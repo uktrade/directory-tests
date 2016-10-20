@@ -1,0 +1,5 @@
+import os
+
+
+DIRECTORY_API_URL = os.environ["DIRECTORY_API_URL"]
+DIRECTORY_UI_URL = os.environ["DIRECTORY_UI_URL"]
