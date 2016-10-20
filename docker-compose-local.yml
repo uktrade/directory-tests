@@ -45,13 +45,3 @@ services:
     env_file: ./docker/.env
     restart: "no"
 
-  directory_tests_shell:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    depends_on: [directory_ui_webserver, directory_api_webserver]
-    links: [directory_ui_webserver, directory_api_webserver]
-    working_dir: /usr/src/app
-    command: sh
-    env_file: ./docker/.env
-    restart: "no"

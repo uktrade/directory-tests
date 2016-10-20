@@ -71,6 +71,6 @@ docker_shell: docker_remove_all
 	$(DOCKER_COMPOSE_CREATE_ENVS) && \
 	$(DOCKER_COMPOSE_REMOVE_AND_PULL) && \
 	docker-compose -f docker-compose-local.yml build && \
-	docker-compose -f docker-compose-local.yml run directory_tests_shell
+	docker-compose -f docker-compose-local.yml run directory_tests_local sh
 
 .PHONY: build clean requirements test docker_remove_all docker_run_local docker_run docker_run_with_local
