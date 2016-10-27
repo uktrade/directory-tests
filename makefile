@@ -9,10 +9,10 @@ requirements:
 
 FLAKE8 := flake8 .
 PYTEST := pytest . $(pytest_args)
+LOCUST := locust -f tests/locustfile.py --host=https://directory-ui-dev.herokuapp.com/ --clients=50 --hatch-rate=50 --num-reques=1000 --no-web --only-summary
 
 test:
-	$(FLAKE8)
-	$(PYTEST)
+	$(FLAKE8) && $(PYTEST) && $(LOCUST)
 
 DOCKER_REMOVE_ALL := \
 	docker ps -a | \
