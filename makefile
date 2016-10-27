@@ -8,7 +8,7 @@ requirements:
 	pip install -r requirements.txt
 
 FLAKE8 := flake8 .
-PYTEST := pytest . $(pytest_args)
+PYTEST := pytest ./tests $(pytest_args)
 
 test:
 	$(FLAKE8)
@@ -22,9 +22,6 @@ DOCKER_REMOVE_ALL := \
 
 docker_remove_all:
 	$(DOCKER_REMOVE_ALL)
-
-DOCKER_COMPOSE_REMOVE_AND_PULL := docker-compose -f docker-compose.yml -f docker-compose-local.yml rm -f && docker-compose -f docker-compose.yml -f docker-compose-local.yml pull
-DOCKER_COMPOSE_CREATE_ENVS := ./docker/create_envs.sh
 
 DOCKER_SET_DIRECTORY_API_ENV_VARS := \
 	export DIRECTORY_API_PORT=8000; \
@@ -49,18 +46,22 @@ DOCKER_SET_DIRECTORY_TESTS_ENV_VARS := \
 	export DIRECTORY_TESTS_DIRECTORY_API_URL=http://directory_api_webserver:8000; \
 	export DIRECTORY_TESTS_DIRECTORY_UI_URL=http://directory_ui_webserver:8001
 
+DOCKER_COMPOSE_CREATE_ENVS := python ./docker/env_writer.py ./docker/env.json
+DOCKER_COMPOSE_REMOVE_AND_PULL := docker-compose rm -f && docker-compose pull
 docker_run: docker_remove_all
 	$(DOCKER_SET_DIRECTORY_TESTS_ENV_VARS) && \
 	$(DOCKER_COMPOSE_CREATE_ENVS) && \
 	$(DOCKER_COMPOSE_REMOVE_AND_PULL) && \
 	docker-compose run directory_tests
 
+DOCKER_COMPOSE_CREATE_ENVS_LOCAL := ./docker/create_envs.sh
+DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL := docker-compose -f docker-compose.yml -f docker-compose-local.yml rm -f && docker-compose -f docker-compose.yml -f docker-compose-local.yml pull
 docker_run_local: docker_remove_all
 	$(DOCKER_SET_DIRECTORY_TESTS_ENV_VARS) && \
 	$(DOCKER_SET_DIRECTORY_API_ENV_VARS) && \
 	$(DOCKER_SET_DIRECTORY_UI_ENV_VARS) && \
-	$(DOCKER_COMPOSE_CREATE_ENVS) && \
-	$(DOCKER_COMPOSE_REMOVE_AND_PULL) && \
+	$(DOCKER_COMPOSE_CREATE_ENVS_LOCAL) && \
+	$(DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
 	docker-compose -f docker-compose-local.yml build && \
 	docker-compose -f docker-compose-local.yml run directory_tests_local
 
@@ -68,8 +69,8 @@ docker_shell: docker_remove_all
 	$(DOCKER_SET_DIRECTORY_TESTS_ENV_VARS) && \
 	$(DOCKER_SET_DIRECTORY_API_ENV_VARS) && \
 	$(DOCKER_SET_DIRECTORY_UI_ENV_VARS) && \
-	$(DOCKER_COMPOSE_CREATE_ENVS) && \
-	$(DOCKER_COMPOSE_REMOVE_AND_PULL) && \
+	$(DOCKER_COMPOSE_CREATE_ENVS_LOCAL) && \
+	$(DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
 	docker-compose -f docker-compose-local.yml build && \
 	docker-compose -f docker-compose-local.yml run directory_tests_local sh
 
