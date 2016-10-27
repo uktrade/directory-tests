@@ -16,24 +16,25 @@
     $ cd directory-tests
     $ make
 
-## Running with Docker
+## Running
+Tests can be run either against locally provisioned environment or any other one, as long as ``DIRECTORY_TESTS_DIRECTORY_API_URL`` and ``DIRECTORY_TESTS_DIRECTORY_UI_URL`` environment variables are set.
 
-### Against any environment
-Requires all host environment variables to be set.
+### Provision local environment and run against it
+Requires ``AWS_ACCESS_KEY_ID`` and ``AWS_SECRET_ACCESS_KEY`` environment variables to be set.
+
+    $ make
+
+### Run against any environment
+Requires just ``DIRECTORY_TESTS_DIRECTORY_API_URL`` and ``DIRECTORY_TESTS_DIRECTORY_UI_URL`` environment variables to be set.
 
     $ make docker_run
-
-### Against locally provisioned environment
-Provides defaults for all env vars but ``AWS_ACCESS_KEY_ID`` and ``AWS_SECRET_ACCESS_KEY``
-
-    $ make docker_run_local
 
 ### Provision local environment and open shell
 
     $ make docker_shell
 
 ### Host environment variables for docker-compose
-``.env`` files will be automatically created (with ``env_writer.py`` based on ``env.json`` and ``env-postgres.json``) by ``make docker_test``, based on host environment variables for each service.
+``.env`` files will be automatically created (with ``./docker/env_writer.py`` based on ``./docker/env.json`` and service env files) by ``make docker_run``, based on host environment variables for each service.
 
 #### directory-tests
 | Host environment variable | Docker environment variable  |
@@ -41,8 +42,9 @@ Provides defaults for all env vars but ``AWS_ACCESS_KEY_ID`` and ``AWS_SECRET_AC
 | DIRECTORY_TESTS_DIRECTORY_API_URL | DIRECTORY_API_URL |
 | DIRECTORY_TESTS_DIRECTORY_UI_URL | DIRECTORY_UI_URL |
 
+#### Locally provisioned environment
 
-#### directory-api webserver, queue worker and database
+##### directory-api webserver, queue worker and database
 | Host environment variable | Docker environment variable  |
 | ------------- | ------------- |
 | DIRECTORY_API_SQS_REGION_NAME | SQS_REGION_NAME |
@@ -59,7 +61,7 @@ Provides defaults for all env vars but ``AWS_ACCESS_KEY_ID`` and ``AWS_SECRET_AC
 | DIRECTORY_API_POSTGRES_PASSWORD | POSTGRES_PASSWORD |
 | DIRECTORY_API_POSTGRES_DB | POSTGRES_DB |
 
-#### directory-ui webserver
+##### directory-ui webserver
 | Host environment variable | Docker environment variable  |
 | ------------- | ------------- |
 | DIRECTORY_UI_SECRET_KEY | SECRET_KEY |
