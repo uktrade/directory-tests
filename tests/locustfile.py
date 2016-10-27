@@ -1,5 +1,7 @@
 from locust import HttpLocust, TaskSet, task
 
+import settings
+
 
 class PublicPages(TaskSet):
     @task
@@ -26,5 +28,5 @@ class PublicPages(TaskSet):
 
 class RegularUser(HttpLocust):
     task_set = PublicPages
-    min_wait = 500
-    max_wait = 6000
+    min_wait = settings.LOCUST_MIN_WAIT
+    max_wait = settings.LOCUST_MAX_WAIT
