@@ -1,6 +1,6 @@
 {
-  "host_env_var_prefix": "DIRECTORY_API",
-  "file_path": "./docker/directory-api/.env-postgres",
+  "host_env_var_prefix": "SSO",
+  "file_path": "./docker/directory-sso/.env-postgres",
   "env_vars": {
     "required": [
       "DB_NAME",
