@@ -6,24 +6,26 @@ import settings
 class PublicPages(TaskSet):
     @task
     def landing_page(self):
-        self.client.get("")
+        self.client.get(settings.DIRECTORY_UI_LOAD_URL)
 
     @task
     def start_registration(self):
-        self.client.get("register")
+        self.client.get(settings.DIRECTORY_UI_LOAD_URL + "/register")
 
     @task
     def sorry_page(self):
-        self.client.get("sorry")
+        self.client.get(settings.DIRECTORY_UI_LOAD_URL + "/sorry")
 
     @task
     def terms_conditions(self):
-        self.client.get("terms_and_conditions")
+        self.client.get(settings.DIRECTORY_UI_LOAD_URL +
+                        "/terms_and_conditions")
 
     @task
-    def confirm_email(self):
+    def confirm_company_email(self):
         # This checks only the case when an invalid code is given
-        self.client.get("confirm-email?confirmation_code=code")
+        self.client.get(settings.DIRECTORY_UI_LOAD_URL +
+                        "/confirm-company-email?confirmation_code=code")
 
 
 class RegularUser(HttpLocust):
