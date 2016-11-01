@@ -9,10 +9,10 @@ requirements:
 
 FLAKE8 := flake8 .
 PYTEST := pytest ./tests $(pytest_args)
+LOCUST := locust -f tests/locustfile.py --host=$$DIRECTORY_TESTS_DIRECTORY_UI_LOAD_URL --clients=$$LOCUST_NUM_CLIENTS --hatch-rate=$$LOCUST_HATCH_RATE --num-request=$$LOCUST_NUM_REQUEST --no-web --only-summary
 
 test:
-	$(FLAKE8)
-	$(PYTEST)
+	$(FLAKE8) && $(PYTEST) && $(LOCUST)
 
 DOCKER_REMOVE_ALL := \
 	docker ps -a | \
@@ -44,7 +44,11 @@ DOCKER_SET_DIRECTORY_UI_ENV_VARS := \
 
 DOCKER_SET_DIRECTORY_TESTS_ENV_VARS := \
 	export DIRECTORY_TESTS_DIRECTORY_API_URL=http://directory_api_webserver:8000; \
-	export DIRECTORY_TESTS_DIRECTORY_UI_URL=http://directory_ui_webserver:8001
+	export DIRECTORY_TESTS_DIRECTORY_UI_URL=http://directory_ui_webserver:8001; \
+	export DIRECTORY_TESTS_DIRECTORY_UI_LOAD_URL=http://www.dev.playground.directory.uktrade.io; \
+	export DIRECTORY_TESTS_LOCUST_NUM_REQUEST=1000; \
+	export DIRECTORY_TESTS_LOCUST_NUM_CLIENTS=50; \
+	export DIRECTORY_TESTS_LOCUST_HATCH_RATE=50
 
 DOCKER_COMPOSE_CREATE_ENVS := python ./docker/env_writer.py ./docker/env.json
 DOCKER_COMPOSE_REMOVE_AND_PULL := docker-compose rm -f && docker-compose pull
@@ -73,5 +77,17 @@ docker_shell: docker_remove_all
 	$(DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
 	docker-compose -f docker-compose-local.yml build && \
 	docker-compose -f docker-compose-local.yml run directory_tests_local sh
+
+SET_LOCAL_ENV_VARS := \
+	export DIRECTORY_API_URL=http://directory_api_webserver:8000; \
+	export DIRECTORY_UI_URL=http://directory_ui_webserver:8001; \
+	export DIRECTORY_UI_LOAD_URL=http://www.dev.playground.directory.uktrade.io; \
+	export LOCUST_NUM_REQUEST=1000; \
+	export LOCUST_NUM_CLIENTS=50; \
+	export LOCUST_HATCH_RATE=50
+
+debug_locust:
+	$(SET_LOCAL_ENV_VARS) && \
+	$(LOCUST)
 
 .PHONY: build clean requirements test docker_remove_all docker_run_local docker_run docker_run_with_local
