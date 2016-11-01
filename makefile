@@ -46,9 +46,9 @@ DOCKER_SET_DIRECTORY_TESTS_ENV_VARS := \
 	export DIRECTORY_TESTS_DIRECTORY_API_URL=http://directory_api_webserver:8000; \
 	export DIRECTORY_TESTS_DIRECTORY_UI_URL=http://directory_ui_webserver:8001; \
 	export DIRECTORY_TESTS_DIRECTORY_UI_LOAD_URL=https://directory-ui-dev.herokuapp.com/; \
-	export LOCUST_NUM_REQUEST=1000; \
-	export LOCUST_NUM_CLIENTS=50; \
-	export LOCUST_HATCH_RATE=50
+	export DIRECTORY_TESTS_LOCUST_NUM_REQUEST=1000; \
+	export DIRECTORY_TESTS_LOCUST_NUM_CLIENTS=50; \
+	export DIRECTORY_TESTS_LOCUST_HATCH_RATE=50
 
 DOCKER_COMPOSE_CREATE_ENVS := python ./docker/env_writer.py ./docker/env.json
 DOCKER_COMPOSE_REMOVE_AND_PULL := docker-compose rm -f && docker-compose pull
