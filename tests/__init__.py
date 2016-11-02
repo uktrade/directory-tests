@@ -22,13 +22,21 @@ urls = {
     'sso:health': 'api/v1/',
     'sso:user': 'api/v1/session-user/',
     # UI
-    'ui:landing': '/',
+    'ui:landing': '',
     'ui:register': 'register',
     'ui:sorry': 'sorry',
     'ui:terms': 'terms_and_conditions',
     'ui:confirm_email': 'confirm-company-email',
     # API
     'api:docs': 'docs/',
+    'api:health': '',
+    'api:enrolment': 'enrolment',
+    'api:sms-verify': 'enrolment/verification-sms/',
+    'api:company': 'user/%d/company/',  # TODO
+    'api:user': 'user/%d/',  # TODO
+    'api:confirm-company-email': 'enrolment/confirm/',
+    'api:validate-company-number': 'validate-company-number/',
+    'api:companies-house-profile': 'company/companies-house-profile/',
 }
 
 
