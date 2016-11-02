@@ -40,7 +40,8 @@ services:
     depends_on: [directory_ui_webserver, directory_api_webserver]
     links: [directory_ui_webserver, directory_api_webserver]
     working_dir: /usr/src/app
-    entrypoint: dockerize -wait http://directory_ui_webserver:8001 -timeout 30s -wait http://directory_api_webserver:8000 -timeout 30s
+    # TODO: uncomment-out when diretory-sso works fine on docker.
+    # entrypoint: dockerize -wait http://directory_ui_webserver:8001 -timeout 30s -wait http://directory_api_webserver:8000 -timeout 30s
     command: ./docker/cmd-run.sh
     env_file: ./docker/.env
     restart: "no"

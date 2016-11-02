@@ -1,4 +1,4 @@
-from tests import get_url, get_random_email_address
+from tests import get_absolute_url, get_random_email_address
 
 
 GOOD_SIGNUP_MESSAGE = (
@@ -7,7 +7,7 @@ GOOD_SIGNUP_MESSAGE = (
 
 
 def test_signup_good_form(selenium):
-    selenium.get(get_url('sso:signup'))
+    selenium.get(get_absolute_url('sso:signup'))
     (selenium
         .find_element_by_css_selector('[name="email"]')
         .send_keys(get_random_email_address()))
