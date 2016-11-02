@@ -53,6 +53,7 @@ class RegularUserSSO(HttpLocust):
     task_set = PublicPagesSSO
     min_wait = settings.LOCUST_MIN_WAIT
     max_wait = settings.LOCUST_MAX_WAIT
+    weight = 1
 
 
 class AuthenticatedUserSSO(HttpLocust):
@@ -60,3 +61,4 @@ class AuthenticatedUserSSO(HttpLocust):
     task_set = AuthenticatedPagesSSO
     min_wait = settings.LOCUST_MIN_WAIT
     max_wait = settings.LOCUST_MAX_WAIT
+    weight = 1

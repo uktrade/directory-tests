@@ -29,8 +29,8 @@ SET_LOCAL_LOCUST_ENV_VARS := \
 	export DIRECTORY_SSO_URL=http://www.sso.dev.playground.directory.uktrade.io/; \
 	export DIRECTORY_UI_URL=http://www.dev.playground.directory.uktrade.io/; \
 	export LOCUST_NUM_REQUEST=1000; \
-	export LOCUST_NUM_CLIENTS=50; \
-	export LOCUST_HATCH_RATE=50
+	export LOCUST_NUM_CLIENTS=150; \
+	export LOCUST_HATCH_RATE=150
 
 # TODO: set these to docker network names when docker works fully
 SET_LOCAL_PYTEST_ENV_VARS := \
@@ -83,8 +83,8 @@ DOCKER_SET_DIRECTORY_TESTS_ENV_VARS := \
 	export DIRECTORY_TESTS_DIRECTORY_API_URL=http://directory_api_webserver:8000; \
 	export DIRECTORY_TESTS_DIRECTORY_SSO_URL=http://www.sso.dev.playground.directory.uktrade.io/; \
 	export DIRECTORY_TESTS_DIRECTORY_UI_URL=http://directory_ui_webserver:8001; \
-	export DIRECTORY_TESTS_LOCUST_HATCH_RATE=50; \
-	export DIRECTORY_TESTS_LOCUST_NUM_CLIENTS=50; \
+	export DIRECTORY_TESTS_LOCUST_HATCH_RATE=150; \
+	export DIRECTORY_TESTS_LOCUST_NUM_CLIENTS=150; \
 	export DIRECTORY_TESTS_LOCUST_NUM_REQUEST=1000
 
 DOCKER_COMPOSE_CREATE_ENVS := python ./docker/env_writer.py ./docker/env.json

@@ -43,6 +43,7 @@ class RegularUserAPI(HttpLocust):
     task_set = PublicPagesAPI
     min_wait = settings.LOCUST_MIN_WAIT
     max_wait = settings.LOCUST_MAX_WAIT
+    weight = 1
 
 
 class AuthenticatedUserAPI(HttpLocust):
@@ -50,3 +51,4 @@ class AuthenticatedUserAPI(HttpLocust):
     task_set = AuthenticatedPagesAPI
     min_wait = settings.LOCUST_MIN_WAIT
     max_wait = settings.LOCUST_MAX_WAIT
+    weight = 1
