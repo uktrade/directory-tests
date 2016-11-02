@@ -1,8 +1,10 @@
+import httplib
+
 import requests
 
-from tests.settings import DIRECTORY_API_URL
+from tests import get_absolute_url
 
 
 def test_api_connection():
-    response = requests.get('{}/docs/'.format(DIRECTORY_API_URL))
-    assert response.ok
+    response = requests.get(get_absolute_url('api:docs'))
+    assert response.status_code == httplib.FORBIDDEN

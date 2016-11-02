@@ -10,8 +10,7 @@ requirements:
 FLAKE8 := flake8 .
 LOCUST := \
 	locust \
-		--locustfile tests/locustfile.py \
-		--host=$$DIRECTORY_TESTS_DIRECTORY_UI_LOAD_URL \
+		--locustfile ./locustfile.py \
 		--clients=$$LOCUST_NUM_CLIENTS \
 		--hatch-rate=$$LOCUST_HATCH_RATE \
 		--num-request=$$LOCUST_NUM_REQUEST \
@@ -25,8 +24,32 @@ PYTEST := \
 		--driver-path /usr/bin/phantomjs $(pytest_args) \
 		$(pytest_args)
 
-test:
-	$(FLAKE8) && $(PYTEST) && $(LOCUST)
+SET_LOCAL_LOCUST_ENV_VARS := \
+	export DIRECTORY_API_URL=http://www.api.dev.playground.directory.uktrade.io/; \
+	export DIRECTORY_SSO_URL=http://www.sso.dev.playground.directory.uktrade.io/; \
+	export DIRECTORY_UI_URL=http://www.dev.playground.directory.uktrade.io/; \
+	export LOCUST_NUM_REQUEST=1000; \
+	export LOCUST_NUM_CLIENTS=50; \
+	export LOCUST_HATCH_RATE=50
+
+# TODO: set these to docker network names when docker works fully
+SET_LOCAL_PYTEST_ENV_VARS := \
+	export DIRECTORY_API_URL=http://www.api.dev.playground.directory.uktrade.io/; \
+	export DIRECTORY_SSO_URL=http://www.sso.dev.playground.directory.uktrade.io/; \
+	export DIRECTORY_UI_URL=http://www.dev.playground.directory.uktrade.io/
+
+test_load:
+	$(SET_LOCAL_LOCUST_ENV_VARS) && \
+	$(LOCUST)
+
+test_integration:
+	$(SET_LOCAL_PYTEST_ENV_VARS) && \
+	$(PYTEST)
+
+test_linting:
+	$(FLAKE8)
+
+test: test_linting test_integration test_load
 
 DOCKER_REMOVE_ALL := \
 	docker ps -a | \
@@ -59,7 +82,6 @@ DOCKER_SET_DIRECTORY_UI_ENV_VARS := \
 DOCKER_SET_DIRECTORY_TESTS_ENV_VARS := \
 	export DIRECTORY_TESTS_DIRECTORY_API_URL=http://directory_api_webserver:8000; \
 	export DIRECTORY_TESTS_DIRECTORY_SSO_URL=http://www.sso.dev.playground.directory.uktrade.io/; \
-	export DIRECTORY_TESTS_DIRECTORY_UI_LOAD_URL=http://www.dev.playground.directory.uktrade.io; \
 	export DIRECTORY_TESTS_DIRECTORY_UI_URL=http://directory_ui_webserver:8001; \
 	export DIRECTORY_TESTS_LOCUST_HATCH_RATE=50; \
 	export DIRECTORY_TESTS_LOCUST_NUM_CLIENTS=50; \
@@ -76,6 +98,7 @@ docker_run: docker_remove_all
 
 DOCKER_COMPOSE_CREATE_ENVS_LOCAL := ./docker/create_envs.sh
 DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL := docker-compose -f docker-compose.yml -f docker-compose-local.yml rm -f && docker-compose -f docker-compose.yml -f docker-compose-local.yml pull
+
 docker_run_local: docker_remove_all
 	$(DOCKER_SET_DIRECTORY_TESTS_ENV_VARS) && \
 	$(DOCKER_SET_DIRECTORY_API_ENV_VARS) && \
@@ -94,17 +117,5 @@ docker_shell: docker_remove_all
 	$(DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
 	docker-compose -f docker-compose-local.yml build && \
 	docker-compose -f docker-compose-local.yml run directory_tests_local sh
-
-SET_LOCAL_ENV_VARS := \
-	export DIRECTORY_API_URL=http://directory_api_webserver:8000; \
-	export DIRECTORY_UI_URL=http://directory_ui_webserver:8001; \
-	export DIRECTORY_UI_LOAD_URL=http://www.dev.playground.directory.uktrade.io; \
-	export LOCUST_NUM_REQUEST=1000; \
-	export LOCUST_NUM_CLIENTS=50; \
-	export LOCUST_HATCH_RATE=50
-
-debug_locust:
-	$(SET_LOCAL_ENV_VARS) && \
-	$(LOCUST)
 
 .PHONY: build clean requirements test docker_remove_all docker_run_local docker_run docker_run_with_local

@@ -1,4 +1,4 @@
-from tests import get_url, get_random_email_address
+from tests import get_absolute_url, get_random_email_address
 
 
 BAD_PASSWORD_MESSAGE = (
@@ -7,7 +7,7 @@ BAD_PASSWORD_MESSAGE = (
 
 
 def test_login_bad_credentials(selenium):
-    url = get_url('sso:login')
+    url = get_absolute_url('sso:login')
     selenium.get(url)
     (selenium
         .find_element_by_css_selector('[name="login"]')
