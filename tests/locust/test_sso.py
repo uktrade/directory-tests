@@ -70,6 +70,10 @@ class AuthenticatedPagesSSO(TaskSet):
     # This checks only the case that redirection occurs
 
     @task
+    def inactive(self):
+        self.client.get(get_relative_url('sso:inactive'))
+
+    @task
     def logout(self):
         self.client.get(get_relative_url('sso:logout'))
 
