@@ -28,7 +28,7 @@ SET_LOCAL_LOCUST_ENV_VARS := \
 	export DIRECTORY_API_URL=http://www.api.dev.playground.directory.uktrade.io/; \
 	export DIRECTORY_SSO_URL=http://www.sso.dev.playground.directory.uktrade.io/; \
 	export DIRECTORY_UI_URL=http://www.dev.playground.directory.uktrade.io/; \
-	export LOCUST_NUM_REQUEST=40; \
+	export LOCUST_NUM_REQUEST=100; \
 	export LOCUST_NUM_CLIENTS=5; \
 	export LOCUST_HATCH_RATE=5
 

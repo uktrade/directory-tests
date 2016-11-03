@@ -49,6 +49,30 @@ class AuthenticatedPagesAPI(TaskSet):
             headers=headers
         )
 
+    @task
+    def test_sms_verify_invalid_data(self):
+        url = get_relative_url('api:sms-verify')
+        headers = {'content-type': 'application/json'}
+        data = json.dumps({'phone_number': 'a' * 50})  # invalid phone number
+        with self.client.post(url, data=data, headers=headers,
+                              catch_response=True) as response:
+            if response.status_code == 400:
+                response.success()
+            else:
+                response.failure("Expected 400 status for invalid data")
+
+    @task
+    def test_confirm_company_email_invalid_data(self):
+        url = get_relative_url('api:confirm-company-email')
+        headers = {'content-type': 'application/json'}
+        data = json.dumps({'confirmation_code': 'invalid'})
+        with self.client.post(url, data=data, headers=headers,
+                              catch_response=True) as response:
+            if response.status_code == 400:
+                response.success()
+            else:
+                response.failure("Expected 400 status for invalid data")
+
 
 class RegularUserAPI(HttpLocust):
     host = settings.DIRECTORY_API_URL
