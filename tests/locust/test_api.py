@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 
 from tests import get_relative_url, settings
+from tests.locust.helpers import AuthedClientMixin
 
 from locust import HttpLocust, TaskSet, task
 
@@ -11,31 +12,23 @@ class PublicPagesAPI(TaskSet):
     def health(self):
         self.client.get(get_relative_url('api:health'))
 
+
+
+class AuthenticatedPagesAPI(TaskSet):
+
     @task
     def docs(self):
         self.client.get(get_relative_url('api:docs'))
 
-
-class AuthenticatedPagesAPI(TaskSet):
-    @task
-    def enrolment(self):
-        self.client.get(get_relative_url('api:enrolment'))
-
-    @task
-    def sms_verify(self):
-        self.client.get(get_relative_url('api:sms-verify'))
-
-    @task
-    def confirm_company_email(self):
-        self.client.post(get_relative_url('api:confirm-company-email'))
-
     @task
     def validate_company_number(self):
-        self.client.get(get_relative_url('api:validate-company-number'))
+        url = get_relative_url('api:validate-company-number')
+        self.client.get('{url}?number=09466013'.format(url=url))
 
     @task
     def companies_house_profile(self):
-        self.client.get(get_relative_url('api:companies-house-profile'))
+        url = get_relative_url('api:companies-house-profile')
+        self.client.get('{url}?number=09466011'.format(url=url))
 
 
 class RegularUserAPI(HttpLocust):
@@ -46,7 +39,7 @@ class RegularUserAPI(HttpLocust):
     weight = 1
 
 
-class AuthenticatedUserAPI(HttpLocust):
+class AuthenticatedUserAPI(AuthedClientMixin, HttpLocust):
     host = settings.DIRECTORY_API_URL
     task_set = AuthenticatedPagesAPI
     min_wait = settings.LOCUST_MIN_WAIT
