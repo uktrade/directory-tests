@@ -1,7 +1,7 @@
 from hashlib import sha256
 import urlparse
 
-from locust.clients import HttpSession, LocustResponse
+from locust.clients import LocustResponse, HttpSession
 
 import requests
 from requests import Request

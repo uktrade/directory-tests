@@ -1,9 +1,11 @@
 from __future__ import absolute_import
 
-from tests import get_relative_url, settings
-from tests.locust.helpers import AuthedClientMixin
+import json
 
 from locust import HttpLocust, TaskSet, task
+
+from tests import get_random_email_address, get_relative_url, settings
+from tests.locust.helpers import AuthedClientMixin
 
 
 class PublicPagesAPI(TaskSet):
@@ -28,6 +30,24 @@ class AuthenticatedPagesAPI(TaskSet):
     def companies_house_profile(self):
         url = get_relative_url('api:companies-house-profile')
         self.client.get('{url}?number=09466011'.format(url=url))
+
+    @task
+    def enrolment(self):
+        data = {
+            'export_status': 'ONE_TWO_YEARS_AGO',
+            'name': 'Examlple corp',
+            'number': '09466013',
+            'sso_id': 2,
+            'company_email': get_random_email_address(),
+            'mobile_number': '07700900418',
+            'referrer': 'email'
+        }
+        headers = {'content-type': 'application/json'}
+        self.client.post(
+            get_relative_url('api:enrolment'),
+            data=json.dumps(data),
+            headers=headers
+        )
 
 
 class RegularUserAPI(HttpLocust):
