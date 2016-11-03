@@ -30,7 +30,7 @@ urls = {
     # API
     'api:docs': 'docs/',
     'api:health': '',
-    'api:enrolment': 'enrolment',
+    'api:enrolment': 'enrolment/',
     'api:sms-verify': 'enrolment/verification-sms/',
     'api:company': 'user/%d/company/',  # TODO
     'api:user': 'user/%d/',  # TODO
