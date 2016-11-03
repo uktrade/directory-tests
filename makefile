@@ -28,9 +28,14 @@ SET_LOCAL_LOCUST_ENV_VARS := \
 	export DIRECTORY_API_URL=http://www.api.dev.playground.directory.uktrade.io/; \
 	export DIRECTORY_SSO_URL=http://www.sso.dev.playground.directory.uktrade.io/; \
 	export DIRECTORY_UI_URL=http://www.dev.playground.directory.uktrade.io/; \
+	export LOCUST_NUM_REQUEST=40; \
+	export LOCUST_NUM_CLIENTS=5; \
+	export LOCUST_HATCH_RATE=5
+
+SET_LOCAL_LOCUST_PROPER_LOAD := \
 	export LOCUST_NUM_REQUEST=1000; \
-	export LOCUST_NUM_CLIENTS=50; \
-	export LOCUST_HATCH_RATE=50
+	export LOCUST_NUM_CLIENTS=150; \
+	export LOCUST_HATCH_RATE=150
 
 # TODO: set these to docker network names when docker works fully
 SET_LOCAL_PYTEST_ENV_VARS := \
@@ -38,8 +43,12 @@ SET_LOCAL_PYTEST_ENV_VARS := \
 	export DIRECTORY_SSO_URL=http://www.sso.dev.playground.directory.uktrade.io/; \
 	export DIRECTORY_UI_URL=http://www.dev.playground.directory.uktrade.io/
 
+# make test_load is the command for actual load test running
+# unlike make test, this will run load tests with the proper load
+# we're testing for
 test_load:
 	$(SET_LOCAL_LOCUST_ENV_VARS) && \
+	$(SET_LOCAL_LOCUST_PROPER_LOAD) && \
 	$(LOCUST)
 
 test_integration:
@@ -49,7 +58,11 @@ test_integration:
 test_linting:
 	$(FLAKE8)
 
-test: test_linting test_integration test_load
+# make test is what CircleCI runs. Load tests on CircleCI are run at
+# 1 client per second, just to check the load tests themselves work.
+test: test_linting test_integration
+	$(SET_LOCAL_LOCUST_ENV_VARS) && \
+	$(LOCUST)
 
 DOCKER_REMOVE_ALL := \
 	docker ps -a | \
@@ -83,9 +96,10 @@ DOCKER_SET_DIRECTORY_TESTS_ENV_VARS := \
 	export DIRECTORY_TESTS_DIRECTORY_API_URL=http://directory_api_webserver:8000; \
 	export DIRECTORY_TESTS_DIRECTORY_SSO_URL=http://www.sso.dev.playground.directory.uktrade.io/; \
 	export DIRECTORY_TESTS_DIRECTORY_UI_URL=http://directory_ui_webserver:8001; \
-	export DIRECTORY_TESTS_LOCUST_HATCH_RATE=50; \
-	export DIRECTORY_TESTS_LOCUST_NUM_CLIENTS=50; \
-	export DIRECTORY_TESTS_LOCUST_NUM_REQUEST=1000
+	export DIRECTORY_TESTS_LOCUST_HATCH_RATE=150; \
+	export DIRECTORY_TESTS_LOCUST_NUM_CLIENTS=150; \
+	export DIRECTORY_TESTS_LOCUST_NUM_REQUEST=1000; \
+	export DIRECTORY_TESTS_API_CLIENT_KEY=$$API_CLIENT_KEY
 
 DOCKER_COMPOSE_CREATE_ENVS := python ./docker/env_writer.py ./docker/env.json
 DOCKER_COMPOSE_REMOVE_AND_PULL := docker-compose rm -f && docker-compose pull
@@ -107,7 +121,6 @@ docker_run_local: docker_remove_all
 	$(DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
 	docker-compose -f docker-compose-local.yml build && \
 	docker-compose -f docker-compose-local.yml run directory_tests_local
-
 
 docker_shell: docker_remove_all
 	$(DOCKER_SET_DIRECTORY_TESTS_ENV_VARS) && \
