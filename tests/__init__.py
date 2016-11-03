@@ -19,6 +19,7 @@ urls = {
     'sso:password_reset': 'accounts/password/reset/',
     'sso:email': 'accounts/email/',
     'sso:email_confirm': 'accounts/confirm-email/',
+    'sso:inactive': 'accounts/inactive/',
     'sso:health': 'api/v1/',
     'sso:user': 'api/v1/session-user/',
     # UI
