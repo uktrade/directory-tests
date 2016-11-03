@@ -52,8 +52,10 @@ class AuthenticatedPagesAPI(TaskSet):
     @task
     def test_sms_verify_invalid_data(self):
         url = get_relative_url('api:sms-verify')
-        data = {'phone_number': 'a' * 50}  # invalid phone number
-        with self.client.post(url, data=data, catch_response=True) as response:
+        headers = {'content-type': 'application/json'}
+        data = json.dumps({'phone_number': 'a' * 50})  # invalid phone number
+        with self.client.post(url, data=data, headers=headers,
+                              catch_response=True) as response:
             if response.status_code == 400:
                 response.success()
             else:
@@ -62,8 +64,10 @@ class AuthenticatedPagesAPI(TaskSet):
     @task
     def test_confirm_company_email_invalid_data(self):
         url = get_relative_url('api:confirm-company-email')
-        data = {'confirmation_code': 'invalid'}
-        with self.client.post(url, data=data, catch_response=True) as response:
+        headers = {'content-type': 'application/json'}
+        data = json.dumps({'confirmation_code': 'invalid'})
+        with self.client.post(url, data=data, headers=headers,
+                              catch_response=True) as response:
             if response.status_code == 400:
                 response.success()
             else:
