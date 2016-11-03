@@ -36,7 +36,6 @@ class AuthenticatedClient(HttpSession):
 
     def sign_request(self, api_key, prepared_request):
         url = urlparse.urlsplit(prepared_request.path_url)
-
         path = bytes(url.path)
         if url.query:
             path += bytes("?{}".format(url.query))
