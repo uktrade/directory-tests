@@ -33,6 +33,33 @@ class AuthenticatedPagesAPI(TaskSet):
         self.client.get('{url}?number=09466011'.format(url=url))
 
     @task
+    def get_company(self):
+        url = get_relative_url('api:company')
+        self.client.get(url)
+
+    @task
+    def put_company(self):
+        url = get_relative_url('api:company')
+        data = {
+            'export_status': 'YES',
+            'name': 'Test Company',
+            'number': '04296006',
+        }  # just required fields here
+        headers = {'content-type': 'application/json'}
+        self.client.put(url, data=json.dumps(data), headers=headers)
+
+    @task
+    def patch_company(self):
+        url = get_relative_url('api:company')
+        data = {
+            'export_status': 'YES',
+            'name': 'Test Company',
+            'number': '04296006',
+        }  # just required fields here
+        headers = {'content-type': 'application/json'}
+        self.client.patch(url, data=json.dumps(data), headers=headers)
+
+    @task
     def get_user(self):
         url = get_relative_url('api:user')
         self.client.get(url)
