@@ -13,7 +13,6 @@ class PublicPagesAPI(TaskSet):
         self.client.get(get_relative_url('api:health'))
 
 
-
 class AuthenticatedPagesAPI(TaskSet):
 
     @task

@@ -1,10 +1,10 @@
 from hashlib import sha256
 import urlparse
 
-from locust.clients import HttpSession
+from locust.clients import HttpSession, LocustResponse
 
 import requests
-from requests import Response, Request
+from requests import Request
 from requests.exceptions import (
     RequestException,
     MissingSchema,
@@ -31,7 +31,7 @@ class AuthenticatedClient(HttpSession):
             r = LocustResponse()
             r.error = e
             r.status_code = 0  # with this status_code, content returns None
-            r.request = Request(method, url).prepare() 
+            r.request = Request(method, url).prepare()
             return r
 
     def sign_request(self, api_key, prepared_request):
