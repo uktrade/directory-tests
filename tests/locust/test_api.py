@@ -29,6 +29,16 @@ class AuthenticatedPagesAPI(TaskSet):
         url = get_relative_url('api:companies-house-profile')
         self.client.get('{url}?number=09466011'.format(url=url))
 
+    @task
+    def test_sms_verify_invalid_data(self):
+        url = get_relative_url('api:sms-verify')
+        data = {'phone_number': 'a' * 50}  # invalid phone number
+        with self.client.post(url, data=data, catch_response=True) as response:
+            if response.status_code == 400:
+                response.success()
+            else:
+                response.failure("Expected 400 status for invalid data")
+
 
 class RegularUserAPI(HttpLocust):
     host = settings.DIRECTORY_API_URL
