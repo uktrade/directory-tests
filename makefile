@@ -49,7 +49,7 @@ test_integration:
 test_linting:
 	$(FLAKE8)
 
-test: test_linting test_integration test_load
+test: test_linting test_integration
 
 DOCKER_REMOVE_ALL := \
 	docker ps -a | \

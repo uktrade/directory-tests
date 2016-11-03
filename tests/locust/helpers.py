@@ -52,6 +52,7 @@ class AuthenticatedClient(HttpSession):
 
         return prepared_request
 
+
 class AuthedClientMixin(object):
     def __init__(self):
         super(AuthedClientMixin, self).__init__()
