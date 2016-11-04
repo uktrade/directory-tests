@@ -34,12 +34,14 @@ class AuthenticatedPagesAPI(TaskSet):
 
     @task
     def get_company(self):
-        url = get_relative_url('api:company')
+        url = get_relative_url('api:company').format(
+            sso_id=settings.SSO_USER_ID)
         self.client.get(url)
 
     @task
     def put_company(self):
-        url = get_relative_url('api:company')
+        url = get_relative_url('api:company').format(
+            sso_id=settings.SSO_USER_ID)
         data = {
             'export_status': 'YES',
             'name': 'Test Company',
@@ -50,7 +52,8 @@ class AuthenticatedPagesAPI(TaskSet):
 
     @task
     def patch_company(self):
-        url = get_relative_url('api:company')
+        url = get_relative_url('api:company').format(
+            sso_id=settings.SSO_USER_ID)
         data = {
             'export_status': 'YES',
             'name': 'Test Company',
@@ -61,14 +64,14 @@ class AuthenticatedPagesAPI(TaskSet):
 
     @task
     def get_user(self):
-        url = get_relative_url('api:user')
+        url = get_relative_url('api:user').format(sso_id=settings.SSO_USER_ID)
         self.client.get(url)
 
     @task
     def put_user(self):
-        url = get_relative_url('api:user')
+        url = get_relative_url('api:user').format(sso_id=settings.SSO_USER_ID)
         data = {
-            'sso_id': 120,
+            'sso_id': settings.SSO_USER_ID,
             'company_email': get_random_email_address(),
             'mobile_number': '0800888777',
             'referrer': 'google',
@@ -80,9 +83,9 @@ class AuthenticatedPagesAPI(TaskSet):
 
     @task
     def patch_user(self):
-        url = get_relative_url('api:user')
+        url = get_relative_url('api:user').format(sso_id=settings.SSO_USER_ID)
         data = {
-            'sso_id': 120,
+            'sso_id': settings.SSO_USER_ID,
             'company_email': get_random_email_address(),
             'mobile_number': '0800888777',
             'referrer': 'google',
