@@ -36,7 +36,7 @@ urls = {
     'api:company': 'user/{sso_id}/company/',
     'api:user': 'user/{sso_id}/',
     'api:confirm-company-email': 'enrolment/confirm/',
-    'api:validate-company-number': 'validate-company-number/',
+    'api:validate-company-number': 'validate/company-number/',
     'api:companies-house-profile': 'company/companies-house-profile/',
 }
 

@@ -3,7 +3,7 @@ services:
 
   postgres:
     image: sameersbn/postgresql:9.5-3
-    env_file: ./docker/directory-api/.env-postgres
+    env_file: ./docker/.env-postgres
 
   directory_api_webserver:
     image: ukti/directory-api:latest

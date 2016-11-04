@@ -1,6 +1,6 @@
 {
-  "host_env_var_prefix": "DIRECTORY_API",
-  "file_path": "./docker/directory-api/.env-postgres",
+  "host_env_var_prefix": "DIRECTORY_TESTS",
+  "file_path": "./docker/.env-postgres",
   "env_vars": {
     "required": [
       "DB_NAME",
