@@ -19,6 +19,33 @@
 ## Running
 Tests can be run either against locally provisioned environment or any other one, as long as ``DIRECTORY_TESTS_DIRECTORY_API_URL`` and ``DIRECTORY_TESTS_DIRECTORY_UI_URL`` environment variables are set.
 
+## Running load tests
+
+1) To run tests the way CircleCI does:
+
+    make test
+
+This will run flake8 linting, integration tests and finally load tests. This doesn't do much more than check load tests haven't been broken, however. By default it tests the three servers (UI, SSO & API) with a load of about 2 clients/s on each server for 2.5 minutes (this time period more or less guarantees each endpoint we have tests for gets hit at least once - locust randomizes this, so there's no 100% guarantee).
+
+2) For real load testing:
+
+    make test_load
+
+This runs only the load tests and tests the three servers (UI, SSO & API) with a load of about 50 clients/s on each server and a default of 2 minutes.
+
+The env variables you are likely to need to change (please see the makefile - they are set in the test_load command) are:
+
+- ``LOCUST_TIMEOUT`` The number of seconds you would like the tests to run for
+- ``LOCUST_NUM_CLIENTS`` The number of clients per second you would like to test. IMPORTANT: You need to set this to 3 times what you actually want as this is divided equally between 3 servers!
+- ``LOCUST_HATCH_RATE`` How the load will grow when you leave the tests running. Presuming you want to start hammering the servers at full load straight away, this needs to be equal to ``LOCUST_NUM_CLIENTS``
+- ``SSO_USER_ID`` The sso id of a user that exists on the api site you're testing.
+- ``DIRECTORY_API_URL``, ``DIRECTORY_SSO_URL``, ``DIRECTORY_UI_URL`` The urls you want to load test.
+
+You probably won't need to change these but you may also set:
+
+- ``LOCUST_MIN_WAIT`` Minimum waiting time (I think locust takes microseconds here) between the execution of locust tasks. Currently set to 500
+- ``LOCUST_MAX_WAIT`` Maximum waiting between the execution of locust tasks (currently set to 6000)
+
 ### Provision local environment and run against it
 Requires ``AWS_ACCESS_KEY_ID`` and ``AWS_SECRET_ACCESS_KEY`` environment variables to be set.
 
