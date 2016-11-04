@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 
 import json
+from datetime import datetime
 
 from locust import HttpLocust, TaskSet, task
 
@@ -32,10 +33,73 @@ class AuthenticatedPagesAPI(TaskSet):
         self.client.get('{url}?number=09466011'.format(url=url))
 
     @task
+    def get_company(self):
+        url = get_relative_url('api:company').format(
+            sso_id=settings.SSO_USER_ID)
+        self.client.get(url)
+
+    @task
+    def put_company(self):
+        url = get_relative_url('api:company').format(
+            sso_id=settings.SSO_USER_ID)
+        data = {
+            'export_status': 'YES',
+            'name': 'Test Company',
+            'number': '04296006',
+        }  # just required fields here
+        headers = {'content-type': 'application/json'}
+        self.client.put(url, data=json.dumps(data), headers=headers)
+
+    @task
+    def patch_company(self):
+        url = get_relative_url('api:company').format(
+            sso_id=settings.SSO_USER_ID)
+        data = {
+            'export_status': 'YES',
+            'name': 'Test Company',
+            'number': '04296006',
+        }  # just required fields here
+        headers = {'content-type': 'application/json'}
+        self.client.patch(url, data=json.dumps(data), headers=headers)
+
+    @task
+    def get_user(self):
+        url = get_relative_url('api:user').format(sso_id=settings.SSO_USER_ID)
+        self.client.get(url)
+
+    @task
+    def put_user(self):
+        url = get_relative_url('api:user').format(sso_id=settings.SSO_USER_ID)
+        data = {
+            'sso_id': settings.SSO_USER_ID,
+            'company_email': get_random_email_address(),
+            'mobile_number': '0800888777',
+            'referrer': 'google',
+            'terms_agreed': True,
+            'date_joined': str(datetime.now()),
+        }
+        headers = {'content-type': 'application/json'}
+        self.client.put(url, data=json.dumps(data), headers=headers)
+
+    @task
+    def patch_user(self):
+        url = get_relative_url('api:user').format(sso_id=settings.SSO_USER_ID)
+        data = {
+            'sso_id': settings.SSO_USER_ID,
+            'company_email': get_random_email_address(),
+            'mobile_number': '0800888777',
+            'referrer': 'google',
+            'terms_agreed': True,
+            'date_joined': str(datetime.now()),
+        }
+        headers = {'content-type': 'application/json'}
+        self.client.patch(url, data=json.dumps(data), headers=headers)
+
+    @task
     def enrolment(self):
         data = {
             'export_status': 'ONE_TWO_YEARS_AGO',
-            'name': 'Examlple corp',
+            'name': 'Example corp',
             'number': '09466013',
             'sso_id': 2,
             'company_email': get_random_email_address(),
