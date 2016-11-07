@@ -141,6 +141,7 @@ class AuthenticatedPagesAPI(TaskSet):
 class RegularUserAPI(HttpLocust):
     host = settings.DIRECTORY_API_URL
     task_set = PublicPagesAPI
+    stop_timeout = settings.LOCUST_TIMEOUT
     min_wait = settings.LOCUST_MIN_WAIT
     max_wait = settings.LOCUST_MAX_WAIT
     weight = 1
@@ -149,6 +150,7 @@ class RegularUserAPI(HttpLocust):
 class AuthenticatedUserAPI(AuthedClientMixin, HttpLocust):
     host = settings.DIRECTORY_API_URL
     task_set = AuthenticatedPagesAPI
+    stop_timeout = settings.LOCUST_TIMEOUT
     min_wait = settings.LOCUST_MIN_WAIT
     max_wait = settings.LOCUST_MAX_WAIT
     weight = 1

@@ -97,6 +97,7 @@ class AuthenticatedPagesSSO(TaskSet):
 class RegularUserSSO(HttpLocust):
     host = settings.DIRECTORY_SSO_URL
     task_set = PublicPagesSSO
+    stop_timeout = settings.LOCUST_TIMEOUT
     min_wait = settings.LOCUST_MIN_WAIT
     max_wait = settings.LOCUST_MAX_WAIT
     weight = 1
@@ -105,6 +106,7 @@ class RegularUserSSO(HttpLocust):
 class AuthenticatedUserSSO(HttpLocust):
     host = settings.DIRECTORY_SSO_URL
     task_set = AuthenticatedPagesSSO
+    stop_timeout = settings.LOCUST_TIMEOUT
     min_wait = settings.LOCUST_MIN_WAIT
     max_wait = settings.LOCUST_MAX_WAIT
     weight = 1
