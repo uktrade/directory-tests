@@ -1,12 +1,12 @@
 from tests import get_absolute_url, get_random_email_address
 
 
-GOOD_SIGNUP_MESSAGE = (
-    'Verify your email address'
+BAD_SIGNUP_MESSAGE = (
+    'This field is required.'
 )
 
 
-def test_signup_good_form(selenium):
+def test_signup_bad_form(selenium):
     selenium.get(get_absolute_url('sso:signup'))
     (selenium
         .find_element_by_css_selector('[name="email"]')
@@ -14,9 +14,6 @@ def test_signup_good_form(selenium):
     (selenium
         .find_element_by_css_selector('[name="password1"]')
         .send_keys('some_password'))
-    (selenium
-        .find_element_by_css_selector('[name="password2"]')
-        .send_keys('some_password'))
-    selenium.find_element_by_css_selector('[type="submit"]').click()
 
-    assert GOOD_SIGNUP_MESSAGE in selenium.page_source
+    selenium.find_element_by_css_selector('[type="submit"]').click()
+    assert BAD_SIGNUP_MESSAGE in selenium.page_source
