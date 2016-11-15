@@ -28,6 +28,7 @@ services:
     image: ukti/directory-ui:latest
     depends_on: [directory_api_queue_worker]
     links: [directory_api_webserver]
+    container_name: find-a-buyer.trade.great.docker
     working_dir: /usr/src/app
     command: ./docker/cmd-webserver.sh
     ports: ["8001:8001"]
@@ -37,9 +38,10 @@ services:
     image: ukti/directory-sso:latest
     depends_on: [postgres]
     links: [postgres]
+    container_name: sso.trade.great.docker
     working_dir: /usr/src/app
     entrypoint: dockerize -wait tcp://postgres:5432 -timeout 20s
-    command: ./docker/cmd-webserver.sh
+    command: ./docker/cmd-integration-test-webserver.sh
     ports: ["8003:8003"]
     env_file: ./docker/directory-sso/.env
 
@@ -50,7 +52,7 @@ services:
     depends_on: [directory_sso_webserver, directory_ui_webserver, directory_api_webserver]
     links: [directory_sso_webserver, directory_ui_webserver, directory_api_webserver]
     working_dir: /usr/src/app
-    entrypoint: dockerize -wait http://directory_sso_webserver:8003/api/v1/ -timeout 60s -wait http://directory_ui_webserver:8001 -timeout 60s -wait http://directory_api_webserver:8000 -timeout 60s 
+    entrypoint: dockerize -wait http://sso.trade.great.docker:8003/api/v1/ -timeout 60s -wait http://find-a-buyer.trade.great.docker:8001 -timeout 60s -wait http://directory_api_webserver:8000 -timeout 60s 
     command: ./docker/cmd-run.sh
     env_file: ./docker/.env
     restart: "no"

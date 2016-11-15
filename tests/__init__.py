@@ -40,6 +40,15 @@ urls = {
     'api:companies-house-profile': 'company/companies-house-profile/',
 }
 
+# these user credentials are hard-coded in `directory-sso`. The users
+# are created when `manage.py create_test_users` is ran on sso.
+users = {
+    'verified': {
+        'username': 'verified@example.com',
+        'password': 'passwordpassword',
+    }
+}
+
 
 def get_relative_url(name):
     return urls[name]

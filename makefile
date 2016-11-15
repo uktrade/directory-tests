@@ -44,9 +44,9 @@ SET_LOCAL_LOCUST_PROPER_LOAD := \
 
 # TODO: set these to docker network names when docker works fully
 SET_LOCAL_PYTEST_ENV_VARS := \
-	export DIRECTORY_API_URL=http://www.api.dev.playground.directory.uktrade.io/; \
-	export DIRECTORY_SSO_URL=http://www.sso.dev.playground.directory.uktrade.io/; \
-	export DIRECTORY_UI_URL=http://www.dev.playground.directory.uktrade.io/; \
+	export DIRECTORY_API_URL=http://directory_api_webserver:8000/; \
+	export DIRECTORY_SSO_URL=http://sso.trade.great.docker:8003/; \
+	export DIRECTORY_UI_URL=http://find-a-buyer.trade.great.docker:8001/; \
 	export SSO_USER_ID=120
 
 
@@ -110,10 +110,10 @@ DOCKER_SET_DIRECTORY_UI_ENV_VARS := \
 	export DIRECTORY_UI_API_CLIENT_KEY=debug; \
 	export DIRECTORY_UI_API_CLIENT_BASE_URL=http://directory_api_webserver:8000; \
 	export DIRECTORY_UI_SSO_API_CLIENT_KEY=debug; \
-	export DIRECTORY_UI_SSO_API_CLIENT_BASE_URL=http://directory_sso_webserver:8003/api/v1/; \
-	export DIRECTORY_UI_SSO_LOGIN_URL=http://directory_sso_webserver:8003/accounts/login/; \
-	export DIRECTORY_UI_SSO_LOGOUT_URL=http://directory_sso_webserver:8003/accounts/logout/?next=http://directory_ui_webserver:8001; \
-	export DIRECTORY_UI_SSO_SIGNUP_URL=http://directory_sso_webserver:8003/accounts/signup/; \
+	export DIRECTORY_UI_SSO_API_CLIENT_BASE_URL=http://sso.trade.great.docker:8003/api/v1/; \
+	export DIRECTORY_UI_SSO_LOGIN_URL=http://sso.trade.great.docker:8003/accounts/login/; \
+	export DIRECTORY_UI_SSO_LOGOUT_URL=http://sso.trade.great.docker:8003/accounts/logout/?next=http://find-a-buyer.trade.great.docker:8001; \
+	export DIRECTORY_UI_SSO_SIGNUP_URL=http://sso.trade.great.docker:8003/accounts/signup/; \
 	export DIRECTORY_UI_SSO_REDIRECT_FIELD_NAME=next; \
 	export DIRECTORY_UI_SSO_SESSION_COOKIE=debug_sso_session_cookie; \
 	export DIRECTORY_UI_PORT=8001; \
@@ -123,8 +123,8 @@ DOCKER_SET_DIRECTORY_UI_ENV_VARS := \
 
 DOCKER_SET_DIRECTORY_TESTS_ENV_VARS := \
 	export DIRECTORY_TESTS_DIRECTORY_API_URL=http://directory_api_webserver:8000; \
-	export DIRECTORY_TESTS_DIRECTORY_SSO_URL=http://directory_sso_webserver:8003/; \
-	export DIRECTORY_TESTS_DIRECTORY_UI_URL=http://directory_ui_webserver:8001; \
+	export DIRECTORY_TESTS_DIRECTORY_SSO_URL=http://sso.trade.great.docker:8003/; \
+	export DIRECTORY_TESTS_DIRECTORY_UI_URL=http://find-a-buyer.trade.great.docker:8001; \
 	export DIRECTORY_TESTS_LOCUST_HATCH_RATE=150; \
 	export DIRECTORY_TESTS_LOCUST_NUM_CLIENTS=150; \
 	export DIRECTORY_TESTS_DB_NAME=directory_api_test,sso_test; \
@@ -138,16 +138,17 @@ DOCKER_SET_DIRECTORY_SSO_ENV_VARS := \
 	export SSO_SECRET_KEY=debug; \
 	export SSO_API_SECRET=debug; \
 	export SSO_DATABASE_URL=postgres://test:test@postgres:5432/sso_test; \
-	export SSO_SESSION_COOKIE_DOMAIN=.trade.great.dev; \
+	export SSO_SESSION_COOKIE_DOMAIN=.trade.great.docker; \
 	export SSO_SSO_SESSION_COOKIE=debug_sso_session_cookie; \
 	export SSO_EMAIL_HOST=debug; \
 	export SSO_EMAIL_PORT=debug; \
 	export SSO_EMAIL_HOST_USER=debug; \
 	export SSO_EMAIL_HOST_PASSWORD=debug; \
 	export SSO_DEFAULT_FROM_EMAIL=debug; \
-	export SSO_LOGOUT_REDIRECT_URL=http://directory_ui_webserver:8001; \
+	export SSO_LOGOUT_REDIRECT_URL=http://find-a-buyer.trade.great.docker:8001; \
 	export SSO_REDIRECT_FIELD_NAME=next; \
-	export SSO_ALLOWED_REDIRECT_DOMAINS=example.com
+	export SSO_ALLOWED_REDIRECT_DOMAINS=example.com; \
+	export SSO_SSO_SESSION_COOKIE_SECURE=false
 
 docker_run: docker_remove_all
 	$(DOCKER_SET_DIRECTORY_TESTS_ENV_VARS) && \
