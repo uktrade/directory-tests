@@ -17,7 +17,6 @@ urls = {
     'sso:password_change': 'accounts/password/change/',
     'sso:password_set': 'accounts/password/set/',
     'sso:password_reset': 'accounts/password/reset/',
-    'sso:email': 'accounts/email/',
     'sso:email_confirm': 'accounts/confirm-email/',
     'sso:inactive': 'accounts/inactive/',
     'sso:health': 'api/v1/',
@@ -26,7 +25,6 @@ urls = {
     'ui:landing': '',
     'ui:register': 'register',
     'ui:sorry': 'sorry',
-    'ui:terms': 'terms_and_conditions',
     'ui:confirm_email': 'confirm-company-email',
     # API
     'api:docs': 'docs/',
@@ -38,6 +36,15 @@ urls = {
     'api:confirm-company-email': 'enrolment/confirm/',
     'api:validate-company-number': 'validate/company-number/',
     'api:companies-house-profile': 'company/companies-house-profile/',
+}
+
+# these user credentials are hard-coded in `directory-sso`. The users
+# are created when `manage.py create_test_users` is ran on sso.
+users = {
+    'verified': {
+        'username': 'verified@example.com',
+        'password': 'passwordpassword',
+    }
 }
 
 
