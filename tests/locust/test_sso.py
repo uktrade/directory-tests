@@ -89,10 +89,6 @@ class AuthenticatedPagesSSO(TaskSet):
     def password_reset(self):
         self.client.get(get_relative_url('sso:password_reset'))
 
-    @task
-    def email(self):
-        self.client.get(get_relative_url('sso:email'))
-
 
 class RegularUserSSO(HttpLocust):
     host = settings.DIRECTORY_SSO_URL

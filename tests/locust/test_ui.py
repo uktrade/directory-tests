@@ -19,10 +19,6 @@ class PublicPagesUI(TaskSet):
         self.client.get(get_relative_url('ui:sorry'))
 
     @task
-    def terms_conditions(self):
-        self.client.get(get_relative_url('ui:terms'))
-
-    @task
     def confirm_company_email(self):
         # This checks only the case when an invalid code is given
         self.client.get(get_relative_url('ui:confirm_email'))

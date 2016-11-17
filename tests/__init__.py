@@ -17,7 +17,6 @@ urls = {
     'sso:password_change': 'accounts/password/change/',
     'sso:password_set': 'accounts/password/set/',
     'sso:password_reset': 'accounts/password/reset/',
-    'sso:email': 'accounts/email/',
     'sso:email_confirm': 'accounts/confirm-email/',
     'sso:inactive': 'accounts/inactive/',
     'sso:health': 'api/v1/',
@@ -26,7 +25,6 @@ urls = {
     'ui:landing': '',
     'ui:register': 'register',
     'ui:sorry': 'sorry',
-    'ui:terms': 'terms_and_conditions',
     'ui:confirm_email': 'confirm-company-email',
     # API
     'api:docs': 'docs/',
