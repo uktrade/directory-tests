@@ -10,6 +10,8 @@
 
 [Docker Compose >= 1.8](https://docs.docker.com/compose/install/)
 
+Python2 (Locust doesn't work with 3 yet)
+
 ## Local installation
 
     $ git clone https://github.com/uktrade/directory-tests
@@ -17,7 +19,7 @@
     $ make
 
 ## Running
-Tests can be run either against locally provisioned environment or any other one, as long as ``DIRECTORY_TESTS_DIRECTORY_API_URL`` and ``DIRECTORY_TESTS_DIRECTORY_UI_URL`` environment variables are set.
+Tests can be run either against locally provisioned environment or any other one, as long as ``DIRECTORY_TESTS_DIRECTORY_API_URL``, ``DIRECTORY_TESTS_DIRECTORY_SSO_URL``, ``DIRECTORY_TESTS_DIRECTORY_BUYER_UI_URL`` and ``DIRECTORY_TESTS_DIRECTORY_SUPPLIER_UI_URL`` environment variables are set.
 
 ## Running load tests
 
@@ -39,7 +41,7 @@ The env variables you are likely to need to change (please see the makefile - th
 - ``LOCUST_NUM_CLIENTS`` The number of clients per second you would like to test. IMPORTANT: You need to set this to 3 times what you actually want as this is divided equally between 3 servers!
 - ``LOCUST_HATCH_RATE`` How the load will grow when you leave the tests running. Presuming you want to start hammering the servers at full load straight away, this needs to be equal to ``LOCUST_NUM_CLIENTS``
 - ``SSO_USER_ID`` The sso id of a user that exists on the api site you're testing.
-- ``DIRECTORY_API_URL``, ``DIRECTORY_SSO_URL``, ``DIRECTORY_UI_URL`` The urls you want to load test.
+- ``DIRECTORY_API_URL``, ``DIRECTORY_SSO_URL``, ``DIRECTORY_BUYER_UI_URL``, ``DIRECTORY_SUPPLIER_UI_URL`` The urls you want to load test.
 
 You probably won't need to change these but you may also set:
 
@@ -52,7 +54,7 @@ Requires ``AWS_ACCESS_KEY_ID`` and ``AWS_SECRET_ACCESS_KEY`` environment variabl
     $ make
 
 ### Run against any environment
-Requires just ``DIRECTORY_TESTS_DIRECTORY_API_URL`` and ``DIRECTORY_TESTS_DIRECTORY_UI_URL`` environment variables to be set.
+Requires just ``DIRECTORY_TESTS_DIRECTORY_API_URL``, ``DIRECTORY_TESTS_DIRECTORY_SSO_URL``, ``DIRECTORY_TESTS_DIRECTORY_SUPPLIER_URL`` and ``DIRECTORY_TESTS_DIRECTORY_BUYER_UI_URL`` environment variables to be set.
 
     $ make docker_run
 
@@ -67,8 +69,8 @@ Requires just ``DIRECTORY_TESTS_DIRECTORY_API_URL`` and ``DIRECTORY_TESTS_DIRECT
 | Host environment variable | Docker environment variable  |
 | ------------- | ------------- |
 | DIRECTORY_TESTS_DIRECTORY_API_URL | DIRECTORY_API_URL |
-| DIRECTORY_TESTS_DIRECTORY_UI_URL | DIRECTORY_UI_URL |
-| DIRECTORY_TESTS_DIRECTORY_UI_LOAD_URL | DIRECTORY_UI_LOAD_URL |
+| DIRECTORY_TESTS_DIRECTORY_BUYER_UI_URL | DIRECTORY_BUYER_UI_URL |
+| DIRECTORY_TESTS_DIRECTORY_SUPPLIER_UI_URL | DIRECTORY_SUPPLIER_UI_URL |
 | DIRECTORY_TESTS_LOCUST_TIMEOUT | LOCUST_TIMEOUT |
 | DIRECTORY_TESTS_LOCUST_NUM_CLIENTS | LOCUST_NUM_CLIENTS |
 | DIRECTORY_TESTS_LOCUST_HATCH_RATE | LOCUST_HATCH_RATE |

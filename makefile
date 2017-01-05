@@ -30,9 +30,10 @@ DOCKER_COMPOSE_CREATE_ENVS_LOCAL := ./docker/create_envs.sh
 DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL := docker-compose -f docker-compose.yml -f docker-compose-local.yml rm -f && docker-compose -f docker-compose.yml -f docker-compose-local.yml pull
 
 SET_LOCAL_LOCUST_ENV_VARS := \
-	export DIRECTORY_API_URL=http://www.api.dev.playground.directory.uktrade.io/; \
-	export DIRECTORY_SSO_URL=http://www.sso.dev.playground.directory.uktrade.io/; \
-	export DIRECTORY_UI_URL=http://www.dev.playground.directory.uktrade.io/; \
+	export DIRECTORY_API_URL=https://directory-api-dev.herokuapp.com/; \
+	export DIRECTORY_SSO_URL=http://www.dev.sso.uktrade.io/; \
+	export DIRECTORY_BUYER_UI_URL=http://www.dev.buyer.directory.uktrade.io/; \
+	export DIRECTORY_SUPPLIER_UI_URL=http://www.dev.supplier.directory.uktrade.io/; \
 	export LOCUST_NUM_CLIENTS=5; \
 	export LOCUST_HATCH_RATE=5; \
 	export SSO_USER_ID=120
@@ -46,7 +47,8 @@ SET_LOCAL_LOCUST_PROPER_LOAD := \
 SET_LOCAL_PYTEST_ENV_VARS := \
 	export DIRECTORY_API_URL=http://directory_api_webserver:8000/; \
 	export DIRECTORY_SSO_URL=http://sso.trade.great.docker:8003/; \
-	export DIRECTORY_UI_URL=http://find-a-buyer.trade.great.docker:8001/; \
+	export DIRECTORY_BUYER_UI_URL=http://find-a-buyer.trade.great.docker:8001/; \
+	export DIRECTORY_SUPPLIER_UI_URL=http://www.dev.supplier.directory.uktrade.io/; \
 	export SSO_USER_ID=120
 
 
@@ -124,7 +126,8 @@ DOCKER_SET_DIRECTORY_UI_ENV_VARS := \
 DOCKER_SET_DIRECTORY_TESTS_ENV_VARS := \
 	export DIRECTORY_TESTS_DIRECTORY_API_URL=http://directory_api_webserver:8000; \
 	export DIRECTORY_TESTS_DIRECTORY_SSO_URL=http://sso.trade.great.docker:8003/; \
-	export DIRECTORY_TESTS_DIRECTORY_UI_URL=http://find-a-buyer.trade.great.docker:8001; \
+	export DIRECTORY_TESTS_DIRECTORY_BUYER_UI_URL=http://find-a-buyer.trade.great.docker:8001; \
+	export DIRECTORY_TESTS_DIRECTORY_SUPPLIER_UI_URL=http://www.dev.supplier.directory.uktrade.io/; \
 	export DIRECTORY_TESTS_LOCUST_HATCH_RATE=150; \
 	export DIRECTORY_TESTS_LOCUST_NUM_CLIENTS=150; \
 	export DIRECTORY_TESTS_DB_NAME=directory_api_test,sso_test; \
