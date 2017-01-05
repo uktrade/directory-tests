@@ -46,7 +46,7 @@ SET_LOCAL_LOCUST_PROPER_LOAD := \
 # TODO: set these to docker network names when docker works fully
 SET_LOCAL_PYTEST_ENV_VARS := \
 	export DIRECTORY_API_URL=http://directory_api_webserver:8000/; \
-	export DIRECTORY_SSO_URL=http://sso.trade.great.docker:8003/; \
+	export DIRECTORY_SSO_URL=http://www.dev.sso.uktrade.io/; \
 	export DIRECTORY_BUYER_UI_URL=http://find-a-buyer.trade.great.docker:8001/; \
 	export DIRECTORY_SUPPLIER_UI_URL=http://www.dev.supplier.directory.uktrade.io/; \
 	export SSO_USER_ID=120
@@ -112,10 +112,10 @@ DOCKER_SET_DIRECTORY_UI_ENV_VARS := \
 	export DIRECTORY_UI_API_CLIENT_KEY=debug; \
 	export DIRECTORY_UI_API_CLIENT_BASE_URL=http://directory_api_webserver:8000; \
 	export DIRECTORY_UI_SSO_API_CLIENT_KEY=debug; \
-	export DIRECTORY_UI_SSO_API_CLIENT_BASE_URL=http://sso.trade.great.docker:8003/api/v1/; \
-	export DIRECTORY_UI_SSO_LOGIN_URL=http://sso.trade.great.docker:8003/accounts/login/; \
-	export DIRECTORY_UI_SSO_LOGOUT_URL=http://sso.trade.great.docker:8003/accounts/logout/?next=http://find-a-buyer.trade.great.docker:8001; \
-	export DIRECTORY_UI_SSO_SIGNUP_URL=http://sso.trade.great.docker:8003/accounts/signup/; \
+	export DIRECTORY_UI_SSO_API_CLIENT_BASE_URL=http://www.dev.sso.uktrade.io/api/v1/; \
+	export DIRECTORY_UI_SSO_LOGIN_URL=http://www.dev.sso.uktrade.io/accounts/login/; \
+	export DIRECTORY_UI_SSO_LOGOUT_URL=http://www.dev.sso.uktrade.io/accounts/logout/?next=http://find-a-buyer.trade.great.docker:8001; \
+	export DIRECTORY_UI_SSO_SIGNUP_URL=http://www.dev.sso.uktrade.io/accounts/signup/; \
 	export DIRECTORY_UI_SSO_REDIRECT_FIELD_NAME=next; \
 	export DIRECTORY_UI_SSO_SESSION_COOKIE=debug_sso_session_cookie; \
 	export DIRECTORY_UI_PORT=8001; \
@@ -125,7 +125,7 @@ DOCKER_SET_DIRECTORY_UI_ENV_VARS := \
 
 DOCKER_SET_DIRECTORY_TESTS_ENV_VARS := \
 	export DIRECTORY_TESTS_DIRECTORY_API_URL=http://directory_api_webserver:8000; \
-	export DIRECTORY_TESTS_DIRECTORY_SSO_URL=http://sso.trade.great.docker:8003/; \
+	export DIRECTORY_TESTS_DIRECTORY_SSO_URL=http://www.dev.sso.uktrade.io/; \
 	export DIRECTORY_TESTS_DIRECTORY_BUYER_UI_URL=http://find-a-buyer.trade.great.docker:8001; \
 	export DIRECTORY_TESTS_DIRECTORY_SUPPLIER_UI_URL=http://www.dev.supplier.directory.uktrade.io/; \
 	export DIRECTORY_TESTS_LOCUST_HATCH_RATE=150; \
