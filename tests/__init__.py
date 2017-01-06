@@ -8,7 +8,7 @@ from tests import settings
 
 join_api = partial(urljoin, settings.DIRECTORY_API_URL)
 join_sso = partial(urljoin, settings.DIRECTORY_SSO_URL)
-join_ui = partial(urljoin, settings.DIRECTORY_UI_URL)
+join_ui = partial(urljoin, settings.DIRECTORY_UI_BUYER_URL)
 urls = {
     # SSO
     'sso:login': 'accounts/login/',

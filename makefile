@@ -30,9 +30,10 @@ DOCKER_COMPOSE_CREATE_ENVS_LOCAL := ./docker/create_envs.sh
 DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL := docker-compose -f docker-compose.yml -f docker-compose-local.yml rm -f && docker-compose -f docker-compose.yml -f docker-compose-local.yml pull
 
 SET_LOCAL_LOCUST_ENV_VARS := \
-	export DIRECTORY_API_URL=http://www.api.dev.playground.directory.uktrade.io/; \
-	export DIRECTORY_SSO_URL=http://www.sso.dev.playground.directory.uktrade.io/; \
-	export DIRECTORY_UI_URL=http://www.dev.playground.directory.uktrade.io/; \
+	export DIRECTORY_API_URL=http://directory-api-dev.herokuapp.com/; \
+	export DIRECTORY_SSO_URL=http://dev.sso.directory.uktrade.io/; \
+	export DIRECTORY_UI_BUYER_URL=http://dev.buyer.directory.uktrade.io/; \
+	export DIRECTORY_UI_SUPPLIER_URL=http://dev.supplier.directory.uktrade.io/; \
 	export LOCUST_NUM_CLIENTS=5; \
 	export LOCUST_HATCH_RATE=5; \
 	export SSO_USER_ID=120
@@ -46,7 +47,8 @@ SET_LOCAL_LOCUST_PROPER_LOAD := \
 SET_LOCAL_PYTEST_ENV_VARS := \
 	export DIRECTORY_API_URL=http://directory_api_webserver:8000/; \
 	export DIRECTORY_SSO_URL=http://sso.trade.great.docker:8003/; \
-	export DIRECTORY_UI_URL=http://find-a-buyer.trade.great.docker:8001/; \
+	export DIRECTORY_UI_BUYER_URL=http://find-a-buyer.export.great.docker:8001/; \
+	export DIRECTORY_UI_SUPPLIER_URL=http://trade.great.docker:8002; \
 	export SSO_USER_ID=120
 
 
@@ -83,72 +85,102 @@ docker_remove_all:
 	$(DOCKER_REMOVE_ALL)
 
 DOCKER_SET_DIRECTORY_API_ENV_VARS := \
-	export DIRECTORY_API_AWS_ACCESS_KEY_ID=debug; \
-	export DIRECTORY_API_AWS_SECRET_ACCESS_KEY=debug; \
-	export DIRECTORY_API_AWS_STORAGE_BUCKET_NAME=debug; \
-	export DIRECTORY_API_COMPANIES_HOUSE_API_KEY=k_yNNwvPVA5cGyKDsmvQynJ-xUqklr-dVAECYzKY; \
-	export DIRECTORY_API_COMPANY_EMAIL_CONFIRMATION_FROM=debug; \
-	export DIRECTORY_API_COMPANY_EMAIL_CONFIRMATION_SUBJECT=debug; \
-	export DIRECTORY_API_COMPANY_EMAIL_CONFIRMATION_URL=debug ;\
-	export DIRECTORY_API_DATABASE_URL=postgres://test:test@postgres:5432/directory_api_test; \
-	export DIRECTORY_API_DEBUG=true; \
-	export DIRECTORY_API_DEFAULT_FROM_EMAIL=debug; \
-	export DIRECTORY_API_EMAIL_HOST=debug; \
-	export DIRECTORY_API_EMAIL_HOST_PASSWORD=debug; \
-	export DIRECTORY_API_EMAIL_HOST_USER=debug; \
-	export DIRECTORY_API_EMAIL_PORT=debug; \
-	export DIRECTORY_API_GOV_NOTIFY_API_KEY=debug; \
-	export DIRECTORY_API_GOV_NOTIFY_SERVICE_ID=debug; \
-	export DIRECTORY_API_GOV_NOTIFY_SERVICE_VERIFICATION_TEMPLATE_NAME=1; \
 	export DIRECTORY_API_PORT=8000; \
+	export DIRECTORY_API_DEBUG=true; \
 	export DIRECTORY_API_SECRET_KEY=debug; \
+	export DIRECTORY_API_UI_SECRET=debug; \
+	export DIRECTORY_API_POSTGRES_USER=debug; \
+	export DIRECTORY_API_POSTGRES_PASSWORD=debug; \
+	export DIRECTORY_API_POSTGRES_DB=directory_api_debug; \
 	export DIRECTORY_API_SQS_ENROLMENT_QUEUE_NAME=debug; \
 	export DIRECTORY_API_SQS_INVALID_ENROLMENT_QUEUE_NAME=debug; \
-	export DIRECTORY_API_UI_SECRET=debug
+	export DIRECTORY_API_DATABASE_URL=postgres://debug:debug@postgres:5432/directory_api_debug; \
+	export DIRECTORY_API_COMPANIES_HOUSE_API_KEY=debug; \
+	export DIRECTORY_API_GOV_NOTIFY_SERVICE_ID=debug; \
+	export DIRECTORY_API_GOV_NOTIFY_API_KEY=debug; \
+	export DIRECTORY_API_GOV_NOTIFY_SERVICE_VERIFICATION_TEMPLATE_NAME=1; \
+	export DIRECTORY_API_EMAIL_HOST=debug; \
+	export DIRECTORY_API_EMAIL_PORT=debug; \
+	export DIRECTORY_API_EMAIL_HOST_USER=debug; \
+	export DIRECTORY_API_EMAIL_HOST_PASSWORD=debug; \
+	export DIRECTORY_API_DEFAULT_FROM_EMAIL=debug; \
+	export DIRECTORY_API_COMPANY_EMAIL_CONFIRMATION_URL=debug ;\
+	export DIRECTORY_API_COMPANY_EMAIL_CONFIRMATION_FROM=debug; \
+	export DIRECTORY_API_COMPANY_EMAIL_CONFIRMATION_SUBJECT=debug; \
+	export DIRECTORY_API_AWS_STORAGE_BUCKET_NAME=debug; \
+	export DIRECTORY_API_SESSION_COOKIE_DOMAIN=.great.docker; \
+	export DIRECTORY_API_CSRF_COOKIE_SECURE=false; \
+	export DIRECTORY_API_SESSION_COOKIE_SECURE=false; \
+	export DIRECTORY_API_GECKO_API_KEY=gecko; \
+	export DIRECTORY_API_STANNP_API_KEY=debug; \
+	export DIRECTORY_API_STANNP_VERIFICATION_LETTER_TEMPLATE_ID=debug; \
+	export DIRECTORY_API_STANNP_TEST_MODE=true
 
-DOCKER_SET_DIRECTORY_UI_ENV_VARS := \
-	export DIRECTORY_UI_API_CLIENT_KEY=debug; \
-	export DIRECTORY_UI_API_CLIENT_BASE_URL=http://directory_api_webserver:8000; \
-	export DIRECTORY_UI_SSO_API_CLIENT_KEY=debug; \
-	export DIRECTORY_UI_SSO_API_CLIENT_BASE_URL=http://sso.trade.great.docker:8003/api/v1/; \
-	export DIRECTORY_UI_SSO_LOGIN_URL=http://sso.trade.great.docker:8003/accounts/login/; \
-	export DIRECTORY_UI_SSO_LOGOUT_URL=http://sso.trade.great.docker:8003/accounts/logout/?next=http://find-a-buyer.trade.great.docker:8001; \
-	export DIRECTORY_UI_SSO_SIGNUP_URL=http://sso.trade.great.docker:8003/accounts/signup/; \
-	export DIRECTORY_UI_SSO_REDIRECT_FIELD_NAME=next; \
-	export DIRECTORY_UI_SSO_SESSION_COOKIE=debug_sso_session_cookie; \
-	export DIRECTORY_UI_PORT=8001; \
-	export DIRECTORY_UI_SECRET_KEY=debug; \
-	export DIRECTORY_UI_DEBUG=true; \
-	export DIRECTORY_UI_COMPANIES_HOUSE_SEARCH_URL=https://beta.companieshouse.gov.uk
+DOCKER_SET_DIRECTORY_UI_BUYER_ENV_VARS := \
+	export DIRECTORY_UI_BUYER_API_CLIENT_KEY=debug; \
+	export DIRECTORY_UI_BUYER_API_CLIENT_BASE_URL=http://directory_api_webserver:8000; \
+	export DIRECTORY_UI_BUYER_SSO_API_CLIENT_KEY=debug; \
+	export DIRECTORY_UI_BUYER_SSO_API_CLIENT_BASE_URL=http://sso.trade.great.docker:8003/api/v1/; \
+	export DIRECTORY_UI_BUYER_SSO_LOGIN_URL=http://sso.trade.great.docker:8003/accounts/login/; \
+	export DIRECTORY_UI_BUYER_SSO_LOGOUT_URL=http://sso.trade.great.docker:8003/accounts/logout/?next=http://find-a-buyer.export.great.docker:8001; \
+	export DIRECTORY_UI_BUYER_SSO_SIGNUP_URL=http://sso.trade.great.docker:8003/accounts/signup/; \
+	export DIRECTORY_UI_BUYER_SSO_REDIRECT_FIELD_NAME=next; \
+	export DIRECTORY_UI_BUYER_SSO_SESSION_COOKIE=debug_sso_session_cookie; \
+	export DIRECTORY_UI_BUYER_PORT=8001; \
+	export DIRECTORY_UI_BUYER_SECRET_KEY=debug; \
+	export DIRECTORY_UI_BUYER_DEBUG=true; \
+	export DIRECTORY_UI_BUYER_COMPANIES_HOUSE_SEARCH_URL=https://beta.companieshouse.gov.uk; \
+	export DIRECTORY_UI_BUYER_FEATURE_PUBLIC_PROFILES_ENABLED=true; \
+	export DIRECTORY_UI_BUYER_SUPPLIER_CASE_STUDY_URL=http://trade.great.docker:8002/company/case-study/view/{id}; \
+	export DIRECTORY_UI_BUYER_SUPPLIER_PROFILE_LIST_URL=http://trade.great.docker:8002/suppliers?sectors={sectors}
 
-DOCKER_SET_DIRECTORY_TESTS_ENV_VARS := \
-	export DIRECTORY_TESTS_DIRECTORY_API_URL=http://directory_api_webserver:8000; \
-	export DIRECTORY_TESTS_DIRECTORY_SSO_URL=http://sso.trade.great.docker:8003/; \
-	export DIRECTORY_TESTS_DIRECTORY_UI_URL=http://find-a-buyer.trade.great.docker:8001; \
-	export DIRECTORY_TESTS_LOCUST_HATCH_RATE=150; \
-	export DIRECTORY_TESTS_LOCUST_NUM_CLIENTS=150; \
-	export DIRECTORY_TESTS_DB_NAME=directory_api_test,sso_test; \
-	export DIRECTORY_TESTS_DB_PASS=test; \
-	export DIRECTORY_TESTS_DB_USER=test; \
-	export DIRECTORY_TESTS_API_CLIENT_KEY=$$API_CLIENT_KEY
+DOCKER_SET_DIRECTORY_UI_SUPPLIER_ENV_VARS := \
+	export DIRECTORY_UI_SUPPLIER_API_CLIENT_KEY=debug; \
+	export DIRECTORY_UI_SUPPLIER_API_CLIENT_BASE_URL=http://directory_api_webserver:8000; \
+	export DIRECTORY_UI_SUPPLIER_PORT=8002; \
+	export DIRECTORY_UI_SUPPLIER_SECRET_KEY=debug; \
+	export DIRECTORY_UI_SUPPLIER_DEBUG=true
+
+DOCKER_SET_DIRECTORY_SSO_PROXY_ENV_VARS := \
+	export SSO_PROXY_PORT=8004; \
+	export SSO_PROXY_DEBUG=true; \
+	export SSO_PROXY_SIGNATURE_SECRET=proxy_signature_debug; \
+	export SSO_PROXY_SECRET_KEY=debug; \
+	export SSO_PROXY_SSO_UPSTREAM=http://directory_sso_webserver:8003
 
 DOCKER_SET_DIRECTORY_SSO_ENV_VARS := \
 	export SSO_PORT=8003; \
 	export SSO_DEBUG=true; \
 	export SSO_SECRET_KEY=debug; \
-	export SSO_API_SECRET=debug; \
-	export SSO_DATABASE_URL=postgres://test:test@postgres:5432/sso_test; \
-	export SSO_SESSION_COOKIE_DOMAIN=.trade.great.docker; \
+	export SSO_API_SIGNATURE_SECRET=api_signature_debug; \
+	export SSO_PROXY_SIGNATURE_SECRET=proxy_signature_debug; \
+	export SSO_POSTGRES_USER=debug; \
+	export SSO_POSTGRES_PASSWORD=debug; \
+	export SSO_POSTGRES_DB=sso_debug; \
+	export SSO_DATABASE_URL=postgres://debug:debug@postgres:5432/sso_debug; \
+	export SSO_SESSION_COOKIE_DOMAIN=.great.docker; \
 	export SSO_SSO_SESSION_COOKIE=debug_sso_session_cookie; \
+	export SSO_SSO_SESSION_COOKIE_SECURE=false; \
 	export SSO_EMAIL_HOST=debug; \
 	export SSO_EMAIL_PORT=debug; \
 	export SSO_EMAIL_HOST_USER=debug; \
 	export SSO_EMAIL_HOST_PASSWORD=debug; \
 	export SSO_DEFAULT_FROM_EMAIL=debug; \
-	export SSO_LOGOUT_REDIRECT_URL=http://find-a-buyer.trade.great.docker:8001; \
+	export SSO_LOGOUT_REDIRECT_URL=http://find-a-buyer.export.great.docker:8001; \
 	export SSO_REDIRECT_FIELD_NAME=next; \
-	export SSO_ALLOWED_REDIRECT_DOMAINS=example.com; \
-	export SSO_SSO_SESSION_COOKIE_SECURE=false
+	export SSO_ALLOWED_REDIRECT_DOMAINS=gov.uk
+
+DOCKER_SET_DIRECTORY_TESTS_ENV_VARS := \
+	export DIRECTORY_TESTS_DIRECTORY_API_URL=http://directory_api_webserver:8000; \
+	export DIRECTORY_TESTS_DIRECTORY_SSO_URL=http://sso.trade.great.docker:8003/; \
+	export DIRECTORY_TESTS_DIRECTORY_UI_BUYER_URL=http://find-a-buyer.export.great.docker:8001; \
+	export DIRECTORY_TESTS_DIRECTORY_UI_SUPPLIER_URL=http://trade.great.docker:8002; \
+	export DIRECTORY_TESTS_LOCUST_HATCH_RATE=150; \
+	export DIRECTORY_TESTS_LOCUST_NUM_CLIENTS=150; \
+	export DIRECTORY_TESTS_DB_NAME=directory_api_debug,sso_debug; \
+	export DIRECTORY_TESTS_DB_PASS=debug; \
+	export DIRECTORY_TESTS_DB_USER=debug; \
+	export DIRECTORY_TESTS_API_CLIENT_KEY=debug
 
 docker_run: docker_remove_all
 	$(DOCKER_SET_DIRECTORY_TESTS_ENV_VARS) && \
@@ -160,7 +192,9 @@ docker_run: docker_remove_all
 docker_run_local: docker_remove_all
 	$(DOCKER_SET_DIRECTORY_TESTS_ENV_VARS) && \
 	$(DOCKER_SET_DIRECTORY_API_ENV_VARS) && \
-	$(DOCKER_SET_DIRECTORY_UI_ENV_VARS) && \
+	$(DOCKER_SET_DIRECTORY_UI_BUYER_ENV_VARS) && \
+	$(DOCKER_SET_DIRECTORY_UI_SUPPLIER_ENV_VARS) && \
+	$(DOCKER_SET_DIRECTORY_SSO_PROXY_ENV_VARS) && \
 	$(DOCKER_SET_DIRECTORY_SSO_ENV_VARS) && \
 	$(DOCKER_COMPOSE_CREATE_ENVS_LOCAL) && \
 	$(DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
@@ -170,7 +204,9 @@ docker_run_local: docker_remove_all
 docker_shell: docker_remove_all
 	$(DOCKER_SET_DIRECTORY_TESTS_ENV_VARS) && \
 	$(DOCKER_SET_DIRECTORY_API_ENV_VARS) && \
-	$(DOCKER_SET_DIRECTORY_UI_ENV_VARS) && \
+	$(DOCKER_SET_DIRECTORY_UI_BUYER_ENV_VARS) && \
+	$(DOCKER_SET_DIRECTORY_UI_SUPPLIER_ENV_VARS) && \
+	$(DOCKER_SET_DIRECTORY_SSO_PROXY_ENV_VARS) && \
 	$(DOCKER_SET_DIRECTORY_SSO_ENV_VARS) && \
 	$(DOCKER_COMPOSE_CREATE_ENVS_LOCAL) && \
 	$(DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
