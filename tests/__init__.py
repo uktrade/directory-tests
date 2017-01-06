@@ -8,8 +8,8 @@ from tests import settings
 
 join_api = partial(urljoin, settings.DIRECTORY_API_URL)
 join_sso = partial(urljoin, settings.DIRECTORY_SSO_URL)
-join_buyer_ui = partial(urljoin, settings.DIRECTORY_BUYER_UI_URL)
-join_supplier_ui = partial(urljoin, settings.DIRECTORY_SUPPLIER_UI_URL)
+join_ui_buyer = partial(urljoin, settings.DIRECTORY_BUYER_UI_URL)
+join_ui_supplier = partial(urljoin, settings.DIRECTORY_SUPPLIER_UI_URL)
 urls = {
     # SSO
     'sso:login': 'accounts/login/',
@@ -22,10 +22,24 @@ urls = {
     'sso:inactive': 'accounts/inactive/',
     'sso:health': 'api/v1/',
     'sso:user': 'api/v1/session-user/',
+
     # UI-BUYER
     'ui-buyer:landing': '',
     'ui-buyer:register': 'register',
+
     # UI-SUPPLIER
+    'ui-supplier:landing': '',
+    'ui-supplier:suppliers': 'suppliers',
+    'ui-supplier:sectors': 'sectors',
+    'ui-supplier:sectors-health': 'sectors/health',
+    'ui-supplier:sectors-tech': 'sectors/tech',
+    'ui-supplier:sectors-creative': 'sectors/creative',
+    'ui-supplier:sectors-food': 'sectors/food-and-drink',
+    # NOTE: the URLS below require data from fixtures/supplier.json
+    # to be loaded to the API db of the tested system
+    'ui-supplier:suppliers-detail': 'suppliers/00000001',
+    'ui-supplier:case-study': 'case-study/2147483647',
+
     # API
     'api:docs': 'docs/',
     'api:health': '',
