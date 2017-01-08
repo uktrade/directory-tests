@@ -34,7 +34,7 @@ class AuthPagesBuyerUI(TaskSet):
 
 
 class RegularUserBuyerUI(HttpLocust):
-    host = settings.DIRECTORY_BUYER_UI_URL
+    host = settings.DIRECTORY_UI_BUYER_URL
     task_set = PublicPagesBuyerUI
     stop_timeout = settings.LOCUST_TIMEOUT
     min_wait = settings.LOCUST_MIN_WAIT
@@ -90,7 +90,7 @@ class PublicPagesSupplierUI(TaskSet):
 
 
 class RegularUserSupplierUI(HttpLocust):
-    host = settings.DIRECTORY_SUPPLIER_UI_URL
+    host = settings.DIRECTORY_UI_SUPPLIER_URL
     task_set = PublicPagesSupplierUI
     stop_timeout = settings.LOCUST_TIMEOUT
     min_wait = settings.LOCUST_MIN_WAIT
