@@ -26,6 +26,7 @@ urls = {
     # UI-BUYER
     'ui-buyer:landing': '',
     'ui-buyer:register': 'register',
+    'ui-buyer:company-profile': 'company-profile',
 
     # UI-SUPPLIER
     'ui-supplier:landing': '',

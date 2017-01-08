@@ -1,7 +1,8 @@
 # flake8: noqa
 from tests.locust.test_ui import (
     RegularUserBuyerUI,
-    RegularUserSupplierUI
+    RegularUserSupplierUI,
+    AuthUserBuyerUI
 )
 from tests.locust.test_sso import (
     RegularUserSSO,

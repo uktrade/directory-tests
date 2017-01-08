@@ -15,9 +15,36 @@ class PublicPagesBuyerUI(TaskSet):
         self.client.get(get_relative_url('ui-buyer:register'))
 
 
+class AuthPagesBuyerUI(TaskSet):
+    def on_start(self):
+        data = {
+            "login": 'load_tests@example.com',
+            "password": 'passwordpassword'
+        }
+        login_url = settings.DIRECTORY_SSO_URL + get_relative_url('sso:login')
+        response = self.client.post(login_url, data=data)
+        self.cookie = response.history[0].headers['Set-Cookie']
+
+    @task
+    def company_profile(self):
+        response = self.client.get(
+            get_relative_url('ui-buyer:company-profile'),
+            headers={'Cookie': self.cookie}
+        )
+
+
 class RegularUserBuyerUI(HttpLocust):
     host = settings.DIRECTORY_BUYER_UI_URL
     task_set = PublicPagesBuyerUI
+    stop_timeout = settings.LOCUST_TIMEOUT
+    min_wait = settings.LOCUST_MIN_WAIT
+    max_wait = settings.LOCUST_MAX_WAIT
+    weight = 2
+
+
+class AuthUserBuyerUI(HttpLocust):
+    host = settings.DIRECTORY_BUYER_UI_URL
+    task_set = AuthPagesBuyerUI
     stop_timeout = settings.LOCUST_TIMEOUT
     min_wait = settings.LOCUST_MIN_WAIT
     max_wait = settings.LOCUST_MAX_WAIT
