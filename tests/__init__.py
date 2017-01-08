@@ -8,8 +8,8 @@ from tests import settings
 
 join_api = partial(urljoin, settings.DIRECTORY_API_URL)
 join_sso = partial(urljoin, settings.DIRECTORY_SSO_URL)
-join_buyer_ui = partial(urljoin, settings.DIRECTORY_UI_BUYER_URL)
-join_supplier_ui = partial(urljoin, settings.DIRECTORY_UI_SUPPLIER_URL)
+join_ui_buyer = partial(urljoin, settings.DIRECTORY_UI_BUYER_URL)
+join_ui_supplier = partial(urljoin, settings.DIRECTORY_UI_SUPPLIER_URL)
 urls = {
     # SSO
     'sso:login': 'accounts/login/',
