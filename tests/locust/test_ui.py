@@ -44,7 +44,7 @@ class AuthPagesBuyerUI(TaskSet):
         csrftoken = soup.find_all('input')[0].attrs['value']
 
         # Upload image
-        img = open('tests/fixtures/images/grumpy-cat.jpg', 'rb')
+        img = open('tests/fixtures/images/sphynx-814164_640.jpg', 'rb')
         data={
             'csrfmiddlewaretoken': csrftoken,
             'supplier_company_profile_logo_edit_view-current_step': 'logo'
