@@ -8,7 +8,8 @@ from tests import settings
 
 join_api = partial(urljoin, settings.DIRECTORY_API_URL)
 join_sso = partial(urljoin, settings.DIRECTORY_SSO_URL)
-join_ui = partial(urljoin, settings.DIRECTORY_UI_BUYER_URL)
+join_ui_buyer = partial(urljoin, settings.DIRECTORY_UI_BUYER_URL)
+join_ui_supplier = partial(urljoin, settings.DIRECTORY_UI_SUPPLIER_URL)
 urls = {
     # SSO
     'sso:login': 'accounts/login/',
@@ -21,18 +22,17 @@ urls = {
     'sso:inactive': 'accounts/inactive/',
     'sso:health': 'api/v1/',
     'sso:user': 'api/v1/session-user/',
-    # UI
-    'ui:landing': '',
-    'ui:register': 'register',
-    'ui:sorry': 'sorry',
-    'ui:confirm_email': 'confirm-company-email',
+    # UI-BUYER
+    'ui-buyer:landing': '',
+    'ui-buyer:register': 'register',
+    # UI-SUPPLIER
     # API
     'api:docs': 'docs/',
     'api:health': '',
     'api:enrolment': 'enrolment/',
     'api:sms-verify': 'enrolment/verification-sms/',
-    'api:company': 'user/{sso_id}/company/',
-    'api:user': 'user/{sso_id}/',
+    'api:company': 'supplier/{sso_id}/company/',
+    'api:user': 'supplier/{sso_id}/',
     'api:confirm-company-email': 'enrolment/confirm/',
     'api:validate-company-number': 'validate/company-number/',
     'api:companies-house-profile': 'company/companies-house-profile/',
@@ -56,8 +56,10 @@ def get_absolute_url(name):
     relative_url = get_relative_url(name)
     if name.startswith('sso:'):
         return join_sso(relative_url)
-    elif name.startswith('ui:'):
-        return join_ui(relative_url)
+    elif name.startswith('ui-buyer:'):
+        return join_ui_buyer(relative_url)
+    elif name.startswith('ui-supplier:'):
+        return join_ui_supplier(relative_url)
     elif name.startswith('api:'):
         return join_api(relative_url)
 

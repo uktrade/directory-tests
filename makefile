@@ -46,7 +46,7 @@ SET_LOCAL_LOCUST_PROPER_LOAD := \
 # TODO: set these to docker network names when docker works fully
 SET_LOCAL_PYTEST_ENV_VARS := \
 	export DIRECTORY_API_URL=http://directory_api_webserver:8000/; \
-	export DIRECTORY_SSO_URL=http://sso.trade.great.docker:8003/; \
+	export DIRECTORY_SSO_URL=http://www.dev.sso.uktrade.io/; \
 	export DIRECTORY_UI_BUYER_URL=http://find-a-buyer.export.great.docker:8001/; \
 	export DIRECTORY_UI_SUPPLIER_URL=http://trade.great.docker:8002; \
 	export SSO_USER_ID=120
