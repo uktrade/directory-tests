@@ -27,6 +27,7 @@ urls = {
     'ui-buyer:landing': '',
     'ui-buyer:register': 'register',
     'ui-buyer:company-profile': 'company-profile',
+    'ui-buyer:upload-logo': 'company-profile/edit/logo',
 
     # UI-SUPPLIER
     'ui-supplier:landing': '',

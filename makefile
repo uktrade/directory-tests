@@ -31,7 +31,7 @@ DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL := docker-compose -f docker-compose.yml -f 
 
 SET_LOCAL_LOCUST_ENV_VARS := \
 	export DIRECTORY_API_URL=http://directory-api-dev.herokuapp.com/; \
-	export DIRECTORY_SSO_URL=http://dev.sso.directory.uktrade.io/; \
+	export DIRECTORY_SSO_URL=http://www.dev.sso.uktrade.io/; \
 	export DIRECTORY_UI_BUYER_URL=http://dev.buyer.directory.uktrade.io/; \
 	export DIRECTORY_UI_SUPPLIER_URL=http://dev.supplier.directory.uktrade.io/; \
 	export LOCUST_NUM_CLIENTS=5; \

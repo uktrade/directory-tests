@@ -1,8 +1,9 @@
 from __future__ import absolute_import
 
-from tests import get_relative_url, settings
-
 from locust import HttpLocust, TaskSet, task
+from bs4 import BeautifulSoup
+
+from tests import get_relative_url, settings
 
 
 class PublicPagesBuyerUI(TaskSet):
@@ -21,7 +22,7 @@ class AuthPagesBuyerUI(TaskSet):
             "login": 'load_tests@example.com',
             "password": 'passwordpassword'
         }
-        login_url = settings.DIRECTORY_SSO_URL + get_relative_url('sso:login')
+        login_url = "http://www.dev.sso.uktrade.io/accounts/login/"
         response = self.client.post(login_url, data=data)
         self.cookie = response.history[0].headers['Set-Cookie']
 
@@ -31,6 +32,25 @@ class AuthPagesBuyerUI(TaskSet):
             get_relative_url('ui-buyer:company-profile'),
             headers={'Cookie': self.cookie}
         )
+
+    @task
+    def upload_logo(self):
+        url = get_relative_url('ui-buyer:upload-logo')
+        headers = {'Cookie': self.cookie}
+
+        # Get csrf token
+        response = self.client.get(url, headers=headers)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        csrftoken = soup.find_all('input')[0].attrs['value']
+
+        # Upload image
+        img = open('tests/fixtures/images/grumpy-cat.jpg', 'rb')
+        data={
+            'csrfmiddlewaretoken': csrftoken,
+            'supplier_company_profile_logo_edit_view-current_step': 'logo'
+        }
+        self.client.post(
+            url, data=data, files={'logo-logo': img}, headers=headers)
 
 
 class RegularUserBuyerUI(HttpLocust):
@@ -43,7 +63,7 @@ class RegularUserBuyerUI(HttpLocust):
 
 
 class AuthUserBuyerUI(HttpLocust):
-    host = settings.DIRECTORY_BUYER_UI_URL
+    host = settings.DIRECTORY_UI_BUYER_URL
     task_set = AuthPagesBuyerUI
     stop_timeout = settings.LOCUST_TIMEOUT
     min_wait = settings.LOCUST_MIN_WAIT
