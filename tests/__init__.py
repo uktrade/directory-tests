@@ -46,10 +46,8 @@ urls = {
     'api:docs': 'docs/',
     'api:health': '',
     'api:enrolment': 'enrolment/',
-    'api:sms-verify': 'enrolment/verification-sms/',
     'api:company': 'supplier/{sso_id}/company/',
     'api:user': 'supplier/{sso_id}/',
-    'api:confirm-company-email': 'enrolment/confirm/',
     'api:validate-company-number': 'validate/company-number/',
     'api:companies-house-profile': 'company/companies-house-profile/',
 }
