@@ -33,8 +33,7 @@ class AuthPagesBuyerUI(TaskSet):
             headers={'Cookie': self.cookie}
         )
 
-    @task
-    def upload_logo(self):
+    def _upload_logo(self, path_to_img):
         url = get_relative_url('ui-buyer:upload-logo')
         headers = {'Cookie': self.cookie}
 
@@ -44,13 +43,21 @@ class AuthPagesBuyerUI(TaskSet):
         csrftoken = soup.find_all('input')[0].attrs['value']
 
         # Upload image
-        img = open('tests/fixtures/images/sphynx-814164_640.jpg', 'rb')
+        img = open(path_to_img, 'rb')
         data={
             'csrfmiddlewaretoken': csrftoken,
             'supplier_company_profile_logo_edit_view-current_step': 'logo'
         }
         self.client.post(
             url, data=data, files={'logo-logo': img}, headers=headers)
+
+    @task
+    def upload_logo(self):
+        self._upload_logo('tests/fixtures/images/sphynx-814164_640.jpg')
+
+    @task
+    def upload_large_logo(self):
+        self._upload_logo('tests/fixtures/images/pallas-cat-275930.jpg')
 
 
 class RegularUserBuyerUI(HttpLocust):
