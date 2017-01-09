@@ -21,7 +21,17 @@ Python2 (Locust doesn't work with 3 yet)
 ## Running
 Tests can be run either against locally provisioned environment or any other one, as long as ``DIRECTORY_TESTS_DIRECTORY_API_URL``, ``DIRECTORY_TESTS_DIRECTORY_SSO_URL``, ``DIRECTORY_TESTS_DIRECTORY_UI_BUYER_URL`` and ``DIRECTORY_TESTS_DIRECTORY_UI_SUPPLIER_URL`` environment variables are set.
 
+## Running integration tests
+Before running integration tests the following must be run on SSO:
+
+    python manage.py create_test_users
+
+
 ## Running load tests
+
+Before running the load tests, you will need to run the following command on API and on SSO:
+
+    python manage.py loaddata tests_fixtures/load-tests.json
 
 1) To run tests the way CircleCI does:
 
