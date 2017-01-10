@@ -160,7 +160,8 @@ DOCKER_SET_DIRECTORY_UI_BUYER_ENV_VARS := \
 	export DIRECTORY_UI_BUYER_COMPANIES_HOUSE_SEARCH_URL=https://beta.companieshouse.gov.uk; \
 	export DIRECTORY_UI_BUYER_FEATURE_PUBLIC_PROFILES_ENABLED=true; \
 	export DIRECTORY_UI_BUYER_SUPPLIER_CASE_STUDY_URL=http://trade.great.docker:8002/company/case-study/view/{id}; \
-	export DIRECTORY_UI_BUYER_SUPPLIER_PROFILE_LIST_URL=http://trade.great.docker:8002/suppliers?sectors={sectors}
+	export DIRECTORY_UI_BUYER_SUPPLIER_PROFILE_LIST_URL=http://trade.great.docker:8002/suppliers?sectors={sectors}; \
+	export DIRECTORY_UI_BUYER_SUPPLIER_PROFILE_URL=http://trade.great.docker:8002/suppliers/{number}
 
 DOCKER_SET_DIRECTORY_UI_SUPPLIER_ENV_VARS := \
 	export DIRECTORY_UI_SUPPLIER_API_CLIENT_KEY=debug; \
