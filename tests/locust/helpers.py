@@ -1,5 +1,5 @@
 from hashlib import sha256
-import urlparse
+from urllib.parse import urlsplit
 
 from locust.clients import LocustResponse, HttpSession
 
@@ -35,16 +35,16 @@ class AuthenticatedClient(HttpSession):
             return r
 
     def sign_request(self, api_key, prepared_request):
-        url = urlparse.urlsplit(prepared_request.path_url)
-        path = bytes(url.path)
+        url = urlsplit(prepared_request.path_url)
+        path = bytes(url.path, 'utf8')
         if url.query:
-            path += bytes("?{}".format(url.query))
+            path += bytes("?{}".format(url.query), 'utf8')
 
-        salt = bytes(api_key)
+        salt = bytes(api_key, 'utf8')
         body = prepared_request.body or b""
 
         if isinstance(body, str):
-            body = bytes(body)
+            body = bytes(body, 'utf8')
 
         signature = sha256(path + body + salt).hexdigest()
         prepared_request.headers["X-Signature"] = signature

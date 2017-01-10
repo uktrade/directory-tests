@@ -10,7 +10,7 @@
 
 [Docker Compose >= 1.8](https://docs.docker.com/compose/install/)
 
-Python2 (Locust doesn't work with 3 yet)
+Python3
 
 ## Local installation
 
