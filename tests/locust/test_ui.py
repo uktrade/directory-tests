@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 
-from tests import get_relative_url, settings
+from tests import get_relative_url, get_absolute_url, settings
 
 from locust import HttpLocust, TaskSet, task
 
@@ -21,7 +21,7 @@ class AuthPagesBuyerUI(TaskSet):
             "login": 'load_tests@example.com',
             "password": 'passwordpassword'
         }
-        login_url = settings.DIRECTORY_SSO_URL + get_relative_url('sso:login')
+        login_url = get_absolute_url('sso:login')
         response = self.client.post(login_url, data=data)
         self.cookie = response.history[0].headers['Set-Cookie']
 
@@ -43,7 +43,7 @@ class RegularUserBuyerUI(HttpLocust):
 
 
 class AuthUserBuyerUI(HttpLocust):
-    host = settings.DIRECTORY_BUYER_UI_URL
+    host = settings.DIRECTORY_UI_BUYER_URL
     task_set = AuthPagesBuyerUI
     stop_timeout = settings.LOCUST_TIMEOUT
     min_wait = settings.LOCUST_MIN_WAIT
