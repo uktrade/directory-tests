@@ -52,6 +52,8 @@ You probably won't need to change these but you may also set:
 - ``LOCUST_MIN_WAIT`` Minimum waiting time (I think locust takes microseconds here) between the execution of locust tasks. Currently set to 500
 - ``LOCUST_MAX_WAIT`` Maximum waiting between the execution of locust tasks (currently set to 6000)
 
+NOTE: Images used for testing image uploads have been taken from https://pixabay.com/
+
 ### Provision local environment and run against it
 Requires ``AWS_ACCESS_KEY_ID`` and ``AWS_SECRET_ACCESS_KEY`` environment variables to be set.
 

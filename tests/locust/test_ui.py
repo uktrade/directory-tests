@@ -28,7 +28,7 @@ class AuthPagesBuyerUI(TaskSet):
 
     @task
     def company_profile(self):
-        response = self.client.get(
+        self.client.get(
             get_relative_url('ui-buyer:company-profile'),
             headers={'Cookie': self.cookie}
         )
