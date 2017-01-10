@@ -44,7 +44,7 @@ This runs only the load tests and tests the three servers (UI, SSO & API) with a
 The env variables you are likely to need to change (please see the makefile - they are set in the test_load command) are:
 
 - ``LOCUST_TIMEOUT`` The number of seconds you would like the tests to run for
-- ``LOCUST_NUM_CLIENTS`` The number of clients per second you would like to test. IMPORTANT: You need to set this to 3 times what you actually want as this is divided equally between 3 servers!
+- ``LOCUST_NUM_CLIENTS`` The number of clients per second you would like to test.
 - ``LOCUST_HATCH_RATE`` How the load will grow when you leave the tests running. Presuming you want to start hammering the servers at full load straight away, this needs to be equal to ``LOCUST_NUM_CLIENTS``
 - ``DIRECTORY_API_URL``, ``DIRECTORY_SSO_URL``, ``DIRECTORY_UI_BUYER_URL``, ``DIRECTORY_UI_SUPPLIER_URL`` The urls you want to load test.
 
