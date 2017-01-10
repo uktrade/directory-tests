@@ -3,7 +3,7 @@ from __future__ import absolute_import
 from locust import HttpLocust, TaskSet, task
 from bs4 import BeautifulSoup
 
-from tests import get_relative_url, settings
+from tests import get_relative_url, get_absolute_url, settings
 
 
 class PublicPagesBuyerUI(TaskSet):
@@ -22,7 +22,7 @@ class AuthPagesBuyerUI(TaskSet):
             "login": 'load_tests@example.com',
             "password": 'passwordpassword'
         }
-        login_url = "http://www.dev.sso.uktrade.io/accounts/login/"
+        login_url = get_absolute_url('sso:login')
         response = self.client.post(login_url, data=data)
         self.cookie = response.history[0].headers['Set-Cookie']
 
