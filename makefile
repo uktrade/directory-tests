@@ -10,7 +10,7 @@ requirements:
 FLAKE8 := flake8 .
 LOCUST := \
 	locust \
-		--locustfile ./locustfile.py \
+		--locustfile $$LOCUST_FILE \
 		--clients=$$LOCUST_NUM_CLIENTS \
 		--hatch-rate=$$LOCUST_HATCH_RATE \
 		--no-web \
@@ -36,12 +36,22 @@ SET_LOCAL_LOCUST_ENV_VARS := \
 	export DIRECTORY_UI_SUPPLIER_URL=http://dev.supplier.directory.uktrade.io/; \
 	export LOCUST_NUM_CLIENTS=5; \
 	export LOCUST_HATCH_RATE=5; \
-	export SSO_USER_ID=120
+	export SSO_USER_ID=2147483647; \
+	export LOCUST_FILE=./locustfile.py
 
 SET_LOCAL_LOCUST_PROPER_LOAD := \
-	export LOCUST_NUM_CLIENTS=150; \
-	export LOCUST_HATCH_RATE=150; \
+	export LOCUST_NUM_CLIENTS=50; \
+	export LOCUST_HATCH_RATE=50; \
 	export LOCUST_TIMEOUT=120
+
+SET_LOCAL_LOCUST_BUYER := \
+	export LOCUST_FILE=./locustfile_buyer.py
+
+SET_LOCAL_LOCUST_SUPPLIER := \
+	export LOCUST_FILE=./locustfile_supplier.py
+
+SET_LOCAL_LOCUST_SSO := \
+	export LOCUST_FILE=./locustfile_sso.py
 
 # TODO: set these to docker network names when docker works fully
 SET_LOCAL_PYTEST_ENV_VARS := \
@@ -58,6 +68,24 @@ SET_LOCAL_PYTEST_ENV_VARS := \
 test_load:
 	$(SET_LOCAL_LOCUST_ENV_VARS); \
 	$(SET_LOCAL_LOCUST_PROPER_LOAD); \
+	$(LOCUST)
+
+test_load_buyer:
+	$(SET_LOCAL_LOCUST_ENV_VARS); \
+	$(SET_LOCAL_LOCUST_PROPER_LOAD); \
+	$(SET_LOCAL_LOCUST_BUYER); \
+	$(LOCUST)
+
+test_load_supplier:
+	$(SET_LOCAL_LOCUST_ENV_VARS); \
+	$(SET_LOCAL_LOCUST_PROPER_LOAD); \
+	$(SET_LOCAL_LOCUST_SUPPLIER); \
+	$(LOCUST)
+
+test_load_sso:
+	$(SET_LOCAL_LOCUST_ENV_VARS); \
+	$(SET_LOCAL_LOCUST_PROPER_LOAD); \
+	$(SET_LOCAL_LOCUST_SSO); \
 	$(LOCUST)
 
 # make test is what CircleCI runs. Load tests on CircleCI are run at

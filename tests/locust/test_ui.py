@@ -15,7 +15,7 @@ class PublicPagesBuyerUI(TaskSet):
         self.client.get(get_relative_url('ui-buyer:register'))
 
 
-class AuthPagesBuyerUI(TaskSet):
+class AuthenticatedPagesBuyerUI(TaskSet):
     def on_start(self):
         data = {
             "login": 'load_tests@example.com',
@@ -39,16 +39,14 @@ class RegularUserBuyerUI(HttpLocust):
     stop_timeout = settings.LOCUST_TIMEOUT
     min_wait = settings.LOCUST_MIN_WAIT
     max_wait = settings.LOCUST_MAX_WAIT
-    weight = 2
 
 
-class AuthUserBuyerUI(HttpLocust):
+class AuthenticatedUserBuyerUI(HttpLocust):
     host = settings.DIRECTORY_UI_BUYER_URL
-    task_set = AuthPagesBuyerUI
+    task_set = AuthenticatedPagesBuyerUI
     stop_timeout = settings.LOCUST_TIMEOUT
     min_wait = settings.LOCUST_MIN_WAIT
     max_wait = settings.LOCUST_MAX_WAIT
-    weight = 2
 
 
 class PublicPagesSupplierUI(TaskSet):
@@ -95,4 +93,3 @@ class RegularUserSupplierUI(HttpLocust):
     stop_timeout = settings.LOCUST_TIMEOUT
     min_wait = settings.LOCUST_MIN_WAIT
     max_wait = settings.LOCUST_MAX_WAIT
-    weight = 2

@@ -144,7 +144,6 @@ class RegularUserAPI(HttpLocust):
     stop_timeout = settings.LOCUST_TIMEOUT
     min_wait = settings.LOCUST_MIN_WAIT
     max_wait = settings.LOCUST_MAX_WAIT
-    weight = 1
 
 
 class AuthenticatedUserAPI(AuthedClientMixin, HttpLocust):
@@ -153,4 +152,3 @@ class AuthenticatedUserAPI(AuthedClientMixin, HttpLocust):
     stop_timeout = settings.LOCUST_TIMEOUT
     min_wait = settings.LOCUST_MIN_WAIT
     max_wait = settings.LOCUST_MAX_WAIT
-    weight = 1
