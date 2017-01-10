@@ -32,11 +32,11 @@ urls = {
     # UI-SUPPLIER
     'ui-supplier:landing': '',
     'ui-supplier:suppliers': 'suppliers',
-    'ui-supplier:sectors': 'sectors',
-    'ui-supplier:sectors-health': 'sectors/health',
-    'ui-supplier:sectors-tech': 'sectors/tech',
-    'ui-supplier:sectors-creative': 'sectors/creative',
-    'ui-supplier:sectors-food': 'sectors/food-and-drink',
+    'ui-supplier:industries': 'industries',
+    'ui-supplier:industries-health': 'industries/health',
+    'ui-supplier:industries-tech': 'industries/tech',
+    'ui-supplier:industries-creative': 'industries/creative',
+    'ui-supplier:industries-food': 'industries/food-and-drink',
     # NOTE: the URLS below require data from fixtures/supplier.json
     # to be loaded to the API db of the tested system
     'ui-supplier:suppliers-detail': 'suppliers/00000001',

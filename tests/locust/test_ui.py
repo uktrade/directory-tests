@@ -92,24 +92,24 @@ class PublicPagesSupplierUI(TaskSet):
         self.client.get(get_relative_url('ui-supplier:suppliers-detail'))
 
     @task
-    def sectors(self):
-        self.client.get(get_relative_url('ui-supplier:sectors'))
+    def industries(self):
+        self.client.get(get_relative_url('ui-supplier:industries'))
 
     @task
-    def sectors_health(self):
-        self.client.get(get_relative_url('ui-supplier:sectors-health'))
+    def industries_health(self):
+        self.client.get(get_relative_url('ui-supplier:industries-health'))
 
     @task
-    def sectors_tech(self):
-        self.client.get(get_relative_url('ui-supplier:sectors-tech'))
+    def industries_tech(self):
+        self.client.get(get_relative_url('ui-supplier:industries-tech'))
 
     @task
-    def sectors_creative(self):
-        self.client.get(get_relative_url('ui-supplier:sectors-creative'))
+    def industries_creative(self):
+        self.client.get(get_relative_url('ui-supplier:industries-creative'))
 
     @task
-    def sectors_food(self):
-        self.client.get(get_relative_url('ui-supplier:sectors-food'))
+    def industries_food(self):
+        self.client.get(get_relative_url('ui-supplier:industries-food'))
 
     @task
     def case_study(self):
