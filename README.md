@@ -35,7 +35,9 @@ This will run flake8 linting, integration tests and finally load tests. This doe
 
 2) For real load testing:
 
-    make test_load
+    make test_load_buyer
+    make test_load_supplier
+    make test_load_sso
 
 This runs only the load tests and tests the three servers (UI, SSO & API) with a load of about 50 clients/s on each server and a default of 2 minutes.
 
@@ -44,13 +46,13 @@ The env variables you are likely to need to change (please see the makefile - th
 - ``LOCUST_TIMEOUT`` The number of seconds you would like the tests to run for
 - ``LOCUST_NUM_CLIENTS`` The number of clients per second you would like to test. IMPORTANT: You need to set this to 3 times what you actually want as this is divided equally between 3 servers!
 - ``LOCUST_HATCH_RATE`` How the load will grow when you leave the tests running. Presuming you want to start hammering the servers at full load straight away, this needs to be equal to ``LOCUST_NUM_CLIENTS``
-- ``SSO_USER_ID`` The sso id of a user that exists on the api site you're testing.
 - ``DIRECTORY_API_URL``, ``DIRECTORY_SSO_URL``, ``DIRECTORY_UI_BUYER_URL``, ``DIRECTORY_UI_SUPPLIER_URL`` The urls you want to load test.
 
 You probably won't need to change these but you may also set:
 
 - ``LOCUST_MIN_WAIT`` Minimum waiting time (I think locust takes microseconds here) between the execution of locust tasks. Currently set to 500
 - ``LOCUST_MAX_WAIT`` Maximum waiting between the execution of locust tasks (currently set to 6000)
+- ``SSO_USER_ID`` The sso id of a user that exists on the api site you're testing.
 
 NOTE: Images used for testing image uploads have been taken from https://pixabay.com/
 

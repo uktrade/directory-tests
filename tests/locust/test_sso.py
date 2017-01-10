@@ -65,28 +65,29 @@ class PublicPagesSSO(TaskSet):
     def email_confirm_GET(self):
         self.client.get(get_relative_url('sso:email_confirm'))
 
-
-class AuthenticatedPagesSSO(TaskSet):
-    # This checks only the case that redirection occurs
-
     @task
     def inactive(self):
+        # This checks only that redirection occurs
         self.client.get(get_relative_url('sso:inactive'))
 
     @task
     def logout(self):
+        # This checks only that redirection occurs
         self.client.get(get_relative_url('sso:logout'))
 
     @task
     def password_change(self):
+        # This checks only that redirection occurs
         self.client.get(get_relative_url('sso:password_change'))
 
     @task
     def password_set(self):
+        # This checks only that redirection occurs
         self.client.get(get_relative_url('sso:password_set'))
 
     @task
     def password_reset(self):
+        # This checks only that redirection occurs
         self.client.get(get_relative_url('sso:password_reset'))
 
 
@@ -96,13 +97,3 @@ class RegularUserSSO(HttpLocust):
     stop_timeout = settings.LOCUST_TIMEOUT
     min_wait = settings.LOCUST_MIN_WAIT
     max_wait = settings.LOCUST_MAX_WAIT
-    weight = 1
-
-
-class AuthenticatedUserSSO(HttpLocust):
-    host = settings.DIRECTORY_SSO_URL
-    task_set = AuthenticatedPagesSSO
-    stop_timeout = settings.LOCUST_TIMEOUT
-    min_wait = settings.LOCUST_MIN_WAIT
-    max_wait = settings.LOCUST_MAX_WAIT
-    weight = 1
