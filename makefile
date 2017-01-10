@@ -62,9 +62,9 @@ SET_LOCAL_PYTEST_ENV_VARS := \
 	export SSO_USER_ID=120
 
 
-# make test_load is the command for actual load test running
-# unlike make test, this will run load tests with the proper load
-# we're testing for
+# Runs load tests on all servers. Number of defined clients will be
+# spread across all servers, so you might want to define LOCUST_NUM_CLIENTS
+# differently than for other commands
 test_load:
 	$(SET_LOCAL_LOCUST_ENV_VARS); \
 	$(SET_LOCAL_LOCUST_PROPER_LOAD); \
