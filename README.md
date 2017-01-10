@@ -23,6 +23,10 @@ Tests can be run either against locally provisioned environment or any other one
 
 ## Running load tests
 
+Before running the load tests, you will need to load all the fixtures in tests/fixtures/api-db to the API database. Django's loaddata command should work, for example:
+
+    python manage.py loaddata ../directory-tests/tests/fixtures/api-db/*.json
+
 1) To run tests the way CircleCI does:
 
     make test
