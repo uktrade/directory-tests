@@ -11,7 +11,7 @@ services:
     links: [postgres]
     working_dir: /usr/src/app
     entrypoint: dockerize -wait tcp://postgres:5432 -timeout 120s
-    command: ./docker/cmd-webserver.sh
+    command: ./docker/cmd-integration-test-webserver.sh
     ports: ["8000:8000"]
     env_file: ./docker/directory-api/.env
 

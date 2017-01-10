@@ -27,15 +27,16 @@ urls = {
     'ui-buyer:landing': '',
     'ui-buyer:register': 'register',
     'ui-buyer:company-profile': 'company-profile',
+    'ui-buyer:upload-logo': 'company-profile/edit/logo',
 
     # UI-SUPPLIER
     'ui-supplier:landing': '',
     'ui-supplier:suppliers': 'suppliers',
-    'ui-supplier:sectors': 'sectors',
-    'ui-supplier:sectors-health': 'sectors/health',
-    'ui-supplier:sectors-tech': 'sectors/tech',
-    'ui-supplier:sectors-creative': 'sectors/creative',
-    'ui-supplier:sectors-food': 'sectors/food-and-drink',
+    'ui-supplier:industries': 'industries',
+    'ui-supplier:industries-health': 'industries/health',
+    'ui-supplier:industries-tech': 'industries/tech',
+    'ui-supplier:industries-creative': 'industries/creative',
+    'ui-supplier:industries-food': 'industries/food-and-drink',
     # NOTE: the URLS below require data from fixtures/supplier.json
     # to be loaded to the API db of the tested system
     'ui-supplier:suppliers-detail': 'suppliers/00000001',
@@ -45,10 +46,8 @@ urls = {
     'api:docs': 'docs/',
     'api:health': '',
     'api:enrolment': 'enrolment/',
-    'api:sms-verify': 'enrolment/verification-sms/',
     'api:company': 'supplier/{sso_id}/company/',
     'api:user': 'supplier/{sso_id}/',
-    'api:confirm-company-email': 'enrolment/confirm/',
     'api:validate-company-number': 'validate/company-number/',
     'api:companies-house-profile': 'company/companies-house-profile/',
 }
