@@ -44,7 +44,7 @@ class AuthenticatedPagesBuyerUI(TaskSet):
 
         # Upload image
         img = open(path_to_img, 'rb')
-        data={
+        data = {
             'csrfmiddlewaretoken': csrftoken,
             'supplier_company_profile_logo_edit_view-current_step': 'logo'
         }
