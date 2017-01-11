@@ -57,34 +57,32 @@ class AuthenticatedPagesBuyerUI(TaskSet):
         login_url = get_absolute_url('sso:login')
         response = self.client.post(login_url, data=data)
         try:
-            self.cookie = response.history[0].headers['Set-Cookie']
+            cookie = response.history[0].headers['Set-Cookie']
         except IndexError:
             raise Exception("Login failed!")
+        self.headers = {'Cookie': cookie}
+
+    def _get_csrf_token(self, url):
+        response = self.client.get(url, headers=self.headers)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        return soup.find_all('input')[0].attrs['value']
 
     @task
     def company_profile(self):
         self.client.get(
             get_relative_url('ui-buyer:company-profile'),
-            headers={'Cookie': self.cookie}
+            headers=self.headers
         )
 
     def _upload_logo(self, path_to_img):
         url = get_relative_url('ui-buyer:upload-logo')
-        headers = {'Cookie': self.cookie}
-
-        # Get csrf token
-        response = self.client.get(url, headers=headers)
-        soup = BeautifulSoup(response.content, 'html.parser')
-        csrftoken = soup.find_all('input')[0].attrs['value']
-
-        # Upload image
         img = open(path_to_img, 'rb')
         data = {
-            'csrfmiddlewaretoken': csrftoken,
+            'csrfmiddlewaretoken': self._get_csrf_token(url),
             'supplier_company_profile_logo_edit_view-current_step': 'logo'
         }
         self.client.post(
-            url, data=data, files={'logo-logo': img}, headers=headers)
+            url, data=data, files={'logo-logo': img}, headers=self.headers)
 
     @task
     def upload_logo(self):
@@ -93,6 +91,28 @@ class AuthenticatedPagesBuyerUI(TaskSet):
     @task
     def upload_large_logo(self):
         self._upload_logo('tests/fixtures/images/pallas-cat-275930.jpg')
+
+    @task
+    def confirm_company_address_valid_code(self):
+        url = get_relative_url('ui-buyer:confirm-company-address')
+        step = 'supplier_company_address_verification_view-current_step'
+        data = {
+            'csrfmiddlewaretoken': self._get_csrf_token(url),
+            step: 'address',
+            'address-code': '000000000000',
+        }
+        self.client.post(url, data=data, headers=self.headers)
+
+    @task
+    def confirm_company_address_invalid_code(self):
+        url = get_relative_url('ui-buyer:confirm-company-address')
+        step = 'supplier_company_address_verification_view-current_step'
+        data = {
+            'csrfmiddlewaretoken': self._get_csrf_token(url),
+            step: 'address',
+            'address-code': '1111',
+        }
+        self.client.post(url, data=data, headers=self.headers)
 
 
 class RegularUserBuyerUI(HttpLocust):
