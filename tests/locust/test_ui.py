@@ -219,6 +219,30 @@ class AuthenticatedPagesBuyerUI(TaskSet):
         }
         self.client.post(url, data=data, headers=self.headers)
 
+    @task
+    def edit_company_contact(self):
+        url = get_relative_url('ui-buyer:company-edit-contact')
+        step = 'supplier_contact_edit_view-current_step'
+        data = {
+            'csrfmiddlewaretoken': self._get_csrf_token(url),
+            step: 'contact',
+            'contact-email_full_name': 'Mr Contact',
+            'contact-email_address': 'contact@example.com',
+        }
+        self.client.post(url, data=data, headers=self.headers)
+
+    @task
+    def edit_company_contact_invalid_data(self):
+        url = get_relative_url('ui-buyer:company-edit-contact')
+        step = 'supplier_contact_edit_view-current_step'
+        data = {
+            'csrfmiddlewaretoken': self._get_csrf_token(url),
+            step: 'contact',
+            'contact-email_full_name': '',  # Invalid
+            'contact-email_address': 'contactme@example.com',
+        }
+        self.client.post(url, data=data, headers=self.headers)
+
 
 class RegularUserBuyerUI(HttpLocust):
     host = settings.DIRECTORY_UI_BUYER_URL
