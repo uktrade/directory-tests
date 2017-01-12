@@ -65,7 +65,8 @@ class AuthenticatedPagesBuyerUI(TaskSet):
     def _get_csrf_token(self, url):
         response = self.client.get(url, headers=self.headers)
         soup = BeautifulSoup(response.content, 'html.parser')
-        return soup.find_all('input')[0].attrs['value']
+        csrf_input = soup.find('input', {'name': 'csrfmiddlewaretoken'})
+        return csrf_input.get('value')
 
     @task
     def company_profile(self):
@@ -113,6 +114,47 @@ class AuthenticatedPagesBuyerUI(TaskSet):
             'address-code': '1111',
         }
         self.client.post(url, data=data, headers=self.headers)
+
+    @task
+    def edit_company_address(self):
+        url = get_relative_url('ui-buyer:company-edit-address')
+        response = self.client.get(url, headers=self.headers)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        csrftoken = soup.find('input', {'name': 'csrfmiddlewaretoken'}
+            ).get('value')
+        signature = soup.find('input', {'id': 'id_address-signature'}
+            ).get('value')
+
+        data = {
+            'csrfmiddlewaretoken': csrftoken,
+            'address-signature': signature,
+            'supplier_address_edit_view-current_step': 'address',
+            'address-postal_full_name': 'Mr Tester',
+            'address-address_line_1': '80 Strand',
+            'address-address_line_2': '',
+            'address-locality': 'London',
+            'address-country': '',
+            'address-postal_code': 'WC2R 0RL',
+            'address-po_box': '',
+        }
+        response = self.client.post(url, data=data, headers=self.headers)
+
+    @task
+    def edit_company_address_invalid_data(self):
+        url = get_relative_url('ui-buyer:company-edit-address')
+        data = {
+            'csrfmiddlewaretoken': self._get_csrf_token(url),
+            'address-signature': '',  # Invalid
+            'supplier_address_edit_view-current_step': 'address',
+            'address-postal_full_name': 'Mr Tester',
+            'address-address_line_1': '80 Strand',
+            'address-address_line_2': '',
+            'address-locality': 'London',
+            'address-country': '',
+            'address-postal_code': 'WC2R 0RL',
+            'address-po_box': '',
+        }
+        response = self.client.post(url, data=data, headers=self.headers)
 
 
 class RegularUserBuyerUI(HttpLocust):
