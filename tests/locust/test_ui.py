@@ -243,6 +243,19 @@ class AuthenticatedPagesBuyerUI(TaskSet):
         }
         self.client.post(url, data=data, headers=self.headers)
 
+    @task
+    def edit_company_social_media(self):
+        url = get_relative_url('ui-buyer:company-edit-social-media')
+        step = 'supplier_company_social_links_edit_view-current_step'
+        data = {
+            'csrfmiddlewaretoken': self._get_csrf_token(url),
+            step: 'social',
+            'social-linkedin_url': 'http://linkedin.com',
+            'social-twitter_url': 'http://twitter.com',
+            'social-facebook_url': 'http://facebook.com',
+        }
+        self.client.post(url, data=data, headers=self.headers)
+
 
 class RegularUserBuyerUI(HttpLocust):
     host = settings.DIRECTORY_UI_BUYER_URL
