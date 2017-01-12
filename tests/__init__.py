@@ -31,6 +31,7 @@ urls = {
     'ui-buyer:confirm-company-address': 'confirm-company-address',
     'ui-buyer:company-edit-address': 'company-profile/edit/address',
     'ui-buyer:company-edit-description': 'company-profile/edit/description',
+    'ui-buyer:company-edit-key-facts': 'company-profile/edit/key-facts',
 
     # UI-SUPPLIER
     'ui-supplier:landing': '',

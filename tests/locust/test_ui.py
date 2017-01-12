@@ -180,6 +180,34 @@ class AuthenticatedPagesBuyerUI(TaskSet):
         }
         self.client.post(url, data=data, headers=self.headers)
 
+    @task
+    def edit_company_key_facts(self):
+        url = get_relative_url('ui-buyer:company-edit-key-facts')
+        step = 'supplier_basic_info_edit_view-current_step'
+        data = {
+            'csrfmiddlewaretoken': self._get_csrf_token(url),
+            step: 'basic',
+            'basic-name': 'Mr Tester load test company',
+            'basic-website': 'http://google.com',
+            'basic-keywords': 'load testing',
+            'basic-employees': '51-200',
+        }
+        self.client.post(url, data=data, headers=self.headers)
+
+    @task
+    def edit_company_key_facts_invalid_data(self):
+        url = get_relative_url('ui-buyer:company-edit-key-facts')
+        step = 'supplier_basic_info_edit_view-current_step'
+        data = {
+            'csrfmiddlewaretoken': self._get_csrf_token(url),
+            step: 'basic',
+            'basic-name': '',  # Invalid
+            'basic-website': 'http://google.com',
+            'basic-keywords': 'load testing',
+            'basic-employees': '51-200',
+        }
+        self.client.post(url, data=data, headers=self.headers)
+
 
 class RegularUserBuyerUI(HttpLocust):
     host = settings.DIRECTORY_UI_BUYER_URL
