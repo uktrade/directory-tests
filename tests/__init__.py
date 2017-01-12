@@ -30,6 +30,7 @@ urls = {
     'ui-buyer:upload-logo': 'company-profile/edit/logo',
     'ui-buyer:confirm-company-address': 'confirm-company-address',
     'ui-buyer:company-edit-address': 'company-profile/edit/address',
+    'ui-buyer:company-edit-description': 'company-profile/edit/description',
 
     # UI-SUPPLIER
     'ui-supplier:landing': '',

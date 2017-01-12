@@ -137,7 +137,7 @@ class AuthenticatedPagesBuyerUI(TaskSet):
             'address-postal_code': 'WC2R 0RL',
             'address-po_box': '',
         }
-        response = self.client.post(url, data=data, headers=self.headers)
+        self.client.post(url, data=data, headers=self.headers)
 
     @task
     def edit_company_address_invalid_data(self):
@@ -154,7 +154,31 @@ class AuthenticatedPagesBuyerUI(TaskSet):
             'address-postal_code': 'WC2R 0RL',
             'address-po_box': '',
         }
-        response = self.client.post(url, data=data, headers=self.headers)
+        self.client.post(url, data=data, headers=self.headers)
+
+    @task
+    def edit_company_description(self):
+        url = get_relative_url('ui-buyer:company-edit-description')
+        step = 'supplier_company_description_edit_view-current_step'
+        data = {
+            'csrfmiddlewaretoken': self._get_csrf_token(url),
+            step: 'description',
+            'description-summary': 'Test brief summary',
+            'description-description': 'Test proper description',
+        }
+        self.client.post(url, data=data, headers=self.headers)
+
+    @task
+    def edit_company_description_invalid_data(self):
+        url = get_relative_url('ui-buyer:company-edit-description')
+        step = 'supplier_company_description_edit_view-current_step'
+        data = {
+            'csrfmiddlewaretoken': self._get_csrf_token(url),
+            step: 'description',
+            'description-summary': '',  # Invalid
+            'description-description': 'Test proper description',
+        }
+        self.client.post(url, data=data, headers=self.headers)
 
 
 class RegularUserBuyerUI(HttpLocust):
