@@ -208,6 +208,17 @@ class AuthenticatedPagesBuyerUI(TaskSet):
         }
         self.client.post(url, data=data, headers=self.headers)
 
+    @task
+    def edit_company_sectors(self):
+        url = get_relative_url('ui-buyer:company-edit-sectors')
+        step = 'supplier_classification_edit_view-current_step'
+        data = {
+            'csrfmiddlewaretoken': self._get_csrf_token(url),
+            step: 'classification',
+            'classification-sectors': ['MINING', 'RAILWAYS', 'WATER']
+        }
+        self.client.post(url, data=data, headers=self.headers)
+
 
 class RegularUserBuyerUI(HttpLocust):
     host = settings.DIRECTORY_UI_BUYER_URL

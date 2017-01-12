@@ -32,6 +32,7 @@ urls = {
     'ui-buyer:company-edit-address': 'company-profile/edit/address',
     'ui-buyer:company-edit-description': 'company-profile/edit/description',
     'ui-buyer:company-edit-key-facts': 'company-profile/edit/key-facts',
+    'ui-buyer:company-edit-sectors': 'company-profile/edit/sectors',
 
     # UI-SUPPLIER
     'ui-supplier:landing': '',
