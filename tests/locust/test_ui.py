@@ -279,6 +279,19 @@ class PublicPagesSupplierUI(TaskSet):
         self.client.get(get_relative_url('ui-supplier:landing'))
 
     @task
+    def register_interest(self):
+        data={
+            'email_address': 'test@example.com',
+            'full_name': 'Mr Test',
+            'sector': 'GLOBAL_SPORTS_INFRASTRUCTURE',
+            'terms': True,
+        }
+        self.client.post(
+            get_relative_url('ui-supplier:landing'),
+            data=data
+        )
+
+    @task
     def suppliers(self):
         self.client.get(get_relative_url('ui-supplier:suppliers'))
 
