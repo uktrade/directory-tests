@@ -29,6 +29,12 @@ urls = {
     'ui-buyer:company-profile': 'company-profile',
     'ui-buyer:upload-logo': 'company-profile/edit/logo',
     'ui-buyer:confirm-company-address': 'confirm-company-address',
+    'ui-buyer:company-edit-address': 'company-profile/edit/address',
+    'ui-buyer:company-edit-description': 'company-profile/edit/description',
+    'ui-buyer:company-edit-key-facts': 'company-profile/edit/key-facts',
+    'ui-buyer:company-edit-sectors': 'company-profile/edit/sectors',
+    'ui-buyer:company-edit-contact': 'company-profile/edit/contact',
+    'ui-buyer:company-edit-social-media': 'company-profile/edit/social-media',
 
     # UI-SUPPLIER
     'ui-supplier:landing': '',
@@ -40,7 +46,7 @@ urls = {
     'ui-supplier:industries-food': 'industries/food-and-drink',
     # NOTE: the URLS below require data from fixtures/supplier.json
     # to be loaded to the API db of the tested system
-    'ui-supplier:suppliers-detail': 'suppliers/00000001',
+    'ui-supplier:suppliers-detail': 'suppliers/99999999',
     'ui-supplier:case-study': 'case-study/2147483647',
 
     # API
