@@ -29,6 +29,12 @@ urls = {
     'ui-buyer:company-profile': 'company-profile',
     'ui-buyer:upload-logo': 'company-profile/edit/logo',
     'ui-buyer:confirm-company-address': 'confirm-company-address',
+    'ui-buyer:company-edit-address': 'company-profile/edit/address',
+    'ui-buyer:company-edit-description': 'company-profile/edit/description',
+    'ui-buyer:company-edit-key-facts': 'company-profile/edit/key-facts',
+    'ui-buyer:company-edit-sectors': 'company-profile/edit/sectors',
+    'ui-buyer:company-edit-contact': 'company-profile/edit/contact',
+    'ui-buyer:company-edit-social-media': 'company-profile/edit/social-media',
 
     # UI-SUPPLIER
     'ui-supplier:landing': '',

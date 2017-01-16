@@ -65,7 +65,8 @@ class AuthenticatedPagesBuyerUI(TaskSet):
     def _get_csrf_token(self, url):
         response = self.client.get(url, headers=self.headers)
         soup = BeautifulSoup(response.content, 'html.parser')
-        return soup.find_all('input')[0].attrs['value']
+        csrf_input = soup.find('input', {'name': 'csrfmiddlewaretoken'})
+        return csrf_input.get('value')
 
     @task
     def company_profile(self):
@@ -111,6 +112,147 @@ class AuthenticatedPagesBuyerUI(TaskSet):
             'csrfmiddlewaretoken': self._get_csrf_token(url),
             step: 'address',
             'address-code': '1111',
+        }
+        self.client.post(url, data=data, headers=self.headers)
+
+    @task
+    def edit_company_address(self):
+        url = get_relative_url('ui-buyer:company-edit-address')
+        response = self.client.get(url, headers=self.headers)
+        soup = BeautifulSoup(response.content, 'html.parser')
+        csrftoken = soup.find('input', {'name': 'csrfmiddlewaretoken'}
+            ).get('value')
+        signature = soup.find('input', {'id': 'id_address-signature'}
+            ).get('value')
+
+        data = {
+            'csrfmiddlewaretoken': csrftoken,
+            'address-signature': signature,
+            'supplier_address_edit_view-current_step': 'address',
+            'address-postal_full_name': 'Mr Tester',
+            'address-address_line_1': '80 Strand',
+            'address-address_line_2': '',
+            'address-locality': 'London',
+            'address-country': '',
+            'address-postal_code': 'WC2R 0RL',
+            'address-po_box': '',
+        }
+        self.client.post(url, data=data, headers=self.headers)
+
+    @task
+    def edit_company_address_invalid_data(self):
+        url = get_relative_url('ui-buyer:company-edit-address')
+        data = {
+            'csrfmiddlewaretoken': self._get_csrf_token(url),
+            'address-signature': '',  # Invalid
+            'supplier_address_edit_view-current_step': 'address',
+            'address-postal_full_name': 'Mr Tester',
+            'address-address_line_1': '80 Strand',
+            'address-address_line_2': '',
+            'address-locality': 'London',
+            'address-country': '',
+            'address-postal_code': 'WC2R 0RL',
+            'address-po_box': '',
+        }
+        self.client.post(url, data=data, headers=self.headers)
+
+    @task
+    def edit_company_description(self):
+        url = get_relative_url('ui-buyer:company-edit-description')
+        step = 'supplier_company_description_edit_view-current_step'
+        data = {
+            'csrfmiddlewaretoken': self._get_csrf_token(url),
+            step: 'description',
+            'description-summary': 'Test brief summary',
+            'description-description': 'Test proper description',
+        }
+        self.client.post(url, data=data, headers=self.headers)
+
+    @task
+    def edit_company_description_invalid_data(self):
+        url = get_relative_url('ui-buyer:company-edit-description')
+        step = 'supplier_company_description_edit_view-current_step'
+        data = {
+            'csrfmiddlewaretoken': self._get_csrf_token(url),
+            step: 'description',
+            'description-summary': '',  # Invalid
+            'description-description': 'Test proper description',
+        }
+        self.client.post(url, data=data, headers=self.headers)
+
+    @task
+    def edit_company_key_facts(self):
+        url = get_relative_url('ui-buyer:company-edit-key-facts')
+        step = 'supplier_basic_info_edit_view-current_step'
+        data = {
+            'csrfmiddlewaretoken': self._get_csrf_token(url),
+            step: 'basic',
+            'basic-name': 'Mr Tester load test company',
+            'basic-website': 'http://google.com',
+            'basic-keywords': 'load testing',
+            'basic-employees': '51-200',
+        }
+        self.client.post(url, data=data, headers=self.headers)
+
+    @task
+    def edit_company_key_facts_invalid_data(self):
+        url = get_relative_url('ui-buyer:company-edit-key-facts')
+        step = 'supplier_basic_info_edit_view-current_step'
+        data = {
+            'csrfmiddlewaretoken': self._get_csrf_token(url),
+            step: 'basic',
+            'basic-name': '',  # Invalid
+            'basic-website': 'http://google.com',
+            'basic-keywords': 'load testing',
+            'basic-employees': '51-200',
+        }
+        self.client.post(url, data=data, headers=self.headers)
+
+    @task
+    def edit_company_sectors(self):
+        url = get_relative_url('ui-buyer:company-edit-sectors')
+        step = 'supplier_classification_edit_view-current_step'
+        data = {
+            'csrfmiddlewaretoken': self._get_csrf_token(url),
+            step: 'classification',
+            'classification-sectors': ['MINING', 'RAILWAYS', 'WATER']
+        }
+        self.client.post(url, data=data, headers=self.headers)
+
+    @task
+    def edit_company_contact(self):
+        url = get_relative_url('ui-buyer:company-edit-contact')
+        step = 'supplier_contact_edit_view-current_step'
+        data = {
+            'csrfmiddlewaretoken': self._get_csrf_token(url),
+            step: 'contact',
+            'contact-email_full_name': 'Mr Contact',
+            'contact-email_address': 'contact@example.com',
+        }
+        self.client.post(url, data=data, headers=self.headers)
+
+    @task
+    def edit_company_contact_invalid_data(self):
+        url = get_relative_url('ui-buyer:company-edit-contact')
+        step = 'supplier_contact_edit_view-current_step'
+        data = {
+            'csrfmiddlewaretoken': self._get_csrf_token(url),
+            step: 'contact',
+            'contact-email_full_name': '',  # Invalid
+            'contact-email_address': 'contactme@example.com',
+        }
+        self.client.post(url, data=data, headers=self.headers)
+
+    @task
+    def edit_company_social_media(self):
+        url = get_relative_url('ui-buyer:company-edit-social-media')
+        step = 'supplier_company_social_links_edit_view-current_step'
+        data = {
+            'csrfmiddlewaretoken': self._get_csrf_token(url),
+            step: 'social',
+            'social-linkedin_url': 'http://linkedin.com',
+            'social-twitter_url': 'http://twitter.com',
+            'social-facebook_url': 'http://facebook.com',
         }
         self.client.post(url, data=data, headers=self.headers)
 
