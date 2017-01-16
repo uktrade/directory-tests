@@ -7,7 +7,3 @@ from tests.locust.test_ui import (
 from tests.locust.test_sso import (
     RegularUserSSO,
 )
-from tests.locust.test_api import (
-    RegularUserAPI,
-    AuthenticatedUserAPI
-)
