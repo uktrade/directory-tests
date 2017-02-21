@@ -16,8 +16,15 @@ LOCUST := \
 		--no-web \
 		--only-summary
 
-PYTEST := \
-	pytest tests \
+PYTEST_SELENIUM := \
+	pytest tests/integration \
+		--capture=no \
+		--driver PhantomJS \
+		--driver-path /usr/bin/phantomjs $(pytest_args) \
+		$(pytest_args)
+
+PYTEST_SMOKE := \
+	pytest tests/smoke \
 		--capture=no \
 		--driver PhantomJS \
 		--driver-path /usr/bin/phantomjs $(pytest_args) \
@@ -57,10 +64,16 @@ SET_LOCAL_LOCUST_SSO := \
 SET_LOCAL_PYTEST_ENV_VARS := \
 	export DIRECTORY_API_URL=http://directory_api_webserver:8000/; \
 	export DIRECTORY_SSO_URL=http://www.dev.sso.uktrade.io/; \
-	export DIRECTORY_UI_BUYER_URL=http://find-a-buyer.export.great.docker:8001/; \
-	export DIRECTORY_UI_SUPPLIER_URL=http://trade.great.docker:8002; \
+	export DIRECTORY_UI_BUYER_URL=http://www.dev.buyer.directory.uktrade.io/; \
+	export DIRECTORY_UI_SUPPLIER_URL=http://www.dev.supplier.directory.uktrade.io; \
 	export SSO_USER_ID=120
 
+
+SET_LOCAL_SMOKE_TEST_ENV_VARS := \
+	export API_CLIENT_KEY=debug; \
+	export DIRECTORY_SSO_URL=http://www.dev.sso.uktrade.io/; \
+	export DIRECTORY_UI_BUYER_URL=http://dev.buyer.directory.uktrade.io/; \
+	export DIRECTORY_UI_SUPPLIER_URL=http://dev.supplier.directory.uktrade.io/
 
 # Runs load tests on all servers. Number of defined clients will be
 # spread across all servers, so you might want to define LOCUST_NUM_CLIENTS
@@ -96,10 +109,15 @@ test_load_minimal:
 
 test_integration:
 	$(SET_LOCAL_PYTEST_ENV_VARS); \
-	$(PYTEST)
+	$(PYTEST_SELENIUM)
 
 test_linting:
 	$(FLAKE8)
+
+test_smoke:
+	$(SET_LOCAL_LOCUST_ENV_VARS); \
+	$(SET_LOCAL_SMOKE_TEST_ENV_VARS); \
+	$(PYTEST_SMOKE)
 
 test: test_linting test_integration test_load_minimal
 
@@ -148,10 +166,10 @@ DOCKER_SET_DIRECTORY_UI_BUYER_ENV_VARS := \
 	export DIRECTORY_UI_BUYER_API_CLIENT_KEY=debug; \
 	export DIRECTORY_UI_BUYER_API_CLIENT_BASE_URL=http://directory_api_webserver:8000; \
 	export DIRECTORY_UI_BUYER_SSO_API_CLIENT_KEY=debug; \
-	export DIRECTORY_UI_BUYER_SSO_API_CLIENT_BASE_URL=http://sso.trade.great.docker:8003/api/v1/; \
-	export DIRECTORY_UI_BUYER_SSO_LOGIN_URL=http://sso.trade.great.docker:8003/accounts/login/; \
-	export DIRECTORY_UI_BUYER_SSO_LOGOUT_URL=http://sso.trade.great.docker:8003/accounts/logout/?next=http://find-a-buyer.export.great.docker:8001; \
-	export DIRECTORY_UI_BUYER_SSO_SIGNUP_URL=http://sso.trade.great.docker:8003/accounts/signup/; \
+	export DIRECTORY_UI_BUYER_SSO_API_CLIENT_BASE_URL=http://www.dev.sso.uktrade.io/api/v1/; \
+	export DIRECTORY_UI_BUYER_SSO_LOGIN_URL=http://www.dev.sso.uktrade.io/accounts/login/; \
+	export DIRECTORY_UI_BUYER_SSO_LOGOUT_URL=http://www.dev.sso.uktrade.io/accounts/logout/?next=http://www.dev.buyer.directory.uktrade.io; \
+	export DIRECTORY_UI_BUYER_SSO_SIGNUP_URL=http://www.dev.sso.uktrade.io/accounts/signup/; \
 	export DIRECTORY_UI_BUYER_SSO_REDIRECT_FIELD_NAME=next; \
 	export DIRECTORY_UI_BUYER_SSO_SESSION_COOKIE=debug_sso_session_cookie; \
 	export DIRECTORY_UI_BUYER_PORT=8001; \
@@ -159,9 +177,9 @@ DOCKER_SET_DIRECTORY_UI_BUYER_ENV_VARS := \
 	export DIRECTORY_UI_BUYER_DEBUG=true; \
 	export DIRECTORY_UI_BUYER_COMPANIES_HOUSE_SEARCH_URL=https://beta.companieshouse.gov.uk; \
 	export DIRECTORY_UI_BUYER_FEATURE_PUBLIC_PROFILES_ENABLED=true; \
-	export DIRECTORY_UI_BUYER_SUPPLIER_CASE_STUDY_URL=http://trade.great.docker:8002/company/case-study/view/{id}; \
-	export DIRECTORY_UI_BUYER_SUPPLIER_PROFILE_LIST_URL=http://trade.great.docker:8002/suppliers?sectors={sectors}; \
-	export DIRECTORY_UI_BUYER_SUPPLIER_PROFILE_URL=http://trade.great.docker:8002/suppliers/{number}
+	export DIRECTORY_UI_BUYER_SUPPLIER_CASE_STUDY_URL=http://www.dev.supplier.directory.uktrade.io/company/case-study/view/{id}; \
+	export DIRECTORY_UI_BUYER_SUPPLIER_PROFILE_LIST_URL=http://www.dev.supplier.directory.uktrade.io/suppliers?sectors={sectors}; \
+	export DIRECTORY_UI_BUYER_SUPPLIER_PROFILE_URL=http://www.dev.supplier.directory.uktrade.io/suppliers/{number}
 
 DOCKER_SET_DIRECTORY_UI_SUPPLIER_ENV_VARS := \
 	export DIRECTORY_UI_SUPPLIER_API_CLIENT_KEY=debug; \
@@ -195,21 +213,22 @@ DOCKER_SET_DIRECTORY_SSO_ENV_VARS := \
 	export SSO_EMAIL_HOST_USER=debug; \
 	export SSO_EMAIL_HOST_PASSWORD=debug; \
 	export SSO_DEFAULT_FROM_EMAIL=debug; \
-	export SSO_LOGOUT_REDIRECT_URL=http://find-a-buyer.export.great.docker:8001; \
+	export SSO_LOGOUT_REDIRECT_URL=http://www.dev.buyer.directory.uktrade.io; \
 	export SSO_REDIRECT_FIELD_NAME=next; \
 	export SSO_ALLOWED_REDIRECT_DOMAINS=gov.uk
 
 DOCKER_SET_DIRECTORY_TESTS_ENV_VARS := \
 	export DIRECTORY_TESTS_DIRECTORY_API_URL=http://directory_api_webserver:8000; \
-	export DIRECTORY_TESTS_DIRECTORY_SSO_URL=http://sso.trade.great.docker:8003/; \
-	export DIRECTORY_TESTS_DIRECTORY_UI_BUYER_URL=http://find-a-buyer.export.great.docker:8001; \
-	export DIRECTORY_TESTS_DIRECTORY_UI_SUPPLIER_URL=http://trade.great.docker:8002; \
+	export DIRECTORY_TESTS_DIRECTORY_SSO_URL=http://www.dev.sso.uktrade.io/; \
+	export DIRECTORY_TESTS_DIRECTORY_UI_BUYER_URL=http://www.dev.buyer.directory.uktrade.io; \
+	export DIRECTORY_TESTS_DIRECTORY_UI_SUPPLIER_URL=http://www.dev.supplier.directory.uktrade.io; \
 	export DIRECTORY_TESTS_LOCUST_HATCH_RATE=150; \
 	export DIRECTORY_TESTS_LOCUST_NUM_CLIENTS=150; \
 	export DIRECTORY_TESTS_DB_NAME=directory_api_debug,sso_debug; \
 	export DIRECTORY_TESTS_DB_PASS=debug; \
 	export DIRECTORY_TESTS_DB_USER=debug; \
 	export DIRECTORY_TESTS_API_CLIENT_KEY=debug
+
 
 docker_run: docker_remove_all
 	$(DOCKER_SET_DIRECTORY_TESTS_ENV_VARS) && \

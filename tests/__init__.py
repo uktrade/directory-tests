@@ -2,6 +2,7 @@ from __future__ import absolute_import
 
 from urlparse import urljoin
 from functools import partial
+import os
 import uuid
 
 from tests import settings
@@ -63,8 +64,8 @@ urls = {
 # are created when `manage.py create_test_users` is ran on sso.
 users = {
     'verified': {
-        'username': 'verified@example.com',
-        'password': 'passwordpassword',
+        'username': os.getenv('SSO_USER_USERNAME', 'verified@example.com'),
+        'password': os.getenv('SSO_USER_PASSWORD', 'passwordpassword'),
     }
 }
 
