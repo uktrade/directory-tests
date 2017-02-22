@@ -69,10 +69,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    depends_on: [directory_sso_proxy, directory_ui_buyer_webserver, directory_ui_supplier_webserver]
-    links: [directory_sso_proxy, directory_ui_buyer_webserver, directory_ui_supplier_webserver]
     working_dir: /usr/src/app
-    entrypoint: dockerize -wait http://sso.trade.great.docker:8004/api/v1/ -timeout 120s -wait http://find-a-buyer.export.great.docker:8001 -timeout 120s -wait http://trade.great.docker:8002 -timeout 120s
     command: ./docker/cmd-run.sh
     env_file: ./docker/.env
     restart: "no"
