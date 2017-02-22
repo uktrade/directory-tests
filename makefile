@@ -16,19 +16,11 @@ LOCUST := \
 		--no-web \
 		--only-summary
 
-PYTEST_SELENIUM := \
-	pytest tests/integration \
-		--capture=no \
-		--driver PhantomJS \
-		--driver-path /usr/bin/phantomjs $(pytest_args) \
-		$(pytest_args)
-
-PYTEST_SMOKE := \
-	pytest tests/smoke \
-		--capture=no \
-		--driver PhantomJS \
-		--driver-path /usr/bin/phantomjs $(pytest_args) \
-		$(pytest_args)
+PYTEST_ARGS :=
+	--capture=no \
+	--driver PhantomJS \
+	--driver-path /usr/bin/phantomjs $(pytest_args) \
+	$(pytest_args)
 
 
 DOCKER_COMPOSE_CREATE_ENVS := python ./docker/env_writer.py ./docker/env.json
@@ -109,15 +101,25 @@ test_load_minimal:
 
 test_integration:
 	$(SET_LOCAL_PYTEST_ENV_VARS); \
-	$(PYTEST_SELENIUM)
+	pytest tests/integration $(PYTEST_ARGS)
 
 test_linting:
 	$(FLAKE8)
 
-test_smoke:
-	$(SET_LOCAL_LOCUST_ENV_VARS); \
+test_smoke_buyer:
+	$(SET_LOCAL_PYTEST_ENV_VARS); \
 	$(SET_LOCAL_SMOKE_TEST_ENV_VARS); \
-	$(PYTEST_SMOKE)
+	pytest tests/smoke/test_buyer.py $(PYTEST_ARGS)
+
+test_smoke_supplier:
+	$(SET_LOCAL_PYTEST_ENV_VARS); \
+	$(SET_LOCAL_SMOKE_TEST_ENV_VARS); \
+	pytest tests/smoke/test_supplier.py $(PYTEST_ARGS)
+
+test_smoke_sso:
+	$(SET_LOCAL_PYTEST_ENV_VARS); \
+	$(SET_LOCAL_SMOKE_TEST_ENV_VARS); \
+	pytest tests/smoke/test_sso.py $(PYTEST_ARGS)
 
 test: test_linting test_integration test_load_minimal
 

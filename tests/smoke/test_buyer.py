@@ -1,88 +1,158 @@
 import httplib
 
-import pytest
 import requests
 
-from tests import get_absolute_url, users
+from tests import get_absolute_url
 
 
-@pytest.fixture
-def logged_in_session():
-    session = requests.Session()
-    user = users['verified']
-    response = session.post(
-        url=get_absolute_url('sso:login'),
-        data={'login': user['username'], 'password': user['password']}
-    )
-    assert 'Logout' in response.content
-    return session
-
-
-def test_login_200_anon_user():
+def test_landing_page_200():
     response = requests.get(
-        get_absolute_url('sso:login'), allow_redirects=False
+        get_absolute_url('ui-buyer:landing'), allow_redirects=False
     )
 
     assert response.status_code == httplib.OK
 
 
-def test_login_redirects_logged_in_user(logged_in_session):
-    response = logged_in_session.get(
-        get_absolute_url('sso:login'), allow_redirects=False
-    )
-
-    assert response.status_code == httplib.FOUND
-
-
-def test_signup_200_anon_users():
+def test_enrolment_200_anon_user():
     response = requests.get(
-        get_absolute_url('sso:signup'), allow_redirects=False
+        get_absolute_url('ui-buyer:register'), allow_redirects=False
     )
 
     assert response.status_code == httplib.OK
 
 
-def test_signup_redirects_logged_in_users(logged_in_session):
+
+def test_enrolment_redirects_company_user(logged_in_session):
     response = logged_in_session.get(
-        get_absolute_url('sso:signup'), allow_redirects=False
+        get_absolute_url('ui-buyer:register'), allow_redirects=False
     )
 
     assert response.status_code == httplib.FOUND
 
 
-def test_logout_200_logged_in_user(logged_in_session):
-    response = logged_in_session.get(
-        get_absolute_url('sso:logout'), allow_redirects=False
-    )
-    assert response.status_code == httplib.OK
-
-
-def test_logout_redirects_anon_users():
+def test_profile_redirects_anon_user():
     response = requests.get(
-        get_absolute_url('sso:logout'), allow_redirects=False
+        get_absolute_url('ui-buyer:company-profile'), allow_redirects=False
     )
+
     assert response.status_code == httplib.FOUND
 
 
-def test_password_change_200_logged_in_user(logged_in_session):
+def test_enrolment_200_company_user(logged_in_session):
     response = logged_in_session.get(
-        get_absolute_url('sso:password_change'), allow_redirects=False
+        get_absolute_url('ui-buyer:company-profile'), allow_redirects=False
     )
 
     assert response.status_code == httplib.OK
 
 
-def test_password_change_redirects_anon_user():
+def test_profile_logo_edit_redirects_anon_user():
     response = requests.get(
-        get_absolute_url('sso:password_change'), allow_redirects=False
+        get_absolute_url('ui-buyer:upload-logo'), allow_redirects=False
     )
 
     assert response.status_code == httplib.FOUND
 
 
-def test_password_reset_200():
+
+def test_profile_logo_edit_200_company_user(logged_in_session):
+    response = logged_in_session.get(
+        get_absolute_url('ui-buyer:upload-logo'), allow_redirects=False
+    )
+
+    assert response.status_code == httplib.OK
+
+
+def test_profile_address_edit_redirects_anon_user():
     response = requests.get(
-        get_absolute_url('sso:password_reset'), allow_redirects=False
+        get_absolute_url('ui-buyer:company-edit-address'), allow_redirects=False
+    )
+
+    assert response.status_code == httplib.FOUND
+
+
+def test_profile_address_edit_200_company_user(logged_in_session):
+    response = logged_in_session.get(
+        get_absolute_url('ui-buyer:company-edit-address'), allow_redirects=False
+    )
+
+    assert response.status_code == httplib.OK
+
+def test_profile_description_edit_redirects_anon_user():
+    response = requests.get(
+        get_absolute_url('ui-buyer:company-edit-description'), allow_redirects=False
+    )
+
+    assert response.status_code == httplib.FOUND
+
+
+def test_profile_description_edit_200_company_user(logged_in_session):
+    response = logged_in_session.get(
+        get_absolute_url('ui-buyer:company-edit-description'), allow_redirects=False
+    )
+
+    assert response.status_code == httplib.OK
+
+
+def test_profile_key_facts_edit_redirects_anon_user():
+    response = requests.get(
+        get_absolute_url('ui-buyer:company-edit-key-facts'), allow_redirects=False
+    )
+
+    assert response.status_code == httplib.FOUND
+
+
+def test_profile_key_facts_edit_200_company_user(logged_in_session):
+    response = logged_in_session.get(
+        get_absolute_url('ui-buyer:company-edit-key-facts'), allow_redirects=False
+    )
+
+    assert response.status_code == httplib.OK
+
+
+def test_profile_sectors_edit_redirects_anon_user():
+    response = requests.get(
+        get_absolute_url('ui-buyer:company-edit-sectors'), allow_redirects=False
+    )
+
+    assert response.status_code == httplib.FOUND
+
+
+def test_profile_sectors_edit_200_company_user(logged_in_session):
+    response = logged_in_session.get(
+        get_absolute_url('ui-buyer:company-edit-sectors'), allow_redirects=False
+    )
+
+    assert response.status_code == httplib.OK
+
+
+def test_profile_contact_edit_redirects_anon_user():
+    response = requests.get(
+        get_absolute_url('ui-buyer:company-edit-contact'), allow_redirects=False
+    )
+
+    assert response.status_code == httplib.FOUND
+
+
+def test_profile_contact_edit_200_company_user(logged_in_session):
+    response = logged_in_session.get(
+        get_absolute_url('ui-buyer:company-edit-contact'), allow_redirects=False
+    )
+
+    assert response.status_code == httplib.OK
+
+
+def test_profile_social_media_edit_redirects_anon_user():
+    response = requests.get(
+        get_absolute_url('ui-buyer:company-edit-social-media'), allow_redirects=False
+    )
+
+    assert response.status_code == httplib.FOUND
+
+
+def test_profile_social_media_edit_200_company_user(logged_in_session):
+    response = logged_in_session.get(
+        get_absolute_url('ui-buyer:company-edit-social-media'), allow_redirects=False
     )
 
     assert response.status_code == httplib.OK

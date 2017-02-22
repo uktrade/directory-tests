@@ -45,6 +45,8 @@ urls = {
     'ui-supplier:industries-tech': 'industries/tech',
     'ui-supplier:industries-creative': 'industries/creative',
     'ui-supplier:industries-food': 'industries/food-and-drink',
+    'ui-supplier:terms': 'terms-and-conditions',
+    'ui-supplier:privacy': 'privacy-policy',
     # NOTE: the URLS below require data from fixtures/supplier.json
     # to be loaded to the API db of the tested system
     'ui-supplier:suppliers-detail': 'suppliers/99999999',
