@@ -116,6 +116,11 @@ test_smoke_supplier:
 	$(SET_LOCAL_SMOKE_TEST_ENV_VARS); \
 	pytest tests/smoke/test_supplier.py $(PYTEST_ARGS)
 
+test_smoke_sso:
+	$(SET_LOCAL_PYTEST_ENV_VARS); \
+	$(SET_LOCAL_SMOKE_TEST_ENV_VARS); \
+	pytest tests/smoke/test_sso.py $(PYTEST_ARGS)
+
 test: test_linting test_integration test_load_minimal
 
 DOCKER_REMOVE_ALL := \
