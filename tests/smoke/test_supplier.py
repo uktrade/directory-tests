@@ -60,6 +60,7 @@ def test_privacy_200():
 
 
 def test_supplier_profile_200():
+    # company 09466005 must exist on the environment the tests are ran against.
     url = join_ui_supplier('suppliers/09466005/michboly-ltd')
     response = requests.get(url)
 
@@ -67,6 +68,7 @@ def test_supplier_profile_200():
 
 
 def test_supplier_contact_200():
+    # company 09466005 must exist on the environment the tests are ran against.
     url = join_ui_supplier('suppliers/09466005/contact')
     response = requests.get(url)
 
@@ -74,7 +76,7 @@ def test_supplier_contact_200():
 
 
 def test_case_study_200():
-    # 
+    # case study 6 must exist on the environment the tests are ran against.
     url = join_ui_supplier('case-study/6/fred')
 
     response = requests.get(url)
