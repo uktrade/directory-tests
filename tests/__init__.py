@@ -66,8 +66,8 @@ urls = {
 # are created when `manage.py create_test_users` is ran on sso.
 users = {
     'verified': {
-        'username': os.getenv('SSO_USER_USERNAME', 'verified@example.com'),
-        'password': os.getenv('SSO_USER_PASSWORD', 'passwordpassword'),
+        'username': os.environ['SSO_USER_USERNAME'],
+        'password': os.environ['SSO_USER_PASSWORD'],
     }
 }
 
