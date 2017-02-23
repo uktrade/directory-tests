@@ -1,2 +1,2 @@
 -r requirements.txt
-locustio==0.7.5
+locustio==0.8a2

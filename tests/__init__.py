@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 
-from urlparse import urljoin
+from urllib.parse import urljoin
 from functools import partial
 import os
 import uuid
