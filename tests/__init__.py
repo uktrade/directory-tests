@@ -2,6 +2,7 @@ from __future__ import absolute_import
 
 from urllib.parse import urljoin
 from functools import partial
+import os
 import uuid
 
 from tests import settings
@@ -28,6 +29,13 @@ urls = {
     'ui-buyer:register': 'register',
     'ui-buyer:company-profile': 'company-profile',
     'ui-buyer:upload-logo': 'company-profile/edit/logo',
+    'ui-buyer:confirm-company-address': 'confirm-company-address',
+    'ui-buyer:company-edit-address': 'company-profile/edit/address',
+    'ui-buyer:company-edit-description': 'company-profile/edit/description',
+    'ui-buyer:company-edit-key-facts': 'company-profile/edit/key-facts',
+    'ui-buyer:company-edit-sectors': 'company-profile/edit/sectors',
+    'ui-buyer:company-edit-contact': 'company-profile/edit/contact',
+    'ui-buyer:company-edit-social-media': 'company-profile/edit/social-media',
 
     # UI-SUPPLIER
     'ui-supplier:landing': '',
@@ -37,9 +45,11 @@ urls = {
     'ui-supplier:industries-tech': 'industries/tech',
     'ui-supplier:industries-creative': 'industries/creative',
     'ui-supplier:industries-food': 'industries/food-and-drink',
+    'ui-supplier:terms': 'terms-and-conditions',
+    'ui-supplier:privacy': 'privacy-policy',
     # NOTE: the URLS below require data from fixtures/supplier.json
     # to be loaded to the API db of the tested system
-    'ui-supplier:suppliers-detail': 'suppliers/00000001',
+    'ui-supplier:suppliers-detail': 'suppliers/99999999',
     'ui-supplier:case-study': 'case-study/2147483647',
 
     # API
@@ -56,8 +66,8 @@ urls = {
 # are created when `manage.py create_test_users` is ran on sso.
 users = {
     'verified': {
-        'username': 'verified@example.com',
-        'password': 'passwordpassword',
+        'username': os.getenv('SSO_USER_USERNAME', 'verified@example.com'),
+        'password': os.getenv('SSO_USER_PASSWORD', 'passwordpassword'),
     }
 }
 

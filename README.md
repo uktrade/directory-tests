@@ -31,15 +31,13 @@ Before running the load tests, you will need to load all the fixtures in tests/f
 
     make test
 
-This will run flake8 linting, integration tests and finally load tests. This doesn't do much more than check load tests haven't been broken, however. By default it tests the three servers (UI, SSO & API) with a load of about 2 clients/s on each server for 2.5 minutes (this time period more or less guarantees each endpoint we have tests for gets hit at least once - locust randomizes this, so there's no 100% guarantee).
+This will run flake8 linting, integration tests and finally load tests. This doesn't do much more than check load tests haven't been broken, however. By default it tests the four servers (BUYER, SUPPLIER, SSO & API) with a load of about 2 clients/s on each server for 2.5 minutes (this time period more or less guarantees each endpoint we have tests for gets hit at least once - locust randomizes this, so there's no 100% guarantee).
 
-2) For real load testing:
+2) For load testing with proper load (50 clients/s for 2min.):
 
     make test_load_buyer
     make test_load_supplier
     make test_load_sso
-
-This runs only the load tests and tests the three servers (UI, SSO & API) with a load of about 50 clients/s on each server and a default of 2 minutes.
 
 The env variables you are likely to need to change (please see the makefile - they are set in the test_load command) are:
 
