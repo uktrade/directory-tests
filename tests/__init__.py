@@ -1,5 +1,3 @@
-from __future__ import absolute_import
-
 from urllib.parse import urljoin
 from functools import partial
 import os
