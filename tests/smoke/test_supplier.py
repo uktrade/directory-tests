@@ -36,7 +36,8 @@ def test_tech_industry_200():
 
 
 def test_creative_industry_200():
-    response = requests.get(get_absolute_url('ui-supplier:industries-creative'))
+    url = get_absolute_url('ui-supplier:industries-creative')
+    response = requests.get(url)
 
     assert response.status_code == httplib.OK
 

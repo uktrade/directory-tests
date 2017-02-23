@@ -1,4 +1,3 @@
-from __future__ import absolute_import
 import random
 
 from locust import HttpLocust, TaskSet, task
@@ -120,10 +119,12 @@ class AuthenticatedPagesBuyerUI(TaskSet):
         url = get_relative_url('ui-buyer:company-edit-address')
         response = self.client.get(url, headers=self.headers)
         soup = BeautifulSoup(response.content, 'html.parser')
-        csrftoken = soup.find('input', {'name': 'csrfmiddlewaretoken'}
-            ).get('value')
-        signature = soup.find('input', {'id': 'id_address-signature'}
-            ).get('value')
+        csrftoken = soup.find(
+            'input', {'name': 'csrfmiddlewaretoken'}
+        ).get('value')
+        signature = soup.find(
+            'input', {'id': 'id_address-signature'}
+        ).get('value')
 
         data = {
             'csrfmiddlewaretoken': csrftoken,
@@ -280,7 +281,7 @@ class PublicPagesSupplierUI(TaskSet):
 
     @task
     def register_interest(self):
-        data={
+        data = {
             'email_address': 'test@example.com',
             'full_name': 'Mr Test',
             'sector': 'GLOBAL_SPORTS_INFRASTRUCTURE',
