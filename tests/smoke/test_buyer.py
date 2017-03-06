@@ -1,4 +1,4 @@
-import httplib
+import http.client
 
 import requests
 
@@ -10,7 +10,7 @@ def test_landing_page_200():
         get_absolute_url('ui-buyer:landing'), allow_redirects=False
     )
 
-    assert response.status_code == httplib.OK
+    assert response.status_code == http.client.OK
 
 
 def test_enrolment_200_anon_user():
@@ -18,7 +18,7 @@ def test_enrolment_200_anon_user():
         get_absolute_url('ui-buyer:register'), allow_redirects=False
     )
 
-    assert response.status_code == httplib.OK
+    assert response.status_code == http.client.OK
 
 
 def test_enrolment_redirects_company_user(logged_in_session):
@@ -26,7 +26,7 @@ def test_enrolment_redirects_company_user(logged_in_session):
         get_absolute_url('ui-buyer:register'), allow_redirects=False
     )
 
-    assert response.status_code == httplib.FOUND
+    assert response.status_code == http.client.FOUND
 
 
 def test_profile_redirects_anon_user():
@@ -34,7 +34,7 @@ def test_profile_redirects_anon_user():
         get_absolute_url('ui-buyer:company-profile'), allow_redirects=False
     )
 
-    assert response.status_code == httplib.FOUND
+    assert response.status_code == http.client.FOUND
 
 
 def test_enrolment_200_company_user(logged_in_session):
@@ -42,7 +42,7 @@ def test_enrolment_200_company_user(logged_in_session):
         get_absolute_url('ui-buyer:company-profile'), allow_redirects=False
     )
 
-    assert response.status_code == httplib.OK
+    assert response.status_code == http.client.OK
 
 
 def test_profile_logo_edit_redirects_anon_user():
@@ -50,7 +50,7 @@ def test_profile_logo_edit_redirects_anon_user():
         get_absolute_url('ui-buyer:upload-logo'), allow_redirects=False
     )
 
-    assert response.status_code == httplib.FOUND
+    assert response.status_code == http.client.FOUND
 
 
 def test_profile_logo_edit_200_company_user(logged_in_session):
@@ -58,7 +58,7 @@ def test_profile_logo_edit_200_company_user(logged_in_session):
         get_absolute_url('ui-buyer:upload-logo'), allow_redirects=False
     )
 
-    assert response.status_code == httplib.OK
+    assert response.status_code == http.client.OK
 
 
 def test_profile_address_edit_redirects_anon_user():
@@ -67,7 +67,7 @@ def test_profile_address_edit_redirects_anon_user():
         allow_redirects=False
     )
 
-    assert response.status_code == httplib.FOUND
+    assert response.status_code == http.client.FOUND
 
 
 def test_profile_address_edit_200_company_user(logged_in_session):
@@ -76,7 +76,7 @@ def test_profile_address_edit_200_company_user(logged_in_session):
         allow_redirects=False
     )
 
-    assert response.status_code == httplib.OK
+    assert response.status_code == http.client.OK
 
 
 def test_profile_description_edit_redirects_anon_user():
@@ -85,7 +85,7 @@ def test_profile_description_edit_redirects_anon_user():
         allow_redirects=False
     )
 
-    assert response.status_code == httplib.FOUND
+    assert response.status_code == http.client.FOUND
 
 
 def test_profile_description_edit_200_company_user(logged_in_session):
@@ -94,7 +94,7 @@ def test_profile_description_edit_200_company_user(logged_in_session):
         allow_redirects=False
     )
 
-    assert response.status_code == httplib.OK
+    assert response.status_code == http.client.OK
 
 
 def test_profile_key_facts_edit_redirects_anon_user():
@@ -103,7 +103,7 @@ def test_profile_key_facts_edit_redirects_anon_user():
         allow_redirects=False
     )
 
-    assert response.status_code == httplib.FOUND
+    assert response.status_code == http.client.FOUND
 
 
 def test_profile_key_facts_edit_200_company_user(logged_in_session):
@@ -112,7 +112,7 @@ def test_profile_key_facts_edit_200_company_user(logged_in_session):
         allow_redirects=False
     )
 
-    assert response.status_code == httplib.OK
+    assert response.status_code == http.client.OK
 
 
 def test_profile_sectors_edit_redirects_anon_user():
@@ -121,7 +121,7 @@ def test_profile_sectors_edit_redirects_anon_user():
         allow_redirects=False
     )
 
-    assert response.status_code == httplib.FOUND
+    assert response.status_code == http.client.FOUND
 
 
 def test_profile_sectors_edit_200_company_user(logged_in_session):
@@ -130,7 +130,7 @@ def test_profile_sectors_edit_200_company_user(logged_in_session):
         allow_redirects=False
     )
 
-    assert response.status_code == httplib.OK
+    assert response.status_code == http.client.OK
 
 
 def test_profile_contact_edit_redirects_anon_user():
@@ -139,7 +139,7 @@ def test_profile_contact_edit_redirects_anon_user():
         allow_redirects=False
     )
 
-    assert response.status_code == httplib.FOUND
+    assert response.status_code == http.client.FOUND
 
 
 def test_profile_contact_edit_200_company_user(logged_in_session):
@@ -148,7 +148,7 @@ def test_profile_contact_edit_200_company_user(logged_in_session):
         allow_redirects=False
     )
 
-    assert response.status_code == httplib.OK
+    assert response.status_code == http.client.OK
 
 
 def test_profile_social_media_edit_redirects_anon_user():
@@ -157,7 +157,7 @@ def test_profile_social_media_edit_redirects_anon_user():
         allow_redirects=False
     )
 
-    assert response.status_code == httplib.FOUND
+    assert response.status_code == http.client.FOUND
 
 
 def test_profile_social_media_edit_200_company_user(logged_in_session):
@@ -166,4 +166,4 @@ def test_profile_social_media_edit_200_company_user(logged_in_session):
         allow_redirects=False
     )
 
-    assert response.status_code == httplib.OK
+    assert response.status_code == http.client.OK

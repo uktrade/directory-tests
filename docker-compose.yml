@@ -1,11 +1,20 @@
 version: '2'
 services:
 
-  directory_tests:
+  smoke_tests:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-smoke
     working_dir: /usr/src/app
-    command: ./docker/cmd-run.sh
+    command: ./docker/cmd-smoke.sh
+    env_file: ./docker/.env
+    restart: "no"
+
+  selenium_tests:
+    build:
+      context: .
+      dockerfile: Dockerfile-selenium
+    working_dir: /usr/src/app
+    command: ./docker/cmd-selenium.sh
     env_file: ./docker/.env
     restart: "no"

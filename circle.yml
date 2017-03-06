@@ -10,4 +10,4 @@ dependencies:
 
 test:
   override:
-    - make docker_run_local
+    - make docker_smoke_test

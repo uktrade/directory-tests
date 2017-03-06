@@ -1,3 +1,3 @@
 #!/bin/bash -xe
 
-make test
+make smoke_tests
