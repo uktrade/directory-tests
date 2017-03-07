@@ -1,8 +1,0 @@
-beautifulsoup4==4.5.3
-flake8==3.0.4
-locustio==0.7.5
-pytest-selenium==1.5.0
-pytest==3.0.2
-pyzmq==16.0.2
-requests==2.11.1
-selenium==3.0.1
