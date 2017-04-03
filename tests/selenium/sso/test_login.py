@@ -27,11 +27,11 @@ def test_login_good_credentials(selenium, submit_login_form):
 
     # the login cookie is shared with directory ui
     selenium.get(get_absolute_url('ui-buyer:landing'))
-    assert '>Logout<' in selenium.page_source
+    assert '>Sign out<' in selenium.page_source
 
     # and the user see they are logged in on sso
     selenium.get(get_absolute_url('sso:login'))
-    assert '>Logout<' in selenium.page_source
+    assert '>Sign out<' in selenium.page_source
 
 
 def test_login_bad_credentials(selenium, submit_login_form):

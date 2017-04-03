@@ -12,5 +12,5 @@ def logged_in_session():
         url=get_absolute_url('sso:login'),
         data={'login': user['username'], 'password': user['password']}
     )
-    assert 'Logout' in str(response.content)
+    assert 'Sign out' in str(response.content)
     return session
