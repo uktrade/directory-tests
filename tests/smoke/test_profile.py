@@ -88,7 +88,8 @@ def test_exops_alerts_anon_user_302():
 def test_directory_supplier_verified_user():
     token = 'Bearer {token}'.format(token=users['verified']['token'])
     headers = {'Authorization': token}
-    response = requests.get('profile:directory-supplier', headers=headers)
+    url = get_absolute_url('profile:directory-supplier')
+    response = requests.get(url, headers=headers)
 
     assert response.status_code == http.client.OK
 
@@ -96,6 +97,7 @@ def test_directory_supplier_verified_user():
 def test_directory_supplier_unverified_user():
     token = 'Bearer {token}'.format(token=users['unverified']['token'])
     headers = {'Authorization': token}
-    response = requests.get('profile:directory-supplier', headers=headers)
+    url = get_absolute_url('profile:directory-supplier')
+    response = requests.get(url, headers=headers)
 
     assert response.status_code == 403
