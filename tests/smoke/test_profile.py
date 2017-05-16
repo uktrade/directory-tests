@@ -100,4 +100,4 @@ def test_directory_supplier_invalid_user_token():
     url = get_absolute_url('profile:directory-supplier')
     response = requests.get(url, headers=headers)
 
-    assert response.status_code == 403
+    assert response.status_code == 401
