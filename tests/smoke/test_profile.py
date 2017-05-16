@@ -94,8 +94,8 @@ def test_directory_supplier_verified_user():
     assert response.status_code == http.client.OK
 
 
-def test_directory_supplier_unverified_user():
-    token = 'Bearer {token}'.format(token=users['unverified']['token'])
+def test_directory_supplier_invalid_user_token():
+    token = 'Bearer {token}'.format(token='foo')
     headers = {'Authorization': token}
     url = get_absolute_url('profile:directory-supplier')
     response = requests.get(url, headers=headers)
