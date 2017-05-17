@@ -92,6 +92,17 @@ def test_directory_supplier_verified_user():
     response = requests.get(url, headers=headers)
 
     assert response.status_code == http.client.OK
+    assert response.json()['sso_id'] == users['verified']['sso_id']
+
+
+def test_directory_supplier_unverified_user():
+    token = 'Bearer {token}'.format(token=users['unverified']['token'])
+    headers = {'Authorization': token}
+    url = get_absolute_url('profile:directory-supplier')
+    response = requests.get(url, headers=headers)
+
+    assert response.status_code == http.client.OK
+    assert response.content == b''
 
 
 def test_directory_supplier_invalid_user_token():
