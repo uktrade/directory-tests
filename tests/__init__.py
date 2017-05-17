@@ -78,7 +78,7 @@ users = {
         'username': os.environ['SSO_USER_USERNAME'],
         'password': os.environ['SSO_USER_PASSWORD'],
         'token': os.environ['SSO_USER_TOKEN'],
-        'sso_id': os.environ['SSO_USER_SSO_ID']
+        'sso_id': int(os.environ['SSO_USER_SSO_ID'])
     },
     'unverified': {
         'token': os.environ['SSO_UNVERIFIED_USER_TOKEN']
