@@ -92,7 +92,15 @@ def test_directory_supplier_verified_user():
     response = requests.get(url, headers=headers)
 
     assert response.status_code == http.client.OK
-    assert response.json()['sso_id'] == users['verified']['sso_id']
+    assert response.json() == {
+        'company_industries': [],
+        'name': '',
+        'company_number': '',
+        'sso_id': users['verified']['sso_id'],
+        'company_email': '',
+        'profile_url': 'http://dev.supplier.directory.uktrade.io/suppliers/',
+        'company_export_status': 'ONE_TWO_YEARS_AGO'
+     }
 
 
 def test_directory_supplier_unverified_user():
