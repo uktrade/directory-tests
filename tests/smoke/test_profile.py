@@ -101,8 +101,7 @@ def test_directory_supplier_unverified_user():
     url = get_absolute_url('profile:directory-supplier')
     response = requests.get(url, headers=headers)
 
-    assert response.status_code == http.client.OK
-    assert response.content == b''
+    assert response.status_code == http.client.NOT_FOUND
 
 
 def test_directory_supplier_invalid_user_token():
