@@ -94,11 +94,13 @@ def test_directory_supplier_verified_user():
     assert response.status_code == http.client.OK
     assert response.json() == {
         'company_industries': [],
-        'name': '',
-        'company_number': '',
+        'name': 'Testo Useri',
+        'company_name': 'Test company 57',
+        'company_number': '12345679',
         'sso_id': users['verified']['sso_id'],
-        'company_email': '',
-        'profile_url': 'http://dev.supplier.directory.uktrade.io/suppliers/',
+        'company_email': 'testo@useri.com',
+        'profile_url': 'http://dev.supplier.directory.uktrade.io/'
+                       'suppliers/12345679',
         'company_export_status': 'ONE_TWO_YEARS_AGO'
      }
 
