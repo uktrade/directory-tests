@@ -89,6 +89,7 @@ users = {
 companies = {
     'not_active': os.environ['SSO_COMPANY_NOT_ACTIVE'],
     'already_registered': os.environ['SSO_COMPANY_ALREADY_REGISTERED'],
+    'active_not_registered': os.environ['SSO_COMPANY_ACTIVE_NOT_REGISTERED']
 }
 
 

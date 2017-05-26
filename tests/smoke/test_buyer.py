@@ -29,6 +29,26 @@ def test_landing_page_post_company_already_registered():
     assert 'Already registered' in str(response.content)
 
 
+def test_landing_page_post_company_not_found():
+    data = {'company_number': '12345670'}
+    response = requests.post(
+        get_absolute_url('ui-buyer:landing'), data=data, allow_redirects=False
+    )
+    assert 'Company not found. Please check the number.' in str(
+        response.content
+    )
+
+
+def test_landing_page_post_company_happy_patch():
+    data = {'company_number': companies['active_not_registered']}
+    response = requests.post(
+        get_absolute_url('ui-buyer:landing'),
+        data=data
+    )
+
+    assert 'Register' in str(response.content)
+
+
 def test_enrolment_200_anon_user():
     response = requests.get(
         get_absolute_url('ui-buyer:register'), allow_redirects=False
