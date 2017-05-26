@@ -39,7 +39,7 @@ def test_landing_page_post_company_not_found():
     )
 
 
-def test_landing_page_post_company_happy_patch():
+def test_landing_page_post_company_happy_path():
     data = {'company_number': companies['active_not_registered']}
     response = requests.post(
         get_absolute_url('ui-buyer:landing'),
