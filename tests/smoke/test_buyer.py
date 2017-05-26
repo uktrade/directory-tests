@@ -26,7 +26,7 @@ def test_landing_page_post_company_already_registered():
     response = requests.post(
         get_absolute_url('ui-buyer:landing'), data=data, allow_redirects=False
     )
-    assert 'Company already registered' in str(response.content)
+    assert 'Already registered' in str(response.content)
 
 
 def test_enrolment_200_anon_user():
