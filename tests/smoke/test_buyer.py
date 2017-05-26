@@ -2,7 +2,7 @@ import http.client
 
 import requests
 
-from tests import get_absolute_url
+from tests import get_absolute_url, companies
 
 
 def test_landing_page_200():
@@ -11,6 +11,22 @@ def test_landing_page_200():
     )
 
     assert response.status_code == http.client.OK
+
+
+def test_landing_page_post_company_not_active():
+    data = {'company_number': companies['not_active']}
+    response = requests.post(
+        get_absolute_url('ui-buyer:landing'), data=data, allow_redirects=False
+    )
+    assert 'Company not active' in str(response.content)
+
+
+def test_landing_page_post_company_already_registered():
+    data = {'company_number': companies['already_registered']}
+    response = requests.post(
+        get_absolute_url('ui-buyer:landing'), data=data, allow_redirects=False
+    )
+    assert 'Already registered' in str(response.content)
 
 
 def test_enrolment_200_anon_user():

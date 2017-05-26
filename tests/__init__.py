@@ -86,6 +86,12 @@ users = {
 }
 
 
+companies = {
+    'not_active': os.environ['SSO_COMPANY_NOT_ACTIVE'],
+    'already_registered': os.environ['SSO_COMPANY_ALREADY_REGISTERED'],
+}
+
+
 def get_relative_url(name):
     return urls[name]
 
