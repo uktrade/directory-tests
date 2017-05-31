@@ -49,12 +49,12 @@ def test_landing_page_post_company_happy_path():
     assert 'Register' in str(response.content)
 
 
-def test_enrolment_200_anon_user():
+def test_enrolment_instructions_302_anon_user():
     response = requests.get(
         get_absolute_url('ui-buyer:register'), allow_redirects=False
     )
 
-    assert response.status_code == http.client.OK
+    assert response.status_code == http.client.FOUND
 
 
 def test_enrolment_redirects_company_user(logged_in_session):
