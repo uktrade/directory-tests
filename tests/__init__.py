@@ -6,6 +6,7 @@ import uuid
 from tests import settings
 
 join_api = partial(urljoin, settings.DIRECTORY_API_URL)
+join_internal_api = partial(urljoin, settings.DIRECTORY_API_URL)
 join_sso = partial(urljoin, settings.DIRECTORY_SSO_URL)
 join_profile = partial(urljoin, settings.DIRECTORY_PROFILE_URL)
 join_ui_buyer = partial(urljoin, settings.DIRECTORY_UI_BUYER_URL)
@@ -61,6 +62,9 @@ urls = {
     'api:validate-company-number': 'validate/company-number/',
     'api:companies-house-profile': 'company/companies-house-profile/',
 
+    # INTERNAL API
+    'internal-api:companies-house-search': 'internal/companies-house-search/',
+
     # SSO-PROFILE
     'profile:soo': 'selling-online-overseas/',
     'profile:fab': 'find-a-buyer/',
@@ -113,6 +117,8 @@ def get_absolute_url(name):
         return join_ui_supplier(relative_url)
     elif name.startswith('api:'):
         return join_api(relative_url)
+    elif name.startswith('internal-api:'):
+        return join_internal_api(relative_url)
     elif name.startswith('profile:'):
         return join_profile(relative_url)
 
