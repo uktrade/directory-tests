@@ -6,6 +6,8 @@ from tests.functional.features.steps.fab_when_impl import \
     confirm_company_selection
 from tests.functional.features.steps.fab_when_impl import \
     confirm_export_status
+from tests.functional.features.steps.fab_when_impl import \
+    create_sso_account_for_selected_company
 from tests.functional.features.steps.fab_when_impl import select_random_company
 
 
@@ -26,3 +28,12 @@ def when_supplier_confirms_export_status(context, supplier_alias, alias,
                                          export_status):
     confirm_export_status(context, supplier_alias, alias, export_status)
 
+
+@when('"{supplier_alias}" creates a SSO account for "{alias}" using '
+      '"{are_valid}" credentials')
+def when_supplier_creates_sso_account_for_selected_company(context,
+                                                           supplier_alias,
+                                                           alias,
+                                                           are_valid):
+    create_sso_account_for_selected_company(context, supplier_alias, alias,
+                                            are_valid)
