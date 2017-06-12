@@ -141,11 +141,13 @@ def confirm_company_selection(context, alias):
     logging.debug("Confirmed selection of Company: {}".format(company.number))
 
 
-def confirm_export_status(context, alias, export_status):
+def confirm_export_status(context, supplier_alias, alias, export_status):
     """Will confirm the current export status of selected unregistered company.
 
     :param context: behave `context` object
     :type context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type supplier_alias: str
     :param alias: alias of the company used in the scope of the scenario
     :type alias: str
     :param export_status: current Export Status of selected company
@@ -173,3 +175,13 @@ def confirm_export_status(context, alias, export_status):
     assert response.status_code == 200
     logging.debug("Confirmed Export Status of '{}'. We're now on SSO signup "
                   "page.".format(alias))
+    content = response.content.decode("utf-8")
+    csrf_tag_idx = content.find("name='csrfmiddlewaretoken'")
+    value_property = "value='"
+    logging.debug("Looking for csrfmiddlewaretoken in: {}"
+                  .format(content[csrf_tag_idx:csrf_tag_idx + 150]))
+    csrf_token_idx = content.find(value_property, csrf_tag_idx, csrf_tag_idx + 60)
+    csrf_token_end_idx = content.find("'", csrf_token_idx + len(value_property), csrf_tag_idx + 150)
+    token = content[(csrf_token_idx+len(value_property)):csrf_token_end_idx]
+    logging.debug("Found csrfmiddlewaretoken={}".format(token))
+    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)

@@ -7,9 +7,9 @@ Feature: Trade Profile
 
       When the supplier randomly selects an active company without a profile identified by an alias "Company X"
       And the supplier confirms that "Company X" is the correct one
-      And the supplier confirms that the export status of "Company X" is "<current>"
       And the supplier provides "valid" SSO registration details
       And the supplier accepts the SSO T&Cs
+      And "Peter Alder" confirms that the export status of "Company X" is "<current>"
 
       Then the supplier should be told about the verification email
       And the supplier should receive a verification email entitled "Your great.gov.uk account: Please Confirm Your E-mail Address"

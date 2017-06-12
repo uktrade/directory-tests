@@ -20,7 +20,9 @@ def when_company_selection_is_confirmed(context, alias):
     confirm_company_selection(context, alias)
 
 
-@when('the supplier confirms that the export status of "{alias}" is '
+@when('"{supplier_alias}" confirms that the export status of "{alias}" is '
       '"{export_status}"')
-def when_supplier_confirms_export_status(context, alias, export_status):
-    confirm_export_status(context, alias, export_status)
+def when_supplier_confirms_export_status(context, supplier_alias, alias,
+                                         export_status):
+    confirm_export_status(context, supplier_alias, alias, export_status)
+
