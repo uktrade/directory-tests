@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Contains named tuple that are used to create the Scenario Data."""
+"""Define Scenario Data structure & additional behave's `context` functions."""
 import logging
 from types import MethodType
 
@@ -25,12 +25,12 @@ def initialize_scenario_data():
 
 
 def add_actor(self, actor):
-    """Will add Actor to Scenario Data.
+    """Will add Actor details to Scenario Data.
 
     :param self: behave `context` object
     :type self: behave.runner.Context
     :param actor: an instance of Actor Named Tuple
-    :type actor: features.ScenarioData.Actor
+    :type actor: tests.functional.features.ScenarioData.Actor
     """
     assert isinstance(actor, Actor), ("Expected Actor named tuple but got '{}' "
                                       "instead".format(type(actor)))
@@ -40,13 +40,14 @@ def add_actor(self, actor):
 
 
 def get_actor(self, alias):
-    """Get actor details from context scenario data.
+    """Get actor details from context Scenario Data.
 
     :param self: behave `context` object
     :type self: behave.runner.Context
     :param alias: alias of sought actor
     :type alias: str
     :return: an Actor named tuple
+    :rtype actor: tests.functional.features.ScenarioData.Actor
     """
     res = None
     for actor in self.scenario_data.actors:
@@ -79,7 +80,7 @@ def add_unregistered_company(self, company):
     :param self: behave `context` object
     :type self: behave.runner.Context
     :param company: an instance of UnregisteredCompany Tuple
-    :type company: features.ScenarioData.UnregisteredCompany
+    :type company: test.functional.features.ScenarioData.UnregisteredCompany
     """
     assert isinstance(company, UnregisteredCompany), (
         "Expected UnregisteredCompany named tuple but got '{}' instead"
@@ -98,7 +99,7 @@ def get_unregistered_company(self, alias):
     :param alias: alias of sought Unregistered Company
     :type alias: str
     :return: an UnregisteredCompany named tuple
-    :rtype features.ScenarioData.UnregisteredCompany
+    :rtype tests.functional.features.ScenarioData.UnregisteredCompany
     """
     res = None
     for company in self.scenario_data.unregistered_companies:
@@ -114,9 +115,10 @@ def get_unregistered_company(self, alias):
 def patch_context(context):
     """Will patch the Behave's `context` object with some handy functions.
 
-    This will add methods that allow to easily access Scenario Data.
+    This adds methods that allow to easily get & add data from/to Scenario Data.
 
-    :param context: Behave context object
+    :param context: behave `context` object
+    :type context: behave.runner.Context
     """
     context.add_actor = MethodType(add_actor, context)
     context.get_actor = MethodType(get_actor, context)
