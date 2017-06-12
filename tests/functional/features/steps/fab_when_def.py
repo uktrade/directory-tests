@@ -11,6 +11,7 @@ def step_impl(context, supplier_alias):
     do_something(context, supplier_alias)
 
 
-@when("the supplier selects randomly chosen company for profile registration")
-def step_impl(context):
-    select_random_company(context)
+@when("the supplier randomly selects an active company without a profile "
+      "identified by an alias '{alias}'")
+def step_impl(context, alias):
+    select_random_company(context, alias)

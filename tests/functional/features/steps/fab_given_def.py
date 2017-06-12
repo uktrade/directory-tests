@@ -2,7 +2,8 @@
 """FAB Given step definitions."""
 from behave import given
 
-from tests.functional.features.steps.fab_given_impl import unauthenticated_supplier
+from tests.functional.features.steps.fab_given_impl import \
+    unauthenticated_supplier
 
 
 @given('"{supplier_alias}" is an unauthenticated supplier')
