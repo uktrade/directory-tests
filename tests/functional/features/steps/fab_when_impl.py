@@ -11,11 +11,6 @@ from tests.functional.features.ScenarioData import UnregisteredCompany
 from tests.functional.schemas import COMPANIES
 
 
-def do_something(context, supplier_alias):
-    actor = context.get_actor(alias=supplier_alias)
-    logging.debug("Got the details of actor called: {}".format(actor.alias))
-    client = context.get_actor_client(alias=supplier_alias)
-    logging.debug("Got the {}'s HTTP client: {}".format(actor.alias, client))
 def has_fas_profile(company_number):
     """Will check if company has an active FAS profile.
 
