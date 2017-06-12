@@ -59,21 +59,6 @@ def get_actor(self, alias):
     return res
 
 
-def get_actor_client(self, alias):
-    """Get actor's HTTP client from context scenario data.
-
-    :param self: behave `context` object
-    :type self: behave.runner.Context
-    :param alias: alias of sought actor
-    :type alias: str
-    :return: Actor's HTTP client
-    """
-    actor = self.get_actor(alias)
-    assert actor.http_client is not None, ("{}'s HTTP client is not set!"
-                                           .format(alias))
-    return actor.http_client
-
-
 def add_unregistered_company(self, company):
     """Will add an Unregistered Company to Scenario Data.
 
@@ -122,7 +107,6 @@ def patch_context(context):
     """
     context.add_actor = MethodType(add_actor, context)
     context.get_actor = MethodType(get_actor, context)
-    context.get_actor_client = MethodType(get_actor_client, context)
     context.add_unregistered_company = MethodType(add_unregistered_company, context)
     context.get_unregistered_company = MethodType(get_unregistered_company, context)
 
