@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 """Contains named tuple that are used to create the Scenario Data."""
 import logging
-import types
+from types import MethodType
 
 from collections import namedtuple
 
 
-ScenarioData = namedtuple('ScenarioData', ['actors'])
+ScenarioData = namedtuple('ScenarioData', ['actors', 'unregistered_companies'])
 Actor = namedtuple('Actor', ['alias', 'http_client'])
+UnregisteredCompany = namedtuple('UnregisteredCompany', ['alias', 'title',
+                                                         'number', 'details'])
 
 
 def initialize_scenario_data():
@@ -17,7 +19,8 @@ def initialize_scenario_data():
     :rtype ScenarioData
     """
     actors = []
-    scenario_data = ScenarioData(actors=actors)
+    unregistered_companies = []
+    scenario_data = ScenarioData(actors, unregistered_companies)
     return scenario_data
 
 
