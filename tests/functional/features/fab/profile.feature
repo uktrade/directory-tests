@@ -5,10 +5,9 @@ Feature: Trade Profile
     Scenario Outline: Supplier should receive a verification email after successful registration
       Given "Peter Alder" is an unauthenticated supplier
 
-      When the supplier randomly selects an active company without a profile identified by an alias "Company X"
-      And the supplier confirms that "Company X" is the correct one
-      And the supplier provides "valid" SSO registration details
       And the supplier accepts the SSO T&Cs
+      When "Peter Alder" randomly selects an active company without a profile identified by an alias "Company X"
+      And "Peter Alder" confirms that "Company X" is the correct one
       And "Peter Alder" confirms that the export status of "Company X" is "<current>"
 
       Then the supplier should be told about the verification email
