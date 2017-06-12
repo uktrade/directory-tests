@@ -29,6 +29,7 @@ urls = {
     'ui-buyer:landing': '',
     'ui-buyer:register': 'register',
     'ui-buyer:register-confirm-company': 'register/company',
+    'ui-buyer:register-confirm-export-status': 'register/exports',
     'ui-buyer:company-profile': 'company-profile',
     'ui-buyer:upload-logo': 'company-profile/edit/logo',
     'ui-buyer:confirm-company-address': 'confirm-company-address',
