@@ -59,6 +59,14 @@ def get_actor(self, alias):
     return res
 
 
+def set_actor_csrfmiddlewaretoken(self, alias, token):
+    for idx, actor in enumerate(self.scenario_data.actors):
+        if actor.alias == alias:
+            self.scenario_data.actors[idx] = actor._replace(csrfmiddlewaretoken=token)
+            logging.debug("Successfully set csrfmiddlewaretoken={} for Actor: "
+                          "{}".format(token, alias))
+
+
 def add_unregistered_company(self, company):
     """Will add an Unregistered Company to Scenario Data.
 
@@ -107,6 +115,7 @@ def patch_context(context):
     """
     context.add_actor = MethodType(add_actor, context)
     context.get_actor = MethodType(get_actor, context)
+    context.set_actor_csrfmiddlewaretoken = MethodType(set_actor_csrfmiddlewaretoken, context)
     context.add_unregistered_company = MethodType(add_unregistered_company, context)
     context.get_unregistered_company = MethodType(get_unregistered_company, context)
 
