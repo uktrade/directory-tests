@@ -2,6 +2,7 @@
 """FAB Given step implementations."""
 import logging
 import random
+from urllib.parse import quote
 
 import requests
 from jsonschema import validate
@@ -9,6 +10,7 @@ from jsonschema import validate
 from tests import get_absolute_url
 from tests.functional.features.ScenarioData import UnregisteredCompany
 from tests.functional.schemas import COMPANIES
+from tests.functional.features.settings import DIRECTORY_SSO_URL
 
 
 def has_fas_profile(company_number):
@@ -138,3 +140,36 @@ def confirm_company_selection(context, alias):
     assert response.status_code == 200
     logging.debug("Confirmed selection of Company: {}".format(company.number))
 
+
+def confirm_export_status(context, alias, export_status):
+    """Will confirm the current export status of selected unregistered company.
+
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param alias: alias of the company used in the scope of the scenario
+    :type alias: str
+    :param export_status: current Export Status of selected company
+    :type export_status: str
+    """
+    if export_status == "Yes, in the last year":
+        export_status = "YES"
+    elif export_status == "Yes, 1 to 2 years ago":
+        export_status = "ONE_TWO_YEARS_AGO"
+    elif export_status == "Yes, but more than 2 years ago":
+        export_status = "OVER_TWO_YEARS_AGO"
+    elif export_status == "No, but we are preparing to":
+        export_status = "NOT_YET"
+    elif export_status == "No, we are not planning to sell overseas":
+        export_status = "NO_INTENTION"
+    else:
+        raise LookupError("Could not recognize provided Export Status: {}"
+                          .format(export_status))
+    company = context.get_unregistered_company(alias)
+    url = get_absolute_url('sso:signup')
+    next_param = ("{}/register-submit?company_number={}&export_status={}"
+                  .format(DIRECTORY_SSO_URL, company.number, export_status))
+    params = {"next": quote(next_param)}
+    response = requests.get(url=url, params=params)
+    assert response.status_code == 200
+    logging.debug("Confirmed Export Status of '{}'. We're now on SSO signup "
+                  "page.".format(alias))
