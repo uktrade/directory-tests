@@ -108,3 +108,23 @@ def select_random_company(context, alias):
     company = UnregisteredCompany(alias, company_json["title"],
                                   company_json["company_number"], company_json)
     context.add_unregistered_company(company)
+
+
+def confirm_company_selection(context, alias):
+    """Will confirm that the selected company is the right one.
+
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param alias: alias of the company used in the scope of the scenario
+    :type alias: str
+    """
+    company = context.get_unregistered_company(alias)
+    url = get_absolute_url('ui-buyer:register-confirm-company')
+    params = {"company_number": company.number}
+    response = requests.get(url=url, params=params)
+    assert response.status_code == 200
+    error_msg = "Company not found. Please check the number."
+    error_idx = response.content.decode("utf-8").find(error_msg)
+    assert error_idx == -1, ("Response contains an error '{}':\n{}"
+                             .format(error_msg, response.content))
+    logging.debug("Confirmed selection of Company: {}".format(company.number))
