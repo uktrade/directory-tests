@@ -6,7 +6,7 @@ Feature: Trade Profile
       Given "Peter Alder" is an unauthenticated supplier
 
       When the supplier randomly selects an active company without a profile identified by an alias 'Company X'
-      And the supplier confirms that the selected company is correct
+      And the supplier confirms that 'Company X' is the correct one
       And the supplier confirms that "<export status>" his company sold products or services to overseas customers
       And the supplier provides “valid” registration details
       And the supplier accepts the T&Cs
