@@ -100,7 +100,7 @@ def select_random_company(context, alias):
                           "different one...".format(random_company_number))
 
     company_json = json[0]
-    logging.debug("It took {} guesses to find an active Company without a "
+    logging.debug("It took {} attempt(s) to find an active Company without a "
                   "FAS profile: {} - {}".format(counter,
                                                 company_json["title"],
                                                 company_json["company_number"]))
