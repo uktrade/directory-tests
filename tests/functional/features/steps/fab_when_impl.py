@@ -72,7 +72,7 @@ def select_random_company(context, alias):
     active = False
     counter = 1
     while has_profile and not exists and not active:
-        random_company_number = "0{}".format(random.randint(0, 9999999))
+        random_company_number = str(random.randint(0, 9999999)).zfill(8)
         has_profile = has_fas_profile(random_company_number)
         logging.debug("Found a company without a FAS profile: {}. Getting "
                       "it details...".format(random_company_number))
