@@ -73,6 +73,44 @@ def get_actor_client(self, alias):
     return actor.http_client
 
 
+def add_unregistered_company(self, company):
+    """Will add an Unregistered Company to Scenario Data.
+
+    :param self: behave `context` object
+    :type self: behave.runner.Context
+    :param company: an instance of UnregisteredCompany Tuple
+    :type company: features.ScenarioData.UnregisteredCompany
+    """
+    assert isinstance(company, UnregisteredCompany), (
+        "Expected UnregisteredCompany named tuple but got '{}' instead"
+        .format(type(company)))
+    self.scenario_data.unregistered_companies.append(company)
+    logging.debug("Successfully added Unregistered Company: {} - {} to "
+                  "Scenario Data as '{}'".format(company.title, company.number,
+                                                 company.alias))
+
+
+def get_unregistered_company(self, alias):
+    """Get the details of an Unregistered Company from context Scenario Data.
+
+    :param self: behave `context` object
+    :type self: behave.runner.Context
+    :param alias: alias of sought Unregistered Company
+    :type alias: str
+    :return: an UnregisteredCompany named tuple
+    :rtype features.ScenarioData.UnregisteredCompany
+    """
+    res = None
+    for company in self.scenario_data.unregistered_companies:
+        if company.alias == alias:
+            res = company
+            logging.debug("Found Unregistered Company: '{}' in Scenario Data"
+                          .format(alias))
+    assert res is not None, ("Couldn't find Unregistered Company '{}' in "
+                             "Scenario Data".format(alias))
+    return res
+
+
 def patch_context(context):
     """Will patch the Behave's `context` object with some handy functions.
 
@@ -80,7 +118,9 @@ def patch_context(context):
 
     :param context: Behave context object
     """
-    context.add_actor = types.MethodType(add_actor, context)
-    context.get_actor = types.MethodType(get_actor, context)
-    context.get_actor_client = types.MethodType(get_actor_client, context)
+    context.add_actor = MethodType(add_actor, context)
+    context.get_actor = MethodType(get_actor, context)
+    context.get_actor_client = MethodType(get_actor_client, context)
+    context.add_unregistered_company = MethodType(add_unregistered_company, context)
+    context.get_unregistered_company = MethodType(get_unregistered_company, context)
 
