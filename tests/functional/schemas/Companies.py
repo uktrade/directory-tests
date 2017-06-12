@@ -37,7 +37,6 @@ COMPANIES = {
                 },
                 "required": [
                     "premises",
-                    "locality"
                 ],
                 "type": "object"
             },
