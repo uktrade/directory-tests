@@ -119,12 +119,22 @@ def confirm_company_selection(context, alias):
     :type alias: str
     """
     company = context.get_unregistered_company(alias)
-    url = get_absolute_url('ui-buyer:register-confirm-company')
+    url_confirm = get_absolute_url('ui-buyer:register-confirm-company')
     params = {"company_number": company.number}
-    response = requests.get(url=url, params=params)
+    response = requests.get(url=url_confirm, params=params)
     assert response.status_code == 200
     error_msg = "Company not found. Please check the number."
     error_idx = response.content.decode("utf-8").find(error_msg)
     assert error_idx == -1, ("Response contains an error '{}':\n{}"
                              .format(error_msg, response.content))
     logging.debug("Confirmed selection of Company: {}".format(company.number))
+
+    # Once on the "Confirm Company" page, we have to go to the
+    # "Confirm Export Status" page with "Referer" header set to this page
+    url_export = get_absolute_url('ui-buyer:register-confirm-export-status')
+    headers = {"Referer": "{}?company_number={}".format(url_confirm,
+                                                        company.number)}
+    response = requests.get(url=url_export, headers=headers)
+    assert response.status_code == 200
+    logging.debug("Confirmed selection of Company: {}".format(company.number))
+
