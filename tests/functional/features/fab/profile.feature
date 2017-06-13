@@ -8,7 +8,7 @@ Feature: Trade Profile
       When "Peter Alder" randomly selects an active company without a profile identified by an alias "Company X"
       And "Peter Alder" confirms that "Company X" is the correct one
       And "Peter Alder" confirms that the export status of "Company X" is "<current>"
-      And "Peter Alder" creates a SSO account for "Company X" using "valid" credentials
+      And "Peter Alder" creates a SSO account for "Company X" using valid credentials
 
       Then the supplier should be told about the verification email
       And the supplier should receive a verification email entitled "Your great.gov.uk account: Please Confirm Your E-mail Address"

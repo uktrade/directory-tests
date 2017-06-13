@@ -187,8 +187,7 @@ def confirm_export_status(context, supplier_alias, alias, export_status):
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
 
 
-def create_sso_account_for_selected_company(context, supplier_alias, alias,
-                                            are_valid):
+def create_sso_account_for_selected_company(context, supplier_alias, alias):
     """Will create a SSO account for selected company.
 
     Will use randomly generated email address and password
@@ -198,13 +197,5 @@ def create_sso_account_for_selected_company(context, supplier_alias, alias,
     :param alias:
     :param are_valid
     """
-    if are_valid == "valid":
-        valid_creds = True
-    elif are_valid == "invalid":
-        valid_creds = False
-    else:
-        raise LookupError("Could not recognize '{}' as an indicator whether "
-                          "valid or invalid SSO credentials should be used: {}"
-                          .format(are_valid))
     actor = context.get_actor(supplier_alias)
 

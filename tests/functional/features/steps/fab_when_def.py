@@ -30,10 +30,8 @@ def when_supplier_confirms_export_status(context, supplier_alias, alias,
 
 
 @when('"{supplier_alias}" creates a SSO account for "{alias}" using '
-      '"{are_valid}" credentials')
+      'valid credentials')
 def when_supplier_creates_sso_account_for_selected_company(context,
                                                            supplier_alias,
-                                                           alias,
-                                                           are_valid):
-    create_sso_account_for_selected_company(context, supplier_alias, alias,
-                                            are_valid)
+                                                           alias):
+    create_sso_account_for_selected_company(context, supplier_alias, alias)
