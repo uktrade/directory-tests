@@ -191,12 +191,37 @@ def confirm_export_status(context, supplier_alias, alias, export_status):
 def create_sso_account_for_selected_company(context, supplier_alias, alias):
     """Will create a SSO account for selected company.
 
-    Will use randomly generated email address and password
+    NOTE:
+    Will use credentials randomly generated at Actor's initialization.
+    It will also store final response in `context`
 
-    :param context:
-    :param supplier_alias:
-    :param alias:
-    :param are_valid
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type supplier_alias: str
+    :param alias: alias of the company used in the scope of the scenario
+    :type alias: str
     """
     actor = context.get_actor(supplier_alias)
+    company = context.get_unregistered_company(alias)
+    export_status = context.export_status
+    next_url = get_absolute_url("ui-buyer:register-submit-account-details")
+    # Encode `next` URL
+    next_link = quote("{}?company_number={}&export_status={}"
+                      .format(next_url, company.number, export_status))
+
+    url_signup = get_absolute_url("sso:signup")
+    headers = {"Referer": "{}?next={}".format(url_signup,
+                                              next_link)}
+    cookies = {"sso_display_logged_in": "false"}
+    data = {"csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
+            "email": actor.email,
+            "email2": actor.email,
+            "password1": actor.password,
+            "password2": actor.password,
+            "terms_agreed": "on",
+            "next": next_link}
+    response = requests.post(url=url_signup, headers=headers, cookies=cookies,
+                             data=data)
+    context.response = response
 
