@@ -185,6 +185,7 @@ def confirm_export_status(context, supplier_alias, alias, export_status):
     token = content[(csrf_token_idx+len(value_property)):csrf_token_end_idx]
     logging.debug("Found csrfmiddlewaretoken={}".format(token))
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+    context.export_status = export_status
 
 
 def create_sso_account_for_selected_company(context, supplier_alias, alias):
