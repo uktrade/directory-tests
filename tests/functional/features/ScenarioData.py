@@ -7,7 +7,8 @@ from collections import namedtuple
 
 
 ScenarioData = namedtuple('ScenarioData', ['actors', 'unregistered_companies'])
-Actor = namedtuple('Actor', ['alias', 'csrfmiddlewaretoken'])
+Actor = namedtuple('Actor', ['alias', 'email', 'password',
+                             'csrfmiddlewaretoken'])
 UnregisteredCompany = namedtuple('UnregisteredCompany', ['alias', 'title',
                                                          'number', 'details'])
 
