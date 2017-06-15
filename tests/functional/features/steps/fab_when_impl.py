@@ -53,21 +53,12 @@ def search_company_house(term):
     return response, response.json()
 
 
-def select_random_company(context, alias):
-    """Will try to find an active company that doesn't have a FAS profile.
+def find_active_company_without_fas_profile(alias):
+    """Will find an active company without a FAS profile.
 
-    Steps (repeat until successful):
-        1 - generate a random Companies House Number
-        2 - check if there's a FAS profile for it
-        3 - check if such company is registered with Companies House & is active
-
-    Once a matching company is found, then it's data will be stored in:
-        context.scenario_data.unregistered_companies[]
-
-    :param context: behave `context` object
-    :type context: behave.runner.Context
-    :param alias: alias of the company used in the scope of the scenario
-    :type alias: str
+    :param alias: alias that will be given to the found company
+    :return: an UnregisteredCompany named tuple
+    :rtype: test.functional.features.ScenarioData.UnregisteredCompany
     """
     has_profile = True
     exists = False
@@ -87,7 +78,7 @@ def select_random_company(context, alias):
                 active = True
                 assert json[0]["company_number"] == random_company_number, (
                     "Expected to get details of company no.: {} but got {}"
-                    .format(random_company_number, json[0]["company_number"]))
+                        .format(random_company_number, json[0]["company_number"]))
             else:
                 counter += 1
                 has_profile, exists, active = True, False, False
@@ -101,15 +92,60 @@ def select_random_company(context, alias):
             logging.debug("Company with number {} does not exist. Trying a "
                           "different one...".format(random_company_number))
 
-    company_json = json[0]
     logging.debug("It took {} attempt(s) to find an active Company without a "
                   "FAS profile: {} - {}".format(counter,
-                                                company_json["title"],
-                                                company_json["company_number"]))
+                                                json[0]["title"],
+                                                json[0]["company_number"]))
+    company = UnregisteredCompany(alias, json[0]["title"].strip(),
+                                  json[0]["company_number"], json[0])
+    return company
 
-    company = UnregisteredCompany(alias, company_json["title"],
-                                  company_json["company_number"], company_json)
+
+def select_random_company(context, supplier_alias, alias):
+    """Will try to find an active company that doesn't have a FAS profile.
+
+    Steps (repeat until successful):
+        1 - generate a random Companies House Number
+        2 - check if there's a FAS profile for it
+        3 - check if such company is registered with Companies House & is active
+
+    Once a matching company is found, then it's data will be stored in:
+        context.scenario_data.unregistered_companies[]
+
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type supplier_alias: str
+    :param alias: alias of the company used in the scope of the scenario
+    :type alias: str
+    """
+    company = find_active_company_without_fas_profile(alias)
     context.add_unregistered_company(company)
+
+    # Once we have company's details, we can select it for registration
+    session = context.get_actor(supplier_alias).session
+    url = get_absolute_url('ui-buyer:landing')
+    data = {"company_name": company.title, "company_number": company.number}
+    response = session.post(url=url,
+                            headers={"Referer": url},
+                            data=data,
+                            allow_redirects=False)
+    assert response.status_code == 302
+    exp_location = "/register/company?company_number={}".format(company.number)
+    assert response.headers.get("Location") == exp_location
+    logging.debug("Successfully selected company {} - {} for registration"
+                  .format(company.title, company.number))
+
+    # go to the Confirm Company page
+    url = get_absolute_url('ui-buyer:register-confirm-company')
+    headers = {"Referer": get_absolute_url('ui-buyer:landing')}
+    params = {"company_number": company.number}
+    response = session.get(url=url, params=params, headers=headers)
+    assert response.status_code == 200
+    assert "Create your company’s profile" in response.content.decode("utf-8")
+    assert company.title in response.content.decode("utf-8")
+    assert company.number in response.content.decode("utf-8")
+    logging.debug("Successfully got to the Confirm your Company page")
 
 
 def confirm_company_selection(context, alias):
