@@ -9,8 +9,9 @@ from jsonschema import validate
 
 from tests import get_absolute_url
 from tests.functional.features.ScenarioData import UnregisteredCompany
+from tests.functional.features.utils import make_request
+from tests.functional.features.utils import Method
 from tests.functional.schemas import COMPANIES
-from tests.functional.features.settings import DIRECTORY_SSO_URL
 
 
 def has_fas_profile(company_number):
@@ -29,7 +30,7 @@ def has_fas_profile(company_number):
     """
     endpoint = get_absolute_url('ui-supplier:suppliers')
     url = "{}/{}".format(endpoint, company_number)
-    response = requests.get(url=url, allow_redirects=False)
+    response = make_request(Method.GET, url, allow_redirects=False)
     return response.status_code == 301
 
 
@@ -46,7 +47,8 @@ def search_company_house(term):
     """
     url = get_absolute_url('internal-api:companies-house-search')
     params = {"term": term}
-    response = requests.get(url=url, params=params)
+    response = make_request(Method.GET, url, params=params,
+                            allow_redirects=False)
     json = response.json()
     logging.debug("Company House Search result: {}".format(json))
     validate(json, COMPANIES)
@@ -126,9 +128,8 @@ def select_random_company(context, supplier_alias, alias):
     session = context.get_actor(supplier_alias).session
     url = get_absolute_url('ui-buyer:landing')
     data = {"company_name": company.title, "company_number": company.number}
-    response = session.post(url=url,
-                            headers={"Referer": url},
-                            data=data,
+    response = make_request(Method.POST, url, session=session,
+                            headers={"Referer": url}, data=data,
                             allow_redirects=False)
     assert response.status_code == 302
     exp_location = "/register/company?company_number={}".format(company.number)
@@ -140,7 +141,8 @@ def select_random_company(context, supplier_alias, alias):
     url = get_absolute_url('ui-buyer:register-confirm-company')
     headers = {"Referer": get_absolute_url('ui-buyer:landing')}
     params = {"company_number": company.number}
-    response = session.get(url=url, params=params, headers=headers)
+    response = make_request(Method.GET, url, session=session, params=params,
+                            headers=headers)
     assert response.status_code == 200
     assert "Create your company’s profile" in response.content.decode("utf-8")
     assert company.title in response.content.decode("utf-8")
@@ -202,15 +204,18 @@ def confirm_export_status(context, supplier_alias, alias, export_status):
     else:
         raise LookupError("Could not recognize provided Export Status: {}"
                           .format(export_status))
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
     company = context.get_unregistered_company(alias)
     url = get_absolute_url('sso:signup')
     next_param = ("{}/register-submit?company_number={}&export_status={}"
                   .format(DIRECTORY_SSO_URL, company.number, export_status))
     params = {"next": quote(next_param)}
-    response = requests.get(url=url, params=params)
+    response = make_request(Method.GET, url, session=session, params=params)
     assert response.status_code == 200
     logging.debug("Confirmed Export Status of '{}'. We're now on SSO signup "
                   "page.".format(alias))
+
     content = response.content.decode("utf-8")
     csrf_tag_idx = content.find("name='csrfmiddlewaretoken'")
     value_property = "value='"
@@ -239,6 +244,7 @@ def create_sso_account_for_selected_company(context, supplier_alias, alias):
     :type alias: str
     """
     actor = context.get_actor(supplier_alias)
+    session = actor.session
     company = context.get_unregistered_company(alias)
     export_status = context.export_status
     next_url = get_absolute_url("ui-buyer:register-submit-account-details")
@@ -257,7 +263,7 @@ def create_sso_account_for_selected_company(context, supplier_alias, alias):
             "password2": actor.password,
             "terms_agreed": "on",
             "next": next_link}
-    response = requests.post(url=url_signup, headers=headers, cookies=cookies,
-                             data=data)
+    response = make_request(Method.POST, url_signup, session=session,
+                            headers=headers, cookies=cookies, data=data)
     context.response = response
 
