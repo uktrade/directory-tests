@@ -17,14 +17,18 @@ def unauthenticated_supplier(context, supplier_alias):
      * initialize `requests` Session object that allows you to keep the cookies
         across multiple requests
 
+    NOTE:
+    Will use test email account "test@directory.uktrade.io" which is configured
+    on AWS SES to store all incoming emails in plain text in S3.
+
     :param context: behave `context` object
     :type context: behave.runner.Context
     :param supplier_alias: alias of the Actor used within the scenario's scope
     :type supplier_alias: str
     """
     session = Session()
-    email = "{}+{}@digital.trade.gov.uk".format(supplier_alias.replace(" ", "_"),
-                                                random.randint(100000, 999999))
+    email = "test+{}+{}@directory.uktrade.io".format(
+        supplier_alias.replace(" ", "_"), random.randint(100000, 999999))
     password_length = 10
     password = ''.join(random.choice(string.ascii_letters)
                        for i in range(password_length))
