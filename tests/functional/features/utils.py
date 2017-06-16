@@ -185,3 +185,19 @@ def extract_csrfmiddlewaretoken(content):
     token = content[(csrf_token_idx+len(value_property)):csrf_token_end_idx]
     logging.debug("Found csrfmiddlewaretoken={}".format(token))
     return token
+
+
+def extract_plain_msg_from_email(msg):
+    """Extract plain text message (7bit) from email message
+
+    :param msg: an email message
+    :type msg: email.mime.text.MIMEText
+    :return: a plain text message (no HTML)
+    """
+    seven_bit = "Content-Transfer-Encoding: 7bit"
+    assert seven_bit in msg.get_payload()
+    start_7bit = msg.get_payload().find(seven_bit)
+    start = start_7bit + len(seven_bit)
+    end = msg.get_payload().find("--===============", start)
+    return msg.get_payload()[start:end]
+
