@@ -146,7 +146,7 @@ def make_request(method: Method, url, *, session=None, params=None,
     if not allow_redirects:
         logging.debug("REQ Follow redirects: disabled")
 
-    logging.debug("REQ URL: {}".format(res.request.url))
+    logging.debug("REQ URL: {} {}".format(method, res.request.url))
     logging.debug("REQ Headers: {}".format(res.request.headers))
     if cookies:
         logging.debug("REQ Cookies: {}".format(cookies))
