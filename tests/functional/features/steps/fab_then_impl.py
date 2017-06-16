@@ -25,6 +25,6 @@ def verify_response_sso_account_was_created(context):
     content = response.content.decode("utf-8")
     for msg in msgs:
         err_msg = ("Could not find '{}' in the response".format(msg))
-        assert content.find(msg) > -1, err_msg
+        assert msg in content, err_msg
     logging.debug("Successfully created new SSO account")
 
