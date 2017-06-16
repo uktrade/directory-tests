@@ -44,6 +44,8 @@ def init_loggers():
     """Will initialize console and file loggers."""
     # get the root logger
     root_logger = logging.getLogger()
+    # "disable" `urllib3` logger, which is used by `requests`
+    logging.getLogger("urllib3").setLevel(logging.WARNING)
 
     # configure the formatter
     fmt = ('%(asctime)s-%(filename)s[line:%(lineno)d]-%(name)s-%(levelname)s: '
