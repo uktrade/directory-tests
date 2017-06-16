@@ -53,3 +53,20 @@ def init_loggers():
     # configure the file & console loggers
     root_logger.addHandler(get_file_log_handler(log_formatter))
     root_logger.addHandler(get_console_log_handler(log_formatter))
+
+
+class Method(Enum):
+    """Lists all HTTP methods supported by `requests`."""
+    DELETE = 0
+    GET = 1
+    HEAD = 2
+    OPTIONS = 3
+    PATCH = 4
+    POST = 5
+    PUT = 6
+
+    def __str__(self):
+        return self.name
+
+    def __eq__(self, y):
+        return self.value == y.value
