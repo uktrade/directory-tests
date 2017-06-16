@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """Define Scenario Data structure & additional behave's `context` functions."""
 import logging
+from collections import namedtuple
 from types import MethodType
 
-from collections import namedtuple
+from requests import Session
 
 
 ScenarioData = namedtuple('ScenarioData', ['actors', 'unregistered_companies'])
@@ -68,6 +69,22 @@ def set_actor_csrfmiddlewaretoken(self, alias, token):
                           "{}".format(token, alias))
 
 
+def reset_actor_session(self, alias):
+    """Reset `requests` Session object.
+
+    Can be useful when interacting with multiple domains.
+
+    :param self: behave `context` object
+    :type self: behave.runner.Context
+    :param alias: alias of sought actor
+    :type alias: str
+    """
+    for idx, actor in enumerate(self.scenario_data.actors):
+        if actor.alias == alias:
+            self.scenario_data.actors[idx] = actor._replace(session=Session())
+            logging.debug("Successfully reset {}' session object".format(alias))
+
+
 def add_unregistered_company(self, company):
     """Will add an Unregistered Company to Scenario Data.
 
@@ -116,6 +133,7 @@ def patch_context(context):
     """
     context.add_actor = MethodType(add_actor, context)
     context.get_actor = MethodType(get_actor, context)
+    context.reset_actor_session = MethodType(reset_actor_session, context)
     context.set_actor_csrfmiddlewaretoken = MethodType(set_actor_csrfmiddlewaretoken, context)
     context.add_unregistered_company = MethodType(add_unregistered_company, context)
     context.get_unregistered_company = MethodType(get_unregistered_company, context)
