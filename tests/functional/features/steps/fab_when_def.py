@@ -13,13 +13,13 @@ from tests.functional.features.steps.fab_when_impl import select_random_company
 
 @when('"{supplier_alias}" randomly selects an active company without a profile '
       'identified by an alias "{alias}"')
-def when_random_company_is_selected(context, supplier_alias, alias):
-    select_random_company(context, alias)
+def when_supplier_selects_random_company(context, supplier_alias, alias):
+    select_random_company(context, supplier_alias, alias)
 
 
 @when('"{supplier_alias}" confirms that "{alias}" is the correct one')
 def when_company_selection_is_confirmed(context, supplier_alias, alias):
-    confirm_company_selection(context, alias)
+    confirm_company_selection(context, supplier_alias, alias)
 
 
 @when('"{supplier_alias}" confirms that the export status of "{alias}" is '
