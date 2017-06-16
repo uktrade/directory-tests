@@ -30,6 +30,7 @@ urls = {
     'ui-buyer:register': 'register',
     'ui-buyer:register-confirm-company': 'register/company',
     'ui-buyer:register-confirm-export-status': 'register/exports',
+    'ui-buyer:register-finish': 'register/finished',
     'ui-buyer:register-submit-account-details': 'register-submit',
     'ui-buyer:company-profile': 'company-profile',
     'ui-buyer:upload-logo': 'company-profile/edit/logo',
