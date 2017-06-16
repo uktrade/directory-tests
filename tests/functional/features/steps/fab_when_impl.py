@@ -4,11 +4,11 @@ import logging
 import random
 from urllib.parse import quote
 
-import requests
 from jsonschema import validate
 
 from tests import get_absolute_url
 from tests.functional.features.ScenarioData import UnregisteredCompany
+from tests.functional.features.utils import extract_csrfmiddlewaretoken
 from tests.functional.features.utils import make_request
 from tests.functional.features.utils import Method
 from tests.functional.schemas import COMPANIES
@@ -144,13 +144,18 @@ def select_random_company(context, supplier_alias, alias):
     response = make_request(Method.GET, url, session=session, params=params,
                             headers=headers)
     assert response.status_code == 200
-    assert "Create your company’s profile" in response.content.decode("utf-8")
-    assert company.title in response.content.decode("utf-8")
-    assert company.number in response.content.decode("utf-8")
+    content = response.content.decode("utf-8")
+    assert "Create your company’s profile" in content
+    assert company.title.upper() in content
+    assert company.number in content
     logging.debug("Successfully got to the Confirm your Company page")
 
+    content = response.content.decode("utf-8")
+    token = extract_csrfmiddlewaretoken(content)
+    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
 
-def confirm_company_selection(context, alias):
+
+def confirm_company_selection(context, supplier_alias, alias):
     """Will confirm that the selected company is the right one.
 
     :param context: behave `context` object
@@ -158,25 +163,49 @@ def confirm_company_selection(context, alias):
     :param alias: alias of the company used in the scope of the scenario
     :type alias: str
     """
+    actor = context.get_actor(supplier_alias)
+    token = actor.csrfmiddlewaretoken
+    session = actor.session
     company = context.get_unregistered_company(alias)
-    url_confirm = get_absolute_url('ui-buyer:register-confirm-company')
-    params = {"company_number": company.number}
-    response = requests.get(url=url_confirm, params=params)
-    assert response.status_code == 200
-    error_msg = "Company not found. Please check the number."
-    error_idx = response.content.decode("utf-8").find(error_msg)
-    assert error_idx == -1, ("Response contains an error '{}':\n{}"
-                             .format(error_msg, response.content))
+    url = ("{}?company_number={}"
+           .format(get_absolute_url('ui-buyer:register-confirm-company'),
+                   company.number))
+    headers = {"Referer": url}
+    data = {"csrfmiddlewaretoken": token,
+            "enrolment_view-current_step": "company",
+            "company-company_name": company.title,
+            "company-company_number": company.number,
+            "company-company_address": company.details["address_snippet"]}
+
+    response = make_request(Method.POST, url, session=session, headers=headers,
+                            data=data, allow_redirects=False)
+    assert response.status_code == 302, ("Expected 302 but got {}"
+                                         .format(response.status_code))
+    assert response.headers.get("Location") == "/register/exports", (
+        "Expected new location to be '/register/exports' but got {}"
+        .format(response.headers.get("Location")))
+
+    msg = "Company not found. Please check the number."
+    err_msg = "Found an error '{}' in response:{}".format(msg, response.content)
+    assert msg not in response.content.decode("utf-8"), err_msg
     logging.debug("Confirmed selection of Company: {}".format(company.number))
 
     # Once on the "Confirm Company" page, we have to go to the
     # "Confirm Export Status" page with "Referer" header set to this page
     url_export = get_absolute_url('ui-buyer:register-confirm-export-status')
-    headers = {"Referer": "{}?company_number={}".format(url_confirm,
-                                                        company.number)}
-    response = requests.get(url=url_export, headers=headers)
-    assert response.status_code == 200
+    headers = {"Referer": url}
+    response = make_request(Method.GET, url_export, session=session,
+                            headers=headers)
+    content = response.content.decode("utf-8")
+    assert response.status_code == 200, ("Expected 200 but got {}"
+                                         .format(response.status_code))
+    assert "Your company's previous exports" in content
     logging.debug("Confirmed selection of Company: {}".format(company.number))
+
+    # Now, we've landed on the Export Status page, so we have extract the
+    # csrfmiddlewaretoken from the response content
+    token = extract_csrfmiddlewaretoken(content)
+    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
 
 
 def confirm_export_status(context, supplier_alias, alias, export_status):
@@ -206,25 +235,73 @@ def confirm_export_status(context, supplier_alias, alias, export_status):
                           .format(export_status))
     actor = context.get_actor(supplier_alias)
     session = actor.session
+    token = actor.csrfmiddlewaretoken
     company = context.get_unregistered_company(alias)
-    url = get_absolute_url('sso:signup')
-    next_param = ("{}/register-submit?company_number={}&export_status={}"
-                  .format(DIRECTORY_SSO_URL, company.number, export_status))
-    params = {"next": quote(next_param)}
-    response = make_request(Method.GET, url, session=session, params=params)
-    assert response.status_code == 200
-    logging.debug("Confirmed Export Status of '{}'. We're now on SSO signup "
-                  "page.".format(alias))
 
+    referer = get_absolute_url("ui-buyer:register-confirm-export-status")
+
+    # Step 1: POST /register/exports
+    url = get_absolute_url("ui-buyer:register-confirm-export-status")
+    headers = {"Referer": referer}
+    data = {"csrfmiddlewaretoken": token,
+            "enrolment_view-current_step": "exports",
+            "exports-export_status": export_status,
+            "exports-terms_agreed": "on"}
+    response = make_request(Method.POST, url, session=session, headers=headers,
+                            data=data, allow_redirects=False)
+    assert response.status_code == 302, ("Expected 302 but got {}"
+                                         .format(response.status_code))
+    assert response.headers.get("Location") == "/register/finished"
+
+    # Step 2: GET /register/finished
+    url = get_absolute_url("ui-buyer:register-finish")
+    headers = {"Referer": referer}
+    response = make_request(Method.GET, url, session=session, headers=headers,
+                            allow_redirects=False)
+    assert response.status_code == 302, ("Expected 302 but got {}"
+                                         .format(response.status_code))
+    location = ("/register-submit?company_number={}&export_status={}"
+                .format(company.number, export_status))
+    assert response.headers.get("Location") == location
+
+    # Step 3: GET /register-submit?company_number={}&export_status={}
+    url = get_absolute_url("ui-buyer:register-submit-account-details")
+    params = {"company_number": company.number,
+              "export_status": export_status}
+    headers = {"Referer": referer}
+    response = make_request(Method.GET, url, session=session, params=params,
+                            headers=headers, allow_redirects=False)
+    assert response.status_code == 302, ("Expected 302 but got {}"
+                                         .format(response.status_code))
+    next_1 = quote("{}?export_status={}&company_number={}"
+                         .format(url, export_status, company.number))
+    location_1 = "{}?next={}".format(get_absolute_url("sso:signup"), next_1)
+    next_2 = quote("{}?company_number={}&export_status={}"
+                         .format(url, company.number, export_status))
+    location_2 = "{}?next={}".format(get_absolute_url("sso:signup"), next_2)
+    assert response.headers.get("Location") in [location_1, location_2], (
+        "Should be redirected to one of these 2 locations '{}' but instead was "
+        "redirected to '{}'".format([location_1, location_2],
+                                    response.headers.get("Location")))
+    logging.debug("Confirmed Export Status of '{}'. We're now going to the "
+                  "SSO signup page.".format(alias))
+
+    # Step 4: GET SSO /accounts/signup/?next=...
+    # don't use FAB UI Cookies
+    url = get_absolute_url("sso:signup")
+    params = {"next": next_1}
+    headers = {"Referer": referer}
+    context.reset_actor_session(supplier_alias)
+    session = context.get_actor(supplier_alias).session
+    response = make_request(Method.GET, url, session=session, params=params,
+                            headers=headers)
+    assert response.status_code == 200, ("Expected 200 but got {}"
+                                         .format(response.status_code))
     content = response.content.decode("utf-8")
-    csrf_tag_idx = content.find("name='csrfmiddlewaretoken'")
-    value_property = "value='"
-    logging.debug("Looking for csrfmiddlewaretoken in: {}"
-                  .format(content[csrf_tag_idx:csrf_tag_idx + 150]))
-    csrf_token_idx = content.find(value_property, csrf_tag_idx, csrf_tag_idx + 60)
-    csrf_token_end_idx = content.find("'", csrf_token_idx + len(value_property), csrf_tag_idx + 150)
-    token = content[(csrf_token_idx+len(value_property)):csrf_token_end_idx]
-    logging.debug("Found csrfmiddlewaretoken={}".format(token))
+    assert "Create a great.gov.uk account and you can" in content
+    logging.debug("Successfully landed on SSO signup page")
+
+    token = extract_csrfmiddlewaretoken(content)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
     context.export_status = export_status
 
@@ -247,15 +324,13 @@ def create_sso_account_for_selected_company(context, supplier_alias, alias):
     session = actor.session
     company = context.get_unregistered_company(alias)
     export_status = context.export_status
+    # Step 1: POST SSO accounts/signup/
     next_url = get_absolute_url("ui-buyer:register-submit-account-details")
-    # Encode `next` URL
     next_link = quote("{}?company_number={}&export_status={}"
                       .format(next_url, company.number, export_status))
-
     url_signup = get_absolute_url("sso:signup")
     headers = {"Referer": "{}?next={}".format(url_signup,
                                               next_link)}
-    cookies = {"sso_display_logged_in": "false"}
     data = {"csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
             "email": actor.email,
             "email2": actor.email,
@@ -264,6 +339,16 @@ def create_sso_account_for_selected_company(context, supplier_alias, alias):
             "terms_agreed": "on",
             "next": next_link}
     response = make_request(Method.POST, url_signup, session=session,
-                            headers=headers, cookies=cookies, data=data)
-    context.response = response
+                            headers=headers, data=data,
+                            allow_redirects=False)
+    assert response.status_code == 302, ("Expected 302 but got {}"
+                                         .format(response.status_code))
+    assert response.headers.get("Location") == "/accounts/confirm-email/"
 
+    # Steps 2: GET SSO /accounts/confirm-email/
+    url = get_absolute_url("sso:email_confirm")
+    response = make_request(Method.GET, url, session=session,
+                            headers=headers, allow_redirects=False)
+    assert response.status_code == 200, ("Expected 200 but got {}"
+                                         .format(response.status_code))
+    context.response = response
