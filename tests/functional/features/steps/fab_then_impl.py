@@ -3,7 +3,7 @@
 import logging
 
 
-def verify_response_sso_account_was_created(context):
+def verify_response_sso_account_was_created(context, alias):
     """Will verify if SSO account was successfully created.
 
     It's a very crude check, as it will only check if the response body contains
@@ -26,5 +26,5 @@ def verify_response_sso_account_was_created(context):
     for msg in msgs:
         err_msg = ("Could not find '{}' in the response".format(msg))
         assert msg in content, err_msg
-    logging.debug("Successfully created new SSO account")
+    logging.debug("Successfully created new SSO account for {}".format(alias))
 
