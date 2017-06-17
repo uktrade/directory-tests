@@ -218,3 +218,18 @@ def extract_plain_text_payload_from_email(msg):
         end = payload.find("--===============", start)
         res = payload[start:end]
     return res or None
+
+
+def extract_email_confirmation_link(payload):
+    """Find email confirmation link inside the plain text email payload.
+
+    :param payload: plain text email message payload
+    :type  payload: str
+    :return: email confirmation link
+    :rtype:  str
+    """
+    start = payload.find("http")
+    end = payload.find("\n", start) - 1  # `- 1` to skip the newline char
+    activation_link = payload[start:end]
+    logging.debug("Found email confirmation link: {}".format(activation_link))
+    return activation_link
