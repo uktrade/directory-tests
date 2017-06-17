@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """FAB Given step implementations."""
-import html
 import logging
 import random
 from urllib.parse import quote
@@ -145,8 +144,12 @@ def select_random_company(context, supplier_alias, alias):
     assert response.status_code == 200
     content = response.content.decode("utf-8")
     assert "Create your company’s profile" in content
-    assert html.escape(company.title.upper()) in content, (
-        "Company name not present in response content:\n{}".format(content))
+    html_escape_table = {"&": "&amp;"}
+    escaped_company_title = "".join(html_escape_table.get(c, c) for c in
+                                    company.title.upper())
+    assert escaped_company_title in content, ("Company name not present in "
+                                              "response content:\n{}"
+                                              .format(content))
     assert company.number in content
     logging.debug("Successfully got to the Confirm your Company page")
 
