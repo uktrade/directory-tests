@@ -13,5 +13,6 @@ jsonschema==2.6.0
 parse-type==0.3.4         # via behave
 parse==1.8.2              # via behave, parse-type
 requests==2.17.3
-six==1.10.0               # via behave, parse-type
+retrying==1.3.3
+six==1.10.0               # via behave, parse-type, retrying
 urllib3==1.21.1           # via requests
