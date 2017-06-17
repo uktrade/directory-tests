@@ -9,7 +9,7 @@ from requests import Session
 
 ScenarioData = namedtuple('ScenarioData', ['actors', 'unregistered_companies'])
 Actor = namedtuple('Actor', ['alias', 'email', 'password', 'session',
-                             'csrfmiddlewaretoken'])
+                             'csrfmiddlewaretoken', 'email_confirmation_link'])
 UnregisteredCompany = namedtuple('UnregisteredCompany', ['alias', 'title',
                                                          'number', 'details'])
 
