@@ -246,6 +246,18 @@ def extract_email_confirmation_link(payload):
 
 
 def get_s3_bucket():
+    """Get S3 bucket connection.
+
+    NOTE:
+    requires following environment variables to be set:
+    * S3_ACCESS_KEY_ID
+    * S3_SECRET_ACCESS_KEY
+    * S3_BUCKET
+    * S3_REGION
+
+    :return: a S3 bucket connection
+    :rtype: boto.s3.connection.S3Connection
+    """
     conn = connect_to_region(region_name=S3_REGION,
                              aws_access_key_id=S3_ACCESS_KEY_ID,
                              aws_secret_access_key=S3_SECRET_ACCESS_KEY,
@@ -255,6 +267,13 @@ def get_s3_bucket():
 
 
 def find_confirmation_email_msg(bucket, actor, subject):
+    """Will search for an email confirmation message stored in AWS S3.
+
+    :param bucket: S3 bucket connection
+    :param actor: Actor named tuple
+    :param subject: expected subject of sought message
+    :return: a plain text message payload
+    """
     res = None
     found = False
     for key in bucket.list():
