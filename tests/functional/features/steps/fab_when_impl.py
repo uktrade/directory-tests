@@ -8,7 +8,7 @@ from urllib.parse import quote
 from jsonschema import validate
 
 from tests import get_absolute_url
-from tests.functional.features.ScenarioData import UnregisteredCompany
+from tests.functional.features.context_utils import UnregisteredCompany
 from tests.functional.features.utils import extract_csrf_middleware_token
 from tests.functional.features.utils import make_request
 from tests.functional.features.utils import Method

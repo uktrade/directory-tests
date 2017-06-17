@@ -5,7 +5,7 @@ import random
 
 from requests import Session
 
-from tests.functional.features.ScenarioData import Actor
+from tests.functional.features.context_utils import Actor
 
 
 def unauthenticated_supplier(context, supplier_alias):

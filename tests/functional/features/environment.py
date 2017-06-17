@@ -2,8 +2,8 @@
 """Behave configuration file."""
 import logging
 
-from tests.functional.features.ScenarioData import initialize_scenario_data
-from tests.functional.features.ScenarioData import patch_context
+from tests.functional.features.context_utils import initialize_scenario_data
+from tests.functional.features.context_utils import patch_context
 from tests.functional.features.utils import init_loggers
 
 
