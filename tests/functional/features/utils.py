@@ -48,6 +48,7 @@ def init_loggers():
     # get the root logger
     root_logger = logging.getLogger()
     # "disable" `urllib3` logger, which is used by `requests`
+    logging.getLogger("boto").setLevel(logging.WARNING)
     logging.getLogger("urllib3").setLevel(logging.WARNING)
 
     # configure the formatter
