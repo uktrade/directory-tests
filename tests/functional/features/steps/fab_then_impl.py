@@ -44,7 +44,7 @@ def sso_account_should_be_created(context, alias):
 
 
 @retry(wait_fixed=5000, stop_max_attempt_number=10)
-def should_get_verification_email(context, alias, title):
+def should_get_verification_email(context, alias, subject):
     """Will check if the Supplier received an email verification message.
 
     NOTE:
@@ -54,8 +54,8 @@ def should_get_verification_email(context, alias, title):
     :type context: behave.runner.Context
     :param alias: alias of the Actor used in the scope of the scenario
     :type alias: str
-    :param title: expected title of the email verification message
-    :type  title: str
+    :param subject: expected subject of the email verification message
+    :type  subject: str
     """
     actor = context.get_actor(alias)
     title = title or ("Your great.gov.uk account: Please Confirm Your E-mail "

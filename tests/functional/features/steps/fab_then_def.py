@@ -13,7 +13,7 @@ def then_sso_account_was_created(context, alias):
     sso_account_should_be_created(context, alias)
 
 
-@then('"{alias}" should receive an email verification msg entitled "{title}"')
-def then_supplier_should_receive_verification_email(context, alias, title):
-    should_get_verification_email(context, alias, title)
+@then('"{alias}" should receive an email verification msg entitled "{subject}"')
+def then_supplier_should_receive_verification_email(context, alias, subject):
+    should_get_verification_email(context, alias, subject)
 
