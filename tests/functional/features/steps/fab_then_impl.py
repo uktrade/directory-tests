@@ -12,11 +12,11 @@ from tests.functional.features.settings import S3_SECRET_ACCESS_KEY
 from tests.functional.features.settings import S3_BUCKET
 from tests.functional.features.settings import S3_REGION
 from tests.functional.features.utils import \
-    extract_plain_text_payload_from_email
+    extract_plain_text_payload
 from tests.functional.features.utils import extract_email_confirmation_link
 
 
-def verify_response_sso_account_was_created(context, alias):
+def sso_account_should_be_created(context, alias):
     """Will verify if SSO account was successfully created.
 
     It's a very crude check, as it will only check if the response body
@@ -27,31 +27,35 @@ def verify_response_sso_account_was_created(context, alias):
 
     :param context: behave `context` object
     :type context: behave.runner.Context
+    :param alias: alias of the Actor used in the scope of the scenario
+    :type alias: str
     """
     response = context.response
     msgs = ["Verify your email address",
             "if you do not receive an email within 10 minutes", (
                 "We have sent you a confirmation email. Please follow the link"
-                " in the email to verify your email address.")
-            ]
+                " in the email to verify your email address.")]
 
     content = response.content.decode("utf-8")
     for msg in msgs:
         err_msg = ("Could not find '{}' in the response".format(msg))
         assert msg in content, err_msg
-    logging.debug("Successfully created new SSO account for {}".format(alias))
+    logging.debug("Successfully created new SSO account for %s", alias)
 
 
 @retry(wait_fixed=5000, stop_max_attempt_number=10)
-def should_receive_verification_email(context, alias, title):
+def should_get_verification_email(context, alias, *, title=None):
     """Will check if the Supplier received an email verification message.
 
     NOTE:
     The check is done by attempting to find a file with the email is Amazon S3.
 
-    :param context:
-    :param alias:
-    :param title:
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param alias: alias of the Actor used in the scope of the scenario
+    :type alias: str
+    :param title: expected title of the email verification message
+    :type  title: str
     """
     actor = context.get_actor(alias)
     title = title or ("Your great.gov.uk account: Please Confirm Your E-mail "
@@ -65,27 +69,27 @@ def should_receive_verification_email(context, alias, title):
     found = False
     for key in bucket.list():
         if key.key != "AMAZON_SES_SETUP_NOTIFICATION":
-            logging.debug("Processing email file: {}".format(key.key))
+            logging.debug("Processing email file: %s", key.key)
             try:
                 msg_contents = key.get_contents_as_string().decode("utf-8")
                 msg = email.message_from_string(msg_contents)
                 if msg['To'] == actor.email:
-                    logging.debug("Found an email addressed at: {}"
-                                  .format(msg['To']))
+                    logging.debug("Found an email addressed at: %s",
+                                  msg['To'])
                     if msg['Subject'] == title:
                         logging.debug("Found email confirmation message "
-                                      "entitled: {}".format(title))
-                        payload = extract_plain_text_payload_from_email(msg)
+                                      "entitled: %s", title)
+                        payload = extract_plain_text_payload(msg)
                         link = extract_email_confirmation_link(payload)
                         context.set_actor_email_confirmation_link(alias, link)
                         found = True
-                logging.debug("Deleting message {}".format(key.key))
+                logging.debug("Deleting message %s", key.key)
                 bucket.delete_key(key.key)
-                logging.debug("Successfully deleted message {} from S3"
-                              .format(key.key))
-            except Exception as e:
+                logging.debug("Successfully deleted message %s from S3",
+                              key.key)
+            except Exception as ex:
                 logging.error("Something went wrong when getting an email msg "
-                              "from S3: {}".format(e))
+                              "from S3: %s", ex)
 
     assert found, ("Could not find email confirmation message for {}"
                    .format(actor.email))

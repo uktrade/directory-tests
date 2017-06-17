@@ -7,7 +7,7 @@ from tests.functional.features.steps.fab_when_impl import \
 from tests.functional.features.steps.fab_when_impl import \
     confirm_export_status
 from tests.functional.features.steps.fab_when_impl import \
-    create_sso_account_for_selected_company
+    create_sso_account
 from tests.functional.features.steps.fab_when_impl import select_random_company
 
 
@@ -34,4 +34,4 @@ def when_supplier_confirms_export_status(context, supplier_alias, alias,
 def when_supplier_creates_sso_account_for_selected_company(context,
                                                            supplier_alias,
                                                            alias):
-    create_sso_account_for_selected_company(context, supplier_alias, alias)
+    create_sso_account(context, supplier_alias, alias)

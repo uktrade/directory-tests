@@ -11,7 +11,7 @@ Feature: Trade Profile
       And "Peter Alder" creates a SSO account for "Company X" using valid credentials
 
       Then "Peter Alder" should be told about the verification email
-      And "Peter Alder" should receive a verification email entitled "Your great.gov.uk account: Please Confirm Your E-mail Address"
+      And "Peter Alder" should receive an email verification msg entitled "Your great.gov.uk account: Please Confirm Your E-mail Address"
 
       Examples:
         | current                        |

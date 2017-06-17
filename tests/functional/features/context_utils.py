@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Define Scenario Data structure & additional behave's `context` functions."""
+"""Helpers added to the behave's `context` object."""
 import logging
 from collections import namedtuple
 from types import MethodType
@@ -37,8 +37,7 @@ def add_actor(self, actor):
     assert isinstance(actor, Actor), ("Expected Actor named tuple but got '{}'"
                                       " instead".format(type(actor)))
     self.scenario_data.actors.append(actor)
-    logging.debug("Successfully added actor: {} to Scenario Data"
-                  .format(actor.alias))
+    logging.debug("Successfully added actor: %s to Scenario Data", actor.alias)
 
 
 def get_actor(self, alias):
@@ -55,7 +54,7 @@ def get_actor(self, alias):
     for actor in self.scenario_data.actors:
         if actor.alias == alias:
             res = actor
-            logging.debug("Found actor: '{}' in Scenario Data".format(alias))
+            logging.debug("Found actor: '%s' in Scenario Data", alias)
     assert res is not None, ("Couldn't find actor '{}' in Scenario Data"
                              .format(alias))
     return res
@@ -66,8 +65,8 @@ def set_actor_csrfmiddlewaretoken(self, alias, token):
         if actor.alias == alias:
             self.scenario_data.actors[idx] = \
                 actor._replace(csrfmiddlewaretoken=token)
-            logging.debug("Successfully set csrfmiddlewaretoken={} for Actor: "
-                          "{}".format(token, alias))
+            logging.debug("Successfully set csrfmiddlewaretoken=%s for Actor: "
+                          "%s", token, alias)
 
 
 def set_actor_email_confirmation_link(self, alias, link):
@@ -75,8 +74,8 @@ def set_actor_email_confirmation_link(self, alias, link):
         if actor.alias == alias:
             self.scenario_data.actors[idx] = \
                 actor._replace(email_confirmation_link=link)
-            logging.debug("Successfully set email_confirmation_link={} for "
-                          "Actor: {}".format(link, alias))
+            logging.debug("Successfully set email_confirmation_link=%s for "
+                          "Actor: %s", link, alias)
 
 
 def reset_actor_session(self, alias):
@@ -92,8 +91,7 @@ def reset_actor_session(self, alias):
     for idx, actor in enumerate(self.scenario_data.actors):
         if actor.alias == alias:
             self.scenario_data.actors[idx] = actor._replace(session=Session())
-            logging.debug("Successfully reset {}'s session object"
-                          .format(alias))
+            logging.debug("Successfully reset %s's session object", alias)
 
 
 def add_unregistered_company(self, company):
@@ -108,9 +106,9 @@ def add_unregistered_company(self, company):
         "Expected UnregisteredCompany named tuple but got '{}' instead"
         .format(type(company)))
     self.scenario_data.unregistered_companies.append(company)
-    logging.debug("Successfully added Unregistered Company: {} - {} to "
-                  "Scenario Data as '{}'".format(company.title, company.number,
-                                                 company.alias))
+    logging.debug("Successfully added Unregistered Company: %s - %s to "
+                  "Scenario Data as '%s'", company.title, company.number,
+                  company.alias)
 
 
 def get_unregistered_company(self, alias):
@@ -127,8 +125,8 @@ def get_unregistered_company(self, alias):
     for company in self.scenario_data.unregistered_companies:
         if company.alias == alias:
             res = company
-            logging.debug("Found Unregistered Company: '{}' in Scenario Data"
-                          .format(alias))
+            logging.debug("Found Unregistered Company: '%s' in Scenario Data",
+                          alias)
     assert res is not None, ("Couldn't find Unregistered Company '{}' in "
                              "Scenario Data".format(alias))
     return res

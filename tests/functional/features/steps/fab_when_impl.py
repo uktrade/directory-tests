@@ -51,7 +51,7 @@ def search_company_house(term):
     response = make_request(Method.GET, url, params=params,
                             allow_redirects=False)
     json = response.json()
-    logging.debug("Company House Search result: {}".format(json))
+    logging.debug("Company House Search result: %s", json)
     validate(json, COMPANIES)
     return response, response.json()
 
@@ -70,35 +70,33 @@ def find_active_company_without_fas_profile(alias):
     while has_profile and not exists and not active:
         random_company_number = str(random.randint(0, 9999999)).zfill(8)
         has_profile = has_fas_profile(random_company_number)
-        logging.debug("Found a company without a FAS profile: {}. Getting "
-                      "it details...".format(random_company_number))
+        logging.debug("Found a company without a FAS profile: %s. Getting "
+                      "it details...", random_company_number)
 
-        response, json = search_company_house(random_company_number)
+        _, json = search_company_house(random_company_number)
 
         if len(json) == 1:
             exists = True
             if json[0]["company_status"] == "active":
                 active = True
                 assert json[0]["company_number"] == random_company_number, (
-                    "Expected to get details of company no.: {} but got {}"
-                    .format(random_company_number, json[0]["company_number"]))
+                    "Expected to get details of company no.: %s but got %s",
+                    random_company_number, json[0]["company_number"])
             else:
                 counter += 1
                 has_profile, exists, active = True, False, False
-                logging.debug("Company with number {} is not active. It's {}. "
-                              "Trying a different one..."
-                              .format(random_company_number,
-                                      json[0]["company_status"]))
+                logging.debug("Company with number %s is not active. It's %s. "
+                              "Trying a different one...",
+                              random_company_number, json[0]["company_status"])
         else:
             counter += 1
             has_profile, exists, active = True, False, False
-            logging.debug("Company with number {} does not exist. Trying a "
-                          "different one...".format(random_company_number))
+            logging.debug("Company with number %s does not exist. Trying a "
+                          "different one...", random_company_number)
 
-    logging.debug("It took {} attempt(s) to find an active Company without a "
-                  "FAS profile: {} - {}".format(counter,
-                                                json[0]["title"],
-                                                json[0]["company_number"]))
+    logging.debug("It took %s attempt(s) to find an active Company without a "
+                  "FAS profile: %s - %s", counter, json[0]["title"],
+                  json[0]["company_number"])
     company = UnregisteredCompany(alias, json[0]["title"].strip(),
                                   json[0]["company_number"], json[0])
     return company
@@ -135,8 +133,8 @@ def select_random_company(context, supplier_alias, alias):
     assert response.status_code == 302
     exp_location = "/register/company?company_number={}".format(company.number)
     assert response.headers.get("Location") == exp_location
-    logging.debug("Successfully selected company {} - {} for registration"
-                  .format(company.title, company.number))
+    logging.debug("Successfully selected company %s - %s for registration",
+                  company.title, company.number)
 
     # go to the Confirm Company page
     url = get_absolute_url('ui-buyer:register-confirm-company')
@@ -184,14 +182,14 @@ def confirm_company_selection(context, supplier_alias, alias):
     assert response.status_code == 302, ("Expected 302 but got {}"
                                          .format(response.status_code))
     assert response.headers.get("Location") == "/register/exports", (
-        "Expected new location to be '/register/exports' but got {}"
-        .format(response.headers.get("Location")))
+        "Expected new location to be '/register/exports' but got %s",
+        response.headers.get("Location"))
 
     msg = "Company not found. Please check the number."
     err_msg = "Found an error '{}' in response: {}".format(msg,
                                                            response.content)
     assert msg not in response.content.decode("utf-8"), err_msg
-    logging.debug("Confirmed selection of Company: {}".format(company.number))
+    logging.debug("Confirmed selection of Company: %s", company.number)
 
     # Once on the "Confirm Company" page, we have to go to the
     # "Confirm Export Status" page with "Referer" header set to this page
@@ -203,7 +201,7 @@ def confirm_company_selection(context, supplier_alias, alias):
     assert response.status_code == 200, ("Expected 200 but got {}"
                                          .format(response.status_code))
     assert "Your company's previous exports" in content
-    logging.debug("Confirmed selection of Company: {}".format(company.number))
+    logging.debug("Confirmed selection of Company: %s", company.number)
 
     # Now, we've landed on the Export Status page, so we have extract the
     # csrfmiddlewaretoken from the response content
@@ -286,8 +284,8 @@ def confirm_export_status(context, supplier_alias, alias, export_status):
         "Should be redirected to one of these 2 locations '{}' but instead was"
         " redirected to '{}'".format([location_1, location_2],
                                      response.headers.get("Location")))
-    logging.debug("Confirmed Export Status of '{}'. We're now going to the "
-                  "SSO signup page.".format(alias))
+    logging.debug("Confirmed Export Status of '%s'. We're now going to the "
+                  "SSO signup page.", alias)
 
     # Step 4: GET SSO /accounts/signup/?next=...
     # don't use FAB UI Cookies
@@ -309,7 +307,7 @@ def confirm_export_status(context, supplier_alias, alias, export_status):
     context.export_status = export_status
 
 
-def create_sso_account_for_selected_company(context, supplier_alias, alias):
+def create_sso_account(context, supplier_alias, alias):
     """Will create a SSO account for selected company.
 
     NOTE:

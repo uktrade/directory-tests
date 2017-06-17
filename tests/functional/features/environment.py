@@ -8,19 +8,18 @@ from tests.functional.features.utils import init_loggers
 
 
 def before_step(context, step):
-    logging.debug('Step: {} {}'.format(step.step_type, str(repr(step.name))))
+    logging.debug('Step: %s %s', step.step_type, str(repr(step.name)))
 
 
 def after_step(context, step):
     logging.debug(context.scenario_data)
     if step.status == "failed":
-        msg = 'Step "{} {}" has failed. Reason: "{}".'.format(
-            step.step_type, step.name, step.exception)
-        logging.debug(msg)
+        logging.debug('Step "%s %s" has failed. Reason: "%s"', step.step_type,
+                      step.name, step.exception)
 
 
 def before_scenario(context, scenario):
-    logging.debug('Starting scenario: {}'.format(scenario.name))
+    logging.debug('Starting scenario: %s', scenario.name)
     # re-initialize the scenario data
     context.scenario_data = initialize_scenario_data()
 
@@ -28,7 +27,7 @@ def before_scenario(context, scenario):
 def after_scenario(context, scenario):
     # clear the scenario data after every scenario
     context.scenario_data = None
-    logging.debug('Finished scenario: {}'.format(scenario.name))
+    logging.debug('Finished scenario: %s', scenario.name)
 
 
 def before_all(context):

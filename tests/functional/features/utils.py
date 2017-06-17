@@ -142,32 +142,31 @@ def make_request(method: Method, url, *, session=None, params=None,
         res = req.put(url=url, params=params, headers=headers, cookies=cookies,
                       data=data, files=files, allow_redirects=allow_redirects)
     else:
-        raise KeyError("Unrecognized Method: {}".format(method.name))
+        raise KeyError("Unrecognized Method: %s", method.name)
 
     if not allow_redirects:
         logging.debug("REQ Follow redirects: disabled")
 
-    logging.debug("REQ URL: {} {}".format(method, res.request.url))
-    logging.debug("REQ Headers: {}".format(res.request.headers))
+    logging.debug("REQ URL: %s %s", method, res.request.url)
+    logging.debug("REQ Headers: %s", res.request.headers)
     if cookies:
-        logging.debug("REQ Cookies: {}".format(cookies))
+        logging.debug("REQ Cookies: %s", cookies)
     if data:
-        logging.debug("REQ Data: {}".format(res.request.body))
+        logging.debug("REQ Data: %s", res.request.body)
     if files:
-        logging.debug("REQ Files: {}".format(res.request.body))
-    logging.debug("RSP Status: {} {}".format(res.status_code, res.reason))
-    logging.debug("RSP URL: {}".format(res.url))
-    logging.debug("RSP Headers: {}".format(res.headers))
-    logging.debug("RSP Cookies: {}".format(res.cookies))
+        logging.debug("REQ Files: %s", res.request.body)
+    logging.debug("RSP Status: %s %s", res.status_code, res.reason)
+    logging.debug("RSP URL: %s", res.url)
+    logging.debug("RSP Headers: %s", res.headers)
+    logging.debug("RSP Cookies: %s", res.cookies)
     if res.content:
         if trim_response_content:
             if len(res.content) > 150:
-                logging.debug("RSP Trimmed Content: {}"
-                              .format(res.content[0:150]))
+                logging.debug("RSP Trimmed Content: %s", res.content[0:150])
             else:
-                logging.debug("RSP Content: {}".format(res.content))
+                logging.debug("RSP Content: %s", res.content)
         else:
-            logging.debug("RSP Content: {}".format(res.content))
+            logging.debug("RSP Content: %s", res.content)
 
     return res
 
@@ -187,8 +186,8 @@ def extract_csrf_middleware_token(content):
     csrf_tag_idx = content.find("name='csrfmiddlewaretoken'")
     value_property = "value='"
     search_offset = 70
-    logging.debug("Looking for csrfmiddlewaretoken in: {}"
-                  .format(content[csrf_tag_idx:csrf_tag_idx + search_offset]))
+    logging.debug("Looking for csrfmiddlewaretoken in: %s",
+                  content[csrf_tag_idx:csrf_tag_idx + search_offset])
     csrf_token_idx = content.find(value_property,
                                   csrf_tag_idx,
                                   csrf_tag_idx + search_offset)
@@ -196,11 +195,11 @@ def extract_csrf_middleware_token(content):
                                       csrf_token_idx + len(value_property),
                                       csrf_tag_idx + search_offset)
     token = content[(csrf_token_idx+len(value_property)):csrf_token_end_idx]
-    logging.debug("Found csrfmiddlewaretoken={}".format(token))
+    logging.debug("Found csrfmiddlewaretoken=%s", token)
     return token
 
 
-def extract_plain_text_payload_from_email(msg):
+def extract_plain_text_payload(msg):
     """Extract plain text payload (7bit) from email message.
 
     :param msg: an email message
@@ -234,5 +233,5 @@ def extract_email_confirmation_link(payload):
     start = payload.find("http")
     end = payload.find("\n", start) - 1  # `- 1` to skip the newline char
     activation_link = payload[start:end]
-    logging.debug("Found email confirmation link: {}".format(activation_link))
+    logging.debug("Found email confirmation link: %s", activation_link)
     return activation_link
