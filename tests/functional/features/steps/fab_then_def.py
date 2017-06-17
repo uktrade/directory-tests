@@ -15,5 +15,5 @@ def then_sso_account_was_created(context, alias):
 
 @then('"{alias}" should receive an email verification msg entitled "{title}"')
 def then_supplier_should_receive_verification_email(context, alias, title):
-    should_get_verification_email(context, alias, title=title)
+    should_get_verification_email(context, alias, title)
 
