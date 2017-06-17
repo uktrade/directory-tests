@@ -8,7 +8,7 @@ from jsonschema import validate
 
 from tests import get_absolute_url
 from tests.functional.features.ScenarioData import UnregisteredCompany
-from tests.functional.features.utils import extract_csrfmiddlewaretoken
+from tests.functional.features.utils import extract_csrf_middleware_token
 from tests.functional.features.utils import make_request
 from tests.functional.features.utils import Method
 from tests.functional.schemas import COMPANIES
@@ -151,7 +151,7 @@ def select_random_company(context, supplier_alias, alias):
     logging.debug("Successfully got to the Confirm your Company page")
 
     content = response.content.decode("utf-8")
-    token = extract_csrfmiddlewaretoken(content)
+    token = extract_csrf_middleware_token(content)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
 
 
@@ -204,7 +204,7 @@ def confirm_company_selection(context, supplier_alias, alias):
 
     # Now, we've landed on the Export Status page, so we have extract the
     # csrfmiddlewaretoken from the response content
-    token = extract_csrfmiddlewaretoken(content)
+    token = extract_csrf_middleware_token(content)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
 
 
@@ -301,7 +301,7 @@ def confirm_export_status(context, supplier_alias, alias, export_status):
     assert "Create a great.gov.uk account and you can" in content
     logging.debug("Successfully landed on SSO signup page")
 
-    token = extract_csrfmiddlewaretoken(content)
+    token = extract_csrf_middleware_token(content)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
     context.export_status = export_status
 

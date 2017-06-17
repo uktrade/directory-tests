@@ -169,7 +169,16 @@ def make_request(method: Method, url, *, session=None, params=None,
     return res
 
 
-def extract_csrfmiddlewaretoken(content):
+def extract_csrf_middleware_token(content):
+    """Extract CSRF middleware token from the response content.
+
+    Comes in handy when dealing with e.g. Django forms.
+
+    :param content: response content decoded as utf-8
+    :type  content: str
+    :return: CSRF middleware token extracted from the response content
+    :rtype: str
+    """
     assert content, "Expected a non-empty response content but got norhing"
 
     csrf_tag_idx = content.find("name='csrfmiddlewaretoken'")
