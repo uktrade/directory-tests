@@ -69,6 +69,15 @@ def set_actor_csrfmiddlewaretoken(self, alias, token):
                           "{}".format(token, alias))
 
 
+def set_actor_email_confirmation_link(self, alias, link):
+    for idx, actor in enumerate(self.scenario_data.actors):
+        if actor.alias == alias:
+            self.scenario_data.actors[idx] = \
+                actor._replace(email_confirmation_link=link)
+            logging.debug("Successfully set email_confirmation_link={} for "
+                          "Actor: {}".format(link, alias))
+
+
 def reset_actor_session(self, alias):
     """Reset `requests` Session object.
 
@@ -135,6 +144,7 @@ def patch_context(context):
     context.get_actor = MethodType(get_actor, context)
     context.reset_actor_session = MethodType(reset_actor_session, context)
     context.set_actor_csrfmiddlewaretoken = MethodType(set_actor_csrfmiddlewaretoken, context)
+    context.set_actor_email_confirmation_link = MethodType(set_actor_email_confirmation_link, context)
     context.add_unregistered_company = MethodType(add_unregistered_company, context)
     context.get_unregistered_company = MethodType(get_unregistered_company, context)
 
