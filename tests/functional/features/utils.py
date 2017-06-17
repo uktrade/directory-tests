@@ -197,17 +197,24 @@ def extract_csrf_middleware_token(content):
     return token
 
 
-def extract_plain_msg_from_email(msg):
-    """Extract plain text message (7bit) from email message
+def extract_plain_text_payload_from_email(msg):
+    """Extract plain text payload (7bit) from email message.
 
     :param msg: an email message
     :type msg: email.mime.text.MIMEText
     :return: a plain text message (no HTML)
+    :rtype: str
     """
-    seven_bit = "Content-Transfer-Encoding: 7bit"
-    assert seven_bit in msg.get_payload()
-    start_7bit = msg.get_payload().find(seven_bit)
-    start = start_7bit + len(seven_bit)
-    end = msg.get_payload().find("--===============", start)
-    return msg.get_payload()[start:end]
-
+    if msg.is_multipart():
+        for part in msg.get_payload():
+            if part.get_content_type() == "text/plain":
+                res = part.get_payload()
+    else:
+        seven_bit = "Content-Transfer-Encoding: 7bit"
+        payload = msg.get_payload()
+        assert seven_bit in payload
+        start_7bit = payload.find(seven_bit)
+        start = start_7bit + len(seven_bit)
+        end = payload.find("--===============", start)
+        res = payload[start:end]
+    return res or None
