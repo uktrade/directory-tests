@@ -64,7 +64,8 @@ def get_actor(self, alias):
 def set_actor_csrfmiddlewaretoken(self, alias, token):
     for idx, actor in enumerate(self.scenario_data.actors):
         if actor.alias == alias:
-            self.scenario_data.actors[idx] = actor._replace(csrfmiddlewaretoken=token)
+            self.scenario_data.actors[idx] = \
+                actor._replace(csrfmiddlewaretoken=token)
             logging.debug("Successfully set csrfmiddlewaretoken={} for Actor: "
                           "{}".format(token, alias))
 
