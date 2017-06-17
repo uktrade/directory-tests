@@ -9,4 +9,3 @@ from tests.functional.features.steps.fab_given_impl import \
 @given('"{supplier_alias}" is an unauthenticated supplier')
 def given_an_unauthenticated_supplier(context, supplier_alias):
     unauthenticated_supplier(context, supplier_alias)
-

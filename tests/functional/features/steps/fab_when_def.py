@@ -11,8 +11,8 @@ from tests.functional.features.steps.fab_when_impl import \
 from tests.functional.features.steps.fab_when_impl import select_random_company
 
 
-@when('"{supplier_alias}" randomly selects an active company without a profile '
-      'identified by an alias "{alias}"')
+@when('"{supplier_alias}" randomly selects an active company without a profile'
+      ' identified by an alias "{alias}"')
 def when_supplier_selects_random_company(context, supplier_alias, alias):
     select_random_company(context, supplier_alias, alias)
 

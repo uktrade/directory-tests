@@ -81,7 +81,7 @@ def find_active_company_without_fas_profile(alias):
                 active = True
                 assert json[0]["company_number"] == random_company_number, (
                     "Expected to get details of company no.: {} but got {}"
-                        .format(random_company_number, json[0]["company_number"]))
+                    .format(random_company_number, json[0]["company_number"]))
             else:
                 counter += 1
                 has_profile, exists, active = True, False, False
@@ -110,7 +110,7 @@ def select_random_company(context, supplier_alias, alias):
     Steps (repeat until successful):
         1 - generate a random Companies House Number
         2 - check if there's a FAS profile for it
-        3 - check if such company is registered with Companies House & is active
+        3 - check if such company is registered at Companies House & is active
 
     Once a matching company is found, then it's data will be stored in:
         context.scenario_data.unregistered_companies[]
@@ -188,7 +188,8 @@ def confirm_company_selection(context, supplier_alias, alias):
         .format(response.headers.get("Location")))
 
     msg = "Company not found. Please check the number."
-    err_msg = "Found an error '{}' in response:{}".format(msg, response.content)
+    err_msg = "Found an error '{}' in response: {}".format(msg,
+                                                           response.content)
     assert msg not in response.content.decode("utf-8"), err_msg
     logging.debug("Confirmed selection of Company: {}".format(company.number))
 
@@ -276,15 +277,15 @@ def confirm_export_status(context, supplier_alias, alias, export_status):
     assert response.status_code == 302, ("Expected 302 but got {}"
                                          .format(response.status_code))
     next_1 = quote("{}?export_status={}&company_number={}"
-                         .format(url, export_status, company.number))
+                   .format(url, export_status, company.number))
     location_1 = "{}?next={}".format(get_absolute_url("sso:signup"), next_1)
     next_2 = quote("{}?company_number={}&export_status={}"
-                         .format(url, company.number, export_status))
+                   .format(url, company.number, export_status))
     location_2 = "{}?next={}".format(get_absolute_url("sso:signup"), next_2)
     assert response.headers.get("Location") in [location_1, location_2], (
-        "Should be redirected to one of these 2 locations '{}' but instead was "
-        "redirected to '{}'".format([location_1, location_2],
-                                    response.headers.get("Location")))
+        "Should be redirected to one of these 2 locations '{}' but instead was"
+        " redirected to '{}'".format([location_1, location_2],
+                                     response.headers.get("Location")))
     logging.debug("Confirmed Export Status of '{}'. We're now going to the "
                   "SSO signup page.".format(alias))
 

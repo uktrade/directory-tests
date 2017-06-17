@@ -17,7 +17,7 @@ def get_file_log_handler(log_formatter,
     Will use DEBUG logging level by default.
 
     :param log_formatter: specifies how the log entries will look like
-    :param log_file: specifies log file path relative to the root of the project
+    :param log_file: specifies log file path relative to the project's root
     :param log_level: specifies logging level, e.g.: logging.ERROR
     :return: configured console log handler
     """
@@ -127,8 +127,8 @@ def make_request(method: Method, url, *, session=None, params=None,
         res = req.get(url=url, params=params, headers=headers, cookies=cookies,
                       allow_redirects=allow_redirects)
     elif method == Method.HEAD:
-        res = req.head(url=url, params=params, headers=headers, cookies=cookies,
-                       allow_redirects=allow_redirects)
+        res = req.head(url=url, params=params, headers=headers,
+                       cookies=cookies, allow_redirects=allow_redirects)
     elif method == Method.OPTIONS:
         res = req.options(url=url, params=params, headers=headers,
                           cookies=cookies, allow_redirects=allow_redirects)
@@ -160,9 +160,12 @@ def make_request(method: Method, url, *, session=None, params=None,
     logging.debug("RSP Headers: {}".format(res.headers))
     logging.debug("RSP Cookies: {}".format(res.cookies))
     if res.content:
-        trim_response_content = len(res.content) > 150
         if trim_response_content:
-            logging.debug("RSP Trimmed Content: {}".format(res.content[0:150]))
+            if len(res.content) > 150:
+                logging.debug("RSP Trimmed Content: {}"
+                              .format(res.content[0:150]))
+            else:
+                logging.debug("RSP Content: {}".format(res.content))
         else:
             logging.debug("RSP Content: {}".format(res.content))
 

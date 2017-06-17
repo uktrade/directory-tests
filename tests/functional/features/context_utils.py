@@ -34,8 +34,8 @@ def add_actor(self, actor):
     :param actor: an instance of Actor Named Tuple
     :type actor: tests.functional.features.ScenarioData.Actor
     """
-    assert isinstance(actor, Actor), ("Expected Actor named tuple but got '{}' "
-                                      "instead".format(type(actor)))
+    assert isinstance(actor, Actor), ("Expected Actor named tuple but got '{}'"
+                                      " instead".format(type(actor)))
     self.scenario_data.actors.append(actor)
     logging.debug("Successfully added actor: {} to Scenario Data"
                   .format(actor.alias))
@@ -92,7 +92,8 @@ def reset_actor_session(self, alias):
     for idx, actor in enumerate(self.scenario_data.actors):
         if actor.alias == alias:
             self.scenario_data.actors[idx] = actor._replace(session=Session())
-            logging.debug("Successfully reset {}' session object".format(alias))
+            logging.debug("Successfully reset {}'s session object"
+                          .format(alias))
 
 
 def add_unregistered_company(self, company):
@@ -136,7 +137,7 @@ def get_unregistered_company(self, alias):
 def patch_context(context):
     """Will patch the Behave's `context` object with some handy functions.
 
-    This adds methods that allow to easily get & add data from/to Scenario Data.
+    Adds methods that allow to easily get & add data from/to Scenario Data.
 
     :param context: behave `context` object
     :type context: behave.runner.Context
@@ -144,8 +145,11 @@ def patch_context(context):
     context.add_actor = MethodType(add_actor, context)
     context.get_actor = MethodType(get_actor, context)
     context.reset_actor_session = MethodType(reset_actor_session, context)
-    context.set_actor_csrfmiddlewaretoken = MethodType(set_actor_csrfmiddlewaretoken, context)
-    context.set_actor_email_confirmation_link = MethodType(set_actor_email_confirmation_link, context)
-    context.add_unregistered_company = MethodType(add_unregistered_company, context)
-    context.get_unregistered_company = MethodType(get_unregistered_company, context)
-
+    context.set_actor_csrfmiddlewaretoken = MethodType(
+        set_actor_csrfmiddlewaretoken, context)
+    context.set_actor_email_confirmation_link = MethodType(
+        set_actor_email_confirmation_link, context)
+    context.add_unregistered_company = MethodType(
+        add_unregistered_company, context)
+    context.get_unregistered_company = MethodType(
+        get_unregistered_company, context)

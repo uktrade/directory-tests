@@ -11,15 +11,16 @@ from tests.functional.features.settings import S3_ACCESS_KEY_ID
 from tests.functional.features.settings import S3_SECRET_ACCESS_KEY
 from tests.functional.features.settings import S3_BUCKET
 from tests.functional.features.settings import S3_REGION
-from tests.functional.features.utils import extract_plain_text_payload_from_email
+from tests.functional.features.utils import \
+    extract_plain_text_payload_from_email
 from tests.functional.features.utils import extract_email_confirmation_link
 
 
 def verify_response_sso_account_was_created(context, alias):
     """Will verify if SSO account was successfully created.
 
-    It's a very crude check, as it will only check if the response body contains
-    selected phrases.
+    It's a very crude check, as it will only check if the response body
+    contains selected phrases.
 
     NOTE:
     It expects that create SSO account response is stored in `context.response`
@@ -30,8 +31,8 @@ def verify_response_sso_account_was_created(context, alias):
     response = context.response
     msgs = ["Verify your email address",
             "if you do not receive an email within 10 minutes", (
-                "We have sent you a confirmation email. Please follow the link "
-                "in the email to verify your email address.")
+                "We have sent you a confirmation email. Please follow the link"
+                " in the email to verify your email address.")
             ]
 
     content = response.content.decode("utf-8")
