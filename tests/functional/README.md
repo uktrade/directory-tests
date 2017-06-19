@@ -4,7 +4,8 @@ Functional Test for FAB, FAS & SSO
 
 # create virtualenv & install dependencies
 ```bash
-mkvirtualenv .env -p python3.5
+virtualenv .venv -p python3.5
+source ./.venv/bin/activate
 pip install -r requirements.txt
 ```
 
@@ -43,21 +44,68 @@ export S3_REGION=<MUST_BE_SET>
 export S3_BUCKET=<MUST_BE_SET>
 ```
 
+or when using `docker`
+
+```commandline
+export DIRECTORY_TESTS_API_CLIENT_KEY=""
+export DIRECTORY_TESTS_DIRECTORY_API_URL=<MUST_BE_SET>
+export DIRECTORY_TESTS_DIRECTORY_UI_SUPPLIER_URL=<MUST_BE_SET>
+export DIRECTORY_TESTS_DIRECTORY_PROFILE_URL=""
+export DIRECTORY_TESTS_DIRECTORY_SSO_URL=<MUST_BE_SET>
+export DIRECTORY_TESTS_DIRECTORY_UI_BUYER_URL=<MUST_BE_SET>
+export DIRECTORY_TESTS_SSO_USER_USERNAME=""
+export DIRECTORY_TESTS_SSO_USER_TOKEN=""
+export DIRECTORY_TESTS_SSO_USER_PASSWORD=""
+export DIRECTORY_TESTS_SSO_USER_SSO_ID=1
+export DIRECTORY_TESTS_SSO_UNVERIFIED_USER_TOKEN=""
+export DIRECTORY_TESTS_S3_SECRET_ACCESS_KEY=<MUST_BE_SET>
+export DIRECTORY_TESTS_S3_ACCESS_KEY_ID=<MUST_BE_SET>
+export DIRECTORY_TESTS_S3_REGION=<MUST_BE_SET>
+export DIRECTORY_TESTS_S3_BUCKET=<MUST_BE_SET>
+```
+
 Only the ones with `<MUST_BE_SET>` value, are actively used by `behave`.
 
 
 # Running tests
 
-Both methods described below require all env variables to be set.
+All methods described below need all required environmental variables to be set 
+(see. [Environment variables](#Environment variables) section).
+
+
+## From IDE (ideally from PyCharm Pro):
 In case of the IDE runner, you can set all required environment variables in
 the `run configuration`.
 
-From CLI:
+Here's an example how this can be done:
+![set required environment variable for test tun configuration][docs/set_env_vars_for_test_run_configuration.gif]
+
+Once all required environment variables are set, then simply:
+
+* right-click on the selected scenario you want to run
+* and hit "Run '...'"
+
+
+## From CLI using `behave` directly:
 ```shell
 behave tests/functional/features/
 ```
 
-From IDE (ideally from PyCharm Pro):
+## From CLI using `make` & `functional_tests` target:
 
-* right-click on the scenario to run
-* hit "Run '...'"
+```commandline
+# run all functional tests except ones tagged with @wip or @skip
+make functional_tests
+
+# run scenarios that match certain tag(s):
+BEHAVE_ARGS="-t certain_tag" make functional_tests
+```
+
+## From CLI using `docker` container
+
+This expects that all required environmental variables will be prefixed with 
+`DIRECTORY_TESTS_` (see. [Environment variables](#Environment variables) section)
+
+```commandline
+make docker_functional_test
+```
