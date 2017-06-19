@@ -57,3 +57,10 @@ def should_get_verification_email(context, alias, subject):
     payload = find_confirmation_email_msg(bucket, actor, subject)
     link = extract_email_confirmation_link(payload)
     context.set_actor_email_confirmation_link(alias, link)
+
+
+def should_be_prompted_to_sign_in(context, supplier_alias):
+    content = context.response.content.decode("utf-8")
+    assert "Sign in" in content
+    assert "If you have not created an account yet, then please" in content
+    logging.debug("%s was prompted to Sign in", supplier_alias)

@@ -6,6 +6,15 @@ import string
 from requests import Session
 
 from tests.functional.features.context_utils import Actor
+from tests.functional.features.steps.fab_when_impl import \
+    confirm_company_selection
+from tests.functional.features.steps.fab_when_impl import \
+    confirm_export_status
+from tests.functional.features.steps.fab_when_impl import \
+    create_sso_account
+from tests.functional.features.steps.fab_when_impl import select_random_company
+from tests.functional.features.steps.fab_then_impl import \
+    sso_account_should_be_created
 
 
 def unauthenticated_supplier(context, supplier_alias):
@@ -36,3 +45,17 @@ def unauthenticated_supplier(context, supplier_alias):
                   session=session, csrfmiddlewaretoken=None,
                   email_confirmation_link=None)
     context.add_actor(actor)
+
+
+def create_sso_account_associated_with_company(context, supplier_alias,
+                                               company_alias):
+    export_status = ["Yes, in the last year",
+                     "Yes, 1 to 2 years ago",
+                     "Yes, but more than 2 years ago",
+                     "No, but we are preparing to"]
+    select_random_company(context, supplier_alias, company_alias)
+    confirm_company_selection(context, supplier_alias, company_alias)
+    confirm_export_status(context, supplier_alias, company_alias,
+                          random.choice(export_status))
+    create_sso_account(context, supplier_alias, company_alias)
+    sso_account_should_be_created(context, supplier_alias)
