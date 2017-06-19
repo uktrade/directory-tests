@@ -380,3 +380,25 @@ def open_email_confirmation_link(context, supplier_alias):
     context.response = response
     context.form_action_value = form_action_value
 
+
+def confirm_email_address(context, supplier_alias):
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+    csrfmiddlewaretoken = actor.csrfmiddlewaretoken
+    form_action_value = context.form_action_value
+    url = get_absolute_url("sso:landing") + form_action_value
+    headers = {"Referer": url}
+    data = {"csrfmiddlewaretoken": csrfmiddlewaretoken}
+    response = make_request(Method.POST, url, session=session, headers=headers,
+                            data=data, allow_redirects=False)
+    assert response.status_code == 302, ("Expected 302 but got {}"
+                                         .format(response.status_code))
+    assert response.headers.get("Location").startswith("/accounts/login/?next=")
+
+    headers = {"Referer": url}
+    url = get_absolute_url("sso:landing") + response.headers.get("Location")
+    response = make_request(Method.POST, url, session=session, headers=headers,
+                            allow_redirects=False)
+    assert response.status_code == 200, ("Expected 200 but got {}"
+                                         .format(response.status_code))
+    context.response = response
