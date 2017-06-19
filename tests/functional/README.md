@@ -78,7 +78,7 @@ In case of the IDE runner, you can set all required environment variables in
 the `run configuration`.
 
 Here's an example how this can be done:
-![set required environment variable for test tun configuration][/docs/set_env_vars_for_test_run_configuration.gif]
+![set required environment variable for test tun configuration](docs/set_env_vars_for_test_run_configuration.gif?raw=true)
 
 Once all required environment variables are set, then simply:
 
