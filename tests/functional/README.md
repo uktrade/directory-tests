@@ -26,7 +26,7 @@ pip-compile
 
 Here's a list of environment variables currently required to run the tests.
 
-```shell
+```bash
 export API_CLIENT_KEY=""
 export DIRECTORY_API_URL=<MUST_BE_SET>
 export DIRECTORY_UI_SUPPLIER_URL=<MUST_BE_SET>
@@ -46,7 +46,7 @@ export S3_BUCKET=<MUST_BE_SET>
 
 or when using `docker`
 
-```commandline
+```bash
 export DIRECTORY_TESTS_API_CLIENT_KEY=""
 export DIRECTORY_TESTS_DIRECTORY_API_URL=<MUST_BE_SET>
 export DIRECTORY_TESTS_DIRECTORY_UI_SUPPLIER_URL=<MUST_BE_SET>
@@ -87,13 +87,13 @@ Once all required environment variables are set, then simply:
 
 
 ## From CLI using `behave` directly:
-```shell
+```bash
 behave tests/functional/features/
 ```
 
 ## From CLI using `make` & `functional_tests` target:
 
-```commandline
+```bash
 # run all functional tests except ones tagged with @wip or @skip
 make functional_tests
 
@@ -106,6 +106,6 @@ BEHAVE_ARGS="-t certain_tag" make functional_tests
 This expects that all required environmental variables will be prefixed with 
 `DIRECTORY_TESTS_` (see. [Environment variables](#environment-variables) section)
 
-```commandline
+```bash
 make docker_functional_test
 ```
