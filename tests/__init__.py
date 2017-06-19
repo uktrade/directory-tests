@@ -14,6 +14,7 @@ join_ui_supplier = partial(urljoin, settings.DIRECTORY_UI_SUPPLIER_URL)
 
 urls = {
     # SSO
+    'sso:landing': '',
     'sso:login': 'accounts/login/',
     'sso:signup': 'accounts/signup/',
     'sso:logout': 'accounts/logout/',
