@@ -23,7 +23,7 @@ Feature: Trade Profile
 
     @verification
     @email
-    Scenario: Unauthenticated Suppliers should be able to verify their email address via activation link sent in verification email
+    Scenario: Unauthenticated Suppliers should be able to verify their email address via confirmation link sent in an email
       Given "Annette Geissinger" is an unauthenticated supplier
       And "Annette Geissinger" created a SSO account associated with randomly selected company "Company X"
       And "Annette Geissinger" received the email verification message
