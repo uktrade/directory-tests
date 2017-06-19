@@ -118,19 +118,12 @@ DOCKER_SET_DIRECTORY_TESTS_ENV_VARS := \
 docker_remove_all:
 	$(DOCKER_REMOVE_ALL)
 
-docker_functional_test: docker_remove_all
-	$(DOCKER_SET_DIRECTORY_TESTS_ENV_VARS) && \
-	$(DOCKER_COMPOSE_CREATE_ENVS) && \
-	$(DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
-	docker-compose -f docker-compose.yml build && \
-	docker-compose -f docker-compose.yml run functional_tests
-
-
-docker_smoke_test: docker_remove_all
+docker_test: docker_remove_all
 	$(DOCKER_SET_DIRECTORY_TESTS_ENV_VARS) && \
 	$(DOCKER_COMPOSE_CREATE_ENVS) && \
 	$(DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
 	docker-compose -f docker-compose.yml build && \
 	docker-compose -f docker-compose.yml run smoke_tests
+	docker-compose -f docker-compose.yml run functional_tests
 
 .PHONY: build clean requirements test docker_remove_all docker_test smoke_test_buyer smoke_test_supplier smoke_test_sso smoke_test load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal integration_test pep8
