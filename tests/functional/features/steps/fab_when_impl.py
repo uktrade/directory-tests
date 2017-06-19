@@ -10,6 +10,7 @@ from tests import get_absolute_url
 from tests.functional.features.context_utils import UnregisteredCompany
 from tests.functional.features.utils import (
     Method,
+    extract_confirm_email_form_action,
     extract_csrf_middleware_token,
     make_request
 )
@@ -358,3 +359,24 @@ def create_sso_account(context, supplier_alias, alias):
     assert response.status_code == 200, ("Expected 200 but got {}"
                                          .format(response.status_code))
     context.response = response
+
+
+def open_email_confirmation_link(context, supplier_alias):
+    context.reset_actor_session(supplier_alias)
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+    confirmation_link = actor.email_confirmation_link
+    assert confirmation_link, "Expected a non-empty email confirmation link"
+    response = make_request(Method.GET, confirmation_link, session=session)
+    assert response.status_code == 200, ("Expected 200 but got {}"
+                                         .format(response.status_code))
+    content = response.content.decode("utf-8")
+    assert "Confirm E-mail Address" in content
+    assert "This e-mail confirmation link expired or is invalid" not in content
+    logging.debug("Supplier is on the Confirm your email address page")
+    token = extract_csrf_middleware_token(content)
+    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+    form_action_value = extract_confirm_email_form_action(content)
+    context.response = response
+    context.form_action_value = form_action_value
+
