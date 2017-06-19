@@ -70,7 +70,7 @@ Only the ones with `<MUST_BE_SET>` value, are actively used by `behave`.
 # Running tests
 
 All methods described below need all required environmental variables to be set 
-(see. [Environment variables](#Environment variables) section).
+(see. [Environment variables](#environment-variables) section).
 
 
 ## From IDE (ideally from PyCharm Pro):
@@ -78,7 +78,7 @@ In case of the IDE runner, you can set all required environment variables in
 the `run configuration`.
 
 Here's an example how this can be done:
-![set required environment variable for test tun configuration][docs/set_env_vars_for_test_run_configuration.gif]
+![set required environment variable for test tun configuration][/docs/set_env_vars_for_test_run_configuration.gif]
 
 Once all required environment variables are set, then simply:
 
@@ -104,7 +104,7 @@ BEHAVE_ARGS="-t certain_tag" make functional_tests
 ## From CLI using `docker` container
 
 This expects that all required environmental variables will be prefixed with 
-`DIRECTORY_TESTS_` (see. [Environment variables](#Environment variables) section)
+`DIRECTORY_TESTS_` (see. [Environment variables](#environment-variables) section)
 
 ```commandline
 make docker_functional_test
