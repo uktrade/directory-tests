@@ -10,6 +10,15 @@ services:
     env_file: ./docker/.env
     restart: "no"
 
+  functional_tests:
+    build:
+      context: .
+      dockerfile: Dockerfile-functional
+    working_dir: /usr/src/app
+    command: ./docker/cmd-functional.sh
+    env_file: ./docker/.env
+    restart: "no"
+
   selenium_tests:
     build:
       context: .
