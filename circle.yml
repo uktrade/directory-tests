@@ -11,3 +11,4 @@ dependencies:
 test:
   override:
     - make docker_smoke_test
+    - make docker_functional_test
