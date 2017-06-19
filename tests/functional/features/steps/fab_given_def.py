@@ -24,7 +24,8 @@ def given_supplier_created_sso_account_for_company(context, supplier_alias,
                                                company_alias)
 
 
-@given('"{alias}" received the email verification message')
+@given('"{alias}" received the email verification message with the email '
+       'confirmation link')
 def then_supplier_should_receive_verification_email(context, alias):
     subject = "Your great.gov.uk account: Please Confirm Your E-mail Address"
     should_get_verification_email(context, alias, subject)
