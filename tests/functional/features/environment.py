@@ -11,6 +11,7 @@ from tests.functional.features.settings import S3_ACCESS_KEY_ID
 from tests.functional.features.settings import S3_SECRET_ACCESS_KEY
 from tests.functional.features.settings import S3_BUCKET
 from tests.functional.features.settings import S3_REGION
+from tests.functional.features.db_cleanup import delete_supplier_data
 
 
 def before_step(context, step):
@@ -31,6 +32,11 @@ def before_scenario(context, scenario):
 
 
 def after_scenario(context, scenario):
+    for actor in context.scenario_data.actors:
+        logging.debug("Deleting supplier data from FAB & SSO DBs for email: %s",
+                      actor.email)
+        delete_supplier_data("FAB", actor.email)
+        delete_supplier_data("SSO", actor.email)
     # clear the scenario data after every scenario
     context.scenario_data = None
     logging.debug('Finished scenario: %s', scenario.name)
