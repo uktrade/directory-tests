@@ -27,12 +27,13 @@ BEGIN
     DELETE FROM account_emailaddress WHERE user_id = userid;
     -- STEP 2 - delete user account
     DELETE FROM user_user WHERE id = userid;
-    -- STEP 3 - DELETE expired Django sessions
-    DELETE FROM django_session WHERE age(expire_date, NOW()) < '1 day';
 END $$;
 """
 
-FAB_CLEAN_UP = """
+SSO_EXPIRED_SESSION_CLEAN_UP = """
+DELETE FROM django_session WHERE age(expire_date, NOW()) < '1 day';
+"""
+
 DIRECTORY_CLEAN_UP = """
 DO $$
 DECLARE
@@ -95,3 +96,11 @@ def delete_supplier_data(service_name, email_address):
     logging.debug("Deleted Supplier data from %s DB for: %s", service_name,
                   email_address)
 
+
+def delete_expired_django_sessions():
+    connection, cursor = get_sso_db_connection()
+    cursor.execute(SSO_EXPIRED_SESSION_CLEAN_UP)
+    connection.commit()
+    cursor.close()
+    connection.close()
+    logging.debug("Deleted all Django sessions that expired before today")
