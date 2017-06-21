@@ -9,9 +9,9 @@ RUN pip install --no-cache-dir -r requirements_functional.txt --src /usr/local/s
 
 # install heroku app
 RUN wget -q https://cli-assets.heroku.com/heroku-cli/channels/stable/heroku-cli-linux-x64.tar.gz -O heroku.tar.gz && \
-	tar -xzf heroku.tar.gz && \
+	tar -xzf heroku.tar.gz -C heroku-cli-linux-x64 && \
 	mkdir -p /usr/local/lib /usr/local/bin && \
-	mv heroku-cli-v6.*-linux-64 /usr/local/lib/heroku && \
+	mv heroku-cli-linux-x64 /usr/local/lib/heroku && \
 	ln -s /usr/local/lib/heroku/bin/heroku /usr/local/bin/heroku
 
 # Install dockerize https://github.com/jwilder/dockerize
