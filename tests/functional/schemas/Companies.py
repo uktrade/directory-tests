@@ -35,9 +35,6 @@ COMPANIES = {
                         "type": "string"
                     }
                 },
-                "required": [
-                    "premises",
-                ],
                 "type": "object"
             },
             "address_snippet": {
