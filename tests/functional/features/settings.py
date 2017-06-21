@@ -16,12 +16,12 @@ S3_SECRET_ACCESS_KEY = os.environ["S3_SECRET_ACCESS_KEY"]
 S3_BUCKET = os.environ["S3_BUCKET"]
 S3_REGION = os.environ["S3_REGION"]
 
-FAB_DB_URL = urlparse.urlparse(os.environ['FAB_DATABASE_URL'])
-FAB_DB_NAME = FAB_DB_URL.path[1:]
-FAB_DB_USER = FAB_DB_URL.username
-FAB_DB_PASSWORD = FAB_DB_URL.password
-FAB_DB_HOST = FAB_DB_URL.hostname
-FAB_DB_PORT = FAB_DB_URL.port
+DIR_DB_URL = urlparse.urlparse(os.environ['DIR_DATABASE_URL'])
+DIR_DB_NAME = DIR_DB_URL.path[1:]
+DIR_DB_USER = DIR_DB_URL.username
+DIR_DB_PASSWORD = DIR_DB_URL.password
+DIR_DB_HOST = DIR_DB_URL.hostname
+DIR_DB_PORT = DIR_DB_URL.port
 
 SSO_DB_URL = urlparse.urlparse(os.environ['SSO_DATABASE_URL'])
 SSO_DB_NAME = SSO_DB_URL.path[1:]

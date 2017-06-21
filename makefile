@@ -94,7 +94,7 @@ SET_FUNCTIONAL_ENV_VARS := \
 	export DIRECTORY_API_URL=https://dev.buyer.directory.uktrade.io/api/
 
 SET_DB_URLS := \
-	export FAB_DATABASE_URL=`heroku config:get DATABASE_URL -a directory-api-dev` && \
+	export DIR_DATABASE_URL=`heroku config:get DATABASE_URL -a directory-api-dev` && \
 	export SSO_DATABASE_URL=`heroku config:get DATABASE_URL -a directory-sso-dev`
 
 functional_tests:
