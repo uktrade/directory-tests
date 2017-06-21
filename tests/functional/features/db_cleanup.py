@@ -27,6 +27,8 @@ BEGIN
     DELETE FROM account_emailaddress WHERE user_id = userid;
     -- STEP 2 - delete user account
     DELETE FROM user_user WHERE id = userid;
+    -- STEP 3 - DELETE expired Django sessions
+    DELETE FROM django_session WHERE age(expire_date, NOW()) > '1 day';
 END $$;
 """
 
