@@ -4,10 +4,8 @@ RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
 COPY requirements_smoke.txt /usr/src/app/
-COPY requirements_functional.txt /usr/src/app/
 # Different src directory for pip to prevent 'pip install -e' packages to be installed in /usr/src/app/
 RUN pip install --no-cache-dir -r requirements_smoke.txt --src /usr/local/src
-RUN pip install --no-cache-dir -r requirements_functional.txt --src /usr/local/src
 
 # Install dockerize https://github.com/jwilder/dockerize
 ENV DOCKERIZE_VERSION v0.2.0
