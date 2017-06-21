@@ -4,16 +4,18 @@ import logging
 
 import psycopg2
 
-from tests.functional.features.settings import DIR_DB_HOST
-from tests.functional.features.settings import DIR_DB_NAME
-from tests.functional.features.settings import DIR_DB_PASSWORD
-from tests.functional.features.settings import DIR_DB_PORT
-from tests.functional.features.settings import DIR_DB_USER
-from tests.functional.features.settings import SSO_DB_HOST
-from tests.functional.features.settings import SSO_DB_NAME
-from tests.functional.features.settings import SSO_DB_PASSWORD
-from tests.functional.features.settings import SSO_DB_PORT
-from tests.functional.features.settings import SSO_DB_USER
+from tests.functional.features.settings import (
+    DIR_DB_HOST,
+    DIR_DB_NAME,
+    DIR_DB_PASSWORD,
+    DIR_DB_PORT,
+    DIR_DB_USER,
+    SSO_DB_HOST,
+    SSO_DB_NAME,
+    SSO_DB_PASSWORD,
+    SSO_DB_PORT,
+    SSO_DB_USER
+)
 
 
 SSO_CLEAN_UP = """
