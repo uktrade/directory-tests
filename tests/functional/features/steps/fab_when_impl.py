@@ -339,7 +339,10 @@ def create_sso_account(context, supplier_alias, alias):
                             allow_redirects=False)
     assert response.status_code == 302, ("Expected 302 but got {}"
                                          .format(response.status_code))
-    assert response.headers.get("Location") == "/accounts/confirm-email/"
+    exp_loc = "/accounts/confirm-email/"
+    given_loc = response.headers.get("Location")
+    assert given_loc == exp_loc, ("Expected new Location to be: '{}' but got "
+                                  "'{}' instead.".format(exp_loc, given_loc))
 
     # Steps 2: GET SSO /accounts/confirm-email/
     url = get_absolute_url("sso:email_confirm")
