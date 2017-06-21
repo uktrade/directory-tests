@@ -7,12 +7,6 @@ from tests.functional.features.context_utils import (
     patch_context
 )
 from tests.functional.features.utils import init_loggers
-from tests.functional.features.settings import S3_ACCESS_KEY_ID
-from tests.functional.features.settings import S3_SECRET_ACCESS_KEY
-from tests.functional.features.settings import S3_BUCKET
-from tests.functional.features.settings import S3_REGION
-from tests.functional.features.settings import FAB_DB_URL
-from tests.functional.features.settings import SSO_DB_URL
 from tests.functional.features.db_cleanup import delete_supplier_data
 
 
@@ -48,9 +42,3 @@ def before_all(context):
     init_loggers()
     # this will add some handy functions to the `context` object
     patch_context(context)
-    assert all(True if x is not None else False for x in [S3_REGION, S3_BUCKET,
-                                                          S3_SECRET_ACCESS_KEY,
-                                                          S3_ACCESS_KEY_ID,
-                                                          FAB_DB_URL,
-                                                          SSO_DB_URL]), (
-        "Not all required S3 env variables are set!")
