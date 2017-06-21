@@ -2,7 +2,7 @@ Feature: Trade Profile
 
 
     @registration
-    Scenario Outline: Supplier should receive a verification email after successful registration
+    Scenario Outline: Supplier should receive a verification email after successful registration - export status is "<current>"
       Given "Peter Alder" is an unauthenticated supplier
 
       When "Peter Alder" randomly selects an active company without a profile identified by an alias "Company X"
