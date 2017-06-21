@@ -4,11 +4,11 @@ import logging
 
 import psycopg2
 
-from tests.functional.features.settings import FAB_DB_HOST
-from tests.functional.features.settings import FAB_DB_NAME
-from tests.functional.features.settings import FAB_DB_PASSWORD
-from tests.functional.features.settings import FAB_DB_PORT
-from tests.functional.features.settings import FAB_DB_USER
+from tests.functional.features.settings import DIR_DB_HOST
+from tests.functional.features.settings import DIR_DB_NAME
+from tests.functional.features.settings import DIR_DB_PASSWORD
+from tests.functional.features.settings import DIR_DB_PORT
+from tests.functional.features.settings import DIR_DB_USER
 from tests.functional.features.settings import SSO_DB_HOST
 from tests.functional.features.settings import SSO_DB_NAME
 from tests.functional.features.settings import SSO_DB_PASSWORD
@@ -33,6 +33,7 @@ END $$;
 """
 
 FAB_CLEAN_UP = """
+DIRECTORY_CLEAN_UP = """
 DO $$
 DECLARE
 companyID INTEGER;
@@ -55,10 +56,10 @@ END $$;
 """
 
 
-def get_fab_db_connection():
-    connection = psycopg2.connect(dbname=FAB_DB_NAME, user=FAB_DB_USER,
-                                  password=FAB_DB_PASSWORD, host=FAB_DB_HOST,
-                                  port=FAB_DB_PORT)
+def get_dir_db_connection():
+    connection = psycopg2.connect(dbname=DIR_DB_NAME, user=DIR_DB_USER,
+                                  password=DIR_DB_PASSWORD, host=DIR_DB_HOST,
+                                  port=DIR_DB_PORT)
     cursor = connection.cursor()
     return connection, cursor
 
@@ -72,9 +73,9 @@ def get_sso_db_connection():
 
 
 def delete_supplier_data(service_name, email_address):
-    if service_name == "FAB":
-        sql = FAB_CLEAN_UP
-        connection, cursor = get_fab_db_connection()
+    if service_name == "DIRECTORY":
+        sql = DIRECTORY_CLEAN_UP
+        connection, cursor = get_dir_db_connection()
     elif service_name == "SSO":
         sql = SSO_CLEAN_UP
         connection, cursor = get_sso_db_connection()
