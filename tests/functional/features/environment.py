@@ -6,9 +6,11 @@ from tests.functional.features.context_utils import (
     initialize_scenario_data,
     patch_context
 )
+from tests.functional.features.db_cleanup import (
+    delete_expired_django_sessions,
+    delete_supplier_data
+)
 from tests.functional.features.utils import init_loggers
-from tests.functional.features.db_cleanup import delete_expired_django_sessions
-from tests.functional.features.db_cleanup import delete_supplier_data
 
 
 def before_step(context, step):
