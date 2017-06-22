@@ -31,4 +31,4 @@ Feature: Trade Profile
       When "Annette Geissinger" decides to confirm her email address by using the email confirmation link
       And "Annette Geissinger" confirms the email address
 
-      Then "Annette Geissinger" should be prompted to Sign in
+      Then "Annette Geissinger" should be prompted to Build and improve your profile

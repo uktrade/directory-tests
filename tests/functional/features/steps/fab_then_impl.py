@@ -59,8 +59,10 @@ def should_get_verification_email(context, alias, subject):
     context.set_actor_email_confirmation_link(alias, link)
 
 
-def should_be_prompted_to_sign_in(context, supplier_alias):
+def should_be_prompted_to_build_your_profile(context, supplier_alias):
     content = context.response.content.decode("utf-8")
-    assert "Sign in" in content
-    assert "If you have not created an account yet, then please" in content
-    logging.debug("%s was prompted to Sign in", supplier_alias)
+    assert "Build and improve your profile" in content
+    assert "To set up your Find a Buyer profile" in content
+    assert "Your company details" in content
+    logging.debug("%s is on the 'Build and improve your profile' page",
+                  supplier_alias)
