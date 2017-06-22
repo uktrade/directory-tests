@@ -395,11 +395,10 @@ def confirm_email_address(context, supplier_alias):
                             data=data, allow_redirects=False)
     assert response.status_code == 302, ("Expected 302 but got {}"
                                          .format(response.status_code))
-    assert response.headers.get("Location").startswith("/accounts/login/?next=")
+    new_location = response.headers.get("Location")
+    assert new_location.startswith("/accounts/login/?next=")
+    assert "register-submit%253Fcompany_number%253D" in new_location
 
-    headers = {"Referer": url}
-    url = get_absolute_url("sso:landing") + response.headers.get("Location")
-    response = make_request(Method.POST, url, session=session, headers=headers,
                             allow_redirects=False)
     assert response.status_code == 200, ("Expected 200 but got {}"
                                          .format(response.status_code))
