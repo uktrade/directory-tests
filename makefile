@@ -93,10 +93,15 @@ smoke_tests:
 SET_FUNCTIONAL_ENV_VARS := \
 	export DIRECTORY_API_URL=https://dev.buyer.directory.uktrade.io/api/
 
+SET_DB_URLS := \
+	export DIR_DATABASE_URL=`heroku config:get DATABASE_URL -a directory-api-dev` && \
+	export SSO_DATABASE_URL=`heroku config:get DATABASE_URL -a directory-sso-dev`
+
 functional_tests:
-	$(SET_PYTEST_ENV_VARS); \
-	$(SET_FUNCTIONAL_ENV_VARS); \
-	behave -k --tags=-wip --tags=-skip tests/functional/features $(BEHAVE_ARGS)
+	$(SET_PYTEST_ENV_VARS) && \
+	$(SET_FUNCTIONAL_ENV_VARS) && \
+	$(SET_DB_URLS) && \
+	behave -k --format progress3 --no-logcapture --tags=-wip --tags=-skip tests/functional/features $(BEHAVE_ARGS)
 
 test: pep8 smoke_test integration_test load_test_minimal
 

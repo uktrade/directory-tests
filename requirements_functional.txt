@@ -12,6 +12,7 @@ idna==2.5                 # via requests
 jsonschema==2.6.0
 parse-type==0.3.4         # via behave
 parse==1.8.2              # via behave, parse-type
+psycopg2==2.7.1
 requests==2.17.3
 retrying==1.3.3
 six==1.10.0               # via behave, parse-type, retrying

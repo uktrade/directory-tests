@@ -7,10 +7,8 @@ from tests.functional.features.context_utils import (
     patch_context
 )
 from tests.functional.features.utils import init_loggers
-from tests.functional.features.settings import S3_ACCESS_KEY_ID
-from tests.functional.features.settings import S3_SECRET_ACCESS_KEY
-from tests.functional.features.settings import S3_BUCKET
-from tests.functional.features.settings import S3_REGION
+from tests.functional.features.db_cleanup import delete_expired_django_sessions
+from tests.functional.features.db_cleanup import delete_supplier_data
 
 
 def before_step(context, step):
@@ -31,6 +29,11 @@ def before_scenario(context, scenario):
 
 
 def after_scenario(context, scenario):
+    for actor in context.scenario_data.actors:
+        logging.debug("Deleting supplier data from FAB & SSO DBs for email: %s",
+                      actor.email)
+        delete_supplier_data("DIRECTORY", actor.email)
+        delete_supplier_data("SSO", actor.email)
     # clear the scenario data after every scenario
     context.scenario_data = None
     logging.debug('Finished scenario: %s', scenario.name)
@@ -40,7 +43,7 @@ def before_all(context):
     init_loggers()
     # this will add some handy functions to the `context` object
     patch_context(context)
-    assert all(True if x is not None else False for x in [S3_REGION, S3_BUCKET,
-                                                          S3_SECRET_ACCESS_KEY,
-                                                          S3_ACCESS_KEY_ID]), (
-        "Not all required S3 env variables are set!")
+
+
+def after_all(context):
+    delete_expired_django_sessions()
