@@ -16,6 +16,7 @@ S3_SECRET_ACCESS_KEY = os.environ["S3_SECRET_ACCESS_KEY"]
 S3_BUCKET = os.environ["S3_BUCKET"]
 S3_REGION = os.environ["S3_REGION"]
 
+# These DB details are required to do post-test clean-up in Directory DB
 DIR_DB_URL = urlparse.urlparse(os.environ['DIR_DATABASE_URL'])
 DIR_DB_NAME = DIR_DB_URL.path[1:]
 DIR_DB_USER = DIR_DB_URL.username
@@ -23,6 +24,7 @@ DIR_DB_PASSWORD = DIR_DB_URL.password
 DIR_DB_HOST = DIR_DB_URL.hostname
 DIR_DB_PORT = DIR_DB_URL.port
 
+# These DB details are required to do post-test clean-up in SSO DB
 SSO_DB_URL = urlparse.urlparse(os.environ['SSO_DATABASE_URL'])
 SSO_DB_NAME = SSO_DB_URL.path[1:]
 SSO_DB_USER = SSO_DB_URL.username
