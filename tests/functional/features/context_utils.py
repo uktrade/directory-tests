@@ -76,8 +76,8 @@ def get_actor(self, alias):
 def set_actor_csrfmiddlewaretoken(self, alias, token):
     for idx, actor in enumerate(self.scenario_data.actors):
         if actor.alias == alias:
-            self.scenario_data.actors[idx] = \
-                actor._replace(csrfmiddlewaretoken=token)
+            new_actor = actor._replace(csrfmiddlewaretoken=token)
+            self.scenario_data.actors[idx] = new_actor
             logging.debug("Successfully set csrfmiddlewaretoken=%s for Actor: "
                           "%s", token, alias)
 
@@ -85,8 +85,8 @@ def set_actor_csrfmiddlewaretoken(self, alias, token):
 def set_actor_email_confirmation_link(self, alias, link):
     for idx, actor in enumerate(self.scenario_data.actors):
         if actor.alias == alias:
-            self.scenario_data.actors[idx] = \
-                actor._replace(email_confirmation_link=link)
+            new_actor = actor._replace(email_confirmation_link=link)
+            self.scenario_data.actors[idx] = new_actor
             logging.debug("Successfully set email_confirmation_link=%s for "
                           "Actor: %s", link, alias)
 
