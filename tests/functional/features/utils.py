@@ -204,7 +204,7 @@ def extract_csrf_middleware_token(content):
     csrf_token_end_idx = content.find("'",
                                       csrf_token_idx + len(value_property),
                                       csrf_tag_idx + search_offset)
-    token = content[(csrf_token_idx+len(value_property)):csrf_token_end_idx]
+    token = content[(csrf_token_idx + len(value_property)):csrf_token_end_idx]
     logging.debug("Found csrfmiddlewaretoken=%s", token)
     return token
 
@@ -303,4 +303,3 @@ def find_confirmation_email_msg(bucket, actor, subject):
     assert found, ("Could not find email confirmation message for {}"
                    .format(actor.email))
     return res
-
