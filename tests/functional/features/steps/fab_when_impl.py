@@ -382,12 +382,14 @@ def open_email_confirmation_link(context, supplier_alias):
 
 
 def confirm_email_address(context, supplier_alias):
+    # STEP 1 - Submit "Confirm your email address" form
     actor = context.get_actor(supplier_alias)
     session = actor.session
     csrfmiddlewaretoken = actor.csrfmiddlewaretoken
     form_action_value = context.form_action_value
-    url = get_absolute_url("sso:landing") + form_action_value
-    headers = {"Referer": url}
+    url = "{}{}".format(get_absolute_url("sso:landing"), form_action_value)
+    referer = actor.email_confirmation_link
+    headers = {"Referer": referer}
     data = {"csrfmiddlewaretoken": csrfmiddlewaretoken}
     response = make_request(Method.POST, url, session=session, headers=headers,
                             data=data, allow_redirects=False)
