@@ -11,7 +11,7 @@ from tests.functional.features.context_utils import UnregisteredCompany
 from tests.functional.features.utils import extract_csrf_middleware_token
 from tests.functional.features.utils import make_request
 from tests.functional.features.utils import Method
-from tests.functional.schemas import COMPANIES
+from tests.functional.schemas.Companies import COMPANIES
 
 
 def has_fas_profile(company_number):
