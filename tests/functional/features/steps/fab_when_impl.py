@@ -3,6 +3,7 @@
 import logging
 import random
 from urllib.parse import quote
+from urllib.parse import unquote
 
 from jsonschema import validate
 
@@ -399,7 +400,41 @@ def confirm_email_address(context, supplier_alias):
     assert new_location.startswith("/accounts/login/?next=")
     assert "register-submit%253Fcompany_number%253D" in new_location
 
+    # Step 2 - Follow redirect from previous step - go to SSO /accounts/login/
+    # use the same Referer as in previous request
+    headers = {"Referer": referer}
+    url = "{}{}".format(get_absolute_url("sso:landing"), new_location)
+    response = make_request(Method.GET, url, session=session, headers=headers,
                             allow_redirects=False)
+    assert response.status_code == 302, ("Expected 302 but got {}"
+                                         .format(response.status_code))
+    new_location = response.headers.get("Location")
+    register_submit = get_absolute_url("ui-buyer:register-submit-account-details")
+    assert new_location.startswith(quote(register_submit)), (
+        "Expected new Location to start with: '{}' but got '{}'"
+        .format(register_submit, new_location))
+    assert "company_number" in new_location
+    assert "export_status" in new_location
+
+    # Step 3 - Follow redirect from previous step - go to DIR /register-submit
+    # use the same Referer as in previous request
+    headers = {"Referer": referer}
+    url = unquote(new_location)
+    response = make_request(Method.GET, url, session=session, headers=headers)
+    logging.debug("\n{}".format(response.content.decode("utf-8")))
+    assert response.status_code == 302, ("Expected 302 but got {}"
+                                         .format(response.status_code))
+    content = response.content.decode("utf-8")
+    new_location = response.headers.get("Location")
+    assert new_location == "/company-profile/edit"
+    assert "There was a problem completing your enrolment" not in content
+
+    # Step 4 = Follow redirect from previous step - go to "Edit Profile" page
+    # use the same Referer as in previous request
+    headers = {"Referer": referer}
+    url = get_absolute_url("ui-buyer:company-edit")
+    response = make_request(Method.GET, url, session=session, headers=headers)
     assert response.status_code == 200, ("Expected 200 but got {}"
                                          .format(response.status_code))
+    assert "Build and improve your profile" in response.content.decode("utf-8")
     context.response = response
