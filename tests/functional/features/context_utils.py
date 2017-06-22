@@ -6,7 +6,6 @@ from types import MethodType
 
 from requests import Session
 
-
 ScenarioData = namedtuple(
     'ScenarioData',
     [

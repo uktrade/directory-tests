@@ -4,9 +4,11 @@ import logging
 
 from retrying import retry
 
-from tests.functional.features.utils import extract_email_confirmation_link
-from tests.functional.features.utils import find_confirmation_email_msg
-from tests.functional.features.utils import get_s3_bucket
+from tests.functional.features.utils import (
+    extract_email_confirmation_link,
+    find_confirmation_email_msg,
+    get_s3_bucket
+)
 
 
 def sso_account_should_be_created(context, alias):

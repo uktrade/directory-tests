@@ -10,10 +10,12 @@ import requests
 from boto.s3 import connect_to_region
 from boto.s3.connection import OrdinaryCallingFormat
 
-from tests.functional.features.settings import S3_ACCESS_KEY_ID
-from tests.functional.features.settings import S3_SECRET_ACCESS_KEY
-from tests.functional.features.settings import S3_BUCKET
-from tests.functional.features.settings import S3_REGION
+from tests.functional.features.settings import (
+    S3_ACCESS_KEY_ID,
+    S3_BUCKET,
+    S3_REGION,
+    S3_SECRET_ACCESS_KEY
+)
 
 
 def get_file_log_handler(log_formatter,
@@ -301,3 +303,4 @@ def find_confirmation_email_msg(bucket, actor, subject):
     assert found, ("Could not find email confirmation message for {}"
                    .format(actor.email))
     return res
+

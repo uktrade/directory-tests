@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """FAB Given step implementations."""
-import string
 import random
+import string
 
 from requests import Session
 

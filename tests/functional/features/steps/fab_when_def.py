@@ -2,13 +2,12 @@
 """FAB Given step definitions."""
 from behave import when
 
-from tests.functional.features.steps.fab_when_impl import \
-    confirm_company_selection
-from tests.functional.features.steps.fab_when_impl import \
-    confirm_export_status
-from tests.functional.features.steps.fab_when_impl import \
-    create_sso_account
-from tests.functional.features.steps.fab_when_impl import select_random_company
+from tests.functional.features.steps.fab_when_impl import (
+    confirm_company_selection,
+    confirm_export_status,
+    create_sso_account,
+    select_random_company
+)
 
 
 @when('"{supplier_alias}" randomly selects an active company without a profile'

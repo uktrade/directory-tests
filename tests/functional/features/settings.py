@@ -1,6 +1,5 @@
 import os
 
-
 # These variables specify URLs to Services under test
 DIRECTORY_API_URL = os.environ["DIRECTORY_API_URL"]
 DIRECTORY_SSO_URL = os.environ['DIRECTORY_SSO_URL']

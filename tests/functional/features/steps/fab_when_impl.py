@@ -8,9 +8,11 @@ from jsonschema import validate
 
 from tests import get_absolute_url
 from tests.functional.features.context_utils import UnregisteredCompany
-from tests.functional.features.utils import extract_csrf_middleware_token
-from tests.functional.features.utils import make_request
-from tests.functional.features.utils import Method
+from tests.functional.features.utils import (
+    Method,
+    extract_csrf_middleware_token,
+    make_request
+)
 from tests.functional.schemas.Companies import COMPANIES
 
 
