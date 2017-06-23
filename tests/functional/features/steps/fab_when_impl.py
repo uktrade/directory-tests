@@ -132,19 +132,7 @@ def select_random_company(context, supplier_alias, alias):
     data = {"company_name": company.title, "company_number": company.number}
     response = make_request(Method.POST, url, session=session,
                             headers={"Referer": url}, data=data,
-                            allow_redirects=False)
-    assert response.status_code == 302
-    exp_location = "/register/company?company_number={}".format(company.number)
-    assert response.headers.get("Location") == exp_location
-    logging.debug("Successfully selected company %s - %s for registration",
-                  company.title, company.number)
-
-    # go to the Confirm Company page
-    url = get_absolute_url('ui-buyer:register-confirm-company')
-    headers = {"Referer": get_absolute_url('ui-buyer:landing')}
-    params = {"company_number": company.number}
-    response = make_request(Method.GET, url, session=session, params=params,
-                            headers=headers)
+                            allow_redirects=True)
     assert response.status_code == 200
     content = response.content.decode("utf-8")
     assert "Create your company’s profile" in content
