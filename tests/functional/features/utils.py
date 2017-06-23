@@ -169,6 +169,20 @@ def make_request(method: Method, url, *, session=None, params=None,
     logging.debug("RSP URL: %s", res.url)
     logging.debug("RSP Headers: %s", res.headers)
     logging.debug("RSP Cookies: %s", res.cookies)
+    if res.history:
+        logging.debug("REQ was redirected")
+        for resp in res.history:
+            logging.debug("Intermediate REQ: %s %s", resp.request.method, resp.url)
+            logging.debug("Intermediate REQ Headers: %s", resp.request.headers)
+            logging.debug("Intermediate REQ Body: %s", resp.request.body)
+            logging.debug("Intermediate RESP: %d %s", resp.status_code, resp.reason)
+            logging.debug("Intermediate RESP Headers: %s", resp.headers)
+            logging.debug("Intermediate RESP Content: %s", resp.content[0:150] or None)
+        logging.debug("Final destination: %s %s -> %d %s",
+                      res.request.method, res.request.url, res.status_code,
+                      res.url)
+    else:
+        logging.debug("REQ was not redirected")
     if res.content:
         if trim_response_content:
             if len(res.content) > 150:
