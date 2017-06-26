@@ -364,7 +364,7 @@ def open_email_confirmation_link(context, supplier_alias):
     assert response.status_code == 200, ("Expected 200 but got {}"
                                          .format(response.status_code))
     content = response.content.decode("utf-8")
-    assert "Confirm E-mail Address" in content
+    assert "Confirm email Address" in content
     assert "This e-mail confirmation link expired or is invalid" not in content
     logging.debug("Supplier is on the Confirm your email address page")
     token = extract_csrf_middleware_token(content)
