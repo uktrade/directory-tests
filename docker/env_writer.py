@@ -58,6 +58,7 @@ class DockerComposeEnvWriter:
                 )
             )
 
+
 if __name__ == '__main__':
     # TODO: change to docopt
     for path_to_config in sys.argv[1:]:
