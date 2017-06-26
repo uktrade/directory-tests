@@ -6,11 +6,10 @@
 [![CircleCI](https://circleci.com/gh/uktrade/directory-tests/tree/master.svg?style=svg)](https://circleci.com/gh/uktrade/directory-tests/tree/master)
 
 ## Requirements
-[Docker >= 1.10](https://docs.docker.com/engine/installation/)
 
-[Docker Compose >= 1.8](https://docs.docker.com/compose/install/)
-
-Python3
+* Python3
+* [Docker >= 1.10](https://docs.docker.com/engine/installation/)
+* [Docker Compose >= 1.8](https://docs.docker.com/compose/install/)
 
 ## Local installation
 
@@ -19,9 +18,26 @@ Python3
     $ make
 
 ## Running
-Tests can be run either against locally provisioned environment or any other one, as long as ``DIRECTORY_TESTS_DIRECTORY_API_URL``, ``DIRECTORY_TESTS_DIRECTORY_SSO_URL``, ``DIRECTORY_TESTS_DIRECTORY_UI_BUYER_URL`` and ``DIRECTORY_TESTS_DIRECTORY_UI_SUPPLIER_URL`` environment variables are set.
+Tests can be run either against locally provisioned environment or any other one, as long as:
 
-## Running load tests
+* ``DIRECTORY_TESTS_DIRECTORY_API_URL``
+* ``DIRECTORY_TESTS_DIRECTORY_SSO_URL``
+* ``DIRECTORY_TESTS_DIRECTORY_UI_BUYER_URL``
+* ``DIRECTORY_TESTS_DIRECTORY_UI_SUPPLIER_URL``
+* ``DIRECTORY_TESTS_S3_SECRET_ACCESS_KEY``
+* ``DIRECTORY_TESTS_S3_ACCESS_KEY_ID``
+* ``DIRECTORY_TESTS_S3_REGION``
+* ``DIRECTORY_TESTS_S3_BUCKET``
+* ``DIRECTORY_TESTS_HEROKU_API_KEY``
+* ``DIRECTORY_TESTS_SSO_USER_USERNAME``
+* ``DIRECTORY_TESTS_SSO_USER_TOKEN``
+* ``DIRECTORY_TESTS_SSO_USER_PASSWORD``
+* ``DIRECTORY_TESTS_SSO_USER_SSO_ID``
+* ``DIRECTORY_TESTS_SSO_UNVERIFIED_USER_TOKEN``
+
+environment variables are set.
+
+## Running tests
 
 Before running the load tests, you will need to load all the fixtures in tests/fixtures/api-db to the API database. Django's loaddata command should work, for example:
 
@@ -38,6 +54,34 @@ This will run flake8 linting, integration tests and finally load tests. This doe
     make test_load_buyer
     make test_load_supplier
     make test_load_sso
+
+3) To run functional tests locally:
+
+    make functional_tests
+
+4) To run functional tests that match specific tag:
+ 
+    BEHAVE_ARGS="-t tag" make functional_tests 
+
+5) To run functional tests using `behave`:
+
+    behave -k tests/functional/features/
+    # or
+    behave -k tests/functional/features/ -t tag
+
+6) To run functional tests using PyCharm Pro:
+
+In order to get these tests running in the IDE, you need to set all required 
+environment variables in the `run configuration`.
+
+Here's an example how this can be done:
+![set required environment variable for test tun configuration](tests/functional/docs/set_env_vars_for_test_run_configuration.gif?raw=true)
+
+Once all required environment variables are set, then simply:
+
+* right-click on the selected scenario you want to run
+* and hit "Run '...'"
+
 
 The env variables you are likely to need to change (please see the makefile - they are set in the test_load command) are:
 
