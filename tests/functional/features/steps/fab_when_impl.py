@@ -143,9 +143,10 @@ def select_random_company(context, supplier_alias, alias):
     html_escape_table = {"&": "&amp;"}
     escaped_company_title = "".join(html_escape_table.get(c, c) for c in
                                     company.title.upper())
-    assert escaped_company_title in content, ("Company name not present in "
-                                              "response content:\n{}"
-                                              .format(content))
+    assert escaped_company_title in content, ("Company name '{}' not present in"
+                                              " response content:\n{}"
+                                              .format(escaped_company_title,
+                                                      content))
     assert company.number in content
     logging.debug("Successfully got to the Confirm your Company page")
 
