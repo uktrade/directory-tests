@@ -53,6 +53,10 @@ def search_company_house(term):
     params = {"term": term}
     response = make_request(Method.GET, url, params=params,
                             allow_redirects=False)
+    assert response.status_code == 200, (
+        "Expected 200 but got {}. In case you're getting 301 Redirect then "
+        "check if you're using correct protocol https or http"
+        .format(response.status_code))
     json = response.json()
     logging.debug("Company House Search result: %s", json)
     validate(json, COMPANIES)
