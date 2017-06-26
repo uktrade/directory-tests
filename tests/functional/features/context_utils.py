@@ -33,8 +33,8 @@ def initialize_scenario_data():
     :return an empty ScenarioData named tuple
     :rtype ScenarioData
     """
-    actors = []
-    unregistered_companies = []
+    actors = {}
+    unregistered_companies = {}
     scenario_data = ScenarioData(actors, unregistered_companies)
     return scenario_data
 
@@ -49,7 +49,7 @@ def add_actor(self, actor):
     """
     assert isinstance(actor, Actor), ("Expected Actor named tuple but got '{}'"
                                       " instead".format(type(actor)))
-    self.scenario_data.actors.append(actor)
+    self.scenario_data.actors[actor.alias] = actor
     logging.debug("Successfully added actor: %s to Scenario Data", actor.alias)
 
 
@@ -63,32 +63,27 @@ def get_actor(self, alias):
     :return: an Actor named tuple
     :rtype actor: tests.functional.features.ScenarioData.Actor
     """
-    res = None
-    for actor in self.scenario_data.actors:
-        if actor.alias == alias:
-            res = actor
-            logging.debug("Found actor: '%s' in Scenario Data", alias)
-    assert res is not None, ("Couldn't find actor '{}' in Scenario Data"
-                             .format(alias))
-    return res
+    return self.scenario_data.actors[alias]
 
 
 def set_actor_csrfmiddlewaretoken(self, alias, token):
-    for idx, actor in enumerate(self.scenario_data.actors):
-        if actor.alias == alias:
-            new_actor = actor._replace(csrfmiddlewaretoken=token)
-            self.scenario_data.actors[idx] = new_actor
-            logging.debug("Successfully set csrfmiddlewaretoken=%s for Actor: "
-                          "%s", token, alias)
+    if alias in self.scenario_data.actors:
+        actors = self.scenario_data.actors
+        actors[alias] = actors[alias]._replace(csrfmiddlewaretoken=token)
+        logging.debug("Successfully set csrfmiddlewaretoken=%s for Actor: "
+                      "%s", token, alias)
+    else:
+        logging.debug("Could not find an actor aliased '%s'", alias)
 
 
 def set_actor_email_confirmation_link(self, alias, link):
-    for idx, actor in enumerate(self.scenario_data.actors):
-        if actor.alias == alias:
-            new_actor = actor._replace(email_confirmation_link=link)
-            self.scenario_data.actors[idx] = new_actor
-            logging.debug("Successfully set email_confirmation_link=%s for "
-                          "Actor: %s", link, alias)
+    if alias in self.scenario_data.actors:
+        actors = self.scenario_data.actors
+        actors[alias] = actors[alias]._replace(email_confirmation_link=link)
+        logging.debug("Successfully set email_confirmation_link=%s for "
+                      "Actor: %s", link, alias)
+    else:
+        logging.debug("Could not find an actor aliased '%s'", alias)
 
 
 def reset_actor_session(self, alias):
@@ -101,10 +96,12 @@ def reset_actor_session(self, alias):
     :param alias: alias of sought actor
     :type alias: str
     """
-    for idx, actor in enumerate(self.scenario_data.actors):
-        if actor.alias == alias:
-            self.scenario_data.actors[idx] = actor._replace(session=Session())
-            logging.debug("Successfully reset %s's session object", alias)
+    if alias in self.scenario_data.actors:
+        actors = self.scenario_data.actors
+        actors[alias] = actors[alias]._replace(session=Session())
+        logging.debug("Successfully reset %s's session object", alias)
+    else:
+        logging.debug("Could not find an actor aliased '%s'", alias)
 
 
 def add_unregistered_company(self, company):
@@ -118,7 +115,7 @@ def add_unregistered_company(self, company):
     assert isinstance(company, UnregisteredCompany), (
         "Expected UnregisteredCompany named tuple but got '{}' instead"
         .format(type(company)))
-    self.scenario_data.unregistered_companies.append(company)
+    self.scenario_data.unregistered_companies[company.alias] = company
     logging.debug("Successfully added Unregistered Company: %s - %s to "
                   "Scenario Data as '%s'", company.title, company.number,
                   company.alias)
@@ -134,15 +131,7 @@ def get_unregistered_company(self, alias):
     :return: an UnregisteredCompany named tuple
     :rtype tests.functional.features.ScenarioData.UnregisteredCompany
     """
-    res = None
-    for company in self.scenario_data.unregistered_companies:
-        if company.alias == alias:
-            res = company
-            logging.debug("Found Unregistered Company: '%s' in Scenario Data",
-                          alias)
-    assert res is not None, ("Couldn't find Unregistered Company '{}' in "
-                             "Scenario Data".format(alias))
-    return res
+    return self.scenario_data.unregistered_companies[alias]
 
 
 def patch_context(context):
