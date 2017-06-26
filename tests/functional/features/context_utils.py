@@ -34,7 +34,7 @@ def initialize_scenario_data():
     :rtype ScenarioData
     """
     actors = {}
-    unregistered_companies = []
+    unregistered_companies = {}
     scenario_data = ScenarioData(actors, unregistered_companies)
     return scenario_data
 
@@ -115,7 +115,7 @@ def add_unregistered_company(self, company):
     assert isinstance(company, UnregisteredCompany), (
         "Expected UnregisteredCompany named tuple but got '{}' instead"
         .format(type(company)))
-    self.scenario_data.unregistered_companies.append(company)
+    self.scenario_data.unregistered_companies[company.alias] = company
     logging.debug("Successfully added Unregistered Company: %s - %s to "
                   "Scenario Data as '%s'", company.title, company.number,
                   company.alias)
@@ -131,15 +131,7 @@ def get_unregistered_company(self, alias):
     :return: an UnregisteredCompany named tuple
     :rtype tests.functional.features.ScenarioData.UnregisteredCompany
     """
-    res = None
-    for company in self.scenario_data.unregistered_companies:
-        if company.alias == alias:
-            res = company
-            logging.debug("Found Unregistered Company: '%s' in Scenario Data",
-                          alias)
-    assert res is not None, ("Couldn't find Unregistered Company '{}' in "
-                             "Scenario Data".format(alias))
-    return res
+    return self.scenario_data.unregistered_companies[alias]
 
 
 def patch_context(context):
