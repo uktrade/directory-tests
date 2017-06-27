@@ -300,6 +300,7 @@ def confirm_export_status(context, supplier_alias, alias, export_status):
     session = context.get_actor(supplier_alias).session
     response = make_request(Method.GET, url, session=session, params=params,
                             headers=headers)
+    context.response = response
     assert response.status_code == 200, ("Expected 200 but got {}"
                                          .format(response.status_code))
     content = response.content.decode("utf-8")
@@ -348,6 +349,7 @@ def create_sso_account(context, supplier_alias, alias):
                             allow_redirects=False)
     assert response.status_code == 302, ("Expected 302 but got {}"
                                          .format(response.status_code))
+    context.response = response
     exp_loc = "/accounts/confirm-email/"
     given_loc = response.headers.get("Location")
     assert given_loc == exp_loc, ("Expected new Location to be: '{}' but got "
@@ -357,9 +359,9 @@ def create_sso_account(context, supplier_alias, alias):
     url = get_absolute_url("sso:email_confirm")
     response = make_request(Method.GET, url, session=session,
                             headers=headers, allow_redirects=False)
+    context.response = response
     assert response.status_code == 200, ("Expected 200 but got {}"
                                          .format(response.status_code))
-    context.response = response
 
 
 def open_email_confirmation_link(context, supplier_alias):
@@ -377,6 +379,7 @@ def open_email_confirmation_link(context, supplier_alias):
     confirmation_link = actor.email_confirmation_link
     assert confirmation_link, "Expected a non-empty email confirmation link"
     response = make_request(Method.GET, confirmation_link, session=session)
+    context.response = response
     assert response.status_code == 200, ("Expected 200 but got {}"
                                          .format(response.status_code))
     content = response.content.decode("utf-8")
@@ -386,7 +389,6 @@ def open_email_confirmation_link(context, supplier_alias):
     token = extract_csrf_middleware_token(content)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
     form_action_value = extract_confirm_email_form_action(content)
-    context.response = response
     context.form_action_value = form_action_value
 
 
@@ -410,6 +412,7 @@ def supplier_confirms_email_address(context, supplier_alias):
     data = {"csrfmiddlewaretoken": csrfmiddlewaretoken}
     response = make_request(Method.POST, url, session=session, headers=headers,
                             data=data, allow_redirects=False)
+    context.response = response
     assert response.status_code == 302, ("Expected 302 but got {}"
                                          .format(response.status_code))
     new_location = response.headers.get("Location")
@@ -424,6 +427,7 @@ def supplier_confirms_email_address(context, supplier_alias):
                             allow_redirects=False)
     assert response.status_code == 302, ("Expected 302 but got {}"
                                          .format(response.status_code))
+    context.response = response
     new_location = response.headers.get("Location")
     register_submit = get_absolute_url("ui-buyer:register-submit-account-details")
     assert new_location.startswith(quote(register_submit)), (
@@ -437,10 +441,10 @@ def supplier_confirms_email_address(context, supplier_alias):
     headers = {"Referer": referer}
     url = unquote(new_location)
     response = make_request(Method.GET, url, session=session, headers=headers)
+    context.response = response
     assert response.status_code == 200, ("Expected 200 but got {}"
                                          .format(response.status_code))
     assert "Build and improve your profile" in response.content.decode("utf-8")
-    context.response = response
 
 
 def bp_provide_company_details(context, supplier_alias):
@@ -470,6 +474,7 @@ def bp_provide_company_details(context, supplier_alias):
             "basic-employees": employees}
     response = make_request(Method.POST, url, session=session, headers=headers,
                             data=data, allow_redirects=False)
+    context.response = response
     assert response.status_code == 200, ("Expected 200 but got {}"
                                          .format(response.status_code))
     content = response.content.decode("utf-8")
@@ -479,7 +484,6 @@ def bp_provide_company_details(context, supplier_alias):
     logging.debug("Supplier is on the Select Sector page")
     token = extract_csrf_middleware_token(content)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
-    context.response = response
 
 
 def bp_extract_company_details(content):
@@ -536,6 +540,7 @@ def bp_select_random_sector(context, supplier_alias):
                             data=data, allow_redirects=False)
     assert response.status_code == 200, ("Expected 200 but got {}"
                                          .format(response.status_code))
+    context.response = response
     content = response.content.decode("utf-8")
     assert "Your company address" in content
     assert "We need to send a letter containing a verification code " in content
@@ -549,7 +554,6 @@ def bp_select_random_sector(context, supplier_alias):
     logging.debug("Supplier is on the Your company address page")
     token = extract_csrf_middleware_token(content)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
-    context.response = response
     details = bp_extract_company_details(content)
     context.details = details
 
@@ -582,6 +586,7 @@ def bp_provide_full_name(context, supplier_alias):
             }
     response = make_request(Method.POST, url, session=session, headers=headers,
                             data=data, allow_redirects=False)
+    context.response = response
     assert response.status_code == 200, ("Expected 200 but got {}"
                                          .format(response.status_code))
     content = response.content.decode("utf-8")
@@ -614,6 +619,7 @@ def bp_confirm_registration_and_send_letter(context, supplier_alias):
             }
     response = make_request(Method.POST, url, session=session, headers=headers,
                             data=data, allow_redirects=False)
+    context.response = response
     assert response.status_code == 200, ("Expected 200 but got {}"
                                          .format(response.status_code))
     content = response.content.decode("utf-8")
@@ -631,6 +637,7 @@ def bp_confirm_registration_and_send_letter(context, supplier_alias):
     headers = {"Referer": referer}
     response = make_request(Method.GET, url, session=session, headers=headers,
                             allow_redirects=False)
+    context.response = response
     assert response.status_code == 200, ("Expected 200 but got {}"
                                          .format(response.status_code))
     content = response.content.decode("utf-8")
