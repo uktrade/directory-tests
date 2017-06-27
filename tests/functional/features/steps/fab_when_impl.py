@@ -519,7 +519,11 @@ def bp_extract_company_details(content):
 
 def bp_select_random_sector(context, supplier_alias):
     """Build Profile - Randomly select one of available sectors our company is
-     interested in working in.
+    interested in working in.
+
+    NOTE:
+    This will set `context.details` which will contain company details extracted
+    from the page displayed after Supplier selects the sector.
 
     :param context: behave `context` object
     :type context: behave.runner.Context
