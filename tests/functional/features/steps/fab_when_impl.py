@@ -316,7 +316,7 @@ def confirm_export_status(context, supplier_alias, alias, export_status):
     context.export_status = export_status
 
 
-def create_sso_account(context, supplier_alias, alias):
+def reg_create_sso_account(context, supplier_alias, alias):
     """Will create a SSO account for selected company.
 
     NOTE:
