@@ -8,7 +8,7 @@ from requests import Session
 from tests.functional.features.context_utils import Actor
 from tests.functional.features.settings import EMAIL_VERIFICATION_MSG_SUBJECT
 from tests.functional.features.steps.fab_then_impl import (
-    should_be_on_profile_page,
+    prof_should_be_on_profile_page,
     should_be_prompted_to_build_your_profile,
     should_be_told_about_missing_description,
     should_get_verification_email,
@@ -85,5 +85,5 @@ def bp_build_company_profile(context, supplier_alias):
     bp_select_random_sector(context, supplier_alias)
     bp_provide_full_name(context, supplier_alias)
     bp_confirm_registration_and_send_letter(context, supplier_alias)
-    should_be_on_profile_page(context, supplier_alias)
+    prof_should_be_on_profile_page(context, supplier_alias)
     should_be_told_about_missing_description(context, supplier_alias)

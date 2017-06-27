@@ -75,7 +75,7 @@ def should_be_prompted_to_build_your_profile(context, supplier_alias):
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
 
 
-def should_be_on_profile_page(context, supplier_alias):
+def prof_should_be_on_profile_page(context, supplier_alias):
     content = context.response.content.decode("utf-8")
     assert "Facts &amp; details" in content
     assert "Number of employees" in content
