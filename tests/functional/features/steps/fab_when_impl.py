@@ -168,6 +168,8 @@ def reg_confirm_company_selection(context, supplier_alias, alias):
 
     :param context: behave `context` object
     :type context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type supplier_alias: str
     :param alias: alias of the company used in the scope of the scenario
     :type alias: str
     """
