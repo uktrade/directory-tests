@@ -378,7 +378,7 @@ def open_email_confirmation_link(context, supplier_alias):
     context.form_action_value = form_action_value
 
 
-def confirm_email_address(context, supplier_alias):
+def supplier_confirms_email_address(context, supplier_alias):
     # STEP 1 - Submit "Confirm your email address" form
     actor = context.get_actor(supplier_alias)
     session = actor.session

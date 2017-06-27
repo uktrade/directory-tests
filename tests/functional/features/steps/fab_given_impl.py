@@ -15,6 +15,7 @@ from tests.functional.features.steps.fab_when_impl import (
     create_sso_account,
     select_random_company
 )
+    supplier_confirms_email_address)
 
 
 def unauthenticated_supplier(context, supplier_alias):
