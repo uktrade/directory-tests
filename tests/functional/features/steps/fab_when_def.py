@@ -4,6 +4,7 @@ from behave import when
 
 from tests.functional.features.steps.fab_when_impl import (
     bp_provide_company_details,
+    bp_provide_full_name,
     bp_select_random_sector,
     confirm_company_selection,
     confirm_export_status,
@@ -59,3 +60,11 @@ def when_supplier_provides_company_details(context, supplier_alias):
       'working in')
 def when_supplier_selects_random_sector(context, supplier_alias):
     bp_select_random_sector(context, supplier_alias)
+
+
+@when('"{supplier_alias}" provides her full name which will be used to sent '
+      'the verification letter')
+@when('"{supplier_alias}" provides his full name which will be used to sent '
+      'the verification letter')
+def when_supplier_provides_full_name(context, supplier_alias):
+    bp_provide_full_name(context, supplier_alias)

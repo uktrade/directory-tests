@@ -552,3 +552,43 @@ def bp_select_random_sector(context, supplier_alias):
     context.response = response
     details = bp_extract_company_details(content)
     context.details = details
+
+
+def bp_provide_full_name(context, supplier_alias):
+    """Build Profile - Provide Supplier's full name, which will be use when
+    sending verification letter.
+
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type supplier_alias: str
+    """
+    actor = context.get_actor(supplier_alias)
+    details = context.details
+    session = actor.session
+    csrfmiddlewaretoken = actor.csrfmiddlewaretoken
+    url = get_absolute_url("ui-buyer:company-edit")
+    headers = {"Referer": url}
+    data = {"csrfmiddlewaretoken": csrfmiddlewaretoken,
+            "supplier_company_profile_edit_view-current_step": "address",
+            "address-signature": details.address_signature,
+            "address-postal_full_name": actor.alias,
+            "address-address_line_1": details.address_line_1,
+            "address-address_line_2": details.address_line_2,
+            "address-locality": details.locality,
+            "address-country": details.country,
+            "address-postal_code": details.postal_code,
+            "address-po_box": details.po_box
+            }
+    response = make_request(Method.POST, url, session=session, headers=headers,
+                            data=data, allow_redirects=False)
+    assert response.status_code == 200, ("Expected 200 but got {}"
+                                         .format(response.status_code))
+    content = response.content.decode("utf-8")
+    assert "Thank you" in content, content
+    assert "The letter will be sent to your registered business address" in content
+    assert "You can change the name of the person who will receive this letter" in content
+    assert actor.alias in content
+    logging.debug("Supplier is on the Thank You page")
+    token = extract_csrf_middleware_token(content)
+    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
