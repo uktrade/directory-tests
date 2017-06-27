@@ -39,7 +39,7 @@ def sso_account_should_be_created(context, alias):
 
 
 @retry(wait_fixed=5000, stop_max_attempt_number=18)
-def should_get_verification_email(context, alias, subject):
+def reg_should_get_verification_email(context, alias, subject):
     """Will check if the Supplier received an email verification message.
 
     NOTE:

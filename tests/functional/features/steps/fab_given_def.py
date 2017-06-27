@@ -13,7 +13,7 @@ from tests.functional.features.steps.fab_when_impl import (
     prof_set_company_description
 )
 from tests.functional.features.steps.fab_then_impl import (
-    should_get_verification_email
+    reg_should_get_verification_email
 )
 
 
@@ -34,7 +34,7 @@ def given_supplier_created_sso_account_for_company(context, supplier_alias,
        'confirmation link')
 def given_supplier_received_verification_email(context, alias):
     subject = EMAIL_VERIFICATION_MSG_SUBJECT
-    should_get_verification_email(context, alias, subject)
+    reg_should_get_verification_email(context, alias, subject)
 
 
 @given('"{supplier_alias}" confirmed her email address')

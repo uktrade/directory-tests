@@ -11,7 +11,7 @@ from tests.functional.features.steps.fab_then_impl import (
     prof_should_be_on_profile_page,
     should_be_prompted_to_build_your_profile,
     prof_should_be_told_about_missing_description,
-    should_get_verification_email,
+    reg_should_get_verification_email,
     sso_account_should_be_created
 )
 from tests.functional.features.steps.fab_when_impl import (
@@ -74,7 +74,7 @@ def create_sso_account_associated_with_company(context, supplier_alias,
 
 def confirm_email_address(context, supplier_alias):
     subject = EMAIL_VERIFICATION_MSG_SUBJECT
-    should_get_verification_email(context, supplier_alias, subject)
+    reg_should_get_verification_email(context, supplier_alias, subject)
     open_email_confirmation_link(context, supplier_alias)
     supplier_confirms_email_address(context, supplier_alias)
     should_be_prompted_to_build_your_profile(context, supplier_alias)
