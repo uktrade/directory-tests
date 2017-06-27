@@ -74,3 +74,17 @@ def should_be_prompted_to_build_your_profile(context, supplier_alias):
                   supplier_alias)
     token = extract_csrf_middleware_token(content)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+
+
+def should_be_on_profile_page(context, supplier_alias):
+    content = context.response.content.decode("utf-8")
+    assert "Facts &amp; details" in content
+    assert "Number of employees" in content
+    assert "Registration number" in content
+    assert "Company description" in content
+    assert "Online profiles" in content
+    assert "Recent projects" in content
+    assert "+ Add a case study" in content
+    assert "Sectors of interest" in content
+    assert "Keywords" in content
+    logging.debug("%s is on the company profile page", supplier_alias)
