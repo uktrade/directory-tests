@@ -6,15 +6,18 @@ import string
 from requests import Session
 
 from tests.functional.features.context_utils import Actor
+from tests.functional.features.settings import EMAIL_VERIFICATION_MSG_SUBJECT
 from tests.functional.features.steps.fab_then_impl import (
+    should_be_prompted_to_build_your_profile,
+    should_get_verification_email,
     sso_account_should_be_created
 )
 from tests.functional.features.steps.fab_when_impl import (
     confirm_company_selection,
     confirm_export_status,
     create_sso_account,
-    select_random_company
-)
+    open_email_confirmation_link,
+    select_random_company,
     supplier_confirms_email_address)
 
 
@@ -60,3 +63,11 @@ def create_sso_account_associated_with_company(context, supplier_alias,
                           random.choice(export_status))
     create_sso_account(context, supplier_alias, company_alias)
     sso_account_should_be_created(context, supplier_alias)
+
+
+def confirm_email_address(context, supplier_alias):
+    subject = EMAIL_VERIFICATION_MSG_SUBJECT
+    should_get_verification_email(context, supplier_alias, subject)
+    open_email_confirmation_link(context, supplier_alias)
+    supplier_confirms_email_address(context, supplier_alias)
+    should_be_prompted_to_build_your_profile(context, supplier_alias)
