@@ -105,3 +105,12 @@ def prof_should_be_told_that_company_is_not_verified_yet(context, supplier_alias
     assert "Verify your company" in content
     logging.debug("%s was told that the company is not verified yet",
                   supplier_alias)
+
+
+def prof_should_be_told_that_company_is_published(context, supplier_alias):
+    content = context.response.content.decode("utf-8")
+    assert "Your company is published" in content
+    assert "Your profile is visible to international buyers" in content
+    assert "View published profile" in content
+    logging.debug("%s was told that the company profile is published",
+                  supplier_alias)
