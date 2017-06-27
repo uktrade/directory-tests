@@ -4,7 +4,7 @@ from behave import then
 
 from tests.functional.features.steps.fab_then_impl import (
     prof_should_be_on_profile_page,
-    should_be_prompted_to_build_your_profile,
+    bp_should_be_prompted_to_build_your_profile,
     prof_should_be_told_about_missing_description,
     reg_should_get_verification_email,
     reg_sso_account_should_be_created
@@ -23,7 +23,7 @@ def then_supplier_should_receive_verification_email(context, alias, subject):
 
 @then('"{supplier_alias}" should be prompted to Build and improve your profile')
 def then_supplier_should_be_prompted_to_build_your_profile(context, supplier_alias):
-    should_be_prompted_to_build_your_profile(context, supplier_alias)
+    bp_should_be_prompted_to_build_your_profile(context, supplier_alias)
 
 
 @then('"{supplier_alias}" should be on company profile page')

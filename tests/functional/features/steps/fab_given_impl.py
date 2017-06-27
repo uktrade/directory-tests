@@ -9,7 +9,7 @@ from tests.functional.features.context_utils import Actor
 from tests.functional.features.settings import EMAIL_VERIFICATION_MSG_SUBJECT
 from tests.functional.features.steps.fab_then_impl import (
     prof_should_be_on_profile_page,
-    should_be_prompted_to_build_your_profile,
+    bp_should_be_prompted_to_build_your_profile,
     prof_should_be_told_about_missing_description,
     reg_should_get_verification_email,
     reg_sso_account_should_be_created
@@ -77,7 +77,7 @@ def reg_confirm_email_address(context, supplier_alias):
     reg_should_get_verification_email(context, supplier_alias, subject)
     reg_open_email_confirmation_link(context, supplier_alias)
     reg_supplier_confirms_email_address(context, supplier_alias)
-    should_be_prompted_to_build_your_profile(context, supplier_alias)
+    bp_should_be_prompted_to_build_your_profile(context, supplier_alias)
 
 
 def bp_build_company_profile(context, supplier_alias):

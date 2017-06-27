@@ -60,7 +60,7 @@ def reg_should_get_verification_email(context, alias, subject):
     context.set_actor_email_confirmation_link(alias, link)
 
 
-def should_be_prompted_to_build_your_profile(context, supplier_alias):
+def bp_should_be_prompted_to_build_your_profile(context, supplier_alias):
     content = context.response.content.decode("utf-8")
     assert "Build and improve your profile" in content
     assert "To set up your Find a Buyer profile" in content
