@@ -5,6 +5,7 @@ import logging
 from retrying import retry
 
 from tests.functional.features.utils import (
+    extract_csrf_middleware_token,
     extract_email_confirmation_link,
     find_confirmation_email_msg,
     get_s3_bucket
@@ -70,3 +71,5 @@ def should_be_prompted_to_build_your_profile(context, supplier_alias):
     assert "How many employees are in your company" in content
     logging.debug("%s is on the 'Build and improve your profile' page",
                   supplier_alias)
+    token = extract_csrf_middleware_token(content)
+    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
