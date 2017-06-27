@@ -5,10 +5,12 @@ import random
 from urllib.parse import quote
 from urllib.parse import unquote
 
+from faker import Factory
 from jsonschema import validate
 
 from tests import get_absolute_url
 from tests.functional.features.context_utils import UnregisteredCompany
+from tests.functional.features.settings import NO_OF_EMPLOYEES, SECTORS
 from tests.functional.features.utils import (
     Method,
     extract_confirm_email_form_action,
@@ -436,4 +438,45 @@ def supplier_confirms_email_address(context, supplier_alias):
     assert response.status_code == 200, ("Expected 200 but got {}"
                                          .format(response.status_code))
     assert "Build and improve your profile" in response.content.decode("utf-8")
+    context.response = response
+
+
+def provide_company_details(context, supplier_alias, company_alias):
+    """Provide company details: website (optional), keywords and number
+    of employees.
+
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type supplier_alias: str
+    :param company_alias: alias of the company used in the scope of the scenario
+    :type company_alias: str
+    """
+    fake = Factory.create()
+    actor = context.get_actor(supplier_alias)
+    company = context.get_unregistered_company(company_alias)
+    session = actor.session
+    csrfmiddlewaretoken = actor.csrfmiddlewaretoken
+    url = get_absolute_url("ui-buyer:company-edit")
+    headers = {"Referer": url}
+    employees = random.choice(NO_OF_EMPLOYEES)
+    website = "https://{}".format(fake.domain_name())
+    keywords = ", ".join(fake.sentence().replace(".", "").split())
+    data = {"csrfmiddlewaretoken": csrfmiddlewaretoken,
+            "supplier_company_profile_edit_view-current_step": "basic",
+            "basic-name": company.title,
+            "basic-website": website,
+            "basic-keywords": keywords,
+            "basic-employees": employees}
+    response = make_request(Method.POST, url, session=session, headers=headers,
+                            data=data, allow_redirects=False)
+    assert response.status_code == 200, ("Expected 200 but got {}"
+                                         .format(response.status_code))
+    content = response.content.decode("utf-8")
+    assert "Your company sector" in content
+    assert "What sector is your company interested in working in?" in content
+    assert all(sector in content for sector in SECTORS)
+    logging.debug("Supplier is on the Select Sector page")
+    token = extract_csrf_middleware_token(content)
+    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
     context.response = response

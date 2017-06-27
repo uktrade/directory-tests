@@ -7,8 +7,8 @@ from tests.functional.features.steps.fab_when_impl import (
     confirm_export_status,
     create_sso_account,
     open_email_confirmation_link,
-    select_random_company
-)
+    provide_company_details,
+    select_random_company,
     supplier_confirms_email_address)
 
 
@@ -47,3 +47,9 @@ def when_supplier_confirms_the_email_address(context, supplier_alias):
 @when('"{supplier_alias}" confirms the email address')
 def when_supplier_confirms_email_address(context, supplier_alias):
     supplier_confirms_email_address(context, supplier_alias)
+
+
+@when('"{supplier_alias}" provides valid details of selected "{company_alias}"')
+def when_supplier_provides_company_details(context, supplier_alias,
+                                           company_alias):
+    provide_company_details(context, supplier_alias, company_alias)
