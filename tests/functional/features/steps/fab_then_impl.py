@@ -53,6 +53,7 @@ def should_get_verification_email(context, alias, subject):
     :param subject: expected subject of the email verification message
     :type  subject: str
     """
+    logging.debug("Searching for an email verification message...")
     actor = context.get_actor(alias)
     bucket = get_s3_bucket()
     payload = find_confirmation_email_msg(bucket, actor, subject)
