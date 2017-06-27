@@ -19,7 +19,7 @@ from tests.functional.features.steps.fab_when_impl import (
     bp_provide_company_details,
     bp_provide_full_name,
     bp_select_random_sector,
-    confirm_company_selection,
+    reg_confirm_company_selection,
     reg_confirm_export_status,
     reg_create_sso_account,
     reg_open_email_confirmation_link,
@@ -65,7 +65,7 @@ def reg_create_sso_account_associated_with_company(context, supplier_alias,
                      "Yes, but more than 2 years ago",
                      "No, but we are preparing to"]
     select_random_company(context, supplier_alias, company_alias)
-    confirm_company_selection(context, supplier_alias, company_alias)
+    reg_confirm_company_selection(context, supplier_alias, company_alias)
     reg_confirm_export_status(context, supplier_alias, company_alias,
                               random.choice(export_status))
     reg_create_sso_account(context, supplier_alias, company_alias)

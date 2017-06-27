@@ -7,7 +7,7 @@ from tests.functional.features.steps.fab_when_impl import (
     bp_provide_company_details,
     bp_provide_full_name,
     bp_select_random_sector,
-    confirm_company_selection,
+    reg_confirm_company_selection,
     reg_confirm_export_status,
     reg_create_sso_account,
     reg_open_email_confirmation_link,
@@ -24,7 +24,7 @@ def when_supplier_selects_random_company(context, supplier_alias, alias):
 
 @when('"{supplier_alias}" confirms that "{alias}" is the correct one')
 def when_company_selection_is_confirmed(context, supplier_alias, alias):
-    confirm_company_selection(context, supplier_alias, alias)
+    reg_confirm_company_selection(context, supplier_alias, alias)
 
 
 @when('"{supplier_alias}" confirms that the export status of "{alias}" is '

@@ -163,7 +163,7 @@ def select_random_company(context, supplier_alias, alias):
     context.set_company_for_actor(supplier_alias, alias)
 
 
-def confirm_company_selection(context, supplier_alias, alias):
+def reg_confirm_company_selection(context, supplier_alias, alias):
     """Will confirm that the selected company is the right one.
 
     :param context: behave `context` object
