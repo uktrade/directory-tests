@@ -4,6 +4,7 @@ from behave import given
 
 from tests.functional.features.settings import EMAIL_VERIFICATION_MSG_SUBJECT
 from tests.functional.features.steps.fab_given_impl import (
+    bp_build_company_profile,
     confirm_email_address,
     create_sso_account_associated_with_company,
     unauthenticated_supplier
@@ -37,3 +38,8 @@ def then_supplier_should_receive_verification_email(context, alias):
 @given('"{supplier_alias}" confirmed his email address')
 def step_impl(context, supplier_alias):
     confirm_email_address(context, supplier_alias)
+
+
+@given('"{supplier_alias}" built the company profile')
+def given_supplier_built_company_profile(context, supplier_alias):
+    bp_build_company_profile(context, supplier_alias)
