@@ -45,7 +45,5 @@ Feature: Trade Profile
       And "Annette Geissinger" provides her full name which will be used to sent the verification letter
       And "Annette Geissinger" confirms the details which will be used to sent the verification letter
 
-      Then "Annette Geissinger" should be told about the verification letter
-      And "Annette Geissinger" should be given an option to view or amend company profile
-      And "Annette Geissinger" should be on company profile page
+      Then "Annette Geissinger" should be on company profile page
       And "Annette Geissinger" should be told that her company has no description
