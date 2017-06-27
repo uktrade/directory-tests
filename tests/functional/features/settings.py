@@ -37,7 +37,7 @@ SSO_DB_PORT = SSO_DB_URL.port
 EMAIL_VERIFICATION_MSG_SUBJECT = ("Your great.gov.uk account: Please Confirm "
                                   "Your E-mail Address")
 NO_OF_EMPLOYEES = ["1-10", "11-50", "51-200", "201-500", "501-1000",
-                   "1001-10000", "10000+"]
+                   "1001-10000", "10001+"]
 SECTORS = [
     "AEROSPACE", "AGRICULTURE_HORTICULTURE_AND_FISHERIES", "AIRPORTS",
     "AUTOMOTIVE", "BIOTECHNOLOGY_AND_PHARMACEUTICALS",
