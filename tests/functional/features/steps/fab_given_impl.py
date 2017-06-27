@@ -24,7 +24,7 @@ from tests.functional.features.steps.fab_when_impl import (
     create_sso_account,
     open_email_confirmation_link,
     select_random_company,
-    supplier_confirms_email_address
+    reg_supplier_confirms_email_address
 )
 
 
@@ -76,7 +76,7 @@ def reg_confirm_email_address(context, supplier_alias):
     subject = EMAIL_VERIFICATION_MSG_SUBJECT
     reg_should_get_verification_email(context, supplier_alias, subject)
     open_email_confirmation_link(context, supplier_alias)
-    supplier_confirms_email_address(context, supplier_alias)
+    reg_supplier_confirms_email_address(context, supplier_alias)
     should_be_prompted_to_build_your_profile(context, supplier_alias)
 
 

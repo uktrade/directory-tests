@@ -396,7 +396,7 @@ def open_email_confirmation_link(context, supplier_alias):
     context.form_action_value = form_action_value
 
 
-def supplier_confirms_email_address(context, supplier_alias):
+def reg_supplier_confirms_email_address(context, supplier_alias):
     """Given Supplier has clicked on the email confirmation link, Suppliers has
     to confirm that the provided email address is the correct one.
 
