@@ -7,6 +7,7 @@ from tests.functional.features.steps.fab_when_impl import (
     bp_provide_company_details,
     bp_provide_full_name,
     bp_select_random_sector,
+    prof_verify_company,
     reg_confirm_company_selection,
     reg_confirm_export_status,
     reg_create_sso_account,
@@ -76,3 +77,9 @@ def when_supplier_provides_full_name(context, supplier_alias):
       'the verification letter')
 def step_impl(context, supplier_alias):
     bp_confirm_registration_and_send_letter(context, supplier_alias)
+
+
+@when('"{supplier_alias}" verifies the company with the verification code '
+      'from the letter sent after company profile was created')
+def when_supplier_verifies_company(context, supplier_alias):
+    prof_verify_company(context, supplier_alias)
