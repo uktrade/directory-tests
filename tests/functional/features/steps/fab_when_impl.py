@@ -155,6 +155,7 @@ def select_random_company(context, supplier_alias, alias):
     content = response.content.decode("utf-8")
     token = extract_csrf_middleware_token(content)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+    context.set_company_for_actor(supplier_alias, alias)
 
 
 def confirm_company_selection(context, supplier_alias, alias):
