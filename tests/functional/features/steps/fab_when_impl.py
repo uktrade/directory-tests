@@ -359,6 +359,14 @@ def create_sso_account(context, supplier_alias, alias):
 
 
 def open_email_confirmation_link(context, supplier_alias):
+    """Given Supplier has received a message with email confirmation link
+    Then Supplier has to click on that link.
+
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type supplier_alias: str
+    """
     # context.reset_actor_session(supplier_alias)
     actor = context.get_actor(supplier_alias)
     session = actor.session
@@ -379,6 +387,14 @@ def open_email_confirmation_link(context, supplier_alias):
 
 
 def supplier_confirms_email_address(context, supplier_alias):
+    """Given Supplier has clicked on the email confirmation link, Suppliers has
+    to confirm that the provided email address is the correct one.
+
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type supplier_alias: str
+    """
     # STEP 1 - Submit "Confirm your email address" form
     actor = context.get_actor(supplier_alias)
     session = actor.session
