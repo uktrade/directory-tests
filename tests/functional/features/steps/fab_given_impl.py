@@ -72,7 +72,7 @@ def create_sso_account_associated_with_company(context, supplier_alias,
     reg_sso_account_should_be_created(context, supplier_alias)
 
 
-def confirm_email_address(context, supplier_alias):
+def reg_confirm_email_address(context, supplier_alias):
     subject = EMAIL_VERIFICATION_MSG_SUBJECT
     reg_should_get_verification_email(context, supplier_alias, subject)
     open_email_confirmation_link(context, supplier_alias)
