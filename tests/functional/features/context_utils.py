@@ -16,7 +16,7 @@ Actor = namedtuple(
     'Actor',
     [
         'alias', 'email', 'password', 'session', 'csrfmiddlewaretoken',
-        'email_confirmation_link'
+        'email_confirmation_link', 'company_alias'
     ]
 )
 UnregisteredCompany = namedtuple(
