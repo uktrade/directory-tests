@@ -2,8 +2,7 @@
 """FAB Given step implementations."""
 import logging
 import random
-from urllib.parse import quote
-from urllib.parse import unquote
+from urllib.parse import quote, unquote
 
 from faker import Factory
 from jsonschema import validate

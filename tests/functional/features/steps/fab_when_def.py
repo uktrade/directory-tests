@@ -11,8 +11,8 @@ from tests.functional.features.steps.fab_when_impl import (
     reg_confirm_export_status,
     reg_create_sso_account,
     reg_open_email_confirmation_link,
-    select_random_company,
-    reg_supplier_confirms_email_address
+    reg_supplier_confirms_email_address,
+    select_random_company
 )
 
 

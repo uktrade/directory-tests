@@ -3,8 +3,8 @@
 from behave import then
 
 from tests.functional.features.steps.fab_then_impl import (
-    prof_should_be_on_profile_page,
     bp_should_be_prompted_to_build_your_profile,
+    prof_should_be_on_profile_page,
     prof_should_be_told_about_missing_description,
     reg_should_get_verification_email,
     reg_sso_account_should_be_created

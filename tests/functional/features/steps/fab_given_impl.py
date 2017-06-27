@@ -8,8 +8,8 @@ from requests import Session
 from tests.functional.features.context_utils import Actor
 from tests.functional.features.settings import EMAIL_VERIFICATION_MSG_SUBJECT
 from tests.functional.features.steps.fab_then_impl import (
-    prof_should_be_on_profile_page,
     bp_should_be_prompted_to_build_your_profile,
+    prof_should_be_on_profile_page,
     prof_should_be_told_about_missing_description,
     reg_should_get_verification_email,
     reg_sso_account_should_be_created
@@ -23,8 +23,8 @@ from tests.functional.features.steps.fab_when_impl import (
     reg_confirm_export_status,
     reg_create_sso_account,
     reg_open_email_confirmation_link,
-    select_random_company,
-    reg_supplier_confirms_email_address
+    reg_supplier_confirms_email_address,
+    select_random_company
 )
 
 

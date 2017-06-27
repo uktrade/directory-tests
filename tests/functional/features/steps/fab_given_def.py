@@ -9,11 +9,11 @@ from tests.functional.features.steps.fab_given_impl import (
     reg_create_sso_account_associated_with_company,
     unauthenticated_supplier
 )
-from tests.functional.features.steps.fab_when_impl import (
-    prof_set_company_description
-)
 from tests.functional.features.steps.fab_then_impl import (
     reg_should_get_verification_email
+)
+from tests.functional.features.steps.fab_when_impl import (
+    prof_set_company_description
 )
 
 
