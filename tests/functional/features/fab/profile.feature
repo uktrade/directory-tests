@@ -32,3 +32,20 @@ Feature: Trade Profile
       And "Annette Geissinger" confirms the email address
 
       Then "Annette Geissinger" should be prompted to Build and improve your profile
+
+
+    @profile
+    Scenario: Supplier should be able to build the profile once the email address is confirmed
+      Given "Annette Geissinger" is an unauthenticated supplier
+      And "Annette Geissinger" created a SSO account associated with randomly selected company "Company X"
+      And "Annette Geissinger" confirmed her email address
+
+      When "Annette Geissinger" provides valid details of selected "Company X"
+      And "Annette Geissinger" selects random sector the company is interested in working in
+      And "Annette Geissinger" provides her full name which will be used to sent the verification letter
+      And "Annette Geissinger" confirms the details which will be used to sent the verification letter
+
+      Then "Annette Geissinger" should be told about the verification letter
+      And "Annette Geissinger" should be given an option to view or amend company profile
+      And "Annette Geissinger" should be on company profile page
+      And "Annette Geissinger" should be told that her company has no description
