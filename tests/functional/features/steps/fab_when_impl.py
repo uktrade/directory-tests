@@ -7,6 +7,7 @@ from urllib.parse import unquote
 
 from faker import Factory
 from jsonschema import validate
+from scrapy.selector import Selector
 
 from tests import get_absolute_url
 from tests.functional.features.context_utils import UnregisteredCompany
