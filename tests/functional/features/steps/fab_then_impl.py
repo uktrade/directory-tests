@@ -89,7 +89,7 @@ def prof_should_be_on_profile_page(context, supplier_alias):
     logging.debug("%s is on the company profile page", supplier_alias)
 
 
-def should_be_told_about_missing_description(context, supplier_alias):
+def prof_should_be_told_about_missing_description(context, supplier_alias):
     content = context.response.content.decode("utf-8")
     assert "Your company has no description." in content
     assert "Your profile can't be published until your company has a" in content
