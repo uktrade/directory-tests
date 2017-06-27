@@ -14,7 +14,7 @@ from tests.functional.features.context_utils import UnregisteredCompany
 from tests.functional.features.settings import NO_OF_EMPLOYEES, SECTORS
 from tests.functional.features.steps.fab_then_impl import (
     prof_should_be_on_profile_page,
-    should_be_told_that_company_is_not_verified_yet
+    prof_should_be_told_that_company_is_not_verified_yet
 )
 from tests.functional.features.utils import (
     Method,
@@ -713,5 +713,5 @@ def prof_set_company_description(context, supplier_alias):
     assert response.status_code == 200, ("Expected 200 but got {}"
                                          .format(response.status_code))
     prof_should_be_on_profile_page(context, supplier_alias)
-    should_be_told_that_company_is_not_verified_yet(context, supplier_alias)
+    prof_should_be_told_that_company_is_not_verified_yet(context, supplier_alias)
     logging.debug("Supplier is back to the Profile Page")
