@@ -217,7 +217,7 @@ def confirm_company_selection(context, supplier_alias, alias):
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
 
 
-def confirm_export_status(context, supplier_alias, alias, export_status):
+def reg_confirm_export_status(context, supplier_alias, alias, export_status):
     """Will confirm the current export status of selected unregistered company.
 
     :param context: behave `context` object
