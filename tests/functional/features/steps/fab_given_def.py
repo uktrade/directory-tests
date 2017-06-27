@@ -2,6 +2,7 @@
 """FAB Given step definitions."""
 from behave import given
 
+from tests.functional.features.settings import EMAIL_VERIFICATION_MSG_SUBJECT
 from tests.functional.features.steps.fab_given_impl import (
     create_sso_account_associated_with_company,
     unauthenticated_supplier
@@ -27,5 +28,5 @@ def given_supplier_created_sso_account_for_company(context, supplier_alias,
 @given('"{alias}" received the email verification message with the email '
        'confirmation link')
 def then_supplier_should_receive_verification_email(context, alias):
-    subject = "Your great.gov.uk account: Please Confirm Your E-mail Address"
+    subject = EMAIL_VERIFICATION_MSG_SUBJECT
     should_get_verification_email(context, alias, subject)
