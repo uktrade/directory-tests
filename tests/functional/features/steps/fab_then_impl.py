@@ -91,8 +91,8 @@ def should_be_on_profile_page(context, supplier_alias):
 
 def should_be_told_about_missing_description(context, supplier_alias):
     content = context.response.content.decode("utf-8")
-    assert "Your company has no description." in content, content
+    assert "Your company has no description." in content
     assert "Your profile can't be published until your company has a" in content
-    assert "Set your description" in content, content
+    assert "Set your description" in content
     logging.debug("%s was told that the company profile has no description",
                   supplier_alias)
