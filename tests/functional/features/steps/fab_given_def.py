@@ -6,7 +6,7 @@ from tests.functional.features.settings import EMAIL_VERIFICATION_MSG_SUBJECT
 from tests.functional.features.steps.fab_given_impl import (
     bp_build_company_profile,
     reg_confirm_email_address,
-    create_sso_account_associated_with_company,
+    reg_create_sso_account_associated_with_company,
     unauthenticated_supplier
 )
 from tests.functional.features.steps.fab_when_impl import (
@@ -26,8 +26,8 @@ def given_an_unauthenticated_supplier(context, supplier_alias):
        'selected company "{company_alias}"')
 def given_supplier_created_sso_account_for_company(context, supplier_alias,
                                                    company_alias):
-    create_sso_account_associated_with_company(context, supplier_alias,
-                                               company_alias)
+    reg_create_sso_account_associated_with_company(context, supplier_alias,
+                                                   company_alias)
 
 
 @given('"{alias}" received the email verification message with the email '

@@ -58,8 +58,8 @@ def unauthenticated_supplier(context, supplier_alias):
     context.add_actor(actor)
 
 
-def create_sso_account_associated_with_company(context, supplier_alias,
-                                               company_alias):
+def reg_create_sso_account_associated_with_company(context, supplier_alias,
+                                                   company_alias):
     export_status = ["Yes, in the last year",
                      "Yes, 1 to 2 years ago",
                      "Yes, but more than 2 years ago",
