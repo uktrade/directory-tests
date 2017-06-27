@@ -12,7 +12,7 @@ from tests.functional.features.utils import (
 )
 
 
-def sso_account_should_be_created(context, alias):
+def reg_sso_account_should_be_created(context, alias):
     """Will verify if SSO account was successfully created.
 
     It's a very crude check, as it will only check if the response body
@@ -28,9 +28,9 @@ def sso_account_should_be_created(context, alias):
     """
     response = context.response
     msgs = ["Verify your email address",
-            "if you do not receive an email within 10 minutes", (
-                "We have sent you a confirmation email. Please follow the link"
-                " in the email to verify your email address.")]
+            "if you do not receive an email within 10 minutes",
+            ("We have sent you a confirmation email. Please follow the link"
+             " in the email to verify your email address.")]
     content = response.content.decode("utf-8")
     for msg in msgs:
         err_msg = ("Could not find '{}' in the response".format(msg))

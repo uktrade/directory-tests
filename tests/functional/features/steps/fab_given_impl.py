@@ -12,7 +12,7 @@ from tests.functional.features.steps.fab_then_impl import (
     should_be_prompted_to_build_your_profile,
     prof_should_be_told_about_missing_description,
     reg_should_get_verification_email,
-    sso_account_should_be_created
+    reg_sso_account_should_be_created
 )
 from tests.functional.features.steps.fab_when_impl import (
     bp_confirm_registration_and_send_letter,
@@ -69,7 +69,7 @@ def create_sso_account_associated_with_company(context, supplier_alias,
     confirm_export_status(context, supplier_alias, company_alias,
                           random.choice(export_status))
     create_sso_account(context, supplier_alias, company_alias)
-    sso_account_should_be_created(context, supplier_alias)
+    reg_sso_account_should_be_created(context, supplier_alias)
 
 
 def confirm_email_address(context, supplier_alias):

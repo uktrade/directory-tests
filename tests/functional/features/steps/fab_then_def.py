@@ -7,13 +7,13 @@ from tests.functional.features.steps.fab_then_impl import (
     should_be_prompted_to_build_your_profile,
     prof_should_be_told_about_missing_description,
     reg_should_get_verification_email,
-    sso_account_should_be_created
+    reg_sso_account_should_be_created
 )
 
 
 @then('"{alias}" should be told about the verification email')
 def then_sso_account_was_created(context, alias):
-    sso_account_should_be_created(context, alias)
+    reg_sso_account_should_be_created(context, alias)
 
 
 @then('"{alias}" should receive an email verification msg entitled "{subject}"')
