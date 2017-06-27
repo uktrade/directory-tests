@@ -4,6 +4,7 @@ from behave import when
 
 from tests.functional.features.steps.fab_when_impl import (
     bp_provide_company_details,
+    bp_select_random_sector,
     confirm_company_selection,
     confirm_export_status,
     create_sso_account,
@@ -52,3 +53,9 @@ def when_supplier_confirms_email_address(context, supplier_alias):
 @when('"{supplier_alias}" provides valid details of selected company')
 def when_supplier_provides_company_details(context, supplier_alias):
     bp_provide_company_details(context, supplier_alias)
+
+
+@when('"{supplier_alias}" selects random sector the company is interested in '
+      'working in')
+def when_supplier_selects_random_sector(context, supplier_alias):
+    bp_select_random_sector(context, supplier_alias)

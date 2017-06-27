@@ -510,3 +510,44 @@ def bp_extract_company_details(content):
 
     logging.debug("Extracted company details: %s", details)
     return details
+
+
+def bp_select_random_sector(context, supplier_alias):
+    """Build Profile - Randomly select one of available sectors our company is
+     interested in working in.
+
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type supplier_alias: str
+    """
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+    csrfmiddlewaretoken = actor.csrfmiddlewaretoken
+    url = get_absolute_url("ui-buyer:company-edit")
+    headers = {"Referer": url}
+    sector = random.choice(SECTORS)
+    data = {"csrfmiddlewaretoken": csrfmiddlewaretoken,
+            "supplier_company_profile_edit_view-current_step": "classification",
+            "classification-sectors": sector,
+            }
+    response = make_request(Method.POST, url, session=session, headers=headers,
+                            data=data, allow_redirects=False)
+    assert response.status_code == 200, ("Expected 200 but got {}"
+                                         .format(response.status_code))
+    content = response.content.decode("utf-8")
+    assert "Your company address" in content
+    assert "We need to send a letter containing a verification code " in content
+    assert "Full name" in content
+    assert "Address line 1" in content
+    assert "Address line 2" in content
+    assert "City" in content
+    assert "Country" in content
+    assert "Postcode" in content
+    assert "PO box" in content
+    logging.debug("Supplier is on the Your company address page")
+    token = extract_csrf_middleware_token(content)
+    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+    context.response = response
+    details = bp_extract_company_details(content)
+    context.details = details
