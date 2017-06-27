@@ -12,6 +12,10 @@ from scrapy.selector import Selector
 from tests import get_absolute_url
 from tests.functional.features.context_utils import UnregisteredCompany
 from tests.functional.features.settings import NO_OF_EMPLOYEES, SECTORS
+from tests.functional.features.steps.fab_then_impl import (
+    should_be_on_profile_page,
+    should_be_told_that_company_is_not_verified_yet
+)
 from tests.functional.features.utils import (
     Method,
     extract_confirm_email_form_action,
@@ -649,3 +653,51 @@ def bp_confirm_registration_and_send_letter(context, supplier_alias):
     assert "Your profile can't be published until your company has a" in content
     assert "Set your description" in content, content
     logging.debug("Supplier is on the Edit Company Profile page")
+
+
+def prof_set_company_description(context, supplier_alias):
+    # STEP 1 - go to the "Set Company Description" page
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+    url = get_absolute_url("ui-buyer:company-edit-description")
+    headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
+    response = make_request(Method.GET, url, session=session, headers=headers,
+                            allow_redirects=False)
+    context.response = response
+    assert response.status_code == 200, ("Expected 200 but got {}"
+                                         .format(response.status_code))
+    content = response.content.decode("utf-8")
+    assert "About your company" in content
+    assert "Brief summary to make your company stand out to buyers" in content
+    assert "Describe your business to overseas buyers" in content
+    token = extract_csrf_middleware_token(content)
+    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+    logging.debug("Supplier is on the Set Company Description page")
+
+    # STEP 2 - Submit company description
+    fake = Factory.create()
+    url = get_absolute_url("ui-buyer:company-edit-description")
+    headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
+    data = {"csrfmiddlewaretoken": token,
+            "supplier_company_description_edit_view-current_step": "description",
+            "description-summary": fake.sentence(),
+            "description-description": fake.sentence()
+            }
+    response = make_request(Method.POST, url, session=session, headers=headers,
+                            data=data, allow_redirects=False)
+    context.response = response
+    assert response.status_code == 302, ("Expected 302 but got {}"
+                                         .format(response.status_code))
+    assert response.headers.get("Location") == "/company-profile"
+
+    # STEP 3 - follow the redirect
+    url = get_absolute_url("ui-buyer:company-profile")
+    headers = {"Referer": get_absolute_url("ui-buyer:company-edit-description")}
+    response = make_request(Method.GET, url, session=session, headers=headers,
+                            allow_redirects=False)
+    context.response = response
+    assert response.status_code == 200, ("Expected 200 but got {}"
+                                         .format(response.status_code))
+    should_be_on_profile_page(context, supplier_alias)
+    should_be_told_that_company_is_not_verified_yet(context, supplier_alias)
+    logging.debug("Supplier is back to the Profile Page")

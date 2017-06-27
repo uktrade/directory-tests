@@ -9,6 +9,9 @@ from tests.functional.features.steps.fab_given_impl import (
     create_sso_account_associated_with_company,
     unauthenticated_supplier
 )
+from tests.functional.features.steps.fab_when_impl import (
+    prof_set_company_description
+)
 from tests.functional.features.steps.fab_then_impl import (
     should_get_verification_email
 )
@@ -43,3 +46,8 @@ def given_supplier_confirmed_email_address(context, supplier_alias):
 @given('"{supplier_alias}" built the company profile')
 def given_supplier_built_company_profile(context, supplier_alias):
     bp_build_company_profile(context, supplier_alias)
+
+
+@given('"{supplier_alias}" set the company description')
+def given_supplier_set_company_description(context, supplier_alias):
+    prof_set_company_description(context, supplier_alias)
