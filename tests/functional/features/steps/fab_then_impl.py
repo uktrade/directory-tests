@@ -96,3 +96,12 @@ def should_be_told_about_missing_description(context, supplier_alias):
     assert "Set your description" in content
     logging.debug("%s was told that the company profile has no description",
                   supplier_alias)
+
+
+def should_be_told_that_company_is_not_verified_yet(context, supplier_alias):
+    content = context.response.content.decode("utf-8")
+    assert "Your company has not yet been verified." in content
+    assert "Your profile can't be published until your company is verified" in content
+    assert "Verify your company" in content
+    logging.debug("%s was told that the company is not verified yet",
+                  supplier_alias)
