@@ -441,20 +441,18 @@ def supplier_confirms_email_address(context, supplier_alias):
     context.response = response
 
 
-def provide_company_details(context, supplier_alias, company_alias):
-    """Provide company details: website (optional), keywords and number
-    of employees.
+def bp_provide_company_details(context, supplier_alias):
+    """Build Profile - Provide company details: website (optional), keywords
+    and number of employees.
 
     :param context: behave `context` object
     :type context: behave.runner.Context
     :param supplier_alias: alias of the Actor used in the scope of the scenario
     :type supplier_alias: str
-    :param company_alias: alias of the company used in the scope of the scenario
-    :type company_alias: str
     """
     fake = Factory.create()
     actor = context.get_actor(supplier_alias)
-    company = context.get_unregistered_company(company_alias)
+    company = context.get_unregistered_company(actor.company_alias)
     session = actor.session
     csrfmiddlewaretoken = actor.csrfmiddlewaretoken
     url = get_absolute_url("ui-buyer:company-edit")

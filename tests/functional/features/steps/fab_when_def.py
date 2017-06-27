@@ -3,11 +3,11 @@
 from behave import when
 
 from tests.functional.features.steps.fab_when_impl import (
+    bp_provide_company_details,
     confirm_company_selection,
     confirm_export_status,
     create_sso_account,
     open_email_confirmation_link,
-    provide_company_details,
     select_random_company,
     supplier_confirms_email_address)
 
@@ -49,7 +49,6 @@ def when_supplier_confirms_email_address(context, supplier_alias):
     supplier_confirms_email_address(context, supplier_alias)
 
 
-@when('"{supplier_alias}" provides valid details of selected "{company_alias}"')
-def when_supplier_provides_company_details(context, supplier_alias,
-                                           company_alias):
-    provide_company_details(context, supplier_alias, company_alias)
+@when('"{supplier_alias}" provides valid details of selected company')
+def when_supplier_provides_company_details(context, supplier_alias):
+    bp_provide_company_details(context, supplier_alias)
