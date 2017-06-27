@@ -368,7 +368,7 @@ def create_sso_account(context, supplier_alias, alias):
                                          .format(response.status_code))
 
 
-def open_email_confirmation_link(context, supplier_alias):
+def reg_open_email_confirmation_link(context, supplier_alias):
     """Given Supplier has received a message with email confirmation link
     Then Supplier has to click on that link.
 
