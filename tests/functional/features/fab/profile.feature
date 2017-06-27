@@ -40,7 +40,7 @@ Feature: Trade Profile
       And "Annette Geissinger" created a SSO account associated with randomly selected company "Company X"
       And "Annette Geissinger" confirmed her email address
 
-      When "Annette Geissinger" provides valid details of selected "Company X"
+      When "Annette Geissinger" provides valid details of selected company
       And "Annette Geissinger" selects random sector the company is interested in working in
       And "Annette Geissinger" provides her full name which will be used to sent the verification letter
       And "Annette Geissinger" confirms the details which will be used to sent the verification letter
