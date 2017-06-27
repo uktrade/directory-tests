@@ -592,3 +592,49 @@ def bp_provide_full_name(context, supplier_alias):
     logging.debug("Supplier is on the Thank You page")
     token = extract_csrf_middleware_token(content)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+
+
+def bp_confirm_registration_and_send_letter(context, supplier_alias):
+    """Build Profile - Supplier has to finally confirm registration and is
+    informed about verification letter.
+
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type supplier_alias: str
+    """
+    # STEP 1 - Confirm registration
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+    csrfmiddlewaretoken = actor.csrfmiddlewaretoken
+    url = get_absolute_url("ui-buyer:company-edit")
+    headers = {"Referer": url}
+    data = {"csrfmiddlewaretoken": csrfmiddlewaretoken,
+            "supplier_company_profile_edit_view-current_step": "confirm"
+            }
+    response = make_request(Method.POST, url, session=session, headers=headers,
+                            data=data, allow_redirects=False)
+    assert response.status_code == 200, ("Expected 200 but got {}"
+                                         .format(response.status_code))
+    content = response.content.decode("utf-8")
+    assert "We've sent your verification letter" in content, content
+    msg = ("You should receive your verification letter within a week. When you"
+           " receive the letter, please log in to GREAT.gov.uk to enter your "
+           "verification profile to publish your company profile.")
+    assert msg in content, content
+    logging.debug("Supplier is on the We've sent your verification letter page")
+
+    # STEP 2 - Click on the "View or amend your company profile" link
+    # use previous url as the referer link
+    referer = url
+    url = get_absolute_url("ui-buyer:company-profile")
+    headers = {"Referer": referer}
+    response = make_request(Method.GET, url, session=session, headers=headers,
+                            allow_redirects=False)
+    assert response.status_code == 200, ("Expected 200 but got {}"
+                                         .format(response.status_code))
+    content = response.content.decode("utf-8")
+    assert "Your company has no description." in content, content
+    assert "Your profile can't be published until your company has a" in content
+    assert "Set your description" in content, content
+    logging.debug("Supplier is on the Edit Company Profile page")

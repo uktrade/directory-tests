@@ -3,6 +3,7 @@
 from behave import when
 
 from tests.functional.features.steps.fab_when_impl import (
+    bp_confirm_registration_and_send_letter,
     bp_provide_company_details,
     bp_provide_full_name,
     bp_select_random_sector,
@@ -11,7 +12,8 @@ from tests.functional.features.steps.fab_when_impl import (
     create_sso_account,
     open_email_confirmation_link,
     select_random_company,
-    supplier_confirms_email_address)
+    supplier_confirms_email_address
+)
 
 
 @when('"{supplier_alias}" randomly selects an active company without a profile'
@@ -68,3 +70,9 @@ def when_supplier_selects_random_sector(context, supplier_alias):
       'the verification letter')
 def when_supplier_provides_full_name(context, supplier_alias):
     bp_provide_full_name(context, supplier_alias)
+
+
+@when('"{supplier_alias}" confirms the details which will be used to sent '
+      'the verification letter')
+def step_impl(context, supplier_alias):
+    bp_confirm_registration_and_send_letter(context, supplier_alias)
