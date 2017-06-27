@@ -86,6 +86,17 @@ def set_actor_email_confirmation_link(self, alias, link):
         logging.debug("Could not find an actor aliased '%s'", alias)
 
 
+def set_company_for_actor(self, actor_alias, company_alias):
+    if actor_alias in self.scenario_data.actors:
+        actors = self.scenario_data.actors
+        actors[actor_alias] = actors[actor_alias]._replace(
+            company_alias=company_alias)
+        logging.debug("Successfully set company_alias=%s for "
+                      "Actor: %s", company_alias, actor_alias)
+    else:
+        logging.debug("Could not find an actor aliased '%s'", actor_alias)
+
+
 def reset_actor_session(self, alias):
     """Reset `requests` Session object.
 
@@ -149,6 +160,7 @@ def patch_context(context):
         set_actor_csrfmiddlewaretoken, context)
     context.set_actor_email_confirmation_link = MethodType(
         set_actor_email_confirmation_link, context)
+    context.set_company_for_actor = MethodType(set_company_for_actor, context)
     context.add_unregistered_company = MethodType(
         add_unregistered_company, context)
     context.get_unregistered_company = MethodType(
