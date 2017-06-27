@@ -142,7 +142,7 @@ def select_random_company(context, supplier_alias, alias):
     assert response.status_code == 200
     content = response.content.decode("utf-8")
     assert "Create your company’s profile" in content
-    html_escape_table = {"&": "&amp;"}
+    html_escape_table = {"&": "&amp;", "'": "&#39;"}
     escaped_company_title = "".join(html_escape_table.get(c, c) for c in
                                     company.title.upper())
     assert escaped_company_title in content, ("Company name '{}' not present in"
