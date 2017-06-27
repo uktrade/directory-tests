@@ -627,7 +627,7 @@ def bp_confirm_registration_and_send_letter(context, supplier_alias):
     msg = ("You should receive your verification letter within a week. When you"
            " receive the letter, please log in to GREAT.gov.uk to enter your "
            "verification profile to publish your company profile.")
-    assert msg in content, content
+    assert msg in content
     logging.debug("Supplier is on the We've sent your verification letter page")
 
     # STEP 2 - Click on the "View or amend your company profile" link
