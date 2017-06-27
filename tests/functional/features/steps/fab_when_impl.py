@@ -479,3 +479,34 @@ def bp_provide_company_details(context, supplier_alias):
     token = extract_csrf_middleware_token(content)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
     context.response = response
+
+
+def bp_extract_company_details(content):
+    """Build Profile - extract company details from Your company address page
+
+    :param content: contents of "Your company address" page
+    :return: named tuple containing all extracted company details
+    """
+    from collections import namedtuple
+
+    Details = namedtuple("Details", ["address_signature", "address_line_1",
+                                     "address_line_2", "locality", "country",
+                                     "postal_code", "po_box"])
+
+    def extract(selector):
+        res = Selector(text=content).css(selector).extract()
+        return res[0] if len(res) > 0 else ""
+
+    address_signature = extract("#id_address-signature::attr(value)")
+    address_line_1 = extract("#id_address-address_line_1::attr(value)")
+    address_line_2 = extract("#id_address-address_line_2::attr(value)")
+    locality = extract("#id_address-locality::attr(value)")
+    country = extract("#id_address-country::attr(value)")
+    postal_code = extract("#id_address-postal_code::attr(value)")
+    po_box = extract("#id_address-po_box::attr(value)")
+
+    details = Details(address_signature, address_line_1, address_line_2,
+                      locality, country, postal_code, po_box)
+
+    logging.debug("Extracted company details: %s", details)
+    return details
