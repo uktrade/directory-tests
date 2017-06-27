@@ -656,6 +656,20 @@ def bp_confirm_registration_and_send_letter(context, supplier_alias):
 
 
 def prof_set_company_description(context, supplier_alias):
+    """Edit Profile - Will set company description.
+
+    This is quasi-mandatory (*) step before Supplier can verify the company with
+    the code sent in a letter.
+
+    (*) it's quasi mandatory, because Supplier can actually go to the company
+    verification page using the link provided in the letter without the need
+    to set company description.
+
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type supplier_alias: str
+    """
     # STEP 1 - go to the "Set Company Description" page
     actor = context.get_actor(supplier_alias)
     session = actor.session
