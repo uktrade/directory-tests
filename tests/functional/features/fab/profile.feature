@@ -79,14 +79,14 @@ Feature: Trade Profile
       Then "Peter Alder" should be on FAS profile page of company "Y"
 
 
-  @ED-1740
-  @registration
-  Scenario: Some suppliers are not appropriate to feature in the FAB service
-    Given "Peter Alder" is an unauthenticated supplier
+    @ED-1740
+    @registration
+    Scenario: Some suppliers are not appropriate to feature in the FAB service
+      Given "Peter Alder" is an unauthenticated supplier
 
-    When "Peter Alder" randomly selects an active company without a profile identified by an alias "Company X"
-    And "Peter Alder" confirms that "Company X" is the correct one
-    And "Peter Alder" decides that the export status of his company is "No, we are not planning to sell overseas"
+      When "Peter Alder" randomly selects an active company without a profile identified by an alias "Company X"
+      And "Peter Alder" confirms that "Company X" is the correct one
+      And "Peter Alder" decides that the export status of his company is "No, we are not planning to sell overseas"
 
-    Then "Peter Alder" should be told that his company is currently not appropriate to feature in the FAB service
+      Then "Peter Alder" should be told that his company is currently not appropriate to feature in the FAB service
 
