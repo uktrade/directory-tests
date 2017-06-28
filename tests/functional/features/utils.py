@@ -371,3 +371,43 @@ def get_verification_code(company_number):
     cursor.close()
     connection.close()
     return res
+
+
+def check_response(response: Response, status_code: int, *,
+                   location: str = None, locations: list = [],
+                   strings: list = []):
+    """Check if SUT replied with an expected response.
+
+    :param response: Response object return by `requests`
+    :type  response: requests.models.Response
+    :param status_code: expected status code
+    :type  status_code: int
+    :param location: (optional) expected value of Location header
+    :type  location: str
+    :param locations: (optional) in one of the Location list
+    :type  locations: list
+    :param strings: (optional) a list of strings that should be present
+                    in the response content
+    :type  strings: list
+    """
+    assert response.status_code == status_code, (
+        "Expected {} but got {}".format(status_code, response.status_code))
+
+    if strings:
+        assert response.content, "Response has no content!"
+        content = response.content.decode("utf-8")
+        assert all(s in content for s in strings), (
+            "Could not find all expected string in the response: %s"
+            .format(", ".join(strings))
+        )
+
+    if location:
+        assert response.headers.get("Location") == location, (
+            "Expected Location header to be: '{}' but got '{}' instead."
+            .format(location, response.headers.get("Location")))
+
+    if locations:
+        assert response.headers.get("Location") in locations, (
+            "Should be redirected to one of these {} locations '{}' but instead"
+            " was redirected to '{}'".format(len(locations), locations,
+                                             response.headers.get("Location")))
