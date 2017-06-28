@@ -731,6 +731,14 @@ def prof_verify_company(context, supplier_alias):
 
 
 def prof_view_published_profile(context, supplier_alias):
+    """Whilst being of FAB company profile page it will `click` on
+    the `View published profile` link.
+
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type supplier_alias: str
+    """
     actor = context.get_actor(supplier_alias)
     company = context.get_unregistered_company(actor.company_alias)
 
