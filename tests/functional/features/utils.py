@@ -134,6 +134,8 @@ def make_request(method: Method, url, *, session=None, params=None,
     assert url is not None, "Please provide the URL"
 
     req = session or requests
+    trim_offset = 150  # define the length of logged response content
+
     request_kwargs = dict(url=url, params=params, headers=headers,
                           cookies=cookies, data=data, files=files,
                           allow_redirects=allow_redirects)
@@ -178,7 +180,8 @@ def make_request(method: Method, url, *, session=None, params=None,
             logging.debug("Intermediate REQ Body: %s", resp.request.body)
             logging.debug("Intermediate RESP: %d %s", resp.status_code, resp.reason)
             logging.debug("Intermediate RESP Headers: %s", resp.headers)
-            logging.debug("Intermediate RESP Content: %s", resp.content[0:150] or None)
+            logging.debug("Intermediate RESP Content: %s",
+                          resp.content[0:trim_offset] or None)
         logging.debug("Final destination: %s %s -> %d %s",
                       res.request.method, res.request.url, res.status_code,
                       res.url)
@@ -186,8 +189,9 @@ def make_request(method: Method, url, *, session=None, params=None,
         logging.debug("REQ was not redirected")
     if res.content:
         if trim_response_content:
-            if len(res.content) > 150:
-                logging.debug("RSP Trimmed Content: %s", res.content[0:150])
+            if len(res.content) > trim_offset:
+                logging.debug("RSP Trimmed Content: %s",
+                              res.content[0:trim_offset])
             else:
                 logging.debug("RSP Content: %s", res.content)
         else:
