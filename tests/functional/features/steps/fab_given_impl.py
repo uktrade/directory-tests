@@ -2,6 +2,7 @@
 """FAB Given step implementations."""
 import random
 import string
+import uuid
 
 from requests import Session
 
@@ -51,7 +52,7 @@ def unauthenticated_supplier(context, supplier_alias):
     """
     session = Session()
     email = "test+{}+{}@directory.uktrade.io".format(
-        supplier_alias.replace(" ", "_"), random.randint(100000, 999999))
+        supplier_alias.replace(" ", "_"), str(uuid.uuid4()))
     password_length = 10
     password = ''.join(random.choice(string.ascii_letters)
                        for i in range(password_length))
