@@ -9,6 +9,7 @@ from enum import Enum
 import requests
 from boto.s3 import connect_to_region
 from boto.s3.connection import OrdinaryCallingFormat
+from requests.models import Response
 
 from tests.functional.features.db_cleanup import get_dir_db_connection
 from tests.functional.features.settings import (
@@ -196,17 +197,18 @@ def make_request(method: Method, url, *, session=None, params=None,
     return res
 
 
-def extract_csrf_middleware_token(content):
+def extract_csrf_middleware_token(response: Response):
     """Extract CSRF middleware token from the response content.
 
     Comes in handy when dealing with e.g. Django forms.
 
-    :param content: response content decoded as utf-8
-    :type  content: str
+    :param response: requests response
+    :type  response: requests.models.Response
     :return: CSRF middleware token extracted from the response content
     :rtype: str
     """
-    assert content, "Expected a non-empty response content but got norhing"
+    assert response.content, "Response has no content"
+    content = response.content.decode("utf-8")
 
     csrf_tag_idx = content.find("name='csrfmiddlewaretoken'")
     value_property = "value='"
