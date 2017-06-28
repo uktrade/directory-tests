@@ -331,21 +331,15 @@ def reg_create_sso_account(context, supplier_alias, alias):
             "next": next_link}
     response = make_request(Method.POST, url_signup, session=session,
                             headers=headers, data=data,
-    assert response.status_code == 302, ("Expected 302 but got {}"
-                                         .format(response.status_code))
-    exp_loc = "/accounts/confirm-email/"
-    given_loc = response.headers.get("Location")
-    assert given_loc == exp_loc, ("Expected new Location to be: '{}' but got "
-                                  "'{}' instead.".format(exp_loc, given_loc))
                             allow_redirects=False, context=context)
+    check_response(response, 302, location="/accounts/confirm-email/")
 
     # Steps 2: GET SSO /accounts/confirm-email/
     url = get_absolute_url("sso:email_confirm")
     response = make_request(Method.GET, url, session=session,
-    assert response.status_code == 200, ("Expected 200 but got {}"
-                                         .format(response.status_code))
                             headers=headers, allow_redirects=False,
                             context=context)
+    check_response(response, 200)
 
 
 def reg_open_email_confirmation_link(context, supplier_alias):
@@ -362,14 +356,14 @@ def reg_open_email_confirmation_link(context, supplier_alias):
     session = actor.session
     confirmation_link = actor.email_confirmation_link
     assert confirmation_link, "Expected a non-empty email confirmation link"
-    response = make_request(Method.GET, confirmation_link, session=session)
-    context.response = response
-    assert response.status_code == 200, ("Expected 200 but got {}"
-                                         .format(response.status_code))
-    content = response.content.decode("utf-8")
-    assert "Confirm email Address" in content
-    assert "This e-mail confirmation link expired or is invalid" not in content
+    response = make_request(Method.GET, confirmation_link, session=session,
+                            context=context)
+    exp_strings = ["Confirm email Address"]
+    unexp_strings = ["This e-mail confirmation link expired or is invalid"]
+    check_response(response, 200, strings=exp_strings,
+                   unexp_strings=unexp_strings)
     logging.debug("Supplier is on the Confirm your email address page")
+
     token = extract_csrf_middleware_token(response)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
     form_action_value = extract_confirm_email_form_action(response)
@@ -395,20 +389,17 @@ def reg_supplier_confirms_email_address(context, supplier_alias):
     headers = {"Referer": referer}
     data = {"csrfmiddlewaretoken": csrfmiddlewaretoken}
     response = make_request(Method.POST, url, session=session, headers=headers,
-    assert response.status_code == 302, ("Expected 302 but got {}"
-                                         .format(response.status_code))
                             data=data, allow_redirects=False, context=context)
     new_location = response.headers.get("Location")
     assert new_location.startswith("/accounts/login/?next=")
     assert "register-submit%253Fcompany_number%253D" in new_location
+    check_response(response, 302)
 
     # Step 2 - Follow redirect - go to SSO /accounts/login/
     # use the same Referer as in previous request
     headers = {"Referer": referer}
     url = "{}{}".format(get_absolute_url("sso:landing"), new_location)
     response = make_request(Method.GET, url, session=session, headers=headers,
-    assert response.status_code == 302, ("Expected 302 but got {}"
-                                         .format(response.status_code))
                             allow_redirects=False, context=context)
     new_location = response.headers.get("Location")
     register_submit = get_absolute_url("ui-buyer:register-submit-account-details")
@@ -417,16 +408,16 @@ def reg_supplier_confirms_email_address(context, supplier_alias):
         .format(register_submit, new_location))
     assert "company_number" in new_location
     assert "export_status" in new_location
+    check_response(response, 302)
 
     # Step 3 - Follow redirect - go to DIR /company-profile/edit
     # use the same Referer as in previous request
     headers = {"Referer": referer}
     url = unquote(new_location)
-    response = make_request(Method.GET, url, session=session, headers=headers)
-    context.response = response
-    assert response.status_code == 200, ("Expected 200 but got {}"
-                                         .format(response.status_code))
-    assert "Build and improve your profile" in response.content.decode("utf-8")
+    response = make_request(Method.GET, url, session=session, headers=headers,
+                            context=context)
+    exp_strings = ["Build and improve your profile"]
+    check_response(response, 200, strings=exp_strings)
 
 
 def bp_provide_company_details(context, supplier_alias):
