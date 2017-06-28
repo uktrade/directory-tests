@@ -749,7 +749,7 @@ def prof_view_published_profile(context, supplier_alias):
     response = make_request(Method.GET, url, session=session,
                             allow_redirects=False, context=context)
     location = "/suppliers/{}/".format(company.number)
-    check_response(response, 301, location=location)
+    check_response(response, 301, location_starts_with=location)
 
     # STEP 2 - follow the redirect from last response
     actor = context.get_actor(supplier_alias)
