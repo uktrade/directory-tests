@@ -810,7 +810,7 @@ def prof_view_published_profile(context, supplier_alias):
     new_location = "/suppliers/{}/".format(company.number)
     assert response.headers.get("Location").startswith(new_location)
 
-    # STEP 1 - go to the "View published profile" page
+    # STEP 2 - follow the redirect from last response
     actor = context.get_actor(supplier_alias)
     session = actor.session
     url = "{}{}".format(get_absolute_url("ui-supplier:landing"),
