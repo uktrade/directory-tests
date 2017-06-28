@@ -134,28 +134,24 @@ def make_request(method: Method, url, *, session=None, params=None,
     assert url is not None, "Please provide the URL"
 
     req = session or requests
+    request_kwargs = dict(url=url, params=params, headers=headers,
+                          cookies=cookies, data=data, files=files,
+                          allow_redirects=allow_redirects)
 
     if method == Method.DELETE:
-        res = req.delete(url=url, params=params, headers=headers,
-                         cookies=cookies, allow_redirects=allow_redirects)
+        res = req.delete(**request_kwargs)
     elif method == Method.GET:
-        res = req.get(url=url, params=params, headers=headers, cookies=cookies,
-                      allow_redirects=allow_redirects)
+        res = req.get(**request_kwargs)
     elif method == Method.HEAD:
-        res = req.head(url=url, params=params, headers=headers,
-                       cookies=cookies, allow_redirects=allow_redirects)
+        res = req.head(**request_kwargs)
     elif method == Method.OPTIONS:
-        res = req.options(url=url, params=params, headers=headers,
-                          cookies=cookies, allow_redirects=allow_redirects)
+        res = req.options(**request_kwargs)
     elif method == Method.PATCH:
-        res = req.patch(url=url, params=params, headers=headers, cookies=cookies,
-                        data=data, files=files, allow_redirects=allow_redirects)
+        res = req.patch(**request_kwargs)
     elif method == Method.POST:
-        res = req.post(url=url, params=params, headers=headers, cookies=cookies,
-                       data=data, files=files, allow_redirects=allow_redirects)
+        res = req.post(**request_kwargs)
     elif method == Method.PUT:
-        res = req.put(url=url, params=params, headers=headers, cookies=cookies,
-                      data=data, files=files, allow_redirects=allow_redirects)
+        res = req.put(**request_kwargs)
     else:
         raise KeyError("Unrecognized Method: %s", method.name)
 
