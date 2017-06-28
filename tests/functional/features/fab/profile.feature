@@ -66,3 +66,14 @@ Feature: Trade Profile
 
       Then "Annette Geissinger" should be on company profile page
       And "Annette Geissinger" should be told that her company is published
+
+
+    @ED-1727
+    @publish
+    @FAS
+    Scenario: Once verified Company Profile should be published on FAS
+      Given "Peter Alder" has created and verified profile for randomly selected company "Y"
+
+      When "Peter Alder" decides to view published profile
+
+      Then "Peter Alder" should be on FAS profile page of company "Y"
