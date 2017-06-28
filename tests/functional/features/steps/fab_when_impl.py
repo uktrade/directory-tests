@@ -790,3 +790,34 @@ def prof_verify_company(context, supplier_alias):
     prof_should_be_told_that_company_is_published(context, supplier_alias)
     logging.debug("%s is on the Verified & Published Company Profile page",
                   supplier_alias)
+
+
+def prof_view_published_profile(context, supplier_alias):
+    actor = context.get_actor(supplier_alias)
+    company = context.get_unregistered_company(actor.company_alias)
+
+    # STEP 1 - go to the "View published profile" page
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+    url = "{}/{}".format(get_absolute_url("ui-supplier:suppliers"), company.number)
+    response = make_request(Method.GET, url, session=session,
+                            allow_redirects=False)
+    context.response = response
+    assert response.status_code == 301, ("Expected 301 but got {}"
+                                         .format(response.status_code))
+    new_location = "/suppliers/{}/".format(company.number)
+    assert response.headers.get("Location").startswith(new_location)
+
+    # STEP 1 - go to the "View published profile" page
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+    url = "{}{}".format(get_absolute_url("ui-supplier:landing"),
+                        response.headers.get("Location"))
+    response = make_request(Method.GET, url, session=session,
+                            allow_redirects=False)
+    context.response = response
+    assert response.status_code == 200, ("Expected 200 but got {}"
+                                         .format(response.status_code))
+    content = response.content.decode("utf-8")
+    assert company.number in content
+    logging.debug("Supplier is on the company's FAS page")

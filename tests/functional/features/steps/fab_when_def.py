@@ -8,6 +8,7 @@ from tests.functional.features.steps.fab_when_impl import (
     bp_provide_full_name,
     bp_select_random_sector,
     prof_verify_company,
+    prof_view_published_profile,
     reg_confirm_company_selection,
     reg_confirm_export_status,
     reg_create_sso_account,
@@ -83,3 +84,8 @@ def step_impl(context, supplier_alias):
       'from the letter sent after company profile was created')
 def when_supplier_verifies_company(context, supplier_alias):
     prof_verify_company(context, supplier_alias)
+
+
+@when('"{supplier_alias}" decides to view published profile')
+def when_supplier_views_published_profile(context, supplier_alias):
+    prof_view_published_profile(context, supplier_alias)
