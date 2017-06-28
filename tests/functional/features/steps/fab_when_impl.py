@@ -697,10 +697,12 @@ def prof_set_company_description(context, supplier_alias):
     fake = Factory.create()
     url = get_absolute_url("ui-buyer:company-edit-description")
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
+    summary = fake.sentence()
+    description = fake.sentence()
     data = {"csrfmiddlewaretoken": token,
             "supplier_company_description_edit_view-current_step": "description",
-            "description-summary": fake.sentence(),
-            "description-description": fake.sentence()
+            "description-summary": summary,
+            "description-description": description
             }
     response = make_request(Method.POST, url, session=session, headers=headers,
                             data=data, allow_redirects=False)
@@ -708,6 +710,7 @@ def prof_set_company_description(context, supplier_alias):
     assert response.status_code == 302, ("Expected 302 but got {}"
                                          .format(response.status_code))
     assert response.headers.get("Location") == "/company-profile"
+    context.set_company_description(actor.company_alias, summary, description)
 
     # STEP 3 - follow the redirect
     url = get_absolute_url("ui-buyer:company-profile")
