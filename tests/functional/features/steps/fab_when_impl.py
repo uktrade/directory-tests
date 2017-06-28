@@ -163,7 +163,7 @@ def select_random_company(context, supplier_alias, alias):
     logging.debug("Successfully got to the Confirm your Company page")
 
     content = response.content.decode("utf-8")
-    token = extract_csrf_middleware_token(content)
+    token = extract_csrf_middleware_token(response)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
     context.set_company_for_actor(supplier_alias, alias)
 
@@ -220,7 +220,7 @@ def reg_confirm_company_selection(context, supplier_alias, alias):
 
     # Now, we've landed on the Export Status page, so we have extract the
     # csrfmiddlewaretoken from the response content
-    token = extract_csrf_middleware_token(content)
+    token = extract_csrf_middleware_token(response)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
 
 
@@ -318,7 +318,7 @@ def reg_confirm_export_status(context, supplier_alias, alias, export_status):
     assert "Create a great.gov.uk account and you can" in content
     logging.debug("Successfully landed on SSO signup page")
 
-    token = extract_csrf_middleware_token(content)
+    token = extract_csrf_middleware_token(response)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
     context.export_status = export_status
 
@@ -397,7 +397,7 @@ def reg_open_email_confirmation_link(context, supplier_alias):
     assert "Confirm email Address" in content
     assert "This e-mail confirmation link expired or is invalid" not in content
     logging.debug("Supplier is on the Confirm your email address page")
-    token = extract_csrf_middleware_token(content)
+    token = extract_csrf_middleware_token(response)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
     form_action_value = extract_confirm_email_form_action(content)
     context.form_action_value = form_action_value
@@ -493,7 +493,7 @@ def bp_provide_company_details(context, supplier_alias):
     assert "What sector is your company interested in working in?" in content
     assert all(sector in content for sector in SECTORS)
     logging.debug("Supplier is on the Select Sector page")
-    token = extract_csrf_middleware_token(content)
+    token = extract_csrf_middleware_token(response)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
 
 
@@ -567,7 +567,7 @@ def bp_select_random_sector(context, supplier_alias):
     assert "Postcode" in content
     assert "PO box" in content
     logging.debug("Supplier is on the Your company address page")
-    token = extract_csrf_middleware_token(content)
+    token = extract_csrf_middleware_token(response)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
     details = bp_extract_company_details(content)
     context.details = details
@@ -610,7 +610,7 @@ def bp_provide_full_name(context, supplier_alias):
     assert "You can change the name of the person who will receive this letter" in content
     assert actor.alias in content
     logging.debug("Supplier is on the Thank You page")
-    token = extract_csrf_middleware_token(content)
+    token = extract_csrf_middleware_token(response)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
 
 
@@ -691,7 +691,7 @@ def prof_set_company_description(context, supplier_alias):
     assert "About your company" in content
     assert "Brief summary to make your company stand out to buyers" in content
     assert "Describe your business to overseas buyers" in content
-    token = extract_csrf_middleware_token(content)
+    token = extract_csrf_middleware_token(response)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
     logging.debug("Supplier is on the Set Company Description page")
 
@@ -758,7 +758,7 @@ def prof_verify_company(context, supplier_alias):
             "you created your company profile") in content
     assert ("We sent you a letter through the mail containing a twelve digit "
             "code.") in content
-    token = extract_csrf_middleware_token(content)
+    token = extract_csrf_middleware_token(response)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
     logging.debug("Supplier is on the Verify Company page")
 

@@ -71,7 +71,7 @@ def bp_should_be_prompted_to_build_your_profile(context, supplier_alias):
     assert "How many employees are in your company" in content
     logging.debug("%s is on the 'Build and improve your profile' page",
                   supplier_alias)
-    token = extract_csrf_middleware_token(content)
+    token = extract_csrf_middleware_token(context.response)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
 
 
