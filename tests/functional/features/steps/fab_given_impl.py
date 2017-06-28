@@ -11,6 +11,7 @@ from tests.functional.features.steps.fab_then_impl import (
     bp_should_be_prompted_to_build_your_profile,
     prof_should_be_on_profile_page,
     prof_should_be_told_about_missing_description,
+    prof_should_be_told_that_company_is_published,
     reg_should_get_verification_email,
     reg_sso_account_should_be_created
 )
@@ -19,6 +20,8 @@ from tests.functional.features.steps.fab_when_impl import (
     bp_provide_company_details,
     bp_provide_full_name,
     bp_select_random_sector,
+    prof_set_company_description,
+    prof_verify_company,
     reg_confirm_company_selection,
     reg_confirm_export_status,
     reg_create_sso_account,
@@ -87,3 +90,22 @@ def bp_build_company_profile(context, supplier_alias):
     bp_confirm_registration_and_send_letter(context, supplier_alias)
     prof_should_be_on_profile_page(context, supplier_alias)
     prof_should_be_told_about_missing_description(context, supplier_alias)
+
+
+def reg_create_verified_profile(context, supplier_alias, company_alias):
+    # STEP 0 - initialize actor
+    unauthenticated_supplier(context, supplier_alias)
+
+    # STEP 1 - select company, create SSO profile & verify email address
+    reg_create_sso_account_associated_with_company(context, supplier_alias,
+                                                   company_alias)
+    reg_confirm_email_address(context, supplier_alias)
+
+    # STEP 2 - build company profile after email verification
+    bp_build_company_profile(context, supplier_alias)
+
+    # STEP 3 - verify company with the code sent by post
+    prof_set_company_description(context, supplier_alias)
+    prof_verify_company(context, supplier_alias)
+    prof_should_be_on_profile_page(context, supplier_alias)
+    prof_should_be_told_that_company_is_published(context, supplier_alias)

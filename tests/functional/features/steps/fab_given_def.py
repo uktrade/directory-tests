@@ -7,6 +7,7 @@ from tests.functional.features.steps.fab_given_impl import (
     bp_build_company_profile,
     reg_confirm_email_address,
     reg_create_sso_account_associated_with_company,
+    reg_create_verified_profile,
     unauthenticated_supplier
 )
 from tests.functional.features.steps.fab_then_impl import (
@@ -51,3 +52,10 @@ def given_supplier_built_company_profile(context, supplier_alias):
 @given('"{supplier_alias}" set the company description')
 def given_supplier_set_company_description(context, supplier_alias):
     prof_set_company_description(context, supplier_alias)
+
+
+@given('"{supplier_alias}" has created and verified profile for randomly '
+       'selected company "{company_alias}"')
+def given_supplier_creates_verified_profile(context, supplier_alias,
+                                            company_alias):
+    reg_create_verified_profile(context, supplier_alias, company_alias)
