@@ -226,17 +226,18 @@ def extract_csrf_middleware_token(response: Response):
     return token
 
 
-def extract_confirm_email_form_action(content):
+def extract_confirm_email_form_action(response: Response):
     """Extract the form action (endpoint) from the Confirm Email page.
 
     Comes in handy when dealing with e.g. Django forms.
 
-    :param content: response content decoded as utf-8
-    :type  content: str
+    :param response: requests response
+    :type  response: requests.models.Response
     :return: for action endpoint
     :rtype: str
     """
-    assert content, "Expected a non-empty response content but got nothing"
+    assert response.content, "Response has no content"
+    content = response.content.decode("utf-8")
 
     form_action = 'form method="post" action="'
     form_action_idx = content.find(form_action)

@@ -373,7 +373,7 @@ def reg_open_email_confirmation_link(context, supplier_alias):
     logging.debug("Supplier is on the Confirm your email address page")
     token = extract_csrf_middleware_token(response)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
-    form_action_value = extract_confirm_email_form_action(content)
+    form_action_value = extract_confirm_email_form_action(response)
     context.form_action_value = form_action_value
 
 
