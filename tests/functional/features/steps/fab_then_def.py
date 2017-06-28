@@ -10,6 +10,7 @@ from tests.functional.features.steps.fab_then_impl import (
     prof_should_be_told_that_company_is_published,
     reg_should_get_verification_email,
     reg_sso_account_should_be_created
+    reg_supplier_is_not_appropriate_for_fab
 )
 
 
