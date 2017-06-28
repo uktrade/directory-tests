@@ -383,7 +383,7 @@ def get_verification_code(company_number):
 
 def check_response(response: Response, status_code: int, *,
                    location: str = None, locations: list = [],
-                   strings: list = []):
+                   strings: list = [], unexp_strings: list = []):
     """Check if SUT replied with an expected response.
 
     :param response: Response object return by `requests`
@@ -397,6 +397,9 @@ def check_response(response: Response, status_code: int, *,
     :param strings: (optional) a list of strings that should be present
                     in the response content
     :type  strings: list
+    :param unexp_strings: (optional) a list of strings that should NOT be
+                          present in the response content
+    :type  unexp_strings: list
     """
     assert response.status_code == status_code, (
         "Expected {} but got {}".format(status_code, response.status_code))
@@ -405,8 +408,16 @@ def check_response(response: Response, status_code: int, *,
         assert response.content, "Response has no content!"
         content = response.content.decode("utf-8")
         assert all(s in content for s in strings), (
-            "Could not find all expected string in the response: %s"
+            "Could not find all expected string in the response: {}"
             .format(", ".join(strings))
+        )
+
+    if unexp_strings:
+        assert response.content, "Response has no content!"
+        content = response.content.decode("utf-8")
+        assert all(s not in content for s in unexp_strings), (
+            "Some of the unexpected strings were found in the response: {}"
+            .format(", ".join(unexp_strings))
         )
 
     if location:
