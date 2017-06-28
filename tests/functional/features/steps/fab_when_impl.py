@@ -711,7 +711,7 @@ def prof_verify_company(context, supplier_alias):
     response = make_request(Method.POST, url, session=session, headers=headers,
                             data=data, allow_redirects=False, context=context)
     exp_strings = [
-        "Your con has re verified",
+        "Your company has been verified",
         "View or amend your company profile"
     ]
     check_response(response, 200, strings=exp_strings)
