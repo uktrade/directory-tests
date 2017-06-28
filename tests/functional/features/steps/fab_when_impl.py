@@ -6,6 +6,7 @@ from urllib.parse import quote, unquote
 
 from faker import Factory
 from jsonschema import validate
+from requests.models import Response
 from scrapy.selector import Selector
 
 from tests import get_absolute_url
@@ -447,23 +448,25 @@ def bp_provide_company_details(context, supplier_alias):
             "basic-employees": employees}
     response = make_request(Method.POST, url, session=session, headers=headers,
                             data=data, allow_redirects=False, context=context)
-    assert response.status_code == 200, ("Expected 200 but got {}"
-                                         .format(response.status_code))
-    content = response.content.decode("utf-8")
-    assert "Your company sector" in content
-    assert "What sector is your company interested in working in?" in content
-    assert all(sector in content for sector in SECTORS)
+    exp_strings = ["Your company sector",
+                   "What sector is your company interested in working in?"]
+    exp_strings += SECTORS
+    check_response(response, 200, strings=exp_strings)
     logging.debug("Supplier is on the Select Sector page")
     token = extract_csrf_middleware_token(response)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
 
 
-def bp_extract_company_details(content):
+def bp_extract_company_details(response: Response):
     """Build Profile - extract company details from Your company address page
 
-    :param content: contents of "Your company address" page
+    :param response: requests response
+    :type  response: requests.models.Response
     :return: named tuple containing all extracted company details
     """
+    assert response.content, "Response has no content"
+    content = response.content.decode("utf-8")
+
     from collections import namedtuple
 
     Details = namedtuple("Details", ["address_signature", "address_line_1",
@@ -514,23 +517,16 @@ def bp_select_random_sector(context, supplier_alias):
             }
     response = make_request(Method.POST, url, session=session, headers=headers,
                             data=data, allow_redirects=False, context=context)
-    assert response.status_code == 200, ("Expected 200 but got {}"
-                                         .format(response.status_code))
-    content = response.content.decode("utf-8")
-    assert "Your company address" in content
-    assert "We need to send a letter containing a verification code " in content
-    assert "Full name" in content
-    assert "Address line 1" in content
-    assert "Address line 2" in content
-    assert "City" in content
-    assert "Country" in content
-    assert "Postcode" in content
-    assert "PO box" in content
+    exp_strings = [
+        "We need to send a letter containing a verification code ",
+        "Your company address", "Full name", "Address line 1", "Address line 2",
+        "City", "Country", "Postcode", "PO box"
+    ]
+    check_response(response, 200, strings=exp_strings)
     logging.debug("Supplier is on the Your company address page")
     token = extract_csrf_middleware_token(response)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
-    details = bp_extract_company_details(content)
-    context.details = details
+    context.details = bp_extract_company_details(response)
 
 
 def bp_provide_full_name(context, supplier_alias):
@@ -561,13 +557,12 @@ def bp_provide_full_name(context, supplier_alias):
             }
     response = make_request(Method.POST, url, session=session, headers=headers,
                             data=data, allow_redirects=False, context=context)
-    assert response.status_code == 200, ("Expected 200 but got {}"
-                                         .format(response.status_code))
-    content = response.content.decode("utf-8")
-    assert "Thank you" in content, content
-    assert "The letter will be sent to your registered business address" in content
-    assert "You can change the name of the person who will receive this letter" in content
-    assert actor.alias in content
+    exp_strings = [
+        actor.alias, "Thank you",
+        "The letter will be sent to your registered business address",
+        "You can change the name of the person who will receive this letter",
+    ]
+    check_response(response, 200, strings=exp_strings)
     logging.debug("Supplier is on the Thank You page")
     token = extract_csrf_middleware_token(response)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
@@ -593,14 +588,11 @@ def bp_confirm_registration_and_send_letter(context, supplier_alias):
             }
     response = make_request(Method.POST, url, session=session, headers=headers,
                             data=data, allow_redirects=False, context=context)
-    assert response.status_code == 200, ("Expected 200 but got {}"
-                                         .format(response.status_code))
-    content = response.content.decode("utf-8")
-    assert "We've sent your verification letter" in content, content
     msg = ("You should receive your verification letter within a week. When you"
            " receive the letter, please log in to GREAT.gov.uk to enter your "
            "verification profile to publish your company profile.")
-    assert msg in content
+    exp_strings = [msg, "We've sent your verification letter"]
+    check_response(response, 200, strings=exp_strings)
     logging.debug("Supplier is on the We've sent your verification letter page")
 
     # STEP 2 - Click on the "View or amend your company profile" link
@@ -610,12 +602,11 @@ def bp_confirm_registration_and_send_letter(context, supplier_alias):
     headers = {"Referer": referer}
     response = make_request(Method.GET, url, session=session, headers=headers,
                             allow_redirects=False, context=context)
-    assert response.status_code == 200, ("Expected 200 but got {}"
-                                         .format(response.status_code))
-    content = response.content.decode("utf-8")
-    assert "Your company has no description." in content, content
-    assert "Your profile can't be published until your company has a" in content
-    assert "Set your description" in content, content
+    exp_strings = [
+        "Your company has no description.", "Set your description",
+        "Your profile can't be published until your company has a",
+    ]
+    check_response(response, 200, strings=exp_strings)
     logging.debug("Supplier is on the Edit Company Profile page")
 
 
@@ -641,12 +632,11 @@ def prof_set_company_description(context, supplier_alias):
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
     response = make_request(Method.GET, url, session=session, headers=headers,
                             allow_redirects=False, context=context)
-    assert response.status_code == 200, ("Expected 200 but got {}"
-                                         .format(response.status_code))
-    content = response.content.decode("utf-8")
-    assert "About your company" in content
-    assert "Brief summary to make your company stand out to buyers" in content
-    assert "Describe your business to overseas buyers" in content
+    exp_strings = [
+        "About your company", "Describe your business to overseas buyers",
+        "Brief summary to make your company stand out to buyers"
+    ]
+    check_response(response, 200, strings=exp_strings)
     token = extract_csrf_middleware_token(response)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
     logging.debug("Supplier is on the Set Company Description page")
@@ -664,9 +654,7 @@ def prof_set_company_description(context, supplier_alias):
             }
     response = make_request(Method.POST, url, session=session, headers=headers,
                             data=data, allow_redirects=False, context=context)
-    assert response.status_code == 302, ("Expected 302 but got {}"
-                                         .format(response.status_code))
-    assert response.headers.get("Location") == "/company-profile"
+    check_response(response, 302, location="/company-profile")
     context.set_company_description(actor.company_alias, summary, description)
 
     # STEP 3 - follow the redirect
@@ -674,8 +662,7 @@ def prof_set_company_description(context, supplier_alias):
     headers = {"Referer": get_absolute_url("ui-buyer:company-edit-description")}
     response = make_request(Method.GET, url, session=session, headers=headers,
                             allow_redirects=False, context=context)
-    assert response.status_code == 200, ("Expected 200 but got {}"
-                                         .format(response.status_code))
+    check_response(response, 200)
     prof_should_be_on_profile_page(context, supplier_alias)
     prof_should_be_told_that_company_is_not_verified_yet(context, supplier_alias)
     logging.debug("Supplier is back to the Profile Page")
@@ -703,14 +690,13 @@ def prof_verify_company(context, supplier_alias):
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
     response = make_request(Method.GET, url, session=session, headers=headers,
                             allow_redirects=False, context=context)
-    assert response.status_code == 200, ("Expected 200 but got {}"
-                                         .format(response.status_code))
-    content = response.content.decode("utf-8")
-    assert "Verify your company" in content
-    assert ("Enter the verification code from the letter we sent to you after  "
-            "you created your company profile") in content
-    assert ("We sent you a letter through the mail containing a twelve digit "
-            "code.") in content
+    exp_strings = [
+        "Verify your company",
+        ("Enter the verification code from the letter we sent to you after  "
+         "you created your company profile"),
+        ("We sent you a letter through the mail containing a twelve digit "
+         "code.")]
+    check_response(response, 200, strings=exp_strings)
     token = extract_csrf_middleware_token(response)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
     logging.debug("Supplier is on the Verify Company page")
@@ -724,11 +710,11 @@ def prof_verify_company(context, supplier_alias):
             }
     response = make_request(Method.POST, url, session=session, headers=headers,
                             data=data, allow_redirects=False, context=context)
-    assert response.status_code == 200, ("Expected 200 but got {}"
-                                         .format(response.status_code))
-    content = response.content.decode("utf-8")
-    assert "Your company has been verified" in content
-    assert "View or amend your company profile" in content
+    exp_strings = [
+        "Your con has re verified",
+        "View or amend your company profile"
+    ]
+    check_response(response, 200, strings=exp_strings)
 
     # STEP 3 - click on the "View or amend your company profile" link
     actor = context.get_actor(supplier_alias)
@@ -737,8 +723,7 @@ def prof_verify_company(context, supplier_alias):
     headers = {"Referer": get_absolute_url("ui-buyer:confirm-company-address")}
     response = make_request(Method.GET, url, session=session, headers=headers,
                             allow_redirects=False, context=context)
-    assert response.status_code == 200, ("Expected 200 but got {}"
-                                         .format(response.status_code))
+    check_response(response, 200)
     prof_should_be_on_profile_page(context, supplier_alias)
     prof_should_be_told_that_company_is_published(context, supplier_alias)
     logging.debug("%s is on the Verified & Published Company Profile page",
@@ -755,10 +740,8 @@ def prof_view_published_profile(context, supplier_alias):
     url = "{}/{}".format(get_absolute_url("ui-supplier:suppliers"), company.number)
     response = make_request(Method.GET, url, session=session,
                             allow_redirects=False, context=context)
-    assert response.status_code == 301, ("Expected 301 but got {}"
-                                         .format(response.status_code))
-    new_location = "/suppliers/{}/".format(company.number)
-    assert response.headers.get("Location").startswith(new_location)
+    location = "/suppliers/{}/".format(company.number)
+    check_response(response, 301, location=location)
 
     # STEP 2 - follow the redirect from last response
     actor = context.get_actor(supplier_alias)
@@ -767,8 +750,5 @@ def prof_view_published_profile(context, supplier_alias):
                         response.headers.get("Location"))
     response = make_request(Method.GET, url, session=session,
                             allow_redirects=False, context=context)
-    assert response.status_code == 200, ("Expected 200 but got {}"
-                                         .format(response.status_code))
-    content = response.content.decode("utf-8")
-    assert company.number in content
+    check_response(response, 200, strings=[company.number])
     logging.debug("Supplier is on the company's FAS page")
