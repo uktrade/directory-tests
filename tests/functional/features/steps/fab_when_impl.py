@@ -149,7 +149,7 @@ def select_random_company(context, supplier_alias, alias):
     data = {"company_name": company.title, "company_number": company.number}
     response = make_request(Method.POST, url, session=session,
                             headers={"Referer": url}, data=data,
-                            allow_redirects=True)
+                            allow_redirects=True, context=context)
     html_escape_table = {"&": "&amp;", "'": "&#39;"}
     escaped_company_title = "".join(html_escape_table.get(c, c) for c in
                                     company.title.upper())
@@ -188,7 +188,7 @@ def reg_confirm_company_selection(context, supplier_alias, alias):
             "company-company_address": company.details["address_snippet"]}
 
     response = make_request(Method.POST, url, session=session, headers=headers,
-                            data=data, allow_redirects=False)
+                            data=data, allow_redirects=False, context=context)
     check_response(response, 302, location="/register/exports")
     logging.debug("Confirmed selection of Company: %s", company.number)
 
@@ -197,7 +197,7 @@ def reg_confirm_company_selection(context, supplier_alias, alias):
     url_export = get_absolute_url('ui-buyer:register-confirm-export-status')
     headers = {"Referer": url}
     response = make_request(Method.GET, url_export, session=session,
-                            headers=headers)
+                            headers=headers, context=context)
     exp_strings = ["Your company's previous exports"]
     check_response(response, 200, strings=exp_strings)
     logging.debug("Confirmed selection of Company: %s", company.number)
@@ -248,14 +248,14 @@ def reg_confirm_export_status(context, supplier_alias, alias, export_status):
             "exports-export_status": export_status,
             "exports-terms_agreed": "on"}
     response = make_request(Method.POST, url, session=session, headers=headers,
-                            data=data, allow_redirects=False)
+                            data=data, allow_redirects=False, context=context)
     check_response(response, 302, location="/register/finished")
 
     # Step 2: GET /register/finished
     url = get_absolute_url("ui-buyer:register-finish")
     headers = {"Referer": referer}
     response = make_request(Method.GET, url, session=session, headers=headers,
-                            allow_redirects=False)
+                            allow_redirects=False, context=context)
     location = ("/register-submit?company_number={}&export_status={}"
                 .format(company.number, export_status))
     check_response(response, 302, location=location)
@@ -266,7 +266,8 @@ def reg_confirm_export_status(context, supplier_alias, alias, export_status):
               "export_status": export_status}
     headers = {"Referer": referer}
     response = make_request(Method.GET, url, session=session, params=params,
-                            headers=headers, allow_redirects=False)
+                            headers=headers, allow_redirects=False,
+                            context=context)
     next_1 = quote("{}?export_status={}&company_number={}"
                    .format(url, export_status, company.number))
     location_1 = "{}?next={}".format(get_absolute_url("sso:signup"), next_1)
@@ -286,8 +287,7 @@ def reg_confirm_export_status(context, supplier_alias, alias, export_status):
     # context.reset_actor_session(supplier_alias)
     session = context.get_actor(supplier_alias).session
     response = make_request(Method.GET, url, session=session, params=params,
-                            headers=headers)
-    context.response = response
+                            headers=headers, context=context)
     exp_strings = ["Create a great.gov.uk account and you can"]
     check_response(response, 200, strings=exp_strings)
     logging.debug("Successfully landed on SSO signup page")
@@ -331,22 +331,21 @@ def reg_create_sso_account(context, supplier_alias, alias):
             "next": next_link}
     response = make_request(Method.POST, url_signup, session=session,
                             headers=headers, data=data,
-                            allow_redirects=False)
     assert response.status_code == 302, ("Expected 302 but got {}"
                                          .format(response.status_code))
-    context.response = response
     exp_loc = "/accounts/confirm-email/"
     given_loc = response.headers.get("Location")
     assert given_loc == exp_loc, ("Expected new Location to be: '{}' but got "
                                   "'{}' instead.".format(exp_loc, given_loc))
+                            allow_redirects=False, context=context)
 
     # Steps 2: GET SSO /accounts/confirm-email/
     url = get_absolute_url("sso:email_confirm")
     response = make_request(Method.GET, url, session=session,
-                            headers=headers, allow_redirects=False)
-    context.response = response
     assert response.status_code == 200, ("Expected 200 but got {}"
                                          .format(response.status_code))
+                            headers=headers, allow_redirects=False,
+                            context=context)
 
 
 def reg_open_email_confirmation_link(context, supplier_alias):
@@ -396,10 +395,9 @@ def reg_supplier_confirms_email_address(context, supplier_alias):
     headers = {"Referer": referer}
     data = {"csrfmiddlewaretoken": csrfmiddlewaretoken}
     response = make_request(Method.POST, url, session=session, headers=headers,
-                            data=data, allow_redirects=False)
-    context.response = response
     assert response.status_code == 302, ("Expected 302 but got {}"
                                          .format(response.status_code))
+                            data=data, allow_redirects=False, context=context)
     new_location = response.headers.get("Location")
     assert new_location.startswith("/accounts/login/?next=")
     assert "register-submit%253Fcompany_number%253D" in new_location
@@ -409,10 +407,9 @@ def reg_supplier_confirms_email_address(context, supplier_alias):
     headers = {"Referer": referer}
     url = "{}{}".format(get_absolute_url("sso:landing"), new_location)
     response = make_request(Method.GET, url, session=session, headers=headers,
-                            allow_redirects=False)
     assert response.status_code == 302, ("Expected 302 but got {}"
                                          .format(response.status_code))
-    context.response = response
+                            allow_redirects=False, context=context)
     new_location = response.headers.get("Location")
     register_submit = get_absolute_url("ui-buyer:register-submit-account-details")
     assert new_location.startswith(quote(register_submit)), (
@@ -458,8 +455,7 @@ def bp_provide_company_details(context, supplier_alias):
             "basic-keywords": keywords,
             "basic-employees": employees}
     response = make_request(Method.POST, url, session=session, headers=headers,
-                            data=data, allow_redirects=False)
-    context.response = response
+                            data=data, allow_redirects=False, context=context)
     assert response.status_code == 200, ("Expected 200 but got {}"
                                          .format(response.status_code))
     content = response.content.decode("utf-8")
@@ -526,10 +522,9 @@ def bp_select_random_sector(context, supplier_alias):
             "classification-sectors": sector,
             }
     response = make_request(Method.POST, url, session=session, headers=headers,
-                            data=data, allow_redirects=False)
+                            data=data, allow_redirects=False, context=context)
     assert response.status_code == 200, ("Expected 200 but got {}"
                                          .format(response.status_code))
-    context.response = response
     content = response.content.decode("utf-8")
     assert "Your company address" in content
     assert "We need to send a letter containing a verification code " in content
@@ -574,8 +569,7 @@ def bp_provide_full_name(context, supplier_alias):
             "address-po_box": details.po_box
             }
     response = make_request(Method.POST, url, session=session, headers=headers,
-                            data=data, allow_redirects=False)
-    context.response = response
+                            data=data, allow_redirects=False, context=context)
     assert response.status_code == 200, ("Expected 200 but got {}"
                                          .format(response.status_code))
     content = response.content.decode("utf-8")
@@ -607,8 +601,7 @@ def bp_confirm_registration_and_send_letter(context, supplier_alias):
             "supplier_company_profile_edit_view-current_step": "confirm"
             }
     response = make_request(Method.POST, url, session=session, headers=headers,
-                            data=data, allow_redirects=False)
-    context.response = response
+                            data=data, allow_redirects=False, context=context)
     assert response.status_code == 200, ("Expected 200 but got {}"
                                          .format(response.status_code))
     content = response.content.decode("utf-8")
@@ -625,8 +618,7 @@ def bp_confirm_registration_and_send_letter(context, supplier_alias):
     url = get_absolute_url("ui-buyer:company-profile")
     headers = {"Referer": referer}
     response = make_request(Method.GET, url, session=session, headers=headers,
-                            allow_redirects=False)
-    context.response = response
+                            allow_redirects=False, context=context)
     assert response.status_code == 200, ("Expected 200 but got {}"
                                          .format(response.status_code))
     content = response.content.decode("utf-8")
@@ -657,8 +649,7 @@ def prof_set_company_description(context, supplier_alias):
     url = get_absolute_url("ui-buyer:company-edit-description")
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
     response = make_request(Method.GET, url, session=session, headers=headers,
-                            allow_redirects=False)
-    context.response = response
+                            allow_redirects=False, context=context)
     assert response.status_code == 200, ("Expected 200 but got {}"
                                          .format(response.status_code))
     content = response.content.decode("utf-8")
@@ -681,8 +672,7 @@ def prof_set_company_description(context, supplier_alias):
             "description-description": description
             }
     response = make_request(Method.POST, url, session=session, headers=headers,
-                            data=data, allow_redirects=False)
-    context.response = response
+                            data=data, allow_redirects=False, context=context)
     assert response.status_code == 302, ("Expected 302 but got {}"
                                          .format(response.status_code))
     assert response.headers.get("Location") == "/company-profile"
@@ -692,8 +682,7 @@ def prof_set_company_description(context, supplier_alias):
     url = get_absolute_url("ui-buyer:company-profile")
     headers = {"Referer": get_absolute_url("ui-buyer:company-edit-description")}
     response = make_request(Method.GET, url, session=session, headers=headers,
-                            allow_redirects=False)
-    context.response = response
+                            allow_redirects=False, context=context)
     assert response.status_code == 200, ("Expected 200 but got {}"
                                          .format(response.status_code))
     prof_should_be_on_profile_page(context, supplier_alias)
@@ -722,8 +711,7 @@ def prof_verify_company(context, supplier_alias):
     url = get_absolute_url("ui-buyer:confirm-company-address")
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
     response = make_request(Method.GET, url, session=session, headers=headers,
-                            allow_redirects=False)
-    context.response = response
+                            allow_redirects=False, context=context)
     assert response.status_code == 200, ("Expected 200 but got {}"
                                          .format(response.status_code))
     content = response.content.decode("utf-8")
@@ -744,8 +732,7 @@ def prof_verify_company(context, supplier_alias):
             "address-code": verification_code
             }
     response = make_request(Method.POST, url, session=session, headers=headers,
-                            data=data, allow_redirects=False)
-    context.response = response
+                            data=data, allow_redirects=False, context=context)
     assert response.status_code == 200, ("Expected 200 but got {}"
                                          .format(response.status_code))
     content = response.content.decode("utf-8")
@@ -758,8 +745,7 @@ def prof_verify_company(context, supplier_alias):
     url = get_absolute_url("ui-buyer:company-profile")
     headers = {"Referer": get_absolute_url("ui-buyer:confirm-company-address")}
     response = make_request(Method.GET, url, session=session, headers=headers,
-                            allow_redirects=False)
-    context.response = response
+                            allow_redirects=False, context=context)
     assert response.status_code == 200, ("Expected 200 but got {}"
                                          .format(response.status_code))
     prof_should_be_on_profile_page(context, supplier_alias)
@@ -777,8 +763,7 @@ def prof_view_published_profile(context, supplier_alias):
     session = actor.session
     url = "{}/{}".format(get_absolute_url("ui-supplier:suppliers"), company.number)
     response = make_request(Method.GET, url, session=session,
-                            allow_redirects=False)
-    context.response = response
+                            allow_redirects=False, context=context)
     assert response.status_code == 301, ("Expected 301 but got {}"
                                          .format(response.status_code))
     new_location = "/suppliers/{}/".format(company.number)
@@ -790,8 +775,7 @@ def prof_view_published_profile(context, supplier_alias):
     url = "{}{}".format(get_absolute_url("ui-supplier:landing"),
                         response.headers.get("Location"))
     response = make_request(Method.GET, url, session=session,
-                            allow_redirects=False)
-    context.response = response
+                            allow_redirects=False, context=context)
     assert response.status_code == 200, ("Expected 200 but got {}"
                                          .format(response.status_code))
     content = response.content.decode("utf-8")
