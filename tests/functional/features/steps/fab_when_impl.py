@@ -18,6 +18,7 @@ from tests.functional.features.steps.fab_then_impl import (
 )
 from tests.functional.features.utils import (
     Method,
+    check_response,
     extract_confirm_email_form_action,
     extract_csrf_middleware_token,
     get_verification_code,
@@ -149,20 +150,14 @@ def select_random_company(context, supplier_alias, alias):
     response = make_request(Method.POST, url, session=session,
                             headers={"Referer": url}, data=data,
                             allow_redirects=True)
-    assert response.status_code == 200
-    content = response.content.decode("utf-8")
-    assert "Create your company’s profile" in content
     html_escape_table = {"&": "&amp;", "'": "&#39;"}
     escaped_company_title = "".join(html_escape_table.get(c, c) for c in
                                     company.title.upper())
-    assert escaped_company_title in content, ("Company name '{}' not present in"
-                                              " response content:\n{}"
-                                              .format(escaped_company_title,
-                                                      content))
-    assert company.number in content
+    exp_strings = ["Create your company’s profile", escaped_company_title,
+                   company.number]
+    check_response(response, 200, strings=exp_strings)
     logging.debug("Successfully got to the Confirm your Company page")
 
-    content = response.content.decode("utf-8")
     token = extract_csrf_middleware_token(response)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
     context.set_company_for_actor(supplier_alias, alias)
@@ -194,16 +189,7 @@ def reg_confirm_company_selection(context, supplier_alias, alias):
 
     response = make_request(Method.POST, url, session=session, headers=headers,
                             data=data, allow_redirects=False)
-    assert response.status_code == 302, ("Expected 302 but got {}"
-                                         .format(response.status_code))
-    assert response.headers.get("Location") == "/register/exports", (
-        "Expected new location to be '/register/exports' but got %s",
-        response.headers.get("Location"))
-
-    msg = "Company not found. Please check the number."
-    err_msg = "Found an error '{}' in response: {}".format(msg,
-                                                           response.content)
-    assert msg not in response.content.decode("utf-8"), err_msg
+    check_response(response, 302, location="/register/exports")
     logging.debug("Confirmed selection of Company: %s", company.number)
 
     # Once on the "Confirm Company" page, we have to go to the
@@ -212,10 +198,8 @@ def reg_confirm_company_selection(context, supplier_alias, alias):
     headers = {"Referer": url}
     response = make_request(Method.GET, url_export, session=session,
                             headers=headers)
-    content = response.content.decode("utf-8")
-    assert response.status_code == 200, ("Expected 200 but got {}"
-                                         .format(response.status_code))
-    assert "Your company's previous exports" in content
+    exp_strings = ["Your company's previous exports"]
+    check_response(response, 200, strings=exp_strings)
     logging.debug("Confirmed selection of Company: %s", company.number)
 
     # Now, we've landed on the Export Status page, so we have extract the
@@ -265,20 +249,16 @@ def reg_confirm_export_status(context, supplier_alias, alias, export_status):
             "exports-terms_agreed": "on"}
     response = make_request(Method.POST, url, session=session, headers=headers,
                             data=data, allow_redirects=False)
-    assert response.status_code == 302, ("Expected 302 but got {}"
-                                         .format(response.status_code))
-    assert response.headers.get("Location") == "/register/finished"
+    check_response(response, 302, location="/register/finished")
 
     # Step 2: GET /register/finished
     url = get_absolute_url("ui-buyer:register-finish")
     headers = {"Referer": referer}
     response = make_request(Method.GET, url, session=session, headers=headers,
                             allow_redirects=False)
-    assert response.status_code == 302, ("Expected 302 but got {}"
-                                         .format(response.status_code))
     location = ("/register-submit?company_number={}&export_status={}"
                 .format(company.number, export_status))
-    assert response.headers.get("Location") == location
+    check_response(response, 302, location=location)
 
     # Step 3: GET /register-submit?company_number={}&export_status={}
     url = get_absolute_url("ui-buyer:register-submit-account-details")
@@ -287,18 +267,14 @@ def reg_confirm_export_status(context, supplier_alias, alias, export_status):
     headers = {"Referer": referer}
     response = make_request(Method.GET, url, session=session, params=params,
                             headers=headers, allow_redirects=False)
-    assert response.status_code == 302, ("Expected 302 but got {}"
-                                         .format(response.status_code))
     next_1 = quote("{}?export_status={}&company_number={}"
                    .format(url, export_status, company.number))
     location_1 = "{}?next={}".format(get_absolute_url("sso:signup"), next_1)
     next_2 = quote("{}?company_number={}&export_status={}"
                    .format(url, company.number, export_status))
     location_2 = "{}?next={}".format(get_absolute_url("sso:signup"), next_2)
-    assert response.headers.get("Location") in [location_1, location_2], (
-        "Should be redirected to one of these 2 locations '{}' but instead was"
-        " redirected to '{}'".format([location_1, location_2],
-                                     response.headers.get("Location")))
+    locations = [location_1, location_2]
+    check_response(response, 302, locations=locations)
     logging.debug("Confirmed Export Status of '%s'. We're now going to the "
                   "SSO signup page.", alias)
 
@@ -312,10 +288,8 @@ def reg_confirm_export_status(context, supplier_alias, alias, export_status):
     response = make_request(Method.GET, url, session=session, params=params,
                             headers=headers)
     context.response = response
-    assert response.status_code == 200, ("Expected 200 but got {}"
-                                         .format(response.status_code))
-    content = response.content.decode("utf-8")
-    assert "Create a great.gov.uk account and you can" in content
+    exp_strings = ["Create a great.gov.uk account and you can"]
+    check_response(response, 200, strings=exp_strings)
     logging.debug("Successfully landed on SSO signup page")
 
     token = extract_csrf_middleware_token(response)
