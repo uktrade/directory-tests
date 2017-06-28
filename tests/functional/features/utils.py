@@ -327,10 +327,10 @@ def find_confirmation_email_msg(bucket, actor, subject):
                                       "entitled: %s", subject)
                         res = extract_plain_text_payload(msg)
                         found = True
-                logging.debug("Deleting message %s", key.key)
-                bucket.delete_key(key.key)
-                logging.debug("Successfully deleted message %s from S3",
-                              key.key)
+                        logging.debug("Deleting message %s", key.key)
+                        bucket.delete_key(key.key)
+                        logging.debug("Successfully deleted message %s from S3",
+                                      key.key)
             except Exception as ex:
                 logging.error("Something went wrong when getting an email msg "
                               "from S3: %s", ex)
