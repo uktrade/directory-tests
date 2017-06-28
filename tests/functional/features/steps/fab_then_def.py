@@ -4,6 +4,7 @@ from behave import then
 
 from tests.functional.features.steps.fab_then_impl import (
     bp_should_be_prompted_to_build_your_profile,
+    fas_should_be_on_profile_page,
     prof_should_be_on_profile_page,
     prof_should_be_told_about_missing_description,
     prof_should_be_told_that_company_is_published,
@@ -41,3 +42,10 @@ def then_supplier_should_be_told_about_missing_description(context, supplier_ali
 def then_supplier_should_be_told_that_profile_is_published(context,
                                                            supplier_alias):
     prof_should_be_told_that_company_is_published(context, supplier_alias)
+
+
+@then('"{supplier_alias}" should be on FAS profile page of company '
+      '"{company_alias}"')
+def then_supplier_should_be_on_company_fas_page(context, supplier_alias,
+                                                company_alias):
+    fas_should_be_on_profile_page(context, supplier_alias, company_alias)
