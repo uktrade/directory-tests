@@ -325,33 +325,31 @@ def find_confirmation_email_msg(bucket, actor, subject):
     res = None
     found = False
     for key in bucket.list():
-        if key.key != "AMAZON_SES_SETUP_NOTIFICATION":
-            logging.debug("Processing email file: %s", key.key)
-            try:
-                msg_contents = key.get_contents_as_string().decode("utf-8")
-                msg = email.message_from_string(msg_contents)
-                if msg['To'] == actor.email:
-                    logging.debug("Found an email addressed at: %s",
-                                  msg['To'])
-                    if msg['Subject'] == subject:
-                        logging.debug("Found email confirmation message "
-                                      "entitled: %s", subject)
-                        res = extract_plain_text_payload(msg)
-                        found = True
-                        logging.debug("Deleting message %s", key.key)
-                        bucket.delete_key(key.key)
-                        logging.debug("Successfully deleted message %s from S3",
-                                      key.key)
-                    else:
-                        logging.debug("Message from %s to %s had a non-matching"
-                                      "subject: '%s'", msg['From'], msg['To'],
-                                      msg['Subject'])
+        logging.debug("Processing email file: %s", key.key)
+        try:
+            msg_contents = key.get_contents_as_string().decode("utf-8")
+            msg = email.message_from_string(msg_contents)
+            if msg['To'] == actor.email:
+                logging.debug("Found an email addressed at: %s", msg['To'])
+                if msg['Subject'] == subject:
+                    logging.debug("Found email confirmation message entitled: "
+                                  "%s", subject)
+                    res = extract_plain_text_payload(msg)
+                    found = True
+                    logging.debug("Deleting message %s", key.key)
+                    bucket.delete_key(key.key)
+                    logging.debug("Successfully deleted message %s from S3",
+                                  key.key)
                 else:
-                    logging.debug("Message %s was addressed at: %s", key.key,
-                                  msg['To'])
-            except Exception as ex:
-                logging.error("Something went wrong when getting an email msg "
-                              "from S3: %s", ex)
+                    logging.debug("Message from %s to %s had a non-matching"
+                                  "subject: '%s'", msg['From'], msg['To'],
+                                  msg['Subject'])
+            else:
+                logging.debug("Message %s was addressed at: %s", key.key,
+                              msg['To'])
+        except Exception as ex:
+            logging.error("Something went wrong when getting an email msg "
+                          "from S3: %s", ex)
 
     assert found, ("Could not find email confirmation message for {}"
                    .format(actor.email))
