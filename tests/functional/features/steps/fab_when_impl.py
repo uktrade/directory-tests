@@ -110,8 +110,12 @@ def find_active_company_without_fas_profile(alias):
     logging.debug("It took %s attempt(s) to find an active Company without a "
                   "FAS profile: %s - %s", counter, json[0]["title"],
                   json[0]["company_number"])
-    company = UnregisteredCompany(alias, json[0]["title"].strip(),
-                                  json[0]["company_number"], json[0])
+    company = UnregisteredCompany(alias=alias,
+                                  title=json[0]["title"].strip(),
+                                  number=json[0]["company_number"],
+                                  details=json[0],
+                                  summary=None,
+                                  description=None)
     return company
 
 
