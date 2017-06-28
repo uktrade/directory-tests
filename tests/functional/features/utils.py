@@ -383,7 +383,8 @@ def get_verification_code(company_number):
 
 def check_response(response: Response, status_code: int, *,
                    location: str = None, locations: list = [],
-                   strings: list = [], unexp_strings: list = []):
+                   location_starts_with: str = None, strings: list = [],
+                   unexp_strings: list = []):
     """Check if SUT replied with an expected response.
 
     :param response: Response object return by `requests`
@@ -394,6 +395,9 @@ def check_response(response: Response, status_code: int, *,
     :type  location: str
     :param locations: (optional) in one of the Location list
     :type  locations: list
+    :param location_starts_with: (optional) expected leading part of
+                                the Location header
+    :type  location_starts_with: str
     :param strings: (optional) a list of strings that should be present
                     in the response content
     :type  strings: list
@@ -430,3 +434,9 @@ def check_response(response: Response, status_code: int, *,
             "Should be redirected to one of these {} locations '{}' but instead"
             " was redirected to '{}'".format(len(locations), locations,
                                              response.headers.get("Location")))
+
+    if location_starts_with:
+        new_location = response.headers.get("Location")
+        assert new_location.startswith(location_starts_with), (
+            "Expected Location header to start with: '{}' but got '{}' instead."
+            .format(location_starts_with, response.headers.get("Location")))
