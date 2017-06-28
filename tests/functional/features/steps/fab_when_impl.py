@@ -14,13 +14,15 @@ from tests.functional.features.settings import NO_OF_EMPLOYEES, SECTORS
 from tests.functional.features.steps.fab_then_impl import (
     prof_should_be_on_profile_page,
     prof_should_be_told_that_company_is_not_verified_yet,
-    prof_should_be_told_that_company_is_published)
+    prof_should_be_told_that_company_is_published
+)
 from tests.functional.features.utils import (
     Method,
     extract_confirm_email_form_action,
     extract_csrf_middleware_token,
-    make_request,
-    get_verification_code)
+    get_verification_code,
+    make_request
+)
 from tests.functional.schemas.Companies import COMPANIES
 
 
