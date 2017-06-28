@@ -92,7 +92,8 @@ class Method(Enum):
 
 def make_request(method: Method, url, *, session=None, params=None,
                  headers=None, cookies=None, data=None, files=None,
-                 allow_redirects=True, trim_response_content=True):
+                 allow_redirects=True, trim_response_content=True,
+                 context=None):
     """Make a desired HTTP request using optional parameters, headers and data.
 
     NOTE:
@@ -125,6 +126,8 @@ def make_request(method: Method, url, *, session=None, params=None,
                                   characters of response content.
                                   Defaults to True.
     :type  trim_response_content: bool
+    :param context: (optional) Behave's context object. If provided then this
+                    Will store the response in `context.response`
     :return: a response object
     :rtype: requests.Response
     """
@@ -193,6 +196,10 @@ def make_request(method: Method, url, *, session=None, params=None,
                 logging.debug("RSP Content: %s", res.content)
         else:
             logging.debug("RSP Content: %s", res.content)
+
+    if context:
+        context.response = res
+        logging.debug("Last response stored in context.response")
 
     return res
 
