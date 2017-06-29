@@ -6,6 +6,7 @@ import uuid
 from tests import settings
 
 join_api = partial(urljoin, settings.DIRECTORY_API_URL)
+join_internal_api = partial(urljoin, settings.DIRECTORY_API_URL)
 join_sso = partial(urljoin, settings.DIRECTORY_SSO_URL)
 join_profile = partial(urljoin, settings.DIRECTORY_PROFILE_URL)
 join_ui_buyer = partial(urljoin, settings.DIRECTORY_UI_BUYER_URL)
@@ -27,6 +28,10 @@ urls = {
     # UI-BUYER
     'ui-buyer:landing': '',
     'ui-buyer:register': 'register',
+    'ui-buyer:register-confirm-company': 'register/company',
+    'ui-buyer:register-confirm-export-status': 'register/exports',
+    'ui-buyer:register-finish': 'register/finished',
+    'ui-buyer:register-submit-account-details': 'register-submit',
     'ui-buyer:company-profile': 'company-profile',
     'ui-buyer:upload-logo': 'company-profile/edit/logo',
     'ui-buyer:confirm-company-address': 'confirm-company-address',
@@ -60,6 +65,9 @@ urls = {
     'api:user': 'supplier/{sso_id}/',
     'api:validate-company-number': 'validate/company-number/',
     'api:companies-house-profile': 'company/companies-house-profile/',
+
+    # INTERNAL API
+    'internal-api:companies-house-search': 'internal/companies-house-search/',
 
     # SSO-PROFILE
     'profile:soo': 'selling-online-overseas/',
@@ -113,6 +121,8 @@ def get_absolute_url(name):
         return join_ui_supplier(relative_url)
     elif name.startswith('api:'):
         return join_api(relative_url)
+    elif name.startswith('internal-api:'):
+        return join_internal_api(relative_url)
     elif name.startswith('profile:'):
         return join_profile(relative_url)
 
