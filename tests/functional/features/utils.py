@@ -329,7 +329,7 @@ def find_confirmation_email_msg(bucket, actor, subject):
         try:
             msg_contents = key.get_contents_as_string().decode("utf-8")
             msg = email.message_from_string(msg_contents)
-            if msg['To'].lower() == actor.email.lower():
+            if msg['To'].strip().lower() == actor.email.lower():
                 logging.debug("Found an email addressed at: %s", msg['To'])
                 if msg['Subject'] == subject:
                     logging.debug("Found email confirmation message entitled: "
