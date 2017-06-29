@@ -8,8 +8,8 @@ from tests.functional.features.utils import (
     extract_csrf_middleware_token,
     extract_email_confirmation_link,
     find_confirmation_email_msg,
-    get_s3_bucket
-)
+    get_s3_bucket,
+    check_response)
 
 
 def reg_sso_account_should_be_created(context, alias):
@@ -130,3 +130,17 @@ def fas_should_be_on_profile_page(context, supplier_alias, company_alias):
     assert company.summary in content
     logging.debug("Supplier %s is on the %s company's FAS page",
                   supplier_alias, company_alias)
+
+
+def reg_supplier_is_not_appropriate_for_fab(context, supplier_alias):
+    exp_strings = [
+        "Try our other business services",
+        "The Find a Buyer service promotes companies that are currently "
+        "exporting or looking to export in the near future. The answers you "
+        "gave suggest that your company is currently not appropriate to feature"
+        " in the Find a Buyer service.",
+        "Exporting is GREAT advice for new exporters"
+    ]
+    check_response(context.response, 200, strings=exp_strings)
+    logging.debug("%s was told that her/his business is not appropriate "
+                  "to feature in the Find a Buyer service", supplier_alias)
