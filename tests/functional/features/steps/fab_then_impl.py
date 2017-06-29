@@ -38,7 +38,7 @@ def sso_account_should_be_created(context, alias):
     logging.debug("Successfully created new SSO account for %s", alias)
 
 
-@retry(wait_fixed=5000, stop_max_attempt_number=10)
+@retry(wait_fixed=5000, stop_max_attempt_number=18)
 def should_get_verification_email(context, alias, subject):
     """Will check if the Supplier received an email verification message.
 
@@ -57,3 +57,12 @@ def should_get_verification_email(context, alias, subject):
     payload = find_confirmation_email_msg(bucket, actor, subject)
     link = extract_email_confirmation_link(payload)
     context.set_actor_email_confirmation_link(alias, link)
+
+
+def should_be_prompted_to_build_your_profile(context, supplier_alias):
+    content = context.response.content.decode("utf-8")
+    assert "Build and improve your profile" in content
+    assert "To set up your Find a Buyer profile" in content
+    assert "Your company details" in content
+    logging.debug("%s is on the 'Build and improve your profile' page",
+                  supplier_alias)

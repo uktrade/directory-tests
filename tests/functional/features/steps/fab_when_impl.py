@@ -3,6 +3,7 @@
 import logging
 import random
 from urllib.parse import quote
+from urllib.parse import unquote
 
 from jsonschema import validate
 
@@ -10,6 +11,7 @@ from tests import get_absolute_url
 from tests.functional.features.context_utils import UnregisteredCompany
 from tests.functional.features.utils import (
     Method,
+    extract_confirm_email_form_action,
     extract_csrf_middleware_token,
     make_request
 )
@@ -51,6 +53,10 @@ def search_company_house(term):
     params = {"term": term}
     response = make_request(Method.GET, url, params=params,
                             allow_redirects=False)
+    assert response.status_code == 200, (
+        "Expected 200 but got {}. In case you're getting 301 Redirect then "
+        "check if you're using correct protocol https or http"
+        .format(response.status_code))
     json = response.json()
     logging.debug("Company House Search result: %s", json)
     validate(json, COMPANIES)
@@ -130,28 +136,17 @@ def select_random_company(context, supplier_alias, alias):
     data = {"company_name": company.title, "company_number": company.number}
     response = make_request(Method.POST, url, session=session,
                             headers={"Referer": url}, data=data,
-                            allow_redirects=False)
-    assert response.status_code == 302
-    exp_location = "/register/company?company_number={}".format(company.number)
-    assert response.headers.get("Location") == exp_location
-    logging.debug("Successfully selected company %s - %s for registration",
-                  company.title, company.number)
-
-    # go to the Confirm Company page
-    url = get_absolute_url('ui-buyer:register-confirm-company')
-    headers = {"Referer": get_absolute_url('ui-buyer:landing')}
-    params = {"company_number": company.number}
-    response = make_request(Method.GET, url, session=session, params=params,
-                            headers=headers)
+                            allow_redirects=True)
     assert response.status_code == 200
     content = response.content.decode("utf-8")
     assert "Create your company’s profile" in content
     html_escape_table = {"&": "&amp;"}
     escaped_company_title = "".join(html_escape_table.get(c, c) for c in
                                     company.title.upper())
-    assert escaped_company_title in content, ("Company name not present in "
-                                              "response content:\n{}"
-                                              .format(content))
+    assert escaped_company_title in content, ("Company name '{}' not present in"
+                                              " response content:\n{}"
+                                              .format(escaped_company_title,
+                                                      content))
     assert company.number in content
     logging.debug("Successfully got to the Confirm your Company page")
 
@@ -297,7 +292,6 @@ def confirm_export_status(context, supplier_alias, alias, export_status):
     url = get_absolute_url("sso:signup")
     params = {"next": next_1}
     headers = {"Referer": referer}
-    context.reset_actor_session(supplier_alias)
     session = context.get_actor(supplier_alias).session
     response = make_request(Method.GET, url, session=session, params=params,
                             headers=headers)
@@ -349,7 +343,10 @@ def create_sso_account(context, supplier_alias, alias):
                             allow_redirects=False)
     assert response.status_code == 302, ("Expected 302 but got {}"
                                          .format(response.status_code))
-    assert response.headers.get("Location") == "/accounts/confirm-email/"
+    exp_loc = "/accounts/confirm-email/"
+    given_loc = response.headers.get("Location")
+    assert given_loc == exp_loc, ("Expected new Location to be: '{}' but got "
+                                  "'{}' instead.".format(exp_loc, given_loc))
 
     # Steps 2: GET SSO /accounts/confirm-email/
     url = get_absolute_url("sso:email_confirm")
@@ -357,4 +354,68 @@ def create_sso_account(context, supplier_alias, alias):
                             headers=headers, allow_redirects=False)
     assert response.status_code == 200, ("Expected 200 but got {}"
                                          .format(response.status_code))
+    context.response = response
+
+
+def open_email_confirmation_link(context, supplier_alias):
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+    confirmation_link = actor.email_confirmation_link
+    assert confirmation_link, "Expected a non-empty email confirmation link"
+    response = make_request(Method.GET, confirmation_link, session=session)
+    assert response.status_code == 200, ("Expected 200 but got {}"
+                                         .format(response.status_code))
+    content = response.content.decode("utf-8")
+    assert "Confirm email Address" in content
+    assert "This e-mail confirmation link expired or is invalid" not in content
+    logging.debug("Supplier is on the Confirm your email address page")
+    token = extract_csrf_middleware_token(content)
+    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+    form_action_value = extract_confirm_email_form_action(content)
+    context.response = response
+    context.form_action_value = form_action_value
+
+
+def confirm_email_address(context, supplier_alias):
+    # STEP 1 - Submit "Confirm your email address" form
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+    csrfmiddlewaretoken = actor.csrfmiddlewaretoken
+    form_action_value = context.form_action_value
+    url = "{}{}".format(get_absolute_url("sso:landing"), form_action_value)
+    referer = actor.email_confirmation_link
+    headers = {"Referer": referer}
+    data = {"csrfmiddlewaretoken": csrfmiddlewaretoken}
+    response = make_request(Method.POST, url, session=session, headers=headers,
+                            data=data, allow_redirects=False)
+    assert response.status_code == 302, ("Expected 302 but got {}"
+                                         .format(response.status_code))
+    new_location = response.headers.get("Location")
+    assert new_location.startswith("/accounts/login/?next=")
+    assert "register-submit%253Fcompany_number%253D" in new_location
+
+    # Step 2 - Follow redirect - go to SSO /accounts/login/
+    # use the same Referer as in previous request
+    headers = {"Referer": referer}
+    url = "{}{}".format(get_absolute_url("sso:landing"), new_location)
+    response = make_request(Method.GET, url, session=session, headers=headers,
+                            allow_redirects=False)
+    assert response.status_code == 302, ("Expected 302 but got {}"
+                                         .format(response.status_code))
+    new_location = response.headers.get("Location")
+    register_submit = get_absolute_url("ui-buyer:register-submit-account-details")
+    assert new_location.startswith(quote(register_submit)), (
+        "Expected new Location to start with: '{}' but got '{}'"
+        .format(register_submit, new_location))
+    assert "company_number" in new_location
+    assert "export_status" in new_location
+
+    # Step 3 - Follow redirect - go to DIR /company-profile/edit
+    # use the same Referer as in previous request
+    headers = {"Referer": referer}
+    url = unquote(new_location)
+    response = make_request(Method.GET, url, session=session, headers=headers)
+    assert response.status_code == 200, ("Expected 200 but got {}"
+                                         .format(response.status_code))
+    assert "Build and improve your profile" in response.content.decode("utf-8")
     context.response = response

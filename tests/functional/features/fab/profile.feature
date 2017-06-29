@@ -2,7 +2,7 @@ Feature: Trade Profile
 
 
     @registration
-    Scenario Outline: Supplier should receive a verification email after successful registration
+    Scenario Outline: Supplier should receive a verification email after successful registration - export status is "<current>"
       Given "Peter Alder" is an unauthenticated supplier
 
       When "Peter Alder" randomly selects an active company without a profile identified by an alias "Company X"
@@ -19,3 +19,16 @@ Feature: Trade Profile
         | Yes, 1 to 2 years ago          |
         | Yes, but more than 2 years ago |
         | No, but we are preparing to    |
+
+
+    @verification
+    @email
+    Scenario: Unauthenticated Suppliers should be able to verify their email address via confirmation link sent in an email
+      Given "Annette Geissinger" is an unauthenticated supplier
+      And "Annette Geissinger" created a SSO account associated with randomly selected company "Company X"
+      And "Annette Geissinger" received the email verification message with the email confirmation link
+
+      When "Annette Geissinger" decides to confirm her email address by using the email confirmation link
+      And "Annette Geissinger" confirms the email address
+
+      Then "Annette Geissinger" should be prompted to Build and improve your profile
