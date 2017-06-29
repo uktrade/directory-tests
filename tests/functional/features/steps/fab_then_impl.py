@@ -133,7 +133,7 @@ def fas_should_be_on_profile_page(context, supplier_alias, company_alias):
 
 
 def reg_supplier_is_not_appropriate_for_fab(context, supplier_alias):
-    exp_strings = [
+    expected = [
         "Try our other business services",
         "The Find a Buyer service promotes companies that are currently "
         "exporting or looking to export in the near future. The answers you "
@@ -141,6 +141,6 @@ def reg_supplier_is_not_appropriate_for_fab(context, supplier_alias):
         " in the Find a Buyer service.",
         "Exporting is GREAT advice for new exporters"
     ]
-    check_response(context.response, 200, strings=exp_strings)
+    check_response(context.response, 200, strings=expected)
     logging.debug("%s was told that her/his business is not appropriate "
                   "to feature in the Find a Buyer service", supplier_alias)
