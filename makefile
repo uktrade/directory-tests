@@ -1,4 +1,4 @@
-build: docker_test
+build: docker_integration_tests
 
 clean:
 	-find . -type f -name "*.pyc" -delete
@@ -122,4 +122,4 @@ docker_integration_tests: docker_remove_all
 	docker-compose -f docker-compose.yml run smoke_tests && \
 	docker-compose -f docker-compose.yml run functional_tests
 
-.PHONY: build clean requirements test docker_remove_all docker_test smoke_test_buyer smoke_test_supplier smoke_test_sso smoke_test load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal integration_test pep8
+.PHONY: build clean requirements test docker_remove_all docker_integration_tests smoke_test_buyer smoke_test_supplier smoke_test_sso smoke_test load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal integration_test pep8
