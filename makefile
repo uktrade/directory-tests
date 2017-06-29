@@ -114,7 +114,7 @@ DOCKER_SET_DIRECTORY_TESTS_ENV_VARS := \
 docker_remove_all:
 	$(DOCKER_REMOVE_ALL)
 
-docker_test: docker_remove_all
+docker_integration_tests: docker_remove_all
 	$(DOCKER_SET_DIRECTORY_TESTS_ENV_VARS) && \
 	$(DOCKER_COMPOSE_CREATE_ENVS) && \
 	$(DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
