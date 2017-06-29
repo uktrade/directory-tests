@@ -21,6 +21,7 @@
 Tests can be run either against locally provisioned environment or any other one, as long as:
 
 * ``DIRECTORY_TESTS_DIRECTORY_API_URL``
+* ``DIRECTORY_TESTS_DIRECTORY_BUYER_API_URL``
 * ``DIRECTORY_TESTS_DIRECTORY_SSO_URL``
 * ``DIRECTORY_TESTS_DIRECTORY_UI_BUYER_URL``
 * ``DIRECTORY_TESTS_DIRECTORY_UI_SUPPLIER_URL``
