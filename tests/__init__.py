@@ -67,7 +67,7 @@ urls = {
     'api:companies-house-profile': 'company/companies-house-profile/',
 
     # INTERNAL API
-    'internal-api:companies-house-search': 'internal/companies-house-search/',
+    'internal-api:companies-house-search': 'api/internal/companies-house-search/',
 
     # SSO-PROFILE
     'profile:soo': 'selling-online-overseas/',
