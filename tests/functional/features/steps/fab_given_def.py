@@ -25,10 +25,10 @@ def given_an_unauthenticated_supplier(context, supplier_alias):
 
 @given('"{supplier_alias}" created a SSO account associated with randomly '
        'selected company "{company_alias}"')
-def given_supplier_created_sso_account_for_company(context, supplier_alias,
-                                                   company_alias):
-    reg_create_sso_account_associated_with_company(context, supplier_alias,
-                                                   company_alias)
+def given_supplier_created_sso_account_for_company(
+        context, supplier_alias, company_alias):
+    reg_create_sso_account_associated_with_company(
+        context, supplier_alias, company_alias)
 
 
 @given('"{alias}" received the email verification message with the email '
