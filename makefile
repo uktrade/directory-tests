@@ -1,4 +1,4 @@
-build: docker_smoke_test
+build: docker_integration_tests
 
 clean:
 	-find . -type f -name "*.pyc" -delete
@@ -12,6 +12,9 @@ requirements_smoke:
 
 requirements_selenium:
 	pip install -r requirements_selenium.txt
+
+requirements_functional:
+	pip install -r requirements_functional.txt
 
 pep8:
 	flake8 .
@@ -87,6 +90,15 @@ smoke_tests:
 	$(SET_PYTEST_ENV_VARS); \
 	pytest tests/smoke $(pytest_args)
 
+SET_DB_URLS := \
+	export DIR_DATABASE_URL=`heroku config:get DATABASE_URL -a directory-api-dev` && \
+	export SSO_DATABASE_URL=`heroku config:get DATABASE_URL -a directory-sso-dev`
+
+functional_tests:
+	$(SET_PYTEST_ENV_VARS) && \
+	$(SET_DB_URLS) && \
+	behave -k --format progress3 --no-logcapture --tags=-wip --tags=-skip tests/functional/features $(BEHAVE_ARGS)
+
 test: pep8 smoke_test integration_test load_test_minimal
 
 DOCKER_REMOVE_ALL := \
@@ -96,7 +108,8 @@ DOCKER_REMOVE_ALL := \
 	xargs -I {} docker rm -f {}
 
 DOCKER_SET_DIRECTORY_TESTS_ENV_VARS := \
-	export DIRECTORY_TESTS_DIRECTORY_API_URL=http://directory-api-dev.herokuapp.com; \
+	export DIRECTORY_TESTS_DIRECTORY_API_URL=http://directory-api-dev.herokuapp.com/; \
+	export DIRECTORY_TESTS_DIRECTORY_BUYER_API_URL=http://dev.buyer.directory.uktrade.io/; \
 	export DIRECTORY_TESTS_DIRECTORY_SSO_URL=http://dev.sso.uktrade.io; \
 	export DIRECTORY_TESTS_DIRECTORY_UI_BUYER_URL=http://dev.buyer.directory.uktrade.io; \
 	export DIRECTORY_TESTS_DIRECTORY_UI_SUPPLIER_URL=http://dev.supplier.directory.uktrade.io; \
@@ -107,11 +120,12 @@ DOCKER_SET_DIRECTORY_TESTS_ENV_VARS := \
 docker_remove_all:
 	$(DOCKER_REMOVE_ALL)
 
-docker_smoke_test: docker_remove_all
+docker_integration_tests: docker_remove_all
 	$(DOCKER_SET_DIRECTORY_TESTS_ENV_VARS) && \
 	$(DOCKER_COMPOSE_CREATE_ENVS) && \
 	$(DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
 	docker-compose -f docker-compose.yml build && \
-	docker-compose -f docker-compose.yml run smoke_tests
+	docker-compose -f docker-compose.yml run smoke_tests && \
+	docker-compose -f docker-compose.yml run functional_tests
 
-.PHONY: build clean requirements test docker_remove_all docker_test smoke_test_buyer smoke_test_supplier smoke_test_sso smoke_test load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal integration_test pep8
+.PHONY: build clean requirements test docker_remove_all docker_integration_tests smoke_test_buyer smoke_test_supplier smoke_test_sso smoke_test load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal integration_test pep8

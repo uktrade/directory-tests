@@ -6,6 +6,10 @@ from tests.functional.features.context_utils import (
     initialize_scenario_data,
     patch_context
 )
+from tests.functional.features.db_cleanup import (
+    delete_expired_django_sessions,
+    delete_supplier_data
+)
 from tests.functional.features.utils import init_loggers
 
 
@@ -27,6 +31,10 @@ def before_scenario(context, scenario):
 
 
 def after_scenario(context, scenario):
+    logging.debug("Deleting supplier data from FAB & SSO DBs")
+    actors = context.scenario_data.actors
+    [delete_supplier_data("DIRECTORY", actor.email) for actor in actors.values()]
+    [delete_supplier_data("SSO", actor.email) for actor in actors.values()]
     # clear the scenario data after every scenario
     context.scenario_data = None
     logging.debug('Finished scenario: %s', scenario.name)
@@ -36,3 +44,7 @@ def before_all(context):
     init_loggers()
     # this will add some handy functions to the `context` object
     patch_context(context)
+
+
+def after_all(context):
+    delete_expired_django_sessions()

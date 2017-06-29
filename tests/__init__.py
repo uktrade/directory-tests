@@ -6,7 +6,7 @@ import uuid
 from tests import settings
 
 join_api = partial(urljoin, settings.DIRECTORY_API_URL)
-join_internal_api = partial(urljoin, settings.DIRECTORY_API_URL)
+join_internal_api = partial(urljoin, settings.DIRECTORY_BUYER_API_URL)
 join_sso = partial(urljoin, settings.DIRECTORY_SSO_URL)
 join_profile = partial(urljoin, settings.DIRECTORY_PROFILE_URL)
 join_ui_buyer = partial(urljoin, settings.DIRECTORY_UI_BUYER_URL)
@@ -14,6 +14,7 @@ join_ui_supplier = partial(urljoin, settings.DIRECTORY_UI_SUPPLIER_URL)
 
 urls = {
     # SSO
+    'sso:landing': '',
     'sso:login': 'accounts/login/',
     'sso:signup': 'accounts/signup/',
     'sso:logout': 'accounts/logout/',
@@ -32,9 +33,10 @@ urls = {
     'ui-buyer:register-confirm-export-status': 'register/exports',
     'ui-buyer:register-finish': 'register/finished',
     'ui-buyer:register-submit-account-details': 'register-submit',
-    'ui-buyer:company-profile': 'company-profile',
     'ui-buyer:upload-logo': 'company-profile/edit/logo',
     'ui-buyer:confirm-company-address': 'confirm-company-address',
+    'ui-buyer:company-profile': 'company-profile',
+    'ui-buyer:company-edit': 'company-profile/edit',
     'ui-buyer:company-edit-address': 'company-profile/edit/address',
     'ui-buyer:company-edit-description': 'company-profile/edit/description',
     'ui-buyer:company-edit-key-facts': 'company-profile/edit/key-facts',
@@ -67,7 +69,7 @@ urls = {
     'api:companies-house-profile': 'company/companies-house-profile/',
 
     # INTERNAL API
-    'internal-api:companies-house-search': 'internal/companies-house-search/',
+    'internal-api:companies-house-search': 'api/internal/companies-house-search/',
 
     # SSO-PROFILE
     'profile:soo': 'selling-online-overseas/',

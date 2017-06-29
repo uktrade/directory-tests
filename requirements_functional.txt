@@ -14,6 +14,7 @@ jsonschema==2.6.0
 mccabe==0.5.3             # via flake8
 parse-type==0.3.4         # via behave
 parse==1.8.2              # via behave, parse-type
+psycopg2==2.7.1
 pycodestyle==2.0.0        # via flake8
 pyflakes==1.2.3           # via flake8
 requests==2.17.3

@@ -169,6 +169,20 @@ def make_request(method: Method, url, *, session=None, params=None,
     logging.debug("RSP URL: %s", res.url)
     logging.debug("RSP Headers: %s", res.headers)
     logging.debug("RSP Cookies: %s", res.cookies)
+    if res.history:
+        logging.debug("REQ was redirected")
+        for resp in res.history:
+            logging.debug("Intermediate REQ: %s %s", resp.request.method, resp.url)
+            logging.debug("Intermediate REQ Headers: %s", resp.request.headers)
+            logging.debug("Intermediate REQ Body: %s", resp.request.body)
+            logging.debug("Intermediate RESP: %d %s", resp.status_code, resp.reason)
+            logging.debug("Intermediate RESP Headers: %s", resp.headers)
+            logging.debug("Intermediate RESP Content: %s", resp.content[0:150] or None)
+        logging.debug("Final destination: %s %s -> %d %s",
+                      res.request.method, res.request.url, res.status_code,
+                      res.url)
+    else:
+        logging.debug("REQ was not redirected")
     if res.content:
         if trim_response_content:
             if len(res.content) > 150:
@@ -207,6 +221,27 @@ def extract_csrf_middleware_token(content):
     token = content[(csrf_token_idx + len(value_property)):csrf_token_end_idx]
     logging.debug("Found csrfmiddlewaretoken=%s", token)
     return token
+
+
+def extract_confirm_email_form_action(content):
+    """Extract the form action (endpoint) from the Confirm Email page.
+
+    Comes in handy when dealing with e.g. Django forms.
+
+    :param content: response content decoded as utf-8
+    :type  content: str
+    :return: for action endpoint
+    :rtype: str
+    """
+    assert content, "Expected a non-empty response content but got nothing"
+
+    form_action = 'form method="post" action="'
+    form_action_idx = content.find(form_action)
+    start = form_action_idx + len(form_action)
+    end = content.find('"', start)
+    action = content[start:end]
+    logging.debug("Found confirm email form action value=%s", action)
+    return action
 
 
 def extract_plain_text_payload(msg):
@@ -292,10 +327,17 @@ def find_confirmation_email_msg(bucket, actor, subject):
                                       "entitled: %s", subject)
                         res = extract_plain_text_payload(msg)
                         found = True
-                logging.debug("Deleting message %s", key.key)
-                bucket.delete_key(key.key)
-                logging.debug("Successfully deleted message %s from S3",
-                              key.key)
+                        logging.debug("Deleting message %s", key.key)
+                        bucket.delete_key(key.key)
+                        logging.debug("Successfully deleted message %s from S3",
+                                      key.key)
+                    else:
+                        logging.debug("Message from %s to %s had a non-matching"
+                                      "subject: '%s'", msg['From'], msg['To'],
+                                      msg['Subject'])
+                else:
+                    logging.debug("Message %s was addressed at: %s", key.key,
+                                  msg['To'])
             except Exception as ex:
                 logging.error("Something went wrong when getting an email msg "
                               "from S3: %s", ex)

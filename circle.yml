@@ -10,4 +10,4 @@ dependencies:
 
 test:
   override:
-    - make docker_smoke_test
+    - make docker_integration_tests
