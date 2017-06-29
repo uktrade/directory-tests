@@ -71,7 +71,7 @@ PYTEST_ARGS :=
 
 SET_PYTEST_ENV_VARS := \
 	export API_CLIENT_KEY=debug; \
-	export DIRECTORY_API_URL=http://directory-api-dev.herokuapp.com/; \
+	export DIRECTORY_API_URL=http://dev.buyer.directory.uktrade.io/; \
 	export DIRECTORY_SSO_URL=http://www.dev.sso.uktrade.io/; \
 	export DIRECTORY_PROFILE_URL=http://www.dev.profile.uktrade.io; \
 	export DIRECTORY_UI_BUYER_URL=http://www.dev.buyer.directory.uktrade.io/; \
@@ -90,12 +90,8 @@ smoke_tests:
 	$(SET_PYTEST_ENV_VARS); \
 	pytest tests/smoke $(pytest_args)
 
-SET_FUNCTIONAL_ENV_VARS := \
-	export DIRECTORY_API_URL=https://dev.buyer.directory.uktrade.io/api/
-
 functional_tests:
 	$(SET_PYTEST_ENV_VARS); \
-	$(SET_FUNCTIONAL_ENV_VARS); \
 	behave -k --tags=-wip --tags=-skip tests/functional/features $(BEHAVE_ARGS)
 
 test: pep8 smoke_test integration_test load_test_minimal
@@ -118,7 +114,7 @@ DOCKER_SET_DIRECTORY_TESTS_ENV_VARS := \
 docker_remove_all:
 	$(DOCKER_REMOVE_ALL)
 
-docker_test: docker_remove_all
+docker_integration_tests: docker_remove_all
 	$(DOCKER_SET_DIRECTORY_TESTS_ENV_VARS) && \
 	$(DOCKER_COMPOSE_CREATE_ENVS) && \
 	$(DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
