@@ -4,12 +4,16 @@ from behave import given
 
 from tests.functional.features.settings import EMAIL_VERIFICATION_MSG_SUBJECT
 from tests.functional.features.steps.fab_given_impl import (
-    confirm_email_address,
-    create_sso_account_associated_with_company,
+    bp_build_company_profile,
+    reg_confirm_email_address,
+    reg_create_sso_account_associated_with_company,
     unauthenticated_supplier
 )
 from tests.functional.features.steps.fab_then_impl import (
-    should_get_verification_email
+    reg_should_get_verification_email
+)
+from tests.functional.features.steps.fab_when_impl import (
+    prof_set_company_description
 )
 
 
@@ -22,18 +26,28 @@ def given_an_unauthenticated_supplier(context, supplier_alias):
        'selected company "{company_alias}"')
 def given_supplier_created_sso_account_for_company(context, supplier_alias,
                                                    company_alias):
-    create_sso_account_associated_with_company(context, supplier_alias,
-                                               company_alias)
+    reg_create_sso_account_associated_with_company(context, supplier_alias,
+                                                   company_alias)
 
 
 @given('"{alias}" received the email verification message with the email '
        'confirmation link')
-def then_supplier_should_receive_verification_email(context, alias):
+def given_supplier_received_verification_email(context, alias):
     subject = EMAIL_VERIFICATION_MSG_SUBJECT
-    should_get_verification_email(context, alias, subject)
+    reg_should_get_verification_email(context, alias, subject)
 
 
 @given('"{supplier_alias}" confirmed her email address')
 @given('"{supplier_alias}" confirmed his email address')
-def step_impl(context, supplier_alias):
-    confirm_email_address(context, supplier_alias)
+def given_supplier_confirmed_email_address(context, supplier_alias):
+    reg_confirm_email_address(context, supplier_alias)
+
+
+@given('"{supplier_alias}" built the company profile')
+def given_supplier_built_company_profile(context, supplier_alias):
+    bp_build_company_profile(context, supplier_alias)
+
+
+@given('"{supplier_alias}" set the company description')
+def given_supplier_set_company_description(context, supplier_alias):
+    prof_set_company_description(context, supplier_alias)

@@ -1,6 +1,7 @@
 Feature: Trade Profile
 
 
+    @ED-1659
     @registration
     Scenario Outline: Supplier should receive a verification email after successful registration - export status is "<current>"
       Given "Peter Alder" is an unauthenticated supplier
@@ -21,6 +22,7 @@ Feature: Trade Profile
         | No, but we are preparing to    |
 
 
+    @ED-1692
     @verification
     @email
     Scenario: Unauthenticated Suppliers should be able to verify their email address via confirmation link sent in an email
@@ -34,6 +36,7 @@ Feature: Trade Profile
       Then "Annette Geissinger" should be prompted to Build and improve your profile
 
 
+    @ED-1716
     @profile
     Scenario: Supplier should be able to build the profile once the email address is confirmed
       Given "Annette Geissinger" is an unauthenticated supplier
@@ -47,3 +50,19 @@ Feature: Trade Profile
 
       Then "Annette Geissinger" should be on company profile page
       And "Annette Geissinger" should be told that her company has no description
+
+
+    @ED-1722
+    @verification
+    @letter
+    Scenario: Supplier should be able to verify company using code sent in the verification letter
+      Given "Annette Geissinger" is an unauthenticated supplier
+      And "Annette Geissinger" created a SSO account associated with randomly selected company "Company X"
+      And "Annette Geissinger" confirmed her email address
+      And "Annette Geissinger" built the company profile
+      And "Annette Geissinger" set the company description
+
+      When "Annette Geissinger" verifies the company with the verification code from the letter sent after company profile was created
+
+      Then "Annette Geissinger" should be on company profile page
+      And "Annette Geissinger" should be told that her company is published

@@ -12,7 +12,7 @@ from tests.functional.features.utils import (
 )
 
 
-def sso_account_should_be_created(context, alias):
+def reg_sso_account_should_be_created(context, alias):
     """Will verify if SSO account was successfully created.
 
     It's a very crude check, as it will only check if the response body
@@ -28,9 +28,9 @@ def sso_account_should_be_created(context, alias):
     """
     response = context.response
     msgs = ["Verify your email address",
-            "if you do not receive an email within 10 minutes", (
-                "We have sent you a confirmation email. Please follow the link"
-                " in the email to verify your email address.")]
+            "if you do not receive an email within 10 minutes",
+            ("We have sent you a confirmation email. Please follow the link"
+             " in the email to verify your email address.")]
     content = response.content.decode("utf-8")
     for msg in msgs:
         err_msg = ("Could not find '{}' in the response".format(msg))
@@ -39,7 +39,7 @@ def sso_account_should_be_created(context, alias):
 
 
 @retry(wait_fixed=5000, stop_max_attempt_number=18)
-def should_get_verification_email(context, alias, subject):
+def reg_should_get_verification_email(context, alias, subject):
     """Will check if the Supplier received an email verification message.
 
     NOTE:
@@ -60,7 +60,7 @@ def should_get_verification_email(context, alias, subject):
     context.set_actor_email_confirmation_link(alias, link)
 
 
-def should_be_prompted_to_build_your_profile(context, supplier_alias):
+def bp_should_be_prompted_to_build_your_profile(context, supplier_alias):
     content = context.response.content.decode("utf-8")
     assert "Build and improve your profile" in content
     assert "To set up your Find a Buyer profile" in content
@@ -75,7 +75,7 @@ def should_be_prompted_to_build_your_profile(context, supplier_alias):
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
 
 
-def should_be_on_profile_page(context, supplier_alias):
+def prof_should_be_on_profile_page(context, supplier_alias):
     content = context.response.content.decode("utf-8")
     assert "Facts &amp; details" in content
     assert "Number of employees" in content
@@ -89,10 +89,28 @@ def should_be_on_profile_page(context, supplier_alias):
     logging.debug("%s is on the company profile page", supplier_alias)
 
 
-def should_be_told_about_missing_description(context, supplier_alias):
+def prof_should_be_told_about_missing_description(context, supplier_alias):
     content = context.response.content.decode("utf-8")
-    assert "Your company has no description." in content, content
+    assert "Your company has no description." in content
     assert "Your profile can't be published until your company has a" in content
-    assert "Set your description" in content, content
+    assert "Set your description" in content
     logging.debug("%s was told that the company profile has no description",
+                  supplier_alias)
+
+
+def prof_should_be_told_that_company_is_not_verified_yet(context, supplier_alias):
+    content = context.response.content.decode("utf-8")
+    assert "Your company has not yet been verified." in content
+    assert "Your profile can't be published until your company is verified" in content
+    assert "Verify your company" in content
+    logging.debug("%s was told that the company is not verified yet",
+                  supplier_alias)
+
+
+def prof_should_be_told_that_company_is_published(context, supplier_alias):
+    content = context.response.content.decode("utf-8")
+    assert "Your company is published" in content
+    assert "Your profile is visible to international buyers" in content
+    assert "View published profile" in content
+    logging.debug("%s was told that the company profile is published",
                   supplier_alias)

@@ -10,6 +10,7 @@ import requests
 from boto.s3 import connect_to_region
 from boto.s3.connection import OrdinaryCallingFormat
 
+from tests.functional.features.db_cleanup import get_dir_db_connection
 from tests.functional.features.settings import (
     S3_ACCESS_KEY_ID,
     S3_BUCKET,
@@ -344,4 +345,27 @@ def find_confirmation_email_msg(bucket, actor, subject):
 
     assert found, ("Could not find email confirmation message for {}"
                    .format(actor.email))
+    return res
+
+
+def get_verification_code(company_number):
+    """Will get the verification code (sent by post) for specified company.
+
+    :param company_number: company number given by Companies House
+    :return: verification code sent by post
+    """
+    connection, cursor = get_dir_db_connection()
+    sql = "SELECT verification_code FROM company_company WHERE number = %s;"
+    data = (company_number, )
+    cursor.execute(sql, data)
+    res = None
+    if cursor.description:
+        res = cursor.fetchone()
+        logging.debug("Verification code for company: %s is %s", company_number,
+                      res)
+    else:
+        logging.debug("Did not find verification code for company %s. "
+                      "Will return None", company_number)
+    cursor.close()
+    connection.close()
     return res

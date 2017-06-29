@@ -2,8 +2,7 @@
 """FAB Given step implementations."""
 import logging
 import random
-from urllib.parse import quote
-from urllib.parse import unquote
+from urllib.parse import quote, unquote
 
 from faker import Factory
 from jsonschema import validate
@@ -12,12 +11,16 @@ from scrapy.selector import Selector
 from tests import get_absolute_url
 from tests.functional.features.context_utils import UnregisteredCompany
 from tests.functional.features.settings import NO_OF_EMPLOYEES, SECTORS
+from tests.functional.features.steps.fab_then_impl import (
+    prof_should_be_on_profile_page,
+    prof_should_be_told_that_company_is_not_verified_yet,
+    prof_should_be_told_that_company_is_published)
 from tests.functional.features.utils import (
     Method,
     extract_confirm_email_form_action,
     extract_csrf_middleware_token,
-    make_request
-)
+    make_request,
+    get_verification_code)
 from tests.functional.schemas.Companies import COMPANIES
 
 
@@ -159,11 +162,13 @@ def select_random_company(context, supplier_alias, alias):
     context.set_company_for_actor(supplier_alias, alias)
 
 
-def confirm_company_selection(context, supplier_alias, alias):
+def reg_confirm_company_selection(context, supplier_alias, alias):
     """Will confirm that the selected company is the right one.
 
     :param context: behave `context` object
     :type context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type supplier_alias: str
     :param alias: alias of the company used in the scope of the scenario
     :type alias: str
     """
@@ -213,7 +218,7 @@ def confirm_company_selection(context, supplier_alias, alias):
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
 
 
-def confirm_export_status(context, supplier_alias, alias, export_status):
+def reg_confirm_export_status(context, supplier_alias, alias, export_status):
     """Will confirm the current export status of selected unregistered company.
 
     :param context: behave `context` object
@@ -312,7 +317,7 @@ def confirm_export_status(context, supplier_alias, alias, export_status):
     context.export_status = export_status
 
 
-def create_sso_account(context, supplier_alias, alias):
+def reg_create_sso_account(context, supplier_alias, alias):
     """Will create a SSO account for selected company.
 
     NOTE:
@@ -364,7 +369,7 @@ def create_sso_account(context, supplier_alias, alias):
                                          .format(response.status_code))
 
 
-def open_email_confirmation_link(context, supplier_alias):
+def reg_open_email_confirmation_link(context, supplier_alias):
     """Given Supplier has received a message with email confirmation link
     Then Supplier has to click on that link.
 
@@ -392,7 +397,7 @@ def open_email_confirmation_link(context, supplier_alias):
     context.form_action_value = form_action_value
 
 
-def supplier_confirms_email_address(context, supplier_alias):
+def reg_supplier_confirms_email_address(context, supplier_alias):
     """Given Supplier has clicked on the email confirmation link, Suppliers has
     to confirm that the provided email address is the correct one.
 
@@ -649,3 +654,132 @@ def bp_confirm_registration_and_send_letter(context, supplier_alias):
     assert "Your profile can't be published until your company has a" in content
     assert "Set your description" in content, content
     logging.debug("Supplier is on the Edit Company Profile page")
+
+
+def prof_set_company_description(context, supplier_alias):
+    """Edit Profile - Will set company description.
+
+    This is quasi-mandatory (*) step before Supplier can verify the company with
+    the code sent in a letter.
+
+    (*) it's quasi mandatory, because Supplier can actually go to the company
+    verification page using the link provided in the letter without the need
+    to set company description.
+
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type supplier_alias: str
+    """
+    # STEP 1 - go to the "Set Company Description" page
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+    url = get_absolute_url("ui-buyer:company-edit-description")
+    headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
+    response = make_request(Method.GET, url, session=session, headers=headers,
+                            allow_redirects=False)
+    context.response = response
+    assert response.status_code == 200, ("Expected 200 but got {}"
+                                         .format(response.status_code))
+    content = response.content.decode("utf-8")
+    assert "About your company" in content
+    assert "Brief summary to make your company stand out to buyers" in content
+    assert "Describe your business to overseas buyers" in content
+    token = extract_csrf_middleware_token(content)
+    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+    logging.debug("Supplier is on the Set Company Description page")
+
+    # STEP 2 - Submit company description
+    fake = Factory.create()
+    url = get_absolute_url("ui-buyer:company-edit-description")
+    headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
+    data = {"csrfmiddlewaretoken": token,
+            "supplier_company_description_edit_view-current_step": "description",
+            "description-summary": fake.sentence(),
+            "description-description": fake.sentence()
+            }
+    response = make_request(Method.POST, url, session=session, headers=headers,
+                            data=data, allow_redirects=False)
+    context.response = response
+    assert response.status_code == 302, ("Expected 302 but got {}"
+                                         .format(response.status_code))
+    assert response.headers.get("Location") == "/company-profile"
+
+    # STEP 3 - follow the redirect
+    url = get_absolute_url("ui-buyer:company-profile")
+    headers = {"Referer": get_absolute_url("ui-buyer:company-edit-description")}
+    response = make_request(Method.GET, url, session=session, headers=headers,
+                            allow_redirects=False)
+    context.response = response
+    assert response.status_code == 200, ("Expected 200 but got {}"
+                                         .format(response.status_code))
+    prof_should_be_on_profile_page(context, supplier_alias)
+    prof_should_be_told_that_company_is_not_verified_yet(context, supplier_alias)
+    logging.debug("Supplier is back to the Profile Page")
+
+
+def prof_verify_company(context, supplier_alias):
+    """Will verify the company by submitting the verification code that is sent
+    by post to the company's address.
+
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type supplier_alias: str
+    """
+    actor = context.get_actor(supplier_alias)
+    company = context.get_unregistered_company(actor.company_alias)
+
+    # STEP 0 - get the verification code from DB
+    verification_code = get_verification_code(company.number)
+
+    # STEP 1 - go to the "Set Company Description" page
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+    url = get_absolute_url("ui-buyer:confirm-company-address")
+    headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
+    response = make_request(Method.GET, url, session=session, headers=headers,
+                            allow_redirects=False)
+    context.response = response
+    assert response.status_code == 200, ("Expected 200 but got {}"
+                                         .format(response.status_code))
+    content = response.content.decode("utf-8")
+    assert "Verify your company" in content
+    assert ("Enter the verification code from the letter we sent to you after  "
+            "you created your company profile") in content
+    assert ("We sent you a letter through the mail containing a twelve digit "
+            "code.") in content
+    token = extract_csrf_middleware_token(content)
+    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+    logging.debug("Supplier is on the Verify Company page")
+
+    # STEP 2 - Submit the verification code
+    url = get_absolute_url("ui-buyer:confirm-company-address")
+    headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
+    data = {"csrfmiddlewaretoken": token,
+            "supplier_company_address_verification_view-current_step": "address",
+            "address-code": verification_code
+            }
+    response = make_request(Method.POST, url, session=session, headers=headers,
+                            data=data, allow_redirects=False)
+    context.response = response
+    assert response.status_code == 200, ("Expected 200 but got {}"
+                                         .format(response.status_code))
+    content = response.content.decode("utf-8")
+    assert "Your company has been verified" in content
+    assert "View or amend your company profile" in content
+
+    # STEP 3 - click on the "View or amend your company profile" link
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+    url = get_absolute_url("ui-buyer:company-profile")
+    headers = {"Referer": get_absolute_url("ui-buyer:confirm-company-address")}
+    response = make_request(Method.GET, url, session=session, headers=headers,
+                            allow_redirects=False)
+    context.response = response
+    assert response.status_code == 200, ("Expected 200 but got {}"
+                                         .format(response.status_code))
+    prof_should_be_on_profile_page(context, supplier_alias)
+    prof_should_be_told_that_company_is_published(context, supplier_alias)
+    logging.debug("%s is on the Verified & Published Company Profile page",
+                  supplier_alias)
