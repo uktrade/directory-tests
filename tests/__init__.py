@@ -6,7 +6,7 @@ import uuid
 from tests import settings
 
 join_api = partial(urljoin, settings.DIRECTORY_API_URL)
-join_internal_api = partial(urljoin, settings.DIRECTORY_API_URL)
+join_internal_api = partial(urljoin, settings.DIRECTORY_BUYER_API_URL)
 join_sso = partial(urljoin, settings.DIRECTORY_SSO_URL)
 join_profile = partial(urljoin, settings.DIRECTORY_PROFILE_URL)
 join_ui_buyer = partial(urljoin, settings.DIRECTORY_UI_BUYER_URL)
