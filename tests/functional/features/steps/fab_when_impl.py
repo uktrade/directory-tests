@@ -292,7 +292,6 @@ def confirm_export_status(context, supplier_alias, alias, export_status):
     url = get_absolute_url("sso:signup")
     params = {"next": next_1}
     headers = {"Referer": referer}
-    # context.reset_actor_session(supplier_alias)
     session = context.get_actor(supplier_alias).session
     response = make_request(Method.GET, url, session=session, params=params,
                             headers=headers)
@@ -359,7 +358,6 @@ def create_sso_account(context, supplier_alias, alias):
 
 
 def open_email_confirmation_link(context, supplier_alias):
-    # context.reset_actor_session(supplier_alias)
     actor = context.get_actor(supplier_alias)
     session = actor.session
     confirmation_link = actor.email_confirmation_link
