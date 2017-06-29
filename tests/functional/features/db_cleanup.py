@@ -4,7 +4,7 @@ import logging
 
 import psycopg2
 
-from tests.functional.features.settings import (
+from tests.settings import (
     DIR_DB_HOST,
     DIR_DB_NAME,
     DIR_DB_PASSWORD,

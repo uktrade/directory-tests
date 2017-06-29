@@ -2,7 +2,6 @@
 """FAB Given step definitions."""
 from behave import given
 
-from tests.functional.features.settings import EMAIL_VERIFICATION_MSG_SUBJECT
 from tests.functional.features.steps.fab_given_impl import (
     bp_build_company_profile,
     reg_confirm_email_address,
@@ -16,6 +15,7 @@ from tests.functional.features.steps.fab_then_impl import (
 from tests.functional.features.steps.fab_when_impl import (
     prof_set_company_description
 )
+from tests.settings import EMAIL_VERIFICATION_MSG_SUBJECT
 
 
 @given('"{supplier_alias}" is an unauthenticated supplier')

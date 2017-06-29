@@ -11,7 +11,6 @@ from scrapy.selector import Selector
 
 from tests import get_absolute_url
 from tests.functional.features.context_utils import UnregisteredCompany
-from tests.functional.features.settings import NO_OF_EMPLOYEES, SECTORS
 from tests.functional.features.steps.fab_then_impl import (
     prof_should_be_on_profile_page,
     prof_should_be_told_that_company_is_not_verified_yet,
@@ -26,6 +25,7 @@ from tests.functional.features.utils import (
     make_request
 )
 from tests.functional.schemas.Companies import COMPANIES
+from tests.settings import NO_OF_EMPLOYEES, SECTORS
 
 
 def has_fas_profile(company_number):

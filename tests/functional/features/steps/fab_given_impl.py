@@ -7,7 +7,6 @@ import uuid
 from requests import Session
 
 from tests.functional.features.context_utils import Actor
-from tests.functional.features.settings import EMAIL_VERIFICATION_MSG_SUBJECT
 from tests.functional.features.steps.fab_then_impl import (
     bp_should_be_prompted_to_build_your_profile,
     prof_should_be_on_profile_page,
@@ -30,6 +29,7 @@ from tests.functional.features.steps.fab_when_impl import (
     reg_supplier_confirms_email_address,
     select_random_company
 )
+from tests.settings import EMAIL_VERIFICATION_MSG_SUBJECT
 
 
 def unauthenticated_supplier(context, supplier_alias):

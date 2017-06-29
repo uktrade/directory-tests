@@ -12,7 +12,7 @@ from boto.s3.connection import OrdinaryCallingFormat
 from requests.models import Response
 
 from tests.functional.features.db_cleanup import get_dir_db_connection
-from tests.functional.features.settings import (
+from tests.settings import (
     S3_ACCESS_KEY_ID,
     S3_BUCKET,
     S3_REGION,
