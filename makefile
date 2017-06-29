@@ -103,7 +103,8 @@ DOCKER_REMOVE_ALL := \
 	xargs -I {} docker rm -f {}
 
 DOCKER_SET_DIRECTORY_TESTS_ENV_VARS := \
-	export DIRECTORY_TESTS_DIRECTORY_API_URL=https://dev.buyer.directory.uktrade.io/api/; \
+	export DIRECTORY_TESTS_DIRECTORY_API_URL=http://directory-api-dev.herokuapp.com/; \
+	export DIRECTORY_TESTS_DIRECTORY_BUYER_API_URL=http://dev.buyer.directory.uktrade.io/; \
 	export DIRECTORY_TESTS_DIRECTORY_SSO_URL=http://dev.sso.uktrade.io; \
 	export DIRECTORY_TESTS_DIRECTORY_UI_BUYER_URL=http://dev.buyer.directory.uktrade.io; \
 	export DIRECTORY_TESTS_DIRECTORY_UI_SUPPLIER_URL=http://dev.supplier.directory.uktrade.io; \
