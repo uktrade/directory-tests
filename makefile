@@ -90,12 +90,8 @@ smoke_tests:
 	$(SET_PYTEST_ENV_VARS); \
 	pytest tests/smoke $(pytest_args)
 
-SET_FUNCTIONAL_ENV_VARS := \
-	export DIRECTORY_API_URL=https://dev.buyer.directory.uktrade.io/api/
-
 functional_tests:
 	$(SET_PYTEST_ENV_VARS); \
-	$(SET_FUNCTIONAL_ENV_VARS); \
 	behave -k --tags=-wip --tags=-skip tests/functional/features $(BEHAVE_ARGS)
 
 test: pep8 smoke_test integration_test load_test_minimal
