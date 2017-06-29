@@ -6,15 +6,15 @@ import string
 from requests import Session
 
 from tests.functional.features.context_utils import Actor
-from tests.functional.features.steps.fab_when_impl import \
-    confirm_company_selection
-from tests.functional.features.steps.fab_when_impl import \
-    confirm_export_status
-from tests.functional.features.steps.fab_when_impl import \
-    create_sso_account
-from tests.functional.features.steps.fab_when_impl import select_random_company
-from tests.functional.features.steps.fab_then_impl import \
+from tests.functional.features.steps.fab_then_impl import (
     sso_account_should_be_created
+)
+from tests.functional.features.steps.fab_when_impl import (
+    confirm_company_selection,
+    confirm_export_status,
+    create_sso_account,
+    select_random_company
+)
 
 
 def unauthenticated_supplier(context, supplier_alias):

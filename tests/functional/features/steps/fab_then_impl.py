@@ -38,7 +38,7 @@ def sso_account_should_be_created(context, alias):
     logging.debug("Successfully created new SSO account for %s", alias)
 
 
-@retry(wait_fixed=5000, stop_max_attempt_number=10)
+@retry(wait_fixed=5000, stop_max_attempt_number=18)
 def should_get_verification_email(context, alias, subject):
     """Will check if the Supplier received an email verification message.
 
