@@ -71,7 +71,7 @@ PYTEST_ARGS :=
 
 SET_PYTEST_ENV_VARS := \
 	export API_CLIENT_KEY=debug; \
-	export DIRECTORY_API_URL=http://dev.buyer.directory.uktrade.io/; \
+	export DIRECTORY_API_URL=http://directory-api-dev.herokuapp.com/; \
 	export DIRECTORY_SSO_URL=http://www.dev.sso.uktrade.io/; \
 	export DIRECTORY_PROFILE_URL=http://www.dev.profile.uktrade.io; \
 	export DIRECTORY_UI_BUYER_URL=http://www.dev.buyer.directory.uktrade.io/; \
