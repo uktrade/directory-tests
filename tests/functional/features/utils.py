@@ -9,8 +9,10 @@ from enum import Enum
 import requests
 from boto.s3 import connect_to_region
 from boto.s3.connection import OrdinaryCallingFormat
+from requests.models import Response
 
-from tests.functional.features.settings import (
+from tests.functional.features.db_cleanup import get_dir_db_connection
+from tests.settings import (
     S3_ACCESS_KEY_ID,
     S3_BUCKET,
     S3_REGION,
@@ -90,7 +92,8 @@ class Method(Enum):
 
 def make_request(method: Method, url, *, session=None, params=None,
                  headers=None, cookies=None, data=None, files=None,
-                 allow_redirects=True, trim_response_content=True):
+                 allow_redirects=True, trim_response_content=True,
+                 context=None):
     """Make a desired HTTP request using optional parameters, headers and data.
 
     NOTE:
@@ -123,34 +126,34 @@ def make_request(method: Method, url, *, session=None, params=None,
                                   characters of response content.
                                   Defaults to True.
     :type  trim_response_content: bool
+    :param context: (optional) Behave's context object. If provided then this
+                    Will store the response in `context.response`
     :return: a response object
     :rtype: requests.Response
     """
     assert url is not None, "Please provide the URL"
 
     req = session or requests
+    trim_offset = 150  # define the length of logged response content
+
+    request_kwargs = dict(url=url, params=params, headers=headers,
+                          cookies=cookies, data=data, files=files,
+                          allow_redirects=allow_redirects)
 
     if method == Method.DELETE:
-        res = req.delete(url=url, params=params, headers=headers,
-                         cookies=cookies, allow_redirects=allow_redirects)
+        res = req.delete(**request_kwargs)
     elif method == Method.GET:
-        res = req.get(url=url, params=params, headers=headers, cookies=cookies,
-                      allow_redirects=allow_redirects)
+        res = req.get(**request_kwargs)
     elif method == Method.HEAD:
-        res = req.head(url=url, params=params, headers=headers,
-                       cookies=cookies, allow_redirects=allow_redirects)
+        res = req.head(**request_kwargs)
     elif method == Method.OPTIONS:
-        res = req.options(url=url, params=params, headers=headers,
-                          cookies=cookies, allow_redirects=allow_redirects)
+        res = req.options(**request_kwargs)
     elif method == Method.PATCH:
-        res = req.patch(url=url, params=params, headers=headers, cookies=cookies,
-                        data=data, files=files, allow_redirects=allow_redirects)
+        res = req.patch(**request_kwargs)
     elif method == Method.POST:
-        res = req.post(url=url, params=params, headers=headers, cookies=cookies,
-                       data=data, files=files, allow_redirects=allow_redirects)
+        res = req.post(**request_kwargs)
     elif method == Method.PUT:
-        res = req.put(url=url, params=params, headers=headers, cookies=cookies,
-                      data=data, files=files, allow_redirects=allow_redirects)
+        res = req.put(**request_kwargs)
     else:
         raise KeyError("Unrecognized Method: %s", method.name)
 
@@ -177,7 +180,8 @@ def make_request(method: Method, url, *, session=None, params=None,
             logging.debug("Intermediate REQ Body: %s", resp.request.body)
             logging.debug("Intermediate RESP: %d %s", resp.status_code, resp.reason)
             logging.debug("Intermediate RESP Headers: %s", resp.headers)
-            logging.debug("Intermediate RESP Content: %s", resp.content[0:150] or None)
+            logging.debug("Intermediate RESP Content: %s",
+                          resp.content[0:trim_offset] or None)
         logging.debug("Final destination: %s %s -> %d %s",
                       res.request.method, res.request.url, res.status_code,
                       res.url)
@@ -185,27 +189,33 @@ def make_request(method: Method, url, *, session=None, params=None,
         logging.debug("REQ was not redirected")
     if res.content:
         if trim_response_content:
-            if len(res.content) > 150:
-                logging.debug("RSP Trimmed Content: %s", res.content[0:150])
+            if len(res.content) > trim_offset:
+                logging.debug("RSP Trimmed Content: %s",
+                              res.content[0:trim_offset])
             else:
                 logging.debug("RSP Content: %s", res.content)
         else:
             logging.debug("RSP Content: %s", res.content)
 
+    if context:
+        context.response = res
+        logging.debug("Last response stored in context.response")
+
     return res
 
 
-def extract_csrf_middleware_token(content):
+def extract_csrf_middleware_token(response: Response):
     """Extract CSRF middleware token from the response content.
 
     Comes in handy when dealing with e.g. Django forms.
 
-    :param content: response content decoded as utf-8
-    :type  content: str
+    :param response: requests response
+    :type  response: requests.models.Response
     :return: CSRF middleware token extracted from the response content
     :rtype: str
     """
-    assert content, "Expected a non-empty response content but got norhing"
+    assert response.content, "Response has no content"
+    content = response.content.decode("utf-8")
 
     csrf_tag_idx = content.find("name='csrfmiddlewaretoken'")
     value_property = "value='"
@@ -223,17 +233,18 @@ def extract_csrf_middleware_token(content):
     return token
 
 
-def extract_confirm_email_form_action(content):
+def extract_confirm_email_form_action(response: Response):
     """Extract the form action (endpoint) from the Confirm Email page.
 
     Comes in handy when dealing with e.g. Django forms.
 
-    :param content: response content decoded as utf-8
-    :type  content: str
+    :param response: requests response
+    :type  response: requests.models.Response
     :return: for action endpoint
     :rtype: str
     """
-    assert content, "Expected a non-empty response content but got nothing"
+    assert response.content, "Response has no content"
+    content = response.content.decode("utf-8")
 
     form_action = 'form method="post" action="'
     form_action_idx = content.find(form_action)
@@ -314,34 +325,116 @@ def find_confirmation_email_msg(bucket, actor, subject):
     res = None
     found = False
     for key in bucket.list():
-        if key.key != "AMAZON_SES_SETUP_NOTIFICATION":
-            logging.debug("Processing email file: %s", key.key)
-            try:
-                msg_contents = key.get_contents_as_string().decode("utf-8")
-                msg = email.message_from_string(msg_contents)
-                if msg['To'] == actor.email:
-                    logging.debug("Found an email addressed at: %s",
-                                  msg['To'])
-                    if msg['Subject'] == subject:
-                        logging.debug("Found email confirmation message "
-                                      "entitled: %s", subject)
-                        res = extract_plain_text_payload(msg)
-                        found = True
-                        logging.debug("Deleting message %s", key.key)
-                        bucket.delete_key(key.key)
-                        logging.debug("Successfully deleted message %s from S3",
-                                      key.key)
-                    else:
-                        logging.debug("Message from %s to %s had a non-matching"
-                                      "subject: '%s'", msg['From'], msg['To'],
-                                      msg['Subject'])
+        logging.debug("Processing email file: %s", key.key)
+        try:
+            msg_contents = key.get_contents_as_string().decode("utf-8")
+            msg = email.message_from_string(msg_contents)
+            if msg['To'].strip().lower() == actor.email.lower():
+                logging.debug("Found an email addressed at: %s", msg['To'])
+                if msg['Subject'] == subject:
+                    logging.debug("Found email confirmation message entitled: "
+                                  "%s", subject)
+                    res = extract_plain_text_payload(msg)
+                    found = True
+                    logging.debug("Deleting message %s", key.key)
+                    bucket.delete_key(key.key)
+                    logging.debug("Successfully deleted message %s from S3",
+                                  key.key)
                 else:
-                    logging.debug("Message %s was addressed at: %s", key.key,
-                                  msg['To'])
-            except Exception as ex:
-                logging.error("Something went wrong when getting an email msg "
-                              "from S3: %s", ex)
+                    logging.debug("Message from %s to %s had a non-matching"
+                                  "subject: '%s'", msg['From'], msg['To'],
+                                  msg['Subject'])
+            else:
+                logging.debug("Message %s was addressed at: %s", key.key,
+                              msg['To'])
+        except Exception as ex:
+            logging.error("Something went wrong when getting an email msg "
+                          "from S3: %s", ex)
 
     assert found, ("Could not find email confirmation message for {}"
                    .format(actor.email))
     return res
+
+
+def get_verification_code(company_number):
+    """Will get the verification code (sent by post) for specified company.
+
+    :param company_number: company number given by Companies House
+    :return: verification code sent by post
+    """
+    connection, cursor = get_dir_db_connection()
+    sql = "SELECT verification_code FROM company_company WHERE number = %s;"
+    data = (company_number, )
+    cursor.execute(sql, data)
+    res = None
+    if cursor.description:
+        res = cursor.fetchone()
+        logging.debug("Verification code for company: %s is %s", company_number,
+                      res)
+    else:
+        logging.debug("Did not find verification code for company %s. "
+                      "Will return None", company_number)
+    cursor.close()
+    connection.close()
+    return res
+
+
+def check_response(response: Response, status_code: int, *,
+                   location: str = None, locations: list = [],
+                   location_starts_with: str = None, strings: list = [],
+                   unexpected_strings: list = []):
+    """Check if SUT replied with an expected response.
+
+    :param response: Response object return by `requests`
+    :type  response: requests.models.Response
+    :param status_code: expected status code
+    :type  status_code: int
+    :param location: (optional) expected value of Location header
+    :type  location: str
+    :param locations: (optional) in one of the Location list
+    :type  locations: list
+    :param location_starts_with: (optional) expected leading part of
+                                the Location header
+    :type  location_starts_with: str
+    :param strings: (optional) a list of strings that should be present
+                    in the response content
+    :type  strings: list
+    :param unexpected_strings: (optional) a list of strings that should NOT be
+                               present in the response content
+    :type  unexpected_strings: list
+    """
+    assert response.status_code == status_code, (
+        "Expected {} but got {}".format(status_code, response.status_code))
+
+    if strings:
+        assert response.content, "Response has no content!"
+        content = response.content.decode("utf-8")
+        assert all(s in content for s in strings), (
+            "Could not find all expected string in the response: {}"
+            .format(", ".join(strings))
+        )
+
+    if unexpected_strings:
+        assert response.content, "Response has no content!"
+        content = response.content.decode("utf-8")
+        assert all(s not in content for s in unexpected_strings), (
+            "Some of the unexpected strings were found in the response: {}"
+            .format(", ".join(unexpected_strings))
+        )
+
+    if location:
+        assert response.headers.get("Location") == location, (
+            "Expected Location header to be: '{}' but got '{}' instead."
+            .format(location, response.headers.get("Location")))
+
+    if locations:
+        assert response.headers.get("Location") in locations, (
+            "Should be redirected to one of these {} locations '{}' but instead"
+            " was redirected to '{}'".format(len(locations), locations,
+                                             response.headers.get("Location")))
+
+    if location_starts_with:
+        new_location = response.headers.get("Location")
+        assert new_location.startswith(location_starts_with), (
+            "Expected Location header to start with: '{}' but got '{}' instead."
+            .format(location_starts_with, response.headers.get("Location")))

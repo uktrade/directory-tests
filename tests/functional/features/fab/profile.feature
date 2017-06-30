@@ -1,6 +1,7 @@
 Feature: Trade Profile
 
 
+    @ED-1659
     @registration
     Scenario Outline: Supplier should receive a verification email after successful registration - export status is "<current>"
       Given "Peter Alder" is an unauthenticated supplier
@@ -21,6 +22,7 @@ Feature: Trade Profile
         | No, but we are preparing to    |
 
 
+    @ED-1692
     @verification
     @email
     Scenario: Unauthenticated Suppliers should be able to verify their email address via confirmation link sent in an email
@@ -32,3 +34,59 @@ Feature: Trade Profile
       And "Annette Geissinger" confirms the email address
 
       Then "Annette Geissinger" should be prompted to Build and improve your profile
+
+
+    @ED-1716
+    @profile
+    Scenario: Supplier should be able to build the profile once the email address is confirmed
+      Given "Annette Geissinger" is an unauthenticated supplier
+      And "Annette Geissinger" created a SSO account associated with randomly selected company "Company X"
+      And "Annette Geissinger" confirmed her email address
+
+      When "Annette Geissinger" provides valid details of selected company
+      And "Annette Geissinger" selects random sector the company is interested in working in
+      And "Annette Geissinger" provides her full name which will be used to sent the verification letter
+      And "Annette Geissinger" confirms the details which will be used to sent the verification letter
+
+      Then "Annette Geissinger" should be on company profile page
+      And "Annette Geissinger" should be told that her company has no description
+
+
+    @ED-1722
+    @verification
+    @letter
+    Scenario: Supplier should be able to verify company using code sent in the verification letter
+      Given "Annette Geissinger" is an unauthenticated supplier
+      And "Annette Geissinger" created a SSO account associated with randomly selected company "Company X"
+      And "Annette Geissinger" confirmed her email address
+      And "Annette Geissinger" built the company profile
+      And "Annette Geissinger" set the company description
+
+      When "Annette Geissinger" verifies the company with the verification code from the letter sent after company profile was created
+
+      Then "Annette Geissinger" should be on company profile page
+      And "Annette Geissinger" should be told that her company is published
+
+
+    @ED-1727
+    @publish
+    @FAS
+    Scenario: Once verified Company Profile should be published on FAS
+      Given "Peter Alder" has created and verified profile for randomly selected company "Y"
+
+      When "Peter Alder" decides to view published profile
+
+      Then "Peter Alder" should be on FAS profile page of company "Y"
+
+
+    @ED-1740
+    @registration
+    Scenario: Some suppliers are not appropriate to feature in the FAB service
+      Given "Peter Alder" is an unauthenticated supplier
+
+      When "Peter Alder" randomly selects an active company without a profile identified by an alias "Company X"
+      And "Peter Alder" confirms that "Company X" is the correct one
+      And "Peter Alder" decides that the export status of his company is "No, we are not planning to sell overseas"
+
+      Then "Peter Alder" should be told that his company is currently not appropriate to feature in the FAB service
+

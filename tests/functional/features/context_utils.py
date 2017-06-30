@@ -16,13 +16,13 @@ Actor = namedtuple(
     'Actor',
     [
         'alias', 'email', 'password', 'session', 'csrfmiddlewaretoken',
-        'email_confirmation_link'
+        'email_confirmation_link', 'company_alias'
     ]
 )
 UnregisteredCompany = namedtuple(
     'UnregisteredCompany',
     [
-        'alias', 'title', 'number', 'details'
+        'alias', 'title', 'number', 'details', 'summary', 'description'
     ]
 )
 
@@ -86,6 +86,17 @@ def set_actor_email_confirmation_link(self, alias, link):
         logging.debug("Could not find an actor aliased '%s'", alias)
 
 
+def set_company_for_actor(self, actor_alias, company_alias):
+    if actor_alias in self.scenario_data.actors:
+        actors = self.scenario_data.actors
+        actors[actor_alias] = actors[actor_alias]._replace(
+            company_alias=company_alias)
+        logging.debug("Successfully set company_alias=%s for "
+                      "Actor: %s", company_alias, actor_alias)
+    else:
+        logging.debug("Could not find an actor aliased '%s'", actor_alias)
+
+
 def reset_actor_session(self, alias):
     """Reset `requests` Session object.
 
@@ -134,6 +145,30 @@ def get_unregistered_company(self, alias):
     return self.scenario_data.unregistered_companies[alias]
 
 
+def set_company_description(self, alias, summary, description):
+    """Will set summary & description used when building up company's profile.
+
+    Can come handy when validating whether these values are visible.
+
+    :param self: behave `context` object
+    :type self: behave.runner.Context
+    :param alias: alias of sought Unregistered Company
+    :type alias: str
+    :param summary: Brief summary to make your company stand out to buyers
+    :type summary: str
+    :param description: Describe your business to overseas buyers
+    :type description: str
+    """
+    if alias in self.scenario_data.unregistered_companies:
+        companies = self.scenario_data.unregistered_companies
+        companies[alias] = companies[alias]._replace(summary=summary,
+                                                     description=description)
+        logging.debug("Successfully set summary & description for company %s",
+                      alias)
+    else:
+        raise KeyError("Could not find company with alias '%s'", alias)
+
+
 def patch_context(context):
     """Will patch the Behave's `context` object with some handy functions.
 
@@ -149,6 +184,8 @@ def patch_context(context):
         set_actor_csrfmiddlewaretoken, context)
     context.set_actor_email_confirmation_link = MethodType(
         set_actor_email_confirmation_link, context)
+    context.set_company_for_actor = MethodType(set_company_for_actor, context)
+    context.set_company_description = MethodType(set_company_description, context)
     context.add_unregistered_company = MethodType(
         add_unregistered_company, context)
     context.get_unregistered_company = MethodType(

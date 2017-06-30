@@ -5,13 +5,14 @@ import logging
 from retrying import retry
 
 from tests.functional.features.utils import (
+    extract_csrf_middleware_token,
     extract_email_confirmation_link,
     find_confirmation_email_msg,
-    get_s3_bucket
-)
+    get_s3_bucket,
+    check_response)
 
 
-def sso_account_should_be_created(context, alias):
+def reg_sso_account_should_be_created(context, alias):
     """Will verify if SSO account was successfully created.
 
     It's a very crude check, as it will only check if the response body
@@ -27,10 +28,9 @@ def sso_account_should_be_created(context, alias):
     """
     response = context.response
     msgs = ["Verify your email address",
-            "if you do not receive an email within 10 minutes", (
-                "We have sent you a confirmation email. Please follow the link"
-                " in the email to verify your email address.")]
-
+            "if you do not receive an email within 10 minutes",
+            ("We have sent you a confirmation email. Please follow the link"
+             " in the email to verify your email address.")]
     content = response.content.decode("utf-8")
     for msg in msgs:
         err_msg = ("Could not find '{}' in the response".format(msg))
@@ -39,7 +39,7 @@ def sso_account_should_be_created(context, alias):
 
 
 @retry(wait_fixed=5000, stop_max_attempt_number=18)
-def should_get_verification_email(context, alias, subject):
+def reg_should_get_verification_email(context, alias, subject):
     """Will check if the Supplier received an email verification message.
 
     NOTE:
@@ -52,6 +52,7 @@ def should_get_verification_email(context, alias, subject):
     :param subject: expected subject of the email verification message
     :type  subject: str
     """
+    logging.debug("Searching for an email verification message...")
     actor = context.get_actor(alias)
     bucket = get_s3_bucket()
     payload = find_confirmation_email_msg(bucket, actor, subject)
@@ -59,10 +60,87 @@ def should_get_verification_email(context, alias, subject):
     context.set_actor_email_confirmation_link(alias, link)
 
 
-def should_be_prompted_to_build_your_profile(context, supplier_alias):
+def bp_should_be_prompted_to_build_your_profile(context, supplier_alias):
     content = context.response.content.decode("utf-8")
     assert "Build and improve your profile" in content
     assert "To set up your Find a Buyer profile" in content
     assert "Your company details" in content
+    assert "Company name" in content
+    assert "Website (optional)" in content
+    assert "Enter up to 10 keywords that describe your company" in content
+    assert "How many employees are in your company" in content
     logging.debug("%s is on the 'Build and improve your profile' page",
                   supplier_alias)
+    token = extract_csrf_middleware_token(context.response)
+    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+
+
+def prof_should_be_on_profile_page(context, supplier_alias):
+    content = context.response.content.decode("utf-8")
+    assert "Facts &amp; details" in content
+    assert "Number of employees" in content
+    assert "Registration number" in content
+    assert "Company description" in content
+    assert "Online profiles" in content
+    assert "Recent projects" in content
+    assert "+ Add a case study" in content
+    assert "Sectors of interest" in content
+    assert "Keywords" in content
+    logging.debug("%s is on the company profile page", supplier_alias)
+
+
+def prof_should_be_told_about_missing_description(context, supplier_alias):
+    content = context.response.content.decode("utf-8")
+    assert "Your company has no description." in content
+    assert "Your profile can't be published until your company has a" in content
+    assert "Set your description" in content
+    logging.debug("%s was told that the company profile has no description",
+                  supplier_alias)
+
+
+def prof_should_be_told_that_company_is_not_verified_yet(context, supplier_alias):
+    content = context.response.content.decode("utf-8")
+    assert "Your company has not yet been verified." in content
+    assert "Your profile can't be published until your company is verified" in content
+    assert "Verify your company" in content
+    logging.debug("%s was told that the company is not verified yet",
+                  supplier_alias)
+
+
+def prof_should_be_told_that_company_is_published(context, supplier_alias):
+    content = context.response.content.decode("utf-8")
+    assert "Your company is published" in content
+    assert "Your profile is visible to international buyers" in content
+    assert "View published profile" in content
+    logging.debug("%s was told that the company profile is published",
+                  supplier_alias)
+
+
+def fas_should_be_on_profile_page(context, supplier_alias, company_alias):
+    content = context.response.content.decode("utf-8")
+    actor = context.get_actor(supplier_alias)
+    company = context.get_unregistered_company(actor.company_alias)
+    assert "Contact" in content
+    assert "Company description" in content
+    assert "Facts &amp; details" in content
+    assert "Industries of interest" in content
+    assert "Keywords" in content
+    assert "Contact company" in content
+    assert company.number in content
+    assert company.summary in content
+    logging.debug("Supplier %s is on the %s company's FAS page",
+                  supplier_alias, company_alias)
+
+
+def reg_supplier_is_not_appropriate_for_fab(context, supplier_alias):
+    expected = [
+        "Try our other business services",
+        "The Find a Buyer service promotes companies that are currently "
+        "exporting or looking to export in the near future. The answers you "
+        "gave suggest that your company is currently not appropriate to feature"
+        " in the Find a Buyer service.",
+        "Exporting is GREAT advice for new exporters"
+    ]
+    check_response(context.response, 200, strings=expected)
+    logging.debug("%s was told that her/his business is not appropriate "
+                  "to feature in the Find a Buyer service", supplier_alias)
