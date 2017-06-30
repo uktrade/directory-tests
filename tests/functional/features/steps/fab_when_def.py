@@ -19,8 +19,8 @@ from tests.functional.features.steps.fab_when_impl import (
 )
 
 
-@when('"{supplier_alias}" randomly selects an active company without a profile'
-      ' identified by an alias "{alias}"')
+@when('"{supplier_alias}" randomly selects an active company without a '
+      'Directory Profile identified by an alias "{alias}"')
 def when_supplier_selects_random_company(context, supplier_alias, alias):
     select_random_company(context, supplier_alias, alias)
 
@@ -37,8 +37,8 @@ def when_supplier_confirms_export_status(context, supplier_alias, alias,
     reg_confirm_export_status(context, supplier_alias, alias, export_status)
 
 
-@when('"{supplier_alias}" creates a SSO account for "{alias}" using '
-      'valid credentials')
+@when('"{supplier_alias}" creates a SSO/great.gov.uk account for "{alias}" '
+      'using valid credentials')
 def when_supplier_creates_sso_account_for_selected_company(context,
                                                            supplier_alias,
                                                            alias):
@@ -82,12 +82,12 @@ def step_impl(context, supplier_alias):
 
 
 @when('"{supplier_alias}" verifies the company with the verification code '
-      'from the letter sent after company profile was created')
+      'from the letter sent after Directory Profile was created')
 def when_supplier_verifies_company(context, supplier_alias):
     prof_verify_company(context, supplier_alias)
 
 
-@when('"{supplier_alias}" decides to view published profile')
+@when('"{supplier_alias}" decides to view published Directory Profile')
 def when_supplier_views_published_profile(context, supplier_alias):
     prof_view_published_profile(context, supplier_alias)
 
