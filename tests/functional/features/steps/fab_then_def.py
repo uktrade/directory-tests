@@ -24,28 +24,31 @@ def then_supplier_should_receive_verification_email(context, alias, subject):
     reg_should_get_verification_email(context, alias, subject)
 
 
-@then('"{supplier_alias}" should be prompted to Build and improve your profile')
-def then_supplier_should_be_prompted_to_build_your_profile(context, supplier_alias):
+@then('"{supplier_alias}" should be prompted to Build and improve your '
+      'Directory Profile')
+def then_supplier_should_be_prompted_to_build_your_profile(
+        context, supplier_alias):
     bp_should_be_prompted_to_build_your_profile(context, supplier_alias)
 
 
-@then('"{supplier_alias}" should be on company profile page')
+@then('"{supplier_alias}" should be on edit Company\'s Directory Profile page')
 def then_supplier_should_be_on_profile_page(context, supplier_alias):
     prof_should_be_on_profile_page(context, supplier_alias)
 
 
 @then('"{supplier_alias}" should be told that her company has no description')
-def then_supplier_should_be_told_about_missing_description(context, supplier_alias):
+def then_supplier_should_be_told_about_missing_description(
+        context, supplier_alias):
     prof_should_be_told_about_missing_description(context, supplier_alias)
 
 
 @then('"{supplier_alias}" should be told that her company is published')
-def then_supplier_should_be_told_that_profile_is_published(context,
-                                                           supplier_alias):
+def then_supplier_should_be_told_that_profile_is_published(
+        context, supplier_alias):
     prof_should_be_told_that_company_is_published(context, supplier_alias)
 
 
-@then('"{supplier_alias}" should be on FAS profile page of company '
+@then('"{supplier_alias}" should be on FAS Directory Profile page of company '
       '"{company_alias}"')
 def then_supplier_should_be_on_company_fas_page(context, supplier_alias,
                                                 company_alias):
