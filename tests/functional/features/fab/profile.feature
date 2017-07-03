@@ -38,7 +38,7 @@ Feature: Trade Profile
 
   @ED-1757
   @verification
-  @email
+  @login
   Scenario: Suppliers without verified email should be told to verify the email address first before being able to log in
     Given "Annette Geissinger" is an unauthenticated supplier
     And "Annette Geissinger" created a SSO/great.gov.uk account associated with randomly selected company "Company X"
