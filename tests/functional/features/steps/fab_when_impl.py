@@ -784,3 +784,59 @@ def prof_view_published_profile(context, supplier_alias):
                             allow_redirects=False, context=context)
     check_response(response, 200, strings=[company.number])
     logging.debug("Supplier is on the company's FAS page")
+
+
+def prof_attempt_to_sign_in_to_fab(context, supplier_alias):
+    """Try to sign in to FAB as a Supplier without verified email address.
+
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type supplier_alias: str
+    """
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+    fab_landing = get_absolute_url("ui-buyer:landing")
+
+    # Step 1 - Get to the Sign In page
+    url = get_absolute_url("sso:login")
+    params = {"next": fab_landing}
+    headers = {"Referer": fab_landing}
+    response = make_request(Method.GET, url, session=session, params=params,
+                            headers=headers, allow_redirects=False,
+                            context=context)
+    expected = []
+    check_response(response, 200, strings=expected)
+    assert response.cookies.get("sso_display_logged_in") == "false"
+    token = extract_csrf_middleware_token(response)
+    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+
+    # Step 2 - submit the login form
+    url = get_absolute_url("sso:login")
+    data = {"next": fab_landing,
+            "csrfmiddlewaretoken": token,
+            "login": actor.email,
+            "password": actor.password,
+            "remember": "on"}
+    # Referer is the same as the final URL from the previous request
+    referer = response.request.url
+    headers = {"Referer": referer}
+    response = make_request(Method.POST, url, session=session, data=data,
+                            headers=headers, allow_redirects=False,
+                            context=context)
+    location = "/accounts/confirm-email/"
+    check_response(response, 302, location=location)
+    cookies = response.cookies
+    assert cookies.get("sso_display_logged_in") == "false"
+    assert cookies.get("directory_sso_dev_session") is not None
+    # extra check - validate the cookie Domain
+    assert "sso_display_logged_in" in cookies.get_dict(domain='.uktrade.io')
+    assert "directory_sso_dev_session" in cookies.get_dict(domain='.uktrade.io')
+
+    # Step 3 - follow the redirect
+    url = get_absolute_url("sso:email_confirm")
+    # Referer is the same as in the previous request
+    headers = {"Referer": referer}
+    response = make_request(Method.GET, url, session=session, headers=headers,
+                            allow_redirects=False, context=context)
+    check_response(response, 200)
