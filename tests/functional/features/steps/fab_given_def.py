@@ -13,7 +13,8 @@ from tests.functional.features.steps.fab_then_impl import (
     reg_should_get_verification_email
 )
 from tests.functional.features.steps.fab_when_impl import (
-    prof_set_company_description
+    prof_set_company_description,
+    prof_sign_out_from_fab
 )
 from tests.settings import EMAIL_VERIFICATION_MSG_SUBJECT
 
@@ -59,3 +60,8 @@ def given_supplier_set_company_description(context, supplier_alias):
 def given_supplier_creates_verified_profile(context, supplier_alias,
                                             company_alias):
     reg_create_verified_profile(context, supplier_alias, company_alias)
+
+
+@given('"{supplier_alias}" signed out from Find a Buyer service')
+def given_supplier_signed_out_from_fab(context, supplier_alias):
+    prof_sign_out_from_fab(context, supplier_alias)
