@@ -10,7 +10,8 @@ from tests.functional.features.steps.fab_then_impl import (
     prof_should_be_told_that_company_is_published,
     reg_should_get_verification_email,
     reg_sso_account_should_be_created,
-    reg_supplier_is_not_appropriate_for_fab
+    reg_supplier_is_not_appropriate_for_fab,
+    reg_supplier_has_to_verify_email_first
 )
 
 
@@ -59,3 +60,9 @@ def then_supplier_should_be_on_company_fas_page(context, supplier_alias,
       'appropriate to feature in the FAB service')
 def then_supplier_is_not_appropriate_for_fab(context, supplier_alias):
     reg_supplier_is_not_appropriate_for_fab(context, supplier_alias)
+
+
+@then('"{supplier_alias}" should be told that she needs to verify her email '
+      'address first')
+def then_supplier_has_to_verify_email_first(context, supplier_alias):
+    reg_supplier_has_to_verify_email_first(context, supplier_alias)
