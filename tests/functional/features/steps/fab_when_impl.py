@@ -764,11 +764,10 @@ def prof_view_published_profile(context, supplier_alias):
     :type supplier_alias: str
     """
     actor = context.get_actor(supplier_alias)
+    session = actor.session
     company = context.get_unregistered_company(actor.company_alias)
 
     # STEP 1 - go to the "View published profile" page
-    actor = context.get_actor(supplier_alias)
-    session = actor.session
     url = "{}/{}".format(get_absolute_url("ui-supplier:suppliers"), company.number)
     response = make_request(Method.GET, url, session=session,
                             allow_redirects=False, context=context)
@@ -776,8 +775,6 @@ def prof_view_published_profile(context, supplier_alias):
     check_response(response, 301, location_starts_with=location)
 
     # STEP 2 - follow the redirect from last response
-    actor = context.get_actor(supplier_alias)
-    session = actor.session
     url = "{}{}".format(get_absolute_url("ui-supplier:landing"),
                         response.headers.get("Location"))
     response = make_request(Method.GET, url, session=session,
