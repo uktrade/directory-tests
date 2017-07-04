@@ -25,7 +25,7 @@ from tests.functional.features.utils import (
     make_request
 )
 from tests.functional.schemas.Companies import COMPANIES
-from tests.settings import NO_OF_EMPLOYEES, SECTORS
+from tests.settings import NO_OF_EMPLOYEES, SECTORS, EXPORT_STATUSES
 
 
 def has_fas_profile(company_number):
@@ -247,19 +247,7 @@ def reg_confirm_export_status(context, supplier_alias, alias, export_status):
     :param export_status: current Export Status of selected company
     :type export_status: str
     """
-    if export_status == "Yes, in the last year":
-        export_status = "YES"
-    elif export_status == "Yes, 1 to 2 years ago":
-        export_status = "ONE_TWO_YEARS_AGO"
-    elif export_status == "Yes, but more than 2 years ago":
-        export_status = "OVER_TWO_YEARS_AGO"
-    elif export_status == "No, but we are preparing to":
-        export_status = "NOT_YET"
-    elif export_status == "No, we are not planning to sell overseas":
-        export_status = "NO_INTENTION"
-    else:
-        raise LookupError("Could not recognize provided Export Status: {}"
-                          .format(export_status))
+    export_status = EXPORT_STATUSES[export_status]
     actor = context.get_actor(supplier_alias)
     session = actor.session
     token = actor.csrfmiddlewaretoken
