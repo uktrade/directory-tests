@@ -1066,3 +1066,44 @@ def sso_supplier_confirms_email_address(context, supplier_alias):
                             context=context)
     expected = ["Welcome to your great.gov.uk profile"]
     check_response(response, 200, strings=expected)
+
+
+def sso_go_to_create_trade_profile(context, supplier_alias):
+    """Follow the 'Create a trade profile' button on the "Find a Buyer" tab.
+
+    NOTE:
+    It's assumed that Supplier already has a standalone SSO/great.gov.uk account
+
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type supplier_alias: str
+    """
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+
+    # Step 1 - Go to "Find a Buyer" tab
+    headers = {"Referer": get_absolute_url("profile:about")}
+    url = get_absolute_url("profile:fab")
+    response = make_request(Method.GET, url, session=session, headers=headers,
+                            allow_redirects=False, context=context)
+    expected = ["Get a trade profile", "Create a trade profile",
+                "Get a trade profile for your company and you can:",
+                "generate new sales leads",
+                "promote your business to thousands of overseas buyers",
+                ("add case studies of your best work to make your company "
+                 "stand out"),
+                ("have buyers contact your sales team directly to get deals "
+                 "moving"),
+                ]
+    check_response(response, 200, strings=expected)
+
+    # Step 2 - Click on "Create a trade profile" button
+    url = get_absolute_url("ui-buyer:landing")
+    response = make_request(Method.GET, url, session=session,
+                            allow_redirects=False, context=context)
+    expected = ["Get promoted internationally",
+                "with a great.gov.uk trade profile",
+                "Connect directly with international buyers"
+                ]
+    check_response(response, 200, strings=expected)
