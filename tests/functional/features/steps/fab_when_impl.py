@@ -235,25 +235,28 @@ def reg_supplier_is_not_ready_to_export(context, supplier_alias):
     check_response(response, 200)
 
 
-def reg_confirm_export_status(context, supplier_alias, alias, export_status):
-    """Will confirm the current export status of selected unregistered company.
+def submit_export_status_form(context, supplier_alias, export_status):
+    """Submit the Export Status form.
+
+    NOTE:
+    This won't run any assertions once the last request is made, it's because
+    that there are 2 possible results depending whether Supplier already has
+    a SSO/great.gov.uk account or not.
+    Moreover the last response will be stored in `context.response`, which can
+    be used in further verification.
 
     :param context: behave `context` object
-    :type context: behave.runner.Context
+    :type  context: behave.runner.Context
     :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :type supplier_alias: str
-    :param alias: alias of the company used in the scope of the scenario
-    :type alias: str
-    :param export_status: current Export Status of selected company
-    :type export_status: str
+    :type  supplier_alias: str
+    :param export_status: any export status that allows Suppliers to create
+                          a Directory profile.
+    :type  export_status: str
     """
-    export_status = EXPORT_STATUSES[export_status]
     actor = context.get_actor(supplier_alias)
+    company = context.get_unregistered_company(actor.company_alias)
     session = actor.session
     token = actor.csrfmiddlewaretoken
-    company = context.get_unregistered_company(alias)
-    has_sso_account = actor.has_sso_account
-
     referer = get_absolute_url("ui-buyer:register-confirm-export-status")
 
     # Step 1: POST /register/exports
@@ -281,58 +284,117 @@ def reg_confirm_export_status(context, supplier_alias, alias, export_status):
     params = {"company_number": company.number,
               "export_status": export_status}
     headers = {"Referer": referer}
+    make_request(Method.GET, url, session=session, params=params,
+                 headers=headers, allow_redirects=False, context=context)
+
+
+def supplier_should_get_to_build_your_profile(context, supplier_alias):
+    """Assert last response based on the fact that Supplier has
+    a SSO/great.gov.uk account
+
+    NOTE:
+    Will use `context.response` to assert the contents of last response.
+
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type supplier_alias: str
+    """
+    actor = context.get_actor(supplier_alias)
+    company_alias = actor.company_alias
+    session = actor.session
+    response = context.response
+    check_response(response, 302, location="/company-profile/edit")
+    assert response.cookies.get("sessionid") is not None
+    logging.debug("Confirmed Export Status of '%s'. We're now going to the "
+                  "FAB edit company profile page.", company_alias)
+
+    # GET FAB /company-profile/edit
+    url = get_absolute_url("ui-buyer:company-edit")
+    headers = {
+        "Referer":
+            get_absolute_url("ui-buyer:register-confirm-export-status")
+    }
+    response = make_request(Method.GET, url, session=session,
+                            headers=headers, context=context)
+    expected = ["Build and improve your profile"]
+    check_response(response, 200, body_contains=expected)
+    logging.debug("Successfully got to Build your Profile page")
+
+
+def supplier_should_get_to_sso_registration_page(
+        context, supplier_alias, export_status):
+    """Assert last response based on the fact that Supplier doesn't have
+    a SSO/great.gov.uk account
+
+    NOTE:
+    Will use `context.response` to assert the contents of last response.
+
+    :param context: behave `context` object
+    :type  context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type  supplier_alias: str
+    :param export_status: any export status that allows Suppliers to create
+                          a Directory profile.
+    :type  export_status: str
+    """
+    actor = context.get_actor(supplier_alias)
+    company = context.get_unregistered_company(actor.company_alias)
+    company_alias = actor.company_alias
+    session = actor.session
+    response = context.response
+    referer = get_absolute_url("ui-buyer:register-confirm-export-status")
+    url = get_absolute_url("ui-buyer:register-submit-account-details")
+    # assert last response based on the fact that Supplier doesn't have
+    # a SSO account
+    next_1 = quote("{}?export_status={}&company_number={}"
+                   .format(url, export_status, company.number))
+    location_1 = "{}?next={}".format(get_absolute_url("sso:signup"), next_1)
+    next_2 = quote("{}?company_number={}&export_status={}"
+                   .format(url, company.number, export_status))
+    location_2 = "{}?next={}".format(get_absolute_url("sso:signup"), next_2)
+    locations = [location_1, location_2]
+    check_response(response, 302, locations=locations)
+    logging.debug("Confirmed Export Status of '%s'. We're now going to the "
+                  "SSO signup page.", company_alias)
+
+    # GET SSO /accounts/signup/?next=...
+    url = get_absolute_url("sso:signup")
+    params = {"next": next_1}
+    headers = {"Referer": referer}
     response = make_request(Method.GET, url, session=session, params=params,
-                            headers=headers, allow_redirects=False,
-                            context=context)
+                            headers=headers, context=context)
+    expected = ["Create a great.gov.uk account and you can"]
+    check_response(response, 200, body_contains=expected)
+    logging.debug("Successfully landed on SSO signup page")
+
+    token = extract_csrf_middleware_token(response)
+    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+
+
+def reg_confirm_export_status(context, supplier_alias, export_status):
+    """Will confirm the current export status of selected unregistered company.
+
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type supplier_alias: str
+    :param export_status: current Export Status of selected company
+    :type export_status: str
+    """
+    export_status = EXPORT_STATUSES[export_status]
     context.export_status = export_status
+    has_sso_account = context.get_actor(supplier_alias).has_sso_account
+
+    submit_export_status_form(context, supplier_alias, export_status)
 
     if has_sso_account:
-        logging.debug("Supplier already have a SSO account")
-        # assert last response based on the fact that Supplier has a SSO account
-        check_response(response, 302, location="/company-profile/edit")
-        assert response.cookies.get("sessionid") is not None
-        logging.debug("Confirmed Export Status of '%s'. We're now going to the "
-                      "FAB edit company profile page.", alias)
-
-        # Step 4a: GET FAB /company-profile/edit
-        url = get_absolute_url("ui-buyer:company-edit")
-        headers = {
-            "Referer":
-                get_absolute_url("ui-buyer:register-confirm-export-status")
-        }
-        response = make_request(Method.GET, url, session=session,
-                                headers=headers, context=context)
-        expected = ["Build and improve your profile"]
-        check_response(response, 200, body_contains=expected)
-        logging.debug("Successfully got to Build your Profile page")
+        logging.debug("Supplier already has a SSO account")
+        supplier_should_get_to_build_your_profile(context, supplier_alias)
     else:
         logging.debug("Supplier doesn't have a SSO account")
-        # assert last response based on the fact that Supplier doesn't have
-        # a SSO account
-        next_1 = quote("{}?export_status={}&company_number={}"
-                       .format(url, export_status, company.number))
-        location_1 = "{}?next={}".format(get_absolute_url("sso:signup"), next_1)
-        next_2 = quote("{}?company_number={}&export_status={}"
-                       .format(url, company.number, export_status))
-        location_2 = "{}?next={}".format(get_absolute_url("sso:signup"), next_2)
-        locations = [location_1, location_2]
-        check_response(response, 302, locations=locations)
-        logging.debug("Confirmed Export Status of '%s'. We're now going to the "
-                      "SSO signup page.", alias)
-
-        # Step 4b: GET SSO /accounts/signup/?next=...
-        # don't use FAB UI Cookies
-        url = get_absolute_url("sso:signup")
-        params = {"next": next_1}
-        headers = {"Referer": referer}
-        response = make_request(Method.GET, url, session=session, params=params,
-                                headers=headers, context=context)
-        expected = ["Create a great.gov.uk account and you can"]
-        check_response(response, 200, body_contains=expected)
-        logging.debug("Successfully landed on SSO signup page")
-
-        token = extract_csrf_middleware_token(response)
-        context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+        supplier_should_get_to_sso_registration_page(
+            context, supplier_alias, export_status)
 
 
 def reg_create_sso_account(context, supplier_alias, alias):
