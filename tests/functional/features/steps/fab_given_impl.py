@@ -30,7 +30,8 @@ from tests.functional.features.steps.fab_when_impl import (
     reg_supplier_confirms_email_address,
     select_random_company,
     reg_create_standalone_sso_account,
-    sso_supplier_confirms_email_address,
+    sso_supplier_confirms_email_address
+)
 from tests.settings import EMAIL_VERIFICATION_MSG_SUBJECT
 
 
