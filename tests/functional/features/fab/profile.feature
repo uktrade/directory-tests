@@ -140,7 +140,6 @@ Feature: Trade Profile
         | No, but we are preparing to    |
 
 
-    @wip
     @ED-1770
     @sso
     @fab
@@ -148,7 +147,7 @@ Feature: Trade Profile
     Scenario: Suppliers with a standalone SSO/great.gov.uk account should be able to create a Directory profile
       Given "Peter Alder" has a verified standalone SSO/great.gov.uk account
       And "Peter Alder" is signed in to SSO/great.gov.uk account
-      And "Peter Alder" selected his company for Directory Profile creation
+      And "Peter Alder" selected an active company without a Directory Profile identified by an alias "Company X"
 
       When "Peter Alder" provides valid details of selected company
       And "Peter Alder" selects random sector the company is interested in working in
