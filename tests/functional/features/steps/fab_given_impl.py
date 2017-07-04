@@ -60,7 +60,8 @@ def unauthenticated_supplier(context, supplier_alias):
                        for i in range(password_length))
     actor = Actor(alias=supplier_alias, email=email, password=password,
                   session=session, csrfmiddlewaretoken=None,
-                  email_confirmation_link=None, company_alias=None)
+                  email_confirmation_link=None, company_alias=None,
+                  has_sso_account=False)
     context.add_actor(actor)
 
 
