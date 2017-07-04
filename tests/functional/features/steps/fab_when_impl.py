@@ -431,6 +431,7 @@ def reg_supplier_confirms_email_address(context, supplier_alias):
                             context=context)
     expected = ["Build and improve your profile"]
     check_response(response, 200, strings=expected)
+    context.set_actor_has_sso_account(supplier_alias, True)
 
 
 def bp_provide_company_details(context, supplier_alias):
