@@ -27,8 +27,8 @@ from tests.functional.features.steps.fab_when_impl import (
     reg_create_sso_account,
     reg_open_email_confirmation_link,
     reg_supplier_confirms_email_address,
-    select_random_company
-)
+    select_random_company,
+    reg_create_standalone_sso_account)
 from tests.settings import EMAIL_VERIFICATION_MSG_SUBJECT
 
 
@@ -110,3 +110,11 @@ def reg_create_verified_profile(context, supplier_alias, company_alias):
     prof_verify_company(context, supplier_alias)
     prof_should_be_on_profile_page(context, supplier_alias)
     prof_should_be_told_that_company_is_published(context, supplier_alias)
+
+
+def sso_create_standalone_unverified_sso_account(context, supplier_alias):
+    subject = EMAIL_VERIFICATION_MSG_SUBJECT
+    unauthenticated_supplier(context, supplier_alias)
+    reg_create_standalone_sso_account(context, supplier_alias)
+    reg_sso_account_should_be_created(context, supplier_alias)
+    reg_should_get_verification_email(context, supplier_alias, subject)
