@@ -1017,3 +1017,52 @@ def reg_create_standalone_sso_account(context, supplier_alias):
     expected = ["Verify your email address"]
     check_response(response, 200, strings=expected)
     assert response.cookies.get("sso_display_logged_in") == "false"
+
+
+def sso_supplier_confirms_email_address(context, supplier_alias):
+    """Given Supplier has clicked on the email confirmation link, Suppliers has
+    to confirm that the provided email address is the correct one.
+
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type supplier_alias: str
+    """
+    # STEP 1 - Submit "Confirm your email address" form
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+    csrfmiddlewaretoken = actor.csrfmiddlewaretoken
+    form_action_value = context.form_action_value
+    url = "{}{}".format(get_absolute_url("sso:landing"), form_action_value)
+    referer = actor.email_confirmation_link
+    headers = {"Referer": referer}
+    data = {"csrfmiddlewaretoken": csrfmiddlewaretoken}
+    response = make_request(Method.POST, url, session=session, headers=headers,
+                            data=data, allow_redirects=False, context=context)
+    new_location = response.headers.get("Location")
+    assert new_location.startswith("/accounts/login/?next=")
+    assert "%2Fabout%2F" in new_location
+    check_response(response, 302)
+
+    # Step 2 - Follow redirect - go to
+    # SSO_HOST/accounts/login/?next=https://SSO_HOST/about/
+    # use the same Referer as in previous request
+    headers = {"Referer": referer}
+    url = "{}{}".format(get_absolute_url("sso:landing"), new_location)
+    response = make_request(Method.GET, url, session=session, headers=headers,
+                            allow_redirects=False, context=context)
+    new_location = response.headers.get("Location")
+    expected_locations = [get_absolute_url("profile:about"),
+                          get_absolute_url("profile:about")
+                          .replace("http://", "https://")]
+    check_response(response, 302, locations=expected_locations)
+    assert response.cookies.get("sso_display_logged_in") == "true"
+
+    # Step 3 - Follow the redirect - go to PROFILE /about
+    # use the same Referer as in previous request
+    headers = {"Referer": referer}
+    url = unquote(new_location)
+    response = make_request(Method.GET, url, session=session, headers=headers,
+                            context=context)
+    expected = ["Welcome to your great.gov.uk profile"]
+    check_response(response, 200, strings=expected)

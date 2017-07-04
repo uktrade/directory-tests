@@ -18,7 +18,8 @@ from tests.functional.features.steps.fab_when_impl import (
     reg_open_email_confirmation_link,
     reg_supplier_confirms_email_address,
     reg_supplier_is_not_ready_to_export,
-    select_random_company
+    select_random_company,
+    sso_supplier_confirms_email_address
 )
 
 
@@ -57,6 +58,12 @@ def when_supplier_confirms_the_email_address(context, supplier_alias):
 @when('"{supplier_alias}" confirms the email address')
 def when_supplier_confirms_email_address(context, supplier_alias):
     reg_supplier_confirms_email_address(context, supplier_alias)
+
+
+@when('"{supplier_alias}" confirms the email address for SSO/great.gov.uk '
+      'account')
+def when_supplier_confirms_email_address_for_sso(context, supplier_alias):
+    sso_supplier_confirms_email_address(context, supplier_alias)
 
 
 @when('"{supplier_alias}" provides valid details of selected company')
