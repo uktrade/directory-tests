@@ -13,6 +13,7 @@ from tests.functional.features.steps.fab_then_impl import (
     reg_supplier_is_not_appropriate_for_fab,
     reg_supplier_has_to_verify_email_first,
     sso_should_be_on_landing_page,
+    sso_should_be_signed_in_to_sso_account
 )
 
 
@@ -73,3 +74,8 @@ def then_supplier_has_to_verify_email_first(context, supplier_alias):
       'page')
 def then_supplier_should_be_on_profile_landing_page(context, supplier_alias):
     sso_should_be_on_landing_page(context, supplier_alias)
+
+
+@then('"{supplier_alias}" should be signed in to SSO/great.gov.uk account')
+def then_supplier_should_be_signed_in_to_sso_account(context, supplier_alias):
+    sso_should_be_signed_in_to_sso_account(context, supplier_alias)

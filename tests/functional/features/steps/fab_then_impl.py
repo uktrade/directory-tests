@@ -176,3 +176,9 @@ def sso_should_be_on_landing_page(context, supplier_alias):
                  "International Trade.")]
     check_response(context.response, 200, strings=expected)
     logging.debug("%s is on the SSO Profile landing page", supplier_alias)
+
+
+def sso_should_be_signed_in_to_sso_account(context, supplier_alias):
+    response = context.response
+    assert response.cookies.get("sessionid") is not None
+    assert "Sign out" in response.content.decode("utf-8")
