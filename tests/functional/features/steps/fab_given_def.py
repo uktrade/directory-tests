@@ -8,6 +8,7 @@ from tests.functional.features.steps.fab_given_impl import (
     reg_create_sso_account_associated_with_company,
     reg_create_verified_profile,
     sso_create_standalone_unverified_sso_account,
+    sso_create_standalone_verified_sso_account,
     unauthenticated_supplier
 )
 from tests.functional.features.steps.fab_then_impl import (
@@ -73,3 +74,8 @@ def given_supplier_signed_out_from_fab(context, supplier_alias):
 def given_supplier_creates_standalone_unverified_sso_account(
         context, supplier_alias):
     sso_create_standalone_unverified_sso_account(context, supplier_alias)
+
+
+@given('"{supplier_alias}" has a verified standalone SSO/great.gov.uk account')
+def given_verified_standalone_sso_account(context, supplier_alias):
+    sso_create_standalone_verified_sso_account(context, supplier_alias)
