@@ -962,3 +962,58 @@ def prof_sign_in_to_fab(context, supplier_alias):
     check_response(response, 200)
     assert "sso_display_logged_in" not in response.cookies
     assert "directory_sso_dev_session" not in response.cookies
+
+
+def reg_create_standalone_sso_account(context, supplier_alias):
+    """Will create a standalone SSO/great.gov.uk account.
+
+    NOTE:
+    There will be no association between this account and any company.
+
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type supplier_alias: str
+    """
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+
+    # Step 1: Go to the SSO/great.gov.uk registration page
+    url = get_absolute_url("sso:signup")
+    headers = {"Referer": get_absolute_url("ui-buyer:landing")}
+    response = make_request(Method.GET, url, session=session,
+                            headers=headers, allow_redirects=False,
+                            context=context)
+    expected = ["Register", "Create a great.gov.uk account and you can",
+                "gain access to worldwide exporting opportunities",
+                "promote your business to international buyers",
+                "Email:", "Confirm email:", "Password:", "Confirm password:",
+                "Tick this box to accept the", "of the great.gov.uk service."]
+    check_response(response, 200, strings=expected)
+    assert response.cookies.get("sso_display_logged_in") == "false"
+
+    # Step 2: POST SSO accounts/signup/
+    url = get_absolute_url("sso:signup")
+    headers = {"Referer": url}
+    data = {"csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
+            "email": actor.email,
+            "email2": actor.email,
+            "password1": actor.password,
+            "password2": actor.password,
+            "terms_agreed": "on"
+            }
+    response = make_request(Method.POST, url, session=session,
+                            headers=headers, data=data,
+                            allow_redirects=False, context=context)
+    check_response(response, 302, location="/accounts/confirm-email/")
+    assert response.cookies.get("sso_display_logged_in") == "false"
+    assert response.cookies.get("directory_sso_dev_session") is not None
+
+    # Steps 3: GET SSO /accounts/confirm-email/
+    url = get_absolute_url("sso:email_confirm")
+    response = make_request(Method.GET, url, session=session,
+                            headers=headers, allow_redirects=False,
+                            context=context)
+    expected = ["Verify your email address"]
+    check_response(response, 200, strings=expected)
+    assert response.cookies.get("sso_display_logged_in") == "false"
