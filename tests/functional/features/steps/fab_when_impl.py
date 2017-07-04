@@ -156,7 +156,7 @@ def select_random_company(context, supplier_alias, alias):
                                     company.title.upper())
     expected = ["Create your company’s profile", escaped_company_title,
                 company.number]
-    check_response(response, 200, strings=expected)
+    check_response(response, 200, body_contains=expected)
     logging.debug("Successfully got to the Confirm your Company page")
 
     token = extract_csrf_middleware_token(response)
@@ -200,7 +200,7 @@ def reg_confirm_company_selection(context, supplier_alias, alias):
     response = make_request(Method.GET, url_export, session=session,
                             headers=headers, context=context)
     expected = ["Your company's previous exports"]
-    check_response(response, 200, strings=expected)
+    check_response(response, 200, body_contains=expected)
     logging.debug("Confirmed selection of Company: %s", company.number)
 
     # Now, we've landed on the Export Status page, so we have extract the
@@ -303,7 +303,7 @@ def reg_confirm_export_status(context, supplier_alias, alias, export_status):
         response = make_request(Method.GET, url, session=session,
                                 headers=headers, context=context)
         expected = ["Build and improve your profile"]
-        check_response(response, 200, strings=expected)
+        check_response(response, 200, body_contains=expected)
         logging.debug("Successfully got to Build your Profile page")
     else:
         logging.debug("Supplier doesn't have a SSO account")
@@ -328,7 +328,7 @@ def reg_confirm_export_status(context, supplier_alias, alias, export_status):
         response = make_request(Method.GET, url, session=session, params=params,
                                 headers=headers, context=context)
         expected = ["Create a great.gov.uk account and you can"]
-        check_response(response, 200, strings=expected)
+        check_response(response, 200, body_contains=expected)
         logging.debug("Successfully landed on SSO signup page")
 
         token = extract_csrf_middleware_token(response)
@@ -397,7 +397,7 @@ def reg_open_email_confirmation_link(context, supplier_alias):
                             context=context)
     expected = ["Confirm email Address"]
     unexpected = ["This e-mail confirmation link expired or is invalid"]
-    check_response(response, 200, strings=expected,
+    check_response(response, 200, body_contains=expected,
                    unexpected_strings=unexpected)
     logging.debug("Supplier is on the Confirm your email address page")
 
@@ -454,7 +454,7 @@ def reg_supplier_confirms_email_address(context, supplier_alias):
     response = make_request(Method.GET, url, session=session, headers=headers,
                             context=context)
     expected = ["Build and improve your profile"]
-    check_response(response, 200, strings=expected)
+    check_response(response, 200, body_contains=expected)
     context.set_actor_has_sso_account(supplier_alias, True)
 
 
@@ -488,7 +488,7 @@ def bp_provide_company_details(context, supplier_alias):
     expected = ["Your company sector",
                 "What sector is your company interested in working in?"]
     expected += SECTORS
-    check_response(response, 200, strings=expected)
+    check_response(response, 200, body_contains=expected)
     logging.debug("Supplier is on the Select Sector page")
     token = extract_csrf_middleware_token(response)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
@@ -559,7 +559,7 @@ def bp_select_random_sector(context, supplier_alias):
         "Your company address", "Full name", "Address line 1", "Address line 2",
         "City", "Country", "Postcode", "PO box"
     ]
-    check_response(response, 200, strings=expected)
+    check_response(response, 200, body_contains=expected)
     logging.debug("Supplier is on the Your company address page")
     token = extract_csrf_middleware_token(response)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
@@ -599,7 +599,7 @@ def bp_provide_full_name(context, supplier_alias):
         "The letter will be sent to your registered business address",
         "You can change the name of the person who will receive this letter",
     ]
-    check_response(response, 200, strings=expected)
+    check_response(response, 200, body_contains=expected)
     logging.debug("Supplier is on the Thank You page")
     token = extract_csrf_middleware_token(response)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
@@ -629,7 +629,7 @@ def bp_confirm_registration_and_send_letter(context, supplier_alias):
            " receive the letter, please log in to GREAT.gov.uk to enter your "
            "verification profile to publish your company profile.")
     expected = [msg, "We've sent your verification letter"]
-    check_response(response, 200, strings=expected)
+    check_response(response, 200, body_contains=expected)
     logging.debug("Supplier is on the We've sent your verification letter page")
 
     # STEP 2 - Click on the "View or amend your company profile" link
@@ -643,7 +643,7 @@ def bp_confirm_registration_and_send_letter(context, supplier_alias):
         "Your company has no description.", "Set your description",
         "Your profile can't be published until your company has a",
     ]
-    check_response(response, 200, strings=expected)
+    check_response(response, 200, body_contains=expected)
     logging.debug("Supplier is on the Edit Company Profile page")
 
 
@@ -673,7 +673,7 @@ def prof_set_company_description(context, supplier_alias):
         "About your company", "Describe your business to overseas buyers",
         "Brief summary to make your company stand out to buyers"
     ]
-    check_response(response, 200, strings=expected)
+    check_response(response, 200, body_contains=expected)
     token = extract_csrf_middleware_token(response)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
     logging.debug("Supplier is on the Set Company Description page")
@@ -733,7 +733,7 @@ def prof_verify_company(context, supplier_alias):
          "you created your company profile"),
         ("We sent you a letter through the mail containing a twelve digit "
          "code.")]
-    check_response(response, 200, strings=expected)
+    check_response(response, 200, body_contains=expected)
     token = extract_csrf_middleware_token(response)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
     logging.debug("Supplier is on the Verify Company page")
@@ -751,7 +751,7 @@ def prof_verify_company(context, supplier_alias):
         "Your company has been verified",
         "View or amend your company profile"
     ]
-    check_response(response, 200, strings=expected)
+    check_response(response, 200, body_contains=expected)
 
     # STEP 3 - click on the "View or amend your company profile" link
     actor = context.get_actor(supplier_alias)
@@ -792,7 +792,7 @@ def prof_view_published_profile(context, supplier_alias):
                         response.headers.get("Location"))
     response = make_request(Method.GET, url, session=session,
                             allow_redirects=False, context=context)
-    check_response(response, 200, strings=[company.number])
+    check_response(response, 200, body_contains=[company.number])
     logging.debug("Supplier is on the company's FAS page")
 
 
@@ -816,7 +816,7 @@ def prof_attempt_to_sign_in_to_fab(context, supplier_alias):
                             headers=headers, allow_redirects=False,
                             context=context)
     expected = []
-    check_response(response, 200, strings=expected)
+    check_response(response, 200, body_contains=expected)
     assert response.cookies.get("sso_display_logged_in") == "false"
     token = extract_csrf_middleware_token(response)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
@@ -872,7 +872,7 @@ def prof_sign_out_from_fab(context, supplier_alias):
                             headers=headers, allow_redirects=False,
                             context=context)
     expected = ["Sign out", "Are you sure you want to sign out?"]
-    check_response(response, 200, strings=expected)
+    check_response(response, 200, body_contains=expected)
     assert response.cookies.get("sso_display_logged_in") == "true"
     token = extract_csrf_middleware_token(response)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
@@ -904,7 +904,7 @@ def prof_sign_out_from_fab(context, supplier_alias):
     expected = ["Find a Buyer - GREAT.gov.uk", "Get promoted internationally",
                 "with a great.gov.uk trade profile",
                 "Enter your Companies House number"]
-    check_response(response, 200, strings=expected)
+    check_response(response, 200, body_contains=expected)
     assert "sso_display_logged_in" not in response.cookies
     assert "directory_sso_dev_session" not in response.cookies
 
@@ -929,7 +929,7 @@ def prof_sign_in_to_fab(context, supplier_alias):
                             headers=headers, allow_redirects=False,
                             context=context)
     expected = []
-    check_response(response, 200, strings=expected)
+    check_response(response, 200, body_contains=expected)
     assert response.cookies.get("sso_display_logged_in") == "false"
     token = extract_csrf_middleware_token(response)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
@@ -1002,7 +1002,7 @@ def reg_create_standalone_sso_account(context, supplier_alias):
                 "promote your business to international buyers",
                 "Email:", "Confirm email:", "Password:", "Confirm password:",
                 "Tick this box to accept the", "of the great.gov.uk service."]
-    check_response(response, 200, strings=expected)
+    check_response(response, 200, body_contains=expected)
     assert response.cookies.get("sso_display_logged_in") == "false"
 
     # Step 2: POST SSO accounts/signup/
@@ -1028,7 +1028,7 @@ def reg_create_standalone_sso_account(context, supplier_alias):
                             headers=headers, allow_redirects=False,
                             context=context)
     expected = ["Verify your email address"]
-    check_response(response, 200, strings=expected)
+    check_response(response, 200, body_contains=expected)
     assert response.cookies.get("sso_display_logged_in") == "false"
 
 
@@ -1078,7 +1078,7 @@ def sso_supplier_confirms_email_address(context, supplier_alias):
     response = make_request(Method.GET, url, session=session, headers=headers,
                             context=context)
     expected = ["Welcome to your great.gov.uk profile"]
-    check_response(response, 200, strings=expected)
+    check_response(response, 200, body_contains=expected)
     context.set_actor_has_sso_account(supplier_alias, True)
 
 
@@ -1110,7 +1110,7 @@ def sso_go_to_create_trade_profile(context, supplier_alias):
                 ("have buyers contact your sales team directly to get deals "
                  "moving"),
                 ]
-    check_response(response, 200, strings=expected)
+    check_response(response, 200, body_contains=expected)
 
     # Step 2 - Click on "Create a trade profile" button
     url = get_absolute_url("ui-buyer:landing")
@@ -1120,4 +1120,4 @@ def sso_go_to_create_trade_profile(context, supplier_alias):
                 "with a great.gov.uk trade profile",
                 "Connect directly with international buyers"
                 ]
-    check_response(response, 200, strings=expected)
+    check_response(response, 200, body_contains=expected)
