@@ -781,7 +781,8 @@ def prof_view_published_profile(context, supplier_alias):
     company = context.get_unregistered_company(actor.company_alias)
 
     # STEP 1 - go to the "View published profile" page
-    url = "{}/{}".format(get_absolute_url("ui-supplier:suppliers"), company.number)
+    url = "{}/{}".format(get_absolute_url("ui-supplier:suppliers"),
+                         company.number)
     response = make_request(Method.GET, url, session=session,
                             allow_redirects=False, context=context)
     location = "/suppliers/{}/".format(company.number)
