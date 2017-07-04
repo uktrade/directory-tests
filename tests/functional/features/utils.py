@@ -389,7 +389,7 @@ def get_verification_code(company_number):
 
 def check_response(response: Response, status_code: int, *,
                    location: str = None, locations: list = [],
-                   location_starts_with: str = None, strings: list = [],
+                   location_starts_with: str = None, body_contains: list = [],
                    unexpected_strings: list = []):
     """Check if SUT replied with an expected response.
 
@@ -404,9 +404,9 @@ def check_response(response: Response, status_code: int, *,
     :param location_starts_with: (optional) expected leading part of
                                 the Location header
     :type  location_starts_with: str
-    :param strings: (optional) a list of strings that should be present
+    :param body_contains: (optional) a list of strings that should be present
                     in the response content
-    :type  strings: list
+    :type  body_contains: list
     :param unexpected_strings: (optional) a list of strings that should NOT be
                                present in the response content
     :type  unexpected_strings: list
@@ -414,12 +414,12 @@ def check_response(response: Response, status_code: int, *,
     assert response.status_code == status_code, (
         "Expected {} but got {}".format(status_code, response.status_code))
 
-    if strings:
+    if body_contains:
         assert response.content, "Response has no content!"
         content = response.content.decode("utf-8")
-        assert all(s in content for s in strings), (
+        assert all(s in content for s in body_contains), (
             "Could not find all expected string in the response: {}"
-            .format(", ".join(strings))
+            .format(", ".join(body_contains))
         )
 
     if unexpected_strings:

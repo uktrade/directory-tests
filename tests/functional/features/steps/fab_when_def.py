@@ -35,11 +35,9 @@ def when_company_selection_is_confirmed(context, supplier_alias, alias):
     reg_confirm_company_selection(context, supplier_alias, alias)
 
 
-@when('"{supplier_alias}" confirms that the export status of "{alias}" is '
-      '"{export_status}"')
-def when_supplier_confirms_export_status(context, supplier_alias, alias,
-                                         export_status):
-    reg_confirm_export_status(context, supplier_alias, alias, export_status)
+@when('"{supplier_alias}" confirms that the export status is "{export_status}"')
+def when_supplier_confirm_export_status(context, supplier_alias, export_status):
+    reg_confirm_export_status(context, supplier_alias, export_status)
 
 
 @when('"{supplier_alias}" creates a SSO/great.gov.uk account for "{alias}" '
