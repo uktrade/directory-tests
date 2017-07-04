@@ -1079,6 +1079,7 @@ def sso_supplier_confirms_email_address(context, supplier_alias):
                             context=context)
     expected = ["Welcome to your great.gov.uk profile"]
     check_response(response, 200, strings=expected)
+    context.set_actor_has_sso_account(supplier_alias, True)
 
 
 def sso_go_to_create_trade_profile(context, supplier_alias):
