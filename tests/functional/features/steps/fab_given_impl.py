@@ -31,6 +31,7 @@ from tests.functional.features.steps.fab_when_impl import (
     select_random_company,
     reg_create_standalone_sso_account,
     sso_supplier_confirms_email_address,
+from tests.functional.features.utils import get_positive_exporting_status
 from tests.settings import EMAIL_VERIFICATION_MSG_SUBJECT
 
 
@@ -67,14 +68,10 @@ def unauthenticated_supplier(context, supplier_alias):
 
 def reg_create_sso_account_associated_with_company(context, supplier_alias,
                                                    company_alias):
-    export_status = ["Yes, in the last year",
-                     "Yes, 1 to 2 years ago",
-                     "Yes, but more than 2 years ago",
-                     "No, but we are preparing to"]
+    export = get_positive_exporting_status()
     select_random_company(context, supplier_alias, company_alias)
     reg_confirm_company_selection(context, supplier_alias, company_alias)
-    reg_confirm_export_status(context, supplier_alias, company_alias,
-                              random.choice(export_status))
+    reg_confirm_export_status(context, supplier_alias, company_alias, export)
     reg_create_sso_account(context, supplier_alias, company_alias)
     reg_sso_account_should_be_created(context, supplier_alias)
 
