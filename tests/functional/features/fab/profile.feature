@@ -38,7 +38,7 @@ Feature: Trade Profile
 
   @ED-1757
   @verification
-  @email
+  @login
   Scenario: Suppliers without verified email should be told to verify the email address first before being able to log in
     Given "Annette Geissinger" is an unauthenticated supplier
     And "Annette Geissinger" created a SSO/great.gov.uk account associated with randomly selected company "Company X"
@@ -102,3 +102,16 @@ Feature: Trade Profile
 
       Then "Peter Alder" should be told that his company is currently not appropriate to feature in the FAB service
 
+
+    @ED-1769
+    @login
+    Scenario: Suppliers with unverified company profile should be able to logout and log back in
+      Given "Annette Geissinger" is an unauthenticated supplier
+      And "Annette Geissinger" created a SSO/great.gov.uk account associated with randomly selected company "Company X"
+      And "Annette Geissinger" confirmed her email address
+      And "Annette Geissinger" signed out from Find a Buyer service
+
+      When "Annette Geissinger" signs in to Find a Buyer profile
+
+      Then "Annette Geissinger" should be on edit Company's Directory Profile page
+      And "Annette Geissinger" should be told that her company has no description

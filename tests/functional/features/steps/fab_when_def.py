@@ -8,6 +8,7 @@ from tests.functional.features.steps.fab_when_impl import (
     bp_provide_full_name,
     bp_select_random_sector,
     prof_attempt_to_sign_in_to_fab,
+    prof_sign_in_to_fab,
     prof_verify_company,
     prof_view_published_profile,
     reg_confirm_company_selection,
@@ -102,3 +103,8 @@ def when_supplier_says_his_not_ready_to_export(context, supplier_alias):
 @when('"{supplier_alias}" attempts to sign in to Find a Buyer profile')
 def when_supplier_attempts_to_sign_in_to_fab(context, supplier_alias):
     prof_attempt_to_sign_in_to_fab(context, supplier_alias)
+
+
+@when('"{supplier_alias}" signs in to Find a Buyer profile')
+def when_supplier_signs_in_to_fab(context, supplier_alias):
+    prof_sign_in_to_fab(context, supplier_alias)
