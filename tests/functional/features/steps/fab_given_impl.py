@@ -31,7 +31,8 @@ from tests.functional.features.steps.fab_when_impl import (
     select_random_company,
     reg_create_standalone_sso_account,
     sso_supplier_confirms_email_address,
-    sso_go_to_create_trade_profile)
+    sso_go_to_create_trade_profile
+)
 from tests.functional.features.utils import get_positive_exporting_status
 from tests.settings import EMAIL_VERIFICATION_MSG_SUBJECT
 
