@@ -154,3 +154,25 @@ def reg_supplier_has_to_verify_email_first(context, supplier_alias):
     check_response(context.response, 200, strings=expected)
     logging.debug("%s was told that her/his email address has to be verified "
                   "first before being able to Sign In", supplier_alias)
+
+
+def sso_should_be_on_landing_page(context, supplier_alias):
+    expected = ["Welcome to your great.gov.uk profile",
+                ("From now on, every time you sign in you’ll be able to quickly"
+                 " access all of our exporting tools in one place. The tools "
+                 "are here to help your business succeed internationally."),
+                ("You can start using any of our exporting tools by clicking "
+                 "on the tabs on your profile."), "Export opportunities",
+                "Find a buyer", "Selling online overseas",
+                ("Find thousands of exporting opportunities, search and apply "
+                 "within your industry or a specific country, and sign up for "
+                 "email alerts so you’re the first to know of new "
+                 "opportunities."),
+                ("Promote your business to overseas buyers with your own trade "
+                 "profile, add case studies of your company’s best work, and "
+                 "let buyers contact your sales team directly."),
+                ("Join major online marketplaces in other countries and access"
+                 " special offers negotiated by the Department for "
+                 "International Trade.")]
+    check_response(context.response, 200, strings=expected)
+    logging.debug("%s is on the SSO Profile landing page", supplier_alias)

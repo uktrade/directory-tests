@@ -11,7 +11,8 @@ from tests.functional.features.steps.fab_then_impl import (
     reg_should_get_verification_email,
     reg_sso_account_should_be_created,
     reg_supplier_is_not_appropriate_for_fab,
-    reg_supplier_has_to_verify_email_first
+    reg_supplier_has_to_verify_email_first,
+    sso_should_be_on_landing_page,
 )
 
 
@@ -66,3 +67,9 @@ def then_supplier_is_not_appropriate_for_fab(context, supplier_alias):
       'address first')
 def then_supplier_has_to_verify_email_first(context, supplier_alias):
     reg_supplier_has_to_verify_email_first(context, supplier_alias)
+
+
+@then('"{supplier_alias}" should be on Welcome to your great.gov.uk profile '
+      'page')
+def then_supplier_should_be_on_profile_landing_page(context, supplier_alias):
+    sso_should_be_on_landing_page(context, supplier_alias)
