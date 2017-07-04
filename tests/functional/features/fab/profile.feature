@@ -36,16 +36,16 @@ Feature: Trade Profile
       Then "Annette Geissinger" should be prompted to build and improve your Directory Profile
 
 
-  @ED-1757
-  @verification
-  @login
-  Scenario: Suppliers without verified email should be told to verify the email address first before being able to log in
-    Given "Annette Geissinger" is an unauthenticated supplier
-    And "Annette Geissinger" created a SSO/great.gov.uk account associated with randomly selected company "Company X"
+    @ED-1757
+    @verification
+    @login
+    Scenario: Suppliers without verified email should be told to verify the email address first before being able to log in
+      Given "Annette Geissinger" is an unauthenticated supplier
+      And "Annette Geissinger" created a SSO/great.gov.uk account associated with randomly selected company "Company X"
 
-    When "Annette Geissinger" attempts to sign in to Find a Buyer profile
+      When "Annette Geissinger" attempts to sign in to Find a Buyer profile
 
-    Then "Annette Geissinger" should be told that she needs to verify her email address first
+      Then "Annette Geissinger" should be told that she needs to verify her email address first
 
 
     @ED-1716
