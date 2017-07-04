@@ -4,6 +4,7 @@
 import email
 import logging
 import os
+import random
 from enum import Enum
 
 import requests
@@ -16,8 +17,8 @@ from tests.settings import (
     S3_ACCESS_KEY_ID,
     S3_BUCKET,
     S3_REGION,
-    S3_SECRET_ACCESS_KEY
-)
+    S3_SECRET_ACCESS_KEY,
+    EXPORT_STATUSES)
 
 
 def get_file_log_handler(log_formatter,
@@ -438,3 +439,19 @@ def check_response(response: Response, status_code: int, *,
         assert new_location.startswith(location_starts_with), (
             "Expected Location header to start with: '{}' but got '{}' instead."
             .format(location_starts_with, response.headers.get("Location")))
+
+
+def get_positive_exporting_status():
+    """Select random Exporting Status that allows you to register with
+    Find a Buyer service.
+
+    :return: an exporting status accepted by Find a Buyer service
+    :rtype: str
+    """
+    return random.choice(
+        list(
+            filter(lambda x: x != "No, we are not planning to sell overseas",
+                   EXPORT_STATUSES
+                   )
+        )
+    )
