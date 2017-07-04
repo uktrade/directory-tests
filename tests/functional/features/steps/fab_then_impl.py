@@ -5,11 +5,12 @@ import logging
 from retrying import retry
 
 from tests.functional.features.utils import (
+    check_response,
     extract_csrf_middleware_token,
     extract_email_confirmation_link,
     find_confirmation_email_msg,
-    get_s3_bucket,
-    check_response)
+    get_s3_bucket
+)
 
 
 def reg_sso_account_should_be_created(context, alias):

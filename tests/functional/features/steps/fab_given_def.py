@@ -14,7 +14,8 @@ from tests.functional.features.steps.fab_given_impl import (
 )
 from tests.functional.features.steps.fab_then_impl import (
     reg_should_get_verification_email,
-    sso_should_be_signed_in_to_sso_account)
+    sso_should_be_signed_in_to_sso_account
+)
 from tests.functional.features.steps.fab_when_impl import (
     prof_set_company_description,
     prof_sign_out_from_fab

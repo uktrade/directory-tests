@@ -10,8 +10,8 @@ from tests.functional.features.steps.fab_then_impl import (
     prof_should_be_told_that_company_is_published,
     reg_should_get_verification_email,
     reg_sso_account_should_be_created,
-    reg_supplier_is_not_appropriate_for_fab,
     reg_supplier_has_to_verify_email_first,
+    reg_supplier_is_not_appropriate_for_fab,
     sso_should_be_on_landing_page,
     sso_should_be_signed_in_to_sso_account
 )

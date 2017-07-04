@@ -15,7 +15,8 @@ from tests.functional.features.steps.fab_then_impl import (
     reg_should_get_verification_email,
     reg_sso_account_should_be_created,
     sso_should_be_on_landing_page,
-    sso_should_be_signed_in_to_sso_account)
+    sso_should_be_signed_in_to_sso_account
+)
 from tests.functional.features.steps.fab_when_impl import (
     bp_confirm_registration_and_send_letter,
     bp_provide_company_details,
@@ -26,12 +27,12 @@ from tests.functional.features.steps.fab_when_impl import (
     reg_confirm_company_selection,
     reg_confirm_export_status,
     reg_create_sso_account,
+    reg_create_standalone_sso_account,
     reg_open_email_confirmation_link,
     reg_supplier_confirms_email_address,
     select_random_company,
-    reg_create_standalone_sso_account,
-    sso_supplier_confirms_email_address,
-    sso_go_to_create_trade_profile
+    sso_go_to_create_trade_profile,
+    sso_supplier_confirms_email_address
 )
 from tests.functional.features.utils import get_positive_exporting_status
 from tests.settings import EMAIL_VERIFICATION_MSG_SUBJECT

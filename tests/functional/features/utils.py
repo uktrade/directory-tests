@@ -15,11 +15,12 @@ from requests.models import Response
 
 from tests.functional.features.db_cleanup import get_dir_db_connection
 from tests.settings import (
+    EXPORT_STATUSES,
     S3_ACCESS_KEY_ID,
     S3_BUCKET,
     S3_REGION,
-    S3_SECRET_ACCESS_KEY,
-    EXPORT_STATUSES)
+    S3_SECRET_ACCESS_KEY
+)
 
 
 def get_file_log_handler(log_formatter,

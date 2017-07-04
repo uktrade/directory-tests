@@ -25,7 +25,7 @@ from tests.functional.features.utils import (
     make_request
 )
 from tests.functional.schemas.Companies import COMPANIES
-from tests.settings import NO_OF_EMPLOYEES, SECTORS, EXPORT_STATUSES
+from tests.settings import EXPORT_STATUSES, NO_OF_EMPLOYEES, SECTORS
 
 
 def has_fas_profile(company_number):
