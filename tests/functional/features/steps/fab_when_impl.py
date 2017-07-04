@@ -252,6 +252,7 @@ def reg_confirm_export_status(context, supplier_alias, alias, export_status):
     session = actor.session
     token = actor.csrfmiddlewaretoken
     company = context.get_unregistered_company(alias)
+    has_sso_account = actor.has_sso_account
 
     referer = get_absolute_url("ui-buyer:register-confirm-export-status")
 
@@ -283,32 +284,55 @@ def reg_confirm_export_status(context, supplier_alias, alias, export_status):
     response = make_request(Method.GET, url, session=session, params=params,
                             headers=headers, allow_redirects=False,
                             context=context)
-    next_1 = quote("{}?export_status={}&company_number={}"
-                   .format(url, export_status, company.number))
-    location_1 = "{}?next={}".format(get_absolute_url("sso:signup"), next_1)
-    next_2 = quote("{}?company_number={}&export_status={}"
-                   .format(url, company.number, export_status))
-    location_2 = "{}?next={}".format(get_absolute_url("sso:signup"), next_2)
-    locations = [location_1, location_2]
-    check_response(response, 302, locations=locations)
-    logging.debug("Confirmed Export Status of '%s'. We're now going to the "
-                  "SSO signup page.", alias)
-
-    # Step 4: GET SSO /accounts/signup/?next=...
-    # don't use FAB UI Cookies
-    url = get_absolute_url("sso:signup")
-    params = {"next": next_1}
-    headers = {"Referer": referer}
-    session = context.get_actor(supplier_alias).session
-    response = make_request(Method.GET, url, session=session, params=params,
-                            headers=headers, context=context)
-    expected = ["Create a great.gov.uk account and you can"]
-    check_response(response, 200, strings=expected)
-    logging.debug("Successfully landed on SSO signup page")
-
-    token = extract_csrf_middleware_token(response)
-    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
     context.export_status = export_status
+
+    if has_sso_account:
+        logging.debug("Supplier already have a SSO account")
+        # assert last response based on the fact that Supplier has a SSO account
+        check_response(response, 302, location="/company-profile/edit")
+        assert response.cookies.get("sessionid") is not None
+        logging.debug("Confirmed Export Status of '%s'. We're now going to the "
+                      "FAB edit company profile page.", alias)
+
+        # Step 4a: GET FAB /company-profile/edit
+        url = get_absolute_url("ui-buyer:company-edit")
+        headers = {
+            "Referer":
+                get_absolute_url("ui-buyer:register-confirm-export-status")
+        }
+        response = make_request(Method.GET, url, session=session,
+                                headers=headers, context=context)
+        expected = ["Build and improve your profile"]
+        check_response(response, 200, strings=expected)
+        logging.debug("Successfully got to Build your Profile page")
+    else:
+        logging.debug("Supplier doesn't have a SSO account")
+        # assert last response based on the fact that Supplier doesn't have
+        # a SSO account
+        next_1 = quote("{}?export_status={}&company_number={}"
+                       .format(url, export_status, company.number))
+        location_1 = "{}?next={}".format(get_absolute_url("sso:signup"), next_1)
+        next_2 = quote("{}?company_number={}&export_status={}"
+                       .format(url, company.number, export_status))
+        location_2 = "{}?next={}".format(get_absolute_url("sso:signup"), next_2)
+        locations = [location_1, location_2]
+        check_response(response, 302, locations=locations)
+        logging.debug("Confirmed Export Status of '%s'. We're now going to the "
+                      "SSO signup page.", alias)
+
+        # Step 4b: GET SSO /accounts/signup/?next=...
+        # don't use FAB UI Cookies
+        url = get_absolute_url("sso:signup")
+        params = {"next": next_1}
+        headers = {"Referer": referer}
+        response = make_request(Method.GET, url, session=session, params=params,
+                                headers=headers, context=context)
+        expected = ["Create a great.gov.uk account and you can"]
+        check_response(response, 200, strings=expected)
+        logging.debug("Successfully landed on SSO signup page")
+
+        token = extract_csrf_middleware_token(response)
+        context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
 
 
 def reg_create_sso_account(context, supplier_alias, alias):
