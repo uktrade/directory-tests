@@ -117,7 +117,6 @@ Feature: Trade Profile
       And "Annette Geissinger" should be told that her company has no description
 
 
-    @wip
     @ED-1770
     @sso
     @fab
