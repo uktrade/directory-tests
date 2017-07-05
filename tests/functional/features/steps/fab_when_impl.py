@@ -21,6 +21,7 @@ from tests.functional.features.utils import (
     check_response,
     extract_confirm_email_form_action,
     extract_csrf_middleware_token,
+    extract_logo_url,
     get_verification_code,
     make_request
 )
@@ -1209,3 +1210,43 @@ def prof_go_to_edit_logo_page(context, supplier_alias):
     check_response(response, 200, body_contains=expected)
     token = extract_csrf_middleware_token(response)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+
+
+def prof_upload_logo(context, supplier_alias, filename: str):
+    """Upload Company's logo & extract newly uploaded logo image URL.
+
+    NOTE:
+    filename must contain an absolute path to the uploaded picture.
+
+    :param context: behave `context` object
+    :type  context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type  supplier_alias: str
+    :param filename: absolute path to the picture file
+    :type  filename: str
+    """
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+
+    # Upload company's logo
+    headers = {"Referer": get_absolute_url("ui-buyer:upload-logo")}
+    url = get_absolute_url("ui-buyer:upload-logo")
+    data = {"csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
+            "supplier_company_profile_logo_edit_view-current_step": "logo",
+            }
+    files = {"logo-logo": open(filename, "rb")}
+    response = make_request(Method.POST, url, session=session, headers=headers,
+                            data=data, files=files,
+                            allow_redirects=False, context=context)
+    check_response(response, 302, location="/company-profile")
+    assert response.cookies.get("sessionid") is not None
+
+    # Follow the redirect
+    headers = {"Referer": get_absolute_url("ui-buyer:upload-logo")}
+    url = get_absolute_url("ui-buyer:company-profile")
+    response = make_request(Method.GET, url, session=session, headers=headers,
+                            allow_redirects=False, context=context)
+    expected = ["Your company is published"]
+    check_response(response, 200, body_contains=expected)
+
+    context.logo_url = extract_logo_url(response)
