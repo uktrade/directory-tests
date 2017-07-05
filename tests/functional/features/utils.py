@@ -462,3 +462,20 @@ def get_positive_exporting_status():
                    )
         )
     )
+
+
+def get_absolute_path_of_file(filename):
+    """Returns absolute path to a file stored in ./tests/functional/files dir.
+
+    Will fail if fail doesn't exists.
+
+    :param filename: name of the file stored in ./tests/functional/files
+    :return: an absolute path to the file
+    """
+    relative_path = os.path.join("tests", "functional", "files", filename)
+    absolute_path = os.path.abspath(relative_path)
+    error_message = ("Could not find '{}' in ./tests/functional/files. Please "
+                     "check the filename!")
+    assert os.path.exists(absolute_path), error_message
+
+    return absolute_path
