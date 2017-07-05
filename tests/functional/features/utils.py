@@ -13,6 +13,7 @@ from boto.exception import S3ResponseError
 from boto.s3 import connect_to_region
 from boto.s3.connection import OrdinaryCallingFormat
 from requests.models import Response
+from scrapy.selector import Selector
 
 from tests.functional.features.db_cleanup import get_dir_db_connection
 from tests.settings import (
@@ -492,3 +493,28 @@ def get_md5_hash_of_file(absolute_path):
     """
     assert os.path.exists(absolute_path)
     return hashlib.md5(open(absolute_path, "rb").read()).hexdigest()
+
+
+def extract_by_css(response, selector):
+    """Extract values from HTML response content using CSS selector.
+
+    :param response: response containing HTML content
+    :param selector: CSS selector
+    :return: value of the 1st found element identified by the CSS selector
+    """
+    content = response.content.decode("utf-8")
+    res = Selector(text=content).css(selector).extract()
+    return res[0] if len(res) > 0 else ""
+
+
+def extract_logo_url(response):
+    """Extract URL of the Company's logo picture from the Directory
+    edit profile page content.
+
+    :param response: response with the contents of edit profile page
+    :return: a URL to the company's logo image
+    """
+    css_selector = ".logo-container img::attr(src)"
+    logo_url = extract_by_css(response, css_selector)
+    assert logo_url, "Could not find Company's logo URL"
+    return logo_url
