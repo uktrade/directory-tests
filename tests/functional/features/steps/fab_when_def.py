@@ -9,6 +9,7 @@ from tests.functional.features.steps.fab_when_impl import (
     bp_select_random_sector,
     prof_attempt_to_sign_in_to_fab,
     prof_sign_in_to_fab,
+    prof_supplier_uploads_logo,
     prof_verify_company,
     prof_view_published_profile,
     reg_confirm_company_selection,
@@ -125,3 +126,8 @@ def when_supplier_creates_standalone_sso_account(context, supplier_alias):
 @when('"{supplier_alias}" decides to create a trade profile')
 def when_supplier_decide_to_create_trade_profile(context, supplier_alias):
     sso_go_to_create_trade_profile(context, supplier_alias)
+
+
+@when('"{supplier_alias}" uploads "{picture}" as company\'s logo')
+def when_supplier_uploads_logo(context, supplier_alias, picture):
+    prof_supplier_uploads_logo(context, supplier_alias, picture)

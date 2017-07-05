@@ -22,6 +22,8 @@ from tests.functional.features.utils import (
     extract_confirm_email_form_action,
     extract_csrf_middleware_token,
     extract_logo_url,
+    get_absolute_path_of_file,
+    get_md5_hash_of_file,
     get_verification_code,
     make_request
 )
@@ -1250,3 +1252,19 @@ def prof_upload_logo(context, supplier_alias, filename: str):
     check_response(response, 200, body_contains=expected)
 
     context.logo_url = extract_logo_url(response)
+
+
+def prof_supplier_uploads_logo(context, supplier_alias, picture):
+    """Upload a picture and set it as Company's logo.
+
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type supplier_alias: str
+    :param picture: name of the picture file stored in ./tests/functional/files
+    """
+    filename = get_absolute_path_of_file(picture)
+    md5_hash = get_md5_hash_of_file(filename)
+    context.logo_md5_hash = md5_hash
+    prof_go_to_edit_logo_page(context, supplier_alias)
+    prof_upload_logo(context, supplier_alias, filename)
