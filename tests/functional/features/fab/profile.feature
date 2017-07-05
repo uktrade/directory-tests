@@ -185,9 +185,10 @@ Feature: Trade Profile
       And "Peter Alder" should see "<valid_image>" picture on FAS Company's Directory Profile page
 
       Examples:
-        | valid_image |
-        | example.jpg |
-        | example.png |
+        | valid_image              |
+        | Anfiteatro_El_Jem.jpeg   |
+        | Kobe_Port_Tower.jpg      |
+        | Wikipedia-logo-v2-en.png |
 
 
     @wip
@@ -205,8 +206,8 @@ Feature: Trade Profile
       And "Peter Alder" should see "<new_picture>" picture on FAS Company's Directory Profile page
 
       Examples:
-        | original    | new_picture |
-        | example.jpg | example.png |
+        | original               | new_picture         |
+        | Anfiteatro_El_Jem.jpeg | Kobe_Port_Tower.jpg |
 
 
     @wip
@@ -221,11 +222,13 @@ Feature: Trade Profile
       Then "Peter Alder" should be told that only images can be uploaded and set as company's logo
 
       Examples:
-        | invalid_file |
-        | example.gif  |
-        | example.exe  |
-        | example.com  |
-        | example.sh   |
-        | example.bat  |
-        | example.txt  |
-        | example.psd  |
+        | invalid_file          | comment                 |
+        | Anfiteatro_El_Jem.bmp | Bitmap                  |
+        | Anfiteatro_El_Jem.jp2 | JPEG 2000               |
+        | Kobe_Port_Tower.webp  | Web P                   |
+        | example.exe           | Windows executable file |
+        | example.com           | Windows executable file |
+        | example.sh            | Linux shell script      |
+        | example.bat           | Windows shell script    |
+        | example.txt           | text file               |
+        | example.psd           | Photoshop file          |
