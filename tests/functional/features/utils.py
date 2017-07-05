@@ -2,6 +2,7 @@
 """Various utils used across the project."""
 
 import email
+import hashlib
 import logging
 import os
 import random
@@ -479,3 +480,15 @@ def get_absolute_path_of_file(filename):
     assert os.path.exists(absolute_path), error_message
 
     return absolute_path
+
+
+def get_md5_hash_of_file(absolute_path):
+    """Calculate md5 hash of provided file.
+
+    :param absolute_path: an absolute path to the file
+    :type  absolute_path: str
+    :return: md5 hash of the file
+    :rtype:  str
+    """
+    assert os.path.exists(absolute_path)
+    return hashlib.md5(open(absolute_path, "rb").read()).hexdigest()
