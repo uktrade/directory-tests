@@ -1184,3 +1184,28 @@ def sso_go_to_create_trade_profile(context, supplier_alias):
                 "Connect directly with international buyers"
                 ]
     check_response(response, 200, body_contains=expected)
+
+
+def prof_go_to_edit_logo_page(context, supplier_alias):
+    """Go to the 'Upload your company's logo' page & extract CSRF token.
+
+    :param context: behave `context` object
+    :type  context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type  supplier_alias: str
+    """
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+
+    # Go to "Upload your company's logo" page
+    headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
+    url = get_absolute_url("ui-buyer:upload-logo")
+    response = make_request(Method.GET, url, session=session, headers=headers,
+                            allow_redirects=False, context=context)
+    expected = ["Upload your company's logo", "Logo:", "Upload file",
+                ("For best results this should be a transparent PNG file of "
+                 "600 x 600 pixels and no more than 2MB")
+                ]
+    check_response(response, 200, body_contains=expected)
+    token = extract_csrf_middleware_token(response)
+    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
