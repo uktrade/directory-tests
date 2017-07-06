@@ -84,7 +84,7 @@ def given_verified_standalone_sso_account(context, supplier_alias):
 
 
 @given('"{supplier_alias}" is signed in to SSO/great.gov.uk account')
-def step_impl(context, supplier_alias):
+def given_supplier_is_signed_in_to_sso(context, supplier_alias):
     sso_should_be_signed_in_to_sso_account(context, supplier_alias)
 
 
