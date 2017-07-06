@@ -5,6 +5,7 @@ from behave import then
 from tests.functional.features.steps.fab_then_impl import (
     bp_should_be_prompted_to_build_your_profile,
     fas_should_be_on_profile_page,
+    fas_should_see_logo_picture,
     prof_should_be_on_profile_page,
     prof_should_be_told_about_missing_description,
     prof_should_be_told_that_company_is_published,
@@ -82,8 +83,13 @@ def then_supplier_should_be_signed_in_to_sso_account(context, supplier_alias):
     sso_should_be_signed_in_to_sso_account(context, supplier_alias)
 
 
-@then('"{supplier_alias}" should see "{picture}" picture on FAB Company\'s '
+@then('"{supplier_alias}" should see that logo on FAB Company\'s '
       'Directory Profile page')
-def then_supplier_should_see_logo_picture_on_fab(
-        context, supplier_alias, picture):
-    prof_should_see_logo_picture(context, supplier_alias, picture)
+def then_supplier_should_see_logo_picture_on_fab(context, supplier_alias):
+    prof_should_see_logo_picture(context, supplier_alias)
+
+
+@then('"{supplier_alias}" should see that logo on FAS Company\'s '
+      'Directory Profile page')
+def then_supplier_should_see_logo_picture_on_fas(context, supplier_alias):
+    fas_should_see_logo_picture(context, supplier_alias)

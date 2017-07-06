@@ -172,7 +172,6 @@ Feature: Trade Profile
       And "Annette Geissinger" should be told that her company is published
 
 
-    @wip
     @ED-1759
     @profile
     @logo
@@ -181,8 +180,8 @@ Feature: Trade Profile
 
       When "Peter Alder" uploads "<valid_image>" as company's logo
 
-      Then "Peter Alder" should see "<valid_image>" picture on FAB Company's Directory Profile page
-      And "Peter Alder" should see "<valid_image>" picture on FAS Company's Directory Profile page
+      Then "Peter Alder" should see that logo on FAB Company's Directory Profile page
+      And "Peter Alder" should see that logo on FAS Company's Directory Profile page
 
       Examples:
         | valid_image              |
@@ -202,8 +201,8 @@ Feature: Trade Profile
 
       When "Peter Alder" uploads "<new_picture>" as company's logo
 
-      Then "Peter Alder" should see "<new_picture>" picture on FAB Company's Directory Profile page
-      And "Peter Alder" should see "<new_picture>" picture on FAS Company's Directory Profile page
+      Then "Peter Alder" should see that logo on FAB Company's Directory Profile page
+      And "Peter Alder" should see that logo on FAS Company's Directory Profile page
 
       Examples:
         | original               | new_picture         |
