@@ -141,7 +141,7 @@ def reg_supplier_is_not_appropriate_for_fab(context, supplier_alias):
         " in the Find a Buyer service.",
         "Exporting is GREAT advice for new exporters"
     ]
-    check_response(context.response, 200, strings=expected)
+    check_response(context.response, 200, body_contains=expected)
     logging.debug("%s was told that her/his business is not appropriate "
                   "to feature in the Find a Buyer service", supplier_alias)
 
@@ -151,7 +151,7 @@ def reg_supplier_has_to_verify_email_first(context, supplier_alias):
                 ("We have sent you a confirmation email. Please follow the link"
                  " in the email to verify your email address."),
                 "if you do not receive an email within 10 minutes."]
-    check_response(context.response, 200, strings=expected)
+    check_response(context.response, 200, body_contains=expected)
     logging.debug("%s was told that her/his email address has to be verified "
                   "first before being able to Sign In", supplier_alias)
 
@@ -174,7 +174,7 @@ def sso_should_be_on_landing_page(context, supplier_alias):
                 ("Join major online marketplaces in other countries and access"
                  " special offers negotiated by the Department for "
                  "International Trade.")]
-    check_response(context.response, 200, strings=expected)
+    check_response(context.response, 200, body_contains=expected)
     logging.debug("%s is on the SSO Profile landing page", supplier_alias)
 
 

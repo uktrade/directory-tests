@@ -19,7 +19,8 @@ from tests.functional.features.steps.fab_when_impl import (
     reg_supplier_confirms_email_address,
     reg_supplier_is_not_ready_to_export,
     select_random_company,
-    sso_supplier_confirms_email_address
+    sso_supplier_confirms_email_address,
+    sso_go_to_create_trade_profile
 )
 
 
@@ -34,11 +35,9 @@ def when_company_selection_is_confirmed(context, supplier_alias, alias):
     reg_confirm_company_selection(context, supplier_alias, alias)
 
 
-@when('"{supplier_alias}" confirms that the export status of "{alias}" is '
-      '"{export_status}"')
-def when_supplier_confirms_export_status(context, supplier_alias, alias,
-                                         export_status):
-    reg_confirm_export_status(context, supplier_alias, alias, export_status)
+@when('"{supplier_alias}" confirms that the export status is "{export_status}"')
+def when_supplier_confirm_export_status(context, supplier_alias, export_status):
+    reg_confirm_export_status(context, supplier_alias, export_status)
 
 
 @when('"{supplier_alias}" creates a SSO/great.gov.uk account for "{alias}" '
@@ -121,3 +120,8 @@ def when_supplier_signs_in_to_fab(context, supplier_alias):
 @when('"{supplier_alias}" creates a SSO/great.gov.uk account')
 def when_supplier_creates_standalone_sso_account(context, supplier_alias):
     reg_create_standalone_sso_account(context, supplier_alias)
+
+
+@when('"{supplier_alias}" decides to create a trade profile')
+def when_supplier_decide_to_create_trade_profile(context, supplier_alias):
+    sso_go_to_create_trade_profile(context, supplier_alias)

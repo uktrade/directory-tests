@@ -8,7 +8,7 @@ Feature: Trade Profile
 
       When "Peter Alder" randomly selects an active company without a Directory Profile identified by an alias "Company X"
       And "Peter Alder" confirms that "Company X" is the correct one
-      And "Peter Alder" confirms that the export status of "Company X" is "<current>"
+      And "Peter Alder" confirms that the export status is "<current>"
       And "Peter Alder" creates a SSO/great.gov.uk account for "Company X" using valid credentials
 
       Then "Peter Alder" should be told about the verification email
@@ -115,3 +115,45 @@ Feature: Trade Profile
 
       Then "Annette Geissinger" should be on edit Company's Directory Profile page
       And "Annette Geissinger" should be told that her company has no description
+
+
+    @ED-1770
+    @sso
+    @fab
+    @account
+    Scenario Outline: Suppliers with a standalone SSO/great.gov.uk account should be able to select their company for Directory Profile creation
+      Given "Peter Alder" has a verified standalone SSO/great.gov.uk account
+      And "Peter Alder" is signed in to SSO/great.gov.uk account
+
+      When "Peter Alder" decides to create a trade profile
+      And "Peter Alder" randomly selects an active company without a Directory Profile identified by an alias "Company X"
+      And "Peter Alder" confirms that "Company X" is the correct one
+      And "Peter Alder" confirms that the export status is "<current>"
+
+      Then "Peter Alder" should be prompted to build and improve your Directory Profile
+
+      Examples:
+        | current                        |
+        | Yes, in the last year          |
+        | Yes, 1 to 2 years ago          |
+        | Yes, but more than 2 years ago |
+        | No, but we are preparing to    |
+
+
+    @wip
+    @ED-1770
+    @sso
+    @fab
+    @account
+    Scenario: Suppliers with a standalone SSO/great.gov.uk account should be able to create a Directory profile
+      Given "Peter Alder" has a verified standalone SSO/great.gov.uk account
+      And "Peter Alder" is signed in to SSO/great.gov.uk account
+      And "Peter Alder" selected his company for Directory Profile creation
+
+      When "Peter Alder" provides valid details of selected company
+      And "Peter Alder" selects random sector the company is interested in working in
+      And "Peter Alder" provides her full name which will be used to sent the verification letter
+      And "Peter Alder" confirms the details which will be used to sent the verification letter
+
+      Then "Peter Alder" should be on edit Company's Directory Profile page
+      And "Peter Alder" should be told that her company has no description

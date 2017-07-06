@@ -13,8 +13,9 @@ from tests.functional.features.steps.fab_then_impl import (
     prof_should_be_told_about_missing_description,
     prof_should_be_told_that_company_is_published,
     reg_should_get_verification_email,
-    reg_sso_account_should_be_created
-)
+    reg_sso_account_should_be_created,
+    sso_should_be_on_landing_page,
+    sso_should_be_signed_in_to_sso_account)
 from tests.functional.features.steps.fab_when_impl import (
     bp_confirm_registration_and_send_letter,
     bp_provide_company_details,
@@ -28,7 +29,9 @@ from tests.functional.features.steps.fab_when_impl import (
     reg_open_email_confirmation_link,
     reg_supplier_confirms_email_address,
     select_random_company,
-    reg_create_standalone_sso_account)
+    reg_create_standalone_sso_account,
+    sso_supplier_confirms_email_address
+)
 from tests.settings import EMAIL_VERIFICATION_MSG_SUBJECT
 
 
@@ -58,7 +61,8 @@ def unauthenticated_supplier(context, supplier_alias):
                        for i in range(password_length))
     actor = Actor(alias=supplier_alias, email=email, password=password,
                   session=session, csrfmiddlewaretoken=None,
-                  email_confirmation_link=None, company_alias=None)
+                  email_confirmation_link=None, company_alias=None,
+                  has_sso_account=False)
     context.add_actor(actor)
 
 
@@ -70,7 +74,7 @@ def reg_create_sso_account_associated_with_company(context, supplier_alias,
                      "No, but we are preparing to"]
     select_random_company(context, supplier_alias, company_alias)
     reg_confirm_company_selection(context, supplier_alias, company_alias)
-    reg_confirm_export_status(context, supplier_alias, company_alias,
+    reg_confirm_export_status(context, supplier_alias,
                               random.choice(export_status))
     reg_create_sso_account(context, supplier_alias, company_alias)
     reg_sso_account_should_be_created(context, supplier_alias)
@@ -118,3 +122,11 @@ def sso_create_standalone_unverified_sso_account(context, supplier_alias):
     reg_create_standalone_sso_account(context, supplier_alias)
     reg_sso_account_should_be_created(context, supplier_alias)
     reg_should_get_verification_email(context, supplier_alias, subject)
+
+
+def sso_create_standalone_verified_sso_account(context, supplier_alias):
+    sso_create_standalone_unverified_sso_account(context, supplier_alias)
+    reg_open_email_confirmation_link(context, supplier_alias)
+    sso_supplier_confirms_email_address(context, supplier_alias)
+    sso_should_be_on_landing_page(context, supplier_alias)
+    sso_should_be_signed_in_to_sso_account(context, supplier_alias)
