@@ -64,10 +64,12 @@ SECTORS = [
     "WATER"
 ]
 
+NO_EXPORT_INTENT_LABEL = "No, we are not planning to sell overseas"
+
 EXPORT_STATUSES = {
     "Yes, in the last year": "YES",
     "Yes, 1 to 2 years ago": "ONE_TWO_YEARS_AGO",
     "Yes, but more than 2 years ago": "OVER_TWO_YEARS_AGO",
     "No, but we are preparing to": "NOT_YET",
-    "No, we are not planning to sell overseas": "NO_INTENTION"
+    NO_EXPORT_INTENT_LABEL: "NO_INTENTION"
 }
