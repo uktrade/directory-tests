@@ -170,9 +170,11 @@ def make_request(method: Method, url, *, session=None, params=None,
     if cookies:
         logging.debug("REQ Cookies: %s", cookies)
     if data:
-        logging.debug("REQ Data: %s", res.request.body)
-    if files:
-        logging.debug("REQ Files: %s", res.request.body)
+        if files:
+            logging.debug("REQ Body (trimmed): %s",
+                          res.request.body[0:trim_offset])
+        else:
+            logging.debug("REQ Data: %s", res.request.body)
     logging.debug("RSP Status: %s %s", res.status_code, res.reason)
     logging.debug("RSP URL: %s", res.url)
     logging.debug("RSP Headers: %s", res.headers)
@@ -182,7 +184,11 @@ def make_request(method: Method, url, *, session=None, params=None,
         for resp in res.history:
             logging.debug("Intermediate REQ: %s %s", resp.request.method, resp.url)
             logging.debug("Intermediate REQ Headers: %s", resp.request.headers)
-            logging.debug("Intermediate REQ Body: %s", resp.request.body)
+            if files:
+                logging.debug("Intermediate REQ Body (trimmed): %s",
+                              resp.request.body[0:trim_offset])
+            else:
+                logging.debug("Intermediate REQ Body: %s", resp.request.body)
             logging.debug("Intermediate RESP: %d %s", resp.status_code, resp.reason)
             logging.debug("Intermediate RESP Headers: %s", resp.headers)
             logging.debug("Intermediate RESP Content: %s",
