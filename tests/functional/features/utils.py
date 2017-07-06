@@ -385,7 +385,7 @@ def find_confirmation_email_msg(bucket, actor, subject):
                               "%s", subject)
                 result = extract_plain_text_payload(msg)
                 found = True
-                delete_message_from_s3(key)
+                delete_message_from_s3(bucket, key)
             else:
                 logging.debug("Message from %s to %s had a non-matching"
                               "subject: '%s'", msg['From'], msg['To'],
