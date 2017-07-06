@@ -19,8 +19,8 @@ from tests.functional.features.steps.fab_when_impl import (
     reg_supplier_confirms_email_address,
     reg_supplier_is_not_ready_to_export,
     select_random_company,
-    sso_supplier_confirms_email_address,
-    sso_go_to_create_trade_profile
+    sso_go_to_create_trade_profile,
+    sso_supplier_confirms_email_address
 )
 
 

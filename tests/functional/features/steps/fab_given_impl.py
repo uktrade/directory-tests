@@ -15,7 +15,8 @@ from tests.functional.features.steps.fab_then_impl import (
     reg_should_get_verification_email,
     reg_sso_account_should_be_created,
     sso_should_be_on_landing_page,
-    sso_should_be_signed_in_to_sso_account)
+    sso_should_be_signed_in_to_sso_account
+)
 from tests.functional.features.steps.fab_when_impl import (
     bp_confirm_registration_and_send_letter,
     bp_provide_company_details,
@@ -26,12 +27,14 @@ from tests.functional.features.steps.fab_when_impl import (
     reg_confirm_company_selection,
     reg_confirm_export_status,
     reg_create_sso_account,
+    reg_create_standalone_sso_account,
     reg_open_email_confirmation_link,
     reg_supplier_confirms_email_address,
     select_random_company,
-    reg_create_standalone_sso_account,
+    sso_go_to_create_trade_profile,
     sso_supplier_confirms_email_address
 )
+from tests.functional.features.utils import get_positive_exporting_status
 from tests.settings import EMAIL_VERIFICATION_MSG_SUBJECT
 
 
@@ -68,14 +71,10 @@ def unauthenticated_supplier(context, supplier_alias):
 
 def reg_create_sso_account_associated_with_company(context, supplier_alias,
                                                    company_alias):
-    export_status = ["Yes, in the last year",
-                     "Yes, 1 to 2 years ago",
-                     "Yes, but more than 2 years ago",
-                     "No, but we are preparing to"]
+    export_status = get_positive_exporting_status()
     select_random_company(context, supplier_alias, company_alias)
     reg_confirm_company_selection(context, supplier_alias, company_alias)
-    reg_confirm_export_status(context, supplier_alias,
-                              random.choice(export_status))
+    reg_confirm_export_status(context, supplier_alias, export_status)
     reg_create_sso_account(context, supplier_alias, company_alias)
     reg_sso_account_should_be_created(context, supplier_alias)
 
@@ -130,3 +129,15 @@ def sso_create_standalone_verified_sso_account(context, supplier_alias):
     sso_supplier_confirms_email_address(context, supplier_alias)
     sso_should_be_on_landing_page(context, supplier_alias)
     sso_should_be_signed_in_to_sso_account(context, supplier_alias)
+
+
+def reg_select_random_company_and_confirm_export_status(
+        context, supplier_alias, company_alias):
+    export_status = get_positive_exporting_status()
+    sso_create_standalone_verified_sso_account(context, supplier_alias)
+    sso_should_be_signed_in_to_sso_account(context, supplier_alias)
+    sso_go_to_create_trade_profile(context, supplier_alias)
+    select_random_company(context, supplier_alias, company_alias)
+    reg_confirm_company_selection(context, supplier_alias, company_alias)
+    reg_confirm_export_status(context, supplier_alias, export_status)
+    bp_should_be_prompted_to_build_your_profile(context, supplier_alias)

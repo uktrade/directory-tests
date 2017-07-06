@@ -4,15 +4,19 @@
 import email
 import logging
 import os
+import random
 from enum import Enum
 
 import requests
+from boto.exception import S3ResponseError
 from boto.s3 import connect_to_region
 from boto.s3.connection import OrdinaryCallingFormat
 from requests.models import Response
 
 from tests.functional.features.db_cleanup import get_dir_db_connection
 from tests.settings import (
+    EXPORT_STATUSES,
+    NO_EXPORT_INTENT_LABEL,
     S3_ACCESS_KEY_ID,
     S3_BUCKET,
     S3_REGION,
@@ -328,28 +332,33 @@ def find_confirmation_email_msg(bucket, actor, subject):
         logging.debug("Processing email file: %s", key.key)
         try:
             msg_contents = key.get_contents_as_string().decode("utf-8")
-            msg = email.message_from_string(msg_contents)
-            if msg['To'].strip().lower() == actor.email.lower():
-                logging.debug("Found an email addressed at: %s", msg['To'])
-                if msg['Subject'] == subject:
-                    logging.debug("Found email confirmation message entitled: "
-                                  "%s", subject)
-                    res = extract_plain_text_payload(msg)
-                    found = True
-                    logging.debug("Deleting message %s", key.key)
+        except S3ResponseError as s3ex:
+            logging.error("Something went wrong when getting an email msg "
+                          "from S3: %s", s3ex)
+            raise
+        msg = email.message_from_string(msg_contents)
+        if msg['To'].strip().lower() == actor.email.lower():
+            logging.debug("Found an email addressed at: %s", msg['To'])
+            if msg['Subject'] == subject:
+                logging.debug("Found email confirmation message entitled: "
+                              "%s", subject)
+                res = extract_plain_text_payload(msg)
+                found = True
+                logging.debug("Deleting message %s", key.key)
+                try:
                     bucket.delete_key(key.key)
                     logging.debug("Successfully deleted message %s from S3",
                                   key.key)
-                else:
-                    logging.debug("Message from %s to %s had a non-matching"
-                                  "subject: '%s'", msg['From'], msg['To'],
-                                  msg['Subject'])
+                except S3ResponseError as s3ex:
+                    logging.error("Something went wrong when deleting msg: "
+                                  "%s - %s", key.key, s3ex)
             else:
-                logging.debug("Message %s was addressed at: %s", key.key,
-                              msg['To'])
-        except Exception as ex:
-            logging.error("Something went wrong when getting an email msg "
-                          "from S3: %s", ex)
+                logging.debug("Message from %s to %s had a non-matching"
+                              "subject: '%s'", msg['From'], msg['To'],
+                              msg['Subject'])
+        else:
+            logging.debug("Message %s was addressed at: %s", key.key,
+                          msg['To'])
 
     assert found, ("Could not find email confirmation message for {}"
                    .format(actor.email))
@@ -438,3 +447,14 @@ def check_response(response: Response, status_code: int, *,
         assert new_location.startswith(location_starts_with), (
             "Expected Location header to start with: '{}' but got '{}' instead."
             .format(location_starts_with, response.headers.get("Location")))
+
+
+def get_positive_exporting_status():
+    """Select random Exporting Status that allows you to register with
+    Find a Buyer service.
+
+    :return: an exporting status accepted by Find a Buyer service
+    :rtype: str
+    """
+    EXPORT_STATUSES.pop(NO_EXPORT_INTENT_LABEL, 0)
+    return random.choice(list(EXPORT_STATUSES))
