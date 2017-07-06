@@ -183,3 +183,4 @@ def sso_should_be_signed_in_to_sso_account(context, supplier_alias):
     response = context.response
     assert response.cookies.get("sessionid") is not None
     assert "Sign out" in response.content.decode("utf-8")
+    logging.debug("%s is logged in to the SSO account".format(supplier_alias))
