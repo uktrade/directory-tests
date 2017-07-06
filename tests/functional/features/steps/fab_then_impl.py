@@ -7,6 +7,7 @@ import requests
 from retrying import retry
 
 from tests.functional.features.utils import (
+    check_hash_of_remote_file,
     check_response,
     extract_csrf_middleware_token,
     extract_email_confirmation_link,
@@ -188,20 +189,23 @@ def sso_should_be_signed_in_to_sso_account(context, supplier_alias):
     logging.debug("%s is logged in to the SSO account".format(supplier_alias))
 
 
-def prof_should_see_logo_picture(context, supplier_alias, picture):
+def prof_should_see_logo_picture(context, supplier_alias):
+    """Will check if Company's Logo visible on FAB profile page is the same as
+    the uploaded one.
+
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type supplier_alias: str
+    """
     actor = context.get_actor(supplier_alias)
     company = context.get_unregistered_company(actor.company_alias)
     logo_url = company.logo_url
     logo_hash = company.logo_hash
+    logo_picture = company.logo_picture
 
     logging.debug("Fetching logo image visible on the %s's FAB profile page",
                   company.title)
-    response = requests.get(logo_url)
-    visible_logo_hash = hashlib.md5(response.content).hexdigest()
-    assert logo_hash == visible_logo_hash, (
-        "Logo picture visible on %s FAB profile page is not the same as "
-        "expected %s. Expected file should have md5 hash %s but got a file "
-        "with hash: %s".format(company.title, picture, logo_hash,
-                               visible_logo_hash))
+    check_hash_of_remote_file(logo_hash, logo_url)
     logging.debug("The Logo visible on the %s's FAB profile page is the same "
-                  "as uploaded %s", company.title, picture)
+                  "as uploaded %s", company.title, logo_picture)
