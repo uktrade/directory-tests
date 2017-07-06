@@ -1217,21 +1217,23 @@ def prof_go_to_edit_logo_page(context, supplier_alias):
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
 
 
-def prof_upload_logo(context, supplier_alias, filename: str):
+def prof_upload_logo(context, supplier_alias, picture: str):
     """Upload Company's logo & extract newly uploaded logo image URL.
 
     NOTE:
-    filename must contain an absolute path to the uploaded picture.
+    picture must represent file stored in ./tests/functional/files
 
     :param context: behave `context` object
     :type  context: behave.runner.Context
     :param supplier_alias: alias of the Actor used in the scope of the scenario
     :type  supplier_alias: str
-    :param filename: absolute path to the picture file
-    :type  filename: str
+    :param picture: name of the picture file stored in ./tests/functional/files
+    :type  picture: str
     """
     actor = context.get_actor(supplier_alias)
     session = actor.session
+    company = context.get_unregistered_company(actor.company_alias)
+    filename = get_absolute_path_of_file(picture)
 
     # Upload company's logo
     headers = {"Referer": get_absolute_url("ui-buyer:upload-logo")}
@@ -1254,7 +1256,13 @@ def prof_upload_logo(context, supplier_alias, filename: str):
     expected = ["Your company is published"]
     check_response(response, 200, body_contains=expected)
 
-    context.logo_url = extract_logo_url(response)
+    logging.debug("Successfully uploaded logo picture: %s", picture)
+
+    # Keep logo details in Company's scenario data
+    logo_url = extract_logo_url(response)
+    md5_hash = get_md5_hash_of_file(filename)
+    context.set_company_logo_detail(
+        company.alias, picture=picture, hash=md5_hash, url=logo_url)
 
 
 def prof_supplier_uploads_logo(context, supplier_alias, picture):
@@ -1266,8 +1274,5 @@ def prof_supplier_uploads_logo(context, supplier_alias, picture):
     :type supplier_alias: str
     :param picture: name of the picture file stored in ./tests/functional/files
     """
-    filename = get_absolute_path_of_file(picture)
-    md5_hash = get_md5_hash_of_file(filename)
-    context.logo_md5_hash = md5_hash
     prof_go_to_edit_logo_page(context, supplier_alias)
-    prof_upload_logo(context, supplier_alias, filename)
+    prof_upload_logo(context, supplier_alias, picture)
