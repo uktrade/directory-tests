@@ -17,6 +17,7 @@ from retrying import retry
 from tests.functional.features.db_cleanup import get_dir_db_connection
 from tests.settings import (
     EXPORT_STATUSES,
+    NO_EXPORT_INTENT_LABEL,
     S3_ACCESS_KEY_ID,
     S3_BUCKET,
     S3_REGION,
@@ -491,10 +492,5 @@ def get_positive_exporting_status():
     :return: an exporting status accepted by Find a Buyer service
     :rtype: str
     """
-    return random.choice(
-        list(
-            filter(lambda x: x != "No, we are not planning to sell overseas",
-                   EXPORT_STATUSES
-                   )
-        )
-    )
+    EXPORT_STATUSES.pop(NO_EXPORT_INTENT_LABEL, 0)
+    return random.choice(list(EXPORT_STATUSES))
