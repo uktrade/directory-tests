@@ -208,7 +208,6 @@ Feature: Trade Profile
         | Anfiteatro_El_Jem.jpeg | Kobe_Port_Tower.jpg |
 
 
-    @wip
     @ED-1759
     @profile
     @logo
