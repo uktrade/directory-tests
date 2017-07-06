@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 """FAB Given step definitions."""
 import logging
+import hashlib
 
+import requests
 from retrying import retry
 
 from tests.functional.features.utils import (
@@ -184,3 +186,22 @@ def sso_should_be_signed_in_to_sso_account(context, supplier_alias):
     assert response.cookies.get("sessionid") is not None
     assert "Sign out" in response.content.decode("utf-8")
     logging.debug("%s is logged in to the SSO account".format(supplier_alias))
+
+
+def prof_should_see_logo_picture(context, supplier_alias, picture):
+    actor = context.get_actor(supplier_alias)
+    company = context.get_unregistered_company(actor.company_alias)
+    logo_url = company.logo_url
+    logo_hash = company.logo_hash
+
+    logging.debug("Fetching logo image visible on the %s's FAB profile page",
+                  company.title)
+    response = requests.get(logo_url)
+    visible_logo_hash = hashlib.md5(response.content).hexdigest()
+    assert logo_hash == visible_logo_hash, (
+        "Logo picture visible on %s FAB profile page is not the same as "
+        "expected %s. Expected file should have md5 hash %s but got a file "
+        "with hash: %s".format(company.title, picture, logo_hash,
+                               visible_logo_hash))
+    logging.debug("The Logo visible on the %s's FAB profile page is the same "
+                  "as uploaded %s", company.title, picture)

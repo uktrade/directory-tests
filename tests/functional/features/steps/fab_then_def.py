@@ -8,6 +8,7 @@ from tests.functional.features.steps.fab_then_impl import (
     prof_should_be_on_profile_page,
     prof_should_be_told_about_missing_description,
     prof_should_be_told_that_company_is_published,
+    prof_should_see_logo_picture,
     reg_should_get_verification_email,
     reg_sso_account_should_be_created,
     reg_supplier_has_to_verify_email_first,
@@ -79,3 +80,10 @@ def then_supplier_should_be_on_profile_landing_page(context, supplier_alias):
 @then('"{supplier_alias}" should be signed in to SSO/great.gov.uk account')
 def then_supplier_should_be_signed_in_to_sso_account(context, supplier_alias):
     sso_should_be_signed_in_to_sso_account(context, supplier_alias)
+
+
+@then('"{supplier_alias}" should see "{picture}" picture on FAB Company\'s '
+      'Directory Profile page')
+def then_supplier_should_see_logo_picture_on_fab(
+        context, supplier_alias, picture):
+    prof_should_see_logo_picture(context, supplier_alias, picture)
