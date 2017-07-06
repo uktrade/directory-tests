@@ -524,3 +524,17 @@ def extract_logo_url(response):
     logo_url = extract_by_css(response, css_selector)
     assert logo_url, "Could not find Company's logo URL"
     return logo_url
+
+
+def check_hash_of_remote_file(expected_hash, file_url):
+    """Check if the md5 hash of the file is the same as expected.
+
+    :param expected_hash: expected md5 hash
+    :param file_url: URL to the file to check
+    """
+    logging.debug("Fetching file: %s", file_url)
+    response = requests.get(file_url)
+    file_hash = hashlib.md5(response.content).hexdigest()
+    assert expected_hash == file_hash, (
+        "Expected hash of file downloaded from %s to be %s but got %s"
+        .format(expected_hash, file_hash))
