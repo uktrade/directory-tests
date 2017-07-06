@@ -8,6 +8,7 @@ from tests.functional.features.steps.fab_when_impl import (
     bp_provide_full_name,
     bp_select_random_sector,
     prof_attempt_to_sign_in_to_fab,
+    prof_to_upload_unsupported_logos,
     prof_sign_in_to_fab,
     prof_supplier_uploads_logo,
     prof_verify_company,
@@ -131,3 +132,9 @@ def when_supplier_decide_to_create_trade_profile(context, supplier_alias):
 @when('"{supplier_alias}" uploads "{picture}" as company\'s logo')
 def when_supplier_uploads_logo(context, supplier_alias, picture):
     prof_supplier_uploads_logo(context, supplier_alias, picture)
+
+
+@when('"{supplier_alias}" attempts to upload a file of unsupported type as '
+      'company\'s logo')
+def when_supplier_attempts_to_upload_unsupported_file(context, supplier_alias):
+    prof_to_upload_unsupported_logos(context, supplier_alias, context.table)
