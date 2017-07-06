@@ -122,7 +122,10 @@ def find_active_company_without_fas_profile(alias):
                                   number=json[0]["company_number"],
                                   details=json[0],
                                   summary=None,
-                                  description=None)
+                                  description=None,
+                                  logo_picture=None,
+                                  logo_url=None,
+                                  logo_hash=None)
     return company
 
 

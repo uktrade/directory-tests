@@ -22,7 +22,8 @@ Actor = namedtuple(
 UnregisteredCompany = namedtuple(
     'UnregisteredCompany',
     [
-        'alias', 'title', 'number', 'details', 'summary', 'description'
+        'alias', 'title', 'number', 'details', 'summary', 'description',
+        'logo_picture', 'logo_url', 'logo_hash'
     ]
 )
 
