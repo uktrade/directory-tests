@@ -334,7 +334,7 @@ def get_email_from_s3(key):
     try:
         message_contents = key.get_contents_as_string().decode("utf-8")
     except S3ResponseError as s3_exception:
-        logging.error("Something went wrong when getting an email message "
+        logging.debug("Something went wrong when getting an email message "
                       "from S3: %s", s3_exception)
         raise
     return email.message_from_string(message_contents)
@@ -360,8 +360,9 @@ def delete_message_from_s3(bucket, key):
         logging.debug("Successfully deleted message %s from S3",
                       key.key)
     except S3ResponseError as s3ex:
-        logging.error("Something went wrong when deleting msg: "
+        logging.debug("Something went wrong when deleting msg: "
                       "%s - %s", key.key, s3ex)
+        raise
 
 
 def find_confirmation_email_msg(bucket, actor, subject):
