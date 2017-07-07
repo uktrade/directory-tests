@@ -11,6 +11,12 @@ from scrapy.selector import Selector
 
 from tests import get_absolute_url
 from tests.functional.features.context_utils import Company
+from tests.functional.features.pages import (
+    fab_ui_edit_address,
+    fab_ui_edit_details,
+    fab_ui_edit_sector
+)
+from tests.functional.features.pages.common import DETAILS
 from tests.functional.features.steps.fab_then_impl import (
     prof_should_be_on_profile_page,
     prof_should_be_told_that_company_is_not_verified_yet,
@@ -1184,3 +1190,37 @@ def sso_go_to_create_trade_profile(context, supplier_alias):
                 "Connect directly with international buyers"
                 ]
     check_response(response, 200, body_contains=expected)
+
+
+def prof_update_company_details(context, supplier_alias, table_of_details):
+    """Update selected Company's details.
+
+    NOTE:
+    `table_of_details` contains names of details to update.
+    Passing `table_of_details` can be avoided as we already have access to
+    `context` object, yet in order to be more explicit, we're making it
+    a mandatory argument.
+
+    :param context: behave `context` object
+    :type  context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type  supplier_alias: str
+    :param table_of_details: context.table containing data table
+            see: https://pythonhosted.org/behave/gherkin.html#table
+    """
+    details_to_update = [row["detail"] for row in table_of_details]
+
+    title = DETAILS["TITLE"] in details_to_update
+    keywords = DETAILS["KEYWORDS"] in details_to_update
+    website = DETAILS["WEBSITE"] in details_to_update
+    size = DETAILS["SIZE"] in details_to_update
+    sector = DETAILS["SECTOR"] in details_to_update
+    recipient = DETAILS["RECIPIENT"] in details_to_update
+
+    fab_ui_edit_details.go_to(context, supplier_alias)
+    fab_ui_edit_details.update_details(context, supplier_alias,
+                                       title=title, keywords=keywords,
+                                       website=website, size=size)
+    fab_ui_edit_sector.update_sector(context, supplier_alias, update=sector)
+    fab_ui_edit_address.update_letters_recipient(context, supplier_alias,
+                                                 update=recipient)
