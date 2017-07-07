@@ -225,8 +225,6 @@ def patch_context(context):
         set_actor_has_sso_account, context)
     context.set_company_for_actor = MethodType(set_company_for_actor, context)
     context.set_company_description = MethodType(set_company_description, context)
-    context.add_unregistered_company = MethodType(
-        add_unregistered_company, context)
-    context.get_unregistered_company = MethodType(
-        get_unregistered_company, context)
+    context.add_company = MethodType(add_company, context)
+    context.get_company = MethodType(get_company, context)
     context.set_company_details = MethodType(set_company_details, context)

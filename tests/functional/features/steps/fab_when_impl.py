@@ -623,7 +623,8 @@ def bp_select_random_sector(context, supplier_alias):
     logging.debug("Supplier is on the Your company address page")
     token = extract_csrf_middleware_token(response)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
-    context.details = bp_extract_company_details(response)
+    details = bp_extract_company_address_details(response)
+    context.set_company_details(actor.company_alias, address_details=details)
 
 
 def bp_provide_full_name(context, supplier_alias):
@@ -636,7 +637,8 @@ def bp_provide_full_name(context, supplier_alias):
     :type supplier_alias: str
     """
     actor = context.get_actor(supplier_alias)
-    details = context.details
+    company = context.get_company(actor.company_alias)
+    details = company.address_details
     session = actor.session
     csrfmiddlewaretoken = actor.csrfmiddlewaretoken
     url = get_absolute_url("ui-buyer:company-edit")
