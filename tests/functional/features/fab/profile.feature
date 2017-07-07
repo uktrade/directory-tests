@@ -156,3 +156,27 @@ Feature: Trade Profile
 
       Then "Peter Alder" should be on edit Company's Directory Profile page
       And "Peter Alder" should be told that her company has no description
+
+
+    @ED-1760
+    @fab
+    @profile
+    Scenario: Supplier should be able to update company’s "contact" details
+      Given "Annette Geissinger" has created and verified profile for randomly selected company "Y"
+
+      When "Annette Geissinger" updates company's details
+        | detail                      |
+        | business name               |
+        | website                     |
+        | keywords                    |
+        | number of employees         |
+        | sector of interest          |
+        | letters recipient full name |
+
+      Then "Annette Geissinger" should see new details of FAB Company's Directory Profile page
+        | detail                      |
+        | business name               |
+        | website                     |
+        | keywords                    |
+        | number of employees         |
+        | sector of interest          |
