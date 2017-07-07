@@ -4,10 +4,7 @@ import logging
 import random
 
 from tests import get_absolute_url
-from tests.functional.features.pages import fab_ui_edit_address
-from tests.functional.features.pages.utils import (
-    extract_and_set_csrf_middleware_token
-)
+from tests.functional.features.pages import fab_ui_profile
 from tests.functional.features.utils import Method, check_response, make_request
 from tests.settings import SECTORS
 
@@ -51,10 +48,9 @@ def update_sector(
             }
 
     response = make_request(Method.POST, URL, session=session, headers=headers,
-                            data=data, allow_redirects=False, context=context)
+                            data=data, allow_redirects=True, context=context)
 
-    fab_ui_edit_address.should_be_here(response)
-    extract_and_set_csrf_middleware_token(context, response, supplier_alias)
+    fab_ui_profile.should_be_here(response)
     context.set_company_details(company.alias, sector=new_sector)
     logging.debug("%s set Company's Sector of Interest to: %s", supplier_alias,
                   new_sector)
