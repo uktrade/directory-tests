@@ -105,15 +105,6 @@ def test_directory_supplier_verified_user():
     }
 
 
-def test_directory_supplier_unverified_user():
-    token = 'Bearer {token}'.format(token=users['unverified']['token'])
-    headers = {'Authorization': token}
-    url = get_absolute_url('profile:directory-supplier')
-    response = requests.get(url, headers=headers)
-
-    assert response.status_code == http.client.NOT_FOUND
-
-
 def test_directory_supplier_invalid_user_token():
     token = 'Bearer {token}'.format(token='foo')
     headers = {'Authorization': token}
