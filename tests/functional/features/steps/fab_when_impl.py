@@ -10,7 +10,7 @@ from requests.models import Response
 from scrapy.selector import Selector
 
 from tests import get_absolute_url
-from tests.functional.features.context_utils import UnregisteredCompany
+from tests.functional.features.context_utils import Company
 from tests.functional.features.steps.fab_then_impl import (
     prof_should_be_on_profile_page,
     prof_should_be_told_that_company_is_not_verified_yet,
@@ -77,8 +77,8 @@ def find_active_company_without_fas_profile(alias):
     """Will find an active company without a FAS profile.
 
     :param alias: alias that will be given to the found company
-    :return: an UnregisteredCompany named tuple
-    :rtype: test.functional.features.ScenarioData.UnregisteredCompany
+    :return: an Company named tuple
+    :rtype: test.functional.features.ScenarioData.Company
     """
     has_profile = True
     exists = False
@@ -114,12 +114,9 @@ def find_active_company_without_fas_profile(alias):
     logging.debug("It took %s attempt(s) to find an active Company without a "
                   "FAS profile: %s - %s", counter, json[0]["title"],
                   json[0]["company_number"])
-    company = UnregisteredCompany(alias=alias,
-                                  title=json[0]["title"].strip(),
-                                  number=json[0]["company_number"],
-                                  details=json[0],
-                                  summary=None,
-                                  description=None)
+    company = Company(
+        alias=alias, title=json[0]["title"].strip(),
+        number=json[0]["company_number"], companies_house_details=json[0])
     return company
 
 
@@ -142,7 +139,7 @@ def select_random_company(context, supplier_alias, alias):
     :type alias: str
     """
     company = find_active_company_without_fas_profile(alias)
-    context.add_unregistered_company(company)
+    context.add_company(company)
 
     # Once we have company's details, we can select it for registration
     session = context.get_actor(supplier_alias).session
@@ -177,7 +174,7 @@ def reg_confirm_company_selection(context, supplier_alias, alias):
     actor = context.get_actor(supplier_alias)
     token = actor.csrfmiddlewaretoken
     session = actor.session
-    company = context.get_unregistered_company(alias)
+    company = context.get_company(alias)
     url = ("{}?company_number={}"
            .format(get_absolute_url('ui-buyer:register-confirm-company'),
                    company.number))
@@ -186,7 +183,8 @@ def reg_confirm_company_selection(context, supplier_alias, alias):
             "enrolment_view-current_step": "company",
             "company-company_name": company.title,
             "company-company_number": company.number,
-            "company-company_address": company.details["address_snippet"]}
+            "company-company_address":
+                company.companies_house_details["address_snippet"]}
 
     response = make_request(Method.POST, url, session=session, headers=headers,
                             data=data, allow_redirects=False, context=context)
@@ -254,7 +252,7 @@ def submit_export_status_form(context, supplier_alias, export_status):
     :type  export_status: str
     """
     actor = context.get_actor(supplier_alias)
-    company = context.get_unregistered_company(actor.company_alias)
+    company = context.get_company(actor.company_alias)
     session = actor.session
     token = actor.csrfmiddlewaretoken
     referer = get_absolute_url("ui-buyer:register-confirm-export-status")
@@ -339,7 +337,7 @@ def supplier_should_get_to_sso_registration_page(
     :type  export_status: str
     """
     actor = context.get_actor(supplier_alias)
-    company = context.get_unregistered_company(actor.company_alias)
+    company = context.get_company(actor.company_alias)
     company_alias = actor.company_alias
     session = actor.session
     response = context.response
@@ -413,7 +411,7 @@ def reg_create_sso_account(context, supplier_alias, alias):
     """
     actor = context.get_actor(supplier_alias)
     session = actor.session
-    company = context.get_unregistered_company(alias)
+    company = context.get_company(alias)
     export_status = context.export_status
     # Step 1: POST SSO accounts/signup/
     next_url = get_absolute_url("ui-buyer:register-submit-account-details")
@@ -531,7 +529,7 @@ def bp_provide_company_details(context, supplier_alias):
     """
     fake = Factory.create()
     actor = context.get_actor(supplier_alias)
-    company = context.get_unregistered_company(actor.company_alias)
+    company = context.get_company(actor.company_alias)
     session = actor.session
     csrfmiddlewaretoken = actor.csrfmiddlewaretoken
     url = get_absolute_url("ui-buyer:company-edit")
@@ -556,7 +554,7 @@ def bp_provide_company_details(context, supplier_alias):
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
 
 
-def bp_extract_company_details(response: Response):
+def bp_extract_company_address_details(response: Response):
     """Build Profile - extract company details from Your company address page
 
     :param response: requests response
@@ -777,7 +775,7 @@ def prof_verify_company(context, supplier_alias):
     :type supplier_alias: str
     """
     actor = context.get_actor(supplier_alias)
-    company = context.get_unregistered_company(actor.company_alias)
+    company = context.get_company(actor.company_alias)
 
     # STEP 0 - get the verification code from DB
     verification_code = get_verification_code(company.number)
@@ -840,7 +838,7 @@ def prof_view_published_profile(context, supplier_alias):
     """
     actor = context.get_actor(supplier_alias)
     session = actor.session
-    company = context.get_unregistered_company(actor.company_alias)
+    company = context.get_company(actor.company_alias)
 
     # STEP 1 - go to the "View published profile" page
     url = "{}/{}".format(get_absolute_url("ui-supplier:suppliers"),

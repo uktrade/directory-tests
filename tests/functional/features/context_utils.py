@@ -19,10 +19,12 @@ Actor = namedtuple(
         'email_confirmation_link', 'company_alias', 'has_sso_account'
     ]
 )
-UnregisteredCompany = namedtuple(
-    'UnregisteredCompany',
+Company = namedtuple(
+    'Company',
     [
-        'alias', 'title', 'number', 'details', 'summary', 'description'
+        'alias', 'title', 'number', 'address_details', 'summary', 'description',
+        'website', 'keywords', 'no_employees', 'sector', 'letter_recipient',
+        'companies_house_details'
     ]
 )
 
@@ -125,32 +127,32 @@ def reset_actor_session(self, alias):
         logging.debug("Could not find an actor aliased '%s'", alias)
 
 
-def add_unregistered_company(self, company):
-    """Will add an Unregistered Company to Scenario Data.
+def add_company(self, company):
+    """Will add an Company to Scenario Data.
 
     :param self: behave `context` object
     :type self: behave.runner.Context
-    :param company: an instance of UnregisteredCompany Tuple
-    :type company: test.functional.features.ScenarioData.UnregisteredCompany
+    :param company: an instance of Company Tuple
+    :type company: test.functional.features.ScenarioData.Company
     """
-    assert isinstance(company, UnregisteredCompany), (
-        "Expected UnregisteredCompany named tuple but got '{}' instead"
+    assert isinstance(company, Company), (
+        "Expected Company named tuple but got '{}' instead"
         .format(type(company)))
     self.scenario_data.unregistered_companies[company.alias] = company
-    logging.debug("Successfully added Unregistered Company: %s - %s to "
+    logging.debug("Successfully added Company: %s - %s to "
                   "Scenario Data as '%s'", company.title, company.number,
                   company.alias)
 
 
-def get_unregistered_company(self, alias):
+def get_company(self, alias):
     """Get the details of an Unregistered Company from context Scenario Data.
 
     :param self: behave `context` object
     :type self: behave.runner.Context
     :param alias: alias of sought Unregistered Company
     :type alias: str
-    :return: an UnregisteredCompany named tuple
-    :rtype tests.functional.features.ScenarioData.UnregisteredCompany
+    :return: an Company named tuple
+    :rtype tests.functional.features.ScenarioData.Company
     """
     return self.scenario_data.unregistered_companies[alias]
 
