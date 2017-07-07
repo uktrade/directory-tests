@@ -159,6 +159,29 @@ def get_company(self, alias):
     return self.scenario_data.unregistered_companies[alias]
 
 
+def set_company_details(self, alias, *, title=None, website=None, keywords=None,
+                        no_employees=None, sector=None, letter_recipient=None,
+                        address_details=None):
+    companies = self.scenario_data.unregistered_companies
+    if title:
+        companies[alias] = companies[alias]._replace(title=title)
+    if website:
+        companies[alias] = companies[alias]._replace(website=website)
+    if keywords:
+        companies[alias] = companies[alias]._replace(keywords=keywords)
+    if no_employees:
+        companies[alias] = companies[alias]._replace(no_employees=no_employees)
+    if sector:
+        companies[alias] = companies[alias]._replace(sector=sector)
+    if letter_recipient:
+        companies[alias] = companies[alias]._replace(letter_recipient=letter_recipient)
+    if address_details:
+        companies[alias] = companies[alias]._replace(address_details=address_details)
+
+    logging.debug("Successfully updated Company's details %s: %s", alias,
+                  companies[alias])
+
+
 def set_company_description(self, alias, summary, description):
     """Will set summary & description used when building up company's profile.
 
@@ -206,3 +229,4 @@ def patch_context(context):
         add_unregistered_company, context)
     context.get_unregistered_company = MethodType(
         get_unregistered_company, context)
+    context.set_company_details = MethodType(set_company_details, context)
