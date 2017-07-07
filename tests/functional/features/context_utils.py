@@ -27,6 +27,8 @@ Company = namedtuple(
         'companies_house_details'
     ]
 )
+# Set all fields to None by default.
+Company.__new__.__defaults__ = (None,) * len(Company._fields)
 
 
 def initialize_scenario_data():
