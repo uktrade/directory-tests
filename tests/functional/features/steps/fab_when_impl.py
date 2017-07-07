@@ -12,7 +12,6 @@ from scrapy.selector import Selector
 from tests import get_absolute_url
 from tests.functional.features.context_utils import Company
 from tests.functional.features.pages import (
-    fab_ui_edit_address,
     fab_ui_edit_details,
     fab_ui_edit_sector
 )
@@ -1215,12 +1214,9 @@ def prof_update_company_details(context, supplier_alias, table_of_details):
     website = DETAILS["WEBSITE"] in details_to_update
     size = DETAILS["SIZE"] in details_to_update
     sector = DETAILS["SECTOR"] in details_to_update
-    recipient = DETAILS["RECIPIENT"] in details_to_update
 
     fab_ui_edit_details.go_to(context, supplier_alias)
     fab_ui_edit_details.update_details(context, supplier_alias,
                                        title=title, keywords=keywords,
                                        website=website, size=size)
     fab_ui_edit_sector.update_sector(context, supplier_alias, update=sector)
-    fab_ui_edit_address.update_letters_recipient(context, supplier_alias,
-                                                 update=recipient)

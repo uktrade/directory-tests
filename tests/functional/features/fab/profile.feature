@@ -171,7 +171,6 @@ Feature: Trade Profile
         | keywords                    |
         | number of employees         |
         | sector of interest          |
-        | letters recipient full name |
 
       Then "Annette Geissinger" should see new details of FAB Company's Directory Profile page
         | detail                      |
