@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""FAB - Edit Company's Directory Profile page"""
+"""FAB - Edit the name of the letters recipient"""
 import logging
 
 from faker import Factory
