@@ -85,11 +85,9 @@ def test_exops_alerts_anon_user_302():
     assert response.status_code == http.client.FOUND
 
 
-def test_directory_supplier_verified_user():
-    token = 'Bearer {token}'.format(token=users['verified']['token'])
-    headers = {'Authorization': token}
+def test_directory_supplier_verified_user(logged_in_session):
     url = get_absolute_url('profile:directory-supplier')
-    response = requests.get(url, headers=headers)
+    response = logged_in_session.get(url)
 
     assert response.status_code == http.client.OK
     assert response.json() == {
