@@ -69,21 +69,12 @@ def update_profiles(
     session = actor.session
     token = actor.csrfmiddlewaretoken
 
-    if facebook:
-        random_url = "http://facebook.com/{}".format(random.randint(999, 99999))
-        new_facebook = specific_facebook or random_url
-    else:
-        new_facebook = company.facebook
-    if linkedin:
-        random_url = "http://linkedin.com/{}".format(random.randint(999, 99999))
-        new_linkedin = specific_linkedin or random_url
-    else:
-        new_linkedin = company.linkedin
-    if twitter:
-        random_url = "http://twitter.com/{}".format(random.randint(999, 999999))
-        new_twitter = specific_twitter or random_url
-    else:
-        new_twitter = company.twitter
+    fake_fb = "http://facebook.com/{}".format(random.randint(9999, 999999999))
+    fake_li = "http://linkedin.com/{}".format(random.randint(9999, 999999999))
+    fake_tw = "http://twitter.com/{}".format(random.randint(9999, 999999999))
+    new_facebook = specific_facebook or fake_fb if facebook else company.facebook
+    new_linkedin = specific_linkedin or fake_li if linkedin else company.linkedin
+    new_twitter = specific_twitter or fake_tw if twitter else company.twitter
 
     headers = {"Referer": URL}
     data = {"csrfmiddlewaretoken": token,
