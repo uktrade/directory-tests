@@ -207,16 +207,8 @@ Feature: Trade Profile
         | LinkedIn        |
         | Twitter         |
 
-      Then "Peter Alder" should see links to online profiles on FAB Company's Directory Profile page
-        | online profile  |
-        | Facebook        |
-        | LinkedIn        |
-        | Twitter         |
-      And "Peter Alder" should see links to online profiles on FAS Company's Directory Profile page
-        | online profile  |
-        | Facebook        |
-        | LinkedIn        |
-        | Twitter         |
+      Then "Peter Alder" should see links to all online profiles on FAB Company's Directory Profile page
+      And "Peter Alder" should see links to all online profiles on FAS Company's Directory Profile page
 
 
     @ED-1762
@@ -231,8 +223,4 @@ Feature: Trade Profile
         | LinkedIn        |
         | Twitter         |
 
-      Then "Peter Alder" should be told to provide valid links to online profiles
-        | online profile  |
-        | Facebook        |
-        | LinkedIn        |
-        | Twitter         |
+      Then "Peter Alder" should be told to provide valid links to all online profiles
