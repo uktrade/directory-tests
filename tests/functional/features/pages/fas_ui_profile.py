@@ -3,7 +3,7 @@
 import logging
 
 from tests import get_absolute_url
-from tests.functional.features.utils import check_response, make_request, Method
+from tests.functional.features.utils import Method, check_response, make_request
 
 URL = get_absolute_url("ui-supplier:suppliers")
 EXPECTED_STRINGS = [
