@@ -184,7 +184,7 @@ Feature: Trade Profile
     @ED-1761
     @fab
     @profile
-    Scenario: Supplier should be able to add valid online profiles (social media URLs)
+    Scenario: Supplier should be able to add valid links to Online Profiles (social media URLs)
       Given "Peter Alder" has created and verified profile for randomly selected company "Y"
 
       When "Peter Alder" adds links to online profiles
