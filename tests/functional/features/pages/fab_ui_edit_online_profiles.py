@@ -134,3 +134,26 @@ def update_profiles_w_invalid_urls(
                             data=data, allow_redirects=True, context=context)
     # check whether we're still on the same page
     should_be_here(response)
+
+
+def should_see_errors(context, supplier_alias, *, facebook=True, linkedin=True,
+                      twitter=True):
+    """Check if all required errors are visible.
+
+    :param context: behave `context` object
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :param facebook: check for a Facebook URL error if True, or not if False
+    :param linkedin: check for a LinkedIn URL error if True, or not if False
+    :param twitter: check for a Twitter URL error if True, or not if False
+    """
+    content = context.response.content.decode("utf-8")
+    if facebook:
+        assert "Please provide a link to Facebook." in content
+    if linkedin:
+        assert "Please provide a link to LinkedIn." in content
+    if twitter:
+        assert "Please provide a link to Twitter." in content
+    logging.debug("%s was not able to set Company's Online Profile links using"
+                  " invalid URLs to: %s %s %s",
+                  supplier_alias, "Facebook" if facebook else "",
+                  "LinkedIn" if linkedin else "", "Twitter" if twitter else "")
