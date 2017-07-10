@@ -16,7 +16,7 @@ from tests.functional.features.pages import (
     fab_ui_edit_online_profiles,
     fab_ui_edit_sector
 )
-from tests.functional.features.pages.common import DETAILS
+from tests.functional.features.pages.common import DETAILS, PROFILES
 from tests.functional.features.steps.fab_then_impl import (
     prof_should_be_on_profile_page,
     prof_should_be_told_that_company_is_not_verified_yet,
@@ -1241,3 +1241,23 @@ def prof_add_online_profiles(context, supplier_alias, online_profiles):
     fab_ui_edit_online_profiles.update_profiles(
         context, supplier_alias, facebook=facebook, linkedin=linkedin,
         twitter=twitter)
+
+
+def prof_add_invalid_online_profiles(context, supplier_alias, online_profiles):
+    """Attempt to uppdate links to Company's Online Profiles using invalid URLs.
+
+    :param context: behave `context` object
+    :type  context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type  supplier_alias: str
+    :param online_profiles: context.table containing data table
+            see: https://pythonhosted.org/behave/gherkin.html#table
+    """
+    profiles = [row["online profile"] for row in online_profiles]
+    facebook = PROFILES["FACEBOOK"] in profiles
+    linkedin = PROFILES["LINKEDiN"] in profiles
+    twitter = PROFILES["TWITTER"] in profiles
+    fab_ui_edit_online_profiles.go_to(context, supplier_alias)
+    fab_ui_edit_online_profiles.update_profiles(
+        context, supplier_alias, invalid_urls=True, facebook=facebook,
+        linkedin=linkedin, twitter=twitter)

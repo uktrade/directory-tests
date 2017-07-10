@@ -7,6 +7,7 @@ from tests.functional.features.steps.fab_when_impl import (
     bp_provide_company_details,
     bp_provide_full_name,
     bp_select_random_sector,
+    prof_add_invalid_online_profiles,
     prof_add_online_profiles,
     prof_attempt_to_sign_in_to_fab,
     prof_sign_in_to_fab,
@@ -137,3 +138,8 @@ def when_supplier_updates_company_details(context, supplier_alias):
 @when('"{supplier_alias}" adds links to online profiles')
 def when_supplier_adds_online_profiles(context, supplier_alias):
     prof_add_online_profiles(context, supplier_alias, context.table)
+
+
+@when('"{supplier_alias}" attempts to use invalid links to online profiles')
+def when_supplier_attempts_to_add_invalid_links(context, supplier_alias):
+    prof_add_invalid_online_profiles(context, supplier_alias, context.table)
