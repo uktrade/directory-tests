@@ -47,23 +47,18 @@ def should_be_here(response, *, number=None):
     logging.debug("Supplier is on FAS Company's Profile page")
 
 
-def should_see_online_profiles(context, supplier_alias, table_of_profiles):
+def should_see_online_profiles(context, supplier_alias):
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
     content = context.response.content.decode("utf-8")
 
-    visible_profiles = [row["online profile"] for row in table_of_profiles]
-    facebook = "Facebook" in visible_profiles
-    linkedin = "LinkedIn" in visible_profiles
-    twitter = "Twitter" in visible_profiles
-
-    if facebook:
+    if company.facebook:
         assert "Visit Facebook" in content
         assert company.facebook in content
-    if linkedin:
+    if company.linkedin:
         assert "Visit LinkedIn" in content
         assert company.linkedin in content
-    if twitter:
+    if company.twitter:
         assert "Visit Twitter" in content
         assert company.twitter in content
     logging.debug("% can see all expected links to Online Profiles on FAB "
