@@ -7,6 +7,7 @@ from tests.functional.features.steps.fab_then_impl import (
     bp_should_be_prompted_to_build_your_profile,
     fas_should_be_on_profile_page,
     prof_should_be_on_profile_page,
+    prof_should_be_told_about_invalid_links,
     prof_should_be_told_about_missing_description,
     prof_should_be_told_that_company_is_published,
     reg_should_get_verification_email,
@@ -100,4 +101,11 @@ def then_supplier_should_see_online_profiles_on_fab(context, supplier_alias):
 def then_supplier_should_see_online_profiles_on_fas(context, supplier_alias):
     fas_ui_profile.go_to(context, supplier_alias)
     fas_ui_profile.should_see_online_profiles(
+        context, supplier_alias, context.table)
+
+
+@then('"{supplier_alias}" should be told to provide valid links to online '
+      'profiles')
+def then_supplier_should_be_told_to_use_valid_links(context, supplier_alias):
+    prof_should_be_told_about_invalid_links(
         context, supplier_alias, context.table)

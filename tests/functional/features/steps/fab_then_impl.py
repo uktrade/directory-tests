@@ -4,6 +4,8 @@ import logging
 
 from retrying import retry
 
+from tests.functional.features.pages import fab_ui_edit_online_profiles
+from tests.functional.features.pages.common import PROFILES
 from tests.functional.features.utils import (
     check_response,
     extract_csrf_middleware_token,
@@ -183,3 +185,13 @@ def sso_should_be_signed_in_to_sso_account(context, supplier_alias):
     response = context.response
     assert response.cookies.get("sessionid") is not None
     assert "Sign out" in response.content.decode("utf-8")
+
+
+def prof_should_be_told_about_invalid_links(context, supplier_alias, profiles):
+    profiles = [row["online profile"] for row in profiles]
+    facebook = PROFILES["FACEBOOK"] in profiles
+    linkedin = PROFILES["LINKEDiN"] in profiles
+    twitter = PROFILES["TWITTER"] in profiles
+    fab_ui_edit_online_profiles.should_see_errors(
+        context, supplier_alias, facebook=facebook, linkedin=linkedin,
+        twitter=twitter)
