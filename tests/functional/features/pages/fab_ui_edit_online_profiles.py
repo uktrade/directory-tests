@@ -173,3 +173,20 @@ def should_see_errors(context, supplier_alias, *, facebook=True, linkedin=True,
         "%s was not able to set Company's Online Profile links using invalid "
         "URLs to: %s %s %s", supplier_alias, "Facebook" if facebook else "",
         "LinkedIn" if linkedin else "", "Twitter" if twitter else "")
+
+
+def remove_links(
+        context, supplier_alias, *, facebook=False, linkedin=False,
+        twitter=False):
+    """Remove links to all existing Online Profiles.
+
+    :param context: behave `context` object
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :param facebook: remove link to Facebook profile if True, or not if False
+    :param linkedin: remove link to LinkedIn profile if True, or not if False
+    :param twitter: remove link to Twitter profile if True, or not if False
+    """
+    update_profiles(
+        context, supplier_alias, facebook=facebook, linkedin=linkedin,
+        twitter=twitter, specific_facebook="", specific_linkedin="",
+        specific_twitter="")
