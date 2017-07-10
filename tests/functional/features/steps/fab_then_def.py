@@ -88,16 +88,14 @@ def then_supplier_should_see_new_details(context, supplier_alias):
     fab_ui_profile.should_see_details(context, supplier_alias, context.table)
 
 
-@then('"{supplier_alias}" should see links to online profiles on FAB Company\'s'
-      ' Directory Profile page')
+@then('"{supplier_alias}" should see links to all online profiles on FAB '
+      'Company\'s Directory Profile page')
 def then_supplier_should_see_online_profiles_on_fab(context, supplier_alias):
-    fab_ui_profile.should_see_online_profiles(
-        context, supplier_alias, context.table)
+    fab_ui_profile.should_see_online_profiles(context, supplier_alias)
 
 
-@then('"{supplier_alias}" should see links to online profiles on FAS Company\'s'
-      ' Directory Profile page')
+@then('"{supplier_alias}" should see links to all online profiles on FAS '
+      'Company\'s Directory Profile page')
 def then_supplier_should_see_online_profiles_on_fas(context, supplier_alias):
     fas_ui_profile.go_to(context, supplier_alias)
-    fas_ui_profile.should_see_online_profiles(
-        context, supplier_alias, context.table)
+    fas_ui_profile.should_see_online_profiles(context, supplier_alias)
