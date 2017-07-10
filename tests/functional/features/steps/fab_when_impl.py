@@ -1261,3 +1261,16 @@ def prof_add_invalid_online_profiles(context, supplier_alias, online_profiles):
     fab_ui_edit_online_profiles.update_profiles(
         context, supplier_alias, invalid_urls=True, facebook=facebook,
         linkedin=linkedin, twitter=twitter)
+
+
+def prof_remove_links_to_online_profiles(context, supplier_alias):
+    actor = context.get_actor(supplier_alias)
+    company = context.get_company(actor.company_alias)
+
+    facebook = True if company.facebook else False
+    linkedin = True if company.linkedin else False
+    twitter = True if company.twitter else False
+
+    fab_ui_edit_online_profiles.remove_links(
+        context, supplier_alias, facebook=facebook, linkedin=linkedin,
+        twitter=twitter)
