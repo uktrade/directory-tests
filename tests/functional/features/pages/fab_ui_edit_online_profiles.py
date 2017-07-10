@@ -3,6 +3,8 @@
 import logging
 import random
 
+from faker import Factory
+
 from tests import get_absolute_url
 from tests.functional.features.pages import fab_ui_profile
 from tests.functional.features.pages.utils import (
@@ -21,6 +23,7 @@ EXPECTED_STRINGS = [
     "Use a full web address (URL) including http:// or https://",
     "Save", "Cancel"
 ]
+FAKE = Factory.create()
 
 
 def should_be_here(response):
@@ -93,3 +96,41 @@ def update_profiles(
     logging.debug("%s set Company's Online Profile links to: Facebook=%s, "
                   "LinkedId=%s, Twitter=%s", supplier_alias, new_facebook,
                   new_linkedin, new_twitter)
+
+
+def update_profiles_w_invalid_urls(
+        context, supplier_alias, *, facebook=True, linkedin=True, twitter=True,
+        specific_facebook=None, specific_linkedin=None, specific_twitter=None):
+    """Try to change Company's Online profiled using invalid URLs.
+
+    :param context: behave `context` object
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :param facebook: change Facebook URL if True, or use the current one if False
+    :param linkedin: change LinkedIn URL if True, or use the current one if False
+    :param twitter: change Twitter URL if True, or use the current one if False
+    :param specific_facebook: use specific Facebook URL
+    :param specific_linkedin: use specific LinkedIn URL
+    :param specific_twitter: use specific Twitter URL
+    """
+    actor = context.get_actor(supplier_alias)
+    company = context.get_company(actor.company_alias)
+    session = actor.session
+    token = actor.csrfmiddlewaretoken
+
+    fake = "http://{}".format(FAKE.domain_name())
+    new_facebook = specific_facebook or fake if facebook else company.facebook
+    new_linkedin = specific_linkedin or fake if linkedin else company.linkedin
+    new_twitter = specific_twitter or fake if twitter else company.twitter
+
+    headers = {"Referer": URL}
+    data = {"csrfmiddlewaretoken": token,
+            "supplier_company_social_links_edit_view-current_step": "social",
+            "social-facebook_url": new_facebook,
+            "social-linkedin_url": new_linkedin,
+            "social-twitter_url": new_twitter
+            }
+
+    response = make_request(Method.POST, URL, session=session, headers=headers,
+                            data=data, allow_redirects=True, context=context)
+    # check whether we're still on the same page
+    should_be_here(response)
