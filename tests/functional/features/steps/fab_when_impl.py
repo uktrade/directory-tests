@@ -1234,9 +1234,9 @@ def prof_add_online_profiles(context, supplier_alias, online_profiles):
             see: https://pythonhosted.org/behave/gherkin.html#table
     """
     profiles = [row["online profile"] for row in online_profiles]
-    facebook = "Facebook" in profiles
-    linkedin = "LinkedIn" in profiles
-    twitter = "Twitter" in profiles
+    facebook = PROFILES["FACEBOOK"] in profiles
+    linkedin = PROFILES["LINKEDiN"] in profiles
+    twitter = PROFILES["TWITTER"] in profiles
     fab_ui_edit_online_profiles.go_to(context, supplier_alias)
     fab_ui_edit_online_profiles.update_profiles(
         context, supplier_alias, facebook=facebook, linkedin=linkedin,
