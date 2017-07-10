@@ -179,3 +179,27 @@ Feature: Trade Profile
         | keywords                    |
         | number of employees         |
         | sector of interest          |
+
+
+    @ED-1761
+    @fab
+    @profile
+    Scenario: Supplier should be able to add valid online profiles (social media URLs)
+      Given "Peter Alder" has created and verified profile for randomly selected company "Y"
+
+      When "Peter Alder" adds links to online profiles
+        | online profile  |
+        | Facebook        |
+        | LinkedIn        |
+        | Twitter         |
+
+      Then "Peter Alder" should see links to online profiles on FAB Company's Directory Profile page
+        | online profile  |
+        | Facebook        |
+        | LinkedIn        |
+        | Twitter         |
+      And "Peter Alder" should see links to online profiles on FAS Company's Directory Profile page
+        | online profile  |
+        | Facebook        |
+        | LinkedIn        |
+        | Twitter         |
