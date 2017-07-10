@@ -63,3 +63,12 @@ def should_see_online_profiles(context, supplier_alias):
         assert company.twitter in content
     logging.debug("% can see all expected links to Online Profiles on FAB "
                   "Company's Directory Profile Page", supplier_alias)
+
+
+def should_not_see_online_profiles(context, supplier_alias):
+    content = context.response.content.decode("utf-8")
+    assert "Visit Facebook" not in content
+    assert "Visit LinkedIn" not in content
+    assert "Visit Twitter" not in content
+    logging.debug("% cannot see links to any Online Profile on FAB "
+                  "Company's Directory Profile Page", supplier_alias)
