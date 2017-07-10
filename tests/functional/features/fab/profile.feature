@@ -224,3 +224,20 @@ Feature: Trade Profile
         | Twitter         |
 
       Then "Peter Alder" should be told to provide valid links to all online profiles
+
+
+    @ED-1763
+    @fab
+    @profile
+    Scenario: Supplier should be able to remove links to all online profiles (social media URLs)
+      Given "Peter Alder" has created and verified profile for randomly selected company "Y"
+      And "Peter Alder" has added links to online profiles
+        | online profile  |
+        | Facebook        |
+        | LinkedIn        |
+        | Twitter         |
+
+      When "Peter Alder" removes links to all online profiles
+
+      Then "Peter Alder" should not see any links to online profiles on FAB Company's Directory Profile page
+      And "Peter Alder" should not see any links to online profiles on FAS Company's Directory Profile page
