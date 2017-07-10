@@ -18,8 +18,8 @@ from tests.functional.features.steps.fab_then_impl import (
 )
 from tests.functional.features.steps.fab_when_impl import (
     prof_set_company_description,
-    prof_sign_out_from_fab
-)
+    prof_sign_out_from_fab,
+    prof_add_invalid_online_profiles)
 from tests.settings import EMAIL_VERIFICATION_MSG_SUBJECT
 
 
@@ -93,3 +93,8 @@ def step_impl(context, supplier_alias):
 def given_supplier_selects_random_company(context, supplier_alias, company_alias):
     reg_select_random_company_and_confirm_export_status(
         context, supplier_alias, company_alias)
+
+
+@given('"{supplier_alias}" has added links to online profiles')
+def given_supplier_adds_valid_links_to_online_profiles(context, supplier_alias):
+    prof_add_invalid_online_profiles(context, supplier_alias, context.table)
