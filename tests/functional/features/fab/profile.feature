@@ -217,3 +217,22 @@ Feature: Trade Profile
         | Facebook        |
         | LinkedIn        |
         | Twitter         |
+
+
+    @ED-1762
+    @fab
+    @profile
+    Scenario: Supplier should NOT be able to use invalid links to Online Profiles (social media URLs)
+      Given "Peter Alder" has created and verified profile for randomly selected company "Y"
+
+      When "Peter Alder" attempts to use invalid links to online profiles
+        | online profile  |
+        | Facebook        |
+        | LinkedIn        |
+        | Twitter         |
+
+      Then "Peter Alder" should be told to provide valid links to online profiles
+        | online profile  |
+        | Facebook        |
+        | LinkedIn        |
+        | Twitter         |
