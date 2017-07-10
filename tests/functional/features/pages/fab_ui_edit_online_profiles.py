@@ -169,7 +169,7 @@ def should_see_errors(context, supplier_alias, *, facebook=True, linkedin=True,
         assert "Please provide a link to LinkedIn." in content
     if twitter:
         assert "Please provide a link to Twitter." in content
-    logging.debug("%s was not able to set Company's Online Profile links using"
-                  " invalid URLs to: %s %s %s",
-                  supplier_alias, "Facebook" if facebook else "",
-                  "LinkedIn" if linkedin else "", "Twitter" if twitter else "")
+    logging.debug(
+        "%s was not able to set Company's Online Profile links using invalid "
+        "URLs to: %s %s %s", supplier_alias, "Facebook" if facebook else "",
+        "LinkedIn" if linkedin else "", "Twitter" if twitter else "")
