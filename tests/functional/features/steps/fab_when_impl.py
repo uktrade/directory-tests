@@ -1244,7 +1244,7 @@ def prof_add_online_profiles(context, supplier_alias, online_profiles):
 
 
 def prof_add_invalid_online_profiles(context, supplier_alias, online_profiles):
-    """Attempt to uppdate links to Company's Online Profiles using invalid URLs.
+    """Attempt to update links to Company's Online Profiles using invalid URLs.
 
     :param context: behave `context` object
     :type  context: behave.runner.Context
