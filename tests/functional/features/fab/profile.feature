@@ -105,6 +105,7 @@ Feature: Trade Profile
 
     @ED-1769
     @login
+    @fab
     Scenario: Suppliers with unverified company profile should be able to logout and log back in
       Given "Annette Geissinger" is an unauthenticated supplier
       And "Annette Geissinger" created a SSO/great.gov.uk account associated with randomly selected company "Company X"
@@ -156,3 +157,16 @@ Feature: Trade Profile
 
       Then "Peter Alder" should be on edit Company's Directory Profile page
       And "Peter Alder" should be told that her company has no description
+
+
+    @ED-1758
+    @fab
+    @login
+    Scenario: Suppliers with verified company profile should be able to logout and log back in
+      Given "Peter Alder" has created and verified profile for randomly selected company "Y"
+      And "Peter Alder" signed out from Find a Buyer service
+
+      When "Peter Alder" signs in to Find a Buyer profile
+
+      Then "Peter Alder" should be on edit Company's Directory Profile page
+      And "Annette Geissinger" should be told that her company is published
