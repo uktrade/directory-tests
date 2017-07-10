@@ -5,8 +5,9 @@ import random
 
 from tests import get_absolute_url
 from tests.functional.features.pages import fab_ui_profile
-from tests.functional.features.pages.utils import \
+from tests.functional.features.pages.utils import (
     extract_and_set_csrf_middleware_token
+)
 from tests.functional.features.utils import Method, check_response, make_request
 
 URL = get_absolute_url("ui-buyer:company-edit-social-media")
