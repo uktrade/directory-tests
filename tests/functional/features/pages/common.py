@@ -9,3 +9,10 @@ DETAILS = {
     "SECTOR": "sector of interest",
     "RECIPIENT": "letters recipient full name"
 }
+
+
+PROFILES = {
+    "FACEBOOK": "Facebook",
+    "LINKEDIN": "LinkedIn",
+    "TWITTER": "Twitter"
+}
