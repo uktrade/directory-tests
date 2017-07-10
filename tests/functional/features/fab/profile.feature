@@ -172,7 +172,7 @@ Feature: Trade Profile
         | number of employees         |
         | sector of interest          |
 
-      Then "Annette Geissinger" should see new details of FAB Company's Directory Profile page
+      Then "Annette Geissinger" should see new details on FAB Company's Directory Profile page
         | detail                      |
         | business name               |
         | website                     |

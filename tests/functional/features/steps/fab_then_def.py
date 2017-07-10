@@ -82,7 +82,7 @@ def then_supplier_should_be_signed_in_to_sso_account(context, supplier_alias):
     sso_should_be_signed_in_to_sso_account(context, supplier_alias)
 
 
-@then('"{supplier_alias}" should see new details of FAB Company\'s Directory '
+@then('"{supplier_alias}" should see new details on FAB Company\'s Directory '
       'Profile page')
 def then_supplier_should_see_new_details(context, supplier_alias):
     fab_ui_profile.should_see_details(context, supplier_alias, context.table)
