@@ -1,18 +1,14 @@
 # -*- coding: utf-8 -*-
 """FAB - Add Case Study - Basic page"""
 import logging
-import random
 
 from faker import Factory
 
 from tests import get_absolute_url
-from tests.functional.features.context_utils import CaseStudy
-from tests.functional.features.pages import fab_ui_case_study_images
 from tests.functional.features.pages.utils import (
     extract_and_set_csrf_middleware_token
 )
 from tests.functional.features.utils import Method, check_response, make_request
-from tests.settings import SECTORS
 
 URL = get_absolute_url("ui-buyer:case-study-add")
 EXPECTED_STRINGS = [
