@@ -22,9 +22,10 @@ Actor = namedtuple(
 CaseStudy = namedtuple(
     'CaseStudy',
     [
-        'title', 'summary', 'description', 'sector', 'website', 'keywords',
-        'image_1', 'image_2', 'image_3', 'caption_1', 'caption_2', 'caption_3',
-        'testimonial', 'source_name', 'source_job', 'source_company'
+        'alias', 'title', 'summary', 'description', 'sector', 'website',
+        'keywords', 'image_1', 'image_2', 'image_3', 'caption_1', 'caption_2',
+        'caption_3', 'testimonial', 'source_name', 'source_job',
+        'source_company'
     ])
 Company = namedtuple(
     'Company',
