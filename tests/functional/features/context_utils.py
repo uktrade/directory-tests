@@ -19,6 +19,13 @@ Actor = namedtuple(
         'email_confirmation_link', 'company_alias', 'has_sso_account'
     ]
 )
+CaseStudy = namedtuple(
+    'CaseStudy',
+    [
+        'title', 'summary', 'description', 'sector', 'website', 'keywords',
+        'image_1', 'image_2', 'image_3', 'caption_1', 'caption_2', 'caption_3',
+        'testimonial', 'source_name', 'source_job', 'source_company'
+    ])
 Company = namedtuple(
     'Company',
     [
@@ -29,6 +36,7 @@ Company = namedtuple(
 )
 # Set all fields to None by default.
 Company.__new__.__defaults__ = (None,) * len(Company._fields)
+CaseStudy.__new__.__defaults__ = (None,) * len(CaseStudy._fields)
 
 
 def initialize_scenario_data():
