@@ -99,3 +99,13 @@ def given_supplier_selects_random_company(context, supplier_alias, company_alias
 @given('"{supplier_alias}" has added links to online profiles')
 def given_supplier_adds_valid_links_to_online_profiles(context, supplier_alias):
     prof_add_invalid_online_profiles(context, supplier_alias, context.table)
+
+
+@given('"{supplier_alias}" created an unverified profile for randomly selected '
+       'company "{company_alias}"')
+def given_unverified_profile(context, supplier_alias, company_alias):
+    unauthenticated_supplier(context, supplier_alias)
+    reg_create_sso_account_associated_with_company(
+        context, supplier_alias, company_alias)
+    reg_confirm_email_address(context, supplier_alias)
+    bp_build_company_profile(context, supplier_alias)

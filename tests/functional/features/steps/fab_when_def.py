@@ -7,6 +7,7 @@ from tests.functional.features.steps.fab_when_impl import (
     bp_provide_company_details,
     bp_provide_full_name,
     bp_select_random_sector,
+    prof_add_case_study,
     prof_add_invalid_online_profiles,
     prof_add_online_profiles,
     prof_attempt_to_sign_in_to_fab,
@@ -149,3 +150,8 @@ def when_supplier_attempts_to_add_invalid_links(context, supplier_alias):
 @when('"{supplier_alias}" removes links to all online profiles')
 def when_supplier_removes_links_to_all_online_profiles(context, supplier_alias):
     prof_remove_links_to_online_profiles(context, supplier_alias)
+
+
+@when('"{supplier_alias}" adds a complete case study called "{case_alias}"')
+def when_supplier_adds_case_study(context, supplier_alias, case_alias):
+    prof_add_case_study(context, supplier_alias, case_alias)
