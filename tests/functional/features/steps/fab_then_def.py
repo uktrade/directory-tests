@@ -5,7 +5,9 @@ from behave import then
 from tests.functional.features.pages import fab_ui_profile, fas_ui_profile
 from tests.functional.features.steps.fab_then_impl import (
     bp_should_be_prompted_to_build_your_profile,
+    fab_should_see_all_case_studies,
     fas_should_be_on_profile_page,
+    fas_should_see_all_case_studies,
     prof_should_be_on_profile_page,
     prof_should_be_told_about_invalid_links,
     prof_should_be_told_about_missing_description,
@@ -123,10 +125,10 @@ def then_no_online_profiles_are_visible_on_fas(context, supplier_alias):
 @then('"{supplier_alias}" should see all case studies on the FAB Company\'s '
       'Directory Profile page')
 def then_supplier_should_see_all_case_studies_fab(context, supplier_alias):
-    fab_ui_profile.should_see_case_studies(context, supplier_alias)
+    fab_should_see_all_case_studies(context, supplier_alias)
 
 
 @then('"{supplier_alias}" should see all case studies on the FAS Company\'s '
       'Directory Profile page')
 def then_supplier_should_see_all_case_studies_fas(context, supplier_alias):
-    fas_ui_profile.should_see_case_studies(context, supplier_alias)
+    fas_should_see_all_case_studies(context, supplier_alias)
