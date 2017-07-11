@@ -1,4 +1,5 @@
 import os
+from glob import glob
 from urllib import parse as urlparse
 
 
@@ -112,3 +113,14 @@ EXPORT_STATUSES = {
     "No, but we are preparing to": "NOT_YET",
     NO_EXPORT_INTENT_LABEL: "NO_INTENTION"
 }
+
+# Absolute path to a directory with test images
+TEST_IMAGES_DIR = os.path.abspath(os.path.join("tests", "functional", "files"))
+
+# lists of absolute paths to test images of specific type
+PNGs = glob(os.path.join(TEST_IMAGES_DIR, "*.png"))
+JPGs = glob(os.path.join(TEST_IMAGES_DIR, "*.jpg"))
+JPEGs = glob(os.path.join(TEST_IMAGES_DIR, "*.jpeg"))
+BMPs = glob(os.path.join(TEST_IMAGES_DIR, "*.bmp"))
+JP2s = glob(os.path.join(TEST_IMAGES_DIR, "*.jp2"))
+WEBPs = glob(os.path.join(TEST_IMAGES_DIR, "*.webp"))
