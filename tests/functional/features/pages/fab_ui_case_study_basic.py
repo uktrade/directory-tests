@@ -65,79 +65,42 @@ def go_to(context, supplier_alias):
     logging.debug("%s is on the Add Case Study - Basic page", supplier_alias)
 
 
-def prepare_form_data(
-        context, supplier_alias, *, current_case_no=None,
-        new_title=True, new_summary=True, new_description=True, new_sector=True,
-        new_website=True, new_keywords=True,
-        custom_title=None, custom_summary=None, custom_description=None,
-        custom_sector=None, custom_website=None, custom_keywords=None):
+def prepare_form_data(token, case_study):
     """Prepare form data based on the flags and custom values provided.
 
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :param current_case_no: number of current study case stored in scenario data
-                            Will use empty one if not provided.
-    :param new_title: update title if True, or use the current one if False
-    :param new_summary: update summary if True, or use the current one if False
-    :param new_description: update description if True, or use the current one if False
-    :param new_sector: update sector if True, or use the current one if False
-    :param new_website: update website if True, or use the current one if False
-    :param new_keywords: update keywords if True, or use the current one if False
-    :param custom_title: use specific case study title (if provided)
-    :param custom_summary: use specific case study summary (if provided)
-    :param custom_description: use specific case study description (if provided)
-    :param custom_sector: use specific case study sector (if provided)
-    :param custom_website: use specific case study website (if provided)
-    :param custom_keywords: use specific case study keywords (if provided)
+    :param token: CSRF middleware token required to submit the form
+    :param case_study: a CaseStudy namedtuple with random data
+    :return: form data with all fields filled out
     """
-    actor = context.get_actor(supplier_alias)
-    company = context.get_company(actor.company_alias)
-    token = actor.csrfmiddlewaretoken
-    c = company.case_studies.get(current_case_no, CaseStudy())
-
-    fake_title = FAKE.sentence()
-    fake_summary = FAKE.sentence()
-    fake_description = FAKE.sentence()
-    rand_sector = random.choice(SECTORS)
-    fake_website = "http://{}/fake-case-study-url".format(FAKE.domain_name())
-    rand_keywords = ", ".join(FAKE.sentence().replace(".", "").split())
-
-    title = custom_title or fake_title if new_title else c.title
-    summary = custom_summary or fake_summary if new_summary else c.summary
-    description = custom_description or fake_description if new_description else c.description
-    sector = custom_sector or rand_sector if new_sector else c.sector
-    website = custom_website or fake_website if new_website else c.website
-    keywords = custom_keywords or rand_keywords if new_keywords else c.keywords
-
     data = {
         "csrfmiddlewaretoken": token,
         "supplier_case_study_wizard_view-current_step": "basic",
-        "basic-title": title,
-        "basic-short_summary": summary,
-        "basic-description": description,
-        "basic-sector": sector,
-        "basic-website": website,
-        "basic-keywords": keywords
+        "basic-title": case_study.title,
+        "basic-short_summary": case_study.summary,
+        "basic-description": case_study.description,
+        "basic-sector": case_study.sector,
+        "basic-website": case_study.website,
+        "basic-keywords": case_study.keywords
     }
 
     return data
 
 
-def submit_form(context, supplier_alias):
+def submit_form(context, supplier_alias, case_study):
     """Submit the form with basic case study data.
 
     :param context: behave `context` object
     :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :param case_study: a CaseStudy namedtuple with random data
     """
     actor = context.get_actor(supplier_alias)
     session = actor.session
-
-    data = prepare_form_data(context, supplier_alias)
+    token = actor.csrfmiddlewaretoken
+    data = prepare_form_data(token, case_study)
     headers = {"Referer": URL}
+
     response = make_request(Method.POST, URL, session=session, headers=headers,
                             data=data, allow_redirects=False, context=context)
-
-    fab_ui_case_study_images.should_be_here(response)
-    extract_and_set_csrf_middleware_token(context, response, supplier_alias)
     logging.debug("%s successfully submitted basic case study details: %s",
                   supplier_alias, data)
+    return response
