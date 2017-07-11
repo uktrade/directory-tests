@@ -241,3 +241,28 @@ Feature: Trade Profile
 
       Then "Peter Alder" should not see any links to online profiles on FAB Company's Directory Profile page
       And "Peter Alder" should not see any links to online profiles on FAS Company's Directory Profile page
+
+
+    @ED-1764
+    @fab
+    @case-study
+    @profile
+    Scenario: Supplier should be able to add a case study to unverified company
+      Given "Peter Alder" created an unverified profile for randomly selected company "Y"
+
+      When "Peter Alder" adds a complete case study called "no 1"
+
+      Then "Peter Alder" should see all case studies on the FAB Company's Directory Profile page
+
+
+    @ED-1764
+    @fab
+    @case-study
+    @profile
+    Scenario: Supplier should be able to add a case study to verified company
+      Given "Peter Alder" has created and verified profile for randomly selected company "Y"
+
+      When "Peter Alder" adds a complete case study called "no 1"
+
+      Then "Peter Alder" should see all case studies on the FAB Company's Directory Profile page
+      And "Peter Alder" should see all case studies on the FAS Company's Directory Profile page
