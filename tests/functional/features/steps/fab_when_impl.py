@@ -17,10 +17,10 @@ from tests.functional.features.pages import (
     fab_ui_edit_details,
     fab_ui_edit_online_profiles,
     fab_ui_edit_sector,
-    fab_ui_profile)
+    fab_ui_profile
+)
 from tests.functional.features.pages.common import DETAILS, PROFILES
-from tests.functional.features.pages.utils import random_case_study_data, \
-    extract_and_set_csrf_middleware_token
+from tests.functional.features.pages.utils import random_case_study_data
 from tests.functional.features.steps.fab_then_impl import (
     prof_should_be_on_profile_page,
     prof_should_be_told_that_company_is_not_verified_yet,
@@ -1293,20 +1293,20 @@ def prof_add_case_study(context, supplier_alias, case_alias):
     :param case_alias: alias of the Case Study used in the scope of the scenario
     """
     actor = context.get_actor(supplier_alias)
-
-    # Step 0 - generate random case study data
+    session = actor.session
     case_study = random_case_study_data(case_alias)
 
-    # Step 1 - go to "Add case study" form
-    fab_ui_case_study_basic.go_to(context, supplier_alias)
+    # Step 1 - go to "Add case study" form & extract CSRF token
+    response = fab_ui_case_study_basic.go_to(session)
+    token = extract_csrf_middleware_token(response)
 
-    # Step 2 - submit the "basic case study data" form
-    response = fab_ui_case_study_basic.submit_form(context, supplier_alias, case_study)
+    # Step 2 - submit the "basic case study data" form & extract CSRF token
+    response = fab_ui_case_study_basic.submit_form(session, token, case_study)
     fab_ui_case_study_images.should_be_here(response)
-    extract_and_set_csrf_middleware_token(context, response, supplier_alias)
+    token = extract_csrf_middleware_token(response)
 
     # Step 3 - submit the "case study images" form
-    response = fab_ui_case_study_images.submit_form(context, supplier_alias, case_study)
+    response = fab_ui_case_study_images.submit_form(session, token, case_study)
 
     # Step 4 - check if we're on the FAB Profile page
     fab_ui_profile.should_be_here(response)
