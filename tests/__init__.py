@@ -34,6 +34,7 @@ urls = {
     'ui-buyer:register-finish': 'register/finished',
     'ui-buyer:register-submit-account-details': 'register-submit',
     'ui-buyer:upload-logo': 'company-profile/edit/logo',
+    'ui-buyer:case-study-add': 'company/case-study/edit/',
     'ui-buyer:confirm-company-address': 'confirm-company-address',
     'ui-buyer:company-profile': 'company-profile',
     'ui-buyer:company-edit': 'company-profile/edit',
