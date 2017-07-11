@@ -223,6 +223,14 @@ def set_company_description(self, alias, summary, description):
         raise KeyError("Could not find company with alias '%s'", alias)
 
 
+def add_case_study(self, company_alias, case_alias, case_study):
+    cases = self.get_company(company_alias).case_studies
+    cases[case_alias] = case_study
+
+    logging.debug("Successfully added Case Study %s to Company %s. "
+                  "Case Study Data: %s", case_alias, company_alias, case_study)
+
+
 def patch_context(context):
     """Will patch the Behave's `context` object with some handy functions.
 
