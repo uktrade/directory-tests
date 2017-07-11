@@ -1264,6 +1264,11 @@ def prof_add_invalid_online_profiles(context, supplier_alias, online_profiles):
 
 
 def prof_remove_links_to_online_profiles(context, supplier_alias):
+    """Will remove links to existing Online Profiles.
+
+    :param context: behave `context` object
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    """
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
 
