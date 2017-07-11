@@ -3,11 +3,10 @@
 import logging
 
 from faker import Factory
+from requests import Response, Session
 
 from tests import get_absolute_url
-from tests.functional.features.pages.utils import (
-    extract_and_set_csrf_middleware_token
-)
+from tests.functional.features.context_utils import CaseStudy
 from tests.functional.features.utils import Method, check_response, make_request
 
 URL = get_absolute_url("ui-buyer:case-study-add")
@@ -35,33 +34,27 @@ EXPECTED_STRINGS = [
 FAKE = Factory.create()
 
 
-def should_be_here(response):
+def should_be_here(response: Response):
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Supplier is on 'Create case study or project' - basic page")
 
 
-def go_to(context, supplier_alias):
+def go_to(session: Session) -> Response:
     """Go to "Add Case Study" basic - page.
 
     This requires:
      * Supplier to be logged in
 
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :param session: Supplier session object
     """
-    actor = context.get_actor(supplier_alias)
-    session = actor.session
-
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
-    response = make_request(Method.GET, URL, session=session, headers=headers,
-                            allow_redirects=False, context=context)
-
+    response = make_request(Method.GET, URL, session=session, headers=headers)
     should_be_here(response)
-    extract_and_set_csrf_middleware_token(context, response, supplier_alias)
-    logging.debug("%s is on the Add Case Study - Basic page", supplier_alias)
+    logging.debug("Supplier is on the Add Case Study - Basic page")
+    return response
 
 
-def prepare_form_data(token, case_study):
+def prepare_form_data(token: str, case_study: CaseStudy) -> dict:
     """Prepare form data based on the flags and custom values provided.
 
     :param token: CSRF middleware token required to submit the form
@@ -78,25 +71,20 @@ def prepare_form_data(token, case_study):
         "basic-website": case_study.website,
         "basic-keywords": case_study.keywords
     }
-
     return data
 
 
-def submit_form(context, supplier_alias, case_study):
+def submit_form(session: Session, token: str, case_study: CaseStudy) -> Response:
     """Submit the form with basic case study data.
 
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :param session: Supplier session object
+    :param token: CSRF token required to submit the form
     :param case_study: a CaseStudy namedtuple with random data
     """
-    actor = context.get_actor(supplier_alias)
-    session = actor.session
-    token = actor.csrfmiddlewaretoken
     data = prepare_form_data(token, case_study)
     headers = {"Referer": URL}
-
-    response = make_request(Method.POST, URL, session=session, headers=headers,
-                            data=data, allow_redirects=False, context=context)
-    logging.debug("%s successfully submitted basic case study details: %s",
-                  supplier_alias, data)
+    response = make_request(
+        Method.POST, URL, session=session, headers=headers, data=data)
+    logging.debug(
+        "Supplier successfully submitted basic case study data: %s", data)
     return response

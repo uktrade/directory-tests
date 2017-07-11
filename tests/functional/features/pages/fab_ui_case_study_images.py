@@ -3,9 +3,10 @@
 import logging
 
 from faker import Factory
-from requests import Response
+from requests import Response, Session
 
 from tests import get_absolute_url
+from tests.functional.features.context_utils import CaseStudy
 from tests.functional.features.utils import Method, check_response, make_request
 
 URL = get_absolute_url("ui-buyer:case-study-add")
@@ -32,12 +33,12 @@ EXPECTED_STRINGS = [
 FAKE = Factory.create()
 
 
-def should_be_here(response):
+def should_be_here(response: Response):
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Supplier is on 'Create case study or project' - images page")
 
 
-def prepare_form_data(token, case_study):
+def prepare_form_data(token: str, case_study: CaseStudy) -> (dict, dict):
     """Prepare form data based on the flags and custom values provided.
 
     :param token: CSRF middleware token required to submit the form
@@ -64,24 +65,20 @@ def prepare_form_data(token, case_study):
     return data, files
 
 
-def submit_form(context, supplier_alias, case_study) -> Response:
+def submit_form(session: Session, token: str, case_study: CaseStudy) -> Response:
     """Submit the form with case study images and extra data.
 
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :param session: Supplier session object
+    :param token: CSRF token required to submit the form
     :param case_study: a CaseStudy namedtuple with random data
     :return: response object
     """
-    actor = context.get_actor(supplier_alias)
-    session = actor.session
-    token = actor.csrfmiddlewaretoken
     data, files = prepare_form_data(token, case_study)
     headers = {"Referer": URL}
 
     response = make_request(
         Method.POST, URL, session=session, headers=headers, data=data,
-        files=files, allow_redirects=False, context=context)
-    logging.debug("%s successfully submitted case study images: %s",
-                  supplier_alias, data)
+        files=files)
+    logging.debug("Supplier successfully submitted case study images: %s", data)
 
     return response
