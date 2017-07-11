@@ -81,13 +81,10 @@ def should_not_see_online_profiles(context, supplier_alias):
                   "Company's Directory Profile Page", supplier_alias)
 
 
-def should_see_case_studies(context, supplier_alias):
-    actor = context.get_actor(supplier_alias)
-    company = context.get_company(actor.company_alias)
-    content = context.response.content.decode("utf-8")
-    case_studies = company.case_studies
+def should_see_case_studies(case_studies, response):
+    content = response.content.decode("utf-8")
     for case in case_studies:
         assert case.title in content
         assert case.description in content
-    logging.debug("% can see all %n Case Studies on FAB Company's Directory "
-                  "Profile Page", len(case_studies), supplier_alias)
+    logging.debug("Supplier can see all %n Case Studies on FAB Company's "
+                  "Directory Profile Page", len(case_studies))
