@@ -252,4 +252,5 @@ def patch_context(context):
     context.set_company_description = MethodType(set_company_description, context)
     context.add_company = MethodType(add_company, context)
     context.get_company = MethodType(get_company, context)
+    context.add_case_study = MethodType(add_case_study, context)
     context.set_company_details = MethodType(set_company_details, context)
