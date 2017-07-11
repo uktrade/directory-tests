@@ -4,7 +4,11 @@ import logging
 
 from retrying import retry
 
-from tests.functional.features.pages import fab_ui_edit_online_profiles
+from tests.functional.features.pages import (
+    fab_ui_edit_online_profiles,
+    fab_ui_profile,
+    fas_ui_profile
+)
 from tests.functional.features.utils import (
     check_response,
     extract_csrf_middleware_token,
@@ -197,3 +201,15 @@ def prof_should_be_told_about_invalid_links(context, supplier_alias):
     fab_ui_edit_online_profiles.should_see_errors(
         context, supplier_alias, facebook=facebook, linkedin=linkedin,
         twitter=twitter)
+
+
+def fab_should_see_all_case_studies(context, supplier_alias):
+    actor = context.get_actor(supplier_alias)
+    case_studies = context.get_company(actor.company_alias).case_studies
+    fab_ui_profile.should_see_case_studies(case_studies, context.response)
+
+
+def fas_should_see_all_case_studies(context, supplier_alias):
+    actor = context.get_actor(supplier_alias)
+    case_studies = context.get_company(actor.company_alias).case_studies
+    fas_ui_profile.should_see_case_studies(case_studies, context.response)
