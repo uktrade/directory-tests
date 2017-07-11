@@ -61,7 +61,7 @@ def should_see_online_profiles(context, supplier_alias):
     if company.twitter:
         assert "Visit Twitter" in content
         assert company.twitter in content
-    logging.debug("% can see all expected links to Online Profiles on FAB "
+    logging.debug("% can see all expected links to Online Profiles on FAS "
                   "Company's Directory Profile Page", supplier_alias)
 
 
