@@ -1243,11 +1243,11 @@ def prof_upload_logo(context, supplier_alias, picture: str):
             }
     with open(filename, "rb") as picture:
         files = {"logo-logo": picture}
-    response = make_request(Method.POST, url, session=session, headers=headers,
-                            data=data, files=files,
-                            allow_redirects=False, context=context)
-    check_response(response, 302, location="/company-profile")
-    assert response.cookies.get("sessionid") is not None
+        response = make_request(
+            Method.POST, url, session=session, headers=headers, data=data,
+            files=files, allow_redirects=False, context=context)
+        check_response(response, 302, location="/company-profile")
+        assert response.cookies.get("sessionid") is not None
 
     # Follow the redirect
     headers = {"Referer": get_absolute_url("ui-buyer:upload-logo")}
