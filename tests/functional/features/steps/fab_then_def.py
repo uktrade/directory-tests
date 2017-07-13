@@ -7,6 +7,7 @@ from tests.functional.features.steps.fab_then_impl import (
     bp_should_be_prompted_to_build_your_profile,
     fas_should_be_on_profile_page,
     fas_should_see_logo_picture,
+    prof_all_unsupported_files_should_be_rejected,
     prof_should_be_on_profile_page,
     prof_should_be_told_about_missing_description,
     prof_should_be_told_that_company_is_published,
@@ -113,3 +114,9 @@ def then_supplier_should_see_logo_picture_on_fab(context, supplier_alias):
       'Directory Profile page')
 def then_supplier_should_see_logo_picture_on_fas(context, supplier_alias):
     fas_should_see_logo_picture(context, supplier_alias)
+
+
+@then('for every uploaded unsupported file "{supplier_alias}" should be told '
+      'that only certain image types can be used as company\'s logo')
+def then_every_invalid_logo_should_be_rejected(context, supplier_alias):
+    prof_all_unsupported_files_should_be_rejected(context, supplier_alias)

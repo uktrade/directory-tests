@@ -1270,6 +1270,54 @@ def prof_upload_logo(context, supplier_alias, picture: str):
         company.alias, picture=picture, hash=md5_hash, url=logo_url)
 
 
+def prof_upload_unsupported_file_as_logo(context, supplier_alias, file):
+    """Try to upload unsupported file type as Company's logo.
+
+    NOTE:
+    file must exist in ./tests/functional/files
+
+    :param context: behave `context` object
+    :type  context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type  supplier_alias: str
+    :param file: name of the file stored in ./tests/functional/files
+    :type  file: str
+    """
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+    filename = get_absolute_path_of_file(file)
+
+    logging.debug("Attempting to upload %s as company logo", filename)
+    # Try to upload a file of unsupported type as company's logo
+    headers = {"Referer": get_absolute_url("ui-buyer:upload-logo")}
+    url = get_absolute_url("ui-buyer:upload-logo")
+    data = {"csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
+            "supplier_company_profile_logo_edit_view-current_step": "logo",
+            }
+    with open(filename, "rb") as f:
+        picture = f.read()
+    files = {"logo-logo": picture}
+    response = make_request(Method.POST, url, session=session, headers=headers,
+                            data=data, files=files,
+                            allow_redirects=False, context=context)
+
+    content = response.content.decode("utf-8")
+    # There are 2 different error message that you can get, depending of the
+    # type of uploaded file.
+    # Here, we're checking if `any` of these 2 message is visible.
+    error_messages = ["Invalid image format, allowed formats: PNG, JPG, JPEG",
+                      ("Upload a valid image. The file you uploaded was either "
+                       "not an image or a corrupted image.")]
+    has_error = any([message in content for message in error_messages])
+    is_200 = response.status_code == 200
+    if is_200 and has_error:
+        logging.debug("%s was rejected", file)
+    else:
+        logging.error("%s was accepted", file)
+
+    return is_200 and has_error
+
+
 def prof_supplier_uploads_logo(context, supplier_alias, picture):
     """Upload a picture and set it as Company's logo.
 
@@ -1328,3 +1376,22 @@ def prof_add_online_profiles(context, supplier_alias, online_profiles):
     fab_ui_edit_online_profiles.update_profiles(
         context, supplier_alias, facebook=facebook, linkedin=linkedin,
         twitter=twitter)
+
+
+def prof_to_upload_unsupported_logos(context, supplier_alias, table):
+    """Upload a picture and set it as Company's logo.
+
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type supplier_alias: str
+    :param table: context.table containing data table
+                  see: https://pythonhosted.org/behave/gherkin.html#table
+    """
+    files = [row['file'] for row in table]
+    rejections = []
+    for file in files:
+        prof_go_to_edit_logo_page(context, supplier_alias)
+        rejected = prof_upload_unsupported_file_as_logo(context, supplier_alias, file)
+        rejections.append(rejected)
+    context.rejections = rejections
