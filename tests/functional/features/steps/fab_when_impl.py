@@ -1331,6 +1331,25 @@ def prof_supplier_uploads_logo(context, supplier_alias, picture):
     prof_upload_logo(context, supplier_alias, picture)
 
 
+def prof_to_upload_unsupported_logos(context, supplier_alias, table):
+    """Upload a picture and set it as Company's logo.
+
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type supplier_alias: str
+    :param table: context.table containing data table
+                  see: https://pythonhosted.org/behave/gherkin.html#table
+    """
+    files = [row['file'] for row in table]
+    rejections = []
+    for file in files:
+        prof_go_to_edit_logo_page(context, supplier_alias)
+        rejected = prof_upload_unsupported_file_as_logo(context, supplier_alias, file)
+        rejections.append(rejected)
+    context.rejections = rejections
+
+
 def prof_update_company_details(context, supplier_alias, table_of_details):
     """Update selected Company's details.
 
@@ -1376,22 +1395,3 @@ def prof_add_online_profiles(context, supplier_alias, online_profiles):
     fab_ui_edit_online_profiles.update_profiles(
         context, supplier_alias, facebook=facebook, linkedin=linkedin,
         twitter=twitter)
-
-
-def prof_to_upload_unsupported_logos(context, supplier_alias, table):
-    """Upload a picture and set it as Company's logo.
-
-    :param context: behave `context` object
-    :type context: behave.runner.Context
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :type supplier_alias: str
-    :param table: context.table containing data table
-                  see: https://pythonhosted.org/behave/gherkin.html#table
-    """
-    files = [row['file'] for row in table]
-    rejections = []
-    for file in files:
-        prof_go_to_edit_logo_page(context, supplier_alias)
-        rejected = prof_upload_unsupported_file_as_logo(context, supplier_alias, file)
-        rejections.append(rejected)
-    context.rejections = rejections
