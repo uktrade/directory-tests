@@ -11,8 +11,10 @@ from tests.functional.features.steps.fab_when_impl import (
     prof_add_online_profiles,
     prof_attempt_to_sign_in_to_fab,
     prof_remove_links_to_online_profiles,
+    prof_to_upload_unsupported_logos,
     prof_sign_in_to_fab,
     prof_update_company_details,
+    prof_supplier_uploads_logo,
     prof_verify_company,
     prof_view_published_profile,
     reg_confirm_company_selection,
@@ -149,3 +151,14 @@ def when_supplier_attempts_to_add_invalid_links(context, supplier_alias):
 @when('"{supplier_alias}" removes links to all online profiles')
 def when_supplier_removes_links_to_all_online_profiles(context, supplier_alias):
     prof_remove_links_to_online_profiles(context, supplier_alias)
+
+
+@when('"{supplier_alias}" uploads "{picture}" as company\'s logo')
+def when_supplier_uploads_logo(context, supplier_alias, picture):
+    prof_supplier_uploads_logo(context, supplier_alias, picture)
+
+
+@when('"{supplier_alias}" attempts to upload a file of unsupported type as '
+      'company\'s logo')
+def when_supplier_attempts_to_upload_unsupported_file(context, supplier_alias):
+    prof_to_upload_unsupported_logos(context, supplier_alias, context.table)

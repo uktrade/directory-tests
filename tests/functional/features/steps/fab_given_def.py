@@ -13,13 +13,15 @@ from tests.functional.features.steps.fab_given_impl import (
     unauthenticated_supplier
 )
 from tests.functional.features.steps.fab_then_impl import (
+    prof_should_see_logo_picture,
     reg_should_get_verification_email,
     sso_should_be_signed_in_to_sso_account
 )
 from tests.functional.features.steps.fab_when_impl import (
     prof_add_invalid_online_profiles,
     prof_set_company_description,
-    prof_sign_out_from_fab
+    prof_sign_out_from_fab,
+    prof_supplier_uploads_logo
 )
 from tests.settings import EMAIL_VERIFICATION_MSG_SUBJECT
 
@@ -85,7 +87,7 @@ def given_verified_standalone_sso_account(context, supplier_alias):
 
 
 @given('"{supplier_alias}" is signed in to SSO/great.gov.uk account')
-def step_impl(context, supplier_alias):
+def given_supplier_is_signed_in_to_sso(context, supplier_alias):
     sso_should_be_signed_in_to_sso_account(context, supplier_alias)
 
 
@@ -99,3 +101,14 @@ def given_supplier_selects_random_company(context, supplier_alias, company_alias
 @given('"{supplier_alias}" has added links to online profiles')
 def given_supplier_adds_valid_links_to_online_profiles(context, supplier_alias):
     prof_add_invalid_online_profiles(context, supplier_alias, context.table)
+
+
+@given('"{supplier_alias}" has set "{picture}" picture as company\'s logo')
+def given_supplier_sets_logo_picture(context, supplier_alias, picture):
+    prof_supplier_uploads_logo(context, supplier_alias, picture)
+
+
+@given('"{supplier_alias}" can see that logo on FAB Company\'s Directory '
+       'Profile page')
+def given_supplier_can_see_correct_logo_on_fab_profile(context, supplier_alias):
+    prof_should_see_logo_picture(context, supplier_alias)
