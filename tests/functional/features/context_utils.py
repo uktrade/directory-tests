@@ -24,7 +24,7 @@ Company = namedtuple(
     [
         'alias', 'title', 'number', 'address_details', 'summary', 'description',
         'website', 'keywords', 'no_employees', 'sector', 'letter_recipient',
-        'companies_house_details', 'facebook', 'linkedin', 'twitter'
+        'companies_house_details', 'facebook', 'linkedin', 'twitter',
         'logo_picture', 'logo_url', 'logo_hash'
     ]
 )
