@@ -1308,9 +1308,9 @@ def prof_upload_unsupported_file_as_logo(context, supplier_alias, file):
     has_error = any([message in content for message in error_messages])
     is_200 = response.status_code == 200
     if is_200 and has_error:
-        logging.debug("%s was rejected", file)
+        logging.debug("%s was rejected", filename)
     else:
-        logging.error("%s was accepted", file)
+        logging.error("%s was accepted", filename)
 
     return is_200 and has_error
 
