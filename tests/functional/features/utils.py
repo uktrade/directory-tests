@@ -2,6 +2,7 @@
 """Various utils used across the project."""
 
 import email
+import hashlib
 import logging
 import os
 import random
@@ -13,6 +14,7 @@ from boto.s3 import connect_to_region
 from boto.s3.connection import OrdinaryCallingFormat
 from requests.models import Response
 from retrying import retry
+from scrapy.selector import Selector
 
 from tests.functional.features.db_cleanup import get_dir_db_connection
 from tests.settings import (
@@ -170,9 +172,11 @@ def make_request(method: Method, url, *, session=None, params=None,
     if cookies:
         logging.debug("REQ Cookies: %s", cookies)
     if data:
-        logging.debug("REQ Data: %s", res.request.body)
-    if files:
-        logging.debug("REQ Files: %s", res.request.body)
+        if files:
+            logging.debug("REQ Body (trimmed): %s",
+                          res.request.body[0:trim_offset])
+        else:
+            logging.debug("REQ Data: %s", res.request.body)
     logging.debug("RSP Status: %s %s", res.status_code, res.reason)
     logging.debug("RSP URL: %s", res.url)
     logging.debug("RSP Headers: %s", res.headers)
@@ -182,7 +186,11 @@ def make_request(method: Method, url, *, session=None, params=None,
         for resp in res.history:
             logging.debug("Intermediate REQ: %s %s", resp.request.method, resp.url)
             logging.debug("Intermediate REQ Headers: %s", resp.request.headers)
-            logging.debug("Intermediate REQ Body: %s", resp.request.body)
+            if files:
+                logging.debug("Intermediate REQ Body (trimmed): %s",
+                              resp.request.body[0:trim_offset])
+            else:
+                logging.debug("Intermediate REQ Body: %s", resp.request.body)
             logging.debug("Intermediate RESP: %d %s", resp.status_code, resp.reason)
             logging.debug("Intermediate RESP Headers: %s", resp.headers)
             logging.debug("Intermediate RESP Content: %s",
@@ -494,3 +502,71 @@ def get_positive_exporting_status():
     """
     EXPORT_STATUSES.pop(NO_EXPORT_INTENT_LABEL, 0)
     return random.choice(list(EXPORT_STATUSES))
+
+
+def get_absolute_path_of_file(filename):
+    """Returns absolute path to a file stored in ./tests/functional/files dir.
+
+    Will fail if fail doesn't exists.
+
+    :param filename: name of the file stored in ./tests/functional/files
+    :return: an absolute path to the file
+    """
+    relative_path = os.path.join("tests", "functional", "files", filename)
+    absolute_path = os.path.abspath(relative_path)
+    error_message = ("Could not find '{}' in ./tests/functional/files. Please "
+                     "check the filename!")
+    assert os.path.exists(absolute_path), error_message
+
+    return absolute_path
+
+
+def get_md5_hash_of_file(absolute_path):
+    """Calculate md5 hash of provided file.
+
+    :param absolute_path: an absolute path to the file
+    :type  absolute_path: str
+    :return: md5 hash of the file
+    :rtype:  str
+    """
+    assert os.path.exists(absolute_path)
+    return hashlib.md5(open(absolute_path, "rb").read()).hexdigest()
+
+
+def extract_by_css(response, selector):
+    """Extract values from HTML response content using CSS selector.
+
+    :param response: response containing HTML content
+    :param selector: CSS selector
+    :return: value of the 1st found element identified by the CSS selector
+    """
+    content = response.content.decode("utf-8")
+    res = Selector(text=content).css(selector).extract()
+    return res[0] if len(res) > 0 else ""
+
+
+def extract_logo_url(response):
+    """Extract URL of the Company's logo picture from the Directory
+    edit profile page content.
+
+    :param response: response with the contents of edit profile page
+    :return: a URL to the company's logo image
+    """
+    css_selector = ".logo-container img::attr(src)"
+    logo_url = extract_by_css(response, css_selector)
+    assert logo_url, "Could not find Company's logo URL"
+    return logo_url
+
+
+def check_hash_of_remote_file(expected_hash, file_url):
+    """Check if the md5 hash of the file is the same as expected.
+
+    :param expected_hash: expected md5 hash
+    :param file_url: URL to the file to check
+    """
+    logging.debug("Fetching file: %s", file_url)
+    response = requests.get(file_url)
+    file_hash = hashlib.md5(response.content).hexdigest()
+    assert expected_hash == file_hash, (
+        "Expected hash of file downloaded from %s to be %s but got %s"
+        .format(expected_hash, file_hash))

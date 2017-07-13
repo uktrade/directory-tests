@@ -22,7 +22,8 @@ Actor = namedtuple(
 UnregisteredCompany = namedtuple(
     'UnregisteredCompany',
     [
-        'alias', 'title', 'number', 'details', 'summary', 'description'
+        'alias', 'title', 'number', 'details', 'summary', 'description',
+        'logo_picture', 'logo_url', 'logo_hash'
     ]
 )
 
@@ -105,6 +106,16 @@ def set_company_for_actor(self, actor_alias, company_alias):
                       "Actor: %s", company_alias, actor_alias)
     else:
         logging.debug("Could not find an actor aliased '%s'", actor_alias)
+
+
+def set_company_logo_detail(self, alias, *, picture=None, url=None, hash=None):
+    companies = self.scenario_data.unregistered_companies
+    if picture:
+        companies[alias] = companies[alias]._replace(logo_picture=picture)
+    if url:
+        companies[alias] = companies[alias]._replace(logo_url=url)
+    if hash:
+        companies[alias] = companies[alias]._replace(logo_hash=hash)
 
 
 def reset_actor_session(self, alias):
@@ -198,6 +209,7 @@ def patch_context(context):
         set_actor_has_sso_account, context)
     context.set_company_for_actor = MethodType(set_company_for_actor, context)
     context.set_company_description = MethodType(set_company_description, context)
+    context.set_company_logo_detail = MethodType(set_company_logo_detail, context)
     context.add_unregistered_company = MethodType(
         add_unregistered_company, context)
     context.get_unregistered_company = MethodType(
