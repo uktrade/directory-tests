@@ -10,6 +10,7 @@ from tests.functional.features.steps.fab_when_impl import (
     prof_attempt_to_sign_in_to_fab,
     prof_to_upload_unsupported_logos,
     prof_sign_in_to_fab,
+    prof_update_company_details,
     prof_supplier_uploads_logo,
     prof_verify_company,
     prof_view_published_profile,
@@ -127,6 +128,11 @@ def when_supplier_creates_standalone_sso_account(context, supplier_alias):
 @when('"{supplier_alias}" decides to create a trade profile')
 def when_supplier_decide_to_create_trade_profile(context, supplier_alias):
     sso_go_to_create_trade_profile(context, supplier_alias)
+
+
+@when('"{supplier_alias}" updates company\'s details')
+def when_supplier_updates_company_details(context, supplier_alias):
+    prof_update_company_details(context, supplier_alias, context.table)
 
 
 @when('"{supplier_alias}" uploads "{picture}" as company\'s logo')

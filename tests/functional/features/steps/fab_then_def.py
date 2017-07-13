@@ -2,6 +2,7 @@
 """FAB Given step definitions."""
 from behave import then
 
+from tests.functional.features.pages import fab_ui_profile
 from tests.functional.features.steps.fab_then_impl import (
     bp_should_be_prompted_to_build_your_profile,
     fas_should_be_on_profile_page,
@@ -82,6 +83,12 @@ def then_supplier_should_be_on_profile_landing_page(context, supplier_alias):
 @then('"{supplier_alias}" should be signed in to SSO/great.gov.uk account')
 def then_supplier_should_be_signed_in_to_sso_account(context, supplier_alias):
     sso_should_be_signed_in_to_sso_account(context, supplier_alias)
+
+
+@then('"{supplier_alias}" should see new details of FAB Company\'s Directory '
+      'Profile page')
+def then_supplier_should_see_new_details(context, supplier_alias):
+    fab_ui_profile.should_see_details(context, supplier_alias, context.table)
 
 
 @then('"{supplier_alias}" should see that logo on FAB Company\'s '

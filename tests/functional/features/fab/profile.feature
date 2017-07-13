@@ -172,6 +172,29 @@ Feature: Trade Profile
       And "Annette Geissinger" should be told that her company is published
 
 
+    @ED-1760
+    @fab
+    @profile
+    Scenario: Supplier should be able to update company’s details
+      Given "Annette Geissinger" has created and verified profile for randomly selected company "Y"
+
+      When "Annette Geissinger" updates company's details
+        | detail                      |
+        | business name               |
+        | website                     |
+        | keywords                    |
+        | number of employees         |
+        | sector of interest          |
+
+      Then "Annette Geissinger" should see new details of FAB Company's Directory Profile page
+        | detail                      |
+        | business name               |
+        | website                     |
+        | keywords                    |
+        | number of employees         |
+        | sector of interest          |
+
+
     @ED-1759
     @profile
     @logo
