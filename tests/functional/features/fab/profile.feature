@@ -231,19 +231,14 @@ Feature: Trade Profile
         | Anfiteatro_El_Jem.jpeg | Kobe_Port_Tower.jpg |
 
 
-    @wip
     @ED-1759
     @profile
     @logo
-    Scenario Outline: Supplier should not be able to upload files other than images as company’s logo
+    Scenario: Supplier should not be able to upload files other than images as company’s logo
       Given "Peter Alder" has created and verified profile for randomly selected company "Y"
 
-      When "Peter Alder" attempts to upload "<unsupported_file>" as company's logo
-
-      Then "Peter Alder" should be told that only images can be uploaded and set as company's logo
-
-      Examples:
-        | unsupported_file      | comment                 |
+      When "Peter Alder" attempts to upload a file of unsupported type as company's logo
+        | file                  | type                    |
         | Anfiteatro_El_Jem.bmp | Bitmap                  |
         | Anfiteatro_El_Jem.jp2 | JPEG 2000               |
         | Kobe_Port_Tower.webp  | Web P                   |
@@ -252,4 +247,6 @@ Feature: Trade Profile
         | example.sh            | Linux shell script      |
         | example.bat           | Windows shell script    |
         | example.txt           | text file               |
-        | example.psd           | Photoshop file          |
+
+      Then for every uploaded unsupported file "Peter Alder" should be told that only certain image types can be used as company's logo
+

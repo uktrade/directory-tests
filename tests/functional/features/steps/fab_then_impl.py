@@ -241,3 +241,23 @@ def fas_should_see_logo_picture(context, supplier_alias):
     check_hash_of_remote_file(logo_hash, logo_url)
     logging.debug("The Logo visible on the %s's FAS profile page is the same "
                   "as uploaded %s", company.title, logo_picture)
+
+
+def prof_all_unsupported_files_should_be_rejected(context, supplier_alias):
+    """Check if all unsupported files were rejected upon upload as company logo.
+
+    NOTE:
+    This require `context.rejections` to be set.
+    It should be a list of bool values.
+
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type supplier_alias: str
+    """
+    assert hasattr(context, "rejections")
+    assert all(context.rejections), (
+        "Some of the uploaded files that should be marked as unsupported were "
+        "actually accepted. Please check the logs for more details")
+    logging.debug("All files of unsupported types uploaded by %s were rejected"
+                  .format(supplier_alias))
