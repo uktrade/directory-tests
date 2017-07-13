@@ -1290,7 +1290,8 @@ def prof_upload_unsupported_file_as_logo(context, supplier_alias, file):
     data = {"csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
             "supplier_company_profile_logo_edit_view-current_step": "logo",
             }
-    files = {"logo-logo": open(filename, "rb")}
+    with open(filename, "rb") as picture:
+        files = {"logo-logo": picture}
     response = make_request(Method.POST, url, session=session, headers=headers,
                             data=data, files=files,
                             allow_redirects=False, context=context)
