@@ -198,7 +198,7 @@ def prof_should_see_logo_picture(context, supplier_alias):
     :type supplier_alias: str
     """
     actor = context.get_actor(supplier_alias)
-    company = context.get_unregistered_company(actor.company_alias)
+    company = context.get_company(actor.company_alias)
     logo_url = company.logo_url
     logo_hash = company.logo_hash
     logo_picture = company.logo_picture
@@ -220,7 +220,7 @@ def fas_should_see_logo_picture(context, supplier_alias):
     :type supplier_alias: str
     """
     actor = context.get_actor(supplier_alias)
-    company = context.get_unregistered_company(actor.company_alias)
+    company = context.get_company(actor.company_alias)
     logo_hash = company.logo_hash
     logo_url = company.logo_url
     logo_picture = company.logo_picture

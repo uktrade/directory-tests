@@ -1234,7 +1234,7 @@ def prof_upload_logo(context, supplier_alias, picture: str):
     """
     actor = context.get_actor(supplier_alias)
     session = actor.session
-    company = context.get_unregistered_company(actor.company_alias)
+    company = context.get_company(actor.company_alias)
     filename = get_absolute_path_of_file(picture)
 
     # Upload company's logo
