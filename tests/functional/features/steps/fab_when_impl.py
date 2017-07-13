@@ -1241,13 +1241,14 @@ def prof_upload_logo(context, supplier_alias, picture: str):
     data = {"csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
             "supplier_company_profile_logo_edit_view-current_step": "logo",
             }
-    with open(filename, "rb") as picture:
-        files = {"logo-logo": picture}
-        response = make_request(
-            Method.POST, url, session=session, headers=headers, data=data,
-            files=files, allow_redirects=False, context=context)
-        check_response(response, 302, location="/company-profile")
-        assert response.cookies.get("sessionid") is not None
+    with open(filename, "rb") as f:
+        picture = f.read()
+    files = {"logo-logo": picture}
+    response = make_request(
+        Method.POST, url, session=session, headers=headers, data=data,
+        files=files, allow_redirects=False, context=context)
+    check_response(response, 302, location="/company-profile")
+    assert response.cookies.get("sessionid") is not None
 
     # Follow the redirect
     headers = {"Referer": get_absolute_url("ui-buyer:upload-logo")}
