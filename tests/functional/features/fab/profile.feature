@@ -169,7 +169,7 @@ Feature: Trade Profile
       When "Peter Alder" signs in to Find a Buyer profile
 
       Then "Peter Alder" should be on edit Company's Directory Profile page
-      And "Annette Geissinger" should be told that her company is published
+      And "Peter Alder" should be told that her company is published
 
 
     @ED-1760
