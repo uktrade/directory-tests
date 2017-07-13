@@ -27,6 +27,9 @@ from tests.functional.features.utils import (
     check_response,
     extract_confirm_email_form_action,
     extract_csrf_middleware_token,
+    extract_logo_url,
+    get_absolute_path_of_file,
+    get_md5_hash_of_file,
     get_verification_code,
     make_request
 )
@@ -1192,6 +1195,142 @@ def sso_go_to_create_trade_profile(context, supplier_alias):
     check_response(response, 200, body_contains=expected)
 
 
+def prof_go_to_edit_logo_page(context, supplier_alias):
+    """Go to the 'Upload your company's logo' page & extract CSRF token.
+
+    :param context: behave `context` object
+    :type  context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type  supplier_alias: str
+    """
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+
+    # Go to "Upload your company's logo" page
+    headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
+    url = get_absolute_url("ui-buyer:upload-logo")
+    response = make_request(Method.GET, url, session=session, headers=headers,
+                            allow_redirects=False, context=context)
+    expected = ["Upload your company's logo", "Logo:", "Upload file",
+                ("For best results this should be a transparent PNG file of "
+                 "600 x 600 pixels and no more than 2MB")
+                ]
+    check_response(response, 200, body_contains=expected)
+    token = extract_csrf_middleware_token(response)
+    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+
+
+def prof_upload_logo(context, supplier_alias, picture: str):
+    """Upload Company's logo & extract newly uploaded logo image URL.
+
+    NOTE:
+    picture must represent file stored in ./tests/functional/files
+
+    :param context: behave `context` object
+    :type  context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type  supplier_alias: str
+    :param picture: name of the picture file stored in ./tests/functional/files
+    :type  picture: str
+    """
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+    company = context.get_company(actor.company_alias)
+    filename = get_absolute_path_of_file(picture)
+
+    # Upload company's logo
+    headers = {"Referer": get_absolute_url("ui-buyer:upload-logo")}
+    url = get_absolute_url("ui-buyer:upload-logo")
+    data = {"csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
+            "supplier_company_profile_logo_edit_view-current_step": "logo",
+            }
+    with open(filename, "rb") as f:
+        picture = f.read()
+    files = {"logo-logo": picture}
+    response = make_request(
+        Method.POST, url, session=session, headers=headers, data=data,
+        files=files, allow_redirects=False, context=context)
+    check_response(response, 302, location="/company-profile")
+    assert response.cookies.get("sessionid") is not None
+
+    # Follow the redirect
+    headers = {"Referer": get_absolute_url("ui-buyer:upload-logo")}
+    url = get_absolute_url("ui-buyer:company-profile")
+    response = make_request(Method.GET, url, session=session, headers=headers,
+                            allow_redirects=False, context=context)
+    expected = ["Your company is published"]
+    check_response(response, 200, body_contains=expected)
+
+    logging.debug("Successfully uploaded logo picture: %s", picture)
+
+    # Keep logo details in Company's scenario data
+    logo_url = extract_logo_url(response)
+    md5_hash = get_md5_hash_of_file(filename)
+    context.set_company_logo_detail(
+        company.alias, picture=picture, hash=md5_hash, url=logo_url)
+
+
+def prof_upload_unsupported_file_as_logo(context, supplier_alias, file):
+    """Try to upload unsupported file type as Company's logo.
+
+    NOTE:
+    file must exist in ./tests/functional/files
+
+    :param context: behave `context` object
+    :type  context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type  supplier_alias: str
+    :param file: name of the file stored in ./tests/functional/files
+    :type  file: str
+    """
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+    filename = get_absolute_path_of_file(file)
+
+    logging.debug("Attempting to upload %s as company logo", filename)
+    # Try to upload a file of unsupported type as company's logo
+    headers = {"Referer": get_absolute_url("ui-buyer:upload-logo")}
+    url = get_absolute_url("ui-buyer:upload-logo")
+    data = {"csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
+            "supplier_company_profile_logo_edit_view-current_step": "logo",
+            }
+    with open(filename, "rb") as f:
+        picture = f.read()
+    files = {"logo-logo": picture}
+    response = make_request(Method.POST, url, session=session, headers=headers,
+                            data=data, files=files,
+                            allow_redirects=False, context=context)
+
+    content = response.content.decode("utf-8")
+    # There are 2 different error message that you can get, depending of the
+    # type of uploaded file.
+    # Here, we're checking if `any` of these 2 message is visible.
+    error_messages = ["Invalid image format, allowed formats: PNG, JPG, JPEG",
+                      ("Upload a valid image. The file you uploaded was either "
+                       "not an image or a corrupted image.")]
+    has_error = any([message in content for message in error_messages])
+    is_200 = response.status_code == 200
+    if is_200 and has_error:
+        logging.debug("%s was rejected", file)
+    else:
+        logging.error("%s was accepted", file)
+
+    return is_200 and has_error
+
+
+def prof_supplier_uploads_logo(context, supplier_alias, picture):
+    """Upload a picture and set it as Company's logo.
+
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type supplier_alias: str
+    :param picture: name of the picture file stored in ./tests/functional/files
+    """
+    prof_go_to_edit_logo_page(context, supplier_alias)
+    prof_upload_logo(context, supplier_alias, picture)
+
+
 def prof_update_company_details(context, supplier_alias, table_of_details):
     """Update selected Company's details.
 
@@ -1201,10 +1340,6 @@ def prof_update_company_details(context, supplier_alias, table_of_details):
     `context` object, yet in order to be more explicit, we're making it
     a mandatory argument.
 
-    :param context: behave `context` object
-    :type  context: behave.runner.Context
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :type  supplier_alias: str
     :param table_of_details: context.table containing data table
             see: https://pythonhosted.org/behave/gherkin.html#table
     """
@@ -1261,3 +1396,22 @@ def prof_add_invalid_online_profiles(context, supplier_alias, online_profiles):
     fab_ui_edit_online_profiles.update_profiles(
         context, supplier_alias, invalid_urls=True, facebook=facebook,
         linkedin=linkedin, twitter=twitter)
+
+
+def prof_to_upload_unsupported_logos(context, supplier_alias, table):
+    """Upload a picture and set it as Company's logo.
+
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type supplier_alias: str
+    :param table: context.table containing data table
+                  see: https://pythonhosted.org/behave/gherkin.html#table
+    """
+    files = [row['file'] for row in table]
+    rejections = []
+    for file in files:
+        prof_go_to_edit_logo_page(context, supplier_alias)
+        rejected = prof_upload_unsupported_file_as_logo(context, supplier_alias, file)
+        rejections.append(rejected)
+    context.rejections = rejections
