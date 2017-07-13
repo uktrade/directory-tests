@@ -11,6 +11,7 @@ from tests.functional.features.steps.fab_when_impl import (
     prof_attempt_to_sign_in_to_fab,
     prof_sign_in_to_fab,
     prof_update_company_details,
+    prof_supplier_uploads_logo,
     prof_verify_company,
     prof_view_published_profile,
     reg_confirm_company_selection,
@@ -137,3 +138,8 @@ def when_supplier_updates_company_details(context, supplier_alias):
 @when('"{supplier_alias}" adds links to online profiles')
 def when_supplier_adds_online_profiles(context, supplier_alias):
     prof_add_online_profiles(context, supplier_alias, context.table)
+
+
+@when('"{supplier_alias}" uploads "{picture}" as company\'s logo')
+def when_supplier_uploads_logo(context, supplier_alias, picture):
+    prof_supplier_uploads_logo(context, supplier_alias, picture)
