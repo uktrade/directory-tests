@@ -1277,8 +1277,8 @@ def prof_upload_unsupported_file_as_logo(context, supplier_alias, file):
     :type  context: behave.runner.Context
     :param supplier_alias: alias of the Actor used in the scope of the scenario
     :type  supplier_alias: str
-    :param filename: name of the file stored in ./tests/functional/files
-    :type  filename: str
+    :param file: name of the file stored in ./tests/functional/files
+    :type  file: str
     """
     actor = context.get_actor(supplier_alias)
     session = actor.session
@@ -1308,9 +1308,9 @@ def prof_upload_unsupported_file_as_logo(context, supplier_alias, file):
     has_error = any([message in content for message in error_messages])
     is_200 = response.status_code == 200
     if is_200 and has_error:
-        logging.debug("%s was rejected", filename)
+        logging.debug("%s was rejected", file)
     else:
-        logging.error("%s was accepted", filename)
+        logging.error("%s was accepted", file)
 
     return is_200 and has_error
 
