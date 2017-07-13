@@ -33,7 +33,7 @@ Company = namedtuple(
         'alias', 'title', 'number', 'address_details', 'summary', 'description',
         'website', 'keywords', 'no_employees', 'sector', 'letter_recipient',
         'companies_house_details', 'facebook', 'linkedin', 'twitter',
-        'case_studies'
+        'case_studies', 'logo_picture', 'logo_url', 'logo_hash'
     ]
 )
 # Set all fields to None by default.
@@ -119,6 +119,16 @@ def set_company_for_actor(self, actor_alias, company_alias):
                       "Actor: %s", company_alias, actor_alias)
     else:
         logging.debug("Could not find an actor aliased '%s'", actor_alias)
+
+
+def set_company_logo_detail(self, alias, *, picture=None, url=None, hash=None):
+    companies = self.scenario_data.unregistered_companies
+    if picture:
+        companies[alias] = companies[alias]._replace(logo_picture=picture)
+    if url:
+        companies[alias] = companies[alias]._replace(logo_url=url)
+    if hash:
+        companies[alias] = companies[alias]._replace(logo_hash=hash)
 
 
 def reset_actor_session(self, alias):
@@ -254,3 +264,4 @@ def patch_context(context):
     context.get_company = MethodType(get_company, context)
     context.add_case_study = MethodType(add_case_study, context)
     context.set_company_details = MethodType(set_company_details, context)
+    context.set_company_logo_detail = MethodType(set_company_logo_detail, context)

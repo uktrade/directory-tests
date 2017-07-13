@@ -10,9 +10,11 @@ from tests.functional.features.pages import (
     fas_ui_profile
 )
 from tests.functional.features.utils import (
+    check_hash_of_remote_file,
     check_response,
     extract_csrf_middleware_token,
     extract_email_confirmation_link,
+    extract_logo_url,
     find_confirmation_email_msg,
     get_s3_bucket
 )
@@ -188,7 +190,7 @@ def sso_should_be_signed_in_to_sso_account(context, supplier_alias):
     response = context.response
     assert response.cookies.get("sessionid") is not None
     assert "Sign out" in response.content.decode("utf-8")
-    logging.debug("%s is signed in to SSO account", supplier_alias)
+    logging.debug("%s is logged in to the SSO account".format(supplier_alias))
 
 
 def prof_should_be_told_about_invalid_links(context, supplier_alias):
@@ -214,3 +216,78 @@ def fas_should_see_all_case_studies(context, supplier_alias):
     actor = context.get_actor(supplier_alias)
     case_studies = context.get_company(actor.company_alias).case_studies
     fas_ui_profile.should_see_case_studies(case_studies, context.response)
+
+
+def prof_should_see_logo_picture(context, supplier_alias):
+    """Will check if Company's Logo visible on FAB profile page is the same as
+    the uploaded one.
+
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type supplier_alias: str
+    """
+    actor = context.get_actor(supplier_alias)
+    company = context.get_company(actor.company_alias)
+    logo_url = company.logo_url
+    logo_hash = company.logo_hash
+    logo_picture = company.logo_picture
+
+    logging.debug("Fetching logo image visible on the %s's FAB profile page",
+                  company.title)
+    check_hash_of_remote_file(logo_hash, logo_url)
+    logging.debug("The Logo visible on the %s's FAB profile page is the same "
+                  "as uploaded %s", company.title, logo_picture)
+
+
+def fas_should_see_logo_picture(context, supplier_alias):
+    """Will check if Company's Logo visible on FAS profile page is the same as
+    the one uploaded on FAB.
+
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type supplier_alias: str
+    """
+    actor = context.get_actor(supplier_alias)
+    company = context.get_company(actor.company_alias)
+    logo_hash = company.logo_hash
+    logo_url = company.logo_url
+    logo_picture = company.logo_picture
+
+    # had to do an inline import as there was a problem with circular imports
+    from tests.functional.features.steps.fab_when_impl import (
+        prof_view_published_profile
+    )
+    # Go to the FAS profile page & extract the URL of visible logo image
+    prof_view_published_profile(context, supplier_alias)
+    response = context.response
+    visible_logo_url = extract_logo_url(response)
+
+    # Check if FAS shows the correct Logo image
+    assert visible_logo_url == logo_url
+    logging.debug("Fetching logo image visible on the %s's FAS profile page",
+                  company.title)
+    check_hash_of_remote_file(logo_hash, logo_url)
+    logging.debug("The Logo visible on the %s's FAS profile page is the same "
+                  "as uploaded %s", company.title, logo_picture)
+
+
+def prof_all_unsupported_files_should_be_rejected(context, supplier_alias):
+    """Check if all unsupported files were rejected upon upload as company logo.
+
+    NOTE:
+    This require `context.rejections` to be set.
+    It should be a list of bool values.
+
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type supplier_alias: str
+    """
+    assert hasattr(context, "rejections")
+    assert all(context.rejections), (
+        "Some of the uploaded files that should be marked as unsupported were "
+        "actually accepted. Please check the logs for more details")
+    logging.debug("All files of unsupported types uploaded by %s were rejected"
+                  .format(supplier_alias))
