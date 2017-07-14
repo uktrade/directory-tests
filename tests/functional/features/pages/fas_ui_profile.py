@@ -34,7 +34,7 @@ def go_to(context, supplier_alias, *, company_number=None):
     full_url = "{}/{}".format(URL, company_number)
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
     response = make_request(Method.GET, full_url, session=session,
-                            headers=headers, allow_redirects=False,
+                            headers=headers, allow_redirects=True,
                             context=context)
 
     should_be_here(response, number=company_number)
