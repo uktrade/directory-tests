@@ -24,7 +24,8 @@ Company = namedtuple(
     [
         'alias', 'title', 'number', 'address_details', 'summary', 'description',
         'website', 'keywords', 'no_employees', 'sector', 'letter_recipient',
-        'companies_house_details', 'logo_picture', 'logo_url', 'logo_hash'
+        'companies_house_details', 'facebook', 'linkedin', 'twitter',
+        'logo_picture', 'logo_url', 'logo_hash'
     ]
 )
 # Set all fields to None by default.
@@ -171,7 +172,8 @@ def get_company(self, alias):
 
 def set_company_details(self, alias, *, title=None, website=None, keywords=None,
                         no_employees=None, sector=None, letter_recipient=None,
-                        address_details=None):
+                        address_details=None, facebook=None, linkedin=None,
+                        twitter=None):
     companies = self.scenario_data.unregistered_companies
     if title:
         companies[alias] = companies[alias]._replace(title=title)
@@ -185,6 +187,12 @@ def set_company_details(self, alias, *, title=None, website=None, keywords=None,
         companies[alias] = companies[alias]._replace(sector=sector)
     if letter_recipient:
         companies[alias] = companies[alias]._replace(letter_recipient=letter_recipient)
+    if facebook:
+        companies[alias] = companies[alias]._replace(facebook=facebook)
+    if linkedin:
+        companies[alias] = companies[alias]._replace(linkedin=linkedin)
+    if twitter:
+        companies[alias] = companies[alias]._replace(twitter=twitter)
     if address_details:
         companies[alias] = companies[alias]._replace(address_details=address_details)
 

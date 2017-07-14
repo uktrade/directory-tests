@@ -169,7 +169,7 @@ Feature: Trade Profile
       When "Peter Alder" signs in to Find a Buyer profile
 
       Then "Peter Alder" should be on edit Company's Directory Profile page
-      And "Annette Geissinger" should be told that her company is published
+      And "Peter Alder" should be told that her company is published
 
 
     @ED-1760
@@ -186,7 +186,7 @@ Feature: Trade Profile
         | number of employees         |
         | sector of interest          |
 
-      Then "Annette Geissinger" should see new details of FAB Company's Directory Profile page
+      Then "Annette Geissinger" should see new details on FAB Company's Directory Profile page
         | detail                      |
         | business name               |
         | website                     |
@@ -250,3 +250,18 @@ Feature: Trade Profile
 
       Then for every uploaded unsupported file "Peter Alder" should be told that only certain image types can be used as company's logo
 
+
+  @ED-1761
+  @fab
+  @profile
+  Scenario: Supplier should be able to add valid links to Online Profiles (social media URLs)
+    Given "Peter Alder" has created and verified profile for randomly selected company "Y"
+
+    When "Peter Alder" adds links to online profiles
+      | online profile  |
+      | Facebook        |
+      | LinkedIn        |
+      | Twitter         |
+
+    Then "Peter Alder" should see links to all online profiles on FAB Company's Directory Profile page
+    And "Peter Alder" should see links to all online profiles on FAS Company's Directory Profile page

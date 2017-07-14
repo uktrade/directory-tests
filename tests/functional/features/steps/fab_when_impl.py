@@ -13,6 +13,7 @@ from tests import get_absolute_url
 from tests.functional.features.context_utils import Company
 from tests.functional.features.pages import (
     fab_ui_edit_details,
+    fab_ui_edit_online_profiles,
     fab_ui_edit_sector
 )
 from tests.functional.features.pages.common import DETAILS
@@ -1374,3 +1375,23 @@ def prof_update_company_details(context, supplier_alias, table_of_details):
                                        title=title, keywords=keywords,
                                        website=website, size=size)
     fab_ui_edit_sector.update_sector(context, supplier_alias, update=sector)
+
+
+def prof_add_online_profiles(context, supplier_alias, online_profiles):
+    """Update links to Company's Online Profiles.
+
+    :param context: behave `context` object
+    :type  context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type  supplier_alias: str
+    :param online_profiles: context.table containing data table
+            see: https://pythonhosted.org/behave/gherkin.html#table
+    """
+    profiles = [row["online profile"] for row in online_profiles]
+    facebook = "Facebook" in profiles
+    linkedin = "LinkedIn" in profiles
+    twitter = "Twitter" in profiles
+    fab_ui_edit_online_profiles.go_to(context, supplier_alias)
+    fab_ui_edit_online_profiles.update_profiles(
+        context, supplier_alias, facebook=facebook, linkedin=linkedin,
+        twitter=twitter)
