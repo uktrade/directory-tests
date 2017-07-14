@@ -8,10 +8,8 @@ from tests.functional.features.utils import (
     check_hash_of_remote_file,
     check_response,
     extract_csrf_middleware_token,
-    extract_email_confirmation_link,
     extract_logo_url,
-    find_confirmation_email_msg,
-    get_s3_bucket
+    get_verification_link
 )
 
 
@@ -57,9 +55,7 @@ def reg_should_get_verification_email(context, alias, subject):
     """
     logging.debug("Searching for an email verification message...")
     actor = context.get_actor(alias)
-    bucket = get_s3_bucket()
-    payload = find_confirmation_email_msg(bucket, actor, subject)
-    link = extract_email_confirmation_link(payload)
+    link = get_verification_link(actor.email)
     context.set_actor_email_confirmation_link(alias, link)
 
 
