@@ -1413,8 +1413,10 @@ def prof_add_invalid_online_profiles(context, supplier_alias, online_profiles):
     twitter = PROFILES["TWITTER"] in profiles
     fab_ui_edit_online_profiles.go_to(context, supplier_alias)
     fab_ui_edit_online_profiles.update_profiles(
-        context, supplier_alias, invalid_urls=True, facebook=facebook,
-        linkedin=linkedin, twitter=twitter)
+        context, supplier_alias, facebook=facebook, linkedin=linkedin,
+        twitter=twitter, specific_facebook="http://notfacebook.com",
+        specific_linkedin="http://notlinkedin.com",
+        specific_twitter="http://nottwitter.com")
 
 
 def prof_remove_links_to_online_profiles(context, supplier_alias):
