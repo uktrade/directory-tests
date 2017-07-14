@@ -40,6 +40,11 @@ SSO_DB_PASSWORD = SSO_DB_URL.password
 SSO_DB_HOST = SSO_DB_URL.hostname
 SSO_DB_PORT = SSO_DB_URL.port
 
+# Mailgun details required to get verification emails
+MAILGUN_DOMAIN = os.environ["MAILGUN_DOMAIN"]
+MAILGUN_EVENTS_URL = "https://api.mailgun.net/v3/%s/events" % MAILGUN_DOMAIN
+MAILGUN_SECRET_API_KEY = os.environ["MAILGUN_SECRET_API_KEY"]
+
 # Static data used across the project
 EMAIL_VERIFICATION_MSG_SUBJECT = ("Your great.gov.uk account: Please Confirm "
                                   "Your E-mail Address")
