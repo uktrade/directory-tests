@@ -1389,7 +1389,7 @@ def prof_add_online_profiles(context, supplier_alias, online_profiles):
     """
     profiles = [row["online profile"] for row in online_profiles]
     facebook = PROFILES["FACEBOOK"] in profiles
-    linkedin = PROFILES["LINKEDiN"] in profiles
+    linkedin = PROFILES["LINKEDIN"] in profiles
     twitter = PROFILES["TWITTER"] in profiles
     fab_ui_edit_online_profiles.go_to(context, supplier_alias)
     fab_ui_edit_online_profiles.update_profiles(
@@ -1409,7 +1409,7 @@ def prof_add_invalid_online_profiles(context, supplier_alias, online_profiles):
     """
     profiles = [row["online profile"] for row in online_profiles]
     facebook = PROFILES["FACEBOOK"] in profiles
-    linkedin = PROFILES["LINKEDiN"] in profiles
+    linkedin = PROFILES["LINKEDIN"] in profiles
     twitter = PROFILES["TWITTER"] in profiles
     fab_ui_edit_online_profiles.go_to(context, supplier_alias)
     fab_ui_edit_online_profiles.update_profiles(
