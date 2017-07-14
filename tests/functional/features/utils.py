@@ -6,6 +6,7 @@ import hashlib
 import logging
 import os
 import random
+from datetime import datetime, timedelta
 from enum import Enum
 
 import requests
@@ -19,6 +20,8 @@ from scrapy.selector import Selector
 from tests.functional.features.db_cleanup import get_dir_db_connection
 from tests.settings import (
     EXPORT_STATUSES,
+    MAILGUN_EVENTS_URL,
+    MAILGUN_SECRET_API_KEY,
     NO_EXPORT_INTENT_LABEL,
     S3_ACCESS_KEY_ID,
     S3_BUCKET,
@@ -570,3 +573,62 @@ def check_hash_of_remote_file(expected_hash, file_url):
     assert expected_hash == file_hash, (
         "Expected hash of file downloaded from %s to be %s but got %s"
         .format(expected_hash, file_hash))
+
+
+def mailgun_get_message(url: str) -> dict:
+    """Get message detail by its URL.
+
+    :param url: unique mailgun message URL
+    :return: a dictionary with message details and message body
+    """
+    api_key = MAILGUN_SECRET_API_KEY
+    # this will help us to get the raw MIME
+    headers = {"Accept": "message/rfc2822"}
+    r = requests.get(url, auth=("api", api_key), headers=headers)
+
+    if r.status_code == 200:
+        return r.json()
+    else:
+        raise LookupError("Oops! Something went wrong: {}".format(r.content))
+
+
+def mailgun_get_message_url(recipient: str) -> str:
+    """Will try to find the message URL among 100 emails sent in last 1 hour.
+
+    :param recipient: email address of the message recipient
+    :return: mailgun message URL
+    """
+    url = MAILGUN_EVENTS_URL
+    api_key = MAILGUN_SECRET_API_KEY
+    message_limit = 100
+
+    some_time_ago = datetime.today() - timedelta(hours=1)
+    begin = some_time_ago.strftime("%a, %d %B %Y %H:%M:%S -0000")
+    params = {
+        "begin": begin,
+        "ascending": "yes",
+        "limit": message_limit
+    }
+    r = requests.get(url, auth=("api", api_key), params=params)
+
+    assert r.status_code == 200
+    assert r.json()["items"]
+    logging.debug("Got {} events since {}".format(len(r.json()["items"]), begin))
+    for item in r.json()["items"]:
+        logging.debug("Found event recipient: {}".format(item["recipient"]))
+        if item["recipient"] == recipient:
+            message_url = item["storage"]["url"]
+    assert message_url, "Could not find email event for: {}".format(recipient)
+    return message_url
+
+
+def get_verification_link(recipient: str) -> str:
+    """Get email verification link sent by SSO to specified recipient.
+
+    :param recipient: email address of the message recipient
+    :return: email verification link sent by SSO
+    """
+    message_url = mailgun_get_message_url(recipient)
+    message = mailgun_get_message(message_url)
+    body = message["body-mime"]
+    return extract_email_confirmation_link(body)
