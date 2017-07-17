@@ -2,6 +2,8 @@
 """FAB - Edit Company's Directory Profile page"""
 import logging
 
+from requests import Response
+
 from tests import get_absolute_url
 from tests.functional.features.utils import Method, check_response, make_request
 
@@ -74,10 +76,10 @@ def should_not_see_online_profiles(context, supplier_alias):
                   "Company's Directory Profile Page", supplier_alias)
 
 
-def should_see_case_studies(case_studies, response):
+def should_see_case_studies(case_studies: dict, response: Response):
     content = response.content.decode("utf-8")
     for case in case_studies:
-        assert case.title in content
-        assert case.description in content
+        assert case_studies[case].title in content
+        assert case_studies[case].description in content
     logging.debug("Supplier can see all %d Case Studies on FAS Company's "
                   "Directory Profile Page", len(case_studies))
