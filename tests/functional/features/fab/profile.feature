@@ -175,7 +175,7 @@ Feature: Trade Profile
     @ED-1760
     @fab
     @profile
-    Scenario: Supplier should be able to update company’s details
+    Scenario: Supplier should be able to update company's details
       Given "Annette Geissinger" has created and verified profile for randomly selected company "Y"
 
       When "Annette Geissinger" updates company's details
@@ -198,7 +198,7 @@ Feature: Trade Profile
     @ED-1759
     @profile
     @logo
-    Scenario Outline: Supplier should be able to upload an image to set company’s logo
+    Scenario Outline: Supplier should be able to upload an image to set company's logo
       Given "Peter Alder" has created and verified profile for randomly selected company "Y"
 
       When "Peter Alder" uploads "<valid_image>" as company's logo
@@ -234,7 +234,7 @@ Feature: Trade Profile
     @ED-1759
     @profile
     @logo
-    Scenario: Supplier should not be able to upload files other than images as company’s logo
+    Scenario: Supplier should not be able to upload files other than images as company's logo
       Given "Peter Alder" has created and verified profile for randomly selected company "Y"
 
       When "Peter Alder" attempts to upload a file of unsupported type as company's logo
@@ -270,6 +270,24 @@ Feature: Trade Profile
     @ED-1762
     @fab
     @profile
+    Scenario: Supplier should NOT be able to use invalid links to Online Profiles - explicit social media URLs
+      Given "Peter Alder" has created and verified profile for randomly selected company "Y"
+
+      When "Peter Alder" attempts to use invalid links to online profiles
+        | online profile  | invalid link               |
+        | Facebook        | https://wrong.facebook.url |
+        | LinkedIn        | https://wrong.linkedin.url |
+        | Twitter         | https://wrong.twitter.url  |
+
+      Then "Peter Alder" should be told to provide valid links to all online profiles
+
+
+    @ED-1762
+    @fab
+    @profile
+    @bug
+    @ED-1833
+    @fixme
     Scenario: Supplier should NOT be able to use invalid links to Online Profiles (social media URLs)
       Given "Peter Alder" has created and verified profile for randomly selected company "Y"
 

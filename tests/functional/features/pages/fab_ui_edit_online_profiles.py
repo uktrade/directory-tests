@@ -6,7 +6,6 @@ import random
 from faker import Factory
 
 from tests import get_absolute_url
-from tests.functional.features.pages import fab_ui_profile
 from tests.functional.features.pages.utils import (
     extract_and_set_csrf_middleware_token
 )
@@ -103,10 +102,9 @@ def update_profiles(
             "social-twitter_url": new_tw
             }
 
-    response = make_request(Method.POST, URL, session=session, headers=headers,
-                            data=data, allow_redirects=True, context=context)
+    make_request(Method.POST, URL, session=session, headers=headers, data=data,
+                 allow_redirects=True, context=context)
 
-    fab_ui_profile.should_be_here(response)
     context.set_company_details(
         company.alias, facebook=new_fb, linkedin=new_li, twitter=new_tw)
     logging.debug(
