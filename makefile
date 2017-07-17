@@ -100,7 +100,7 @@ functional_tests:
 	$(SET_DB_URLS) && \
 	behave -k --format progress3 --no-logcapture --tags=-wip --tags=-skip --tags=~fixme tests/functional/features $(BEHAVE_ARGS)
 
-test: pep8 smoke_test integration_test load_test_minimal
+test: pep8 smoke_tests integration_test load_test_minimal
 
 DOCKER_REMOVE_ALL := \
 	docker ps -a | \
@@ -129,4 +129,4 @@ docker_integration_tests: docker_remove_all
 	docker-compose -f docker-compose.yml run smoke_tests && \
 	docker-compose -f docker-compose.yml run functional_tests
 
-.PHONY: build clean requirements test docker_remove_all docker_integration_tests smoke_test_buyer smoke_test_supplier smoke_test_sso smoke_test load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal integration_test pep8
+.PHONY: build clean requirements test docker_remove_all docker_integration_tests smoke_tests load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal functional_tests pep8
