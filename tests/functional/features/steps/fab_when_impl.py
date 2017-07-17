@@ -131,7 +131,8 @@ def find_active_company_without_fas_profile(alias):
                   json[0]["company_number"])
     company = Company(
         alias=alias, title=json[0]["title"].strip(),
-        number=json[0]["company_number"], companies_house_details=json[0])
+        number=json[0]["company_number"], companies_house_details=json[0],
+        case_studies={})
     return company
 
 
