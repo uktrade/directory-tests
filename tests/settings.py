@@ -17,20 +17,20 @@ API_CLIENT_KEY = os.getenv("API_CLIENT_KEY")
 SSO_USER_ID = int(os.getenv("SSO_USER_ID", 0))
 
 # These DB details are required to do post-test clean-up in Directory DB
-DIR_DB_URL = urlparse.urlparse(os.environ['DIR_DATABASE_URL'])
-DIR_DB_NAME = DIR_DB_URL.path[1:]
-DIR_DB_USER = DIR_DB_URL.username
-DIR_DB_PASSWORD = DIR_DB_URL.password
-DIR_DB_HOST = DIR_DB_URL.hostname
-DIR_DB_PORT = DIR_DB_URL.port
+DIR_DB_URL = urlparse.urlparse(os.getenv('DIR_DATABASE_URL'))
+DIR_DB_NAME = DIR_DB_URL.path[1:] if DIR_DB_URL else None
+DIR_DB_USER = DIR_DB_URL.username if DIR_DB_URL else None
+DIR_DB_PASSWORD = DIR_DB_URL.password if DIR_DB_URL else None
+DIR_DB_HOST = DIR_DB_URL.hostname if DIR_DB_URL else None
+DIR_DB_PORT = DIR_DB_URL.port if DIR_DB_URL else None
 
 # These DB details are required to do post-test clean-up in SSO DB
-SSO_DB_URL = urlparse.urlparse(os.environ['SSO_DATABASE_URL'])
-SSO_DB_NAME = SSO_DB_URL.path[1:]
-SSO_DB_USER = SSO_DB_URL.username
-SSO_DB_PASSWORD = SSO_DB_URL.password
-SSO_DB_HOST = SSO_DB_URL.hostname
-SSO_DB_PORT = SSO_DB_URL.port
+SSO_DB_URL = urlparse.urlparse(os.getenv('SSO_DATABASE_URL'))
+SSO_DB_NAME = SSO_DB_URL.path[1:] if SSO_DB_URL else None
+SSO_DB_USER = SSO_DB_URL.username if SSO_DB_URL else None
+SSO_DB_PASSWORD = SSO_DB_URL.password if SSO_DB_URL else None
+SSO_DB_HOST = SSO_DB_URL.hostname if SSO_DB_URL else None
+SSO_DB_PORT = SSO_DB_URL.port if SSO_DB_URL else None
 
 # Mailgun details required to get verification emails
 MAILGUN_DOMAIN = os.environ["MAILGUN_DOMAIN"]
