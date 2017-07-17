@@ -16,14 +16,6 @@ LOCUST_TIMEOUT = int(os.getenv("LOCUST_TIMEOUT", 150))
 API_CLIENT_KEY = os.getenv("API_CLIENT_KEY")
 SSO_USER_ID = int(os.getenv("SSO_USER_ID", 0))
 
-# These are required to fetch email messages with email verification links
-# which are stored in AWS S3 by AWS SES for specific test user:
-# test@directory.uktrade.io
-S3_ACCESS_KEY_ID = os.environ["S3_ACCESS_KEY_ID"]
-S3_SECRET_ACCESS_KEY = os.environ["S3_SECRET_ACCESS_KEY"]
-S3_BUCKET = os.environ["S3_BUCKET"]
-S3_REGION = os.environ["S3_REGION"]
-
 # These DB details are required to do post-test clean-up in Directory DB
 DIR_DB_URL = urlparse.urlparse(os.environ['DIR_DATABASE_URL'])
 DIR_DB_NAME = DIR_DB_URL.path[1:]
