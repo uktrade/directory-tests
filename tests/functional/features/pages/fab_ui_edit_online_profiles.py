@@ -57,6 +57,10 @@ def update_profiles(
         specific_facebook=None, specific_linkedin=None, specific_twitter=None):
     """Change Company's Sector of Interest.
 
+    NOTE:
+    If any of `specific_*` arguments is set to an empty string, then this will
+    remove existing link.
+
     :param context: behave `context` object
     :param supplier_alias: alias of the Actor used in the scope of the scenario
     :param facebook: change Facebook URL if True, or use the current one if False
@@ -74,26 +78,38 @@ def update_profiles(
     fake_fb = "http://facebook.com/{}".format(random.randint(9999, 999999999))
     fake_li = "http://linkedin.com/{}".format(random.randint(9999, 999999999))
     fake_tw = "http://twitter.com/{}".format(random.randint(9999, 999999999))
-    new_facebook = specific_facebook or fake_fb if facebook else company.facebook
-    new_linkedin = specific_linkedin or fake_li if linkedin else company.linkedin
-    new_twitter = specific_twitter or fake_tw if twitter else company.twitter
+
+    if facebook:
+        new_fb = specific_facebook if specific_facebook is not None else fake_fb
+    else:
+        new_fb = company.facebook
+
+    if linkedin:
+        new_li = specific_linkedin if specific_linkedin is not None else fake_li
+    else:
+        new_li = company.linkedin
+
+    if twitter:
+        new_tw = specific_twitter if specific_twitter is not None else fake_tw
+    else:
+        new_tw = company.twitter
 
     headers = {"Referer": URL}
     data = {"csrfmiddlewaretoken": token,
             "supplier_company_social_links_edit_view-current_step": "social",
-            "social-facebook_url": new_facebook,
-            "social-linkedin_url": new_linkedin,
-            "social-twitter_url": new_twitter
+            "social-facebook_url": new_fb,
+            "social-linkedin_url": new_li,
+            "social-twitter_url": new_tw
             }
 
     make_request(Method.POST, URL, session=session, headers=headers, data=data,
                  allow_redirects=True, context=context)
 
-    context.set_company_details(company.alias, facebook=new_facebook,
-                                linkedin=new_linkedin, twitter=new_twitter)
-    logging.debug("%s set Company's Online Profile links to: Facebook=%s, "
-                  "LinkedId=%s, Twitter=%s", supplier_alias, new_facebook,
-                  new_linkedin, new_twitter)
+    context.set_company_details(
+        company.alias, facebook=new_fb, linkedin=new_li, twitter=new_tw)
+    logging.debug(
+        "%s set Company's Online Profile links to: Facebook=%s, LinkedId=%s, "
+        "Twitter=%s", supplier_alias, new_fb, new_li, new_tw)
 
 
 def update_profiles_w_invalid_urls(
@@ -151,7 +167,24 @@ def should_see_errors(context, supplier_alias, *, facebook=True, linkedin=True,
         assert "Please provide a link to LinkedIn." in content
     if twitter:
         assert "Please provide a link to Twitter." in content
-    logging.debug("%s was not able to set Company's Online Profile links using"
-                  " invalid URLs to: %s %s %s",
-                  supplier_alias, "Facebook" if facebook else "",
-                  "LinkedIn" if linkedin else "", "Twitter" if twitter else "")
+    logging.debug(
+        "%s was not able to set Company's Online Profile links using invalid "
+        "URLs to: %s %s %s", supplier_alias, "Facebook" if facebook else "",
+        "LinkedIn" if linkedin else "", "Twitter" if twitter else "")
+
+
+def remove_links(
+        context, supplier_alias, *, facebook=False, linkedin=False,
+        twitter=False):
+    """Remove links to all existing Online Profiles.
+
+    :param context: behave `context` object
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :param facebook: remove link to Facebook profile if True, or not if False
+    :param linkedin: remove link to LinkedIn profile if True, or not if False
+    :param twitter: remove link to Twitter profile if True, or not if False
+    """
+    update_profiles(
+        context, supplier_alias, facebook=facebook, linkedin=linkedin,
+        twitter=twitter, specific_facebook="", specific_linkedin="",
+        specific_twitter="")

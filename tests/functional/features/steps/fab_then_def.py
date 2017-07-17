@@ -111,6 +111,18 @@ def then_supplier_should_be_told_to_use_valid_links(context, supplier_alias):
     prof_should_be_told_about_invalid_links(context, supplier_alias)
 
 
+@then('"{supplier_alias}" should not see any links to online profiles on FAB '
+      'Company\'s Directory Profile page')
+def then_no_online_profiles_are_visible_on_fab(context, supplier_alias):
+    fab_ui_profile.should_not_see_online_profiles(context, supplier_alias)
+
+
+@then('"{supplier_alias}" should not see any links to online profiles on FAS '
+      'Company\'s Directory Profile page')
+def then_no_online_profiles_are_visible_on_fas(context, supplier_alias):
+    fas_ui_profile.should_not_see_online_profiles(context, supplier_alias)
+
+
 @then('"{supplier_alias}" should see that logo on FAB Company\'s '
       'Directory Profile page')
 def then_supplier_should_see_logo_picture_on_fab(context, supplier_alias):

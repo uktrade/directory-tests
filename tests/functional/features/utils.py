@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """Various utils used across the project."""
 
-import email
 import hashlib
 import logging
 import os
@@ -9,11 +8,7 @@ import random
 from enum import Enum
 
 import requests
-from boto.exception import S3ResponseError
-from boto.s3 import connect_to_region
-from boto.s3.connection import OrdinaryCallingFormat
 from requests.models import Response
-from retrying import retry
 from scrapy.selector import Selector
 
 from tests.functional.features.db_cleanup import get_dir_db_connection
@@ -22,10 +17,6 @@ from tests.settings import (
     MAILGUN_EVENTS_URL,
     MAILGUN_SECRET_API_KEY,
     NO_EXPORT_INTENT_LABEL,
-    S3_ACCESS_KEY_ID,
-    S3_BUCKET,
-    S3_REGION,
-    S3_SECRET_ACCESS_KEY
 )
 
 
@@ -306,109 +297,6 @@ def extract_email_confirmation_link(payload):
     activation_link = payload[start:end]
     logging.debug("Found email confirmation link: %s", activation_link)
     return activation_link
-
-
-def get_s3_bucket():
-    """Get S3 bucket connection.
-
-    NOTE:
-    requires following environment variables to be set:
-    * S3_ACCESS_KEY_ID
-    * S3_SECRET_ACCESS_KEY
-    * S3_BUCKET
-    * S3_REGION
-
-    :return: a S3 bucket connection
-    :rtype: boto.s3.connection.S3Connection
-    """
-    conn = connect_to_region(region_name=S3_REGION,
-                             aws_access_key_id=S3_ACCESS_KEY_ID,
-                             aws_secret_access_key=S3_SECRET_ACCESS_KEY,
-                             is_secure=True,
-                             calling_format=OrdinaryCallingFormat())
-    return conn.get_bucket(S3_BUCKET)
-
-
-@retry(wait_fixed=2000, stop_max_attempt_number=3)
-def get_email_from_s3(key):
-    """Fetch Email message from S3 and parse it into Python Email object.
-
-    NOTE:
-    This will retry few times to fetch the contents of the message due to fact
-    that it take a while for the changes (e.g.: saving email message)
-    to replicate across Amazon S3.
-    More on it here: https://stackoverflow.com/a/13602018
-
-    :param key: a Key that identifies email message stored in S3 bucket
-    :return: standard Python Email object
-    """
-    try:
-        message_contents = key.get_contents_as_string().decode("utf-8")
-    except S3ResponseError as s3_exception:
-        logging.debug("Something went wrong when getting an email message "
-                      "from S3: %s", s3_exception)
-        raise
-    return email.message_from_string(message_contents)
-
-
-@retry(wait_fixed=2000, stop_max_attempt_number=3)
-def delete_message_from_s3(bucket, key):
-    """Delete Email message from S3.
-
-    NOTE:
-    This will retry few times to fetch the contents of the message due to fact
-    that it take a while for the changes (e.g.: saving email message)
-    to replicate across Amazon S3.
-    More on it here: https://stackoverflow.com/a/13602018
-
-    :param bucket: S3 bucket connection
-    :param key: a Key that identifies email message stored in S3 bucket
-    :return: standard Python Email object
-    """
-    logging.debug("Deleting message %s", key.key)
-    try:
-        bucket.delete_key(key.key)
-        logging.debug("Successfully deleted message %s from S3",
-                      key.key)
-    except S3ResponseError as s3ex:
-        logging.debug("Something went wrong when deleting msg: "
-                      "%s - %s", key.key, s3ex)
-        raise
-
-
-def find_confirmation_email_msg(bucket, actor, subject):
-    """Will search for an email confirmation message stored in AWS S3.
-
-    :param bucket: S3 bucket connection
-    :param actor: Actor named tuple
-    :param subject: expected subject of sought message
-    :return: a plain text message payload
-    """
-    result = None
-    found = False
-
-    for key in bucket.list():
-        logging.debug("Processing email file: %s", key.key)
-        msg = get_email_from_s3(key)
-        if msg['To'].strip().lower() == actor.email.lower():
-            logging.debug("Found an email addressed at: %s", msg['To'])
-            if msg['Subject'] == subject:
-                logging.debug("Found email confirmation message entitled: "
-                              "%s", subject)
-                result = extract_plain_text_payload(msg)
-                found = True
-                delete_message_from_s3(bucket, key)
-            else:
-                logging.debug("Message from %s to %s had a non-matching"
-                              "subject: '%s'", msg['From'], msg['To'],
-                              msg['Subject'])
-        else:
-            logging.debug("Message %s was addressed at: %s", key.key,
-                          msg['To'])
-
-    assert found, ("Could not find email confirmation message for {}"
-                   .format(actor.email))
-    return result
 
 
 def get_verification_code(company_number):
