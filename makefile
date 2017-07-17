@@ -88,8 +88,7 @@ DOCKER_COMPOSE_CREATE_ENVS := ./docker/create_envs.sh
 DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL := docker-compose rm && docker-compose pull
 
 smoke_tests:
-	$(SET_PYTEST_ENV_VARS); \
-	$(SET_DB_URLS) && \
+	$(SET_PYTEST_ENV_VARS) && \
 	pytest tests/smoke $(pytest_args)
 
 SET_DB_URLS := \
