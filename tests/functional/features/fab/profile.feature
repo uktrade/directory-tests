@@ -175,7 +175,7 @@ Feature: Trade Profile
     @ED-1760
     @fab
     @profile
-    Scenario: Supplier should be able to update company’s details
+    Scenario: Supplier should be able to update company's details
       Given "Annette Geissinger" has created and verified profile for randomly selected company "Y"
 
       When "Annette Geissinger" updates company's details
@@ -198,7 +198,7 @@ Feature: Trade Profile
     @ED-1759
     @profile
     @logo
-    Scenario Outline: Supplier should be able to upload an image to set company’s logo
+    Scenario Outline: Supplier should be able to upload an image to set company's logo
       Given "Peter Alder" has created and verified profile for randomly selected company "Y"
 
       When "Peter Alder" uploads "<valid_image>" as company's logo
@@ -234,7 +234,7 @@ Feature: Trade Profile
     @ED-1759
     @profile
     @logo
-    Scenario: Supplier should not be able to upload files other than images as company’s logo
+    Scenario: Supplier should not be able to upload files other than images as company's logo
       Given "Peter Alder" has created and verified profile for randomly selected company "Y"
 
       When "Peter Alder" attempts to upload a file of unsupported type as company's logo
@@ -251,17 +251,50 @@ Feature: Trade Profile
       Then for every uploaded unsupported file "Peter Alder" should be told that only certain image types can be used as company's logo
 
 
-  @ED-1761
-  @fab
-  @profile
-  Scenario: Supplier should be able to add valid links to Online Profiles (social media URLs)
-    Given "Peter Alder" has created and verified profile for randomly selected company "Y"
+    @ED-1761
+    @fab
+    @profile
+    Scenario: Supplier should be able to add valid links to Online Profiles (social media URLs)
+      Given "Peter Alder" has created and verified profile for randomly selected company "Y"
 
-    When "Peter Alder" adds links to online profiles
-      | online profile  |
-      | Facebook        |
-      | LinkedIn        |
-      | Twitter         |
+      When "Peter Alder" adds links to online profiles
+        | online profile  |
+        | Facebook        |
+        | LinkedIn        |
+        | Twitter         |
 
-    Then "Peter Alder" should see links to all online profiles on FAB Company's Directory Profile page
-    And "Peter Alder" should see links to all online profiles on FAS Company's Directory Profile page
+      Then "Peter Alder" should see links to all online profiles on FAB Company's Directory Profile page
+      And "Peter Alder" should see links to all online profiles on FAS Company's Directory Profile page
+
+
+    @ED-1762
+    @fab
+    @profile
+    Scenario: Supplier should NOT be able to use invalid links to Online Profiles - explicit social media URLs
+      Given "Peter Alder" has created and verified profile for randomly selected company "Y"
+
+      When "Peter Alder" attempts to use invalid links to online profiles
+        | online profile  | invalid link               |
+        | Facebook        | https://wrong.facebook.url |
+        | LinkedIn        | https://wrong.linkedin.url |
+        | Twitter         | https://wrong.twitter.url  |
+
+      Then "Peter Alder" should be told to provide valid links to all online profiles
+
+
+    @ED-1762
+    @fab
+    @profile
+    @bug
+    @ED-1833
+    @fixme
+    Scenario: Supplier should NOT be able to use invalid links to Online Profiles (social media URLs)
+      Given "Peter Alder" has created and verified profile for randomly selected company "Y"
+
+      When "Peter Alder" attempts to use invalid links to online profiles
+        | online profile  |
+        | Facebook        |
+        | LinkedIn        |
+        | Twitter         |
+
+      Then "Peter Alder" should be told to provide valid links to all online profiles

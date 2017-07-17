@@ -4,6 +4,7 @@ import logging
 
 from retrying import retry
 
+from tests.functional.features.pages import fab_ui_edit_online_profiles
 from tests.functional.features.utils import (
     check_hash_of_remote_file,
     check_response,
@@ -182,6 +183,19 @@ def sso_should_be_signed_in_to_sso_account(context, supplier_alias):
     assert response.cookies.get("sessionid") is not None
     assert "Sign out" in response.content.decode("utf-8")
     logging.debug("%s is logged in to the SSO account".format(supplier_alias))
+
+
+def prof_should_be_told_about_invalid_links(context, supplier_alias):
+    actor = context.get_actor(supplier_alias)
+    company = context.get_company(actor.company_alias)
+
+    facebook = True if company.facebook else False
+    linkedin = True if company.linkedin else False
+    twitter = True if company.twitter else False
+
+    fab_ui_edit_online_profiles.should_see_errors(
+        context, supplier_alias, facebook=facebook, linkedin=linkedin,
+        twitter=twitter)
 
 
 def prof_should_see_logo_picture(context, supplier_alias):

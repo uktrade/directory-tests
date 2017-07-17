@@ -3,8 +3,9 @@
 import logging
 import random
 
+from faker import Factory
+
 from tests import get_absolute_url
-from tests.functional.features.pages import fab_ui_profile
 from tests.functional.features.pages.utils import (
     extract_and_set_csrf_middleware_token
 )
@@ -21,6 +22,7 @@ EXPECTED_STRINGS = [
     "Use a full web address (URL) including http:// or https://",
     "Save", "Cancel"
 ]
+FAKE = Factory.create()
 
 
 def should_be_here(response):
@@ -69,21 +71,54 @@ def update_profiles(
     session = actor.session
     token = actor.csrfmiddlewaretoken
 
-    if facebook:
-        random_url = "http://facebook.com/{}".format(random.randint(999, 99999))
-        new_facebook = specific_facebook or random_url
-    else:
-        new_facebook = company.facebook
-    if linkedin:
-        random_url = "http://linkedin.com/{}".format(random.randint(999, 99999))
-        new_linkedin = specific_linkedin or random_url
-    else:
-        new_linkedin = company.linkedin
-    if twitter:
-        random_url = "http://twitter.com/{}".format(random.randint(999, 999999))
-        new_twitter = specific_twitter or random_url
-    else:
-        new_twitter = company.twitter
+    fake_fb = "http://facebook.com/{}".format(random.randint(9999, 999999999))
+    fake_li = "http://linkedin.com/{}".format(random.randint(9999, 999999999))
+    fake_tw = "http://twitter.com/{}".format(random.randint(9999, 999999999))
+    new_facebook = specific_facebook or fake_fb if facebook else company.facebook
+    new_linkedin = specific_linkedin or fake_li if linkedin else company.linkedin
+    new_twitter = specific_twitter or fake_tw if twitter else company.twitter
+
+    headers = {"Referer": URL}
+    data = {"csrfmiddlewaretoken": token,
+            "supplier_company_social_links_edit_view-current_step": "social",
+            "social-facebook_url": new_facebook,
+            "social-linkedin_url": new_linkedin,
+            "social-twitter_url": new_twitter
+            }
+
+    make_request(Method.POST, URL, session=session, headers=headers, data=data,
+                 allow_redirects=True, context=context)
+
+    context.set_company_details(company.alias, facebook=new_facebook,
+                                linkedin=new_linkedin, twitter=new_twitter)
+    logging.debug("%s set Company's Online Profile links to: Facebook=%s, "
+                  "LinkedId=%s, Twitter=%s", supplier_alias, new_facebook,
+                  new_linkedin, new_twitter)
+
+
+def update_profiles_w_invalid_urls(
+        context, supplier_alias, *, facebook=True, linkedin=True, twitter=True,
+        specific_facebook=None, specific_linkedin=None, specific_twitter=None):
+    """Try to change Company's Online profiled using invalid URLs.
+
+    :param context: behave `context` object
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :param facebook: change Facebook URL if True, or use the current one if False
+    :param linkedin: change LinkedIn URL if True, or use the current one if False
+    :param twitter: change Twitter URL if True, or use the current one if False
+    :param specific_facebook: use specific Facebook URL
+    :param specific_linkedin: use specific LinkedIn URL
+    :param specific_twitter: use specific Twitter URL
+    """
+    actor = context.get_actor(supplier_alias)
+    company = context.get_company(actor.company_alias)
+    session = actor.session
+    token = actor.csrfmiddlewaretoken
+
+    fake = "http://{}".format(FAKE.domain_name())
+    new_facebook = specific_facebook or fake if facebook else company.facebook
+    new_linkedin = specific_linkedin or fake if linkedin else company.linkedin
+    new_twitter = specific_twitter or fake if twitter else company.twitter
 
     headers = {"Referer": URL}
     data = {"csrfmiddlewaretoken": token,
@@ -95,10 +130,28 @@ def update_profiles(
 
     response = make_request(Method.POST, URL, session=session, headers=headers,
                             data=data, allow_redirects=True, context=context)
+    # check whether we're still on the same page
+    should_be_here(response)
 
-    fab_ui_profile.should_be_here(response)
-    context.set_company_details(company.alias, facebook=new_facebook,
-                                linkedin=new_linkedin, twitter=new_twitter)
-    logging.debug("%s set Company's Online Profile links to: Facebook=%s, "
-                  "LinkedId=%s, Twitter=%s", supplier_alias, new_facebook,
-                  new_linkedin, new_twitter)
+
+def should_see_errors(context, supplier_alias, *, facebook=True, linkedin=True,
+                      twitter=True):
+    """Check if all required errors are visible.
+
+    :param context: behave `context` object
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :param facebook: check for a Facebook URL error if True, or not if False
+    :param linkedin: check for a LinkedIn URL error if True, or not if False
+    :param twitter: check for a Twitter URL error if True, or not if False
+    """
+    content = context.response.content.decode("utf-8")
+    if facebook:
+        assert "Please provide a link to Facebook." in content
+    if linkedin:
+        assert "Please provide a link to LinkedIn." in content
+    if twitter:
+        assert "Please provide a link to Twitter." in content
+    logging.debug("%s was not able to set Company's Online Profile links using"
+                  " invalid URLs to: %s %s %s",
+                  supplier_alias, "Facebook" if facebook else "",
+                  "LinkedIn" if linkedin else "", "Twitter" if twitter else "")

@@ -4,6 +4,8 @@ import logging
 import random
 from urllib.parse import quote, unquote
 
+from behave.runner import Context
+from behave.model import Table
 from faker import Factory
 from jsonschema import validate
 from requests.models import Response
@@ -16,7 +18,7 @@ from tests.functional.features.pages import (
     fab_ui_edit_online_profiles,
     fab_ui_edit_sector
 )
-from tests.functional.features.pages.common import DETAILS
+from tests.functional.features.pages.common import DETAILS, PROFILES
 from tests.functional.features.steps.fab_then_impl import (
     prof_should_be_on_profile_page,
     prof_should_be_told_that_company_is_not_verified_yet,
@@ -1388,10 +1390,48 @@ def prof_add_online_profiles(context, supplier_alias, online_profiles):
             see: https://pythonhosted.org/behave/gherkin.html#table
     """
     profiles = [row["online profile"] for row in online_profiles]
-    facebook = "Facebook" in profiles
-    linkedin = "LinkedIn" in profiles
-    twitter = "Twitter" in profiles
+    facebook = PROFILES["FACEBOOK"] in profiles
+    linkedin = PROFILES["LINKEDIN"] in profiles
+    twitter = PROFILES["TWITTER"] in profiles
     fab_ui_edit_online_profiles.go_to(context, supplier_alias)
     fab_ui_edit_online_profiles.update_profiles(
         context, supplier_alias, facebook=facebook, linkedin=linkedin,
         twitter=twitter)
+
+
+def prof_add_invalid_online_profiles(
+        context: Context, supplier_alias: str, online_profiles: Table):
+    """Attempt to update links to Company's Online Profiles using invalid URLs.
+
+    :param context: behave `context` object
+    :type  context: behave.runner.Context
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :type  supplier_alias: str
+    :param online_profiles: context.table containing data table
+            see: https://pythonhosted.org/behave/gherkin.html#table
+    """
+    facebook = False
+    linkedin = False
+    twitter = False
+    facebook_url = "http://notfacebook.com"
+    linkedin_url = "http://notlinkedin.com"
+    twitter_url = "http://nottwitter.com"
+    for row in online_profiles:
+        if row["online profile"] == PROFILES["FACEBOOK"]:
+            facebook = True
+            facebook_url = row.get("invalid link", facebook_url)
+        if row["online profile"] == PROFILES["LINKEDIN"]:
+            linkedin = True
+            linkedin_url = row.get("invalid link", linkedin_url)
+        if row["online profile"] == PROFILES["TWITTER"]:
+            twitter = True
+            twitter_url = row.get("invalid link", twitter_url)
+    fab_ui_edit_online_profiles.go_to(context, supplier_alias)
+    logging.debug(
+        "Will use following invalid URLs to Online Profiles: %s %s %s",
+        facebook_url if facebook else "", linkedin_url if linkedin else "",
+        twitter_url if twitter else "")
+    fab_ui_edit_online_profiles.update_profiles(
+        context, supplier_alias, facebook=facebook, linkedin=linkedin,
+        twitter=twitter, specific_facebook=facebook_url,
+        specific_linkedin=linkedin_url, specific_twitter=twitter_url)
