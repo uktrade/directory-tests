@@ -5,7 +5,9 @@ from behave import then
 from tests.functional.features.pages import fab_ui_profile, fas_ui_profile
 from tests.functional.features.steps.fab_then_impl import (
     bp_should_be_prompted_to_build_your_profile,
+    fab_should_see_all_case_studies,
     fas_should_be_on_profile_page,
+    fas_should_see_all_case_studies,
     fas_should_see_logo_picture,
     prof_all_unsupported_files_should_be_rejected,
     prof_should_be_on_profile_page,
@@ -121,6 +123,18 @@ def then_no_online_profiles_are_visible_on_fab(context, supplier_alias):
       'Company\'s Directory Profile page')
 def then_no_online_profiles_are_visible_on_fas(context, supplier_alias):
     fas_ui_profile.should_not_see_online_profiles(context, supplier_alias)
+
+
+@then('"{supplier_alias}" should see all case studies on the FAB Company\'s '
+      'Directory Profile page')
+def then_supplier_should_see_all_case_studies_fab(context, supplier_alias):
+    fab_should_see_all_case_studies(context, supplier_alias)
+
+
+@then('"{supplier_alias}" should see all case studies on the FAS Company\'s '
+      'Directory Profile page')
+def then_supplier_should_see_all_case_studies_fas(context, supplier_alias):
+    fas_should_see_all_case_studies(context, supplier_alias)
 
 
 @then('"{supplier_alias}" should see that logo on FAB Company\'s '

@@ -2,6 +2,9 @@
 """FAB - Edit Company's Directory Profile page"""
 import logging
 
+from behave.runner import Context
+from requests import Response
+
 from tests import get_absolute_url
 from tests.functional.features.pages.common import DETAILS
 from tests.functional.features.utils import check_response
@@ -15,12 +18,12 @@ EXPECTED_STRINGS = [
 ]
 
 
-def should_be_here(response):
+def should_be_here(response: Response):
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Supplier is on FAB Company's Profile page")
 
 
-def should_see_details(context, supplier_alias, table_of_details):
+def should_see_details(context: Context, supplier_alias: str, table_of_details):
     visible_details = [row["detail"] for row in table_of_details]
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
@@ -50,11 +53,11 @@ def should_see_details(context, supplier_alias, table_of_details):
             assert company.no_employees in content
     if sector:
         assert SECTORS_WITH_LABELS[company.sector] in content
-    logging.debug("% can see all expected details are visible of FAB Company's "
-                  "Directory Profile Page", supplier_alias)
+    logging.debug("%s can see all expected details are visible of FAB Company's"
+                  " Directory Profile Page", supplier_alias)
 
 
-def should_see_online_profiles(context, supplier_alias):
+def should_see_online_profiles(context: Context, supplier_alias: str):
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
     content = context.response.content.decode("utf-8")
@@ -72,10 +75,19 @@ def should_see_online_profiles(context, supplier_alias):
                   "Company's Directory Profile Page", supplier_alias)
 
 
-def should_not_see_online_profiles(context, supplier_alias):
+def should_not_see_online_profiles(context: Context, supplier_alias: str):
     content = context.response.content.decode("utf-8")
     assert "Add Facebook" in content
     assert "Add LinkedIn" in content
     assert "Add Twitter" in content
-    logging.debug("% cannot see links to any Online Profile on FAB "
+    logging.debug("%s cannot see links to any Online Profile on FAB "
                   "Company's Directory Profile Page", supplier_alias)
+
+
+def should_see_case_studies(case_studies: dict, response: Response):
+    content = response.content.decode("utf-8")
+    for case in case_studies:
+        assert case_studies[case].title in content
+        assert case_studies[case].description in content
+    logging.debug("Supplier can see all %d Case Studies on FAB Company's "
+                  "Directory Profile Page", len(case_studies))

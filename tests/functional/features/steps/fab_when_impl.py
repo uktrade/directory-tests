@@ -14,11 +14,15 @@ from scrapy.selector import Selector
 from tests import get_absolute_url
 from tests.functional.features.context_utils import Company
 from tests.functional.features.pages import (
+    fab_ui_case_study_basic,
+    fab_ui_case_study_images,
     fab_ui_edit_details,
     fab_ui_edit_online_profiles,
-    fab_ui_edit_sector
+    fab_ui_edit_sector,
+    fab_ui_profile
 )
 from tests.functional.features.pages.common import DETAILS, PROFILES
+from tests.functional.features.pages.utils import random_case_study_data
 from tests.functional.features.steps.fab_then_impl import (
     prof_should_be_on_profile_page,
     prof_should_be_told_that_company_is_not_verified_yet,
@@ -127,7 +131,8 @@ def find_active_company_without_fas_profile(alias):
                   json[0]["company_number"])
     company = Company(
         alias=alias, title=json[0]["title"].strip(),
-        number=json[0]["company_number"], companies_house_details=json[0])
+        number=json[0]["company_number"], companies_house_details=json[0],
+        case_studies={})
     return company
 
 
@@ -1438,6 +1443,11 @@ def prof_add_invalid_online_profiles(
 
 
 def prof_remove_links_to_online_profiles(context, supplier_alias):
+    """Will remove links to existing Online Profiles.
+
+    :param context: behave `context` object
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    """
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
 
@@ -1448,3 +1458,36 @@ def prof_remove_links_to_online_profiles(context, supplier_alias):
     fab_ui_edit_online_profiles.remove_links(
         context, supplier_alias, facebook=facebook, linkedin=linkedin,
         twitter=twitter)
+
+
+def prof_add_case_study(context, supplier_alias, case_alias):
+    """Will add a complete case study (all fields will be filled out).
+
+    :param context: behave `context` object
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :param case_alias: alias of the Case Study used in the scope of the scenario
+    """
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+    case_study = random_case_study_data(case_alias)
+
+    # Step 1 - go to "Add case study" form & extract CSRF token
+    response = fab_ui_case_study_basic.go_to(session)
+    context.response = response
+    token = extract_csrf_middleware_token(response)
+
+    # Step 2 - submit the "basic case study data" form & extract CSRF token
+    response = fab_ui_case_study_basic.submit_form(session, token, case_study)
+    context.response = response
+    fab_ui_case_study_images.should_be_here(response)
+    token = extract_csrf_middleware_token(response)
+
+    # Step 3 - submit the "case study images" form
+    response = fab_ui_case_study_images.submit_form(session, token, case_study)
+    context.response = response
+
+    # Step 4 - check if we're on the FAB Profile page
+    fab_ui_profile.should_be_here(response)
+
+    # Step 5 - Store Case Study data in Scenario Data
+    context.add_case_study(actor.company_alias, case_alias, case_study)

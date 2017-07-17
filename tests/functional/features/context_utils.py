@@ -19,17 +19,26 @@ Actor = namedtuple(
         'email_confirmation_link', 'company_alias', 'has_sso_account'
     ]
 )
+CaseStudy = namedtuple(
+    'CaseStudy',
+    [
+        'alias', 'title', 'summary', 'description', 'sector', 'website',
+        'keywords', 'image_1', 'image_2', 'image_3', 'caption_1', 'caption_2',
+        'caption_3', 'testimonial', 'source_name', 'source_job',
+        'source_company'
+    ])
 Company = namedtuple(
     'Company',
     [
         'alias', 'title', 'number', 'address_details', 'summary', 'description',
         'website', 'keywords', 'no_employees', 'sector', 'letter_recipient',
         'companies_house_details', 'facebook', 'linkedin', 'twitter',
-        'logo_picture', 'logo_url', 'logo_hash'
+        'case_studies', 'logo_picture', 'logo_url', 'logo_hash'
     ]
 )
 # Set all fields to None by default.
 Company.__new__.__defaults__ = (None,) * len(Company._fields)
+CaseStudy.__new__.__defaults__ = (None,) * len(CaseStudy._fields)
 
 
 def initialize_scenario_data():
@@ -224,6 +233,14 @@ def set_company_description(self, alias, summary, description):
         raise KeyError("Could not find company with alias '%s'", alias)
 
 
+def add_case_study(self, company_alias, case_alias, case_study):
+    cases = self.get_company(company_alias).case_studies
+    cases[case_alias] = case_study
+
+    logging.debug("Successfully added Case Study %s to Company %s. "
+                  "Case Study Data: %s", case_alias, company_alias, case_study)
+
+
 def patch_context(context):
     """Will patch the Behave's `context` object with some handy functions.
 
@@ -245,5 +262,6 @@ def patch_context(context):
     context.set_company_description = MethodType(set_company_description, context)
     context.add_company = MethodType(add_company, context)
     context.get_company = MethodType(get_company, context)
+    context.add_case_study = MethodType(add_case_study, context)
     context.set_company_details = MethodType(set_company_details, context)
     context.set_company_logo_detail = MethodType(set_company_logo_detail, context)

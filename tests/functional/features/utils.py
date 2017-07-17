@@ -166,8 +166,11 @@ def make_request(method: Method, url, *, session=None, params=None,
         logging.debug("REQ Cookies: %s", cookies)
     if data:
         if files:
-            logging.debug("REQ Body (trimmed): %s",
-                          res.request.body[0:trim_offset])
+            if res.request.body:
+                logging.debug("REQ Body (trimmed): %s",
+                              res.request.body[0:trim_offset])
+            else:
+                logging.debug("REQ has no body just files")
         else:
             logging.debug("REQ Data: %s", res.request.body)
     logging.debug("RSP Status: %s %s", res.status_code, res.reason)
