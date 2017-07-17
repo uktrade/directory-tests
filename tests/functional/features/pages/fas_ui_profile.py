@@ -70,7 +70,7 @@ def should_not_see_online_profiles(context, supplier_alias):
     assert "Visit Facebook" not in content
     assert "Visit LinkedIn" not in content
     assert "Visit Twitter" not in content
-    logging.debug("% cannot see links to any Online Profile on FAS "
+    logging.debug("%s cannot see links to any Online Profile on FAS "
                   "Company's Directory Profile Page", supplier_alias)
 
 
@@ -79,5 +79,5 @@ def should_see_case_studies(case_studies, response):
     for case in case_studies:
         assert case.title in content
         assert case.description in content
-    logging.debug("Supplier can see all %n Case Studies on FAS Company's "
+    logging.debug("Supplier can see all %d Case Studies on FAS Company's "
                   "Directory Profile Page", len(case_studies))

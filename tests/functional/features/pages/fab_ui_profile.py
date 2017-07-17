@@ -53,8 +53,8 @@ def should_see_details(context: Context, supplier_alias: str, table_of_details):
             assert company.no_employees in content
     if sector:
         assert SECTORS_WITH_LABELS[company.sector] in content
-    logging.debug("% can see all expected details are visible of FAB Company's "
-                  "Directory Profile Page", supplier_alias)
+    logging.debug("%s can see all expected details are visible of FAB Company's"
+                  " Directory Profile Page", supplier_alias)
 
 
 def should_see_online_profiles(context: Context, supplier_alias: str):
@@ -80,7 +80,7 @@ def should_not_see_online_profiles(context: Context, supplier_alias: str):
     assert "Add Facebook" in content
     assert "Add LinkedIn" in content
     assert "Add Twitter" in content
-    logging.debug("% cannot see links to any Online Profile on FAB "
+    logging.debug("%s cannot see links to any Online Profile on FAB "
                   "Company's Directory Profile Page", supplier_alias)
 
 
@@ -89,5 +89,5 @@ def should_see_case_studies(case_studies: dict, response: Response):
     for case in case_studies:
         assert case_studies[case].title in content
         assert case_studies[case].description in content
-    logging.debug("Supplier can see all %n Case Studies on FAB Company's "
+    logging.debug("Supplier can see all %d Case Studies on FAB Company's "
                   "Directory Profile Page", len(case_studies))
