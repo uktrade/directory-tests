@@ -1426,12 +1426,11 @@ def prof_add_invalid_online_profiles(
         if row["online profile"] == PROFILES["TWITTER"]:
             twitter = True
             twitter_url = row.get("invalid link", twitter_url)
+    fab_ui_edit_online_profiles.go_to(context, supplier_alias)
     logging.debug(
         "Will use following invalid URLs to Online Profiles: %s %s %s",
         facebook_url if facebook else "", linkedin_url if linkedin else "",
-        twitter_url if twitter else ""
-    )
-    fab_ui_edit_online_profiles.go_to(context, supplier_alias)
+        twitter_url if twitter else "")
     fab_ui_edit_online_profiles.update_profiles(
         context, supplier_alias, facebook=facebook, linkedin=linkedin,
         twitter=twitter, specific_facebook=facebook_url,
