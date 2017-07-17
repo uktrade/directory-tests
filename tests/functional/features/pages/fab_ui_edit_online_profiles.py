@@ -58,7 +58,7 @@ def update_profiles(
     """Change Company's Sector of Interest.
 
     NOTE:
-    If any of `specific_*` arguments are set to an empty string, then this will
+    If any of `specific_*` arguments is set to an empty string, then this will
     remove existing link.
 
     :param context: behave `context` object
