@@ -33,7 +33,7 @@ def random_case_study_data(alias) -> CaseStudy:
     """
     images = PNGs + JPGs + JPEGs
     (title, summary, description, caption_1, caption_2, caption_3, testimonial,
-     testimonial_name, testimonial_job, testimonial_company) = (
+     source_name, source_job, source_company) = (
         FAKE.sentence() for _ in range(10))
     sector = choice(SECTORS)
     website = "http://{}/fake-case-study-url".format(FAKE.domain_name())
@@ -45,7 +45,7 @@ def random_case_study_data(alias) -> CaseStudy:
         sector=sector, website=website, keywords=keywords, image_1=image_1,
         image_2=image_2, image_3=image_3, caption_1=caption_1,
         caption_2=caption_2, caption_3=caption_3, testimonial=testimonial,
-        testimonial_name=testimonial_name, testimonial_job=testimonial_job,
-        testimonial_company=testimonial_company)
+        source_name=source_name, source_job=source_job,
+        source_company=source_company)
 
     return case_study
