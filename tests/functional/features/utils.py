@@ -6,7 +6,6 @@ import hashlib
 import logging
 import os
 import random
-from datetime import datetime, timedelta
 from enum import Enum
 
 import requests
@@ -600,26 +599,19 @@ def mailgun_get_message_url(recipient: str) -> str:
     """
     url = MAILGUN_EVENTS_URL
     api_key = MAILGUN_SECRET_API_KEY
-    message_limit = 100
+    message_limit = 1
 
-    some_time_ago = datetime.today() - timedelta(hours=1)
-    begin = some_time_ago.strftime("%a, %d %B %Y %H:%M:%S -0000")
     params = {
-        "begin": begin,
-        "ascending": "yes",
-        "limit": message_limit
+        "limit": message_limit,
+        "recipient": recipient,
+        "event": "accepted"
     }
-    r = requests.get(url, auth=("api", api_key), params=params)
+    response = requests.get(url, auth=("api", api_key), params=params)
 
-    assert r.status_code == 200
-    assert r.json()["items"]
-    logging.debug("Got {} events since {}".format(len(r.json()["items"]), begin))
-    for item in r.json()["items"]:
-        logging.debug("Found event recipient: {}".format(item["recipient"]))
-        if item["recipient"] == recipient:
-            message_url = item["storage"]["url"]
-    assert message_url, "Could not find email event for: {}".format(recipient)
-    return message_url
+    assert response.status_code == 200
+    assert len(response.json()["items"]) == message_limit
+    logging.debug("Found event with recipient: {}".format(recipient))
+    return response.json()["items"][0]["storage"]["url"]
 
 
 def get_verification_link(recipient: str) -> str:
@@ -628,6 +620,7 @@ def get_verification_link(recipient: str) -> str:
     :param recipient: email address of the message recipient
     :return: email verification link sent by SSO
     """
+    logging.debug("Searching for verification email of: {}".format(recipient))
     message_url = mailgun_get_message_url(recipient)
     message = mailgun_get_message(message_url)
     body = message["body-mime"]

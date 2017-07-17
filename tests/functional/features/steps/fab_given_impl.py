@@ -57,11 +57,12 @@ def unauthenticated_supplier(context, supplier_alias):
     :type supplier_alias: str
     """
     session = Session()
-    email = "test+{}+{}@directory.uktrade.io".format(
-        supplier_alias.replace(" ", "_"), str(uuid.uuid4()))
+    email = ("test+{}{}@directory.uktrade.io"
+             .format(supplier_alias, str(uuid.uuid4()))
+             .replace("-", "").replace(" ", "").lower())
     password_length = 10
     password = ''.join(random.choice(string.ascii_letters)
-                       for i in range(password_length))
+                       for _ in range(password_length))
     actor = Actor(alias=supplier_alias, email=email, password=password,
                   session=session, csrfmiddlewaretoken=None,
                   email_confirmation_link=None, company_alias=None,

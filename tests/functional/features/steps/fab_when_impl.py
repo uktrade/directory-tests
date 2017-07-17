@@ -4,6 +4,8 @@ import logging
 import random
 from urllib.parse import quote, unquote
 
+from behave.runner import Context
+from behave.model import Table
 from faker import Factory
 from jsonschema import validate
 from requests.models import Response
@@ -1397,7 +1399,8 @@ def prof_add_online_profiles(context, supplier_alias, online_profiles):
         twitter=twitter)
 
 
-def prof_add_invalid_online_profiles(context, supplier_alias, online_profiles):
+def prof_add_invalid_online_profiles(
+        context: Context, supplier_alias: str, online_profiles: Table):
     """Attempt to update links to Company's Online Profiles using invalid URLs.
 
     :param context: behave `context` object
@@ -1407,16 +1410,31 @@ def prof_add_invalid_online_profiles(context, supplier_alias, online_profiles):
     :param online_profiles: context.table containing data table
             see: https://pythonhosted.org/behave/gherkin.html#table
     """
-    profiles = [row["online profile"] for row in online_profiles]
-    facebook = PROFILES["FACEBOOK"] in profiles
-    linkedin = PROFILES["LINKEDIN"] in profiles
-    twitter = PROFILES["TWITTER"] in profiles
+    facebook = False
+    linkedin = False
+    twitter = False
+    facebook_url = "http://notfacebook.com"
+    linkedin_url = "http://notlinkedin.com"
+    twitter_url = "http://nottwitter.com"
+    for row in online_profiles:
+        if row["online profile"] == PROFILES["FACEBOOK"]:
+            facebook = True
+            facebook_url = row.get("invalid link", facebook_url)
+        if row["online profile"] == PROFILES["LINKEDIN"]:
+            linkedin = True
+            linkedin_url = row.get("invalid link", linkedin_url)
+        if row["online profile"] == PROFILES["TWITTER"]:
+            twitter = True
+            twitter_url = row.get("invalid link", twitter_url)
     fab_ui_edit_online_profiles.go_to(context, supplier_alias)
+    logging.debug(
+        "Will use following invalid URLs to Online Profiles: %s %s %s",
+        facebook_url if facebook else "", linkedin_url if linkedin else "",
+        twitter_url if twitter else "")
     fab_ui_edit_online_profiles.update_profiles(
         context, supplier_alias, facebook=facebook, linkedin=linkedin,
-        twitter=twitter, specific_facebook="http://notfacebook.com",
-        specific_linkedin="http://notlinkedin.com",
-        specific_twitter="http://nottwitter.com")
+        twitter=twitter, specific_facebook=facebook_url,
+        specific_linkedin=linkedin_url, specific_twitter=twitter_url)
 
 
 def prof_remove_links_to_online_profiles(context, supplier_alias):
