@@ -1473,15 +1473,18 @@ def prof_add_case_study(context, supplier_alias, case_alias):
 
     # Step 1 - go to "Add case study" form & extract CSRF token
     response = fab_ui_case_study_basic.go_to(session)
+    context.response = response
     token = extract_csrf_middleware_token(response)
 
     # Step 2 - submit the "basic case study data" form & extract CSRF token
     response = fab_ui_case_study_basic.submit_form(session, token, case_study)
+    context.response = response
     fab_ui_case_study_images.should_be_here(response)
     token = extract_csrf_middleware_token(response)
 
     # Step 3 - submit the "case study images" form
     response = fab_ui_case_study_images.submit_form(session, token, case_study)
+    context.response = response
 
     # Step 4 - check if we're on the FAB Profile page
     fab_ui_profile.should_be_here(response)
