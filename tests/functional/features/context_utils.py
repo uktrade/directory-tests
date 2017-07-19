@@ -26,7 +26,16 @@ CaseStudy = namedtuple(
         'keywords', 'image_1', 'image_2', 'image_3', 'caption_1', 'caption_2',
         'caption_3', 'testimonial', 'source_name', 'source_job',
         'source_company'
-    ])
+    ]
+)
+AddressDetails = namedtuple(
+    "AddressDetails",
+    [
+        "address_signature", "address_line_1", "address_line_2", "locality",
+        "country", "postal_code", "po_box"
+    ]
+)
+
 Company = namedtuple(
     'Company',
     [
