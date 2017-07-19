@@ -349,24 +349,19 @@ def check_response(response: Response, status_code: int, *,
                                present in the response content
     :type  unexpected_strings: list
     """
-    assert response.status_code == status_code, (
-        "Expected {} but got {}".format(status_code, response.status_code))
+    assert response.status_code == status_code
 
     if body_contains:
         assert response.content, "Response has no content!"
         content = response.content.decode("utf-8")
-        assert all(s in content for s in body_contains), (
-            "Could not find all expected string in the response: {}"
-            .format(", ".join(body_contains))
-        )
+        for string in body_contains:
+            assert string in content
 
     if unexpected_strings:
         assert response.content, "Response has no content!"
         content = response.content.decode("utf-8")
-        assert all(s not in content for s in unexpected_strings), (
-            "Some of the unexpected strings were found in the response: {}"
-            .format(", ".join(unexpected_strings))
-        )
+        for string in unexpected_strings:
+            assert string in content
 
     if location:
         assert response.headers.get("Location") == location, (
