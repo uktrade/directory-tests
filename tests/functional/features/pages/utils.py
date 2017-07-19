@@ -34,7 +34,7 @@ def random_case_study_data(alias) -> CaseStudy:
     images = PNGs + JPGs + JPEGs
     (title, summary, description, caption_1, caption_2, caption_3, testimonial,
      source_name, source_job, source_company) = (
-        FAKE.sentence()[:60] for _ in range(10))
+        FAKE.sentence()[:60].strip() for _ in range(10))
     sector = choice(SECTORS)
     website = "http://{}/fake-case-study-url".format(FAKE.domain_name())
     keywords = ", ".join(FAKE.sentence().replace(".", "").split())
