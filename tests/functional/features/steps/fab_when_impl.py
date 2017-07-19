@@ -166,7 +166,7 @@ def select_random_company(context, supplier_alias, alias):
                             allow_redirects=True, context=context)
     html_escape_table = {"&": "&amp;", "'": "&#39;"}
     escaped_company_title = "".join(html_escape_table.get(c, c) for c in
-                                    company.title.upper())
+                                    company.title).upper().strip()
     expected = ["Create your company’s profile", escaped_company_title,
                 company.number]
     check_response(response, 200, body_contains=expected)
