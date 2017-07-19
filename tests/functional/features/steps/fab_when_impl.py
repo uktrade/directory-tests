@@ -396,7 +396,8 @@ def reg_confirm_export_status(context, supplier_alias, export_status):
     :param export_status: current Export Status of selected company
     :type export_status: str
     """
-    export_status = EXPORT_STATUSES[export_status]
+    if export_status in EXPORT_STATUSES:
+        export_status = EXPORT_STATUSES[export_status]
     context.export_status = export_status
     has_sso_account = context.get_actor(supplier_alias).has_sso_account
 
