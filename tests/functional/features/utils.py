@@ -407,8 +407,8 @@ def get_positive_exporting_status():
     :return: an exporting status accepted by Find a Buyer service
     :rtype: str
     """
-    with_export_intent = [EXPORT_STATUSES[s] for s in EXPORT_STATUSES if
-                          s != NO_EXPORT_INTENT_LABEL]
+    with_export_intent = [EXPORT_STATUSES[key] for key in EXPORT_STATUSES if
+                          key != NO_EXPORT_INTENT_LABEL]
     return random.choice(with_export_intent)
 
 
