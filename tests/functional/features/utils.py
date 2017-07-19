@@ -16,7 +16,7 @@ from tests.settings import (
     EXPORT_STATUSES,
     MAILGUN_EVENTS_URL,
     MAILGUN_SECRET_API_KEY,
-    NO_EXPORT_INTENT_LABEL,
+    NO_EXPORT_INTENT_LABEL
 )
 
 
@@ -388,8 +388,9 @@ def get_positive_exporting_status():
     :return: an exporting status accepted by Find a Buyer service
     :rtype: str
     """
-    EXPORT_STATUSES.pop(NO_EXPORT_INTENT_LABEL, 0)
-    return random.choice(list(EXPORT_STATUSES))
+    with_export_intent = [EXPORT_STATUSES[s] for s in EXPORT_STATUSES if
+                          s != NO_EXPORT_INTENT_LABEL]
+    return random.choice(with_export_intent)
 
 
 def get_absolute_path_of_file(filename):
