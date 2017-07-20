@@ -21,10 +21,12 @@ from tests.settings import (
 SSO_CLEAN_UP = """
 DO $$
 DECLARE
+actor_email TEXT;
 userid INTEGER;
 BEGIN
     -- STEP 0 - get user ID (need to explicitly cast it to Integer)
-    userid := (SELECT id::INTEGER FROM user_user WHERE email = %s);
+    actor_email := %s;
+    userid := (SELECT id::INTEGER FROM user_user WHERE email = actor_email);
     -- STEP 1 - delete account email address
     DELETE FROM account_emailaddress WHERE user_id = userid;
     -- STEP 2 - delete user account
@@ -39,14 +41,16 @@ DELETE FROM django_session WHERE age(expire_date, NOW()) < '1 day';
 DIRECTORY_CLEAN_UP = """
 DO $$
 DECLARE
+actor_email TEXT;
 companyID INTEGER;
 BEGIN
     -- STEP 0 - get company ID (need to explicitly cast it to Integer)
-    companyID := (SELECT company_id::INTEGER FROM user_user WHERE company_email = %s);
+    actor_email := %s;
+    companyID := (SELECT company_id::INTEGER FROM user_user WHERE company_email = actor_email);
     -- STEP 1 - delete all possible notifications
     DELETE FROM notifications_supplieremailnotification WHERE supplier_id = companyID;
-    DELETE FROM notifications_anonymousunsubscribe WHERE email = '{email}';
-    DELETE FROM notifications_anonymousemailnotification WHERE email = '{email}';
+    DELETE FROM notifications_anonymousunsubscribe WHERE email = actor_email;
+    DELETE FROM notifications_anonymousemailnotification WHERE email = actor_email;
     -- STEP 2 - delete messages sent to the Supplier
     DELETE FROM contact_messagetosupplier WHERE recipient_id = companyID;
     -- STEP 3 - delete all case studies
