@@ -16,7 +16,7 @@ from tests.settings import (
     EXPORT_STATUSES,
     MAILGUN_EVENTS_URL,
     MAILGUN_SECRET_API_KEY,
-    NO_EXPORT_INTENT_LABEL,
+    NO_EXPORT_INTENT_LABEL
 )
 
 
@@ -332,58 +332,72 @@ def check_response(response: Response, status_code: int, *,
     """Check if SUT replied with an expected response.
 
     :param response: Response object return by `requests`
-    :type  response: requests.models.Response
     :param status_code: expected status code
-    :type  status_code: int
     :param location: (optional) expected value of Location header
-    :type  location: str
     :param locations: (optional) in one of the Location list
-    :type  locations: list
     :param location_starts_with: (optional) expected leading part of
                                 the Location header
-    :type  location_starts_with: str
     :param body_contains: (optional) a list of strings that should be present
                     in the response content
-    :type  body_contains: list
     :param unexpected_strings: (optional) a list of strings that should NOT be
                                present in the response content
-    :type  unexpected_strings: list
     """
-    assert response.status_code == status_code, (
-        "Expected {} but got {}".format(status_code, response.status_code))
+    try:
+        assert response.status_code == status_code
+    except AssertionError:
+        logging.error(
+            "Expected %s but got %s", status_code, response.status_code)
+        raise
 
     if body_contains:
         assert response.content, "Response has no content!"
         content = response.content.decode("utf-8")
-        assert all(s in content for s in body_contains), (
-            "Could not find all expected string in the response: {}"
-            .format(", ".join(body_contains))
-        )
+        for string in body_contains:
+            try:
+                assert string in content
+            except AssertionError:
+                logging.error("Could not find '%s' in the response", string)
+                raise
 
     if unexpected_strings:
         assert response.content, "Response has no content!"
         content = response.content.decode("utf-8")
-        assert all(s not in content for s in unexpected_strings), (
-            "Some of the unexpected strings were found in the response: {}"
-            .format(", ".join(unexpected_strings))
-        )
+        for string in unexpected_strings:
+            try:
+                assert string not in content
+            except AssertionError:
+                logging.error("Found unexpected '%s' in response", string)
+                raise
 
     if location:
-        assert response.headers.get("Location") == location, (
-            "Expected Location header to be: '{}' but got '{}' instead."
-            .format(location, response.headers.get("Location")))
+        try:
+            assert response.headers.get("Location") == location
+        except AssertionError:
+            logging.error(
+                "Expected Location header to be: '%s' but got '%s' instead."
+                .format(location, response.headers.get("Location")))
+            raise
 
     if locations:
-        assert response.headers.get("Location") in locations, (
-            "Should be redirected to one of these {} locations '{}' but instead"
-            " was redirected to '{}'".format(len(locations), locations,
-                                             response.headers.get("Location")))
+        try:
+            assert response.headers.get("Location") in locations
+        except AssertionError:
+            logging.error(
+                "Should be redirected to one of these %d locations '%s' but "
+                "instead was redirected to '%s'", len(locations), locations,
+                response.headers.get("Location"))
+            raise
 
     if location_starts_with:
-        new_location = response.headers.get("Location")
-        assert new_location.startswith(location_starts_with), (
-            "Expected Location header to start with: '{}' but got '{}' instead."
-            .format(location_starts_with, response.headers.get("Location")))
+        try:
+            new_location = response.headers.get("Location")
+            assert new_location.startswith(location_starts_with)
+        except AssertionError:
+            logging.error(
+                "Expected Location header to start with: '%s' but got '%s' "
+                "instead.", location_starts_with,
+                response.headers.get("Location"))
+            raise
 
 
 def get_positive_exporting_status():
@@ -393,8 +407,9 @@ def get_positive_exporting_status():
     :return: an exporting status accepted by Find a Buyer service
     :rtype: str
     """
-    EXPORT_STATUSES.pop(NO_EXPORT_INTENT_LABEL, 0)
-    return random.choice(list(EXPORT_STATUSES))
+    with_export_intent = [EXPORT_STATUSES[key] for key in EXPORT_STATUSES if
+                          key != NO_EXPORT_INTENT_LABEL]
+    return random.choice(with_export_intent)
 
 
 def get_absolute_path_of_file(filename):
