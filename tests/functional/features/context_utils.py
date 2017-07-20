@@ -26,7 +26,16 @@ CaseStudy = namedtuple(
         'keywords', 'image_1', 'image_2', 'image_3', 'caption_1', 'caption_2',
         'caption_3', 'testimonial', 'source_name', 'source_job',
         'source_company'
-    ])
+    ]
+)
+AddressDetails = namedtuple(
+    "AddressDetails",
+    [
+        "address_signature", "address_line_1", "address_line_2", "locality",
+        "country", "postal_code", "po_box"
+    ]
+)
+
 Company = namedtuple(
     'Company',
     [
@@ -182,7 +191,7 @@ def get_company(self, alias):
 def set_company_details(self, alias, *, title=None, website=None, keywords=None,
                         no_employees=None, sector=None, letter_recipient=None,
                         address_details=None, facebook=None, linkedin=None,
-                        twitter=None):
+                        twitter=None, summary=None, description=None):
     companies = self.scenario_data.unregistered_companies
     if title:
         companies[alias] = companies[alias]._replace(title=title)
@@ -204,33 +213,13 @@ def set_company_details(self, alias, *, title=None, website=None, keywords=None,
         companies[alias] = companies[alias]._replace(twitter=twitter)
     if address_details:
         companies[alias] = companies[alias]._replace(address_details=address_details)
+    if summary:
+        companies[alias] = companies[alias]._replace(summary=summary)
+    if description:
+        companies[alias] = companies[alias]._replace(description=description)
 
     logging.debug("Successfully updated Company's details %s: %s", alias,
                   companies[alias])
-
-
-def set_company_description(self, alias, summary, description):
-    """Will set summary & description used when building up company's profile.
-
-    Can come handy when validating whether these values are visible.
-
-    :param self: behave `context` object
-    :type self: behave.runner.Context
-    :param alias: alias of sought Unregistered Company
-    :type alias: str
-    :param summary: Brief summary to make your company stand out to buyers
-    :type summary: str
-    :param description: Describe your business to overseas buyers
-    :type description: str
-    """
-    if alias in self.scenario_data.unregistered_companies:
-        companies = self.scenario_data.unregistered_companies
-        companies[alias] = companies[alias]._replace(summary=summary,
-                                                     description=description)
-        logging.debug("Successfully set summary & description for company %s",
-                      alias)
-    else:
-        raise KeyError("Could not find company with alias '%s'", alias)
 
 
 def add_case_study(self, company_alias, case_alias, case_study):
@@ -259,7 +248,6 @@ def patch_context(context):
     context.set_actor_has_sso_account = MethodType(
         set_actor_has_sso_account, context)
     context.set_company_for_actor = MethodType(set_company_for_actor, context)
-    context.set_company_description = MethodType(set_company_description, context)
     context.add_company = MethodType(add_company, context)
     context.get_company = MethodType(get_company, context)
     context.add_case_study = MethodType(add_case_study, context)

@@ -771,7 +771,8 @@ def prof_set_company_description(context, supplier_alias):
     response = make_request(Method.POST, url, session=session, headers=headers,
                             data=data, allow_redirects=False, context=context)
     check_response(response, 302, location="/company-profile")
-    context.set_company_description(actor.company_alias, summary, description)
+    context.set_company_details(
+        actor.company_alias, summary=summary, description=description)
 
     # STEP 3 - follow the redirect
     url = get_absolute_url("ui-buyer:company-profile")
