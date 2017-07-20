@@ -36,8 +36,10 @@ def before_scenario(context, scenario):
 def after_scenario(context, scenario):
     logging.debug("Deleting supplier data from FAB & SSO DBs")
     actors = context.scenario_data.actors
-    [delete_supplier_data("DIRECTORY", actor.email) for actor in actors.values()]
-    [delete_supplier_data("SSO", actor.email) for actor in actors.values()]
+    for actor in actors.values():
+        delete_supplier_data("DIRECTORY", actor.email)
+    for actor in actors.values():
+        delete_supplier_data("SSO", actor.email)
     # clear the scenario data after every scenario
     context.scenario_data = None
     logging.debug('Finished scenario: %s', scenario.name)
