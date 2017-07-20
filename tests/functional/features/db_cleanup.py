@@ -60,17 +60,29 @@ END $$;
 
 
 def get_dir_db_connection():
-    connection = psycopg2.connect(dbname=DIR_DB_NAME, user=DIR_DB_USER,
-                                  password=DIR_DB_PASSWORD, host=DIR_DB_HOST,
-                                  port=DIR_DB_PORT)
+    try:
+        connection = psycopg2.connect(
+            dbname=DIR_DB_NAME, user=DIR_DB_USER, password=DIR_DB_PASSWORD,
+            host=DIR_DB_HOST, port=DIR_DB_PORT)
+    except psycopg2.OperationalError as e:
+        logging.error('Unable to connect to Directory DB!\n%s', e)
+        raise
+    else:
+        logging.debug('Connected to Directory DB: %s!', DIR_DB_NAME)
     cursor = connection.cursor()
     return connection, cursor
 
 
 def get_sso_db_connection():
-    connection = psycopg2.connect(dbname=SSO_DB_NAME, user=SSO_DB_USER,
-                                  password=SSO_DB_PASSWORD, host=SSO_DB_HOST,
-                                  port=SSO_DB_PORT)
+    try:
+        connection = psycopg2.connect(
+            dbname=SSO_DB_NAME, user=SSO_DB_USER, password=SSO_DB_PASSWORD,
+            host=SSO_DB_HOST, port=SSO_DB_PORT)
+    except psycopg2.OperationalError as e:
+        logging.error('Unable to connect to SSO DB!\n%s', e)
+        raise
+    else:
+        logging.debug('Connected to Directory DB: %s!', DIR_DB_NAME)
     cursor = connection.cursor()
     return connection, cursor
 
