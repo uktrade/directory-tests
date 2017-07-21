@@ -101,7 +101,8 @@ def test_directory_supplier_verified_user():
         'company_email': 'testo@useri.com',
         'profile_url': 'http://dev.supplier.directory.uktrade.io/'
                        'suppliers/12345679',
-        'company_export_status': 'ONE_TWO_YEARS_AGO'
+        'company_export_status': 'ONE_TWO_YEARS_AGO',
+        'company_has_exported_before': True,
     }
 
 
