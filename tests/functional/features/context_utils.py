@@ -42,7 +42,8 @@ Company = namedtuple(
         'alias', 'title', 'number', 'address_details', 'summary', 'description',
         'website', 'keywords', 'no_employees', 'sector', 'letter_recipient',
         'companies_house_details', 'facebook', 'linkedin', 'twitter',
-        'case_studies', 'logo_picture', 'logo_url', 'logo_hash'
+        'case_studies', 'logo_picture', 'logo_url', 'logo_hash',
+        'export_to_countries'
     ]
 )
 # Set all fields to None by default.
@@ -191,7 +192,8 @@ def get_company(self, alias):
 def set_company_details(self, alias, *, title=None, website=None, keywords=None,
                         no_employees=None, sector=None, letter_recipient=None,
                         address_details=None, facebook=None, linkedin=None,
-                        twitter=None, summary=None, description=None):
+                        twitter=None, summary=None, description=None,
+                        export_to_countries):
     companies = self.scenario_data.unregistered_companies
     if title:
         companies[alias] = companies[alias]._replace(title=title)
@@ -217,6 +219,8 @@ def set_company_details(self, alias, *, title=None, website=None, keywords=None,
         companies[alias] = companies[alias]._replace(summary=summary)
     if description:
         companies[alias] = companies[alias]._replace(description=description)
+    if export_to_countries:
+        companies[alias] = companies[alias]._replace(export_to_countries=export_to_countries)
 
     logging.debug("Successfully updated Company's details %s: %s", alias,
                   companies[alias])
