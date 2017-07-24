@@ -223,32 +223,6 @@ def reg_confirm_company_selection(context, supplier_alias, alias):
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
 
 
-def reg_supplier_is_not_ready_to_export(context, supplier_alias):
-    """Supplier decides that her/his company is not ready to export.
-
-    :param context: behave `context` object
-    :type context: behave.runner.Context
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :type supplier_alias: str
-    """
-    export_status = "NO_INTENTION"
-    actor = context.get_actor(supplier_alias)
-    session = actor.session
-    token = actor.csrfmiddlewaretoken
-    referer = get_absolute_url("ui-buyer:register-confirm-export-status")
-
-    # Step 1: POST /register/exports
-    url = get_absolute_url("ui-buyer:register-confirm-export-status")
-    headers = {"Referer": referer}
-    data = {"csrfmiddlewaretoken": token,
-            "enrolment_view-current_step": "exports",
-            "exports-export_status": export_status,
-            "exports-terms_agreed": "on"}
-    response = make_request(Method.POST, url, session=session, headers=headers,
-                            data=data, allow_redirects=False, context=context)
-    check_response(response, 200)
-
-
 def submit_export_status_form(context, supplier_alias, export_status):
     """Submit the Export Status form.
 
