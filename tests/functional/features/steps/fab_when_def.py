@@ -24,7 +24,6 @@ from tests.functional.features.steps.fab_when_impl import (
     reg_create_standalone_sso_account,
     reg_open_email_confirmation_link,
     reg_supplier_confirms_email_address,
-    reg_supplier_is_not_ready_to_export,
     select_random_company,
     sso_go_to_create_trade_profile,
     sso_supplier_confirms_email_address
@@ -106,12 +105,6 @@ def when_supplier_verifies_company(context, supplier_alias):
 @when('"{supplier_alias}" decides to view published Directory Profile')
 def when_supplier_views_published_profile(context, supplier_alias):
     prof_view_published_profile(context, supplier_alias)
-
-
-@when('"{supplier_alias}" decides that the export status of his company is '
-      '"No, we are not planning to sell overseas"')
-def when_supplier_says_his_not_ready_to_export(context, supplier_alias):
-    reg_supplier_is_not_ready_to_export(context, supplier_alias)
 
 
 @when('"{supplier_alias}" attempts to sign in to Find a Buyer profile')
