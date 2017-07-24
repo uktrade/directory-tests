@@ -3,23 +3,30 @@ Feature: Trade Profile
 
     @ED-1659
     @registration
-    Scenario Outline: Supplier should receive a verification email after successful registration - export status is "<current>"
+    Scenario: Supplier should receive a verification email after successful registration - company has exported in the past
       Given "Peter Alder" is an unauthenticated supplier
 
       When "Peter Alder" randomly selects an active company without a Directory Profile identified by an alias "Company X"
       And "Peter Alder" confirms that "Company X" is the correct one
-      And "Peter Alder" confirms that the export status is "<current>"
+      And "Peter Alder" confirms that the company has exported in the past
       And "Peter Alder" creates a SSO/great.gov.uk account for "Company X" using valid credentials
 
       Then "Peter Alder" should be told about the verification email
       And "Peter Alder" should receive an email verification msg entitled "Your great.gov.uk account: Please Confirm Your E-mail Address"
 
-      Examples:
-        | current                        |
-        | Yes, in the last year          |
-        | Yes, 1 to 2 years ago          |
-        | Yes, but more than 2 years ago |
-        | No, but we are preparing to    |
+
+    @ED-1659
+    @registration
+    Scenario: Supplier should receive a verification email after successful registration - company has not exported in the past
+      Given "Peter Alder" is an unauthenticated supplier
+
+      When "Peter Alder" randomly selects an active company without a Directory Profile identified by an alias "Company X"
+      And "Peter Alder" confirms that "Company X" is the correct one
+      And "Peter Alder" confirms that the company has not exported in the past
+      And "Peter Alder" creates a SSO/great.gov.uk account for "Company X" using valid credentials
+
+      Then "Peter Alder" should be told about the verification email
+      And "Peter Alder" should receive an email verification msg entitled "Your great.gov.uk account: Please Confirm Your E-mail Address"
 
 
     @ED-1692
@@ -56,7 +63,7 @@ Feature: Trade Profile
       And "Annette Geissinger" confirmed her email address
 
       When "Annette Geissinger" provides valid details of selected company
-      And "Annette Geissinger" selects random sector the company is interested in working in
+      And "Annette Geissinger" selects sector the company is in and preferred country of export
       And "Annette Geissinger" provides her full name which will be used to sent the verification letter
       And "Annette Geissinger" confirms the details which will be used to sent the verification letter
 
@@ -91,18 +98,6 @@ Feature: Trade Profile
       Then "Peter Alder" should be on FAS Directory Profile page of company "Y"
 
 
-    @ED-1740
-    @registration
-    Scenario: Some suppliers are not appropriate to feature in the Find a Buyer service
-      Given "Peter Alder" is an unauthenticated supplier
-
-      When "Peter Alder" randomly selects an active company without a Directory Profile identified by an alias "Company X"
-      And "Peter Alder" confirms that "Company X" is the correct one
-      And "Peter Alder" decides that the export status of his company is "No, we are not planning to sell overseas"
-
-      Then "Peter Alder" should be told that his company is currently not appropriate to feature in the FAB service
-
-
     @ED-1769
     @login
     @fab
@@ -122,23 +117,16 @@ Feature: Trade Profile
     @sso
     @fab
     @account
-    Scenario Outline: Suppliers with a standalone SSO/great.gov.uk account should be able to select their company for Directory Profile creation
+    Scenario: Suppliers with a standalone SSO/great.gov.uk account should be able to select their company for Directory Profile creation
       Given "Peter Alder" has a verified standalone SSO/great.gov.uk account
       And "Peter Alder" is signed in to SSO/great.gov.uk account
 
       When "Peter Alder" decides to create a trade profile
       And "Peter Alder" randomly selects an active company without a Directory Profile identified by an alias "Company X"
       And "Peter Alder" confirms that "Company X" is the correct one
-      And "Peter Alder" confirms that the export status is "<current>"
+      And "Peter Alder" confirms that the company has exported in the past
 
       Then "Peter Alder" should be prompted to build and improve your Directory Profile
-
-      Examples:
-        | current                        |
-        | Yes, in the last year          |
-        | Yes, 1 to 2 years ago          |
-        | Yes, but more than 2 years ago |
-        | No, but we are preparing to    |
 
 
     @ED-1770
@@ -151,7 +139,7 @@ Feature: Trade Profile
       And "Peter Alder" selected an active company without a Directory Profile identified by an alias "Company X"
 
       When "Peter Alder" provides valid details of selected company
-      And "Peter Alder" selects random sector the company is interested in working in
+      And "Peter Alder" selects sector the company is in and preferred country of export
       And "Peter Alder" provides her full name which will be used to sent the verification letter
       And "Peter Alder" confirms the details which will be used to sent the verification letter
 
