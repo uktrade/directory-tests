@@ -10,9 +10,8 @@ from tests.settings import SECTORS, COUNTRIES
 
 URL = get_absolute_url("ui-buyer:company-edit-sectors")
 EXPECTED_STRINGS = [
-    "Your company sector",
-    "What industry is your company in?",
-    "Back to previous step", "Select the countries you would like to export to:",
+    "Your company sector", "What industry is your company in?",
+    "Select the countries you would like to export to:",
     "China", "Germany", "India", "Japan", "United States", "Other", "Save"
 ] + SECTORS
 
