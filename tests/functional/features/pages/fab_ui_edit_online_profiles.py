@@ -96,7 +96,7 @@ def update_profiles(
 
     headers = {"Referer": URL}
     data = {"csrfmiddlewaretoken": token,
-            "supplier_company_social_links_edit_view-current_step": "social",
+            "company_social_links_edit_view-current_step": "social",
             "social-facebook_url": new_fb,
             "social-linkedin_url": new_li,
             "social-twitter_url": new_tw

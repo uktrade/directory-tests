@@ -40,7 +40,7 @@ from tests.functional.features.utils import (
     make_request
 )
 from tests.functional.schemas.Companies import COMPANIES
-from tests.settings import EXPORT_STATUSES, NO_OF_EMPLOYEES, SECTORS
+from tests.settings import NO_OF_EMPLOYEES, SECTORS, COUNTRIES
 
 
 def has_fas_profile(company_number):
@@ -223,33 +223,7 @@ def reg_confirm_company_selection(context, supplier_alias, alias):
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
 
 
-def reg_supplier_is_not_ready_to_export(context, supplier_alias):
-    """Supplier decides that her/his company is not ready to export.
-
-    :param context: behave `context` object
-    :type context: behave.runner.Context
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :type supplier_alias: str
-    """
-    export_status = "NO_INTENTION"
-    actor = context.get_actor(supplier_alias)
-    session = actor.session
-    token = actor.csrfmiddlewaretoken
-    referer = get_absolute_url("ui-buyer:register-confirm-export-status")
-
-    # Step 1: POST /register/exports
-    url = get_absolute_url("ui-buyer:register-confirm-export-status")
-    headers = {"Referer": referer}
-    data = {"csrfmiddlewaretoken": token,
-            "enrolment_view-current_step": "exports",
-            "exports-export_status": export_status,
-            "exports-terms_agreed": "on"}
-    response = make_request(Method.POST, url, session=session, headers=headers,
-                            data=data, allow_redirects=False, context=context)
-    check_response(response, 200)
-
-
-def submit_export_status_form(context, supplier_alias, export_status):
+def submit_export_status_form(context, supplier_alias, exported):
     """Submit the Export Status form.
 
     NOTE:
@@ -263,9 +237,8 @@ def submit_export_status_form(context, supplier_alias, export_status):
     :type  context: behave.runner.Context
     :param supplier_alias: alias of the Actor used in the scope of the scenario
     :type  supplier_alias: str
-    :param export_status: any export status that allows Suppliers to create
-                          a Directory profile.
-    :type  export_status: str
+    :param exported: has the company exported or not in the past
+    :type  exported: bool
     """
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
@@ -278,7 +251,7 @@ def submit_export_status_form(context, supplier_alias, export_status):
     headers = {"Referer": referer}
     data = {"csrfmiddlewaretoken": token,
             "enrolment_view-current_step": "exports",
-            "exports-export_status": export_status,
+            "exports-has_exported_before": exported,
             "exports-terms_agreed": "on"}
     response = make_request(Method.POST, url, session=session, headers=headers,
                             data=data, allow_redirects=False, context=context)
@@ -289,14 +262,14 @@ def submit_export_status_form(context, supplier_alias, export_status):
     headers = {"Referer": referer}
     response = make_request(Method.GET, url, session=session, headers=headers,
                             allow_redirects=False, context=context)
-    location = ("/register-submit?company_number={}&export_status={}"
-                .format(company.number, export_status))
+    location = ("/register-submit?company_number={}&has_exported_before={}"
+                .format(company.number, exported))
     check_response(response, 302, location=location)
 
-    # Step 3: GET /register-submit?company_number={}&export_status={}
+    # Step 3: GET /register-submit?company_number={}&has_exported_before={}
     url = get_absolute_url("ui-buyer:register-submit-account-details")
     params = {"company_number": company.number,
-              "export_status": export_status}
+              "has_exported_before": exported}
     headers = {"Referer": referer}
     make_request(Method.GET, url, session=session, params=params,
                  headers=headers, allow_redirects=False, context=context)
@@ -337,7 +310,7 @@ def supplier_should_get_to_build_your_profile(context, supplier_alias):
 
 
 def supplier_should_get_to_sso_registration_page(
-        context, supplier_alias, export_status):
+        context, supplier_alias, exported):
     """Assert last response based on the fact that Supplier doesn't have
     a SSO/great.gov.uk account
 
@@ -348,9 +321,8 @@ def supplier_should_get_to_sso_registration_page(
     :type  context: behave.runner.Context
     :param supplier_alias: alias of the Actor used in the scope of the scenario
     :type  supplier_alias: str
-    :param export_status: any export status that allows Suppliers to create
-                          a Directory profile.
-    :type  export_status: str
+    :param exported: True if company has exported in the past and False if not
+    :type  exported: bool
     """
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
@@ -361,11 +333,11 @@ def supplier_should_get_to_sso_registration_page(
     url = get_absolute_url("ui-buyer:register-submit-account-details")
     # assert last response based on the fact that Supplier doesn't have
     # a SSO account
-    next_1 = quote("{}?export_status={}&company_number={}"
-                   .format(url, export_status, company.number))
+    next_1 = quote("{}?has_exported_before={}&company_number={}"
+                   .format(url, exported, company.number))
     location_1 = "{}?next={}".format(get_absolute_url("sso:signup"), next_1)
-    next_2 = quote("{}?company_number={}&export_status={}"
-                   .format(url, company.number, export_status))
+    next_2 = quote("{}?company_number={}&has_exported_before={}"
+                   .format(url, company.number, exported))
     location_2 = "{}?next={}".format(get_absolute_url("sso:signup"), next_2)
     locations = [location_1, location_2]
     check_response(response, 302, locations=locations)
@@ -386,22 +358,20 @@ def supplier_should_get_to_sso_registration_page(
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
 
 
-def reg_confirm_export_status(context, supplier_alias, export_status):
+def reg_confirm_export_status(context, supplier_alias, exported):
     """Will confirm the current export status of selected unregistered company.
 
     :param context: behave `context` object
     :type context: behave.runner.Context
     :param supplier_alias: alias of the Actor used in the scope of the scenario
     :type supplier_alias: str
-    :param export_status: current Export Status of selected company
-    :type export_status: str
+    :param exported: current Export Status of selected company
+    :type exported: bool
     """
-    if export_status in EXPORT_STATUSES:
-        export_status = EXPORT_STATUSES[export_status]
-    context.export_status = export_status
+    context.exported = exported
     has_sso_account = context.get_actor(supplier_alias).has_sso_account
 
-    submit_export_status_form(context, supplier_alias, export_status)
+    submit_export_status_form(context, supplier_alias, exported)
 
     if has_sso_account:
         logging.debug("Supplier already has a SSO account")
@@ -409,7 +379,7 @@ def reg_confirm_export_status(context, supplier_alias, export_status):
     else:
         logging.debug("Supplier doesn't have a SSO account")
         supplier_should_get_to_sso_registration_page(
-            context, supplier_alias, export_status)
+            context, supplier_alias, exported)
 
 
 def reg_create_sso_account(context, supplier_alias, alias):
@@ -429,11 +399,11 @@ def reg_create_sso_account(context, supplier_alias, alias):
     actor = context.get_actor(supplier_alias)
     session = actor.session
     company = context.get_company(alias)
-    export_status = context.export_status
+    exported = context.exported
     # Step 1: POST SSO accounts/signup/
     next_url = get_absolute_url("ui-buyer:register-submit-account-details")
-    next_link = quote("{}?company_number={}&export_status={}"
-                      .format(next_url, company.number, export_status))
+    next_link = quote("{}?company_number={}&has_exported_before={}"
+                      .format(next_url, company.number, exported))
     url_signup = get_absolute_url("sso:signup")
     headers = {"Referer": "{}?next={}".format(url_signup,
                                               next_link)}
@@ -521,7 +491,7 @@ def reg_supplier_confirms_email_address(context, supplier_alias):
         "Expected new Location to start with: '{}' but got '{}'"
         .format(register_submit, new_location))
     assert "company_number" in new_location
-    assert "export_status" in new_location
+    assert "has_exported_before" in new_location
     check_response(response, 302)
 
     # Step 3 - Follow redirect - go to DIR /company-profile/edit
@@ -555,15 +525,14 @@ def bp_provide_company_details(context, supplier_alias):
     website = "https://{}".format(fake.domain_name())
     keywords = ", ".join(fake.sentence().replace(".", "").split())
     data = {"csrfmiddlewaretoken": csrfmiddlewaretoken,
-            "supplier_company_profile_edit_view-current_step": "basic",
+            "company_profile_edit_view-current_step": "basic",
             "basic-name": company.title,
             "basic-website": website,
             "basic-keywords": keywords,
             "basic-employees": employees}
     response = make_request(Method.POST, url, session=session, headers=headers,
                             data=data, allow_redirects=False, context=context)
-    expected = ["Your company sector",
-                "What sector is your company interested in working in?"]
+    expected = ["Your company sector", "What industry is your company in?"]
     expected += SECTORS
     check_response(response, 200, body_contains=expected)
     logging.debug("Supplier is on the Select Sector page")
@@ -625,9 +594,13 @@ def bp_select_random_sector(context, supplier_alias):
     url = get_absolute_url("ui-buyer:company-edit")
     headers = {"Referer": url}
     sector = random.choice(SECTORS)
+    country = COUNTRIES[random.choice(list(COUNTRIES))]
+    other = ""
     data = {"csrfmiddlewaretoken": csrfmiddlewaretoken,
-            "supplier_company_profile_edit_view-current_step": "classification",
+            "company_profile_edit_view-current_step": "classification",
             "classification-sectors": sector,
+            "classification-export_destinations": country,
+            "classification-export_destinations_other": other
             }
     response = make_request(Method.POST, url, session=session, headers=headers,
                             data=data, allow_redirects=False, context=context)
@@ -661,7 +634,7 @@ def bp_provide_full_name(context, supplier_alias):
     url = get_absolute_url("ui-buyer:company-edit")
     headers = {"Referer": url}
     data = {"csrfmiddlewaretoken": csrfmiddlewaretoken,
-            "supplier_company_profile_edit_view-current_step": "address",
+            "company_profile_edit_view-current_step": "address",
             "address-signature": details.address_signature,
             "address-postal_full_name": actor.alias,
             "address-address_line_1": details.address_line_1,
@@ -700,7 +673,7 @@ def bp_confirm_registration_and_send_letter(context, supplier_alias):
     url = get_absolute_url("ui-buyer:company-edit")
     headers = {"Referer": url}
     data = {"csrfmiddlewaretoken": csrfmiddlewaretoken,
-            "supplier_company_profile_edit_view-current_step": "confirm"
+            "company_profile_edit_view-current_step": "confirm"
             }
     response = make_request(Method.POST, url, session=session, headers=headers,
                             data=data, allow_redirects=False, context=context)
@@ -764,7 +737,7 @@ def prof_set_company_description(context, supplier_alias):
     summary = fake.sentence()
     description = fake.sentence()
     data = {"csrfmiddlewaretoken": token,
-            "supplier_company_description_edit_view-current_step": "description",
+            "company_description_edit_view-current_step": "description",
             "description-summary": summary,
             "description-description": description
             }
@@ -822,7 +795,7 @@ def prof_verify_company(context, supplier_alias):
     url = get_absolute_url("ui-buyer:confirm-company-address")
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
     data = {"csrfmiddlewaretoken": token,
-            "supplier_company_address_verification_view-current_step": "address",
+            "company_address_verification_view-current_step": "address",
             "address-code": verification_code
             }
     response = make_request(Method.POST, url, session=session, headers=headers,
@@ -1251,7 +1224,7 @@ def prof_upload_logo(context, supplier_alias, picture: str):
     headers = {"Referer": get_absolute_url("ui-buyer:upload-logo")}
     url = get_absolute_url("ui-buyer:upload-logo")
     data = {"csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
-            "supplier_company_profile_logo_edit_view-current_step": "logo",
+            "company_profile_logo_edit_view-current_step": "logo",
             }
     with open(filename, "rb") as f:
         picture = f.read()
@@ -1301,7 +1274,7 @@ def prof_upload_unsupported_file_as_logo(context, supplier_alias, file):
     headers = {"Referer": get_absolute_url("ui-buyer:upload-logo")}
     url = get_absolute_url("ui-buyer:upload-logo")
     data = {"csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
-            "supplier_company_profile_logo_edit_view-current_step": "logo",
+            "company_profile_logo_edit_view-current_step": "logo",
             }
     with open(filename, "rb") as f:
         picture = f.read()
@@ -1383,7 +1356,8 @@ def prof_update_company_details(context, supplier_alias, table_of_details):
     fab_ui_edit_details.update_details(context, supplier_alias,
                                        title=title, keywords=keywords,
                                        website=website, size=size)
-    fab_ui_edit_sector.update_sector(context, supplier_alias, update=sector)
+    fab_ui_edit_sector.go_to(context, supplier_alias)
+    fab_ui_edit_sector.update_sector_and_countries(context, supplier_alias, update=sector)
 
 
 def prof_add_online_profiles(context, supplier_alias, online_profiles):

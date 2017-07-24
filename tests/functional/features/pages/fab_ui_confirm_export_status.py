@@ -10,9 +10,10 @@ from tests.settings import EXPORT_STATUSES, NO_EXPORT_INTENT_LABEL
 
 EXPECTED_STRINGS = [
     "Your company's previous exports", "Confirm company", "Export status",
-    "Has your company sold products or services to overseas customers?",
-    "Tick this box to accept the", "terms and conditions",
-    "of the Find a Buyer service.", "< Back to previous step", "Continue"
+    "Have you exported before?",
+    "Yes", "No", "I accept the", "Find a Buyer terms and conditions",
+    "To confirm that this is your company you must create a great.gov.uk account",
+    "< Back to previous step", "Continue"
 ]
 
 EXPECTED_STRINGS_WO_SSO_ACCOUNT = [

@@ -5,15 +5,40 @@ import random
 
 from tests import get_absolute_url
 from tests.functional.features.pages import fab_ui_profile
+from tests.functional.features.pages.utils import (
+    extract_and_set_csrf_middleware_token
+)
 from tests.functional.features.utils import Method, check_response, make_request
-from tests.settings import SECTORS
+from tests.settings import SECTORS, COUNTRIES
 
-URL = get_absolute_url("ui-buyer:company-edit")
+URL = get_absolute_url("ui-buyer:company-edit-sectors")
 EXPECTED_STRINGS = [
-    "Your company sector",
-    "What sector is your company interested in working in?",
-    "Back to previous step"
+    "Your company sector", "What industry is your company in?",
+    "Select the countries you would like to export to:",
+    "China", "Germany", "India", "Japan", "United States", "Other", "Save"
 ] + SECTORS
+
+
+def go_to(context, supplier_alias):
+    """Go to "Edit Company's sector & countries to export to" page.
+
+    This requires:
+     * Supplier to be logged in
+
+    :param context: behave `context` object
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    """
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+
+    headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
+    response = make_request(Method.GET, URL, session=session, headers=headers,
+                            allow_redirects=True, context=context)
+
+    should_be_here(response)
+    extract_and_set_csrf_middleware_token(context, response, supplier_alias)
+    logging.debug("%s is on the Edit Company Industry & Countries to export to",
+                  supplier_alias)
 
 
 def should_be_here(response):
@@ -21,7 +46,7 @@ def should_be_here(response):
     logging.debug("Supplier is on the Select Sector page")
 
 
-def update_sector(
+def update_sector_and_countries(
         context, supplier_alias, *, update=True, sector_name=None):
     """Change Company's Sector of Interest.
 
@@ -41,16 +66,21 @@ def update_sector(
     else:
         new_sector = company.sector
 
+    country = COUNTRIES[random.choice(list(COUNTRIES))]
+    other = ""
     headers = {"Referer": URL}
     data = {"csrfmiddlewaretoken": token,
-            "supplier_company_profile_edit_view-current_step": "classification",
-            "classification-sectors": new_sector
+            "supplier_classification_edit_view-current_step": "classification",
+            "classification-sectors": new_sector,
+            "classification-export_destinations": country,
+            "classification-export_destinations_other": other
             }
 
     response = make_request(Method.POST, URL, session=session, headers=headers,
                             data=data, allow_redirects=True, context=context)
 
     fab_ui_profile.should_be_here(response)
-    context.set_company_details(company.alias, sector=new_sector)
+    context.set_company_details(
+        company.alias, sector=new_sector, export_to_countries=country)
     logging.debug("%s set Company's Sector of Interest to: %s", supplier_alias,
                   new_sector)

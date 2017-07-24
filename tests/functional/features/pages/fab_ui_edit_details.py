@@ -6,14 +6,14 @@ import random
 from faker import Factory
 
 from tests import get_absolute_url
-from tests.functional.features.pages import fab_ui_edit_sector
+from tests.functional.features.pages import fab_ui_profile
 from tests.functional.features.pages.utils import (
     extract_and_set_csrf_middleware_token
 )
 from tests.functional.features.utils import Method, check_response, make_request
 from tests.settings import NO_OF_EMPLOYEES
 
-URL = get_absolute_url("ui-buyer:company-edit")
+URL = get_absolute_url("ui-buyer:company-edit-key-facts")
 EXPECTED_STRINGS = [
     "Build and improve your profile", "Your company details", "Company name:",
     "Enter your preferred business name", "Website (optional):",
@@ -99,17 +99,18 @@ def update_details(
 
     headers = {"Referer": URL}
     data = {"csrfmiddlewaretoken": token,
-            "supplier_company_profile_edit_view-current_step": "basic",
+            "supplier_basic_info_edit_view-current_step": "basic",
             "basic-name": new_title,
             "basic-website": new_website,
             "basic-keywords": new_keywords,
             "basic-employees": new_size}
 
     response = make_request(Method.POST, URL, session=session, headers=headers,
-                            data=data, allow_redirects=False, context=context)
+                            data=data, allow_redirects=True, context=context)
 
-    fab_ui_edit_sector.should_be_here(response)
+    fab_ui_profile.should_be_here(response)
     extract_and_set_csrf_middleware_token(context, response, supplier_alias)
+
     context.set_company_details(
         company.alias, title=new_title, website=new_website,
         keywords=new_keywords, no_employees=new_size)

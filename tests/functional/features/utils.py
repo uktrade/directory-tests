@@ -4,7 +4,6 @@
 import hashlib
 import logging
 import os
-import random
 from enum import Enum
 
 import requests
@@ -13,10 +12,8 @@ from scrapy.selector import Selector
 
 from tests.functional.features.db_cleanup import get_dir_db_connection
 from tests.settings import (
-    EXPORT_STATUSES,
     MAILGUN_EVENTS_URL,
-    MAILGUN_SECRET_API_KEY,
-    NO_EXPORT_INTENT_LABEL
+    MAILGUN_SECRET_API_KEY
 )
 
 
@@ -398,18 +395,6 @@ def check_response(response: Response, status_code: int, *,
                 "instead.", location_starts_with,
                 response.headers.get("Location"))
             raise
-
-
-def get_positive_exporting_status():
-    """Select random Exporting Status that allows you to register with
-    Find a Buyer service.
-
-    :return: an exporting status accepted by Find a Buyer service
-    :rtype: str
-    """
-    with_export_intent = [EXPORT_STATUSES[key] for key in EXPORT_STATUSES if
-                          key != NO_EXPORT_INTENT_LABEL]
-    return random.choice(with_export_intent)
 
 
 def get_absolute_path_of_file(filename):
