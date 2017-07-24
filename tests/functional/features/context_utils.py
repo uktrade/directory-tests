@@ -193,7 +193,7 @@ def set_company_details(self, alias, *, title=None, website=None, keywords=None,
                         no_employees=None, sector=None, letter_recipient=None,
                         address_details=None, facebook=None, linkedin=None,
                         twitter=None, summary=None, description=None,
-                        export_to_countries):
+                        export_to_countries=None):
     companies = self.scenario_data.unregistered_companies
     if title:
         companies[alias] = companies[alias]._replace(title=title)
