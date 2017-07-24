@@ -13,7 +13,7 @@ from tests.functional.features.pages.utils import (
 from tests.functional.features.utils import Method, check_response, make_request
 from tests.settings import NO_OF_EMPLOYEES
 
-URL = get_absolute_url("ui-buyer:company-edit")
+URL = get_absolute_url("ui-buyer:company-edit-key-facts")
 EXPECTED_STRINGS = [
     "Build and improve your profile", "Your company details", "Company name:",
     "Enter your preferred business name", "Website (optional):",

@@ -8,7 +8,7 @@ from tests.functional.features.pages import fab_ui_profile
 from tests.functional.features.utils import Method, check_response, make_request
 from tests.settings import SECTORS, COUNTRIES
 
-URL = get_absolute_url("ui-buyer:company-edit")
+URL = get_absolute_url("ui-buyer:company-edit-sectors")
 EXPECTED_STRINGS = [
     "Your company sector",
     "What industry is your company in?",
