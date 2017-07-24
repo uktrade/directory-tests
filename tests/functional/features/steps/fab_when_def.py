@@ -41,9 +41,14 @@ def when_company_selection_is_confirmed(context, supplier_alias, alias):
     reg_confirm_company_selection(context, supplier_alias, alias)
 
 
-@when('"{supplier_alias}" confirms that the export status is "{export_status}"')
-def when_supplier_confirm_export_status(context, supplier_alias, export_status):
-    reg_confirm_export_status(context, supplier_alias, export_status)
+@when('"{supplier_alias}" confirms that the company has exported in the past')
+def when_supplier_confirm_export_status(context, supplier_alias):
+    reg_confirm_export_status(context, supplier_alias, exported=True)
+
+
+@when('"{supplier_alias}" confirms that the company has not exported in the past')
+def when_supplier_confirm_that_company_has_not_exported(context, supplier_alias):
+    reg_confirm_export_status(context, supplier_alias, exported=False)
 
 
 @when('"{supplier_alias}" creates a SSO/great.gov.uk account for "{alias}" '
@@ -76,8 +81,8 @@ def when_supplier_provides_company_details(context, supplier_alias):
     bp_provide_company_details(context, supplier_alias)
 
 
-@when('"{supplier_alias}" selects random sector the company is interested in '
-      'working in')
+@when('"{supplier_alias}" selects sector the company is in and preferred '
+      'country of export')
 def when_supplier_selects_random_sector(context, supplier_alias):
     bp_select_random_sector(context, supplier_alias)
 
