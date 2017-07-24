@@ -1356,6 +1356,7 @@ def prof_update_company_details(context, supplier_alias, table_of_details):
     fab_ui_edit_details.update_details(context, supplier_alias,
                                        title=title, keywords=keywords,
                                        website=website, size=size)
+    fab_ui_edit_sector.go_to(context, supplier_alias)
     fab_ui_edit_sector.update_sector_and_countries(context, supplier_alias, update=sector)
 
 

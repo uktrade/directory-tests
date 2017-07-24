@@ -6,7 +6,7 @@ import random
 from faker import Factory
 
 from tests import get_absolute_url
-from tests.functional.features.pages import fab_ui_edit_sector
+from tests.functional.features.pages import fab_ui_profile
 from tests.functional.features.pages.utils import (
     extract_and_set_csrf_middleware_token
 )
@@ -106,10 +106,11 @@ def update_details(
             "basic-employees": new_size}
 
     response = make_request(Method.POST, URL, session=session, headers=headers,
-                            data=data, allow_redirects=False, context=context)
+                            data=data, allow_redirects=True, context=context)
 
-    fab_ui_edit_sector.should_be_here(response)
+    fab_ui_profile.should_be_here(response)
     extract_and_set_csrf_middleware_token(context, response, supplier_alias)
+
     context.set_company_details(
         company.alias, title=new_title, website=new_website,
         keywords=new_keywords, no_employees=new_size)
