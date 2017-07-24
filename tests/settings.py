@@ -101,6 +101,14 @@ SECTORS_WITH_LABELS = {
     "WATER": "Water"
 }
 
+COUNTRIES = {
+    "China": "CN",
+    "Germany": "DE",
+    "India": "IN",
+    "Japan": "JP",
+    "United States": "US"
+}
+
 NO_EXPORT_INTENT_LABEL = "No, we are not planning to sell overseas"
 
 EXPORT_STATUSES = {
