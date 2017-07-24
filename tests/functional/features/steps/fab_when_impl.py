@@ -1224,7 +1224,7 @@ def prof_upload_logo(context, supplier_alias, picture: str):
     headers = {"Referer": get_absolute_url("ui-buyer:upload-logo")}
     url = get_absolute_url("ui-buyer:upload-logo")
     data = {"csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
-            "supplier_company_profile_logo_edit_view-current_step": "logo",
+            "company_profile_logo_edit_view-current_step": "logo",
             }
     with open(filename, "rb") as f:
         picture = f.read()
@@ -1274,7 +1274,7 @@ def prof_upload_unsupported_file_as_logo(context, supplier_alias, file):
     headers = {"Referer": get_absolute_url("ui-buyer:upload-logo")}
     url = get_absolute_url("ui-buyer:upload-logo")
     data = {"csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
-            "supplier_company_profile_logo_edit_view-current_step": "logo",
+            "company_profile_logo_edit_view-current_step": "logo",
             }
     with open(filename, "rb") as f:
         picture = f.read()

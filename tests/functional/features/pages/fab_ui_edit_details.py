@@ -99,7 +99,7 @@ def update_details(
 
     headers = {"Referer": URL}
     data = {"csrfmiddlewaretoken": token,
-            "supplier_company_profile_edit_view-current_step": "basic",
+            "company_description_edit_view-current_step": "basic",
             "basic-name": new_title,
             "basic-website": new_website,
             "basic-keywords": new_keywords,
