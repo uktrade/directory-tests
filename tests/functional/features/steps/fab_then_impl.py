@@ -299,3 +299,23 @@ def profile_supplier_should_be_on_landing_page(
     response = context.response
     profile_ui_landing.should_be_here(response)
     logging.debug("%s got to the SSO landing page.", supplier_alias)
+
+
+def fas_should_see_company_details(context: Context, supplier_alias: str):
+    """Supplier should see all expected Company details of FAS profile page.
+
+    :param context: behave `context` object
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    """
+    actor = context.get_actor(supplier_alias)
+    company = context.get_company(actor.company_alias)
+    session = actor.session
+
+    # Step 1 - Go to the FAS profile page & extract URL of visible logo image
+    response = fas_ui_profile.go_to(session, company.number)
+    context.response = response
+
+    # Step 2 - Check if all details are visible on FAS
+    fas_ui_profile.should_see_details(company, response, context.table)
+    logging.debug("%s can see all expected details are visible of FAS "
+                  "Company's Directory Profile Page", supplier_alias)

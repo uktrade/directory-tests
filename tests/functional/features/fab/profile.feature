@@ -161,6 +161,7 @@ Feature: Trade Profile
 
 
     @ED-1760
+    @ED-1766
     @fab
     @profile
     Scenario: Supplier should be able to update company's details
@@ -176,6 +177,13 @@ Feature: Trade Profile
         | countries to export to      |
 
       Then "Annette Geissinger" should see new details on FAB Company's Directory Profile page
+        | detail                      |
+        | business name               |
+        | website                     |
+        | keywords                    |
+        | number of employees         |
+        | sector of interest          |
+      And "Annette Geissinger" should see new details on FAS Company's Directory Profile page
         | detail                      |
         | business name               |
         | website                     |
