@@ -3,7 +3,6 @@
 import logging
 import random
 from random import choice
-from uuid import uuid4
 
 from behave.runner import Context
 from faker import Factory
@@ -34,28 +33,31 @@ def extract_and_set_csrf_middleware_token(
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
 
 
-def random_case_study_data(alias: str, *, unique: bool = False) -> CaseStudy:
+def sentence(*, max_length: int = 60, min_word_length: int = 5):
+    """Generate a random alphanumeric string of up to 60 characters.
+
+    :return: a sentence of up to 60 characters long
+    """
+    text = FAKE.text().replace(".", "").strip().split()
+    words = [word for word in text if len(word) > min_word_length]
+    while len(" ".join(words)) > max_length:
+        words.pop()
+    return " ".join(words)
+
+
+def random_case_study_data(alias: str) -> CaseStudy:
     """Return a CaseStudy populated with randomly generated details.
 
     :param alias: alias of the Case Study
-    :param unique: use uniquely identifying words if True, otherwise False
     :return: a CaseStudy namedtuple
     """
     sector = choice(SECTORS)
     images = PNGs + JPGs + JPEGs
     image_1, image_2, image_3 = (choice(images) for _ in range(3))
-    if unique:
-        (title, summary, description, caption_1, caption_2, caption_3,
-         testimonial, source_name, source_job, source_company) = (
-            str(uuid4()) for _ in range(10))
-        website = "http://{}.com/fake-case-study-url".format(str(uuid4()))
-        keywords = ", ".join(str(uuid4()) for _ in range(5))
-    else:
-        (title, summary, description, caption_1, caption_2, caption_3,
-         testimonial, source_name, source_job, source_company) = (
-            FAKE.sentence()[:60].strip() for _ in range(10))
-        website = "http://{}/fake-case-study-url".format(FAKE.domain_name())
-        keywords = ", ".join(FAKE.sentence().replace(".", "").split())
+    (title, summary, description, caption_1, caption_2, caption_3, testimonial,
+     source_name, source_job, source_company) = (sentence() for _ in range(10))
+    website = "http://{}.com".format(sentence().replace(" ", ""))
+    keywords = ", ".join(sentence().split())
 
     case_study = CaseStudy(
         alias=alias, title=title, summary=summary, description=description,
