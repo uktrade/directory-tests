@@ -42,18 +42,18 @@ def go_to(session: Session) -> Response:
     return response
 
 
-def submit(actor: Actor, company: Company, export_status: str) -> Response:
+def submit(actor: Actor, company: Company, exported: bool) -> Response:
     """Will submit the SSO Registration form with Supplier & Company details.
 
     :param actor: a namedtuple with Actor details
     :param company: a namedtuple with Company details
-    :param export_status: export status of the company
+    :param exported: True is exported in the past, False if not
     """
     session = actor.session
     next_url = get_absolute_url("ui-buyer:register-submit-account-details")
     next_link = quote(
-        "{}?company_number={}&export_status={}".format(next_url, company.number,
-                                                       export_status))
+        "{}?company_number={}&has_exported_before={}"
+        .format(next_url, company.number, exported))
     headers = {"Referer": "{}?next={}".format(URL, next_link)}
     data = {
         "csrfmiddlewaretoken": actor.csrfmiddlewaretoken,

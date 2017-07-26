@@ -29,7 +29,7 @@ def submit(session: Session, token: str, summary: str, description: str) -> Resp
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
     data = {
         "csrfmiddlewaretoken": token,
-        "supplier_company_description_edit_view-current_step": "description",
+        "company_description_edit_view-current_step": "description",
         "description-summary": summary,
         "description-description": description
     }

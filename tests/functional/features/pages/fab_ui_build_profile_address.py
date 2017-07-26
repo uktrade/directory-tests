@@ -11,7 +11,8 @@ from tests.functional.features.utils import Method, check_response, make_request
 
 URL = get_absolute_url("ui-buyer:company-edit")
 EXPECTED_STRINGS = [
-    "Your company address", "Basic", "Industries", "Address", "Confirm",
+    "Your company address", "Basic", "Industry and exporting", "Address",
+    "Confirm",
     ("We need to send a letter containing a verification code to your business "
      "address. This is an additional step to validate that you do represent "
      "your business."), "Full name:", "Address line 1:", "Address line 2:",
@@ -70,7 +71,7 @@ def submit(actor: Actor, details: AddressDetails) -> Response:
     """
     headers = {"Referer": URL}
     data = {"csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
-            "supplier_company_profile_edit_view-current_step": "address",
+            "company_profile_edit_view-current_step": "address",
             "address-signature": details.address_signature,
             "address-postal_full_name": actor.alias,
             "address-address_line_1": details.address_line_1,

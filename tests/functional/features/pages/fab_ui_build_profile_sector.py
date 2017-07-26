@@ -41,7 +41,7 @@ def submit(actor: Actor, sector: str, country: str, other: str) -> Response:
     headers = {"Referer": URL}
     data = {
         "csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
-        "supplier_company_profile_edit_view-current_step": "classification",
+        "company_profile_edit_view-current_step": "classification",
         "classification-sectors": sector,
         "classification-export_destinations": country,
         "classification-export_destinations_other": other

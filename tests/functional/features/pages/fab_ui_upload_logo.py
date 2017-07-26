@@ -52,7 +52,7 @@ def upload(session: Session, token: str, file_path: str) -> Response:
     url = get_absolute_url("ui-buyer:upload-logo")
     data = {
         "csrfmiddlewaretoken": token,
-        "supplier_company_profile_logo_edit_view-current_step": "logo",
+        "company_profile_logo_edit_view-current_step": "logo",
     }
     with open(file_path, "rb") as f:
         picture = f.read()

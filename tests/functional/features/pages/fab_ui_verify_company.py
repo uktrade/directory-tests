@@ -53,7 +53,7 @@ def submit(session: Session, token: str, verification_code: str) -> Response:
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
     data = {
         "csrfmiddlewaretoken": token,
-        "supplier_company_address_verification_view-current_step": "address",
+        "company_address_verification_view-current_step": "address",
         "address-code": verification_code
     }
     response = make_request(
