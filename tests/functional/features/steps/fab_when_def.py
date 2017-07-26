@@ -173,9 +173,3 @@ def when_supplier_attempts_to_upload_unsupported_file(context, supplier_alias):
       '"{case_alias}"')
 def when_supplier_updates_case_study(context, supplier_alias, case_alias):
     fab_update_case_study(context, supplier_alias, case_alias)
-
-
-@when('"{supplier_alias}" adds a complete case study called "{case_alias}" with'
-      ' unique keywords')
-def given_unique_case_study(context, supplier_alias, case_alias):
-    prof_add_case_study(context, supplier_alias, case_alias, unique=True)
