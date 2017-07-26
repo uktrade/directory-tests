@@ -15,7 +15,7 @@ Feature: Search
     And "Peter Alder" is an unauthenticated supplier
     And "Peter Alder" has created and verified profile for randomly selected company "Y"
 
-    When "Peter Alder" adds a complete case study called "no 1" with unique keywords
+    When "Peter Alder" adds a complete case study called "no 1"
 
     Then "Annette Geissinger" should be able to find company "Y" on FAS using words from case study "no 1"
       | search using case study's |
@@ -44,9 +44,9 @@ Feature: Search
     And "Peter Alder" is an unauthenticated supplier
     And "Peter Alder" has created and verified profile for randomly selected company "Y"
 
-    When "Peter Alder" adds a complete case study called "no 1" with unique keywords
-    And "Peter Alder" adds a complete case study called "no 2" with unique keywords
-    And "Peter Alder" adds a complete case study called "no 3" with unique keywords
+    When "Peter Alder" adds a complete case study called "no 1"
+    And "Peter Alder" adds a complete case study called "no 2"
+    And "Peter Alder" adds a complete case study called "no 3"
 
     Then "Annette Geissinger" should be able to find company "Y" on FAS by using any unique word present on case study "no 1"
     And "Annette Geissinger" should be able to find company "Y" on FAS by using any unique word present on case study "no 2"
@@ -64,6 +64,6 @@ Feature: Search
     And "Peter Alder" is an unauthenticated supplier
     And "Peter Alder" has created and unverified profile for randomly selected company "Y"
 
-    When "Peter Alder" adds a complete case study called "no 1" with unique keywords
+    When "Peter Alder" adds a complete case study called "no 1"
 
     Then "Annette Geissinger" should NOT be able to find company "Y" on FAS by using any unique word present on case study "no 1"
