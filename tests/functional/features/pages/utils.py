@@ -3,6 +3,7 @@
 import logging
 import random
 from random import choice
+from uuid import uuid4
 
 from behave.runner import Context
 from faker import Factory
@@ -33,20 +34,28 @@ def extract_and_set_csrf_middleware_token(
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
 
 
-def random_case_study_data(alias: str) -> CaseStudy:
+def random_case_study_data(alias: str, *, unique: bool = False) -> CaseStudy:
     """Return a CaseStudy populated with randomly generated details.
 
     :param alias: alias of the Case Study
+    :param unique: use uniquely identifying words if True, otherwise False
     :return: a CaseStudy namedtuple
     """
-    images = PNGs + JPGs + JPEGs
-    (title, summary, description, caption_1, caption_2, caption_3, testimonial,
-     source_name, source_job, source_company) = (
-        FAKE.sentence()[:60].strip() for _ in range(10))
     sector = choice(SECTORS)
-    website = "http://{}/fake-case-study-url".format(FAKE.domain_name())
-    keywords = ", ".join(FAKE.sentence().replace(".", "").split())
+    images = PNGs + JPGs + JPEGs
     image_1, image_2, image_3 = (choice(images) for _ in range(3))
+    if unique:
+        (title, summary, description, caption_1, caption_2, caption_3,
+         testimonial, source_name, source_job, source_company) = (
+            str(uuid4()) for _ in range(10))
+        website = "http://{}.com/fake-case-study-url".format(str(uuid4()))
+        keywords = ", ".join(str(uuid4()) for _ in range(5))
+    else:
+        (title, summary, description, caption_1, caption_2, caption_3,
+         testimonial, source_name, source_job, source_company) = (
+            FAKE.sentence()[:60].strip() for _ in range(10))
+        website = "http://{}/fake-case-study-url".format(FAKE.domain_name())
+        keywords = ", ".join(FAKE.sentence().replace(".", "").split())
 
     case_study = CaseStudy(
         alias=alias, title=title, summary=summary, description=description,
