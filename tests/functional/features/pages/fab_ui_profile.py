@@ -2,10 +2,11 @@
 """FAB - Edit Company's Directory Profile page"""
 import logging
 
-from behave.runner import Context
+from behave.model import Table
 from requests import Response
 
 from tests import get_absolute_url
+from tests.functional.features.context_utils import Company
 from tests.functional.features.pages.common import DETAILS
 from tests.functional.features.utils import check_response
 from tests.settings import SECTORS_WITH_LABELS
@@ -17,17 +18,37 @@ EXPECTED_STRINGS = [
     "+ Add a case study", "Sectors of interest", "Keywords"
 ]
 
+EXPECTED_STRINGS_NO_DESCRIPTION = [
+    "Your company has no description.", "Set your description",
+    "Your profile can't be published until your company has a description",
+]
+
+EXPECTED_STRINGS_VERIFIED = [
+    "Your company is published", "View published profile",
+    "Your profile is visible to international buyers"
+]
+
+EXPECTED_STRINGS_NOT_VERIFIED = [
+    "Your company has not yet been verified.", "Verify your company",
+    "Your profile can't be published until your company is verified"
+]
+
 
 def should_be_here(response: Response):
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Supplier is on FAB Company's Profile page")
 
 
-def should_see_details(context: Context, supplier_alias: str, table_of_details):
+def should_see_details(
+        company: Company, response: Response, table_of_details: Table):
+    """Supplier should see all expected Company details of FAB profile page.
+
+    :param company: a namedtuple with Company details
+    :param response: a response object
+    :param table_of_details: a table of expected company details
+    """
     visible_details = [row["detail"] for row in table_of_details]
-    actor = context.get_actor(supplier_alias)
-    company = context.get_company(actor.company_alias)
-    content = context.response.content.decode("utf-8")
+    content = response.content.decode("utf-8")
 
     title = DETAILS["TITLE"] in visible_details
     keywords = DETAILS["KEYWORDS"] in visible_details
@@ -53,14 +74,10 @@ def should_see_details(context: Context, supplier_alias: str, table_of_details):
             assert company.no_employees in content
     if sector:
         assert SECTORS_WITH_LABELS[company.sector] in content
-    logging.debug("%s can see all expected details are visible of FAB Company's"
-                  " Directory Profile Page", supplier_alias)
 
 
-def should_see_online_profiles(context: Context, supplier_alias: str):
-    actor = context.get_actor(supplier_alias)
-    company = context.get_company(actor.company_alias)
-    content = context.response.content.decode("utf-8")
+def should_see_online_profiles(company: Company, response: Response):
+    content = response.content.decode("utf-8")
 
     if company.facebook:
         assert "Visit Facebook" in content
@@ -71,17 +88,17 @@ def should_see_online_profiles(context: Context, supplier_alias: str):
     if company.twitter:
         assert "Visit Twitter" in content
         assert company.twitter in content
-    logging.debug("%s can see all expected links to Online Profiles on FAB "
-                  "Company's Directory Profile Page", supplier_alias)
+    logging.debug("Supplier can see all expected links to Online Profiles on "
+                  "FAB Company's Directory Profile Page")
 
 
-def should_not_see_online_profiles(context: Context, supplier_alias: str):
-    content = context.response.content.decode("utf-8")
+def should_not_see_online_profiles(response: Response):
+    content = response.content.decode("utf-8")
     assert "Add Facebook" in content
     assert "Add LinkedIn" in content
     assert "Add Twitter" in content
-    logging.debug("%s cannot see links to any Online Profile on FAB "
-                  "Company's Directory Profile Page", supplier_alias)
+    logging.debug("Supplier cannot see links to any Online Profile on FAB "
+                  "Company's Directory Profile Page")
 
 
 def should_see_case_studies(case_studies: dict, response: Response):
@@ -91,3 +108,21 @@ def should_see_case_studies(case_studies: dict, response: Response):
         assert case_studies[case].description in content
     logging.debug("Supplier can see all %d Case Studies on FAB Company's "
                   "Directory Profile Page", len(case_studies))
+
+
+def should_see_profile_is_not_verified(response: Response):
+    expected = EXPECTED_STRINGS + EXPECTED_STRINGS_NOT_VERIFIED
+    check_response(response, 200, body_contains=expected)
+    logging.debug("Supplier is on Unverified Company's Profile page")
+
+
+def should_see_profile_is_verified(response: Response):
+    expected = EXPECTED_STRINGS + EXPECTED_STRINGS_VERIFIED
+    check_response(response, 200, body_contains=expected)
+    logging.debug("Supplier is on Verified & Published Profile page")
+
+
+def should_see_missing_description(response: Response):
+    expected = EXPECTED_STRINGS + EXPECTED_STRINGS_NO_DESCRIPTION
+    check_response(response, 200, body_contains=expected)
+    logging.debug("Supplier is on FAB Profile page with missing description")
