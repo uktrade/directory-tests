@@ -36,7 +36,7 @@ from tests.functional.features.steps.fab_when_impl import (
 )
 
 
-def unauthenticated_supplier(context: Context, supplier_alias: str):
+def unauthenticated_supplier(supplier_alias: str) -> Actor:
     """Create an instance of an unauthenticated Supplier Actor.
 
     Will:
@@ -45,12 +45,8 @@ def unauthenticated_supplier(context: Context, supplier_alias: str):
      * initialize `requests` Session object that allows you to keep the cookies
         across multiple requests
 
-    NOTE:
-    Will use test email account "test@directory.uktrade.io" which is configured
-    on AWS SES to store all incoming emails in plain text in S3.
-
-    :param context: behave `context` object
     :param supplier_alias: alias of the Actor used within the scenario's scope
+    :return: an Actor namedtuple with all required details
     """
     session = Session()
     email = ("test+{}{}@directory.uktrade.io"
@@ -59,11 +55,10 @@ def unauthenticated_supplier(context: Context, supplier_alias: str):
     password_length = 10
     password = ''.join(random.choice(string.ascii_letters)
                        for _ in range(password_length))
-    actor = Actor(
+    return Actor(
         alias=supplier_alias, email=email, password=password, session=session,
         csrfmiddlewaretoken=None, email_confirmation_link=None,
         company_alias=None, has_sso_account=False)
-    context.add_actor(actor)
 
 
 def reg_create_sso_account_associated_with_company(
@@ -114,7 +109,8 @@ def reg_create_verified_profile(
 
 def sso_create_standalone_unverified_sso_account(
         context: Context, supplier_alias: str):
-    unauthenticated_supplier(context, supplier_alias)
+    supplier = unauthenticated_supplier(supplier_alias)
+    context.add_actor(supplier)
     reg_create_standalone_sso_account(context, supplier_alias)
     reg_sso_account_should_be_created(context.response, supplier_alias)
     reg_should_get_verification_email(context, supplier_alias)

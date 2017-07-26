@@ -29,7 +29,8 @@ from tests.functional.features.steps.fab_when_impl import (
 
 @given('"{supplier_alias}" is an unauthenticated supplier')
 def given_an_unauthenticated_supplier(context, supplier_alias):
-    unauthenticated_supplier(context, supplier_alias)
+    supplier = unauthenticated_supplier(supplier_alias)
+    context.add_actor(supplier)
 
 
 @given('"{supplier_alias}" created a SSO/great.gov.uk account associated with '
@@ -106,7 +107,8 @@ def given_supplier_adds_valid_links_to_online_profiles(context, supplier_alias):
 @given('"{supplier_alias}" created an unverified profile for randomly selected '
        'company "{company_alias}"')
 def given_unverified_profile(context, supplier_alias, company_alias):
-    unauthenticated_supplier(context, supplier_alias)
+    supplier = unauthenticated_supplier(supplier_alias)
+    context.add_actor(supplier)
     reg_create_sso_account_associated_with_company(
         context, supplier_alias, company_alias)
     reg_confirm_email_address(context, supplier_alias)
