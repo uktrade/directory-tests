@@ -173,6 +173,7 @@ Feature: Trade Profile
         | keywords                    |
         | number of employees         |
         | sector of interest          |
+        | countries to export to      |
 
       Then "Annette Geissinger" should see new details on FAB Company's Directory Profile page
         | detail                      |
@@ -280,10 +281,10 @@ Feature: Trade Profile
       Given "Peter Alder" has created and verified profile for randomly selected company "Y"
 
       When "Peter Alder" attempts to use invalid links to online profiles
-        | online profile  |
-        | Facebook        |
-        | LinkedIn        |
-        | Twitter         |
+        | online profile  | invalid link           |
+        | Facebook        | http://notfacebook.com |
+        | LinkedIn        | http://notlinkedin.com |
+        | Twitter         | http://nottwitter.com  |
 
       Then "Peter Alder" should be told to provide valid links to all online profiles
 

@@ -11,10 +11,7 @@ from requests.models import Response
 from scrapy.selector import Selector
 
 from tests.functional.features.db_cleanup import get_dir_db_connection
-from tests.settings import (
-    MAILGUN_EVENTS_URL,
-    MAILGUN_SECRET_API_KEY
-)
+from tests.settings import MAILGUN_EVENTS_URL, MAILGUN_SECRET_API_KEY
 
 
 def get_file_log_handler(log_formatter,

@@ -18,12 +18,11 @@ from tests.functional.features.steps.fab_then_impl import (
     sso_should_be_signed_in_to_sso_account
 )
 from tests.functional.features.steps.fab_when_impl import (
-    prof_add_invalid_online_profiles,
+    prof_add_online_profiles,
     prof_set_company_description,
     prof_sign_out_from_fab,
     prof_supplier_uploads_logo
 )
-from tests.settings import EMAIL_VERIFICATION_MSG_SUBJECT
 
 
 @given('"{supplier_alias}" is an unauthenticated supplier')
@@ -42,8 +41,7 @@ def given_supplier_created_sso_account_for_company(
 @given('"{alias}" received the email verification message with the email '
        'confirmation link')
 def given_supplier_received_verification_email(context, alias):
-    subject = EMAIL_VERIFICATION_MSG_SUBJECT
-    reg_should_get_verification_email(context, alias, subject)
+    reg_should_get_verification_email(context, alias)
 
 
 @given('"{supplier_alias}" confirmed her email address')
@@ -100,7 +98,7 @@ def given_supplier_selects_random_company(context, supplier_alias, company_alias
 
 @given('"{supplier_alias}" has added links to online profiles')
 def given_supplier_adds_valid_links_to_online_profiles(context, supplier_alias):
-    prof_add_invalid_online_profiles(context, supplier_alias, context.table)
+    prof_add_online_profiles(context, supplier_alias, context.table)
 
 
 @given('"{supplier_alias}" created an unverified profile for randomly selected '
