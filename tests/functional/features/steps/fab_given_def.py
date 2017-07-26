@@ -10,6 +10,7 @@ from tests.functional.features.steps.fab_given_impl import (
     reg_select_random_company_and_confirm_export_status,
     sso_create_standalone_unverified_sso_account,
     sso_create_standalone_verified_sso_account,
+    unauthenticated_buyer,
     unauthenticated_supplier
 )
 from tests.functional.features.steps.fab_then_impl import (
@@ -130,3 +131,9 @@ def given_supplier_can_see_correct_logo_on_fab_profile(context, supplier_alias):
 def given_supplier_added_complete_case_study(context, supplier_alias, case_alias):
     prof_add_case_study(context, supplier_alias, case_alias)
     fab_should_see_all_case_studies(context, supplier_alias)
+
+
+@given('"{buyer_alias}" is a buyer')
+def given_unauthenticated_buyer(context, buyer_alias):
+    buyer = unauthenticated_buyer(buyer_alias)
+    context.add_actor(buyer)
