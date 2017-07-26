@@ -6,16 +6,16 @@ from tests.functional.features.steps.fab_when_impl import (
     bp_confirm_registration_and_send_letter,
     bp_provide_company_details,
     bp_provide_full_name,
-    bp_select_random_sector,
+    bp_select_random_sector_and_export_to_country,
     prof_add_case_study,
     prof_add_invalid_online_profiles,
     prof_add_online_profiles,
     prof_attempt_to_sign_in_to_fab,
     prof_remove_links_to_online_profiles,
-    prof_to_upload_unsupported_logos,
     prof_sign_in_to_fab,
-    prof_update_company_details,
     prof_supplier_uploads_logo,
+    prof_to_upload_unsupported_logos,
+    prof_update_company_details,
     prof_verify_company,
     prof_view_published_profile,
     reg_confirm_company_selection,
@@ -84,7 +84,7 @@ def when_supplier_provides_company_details(context, supplier_alias):
 @when('"{supplier_alias}" selects sector the company is in and preferred '
       'country of export')
 def when_supplier_selects_random_sector(context, supplier_alias):
-    bp_select_random_sector(context, supplier_alias)
+    bp_select_random_sector_and_export_to_country(context, supplier_alias)
 
 
 @when('"{supplier_alias}" provides her full name which will be used to sent '
