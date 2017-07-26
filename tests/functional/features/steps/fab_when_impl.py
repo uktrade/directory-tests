@@ -930,16 +930,17 @@ def prof_remove_links_to_online_profiles(context, supplier_alias):
     context.response = response
 
 
-def prof_add_case_study(context, supplier_alias, case_alias):
+def prof_add_case_study(context, supplier_alias, case_alias, *, unique=False):
     """Will add a complete case study (all fields will be filled out).
 
     :param context: behave `context` object
     :param supplier_alias: alias of the Actor used in the scope of the scenario
     :param case_alias: alias of the Case Study used in the scope of the scenario
+    :param unique: use uniquely identifying words if True, otherwise False
     """
     actor = context.get_actor(supplier_alias)
     session = actor.session
-    case_study = random_case_study_data(case_alias)
+    case_study = random_case_study_data(case_alias, unique)
 
     # Step 1 - go to "Add case study" form & extract CSRF token
     response = fab_ui_case_study_basic.go_to(session)
