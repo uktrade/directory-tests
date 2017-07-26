@@ -88,7 +88,7 @@ def get_actor(self, alias):
     :return: an Actor named tuple
     :rtype actor: tests.functional.features.ScenarioData.Actor
     """
-    return self.scenario_data.actors[alias]
+    return self.scenario_data.actors.get(alias)
 
 
 def set_actor_csrfmiddlewaretoken(self, alias, token):
