@@ -322,6 +322,7 @@ def fas_should_see_company_details(context: Context, supplier_alias: str):
                   "Company's Directory Profile Page", supplier_alias)
 
 
+@retry(wait_fixed=5000, stop_max_attempt_number=3)
 def fas_find_supplier_using_case_study_details(
         context: Context, buyer_alias: str, company_alias: str, case_alias: str,
         properties: Table):
@@ -338,28 +339,25 @@ def fas_find_supplier_using_case_study_details(
     company = context.get_company(company_alias)
     case_study = company.case_studies[case_alias]
     properties = [row['search using case study\'s'] for row in properties]
-    search_terms = []
-    search_results = []
+    search_terms = {}
     for row in properties:
         if row == "keywords":
-            search_terms += case_study.keywords.split(", ")
+            i = 0
+            for keyword in case_study.keywords.split(", "):
+                i += 1
+                search_terms["keyword #{}".format(i)] = keyword
         else:
-            search_terms.append(getattr(case_study, row.replace(" ", "_")))
+            search_terms[row] = getattr(case_study, row.replace(" ", "_"))
     logging.debug(
         "Now %s will try to find '%s' using following search terms: %s",
         buyer_alias, company.title, search_terms)
-    for term in search_terms:
+    for term_name in search_terms:
+        term = search_terms[term_name]
         response = fas_ui_find_supplier.go_to(session, term=term)
         context.response = response
         found = fas_ui_find_supplier.should_see_company(response, company.title)
-        if found:
-            logging.debug(
-                "Buyer found Supplier '%s' on FAS using term: %s",
-                company.title, term)
-        else:
-            logging.debug(
-                "Buyer could not find Supplier '%s' on FAS using term: %s",
-                company.title, term)
-        search_results.append(found)
-
-    assert all(search_results)
+        assert found, ("Buyer could not find Supplier '{}' on FAS using {}: {}"
+                       .format(company.title, term_name, term))
+        logging.debug(
+            "Buyer found Supplier '%s' on FAS using %s: %s", company.title,
+            term_name, term)
