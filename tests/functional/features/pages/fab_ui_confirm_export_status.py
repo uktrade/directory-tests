@@ -6,13 +6,11 @@ from requests import Response, Session
 
 from tests import get_absolute_url
 from tests.functional.features.utils import Method, check_response, make_request
-from tests.settings import EXPORT_STATUSES, NO_EXPORT_INTENT_LABEL
 
 EXPECTED_STRINGS = [
     "Your company's previous exports", "Confirm company", "Export status",
     "Have you exported before?",
     "Yes", "No", "I accept the", "Find a Buyer terms and conditions",
-    "To confirm that this is your company you must create a great.gov.uk account",
     "< Back to previous step", "Continue"
 ]
 
@@ -34,44 +32,22 @@ def should_be_here(response: Response):
     logging.debug("Supplier is on Confirm Export Status page")
 
 
-def submit_no_export_intent(session: Session, token: str) -> Response:
-    """Supplier decides that the company has no export intent.
+def submit(session: Session, token: str, exported: bool) -> Response:
+    """Submit the Export Status form.
 
     :param session: Supplier session object
     :param token: a CSRF token required to submit the form
+    :param exported: True is exported in the past, False if not
     :return: response object
     """
-    export_status = EXPORT_STATUSES[NO_EXPORT_INTENT_LABEL]
-
-    # Step 1: POST /register/exports
     url = get_absolute_url("ui-buyer:register-confirm-export-status")
     headers = {"Referer": url}
     data = {
         "csrfmiddlewaretoken": token,
         "enrolment_view-current_step": "exports",
-        "exports-export_status": export_status,
+        "exports-has_exported_before": exported,
         "exports-terms_agreed": "on"
     }
-    response = make_request(
-        Method.POST, url, session=session, headers=headers, data=data)
-    return response
-
-
-def submit(session: Session, token: str, export_status: str) -> Response:
-    """Submit the Export Status form.
-
-    :param session: Supplier session object
-    :param token: a CSRF token required to submit the form
-    :param export_status: any export status that allows Suppliers to create
-                          a Directory profile.
-    :return: response object
-    """
-    url = get_absolute_url("ui-buyer:register-confirm-export-status")
-    headers = {"Referer": url}
-    data = {"csrfmiddlewaretoken": token,
-            "enrolment_view-current_step": "exports",
-            "exports-export_status": export_status,
-            "exports-terms_agreed": "on"}
 
     response = make_request(
         Method.POST, url, session=session, headers=headers, data=data)
