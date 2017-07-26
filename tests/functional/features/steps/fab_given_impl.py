@@ -5,6 +5,7 @@ import string
 import uuid
 
 from behave.runner import Context
+from faker import Factory
 from requests import Session
 
 from tests.functional.features.context_utils import Actor
@@ -59,6 +60,28 @@ def unauthenticated_supplier(supplier_alias: str) -> Actor:
         alias=supplier_alias, email=email, password=password, session=session,
         csrfmiddlewaretoken=None, email_confirmation_link=None,
         company_alias=None, has_sso_account=False)
+
+
+def unauthenticated_buyer(buyer_alias: str) -> Actor:
+    """Create an instance of an unauthenticated Buyer Actor.
+
+    Will:
+     * set only rudimentary Actor details, all omitted ones will default to None
+     * initialize `requests` Session object that allows you to keep the cookies
+        across multiple requests
+
+    :param buyer_alias: alias of the Actor used within the scenario's scope
+    :return: an Actor namedtuple with all required details
+    """
+    session = Session()
+    email = ("test+buyer_{}{}@directory.uktrade.io"
+             .format(buyer_alias, str(uuid.uuid4()))
+             .replace("-", "").replace(" ", "").lower())
+    fake = Factory.create()
+    company_name = fake.sentence()[:60].strip()
+    return Actor(
+        alias=buyer_alias, email=email, session=session,
+        company_alias=company_name)
 
 
 def reg_create_sso_account_associated_with_company(
