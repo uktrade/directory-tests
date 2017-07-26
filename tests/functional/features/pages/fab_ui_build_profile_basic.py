@@ -10,11 +10,12 @@ from tests.functional.features.utils import Method, check_response, make_request
 
 URL = get_absolute_url("ui-buyer:company-edit")
 EXPECTED_STRINGS = [
-    "Build and improve your profile", "Basic", "Industries", "Address",
+    "Build and improve your profile", "Basic", "Industry and exporting",
+    "Address", "Confirm",
     ("To set up your Find a Buyer profile, enter your company’s basic details, "
-     "then choose which sectors you’re interested in."), "Confirm",
-    ("You can add extra information and a company logo to complete your "
-     "profile. You can edit your profile at any time."),
+     "then choose which sectors you’re interested in."),
+    ("You can add extra information and a company logo to complete your profile"
+     ". You can edit your profile at any time."),
     ("From early 2017, your company profile will be published online and "
      "promoted to international buyers."), "Your company details",
     "Company name", "Website (optional)", "Enter your preferred business name",
@@ -45,7 +46,7 @@ def submit(actor: Actor, company: Company) -> Response:
     """
     data = {
         "csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
-        "supplier_company_profile_edit_view-current_step": "basic",
+        "company_profile_edit_view-current_step": "basic",
         "basic-name": company.title,
         "basic-website": company.website,
         "basic-keywords": company.keywords,

@@ -7,7 +7,8 @@ DETAILS = {
     "WEBSITE": "website",
     "SIZE": "number of employees",
     "SECTOR": "sector of interest",
-    "RECIPIENT": "letters recipient full name"
+    "RECIPIENT": "letters recipient full name",
+    "COUNTRIES": "countries to export to"
 }
 
 

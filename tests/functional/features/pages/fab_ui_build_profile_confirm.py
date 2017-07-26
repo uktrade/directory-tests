@@ -9,7 +9,7 @@ from tests.functional.features.utils import Method, check_response, make_request
 
 URL = get_absolute_url("ui-buyer:company-edit")
 EXPECTED_STRINGS = [
-    "Thank you", "Basic", "Industries", "Address", "Confirm",
+    "Thank you", "Basic", "Industry and exporting", "Address", "Confirm",
     "The letter will be sent to your registered business address",
     "You can change the name of the person who will receive this letter",
     "< Back to previous step", "Send"
@@ -36,7 +36,7 @@ def submit(session: Session, token: str) -> Response:
     headers = {"Referer": URL}
     data = {
         "csrfmiddlewaretoken": token,
-        "supplier_company_profile_edit_view-current_step": "confirm"
+        "company_profile_edit_view-current_step": "confirm"
     }
     response = make_request(
         Method.POST, URL, session=session, headers=headers, data=data)
