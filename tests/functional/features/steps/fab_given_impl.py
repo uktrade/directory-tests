@@ -89,8 +89,11 @@ def bp_build_company_profile(context: Context, supplier_alias: str):
 
 def reg_create_verified_profile(
         context: Context, supplier_alias: str, company_alias: str):
-    # STEP 0 - initialize actor
-    unauthenticated_supplier(context, supplier_alias)
+    # STEP 0 - use existing actor or initialize new one if necessary
+    supplier = context.get_actor(supplier_alias)
+    if not supplier:
+        supplier = unauthenticated_supplier(supplier_alias)
+    context.add_actor(supplier)
 
     # STEP 1 - select company, create SSO profile & verify email address
     reg_create_sso_account_associated_with_company(
