@@ -3,9 +3,10 @@
 import logging
 
 from faker import Factory
+from requests import Response
 
 from tests import get_absolute_url
-from tests.functional.features.pages import fab_ui_profile
+from tests.functional.features.context_utils import Actor, Company
 from tests.functional.features.utils import Method, check_response, make_request
 
 URL = get_absolute_url("ui-buyer:company-edit")
@@ -21,26 +22,30 @@ EXPECTED_STRINGS = [
 FAKE = Factory.create()
 
 
-def should_be_here(response):
+def should_be_here(response: Response):
+    """Check if Supplier is on the 'Edit the name of letters recipient' page.
+
+    :param response: a response object
+    """
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Supplier is on the Company's Address page")
 
 
 def update_letters_recipient(
-        context, supplier_alias, *, update=True, full_name=None):
+        actor: Actor, company: Company, *, update: bool = True,
+        full_name: bool = None) -> Response:
     """Update the full name of the letters recipient.
 
     If `update` is False then the current letter recipient will be used.
 
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :param actor: a namedtuple with Actor details
+    :param company: a namedtuple with Company details
     :param update: update recipient if True, or use the current one if False
     :param full_name: use specific full name of letter recipient if provided
+    :return: a response object.
     """
-    actor = context.get_actor(supplier_alias)
     session = actor.session
     token = actor.csrfmiddlewaretoken
-    company = context.get_company(actor.company_alias)
     address = company.address_details
 
     if update:
@@ -49,22 +54,18 @@ def update_letters_recipient(
         new_full_name = address.letter_recipient
 
     headers = {"Referer": URL}
-    data = {"csrfmiddlewaretoken": token,
-            "supplier_company_profile_edit_view-current_step": "address",
-            "address-signature": address.address_signature,
-            "address-postal_full_name": new_full_name,
-            "address-address_line_1": address.address_line_1,
-            "address-address_line_2": address.address_line_2,
-            "address-locality": address.locality,
-            "address-country": address.country,
-            "address-postal_code": address.postal_code,
-            "address-po_box": address.po_box
-            }
+    data = {
+        "csrfmiddlewaretoken": token,
+        "supplier_company_profile_edit_view-current_step": "address",
+        "address-signature": address.address_signature,
+        "address-postal_full_name": new_full_name,
+        "address-address_line_1": address.address_line_1,
+        "address-address_line_2": address.address_line_2,
+        "address-locality": address.locality,
+        "address-country": address.country,
+        "address-postal_code": address.postal_code,
+        "address-po_box": address.po_box
+    }
 
-    response = make_request(Method.POST, URL, session=session, headers=headers,
-                            data=data, allow_redirects=True, context=context)
-
-    fab_ui_profile.should_be_here(response)
-    context.set_company_details(company.alias, letter_recipient=new_full_name)
-    logging.debug("%s set letter recipient full name to: %s",
-                  supplier_alias, new_full_name)
+    return make_request(
+        Method.POST, URL, session=session, headers=headers, data=data)
