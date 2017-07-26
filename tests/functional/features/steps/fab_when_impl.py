@@ -7,6 +7,7 @@ from behave.model import Table
 from behave.runner import Context
 from faker import Factory
 from requests import Response
+from scrapy import Selector
 
 from tests.functional.features.pages import (
     fab_ui_build_profile_address,
@@ -960,3 +961,55 @@ def prof_add_case_study(context, supplier_alias, case_alias):
 
     # Step 5 - Store Case Study data in Scenario Data
     context.add_case_study(actor.company_alias, case_alias, case_study)
+
+
+def fab_update_case_study(context: Context, supplier_alias: str, case_alias: str):
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+    company = context.get_company(actor.company_alias)
+    # get content from last response (which contains FAB Profile Page)
+    content = context.response.content.decode("utf-8")
+
+    # Step 0 - extract links to Case Studies and do a crude mapping to
+    # Case Study titles.
+    css_selector_titles = ("div.ed-company-profile-sector-case-study-container"
+                           ".company-profile-module-container h4::text")
+    css_selector = ("div.row-fluid.ed-company-profile-sector-case-study-inner "
+                    "p + a::attr(href)")
+    titles = Selector(text=content).css(css_selector_titles).extract()
+    links = Selector(text=content).css(css_selector).extract()
+    case_link_mappings = {k: v for (k, v) in zip(titles, links)}
+    current = company.case_studies[case_alias]
+    current_link = case_link_mappings[current.title]
+    current_number = int(current_link.split('/')[-1])
+    logging.debug(
+        "Extracted link for case study: %s is: %s", case_alias, current_link)
+
+    # Step 1 - generate new case study data
+    new_case = random_case_study_data(case_alias)
+    logging.debug("Now will replace case study data with: %s", new_case)
+
+    # Step 2 - go to specific "Case study" page form & extract CSRF token
+    response = fab_ui_case_study_basic.go_to(session, case_number=current_number)
+    context.response = response
+    token = extract_csrf_middleware_token(response)
+
+    # Step 3 - submit the "basic case study data" form & extract CSRF token
+    response = fab_ui_case_study_basic.submit_form(session, token, new_case)
+    context.response = response
+    fab_ui_case_study_images.should_be_here(response)
+    token = extract_csrf_middleware_token(response)
+
+    # Step 4 - submit the "case study images" form
+    response = fab_ui_case_study_images.submit_form(session, token, new_case)
+    context.response = response
+
+    # Step 5 - check if we're on the FAB Profile page
+    fab_ui_profile.should_be_here(response)
+
+    # Step 5 - Store new Case Study data in Scenario Data
+    # `add_case_study` apart from adding will replace existing case study.
+    context.add_case_study(actor.company_alias, case_alias, new_case)
+    logging.debug(
+        "Successfully updated details of case study: '%s', title:'%s', link:"
+        "'%s'", case_alias, current.title, current_link)

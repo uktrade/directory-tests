@@ -7,6 +7,7 @@ from tests.functional.features.steps.fab_when_impl import (
     bp_provide_company_details,
     bp_provide_full_name,
     bp_select_random_sector_and_export_to_country,
+    fab_update_case_study,
     prof_add_case_study,
     prof_add_invalid_online_profiles,
     prof_add_online_profiles,
@@ -166,3 +167,9 @@ def when_supplier_uploads_logo(context, supplier_alias, picture):
       'company\'s logo')
 def when_supplier_attempts_to_upload_unsupported_file(context, supplier_alias):
     prof_to_upload_unsupported_logos(context, supplier_alias, context.table)
+
+
+@when('"{supplier_alias}" updates all the details of case study called '
+      '"{case_alias}"')
+def when_supplier_updates_case_study(context, supplier_alias, case_alias):
+    fab_update_case_study(context, supplier_alias, case_alias)
