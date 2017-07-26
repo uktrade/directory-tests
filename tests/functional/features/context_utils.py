@@ -4,6 +4,7 @@ import logging
 from collections import namedtuple
 from types import MethodType
 
+from behave.runner import Context
 from requests import Session
 
 ScenarioData = namedtuple(
@@ -226,11 +227,20 @@ def set_company_details(self, alias, *, title=None, website=None, keywords=None,
                   companies[alias])
 
 
-def add_case_study(self, company_alias, case_alias, case_study):
+def add_case_study(
+        self: Context, company_alias: str, case_alias: str,
+        case_study: CaseStudy):
+    """This will add a CaseStudy to company's data or replace existing one.
+
+    :param self: behave `context` object
+    :param company_alias: alias of Company to update
+    :param case_alias: alias of the case study to update
+    :param case_study: a CaseStudy namedtuple
+    """
     cases = self.get_company(company_alias).case_studies
     cases[case_alias] = case_study
 
-    logging.debug("Successfully added Case Study %s to Company %s. "
+    logging.debug("Successfully added/replaced Case Study %s to Company %s. "
                   "Case Study Data: %s", case_alias, company_alias, case_study)
 
 
