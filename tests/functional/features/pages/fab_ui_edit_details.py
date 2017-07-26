@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
 """FAB - Edit Company's Details page"""
-import logging
 import random
 
 from faker import Factory
+from requests import Response, Session
 
 from tests import get_absolute_url
-from tests.functional.features.pages import fab_ui_profile
-from tests.functional.features.pages.utils import (
-    extract_and_set_csrf_middleware_token
-)
+from tests.functional.features.context_utils import Actor, Company
 from tests.functional.features.utils import Method, check_response, make_request
 from tests.settings import NO_OF_EMPLOYEES
 
@@ -27,41 +24,34 @@ EXPECTED_STRINGS = [
 FAKE = Factory.create()
 
 
-def should_be_here(response):
+def should_be_here(response: Response):
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
 
 
-def go_to(context, supplier_alias):
+def go_to(session: Session) -> Response:
     """Go to "Edit Company's Details" page.
 
     This requires:
      * Supplier to be logged in
 
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
     """
-    actor = context.get_actor(supplier_alias)
-    session = actor.session
-
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
-    response = make_request(Method.GET, URL, session=session, headers=headers,
-                            allow_redirects=False, context=context)
+    response = make_request(Method.GET, URL, session=session, headers=headers)
 
     should_be_here(response)
-    extract_and_set_csrf_middleware_token(context, response, supplier_alias)
-    logging.debug("%s is on the Edit Company Details page", supplier_alias)
+    return response
 
 
 def update_details(
-        context, supplier_alias, *, title=True, website=True, keywords=True,
-        size=True, specific_title=None, specific_website=None,
-        specific_keywords=None, specific_size=None):
+        actor: Actor, company: Company, *, title=True, website=True,
+        keywords=True, size=True, specific_title=None, specific_website=None,
+        specific_keywords=None, specific_size=None) -> (Response, Company):
     """Update basic Company's details: business name, website, keywords & size.
 
     Will use random details or specific values if they are provided.
 
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :param actor: a namedtuple with Actor details
+    :param company: a namedtuple with Company details
     :param title: change business title if True, or use the current one if False
     :param website: change website if True, or use the current one if False
     :param keywords: change keywords if True, or use the current one if False
@@ -70,9 +60,9 @@ def update_details(
     :param specific_website: use specific website (if provided)
     :param specific_keywords: use specific keywords (if provided)
     :param specific_size: use specific number of employees (if provided)
+    :return: a tuple consisting of Response object and Company details that were
+             actually send in the update request.
     """
-    actor = context.get_actor(supplier_alias)
-    company = context.get_company(actor.company_alias)
     session = actor.session
     token = actor.csrfmiddlewaretoken
 
@@ -98,23 +88,20 @@ def update_details(
         new_size = company.no_employees
 
     headers = {"Referer": URL}
-    data = {"csrfmiddlewaretoken": token,
-            "supplier_basic_info_edit_view-current_step": "basic",
-            "basic-name": new_title,
-            "basic-website": new_website,
-            "basic-keywords": new_keywords,
-            "basic-employees": new_size}
+    data = {
+        "csrfmiddlewaretoken": token,
+        "supplier_basic_info_edit_view-current_step": "basic",
+        "basic-name": new_title,
+        "basic-website": new_website,
+        "basic-keywords": new_keywords,
+        "basic-employees": new_size
+    }
 
-    response = make_request(Method.POST, URL, session=session, headers=headers,
-                            data=data, allow_redirects=True, context=context)
+    new_details = Company(
+        title=new_title, website=new_website, keywords=new_keywords,
+        no_employees=new_size)
 
-    fab_ui_profile.should_be_here(response)
-    extract_and_set_csrf_middleware_token(context, response, supplier_alias)
+    response = make_request(
+        Method.POST, URL, session=session, headers=headers, data=data)
 
-    context.set_company_details(
-        company.alias, title=new_title, website=new_website,
-        keywords=new_keywords, no_employees=new_size)
-    logging.debug("%s successfully updated basic Company's details: "
-                  "title=%s, website=%s, keywords=%s, number of employees=%s",
-                  supplier_alias, new_title, new_website, new_keywords,
-                  new_size)
+    return response, new_details
