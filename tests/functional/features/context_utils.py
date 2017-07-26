@@ -48,6 +48,7 @@ Company = namedtuple(
     ]
 )
 # Set all fields to None by default.
+Actor.__new__.__defaults__ = (None,) * len(Actor._fields)
 Company.__new__.__defaults__ = (None,) * len(Company._fields)
 CaseStudy.__new__.__defaults__ = (None,) * len(CaseStudy._fields)
 
