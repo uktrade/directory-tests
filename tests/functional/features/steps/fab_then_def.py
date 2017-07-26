@@ -13,6 +13,7 @@ from tests.functional.features.steps.fab_then_impl import (
     fas_no_links_to_online_profiles_are_visible,
     fas_should_be_on_profile_page,
     fas_should_see_all_case_studies,
+    fas_should_see_company_details,
     fas_should_see_logo_picture,
     prof_all_unsupported_files_should_be_rejected,
     prof_should_be_on_profile_page,
@@ -157,3 +158,9 @@ def then_supplier_should_see_logo_picture_on_fas(context, supplier_alias):
       'that only certain image types can be used as company\'s logo')
 def then_every_invalid_logo_should_be_rejected(context, supplier_alias):
     prof_all_unsupported_files_should_be_rejected(context, supplier_alias)
+
+
+@then('"{supplier_alias}" should see new details on FAS Company\'s Directory '
+      'Profile page')
+def then_supplier_should_see_new_details_on_fas(context, supplier_alias):
+    fas_should_see_company_details(context, supplier_alias)
