@@ -1,6 +1,26 @@
 @wip
 @skip
-Feature: Search
+Feature: Find a Supplier
+
+
+  @ED-1746a
+  @fas
+  @case-study
+  @profile
+  @verified
+  @published
+  @two-actors
+  Scenario: Buyers should be able to find Supplier by uniquely identifying words present on Supplier's case study
+    Given "Annette Geissinger" is a buyer
+    And "Peter Alder" is an unauthenticated supplier
+    And "Peter Alder" has created and verified profile for randomly selected company "Y"
+
+    When "Peter Alder" adds a complete case study called "no 1"
+
+    Then "Annette Geissinger" should be able to find company "Y" on FAS using words from case study "no 1"
+      | search using case study's |
+      | summary                   |
+      | description               |
 
 
   @ED-1746
@@ -10,6 +30,9 @@ Feature: Search
   @verified
   @published
   @two-actors
+  @bug
+  @ED-1958
+  @fixme
   Scenario: Buyers should be able to find Supplier by uniquely identifying words present on Supplier's case study
     Given "Annette Geissinger" is a buyer
     And "Peter Alder" is an unauthenticated supplier
