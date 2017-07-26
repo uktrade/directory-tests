@@ -39,16 +39,18 @@ def should_be_here(response: Response):
     logging.debug("Supplier is on 'Create case study or project' - basic page")
 
 
-def go_to(session: Session) -> Response:
+def go_to(session: Session, *, case_number: int = None) -> Response:
     """Go to "Add Case Study" basic - page.
 
     This requires:
      * Supplier to be logged in
 
     :param session: Supplier session object
+    :param case_number: (optional) case study number
     """
+    url = "{}{}".format(URL, case_number) if case_number else URL
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
-    response = make_request(Method.GET, URL, session=session, headers=headers)
+    response = make_request(Method.GET, url, session=session, headers=headers)
     should_be_here(response)
     logging.debug("Supplier is on the Add Case Study - Basic page")
     return response
