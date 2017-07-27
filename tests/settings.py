@@ -130,38 +130,40 @@ BMPs = glob(os.path.join(TEST_IMAGES_DIR, "*.bmp"))
 JP2s = glob(os.path.join(TEST_IMAGES_DIR, "*.jp2"))
 WEBPs = glob(os.path.join(TEST_IMAGES_DIR, "*.webp"))
 
-# Load a list of rare english words.
-# This list was compiled using:
-# a) Wictionary top 100,000 most frequently-used English words
-#   -> https://gist.github.com/h3xx/1976236
-# b) 20000 most common English words in order of frequency, as determined by
-#   n-gram frequency analysis of the Google's Trillion Word Corpus
-#   -> https://github.com/first20hours/google-10000-english
-#
-# The selection process was as follows:
-# 1) delete first 30000 lines from a)
-# 2) select words with a least 9 characters: if len(w) > 8
-# 3) skip all words that contain non-ASCII characters: len(w) == len(w.encode())
-# 4) skip all words that contain non-latin alphabet characters, like: ',."@$ etc
-#    skip = ["'", "\"", "`", ",", ".", ";", ":", "!", "#", "@", "$", "%", "^",
-#            "&", "*", "(", ")", "-", "=", "+", "_", "{", "[", "]", "}", "?",
-#            ">", "<"]
-#    all(e not in w for e in skip)
-# 5) make all words lower case: w.lower()
-# 6) remove all duplicates: set(words)
-# 7) sort
-# 8) remove from selected words all words present in b)
-#    grep -v -x -f 100k.txt 20k.txt > rare.txt
-#
-# Steps 2-7:
-# with open("./100k.txt") as f:
-#    words = f.read().split()
-#
-# skip = ["'", "\"", "`", ",", ".", ";", ":", "!", "#", "@", "$", "%", "^", "&",
-#         "*", "(", ")", "-", "=", "+", "_", "{", "[", "]", "}", "?", ">", "<"]
-# nine = sorted(set([w.lower() for w in words
-#                    if len(w) > 8
-#                    and len(w) == len(w.encode())
-#                    and all(e not in w for e in skip)]))
+"""
+Load a list of rare english words.
+This list was compiled using:
+a) Wictionary top 100,000 most frequently-used English words
+  -> https://gist.github.com/h3xx/1976236
+b) 20000 most common English words in order of frequency, as determined by
+  n-gram frequency analysis of the Google's Trillion Word Corpus
+  -> https://github.com/first20hours/google-10000-english
+
+The selection process was as follows:
+1) delete first 30000 lines from a)
+2) select words with a least 9 characters: if len(w) > 8
+3) skip all words that contain non-ASCII characters: len(w) == len(w.encode())
+4) skip all words that contain non-latin alphabet characters, like: ',."@$ etc
+   skip = ["'", "\"", "`", ",", ".", ";", ":", "!", "#", "@", "$", "%", "^",
+           "&", "*", "(", ")", "-", "=", "+", "_", "{", "[", "]", "}", "?",
+           ">", "<"]
+   all(e not in w for e in skip)
+5) make all words lower case: w.lower()
+6) remove all duplicates: set(words)
+7) sort
+8) remove from selected words all words present in b)
+   grep -v -x -f 100k.txt 20k.txt > rare.txt
+
+Steps 2-7:
+with open("./100k.txt") as f:
+   words = f.read().split()
+
+skip = ["'", "\"", "`", ",", ".", ";", ":", "!", "#", "@", "$", "%", "^", "&",
+        "*", "(", ")", "-", "=", "+", "_", "{", "[", "]", "}", "?", ">", "<"]
+nine = sorted(set([w.lower() for w in words
+                   if len(w) > 8
+                   and len(w) == len(w.encode())
+                   and all(e not in w for e in skip)]))
+"""
 with open(os.path.join(TEST_IMAGES_DIR, "rare.txt"), "r") as f:
     RARE_WORDS = f.read().split()
