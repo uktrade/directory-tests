@@ -16,7 +16,7 @@ from tests.functional.features.utils import (
     extract_csrf_middleware_token,
     make_request
 )
-from tests.settings import SECTORS, JPEGs, JPGs, PNGs
+from tests.settings import RARE_WORDS, SECTORS, JPEGs, JPGs, PNGs
 
 FAKE = Factory.create()
 
@@ -33,13 +33,20 @@ def extract_and_set_csrf_middleware_token(
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
 
 
-def sentence(*, max_length: int = 60, min_word_length: int = 5):
-    """Generate a random alphanumeric string of up to 60 characters.
+def sentence(*, max_length: int = 60, min_word_length: int = 9, max_words: int = 10):
+    """Generate a random string consisting of rare english words.
 
-    :return: a sentence of up to 60 characters long
+    NOTE:
+    min_word_length is set to 9, because all words in RARE_WORDS are at least 9
+    characters long
+
+    :return: a sentence consisting of rare english words
     """
-    text = FAKE.text().replace(".", "").strip().split()
-    words = [word for word in text if len(word) > min_word_length]
+    words = []
+    while len(words) <= max_words:
+        word = random.choice(RARE_WORDS)
+        if len(word) > min_word_length:
+            words.append(word)
     while len(" ".join(words)) > max_length:
         words.pop()
     return " ".join(words)
