@@ -12,10 +12,11 @@ from tests.functional.features.pages import (
     fab_ui_edit_online_profiles,
     fab_ui_profile,
     fab_ui_try_other_services,
+    fas_ui_find_supplier,
     fas_ui_profile,
     profile_ui_landing,
-    sso_ui_verify_your_email,
-    fas_ui_find_supplier)
+    sso_ui_verify_your_email
+)
 from tests.functional.features.utils import (
     check_hash_of_remote_file,
     extract_csrf_middleware_token,

@@ -51,7 +51,7 @@ from tests.functional.features.utils import (
     get_md5_hash_of_file,
     get_verification_code
 )
-from tests.settings import NO_OF_EMPLOYEES, SECTORS, COUNTRIES
+from tests.settings import COUNTRIES, NO_OF_EMPLOYEES, SECTORS
 
 FAKE = Factory.create()
 

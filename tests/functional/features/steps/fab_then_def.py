@@ -10,6 +10,7 @@ from tests.functional.features.steps.fab_then_impl import (
     fab_should_see_company_details,
     fab_should_see_online_profiles,
     fas_check_profiles,
+    fas_find_supplier_using_case_study_details,
     fas_no_links_to_online_profiles_are_visible,
     fas_should_be_on_profile_page,
     fas_should_see_all_case_studies,
@@ -25,8 +26,8 @@ from tests.functional.features.steps.fab_then_impl import (
     reg_sso_account_should_be_created,
     reg_supplier_has_to_verify_email_first,
     reg_supplier_is_not_appropriate_for_fab,
-    sso_should_be_signed_in_to_sso_account,
-    fas_find_supplier_using_case_study_details)
+    sso_should_be_signed_in_to_sso_account
+)
 
 
 @then('"{alias}" should be told about the verification email')
