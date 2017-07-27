@@ -52,6 +52,22 @@ def sentence(*, max_length: int = 60, min_word_length: int = 9, max_words: int =
     return " ".join(words)
 
 
+def rare_word(*, min_length: int = 9, max_length: int = 20):
+    """Get a random rare english word.
+
+    NOTE:
+    min_length is set to 9, because all words in RARE_WORDS are at least 9
+    characters long
+
+    :return: a rare english word
+    """
+    assert min_length < max_length
+    word = ""
+    while min_length >= len(word) <= max_length:
+        word = random.choice(RARE_WORDS)
+    return word
+
+
 def random_case_study_data(alias: str) -> CaseStudy:
     """Return a CaseStudy populated with randomly generated details.
 
