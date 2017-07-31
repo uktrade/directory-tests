@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """Common page helpers"""
 import logging
+import os
+import pickle
 import random
 from random import choice
 from typing import List
@@ -17,7 +19,14 @@ from tests.functional.features.utils import (
     extract_csrf_middleware_token,
     make_request
 )
-from tests.settings import RARE_WORDS, SECTORS, JPEGs, JPGs, PNGs
+from tests.settings import (
+    RARE_WORDS,
+    SECTORS,
+    TEST_IMAGES_DIR,
+    JPEGs,
+    JPGs,
+    PNGs
+)
 
 FAKE = Factory.create()
 CompaniesList = List[Company]  # a type hint for a List of Company named tuples
@@ -158,3 +167,34 @@ def has_fas_profile(company_number: str) -> bool:
     url = "{}/{}".format(endpoint, company_number)
     response = make_request(Method.GET, url, allow_redirects=False)
     return response.status_code == 301
+
+
+def get_companies(*, number: int = 100) -> CompaniesList:
+    """Find a number of active companies without FAS profile.
+
+    NOTE:
+    The search is pretty slow. It might take 2-3 minutes to find default number
+    of companies.
+
+    :param number: (optional) expected number of companies to find
+    :return: a list of Company named tuples (all with "test" alias)
+    """
+    return [find_active_company_without_fas_profile("test") for _ in range(number)]
+
+
+def save_companies(companies: CompaniesList):
+    """Pickle and save in a file a List of Company named tuples.
+
+    :param companies: a List of Company named tuples
+    """
+    with open(os.path.join(TEST_IMAGES_DIR, 'companies.pkl'), 'wb') as f:
+        pickle.dump(companies, f)
+
+
+def load_companies() -> CompaniesList:
+    """Load pickled List of Companies from file.
+
+    :return: a List of Company named tuples
+    """
+    with open(os.path.join(TEST_IMAGES_DIR, 'companies.pkl'), 'rb') as f:
+        return pickle.load(f)
