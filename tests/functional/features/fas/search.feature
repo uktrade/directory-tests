@@ -10,7 +10,7 @@ Feature: Find a Supplier
   @two-actors
   @bug
   @ED-1968
-  @fixme
+  @fixed
   Scenario: Buyers should be able to find Supplier by uniquely identifying words present on Supplier's case study
     Given "Annette Geissinger" is a buyer
     And "Peter Alder" is an unauthenticated supplier
