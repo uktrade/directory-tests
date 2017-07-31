@@ -169,6 +169,20 @@ def has_fas_profile(company_number: str) -> bool:
     return response.status_code == 301
 
 
+def already_registered(company_number: str) -> bool:
+    """Will check if Company is already registered with FAB.
+
+    :param company_number:
+    :return: True/False based on the presence of FAB profile
+    """
+    url = get_absolute_url('ui-buyer:landing')
+    data = {"company_number": company_number}
+    headers = {"Referer": url}
+
+    response = make_request(Method.POST, url, headers=headers, data=data)
+    return "Already registered" in response.content.decode("utf-8")
+
+
 def get_companies(*, number: int = 100) -> CompaniesList:
     """Find a number of active companies without FAS profile.
 
