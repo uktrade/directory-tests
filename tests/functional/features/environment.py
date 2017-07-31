@@ -46,7 +46,7 @@ def after_scenario(context, scenario):
 
 
 def before_all(context):
-    init_loggers()
+    init_loggers(context)
     # this will add some handy functions to the `context` object
     patch_context(context)
 
