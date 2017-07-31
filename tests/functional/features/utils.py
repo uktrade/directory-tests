@@ -7,6 +7,7 @@ import os
 from enum import Enum
 
 import requests
+from behave.runner import Context
 from requests.models import Response
 from retrying import retry
 from scrapy.selector import Selector
@@ -50,22 +51,15 @@ def get_console_log_handler(log_formatter, log_level=logging.ERROR):
     return console_handler
 
 
-def init_loggers():
+def init_loggers(context: Context):
     """Will initialize console and file loggers."""
-    # get the root logger
-    root_logger = logging.getLogger()
-    # "disable" `urllib3` logger, which is used by `requests`
-    logging.getLogger("boto").setLevel(logging.WARNING)
-    logging.getLogger("urllib3").setLevel(logging.WARNING)
-
     # configure the formatter
     fmt = ('%(asctime)s-%(filename)s[line:%(lineno)d]-%(name)s-%(levelname)s: '
            '%(message)s')
     log_formatter = logging.Formatter(fmt)
-
-    # configure the file & console loggers
-    root_logger.addHandler(get_file_log_handler(log_formatter))
-    root_logger.addHandler(get_console_log_handler(log_formatter))
+    log_file_handler = get_file_log_handler(log_formatter)
+    # Add log file handler to Behave's logging
+    context.config.setup_logging(handlers=[log_file_handler])
 
 
 class Method(Enum):
