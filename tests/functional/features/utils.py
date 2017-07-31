@@ -480,7 +480,9 @@ def mailgun_get_message_url(recipient: str) -> str:
     response = requests.get(url, auth=("api", api_key), params=params)
 
     assert response.status_code == 200
-    assert len(response.json()["items"]) == message_limit
+    no_of_items = len(response.json()["items"])
+    with log_assertion_error("Could not find MailGun event for %s", recipient):
+        assert no_of_items == message_limit
     logging.debug("Found event with recipient: {}".format(recipient))
     return response.json()["items"][0]["storage"]["url"]
 
