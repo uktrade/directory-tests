@@ -3,6 +3,7 @@
 import logging
 import random
 from random import choice
+from typing import List
 
 from behave.runner import Context
 from faker import Factory
@@ -19,6 +20,7 @@ from tests.functional.features.utils import (
 from tests.settings import RARE_WORDS, SECTORS, JPEGs, JPGs, PNGs
 
 FAKE = Factory.create()
+CompaniesList = List[Company]  # a type hint for a List of Company named tuples
 
 
 def extract_and_set_csrf_middleware_token(
