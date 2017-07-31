@@ -36,21 +36,6 @@ def get_file_log_handler(log_formatter,
     return file_handler
 
 
-def get_console_log_handler(log_formatter, log_level=logging.ERROR):
-    """Configure the console logger.
-
-    Will use ERROR logging level by default.
-
-    :param log_formatter: specifies how the log entries will look like
-    :param log_level: specifies logging level, e.g.: logging.ERROR
-    :return: configured console log handler
-    """
-    console_handler = logging.StreamHandler()
-    console_handler.setFormatter(log_formatter)
-    console_handler.setLevel(log_level)
-    return console_handler
-
-
 def init_loggers(context: Context):
     """Will initialize console and file loggers."""
     # configure the formatter
