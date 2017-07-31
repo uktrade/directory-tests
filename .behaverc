@@ -7,5 +7,3 @@
 #junit_directory=./tests/functional/reports/
 verbose=True
 logging_level=DEBUG
-stdout_capture=True
-stderr_capture=True
