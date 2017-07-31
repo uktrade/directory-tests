@@ -4,6 +4,9 @@
 import hashlib
 import logging
 import os
+import sys
+import traceback
+from contextlib import contextmanager
 from enum import Enum
 
 import requests
@@ -480,6 +483,36 @@ def mailgun_get_message_url(recipient: str) -> str:
     assert len(response.json()["items"]) == message_limit
     logging.debug("Found event with recipient: {}".format(recipient))
     return response.json()["items"][0]["storage"]["url"]
+
+
+@contextmanager
+def log_assertion_error(*args):
+    """This will:
+        * print the custom assertion message
+        * print the traceback (stack trace)
+        * raise the original AssertionError exception
+
+    :param args: a custom assertion message. It can be:
+                 * just a string, eg.:
+                    log_assertion_error("This is a simple assertion error")
+                 * or contain standard string format placeholders, like: %s, %d
+                   but then correct number of arguments needs to be provided eg:
+                    log_assertion_error("Expected %s got %s", "a", "b")
+    """
+    try:
+        yield
+    except AssertionError as e:
+        logging.error(*args)
+        if len(args) > 1:
+            # format the assertion error message.
+            # This assumes that the first argument contains a string with
+            # format placeholders, like: %s, %d etc
+            e.args += (args[0] % tuple(args[1:]), )
+        else:
+            e.args += args
+        _, _, tb = sys.exc_info()
+        traceback.print_tb(tb)  # Fixed format
+        raise
 
 
 @retry(wait_fixed=3000, stop_max_attempt_number=15)
