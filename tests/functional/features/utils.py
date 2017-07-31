@@ -16,10 +16,10 @@ from tests.functional.features.db_cleanup import get_dir_db_connection
 from tests.settings import MAILGUN_EVENTS_URL, MAILGUN_SECRET_API_KEY
 
 
-def get_file_log_handler(log_formatter,
-                         log_file=os.path.join(".", "tests", "functional",
-                                               "reports", "behave.log"),
-                         log_level=logging.DEBUG):
+def get_file_log_handler(
+        log_formatter, log_file=os.path.join(
+            ".", "tests", "functional", "reports", "behave.log"),
+        log_level=logging.DEBUG):
     """Configure the console logger.
 
     Will use DEBUG logging level by default.
