@@ -8,6 +8,7 @@ from enum import Enum
 
 import requests
 from requests.models import Response
+from retrying import retry
 from scrapy.selector import Selector
 
 from tests.functional.features.db_cleanup import get_dir_db_connection
@@ -502,6 +503,7 @@ def mailgun_get_message_url(recipient: str) -> str:
     return response.json()["items"][0]["storage"]["url"]
 
 
+@retry(wait_fixed=3000, stop_max_attempt_number=15)
 def get_verification_link(recipient: str) -> str:
     """Get email verification link sent by SSO to specified recipient.
 

@@ -5,7 +5,6 @@ import logging
 from behave.model import Table
 from behave.runner import Context
 from requests import Response
-from retrying import retry
 
 from tests.functional.features.pages import (
     fab_ui_build_profile_basic,
@@ -39,7 +38,6 @@ def reg_sso_account_should_be_created(response: Response, supplier_alias: str):
     logging.debug("Successfully created new SSO account for %s", supplier_alias)
 
 
-@retry(wait_fixed=5000, stop_max_attempt_number=18)
 def reg_should_get_verification_email(context: Context, alias: str):
     """Will check if the Supplier received an email verification message.
 
