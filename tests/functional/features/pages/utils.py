@@ -247,4 +247,6 @@ def get_active_company_without_fas_profile(alias: str) -> Company:
     :param alias: alias of the company used withing the scope of the scenario
     :return: a Company named tuple with all basic company details
     """
-    return random.choice(load_companies())._replace(alias=alias)
+    company = random.choice(load_companies())._replace(alias=alias)
+    logging.debug("Selected company: %s", company)
+    return company
