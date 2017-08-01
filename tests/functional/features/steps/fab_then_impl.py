@@ -376,3 +376,37 @@ def fas_find_supplier_using_case_study_details(
         logging.debug(
             "Buyer found Supplier '%s' on FAS using %s: %s", company.title,
             term_name, term)
+
+
+def fas_supplier_cannot_be_found_using_case_study_details(
+        context: Context, buyer_alias: str, company_alias: str, case_alias: str):
+    actor = context.get_actor(buyer_alias)
+    session = actor.session
+    company = context.get_company(company_alias)
+    case_study = company.case_studies[case_alias]
+    keys = list(filter(lambda x: x != 'alias', case_study._fields))
+    search_terms = {}
+    for key in keys:
+        if key == "keywords":
+            i = 0
+            for keyword in case_study.keywords.split(", "):
+                i += 1
+                search_terms["keyword #{}".format(i)] = keyword
+        else:
+            search_terms[key] = getattr(case_study, key)
+    logging.debug(
+        "Now %s will try to find '%s' using following search terms: %s",
+        buyer_alias, company.title, search_terms)
+    for term_name in search_terms:
+        term = search_terms[term_name]
+        logging.debug(
+            "Searching for '%s' using %s: %s", buyer_alias, company.title,
+            term_name, search_terms)
+        response = fas_ui_find_supplier.go_to(session, term=term)
+        context.response = response
+        found = fas_ui_find_supplier.should_not_see_company(response, company.title)
+        assert found, ("Buyer found Supplier '{}' on FAS using {}: {}"
+                       .format(company.title, term_name, term))
+        logging.debug(
+            "Buyer was not able to find unverified Supplier '%s' on FAS using "
+            "%s: %s", company.title, term_name, term)
