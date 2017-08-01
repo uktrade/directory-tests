@@ -108,7 +108,8 @@ def make_request(method: Method, url, *, session=None, params=None,
     :return: a response object
     :rtype: requests.Response
     """
-    assert url is not None, "Please provide the URL"
+    with assertion_msg("Can't make a request without a valid URL!"):
+        assert url is not None
 
     req = session or requests
     trim_offset = 150  # define the length of logged response content
@@ -200,7 +201,8 @@ def extract_csrf_middleware_token(response: Response):
     :return: CSRF middleware token extracted from the response content
     :rtype: str
     """
-    assert response.content, "Response has no content"
+    with assertion_msg("Can't extract CSRF token as response has no content"):
+        assert response.content
     content = response.content.decode("utf-8")
 
     csrf_tag_idx = content.find("name='csrfmiddlewaretoken'")
@@ -229,7 +231,8 @@ def extract_confirm_email_form_action(response: Response):
     :return: for action endpoint
     :rtype: str
     """
-    assert response.content, "Response has no content"
+    with assertion_msg("Can't extract form action from an empty response!"):
+        assert response.content
     content = response.content.decode("utf-8")
 
     form_action = 'form method="post" action="'
@@ -256,7 +259,8 @@ def extract_plain_text_payload(msg):
     else:
         seven_bit = "Content-Transfer-Encoding: 7bit"
         payload = msg.get_payload()
-        assert seven_bit in payload
+        with assertion_msg("Could not find plain text msg in email payload"):
+            assert seven_bit in payload
         start_7bit = payload.find(seven_bit)
         start = start_7bit + len(seven_bit)
         end = payload.find("--===============", start)
@@ -319,62 +323,46 @@ def check_response(response: Response, status_code: int, *,
     :param unexpected_strings: (optional) a list of strings that should NOT be
                                present in the response content
     """
-    try:
+    with assertion_msg(
+            "Expected %s but got %s", status_code, response.status_code):
         assert response.status_code == status_code
-    except AssertionError:
-        logging.error(
-            "Expected %s but got %s", status_code, response.status_code)
-        raise
 
     if body_contains:
-        assert response.content, "Response has no content!"
+        with assertion_msg("Expected response with content, got an empty one!"):
+            assert response.content
         content = response.content.decode("utf-8")
         for string in body_contains:
-            try:
+            with assertion_msg("Could not find '%s' in the response", string):
                 assert string in content
-            except AssertionError:
-                logging.error("Could not find '%s' in the response", string)
-                raise
 
     if unexpected_strings:
-        assert response.content, "Response has no content!"
+        with assertion_msg("Expected response with content, got an empty one!"):
+            assert response.content
         content = response.content.decode("utf-8")
         for string in unexpected_strings:
-            try:
+            with assertion_msg("Found unexpected '%s' in response", string):
                 assert string not in content
-            except AssertionError:
-                logging.error("Found unexpected '%s' in response", string)
-                raise
 
     if location:
-        try:
-            assert response.headers.get("Location") == location
-        except AssertionError:
-            logging.error(
-                "Expected Location header to be: '%s' but got '%s' instead."
-                .format(location, response.headers.get("Location")))
-            raise
+        new_location = response.headers.get("Location")
+        with assertion_msg("Expected Location header to be: '%s' but got '%s' "
+                           "instead.", location, new_location):
+            assert new_location == location
 
     if locations:
-        try:
-            assert response.headers.get("Location") in locations
-        except AssertionError:
-            logging.error(
-                "Should be redirected to one of these %d locations '%s' but "
-                "instead was redirected to '%s'", len(locations), locations,
-                response.headers.get("Location"))
-            raise
+        new_location = response.headers.get("Location")
+        with assertion_msg(
+                "Should redirect to one of these %d locations '%s' but instead "
+                "was redirected to '%s'", len(locations), locations,
+                new_location):
+            assert new_location in locations
 
     if location_starts_with:
-        try:
-            new_location = response.headers.get("Location")
-            assert new_location.startswith(location_starts_with)
-        except AssertionError:
-            logging.error(
+        new_location = response.headers.get("Location")
+        with assertion_msg(
                 "Expected Location header to start with: '%s' but got '%s' "
-                "instead.", location_starts_with,
-                response.headers.get("Location"))
-            raise
+                "instead.", location_starts_with, new_location):
+            assert new_location.startswith(location_starts_with)
 
 
 def get_absolute_path_of_file(filename):
@@ -387,9 +375,10 @@ def get_absolute_path_of_file(filename):
     """
     relative_path = os.path.join("tests", "functional", "files", filename)
     absolute_path = os.path.abspath(relative_path)
-    error_message = ("Could not find '{}' in ./tests/functional/files. Please "
-                     "check the filename!")
-    assert os.path.exists(absolute_path), error_message
+    with assertion_msg(
+            "Could not find '%s' in ./tests/functional/files. Please check the "
+            "filename!", filename):
+        assert os.path.exists(absolute_path)
 
     return absolute_path
 
@@ -402,7 +391,8 @@ def get_md5_hash_of_file(absolute_path):
     :return: md5 hash of the file
     :rtype:  str
     """
-    assert os.path.exists(absolute_path)
+    with assertion_msg("File doesn't exist: %s", absolute_path):
+        assert os.path.exists(absolute_path)
     return hashlib.md5(open(absolute_path, "rb").read()).hexdigest()
 
 
@@ -427,7 +417,8 @@ def extract_logo_url(response):
     """
     css_selector = ".logo-container img::attr(src)"
     logo_url = extract_by_css(response, css_selector)
-    assert logo_url, "Could not find Company's logo URL"
+    with assertion_msg("Could not find Company's logo URL in the response"):
+        assert logo_url
     return logo_url
 
 
@@ -440,9 +431,10 @@ def check_hash_of_remote_file(expected_hash, file_url):
     logging.debug("Fetching file: %s", file_url)
     response = requests.get(file_url)
     file_hash = hashlib.md5(response.content).hexdigest()
-    assert expected_hash == file_hash, (
-        "Expected hash of file downloaded from %s to be %s but got %s"
-        .format(expected_hash, file_hash))
+    with assertion_msg(
+            "Expected hash of file downloaded from %s to be %s but got %s",
+            expected_hash, file_hash):
+        assert expected_hash == file_hash
 
 
 def mailgun_get_message(url: str) -> dict:
@@ -479,16 +471,19 @@ def mailgun_get_message_url(recipient: str) -> str:
     }
     response = requests.get(url, auth=("api", api_key), params=params)
 
-    assert response.status_code == 200
+    with assertion_msg(
+            "Expected 200 OK from MailGun when searching for an event triggered"
+            " by email verification message but got %s", response.status_code):
+        assert response.status_code == 200
     no_of_items = len(response.json()["items"])
-    with log_assertion_error("Could not find MailGun event for %s", recipient):
+    with assertion_msg("Could not find MailGun event for %s", recipient):
         assert no_of_items == message_limit
     logging.debug("Found event with recipient: {}".format(recipient))
     return response.json()["items"][0]["storage"]["url"]
 
 
 @contextmanager
-def log_assertion_error(*args):
+def assertion_msg(*args):
     """This will:
         * print the custom assertion message
         * print the traceback (stack trace)
