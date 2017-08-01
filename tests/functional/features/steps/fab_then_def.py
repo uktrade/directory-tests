@@ -26,8 +26,8 @@ from tests.functional.features.steps.fab_then_impl import (
     reg_sso_account_should_be_created,
     reg_supplier_has_to_verify_email_first,
     reg_supplier_is_not_appropriate_for_fab,
-    sso_should_be_signed_in_to_sso_account
-)
+    sso_should_be_signed_in_to_sso_account,
+    fas_supplier_cannot_be_found_using_case_study_details)
 
 
 @then('"{alias}" should be told about the verification email')
@@ -169,7 +169,22 @@ def then_supplier_should_see_new_details_on_fas(context, supplier_alias):
 
 @then('"{buyer_alias}" should be able to find company "{company_alias}" on FAS '
       'using words from case study "{case_alias}"')
-def then_buyer_should_find_supplier_using_unique_words(
+def then_buyer_should_find_supplier_using_part_of_case_study(
         context, buyer_alias, company_alias, case_alias):
     fas_find_supplier_using_case_study_details(
         context, buyer_alias, company_alias, case_alias, context.table)
+
+
+@then('"{buyer_alias}" should NOT be able to find company "{company_alias}" on '
+      'FAS by using any part of case study "{case_alias}"')
+def step_impl(context, buyer_alias, company_alias, case_alias):
+    fas_supplier_cannot_be_found_using_case_study_details(
+        context, buyer_alias, company_alias, case_alias)
+
+
+@then('"{buyer_alias}" should be able to find company "{company_alias}" on FAS '
+      'using any part of case study "{case_alias}"')
+def then_buyer_should_find_supplier_using_any_part_of_case_study(
+        context, buyer_alias, company_alias, case_alias):
+    fas_find_supplier_using_case_study_details(
+        context, buyer_alias, company_alias, case_alias)
