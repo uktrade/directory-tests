@@ -18,6 +18,7 @@ from tests.functional.features.pages import (
     sso_ui_verify_your_email
 )
 from tests.functional.features.utils import (
+    assertion_msg,
     check_hash_of_remote_file,
     extract_csrf_middleware_token,
     extract_logo_url,
@@ -111,8 +112,12 @@ def reg_supplier_has_to_verify_email_first(
 def sso_should_be_signed_in_to_sso_account(
         context: Context, supplier_alias: str):
     response = context.response
-    assert response.cookies.get("sessionid") is not None
-    assert "Sign out" in response.content.decode("utf-8")
+    with assertion_msg("Expected sessionid cookie to be set. It looks like "
+                       "user is not logged in"):
+        assert response.cookies.get("sessionid") is not None
+    with assertion_msg("Response doesn't contain 'Sign out' button. It looks "
+                       "like user is not logged in"):
+        assert "Sign out" in response.content.decode("utf-8")
     logging.debug("%s is logged in to the SSO account".format(supplier_alias))
 
 
@@ -198,7 +203,9 @@ def fas_should_see_logo_picture(context: Context, supplier_alias: str):
     visible_logo_url = extract_logo_url(response)
 
     # Check if FAS shows the correct Logo image
-    assert visible_logo_url == logo_url
+    with assertion_msg(
+            "Expected company logo: %s but got: %s", logo_url, visible_logo_url):
+        assert visible_logo_url == logo_url
     logging.debug("Fetching logo image visible on the %s's FAS profile page",
                   company.title)
     check_hash_of_remote_file(logo_hash, logo_url)
@@ -218,9 +225,10 @@ def prof_all_unsupported_files_should_be_rejected(
     :param supplier_alias: alias of the Actor used in the scope of the scenario
     """
     assert hasattr(context, "rejections")
-    assert all(context.rejections), (
-        "Some of the uploaded files that should be marked as unsupported were "
-        "actually accepted. Please check the logs for more details")
+    with assertion_msg(
+            "Some of the uploaded files that should be marked as unsupported "
+            "were actually accepted. Please check the logs for more details"):
+        assert all(context.rejections)
     logging.debug("All files of unsupported types uploaded by %s were rejected"
                   .format(supplier_alias))
 
@@ -356,8 +364,10 @@ def fas_find_supplier_using_case_study_details(
         response = fas_ui_find_supplier.go_to(session, term=term)
         context.response = response
         found = fas_ui_find_supplier.should_see_company(response, company.title)
-        assert found, ("Buyer could not find Supplier '{}' on FAS using {}: {}"
-                       .format(company.title, term_name, term))
+        with assertion_msg(
+                "Buyer could not find Supplier '%s' on FAS using %s: %s",
+                company.title, term_name, term):
+            assert found
         logging.debug(
             "Buyer found Supplier '%s' on FAS using %s: %s", company.title,
             term_name, term)
