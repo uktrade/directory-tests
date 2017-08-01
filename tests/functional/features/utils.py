@@ -114,9 +114,12 @@ def make_request(method: Method, url, *, session=None, params=None,
     req = session or requests
     trim_offset = 150  # define the length of logged response content
 
+    connect_timeout = 3.05
+    read_timeout = 60
     request_kwargs = dict(url=url, params=params, headers=headers,
                           cookies=cookies, data=data, files=files,
-                          allow_redirects=allow_redirects)
+                          allow_redirects=allow_redirects,
+                          timeout=(connect_timeout, read_timeout))
 
     if method == Method.DELETE:
         res = req.delete(**request_kwargs)
