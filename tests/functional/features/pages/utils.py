@@ -16,6 +16,7 @@ from tests.functional.features.context_utils import CaseStudy, Company
 from tests.functional.features.pages import int_api_ch_search
 from tests.functional.features.utils import (
     Method,
+    assertion_msg,
     extract_csrf_middleware_token,
     make_request
 )
@@ -138,9 +139,10 @@ def find_active_company_without_fas_profile(alias: str) -> Company:
             exists = True
             if json[0]["company_status"] == "active":
                 active = True
-                assert json[0]["company_number"] == random_company_number, (
-                    "Expected to get details of company no.: %s but got %s",
-                    random_company_number, json[0]["company_number"])
+                with assertion_msg(
+                        "Expected to get details of company no.: %s but got %s",
+                        random_company_number, json[0]["company_number"]):
+                    assert json[0]["company_number"] == random_company_number
             else:
                 counter += 1
                 has_profile, is_registered, exists, active = True, True, False, False
