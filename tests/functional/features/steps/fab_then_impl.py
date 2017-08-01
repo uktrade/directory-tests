@@ -351,7 +351,7 @@ def fas_find_supplier_using_case_study_details(
     if properties:
         keys = [row['search using case study\'s'] for row in properties]
     else:
-        skip = ['alias', 'image_1', 'image_2', 'image_3']
+        skip = ['alias', 'image_1', 'image_2', 'image_3', 'sector']
         keys = list(filter(lambda x: x not in skip, case_study._fields))
     search_terms = {}
     for key in keys:
