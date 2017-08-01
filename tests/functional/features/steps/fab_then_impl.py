@@ -333,29 +333,34 @@ def fas_should_see_company_details(context: Context, supplier_alias: str):
 @retry(wait_fixed=5000, stop_max_attempt_number=3)
 def fas_find_supplier_using_case_study_details(
         context: Context, buyer_alias: str, company_alias: str, case_alias: str,
-        properties: Table):
+        *, properties: Table = None):
     """Find Supplier on FAS using parts of the Case Study added by Supplier.
 
     :param context: behave `context` object
     :param buyer_alias: alias of the Actor used in the scope of the scenario
     :param company_alias: alias of the sought Company
     :param case_alias: alias of the Case Study used in the search
-    :param properties: table with Case Study properties used in search
+    :param properties: (optional) table containing the names of Case Study parts
+                       that will be used search. If not provided, then all parts
+                       will be used except 'alias'.
     """
     actor = context.get_actor(buyer_alias)
     session = actor.session
     company = context.get_company(company_alias)
     case_study = company.case_studies[case_alias]
-    properties = [row['search using case study\'s'] for row in properties]
+    if properties:
+        keys = [row['search using case study\'s'] for row in properties]
+    else:
+        keys = list(filter(lambda x: x != 'alias', case_study._fields))
     search_terms = {}
-    for row in properties:
-        if row == "keywords":
+    for key in keys:
+        if key == "keywords":
             i = 0
             for keyword in case_study.keywords.split(", "):
                 i += 1
                 search_terms["keyword #{}".format(i)] = keyword
         else:
-            search_terms[row] = getattr(case_study, row.replace(" ", "_"))
+            search_terms[key] = getattr(case_study, key.replace(" ", "_"))
     logging.debug(
         "Now %s will try to find '%s' using following search terms: %s",
         buyer_alias, company.title, search_terms)
