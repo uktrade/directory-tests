@@ -5,6 +5,7 @@ import logging
 from behave.model import Table
 from behave.runner import Context
 from requests import Response
+from retrying import retry
 
 from tests.functional.features.pages import (
     fab_ui_build_profile_basic,
