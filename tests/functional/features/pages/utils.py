@@ -239,3 +239,12 @@ def escape_html(text: str, *, upper: bool = False) -> str:
     if upper:
         text = text.upper()
     return "".join(html_escape_table.get(c, c) for c in text)
+
+
+def get_active_company_without_fas_profile(alias: str) -> Company:
+    """Randomly select one of predefined companies and set it alias.
+
+    :param alias: alias of the company used withing the scope of the scenario
+    :return: a Company named tuple with all basic company details
+    """
+    return random.choice(load_companies())._replace(alias=alias)
