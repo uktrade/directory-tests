@@ -40,8 +40,6 @@ Feature: Find a Supplier
   @profile
   @verified
   @published
-  @wip
-  @skip
   Scenario: Buyers should be able to find Supplier by uniquely identifying words present on any of Supplier's case studies
     Given "Annette Geissinger" is a buyer
     And "Peter Alder" is an unauthenticated supplier
@@ -62,8 +60,6 @@ Feature: Find a Supplier
   @profile
   @unverified
   @unpublished
-  @wip
-  @skip
   Scenario: Buyers should NOT be able to find unverified Supplier by uniquely identifying words present on Supplier's case study
     Given "Annette Geissinger" is a buyer
     And "Peter Alder" is an unauthenticated supplier
