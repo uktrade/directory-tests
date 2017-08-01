@@ -67,7 +67,7 @@ def select_random_company(
         3 - check if such company is registered at Companies House & is active
 
     Once a matching company is found, then it's data will be stored in:
-        context.scenario_data.unregistered_companies[]
+        context.scenario_data.companies[]
 
     :param context: behave `context` object
     :param supplier_alias: alias of the Actor used in the scope of the scenario

@@ -10,7 +10,7 @@ from requests import Session
 ScenarioData = namedtuple(
     'ScenarioData',
     [
-        'actors', 'unregistered_companies'
+        'actors', 'companies'
     ]
 )
 Actor = namedtuple(
@@ -60,8 +60,8 @@ def initialize_scenario_data():
     :rtype ScenarioData
     """
     actors = {}
-    unregistered_companies = {}
-    scenario_data = ScenarioData(actors, unregistered_companies)
+    companies = {}
+    scenario_data = ScenarioData(actors, companies)
     return scenario_data
 
 
@@ -134,7 +134,7 @@ def set_company_for_actor(self, actor_alias, company_alias):
 
 
 def set_company_logo_detail(self, alias, *, picture=None, url=None, hash=None):
-    companies = self.scenario_data.unregistered_companies
+    companies = self.scenario_data.companies
     if picture:
         companies[alias] = companies[alias]._replace(logo_picture=picture)
     if url:
@@ -172,7 +172,7 @@ def add_company(self, company):
     assert isinstance(company, Company), (
         "Expected Company named tuple but got '{}' instead"
         .format(type(company)))
-    self.scenario_data.unregistered_companies[company.alias] = company
+    self.scenario_data.companies[company.alias] = company
     logging.debug("Successfully added Company: %s - %s to "
                   "Scenario Data as '%s'", company.title, company.number,
                   company.alias)
@@ -188,7 +188,7 @@ def get_company(self, alias):
     :return: an Company named tuple
     :rtype tests.functional.features.ScenarioData.Company
     """
-    return self.scenario_data.unregistered_companies[alias]
+    return self.scenario_data.companies[alias]
 
 
 def set_company_details(self, alias, *, title=None, website=None, keywords=None,
@@ -196,7 +196,7 @@ def set_company_details(self, alias, *, title=None, website=None, keywords=None,
                         address_details=None, facebook=None, linkedin=None,
                         twitter=None, summary=None, description=None,
                         export_to_countries=None):
-    companies = self.scenario_data.unregistered_companies
+    companies = self.scenario_data.companies
     if title:
         companies[alias] = companies[alias]._replace(title=title)
     if website:
