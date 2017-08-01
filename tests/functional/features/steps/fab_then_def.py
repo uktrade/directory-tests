@@ -172,7 +172,8 @@ def then_supplier_should_see_new_details_on_fas(context, supplier_alias):
 def then_buyer_should_find_supplier_using_part_of_case_study(
         context, buyer_alias, company_alias, case_alias):
     fas_find_supplier_using_case_study_details(
-        context, buyer_alias, company_alias, case_alias, context.table)
+        context, buyer_alias, company_alias, case_alias,
+        properties=context.table)
 
 
 @then('"{buyer_alias}" should NOT be able to find company "{company_alias}" on '
