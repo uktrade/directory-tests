@@ -6,6 +6,7 @@ from tests.functional.features.steps.fab_given_impl import (
     bp_build_company_profile,
     reg_confirm_email_address,
     reg_create_sso_account_associated_with_company,
+    reg_create_unverified_profile,
     reg_create_verified_profile,
     reg_select_random_company_and_confirm_export_status,
     sso_create_standalone_unverified_sso_account,
@@ -108,12 +109,7 @@ def given_supplier_adds_valid_links_to_online_profiles(context, supplier_alias):
 @given('"{supplier_alias}" created an unverified profile for randomly selected '
        'company "{company_alias}"')
 def given_unverified_profile(context, supplier_alias, company_alias):
-    supplier = unauthenticated_supplier(supplier_alias)
-    context.add_actor(supplier)
-    reg_create_sso_account_associated_with_company(
-        context, supplier_alias, company_alias)
-    reg_confirm_email_address(context, supplier_alias)
-    bp_build_company_profile(context, supplier_alias)
+    reg_create_unverified_profile(context, supplier_alias, company_alias)
 
 
 @given('"{supplier_alias}" has set "{picture}" picture as company\'s logo')
