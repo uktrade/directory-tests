@@ -10,6 +10,7 @@ from tests.functional.features.steps.fab_given_impl import (
     reg_select_random_company_and_confirm_export_status,
     sso_create_standalone_unverified_sso_account,
     sso_create_standalone_verified_sso_account,
+    unauthenticated_buyer,
     unauthenticated_supplier
 )
 from tests.functional.features.steps.fab_then_impl import (
@@ -29,7 +30,8 @@ from tests.functional.features.steps.fab_when_impl import (
 
 @given('"{supplier_alias}" is an unauthenticated supplier')
 def given_an_unauthenticated_supplier(context, supplier_alias):
-    unauthenticated_supplier(context, supplier_alias)
+    supplier = unauthenticated_supplier(supplier_alias)
+    context.add_actor(supplier)
 
 
 @given('"{supplier_alias}" created a SSO/great.gov.uk account associated with '
@@ -106,7 +108,8 @@ def given_supplier_adds_valid_links_to_online_profiles(context, supplier_alias):
 @given('"{supplier_alias}" created an unverified profile for randomly selected '
        'company "{company_alias}"')
 def given_unverified_profile(context, supplier_alias, company_alias):
-    unauthenticated_supplier(context, supplier_alias)
+    supplier = unauthenticated_supplier(supplier_alias)
+    context.add_actor(supplier)
     reg_create_sso_account_associated_with_company(
         context, supplier_alias, company_alias)
     reg_confirm_email_address(context, supplier_alias)
@@ -128,3 +131,9 @@ def given_supplier_can_see_correct_logo_on_fab_profile(context, supplier_alias):
 def given_supplier_added_complete_case_study(context, supplier_alias, case_alias):
     prof_add_case_study(context, supplier_alias, case_alias)
     fab_should_see_all_case_studies(context, supplier_alias)
+
+
+@given('"{buyer_alias}" is a buyer')
+def given_unauthenticated_buyer(context, buyer_alias):
+    buyer = unauthenticated_buyer(buyer_alias)
+    context.add_actor(buyer)

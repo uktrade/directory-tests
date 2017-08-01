@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 """Common page helpers"""
 import logging
+import os
+import pickle
 import random
 from random import choice
+from typing import List
 
 from behave.runner import Context
 from faker import Factory
@@ -16,9 +19,17 @@ from tests.functional.features.utils import (
     extract_csrf_middleware_token,
     make_request
 )
-from tests.settings import SECTORS, JPEGs, JPGs, PNGs
+from tests.settings import (
+    RARE_WORDS,
+    SECTORS,
+    TEST_IMAGES_DIR,
+    JPEGs,
+    JPGs,
+    PNGs
+)
 
 FAKE = Factory.create()
+CompaniesList = List[Company]  # a type hint for a List of Company named tuples
 
 
 def extract_and_set_csrf_middleware_token(
@@ -33,20 +44,54 @@ def extract_and_set_csrf_middleware_token(
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
 
 
+def sentence(*, max_length: int = 60, min_word_length: int = 9, max_words: int = 10):
+    """Generate a random string consisting of rare english words.
+
+    NOTE:
+    min_word_length is set to 9, because all words in RARE_WORDS are at least 9
+    characters long
+
+    :return: a sentence consisting of rare english words
+    """
+    words = []
+    while len(words) <= max_words:
+        word = random.choice(RARE_WORDS)
+        if len(word) > min_word_length:
+            words.append(word)
+    while len(" ".join(words)) > max_length:
+        words.pop()
+    return " ".join(words)
+
+
+def rare_word(*, min_length: int = 9, max_length: int = 20):
+    """Get a random rare english word.
+
+    NOTE:
+    min_length is set to 9, because all words in RARE_WORDS are at least 9
+    characters long
+
+    :return: a rare english word
+    """
+    assert min_length < max_length
+    word = ""
+    while min_length >= len(word) <= max_length:
+        word = random.choice(RARE_WORDS)
+    return word
+
+
 def random_case_study_data(alias: str) -> CaseStudy:
     """Return a CaseStudy populated with randomly generated details.
 
     :param alias: alias of the Case Study
     :return: a CaseStudy namedtuple
     """
-    images = PNGs + JPGs + JPEGs
-    (title, summary, description, caption_1, caption_2, caption_3, testimonial,
-     source_name, source_job, source_company) = (
-        FAKE.sentence()[:60].strip() for _ in range(10))
     sector = choice(SECTORS)
-    website = "http://{}/fake-case-study-url".format(FAKE.domain_name())
-    keywords = ", ".join(FAKE.sentence().replace(".", "").split())
+    images = PNGs + JPGs + JPEGs
     image_1, image_2, image_3 = (choice(images) for _ in range(3))
+    (title, summary, description, caption_1, caption_2, caption_3, testimonial,
+     source_name, source_job, source_company) = (sentence() for _ in range(10))
+    website = "http://{}.com".format(rare_word(min_length=15))
+    keywords = ", ".join(sentence().split())
 
     case_study = CaseStudy(
         alias=alias, title=title, summary=summary, description=description,
@@ -122,3 +167,34 @@ def has_fas_profile(company_number: str) -> bool:
     url = "{}/{}".format(endpoint, company_number)
     response = make_request(Method.GET, url, allow_redirects=False)
     return response.status_code == 301
+
+
+def get_companies(*, number: int = 100) -> CompaniesList:
+    """Find a number of active companies without FAS profile.
+
+    NOTE:
+    The search is pretty slow. It might take 2-3 minutes to find default number
+    of companies.
+
+    :param number: (optional) expected number of companies to find
+    :return: a list of Company named tuples (all with "test" alias)
+    """
+    return [find_active_company_without_fas_profile("test") for _ in range(number)]
+
+
+def save_companies(companies: CompaniesList):
+    """Pickle and save in a file a List of Company named tuples.
+
+    :param companies: a List of Company named tuples
+    """
+    with open(os.path.join(TEST_IMAGES_DIR, 'companies.pkl'), 'wb') as f:
+        pickle.dump(companies, f)
+
+
+def load_companies() -> CompaniesList:
+    """Load pickled List of Companies from file.
+
+    :return: a List of Company named tuples
+    """
+    with open(os.path.join(TEST_IMAGES_DIR, 'companies.pkl'), 'rb') as f:
+        return pickle.load(f)

@@ -2,6 +2,7 @@
 """FAB Given step definitions."""
 import logging
 
+from behave.model import Table
 from behave.runner import Context
 from requests import Response
 from retrying import retry
@@ -11,6 +12,7 @@ from tests.functional.features.pages import (
     fab_ui_edit_online_profiles,
     fab_ui_profile,
     fab_ui_try_other_services,
+    fas_ui_find_supplier,
     fas_ui_profile,
     profile_ui_landing,
     sso_ui_verify_your_email
@@ -319,3 +321,44 @@ def fas_should_see_company_details(context: Context, supplier_alias: str):
     fas_ui_profile.should_see_details(company, response, context.table)
     logging.debug("%s can see all expected details are visible of FAS "
                   "Company's Directory Profile Page", supplier_alias)
+
+
+@retry(wait_fixed=5000, stop_max_attempt_number=3)
+def fas_find_supplier_using_case_study_details(
+        context: Context, buyer_alias: str, company_alias: str, case_alias: str,
+        properties: Table):
+    """Find Supplier on FAS using parts of the Case Study added by Supplier.
+
+    :param context: behave `context` object
+    :param buyer_alias: alias of the Actor used in the scope of the scenario
+    :param company_alias: alias of the sought Company
+    :param case_alias: alias of the Case Study used in the search
+    :param properties: table with Case Study properties used in search
+    """
+    actor = context.get_actor(buyer_alias)
+    session = actor.session
+    company = context.get_company(company_alias)
+    case_study = company.case_studies[case_alias]
+    properties = [row['search using case study\'s'] for row in properties]
+    search_terms = {}
+    for row in properties:
+        if row == "keywords":
+            i = 0
+            for keyword in case_study.keywords.split(", "):
+                i += 1
+                search_terms["keyword #{}".format(i)] = keyword
+        else:
+            search_terms[row] = getattr(case_study, row.replace(" ", "_"))
+    logging.debug(
+        "Now %s will try to find '%s' using following search terms: %s",
+        buyer_alias, company.title, search_terms)
+    for term_name in search_terms:
+        term = search_terms[term_name]
+        response = fas_ui_find_supplier.go_to(session, term=term)
+        context.response = response
+        found = fas_ui_find_supplier.should_see_company(response, company.title)
+        assert found, ("Buyer could not find Supplier '{}' on FAS using {}: {}"
+                       .format(company.title, term_name, term))
+        logging.debug(
+            "Buyer found Supplier '%s' on FAS using %s: %s", company.title,
+            term_name, term)

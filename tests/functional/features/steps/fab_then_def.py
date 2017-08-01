@@ -10,6 +10,7 @@ from tests.functional.features.steps.fab_then_impl import (
     fab_should_see_company_details,
     fab_should_see_online_profiles,
     fas_check_profiles,
+    fas_find_supplier_using_case_study_details,
     fas_no_links_to_online_profiles_are_visible,
     fas_should_be_on_profile_page,
     fas_should_see_all_case_studies,
@@ -164,3 +165,11 @@ def then_every_invalid_logo_should_be_rejected(context, supplier_alias):
       'Profile page')
 def then_supplier_should_see_new_details_on_fas(context, supplier_alias):
     fas_should_see_company_details(context, supplier_alias)
+
+
+@then('"{buyer_alias}" should be able to find company "{company_alias}" on FAS '
+      'using words from case study "{case_alias}"')
+def then_buyer_should_find_supplier_using_unique_words(
+        context, buyer_alias, company_alias, case_alias):
+    fas_find_supplier_using_case_study_details(
+        context, buyer_alias, company_alias, case_alias, context.table)

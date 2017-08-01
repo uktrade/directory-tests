@@ -53,6 +53,7 @@ urls = {
     'ui-supplier:industries-tech': 'industries/tech',
     'ui-supplier:industries-creative': 'industries/creative',
     'ui-supplier:industries-food': 'industries/food-and-drink',
+    'ui-supplier:search': 'search',
     'ui-supplier:terms': 'terms-and-conditions',
     'ui-supplier:privacy': 'privacy-policy',
     # NOTE: the URLS below require data from fixtures/supplier.json

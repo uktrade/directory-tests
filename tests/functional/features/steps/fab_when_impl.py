@@ -51,7 +51,7 @@ from tests.functional.features.utils import (
     get_md5_hash_of_file,
     get_verification_code
 )
-from tests.settings import NO_OF_EMPLOYEES, SECTORS, COUNTRIES
+from tests.settings import COUNTRIES, NO_OF_EMPLOYEES, SECTORS
 
 FAKE = Factory.create()
 
@@ -936,6 +936,7 @@ def prof_add_case_study(context, supplier_alias, case_alias):
     :param context: behave `context` object
     :param supplier_alias: alias of the Actor used in the scope of the scenario
     :param case_alias: alias of the Case Study used in the scope of the scenario
+    :param unique: use uniquely identifying words if True, otherwise False
     """
     actor = context.get_actor(supplier_alias)
     session = actor.session

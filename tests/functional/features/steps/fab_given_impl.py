@@ -5,6 +5,7 @@ import string
 import uuid
 
 from behave.runner import Context
+from faker import Factory
 from requests import Session
 
 from tests.functional.features.context_utils import Actor
@@ -36,7 +37,7 @@ from tests.functional.features.steps.fab_when_impl import (
 )
 
 
-def unauthenticated_supplier(context: Context, supplier_alias: str):
+def unauthenticated_supplier(supplier_alias: str) -> Actor:
     """Create an instance of an unauthenticated Supplier Actor.
 
     Will:
@@ -45,12 +46,8 @@ def unauthenticated_supplier(context: Context, supplier_alias: str):
      * initialize `requests` Session object that allows you to keep the cookies
         across multiple requests
 
-    NOTE:
-    Will use test email account "test@directory.uktrade.io" which is configured
-    on AWS SES to store all incoming emails in plain text in S3.
-
-    :param context: behave `context` object
     :param supplier_alias: alias of the Actor used within the scenario's scope
+    :return: an Actor namedtuple with all required details
     """
     session = Session()
     email = ("test+{}{}@directory.uktrade.io"
@@ -59,11 +56,32 @@ def unauthenticated_supplier(context: Context, supplier_alias: str):
     password_length = 10
     password = ''.join(random.choice(string.ascii_letters)
                        for _ in range(password_length))
-    actor = Actor(
+    return Actor(
         alias=supplier_alias, email=email, password=password, session=session,
         csrfmiddlewaretoken=None, email_confirmation_link=None,
         company_alias=None, has_sso_account=False)
-    context.add_actor(actor)
+
+
+def unauthenticated_buyer(buyer_alias: str) -> Actor:
+    """Create an instance of an unauthenticated Buyer Actor.
+
+    Will:
+     * set only rudimentary Actor details, all omitted ones will default to None
+     * initialize `requests` Session object that allows you to keep the cookies
+        across multiple requests
+
+    :param buyer_alias: alias of the Actor used within the scenario's scope
+    :return: an Actor namedtuple with all required details
+    """
+    session = Session()
+    email = ("test+buyer_{}{}@directory.uktrade.io"
+             .format(buyer_alias, str(uuid.uuid4()))
+             .replace("-", "").replace(" ", "").lower())
+    fake = Factory.create()
+    company_name = fake.sentence()[:60].strip()
+    return Actor(
+        alias=buyer_alias, email=email, session=session,
+        company_alias=company_name)
 
 
 def reg_create_sso_account_associated_with_company(
@@ -94,8 +112,11 @@ def bp_build_company_profile(context: Context, supplier_alias: str):
 
 def reg_create_verified_profile(
         context: Context, supplier_alias: str, company_alias: str):
-    # STEP 0 - initialize actor
-    unauthenticated_supplier(context, supplier_alias)
+    # STEP 0 - use existing actor or initialize new one if necessary
+    supplier = context.get_actor(supplier_alias)
+    if not supplier:
+        supplier = unauthenticated_supplier(supplier_alias)
+    context.add_actor(supplier)
 
     # STEP 1 - select company, create SSO profile & verify email address
     reg_create_sso_account_associated_with_company(
@@ -114,7 +135,8 @@ def reg_create_verified_profile(
 
 def sso_create_standalone_unverified_sso_account(
         context: Context, supplier_alias: str):
-    unauthenticated_supplier(context, supplier_alias)
+    supplier = unauthenticated_supplier(supplier_alias)
+    context.add_actor(supplier)
     reg_create_standalone_sso_account(context, supplier_alias)
     reg_sso_account_should_be_created(context.response, supplier_alias)
     reg_should_get_verification_email(context, supplier_alias)
