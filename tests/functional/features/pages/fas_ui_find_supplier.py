@@ -44,3 +44,8 @@ def should_be_here(response, *, number=None):
 def should_see_company(response: Response, company_title: str) -> bool:
     content = response.content.decode("utf-8")
     return company_title in content
+
+
+def should_not_see_company(response: Response, company_title: str) -> bool:
+    content = response.content.decode("utf-8")
+    return company_title not in content
