@@ -51,9 +51,9 @@ Feature: Find a Supplier
     And "Peter Alder" adds a complete case study called "no 2"
     And "Peter Alder" adds a complete case study called "no 3"
 
-    Then "Annette Geissinger" should be able to find company "Y" on FAS by using any unique word present on case study "no 1"
-    And "Annette Geissinger" should be able to find company "Y" on FAS by using any unique word present on case study "no 2"
-    And "Annette Geissinger" should be able to find company "Y" on FAS by using any unique word present on case study "no 3"
+    Then "Annette Geissinger" should be able to find company "Y" on FAS using any part of case study "no 1"
+    And "Annette Geissinger" should be able to find company "Y" on FAS using any part of case study "no 2"
+    And "Annette Geissinger" should be able to find company "Y" on FAS using any part of case study "no 3"
 
 
   @ED-1746
@@ -67,8 +67,8 @@ Feature: Find a Supplier
   Scenario: Buyers should NOT be able to find unverified Supplier by uniquely identifying words present on Supplier's case study
     Given "Annette Geissinger" is a buyer
     And "Peter Alder" is an unauthenticated supplier
-    And "Peter Alder" has created and unverified profile for randomly selected company "Y"
+    And "Peter Alder" created an unverified profile for randomly selected company "Y"
 
     When "Peter Alder" adds a complete case study called "no 1"
 
-    Then "Annette Geissinger" should NOT be able to find company "Y" on FAS by using any unique word present on case study "no 1"
+    Then "Annette Geissinger" should NOT be able to find company "Y" on FAS by using any part of case study "no 1"
