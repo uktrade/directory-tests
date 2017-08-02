@@ -7,7 +7,12 @@ from requests import Response, Session
 
 from tests import get_absolute_url
 from tests.functional.features.context_utils import Actor
-from tests.functional.features.utils import Method, check_response, make_request
+from tests.functional.features.utils import (
+    Method,
+    assertion_msg,
+    check_response,
+    make_request
+)
 
 EXPECTED_STRINGS = [
     "Confirm email Address", "Please confirm that", "is an email",
@@ -31,7 +36,8 @@ def open_confirmation_link(session: Session, link: str) -> Response:
     :param link: email confirmation link
     :return: response object
     """
-    assert link, "Expected a non-empty email confirmation link"
+    with assertion_msg("Expected a non-empty email confirmation link"):
+        assert link
     response = make_request(Method.GET, link, session=session)
     return response
 
