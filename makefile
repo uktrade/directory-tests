@@ -98,7 +98,7 @@ SET_DB_URLS := \
 functional_tests:
 	$(SET_PYTEST_ENV_VARS) && \
 	$(SET_DB_URLS) && \
-	behave -k --format progress3 --no-logcapture --tags=-wip --tags=-skip --tags=~fixme tests/functional/features $(BEHAVE_ARGS)
+	behave -k --format progress3 --no-logcapture --stop --tags=-wip --tags=-skip --tags=~fixme tests/functional/features $(BEHAVE_ARGS)
 
 test: pep8 smoke_tests integration_test load_test_minimal
 
