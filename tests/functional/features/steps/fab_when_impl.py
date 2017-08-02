@@ -810,7 +810,7 @@ def prof_update_company_details(
     fab_ui_profile.should_be_here(response)
 
     # Step 5 - Go to the Edit Sector page
-    fab_ui_edit_sector.go_to(session)
+    response = fab_ui_edit_sector.go_to(session)
     context.response = response
 
     # Step 5 - extract CSRF token
