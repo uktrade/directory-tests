@@ -23,7 +23,9 @@ def after_step(context, step):
         logging.debug('Step "%s %s" has failed. Reason: "%s"', step.step_type,
                       step.name, step.exception)
         if hasattr(context, "response"):
-            logging.debug("Here's the content of last recorded response:\n%s",
+            print("\nHere's the content of last recorded response:\n",
+                  context.response.content.decode("utf-8"))
+            logging.error("Here's the content of last recorded response:\n%s",
                           context.response.content.decode("utf-8"))
 
 
