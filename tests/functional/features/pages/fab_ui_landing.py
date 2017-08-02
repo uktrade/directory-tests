@@ -5,7 +5,12 @@ import logging
 from requests import Response, Session
 
 from tests import get_absolute_url
-from tests.functional.features.utils import Method, check_response, make_request
+from tests.functional.features.utils import (
+    Method,
+    assertion_msg,
+    check_response,
+    make_request
+)
 
 URL = get_absolute_url("ui-buyer:landing")
 EXPECTED_STRINGS = [
@@ -39,5 +44,11 @@ def should_be_logged_out(response: Response):
 
     :param response: response object
     """
-    assert "sso_display_logged_in" not in response.cookies
-    assert "directory_sso_dev_session" not in response.cookies
+    with assertion_msg(
+            "Found sso_display_logged_in cookie in the response. Maybe user is "
+            "still logged in?"):
+        assert "sso_display_logged_in" not in response.cookies
+    with assertion_msg(
+            "Found directory_sso_dev_session cookie in the response. Maybe user"
+            " is still logged in?"):
+        assert "directory_sso_dev_session" not in response.cookies
