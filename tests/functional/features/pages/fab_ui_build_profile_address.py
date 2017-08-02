@@ -7,7 +7,12 @@ from scrapy import Selector
 
 from tests import get_absolute_url
 from tests.functional.features.context_utils import Actor, AddressDetails
-from tests.functional.features.utils import Method, check_response, make_request
+from tests.functional.features.utils import (
+    Method,
+    assertion_msg,
+    check_response,
+    make_request
+)
 
 URL = get_absolute_url("ui-buyer:company-edit")
 EXPECTED_STRINGS = [
@@ -37,7 +42,10 @@ def extract_address_details(response: Response) -> AddressDetails:
     :param response: requests response
     :return: named tuple containing all extracted company details
     """
-    assert response.content, "Response has no content"
+    with assertion_msg(
+            "Could not extract Company's Address Details as the response had no"
+            " content"):
+        assert response.content
     content = response.content.decode("utf-8")
 
     def extract(selector):
