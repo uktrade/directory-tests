@@ -483,32 +483,25 @@ def mailgun_get_message_url(recipient: str) -> str:
 
 
 @contextmanager
-def assertion_msg(*args):
+def assertion_msg(message: str, *args):
     """This will:
         * print the custom assertion message
         * print the traceback (stack trace)
         * raise the original AssertionError exception
 
-    :param args: a custom assertion message. It can be:
-                 * just a string, eg.:
-                    log_assertion_error("This is a simple assertion error")
-                 * or contain standard string format placeholders, like: %s, %d
-                   but then correct number of arguments needs to be provided eg:
-                    log_assertion_error("Expected %s got %s", "a", "b")
+    :param message: a message that will be printed & logged when assertion fails
+    :param args: values that will replace % conversion specifications in message
+                 like: %s, %d
     """
     try:
         yield
     except AssertionError as e:
-        logging.error(*args)
-        if len(args) > 1:
-            # format the assertion error message.
-            # This assumes that the first argument contains a string with
-            # format placeholders, like: %s, %d etc
-            e.args += (args[0] % tuple(args[1:]), )
-        else:
-            e.args += args
+        if args:
+            message = message % args
+        logging.error(message)
+        e.args += (message,)
         _, _, tb = sys.exc_info()
-        traceback.print_tb(tb)  # Fixed format
+        traceback.print_tb(tb)
         raise
 
 
