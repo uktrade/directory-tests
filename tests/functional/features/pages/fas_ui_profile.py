@@ -8,7 +8,12 @@ from requests import Response, Session
 from tests import get_absolute_url
 from tests.functional.features.context_utils import Company
 from tests.functional.features.pages.common import DETAILS
-from tests.functional.features.utils import Method, check_response, make_request
+from tests.functional.features.utils import (
+    Method,
+    assertion_msg,
+    check_response,
+    make_request
+)
 from tests.settings import SECTORS_WITH_LABELS
 
 URL = get_absolute_url("ui-supplier:suppliers")
@@ -52,28 +57,40 @@ def should_be_here(response, *, number=None):
 def should_see_online_profiles(company: Company, response: Response):
     content = response.content.decode("utf-8")
     if company.facebook:
-        assert "Visit Facebook" in content
-        assert company.facebook in content
+        with assertion_msg("Couldn't find link to company's Facebook profile"):
+            assert "Visit Facebook" in content
+            assert company.facebook in content
     if company.linkedin:
-        assert "Visit LinkedIn" in content
-        assert company.linkedin in content
+        with assertion_msg("Couldn't find link to company's LinkedIn profile"):
+            assert "Visit LinkedIn" in content
+            assert company.linkedin in content
     if company.twitter:
-        assert "Visit Twitter" in content
-        assert company.twitter in content
+        with assertion_msg("Couldn't find link to company's Twitter profile"):
+            assert "Visit Twitter" in content
+            assert company.twitter in content
 
 
 def should_not_see_online_profiles(response: Response):
     content = response.content.decode("utf-8")
-    assert "Visit Facebook" not in content
-    assert "Visit LinkedIn" not in content
-    assert "Visit Twitter" not in content
+    with assertion_msg("Found a link to 'Add Facebook' profile"):
+        assert "Visit Facebook" not in content
+    with assertion_msg("Found a link to 'Add LinkedIn' profile"):
+        assert "Visit LinkedIn" not in content
+    with assertion_msg("Found a link to 'Add Twitter' profile"):
+        assert "Visit Twitter" not in content
 
 
 def should_see_case_studies(case_studies: dict, response: Response):
     content = response.content.decode("utf-8")
     for case in case_studies:
-        assert case_studies[case].title in content
-        assert case_studies[case].description in content
+        with assertion_msg(
+                "Couldn't find Case Study '%s' title '%s'",
+                case_studies[case].alias, case_studies[case].title):
+            assert case_studies[case].title in content
+        with assertion_msg(
+                "Couldn't find Case Study '%s' description '%s'",
+                case_studies[case].alias, case_studies[case].description):
+            assert case_studies[case].description in content
 
 
 def should_see_details(
@@ -94,20 +111,30 @@ def should_see_details(
     sector = DETAILS["SECTOR"] in visible_details
 
     if title:
-        assert company.title in content
+        with assertion_msg("Couldn't find Company's title '%s'", company.title):
+            assert company.title in content
     if keywords:
         for keyword in company.keywords.split(", "):
-            assert keyword.strip() in content
+            with assertion_msg("Couldn't find Company's keyword '%s'", keyword):
+                assert keyword.strip() in content
     if website:
-        assert company.website in content
+        with assertion_msg(
+                "Couldn't find Company's website '%s'", company.website):
+            assert company.website in content
     if size:
-        if company.no_employees == "10001+":
-            assert "10,001+" in content
-        elif company.no_employees == "1001-10000":
-            assert "1,001-10,000" in content
-        elif company.no_employees == "501-1000":
-            assert "501-1,000" in content
-        else:
-            assert company.no_employees in content
+        with assertion_msg(
+                "Couldn't find the size of the company '%s' in the response",
+                company.no_employees):
+            if company.no_employees == "10001+":
+                assert "10,001+" in content
+            elif company.no_employees == "1001-10000":
+                assert "1,001-10,000" in content
+            elif company.no_employees == "501-1000":
+                assert "501-1,000" in content
+            else:
+                assert company.no_employees in content
     if sector:
-        assert SECTORS_WITH_LABELS[company.sector] in content
+        with assertion_msg(
+                "Couldn't find company's sector '%s' in the response",
+                SECTORS_WITH_LABELS[company.sector]):
+            assert SECTORS_WITH_LABELS[company.sector] in content
