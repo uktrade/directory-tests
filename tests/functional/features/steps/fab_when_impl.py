@@ -859,6 +859,7 @@ def prof_add_online_profiles(context, supplier_alias, online_profiles):
 
     # Step 1 - Go to the FAB Edit Online Profiles page
     response = fab_ui_edit_online_profiles.go_to(session)
+    context.response = response
 
     # Step 2 - Extract CSRF token
     extract_and_set_csrf_middleware_token(context, response, supplier_alias)
