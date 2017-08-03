@@ -24,6 +24,7 @@ from tests.functional.features.utils import (
     extract_logo_url,
     get_verification_link
 )
+from tests.settings import SEARCHABLE_CASE_STUDY_DETAILS
 
 
 def reg_sso_account_should_be_created(response: Response, supplier_alias: str):
@@ -348,11 +349,9 @@ def fas_find_supplier_using_case_study_details(
     session = actor.session
     company = context.get_company(company_alias)
     case_study = company.case_studies[case_alias]
+    keys = SEARCHABLE_CASE_STUDY_DETAILS
     if properties:
         keys = [row['search using case study\'s'] for row in properties]
-    else:
-        skip = ['alias', 'image_1', 'image_2', 'image_3', 'sector']
-        keys = list(filter(lambda x: x not in skip, case_study._fields))
     search_terms = {}
     for key in keys:
         if key == "keywords":
@@ -385,7 +384,7 @@ def fas_supplier_cannot_be_found_using_case_study_details(
     session = actor.session
     company = context.get_company(company_alias)
     case_study = company.case_studies[case_alias]
-    keys = list(filter(lambda x: x != 'alias', case_study._fields))
+    keys = SEARCHABLE_CASE_STUDY_DETAILS
     search_terms = {}
     for key in keys:
         if key == "keywords":
