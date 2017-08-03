@@ -18,13 +18,17 @@ def before_step(context, step):
 
 
 def after_step(context, step):
-    logging.debug(context.scenario_data)
     if step.status == "failed":
-        logging.debug('Step "%s %s" has failed. Reason: "%s"', step.step_type,
-                      step.name, step.exception)
+        logging.debug(context.scenario_data)
+        logging.debug(
+            'Step "%s %s" failed. Reason: "%s"', step.step_type, step.name,
+            step.exception)
         if hasattr(context, "response"):
-            logging.debug("Here's the content of last recorded response:\n%s",
-                          context.response.content.decode("utf-8"))
+            content = context.response.content.decode("utf-8")
+            print("\nThe content of last response:\n%s" % content)
+            delattr(context, "response")
+        else:
+            print("\nThere's no response content to log")
 
 
 def before_scenario(context, scenario):
@@ -46,7 +50,7 @@ def after_scenario(context, scenario):
 
 
 def before_all(context):
-    init_loggers()
+    init_loggers(context)
     # this will add some handy functions to the `context` object
     patch_context(context)
 

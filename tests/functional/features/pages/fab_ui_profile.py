@@ -8,7 +8,7 @@ from requests import Response
 from tests import get_absolute_url
 from tests.functional.features.context_utils import Company
 from tests.functional.features.pages.common import DETAILS
-from tests.functional.features.utils import check_response
+from tests.functional.features.utils import assertion_msg, check_response
 from tests.settings import SECTORS_WITH_LABELS
 
 URL = get_absolute_url("ui-buyer:company-profile")
@@ -57,46 +57,66 @@ def should_see_details(
     sector = DETAILS["SECTOR"] in visible_details
 
     if title:
-        assert company.title in content
+        with assertion_msg(
+                "Couldn't find company's title '%s' in the response",
+                company.title):
+            assert company.title in content
     if keywords:
         for keyword in company.keywords.split(", "):
-            assert keyword.strip() in content
+            with assertion_msg(
+                    "Couldn't find keyword '%s' in the response", keyword):
+                assert keyword.strip() in content
     if website:
-        assert company.website in content
+        with assertion_msg(
+                "Couldn't find company's website '%s' in the response",
+                company.website):
+            assert company.website in content
     if size:
-        if company.no_employees == "10001+":
-            assert "10,001+" in content
-        elif company.no_employees == "1001-10000":
-            assert "1,001-10,000" in content
-        elif company.no_employees == "501-1000":
-            assert "501-1,000" in content
-        else:
-            assert company.no_employees in content
+        with assertion_msg(
+                "Couldn't find the size of the company '%s' in the response",
+                company.no_employees):
+            if company.no_employees == "10001+":
+                assert "10,001+" in content
+            elif company.no_employees == "1001-10000":
+                assert "1,001-10,000" in content
+            elif company.no_employees == "501-1000":
+                assert "501-1,000" in content
+            else:
+                assert company.no_employees in content
     if sector:
-        assert SECTORS_WITH_LABELS[company.sector] in content
+        with assertion_msg(
+                "Couldn't find company's sector '%s' in the response",
+                SECTORS_WITH_LABELS[company.sector]):
+            assert SECTORS_WITH_LABELS[company.sector] in content
 
 
 def should_see_online_profiles(company: Company, response: Response):
     content = response.content.decode("utf-8")
 
     if company.facebook:
-        assert "Visit Facebook" in content
-        assert company.facebook in content
+        with assertion_msg("Couldn't find link to company's Facebook profile"):
+            assert "Visit Facebook" in content
+            assert company.facebook in content
     if company.linkedin:
-        assert "Visit LinkedIn" in content
-        assert company.linkedin in content
+        with assertion_msg("Couldn't find link to company's LinkedIn profile"):
+            assert "Visit LinkedIn" in content
+            assert company.linkedin in content
     if company.twitter:
-        assert "Visit Twitter" in content
-        assert company.twitter in content
+        with assertion_msg("Couldn't find link to company's Twitter profile"):
+            assert "Visit Twitter" in content
+            assert company.twitter in content
     logging.debug("Supplier can see all expected links to Online Profiles on "
                   "FAB Company's Directory Profile Page")
 
 
 def should_not_see_online_profiles(response: Response):
     content = response.content.decode("utf-8")
-    assert "Add Facebook" in content
-    assert "Add LinkedIn" in content
-    assert "Add Twitter" in content
+    with assertion_msg("Found a link to 'Add Facebook' profile"):
+        assert "Add Facebook" in content
+    with assertion_msg("Found a link to 'Add LinkedIn' profile"):
+        assert "Add LinkedIn" in content
+    with assertion_msg("Found a link to 'Add Twitter' profile"):
+        assert "Add Twitter" in content
     logging.debug("Supplier cannot see links to any Online Profile on FAB "
                   "Company's Directory Profile Page")
 
@@ -104,8 +124,14 @@ def should_not_see_online_profiles(response: Response):
 def should_see_case_studies(case_studies: dict, response: Response):
     content = response.content.decode("utf-8")
     for case in case_studies:
-        assert case_studies[case].title in content
-        assert case_studies[case].description in content
+        with assertion_msg(
+                "Couldn't find Case Study '%s' title '%s'",
+                case_studies[case].alias, case_studies[case].title):
+            assert case_studies[case].title in content
+        with assertion_msg(
+                "Couldn't find Case Study '%s' description '%s'",
+                case_studies[case].alias, case_studies[case].description):
+            assert case_studies[case].description in content
     logging.debug("Supplier can see all %d Case Studies on FAB Company's "
                   "Directory Profile Page", len(case_studies))
 

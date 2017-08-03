@@ -8,7 +8,12 @@ from requests import Response, Session
 
 from tests import get_absolute_url
 from tests.functional.features.context_utils import Actor, Company
-from tests.functional.features.utils import Method, check_response, make_request
+from tests.functional.features.utils import (
+    Method,
+    assertion_msg,
+    check_response,
+    make_request
+)
 
 URL = get_absolute_url("ui-buyer:company-edit-social-media")
 EXPECTED_STRINGS = [
@@ -115,11 +120,14 @@ def should_see_errors(
     """
     content = response.content.decode("utf-8")
     if facebook:
-        assert "Please provide a link to Facebook." in content
+        with assertion_msg("Could't find link to Facebook profile"):
+            assert "Please provide a link to Facebook." in content
     if linkedin:
-        assert "Please provide a link to LinkedIn." in content
+        with assertion_msg("Could't find link to LinkedIn profile"):
+            assert "Please provide a link to LinkedIn." in content
     if twitter:
-        assert "Please provide a link to Twitter." in content
+        with assertion_msg("Could't find link to Twitter profile"):
+            assert "Please provide a link to Twitter." in content
 
 
 def remove_links(

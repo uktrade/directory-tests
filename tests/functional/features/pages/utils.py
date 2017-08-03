@@ -16,6 +16,7 @@ from tests.functional.features.context_utils import CaseStudy, Company
 from tests.functional.features.pages import int_api_ch_search
 from tests.functional.features.utils import (
     Method,
+    assertion_msg,
     extract_csrf_middleware_token,
     make_request
 )
@@ -111,14 +112,26 @@ def find_active_company_without_fas_profile(alias: str) -> Company:
     :return: an Company named tuple
     """
     has_profile = True
+    is_registered = True
     exists = False
     active = False
     counter = 1
-    while has_profile and not exists and not active:
+    while has_profile and is_registered and not exists and not active:
         random_company_number = str(random.randint(0, 9999999)).zfill(8)
         has_profile = has_fas_profile(random_company_number)
-        logging.debug("Found a company without a FAS profile: %s. Getting "
-                      "it details...", random_company_number)
+        if has_profile:
+            logging.debug("Selected company has a FAS profile: %s. Will try a "
+                          "different one.", random_company_number)
+        else:
+            logging.debug("Found a company without a FAS profile: %s.",
+                          random_company_number)
+        is_registered = already_registered(random_company_number)
+        if is_registered:
+            logging.debug("Company %s is already registered with FAB. Will try "
+                          "a different one.", random_company_number)
+        else:
+            logging.debug("Company %s is not registered with FAB: Getting "
+                          "it details from CH...", random_company_number)
 
         json = int_api_ch_search.search(random_company_number)
 
@@ -126,24 +139,25 @@ def find_active_company_without_fas_profile(alias: str) -> Company:
             exists = True
             if json[0]["company_status"] == "active":
                 active = True
-                assert json[0]["company_number"] == random_company_number, (
-                    "Expected to get details of company no.: %s but got %s",
-                    random_company_number, json[0]["company_number"])
+                with assertion_msg(
+                        "Expected to get details of company no.: %s but got %s",
+                        random_company_number, json[0]["company_number"]):
+                    assert json[0]["company_number"] == random_company_number
             else:
                 counter += 1
-                has_profile, exists, active = True, False, False
+                has_profile, is_registered, exists, active = True, True, False, False
                 logging.debug("Company with number %s is not active. It's %s. "
                               "Trying a different one...",
                               random_company_number, json[0]["company_status"])
         else:
             counter += 1
-            has_profile, exists, active = True, False, False
+            has_profile, is_registered, exists, active = True, True, False, False
             logging.debug("Company with number %s does not exist. Trying a "
                           "different one...", random_company_number)
 
     logging.debug("It took %s attempt(s) to find an active Company without a "
-                  "FAS profile: %s - %s", counter, json[0]["title"],
-                  json[0]["company_number"])
+                  "FAS profile and not already registered with FAB: %s - %s",
+                  counter, json[0]["title"], json[0]["company_number"])
     company = Company(
         alias=alias, title=json[0]["title"].strip(),
         number=json[0]["company_number"], companies_house_details=json[0],
@@ -167,6 +181,20 @@ def has_fas_profile(company_number: str) -> bool:
     url = "{}/{}".format(endpoint, company_number)
     response = make_request(Method.GET, url, allow_redirects=False)
     return response.status_code == 301
+
+
+def already_registered(company_number: str) -> bool:
+    """Will check if Company is already registered with FAB.
+
+    :param company_number:
+    :return: True/False based on the presence of FAB profile
+    """
+    url = get_absolute_url('ui-buyer:landing')
+    data = {"company_number": company_number}
+    headers = {"Referer": url}
+
+    response = make_request(Method.POST, url, headers=headers, data=data)
+    return "Already registered" in response.content.decode("utf-8")
 
 
 def get_companies(*, number: int = 100) -> CompaniesList:

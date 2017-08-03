@@ -43,6 +43,7 @@ from tests.functional.features.pages.utils import (
     random_case_study_data
 )
 from tests.functional.features.utils import (
+    assertion_msg,
     check_response,
     extract_confirm_email_form_action,
     extract_csrf_middleware_token,
@@ -483,7 +484,10 @@ def prof_attempt_to_sign_in_to_fab(context, supplier_alias):
 
     # Step 2 - check if Supplier is on SSO Login page & extract CSRF token
     sso_ui_login.should_be_here(response)
-    assert response.cookies.get("sso_display_logged_in") == "false"
+    with assertion_msg(
+            "It looks like user is still logged in, as the "
+            "sso_display_logged_in cookie is not equal to False"):
+        assert response.cookies.get("sso_display_logged_in") == "false"
     token = extract_csrf_middleware_token(response)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
 
@@ -538,7 +542,10 @@ def prof_sign_in_to_fab(context, supplier_alias):
 
     # Step 2 - check if Supplier is on the SSO Login page
     sso_ui_login.should_be_here(response)
-    assert response.cookies.get("sso_display_logged_in") == "false"
+    with assertion_msg(
+            "It looks like user is still logged in, as the "
+            "sso_display_logged_in cookie is not equal to False"):
+        assert response.cookies.get("sso_display_logged_in") == "false"
 
     # Step 3 - extract CSRF token
     token = extract_csrf_middleware_token(response)
@@ -550,8 +557,14 @@ def prof_sign_in_to_fab(context, supplier_alias):
 
     # Step 5 - check if Supplier is on the FAB profile page
     fab_ui_profile.should_be_here(response)
-    assert "sso_display_logged_in" not in response.cookies
-    assert "directory_sso_dev_session" not in response.cookies
+    with assertion_msg(
+            "Found sso_display_logged_in cookie in the response. Maybe user is "
+            "still logged in?"):
+        assert "sso_display_logged_in" not in response.cookies
+    with assertion_msg(
+            "Found directory_sso_dev_session cookie in the response. Maybe user"
+            " is still logged in?"):
+        assert "directory_sso_dev_session" not in response.cookies
 
 
 def reg_create_standalone_sso_account(context: Context, supplier_alias: str):
@@ -571,7 +584,10 @@ def reg_create_standalone_sso_account(context: Context, supplier_alias: str):
     context.response = response
 
     # Step 2: Check if User is not logged in
-    assert response.cookies.get("sso_display_logged_in") == "false"
+    with assertion_msg(
+            "It looks like user is still logged in, as the "
+            "sso_display_logged_in cookie is not equal to False"):
+        assert response.cookies.get("sso_display_logged_in") == "false"
 
     # Step 3: POST SSO accounts/signup/
     response = sso_ui_register.submit_no_company(actor)
@@ -579,7 +595,10 @@ def reg_create_standalone_sso_account(context: Context, supplier_alias: str):
 
     # Step 3: Check if Supplier is on Verify your email page & is not logged in
     sso_ui_verify_your_email.should_be_here(response)
-    assert response.cookies.get("sso_display_logged_in") == "false"
+    with assertion_msg(
+            "It looks like user is still logged in, as the "
+            "sso_display_logged_in cookie is not equal to False"):
+        assert response.cookies.get("sso_display_logged_in") == "false"
 
 
 def sso_supplier_confirms_email_address(context, supplier_alias):
@@ -791,7 +810,7 @@ def prof_update_company_details(
     fab_ui_profile.should_be_here(response)
 
     # Step 5 - Go to the Edit Sector page
-    fab_ui_edit_sector.go_to(session)
+    response = fab_ui_edit_sector.go_to(session)
     context.response = response
 
     # Step 5 - extract CSRF token
@@ -840,6 +859,7 @@ def prof_add_online_profiles(context, supplier_alias, online_profiles):
 
     # Step 1 - Go to the FAB Edit Online Profiles page
     response = fab_ui_edit_online_profiles.go_to(session)
+    context.response = response
 
     # Step 2 - Extract CSRF token
     extract_and_set_csrf_middleware_token(context, response, supplier_alias)
