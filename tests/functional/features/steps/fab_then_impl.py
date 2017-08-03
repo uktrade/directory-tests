@@ -423,6 +423,7 @@ def fas_should_find_with_company_details(
     """
     assert hasattr(context, "search_results")
     for result in context.search_results:
-        assert context.search_results[result], (
-            "%s wasn't able to find %s using %s" % (
-                buyer_alias, company_alias, result))
+        with assertion_msg(
+                "%s wasn't able to find %s using %s", buyer_alias,
+                company_alias, result):
+            assert context.search_results[result]
