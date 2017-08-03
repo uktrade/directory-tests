@@ -109,3 +109,14 @@ Feature: Find a Supplier
       | facebook       |
       | twitter        |
       | linkedin       |
+
+
+  @ED-2000
+  @fas
+  @search
+  Scenario: Empty search query should return no results
+    Given "Annette Geissinger" is a buyer
+
+    When "Annette Geissinger" searches for companies on FAS with empty search query
+
+    Then "Annette Geissinger" should be told that the search did not match any UK trade profiles
