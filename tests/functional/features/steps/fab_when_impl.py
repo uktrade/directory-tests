@@ -1111,3 +1111,16 @@ def fas_view_pages_in_selected_language(
         response = make_request(Method.GET, page_url, session=session)
         views[page_name] = response
     context.views = views
+
+
+def fas_search_with_empty_query(context, buyer_alias):
+    actor = context.get_actor(buyer_alias)
+    session = actor.session
+    context.response = fas_ui_find_supplier.go_to(session, term="")
+
+
+def fas_should_be_told_about_empty_search_results(context, buyer_alias):
+    fas_ui_find_supplier.should_see_no_matches(context.response)
+    logging.debug(
+        "%s was told that the search did not match any UK trade profiles",
+        buyer_alias)
