@@ -440,7 +440,7 @@ def check_hash_of_remote_file(expected_hash, file_url):
         assert expected_hash == file_hash
 
 
-@retry(wait_fixed=3000, stop_max_attempt_number=15)
+@retry(wait_fixed=10000, stop_max_attempt_number=9)
 def mailgun_get_message(context: Context, url: str) -> dict:
     """Get message detail by its URL.
 
@@ -461,7 +461,7 @@ def mailgun_get_message(context: Context, url: str) -> dict:
     return response.json()
 
 
-@retry(wait_fixed=3000, stop_max_attempt_number=15)
+@retry(wait_fixed=10000, stop_max_attempt_number=9)
 def mailgun_get_message_url(context: Context, recipient: str) -> str:
     """Will try to find the message URL among 100 emails sent in last 1 hour.
 
