@@ -408,3 +408,21 @@ def fas_supplier_cannot_be_found_using_case_study_details(
         logging.debug(
             "Buyer was not able to find unverified Supplier '%s' on FAS using "
             "%s: %s", company.title, term_name, term)
+
+
+def fas_should_find_with_company_details(
+        context: Context, buyer_alias: str, company_alias: str):
+    """Check if Buyer was able to find Supplier using all selected search terms.
+
+    NOTE:
+    This step requires the search_results dict to be stored in context
+
+    :param context: behave `context` object
+    :param buyer_alias: alias of the Actor used in the scope of the scenario
+    :param company_alias: alias of the Company used in the scope of the scenario
+    """
+    assert hasattr(context, "search_results")
+    for result in context.search_results:
+        assert context.search_results[result], (
+            "%s wasn't able to find %s using %s" % (
+                buyer_alias, company_alias, result))
