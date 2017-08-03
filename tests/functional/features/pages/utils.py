@@ -8,7 +8,6 @@ from random import choice
 from typing import List
 
 from behave.runner import Context
-from faker import Factory
 from requests import Response
 
 from tests import get_absolute_url
@@ -29,7 +28,6 @@ from tests.settings import (
     PNGs
 )
 
-FAKE = Factory.create()
 CompaniesList = List[Company]  # a type hint for a List of Company named tuples
 
 

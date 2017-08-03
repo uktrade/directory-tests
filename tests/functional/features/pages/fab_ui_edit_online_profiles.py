@@ -3,7 +3,6 @@
 import logging
 import random
 
-from faker import Factory
 from requests import Response, Session
 
 from tests import get_absolute_url
@@ -26,7 +25,6 @@ EXPECTED_STRINGS = [
     "Use a full web address (URL) including http:// or https://",
     "Save", "Cancel"
 ]
-FAKE = Factory.create()
 
 
 def should_be_here(response: Response):
