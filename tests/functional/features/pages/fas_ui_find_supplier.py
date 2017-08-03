@@ -23,13 +23,13 @@ def go_to(session: Session, *, term: str = None) -> Response:
     :param term: (optional) search term
     :return: response object
     """
-    params = {"term": term} if term else {}
+    params = {"term": term} if term is not None else {}
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
     response = make_request(
         Method.GET, URL, session=session, params=params, headers=headers)
 
     should_be_here(response)
-    if term:
+    if term is not None:
         logging.debug("Buyer searched for Suppliers using term: %s", term)
     else:
         logging.debug("Buyer is on the FAS Find a Supplier page")
