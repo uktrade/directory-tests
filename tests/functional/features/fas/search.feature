@@ -68,3 +68,44 @@ Feature: Find a Supplier
     When "Peter Alder" adds a complete case study called "no 1"
 
     Then "Annette Geissinger" should NOT be able to find company "Y" on FAS by using any part of case study "no 1"
+
+
+  @ED-1967
+  @fas
+  @search
+  @profile
+  @verified
+  @published
+  Scenario: Buyers should be able to find Supplier by uniquely identifying words present on Supplier's profile
+    Given "Annette Geissinger" is a buyer
+    And "Peter Alder" is an unauthenticated supplier
+    And "Peter Alder" has created and verified profile for randomly selected company "Y"
+    And "Peter Alder" has added links to online profiles
+      | online profile  |
+      | Facebook        |
+      | LinkedIn        |
+      | Twitter         |
+
+    When "Annette Geissinger" searches for company "Y" on FAS using selected company's details
+      | company detail |
+      | title          |
+      | number         |
+      | keywords       |
+      | website        |
+      | summary        |
+      | description    |
+      | facebook       |
+      | twitter        |
+      | linkedin       |
+
+    Then "Annette Geissinger" should be able to find company "Y" on FAS using selected company's details
+      | company detail |
+      | title          |
+      | number         |
+      | keywords       |
+      | website        |
+      | summary        |
+      | description    |
+      | facebook       |
+      | twitter        |
+      | linkedin       |
