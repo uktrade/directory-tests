@@ -440,26 +440,30 @@ def check_hash_of_remote_file(expected_hash, file_url):
         assert expected_hash == file_hash
 
 
-def mailgun_get_message(url: str) -> dict:
+def mailgun_get_message(context: Context, url: str) -> dict:
     """Get message detail by its URL.
 
+    :param context: behave `context` object
     :param url: unique mailgun message URL
     :return: a dictionary with message details and message body
     """
     api_key = MAILGUN_SECRET_API_KEY
     # this will help us to get the raw MIME
     headers = {"Accept": "message/rfc2822"}
-    r = requests.get(url, auth=("api", api_key), headers=headers)
+    response = requests.get(url, auth=("api", api_key), headers=headers)
+    context.response = response
 
-    if r.status_code == 200:
-        return r.json()
-    else:
-        raise LookupError("Oops! Something went wrong: {}".format(r.content))
+    with assertion_msg(
+            "Expected 200 from MailGun when getting message details but got %s",
+            response.status_code):
+        assert response.status_code == 200
+    return response.json()
 
 
-def mailgun_get_message_url(recipient: str) -> str:
+def mailgun_get_message_url(context: Context, recipient: str) -> str:
     """Will try to find the message URL among 100 emails sent in last 1 hour.
 
+    :param context: behave `context` object
     :param recipient: email address of the message recipient
     :return: mailgun message URL
     """
@@ -473,6 +477,7 @@ def mailgun_get_message_url(recipient: str) -> str:
         "event": "accepted"
     }
     response = requests.get(url, auth=("api", api_key), params=params)
+    context.response = response
 
     with assertion_msg(
             "Expected 200 OK from MailGun when searching for an event triggered"
@@ -509,14 +514,15 @@ def assertion_msg(message: str, *args):
 
 
 @retry(wait_fixed=3000, stop_max_attempt_number=15)
-def get_verification_link(recipient: str) -> str:
+def get_verification_link(context: Context, recipient: str) -> str:
     """Get email verification link sent by SSO to specified recipient.
 
+    :param context: behave `context` object
     :param recipient: email address of the message recipient
     :return: email verification link sent by SSO
     """
     logging.debug("Searching for verification email of: {}".format(recipient))
-    message_url = mailgun_get_message_url(recipient)
-    message = mailgun_get_message(message_url)
+    message_url = mailgun_get_message_url(context, recipient)
+    message = mailgun_get_message(context, message_url)
     body = message["body-mime"]
     return extract_email_confirmation_link(body)

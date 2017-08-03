@@ -52,7 +52,7 @@ def reg_should_get_verification_email(context: Context, alias: str):
     """
     logging.debug("Searching for an email verification message...")
     actor = context.get_actor(alias)
-    link = get_verification_link(actor.email)
+    link = get_verification_link(context, actor.email)
     context.set_actor_email_confirmation_link(alias, link)
 
 
