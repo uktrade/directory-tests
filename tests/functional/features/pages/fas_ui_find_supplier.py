@@ -15,6 +15,11 @@ EXPECTED_STRINGS = [
     "Search"
 ]
 
+NO_MATCH = [
+    "Your search", "&quot;<span class=\"term\">", "</span>&quot;",
+    "did not match any UK trade profiles."
+]
+
 
 def go_to(session: Session, *, term: str = None) -> Response:
     """Go to "FAS Find a Supplier" page.
@@ -50,3 +55,10 @@ def should_see_company(response: Response, company_title: str) -> bool:
 def should_not_see_company(response: Response, company_title: str) -> bool:
     content = response.content.decode("utf-8")
     return escape_html(company_title, upper=True)not in content
+
+
+def should_see_no_matches(response: Response, *, term: str = None):
+    expected = NO_MATCH
+    if term:
+        expected += term
+    check_response(response, 200, body_contains=expected)
