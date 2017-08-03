@@ -5,7 +5,6 @@ import random
 
 from behave.model import Table
 from behave.runner import Context
-from faker import Factory
 from requests import Response
 from scrapy import Selector
 
@@ -27,6 +26,7 @@ from tests.functional.features.pages import (
     fab_ui_profile,
     fab_ui_upload_logo,
     fab_ui_verify_company,
+    fas_ui_find_supplier,
     fas_ui_profile,
     profile_ui_find_a_buyer,
     profile_ui_landing,
@@ -40,7 +40,9 @@ from tests.functional.features.pages.common import DETAILS, PROFILES
 from tests.functional.features.pages.utils import (
     extract_and_set_csrf_middleware_token,
     get_active_company_without_fas_profile,
-    random_case_study_data
+    random_case_study_data,
+    rare_word,
+    sentence
 )
 from tests.functional.features.utils import (
     assertion_msg,
@@ -53,8 +55,6 @@ from tests.functional.features.utils import (
     get_verification_code
 )
 from tests.settings import COUNTRIES, NO_OF_EMPLOYEES, SECTORS
-
-FAKE = Factory.create()
 
 
 def select_random_company(
@@ -253,8 +253,8 @@ def bp_provide_company_details(context, supplier_alias):
     # Step 0 - generate random details & update Company matching details
     # Need to get Company details after updating it in the Scenario Data
     size = random.choice(NO_OF_EMPLOYEES)
-    website = "https://{}".format(FAKE.domain_name())
-    keywords = ", ".join(FAKE.sentence().replace(".", "").split())
+    website = "http://{}.com".format(rare_word(min_length=15))
+    keywords = ", ".join(sentence().split())
     context.set_company_details(
         company_alias, no_employees=size, website=website, keywords=keywords
     )
@@ -394,8 +394,8 @@ def prof_set_company_description(context, supplier_alias):
     logging.debug("Supplier is on the Set Company Description page")
 
     # Step 2 - Submit company description
-    summary = FAKE.sentence()
-    description = FAKE.sentence()
+    summary = sentence()
+    description = sentence()
     response = fab_ui_edit_description.submit(
         session, token, summary, description)
     context.response = response

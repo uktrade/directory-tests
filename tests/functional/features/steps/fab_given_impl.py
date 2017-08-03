@@ -5,11 +5,11 @@ import string
 import uuid
 
 from behave.runner import Context
-from faker import Factory
 from requests import Session
 
 from tests.functional.features.context_utils import Actor
 from tests.functional.features.pages import fab_ui_profile, profile_ui_landing
+from tests.functional.features.pages.utils import sentence
 from tests.functional.features.steps.fab_then_impl import (
     bp_should_be_prompted_to_build_your_profile,
     prof_should_be_on_profile_page,
@@ -77,8 +77,7 @@ def unauthenticated_buyer(buyer_alias: str) -> Actor:
     email = ("test+buyer_{}{}@directory.uktrade.io"
              .format(buyer_alias, str(uuid.uuid4()))
              .replace("-", "").replace(" ", "").lower())
-    fake = Factory.create()
-    company_name = fake.sentence()[:60].strip()
+    company_name = sentence()
     return Actor(
         alias=buyer_alias, email=email, session=session,
         company_alias=company_name)
