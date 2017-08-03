@@ -742,13 +742,12 @@ def prof_supplier_uploads_logo(context, supplier_alias, picture):
     prof_upload_logo(context, supplier_alias, picture)
 
 
-def prof_to_upload_unsupported_logos(context, supplier_alias, table):
+def prof_to_upload_unsupported_logos(
+        context: Context, supplier_alias: str, table: Table):
     """Upload a picture and set it as Company's logo.
 
     :param context: behave `context` object
-    :type context: behave.runner.Context
     :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :type supplier_alias: str
     :param table: context.table containing data table
                   see: https://pythonhosted.org/behave/gherkin.html#table
     """
@@ -839,13 +838,12 @@ def prof_update_company_details(
         new_countries)
 
 
-def prof_add_online_profiles(context, supplier_alias, online_profiles):
+def prof_add_online_profiles(
+        context: Context, supplier_alias: str, online_profiles: Table):
     """Update links to Company's Online Profiles.
 
     :param context: behave `context` object
-    :type  context: behave.runner.Context
     :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :type  supplier_alias: str
     :param online_profiles: context.table containing data table
             see: https://pythonhosted.org/behave/gherkin.html#table
     """
@@ -887,9 +885,7 @@ def prof_add_invalid_online_profiles(
     """Attempt to update links to Company's Online Profiles using invalid URLs.
 
     :param context: behave `context` object
-    :type  context: behave.runner.Context
     :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :type  supplier_alias: str
     :param online_profiles: context.table containing data table
             see: https://pythonhosted.org/behave/gherkin.html#table
     """
