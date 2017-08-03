@@ -1033,3 +1033,55 @@ def fab_update_case_study(context: Context, supplier_alias: str, case_alias: str
     logging.debug(
         "Successfully updated details of case study: '%s', title:'%s', link:"
         "'%s'", case_alias, current.title, current_link)
+
+
+def fas_search_using_company_details(
+        context: Context, buyer_alias: str, company_alias: str, *,
+        table_of_details: Table = None):
+    """Search for Company on FAS using it's all or selected details.
+
+    :param context: behave `context` object
+    :param buyer_alias: alias of the Actor used in the scope of the scenario
+    :param company_alias: alias of the Company used in the scope of the scenario
+    :param table_of_details: (optional) a table with selected company details
+                             which will be used in search
+    """
+    actor = context.get_actor(buyer_alias)
+    session = actor.session
+    company = context.get_company(company_alias)
+    keys = [
+        'title', 'number', 'summary', 'description', 'website', 'keywords',
+        'facebook', 'linkedin', 'twitter'
+    ]
+
+    # use selected company details
+    if table_of_details:
+        keys = [row["company detail"] for row in table_of_details]
+
+    search_terms = {}
+    search_results = {}
+    for key in keys:
+        if key == "keywords":
+            for index, keyword in enumerate(company.keywords.split(", ")):
+                search_terms["keyword #{}".format(index)] = keyword
+        else:
+            search_terms[key] = getattr(company, key)
+    logging.debug(
+        "Now %s will try to find '%s' using following search terms: %s",
+        buyer_alias, company.title, search_terms)
+    for term_name in search_terms:
+        term = search_terms[term_name]
+        response = fas_ui_find_supplier.go_to(session, term=term)
+        context.response = response
+        found = fas_ui_find_supplier.should_see_company(response, company.title)
+        search_results[term_name] = found
+        if found:
+            logging.debug(
+                "Found Supplier '%s' on FAS using '%s' : '%s'", company.title,
+                term_name, term)
+        else:
+            logging.debug(
+                "Couldn't find Supplier '%s' on the 1st page of FAS search "
+                "results. Search was done using '%s' : '%s'", company.title,
+                term_name, term)
+    context.search_results = search_results
