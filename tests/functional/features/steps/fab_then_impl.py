@@ -355,10 +355,8 @@ def fas_find_supplier_using_case_study_details(
     search_terms = {}
     for key in keys:
         if key == "keywords":
-            i = 0
-            for keyword in case_study.keywords.split(", "):
-                i += 1
-                search_terms["keyword #{}".format(i)] = keyword
+            for index, keyword in enumerate(case_study.keywords.split(", ")):
+                search_terms["keyword #{}".format(index)] = keyword
         else:
             search_terms[key] = getattr(case_study, key.replace(" ", "_"))
     logging.debug(
@@ -388,10 +386,8 @@ def fas_supplier_cannot_be_found_using_case_study_details(
     search_terms = {}
     for key in keys:
         if key == "keywords":
-            i = 0
-            for keyword in case_study.keywords.split(", "):
-                i += 1
-                search_terms["keyword #{}".format(i)] = keyword
+            for index, keyword in enumerate(case_study.keywords.split(", ")):
+                search_terms["keyword #{}".format(index)] = keyword
         else:
             search_terms[key] = getattr(case_study, key)
     logging.debug(
