@@ -406,8 +406,10 @@ def fas_supplier_cannot_be_found_using_case_study_details(
         response = fas_ui_find_supplier.go_to(session, term=term)
         context.response = response
         found = fas_ui_find_supplier.should_not_see_company(response, company.title)
-        assert found, ("Buyer found Supplier '{}' on FAS using {}: {}"
-                       .format(company.title, term_name, term))
+        with assertion_msg(
+                "Buyer found Supplier '%s' on FAS using %s: %s", company.title,
+                term_name, term):
+            assert found
         logging.debug(
             "Buyer was not able to find unverified Supplier '%s' on FAS using "
             "%s: %s", company.title, term_name, term)
