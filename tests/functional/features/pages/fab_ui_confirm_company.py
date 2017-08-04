@@ -40,7 +40,7 @@ def should_be_here(response: Response, company: Company):
     :param response: response with Confirm Export Status page
     :param company: a namedtuple with Company details
     """
-    escaped_company_title = escape_html(company.title).upper()
+    escaped_company_title = escape_html(company.title, upper=True)
     expected = EXPECTED_STRINGS + [escaped_company_title, company.number]
     check_response(response, 200, body_contains=expected)
     logging.debug("Successfully got to the Confirm your Company page")
