@@ -228,11 +228,14 @@ def load_companies() -> CompaniesList:
         return pickle.load(f)
 
 
-def escape_html(text: str) -> str:
+def escape_html(text: str, *, upper: bool = False) -> str:
     """Escape some of the special characters that are replaced by FAB/SSO.
 
     :param text: a string to escape
+    :param upper: (optional) change to upper case before escaping the characters
     :return: a string with escaped characters
     """
     html_escape_table = {"&": "&amp;", "'": "&#39;"}
+    if upper:
+        text = text.upper()
     return "".join(html_escape_table.get(c, c) for c in text)
