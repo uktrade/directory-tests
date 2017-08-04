@@ -10,7 +10,13 @@ from tests.functional.features.db_cleanup import (
     delete_expired_django_sessions,
     delete_supplier_data
 )
-from tests.functional.features.utils import init_loggers
+from tests.functional.features.utils import (
+    BLUE,
+    GREEN,
+    RED,
+    init_loggers,
+    printout
+)
 
 
 def before_step(context, step):
@@ -18,14 +24,47 @@ def before_step(context, step):
 
 
 def after_step(context, step):
+    offset = 1024
     if step.status == "failed":
-        logging.debug(context.scenario_data)
         logging.debug(
             'Step "%s %s" failed. Reason: "%s"', step.step_type, step.name,
             step.exception)
+        logging.debug(context.scenario_data)
+        printout("\nScenario data:\n", RED)
+        print(context.scenario_data)
         if hasattr(context, "response"):
-            content = context.response.content.decode("utf-8")
-            print("\nThe content of last response:\n%s" % content)
+            res = context.response
+            content = res.content.decode("utf-8")
+            printout("\nLast recorded request & response\n", RED)
+            if res.history:
+                printout("\nRequest was redirected\n", GREEN)
+                for resp in res.history:
+                    printout("\nIntermediate REQ:\n", GREEN)
+                    print(resp.request.method, resp.url)
+                    printout("Intermediate REQ Headers:", GREEN)
+                    print(resp.request.headers)
+                    printout("Intermediate RESP:", GREEN)
+                    print(resp.status_code, resp.reason)
+                    printout("Intermediate RESP Headers:", GREEN)
+                    print(resp.headers)
+                    printout("\nFinal REQ URL:\n", BLUE)
+            else:
+                printout("\nREQ URL:\n", BLUE)
+            print(res.request.method, res.request.url)
+            printout("\nREQ Headers:\n", BLUE)
+            print(res.request.headers)
+            if hasattr(res.request, "body"):
+                if res.request.body:
+                    if len(res.request.body) > offset:
+                        printout("\nREQ Body (trimmed):\n", BLUE)
+                        print(res.request.body[:offset])
+                    else:
+                        printout("\nREQ Body:\n", BLUE)
+                        print(res.request.body)
+            printout("\nRESP Headers:\n", BLUE)
+            print(res.headers)
+            printout("\nRESP Content:\n", BLUE)
+            print(content)
             delattr(context, "response")
         else:
             print("\nThere's no response content to log")
