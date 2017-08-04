@@ -10,13 +10,7 @@ from tests.functional.features.db_cleanup import (
     delete_expired_django_sessions,
     delete_supplier_data
 )
-from tests.functional.features.utils import (
-    BLUE,
-    GREEN,
-    RED,
-    init_loggers,
-    printout
-)
+from tests.functional.features.utils import blue, green, init_loggers, red
 
 
 def before_step(context, step):
@@ -24,46 +18,47 @@ def before_step(context, step):
 
 
 def after_step(context, step):
+    from pprint import pformat
     offset = 1024
     if step.status == "failed":
         logging.debug(
             'Step "%s %s" failed. Reason: "%s"', step.step_type, step.name,
             step.exception)
         logging.debug(context.scenario_data)
-        printout("\nScenario data:\n", RED)
-        print(context.scenario_data)
+        red("\nScenario data:")
+        print(pformat(context.scenario_data))
         if hasattr(context, "response"):
             res = context.response
             content = res.content.decode("utf-8")
-            printout("\nLast recorded request & response\n", RED)
+            red("Last recorded request & response")
             if res.history:
-                printout("\nRequest was redirected\n", GREEN)
+                green("Request was redirected")
                 for resp in res.history:
-                    printout("\nIntermediate REQ:\n", GREEN)
+                    green("Intermediate REQ:")
                     print(resp.request.method, resp.url)
-                    printout("Intermediate REQ Headers:", GREEN)
-                    print(resp.request.headers)
-                    printout("Intermediate RESP:", GREEN)
+                    green("Intermediate REQ Headers:")
+                    print(pformat(resp.request.headers))
+                    green("Intermediate RESP:")
                     print(resp.status_code, resp.reason)
-                    printout("Intermediate RESP Headers:", GREEN)
-                    print(resp.headers)
-                    printout("\nFinal REQ URL:\n", BLUE)
+                    green("Intermediate RESP Headers:")
+                    print(pformat(resp.headers))
+                    blue("Final REQ URL:")
             else:
-                printout("\nREQ URL:\n", BLUE)
+                blue("REQ URL: ")
             print(res.request.method, res.request.url)
-            printout("\nREQ Headers:\n", BLUE)
-            print(res.request.headers)
+            blue("REQ Headers: ")
+            print(pformat(res.request.headers))
             if hasattr(res.request, "body"):
                 if res.request.body:
                     if len(res.request.body) > offset:
-                        printout("\nREQ Body (trimmed):\n", BLUE)
+                        blue("REQ Body (trimmed):")
                         print(res.request.body[:offset])
                     else:
-                        printout("\nREQ Body:\n", BLUE)
+                        blue("REQ Body:")
                         print(res.request.body)
-            printout("\nRESP Headers:\n", BLUE)
-            print(res.headers)
-            printout("\nRESP Content:\n", BLUE)
+            blue("RESP Headers:")
+            print(pformat(res.headers))
+            blue("RESP Content:")
             print(content)
             delattr(context, "response")
         else:
