@@ -40,6 +40,7 @@ retrying==1.3.3
 scrapy==1.4.0
 service-identity==17.0.0  # via scrapy
 six==1.10.0               # via automat, behave, cryptography, faker, parse-type, parsel, pyopenssl, python-dateutil, retrying, scrapy, w3lib
+termcolor==1.1.0
 twisted==17.5.0           # via scrapy
 urllib3==1.21.1           # via requests
 w3lib==1.17.0             # via parsel, scrapy
