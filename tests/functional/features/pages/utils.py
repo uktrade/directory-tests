@@ -226,3 +226,13 @@ def load_companies() -> CompaniesList:
     """
     with open(os.path.join(TEST_IMAGES_DIR, 'companies.pkl'), 'rb') as f:
         return pickle.load(f)
+
+
+def escape_html(text: str) -> str:
+    """Escape some of the special characters that are replaced by FAB/SSO.
+
+    :param text: a string to escape
+    :return: a string with escaped characters
+    """
+    html_escape_table = {"&": "&amp;", "'": "&#39;"}
+    return "".join(html_escape_table.get(c, c) for c in text)
