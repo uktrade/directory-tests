@@ -18,9 +18,6 @@ from scrapy.selector import Selector
 from tests.functional.features.db_cleanup import get_dir_db_connection
 from tests.settings import MAILGUN_EVENTS_URL, MAILGUN_SECRET_API_KEY
 
-# Colors for ANSI Color capable terminal
-BLACK, RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN, WHITE = range(8)
-
 
 def get_file_log_handler(
         log_formatter, log_file=os.path.join(
@@ -532,49 +529,7 @@ def get_verification_link(context: Context, recipient: str) -> str:
     return extract_email_confirmation_link(body)
 
 
-def has_colours(stream):
-    """Check if terminal supports ANSI Colors
-
-    NOTE:
-        following from Python cookbook, #475186
-
-    SRC:
-    http://blog.mathieu-leplatre.info/colored-output-in-console-with-python.html
-
-    AUTHOR:
-        Mathieu Leplatre
-
-    :param stream: system's standard output
-    :return: True if terminal supports colors
-    """
-    if not hasattr(stream, "isatty"):
-        return False
-    if not stream.isatty():
-        # auto color only on TTYs
-        return False
-    try:
-        import curses
-        curses.setupterm()
-        return curses.tigetnum("colors") > 2
-    except:
-        # guess false in case of error
-        return False
 
 
-def printout(text, colour=WHITE):
-    """Colored Output in Console with Python
 
-    SRC:
-    http://blog.mathieu-leplatre.info/colored-output-in-console-with-python.html
 
-    AUTHOR:
-    Mathieu Leplatre
-
-    :param text: text to be printed to console in color
-    :param colour: one of the 8 colors supported by ANSI Color capable terminal
-    """
-    if has_colours(sys.stdout):
-        seq = "\x1b[1;%dm" % (30 + colour) + text + "\x1b[0m"
-        sys.stdout.write(seq)
-    else:
-        sys.stdout.write(text)
