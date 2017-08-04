@@ -16,6 +16,7 @@ from tests.functional.features.steps.fab_then_impl import (
     fas_should_see_all_case_studies,
     fas_should_see_company_details,
     fas_should_see_logo_picture,
+    fas_supplier_cannot_be_found_using_case_study_details,
     prof_all_unsupported_files_should_be_rejected,
     prof_should_be_on_profile_page,
     prof_should_be_told_about_invalid_links,
@@ -26,8 +27,8 @@ from tests.functional.features.steps.fab_then_impl import (
     reg_sso_account_should_be_created,
     reg_supplier_has_to_verify_email_first,
     reg_supplier_is_not_appropriate_for_fab,
-    sso_should_be_signed_in_to_sso_account,
-    fas_supplier_cannot_be_found_using_case_study_details)
+    sso_should_be_signed_in_to_sso_account
+)
 
 
 @then('"{alias}" should be told about the verification email')
