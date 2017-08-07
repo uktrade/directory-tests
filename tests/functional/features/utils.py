@@ -14,6 +14,7 @@ from behave.runner import Context
 from requests.models import Response
 from retrying import retry
 from scrapy.selector import Selector
+from termcolor import cprint
 
 from tests.functional.features.db_cleanup import get_dir_db_connection
 from tests.settings import MAILGUN_EVENTS_URL, MAILGUN_SECRET_API_KEY
@@ -527,3 +528,15 @@ def get_verification_link(context: Context, recipient: str) -> str:
     message = mailgun_get_message(context, message_url)
     body = message["body-mime"]
     return extract_email_confirmation_link(body)
+
+
+def red(x: str):
+    cprint(x, 'red', attrs=['bold'])
+
+
+def green(x: str):
+    cprint(x, 'green', attrs=['bold'])
+
+
+def blue(x: str):
+    cprint(x, 'blue', attrs=['bold'])

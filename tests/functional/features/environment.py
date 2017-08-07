@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Behave configuration file."""
 import logging
+from pprint import pformat
 
 from tests.functional.features.context_utils import (
     initialize_scenario_data,
@@ -10,7 +11,7 @@ from tests.functional.features.db_cleanup import (
     delete_expired_django_sessions,
     delete_supplier_data
 )
-from tests.functional.features.utils import init_loggers
+from tests.functional.features.utils import blue, green, init_loggers, red
 
 
 def before_step(context, step):
@@ -18,14 +19,47 @@ def before_step(context, step):
 
 
 def after_step(context, step):
+    offset = 1024
     if step.status == "failed":
-        logging.debug(context.scenario_data)
         logging.debug(
             'Step "%s %s" failed. Reason: "%s"', step.step_type, step.name,
             step.exception)
+        logging.debug(context.scenario_data)
+        red("\nScenario data:")
+        print(pformat(context.scenario_data))
         if hasattr(context, "response"):
-            content = context.response.content.decode("utf-8")
-            print("\nThe content of last response:\n%s" % content)
+            res = context.response
+            content = res.content.decode("utf-8")
+            red("Last recorded request & response")
+            if res.history:
+                green("Request was redirected")
+                for resp in res.history:
+                    green("Intermediate REQ:")
+                    print(resp.request.method, resp.url)
+                    green("Intermediate REQ Headers:")
+                    print(pformat(resp.request.headers))
+                    green("Intermediate RESP:")
+                    print(resp.status_code, resp.reason)
+                    green("Intermediate RESP Headers:")
+                    print(pformat(resp.headers))
+                    blue("Final REQ URL:")
+            else:
+                blue("REQ URL: ")
+            print(res.request.method, res.request.url)
+            blue("REQ Headers: ")
+            print(pformat(res.request.headers))
+            if hasattr(res.request, "body"):
+                if res.request.body:
+                    if len(res.request.body) > offset:
+                        blue("REQ Body (trimmed):")
+                        print(res.request.body[:offset])
+                    else:
+                        blue("REQ Body:")
+                        print(res.request.body)
+            blue("RESP Headers:")
+            print(pformat(res.headers))
+            blue("RESP Content:")
+            print(content)
             delattr(context, "response")
         else:
             print("\nThere's no response content to log")
