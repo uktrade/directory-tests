@@ -4,6 +4,7 @@
 import hashlib
 import logging
 import os
+import re
 import sys
 import traceback
 from contextlib import contextmanager
@@ -13,6 +14,7 @@ import lxml.html
 import requests
 from behave.runner import Context
 from bs4 import BeautifulSoup
+from langdetect import detect
 from requests.models import Response
 from retrying import retry
 from scrapy.selector import Selector
@@ -593,3 +595,33 @@ def extract_form_errors(content: str) -> str:
         for line in form_errors.splitlines()
         for indicator in ERROR_INDICATORS)
     return form_errors if has_errors else ""
+
+
+def detect_page_language(*, url: str = None, content: str = None) -> str:
+    """Detect the language of the page.
+
+    NOTE:
+    langdetect supports 55 languages out of the box:
+        af, ar, bg, bn, ca, cs, cy, da, de, el, en, es, et, fa, fi, fr, gu, he,
+        hi, hr, hu, id, it, ja, kn, ko, lt, lv, mk, ml, mr, ne, nl, no, pa, pl,
+        pt, ro, ru, sk, sl, so, sq, sv, sw, ta, te, th, tl, tr, uk, ur, vi,
+        zh-cn, zh-tw
+
+    :param url: URL to the HTML page with some content
+    :param content: use explicit content rather than downloading it from URL
+    :return: language code detected by langdetect
+    """
+    ignored_characters = '[ا]'
+    if url:
+        content = requests.get(url).content.decode("utf-8")
+
+    soup = BeautifulSoup(content, "lxml")
+    # strip out all of JavaScript & CSS that might not be filtered out initially
+    for element in soup.findAll(['script', 'style']):
+        element.extract()
+    # get the content of the page without ignored characters
+    text = re.sub(ignored_characters, '', soup.get_text()).decode("utf-8")
+    lines = [line.strip().lower() for line in text.splitlines() if line]
+    language = detect('\n'.join(lines))
+    logging.debug("Detected language of %s is '%s'", url, language)
+    return language
