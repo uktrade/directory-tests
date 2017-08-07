@@ -6,6 +6,7 @@ from requests import Response, Session
 
 from tests import get_absolute_url
 from tests.functional.features.context_utils import Company
+from tests.functional.features.pages.utils import escape_html
 from tests.functional.features.utils import Method, check_response, make_request
 
 URL = get_absolute_url('ui-buyer:landing')
@@ -39,11 +40,7 @@ def should_be_here(response: Response, company: Company):
     :param response: response with Confirm Export Status page
     :param company: a namedtuple with Company details
     """
-    # a bit of HTML escaping is required to assert that we're confirming the
-    # selection of correct company
-    html_escape_table = {"&": "&amp;", "'": "&#39;"}
-    escaped_company_title = "".join(html_escape_table.get(c, c) for c in
-                                    company.title.upper())
+    escaped_company_title = escape_html(company.title, upper=True)
     expected = EXPECTED_STRINGS + [escaped_company_title, company.number]
     check_response(response, 200, body_contains=expected)
     logging.debug("Successfully got to the Confirm your Company page")

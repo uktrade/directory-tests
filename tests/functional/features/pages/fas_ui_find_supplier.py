@@ -5,6 +5,7 @@ import logging
 from requests import Response, Session
 
 from tests import get_absolute_url
+from tests.functional.features.pages.utils import escape_html
 from tests.functional.features.utils import Method, check_response, make_request
 
 URL = get_absolute_url("ui-supplier:search")
@@ -43,4 +44,9 @@ def should_be_here(response, *, number=None):
 
 def should_see_company(response: Response, company_title: str) -> bool:
     content = response.content.decode("utf-8")
-    return company_title in content
+    return escape_html(company_title, upper=True) in content
+
+
+def should_not_see_company(response: Response, company_title: str) -> bool:
+    content = response.content.decode("utf-8")
+    return escape_html(company_title, upper=True)not in content

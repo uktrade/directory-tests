@@ -16,6 +16,7 @@ from tests.functional.features.steps.fab_then_impl import (
     fas_should_see_all_case_studies,
     fas_should_see_company_details,
     fas_should_see_logo_picture,
+    fas_supplier_cannot_be_found_using_case_study_details,
     prof_all_unsupported_files_should_be_rejected,
     prof_should_be_on_profile_page,
     prof_should_be_told_about_invalid_links,
@@ -169,7 +170,23 @@ def then_supplier_should_see_new_details_on_fas(context, supplier_alias):
 
 @then('"{buyer_alias}" should be able to find company "{company_alias}" on FAS '
       'using words from case study "{case_alias}"')
-def then_buyer_should_find_supplier_using_unique_words(
+def then_buyer_should_find_supplier_using_part_of_case_study(
         context, buyer_alias, company_alias, case_alias):
     fas_find_supplier_using_case_study_details(
-        context, buyer_alias, company_alias, case_alias, context.table)
+        context, buyer_alias, company_alias, case_alias,
+        properties=context.table)
+
+
+@then('"{buyer_alias}" should NOT be able to find company "{company_alias}" on '
+      'FAS by using any part of case study "{case_alias}"')
+def step_impl(context, buyer_alias, company_alias, case_alias):
+    fas_supplier_cannot_be_found_using_case_study_details(
+        context, buyer_alias, company_alias, case_alias)
+
+
+@then('"{buyer_alias}" should be able to find company "{company_alias}" on FAS '
+      'using any part of case study "{case_alias}"')
+def then_buyer_should_find_supplier_using_any_part_of_case_study(
+        context, buyer_alias, company_alias, case_alias):
+    fas_find_supplier_using_case_study_details(
+        context, buyer_alias, company_alias, case_alias)

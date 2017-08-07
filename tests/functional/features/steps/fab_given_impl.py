@@ -160,3 +160,12 @@ def reg_select_random_company_and_confirm_export_status(
     reg_confirm_company_selection(context, supplier_alias, company_alias)
     reg_confirm_export_status(context, supplier_alias, exported=True)
     bp_should_be_prompted_to_build_your_profile(context, supplier_alias)
+
+
+def reg_create_unverified_profile(context, supplier_alias, company_alias):
+    supplier = unauthenticated_supplier(supplier_alias)
+    context.add_actor(supplier)
+    reg_create_sso_account_associated_with_company(
+        context, supplier_alias, company_alias)
+    reg_confirm_email_address(context, supplier_alias)
+    bp_build_company_profile(context, supplier_alias)

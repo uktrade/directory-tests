@@ -956,7 +956,6 @@ def prof_add_case_study(context, supplier_alias, case_alias):
     :param context: behave `context` object
     :param supplier_alias: alias of the Actor used in the scope of the scenario
     :param case_alias: alias of the Case Study used in the scope of the scenario
-    :param unique: use uniquely identifying words if True, otherwise False
     """
     actor = context.get_actor(supplier_alias)
     session = actor.session

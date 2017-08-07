@@ -24,6 +24,7 @@ from tests.functional.features.utils import (
     extract_logo_url,
     get_verification_link
 )
+from tests.settings import SEARCHABLE_CASE_STUDY_DETAILS
 
 
 def reg_sso_account_should_be_created(response: Response, supplier_alias: str):
@@ -51,7 +52,7 @@ def reg_should_get_verification_email(context: Context, alias: str):
     """
     logging.debug("Searching for an email verification message...")
     actor = context.get_actor(alias)
-    link = get_verification_link(actor.email)
+    link = get_verification_link(context, actor.email)
     context.set_actor_email_confirmation_link(alias, link)
 
 
@@ -333,29 +334,31 @@ def fas_should_see_company_details(context: Context, supplier_alias: str):
 @retry(wait_fixed=5000, stop_max_attempt_number=3)
 def fas_find_supplier_using_case_study_details(
         context: Context, buyer_alias: str, company_alias: str, case_alias: str,
-        properties: Table):
+        *, properties: Table = None):
     """Find Supplier on FAS using parts of the Case Study added by Supplier.
 
     :param context: behave `context` object
     :param buyer_alias: alias of the Actor used in the scope of the scenario
     :param company_alias: alias of the sought Company
     :param case_alias: alias of the Case Study used in the search
-    :param properties: table with Case Study properties used in search
+    :param properties: (optional) table containing the names of Case Study parts
+                       that will be used search. If not provided, then all parts
+                       will be used except 'alias'.
     """
     actor = context.get_actor(buyer_alias)
     session = actor.session
     company = context.get_company(company_alias)
     case_study = company.case_studies[case_alias]
-    properties = [row['search using case study\'s'] for row in properties]
+    keys = SEARCHABLE_CASE_STUDY_DETAILS
+    if properties:
+        keys = [row['search using case study\'s'] for row in properties]
     search_terms = {}
-    for row in properties:
-        if row == "keywords":
-            i = 0
-            for keyword in case_study.keywords.split(", "):
-                i += 1
-                search_terms["keyword #{}".format(i)] = keyword
+    for key in keys:
+        if key == "keywords":
+            for index, keyword in enumerate(case_study.keywords.split(", ")):
+                search_terms["keyword #{}".format(index)] = keyword
         else:
-            search_terms[row] = getattr(case_study, row.replace(" ", "_"))
+            search_terms[key] = getattr(case_study, key.replace(" ", "_"))
     logging.debug(
         "Now %s will try to find '%s' using following search terms: %s",
         buyer_alias, company.title, search_terms)
@@ -371,3 +374,37 @@ def fas_find_supplier_using_case_study_details(
         logging.debug(
             "Buyer found Supplier '%s' on FAS using %s: %s", company.title,
             term_name, term)
+
+
+def fas_supplier_cannot_be_found_using_case_study_details(
+        context: Context, buyer_alias: str, company_alias: str, case_alias: str):
+    actor = context.get_actor(buyer_alias)
+    session = actor.session
+    company = context.get_company(company_alias)
+    case_study = company.case_studies[case_alias]
+    keys = SEARCHABLE_CASE_STUDY_DETAILS
+    search_terms = {}
+    for key in keys:
+        if key == "keywords":
+            for index, keyword in enumerate(case_study.keywords.split(", ")):
+                search_terms["keyword #{}".format(index)] = keyword
+        else:
+            search_terms[key] = getattr(case_study, key)
+    logging.debug(
+        "Now %s will try to find '%s' using following search terms: %s",
+        buyer_alias, company.title, search_terms)
+    for term_name in search_terms:
+        term = search_terms[term_name]
+        logging.debug(
+            "Searching for '%s' using %s: %s", buyer_alias, company.title,
+            term_name, search_terms)
+        response = fas_ui_find_supplier.go_to(session, term=term)
+        context.response = response
+        found = fas_ui_find_supplier.should_not_see_company(response, company.title)
+        with assertion_msg(
+                "Buyer found Supplier '%s' on FAS using %s: %s", company.title,
+                term_name, term):
+            assert found
+        logging.debug(
+            "Buyer was not able to find unverified Supplier '%s' on FAS using "
+            "%s: %s", company.title, term_name, term)

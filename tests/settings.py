@@ -167,3 +167,10 @@ nine = sorted(set([w.lower() for w in words
 """
 with open(os.path.join(TEST_IMAGES_DIR, "rare.txt"), "r") as f:
     RARE_WORDS = f.read().split()
+
+
+SEARCHABLE_CASE_STUDY_DETAILS = [
+    'title', 'summary', 'description', 'website', 'keywords', 'caption_1',
+    'caption_2', 'caption_3', 'testimonial', 'source_name', 'source_job',
+    'source_company'
+]
