@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Behave configuration file."""
 import logging
+from pprint import pformat
 
 from tests.functional.features.context_utils import (
     initialize_scenario_data,
@@ -18,7 +19,6 @@ def before_step(context, step):
 
 
 def after_step(context, step):
-    from pprint import pformat
     offset = 1024
     if step.status == "failed":
         logging.debug(
