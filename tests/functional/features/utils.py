@@ -9,8 +9,10 @@ import traceback
 from contextlib import contextmanager
 from enum import Enum
 
+import lxml.html
 import requests
 from behave.runner import Context
+from bs4 import BeautifulSoup
 from requests.models import Response
 from retrying import retry
 from scrapy.selector import Selector
@@ -18,6 +20,11 @@ from termcolor import cprint
 
 from tests.functional.features.db_cleanup import get_dir_db_connection
 from tests.settings import MAILGUN_EVENTS_URL, MAILGUN_SECRET_API_KEY
+
+ERROR_INDICATORS = [
+    'error', 'errors', 'problem', 'problems', 'fail', 'failed', 'failure',
+    'required', 'missing'
+]
 
 
 def get_file_log_handler(
@@ -540,3 +547,46 @@ def green(x: str):
 
 def blue(x: str):
     cprint(x, 'blue', attrs=['bold'])
+
+
+def extract_section_error(content: str) -> str:
+    """Extract error from page main 'section'.
+
+    :param content: a raw HTML content
+    :return: error message or None is no error was detected
+    """
+    soup = BeautifulSoup(content, "lxml")
+    sections = soup.find_all('section')
+    lines = [
+        line.strip().lower()
+        for section in sections
+        for line in section.text.splitlines()
+        if line
+    ]
+    has_errors = any(
+        indicator in line
+        for line in lines
+        for indicator in ERROR_INDICATORS
+    )
+    return "\n".join(lines) if has_errors else ""
+
+
+def extract_form_errors(content: str) -> str:
+    """Extract form errors if any is present.
+
+    :param content: a raw HTML content
+    :return: form error or None is no form error was detected
+    """
+    tree = lxml.html.fromstring(content)
+    elements = tree.find_class("input-field-container has-error")
+
+    form_errors = ""
+    for element in elements:
+        string_element = lxml.html.tostring(element).decode("utf-8")
+        form_errors += string_element.replace("\t", "").replace("\n\n", "")
+
+    has_errors = any(
+        indicator in line.lower()
+        for line in form_errors.splitlines()
+        for indicator in ERROR_INDICATORS)
+    return form_errors if has_errors else ""
