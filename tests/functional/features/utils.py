@@ -419,14 +419,17 @@ def extract_by_css(response, selector):
     return res[0] if len(res) > 0 else ""
 
 
-def extract_logo_url(response):
+def extract_logo_url(response, *, fas: bool = False):
     """Extract URL of the Company's logo picture from the Directory
     edit profile page content.
 
     :param response: response with the contents of edit profile page
+    :param fas: Use FAS specific CSS selector if True, if False use FAB selector
     :return: a URL to the company's logo image
     """
     css_selector = ".logo-container img::attr(src)"
+    if fas:
+        css_selector = "#company-logo::attr(src)"
     logo_url = extract_by_css(response, css_selector)
     with assertion_msg("Could not find Company's logo URL in the response"):
         assert logo_url

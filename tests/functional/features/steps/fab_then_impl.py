@@ -201,7 +201,7 @@ def fas_should_see_logo_picture(context: Context, supplier_alias: str):
     # Step 1 - Go to the FAS profile page & extract URL of visible logo image
     response = fas_ui_profile.go_to(session, company.number)
     context.response = response
-    visible_logo_url = extract_logo_url(response)
+    visible_logo_url = extract_logo_url(response, fas=True)
 
     # Check if FAS shows the correct Logo image
     with assertion_msg(
