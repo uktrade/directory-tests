@@ -8,6 +8,7 @@ import re
 from random import choice
 from typing import List
 
+import lxml
 import requests
 from behave.runner import Context
 from bs4 import BeautifulSoup
@@ -39,6 +40,10 @@ CompaniesList = List[Company]
 # make `langdetect` results deterministic
 DetectorFactory.seed = 0
 # A dict with currently supported languages on FAS and their short codes
+ERROR_INDICATORS = [
+    'error', 'errors', 'problem', 'problems', 'fail', 'failed', 'failure',
+    'required', 'missing'
+]
 FAS_SUPPORTED_LANGUAGES = {
     "arabic": "ar",
     "english": "en",

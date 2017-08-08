@@ -9,7 +9,6 @@ import traceback
 from contextlib import contextmanager
 from enum import Enum
 
-import lxml.html
 import requests
 from behave.runner import Context
 from requests.models import Response
@@ -19,11 +18,6 @@ from termcolor import cprint
 
 from tests.functional.features.db_cleanup import get_dir_db_connection
 from tests.settings import MAILGUN_EVENTS_URL, MAILGUN_SECRET_API_KEY
-
-ERROR_INDICATORS = [
-    'error', 'errors', 'problem', 'problems', 'fail', 'failed', 'failure',
-    'required', 'missing'
-]
 
 
 def get_file_log_handler(
