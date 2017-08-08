@@ -1144,7 +1144,7 @@ def fas_send_feedback_request(
 
 
 def fas_feedback_request_should_be_submitted(context: Context, buyer_alias: str):
-    response = context.respone
+    response = context.response
     fas_ui_feedback.should_see_feedback_submission_confirmation(response)
     logging.debug(
         "% was told that the feedback request has been submitted", buyer_alias)
