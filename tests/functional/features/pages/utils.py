@@ -307,8 +307,30 @@ def get_fas_page_url(page_name: str, *, language_code: str = None):
     return url
 
 
+def extract_main_error(content: str) -> str:
+    """Extract error from page `main` block.
+
+    :param content: a raw HTML content
+    :return: error message or None is no error was detected
+    """
+    soup = BeautifulSoup(content, "lxml")
+    sections = soup.find_all('main')
+    lines = [
+        line.strip().lower()
+        for section in sections
+        for line in section.text.splitlines()
+        if line
+    ]
+    has_errors = any(
+        indicator in line
+        for line in lines
+        for indicator in ERROR_INDICATORS
+    )
+    return "\n".join(lines) if has_errors else ""
+
+
 def extract_section_error(content: str) -> str:
-    """Extract error from page main 'section'.
+    """Extract error from 'section'.
 
     :param content: a raw HTML content
     :return: error message or None is no error was detected
