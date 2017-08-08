@@ -4,10 +4,15 @@ import json
 import logging
 import os
 import random
+import re
 from random import choice
 from typing import List
 
+import requests
 from behave.runner import Context
+from bs4 import BeautifulSoup
+from faker import Factory
+from langdetect import DetectorFactory, detect_langs
 from requests import Response
 
 from tests import get_absolute_url
@@ -28,7 +33,11 @@ from tests.settings import (
     PNGs
 )
 
-CompaniesList = List[Company]  # a type hint for a List of Company named tuples
+FAKE = Factory.create()
+# a type hint for a List of Company named tuples
+CompaniesList = List[Company]
+# make `langdetect` results deterministic
+DetectorFactory.seed = 0
 
 
 def extract_and_set_csrf_middleware_token(
@@ -255,3 +264,50 @@ def get_active_company_without_fas_profile(alias: str) -> Company:
     company = random.choice(load_companies())._replace(alias=alias)
     logging.debug("Selected company: %s", company)
     return company
+
+
+def detect_page_language(
+        *, url: str = None, content: str = None, main: bool = False,
+        rounds: int = 15) -> dict:
+    """Detect the language of the page.
+
+    NOTE:
+    langdetect supports 55 languages out of the box:
+        af, ar, bg, bn, ca, cs, cy, da, de, el, en, es, et, fa, fi, fr, gu, he,
+        hi, hr, hu, id, it, ja, kn, ko, lt, lv, mk, ml, mr, ne, nl, no, pa, pl,
+        pt, ro, ru, sk, sl, so, sq, sv, sw, ta, te, th, tl, tr, uk, ur, vi,
+        zh-cn, zh-tw
+
+    :param url: URL to the HTML page with some content
+    :param content: use explicit content rather than downloading it from URL
+    :param main: use only the main part of the content (ignore header & footer)
+    :param rounds: number of detection rounds. `langdetect` is not
+    :return: language code detected by langdetect
+    """
+    assert rounds > 0, "Rounds can't be lower than 1"
+    ignored_characters = '[ا]'
+    if url:
+        content = requests.get(url).content.decode("utf-8")
+
+    soup = BeautifulSoup(content, "lxml")
+    # strip out all of JavaScript & CSS that might not be filtered out initially
+    for element in soup.findAll(['script', 'style']):
+        element.extract()
+
+    if main:
+        # ignore page header & footer
+        logging.debug(
+            "Will analyse only the main content of the page and ignore the page"
+            " header & footer")
+        for element in soup.findAll(['header', 'footer']):
+            element.extract()
+
+    # clear the page content from the specified characters
+    text = re.sub(ignored_characters, '', soup.get_text())
+    lines = [line.strip().lower() for line in text.splitlines() if line.strip()]
+    results = {}
+    for x in range(rounds):
+        results[x] = detect_langs('\n'.join(lines))
+    logging.debug(
+        "Language detection results after %d rounds: %s", rounds, results)
+    return results
