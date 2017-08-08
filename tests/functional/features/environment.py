@@ -11,14 +11,11 @@ from tests.functional.features.db_cleanup import (
     delete_expired_django_sessions,
     delete_supplier_data
 )
-from tests.functional.features.utils import (
-    blue,
+from tests.functional.features.pages.utils import (
     extract_form_errors,
-    extract_section_error,
-    green,
-    init_loggers,
-    red
+    extract_section_error
 )
+from tests.functional.features.utils import blue, green, init_loggers, red
 
 
 def before_step(context, step):
