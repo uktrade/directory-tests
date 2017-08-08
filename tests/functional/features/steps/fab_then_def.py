@@ -12,6 +12,7 @@ from tests.functional.features.steps.fab_then_impl import (
     fas_check_profiles,
     fas_find_supplier_using_case_study_details,
     fas_no_links_to_online_profiles_are_visible,
+    fas_pages_should_be_in_selected_language,
     fas_should_be_on_profile_page,
     fas_should_find_with_company_details,
     fas_should_see_all_case_studies,
@@ -198,3 +199,11 @@ def then_buyer_should_find_supplier_using_any_part_of_case_study(
 def then_buyer_should_find_supplier_using_company_details(
         context, buyer_alias, company_alias):
     fas_should_find_with_company_details(context, buyer_alias, company_alias)
+
+
+@then('the "{page_part}" part of the viewed FAS page should be presented '
+      'in "{language}" language with probability greater than "{probability}"')
+def then_page_should_be_in(context, page_part, language, probability):
+    fas_pages_should_be_in_selected_language(
+        context, pages_table=context.table, language=language,
+        page_part=page_part, probability=float(probability))
