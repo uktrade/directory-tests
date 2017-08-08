@@ -13,6 +13,7 @@ from tests.functional.features.db_cleanup import (
 )
 from tests.functional.features.pages.utils import (
     extract_form_errors,
+    extract_main_error,
     extract_section_error
 )
 from tests.functional.features.utils import (
@@ -42,10 +43,14 @@ def after_step(context, step):
         if not is_request_exception and has_content:
             res = context.response
             content = res.content.decode("utf-8")
+            main_errors = extract_main_error(content)
             section_errors = extract_section_error(content)
             form_errors = extract_form_errors(content)
+            if main_errors:
+                red("Found errors in the `main` part of the response")
+                print(main_errors)
             if section_errors:
-                red("Found errors in the main section of the response")
+                red("Found errors in the `section` of the response")
                 print(section_errors)
             if form_errors:
                 red("Found form related error(s)")
