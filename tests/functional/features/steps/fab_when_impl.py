@@ -39,7 +39,7 @@ from tests.functional.features.pages import (
 from tests.functional.features.pages.common import DETAILS, PROFILES
 from tests.functional.features.pages.utils import (
     extract_and_set_csrf_middleware_token,
-    find_active_company_without_fas_profile,
+    get_active_company_without_fas_profile,
     random_case_study_data
 )
 from tests.functional.features.utils import (
@@ -67,7 +67,7 @@ def select_random_company(
         3 - check if such company is registered at Companies House & is active
 
     Once a matching company is found, then it's data will be stored in:
-        context.scenario_data.unregistered_companies[]
+        context.scenario_data.companies[]
 
     :param context: behave `context` object
     :param supplier_alias: alias of the Actor used in the scope of the scenario
@@ -77,7 +77,7 @@ def select_random_company(
     session = actor.session
 
     # Step 1 - find an active company without a FAS profile
-    company = find_active_company_without_fas_profile(company_alias)
+    company = get_active_company_without_fas_profile(company_alias)
 
     # Step 2 - Go to the Confirm Company page
     response = fab_ui_confirm_company.go_to(session, company)
