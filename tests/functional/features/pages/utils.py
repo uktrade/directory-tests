@@ -38,6 +38,32 @@ FAKE = Factory.create()
 CompaniesList = List[Company]
 # make `langdetect` results deterministic
 DetectorFactory.seed = 0
+# A dict with currently supported languages on FAS and their short codes
+FAS_SUPPORTED_LANGUAGES = {
+    "arabic": "ar",
+    "english": "en",
+    "chinese": "zh-hans",
+    "german": "de",
+    "japanese": "ja",
+    "portuguese": "pt",
+    "portuguese-brazilian": "pt-br",
+    "spanish": "es"
+}
+FAS_PAGE_SELECTORS = {
+    "landing": "ui-supplier:landing",
+    'industries': 'ui-supplier:industries',
+    'search': 'ui-supplier:search',
+    'health industry': 'ui-supplier:industries-health',
+    'tech industry': 'ui-supplier:industries-tech',
+    'creative industry': 'ui-supplier:industries-creative',
+    'food-and-drink industry': 'ui-supplier:industries-food',
+    'health industry summary': 'ui-supplier:industries-health-summary',
+    'tech industry summary': 'ui-supplier:industries-tech-summary',
+    'creative industry summary': 'ui-supplier:industries-creative-summary',
+    'food-and-drink industry summary': 'ui-supplier:industries-food-summary',
+    'terms-and-conditions': 'ui-supplier:terms',
+    'privacy-policy': 'ui-supplier:privacy',
+}
 
 
 def extract_and_set_csrf_middleware_token(
@@ -264,6 +290,18 @@ def get_active_company_without_fas_profile(alias: str) -> Company:
     company = random.choice(load_companies())._replace(alias=alias)
     logging.debug("Selected company: %s", company)
     return company
+
+
+def get_language_code(language: str):
+    return FAS_SUPPORTED_LANGUAGES[language.lower()]
+
+
+def get_fas_page_url(page_name: str, *, language_code: str = None):
+    selector = FAS_PAGE_SELECTORS[page_name.lower()]
+    url = get_absolute_url(selector)
+    if language_code:
+        url += "?lang={}".format(language_code)
+    return url
 
 
 def detect_page_language(
