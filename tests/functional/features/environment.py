@@ -11,7 +11,14 @@ from tests.functional.features.db_cleanup import (
     delete_expired_django_sessions,
     delete_supplier_data
 )
-from tests.functional.features.utils import blue, green, init_loggers, red
+from tests.functional.features.utils import (
+    blue,
+    extract_form_errors,
+    extract_section_error,
+    green,
+    init_loggers,
+    red
+)
 
 
 def before_step(context, step):
@@ -30,6 +37,14 @@ def after_step(context, step):
         if hasattr(context, "response"):
             res = context.response
             content = res.content.decode("utf-8")
+            section_errors = extract_section_error(content)
+            form_errors = extract_form_errors(content)
+            if section_errors:
+                red("Found errors in the main section of the response")
+                print(section_errors)
+            if form_errors:
+                red("Found form related error(s)")
+                print(form_errors)
             red("Last recorded request & response")
             if res.history:
                 green("Request was redirected")
