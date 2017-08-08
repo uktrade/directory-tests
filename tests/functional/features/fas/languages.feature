@@ -6,7 +6,7 @@ Feature: View FAS in various languages
   @internationalization
   @i18n
   @<selected>
-  Scenario Outline: Buyers should be able to view specific FAB pages in "<selected>" language
+  Scenario Outline: Buyers should be able to view specific FAS pages in "<selected>" language
     Given "Annette Geissinger" is a buyer
 
     When "Annette Geissinger" chooses to view specific FAS page in "<selected>" language
