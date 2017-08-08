@@ -71,7 +71,7 @@ def update_details(
         new_title = company.title
 
     if website:
-        new_website = specific_website or "http://{}".format(rare_word())
+        new_website = specific_website or "http://{}.com".format(rare_word())
     else:
         new_website = company.website
 
