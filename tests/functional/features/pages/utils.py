@@ -12,7 +12,6 @@ import lxml
 import requests
 from behave.runner import Context
 from bs4 import BeautifulSoup
-from faker import Factory
 from langdetect import DetectorFactory, detect_langs
 from requests import Response
 
@@ -34,7 +33,6 @@ from tests.settings import (
     PNGs
 )
 
-FAKE = Factory.create()
 # a type hint for a List of Company named tuples
 CompaniesList = List[Company]
 # make `langdetect` results deterministic
