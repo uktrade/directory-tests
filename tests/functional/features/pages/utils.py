@@ -53,7 +53,7 @@ def sentence(*, max_length: int = 60, min_word_length: int = 9, max_words: int =
     :return: a sentence consisting of rare english words
     """
     words = []
-    while len(words) <= max_words:
+    while len(words) < max_words:
         word = random.choice(RARE_WORDS)
         if len(word) > min_word_length:
             words.append(word)
