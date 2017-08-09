@@ -129,7 +129,7 @@ def random_case_study_data(alias: str) -> CaseStudy:
     image_1, image_2, image_3 = (choice(images) for _ in range(3))
     (title, summary, description, caption_1, caption_2, caption_3, testimonial,
      source_name, source_job, source_company) = (sentence() for _ in range(10))
-    website = "http://{}.{}".format(rare_word(), rare_word())
+    website = "http://{}.{}".format(rare_word(min_length=15), rare_word())
     keywords = ", ".join(sentence().split())
 
     case_study = CaseStudy(
