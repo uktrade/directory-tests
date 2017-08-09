@@ -20,8 +20,8 @@ def search(term: str) -> dict:
     :return: a JSON response from Companies House Search endpoint
     """
     params = {"term": term}
-    response = make_request(Method.GET, URL, params=params,
-                            allow_redirects=False)
+    response = make_request(
+        Method.GET, URL, params=params, allow_redirects=False)
     with assertion_msg(
             "Expected 200 OK from GET %s but instead got {}. In case you're "
             "getting 301 Redirect then check if you're using correct protocol "
