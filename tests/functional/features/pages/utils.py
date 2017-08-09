@@ -358,6 +358,13 @@ def detect_page_language(
     """Detect the language of the page.
 
     NOTE:
+    `langdetect` uses a non-deterministic algorithm. By setting the
+    `DetectorFactory.seed` to 0 we can force the library to give consistent
+    results.
+    In order to ensure that the page language detection is consistent, we can
+    run the detection process N times (by default it's 15 times) and compare
+    all the results using statistics like: median or average.
+
     langdetect supports 55 languages out of the box:
         af, ar, bg, bn, ca, cs, cy, da, de, el, en, es, et, fa, fi, fr, gu, he,
         hi, hr, hu, id, it, ja, kn, ko, lt, lv, mk, ml, mr, ne, nl, no, pa, pl,
@@ -367,7 +374,7 @@ def detect_page_language(
     :param url: URL to the HTML page with some content
     :param content: use explicit content rather than downloading it from URL
     :param main: use only the main part of the content (ignore header & footer)
-    :param rounds: number of detection rounds. `langdetect` is not
+    :param rounds: number of detection rounds.
     :return: language code detected by langdetect
     """
     assert rounds > 0, "Rounds can't be lower than 1"
