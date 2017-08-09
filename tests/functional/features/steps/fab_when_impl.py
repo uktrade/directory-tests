@@ -5,7 +5,6 @@ import random
 
 from behave.model import Table
 from behave.runner import Context
-from faker import Factory
 from requests import Response
 from scrapy import Selector
 
@@ -27,6 +26,7 @@ from tests.functional.features.pages import (
     fab_ui_profile,
     fab_ui_upload_logo,
     fab_ui_verify_company,
+    fas_ui_find_supplier,
     fas_ui_profile,
     profile_ui_find_a_buyer,
     profile_ui_landing,
@@ -40,7 +40,9 @@ from tests.functional.features.pages.common import DETAILS, PROFILES
 from tests.functional.features.pages.utils import (
     extract_and_set_csrf_middleware_token,
     get_active_company_without_fas_profile,
-    random_case_study_data
+    random_case_study_data,
+    rare_word,
+    sentence
 )
 from tests.functional.features.utils import (
     assertion_msg,
@@ -53,8 +55,6 @@ from tests.functional.features.utils import (
     get_verification_code
 )
 from tests.settings import COUNTRIES, NO_OF_EMPLOYEES, SECTORS
-
-FAKE = Factory.create()
 
 
 def select_random_company(
@@ -253,8 +253,8 @@ def bp_provide_company_details(context, supplier_alias):
     # Step 0 - generate random details & update Company matching details
     # Need to get Company details after updating it in the Scenario Data
     size = random.choice(NO_OF_EMPLOYEES)
-    website = "https://{}".format(FAKE.domain_name())
-    keywords = ", ".join(FAKE.sentence().replace(".", "").split())
+    website = "http://{}.com".format(rare_word(min_length=15))
+    keywords = ", ".join(sentence().split())
     context.set_company_details(
         company_alias, no_employees=size, website=website, keywords=keywords
     )
@@ -394,8 +394,8 @@ def prof_set_company_description(context, supplier_alias):
     logging.debug("Supplier is on the Set Company Description page")
 
     # Step 2 - Submit company description
-    summary = FAKE.sentence()
-    description = FAKE.sentence()
+    summary = sentence()
+    description = sentence()
     response = fab_ui_edit_description.submit(
         session, token, summary, description)
     context.response = response
@@ -742,13 +742,12 @@ def prof_supplier_uploads_logo(context, supplier_alias, picture):
     prof_upload_logo(context, supplier_alias, picture)
 
 
-def prof_to_upload_unsupported_logos(context, supplier_alias, table):
+def prof_to_upload_unsupported_logos(
+        context: Context, supplier_alias: str, table: Table):
     """Upload a picture and set it as Company's logo.
 
     :param context: behave `context` object
-    :type context: behave.runner.Context
     :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :type supplier_alias: str
     :param table: context.table containing data table
                   see: https://pythonhosted.org/behave/gherkin.html#table
     """
@@ -839,13 +838,12 @@ def prof_update_company_details(
         new_countries)
 
 
-def prof_add_online_profiles(context, supplier_alias, online_profiles):
+def prof_add_online_profiles(
+        context: Context, supplier_alias: str, online_profiles: Table):
     """Update links to Company's Online Profiles.
 
     :param context: behave `context` object
-    :type  context: behave.runner.Context
     :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :type  supplier_alias: str
     :param online_profiles: context.table containing data table
             see: https://pythonhosted.org/behave/gherkin.html#table
     """
@@ -887,9 +885,7 @@ def prof_add_invalid_online_profiles(
     """Attempt to update links to Company's Online Profiles using invalid URLs.
 
     :param context: behave `context` object
-    :type  context: behave.runner.Context
     :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :type  supplier_alias: str
     :param online_profiles: context.table containing data table
             see: https://pythonhosted.org/behave/gherkin.html#table
     """
@@ -1033,3 +1029,55 @@ def fab_update_case_study(context: Context, supplier_alias: str, case_alias: str
     logging.debug(
         "Successfully updated details of case study: '%s', title:'%s', link:"
         "'%s'", case_alias, current.title, current_link)
+
+
+def fas_search_using_company_details(
+        context: Context, buyer_alias: str, company_alias: str, *,
+        table_of_details: Table = None):
+    """Search for Company on FAS using it's all or selected details.
+
+    :param context: behave `context` object
+    :param buyer_alias: alias of the Actor used in the scope of the scenario
+    :param company_alias: alias of the Company used in the scope of the scenario
+    :param table_of_details: (optional) a table with selected company details
+                             which will be used in search
+    """
+    actor = context.get_actor(buyer_alias)
+    session = actor.session
+    company = context.get_company(company_alias)
+    keys = [
+        'title', 'number', 'summary', 'description', 'website', 'keywords',
+        'facebook', 'linkedin', 'twitter'
+    ]
+
+    # use selected company details
+    if table_of_details:
+        keys = [row["company detail"] for row in table_of_details]
+
+    search_terms = {}
+    search_results = {}
+    for key in keys:
+        if key == "keywords":
+            for index, keyword in enumerate(company.keywords.split(", ")):
+                search_terms["keyword #{}".format(index)] = keyword
+        else:
+            search_terms[key] = getattr(company, key)
+    logging.debug(
+        "Now %s will try to find '%s' using following search terms: %s",
+        buyer_alias, company.title, search_terms)
+    for term_name in search_terms:
+        term = search_terms[term_name]
+        response = fas_ui_find_supplier.go_to(session, term=term)
+        context.response = response
+        found = fas_ui_find_supplier.should_see_company(response, company.title)
+        search_results[term_name] = found
+        if found:
+            logging.debug(
+                "Found Supplier '%s' on FAS using '%s' : '%s'", company.title,
+                term_name, term)
+        else:
+            logging.debug(
+                "Couldn't find Supplier '%s' on the 1st page of FAS search "
+                "results. Search was done using '%s' : '%s'", company.title,
+                term_name, term)
+    context.search_results = search_results

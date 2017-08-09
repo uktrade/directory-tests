@@ -2,11 +2,11 @@
 """FAB - Edit the name of the letters recipient"""
 import logging
 
-from faker import Factory
 from requests import Response
 
 from tests import get_absolute_url
 from tests.functional.features.context_utils import Actor, Company
+from tests.functional.features.pages.utils import rare_word
 from tests.functional.features.utils import Method, check_response, make_request
 
 URL = get_absolute_url("ui-buyer:company-edit")
@@ -19,7 +19,6 @@ EXPECTED_STRINGS = [
     "Address line 1:", "Address line 2:", "City:", "Country:", "Postcode:",
     "PO box:", "Back to previous step", "Save"
 ]
-FAKE = Factory.create()
 
 
 def should_be_here(response: Response):
@@ -49,7 +48,7 @@ def update_letters_recipient(
     address = company.address_details
 
     if update:
-        new_full_name = full_name or FAKE.name()
+        new_full_name = full_name or rare_word()
     else:
         new_full_name = address.letter_recipient
 

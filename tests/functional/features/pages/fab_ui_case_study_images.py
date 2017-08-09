@@ -2,7 +2,6 @@
 """FAB - Add Case Study - Images page"""
 import logging
 
-from faker import Factory
 from requests import Response, Session
 
 from tests import get_absolute_url
@@ -30,7 +29,6 @@ EXPECTED_STRINGS = [
     "Job title of the source (optional):", "< Back to previous step", "Save",
     "Company name of the source (optional):"
 ]
-FAKE = Factory.create()
 
 
 def should_be_here(response: Response):

@@ -2,7 +2,6 @@
 """FAB - Add Case Study - Basic page"""
 import logging
 
-from faker import Factory
 from requests import Response, Session
 
 from tests import get_absolute_url
@@ -31,7 +30,6 @@ EXPECTED_STRINGS = [
     ("These keywords will be used to help potential overseas buyers find your "
      "case study."), "Next", "Cancel"
 ]
-FAKE = Factory.create()
 
 
 def should_be_here(response: Response):

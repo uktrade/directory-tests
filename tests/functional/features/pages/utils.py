@@ -8,7 +8,6 @@ from random import choice
 from typing import List
 
 from behave.runner import Context
-from faker import Factory
 from requests import Response
 
 from tests import get_absolute_url
@@ -29,7 +28,6 @@ from tests.settings import (
     PNGs
 )
 
-FAKE = Factory.create()
 CompaniesList = List[Company]  # a type hint for a List of Company named tuples
 
 
@@ -55,7 +53,7 @@ def sentence(*, max_length: int = 60, min_word_length: int = 9, max_words: int =
     :return: a sentence consisting of rare english words
     """
     words = []
-    while len(words) <= max_words:
+    while len(words) < max_words:
         word = random.choice(RARE_WORDS)
         if len(word) > min_word_length:
             words.append(word)
@@ -91,7 +89,7 @@ def random_case_study_data(alias: str) -> CaseStudy:
     image_1, image_2, image_3 = (choice(images) for _ in range(3))
     (title, summary, description, caption_1, caption_2, caption_3, testimonial,
      source_name, source_job, source_company) = (sentence() for _ in range(10))
-    website = "http://{}.com".format(rare_word(min_length=15))
+    website = "http://{}.{}".format(rare_word(), rare_word())
     keywords = ", ".join(sentence().split())
 
     case_study = CaseStudy(

@@ -2,11 +2,11 @@
 """FAB - Edit Company's Details page"""
 import random
 
-from faker import Factory
 from requests import Response, Session
 
 from tests import get_absolute_url
 from tests.functional.features.context_utils import Actor, Company
+from tests.functional.features.pages.utils import rare_word, sentence
 from tests.functional.features.utils import Method, check_response, make_request
 from tests.settings import NO_OF_EMPLOYEES
 
@@ -21,7 +21,6 @@ EXPECTED_STRINGS = [
     ("Tell international buyers more about your business to ensure the right "
      "buyers can find you.")
 ] + NO_OF_EMPLOYEES
-FAKE = Factory.create()
 
 
 def should_be_here(response: Response):
@@ -67,17 +66,17 @@ def update_details(
     token = actor.csrfmiddlewaretoken
 
     if title:
-        new_title = specific_title or FAKE.sentence()
+        new_title = specific_title or sentence()
     else:
         new_title = company.title
 
     if website:
-        new_website = specific_website or "http://{}".format(FAKE.domain_name())
+        new_website = specific_website or "http://{}.com".format(rare_word())
     else:
         new_website = company.website
 
     if keywords:
-        random_keywords = ", ".join(FAKE.sentence().replace(".", "").split())
+        random_keywords = ", ".join(sentence().split())
         new_keywords = specific_keywords or random_keywords
     else:
         new_keywords = company.keywords

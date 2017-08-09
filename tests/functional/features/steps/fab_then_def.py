@@ -13,6 +13,7 @@ from tests.functional.features.steps.fab_then_impl import (
     fas_find_supplier_using_case_study_details,
     fas_no_links_to_online_profiles_are_visible,
     fas_should_be_on_profile_page,
+    fas_should_find_with_company_details,
     fas_should_see_all_case_studies,
     fas_should_see_company_details,
     fas_should_see_logo_picture,
@@ -190,3 +191,10 @@ def then_buyer_should_find_supplier_using_any_part_of_case_study(
         context, buyer_alias, company_alias, case_alias):
     fas_find_supplier_using_case_study_details(
         context, buyer_alias, company_alias, case_alias)
+
+
+@then('"{buyer_alias}" should be able to find company "{company_alias}" on FAS '
+      'using selected company\'s details')
+def then_buyer_should_find_supplier_using_company_details(
+        context, buyer_alias, company_alias):
+    fas_should_find_with_company_details(context, buyer_alias, company_alias)

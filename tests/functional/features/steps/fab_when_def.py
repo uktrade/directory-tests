@@ -8,6 +8,7 @@ from tests.functional.features.steps.fab_when_impl import (
     bp_provide_full_name,
     bp_select_random_sector_and_export_to_country,
     fab_update_case_study,
+    fas_search_using_company_details,
     prof_add_case_study,
     prof_add_invalid_online_profiles,
     prof_add_online_profiles,
@@ -173,3 +174,11 @@ def when_supplier_attempts_to_upload_unsupported_file(context, supplier_alias):
       '"{case_alias}"')
 def when_supplier_updates_case_study(context, supplier_alias, case_alias):
     fab_update_case_study(context, supplier_alias, case_alias)
+
+
+@when('"{buyer_alias}" searches for company "{company_alias}" on FAS using '
+      'selected company\'s details')
+def when_buyer_searches_on_fas_using_company_details(
+        context, buyer_alias, company_alias):
+    fas_search_using_company_details(
+        context, buyer_alias, company_alias, table_of_details=context.table)
