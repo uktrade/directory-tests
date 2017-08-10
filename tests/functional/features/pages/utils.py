@@ -313,6 +313,8 @@ def extract_section_error(content: str) -> str:
     :param content: a raw HTML content
     :return: error message or None is no error was detected
     """
+    if not content:
+        return None
     soup = BeautifulSoup(content, "lxml")
     sections = soup.find_all('section')
     lines = [
@@ -335,6 +337,8 @@ def extract_form_errors(content: str) -> str:
     :param content: a raw HTML content
     :return: form error or None is no form error was detected
     """
+    if not content:
+        return None
     tree = lxml.html.fromstring(content)
     elements = tree.find_class("input-field-container has-error")
 
