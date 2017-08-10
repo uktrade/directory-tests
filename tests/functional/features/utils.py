@@ -7,6 +7,7 @@ import os
 import sys
 import traceback
 from contextlib import contextmanager
+from datetime import datetime
 from enum import Enum
 from pprint import pprint
 
@@ -283,6 +284,7 @@ def make_request(
         else:
             raise KeyError("Unrecognized Method: %s", method.name)
     except REQUEST_EXCEPTIONS as ex:
+        red("Exception UTC datetime: %s" % datetime.isoformat(datetime.utcnow()))
         print_response(res, trim=False)
         raise ex
 
