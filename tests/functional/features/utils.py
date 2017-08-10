@@ -560,7 +560,8 @@ def mailgun_get_message(context: Context, url: str) -> dict:
     api_key = MAILGUN_SECRET_API_KEY
     # this will help us to get the raw MIME
     headers = {"Accept": "message/rfc2822"}
-    response = requests.get(url, auth=("api", api_key), headers=headers)
+    response = make_request(
+        Method.GET, url, headers=headers, auth=("api", api_key))
     context.response = response
 
     with assertion_msg(
