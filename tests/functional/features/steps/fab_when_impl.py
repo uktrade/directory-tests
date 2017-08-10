@@ -253,7 +253,7 @@ def bp_provide_company_details(context, supplier_alias):
     # Step 0 - generate random details & update Company matching details
     # Need to get Company details after updating it in the Scenario Data
     size = random.choice(NO_OF_EMPLOYEES)
-    website = "http://{}.com".format(rare_word(min_length=15))
+    website = "http://{}.{}".format(rare_word(min_length=15), rare_word())
     keywords = ", ".join(sentence().split())
     context.set_company_details(
         company_alias, no_employees=size, website=website, keywords=keywords
@@ -1056,6 +1056,7 @@ def fas_search_using_company_details(
 
     search_terms = {}
     search_results = {}
+    search_responses = {}
     for key in keys:
         if key == "keywords":
             for index, keyword in enumerate(company.keywords.split(", ")):
@@ -1068,7 +1069,7 @@ def fas_search_using_company_details(
     for term_name in search_terms:
         term = search_terms[term_name]
         response = fas_ui_find_supplier.go_to(session, term=term)
-        context.response = response
+        search_responses[term_name] = response
         found = fas_ui_find_supplier.should_see_company(response, company.title)
         search_results[term_name] = found
         if found:
@@ -1081,3 +1082,4 @@ def fas_search_using_company_details(
                 "results. Search was done using '%s' : '%s'", company.title,
                 term_name, term)
     context.search_results = search_results
+    context.search_responses = search_responses

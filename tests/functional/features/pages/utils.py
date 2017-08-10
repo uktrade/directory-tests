@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """Common page helpers"""
+import json
 import logging
 import os
-import pickle
 import random
 from random import choice
 from typing import List
@@ -199,8 +199,7 @@ def get_companies(*, number: int = 100) -> CompaniesList:
     """Find a number of active companies without FAS profile.
 
     NOTE:
-    The search is pretty slow. It might take 2-3 minutes to find default number
-    of companies.
+    The search is pretty slow. It takes roughly 10 minutes to find 100 companies
 
     :param number: (optional) expected number of companies to find
     :return: a list of Company named tuples (all with "test" alias)
@@ -209,21 +208,29 @@ def get_companies(*, number: int = 100) -> CompaniesList:
 
 
 def save_companies(companies: CompaniesList):
-    """Pickle and save in a file a List of Company named tuples.
+    """Save pre-selected Companies in a JSON file.
 
-    :param companies: a List of Company named tuples
+    :param companies: a list of named tuples with basic Company details
     """
-    with open(os.path.join(TEST_IMAGES_DIR, 'companies.pkl'), 'wb') as f:
-        pickle.dump(companies, f)
+    # convert `Company` named tuples into dictionaries
+    list_dict = []
+    for company in companies:
+        list_dict.append({key: getattr(company, key) for key in company._fields})
+
+    path = os.path.join(TEST_IMAGES_DIR, 'companies.json')
+    with open(path, 'w', encoding='utf8') as f:
+        f.write(json.dumps(list_dict, indent=4))
 
 
 def load_companies() -> CompaniesList:
-    """Load pickled List of Companies from file.
+    """Load stored list of Companies from a JSON file.
 
-    :return: a List of Company named tuples
+    :return: a list of named tuples with basic Company details
     """
-    with open(os.path.join(TEST_IMAGES_DIR, 'companies.pkl'), 'rb') as f:
-        return pickle.load(f)
+    path = os.path.join(TEST_IMAGES_DIR, 'companies.json')
+    with open(path, 'r', encoding='utf8') as f:
+        companies = json.load(f)
+    return [Company(**company) for company in companies]
 
 
 def escape_html(text: str, *, upper: bool = False) -> str:
