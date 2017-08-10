@@ -40,11 +40,14 @@ from tests.functional.features.pages.common import DETAILS, PROFILES
 from tests.functional.features.pages.utils import (
     extract_and_set_csrf_middleware_token,
     get_active_company_without_fas_profile,
+    get_fas_page_url,
+    get_language_code,
     random_case_study_data,
     rare_word,
     sentence
 )
 from tests.functional.features.utils import (
+    Method,
     assertion_msg,
     check_response,
     extract_confirm_email_form_action,
@@ -52,7 +55,8 @@ from tests.functional.features.utils import (
     extract_logo_url,
     get_absolute_path_of_file,
     get_md5_hash_of_file,
-    get_verification_code
+    get_verification_code,
+    make_request
 )
 from tests.settings import COUNTRIES, NO_OF_EMPLOYEES, SECTORS
 
@@ -1083,3 +1087,27 @@ def fas_search_using_company_details(
                 term_name, term)
     context.search_results = search_results
     context.search_responses = search_responses
+
+
+def fas_view_pages_in_selected_language(
+        context: Context, buyer_alias: str, pages_table: Table, language: str):
+    """View specific FAS pages in selected language.
+
+    NOTE:
+    This will store a dict with all page views responses in context.views
+
+    :param context: behave `context` object
+    :param buyer_alias: alias of the Buyer Actor
+    :param pages_table: a table with FAS pages to view
+    :param language: expected language of the view FAS page content
+    """
+    pages = [row['page'] for row in pages_table]
+    views = {}
+    for page_name in pages:
+        actor = context.get_actor(buyer_alias)
+        session = actor.session
+        language_code = get_language_code(language)
+        page_url = get_fas_page_url(page_name, language_code=language_code)
+        response = make_request(Method.GET, page_url, session=session)
+        views[page_name] = response
+    context.views = views

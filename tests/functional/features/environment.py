@@ -11,12 +11,16 @@ from tests.functional.features.db_cleanup import (
     delete_expired_django_sessions,
     delete_supplier_data
 )
-from tests.functional.features.utils import (
-    blue,
+from tests.functional.features.pages.utils import (
     extract_form_errors,
-    extract_section_error,
+    extract_section_error
+)
+from tests.functional.features.utils import (
+    REQUEST_EXCEPTIONS,
+    blue,
     green,
     init_loggers,
+    print_response,
     red
 )
 
@@ -26,7 +30,6 @@ def before_step(context, step):
 
 
 def after_step(context, step):
-    offset = 1024
     if step.status == "failed":
         logging.debug(
             'Step "%s %s" failed. Reason: "%s"', step.step_type, step.name,
@@ -34,7 +37,9 @@ def after_step(context, step):
         logging.debug(context.scenario_data)
         red("\nScenario data:")
         print(pformat(context.scenario_data))
-        if hasattr(context, "response"):
+        has_content = hasattr(context, "response")
+        is_request_exception = isinstance(step.exception, REQUEST_EXCEPTIONS)
+        if not is_request_exception and has_content:
             res = context.response
             content = res.content.decode("utf-8")
             section_errors = extract_section_error(content)
@@ -45,39 +50,10 @@ def after_step(context, step):
             if form_errors:
                 red("Found form related error(s)")
                 print(form_errors)
-            red("Last recorded request & response")
-            if res.history:
-                green("Request was redirected")
-                for resp in res.history:
-                    green("Intermediate REQ:")
-                    print(resp.request.method, resp.url)
-                    green("Intermediate REQ Headers:")
-                    print(pformat(resp.request.headers))
-                    green("Intermediate RESP:")
-                    print(resp.status_code, resp.reason)
-                    green("Intermediate RESP Headers:")
-                    print(pformat(resp.headers))
-                    blue("Final REQ URL:")
-            else:
-                blue("REQ URL: ")
-            print(res.request.method, res.request.url)
-            blue("REQ Headers: ")
-            print(pformat(res.request.headers))
-            if hasattr(res.request, "body"):
-                if res.request.body:
-                    if len(res.request.body) > offset:
-                        blue("REQ Body (trimmed):")
-                        print(res.request.body[:offset])
-                    else:
-                        blue("REQ Body:")
-                        print(res.request.body)
-            blue("RESP Headers:")
-            print(pformat(res.headers))
-            blue("RESP Content:")
-            print(content)
-            delattr(context, "response")
+            green("Last recorded request & response")
+            print_response(res, trim=False)
         else:
-            print("\nThere's no response content to log")
+            blue("There's no response content to log")
 
 
 def before_scenario(context, scenario):
@@ -90,9 +66,11 @@ def after_scenario(context, scenario):
     logging.debug("Deleting supplier data from FAB & SSO DBs")
     actors = context.scenario_data.actors
     for actor in actors.values():
-        delete_supplier_data("DIRECTORY", actor.email)
-    for actor in actors.values():
-        delete_supplier_data("SSO", actor.email)
+        if actor.type == "supplier":
+            delete_supplier_data("DIRECTORY", actor.email)
+            delete_supplier_data("SSO", actor.email)
+            if scenario.status == "failed":
+                red("Deleted data from DIR/SSO DBs for user: %s" % actor.email)
     # clear the scenario data after every scenario
     context.scenario_data = None
     logging.debug('Finished scenario: %s', scenario.name)

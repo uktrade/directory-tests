@@ -17,7 +17,7 @@ Actor = namedtuple(
     'Actor',
     [
         'alias', 'email', 'password', 'session', 'csrfmiddlewaretoken',
-        'email_confirmation_link', 'company_alias', 'has_sso_account'
+        'email_confirmation_link', 'company_alias', 'has_sso_account', 'type'
     ]
 )
 CaseStudy = namedtuple(

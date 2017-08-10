@@ -59,7 +59,7 @@ def unauthenticated_supplier(supplier_alias: str) -> Actor:
     return Actor(
         alias=supplier_alias, email=email, password=password, session=session,
         csrfmiddlewaretoken=None, email_confirmation_link=None,
-        company_alias=None, has_sso_account=False)
+        company_alias=None, has_sso_account=False, type="supplier")
 
 
 def unauthenticated_buyer(buyer_alias: str) -> Actor:
@@ -80,7 +80,7 @@ def unauthenticated_buyer(buyer_alias: str) -> Actor:
     company_name = sentence()
     return Actor(
         alias=buyer_alias, email=email, session=session,
-        company_alias=company_name)
+        company_alias=company_name, type="buyer")
 
 
 def reg_create_sso_account_associated_with_company(

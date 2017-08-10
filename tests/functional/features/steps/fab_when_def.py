@@ -9,6 +9,7 @@ from tests.functional.features.steps.fab_when_impl import (
     bp_select_random_sector_and_export_to_country,
     fab_update_case_study,
     fas_search_using_company_details,
+    fas_view_pages_in_selected_language,
     prof_add_case_study,
     prof_add_invalid_online_profiles,
     prof_add_online_profiles,
@@ -182,3 +183,10 @@ def when_buyer_searches_on_fas_using_company_details(
         context, buyer_alias, company_alias):
     fas_search_using_company_details(
         context, buyer_alias, company_alias, table_of_details=context.table)
+
+
+@when('"{buyer_alias}" chooses to view specific FAS page in "{language}" '
+      'language')
+def when_buyer_views_page_in_selected_language(context, buyer_alias, language):
+    fas_view_pages_in_selected_language(
+        context, buyer_alias, pages_table=context.table, language=language)

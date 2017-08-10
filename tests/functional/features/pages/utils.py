@@ -4,10 +4,15 @@ import json
 import logging
 import os
 import random
+import re
 from random import choice
 from typing import List
 
+import lxml
+import requests
 from behave.runner import Context
+from bs4 import BeautifulSoup
+from langdetect import DetectorFactory, detect_langs
 from requests import Response
 
 from tests import get_absolute_url
@@ -28,7 +33,40 @@ from tests.settings import (
     PNGs
 )
 
-CompaniesList = List[Company]  # a type hint for a List of Company named tuples
+# a type hint for a List of Company named tuples
+CompaniesList = List[Company]
+# make `langdetect` results deterministic
+DetectorFactory.seed = 0
+# A dict with currently supported languages on FAS and their short codes
+ERROR_INDICATORS = [
+    'error', 'errors', 'problem', 'problems', 'fail', 'failed', 'failure',
+    'required', 'missing'
+]
+FAS_SUPPORTED_LANGUAGES = {
+    "arabic": "ar",
+    "english": "en",
+    "chinese": "zh-hans",
+    "german": "de",
+    "japanese": "ja",
+    "portuguese": "pt",
+    "portuguese-brazilian": "pt-br",
+    "spanish": "es"
+}
+FAS_PAGE_SELECTORS = {
+    "landing": "ui-supplier:landing",
+    'industries': 'ui-supplier:industries',
+    'search': 'ui-supplier:search',
+    'health industry': 'ui-supplier:industries-health',
+    'tech industry': 'ui-supplier:industries-tech',
+    'creative industry': 'ui-supplier:industries-creative',
+    'food-and-drink industry': 'ui-supplier:industries-food',
+    'health industry summary': 'ui-supplier:industries-health-summary',
+    'tech industry summary': 'ui-supplier:industries-tech-summary',
+    'creative industry summary': 'ui-supplier:industries-creative-summary',
+    'food-and-drink industry summary': 'ui-supplier:industries-food-summary',
+    'terms-and-conditions': 'ui-supplier:terms',
+    'privacy-policy': 'ui-supplier:privacy',
+}
 
 
 def extract_and_set_csrf_middleware_token(
@@ -89,7 +127,7 @@ def random_case_study_data(alias: str) -> CaseStudy:
     image_1, image_2, image_3 = (choice(images) for _ in range(3))
     (title, summary, description, caption_1, caption_2, caption_3, testimonial,
      source_name, source_job, source_company) = (sentence() for _ in range(10))
-    website = "http://{}.{}".format(rare_word(), rare_word())
+    website = "http://{}.{}".format(rare_word(min_length=15), rare_word())
     keywords = ", ".join(sentence().split())
 
     case_study = CaseStudy(
@@ -255,3 +293,116 @@ def get_active_company_without_fas_profile(alias: str) -> Company:
     company = random.choice(load_companies())._replace(alias=alias)
     logging.debug("Selected company: %s", company)
     return company
+
+
+def get_language_code(language: str):
+    return FAS_SUPPORTED_LANGUAGES[language.lower()]
+
+
+def get_fas_page_url(page_name: str, *, language_code: str = None):
+    selector = FAS_PAGE_SELECTORS[page_name.lower()]
+    url = get_absolute_url(selector)
+    if language_code:
+        url += "?lang={}".format(language_code)
+    return url
+
+
+def extract_section_error(content: str) -> str:
+    """Extract error from page main 'section'.
+
+    :param content: a raw HTML content
+    :return: error message or None is no error was detected
+    """
+    if not content:
+        return None
+    soup = BeautifulSoup(content, "lxml")
+    sections = soup.find_all('section')
+    lines = [
+        line.strip().lower()
+        for section in sections
+        for line in section.text.splitlines()
+        if line
+    ]
+    has_errors = any(
+        indicator in line
+        for line in lines
+        for indicator in ERROR_INDICATORS
+    )
+    return "\n".join(lines) if has_errors else ""
+
+
+def extract_form_errors(content: str) -> str:
+    """Extract form errors if any is present.
+
+    :param content: a raw HTML content
+    :return: form error or None is no form error was detected
+    """
+    if not content:
+        return None
+    tree = lxml.html.fromstring(content)
+    elements = tree.find_class("input-field-container has-error")
+
+    form_errors = ""
+    for element in elements:
+        string_element = lxml.html.tostring(element).decode("utf-8")
+        form_errors += string_element.replace("\t", "").replace("\n\n", "")
+
+    has_errors = any(
+        indicator in line.lower()
+        for line in form_errors.splitlines()
+        for indicator in ERROR_INDICATORS)
+    return form_errors if has_errors else ""
+
+
+def detect_page_language(
+        *, url: str = None, content: str = None, main: bool = False,
+        rounds: int = 15) -> dict:
+    """Detect the language of the page.
+
+    NOTE:
+    `langdetect` uses a non-deterministic algorithm. By setting the
+    `DetectorFactory.seed` to 0 we can force the library to give consistent
+    results.
+    In order to ensure that the page language detection is consistent, we can
+    run the detection process N times (by default it's 15 times) and compare
+    all the results using statistics like: median or average.
+
+    langdetect supports 55 languages out of the box:
+        af, ar, bg, bn, ca, cs, cy, da, de, el, en, es, et, fa, fi, fr, gu, he,
+        hi, hr, hu, id, it, ja, kn, ko, lt, lv, mk, ml, mr, ne, nl, no, pa, pl,
+        pt, ro, ru, sk, sl, so, sq, sv, sw, ta, te, th, tl, tr, uk, ur, vi,
+        zh-cn, zh-tw
+
+    :param url: URL to the HTML page with some content
+    :param content: use explicit content rather than downloading it from URL
+    :param main: use only the main part of the content (ignore header & footer)
+    :param rounds: number of detection rounds.
+    :return: language code detected by langdetect
+    """
+    assert rounds > 0, "Rounds can't be lower than 1"
+    ignored_characters = '[ا]'
+    if url:
+        content = requests.get(url).content.decode("utf-8")
+
+    soup = BeautifulSoup(content, "lxml")
+    # strip out all of JavaScript & CSS that might not be filtered out initially
+    for element in soup.findAll(['script', 'style']):
+        element.extract()
+
+    if main:
+        # ignore page header & footer
+        logging.debug(
+            "Will analyse only the main content of the page and ignore the page"
+            " header & footer")
+        for element in soup.findAll(['header', 'footer']):
+            element.extract()
+
+    # clear the page content from the specified characters
+    text = re.sub(ignored_characters, '', soup.get_text())
+    lines = [line.strip().lower() for line in text.splitlines() if line.strip()]
+    results = {}
+    for x in range(rounds):
+        results[x] = detect_langs('\n'.join(lines))
+    logging.debug(
+        "Language detection results after %d rounds: %s", rounds, results)
+    return results

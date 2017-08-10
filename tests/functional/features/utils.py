@@ -7,24 +7,51 @@ import os
 import sys
 import traceback
 from contextlib import contextmanager
+from datetime import datetime
 from enum import Enum
+from pprint import pprint
 
-import lxml.html
 import requests
 from behave.runner import Context
-from bs4 import BeautifulSoup
+from requests import Session
+from requests.exceptions import (
+    ChunkedEncodingError,
+    ConnectionError,
+    ConnectTimeout,
+    ContentDecodingError,
+    HTTPError,
+    InvalidHeader,
+    InvalidSchema,
+    InvalidURL,
+    MissingSchema,
+    ProxyError,
+    ReadTimeout,
+    RequestException,
+    RetryError,
+    SSLError,
+    StreamConsumedError,
+    Timeout,
+    TooManyRedirects,
+    UnrewindableBodyError,
+    URLRequired
+)
 from requests.models import Response
 from retrying import retry
 from scrapy.selector import Selector
 from termcolor import cprint
+from urllib3.exceptions import HTTPError as BaseHTTPError
 
 from tests.functional.features.db_cleanup import get_dir_db_connection
 from tests.settings import MAILGUN_EVENTS_URL, MAILGUN_SECRET_API_KEY
 
-ERROR_INDICATORS = [
-    'error', 'errors', 'problem', 'problems', 'fail', 'failed', 'failure',
-    'required', 'missing'
-]
+# a list of exceptions that can be thrown by `requests` (and urllib3)
+REQUEST_EXCEPTIONS = (
+    BaseHTTPError, RequestException, HTTPError, ConnectionError, ProxyError,
+    SSLError, Timeout, ConnectTimeout, ReadTimeout, URLRequired,
+    TooManyRedirects, MissingSchema, InvalidSchema, InvalidURL, InvalidHeader,
+    ChunkedEncodingError, ContentDecodingError, StreamConsumedError, RetryError,
+    UnrewindableBodyError
+)
 
 
 def get_file_log_handler(
@@ -75,10 +102,139 @@ class Method(Enum):
         return self.value == y.value
 
 
-def make_request(method: Method, url, *, session=None, params=None,
-                 headers=None, cookies=None, data=None, files=None,
-                 allow_redirects=True, trim_response_content=True,
-                 context=None):
+def print_response(response: Response, *, trim: bool = True):
+    """
+
+    :param response:
+    :param trim:
+    :return:
+    """
+    request = response.request
+    trim_offset = 1024  # define the length of logged response content
+
+    if response.history:
+        blue("REQ was redirected")
+        for r in response.history:
+            blue("Intermediate REQ: %s %s" % (r.request.method, r.url))
+            blue("Intermediate REQ Headers:")
+            if r.request.headers.get('Authorization'):
+                r.request.headers['Authorization'] = 'STRIPPED_OUT'
+            pprint(r.request.headers)
+            if r.request.body:
+                blue("Intermediate REQ Body (trimmed):")
+                print(r.request.body[0:trim_offset])
+            else:
+                blue("Intermediate REQ had no body")
+            blue("Intermediate RESP: %d %s" % (r.status_code, r.reason))
+            blue("Intermediate RESP Headers:")
+            pprint(r.headers)
+            if r.content:
+                content = r.content.decode("utf-8")
+                if trim:
+                    blue("Intermediate RESP Content (trimmed):")
+                    print(content[0:trim_offset])
+                else:
+                    blue("Intermediate RESP Content:")
+                    print(content)
+
+        blue("Final destination: %s %s -> %d %s" % (
+            request.method, request.url, response.status_code, response.url))
+    else:
+        green("REQ URL: %s %s" % (request.method, request.url))
+        green("REQ Headers:")
+        if request.headers.get('Authorization'):
+            request.headers['Authorization'] = 'STRIPPED_OUT'
+        pprint(request.headers)
+        if request.headers.get('Set-Cookie'):
+            green("REQ Cookies:")
+            pprint(request.headers.get('Set-Cookie'))
+        if request.body:
+            if trim:
+                green("REQ Body (trimmed):")
+                print(request.body[0:trim_offset])
+            else:
+                green("REQ Body:")
+                print(request.body)
+        else:
+            green("REQ had no body")
+        green("RSP Status: %s %s" % (response.status_code, response.reason))
+        green("RSP URL: %s" % response.url)
+        green("RSP Headers:")
+        pprint(response.headers)
+        green("RSP Cookies:")
+        pprint(response.cookies)
+
+    if response.content:
+        content = response.content.decode("utf-8")
+        if trim:
+            red("RSP Content (trimmed):")
+            print(content[0:trim_offset])
+        else:
+            red("RSP Content:")
+            print(content)
+
+
+def log_response(response: Response, *, trim: bool = True):
+    request = response.request
+    trim_offset = 1024  # define the length of logged response content
+
+    if response.history:
+        logging.debug("REQ was redirected")
+        for r in response.history:
+            logging.debug("Intermediate REQ: %s %s", r.request.method, r.url)
+            if r.request.headers.get('Authorization'):
+                r.request.headers['Authorization'] = 'STRIPPED_OUT'
+            logging.debug("Intermediate REQ Headers: %s", r.request.headers)
+            if r.request.body:
+                logging.debug(
+                    "Intermediate REQ Body (trimmed): %s",
+                    r.request.body[0:trim_offset])
+            else:
+                logging.debug("Intermediate REQ had no body")
+            logging.debug("Intermediate RESP: %d %s", r.status_code, r.reason)
+            logging.debug("Intermediate RESP Headers: %s", r.headers)
+            if r.content:
+                content = r.content.decode("utf-8")
+                if trim:
+                    logging.debug(
+                        "Intermediate RESP Content: %s", content[0:trim_offset])
+                else:
+                    logging.debug("Intermediate RSP Content: %s", content)
+        logging.debug(
+            "Final destination: %s %s -> %d %s", request.method, request.url,
+            response.status_code, response.url)
+    else:
+        logging.debug("REQ URL: %s %s", request.method, request.url)
+        if request.headers.get('Authorization'):
+            request.headers['Authorization'] = 'STRIPPED_OUT'
+        logging.debug("REQ Headers:", request.headers)
+
+        if request.headers.get('Set-Cookie'):
+            logging.debug("REQ Cookies:", request.headers.get('Set-Cookie'))
+
+        if request.body:
+            logging.debug("REQ Body (trimmed): %s", request.body[0:trim_offset])
+        else:
+            logging.debug("REQ had no body")
+
+        logging.debug("RSP Status: %s %s", response.status_code, response.reason)
+        logging.debug("RSP URL: %s", response.url)
+        logging.debug("RSP Headers: %s", response.headers)
+        logging.debug("RSP Cookies: %s", response.cookies)
+
+    if response.content:
+        content = response.content.decode("utf-8")
+        if trim:
+            logging.debug("RSP Content (trimmed): %s", content[0:trim_offset])
+        else:
+            logging.debug("RSP Content: %s", content)
+
+
+def make_request(
+        method: Method, url: str, *, session: Session = None,
+        params: dict = None, headers: dict = None, cookies: dict = None,
+        data: dict = None, files: dict = None,
+        allow_redirects: bool = True, auth: tuple = None) -> Response:
     """Make a desired HTTP request using optional parameters, headers and data.
 
     NOTE:
@@ -87,118 +243,60 @@ def make_request(method: Method, url, *, session=None, params=None,
     then provide `data` as `files`.
 
     :param method: HTTP method, e.g.: GET, POST, PUT etc
-    :type  method: tests.functional.features.utils.Method
     :param url: URL that request will be made against
-    :type  url: str
     :param session: (optional) an instance of requests Session
-    :type session: requests.Session
     :param params: (optional) query parameters
-    :type  params: dict
     :param headers: (optional) extra request headers. Will not be persisted
                     across requests, even if using a session.
-    :type  headers: dict
     :param cookies: (optional) extra request cookies. Will not be persisted
                     across requests, even if using a session.
-    :type  cookies: dict
     :param data: (optional) data to send
-    :type  data: dict
-    :param files: (optional)
-    :type  files: dict with a file. For more details please refer to:
+    :param files: (optional) a dict with a file. For more details please refer to:
                   http://docs.python-requests.org/en/master/user/quickstart/#post-a-multipart-encoded-file
     :param allow_redirects: Follow or do not follow redirects
-    :type  allow_redirects: bool
-    :param trim_response_content: decide whether you want to log only first 150
-                                  characters of response content.
-                                  Defaults to True.
-    :type  trim_response_content: bool
-    :param context: (optional) Behave's context object. If provided then this
-                    Will store the response in `context.response`
+    :param auth: (optional) authentication tuple, e.g.: ("username", "password")
     :return: a response object
-    :rtype: requests.Response
     """
     with assertion_msg("Can't make a request without a valid URL!"):
         assert url is not None
 
     req = session or requests
-    trim_offset = 150  # define the length of logged response content
 
     connect_timeout = 3.05
     read_timeout = 60
-    request_kwargs = dict(url=url, params=params, headers=headers,
-                          cookies=cookies, data=data, files=files,
-                          allow_redirects=allow_redirects,
-                          timeout=(connect_timeout, read_timeout))
-
-    if method == Method.DELETE:
-        res = req.delete(**request_kwargs)
-    elif method == Method.GET:
-        res = req.get(**request_kwargs)
-    elif method == Method.HEAD:
-        res = req.head(**request_kwargs)
-    elif method == Method.OPTIONS:
-        res = req.options(**request_kwargs)
-    elif method == Method.PATCH:
-        res = req.patch(**request_kwargs)
-    elif method == Method.POST:
-        res = req.post(**request_kwargs)
-    elif method == Method.PUT:
-        res = req.put(**request_kwargs)
-    else:
-        raise KeyError("Unrecognized Method: %s", method.name)
+    request_kwargs = dict(
+        url=url, params=params, headers=headers, cookies=cookies, data=data,
+        files=files, allow_redirects=allow_redirects,
+        timeout=(connect_timeout, read_timeout), auth=auth)
 
     if not allow_redirects:
-        logging.debug("REQ Follow redirects: disabled")
+        msg = "REQ Follow redirects: disabled"
+        blue(msg)
+        logging.debug(msg)
 
-    logging.debug("REQ URL: %s %s", method, res.request.url)
-    logging.debug("REQ Headers: %s", res.request.headers)
-    if cookies:
-        logging.debug("REQ Cookies: %s", cookies)
-    if data:
-        if files:
-            if res.request.body:
-                logging.debug("REQ Body (trimmed): %s",
-                              res.request.body[0:trim_offset])
-            else:
-                logging.debug("REQ has no body just files")
+    try:
+        if method == Method.DELETE:
+            res = req.delete(**request_kwargs)
+        elif method == Method.GET:
+            res = req.get(**request_kwargs)
+        elif method == Method.HEAD:
+            res = req.head(**request_kwargs)
+        elif method == Method.OPTIONS:
+            res = req.options(**request_kwargs)
+        elif method == Method.PATCH:
+            res = req.patch(**request_kwargs)
+        elif method == Method.POST:
+            res = req.post(**request_kwargs)
+        elif method == Method.PUT:
+            res = req.put(**request_kwargs)
         else:
-            logging.debug("REQ Data: %s", res.request.body)
-    logging.debug("RSP Status: %s %s", res.status_code, res.reason)
-    logging.debug("RSP URL: %s", res.url)
-    logging.debug("RSP Headers: %s", res.headers)
-    logging.debug("RSP Cookies: %s", res.cookies)
-    if res.history:
-        logging.debug("REQ was redirected")
-        for resp in res.history:
-            logging.debug("Intermediate REQ: %s %s", resp.request.method, resp.url)
-            logging.debug("Intermediate REQ Headers: %s", resp.request.headers)
-            if files:
-                logging.debug("Intermediate REQ Body (trimmed): %s",
-                              resp.request.body[0:trim_offset])
-            else:
-                logging.debug("Intermediate REQ Body: %s", resp.request.body)
-            logging.debug("Intermediate RESP: %d %s", resp.status_code, resp.reason)
-            logging.debug("Intermediate RESP Headers: %s", resp.headers)
-            logging.debug("Intermediate RESP Content: %s",
-                          resp.content[0:trim_offset] or None)
-        logging.debug("Final destination: %s %s -> %d %s",
-                      res.request.method, res.request.url, res.status_code,
-                      res.url)
-    else:
-        logging.debug("REQ was not redirected")
-    if res.content:
-        if trim_response_content:
-            if len(res.content) > trim_offset:
-                logging.debug("RSP Trimmed Content: %s",
-                              res.content[0:trim_offset])
-            else:
-                logging.debug("RSP Content: %s", res.content)
-        else:
-            logging.debug("RSP Content: %s", res.content)
+            raise KeyError("Unrecognized Method: %s", method.name)
+    except REQUEST_EXCEPTIONS as ex:
+        red("Exception UTC datetime: %s" % datetime.isoformat(datetime.utcnow()))
+        print_response(res, trim=False)
+        raise ex
 
-    if context:
-        context.response = res
-        logging.debug("Last response stored in context.response")
-
+    log_response(res)
     return res
 
 
@@ -489,7 +587,7 @@ def mailgun_get_message_url(context: Context, recipient: str) -> str:
         "recipient": recipient,
         "event": "accepted"
     }
-    response = requests.get(url, auth=("api", api_key), params=params)
+    response = make_request(Method.GET, url, auth=("api", api_key), params=params)
     context.response = response
 
     with assertion_msg(
@@ -550,46 +648,3 @@ def green(x: str):
 
 def blue(x: str):
     cprint(x, 'blue', attrs=['bold'])
-
-
-def extract_section_error(content: str) -> str:
-    """Extract error from page main 'section'.
-
-    :param content: a raw HTML content
-    :return: error message or None is no error was detected
-    """
-    soup = BeautifulSoup(content, "lxml")
-    sections = soup.find_all('section')
-    lines = [
-        line.strip().lower()
-        for section in sections
-        for line in section.text.splitlines()
-        if line
-    ]
-    has_errors = any(
-        indicator in line
-        for line in lines
-        for indicator in ERROR_INDICATORS
-    )
-    return "\n".join(lines) if has_errors else ""
-
-
-def extract_form_errors(content: str) -> str:
-    """Extract form errors if any is present.
-
-    :param content: a raw HTML content
-    :return: form error or None is no form error was detected
-    """
-    tree = lxml.html.fromstring(content)
-    elements = tree.find_class("input-field-container has-error")
-
-    form_errors = ""
-    for element in elements:
-        string_element = lxml.html.tostring(element).decode("utf-8")
-        form_errors += string_element.replace("\t", "").replace("\n\n", "")
-
-    has_errors = any(
-        indicator in line.lower()
-        for line in form_errors.splitlines()
-        for indicator in ERROR_INDICATORS)
-    return form_errors if has_errors else ""

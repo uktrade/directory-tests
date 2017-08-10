@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """FAB Given step definitions."""
 import logging
+from statistics import median
 
 from behave.model import Table
 from behave.runner import Context
@@ -16,6 +17,10 @@ from tests.functional.features.pages import (
     fas_ui_profile,
     profile_ui_landing,
     sso_ui_verify_your_email
+)
+from tests.functional.features.pages.utils import (
+    detect_page_language,
+    get_language_code
 )
 from tests.functional.features.utils import (
     assertion_msg,
@@ -430,3 +435,59 @@ def fas_should_find_with_company_details(
                 "%s wasn't able to find '%s' (alias: %s) using %s", buyer_alias,
                 company.title, company_alias, result):
             assert context.search_results[result]
+
+
+def fas_pages_should_be_in_selected_language(
+        context, pages_table: Table, language, *, page_part: str = None,
+        probability: float = 0.9):
+    """Check if all viewed pages contain content in expected language
+
+    NOTE:
+    This requires all responses with page views to be stored in context.views
+
+    :param context: behave `context` object
+    :param pages_table: a table with viewed FAS pages
+    :param language: expected language of the view FAS page content
+    :param page_part: detect language of the whole page or just the main part
+    :param probability: expected probability of expected language to be detected
+    """
+    with assertion_msg("Required dictionary with page views is missing"):
+        assert hasattr(context, "views")
+    pages = [row['page'] for row in pages_table]
+    views = context.views
+
+    if page_part:
+        if page_part == "main":
+            main = True
+        elif page_part == "whole":
+            main = False
+        else:
+            raise KeyError(
+                "Please select valid part of the page: main or whole")
+
+    for page_name in pages:
+        response = views[page_name]
+        # store currently processed response in context, so that it can be
+        # printed out to the console in case of a failing assertion
+        context.response = response
+        content = response.content.decode("utf-8")
+        expected_language = get_language_code(language)
+        logging.debug("Detecting the language of FAS %s page", page_name)
+        results = detect_page_language(content=content, main=main)
+        detected = set(lang.lang for idx in results for lang in results[idx])
+        logging.debug("`langdetect` detected FAS %s page to be in %s", detected)
+
+        error_msg = ""
+        for lang_code in detected:
+            probabilities = [lang.prob
+                             for idx in results
+                             for lang in results[idx]
+                             if lang.lang == lang_code]
+            error_msg += ("With median probability {} the text is in {}\n"
+                          .format(median(probabilities), lang_code))
+
+        with assertion_msg(error_msg):
+            assert all(lang.prob > probability
+                       for idx in results
+                       for lang in results[idx]
+                       if lang.lang == expected_language)
