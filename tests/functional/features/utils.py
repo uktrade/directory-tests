@@ -11,16 +11,46 @@ from enum import Enum
 from pprint import pprint
 
 import requests
-import requests.exceptions as requests_base_exception
 from behave.runner import Context
 from requests import Session
+from requests.exceptions import (
+    ChunkedEncodingError,
+    ConnectionError,
+    ConnectTimeout,
+    ContentDecodingError,
+    HTTPError,
+    InvalidHeader,
+    InvalidSchema,
+    InvalidURL,
+    MissingSchema,
+    ProxyError,
+    ReadTimeout,
+    RequestException,
+    RetryError,
+    SSLError,
+    StreamConsumedError,
+    Timeout,
+    TooManyRedirects,
+    UnrewindableBodyError,
+    URLRequired
+)
 from requests.models import Response
 from retrying import retry
 from scrapy.selector import Selector
 from termcolor import cprint
+from urllib3.exceptions import HTTPError as BaseHTTPError
 
 from tests.functional.features.db_cleanup import get_dir_db_connection
 from tests.settings import MAILGUN_EVENTS_URL, MAILGUN_SECRET_API_KEY
+
+# a list of exceptions that can be thrown by `requests` (and urllib3)
+REQUEST_EXCEPTIONS = (
+    BaseHTTPError, RequestException, HTTPError, ConnectionError, ProxyError,
+    SSLError, Timeout, ConnectTimeout, ReadTimeout, URLRequired,
+    TooManyRedirects, MissingSchema, InvalidSchema, InvalidURL, InvalidHeader,
+    ChunkedEncodingError, ContentDecodingError, StreamConsumedError, RetryError,
+    UnrewindableBodyError
+)
 
 
 def get_file_log_handler(
@@ -251,7 +281,7 @@ def make_request(
             res = req.put(**request_kwargs)
         else:
             raise KeyError("Unrecognized Method: %s", method.name)
-    except requests_base_exception.HTTPError as ex:
+    except REQUEST_EXCEPTIONS as ex:
         print_response(res, trim=False)
         raise ex
 
