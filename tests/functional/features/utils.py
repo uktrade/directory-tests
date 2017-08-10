@@ -577,7 +577,7 @@ def mailgun_get_message_url(context: Context, recipient: str) -> str:
         "recipient": recipient,
         "event": "accepted"
     }
-    response = requests.get(url, auth=("api", api_key), params=params)
+    response = make_request(Method.GET, url, auth=("api", api_key), params=params)
     context.response = response
 
     with assertion_msg(
