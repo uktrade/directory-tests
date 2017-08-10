@@ -199,8 +199,7 @@ def get_companies(*, number: int = 100) -> CompaniesList:
     """Find a number of active companies without FAS profile.
 
     NOTE:
-    The search is pretty slow. It might take 2-3 minutes to find default number
-    of companies.
+    The search is pretty slow. It takes roughly 10 minutes to find 100 companies
 
     :param number: (optional) expected number of companies to find
     :return: a list of Company named tuples (all with "test" alias)
