@@ -422,8 +422,11 @@ def fas_should_find_with_company_details(
     :param company_alias: alias of the Company used in the scope of the scenario
     """
     assert hasattr(context, "search_results")
+    company = context.get_company(company_alias)
     for result in context.search_results:
+        # get response for specific search request. This helps to debug
+        context.response = context.search_responses[result]
         with assertion_msg(
-                "%s wasn't able to find %s using %s", buyer_alias,
-                company_alias, result):
+                "%s wasn't able to find '%s' (alias: %s) using %s", buyer_alias,
+                company.title, company_alias, result):
             assert context.search_results[result]
