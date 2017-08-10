@@ -16,6 +16,7 @@ from tests.functional.features.pages.utils import (
     extract_section_error
 )
 from tests.functional.features.utils import (
+    REQUEST_EXCEPTIONS,
     blue,
     green,
     init_loggers,
@@ -36,7 +37,9 @@ def after_step(context, step):
         logging.debug(context.scenario_data)
         red("\nScenario data:")
         print(pformat(context.scenario_data))
-        if hasattr(context, "response"):
+        has_content = hasattr(context, "response")
+        is_request_exception = isinstance(step.exception, REQUEST_EXCEPTIONS)
+        if not is_request_exception and has_content:
             res = context.response
             content = res.content.decode("utf-8")
             section_errors = extract_section_error(content)
