@@ -1101,49 +1101,6 @@
     },
     {
         "website": null,
-        "title": "LONDON TOWN INVESTMENTS LIMITED",
-        "summary": null,
-        "alias": "test",
-        "sector": null,
-        "companies_house_details": {
-            "description": "02763205 - Incorporated on  9 November 1992",
-            "company_type": "ltd",
-            "title": "LONDON TOWN INVESTMENTS LIMITED",
-            "address_snippet": "Athins House,, 171, Ballards Lane,, London., N3 1lp.",
-            "kind": "searchresults#company",
-            "company_status": "active",
-            "date_of_creation": "1992-11-09",
-            "company_number": "02763205",
-            "address": {
-                "address_line_1": "171, Ballards Lane,",
-                "region": "N3 1lp.",
-                "locality": "London.",
-                "premises": "Athins House,"
-            },
-            "links": {
-                "self": "/company/02763205"
-            },
-            "description_identifier": [
-                "incorporated-on"
-            ]
-        },
-        "facebook": null,
-        "letter_recipient": null,
-        "keywords": null,
-        "twitter": null,
-        "case_studies": {},
-        "export_to_countries": null,
-        "description": null,
-        "logo_url": null,
-        "address_details": null,
-        "linkedin": null,
-        "no_employees": null,
-        "logo_hash": null,
-        "logo_picture": null,
-        "number": "02763205"
-    },
-    {
-        "website": null,
         "title": "MMP CONSULTANCY LIMITED",
         "summary": null,
         "alias": "test",
@@ -4333,50 +4290,6 @@
         "logo_hash": null,
         "logo_picture": null,
         "number": "09869130"
-    },
-    {
-        "website": null,
-        "title": "WELL BEHAVED SOFTWARE LTD",
-        "summary": null,
-        "alias": "test",
-        "sector": null,
-        "companies_house_details": {
-            "description": "08803557 - Incorporated on  5 December 2013",
-            "company_type": "ltd",
-            "title": "WELL BEHAVED SOFTWARE LTD",
-            "address_snippet": "1  Commercial Court, Briggate, Leeds, England",
-            "kind": "searchresults#company",
-            "company_number": "08803557",
-            "date_of_creation": "2013-12-05",
-            "company_status": "active",
-            "address": {
-                "country": "England",
-                "address_line_1": "Commercial Court",
-                "address_line_2": "Briggate",
-                "locality": "Leeds",
-                "premises": "1 "
-            },
-            "links": {
-                "self": "/company/08803557"
-            },
-            "description_identifier": [
-                "incorporated-on"
-            ]
-        },
-        "facebook": null,
-        "letter_recipient": null,
-        "keywords": null,
-        "twitter": null,
-        "case_studies": {},
-        "export_to_countries": null,
-        "description": null,
-        "logo_url": null,
-        "address_details": null,
-        "linkedin": null,
-        "no_employees": null,
-        "logo_hash": null,
-        "logo_picture": null,
-        "number": "08803557"
     },
     {
         "website": null,
