@@ -117,6 +117,8 @@ def print_response(response: Response, *, trim: bool = True):
         for r in response.history:
             blue("Intermediate REQ: %s %s" % (r.request.method, r.url))
             blue("Intermediate REQ Headers:")
+            if r.request.headers.get('Authorization'):
+                r.request.headers['Authorization'] = 'STRIPPED_OUT'
             pprint(r.request.headers)
             if r.request.body:
                 blue("Intermediate REQ Body (trimmed):")
@@ -140,6 +142,8 @@ def print_response(response: Response, *, trim: bool = True):
     else:
         green("REQ URL: %s %s" % (request.method, request.url))
         green("REQ Headers:")
+        if request.headers.get('Authorization'):
+            request.headers['Authorization'] = 'STRIPPED_OUT'
         pprint(request.headers)
         if request.headers.get('Set-Cookie'):
             green("REQ Cookies:")
@@ -178,6 +182,8 @@ def log_response(response: Response, *, trim: bool = True):
         logging.debug("REQ was redirected")
         for r in response.history:
             logging.debug("Intermediate REQ: %s %s", r.request.method, r.url)
+            if r.request.headers.get('Authorization'):
+                r.request.headers['Authorization'] = 'STRIPPED_OUT'
             logging.debug("Intermediate REQ Headers: %s", r.request.headers)
             if r.request.body:
                 logging.debug(
@@ -199,6 +205,8 @@ def log_response(response: Response, *, trim: bool = True):
             response.status_code, response.url)
     else:
         logging.debug("REQ URL: %s %s", request.method, request.url)
+        if request.headers.get('Authorization'):
+            request.headers['Authorization'] = 'STRIPPED_OUT'
         logging.debug("REQ Headers:", request.headers)
 
         if request.headers.get('Set-Cookie'):
