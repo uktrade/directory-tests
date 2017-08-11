@@ -251,6 +251,16 @@ def already_registered(company_number: str) -> bool:
     return "Already registered" in response.content.decode("utf-8")
 
 
+def is_already_registered(response: Response) -> bool:
+    """Will check if response contains information that Company is already
+    registered with FAB.
+
+    :param response: requests response
+    :return: True/False based on the presence of FAB profile
+    """
+    return "Already registered" in response.content.decode("utf-8")
+
+
 def get_companies(*, number: int = 100) -> CompaniesList:
     """Find a number of active companies without FAS profile.
 
