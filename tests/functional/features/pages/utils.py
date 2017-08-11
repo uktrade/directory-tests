@@ -468,7 +468,8 @@ def get_number_of_search_result_pages(response: Response) -> int:
     :param response: FAS Search Result response
     :return: a number of FAS Search Result pages
     """
-    css_selector = "#ed-search-list-container span.current::text"
+    css_selector = (".company-profile-details-body-toolbar-bottom"
+                    " span.current::text")
     pages = extract_by_css(response, css_selector).strip()
     page_numbers = [int(word) for word in pages.split() if word.isdigit()]
     with assertion_msg(
