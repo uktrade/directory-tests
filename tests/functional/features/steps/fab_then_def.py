@@ -32,6 +32,7 @@ from tests.functional.features.steps.fab_then_impl import (
     sso_should_be_signed_in_to_sso_account
 )
 from tests.functional.features.steps.fab_when_impl import (
+    fas_feedback_request_should_be_submitted,
     fas_should_be_told_about_empty_search_results
 )
 
@@ -216,3 +217,10 @@ def then_page_should_be_in(context, page_part, language, probability):
       'trade profiles')
 def then_should_be_told_about_empty_search_results(context, buyer_alias):
     fas_should_be_told_about_empty_search_results(context, buyer_alias)
+
+
+@then('"{buyer_alias}" should be told that the feedback request has been '
+      'submitted')
+def then_buyer_should_be_told_about_feedback_request_confirmation(
+        context, buyer_alias):
+    fas_feedback_request_should_be_submitted(context, buyer_alias)

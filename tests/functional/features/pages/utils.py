@@ -16,7 +16,7 @@ from langdetect import DetectorFactory, detect_langs
 from requests import Response
 
 from tests import get_absolute_url
-from tests.functional.features.context_utils import CaseStudy, Company
+from tests.functional.features.context_utils import CaseStudy, Company, Feedback
 from tests.functional.features.pages import int_api_ch_search
 from tests.functional.features.utils import (
     Method,
@@ -139,6 +139,24 @@ def random_case_study_data(alias: str) -> CaseStudy:
         source_company=source_company)
 
     return case_study
+
+
+def random_feedback_data(
+        *, name: str = None, email: str = None, company_name: str = None,
+        country: str = None, comment: str = None, terms: str = None) -> Feedback:
+    name = name or rare_word(min_length=12)
+    email = email or ("test+buyer_{}@directory.uktrade.io"
+                      .format(rare_word(min_length=15)))
+    company_name = company_name or rare_word(min_length=12)
+    country = country or rare_word(min_length=12)
+    comment = comment or sentence(max_length=1000)
+    terms = terms or "on"
+
+    feedback = Feedback(
+        name=name, email=email, company_name=company_name,
+        country=country, comment=comment, terms=terms)
+
+    return feedback
 
 
 def find_active_company_without_fas_profile(alias: str) -> Company:
@@ -307,8 +325,30 @@ def get_fas_page_url(page_name: str, *, language_code: str = None):
     return url
 
 
+def extract_main_error(content: str) -> str:
+    """Extract error from page `main` block.
+
+    :param content: a raw HTML content
+    :return: error message or None is no error was detected
+    """
+    soup = BeautifulSoup(content, "lxml")
+    sections = soup.find_all('main')
+    lines = [
+        line.strip().lower()
+        for section in sections
+        for line in section.text.splitlines()
+        if line
+    ]
+    has_errors = any(
+        indicator in line
+        for line in lines
+        for indicator in ERROR_INDICATORS
+    )
+    return "\n".join(lines) if has_errors else ""
+
+
 def extract_section_error(content: str) -> str:
-    """Extract error from page main 'section'.
+    """Extract error from 'section'.
 
     :param content: a raw HTML content
     :return: error message or None is no error was detected

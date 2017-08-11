@@ -47,6 +47,12 @@ Company = namedtuple(
         'export_to_countries'
     ]
 )
+Feedback = namedtuple(
+    'Feedback',
+    [
+        'name', 'email', 'company_name', 'country', 'comment', 'terms'
+    ]
+)
 # Set all fields to None by default.
 Actor.__new__.__defaults__ = (None,) * len(Actor._fields)
 Company.__new__.__defaults__ = (None,) * len(Company._fields)

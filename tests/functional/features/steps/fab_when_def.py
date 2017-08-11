@@ -9,6 +9,7 @@ from tests.functional.features.steps.fab_when_impl import (
     bp_select_random_sector_and_export_to_country,
     fab_update_case_study,
     fas_search_using_company_details,
+    fas_send_feedback_request,
     fas_view_pages_in_selected_language,
     fas_search_with_empty_query,
     prof_add_case_study,
@@ -196,3 +197,9 @@ def when_buyer_views_page_in_selected_language(context, buyer_alias, language):
 @when('"{buyer_alias}" searches for companies on FAS with empty search query')
 def when_buyer_searches_with_emtpy_search_query(context, buyer_alias):
     fas_search_with_empty_query(context, buyer_alias)
+
+
+@when('"{buyer_alias}" sends a Trade Profiles feedback request from '
+      '"{page_name}" FAS page')
+def when_buyer_sends_feedback_request(context, buyer_alias, page_name):
+    fas_send_feedback_request(context, buyer_alias, page_name)

@@ -26,6 +26,7 @@ from tests.functional.features.pages import (
     fab_ui_profile,
     fab_ui_upload_logo,
     fab_ui_verify_company,
+    fas_ui_feedback,
     fas_ui_find_supplier,
     fas_ui_profile,
     profile_ui_find_a_buyer,
@@ -43,6 +44,7 @@ from tests.functional.features.pages.utils import (
     get_fas_page_url,
     get_language_code,
     random_case_study_data,
+    random_feedback_data,
     rare_word,
     sentence
 )
@@ -1124,3 +1126,25 @@ def fas_should_be_told_about_empty_search_results(context, buyer_alias):
     logging.debug(
         "%s was told that the search did not match any UK trade profiles",
         buyer_alias)
+
+
+def fas_send_feedback_request(
+        context: Context, buyer_alias: str, page_name: str):
+    actor = context.get_actor(buyer_alias)
+    session = actor.session
+    referer_url = get_fas_page_url(page_name)
+
+    # Step 1: generate random form data for our Buyer
+    feedback = random_feedback_data(email=actor.email)
+
+    # Step 2: submit the form
+    response = fas_ui_feedback.submit(session, feedback, referer=referer_url)
+    context.response = response
+    logging.debug("% submitted the feedback request", buyer_alias)
+
+
+def fas_feedback_request_should_be_submitted(context: Context, buyer_alias: str):
+    response = context.response
+    fas_ui_feedback.should_see_feedback_submission_confirmation(response)
+    logging.debug(
+        "% was told that the feedback request has been submitted", buyer_alias)

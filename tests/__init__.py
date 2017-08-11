@@ -57,6 +57,7 @@ urls = {
     'ui-supplier:industries-tech-summary': 'industries/tech/summary',
     'ui-supplier:industries-creative-summary': 'industries/creative/summary',
     'ui-supplier:industries-food-summary': 'industries/food-and-drink/summary',
+    'ui-supplier:feedback': 'feedback',
     'ui-supplier:search': 'search',
     'ui-supplier:terms': 'terms-and-conditions',
     'ui-supplier:privacy': 'privacy-policy',
