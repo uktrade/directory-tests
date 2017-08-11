@@ -43,6 +43,7 @@ from tests.functional.features.pages.utils import (
     get_active_company_without_fas_profile,
     get_fas_page_url,
     get_language_code,
+    is_already_registered,
     random_case_study_data,
     random_feedback_data,
     rare_word,
@@ -82,12 +83,22 @@ def select_random_company(
     actor = context.get_actor(supplier_alias)
     session = actor.session
 
-    # Step 1 - find an active company without a FAS profile
-    company = get_active_company_without_fas_profile(company_alias)
+    while True:
+        # Step 1 - find an active company without a FAS profile
+        company = get_active_company_without_fas_profile(company_alias)
 
-    # Step 2 - Go to the Confirm Company page
-    response = fab_ui_confirm_company.go_to(session, company)
-    context.response = response
+        # Step 2 - Go to the Confirm Company page
+        response = fab_ui_confirm_company.go_to(session, company)
+        if is_already_registered(response):
+            logging.warning(
+                "Company '%s' is already registered, will use a different one",
+                company.title)
+            continue
+        else:
+            logging.warning(
+                "Company '%s' is not registered with FAB", company.title)
+            context.response = response
+            break
 
     # Step 3 - check if we're on the Confirm Company page
     fab_ui_confirm_company.should_be_here(response, company)
