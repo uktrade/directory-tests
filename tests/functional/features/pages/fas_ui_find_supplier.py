@@ -21,14 +21,19 @@ NO_MATCH = [
 ]
 
 
-def go_to(session: Session, *, term: str = None) -> Response:
+def go_to(session: Session, *, term: str = None, page: int = None) -> Response:
     """Go to "FAS Find a Supplier" page.
 
     :param session: Supplier session object
     :param term: (optional) search term
+    :param page: (optional) number of search result page
     :return: response object
     """
-    params = {"term": term} if term is not None else {}
+    params = {}
+    if term is not None:
+        params.update({"term": term})
+    if term is not None:
+        params.update({"page": page})
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
     response = make_request(
         Method.GET, URL, session=session, params=params, headers=headers)
