@@ -10,6 +10,7 @@ from tests.functional.features.steps.fab_when_impl import (
     fab_update_case_study,
     fas_search_using_company_details,
     fas_view_pages_in_selected_language,
+    fas_search_with_empty_query,
     prof_add_case_study,
     prof_add_invalid_online_profiles,
     prof_add_online_profiles,
@@ -190,3 +191,8 @@ def when_buyer_searches_on_fas_using_company_details(
 def when_buyer_views_page_in_selected_language(context, buyer_alias, language):
     fas_view_pages_in_selected_language(
         context, buyer_alias, pages_table=context.table, language=language)
+
+
+@when('"{buyer_alias}" searches for companies on FAS with empty search query')
+def when_buyer_searches_with_emtpy_search_query(context, buyer_alias):
+    fas_search_with_empty_query(context, buyer_alias)

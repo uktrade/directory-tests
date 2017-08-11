@@ -15,6 +15,11 @@ EXPECTED_STRINGS = [
     "Search"
 ]
 
+NO_MATCH = [
+    "Your search", "&quot;<span class=\"term\">", "</span>&quot;",
+    "did not match any UK trade profiles."
+]
+
 
 def go_to(session: Session, *, term: str = None) -> Response:
     """Go to "FAS Find a Supplier" page.
@@ -23,13 +28,13 @@ def go_to(session: Session, *, term: str = None) -> Response:
     :param term: (optional) search term
     :return: response object
     """
-    params = {"term": term} if term else {}
+    params = {"term": term} if term is not None else {}
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
     response = make_request(
         Method.GET, URL, session=session, params=params, headers=headers)
 
     should_be_here(response)
-    if term:
+    if term is not None:
         logging.debug("Buyer searched for Suppliers using term: %s", term)
     else:
         logging.debug("Buyer is on the FAS Find a Supplier page")
@@ -50,3 +55,10 @@ def should_see_company(response: Response, company_title: str) -> bool:
 def should_not_see_company(response: Response, company_title: str) -> bool:
     content = response.content.decode("utf-8")
     return escape_html(company_title, upper=True)not in content
+
+
+def should_see_no_matches(response: Response, *, term: str = None):
+    expected = NO_MATCH
+    if term:
+        expected += term
+    check_response(response, 200, body_contains=expected)

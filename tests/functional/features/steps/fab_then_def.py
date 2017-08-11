@@ -31,6 +31,9 @@ from tests.functional.features.steps.fab_then_impl import (
     reg_supplier_is_not_appropriate_for_fab,
     sso_should_be_signed_in_to_sso_account
 )
+from tests.functional.features.steps.fab_when_impl import (
+    fas_should_be_told_about_empty_search_results
+)
 
 
 @then('"{alias}" should be told about the verification email')
@@ -207,3 +210,9 @@ def then_page_should_be_in(context, page_part, language, probability):
     fas_pages_should_be_in_selected_language(
         context, pages_table=context.table, language=language,
         page_part=page_part, probability=float(probability))
+
+
+@then('"{buyer_alias}" should be told that the search did not match any UK '
+      'trade profiles')
+def then_should_be_told_about_empty_search_results(context, buyer_alias):
+    fas_should_be_told_about_empty_search_results(context, buyer_alias)
