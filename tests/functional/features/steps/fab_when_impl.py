@@ -43,6 +43,7 @@ from tests.functional.features.pages.utils import (
     get_active_company_without_fas_profile,
     get_fas_page_url,
     get_language_code,
+    get_number_of_search_result_pages,
     is_already_registered,
     random_case_study_data,
     random_feedback_data,
@@ -1086,18 +1087,25 @@ def fas_search_using_company_details(
     for term_name in search_terms:
         term = search_terms[term_name]
         response = fas_ui_find_supplier.go_to(session, term=term)
-        search_responses[term_name] = response
-        found = fas_ui_find_supplier.should_see_company(response, company.title)
-        search_results[term_name] = found
-        if found:
-            logging.debug(
-                "Found Supplier '%s' on FAS using '%s' : '%s'", company.title,
-                term_name, term)
-        else:
-            logging.debug(
-                "Couldn't find Supplier '%s' on the 1st page of FAS search "
-                "results. Search was done using '%s' : '%s'", company.title,
-                term_name, term)
+        context.response = response
+        number_of_pages = get_number_of_search_result_pages(response)
+        for page_number in range(1, number_of_pages + 1):
+            search_responses[term_name] = response
+            found = fas_ui_find_supplier.should_see_company(response, company.title)
+            search_results[term_name] = found
+            if found:
+                logging.debug(
+                    "Found Supplier '%s' on FAS using '%s' : '%s' on %d page "
+                    "out of %d", company.title, term_name, term, page_number,
+                    number_of_pages)
+                break
+            else:
+                logging.debug(
+                    "Couldn't find Supplier '%s' on the %d page out of %d of "
+                    "FAS search results. Search was done using '%s' : '%s'",
+                    company.title, page_number, number_of_pages, term_name, term)
+                response = fas_ui_find_supplier.go_to(
+                    session, term=term, page=page_number)
     context.search_results = search_results
     context.search_responses = search_responses
 
