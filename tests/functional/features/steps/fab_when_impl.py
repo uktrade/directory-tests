@@ -1108,8 +1108,13 @@ def fas_search_using_company_details(
                     "Couldn't find Supplier '%s' on the %d page out of %d of "
                     "FAS search results. Search was done using '%s' : '%s'",
                     company.title, page_number, number_of_pages, term_name, term)
-                response = fas_ui_find_supplier.go_to(
-                    session, term=term, page=page_number)
+                next_page = page_number + 1
+                if next_page <= number_of_pages:
+                    response = fas_ui_find_supplier.go_to(
+                        session, term=term, page=next_page)
+                else:
+                    logging.debug("Couldn't find the Supplier even on the last "
+                                  "page of the search results")
     context.search_results = search_results
     context.search_responses = search_responses
 
