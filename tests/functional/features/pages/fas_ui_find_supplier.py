@@ -32,7 +32,7 @@ def go_to(session: Session, *, term: str = None, page: int = None) -> Response:
     params = {}
     if term is not None:
         params.update({"term": term})
-    if term is not None:
+    if page is not None:
         params.update({"page": page})
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
     response = make_request(
