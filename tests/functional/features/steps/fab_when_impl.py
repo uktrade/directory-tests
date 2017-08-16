@@ -45,6 +45,7 @@ from tests.functional.features.pages.utils import (
     get_language_code,
     get_number_of_search_result_pages,
     is_already_registered,
+    is_inactive,
     random_case_study_data,
     random_feedback_data,
     rare_word,
@@ -90,14 +91,17 @@ def select_random_company(
 
         # Step 2 - Go to the Confirm Company page
         response = fab_ui_confirm_company.go_to(session, company)
-        if is_already_registered(response):
+        registered = is_already_registered(response)
+        inactive = is_inactive(response)
+        if registered or inactive:
             logging.warning(
-                "Company '%s' is already registered, will use a different one",
-                company.title)
+                "Company '%s' is already registered or inactive, will use "
+                "a different one", company.title)
             continue
         else:
             logging.warning(
-                "Company '%s' is not registered with FAB", company.title)
+                "Company '%s' is active and not registered with FAB",
+                company.title)
             context.response = response
             break
 
