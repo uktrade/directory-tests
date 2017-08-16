@@ -578,7 +578,7 @@ def mailgun_get_message(context: Context, url: str) -> dict:
     return response.json()
 
 
-@retry(wait_fixed=10000, stop_max_attempt_number=12)
+@retry(wait_fixed=10000, stop_max_attempt_number=9)
 def mailgun_get_message_url(context: Context, recipient: str) -> str:
     """Will try to find the message URL among 100 emails sent in last 1 hour.
 
@@ -605,9 +605,6 @@ def mailgun_get_message_url(context: Context, recipient: str) -> str:
         assert response.status_code == 200
     no_of_items = len(response.json()["items"])
     with assertion_msg("Could not find MailGun event for %s", recipient):
-        if no_of_items != message_limit:
-            red("Could not find message event for %s" % recipient)
-            print_response(response)
         assert no_of_items == message_limit
     logging.debug("Found event with recipient: {}".format(recipient))
     return response.json()["items"][0]["storage"]["url"]
