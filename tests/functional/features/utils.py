@@ -274,6 +274,7 @@ def make_request(
         blue(msg)
         logging.debug(msg)
 
+    res = None
     try:
         if method == Method.DELETE:
             res = req.delete(**request_kwargs)
@@ -293,7 +294,8 @@ def make_request(
             raise KeyError("Unrecognized Method: %s", method.name)
     except REQUEST_EXCEPTIONS as ex:
         red("Exception UTC datetime: %s" % datetime.isoformat(datetime.utcnow()))
-        print_response(res, trim=False)
+        if res:
+            print_response(res, trim=False)
         raise ex
 
     log_response(res)
