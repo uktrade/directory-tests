@@ -274,7 +274,6 @@ def make_request(
         blue(msg)
         logging.debug(msg)
 
-    res = None
     try:
         if method == Method.DELETE:
             res = req.delete(**request_kwargs)
@@ -294,8 +293,14 @@ def make_request(
             raise KeyError("Unrecognized Method: %s", method.name)
     except REQUEST_EXCEPTIONS as ex:
         red("Exception UTC datetime: %s" % datetime.isoformat(datetime.utcnow()))
-        if res:
-            print_response(res, trim=False)
+        red("{} {}".format(method, url))
+        red("Parameters: {}".format(params))
+        if headers.get('Authorization'):
+            headers['Authorization'] = 'STRIPPED_OUT'
+        red("Headers: {}".format(headers))
+        red("Cookies: {}".format(cookies))
+        red("Data: {}".format(data))
+        red("Files: {}".format(files))
         raise ex
 
     log_response(res)
