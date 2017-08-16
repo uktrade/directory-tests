@@ -262,6 +262,15 @@ def is_already_registered(response: Response) -> bool:
     return "Already registered" in response.content.decode("utf-8")
 
 
+def is_inactive(response: Response) -> bool:
+    """Will check if response contains information that Company is inactive.
+
+    :param response: requests response
+    :return: True/False based on the Company's Status in Companies House
+    """
+    return "Company not active." in response.content.decode("utf-8")
+
+
 def get_companies(*, number: int = 100) -> CompaniesList:
     """Find a number of active companies without FAS profile.
 
