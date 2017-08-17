@@ -508,3 +508,24 @@ def fas_pages_should_be_in_selected_language(
                        for idx in results
                        for lang in results[idx]
                        if lang.lang == expected_language)
+
+
+def fas_should_find_all_sought_companies(context: Context, buyer_alias: str):
+    """Check if all Buyer was able to find Supplier using all provided terms.
+
+    :param context: behave `context` object
+    :param buyer_alias: alias of the Actor used in the scope of the scenario
+    """
+    with assertion_msg(
+            "Context has no required `search_details` dict. Please check if "
+            "one of previous steps sets it correctly."):
+        assert hasattr(context, "search_results")
+    for company, results in context.search_results.items():
+        for result in results:
+            term = result["term"]
+            term_type = result["type"]
+            context.response = result["response"]
+            with assertion_msg(
+                    "%s could not find Supplier '%s' using '%s' term '%s'",
+                    buyer_alias, company, term_type, term):
+                assert result["found"]
