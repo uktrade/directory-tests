@@ -5,7 +5,7 @@ import random
 
 from behave.model import Table
 from behave.runner import Context
-from requests import Response
+from requests import Response, Session
 from scrapy import Selector
 
 from tests.functional.features.pages import (
@@ -1176,3 +1176,38 @@ def fas_feedback_request_should_be_submitted(context: Context, buyer_alias: str)
     fas_ui_feedback.should_see_feedback_submission_confirmation(response)
     logging.debug(
         "% was told that the feedback request has been submitted", buyer_alias)
+
+
+def can_find_supplier_by_term(
+        session: Session, name: str, term: str, term_type: str) \
+        -> (bool, Response):
+    """
+
+    :param session: Buyer's session object
+    :param name: sought Supplier name
+    :param term: a text used to find the Supplier
+    :param term_type: type of the term, e.g.: product, service, keyword etc.
+    :return: a tuple with search result (True/False) and last search Response
+    """
+
+    response = fas_ui_find_supplier.go_to(session, term=term)
+    number_of_pages = get_number_of_search_result_pages(response)
+    found = False
+    for page_number in range(1, number_of_pages + 1):
+        found = fas_ui_find_supplier.should_see_company(response, name)
+        if found:
+            break
+        else:
+            logging.debug(
+                "Couldn't find Supplier '%s' on the %d page out of %d of "
+                "FAS search results. Search was done using '%s' : '%s'",
+                name, page_number, number_of_pages, term_type, term)
+            next_page = page_number + 1
+            if next_page <= number_of_pages:
+                response = fas_ui_find_supplier.go_to(
+                    session, term=term, page=next_page)
+            else:
+                logging.debug(
+                    "Couldn't find the Supplier even on the last page of the "
+                    "search results")
+    return found, response
