@@ -1,8 +1,8 @@
+@fas
 Feature: Find a Supplier
 
 
   @ED-1746
-  @fas
   @case-study
   @profile
   @verified
@@ -35,7 +35,6 @@ Feature: Find a Supplier
 
 
   @ED-1746
-  @fas
   @case-study
   @profile
   @verified
@@ -55,7 +54,6 @@ Feature: Find a Supplier
 
 
   @ED-1746
-  @fas
   @case-study
   @profile
   @unverified
@@ -71,7 +69,6 @@ Feature: Find a Supplier
 
 
   @ED-1967
-  @fas
   @search
   @profile
   @verified
@@ -101,7 +98,6 @@ Feature: Find a Supplier
 
 
   @ED-2000
-  @fas
   @search
   Scenario: Empty search query should return no results
     Given "Annette Geissinger" is a buyer
