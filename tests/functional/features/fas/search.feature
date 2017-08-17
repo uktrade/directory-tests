@@ -109,3 +109,17 @@ Feature: Find a Supplier
     When "Annette Geissinger" searches for companies on FAS with empty search query
 
     Then "Annette Geissinger" should be told that the search did not match any UK trade profiles
+
+
+  @ED-2020
+  @search
+  Scenario: Buyers should be able to find Suppliers by product, service or company keyword
+    Given "Annette Geissinger" is a buyer
+
+    When "Annette Geissinger" searches for Suppliers using product name, service name and a keyword
+      | product                      | service                                  | keyword                    | company                                                  |
+      | Aerosol Paints               | Supply all types of Aerosols             | vanishing spray            | KING OF PAINTS                                           |
+      | LINSIG traffic signal models | management of transport                  | drainage civil engineering | CALLIDUS TRANSPORT & ENGINEERING LTD                     |
+      | peristaltic pump             | deliver the maximum possible performance | brushless                  | ZIKODRIVE MOTOR CONTROLLERS (ROUND BANK ENGINEERING LTD) |
+
+    Then "Annette Geissinger" should be able to find all sought companies
