@@ -1211,3 +1211,45 @@ def can_find_supplier_by_term(
                     "Couldn't find the Supplier even on the last page of the "
                     "search results")
     return found, response
+
+
+def fas_search_with_product_service_keyword(
+        context: Context, buyer_alias: str, search_table: Table):
+    """Search for Suppliers with one of the following:
+    * Product name
+    * Service name
+    * keyword
+
+    NOTE: this will add a dictionary `search_results` to `context`
+
+    :param context: behave `context` object
+    :param buyer_alias: alias of the Buyer Actor
+    :param search_table: a table with FAS pages to view
+    """
+    actor = context.get_actor(buyer_alias)
+    session = actor.session
+    search_results = {}
+    for row in search_table:
+        terms = []
+        if row["product"]:
+            terms.append({"type": "product", "term": row["product"]})
+        if row["service"]:
+            terms.append({"type": "service", "term": row["service"]})
+        if row["keyword"]:
+            terms.append({"type": "keyword", "term": row["keyword"]})
+        search_results[row["company"]] = terms
+
+    for company in search_results:
+        search_terms = search_results[company]
+        for search_term in search_terms:
+            term_type = search_term['type']
+            term = search_term['term']
+            logging.debug(
+                "%s is searching for company '%s' using %s term '%s'",
+                buyer_alias, company, term_type, term)
+            found, response = can_find_supplier_by_term(
+                session, company, term, term_type)
+            search_term['found'] = found
+            search_term['response'] = response
+
+    context.search_results = search_results
