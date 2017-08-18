@@ -25,6 +25,7 @@ from tests.functional.features.pages import (
     fab_ui_profile,
     fab_ui_upload_logo,
     fab_ui_verify_company,
+    fas_ui_contact,
     fas_ui_feedback,
     fas_ui_find_supplier,
     fas_ui_profile,
@@ -47,6 +48,7 @@ from tests.functional.features.pages.utils import (
     is_inactive,
     random_case_study_data,
     random_feedback_data,
+    random_message_data,
     rare_word,
     sentence
 )
@@ -1247,3 +1249,30 @@ def fas_search_with_product_service_keyword(
             search_term['response'] = response
 
     context.search_results = search_results
+
+
+def fas_send_message_to_supplier(
+        context: Context, buyer_alias: str, company_alias: str):
+    buyer = context.get_actor(buyer_alias)
+    session = buyer.session
+    company = context.get_company(company_alias)
+    endpoint = company.fas_profile_endpoint
+    with assertion_msg(
+            "Company '%s' doesn't have FAS profile URL set", company.title):
+        assert endpoint
+    # Step 0 - generate message data
+    message = random_message_data()
+
+    # Step 1 - go to Company's profile page
+    response = fas_ui_profile.go_to_endpoint(session, endpoint)
+    context.response = response
+    fas_ui_profile.should_be_here(response, number=company.number)
+
+    # Step 2 - go to the "email company" form
+    response = fas_ui_contact.go_to(
+        session, company_number=company.number, company_name=company.title)
+    context.response = response
+
+    # Step 3 - submit the form with the message data
+    response = fas_ui_contact.submit(session, message, company.number)
+    context.response = response
