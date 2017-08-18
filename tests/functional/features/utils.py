@@ -6,6 +6,7 @@ import logging
 import os
 import sys
 import traceback
+from collections import namedtuple
 from contextlib import contextmanager
 from datetime import datetime, timedelta
 from enum import Enum
@@ -42,7 +43,14 @@ from termcolor import cprint
 from urllib3.exceptions import HTTPError as BaseHTTPError
 
 from tests.functional.features.db_cleanup import get_dir_db_connection
-from tests.settings import MAILGUN_EVENTS_URL, MAILGUN_SECRET_API_KEY
+from tests.settings import (
+    MAILGUN_DIRECTORY_API_USER,
+    MAILGUN_DIRECTORY_EVENTS_URL,
+    MAILGUN_DIRECTORY_SECRET_API_KEY,
+    MAILGUN_SSO_API_USER,
+    MAILGUN_SSO_EVENTS_URL,
+    MAILGUN_SSO_SECRET_API_KEY
+)
 
 # a list of exceptions that can be thrown by `requests` (and urllib3)
 REQUEST_EXCEPTIONS = (
@@ -138,6 +146,35 @@ class MailGunEvent(Enum):
 
     def __eq__(self, y):
         return self.value == y.value
+
+
+class MailGunService(Enum):
+    """Lists all MailGun's events states"""
+    ServiceDetails = namedtuple('ServiceDetails', ['url', 'user', 'password'])
+    SSO = ServiceDetails(
+        url=MAILGUN_SSO_EVENTS_URL, user=MAILGUN_SSO_API_USER,
+        password=MAILGUN_SSO_SECRET_API_KEY)
+    DIRECTORY = ServiceDetails(
+        url=MAILGUN_DIRECTORY_EVENTS_URL, user=MAILGUN_DIRECTORY_API_USER,
+        password=MAILGUN_DIRECTORY_SECRET_API_KEY)
+
+    def __str__(self):
+        return self.value
+
+    def __eq__(self, y):
+        return self.value == y.value
+
+    @property
+    def url(self):
+        return self.value.url
+
+    @property
+    def user(self):
+        return self.value.user
+
+    @property
+    def password(self):
+        return self.value.password
 
 
 def print_response(response: Response, *, trim: bool = True):
