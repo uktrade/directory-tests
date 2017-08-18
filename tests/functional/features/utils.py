@@ -117,6 +117,29 @@ def decode_as_utf8(content):
     return content
 
 
+class MailGunEvent(Enum):
+    """Lists all of MailGun's event types.
+
+    More info here:
+    https://documentation.mailgun.com/en/latest/api-events.html#event-types
+    """
+    ACCEPTED = "accepted"
+    DELIVERED = "delivered"
+    REJECTED = "rejected"
+    FAILED = "failed"
+    OPENED = "opened"
+    CLICKED = "clicked"
+    UNSUBSCRIBED = "unsubscribed"
+    COMPLAINED = "complained"
+    STORED = "stored"
+
+    def __str__(self):
+        return self.value
+
+    def __eq__(self, y):
+        return self.value == y.value
+
+
 def print_response(response: Response, *, trim: bool = True):
     """
 
