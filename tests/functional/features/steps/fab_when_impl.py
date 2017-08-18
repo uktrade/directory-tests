@@ -275,11 +275,13 @@ def bp_provide_company_details(context, supplier_alias):
 
     # Step 0 - generate random details & update Company matching details
     # Need to get Company details after updating it in the Scenario Data
+    title = "{} {}".format(company.title, sentence())
     size = random.choice(NO_OF_EMPLOYEES)
     website = "http://{}.{}".format(rare_word(min_length=15), rare_word())
     keywords = ", ".join(sentence().split())
     context.set_company_details(
-        company_alias, no_employees=size, website=website, keywords=keywords
+        company_alias, title=title, no_employees=size, website=website,
+        keywords=keywords
     )
     company = context.get_company(actor.company_alias)
 
