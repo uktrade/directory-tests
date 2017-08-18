@@ -607,7 +607,7 @@ def get_md5_hash_of_file(absolute_path):
     return hashlib.md5(open(absolute_path, "rb").read()).hexdigest()
 
 
-def extract_by_css(response, selector):
+def extract_by_css(response, selector, *, first: bool = True):
     """Extract values from HTML response content using CSS selector.
 
     :param response: response containing HTML content
@@ -615,8 +615,12 @@ def extract_by_css(response, selector):
     :return: value of the 1st found element identified by the CSS selector
     """
     content = response.content.decode("utf-8")
-    res = Selector(text=content).css(selector).extract()
-    return res[0] if len(res) > 0 else ""
+    extracted = Selector(text=content).css(selector).extract()
+    if first:
+        result = extracted[0] if len(extracted) > 0 else ""
+    else:
+        result = extracted
+    return result
 
 
 def extract_logo_url(response, *, fas: bool = False):
