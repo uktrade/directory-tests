@@ -53,10 +53,19 @@ Feedback = namedtuple(
         'name', 'email', 'company_name', 'country', 'comment', 'terms'
     ]
 )
+Message = namedtuple(
+    'Message',
+    [
+        'alias', 'body', 'company_name', 'country', 'email_address',
+        'full_name', 'recaptcha_challenge_field', 'recaptcha_response_field',
+        'sector', 'subject', 'terms'
+    ]
+)
 # Set all fields to None by default.
 Actor.__new__.__defaults__ = (None,) * len(Actor._fields)
 Company.__new__.__defaults__ = (None,) * len(Company._fields)
 CaseStudy.__new__.__defaults__ = (None,) * len(CaseStudy._fields)
+Message.__new__.__defaults__ = (None,) * len(Message._fields)
 AddressDetails.__new__.__defaults__ = (None,) * len(AddressDetails._fields)
 
 
