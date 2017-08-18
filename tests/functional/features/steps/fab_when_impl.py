@@ -1241,7 +1241,7 @@ def fas_search_with_product_service_keyword(
             logging.debug(
                 "%s is searching for company '%s' using %s term '%s'",
                 buyer_alias, company, term_type, term)
-            found, response = can_find_supplier_by_term(
+            found, response, _ = can_find_supplier_by_term(
                 session, company, term, term_type)
             search_term['found'] = found
             search_term['response'] = response
