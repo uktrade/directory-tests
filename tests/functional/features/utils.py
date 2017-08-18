@@ -677,7 +677,6 @@ def mailgun_get_message(context: Context, url: str) -> dict:
     return response.json()
 
 
-@retry(wait_fixed=15000, stop_max_attempt_number=8)
 def mailgun_get_message_url(context: Context, recipient: str) -> str:
     """Will try to find the message URL among 100 emails sent in last 1 hour.
 
@@ -689,30 +688,15 @@ def mailgun_get_message_url(context: Context, recipient: str) -> str:
     :param recipient: email address of the message recipient
     :return: mailgun message URL
     """
-    url = MAILGUN_EVENTS_URL
-    api_key = MAILGUN_SECRET_API_KEY
     message_limit = 1
     pattern = '%a, %d %b %Y %H:%M:%S GMT'
     begin = (datetime.utcnow() - timedelta(minutes=60)).strftime(pattern)
 
-    params = {
-        "limit": message_limit,
-        "recipient": recipient,
-        "event": "accepted",
-        "ascending": "yes",
-        "begin": begin
-    }
-    response = make_request(
-        Method.GET, url, auth=("api", api_key), params=params)
+    response = find_mailgun_events(
+        context, MailGunService.SSO, limit=message_limit, recipient=recipient,
+        event=MailGunEvent.ACCEPTED
+    )
     context.response = response
-
-    with assertion_msg(
-            "Expected 200 OK from MailGun when searching for an event triggered"
-            " by email verification message but got %d", response.status_code):
-        assert response.status_code == 200
-    no_of_items = len(response.json()["items"])
-    with assertion_msg("Could not find MailGun event for %s", recipient):
-        assert no_of_items == message_limit
     logging.debug("Found event with recipient: {}".format(recipient))
     return response.json()["items"][0]["storage"]["url"]
 
