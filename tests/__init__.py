@@ -48,6 +48,7 @@ urls = {
     # UI-SUPPLIER
     'ui-supplier:landing': '',
     'ui-supplier:suppliers': 'suppliers',
+    'ui-supplier:suppliers-contact': 'suppliers/{}/contact',
     'ui-supplier:industries': 'industries',
     'ui-supplier:industries-health': 'industries/health',
     'ui-supplier:industries-tech': 'industries/tech',
