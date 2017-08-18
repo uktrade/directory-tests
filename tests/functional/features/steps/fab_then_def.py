@@ -21,6 +21,7 @@ from tests.functional.features.steps.fab_then_impl import (
     fas_should_see_company_details,
     fas_should_see_logo_picture,
     fas_supplier_cannot_be_found_using_case_study_details,
+    fas_supplier_should_receive_message_from_buyer,
     prof_all_unsupported_files_should_be_rejected,
     prof_should_be_on_profile_page,
     prof_should_be_told_about_invalid_links,
@@ -239,3 +240,9 @@ def then_buyer_should_be_told_that_message_has_been_sent(
         context, buyer_alias, company_alias):
     fas_should_be_told_that_message_has_been_sent(
         context, buyer_alias, company_alias)
+
+
+@then('"{supplier_alias}" should receive an email message from "{buyer_alias}"')
+def then_supplier_should_receive_message_from_buyer(
+        context, supplier_alias, buyer_alias):
+    fas_supplier_should_receive_message_from_buyer(context, supplier_alias, buyer_alias)
