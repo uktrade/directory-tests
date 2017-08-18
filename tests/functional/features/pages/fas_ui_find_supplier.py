@@ -57,9 +57,12 @@ def should_be_here(response, *, number=None):
     logging.debug("Buyer is on FAS Company's Profile page")
 
 
-def should_see_company(response: Response, company_title: str) -> bool:
+def should_see_company(
+        response: Response, company_title: str, *, upper: bool = True) -> bool:
     content = response.content.decode("utf-8")
-    return escape_html(company_title, upper=True) in content
+    no_match = "did not match any UK trade profiles" in content
+    contains_company_title = escape_html(company_title, upper=upper) in content
+    return contains_company_title and not no_match
 
 
 def should_not_see_company(response: Response, company_title: str) -> bool:
