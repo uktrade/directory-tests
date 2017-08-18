@@ -663,7 +663,7 @@ def mailgun_get_message(context: Context, url: str) -> dict:
     :param url: unique mailgun message URL
     :return: a dictionary with message details and message body
     """
-    api_key = MAILGUN_SECRET_API_KEY
+    api_key = MAILGUN_SSO_SECRET_API_KEY
     # this will help us to get the raw MIME
     headers = {"Accept": "message/rfc2822"}
     response = make_request(
