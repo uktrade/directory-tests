@@ -13,6 +13,7 @@ from tests.functional.features.pages import (
     fab_ui_edit_online_profiles,
     fab_ui_profile,
     fab_ui_try_other_services,
+    fas_ui_contact,
     fas_ui_find_supplier,
     fas_ui_profile,
     profile_ui_landing,
@@ -529,3 +530,12 @@ def fas_should_find_all_sought_companies(context: Context, buyer_alias: str):
                     "%s could not find Supplier '%s' using '%s' term '%s'",
                     buyer_alias, company, term_type, term):
                 assert result["found"]
+
+
+def fas_should_be_told_that_message_has_been_sent(
+        context: Context, buyer_alias: str, company_alias: str):
+    response = context.response
+    company = context.get_company(company_alias)
+    fas_ui_contact.should_see_that_message_has_been_sent(company, response)
+    logging.debug("%s was told that the message to '%s' (%s) has been sent",
+                  buyer_alias, company.title, company_alias)

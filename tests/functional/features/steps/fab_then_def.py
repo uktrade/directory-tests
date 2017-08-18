@@ -14,6 +14,7 @@ from tests.functional.features.steps.fab_then_impl import (
     fas_no_links_to_online_profiles_are_visible,
     fas_pages_should_be_in_selected_language,
     fas_should_be_on_profile_page,
+    fas_should_be_told_that_message_has_been_sent,
     fas_should_find_all_sought_companies,
     fas_should_find_with_company_details,
     fas_should_see_all_case_studies,
@@ -230,3 +231,11 @@ def then_buyer_should_be_told_about_feedback_request_confirmation(
 @then('"{buyer_alias}" should be able to find all sought companies')
 def then_buyer_should_find_all_sought_companies(context, buyer_alias):
     fas_should_find_all_sought_companies(context, buyer_alias)
+
+
+@then('"{buyer_alias}" should be told that the message has been sent to company'
+      ' "{company_alias}"')
+def then_buyer_should_be_told_that_message_has_been_sent(
+        context, buyer_alias, company_alias):
+    fas_should_be_told_that_message_has_been_sent(
+        context, buyer_alias, company_alias)
