@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """FAB - Edit Company's Directory Profile page"""
 import logging
+from urllib.parse import urljoin
 
 from behave.model import Table
 from requests import Response, Session
@@ -40,6 +41,18 @@ def go_to(session: Session, company_number: str) -> Response:
     logging.debug(
         "User is on the Company %s FAS profile page", company_number)
     return response
+
+
+def go_to_endpoint(session: Session, endpoint: str) -> Response:
+    """Go to Company's FAS profile page using explicit FAS endpoint.
+
+    :param session: Supplier session object
+    :param endpoint: FAS endpoint that leads directly to Company's profile page
+    :return: response object
+    """
+    fas_url = get_absolute_url("ui-supplier:landing")
+    profile_url = urljoin(fas_url, endpoint)
+    return make_request(Method.GET, profile_url, session=session)
 
 
 def should_be_here(response, *, number=None):
