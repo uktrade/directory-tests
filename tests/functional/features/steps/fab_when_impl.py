@@ -1151,6 +1151,22 @@ def fas_feedback_request_should_be_submitted(
         "% was told that the feedback request has been submitted", buyer_alias)
 
 
+def fas_get_company_profile_url(response: Response, name: str) -> str:
+    content = response.content.decode("utf-8")
+    links_to_profiles_selector = "#ed-search-list-container a"
+    href_selector = "a::attr(href)"
+    links_to_profiles = Selector(text=content).css(links_to_profiles_selector).extract()
+    profile_url = None
+    for link in links_to_profiles:
+        if name in link:
+            profile_url = Selector(text=link).css(href_selector).extract()[0]
+    with assertion_msg(
+            "Couldn't find link to '%s' company profile page in the response",
+            name):
+        assert profile_url
+    return profile_url
+
+
 def can_find_supplier_by_term(
         session: Session, name: str, term: str, term_type: str) \
         -> (bool, Response):
