@@ -25,10 +25,7 @@ EXPECTED_STRINGS = [
 
 
 def go_to(session: Session, company_number: str) -> Response:
-    """Go to "Edit Company's Details" page.
-
-    This requires:
-     * Supplier to be logged in
+    """Go to Company's FAS profile page using company's number.
 
     :param session: Supplier session object
     :param company_number: (optional) explicit company number
@@ -41,7 +38,7 @@ def go_to(session: Session, company_number: str) -> Response:
 
     should_be_here(response, number=company_number)
     logging.debug(
-        "Supplier is on the Company %s FAS profile page", company_number)
+        "User is on the Company %s FAS profile page", company_number)
     return response
 
 
