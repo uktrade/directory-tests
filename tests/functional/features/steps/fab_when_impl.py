@@ -1169,23 +1169,27 @@ def fas_get_company_profile_url(response: Response, name: str) -> str:
 
 def can_find_supplier_by_term(
         session: Session, name: str, term: str, term_type: str) \
-        -> (bool, Response):
+        -> (bool, Response, str):
     """
 
     :param session: Buyer's session object
     :param name: sought Supplier name
     :param term: a text used to find the Supplier
     :param term_type: type of the term, e.g.: product, service, keyword etc.
-    :return: a tuple with search result (True/False) and last search Response
+    :return: a tuple with search result (True/False), last search Response and
+             an endpoint to company's profile
     """
     found = False
     response = fas_ui_find_supplier.go_to(session, term=term)
     number_of_pages = get_number_of_search_result_pages(response)
     if number_of_pages == 0:
         return found, response
+    endpoint = None
     for page_number in range(1, number_of_pages + 1):
-        found = fas_ui_find_supplier.should_see_company(response, name)
+        found = fas_ui_find_supplier.should_see_company(
+            response, name, upper=False)
         if found:
+            endpoint = fas_get_company_profile_url(response, name)
             break
         else:
             logging.debug(
@@ -1200,7 +1204,7 @@ def can_find_supplier_by_term(
                 logging.debug(
                     "Couldn't find the Supplier even on the last page of the "
                     "search results")
-    return found, response
+    return found, response, endpoint
 
 
 def fas_search_with_product_service_keyword(
