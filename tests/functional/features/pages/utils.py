@@ -16,10 +16,15 @@ from langdetect import DetectorFactory, detect_langs
 from requests import Response
 
 from tests import get_absolute_url
-from tests.functional.features.context_utils import CaseStudy, Company, Feedback
 from tests.functional.features.db_cleanup import (
     delete_supplier_data,
     get_company_email
+)
+from tests.functional.features.context_utils import (
+    CaseStudy,
+    Company,
+    Feedback,
+    Message
 )
 from tests.functional.features.pages import int_api_ch_search
 from tests.functional.features.utils import (
@@ -165,6 +170,34 @@ def random_feedback_data(
         country=country, comment=comment, terms=terms)
 
     return feedback
+
+
+def random_message_data(
+        *, alias: str = None, body: str = None, company_name: str = None,
+        country: str = None, email_address: str = None, full_name: str = None,
+        recaptcha_challenge_field: str = None, recaptcha_response_field: str = None,
+        sector: str = None, subject: str = None, terms: str = None) -> Feedback:
+    alias = alias or "test message"
+    body = body or sentence(max_length=1000)
+    company_name = company_name or rare_word(min_length=12)
+    country = country or rare_word(min_length=12)
+    email_address = email_address or ("test+buyer_{}@directory.uktrade.io"
+                                      .format(rare_word(min_length=15)))
+    full_name = full_name or sentence(max_words=2)
+    sector = sector or random.choice(SECTORS)
+    subject = subject or sentence(max_length=200)
+    recaptcha_challenge_field = recaptcha_challenge_field or "CAPTCHA CHALLENGE"
+    recaptcha_response_field = recaptcha_response_field or "CAPTCHA RESPONSE"
+    terms = terms or "on"
+
+    message = Message(
+        alias=alias, body=body, company_name=company_name, country=country,
+        email_address=email_address, full_name=full_name,
+        recaptcha_challenge_field=recaptcha_challenge_field,
+        recaptcha_response_field=recaptcha_response_field, sector=sector,
+        subject=subject, terms=terms)
+
+    return message
 
 
 def find_active_company_without_fas_profile(alias: str) -> Company:
