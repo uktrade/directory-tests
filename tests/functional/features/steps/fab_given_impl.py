@@ -22,6 +22,7 @@ from tests.functional.features.steps.fab_when_impl import (
     bp_provide_company_details,
     bp_provide_full_name,
     bp_select_random_sector_and_export_to_country,
+    can_find_supplier_by_term,
     prof_set_company_description,
     prof_verify_company,
     reg_confirm_company_selection,
@@ -34,6 +35,7 @@ from tests.functional.features.steps.fab_when_impl import (
     sso_go_to_create_trade_profile,
     sso_supplier_confirms_email_address
 )
+from tests.functional.features.utils import assertion_msg
 
 
 def unauthenticated_supplier(supplier_alias: str) -> Actor:
@@ -167,3 +169,22 @@ def reg_create_unverified_profile(context, supplier_alias, company_alias):
         context, supplier_alias, company_alias)
     reg_confirm_email_address(context, supplier_alias)
     bp_build_company_profile(context, supplier_alias)
+
+
+def fas_find_company_by_name(
+        context: Context, buyer_alias: str, company_alias: str):
+    buyer = context.get_actor(buyer_alias)
+    session = buyer.session
+    company = context.get_company(company_alias)
+    found, response, profile_endpoint = can_find_supplier_by_term(
+        session=session, name=company.title, term=company.title,
+        term_type="company title")
+    context.response = response
+    with assertion_msg(
+            "%s could not find company '%s' of FAS using company's title",
+            buyer_alias, company.title):
+        assert found
+    with assertion_msg(
+            "Could not extract URL to '%s' profile page", company.title):
+        assert profile_endpoint
+    context.set_company_details(company_alias, fas_profile_endpoint=profile_endpoint)
