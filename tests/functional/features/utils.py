@@ -764,3 +764,69 @@ def green(x: str):
 
 def blue(x: str):
     cprint(x, 'blue', attrs=['bold'])
+
+
+@retry(wait_fixed=10000, stop_max_attempt_number=9)
+def find_mailgun_events(
+        context: Context, service: MailGunService, *, sender: str = None,
+        recipient: str = None, to: str = None, subject: str = None,
+        limit: int = None, event: MailGunEvent = None, begin: str = None,
+        end: str = None, ascending: str = None) -> Response:
+    """
+
+    :param context: behave `context` object
+    :param service: an object with MailGun service details
+    :param sender: (optional) email address of the sender
+    :param recipient: (optional) email address of the recipient
+    :param to: (optional) email address of the recipient (from the MIME header)
+    :param subject: (optional) subject of the message
+    :param limit: (optional) Number of entries to return. (300 max)
+    :param event: (optional) An event type
+    :param begin: (optional)
+    :param end: (optional)
+    :param ascending: (optional) yes/no
+    :return: a response object
+    """
+    params = {}
+
+    if sender:
+        params.update({"from": sender})
+    if recipient:
+        params.update({"recipient": recipient})
+    if to:
+        params.update({"to": to})
+    if subject:
+        params.update({"subject": subject})
+    if limit:
+        params.update({"limit": limit})
+    if event:
+        params.update({"event": str(event)})
+    if begin:
+        params.update({"begin": begin})
+    if end:
+        params.update({"end": end})
+    if ascending:
+        params.update({"ascending": ascending})
+
+    response = make_request(
+        Method.GET, service.url, auth=(service.user, service.password),
+        params=params)
+    context.response = response
+    with assertion_msg(
+            "Expected 200 OK from MailGun when searching for an event %s",
+            response.status_code):
+        assert response.status_code == 200
+    number_of_events = len(response.json()["items"])
+    if limit:
+        with assertion_msg(
+                "Expected (maximum) %d events but got %d instead.", limit,
+                number_of_events):
+            assert number_of_events <= limit
+    with assertion_msg(
+            "Expected to find at least 1 MailGun event, got 0 instead. User "
+            "parameters: %s", params):
+        assert number_of_events > 0
+    logging.debug(
+        "Found {} event(s) that matched following criteria: {}"
+        .format(number_of_events, params))
+    return response
