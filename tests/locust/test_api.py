@@ -41,7 +41,7 @@ class AuthenticatedPagesAPI(TaskSet):
         url = get_relative_url('api:company').format(
             sso_id=settings.SSO_USER_ID)
         data = {
-            'export_status': 'YES',
+            'has_exported_before': 'True',
             'name': 'Test Company',
             'number': '04296006',
         }  # just required fields here
@@ -53,7 +53,7 @@ class AuthenticatedPagesAPI(TaskSet):
         url = get_relative_url('api:company').format(
             sso_id=settings.SSO_USER_ID)
         data = {
-            'export_status': 'YES',
+            'has_exported_before': 'True',
             'name': 'Test Company',
             'number': '04296006',
         }  # just required fields here
@@ -96,7 +96,7 @@ class AuthenticatedPagesAPI(TaskSet):
     @task
     def enrolment(self):
         data = {
-            'export_status': 'ONE_TWO_YEARS_AGO',
+            'has_exported_before': 'True',
             'name': 'Example corp',
             'number': '09466013',
             'sso_id': 2,
