@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """FAB - Upload Logo page"""
 import logging
+import mimetypes
+import os
 
 from requests import Response, Session
 
@@ -56,7 +58,8 @@ def upload(session: Session, token: str, file_path: str) -> Response:
     }
     with open(file_path, "rb") as f:
         picture = f.read()
-    files = {"logo-logo": picture}
+    mime = mimetypes.MimeTypes().guess_type(file_path)[0]
+    files = {"logo-logo": (os.path.basename(file_path), picture, mime)}
     response = make_request(
         Method.POST, url, session=session, headers=headers, data=data,
         files=files)
