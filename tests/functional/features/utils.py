@@ -234,7 +234,7 @@ def make_request(
         method: Method, url: str, *, session: Session = None,
         params: dict = None, headers: dict = None, cookies: dict = None,
         data: dict = None, files: dict = None,
-        allow_redirects: bool = True, auth: tuple = None) -> Response:
+        allow_redirects: bool = True, auth: tuple = None, trim: bool = True) -> Response:
     """Make a desired HTTP request using optional parameters, headers and data.
 
     NOTE:
@@ -255,6 +255,7 @@ def make_request(
                   http://docs.python-requests.org/en/master/user/quickstart/#post-a-multipart-encoded-file
     :param allow_redirects: Follow or do not follow redirects
     :param auth: (optional) authentication tuple, e.g.: ("username", "password")
+    :param trim: (optional) trim long request body/response content if True
     :return: a response object
     """
     with assertion_msg("Can't make a request without a valid URL!"):
@@ -303,7 +304,7 @@ def make_request(
         red("Files: {}".format(files))
         raise ex
 
-    log_response(res)
+    log_response(res, trim=trim)
     return res
 
 
