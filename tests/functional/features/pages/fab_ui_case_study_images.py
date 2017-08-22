@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """FAB - Add Case Study - Images page"""
 import logging
+from mimetypes import MimeTypes
+from os.path import basename
 
 from requests import Response, Session
 
@@ -43,6 +45,10 @@ def prepare_form_data(token: str, case_study: CaseStudy) -> (dict, dict):
     :param case_study: a CaseStudy namedtuple with random data
     :return: a tuple consisting of form data and files to upload
     """
+    def read_image(file_path: str):
+        with open(file_path, "rb") as f:
+            return f.read()
+
     data = {
         "csrfmiddlewaretoken": token,
         "supplier_case_study_wizard_view-current_step": "rich-media",
@@ -54,10 +60,15 @@ def prepare_form_data(token: str, case_study: CaseStudy) -> (dict, dict):
         "rich-media-testimonial_job_title": case_study.source_job,
         "rich-media-testimonial_company": case_study.source_company
     }
+
+    paths = [case_study.image_1, case_study.image_2, case_study.image_3]
+    name_1, name_2, name_3 = (basename(path) for path in paths)
+    mime_1, mime_2, mime_3 = (MimeTypes().guess_type(path)[0] for path in paths)
+    file_1, file_2, file_3 = (read_image(path) for path in paths)
     files = {
-        "rich-media-image_one": open(case_study.image_1, "rb"),
-        "rich-media-image_two": open(case_study.image_2, "rb"),
-        "rich-media-image_three": open(case_study.image_3, "rb")
+        "rich-media-image_one": (name_1, file_1, mime_1),
+        "rich-media-image_two": (name_2, file_2, mime_2),
+        "rich-media-image_three": (name_3, file_3, mime_3),
     }
 
     return data, files
