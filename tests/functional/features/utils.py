@@ -609,7 +609,7 @@ def mailgun_get_message(context: Context, url: str) -> dict:
     return response.json()
 
 
-@retry(wait_fixed=15000, stop_max_attempt_number=6)
+@retry(wait_fixed=15000, stop_max_attempt_number=8)
 def mailgun_get_message_url(context: Context, recipient: str) -> str:
     """Will try to find the message URL among 100 emails sent in last 1 hour.
 
