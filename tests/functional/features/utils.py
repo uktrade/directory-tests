@@ -625,7 +625,7 @@ def mailgun_get_message_url(context: Context, recipient: str) -> str:
     api_key = MAILGUN_SECRET_API_KEY
     message_limit = 1
     pattern = '%a, %d %b %Y %H:%M:%S GMT'
-    begin = (datetime.utcnow() - timedelta(minutes=30)).strftime(pattern)
+    begin = (datetime.utcnow() - timedelta(minutes=60)).strftime(pattern)
 
     params = {
         "limit": message_limit,
