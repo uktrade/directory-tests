@@ -640,7 +640,7 @@ def mailgun_get_message_url(context: Context, recipient: str) -> str:
 
     with assertion_msg(
             "Expected 200 OK from MailGun when searching for an event triggered"
-            " by email verification message but got %s", response.status_code):
+            " by email verification message but got %d", response.status_code):
         assert response.status_code == 200
     no_of_items = len(response.json()["items"])
     with assertion_msg("Could not find MailGun event for %s", recipient):
