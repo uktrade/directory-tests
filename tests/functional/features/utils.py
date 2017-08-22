@@ -8,6 +8,7 @@ import sys
 import traceback
 from contextlib import contextmanager
 from datetime import datetime
+from datetime import timedelta
 from enum import Enum
 from pprint import pprint
 
@@ -608,9 +609,13 @@ def mailgun_get_message(context: Context, url: str) -> dict:
     return response.json()
 
 
-@retry(wait_fixed=10000, stop_max_attempt_number=9)
+@retry(wait_fixed=15000, stop_max_attempt_number=6)
 def mailgun_get_message_url(context: Context, recipient: str) -> str:
     """Will try to find the message URL among 100 emails sent in last 1 hour.
+
+    NOTE:
+    More on MailGun's Event Polling:
+    https://documentation.mailgun.com/en/latest/api-events.html#event-polling
 
     :param context: behave `context` object
     :param recipient: email address of the message recipient
@@ -619,11 +624,15 @@ def mailgun_get_message_url(context: Context, recipient: str) -> str:
     url = MAILGUN_EVENTS_URL
     api_key = MAILGUN_SECRET_API_KEY
     message_limit = 1
+    pattern = '%a, %d %b %Y %H:%M:%S GMT'
+    begin = (datetime.utcnow() - timedelta(minutes=30)).strftime(pattern)
 
     params = {
         "limit": message_limit,
         "recipient": recipient,
-        "event": "accepted"
+        "event": "accepted",
+        "ascending": "yes",
+        "begin": begin
     }
     response = make_request(
         Method.GET, url, auth=("api", api_key), params=params)
