@@ -43,6 +43,9 @@ from tests.functional.features.pages.utils import (
     get_active_company_without_fas_profile,
     get_fas_page_url,
     get_language_code,
+    get_number_of_search_result_pages,
+    is_already_registered,
+    is_inactive,
     random_case_study_data,
     random_feedback_data,
     rare_word,
@@ -82,12 +85,25 @@ def select_random_company(
     actor = context.get_actor(supplier_alias)
     session = actor.session
 
-    # Step 1 - find an active company without a FAS profile
-    company = get_active_company_without_fas_profile(company_alias)
+    while True:
+        # Step 1 - find an active company without a FAS profile
+        company = get_active_company_without_fas_profile(company_alias)
 
-    # Step 2 - Go to the Confirm Company page
-    response = fab_ui_confirm_company.go_to(session, company)
-    context.response = response
+        # Step 2 - Go to the Confirm Company page
+        response = fab_ui_confirm_company.go_to(session, company)
+        registered = is_already_registered(response)
+        inactive = is_inactive(response)
+        if registered or inactive:
+            logging.warning(
+                "Company '%s' is already registered or inactive, will use "
+                "a different one", company.title)
+            continue
+        else:
+            logging.warning(
+                "Company '%s' is active and not registered with FAB",
+                company.title)
+            context.response = response
+            break
 
     # Step 3 - check if we're on the Confirm Company page
     fab_ui_confirm_company.should_be_here(response, company)
@@ -1075,18 +1091,30 @@ def fas_search_using_company_details(
     for term_name in search_terms:
         term = search_terms[term_name]
         response = fas_ui_find_supplier.go_to(session, term=term)
-        search_responses[term_name] = response
-        found = fas_ui_find_supplier.should_see_company(response, company.title)
-        search_results[term_name] = found
-        if found:
-            logging.debug(
-                "Found Supplier '%s' on FAS using '%s' : '%s'", company.title,
-                term_name, term)
-        else:
-            logging.debug(
-                "Couldn't find Supplier '%s' on the 1st page of FAS search "
-                "results. Search was done using '%s' : '%s'", company.title,
-                term_name, term)
+        context.response = response
+        number_of_pages = get_number_of_search_result_pages(response)
+        for page_number in range(1, number_of_pages + 1):
+            search_responses[term_name] = response
+            found = fas_ui_find_supplier.should_see_company(response, company.title)
+            search_results[term_name] = found
+            if found:
+                logging.debug(
+                    "Found Supplier '%s' on FAS using '%s' : '%s' on %d page "
+                    "out of %d", company.title, term_name, term, page_number,
+                    number_of_pages)
+                break
+            else:
+                logging.debug(
+                    "Couldn't find Supplier '%s' on the %d page out of %d of "
+                    "FAS search results. Search was done using '%s' : '%s'",
+                    company.title, page_number, number_of_pages, term_name, term)
+                next_page = page_number + 1
+                if next_page <= number_of_pages:
+                    response = fas_ui_find_supplier.go_to(
+                        session, term=term, page=next_page)
+                else:
+                    logging.debug("Couldn't find the Supplier even on the last "
+                                  "page of the search results")
     context.search_results = search_results
     context.search_responses = search_responses
 

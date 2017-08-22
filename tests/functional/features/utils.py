@@ -8,6 +8,7 @@ import sys
 import traceback
 from contextlib import contextmanager
 from datetime import datetime
+from datetime import timedelta
 from enum import Enum
 from pprint import pprint
 
@@ -102,6 +103,21 @@ class Method(Enum):
         return self.value == y.value
 
 
+def decode_as_utf8(content):
+    """Try to decode provided content as UTF-8
+
+    :param content: bytes to decode as UTF-8
+    :return: UTF-8 decoded content or the original content
+    """
+    if isinstance(content, bytes):
+        try:
+            content = content.decode("utf-8")
+        except UnicodeDecodeError:
+            logging.debug("Could not decode content as utf-8")
+            pass
+    return content
+
+
 def print_response(response: Response, *, trim: bool = True):
     """
 
@@ -121,15 +137,20 @@ def print_response(response: Response, *, trim: bool = True):
                 r.request.headers['Authorization'] = 'STRIPPED_OUT'
             pprint(r.request.headers)
             if r.request.body:
-                blue("Intermediate REQ Body (trimmed):")
-                print(r.request.body[0:trim_offset])
+                body = decode_as_utf8(r.request.body)
+                if trim:
+                    blue("Intermediate REQ Body (trimmed):")
+                    print(body[0:trim_offset])
+                else:
+                    blue("Intermediate REQ Body:")
+                    print(body)
             else:
                 blue("Intermediate REQ had no body")
             blue("Intermediate RESP: %d %s" % (r.status_code, r.reason))
             blue("Intermediate RESP Headers:")
             pprint(r.headers)
             if r.content:
-                content = r.content.decode("utf-8")
+                content = decode_as_utf8(r.content)
                 if trim:
                     blue("Intermediate RESP Content (trimmed):")
                     print(content[0:trim_offset])
@@ -149,12 +170,13 @@ def print_response(response: Response, *, trim: bool = True):
             green("REQ Cookies:")
             pprint(request.headers.get('Set-Cookie'))
         if request.body:
+            body = decode_as_utf8(request.body)
             if trim:
                 green("REQ Body (trimmed):")
-                print(request.body[0:trim_offset])
+                print(body[0:trim_offset])
             else:
                 green("REQ Body:")
-                print(request.body)
+                print(body)
         else:
             green("REQ had no body")
         green("RSP Status: %s %s" % (response.status_code, response.reason))
@@ -165,7 +187,7 @@ def print_response(response: Response, *, trim: bool = True):
         pprint(response.cookies)
 
     if response.content:
-        content = response.content.decode("utf-8")
+        content = decode_as_utf8(response.content)
         if trim:
             red("RSP Content (trimmed):")
             print(content[0:trim_offset])
@@ -186,15 +208,19 @@ def log_response(response: Response, *, trim: bool = True):
                 r.request.headers['Authorization'] = 'STRIPPED_OUT'
             logging.debug("Intermediate REQ Headers: %s", r.request.headers)
             if r.request.body:
-                logging.debug(
-                    "Intermediate REQ Body (trimmed): %s",
-                    r.request.body[0:trim_offset])
+                body = decode_as_utf8(r.request.body)
+                if trim:
+                    logging.debug(
+                        "Intermediate REQ Body (trimmed): %s",
+                        body[0:trim_offset])
+                else:
+                    logging.debug("Intermediate REQ Body: %s", body)
             else:
                 logging.debug("Intermediate REQ had no body")
             logging.debug("Intermediate RESP: %d %s", r.status_code, r.reason)
             logging.debug("Intermediate RESP Headers: %s", r.headers)
             if r.content:
-                content = r.content.decode("utf-8")
+                content = decode_as_utf8(r.content)
                 if trim:
                     logging.debug(
                         "Intermediate RESP Content: %s", content[0:trim_offset])
@@ -213,7 +239,11 @@ def log_response(response: Response, *, trim: bool = True):
             logging.debug("REQ Cookies:", request.headers.get('Set-Cookie'))
 
         if request.body:
-            logging.debug("REQ Body (trimmed): %s", request.body[0:trim_offset])
+            body = decode_as_utf8(request.body)
+            if trim:
+                logging.debug("REQ Body (trimmed): %s", body[0:trim_offset])
+            else:
+                logging.debug("REQ Body: %s", body)
         else:
             logging.debug("REQ had no body")
 
@@ -223,7 +253,7 @@ def log_response(response: Response, *, trim: bool = True):
         logging.debug("RSP Cookies: %s", response.cookies)
 
     if response.content:
-        content = response.content.decode("utf-8")
+        content = decode_as_utf8(response.content)
         if trim:
             logging.debug("RSP Content (trimmed): %s", content[0:trim_offset])
         else:
@@ -234,7 +264,7 @@ def make_request(
         method: Method, url: str, *, session: Session = None,
         params: dict = None, headers: dict = None, cookies: dict = None,
         data: dict = None, files: dict = None,
-        allow_redirects: bool = True, auth: tuple = None) -> Response:
+        allow_redirects: bool = True, auth: tuple = None, trim: bool = True) -> Response:
     """Make a desired HTTP request using optional parameters, headers and data.
 
     NOTE:
@@ -255,6 +285,7 @@ def make_request(
                   http://docs.python-requests.org/en/master/user/quickstart/#post-a-multipart-encoded-file
     :param allow_redirects: Follow or do not follow redirects
     :param auth: (optional) authentication tuple, e.g.: ("username", "password")
+    :param trim: (optional) trim long request body/response content if True
     :return: a response object
     """
     with assertion_msg("Can't make a request without a valid URL!"):
@@ -293,10 +324,17 @@ def make_request(
             raise KeyError("Unrecognized Method: %s", method.name)
     except REQUEST_EXCEPTIONS as ex:
         red("Exception UTC datetime: %s" % datetime.isoformat(datetime.utcnow()))
-        print_response(res, trim=False)
+        red("{} {}".format(method, url))
+        red("Parameters: {}".format(params))
+        if headers.get('Authorization'):
+            headers['Authorization'] = 'STRIPPED_OUT'
+        red("Headers: {}".format(headers))
+        red("Cookies: {}".format(cookies))
+        red("Data: {}".format(data))
+        red("Files: {}".format(files))
         raise ex
 
-    log_response(res)
+    log_response(res, trim=trim)
     return res
 
 
@@ -571,9 +609,13 @@ def mailgun_get_message(context: Context, url: str) -> dict:
     return response.json()
 
 
-@retry(wait_fixed=10000, stop_max_attempt_number=9)
+@retry(wait_fixed=15000, stop_max_attempt_number=8)
 def mailgun_get_message_url(context: Context, recipient: str) -> str:
     """Will try to find the message URL among 100 emails sent in last 1 hour.
+
+    NOTE:
+    More on MailGun's Event Polling:
+    https://documentation.mailgun.com/en/latest/api-events.html#event-polling
 
     :param context: behave `context` object
     :param recipient: email address of the message recipient
@@ -582,11 +624,15 @@ def mailgun_get_message_url(context: Context, recipient: str) -> str:
     url = MAILGUN_EVENTS_URL
     api_key = MAILGUN_SECRET_API_KEY
     message_limit = 1
+    pattern = '%a, %d %b %Y %H:%M:%S GMT'
+    begin = (datetime.utcnow() - timedelta(minutes=60)).strftime(pattern)
 
     params = {
         "limit": message_limit,
         "recipient": recipient,
-        "event": "accepted"
+        "event": "accepted",
+        "ascending": "yes",
+        "begin": begin
     }
     response = make_request(
         Method.GET, url, auth=("api", api_key), params=params)
@@ -594,7 +640,7 @@ def mailgun_get_message_url(context: Context, recipient: str) -> str:
 
     with assertion_msg(
             "Expected 200 OK from MailGun when searching for an event triggered"
-            " by email verification message but got %s", response.status_code):
+            " by email verification message but got %d", response.status_code):
         assert response.status_code == 200
     no_of_items = len(response.json()["items"])
     with assertion_msg("Could not find MailGun event for %s", recipient):

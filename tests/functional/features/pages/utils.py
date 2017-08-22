@@ -21,6 +21,7 @@ from tests.functional.features.pages import int_api_ch_search
 from tests.functional.features.utils import (
     Method,
     assertion_msg,
+    extract_by_css,
     extract_csrf_middleware_token,
     make_request
 )
@@ -251,6 +252,25 @@ def already_registered(company_number: str) -> bool:
     return "Already registered" in response.content.decode("utf-8")
 
 
+def is_already_registered(response: Response) -> bool:
+    """Will check if response contains information that Company is already
+    registered with FAB.
+
+    :param response: requests response
+    :return: True/False based on the presence of FAB profile
+    """
+    return "Already registered" in response.content.decode("utf-8")
+
+
+def is_inactive(response: Response) -> bool:
+    """Will check if response contains information that Company is inactive.
+
+    :param response: requests response
+    :return: True/False based on the Company's Status in Companies House
+    """
+    return "Company not active." in response.content.decode("utf-8")
+
+
 def get_companies(*, number: int = 100) -> CompaniesList:
     """Find a number of active companies without FAS profile.
 
@@ -446,3 +466,22 @@ def detect_page_language(
     logging.debug(
         "Language detection results after %d rounds: %s", rounds, results)
     return results
+
+
+def get_number_of_search_result_pages(response: Response) -> int:
+    """Will extract number of FAS Search Result pages.
+
+    NOTE:
+    This will parse string like `page 1 of 2` and return the last number.
+
+    :param response: FAS Search Result response
+    :return: a number of FAS Search Result pages
+    """
+    css_selector = (".company-profile-details-body-toolbar-bottom"
+                    " span.current::text")
+    pages = extract_by_css(response, css_selector).strip()
+    page_numbers = [int(word) for word in pages.split() if word.isdigit()]
+    with assertion_msg(
+            "Couldn't find information about the number of Search Result Pages"):
+        assert len(page_numbers) == 2
+    return page_numbers[-1]

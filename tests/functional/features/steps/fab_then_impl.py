@@ -20,7 +20,8 @@ from tests.functional.features.pages import (
 )
 from tests.functional.features.pages.utils import (
     detect_page_language,
-    get_language_code
+    get_language_code,
+    get_number_of_search_result_pages
 )
 from tests.functional.features.utils import (
     assertion_msg,
@@ -371,7 +372,23 @@ def fas_find_supplier_using_case_study_details(
         term = search_terms[term_name]
         response = fas_ui_find_supplier.go_to(session, term=term)
         context.response = response
-        found = fas_ui_find_supplier.should_see_company(response, company.title)
+        number_of_pages = get_number_of_search_result_pages(response)
+        for page_number in range(1, number_of_pages + 1):
+            found = fas_ui_find_supplier.should_see_company(response, company.title)
+            if found:
+                logging.debug(
+                    "Found Supplier '%s' on FAS using '%s' : '%s' on %d page "
+                    "out of %d", company.title, term_name, term, page_number,
+                    number_of_pages)
+                break
+            else:
+                logging.debug(
+                    "Couldn't find Supplier '%s' on the %d page out of %d of "
+                    "FAS search results. Search was done using '%s' : '%s'",
+                    company.title, page_number, number_of_pages, term_name, term)
+                response = fas_ui_find_supplier.go_to(
+                    session, term=term, page=page_number)
+                context.response = response
         with assertion_msg(
                 "Buyer could not find Supplier '%s' on FAS using %s: %s",
                 company.title, term_name, term):

@@ -2,6 +2,7 @@
 """FAB - Edit Company's Online Profiles page"""
 import logging
 import random
+import re
 
 from requests import Response, Session
 
@@ -70,10 +71,13 @@ def update_profiles(
     """
     session = actor.session
     token = actor.csrfmiddlewaretoken
+    clean_name = re.sub('[|&"-_;# ]', '', company.title.lower())
+    random_number = random.randint(9999, 999999999)
+    profile_suffix = "{}-{}".format(clean_name, random_number)
 
-    fake_fb = "http://facebook.com/{}".format(random.randint(9999, 999999999))
-    fake_li = "http://linkedin.com/{}".format(random.randint(9999, 999999999))
-    fake_tw = "http://twitter.com/{}".format(random.randint(9999, 999999999))
+    fake_fb = "http://facebook.com/{}".format(profile_suffix)
+    fake_li = "http://linkedin.com/{}".format(profile_suffix)
+    fake_tw = "http://twitter.com/{}".format(profile_suffix)
 
     if facebook:
         new_fb = specific_facebook if specific_facebook is not None else fake_fb
