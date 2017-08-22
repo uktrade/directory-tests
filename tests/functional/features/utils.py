@@ -136,15 +136,20 @@ def print_response(response: Response, *, trim: bool = True):
                 r.request.headers['Authorization'] = 'STRIPPED_OUT'
             pprint(r.request.headers)
             if r.request.body:
-                blue("Intermediate REQ Body (trimmed):")
-                print(r.request.body[0:trim_offset])
+                body = decode_as_utf8(r.request.body)
+                if trim:
+                    blue("Intermediate REQ Body (trimmed):")
+                    print(body[0:trim_offset])
+                else:
+                    blue("Intermediate REQ Body:")
+                    print(body)
             else:
                 blue("Intermediate REQ had no body")
             blue("Intermediate RESP: %d %s" % (r.status_code, r.reason))
             blue("Intermediate RESP Headers:")
             pprint(r.headers)
             if r.content:
-                content = r.content.decode("utf-8")
+                content = decode_as_utf8(r.content)
                 if trim:
                     blue("Intermediate RESP Content (trimmed):")
                     print(content[0:trim_offset])
@@ -164,12 +169,13 @@ def print_response(response: Response, *, trim: bool = True):
             green("REQ Cookies:")
             pprint(request.headers.get('Set-Cookie'))
         if request.body:
+            body = decode_as_utf8(request.body)
             if trim:
                 green("REQ Body (trimmed):")
-                print(request.body[0:trim_offset])
+                print(body[0:trim_offset])
             else:
                 green("REQ Body:")
-                print(request.body)
+                print(body)
         else:
             green("REQ had no body")
         green("RSP Status: %s %s" % (response.status_code, response.reason))
@@ -180,7 +186,7 @@ def print_response(response: Response, *, trim: bool = True):
         pprint(response.cookies)
 
     if response.content:
-        content = response.content.decode("utf-8")
+        content = decode_as_utf8(response.content)
         if trim:
             red("RSP Content (trimmed):")
             print(content[0:trim_offset])
@@ -201,15 +207,19 @@ def log_response(response: Response, *, trim: bool = True):
                 r.request.headers['Authorization'] = 'STRIPPED_OUT'
             logging.debug("Intermediate REQ Headers: %s", r.request.headers)
             if r.request.body:
-                logging.debug(
-                    "Intermediate REQ Body (trimmed): %s",
-                    r.request.body[0:trim_offset])
+                body = decode_as_utf8(r.request.body)
+                if trim:
+                    logging.debug(
+                        "Intermediate REQ Body (trimmed): %s",
+                        body[0:trim_offset])
+                else:
+                    logging.debug("Intermediate REQ Body: %s", body)
             else:
                 logging.debug("Intermediate REQ had no body")
             logging.debug("Intermediate RESP: %d %s", r.status_code, r.reason)
             logging.debug("Intermediate RESP Headers: %s", r.headers)
             if r.content:
-                content = r.content.decode("utf-8")
+                content = decode_as_utf8(r.content)
                 if trim:
                     logging.debug(
                         "Intermediate RESP Content: %s", content[0:trim_offset])
@@ -228,7 +238,11 @@ def log_response(response: Response, *, trim: bool = True):
             logging.debug("REQ Cookies:", request.headers.get('Set-Cookie'))
 
         if request.body:
-            logging.debug("REQ Body (trimmed): %s", request.body[0:trim_offset])
+            body = decode_as_utf8(request.body)
+            if trim:
+                logging.debug("REQ Body (trimmed): %s", body[0:trim_offset])
+            else:
+                logging.debug("REQ Body: %s", body)
         else:
             logging.debug("REQ had no body")
 
@@ -238,7 +252,7 @@ def log_response(response: Response, *, trim: bool = True):
         logging.debug("RSP Cookies: %s", response.cookies)
 
     if response.content:
-        content = response.content.decode("utf-8")
+        content = decode_as_utf8(response.content)
         if trim:
             logging.debug("RSP Content (trimmed): %s", content[0:trim_offset])
         else:
