@@ -102,6 +102,21 @@ class Method(Enum):
         return self.value == y.value
 
 
+def decode_as_utf8(content):
+    """Try to decode provided content as UTF-8
+
+    :param content: bytes to decode as UTF-8
+    :return: UTF-8 decoded content or the original content
+    """
+    if isinstance(content, bytes):
+        try:
+            content = content.decode("utf-8")
+        except UnicodeDecodeError:
+            logging.debug("Could not decode content as utf-8")
+            pass
+    return content
+
+
 def print_response(response: Response, *, trim: bool = True):
     """
 
