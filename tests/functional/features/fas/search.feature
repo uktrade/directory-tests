@@ -80,11 +80,6 @@ Feature: Find a Supplier
     Given "Annette Geissinger" is a buyer
     And "Peter Alder" is an unauthenticated supplier
     And "Peter Alder" has created and verified profile for randomly selected company "Y"
-    And "Peter Alder" has added links to online profiles
-      | online profile  |
-      | Facebook        |
-      | LinkedIn        |
-      | Twitter         |
 
     When "Annette Geissinger" searches for company "Y" on FAS using selected company's details
       | company detail |
@@ -94,9 +89,6 @@ Feature: Find a Supplier
       | website        |
       | summary        |
       | description    |
-      | facebook       |
-      | twitter        |
-      | linkedin       |
 
     Then "Annette Geissinger" should be able to find company "Y" on FAS using selected company's details
       | company detail |
@@ -106,9 +98,6 @@ Feature: Find a Supplier
       | website        |
       | summary        |
       | description    |
-      | facebook       |
-      | twitter        |
-      | linkedin       |
 
 
   @ED-2000
