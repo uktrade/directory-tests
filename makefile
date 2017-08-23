@@ -126,7 +126,7 @@ docker_integration_tests: docker_remove_all
 	$(DOCKER_COMPOSE_CREATE_ENVS) && \
 	$(DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
 	docker-compose -f docker-compose.yml build && \
-	docker-compose -f docker-compose.yml run smoke_tests && \
-	docker-compose -f docker-compose.yml run functional_tests
+	docker-compose -f docker-compose.yml run --rm smoke_tests && \
+	docker-compose -f docker-compose.yml run --rm functional_tests
 
 .PHONY: build clean requirements test docker_remove_all docker_integration_tests smoke_tests load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal functional_tests pep8
