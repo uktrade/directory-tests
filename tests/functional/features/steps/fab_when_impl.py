@@ -5,7 +5,7 @@ import random
 
 from behave.model import Table
 from behave.runner import Context
-from requests import Response
+from requests import Response, Session
 from scrapy import Selector
 
 from tests.functional.features.pages import (
@@ -1176,3 +1176,81 @@ def fas_feedback_request_should_be_submitted(context: Context, buyer_alias: str)
     fas_ui_feedback.should_see_feedback_submission_confirmation(response)
     logging.debug(
         "% was told that the feedback request has been submitted", buyer_alias)
+
+
+def can_find_supplier_by_term(
+        session: Session, name: str, term: str, term_type: str) \
+        -> (bool, Response):
+    """
+
+    :param session: Buyer's session object
+    :param name: sought Supplier name
+    :param term: a text used to find the Supplier
+    :param term_type: type of the term, e.g.: product, service, keyword etc.
+    :return: a tuple with search result (True/False) and last search Response
+    """
+    found = False
+    response = fas_ui_find_supplier.go_to(session, term=term)
+    number_of_pages = get_number_of_search_result_pages(response)
+    if number_of_pages == 0:
+        return found, response
+    for page_number in range(1, number_of_pages + 1):
+        found = fas_ui_find_supplier.should_see_company(response, name)
+        if found:
+            break
+        else:
+            logging.debug(
+                "Couldn't find Supplier '%s' on the %d page out of %d of "
+                "FAS search results. Search was done using '%s' : '%s'",
+                name, page_number, number_of_pages, term_type, term)
+            next_page = page_number + 1
+            if next_page <= number_of_pages:
+                response = fas_ui_find_supplier.go_to(
+                    session, term=term, page=next_page)
+            else:
+                logging.debug(
+                    "Couldn't find the Supplier even on the last page of the "
+                    "search results")
+    return found, response
+
+
+def fas_search_with_product_service_keyword(
+        context: Context, buyer_alias: str, search_table: Table):
+    """Search for Suppliers with one of the following:
+    * Product name
+    * Service name
+    * keyword
+
+    NOTE: this will add a dictionary `search_results` to `context`
+
+    :param context: behave `context` object
+    :param buyer_alias: alias of the Buyer Actor
+    :param search_table: a table with FAS pages to view
+    """
+    actor = context.get_actor(buyer_alias)
+    session = actor.session
+    search_results = {}
+    for row in search_table:
+        terms = []
+        if row["product"]:
+            terms.append({"type": "product", "term": row["product"]})
+        if row["service"]:
+            terms.append({"type": "service", "term": row["service"]})
+        if row["keyword"]:
+            terms.append({"type": "keyword", "term": row["keyword"]})
+        search_results[row["company"]] = terms
+
+    for company in search_results:
+        search_terms = search_results[company]
+        for search_term in search_terms:
+            term_type = search_term['type']
+            term = search_term['term']
+            logging.debug(
+                "%s is searching for company '%s' using %s term '%s'",
+                buyer_alias, company, term_type, term)
+            found, response = can_find_supplier_by_term(
+                session, company, term, term_type)
+            search_term['found'] = found
+            search_term['response'] = response
+
+    context.search_results = search_results

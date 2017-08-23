@@ -469,19 +469,20 @@ def detect_page_language(
 
 
 def get_number_of_search_result_pages(response: Response) -> int:
-    """Will extract number of FAS Search Result pages.
+    """Will extract the last search result page number from provided response.
 
-    NOTE:
-    This will parse string like `page 1 of 2` and return the last number.
+    The CSS selector will return string like: `page 1 of 2`.
+    Then we extract the numbers from it and return the last one.
+    In case of lack of thereof a 0 is returned.
 
     :param response: FAS Search Result response
-    :return: a number of FAS Search Result pages
+    :return: a number of FAS Search Result pages or 0 if couldn't find
+             information about number of pages
     """
+    no_page_counter = 0
     css_selector = (".company-profile-details-body-toolbar-bottom"
                     " span.current::text")
     pages = extract_by_css(response, css_selector).strip()
     page_numbers = [int(word) for word in pages.split() if word.isdigit()]
-    with assertion_msg(
-            "Couldn't find information about the number of Search Result Pages"):
-        assert len(page_numbers) == 2
-    return page_numbers[-1]
+    last_page = page_numbers[-1] if len(page_numbers) == 2 else no_page_counter
+    return last_page
