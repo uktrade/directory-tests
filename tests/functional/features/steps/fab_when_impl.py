@@ -1191,6 +1191,10 @@ def can_find_supplier_by_term(
     """
 
     response = fas_ui_find_supplier.go_to(session, term=term)
+    with assertion_msg(
+            "Couldn't find any Supplier using '%s': '%s'", term_type, term):
+        no_match = ["Your search", "did not match any UK trade profiles"]
+        check_response(response, 200, unexpected_strings=no_match)
     number_of_pages = get_number_of_search_result_pages(response)
     found = False
     for page_number in range(1, number_of_pages + 1):
