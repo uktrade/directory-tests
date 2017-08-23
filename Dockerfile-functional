@@ -15,7 +15,7 @@ RUN wget -q https://cli-assets.heroku.com/heroku-cli/channels/stable/heroku-cli-
 	ln -s /usr/local/lib/heroku/bin/heroku /usr/local/bin/heroku
 
 # Install dockerize https://github.com/jwilder/dockerize
-ENV DOCKERIZE_VERSION v0.2.0
+ENV DOCKERIZE_VERSION v0.5.0
 RUN wget -q https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
     && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
