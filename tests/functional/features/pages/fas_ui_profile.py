@@ -19,7 +19,8 @@ from tests.settings import SECTORS_WITH_LABELS
 URL = get_absolute_url("ui-supplier:suppliers")
 EXPECTED_STRINGS = [
     "Contact", "Facts &amp; details", "Company description",
-    "Online profiles", "Recent projects", "Core Sector", "Keywords"
+    "Core industry", "Keywords", "Report profile", "Email company",
+    "Contact company"
 ]
 
 
