@@ -11,7 +11,6 @@ from scrapy import Selector
 from tests.functional.features.pages import (
     fab_ui_build_profile_address,
     fab_ui_build_profile_basic,
-    fab_ui_build_profile_confirm,
     fab_ui_build_profile_sector,
     fab_ui_build_profile_verification_letter,
     fab_ui_case_study_basic,
