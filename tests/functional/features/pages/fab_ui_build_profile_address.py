@@ -61,26 +61,20 @@ def extract_address_details(response: Response) -> AddressDetails:
     return details
 
 
-def submit(actor: Actor, details: AddressDetails) -> Response:
+def submit(actor: Actor) -> Response:
     """Build Profile - Provide Supplier's full name, which will be use when
     sending verification letter.
 
     :param actor: a namedtuple with Actor details
-    :param details: named tuple containing extracted company address details
     :return: response object
     """
     headers = {"Referer": URL}
-    data = {"csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
-            "company_profile_edit_view-current_step": "address",
-            "address-signature": details.address_signature,
-            "address-postal_full_name": actor.alias,
-            "address-address_line_1": details.address_line_1,
-            "address-address_line_2": details.address_line_2,
-            "address-locality": details.locality,
-            "address-country": details.country,
-            "address-postal_code": details.postal_code,
-            "address-po_box": details.po_box
-            }
+    data = {
+        "csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
+        "company_profile_edit_view-current_step": "address",
+        "address-postal_full_name": actor.alias,
+        "address-address_confirmed": "on"
+    }
     response = make_request(
         Method.POST, URL, session=actor.session, headers=headers, data=data)
 

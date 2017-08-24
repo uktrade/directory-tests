@@ -323,10 +323,6 @@ def bp_select_random_sector_and_export_to_country(context, supplier_alias):
     # Step 3 - extract & store CSRF token and company's address details
     token = extract_csrf_middleware_token(response)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
-    details = fab_ui_build_profile_address.extract_address_details(response)
-    context.set_company_details(
-        actor.company_alias, address_details=details,
-        export_to_countries=country)
 
 
 def bp_provide_full_name(context, supplier_alias):
@@ -340,10 +336,9 @@ def bp_provide_full_name(context, supplier_alias):
     """
     actor = context.get_actor(supplier_alias)
     session = actor.session
-    details = context.get_company(actor.company_alias).address_details
 
     # Step 1 - Submit Supplier's Full Name
-    response = fab_ui_build_profile_address.submit(actor, details)
+    response = fab_ui_build_profile_address.submit(actor)
     context.response = response
 
     # Step 2 - check if Supplier is on the We've sent you a verification letter
