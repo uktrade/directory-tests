@@ -35,6 +35,10 @@ EXPECTED_STRINGS_NOT_VERIFIED = [
 
 
 def should_be_here(response: Response):
+    """Check if User is on the correct page.
+
+    :param response: response object
+    """
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Supplier is on FAB Company's Profile page")
 

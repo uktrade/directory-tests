@@ -46,6 +46,10 @@ def go_to(session: Session, company_number: str) -> Response:
 
 
 def should_be_here(response, *, number=None):
+    """Check if User is on the correct page.
+
+    :param response: response object
+    """
     expected = EXPECTED_STRINGS + [number] if number else EXPECTED_STRINGS
     check_response(response, 200, body_contains=expected)
     logging.debug("Supplier is on FAS Company's Profile page")

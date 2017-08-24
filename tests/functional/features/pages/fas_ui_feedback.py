@@ -42,6 +42,10 @@ def go_to(session: Session) -> Response:
 
 
 def should_be_here(response):
+    """Check if User is on the correct page.
+
+    :param response: response object
+    """
     check_response(response, 200, body_contains=EXPECTED_STRINGS_FORM)
     logging.debug("Buyer is on FAS send Feedback page")
 
