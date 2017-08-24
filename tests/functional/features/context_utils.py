@@ -40,7 +40,7 @@ AddressDetails = namedtuple(
 Company = namedtuple(
     'Company',
     [
-        'alias', 'title', 'number', 'address_details', 'summary', 'description',
+        'alias', 'title', 'number', 'summary', 'description',
         'website', 'keywords', 'no_employees', 'sector', 'letter_recipient',
         'companies_house_details', 'facebook', 'linkedin', 'twitter',
         'case_studies', 'logo_picture', 'logo_url', 'logo_hash',
@@ -200,8 +200,8 @@ def get_company(self, alias):
 
 def set_company_details(self, alias, *, title=None, website=None, keywords=None,
                         no_employees=None, sector=None, letter_recipient=None,
-                        address_details=None, facebook=None, linkedin=None,
-                        twitter=None, summary=None, description=None,
+                        facebook=None, linkedin=None, twitter=None,
+                        summary=None, description=None,
                         export_to_countries=None):
     companies = self.scenario_data.companies
     if title:
@@ -222,8 +222,6 @@ def set_company_details(self, alias, *, title=None, website=None, keywords=None,
         companies[alias] = companies[alias]._replace(linkedin=linkedin)
     if twitter:
         companies[alias] = companies[alias]._replace(twitter=twitter)
-    if address_details:
-        companies[alias] = companies[alias]._replace(address_details=address_details)
     if summary:
         companies[alias] = companies[alias]._replace(summary=summary)
     if description:

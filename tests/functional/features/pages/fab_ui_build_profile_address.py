@@ -35,32 +35,6 @@ def should_be_here(response: Response):
                   "Choose Your company sector")
 
 
-def extract_address_details(response: Response) -> AddressDetails:
-    """Build Profile - extract address details from Your company address page.
-
-    :param response: requests response
-    :return: named tuple containing all extracted company details
-    """
-    with assertion_msg(
-            "Could not extract Company's Address Details as the response had no"
-            " content"):
-        assert response.content
-    content = response.content.decode("utf-8")
-
-    def extract(selector):
-        res = Selector(text=content).css(selector).extract()
-        return res[0] if len(res) > 0 else ""
-
-    address_signature = extract(
-        "#ed-company-edit-address > p:nth-child(3)::attr(value)")
-
-    details = AddressDetails(address_signature)
-
-    logging.debug("Extracted company details: %s", details)
-
-    return details
-
-
 def submit(actor: Actor) -> Response:
     """Build Profile - Provide Supplier's full name, which will be use when
     sending verification letter.
