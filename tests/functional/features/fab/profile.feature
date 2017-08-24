@@ -65,7 +65,6 @@ Feature: Trade Profile
       When "Annette Geissinger" provides valid details of selected company
       And "Annette Geissinger" selects sector the company is in and preferred country of export
       And "Annette Geissinger" provides her full name which will be used to sent the verification letter
-      And "Annette Geissinger" confirms the details which will be used to sent the verification letter
 
       Then "Annette Geissinger" should be on edit Company's Directory Profile page
       And "Annette Geissinger" should be told that her company has no description
@@ -141,7 +140,6 @@ Feature: Trade Profile
       When "Peter Alder" provides valid details of selected company
       And "Peter Alder" selects sector the company is in and preferred country of export
       And "Peter Alder" provides her full name which will be used to sent the verification letter
-      And "Peter Alder" confirms the details which will be used to sent the verification letter
 
       Then "Peter Alder" should be on edit Company's Directory Profile page
       And "Peter Alder" should be told that her company has no description
