@@ -52,17 +52,10 @@ def extract_address_details(response: Response) -> AddressDetails:
         res = Selector(text=content).css(selector).extract()
         return res[0] if len(res) > 0 else ""
 
-    address_signature = extract("#id_address-signature::attr(value)")
-    address_line_1 = extract("#id_address-address_line_1::attr(value)")
-    address_line_2 = extract("#id_address-address_line_2::attr(value)")
-    locality = extract("#id_address-locality::attr(value)")
-    country = extract("#id_address-country::attr(value)")
-    postal_code = extract("#id_address-postal_code::attr(value)")
-    po_box = extract("#id_address-po_box::attr(value)")
+    address_signature = extract(
+        "#ed-company-edit-address > p:nth-child(3)::attr(value)")
 
-    details = AddressDetails(
-        address_signature, address_line_1, address_line_2, locality, country,
-        postal_code, po_box)
+    details = AddressDetails(address_signature)
 
     logging.debug("Extracted company details: %s", details)
 
