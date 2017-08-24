@@ -100,6 +100,11 @@ functional_tests:
 	$(SET_DB_URLS) && \
 	behave -k --format progress3 --no-logcapture --stop --tags=-wip --tags=-skip --tags=~fixme tests/functional/features $(BEHAVE_ARGS)
 
+functional_update_companies:
+	$(SET_PYTEST_ENV_VARS) && \
+	$(SET_DB_URLS) && \
+	python -c "from tests.functional.features.pages.utils import update_companies; update_companies()"
+
 test: pep8 smoke_tests integration_test load_test_minimal
 
 DOCKER_REMOVE_ALL := \
