@@ -7,8 +7,7 @@ import os
 import sys
 import traceback
 from contextlib import contextmanager
-from datetime import datetime
-from datetime import timedelta
+from datetime import datetime, timedelta
 from enum import Enum
 from pprint import pprint
 

@@ -3,16 +3,10 @@
 import logging
 
 from requests import Response
-from scrapy import Selector
 
 from tests import get_absolute_url
-from tests.functional.features.context_utils import Actor, AddressDetails
-from tests.functional.features.utils import (
-    Method,
-    assertion_msg,
-    check_response,
-    make_request
-)
+from tests.functional.features.context_utils import Actor
+from tests.functional.features.utils import Method, check_response, make_request
 
 URL = get_absolute_url("ui-buyer:company-edit")
 EXPECTED_STRINGS = [
