@@ -57,6 +57,7 @@ Feedback = namedtuple(
 Actor.__new__.__defaults__ = (None,) * len(Actor._fields)
 Company.__new__.__defaults__ = (None,) * len(Company._fields)
 CaseStudy.__new__.__defaults__ = (None,) * len(CaseStudy._fields)
+AddressDetails.__new__.__defaults__ = (None,) * len(AddressDetails._fields)
 
 
 def initialize_scenario_data():
