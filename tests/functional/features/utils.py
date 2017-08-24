@@ -402,6 +402,7 @@ def extract_plain_text_payload(msg):
     :return: a plain text message (no HTML)
     :rtype: str
     """
+    res = None
     if msg.is_multipart():
         for part in msg.get_payload():
             if part.get_content_type() == "text/plain":
@@ -415,7 +416,7 @@ def extract_plain_text_payload(msg):
         start = start_7bit + len(seven_bit)
         end = payload.find("--===============", start)
         res = payload[start:end]
-    return res or None
+    return res
 
 
 def extract_email_confirmation_link(payload):
@@ -457,9 +458,9 @@ def get_verification_code(company_number):
 
 
 def check_response(response: Response, status_code: int, *,
-                   location: str = None, locations: list = [],
-                   location_starts_with: str = None, body_contains: list = [],
-                   unexpected_strings: list = []):
+                   location: str = None, locations: list = None,
+                   location_starts_with: str = None, body_contains: list = None,
+                   unexpected_strings: list = None):
     """Check if SUT replied with an expected response.
 
     :param response: Response object return by `requests`
