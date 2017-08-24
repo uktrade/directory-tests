@@ -339,39 +339,11 @@ def bp_provide_full_name(context, supplier_alias):
     :type supplier_alias: str
     """
     actor = context.get_actor(supplier_alias)
+    session = actor.session
     details = context.get_company(actor.company_alias).address_details
 
     # Step 1 - Submit Supplier's Full Name
     response = fab_ui_build_profile_address.submit(actor, details)
-    context.response = response
-
-    # Step 2 - check if Supplier is on Confirm page
-    fab_ui_build_profile_confirm.should_be_here(response)
-    logging.debug("Supplier is on the Thank You page")
-
-    # Steps 3 - extract CSRF token
-    token = extract_csrf_middleware_token(response)
-    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
-
-
-def bp_confirm_registration_and_send_letter(
-        context: Context, supplier_alias: str) -> Response:
-    """Build Profile - Supplier has to finally confirm registration and is
-    informed about verification letter.
-
-    :param context: behave `context` object
-    :type context: behave.runner.Context
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :type supplier_alias: str
-    :return last response object -> FAB Profile page
-    """
-    # STEP 1 - Confirm registration
-    actor = context.get_actor(supplier_alias)
-    session = actor.session
-    token = actor.csrfmiddlewaretoken
-
-    # Step 1 - Submit the Confirm form
-    response = fab_ui_build_profile_confirm.submit(session, token)
     context.response = response
 
     # Step 2 - check if Supplier is on the We've sent you a verification letter
@@ -385,8 +357,6 @@ def bp_confirm_registration_and_send_letter(
 
     # Step 4 - check if Supplier is on the FAB profile page
     fab_ui_profile.should_see_missing_description(response)
-
-    return response
 
 
 def prof_set_company_description(context, supplier_alias):
