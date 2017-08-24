@@ -246,7 +246,8 @@ def log_response(response: Response, *, trim: bool = True):
         else:
             logging.debug("REQ had no body")
 
-        logging.debug("RSP Status: %s %s", response.status_code, response.reason)
+        logging.debug(
+            "RSP Status: %s %s", response.status_code, response.reason)
         logging.debug("RSP URL: %s", response.url)
         logging.debug("RSP Headers: %s", response.headers)
         logging.debug("RSP Cookies: %s", response.cookies)
@@ -263,7 +264,8 @@ def make_request(
         method: Method, url: str, *, session: Session = None,
         params: dict = None, headers: dict = None, cookies: dict = None,
         data: dict = None, files: dict = None,
-        allow_redirects: bool = True, auth: tuple = None, trim: bool = True) -> Response:
+        allow_redirects: bool = True, auth: tuple = None, trim: bool = True) \
+        -> Response:
     """Make a desired HTTP request using optional parameters, headers and data.
 
     NOTE:
@@ -280,7 +282,8 @@ def make_request(
     :param cookies: (optional) extra request cookies. Will not be persisted
                     across requests, even if using a session.
     :param data: (optional) data to send
-    :param files: (optional) a dict with a file. For more details please refer to:
+    :param files: (optional) a dict with a file.
+                  For more details please refer to:
                   http://docs.python-requests.org/en/master/user/quickstart/#post-a-multipart-encoded-file
     :param allow_redirects: Follow or do not follow redirects
     :param auth: (optional) authentication tuple, e.g.: ("username", "password")
@@ -322,7 +325,8 @@ def make_request(
         else:
             raise KeyError("Unrecognized Method: %s", method.name)
     except REQUEST_EXCEPTIONS as ex:
-        red("Exception UTC datetime: %s" % datetime.isoformat(datetime.utcnow()))
+        red("Exception UTC datetime: %s" %
+            datetime.isoformat(datetime.utcnow()))
         red("{} {}".format(method, url))
         red("Parameters: {}".format(params))
         if headers.get('Authorization'):

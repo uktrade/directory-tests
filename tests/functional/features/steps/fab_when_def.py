@@ -51,8 +51,10 @@ def when_supplier_confirm_export_status(context, supplier_alias):
     reg_confirm_export_status(context, supplier_alias, exported=True)
 
 
-@when('"{supplier_alias}" confirms that the company has not exported in the past')
-def when_supplier_confirm_that_company_has_not_exported(context, supplier_alias):
+@when('"{supplier_alias}" confirms that the company has not exported in the '
+      'past')
+def when_supplier_confirm_that_company_has_not_exported(
+        context, supplier_alias):
     reg_confirm_export_status(context, supplier_alias, exported=False)
 
 

@@ -158,14 +158,16 @@ def reg_supplier_is_not_ready_to_export(context, supplier_alias):
     token = actor.csrfmiddlewaretoken
 
     # Step 1 - Submit the form with No Intention to Export
-    response = fab_ui_confirm_export_status.submit(session, token, exported=False)
+    response = fab_ui_confirm_export_status.submit(
+        session, token, exported=False)
 
     # Step 2 - store response & check it
     context.response = response
     check_response(response, 200)
 
 
-def reg_confirm_export_status(context: Context, supplier_alias: str, exported: bool):
+def reg_confirm_export_status(
+        context: Context, supplier_alias: str, exported: bool):
     """Will confirm the current export status of selected unregistered company.
 
     :param context: behave `context` object
@@ -965,7 +967,8 @@ def prof_add_case_study(context, supplier_alias, case_alias):
     context.add_case_study(actor.company_alias, case_alias, case_study)
 
 
-def fab_update_case_study(context: Context, supplier_alias: str, case_alias: str):
+def fab_update_case_study(
+        context: Context, supplier_alias: str, case_alias: str):
     actor = context.get_actor(supplier_alias)
     session = actor.session
     company = context.get_company(actor.company_alias)
@@ -992,7 +995,8 @@ def fab_update_case_study(context: Context, supplier_alias: str, case_alias: str
     logging.debug("Now will replace case study data with: %s", new_case)
 
     # Step 2 - go to specific "Case study" page form & extract CSRF token
-    response = fab_ui_case_study_basic.go_to(session, case_number=current_number)
+    response = fab_ui_case_study_basic.go_to(
+        session, case_number=current_number)
     context.response = response
     token = extract_csrf_middleware_token(response)
 
@@ -1059,7 +1063,8 @@ def fas_search_using_company_details(
         number_of_pages = get_number_of_search_result_pages(response)
         for page_number in range(1, number_of_pages + 1):
             search_responses[term_name] = response
-            found = fas_ui_find_supplier.should_see_company(response, company.title)
+            found = fas_ui_find_supplier.should_see_company(
+                response, company.title)
             search_results[term_name] = found
             if found:
                 logging.debug(
@@ -1071,7 +1076,8 @@ def fas_search_using_company_details(
                 logging.debug(
                     "Couldn't find Supplier '%s' on the %d page out of %d of "
                     "FAS search results. Search was done using '%s' : '%s'",
-                    company.title, page_number, number_of_pages, term_name, term)
+                    company.title, page_number, number_of_pages, term_name,
+                    term)
                 next_page = page_number + 1
                 if next_page <= number_of_pages:
                     response = fas_ui_find_supplier.go_to(
@@ -1135,7 +1141,8 @@ def fas_send_feedback_request(
     logging.debug("% submitted the feedback request", buyer_alias)
 
 
-def fas_feedback_request_should_be_submitted(context: Context, buyer_alias: str):
+def fas_feedback_request_should_be_submitted(
+        context: Context, buyer_alias: str):
     response = context.response
     fas_ui_feedback.should_see_feedback_submission_confirmation(response)
     logging.debug(
