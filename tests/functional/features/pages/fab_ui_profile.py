@@ -15,7 +15,7 @@ URL = get_absolute_url("ui-buyer:company-profile")
 EXPECTED_STRINGS = [
     "Facts &amp; details", "Number of employees", "Registration number",
     "Company description", "Online profiles", "Recent projects",
-    "+ Add a case study", "Sectors of interest", "Keywords"
+    "+ Add a case study", "Core Sector", "Keywords"
 ]
 
 EXPECTED_STRINGS_NO_DESCRIPTION = [
