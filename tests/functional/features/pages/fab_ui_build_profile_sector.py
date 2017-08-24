@@ -11,11 +11,11 @@ from tests.settings import SECTORS
 
 URL = get_absolute_url("ui-buyer:company-edit")
 EXPECTED_STRINGS = [
-    "Your company sector", "Basic", "Industry and exporting", "Address",
-    "Confirm",
-    "What industry is your company in?",
-    "< Back to previous step", "Next", "Select the countries you would like to export to:",
-    "China", "Germany", "India", "Japan", "United States", "Other", "Enter 3 maximum"
+    "Your company sector", "Basic", "Industry and exporting", "Confirmation",
+    "What industry is your company in?", "< Back to previous step", "Next",
+    "Select the countries you would like to export to:",
+    "China", "Germany", "India", "Japan", "United States", "Other",
+    "Enter 3 maximum", "Back to previous step", "Next"
 ] + SECTORS
 
 

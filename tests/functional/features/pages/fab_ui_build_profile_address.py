@@ -16,13 +16,13 @@ from tests.functional.features.utils import (
 
 URL = get_absolute_url("ui-buyer:company-edit")
 EXPECTED_STRINGS = [
-    "Your company address", "Basic", "Industry and exporting", "Address",
-    "Confirm",
-    ("We need to send a letter containing a verification code to your business "
-     "address. This is an additional step to validate that you do represent "
-     "your business."), "Full name:", "Address line 1:", "Address line 2:",
-    "City:", "Country:", "Postcode:", "PO box:", "< Back to previous step",
-    "Next", "This is the full name that letters will be addressed to."
+    "Your company address", "Basic", "Industry and exporting", "Confirmation",
+    ("Enter your name. We’ll then send a confirmation letter to your company’s "
+     "registered address address within 5 working days."),
+    "Your name:", "Company number",
+    ("Tick to confirm address. If you can’t collect the letter yourself, you’ll"
+     " need to make sure someone can send it on to you.."),
+    "Back to previous step", "Send"
 ]
 
 
