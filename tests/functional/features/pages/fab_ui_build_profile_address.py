@@ -19,10 +19,9 @@ EXPECTED_STRINGS = [
     "Your company address", "Basic", "Industry and exporting", "Confirmation",
     ("Enter your name. We’ll then send a confirmation letter to your company’s "
      "registered address address within 5 working days."),
-    "Your name:", "Company number",
-    ("Tick to confirm address. If you can’t collect the letter yourself, you’ll"
-     " need to make sure someone can send it on to you.."),
-    "Back to previous step", "Send"
+    "Your name:", "Company number", "Tick to confirm address.",
+    ("If you can’t collect the letter yourself, you’ll need to make sure "
+     "someone can send it on to you."), "Back to previous step", "Send"
 ]
 
 
