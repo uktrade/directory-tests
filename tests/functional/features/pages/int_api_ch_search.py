@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+"""Internal API - Search for companies using Companies House API"""
 import logging
 
 from jsonschema import validate

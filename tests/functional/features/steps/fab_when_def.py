@@ -3,7 +3,6 @@
 from behave import when
 
 from tests.functional.features.steps.fab_when_impl import (
-    bp_confirm_registration_and_send_letter,
     bp_provide_company_details,
     bp_provide_full_name,
     bp_select_random_sector_and_export_to_country,
@@ -52,8 +51,10 @@ def when_supplier_confirm_export_status(context, supplier_alias):
     reg_confirm_export_status(context, supplier_alias, exported=True)
 
 
-@when('"{supplier_alias}" confirms that the company has not exported in the past')
-def when_supplier_confirm_that_company_has_not_exported(context, supplier_alias):
+@when('"{supplier_alias}" confirms that the company has not exported in the '
+      'past')
+def when_supplier_confirm_that_company_has_not_exported(
+        context, supplier_alias):
     reg_confirm_export_status(context, supplier_alias, exported=False)
 
 
@@ -99,12 +100,6 @@ def when_supplier_selects_random_sector(context, supplier_alias):
       'the verification letter')
 def when_supplier_provides_full_name(context, supplier_alias):
     bp_provide_full_name(context, supplier_alias)
-
-
-@when('"{supplier_alias}" confirms the details which will be used to sent '
-      'the verification letter')
-def step_impl(context, supplier_alias):
-    bp_confirm_registration_and_send_letter(context, supplier_alias)
 
 
 @when('"{supplier_alias}" verifies the company with the verification code '

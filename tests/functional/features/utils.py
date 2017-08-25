@@ -7,8 +7,7 @@ import os
 import sys
 import traceback
 from contextlib import contextmanager
-from datetime import datetime
-from datetime import timedelta
+from datetime import datetime, timedelta
 from enum import Enum
 from pprint import pprint
 
@@ -247,7 +246,8 @@ def log_response(response: Response, *, trim: bool = True):
         else:
             logging.debug("REQ had no body")
 
-        logging.debug("RSP Status: %s %s", response.status_code, response.reason)
+        logging.debug(
+            "RSP Status: %s %s", response.status_code, response.reason)
         logging.debug("RSP URL: %s", response.url)
         logging.debug("RSP Headers: %s", response.headers)
         logging.debug("RSP Cookies: %s", response.cookies)
@@ -264,7 +264,8 @@ def make_request(
         method: Method, url: str, *, session: Session = None,
         params: dict = None, headers: dict = None, cookies: dict = None,
         data: dict = None, files: dict = None,
-        allow_redirects: bool = True, auth: tuple = None, trim: bool = True) -> Response:
+        allow_redirects: bool = True, auth: tuple = None, trim: bool = True) \
+        -> Response:
     """Make a desired HTTP request using optional parameters, headers and data.
 
     NOTE:
@@ -281,7 +282,8 @@ def make_request(
     :param cookies: (optional) extra request cookies. Will not be persisted
                     across requests, even if using a session.
     :param data: (optional) data to send
-    :param files: (optional) a dict with a file. For more details please refer to:
+    :param files: (optional) a dict with a file.
+                  For more details please refer to:
                   http://docs.python-requests.org/en/master/user/quickstart/#post-a-multipart-encoded-file
     :param allow_redirects: Follow or do not follow redirects
     :param auth: (optional) authentication tuple, e.g.: ("username", "password")
@@ -323,7 +325,8 @@ def make_request(
         else:
             raise KeyError("Unrecognized Method: %s", method.name)
     except REQUEST_EXCEPTIONS as ex:
-        red("Exception UTC datetime: %s" % datetime.isoformat(datetime.utcnow()))
+        red("Exception UTC datetime: %s" %
+            datetime.isoformat(datetime.utcnow()))
         red("{} {}".format(method, url))
         red("Parameters: {}".format(params))
         if headers.get('Authorization'):
@@ -399,6 +402,7 @@ def extract_plain_text_payload(msg):
     :return: a plain text message (no HTML)
     :rtype: str
     """
+    res = None
     if msg.is_multipart():
         for part in msg.get_payload():
             if part.get_content_type() == "text/plain":
@@ -412,7 +416,7 @@ def extract_plain_text_payload(msg):
         start = start_7bit + len(seven_bit)
         end = payload.find("--===============", start)
         res = payload[start:end]
-    return res or None
+    return res
 
 
 def extract_email_confirmation_link(payload):
@@ -454,9 +458,9 @@ def get_verification_code(company_number):
 
 
 def check_response(response: Response, status_code: int, *,
-                   location: str = None, locations: list = [],
-                   location_starts_with: str = None, body_contains: list = [],
-                   unexpected_strings: list = []):
+                   location: str = None, locations: list = None,
+                   location_starts_with: str = None, body_contains: list = None,
+                   unexpected_strings: list = None):
     """Check if SUT replied with an expected response.
 
     :param response: Response object return by `requests`

@@ -12,9 +12,12 @@ from tests.functional.features.utils import Method, check_response, make_request
 URL = get_absolute_url('ui-buyer:landing')
 EXPECTED_STRINGS = [
     "Create your company’s profile", "Confirm company", "Export status",
-    "Company name:", "Company number:", "Company registered office address:",
-    ("If this is not your company then click back in your browser and re-enter "
-     "your company."), "Confirm", "Cancel"
+    "Company number",
+    ("To confirm that this is your company you must create a great.gov.uk "
+     "account."), "An account will let you:",
+    "create a trade profile that will be promoted to international buyers",
+    ("apply for export opportunities from foreign companies sourced by UK "
+     "government"), "Create account", "Cancel"
 ]
 
 

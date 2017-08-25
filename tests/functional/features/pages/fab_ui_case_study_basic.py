@@ -33,6 +33,10 @@ EXPECTED_STRINGS = [
 
 
 def should_be_here(response: Response):
+    """Check if User is on the correct page.
+
+    :param response: response object
+    """
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Supplier is on 'Create case study or project' - basic page")
 
