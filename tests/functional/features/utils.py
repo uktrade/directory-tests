@@ -4,13 +4,16 @@
 import hashlib
 import logging
 import os
+import random
 import sys
 import traceback
 from collections import namedtuple
 from contextlib import contextmanager
 from datetime import datetime, timedelta
 from enum import Enum
+from itertools import islice
 from pprint import pprint
+from string import ascii_uppercase
 
 import requests
 from behave.runner import Context
@@ -796,3 +799,9 @@ def find_mailgun_events(
         "Found {} event(s) that matched following criteria: {}"
         .format(number_of_events, params))
     return response
+
+
+def random_chars(size, *, chars=ascii_uppercase):
+    selection = iter(lambda: random.choice(chars), object())
+    while True:
+        yield ''.join(islice(selection, size))
