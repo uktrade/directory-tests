@@ -802,6 +802,7 @@ def find_mailgun_events(
 
 
 def random_chars(size, *, chars=ascii_uppercase):
-    selection = iter(lambda: random.choice(chars), object())
-    while True:
-        yield ''.join(islice(selection, size))
+    res = ""
+    while len(res) < size:
+        res += random.choice(chars)
+    return res
