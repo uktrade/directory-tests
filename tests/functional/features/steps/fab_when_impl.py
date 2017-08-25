@@ -1281,9 +1281,23 @@ def fas_send_message_to_supplier(
 
 def fab_provide_company_details(
         context: Context, supplier_alias: str, table: Table):
+    """Submit company details with specific values in order to verify data
+     validation.
+
+    NOTE:
+    This will store a list of `results` tuples in context. Each tuple will
+    contain:
+    * Company namedtuple (with details used in the request)
+    * response object
+    * expected error message
+
+    :param context: behave `context` object
+    :param supplier_alias: alias of the Supplier Actor
+    :param table: a table with company details to update & expected error msg
+    """
     actor = context.get_actor(supplier_alias)
     original_details = context.get_company(actor.company_alias)
-    responses = []
+    results = []
     for row in table:
         if row["company name"] == "unchanged":
             title = original_details.title
@@ -1328,8 +1342,7 @@ def fab_provide_company_details(
         new_details = Company(
             title=title, website=website, keywords=keywords, no_employees=size)
 
-        # Step 1 - submit the details
         response = fab_ui_build_profile_basic.submit(actor, new_details)
-        responses.append(response)
+        results.append((new_details, response, row["error"]))
 
-    context.responses = responses
+    context.results = results
