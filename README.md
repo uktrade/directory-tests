@@ -10,12 +10,23 @@
 * Python3
 * [Docker >= 1.10](https://docs.docker.com/engine/installation/)
 * [Docker Compose >= 1.8](https://docs.docker.com/compose/install/)
+* libpq-dev -> `sudo apt install libpq-dev`
 
 ## Local installation
 
     $ git clone https://github.com/uktrade/directory-tests
     $ cd directory-tests
     $ make
+
+## Updating list of pre-selected companies
+
+Data in Companies House changes fairly frequently.
+This can cause some discrepancies with our list of pre-defined companies.
+In order to fix this run:
+```
+make functional_update_companies
+```
+
 
 ## Running
 Tests can be run either against locally provisioned environment or any other one, as long as:
