@@ -694,7 +694,7 @@ def mailgun_get_message_url(context: Context, recipient: str) -> str:
 
     response = find_mailgun_events(
         context, MailGunService.SSO, limit=message_limit, recipient=recipient,
-        event=MailGunEvent.ACCEPTED
+        event=MailGunEvent.ACCEPTED, begin=begin, ascending="yes"
     )
     context.response = response
     logging.debug("Found event with recipient: {}".format(recipient))
