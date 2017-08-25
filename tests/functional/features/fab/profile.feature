@@ -87,11 +87,11 @@ Feature: Trade Profile
         |unchanged     |empty string |bus, ferry, plane|full stop |501-1000|You can only enter letters, numbers and commas.|
         |500 characters|valid https  |sand, dunes, bird|comma     |1-10    |You can only enter letters, numbers and commas.|
         |unchanged     |valid https  |sand, dunes, bird|comma     |unset   |This field is required.                        |
-        |unchanged     |invalid http |sand, dunes, bird|comma     |unset   |This field is required.                        |
-        |unchanged     |invalid https|sand, dunes, bird|comma     |unset   |This field is required.                        |
-        |unchanged     |valid http   |empty string     |comma     |unset   |This field is required.                        |
+        |unchanged     |invalid http |sand, dunes, bird|comma     |1-10    |This field is required.                        |
+        |unchanged     |invalid https|sand, dunes, bird|comma     |11-50   |This field is required.                        |
+        |unchanged     |valid http   |empty string     |comma     |51-200  |This field is required.                        |
 
-      Then "Annette Geissinger" should see expected error message
+      Then "Annette Geissinger" should see expected error messages
 
 
     @ED-1722
