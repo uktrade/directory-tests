@@ -583,3 +583,14 @@ def fas_supplier_should_receive_message_from_buyer(
         context, service=MailGunService.DIRECTORY, recipient=supplier.email,
         event=MailGunEvent.ACCEPTED, subject=FAS_MESSAGE_FROM_BUYER_SUBJECT)
     context.response = response
+
+
+def fab_should_see_expected_error_messages(context, supplier_alias):
+    results = context.results
+    logging.debug(results)
+    for company, response, error in results:
+        context.response = response
+        with assertion_msg(
+                "Could not find error message: '%s' in the response",
+                error):
+            assert error in response  #.content.decode("utf-8")
