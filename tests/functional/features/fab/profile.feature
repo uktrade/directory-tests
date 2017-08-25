@@ -199,7 +199,7 @@ Feature: Trade Profile
       When "Peter Alder" uploads "<valid_image>" as company's logo
 
       Then "Peter Alder" should see that logo on FAB Company's Directory Profile page
-#      And "Peter Alder" should see that logo on FAS Company's Directory Profile page
+      And "Peter Alder" should see a logo thumbnail on FAS Company's Directory Profile page
 
       Examples:
         | valid_image              |
@@ -215,11 +215,12 @@ Feature: Trade Profile
       Given "Peter Alder" has created and verified profile for randomly selected company "Y"
       And "Peter Alder" has set "<original>" picture as company's logo
       And "Peter Alder" can see that logo on FAB Company's Directory Profile page
+      And "Peter Alder" can see a logo thumbnail on FAS Company's Directory Profile page
 
       When "Peter Alder" uploads "<new_picture>" as company's logo
 
       Then "Peter Alder" should see that logo on FAB Company's Directory Profile page
-#      And "Peter Alder" should see that logo on FAS Company's Directory Profile page
+      And "Peter Alder" should see different updated thumbnail of the logo on FAS Company's Directory Profile page
 
       Examples:
         | original               | new_picture         |

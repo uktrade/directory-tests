@@ -17,6 +17,7 @@ from tests.functional.features.steps.fab_given_impl import (
 )
 from tests.functional.features.steps.fab_then_impl import (
     fab_should_see_all_case_studies,
+    fas_should_see_logo_picture,
     prof_should_see_logo_picture,
     reg_should_get_verification_email,
     sso_should_be_signed_in_to_sso_account
@@ -140,3 +141,9 @@ def given_unauthenticated_buyer(context, buyer_alias):
        'Supplier site')
 def given_buyer_finds_company_by_name(context, buyer_alias, company_alias):
     fas_find_company_by_name(context, buyer_alias, company_alias)
+
+
+@given('"{actor_alias}" can see a logo thumbnail on FAS Company\'s Directory'
+       ' Profile page')
+def given_actor_can_see_logo_on_fas_profile_page(context, actor_alias):
+    fas_should_see_logo_picture(context, actor_alias)
