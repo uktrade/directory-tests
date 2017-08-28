@@ -190,6 +190,7 @@ Feature: Trade Profile
         | sector of interest          |
 
 
+    @ED-2093
     @ED-1759
     @profile
     @logo
@@ -208,6 +209,7 @@ Feature: Trade Profile
         | Wikipedia-logo-v2-en.png |
 
 
+    @ED-2093
     @ED-1759
     @profile
     @logo
