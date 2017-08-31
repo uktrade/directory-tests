@@ -194,6 +194,9 @@ Feature: Trade Profile
     @ED-1759
     @profile
     @logo
+    @bug
+    @ED-2160
+    @fixed
     Scenario Outline: Supplier should be able to upload an image to set company's logo
       Given "Peter Alder" has created and verified profile for randomly selected company "Y"
 
@@ -203,11 +206,12 @@ Feature: Trade Profile
       And "Peter Alder" should see a PNG logo thumbnail on FAS Company's Directory Profile page
 
       Examples:
-        | valid_image                           |
-        | Anfiteatro_El_Jem.jpeg                |
-        | Kobe_Port_Tower.jpg                   |
-        | archive-org-solid-background.png      |
-        | Wikipedia-logo-v2-en-alpa-channel.png |
+        | valid_image                                  |
+        | Anfiteatro_El_Jem.jpeg                       |
+        | Kobe_Port_Tower.jpg                          |
+        | archive-org-solid-background.png             |
+        | Wikipedia-logo-v2-en-alpa-channel.png        |
+        | Animated_PNG_example_bouncing_beach_ball.png |
 
 
 
