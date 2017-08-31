@@ -200,28 +200,15 @@ Feature: Trade Profile
       When "Peter Alder" uploads "<valid_image>" as company's logo
 
       Then "Peter Alder" should see that logo on FAB Company's Directory Profile page
-      And "Peter Alder" should see a logo thumbnail on FAS Company's Directory Profile page
+      And "Peter Alder" should see a PNG logo thumbnail on FAS Company's Directory Profile page
 
       Examples:
-        | valid_image              |
-        | Anfiteatro_El_Jem.jpeg   |
-        | Kobe_Port_Tower.jpg      |
+        | valid_image                           |
+        | Anfiteatro_El_Jem.jpeg                |
+        | Kobe_Port_Tower.jpg                   |
+        | archive-org-solid-background.png      |
+        | Wikipedia-logo-v2-en-alpa-channel.png |
 
-
-    @bug
-    @ED-2160
-    @fixme
-    Scenario Outline: Supplier should be able to upload an image to set company's logo
-      Given "Peter Alder" has created and verified profile for randomly selected company "Y"
-
-      When "Peter Alder" uploads "<valid_image>" as company's logo
-
-      Then "Peter Alder" should see that logo on FAB Company's Directory Profile page
-      And "Peter Alder" should see a logo thumbnail on FAS Company's Directory Profile page
-
-      Examples:
-        | valid_image              |
-        | Wikipedia-logo-v2-en.png |
 
 
     @ED-2093
@@ -232,7 +219,7 @@ Feature: Trade Profile
       Given "Peter Alder" has created and verified profile for randomly selected company "Y"
       And "Peter Alder" has set "<original>" picture as company's logo
       And "Peter Alder" can see that logo on FAB Company's Directory Profile page
-      And "Peter Alder" can see a logo thumbnail on FAS Company's Directory Profile page
+      And "Peter Alder" can see a PNG logo thumbnail on FAS Company's Directory Profile page
 
       When "Peter Alder" uploads "<new_picture>" as company's logo
 
