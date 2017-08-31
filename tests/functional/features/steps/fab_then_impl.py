@@ -197,9 +197,8 @@ def prof_should_see_logo_picture(context: Context, supplier_alias: str):
                   "as uploaded %s", company.title, logo_picture)
 
 
-def fas_should_see_logo_picture(context: Context, supplier_alias: str):
-    """Will check if Company's Logo visible on FAS profile page is the same as
-    the one uploaded on FAB.
+def fas_should_see_png_logo_thumbnail(context: Context, supplier_alias: str):
+    """Will check if Company's PNG thumbnail logo visible on FAS profile.
 
     :param context: behave `context` object
     :param supplier_alias: alias of the Actor used in the scope of the scenario
@@ -226,7 +225,7 @@ def fas_should_see_logo_picture(context: Context, supplier_alias: str):
     logging.debug("Set Company's logo URL to: %s", visible_logo_url)
 
 
-def fas_should_see_different_logo_picture(context, actor_alias):
+def fas_should_see_different_png_logo_thumbnail(context, actor_alias):
     """Will check if Company's Logo visible on FAS profile page is the same as
     the one uploaded on FAB.
 
