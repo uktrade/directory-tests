@@ -413,21 +413,8 @@ def extract_csrf_middleware_token(response: Response):
     """
     with assertion_msg("Can't extract CSRF token as response has no content"):
         assert response.content
-    content = response.content.decode("utf-8")
-
-    csrf_tag_idx = content.find("name='csrfmiddlewaretoken'")
-    value_property = "value='"
-    search_offset = 70
-    logging.debug("Looking for csrfmiddlewaretoken in: %s",
-                  content[csrf_tag_idx:csrf_tag_idx + search_offset])
-    csrf_token_idx = content.find(value_property,
-                                  csrf_tag_idx,
-                                  csrf_tag_idx + search_offset)
-    csrf_token_end_idx = content.find("'",
-                                      csrf_token_idx + len(value_property),
-                                      csrf_tag_idx + search_offset)
-    token = content[(csrf_token_idx + len(value_property)):csrf_token_end_idx]
-    logging.debug("Found csrfmiddlewaretoken=%s", token)
+    css_selector = '#content input[type="hidden"]::attr(value)'
+    token = extract_by_css(response, css_selector)
     return token
 
 
@@ -443,13 +430,8 @@ def extract_confirm_email_form_action(response: Response):
     """
     with assertion_msg("Can't extract form action from an empty response!"):
         assert response.content
-    content = response.content.decode("utf-8")
-
-    form_action = 'form method="post" action="'
-    form_action_idx = content.find(form_action)
-    start = form_action_idx + len(form_action)
-    end = content.find('"', start)
-    action = content[start:end]
+    css_selector = "#content form::attr(action)"
+    action = extract_by_css(response, css_selector)
     logging.debug("Found confirm email form action value=%s", action)
     return action
 
