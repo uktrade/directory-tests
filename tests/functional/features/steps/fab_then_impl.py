@@ -215,7 +215,7 @@ def fas_should_see_logo_picture(context: Context, supplier_alias: str):
     placeholder = FAS_LOGO_PLACEHOLDER_IMAGE
 
     with assertion_msg(
-            "Expected company logo but got image placeholder",
+            "Expected company logo but got image placeholder '%s'",
             visible_logo_url):
         assert visible_logo_url != placeholder
     context.set_company_logo_detail(
