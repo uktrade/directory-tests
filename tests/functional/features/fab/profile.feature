@@ -206,6 +206,21 @@ Feature: Trade Profile
         | valid_image              |
         | Anfiteatro_El_Jem.jpeg   |
         | Kobe_Port_Tower.jpg      |
+
+
+    @bug
+    @ED-2160
+    @fixme
+    Scenario Outline: Supplier should be able to upload an image to set company's logo
+      Given "Peter Alder" has created and verified profile for randomly selected company "Y"
+
+      When "Peter Alder" uploads "<valid_image>" as company's logo
+
+      Then "Peter Alder" should see that logo on FAB Company's Directory Profile page
+      And "Peter Alder" should see a logo thumbnail on FAS Company's Directory Profile page
+
+      Examples:
+        | valid_image              |
         | Wikipedia-logo-v2-en.png |
 
 
