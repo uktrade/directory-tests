@@ -218,6 +218,9 @@ def fas_should_see_logo_picture(context: Context, supplier_alias: str):
             "Expected company logo but got image placeholder '%s'",
             visible_logo_url):
         assert visible_logo_url != placeholder
+    with assertion_msg(
+            "Expected PNG logo thumbnail, but got: %s", visible_logo_url):
+        assert visible_logo_url.lower().endswith(".png")
     context.set_company_logo_detail(
         actor.company_alias, url=visible_logo_url)
     logging.debug("Set Company's logo URL to: %s", visible_logo_url)
@@ -249,6 +252,9 @@ def fas_should_see_different_logo_picture(context, actor_alias):
             "Expected to see other logo thumbnail than the previous one '%s'.",
             visible_logo_url):
         assert visible_logo_url != fas_logo_url
+    with assertion_msg(
+            "Expected PNG logo thumbnail, but got: %s", visible_logo_url):
+        assert visible_logo_url.lower().endswith(".png")
 
 
 def prof_all_unsupported_files_should_be_rejected(
