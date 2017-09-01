@@ -50,15 +50,14 @@ def submit(session: Session, message: Message, company_number: str):
     full_url = URL.format(company_number=company_number)
     headers = {"Referer": URL.format(company_number=company_number)}
     data = {
-        "body": message.full_name,
-        "company_name": message.full_name,
-        "country": message.full_name,
-        "email_address": message.full_name,
+        "body": message.body,
+        "company_name": message.company_name,
+        "country": message.country,
+        "email_address": message.email_address,
         "full_name": message.full_name,
-        "recaptcha_challenge_field": message.recaptcha_challenge_field,
-        "recaptcha_response_field": message.recaptcha_response_field,
-        "sector": message.full_name,
-        "subject": message.full_name,
+        "g-recaptcha-response": message.g_recaptcha_response,
+        "sector": message.sector,
+        "subject": message.subject,
         "terms": message.terms
     }
     response = make_request(
