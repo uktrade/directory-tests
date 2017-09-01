@@ -57,8 +57,7 @@ Message = namedtuple(
     'Message',
     [
         'alias', 'body', 'company_name', 'country', 'email_address',
-        'full_name', 'recaptcha_challenge_field', 'recaptcha_response_field',
-        'sector', 'subject', 'terms'
+        'full_name', 'g_recaptcha_response', 'sector', 'subject', 'terms'
     ]
 )
 # Set all fields to None by default.

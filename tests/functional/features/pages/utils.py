@@ -175,8 +175,8 @@ def random_feedback_data(
 def random_message_data(
         *, alias: str = None, body: str = None, company_name: str = None,
         country: str = None, email_address: str = None, full_name: str = None,
-        recaptcha_challenge_field: str = None, recaptcha_response_field: str = None,
-        sector: str = None, subject: str = None, terms: str = None) -> Feedback:
+        g_recaptcha_response: str = None, sector: str = None,
+        subject: str = None, terms: str = None) -> Feedback:
     alias = alias or "test message"
     body = body or sentence(max_length=1000)
     company_name = company_name or rare_word(min_length=12)
@@ -186,15 +186,13 @@ def random_message_data(
     full_name = full_name or sentence(max_words=2)
     sector = sector or random.choice(SECTORS)
     subject = subject or sentence(max_length=200)
-    recaptcha_challenge_field = recaptcha_challenge_field or "CAPTCHA CHALLENGE"
-    recaptcha_response_field = recaptcha_response_field or "CAPTCHA RESPONSE"
+    g_recaptcha_response = g_recaptcha_response or "test mode"
     terms = terms or "on"
 
     message = Message(
         alias=alias, body=body, company_name=company_name, country=country,
         email_address=email_address, full_name=full_name,
-        recaptcha_challenge_field=recaptcha_challenge_field,
-        recaptcha_response_field=recaptcha_response_field, sector=sector,
+        g_recaptcha_response=g_recaptcha_response, sector=sector,
         subject=subject, terms=terms)
 
     return message
