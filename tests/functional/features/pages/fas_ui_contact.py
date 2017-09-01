@@ -8,7 +8,8 @@ from tests import get_absolute_url
 from tests.functional.features.context_utils import Company, Message
 from tests.functional.features.utils import Method, check_response, make_request
 
-URL = get_absolute_url("ui-supplier:suppliers-contact")
+LANDING = get_absolute_url("ui-supplier:landing")
+URL = "{}/{}".format(LANDING, 'suppliers/{company_number}/contact')
 EXPECTED_STRINGS = [
     "Send a message to",
     ("Fill in your details and a brief message summarising your needs that will"
@@ -33,7 +34,7 @@ def go_to(session: Session, company_number: str, company_name: str) -> Response:
     :param company_name: name of the company
     :return: response object
     """
-    full_url = URL.format(company_number)
+    full_url = URL.format(company_number=company_number)
     response = make_request(Method.GET, full_url, session=session)
     should_be_here(response, name=company_name)
     return response
@@ -46,7 +47,8 @@ def should_be_here(response, *, name=None):
 
 
 def submit(session: Session, message: Message, company_number: str):
-    headers = {"Referer": URL.format(company_number)}
+    full_url = URL.format(company_number=company_number)
+    headers = {"Referer": URL.format(company_number=company_number)}
     data = {
         "body": message.full_name,
         "company_name": message.full_name,
@@ -60,7 +62,7 @@ def submit(session: Session, message: Message, company_number: str):
         "terms": message.terms
     }
     response = make_request(
-        Method.POST, URL, session=session, headers=headers, data=data)
+        Method.POST, full_url, session=session, headers=headers, data=data)
     return response
 
 
