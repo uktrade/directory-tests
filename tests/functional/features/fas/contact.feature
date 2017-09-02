@@ -2,7 +2,6 @@
 Feature: Contact a Supplier
 
 
-  @wip
   @ED-2011
   @contact
   Scenario: Buyers should be able to contact selected Supplier via FAS
