@@ -62,6 +62,13 @@ BEGIN
 END $$;
 """
 
+DIRECTORY_COMPANY_EMAIL = """
+SELECT company_email
+FROM user_user u, company_company c
+WHERE c.number = %s
+AND u.company_id = c.id;
+"""
+
 
 def get_dir_db_connection():
     try:
@@ -89,6 +96,23 @@ def get_sso_db_connection():
         logging.debug('Connected to Directory DB: %s!', DIR_DB_NAME)
     cursor = connection.cursor()
     return connection, cursor
+
+
+def get_company_email(number: str) -> str:
+    """Get email address associated with company.
+
+    :param number: company number given by Companies House.
+    :return: email address or None if couldn't find company or user associated
+             with it
+    """
+    connection, cursor = get_dir_db_connection()
+    data = (number, )
+    cursor.execute(DIRECTORY_COMPANY_EMAIL, data)
+    result_set = cursor.fetchone()
+    cursor.close()
+    connection.close()
+    email = result_set[0] if result_set is not None else None
+    return email
 
 
 def delete_supplier_data(service_name, email_address):

@@ -106,7 +106,8 @@ Feature: Find a Supplier
 
     Then "Annette Geissinger" should be told that the search did not match any UK trade profiles
 
-
+    
+  @skip
   @ED-2020
   @search
   Scenario: Buyers should be able to find Suppliers by product, service or company keyword

@@ -17,13 +17,20 @@ from requests import Response
 
 from tests import get_absolute_url
 from tests.functional.features.context_utils import CaseStudy, Company, Feedback
+from tests.functional.features.db_cleanup import (
+    delete_supplier_data,
+    get_company_email
+)
 from tests.functional.features.pages import int_api_ch_search
 from tests.functional.features.utils import (
     Method,
     assertion_msg,
+    blue,
     extract_by_css,
     extract_csrf_middleware_token,
-    make_request
+    green,
+    make_request,
+    red
 )
 from tests.settings import (
     RARE_WORDS,
@@ -307,6 +314,65 @@ def load_companies() -> CompaniesList:
     with open(path, 'r', encoding='utf8') as f:
         companies = json.load(f)
     return [Company(**company) for company in companies]
+
+
+def update_companies():
+    """Update existing pre-defined list of Companies."""
+    companies = load_companies()
+    updated_companies = []
+    companies_number = len(companies)
+    doesnt_exit_counter = 0
+    inactive_counter = 0
+    registered_counter = 0
+    for index, company in enumerate(companies):
+        progress_message = ("Updating company {} out of {}: {} - {}".format(
+            index + 1, companies_number, company.number, company.title))
+        blue(progress_message)
+        exists, active, is_registered = False, False, False
+        ch_result = int_api_ch_search.search(company.number)
+        if len(ch_result) == 1:
+            exists = True
+            if ch_result[0]["company_status"] == "active":
+                active = True
+                is_registered = already_registered(company.number)
+                if is_registered:
+                    registered_counter += 1
+                    red("Company is already registered with FAB")
+                    blue("Will remove company data from DIR & SSO DBs")
+                    email = get_company_email(company.number)
+                    delete_supplier_data("DIRECTORY", email)
+                    delete_supplier_data("SSO", email)
+                    blue("Successfully deleted company data from DIR & SSO DBs")
+                    is_registered = False
+            else:
+                inactive_counter += 1
+                red("Company %s - %s is not active any more" % (company.number,
+                                                                company.title))
+        else:
+            doesnt_exit_counter += 1
+            red("Company %s - %s does not exist any more" % (company.number,
+                                                             company.title))
+        if not exists or (exists and not active):
+            blue("Searching for a new replacement company")
+            new = find_active_company_without_fas_profile("test")
+            updated_companies.append(new)
+            blue("Found company %s - %s" % (new.number, new.title))
+
+        if exists and active and not is_registered:
+            green("Company %s - %s is still active, it's not registered with "
+                  "FAB" % (company.number, company.title))
+            updated_company = Company(
+                alias="test", title=ch_result[0]["title"].strip(),
+                number=ch_result[0]["company_number"],
+                companies_house_details=ch_result[0],
+                case_studies={})
+            updated_companies.append(updated_company)
+
+    blue("Number of already registered companies %d" % registered_counter)
+    blue("Number of replaced inactive companies %d" % inactive_counter)
+    blue("Number of non-existent companies %d" % doesnt_exit_counter)
+    green("Saving updated list of companies")
+    save_companies(updated_companies)
 
 
 def escape_html(text: str, *, upper: bool = False) -> str:
