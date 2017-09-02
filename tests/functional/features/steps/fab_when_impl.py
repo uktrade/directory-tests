@@ -1182,11 +1182,11 @@ def can_find_supplier_by_term(
              an endpoint to company's profile
     """
     found = False
+    endpoint = None
     response = fas_ui_find_supplier.go_to(session, term=term)
     number_of_pages = get_number_of_search_result_pages(response)
     if number_of_pages == 0:
-        return found, response
-    endpoint = None
+        return found, response, endpoint
     for page_number in range(1, number_of_pages + 1):
         found = fas_ui_find_supplier.should_see_company(
             response, name, upper=False)
