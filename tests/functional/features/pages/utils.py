@@ -442,6 +442,31 @@ def get_fas_page_url(page_name: str, *, language_code: str = None):
     return url
 
 
+def get_fas_page_object(page_name: str):
+    if page_name == FAS_PAGE.CREATIVE_INDUSTRY:
+        page = FAS_PAGE.CREATIVE_INDUSTRY.po
+    elif page_name == FAS_PAGE.FOOD_AND_DRINK_INDUSTRY:
+        page = FAS_PAGE.FOOD_AND_DRINK_INDUSTRY.po
+    elif page_name == FAS_PAGE.HEALTH_INDUSTRY:
+        page = FAS_PAGE.HEALTH_INDUSTRY.po
+    elif page_name == FAS_PAGE.TECH_INDUSTRY:
+        page = FAS_PAGE.TECH_INDUSTRY.po
+    elif page_name == FAS_PAGE.CREATIVE_INDUSTRY_SUMMARY:
+        page = FAS_PAGE.CREATIVE_INDUSTRY_SUMMARY.po
+    elif page_name == FAS_PAGE.FOOD_AND_DRINK_INDUSTRY_SUMMARY:
+        page = FAS_PAGE.FOOD_AND_DRINK_INDUSTRY_SUMMARY.po
+    elif page_name == FAS_PAGE.HEALTH_INDUSTRY_SUMMARY:
+        page = FAS_PAGE.HEALTH_INDUSTRY_SUMMARY.po
+    elif page_name == FAS_PAGE.TECH_INDUSTRY_SUMMARY:
+        page = FAS_PAGE.TECH_INDUSTRY_SUMMARY.po
+    elif page_name == FAS_PAGE.INDUSTRIES:
+        page = FAS_PAGE.INDUSTRIES.po
+    else:
+        raise KeyError("Unknown FAS page: '{}'".format(page_name))
+
+    return page
+
+
 def extract_main_error(content: str) -> str:
     """Extract error from page `main` block.
 
