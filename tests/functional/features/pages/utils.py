@@ -27,6 +27,7 @@ from tests.functional.features.db_cleanup import (
     get_company_email
 )
 from tests.functional.features.pages import int_api_ch_search
+from tests.functional.features.pages.common import FAS_PAGE
 from tests.functional.features.utils import (
     Method,
     assertion_msg,
