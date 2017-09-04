@@ -591,6 +591,10 @@ def fab_should_see_expected_error_messages(context, supplier_alias):
     for company, response, error in results:
         context.response = response
         with assertion_msg(
-                "Could not find error message: '%s' in the response",
-                error):
-            assert error in response  #.content.decode("utf-8")
+                "Could not find expected error message: '%s' in the response, "
+                "after submitting the form with following company details: "
+                "title='%s' website='%s' keywords='%s' number of employees="
+                "'%s'", error, company.title, company.website,
+                company.keywords, company.no_employees):
+            assert error in response.content.decode("utf-8")
+    logging.debug("%s has seen all expected form errors", supplier_alias)
