@@ -15,6 +15,7 @@ from tests.functional.features.steps.fab_then_impl import (
     fas_no_links_to_online_profiles_are_visible,
     fas_pages_should_be_in_selected_language,
     fas_should_be_on_profile_page,
+    fas_should_be_on_selected_page,
     fas_should_be_told_that_message_has_been_sent,
     fas_should_find_all_sought_companies,
     fas_should_find_with_company_details,
@@ -265,3 +266,8 @@ def then_actor_should_see_different_logo_on_fas(context, actor_alias):
 @then('"{supplier_alias}" should see expected error messages')
 def then_supplier_should_see_expected_error_messages(context, supplier_alias):
     fab_should_see_expected_error_messages(context, supplier_alias)
+
+
+@then('"{actor_alias}" should be presented with "{page_name}" FAS page')
+def actor_should_be_on_specific_fas_page(context, actor_alias, page_name):
+    fas_should_be_on_selected_page(context, actor_alias, page_name)
