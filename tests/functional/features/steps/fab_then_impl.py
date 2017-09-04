@@ -35,6 +35,7 @@ from tests.functional.features.utils import (
     MailGunService)
 from tests.settings import (
     FAS_MESSAGE_FROM_BUYER_SUBJECT,
+    FAS_LOGO_PLACEHOLDER_IMAGE,
     SEARCHABLE_CASE_STUDY_DETAILS
 )
 
@@ -196,9 +197,8 @@ def prof_should_see_logo_picture(context: Context, supplier_alias: str):
                   "as uploaded %s", company.title, logo_picture)
 
 
-def fas_should_see_logo_picture(context: Context, supplier_alias: str):
-    """Will check if Company's Logo visible on FAS profile page is the same as
-    the one uploaded on FAB.
+def fas_should_see_png_logo_thumbnail(context: Context, supplier_alias: str):
+    """Will check if Company's PNG thumbnail logo visible on FAS profile.
 
     :param context: behave `context` object
     :param supplier_alias: alias of the Actor used in the scope of the scenario
@@ -206,24 +206,54 @@ def fas_should_see_logo_picture(context: Context, supplier_alias: str):
     actor = context.get_actor(supplier_alias)
     session = actor.session
     company = context.get_company(actor.company_alias)
-    logo_hash = company.logo_hash
-    logo_url = company.logo_url
-    logo_picture = company.logo_picture
 
     # Step 1 - Go to the FAS profile page & extract URL of visible logo image
     response = fas_ui_profile.go_to(session, company.number)
     context.response = response
     visible_logo_url = extract_logo_url(response, fas=True)
+    placeholder = FAS_LOGO_PLACEHOLDER_IMAGE
 
-    # Check if FAS shows the correct Logo image
     with assertion_msg(
-            "Expected company logo: %s but got: %s", logo_url, visible_logo_url):
-        assert visible_logo_url == logo_url
-    logging.debug("Fetching logo image visible on the %s's FAS profile page",
-                  company.title)
-    check_hash_of_remote_file(logo_hash, logo_url)
-    logging.debug("The Logo visible on the %s's FAS profile page is the same "
-                  "as uploaded %s", company.title, logo_picture)
+            "Expected company logo but got image placeholder '%s'",
+            visible_logo_url):
+        assert visible_logo_url != placeholder
+    with assertion_msg(
+            "Expected PNG logo thumbnail, but got: %s", visible_logo_url):
+        assert visible_logo_url.lower().endswith(".png")
+    context.set_company_logo_detail(
+        actor.company_alias, url=visible_logo_url)
+    logging.debug("Set Company's logo URL to: %s", visible_logo_url)
+
+
+def fas_should_see_different_png_logo_thumbnail(context, actor_alias):
+    """Will check if Company's Logo visible on FAS profile page is the same as
+    the one uploaded on FAB.
+
+    :param context: behave `context` object
+    :param actor_alias: alias of the Actor used in the scope of the scenario
+    """
+    actor = context.get_actor(actor_alias)
+    session = actor.session
+    company = context.get_company(actor.company_alias)
+    fas_logo_url = company.logo_url
+
+    # Step 1 - Go to the FAS profile page & extract URL of visible logo image
+    response = fas_ui_profile.go_to(session, company.number)
+    context.response = response
+    visible_logo_url = extract_logo_url(response, fas=True)
+    placeholder = FAS_LOGO_PLACEHOLDER_IMAGE
+
+    with assertion_msg(
+            "Expected company logo but got image placeholder",
+            visible_logo_url):
+        assert visible_logo_url != placeholder
+    with assertion_msg(
+            "Expected to see other logo thumbnail than the previous one '%s'.",
+            visible_logo_url):
+        assert visible_logo_url != fas_logo_url
+    with assertion_msg(
+            "Expected PNG logo thumbnail, but got: %s", visible_logo_url):
+        assert visible_logo_url.lower().endswith(".png")
 
 
 def prof_all_unsupported_files_should_be_rejected(

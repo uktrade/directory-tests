@@ -171,3 +171,5 @@ SEARCHABLE_CASE_STUDY_DETAILS = [
     'caption_2', 'caption_3', 'testimonial', 'source_name', 'source_job',
     'source_company'
 ]
+
+FAS_LOGO_PLACEHOLDER_IMAGE = "/static/images/placeholder.fc5114289e5b.png"
