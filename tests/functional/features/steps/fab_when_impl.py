@@ -40,6 +40,7 @@ from tests.functional.features.pages import (
 )
 from tests.functional.features.pages.common import DETAILS, PROFILES
 from tests.functional.features.pages.utils import (
+    escape_html,
     extract_and_set_csrf_middleware_token,
     get_active_company_without_fas_profile,
     get_fas_page_url,
@@ -1162,7 +1163,7 @@ def fas_get_company_profile_url(response: Response, name: str) -> str:
     links_to_profiles = Selector(text=content).css(links_to_profiles_selector).extract()
     profile_url = None
     for link in links_to_profiles:
-        if name in link:
+        if escape_html(name).lower() in link.lower():
             profile_url = Selector(text=link).css(href_selector).extract()[0]
     with assertion_msg(
             "Couldn't find link to '%s' company profile page in the response",
