@@ -6,6 +6,7 @@ import logging
 import os
 import sys
 import traceback
+from collections import namedtuple
 from contextlib import contextmanager
 from datetime import datetime, timedelta
 from enum import Enum
@@ -42,7 +43,14 @@ from termcolor import cprint
 from urllib3.exceptions import HTTPError as BaseHTTPError
 
 from tests.functional.features.db_cleanup import get_dir_db_connection
-from tests.settings import MAILGUN_EVENTS_URL, MAILGUN_SECRET_API_KEY
+from tests.settings import (
+    MAILGUN_DIRECTORY_API_USER,
+    MAILGUN_DIRECTORY_EVENTS_URL,
+    MAILGUN_DIRECTORY_SECRET_API_KEY,
+    MAILGUN_SSO_API_USER,
+    MAILGUN_SSO_EVENTS_URL,
+    MAILGUN_SSO_SECRET_API_KEY
+)
 
 # a list of exceptions that can be thrown by `requests` (and urllib3)
 REQUEST_EXCEPTIONS = (
@@ -115,6 +123,58 @@ def decode_as_utf8(content):
             logging.debug("Could not decode content as utf-8")
             pass
     return content
+
+
+class MailGunEvent(Enum):
+    """Lists all of MailGun's event types.
+
+    More info here:
+    https://documentation.mailgun.com/en/latest/api-events.html#event-types
+    """
+    ACCEPTED = "accepted"
+    DELIVERED = "delivered"
+    REJECTED = "rejected"
+    FAILED = "failed"
+    OPENED = "opened"
+    CLICKED = "clicked"
+    UNSUBSCRIBED = "unsubscribed"
+    COMPLAINED = "complained"
+    STORED = "stored"
+
+    def __str__(self):
+        return self.value
+
+    def __eq__(self, y):
+        return self.value == y.value
+
+
+class MailGunService(Enum):
+    """Lists all MailGun's events states"""
+    ServiceDetails = namedtuple('ServiceDetails', ['url', 'user', 'password'])
+    SSO = ServiceDetails(
+        url=MAILGUN_SSO_EVENTS_URL, user=MAILGUN_SSO_API_USER,
+        password=MAILGUN_SSO_SECRET_API_KEY)
+    DIRECTORY = ServiceDetails(
+        url=MAILGUN_DIRECTORY_EVENTS_URL, user=MAILGUN_DIRECTORY_API_USER,
+        password=MAILGUN_DIRECTORY_SECRET_API_KEY)
+
+    def __str__(self):
+        return self.value
+
+    def __eq__(self, y):
+        return self.value == y.value
+
+    @property
+    def url(self):
+        return self.value.url
+
+    @property
+    def user(self):
+        return self.value.user
+
+    @property
+    def password(self):
+        return self.value.password
 
 
 def print_response(response: Response, *, trim: bool = True):
@@ -547,7 +607,7 @@ def get_md5_hash_of_file(absolute_path):
     return hashlib.md5(open(absolute_path, "rb").read()).hexdigest()
 
 
-def extract_by_css(response, selector):
+def extract_by_css(response, selector, *, first: bool = True):
     """Extract values from HTML response content using CSS selector.
 
     :param response: response containing HTML content
@@ -555,8 +615,12 @@ def extract_by_css(response, selector):
     :return: value of the 1st found element identified by the CSS selector
     """
     content = response.content.decode("utf-8")
-    res = Selector(text=content).css(selector).extract()
-    return res[0] if len(res) > 0 else ""
+    extracted = Selector(text=content).css(selector).extract()
+    if first:
+        result = extracted[0] if len(extracted) > 0 else ""
+    else:
+        result = extracted
+    return result
 
 
 def extract_logo_url(response, *, fas: bool = False):
@@ -599,7 +663,7 @@ def mailgun_get_message(context: Context, url: str) -> dict:
     :param url: unique mailgun message URL
     :return: a dictionary with message details and message body
     """
-    api_key = MAILGUN_SECRET_API_KEY
+    api_key = MAILGUN_SSO_SECRET_API_KEY
     # this will help us to get the raw MIME
     headers = {"Accept": "message/rfc2822"}
     response = make_request(
@@ -613,7 +677,6 @@ def mailgun_get_message(context: Context, url: str) -> dict:
     return response.json()
 
 
-@retry(wait_fixed=15000, stop_max_attempt_number=8)
 def mailgun_get_message_url(context: Context, recipient: str) -> str:
     """Will try to find the message URL among 100 emails sent in last 1 hour.
 
@@ -625,30 +688,15 @@ def mailgun_get_message_url(context: Context, recipient: str) -> str:
     :param recipient: email address of the message recipient
     :return: mailgun message URL
     """
-    url = MAILGUN_EVENTS_URL
-    api_key = MAILGUN_SECRET_API_KEY
     message_limit = 1
     pattern = '%a, %d %b %Y %H:%M:%S GMT'
     begin = (datetime.utcnow() - timedelta(minutes=60)).strftime(pattern)
 
-    params = {
-        "limit": message_limit,
-        "recipient": recipient,
-        "event": "accepted",
-        "ascending": "yes",
-        "begin": begin
-    }
-    response = make_request(
-        Method.GET, url, auth=("api", api_key), params=params)
+    response = find_mailgun_events(
+        context, MailGunService.SSO, limit=message_limit, recipient=recipient,
+        event=MailGunEvent.ACCEPTED, begin=begin, ascending="yes"
+    )
     context.response = response
-
-    with assertion_msg(
-            "Expected 200 OK from MailGun when searching for an event triggered"
-            " by email verification message but got %d", response.status_code):
-        assert response.status_code == 200
-    no_of_items = len(response.json()["items"])
-    with assertion_msg("Could not find MailGun event for %s", recipient):
-        assert no_of_items == message_limit
     logging.debug("Found event with recipient: {}".format(recipient))
     return response.json()["items"][0]["storage"]["url"]
 
@@ -700,3 +748,69 @@ def green(x: str):
 
 def blue(x: str):
     cprint(x, 'blue', attrs=['bold'])
+
+
+@retry(wait_fixed=10000, stop_max_attempt_number=9)
+def find_mailgun_events(
+        context: Context, service: MailGunService, *, sender: str = None,
+        recipient: str = None, to: str = None, subject: str = None,
+        limit: int = None, event: MailGunEvent = None, begin: str = None,
+        end: str = None, ascending: str = None) -> Response:
+    """
+
+    :param context: behave `context` object
+    :param service: an object with MailGun service details
+    :param sender: (optional) email address of the sender
+    :param recipient: (optional) email address of the recipient
+    :param to: (optional) email address of the recipient (from the MIME header)
+    :param subject: (optional) subject of the message
+    :param limit: (optional) Number of entries to return. (300 max)
+    :param event: (optional) An event type
+    :param begin: (optional)
+    :param end: (optional)
+    :param ascending: (optional) yes/no
+    :return: a response object
+    """
+    params = {}
+
+    if sender:
+        params.update({"from": sender})
+    if recipient:
+        params.update({"recipient": recipient})
+    if to:
+        params.update({"to": to})
+    if subject:
+        params.update({"subject": subject})
+    if limit:
+        params.update({"limit": limit})
+    if event:
+        params.update({"event": str(event)})
+    if begin:
+        params.update({"begin": begin})
+    if end:
+        params.update({"end": end})
+    if ascending:
+        params.update({"ascending": ascending})
+
+    response = make_request(
+        Method.GET, service.url, auth=(service.user, service.password),
+        params=params)
+    context.response = response
+    with assertion_msg(
+            "Expected 200 OK from MailGun when searching for an event %s",
+            response.status_code):
+        assert response.status_code == 200
+    number_of_events = len(response.json()["items"])
+    if limit:
+        with assertion_msg(
+                "Expected (maximum) %d events but got %d instead.", limit,
+                number_of_events):
+            assert number_of_events <= limit
+    with assertion_msg(
+            "Expected to find at least 1 MailGun event, got 0 instead. User "
+            "parameters: %s", params):
+        assert number_of_events > 0
+    logging.debug(
+        "Found {} event(s) that matched following criteria: {}"
+        .format(number_of_events, params))
+    return response

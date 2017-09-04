@@ -4,6 +4,7 @@ from behave import given
 
 from tests.functional.features.steps.fab_given_impl import (
     bp_build_company_profile,
+    fas_find_company_by_name,
     reg_confirm_email_address,
     reg_create_sso_account_associated_with_company,
     reg_create_unverified_profile,
@@ -133,3 +134,9 @@ def given_supplier_added_complete_case_study(context, supplier_alias, case_alias
 def given_unauthenticated_buyer(context, buyer_alias):
     buyer = unauthenticated_buyer(buyer_alias)
     context.add_actor(buyer)
+
+
+@given('"{buyer_alias}" has found a company "{company_alias}" on Find a '
+       'Supplier site')
+def given_buyer_finds_company_by_name(context, buyer_alias, company_alias):
+    fas_find_company_by_name(context, buyer_alias, company_alias)

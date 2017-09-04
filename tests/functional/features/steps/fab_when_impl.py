@@ -25,6 +25,7 @@ from tests.functional.features.pages import (
     fab_ui_profile,
     fab_ui_upload_logo,
     fab_ui_verify_company,
+    fas_ui_contact,
     fas_ui_feedback,
     fas_ui_find_supplier,
     fas_ui_profile,
@@ -47,6 +48,7 @@ from tests.functional.features.pages.utils import (
     is_inactive,
     random_case_study_data,
     random_feedback_data,
+    random_message_data,
     rare_word,
     sentence
 )
@@ -275,11 +277,13 @@ def bp_provide_company_details(context, supplier_alias):
 
     # Step 0 - generate random details & update Company matching details
     # Need to get Company details after updating it in the Scenario Data
+    title = "{} {}".format(company.title, sentence())
     size = random.choice(NO_OF_EMPLOYEES)
     website = "http://{}.{}".format(rare_word(min_length=15), rare_word())
     keywords = ", ".join(sentence().split())
     context.set_company_details(
-        company_alias, no_employees=size, website=website, keywords=keywords
+        company_alias, title=title, no_employees=size, website=website,
+        keywords=keywords
     )
     company = context.get_company(actor.company_alias)
 
@@ -1149,25 +1153,44 @@ def fas_feedback_request_should_be_submitted(
         "% was told that the feedback request has been submitted", buyer_alias)
 
 
+def fas_get_company_profile_url(response: Response, name: str) -> str:
+    content = response.content.decode("utf-8")
+    links_to_profiles_selector = "#ed-search-list-container a"
+    href_selector = "a::attr(href)"
+    links_to_profiles = Selector(text=content).css(links_to_profiles_selector).extract()
+    profile_url = None
+    for link in links_to_profiles:
+        if name in link:
+            profile_url = Selector(text=link).css(href_selector).extract()[0]
+    with assertion_msg(
+            "Couldn't find link to '%s' company profile page in the response",
+            name):
+        assert profile_url
+    return profile_url
+
+
 def can_find_supplier_by_term(
         session: Session, name: str, term: str, term_type: str) \
-        -> (bool, Response):
+        -> (bool, Response, str):
     """
 
     :param session: Buyer's session object
     :param name: sought Supplier name
     :param term: a text used to find the Supplier
     :param term_type: type of the term, e.g.: product, service, keyword etc.
-    :return: a tuple with search result (True/False) and last search Response
+    :return: a tuple with search result (True/False), last search Response and
+             an endpoint to company's profile
     """
     found = False
+    endpoint = None
     response = fas_ui_find_supplier.go_to(session, term=term)
     number_of_pages = get_number_of_search_result_pages(response)
     if number_of_pages == 0:
-        return found, response
+        return found, response, endpoint
     for page_number in range(1, number_of_pages + 1):
         found = fas_ui_find_supplier.should_see_company(response, name)
         if found:
+            endpoint = fas_get_company_profile_url(response, name)
             break
         else:
             logging.debug(
@@ -1182,7 +1205,7 @@ def can_find_supplier_by_term(
                 logging.debug(
                     "Couldn't find the Supplier even on the last page of the "
                     "search results")
-    return found, response
+    return found, response, endpoint
 
 
 def fas_search_with_product_service_keyword(
@@ -1219,9 +1242,36 @@ def fas_search_with_product_service_keyword(
             logging.debug(
                 "%s is searching for company '%s' using %s term '%s'",
                 buyer_alias, company, term_type, term)
-            found, response = can_find_supplier_by_term(
+            found, response, _ = can_find_supplier_by_term(
                 session, company, term, term_type)
             search_term['found'] = found
             search_term['response'] = response
 
     context.search_results = search_results
+
+
+def fas_send_message_to_supplier(
+        context: Context, buyer_alias: str, company_alias: str):
+    buyer = context.get_actor(buyer_alias)
+    session = buyer.session
+    company = context.get_company(company_alias)
+    endpoint = company.fas_profile_endpoint
+    with assertion_msg(
+            "Company '%s' doesn't have FAS profile URL set", company.title):
+        assert endpoint
+    # Step 0 - generate message data
+    message = random_message_data()
+
+    # Step 1 - go to Company's profile page
+    response = fas_ui_profile.go_to_endpoint(session, endpoint)
+    context.response = response
+    fas_ui_profile.should_be_here(response, number=company.number)
+
+    # Step 2 - go to the "email company" form
+    response = fas_ui_contact.go_to(
+        session, company_number=company.number, company_name=company.title)
+    context.response = response
+
+    # Step 3 - submit the form with the message data
+    response = fas_ui_contact.submit(session, message, company.number)
+    context.response = response

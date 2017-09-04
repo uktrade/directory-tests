@@ -11,6 +11,7 @@ from tests.functional.features.steps.fab_when_impl import (
     fas_search_with_empty_query,
     fas_search_with_product_service_keyword,
     fas_send_feedback_request,
+    fas_send_message_to_supplier,
     fas_view_pages_in_selected_language,
     prof_add_case_study,
     prof_add_invalid_online_profiles,
@@ -205,3 +206,8 @@ def when_buyer_sends_feedback_request(context, buyer_alias, page_name):
       ' and a keyword')
 def when_buyer_search_using_product_servive_keyword(context, buyer_alias):
     fas_search_with_product_service_keyword(context, buyer_alias, context.table)
+
+
+@when('"{buyer_alias}" sends a message to company "{company_alias}"')
+def when_buyer_sends_message_to_supplier(context, buyer_alias, company_alias):
+    fas_send_message_to_supplier(context, buyer_alias, company_alias)

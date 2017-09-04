@@ -44,7 +44,7 @@ Company = namedtuple(
         'website', 'keywords', 'no_employees', 'sector', 'letter_recipient',
         'companies_house_details', 'facebook', 'linkedin', 'twitter',
         'case_studies', 'logo_picture', 'logo_url', 'logo_hash',
-        'export_to_countries'
+        'export_to_countries', 'fas_profile_endpoint'
     ]
 )
 Feedback = namedtuple(
@@ -53,10 +53,18 @@ Feedback = namedtuple(
         'name', 'email', 'company_name', 'country', 'comment', 'terms'
     ]
 )
+Message = namedtuple(
+    'Message',
+    [
+        'alias', 'body', 'company_name', 'country', 'email_address',
+        'full_name', 'g_recaptcha_response', 'sector', 'subject', 'terms'
+    ]
+)
 # Set all fields to None by default.
 Actor.__new__.__defaults__ = (None,) * len(Actor._fields)
 Company.__new__.__defaults__ = (None,) * len(Company._fields)
 CaseStudy.__new__.__defaults__ = (None,) * len(CaseStudy._fields)
+Message.__new__.__defaults__ = (None,) * len(Message._fields)
 AddressDetails.__new__.__defaults__ = (None,) * len(AddressDetails._fields)
 
 
@@ -202,7 +210,7 @@ def set_company_details(self, alias, *, title=None, website=None, keywords=None,
                         no_employees=None, sector=None, letter_recipient=None,
                         facebook=None, linkedin=None, twitter=None,
                         summary=None, description=None,
-                        export_to_countries=None):
+                        export_to_countries=None, fas_profile_endpoint=None):
     companies = self.scenario_data.companies
     if title:
         companies[alias] = companies[alias]._replace(title=title)
@@ -228,6 +236,8 @@ def set_company_details(self, alias, *, title=None, website=None, keywords=None,
         companies[alias] = companies[alias]._replace(description=description)
     if export_to_countries:
         companies[alias] = companies[alias]._replace(export_to_countries=export_to_countries)
+    if fas_profile_endpoint:
+        companies[alias] = companies[alias]._replace(fas_profile_endpoint=fas_profile_endpoint)
 
     logging.debug("Successfully updated Company's details %s: %s", alias,
                   companies[alias])

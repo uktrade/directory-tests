@@ -58,8 +58,10 @@ def should_be_here(response, *, number=None):
 
 
 def should_see_company(response: Response, company_title: str) -> bool:
-    content = response.content.decode("utf-8")
-    return escape_html(company_title, upper=True) in content
+    content = response.content.decode("utf-8").lower()
+    no_match = "did not match any uk trade profiles" in content
+    contains_company_title = escape_html(company_title).lower() in content
+    return contains_company_title and not no_match
 
 
 def should_not_see_company(response: Response, company_title: str) -> bool:
