@@ -26,16 +26,17 @@ from tests.functional.features.pages.utils import (
 )
 from tests.functional.features.utils import (
     MailGunEvent,
+    MailGunService,
     assertion_msg,
     check_hash_of_remote_file,
     extract_csrf_middleware_token,
     extract_logo_url,
     find_mailgun_events,
-    get_verification_link,
-    MailGunService)
+    get_verification_link
+)
 from tests.settings import (
-    FAS_MESSAGE_FROM_BUYER_SUBJECT,
     FAS_LOGO_PLACEHOLDER_IMAGE,
+    FAS_MESSAGE_FROM_BUYER_SUBJECT,
     SEARCHABLE_CASE_STUDY_DETAILS
 )
 
