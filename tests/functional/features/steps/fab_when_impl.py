@@ -1319,9 +1319,15 @@ def fab_provide_company_details(
             website = "http:{}.{}".format(rare_word(), rare_word())
         elif row["website"] == "invalid https":
             website = "https:{}.{}".format(rare_word(), rare_word())
+        elif row["website"].endswith(" characters"):
+            number = [int(word) for word in row["website"].split() if word.isdigit()][0]
+            website = random_chars(number)
 
         if row["keywords"] == "empty string":
             keywords = ""
+        elif row["keywords"].endswith(" characters"):
+            number = [int(word) for word in row["keywords"].split() if word.isdigit()][0]
+            keywords = random_chars(number)
         else:
             keywords = row["keywords"]
             separate_keywords = keywords.split(", ")
