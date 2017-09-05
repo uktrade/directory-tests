@@ -2,12 +2,14 @@
 """FAB Given step implementations."""
 import logging
 import random
+from urllib.parse import parse_qsl, urljoin, urlsplit
 
 from behave.model import Table
 from behave.runner import Context
 from requests import Response, Session
 from scrapy import Selector
 
+from tests import get_absolute_url
 from tests.functional.features.context_utils import Company
 from tests.functional.features.pages import (
     fab_ui_build_profile_address,
@@ -1360,4 +1362,33 @@ def fab_provide_company_details(
         response = fab_ui_build_profile_basic.submit(actor, new_details)
         results.append((new_details, response, row["error"]))
 
+    context.results = results
+
+
+def fas_follow_case_study_links_to_related_sectors(context, actor_alias):
+    actor = context.get_actor(actor_alias)
+    session = actor.session
+    content = context.response.content.decode("utf-8")
+    links_css_selector = "#company-showcase .case-study-info a"
+    links_to_sectors = Selector(text=content).css(links_css_selector).extract()
+    with assertion_msg("Expected to find at least 1 link to Industry sector"
+                       "associated with Company Showcase Case Study"):
+        assert links_css_selector
+    results = {}
+    fas_url = get_absolute_url("ui-supplier:landing")
+    for link in links_to_sectors:
+        industry = Selector(text=link).css("a::text").extract()[0]
+        href = Selector(text=link).css("a::attr(href)").extract()[0]
+        url = urljoin(fas_url, href)
+        sectors = [value for _, value in parse_qsl(urlsplit(href).query)]
+        logging.debug(
+            "%s will look for Suppliers in '%s' Industry sectors '%s'",
+            actor_alias, industry, ", ".join(sectors)
+        )
+        response = make_request(Method.GET, url=url, session=session)
+        results[industry] = {
+            "url": url,
+            "sectors": sectors,
+            "response": response
+        }
     context.results = results
