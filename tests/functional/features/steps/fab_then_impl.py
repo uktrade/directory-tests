@@ -7,6 +7,7 @@ from behave.model import Table
 from behave.runner import Context
 from requests import Response
 from retrying import retry
+from scrapy import Selector
 
 from tests.functional.features.pages import (
     fab_ui_build_profile_basic,
@@ -619,3 +620,30 @@ def fas_should_see_promoted_industries(context, actor_alias, table):
     logging.debug(
         "%s can see all expected industry sections '%s'", actor_alias,
         industries)
+
+
+def fas_should_see_filtered_search_results(context, actor_alias):
+    results = context.results
+    sector_filters_selector = "#id_sectors input"
+    for industry, result in results.items():
+        context.response = result["response"]
+        content = result["response"].content.decode("utf-8")
+        filters = Selector(text=content).css(sector_filters_selector).extract()
+        for fil in filters:
+            sector = Selector(text=fil).css("input::attr(value)").extract()[0]
+            checked = True if Selector(text=fil).css("input::attr(checked)").extract() else False
+            if sector in result["sectors"]:
+                with assertion_msg(
+                        "Expected search results to be filtered by '%s' sector"
+                        " but this filter was not checked!"):
+                    assert checked
+            else:
+                with assertion_msg(
+                        "Expected search results to be filtered only by "
+                        "following sectors '%s', but they are also filtered "
+                        "by '%s'!", ", ".join(result['sectors']), sector):
+                    assert not checked
+        logging.debug(
+            "%s was presented with '%s' industry search results correctly "
+            "filtered by following sectors: '%s'", actor_alias, industry,
+            ", ".join(result['sectors']))
