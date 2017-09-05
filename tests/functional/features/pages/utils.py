@@ -16,15 +16,15 @@ from langdetect import DetectorFactory, detect_langs
 from requests import Response
 
 from tests import get_absolute_url
-from tests.functional.features.db_cleanup import (
-    delete_supplier_data,
-    get_company_email
-)
 from tests.functional.features.context_utils import (
     CaseStudy,
     Company,
     Feedback,
     Message
+)
+from tests.functional.features.db_cleanup import (
+    delete_supplier_data,
+    get_company_email
 )
 from tests.functional.features.pages import int_api_ch_search
 from tests.functional.features.utils import (

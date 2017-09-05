@@ -6,6 +6,7 @@ from tests.functional.features.steps.fab_when_impl import (
     bp_provide_company_details,
     bp_provide_full_name,
     bp_select_random_sector_and_export_to_country,
+    fab_provide_company_details,
     fab_update_case_study,
     fas_search_using_company_details,
     fas_search_with_empty_query,
@@ -211,3 +212,8 @@ def when_buyer_search_using_product_servive_keyword(context, buyer_alias):
 @when('"{buyer_alias}" sends a message to company "{company_alias}"')
 def when_buyer_sends_message_to_supplier(context, buyer_alias, company_alias):
     fas_send_message_to_supplier(context, buyer_alias, company_alias)
+
+
+@when('"{supplier_alias}" provides company details using following values')
+def when_supplier_provide_company_details(context, supplier_alias):
+    fab_provide_company_details(context, supplier_alias, context.table)

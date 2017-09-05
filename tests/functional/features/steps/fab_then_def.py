@@ -8,6 +8,7 @@ from tests.functional.features.steps.fab_then_impl import (
     fab_profile_is_verified,
     fab_should_see_all_case_studies,
     fab_should_see_company_details,
+    fab_should_see_expected_error_messages,
     fab_should_see_online_profiles,
     fas_check_profiles,
     fas_find_supplier_using_case_study_details,
@@ -259,3 +260,8 @@ def then_buyer_should_see_logo_on_fas_profile_page(context, actor_alias):
       'FAS Company\'s Directory Profile page')
 def then_actor_should_see_different_logo_on_fas(context, actor_alias):
     fas_should_see_different_png_logo_thumbnail(context, actor_alias)
+
+
+@then('"{supplier_alias}" should see expected error messages')
+def then_supplier_should_see_expected_error_messages(context, supplier_alias):
+    fab_should_see_expected_error_messages(context, supplier_alias)

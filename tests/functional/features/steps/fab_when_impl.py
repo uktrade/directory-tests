@@ -8,6 +8,7 @@ from behave.runner import Context
 from requests import Response, Session
 from scrapy import Selector
 
+from tests.functional.features.context_utils import Company
 from tests.functional.features.pages import (
     fab_ui_build_profile_address,
     fab_ui_build_profile_basic,
@@ -39,6 +40,7 @@ from tests.functional.features.pages import (
 )
 from tests.functional.features.pages.common import DETAILS, PROFILES
 from tests.functional.features.pages.utils import (
+    escape_html,
     extract_and_set_csrf_middleware_token,
     get_active_company_without_fas_profile,
     get_fas_page_url,
@@ -62,7 +64,8 @@ from tests.functional.features.utils import (
     get_absolute_path_of_file,
     get_md5_hash_of_file,
     get_verification_code,
-    make_request
+    make_request,
+    random_chars
 )
 from tests.settings import COUNTRIES, NO_OF_EMPLOYEES, SECTORS
 
@@ -1160,7 +1163,7 @@ def fas_get_company_profile_url(response: Response, name: str) -> str:
     links_to_profiles = Selector(text=content).css(links_to_profiles_selector).extract()
     profile_url = None
     for link in links_to_profiles:
-        if name in link:
+        if escape_html(name).lower() in link.lower():
             profile_url = Selector(text=link).css(href_selector).extract()[0]
     with assertion_msg(
             "Couldn't find link to '%s' company profile page in the response",
@@ -1275,3 +1278,78 @@ def fas_send_message_to_supplier(
     # Step 3 - submit the form with the message data
     response = fas_ui_contact.submit(session, message, company.number)
     context.response = response
+
+
+def fab_provide_company_details(
+        context: Context, supplier_alias: str, table: Table):
+    """Submit company details with specific values in order to verify data
+     validation.
+
+    NOTE:
+    This will store a list of `results` tuples in context. Each tuple will
+    contain:
+    * Company namedtuple (with details used in the request)
+    * response object
+    * expected error message
+
+    :param context: behave `context` object
+    :param supplier_alias: alias of the Supplier Actor
+    :param table: a table with company details to update & expected error msg
+    """
+    actor = context.get_actor(supplier_alias)
+    original_details = context.get_company(actor.company_alias)
+    results = []
+    for row in table:
+        if row["company name"] == "unchanged":
+            title = original_details.title
+        elif row["company name"] == "empty string":
+            title = ""
+        elif row["company name"].endswith(" characters"):
+            number = [int(word) for word in row["company name"].split() if word.isdigit()][0]
+            title = random_chars(number)
+        else:
+            title = original_details.title
+
+        if row["website"] == "empty string":
+            website = ""
+        elif row["website"] == "valid http":
+            website = "http://{}.{}".format(rare_word(), rare_word())
+        elif row["website"] == "valid https":
+            website = "https://{}.{}".format(rare_word(), rare_word())
+        elif row["website"] == "invalid http":
+            website = "http:{}.{}".format(rare_word(), rare_word())
+        elif row["website"] == "invalid https":
+            website = "https:{}.{}".format(rare_word(), rare_word())
+        elif row["website"].endswith(" characters"):
+            number = [int(word) for word in row["website"].split() if word.isdigit()][0]
+            website = random_chars(number)
+
+        if row["keywords"] == "empty string":
+            keywords = ""
+        elif row["keywords"].endswith(" characters"):
+            number = [int(word) for word in row["keywords"].split() if word.isdigit()][0]
+            keywords = random_chars(number)
+        else:
+            keywords = row["keywords"]
+            separate_keywords = keywords.split(", ")
+            if row["separator"] == "pipe":
+                keywords = "| ".join(separate_keywords)
+            if row["separator"] == "semi-colon":
+                keywords = "; ".join(separate_keywords)
+            if row["separator"] == "colon":
+                keywords = ": ".join(separate_keywords)
+            if row["separator"] == "full stop":
+                keywords = ". ".join(separate_keywords)
+
+        if row["size"] == "unset":
+            size = ""
+        else:
+            size = row["size"]
+
+        new_details = Company(
+            title=title, website=website, keywords=keywords, no_employees=size)
+
+        response = fab_ui_build_profile_basic.submit(actor, new_details)
+        results.append((new_details, response, row["error"]))
+
+    context.results = results

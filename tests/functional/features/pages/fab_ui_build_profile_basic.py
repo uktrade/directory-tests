@@ -46,12 +46,16 @@ def submit(actor: Actor, company: Company) -> Response:
     """
     data = {
         "csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
-        "company_profile_edit_view-current_step": "basic",
-        "basic-name": company.title,
-        "basic-website": company.website,
-        "basic-keywords": company.keywords,
-        "basic-employees": company.no_employees
+        "company_profile_edit_view-current_step": "basic"
     }
+    if company.title is not None:
+        data.update({"basic-name": company.title})
+    if company.website is not None:
+        data.update({"basic-website": company.website})
+    if company.keywords is not None:
+        data.update({"basic-keywords": company.keywords})
+    if company.no_employees is not None:
+        data.update({"basic-employees": company.no_employees})
     headers = {"Referer": URL}
     response = make_request(
         Method.POST, URL, session=actor.session, headers=headers, data=data)

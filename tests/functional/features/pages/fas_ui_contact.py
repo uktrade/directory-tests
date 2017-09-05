@@ -6,6 +6,7 @@ from requests import Response, Session
 
 from tests import get_absolute_url
 from tests.functional.features.context_utils import Company, Message
+from tests.functional.features.pages.utils import escape_html
 from tests.functional.features.utils import Method, check_response, make_request
 
 LANDING = get_absolute_url("ui-supplier:landing")
@@ -41,7 +42,7 @@ def go_to(session: Session, company_number: str, company_name: str) -> Response:
 
 
 def should_be_here(response, *, name=None):
-    expected = EXPECTED_STRINGS + [name] if name else EXPECTED_STRINGS
+    expected = EXPECTED_STRINGS + [escape_html(name)] if name else EXPECTED_STRINGS
     check_response(response, 200, body_contains=expected)
     logging.debug("Supplier is on FAS Contact Company page")
 
@@ -66,6 +67,6 @@ def submit(session: Session, message: Message, company_number: str):
 
 
 def should_see_that_message_has_been_sent(company: Company, response: Response):
-    expected = EXPECTED_STRINGS_MESSAGE_SENT + [company.title]
+    expected = EXPECTED_STRINGS_MESSAGE_SENT + [escape_html(company.title)]
     check_response(response, 200, body_contains=expected)
     logging.debug("Buyer was told that the message has been sent")
