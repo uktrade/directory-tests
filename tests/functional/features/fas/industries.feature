@@ -38,7 +38,7 @@ Feature: Promoted industries
 
   @ED-2016
   @industries
-  Scenario Outline: Buyers should be able to find UK Suppliers by keywords associated with promoted Case Study on "<selected>" page
+  Scenario Outline: Buyers should be able to find UK Suppliers by industries associated with promoted Case Study on "<selected>" page
     Given "Annette Geissinger" is a buyer
     And "Annette Geissinger" is on the "<selected>" page on FAS
 
