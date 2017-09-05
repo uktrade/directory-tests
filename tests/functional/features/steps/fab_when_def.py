@@ -13,6 +13,7 @@ from tests.functional.features.steps.fab_when_impl import (
     fas_search_with_product_service_keyword,
     fas_send_feedback_request,
     fas_send_message_to_supplier,
+    fas_view_page,
     fas_view_pages_in_selected_language,
     prof_add_case_study,
     prof_add_invalid_online_profiles,
@@ -217,3 +218,8 @@ def when_buyer_sends_message_to_supplier(context, buyer_alias, company_alias):
 @when('"{supplier_alias}" provides company details using following values')
 def when_supplier_provide_company_details(context, supplier_alias):
     fab_provide_company_details(context, supplier_alias, context.table)
+
+
+@when('"{actor_alias}" visits "{page_name}" page on FAS')
+def when_actor_visits_page_on_fas(context, actor_alias, page_name):
+    fas_view_page(context, actor_alias, page_name)

@@ -43,6 +43,7 @@ from tests.functional.features.pages.utils import (
     escape_html,
     extract_and_set_csrf_middleware_token,
     get_active_company_without_fas_profile,
+    get_fas_page_object,
     get_fas_page_url,
     get_language_code,
     get_number_of_search_result_pages,
@@ -1118,6 +1119,13 @@ def fas_view_pages_in_selected_language(
         response = make_request(Method.GET, page_url, session=session)
         views[page_name] = response
     context.views = views
+
+
+def fas_view_page(context, actor_alias, page_name):
+    actor = context.get_actor(actor_alias)
+    session = actor.session
+    page_object = get_fas_page_object(page_name)
+    context.response = page_object.go_to(session)
 
 
 def fas_search_with_empty_query(context, buyer_alias):

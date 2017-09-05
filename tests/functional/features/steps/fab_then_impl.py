@@ -15,12 +15,14 @@ from tests.functional.features.pages import (
     fab_ui_try_other_services,
     fas_ui_contact,
     fas_ui_find_supplier,
+    fas_ui_industries,
     fas_ui_profile,
     profile_ui_landing,
     sso_ui_verify_your_email
 )
 from tests.functional.features.pages.utils import (
     detect_page_language,
+    get_fas_page_object,
     get_language_code,
     get_number_of_search_result_pages
 )
@@ -599,3 +601,21 @@ def fab_should_see_expected_error_messages(context, supplier_alias):
                 company.keywords, company.no_employees):
             assert error in response.content.decode("utf-8")
     logging.debug("%s has seen all expected form errors", supplier_alias)
+
+
+def fas_should_be_on_selected_page(context, actor_alias, page_name):
+    response = context.response
+    page_object = get_fas_page_object(page_name)
+    page_object.should_be_here(response)
+    logging.debug(
+        "%s successfully got to the %s FAS page", actor_alias, page_name)
+
+
+def fas_should_see_promoted_industries(context, actor_alias, table):
+    industries = [row['industry'].lower() for row in table]
+    response = context.response
+    for industry in industries:
+        fas_ui_industries.should_see_industry_section(response, industry)
+    logging.debug(
+        "%s can see all expected industry sections '%s'", actor_alias,
+        industries)
