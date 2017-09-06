@@ -11,7 +11,6 @@ from collections import namedtuple
 from contextlib import contextmanager
 from datetime import datetime, timedelta
 from enum import Enum
-from itertools import islice
 from pprint import pprint
 from string import ascii_uppercase
 
