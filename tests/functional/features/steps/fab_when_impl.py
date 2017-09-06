@@ -1398,3 +1398,29 @@ def fas_follow_case_study_links_to_related_sectors(context, actor_alias):
             "response": response
         }
     context.results = results
+
+
+def fas_browse_suppliers_using_every_sector_filter(
+        context: Context, actor_alias: str):
+    actor = context.get_actor(actor_alias)
+    session = actor.session
+
+    response = fas_ui_find_supplier.go_to(session, term="")
+    context.response = response
+
+    sector_filters_selector = "#id_sectors input::attr(value)"
+    content = response.content.decode("utf-8")
+    sector_filters = Selector(text=content).css(sector_filters_selector).extract()
+    results = {}
+    for sector in sector_filters:
+        logging.debug(
+            "%s will browse Suppliers by Industry sector filter '%s'",
+            actor_alias, sector
+        )
+        response = fas_ui_find_supplier.go_to(session, sectors=[sector])
+        results[sector] = {
+            "url": response.request.url,
+            "sectors": [sector],
+            "response": response
+        }
+    context.results = results

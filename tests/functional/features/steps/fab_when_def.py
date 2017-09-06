@@ -8,6 +8,7 @@ from tests.functional.features.steps.fab_when_impl import (
     bp_verify_identity_with_letter,
     fab_provide_company_details,
     fab_update_case_study,
+    fas_browse_suppliers_using_every_sector_filter,
     fas_follow_case_study_links_to_related_sectors,
     fas_search_using_company_details,
     fas_search_with_empty_query,
@@ -230,3 +231,9 @@ def when_actor_visits_page_on_fas(context, actor_alias, page_name):
       ' case study from the Company Showcase')
 def when_actor_follows_case_study_links_to_sectors(context, actor_alias):
     fas_follow_case_study_links_to_related_sectors(context, actor_alias)
+
+
+@when('"{actor_alias}" searches for Suppliers using every available sector '
+      'filter')
+def when_actor_checks_every_industry_filter(context, actor_alias):
+    fas_browse_suppliers_using_every_sector_filter(context, actor_alias)
