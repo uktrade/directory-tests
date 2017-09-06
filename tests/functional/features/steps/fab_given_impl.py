@@ -20,8 +20,8 @@ from tests.functional.features.steps.fab_then_impl import (
 )
 from tests.functional.features.steps.fab_when_impl import (
     bp_provide_company_details,
-    bp_provide_full_name,
     bp_select_random_sector_and_export_to_country,
+    bp_verify_identity_with_letter,
     can_find_supplier_by_term,
     prof_set_company_description,
     prof_verify_company,
@@ -104,7 +104,7 @@ def reg_confirm_email_address(context: Context, supplier_alias: str):
 def bp_build_company_profile(context: Context, supplier_alias: str):
     bp_provide_company_details(context, supplier_alias)
     bp_select_random_sector_and_export_to_country(context, supplier_alias)
-    bp_provide_full_name(context, supplier_alias)
+    bp_verify_identity_with_letter(context, supplier_alias)
     prof_should_be_on_profile_page(context.response, supplier_alias)
     prof_should_be_told_about_missing_description(
         context.response, supplier_alias)
