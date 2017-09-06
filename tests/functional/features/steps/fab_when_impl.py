@@ -41,12 +41,15 @@ from tests.functional.features.pages import (
     sso_ui_register,
     sso_ui_verify_your_email
 )
-from tests.functional.features.pages.common import DETAILS, PROFILES
+from tests.functional.features.pages.common import (
+    DETAILS,
+    FAS_PAGE_OBJECTS,
+    PROFILES
+)
 from tests.functional.features.pages.utils import (
     escape_html,
     extract_and_set_csrf_middleware_token,
     get_active_company_without_fas_profile,
-    get_fas_page_object,
     get_fas_page_url,
     get_language_code,
     get_number_of_search_result_pages,
@@ -1129,7 +1132,7 @@ def fas_view_pages_in_selected_language(
 def fas_view_page(context, actor_alias, page_name):
     actor = context.get_actor(actor_alias)
     session = actor.session
-    page_object = get_fas_page_object(page_name)
+    page_object = FAS_PAGE_OBJECTS[page_name.lower()]
     context.response = page_object.go_to(session)
 
 
