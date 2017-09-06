@@ -23,6 +23,7 @@ from tests.functional.features.steps.fab_then_impl import (
     sso_should_be_signed_in_to_sso_account
 )
 from tests.functional.features.steps.fab_when_impl import (
+    fas_view_page,
     prof_add_case_study,
     prof_add_online_profiles,
     prof_set_company_description,
@@ -147,3 +148,8 @@ def given_buyer_finds_company_by_name(context, buyer_alias, company_alias):
        'Directory Profile page')
 def given_actor_can_see_logo_on_fas_profile_page(context, actor_alias):
     fas_should_see_png_logo_thumbnail(context, actor_alias)
+
+
+@given('"{actor_alias}" is on the "{page_name}" page on FAS')
+def step_impl(context, actor_alias, page_name):
+    fas_view_page(context, actor_alias, page_name)

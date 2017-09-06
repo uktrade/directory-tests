@@ -8,6 +8,7 @@ from tests.functional.features.steps.fab_when_impl import (
     bp_select_random_sector_and_export_to_country,
     fab_provide_company_details,
     fab_update_case_study,
+    fas_follow_case_study_links_to_related_sectors,
     fas_search_using_company_details,
     fas_search_with_empty_query,
     fas_search_with_product_service_keyword,
@@ -223,3 +224,9 @@ def when_supplier_provide_company_details(context, supplier_alias):
 @when('"{actor_alias}" visits "{page_name}" page on FAS')
 def when_actor_visits_page_on_fas(context, actor_alias, page_name):
     fas_view_page(context, actor_alias, page_name)
+
+
+@when('"{actor_alias}" follows all the links to industries associated with the'
+      ' case study from the Company Showcase')
+def when_actor_follows_case_study_links_to_sectors(context, actor_alias):
+    fas_follow_case_study_links_to_related_sectors(context, actor_alias)

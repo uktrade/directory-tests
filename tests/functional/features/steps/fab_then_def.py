@@ -22,6 +22,7 @@ from tests.functional.features.steps.fab_then_impl import (
     fas_should_see_all_case_studies,
     fas_should_see_company_details,
     fas_should_see_different_png_logo_thumbnail,
+    fas_should_see_filtered_search_results,
     fas_should_see_png_logo_thumbnail,
     fas_should_see_promoted_industries,
     fas_supplier_cannot_be_found_using_case_study_details,
@@ -277,3 +278,9 @@ def actor_should_be_on_specific_fas_page(context, actor_alias, page_name):
 @then('"{actor_alias}" should see sections with selected industries')
 def then_actor_should_see_sections_with_industries(context, actor_alias):
     fas_should_see_promoted_industries(context, actor_alias, context.table)
+
+
+@then('"{actor_alias}" should see search results filtered by appropriate '
+      'industries')
+def then_actor_should_see_filtered_search_results(context, actor_alias):
+    fas_should_see_filtered_search_results(context, actor_alias)
