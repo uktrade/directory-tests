@@ -11,7 +11,6 @@ from collections import namedtuple
 from contextlib import contextmanager
 from datetime import datetime, timedelta
 from enum import Enum
-from itertools import islice
 from pprint import pprint
 from string import ascii_uppercase
 
@@ -735,7 +734,7 @@ def blue(x: str):
     cprint(x, 'blue', attrs=['bold'])
 
 
-@retry(wait_fixed=10000, stop_max_attempt_number=9)
+@retry(wait_fixed=15000, stop_max_attempt_number=9)
 def find_mailgun_events(
         context: Context, service: MailGunService, *, sender: str = None,
         recipient: str = None, to: str = None, subject: str = None,

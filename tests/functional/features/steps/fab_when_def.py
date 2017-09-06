@@ -4,8 +4,8 @@ from behave import when
 
 from tests.functional.features.steps.fab_when_impl import (
     bp_provide_company_details,
-    bp_provide_full_name,
     bp_select_random_sector_and_export_to_country,
+    bp_verify_identity_with_letter,
     fab_provide_company_details,
     fab_update_case_study,
     fas_follow_case_study_links_to_related_sectors,
@@ -98,12 +98,12 @@ def when_supplier_selects_random_sector(context, supplier_alias):
     bp_select_random_sector_and_export_to_country(context, supplier_alias)
 
 
-@when('"{supplier_alias}" provides her full name which will be used to sent '
-      'the verification letter')
-@when('"{supplier_alias}" provides his full name which will be used to sent '
-      'the verification letter')
+@when('"{supplier_alias}" decides to verify her identity with a verification '
+      'letter')
+@when('"{supplier_alias}" decides to verify his identity with a verification '
+      'letter')
 def when_supplier_provides_full_name(context, supplier_alias):
-    bp_provide_full_name(context, supplier_alias)
+    bp_verify_identity_with_letter(context, supplier_alias)
 
 
 @when('"{supplier_alias}" verifies the company with the verification code '

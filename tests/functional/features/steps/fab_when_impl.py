@@ -12,7 +12,6 @@ from scrapy import Selector
 from tests import get_absolute_url
 from tests.functional.features.context_utils import Company
 from tests.functional.features.pages import (
-    fab_ui_build_profile_address,
     fab_ui_build_profile_basic,
     fab_ui_build_profile_sector,
     fab_ui_build_profile_verification_letter,
@@ -20,6 +19,8 @@ from tests.functional.features.pages import (
     fab_ui_case_study_images,
     fab_ui_confirm_company,
     fab_ui_confirm_export_status,
+    fab_ui_confirm_identity,
+    fab_ui_confirm_identity_letter,
     fab_ui_edit_description,
     fab_ui_edit_details,
     fab_ui_edit_online_profiles,
@@ -329,40 +330,42 @@ def bp_select_random_sector_and_export_to_country(context, supplier_alias):
     context.response = response
 
     # Step 2 - check if Supplier is on Confirm Address page
-    fab_ui_build_profile_address.should_be_here(response)
-    logging.debug("Supplier is on the Your company address page")
-
-    # Step 3 - extract & store CSRF token and company's address details
-    token = extract_csrf_middleware_token(response)
-    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+    fab_ui_confirm_identity.should_be_here(response)
+    logging.debug("Supplier is on the Confirm your Identity page")
 
 
-def bp_provide_full_name(context, supplier_alias):
-    """Build Profile - Provide Supplier's full name, which will be use when
-    sending verification letter.
+def bp_verify_identity_with_letter(context: Context, supplier_alias: str):
+    """Build Profile - verify identity with a physical letter.
 
     :param context: behave `context` object
-    :type context: behave.runner.Context
     :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :type supplier_alias: str
     """
     actor = context.get_actor(supplier_alias)
     session = actor.session
 
-    # Step 1 - Submit Supplier's Full Name
-    response = fab_ui_build_profile_address.submit(actor)
+    # Step 1 - Choose to verify with a letter
+    response = fab_ui_confirm_identity.send(actor)
     context.response = response
 
     # Step 2 - check if Supplier is on the We've sent you a verification letter
-    fab_ui_build_profile_verification_letter.should_be_here(response)
-    logging.debug("Supplier is on the We've sent you verification letter page")
+    fab_ui_confirm_identity_letter.should_be_here(response)
+    logging.debug(
+        "Supplier is on the 'Your company address' letter verification page")
 
-    # STEP 3 - Click on the "View or amend your company profile" link
+    # Step 3 - extract & store CSRF token
+    token = extract_csrf_middleware_token(response)
+    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+
+    # Step 4 - check if Supplier is on the We've sent you a verification letter
+    fab_ui_confirm_identity_letter.submit(actor)
+    context.response = response
+
+    # Step 5 - Click on the "View or amend your company profile" link
     # use previous url as the referer link
     response = fab_ui_build_profile_verification_letter.go_to_profile(session)
     context.response = response
 
-    # Step 4 - check if Supplier is on the FAB profile page
+    # Step 6 - check if Supplier is on the FAB profile page
     fab_ui_profile.should_see_missing_description(response)
 
 
