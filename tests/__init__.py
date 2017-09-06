@@ -36,6 +36,8 @@ urls = {
     'ui-buyer:upload-logo': 'company-profile/edit/logo',
     'ui-buyer:case-study-add': 'company/case-study/edit/',
     'ui-buyer:confirm-company-address': 'verify/letter-confirm/',
+    'ui-buyer:confirm-identity': '/verify/',
+    'ui-buyer:confirm-identity-letter': '/verify/letter-send',
     'ui-buyer:company-profile': 'company-profile',
     'ui-buyer:company-edit': 'company-profile/edit',
     'ui-buyer:company-edit-address': 'company-profile/edit/address',
