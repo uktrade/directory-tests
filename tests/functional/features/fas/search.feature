@@ -131,3 +131,28 @@ Feature: Find a Supplier
     When "Annette Geissinger" browse Suppliers by every available sector filter
 
     Then "Annette Geissinger" should see search results filtered by appropriate sector
+
+
+  @ED-2018
+  @filter
+  @sector
+  @search
+  Scenario: Buyers should be able to browse UK Suppliers by multiple sectors at once
+    Given "Annette Geissinger" is a buyer
+
+    When "Annette Geissinger" browse Suppliers by multiple sector filters
+
+    Then "Annette Geissinger" should see search results filtered by appropriate sectors
+
+
+  @ED-2018
+  @filter
+  @sector
+  @search
+  @invalid
+  Scenario: Buyers should NOT be able to browse UK Suppliers by invalid sectors
+    Given "Annette Geissinger" is a buyer
+
+    When "Annette Geissinger" attempts to browse Suppliers by invalid sector filter
+
+    Then "Annette Geissinger" should be told that the search did not match any UK trade profiles
