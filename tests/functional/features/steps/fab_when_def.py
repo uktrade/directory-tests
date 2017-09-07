@@ -8,6 +8,7 @@ from tests.functional.features.steps.fab_when_impl import (
     bp_verify_identity_with_letter,
     fab_provide_company_details,
     fab_update_case_study,
+    fas_browse_suppliers_by_company_sectors,
     fas_browse_suppliers_by_invalid_sectors,
     fas_browse_suppliers_by_multiple_sectors,
     fas_browse_suppliers_using_every_sector_filter,
@@ -254,3 +255,11 @@ def when_actor_browse_suppliers_by_invalid_sectors(context, actor_alias):
 @when('"{actor_alias}" clears the search filters')
 def when_actor_clears_search_filters(context, actor_alias):
     fas_clear_search_filters(context, actor_alias)
+
+
+@when('"{actor_alias}" browse first "{pages_to_scan:d}" pages of Suppliers '
+      'filtered by all sectors associated with company "{company_alias}"')
+def when_browse_suppliers_by_company_sectors(
+        context, actor_alias, pages_to_scan: int, company_alias):
+    fas_browse_suppliers_by_company_sectors(
+        context, actor_alias, company_alias, pages_to_scan)
