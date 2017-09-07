@@ -235,7 +235,7 @@ def when_actor_follows_case_study_links_to_sectors(context, actor_alias):
 
 
 @when('"{actor_alias}" browse Suppliers by every available sector filter')
-def when_actor_checks_every_industry_filter(context, actor_alias):
+def when_actor_browse_suppliers_using_every_sector_filter(context, actor_alias):
     fas_browse_suppliers_using_every_sector_filter(context, actor_alias)
 
 
