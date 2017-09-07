@@ -170,3 +170,16 @@ Feature: Find a Supplier
 
     Then "Annette Geissinger" should be told that the search did not match any UK trade profiles
     And "Annette Geissinger" should see that search results are not filtered by any sector
+
+
+  @ED-1824
+  @filter
+  @sector
+  @search
+  Scenario: Buyers should not see the same company multiple times in the search results even if all associated sector filters are used
+    Given "Annette Geissinger" is a buyer
+    And "Annette Geissinger" finds a Supplier "Y" with a published profile associated with at least "5" different sectors
+
+    When "Annette Geissinger" browse first "10" pages of Suppliers filtered by all sectors associated with company "Y"
+
+    Then "Annette Geissinger" should see company "Y" only once on browsed search result pages
