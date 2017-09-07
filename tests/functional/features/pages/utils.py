@@ -27,7 +27,6 @@ from tests.functional.features.db_cleanup import (
     get_company_email
 )
 from tests.functional.features.pages import int_api_ch_search
-from tests.functional.features.pages.common import FAS_PAGE
 from tests.functional.features.utils import (
     Method,
     assertion_msg,
@@ -441,31 +440,6 @@ def get_fas_page_url(page_name: str, *, language_code: str = None):
     if language_code:
         url += "?lang={}".format(language_code)
     return url
-
-
-def get_fas_page_object(page_name: str):
-    if page_name == FAS_PAGE.CREATIVE_INDUSTRY:
-        page = FAS_PAGE.CREATIVE_INDUSTRY.po
-    elif page_name == FAS_PAGE.FOOD_AND_DRINK_INDUSTRY:
-        page = FAS_PAGE.FOOD_AND_DRINK_INDUSTRY.po
-    elif page_name == FAS_PAGE.HEALTH_INDUSTRY:
-        page = FAS_PAGE.HEALTH_INDUSTRY.po
-    elif page_name == FAS_PAGE.TECH_INDUSTRY:
-        page = FAS_PAGE.TECH_INDUSTRY.po
-    elif page_name == FAS_PAGE.CREATIVE_INDUSTRY_SUMMARY:
-        page = FAS_PAGE.CREATIVE_INDUSTRY_SUMMARY.po
-    elif page_name == FAS_PAGE.FOOD_AND_DRINK_INDUSTRY_SUMMARY:
-        page = FAS_PAGE.FOOD_AND_DRINK_INDUSTRY_SUMMARY.po
-    elif page_name == FAS_PAGE.HEALTH_INDUSTRY_SUMMARY:
-        page = FAS_PAGE.HEALTH_INDUSTRY_SUMMARY.po
-    elif page_name == FAS_PAGE.TECH_INDUSTRY_SUMMARY:
-        page = FAS_PAGE.TECH_INDUSTRY_SUMMARY.po
-    elif page_name == FAS_PAGE.INDUSTRIES:
-        page = FAS_PAGE.INDUSTRIES.po
-    else:
-        raise KeyError("Unknown FAS page: '{}'".format(page_name))
-
-    return page
 
 
 def extract_main_error(content: str) -> str:

@@ -44,7 +44,7 @@ Feature: Promoted industries
 
     When "Annette Geissinger" follows all the links to industries associated with the case study from the Company Showcase
 
-    Then "Annette Geissinger" should see search results filtered by appropriate industries
+    Then "Annette Geissinger" should see search results filtered by appropriate sectors
 
     Examples:
       | selected                        |

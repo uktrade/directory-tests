@@ -281,6 +281,8 @@ def then_actor_should_see_sections_with_industries(context, actor_alias):
 
 
 @then('"{actor_alias}" should see search results filtered by appropriate '
-      'industries')
+      'sector')
+@then('"{actor_alias}" should see search results filtered by appropriate '
+      'sectors')
 def then_actor_should_see_filtered_search_results(context, actor_alias):
     fas_should_see_filtered_search_results(context, actor_alias)

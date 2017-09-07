@@ -107,7 +107,6 @@ Feature: Find a Supplier
     Then "Annette Geissinger" should be told that the search did not match any UK trade profiles
 
     
-  @skip
   @ED-2020
   @search
   Scenario: Buyers should be able to find Suppliers by product, service or company keyword
@@ -120,3 +119,15 @@ Feature: Find a Supplier
       | peristaltic pump             | deliver the maximum possible performance | brushless                  | ZIKODRIVE MOTOR CONTROLLERS (ROUND BANK ENGINEERING LTD) |
 
     Then "Annette Geissinger" should be able to find all sought companies
+
+
+  @ED-2017
+  @filter
+  @sector
+  @search
+  Scenario: Buyers should be able to browse UK Suppliers by any of available sectors
+    Given "Annette Geissinger" is a buyer
+
+    When "Annette Geissinger" browse Suppliers by every available sector filter
+
+    Then "Annette Geissinger" should see search results filtered by appropriate sector

@@ -41,12 +41,15 @@ from tests.functional.features.pages import (
     sso_ui_register,
     sso_ui_verify_your_email
 )
-from tests.functional.features.pages.common import DETAILS, PROFILES
+from tests.functional.features.pages.common import (
+    DETAILS,
+    FAS_PAGE_OBJECTS,
+    PROFILES
+)
 from tests.functional.features.pages.utils import (
     escape_html,
     extract_and_set_csrf_middleware_token,
     get_active_company_without_fas_profile,
-    get_fas_page_object,
     get_fas_page_url,
     get_language_code,
     get_number_of_search_result_pages,
@@ -1129,7 +1132,7 @@ def fas_view_pages_in_selected_language(
 def fas_view_page(context, actor_alias, page_name):
     actor = context.get_actor(actor_alias)
     session = actor.session
-    page_object = get_fas_page_object(page_name)
+    page_object = FAS_PAGE_OBJECTS[page_name.lower()]
     context.response = page_object.go_to(session)
 
 
@@ -1392,6 +1395,32 @@ def fas_follow_case_study_links_to_related_sectors(context, actor_alias):
         results[industry] = {
             "url": url,
             "sectors": sectors,
+            "response": response
+        }
+    context.results = results
+
+
+def fas_browse_suppliers_using_every_sector_filter(
+        context: Context, actor_alias: str):
+    actor = context.get_actor(actor_alias)
+    session = actor.session
+
+    response = fas_ui_find_supplier.go_to(session, term="")
+    context.response = response
+
+    sector_filters_selector = "#id_sectors input::attr(value)"
+    content = response.content.decode("utf-8")
+    sector_filters = Selector(text=content).css(sector_filters_selector).extract()
+    results = {}
+    for sector in sector_filters:
+        logging.debug(
+            "%s will browse Suppliers by Industry sector filter '%s'",
+            actor_alias, sector
+        )
+        response = fas_ui_find_supplier.go_to(session, sectors=[sector])
+        results[sector] = {
+            "url": response.request.url,
+            "sectors": [sector],
             "response": response
         }
     context.results = results
