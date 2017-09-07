@@ -1452,3 +1452,27 @@ def fas_browse_suppliers_by_multiple_sectors(
         "response": response
     }
     context.results = results
+
+
+def fas_browse_suppliers_by_invalid_sectors(
+        context: Context, actor_alias: str):
+    actor = context.get_actor(actor_alias)
+    session = actor.session
+
+    response = fas_ui_find_supplier.go_to(session, term="")
+    context.response = response
+
+    sector_selector = "#id_sectors input::attr(value)"
+    content = response.content.decode("utf-8")
+    filters = Selector(text=content).css(sector_selector).extract()
+
+    sectors = list(set(random.choice(filters)
+                       for _ in range(random.randrange(1, len(filters)))))
+
+    sectors.append("this_is_an_invalid_sector_filter")
+    logging.debug(
+        "%s will browse Suppliers by multiple Industry sector filters and will"
+        " inject an invalid filter: '%s'",
+        actor_alias, ", ".join(sectors)
+    )
+    context.response = fas_ui_find_supplier.go_to(session, sectors=sectors)
