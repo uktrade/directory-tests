@@ -11,6 +11,7 @@ from tests.functional.features.steps.fab_when_impl import (
     fas_browse_suppliers_by_invalid_sectors,
     fas_browse_suppliers_by_multiple_sectors,
     fas_browse_suppliers_using_every_sector_filter,
+    fas_clear_search_filters,
     fas_follow_case_study_links_to_related_sectors,
     fas_search_using_company_details,
     fas_search_with_empty_query,
@@ -248,3 +249,8 @@ def when_actor_browse_suppliers_by_multiple_sectors(context, actor_alias):
 @when('"{actor_alias}" attempts to browse Suppliers by invalid sector filter')
 def when_actor_browse_suppliers_by_invalid_sectors(context, actor_alias):
     fas_browse_suppliers_by_invalid_sectors(context, actor_alias)
+
+
+@when('"{actor_alias}" clears the search filters')
+def when_actor_clears_search_filters(context, actor_alias):
+    fas_clear_search_filters(context, actor_alias)
