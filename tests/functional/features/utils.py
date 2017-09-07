@@ -44,7 +44,7 @@ from scrapy.selector import Selector
 from termcolor import cprint
 from urllib3.exceptions import HTTPError as BaseHTTPError
 
-from tests.functional.features.db_cleanup import get_dir_db_connection
+from tests.functional.features.db_utils import get_dir_db_connection
 from tests.settings import (
     MAILGUN_DIRECTORY_API_USER,
     MAILGUN_DIRECTORY_EVENTS_URL,

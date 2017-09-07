@@ -9,7 +9,7 @@ from behave.runner import Context
 from requests import Session
 
 from tests.functional.features.context_utils import Actor, Company
-from tests.functional.features.db_cleanup import (
+from tests.functional.features.db_utils import (
     get_published_companies,
     get_published_companies_with_n_sectors
 )
