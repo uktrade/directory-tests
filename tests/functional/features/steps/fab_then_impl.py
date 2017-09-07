@@ -647,3 +647,19 @@ def fas_should_see_filtered_search_results(context, actor_alias):
             "%s was presented with '%s' industry search results correctly "
             "filtered by following sectors: '%s'", actor_alias, industry,
             ", ".join(result['sectors']))
+
+
+def fas_should_see_unfiltered_search_results(context, actor_alias):
+    response = context.response
+    content = response.content.decode("utf-8")
+    sector_filters_selector = "#id_sectors input"
+    filters = Selector(text=content).css(sector_filters_selector).extract()
+    for fil in filters:
+        sector = Selector(text=fil).css("input::attr(value)").extract()[0]
+        selector = "input::attr(checked)"
+        checked = True if Selector(text=fil).css(selector).extract() else False
+        with assertion_msg(
+                "Expected search results to be unfiltered but this "
+                "filter was checked: '%s'", sector):
+            assert not checked
+    logging.debug("%s was shown with unfiltered search results", actor_alias)

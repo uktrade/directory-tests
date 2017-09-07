@@ -1476,3 +1476,12 @@ def fas_browse_suppliers_by_invalid_sectors(
         actor_alias, ", ".join(sectors)
     )
     context.response = fas_ui_find_supplier.go_to(session, sectors=sectors)
+
+
+def fas_clear_search_filters(context: Context, actor_alias: str):
+    actor = context.get_actor(actor_alias)
+    session = actor.session
+
+    logging.debug("%s will clear the search filter", actor_alias)
+    response = fas_ui_find_supplier.go_to(session, term="")
+    context.response = response

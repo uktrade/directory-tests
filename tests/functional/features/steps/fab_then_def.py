@@ -25,6 +25,7 @@ from tests.functional.features.steps.fab_then_impl import (
     fas_should_see_filtered_search_results,
     fas_should_see_png_logo_thumbnail,
     fas_should_see_promoted_industries,
+    fas_should_see_unfiltered_search_results,
     fas_supplier_cannot_be_found_using_case_study_details,
     fas_supplier_should_receive_message_from_buyer,
     prof_all_unsupported_files_should_be_rejected,
@@ -286,3 +287,9 @@ def then_actor_should_see_sections_with_industries(context, actor_alias):
       'sectors')
 def then_actor_should_see_filtered_search_results(context, actor_alias):
     fas_should_see_filtered_search_results(context, actor_alias)
+
+
+@then('"{actor_alias}" should see that search results are not filtered by any '
+      'sector')
+def then_actor_should_see_unfiltered_search_results(context, actor_alias):
+    fas_should_see_unfiltered_search_results(context, actor_alias)

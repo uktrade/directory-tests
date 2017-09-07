@@ -156,3 +156,17 @@ Feature: Find a Supplier
     When "Annette Geissinger" attempts to browse Suppliers by invalid sector filter
 
     Then "Annette Geissinger" should be told that the search did not match any UK trade profiles
+
+
+  @ED-2019
+  @filter
+  @sector
+  @search
+  Scenario: Buyers should be able to clear search results filters
+    Given "Annette Geissinger" is a buyer
+
+    When "Annette Geissinger" browse Suppliers by multiple sector filters
+    And "Annette Geissinger" clears the search filters
+
+    Then "Annette Geissinger" should be told that the search did not match any UK trade profiles
+    And "Annette Geissinger" should see that search results are not filtered by any sector
