@@ -1424,3 +1424,31 @@ def fas_browse_suppliers_using_every_sector_filter(
             "response": response
         }
     context.results = results
+
+
+def fas_browse_suppliers_by_multiple_sectors(
+        context: Context, actor_alias: str):
+    actor = context.get_actor(actor_alias)
+    session = actor.session
+
+    response = fas_ui_find_supplier.go_to(session, term="")
+    context.response = response
+
+    sector_selector = "#id_sectors input::attr(value)"
+    content = response.content.decode("utf-8")
+    filters = Selector(text=content).css(sector_selector).extract()
+
+    sectors = list(set(random.choice(filters)
+                       for _ in range(random.randrange(1, len(filters)))))
+    results = {}
+    logging.debug(
+        "%s will browse Suppliers by multiple Industry sector filters '%s'",
+        actor_alias, ", ".join(sectors)
+    )
+    response = fas_ui_find_supplier.go_to(session, sectors=sectors)
+    results["multiple choice"] = {
+        "url": response.request.url,
+        "sectors": sectors,
+        "response": response
+    }
+    context.results = results

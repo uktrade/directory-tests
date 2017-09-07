@@ -8,6 +8,7 @@ from tests.functional.features.steps.fab_when_impl import (
     bp_verify_identity_with_letter,
     fab_provide_company_details,
     fab_update_case_study,
+    fas_browse_suppliers_by_multiple_sectors,
     fas_browse_suppliers_using_every_sector_filter,
     fas_follow_case_study_links_to_related_sectors,
     fas_search_using_company_details,
@@ -236,3 +237,8 @@ def when_actor_follows_case_study_links_to_sectors(context, actor_alias):
 @when('"{actor_alias}" browse Suppliers by every available sector filter')
 def when_actor_checks_every_industry_filter(context, actor_alias):
     fas_browse_suppliers_using_every_sector_filter(context, actor_alias)
+
+
+@when('"{actor_alias}" browse Suppliers by multiple sector filters')
+def when_actor_browse_suppliers_by_multiple_sectors(context, actor_alias):
+    fas_browse_suppliers_by_multiple_sectors(context, actor_alias)
