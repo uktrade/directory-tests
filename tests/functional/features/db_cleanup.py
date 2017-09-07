@@ -3,6 +3,7 @@
 import logging
 
 import psycopg2
+from psycopg2.extras import RealDictCursor
 
 from tests.settings import (
     DIR_DB_HOST,
@@ -70,7 +71,7 @@ AND u.company_id = c.id;
 """
 
 
-def get_dir_db_connection():
+def get_dir_db_connection(*, dict_cursor: bool = False):
     try:
         connection = psycopg2.connect(
             dbname=DIR_DB_NAME, user=DIR_DB_USER, password=DIR_DB_PASSWORD,
@@ -80,11 +81,14 @@ def get_dir_db_connection():
         raise
     else:
         logging.debug('Connected to Directory DB: %s!', DIR_DB_NAME)
-    cursor = connection.cursor()
+    if dict_cursor:
+        cursor = connection.cursor(cursor_factory=RealDictCursor)
+    else:
+        cursor = connection.cursor()
     return connection, cursor
 
 
-def get_sso_db_connection():
+def get_sso_db_connection(*, dict_cursor: bool = False):
     try:
         connection = psycopg2.connect(
             dbname=SSO_DB_NAME, user=SSO_DB_USER, password=SSO_DB_PASSWORD,
@@ -94,7 +98,10 @@ def get_sso_db_connection():
         raise
     else:
         logging.debug('Connected to Directory DB: %s!', DIR_DB_NAME)
-    cursor = connection.cursor()
+    if dict_cursor:
+        cursor = connection.cursor(cursor_factory=RealDictCursor)
+    else:
+        cursor = connection.cursor()
     return connection, cursor
 
 
