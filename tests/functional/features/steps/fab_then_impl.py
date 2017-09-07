@@ -663,3 +663,21 @@ def fas_should_see_unfiltered_search_results(context, actor_alias):
                 "filter was checked: '%s'", sector):
             assert not checked
     logging.debug("%s was shown with unfiltered search results", actor_alias)
+
+
+def fas_should_see_company_once_in_search_results(
+        context: Context, actor_alias: str, company_alias: str):
+    company = context.get_company(company_alias)
+    results = context.results
+    founds = [(page, result['found'])
+              for page, result in results.items()
+              if result['found']]
+    with assertion_msg(
+            "Expected to see company '%s' only once on first %d search result "
+            "pages but found it %d times. On pages: %s", company.title,
+            len(results), len(founds), founds):
+        assert len(founds) == 1
+    logging.debug(
+        "As expected %s found company '%s' (%s) only once on first %d search "
+        "result pages", actor_alias, company.title, company_alias,
+        len(results) + 1)

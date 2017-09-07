@@ -7,7 +7,7 @@ from tests.functional.features.context_utils import (
     initialize_scenario_data,
     patch_context
 )
-from tests.functional.features.db_cleanup import (
+from tests.functional.features.db_utils import (
     delete_expired_django_sessions,
     delete_supplier_data
 )

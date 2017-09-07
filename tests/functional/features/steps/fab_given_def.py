@@ -4,6 +4,7 @@ from behave import given
 
 from tests.functional.features.steps.fab_given_impl import (
     bp_build_company_profile,
+    fab_find_published_company,
     fas_find_company_by_name,
     reg_confirm_email_address,
     reg_create_sso_account_associated_with_company,
@@ -151,5 +152,15 @@ def given_actor_can_see_logo_on_fas_profile_page(context, actor_alias):
 
 
 @given('"{actor_alias}" is on the "{page_name}" page on FAS')
-def step_impl(context, actor_alias, page_name):
+def given_actor_views_fas_page(context, actor_alias, page_name):
     fas_view_page(context, actor_alias, page_name)
+
+
+@given('"{actor_alias}" finds a Supplier "{company_alias}" with a published '
+       'profile associated with at least "{min_number_sectors}" different '
+       'sectors')
+def given_actor_finds_published_company_with_min_n_sectors(
+        context, actor_alias, company_alias, min_number_sectors: int):
+    fab_find_published_company(
+        context, actor_alias, company_alias,
+        min_number_sectors=min_number_sectors)

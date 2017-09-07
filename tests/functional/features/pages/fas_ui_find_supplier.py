@@ -44,10 +44,6 @@ def go_to(
         Method.GET, URL, session=session, params=params, headers=headers)
 
     should_be_here(response)
-    if term is not None:
-        logging.debug("Buyer searched for Suppliers using term: %s", term)
-    else:
-        logging.debug("Buyer is on the FAS Find a Supplier page")
     return response
 
 
@@ -59,7 +55,7 @@ def should_be_here(response, *, number=None):
     """
     expected = EXPECTED_STRINGS + [number] if number else EXPECTED_STRINGS
     check_response(response, 200, body_contains=expected)
-    logging.debug("Buyer is on FAS Company's Profile page")
+    logging.debug("Buyer is on the FAS Find a Supplier page")
 
 
 def should_see_company(response: Response, company_title: str) -> bool:

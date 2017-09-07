@@ -3,6 +3,7 @@
 import logging
 
 import psycopg2
+from psycopg2.extras import RealDictCursor
 
 from tests.settings import (
     DIR_DB_HOST,
@@ -70,7 +71,24 @@ AND u.company_id = c.id;
 """
 
 
-def get_dir_db_connection():
+PUBLISHED_COMPANIES = """
+SELECT name, number, sectors, employees, keywords, website, facebook_url,
+     twitter_url, linkedin_url, summary, description
+FROM company_company
+WHERE is_published = TRUE;
+"""
+
+
+PUBLISHED_COMPANIES_WITH_N_SECTORS = """
+SELECT name, number, sectors, employees, keywords, website, facebook_url,
+    twitter_url, linkedin_url, summary, description
+FROM company_company
+WHERE is_published = TRUE
+AND jsonb_array_length(sectors) > %s;
+"""
+
+
+def get_dir_db_connection(*, dict_cursor: bool = False):
     try:
         connection = psycopg2.connect(
             dbname=DIR_DB_NAME, user=DIR_DB_USER, password=DIR_DB_PASSWORD,
@@ -80,11 +98,14 @@ def get_dir_db_connection():
         raise
     else:
         logging.debug('Connected to Directory DB: %s!', DIR_DB_NAME)
-    cursor = connection.cursor()
+    if dict_cursor:
+        cursor = connection.cursor(cursor_factory=RealDictCursor)
+    else:
+        cursor = connection.cursor()
     return connection, cursor
 
 
-def get_sso_db_connection():
+def get_sso_db_connection(*, dict_cursor: bool = False):
     try:
         connection = psycopg2.connect(
             dbname=SSO_DB_NAME, user=SSO_DB_USER, password=SSO_DB_PASSWORD,
@@ -94,7 +115,10 @@ def get_sso_db_connection():
         raise
     else:
         logging.debug('Connected to Directory DB: %s!', DIR_DB_NAME)
-    cursor = connection.cursor()
+    if dict_cursor:
+        cursor = connection.cursor(cursor_factory=RealDictCursor)
+    else:
+        cursor = connection.cursor()
     return connection, cursor
 
 
@@ -113,6 +137,53 @@ def get_company_email(number: str) -> str:
     connection.close()
     email = result_set[0] if result_set is not None else None
     return email
+
+
+def run_query(
+        service_name: str, query: str, *, data: tuple = None,
+        dict_cursor: bool = False) -> list:
+    """Run a query against specific Service DB:
+
+    :param service_name: name of Service DB to connect to
+    :param query: SELECT query to execute
+    :param data: (optional) query parameter values
+    :param dict_cursor: (optional) return result as dict rather than a list.
+                        Defaults to False (list)
+    :return: a list of tuples or dictionaries containing the whole result set
+    """
+    if service_name == "DIRECTORY":
+        connection, cursor = get_dir_db_connection(dict_cursor=dict_cursor)
+    elif service_name == "SSO":
+        connection, cursor = get_sso_db_connection(dict_cursor=dict_cursor)
+    else:
+        raise KeyError("Unrecognized service name: {}".format(service_name))
+
+    data = (data, ) if data is not None else ()
+    cursor.execute(query, data)
+    result_set = cursor.fetchall()
+    cursor.close()
+    connection.close()
+    return result_set
+
+
+def get_published_companies() -> list:
+    """Get a List of dicts with published companies.
+
+    :return: a list of dictionaries with published companies
+    """
+    return run_query("DIRECTORY", PUBLISHED_COMPANIES, dict_cursor=True)
+
+
+def get_published_companies_with_n_sectors(number_of_sectors: int) -> list:
+    """Get a List of published companies with at least N associated sectors.
+
+    :param number_of_sectors: minimal number of sectors associated with company
+    :return: a list of dictionaries with matching published companies
+    """
+    data = (number_of_sectors, )
+    return run_query(
+        "DIRECTORY", PUBLISHED_COMPANIES_WITH_N_SECTORS, data=data,
+        dict_cursor=True)
 
 
 def delete_supplier_data(service_name, email_address):

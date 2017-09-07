@@ -22,7 +22,7 @@ from tests.functional.features.context_utils import (
     Feedback,
     Message
 )
-from tests.functional.features.db_cleanup import (
+from tests.functional.features.db_utils import (
     delete_supplier_data,
     get_company_email
 )

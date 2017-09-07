@@ -1485,3 +1485,49 @@ def fas_clear_search_filters(context: Context, actor_alias: str):
     logging.debug("%s will clear the search filter", actor_alias)
     response = fas_ui_find_supplier.go_to(session, term="")
     context.response = response
+
+
+def fas_browse_suppliers_by_company_sectors(
+        context: Context, actor_alias: str, company_alias: str,
+        pages_to_scan: int):
+    actor = context.get_actor(actor_alias)
+    session = actor.session
+    company = context.get_company(company_alias)
+    sectors = company.sector
+    results = {}
+
+    response = fas_ui_find_supplier.go_to(session, sectors=sectors)
+    context.response = response
+
+    found = fas_ui_find_supplier.should_see_company(response, company.title)
+
+    results[1] = {
+        "url": response.request.url,
+        "sectors": sectors,
+        "response": response,
+        "found": found
+    }
+
+    last_page = get_number_of_search_result_pages(response)
+    logging.debug("Search results have %d pages", last_page)
+    if last_page > 1:
+        last_page = pages_to_scan if pages_to_scan < last_page else last_page
+        logging.debug("Will scan only first %d pages", last_page)
+        for page_number in range(2, last_page):
+            logging.debug("Going to search result page no.: %d", page_number)
+            response = fas_ui_find_supplier.go_to(
+                session, page=page_number, sectors=sectors)
+            found = fas_ui_find_supplier.should_see_company(
+                response, company.title)
+            results[page_number] = {
+                "url": response.request.url,
+                "sectors": sectors,
+                "response": response,
+                "found": found
+            }
+
+    logging.debug(
+        "%s browsed first %d pages of search results filtered by multiple "
+        "sector filters '%s'", actor_alias, last_page, ", ".join(sectors)
+    )
+    context.results = results

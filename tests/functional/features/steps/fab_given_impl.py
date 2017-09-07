@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """FAB Given step implementations."""
+import logging
 import random
 import string
 import uuid
@@ -7,7 +8,11 @@ import uuid
 from behave.runner import Context
 from requests import Session
 
-from tests.functional.features.context_utils import Actor
+from tests.functional.features.context_utils import Actor, Company
+from tests.functional.features.db_utils import (
+    get_published_companies,
+    get_published_companies_with_n_sectors
+)
 from tests.functional.features.pages import fab_ui_profile, profile_ui_landing
 from tests.functional.features.pages.utils import sentence
 from tests.functional.features.steps.fab_then_impl import (
@@ -188,3 +193,32 @@ def fas_find_company_by_name(
             "Could not extract URL to '%s' profile page", company.title):
         assert profile_endpoint
     context.set_company_details(company_alias, fas_profile_endpoint=profile_endpoint)
+
+
+def fab_find_published_company(
+        context: Context, actor_alias: str, company_alias: str, *,
+        min_number_sectors: int = None):
+    if min_number_sectors:
+        companies = get_published_companies_with_n_sectors(min_number_sectors)
+    else:
+        companies = get_published_companies()
+
+    with assertion_msg(
+            "Expected to find at least 1 published company but got none!"):
+        assert len(companies) > 0
+    company_dict = random.choice(companies)
+    company = Company(
+        alias=company_alias, title=company_dict['name'],
+        number=company_dict['number'], sector=company_dict['sectors'],
+        description=company_dict['description'],
+        summary=company_dict['summary'],
+        no_employees=company_dict['employees'],
+        keywords=company_dict['keywords'],
+        website=company_dict['website'],
+        facebook=company_dict['facebook_url'],
+        twitter=company_dict['twitter_url'],
+        linkedin=company_dict['linkedin_url']
+    )
+    context.set_company_for_actor(actor_alias, company_alias)
+    context.add_company(company)
+    logging.debug("%s found a published company: %s", actor_alias, company)
