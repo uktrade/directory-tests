@@ -21,6 +21,7 @@ from tests.functional.features.steps.fab_then_impl import (
     fas_should_find_with_company_details,
     fas_should_see_all_case_studies,
     fas_should_see_company_details,
+    fas_should_see_company_once_in_search_results,
     fas_should_see_different_png_logo_thumbnail,
     fas_should_see_filtered_search_results,
     fas_should_see_png_logo_thumbnail,
@@ -293,3 +294,11 @@ def then_actor_should_see_filtered_search_results(context, actor_alias):
       'sector')
 def then_actor_should_see_unfiltered_search_results(context, actor_alias):
     fas_should_see_unfiltered_search_results(context, actor_alias)
+
+
+@then('"{actor_alias}" should see company "{company_alias}" only once on '
+      'browsed search result pages')
+def then_actor_should_see_company_once_in_search_results(
+        context, actor_alias, company_alias):
+    fas_should_see_company_once_in_search_results(
+        context, actor_alias, company_alias)
