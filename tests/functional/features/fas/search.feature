@@ -17,6 +17,7 @@ Feature: Find a Supplier
     And "Peter Alder" has created and verified profile for randomly selected company "Y"
 
     When "Peter Alder" adds a complete case study called "no 1"
+    And "Peter Alder" gets the slug for case study "no 1"
 
     Then "Annette Geissinger" should be able to find company "Y" on FAS using words from case study "no 1"
       | search using case study's |
@@ -32,6 +33,7 @@ Feature: Find a Supplier
       | source company            |
       | website                   |
       | keywords                  |
+      | slug                      |
 
 
   @ED-1746
@@ -77,6 +79,7 @@ Feature: Find a Supplier
     Given "Annette Geissinger" is a buyer
     And "Peter Alder" is an unauthenticated supplier
     And "Peter Alder" has created and verified profile for randomly selected company "Y"
+    And "Peter Alder" gets the slug for company "Y"
 
     When "Annette Geissinger" searches for company "Y" on FAS using selected company's details
       | company detail |
@@ -86,6 +89,7 @@ Feature: Find a Supplier
       | website        |
       | summary        |
       | description    |
+      | slug           |
 
     Then "Annette Geissinger" should be able to find company "Y" on FAS using selected company's details
       | company detail |
@@ -95,6 +99,7 @@ Feature: Find a Supplier
       | website        |
       | summary        |
       | description    |
+      | slug           |
 
 
   @ED-2000
