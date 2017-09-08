@@ -175,8 +175,11 @@ def fas_should_see_all_case_studies(context: Context, supplier_alias: str):
     :param supplier_alias: alias of the Actor used in the scope of the scenario
     """
     actor = context.get_actor(supplier_alias)
+    company = context.get_company(actor.company_alias)
+    response = fas_ui_profile.go_to(actor.session, company.number)
+    context.response = response
     case_studies = context.get_company(actor.company_alias).case_studies
-    fas_ui_profile.should_see_case_studies(case_studies, context.response)
+    fas_ui_profile.should_see_case_studies(case_studies, response)
     logging.debug("%s can see all %d Case Studies on FAS Company's "
                   "Directory Profile Page", supplier_alias, len(case_studies))
 

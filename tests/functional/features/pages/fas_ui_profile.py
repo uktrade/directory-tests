@@ -102,7 +102,7 @@ def should_see_case_studies(case_studies: dict, response: Response):
         with assertion_msg(
                 "Couldn't find Case Study '%s' description '%s'",
                 case_studies[case].alias, case_studies[case].description):
-            assert case_studies[case].description in content
+            assert case_studies[case].summary in content
 
 
 def should_see_details(
