@@ -26,7 +26,7 @@ CaseStudy = namedtuple(
         'alias', 'title', 'summary', 'description', 'sector', 'website',
         'keywords', 'image_1', 'image_2', 'image_3', 'caption_1', 'caption_2',
         'caption_3', 'testimonial', 'source_name', 'source_job',
-        'source_company'
+        'source_company', 'slug'
     ]
 )
 AddressDetails = namedtuple(
@@ -263,6 +263,17 @@ def add_case_study(
                   "Case Study Data: %s", case_alias, company_alias, case_study)
 
 
+def update_case_study(self, company_alias, case_alias, *, slug=None):
+    # cases = self.get_company(company_alias).case_studies
+    companies = self.scenario_data.companies
+    if slug:
+        companies[company_alias].case_studies[case_alias] = companies[company_alias].case_studies[case_alias]._replace(slug=slug)
+        # cases[case_alias] = cases[case_alias]._replace(slug=slug)
+
+    logging.debug("Successfully updated Case Study '%s' for Company %s",
+                  case_alias, company_alias)
+
+
 def patch_context(context):
     """Will patch the Behave's `context` object with some handy functions.
 
@@ -284,5 +295,6 @@ def patch_context(context):
     context.add_company = MethodType(add_company, context)
     context.get_company = MethodType(get_company, context)
     context.add_case_study = MethodType(add_case_study, context)
+    context.update_case_study = MethodType(update_case_study, context)
     context.set_company_details = MethodType(set_company_details, context)
     context.set_company_logo_detail = MethodType(set_company_logo_detail, context)
