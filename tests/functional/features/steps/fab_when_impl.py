@@ -1053,7 +1053,7 @@ def fas_search_using_company_details(
     company = context.get_company(company_alias)
     keys = [
         'title', 'number', 'summary', 'description', 'website', 'keywords',
-        'facebook', 'linkedin', 'twitter'
+        'facebook', 'linkedin', 'twitter', 'slug'
     ]
 
     # use selected company details
