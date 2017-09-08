@@ -102,7 +102,7 @@ def test_directory_supplier_verified_user():
         'profile_url': 'http://dev.supplier.directory.uktrade.io/'
                        'suppliers/12345679',
         'company_has_exported_before': True,
-        'is_company_owner': False,
+        'is_company_owner': True,
     }
 
 
