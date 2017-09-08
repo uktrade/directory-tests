@@ -1,9 +1,13 @@
 # directory-tests
-[Export Directory integration tests](https://www.directory.exportingisgreat.gov.uk/)
 
-## Build status
+[![code-climate-image]][code-climate]
+[![circle-ci-image]][circle-ci]
+[![codecov-image]][codecov]
+[![gemnasium-image]][gemnasium]
 
-[![CircleCI](https://circleci.com/gh/uktrade/directory-tests/tree/master.svg?style=svg)](https://circleci.com/gh/uktrade/directory-tests/tree/master)
+**[Export Directory integration tests](https://www.directory.exportingisgreat.gov.uk/)**
+
+---
 
 ## Requirements
 
@@ -163,3 +167,15 @@ Requires just ``DIRECTORY_TESTS_DIRECTORY_API_URL``, ``DIRECTORY_TESTS_DIRECTORY
 | DIRECTORY_UI_BUYER_PORT | PORT |
 | DIRECTORY_UI_BUYER_API_CLIENT_API_KEY | API_CLIENT_API_KEY |
 | DIRECTORY_UI_BUYER_API_CLIENT_BASE_URL | API_CLIENT_BASE_URL |
+
+[code-climate-image]: https://codeclimate.com/github/uktrade/directory-tests/badges/issue_count.svg
+[code-climate]: https://codeclimate.com/github/uktrade/directory-tests
+
+[circle-ci-image]: https://circleci.com/gh/uktrade/directory-tests/tree/master.svg?style=svg
+[circle-ci]: https://circleci.com/gh/uktrade/directory-tests/tree/master
+
+[codecov-image]: https://codecov.io/gh/uktrade/directory-tests/branch/master/graph/badge.svg
+[codecov]: https://codecov.io/gh/uktrade/directory-tests
+
+[gemnasium-image]: https://gemnasium.com/badges/github.com/uktrade/directory-tests.svg
+[gemnasium]: https://gemnasium.com/github.com/uktrade/directory-tests
