@@ -1553,3 +1553,9 @@ def fas_get_case_study_slug(context: Context, actor_alias: str, case_alias: str)
     context.update_case_study(company.alias, case_alias, slug=result)
     logging.debug(
         "%s got case study '%s' slug: '%s'", actor_alias, case_alias, result)
+
+
+def fas_search_with_term(context, actor_alias, search_term):
+    actor = context.get_actor(actor_alias)
+    session = actor.session
+    context.response = fas_ui_find_supplier.go_to(session, term=search_term)

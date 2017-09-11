@@ -18,6 +18,7 @@ from tests.functional.features.steps.fab_when_impl import (
     fas_search_using_company_details,
     fas_search_with_empty_query,
     fas_search_with_product_service_keyword,
+    fas_search_with_term,
     fas_send_feedback_request,
     fas_send_message_to_supplier,
     fas_view_page,
@@ -269,3 +270,8 @@ def when_browse_suppliers_by_company_sectors(
 @when('"{actor_alias}" gets the slug for case study "{case_alias}"')
 def when_actor_gets_case_study_slug(context, actor_alias, case_alias):
     fas_get_case_study_slug(context, actor_alias, case_alias)
+
+
+@when('"{actor_alias}" searches for Suppliers using "{search_term}" term')
+def step_impl(context, actor_alias, search_term):
+    fas_search_with_term(context, actor_alias, search_term)
