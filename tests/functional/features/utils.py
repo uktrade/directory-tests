@@ -734,6 +734,16 @@ def blue(x: str):
     cprint(x, 'blue', attrs=['bold'])
 
 
+def surround(text: str, tag: str):
+    """Surround provided text with a tag.
+
+    :param text: text to surround
+    :param tag: tag to surround the text with
+    :return: original text surrounded with tag
+    """
+    return "<{tag}>{text}</{tag}>".format(tag=tag, text=text)
+
+
 @retry(wait_fixed=15000, stop_max_attempt_number=9)
 def find_mailgun_events(
         context: Context, service: MailGunService, *, sender: str = None,
