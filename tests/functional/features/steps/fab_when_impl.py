@@ -1053,7 +1053,7 @@ def fas_search_using_company_details(
     company = context.get_company(company_alias)
     keys = [
         'title', 'number', 'summary', 'description', 'website', 'keywords',
-        'facebook', 'linkedin', 'twitter'
+        'facebook', 'linkedin', 'twitter', 'slug'
     ]
 
     # use selected company details
@@ -1531,3 +1531,25 @@ def fas_browse_suppliers_by_company_sectors(
         "sector filters '%s'", actor_alias, last_page, ", ".join(sectors)
     )
     context.results = results
+
+
+def fas_get_case_study_slug(context: Context, actor_alias: str, case_alias: str):
+    result = None
+    actor = context.get_actor(actor_alias)
+    company = context.get_company(actor.company_alias)
+    case = context.get_company(actor.company_alias).case_studies[case_alias]
+
+    response = fas_ui_profile.go_to(actor.session, company.number)
+    context.response = response
+
+    case_studies_details = fas_ui_profile.get_case_studies_details(response)
+    for title, summary, href, slug in case_studies_details:
+        if title == case.title:
+            result = slug
+
+    with assertion_msg("Could not find slug for case study '%s'", case_alias):
+        assert result is not None
+
+    context.update_case_study(company.alias, case_alias, slug=result)
+    logging.debug(
+        "%s got case study '%s' slug: '%s'", actor_alias, case_alias, result)

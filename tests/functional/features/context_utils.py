@@ -26,7 +26,7 @@ CaseStudy = namedtuple(
         'alias', 'title', 'summary', 'description', 'sector', 'website',
         'keywords', 'image_1', 'image_2', 'image_3', 'caption_1', 'caption_2',
         'caption_3', 'testimonial', 'source_name', 'source_job',
-        'source_company'
+        'source_company', 'slug'
     ]
 )
 AddressDetails = namedtuple(
@@ -44,7 +44,7 @@ Company = namedtuple(
         'website', 'keywords', 'no_employees', 'sector', 'letter_recipient',
         'companies_house_details', 'facebook', 'linkedin', 'twitter',
         'case_studies', 'logo_picture', 'logo_url', 'logo_hash',
-        'export_to_countries', 'fas_profile_endpoint'
+        'export_to_countries', 'fas_profile_endpoint', 'slug'
     ]
 )
 Feedback = namedtuple(
@@ -210,7 +210,8 @@ def set_company_details(self, alias, *, title=None, website=None, keywords=None,
                         no_employees=None, sector=None, letter_recipient=None,
                         facebook=None, linkedin=None, twitter=None,
                         summary=None, description=None,
-                        export_to_countries=None, fas_profile_endpoint=None):
+                        export_to_countries=None, fas_profile_endpoint=None,
+                        slug=None):
     companies = self.scenario_data.companies
     if title:
         companies[alias] = companies[alias]._replace(title=title)
@@ -238,6 +239,8 @@ def set_company_details(self, alias, *, title=None, website=None, keywords=None,
         companies[alias] = companies[alias]._replace(export_to_countries=export_to_countries)
     if fas_profile_endpoint:
         companies[alias] = companies[alias]._replace(fas_profile_endpoint=fas_profile_endpoint)
+    if slug:
+        companies[alias] = companies[alias]._replace(slug=slug)
 
     logging.debug("Successfully updated Company's details %s: %s", alias,
                   companies[alias])
@@ -258,6 +261,17 @@ def add_case_study(
 
     logging.debug("Successfully added/replaced Case Study %s to Company %s. "
                   "Case Study Data: %s", case_alias, company_alias, case_study)
+
+
+def update_case_study(self, company_alias, case_alias, *, slug=None):
+    # cases = self.get_company(company_alias).case_studies
+    companies = self.scenario_data.companies
+    if slug:
+        companies[company_alias].case_studies[case_alias] = companies[company_alias].case_studies[case_alias]._replace(slug=slug)
+        # cases[case_alias] = cases[case_alias]._replace(slug=slug)
+
+    logging.debug("Successfully updated Case Study '%s' for Company %s",
+                  case_alias, company_alias)
 
 
 def patch_context(context):
@@ -281,5 +295,6 @@ def patch_context(context):
     context.add_company = MethodType(add_company, context)
     context.get_company = MethodType(get_company, context)
     context.add_case_study = MethodType(add_case_study, context)
+    context.update_case_study = MethodType(update_case_study, context)
     context.set_company_details = MethodType(set_company_details, context)
     context.set_company_logo_detail = MethodType(set_company_logo_detail, context)

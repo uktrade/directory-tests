@@ -4,6 +4,7 @@ import logging
 import random
 import string
 import uuid
+from urllib.parse import urlsplit
 
 from behave.runner import Context
 from requests import Session
@@ -13,7 +14,11 @@ from tests.functional.features.db_utils import (
     get_published_companies,
     get_published_companies_with_n_sectors
 )
-from tests.functional.features.pages import fab_ui_profile, profile_ui_landing
+from tests.functional.features.pages import (
+    fab_ui_profile,
+    fas_ui_profile,
+    profile_ui_landing
+)
 from tests.functional.features.pages.utils import sentence
 from tests.functional.features.steps.fab_then_impl import (
     bp_should_be_prompted_to_build_your_profile,
@@ -222,3 +227,17 @@ def fab_find_published_company(
     context.set_company_for_actor(actor_alias, company_alias)
     context.add_company(company)
     logging.debug("%s found a published company: %s", actor_alias, company)
+
+
+def fas_get_company_slug(context, actor_alias, company_alias):
+    actor = context.get_actor(actor_alias)
+    session = actor.session
+    company = context.get_company(company_alias)
+    response = fas_ui_profile.go_to(session, company_number=company.number)
+    context.response = response
+    url = response.request.url
+    last_item_idx = -1
+    slash_idx = 1
+    slug = urlsplit(url).path.split(company.number)[last_item_idx][slash_idx:]
+    logging.debug("%s got company's slug: %s", actor_alias, slug)
+    context.set_company_details(company_alias, slug=slug)

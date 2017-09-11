@@ -5,6 +5,7 @@ from urllib.parse import urljoin
 
 from behave.model import Table
 from requests import Response, Session
+from scrapy import Selector
 
 from tests import get_absolute_url
 from tests.functional.features.context_utils import Company
@@ -101,7 +102,7 @@ def should_see_case_studies(case_studies: dict, response: Response):
         with assertion_msg(
                 "Couldn't find Case Study '%s' description '%s'",
                 case_studies[case].alias, case_studies[case].description):
-            assert case_studies[case].description in content
+            assert case_studies[case].summary in content
 
 
 def should_see_details(
@@ -149,3 +150,18 @@ def should_see_details(
                 "Couldn't find company's sector '%s' in the response",
                 SECTORS_WITH_LABELS[company.sector]):
             assert SECTORS_WITH_LABELS[company.sector] in content
+
+
+def get_case_studies_details(response: Response):
+    content = response.content.decode("utf-8")
+    article_selector = "#company-projects > article"
+    articles = Selector(text=content).css(article_selector).extract()
+    result = []
+    for article in articles:
+        title = Selector(text=article).css("h3::text").extract()[0]
+        summary = Selector(text=article).css("p::text").extract()[0]
+        href = Selector(text=article).css("a::attr(href)").extract()[0]
+        slug = href.split("/")[-1]
+        logging.debug("Got case study slug: %s", slug)
+        result.append((title, summary, href, slug))
+    return result

@@ -6,6 +6,7 @@ from tests.functional.features.steps.fab_given_impl import (
     bp_build_company_profile,
     fab_find_published_company,
     fas_find_company_by_name,
+    fas_get_company_slug,
     reg_confirm_email_address,
     reg_create_sso_account_associated_with_company,
     reg_create_unverified_profile,
@@ -164,3 +165,8 @@ def given_actor_finds_published_company_with_min_n_sectors(
     fab_find_published_company(
         context, actor_alias, company_alias,
         min_number_sectors=min_number_sectors)
+
+
+@given('"{actor_alias}" gets the slug for company "{company_alias}"')
+def given_actor_gets_company_slug(context, actor_alias, company_alias):
+    fas_get_company_slug(context, actor_alias, company_alias)
