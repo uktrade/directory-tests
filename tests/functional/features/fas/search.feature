@@ -188,3 +188,19 @@ Feature: Find a Supplier
     When "Annette Geissinger" browse first "10" pages of Suppliers filtered by all sectors associated with company "Y"
 
     Then "Annette Geissinger" should see company "Y" only once on browsed search result pages
+
+
+  @ED-1983
+  @search
+  @contextual
+  Scenario Outline: Buyers should see highlighted search terms in the search results - contextual results
+    Given "Annette Geissinger" is a buyer
+
+    When "Annette Geissinger" searches for Suppliers using "<specific>" term
+
+    Then "Annette Geissinger" should see that some of the results have the "<specific>" search terms highlighted
+
+    Examples: terms
+      | specific                |
+      | sweets                  |
+      | international companies |
