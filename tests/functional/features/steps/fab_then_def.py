@@ -24,6 +24,7 @@ from tests.functional.features.steps.fab_then_impl import (
     fas_should_see_company_once_in_search_results,
     fas_should_see_different_png_logo_thumbnail,
     fas_should_see_filtered_search_results,
+    fas_should_see_highlighted_search_term,
     fas_should_see_png_logo_thumbnail,
     fas_should_see_promoted_industries,
     fas_should_see_unfiltered_search_results,
@@ -302,3 +303,9 @@ def then_actor_should_see_company_once_in_search_results(
         context, actor_alias, company_alias):
     fas_should_see_company_once_in_search_results(
         context, actor_alias, company_alias)
+
+
+@then('"{actor_alias}" should see that some of the results have the '
+      '"{search_term}" search terms highlighted')
+def then_should_see_highlighted_search_term(context, actor_alias, search_term):
+    fas_should_see_highlighted_search_term(context, actor_alias, search_term)
