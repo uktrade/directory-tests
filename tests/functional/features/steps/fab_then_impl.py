@@ -14,6 +14,7 @@ from tests.functional.features.pages import (
     fab_ui_edit_online_profiles,
     fab_ui_profile,
     fab_ui_try_other_services,
+    fab_ui_verify_company,
     fas_ui_contact,
     fas_ui_find_supplier,
     fas_ui_industries,
@@ -710,3 +711,8 @@ def fas_should_see_highlighted_search_term(context, actor_alias, search_term):
             keywords=", ".join(keywords), founds=len([f for f in founds if f]),
             times="times" if len([f for f in founds if f]) > 1 else "time",
             results=len(summaries)))
+
+
+def fab_company_should_be_verified(context, supplier_alias):
+    response = context.response
+    fab_ui_verify_company.should_see_company_is_verified(response)

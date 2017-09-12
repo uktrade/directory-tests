@@ -4,6 +4,7 @@ from behave import then
 
 from tests.functional.features.steps.fab_then_impl import (
     bp_should_be_prompted_to_build_your_profile,
+    fab_company_should_be_verified,
     fab_no_links_to_online_profiles_are_visible,
     fab_profile_is_verified,
     fab_should_see_all_case_studies,
@@ -309,3 +310,8 @@ def then_actor_should_see_company_once_in_search_results(
       '"{search_term}" search terms highlighted')
 def then_should_see_highlighted_search_term(context, actor_alias, search_term):
     fas_should_see_highlighted_search_term(context, actor_alias, search_term)
+
+
+@then('"{supplier_alias}" should be told that company has been verified')
+def then_company_should_be_verified(context, supplier_alias):
+    fab_company_should_be_verified(context, supplier_alias)
