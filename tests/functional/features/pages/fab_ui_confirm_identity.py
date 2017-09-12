@@ -3,7 +3,7 @@
 import logging
 from copy import copy
 
-from requests import Response
+from requests import Response, Session
 
 from tests import get_absolute_url
 from tests.functional.features.context_utils import Actor
@@ -29,6 +29,13 @@ EXPECTED_STRINGS = [
 EXPECTED_STRINGS_DURING_PROFILE_BUILDING = ["Send"]
 
 EXPECTED_STRINGS_WHILE_LETTER_VERIFICATION = ["Verify with your address"]
+
+
+def go_to(session: Session, *, logged_in: bool = True):
+    response = make_request(Method.GET, URL, session=session)
+    if logged_in:
+        should_be_here(response, letter_verification=True)
+    return response
 
 
 def should_be_here(
