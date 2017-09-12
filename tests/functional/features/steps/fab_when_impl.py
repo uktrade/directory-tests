@@ -2,7 +2,7 @@
 """FAB Given step implementations."""
 import logging
 import random
-from urllib.parse import parse_qsl, urljoin, urlsplit
+from urllib.parse import parse_qsl, quote, urljoin, urlsplit
 
 from behave.model import Table
 from behave.runner import Context
@@ -333,7 +333,7 @@ def bp_select_random_sector_and_export_to_country(context, supplier_alias):
     context.response = response
 
     # Step 2 - check if Supplier is on Confirm Address page
-    fab_ui_confirm_identity.should_be_here(response)
+    fab_ui_confirm_identity.should_be_here(response, profile_building=True)
     logging.debug("Supplier is on the Confirm your Identity page")
 
 
@@ -527,6 +527,9 @@ def prof_sign_out_from_fab(context, supplier_alias):
     # Step 4 - check if Supplier is on FAB Landing page & is logged out
     fab_ui_landing.should_be_here(response)
     fab_ui_landing.should_be_logged_out(response)
+
+    # Step 5 - reset requests Session object
+    context.reset_actor_session(supplier_alias)
 
 
 def prof_sign_in_to_fab(context, supplier_alias):
@@ -1176,7 +1179,8 @@ def fas_get_company_profile_url(response: Response, name: str) -> str:
     content = response.content.decode("utf-8")
     links_to_profiles_selector = "#ed-search-list-container a"
     href_selector = "a::attr(href)"
-    links_to_profiles = Selector(text=content).css(links_to_profiles_selector).extract()
+    links_to_profiles = Selector(text=content).css(
+        links_to_profiles_selector).extract()
     profile_url = None
     for link in links_to_profiles:
         if escape_html(name).lower() in link.lower():
@@ -1321,7 +1325,8 @@ def fab_provide_company_details(
         elif row["company name"] == "empty string":
             title = ""
         elif row["company name"].endswith(" characters"):
-            number = [int(word) for word in row["company name"].split() if word.isdigit()][0]
+            number = [int(word) for word in row["company name"].split() if
+                      word.isdigit()][0]
             title = random_chars(number)
         else:
             title = original_details.title
@@ -1337,13 +1342,17 @@ def fab_provide_company_details(
         elif row["website"] == "invalid https":
             website = "https:{}.{}".format(rare_word(), rare_word())
         elif row["website"].endswith(" characters"):
-            number = [int(word) for word in row["website"].split() if word.isdigit()][0]
+            number = [int(word)
+                      for word in row["website"].split()
+                      if word.isdigit()][0]
             website = random_chars(number)
 
         if row["keywords"] == "empty string":
             keywords = ""
         elif row["keywords"].endswith(" characters"):
-            number = [int(word) for word in row["keywords"].split() if word.isdigit()][0]
+            number = [int(word)
+                      for word in row["keywords"].split()
+                      if word.isdigit()][0]
             keywords = random_chars(number)
         else:
             keywords = row["keywords"]
@@ -1410,7 +1419,8 @@ def fas_browse_suppliers_using_every_sector_filter(
 
     sector_filters_selector = "#id_sectors input::attr(value)"
     content = response.content.decode("utf-8")
-    sector_filters = Selector(text=content).css(sector_filters_selector).extract()
+    sector_filters = Selector(text=content).css(
+        sector_filters_selector).extract()
     results = {}
     for sector in sector_filters:
         logging.debug(
@@ -1533,7 +1543,8 @@ def fas_browse_suppliers_by_company_sectors(
     context.results = results
 
 
-def fas_get_case_study_slug(context: Context, actor_alias: str, case_alias: str):
+def fas_get_case_study_slug(context: Context, actor_alias: str,
+                            case_alias: str):
     result = None
     actor = context.get_actor(actor_alias)
     company = context.get_company(actor.company_alias)
