@@ -44,7 +44,6 @@ from scrapy.selector import Selector
 from termcolor import cprint
 from urllib3.exceptions import HTTPError as BaseHTTPError
 
-from tests.functional.features.db_utils import get_dir_db_connection
 from tests.settings import (
     MAILGUN_DIRECTORY_API_USER,
     MAILGUN_DIRECTORY_EVENTS_URL,
@@ -476,29 +475,6 @@ def extract_email_confirmation_link(payload):
     activation_link = payload[start:end]
     logging.debug("Found email confirmation link: %s", activation_link)
     return activation_link
-
-
-def get_verification_code(company_number):
-    """Will get the verification code (sent by post) for specified company.
-
-    :param company_number: company number given by Companies House
-    :return: verification code sent by post
-    """
-    connection, cursor = get_dir_db_connection()
-    sql = "SELECT verification_code FROM company_company WHERE number = %s;"
-    data = (company_number, )
-    cursor.execute(sql, data)
-    res = None
-    if cursor.description:
-        res = cursor.fetchone()
-        logging.debug("Verification code for company: %s is %s", company_number,
-                      res)
-    else:
-        logging.debug("Did not find verification code for company %s. "
-                      "Will return None", company_number)
-    cursor.close()
-    connection.close()
-    return res
 
 
 def check_response(response: Response, status_code: int, *,

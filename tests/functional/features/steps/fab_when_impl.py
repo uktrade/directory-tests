@@ -11,6 +11,7 @@ from scrapy import Selector
 
 from tests import get_absolute_url
 from tests.functional.features.context_utils import Company
+from tests.functional.features.db_utils import get_verification_code
 from tests.functional.features.pages import (
     fab_ui_build_profile_basic,
     fab_ui_build_profile_sector,
@@ -70,7 +71,6 @@ from tests.functional.features.utils import (
     extract_logo_url,
     get_absolute_path_of_file,
     get_md5_hash_of_file,
-    get_verification_code,
     make_request,
     random_chars
 )
