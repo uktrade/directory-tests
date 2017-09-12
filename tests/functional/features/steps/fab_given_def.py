@@ -12,6 +12,7 @@ from tests.functional.features.steps.fab_given_impl import (
     reg_create_unverified_profile,
     reg_create_verified_profile,
     reg_select_random_company_and_confirm_export_status,
+    reg_should_get_verification_letter,
     sso_create_standalone_unverified_sso_account,
     sso_create_standalone_verified_sso_account,
     unauthenticated_buyer,
@@ -170,3 +171,8 @@ def given_actor_finds_published_company_with_min_n_sectors(
 @given('"{actor_alias}" gets the slug for company "{company_alias}"')
 def given_actor_gets_company_slug(context, actor_alias, company_alias):
     fas_get_company_slug(context, actor_alias, company_alias)
+
+
+@given('"{supplier_alias}" received the letter with verification code')
+def step_impl(context, supplier_alias):
+    reg_should_get_verification_letter(context, supplier_alias)

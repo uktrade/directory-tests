@@ -12,7 +12,9 @@ from requests import Session
 from tests.functional.features.context_utils import Actor, Company
 from tests.functional.features.db_utils import (
     get_published_companies,
-    get_published_companies_with_n_sectors
+    get_published_companies_with_n_sectors,
+    get_verification_code,
+    is_verification_letter_sent
 )
 from tests.functional.features.pages import (
     fab_ui_profile,
@@ -241,3 +243,20 @@ def fas_get_company_slug(context, actor_alias, company_alias):
     slug = urlsplit(url).path.split(company.number)[last_item_idx][slash_idx:]
     logging.debug("%s got company's slug: %s", actor_alias, slug)
     context.set_company_details(company_alias, slug=slug)
+
+
+def reg_should_get_verification_letter(context, supplier_alias):
+    actor = context.get_actor(supplier_alias)
+    company = context.get_company(actor.company_alias)
+    sent = is_verification_letter_sent(company.number)
+
+    with assertion_msg("Verification letter wasn't sent"):
+        assert sent
+
+    verification_code = get_verification_code(company.number)
+    context.set_company_details(
+        company.alias, verification_code=verification_code)
+
+    logging.debug(
+        "%s received the verification letter with code: %s", supplier_alias,
+        verification_code)
