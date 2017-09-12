@@ -6,6 +6,7 @@ from tests.functional.features.steps.fab_when_impl import (
     bp_provide_company_details,
     bp_select_random_sector_and_export_to_country,
     bp_verify_identity_with_letter,
+    fab_go_to_letter_verification,
     fab_provide_company_details,
     fab_update_case_study,
     fas_browse_suppliers_by_company_sectors,
@@ -275,3 +276,15 @@ def when_actor_gets_case_study_slug(context, actor_alias, case_alias):
 @when('"{actor_alias}" searches for Suppliers using "{search_term}" term')
 def step_impl(context, actor_alias, search_term):
     fas_search_with_term(context, actor_alias, search_term)
+
+
+@when('"{supplier_alias}" goes to the verification link from the letter as '
+      'authenticated user')
+def when_supplier_goes_to_verify_page_auth(context, supplier_alias):
+    fab_go_to_letter_verification(context, supplier_alias, True)
+
+
+@when('"{supplier_alias}" goes to the verification link from the letter as '
+      'unauthenticated user')
+def when_supplier_goes_to_verify_page_unauth(context, supplier_alias):
+    fab_go_to_letter_verification(context, supplier_alias, False)

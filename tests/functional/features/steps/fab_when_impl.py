@@ -1559,3 +1559,37 @@ def fas_search_with_term(context, actor_alias, search_term):
     actor = context.get_actor(actor_alias)
     session = actor.session
     context.response = fas_ui_find_supplier.go_to(session, term=search_term)
+
+
+def fab_go_to_letter_verification(
+        context: Context, supplier_alias: str, logged_in: bool):
+    actor = context.get_actor(supplier_alias)
+    response = fab_ui_confirm_identity.go_to(actor.session, logged_in=logged_in)
+    context.response = response
+
+    if logged_in:
+        fab_ui_confirm_identity.should_be_here(
+            response, letter_verification=True)
+    else:
+        sso_ui_login.should_be_here(response)
+
+        token = extract_csrf_middleware_token(response)
+        context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+
+        sso_login_url = get_absolute_url("sso:login")
+        fab_verify_url = quote(get_absolute_url("ui-buyer:confirm-identity"))
+        referer = ("{sso_login_url}?next={fab_verify_url}"
+                   .format(sso_login_url=sso_login_url,
+                           fab_verify_url=fab_verify_url))
+        next = get_absolute_url("ui-buyer:confirm-identity")
+        logging.debug(
+            "After successful login %s should be redirected to: %s",
+            supplier_alias, referer)
+        response = sso_ui_login.login(actor, token, referer=referer, next=next)
+        context.response = response
+
+        fab_ui_confirm_identity.should_be_here(
+            response, letter_verification=True)
+
+    response = fab_ui_confirm_identity.send(actor)
+    context.response = response
