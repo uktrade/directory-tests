@@ -1593,3 +1593,11 @@ def fab_go_to_letter_verification(
 
     response = fab_ui_confirm_identity.send(actor)
     context.response = response
+
+
+def fab_choose_to_verify_with_code(context: Context, supplier_alias: str):
+    actor = context.get_actor(supplier_alias)
+    referer = get_absolute_url("ui-buyer:confirm-identity")
+    response = fab_ui_verify_company.go_to(actor.session, referer=referer)
+    context.response = response
+    fab_ui_verify_company.should_be_here(response)
