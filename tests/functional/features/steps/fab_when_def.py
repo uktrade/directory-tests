@@ -9,6 +9,7 @@ from tests.functional.features.steps.fab_when_impl import (
     fab_choose_to_verify_with_code,
     fab_go_to_letter_verification,
     fab_provide_company_details,
+    fab_submit_verification_code,
     fab_update_case_study,
     fas_browse_suppliers_by_company_sectors,
     fas_browse_suppliers_by_invalid_sectors,
@@ -294,3 +295,8 @@ def when_supplier_goes_to_verify_page_unauth(context, supplier_alias):
 @when('"{supplier_alias}" decides to verify her identity with the address')
 def when_supplier_decides_to_verify_with_address(context, supplier_alias):
     fab_choose_to_verify_with_code(context, supplier_alias)
+
+
+@when('"{supplier_alias}" submits the verification code')
+def when_supplier_submits_verification_code(context, supplier_alias):
+    fab_submit_verification_code(context, supplier_alias)

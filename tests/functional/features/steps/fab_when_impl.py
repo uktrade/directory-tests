@@ -1601,3 +1601,14 @@ def fab_choose_to_verify_with_code(context: Context, supplier_alias: str):
     response = fab_ui_verify_company.go_to(actor.session, referer=referer)
     context.response = response
     fab_ui_verify_company.should_be_here(response)
+
+
+def fab_submit_verification_code(context, supplier_alias):
+    actor = context.get_actor(supplier_alias)
+    company = context.get_company(actor.company_alias)
+    verification_code = company.verification_code
+    referer = get_absolute_url("ui-buyer:confirm-company-address")
+    response = fab_ui_verify_company.submit(
+        actor.session, actor.csrfmiddlewaretoken, verification_code,
+        referer=referer)
+    context.response = response
