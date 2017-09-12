@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """FAB - Confirm Identity page"""
 import logging
+from copy import copy
 
 from requests import Response
 
@@ -19,20 +20,35 @@ EXPECTED_STRINGS = [
     "Sign in with Companies House",
     ("Enter your Companies House username and password. We’ll be able to "
      "confirm your identity instantly."),
-    "Sign in", "Get confirmation letter",
+    "Sign in", "Get confirmation letter", "Back",
     ("We’ll then send a confirmation letter to your company’s registered "
      "address address within 5 working days. If you can’t collect the letter "
-     "yourself, you’ll need to make sure someone can send it on to you."),
-    "Send", "Back"
+     "yourself, you’ll need to make sure someone can send it on to you.")
 ]
 
+EXPECTED_STRINGS_DURING_PROFILE_BUILDING = ["Send"]
 
-def should_be_here(response: Response):
+EXPECTED_STRINGS_WHILE_LETTER_VERIFICATION = ["Verify with your address"]
+
+
+def should_be_here(
+        response: Response, *, profile_building: bool = False,
+        letter_verification: bool = False):
     """Check if Supplier is on FAB Confirm your Identity page.
 
+    :param profile_building: (optional) if True, then it will look for specific
+                             strings displayed when building company's profile
+    :param letter_verification: (optional) if True, then it will look for
+                                specific strings displayed when verifying the
+                                identity with a code from a letter
     :param response: response object
     """
-    check_response(response, 200, body_contains=EXPECTED_STRINGS)
+    expected = copy(EXPECTED_STRINGS)
+    if profile_building:
+        expected += EXPECTED_STRINGS_DURING_PROFILE_BUILDING
+    if letter_verification:
+        expected += EXPECTED_STRINGS_WHILE_LETTER_VERIFICATION
+    check_response(response, 200, body_contains=expected)
     logging.debug("Successfully got to the FAB Confirm your Identity page")
 
 
