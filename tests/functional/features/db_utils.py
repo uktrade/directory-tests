@@ -92,6 +92,13 @@ VERIFICATION_CODE = """
 SELECT verification_code FROM company_company WHERE number = %s;
 """
 
+IS_VERIFICATION_LETTER_SENT = """
+SELECT is_verification_letter_sent
+FROM company_company
+WHERE number = %s;
+"""
+
+
 def get_dir_db_connection(*, dict_cursor: bool = False):
     try:
         connection = psycopg2.connect(
@@ -202,6 +209,18 @@ def get_verification_code(company_number):
             "Could not find verification code for company %s", company_number):
         assert res
     return res[0][0]
+
+
+def is_verification_letter_sent(company_number: str) -> bool:
+    """Check if verification letter was sent.
+
+    :param company_number: company number
+    :return: True if letter was sent and False if it wasn't
+    """
+    data = (company_number, )
+    return run_query("DIRECTORY", IS_VERIFICATION_LETTER_SENT, data=data)[0]
+
+
 def delete_supplier_data(service_name, email_address):
     if service_name == "DIRECTORY":
         sql = DIRECTORY_CLEAN_UP
