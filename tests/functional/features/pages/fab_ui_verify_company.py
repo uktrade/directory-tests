@@ -22,13 +22,15 @@ EXPECTED_STRINGS_VERIFIED = [
 ]
 
 
-def go_to(session: Session) -> Response:
+def go_to(session: Session, *, referer: str = None) -> Response:
     """Go to "Confirm Company" page. This requires Company
 
     :param session: Supplier session object
+    :param referer: (optional) custom referer header value
     :return: response object
     """
-    headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
+    referer = referer or get_absolute_url("ui-buyer:company-profile")
+    headers = {"Referer": referer}
     response = make_request(Method.GET, URL, session=session, headers=headers)
     return response
 
@@ -42,15 +44,19 @@ def should_be_here(response: Response):
     logging.debug("Supplier is on the Verify Company page")
 
 
-def submit(session: Session, token: str, verification_code: str) -> Response:
+def submit(session: Session, token: str, verification_code: str, *,
+           referer: str = None) -> Response:
     """Submit the form with verification code.
 
     :param session: Supplier session object
     :param token: CSRF token required to submit the form
     :param verification_code: code required to verify company's profile
+    :param referer: (optional) custom referer header value
     :return: response object
     """
-    headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
+    if referer is None:
+        referer = get_absolute_url("ui-buyer:company-profile")
+    headers = {"Referer": referer}
     data = {
         "csrfmiddlewaretoken": token,
         "company_address_verification_view-current_step": "address",
