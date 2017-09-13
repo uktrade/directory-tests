@@ -35,7 +35,8 @@ from tests.functional.features.utils import (
     extract_csrf_middleware_token,
     extract_logo_url,
     find_mailgun_events,
-    get_verification_link
+    get_verification_link,
+    surround
 )
 from tests.settings import (
     FAS_LOGO_PLACEHOLDER_IMAGE,
@@ -684,3 +685,28 @@ def fas_should_see_company_once_in_search_results(
         "As expected %s found company '%s' (%s) only once on first %d search "
         "result pages", actor_alias, company.title, company_alias,
         len(results) + 1)
+
+
+def fas_should_see_highlighted_search_term(context, actor_alias, search_term):
+    response = context.response
+    content = response.content.decode("utf-8")
+    search_summaries_selector = ".ed-company-search-summary"
+    summaries = Selector(text=content).css(search_summaries_selector).extract()
+    tag = "em"
+    keywords = [surround(keyword, tag) for keyword in search_term.split()]
+    founds = []
+    for summary in summaries:
+        founds += [(keyword in summary) for keyword in keywords]
+
+    with assertion_msg(
+            "Expected to see at least 1 search result with highlighted search "
+            "term: '%s'".format(", ".join(keywords))):
+        assert any(founds)
+
+    logging.debug(
+        "{alias} found highlighted search {term}: '{keywords}' {founds} {times}"
+        " in {results} search results".format(
+            alias=actor_alias, term="terms" if len(keywords) > 1 else "term",
+            keywords=", ".join(keywords), founds=len([f for f in founds if f]),
+            times="times" if len([f for f in founds if f]) > 1 else "time",
+            results=len(summaries)))
