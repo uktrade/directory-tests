@@ -716,3 +716,16 @@ def fas_should_see_highlighted_search_term(context, actor_alias, search_term):
 def fab_company_should_be_verified(context, supplier_alias):
     response = context.response
     fab_ui_verify_company.should_see_company_is_verified(response)
+
+
+def fab_should_see_case_study_error_message(context, supplier_alias):
+    results = context.results
+    logging.debug(results)
+    for field, value_type, case_study, response, error in results:
+        context.response = response
+        with assertion_msg(
+                "Could not find expected error message: '%s' in the response, "
+                "after submitting the add case study form with following "
+                "details: '%s'", error, case_study):
+            assert error in response.content.decode("utf-8")
+    logging.debug("%s has seen all expected case study errors", supplier_alias)
