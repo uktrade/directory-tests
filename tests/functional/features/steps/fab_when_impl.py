@@ -1637,7 +1637,6 @@ def fab_attempt_to_add_case_study(
         context: Context, supplier_alias: str, table: Table):
     actor = context.get_actor(supplier_alias)
     session = actor.session
-    case_study = random_case_study_data("test")
 
     page_1_fields = [
         "title", "summary", "description", "sector", "website", "keywords"
@@ -1649,6 +1648,7 @@ def fab_attempt_to_add_case_study(
 
     results = []
     for row in table:
+        case_study = random_case_study_data("test")
         field = row["field"]
         value_type = row["value type"]
         separator = row["separator"]
