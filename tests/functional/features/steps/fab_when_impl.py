@@ -2,6 +2,7 @@
 """FAB Given step implementations."""
 import logging
 import random
+from random import choice
 from urllib.parse import parse_qsl, quote, urljoin, urlsplit
 
 from behave.model import Table
@@ -74,7 +75,14 @@ from tests.functional.features.utils import (
     make_request,
     random_chars
 )
-from tests.settings import COUNTRIES, NO_OF_EMPLOYEES, SECTORS
+from tests.settings import (
+    COUNTRIES,
+    NO_OF_EMPLOYEES,
+    SECTORS,
+    BMPs,
+    JP2s,
+    WEBPs
+)
 
 
 def select_random_company(
@@ -1623,3 +1631,87 @@ def fab_submit_verification_code(context, supplier_alias):
         actor.session, actor.csrfmiddlewaretoken, verification_code,
         referer=referer)
     context.response = response
+
+
+def fab_attempt_to_add_case_study(
+        context: Context, supplier_alias: str, table: Table):
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+    case_study = random_case_study_data("test")
+
+    page_1_fields = [
+        "title", "summary", "description", "sector", "website", "keywords"
+    ]
+    page_2_fields = [
+        "image_1", "caption_1", "image_2", "caption_2", "image_3", "caption_3",
+        "testimonial", "source_name", "source_job", "source_company"
+    ]
+
+    results = []
+    for row in table:
+        field = row["field"]
+        value_type = row["value type"]
+        separator = row["separator"]
+        error = row["error"]
+
+        if value_type.endswith(" characters"):
+            number = [int(word)
+                      for word in value_type.split() if word.isdigit()][0]
+            value = random_chars(number)
+        elif value_type.endswith(" words"):
+            number = [int(word)
+                      for word in value_type.split() if word.isdigit()][0]
+            value = sentence(min_words=number, max_words=number, max_length=0)
+        elif value_type == "empty string":
+            value = ""
+        elif value_type == "valid http":
+            value = "http://{}.{}".format(rare_word(), rare_word())
+        elif value_type == "valid https":
+            value = "https://{}.{}".format(rare_word(), rare_word())
+        elif value_type == "invalid http":
+            value = "http:{}.{}".format(rare_word(), rare_word())
+        elif value_type == "invalid https":
+            value = "https:{}.{}".format(rare_word(), rare_word())
+        elif value_type == "invalid sector":
+            value = "this is an invalid sector"
+        elif value_type == "no image":
+            value = None
+        elif value_type == "invalid image":
+            images = BMPs + JP2s + WEBPs
+            value = choice(images)
+
+        if separator == "pipe":
+            separator = "|"
+        elif separator == "semi-colon":
+            separator = ";"
+        elif separator == "colon":
+            separator = ":"
+        elif separator == "full stop":
+            separator = "."
+        else:
+            separator = ","
+
+        if field == "keywords":
+            separate_keywords = value_type.split(", ")
+            value = "{} ".format(separator).join(separate_keywords)
+
+        case_study = case_study._replace(**{field: value})
+
+        response = fab_ui_case_study_basic.go_to(session)
+        context.response = response
+        token = extract_csrf_middleware_token(response)
+        if field in page_1_fields:
+            response = fab_ui_case_study_basic.submit_form(session, token, case_study)
+            context.response = response
+        elif field in page_2_fields:
+            response = fab_ui_case_study_basic.submit_form(session, token, case_study)
+            context.response = response
+            token = extract_csrf_middleware_token(response)
+            response = fab_ui_case_study_images.submit_form(session, token, case_study)
+            context.response = response
+        else:
+            raise KeyError(
+                "Could not recognize field '{}' as valid case study field")
+
+        results.append((field, value_type, case_study, response, error))
+    context.results = results
