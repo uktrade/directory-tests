@@ -725,7 +725,8 @@ def fab_should_see_case_study_error_message(context, supplier_alias):
         context.response = response
         with assertion_msg(
                 "Could not find expected error message: '%s' in the response, "
-                "after submitting the add case study form with following "
-                "details: '%s'", error, case_study):
+                "after submitting the add case study form with '%s' value being"
+                " '%s' following and other details: '%s'", error, field,
+                value_type, case_study):
             assert error in response.content.decode("utf-8")
     logging.debug("%s has seen all expected case study errors", supplier_alias)
