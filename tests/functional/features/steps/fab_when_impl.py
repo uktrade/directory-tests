@@ -1692,8 +1692,11 @@ def fab_attempt_to_add_case_study(
             separator = ","
 
         if field == "keywords":
-            separate_keywords = value_type.split(", ")
-            value = "{} ".format(separator).join(separate_keywords)
+            if value_type == "empty string":
+                value = ""
+            else:
+                separate_keywords = value_type.split(", ")
+                value = "{} ".format(separator).join(separate_keywords)
 
         case_study = case_study._replace(**{field: value})
 
