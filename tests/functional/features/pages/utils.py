@@ -94,7 +94,9 @@ def extract_and_set_csrf_middleware_token(
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
 
 
-def sentence(*, max_length: int = 60, min_word_length: int = 9, max_words: int = 10):
+def sentence(
+        *, max_length: int = 60, min_word_length: int = 9, max_words: int = 10,
+        min_words: int = 3) -> str:
     """Generate a random string consisting of rare english words.
 
     NOTE:
@@ -104,11 +106,13 @@ def sentence(*, max_length: int = 60, min_word_length: int = 9, max_words: int =
     :return: a sentence consisting of rare english words
     """
     words = []
-    while len(words) < max_words:
+    assert min_words <= max_words
+    number_of_words = random.randint(min_words, max_words)
+    while len(words) < number_of_words:
         word = random.choice(RARE_WORDS)
         if len(word) > min_word_length:
             words.append(word)
-    while len(" ".join(words)) > max_length:
+    while 0 < max_length < len(" ".join(words)):
         words.pop()
     return " ".join(words)
 
