@@ -14,7 +14,7 @@ Feature: Case Studies
       |title         |empty string    |          |This field is required.                                     |
       |summary       |201 characters  |          |Ensure this value has at most 200 characters (it has 201).  |
       |summary       |empty string    |          |This field is required.                                     |
-      |description   |101 characters  |          |Ensure this value has at most 60 characters (it has 61).    |
+      |description   |1001 characters |          |Ensure this value has at most 1000 characters (it has 10-1).|
       |description   |empty string    |          |This field is required.                                     |
       |sector        |invalid sector  |          |Ensure this value has at most 60 characters (it has 61).    |
       |website       |invalid http    |          |Ensure this value has at most 60 characters (it has 61).    |
