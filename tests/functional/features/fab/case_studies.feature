@@ -17,7 +17,6 @@ Feature: Case Studies
       |description   |1001 characters |          |Ensure this value has at most 1000 characters (it has 1001).                         |
       |description   |empty string    |          |This field is required.                                                              |
       |sector        |invalid sector  |          |Select a valid choice. this is an invalid sector is not one of the available choices.|
-#      |website       |invalid http    |          |Enter a valid URL.                                                                   |
       |website       |256 characters  |          |Enter a valid URL.                                                                   |
       |keywords      |book, keys, food|pipe      |You can only enter letters, numbers and commas.                                      |
       |keywords      |book, keys, food|semi-colon|You can only enter letters, numbers and commas.                                      |
@@ -25,7 +24,7 @@ Feature: Case Studies
       |keywords      |book, keys, food|full stop |You can only enter letters, numbers and commas.                                      |
       |keywords      |empty string    |          |This field is required.                                                              |
       |image_1       |invalid image   |          |Invalid image format, allowed formats: PNG, JPG, JPEG                                |
-#      |image_1       |no image        |          |This field is required.                                                              |
+      |image_1       |no image        |          |This field is required.                                                              |
       |caption_1     |121 characters  |          |Ensure this value has at most 120 characters (it has 121).                           |
       |caption_1     |empty string    |          |This field is required.                                                              |
       |image_2       |invalid image   |          |Invalid image format, allowed formats: PNG, JPG, JPEG                                |
@@ -40,7 +39,7 @@ Feature: Case Studies
     Then "Peter Alder" should see expected case study error message
 
 
-  @ED-2142a
+  @ED-2142
   @fab
   @case-study
   @profile
