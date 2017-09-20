@@ -187,7 +187,7 @@ def random_message_data(
     country = country or rare_word(min_length=12)
     email_address = email_address or ("test+buyer_{}@directory.uktrade.io"
                                       .format(rare_word(min_length=15)))
-    full_name = full_name or sentence(max_words=2)
+    full_name = full_name or sentence(min_words=2, max_words=2)
     sector = sector or random.choice(SECTORS)
     subject = subject or sentence(max_length=200)
     g_recaptcha_response = g_recaptcha_response or "test mode"
