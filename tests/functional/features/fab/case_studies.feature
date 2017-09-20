@@ -44,7 +44,7 @@ Feature: Case Studies
   @case-study
   @profile
   @bug
-  @ED-
+  @ED-2248
   @fixme
   Scenario: Supplier should not be able to use invalid values when adding a case study
     Given "Peter Alder" created an unverified profile for randomly selected company "Y"
