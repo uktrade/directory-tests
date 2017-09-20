@@ -160,7 +160,8 @@ def random_case_study_data(alias: str) -> CaseStudy:
 
 def random_feedback_data(
         *, name: str = None, email: str = None, company_name: str = None,
-        country: str = None, comment: str = None, terms: str = None) -> Feedback:
+        country: str = None, comment: str = None,
+        terms: str = None) -> Feedback:
     name = name or rare_word(min_length=12)
     email = email or ("test+buyer_{}@directory.uktrade.io"
                       .format(rare_word(min_length=15)))
@@ -322,7 +323,8 @@ def get_companies(*, number: int = 100) -> CompaniesList:
     :param number: (optional) expected number of companies to find
     :return: a list of Company named tuples (all with "test" alias)
     """
-    return [find_active_company_without_fas_profile("test") for _ in range(number)]
+    return [find_active_company_without_fas_profile("test") for _ in
+            range(number)]
 
 
 def save_companies(companies: CompaniesList):
@@ -333,7 +335,8 @@ def save_companies(companies: CompaniesList):
     # convert `Company` named tuples into dictionaries
     list_dict = []
     for company in companies:
-        list_dict.append({key: getattr(company, key) for key in company._fields})
+        list_dict.append(
+            {key: getattr(company, key) for key in company._fields})
 
     path = os.path.join(TEST_IMAGES_DIR, 'companies.json')
     with open(path, 'w', encoding='utf8') as f:
