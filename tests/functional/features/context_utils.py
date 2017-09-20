@@ -44,7 +44,8 @@ Company = namedtuple(
         'website', 'keywords', 'no_employees', 'sector', 'letter_recipient',
         'companies_house_details', 'facebook', 'linkedin', 'twitter',
         'case_studies', 'logo_picture', 'logo_url', 'logo_hash',
-        'export_to_countries', 'fas_profile_endpoint', 'slug'
+        'export_to_countries', 'fas_profile_endpoint', 'slug',
+        'verification_code'
     ]
 )
 Feedback = namedtuple(
@@ -211,7 +212,7 @@ def set_company_details(self, alias, *, title=None, website=None, keywords=None,
                         facebook=None, linkedin=None, twitter=None,
                         summary=None, description=None,
                         export_to_countries=None, fas_profile_endpoint=None,
-                        slug=None):
+                        slug=None, verification_code=None):
     companies = self.scenario_data.companies
     if title:
         companies[alias] = companies[alias]._replace(title=title)
@@ -241,6 +242,8 @@ def set_company_details(self, alias, *, title=None, website=None, keywords=None,
         companies[alias] = companies[alias]._replace(fas_profile_endpoint=fas_profile_endpoint)
     if slug:
         companies[alias] = companies[alias]._replace(slug=slug)
+    if verification_code:
+        companies[alias] = companies[alias]._replace(verification_code=verification_code)
 
     logging.debug("Successfully updated Company's details %s: %s", alias,
                   companies[alias])

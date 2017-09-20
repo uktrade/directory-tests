@@ -5,6 +5,7 @@ import logging
 import psycopg2
 from psycopg2.extras import RealDictCursor
 
+from tests.functional.features.utils import assertion_msg
 from tests.settings import (
     DIR_DB_HOST,
     DIR_DB_NAME,
@@ -85,6 +86,16 @@ SELECT name, number, sectors, employees, keywords, website, facebook_url,
 FROM company_company
 WHERE is_published = TRUE
 AND jsonb_array_length(sectors) > %s;
+"""
+
+VERIFICATION_CODE = """
+SELECT verification_code FROM company_company WHERE number = %s;
+"""
+
+IS_VERIFICATION_LETTER_SENT = """
+SELECT is_verification_letter_sent
+FROM company_company
+WHERE number = %s;
 """
 
 
@@ -184,6 +195,30 @@ def get_published_companies_with_n_sectors(number_of_sectors: int) -> list:
     return run_query(
         "DIRECTORY", PUBLISHED_COMPANIES_WITH_N_SECTORS, data=data,
         dict_cursor=True)
+
+
+def get_verification_code(company_number):
+    """Will get the verification code (sent by post) for specified company.
+
+    :param company_number: company number given by Companies House
+    :return: verification code sent by post
+    """
+    data = (company_number, )
+    res = run_query("DIRECTORY", VERIFICATION_CODE, data=data)
+    with assertion_msg(
+            "Could not find verification code for company %s", company_number):
+        assert res
+    return res[0][0]
+
+
+def is_verification_letter_sent(company_number: str) -> bool:
+    """Check if verification letter was sent.
+
+    :param company_number: company number
+    :return: True if letter was sent and False if it wasn't
+    """
+    data = (company_number, )
+    return run_query("DIRECTORY", IS_VERIFICATION_LETTER_SENT, data=data)[0]
 
 
 def delete_supplier_data(service_name, email_address):

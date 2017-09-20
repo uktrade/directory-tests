@@ -34,11 +34,15 @@ def should_be_here(response: Response):
     logging.debug("Successfully got to the SSO Verify your email page")
 
 
-def login(actor: Actor, token: str) -> Response:
+def login(
+        actor: Actor, token: str, *, referer: str = None,
+        next: str = None) -> Response:
     """Try to sign in to FAB as a Supplier without verified email address.
 
     :param actor: a namedtuple with Actor details
     :param token: CSRF token required to submit the login form
+    :param referer: (optional) referer URL
+    :param next: (optional) URL to go to after successful login
     :return: response object
     """
     session = actor.session
@@ -51,8 +55,10 @@ def login(actor: Actor, token: str) -> Response:
         "password": actor.password,
         "remember": "on"
     }
+    if next:
+        data.update({"next": next})
     # Referer is the same as the final URL from the previous request
-    referer = "{}/?next={}".format(URL, fab_landing)
+    referer = referer or "{}?next={}".format(URL, fab_landing)
     headers = {"Referer": referer}
 
     response = make_request(
