@@ -49,10 +49,6 @@ def prepare_form_data(token: str, case_study: CaseStudy) -> (dict, dict):
     :param case_study: a CaseStudy namedtuple with random data
     :return: a tuple consisting of form data and files to upload
     """
-    def read_image(file_path: str):
-        with open(file_path, "rb") as f:
-            return f.read()
-
     data = {
         "csrfmiddlewaretoken": token,
         "supplier_case_study_wizard_view-current_step": "rich-media",
@@ -66,8 +62,31 @@ def prepare_form_data(token: str, case_study: CaseStudy) -> (dict, dict):
     }
 
     paths = [case_study.image_1, case_study.image_2, case_study.image_3]
-    name_1, name_2, name_3 = (basename(path) for path in paths)
-    mime_1, mime_2, mime_3 = (MimeTypes().guess_type(path)[0] for path in paths)
+
+    def get_basename(path):
+        if path is not None:
+            res = basename(path)
+        else:
+            res = ""
+        return res
+
+    def get_mimetype(path):
+        if path is not None:
+            res = MimeTypes().guess_type(path)[0]
+        else:
+            res = ""
+        return res
+
+    def read_image(file_path: str):
+        if file_path is not None:
+            with open(file_path, "rb") as f:
+                res = f.read()
+        else:
+            res = ""
+        return res
+
+    name_1, name_2, name_3 = (get_basename(path) for path in paths)
+    mime_1, mime_2, mime_3 = (get_mimetype(path) for path in paths)
     file_1, file_2, file_3 = (read_image(path) for path in paths)
     files = {
         "rich-media-image_one": (name_1, file_1, mime_1),
