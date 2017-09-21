@@ -418,6 +418,7 @@ def fas_find_supplier_using_case_study_details(
         response = fas_ui_find_supplier.go_to(session, term=term)
         context.response = response
         number_of_pages = get_number_of_search_result_pages(response)
+        found = False
         for page_number in range(1, number_of_pages + 1):
             found = fas_ui_find_supplier.should_see_company(response, company.title)
             if found:
