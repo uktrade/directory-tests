@@ -69,7 +69,6 @@ Feature: Find a Supplier
     And "Peter Alder" created an unverified profile for randomly selected company "Y"
 
     When "Peter Alder" adds a complete case study called "no 1"
-    And "Peter Alder" gets the slug for case study "no 1"
 
     Then "Annette Geissinger" should NOT be able to find company "Y" on FAS by using any part of case study "no 1"
 
