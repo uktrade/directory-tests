@@ -23,7 +23,8 @@ from tests.functional.features.steps.fab_then_impl import (
     fas_should_see_png_logo_thumbnail,
     prof_should_see_logo_picture,
     reg_should_get_verification_email,
-    sso_should_be_signed_in_to_sso_account
+    sso_should_be_signed_in_to_sso_account,
+    sso_should_be_signed_out_from_sso_account
 )
 from tests.functional.features.steps.fab_when_impl import (
     fas_view_page,
@@ -98,6 +99,11 @@ def given_verified_standalone_sso_account(context, supplier_alias):
 @given('"{supplier_alias}" is signed in to SSO/great.gov.uk account')
 def given_supplier_is_signed_in_to_sso(context, supplier_alias):
     sso_should_be_signed_in_to_sso_account(context, supplier_alias)
+
+
+@given('"{supplier_alias}" is signed out from SSO/great.gov.uk account')
+def given_supplier_is_signed_out_from_sso(context, supplier_alias):
+    sso_should_be_signed_out_from_sso_account(context, supplier_alias)
 
 
 @given('"{supplier_alias}" selected an active company without a Directory '

@@ -9,6 +9,7 @@ from requests import Response
 from retrying import retry
 from scrapy import Selector
 
+from tests import get_absolute_url
 from tests.functional.features.pages import (
     fab_ui_build_profile_basic,
     fab_ui_edit_online_profiles,
@@ -20,6 +21,7 @@ from tests.functional.features.pages import (
     fas_ui_industries,
     fas_ui_profile,
     profile_ui_landing,
+    sso_ui_logout,
     sso_ui_verify_your_email
 )
 from tests.functional.features.pages.common import FAS_PAGE_OBJECTS
@@ -139,6 +141,39 @@ def sso_should_be_signed_in_to_sso_account(
                        "like user is not logged in"):
         assert "Sign out" in response.content.decode("utf-8")
     logging.debug("%s is logged in to the SSO account".format(supplier_alias))
+
+
+def sso_should_be_signed_out_from_sso_account(
+        context: Context, supplier_alias: str):
+    """Sign out from SSO.
+
+    :param context: behave `context` object
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    """
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+
+    # Step 1 - Get to the Sign Out confirmation page
+    next_param = get_absolute_url("profile:about")
+    response = sso_ui_logout.go_to(session, next_param=next_param)
+    context.response = response
+
+    # Step 2 - check if Supplier is on Log Out page & extract CSRF token
+    sso_ui_logout.should_be_here(response)
+    token = extract_csrf_middleware_token(response)
+    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+
+    # Step 3 - log out
+    next_param = get_absolute_url("profile:landing")
+    response = sso_ui_logout.logout(session, token, next_param=next_param)
+    context.response = response
+
+    # Step 4 - check if Supplier is on SSO landing page
+    profile_ui_landing.should_be_here(response)
+    profile_ui_landing.should_be_logged_out(response)
+
+    # Step 5 - reset requests Session object
+    context.reset_actor_session(supplier_alias)
 
 
 def prof_should_be_told_about_invalid_links(
