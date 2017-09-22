@@ -260,6 +260,9 @@ def log_response(response: Response, *, trim: bool = True):
     request = response.request
     trim_offset = 1024  # define the length of logged response content
 
+    logging.debug(
+        "RESPONSE TIME | %s | %s %s", str(response.elapsed), request.method,
+        request.url)
     if response.history:
         logging.debug("REQ was redirected")
         for r in response.history:
