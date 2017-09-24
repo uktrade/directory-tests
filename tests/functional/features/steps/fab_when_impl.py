@@ -40,6 +40,7 @@ from tests.functional.features.pages import (
     sso_ui_confim_your_email,
     sso_ui_login,
     sso_ui_logout,
+    sso_ui_password_reset,
     sso_ui_register,
     sso_ui_verify_your_email
 )
@@ -52,6 +53,7 @@ from tests.functional.features.pages.utils import (
     escape_html,
     extract_and_set_csrf_middleware_token,
     get_active_company_without_fas_profile,
+    get_fabs_page_url,
     get_fas_page_url,
     get_language_code,
     get_number_of_search_result_pages,
@@ -1720,3 +1722,22 @@ def fab_attempt_to_add_case_study(
         results.append((field, value_type, case_study, response, error))
 
     context.results = results
+
+
+def sso_reset_password(
+        context: Context, supplier_alias: str, *, next_page: str = None):
+    actor = context.get_actor(supplier_alias)
+    next_param = None
+    if next_page is not None:
+        next_param = get_fabs_page_url(page_name=next_page)
+
+    response = sso_ui_password_reset.go_to(actor.session, next_param=next_param)
+    context.response = response
+
+    sso_ui_password_reset.should_be_here(response)
+
+    token = extract_csrf_middleware_token(response)
+    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+
+    response = sso_ui_password_reset.reset(actor, token, next_param=next_param)
+    context.response = response
