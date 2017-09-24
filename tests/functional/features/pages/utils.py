@@ -80,6 +80,40 @@ FAS_PAGE_SELECTORS = {
     'terms-and-conditions': 'ui-supplier:terms',
     'privacy-policy': 'ui-supplier:privacy',
 }
+SSO_PAGE_SELECTORS = {
+    "sso landing": 'sso:landing',
+    "login": 'sso:login',
+    "register": 'sso:signup',
+    "logout": 'sso:logout',
+    "password change": 'sso:password_change',
+    "password set": 'sso:password_set',
+    "password reset": 'sso:password_reset',
+    "confirm email": 'sso:email_confirm',
+    "inactive": 'sso:inactive',
+    "health": 'sso:health',
+    "session user": 'sso:user'
+}
+FAB_PAGE_SELECTORS = {
+    "fab landing": "ui-buyer:landing",
+    "fab register": "ui-buyer:register",
+    "confirm company selection": "ui-buyer:register-confirm-company",
+    "confirm export status": "ui-buyer:register-confirm-export-status",
+    "finish registration": "ui-buyer:register-finish",
+    "submit account details": "ui-buyer:register-submit-account-details",
+    "upload logo": "ui-buyer:upload-logo",
+    "add case study": "ui-buyer:case-study-add",
+    "company company address": "ui-buyer:confirm-company-address",
+    "company identity": "ui-buyer:confirm-identity",
+    "company identity via letter": "ui-buyer:confirm-identity-letter",
+    "fab company profile": "ui-buyer:company-profile",
+    "edit company profile": "ui-buyer:company-edit",
+    "edit company address": "ui-buyer:company-edit-address",
+    "edit company description": "ui-buyer:company-edit-description",
+    "edit company key facts": "ui-buyer:company-edit-key-facts",
+    "edit company sectors": "ui-buyer:company-edit-sectors",
+    "edit company contact": "ui-buyer:company-edit-contact",
+    "edit social media links": "ui-buyer:company-edit-social-media",
+}
 
 
 def extract_and_set_csrf_middleware_token(
