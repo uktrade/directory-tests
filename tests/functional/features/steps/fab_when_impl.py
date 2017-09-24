@@ -639,7 +639,7 @@ def sso_supplier_confirms_email_address(context, supplier_alias):
     profile_ui_landing.should_be_here(response)
 
     # STEP 3 - Update Actor's data
-    context.set_actor_has_sso_account(supplier_alias, True)
+    context.update_actor(supplier_alias, has_sso_account=True)
 
 
 def sso_go_to_create_trade_profile(context, supplier_alias):

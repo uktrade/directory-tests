@@ -128,16 +128,6 @@ def set_actor_email_confirmation_link(self, alias, link):
         logging.debug("Could not find an actor aliased '%s'", alias)
 
 
-def set_actor_has_sso_account(self, alias, has_sso_account: bool):
-    if alias in self.scenario_data.actors:
-        actors = self.scenario_data.actors
-        actors[alias] = actors[alias]._replace(has_sso_account=has_sso_account)
-        logging.debug("Successfully set has_sso_account=%s for "
-                      "Actor: %s", has_sso_account, alias)
-    else:
-        logging.debug("Could not find an actor aliased '%s'", alias)
-
-
 def update_actor(
         self, alias, *, password_reset_link: str = None,
         company_alias: str = None, has_sso_account: bool = None,
@@ -302,8 +292,6 @@ def patch_context(context):
         set_actor_csrfmiddlewaretoken, context)
     context.set_actor_email_confirmation_link = MethodType(
         set_actor_email_confirmation_link, context)
-    context.set_actor_has_sso_account = MethodType(
-        set_actor_has_sso_account, context)
     context.add_company = MethodType(add_company, context)
     context.get_company = MethodType(get_company, context)
     context.add_case_study = MethodType(add_case_study, context)

@@ -103,7 +103,7 @@ def reg_create_sso_account_associated_with_company(
     reg_confirm_export_status(context, supplier_alias, exported=True)
     reg_create_sso_account(context, supplier_alias, company_alias)
     reg_sso_account_should_be_created(context.response, supplier_alias)
-    context.set_actor_has_sso_account(supplier_alias, True)
+    context.update_actor(supplier_alias, has_sso_account=True)
 
 
 def reg_confirm_email_address(context: Context, supplier_alias: str):
