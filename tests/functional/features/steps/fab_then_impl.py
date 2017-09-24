@@ -22,6 +22,7 @@ from tests.functional.features.pages import (
     fas_ui_profile,
     profile_ui_landing,
     sso_ui_logout,
+    sso_ui_password_reset,
     sso_ui_verify_your_email
 )
 from tests.functional.features.pages.common import FAS_PAGE_OBJECTS
@@ -763,3 +764,9 @@ def fab_should_see_case_study_error_message(context, supplier_alias):
                 value_type, case_study):
             assert error in response.content.decode("utf-8")
     logging.debug("%s has seen all expected case study errors", supplier_alias)
+
+
+def sso_should_be_told_about_password_reset(
+        context: Context, supplier_alias: str):
+    sso_ui_password_reset.should_see_that_password_was_reset(context.response)
+    logging.debug("%s was told that the password was reset", supplier_alias)
