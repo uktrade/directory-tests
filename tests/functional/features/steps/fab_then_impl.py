@@ -39,6 +39,7 @@ from tests.functional.features.utils import (
     extract_csrf_middleware_token,
     extract_logo_url,
     find_mailgun_events,
+    get_password_reset_link,
     get_verification_link,
     surround
 )
@@ -770,3 +771,15 @@ def sso_should_be_told_about_password_reset(
         context: Context, supplier_alias: str):
     sso_ui_password_reset.should_see_that_password_was_reset(context.response)
     logging.debug("%s was told that the password was reset", supplier_alias)
+
+
+def sso_should_get_password_reset_email(context: Context, supplier_alias: str):
+    """Will check if the Supplier received an email verification message.
+
+    :param context: behave `context` object
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    """
+    logging.debug("Searching for a password reset email...")
+    actor = context.get_actor(supplier_alias)
+    link = get_password_reset_link(context, actor.email)
+    context.update_actor(supplier_alias, password_reset_link=link)
