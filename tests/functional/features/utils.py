@@ -640,7 +640,8 @@ def mailgun_get_message(context: Context, url: str) -> dict:
     return response.json()
 
 
-def mailgun_get_message_url(context: Context, recipient: str) -> str:
+def mailgun_get_message_url(
+        context: Context, recipient: str, *, subject: str = None) -> str:
     """Will try to find the message URL among 100 emails sent in last 1 hour.
 
     NOTE:
@@ -657,7 +658,8 @@ def mailgun_get_message_url(context: Context, recipient: str) -> str:
 
     response = find_mailgun_events(
         context, MailGunService.SSO, limit=message_limit, recipient=recipient,
-        event=MailGunEvent.ACCEPTED, begin=begin, ascending="yes"
+        event=MailGunEvent.ACCEPTED, begin=begin, ascending="yes",
+        subject=subject
     )
     context.response = response
     logging.debug("Found event with recipient: {}".format(recipient))
