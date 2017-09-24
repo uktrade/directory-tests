@@ -82,7 +82,7 @@ def bp_should_be_prompted_to_build_your_profile(
     logging.debug(
         "%s is on the 'Build and improve your profile' page", supplier_alias)
     token = extract_csrf_middleware_token(context.response)
-    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
 
 def prof_should_be_on_profile_page(response: Response, supplier_alias: str):
@@ -160,7 +160,7 @@ def sso_should_be_signed_out_from_sso_account(
     # Step 2 - check if Supplier is on Log Out page & extract CSRF token
     sso_ui_logout.should_be_here(response)
     token = extract_csrf_middleware_token(response)
-    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
     # Step 3 - log out
     next_param = get_absolute_url("profile:landing")

@@ -125,7 +125,7 @@ def extract_and_set_csrf_middleware_token(
     :param response: request with HTML content containing CSRF middleware token
     """
     token = extract_csrf_middleware_token(response)
-    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
 
 def sentence(
