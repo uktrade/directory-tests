@@ -46,6 +46,7 @@ from tests.functional.features.steps.fab_when_impl import (
     reg_supplier_confirms_email_address,
     select_random_company,
     sso_go_to_create_trade_profile,
+    sso_reset_password,
     sso_supplier_confirms_email_address
 )
 
