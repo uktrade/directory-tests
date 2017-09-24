@@ -65,9 +65,6 @@ def reg_sso_account_should_be_created(response: Response, supplier_alias: str):
 def reg_should_get_verification_email(context: Context, alias: str):
     """Will check if the Supplier received an email verification message.
 
-    NOTE:
-    The check is done by attempting to find a file with the email is Amazon S3.
-
     :param context: behave `context` object
     :param alias: alias of the Actor used in the scope of the scenario
     """
