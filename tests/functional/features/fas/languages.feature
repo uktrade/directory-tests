@@ -11,7 +11,7 @@ Feature: View FAS in various languages
 
     When "Annette Geissinger" chooses to view specific FAS page in "<selected>" language
       | page                            |
-      | Landing                         |
+      | FAS Landing                     |
       | Industries                      |
       | Health Industry                 |
       | Tech Industry                   |
@@ -24,7 +24,7 @@ Feature: View FAS in various languages
 
     Then the "main" part of the viewed FAS page should be presented in "<expected>" language with probability greater than "0.98"
       | page                            |
-      | Landing                         |
+      | FAS Landing                     |
       | Industries                      |
       | Health Industry                 |
       | Tech Industry                   |

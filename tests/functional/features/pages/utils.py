@@ -66,7 +66,7 @@ FAS_SUPPORTED_LANGUAGES = {
     "spanish": "es"
 }
 FAS_PAGE_SELECTORS = {
-    "landing": "ui-supplier:landing",
+    "fas landing": "ui-supplier:landing",
     'industries': 'ui-supplier:industries',
     'search': 'ui-supplier:search',
     'health industry': 'ui-supplier:industries-health',
