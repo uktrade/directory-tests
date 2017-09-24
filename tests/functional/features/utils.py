@@ -480,6 +480,23 @@ def extract_email_confirmation_link(payload):
     return activation_link
 
 
+def extract_password_reset_link(payload: str) -> str:
+    """Find password reset link inside the plain text email payload.
+
+    :param payload: plain text email message payload
+    :return: password reset link
+    """
+    start = payload.find("http")
+    end = payload.find("\n", start) - 1  # `- 1` to skip the newline char
+    password_reset_link = payload[start:end]
+    with assertion_msg(
+            "Extracted link is not a correct password reset link: %s",
+            password_reset_link):
+        assert "accounts/password/reset/key/" in password_reset_link
+    logging.debug("Found password reset link: %s", password_reset_link)
+    return password_reset_link
+
+
 def check_response(response: Response, status_code: int, *,
                    location: str = None, locations: list = None,
                    location_starts_with: str = None, body_contains: list = None,
