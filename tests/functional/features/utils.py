@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Various utils used across the project."""
 
+import email
 import hashlib
 import logging
 import os
@@ -50,7 +51,8 @@ from tests.settings import (
     MAILGUN_DIRECTORY_SECRET_API_KEY,
     MAILGUN_SSO_API_USER,
     MAILGUN_SSO_EVENTS_URL,
-    MAILGUN_SSO_SECRET_API_KEY
+    MAILGUN_SSO_SECRET_API_KEY,
+    SSO_PASSWORD_RESET_MSG_SUBJECT
 )
 
 # a list of exceptions that can be thrown by `requests` (and urllib3)
@@ -704,6 +706,23 @@ def assertion_msg(message: str, *args):
         _, _, tb = sys.exc_info()
         traceback.print_tb(tb)
         raise
+
+
+def get_password_reset_link(context: Context, recipient: str) -> str:
+    """Get email verification link sent by SSO to specified recipient.
+
+    :param context: behave `context` object
+    :param recipient: email address of the message recipient
+    :return: email verification link sent by SSO
+    """
+    logging.debug("Searching for password reset email of: {}".format(recipient))
+
+    message_url = mailgun_get_message_url(
+        context, recipient, subject=SSO_PASSWORD_RESET_MSG_SUBJECT)
+    raw_response = mailgun_get_message(context, message_url)["body-mime"]
+    message = email.message_from_string(raw_response)
+    plain_text_message = message.get_payload()[0].get_payload()
+    return extract_password_reset_link(plain_text_message)
 
 
 def get_verification_link(context: Context, recipient: str) -> str:
