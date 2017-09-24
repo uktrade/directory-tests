@@ -226,7 +226,7 @@ def fab_find_published_company(
         twitter=company_dict['twitter_url'],
         linkedin=company_dict['linkedin_url']
     )
-    context.set_company_for_actor(actor_alias, company_alias)
+    context.update_actor(actor_alias, company_alias=company_alias)
     context.add_company(company)
     logging.debug("%s found a published company: %s", actor_alias, company)
 

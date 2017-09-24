@@ -132,7 +132,7 @@ def select_random_company(
     context.add_company(company)
     token = extract_csrf_middleware_token(response)
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
-    context.set_company_for_actor(supplier_alias, company_alias)
+    context.update_actor(supplier_alias, company_alias=company_alias)
 
 
 def reg_confirm_company_selection(
