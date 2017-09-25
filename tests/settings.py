@@ -173,3 +173,11 @@ SEARCHABLE_CASE_STUDY_DETAILS = [
 ]
 
 FAS_LOGO_PLACEHOLDER_IMAGE = "/static/images/placeholder.fc5114289e5b.png"
+
+SEPARATORS = {
+    "pipe": "|",
+    "semi-colon": ";",
+    "colon": ":",
+    "full stop": ".",
+    "comma": ","
+}
