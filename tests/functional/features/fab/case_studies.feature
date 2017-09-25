@@ -18,10 +18,10 @@ Feature: Case Studies
       |description   |empty string    |          |This field is required.                                                              |
       |sector        |invalid sector  |          |Select a valid choice. this is an invalid sector is not one of the available choices.|
       |website       |256 characters  |          |Enter a valid URL.                                                                   |
-      |keywords      |book, keys, food|pipe      |You can only enter letters, numbers and commas.                                      |
-      |keywords      |book, keys, food|semi-colon|You can only enter letters, numbers and commas.                                      |
-      |keywords      |book, keys, food|colon     |You can only enter letters, numbers and commas.                                      |
-      |keywords      |book, keys, food|full stop |You can only enter letters, numbers and commas.                                      |
+      |keywords      |3 words         |pipe      |You can only enter letters, numbers and commas.                                      |
+      |keywords      |3 words         |semi-colon|You can only enter letters, numbers and commas.                                      |
+      |keywords      |3 words         |colon     |You can only enter letters, numbers and commas.                                      |
+      |keywords      |3 words         |full stop |You can only enter letters, numbers and commas.                                      |
       |keywords      |empty string    |          |This field is required.                                                              |
       |image_1       |invalid image   |          |Invalid image format, allowed formats: PNG, JPG, JPEG                                |
       |image_1       |no image        |          |This field is required.                                                              |
