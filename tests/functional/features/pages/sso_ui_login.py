@@ -36,30 +36,28 @@ def should_be_here(response: Response):
 
 
 def login(
-        actor: Actor, token: str, *, referer: str = None,
-        next: str = None) -> Response:
+        actor: Actor, *, token: str = None, referer: str = None,
+        next_param: str = None) -> Response:
     """Try to sign in to FAB as a Supplier without verified email address.
 
     :param actor: a namedtuple with Actor details
-    :param token: CSRF token required to submit the login form
-    :param referer: (optional) referer URL
-    :param next: (optional) URL to go to after successful login
+    :param token: (optional) CSRF token required to submit the login form
+    :param referer: (optional) referer URL. Defaults to FAB Landing page
+    :param next_param: (optional) URL to go to after successful login.
+                       Defaults to FAB Landing page
     :return: response object
     """
     session = actor.session
     fab_landing = get_absolute_url("ui-buyer:landing")
 
     data = {
-        "next": fab_landing,
-        "csrfmiddlewaretoken": token,
+        "next": next_param or fab_landing,
+        "csrfmiddlewaretoken": token or actor.csrfmiddlewaretoken,
         "login": actor.email,
         "password": actor.password,
         "remember": "on"
     }
-    if next:
-        data.update({"next": next})
-    # Referer is the same as the final URL from the previous request
-    referer = referer or "{}?next={}".format(URL, fab_landing)
+    referer = "{}?next={}".format(URL, referer or fab_landing)
     headers = {"Referer": referer}
 
     response = make_request(

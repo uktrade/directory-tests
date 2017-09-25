@@ -507,7 +507,7 @@ def prof_attempt_to_sign_in_to_fab(context, supplier_alias):
     context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
     # Step 3 - submit the login form
-    response = sso_ui_login.login(actor, token)
+    response = sso_ui_login.login(actor)
     context.response = response
 
 
@@ -570,7 +570,7 @@ def prof_sign_in_to_fab(context, supplier_alias):
     context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
     # Step 4 - submit the login form
-    response = sso_ui_login.login(actor, token)
+    response = sso_ui_login.login(actor)
     context.response = response
 
     # Step 5 - check if Supplier is on the FAB profile page
@@ -1607,7 +1607,7 @@ def fab_go_to_letter_verification(
         logging.debug(
             "After successful login %s should be redirected to: %s",
             supplier_alias, referer)
-        response = sso_ui_login.login(actor, token, referer=referer, next=next)
+        response = sso_ui_login.login(actor, referer=referer, next_param=next)
         context.response = response
 
         fab_ui_confirm_identity.should_be_here(
