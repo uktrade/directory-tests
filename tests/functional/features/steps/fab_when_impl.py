@@ -79,6 +79,7 @@ from tests.settings import (
     COUNTRIES,
     NO_OF_EMPLOYEES,
     SECTORS,
+    SEPARATORS,
     BMPs,
     JP2s,
     WEBPs
@@ -1633,6 +1634,42 @@ def fab_submit_verification_code(context, supplier_alias):
     context.response = response
 
 
+def get_form_value(key: str) -> str:
+
+    def get_number_from_key(key: str) -> int:
+        return [int(word) for word in key.split() if word.isdigit()][0]
+
+    def get_n_chars(number: int) -> str:
+        return random_chars(number)
+
+    def get_n_words(number: int) -> str:
+        return sentence(min_words=number, max_words=number, max_length=0)
+
+    if key.endswith(" characters"):
+        number = get_number_from_key(key)
+        key = "N characters"
+    elif key.endswith(" words"):
+        number = get_number_from_key(key)
+        key = "N words"
+    else:
+        number = 0
+
+    values = {
+        "N characters": get_n_chars(number),
+        "N words": get_n_words(number),
+        "empty string": "",
+        "valid http": "http://{}.{}".format(rare_word(), rare_word()),
+        "valid https": "https://{}.{}".format(rare_word(), rare_word()),
+        "invalid http": "http:{}.{}".format(rare_word(), rare_word()),
+        "invalid https": "https:{}.{}".format(rare_word(), rare_word()),
+        "invalid sector": "this is an invalid sector",
+        "no image": None,
+        "invalid image": choice(BMPs + JP2s + WEBPs)
+    }
+
+    return values[key]
+
+
 def fab_attempt_to_add_case_study(
         context: Context, supplier_alias: str, table: Table):
     actor = context.get_actor(supplier_alias)
@@ -1654,55 +1691,19 @@ def fab_attempt_to_add_case_study(
         separator = row["separator"]
         error = row["error"]
 
-        if value_type.endswith(" characters"):
-            number = [int(word)
-                      for word in value_type.split() if word.isdigit()][0]
-            value = random_chars(number)
-        elif value_type.endswith(" words"):
-            number = [int(word)
-                      for word in value_type.split() if word.isdigit()][0]
-            value = sentence(min_words=number, max_words=number, max_length=0)
-        elif value_type == "empty string":
-            value = ""
-        elif value_type == "valid http":
-            value = "http://{}.{}".format(rare_word(), rare_word())
-        elif value_type == "valid https":
-            value = "https://{}.{}".format(rare_word(), rare_word())
-        elif value_type == "invalid http":
-            value = "http:{}.{}".format(rare_word(), rare_word())
-        elif value_type == "invalid https":
-            value = "https:{}.{}".format(rare_word(), rare_word())
-        elif value_type == "invalid sector":
-            value = "this is an invalid sector"
-        elif value_type == "no image":
-            value = None
-        elif value_type == "invalid image":
-            images = BMPs + JP2s + WEBPs
-            value = choice(images)
-
-        if separator == "pipe":
-            separator = "|"
-        elif separator == "semi-colon":
-            separator = ";"
-        elif separator == "colon":
-            separator = ":"
-        elif separator == "full stop":
-            separator = "."
-        else:
-            separator = ","
+        value = get_form_value(value_type)
 
         if field == "keywords":
-            if value_type == "empty string":
-                value = ""
-            else:
-                separate_keywords = value_type.split(", ")
-                value = "{} ".format(separator).join(separate_keywords)
+            separator = SEPARATORS.get(separator, ",")
+            value = "{} ".format(separator).join(value.split())
 
         case_study = case_study._replace(**{field: value})
 
         response = fab_ui_case_study_basic.go_to(session)
         context.response = response
+
         token = extract_csrf_middleware_token(response)
+
         if field in page_1_fields:
             response = fab_ui_case_study_basic.submit_form(session, token, case_study)
             context.response = response
@@ -1717,4 +1718,5 @@ def fab_attempt_to_add_case_study(
                 "Could not recognize field '{}' as valid case study field")
 
         results.append((field, value_type, case_study, response, error))
+
     context.results = results
