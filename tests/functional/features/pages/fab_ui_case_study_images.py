@@ -64,25 +64,16 @@ def prepare_form_data(token: str, case_study: CaseStudy) -> (dict, dict):
     paths = [case_study.image_1, case_study.image_2, case_study.image_3]
 
     def get_basename(path):
-        if path is not None:
-            res = basename(path)
-        else:
-            res = ""
-        return res
+        return basename(path) if path is not None else ""
 
     def get_mimetype(path):
-        if path is not None:
-            res = MimeTypes().guess_type(path)[0]
-        else:
-            res = ""
-        return res
+        return MimeTypes().guess_type(path)[0] if path is not None else ""
 
-    def read_image(file_path: str):
-        if file_path is not None:
-            with open(file_path, "rb") as f:
+    def read_image(path: str):
+        res = ""
+        if path is not None:
+            with open(path, "rb") as f:
                 res = f.read()
-        else:
-            res = ""
         return res
 
     name_1, name_2, name_3 = (get_basename(path) for path in paths)
