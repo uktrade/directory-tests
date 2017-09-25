@@ -47,6 +47,7 @@ from tests.functional.features.steps.fab_when_impl import (
     select_random_company,
     sso_go_to_create_trade_profile,
     sso_reset_password,
+    sso_sign_in,
     sso_supplier_confirms_email_address
 )
 
@@ -312,3 +313,8 @@ def when_supplier_attempts_to_add_case_study(context, supplier_alias):
 @when('"{supplier_alias}" resets the password')
 def when_supplier_resets_password(context, supplier_alias):
     sso_reset_password(context, supplier_alias)
+
+
+@when('"{supplier_alias}" signs in to SSO/great.gov.uk account')
+def step_impl(context, supplier_alias):
+    sso_sign_in(context, supplier_alias)

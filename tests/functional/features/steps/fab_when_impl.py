@@ -1741,3 +1741,23 @@ def sso_reset_password(
 
     response = sso_ui_password_reset.reset(actor, token, next_param=next_param)
     context.response = response
+
+
+def sso_sign_in(context: Context, supplier_alias: str):
+    """Sign in to standalone SSO account.
+
+    :param context: behave `context` object
+    :param supplier_alias: alias of the Supplier Actor
+    """
+    actor = context.get_actor(supplier_alias)
+    next_param = get_absolute_url("profile:about")
+    referer = get_absolute_url("profile:about")
+    response = sso_ui_login.go_to(
+        actor.session, next_param=next_param, referer=referer)
+    context.response = response
+
+    token = extract_csrf_middleware_token(response)
+    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
+
+    context.response = sso_ui_login.login(
+        actor, next_param=next_param, referer=referer)
