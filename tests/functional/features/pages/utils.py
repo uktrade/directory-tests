@@ -114,6 +114,15 @@ FAB_PAGE_SELECTORS = {
     "edit company contact": "ui-buyer:company-edit-contact",
     "edit social media links": "ui-buyer:company-edit-social-media",
 }
+PROFILE_PAGE_SELECTORS = {
+    "profile selling online overseas": "profile:soo",
+    "profile find a buyer": "profile:fab",
+    "exops alerts": "profile:exops-alerts",
+    "exops applications": "profile:exops-applications",
+    "profile landing": "profile:landing",
+    "profile about": "profile:about",
+    "profile directory supplier": "profile:directory-supplier"
+}
 
 
 def extract_and_set_csrf_middleware_token(
