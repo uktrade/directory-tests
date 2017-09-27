@@ -318,3 +318,9 @@ def when_supplier_resets_password(context, supplier_alias):
 @when('"{supplier_alias}" signs in to SSO/great.gov.uk account')
 def when_supplier_signs_in_to_sso_account(context, supplier_alias):
     sso_sign_in(context, supplier_alias)
+
+
+@when('"{supplier_alias}" changes the password to a new one using the password'
+      ' reset link')
+def when_supplier_change_password(context, supplier_alias):
+    sso_reset_password(context, supplier_alias)

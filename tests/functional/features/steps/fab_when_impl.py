@@ -1724,12 +1724,12 @@ def fab_attempt_to_add_case_study(
     context.results = results
 
 
-def sso_reset_password(
-        context: Context, supplier_alias: str, *, next_page: str = None):
+def sso_reset_password(context: Context, supplier_alias: str):
     actor = context.get_actor(supplier_alias)
-    next_param = None
-    if next_page is not None:
-        next_param = get_fabs_page_url(page_name=next_page)
+    if actor.company_alias is None:
+        next_param = get_fabs_page_url(page_name="profile about")
+    else:
+        next_param = get_fabs_page_url(page_name="fab landing")
 
     response = sso_ui_password_reset.go_to(actor.session, next_param=next_param)
     context.response = response
