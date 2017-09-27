@@ -38,7 +38,6 @@ from tests.functional.features.steps.fab_when_impl import (
     bp_verify_identity_with_letter,
     can_find_supplier_by_term,
     prof_set_company_description,
-    prof_sign_out_from_fab,
     prof_verify_company,
     reg_confirm_company_selection,
     reg_confirm_export_status,
