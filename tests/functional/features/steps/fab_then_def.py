@@ -334,8 +334,3 @@ def then_should_be_told_that_password_was_reset(context, supplier_alias):
 @then('"{supplier_alias}" should receive a password reset email')
 def then_supplier_should_receive_password_reset_email(context, supplier_alias):
     sso_should_get_password_reset_email(context, supplier_alias)
-
-
-@then('"{supplier_alias}" should be told that password was reset')
-def then_should_be_told_that_password_was_reset(context, supplier_alias):
-    sso_should_be_told_about_password_reset(context, supplier_alias)
