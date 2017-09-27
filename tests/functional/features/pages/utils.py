@@ -497,6 +497,7 @@ def get_fabs_page_url(page_name: str, *, language_code: str = None):
     selectors.update(FAB_PAGE_SELECTORS)
     selectors.update(FAS_PAGE_SELECTORS)
     selectors.update(SSO_PAGE_SELECTORS)
+    selectors.update(PROFILE_PAGE_SELECTORS)
     url = get_absolute_url(selectors[page_name.lower()])
     if language_code:
         url += "?lang={}".format(language_code)
