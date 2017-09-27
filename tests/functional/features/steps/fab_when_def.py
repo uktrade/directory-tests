@@ -316,5 +316,5 @@ def when_supplier_resets_password(context, supplier_alias):
 
 
 @when('"{supplier_alias}" signs in to SSO/great.gov.uk account')
-def step_impl(context, supplier_alias):
+def when_supplier_signs_in_to_sso_account(context, supplier_alias):
     sso_sign_in(context, supplier_alias)
