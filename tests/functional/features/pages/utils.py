@@ -94,7 +94,9 @@ def extract_and_set_csrf_middleware_token(
     context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
 
 
-def sentence(*, max_length: int = 60, min_word_length: int = 9, max_words: int = 10):
+def sentence(
+        *, max_length: int = 60, min_word_length: int = 9, max_words: int = 10,
+        min_words: int = 3) -> str:
     """Generate a random string consisting of rare english words.
 
     NOTE:
@@ -104,11 +106,13 @@ def sentence(*, max_length: int = 60, min_word_length: int = 9, max_words: int =
     :return: a sentence consisting of rare english words
     """
     words = []
-    while len(words) < max_words:
+    assert min_words <= max_words
+    number_of_words = random.randint(min_words, max_words)
+    while len(words) < number_of_words:
         word = random.choice(RARE_WORDS)
         if len(word) > min_word_length:
             words.append(word)
-    while len(" ".join(words)) > max_length:
+    while 0 < max_length < len(" ".join(words)):
         words.pop()
     return " ".join(words)
 
@@ -156,7 +160,8 @@ def random_case_study_data(alias: str) -> CaseStudy:
 
 def random_feedback_data(
         *, name: str = None, email: str = None, company_name: str = None,
-        country: str = None, comment: str = None, terms: str = None) -> Feedback:
+        country: str = None, comment: str = None,
+        terms: str = None) -> Feedback:
     name = name or rare_word(min_length=12)
     email = email or ("test+buyer_{}@directory.uktrade.io"
                       .format(rare_word(min_length=15)))
@@ -183,7 +188,7 @@ def random_message_data(
     country = country or rare_word(min_length=12)
     email_address = email_address or ("test+buyer_{}@directory.uktrade.io"
                                       .format(rare_word(min_length=15)))
-    full_name = full_name or sentence(max_words=2)
+    full_name = full_name or sentence(min_words=2, max_words=2)
     sector = sector or random.choice(SECTORS)
     subject = subject or sentence(max_length=200)
     g_recaptcha_response = g_recaptcha_response or "test mode"
@@ -318,7 +323,8 @@ def get_companies(*, number: int = 100) -> CompaniesList:
     :param number: (optional) expected number of companies to find
     :return: a list of Company named tuples (all with "test" alias)
     """
-    return [find_active_company_without_fas_profile("test") for _ in range(number)]
+    return [find_active_company_without_fas_profile("test") for _ in
+            range(number)]
 
 
 def save_companies(companies: CompaniesList):
@@ -329,7 +335,8 @@ def save_companies(companies: CompaniesList):
     # convert `Company` named tuples into dictionaries
     list_dict = []
     for company in companies:
-        list_dict.append({key: getattr(company, key) for key in company._fields})
+        list_dict.append(
+            {key: getattr(company, key) for key in company._fields})
 
     path = os.path.join(TEST_IMAGES_DIR, 'companies.json')
     with open(path, 'w', encoding='utf8') as f:

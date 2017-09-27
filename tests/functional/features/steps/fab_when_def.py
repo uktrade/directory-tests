@@ -6,6 +6,7 @@ from tests.functional.features.steps.fab_when_impl import (
     bp_provide_company_details,
     bp_select_random_sector_and_export_to_country,
     bp_verify_identity_with_letter,
+    fab_attempt_to_add_case_study,
     fab_choose_to_verify_with_code,
     fab_go_to_letter_verification,
     fab_provide_company_details,
@@ -300,3 +301,8 @@ def when_supplier_decides_to_verify_with_address(context, supplier_alias):
 @when('"{supplier_alias}" submits the verification code')
 def when_supplier_submits_verification_code(context, supplier_alias):
     fab_submit_verification_code(context, supplier_alias)
+
+
+@when('"{supplier_alias}" attempts to add a case study using following values')
+def when_supplier_attempts_to_add_case_study(context, supplier_alias):
+    fab_attempt_to_add_case_study(context, supplier_alias, context.table)

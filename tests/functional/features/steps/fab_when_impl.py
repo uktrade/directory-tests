@@ -2,6 +2,7 @@
 """FAB Given step implementations."""
 import logging
 import random
+from random import choice
 from urllib.parse import parse_qsl, quote, urljoin, urlsplit
 
 from behave.model import Table
@@ -74,7 +75,15 @@ from tests.functional.features.utils import (
     make_request,
     random_chars
 )
-from tests.settings import COUNTRIES, NO_OF_EMPLOYEES, SECTORS
+from tests.settings import (
+    COUNTRIES,
+    NO_OF_EMPLOYEES,
+    SECTORS,
+    SEPARATORS,
+    BMPs,
+    JP2s,
+    WEBPs
+)
 
 
 def select_random_company(
@@ -1623,3 +1632,91 @@ def fab_submit_verification_code(context, supplier_alias):
         actor.session, actor.csrfmiddlewaretoken, verification_code,
         referer=referer)
     context.response = response
+
+
+def get_form_value(key: str) -> str:
+
+    def get_number_from_key(key: str) -> int:
+        return [int(word) for word in key.split() if word.isdigit()][0]
+
+    def get_n_chars(number: int) -> str:
+        return random_chars(number)
+
+    def get_n_words(number: int) -> str:
+        return sentence(min_words=number, max_words=number, max_length=0)
+
+    if key.endswith(" characters"):
+        number = get_number_from_key(key)
+        key = "N characters"
+    elif key.endswith(" words"):
+        number = get_number_from_key(key)
+        key = "N words"
+    else:
+        number = 0
+
+    values = {
+        "N characters": get_n_chars(number),
+        "N words": get_n_words(number),
+        "empty string": "",
+        "valid http": "http://{}.{}".format(rare_word(), rare_word()),
+        "valid https": "https://{}.{}".format(rare_word(), rare_word()),
+        "invalid http": "http:{}.{}".format(rare_word(), rare_word()),
+        "invalid https": "https:{}.{}".format(rare_word(), rare_word()),
+        "invalid sector": "this is an invalid sector",
+        "no image": None,
+        "invalid image": choice(BMPs + JP2s + WEBPs)
+    }
+
+    return values[key]
+
+
+def fab_attempt_to_add_case_study(
+        context: Context, supplier_alias: str, table: Table):
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+
+    page_1_fields = [
+        "title", "summary", "description", "sector", "website", "keywords"
+    ]
+    page_2_fields = [
+        "image_1", "caption_1", "image_2", "caption_2", "image_3", "caption_3",
+        "testimonial", "source_name", "source_job", "source_company"
+    ]
+
+    results = []
+    for row in table:
+        case_study = random_case_study_data("test")
+        field = row["field"]
+        value_type = row["value type"]
+        separator = row["separator"]
+        error = row["error"]
+
+        value = get_form_value(value_type)
+
+        if field == "keywords":
+            separator = SEPARATORS.get(separator, ",")
+            value = "{} ".format(separator).join(value.split())
+
+        case_study = case_study._replace(**{field: value})
+
+        response = fab_ui_case_study_basic.go_to(session)
+        context.response = response
+
+        token = extract_csrf_middleware_token(response)
+
+        if field in page_1_fields:
+            response = fab_ui_case_study_basic.submit_form(session, token, case_study)
+            context.response = response
+        elif field in page_2_fields:
+            response = fab_ui_case_study_basic.submit_form(session, token, case_study)
+            context.response = response
+            token = extract_csrf_middleware_token(response)
+            response = fab_ui_case_study_images.submit_form(session, token, case_study)
+            context.response = response
+        else:
+            raise KeyError(
+                "Could not recognize field '{}' as valid case study field")
+
+        results.append((field, value_type, case_study, response, error))
+
+    context.results = results

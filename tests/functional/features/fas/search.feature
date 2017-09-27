@@ -49,6 +49,9 @@ Feature: Find a Supplier
     When "Peter Alder" adds a complete case study called "no 1"
     And "Peter Alder" adds a complete case study called "no 2"
     And "Peter Alder" adds a complete case study called "no 3"
+    And "Peter Alder" gets the slug for case study "no 1"
+    And "Peter Alder" gets the slug for case study "no 2"
+    And "Peter Alder" gets the slug for case study "no 3"
 
     Then "Annette Geissinger" should be able to find company "Y" on FAS using any part of case study "no 1"
     And "Annette Geissinger" should be able to find company "Y" on FAS using any part of case study "no 2"
