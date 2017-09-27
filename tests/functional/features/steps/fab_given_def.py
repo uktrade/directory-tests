@@ -102,7 +102,7 @@ def given_supplier_is_signed_in_to_sso(context, supplier_alias):
     sso_should_be_signed_in_to_sso_account(context, supplier_alias)
 
 
-@given('"{supplier_alias}" is signed out from SSO/great.gov.uk account')
+@given('"{supplier_alias}" signed out from SSO/great.gov.uk account')
 def given_supplier_is_signed_out_from_sso(context, supplier_alias):
     sso_should_be_signed_out_from_sso_account(context, supplier_alias)
 

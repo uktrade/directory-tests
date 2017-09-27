@@ -8,7 +8,7 @@ Feature: SSO password management
     @password
     Scenario: Suppliers without FAB profile should receive a message with password reset link
       Given "Peter Alder" has a verified standalone SSO/great.gov.uk account
-      And "Peter Alder" is signed out from SSO/great.gov.uk account
+      And "Peter Alder" signed out from SSO/great.gov.uk account
 
       When "Peter Alder" resets the password
 
@@ -80,7 +80,7 @@ Feature: SSO password management
     @password
     Scenario: Suppliers should be able to reset (change) the password to the same one
       Given "Peter Alder" has a verified standalone SSO/great.gov.uk account
-      And "Peter Alder" is signed out from SSO/great.gov.uk account
+      And "Peter Alder" signed out from SSO/great.gov.uk account
 
       When "Peter Alder" changes the password to the same one using the password reset link
 
