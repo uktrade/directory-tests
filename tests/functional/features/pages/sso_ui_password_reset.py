@@ -6,7 +6,12 @@ from requests import Response, Session
 
 from tests import get_absolute_url
 from tests.functional.features.context_utils import Actor
-from tests.functional.features.utils import Method, check_response, make_request
+from tests.functional.features.utils import (
+    Method,
+    assertion_msg,
+    check_response,
+    make_request
+)
 
 URL = get_absolute_url("sso:password_reset")
 EXPECTED_STRINGS = [
@@ -78,3 +83,9 @@ def reset(
         Method.POST, URL, session=session, data=data, headers=headers)
 
     return response
+
+
+def open_link(session: Session, link: str) -> Response:
+    with assertion_msg("Expected a non-empty password reset email link"):
+        assert link
+    return make_request(Method.GET, link, session=session)
