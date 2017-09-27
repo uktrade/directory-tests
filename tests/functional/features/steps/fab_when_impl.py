@@ -1761,3 +1761,10 @@ def sso_sign_in(context: Context, supplier_alias: str):
 
     context.response = sso_ui_login.login(
         actor, next_param=next_param, referer=referer)
+
+
+def sso_open_password_reset_link(context: Context, supplier_alias: str):
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+    link = actor.password_reset_link
+    context.response = sso_ui_password_reset.open_link(session, link)
