@@ -38,8 +38,7 @@ def open_confirmation_link(session: Session, link: str) -> Response:
     """
     with assertion_msg("Expected a non-empty email confirmation link"):
         assert link
-    response = make_request(Method.GET, link, session=session)
-    return response
+    return make_request(Method.GET, link, session=session)
 
 
 def confirm(actor: Actor, form_action_value: str) -> Response:
