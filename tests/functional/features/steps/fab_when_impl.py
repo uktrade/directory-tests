@@ -2,6 +2,7 @@
 """FAB Given step implementations."""
 import logging
 import random
+import string
 from random import choice
 from urllib.parse import parse_qsl, quote, urljoin, urlsplit
 
@@ -37,6 +38,7 @@ from tests.functional.features.pages import (
     fas_ui_profile,
     profile_ui_find_a_buyer,
     profile_ui_landing,
+    sso_ui_change_password,
     sso_ui_confim_your_email,
     sso_ui_login,
     sso_ui_logout,
@@ -1761,6 +1763,43 @@ def sso_sign_in(context: Context, supplier_alias: str):
 
     context.response = sso_ui_login.login(
         actor, next_param=next_param, referer=referer)
+
+
+def sso_change_password_with_password_reset_link(
+        context: Context, supplier_alias: str, *, new: bool = False,
+        same: bool = False, mismatch: bool = False):
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+    link = actor.password_reset_link
+
+    response = sso_ui_password_reset.open_link(session, link)
+    context.response = response
+
+    sso_ui_change_password.should_be_here(response)
+
+    token = extract_csrf_middleware_token(response)
+    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
+    action = extract_form_action(response)
+
+    password = None
+    password_again = None
+
+    if new:
+        password_length = 10
+        password = "".join(random.choice(string.ascii_letters)
+                           for _ in range(password_length))
+        context.update_actor(supplier_alias, password=password)
+    if same:
+        password = actor.password
+    if mismatch:
+        password = "first password"
+        password_again = "this password does not match"
+
+    actor = context.get_actor(supplier_alias)
+
+    response = sso_ui_change_password.submit(
+        actor, action, password=password, password_again=password_again)
+    context.response = response
 
 
 def sso_open_password_reset_link(context: Context, supplier_alias: str):
