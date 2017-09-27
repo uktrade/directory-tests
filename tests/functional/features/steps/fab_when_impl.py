@@ -69,8 +69,8 @@ from tests.functional.features.utils import (
     Method,
     assertion_msg,
     check_response,
-    extract_confirm_email_form_action,
     extract_csrf_middleware_token,
+    extract_form_action,
     extract_logo_url,
     get_absolute_path_of_file,
     get_md5_hash_of_file,
@@ -263,7 +263,7 @@ def reg_open_email_confirmation_link(context, supplier_alias):
     # Form Action Value is required to successfully confirm email
     token = extract_csrf_middleware_token(response)
     context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
-    form_action_value = extract_confirm_email_form_action(response)
+    form_action_value = extract_form_action(response)
     context.form_action_value = form_action_value
 
 
