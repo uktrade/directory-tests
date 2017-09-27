@@ -15,6 +15,7 @@ from tests.functional.features.steps.fab_given_impl import (
     reg_should_get_verification_letter,
     sso_create_standalone_unverified_sso_account,
     sso_create_standalone_verified_sso_account,
+    sso_get_password_reset_link,
     unauthenticated_buyer,
     unauthenticated_supplier
 )
@@ -182,3 +183,8 @@ def given_actor_gets_company_slug(context, actor_alias, company_alias):
 @given('"{supplier_alias}" received the letter with verification code')
 def step_impl(context, supplier_alias):
     reg_should_get_verification_letter(context, supplier_alias)
+
+
+@given('"{supplier_alias}" received a password reset email')
+def given_supplier_received_password_reset_email(context, supplier_alias):
+    sso_get_password_reset_link(context, supplier_alias)

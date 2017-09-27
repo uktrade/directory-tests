@@ -28,7 +28,9 @@ from tests.functional.features.steps.fab_then_impl import (
     prof_should_be_told_about_missing_description,
     reg_should_get_verification_email,
     reg_sso_account_should_be_created,
-    sso_should_be_signed_in_to_sso_account
+    sso_should_be_signed_in_to_sso_account,
+    sso_should_be_told_about_password_reset,
+    sso_should_get_password_reset_email
 )
 from tests.functional.features.steps.fab_when_impl import (
     bp_provide_company_details,
@@ -36,6 +38,7 @@ from tests.functional.features.steps.fab_when_impl import (
     bp_verify_identity_with_letter,
     can_find_supplier_by_term,
     prof_set_company_description,
+    prof_sign_out_from_fab,
     prof_verify_company,
     reg_confirm_company_selection,
     reg_confirm_export_status,
@@ -45,6 +48,7 @@ from tests.functional.features.steps.fab_when_impl import (
     reg_supplier_confirms_email_address,
     select_random_company,
     sso_go_to_create_trade_profile,
+    sso_reset_password,
     sso_supplier_confirms_email_address
 )
 from tests.functional.features.utils import assertion_msg
@@ -260,3 +264,10 @@ def reg_should_get_verification_letter(context, supplier_alias):
     logging.debug(
         "%s received the verification letter with code: %s", supplier_alias,
         verification_code)
+
+
+def sso_get_password_reset_link(context: Context, supplier_alias: str):
+    prof_sign_out_from_fab(context, supplier_alias)
+    sso_reset_password(context, supplier_alias)
+    sso_should_be_told_about_password_reset(context, supplier_alias)
+    sso_should_get_password_reset_email(context, supplier_alias)
