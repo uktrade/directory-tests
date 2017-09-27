@@ -1724,7 +1724,7 @@ def fab_attempt_to_add_case_study(
     context.results = results
 
 
-def sso_reset_password(context: Context, supplier_alias: str):
+def sso_request_password_reset(context: Context, supplier_alias: str):
     actor = context.get_actor(supplier_alias)
     if actor.company_alias is None:
         next_param = get_fabs_page_url(page_name="profile about")

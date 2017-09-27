@@ -10,7 +10,7 @@ Feature: SSO password management
       Given "Peter Alder" has a verified standalone SSO/great.gov.uk account
       And "Peter Alder" signed out from SSO/great.gov.uk account
 
-      When "Peter Alder" resets the password
+      When "Peter Alder" requests password reset
 
       Then "Peter Alder" should be told that password was reset
       And "Peter Alder" should receive a password reset email
@@ -25,7 +25,7 @@ Feature: SSO password management
       Given "Peter Alder" has created and verified profile for randomly selected company "Y"
       And "Peter Alder" signed out from Find a Buyer service
 
-      When "Peter Alder" resets the password
+      When "Peter Alder" requests password reset
 
       Then "Peter Alder" should be told that password was reset
       And "Peter Alder" should receive a password reset email
@@ -40,7 +40,7 @@ Feature: SSO password management
       Given "Peter Alder" created an unverified profile for randomly selected company "Y"
       And "Peter Alder" signed out from Find a Buyer service
 
-      When "Peter Alder" resets the password
+      When "Peter Alder" requests password reset
 
       Then "Peter Alder" should be told that password was reset
       And "Peter Alder" should receive a password reset email

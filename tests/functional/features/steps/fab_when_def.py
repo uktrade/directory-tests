@@ -46,8 +46,8 @@ from tests.functional.features.steps.fab_when_impl import (
     reg_supplier_confirms_email_address,
     select_random_company,
     sso_go_to_create_trade_profile,
-    sso_reset_password,
     sso_sign_in,
+    sso_request_password_reset,
     sso_supplier_confirms_email_address
 )
 
@@ -310,9 +310,9 @@ def when_supplier_attempts_to_add_case_study(context, supplier_alias):
     fab_attempt_to_add_case_study(context, supplier_alias, context.table)
 
 
-@when('"{supplier_alias}" resets the password')
+@when('"{supplier_alias}" requests password reset')
 def when_supplier_resets_password(context, supplier_alias):
-    sso_reset_password(context, supplier_alias)
+    sso_request_password_reset(context, supplier_alias)
 
 
 @when('"{supplier_alias}" signs in to SSO/great.gov.uk account')
@@ -323,4 +323,4 @@ def when_supplier_signs_in_to_sso_account(context, supplier_alias):
 @when('"{supplier_alias}" changes the password to a new one using the password'
       ' reset link')
 def when_supplier_change_password(context, supplier_alias):
-    sso_reset_password(context, supplier_alias)
+    sso_request_password_reset(context, supplier_alias)
