@@ -65,64 +65,6 @@ FAS_SUPPORTED_LANGUAGES = {
     "portuguese-brazilian": "pt-br",
     "spanish": "es"
 }
-FAS_PAGE_SELECTORS = {
-    "fas landing": "ui-supplier:landing",
-    'industries': 'ui-supplier:industries',
-    'search': 'ui-supplier:search',
-    'health industry': 'ui-supplier:industries-health',
-    'tech industry': 'ui-supplier:industries-tech',
-    'creative industry': 'ui-supplier:industries-creative',
-    'food-and-drink industry': 'ui-supplier:industries-food',
-    'health industry summary': 'ui-supplier:industries-health-summary',
-    'tech industry summary': 'ui-supplier:industries-tech-summary',
-    'creative industry summary': 'ui-supplier:industries-creative-summary',
-    'food-and-drink industry summary': 'ui-supplier:industries-food-summary',
-    'terms-and-conditions': 'ui-supplier:terms',
-    'privacy-policy': 'ui-supplier:privacy',
-}
-SSO_PAGE_SELECTORS = {
-    "sso landing": 'sso:landing',
-    "login": 'sso:login',
-    "register": 'sso:signup',
-    "logout": 'sso:logout',
-    "password change": 'sso:password_change',
-    "password set": 'sso:password_set',
-    "password reset": 'sso:password_reset',
-    "confirm email": 'sso:email_confirm',
-    "inactive": 'sso:inactive',
-    "health": 'sso:health',
-    "session user": 'sso:user'
-}
-FAB_PAGE_SELECTORS = {
-    "fab landing": "ui-buyer:landing",
-    "fab register": "ui-buyer:register",
-    "confirm company selection": "ui-buyer:register-confirm-company",
-    "confirm export status": "ui-buyer:register-confirm-export-status",
-    "finish registration": "ui-buyer:register-finish",
-    "submit account details": "ui-buyer:register-submit-account-details",
-    "upload logo": "ui-buyer:upload-logo",
-    "add case study": "ui-buyer:case-study-add",
-    "company company address": "ui-buyer:confirm-company-address",
-    "company identity": "ui-buyer:confirm-identity",
-    "company identity via letter": "ui-buyer:confirm-identity-letter",
-    "fab company profile": "ui-buyer:company-profile",
-    "edit company profile": "ui-buyer:company-edit",
-    "edit company address": "ui-buyer:company-edit-address",
-    "edit company description": "ui-buyer:company-edit-description",
-    "edit company key facts": "ui-buyer:company-edit-key-facts",
-    "edit company sectors": "ui-buyer:company-edit-sectors",
-    "edit company contact": "ui-buyer:company-edit-contact",
-    "edit social media links": "ui-buyer:company-edit-social-media",
-}
-PROFILE_PAGE_SELECTORS = {
-    "profile selling online overseas": "profile:soo",
-    "profile find a buyer": "profile:fab",
-    "exops alerts": "profile:exops-alerts",
-    "exops applications": "profile:exops-applications",
-    "profile landing": "profile:landing",
-    "profile about": "profile:about",
-    "profile directory supplier": "profile:directory-supplier"
-}
 
 
 def extract_and_set_csrf_middleware_token(
