@@ -796,3 +796,10 @@ def sso_should_see_invalid_password_reset_link_error(
     sso_ui_invalid_password_reset_link.should_be_here(context.response)
     logging.debug(
         "%s was told about invalid password reset link", supplier_alias)
+
+
+def should_be_at(context: Context, supplier_alias: str, page_name: str):
+    response = context.response
+    page = get_fabs_page_object(page_name.lower())
+    page.should_be_here(response)
+    logging.debug("%s is on '%s' page", supplier_alias, page_name)

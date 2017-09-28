@@ -42,6 +42,7 @@ from tests.functional.features.steps.fab_then_impl import (
     reg_sso_account_should_be_created,
     reg_supplier_has_to_verify_email_first,
     reg_supplier_is_not_appropriate_for_fab,
+    should_be_at,
     sso_should_be_signed_in_to_sso_account,
     sso_should_be_told_about_password_reset,
     sso_should_get_password_reset_email,
@@ -340,3 +341,8 @@ def then_supplier_should_receive_password_reset_email(context, supplier_alias):
 @then('"{supplier_alias}" should be told that password reset link is invalid')
 def then_should_see_invalid_password_reset_link_error(context, supplier_alias):
     sso_should_see_invalid_password_reset_link_error(context, supplier_alias)
+
+
+@then('"{supplier_alias}" should see "{page_name}" page')
+def step_impl(context, supplier_alias, page_name):
+    should_be_at(context, supplier_alias, page_name)
