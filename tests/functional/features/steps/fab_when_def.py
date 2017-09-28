@@ -27,6 +27,7 @@ from tests.functional.features.steps.fab_when_impl import (
     fas_send_message_to_supplier,
     fas_view_page,
     fas_view_pages_in_selected_language,
+    go_to_page,
     prof_add_case_study,
     prof_add_invalid_online_profiles,
     prof_add_online_profiles,
@@ -339,3 +340,8 @@ def when_supplier_opens_password_reset_link(context, supplier_alias):
 def when_supplier_changes_password_to_the_same_one(context, supplier_alias):
     sso_change_password_with_password_reset_link(
         context, supplier_alias, same=True)
+
+
+@when('"{supplier_alias}" goes to "{page_name}" page')
+def when_supplier_goes_sud_page(context, supplier_alias, page_name):
+    go_to_page(context, supplier_alias, page_name)

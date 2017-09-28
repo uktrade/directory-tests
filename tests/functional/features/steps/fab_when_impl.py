@@ -1805,3 +1805,9 @@ def sso_open_password_reset_link(context: Context, supplier_alias: str):
     session = actor.session
     link = actor.password_reset_link
     context.response = sso_ui_password_reset.open_link(session, link)
+
+
+def go_to_page(context: Context, supplier_alias: str, page_name: str):
+    actor = context.get_actor(supplier_alias)
+    url = get_fabs_page_url(page_name)
+    context.response = make_request(Method.GET, url, session=actor.session)
