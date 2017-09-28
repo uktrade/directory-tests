@@ -46,17 +46,11 @@ from tests.functional.features.pages import (
     sso_ui_register,
     sso_ui_verify_your_email
 )
-from tests.functional.features.pages.common import (
-    DETAILS,
-    FAS_PAGE_OBJECTS,
-    PROFILES
-)
+from tests.functional.features.pages.common import DETAILS, PROFILES
 from tests.functional.features.pages.utils import (
     escape_html,
     extract_and_set_csrf_middleware_token,
     get_active_company_without_fas_profile,
-    get_fabs_page_url,
-    get_fas_page_url,
     get_language_code,
     get_number_of_search_result_pages,
     is_already_registered,
@@ -66,6 +60,10 @@ from tests.functional.features.pages.utils import (
     random_message_data,
     rare_word,
     sentence
+)
+from tests.functional.features.steps import (
+    get_fabs_page_object,
+    get_fabs_page_url
 )
 from tests.functional.features.utils import (
     Method,
@@ -1139,7 +1137,7 @@ def fas_view_pages_in_selected_language(
         actor = context.get_actor(buyer_alias)
         session = actor.session
         language_code = get_language_code(language)
-        page_url = get_fas_page_url(page_name, language_code=language_code)
+        page_url = get_fabs_page_url(page_name, language_code=language_code)
         response = make_request(Method.GET, page_url, session=session)
         views[page_name] = response
     context.views = views
@@ -1148,7 +1146,7 @@ def fas_view_pages_in_selected_language(
 def fas_view_page(context, actor_alias, page_name):
     actor = context.get_actor(actor_alias)
     session = actor.session
-    page_object = FAS_PAGE_OBJECTS[page_name.lower()]
+    page_object = get_fabs_page_object(page_name)
     context.response = page_object.go_to(session)
 
 
@@ -1169,7 +1167,7 @@ def fas_send_feedback_request(
         context: Context, buyer_alias: str, page_name: str):
     actor = context.get_actor(buyer_alias)
     session = actor.session
-    referer_url = get_fas_page_url(page_name)
+    referer_url = get_fabs_page_url(page_name)
 
     # Step 1: generate random form data for our Buyer
     feedback = random_feedback_data(email=actor.email)
