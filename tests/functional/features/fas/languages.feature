@@ -16,11 +16,11 @@ Feature: View FAS in various languages
       | Health Industry                 |
       | Tech Industry                   |
       | Creative Industry               |
-      | Food-and-drink Industry         |
+      | Food and drink Industry         |
       | Health Industry Summary         |
       | Tech Industry Summary           |
       | Creative Industry Summary       |
-      | Food-and-drink Industry Summary |
+      | Food and drink Industry Summary |
 
     Then the "main" part of the viewed FAS page should be presented in "<expected>" language with probability greater than "0.98"
       | page                            |
@@ -29,11 +29,11 @@ Feature: View FAS in various languages
       | Health Industry                 |
       | Tech Industry                   |
       | Creative Industry               |
-      | Food-and-drink Industry         |
+      | Food and drink Industry         |
       | Health Industry Summary         |
       | Tech Industry Summary           |
       | Creative Industry Summary       |
-      | Food-and-drink Industry Summary |
+      | Food and drink Industry Summary |
 
     Examples:
       | selected             | expected   |
