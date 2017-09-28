@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Various utils used across the project."""
 
+import email
 import hashlib
 import logging
 import os
@@ -50,7 +51,8 @@ from tests.settings import (
     MAILGUN_DIRECTORY_SECRET_API_KEY,
     MAILGUN_SSO_API_USER,
     MAILGUN_SSO_EVENTS_URL,
-    MAILGUN_SSO_SECRET_API_KEY
+    MAILGUN_SSO_SECRET_API_KEY,
+    SSO_PASSWORD_RESET_MSG_SUBJECT
 )
 
 # a list of exceptions that can be thrown by `requests` (and urllib3)
@@ -260,6 +262,9 @@ def log_response(response: Response, *, trim: bool = True):
     request = response.request
     trim_offset = 1024  # define the length of logged response content
 
+    logging.debug(
+        "RESPONSE TIME | %s | %s %s", str(response.elapsed), request.method,
+        request.url)
     if response.history:
         logging.debug("REQ was redirected")
         for r in response.history:
@@ -477,6 +482,23 @@ def extract_email_confirmation_link(payload):
     return activation_link
 
 
+def extract_password_reset_link(payload: str) -> str:
+    """Find password reset link inside the plain text email payload.
+
+    :param payload: plain text email message payload
+    :return: password reset link
+    """
+    start = payload.find("http")
+    end = payload.find("\n", start) - 1  # `- 1` to skip the newline char
+    password_reset_link = payload[start:end]
+    with assertion_msg(
+            "Extracted link is not a correct password reset link: %s",
+            password_reset_link):
+        assert "accounts/password/reset/key/" in password_reset_link
+    logging.debug("Found password reset link: %s", password_reset_link)
+    return password_reset_link
+
+
 def check_response(response: Response, status_code: int, *,
                    location: str = None, locations: list = None,
                    location_starts_with: str = None, body_contains: list = None,
@@ -637,7 +659,8 @@ def mailgun_get_message(context: Context, url: str) -> dict:
     return response.json()
 
 
-def mailgun_get_message_url(context: Context, recipient: str) -> str:
+def mailgun_get_message_url(
+        context: Context, recipient: str, *, subject: str = None) -> str:
     """Will try to find the message URL among 100 emails sent in last 1 hour.
 
     NOTE:
@@ -654,7 +677,8 @@ def mailgun_get_message_url(context: Context, recipient: str) -> str:
 
     response = find_mailgun_events(
         context, MailGunService.SSO, limit=message_limit, recipient=recipient,
-        event=MailGunEvent.ACCEPTED, begin=begin, ascending="yes"
+        event=MailGunEvent.ACCEPTED, begin=begin, ascending="yes",
+        subject=subject
     )
     context.response = response
     logging.debug("Found event with recipient: {}".format(recipient))
@@ -682,6 +706,23 @@ def assertion_msg(message: str, *args):
         _, _, tb = sys.exc_info()
         traceback.print_tb(tb)
         raise
+
+
+def get_password_reset_link(context: Context, recipient: str) -> str:
+    """Get email verification link sent by SSO to specified recipient.
+
+    :param context: behave `context` object
+    :param recipient: email address of the message recipient
+    :return: email verification link sent by SSO
+    """
+    logging.debug("Searching for password reset email of: {}".format(recipient))
+
+    message_url = mailgun_get_message_url(
+        context, recipient, subject=SSO_PASSWORD_RESET_MSG_SUBJECT)
+    raw_response = mailgun_get_message(context, message_url)["body-mime"]
+    message = email.message_from_string(raw_response)
+    plain_text_message = message.get_payload()[0].get_payload()
+    return extract_password_reset_link(plain_text_message)
 
 
 def get_verification_link(context: Context, recipient: str) -> str:

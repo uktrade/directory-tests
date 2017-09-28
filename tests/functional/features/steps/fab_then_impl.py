@@ -9,6 +9,7 @@ from requests import Response
 from retrying import retry
 from scrapy import Selector
 
+from tests import get_absolute_url
 from tests.functional.features.pages import (
     fab_ui_build_profile_basic,
     fab_ui_edit_online_profiles,
@@ -20,6 +21,8 @@ from tests.functional.features.pages import (
     fas_ui_industries,
     fas_ui_profile,
     profile_ui_landing,
+    sso_ui_logout,
+    sso_ui_password_reset,
     sso_ui_verify_your_email
 )
 from tests.functional.features.pages.common import FAS_PAGE_OBJECTS
@@ -36,6 +39,7 @@ from tests.functional.features.utils import (
     extract_csrf_middleware_token,
     extract_logo_url,
     find_mailgun_events,
+    get_password_reset_link,
     get_verification_link,
     surround
 )
@@ -63,16 +67,13 @@ def reg_sso_account_should_be_created(response: Response, supplier_alias: str):
 def reg_should_get_verification_email(context: Context, alias: str):
     """Will check if the Supplier received an email verification message.
 
-    NOTE:
-    The check is done by attempting to find a file with the email is Amazon S3.
-
     :param context: behave `context` object
     :param alias: alias of the Actor used in the scope of the scenario
     """
     logging.debug("Searching for an email verification message...")
     actor = context.get_actor(alias)
     link = get_verification_link(context, actor.email)
-    context.set_actor_email_confirmation_link(alias, link)
+    context.update_actor(alias, email_confirmation_link=link)
 
 
 def bp_should_be_prompted_to_build_your_profile(
@@ -81,7 +82,7 @@ def bp_should_be_prompted_to_build_your_profile(
     logging.debug(
         "%s is on the 'Build and improve your profile' page", supplier_alias)
     token = extract_csrf_middleware_token(context.response)
-    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
 
 def prof_should_be_on_profile_page(response: Response, supplier_alias: str):
@@ -139,6 +140,39 @@ def sso_should_be_signed_in_to_sso_account(
                        "like user is not logged in"):
         assert "Sign out" in response.content.decode("utf-8")
     logging.debug("%s is logged in to the SSO account".format(supplier_alias))
+
+
+def sso_should_be_signed_out_from_sso_account(
+        context: Context, supplier_alias: str):
+    """Sign out from SSO.
+
+    :param context: behave `context` object
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    """
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+
+    # Step 1 - Get to the Sign Out confirmation page
+    next_param = get_absolute_url("profile:about")
+    response = sso_ui_logout.go_to(session, next_param=next_param)
+    context.response = response
+
+    # Step 2 - check if Supplier is on Log Out page & extract CSRF token
+    sso_ui_logout.should_be_here(response)
+    token = extract_csrf_middleware_token(response)
+    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
+
+    # Step 3 - log out
+    next_param = get_absolute_url("profile:landing")
+    response = sso_ui_logout.logout(session, token, next_param=next_param)
+    context.response = response
+
+    # Step 4 - check if Supplier is on SSO landing page
+    profile_ui_landing.should_be_here(response)
+    profile_ui_landing.should_be_logged_out(response)
+
+    # Step 5 - reset requests Session object
+    context.reset_actor_session(supplier_alias)
 
 
 def prof_should_be_told_about_invalid_links(
@@ -417,24 +451,29 @@ def fas_find_supplier_using_case_study_details(
         term = search_terms[term_name]
         response = fas_ui_find_supplier.go_to(session, term=term)
         context.response = response
-        number_of_pages = get_number_of_search_result_pages(response)
-        found = False
-        for page_number in range(1, number_of_pages + 1):
-            found = fas_ui_find_supplier.should_see_company(response, company.title)
-            if found:
-                logging.debug(
-                    "Found Supplier '%s' on FAS using '%s' : '%s' on %d page "
-                    "out of %d", company.title, term_name, term, page_number,
-                    number_of_pages)
-                break
+        found = fas_ui_find_supplier.should_see_company(response, company.title)
+        if found:
+            logging.debug(
+                "Found Supplier '%s' using '%s' : '%s' on 1st result page",
+                company.title, term_name, term)
+        else:
+            number_of_pages = get_number_of_search_result_pages(response)
+            if number_of_pages > 1:
+                for page_number in range(2, number_of_pages + 1):
+                    response = fas_ui_find_supplier.go_to(
+                        session, term=term, page=page_number)
+                    context.response = response
+                    found = fas_ui_find_supplier.should_see_company(
+                        response, company.title)
+                    if found:
+                        break
             else:
-                logging.debug(
-                    "Couldn't find Supplier '%s' on the %d page out of %d of "
-                    "FAS search results. Search was done using '%s' : '%s'",
-                    company.title, page_number, number_of_pages, term_name, term)
-                response = fas_ui_find_supplier.go_to(
-                    session, term=term, page=page_number)
-                context.response = response
+                with assertion_msg(
+                        "Couldn't find '%s' using '%s': '%s' on the only "
+                        "available search result page", company.title,
+                        term_name, term):
+                    assert False
+
         with assertion_msg(
                 "Buyer could not find Supplier '%s' on FAS using %s: %s",
                 company.title, term_name, term):
@@ -731,3 +770,21 @@ def fab_should_see_case_study_error_message(context, supplier_alias):
                 value_type, case_study):
             assert error in response.content.decode("utf-8")
     logging.debug("%s has seen all expected case study errors", supplier_alias)
+
+
+def sso_should_be_told_about_password_reset(
+        context: Context, supplier_alias: str):
+    sso_ui_password_reset.should_see_that_password_was_reset(context.response)
+    logging.debug("%s was told that the password was reset", supplier_alias)
+
+
+def sso_should_get_password_reset_email(context: Context, supplier_alias: str):
+    """Will check if the Supplier received an email verification message.
+
+    :param context: behave `context` object
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    """
+    logging.debug("Searching for a password reset email...")
+    actor = context.get_actor(supplier_alias)
+    link = get_password_reset_link(context, actor.email)
+    context.update_actor(supplier_alias, password_reset_link=link)

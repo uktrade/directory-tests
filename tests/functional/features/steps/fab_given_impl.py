@@ -103,7 +103,7 @@ def reg_create_sso_account_associated_with_company(
     reg_confirm_export_status(context, supplier_alias, exported=True)
     reg_create_sso_account(context, supplier_alias, company_alias)
     reg_sso_account_should_be_created(context.response, supplier_alias)
-    context.set_actor_has_sso_account(supplier_alias, True)
+    context.update_actor(supplier_alias, has_sso_account=True)
 
 
 def reg_confirm_email_address(context: Context, supplier_alias: str):
@@ -226,7 +226,7 @@ def fab_find_published_company(
         twitter=company_dict['twitter_url'],
         linkedin=company_dict['linkedin_url']
     )
-    context.set_company_for_actor(actor_alias, company_alias)
+    context.update_actor(actor_alias, company_alias=company_alias)
     context.add_company(company)
     logging.debug("%s found a published company: %s", actor_alias, company)
 

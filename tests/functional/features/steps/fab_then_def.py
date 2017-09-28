@@ -42,7 +42,9 @@ from tests.functional.features.steps.fab_then_impl import (
     reg_sso_account_should_be_created,
     reg_supplier_has_to_verify_email_first,
     reg_supplier_is_not_appropriate_for_fab,
-    sso_should_be_signed_in_to_sso_account
+    sso_should_be_signed_in_to_sso_account,
+    sso_should_be_told_about_password_reset,
+    sso_should_get_password_reset_email
 )
 from tests.functional.features.steps.fab_when_impl import (
     fas_feedback_request_should_be_submitted,
@@ -322,3 +324,13 @@ def then_company_should_be_verified(context, supplier_alias):
 def then_supplier_should_see_expected_case_study_error_message(
         context, supplier_alias):
     fab_should_see_case_study_error_message(context, supplier_alias)
+
+
+@then('"{supplier_alias}" should be told that password was reset')
+def then_should_be_told_that_password_was_reset(context, supplier_alias):
+    sso_should_be_told_about_password_reset(context, supplier_alias)
+
+
+@then('"{supplier_alias}" should receive a password reset email')
+def then_supplier_should_receive_password_reset_email(context, supplier_alias):
+    sso_should_get_password_reset_email(context, supplier_alias)

@@ -40,6 +40,7 @@ from tests.functional.features.pages import (
     sso_ui_confim_your_email,
     sso_ui_login,
     sso_ui_logout,
+    sso_ui_password_reset,
     sso_ui_register,
     sso_ui_verify_your_email
 )
@@ -52,6 +53,7 @@ from tests.functional.features.pages.utils import (
     escape_html,
     extract_and_set_csrf_middleware_token,
     get_active_company_without_fas_profile,
+    get_fabs_page_url,
     get_fas_page_url,
     get_language_code,
     get_number_of_search_result_pages,
@@ -131,8 +133,8 @@ def select_random_company(
     # Step 4 - store Company, CSRF token & associate Actor with Company
     context.add_company(company)
     token = extract_csrf_middleware_token(response)
-    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
-    context.set_company_for_actor(supplier_alias, company_alias)
+    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
+    context.update_actor(supplier_alias, company_alias=company_alias)
 
 
 def reg_confirm_company_selection(
@@ -163,7 +165,7 @@ def reg_confirm_company_selection(
 
     # Step 3 - extract & store CSRF token
     token = extract_csrf_middleware_token(response)
-    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
 
 def reg_supplier_is_not_ready_to_export(context, supplier_alias):
@@ -211,7 +213,7 @@ def reg_confirm_export_status(
         logging.debug("Supplier doesn't have a SSO account")
         sso_ui_register.should_be_here(response)
         token = extract_csrf_middleware_token(response)
-        context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+        context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
 
 def reg_create_sso_account(context, supplier_alias, alias):
@@ -260,7 +262,7 @@ def reg_open_email_confirmation_link(context, supplier_alias):
     # Step 4 - extract & store CSRF token & form action value
     # Form Action Value is required to successfully confirm email
     token = extract_csrf_middleware_token(response)
-    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
     form_action_value = extract_confirm_email_form_action(response)
     context.form_action_value = form_action_value
 
@@ -316,7 +318,7 @@ def bp_provide_company_details(context, supplier_alias):
     # Step 3 - extract CSRF token
     logging.debug("Supplier is on the Select Sector page")
     token = extract_csrf_middleware_token(response)
-    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
 
 def bp_select_random_sector_and_export_to_country(context, supplier_alias):
@@ -366,7 +368,7 @@ def bp_verify_identity_with_letter(context: Context, supplier_alias: str):
 
     # Step 3 - extract & store CSRF token
     token = extract_csrf_middleware_token(response)
-    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
     # Step 4 - check if Supplier is on the We've sent you a verification letter
     fab_ui_confirm_identity_letter.submit(actor)
@@ -403,7 +405,7 @@ def prof_set_company_description(context, supplier_alias):
     response = fab_ui_edit_description.go_to(session)
 
     token = extract_csrf_middleware_token(response)
-    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
     logging.debug("Supplier is on the Set Company Description page")
 
     # Step 2 - Submit company description
@@ -444,7 +446,7 @@ def prof_verify_company(context, supplier_alias):
 
     # STEP 2 - extract CSRF token
     token = extract_csrf_middleware_token(response)
-    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
     # STEP 3 - Submit the verification code
     response = fab_ui_verify_company.submit(session, token, verification_code)
@@ -502,7 +504,7 @@ def prof_attempt_to_sign_in_to_fab(context, supplier_alias):
             "sso_display_logged_in cookie is not equal to False"):
         assert response.cookies.get("sso_display_logged_in") == "false"
     token = extract_csrf_middleware_token(response)
-    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
     # Step 3 - submit the login form
     response = sso_ui_login.login(actor, token)
@@ -527,7 +529,7 @@ def prof_sign_out_from_fab(context, supplier_alias):
     # Step 2 - check if Supplier is on Log Out page & extract CSRF token
     sso_ui_logout.should_be_here(response)
     token = extract_csrf_middleware_token(response)
-    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
     # Step 3 - log out
     response = sso_ui_logout.logout(session, token)
@@ -565,7 +567,7 @@ def prof_sign_in_to_fab(context, supplier_alias):
 
     # Step 3 - extract CSRF token
     token = extract_csrf_middleware_token(response)
-    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
     # Step 4 - submit the login form
     response = sso_ui_login.login(actor, token)
@@ -637,7 +639,7 @@ def sso_supplier_confirms_email_address(context, supplier_alias):
     profile_ui_landing.should_be_here(response)
 
     # STEP 3 - Update Actor's data
-    context.set_actor_has_sso_account(supplier_alias, True)
+    context.update_actor(supplier_alias, has_sso_account=True)
 
 
 def sso_go_to_create_trade_profile(context, supplier_alias):
@@ -752,7 +754,7 @@ def prof_supplier_uploads_logo(context, supplier_alias, picture):
 
     # Step 2 - extract CSRF token
     token = extract_csrf_middleware_token(response)
-    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
     # Step 3 - upload the logo
     prof_upload_logo(context, supplier_alias, picture)
@@ -813,7 +815,7 @@ def prof_update_company_details(
 
     # Step 2 - extract CSRF token
     token = extract_csrf_middleware_token(response)
-    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
     # Step 3 - Update company's details
     response, new_details = fab_ui_edit_details.update_details(
@@ -830,7 +832,7 @@ def prof_update_company_details(
 
     # Step 5 - extract CSRF token
     token = extract_csrf_middleware_token(response)
-    context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
     # Step 6 - Update company's sector
     response, new_sector, new_countries = fab_ui_edit_sector.update(
@@ -1594,7 +1596,7 @@ def fab_go_to_letter_verification(
         sso_ui_login.should_be_here(response)
 
         token = extract_csrf_middleware_token(response)
-        context.set_actor_csrfmiddlewaretoken(supplier_alias, token)
+        context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
         sso_login_url = get_absolute_url("sso:login")
         fab_verify_url = quote(get_absolute_url("ui-buyer:confirm-identity"))
@@ -1720,3 +1722,22 @@ def fab_attempt_to_add_case_study(
         results.append((field, value_type, case_study, response, error))
 
     context.results = results
+
+
+def sso_reset_password(
+        context: Context, supplier_alias: str, *, next_page: str = None):
+    actor = context.get_actor(supplier_alias)
+    next_param = None
+    if next_page is not None:
+        next_param = get_fabs_page_url(page_name=next_page)
+
+    response = sso_ui_password_reset.go_to(actor.session, next_param=next_param)
+    context.response = response
+
+    sso_ui_password_reset.should_be_here(response)
+
+    token = extract_csrf_middleware_token(response)
+    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
+
+    response = sso_ui_password_reset.reset(actor, token, next_param=next_param)
+    context.response = response

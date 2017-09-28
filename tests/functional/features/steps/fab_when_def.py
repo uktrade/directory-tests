@@ -46,6 +46,7 @@ from tests.functional.features.steps.fab_when_impl import (
     reg_supplier_confirms_email_address,
     select_random_company,
     sso_go_to_create_trade_profile,
+    sso_reset_password,
     sso_supplier_confirms_email_address
 )
 
@@ -306,3 +307,8 @@ def when_supplier_submits_verification_code(context, supplier_alias):
 @when('"{supplier_alias}" attempts to add a case study using following values')
 def when_supplier_attempts_to_add_case_study(context, supplier_alias):
     fab_attempt_to_add_case_study(context, supplier_alias, context.table)
+
+
+@when('"{supplier_alias}" resets the password')
+def when_supplier_resets_password(context, supplier_alias):
+    sso_reset_password(context, supplier_alias)

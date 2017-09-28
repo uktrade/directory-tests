@@ -17,7 +17,8 @@ Actor = namedtuple(
     'Actor',
     [
         'alias', 'email', 'password', 'session', 'csrfmiddlewaretoken',
-        'email_confirmation_link', 'company_alias', 'has_sso_account', 'type'
+        'email_confirmation_link', 'company_alias', 'has_sso_account', 'type',
+        'password_reset_link'
     ]
 )
 CaseStudy = namedtuple(
@@ -108,45 +109,24 @@ def get_actor(self, alias):
     return self.scenario_data.actors.get(alias)
 
 
-def set_actor_csrfmiddlewaretoken(self, alias, token):
-    if alias in self.scenario_data.actors:
-        actors = self.scenario_data.actors
-        actors[alias] = actors[alias]._replace(csrfmiddlewaretoken=token)
-        logging.debug("Successfully set csrfmiddlewaretoken=%s for Actor: "
-                      "%s", token, alias)
-    else:
-        logging.debug("Could not find an actor aliased '%s'", alias)
-
-
-def set_actor_email_confirmation_link(self, alias, link):
-    if alias in self.scenario_data.actors:
-        actors = self.scenario_data.actors
-        actors[alias] = actors[alias]._replace(email_confirmation_link=link)
-        logging.debug("Successfully set email_confirmation_link=%s for "
-                      "Actor: %s", link, alias)
-    else:
-        logging.debug("Could not find an actor aliased '%s'", alias)
-
-
-def set_actor_has_sso_account(self, alias, has_sso_account: bool):
-    if alias in self.scenario_data.actors:
-        actors = self.scenario_data.actors
+def update_actor(
+        self, alias, *, password_reset_link: str = None,
+        company_alias: str = None, has_sso_account: bool = None,
+        email_confirmation_link: str = None, csrfmiddlewaretoken: str = None):
+    actors = self.scenario_data.actors
+    if password_reset_link:
+        actors[alias] = actors[alias]._replace(password_reset_link=password_reset_link)
+    if company_alias:
+        actors[alias] = actors[alias]._replace(company_alias=company_alias)
+    if has_sso_account:
         actors[alias] = actors[alias]._replace(has_sso_account=has_sso_account)
-        logging.debug("Successfully set has_sso_account=%s for "
-                      "Actor: %s", has_sso_account, alias)
-    else:
-        logging.debug("Could not find an actor aliased '%s'", alias)
+    if email_confirmation_link:
+        actors[alias] = actors[alias]._replace(email_confirmation_link=email_confirmation_link)
+    if csrfmiddlewaretoken:
+        actors[alias] = actors[alias]._replace(csrfmiddlewaretoken=csrfmiddlewaretoken)
 
-
-def set_company_for_actor(self, actor_alias, company_alias):
-    if actor_alias in self.scenario_data.actors:
-        actors = self.scenario_data.actors
-        actors[actor_alias] = actors[actor_alias]._replace(
-            company_alias=company_alias)
-        logging.debug("Successfully set company_alias=%s for "
-                      "Actor: %s", company_alias, actor_alias)
-    else:
-        logging.debug("Could not find an actor aliased '%s'", actor_alias)
+    logging.debug(
+        "Successfully updated Actors's details %s: %s", alias, actors[alias])
 
 
 def set_company_logo_detail(self, alias, *, picture=None, url=None, hash=None):
@@ -287,14 +267,8 @@ def patch_context(context):
     """
     context.add_actor = MethodType(add_actor, context)
     context.get_actor = MethodType(get_actor, context)
+    context.update_actor = MethodType(update_actor, context)
     context.reset_actor_session = MethodType(reset_actor_session, context)
-    context.set_actor_csrfmiddlewaretoken = MethodType(
-        set_actor_csrfmiddlewaretoken, context)
-    context.set_actor_email_confirmation_link = MethodType(
-        set_actor_email_confirmation_link, context)
-    context.set_actor_has_sso_account = MethodType(
-        set_actor_has_sso_account, context)
-    context.set_company_for_actor = MethodType(set_company_for_actor, context)
     context.add_company = MethodType(add_company, context)
     context.get_company = MethodType(get_company, context)
     context.add_case_study = MethodType(add_case_study, context)
