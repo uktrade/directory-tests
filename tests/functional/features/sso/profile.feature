@@ -42,3 +42,15 @@ Feature: SSO profile
 
       When "Peter Alder" creates a SSO/great.gov.uk account
       Then "Peter Alder" should be told about the verification email
+
+
+    @ED-2147
+    @sso
+    @account
+    Scenario: Suppliers should be able to sign out and sign back in
+      Given "Peter Alder" has a verified standalone SSO/great.gov.uk account
+      And "Peter Alder" is signed out from SSO/great.gov.uk account
+
+      When "Peter Alder" signs in to SSO/great.gov.uk account
+
+      Then "Peter Alder" should be signed in to SSO/great.gov.uk account

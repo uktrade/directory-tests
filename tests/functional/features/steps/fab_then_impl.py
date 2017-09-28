@@ -139,7 +139,7 @@ def sso_should_be_signed_in_to_sso_account(
     with assertion_msg("Response doesn't contain 'Sign out' button. It looks "
                        "like user is not logged in"):
         assert "Sign out" in response.content.decode("utf-8")
-    logging.debug("%s is logged in to the SSO account".format(supplier_alias))
+    logging.debug("%s is logged in to the SSO account", supplier_alias)
 
 
 def sso_should_be_signed_out_from_sso_account(
