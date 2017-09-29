@@ -350,5 +350,5 @@ def then_supplier_should_see_specific_page(context, supplier_alias, page_name):
 
 
 @then('"{actor_alias}" should be able to see all selected pages')
-def then_actor_shoud_see_selected_pages(context, actor_alias):
+def then_actor_should_see_selected_pages(context, actor_alias):
     should_see_selected_pages(context, actor_alias)
