@@ -24,10 +24,10 @@ Feature: SUD (Profile) pages
       Then "Peter Alder" should see "SSO Login" page
 
       Examples: SUD pages
-      |other SUD                  |
-      |SUD Export Opportunities   |
-      |SUD Find a Buyer           |
-      |SUD Selling Online Overseas|
+        |other SUD                  |
+        |SUD Export Opportunities   |
+        |SUD Find a Buyer           |
+        |SUD Selling Online Overseas|
 
 
     @ED-2266
@@ -41,10 +41,25 @@ Feature: SUD (Profile) pages
 
       When "Peter Alder" goes to "<SUD>" page
 
-      Then "Peter Alder" should see "<Landing>" page
+      Then "Peter Alder" should see "SSO Login" page
 
       Examples: SUD pages
-      |SUD                        |Landing      |
-      |SUD Selling Online Overseas|SUD About    |
-      |SUD Export Opportunities   |SUD About    |
-      |SUD Find a Buyer           |SSO Login    |
+        |SUD                        |
+        |SUD Export Opportunities   |
+        |SUD Find a Buyer           |
+        |SUD Selling Online Overseas|
+
+
+    @ED-2267
+    @sso
+    @account
+    Scenario: Authenticated users should be able to view "<specific SUD>" page
+      Given "Peter Alder" has a verified standalone SSO/great.gov.uk account
+
+      When "Peter Alder" goes to specific pages
+        |page name                  |
+        |SUD Export Opportunities   |
+        |SUD Find a Buyer           |
+        |SUD Selling Online Overseas|
+
+      Then "Peter Alder" should be able to see all selected pages
