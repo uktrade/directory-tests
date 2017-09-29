@@ -28,6 +28,7 @@ from tests.functional.steps.fab_when_impl import (
     fas_view_page,
     fas_view_pages_in_selected_language,
     go_to_page,
+    go_to_pages,
     prof_add_case_study,
     prof_add_invalid_online_profiles,
     prof_add_online_profiles,
@@ -345,3 +346,8 @@ def when_supplier_changes_password_to_the_same_one(context, supplier_alias):
 @when('"{supplier_alias}" goes to "{page_name}" page')
 def when_supplier_goes_sud_page(context, supplier_alias, page_name):
     go_to_page(context, supplier_alias, page_name)
+
+
+@when('"{actor_alias}" goes to specific pages')
+def when_actor_goes_to_specific_pages(context, actor_alias):
+    go_to_pages(context, actor_alias, context.table)
