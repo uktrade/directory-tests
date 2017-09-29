@@ -186,7 +186,7 @@ Feature: Find a Supplier
   @search
   Scenario: Buyers should not see the same company multiple times in the search results even if all associated sector filters are used
     Given "Annette Geissinger" is a buyer
-    And "Annette Geissinger" finds a Supplier "Y" with a published profile associated with at least "5" different sectors
+    And "Annette Geissinger" finds a Supplier "Y" with a published profile associated with at least "4" different sectors
 
     When "Annette Geissinger" browse first "10" pages of Suppliers filtered by all sectors associated with company "Y"
 
