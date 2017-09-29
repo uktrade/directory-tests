@@ -49,7 +49,7 @@ Feature: SSO profile
     @account
     Scenario: Suppliers should be able to sign out and sign back in
       Given "Peter Alder" has a verified standalone SSO/great.gov.uk account
-      And "Peter Alder" is signed out from SSO/great.gov.uk account
+      And "Peter Alder" signed out from SSO/great.gov.uk account
 
       When "Peter Alder" signs in to SSO/great.gov.uk account
 
