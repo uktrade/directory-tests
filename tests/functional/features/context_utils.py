@@ -112,7 +112,8 @@ def get_actor(self, alias):
 def update_actor(
         self, alias, *, password_reset_link: str = None,
         company_alias: str = None, has_sso_account: bool = None,
-        email_confirmation_link: str = None, csrfmiddlewaretoken: str = None):
+        email_confirmation_link: str = None, csrfmiddlewaretoken: str = None,
+        password: str = None):
     actors = self.scenario_data.actors
     if password_reset_link:
         actors[alias] = actors[alias]._replace(password_reset_link=password_reset_link)
@@ -124,6 +125,8 @@ def update_actor(
         actors[alias] = actors[alias]._replace(email_confirmation_link=email_confirmation_link)
     if csrfmiddlewaretoken:
         actors[alias] = actors[alias]._replace(csrfmiddlewaretoken=csrfmiddlewaretoken)
+    if password:
+        actors[alias] = actors[alias]._replace(password=password)
 
     logging.debug(
         "Successfully updated Actors's details %s: %s", alias, actors[alias])

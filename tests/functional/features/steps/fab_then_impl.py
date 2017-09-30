@@ -21,6 +21,7 @@ from tests.functional.features.pages import (
     fas_ui_industries,
     fas_ui_profile,
     profile_ui_landing,
+    sso_ui_invalid_password_reset_link,
     sso_ui_logout,
     sso_ui_password_reset,
     sso_ui_verify_your_email
@@ -788,3 +789,10 @@ def sso_should_get_password_reset_email(context: Context, supplier_alias: str):
     actor = context.get_actor(supplier_alias)
     link = get_password_reset_link(context, actor.email)
     context.update_actor(supplier_alias, password_reset_link=link)
+
+
+def sso_should_see_invalid_password_reset_link_error(
+        context: Context, supplier_alias: str):
+    sso_ui_invalid_password_reset_link.should_be_here(context.response)
+    logging.debug(
+        "%s was told about invalid password reset link", supplier_alias)

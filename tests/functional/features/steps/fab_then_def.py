@@ -44,7 +44,8 @@ from tests.functional.features.steps.fab_then_impl import (
     reg_supplier_is_not_appropriate_for_fab,
     sso_should_be_signed_in_to_sso_account,
     sso_should_be_told_about_password_reset,
-    sso_should_get_password_reset_email
+    sso_should_get_password_reset_email,
+    sso_should_see_invalid_password_reset_link_error
 )
 from tests.functional.features.steps.fab_when_impl import (
     fas_feedback_request_should_be_submitted,
@@ -334,3 +335,8 @@ def then_should_be_told_that_password_was_reset(context, supplier_alias):
 @then('"{supplier_alias}" should receive a password reset email')
 def then_supplier_should_receive_password_reset_email(context, supplier_alias):
     sso_should_get_password_reset_email(context, supplier_alias)
+
+
+@then('"{supplier_alias}" should be told that password reset link is invalid')
+def then_should_see_invalid_password_reset_link_error(context, supplier_alias):
+    sso_should_see_invalid_password_reset_link_error(context, supplier_alias)

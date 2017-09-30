@@ -421,18 +421,17 @@ def extract_csrf_middleware_token(response: Response):
         assert response.content
     css_selector = '#content input[type="hidden"]::attr(value)'
     token = extract_by_css(response, css_selector)
+    logging.debug("Found CSRF token: %s", token)
     return token
 
 
-def extract_confirm_email_form_action(response: Response):
-    """Extract the form action (endpoint) from the Confirm Email page.
+def extract_form_action(response: Response) -> str:
+    """Extract the form action (endpoint).
 
     Comes in handy when dealing with e.g. Django forms.
 
     :param response: requests response
-    :type  response: requests.models.Response
     :return: for action endpoint
-    :rtype: str
     """
     with assertion_msg("Can't extract form action from an empty response!"):
         assert response.content
