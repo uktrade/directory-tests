@@ -5,7 +5,6 @@ import logging
 import psycopg2
 from psycopg2.extras import RealDictCursor
 
-from tests.functional.utils import assertion_msg
 from tests.settings import (
     DIR_DB_HOST,
     DIR_DB_NAME,
@@ -202,6 +201,7 @@ def get_verification_code(company_number):
     :param company_number: company number given by Companies House
     :return: verification code sent by post
     """
+    from tests.functional.utils.generic import assertion_msg
     data = (company_number, )
     res = run_query("DIRECTORY", VERIFICATION_CODE, data=data)
     with assertion_msg(
