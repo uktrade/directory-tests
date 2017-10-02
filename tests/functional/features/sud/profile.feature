@@ -53,7 +53,7 @@ Feature: SUD (Profile) pages
     @ED-2267
     @sso
     @account
-    Scenario: Authenticated users should be able to view "<specific SUD>" page
+    Scenario: Authenticated Users should be able to view SUD sub-pages
       Given "Peter Alder" has a verified standalone SSO/great.gov.uk account
 
       When "Peter Alder" goes to specific pages
