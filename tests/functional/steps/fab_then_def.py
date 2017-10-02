@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 """FAB Given step definitions."""
 from behave import then
-
-from tests.functional.features.steps.fab_then_impl import (
+from tests.functional.steps.fab_then_impl import (
     bp_should_be_prompted_to_build_your_profile,
     fab_company_should_be_verified,
     fab_no_links_to_online_profiles_are_visible,
@@ -48,7 +47,8 @@ from tests.functional.features.steps.fab_then_impl import (
     sso_should_get_password_reset_email,
     sso_should_see_invalid_password_reset_link_error
 )
-from tests.functional.features.steps.fab_when_impl import (
+
+from tests.functional.steps.fab_when_impl import (
     fas_feedback_request_should_be_submitted,
     fas_should_be_told_about_empty_search_results
 )
@@ -344,5 +344,5 @@ def then_should_see_invalid_password_reset_link_error(context, supplier_alias):
 
 
 @then('"{supplier_alias}" should see "{page_name}" page')
-def step_impl(context, supplier_alias, page_name):
+def then_supplier_should_see_specific_page(context, supplier_alias, page_name):
     should_be_at(context, supplier_alias, page_name)

@@ -10,7 +10,13 @@ from behave.runner import Context
 from random import choice
 from requests import Response, Session
 from scrapy import Selector
-from tests.functional.features.pages import (
+
+from tests.functional.registry import get_fabs_page_url, get_fabs_page_object
+from tests.functional.utils.context_utils import Company
+
+from tests import get_absolute_url
+from tests.functional.common import DETAILS, PROFILES
+from tests.functional.pages import (
     fab_ui_build_profile_basic,
     fab_ui_build_profile_sector,
     fab_ui_build_profile_verification_letter,
@@ -41,7 +47,15 @@ from tests.functional.features.pages import (
     sso_ui_register,
     sso_ui_verify_your_email
 )
-from tests.functional.features.pages.utils import (
+from tests.functional.pages import fab_ui_case_study_basic
+from tests.functional.utils.generic import (
+    assertion_msg,
+    extract_csrf_middleware_token,
+    extract_form_action,
+    extract_logo_url,
+    get_absolute_path_of_file,
+    get_md5_hash_of_file,
+    random_chars,
     escape_html,
     extract_and_set_csrf_middleware_token,
     get_active_company_without_fas_profile,
@@ -55,28 +69,8 @@ from tests.functional.features.pages.utils import (
     rare_word,
     sentence
 )
-
-from tests import get_absolute_url
-from tests.functional.features.common import DETAILS, PROFILES
-from tests.functional.features.context_utils import Company
-from tests.functional.features.db_utils import get_verification_code
-from tests.functional.features.steps import (
-    get_fabs_page_object,
-    get_fabs_page_url
-)
-from tests.functional.features.utils import (
-    Method,
-    assertion_msg,
-    check_response,
-    extract_csrf_middleware_token,
-    extract_form_action,
-    extract_logo_url,
-    get_absolute_path_of_file,
-    get_md5_hash_of_file,
-    make_request,
-    random_chars
-)
-from tests.functional.pages import fab_ui_case_study_basic
+from tests.functional.utils.db_utils import get_verification_code
+from tests.functional.utils.request import check_response, make_request, Method
 from tests.settings import (
     COUNTRIES,
     NO_OF_EMPLOYEES,

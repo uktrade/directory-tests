@@ -3,15 +3,11 @@
 import logging
 
 from requests import Response, Session
+from tests.functional.utils.context_utils import Actor
 
 from tests import get_absolute_url
-from tests.functional.features.context_utils import Actor
-from tests.functional.features.utils import (
-    Method,
-    assertion_msg,
-    check_response,
-    make_request
-)
+from tests.functional.utils.generic import assertion_msg
+from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("sso:password_reset")
 EXPECTED_STRINGS = [

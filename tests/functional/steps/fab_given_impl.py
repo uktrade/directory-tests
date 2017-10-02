@@ -8,30 +8,22 @@ from urllib.parse import urlsplit
 import random
 from behave.runner import Context
 from requests import Session
-from tests.functional.features.pages import (
-    fab_ui_profile,
+from tests.functional.utils.context_utils import Actor, Company
+
+from tests.functional.pages import (
+    profile_ui_landing, fab_ui_profile,
     fas_ui_profile
 )
-from tests.functional.features.pages.utils import sentence
-
-from tests.functional.features.context_utils import Actor, Company
-from tests.functional.features.db_utils import (
-    get_published_companies,
-    get_published_companies_with_n_sectors,
-    get_verification_code,
-    is_verification_letter_sent
-)
-from tests.functional.features.steps.fab_then_impl import (
+from tests.functional.steps.fab_then_impl import (
+    reg_sso_account_should_be_created, reg_should_get_verification_email,
     bp_should_be_prompted_to_build_your_profile,
     prof_should_be_on_profile_page,
     prof_should_be_told_about_missing_description,
-    reg_should_get_verification_email,
-    reg_sso_account_should_be_created,
     sso_should_be_signed_in_to_sso_account,
     sso_should_be_told_about_password_reset,
     sso_should_get_password_reset_email
 )
-from tests.functional.features.steps.fab_when_impl import (
+from tests.functional.steps.fab_when_impl import (
     bp_provide_company_details,
     bp_select_random_sector_and_export_to_country,
     bp_verify_identity_with_letter,
@@ -49,8 +41,13 @@ from tests.functional.features.steps.fab_when_impl import (
     sso_request_password_reset,
     sso_supplier_confirms_email_address
 )
-from tests.functional.features.utils import assertion_msg
-from tests.functional.pages import profile_ui_landing
+from tests.functional.utils.generic import sentence, assertion_msg
+from tests.functional.utils.db_utils import (
+    get_published_companies,
+    get_published_companies_with_n_sectors,
+    get_verification_code,
+    is_verification_letter_sent
+)
 
 
 def unauthenticated_supplier(supplier_alias: str) -> Actor:

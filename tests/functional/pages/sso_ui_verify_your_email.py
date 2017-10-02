@@ -4,7 +4,7 @@ import logging
 
 from requests import Response
 
-from tests.functional.features.utils import check_response
+from tests.functional.utils.request import check_response
 
 EXPECTED_STRINGS = [
     "Verify your email address",

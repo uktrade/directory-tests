@@ -2,12 +2,12 @@
 """FAB - Upload Logo page"""
 import logging
 import mimetypes
-import os
 
+import os
 from requests import Response, Session
 
 from tests import get_absolute_url
-from tests.functional.features.utils import Method, check_response, make_request
+from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("ui-buyer:upload-logo")
 EXPECTED_STRINGS = [

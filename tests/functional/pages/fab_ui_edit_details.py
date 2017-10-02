@@ -1,18 +1,17 @@
 # -*- coding: utf-8 -*-
 """FAB - Edit Company's Details page"""
 import random
-
 from requests import Response, Session
+from tests.functional.utils.context_utils import Actor, Company
 
 from tests import get_absolute_url
-from tests.functional.features.context_utils import Actor, Company
-from tests.functional.features.utils import (
+from tests.functional.utils.generic import (
     Method,
-    check_response,
     make_request,
     rare_word,
     sentence
 )
+from tests.functional.utils.request import check_response
 from tests.settings import NO_OF_EMPLOYEES
 
 URL = get_absolute_url("ui-buyer:company-edit-key-facts")

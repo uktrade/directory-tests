@@ -8,7 +8,7 @@ from behave.runner import Context
 from requests import Response
 from retrying import retry
 from scrapy import Selector
-from tests.functional.features.pages import (
+from tests.functional.pages import (
     fab_ui_edit_online_profiles,
     fab_ui_profile,
     fab_ui_try_other_services,
@@ -23,15 +23,11 @@ from tests.functional.features.pages import (
     sso_ui_password_reset,
     sso_ui_verify_your_email
 )
-from tests.functional.features.pages.utils import (
+from tests.functional.registry import get_fabs_page_object
+from tests.functional.utils.generic import (
     detect_page_language,
     get_language_code,
-    get_number_of_search_result_pages
-)
-
-from tests import get_absolute_url
-from tests.functional.features.steps import get_fabs_page_object
-from tests.functional.features.utils import (
+    get_number_of_search_result_pages,
     MailGunEvent,
     MailGunService,
     assertion_msg,
@@ -43,6 +39,8 @@ from tests.functional.features.utils import (
     get_verification_link,
     surround
 )
+
+from tests import get_absolute_url
 from tests.functional.pages import fab_ui_build_profile_basic
 from tests.settings import (
     FAS_LOGO_PLACEHOLDER_IMAGE,

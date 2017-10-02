@@ -4,11 +4,12 @@ import logging
 
 from behave.model import Table
 from requests import Response
+from tests.functional.utils.context_utils import Company
+from tests.functional.utils.generic import assertion_msg
+from tests.functional.utils.request import check_response
 
 from tests import get_absolute_url
-from tests.functional.features.context_utils import Company
-from tests.functional.features.pages.common import DETAILS
-from tests.functional.features.utils import assertion_msg, check_response
+from tests.functional.common import DETAILS
 from tests.settings import SECTORS_WITH_LABELS
 
 URL = get_absolute_url("ui-buyer:company-profile")

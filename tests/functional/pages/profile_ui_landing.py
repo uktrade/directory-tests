@@ -2,7 +2,8 @@
 """SSO - Verify your email page"""
 from requests import Response
 
-from tests.functional.features.utils import assertion_msg, check_response
+from tests.functional.utils.generic import assertion_msg
+from tests.functional.utils.request import check_response
 
 EXPECTED_STRINGS = [
     "Welcome to your great.gov.uk profile",

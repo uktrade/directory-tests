@@ -4,12 +4,12 @@ import logging
 
 from requests import Response
 
-from tests.functional.features.utils import check_response
+from tests.functional.utils.request import check_response
 
 EXPECTED_STRINGS = [
     "Bad Token", "Please request a", "new password reset",
-    ("The password reset link was invalid, possibly because it has already been"
-     " used.")
+    ("The password reset link was invalid, possibly because it has already "
+     "been used.")
 ]
 
 

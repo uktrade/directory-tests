@@ -4,15 +4,11 @@ import logging
 from urllib.parse import unquote
 
 from requests import Response, Session
+from tests.functional.utils.context_utils import Actor
 
 from tests import get_absolute_url
-from tests.functional.features.context_utils import Actor
-from tests.functional.features.utils import (
-    Method,
-    assertion_msg,
-    check_response,
-    make_request
-)
+from tests.functional.utils.generic import assertion_msg
+from tests.functional.utils.request import Method, make_request, check_response
 
 EXPECTED_STRINGS = [
     "Confirm email Address", "Please confirm that", "is an email",

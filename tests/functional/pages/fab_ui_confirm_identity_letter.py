@@ -3,10 +3,10 @@
 import logging
 
 from requests import Response
+from tests.functional.utils.context_utils import Actor
 
 from tests import get_absolute_url
-from tests.functional.features.context_utils import Actor
-from tests.functional.features.utils import Method, check_response, make_request
+from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("ui-buyer:confirm-identity-letter")
 EXPECTED_STRINGS = [

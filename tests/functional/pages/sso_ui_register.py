@@ -4,10 +4,10 @@ import logging
 from urllib.parse import quote
 
 from requests import Response, Session
+from tests.functional.utils.context_utils import Actor, Company
 
 from tests import get_absolute_url
-from tests.functional.features.context_utils import Actor, Company
-from tests.functional.features.utils import Method, check_response, make_request
+from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("sso:signup")
 EXPECTED_STRINGS = [

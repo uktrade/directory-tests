@@ -2,32 +2,30 @@
 """FAB Given step definitions."""
 from behave import given
 
-from tests.functional.features.steps.fab_given_impl import (
-    bp_build_company_profile,
-    fab_find_published_company,
-    fas_find_company_by_name,
-    fas_get_company_slug,
-    reg_confirm_email_address,
+from tests.functional.steps.fab_given_impl import (
+    unauthenticated_supplier,
     reg_create_sso_account_associated_with_company,
-    reg_create_unverified_profile,
+    reg_confirm_email_address,
+    bp_build_company_profile,
     reg_create_verified_profile,
-    reg_select_random_company_and_confirm_export_status,
-    reg_should_get_verification_letter,
     sso_create_standalone_unverified_sso_account,
     sso_create_standalone_verified_sso_account,
-    sso_get_password_reset_link,
-    unauthenticated_buyer,
-    unauthenticated_supplier
+    reg_select_random_company_and_confirm_export_status,
+    reg_create_unverified_profile, unauthenticated_buyer,
+    fas_find_company_by_name, fab_find_published_company,
+    fas_get_company_slug,
+    reg_should_get_verification_letter,
+    sso_get_password_reset_link
 )
-from tests.functional.features.steps.fab_then_impl import (
-    fab_should_see_all_case_studies,
-    fas_should_see_png_logo_thumbnail,
-    prof_should_see_logo_picture,
+from tests.functional.steps.fab_then_impl import (
     reg_should_get_verification_email,
     sso_should_be_signed_in_to_sso_account,
-    sso_should_be_signed_out_from_sso_account
+    sso_should_be_signed_out_from_sso_account,
+    prof_should_see_logo_picture,
+    fab_should_see_all_case_studies,
+    fas_should_see_png_logo_thumbnail
 )
-from tests.functional.features.steps.fab_when_impl import (
+from tests.functional.steps.fab_when_impl import (
     go_to_page,
     prof_add_case_study,
     prof_add_online_profiles,

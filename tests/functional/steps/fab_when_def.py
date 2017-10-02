@@ -2,7 +2,7 @@
 """FAB Given step definitions."""
 from behave import when
 
-from tests.functional.features.steps.fab_when_impl import (
+from tests.functional.steps.fab_when_impl import (
     bp_provide_company_details,
     bp_select_random_sector_and_export_to_country,
     bp_verify_identity_with_letter,

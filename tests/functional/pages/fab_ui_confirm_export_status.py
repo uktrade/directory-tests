@@ -5,7 +5,7 @@ import logging
 from requests import Response, Session
 
 from tests import get_absolute_url
-from tests.functional.features.utils import Method, check_response, make_request
+from tests.functional.utils.request import Method, check_response, make_request
 
 EXPECTED_STRINGS = [
     "Your company's previous exports", "Confirm company", "Export status",

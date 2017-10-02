@@ -3,10 +3,10 @@
 import logging
 
 from requests import Response, Session
+from tests.functional.utils.context_utils import Feedback
 
 from tests import get_absolute_url
-from tests.functional.features.context_utils import Feedback
-from tests.functional.features.utils import Method, check_response, make_request
+from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("ui-supplier:feedback")
 EXPECTED_STRINGS_FORM = [

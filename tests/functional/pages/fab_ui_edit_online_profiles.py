@@ -1,19 +1,15 @@
 # -*- coding: utf-8 -*-
 """FAB - Edit Company's Online Profiles page"""
 import logging
+
 import random
 import re
-
 from requests import Response, Session
+from tests.functional.utils.context_utils import Actor, Company
 
 from tests import get_absolute_url
-from tests.functional.features.context_utils import Actor, Company
-from tests.functional.features.utils import (
-    Method,
-    assertion_msg,
-    check_response,
-    make_request
-)
+from tests.functional.utils.generic import assertion_msg
+from tests.functional.utils.request import Method, make_request, check_response
 
 URL = get_absolute_url("ui-buyer:company-edit-social-media")
 EXPECTED_STRINGS = [
