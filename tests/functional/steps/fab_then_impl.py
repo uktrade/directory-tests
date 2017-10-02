@@ -806,6 +806,7 @@ def should_be_at(context: Context, supplier_alias: str, page_name: str):
 def should_see_selected_pages(context: Context, actor_alias: str):
     results = context.results
     for page_name, response in results.items():
+        context.response = response
         page = get_fabs_page_object(page_name.lower())
         page.should_be_here(response)
         logging.debug("%s successfully got to '%s' page", actor_alias, page_name)

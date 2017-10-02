@@ -1814,6 +1814,7 @@ def go_to_pages(context: Context, actor_alias: str, table: Table):
         page_name = row["page name"]
         url = get_fabs_page_url(page_name)
         response = make_request(Method.GET, url, session=actor.session)
+        context.response = response
         results[page_name] = response
 
     context.results = results
