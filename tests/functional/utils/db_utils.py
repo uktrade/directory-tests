@@ -5,7 +5,7 @@ import logging
 import psycopg2
 from psycopg2.extras import RealDictCursor
 
-from tests.functional.features.utils import assertion_msg
+from tests.functional.utils import assertion_msg
 from tests.settings import (
     DIR_DB_HOST,
     DIR_DB_NAME,
@@ -18,7 +18,6 @@ from tests.settings import (
     SSO_DB_PORT,
     SSO_DB_USER
 )
-
 
 SSO_CLEAN_UP = """
 DO $$

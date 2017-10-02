@@ -11,11 +11,6 @@ from tests.functional.features.db_utils import (
     delete_expired_django_sessions,
     delete_supplier_data
 )
-from tests.functional.features.pages.utils import (
-    extract_form_errors,
-    extract_main_error,
-    extract_section_error
-)
 from tests.functional.features.utils import (
     REQUEST_EXCEPTIONS,
     blue,
@@ -23,6 +18,11 @@ from tests.functional.features.utils import (
     init_loggers,
     print_response,
     red
+)
+from tests.functional.pages import (
+    extract_form_errors,
+    extract_main_error,
+    extract_section_error
 )
 
 

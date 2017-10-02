@@ -1,24 +1,19 @@
 # -*- coding: utf-8 -*-
 """FAB Given step implementations."""
 import logging
-import random
 import string
-from random import choice
 from urllib.parse import parse_qsl, quote, urljoin, urlsplit
 
+import random
 from behave.model import Table
 from behave.runner import Context
+from random import choice
 from requests import Response, Session
 from scrapy import Selector
-
-from tests import get_absolute_url
-from tests.functional.features.context_utils import Company
-from tests.functional.features.db_utils import get_verification_code
 from tests.functional.features.pages import (
     fab_ui_build_profile_basic,
     fab_ui_build_profile_sector,
     fab_ui_build_profile_verification_letter,
-    fab_ui_case_study_basic,
     fab_ui_case_study_images,
     fab_ui_confirm_company,
     fab_ui_confirm_export_status,
@@ -46,7 +41,6 @@ from tests.functional.features.pages import (
     sso_ui_register,
     sso_ui_verify_your_email
 )
-from tests.functional.features.pages.common import DETAILS, PROFILES
 from tests.functional.features.pages.utils import (
     escape_html,
     extract_and_set_csrf_middleware_token,
@@ -61,6 +55,11 @@ from tests.functional.features.pages.utils import (
     rare_word,
     sentence
 )
+
+from tests import get_absolute_url
+from tests.functional.features.common import DETAILS, PROFILES
+from tests.functional.features.context_utils import Company
+from tests.functional.features.db_utils import get_verification_code
 from tests.functional.features.steps import (
     get_fabs_page_object,
     get_fabs_page_url
@@ -77,6 +76,7 @@ from tests.functional.features.utils import (
     make_request,
     random_chars
 )
+from tests.functional.pages import fab_ui_case_study_basic
 from tests.settings import (
     COUNTRIES,
     NO_OF_EMPLOYEES,

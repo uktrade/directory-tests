@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 """FABS Page Registry"""
-from tests import get_absolute_url
-
 from tests.functional.features.pages import (
-    fab_ui_case_study_basic,
     fab_ui_confirm_identity,
     fab_ui_confirm_identity_letter,
     fab_ui_edit_description,
@@ -31,6 +28,9 @@ from tests.functional.features.pages import (
     sso_ui_register,
     sud_ui_landing
 )
+
+from tests import get_absolute_url
+from tests.functional.pages import fab_ui_case_study_basic
 
 FAS_PAGE_REGISTRY = {
     "fas landing": {

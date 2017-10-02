@@ -1,13 +1,18 @@
 # -*- coding: utf-8 -*-
 """FAB Given step implementations."""
 import logging
-import random
 import string
 import uuid
 from urllib.parse import urlsplit
 
+import random
 from behave.runner import Context
 from requests import Session
+from tests.functional.features.pages import (
+    fab_ui_profile,
+    fas_ui_profile
+)
+from tests.functional.features.pages.utils import sentence
 
 from tests.functional.features.context_utils import Actor, Company
 from tests.functional.features.db_utils import (
@@ -16,12 +21,6 @@ from tests.functional.features.db_utils import (
     get_verification_code,
     is_verification_letter_sent
 )
-from tests.functional.features.pages import (
-    fab_ui_profile,
-    fas_ui_profile,
-    profile_ui_landing
-)
-from tests.functional.features.pages.utils import sentence
 from tests.functional.features.steps.fab_then_impl import (
     bp_should_be_prompted_to_build_your_profile,
     prof_should_be_on_profile_page,
@@ -51,6 +50,7 @@ from tests.functional.features.steps.fab_when_impl import (
     sso_supplier_confirms_email_address
 )
 from tests.functional.features.utils import assertion_msg
+from tests.functional.pages import profile_ui_landing
 
 
 def unauthenticated_supplier(supplier_alias: str) -> Actor:

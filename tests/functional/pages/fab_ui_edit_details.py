@@ -6,8 +6,13 @@ from requests import Response, Session
 
 from tests import get_absolute_url
 from tests.functional.features.context_utils import Actor, Company
-from tests.functional.features.pages.utils import rare_word, sentence
-from tests.functional.features.utils import Method, check_response, make_request
+from tests.functional.features.utils import (
+    Method,
+    check_response,
+    make_request,
+    rare_word,
+    sentence
+)
 from tests.settings import NO_OF_EMPLOYEES
 
 URL = get_absolute_url("ui-buyer:company-edit-key-facts")
