@@ -11,8 +11,8 @@ URL = get_absolute_url("profile:exops-applications")
 EXPECTED_STRINGS = [
     "Profile", "You are signed in as", "Export opportunities", "Find a buyer",
     "Selling online overseas", "Selling online overseas",
-    ("We've built partnerships across the globe with online marketplaces, so we"
-     " can fast track your applications and give you access to exclusive "
+    ("We've built partnerships across the globe with online marketplaces, so "
+     "we can fast track your applications and give you access to exclusive "
      "offers."), "Selling online overseas (SOO) will help you to:",
     "join online marketplaces around the world",
     "quickly compare and contrast marketplaces",
