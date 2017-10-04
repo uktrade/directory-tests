@@ -10,7 +10,8 @@ from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("ui-buyer:company-edit")
 EXPECTED_STRINGS = [
-    "Your company address", "Basic", "Industry and exporting", "Confirmation",
+    "Your company address", "About your company", "Industry and exporting",
+    "Confirmation",
     ("Enter your name. We’ll then send a confirmation letter to your company’s "
      "registered address address within 5 working days."),
     "Your name:", "Company number", "Tick to confirm address.",
