@@ -8,7 +8,7 @@ from tests import get_absolute_url
 from tests.functional.utils.request import Method, check_response, make_request
 
 EXPECTED_STRINGS = [
-    "Your company's previous exports", "Confirm company", "Export status",
+    "Your company's previous exports", "Confirm company", "Trading status",
     "Have you exported before?",
     "Yes", "No", "I accept the", "Find a Buyer terms and conditions",
     "< Back to previous step", "Continue"
