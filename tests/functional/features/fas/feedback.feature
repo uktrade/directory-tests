@@ -7,6 +7,6 @@ Feature: Send feedback
   Scenario: Buyer should be able to send us a feedback from "Industries" FAS page
     Given "Annette Geissinger" is a buyer
 
-    When "Annette Geissinger" sends a Trade Profiles feedback request from "Industries" FAS page
+    When "Annette Geissinger" sends a Trade Profiles feedback request from "FAS Industries" FAS page
 
     Then "Annette Geissinger" should be told that the feedback request has been submitted
