@@ -1,22 +1,23 @@
 Feature: Export Preferences
 
 
-  @wip
-  @ED-1952a
+  @ED-1952
   @profile
   @export-preferences
-  Scenario: Suppliers can select preferred countries of export from the given list and provide a list of other countries
+  Scenario Outline: Suppliers can select preferred countries of export from the given list and provide a list of other countries
     Given "Annette Geissinger" is an unauthenticated supplier
     And "Annette Geissinger" created a SSO/great.gov.uk account associated with randomly selected company "Company X"
     And "Annette Geissinger" confirmed her email address
 
     When "Annette Geissinger" provides valid details of selected company
-    And "Annette Geissinger" selects sector the company is in and preferred countries of export
-      | predefined countries                        | other                 |
-      | China, Germany, India, Japan, United States | empty string          |
-      | China, Germany, India, Japan, United States | Canada, Poland, Italy |
+    And "Annette Geissinger" selects sector the company is in and "<preferred>" & "<other>" countries of export
 
     Then "Annette Geissinger" should be asked to decide how to verify her identity
+
+    Examples:
+      | preferred                                   | other                 |
+      | China, Germany, India, Japan, United States | empty string          |
+      | China, Germany, India, Japan, United States | Canada, Poland, Italy |
 
 
   @wip
