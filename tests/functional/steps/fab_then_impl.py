@@ -817,3 +817,11 @@ def fab_should_be_asked_about_verification_form(
     fab_ui_confirm_identity.should_be_here(context.response)
     logging.debug(
         "%s was asked about the form of identity verification", supplier_alias)
+
+
+def should_see_message(context: Context, actor_alias: str, message: str):
+    response = context.response
+    with assertion_msg(
+            "Response doesn't contain expetected message: '%s'", message):
+        assert message in response
+    logging.debug("%s saw expected message: '%s'", actor_alias, message)
