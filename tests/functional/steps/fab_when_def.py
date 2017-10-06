@@ -52,8 +52,8 @@ from tests.functional.steps.fab_when_impl import (
     sso_open_password_reset_link,
     sso_request_password_reset,
     sso_sign_in,
-    sso_supplier_confirms_email_address
-)
+    sso_supplier_confirms_email_address,
+    fab_select_preferred_countries_of_export)
 
 
 @when('"{supplier_alias}" randomly selects an active company without a '
@@ -351,3 +351,10 @@ def when_supplier_goes_sud_page(context, supplier_alias, page_name):
 @when('"{actor_alias}" goes to specific pages')
 def when_actor_goes_to_specific_pages(context, actor_alias):
     go_to_pages(context, actor_alias, context.table)
+
+
+@when('"{supplier_alias}" selects sector the company is in and preferred '
+      'countries of export')
+def when_supplier_select_preferred_countries_of_export(context, supplier_alias):
+    fab_select_preferred_countries_of_export(
+        context, supplier_alias, context.table)
