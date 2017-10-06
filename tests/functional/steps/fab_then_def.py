@@ -46,8 +46,8 @@ from tests.functional.steps.fab_then_impl import (
     sso_should_be_told_about_password_reset,
     sso_should_get_password_reset_email,
     sso_should_see_invalid_password_reset_link_error,
-    should_see_selected_pages
-)
+    should_see_selected_pages,
+    fab_should_be_asked_about_verification_form)
 
 from tests.functional.steps.fab_when_impl import (
     fas_feedback_request_should_be_submitted,
@@ -352,3 +352,8 @@ def then_supplier_should_see_specific_page(context, supplier_alias, page_name):
 @then('"{actor_alias}" should be able to see all selected pages')
 def then_actor_should_see_selected_pages(context, actor_alias):
     should_see_selected_pages(context, actor_alias)
+
+
+@then('"{supplier_alias}" should be asked to decide how to verify her identity')
+def then_supplier_should_be_asked_about_verification(context, supplier_alias):
+    fab_should_be_asked_about_verification_form(context, supplier_alias)

@@ -21,8 +21,8 @@ from tests.functional.pages import (
     sso_ui_invalid_password_reset_link,
     sso_ui_logout,
     sso_ui_password_reset,
-    sso_ui_verify_your_email
-)
+    sso_ui_verify_your_email,
+    fab_ui_confirm_identity)
 from tests.functional.registry import get_fabs_page_object
 from tests.functional.utils.generic import (
     detect_page_language,
@@ -810,3 +810,10 @@ def should_see_selected_pages(context: Context, actor_alias: str):
         page = get_fabs_page_object(page_name.lower())
         page.should_be_here(response)
         logging.debug("%s successfully got to '%s' page", actor_alias, page_name)
+
+
+def fab_should_be_asked_about_verification_form(
+        context: Context, supplier_alias: str):
+    fab_ui_confirm_identity.should_be_here(context.response)
+    logging.debug(
+        "%s was asked about the form of identity verification", supplier_alias)

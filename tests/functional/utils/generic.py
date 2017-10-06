@@ -108,7 +108,6 @@ def init_loggers(context: Context):
     context.config.setup_logging(handlers=[log_file_handler])
 
 
-
 def decode_as_utf8(content):
     """Try to decode provided content as UTF-8
 
@@ -436,7 +435,6 @@ def extract_password_reset_link(payload: str) -> str:
         assert "accounts/password/reset/key/" in password_reset_link
     logging.debug("Found password reset link: %s", password_reset_link)
     return password_reset_link
-
 
 
 def get_absolute_path_of_file(filename):

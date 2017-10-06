@@ -200,4 +200,3 @@ def check_response(response: Response, status_code: int, *,
                 "Expected Location header to start with: '%s' but got '%s' "
                 "instead.", location_starts_with, new_location):
             assert new_location.startswith(location_starts_with)
-
