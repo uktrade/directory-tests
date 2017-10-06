@@ -1828,11 +1828,14 @@ def fab_select_preferred_countries_of_export(
         "germany": "DE",
         "india": "IN",
         "japan": "JP",
-        "united states": "US"
+        "united states": "US",
+        "none selected": None,
+        "empty string": ""
     }
     sector = random.choice(SECTORS)
     country_names = preferred.split(", ")
     countries = [country_codes[country.lower()] for country in country_names]
+    other = "" if other == "empty string" else other
     response = fab_ui_build_profile_sector.submit(
         actor, sector, countries, other)
     context.response = response
