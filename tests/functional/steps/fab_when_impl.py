@@ -330,11 +330,11 @@ def bp_select_random_sector_and_export_to_country(context, supplier_alias):
     """
     actor = context.get_actor(supplier_alias)
     sector = random.choice(SECTORS)
-    country = COUNTRIES[random.choice(list(COUNTRIES))]
+    countries = [COUNTRIES[random.choice(list(COUNTRIES))]]
     other = ""
 
     # Step 1 - Submit the Choose Your Sector form
-    response = fab_ui_build_profile_sector.submit(actor, sector, country, other)
+    response = fab_ui_build_profile_sector.submit(actor, sector, countries, other)
     context.response = response
 
     # Step 2 - check if Supplier is on Confirm Address page
