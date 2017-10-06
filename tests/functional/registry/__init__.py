@@ -26,8 +26,9 @@ from tests.functional.pages import (
     sso_ui_logout,
     sso_ui_password_reset,
     sso_ui_register,
-    sud_ui_landing
-)
+    sud_ui_landing,
+    sud_ui_selling_online_overseas, sud_ui_find_a_buyer,
+    sud_ui_export_opportunities)
 
 from tests import get_absolute_url
 from tests.functional.pages import fab_ui_case_study_basic
@@ -224,15 +225,15 @@ SUD_PAGE_REGISTRY = {
     },
     "sud selling online overseas": {
         "url": "profile:soo",
-        "po": None
+        "po": sud_ui_selling_online_overseas
     },
     "sud export opportunities": {
-        "url": "profile:landing",
-        "po": None
+        "url": "profile:exops-applications",
+        "po": sud_ui_export_opportunities
     },
     "sud find a buyer": {
         "url": "profile:fab",
-        "po": None
+        "po": sud_ui_find_a_buyer
     },
     "sud export opportunities applications": {
         "url": "profile:exops-applications",

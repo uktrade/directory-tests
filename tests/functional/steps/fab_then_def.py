@@ -45,7 +45,8 @@ from tests.functional.steps.fab_then_impl import (
     sso_should_be_signed_in_to_sso_account,
     sso_should_be_told_about_password_reset,
     sso_should_get_password_reset_email,
-    sso_should_see_invalid_password_reset_link_error
+    sso_should_see_invalid_password_reset_link_error,
+    should_see_selected_pages
 )
 
 from tests.functional.steps.fab_when_impl import (
@@ -346,3 +347,8 @@ def then_should_see_invalid_password_reset_link_error(context, supplier_alias):
 @then('"{supplier_alias}" should see "{page_name}" page')
 def then_supplier_should_see_specific_page(context, supplier_alias, page_name):
     should_be_at(context, supplier_alias, page_name)
+
+
+@then('"{actor_alias}" should be able to see all selected pages')
+def then_actor_should_see_selected_pages(context, actor_alias):
+    should_see_selected_pages(context, actor_alias)
