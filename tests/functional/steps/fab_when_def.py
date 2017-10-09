@@ -354,7 +354,7 @@ def when_actor_goes_to_specific_pages(context, actor_alias):
 
 
 @when('"{supplier_alias}" selects sector the company is in and "{preferred}" &'
-      ' "{other}" countries of export')
+      ' "{other}" as other countries of export')
 def when_supplier_select_preferred_countries_of_export(
         context, supplier_alias, preferred, other):
     fab_select_preferred_countries_of_export(
