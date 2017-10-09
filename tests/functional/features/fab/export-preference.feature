@@ -20,33 +20,41 @@ Feature: Export Preferences
       | China, Germany, India, Japan, United States | Canada, Poland, Italy |
 
 
-  @wip
   @ED-1952b
   @profile
   @export-preferences
-  Scenario: Suppliers have to provide preferred country of export when building up the profile
+  Scenario Outline: Suppliers have to provide preferred country of export when building up the profile
     Given "Annette Geissinger" is an unauthenticated supplier
     And "Annette Geissinger" created a SSO/great.gov.uk account associated with randomly selected company "Company X"
     And "Annette Geissinger" confirmed her email address
 
     When "Annette Geissinger" provides valid details of selected company
-    And "Annette Geissinger" selects sector the company is in and preferred country of export
-      | predefined countries | other                        | error                   |
-      | none selected        | empty string                 | This field is required. |
-      | none selected        | Canada, Poland, Italy, Kenia | Enter 3 maximum         |
+    And "Annette Geissinger" selects sector the company is in and "<preferred>" & "<other>" countries of export
 
-    Then "Annette Geissinger" should see expected error messages
+    Then "Annette Geissinger" should see "<error>" message
+
+    Examples:
+      | preferred     | other           | error                                                        |
+      | China         | 1001 characters | Ensure this value has at most 1000 characters (it has 1001). |
+      | none selected | empty string    | This field is required.                                      |
 
 
   @wip
   @ED-1952c
   @profile
   @export-preferences
-  Scenario: Suppliers have to use commas to separate other preferred countries of export when building up the profile
+  Scenario Outline: Suppliers have to use commas to separate other preferred countries of export when building up the profile
     Given "Annette Geissinger" is an unauthenticated supplier
     And "Annette Geissinger" created a SSO/great.gov.uk account associated with randomly selected company "Company X"
     And "Annette Geissinger" confirmed her email address
 
     When "Annette Geissinger" provides valid details of selected company
-    And "Annette Geissinger" selects sector the company is in and preferred country of export
+    And "Annette Geissinger" selects sector the company is in and "<preferred>" & "<other>" countries of export
+
+    Then "Annette Geissinger" should see "<error>" message
+
+    Examples:
+      | preferred     | other                 | error                   |
+      | none selected | Canada; Poland; Italy | Enter 3 maximum         |
+      | none selected | Canada.Poland.Italy   | Enter 3 maximum         |
 
