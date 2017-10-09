@@ -1836,22 +1836,11 @@ def go_to_pages(context: Context, actor_alias: str, table: Table):
 
 
 def fab_select_preferred_countries_of_export(
-        context: Context, supplier_alias: str, preferred, other):
+        context: Context, supplier_alias: str, country_names, other_countries):
     actor = context.get_actor(supplier_alias)
-    country_codes = {
-        "china": "CN",
-        "germany": "DE",
-        "india": "IN",
-        "japan": "JP",
-        "united states": "US",
-        "none selected": None,
-        "empty string": ""
-    }
-    value = get_form_value(value_type)
-    sector = random.choice(SECTORS)
-    country_names = preferred.split(", ")
-    countries = [country_codes[country.lower()] for country in country_names]
-    other = "" if other == "empty string" else other
+    country_codes = get_form_value(country_names)
+    other = get_form_value(other_countries)
+    sector = get_form_value("sector")
     response = fab_ui_build_profile_sector.submit(
-        actor, sector, countries, other)
+        actor, sector, country_codes, other)
     context.response = response
