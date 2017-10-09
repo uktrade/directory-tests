@@ -361,5 +361,5 @@ def then_supplier_should_be_asked_about_verification(context, supplier_alias):
 
 
 @then('"{actor_alias}" should see "{message}" message')
-def step_impl(context, actor_alias, message):
+def then_actor_should_see_a_message(context, actor_alias, message):
     should_see_message(context, actor_alias, message)
