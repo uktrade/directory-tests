@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """FAB Given step implementations."""
 import logging
+import re
 import string
 from urllib.parse import parse_qsl, quote, urljoin, urlsplit
 
@@ -1633,7 +1634,8 @@ def fab_submit_verification_code(context, supplier_alias):
 def get_form_value(key: str) -> str:
 
     def get_number_from_key(key: str) -> int:
-        return [int(word) for word in key.split() if word.isdigit()][0]
+        numbers = [int(word) for word in key.split() if word.isdigit()]
+        return numbers[0] if numbers else 0
 
     def get_n_chars(number: int) -> str:
         return random_chars(number)
@@ -1641,29 +1643,40 @@ def get_form_value(key: str) -> str:
     def get_n_words(number: int) -> str:
         return sentence(min_words=number, max_words=number, max_length=0)
 
-    if key.endswith(" characters"):
-        number = get_number_from_key(key)
-        key = "N characters"
-    elif key.endswith(" words"):
-        number = get_number_from_key(key)
-        key = "N words"
-    else:
-        number = 0
+    def get_n_country_codes(number: int) -> list:
+        country_codes = ["CN", "DE", "IN", "JP", "US"]
+        max = number if number <= len(country_codes) else len(country_codes)
+        return [country_codes[idx] for idx in range(max)]
 
-    values = {
-        "N characters": get_n_chars(number),
-        "N words": get_n_words(number),
-        "empty string": "",
-        "valid http": "http://{}.{}".format(rare_word(), rare_word()),
-        "valid https": "https://{}.{}".format(rare_word(), rare_word()),
-        "invalid http": "http:{}.{}".format(rare_word(), rare_word()),
-        "invalid https": "https:{}.{}".format(rare_word(), rare_word()),
-        "invalid sector": "this is an invalid sector",
-        "no image": None,
-        "invalid image": choice(BMPs + JP2s + WEBPs)
-    }
+    result = None
 
-    return values[key]
+    mappings = [
+        ("empty string", ""),
+        ("valid http", "http://{}.{}".format(rare_word(), rare_word())),
+        ("valid https", "https://{}.{}".format(rare_word(), rare_word())),
+        ("invalid http", "http:{}.{}".format(rare_word(), rare_word())),
+        ("invalid https", "https:{}.{}".format(rare_word(), rare_word())),
+        ("invalid sector", "this is an invalid sector"),
+        ("no image", None),
+        ("invalid image", choice(BMPs + JP2s + WEBPs)),
+        (" characters$", get_n_chars(get_number_from_key(key))),
+        (" words$", get_n_words(get_number_from_key(key))),
+        (" predefined countries$", get_n_country_codes(get_number_from_key(key))),
+        ("none selected", None)
+    ]
+
+    found = False
+    for pattern, value in mappings:
+        r = re.compile(pattern)
+        if r.findall(key):
+            result = value
+            found = True
+            break
+
+    if not found:
+        result = key
+
+    return result
 
 
 def fab_attempt_to_add_case_study(
@@ -1832,6 +1845,7 @@ def fab_select_preferred_countries_of_export(
         "none selected": None,
         "empty string": ""
     }
+    value = get_form_value(value_type)
     sector = random.choice(SECTORS)
     country_names = preferred.split(", ")
     countries = [country_codes[country.lower()] for country in country_names]
