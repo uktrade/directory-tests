@@ -1631,7 +1631,7 @@ def fab_submit_verification_code(context, supplier_alias):
     context.response = response
 
 
-def get_form_value(key: str) -> str:
+def get_form_value(key: str) -> str or list or int or None:
 
     def get_number_from_key(key: str) -> int:
         numbers = [int(word) for word in key.split() if word.isdigit()]
@@ -1662,7 +1662,9 @@ def get_form_value(key: str) -> str:
         (" characters$", get_n_chars(get_number_from_key(key))),
         (" words$", get_n_words(get_number_from_key(key))),
         (" predefined countries$", get_n_country_codes(get_number_from_key(key))),
-        ("none selected", None)
+        ("1 predefined country$", get_n_country_codes(1)),
+        ("none selected", None),
+        ("sector", random.choice(SECTORS))
     ]
 
     found = False
