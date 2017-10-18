@@ -4,8 +4,9 @@ import logging
 from datetime import datetime
 
 
-URL = "https://exred-prototype.herokuapp.com/"
+from tests import get_absolute_url
 from tests.exred.drivers import DRIVERS
+URL = get_absolute_url("exred:home")
 NAME = "ExRed Home"
 
 SECTION_VIDEO = {
