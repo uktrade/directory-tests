@@ -73,7 +73,12 @@ SECTION_CASE_STUDIES = {
 }
 
 
-def visit(driver: DRIVERS):
+def visit(driver: DRIVERS, *, first_time: bool = False):
+    if first_time:
+        logging.debug(
+            "Deleting all cookies in order to enforce the first time visit "
+            "simulation")
+        driver.delete_all_cookies()
     driver.get(URL)
     take_screenshot(driver, NAME)
 
