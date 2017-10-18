@@ -105,6 +105,10 @@ functional_update_companies:
 	$(SET_DB_URLS) && \
 	python -c "from tests.functional.features.pages.utils import update_companies; update_companies()"
 
+exred_tests:
+	$(SET_PYTEST_ENV_VARS) && \
+	behave -k --format progress3 --no-logcapture --stop --tags=-wip --tags=-skip --tags=~fixme tests/exred/features $(BEHAVE_ARGS)
+
 test: pep8 smoke_tests integration_test load_test_minimal
 
 DOCKER_REMOVE_ALL := \
@@ -120,6 +124,7 @@ DOCKER_SET_DIRECTORY_TESTS_ENV_VARS := \
 	export DIRECTORY_TESTS_DIRECTORY_UI_BUYER_URL=http://dev.buyer.directory.uktrade.io; \
 	export DIRECTORY_TESTS_DIRECTORY_UI_SUPPLIER_URL=http://dev.supplier.directory.uktrade.io; \
 	export DIRECTORY_TESTS_DIRECTORY_PROFILE_URL=http://dev.profile.uktrade.io; \
+	export DIRECTORY_TESTS_EXRED_UI_URL=https://exred-prototype.herokuapp.com; \
 	export DIRECTORY_TESTS_LOCUST_HATCH_RATE=150; \
 	export DIRECTORY_TESTS_LOCUST_NUM_CLIENTS=150
 
@@ -133,5 +138,12 @@ docker_integration_tests: docker_remove_all
 	docker-compose -f docker-compose.yml build && \
 	docker-compose -f docker-compose.yml run smoke_tests && \
 	docker-compose -f docker-compose.yml run functional_tests
+
+docker_exred_tests: docker_remove_all
+	$(DOCKER_SET_DIRECTORY_TESTS_ENV_VARS) && \
+	$(DOCKER_COMPOSE_CREATE_ENVS) && \
+	$(DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
+	docker-compose -f docker-compose.yml build && \
+	docker-compose -f docker-compose.yml run exred_tests
 
 .PHONY: build clean requirements test docker_remove_all docker_integration_tests smoke_tests load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal functional_tests pep8
