@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 """Behave configuration file."""
 import logging
-import os
 from collections import namedtuple
 
 from behave.model import Scenario, Step
 from behave.runner import Context
 
-from tests.exred import drivers
-from tests.functional.utils.generic import init_loggers
+import drivers
 from settings import BROWSER, HEIGHT, WIDTH
+from utils import init_loggers, take_screenshot
 
 ScenarioData = namedtuple(
     "ScenarioData",
@@ -45,6 +44,25 @@ def before_step(context: Context, step: Step):
     :param step: Behave Step object
     """
     logging.debug('Step: %s %s', step.step_type, str(repr(step.name)))
+
+
+def after_step(context: Context, step: Step):
+    """Place here code which that has to be executed after every step.
+
+    :param context: Behave Context object
+    :param step: Behave Step object
+    """
+    logging.debug('Step: %s %s', step.step_type, str(repr(step.name)))
+    if step.status == "failed":
+        logging.debug(
+            'Step "%s %s" failed. Reason: "%s"', step.step_type, step.name,
+            step.exception)
+        if hasattr(context, "driver"):
+            if hasattr(context, "current_page"):
+                page_name = "{}-{}_failure".format(step.name, context.current_page.NAME)
+            else:
+                page_name = "{}-last_page_failure".format(step.name)
+            take_screenshot(context.driver, page_name)
 
 
 def before_scenario(context: Context, scenario: Scenario):
