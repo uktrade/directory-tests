@@ -4,14 +4,14 @@ import logging
 
 from behave.runner import Context
 
-from pages import exred_home
+from pages import home
 from registry import get_page_object
 
 
 def should_see_sections_on_home_page(
         context: Context, actor_name: str, sections: str):
     section_names = sections.lower().split(", ")
-    exred_home.should_see_sections(context.driver, section_names)
+    home.should_see_sections(context.driver, section_names)
     logging.debug(
         "%s saw all expected sections on '%s' page", actor_name,
         context.current_page.NAME)
