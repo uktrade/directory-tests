@@ -2,10 +2,11 @@
 """Selenium driver getters"""
 import os
 
-from selenium.webdriver import Remote
+from selenium.webdriver import Chrome, Firefox, PhantomJS, Remote
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 HUB_URL = os.environ.get("HUB_URL", "http://127.0.0.1:4444/wd/hub")
+DRIVERS = (Remote, Chrome, Firefox, PhantomJS)
 
 
 def get_chrome_driver():
