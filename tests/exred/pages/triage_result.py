@@ -39,13 +39,24 @@ def get_classification(driver: DRIVERS) -> str:
     return element.text
 
 
-def should_be_classified_as_new(driver: DRIVERS):
+def should_be_classified_as(driver: DRIVERS, expected: str):
     classified = get_classification(driver)
-    expected = "New to exporting"
     with assertion_msg(
             "Expected to be classified as '%s' but was classified as: '%s'",
             expected, classified):
         assert classified == expected
+
+
+def should_be_classified_as_new(driver: DRIVERS):
+    should_be_classified_as(driver, "New to exporting")
+
+
+def should_be_classified_as_occasional(driver: DRIVERS):
+    should_be_classified_as(driver, "Occasional Exporter")
+
+
+def should_be_classified_as_regular(driver: DRIVERS):
+    should_be_classified_as(driver, "Regular Exporter")
 
 
 def create_exporting_journey(driver: DRIVERS):
