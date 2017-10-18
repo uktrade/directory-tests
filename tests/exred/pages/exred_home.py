@@ -2,13 +2,17 @@
 """ExRed Home Page Object."""
 import logging
 
+from selenium.webdriver import ActionChains
 
 from tests import get_absolute_url
 from tests.exred.drivers import DRIVERS
 from tests.exred.utils import take_screenshot
+
 URL = get_absolute_url("exred:home")
 NAME = "ExRed Home"
 
+GET_STARTED_BUTTON = ("#content > section.triage.triage-section .intro "
+                      ".content .button-cta")
 SECTION_VIDEO = {
     "itself": "#content > section.hero-section",
     "teaser": "#content > section.hero-section div.hero-teaser",
@@ -20,8 +24,7 @@ SECTION_EXPORTING_JOURNEY = {
     "itself": "#content > section.triage.triage-section",
     "heading": "#content > section.triage.triage-section .heading",
     "introduction": "#content > section.triage.triage-section .intro",
-    "get_started_button":
-        "#content > section.triage.triage-section .intro .content .button-cta",
+    "get_started_button": GET_STARTED_BUTTON,
     "image": "#content > section.triage.triage-section .container > img"
 }
 SECTION_PERSONAS = {
@@ -103,3 +106,12 @@ def should_see_sections(driver: DRIVERS, section_names: list):
         logging.debug("All elements in '%s' section are visible", section_name)
     logging.debug(
         "All expected sections: %s on %s page are visible", section_names, NAME)
+
+
+def start_exporting_journey(driver: DRIVERS):
+    button = driver.find_element_by_css_selector(GET_STARTED_BUTTON)
+    assert button.is_displayed()
+    actions = ActionChains(driver)
+    actions.move_to_element(button)
+    actions.click(button)
+    actions.perform()
