@@ -4,8 +4,10 @@ from pages import (
     home,
     triage_1st_question,
     triage_2nd_question,
+    triage_3rd_question,
     triage_4th_question,
-    triage_result)
+    triage_result,
+)
 
 from utils import get_absolute_url
 
@@ -21,6 +23,10 @@ EXRED_PAGE_REGISTRY = {
     "triage - 2nd question": {
         "url": "ExRed Triage - 2nd question",
         "po": triage_2nd_question
+    },
+    "triage - 3rd question": {
+        "url": "ExRed Triage - 3rd question",
+        "po": triage_3rd_question
     },
     "triage - 4th question": {
         "url": "ExRed Triage - 4th question",
