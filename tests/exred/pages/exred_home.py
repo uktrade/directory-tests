@@ -39,8 +39,8 @@ SECTION_PERSONAS = {
 }
 SECTION_GUIDANCE = {
     "itself": "#resource-guidance",
-    "header": "#resource-guidance > .container > .section-header",
-    "intro": "#resource-guidance > .container > .section-intro",
+    "header": "#resource-guidance > .container > .header",
+    "intro": "#resource-guidance > .container > .intro",
     "groups": "#resource-guidance > .container > .group",
     "market_research_group":
         "#resource-guidance > .container > .group > div > .market-research",
@@ -97,6 +97,9 @@ def should_see_sections(driver: DRIVERS, section_names: list):
     for section_name in section_names:
         section = sections[section_name.lower().replace(" ", "_")]
         for element_name, element_selector in section.items():
+            logging.debug(
+                "Looking for '%s' element in '%s' section with '%s' selector",
+                element_name, section_name, element_selector)
             element = driver.find_element_by_css_selector(element_selector)
             assert element.is_displayed(), ("It looks like '{}' in '{}' "
                                             "section is not visible"
