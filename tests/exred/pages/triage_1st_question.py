@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 """ExRed Triage 1st Question Page Object."""
 import logging
+import random
+
+from selenium.webdriver import ActionChains
+from selenium.webdriver.support.select import Select
 
 from settings import DRIVERS
 from utils import assertion_msg, get_absolute_url, take_screenshot
@@ -53,3 +57,23 @@ def extract_sectors(driver: DRIVERS) -> list:
     for option in options:
         option_values.append(option.get_attribute("value"))
     return option_values
+
+
+def select_sector(driver: DRIVERS, sector: str):
+    if not sector:
+        sector = random.choice(extract_sectors(driver))
+    options = driver.find_element_by_css_selector(FIRST_QUESTION)
+    assert options.is_displayed()
+    select = Select(options)
+    select.select_by_visible_text(sector)
+    take_screenshot(driver, NAME)
+
+
+def submit(driver: DRIVERS):
+    button = driver.find_element_by_css_selector(CONTINUE_BUTTON)
+    assert button.is_displayed()
+    actions = ActionChains(driver)
+    actions.move_to_element(button)
+    actions.click(button)
+    actions.perform()
+    take_screenshot(driver, NAME + " after submitting")
