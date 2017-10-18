@@ -31,6 +31,6 @@ def get(browser_name, *, width: int = 1600, height: int = 1200):
         "firefox": get_firefox_driver,
         "phantomjs": get_phantom_js_driver
     }
-    remote_driver = browser_map[browser_name]()
+    remote_driver = browser_map[browser_name.lower()]()
     remote_driver.set_window_size(width, height)
     return remote_driver
