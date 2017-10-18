@@ -95,8 +95,7 @@ def before_all(context: Context):
 
     :param context: Behave Context object
     """
-    init_loggers(context, log_file=os.path.join(
-        ".", "tests", "exred", "reports", "behave.log"))
-    context.browser_name = os.environ.get("BROWSER", "chrome")
-    context.viewport_width = os.environ.get("WIDTH", 1600)
-    context.viewport_height = os.environ.get("HEIGHT", 1200)
+    init_loggers(context)
+    context.browser_name = BROWSER
+    context.viewport_width = WIDTH
+    context.viewport_height = HEIGHT
