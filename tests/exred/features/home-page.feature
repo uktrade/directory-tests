@@ -20,6 +20,7 @@ Feature: Home Page
 
 
   @wip
+  @ED-2366
   @triage
   Scenario: Any Exporter visiting the home page after triage should be able to get to personalised page
     Given "Robert" has answered triage questions
@@ -31,6 +32,7 @@ Feature: Home Page
 
 
   @wip
+  @ED-2366
   @personas
   @articles
   Scenario Outline: Any Exporter should get to a relevant article list from Personas section on the homepage
