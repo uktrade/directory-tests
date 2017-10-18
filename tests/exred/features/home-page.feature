@@ -6,7 +6,7 @@ Feature: Home Page
   @sections
   Scenario: Any Exporter should see the "Video, Exporting Journey, Personas, Guidance, Services, Case Studies" sections on the home page.
       Given "Robert" visits the "Home" page
-      Then "Robert" should see the "Video, Exporting Journey, Personas, Guidance, Services, Case Studies" sections
+      Then "Robert" should see the "Video, Exporting Journey, Personas, Guidance, Services, Case Studies" sections on Home page
 
 
   @ED-2366

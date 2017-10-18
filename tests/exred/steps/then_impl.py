@@ -8,10 +8,10 @@ from pages import exred_home
 from registry import get_page_object
 
 
-def should_see_sections(context: Context, actor_name: str, sections: str):
+def should_see_sections_on_home_page(
+        context: Context, actor_name: str, sections: str):
     section_names = sections.lower().split(", ")
-    page = context.current_page
-    page.should_see_sections(context.driver, section_names)
+    exred_home.should_see_sections(context.driver, section_names)
     logging.debug(
         "%s saw all expected sections on '%s' page", actor_name,
         context.current_page.NAME)
