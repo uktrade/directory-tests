@@ -105,7 +105,8 @@ def should_see_sections(driver: DRIVERS, section_names: list):
                                                     section_name))
         logging.debug("All elements in '%s' section are visible", section_name)
     logging.debug(
-        "All expected sections: %s on %s page are visible", section_names, NAME)
+        "All expected sections: %s on %s page are visible", section_names,
+        NAME)
 
 
 def start_exporting_journey(driver: DRIVERS):
