@@ -10,8 +10,7 @@ from utils import get_absolute_url, take_screenshot
 NAME = "ExRed Home"
 URL = get_absolute_url(NAME)
 
-GET_STARTED_BUTTON = ("#content > section.triage.triage-section .intro "
-                      ".content .button-cta")
+GET_STARTED_BUTTON = ".triage a.button-cta"
 SECTION_VIDEO = {
     "itself": "#content > section.hero-section",
     "teaser": "#content > section.hero-section div.hero-teaser",
