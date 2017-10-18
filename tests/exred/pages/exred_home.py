@@ -5,8 +5,8 @@ import logging
 from selenium.webdriver import ActionChains
 
 from tests import get_absolute_url
-from tests.exred.drivers import DRIVERS
 from tests.exred.utils import take_screenshot
+from settings import DRIVERS
 
 URL = get_absolute_url("exred:home")
 NAME = "ExRed Home"

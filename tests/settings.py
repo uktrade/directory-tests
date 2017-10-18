@@ -2,8 +2,6 @@ import os
 from glob import glob
 from urllib import parse as urlparse
 
-EXRED_UI_URL = os.environ["EXRED_UI_URL"]
-EXRED_SCREENSHOTS_DIR = os.path.abspath(os.path.join("tests", "exred", "screenshots"))
 
 DIRECTORY_API_URL = os.environ["DIRECTORY_API_URL"]
 DIRECTORY_BUYER_API_URL = os.environ["DIRECTORY_BUYER_API_URL"]

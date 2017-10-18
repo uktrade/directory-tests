@@ -9,6 +9,7 @@ from behave.runner import Context
 
 from tests.exred import drivers
 from tests.functional.utils.generic import init_loggers
+from settings import BROWSER, HEIGHT, WIDTH
 
 ScenarioData = namedtuple(
     "ScenarioData",
