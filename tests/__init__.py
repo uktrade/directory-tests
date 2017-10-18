@@ -11,6 +11,7 @@ join_sso = partial(urljoin, settings.DIRECTORY_SSO_URL)
 join_profile = partial(urljoin, settings.DIRECTORY_PROFILE_URL)
 join_ui_buyer = partial(urljoin, settings.DIRECTORY_UI_BUYER_URL)
 join_ui_supplier = partial(urljoin, settings.DIRECTORY_UI_SUPPLIER_URL)
+join_ui_exred = partial(urljoin, settings.EXRED_UI_URL)
 
 urls = {
     # SSO
@@ -87,7 +88,12 @@ urls = {
     'profile:exops-applications': 'export-opportunities/applications/',
     'profile:landing': '',
     'profile:about': 'about/',
-    'profile:directory-supplier': 'api/v1/directory/supplier/'
+    'profile:directory-supplier': 'api/v1/directory/supplier/',
+
+
+    # Exporting Readiness
+    'exred:home': '',
+    'exred:triage-1st-question': 'triage',
 }
 
 # these user credentials are hard-coded in `directory-sso`. The users
@@ -136,6 +142,8 @@ def get_absolute_url(name):
         return join_internal_api(relative_url)
     elif name.startswith('profile:'):
         return join_profile(relative_url)
+    elif name.startswith('exred:'):
+        return join_ui_exred(relative_url)
 
 
 def get_random_email_address():
