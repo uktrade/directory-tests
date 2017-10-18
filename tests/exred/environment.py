@@ -85,9 +85,11 @@ def after_scenario(context: Context, scenario: Scenario):
     :param context: Behave Context object
     :param scenario: Behave Scenario object
     """
-    logging.debug('Quitting Selenium Driver after scenario: %s', scenario.name)
+    logging.debug(
+        "Deleting all cookies and closing Selenium Driver after scenario: %s",
+        scenario.name)
+    context.driver.delete_all_cookies()
     context.driver.close()
-    context.driver.quit()
 
 
 def before_all(context: Context):
@@ -99,3 +101,13 @@ def before_all(context: Context):
     context.browser_name = BROWSER
     context.viewport_width = WIDTH
     context.viewport_height = HEIGHT
+
+
+def after_all(context: Context):
+    """Place here code which has to be executed after all scenarios.
+
+    :param context: Behave Context object
+    """
+    if hasattr(context, "driver"):
+        logging.debug('Quitting Selenium Driver')
+        context.driver.quit()
