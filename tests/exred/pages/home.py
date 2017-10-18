@@ -76,6 +76,11 @@ SECTION_CASE_STUDIES = {
 
 
 def visit(driver: DRIVERS, *, first_time: bool = False):
+    """Visit the Home Page.
+
+    :param driver: Any Selenium Driver (Remote, Chrome, Firefox, PhantomJS etc.
+    :param first_time: (optional) will delete all cookies if True
+    """
     if first_time:
         logging.debug(
             "Deleting all cookies in order to enforce the first time visit "
@@ -86,6 +91,11 @@ def visit(driver: DRIVERS, *, first_time: bool = False):
 
 
 def should_see_sections(driver: DRIVERS, section_names: list):
+    """Will check if Actor can see all expected page sections.
+
+    :param driver: Any Selenium Driver (Remote, Chrome, Firefox, PhantomJS etc.
+    :param section_names: list of page section to check
+    """
     sections = {
         "video": SECTION_VIDEO,
         "exporting_journey": SECTION_EXPORTING_JOURNEY,
@@ -112,6 +122,10 @@ def should_see_sections(driver: DRIVERS, section_names: list):
 
 
 def start_exporting_journey(driver: DRIVERS):
+    """Start Exporting Journey (Triaging).
+
+    :param driver: Any Selenium Driver (Remote, Chrome, Firefox, PhantomJS etc.
+    """
     button = driver.find_element_by_css_selector(GET_STARTED_BUTTON)
     assert button.is_displayed()
     actions = ActionChains(driver)

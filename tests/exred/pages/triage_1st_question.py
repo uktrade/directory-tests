@@ -9,6 +9,7 @@ NAME = "ExRed Triage - 1st question"
 URL = get_absolute_url(NAME)
 
 
+SECTOR_OPTIONS = "#q0 > option"
 EXPECTED_ELEMENTS = {
     "form legend": "#content > .questions form > fieldset > legend",
     "1st question label": "#content > .questions form > fieldset > label",
@@ -38,3 +39,16 @@ def should_be_here(driver: DRIVERS):
             assert element.is_displayed()
     take_screenshot(driver, NAME)
     logging.debug("All expected elements are visible on '%s' page", NAME)
+
+
+def extract_sectors(driver: DRIVERS) -> list:
+    """Extract all Sector options.
+
+    :param driver: Any Selenium Driver (Remote, Chrome, Firefox, PhantomJS etc.
+    :return: a list of available Sectors
+    """
+    options = driver.find_elements_by_css_selector(SECTOR_OPTIONS)
+    option_values = []
+    for option in options:
+        option_values.append(option.get_attribute("value"))
+    return option_values
