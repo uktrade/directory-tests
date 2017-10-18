@@ -4,7 +4,8 @@ import logging
 
 from behave.runner import Context
 
-from tests.exred.registry import get_page_object
+from pages import exred_home
+from registry import get_page_object
 
 
 def should_see_sections(context: Context, actor_name: str, sections: str):

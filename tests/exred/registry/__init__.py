@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 """ExRed Page Object Registry"""
-from tests.exred.pages import (
+from pages import (
     exred_home,
     exred_triage_1st_question
 )
 
-from tests import get_absolute_url
+from utils import get_absolute_url
 
 EXRED_PAGE_REGISTRY = {
     "home": {

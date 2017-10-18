@@ -2,7 +2,7 @@
 """When step definitions."""
 from behave import when
 
-from tests.exred.steps.when_impl import start_triage
+from steps.when_impl import start_triage
 
 
 @when('"{actor_alias}" decides to get started in Exporting journey section')

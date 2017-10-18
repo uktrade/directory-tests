@@ -4,7 +4,7 @@ import logging
 
 from behave.runner import Context
 
-from tests.exred.pages import exred_home
+from pages import exred_home
 
 
 def start_triage(context: Context, actor_alias: str):

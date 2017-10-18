@@ -4,7 +4,7 @@ import logging
 
 from behave.runner import Context
 
-from tests.exred.registry import get_page_object
+from registry import get_page_object
 
 
 def visit_page(

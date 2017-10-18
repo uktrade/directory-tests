@@ -2,7 +2,7 @@
 """Then step definitions."""
 from behave import then
 
-from tests.exred.steps.then_impl import should_be_on_page, should_see_sections
+from steps.then_impl import should_be_on_page, should_see_sections_on_home_page
 
 
 @then('"{actor_name}" should see the "{sections}" sections')

@@ -2,7 +2,7 @@
 """Given step definitions."""
 from behave import given
 
-from tests.exred.steps.given_impl import visit_page
+from steps.given_impl import visit_page
 
 
 @given('"{actor_name}" visits the "{page_name}" page')
