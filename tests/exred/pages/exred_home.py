@@ -3,10 +3,9 @@
 import logging
 from datetime import datetime
 
-from selenium.webdriver import Chrome, Firefox, PhantomJS, Remote
 
-DRIVERS = (Remote, Chrome, Firefox, PhantomJS)
 URL = "https://exred-prototype.herokuapp.com/"
+from tests.exred.drivers import DRIVERS
 NAME = "ExRed Home"
 
 SECTION_VIDEO = {
