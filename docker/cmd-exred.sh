@@ -1,3 +1,3 @@
 #!/bin/bash -xe
 
-make exred_tests
+make exred_docker

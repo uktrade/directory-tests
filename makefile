@@ -84,7 +84,7 @@ selenium_tests:
 	pytest tests/selenium $(PYTEST_ARGS)
 
 DOCKER_COMPOSE_REMOVE_AND_PULL := docker-compose rm -f && docker-compose pull
-DOCKER_COMPOSE_CREATE_ENVS := ./docker/create_envs.sh
+DOCKER_COMPOSE_CREATE_ENVS := ./docker/create_envs.sh ./docker/env.json
 DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL := docker-compose rm && docker-compose pull
 
 smoke_tests:
@@ -104,10 +104,6 @@ functional_update_companies:
 	$(SET_PYTEST_ENV_VARS) && \
 	$(SET_DB_URLS) && \
 	python -c "from tests.functional.features.pages.utils import update_companies; update_companies()"
-
-exred_tests:
-	$(SET_PYTEST_ENV_VARS) && \
-	behave -k --format progress3 --no-logcapture --stop --tags=-wip --tags=-skip --tags=~fixme tests/exred/features $(BEHAVE_ARGS)
 
 test: pep8 smoke_tests integration_test load_test_minimal
 
@@ -139,11 +135,47 @@ docker_integration_tests: docker_remove_all
 	docker-compose -f docker-compose.yml run smoke_tests && \
 	docker-compose -f docker-compose.yml run functional_tests
 
-docker_exred_tests: docker_remove_all
-	$(DOCKER_SET_DIRECTORY_TESTS_ENV_VARS) && \
-	$(DOCKER_COMPOSE_CREATE_ENVS) && \
-	$(DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
-	docker-compose -f docker-compose.yml build && \
-	docker-compose -f docker-compose.yml run exred_tests
+
+EXRED_SET_DOCKER_ENV_VARS := \
+	export EXRED_TESTS_WIDTH=1280; \
+	export EXRED_TESTS_HEIGTH=768; \
+	export EXRED_TESTS_BROWSER=chrome; \
+	export EXRED_TESTS_HUB_URL=http://hub:4444/wd/hub; \
+	export EXRED_TESTS_EXRED_UI_URL=https://exred-prototype.herokuapp.com/export
+
+EXRED_SET_LOCAL_ENV_VARS := \
+	export WIDTH=1280; \
+	export HEIGTH=768; \
+	export BROWSER=chrome; \
+	export HUB_URL=http://localhost:4444/wd/hub; \
+	export EXRED_UI_URL=https://exred-prototype.herokuapp.com/export
+
+EXRED_DOCKER_COMPOSE_CREATE_ENVS := \
+	./docker/create_envs.sh ./docker/env-exred.json
+
+EXRED_DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL := \
+	docker-compose -f docker-compose-exred.yml -p exred rm && \
+	docker-compose -f docker-compose-exred.yml -p exred pull
+
+EXRED_DOCKER_REMOVE_ALL:
+	docker ps -a | \
+	grep -e exred_ | \
+	awk '{print $$1 }' | \
+	xargs -I {} docker rm -f {}
+
+exred_local:
+	$(EXRED_SET_LOCAL_ENV_VARS) && \
+	cd tests/exred && behave -k --format progress3 --no-logcapture --stop --tags=-wip --tags=-skip --tags=~fixme $(BEHAVE_ARGS)
+
+exred_docker:
+	$(EXRED_SET_DOCKER_ENV_VARS) && \
+	cd tests/exred && behave -k --format progress3 --no-logcapture --stop --tags=-wip --tags=-skip --tags=~fixme $(BEHAVE_ARGS)
+
+exred_docker_tests: EXRED_DOCKER_REMOVE_ALL
+	$(EXRED_SET_DOCKER_ENV_VARS) && \
+	$(EXRED_DOCKER_COMPOSE_CREATE_ENVS) && \
+	$(EXRED_DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
+	docker-compose -f docker-compose-exred.yml -p exred build && \
+	docker-compose -f docker-compose-exred.yml -p exred run exred_tests
 
 .PHONY: build clean requirements test docker_remove_all docker_integration_tests smoke_tests load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal functional_tests pep8
