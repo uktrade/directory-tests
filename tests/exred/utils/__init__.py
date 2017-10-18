@@ -22,8 +22,9 @@ URLS = {
     # Exporting Readiness
     "ExRed Home": "",
     "ExRed Triage - 1st question": "triage",
-    "ExRed Triage - 2nd question": 'triage?q0=',
-    "ExRed Triage - 4th question": "triage?q0=q1=",
+    "ExRed Triage - 2nd question": 'triage?q0={}&q1={}',
+    "ExRed Triage - 3rd question": 'triage?q0={}&q1=Yes',
+    "ExRed Triage - 4th question": "triage?q0={}&q1={}&q2={}&q3={}",
     "ExRed Triage - result": "triage/result",
 }
 
