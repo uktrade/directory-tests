@@ -1,0 +1,14 @@
+{
+  "host_env_var_prefix": "EXRED_TESTS",
+  "file_path": "./docker/.env",
+  "env_vars": {
+    "required": [
+      "EXRED_UI_URL",
+      "HUB_URL"
+    ],
+    "optional": [
+      "WIDTH",
+      "HEIGHT"
+    ]
+  }
+}
