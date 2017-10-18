@@ -1,21 +1,35 @@
 # -*- coding: utf-8 -*-
 """ExRed Page Object Registry"""
 from pages import (
-    exred_home,
-    exred_triage_1st_question
-)
+    home,
+    triage_1st_question,
+    triage_2nd_question,
+    triage_4th_question,
+    triage_result)
 
 from utils import get_absolute_url
 
 EXRED_PAGE_REGISTRY = {
     "home": {
-        "url": "exred:home",
-        "po": exred_home
+        "url": "ExRed Home",
+        "po": home
     },
     "triage - 1st question": {
-        "url": "exred:triage-1st-question",
-        "po": exred_triage_1st_question
-    }
+        "url": "ExRed Triage - 1st question",
+        "po": triage_1st_question
+    },
+    "triage - 2nd question": {
+        "url": "ExRed Triage - 2nd question",
+        "po": triage_2nd_question
+    },
+    "triage - 4th question": {
+        "url": "ExRed Triage - 4th question",
+        "po": triage_4th_question
+    },
+    "triage - result": {
+        "url": "ExRed Triage - result",
+        "po": triage_result
+    },
 }
 
 PAGE_REGISTRY = {}
