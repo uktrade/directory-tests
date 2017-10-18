@@ -1,3 +1,3 @@
 #!/bin/bash -xe
 
-python ./docker/env_writer.py ./docker/env.json
+python ./docker/env_writer.py $1
