@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 """ExRed Home Page Object."""
 import logging
-from datetime import datetime
 
 
 from tests import get_absolute_url
 from tests.exred.drivers import DRIVERS
+from tests.exred.utils import take_screenshot
 URL = get_absolute_url("exred:home")
 NAME = "ExRed Home"
 
@@ -75,11 +75,7 @@ SECTION_CASE_STUDIES = {
 
 def visit(driver: DRIVERS):
     driver.get(URL)
-    stamp = datetime.isoformat(datetime.utcnow())
-    filename = "./tests/exred/screenshots/{}-{}.png".format(stamp, NAME)
-    logging.debug("User visited {} page. You can find a screenshot of it here:"
-                  " %s", NAME, filename)
-    driver.get_screenshot_as_file(filename)
+    take_screenshot(driver, NAME)
 
 
 def should_see_sections(driver: DRIVERS, section_names: list):
