@@ -8,15 +8,16 @@ from utils import assertion_msg, get_absolute_url, take_screenshot
 NAME = "ExRed Triage - 1st question"
 URL = get_absolute_url(NAME)
 
-
 SECTOR_OPTIONS = "#q0 > option"
+FIRST_QUESTION = "#q0"
+CONTINUE_BUTTON = "#content > .questions form > fieldset > button[type=submit]"
+BACK_TO_HOME_LINK = "#content > .questions .home-link > a"
 EXPECTED_ELEMENTS = {
     "form legend": "#content > .questions form > fieldset > legend",
-    "1st question label": "#content > .questions form > fieldset > label",
-    "1st question": "#content > .questions form > fieldset > #q0",
-    "continue button":
-        "#content > .questions form > fieldset > button[type=submit]",
-    "back to home link": "#content > .questions .home-link > a"
+    "first question label": "#content > .questions form > fieldset > label",
+    "first question": FIRST_QUESTION,
+    "continue button": CONTINUE_BUTTON,
+    "back to home link": BACK_TO_HOME_LINK
 }
 
 
