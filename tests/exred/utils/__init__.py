@@ -26,6 +26,7 @@ URLS = {
     "ExRed Triage - 3rd question": 'triage?q0={}&q1=Yes',
     "ExRed Triage - 4th question": "triage?q0={}&q1={}&q2={}&q3={}",
     "ExRed Triage - result": "triage/result",
+    "ExRed Personalised Journey": "custom",
 }
 
 

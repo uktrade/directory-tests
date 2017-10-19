@@ -7,6 +7,7 @@ from pages import (
     triage_3rd_question,
     triage_4th_question,
     triage_result,
+    personalised_journey
 )
 
 from utils import get_absolute_url
@@ -35,6 +36,10 @@ EXRED_PAGE_REGISTRY = {
     "triage - result": {
         "url": "ExRed Triage - result",
         "po": triage_result
+    },
+    "personalised journey": {
+        "url": "ExRed Personalised Journey",
+        "po": personalised_journey
     },
 }
 
