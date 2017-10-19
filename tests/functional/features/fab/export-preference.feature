@@ -6,9 +6,7 @@ Feature: Export Preferences
   @export-preferences
   @fake-sso-email-verification
   Scenario Outline: Suppliers can select preferred countries of export from the given list and provide a list of other countries
-    Given "Annette Geissinger" is an unauthenticated supplier
-    And "Annette Geissinger" created a SSO/great.gov.uk account associated with randomly selected company "Company X"
-    And "Annette Geissinger" confirmed her email address
+    Given "Annette Geissinger" created a verified SSO/great.gov.uk account associated with randomly selected company "Company X"
 
     When "Annette Geissinger" provides valid details of selected company
     And "Annette Geissinger" selects sector the company is in and "<preferred>" & "<other>" as other countries of export
@@ -26,9 +24,7 @@ Feature: Export Preferences
   @export-preferences
   @fake-sso-email-verification
   Scenario Outline: Suppliers have to provide preferred country of export when building up the profile
-    Given "Annette Geissinger" is an unauthenticated supplier
-    And "Annette Geissinger" created a SSO/great.gov.uk account associated with randomly selected company "Company X"
-    And "Annette Geissinger" confirmed her email address
+    Given "Annette Geissinger" created a verified SSO/great.gov.uk account associated with randomly selected company "Company X"
 
     When "Annette Geissinger" provides valid details of selected company
     And "Annette Geissinger" selects sector the company is in and "<preferred>" & "<other>" as other countries of export
@@ -49,9 +45,7 @@ Feature: Export Preferences
   @fixme
   @fake-sso-email-verification
   Scenario Outline: Suppliers have to use commas to separate other preferred countries of export when building up the profile
-    Given "Annette Geissinger" is an unauthenticated supplier
-    And "Annette Geissinger" created a SSO/great.gov.uk account associated with randomly selected company "Company X"
-    And "Annette Geissinger" confirmed her email address
+    Given "Annette Geissinger" created a verified SSO/great.gov.uk account associated with randomly selected company "Company X"
 
     When "Annette Geissinger" provides valid details of selected company
     And "Annette Geissinger" selects sector the company is in and "<preferred>" & "<other>" as other countries of export
