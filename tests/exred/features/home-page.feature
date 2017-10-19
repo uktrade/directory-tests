@@ -19,12 +19,14 @@ Feature: Home Page
     Then "Robert" should be on the "Triage - 1st question" page
 
 
-  @wip
   @ED-2366
   @triage
+  @bug
+  @ED-
+  @fixme
   Scenario: Any Exporter visiting the home page after triage should be able to get to personalised page
     Given "Robert" has answered triage questions
-    And "Robert" goes to the "home" page again
+    And "Robert" goes to the "Home" page
 
     When "Robert" decides to continue in Exporting journey section
 
