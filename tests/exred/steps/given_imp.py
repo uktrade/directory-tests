@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Given step definitions."""
 import logging
+import random
 
 from behave.runner import Context
 
@@ -69,3 +70,9 @@ def classify_as(context: Context, actor_alias: str, exporter_status: str):
         "%s decided to classify himself/herself as %s Exporter", actor_alias,
         exporter_status)
     step(context, actor_alias)
+
+
+def finish_triage(context: Context, actor_alias: str):
+    """Will finish triage with randomly selected exporting status."""
+    exporter_status = random.choice(["new", "occasional", "regular"])
+    classify_as(context, actor_alias, exporter_status)
