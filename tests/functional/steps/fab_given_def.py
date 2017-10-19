@@ -10,6 +10,7 @@ from tests.functional.steps.fab_given_impl import (
     reg_create_verified_profile,
     sso_create_standalone_unverified_sso_account,
     sso_create_standalone_verified_sso_account,
+    reg_create_verified_sso_account_associated_with_company,
     reg_select_random_company_and_confirm_export_status,
     reg_create_unverified_profile, unauthenticated_buyer,
     fas_find_company_by_name, fab_find_published_company,
@@ -186,3 +187,11 @@ def step_impl(context, supplier_alias):
 @given('"{supplier_alias}" received a password reset email')
 def given_supplier_received_password_reset_email(context, supplier_alias):
     sso_get_password_reset_link(context, supplier_alias)
+
+
+@given('"{supplier_alias}" created a verified SSO/great.gov.uk account '
+       'associated with randomly selected company "{company_alias}"')
+def given_verified_sso_account_associated_with_company(
+        context, supplier_alias, company_alias):
+    reg_create_verified_sso_account_associated_with_company(
+        context, supplier_alias, company_alias)

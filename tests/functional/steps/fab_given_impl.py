@@ -266,3 +266,18 @@ def sso_get_password_reset_link(context: Context, supplier_alias: str):
     sso_request_password_reset(context, supplier_alias)
     sso_should_be_told_about_password_reset(context, supplier_alias)
     sso_should_get_password_reset_email(context, supplier_alias)
+
+
+def reg_create_verified_sso_account_associated_with_company(
+        context: Context, supplier_alias: str, company_alias: str):
+    """Select a Company, create a SSO account for it, and verify the email.
+
+    :param context: behave `context` object
+    :param supplier_alias: alias of the Actor used within the scenario's scope
+    :param company_alias: alias of the Actor's Company
+    """
+    supplier = unauthenticated_supplier(supplier_alias)
+    context.add_actor(supplier)
+    reg_create_sso_account_associated_with_company(
+        context, supplier_alias, company_alias)
+    reg_confirm_email_address(context, supplier_alias)
