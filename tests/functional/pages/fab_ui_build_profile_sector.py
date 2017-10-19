@@ -29,12 +29,12 @@ def should_be_here(response: Response):
                   "Choose Your company sector")
 
 
-def submit(actor: Actor, sector: str, country: str, other: str) -> Response:
+def submit(actor: Actor, sector: str, countries: list, other: str) -> Response:
     """Submit Build your profile - Choose your sector form.
 
     :param actor: a namedtuple with Actor details
     :param sector: Industry Sector in which company is interested in
-    :param country: country code of the country you're exporting to
+    :param countries: a list of country codes of preferred countries to export
     :param other: list of other countries your company is exporting to
     :return: response object
     """
@@ -43,7 +43,7 @@ def submit(actor: Actor, sector: str, country: str, other: str) -> Response:
         "csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
         "company_profile_edit_view-current_step": "classification",
         "classification-sectors": sector,
-        "classification-export_destinations": country,
+        "classification-export_destinations": countries,
         "classification-export_destinations_other": other
     }
     response = make_request(

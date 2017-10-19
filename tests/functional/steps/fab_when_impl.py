@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """FAB Given step implementations."""
 import logging
+import re
 import string
 from urllib.parse import parse_qsl, quote, urljoin, urlsplit
 
@@ -330,11 +331,11 @@ def bp_select_random_sector_and_export_to_country(context, supplier_alias):
     """
     actor = context.get_actor(supplier_alias)
     sector = random.choice(SECTORS)
-    country = COUNTRIES[random.choice(list(COUNTRIES))]
+    countries = [COUNTRIES[random.choice(list(COUNTRIES))]]
     other = ""
 
     # Step 1 - Submit the Choose Your Sector form
-    response = fab_ui_build_profile_sector.submit(actor, sector, country, other)
+    response = fab_ui_build_profile_sector.submit(actor, sector, countries, other)
     context.response = response
 
     # Step 2 - check if Supplier is on Confirm Address page
@@ -1630,10 +1631,11 @@ def fab_submit_verification_code(context, supplier_alias):
     context.response = response
 
 
-def get_form_value(key: str) -> str:
+def get_form_value(key: str) -> str or list or int or None:
 
     def get_number_from_key(key: str) -> int:
-        return [int(word) for word in key.split() if word.isdigit()][0]
+        numbers = [int(word) for word in key.split() if word.isdigit()]
+        return numbers[0] if numbers else 0
 
     def get_n_chars(number: int) -> str:
         return random_chars(number)
@@ -1641,29 +1643,42 @@ def get_form_value(key: str) -> str:
     def get_n_words(number: int) -> str:
         return sentence(min_words=number, max_words=number, max_length=0)
 
-    if key.endswith(" characters"):
-        number = get_number_from_key(key)
-        key = "N characters"
-    elif key.endswith(" words"):
-        number = get_number_from_key(key)
-        key = "N words"
-    else:
-        number = 0
+    def get_n_country_codes(number: int) -> list:
+        country_codes = ["CN", "DE", "IN", "JP", "US"]
+        max = number if number <= len(country_codes) else len(country_codes)
+        return [country_codes[idx] for idx in range(max)]
 
-    values = {
-        "N characters": get_n_chars(number),
-        "N words": get_n_words(number),
-        "empty string": "",
-        "valid http": "http://{}.{}".format(rare_word(), rare_word()),
-        "valid https": "https://{}.{}".format(rare_word(), rare_word()),
-        "invalid http": "http:{}.{}".format(rare_word(), rare_word()),
-        "invalid https": "https:{}.{}".format(rare_word(), rare_word()),
-        "invalid sector": "this is an invalid sector",
-        "no image": None,
-        "invalid image": choice(BMPs + JP2s + WEBPs)
-    }
+    result = None
 
-    return values[key]
+    mappings = [
+        ("empty string", ""),
+        ("valid http", "http://{}.{}".format(rare_word(), rare_word())),
+        ("valid https", "https://{}.{}".format(rare_word(), rare_word())),
+        ("invalid http", "http:{}.{}".format(rare_word(), rare_word())),
+        ("invalid https", "https:{}.{}".format(rare_word(), rare_word())),
+        ("invalid sector", "this is an invalid sector"),
+        ("no image", None),
+        ("invalid image", choice(BMPs + JP2s + WEBPs)),
+        (" characters$", get_n_chars(get_number_from_key(key))),
+        (" words$", get_n_words(get_number_from_key(key))),
+        (" predefined countries$", get_n_country_codes(get_number_from_key(key))),
+        ("1 predefined country$", get_n_country_codes(1)),
+        ("none selected", None),
+        ("sector", random.choice(SECTORS))
+    ]
+
+    found = False
+    for pattern, value in mappings:
+        r = re.compile(pattern)
+        if r.findall(key):
+            result = value
+            found = True
+            break
+
+    if not found:
+        result = key
+
+    return result
 
 
 def fab_attempt_to_add_case_study(
@@ -1818,3 +1833,14 @@ def go_to_pages(context: Context, actor_alias: str, table: Table):
         results[page_name] = response
 
     context.results = results
+
+
+def fab_select_preferred_countries_of_export(
+        context: Context, supplier_alias: str, country_names, other_countries):
+    actor = context.get_actor(supplier_alias)
+    country_codes = get_form_value(country_names)
+    other = get_form_value(other_countries)
+    sector = get_form_value("sector")
+    response = fab_ui_build_profile_sector.submit(
+        actor, sector, country_codes, other)
+    context.response = response
