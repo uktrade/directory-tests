@@ -4,6 +4,7 @@ Feature: SSO profile
     @ED-1756
     @sso
     @account
+    @real-email-verification
     Scenario: Suppliers should receive an email verification msg after creating a standalone SSO/great.gov.uk account
       Given "Peter Alder" is an unauthenticated supplier
 
@@ -16,6 +17,7 @@ Feature: SSO profile
     @ED-1756
     @sso
     @account
+    @real-sso-email-verification
     Scenario: Suppliers should be able to confirm email address for a standalone SSO/great.gov.uk account
       Given "Peter Alder" created a standalone SSO/great.gov.uk account with unverified email address
 
@@ -29,6 +31,7 @@ Feature: SSO profile
     @ED-2145
     @sso
     @account
+    @no-sso-email-verification-required
     Scenario: Suppliers should not be able to register with the same email again
       # No error should be displayed when Supplier attempts to register with an
       # existing email address (intended behaviour) yet no verification email
@@ -47,6 +50,7 @@ Feature: SSO profile
     @ED-2147
     @sso
     @account
+    @fake-sso-email-verification
     Scenario: Suppliers should be able to sign out and sign back in
       Given "Peter Alder" has a verified standalone SSO/great.gov.uk account
       And "Peter Alder" signed out from SSO/great.gov.uk account

@@ -4,6 +4,7 @@ Feature: SUD (Profile) pages
     @ED-2265
     @sso
     @account
+    @no-sso-email-verification-required
     Scenario: Users should be able to view SUD Landing page without authentication
       Given "Peter Alder" is an unauthenticated supplier
 
@@ -15,6 +16,7 @@ Feature: SUD (Profile) pages
     @ED-2266
     @sso
     @account
+    @no-sso-email-verification-required
     Scenario Outline: Users who visited SUD landing page should not be able to view "<other SUD>" page without authentication
       Given "Peter Alder" is an unauthenticated supplier
 
@@ -36,6 +38,7 @@ Feature: SUD (Profile) pages
     @bug
     @ED-2268
     @fixme
+    @no-sso-email-verification-required
     Scenario Outline: Users who visit "<SUD>" page for the first time should be redirected to SSO Login page
       Given "Peter Alder" is an unauthenticated supplier
 
@@ -53,6 +56,7 @@ Feature: SUD (Profile) pages
     @ED-2267
     @sso
     @account
+    @fake-sso-email-verification
     Scenario: Authenticated Users should be able to view SUD sub-pages
       Given "Peter Alder" has a verified standalone SSO/great.gov.uk account
 

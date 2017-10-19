@@ -6,6 +6,7 @@ Feature: View FAS in various languages
   @internationalization
   @i18n
   @<selected>
+  @no-sso-email-verification-required
   Scenario Outline: Buyers should be able to view specific FAS pages in "<selected>" language
     Given "Annette Geissinger" is a buyer
 

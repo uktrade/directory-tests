@@ -4,6 +4,7 @@ Feature: Send feedback
 
   @ED-2012
   @feedback
+  @no-sso-email-verification-required
   Scenario: Buyer should be able to send us a feedback from "Industries" FAS page
     Given "Annette Geissinger" is a buyer
 
