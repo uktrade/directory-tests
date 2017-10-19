@@ -18,6 +18,7 @@ from tests.settings import (
     SSO_DB_USER
 )
 
+
 SSO_CLEAN_UP = """
 DO $$
 DECLARE

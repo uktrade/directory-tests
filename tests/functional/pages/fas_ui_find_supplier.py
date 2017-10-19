@@ -6,7 +6,7 @@ from requests import Response, Session
 
 from tests import get_absolute_url
 from tests.functional.utils.generic import escape_html
-from tests.functional.utils.request import Method, make_request, check_response
+from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("ui-supplier:search")
 EXPECTED_STRINGS = [

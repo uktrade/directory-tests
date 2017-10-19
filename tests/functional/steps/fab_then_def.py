@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 """FAB Given step definitions."""
 from behave import then
+
 from tests.functional.steps.fab_then_impl import (
     bp_should_be_prompted_to_build_your_profile,
     fab_company_should_be_verified,
     fab_no_links_to_online_profiles_are_visible,
     fab_profile_is_verified,
+    fab_should_be_asked_about_verification_form,
     fab_should_see_all_case_studies,
     fab_should_see_case_study_error_message,
     fab_should_see_company_details,
@@ -42,14 +44,13 @@ from tests.functional.steps.fab_then_impl import (
     reg_supplier_has_to_verify_email_first,
     reg_supplier_is_not_appropriate_for_fab,
     should_be_at,
+    should_see_message,
+    should_see_selected_pages,
     sso_should_be_signed_in_to_sso_account,
     sso_should_be_told_about_password_reset,
     sso_should_get_password_reset_email,
-    sso_should_see_invalid_password_reset_link_error,
-    should_see_selected_pages,
-    fab_should_be_asked_about_verification_form, should_see_message
+    sso_should_see_invalid_password_reset_link_error
 )
-
 from tests.functional.steps.fab_when_impl import (
     fas_feedback_request_should_be_submitted,
     fas_should_be_told_about_empty_search_results

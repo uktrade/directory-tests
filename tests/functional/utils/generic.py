@@ -2,34 +2,35 @@
 """Various utils used across the project."""
 
 import email
+import hashlib
 import json
 import logging
+import os
+import random
+import re
 import sys
 import traceback
+from collections import namedtuple
 from contextlib import contextmanager
 from datetime import datetime, timedelta
 from enum import Enum
 from pprint import pprint
+from random import choice
 from string import ascii_uppercase
 from typing import List
 
-import hashlib
 import lxml
-import os
-import random
-import re
 import requests
 from behave.runner import Context
 from bs4 import BeautifulSoup
-from collections import namedtuple
 from jsonschema import validate
 from langdetect import DetectorFactory, detect_langs
-from random import choice
 from requests import Response
 from retrying import retry
 from scrapy.selector import Selector
 from termcolor import cprint
 
+from tests import get_absolute_url
 from tests.functional.schemas.Companies import COMPANIES
 from tests.functional.utils.context_utils import (
     CaseStudy,
@@ -37,13 +38,11 @@ from tests.functional.utils.context_utils import (
     Feedback,
     Message
 )
-
-from tests import get_absolute_url
 from tests.functional.utils.db_utils import (
     delete_supplier_data,
     get_company_email
 )
-from tests.functional.utils.request import make_request, Method
+from tests.functional.utils.request import Method, make_request
 from tests.settings import (
     MAILGUN_DIRECTORY_API_USER,
     MAILGUN_DIRECTORY_EVENTS_URL,
@@ -52,9 +51,13 @@ from tests.settings import (
     MAILGUN_SSO_EVENTS_URL,
     MAILGUN_SSO_SECRET_API_KEY,
     RARE_WORDS,
-    SSO_PASSWORD_RESET_MSG_SUBJECT
+    SECTORS,
+    SSO_PASSWORD_RESET_MSG_SUBJECT,
+    TEST_IMAGES_DIR,
+    JPEGs,
+    JPGs,
+    PNGs
 )
-from tests.settings import SECTORS, TEST_IMAGES_DIR, JPEGs, JPGs, PNGs
 
 # a type hint for a List of Company named tuples
 CompaniesList = List[Company]

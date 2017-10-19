@@ -1,19 +1,16 @@
 # -*- coding: utf-8 -*-
 """FAB Given step implementations."""
 import logging
+import random
 import re
 import string
+from random import choice
 from urllib.parse import parse_qsl, quote, urljoin, urlsplit
 
-import random
 from behave.model import Table
 from behave.runner import Context
-from random import choice
 from requests import Response, Session
 from scrapy import Selector
-
-from tests.functional.registry import get_fabs_page_url, get_fabs_page_object
-from tests.functional.utils.context_utils import Company
 
 from tests import get_absolute_url
 from tests.functional.common import DETAILS, PROFILES
@@ -21,6 +18,7 @@ from tests.functional.pages import (
     fab_ui_build_profile_basic,
     fab_ui_build_profile_sector,
     fab_ui_build_profile_verification_letter,
+    fab_ui_case_study_basic,
     fab_ui_case_study_images,
     fab_ui_confirm_company,
     fab_ui_confirm_export_status,
@@ -48,30 +46,31 @@ from tests.functional.pages import (
     sso_ui_register,
     sso_ui_verify_your_email
 )
-from tests.functional.pages import fab_ui_case_study_basic
+from tests.functional.registry import get_fabs_page_object, get_fabs_page_url
+from tests.functional.utils.context_utils import Company
+from tests.functional.utils.db_utils import get_verification_code
 from tests.functional.utils.generic import (
     assertion_msg,
+    escape_html,
+    extract_and_set_csrf_middleware_token,
     extract_csrf_middleware_token,
     extract_form_action,
     extract_logo_url,
     get_absolute_path_of_file,
-    get_md5_hash_of_file,
-    random_chars,
-    escape_html,
-    extract_and_set_csrf_middleware_token,
     get_active_company_without_fas_profile,
     get_language_code,
+    get_md5_hash_of_file,
     get_number_of_search_result_pages,
     is_already_registered,
     is_inactive,
     random_case_study_data,
+    random_chars,
     random_feedback_data,
     random_message_data,
     rare_word,
     sentence
 )
-from tests.functional.utils.db_utils import get_verification_code
-from tests.functional.utils.request import check_response, make_request, Method
+from tests.functional.utils.request import Method, check_response, make_request
 from tests.settings import (
     COUNTRIES,
     NO_OF_EMPLOYEES,

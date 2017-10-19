@@ -1,24 +1,25 @@
 # -*- coding: utf-8 -*-
 """FAB Given step implementations."""
 import logging
+import random
 import string
 import uuid
 from urllib.parse import urlsplit
 
-import random
 from behave.runner import Context
 from requests import Session
-from tests.functional.utils.context_utils import Actor, Company
 
 from tests.functional.pages import (
-    profile_ui_landing, fab_ui_profile,
-    fas_ui_profile
+    fab_ui_profile,
+    fas_ui_profile,
+    profile_ui_landing
 )
 from tests.functional.steps.fab_then_impl import (
-    reg_sso_account_should_be_created, reg_should_get_verification_email,
     bp_should_be_prompted_to_build_your_profile,
     prof_should_be_on_profile_page,
     prof_should_be_told_about_missing_description,
+    reg_should_get_verification_email,
+    reg_sso_account_should_be_created,
     sso_should_be_signed_in_to_sso_account,
     sso_should_be_told_about_password_reset,
     sso_should_get_password_reset_email
@@ -41,13 +42,14 @@ from tests.functional.steps.fab_when_impl import (
     sso_request_password_reset,
     sso_supplier_confirms_email_address
 )
-from tests.functional.utils.generic import sentence, assertion_msg
+from tests.functional.utils.context_utils import Actor, Company
 from tests.functional.utils.db_utils import (
     get_published_companies,
     get_published_companies_with_n_sectors,
     get_verification_code,
     is_verification_letter_sent
 )
+from tests.functional.utils.generic import assertion_msg, sentence
 
 
 def unauthenticated_supplier(supplier_alias: str) -> Actor:

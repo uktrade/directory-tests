@@ -10,6 +10,7 @@ from tests.functional.steps.fab_when_impl import (
     fab_choose_to_verify_with_code,
     fab_go_to_letter_verification,
     fab_provide_company_details,
+    fab_select_preferred_countries_of_export,
     fab_submit_verification_code,
     fab_update_case_study,
     fas_browse_suppliers_by_company_sectors,
@@ -52,8 +53,8 @@ from tests.functional.steps.fab_when_impl import (
     sso_open_password_reset_link,
     sso_request_password_reset,
     sso_sign_in,
-    sso_supplier_confirms_email_address,
-    fab_select_preferred_countries_of_export)
+    sso_supplier_confirms_email_address
+)
 
 
 @when('"{supplier_alias}" randomly selects an active company without a '

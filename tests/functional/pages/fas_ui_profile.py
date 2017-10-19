@@ -6,16 +6,12 @@ from urllib.parse import urljoin
 from behave.model import Table
 from requests import Response, Session
 from scrapy import Selector
-from tests.functional.utils.context_utils import Company
-from tests.functional.utils.generic import (
-    Method,
-    assertion_msg,
-    make_request
-)
-from tests.functional.utils.request import check_response
 
 from tests import get_absolute_url
 from tests.functional.common import DETAILS
+from tests.functional.utils.context_utils import Company
+from tests.functional.utils.generic import Method, assertion_msg, make_request
+from tests.functional.utils.request import check_response
 from tests.settings import SECTORS_WITH_LABELS
 
 URL = get_absolute_url("ui-supplier:suppliers")
