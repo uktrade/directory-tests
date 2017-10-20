@@ -145,7 +145,7 @@ def when_supplier_signs_in_to_fab(context, supplier_alias):
     prof_sign_in_to_fab(context, supplier_alias)
 
 
-@when('"{supplier_alias}" creates a SSO/great.gov.uk account')
+@when('"{supplier_alias}" creates an unverified SSO/great.gov.uk account')
 def when_supplier_creates_standalone_sso_account(context, supplier_alias):
     reg_create_standalone_unverified_sso_account(context, supplier_alias)
 

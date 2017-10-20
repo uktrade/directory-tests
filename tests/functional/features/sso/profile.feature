@@ -8,7 +8,7 @@ Feature: SSO profile
     Scenario: Suppliers should receive an email verification msg after creating a standalone SSO/great.gov.uk account
       Given "Peter Alder" is an unauthenticated supplier
 
-      When "Peter Alder" creates a SSO/great.gov.uk account
+      When "Peter Alder" creates an unverified SSO/great.gov.uk account
 
       Then "Peter Alder" should be told about the verification email
       And "Peter Alder" should receive an email verification msg entitled "Your great.gov.uk account: Please Confirm Your E-mail Address"
@@ -40,10 +40,10 @@ Feature: SSO profile
       # constraint configured on the `email` column.
       Given "Peter Alder" is an unauthenticated supplier
 
-      When "Peter Alder" creates a SSO/great.gov.uk account
+      When "Peter Alder" creates an unverified SSO/great.gov.uk account
       Then "Peter Alder" should be told about the verification email
 
-      When "Peter Alder" creates a SSO/great.gov.uk account
+      When "Peter Alder" creates an unverified SSO/great.gov.uk account
       Then "Peter Alder" should be told about the verification email
 
 
