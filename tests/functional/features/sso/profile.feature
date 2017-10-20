@@ -20,6 +20,7 @@ Feature: SSO profile
     @real-sso-email-verification
     Scenario: Suppliers should be able to confirm email address for a standalone SSO/great.gov.uk account
       Given "Peter Alder" created a standalone SSO/great.gov.uk account with unverified email address
+      And "Peter Alder" received the email verification message with the email confirmation link
 
       When "Peter Alder" decides to confirm her email address by using the email confirmation link
       And "Peter Alder" confirms the email address for SSO/great.gov.uk account
