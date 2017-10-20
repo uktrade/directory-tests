@@ -579,6 +579,40 @@ def prof_sign_in_to_fab(context, supplier_alias):
         assert "directory_sso_dev_session" not in response.cookies
 
 
+def prof_sign_in_to_fab_with_redirect(
+        context: Context, supplier_alias: str, next_param: str,
+        referer: str = None):
+    """Sign in to Find a Buyer.
+
+    :param context: behave `context` object
+    :param supplier_alias: alias of the Actor used in the scope of the scenario
+    :param next_param: URL where SSO should redirect us after successful login
+    :param referer: URL of the referring page
+    """
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+
+    # Step 1 - Get to the Sign In page
+    response = sso_ui_login.go_to(session)
+    context.response = response
+
+    # Step 2 - check if Supplier is on the SSO Login page
+    sso_ui_login.should_be_here(response)
+    with assertion_msg(
+            "It looks like user is still logged in, as the "
+            "sso_display_logged_in cookie is not equal to False"):
+        assert response.cookies.get("sso_display_logged_in") == "false"
+
+    # Step 3 - extract CSRF token
+    token = extract_csrf_middleware_token(response)
+    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
+
+    # Step 4 - submit the login form
+    response = sso_ui_login.login(
+        actor, next_param=next_param, referer=referer)
+    context.response = response
+
+
 def reg_create_standalone_unverified_sso_account(
         context: Context, supplier_alias: str):
     """Will create a standalone SSO/great.gov.uk account.
