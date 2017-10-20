@@ -9,7 +9,6 @@ from urllib.parse import urlsplit
 from behave.runner import Context
 from requests import Session
 
-from tests import get_absolute_url
 from tests.functional.pages import (
     fab_ui_profile,
     fas_ui_profile,
@@ -30,9 +29,8 @@ from tests.functional.steps.fab_when_impl import (
     bp_select_random_sector_and_export_to_country,
     bp_verify_identity_with_letter,
     can_find_supplier_by_term,
+    finish_registration_after_flagging_as_verified,
     prof_set_company_description,
-    prof_sign_in_to_fab,
-    prof_sign_in_to_fab_with_redirect,
     prof_verify_company,
     reg_confirm_company_selection,
     reg_confirm_export_status,
@@ -43,7 +41,7 @@ from tests.functional.steps.fab_when_impl import (
     select_random_company,
     sso_go_to_create_trade_profile,
     sso_request_password_reset,
-    sso_supplier_confirms_email_address
+    sso_sign_in
 )
 from tests.functional.utils.context_utils import Actor, Company
 from tests.functional.utils.db_utils import (
@@ -156,10 +154,12 @@ def sso_create_standalone_unverified_sso_account(
 def sso_create_standalone_verified_sso_account(
         context: Context, supplier_alias: str):
     sso_create_standalone_unverified_sso_account(context, supplier_alias)
-    reg_open_email_confirmation_link(context, supplier_alias)
-    sso_supplier_confirms_email_address(context, supplier_alias)
+    supplier = context.get_actor(supplier_alias)
+    flag_sso_account_as_verified(supplier.email)
+    sso_sign_in(context, supplier_alias)
     profile_ui_landing.should_be_here(context.response)
     sso_should_be_signed_in_to_sso_account(context, supplier_alias)
+    context.update_actor(supplier_alias, has_sso_account=True)
 
 
 def reg_select_random_company_and_confirm_export_status(
@@ -276,23 +276,9 @@ def reg_create_verified_sso_account_associated_with_company(
     :param supplier_alias: alias of the Actor used within the scenario's scope
     :param company_alias: alias of the Actor's Company
     """
-    supplier = unauthenticated_supplier(supplier_alias)
-    context.add_actor(supplier)
-
-    # Step 1 - register with SSO
     reg_create_sso_account_associated_with_company(
         context, supplier_alias, company_alias)
-
-    # Step 2 - flag in SSO DB as verified
+    supplier = context.get_actor(supplier_alias)
     flag_sso_account_as_verified(supplier.email)
-
-    # Step 3 - prepare appropriate redirection details
-    company = context.get_company(company_alias)
-    register_url = get_absolute_url("ui-buyer:register-submit-account-details")
-    next_param = ("{}?company_number={}&has_exported_before=Yes"
-                  .format(register_url, company.number))
-    referer = get_absolute_url("sso:email_confirm")
-
-    # Step 4 - sign in to FAB & continue where we left off
-    prof_sign_in_to_fab_with_redirect(
-        context, supplier_alias, next_param=next_param, referer=referer)
+    sso_sign_in(context, supplier_alias)
+    finish_registration_after_flagging_as_verified(context, supplier_alias)
