@@ -1878,3 +1878,17 @@ def fab_select_preferred_countries_of_export(
     response = fab_ui_build_profile_sector.submit(
         actor, sector, country_codes, other)
     context.response = response
+
+
+def finish_registration_after_flagging_as_verified(
+        context: Context, supplier_alias: str):
+    """Go to the `/register-submit` endpoint which, when Actor has a verified
+     SSO account, should redirect to `company-profile/edit` (Create Profile)
+    """
+    actor = context.get_actor(supplier_alias)
+    company = context.get_company(actor.company_alias)
+    register_url = get_absolute_url("ui-buyer:register-submit-account-details")
+    url = ("{}?company_number={}&has_exported_before=True"
+           .format(register_url, company.number))
+    response = make_request(Method.GET, url, session=actor.session)
+    context.response = response
