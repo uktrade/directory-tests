@@ -282,9 +282,7 @@ def bp_provide_company_details(context, supplier_alias):
     and number of employees.
 
     :param context: behave `context` object
-    :type context: behave.runner.Context
     :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :type supplier_alias: str
     """
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
@@ -570,12 +568,12 @@ def prof_sign_in_to_fab(context, supplier_alias):
     # Step 5 - check if Supplier is on the FAB profile page
     fab_ui_profile.should_be_here(response)
     with assertion_msg(
-            "Found sso_display_logged_in cookie in the response. Maybe user is "
-            "still logged in?"):
+            "Found sso_display_logged_in cookie in the response. Maybe user is"
+            " still logged in?"):
         assert "sso_display_logged_in" not in response.cookies
     with assertion_msg(
-            "Found directory_sso_dev_session cookie in the response. Maybe user"
-            " is still logged in?"):
+            "Found directory_sso_dev_session cookie in the response. Maybe "
+            "user is still logged in?"):
         assert "directory_sso_dev_session" not in response.cookies
 
 

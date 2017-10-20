@@ -85,7 +85,7 @@ def unauthenticated_buyer(buyer_alias: str) -> Actor:
     """Create an instance of an unauthenticated Buyer Actor.
 
     Will:
-     * set only rudimentary Actor details, all omitted ones will default to None
+     * set rudimentary Actor details, all omitted ones will default to None
      * initialize `requests` Session object that allows you to keep the cookies
         across multiple requests
 
@@ -206,7 +206,8 @@ def fas_find_company_by_name(
     with assertion_msg(
             "Could not extract URL to '%s' profile page", company.title):
         assert profile_endpoint
-    context.set_company_details(company_alias, fas_profile_endpoint=profile_endpoint)
+    context.set_company_details(
+        company_alias, fas_profile_endpoint=profile_endpoint)
 
 
 def fab_find_published_company(
