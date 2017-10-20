@@ -148,7 +148,6 @@ def sso_create_standalone_unverified_sso_account(
     supplier = unauthenticated_supplier(supplier_alias)
     context.add_actor(supplier)
     reg_create_standalone_unverified_sso_account(context, supplier_alias)
-    reg_sso_account_should_be_created(context.response, supplier_alias)
 
 
 def sso_create_standalone_verified_sso_account(
