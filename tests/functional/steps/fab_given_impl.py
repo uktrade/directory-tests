@@ -9,6 +9,7 @@ from urllib.parse import urlsplit
 from behave.runner import Context
 from requests import Session
 
+from tests import get_absolute_url
 from tests.functional.pages import (
     fab_ui_profile,
     fas_ui_profile,
@@ -30,6 +31,8 @@ from tests.functional.steps.fab_when_impl import (
     bp_verify_identity_with_letter,
     can_find_supplier_by_term,
     prof_set_company_description,
+    prof_sign_in_to_fab,
+    prof_sign_in_to_fab_with_redirect,
     prof_verify_company,
     reg_confirm_company_selection,
     reg_confirm_export_status,
@@ -44,6 +47,7 @@ from tests.functional.steps.fab_when_impl import (
 )
 from tests.functional.utils.context_utils import Actor, Company
 from tests.functional.utils.db_utils import (
+    flag_sso_account_as_verified,
     get_published_companies,
     get_published_companies_with_n_sectors,
     get_verification_code,
@@ -100,6 +104,7 @@ def unauthenticated_buyer(buyer_alias: str) -> Actor:
 
 def reg_create_sso_account_associated_with_company(
         context: Context, supplier_alias: str, company_alias: str):
+    context.add_actor(unauthenticated_supplier(supplier_alias))
     select_random_company(context, supplier_alias, company_alias)
     reg_confirm_company_selection(context, supplier_alias, company_alias)
     reg_confirm_export_status(context, supplier_alias, exported=True)
@@ -280,6 +285,21 @@ def reg_create_verified_sso_account_associated_with_company(
     """
     supplier = unauthenticated_supplier(supplier_alias)
     context.add_actor(supplier)
+
+    # Step 1 - register with SSO
     reg_create_sso_account_associated_with_company(
         context, supplier_alias, company_alias)
-    reg_confirm_email_address(context, supplier_alias)
+
+    # Step 2 - flag in SSO DB as verified
+    flag_sso_account_as_verified(supplier.email)
+
+    # Step 3 - prepare appropriate redirection details
+    company = context.get_company(company_alias)
+    register_url = get_absolute_url("ui-buyer:register-submit-account-details")
+    next_param = ("{}?company_number={}&has_exported_before=Yes"
+                  .format(register_url, company.number))
+    referer = get_absolute_url("sso:email_confirm")
+
+    # Step 4 - sign in to FAB & continue where we left off
+    prof_sign_in_to_fab_with_redirect(
+        context, supplier_alias, next_param=next_param, referer=referer)
