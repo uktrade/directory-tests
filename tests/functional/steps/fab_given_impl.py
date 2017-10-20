@@ -131,21 +131,14 @@ def bp_build_company_profile(context: Context, supplier_alias: str):
 
 def reg_create_verified_profile(
         context: Context, supplier_alias: str, company_alias: str):
-    # STEP 0 - use existing actor or initialize new one if necessary
-    supplier = context.get_actor(supplier_alias)
-    if not supplier:
-        supplier = unauthenticated_supplier(supplier_alias)
-    context.add_actor(supplier)
-
-    # STEP 1 - select company, create SSO profile & verify email address
+    """Create a verified FAB profile with a quick SSO account verification."""
     reg_create_sso_account_associated_with_company(
         context, supplier_alias, company_alias)
-    reg_confirm_email_address(context, supplier_alias)
-
-    # STEP 2 - build company profile after email verification
+    supplier = context.get_actor(supplier_alias)
+    flag_sso_account_as_verified(supplier.email)
+    sso_sign_in(context, supplier_alias)
+    finish_registration_after_flagging_as_verified(context, supplier_alias)
     bp_build_company_profile(context, supplier_alias)
-
-    # STEP 3 - verify company with the code sent by post
     prof_set_company_description(context, supplier_alias)
     prof_verify_company(context, supplier_alias)
     prof_should_be_on_profile_page(context.response, supplier_alias)
@@ -158,7 +151,6 @@ def sso_create_standalone_unverified_sso_account(
     context.add_actor(supplier)
     reg_create_standalone_unverified_sso_account(context, supplier_alias)
     reg_sso_account_should_be_created(context.response, supplier_alias)
-    reg_should_get_verification_email(context, supplier_alias)
 
 
 def sso_create_standalone_verified_sso_account(
