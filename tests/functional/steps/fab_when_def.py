@@ -44,7 +44,7 @@ from tests.functional.steps.fab_when_impl import (
     reg_confirm_company_selection,
     reg_confirm_export_status,
     reg_create_sso_account,
-    reg_create_standalone_sso_account,
+    reg_create_standalone_unverified_sso_account,
     reg_open_email_confirmation_link,
     reg_supplier_confirms_email_address,
     select_random_company,
@@ -147,7 +147,7 @@ def when_supplier_signs_in_to_fab(context, supplier_alias):
 
 @when('"{supplier_alias}" creates a SSO/great.gov.uk account')
 def when_supplier_creates_standalone_sso_account(context, supplier_alias):
-    reg_create_standalone_sso_account(context, supplier_alias)
+    reg_create_standalone_unverified_sso_account(context, supplier_alias)
 
 
 @when('"{supplier_alias}" decides to create a trade profile')

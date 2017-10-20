@@ -579,7 +579,8 @@ def prof_sign_in_to_fab(context, supplier_alias):
         assert "directory_sso_dev_session" not in response.cookies
 
 
-def reg_create_standalone_sso_account(context: Context, supplier_alias: str):
+def reg_create_standalone_unverified_sso_account(
+        context: Context, supplier_alias: str):
     """Will create a standalone SSO/great.gov.uk account.
 
     NOTE:

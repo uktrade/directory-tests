@@ -34,7 +34,7 @@ from tests.functional.steps.fab_when_impl import (
     reg_confirm_company_selection,
     reg_confirm_export_status,
     reg_create_sso_account,
-    reg_create_standalone_sso_account,
+    reg_create_standalone_unverified_sso_account,
     reg_open_email_confirmation_link,
     reg_supplier_confirms_email_address,
     select_random_company,
@@ -151,7 +151,7 @@ def sso_create_standalone_unverified_sso_account(
         context: Context, supplier_alias: str):
     supplier = unauthenticated_supplier(supplier_alias)
     context.add_actor(supplier)
-    reg_create_standalone_sso_account(context, supplier_alias)
+    reg_create_standalone_unverified_sso_account(context, supplier_alias)
     reg_sso_account_should_be_created(context.response, supplier_alias)
     reg_should_get_verification_email(context, supplier_alias)
 
