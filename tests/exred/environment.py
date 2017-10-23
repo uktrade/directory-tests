@@ -85,7 +85,8 @@ def after_scenario(context: Context, scenario: Scenario):
     logging.debug(
         "Deleting all cookies and closing Selenium Driver after scenario: %s",
         scenario.name)
-    context.driver.delete_all_cookies()
+    if context.driver.get_cookies():
+        context.driver.delete_all_cookies()
     context.driver.quit()
 
 
