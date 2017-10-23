@@ -4,19 +4,16 @@ import logging
 import os
 import sys
 import traceback
-from os.path import abspath, join
-from urllib.parse import urljoin
-from functools import partial
 from contextlib import contextmanager
 from datetime import datetime
+from functools import partial
+from os.path import abspath, join
+from urllib.parse import urljoin
 
 from behave.runner import Context
+from selenium import webdriver
 
-from settings import (
-    DRIVERS,
-    EXRED_UI_URL,
-    SCREENSHOTS_DIR
-)
+from settings import EXRED_UI_URL
 
 URLS = {
     # Exporting Readiness
@@ -40,18 +37,18 @@ def get_absolute_url(name: str) -> str:
     return join_ui_exred(relative_url)
 
 
-def take_screenshot(driver: DRIVERS, page_name: str):
+def take_screenshot(driver: webdriver, page_name: str):
     """Will take a screenshot of current page.
 
     :param driver: Any of the WebDrivers
     :param page_name: page name which will be used in the screenshot filename
     """
+    session_id = driver.session_id
     stamp = datetime.isoformat(datetime.utcnow())
-    file_name = "{}-{}.png".format(stamp, page_name)
-    file_path = abspath(join(SCREENSHOTS_DIR, file_name))
-    driver.get_screenshot_as_file(file_path)
-    logging.debug("User took a screenshot of %s page. You can find it here:"
-                  " %s", page_name, file_path)
+    filename = "{}-{}-{}.png".format(stamp, page_name, session_id)
+    file_path = abspath(join("screenshots", filename))
+    driver.save_screenshot(file_path)
+    logging.debug("Screenshot of %s page saved in: %s", page_name, filename)
 
 
 @contextmanager
