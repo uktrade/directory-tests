@@ -14,9 +14,8 @@ GET_STARTED_BUTTON = ".triage a.button-cta"
 SECTION_VIDEO = {
     "itself": "#content > section.hero-section",
     "teaser": "#content > section.hero-section div.hero-teaser",
-    "teaser_title": "#content > section.hero-section div.hero-teaser > .title",
-    "teaser_logo": "#content > section.hero-section div.hero-teaser > img",
-    "watch_video_button": "#content > section.hero-section .video-button"
+    "teaser_title": "#content > section.hero-section div.hero-teaser h1.title",
+    "teaser_logo": "#content > section.hero-section div.hero-teaser img",
 }
 SECTION_EXPORTING_JOURNEY = {
     "itself": "#content > section.triage.triage-section",
