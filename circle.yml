@@ -6,7 +6,7 @@ machine:
 
 dependencies:
   override:
-    - sudo pip install docker-compose==1.16.1
+    - sudo pip install docker-compose==1.8.0
 
 test:
   override:
