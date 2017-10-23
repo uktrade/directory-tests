@@ -120,7 +120,6 @@ DOCKER_SET_DIRECTORY_TESTS_ENV_VARS := \
 	export DIRECTORY_TESTS_DIRECTORY_UI_BUYER_URL=http://dev.buyer.directory.uktrade.io; \
 	export DIRECTORY_TESTS_DIRECTORY_UI_SUPPLIER_URL=http://dev.supplier.directory.uktrade.io; \
 	export DIRECTORY_TESTS_DIRECTORY_PROFILE_URL=http://dev.profile.uktrade.io; \
-	export DIRECTORY_TESTS_EXRED_UI_URL=https://exred-prototype.herokuapp.com; \
 	export DIRECTORY_TESTS_LOCUST_HATCH_RATE=150; \
 	export DIRECTORY_TESTS_LOCUST_NUM_CLIENTS=150
 
