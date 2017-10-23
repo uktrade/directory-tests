@@ -5,7 +5,6 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-exred
-    privileged: true
     working_dir: /usr/src/app
     command: ./docker/cmd-exred.sh
     env_file: ./docker/.env
