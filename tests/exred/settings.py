@@ -1,4 +1,8 @@
 import os
+from datetime import datetime
+
+BUILD_VERSION = "v0.1"
+BUILD_SUFFIX = os.environ.get("CIRCLE_SHA1", str(datetime.date(datetime.now())))
 
 EXRED_UI_URL = os.environ["EXRED_UI_URL"]
 BROWSER_STACK_SERVER = os.environ.get(
@@ -16,7 +20,7 @@ BROWSER_STACK_CONFIG = {
     "capabilities": {
         "browserstack.debug": True,
         "browserstack.selenium_version": "3.5.2",
-        "build": "v0.1",
+        "build": "{}-{}".format(BUILD_VERSION, BUILD_SUFFIX),
         "project": "ExRed",
         "resolution": "1600x1200"
     },
