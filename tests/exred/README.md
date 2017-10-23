@@ -45,3 +45,15 @@ To run all tests inside dedicated Docker containers, simply execute:
 ```bash
 make exred_docker_tests
 ```
+
+
+# TODO
+* make Paver detect number of browsers in config file
+* add support for local test run
+
+## Useful BrowserStack related links
+
+* tutorial on using [browserstack with python](https://www.browserstack.com/automate/python)
+* tutorial on using [behave with browserstack](https://www.browserstack.com/automate/behave)
+* example [browserstack behave project](https://github.com/browserstack/behave-browserstack)
+* [browser capabilities]()https://www.browserstack.com/automate/capabilities)
