@@ -24,8 +24,10 @@ from steps.when_impl import (
 def visit_page(
         context: Context, actor_name: str, page_name: str, *,
         first_time: bool = False):
-    logging.debug("%s will visit '%s' page", actor_name, page_name)
     context.current_page = get_page_object(page_name)
+    logging.debug(
+        "%s will visit '%s' page using: '%s'", actor_name, page_name,
+        context.current_page.URL)
     context.current_page.visit(context.driver, first_time=first_time)
 
 
