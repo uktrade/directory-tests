@@ -143,7 +143,7 @@ EXRED_SET_LOCAL_ENV_VARS := \
 	export EXRED_UI_URL=https://dev.exportreadiness.directory.uktrade.io
 
 EXRED_DOCKER_COMPOSE_CREATE_ENVS := \
-	./docker/create_envs.sh ./docker/env-exred.json
+	./docker/create_envs.sh ./docker/env_exred.json
 
 EXRED_DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL := \
 	docker-compose -f docker-compose-exred.yml -p exred rm && \
