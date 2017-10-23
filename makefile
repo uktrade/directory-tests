@@ -137,18 +137,10 @@ docker_integration_tests: docker_remove_all
 
 
 EXRED_SET_DOCKER_ENV_VARS := \
-	export EXRED_TESTS_WIDTH=1280; \
-	export EXRED_TESTS_HEIGTH=768; \
-	export EXRED_TESTS_BROWSER=chrome; \
-	export EXRED_TESTS_HUB_URL=http://hub:4444/wd/hub; \
-	export EXRED_TESTS_EXRED_UI_URL=https://exred-prototype.herokuapp.com/export
+	export EXRED_TESTS_EXRED_UI_URL=https://dev.exportreadiness.directory.uktrade.io
 
 EXRED_SET_LOCAL_ENV_VARS := \
-	export WIDTH=1280; \
-	export HEIGTH=768; \
-	export BROWSER=chrome; \
-	export HUB_URL=http://localhost:4444/wd/hub; \
-	export EXRED_UI_URL=https://exred-prototype.herokuapp.com/export
+	export EXRED_UI_URL=https://dev.exportreadiness.directory.uktrade.io
 
 EXRED_DOCKER_COMPOSE_CREATE_ENVS := \
 	./docker/create_envs.sh ./docker/env-exred.json
