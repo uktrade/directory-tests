@@ -1,4 +1,4 @@
-build: docker_integration_tests
+build: exred_docker_tests docker_integration_tests 
 
 clean:
 	-find . -type f -name "*.pyc" -delete
@@ -170,4 +170,4 @@ exred_docker_tests: EXRED_DOCKER_REMOVE_ALL
 	docker-compose -f docker-compose-exred.yml -p exred build && \
 	docker-compose -f docker-compose-exred.yml -p exred run exred_tests
 
-.PHONY: build clean requirements test docker_remove_all docker_integration_tests smoke_tests load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal functional_tests pep8
+.PHONY: build clean requirements test docker_remove_all docker_integration_tests smoke_tests exred_docker_tests load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal functional_tests pep8
