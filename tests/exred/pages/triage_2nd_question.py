@@ -2,7 +2,8 @@
 """ExRed Triage 2nd Question Page Object."""
 import logging
 
-from settings import DRIVERS
+from selenium import webdriver
+
 from utils import assertion_msg, get_absolute_url, take_screenshot
 
 NAME = "ExRed Triage - 2nd question"
@@ -22,7 +23,7 @@ EXPECTED_ELEMENTS = {
 }
 
 
-def should_be_here(driver: DRIVERS):
+def should_be_here(driver: webdriver):
     for element_name, element_selector in EXPECTED_ELEMENTS.items():
         element = driver.find_element_by_css_selector(element_selector)
         with assertion_msg(
@@ -33,19 +34,19 @@ def should_be_here(driver: DRIVERS):
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
-def select_yes(driver: DRIVERS):
+def select_yes(driver: webdriver):
     yes = driver.find_element_by_css_selector(YES_CHECKBOX)
     yes.click()
     take_screenshot(driver, NAME)
 
 
-def select_no(driver: DRIVERS):
+def select_no(driver: webdriver):
     no = driver.find_element_by_css_selector(NO_CHECKBOX)
     no.click()
     take_screenshot(driver, NAME)
 
 
-def submit(driver: DRIVERS):
+def submit(driver: webdriver):
     button = driver.find_element_by_css_selector(CONTINUE_BUTTON)
     button.click()
     take_screenshot(driver, NAME + " after submitting")

@@ -2,9 +2,9 @@
 """ExRed Personalised Journey - Page Object."""
 import logging
 
+from selenium import webdriver
 from selenium.webdriver import ActionChains
 
-from settings import DRIVERS
 from utils import assertion_msg, get_absolute_url, take_screenshot
 
 NAME = "ExRed Personalised Journey"
@@ -49,7 +49,7 @@ EXPECTED_ELEMENTS.update(SERVICES_SECTION)
 EXPECTED_ELEMENTS.update(GUIDANCE_SECTION)
 
 
-def should_be_here(driver: DRIVERS):
+def should_be_here(driver: webdriver):
     for element_name, element_selector in EXPECTED_ELEMENTS.items():
         element = driver.find_element_by_css_selector(element_selector)
         with assertion_msg(
@@ -60,7 +60,7 @@ def should_be_here(driver: DRIVERS):
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
-def show_more(driver: DRIVERS):
+def show_more(driver: webdriver):
     button = driver.find_element_by_css_selector(SHOW_MORE_BUTTON)
     assert button.is_displayed()
     actions = ActionChains(driver)

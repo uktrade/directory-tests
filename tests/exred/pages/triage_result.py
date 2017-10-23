@@ -2,7 +2,8 @@
 """ExRed Triage 4th Question Page Object."""
 import logging
 
-from settings import DRIVERS
+from selenium import webdriver
+
 from utils import assertion_msg, get_absolute_url, take_screenshot
 
 NAME = "ExRed Triage - result"
@@ -23,7 +24,7 @@ EXPECTED_ELEMENTS = {
 }
 
 
-def should_be_here(driver: DRIVERS):
+def should_be_here(driver: webdriver):
     for element_name, element_selector in EXPECTED_ELEMENTS.items():
         element = driver.find_element_by_css_selector(element_selector)
         with assertion_msg(
@@ -34,12 +35,12 @@ def should_be_here(driver: DRIVERS):
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
-def get_classification(driver: DRIVERS) -> str:
+def get_classification(driver: webdriver) -> str:
     element = driver.find_element_by_css_selector(CLASSIFICATION)
     return element.text
 
 
-def should_be_classified_as(driver: DRIVERS, expected: str):
+def should_be_classified_as(driver: webdriver, expected: str):
     classified = get_classification(driver)
     with assertion_msg(
             "Expected to be classified as '%s' but was classified as: '%s'",
@@ -47,19 +48,19 @@ def should_be_classified_as(driver: DRIVERS, expected: str):
         assert classified == expected
 
 
-def should_be_classified_as_new(driver: DRIVERS):
+def should_be_classified_as_new(driver: webdriver):
     should_be_classified_as(driver, "New to exporting")
 
 
-def should_be_classified_as_occasional(driver: DRIVERS):
+def should_be_classified_as_occasional(driver: webdriver):
     should_be_classified_as(driver, "Occasional Exporter")
 
 
-def should_be_classified_as_regular(driver: DRIVERS):
+def should_be_classified_as_regular(driver: webdriver):
     should_be_classified_as(driver, "Regular Exporter")
 
 
-def create_exporting_journey(driver: DRIVERS):
+def create_exporting_journey(driver: webdriver):
     button = driver.find_element_by_css_selector(CONTINUE_BUTTON)
     button.click()
     take_screenshot(driver, NAME + " after submitting")

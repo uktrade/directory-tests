@@ -3,7 +3,8 @@
 import logging
 import random
 
-from settings import DRIVERS
+from selenium import webdriver
+
 from utils import assertion_msg, get_absolute_url, take_screenshot
 
 NAME = "ExRed Triage - 4th question"
@@ -21,7 +22,7 @@ EXPECTED_ELEMENTS = {
 }
 
 
-def should_be_here(driver: DRIVERS):
+def should_be_here(driver: webdriver):
     for element_name, element_selector in EXPECTED_ELEMENTS.items():
         element = driver.find_element_by_css_selector(element_selector)
         with assertion_msg(
@@ -32,7 +33,7 @@ def should_be_here(driver: DRIVERS):
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
-def enter_company_name(driver: DRIVERS, *, company_name: str = None):
+def enter_company_name(driver: webdriver, *, company_name: str = None):
     if not company_name:
         company_name = "Random company {}".format(random.randrange(0, 9999999))
     input_field = driver.find_element_by_css_selector(COMPANY_NAME_INPUT)
@@ -40,13 +41,13 @@ def enter_company_name(driver: DRIVERS, *, company_name: str = None):
     take_screenshot(driver, NAME + " after typing in company name")
 
 
-def select_sole_trade(driver: DRIVERS):
+def select_sole_trade(driver: webdriver):
     sole_trader = driver.find_element_by_css_selector(SOLE_TRADER_CHECKBOX)
     sole_trader.click()
     take_screenshot(driver, NAME + " selected sole trader")
 
 
-def submit(driver: DRIVERS):
+def submit(driver: webdriver):
     button = driver.find_element_by_css_selector(CONTINUE_BUTTON)
     button.click()
     take_screenshot(driver, NAME + " after submitting")

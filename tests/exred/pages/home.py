@@ -2,9 +2,9 @@
 """ExRed Home Page Object."""
 import logging
 
+from selenium import webdriver
 from selenium.webdriver import ActionChains
 
-from settings import DRIVERS
 from utils import get_absolute_url, take_screenshot
 
 NAME = "ExRed Home"
@@ -74,7 +74,7 @@ SECTION_CASE_STUDIES = {
 }
 
 
-def visit(driver: DRIVERS, *, first_time: bool = False):
+def visit(driver: webdriver, *, first_time: bool = False):
     """Visit the Home Page.
 
     :param driver: Any Selenium Driver (Remote, Chrome, Firefox, PhantomJS etc.
@@ -85,11 +85,11 @@ def visit(driver: DRIVERS, *, first_time: bool = False):
             "Deleting all cookies in order to enforce the first time visit "
             "simulation")
         driver.delete_all_cookies()
-    driver.get(URL)
+        driver.get(URL)
     take_screenshot(driver, NAME)
 
 
-def should_see_sections(driver: DRIVERS, section_names: list):
+def should_see_sections(driver: webdriver, section_names: list):
     """Will check if Actor can see all expected page sections.
 
     :param driver: Any Selenium Driver (Remote, Chrome, Firefox, PhantomJS etc.
@@ -120,7 +120,7 @@ def should_see_sections(driver: DRIVERS, section_names: list):
         NAME)
 
 
-def start_exporting_journey(driver: DRIVERS):
+def start_exporting_journey(driver: webdriver):
     """Start Exporting Journey (Triaging).
 
     :param driver: Any Selenium Driver (Remote, Chrome, Firefox, PhantomJS etc.
