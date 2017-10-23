@@ -37,6 +37,7 @@ def enter_company_name(driver: webdriver, *, company_name: str = None):
     if not company_name:
         company_name = "Random company {}".format(random.randrange(0, 9999999))
     input_field = driver.find_element_by_css_selector(COMPANY_NAME_INPUT)
+    input_field.clear()
     input_field.send_keys(company_name)
     take_screenshot(driver, NAME + " after typing in company name")
 
