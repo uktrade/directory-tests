@@ -161,7 +161,7 @@ exred_local:
 
 exred_docker:
 	$(EXRED_SET_DOCKER_ENV_VARS) && \
-	cd tests/exred && behave -k --format progress3 --no-logcapture --stop --tags=-wip --tags=-skip --tags=~fixme $(BEHAVE_ARGS)
+	cd tests/exred && paver run parallel
 
 exred_docker_tests: EXRED_DOCKER_REMOVE_ALL
 	$(EXRED_SET_DOCKER_ENV_VARS) && \
