@@ -1,71 +1,11 @@
 version: '3'
 services:
 
-  hub:
-    image: selenium/hub:3.6.0-bromine
-    ports:
-      - 4444:4444
-    volumes:
-      - /dev/shm:/dev/shm
-    privileged: true
-
-  chrome:
-    image: selenium/node-chrome:3.6.0-bromine
-    depends_on: 
-      - hub
-    links:
-      - hub
-    volumes:
-      - /dev/shm:/dev/shm
-    privileged: true
-    environment:
-      - HUB_PORT_4444_TCP_ADDR=hub
-      - HUB_PORT_4444_TCP_PORT=4444
-    restart: always
-
-  firefox:
-    image: selenium/node-firefox:3.6.0-bromine
-    depends_on: 
-      - hub
-    links:
-      - hub
-    volumes:
-      - /dev/shm:/dev/shm
-    privileged: true
-    shm_size: 2g
-    environment:
-      - HUB_PORT_4444_TCP_ADDR=hub
-      - HUB_PORT_4444_TCP_PORT=4444
-    restart: always
-
-  phantomjs:
-    image: selenium/node-phantomjs:3.6.0-bromine
-    depends_on: 
-      - hub
-    links:
-      - hub
-    environment:
-      - PHANTOMJS_OPTS="--ignore-ssl-errors=true"
-      - HUB_PORT_4444_TCP_ADDR=hub
-      - HUB_PORT_4444_TCP_PORT=4444
-    restart: always
-
   exred_tests:
-    depends_on:
-      - hub
-      - chrome
-      - firefox
-      - phantomjs
-    links:
-      - hub
-      - chrome
-      - firefox
-      - phantomjs
     build:
       context: .
       dockerfile: Dockerfile-exred
     privileged: true
     working_dir: /usr/src/app
-    entrypoint: dockerize -wait http://hub:4444/grid/console -timeout 20s
     command: ./docker/cmd-exred.sh
     env_file: ./docker/.env
