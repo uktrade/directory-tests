@@ -7,5 +7,6 @@
 behave==1.2.5
 parse-type==0.4.2         # via behave
 parse==1.8.2              # via behave, parse-type
+paver==1.2.4
 selenium==3.6.0
 six==1.11.0               # via behave, parse-type
