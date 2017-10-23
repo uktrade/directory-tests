@@ -78,17 +78,21 @@ def assertion_msg(message: str, *args):
 
 
 def get_file_log_handler(
-        log_formatter, log_file: str = os.path.join("reports", "behave.log"),
-        log_level=logging.DEBUG) -> logging.FileHandler:
+        log_formatter, *, log_level=logging.DEBUG, task_id: str = None) \
+        -> logging.FileHandler:
     """Configure the console logger.
 
     Will use DEBUG logging level by default.
 
     :param log_formatter: specifies how the log entries will look like
-    :param log_file: specifies log file path relative to the project's root
     :param log_level: specifies logging level, e.g.: logging.ERROR
+    :param task_id: (optional) ID of the parallel task
     :return: configured console log handler
     """
+    if task_id:
+        log_file = os.path.join("reports", ("behave-%s.log" % task_id))
+    else:
+        log_file = os.path.join("reports", "behave.log")
     print("Behave log file: {}".format(log_file))
     file_handler = logging.FileHandler(log_file)
     file_handler.setLevel(log_level)
@@ -96,13 +100,13 @@ def get_file_log_handler(
     return file_handler
 
 
-def init_loggers(context: Context):
+def init_loggers(context: Context, *, task_id: str = None):
     """Will initialize console and file loggers."""
     # configure the formatter
     fmt = ('%(asctime)s-%(filename)s[line:%(lineno)d]-%(name)s-%(levelname)s: '
            '%(message)s')
     log_formatter = logging.Formatter(fmt)
-    log_file_handler = get_file_log_handler(log_formatter)
+    log_file_handler = get_file_log_handler(log_formatter, task_id=task_id)
     # Add log file handler to Behave's logging
     logging.getLogger("selenium").setLevel(logging.WARNING)
     context.config.setup_logging(handlers=[log_file_handler])
