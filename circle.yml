@@ -6,8 +6,9 @@ machine:
 
 dependencies:
   override:
-    - sudo pip install docker-compose==1.8.0
+    - sudo pip install docker-compose==1.16.1
 
 test:
   override:
+    - make exred_docker_tests
     - make docker_integration_tests
