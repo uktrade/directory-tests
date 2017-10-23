@@ -1,14 +1,48 @@
 import os
 
-from selenium.webdriver import Chrome, Firefox, PhantomJS, Remote
-
 EXRED_UI_URL = os.environ["EXRED_UI_URL"]
-HUB_URL = os.environ.get("HUB_URL", "http://localhost:4444/wd/hub")
-BROWSER = os.environ.get("BROWSER", "chrome")
-WIDTH = os.environ.get("WIDTH", 1600)
-HEIGHT = os.environ.get("HEIGHT", 1200)
+BROWSER_STACK_SERVER = os.environ.get(
+    "BROWSER_STACK_SERVER", "hub.browserstack.com")
+BROWSER_STACK_USERNAME = os.environ.get("BROWSER_STACK_USERNAME")
+BROWSER_STACK_ACCESS_KEY = os.environ.get("BROWSER_STACK_ACCESS_KEY")
+BROWSER_STACK_TASK_ID = int(os.environ.get("TASK_ID", 0))
+BROWSER_STACK_EXECUTOR_URL = ("http://{}:{}@{}/wd/hub".format(
+    BROWSER_STACK_USERNAME, BROWSER_STACK_ACCESS_KEY, BROWSER_STACK_SERVER))
 
-SCREENSHOTS_DIR = os.path.abspath(os.path.join(".", "screenshots"))
-DRIVERS = (Remote, Chrome, Firefox, PhantomJS)
+BROWSER_STACK_CONFIG = {
+    "server": BROWSER_STACK_SERVER,
+    "user": BROWSER_STACK_USERNAME,
+    "key": BROWSER_STACK_ACCESS_KEY,
+    "capabilities": {
+        "browserstack.debug": True,
+        "browserstack.selenium_version": "3.5.2",
+        "build": "v0.1",
+        "project": "ExRed",
+        "resolution": "1600x1200"
+    },
+    "environments": [
+        {
+            "browser": "Chrome",
+            "browser_version": "61.0",
 
-print("Will use Selenium Hub @ {} and ExRed @ {}".format(HUB_URL, EXRED_UI_URL))
+        },
+        {
+            "browser": "Firefox",
+            "browser_version": "56.0",
+        },
+        {
+            "browser": "Safari",
+            "browser_version": "10.1",
+            "os": "OS X",
+            "os_version": "Sierra",
+        },
+        {
+            "browser": "IE",
+            "browser_version": "11.0",
+        },
+        {
+            "browser": "Edge",
+            "browser_version": "15.0",
+        },
+    ]
+}
