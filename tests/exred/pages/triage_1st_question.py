@@ -45,7 +45,7 @@ def should_be_here(driver: webdriver):
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
-def extract_sectors(driver: webdriver) -> list:
+def extract_sectors_values(driver: webdriver) -> list:
     """Extract all Sector options.
 
     :param driver: Any Selenium Driver (Remote, Chrome, Firefox, PhantomJS etc.
@@ -60,11 +60,11 @@ def extract_sectors(driver: webdriver) -> list:
 
 def select_sector(driver: webdriver, sector: str):
     if not sector:
-        sector = random.choice(extract_sectors(driver))
-    options = driver.find_element_by_css_selector(FIRST_QUESTION)
+        sector = random.choice(extract_sectors_values(driver))
+    options = driver.find_element_by_css_selector(SECTORS_DROPDOWN)
     assert options.is_displayed()
     select = Select(options)
-    select.select_by_visible_text(sector)
+    select.select_by_value(sector)
     take_screenshot(driver, NAME)
 
 
