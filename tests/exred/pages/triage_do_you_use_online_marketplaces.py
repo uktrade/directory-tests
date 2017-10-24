@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """ExRed Triage 4th Question Page Object."""
 import logging
-import random
 
 from selenium import webdriver
 
@@ -34,19 +33,16 @@ def should_be_here(driver: webdriver):
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
-def enter_company_name(driver: webdriver, *, company_name: str = None):
-    if not company_name:
-        company_name = "Random company {}".format(random.randrange(0, 9999999))
-    input_field = driver.find_element_by_css_selector(COMPANY_NAME_INPUT)
-    input_field.clear()
-    input_field.send_keys(company_name)
-    take_screenshot(driver, NAME + " after typing in company name")
+def select_yes(driver: webdriver):
+    yes = driver.find_element_by_css_selector(YES_CHECKBOX)
+    yes.click()
+    take_screenshot(driver, NAME)
 
 
-def select_sole_trade(driver: webdriver):
-    sole_trader = driver.find_element_by_css_selector(SOLE_TRADER_CHECKBOX)
-    sole_trader.click()
-    take_screenshot(driver, NAME + " selected sole trader")
+def select_no(driver: webdriver):
+    no = driver.find_element_by_css_selector(NO_CHECKBOX)
+    no.click()
+    take_screenshot(driver, NAME)
 
 
 def submit(driver: webdriver):
