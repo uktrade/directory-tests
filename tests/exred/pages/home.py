@@ -104,6 +104,12 @@ def should_see_sections(driver: webdriver, section_names: list):
         "services": SECTION_SERVICES,
         "case_studies": SECTION_CASE_STUDIES
     }
+    browser = "%s v:%s %s" % (driver.capabilities.get("browserName",
+                                                      "unknown browse"),
+                              driver.capabilities.get("version",
+                                                      "unknown version"),
+                              driver.capabilities.get("platform",
+                                                      "unknown platform"))
     for section_name in section_names:
         section = sections[section_name.lower().replace(" ", "_")]
         for element_name, element_selector in section.items():
