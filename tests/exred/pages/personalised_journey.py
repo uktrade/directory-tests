@@ -12,9 +12,9 @@ URL = get_absolute_url(NAME)
 
 SHOW_MORE_BUTTON = "#persona-overview a.button.more"
 HERO_SECTION = {
-    "hero - title": "#content > section.hero-section h1",
-    "hero - introduction": "#content > section.hero-section p",
-    "hero - exporting is great logo": "#content > section.hero-section img",
+    "hero - title": "section.hero-section h1",
+    "hero - introduction": "section.hero-section p",
+    "hero - exporting is great logo": "section.hero-section img",
 }
 FACTS_SECTION = {
     "facts - intro": "#content > section.sector-fact p.intro",
@@ -30,21 +30,21 @@ TOP_10_SECTION = {
     "top 10 - table": "#content > section.markets table",
 }
 SERVICES_SECTION = {
-    "services - heading": "#content > section.service-section h2",
-    "services - intro": "#content > section.service-section .intro",
-    "services - other": "#content > section#other-services",
+    "services - heading": "section.service-section h2",
+    "services - intro": "section.service-section .intro",
+    "services - other": "#other-services > div > div",
 }
 GUIDANCE_SECTION = {
     "guidance - heading": "#resource-guidance h2",
-    "guidance - introduction": "#resource-guidance p.intro",
+    "guidance - introduction": "#resource-guidance p.section-intro",
     "guidance - categories": "#resource-guidance div.group",
 }
 
 EXPECTED_ELEMENTS = {}
 # ARTICLES_SECTION is not included as it's not displayed to Regular Exporters
 EXPECTED_ELEMENTS.update(HERO_SECTION)
-EXPECTED_ELEMENTS.update(FACTS_SECTION)
-EXPECTED_ELEMENTS.update(TOP_10_SECTION)
+# EXPECTED_ELEMENTS.update(FACTS_SECTION)
+# EXPECTED_ELEMENTS.update(TOP_10_SECTION)
 EXPECTED_ELEMENTS.update(SERVICES_SECTION)
 EXPECTED_ELEMENTS.update(GUIDANCE_SECTION)
 

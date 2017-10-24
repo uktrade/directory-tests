@@ -12,14 +12,13 @@ from utils import assertion_msg, get_absolute_url, take_screenshot
 NAME = "ExRed Triage - 1st question"
 URL = get_absolute_url(NAME)
 
-SECTOR_OPTIONS = "#q0 > option"
-FIRST_QUESTION = "#q0"
-CONTINUE_BUTTON = "#content > .questions form > fieldset > button[type=submit]"
-BACK_TO_HOME_LINK = "#content > .questions .home-link > a"
+SECTORS_DROPDOWN = "#id_SECTOR-sector"
+SECTOR_OPTIONS = "#id_SECTOR-sector option"
+CONTINUE_BUTTON = "#content .exred-triage-form button[type=submit]"
+BACK_TO_HOME_LINK = "#content .home-link a"
 EXPECTED_ELEMENTS = {
-    "form legend": "#content > .questions form > fieldset > legend",
-    "first question label": "#content > .questions form > fieldset > label",
-    "first question": FIRST_QUESTION,
+    "question": "#content .exred-triage-form label",
+    "sectors dropdown": SECTORS_DROPDOWN,
     "continue button": CONTINUE_BUTTON,
     "back to home link": BACK_TO_HOME_LINK
 }

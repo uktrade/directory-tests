@@ -11,14 +11,15 @@ URL = get_absolute_url(NAME)
 
 CLASSIFICATION = ".question > h2"
 ANSWERS = "div.answers"
-CONTINUE_BUTTON = "a.next"
-CHANGE_ANSWERS_LINK = "a.update"
-BACK_TO_HOME_LINK = "#content > .questions .home-link > a"
+CREATE_MY_JOURNEY_BUTTON = "input.button.next"
+PREVIOUS_STEP_BUTTON = "input.button.next ~ button.previous-step"
+CHANGE_ANSWERS_LINK = "#change-answers-button-container > button"
+BACK_TO_HOME_LINK = ".home-link a"
 
 EXPECTED_ELEMENTS = {
     "classification": CLASSIFICATION,
     "answers section": ANSWERS,
-    "continue button": CONTINUE_BUTTON,
+    "continue button": CREATE_MY_JOURNEY_BUTTON,
     "change answers link": CHANGE_ANSWERS_LINK,
     "back to home link": BACK_TO_HOME_LINK
 }
@@ -61,6 +62,6 @@ def should_be_classified_as_regular(driver: webdriver):
 
 
 def create_exporting_journey(driver: webdriver):
-    button = driver.find_element_by_css_selector(CONTINUE_BUTTON)
+    button = driver.find_element_by_css_selector(CREATE_MY_JOURNEY_BUTTON)
     button.click()
     take_screenshot(driver, NAME + " after submitting")

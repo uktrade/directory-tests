@@ -10,14 +10,15 @@ from utils import assertion_msg, get_absolute_url, take_screenshot
 NAME = "ExRed Triage - 4th question"
 URL = get_absolute_url(NAME)
 
-CONTINUE_BUTTON = ".question form .button"
-BACK_TO_HOME_LINK = "#content > .questions .home-link > a"
-COMPANY_NAME_INPUT = "#q3_a"
-SOLE_TRADER_CHECKBOX = "#q3_b ~ label"
+COMPANY_NAME_INPUT = "#js-typeahead-company-name"
+SOLE_TRADER_CHECKBOX = ".form-field label[for=id_COMPANY-sole_trader]"
+CONTINUE_BUTTON = ".exred-triage-form button.button"
+PREVIOUS_STEP_BUTTON = ".exred-triage-form button.previous-step"
+BACK_TO_HOME_LINK = ".home-link a"
 EXPECTED_ELEMENTS = {
-    "question legend": ".question > form fieldset legend",
-    "question": ".question > form fieldset legend ~ label",
+    "question": "label[for=js-typeahead-company-name]",
     "continue button": CONTINUE_BUTTON,
+    "previous step button": PREVIOUS_STEP_BUTTON,
     "back to home link": BACK_TO_HOME_LINK
 }
 
