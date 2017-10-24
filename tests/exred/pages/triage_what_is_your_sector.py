@@ -4,7 +4,6 @@ import logging
 import random
 
 from selenium import webdriver
-from selenium.webdriver import ActionChains
 from selenium.webdriver.support.select import Select
 
 from utils import assertion_msg, get_absolute_url, take_screenshot
@@ -71,8 +70,5 @@ def select_sector(driver: webdriver, sector: str):
 def submit(driver: webdriver):
     button = driver.find_element_by_css_selector(CONTINUE_BUTTON)
     assert button.is_displayed()
-    actions = ActionChains(driver)
-    actions.move_to_element(button)
-    actions.click(button)
-    actions.perform()
+    button.click()
     take_screenshot(driver, NAME + " after submitting")
