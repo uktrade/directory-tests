@@ -5,7 +5,7 @@ import logging
 from selenium import webdriver
 from selenium.webdriver import ActionChains
 
-from utils import get_absolute_url, take_screenshot
+from utils import get_absolute_url, take_screenshot, assertion_msg
 
 NAME = "ExRed Home"
 URL = get_absolute_url(NAME)
@@ -111,10 +111,10 @@ def should_see_sections(driver: webdriver, section_names: list):
                 "Looking for '%s' element in '%s' section with '%s' selector",
                 element_name, section_name, element_selector)
             element = driver.find_element_by_css_selector(element_selector)
-            assert element.is_displayed(), ("It looks like '{}' in '{}' "
-                                            "section is not visible"
-                                            .format(element_name,
-                                                    section_name))
+            with assertion_msg(
+                    "It looks like '%s' in '%s' section is not visible (%s)",
+                    element_name, section_name, browser):
+                assert element.is_displayed()
         logging.debug("All elements in '%s' section are visible", section_name)
     logging.debug(
         "All expected sections: %s on %s page are visible", section_names,
