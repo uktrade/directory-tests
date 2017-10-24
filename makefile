@@ -137,6 +137,7 @@ docker_integration_tests: docker_remove_all
 
 EXRED_SET_DOCKER_ENV_VARS := \
 	export EXRED_TESTS_EXRED_UI_URL=https://dev.exportreadiness.directory.uktrade.io
+	export EXRED_TESTS_CIRCLE_SHA1=$(CIRCLE_SHA1)
 
 EXRED_SET_LOCAL_ENV_VARS := \
 	export EXRED_UI_URL=https://dev.exportreadiness.directory.uktrade.io
