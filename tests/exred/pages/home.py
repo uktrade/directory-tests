@@ -11,6 +11,14 @@ NAME = "ExRed Home"
 URL = get_absolute_url(NAME)
 
 GET_STARTED_BUTTON = ".triage a.button-cta"
+NEW_TO_EXPORTING_LINK = "#personas > .container > .group div:nth-child(1) a"
+OCCASIONAL_EXPORTER_LINK = "#personas > .container > .group div:nth-child(2) a"
+REGULAR_EXPORTED_LINK = "#personas > .container > .group div:nth-child(3) a"
+FIND_A_BUYER_SERVICE_LINK = "#services div:nth-child(1) > article > a"
+ONLINE_MARKETPLACES_SERVICE_LINK = "#services div:nth-child(2) > article > a"
+EXPORT_OPPORTUNITIES_SERVICE_LINK = "#services div:nth-child(3) > article > a"
+CAROUSEL_PREVIOUS_BUTTON = ".Carousel .buttons button.previous"
+CAROUSEL_NEXT_BUTTON = ".Carousel .buttons button.next"
 SECTION_VIDEO = {
     "itself": "#content > section.hero-section",
     "teaser": "#content > section.hero-section div.hero-teaser",
@@ -29,47 +37,40 @@ SECTION_PERSONAS = {
     "header": "#personas > .container > .header",
     "intro": "#personas > .container > .intro",
     "groups": "#personas > .container > .group",
-    "new_to_exporting_link": "#personas > .container > .group a[href='/new']",
-    "occasional_exporter_link":
-        "#personas > .container > .group a[href='/occasional']",
-    "regular_exported_link":
-        "#personas > .container > .group a[href='/regular']",
+    "new_to_exporting_link": NEW_TO_EXPORTING_LINK,
+    "occasional_exporter_link": OCCASIONAL_EXPORTER_LINK,
+    "regular_exported_link": REGULAR_EXPORTED_LINK,
 }
 SECTION_GUIDANCE = {
     "itself": "#resource-guidance",
-    "header": "#resource-guidance > .container > .header",
-    "intro": "#resource-guidance > .container > .intro",
-    "groups": "#resource-guidance > .container > .group",
-    "market_research_group":
-        "#resource-guidance > .container > .group > div > .market-research",
-    "customer_insight_group":
-        "#resource-guidance > .container > .group > div > .customer-insight",
-    "finance_group":
-        "#resource-guidance > .container > .group > div > .finance",
-    "business_planning_group":
-        "#resource-guidance > .container > .group > div > .business-planning",
-    "getting_paid_group":
-        "#resource-guidance > .container > .group > div > .getting-paid",
+    "header": "#resource-guidance > .container .section-header",
+    "intro": "#resource-guidance > .container .section-intro",
+    "groups": "#resource-guidance > .container .group",
+    "market_research_group": "#resource-guidance .group .market-research",
+    "customer_insight_group": "#resource-guidance .group .customer-insight",
+    "finance_group": "#resource-guidance .group .finance",
+    "business_planning_group": "#resource-guidance .group .business-planning",
+    "getting_paid_group": "#resource-guidance .group .getting-paid",
     "operations_and_compliance_group":
-        "#resource-guidance > .container > .group > div > "
-        ".operations-and-compliance",
-
+        "#resource-guidance .group .operations-and-compliance",
 }
 SECTION_SERVICES = {
     "itself": "#services",
-    "intro": "#services > div > .intro",
-    "groups": "#services > div > .group",
-    "find_a_buyer_service":
-        "#services .group > div:nth-child(1) > article",
-    "online_marketplaces_service":
-        "#services .group > div:nth-child(2) > article",
-    "export_opportunities_service":
-        "#services .group > div:nth-child(3) > article",
+    "intro": "#services .intro",
+    "groups": "#services .group",
+    "find_a_buyer_service": "#services div:nth-child(1) > article",
+    "online_marketplaces_service": "#services div:nth-child(2) > article",
+    "export_opportunities_service": "#services div:nth-child(3) > article",
+    "find_a_buyer_service_link": FIND_A_BUYER_SERVICE_LINK,
+    "online_marketplaces_service_link": ONLINE_MARKETPLACES_SERVICE_LINK,
+    "export_opportunities_service_link": EXPORT_OPPORTUNITIES_SERVICE_LINK,
 }
 SECTION_CASE_STUDIES = {
     "itself": "#stories",
     "header": "#stories .header",
-    "intro": "#stories .intro"
+    "intro": "#stories .intro",
+    "carousel_previous_button": CAROUSEL_PREVIOUS_BUTTON,
+    "carousel_next_button": CAROUSEL_NEXT_BUTTON
 }
 
 
