@@ -2,12 +2,13 @@
 """ExRed Page Object Registry"""
 from pages import (
     home,
-    triage_1st_question,
-    triage_2nd_question,
-    triage_3rd_question,
-    triage_4th_question,
+    triage_what_is_your_sector,
+    triage_have_you_exported,
+    triage_are_you_regular_exporter,
+    triage_company_name_or_sole_trader,
     triage_result,
-    personalised_journey
+    personalised_journey,
+    triage_do_you_use_online_marketplaces
 )
 
 from utils import get_absolute_url
