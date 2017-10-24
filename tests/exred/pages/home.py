@@ -82,10 +82,10 @@ def visit(driver: webdriver, *, first_time: bool = False):
     """
     if first_time:
         logging.debug(
-            "Deleting all cookies in order to enforce the first time visit "
-            "simulation")
-        if driver.get_cookies():
-            driver.delete_all_cookies()
+            "Deleting all cookies in order to enforce the first time visit"
+            " simulation")
+        # if driver.get_cookies():
+        #     driver.delete_all_cookies()
     driver.get(URL)
     take_screenshot(driver, NAME)
 
