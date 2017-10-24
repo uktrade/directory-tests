@@ -3,9 +3,8 @@
 import logging
 
 from selenium import webdriver
-from selenium.webdriver import ActionChains
 
-from utils import get_absolute_url, take_screenshot, assertion_msg
+from utils import assertion_msg, get_absolute_url, take_screenshot
 
 NAME = "ExRed Home"
 URL = get_absolute_url(NAME)
