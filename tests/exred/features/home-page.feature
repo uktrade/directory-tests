@@ -21,9 +21,6 @@ Feature: Home Page
 
   @ED-2366
   @triage
-  @bug
-  @ED-
-  @fixme
   Scenario: Any Exporter visiting the home page after triage should be able to get to personalised page
     Given "Robert" has answered triage questions
     And "Robert" goes to the "Home" page
