@@ -17,8 +17,8 @@ REGULAR_EXPORTED_LINK = "#personas > .container > .group div:nth-child(3) a"
 FIND_A_BUYER_SERVICE_LINK = "#services div:nth-child(1) > article > a"
 ONLINE_MARKETPLACES_SERVICE_LINK = "#services div:nth-child(2) > article > a"
 EXPORT_OPPORTUNITIES_SERVICE_LINK = "#services div:nth-child(3) > article > a"
-CAROUSEL_PREVIOUS_BUTTON = ".Carousel .buttons button.previous"
-CAROUSEL_NEXT_BUTTON = ".Carousel .buttons button.next"
+CAROUSEL_PREVIOUS_BUTTON = "#carousel label.ed-carousel__control--backward"
+CAROUSEL_NEXT_BUTTON = "#carousel label.ed-carousel__control--forward"
 SECTION_VIDEO = {
     "itself": "#content > section.hero-section",
     "teaser": "#content > section.hero-section div.hero-teaser",
@@ -66,9 +66,9 @@ SECTION_SERVICES = {
     "export_opportunities_service_link": EXPORT_OPPORTUNITIES_SERVICE_LINK,
 }
 SECTION_CASE_STUDIES = {
-    "itself": "#stories",
-    "header": "#stories .header",
-    "intro": "#stories .intro",
+    "itself": "#carousel",
+    "heading": "#carousel .heading",
+    "intro": "#carousel .intro",
     "carousel_previous_button": CAROUSEL_PREVIOUS_BUTTON,
     "carousel_next_button": CAROUSEL_NEXT_BUTTON
 }
