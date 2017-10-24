@@ -7,7 +7,7 @@ from selenium import webdriver
 
 from utils import assertion_msg, get_absolute_url, take_screenshot
 
-NAME = "ExRed Triage - 4th question"
+NAME = "ExRed Triage - company name or sole trader"
 URL = get_absolute_url(NAME)
 
 COMPANY_NAME_INPUT = "#js-typeahead-company-name"

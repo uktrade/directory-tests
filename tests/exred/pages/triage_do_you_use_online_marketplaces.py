@@ -7,7 +7,7 @@ from selenium import webdriver
 
 from utils import assertion_msg, get_absolute_url, take_screenshot
 
-NAME = "ExRed Triage - 4th question"
+NAME = "ExRed Triage - do you use online marketplaces"
 URL = get_absolute_url(NAME)
 
 YES_CHECKBOX = ".radio label[for=id_ONLINE_MARKETPLACE-used_online_marketplace_0]"

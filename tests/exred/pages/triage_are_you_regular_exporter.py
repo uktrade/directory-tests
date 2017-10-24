@@ -6,7 +6,7 @@ from selenium import webdriver
 
 from utils import assertion_msg, get_absolute_url, take_screenshot
 
-NAME = "ExRed Triage - 3rd question"
+NAME = "ExRed Triage - are you regular exporter"
 URL = get_absolute_url(NAME)
 
 YES_CHECKBOX = "#id_REGULAR_EXPORTER-regular_exporter li:nth-child(1) > label"

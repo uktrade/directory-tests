@@ -8,7 +8,7 @@ from selenium.webdriver.support.select import Select
 
 from utils import assertion_msg, get_absolute_url, take_screenshot
 
-NAME = "ExRed Triage - 1st question"
+NAME = "ExRed Triage - what is your sector"
 URL = get_absolute_url(NAME)
 
 SECTORS_DROPDOWN = "#id_SECTOR-sector"

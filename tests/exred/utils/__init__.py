@@ -18,10 +18,11 @@ from settings import EXRED_UI_URL
 URLS = {
     # Exporting Readiness
     "ExRed Home": "",
-    "ExRed Triage - 1st question": "triage",
-    "ExRed Triage - 2nd question": 'triage?q0={}&q1={}',
-    "ExRed Triage - 3rd question": 'triage?q0={}&q1=Yes',
-    "ExRed Triage - 4th question": "triage?q0={}&q1={}&q2={}&q3={}",
+    "ExRed Triage - what is your sector": "triage",
+    "ExRed Triage - have you exported before": 'triage',
+    "ExRed Triage - are you regular exporter": 'triage',
+    "ExRed Triage - do you use online marketplaces": 'triage',
+    "ExRed Triage - company name or sole trader": "triage",
     "ExRed Triage - result": "triage/result",
     "ExRed Personalised Journey": "custom",
 }

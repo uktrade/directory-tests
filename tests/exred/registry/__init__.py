@@ -17,21 +17,25 @@ EXRED_PAGE_REGISTRY = {
         "url": "ExRed Home",
         "po": home
     },
-    "triage - 1st question": {
-        "url": "ExRed Triage - 1st question",
-        "po": triage_1st_question
+    "triage - what is your sector": {
+        "url": "ExRed Triage - what is your sector",
+        "po": triage_what_is_your_sector
     },
-    "triage - 2nd question": {
-        "url": "ExRed Triage - 2nd question",
-        "po": triage_2nd_question
+    "triage - have you exported before": {
+        "url": "ExRed Triage - have you exported before",
+        "po": triage_have_you_exported
     },
-    "triage - 3rd question": {
-        "url": "ExRed Triage - 3rd question",
-        "po": triage_3rd_question
+    "triage - are you regular exporter": {
+        "url": "ExRed Triage - are you regular exporter",
+        "po": triage_are_you_regular_exporter
     },
-    "triage - 4th question": {
-        "url": "ExRed Triage - 4th question",
-        "po": triage_4th_question
+    "triage - do you use online marketplaces": {
+        "url": "ExRed Triage - do you use online marketplaces",
+        "po": triage_do_you_use_online_marketplaces
+    },
+    "triage - company name or sole trader": {
+        "url": "ExRed Triage - company name or sole trader",
+        "po": triage_company_name_or_sole_trader
     },
     "triage - result": {
         "url": "ExRed Triage - result",

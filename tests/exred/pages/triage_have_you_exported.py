@@ -6,7 +6,7 @@ from selenium import webdriver
 
 from utils import assertion_msg, get_absolute_url, take_screenshot
 
-NAME = "ExRed Triage - 2nd question"
+NAME = "ExRed Triage - have you exported before"
 URL = get_absolute_url(NAME)
 
 YES_CHECKBOX = "#id_EXPORTED_BEFORE-exported_before > li:nth-child(1) > label"
