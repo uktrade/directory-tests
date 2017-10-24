@@ -14,6 +14,7 @@ from steps.when_impl import (
     triage_say_you_export_regularly,
     triage_say_you_exported_before,
     triage_say_you_never_exported_before,
+    triage_say_you_use_online_marketplaces,
     triage_select_sector,
     triage_should_be_classified_as_new,
     triage_should_be_classified_as_occasional,
@@ -45,6 +46,7 @@ def classify_as_occasional(context: Context, actor_alias: str):
     triage_select_sector(context)
     triage_say_you_exported_before(context)
     triage_say_you_do_not_export_regularly(context)
+    triage_say_you_use_online_marketplaces(context)
     triage_enter_company_name(context)
     triage_should_be_classified_as_occasional(context)
     triage_create_exporting_journey(context)
