@@ -134,7 +134,4 @@ def start_exporting_journey(driver: webdriver):
     """
     button = driver.find_element_by_css_selector(GET_STARTED_BUTTON)
     assert button.is_displayed()
-    actions = ActionChains(driver)
-    actions.move_to_element(button)
-    actions.click(button)
-    actions.perform()
+    button.click()
