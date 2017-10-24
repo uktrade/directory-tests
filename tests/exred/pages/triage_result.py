@@ -50,7 +50,7 @@ def should_be_classified_as(driver: webdriver, expected: str):
 
 
 def should_be_classified_as_new(driver: webdriver):
-    should_be_classified_as(driver, "New to exporting")
+    should_be_classified_as(driver, "New Exporter")
 
 
 def should_be_classified_as_occasional(driver: webdriver):
