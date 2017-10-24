@@ -8,3 +8,6 @@ services:
     working_dir: /usr/src/app
     command: ./docker/cmd-exred.sh
     env_file: ./docker/.env
+    volumes:
+      - ./tests/exred/reports:/usr/src/app/tests/exred/reports
+      - ./tests/exred/screenshots:/usr/src/app/tests/exred/screenshots
