@@ -55,6 +55,13 @@ def triage_say_you_do_not_export_regularly(context: Context):
     triage_do_you_use_online_marketplaces.should_be_here(driver)
 
 
+def triage_say_you_use_online_marketplaces(context: Context):
+    driver = context.driver
+    triage_do_you_use_online_marketplaces.select_yes(driver)
+    triage_do_you_use_online_marketplaces.submit(driver)
+    triage_company_name_or_sole_trader.should_be_here(driver)
+
+
 def triage_enter_company_name(context: Context):
     driver = context.driver
     triage_company_name_or_sole_trader.enter_company_name(driver)
