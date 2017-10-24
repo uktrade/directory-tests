@@ -34,12 +34,12 @@ BROWSER_STACK_CONFIG = {
             "browser": "Firefox",
             "browser_version": "56.0",
         },
-        {
-            "browser": "Safari",
-            "browser_version": "10.1",
-            "os": "OS X",
-            "os_version": "Sierra",
-        },
+        # {
+        #     "browser": "Safari",
+        #     "browser_version": "10.1",
+        #     "os": "OS X",
+        #     "os_version": "Sierra",
+        # },
         {
             "browser": "IE",
             "browser_version": "11.0",
