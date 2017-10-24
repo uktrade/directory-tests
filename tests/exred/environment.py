@@ -47,7 +47,7 @@ def before_step(context: Context, step: Step):
     :param context: Behave Context object
     :param step: Behave Step object
     """
-    logging.debug('Step: %s %s', step.step_type, str(repr(step.name)))
+    logging.debug('Started Step: %s %s', step.step_type, str(repr(step.name)))
 
 
 def after_step(context: Context, step: Step):
@@ -56,7 +56,7 @@ def after_step(context: Context, step: Step):
     :param context: Behave Context object
     :param step: Behave Step object
     """
-    logging.debug('Step: %s %s', step.step_type, str(repr(step.name)))
+    logging.debug('Finished Step: %s %s', step.step_type, str(repr(step.name)))
 
 
 def before_scenario(context: Context, scenario: Scenario):
