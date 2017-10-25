@@ -63,5 +63,6 @@ def should_be_classified_as_regular(driver: webdriver):
 
 def create_exporting_journey(driver: webdriver):
     button = driver.find_element_by_css_selector(CREATE_MY_JOURNEY_BUTTON)
+    assert button.is_displayed()
     button.click()
     take_screenshot(driver, NAME + " after submitting")
