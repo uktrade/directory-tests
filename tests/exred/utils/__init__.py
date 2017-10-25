@@ -6,9 +6,7 @@ import sys
 import traceback
 from contextlib import contextmanager
 from datetime import datetime
-from functools import partial
 from os.path import abspath, join
-from urllib.parse import urljoin
 
 import requests
 from behave.runner import Context
@@ -22,17 +20,6 @@ from settings import (
     BROWSER_STACK_ACCESS_KEY
 )
 
-URLS = {
-    # Exporting Readiness
-    "ExRed Home": "",
-    "ExRed Triage - what is your sector": "triage",
-    "ExRed Triage - have you exported before": 'triage',
-    "ExRed Triage - are you regular exporter": 'triage',
-    "ExRed Triage - do you use online marketplaces": 'triage',
-    "ExRed Triage - company name or sole trader": "triage",
-    "ExRed Triage - result": "triage/result",
-    "ExRed Personalised Journey": "custom",
-}
 ScenarioData = namedtuple(
     "ScenarioData",
     [
@@ -50,16 +37,10 @@ Actor = namedtuple(
 # Set all fields to None by default.
 Actor.__new__.__defaults__ = (None,) * len(Actor._fields)
 
-def get_relative_url(name: str) -> str:
-    return URLS[name]
 
 def initialize_scenario_data() -> ScenarioData:
     """Will initialize the Scenario Data.
 
-def get_absolute_url(name: str) -> str:
-    join_ui_exred = partial(urljoin, EXRED_UI_URL)
-    relative_url = get_relative_url(name)
-    return join_ui_exred(relative_url)
     :return an empty ScenarioData named tuple
     """
     actors = {}
