@@ -57,8 +57,9 @@ def extract_sectors_values(driver: webdriver) -> list:
     options = driver.find_elements_by_css_selector(SECTOR_OPTIONS)
     option_values = []
     for option in options:
-        if option.text != "---------":
-            option_values.append(option.text)
+        text = option.text
+        if text != "---------":
+            option_values.append(text)
     return option_values
 
 
