@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """ExRed utils."""
+import json
 import logging
 import os
 import random
@@ -230,6 +231,12 @@ def flag_browserstack_session_as_failed(session_id: str, reason: str):
         "reason": reason
     }
     auth = (BROWSER_STACK_USERNAME, BROWSER_STACK_ACCESS_KEY)
-    response = requests.put(url=url, headers=headers, data=data, auth=auth)
-    assert response.ok
-    logging.error("Flagged BrowserStack session: %s as failed", session_id)
+    response = requests.put(
+        url=url, headers=headers, data=json.dumps(data), auth=auth)
+    if not response.ok:
+        logging.error(
+            "Failed to flagged BrowserStack session: %s as failed. "
+            "BrowserStack responded with %d: %s", session_id,
+            response.status_code, response.content)
+    else:
+        logging.error("Flagged BrowserStack session: %s as failed", session_id)
