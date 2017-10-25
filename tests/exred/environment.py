@@ -11,8 +11,10 @@ from settings import (
     BROWSER_STACK_EXECUTOR_URL,
     BROWSER_STACK_TASK_ID
 )
-from utils import flag_browserstack_session_as_failed, init_loggers
-
+from utils import (
+    flag_browserstack_session_as_failed,
+    init_loggers,
+    initialize_scenario_data
 )
 
 
