@@ -28,4 +28,4 @@ def given_actor_classifies_as(context, actor_alias, exporter_status):
 
 @given('"{actor_alias}" has answered triage questions')
 def given_actor_answered_triage_questions(context, actor_alias):
-    finish_triage(context, actor_alias)
+    finish_triage_as(context, actor_alias)
