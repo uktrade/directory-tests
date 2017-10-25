@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 """ExRed Triage 3rd Question Page Object."""
 import logging
+from urllib.parse import urljoin
 
 from selenium import webdriver
 
-from utils import assertion_msg, get_absolute_url, take_screenshot
+from settings import EXRED_UI_URL
+from utils import assertion_msg, take_screenshot
 
 NAME = "ExRed Triage - are you regular exporter"
-URL = get_absolute_url(NAME)
+URL = urljoin(EXRED_UI_URL, "triage")
 
 YES_CHECKBOX = "#id_REGULAR_EXPORTER-regular_exporter li:nth-child(1) > label"
 NO_CHECKBOX = "#id_REGULAR_EXPORTER-regular_exporter li:nth-child(2) > label"

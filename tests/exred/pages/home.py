@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 """ExRed Home Page Object."""
 import logging
+from urllib.parse import urljoin
 
 from selenium import webdriver
 
-from utils import assertion_msg, get_absolute_url, take_screenshot
+from settings import EXRED_UI_URL
+from utils import assertion_msg, take_screenshot
 
 NAME = "ExRed Home"
-URL = get_absolute_url(NAME)
+URL = urljoin(EXRED_UI_URL, "")
 
 GET_STARTED_BUTTON = ".triage a.button-cta"
 NEW_TO_EXPORTING_LINK = "#personas > .container > .group div:nth-child(1) a"

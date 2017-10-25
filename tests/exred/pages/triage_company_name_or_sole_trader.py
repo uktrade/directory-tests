@@ -2,13 +2,15 @@
 """ExRed Triage 4th Question Page Object."""
 import logging
 import random
+from urllib.parse import urljoin
 
 from selenium import webdriver
 
-from utils import assertion_msg, get_absolute_url, take_screenshot
+from settings import EXRED_UI_URL
+from utils import assertion_msg, take_screenshot
 
 NAME = "ExRed Triage - company name or sole trader"
-URL = get_absolute_url(NAME)
+URL = urljoin(EXRED_UI_URL, "triage")
 
 COMPANY_NAME_INPUT = "#js-typeahead-company-name"
 SOLE_TRADER_CHECKBOX = ".form-field label[for=id_COMPANY-sole_trader]"

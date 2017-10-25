@@ -1,19 +1,15 @@
 # -*- coding: utf-8 -*-
 """ExRed Personalised Journey - Page Object."""
 import logging
+from urllib.parse import urljoin
 
 from selenium import webdriver
-from selenium.webdriver import ActionChains
 
-from utils import (
-    assertion_msg,
-    get_absolute_url,
-    selenium_action,
-    take_screenshot
-)
+from settings import EXRED_UI_URL
+from utils import assertion_msg, selenium_action, take_screenshot
 
 NAME = "ExRed Personalised Journey"
-URL = get_absolute_url(NAME)
+URL = urljoin(EXRED_UI_URL, "custom")
 
 SHOW_MORE_BUTTON = "#persona-overview a.button.more"
 HERO_SECTION = {

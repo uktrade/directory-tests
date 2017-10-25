@@ -2,14 +2,16 @@
 """ExRed Triage 1st Question Page Object."""
 import logging
 import random
+from urllib.parse import urljoin
 
 from selenium import webdriver
 from selenium.webdriver.support.select import Select
 
-from utils import assertion_msg, get_absolute_url, take_screenshot
+from settings import EXRED_UI_URL
+from utils import assertion_msg, take_screenshot
 
 NAME = "ExRed Triage - what is your sector"
-URL = get_absolute_url(NAME)
+URL = urljoin(EXRED_UI_URL, "triage")
 
 SECTORS_DROPDOWN = "#id_SECTOR-sector"
 SECTOR_OPTIONS = "#id_SECTOR-sector option"
