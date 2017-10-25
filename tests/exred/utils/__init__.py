@@ -2,8 +2,12 @@
 """ExRed utils."""
 import logging
 import os
+import random
+import string
 import sys
 import traceback
+import uuid
+from collections import namedtuple
 from contextlib import contextmanager
 from datetime import datetime
 from os.path import abspath, join
@@ -14,10 +18,9 @@ from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 
 from settings import (
-    EXRED_UI_URL,
     BROWSER_STACK_SESSIONS_URL,
     BROWSER_STACK_USERNAME,
-    BROWSER_STACK_ACCESS_KEY
+    BROWSER_STACK_ACCESS_KEY,
 )
 
 ScenarioData = namedtuple(
