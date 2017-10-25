@@ -174,11 +174,11 @@ def flag_browserstack_session_as_failed(session_id: str, reason: str):
     headers = {
         "Content-Type": "application/json"
     }
-    body = {
+    data = {
         "status": "failed",
         "reason": reason
     }
     auth = (BROWSER_STACK_USERNAME, BROWSER_STACK_ACCESS_KEY)
-    response = requests.put(url=url, headers=headers, body=body, auth=auth)
+    response = requests.put(url=url, headers=headers, data=data, auth=auth)
     assert response.ok
     logging.error("Flagged BrowserStack session: %s as failed", session_id)
