@@ -48,13 +48,10 @@ EXRED_PAGE_REGISTRY = {
     },
 }
 
-PAGE_REGISTRY = {}
-PAGE_REGISTRY.update(EXRED_PAGE_REGISTRY)
-
 
 def get_page_url(page_name: str):
-    return get_absolute_url(PAGE_REGISTRY[page_name.lower()]["url"])
+    return EXRED_PAGE_REGISTRY[page_name.lower()]["url"]
 
 
 def get_page_object(page_name: str):
-    return PAGE_REGISTRY[page_name.lower()]["po"]
+    return EXRED_PAGE_REGISTRY[page_name.lower()]["po"]
