@@ -20,6 +20,7 @@ from steps.when_impl import (
     triage_should_be_classified_as_occasional,
     triage_should_be_classified_as_regular
 )
+from utils import add_actor, unauthenticated_actor
 
 
 def visit_page(
@@ -32,7 +33,7 @@ def visit_page(
     context.current_page.visit(context.driver, first_time=first_time)
 
 
-def classify_as_new(context: Context, actor_alias: str):
+def triage_classify_as_new(context: Context, actor_alias: str):
     start_triage(context, actor_alias)
     triage_select_sector(context)
     triage_say_you_never_exported_before(context)
@@ -41,7 +42,7 @@ def classify_as_new(context: Context, actor_alias: str):
     triage_create_exporting_journey(context)
 
 
-def classify_as_occasional(context: Context, actor_alias: str):
+def triage_classify_as_occasional(context: Context, actor_alias: str):
     start_triage(context, actor_alias)
     triage_select_sector(context)
     triage_say_you_exported_before(context)
@@ -52,7 +53,7 @@ def classify_as_occasional(context: Context, actor_alias: str):
     triage_create_exporting_journey(context)
 
 
-def classify_as_regular(context: Context, actor_alias: str):
+def triage_classify_as_regular(context: Context, actor_alias: str):
     start_triage(context, actor_alias)
     triage_select_sector(context)
     triage_say_you_exported_before(context)
@@ -62,11 +63,11 @@ def classify_as_regular(context: Context, actor_alias: str):
     triage_create_exporting_journey(context)
 
 
-def classify_as(context: Context, actor_alias: str, exporter_status: str):
+def triage_classify_as(context: Context, actor_alias: str, exporter_status: str):
     classifications = {
-        "new": classify_as_new,
-        "occasional": classify_as_occasional,
-        "regular": classify_as_regular
+        "new": triage_classify_as_new,
+        "occasional": triage_classify_as_occasional,
+        "regular": triage_classify_as_regular
     }
     visit_page(context, actor_alias, "home")
     step = classifications[exporter_status.lower()]
@@ -76,10 +77,10 @@ def classify_as(context: Context, actor_alias: str, exporter_status: str):
     step(context, actor_alias)
 
 
-def finish_triage(context: Context, actor_alias: str):
+def finish_triage_as(context: Context, actor_alias: str):
     """Will finish triage with randomly selected exporting status."""
     exporter_status = random.choice(["new", "occasional", "regular"])
-    classify_as(context, actor_alias, exporter_status)
+    triage_classify_as(context, actor_alias, exporter_status)
 
 
 def actor_classifies_himself_as(
