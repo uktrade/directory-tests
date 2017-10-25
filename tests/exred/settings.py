@@ -13,6 +13,8 @@ BROWSER_STACK_TASK_ID = int(os.environ.get("TASK_ID", 0))
 BROWSER_STACK_EXECUTOR_URL = ("http://{}:{}@{}/wd/hub".format(
     BROWSER_STACK_USERNAME, BROWSER_STACK_ACCESS_KEY, BROWSER_STACK_SERVER))
 
+BROWSER_STACK_SESSIONS_URL = "https://www.browserstack.com/automate/sessions/{}.json"
+
 BROWSER_STACK_CONFIG = {
     "server": BROWSER_STACK_SERVER,
     "user": BROWSER_STACK_USERNAME,
