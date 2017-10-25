@@ -16,6 +16,5 @@ test:
     - mkdir $CIRCLE_ARTIFACTS/exred_reports
     - mkdir $CIRCLE_ARTIFACTS/exred_screenshots
     - mv tests/exred/reports/*.log $CIRCLE_ARTIFACTS/exred_reports
-    - mv tests/exred/reports/*.xml $CIRCLE_ARTIFACTS/exred_reports
     - mv tests/exred/screenshots/*.png $CIRCLE_ARTIFACTS/exred_screenshots
 
