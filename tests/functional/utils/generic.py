@@ -108,7 +108,6 @@ def init_loggers(context: Context):
     log_formatter = logging.Formatter(fmt)
     log_file_handler = get_file_log_handler(log_formatter)
     # Add log file handler to Behave's logging
-    logging.getLogger("selenium").setLevel(logging.WARNING)
     context.config.setup_logging(handlers=[log_file_handler])
 
 
