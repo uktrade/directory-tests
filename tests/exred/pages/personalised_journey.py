@@ -5,7 +5,12 @@ import logging
 from selenium import webdriver
 from selenium.webdriver import ActionChains
 
-from utils import assertion_msg, get_absolute_url, take_screenshot
+from utils import (
+    assertion_msg,
+    get_absolute_url,
+    selenium_action,
+    take_screenshot
+)
 
 NAME = "ExRed Personalised Journey"
 URL = get_absolute_url(NAME)
@@ -51,7 +56,10 @@ EXPECTED_ELEMENTS.update(HERO_SECTION)
 
 def should_be_here(driver: webdriver):
     for element_name, element_selector in EXPECTED_ELEMENTS.items():
-        element = driver.find_element_by_css_selector(element_selector)
+        with selenium_action(
+                driver, "Could not find '%s' using '%s'", element_name,
+                element_selector):
+            element = driver.find_element_by_css_selector(element_selector)
         with assertion_msg(
                 "It looks like '%s' element is not visible on %s",
                 element_name, NAME):
@@ -61,10 +69,10 @@ def should_be_here(driver: webdriver):
 
 
 def show_more(driver: webdriver):
-    button = driver.find_element_by_css_selector(SHOW_MORE_BUTTON)
-    assert button.is_displayed()
-    actions = ActionChains(driver)
-    actions.move_to_element(button)
-    actions.click(button)
-    actions.perform()
+    with selenium_action(
+            driver, "Could not find 'Show More' button using '%s'",
+            SHOW_MORE_BUTTON):
+        button = driver.find_element_by_css_selector(SHOW_MORE_BUTTON)
+        assert button.is_displayed()
+    button.click()
     take_screenshot(driver, NAME + " after showing more")
