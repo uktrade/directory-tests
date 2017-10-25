@@ -12,7 +12,7 @@ from settings import (
     BROWSER_STACK_EXECUTOR_URL,
     BROWSER_STACK_TASK_ID
 )
-from utils import init_loggers
+from utils import flag_browserstack_session_as_failed, init_loggers
 
 ScenarioData = namedtuple(
     "ScenarioData",
@@ -56,7 +56,15 @@ def after_step(context: Context, step: Step):
     :param context: Behave Context object
     :param step: Behave Step object
     """
-    logging.debug('Finished Step: %s %s', step.step_type, str(repr(step.name)))
+    logging.debug("Finished Step: %s %s", step.step_type, str(repr(step.name)))
+    if step.status == "failed":
+        message = "Step '%s %s' failed. Reason: '%s'" % (step.step_type,
+                                                         step.name,
+                                                         step.exception)
+        logging.error(message)
+        if hasattr(context, "driver"):
+            session_id = context.driver.session_id
+            flag_browserstack_session_as_failed(session_id, message)
 
 
 def before_scenario(context: Context, scenario: Scenario):
