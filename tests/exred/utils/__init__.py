@@ -48,6 +48,73 @@ def initialize_scenario_data() -> ScenarioData:
     return scenario_data
 
 
+def unauthenticated_actor(
+        alias: str, *, self_classification: str = None) -> Actor:
+    """Create an instance of an unauthenticated Actor.
+
+    Will:
+     * generate a random password for user, which can be used later on during
+        registration or signing-in.
+
+    :param alias: alias of the Actor used within the scenario's scope
+    :param self_classification: Actor's perception of its Export Status
+    :return: an Actor namedtuple with all required details
+    """
+    email = ("test+{}{}@directory.uktrade.io"
+             .format(alias, str(uuid.uuid4()))
+             .replace("-", "").replace(" ", "").lower())
+    password_length = 10
+    password = ''.join(random.choice(string.ascii_letters)
+                       for _ in range(password_length))
+    return Actor(
+        alias=alias, email=email, password=password,
+        self_classification=self_classification)
+
+
+def add_actor(context: Context, actor: Actor):
+    """Will add Actor details to Scenario Data.
+
+    :param context: behave `context` object
+    :param actor: an instance of Actor Named Tuple
+    """
+    assert isinstance(actor, Actor), ("Expected Actor named tuple but got '{}'"
+                                      " instead".format(type(actor)))
+    context.scenario_data.actors[actor.alias] = actor
+    logging.debug("Successfully added actor: %s to Scenario Data", actor.alias)
+
+
+def get_actor(context, alias) -> Actor:
+    """Get actor details from context Scenario Data.
+
+    :param context: behave `context` object
+    :param alias: alias of sought actor
+    :return: an Actor named tuple
+    """
+    return context.scenario_data.actors.get(alias)
+
+
+def update_actor(
+        context: Context, alias: str, *, self_classification: str = None,
+        triage_classification: str = None):
+    """Update Actor's details stored in context.scenario_data
+
+    :param context: behave `context` object
+    :param alias: alias of the Actor to update
+    :param self_classification: Actor's perception of its Export Status
+    :param triage_classification: Actor's Exporting Classification after Triage
+    """
+    actors = context.scenario_data.actors
+    if self_classification:
+        actors[alias] = actors[alias]._replace(
+            self_classification=self_classification)
+    if triage_classification:
+        actors[alias] = actors[alias]._replace(
+            triage_classification=triage_classification)
+
+    logging.debug(
+        "Successfully updated %s's details: %s", alias, actors[alias])
+
+
 def take_screenshot(driver: webdriver, page_name: str):
     """Will take a screenshot of current page.
 
