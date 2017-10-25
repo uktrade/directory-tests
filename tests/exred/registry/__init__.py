@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """ExRed Page Object Registry"""
+
 from pages import (
     home,
     triage_what_is_your_sector,
@@ -11,39 +12,38 @@ from pages import (
     triage_do_you_use_online_marketplaces
 )
 
-from utils import get_absolute_url
 
 EXRED_PAGE_REGISTRY = {
     "home": {
-        "url": "ExRed Home",
+        "url": home.URL,
         "po": home
     },
     "triage - what is your sector": {
-        "url": "ExRed Triage - what is your sector",
+        "url": triage_what_is_your_sector.URL,
         "po": triage_what_is_your_sector
     },
     "triage - have you exported before": {
-        "url": "ExRed Triage - have you exported before",
+        "url": triage_have_you_exported.URL,
         "po": triage_have_you_exported
     },
     "triage - are you regular exporter": {
-        "url": "ExRed Triage - are you regular exporter",
+        "url": triage_are_you_regular_exporter.URL,
         "po": triage_are_you_regular_exporter
     },
     "triage - do you use online marketplaces": {
-        "url": "ExRed Triage - do you use online marketplaces",
+        "url": triage_do_you_use_online_marketplaces.URL,
         "po": triage_do_you_use_online_marketplaces
     },
     "triage - company name or sole trader": {
-        "url": "ExRed Triage - company name or sole trader",
+        "url": triage_company_name_or_sole_trader.URL,
         "po": triage_company_name_or_sole_trader
     },
     "triage - result": {
-        "url": "ExRed Triage - result",
+        "url": triage_result.URL,
         "po": triage_result
     },
     "personalised journey": {
-        "url": "ExRed Personalised Journey",
+        "url": personalised_journey.URL,
         "po": personalised_journey
     },
 }
