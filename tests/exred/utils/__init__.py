@@ -33,16 +33,38 @@ URLS = {
     "ExRed Triage - result": "triage/result",
     "ExRed Personalised Journey": "custom",
 }
+ScenarioData = namedtuple(
+    "ScenarioData",
+    [
+        "actors"
+    ]
+)
+Actor = namedtuple(
+    "Actor",
+    [
+        "alias", "email", "password", "self_classification",
+        "triage_classification"
+    ]
+)
 
+# Set all fields to None by default.
+Actor.__new__.__defaults__ = (None,) * len(Actor._fields)
 
 def get_relative_url(name: str) -> str:
     return URLS[name]
 
+def initialize_scenario_data() -> ScenarioData:
+    """Will initialize the Scenario Data.
 
 def get_absolute_url(name: str) -> str:
     join_ui_exred = partial(urljoin, EXRED_UI_URL)
     relative_url = get_relative_url(name)
     return join_ui_exred(relative_url)
+    :return an empty ScenarioData named tuple
+    """
+    actors = {}
+    scenario_data = ScenarioData(actors)
+    return scenario_data
 
 
 def take_screenshot(driver: webdriver, page_name: str):

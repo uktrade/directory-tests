@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """Behave configuration file."""
 import logging
-from collections import namedtuple
 
 from behave.model import Scenario, Step
 from behave.runner import Context
@@ -14,31 +13,7 @@ from settings import (
 )
 from utils import flag_browserstack_session_as_failed, init_loggers
 
-ScenarioData = namedtuple(
-    "ScenarioData",
-    [
-        "actors"
-    ]
 )
-Actor = namedtuple(
-    "Actor",
-    [
-        "alias", "classification"
-    ]
-)
-
-# Set all fields to None by default.
-Actor.__new__.__defaults__ = (None,) * len(Actor._fields)
-
-
-def initialize_scenario_data() -> ScenarioData:
-    """Will initialize the Scenario Data.
-
-    :return an empty ScenarioData named tuple
-    """
-    actors = {}
-    scenario_data = ScenarioData(actors)
-    return scenario_data
 
 
 def before_step(context: Context, step: Step):
