@@ -2,7 +2,11 @@
 """Given step definitions."""
 from behave import given
 
-from steps.given_imp import classify_as, finish_triage, visit_page
+from steps.given_imp import (
+    actor_classifies_himself_as,
+    finish_triage_as,
+    visit_page
+)
 
 
 @given('"{actor_name}" goes to the "{page_name}" page')
@@ -19,7 +23,7 @@ def given_actor_visits_page_for_the_first_time(context, actor_name, page_name):
 @given('"{actor_alias}" classifies herself as "{exporter_status}" exporter')
 @given('"{actor_alias}" classifies himself as "{exporter_status}" exporter')
 def given_actor_classifies_as(context, actor_alias, exporter_status):
-    classify_as(context, actor_alias, exporter_status)
+    actor_classifies_himself_as(context, actor_alias, exporter_status)
 
 
 @given('"{actor_alias}" has answered triage questions')

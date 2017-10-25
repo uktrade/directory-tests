@@ -80,3 +80,10 @@ def finish_triage(context: Context, actor_alias: str):
     """Will finish triage with randomly selected exporting status."""
     exporter_status = random.choice(["new", "occasional", "regular"])
     classify_as(context, actor_alias, exporter_status)
+
+
+def actor_classifies_himself_as(
+        context: Context, actor_alias: str, exporter_status: str):
+    actor = unauthenticated_actor(
+        actor_alias, self_classification=exporter_status)
+    add_actor(context, actor)
