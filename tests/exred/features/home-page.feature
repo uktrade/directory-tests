@@ -37,7 +37,7 @@ Feature: Home Page
   Scenario Outline: "<exporter_status>" Exporter should be able to get to a relevant article list from Personas section on the homepage
     Given "Robert" classifies himself as "<exporter_status>" exporter
 
-    When "Robert" goes to the relevant "<exporter_status>" exporter link in the Personas section on the homepage
+    When "Robert" goes to the relevant "<exporter_status>" exporter link in the Personas section on the Home page
 
     Then "Robert" should see an ordered list of "previous + next 5" articles selected for "<exporter_status>" exporter
     And "Robert" should see a Articles Read counter, Total number of Articles and Time to complete remaining chapters
