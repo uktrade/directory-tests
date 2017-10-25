@@ -175,11 +175,11 @@ def selenium_action(driver: webdriver, message: str, *args):
         version = driver.capabilities.get("version", "unknown version")
         platform = driver.capabilities.get("platform", "unknown platform")
         session_id = driver.session_id
-        info = ("[{} v:{} os:{} session_id:{}] "
+        info = ("[{} v:{} os:{} session_id:{}]"
                 .format(browser, version, platform, session_id))
         if args:
             message = message % args
-        logging.error(info, message)
+        logging.error("%s - %s", info, message)
         e.args += (message,)
         _, _, tb = sys.exc_info()
         traceback.print_tb(tb)
