@@ -16,7 +16,7 @@ Feature: Home Page
 
     When "Robert" decides to get started in Exporting journey section
 
-    Then "Robert" should be on the "Triage - 1st question" page
+    Then "Robert" should be on the "Triage - what is your sector" page
 
 
   @ED-2366
