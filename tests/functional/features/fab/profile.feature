@@ -3,6 +3,7 @@ Feature: Trade Profile
 
     @ED-1659
     @registration
+    @real-sso-email-verification
     Scenario: Supplier should receive a verification email after successful registration - company has exported in the past
       Given "Peter Alder" is an unauthenticated supplier
 
@@ -17,6 +18,7 @@ Feature: Trade Profile
 
     @ED-1659
     @registration
+    @real-sso-email-verification
     Scenario: Supplier should receive a verification email after successful registration - company has not exported in the past
       Given "Peter Alder" is an unauthenticated supplier
 
@@ -31,10 +33,9 @@ Feature: Trade Profile
 
     @ED-1692
     @verification
-    @email
+    @real-sso-email-verification
     Scenario: Unauthenticated Suppliers should be able to verify their email address via confirmation link sent in an email
-      Given "Annette Geissinger" is an unauthenticated supplier
-      And "Annette Geissinger" created a SSO/great.gov.uk account associated with randomly selected company "Company X"
+      Given "Annette Geissinger" created an unverified SSO/great.gov.uk account associated with randomly selected company "Company X"
       And "Annette Geissinger" received the email verification message with the email confirmation link
 
       When "Annette Geissinger" decides to confirm her email address by using the email confirmation link
@@ -46,9 +47,9 @@ Feature: Trade Profile
     @ED-1757
     @verification
     @login
+    @no-sso-email-verification-required
     Scenario: Suppliers without verified email should be told to verify the email address first before being able to log in
-      Given "Annette Geissinger" is an unauthenticated supplier
-      And "Annette Geissinger" created a SSO/great.gov.uk account associated with randomly selected company "Company X"
+      Given "Annette Geissinger" created an unverified SSO/great.gov.uk account associated with randomly selected company "Company X"
 
       When "Annette Geissinger" attempts to sign in to Find a Buyer profile
 
@@ -57,10 +58,9 @@ Feature: Trade Profile
 
     @ED-1716
     @profile
+    @fake-sso-email-verification
     Scenario: Supplier should be able to build the Directory Profile once the email address is confirmed
-      Given "Annette Geissinger" is an unauthenticated supplier
-      And "Annette Geissinger" created a SSO/great.gov.uk account associated with randomly selected company "Company X"
-      And "Annette Geissinger" confirmed her email address
+      Given "Annette Geissinger" created a verified SSO/great.gov.uk account associated with randomly selected company "Company X"
 
       When "Annette Geissinger" provides valid details of selected company
       And "Annette Geissinger" selects sector the company is in and preferred country of export
@@ -72,10 +72,9 @@ Feature: Trade Profile
 
     @ED-2141
     @profile
+    @fake-sso-email-verification
     Scenario: Supplier should not be able to use other characters than alphanumerics and commas in profile keywords
-      Given "Annette Geissinger" is an unauthenticated supplier
-      And "Annette Geissinger" created a SSO/great.gov.uk account associated with randomly selected company "Company X"
-      And "Annette Geissinger" confirmed her email address
+      Given "Annette Geissinger" created a verified SSO/great.gov.uk account associated with randomly selected company "Company X"
 
       When "Annette Geissinger" provides company details using following values
         |company name  |website       |keywords         |separator |size    |error                                                       |
@@ -97,10 +96,9 @@ Feature: Trade Profile
     @bug
     @ED-2170
     @fixme
+    @fake-sso-email-verification
     Scenario: Supplier should not be able to use other characters than alphanumerics and commas in profile keywords
-      Given "Annette Geissinger" is an unauthenticated supplier
-      And "Annette Geissinger" created a SSO/great.gov.uk account associated with randomly selected company "Company X"
-      And "Annette Geissinger" confirmed her email address
+      Given "Annette Geissinger" created a verified SSO/great.gov.uk account associated with randomly selected company "Company X"
 
       When "Annette Geissinger" provides company details using following values
         |company name  |website       |keywords         |separator |size  |error                                                     |
@@ -114,10 +112,9 @@ Feature: Trade Profile
     @ED-1722
     @verification
     @letter
+    @fake-sso-email-verification
     Scenario: Supplier should be able to verify company using code sent in the verification letter
-      Given "Annette Geissinger" is an unauthenticated supplier
-      And "Annette Geissinger" created a SSO/great.gov.uk account associated with randomly selected company "Company X"
-      And "Annette Geissinger" confirmed her email address
+      Given "Annette Geissinger" created a verified SSO/great.gov.uk account associated with randomly selected company "Company X"
       And "Annette Geissinger" built the company profile
       And "Annette Geissinger" set the company description
 
@@ -130,6 +127,7 @@ Feature: Trade Profile
     @ED-1727
     @publish
     @FAS
+    @fake-sso-email-verification
     Scenario: Once verified Company's Directory Profile should be published on FAS
       Given "Peter Alder" has created and verified profile for randomly selected company "Y"
 
@@ -141,10 +139,9 @@ Feature: Trade Profile
     @ED-1769
     @login
     @fab
+    @fake-sso-email-verification
     Scenario: Suppliers with unverified company profile should be able to logout and log back in
-      Given "Annette Geissinger" is an unauthenticated supplier
-      And "Annette Geissinger" created a SSO/great.gov.uk account associated with randomly selected company "Company X"
-      And "Annette Geissinger" confirmed her email address
+      Given "Annette Geissinger" created a verified SSO/great.gov.uk account associated with randomly selected company "Company X"
       And "Annette Geissinger" signed out from Find a Buyer service
 
       When "Annette Geissinger" signs in to Find a Buyer profile
@@ -157,6 +154,7 @@ Feature: Trade Profile
     @sso
     @fab
     @account
+    @fake-sso-email-verification
     Scenario: Suppliers with a standalone SSO/great.gov.uk account should be able to select their company for Directory Profile creation
       Given "Peter Alder" has a verified standalone SSO/great.gov.uk account
       And "Peter Alder" is signed in to SSO/great.gov.uk account
@@ -173,6 +171,7 @@ Feature: Trade Profile
     @sso
     @fab
     @account
+    @fake-sso-email-verification
     Scenario: Suppliers with a standalone SSO/great.gov.uk account should be able to create a Directory profile
       Given "Peter Alder" has a verified standalone SSO/great.gov.uk account
       And "Peter Alder" is signed in to SSO/great.gov.uk account
@@ -189,6 +188,7 @@ Feature: Trade Profile
     @ED-1758
     @fab
     @login
+    @fake-sso-email-verification
     Scenario: Suppliers with verified company profile should be able to logout and log back in
       Given "Peter Alder" has created and verified profile for randomly selected company "Y"
       And "Peter Alder" signed out from Find a Buyer service
@@ -203,6 +203,7 @@ Feature: Trade Profile
     @ED-1766
     @fab
     @profile
+    @fake-sso-email-verification
     Scenario: Supplier should be able to update company's details
       Given "Annette Geissinger" has created and verified profile for randomly selected company "Y"
 
@@ -238,6 +239,7 @@ Feature: Trade Profile
     @bug
     @ED-2160
     @fixed
+    @fake-sso-email-verification
     Scenario Outline: Supplier should be able to upload an image to set company's logo
       Given "Peter Alder" has created and verified profile for randomly selected company "Y"
 
@@ -260,6 +262,7 @@ Feature: Trade Profile
     @ED-1759
     @profile
     @logo
+    @fake-sso-email-verification
     Scenario Outline: Supplier should be able to replace an existing company's logo with a new one
       Given "Peter Alder" has created and verified profile for randomly selected company "Y"
       And "Peter Alder" has set "<original>" picture as company's logo
@@ -279,6 +282,7 @@ Feature: Trade Profile
     @ED-1759
     @profile
     @logo
+    @fake-sso-email-verification
     Scenario: Supplier should not be able to upload files other than images as company's logo
       Given "Peter Alder" has created and verified profile for randomly selected company "Y"
 
@@ -299,6 +303,7 @@ Feature: Trade Profile
     @ED-1761
     @fab
     @profile
+    @fake-sso-email-verification
     Scenario: Supplier should be able to add valid links to Online Profiles (social media URLs)
       Given "Peter Alder" has created and verified profile for randomly selected company "Y"
 
@@ -315,6 +320,7 @@ Feature: Trade Profile
     @ED-1762
     @fab
     @profile
+    @fake-sso-email-verification
     Scenario: Supplier should NOT be able to use invalid links to Online Profiles - explicit social media URLs
       Given "Peter Alder" has created and verified profile for randomly selected company "Y"
 
@@ -333,6 +339,7 @@ Feature: Trade Profile
     @bug
     @ED-1833
     @fixme
+    @fake-sso-email-verification
     Scenario: Supplier should NOT be able to use invalid links to Online Profiles (social media URLs)
       Given "Peter Alder" has created and verified profile for randomly selected company "Y"
 
@@ -348,6 +355,7 @@ Feature: Trade Profile
     @ED-1763
     @fab
     @profile
+    @fake-sso-email-verification
     Scenario: Supplier should be able to remove links to all online profiles (social media URLs)
       Given "Peter Alder" has created and verified profile for randomly selected company "Y"
       And "Peter Alder" has added links to online profiles
@@ -366,6 +374,7 @@ Feature: Trade Profile
     @fab
     @case-study
     @profile
+    @fake-sso-email-verification
     Scenario: Supplier should be able to add a case study to unverified company
       Given "Peter Alder" created an unverified profile for randomly selected company "Y"
 
@@ -378,6 +387,7 @@ Feature: Trade Profile
     @fab
     @case-study
     @profile
+    @fake-sso-email-verification
     Scenario: Supplier should be able to add a case study to verified company
       Given "Peter Alder" has created and verified profile for randomly selected company "Y"
 
@@ -391,6 +401,7 @@ Feature: Trade Profile
   @fab
   @case-study
   @profile
+  @fake-sso-email-verification
   Scenario: Supplier should be able to add multiple case studies to unverified company
     Given "Peter Alder" created an unverified profile for randomly selected company "Y"
 
@@ -406,6 +417,7 @@ Feature: Trade Profile
     @fab
     @case-study
     @profile
+    @fake-sso-email-verification
     Scenario: Supplier should be able to add multiple case studies to verified company
       Given "Peter Alder" has created and verified profile for randomly selected company "Y"
 
@@ -422,6 +434,7 @@ Feature: Trade Profile
   @fab
   @case-study
   @profile
+  @fake-sso-email-verification
   Scenario: Supplier should be able to update a case study for an unverified company
     Given "Peter Alder" created an unverified profile for randomly selected company "Y"
     And "Peter Alder" added a complete case study called "no 1"
@@ -435,6 +448,7 @@ Feature: Trade Profile
   @fab
   @case-study
   @profile
+  @fake-sso-email-verification
   Scenario: Supplier should be able to update a case study for a verified company
     Given "Peter Alder" has created and verified profile for randomly selected company "Y"
     And "Peter Alder" added a complete case study called "no 1"
@@ -449,6 +463,7 @@ Feature: Trade Profile
   @fab
   @case-study
   @profile
+  @fake-sso-email-verification
   Scenario: Supplier should be able to update multiple case studies for an unverified company
     Given "Peter Alder" created an unverified profile for randomly selected company "Y"
     And "Peter Alder" added a complete case study called "no 1"
@@ -466,6 +481,7 @@ Feature: Trade Profile
   @fab
   @case-study
   @profile
+  @fake-sso-email-verification
   Scenario: Supplier should be able to update multiple case studies for a verified company
     Given "Peter Alder" has created and verified profile for randomly selected company "Y"
     And "Peter Alder" added a complete case study called "no 1"

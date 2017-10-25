@@ -2,6 +2,7 @@ Feature: Promoted industries
 
   @ED-2013
   @industries
+  @no-sso-email-verification-required
   Scenario: Buyers should be able to view page with promoted Industries
     Given "Annette Geissinger" is a buyer
 
@@ -17,6 +18,7 @@ Feature: Promoted industries
 
   @ED-2015
   @industries
+  @no-sso-email-verification-required
   Scenario Outline: Buyers should be able to find out more about every promoted industry - visit "<selected>" page
     Given "Annette Geissinger" is a buyer
 
@@ -38,6 +40,7 @@ Feature: Promoted industries
 
   @ED-2016
   @industries
+  @no-sso-email-verification-required
   Scenario Outline: Buyers should be able to find UK Suppliers by industries associated with promoted Case Study on "<selected>" page
     Given "Annette Geissinger" is a buyer
     And "Annette Geissinger" is on the "<selected>" page

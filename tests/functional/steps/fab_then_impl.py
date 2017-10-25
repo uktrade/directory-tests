@@ -8,7 +8,11 @@ from behave.runner import Context
 from requests import Response
 from retrying import retry
 from scrapy import Selector
+
+from tests import get_absolute_url
 from tests.functional.pages import (
+    fab_ui_build_profile_basic,
+    fab_ui_confirm_identity,
     fab_ui_edit_online_profiles,
     fab_ui_profile,
     fab_ui_try_other_services,
@@ -21,27 +25,24 @@ from tests.functional.pages import (
     sso_ui_invalid_password_reset_link,
     sso_ui_logout,
     sso_ui_password_reset,
-    sso_ui_verify_your_email,
-    fab_ui_confirm_identity)
+    sso_ui_verify_your_email
+)
 from tests.functional.registry import get_fabs_page_object
 from tests.functional.utils.generic import (
-    detect_page_language,
-    get_language_code,
-    get_number_of_search_result_pages,
     MailGunEvent,
     MailGunService,
     assertion_msg,
     check_hash_of_remote_file,
+    detect_page_language,
     extract_csrf_middleware_token,
     extract_logo_url,
     find_mailgun_events,
+    get_language_code,
+    get_number_of_search_result_pages,
     get_password_reset_link,
     get_verification_link,
     surround
 )
-
-from tests import get_absolute_url
-from tests.functional.pages import fab_ui_build_profile_basic
 from tests.settings import (
     FAS_LOGO_PLACEHOLDER_IMAGE,
     FAS_MESSAGE_FROM_BUYER_SUBJECT,

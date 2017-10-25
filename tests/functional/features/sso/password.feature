@@ -6,6 +6,7 @@ Feature: SSO password management
     @account
     @manage
     @password
+    @fake-sso-email-verification
     Scenario: Suppliers with just SSO/great.gov.uk account should be able to reset password
       Given "Peter Alder" has a verified standalone SSO/great.gov.uk account
       And "Peter Alder" signed out from SSO/great.gov.uk account
@@ -21,6 +22,7 @@ Feature: SSO password management
     @account
     @manage
     @password
+    @no-sso-email-verification-required
     Scenario: Suppliers with unverified FAB profile should be able to reset password
       Given "Peter Alder" created an unverified profile for randomly selected company "Y"
       And "Peter Alder" signed out from Find a Buyer service
@@ -36,6 +38,7 @@ Feature: SSO password management
     @account
     @manage
     @password
+    @fake-sso-email-verification
     Scenario: Suppliers with verified FAB profile should be able to reset password
       Given "Peter Alder" has created and verified profile for randomly selected company "Y"
       And "Peter Alder" signed out from Find a Buyer service
@@ -51,6 +54,7 @@ Feature: SSO password management
     @account
     @manage
     @password
+    @fake-sso-email-verification
     Scenario: Suppliers should be able to reset (change) the password to the same one
       Given "Peter Alder" has a verified standalone SSO/great.gov.uk account
       And "Peter Alder" received a password reset email
@@ -65,6 +69,7 @@ Feature: SSO password management
     @account
     @manage
     @password
+    @fake-sso-email-verification
     Scenario: Suppliers should not be to use the password reset link more than once
       Given "Peter Alder" has a verified standalone SSO/great.gov.uk account
       And "Peter Alder" signed out from SSO/great.gov.uk account

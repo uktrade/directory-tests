@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 """FAB - Edit Company's Sector page"""
 import logging
-
 import random
+
 from requests import Response, Session
-from tests.functional.utils.context_utils import Actor, Company
 
 from tests import get_absolute_url
+from tests.functional.utils.context_utils import Actor, Company
 from tests.functional.utils.request import Method, check_response, make_request
 from tests.settings import COUNTRIES, SECTORS
 

@@ -2,8 +2,8 @@
 """FAB - Upload Logo page"""
 import logging
 import mimetypes
-
 import os
+
 from requests import Response, Session
 
 from tests import get_absolute_url

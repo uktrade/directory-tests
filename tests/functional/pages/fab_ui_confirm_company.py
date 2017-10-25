@@ -3,11 +3,11 @@
 import logging
 
 from requests import Response, Session
-from tests.functional.utils.context_utils import Company
 
 from tests import get_absolute_url
+from tests.functional.utils.context_utils import Company
 from tests.functional.utils.generic import escape_html
-from tests.functional.utils.request import Method, make_request, check_response
+from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url('ui-buyer:landing')
 EXPECTED_STRINGS = [

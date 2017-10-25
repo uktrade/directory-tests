@@ -2,10 +2,10 @@
 """FAB - Build and improve your profile page"""
 import logging
 
-from requests import Response
-from tests.functional.utils.context_utils import Actor, Company
+from requests import Response, Session
 
 from tests import get_absolute_url
+from tests.functional.utils.context_utils import Actor, Company
 from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("ui-buyer:company-edit")
@@ -25,6 +25,17 @@ EXPECTED_STRINGS = [
     ("Tell international buyers more about your business to ensure the right "
      "buyers can find you.")
 ]
+
+
+def go_to(session: Session) -> Response:
+    """Go to "Confirm Company" page. This requires Company
+
+    :param session: Supplier session object
+    :return: response object
+    """
+    response = make_request(Method.GET, URL, session=session)
+
+    return response
 
 
 def should_be_here(response: Response):

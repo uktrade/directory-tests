@@ -11,6 +11,7 @@ Feature: Find a Supplier
   @bug
   @ED-1968
   @fixed
+  @fake-sso-email-verification
   Scenario: Buyers should be able to find Supplier by uniquely identifying words present on Supplier's case study
     Given "Annette Geissinger" is a buyer
     And "Peter Alder" is an unauthenticated supplier
@@ -41,6 +42,7 @@ Feature: Find a Supplier
   @profile
   @verified
   @published
+  @fake-sso-email-verification
   Scenario: Buyers should be able to find Supplier by uniquely identifying words present on any of Supplier's case studies
     Given "Annette Geissinger" is a buyer
     And "Peter Alder" is an unauthenticated supplier
@@ -63,6 +65,7 @@ Feature: Find a Supplier
   @profile
   @unverified
   @unpublished
+  @no-sso-email-verification-required
   Scenario: Buyers should NOT be able to find unverified Supplier by uniquely identifying words present on Supplier's case study
     Given "Annette Geissinger" is a buyer
     And "Peter Alder" is an unauthenticated supplier
@@ -78,6 +81,7 @@ Feature: Find a Supplier
   @profile
   @verified
   @published
+  @fake-sso-email-verification
   Scenario: Buyers should be able to find Supplier by uniquely identifying words present on Supplier's profile
     Given "Annette Geissinger" is a buyer
     And "Peter Alder" is an unauthenticated supplier
@@ -107,6 +111,7 @@ Feature: Find a Supplier
 
   @ED-2000
   @search
+  @no-sso-email-verification-required
   Scenario: Empty search query should return no results
     Given "Annette Geissinger" is a buyer
 
@@ -117,6 +122,7 @@ Feature: Find a Supplier
     
   @ED-2020
   @search
+  @no-sso-email-verification-required
   Scenario: Buyers should be able to find Suppliers by product, service or company keyword
     Given "Annette Geissinger" is a buyer
 
@@ -133,6 +139,7 @@ Feature: Find a Supplier
   @filter
   @sector
   @search
+  @no-sso-email-verification-required
   Scenario: Buyers should be able to browse UK Suppliers by any of available sectors
     Given "Annette Geissinger" is a buyer
 
@@ -145,6 +152,7 @@ Feature: Find a Supplier
   @filter
   @sector
   @search
+  @no-sso-email-verification-required
   Scenario: Buyers should be able to browse UK Suppliers by multiple sectors at once
     Given "Annette Geissinger" is a buyer
 
@@ -158,6 +166,7 @@ Feature: Find a Supplier
   @sector
   @search
   @invalid
+  @no-sso-email-verification-required
   Scenario: Buyers should NOT be able to browse UK Suppliers by invalid sectors
     Given "Annette Geissinger" is a buyer
 
@@ -170,6 +179,7 @@ Feature: Find a Supplier
   @filter
   @sector
   @search
+  @no-sso-email-verification-required
   Scenario: Buyers should be able to clear search results filters
     Given "Annette Geissinger" is a buyer
 
@@ -184,6 +194,7 @@ Feature: Find a Supplier
   @filter
   @sector
   @search
+  @no-sso-email-verification-required
   Scenario: Buyers should not see the same company multiple times in the search results even if all associated sector filters are used
     Given "Annette Geissinger" is a buyer
     And "Annette Geissinger" finds a Supplier "Y" with a published profile associated with at least "4" different sectors
@@ -196,6 +207,7 @@ Feature: Find a Supplier
   @ED-1983
   @search
   @contextual
+  @no-sso-email-verification-required
   Scenario Outline: Buyers should see highlighted search terms in the search results - contextual results
     Given "Annette Geissinger" is a buyer
 

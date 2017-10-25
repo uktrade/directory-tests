@@ -10,6 +10,7 @@ from tests.functional.steps.fab_when_impl import (
     fab_choose_to_verify_with_code,
     fab_go_to_letter_verification,
     fab_provide_company_details,
+    fab_select_preferred_countries_of_export,
     fab_submit_verification_code,
     fab_update_case_study,
     fas_browse_suppliers_by_company_sectors,
@@ -43,7 +44,7 @@ from tests.functional.steps.fab_when_impl import (
     reg_confirm_company_selection,
     reg_confirm_export_status,
     reg_create_sso_account,
-    reg_create_standalone_sso_account,
+    reg_create_standalone_unverified_sso_account,
     reg_open_email_confirmation_link,
     reg_supplier_confirms_email_address,
     select_random_company,
@@ -52,8 +53,8 @@ from tests.functional.steps.fab_when_impl import (
     sso_open_password_reset_link,
     sso_request_password_reset,
     sso_sign_in,
-    sso_supplier_confirms_email_address,
-    fab_select_preferred_countries_of_export)
+    sso_supplier_confirms_email_address
+)
 
 
 @when('"{supplier_alias}" randomly selects an active company without a '
@@ -144,9 +145,9 @@ def when_supplier_signs_in_to_fab(context, supplier_alias):
     prof_sign_in_to_fab(context, supplier_alias)
 
 
-@when('"{supplier_alias}" creates a SSO/great.gov.uk account')
+@when('"{supplier_alias}" creates an unverified SSO/great.gov.uk account')
 def when_supplier_creates_standalone_sso_account(context, supplier_alias):
-    reg_create_standalone_sso_account(context, supplier_alias)
+    reg_create_standalone_unverified_sso_account(context, supplier_alias)
 
 
 @when('"{supplier_alias}" decides to create a trade profile')

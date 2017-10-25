@@ -4,11 +4,11 @@ import logging
 from urllib.parse import urljoin
 
 from requests import Response, Session
-from tests.functional.utils.context_utils import Actor
 
 from tests import get_absolute_url
+from tests.functional.utils.context_utils import Actor
 from tests.functional.utils.generic import assertion_msg
-from tests.functional.utils.request import Method, make_request, check_response
+from tests.functional.utils.request import Method, check_response, make_request
 
 EXPECTED_STRINGS = [
     "Change Password",

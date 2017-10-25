@@ -4,6 +4,7 @@ Feature: Contact a Supplier
 
   @ED-2011
   @contact
+  @fake-sso-email-verification
   Scenario: Buyers should be able to contact selected Supplier via FAS
     Given "Annette Geissinger" is a buyer
     And "Peter Alder" is an unauthenticated supplier

@@ -1,19 +1,16 @@
 # -*- coding: utf-8 -*-
 """FAB Given step implementations."""
 import logging
+import random
 import re
 import string
+from random import choice
 from urllib.parse import parse_qsl, quote, urljoin, urlsplit
 
-import random
 from behave.model import Table
 from behave.runner import Context
-from random import choice
 from requests import Response, Session
 from scrapy import Selector
-
-from tests.functional.registry import get_fabs_page_url, get_fabs_page_object
-from tests.functional.utils.context_utils import Company
 
 from tests import get_absolute_url
 from tests.functional.common import DETAILS, PROFILES
@@ -21,6 +18,7 @@ from tests.functional.pages import (
     fab_ui_build_profile_basic,
     fab_ui_build_profile_sector,
     fab_ui_build_profile_verification_letter,
+    fab_ui_case_study_basic,
     fab_ui_case_study_images,
     fab_ui_confirm_company,
     fab_ui_confirm_export_status,
@@ -48,30 +46,31 @@ from tests.functional.pages import (
     sso_ui_register,
     sso_ui_verify_your_email
 )
-from tests.functional.pages import fab_ui_case_study_basic
+from tests.functional.registry import get_fabs_page_object, get_fabs_page_url
+from tests.functional.utils.context_utils import Company
+from tests.functional.utils.db_utils import get_verification_code
 from tests.functional.utils.generic import (
     assertion_msg,
+    escape_html,
+    extract_and_set_csrf_middleware_token,
     extract_csrf_middleware_token,
     extract_form_action,
     extract_logo_url,
     get_absolute_path_of_file,
-    get_md5_hash_of_file,
-    random_chars,
-    escape_html,
-    extract_and_set_csrf_middleware_token,
     get_active_company_without_fas_profile,
     get_language_code,
+    get_md5_hash_of_file,
     get_number_of_search_result_pages,
     is_already_registered,
     is_inactive,
     random_case_study_data,
+    random_chars,
     random_feedback_data,
     random_message_data,
     rare_word,
     sentence
 )
-from tests.functional.utils.db_utils import get_verification_code
-from tests.functional.utils.request import check_response, make_request, Method
+from tests.functional.utils.request import Method, check_response, make_request
 from tests.settings import (
     COUNTRIES,
     NO_OF_EMPLOYEES,
@@ -283,9 +282,7 @@ def bp_provide_company_details(context, supplier_alias):
     and number of employees.
 
     :param context: behave `context` object
-    :type context: behave.runner.Context
     :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :type supplier_alias: str
     """
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
@@ -571,16 +568,17 @@ def prof_sign_in_to_fab(context, supplier_alias):
     # Step 5 - check if Supplier is on the FAB profile page
     fab_ui_profile.should_be_here(response)
     with assertion_msg(
-            "Found sso_display_logged_in cookie in the response. Maybe user is "
-            "still logged in?"):
+            "Found sso_display_logged_in cookie in the response. Maybe user is"
+            " still logged in?"):
         assert "sso_display_logged_in" not in response.cookies
     with assertion_msg(
-            "Found directory_sso_dev_session cookie in the response. Maybe user"
-            " is still logged in?"):
+            "Found directory_sso_dev_session cookie in the response. Maybe "
+            "user is still logged in?"):
         assert "directory_sso_dev_session" not in response.cookies
 
 
-def reg_create_standalone_sso_account(context: Context, supplier_alias: str):
+def reg_create_standalone_unverified_sso_account(
+        context: Context, supplier_alias: str):
     """Will create a standalone SSO/great.gov.uk account.
 
     NOTE:
@@ -1843,4 +1841,18 @@ def fab_select_preferred_countries_of_export(
     sector = get_form_value("sector")
     response = fab_ui_build_profile_sector.submit(
         actor, sector, country_codes, other)
+    context.response = response
+
+
+def finish_registration_after_flagging_as_verified(
+        context: Context, supplier_alias: str):
+    """Go to the `/register-submit` endpoint which, when Actor has a verified
+     SSO account, should redirect to `company-profile/edit` (Create Profile)
+    """
+    actor = context.get_actor(supplier_alias)
+    company = context.get_company(actor.company_alias)
+    register_url = get_absolute_url("ui-buyer:register-submit-account-details")
+    url = ("{}?company_number={}&has_exported_before=True"
+           .format(register_url, company.number))
+    response = make_request(Method.GET, url, session=actor.session)
     context.response = response

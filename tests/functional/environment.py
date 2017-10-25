@@ -7,22 +7,21 @@ from tests.functional.utils.context_utils import (
     initialize_scenario_data,
     patch_context
 )
-from tests.functional.utils.generic import (
-    blue,
-    green,
-    init_loggers,
-    print_response,
-    red,
-    extract_form_errors,
-    extract_main_error,
-    extract_section_error
-)
-from tests.functional.utils.request import REQUEST_EXCEPTIONS
-
 from tests.functional.utils.db_utils import (
     delete_expired_django_sessions,
     delete_supplier_data
 )
+from tests.functional.utils.generic import (
+    blue,
+    extract_form_errors,
+    extract_main_error,
+    extract_section_error,
+    green,
+    init_loggers,
+    print_response,
+    red
+)
+from tests.functional.utils.request import REQUEST_EXCEPTIONS
 
 
 def before_step(context, step):

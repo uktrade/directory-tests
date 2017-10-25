@@ -18,6 +18,7 @@ from tests.settings import (
     SSO_DB_USER
 )
 
+
 SSO_CLEAN_UP = """
 DO $$
 DECLARE
@@ -36,6 +37,12 @@ END $$;
 
 SSO_EXPIRED_SESSION_CLEAN_UP = """
 DELETE FROM django_session WHERE age(expire_date, NOW()) < '1 day';
+"""
+
+SSO_FLAG_AS_VERIFIED = """
+UPDATE account_emailaddress
+SET verified = TRUE
+WHERE email = %s;
 """
 
 DIRECTORY_CLEAN_UP = """
@@ -251,3 +258,13 @@ def delete_expired_django_sessions():
     cursor.close()
     connection.close()
     logging.debug("Deleted all Django sessions that expired before today")
+
+
+def flag_sso_account_as_verified(email_address):
+    connection, cursor = get_sso_db_connection()
+    data = (email_address, )
+    cursor.execute(SSO_FLAG_AS_VERIFIED, data)
+    connection.commit()
+    cursor.close()
+    connection.close()
+    logging.debug("Flagged '%s' account as verified", email_address)

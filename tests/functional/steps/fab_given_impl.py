@@ -1,24 +1,25 @@
 # -*- coding: utf-8 -*-
 """FAB Given step implementations."""
 import logging
+import random
 import string
 import uuid
 from urllib.parse import urlsplit
 
-import random
 from behave.runner import Context
 from requests import Session
-from tests.functional.utils.context_utils import Actor, Company
 
 from tests.functional.pages import (
-    profile_ui_landing, fab_ui_profile,
-    fas_ui_profile
+    fab_ui_profile,
+    fas_ui_profile,
+    profile_ui_landing
 )
 from tests.functional.steps.fab_then_impl import (
-    reg_sso_account_should_be_created, reg_should_get_verification_email,
     bp_should_be_prompted_to_build_your_profile,
     prof_should_be_on_profile_page,
     prof_should_be_told_about_missing_description,
+    reg_should_get_verification_email,
+    reg_sso_account_should_be_created,
     sso_should_be_signed_in_to_sso_account,
     sso_should_be_told_about_password_reset,
     sso_should_get_password_reset_email
@@ -28,26 +29,29 @@ from tests.functional.steps.fab_when_impl import (
     bp_select_random_sector_and_export_to_country,
     bp_verify_identity_with_letter,
     can_find_supplier_by_term,
+    finish_registration_after_flagging_as_verified,
     prof_set_company_description,
     prof_verify_company,
     reg_confirm_company_selection,
     reg_confirm_export_status,
     reg_create_sso_account,
-    reg_create_standalone_sso_account,
+    reg_create_standalone_unverified_sso_account,
     reg_open_email_confirmation_link,
     reg_supplier_confirms_email_address,
     select_random_company,
     sso_go_to_create_trade_profile,
     sso_request_password_reset,
-    sso_supplier_confirms_email_address
+    sso_sign_in
 )
-from tests.functional.utils.generic import sentence, assertion_msg
+from tests.functional.utils.context_utils import Actor, Company
 from tests.functional.utils.db_utils import (
+    flag_sso_account_as_verified,
     get_published_companies,
     get_published_companies_with_n_sectors,
     get_verification_code,
     is_verification_letter_sent
 )
+from tests.functional.utils.generic import assertion_msg, sentence
 
 
 def unauthenticated_supplier(supplier_alias: str) -> Actor:
@@ -79,7 +83,7 @@ def unauthenticated_buyer(buyer_alias: str) -> Actor:
     """Create an instance of an unauthenticated Buyer Actor.
 
     Will:
-     * set only rudimentary Actor details, all omitted ones will default to None
+     * set rudimentary Actor details, all omitted ones will default to None
      * initialize `requests` Session object that allows you to keep the cookies
         across multiple requests
 
@@ -98,6 +102,7 @@ def unauthenticated_buyer(buyer_alias: str) -> Actor:
 
 def reg_create_sso_account_associated_with_company(
         context: Context, supplier_alias: str, company_alias: str):
+    context.add_actor(unauthenticated_supplier(supplier_alias))
     select_random_company(context, supplier_alias, company_alias)
     reg_confirm_company_selection(context, supplier_alias, company_alias)
     reg_confirm_export_status(context, supplier_alias, exported=True)
@@ -124,21 +129,14 @@ def bp_build_company_profile(context: Context, supplier_alias: str):
 
 def reg_create_verified_profile(
         context: Context, supplier_alias: str, company_alias: str):
-    # STEP 0 - use existing actor or initialize new one if necessary
-    supplier = context.get_actor(supplier_alias)
-    if not supplier:
-        supplier = unauthenticated_supplier(supplier_alias)
-    context.add_actor(supplier)
-
-    # STEP 1 - select company, create SSO profile & verify email address
+    """Create a verified FAB profile with a quick SSO account verification."""
     reg_create_sso_account_associated_with_company(
         context, supplier_alias, company_alias)
-    reg_confirm_email_address(context, supplier_alias)
-
-    # STEP 2 - build company profile after email verification
+    supplier = context.get_actor(supplier_alias)
+    flag_sso_account_as_verified(supplier.email)
+    sso_sign_in(context, supplier_alias)
+    finish_registration_after_flagging_as_verified(context, supplier_alias)
     bp_build_company_profile(context, supplier_alias)
-
-    # STEP 3 - verify company with the code sent by post
     prof_set_company_description(context, supplier_alias)
     prof_verify_company(context, supplier_alias)
     prof_should_be_on_profile_page(context.response, supplier_alias)
@@ -149,18 +147,18 @@ def sso_create_standalone_unverified_sso_account(
         context: Context, supplier_alias: str):
     supplier = unauthenticated_supplier(supplier_alias)
     context.add_actor(supplier)
-    reg_create_standalone_sso_account(context, supplier_alias)
-    reg_sso_account_should_be_created(context.response, supplier_alias)
-    reg_should_get_verification_email(context, supplier_alias)
+    reg_create_standalone_unverified_sso_account(context, supplier_alias)
 
 
 def sso_create_standalone_verified_sso_account(
         context: Context, supplier_alias: str):
     sso_create_standalone_unverified_sso_account(context, supplier_alias)
-    reg_open_email_confirmation_link(context, supplier_alias)
-    sso_supplier_confirms_email_address(context, supplier_alias)
+    supplier = context.get_actor(supplier_alias)
+    flag_sso_account_as_verified(supplier.email)
+    sso_sign_in(context, supplier_alias)
     profile_ui_landing.should_be_here(context.response)
     sso_should_be_signed_in_to_sso_account(context, supplier_alias)
+    context.update_actor(supplier_alias, has_sso_account=True)
 
 
 def reg_select_random_company_and_confirm_export_status(
@@ -199,7 +197,8 @@ def fas_find_company_by_name(
     with assertion_msg(
             "Could not extract URL to '%s' profile page", company.title):
         assert profile_endpoint
-    context.set_company_details(company_alias, fas_profile_endpoint=profile_endpoint)
+    context.set_company_details(
+        company_alias, fas_profile_endpoint=profile_endpoint)
 
 
 def fab_find_published_company(
@@ -266,3 +265,19 @@ def sso_get_password_reset_link(context: Context, supplier_alias: str):
     sso_request_password_reset(context, supplier_alias)
     sso_should_be_told_about_password_reset(context, supplier_alias)
     sso_should_get_password_reset_email(context, supplier_alias)
+
+
+def reg_create_verified_sso_account_associated_with_company(
+        context: Context, supplier_alias: str, company_alias: str):
+    """Select a Company, create a SSO account for it, and verify the email.
+
+    :param context: behave `context` object
+    :param supplier_alias: alias of the Actor used within the scenario's scope
+    :param company_alias: alias of the Actor's Company
+    """
+    reg_create_sso_account_associated_with_company(
+        context, supplier_alias, company_alias)
+    supplier = context.get_actor(supplier_alias)
+    flag_sso_account_as_verified(supplier.email)
+    sso_sign_in(context, supplier_alias)
+    finish_registration_after_flagging_as_verified(context, supplier_alias)
