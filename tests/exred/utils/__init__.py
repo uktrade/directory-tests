@@ -12,6 +12,7 @@ from urllib.parse import urljoin
 
 from behave.runner import Context
 from selenium import webdriver
+from selenium.common.exceptions import WebDriverException
 
 from settings import EXRED_UI_URL
 
@@ -69,6 +70,36 @@ def assertion_msg(message: str, *args):
         if args:
             message = message % args
         logging.error(message)
+        e.args += (message,)
+        _, _, tb = sys.exc_info()
+        traceback.print_tb(tb)
+        raise
+
+
+@contextmanager
+def selenium_action(driver: webdriver, message: str, *args):
+    """This will:
+        * print the custom assertion message
+        * print the traceback (stack trace)
+        * raise the original AssertionError exception
+
+    :param driver: Selenium WebDriver required to extract browser information
+    :param message: a message that will be printed & logged when assertion fails
+    :param args: values that will replace % conversion specifications in message
+                 like: %s, %d
+    """
+    try:
+        yield
+    except WebDriverException as e:
+        browser = driver.capabilities.get("browserName", "unknown browser")
+        version = driver.capabilities.get("version", "unknown version")
+        platform = driver.capabilities.get("platform", "unknown platform")
+        session_id = driver.session_id
+        info = ("[{} v:{} os:{} session_id:{}] "
+                .format(browser, version, platform, session_id))
+        if args:
+            message = message % args
+        logging.error(info, message)
         e.args += (message,)
         _, _, tb = sys.exc_info()
         traceback.print_tb(tb)
