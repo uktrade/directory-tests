@@ -10,11 +10,17 @@ from functools import partial
 from os.path import abspath, join
 from urllib.parse import urljoin
 
+import requests
 from behave.runner import Context
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 
-from settings import EXRED_UI_URL
+from settings import (
+    EXRED_UI_URL,
+    BROWSER_STACK_SESSIONS_URL,
+    BROWSER_STACK_USERNAME,
+    BROWSER_STACK_ACCESS_KEY
+)
 
 URLS = {
     # Exporting Readiness
@@ -139,3 +145,18 @@ def init_loggers(context: Context, *, task_id: str = None):
     # Add log file handler to Behave's logging
     logging.getLogger("selenium").setLevel(logging.WARNING)
     context.config.setup_logging(handlers=[log_file_handler])
+
+
+def flag_browserstack_session_as_failed(session_id: str, reason: str):
+    url = BROWSER_STACK_SESSIONS_URL.format(session_id)
+    headers = {
+        "Content-Type": "application/json"
+    }
+    body = {
+        "status": "failed",
+        "reason": reason
+    }
+    auth = (BROWSER_STACK_USERNAME, BROWSER_STACK_ACCESS_KEY)
+    response = requests.put(url=url, headers=headers, body=body, auth=auth)
+    assert response.ok
+    logging.debug("Flagged BrowserStack session: %s as failed", session_id)
