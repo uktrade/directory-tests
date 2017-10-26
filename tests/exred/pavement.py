@@ -36,6 +36,11 @@ def run(args):
         jobs.append(p)
         p.start()
 
+    for j in jobs:
+        j.join()
+        print('%s.exitcode = %s' % (j.name, j.exitcode))
+    exit(j.exitcode)
+
 
 @task
 def test():
