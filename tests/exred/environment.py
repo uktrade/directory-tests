@@ -82,12 +82,14 @@ def before_all(context: Context):
     """
     desired_capabilities = BROWSER_STACK_CONFIG["environments"][BROWSER_STACK_TASK_ID]
     browser_name = desired_capabilities["browser"]
+    browser_version = desired_capabilities["browser_version"]
 
     for key in BROWSER_STACK_CONFIG["capabilities"]:
         if key not in desired_capabilities:
             desired_capabilities[key] = BROWSER_STACK_CONFIG["capabilities"][key]
 
-    task_id = "{}-{}".format(BROWSER_STACK_TASK_ID, browser_name)
+    task_id = "{}-{}-v{}".format(
+        BROWSER_STACK_TASK_ID, browser_name, browser_version)
     init_loggers(context, task_id=task_id)
 
     context.desired_capabilities = desired_capabilities
