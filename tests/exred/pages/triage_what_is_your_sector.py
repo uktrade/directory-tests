@@ -50,10 +50,10 @@ def select_sector(driver: webdriver, sector: str):
     if not sector:
         sector = random.choice(list(EXRED_SECTORS.values()))
     with selenium_action(driver, "Can't find Sector selector input box"):
-        input = driver.find_element_by_css_selector(SECTORS_INPUT)
-    input.click()
-    input.clear()
-    input.send_keys(sector)
+        input_field = driver.find_element_by_css_selector(SECTORS_INPUT)
+    input_field.click()
+    input_field.clear()
+    input_field.send_keys(sector)
     with selenium_action(driver, "Can't find Autocomplete 1st option"):
         option = driver.find_element_by_css_selector(AUTOCOMPLETE_1ST_OPTION)
     option.click()
