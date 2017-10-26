@@ -81,8 +81,7 @@ FAS_SUPPORTED_LANGUAGES = {
 
 
 def get_file_log_handler(
-        log_formatter, log_file=os.path.join(
-            ".", "tests", "functional", "reports", "behave.log"),
+        log_formatter, *, log_file: str = None, suffix: str = "",
         log_level=logging.DEBUG):
     """Configure the console logger.
 
@@ -93,6 +92,12 @@ def get_file_log_handler(
     :param log_level: specifies logging level, e.g.: logging.ERROR
     :return: configured console log handler
     """
+    if suffix:
+        suffix = "-{}".format(suffix)
+    if not log_file:
+        log_file = os.path.join(
+                ".", "tests", "functional", "reports",
+                "behave{}.log".format(suffix))
     print("Behave log file: {}".format(log_file))
     file_handler = logging.FileHandler(log_file)
     file_handler.setLevel(log_level)
@@ -100,13 +105,13 @@ def get_file_log_handler(
     return file_handler
 
 
-def init_loggers(context: Context):
+def init_loggers(context: Context, *, suffix: str = ""):
     """Will initialize console and file loggers."""
     # configure the formatter
     fmt = ('%(asctime)s-%(filename)s[line:%(lineno)d]-%(name)s-%(levelname)s: '
            '%(message)s')
     log_formatter = logging.Formatter(fmt)
-    log_file_handler = get_file_log_handler(log_formatter)
+    log_file_handler = get_file_log_handler(log_formatter, suffix=suffix)
     # Add log file handler to Behave's logging
     context.config.setup_logging(handlers=[log_file_handler])
 
