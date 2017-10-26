@@ -1,4 +1,4 @@
-build: docker_integration_tests
+build: exred_docker_tests docker_integration_tests 
 
 clean:
 	-find . -type f -name "*.pyc" -delete
@@ -84,7 +84,7 @@ selenium_tests:
 	pytest tests/selenium $(PYTEST_ARGS)
 
 DOCKER_COMPOSE_REMOVE_AND_PULL := docker-compose rm -f && docker-compose pull
-DOCKER_COMPOSE_CREATE_ENVS := ./docker/create_envs.sh
+DOCKER_COMPOSE_CREATE_ENVS := python ./docker/env_writer.py ./docker/env.json
 DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL := docker-compose rm && docker-compose pull
 
 smoke_tests:
@@ -134,4 +134,40 @@ docker_integration_tests: docker_remove_all
 	docker-compose -f docker-compose.yml run smoke_tests && \
 	docker-compose -f docker-compose.yml run functional_tests
 
-.PHONY: build clean requirements test docker_remove_all docker_integration_tests smoke_tests load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal functional_tests pep8
+
+EXRED_SET_DOCKER_ENV_VARS := \
+	export EXRED_TESTS_EXRED_UI_URL=https://dev.exportreadiness.directory.uktrade.io
+	export EXRED_TESTS_CIRCLE_SHA1=$(CIRCLE_SHA1)
+
+EXRED_SET_LOCAL_ENV_VARS := \
+	export EXRED_UI_URL=https://dev.exportreadiness.directory.uktrade.io
+
+EXRED_DOCKER_COMPOSE_CREATE_ENVS := \
+	python ./docker/env_writer.py ./docker/env_exred.json
+
+EXRED_DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL := \
+	docker-compose -f docker-compose-exred.yml -p exred rm && \
+	docker-compose -f docker-compose-exred.yml -p exred pull
+
+EXRED_DOCKER_REMOVE_ALL:
+	docker ps -a | \
+	grep -e exred_ | \
+	awk '{print $$1 }' | \
+	xargs -I {} docker rm -f {}
+
+exred_local:
+	$(EXRED_SET_LOCAL_ENV_VARS) && \
+	cd tests/exred && behave -k --format progress3 --no-logcapture --stop --tags=-wip --tags=-skip --tags=~fixme $(BEHAVE_ARGS)
+
+exred_docker:
+	$(EXRED_SET_DOCKER_ENV_VARS) && \
+	cd tests/exred && paver run parallel
+
+exred_docker_tests: EXRED_DOCKER_REMOVE_ALL
+	$(EXRED_SET_DOCKER_ENV_VARS) && \
+	$(EXRED_DOCKER_COMPOSE_CREATE_ENVS) && \
+	$(EXRED_DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
+	docker-compose -f docker-compose-exred.yml -p exred build && \
+	docker-compose -f docker-compose-exred.yml -p exred run exred_tests
+
+.PHONY: build clean requirements test docker_remove_all docker_integration_tests smoke_tests exred_docker_tests load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal functional_tests pep8
