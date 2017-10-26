@@ -47,10 +47,6 @@ make exred_docker_tests
 ```
 
 
-# TODO
-* make Paver detect number of browsers in config file
-* add support for local test run
-
 ## Useful BrowserStack related links
 
 * tutorial on using [browserstack with python](https://www.browserstack.com/automate/python)
