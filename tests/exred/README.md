@@ -13,6 +13,7 @@ This repository contains UI tests automated using:
 * pip
 * docker
 * docker-compose
+* [BrowserStack](https://www.browserstack.com/users/sign_up) account (DIT employees can find them in Rattic)
 
 
 ## Run tests locally
