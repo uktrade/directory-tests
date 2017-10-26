@@ -67,11 +67,7 @@ def after_scenario(context: Context, scenario: Scenario):
     :param context: Behave Context object
     :param scenario: Behave Scenario object
     """
-    logging.debug(
-        "Deleting all cookies and closing Selenium Driver after scenario: %s",
-        scenario.name)
-    # if context.driver.get_cookies():
-    #     context.driver.delete_all_cookies()
+    logging.debug("Closing Selenium Driver after scenario: %s", scenario.name)
     context.driver.quit()
 
 
