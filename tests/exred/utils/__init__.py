@@ -126,8 +126,13 @@ def take_screenshot(driver: webdriver, page_name: str):
     :param page_name: page name which will be used in the screenshot filename
     """
     session_id = driver.session_id
+    browser = driver.capabilities.get("browserName", "unknown_browser")
+    version = driver.capabilities.get("version", "unknown_version")
+    platform = driver.capabilities.get("platform", "unknown_platform")
     stamp = datetime.isoformat(datetime.utcnow())
-    filename = "{}-{}-{}.png".format(stamp, page_name, session_id)
+    filename = ("{}-{}-{}-{}-{}-{}.png"
+                .format(stamp, page_name, browser, version, platform,
+                        session_id))
     file_path = abspath(join("screenshots", filename))
     driver.save_screenshot(file_path)
     logging.debug("Screenshot of %s page saved in: %s", page_name, filename)
