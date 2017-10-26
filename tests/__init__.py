@@ -87,7 +87,7 @@ urls = {
     'profile:exops-applications': 'export-opportunities/applications/',
     'profile:landing': '',
     'profile:about': 'about/',
-    'profile:directory-supplier': 'api/v1/directory/supplier/',
+    'profile:directory-supplier': 'api/v1/directory/supplier/'
 }
 
 # these user credentials are hard-coded in `directory-sso`. The users
