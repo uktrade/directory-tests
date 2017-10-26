@@ -19,11 +19,9 @@ setup(
 )
 
 
-def run_behave_test(feature: str, task_id: int = 0):
-    sh("TASK_ID={} "
-       "behave -k --format progress3 --no-logcapture --tags=-wip --tags=-skip "
-       "--tags=~fixme features/{}.feature"
-       .format(task_id, feature))
+def run_behave_test(task_id: int = 0):
+    sh("TASK_ID={} behave -k --format progress3 --no-logcapture --tags=-wip"
+       " --tags=-skip --tags=~fixme".format(task_id))
 
 
 @task
@@ -32,8 +30,7 @@ def run(args):
     """Run single, local and parallel test using different config."""
     jobs = []
     for i in range(6):
-        p = multiprocessing.Process(
-            target=run_behave_test, args=("home-page", i))
+        p = multiprocessing.Process(target=run_behave_test, args=(i,))
         jobs.append(p)
         p.start()
 
