@@ -145,9 +145,9 @@ def assertion_msg(message: str, *args):
         * print the traceback (stack trace)
         * raise the original AssertionError exception
 
-    :param message: a message that will be printed & logged when assertion fails
-    :param args: values that will replace % conversion specifications in message
-                 like: %s, %d
+    :param message: message that will be printed & logged when assertion fails
+    :param args: values that will replace % conversion specifications in
+                 message like: %s, %d
     """
     try:
         yield

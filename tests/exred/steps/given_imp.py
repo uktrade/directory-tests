@@ -63,7 +63,8 @@ def triage_classify_as_regular(context: Context, actor_alias: str):
     triage_create_exporting_journey(context)
 
 
-def triage_classify_as(context: Context, actor_alias: str, exporter_status: str):
+def triage_classify_as(
+        context: Context, actor_alias: str, exporter_status: str):
     classifications = {
         "new": triage_classify_as_new,
         "occasional": triage_classify_as_occasional,

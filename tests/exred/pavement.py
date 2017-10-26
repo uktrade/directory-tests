@@ -3,7 +3,7 @@
 import multiprocessing
 import sys
 
-from paver.easy import *
+from paver.easy import sh, task, consume_nargs
 from paver.setuputils import setup
 
 setup(

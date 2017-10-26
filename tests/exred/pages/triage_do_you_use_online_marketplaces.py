@@ -11,7 +11,8 @@ from utils import assertion_msg, take_screenshot
 NAME = "ExRed Triage - do you use online marketplaces"
 URL = urljoin(EXRED_UI_URL, "triage")
 
-YES_CHECKBOX = ".radio label[for=id_ONLINE_MARKETPLACE-used_online_marketplace_0]"
+YES_CHECKBOX = (".radio label[for=id_ONLINE_MARKETPLACE-"
+                "used_online_marketplace_0]")
 NO_CHECKBOX = "label[for=id_ONLINE_MARKETPLACE-used_online_marketplace_1]"
 CONTINUE_BUTTON = ".exred-triage-form button.button"
 PREVIOUS_STEP_BUTTON = ".exred-triage-form button.previous-step"
