@@ -1,10 +1,13 @@
 import os
 from datetime import datetime
 
+from directory_constants.constants.exred_sector_names import CODES_SECTORS_DICT
+
 BUILD_VERSION = "v0.1"
 BUILD_SUFFIX = os.environ.get("CIRCLE_SHA1", str(datetime.date(datetime.now())))
 
 EXRED_UI_URL = os.environ["EXRED_UI_URL"]
+EXRED_SECTORS = CODES_SECTORS_DICT
 BROWSER_STACK_SERVER = os.environ.get(
     "BROWSER_STACK_SERVER", "hub.browserstack.com")
 BROWSER_STACK_USERNAME = os.environ.get("BROWSER_STACK_USERNAME")

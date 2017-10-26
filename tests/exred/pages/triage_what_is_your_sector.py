@@ -6,7 +6,7 @@ from urllib.parse import urljoin
 
 from selenium import webdriver
 
-from settings import EXRED_UI_URL
+from settings import EXRED_UI_URL, EXRED_SECTORS
 from utils import assertion_msg, selenium_action, take_screenshot
 
 NAME = "ExRed Triage - what is your sector"
@@ -65,7 +65,7 @@ def extract_sectors_values(driver: webdriver) -> list:
 
 def select_sector(driver: webdriver, sector: str):
     if not sector:
-        sector = random.choice(extract_sectors_values(driver))
+        sector = random.choice(list(EXRED_SECTORS.values()))
     with selenium_action(driver, "Can't find Sector selector input box"):
         input = driver.find_element_by_css_selector(SECTORS_INPUT)
     input.click()
