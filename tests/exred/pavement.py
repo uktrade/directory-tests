@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Paver configuration file."""
 import multiprocessing
+import sys
 
 from paver.easy import *
 from paver.setuputils import setup
@@ -36,10 +37,12 @@ def run(args):
         jobs.append(p)
         p.start()
 
+    exit_codes = []
     for j in jobs:
         j.join()
+        exit_codes.append(j.exitcode)
         print('%s.exitcode = %s' % (j.name, j.exitcode))
-    exit(j.exitcode)
+    sys.exit(sum(exit_codes))
 
 
 @task
