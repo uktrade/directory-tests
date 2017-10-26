@@ -33,12 +33,10 @@ BROWSER_STACK_CONFIG = {
         {
             "browser": "Chrome",
             "browser_version": "61.0",
-
         },
         {
             "browser": "Chrome",
             "browser_version": "62.0",
-
         },
         {
             "browser": "Firefox",
