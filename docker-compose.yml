@@ -18,3 +18,5 @@ services:
     command: ./docker/cmd-functional.sh
     env_file: ./docker/.env
     restart: "no"
+    volumes:
+      - ./tests/functional/reports:/usr/src/app/tests/functional/reports
