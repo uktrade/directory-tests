@@ -1,10 +1,10 @@
 Export Readiness - UI Automated Tests
 -------------------------------------
 
-This repository contains UI tests automated using Behave and Selenium.  
-They can be run:
-* using locally running browsers attached to a Selenium Hub
-* or inside a isolated Docker environment
+This repository contains UI tests automated using:
+* [Behave](https://pythonhosted.org/behave/)
+* [Selenium with Python](https://selenium-python.readthedocs.io/)
+* [BrowserStack](https://www.browserstack.com/automate) 
 
 
 # Requirements
@@ -15,32 +15,32 @@ They can be run:
 * docker-compose
 
 
-## Run locally
+## Run tests locally
 
-To run tests against local Selenium Hub (*) with some browsers attached to it,
-you can use following command:
+Run all scenarios on [BrowserStack](https://www.browserstack.com/automate) in parallel:
 
 ```bash
 make exred_local
 ```
 
-An equivalent `behave` command is:
-
+You can also run all scenarios on [BrowserStack](https://www.browserstack.com/automate) in parallel with `paver` command:
 ```bash
 cd tests/exred
-BROWSER=chrome \
-WIDTH=1280 \
-HEIGHT=768 \
-EXRED_UI_URL=https://exred-prototype.herokuapp.com/export \
+paver run parallel
+```
+
+You can also run all scenarios on [BrowserStack](https://www.browserstack.com/automate) in a `"single browser mode"` (*) with `behave` command: 
+```bash
+cd tests/exred
 behave -k --format progress3 --no-logcapture --stop --tags=-wip --tags=-skip --tags=~fixme
 ```
 
-(*) - this will also work if you have a Selenium Hub running locally inside 
-a docker container accessible via port `4444` and some browsers attached to it.
+(*) - Latest version of Chrome will be used.
 
-## Run with docker
 
-To run all tests inside dedicated Docker containers, simply execute:
+## Run tests in Docker container
+
+To run all tests in a container:
 
 ```bash
 make exred_docker_tests
