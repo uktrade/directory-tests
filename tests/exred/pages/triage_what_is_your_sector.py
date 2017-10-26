@@ -14,8 +14,6 @@ URL = urljoin(EXRED_UI_URL, "triage")
 
 SECTORS_COMBOBOX = ".exred-triage-form div[role=combobox]"
 SECTORS_INPUT = "#js-sector-select"
-SECTORS_SELECT_LIST = "js-sector-select-select"
-SECTOR_OPTIONS = "#js-sector-select-select > option"
 AUTOCOMPLETE_1ST_OPTION = "#js-sector-select__option--0"
 CONTINUE_BUTTON = "#content .exred-triage-form button[type=submit]"
 BACK_TO_HOME_LINK = "#content .home-link a"
@@ -46,21 +44,6 @@ def should_be_here(driver: webdriver):
             assert element.is_displayed()
     take_screenshot(driver, NAME)
     logging.debug("All expected elements are visible on '%s' page", NAME)
-
-
-def extract_sectors_values(driver: webdriver) -> list:
-    """Extract all Sector options.
-
-    :param driver: Any Selenium Driver (Remote, Chrome, Firefox, PhantomJS etc.
-    :return: a list of available Sectors
-    """
-    options = driver.find_elements_by_css_selector(SECTOR_OPTIONS)
-    option_values = []
-    for option in options:
-        text = option.get_attribute("text")
-        if text != "---------":
-            option_values.append(text)
-    return option_values
 
 
 def select_sector(driver: webdriver, sector: str):
