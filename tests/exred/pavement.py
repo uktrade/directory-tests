@@ -30,7 +30,7 @@ def run_behave_test(feature: str, task_id: int = 0):
 def run(args):
     """Run single, local and parallel test using different config."""
     jobs = []
-    for i in range(4):
+    for i in range(6):
         p = multiprocessing.Process(
             target=run_behave_test, args=("home-page", i))
         jobs.append(p)

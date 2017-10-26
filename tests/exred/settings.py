@@ -36,15 +36,14 @@ BROWSER_STACK_CONFIG = {
 
         },
         {
+            "browser": "Chrome",
+            "browser_version": "62.0",
+
+        },
+        {
             "browser": "Firefox",
             "browser_version": "56.0",
         },
-        # {
-        #     "browser": "Safari",
-        #     "browser_version": "10.1",
-        #     "os": "OS X",
-        #     "os_version": "Sierra",
-        # },
         {
             "browser": "IE",
             "browser_version": "11.0",
@@ -52,6 +51,10 @@ BROWSER_STACK_CONFIG = {
         {
             "browser": "Edge",
             "browser_version": "15.0",
+        },
+        {
+            "browser": "Edge",
+            "browser_version": "16.0",
         },
     ]
 }
