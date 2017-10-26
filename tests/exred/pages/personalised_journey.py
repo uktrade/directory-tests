@@ -42,12 +42,7 @@ GUIDANCE_SECTION = {
 }
 
 EXPECTED_ELEMENTS = {}
-# ARTICLES_SECTION is not included as it's not displayed to Regular Exporters
 EXPECTED_ELEMENTS.update(HERO_SECTION)
-# EXPECTED_ELEMENTS.update(FACTS_SECTION)
-# EXPECTED_ELEMENTS.update(TOP_10_SECTION)
-# EXPECTED_ELEMENTS.update(SERVICES_SECTION)
-# EXPECTED_ELEMENTS.update(GUIDANCE_SECTION)
 
 
 def should_be_here(driver: webdriver):
