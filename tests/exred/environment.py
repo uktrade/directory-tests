@@ -6,11 +6,7 @@ from behave.model import Scenario, Step
 from behave.runner import Context
 from selenium import webdriver
 
-from settings import (
-    BROWSER_STACK_CONFIG,
-    BROWSER_STACK_EXECUTOR_URL,
-    BROWSER_STACK_TASK_ID
-)
+from settings import CONFIG, CONFIG_NAME, TASK_ID
 from utils import (
     flag_browserstack_session_as_failed,
     init_loggers,
@@ -54,10 +50,21 @@ def before_scenario(context: Context, scenario: Scenario):
     context.scenario_data = initialize_scenario_data()
     desired_capabilities = context.desired_capabilities
     desired_capabilities["name"] = scenario.name
-    context.driver = webdriver.Remote(
-        desired_capabilities=desired_capabilities,
-        command_executor=BROWSER_STACK_EXECUTOR_URL
-    )
+    if CONFIG["hub_url"]:
+        context.driver = webdriver.Remote(
+            desired_capabilities=desired_capabilities,
+            command_executor=CONFIG["hub_url"])
+    else:
+        browser_name = CONFIG["environments"][0]["browser"]
+        drivers = {
+            "chrome": webdriver.Chrome,
+            "edge": webdriver.Edge,
+            "firefox": webdriver.Firefox,
+            "ie": webdriver.Ie,
+            "phantomjs": webdriver.PhantomJS,
+            "safari": webdriver.Safari,
+        }
+        context.driver = drivers[browser_name.lower()]()
     context.driver.maximize_window()
 
 
@@ -76,17 +83,15 @@ def before_all(context: Context):
 
     :param context: Behave Context object
     """
-    desired_capabilities = BROWSER_STACK_CONFIG["environments"][BROWSER_STACK_TASK_ID]
-    browser_name = desired_capabilities["browser"]
-    browser_version = desired_capabilities["browser_version"]
+    desired_capabilities = CONFIG["environments"][TASK_ID]
 
-    for key in BROWSER_STACK_CONFIG["capabilities"]:
+    for key in CONFIG["capabilities"]:
         if key not in desired_capabilities:
-            desired_capabilities[key] = BROWSER_STACK_CONFIG["capabilities"][key]
-
-    task_id = "{}-{}-v{}".format(
-        BROWSER_STACK_TASK_ID, browser_name, browser_version)
-    init_loggers(context, task_id=task_id)
+            desired_capabilities[key] = CONFIG["capabilities"][key]
 
     context.desired_capabilities = desired_capabilities
-    context.browser_name = browser_name
+    browser_name = desired_capabilities["browser"]
+    browser_version = desired_capabilities.get("browser_version", "")
+    task_id = "{}-{}-v{}".format(TASK_ID, browser_name, browser_version)
+
+    init_loggers(context, task_id=task_id)
