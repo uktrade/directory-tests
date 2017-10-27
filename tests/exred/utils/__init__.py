@@ -19,9 +19,9 @@ from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 
 from settings import (
-    BROWSER_STACK_SESSIONS_URL,
-    BROWSER_STACK_USERNAME,
-    BROWSER_STACK_ACCESS_KEY,
+    BROWSERSTACK_SESSIONS_URL,
+    BROWSERSTACK_USER,
+    BROWSERSTACK_PASS,
 )
 
 ScenarioData = namedtuple(
@@ -227,7 +227,7 @@ def init_loggers(context: Context, *, task_id: str = None):
 
 
 def flag_browserstack_session_as_failed(session_id: str, reason: str):
-    url = BROWSER_STACK_SESSIONS_URL.format(session_id)
+    url = BROWSERSTACK_SESSIONS_URL.format(session_id)
     headers = {
         "Content-Type": "application/json"
     }
@@ -235,7 +235,7 @@ def flag_browserstack_session_as_failed(session_id: str, reason: str):
         "status": "failed",
         "reason": reason
     }
-    auth = (BROWSER_STACK_USERNAME, BROWSER_STACK_ACCESS_KEY)
+    auth = (BROWSERSTACK_USER, BROWSERSTACK_PASS)
     response = requests.put(
         url=url, headers=headers, data=json.dumps(data), auth=auth)
     if not response.ok:
