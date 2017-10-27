@@ -1,0 +1,36 @@
+{{
+  "hub_url": {HUB_URL},
+  "capabilities": {{
+    "browserstack.debug": true,
+    "browserstack.selenium_version": "3.5.2",
+    "build": {BUILD_ID},
+    "project": "ExRed",
+    "resolution": "1600x1200"
+  }},
+  "environments": [
+    {{
+      "browser": "Chrome",
+      "browser_version": "61.0"
+    }},
+    {{
+      "browser": "Chrome",
+      "browser_version": "62.0"
+    }},
+    {{
+      "browser": "Firefox",
+      "browser_version": "56.0"
+    }},
+    {{
+      "browser": "IE",
+      "browser_version": "11.0"
+    }},
+    {{
+      "browser": "Edge",
+      "browser_version": "15.0"
+    }},
+    {{
+      "browser": "Edge",
+      "browser_version": "16.0"
+    }}
+  ]
+}}
