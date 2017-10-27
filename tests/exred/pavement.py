@@ -1,10 +1,15 @@
 # -*- coding: utf-8 -*-
 """Paver configuration file."""
-import multiprocessing
+import os
 import sys
+from multiprocessing import Process
 
-from paver.easy import sh, task, consume_nargs
+from paver.easy import consume_nargs, sh, task
 from paver.setuputils import setup
+
+# Append current directory to Paver's class path.
+# This is needed to load the local `config` module
+sys.path.append(os.path.dirname(os.path.realpath(__file__)))
 
 setup(
     name="behave-browserstack",
@@ -19,9 +24,9 @@ setup(
 )
 
 
-def run_behave_test(task_id: int = 0):
-    sh("TASK_ID={} behave -k --format progress3 --no-logcapture --tags=-wip"
-       " --tags=-skip --tags=~fixme".format(task_id))
+def run_behave_test(config_name: str, task_id: int = 0):
+    sh("CONFIG={} TASK_ID={} behave -k --format progress3 --no-logcapture "
+       "--tags=-wip --tags=-skip --tags=~fixme".format(config_name, task_id))
 
 
 @task
@@ -29,20 +34,19 @@ def run_behave_test(task_id: int = 0):
 def run(args):
     """Run single, local and parallel test using different config."""
     jobs = []
-    for i in range(6):
-        p = multiprocessing.Process(target=run_behave_test, args=(i,))
-        jobs.append(p)
-        p.start()
+    if args[0] == "local":
+        run_behave_test(args[0])
+    else:
+        import config
+        browser_num = len(config.get(args[0])["environments"])
+        for idx in range(browser_num):
+            process = Process(target=run_behave_test, args=(args[0], idx))
+            jobs.append(process)
+            process.start()
 
-    exit_codes = []
-    for j in jobs:
-        j.join()
-        exit_codes.append(j.exitcode)
-        print('%s.exitcode = %s' % (j.name, j.exitcode))
-    sys.exit(sum(exit_codes))
-
-
-@task
-def test():
-    """Run all tests"""
-    sh("paver run parallel")
+        exit_codes = []
+        for job in jobs:
+            job.join()
+            exit_codes.append(job.exitcode)
+            print('%s.exitcode = %s' % (job.name, job.exitcode))
+        sys.exit(sum(exit_codes))
