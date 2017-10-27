@@ -4,7 +4,7 @@ import json
 
 
 def load_template(config_file: str) -> str:
-    with open("config/{}.cfg".format(config_file)) as file:
+    with open("config/{}.json".format(config_file)) as file:
         return file.read()
 
 
