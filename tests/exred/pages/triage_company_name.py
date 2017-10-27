@@ -13,14 +13,15 @@ NAME = "ExRed Triage - What is your company name"
 URL = urljoin(EXRED_UI_URL, "triage")
 
 COMPANY_NAME_INPUT = "#js-typeahead-company-name"
-SOLE_TRADER_CHECKBOX = ".form-field label[for=id_COMPANY-sole_trader]"
 CONTINUE_BUTTON = ".exred-triage-form button.button"
 PREVIOUS_STEP_BUTTON = ".exred-triage-form button.previous-step"
+CONTINUE_WO_NAME_BUTTON = "div.exred-triage-form button[name=wizard_skip_step]"
 BACK_TO_HOME_LINK = ".home-link a"
 EXPECTED_ELEMENTS = {
     "question": "label[for=js-typeahead-company-name]",
     "continue button": CONTINUE_BUTTON,
     "previous step button": PREVIOUS_STEP_BUTTON,
+    "continue without providing name": CONTINUE_WO_NAME_BUTTON,
     "back to home link": BACK_TO_HOME_LINK
 }
 
@@ -43,12 +44,6 @@ def enter_company_name(driver: webdriver, *, company_name: str = None):
     input_field.clear()
     input_field.send_keys(company_name)
     take_screenshot(driver, NAME + " after typing in company name")
-
-
-def select_sole_trade(driver: webdriver):
-    sole_trader = driver.find_element_by_css_selector(SOLE_TRADER_CHECKBOX)
-    sole_trader.click()
-    take_screenshot(driver, NAME + " selected sole trader")
 
 
 def submit(driver: webdriver):
