@@ -5,6 +5,9 @@ import random
 from urllib.parse import urljoin
 
 from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
 
 from settings import EXRED_UI_URL
 from utils import assertion_msg, take_screenshot
@@ -39,20 +42,26 @@ def should_be_here(driver: webdriver):
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
+def click_on_first_suggestion(driver: webdriver):
+    suggestions = driver.find_element_by_css_selector(SUGGESTIONS)
+    WebDriverWait(driver, 5).until(
+        EC.visibility_of_element_located((By.CSS_SELECTOR, SUGGESTIONS)))
+    if suggestions.is_displayed():
+        first_suggestion = driver.find_element_by_css_selector(FIRST_SUGGESTION)
+        first_suggestion.click()
+
+
 def enter_company_name(driver: webdriver, *, company_name: str = None):
     if not company_name:
         company_name = random.choice(["automated", "browser", "tests"])
     input_field = driver.find_element_by_css_selector(COMPANY_NAME_INPUT)
     input_field.clear()
     input_field.send_keys(company_name)
-    suggestions = driver.find_element_by_css_selector(SUGGESTIONS)
-    if suggestions.is_displayed():
-        first_suggestion = driver.find_element_by_css_selector(FIRST_SUGGESTION)
-        first_suggestion.click()
     take_screenshot(driver, NAME + " after typing in company name")
 
 
 def submit(driver: webdriver):
+    click_on_first_suggestion(driver)
     button = driver.find_element_by_css_selector(CONTINUE_BUTTON)
     button.click()
     take_screenshot(driver, NAME + " after submitting")
