@@ -9,7 +9,7 @@ from selenium import webdriver
 from settings import EXRED_UI_URL
 from utils import assertion_msg, take_screenshot
 
-NAME = "ExRed Triage - company name or sole trader"
+NAME = "ExRed Triage - What is your company name"
 URL = urljoin(EXRED_UI_URL, "triage")
 
 COMPANY_NAME_INPUT = "#js-typeahead-company-name"
