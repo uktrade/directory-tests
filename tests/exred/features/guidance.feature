@@ -88,17 +88,37 @@ Feature: Guidance articles
   @wip
   @ED-2467
   @banner
-  Scenario Outline: Guidance Banner should be visible when on Guidance Article List
-    Given "Robert" accessed "<guidance_category>" guidance articles using "<guidance_menu_location>"
+  @<category>
+  @<location>
+  Scenario Outline: Guidance Banner should be visible when on "<category>" Guidance Article List accessed via "<location>"
+    Given "Robert" accessed "<category>" guidance articles using "<location>"
 
     Then "Robert" should see the Guidance Category Banner
     And "Robert" should see that the banner tile for "guidance_category" category is highlighted
 
-    Examples:
-      | guidance_category | guidance_menu_location |
-      | Market research   | header menu            |
-      | Customer insight  | home page              |
-      | Finance           | personalised page      |
-      | Business planning | footer links           |
-      | Getting paid      | ....                   |
+    Examples: header menu
+      | category                  | location    |
+      | Market research           | header menu |
+      | Customer insight          | header menu |
+      | Finance                   | header menu |
+      | Business planning         | header menu |
+      | Getting paid              | header menu |
+      | Operations and Compliance | header menu |
 
+    Examples: footer links
+      | category                  | location     |
+      | Market research           | footer links |
+      | Customer insight          | footer links |
+      | Finance                   | footer links |
+      | Business planning         | footer links |
+      | Getting paid              | footer links |
+      | Operations and Compliance | footer links |
+
+    Examples: home page
+      | category                  | location  |
+      | Market research           | home page |
+      | Customer insight          | home page |
+      | Finance                   | home page |
+      | Business planning         | home page |
+      | Getting paid              | home page |
+      | Operations and Compliance | home page |
