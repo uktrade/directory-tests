@@ -66,10 +66,7 @@ def before_scenario(context: Context, scenario: Scenario):
             "safari": webdriver.Safari,
         }
         # start the browser
-        driver = drivers[browser_name.lower()]
-        context.driver = driver()
-        # force Selenium to focus on the current window
-        context.driver.switch_to.window(context.driver.window_handles[-1])
+        context.driver = drivers[browser_name.lower()]()
     context.driver.maximize_window()
 
 
