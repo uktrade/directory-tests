@@ -13,6 +13,7 @@ NAME = "ExRed Triage - What is your company name"
 URL = urljoin(EXRED_UI_URL, "triage")
 
 COMPANY_NAME_INPUT = "#js-typeahead-company-name"
+FIRST_SUGGESTION = "ul.SelectiveLookupDisplay > li:nth-child(1)"
 CONTINUE_BUTTON = ".exred-triage-form button.button"
 PREVIOUS_STEP_BUTTON = ".exred-triage-form button.previous-step"
 CONTINUE_WO_NAME_BUTTON = "div.exred-triage-form button[name=wizard_skip_step]"
@@ -39,10 +40,12 @@ def should_be_here(driver: webdriver):
 
 def enter_company_name(driver: webdriver, *, company_name: str = None):
     if not company_name:
-        company_name = "Random company {}".format(random.randrange(0, 9999999))
+        company_name = random.choice(["automated", "browser", "tests"])
     input_field = driver.find_element_by_css_selector(COMPANY_NAME_INPUT)
     input_field.clear()
     input_field.send_keys(company_name)
+    first_suggestion = driver.find_element_by_css_selector(FIRST_SUGGESTION)
+    first_suggestion.click()
     take_screenshot(driver, NAME + " after typing in company name")
 
 
