@@ -9,7 +9,8 @@ from pages import (
     triage_company_name,
     triage_result,
     personalised_journey,
-    triage_do_you_use_online_marketplaces
+    triage_do_you_use_online_marketplaces,
+    triage_are_you_registered_with_companies_house
 )
 
 
@@ -33,6 +34,10 @@ EXRED_PAGE_REGISTRY = {
     "triage - do you use online marketplaces": {
         "url": triage_do_you_use_online_marketplaces.URL,
         "po": triage_do_you_use_online_marketplaces
+    },
+    "triage - are you registered with companies house": {
+        "url": triage_are_you_registered_with_companies_house.URL,
+        "po": triage_are_you_registered_with_companies_house
     },
     "triage - what is your company name": {
         "url": triage_company_name.URL,
