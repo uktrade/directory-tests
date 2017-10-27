@@ -10,7 +10,10 @@ from steps.when_impl import (
     start_triage,
     triage_create_exporting_journey,
     triage_enter_company_name,
+    triage_say_you_are_not_registered_with_companies_house,
+    triage_say_you_are_registered_with_companies_house,
     triage_say_you_do_not_export_regularly,
+    triage_say_you_do_not_use_online_marketplaces,
     triage_say_you_export_regularly,
     triage_say_you_exported_before,
     triage_say_you_never_exported_before,
@@ -37,7 +40,11 @@ def triage_classify_as_new(context: Context, actor_alias: str):
     start_triage(context, actor_alias)
     triage_select_sector(context)
     triage_say_you_never_exported_before(context)
-    triage_enter_company_name(context)
+    if random.choice([True, False]):
+        triage_say_you_are_registered_with_companies_house(context)
+        triage_enter_company_name(context)
+    else:
+        triage_say_you_are_not_registered_with_companies_house(context)
     triage_should_be_classified_as_new(context)
     triage_create_exporting_journey(context)
 
@@ -47,8 +54,15 @@ def triage_classify_as_occasional(context: Context, actor_alias: str):
     triage_select_sector(context)
     triage_say_you_exported_before(context)
     triage_say_you_do_not_export_regularly(context)
-    triage_say_you_use_online_marketplaces(context)
-    triage_enter_company_name(context)
+    if random.choice([True, False]):
+        triage_say_you_use_online_marketplaces(context)
+    else:
+        triage_say_you_do_not_use_online_marketplaces(context)
+    if random.choice([True, False]):
+        triage_say_you_are_registered_with_companies_house(context)
+        triage_enter_company_name(context)
+    else:
+        triage_say_you_are_not_registered_with_companies_house(context)
     triage_should_be_classified_as_occasional(context)
     triage_create_exporting_journey(context)
 
@@ -58,7 +72,11 @@ def triage_classify_as_regular(context: Context, actor_alias: str):
     triage_select_sector(context)
     triage_say_you_exported_before(context)
     triage_say_you_export_regularly(context)
-    triage_enter_company_name(context)
+    if random.choice([True, False]):
+        triage_say_you_are_registered_with_companies_house(context)
+        triage_enter_company_name(context)
+    else:
+        triage_say_you_are_not_registered_with_companies_house(context)
     triage_should_be_classified_as_regular(context)
     triage_create_exporting_journey(context)
 
