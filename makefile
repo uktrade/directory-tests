@@ -1,4 +1,4 @@
-build: exred_docker_tests docker_integration_tests 
+build: exred_docker_browserstack docker_integration_tests 
 
 clean:
 	-find . -type f -name "*.pyc" -delete
@@ -157,17 +157,17 @@ EXRED_DOCKER_REMOVE_ALL:
 
 exred_local:
 	$(EXRED_SET_LOCAL_ENV_VARS) && \
-	cd tests/exred && behave -k --format progress3 --no-logcapture --stop --tags=-wip --tags=-skip --tags=~fixme $(BEHAVE_ARGS)
+	cd tests/exred && BROWSERS=$(BROWSERS) paver run local
 
-exred_docker:
+exred_browserstack:
 	$(EXRED_SET_DOCKER_ENV_VARS) && \
-	cd tests/exred && paver run parallel
+	cd tests/exred && paver run browserstack
 
-exred_docker_tests: EXRED_DOCKER_REMOVE_ALL
+exred_docker_browserstack: EXRED_DOCKER_REMOVE_ALL
 	$(EXRED_SET_DOCKER_ENV_VARS) && \
 	$(EXRED_DOCKER_COMPOSE_CREATE_ENVS) && \
 	$(EXRED_DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
 	docker-compose -f docker-compose-exred.yml -p exred build && \
 	docker-compose -f docker-compose-exred.yml -p exred run exred_tests
 
-.PHONY: build clean requirements test docker_remove_all docker_integration_tests smoke_tests exred_docker_tests load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal functional_tests pep8
+.PHONY: build clean requirements test docker_remove_all docker_integration_tests smoke_tests exred_docker_browserstack load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal functional_tests pep8

@@ -1,0 +1,9 @@
+{{
+  "hub_url": {HUB_URL},
+  "capabilities": {CAPABILITIES},
+  "environments": [
+    {{
+      "browser": {BROWSERS[0]}
+    }}
+  ]
+}}

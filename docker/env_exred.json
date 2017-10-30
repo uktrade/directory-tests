@@ -4,9 +4,9 @@
   "env_vars": {
     "required": [
       "EXRED_UI_URL",
-      "BROWSER_STACK_SERVER",
-      "BROWSER_STACK_USERNAME",
-      "BROWSER_STACK_ACCESS_KEY"
+      "BROWSERSTACK_SERVER",
+      "BROWSERSTACK_USER",
+      "BROWSERSTACK_PASS"
     ],
     "optional": [
       "CIRCLE_SHA1"

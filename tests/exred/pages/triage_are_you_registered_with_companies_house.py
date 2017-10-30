@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
-"""ExRed Triage 4th Question Page Object."""
+"""Triage - Are you registered with Companies House? Page Object."""
 import logging
-import random
 from urllib.parse import urljoin
 
 from selenium import webdriver
@@ -9,16 +8,18 @@ from selenium import webdriver
 from settings import EXRED_UI_URL
 from utils import assertion_msg, take_screenshot
 
-NAME = "ExRed Triage - company name or sole trader"
+NAME = "ExRed Triage - are you registered with Companies House"
 URL = urljoin(EXRED_UI_URL, "triage")
 
-COMPANY_NAME_INPUT = "#js-typeahead-company-name"
-SOLE_TRADER_CHECKBOX = ".form-field label[for=id_COMPANY-sole_trader]"
+YES_CHECKBOX = "#id_COMPANIES_HOUSE-is_in_companies_house_0 ~ label"
+NO_CHECKBOX = "#id_COMPANIES_HOUSE-is_in_companies_house_1 ~ label"
 CONTINUE_BUTTON = ".exred-triage-form button.button"
 PREVIOUS_STEP_BUTTON = ".exred-triage-form button.previous-step"
 BACK_TO_HOME_LINK = ".home-link a"
 EXPECTED_ELEMENTS = {
-    "question": "label[for=js-typeahead-company-name]",
+    "question": "#id_triage_wizard_form_view-current_step ~ li > label",
+    "yes checkbox": YES_CHECKBOX,
+    "no checkbox": NO_CHECKBOX,
     "continue button": CONTINUE_BUTTON,
     "previous step button": PREVIOUS_STEP_BUTTON,
     "back to home link": BACK_TO_HOME_LINK
@@ -36,19 +37,16 @@ def should_be_here(driver: webdriver):
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
-def enter_company_name(driver: webdriver, *, company_name: str = None):
-    if not company_name:
-        company_name = "Random company {}".format(random.randrange(0, 9999999))
-    input_field = driver.find_element_by_css_selector(COMPANY_NAME_INPUT)
-    input_field.clear()
-    input_field.send_keys(company_name)
-    take_screenshot(driver, NAME + " after typing in company name")
+def select_yes(driver: webdriver):
+    yes = driver.find_element_by_css_selector(YES_CHECKBOX)
+    yes.click()
+    take_screenshot(driver, NAME)
 
 
-def select_sole_trade(driver: webdriver):
-    sole_trader = driver.find_element_by_css_selector(SOLE_TRADER_CHECKBOX)
-    sole_trader.click()
-    take_screenshot(driver, NAME + " selected sole trader")
+def select_no(driver: webdriver):
+    no = driver.find_element_by_css_selector(NO_CHECKBOX)
+    no.click()
+    take_screenshot(driver, NAME)
 
 
 def submit(driver: webdriver):

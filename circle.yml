@@ -10,7 +10,7 @@ dependencies:
 
 test:
   override:
-    - make exred_docker_tests
+    - make exred_docker_browserstack
     - make docker_integration_tests
   post:
     - mkdir $CIRCLE_ARTIFACTS/exred_reports

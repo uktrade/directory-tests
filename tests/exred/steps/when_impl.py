@@ -6,8 +6,9 @@ from behave.runner import Context
 
 from pages import (
     home,
+    triage_are_you_registered_with_companies_house,
     triage_are_you_regular_exporter,
-    triage_company_name_or_sole_trader,
+    triage_company_name,
     triage_do_you_use_online_marketplaces,
     triage_have_you_exported,
     triage_result,
@@ -34,18 +35,32 @@ def triage_say_you_exported_before(context: Context):
     triage_are_you_regular_exporter.should_be_here(driver)
 
 
+def triage_say_you_are_registered_with_companies_house(context: Context):
+    driver = context.driver
+    triage_are_you_registered_with_companies_house.select_yes(driver)
+    triage_are_you_registered_with_companies_house.submit(driver)
+    triage_company_name.should_be_here(driver)
+
+
+def triage_say_you_are_not_registered_with_companies_house(context: Context):
+    driver = context.driver
+    triage_are_you_registered_with_companies_house.select_no(driver)
+    triage_are_you_registered_with_companies_house.submit(driver)
+    triage_result.should_be_here(driver)
+
+
 def triage_say_you_never_exported_before(context: Context):
     driver = context.driver
     triage_have_you_exported.select_no(driver)
     triage_have_you_exported.submit(driver)
-    triage_company_name_or_sole_trader.should_be_here(driver)
+    triage_are_you_registered_with_companies_house.should_be_here(driver)
 
 
 def triage_say_you_export_regularly(context: Context):
     driver = context.driver
     triage_are_you_regular_exporter.select_yes(driver)
     triage_are_you_regular_exporter.submit(driver)
-    triage_company_name_or_sole_trader.should_be_here(driver)
+    triage_are_you_registered_with_companies_house.should_be_here(driver)
 
 
 def triage_say_you_do_not_export_regularly(context: Context):
@@ -59,13 +74,20 @@ def triage_say_you_use_online_marketplaces(context: Context):
     driver = context.driver
     triage_do_you_use_online_marketplaces.select_yes(driver)
     triage_do_you_use_online_marketplaces.submit(driver)
-    triage_company_name_or_sole_trader.should_be_here(driver)
+    triage_are_you_registered_with_companies_house.should_be_here(driver)
+
+
+def triage_say_you_do_not_use_online_marketplaces(context: Context):
+    driver = context.driver
+    triage_do_you_use_online_marketplaces.select_no(driver)
+    triage_do_you_use_online_marketplaces.submit(driver)
+    triage_are_you_registered_with_companies_house.should_be_here(driver)
 
 
 def triage_enter_company_name(context: Context):
     driver = context.driver
-    triage_company_name_or_sole_trader.enter_company_name(driver)
-    triage_company_name_or_sole_trader.submit(driver)
+    triage_company_name.enter_company_name(driver)
+    triage_company_name.submit(driver)
     triage_result.should_be_here(driver)
 
 

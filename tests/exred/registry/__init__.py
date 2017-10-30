@@ -6,10 +6,11 @@ from pages import (
     triage_what_is_your_sector,
     triage_have_you_exported,
     triage_are_you_regular_exporter,
-    triage_company_name_or_sole_trader,
+    triage_company_name,
     triage_result,
     personalised_journey,
-    triage_do_you_use_online_marketplaces
+    triage_do_you_use_online_marketplaces,
+    triage_are_you_registered_with_companies_house
 )
 
 
@@ -34,9 +35,13 @@ EXRED_PAGE_REGISTRY = {
         "url": triage_do_you_use_online_marketplaces.URL,
         "po": triage_do_you_use_online_marketplaces
     },
-    "triage - company name or sole trader": {
-        "url": triage_company_name_or_sole_trader.URL,
-        "po": triage_company_name_or_sole_trader
+    "triage - are you registered with companies house": {
+        "url": triage_are_you_registered_with_companies_house.URL,
+        "po": triage_are_you_registered_with_companies_house
+    },
+    "triage - what is your company name": {
+        "url": triage_company_name.URL,
+        "po": triage_company_name
     },
     "triage - result": {
         "url": triage_result.URL,

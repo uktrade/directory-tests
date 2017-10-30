@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-"""ExRed Triage 1st Question Page Object."""
+"""Triage - What is you sector? Page Object."""
 import logging
 import random
 from urllib.parse import urljoin
 
 from selenium import webdriver
 
-from settings import EXRED_UI_URL, EXRED_SECTORS
+from settings import EXRED_SECTORS, EXRED_UI_URL
 from utils import assertion_msg, selenium_action, take_screenshot
 
 NAME = "ExRed Triage - what is your sector"

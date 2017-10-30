@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""ExRed Triage 3rd Question Page Object."""
+"""Triage  Are you regular exporter? Page Object."""
 import logging
 from urllib.parse import urljoin
 

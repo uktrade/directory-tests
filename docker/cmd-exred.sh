@@ -1,3 +1,3 @@
 #!/bin/bash -xe
 
-make exred_docker
+make exred_browserstack

@@ -14,37 +14,62 @@ This repository contains UI tests automated using:
 * docker
 * docker-compose
 * [BrowserStack](https://www.browserstack.com/users/sign_up) account (Devs can find them in Rattic)
+* appropriate [browser driver binaries](https://selenium-python.readthedocs.io/installation.html#drivers) installed in `$PATH`
 
 
-## Run tests locally
+# Run scenarios using locally installed browser
 
-Run all scenarios on [BrowserStack](https://www.browserstack.com/automate) in parallel:
-
+Run all scenarios using local browser (defaults to Chrome):  
 ```bash
 make exred_local
 ```
 
-You can also run all scenarios on [BrowserStack](https://www.browserstack.com/automate) in parallel with `paver` command:
+
+If you want to run the scenarios in a different browser then specify it using `BROWSERS` environment variable:  
 ```bash
-cd tests/exred
-paver run parallel
+BROWSERS=firefox make exred_local
 ```
 
-You can also run all scenarios on [BrowserStack](https://www.browserstack.com/automate) in a `"single browser mode"` (*) with `behave` command: 
+
+You can also run the scenarios with `behave` command (defaults to Chrome): 
 ```bash
 cd tests/exred
 behave -k --format progress3 --no-logcapture --stop --tags=-wip --tags=-skip --tags=~fixme
 ```
 
-(*) - Latest version of Chrome will be used.
-
-
-## Run tests in Docker container
-
-To run all tests in a container:
-
+You can also use different browser when running the scenarios with `behave` command:  
 ```bash
-make exred_docker_tests
+cd tests/exred
+BROWSERS=firefox behave -k --format progress3 --no-logcapture --stop --tags=-wip --tags=-skip --tags=~fixme
+```
+
+
+# Run scenarios on BrowserStack
+
+Run all scenarios on [BrowserStack](https://www.browserstack.com/automate) in parallel:  
+```bash
+make exred_browserstack
+```
+
+
+To run all scenarios on [BrowserStack](https://www.browserstack.com/automate) in parallel with `paver` command:
+```bash
+cd tests/exred
+paver run browserstack
+```
+
+
+To run all scenarios on [BrowserStack](https://www.browserstack.com/automate) with `behave` command (always defaults to `Chrome`):   
+```bash
+cd tests/exred
+CONFIG=browserstack behave -k --format progress3 --no-logcapture --stop --tags=-wip --tags=-skip --tags=~fixme
+```
+
+# Run scenarios in Docker container on BrowserStack
+
+To run all tests in a container which will use [BrowserStack](https://www.browserstack.com/automate):  
+```bash
+make exred_docker_browserstack
 ```
 
 
