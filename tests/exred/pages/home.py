@@ -20,58 +20,66 @@ ONLINE_MARKETPLACES_SERVICE_LINK = "#services div:nth-child(2) > article > a"
 EXPORT_OPPORTUNITIES_SERVICE_LINK = "#services div:nth-child(3) > article > a"
 CAROUSEL_PREVIOUS_BUTTON = "#carousel label.ed-carousel__control--backward"
 CAROUSEL_NEXT_BUTTON = "#carousel label.ed-carousel__control--forward"
-SECTION_VIDEO = {
-    "itself": "#content > section.hero-section",
-    "teaser": "#content > section.hero-section div.hero-teaser",
-    "teaser_title": "#content > section.hero-section div.hero-teaser h1.title",
-    "teaser_logo": "#content > section.hero-section div.hero-teaser img",
-}
-SECTION_EXPORTING_JOURNEY = {
-    "itself": "#content > section.triage.triage-section",
-    "heading": "#content > section.triage.triage-section .heading",
-    "introduction": "#content > section.triage.triage-section .intro",
-    "get_started_button": GET_STARTED_BUTTON,
-    "image": "#content > section.triage.triage-section .container > img"
-}
-SECTION_PERSONAS = {
-    "itself": "#personas",
-    "header": "#personas > .container > .header",
-    "intro": "#personas > .container > .intro",
-    "groups": "#personas > .container > .group",
-    "new_to_exporting_link": NEW_TO_EXPORTING_LINK,
-    "occasional_exporter_link": OCCASIONAL_EXPORTER_LINK,
-    "regular_exported_link": REGULAR_EXPORTED_LINK,
-}
-SECTION_GUIDANCE = {
-    "itself": "#resource-guidance",
-    "header": "#resource-guidance > .container .section-header",
-    "intro": "#resource-guidance > .container .section-intro",
-    "groups": "#resource-guidance > .container .group",
-    "market_research_group": "#resource-guidance .group .market-research",
-    "customer_insight_group": "#resource-guidance .group .customer-insight",
-    "finance_group": "#resource-guidance .group .finance",
-    "business_planning_group": "#resource-guidance .group .business-planning",
-    "getting_paid_group": "#resource-guidance .group .getting-paid",
-    "operations_and_compliance_group":
-        "#resource-guidance .group .operations-and-compliance",
-}
-SECTION_SERVICES = {
-    "itself": "#services",
-    "intro": "#services .intro",
-    "groups": "#services .group",
-    "find_a_buyer_service": "#services div:nth-child(1) > article",
-    "online_marketplaces_service": "#services div:nth-child(2) > article",
-    "export_opportunities_service": "#services div:nth-child(3) > article",
-    "find_a_buyer_service_link": FIND_A_BUYER_SERVICE_LINK,
-    "online_marketplaces_service_link": ONLINE_MARKETPLACES_SERVICE_LINK,
-    "export_opportunities_service_link": EXPORT_OPPORTUNITIES_SERVICE_LINK,
-}
-SECTION_CASE_STUDIES = {
-    "itself": "#carousel",
-    "heading": "#carousel .heading",
-    "intro": "#carousel .intro",
-    "carousel_previous_button": CAROUSEL_PREVIOUS_BUTTON,
-    "carousel_next_button": CAROUSEL_NEXT_BUTTON
+MARKET_RESEARCH_LINK = "#resource-guidance a[href='/market-research']"
+CUSTOMER_INSIGHT_LINK = "#resource-guidance a[href='/customer-insight']"
+FINANCE_LINK = "#resource-guidance a[href='/finance']"
+BUSINESS_LINK = "#resource-guidance a[href='/business-planning']"
+GETTING_PAID_LINK = "#resource-guidance a[href='/getting-paid']"
+OPERATIONS_AND_COMPLIANCE_LINK = "#resource-guidance a[href='/operations-and-compliance']"
+
+SECTIONS = {
+    "video": {
+        "itself": "#content > section.hero-section",
+        "teaser": "#content > section.hero-section div.hero-teaser",
+        "teaser_title": "#content > section.hero-section div.hero-teaser h1.title",
+        "teaser_logo": "#content > section.hero-section div.hero-teaser img",
+    },
+    "exporting_journey": {
+        "itself": "#content > section.triage.triage-section",
+        "heading": "#content > section.triage.triage-section .heading",
+        "introduction": "#content > section.triage.triage-section .intro",
+        "get_started_button": GET_STARTED_BUTTON,
+        "image": "#content > section.triage.triage-section .container > img"
+    },
+    "personas": {
+        "itself": "#personas",
+        "header": "#personas > .container > .header",
+        "intro": "#personas > .container > .intro",
+        "groups": "#personas > .container > .group",
+        "new_to_exporting_link": NEW_TO_EXPORTING_LINK,
+        "occasional_exporter_link": OCCASIONAL_EXPORTER_LINK,
+        "regular_exported_link": REGULAR_EXPORTED_LINK,
+    },
+    "guidance": {
+        "itself": "#resource-guidance",
+        "header": "#resource-guidance > .container .section-header",
+        "intro": "#resource-guidance > .container .section-intro",
+        "groups": "#resource-guidance > .container .group",
+        "market research": MARKET_RESEARCH_LINK,
+        "customer insight": CUSTOMER_INSIGHT_LINK,
+        "finance": FINANCE_LINK,
+        "business planning": BUSINESS_LINK,
+        "getting paid": GETTING_PAID_LINK,
+        "operations and compliance": OPERATIONS_AND_COMPLIANCE_LINK,
+    },
+    "services": {
+        "itself": "#services",
+        "intro": "#services .intro",
+        "groups": "#services .group",
+        "find_a_buyer_service": "#services div:nth-child(1) > article",
+        "online_marketplaces_service": "#services div:nth-child(2) > article",
+        "export_opportunities_service": "#services div:nth-child(3) > article",
+        "find_a_buyer_service_link": FIND_A_BUYER_SERVICE_LINK,
+        "online_marketplaces_service_link": ONLINE_MARKETPLACES_SERVICE_LINK,
+        "export_opportunities_service_link": EXPORT_OPPORTUNITIES_SERVICE_LINK,
+    },
+    "case_studies": {
+        "itself": "#carousel",
+        "heading": "#carousel .heading",
+        "intro": "#carousel .intro",
+        "carousel_previous_button": CAROUSEL_PREVIOUS_BUTTON,
+        "carousel_next_button": CAROUSEL_NEXT_BUTTON
+    }
 }
 
 
@@ -97,14 +105,6 @@ def should_see_sections(driver: webdriver, section_names: list):
     :param driver: Any Selenium Driver (Remote, Chrome, Firefox, PhantomJS etc.
     :param section_names: list of page section to check
     """
-    sections = {
-        "video": SECTION_VIDEO,
-        "exporting_journey": SECTION_EXPORTING_JOURNEY,
-        "personas": SECTION_PERSONAS,
-        "guidance": SECTION_GUIDANCE,
-        "services": SECTION_SERVICES,
-        "case_studies": SECTION_CASE_STUDIES
-    }
     browser = "%s v:%s %s" % (driver.capabilities.get("browserName",
                                                       "unknown browse"),
                               driver.capabilities.get("version",
@@ -112,7 +112,7 @@ def should_see_sections(driver: webdriver, section_names: list):
                               driver.capabilities.get("platform",
                                                       "unknown platform"))
     for section_name in section_names:
-        section = sections[section_name.lower().replace(" ", "_")]
+        section = SECTIONS[section_name.lower().replace(" ", "_")]
         for element_name, element_selector in section.items():
             logging.debug(
                 "Looking for '%s' element in '%s' section with '%s' selector",
