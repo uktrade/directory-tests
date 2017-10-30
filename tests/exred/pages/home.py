@@ -136,3 +136,12 @@ def start_exporting_journey(driver: webdriver):
     button = driver.find_element_by_css_selector(GET_STARTED_BUTTON)
     assert button.is_displayed()
     button.click()
+
+
+def open(driver: webdriver, group: str, element: str):
+    selector = SECTIONS[group.lower()][element.lower()]
+    link = driver.find_element_by_css_selector(selector)
+    assert link.is_displayed()
+    link.click()
+    take_screenshot(
+        driver, NAME + " after clicking on: %s link".format(element))
