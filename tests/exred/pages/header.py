@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 """ExRed Header Page Object."""
 import logging
-from collections import OrderedDict
 
 from selenium import webdriver
-from selenium.webdriver import ActionChains
+from selenium.webdriver.common.keys import Keys
 
 from utils import assertion_msg, selenium_action, take_screenshot
 
@@ -13,32 +12,30 @@ URL = None
 
 
 HOME_LINK = "#menu > ul > li:nth-child(1) > a"
-# some sections contain an OrderedDict, this is because of the quirky browser
-# behaviour when dealing with JS menus. Please refer to open() for more details
 SECTIONS = {
-    "export readiness": OrderedDict([
-        ("menu", "#nav-export-readiness"),
-        ("i'm new to exporting", "#nav-export-readiness-list a[href='/new']"),
-        ('i export occasionally', "#nav-export-readiness-list a[href='/occasional']"),
-        ("i'm a regular exporter", "#nav-export-readiness-list a[href='/regular']")
-    ]),
-    "guidance": OrderedDict([
-        ("menu", "#nav-guidance"),
-        ("market research", "#nav-guidance-list  a[href='/market-research']"),
-        ("customer insight", "#nav-guidance-list  a[href='/customer-insight']"),
-        ("finance", "#nav-guidance-list  a[href='/finance']"),
-        ("business planning", "#nav-guidance-list  a[href='/business-planning']"),
-        ("getting paid", "#nav-guidance-list  a[href='/getting-paid']"),
-        ("operations and compliance", "#nav-guidance-list  a[href='/operations-and-compliance']")
-    ]),
-    "services": OrderedDict([
-        ("menu", "#nav-services"),
-        ("find a buyer", "#nav-services-list > li:nth-child(1) > a"),
-        ("selling online overseas", "#nav-services-list > li:nth-child(2) > a"),
-        ("export opportunities", "#nav-services-list > li:nth-child(3) > a"),
-        ("get finance", "#nav-services-list > li:nth-child(4) > a"),
-        ("events", "#nav-services-list > li:nth-child(5) > a)")
-    ]),
+    "export readiness": {
+        "menu": "#nav-export-readiness",
+        "i'm new to exporting": "#nav-export-readiness-list a[href='/new']",
+        'i export occasionally': "#nav-export-readiness-list a[href='/occasional']",
+        "i'm a regular exporter": "#nav-export-readiness-list a[href='/regular']"
+    },
+    "guidance": {
+        "menu": "#nav-guidance",
+        "market research": "#nav-guidance-list  a[href='/market-research']",
+        "customer insight": "#nav-guidance-list  a[href='/customer-insight']",
+        "finance": "#nav-guidance-list  a[href='/finance']",
+        "business planning": "#nav-guidance-list  a[href='/business-planning']",
+        "getting paid": "#nav-guidance-list  a[href='/getting-paid']",
+        "operations and compliance": "#nav-guidance-list  a[href='/operations-and-compliance']"
+    },
+    "services": {
+        "menu": "#nav-services",
+        "find a buyer": "#nav-services-list > li:nth-child(1) > a",
+        "selling online overseas": "#nav-services-list > li:nth-child(2) > a",
+        "export opportunities": "#nav-services-list > li:nth-child(3) > a",
+        "get finance": "#nav-services-list > li:nth-child(4) > a",
+        "events": "#nav-services-list > li:nth-child(5) > a"
+    },
     "government links": {
         "part of great.gov.uk": "#header-bar > div > p > a"
     },
@@ -80,26 +77,13 @@ def open(driver: webdriver, group: str, element: str):
     the focus of the menu and which will make menu to fold.
     """
     if "menu" in SECTIONS[group.lower()]:
+        # Open the menu by sending "Down Arrow" key
         menu_selector = SECTIONS[group.lower()]["menu"]
         menu = driver.find_element_by_css_selector(menu_selector)
-
-        last_menu_item_name = next(reversed(SECTIONS[group.lower()]))
-        last_menu_selector = SECTIONS[group.lower()][last_menu_item_name]
-        last_menu_item = driver.find_element_by_css_selector(last_menu_selector)
-
-        menu_item_selector = SECTIONS[group.lower()][element.lower()]
-        menu_item = driver.find_element_by_css_selector(menu_item_selector)
-
-        actions = ActionChains(driver)
-        actions.move_to_element(menu)
-        if menu_item_selector != last_menu_selector:
-            actions.move_to_element(last_menu_item)
-        actions.click(menu_item)
-        actions.perform()
-    else:
-        menu_item_selector = SECTIONS[group.lower()][element.lower()]
-        menu_item = driver.find_element_by_css_selector(menu_item_selector)
-        assert menu_item.is_displayed()
-        menu_item.click()
+        menu.send_keys(Keys.DOWN)
+    menu_item_selector = SECTIONS[group.lower()][element.lower()]
+    menu_item = driver.find_element_by_css_selector(menu_item_selector)
+    assert menu_item.is_displayed()
+    menu_item.click()
     take_screenshot(
-        driver, NAME + " after clicking on: %s link".format(element))
+        driver, NAME + " after clicking on: {} link".format(element))
