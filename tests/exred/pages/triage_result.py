@@ -40,7 +40,7 @@ def should_be_here(driver: webdriver):
 
 def get_classification(driver: webdriver) -> str:
     element = driver.find_element_by_css_selector(CLASSIFICATION)
-    return element.text
+    return element.text.lower()
 
 
 def should_be_classified_as(driver: webdriver, expected: str):
@@ -52,15 +52,15 @@ def should_be_classified_as(driver: webdriver, expected: str):
 
 
 def should_be_classified_as_new(driver: webdriver):
-    should_be_classified_as(driver, "New Exporter")
+    should_be_classified_as(driver, "new exporter")
 
 
 def should_be_classified_as_occasional(driver: webdriver):
-    should_be_classified_as(driver, "Occasional Exporter")
+    should_be_classified_as(driver, "occasional exporter")
 
 
 def should_be_classified_as_regular(driver: webdriver):
-    should_be_classified_as(driver, "Regular Exporter")
+    should_be_classified_as(driver, "regular exporter")
 
 
 def create_exporting_journey(driver: webdriver):
