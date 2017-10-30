@@ -5,6 +5,7 @@ from behave import given
 from steps.given_imp import (
     actor_classifies_himself_as,
     finish_triage_as,
+    guidance_open_category,
     triage_classify_as,
     visit_page
 )
@@ -35,3 +36,8 @@ def given_actor_was_classified_as(context, actor_alias, exporter_status):
 @given('"{actor_alias}" has answered triage questions')
 def given_actor_answered_triage_questions(context, actor_alias):
     finish_triage_as(context, actor_alias)
+
+
+@given('"{actor_alias}" accessed "{category}" guidance articles using "{location}"')
+def given_actor_opened_guidance(context, actor_alias, category, location):
+    guidance_open_category(context, actor_alias, category, location)

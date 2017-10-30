@@ -119,3 +119,13 @@ def open_group_element(
         header.open(driver, group, element)
     elif location == "footer links":
         footer.open(driver, group, element)
+
+
+def guidance_open_category(
+        context: Context, actor: str, category: str, location: str):
+    home.visit(driver=context.driver)
+    logging.debug(
+        "%s is about to open Guidance '%s' category from %s",
+        actor, category, location)
+    open_group_element(
+        context, group="guidance", element=category, location=location)
