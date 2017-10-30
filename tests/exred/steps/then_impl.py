@@ -28,3 +28,12 @@ def guidance_ribbon_should_be_visible(context: Context, actor_alias: str):
     guidance_common.ribbon_should_be_visible(driver)
     logging.debug(
         "%s can see Guidance Ribbon on %s", actor_alias, driver.current_url)
+
+
+def guidance_tile_should_be_highlighted(
+        context: Context, actor_alias: str, tile: str):
+    driver = context.driver
+    guidance_common.ribbon_tile_should_be_highlighted(driver, tile)
+    logging.debug(
+        "%s can see highlighted Guidance Ribbon '%s' tile on %s",
+        actor_alias, tile, driver.current_url)
