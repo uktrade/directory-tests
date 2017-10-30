@@ -34,3 +34,14 @@ def ribbon_should_be_visible(driver: webdriver):
                 "It looks like '%s' is not visible", element_name):
             assert element.is_displayed()
     take_screenshot(driver, NAME + " Ribbon")
+
+
+def ribbon_tile_should_be_highlighted(driver: webdriver, tile: str):
+    tile_selector = RIBBON[tile.lower()]
+    with selenium_action(driver, "Could not find '%s' tile", tile):
+        tile_link = driver.find_element_by_css_selector(tile_selector)
+        tile_class = tile_link.get_attribute("class")
+    with assertion_msg(
+            "It looks like '%s' tile is not active (it's class is %s)",
+            tile, tile_class):
+        assert tile_class == "active"
