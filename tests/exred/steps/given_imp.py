@@ -5,6 +5,7 @@ import random
 
 from behave.runner import Context
 
+from pages import footer, header, home
 from registry import get_page_object
 from steps.when_impl import (
     start_triage,
@@ -107,3 +108,14 @@ def actor_classifies_himself_as(
     actor = unauthenticated_actor(
         actor_alias, self_classification=exporter_status)
     add_actor(context, actor)
+
+
+def open_group_element(
+        context: Context, group: str, element: str, location: str):
+    driver = context.driver
+    if location == "home page":
+        home.open(driver, group, element)
+    elif location == "header menu":
+        header.open(driver, group, element)
+    elif location == "footer links":
+        footer.open(driver, group, element)
