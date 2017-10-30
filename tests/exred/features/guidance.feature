@@ -85,7 +85,6 @@ Feature: Guidance articles
       | Getting paid      |
 
 
-  @wip
   @ED-2467
   @banner
   @<category>
@@ -93,8 +92,8 @@ Feature: Guidance articles
   Scenario Outline: Guidance Banner should be visible when on "<category>" Guidance Article List accessed via "<location>"
     Given "Robert" accessed "<category>" guidance articles using "<location>"
 
-    Then "Robert" should see the Guidance Category Banner
-    And "Robert" should see that the banner tile for "guidance_category" category is highlighted
+    Then "Robert" should see the Guidance Navigation Ribbon
+    And "Robert" should see that the banner tile for "<category>" category is highlighted
 
     Examples: header menu
       | category                  | location    |
