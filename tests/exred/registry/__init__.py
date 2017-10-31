@@ -371,3 +371,41 @@ ARTICLES = {
 
     },
 }
+
+
+def filter_articles(group: str, category: str) -> list:
+    """Filter articles by group and category.
+
+    :param group: Article Group: Guidance, Export Readiness, Triage
+    :param category: Category of Articles that belong to a specific Group
+    :return: a list of matching Article dictionaries
+    """
+    filtered = [{
+                name: {
+                    "index": ARTICLES[name][group][category]["index"],
+                    "time to read": ARTICLES[name]["time to read"],
+                    "previous": ARTICLES[name][group][category]["previous"],
+                    "next": ARTICLES[name][group][category]["next"],
+                }} for name in ARTICLES if
+                group in ARTICLES[name] and category in ARTICLES[name][group]]
+    return filtered
+
+
+def get_article_index(dictionary: dict) -> int:
+    """Get Article index. Handy when sorting articles by index.
+
+    :param dictionary: a dict with one key and dict as value that has index key
+    :return: the article index value
+    """
+    return list(dictionary.values())[0]['index']
+
+
+def get_articles(group: str, category: str) -> list:
+    """Find matching articles and sort them by their category index.
+
+    :param group: Article Group: Guidance, Export Readiness, Triage
+    :param category: Category of Articles that belong to a specific Group
+    :return: a list of matching Article sorted by their category index
+    """
+    filtered = filter_articles(group, category)
+    return sorted(filtered, key=get_article_index)
