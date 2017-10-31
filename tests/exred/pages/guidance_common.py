@@ -4,6 +4,7 @@ import logging
 
 from selenium import webdriver
 
+from registry.articles import get_articles
 from utils import assertion_msg, selenium_action, take_screenshot
 
 NAME = "ExRed Common Guidance"
