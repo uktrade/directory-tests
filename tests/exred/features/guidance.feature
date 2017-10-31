@@ -23,19 +23,19 @@ Feature: Guidance articles
       | Getting paid      |
 
 
-  @wip
   @ED-2464
   @home-page
   @articles
-  Scenario Outline: Any Exporter should see article read count for each tile in the Guidance section on the homepage
-    Given "Robert" visits the home page
+  Scenario Outline: Any Exporter should see article read count for "<specific>" Guidance category when accessed via home page
+    Given "Robert" visits the "Home" page
 
-    When "Robert" sees "<guidance_category>" tile in the Guidance section on the homepage
+    When "Robert" goes to the "<specific>" Guidance articles via "home page"
 
-    Then "Robert" should see an article read count for the "<guidance_category>"
+    Then "Robert" should see an article read counter for the "<specific>" Guidance category set to "0"
+    And "Robert" should see total number of articles for the "<specific>" Guidance category
 
     Examples:
-      | guidance_category |
+      | specific          |
       | Market research   |
       | Customer insight  |
       | Finance           |
