@@ -63,8 +63,6 @@ def get_page_object(page_name: str):
 
 
 ARTICLES = {
-    "ip protection in multiple countries": {
-    },
     "analyse the competition": {
         "time to read": 0,
         "guidance": {
@@ -206,10 +204,24 @@ ARTICLES = {
         },
     },
     "get your export documents right": {
-
+        "time to read": 0,
+        "guidance": {
+            "operations and compliance": {
+                "index": 4,
+                "previous": "user incoterms in contracts",
+                "next": "match your website to your audience"
+            }
+        },
     },
-    "iP protection in multiple countries": {
-
+    "ip protection in multiple countries": {
+        "time to read": 0,
+        "guidance": {
+            "operations and compliance": {
+                "index": 10,
+                "previous": "know what IP you have",
+                "next": None
+            }
+        },
     },
     "insure against non-payment": {
         "time to read": 0,
@@ -222,7 +234,14 @@ ARTICLES = {
         },
     },
     "internationalise your website": {
-
+        "time to read": 0,
+        "guidance": {
+            "operations and compliance": {
+                "index": 6,
+                "previous": "match your website to your audience",
+                "next": "what intellectual property is"
+            }
+        },
     },
     "invoice currency and contents": {
         "time to read": 0,
@@ -234,8 +253,15 @@ ARTICLES = {
             }
         },
     },
-    "know what IP you have": {
-
+    "know what ip you have": {
+        "time to read": 0,
+        "guidance": {
+            "operations and compliance": {
+                "index": 9,
+                "previous": "types of intellectual property",
+                "next": "ip protection in multiple countries"
+            }
+        },
     },
     "know your customers": {
         "time to read": 0,
@@ -288,7 +314,14 @@ ARTICLES = {
         },
     },
     "match your website to your audience": {
-
+        "time to read": 0,
+        "guidance": {
+            "operations and compliance": {
+                "index": 5,
+                "previous": "get your export documents right",
+                "next": "internationalise your website"
+            }
+        },
     },
     "meet your customers": {
         "time to read": 0,
@@ -311,7 +344,14 @@ ARTICLES = {
         },
     },
     "plan the logistics": {
-
+        "time to read": 0,
+        "guidance": {
+            "operations and compliance": {
+                "index": 1,
+                "previous": None,
+                "next": "use a freight forwarder"
+            }
+        },
     },
     "raise money by borrowing": {
         "time to read": 0,
@@ -354,7 +394,14 @@ ARTICLES = {
         },
     },
     "types of intellectual property": {
-
+        "time to read": 0,
+        "guidance": {
+            "operations and compliance": {
+                "index": 8,
+                "previous": "what intellectual property is",
+                "next": "know what IP you have"
+            }
+        },
     },
     "understand your customer's culture": {
         "time to read": 0,
@@ -377,7 +424,14 @@ ARTICLES = {
         },
     },
     "use a freight forwarder": {
-
+        "time to read": 0,
+        "guidance": {
+            "operations and compliance": {
+                "index": 2,
+                "previous": "plan the logistics",
+                "next": "user incoterms in contracts"
+            }
+        },
     },
     "use an overseas agent": {
         "time to read": 0,
@@ -390,7 +444,14 @@ ARTICLES = {
         },
     },
     "user incoterms in contracts": {
-
+        "time to read": 0,
+        "guidance": {
+            "operations and compliance": {
+                "index": 3,
+                "previous": "use a freight forwarder",
+                "next": "get your export documents right"
+            }
+        },
     },
     "visit a trade show": {
         "time to read": 0,
@@ -403,7 +464,14 @@ ARTICLES = {
         },
     },
     "what intellectual property is": {
-
+        "time to read": 0,
+        "guidance": {
+            "operations and compliance": {
+                "index": 7,
+                "previous": "internationalise your website",
+                "next": "types of intellectual property"
+            }
+        },
     },
 }
 
