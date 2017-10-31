@@ -449,5 +449,5 @@ def get_articles(group: str, category: str) -> list:
     :param category: Category of Articles that belong to a specific Group
     :return: a list of matching Article sorted by their category index
     """
-    filtered = filter_articles(group, category)
+    filtered = filter_articles(group.lower(), category.lower())
     return sorted(filtered, key=get_article_index)
