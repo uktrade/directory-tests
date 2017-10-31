@@ -37,3 +37,14 @@ def guidance_tile_should_be_highlighted(
     logging.debug(
         "%s can see highlighted Guidance Ribbon '%s' tile on %s",
         actor_alias, tile, driver.current_url)
+
+
+def guidance_should_see_article_read_counter(
+        context: Context, actor_alias: str, category: str, expected: int):
+    guidance_common.correct_article_read_counter(
+        context.driver, category, expected)
+
+
+def guidance_should_see_total_number_of_articles(
+        context: Context, actor_alias: str, category: str):
+    guidance_common.correct_total_number_of_articles(context.driver, category)
