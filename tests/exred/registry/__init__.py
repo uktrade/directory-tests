@@ -106,10 +106,24 @@ ARTICLES = {
         },
     },
     "consider how you'll get paid": {
-
+        "time to read": 0,
+        "guidance": {
+            "getting paid": {
+                "index": 1,
+                "previous": None,
+                "next": "invoice currency and contents"
+            }
+        },
     },
     "decide when you'll get paid": {
-
+        "time to read": 0,
+        "guidance": {
+            "getting paid": {
+                "index": 3,
+                "previous": "invoice currency and contents",
+                "next": "payment methods"
+            }
+        },
     },
     "define market potential": {
         "time to read": 0,
@@ -198,13 +212,27 @@ ARTICLES = {
 
     },
     "insure against non-payment": {
-
+        "time to read": 0,
+        "guidance": {
+            "getting paid": {
+                "index": 5,
+                "previous": "payment methods",
+                "next": None
+            }
+        },
     },
     "internationalise your website": {
 
     },
     "invoice currency and contents": {
-
+        "time to read": 0,
+        "guidance": {
+            "getting paid": {
+                "index": 2,
+                "previous": "consider how you'll get paid",
+                "next": "decide when you'll get paid"
+            }
+        },
     },
     "know what IP you have": {
 
@@ -273,7 +301,14 @@ ARTICLES = {
         },
     },
     "payment methods": {
-
+        "time to read": 0,
+        "guidance": {
+            "getting paid": {
+                "index": 4,
+                "previous": "decide when you'll get paid",
+                "next": "insure against non-payment"
+            }
+        },
     },
     "plan the logistics": {
 
