@@ -20,6 +20,7 @@ RIBBON = {
     "operations and compliance": ".navigation-ribbon a[href='/operations-and-compliance']"
 }
 TOTAL_NUMBER_OF_ARTICLES = "#articles div.scope-indicator dd.position > span.to"
+ARTICLES_TO_READ_COUNTER = "#articles div.scope-indicator dd.position > span.from"
 
 
 def ribbon_should_be_visible(driver: webdriver):
@@ -54,4 +55,13 @@ def correct_total_number_of_articles(driver: webdriver, category: str):
     with assertion_msg(
             "Expected Total Number of Articles to read in Guidance '%s' "
             "category to be %d but got %s", category, expected, given):
+        assert given == expected
+
+
+def correct_article_read_counter(
+        driver: webdriver, category: str, expected: int):
+    given = int(driver.find_element_by_css_selector(ARTICLES_TO_READ_COUNTER).text)
+    with assertion_msg(
+            "Expected Article Read Counter Guidance '%s' category to be %d but"
+            " got %s", category, expected, given):
         assert given == expected
