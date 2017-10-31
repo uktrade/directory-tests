@@ -19,6 +19,7 @@ RIBBON = {
     "getting paid": ".navigation-ribbon a[href='/getting-paid']",
     "operations and compliance": ".navigation-ribbon a[href='/operations-and-compliance']"
 }
+TOTAL_NUMBER_OF_ARTICLES = "#articles div.scope-indicator dd.position > span.to"
 
 
 def ribbon_should_be_visible(driver: webdriver):
@@ -45,3 +46,12 @@ def ribbon_tile_should_be_highlighted(driver: webdriver, tile: str):
             "It looks like '%s' tile is not active (it's class is %s)",
             tile, tile_class):
         assert tile_class == "active"
+
+
+def correct_total_number_of_articles(driver: webdriver, category: str):
+    expected = len(get_articles("guidance", category))
+    given = int(driver.find_element_by_css_selector(TOTAL_NUMBER_OF_ARTICLES).text)
+    with assertion_msg(
+            "Expected Total Number of Articles to read in Guidance '%s' "
+            "category to be %d but got %s", category, expected, given):
+        assert given == expected
