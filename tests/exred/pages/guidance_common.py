@@ -23,6 +23,7 @@ RIBBON = {
 TOTAL_NUMBER_OF_ARTICLES = "#articles div.scope-indicator dd.position > span.to"
 ARTICLES_TO_READ_COUNTER = "#articles div.scope-indicator dd.position > span.from"
 SHOW_MORE_BUTTON = "#js-paginate-list-more"
+ARTICLES_LIST = "#js-paginate-list > li"
 
 
 def ribbon_should_be_visible(driver: webdriver):
@@ -83,3 +84,32 @@ def show_all_articles(driver: webdriver):
     button = driver.find_element_by_css_selector(SHOW_MORE_BUTTON)
     while button.is_displayed():
         button.click()
+
+
+def correct_articles_and_link_to_next_category(
+        driver: webdriver, category: str):
+    """Check if all expected articles for given category are displayed and are
+     on correct position.
+
+    :param driver: selenium webdriver
+    :param category: expected Guidance Article category
+    """
+    expected_list = get_articles("guidance", category.lower())
+    # convert list of dict to a simpler dict, which will help in comparison
+    expected_articles = {}
+    for article in expected_list:
+        expected_articles.update(article)
+    show_all_articles(driver)
+    # extract displayed list of articles and their indexes
+    articles = driver.find_elements_by_css_selector(ARTICLES_LIST)
+    given_articles = [(idx+1, article.find_element_by_tag_name("a").text)
+                      for idx, article in enumerate(articles)]
+    # check whether article is on the right position
+    logging.debug("Expected articles: %s", expected_articles)
+    logging.debug("Given articles: %s", given_articles)
+    for position, name in given_articles:
+        expected_position = expected_articles[name.lower()]["index"]
+        with assertion_msg(
+                "Expected article '%s' to be at position %d but found it at "
+                "position no. %d ", name, expected_position, position):
+            assert expected_position == position
