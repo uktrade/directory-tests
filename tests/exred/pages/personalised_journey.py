@@ -5,6 +5,7 @@ from urllib.parse import urljoin
 
 from selenium import webdriver
 
+from registry.articles import get_articles
 from settings import EXRED_UI_URL
 from utils import assertion_msg, selenium_action, take_screenshot
 
