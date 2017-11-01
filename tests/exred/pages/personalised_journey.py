@@ -43,6 +43,7 @@ GUIDANCE_SECTION = {
 
 EXPECTED_ELEMENTS = {}
 EXPECTED_ELEMENTS.update(HERO_SECTION)
+SHOW_MORE_BUTTON = "#js-paginate-list-more"
 
 
 def should_be_here(driver: webdriver):
@@ -67,3 +68,13 @@ def show_more(driver: webdriver):
         assert button.is_displayed()
     button.click()
     take_screenshot(driver, NAME + " after showing more")
+
+
+def show_all_articles(driver: webdriver):
+    with selenium_action(
+            driver, "Could not find 'Show More' button using '%s'",
+            SHOW_MORE_BUTTON):
+        button = driver.find_element_by_css_selector(SHOW_MORE_BUTTON)
+    while button.is_displayed():
+        button.click()
+    take_screenshot(driver, NAME + " after showing all articles")
