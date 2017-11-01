@@ -63,3 +63,12 @@ def guidance_should_see_articles_and_link_to_next_category(
     logging.debug(
         "%s can see correct Articles for Guidance '%s' category and link to "
         "the next category wherever possible", actor_alias, category)
+
+
+def guidance_check_if_link_to_next_category_is_displayed(
+        context: Context, actor_alias: str, next_category: str):
+    guidance_common.check_if_link_to_next_category_is_displayed(
+        context.driver, next_category)
+    logging.debug(
+        "%s was able t see the link to the next category wherever expected",
+        actor_alias, next_category)
