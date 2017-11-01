@@ -24,6 +24,7 @@ TOTAL_NUMBER_OF_ARTICLES = "#articles div.scope-indicator dd.position > span.to"
 ARTICLES_TO_READ_COUNTER = "#articles div.scope-indicator dd.position > span.from"
 SHOW_MORE_BUTTON = "#js-paginate-list-more"
 ARTICLES_LIST = "#js-paginate-list > li"
+NEXT_CATEGORY_LINK = ""
 
 
 def ribbon_should_be_visible(driver: webdriver):
@@ -113,3 +114,28 @@ def correct_articles_and_link_to_next_category(
                 "Expected article '%s' to be at position %d but found it at "
                 "position no. %d ", name, expected_position, position):
             assert expected_position == position
+
+
+def check_if_link_to_next_category_is_displayed(
+        driver: webdriver, next_category: str):
+    """Check if link to the next Guidance category is displayed, except:
+    the "last" Guidance category.
+
+    :param driver: selenium webdriver
+    :param next_category: Category for which "next" link should be visible
+    """
+    if next_category.lower() != "last":
+        # TODO uncomment when link to the next category is implemented
+        # link = driver.find_element_by_css_selector(NEXT_CATEGORY_LINK)
+        # is_displayed = link.is_displayed()
+        is_displayed = False
+        with assertion_msg(
+                "Found a link to the next category on the last Category page"):
+            assert not is_displayed
+    else:
+        # TODO uncomment when link to the next category is implemented
+        # link = driver.find_element_by_css_selector(NEXT_CATEGORY_LINK)
+        # is_displayed = link.is_displayed()
+        is_displayed = True
+        with assertion_msg("Link to the next category is not visible"):
+            assert is_displayed
