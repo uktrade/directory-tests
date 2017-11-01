@@ -4,8 +4,8 @@ import logging
 
 from behave.runner import Context
 
-from pages import guidance_common, home
-from registry import get_page_object
+from pages import guidance_common, home, personalised_journey
+from registry.pages import get_page_object
 
 
 def should_see_sections_on_home_page(
@@ -80,3 +80,12 @@ def guidance_expected_page_elements_should_be_visible(
     logging.debug(
         "%s can see all expected page elements: '%s' on current Guidance "
         "Articles page: %s", actor_alias, elements, context.driver.current_url)
+
+
+def personalised_journey_should_see_read_counter(
+        context: Context, actor_alias: str, exporter_status: str):
+    personalised_journey.should_see_read_counter(
+        context.driver, exporter_status=exporter_status)
+    logging.debug(
+        "%s can see Guidance Article Read Counter on the Personalised Journey "
+        "page: %s", actor_alias, context.driver.current_url)
