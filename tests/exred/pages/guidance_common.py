@@ -22,6 +22,7 @@ RIBBON = {
 }
 TOTAL_NUMBER_OF_ARTICLES = "#articles div.scope-indicator dd.position > span.to"
 ARTICLES_TO_READ_COUNTER = "#articles div.scope-indicator dd.position > span.from"
+SHOW_MORE_BUTTON = "#js-paginate-list-more"
 
 
 def ribbon_should_be_visible(driver: webdriver):
@@ -76,3 +77,9 @@ def correct_article_read_counter(
             "Expected Article Read Counter Guidance '%s' category to be %d but"
             " got %s", category, expected, given):
         assert given == expected
+
+
+def show_all_articles(driver: webdriver):
+    button = driver.find_element_by_css_selector(SHOW_MORE_BUTTON)
+    while button.is_displayed():
+        button.click()
