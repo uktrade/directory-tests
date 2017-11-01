@@ -22,9 +22,16 @@ RIBBON = {
 }
 TOTAL_NUMBER_OF_ARTICLES = "#articles div.scope-indicator dd.position > span.to"
 ARTICLES_TO_READ_COUNTER = "#articles div.scope-indicator dd.position > span.from"
+TIME_TO_COMPLETE = "#articles div.scope-indicator dd.time > span.value"
 SHOW_MORE_BUTTON = "#js-paginate-list-more"
 ARTICLES_LIST = "#js-paginate-list > li"
 NEXT_CATEGORY_LINK = ""
+
+SCOPE_ELEMENTS = {
+    "total number of articles": TOTAL_NUMBER_OF_ARTICLES,
+    "articles read counter": ARTICLES_TO_READ_COUNTER,
+    "time to complete remaining chapters": TIME_TO_COMPLETE
+}
 
 
 def ribbon_should_be_visible(driver: webdriver):
@@ -139,3 +146,12 @@ def check_if_link_to_next_category_is_displayed(
         is_displayed = True
         with assertion_msg("Link to the next category is not visible"):
             assert is_displayed
+
+
+def check_elements_are_visible(driver: webdriver, elements: list):
+    take_screenshot(driver, NAME)
+    for element in elements:
+        selector = SCOPE_ELEMENTS[element.lower()]
+        page_element = driver.find_element_by_css_selector(selector)
+        with assertion_msg("Expected to see '%s' but can't see it"):
+            assert page_element.is_displayed()
