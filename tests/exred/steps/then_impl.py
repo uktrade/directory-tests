@@ -4,7 +4,7 @@ import logging
 
 from behave.runner import Context
 
-from pages import home
+from pages import guidance_common, home
 from registry import get_page_object
 
 
@@ -21,3 +21,19 @@ def should_be_on_page(context: Context, actor_alias: str, page_name: str):
     page = get_page_object(page_name)
     page.should_be_here(context.driver)
     logging.debug("%s is on %s page", actor_alias, page_name)
+
+
+def guidance_ribbon_should_be_visible(context: Context, actor_alias: str):
+    driver = context.driver
+    guidance_common.ribbon_should_be_visible(driver)
+    logging.debug(
+        "%s can see Guidance Ribbon on %s", actor_alias, driver.current_url)
+
+
+def guidance_tile_should_be_highlighted(
+        context: Context, actor_alias: str, tile: str):
+    driver = context.driver
+    guidance_common.ribbon_tile_should_be_highlighted(driver, tile)
+    logging.debug(
+        "%s can see highlighted Guidance Ribbon '%s' tile on %s",
+        actor_alias, tile, driver.current_url)
