@@ -72,3 +72,11 @@ def guidance_check_if_link_to_next_category_is_displayed(
     logging.debug(
         "%s was able t see the link to the next category wherever expected",
         actor_alias, next_category)
+
+
+def guidance_expected_page_elements_should_be_visible(
+        context: Context, actor_alias: str, elements: list):
+    guidance_common.check_elements_are_visible(context.driver, elements)
+    logging.debug(
+        "%s can see all expected page elements: '%s' on current Guidance "
+        "Articles page: %s", actor_alias, elements, context.driver.current_url)

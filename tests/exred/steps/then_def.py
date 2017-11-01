@@ -4,6 +4,7 @@ from behave import then
 
 from steps.then_impl import (
     guidance_check_if_link_to_next_category_is_displayed,
+    guidance_expected_page_elements_should_be_visible,
     guidance_ribbon_should_be_visible,
     guidance_should_see_article_read_counter,
     guidance_should_see_articles,
@@ -56,3 +57,10 @@ def then_check_if_link_to_next_category_is_displayed(
         context, actor_alias, next_category):
     guidance_check_if_link_to_next_category_is_displayed(
         context, actor_alias, next_category)
+
+
+@then('"{actor_alias}" should see on the Guidance Articles page "{elements}"')
+def then_expected_guidance_page_elements_should_be_visible(
+        context, actor_alias, elements):
+    guidance_expected_page_elements_should_be_visible(
+        context, actor_alias, elements.split(", "))
