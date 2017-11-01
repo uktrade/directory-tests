@@ -2,7 +2,7 @@
 """Given step definitions."""
 from behave import given
 
-from steps.given_imp import (
+from steps.when_impl import (
     actor_classifies_himself_as,
     finish_triage_as,
     guidance_open_category,
