@@ -51,6 +51,13 @@ ARTICLES = {
                 "next": "invoice currency and contents"
             }
         },
+        "personalised journey": {
+            "new": {
+                "index": 10,
+                "previous": "use a distributor",
+                "next": "plan the logistics"
+            }
+        },
     },
     "decide when you'll get paid": {
         "time to read": 0,
@@ -91,12 +98,26 @@ ARTICLES = {
                 "next": "define market potential"
             }
         },
+        "personalised journey": {
+            "new": {
+                "index": 1,
+                "previous": None,
+                "next": "know your customers"
+            }
+        },
     },
     "find a route to market": {
         "time to read": 0,
         "guidance": {
             "business planning": {
                 "index": 2,
+                "previous": "make an export plan",
+                "next": "use an overseas agent"
+            }
+        },
+        "personalised journey": {
+            "new": {
+                "index": 7,
                 "previous": "make an export plan",
                 "next": "use an overseas agent"
             }
@@ -141,6 +162,13 @@ ARTICLES = {
                 "next": "choose the right finance"
             }
         },
+        "personalised journey": {
+            "new": {
+                "index": 5,
+                "previous": "manage language differences",
+                "next": "make an export plan"
+            }
+        },
     },
     "get your export documents right": {
         "time to read": 0,
@@ -181,6 +209,13 @@ ARTICLES = {
                 "next": "what intellectual property is"
             }
         },
+        "personalised journey": {
+            "new": {
+                "index": 12,
+                "previous": "plan the logistics",
+                "next": "what intellectual property is"
+            }
+        },
     },
     "invoice currency and contents": {
         "time to read": 0,
@@ -208,6 +243,13 @@ ARTICLES = {
             "customer insight": {
                 "index": 1,
                 "previous": None,
+                "next": "meet your customers"
+            }
+        },
+        "personalised journey": {
+            "new": {
+                "index": 2,
+                "previous": "do research first",
                 "next": "meet your customers"
             }
         },
@@ -241,6 +283,13 @@ ARTICLES = {
                 "next": "find a route to market"
             }
         },
+        "personalised journey": {
+            "new": {
+                "index": 6,
+                "previous": "get money to export",
+                "next": "find a route to market"
+            }
+        },
     },
     "manage language differences": {
         "time to read": 0,
@@ -249,6 +298,13 @@ ARTICLES = {
                 "index": 3,
                 "previous": "meet your customers",
                 "next": "Understand your customer's culture"
+            }
+        },
+        "personalised journey": {
+            "new": {
+                "index": 4,
+                "previous": "meet your customers",
+                "next": "get money to export"
             }
         },
     },
@@ -271,6 +327,13 @@ ARTICLES = {
                 "next": "manage language differences"
             }
         },
+        "personalised journey": {
+            "new": {
+                "index": 3,
+                "previous": "know your customers",
+                "next": "manage language differences"
+            }
+        },
     },
     "payment methods": {
         "time to read": 0,
@@ -289,6 +352,13 @@ ARTICLES = {
                 "index": 1,
                 "previous": None,
                 "next": "use a freight forwarder"
+            }
+        },
+        "personalised journey": {
+            "new": {
+                "index": 11,
+                "previous": "consider how you'll get paid",
+                "next": "internationalise your website"
             }
         },
     },
@@ -341,6 +411,13 @@ ARTICLES = {
                 "next": "know what IP you have"
             }
         },
+        "personalised journey": {
+            "new": {
+                "index": 14,
+                "previous": "what intellectual property is",
+                "next": None
+            }
+        },
     },
     "understand your customer's culture": {
         "time to read": 0,
@@ -361,6 +438,13 @@ ARTICLES = {
                 "next": "choosing an agent or distributor"
             }
         },
+        "personalised journey": {
+            "new": {
+                "index": 9,
+                "previous": "use an overseas agent",
+                "next": "consider how you'll get paid"
+            }
+        },
     },
     "use a freight forwarder": {
         "time to read": 0,
@@ -377,6 +461,13 @@ ARTICLES = {
         "guidance": {
             "business planning": {
                 "index": 3,
+                "previous": "find a route to market",
+                "next": "use a distributor"
+            }
+        },
+        "personalised journey": {
+            "new": {
+                "index": 8,
                 "previous": "find a route to market",
                 "next": "use a distributor"
             }
@@ -407,6 +498,13 @@ ARTICLES = {
         "guidance": {
             "operations and compliance": {
                 "index": 7,
+                "previous": "internationalise your website",
+                "next": "types of intellectual property"
+            }
+        },
+        "personalised journey": {
+            "new": {
+                "index": 13,
                 "previous": "internationalise your website",
                 "next": "types of intellectual property"
             }
