@@ -2,8 +2,11 @@
 """When step definitions."""
 from behave import when
 
-from steps.given_imp import guidance_open_category
-from steps.when_impl import start_triage
+from steps.when_impl import (
+    guidance_open_category,
+    personalised_journey_create_page,
+    start_triage
+)
 
 
 @when('"{actor_alias}" decides to continue in Exporting journey section')
@@ -15,3 +18,8 @@ def when_actor_starts_triage(context, actor_alias):
 @when('"{actor_alias}" goes to the "{category}" Guidance articles via "{location}"')
 def step_impl(context, actor_alias, category, location):
     guidance_open_category(context, actor_alias, category, location)
+
+
+@when('"{actor_alias}" creates a personalised journey page for herself')
+def when_actor_creates_personalised_journey_page(context, actor_alias):
+    personalised_journey_create_page(context, actor_alias)

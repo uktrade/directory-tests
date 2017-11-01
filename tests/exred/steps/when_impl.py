@@ -9,6 +9,7 @@ from pages import (
     footer,
     header,
     home,
+    personalised_journey,
     triage_are_you_registered_with_companies_house,
     triage_are_you_regular_exporter,
     triage_company_name,
@@ -217,3 +218,10 @@ def triage_classify_as(
         "%s decided to classify himself/herself as %s Exporter", actor_alias,
         exporter_status)
     step(context, actor_alias)
+
+
+def personalised_journey_create_page(context: Context, actor_alias: str):
+    actor = get_actor(context, actor_alias)
+    export_status = actor.self_classification
+    triage_classify_as(context, actor_alias, export_status)
+    personalised_journey.should_be_here(context.driver)
