@@ -48,3 +48,11 @@ def guidance_should_see_article_read_counter(
 def guidance_should_see_total_number_of_articles(
         context: Context, actor_alias: str, category: str):
     guidance_common.correct_total_number_of_articles(context.driver, category)
+
+def guidance_should_see_articles_and_link_to_next_category(
+        context: Context, actor_alias: str, category: str):
+    guidance_common.correct_articles_and_link_to_next_category(
+        context.driver, category)
+    logging.debug(
+        "%s can see correct Articles for Guidance '%s' category and link to "
+        "the next category wherever possible", actor_alias, category)

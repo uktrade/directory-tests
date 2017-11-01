@@ -5,6 +5,7 @@ from behave import then
 from steps.then_impl import (
     guidance_ribbon_should_be_visible,
     guidance_should_see_article_read_counter,
+    guidance_should_see_articles_and_link_to_next_category,
     guidance_should_see_total_number_of_articles,
     guidance_tile_should_be_highlighted,
     should_be_on_page,
@@ -42,3 +43,10 @@ def then_should_see_article_read_counter(
 @then('"{actor_alias}" should see total number of articles for the "{category}" Guidance category')
 def then_total_number_of_articles_should_be_visible(context, actor_alias, category):
     guidance_should_see_total_number_of_articles(context, actor_alias, category)
+
+
+@then('"{actor_alias}" should see an ordered list of all articles  selected for "{category}" and a link to the next category')
+def then_should_see_guidance_articles_and_link_to_next_category(
+        context, actor_alias, category):
+    guidance_should_see_articles_and_link_to_next_category(
+        context, actor_alias, category)
