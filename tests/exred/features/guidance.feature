@@ -27,7 +27,7 @@ Feature: Guidance articles
   @home-page
   @articles
   Scenario Outline: Any Exporter should see article read count for "<specific>" Guidance category when accessed via home page
-    Given "Robert" visits the "Home" page
+    Given "Robert" visits the "Home" page for the first time
 
     When "Robert" goes to the "<specific>" Guidance articles via "home page"
 
