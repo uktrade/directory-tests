@@ -44,6 +44,7 @@ GUIDANCE_SECTION = {
 EXPECTED_ELEMENTS = {}
 EXPECTED_ELEMENTS.update(HERO_SECTION)
 SHOW_MORE_BUTTON = "#js-paginate-list-more"
+READ_COUNTER = "#articles .scope-indicator .position > span.from"
 
 
 def should_be_here(driver: webdriver):
@@ -78,3 +79,22 @@ def show_all_articles(driver: webdriver):
     while button.is_displayed():
         button.click()
     take_screenshot(driver, NAME + " after showing all articles")
+
+
+def should_see_read_counter(driver: webdriver, *, exporter_status: str = None):
+    show_all_articles(driver)
+    with selenium_action(
+            driver, "Could not find 'Show More' button using '%s'",
+            SHOW_MORE_BUTTON):
+        counter = driver.find_element_by_css_selector(READ_COUNTER)
+    with assertion_msg(
+            "Guidance Article Read Counter is not visible on '%s' page", NAME):
+        assert counter.is_displayed()
+    if exporter_status:
+        expected_number_articles = len(get_articles(
+            group="personalised journey", category=exporter_status.lower()))
+        given_number_articles = int(counter.text)
+        with assertion_msg(
+                "Expected the Article Read Counter to be: %d but got %d",
+                expected_number_articles, given_number_articles):
+            assert given_number_articles == expected_number_articles
