@@ -16,7 +16,8 @@ def when_actor_starts_triage(context, actor_alias):
 
 
 @when('"{actor_alias}" goes to the "{category}" Guidance articles via "{location}"')
-def step_impl(context, actor_alias, category, location):
+def when_actor_goes_to_guidance_articles(
+        context, actor_alias, category, location):
     guidance_open_category(context, actor_alias, category, location)
 
 
