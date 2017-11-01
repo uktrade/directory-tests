@@ -58,7 +58,7 @@ def guidance_should_see_total_number_of_articles(
 
 def guidance_should_see_articles_and_link_to_next_category(
         context: Context, actor_alias: str, category: str):
-    guidance_common.correct_articles_and_link_to_next_category(
+    guidance_common.check_if_correct_articles_are_displayed(
         context.driver, category)
     logging.debug(
         "%s can see correct Articles for Guidance '%s' category and link to "

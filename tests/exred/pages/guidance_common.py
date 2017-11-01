@@ -87,7 +87,7 @@ def show_all_articles(driver: webdriver):
         button.click()
 
 
-def correct_articles_and_link_to_next_category(
+def check_if_correct_articles_are_displayed(
         driver: webdriver, category: str):
     """Check if all expected articles for given category are displayed and are
      on correct position.
