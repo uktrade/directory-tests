@@ -52,7 +52,12 @@ def ribbon_tile_should_be_highlighted(driver: webdriver, tile: str):
 
 def correct_total_number_of_articles(driver: webdriver, category: str):
     expected = len(get_articles("guidance", category))
-    given = int(driver.find_element_by_css_selector(TOTAL_NUMBER_OF_ARTICLES).text)
+    total = driver.find_element_by_css_selector(TOTAL_NUMBER_OF_ARTICLES)
+    with assertion_msg(
+            "Total Number of Articles to read for Guidance '%s' category is "
+            "not visible", category):
+        assert total.is_displayed()
+    given = int(total.text)
     with assertion_msg(
             "Expected Total Number of Articles to read in Guidance '%s' "
             "category to be %d but got %s", category, expected, given):
@@ -61,7 +66,12 @@ def correct_total_number_of_articles(driver: webdriver, category: str):
 
 def correct_article_read_counter(
         driver: webdriver, category: str, expected: int):
-    given = int(driver.find_element_by_css_selector(ARTICLES_TO_READ_COUNTER).text)
+    counter = driver.find_element_by_css_selector(ARTICLES_TO_READ_COUNTER)
+    with assertion_msg(
+            "Article Read Counter for Guidance '%s' category is not visible",
+            category):
+        assert counter.is_displayed()
+    given = int(counter.text)
     with assertion_msg(
             "Expected Article Read Counter Guidance '%s' category to be %d but"
             " got %s", category, expected, given):
