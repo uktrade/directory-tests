@@ -4,6 +4,7 @@ import logging
 
 from selenium import webdriver
 
+from registry.articles import get_articles
 from utils import assertion_msg, selenium_action, take_screenshot
 
 NAME = "ExRed Common Guidance"
@@ -19,6 +20,8 @@ RIBBON = {
     "getting paid": ".navigation-ribbon a[href='/getting-paid']",
     "operations and compliance": ".navigation-ribbon a[href='/operations-and-compliance']"
 }
+TOTAL_NUMBER_OF_ARTICLES = "#articles div.scope-indicator dd.position > span.to"
+ARTICLES_TO_READ_COUNTER = "#articles div.scope-indicator dd.position > span.from"
 
 
 def ribbon_should_be_visible(driver: webdriver):
@@ -45,3 +48,31 @@ def ribbon_tile_should_be_highlighted(driver: webdriver, tile: str):
             "It looks like '%s' tile is not active (it's class is %s)",
             tile, tile_class):
         assert tile_class == "active"
+
+
+def correct_total_number_of_articles(driver: webdriver, category: str):
+    expected = len(get_articles("guidance", category))
+    total = driver.find_element_by_css_selector(TOTAL_NUMBER_OF_ARTICLES)
+    with assertion_msg(
+            "Total Number of Articles to read for Guidance '%s' category is "
+            "not visible", category):
+        assert total.is_displayed()
+    given = int(total.text)
+    with assertion_msg(
+            "Expected Total Number of Articles to read in Guidance '%s' "
+            "category to be %d but got %s", category, expected, given):
+        assert given == expected
+
+
+def correct_article_read_counter(
+        driver: webdriver, category: str, expected: int):
+    counter = driver.find_element_by_css_selector(ARTICLES_TO_READ_COUNTER)
+    with assertion_msg(
+            "Article Read Counter for Guidance '%s' category is not visible",
+            category):
+        assert counter.is_displayed()
+    given = int(counter.text)
+    with assertion_msg(
+            "Expected Article Read Counter Guidance '%s' category to be %d but"
+            " got %s", category, expected, given):
+        assert given == expected
