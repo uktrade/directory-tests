@@ -2,6 +2,7 @@
 """Given step definitions."""
 from behave import given
 
+from steps.then_impl import should_be_on_page
 from steps.when_impl import (
     actor_classifies_himself_as,
     guidance_open_category,
@@ -19,6 +20,11 @@ def given_actor_visits_page(context, actor_name, page_name):
 @given('"{actor_name}" visits the "{page_name}" page for the first time')
 def given_actor_visits_page_for_the_first_time(context, actor_name, page_name):
     visit_page(context, actor_name, page_name, first_time=True)
+
+
+@given('"{actor_alias}" is on the "{page_name}" page')
+def given_actor_is_on_page(context, actor_alias, page_name):
+    should_be_on_page(context, actor_alias, page_name)
 
 
 @given('"{actor_alias}" classifies herself as "{exporter_status}" exporter')
