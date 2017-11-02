@@ -12,5 +12,6 @@ parse==1.8.2              # via behave, parse-type
 paver==1.2.4
 pytz==2017.2              # via django
 requests==2.11.1
+retrying==1.3.3
 selenium==3.6.0
-six==1.11.0               # via behave, parse-type
+six==1.11.0               # via behave, parse-type, retrying
