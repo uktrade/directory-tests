@@ -41,12 +41,6 @@ def visit_page(
     context.current_page.visit(context.driver, first_time=first_time)
 
 
-def finish_triage_as(context: Context, actor_alias: str):
-    """Will finish triage with randomly selected exporting status."""
-    exporter_status = random.choice(["new", "occasional", "regular"])
-    triage_classify_as(context, actor_alias, exporter_status)
-
-
 def actor_classifies_himself_as(
         context: Context, actor_alias: str, exporter_status: str):
     actor = unauthenticated_actor(
