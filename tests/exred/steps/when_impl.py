@@ -57,6 +57,8 @@ def open_group_element(
         header.open(driver, group, element)
     elif location == "footer links":
         footer.open(driver, group, element)
+    elif location == "personalised journey":
+        personalised_journey.open(driver, group, element)
 
 
 def guidance_open_category(
