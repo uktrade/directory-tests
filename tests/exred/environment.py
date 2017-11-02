@@ -5,6 +5,7 @@ import logging
 from behave.model import Scenario, Step
 from behave.runner import Context
 from selenium import webdriver
+from selenium.common.exceptions import WebDriverException
 
 from settings import CONFIG, CONFIG_NAME, TASK_ID
 from utils import (
@@ -67,7 +68,10 @@ def before_scenario(context: Context, scenario: Scenario):
         }
         # start the browser
         context.driver = drivers[browser_name.lower()]()
-    context.driver.maximize_window()
+    try:
+        context.driver.maximize_window()
+    except WebDriverException:
+        logging.error("Failed to maximize the window, will continue as is")
 
 
 def after_scenario(context: Context, scenario: Scenario):
