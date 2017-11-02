@@ -63,6 +63,29 @@ Feature: Guidance articles
       | Occasional |
 
 
+  @ED-2465
+  @personalised-page
+  @guidance
+  @articles
+  @regular
+  @optimize
+  Scenario Outline: Regular Exporter should see article read count for each tile in the Guidance section on the personalised page
+    Given "Nadia" was classified as "regular" exporter in the triage process
+
+    When "Nadia" goes to the "<specific>" Guidance articles via "personalised journey"
+
+    Then "Nadia" should see an article read counter for the "<specific>" Guidance category set to "0"
+    And "Nadia" should see total number of articles for the "<specific>" Guidance category
+
+    Examples:
+      | specific          |
+      | Market research   |
+      | Customer insight  |
+      | Finance           |
+      | Business planning |
+      | Getting paid      |
+
+
   @wip
   @ED-2466
   @personalised-page
