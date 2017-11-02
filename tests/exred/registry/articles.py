@@ -432,7 +432,7 @@ ARTICLES = {
             "customer insight": {
                 "index": 3,
                 "previous": "meet your customers",
-                "next": "Understand your customer's culture"
+                "next": "understand your customer's culture"
             }
         },
         "personalised journey": {
