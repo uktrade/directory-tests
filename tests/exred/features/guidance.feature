@@ -43,19 +43,42 @@ Feature: Guidance articles
       | Getting paid      |
 
 
-  @wip
   @ED-2465
   @personalised-page
   @articles
-  Scenario Outline: Regular Exporter should see article read count for each tile in the Guidance section on the personalised page
-    Given "Nadia" visits the personalised page
+  @<relevant>
+  @bug
+  @ED-2508
+  @fixme
+  Scenario Outline: "<relevant>" Exporter should see Guidance Articles Read Counter on the personalised page
+    Given "Nadia" classifies herself as "<relevant>" exporter
 
-    When "Nadia" sees "<guidance_category>" tile in the Guidance section on the homepage
+    When "Nadia" creates a personalised journey page for herself
 
-    Then "Nadia" should see an article read count for the "<guidance_category>"
+    Then "Nadia" should see a Guidance Articles read counter for the "<relevant>" exporter
 
     Examples:
-      | guidance_category |
+      | relevant   |
+      | New        |
+      | Occasional |
+
+
+  @ED-2465
+  @personalised-page
+  @guidance
+  @articles
+  @regular
+  @optimize
+  Scenario Outline: Regular Exporter should see article read count for each tile in the Guidance section on the personalised page
+    Given "Nadia" was classified as "regular" exporter in the triage process
+
+    When "Nadia" goes to the "<specific>" Guidance articles via "personalised journey"
+
+    Then "Nadia" should see an article read counter for the "<specific>" Guidance category set to "0"
+    And "Nadia" should see total number of articles for the "<specific>" Guidance category
+
+    Examples:
+      | specific          |
       | Market research   |
       | Customer insight  |
       | Finance           |

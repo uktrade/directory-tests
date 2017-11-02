@@ -68,6 +68,7 @@ def before_scenario(context: Context, scenario: Scenario):
         }
         # start the browser
         context.driver = drivers[browser_name.lower()]()
+    context.driver.set_page_load_timeout(time_to_wait=30)
     try:
         context.driver.maximize_window()
     except WebDriverException:

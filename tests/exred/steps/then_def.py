@@ -10,6 +10,7 @@ from steps.then_impl import (
     guidance_should_see_articles,
     guidance_should_see_total_number_of_articles,
     guidance_tile_should_be_highlighted,
+    personalised_journey_should_see_read_counter,
     should_be_on_page,
     should_see_sections_on_home_page
 )
@@ -64,3 +65,10 @@ def then_expected_guidance_page_elements_should_be_visible(
         context, actor_alias, elements):
     guidance_expected_page_elements_should_be_visible(
         context, actor_alias, elements.split(", "))
+
+
+@then('"{actor_alias}" should see a Guidance Articles read counter for the "{exporter_status}" exporter')
+def then_actor_should_see_guidance_articles_read_counter(
+        context, actor_alias, exporter_status):
+    personalised_journey_should_see_read_counter(
+        context, actor_alias, exporter_status)
