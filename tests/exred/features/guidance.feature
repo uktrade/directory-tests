@@ -1,26 +1,26 @@
 @guidance
 Feature: Guidance articles
 
-  @wip
   @ED-2463
   @home-page
   @articles
-  Scenario Outline: Any Exporter should get to a relevant article list from Guidance section on the homepage
-    Given "Robert" is interested in "<guidance_category>" guidance
+  @<specific>
+  Scenario Outline: Any Exporter should get to a "<specific>" article list from Guidance section on the home page
+    Given "Robert" visits the "Home" page for the first time
 
-    When "Robert" goes to the relevant "<guidance_category>" link in the Guidance section on the homepage
+    When "Robert" goes to the "<specific>" Guidance articles via "home page"
 
-    Then "Robert" should see an ordered list of all articles  selected for "<guidance_category>" + "next category"
-    And "Robert" should see a Articles Read counter, Total number of Articles and Time to complete remaining chapters
-    And "Robert" should see a link to the next Guidance category
+    Then "Robert" should see an ordered list of all articles selected for "<specific>" category
+    And "Robert" should see on the Guidance Articles page "Articles Read counter, Total number of Articles, Time to complete remaining chapters"
+    And "Robert" should see a link to the "<next>" Guidance category
 
-    Examples:
-      | guidance_category |
-      | Market research   |
-      | Customer insight  |
-      | Finance           |
-      | Business planning |
-      | Getting paid      |
+    Examples: Guidance categories
+      | specific          | next              |
+      | Market research   | Customer insight  |
+      | Customer insight  | Finance           |
+      | Finance           | Business planning |
+      | Business planning | Getting paid      |
+      | Getting paid      | last              |
 
 
   @ED-2464
