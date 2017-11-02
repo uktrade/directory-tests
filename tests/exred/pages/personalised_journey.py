@@ -111,3 +111,12 @@ def should_see_read_counter(driver: webdriver, *, exporter_status: str = None):
                 "Expected the Article Read Counter to be: %d but got %d",
                 expected_number_articles, given_number_articles):
             assert given_number_articles == expected_number_articles
+
+
+def open(driver: webdriver, group: str, element: str):
+    link = SECTIONS[group.lower()][element.lower()]
+    button = driver.find_element_by_css_selector(link)
+    assert button.is_displayed()
+    button.click()
+    take_screenshot(
+        driver, NAME + " after clicking on: %s link".format(element))
