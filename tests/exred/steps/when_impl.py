@@ -4,6 +4,7 @@ import logging
 import random
 
 from behave.runner import Context
+from retrying import retry
 
 from pages import (
     footer,
@@ -22,9 +23,17 @@ from registry.pages import get_page_object
 from utils import add_actor, get_actor, unauthenticated_actor, update_actor
 
 
+@retry(wait_fixed=31000, stop_max_attempt_number=3)
 def visit_page(
         context: Context, actor_name: str, page_name: str, *,
         first_time: bool = False):
+    """Will visit specific page.
+
+    NOTE:
+    In order for the retry scheme to work properly you should have
+    the webdriver' page load timeout set to value lower than the retry's
+    `wait_fixed` timer, e.g `driver.set_page_load_timeout(time_to_wait=30)`
+    """
     context.current_page = get_page_object(page_name)
     logging.debug(
         "%s will visit '%s' page using: '%s'", actor_name, page_name,
