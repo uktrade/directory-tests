@@ -215,12 +215,15 @@ def triage_classify_as_regular(context: Context, actor_alias: str):
 
 
 def triage_classify_as(
-        context: Context, actor_alias: str, exporter_status: str):
+        context: Context, actor_alias: str, *, exporter_status: str = None):
+    if not get_actor(context, actor_alias):
+        add_actor(context, unauthenticated_actor(actor_alias))
     classifications = {
         "new": triage_classify_as_new,
         "occasional": triage_classify_as_occasional,
         "regular": triage_classify_as_regular
     }
+    exporter_status = exporter_status or random.choice(list(classifications))
     visit_page(context, actor_alias, "home")
     step = classifications[exporter_status.lower()]
     logging.debug(
@@ -231,6 +234,6 @@ def triage_classify_as(
 
 def personalised_journey_create_page(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
-    export_status = actor.self_classification
-    triage_classify_as(context, actor_alias, export_status)
+    exporter_status = actor.self_classification
+    triage_classify_as(context, actor_alias, exporter_status=exporter_status)
     personalised_journey.should_be_here(context.driver)

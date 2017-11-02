@@ -30,7 +30,7 @@ def given_actor_classifies_as(context, actor_alias, exporter_status):
 
 @given('"{actor_alias}" was classified as "{exporter_status}" exporter in the triage process')
 def given_actor_was_classified_as(context, actor_alias, exporter_status):
-    triage_classify_as(context, actor_alias, exporter_status)
+    triage_classify_as(context, actor_alias, exporter_status=exporter_status)
 
 
 @given('"{actor_alias}" has answered triage questions')
