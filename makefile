@@ -103,7 +103,7 @@ functional_tests:
 functional_update_companies:
 	$(SET_PYTEST_ENV_VARS) && \
 	$(SET_DB_URLS) && \
-	python -c "from tests.functional.features.pages.utils import update_companies; update_companies()"
+	python -c "from tests.functional.utils.generic import update_companies; update_companies()"
 
 test: pep8 smoke_tests integration_test load_test_minimal
 
