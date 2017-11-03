@@ -93,6 +93,14 @@ def triage_say_you_exported_before(context: Context, actor_alias: str):
     update_actor(context, actor_alias, have_you_exported_before=True)
 
 
+def triage_say_you_never_exported_before(context: Context, actor_alias: str):
+    driver = context.driver
+    triage_have_you_exported.select_no(driver)
+    triage_have_you_exported.submit(driver)
+    triage_are_you_registered_with_companies_house.should_be_here(driver)
+    update_actor(context, actor_alias, have_you_exported_before=False)
+
+
 def triage_say_you_are_incorporated(
         context: Context, actor_alias: str):
     driver = context.driver
@@ -107,13 +115,6 @@ def triage_say_you_are_not_incorporated(context: Context, actor_alias: str):
     triage_are_you_registered_with_companies_house.submit(driver)
     triage_result.should_be_here(driver)
     update_actor(context, actor_alias, are_you_incorporated=False)
-
-
-def triage_say_you_never_exported_before(context: Context):
-    driver = context.driver
-    triage_have_you_exported.select_no(driver)
-    triage_have_you_exported.submit(driver)
-    triage_are_you_registered_with_companies_house.should_be_here(driver)
 
 
 def triage_say_you_export_regularly(context: Context):
@@ -171,8 +172,8 @@ def triage_create_exporting_journey(context: Context):
 
 def triage_classify_as_new(context: Context, actor_alias: str):
     start_triage(context, actor_alias)
-    triage_say_you_never_exported_before(context)
     triage_select_sector(context, actor_alias)
+    triage_say_you_never_exported_before(context, actor_alias)
     if random.choice([True, False]):
         triage_say_you_are_incorporated(context, actor_alias)
         triage_enter_company_name(context, actor_alias)
