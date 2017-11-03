@@ -79,6 +79,7 @@ def when_actor_decides_to_create_personalised_page(context, actor_alias):
     triage_create_exporting_journey(context, actor_alias)
 
 
+@when('"{actor_alias}" can see that he was classified as a "{classification}" exporter')
 @when('"{actor_alias}" can see that she was classified as a "{classification}" exporter')
 def when_actor_is_classified_as(context, actor_alias, classification):
     triage_should_be_classified_as(context, actor_alias, classification)

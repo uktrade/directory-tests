@@ -15,6 +15,7 @@ from steps.then_impl import (
     should_see_sections_on_home_page,
     triage_should_be_classified_as
 )
+from steps.when_impl import triage_should_see_answers_to_questions
 
 
 @then('"{actor_name}" should see the "{sections}" sections on home page')
@@ -78,3 +79,8 @@ def then_actor_should_see_guidance_articles_read_counter(
 @then('"{actor_alias}" should be classified as "{classification}" exporter')
 def step_impl(context, actor_alias, classification):
     triage_should_be_classified_as(context, actor_alias, classification)
+
+
+@then('"{actor_alias}" should see the summary page with answers to the questions she was asked')
+def then_actor_should_see_answers_to_questions(context, actor_alias):
+    triage_should_see_answers_to_questions(context, actor_alias)
