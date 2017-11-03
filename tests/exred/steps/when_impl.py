@@ -185,6 +185,18 @@ def triage_say_you_do_not_use_online_marketplaces(
     update_actor(context, actor_alias, do_you_use_online_marketplaces=False)
 
 
+def triage_say_whether_you_use_online_marketplaces(
+        context: Context, actor_alias: str, decision: str):
+    if decision == "has":
+        triage_say_you_use_online_marketplaces(context, actor_alias)
+    elif decision == "has never":
+        triage_say_you_do_not_use_online_marketplaces(context, actor_alias)
+    else:
+        raise KeyError(
+            "Could not recognize '%s', please use 'has' or 'has never'" %
+            decision)
+
+
 def triage_enter_company_name(
         context: Context, actor_alias: str, use_suggestions: bool, *,
         company_name: str = None):

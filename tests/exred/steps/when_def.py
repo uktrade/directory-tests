@@ -12,6 +12,7 @@ from steps.when_impl import (
     triage_do_you_export_regularly,
     triage_have_you_exported_before,
     triage_say_what_do_you_want_to_export,
+    triage_say_whether_you_use_online_marketplaces,
     triage_should_see_answers_to_questions,
     triage_what_is_your_company_name
 )
@@ -83,3 +84,10 @@ def when_actor_decides_to_create_personalised_page(context, actor_alias):
 @when('"{actor_alias}" can see that she was classified as a "{classification}" exporter')
 def when_actor_is_classified_as(context, actor_alias, classification):
     triage_should_be_classified_as(context, actor_alias, classification)
+
+
+@when('"{actor_alias}" says that she "{decision}" used online marketplaces')
+def when_actor_says_whether_he_used_online_marktet_places(
+        context, actor_alias, decision):
+    triage_say_whether_you_use_online_marketplaces(
+        context, actor_alias, decision)
