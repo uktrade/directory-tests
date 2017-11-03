@@ -6,6 +6,7 @@ from steps.then_impl import should_be_on_page
 from steps.when_impl import (
     actor_classifies_himself_as,
     guidance_open_category,
+    start_triage,
     triage_classify_as,
     visit_page
 )
@@ -46,3 +47,9 @@ def given_actor_answered_triage_questions(context, actor_alias):
 @given('"{actor_alias}" accessed "{category}" guidance articles using "{location}"')
 def given_actor_opened_guidance(context, actor_alias, category, location):
     guidance_open_category(context, actor_alias, category, location)
+
+
+@given('"{actor_alias}" decided to build her exporting journey')
+@given('"{actor_alias}" decided to build his exporting journey')
+def given_actor_starts_exporting_journey(context, actor_alias):
+    start_triage(context, actor_alias)
