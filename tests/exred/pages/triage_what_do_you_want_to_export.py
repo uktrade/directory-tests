@@ -46,11 +46,11 @@ def should_be_here(driver: webdriver):
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
-def select_sector(driver: webdriver, sector: str) -> str:
-    """Select specific sector or use randomly select one.
+def enter(driver: webdriver, sector: str) -> str:
+    """Enter information about the things you want to export.
 
     :param driver: webdriver object
-    :param sector: specific sector to use. Will select random if not set.
+    :param sector: specific product to use. Will select random if not set.
     :return: selected sector, might be different that t
     """
     if not sector:
