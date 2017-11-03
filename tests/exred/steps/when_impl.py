@@ -107,6 +107,7 @@ def triage_say_you_are_incorporated(
     triage_are_you_registered_with_companies_house.select_yes(driver)
     triage_are_you_registered_with_companies_house.submit(driver)
     triage_company_name.should_be_here(driver)
+    update_actor(context, actor_alias, are_you_incorporated=True)
 
 
 def triage_say_you_are_not_incorporated(context: Context, actor_alias: str):
