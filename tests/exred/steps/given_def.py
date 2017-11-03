@@ -12,15 +12,15 @@ from steps.when_impl import (
 )
 
 
-@given('"{actor_name}" goes to the "{page_name}" page')
-@given('"{actor_name}" visits the "{page_name}" page')
-def given_actor_visits_page(context, actor_name, page_name):
-    visit_page(context, actor_name, page_name)
+@given('"{actor_alias}" goes to the "{page_name}" page')
+@given('"{actor_alias}" visits the "{page_name}" page')
+def given_actor_visits_page(context, actor_alias, page_name):
+    visit_page(context, actor_alias, page_name)
 
 
-@given('"{actor_name}" visits the "{page_name}" page for the first time')
-def given_actor_visits_page_for_the_first_time(context, actor_name, page_name):
-    visit_page(context, actor_name, page_name, first_time=True)
+@given('"{actor_alias}" visits the "{page_name}" page for the first time')
+def given_actor_visits_page_for_the_first_time(context, actor_alias, page_name):
+    visit_page(context, actor_alias, page_name, first_time=True)
 
 
 @given('"{actor_alias}" is on the "{page_name}" page')
