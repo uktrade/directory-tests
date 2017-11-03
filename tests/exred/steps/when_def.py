@@ -7,6 +7,7 @@ from steps.when_impl import (
     personalised_journey_create_page,
     start_triage,
     triage_are_you_incorporated,
+    triage_create_exporting_journey,
     triage_do_you_export_regularly,
     triage_have_you_exported_before,
     triage_say_what_do_you_want_to_export,
@@ -69,3 +70,9 @@ def when_actor_decide_to_enter_company_name(context, actor_alias, decision):
 @when('"{actor_alias}" sees the summary page with answers to the questions she was asked')
 def when_actor_sees_answers_to_the_questions(context, actor_alias):
     triage_should_see_answers_to_questions(context, actor_alias)
+
+
+@when('"{actor_alias}" decides to create her personalised journey page')
+@when('"{actor_alias}" decides to create his personalised journey page')
+def when_actor_decides_to_create_personalised_page(context, actor_alias):
+    triage_create_exporting_journey(context, actor_alias)
