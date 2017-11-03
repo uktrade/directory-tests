@@ -36,6 +36,7 @@ def after_step(context: Context, step: Step):
                                                          step.name,
                                                          step.exception)
         logging.error(message)
+        logging.debug(context.scenario_data)
         if CONFIG_NAME == "browserstack":
             if hasattr(context, "driver"):
                 session_id = context.driver.session_id
@@ -82,6 +83,7 @@ def after_scenario(context: Context, scenario: Scenario):
     :param scenario: Behave Scenario object
     """
     logging.debug("Closing Selenium Driver after scenario: %s", scenario.name)
+    logging.debug(context.scenario_data)
     context.driver.quit()
 
 
