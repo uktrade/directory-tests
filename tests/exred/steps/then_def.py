@@ -12,7 +12,8 @@ from steps.then_impl import (
     guidance_tile_should_be_highlighted,
     personalised_journey_should_see_read_counter,
     should_be_on_page,
-    should_see_sections_on_home_page
+    should_see_sections_on_home_page,
+    triage_should_be_classified_as
 )
 
 
@@ -72,3 +73,8 @@ def then_actor_should_see_guidance_articles_read_counter(
         context, actor_alias, exporter_status):
     personalised_journey_should_see_read_counter(
         context, actor_alias, exporter_status)
+
+
+@then('"{actor_alias}" should be classified as "{classification}" exporter')
+def step_impl(context, actor_alias, classification):
+    triage_should_be_classified_as(context, actor_alias, classification)

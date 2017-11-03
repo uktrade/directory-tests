@@ -6,6 +6,11 @@ from behave.runner import Context
 
 from pages import guidance_common, home, personalised_journey
 from registry.pages import get_page_object
+from steps.when_impl import (
+    triage_should_be_classified_as_new,
+    triage_should_be_classified_as_occasional,
+    triage_should_be_classified_as_regular
+)
 
 
 def should_see_sections_on_home_page(
@@ -89,3 +94,18 @@ def personalised_journey_should_see_read_counter(
     logging.debug(
         "%s can see Guidance Article Read Counter on the Personalised Journey "
         "page: %s", actor_alias, context.driver.current_url)
+
+
+def triage_should_be_classified_as(
+        context: Context, actor_alias: str, classification: str):
+    if classification == "new":
+        triage_should_be_classified_as_new(context)
+    elif classification == "occasional":
+        triage_should_be_classified_as_occasional(context)
+    elif classification == "regular":
+        triage_should_be_classified_as_regular(context)
+    else:
+        raise KeyError("Could not recognize: '%s'. Please use: ")
+    logging.debug(
+        "%s was properly classified as %s exporter", actor_alias,
+        classification)

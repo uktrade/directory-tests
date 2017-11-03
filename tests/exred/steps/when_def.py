@@ -2,6 +2,7 @@
 """When step definitions."""
 from behave import when
 
+from steps.then_impl import triage_should_be_classified_as
 from steps.when_impl import (
     guidance_open_category,
     personalised_journey_create_page,
@@ -76,3 +77,8 @@ def when_actor_sees_answers_to_the_questions(context, actor_alias):
 @when('"{actor_alias}" decides to create his personalised journey page')
 def when_actor_decides_to_create_personalised_page(context, actor_alias):
     triage_create_exporting_journey(context, actor_alias)
+
+
+@when('"{actor_alias}" can see that she was classified as a "{classification}" exporter')
+def when_actor_is_classified_as(context, actor_alias, classification):
+    triage_should_be_classified_as(context, actor_alias, classification)
