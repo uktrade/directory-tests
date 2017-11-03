@@ -186,12 +186,38 @@ def triage_say_you_do_not_use_online_marketplaces(
 
 
 def triage_enter_company_name(
-        context: Context, actor_alias: str, *, company_name: str = None):
+        context: Context, actor_alias: str, use_suggestions: bool, *,
+        company_name: str = None):
     driver = context.driver
-    company_name = triage_company_name.enter_company_name(driver, company_name)
+    triage_company_name.enter_company_name(driver, company_name)
+    if use_suggestions:
+        triage_company_name.click_on_first_suggestion(driver)
+    else:
+        triage_company_name.hide_suggestions(driver)
+    final_company_name = triage_company_name.get_company_name(driver)
     triage_company_name.submit(driver)
     triage_result.should_be_here(driver)
-    update_actor(context, actor_alias, company_name=company_name)
+    update_actor(context, actor_alias, company_name=final_company_name)
+
+
+def triage_do_not_enter_company_name(context: Context, actor_alias: str):
+    driver = context.driver
+    triage_company_name.submit(driver)
+    triage_result.should_be_here(driver)
+    update_actor(context, actor_alias, company_name=None)
+
+
+def triage_what_is_your_company_name(context, actor_alias, decision):
+    if decision == "types in":
+        triage_enter_company_name(context, actor_alias, use_suggestions=False)
+    elif decision == "does not provide":
+        triage_do_not_enter_company_name(context, actor_alias)
+    elif decision == "types in and selects":
+        triage_enter_company_name(context, actor_alias, use_suggestions=True)
+    else:
+        raise KeyError(
+            "Could not recognize '%s', please use 'types in', "
+            "'does not provide' or 'types in and selects'" % decision)
 
 
 def triage_should_be_classified_as_new(context: Context):

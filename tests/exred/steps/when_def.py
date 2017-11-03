@@ -10,6 +10,7 @@ from steps.when_impl import (
     triage_do_you_export_regularly,
     triage_have_you_exported_before,
     triage_say_what_do_you_want_to_export,
+    triage_what_is_your_company_name
 )
 
 
@@ -55,3 +56,9 @@ def when_actor_tells_whether_he_exports_regularly_or_not(
 def when_actor_says_whether_company_is_incorporated(
         context, actor_alias, is_or_not):
     triage_are_you_incorporated(context, actor_alias, is_or_not)
+
+
+@when('"{actor_alias}" "{decision}" her company name')
+@when('"{actor_alias}" "{decision}" his company name')
+def when_actor_decide_to_enter_company_name(context, actor_alias, decision):
+    triage_what_is_your_company_name(context, actor_alias, decision)
