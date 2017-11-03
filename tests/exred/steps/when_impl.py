@@ -100,11 +100,12 @@ def triage_say_you_are_incorporated(
     triage_company_name.should_be_here(driver)
 
 
-def triage_say_you_are_not_registered_with_companies_house(context: Context):
+def triage_say_you_are_not_incorporated(context: Context, actor_alias: str):
     driver = context.driver
     triage_are_you_registered_with_companies_house.select_no(driver)
     triage_are_you_registered_with_companies_house.submit(driver)
     triage_result.should_be_here(driver)
+    update_actor(context, actor_alias, are_you_incorporated=False)
 
 
 def triage_say_you_never_exported_before(context: Context):
@@ -175,7 +176,7 @@ def triage_classify_as_new(context: Context, actor_alias: str):
         triage_say_you_are_incorporated(context, actor_alias)
         triage_enter_company_name(context, actor_alias)
     else:
-        triage_say_you_are_not_registered_with_companies_house(context)
+        triage_say_you_are_not_incorporated(context, actor_alias)
     triage_should_be_classified_as_new(context)
     triage_create_exporting_journey(context)
     update_actor(context, alias=actor_alias, triage_classification="new")
@@ -194,7 +195,7 @@ def triage_classify_as_occasional(context: Context, actor_alias: str):
         triage_say_you_are_incorporated(context, actor_alias)
         triage_enter_company_name(context, actor_alias)
     else:
-        triage_say_you_are_not_registered_with_companies_house(context)
+        triage_say_you_are_not_incorporated(context, actor_alias)
     triage_should_be_classified_as_occasional(context)
     triage_create_exporting_journey(context)
     update_actor(context, alias=actor_alias, triage_classification="occasional")
@@ -209,7 +210,7 @@ def triage_classify_as_regular(context: Context, actor_alias: str):
         triage_say_you_are_incorporated(context, actor_alias)
         triage_enter_company_name(context, actor_alias)
     else:
-        triage_say_you_are_not_registered_with_companies_house(context)
+        triage_say_you_are_not_incorporated(context, actor_alias)
     triage_should_be_classified_as_regular(context)
     triage_create_exporting_journey(context)
     update_actor(context, alias=actor_alias, triage_classification="regular")
