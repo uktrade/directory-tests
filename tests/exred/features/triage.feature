@@ -35,7 +35,7 @@ Feature: Triage
     When "Inigo" says what does she wants to export
     And "Inigo" says that she "has" exported before
     And "Inigo" says that exporting is "not a regular" part of her business
-    And "Inigo" says that he "<online_action>" used online marketplaces
+    And "Inigo" says that she "<online_action>" used online marketplaces
     And "Inigo" says that her company "is" incorporated
     And "Inigo" "<company_name_action>" his company name
     And "Inigo" sees the summary page with answers to the questions he was asked
@@ -164,7 +164,7 @@ Feature: Triage
   @ED-2528
   @classification
   Scenario Outline: Triaging should help to identify "occasional exporter"
-    Given "Inigo" visits the home page for the first time
+    Given "Inigo" visits the "home" page for the first time
     And "Inigo" decided to build his exporting journey
 
     When "Inigo" says what does she wants to export
