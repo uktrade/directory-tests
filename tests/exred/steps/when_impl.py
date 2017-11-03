@@ -142,11 +142,13 @@ def triage_say_you_use_online_marketplaces(context: Context, actor_alias: str):
     update_actor(context, actor_alias, do_you_use_online_marketplaces=True)
 
 
-def triage_say_you_do_not_use_online_marketplaces(context: Context):
+def triage_say_you_do_not_use_online_marketplaces(
+        context: Context, actor_alias: str):
     driver = context.driver
     triage_do_you_use_online_marketplaces.select_no(driver)
     triage_do_you_use_online_marketplaces.submit(driver)
     triage_are_you_registered_with_companies_house.should_be_here(driver)
+    update_actor(context, actor_alias, do_you_use_online_marketplaces=False)
 
 
 def triage_enter_company_name(
@@ -196,7 +198,7 @@ def triage_classify_as_occasional(context: Context, actor_alias: str):
     if random.choice([True, False]):
         triage_say_you_use_online_marketplaces(context, actor_alias)
     else:
-        triage_say_you_do_not_use_online_marketplaces(context)
+        triage_say_you_do_not_use_online_marketplaces(context, actor_alias)
     if random.choice([True, False]):
         triage_say_you_are_incorporated(context, actor_alias)
         triage_enter_company_name(context, actor_alias)
