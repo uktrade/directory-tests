@@ -76,11 +76,13 @@ def start_triage(context: Context, actor_alias: str):
     logging.debug("%s started triage process", actor_alias)
 
 
-def triage_select_sector(context: Context, *, sector: str = None):
+def triage_select_sector(
+        context: Context, actor_alias: str, *, sector: str = None):
     driver = context.driver
-    triage_what_is_your_sector.select_sector(driver, sector)
+    final_sector = triage_what_is_your_sector.select_sector(driver, sector)
     triage_what_is_your_sector.submit(driver)
     triage_have_you_exported.should_be_here(driver)
+    update_actor(context, actor_alias, sector=final_sector)
 
 
 def triage_say_you_exported_before(context: Context):
@@ -166,8 +168,8 @@ def triage_create_exporting_journey(context: Context):
 
 def triage_classify_as_new(context: Context, actor_alias: str):
     start_triage(context, actor_alias)
-    triage_select_sector(context)
     triage_say_you_never_exported_before(context)
+    triage_select_sector(context, actor_alias)
     if random.choice([True, False]):
         triage_say_you_are_registered_with_companies_house(context)
         triage_enter_company_name(context, actor_alias)
@@ -180,9 +182,9 @@ def triage_classify_as_new(context: Context, actor_alias: str):
 
 def triage_classify_as_occasional(context: Context, actor_alias: str):
     start_triage(context, actor_alias)
-    triage_select_sector(context)
     triage_say_you_exported_before(context)
     triage_say_you_do_not_export_regularly(context)
+    triage_select_sector(context, actor_alias)
     if random.choice([True, False]):
         triage_say_you_use_online_marketplaces(context)
     else:
@@ -199,9 +201,9 @@ def triage_classify_as_occasional(context: Context, actor_alias: str):
 
 def triage_classify_as_regular(context: Context, actor_alias: str):
     start_triage(context, actor_alias)
-    triage_select_sector(context)
     triage_say_you_exported_before(context)
     triage_say_you_export_regularly(context)
+    triage_select_sector(context, actor_alias)
     if random.choice([True, False]):
         triage_say_you_are_registered_with_companies_house(context)
         triage_enter_company_name(context, actor_alias)

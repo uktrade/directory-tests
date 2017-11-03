@@ -5,7 +5,8 @@ from behave import when
 from steps.when_impl import (
     guidance_open_category,
     personalised_journey_create_page,
-    start_triage
+    start_triage,
+    triage_select_sector
 )
 
 
@@ -24,3 +25,9 @@ def when_actor_goes_to_guidance_articles(
 @when('"{actor_alias}" creates a personalised journey page for herself')
 def when_actor_creates_personalised_journey_page(context, actor_alias):
     personalised_journey_create_page(context, actor_alias)
+
+
+@when('"{actor_alias}" selects her sector')
+@when('"{actor_alias}" selects his sector')
+def when_actor_selects_sector(context, actor_alias):
+    triage_select_sector(context, actor_alias)
