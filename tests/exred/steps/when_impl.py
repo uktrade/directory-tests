@@ -131,6 +131,16 @@ def triage_say_you_are_not_incorporated(context: Context, actor_alias: str):
     update_actor(context, actor_alias, are_you_incorporated=False)
 
 
+def triage_are_you_incorporated(context, actor_alias, is_or_not):
+    if is_or_not == "is":
+        triage_say_you_are_incorporated(context, actor_alias)
+    elif is_or_not == "is not":
+        triage_say_you_are_not_incorporated(context, actor_alias)
+    else:
+        raise KeyError(
+            "Could not recognize '%s', please use 'is' or 'is not'" % is_or_not)
+
+
 def triage_say_you_export_regularly(context: Context, actor_alias: str):
     driver = context.driver
     triage_are_you_regular_exporter.select_yes(driver)

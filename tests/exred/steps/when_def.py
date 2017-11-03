@@ -6,6 +6,7 @@ from steps.when_impl import (
     guidance_open_category,
     personalised_journey_create_page,
     start_triage,
+    triage_are_you_incorporated,
     triage_do_you_export_regularly,
     triage_have_you_exported_before,
     triage_say_what_do_you_want_to_export,
@@ -47,3 +48,10 @@ def when_actor_answers_whether_he_exported_before(
 def when_actor_tells_whether_he_exports_regularly_or_not(
         context, actor_alias, regular_or_not):
     triage_do_you_export_regularly(context, actor_alias, regular_or_not)
+
+
+@when('"{actor_alias}" says that her company "{is_or_not}" incorporated')
+@when('"{actor_alias}" says that his company "{is_or_not}" incorporated')
+def when_actor_says_whether_company_is_incorporated(
+        context, actor_alias, is_or_not):
+    triage_are_you_incorporated(context, actor_alias, is_or_not)
