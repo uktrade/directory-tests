@@ -17,7 +17,7 @@ from pages import (
     triage_do_you_use_online_marketplaces,
     triage_have_you_exported,
     triage_result,
-    triage_what_is_your_sector
+    triage_what_do_you_want_to_export
 )
 from registry.pages import get_page_object
 from utils import add_actor, get_actor, unauthenticated_actor, update_actor
@@ -76,13 +76,13 @@ def start_triage(context: Context, actor_alias: str):
     logging.debug("%s started triage process", actor_alias)
 
 
-def triage_select_sector(
+def triage_say_what_do_you_want_to_export(
         context: Context, actor_alias: str, *, sector: str = None):
     driver = context.driver
-    final_sector = triage_what_is_your_sector.select_sector(driver, sector)
-    triage_what_is_your_sector.submit(driver)
+    final_sector = triage_what_do_you_want_to_export.enter(driver, sector)
+    triage_what_do_you_want_to_export.submit(driver)
     triage_have_you_exported.should_be_here(driver)
-    update_actor(context, actor_alias, sector=final_sector)
+    update_actor(context, actor_alias, what_do_you_want_to_export=final_sector)
 
 
 def triage_say_you_exported_before(context: Context, actor_alias: str):
@@ -178,7 +178,7 @@ def triage_create_exporting_journey(context: Context):
 
 def triage_classify_as_new(context: Context, actor_alias: str):
     start_triage(context, actor_alias)
-    triage_select_sector(context, actor_alias)
+    triage_what_do_you_want_to_export(context, actor_alias)
     triage_say_you_never_exported_before(context, actor_alias)
     if random.choice([True, False]):
         triage_say_you_are_incorporated(context, actor_alias)
@@ -192,7 +192,7 @@ def triage_classify_as_new(context: Context, actor_alias: str):
 
 def triage_classify_as_occasional(context: Context, actor_alias: str):
     start_triage(context, actor_alias)
-    triage_select_sector(context, actor_alias)
+    triage_what_do_you_want_to_export(context, actor_alias)
     triage_say_you_exported_before(context, actor_alias)
     triage_say_you_do_not_export_regularly(context, actor_alias)
     if random.choice([True, False]):
@@ -211,7 +211,7 @@ def triage_classify_as_occasional(context: Context, actor_alias: str):
 
 def triage_classify_as_regular(context: Context, actor_alias: str):
     start_triage(context, actor_alias)
-    triage_select_sector(context, actor_alias)
+    triage_what_do_you_want_to_export(context, actor_alias)
     triage_say_you_exported_before(context, actor_alias)
     triage_say_you_export_regularly(context, actor_alias)
     if random.choice([True, False]):

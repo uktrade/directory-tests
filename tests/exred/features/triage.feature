@@ -7,7 +7,7 @@ Feature: Triage
     Given "Nadia" visits the "Home" page for the first time
     And "Nadia" decided to build her exporting journey
 
-    When "Nadia" selects her sector
+    When "Nadia" says what does she wants to export
     And "Nadia" says that she "has" exported before
     And "Nadia" says that exporting is "a regular" part of her business
     And "Nadia" tells that she "is" registered with companies house

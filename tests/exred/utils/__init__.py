@@ -34,8 +34,9 @@ Actor = namedtuple(
     "Actor",
     [
         "alias", "email", "password", "self_classification",
-        "triage_classification", "sector", "have_you_exported_before",
-        "do_you_export_regularly", "are_you_incorporated", "company_name",
+        "triage_classification", "what_do_you_want_to_export",
+        "have_you_exported_before", "do_you_export_regularly",
+        "are_you_incorporated", "company_name",
         "do_you_use_online_marketplaces"
     ]
 )

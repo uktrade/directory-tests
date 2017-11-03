@@ -10,7 +10,7 @@ from pages import (
     triage_do_you_use_online_marketplaces,
     triage_have_you_exported,
     triage_result,
-    triage_what_is_your_sector
+    triage_what_do_you_want_to_export
 )
 
 EXRED_PAGE_REGISTRY = {
@@ -18,9 +18,9 @@ EXRED_PAGE_REGISTRY = {
         "url": home.URL,
         "po": home
     },
-    "triage - what is your sector": {
-        "url": triage_what_is_your_sector.URL,
-        "po": triage_what_is_your_sector
+    "triage - what do you want to export": {
+        "url": triage_what_do_you_want_to_export.URL,
+        "po": triage_what_do_you_want_to_export
     },
     "triage - have you exported before": {
         "url": triage_have_you_exported.URL,

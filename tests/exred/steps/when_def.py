@@ -6,7 +6,7 @@ from steps.when_impl import (
     guidance_open_category,
     personalised_journey_create_page,
     start_triage,
-    triage_select_sector
+    triage_say_what_do_you_want_to_export,
 )
 
 
@@ -27,7 +27,7 @@ def when_actor_creates_personalised_journey_page(context, actor_alias):
     personalised_journey_create_page(context, actor_alias)
 
 
-@when('"{actor_alias}" selects her sector')
-@when('"{actor_alias}" selects his sector')
-def when_actor_selects_sector(context, actor_alias):
-    triage_select_sector(context, actor_alias)
+@when('"{actor_alias}" says what does he wants to export')
+@when('"{actor_alias}" says what does she wants to export')
+def when_actor_says_what_he_wants_to_export(context, actor_alias):
+    triage_say_what_do_you_want_to_export(context, actor_alias)

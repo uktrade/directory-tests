@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Triage - What is you sector? Page Object."""
+"""Triage - What do you want to export? Page Object."""
 import logging
 import random
 from urllib.parse import urljoin
@@ -9,7 +9,7 @@ from selenium import webdriver
 from settings import EXRED_SECTORS, EXRED_UI_URL
 from utils import assertion_msg, selenium_action, take_screenshot
 
-NAME = "ExRed Triage - what is your sector"
+NAME = "ExRed Triage - what do you want to export"
 URL = urljoin(EXRED_UI_URL, "triage")
 
 SECTORS_COMBOBOX = ".exred-triage-form div[role=combobox]"
