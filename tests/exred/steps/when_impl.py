@@ -147,6 +147,17 @@ def triage_say_you_do_not_export_regularly(context: Context, actor_alias: str):
     update_actor(context, actor_alias, do_you_export_regularly=False)
 
 
+def triage_do_you_export_regularly(context, actor_alias, regular_or_not):
+    if regular_or_not == "a regular":
+        triage_say_you_export_regularly(context, actor_alias)
+    elif regular_or_not == "not a regular":
+        triage_say_you_do_not_export_regularly(context, actor_alias)
+    else:
+        raise KeyError(
+            "Could not recognize '%s', please use 'a regular' or "
+            "'not a regular'" % regular_or_not)
+
+
 def triage_say_you_use_online_marketplaces(context: Context, actor_alias: str):
     driver = context.driver
     triage_do_you_use_online_marketplaces.select_yes(driver)
