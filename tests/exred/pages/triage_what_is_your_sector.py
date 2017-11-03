@@ -46,7 +46,13 @@ def should_be_here(driver: webdriver):
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
-def select_sector(driver: webdriver, sector: str):
+def select_sector(driver: webdriver, sector: str) -> str:
+    """Select specific sector or use randomly select one.
+
+    :param driver: webdriver object
+    :param sector: specific sector to use. Will select random if not set.
+    :return: selected sector, might be different that t
+    """
     if not sector:
         sector = random.choice(list(EXRED_SECTORS.values()))
     with selenium_action(driver, "Can't find Sector selector input box"):
@@ -58,6 +64,7 @@ def select_sector(driver: webdriver, sector: str):
         option = driver.find_element_by_css_selector(AUTOCOMPLETE_1ST_OPTION)
     option.click()
     take_screenshot(driver, NAME)
+    return sector
 
 
 def submit(driver: webdriver):
