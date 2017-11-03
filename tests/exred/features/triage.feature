@@ -13,9 +13,10 @@ Feature: Triage
     And "Nadia" says that her company "is" incorporated
     And "Nadia" "<company_name_action>" her company name
     And "Nadia" sees the summary page with answers to the questions she was asked
+    And "Nadia" can see that she was classified as a "regular" exporter
     And "Nadia" decides to create her personalised journey page
 
-    Then "Nadia" should be on the personalised "regular exporter" journey page
+    Then "Nadia" should be on the personalised "regular" exporter journey page
 
     Examples:
       | company_name_action  |
@@ -37,11 +38,11 @@ Feature: Triage
     And "Inigo" says that he "<online_action>" used online marketplaces
     And "Inigo" says that her company "is" incorporated
     And "Inigo" "<company_name_action>" his company name
-
     And "Inigo" sees the summary page with answers to the questions he was asked
+    And "Inigo" can see that she was classified as a "occasional" exporter
     And "Inigo" decides to create her personalised journey page
 
-    Then "Inigo" should be on the personalised "occasional exporter" journey page
+    Then "Inigo" should be on the personalised "occasional" exporter journey page
 
     Examples:
       | online_action | company_name_action  |
@@ -65,8 +66,10 @@ Feature: Triage
     And "Jonah" says that his company "is" incorporated
     And "Jonah" "<company_name_action>" his company name
     And "Jonah" sees the summary page with answers to the questions he was asked
+    And "Jonah" can see that she was classified as a "new" exporter
     And "Jonah" decides to create his personalised journey page
-    Then "Jonah" should be on the personalised "new exporter" journey page
+
+    Then "Jonah" should be on the personalised "new" exporter journey page
 
     Examples:
       | company_name_action  |
@@ -124,7 +127,7 @@ Feature: Triage
 
 
     Then "Nadia" should see the summary page with answers to the questions she was asked
-    And "Nadia" should be classified as "new exporter"
+    And "Nadia" should be classified as "new" exporter
 
     Examples:
       | company_name_action  |
@@ -145,9 +148,10 @@ Feature: Triage
     And "Jonah" says that his company "is" incorporated
     And "Jonah" "<company_name_action>" his company name
     And "Jonah" sees the summary page with answers to the questions he was asked
+    And "Jonah" can see that she was classified as a "new" exporter
     And "Jonah" decides to create his personalised journey page
 
-    Then "Jonah" should be on the personalised "new exporter" journey page
+    Then "Jonah" should be on the personalised "new" exporter journey page
 
     Examples:
       | company_name_action  |
@@ -172,7 +176,7 @@ Feature: Triage
 
 
     Then "Inigo" should see the summary page with answers to the questions she was asked
-    And "Inigo" should be classified as (the header on summary says) "occasional exporter"
+    And "Inigo" should be classified as "occasional" exporter
 
     Examples:
       | online_action | company_name_action  |
