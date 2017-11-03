@@ -51,17 +51,19 @@ def click_on_first_suggestion(driver: webdriver):
         first_suggestion.click()
 
 
-def enter_company_name(driver: webdriver, *, company_name: str = None):
+def enter_company_name(driver: webdriver, company_name: str = None) -> str:
     if not company_name:
         company_name = random.choice(["automated", "browser", "tests"])
     input_field = driver.find_element_by_css_selector(COMPANY_NAME_INPUT)
     input_field.clear()
     input_field.send_keys(company_name)
+    click_on_first_suggestion(driver)
     take_screenshot(driver, NAME + " after typing in company name")
+    input_field = driver.find_element_by_css_selector(COMPANY_NAME_INPUT)
+    return input_field.text
 
 
 def submit(driver: webdriver):
-    click_on_first_suggestion(driver)
     button = driver.find_element_by_css_selector(CONTINUE_BUTTON)
     button.click()
     take_screenshot(driver, NAME + " after submitting")
