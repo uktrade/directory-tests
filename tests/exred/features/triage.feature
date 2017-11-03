@@ -10,7 +10,7 @@ Feature: Triage
     When "Nadia" says what does she wants to export
     And "Nadia" says that she "has" exported before
     And "Nadia" says that exporting is "a regular" part of her business
-    And "Nadia" tells that she "is" registered with companies house
+    And "Nadia" says that her company "is" incorporated
     And "Nadia" "<company_name_action>" her company name
     And "Nadia" sees the summary page with answers to the questions she was asked
     And "Nadia" decides to create her personalised journey page
@@ -31,15 +31,15 @@ Feature: Triage
     Given "Inigo" visits the home page for the first time
     And "Inigo" decided to build his exporting journey
 
-    When "Inigo" selects his sector
-    And "Inigo" says that he "has" exported before
-    And "Inigo" says that exporting is "not a regular" part of his business
+    When "Inigo" selects her sector
+    And "Inigo" says that she "has" exported before
+    And "Inigo" says that exporting is "not a regular" part of her business
     And "Inigo" says that he "<online_action>" used online marketplaces
-    And "Inigo" tells that he "is" registered with companies house
+    And "Inigo" says that her company "is" incorporated
     And "Inigo" "<company_name_action>" his company name
 
     And "Inigo" sees the summary page with answers to the questions he was asked
-    And "Inigo" decides to create his personalised journey page
+    And "Inigo" decides to create her personalised journey page
 
     Then "Inigo" should be on the personalised "occasional exporter" journey page
 
@@ -62,7 +62,7 @@ Feature: Triage
 
     When "Jonah" selects his sector
     And "Jonah" says that he "has never" exported before
-    And "Jonah" tells that he "is" registered with companies house
+    And "Jonah" says that his company "is" incorporated
     And "Jonah" "<company_name_action>" his company name
     And "Jonah" sees the summary page with answers to the questions he was asked
     And "Jonah" decides to create his personalised journey page
@@ -92,7 +92,7 @@ Feature: Triage
   @sole-trader
   Scenario: Sole Trader visiting the home page for the 1st time should be able asked for Company name if he is not registered with companies house
     Given "Robert" is in triage
-    And "Robert" tells that he "is not" registered in Companies House
+    And "Robert" said that his company "is not" incorporated
 
     Then "Robert" should not be asked for his Company name
     And "Robert" should be presented with the summary page with answers to the questions he asked
@@ -103,7 +103,7 @@ Feature: Triage
   @sole-trader
   Scenario: Sole Trader visiting the home page for the 1st time should be able to get to personalised page after going through triage process
     Given "Robert" is in triage
-    And "Robert" tells that he "is not" registered in Companies House
+    And "Robert" said that his company "is not" incorporated
     And "Robert" sees the summary page with answers to the questions he was asked
     And "Robert" decides to create his personalised journey page
 
@@ -119,7 +119,7 @@ Feature: Triage
 
     When "Jonah" selects his sector
     And "Jonah" says that he "has never" exported before
-    And "Jonah" tells that she "is" registered with companies house
+    And "Jonah" says that his company "is" incorporated
     And "Jonah" "<company_name_action>" his company name
 
 
@@ -142,7 +142,7 @@ Feature: Triage
 
     When "Jonah" selects his sector
     And "Jonah" says that he "has never" exported before
-    And "Jonah" tells that she "is" registered with companies house
+    And "Jonah" says that his company "is" incorporated
     And "Jonah" "<company_name_action>" his company name
     And "Jonah" sees the summary page with answers to the questions he was asked
     And "Jonah" decides to create his personalised journey page
@@ -166,9 +166,9 @@ Feature: Triage
     When "Inigo" selects his sector
     And "Inigo" says that he "has" exported before
     And "Inigo" says that exporting is "not a regular" part of his business
-    And "Inigo" says that he "<online_action>" used online marketplaces
-    And "Inigo" tells that she "is" registered with companies house
-    And "Inigo" "<company_name_action>" his company name
+    And "Inigo" says that she "<online_action>" used online marketplaces
+    And "Inigo" says that her company "is" incorporated
+    And "Inigo" "<company_name_action>" her company name
 
 
     Then "Inigo" should see the summary page with answers to the questions she was asked
