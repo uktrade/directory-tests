@@ -6,6 +6,7 @@ from steps.when_impl import (
     guidance_open_category,
     personalised_journey_create_page,
     start_triage,
+    triage_have_you_exported_before,
     triage_say_what_do_you_want_to_export,
 )
 
@@ -31,3 +32,10 @@ def when_actor_creates_personalised_journey_page(context, actor_alias):
 @when('"{actor_alias}" says what does she wants to export')
 def when_actor_says_what_he_wants_to_export(context, actor_alias):
     triage_say_what_do_you_want_to_export(context, actor_alias)
+
+
+@when('"{actor_alias}" says that he "{has_or_has_never}" exported before')
+@when('"{actor_alias}" says that she "{has_or_has_never}" exported before')
+def when_actor_answers_whether_he_exported_before(
+        context, actor_alias, has_or_has_never):
+    triage_have_you_exported_before(context, actor_alias, has_or_has_never)

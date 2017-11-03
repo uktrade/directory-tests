@@ -103,6 +103,17 @@ def triage_say_you_never_exported_before(context: Context, actor_alias: str):
     update_actor(context, actor_alias, have_you_exported_before=False)
 
 
+def triage_have_you_exported_before(context, actor_alias, has_or_has_never):
+    if has_or_has_never == "has":
+        triage_say_you_exported_before(context, actor_alias)
+    elif has_or_has_never == "has never":
+        triage_say_you_never_exported_before(context, actor_alias)
+    else:
+        raise KeyError(
+            "Could not recognize '%s', please use 'has' or 'has never'" %
+            has_or_has_never)
+
+
 def triage_say_you_are_incorporated(
         context: Context, actor_alias: str):
     driver = context.driver
