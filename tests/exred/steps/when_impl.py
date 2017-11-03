@@ -302,6 +302,29 @@ def triage_classify_as(
     step(context, actor_alias)
 
 
+def triage_should_see_answers_to_questions(context, actor_alias):
+    actor = get_actor(context, actor_alias)
+    q_and_a = triage_result.get_questions_and_answers(context.driver)
+    if actor.what_do_you_want_to_export is not None:
+        what = actor.what_do_you_want_to_export
+        assert q_and_a["What do you want to export?"] == what
+    if actor.company_name is not None:
+        name = actor.company_name
+        assert q_and_a["Company name"] == name
+    if actor.have_you_exported_before is not None:
+        exported_before = "Yes" if actor.have_you_exported_before else "No"
+        assert q_and_a["Have you exported before?"] == exported_before
+    if actor.do_you_export_regularly is not None:
+        export_regularly = "Yes" if actor.do_you_export_regularly else "No"
+        assert q_and_a["Is exporting a regular part of your business activities?"] == export_regularly
+    # if actor.are_you_incorporated is not None:
+    #     incorporated = "Yes" if actor.are_you_incorporated else "No"
+    #     assert q_and_a["Is your company incorporated in the UK?"] == incorporated
+    if actor.do_you_use_online_marketplaces is not None:
+        sell_online = "Yes" if actor.do_you_use_online_marketplaces else "No"
+        assert q_and_a["Do you use online marketplaces to sell your products?"] == sell_online
+
+
 def personalised_journey_create_page(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     exporter_status = actor.self_classification
