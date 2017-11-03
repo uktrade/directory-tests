@@ -15,8 +15,8 @@ from utils import assertion_msg, take_screenshot
 NAME = "ExRed Triage - What is your company name"
 URL = urljoin(EXRED_UI_URL, "triage")
 
-COMPANY_NAME_INPUT = "#js-typeahead-company-name"
 QUESTION = "label[for=js-typeahead-company-name]"
+COMPANY_NAME_INPUT = "js-typeahead-company-name"
 SUGGESTIONS = "ul.SelectiveLookupDisplay"
 FIRST_SUGGESTION = "ul.SelectiveLookupDisplay > li:nth-child(1)"
 CONTINUE_BUTTON = ".exred-triage-form button.button"
@@ -61,16 +61,18 @@ def click_on_first_suggestion(driver: webdriver):
         first_suggestion.click()
 
 
-def enter_company_name(driver: webdriver, company_name: str = None) -> str:
+def enter_company_name(driver: webdriver, company_name: str = None):
     if not company_name:
         company_name = random.choice(["automated", "browser", "tests"])
-    input_field = driver.find_element_by_css_selector(COMPANY_NAME_INPUT)
+    input_field = driver.find_element_by_id(COMPANY_NAME_INPUT)
     input_field.clear()
     input_field.send_keys(company_name)
-    click_on_first_suggestion(driver)
     take_screenshot(driver, NAME + " after typing in company name")
-    input_field = driver.find_element_by_css_selector(COMPANY_NAME_INPUT)
-    return input_field.text
+
+
+def get_company_name(driver: webdriver) -> str:
+    input_field = driver.find_element_by_id(COMPANY_NAME_INPUT)
+    return input_field.get_attribute("value")
 
 
 def submit(driver: webdriver):
