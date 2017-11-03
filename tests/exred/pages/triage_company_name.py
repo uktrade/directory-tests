@@ -16,6 +16,7 @@ NAME = "ExRed Triage - What is your company name"
 URL = urljoin(EXRED_UI_URL, "triage")
 
 COMPANY_NAME_INPUT = "#js-typeahead-company-name"
+QUESTION = "label[for=js-typeahead-company-name]"
 SUGGESTIONS = "ul.SelectiveLookupDisplay"
 FIRST_SUGGESTION = "ul.SelectiveLookupDisplay > li:nth-child(1)"
 CONTINUE_BUTTON = ".exred-triage-form button.button"
@@ -40,6 +41,15 @@ def should_be_here(driver: webdriver):
             assert element.is_displayed()
     take_screenshot(driver, NAME)
     logging.debug("All expected elements are visible on '%s' page", NAME)
+
+
+def hide_suggestions(driver: webdriver):
+    suggestions = driver.find_element_by_css_selector(SUGGESTIONS)
+    WebDriverWait(driver, 5).until(
+        EC.visibility_of_element_located((By.CSS_SELECTOR, SUGGESTIONS)))
+    if suggestions.is_displayed():
+        question = driver.find_element_by_css_selector(QUESTION)
+        question.click()
 
 
 def click_on_first_suggestion(driver: webdriver):
