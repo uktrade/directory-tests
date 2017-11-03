@@ -34,6 +34,8 @@ def visit_page(
     the webdriver' page load timeout set to value lower than the retry's
     `wait_fixed` timer, e.g `driver.set_page_load_timeout(time_to_wait=30)`
     """
+    if not get_actor(context, actor_alias):
+        add_actor(context, unauthenticated_actor(actor_alias))
     context.current_page = get_page_object(page_name)
     logging.debug(
         "%s will visit '%s' page using: '%s'", actor_alias, page_name,
