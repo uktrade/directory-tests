@@ -92,7 +92,8 @@ def triage_say_you_exported_before(context: Context):
     triage_are_you_regular_exporter.should_be_here(driver)
 
 
-def triage_say_you_are_registered_with_companies_house(context: Context):
+def triage_say_you_are_incorporated(
+        context: Context, actor_alias: str):
     driver = context.driver
     triage_are_you_registered_with_companies_house.select_yes(driver)
     triage_are_you_registered_with_companies_house.submit(driver)
@@ -171,7 +172,7 @@ def triage_classify_as_new(context: Context, actor_alias: str):
     triage_say_you_never_exported_before(context)
     triage_select_sector(context, actor_alias)
     if random.choice([True, False]):
-        triage_say_you_are_registered_with_companies_house(context)
+        triage_say_you_are_incorporated(context, actor_alias)
         triage_enter_company_name(context, actor_alias)
     else:
         triage_say_you_are_not_registered_with_companies_house(context)
@@ -190,7 +191,7 @@ def triage_classify_as_occasional(context: Context, actor_alias: str):
     else:
         triage_say_you_do_not_use_online_marketplaces(context)
     if random.choice([True, False]):
-        triage_say_you_are_registered_with_companies_house(context)
+        triage_say_you_are_incorporated(context, actor_alias)
         triage_enter_company_name(context, actor_alias)
     else:
         triage_say_you_are_not_registered_with_companies_house(context)
@@ -205,7 +206,7 @@ def triage_classify_as_regular(context: Context, actor_alias: str):
     triage_say_you_export_regularly(context)
     triage_select_sector(context, actor_alias)
     if random.choice([True, False]):
-        triage_say_you_are_registered_with_companies_house(context)
+        triage_say_you_are_incorporated(context, actor_alias)
         triage_enter_company_name(context, actor_alias)
     else:
         triage_say_you_are_not_registered_with_companies_house(context)
