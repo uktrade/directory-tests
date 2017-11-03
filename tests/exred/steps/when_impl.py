@@ -139,11 +139,13 @@ def triage_say_you_do_not_use_online_marketplaces(context: Context):
     triage_are_you_registered_with_companies_house.should_be_here(driver)
 
 
-def triage_enter_company_name(context: Context):
+def triage_enter_company_name(
+        context: Context, actor_alias: str, *, company_name: str = None):
     driver = context.driver
-    triage_company_name.enter_company_name(driver)
+    company_name = triage_company_name.enter_company_name(driver, company_name)
     triage_company_name.submit(driver)
     triage_result.should_be_here(driver)
+    update_actor(context, actor_alias, company_name=company_name)
 
 
 def triage_should_be_classified_as_new(context: Context):
@@ -168,7 +170,7 @@ def triage_classify_as_new(context: Context, actor_alias: str):
     triage_say_you_never_exported_before(context)
     if random.choice([True, False]):
         triage_say_you_are_registered_with_companies_house(context)
-        triage_enter_company_name(context)
+        triage_enter_company_name(context, actor_alias)
     else:
         triage_say_you_are_not_registered_with_companies_house(context)
     triage_should_be_classified_as_new(context)
@@ -187,7 +189,7 @@ def triage_classify_as_occasional(context: Context, actor_alias: str):
         triage_say_you_do_not_use_online_marketplaces(context)
     if random.choice([True, False]):
         triage_say_you_are_registered_with_companies_house(context)
-        triage_enter_company_name(context)
+        triage_enter_company_name(context, actor_alias)
     else:
         triage_say_you_are_not_registered_with_companies_house(context)
     triage_should_be_classified_as_occasional(context)
@@ -202,7 +204,7 @@ def triage_classify_as_regular(context: Context, actor_alias: str):
     triage_say_you_export_regularly(context)
     if random.choice([True, False]):
         triage_say_you_are_registered_with_companies_house(context)
-        triage_enter_company_name(context)
+        triage_enter_company_name(context, actor_alias)
     else:
         triage_say_you_are_not_registered_with_companies_house(context)
     triage_should_be_classified_as_regular(context)
