@@ -11,6 +11,7 @@ from steps.when_impl import (
     triage_should_be_classified_as_occasional,
     triage_should_be_classified_as_regular
 )
+from utils import get_actor
 
 
 def should_see_sections_on_home_page(
@@ -109,3 +110,28 @@ def triage_should_be_classified_as(
     logging.debug(
         "%s was properly classified as %s exporter", actor_alias,
         classification)
+
+
+def personalised_should_see_layout_for(
+        context: Context, actor_alias: str, classification: str):
+    actor = get_actor(context, actor_alias)
+    incorporated = actor.are_you_incorporated
+    online_marketplaces = actor.do_you_use_online_marketplaces
+    code, _ = actor.what_do_you_want_to_export
+    if classification == "new":
+        personalised_journey.layout_for_new_exporter(
+            context.driver, incorporated=incorporated, sector_code=code)
+    elif classification == "occasional":
+        personalised_journey.layout_for_occasional_exporter(
+            context.driver, incorporated=incorporated,
+            use_online_marketplaces=online_marketplaces, sector_code=code)
+    elif classification == "regular":
+        personalised_journey.layout_for_regular_exporter(
+            context.driver, incorporated=incorporated, sector_code=code)
+    else:
+        raise KeyError(
+            "Could not recognise '%s'. Please use: new, occasional or "
+            "regular" % classification)
+    logging.debug(
+        "%s saw Personalised Journey page layout tailored for %s exporter",
+        actor_alias, classification)

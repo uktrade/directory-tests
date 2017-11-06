@@ -11,6 +11,7 @@ from steps.then_impl import (
     guidance_should_see_total_number_of_articles,
     guidance_tile_should_be_highlighted,
     personalised_journey_should_see_read_counter,
+    personalised_should_see_layout_for,
     should_be_on_page,
     should_see_sections_on_home_page,
     triage_should_be_classified_as
@@ -84,3 +85,9 @@ def step_impl(context, actor_alias, classification):
 @then('"{actor_alias}" should see the summary page with answers to the questions she was asked')
 def then_actor_should_see_answers_to_questions(context, actor_alias):
     triage_should_see_answers_to_questions(context, actor_alias)
+
+
+@then('"{actor_alias}" should be on the personalised "{classification}" exporter journey page')
+def then_classified_exporter_should_be_on_personalised_journey_page(
+        context, actor_alias, classification):
+    personalised_should_see_layout_for(context, actor_alias, classification)
