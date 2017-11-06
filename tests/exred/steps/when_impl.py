@@ -261,7 +261,6 @@ def triage_classify_as_new(context: Context, actor_alias: str):
     else:
         triage_say_you_are_not_incorporated(context, actor_alias)
     triage_should_be_classified_as_new(context)
-    triage_create_exporting_journey(context, actor_alias)
     update_actor(context, alias=actor_alias, triage_classification="new")
 
 
@@ -280,7 +279,6 @@ def triage_classify_as_occasional(context: Context, actor_alias: str):
     else:
         triage_say_you_are_not_incorporated(context, actor_alias)
     triage_should_be_classified_as_occasional(context)
-    triage_create_exporting_journey(context, actor_alias)
     update_actor(context, alias=actor_alias, triage_classification="occasional")
 
 
@@ -295,7 +293,6 @@ def triage_classify_as_regular(context: Context, actor_alias: str):
     else:
         triage_say_you_are_not_incorporated(context, actor_alias)
     triage_should_be_classified_as_regular(context)
-    triage_create_exporting_journey(context, actor_alias)
     update_actor(context, alias=actor_alias, triage_classification="regular")
 
 
@@ -345,6 +342,7 @@ def personalised_journey_create_page(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     exporter_status = actor.self_classification
     triage_classify_as(context, actor_alias, exporter_status=exporter_status)
+    triage_create_exporting_journey(context, actor_alias)
     personalised_journey.should_be_here(context.driver)
 
 
