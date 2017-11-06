@@ -8,6 +8,7 @@ from steps.when_impl import (
     guidance_open_category,
     start_triage,
     triage_classify_as,
+    triage_create_exporting_journey,
     visit_page
 )
 
@@ -39,7 +40,7 @@ def given_actor_was_classified_as(context, actor_alias, exporter_status):
     triage_classify_as(context, actor_alias, exporter_status=exporter_status)
 
 
-@given('"{actor_alias}" has answered triage questions')
+@given('"{actor_alias}" answered triage questions')
 def given_actor_answered_triage_questions(context, actor_alias):
     triage_classify_as(context, actor_alias)
 
