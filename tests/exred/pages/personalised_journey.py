@@ -224,3 +224,54 @@ def check_facts_and_top_10(driver: webdriver, sector_code: str):
         should_see_section(driver, "facts")
         should_see_section(driver, "top 10")
         check_top_facts_values(driver)
+
+
+def layout_for_new_exporter(
+        driver: webdriver, incorporated: bool, sector_code: str):
+    """
+    * a new exporter says his company incorporated, then only `FAB` is displayed
+    * a new exporter says his company is not incorporated, then `no services are displayed`
+    """
+    should_see_section(driver, "hero")
+    check_facts_and_top_10(driver, sector_code)
+    should_see_section(driver, "article list")
+    if incorporated:
+        should_see_section(driver, "fas section")
+    should_see_section(driver, "case studies")
+
+
+def layout_for_occasional_exporter(
+        driver: webdriver, incorporated: bool, use_online_marketplaces: bool,
+        sector_code: str):
+    """
+    * an occasional exporter says his company used online marketplaces and is incorporated, then `FAB & SOO` are displayed
+    * an occasional exporter says his company used online marketplaces but it is not incorporated, then only `SOO` is displayed
+    * an occasional exporter says his company haven't used online marketplaces but it is incorporated, then only `FAB` is displayed
+    * an occasional exporter says his company haven't used online marketplaces and it is not incorporated, then `no services are displayed`
+    """
+    should_see_section(driver, "hero")
+    check_facts_and_top_10(driver, sector_code)
+    should_see_section(driver, "article list")
+    if incorporated and use_online_marketplaces:
+        should_see_section(driver, "fas section")
+        should_see_section(driver, "soo section")
+    if not incorporated and use_online_marketplaces:
+        should_see_section(driver, "soo section")
+    if not incorporated and not use_online_marketplaces:
+        logging.debug("Nothing to show here")
+    should_see_section(driver, "case studies")
+
+
+def layout_for_regular_exporter(
+        driver: webdriver, incorporated: bool, sector_code: str):
+    """
+    * a regular exporter says his company is incorporated, then `FAB, SOO & ExOpps` are displayed
+    * a regular exporter says his company is not incorporated, then `SOO & ExOpps` are displayed
+    """
+    should_see_section(driver, "hero")
+    check_facts_and_top_10(driver, sector_code)
+    if incorporated:
+        should_see_section(driver, "fas section")
+    should_see_section(driver, "soo tile")
+    should_see_section(driver, "exopps tile")
+    should_see_section(driver, "guidance")
