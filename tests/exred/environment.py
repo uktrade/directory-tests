@@ -73,7 +73,11 @@ def before_scenario(context: Context, scenario: Scenario):
     try:
         context.driver.maximize_window()
     except WebDriverException:
-        logging.error("Failed to maximize the window, will continue as is")
+        logging.warning("Failed to maximize the window.")
+        try:
+            context.driver.set_window_size(1600, 1200)
+        except WebDriverException:
+            logging.warning("Failed to set window size, will continue as is")
 
 
 def after_scenario(context: Context, scenario: Scenario):
