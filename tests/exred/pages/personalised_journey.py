@@ -21,41 +21,96 @@ FINANCE_LINK = "#resource-guidance a[href='/finance']"
 BUSINESS_LINK = "#resource-guidance a[href='/business-planning']"
 GETTING_PAID_LINK = "#resource-guidance a[href='/getting-paid']"
 OPERATIONS_AND_COMPLIANCE_LINK = "#resource-guidance a[href='/operations-and-compliance']"
-
+TOP_IMPORTER = "#top_importer_name"
+TRADE_VALUE = "#top_importer_global_trade_value"
+TOP_10_TRADE_VALUE = ".cell-global_trade_value"
 SECTIONS = {
     "hero": {
-        "hero - title": "section.hero-section h1",
-        "hero - introduction": "section.hero-section p",
-        "hero - exporting is great logo": "section.hero-section img",
+        "title": "section.hero-section h1",
+        "introduction": "section.hero-section p",
+        "exporting is great logo": "section.hero-section img",
+        "update preferences link": "section.hero-section a.preferences",
     },
     "facts": {
-        "facts - intro": "#content > section.sector-fact p.intro",
-        "facts - figures": "#content > section.sector-fact p.figure",
+        "intro": "#content > section.sector-fact p.intro",
+        "figures": "#content > section.sector-fact p.figure",
     },
     "articles": {
-        "articles - heading": "#persona-overview h2",
-        "articles - introduction": "#persona-overview p.intro",
-        "articles - article list": "#persona-overview div.section-content-list",
+        "heading": "#persona-overview h2",
+        "introduction": "#persona-overview p.intro",
+        "article list": "#persona-overview div.section-content-list",
     },
     "top 10": {
-        "top 10 - heading": "#content > section.markets h1",
-        "top 10 - table": "#content > section.markets table",
+        "heading": "section.top-markets h2",
+        "intro": "section.top-markets .intro",
+        "table": "#top-of-the-markets",
+        "source data": "section.top-markets #market-source-data",
     },
     "services": {
-        "services - heading": "section.service-section h2",
-        "services - intro": "section.service-section .intro",
-        "services - other": "#other-services > div > div",
+        "heading": "section.service-section h2",
+        "intro": "section.service-section .intro",
+        "other": "#other-services > div > div",
+    },
+    "fas section": {
+        "heading": "section.service-section.fas h2",
+        "fas image": "section.service-section.fas img",
+        "intro": "section.service-section.fas .intro",
+        "create a trade profile": "section.service-section.fas .intro .button",
+    },
+    "exopps tile": {
+        "heading": "#other-services div.lg-2:nth-child(2) h3",
+        "soo image": "#other-services div.lg-2:nth-child(2) img",
+        "intro": "#other-services div.lg-2:nth-child(2) p",
+        "find marketplaces link": "#other-services div.lg-2:nth-child(2) a",
+    },
+    "exopps section": {
+        "heading": "section.service-section.soo h2",
+        "soo image": "section.service-section.soo img",
+        "intro": "section.service-section.soo .intro",
+        "find marketplaces button": "section.service-section.soo .intro .button",
+    },
+    "soo section": {
+        "heading": "section.service-section.soo h2",
+        "soo image": "section.service-section.soo img",
+        "intro": "section.service-section.soo .intro",
+        "find marketplaces button": "section.service-section.soo .intro .button",
+    },
+    "soo tile": {
+        "heading": "#other-services div.lg-2:nth-child(1) h3",
+        "soo image": "#other-services div.lg-2:nth-child(1) img",
+        "intro": "#other-services div.lg-2:nth-child(1) p",
+        "find marketplaces link": "#other-services div.lg-2:nth-child(1) a",
+    },
+    "article list": {
+        "itself": "#articles",
+        "heading": "#articles h2",
+        "introduction": "#articles .intro",
+        "article list": "#articles .section-content-list",
     },
     "guidance": {
-        "guidance - heading": "#resource-guidance h2",
-        "guidance - introduction": "#resource-guidance p.section-intro",
-        "guidance - categories": "#resource-guidance div.group",
+        "itself": "#resource-guidance",
+        "guidance - heading": "#resource-guidance h2.section-header",
+        "guidance - introduction": "#resource-guidance p.intro",
+        "guidance - categories": "#resource-guidance .group",
         "market research": MARKET_RESEARCH_LINK,
         "customer insight": CUSTOMER_INSIGHT_LINK,
         "finance": FINANCE_LINK,
         "business planning": BUSINESS_LINK,
         "getting paid": GETTING_PAID_LINK,
         "operations and compliance": OPERATIONS_AND_COMPLIANCE_LINK,
+    },
+    "case studies": {
+        "heading": "#carousel h2",
+        "intro": "#carousel .intro",
+        "article": "#carousel .ed-carousel-container",
+        "previous article": "#carousel label.ed-carousel__control--backward",
+        "next article": "#carousel label.ed-carousel__control--forward",
+        "case study head link": ".ed-carousel__track > div:nth-child(1) h3 a",
+        "case study intro": ".ed-carousel__track > div:nth-child(1) p",
+        "case study intro link": ".ed-carousel__track > div:nth-child(1) div > a",
+        "carousel indicator #1": "#carousel .ed-carousel__indicator[for='1']",
+        "carousel indicator #2": "#carousel .ed-carousel__indicator[for='2']",
+        "carousel indicator #3": "#carousel .ed-carousel__indicator[for='3']",
     }
 }
 
