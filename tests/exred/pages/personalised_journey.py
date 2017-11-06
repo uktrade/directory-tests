@@ -194,3 +194,21 @@ def should_see_section(driver: webdriver, name: str):
         with assertion_msg(
                 "'%s' in '%s' is not displayed", key, name):
             assert element.is_displayed()
+
+
+def check_top_facts_values(driver: webdriver):
+    top_importer = driver.find_element_by_css_selector(TOP_IMPORTER).text
+    trade_value = driver.find_element_by_css_selector(TRADE_VALUE).text
+
+    try:
+        tr = driver.find_element_by_css_selector(
+            "#row-{}".format(top_importer))
+        cell = tr.find_element_by_css_selector(TOP_10_TRADE_VALUE).text
+        with assertion_msg(
+                "Expected to see 'Export value from the world' for %s to be %s"
+                " but got %s", top_importer, trade_value, cell):
+            assert cell == trade_value
+    except NoSuchElementException:
+        logging.debug(
+            "Country mentioned in Top Facts: %s is not present in the Top 10 "
+            "Importers table. Won't check the the trade value")
