@@ -4,6 +4,10 @@ import logging
 from urllib.parse import urljoin
 
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
 
 from registry.articles import get_articles
 from settings import EXRED_UI_URL
@@ -175,3 +179,18 @@ def open(driver: webdriver, group: str, element: str):
     button.click()
     take_screenshot(
         driver, NAME + " after clicking on: %s link".format(element))
+
+
+def should_see_section(driver: webdriver, name: str):
+    section = SECTIONS[name]
+    for key, selector in section.items():
+        with selenium_action(
+                driver, "Could not find: '%s' element in '%s' section using "
+                        "'%s' selector",
+                key, name, selector):
+            element = driver.find_element_by_css_selector(selector)
+            WebDriverWait(driver, 5).until(
+                EC.visibility_of_element_located((By.CSS_SELECTOR, selector)))
+        with assertion_msg(
+                "'%s' in '%s' is not displayed", key, name):
+            assert element.is_displayed()
