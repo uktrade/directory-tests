@@ -147,9 +147,17 @@ def show_all_articles(driver: webdriver):
     with selenium_action(
             driver, "Could not find 'Show More' button using '%s'",
             SHOW_MORE_BUTTON):
-        button = driver.find_element_by_css_selector(SHOW_MORE_BUTTON)
-    while button.is_displayed():
-        button.click()
+        show_more_button = driver.find_element_by_css_selector(SHOW_MORE_BUTTON)
+    max_clicks = 10
+    counter = 0
+    # click up to 11 times - see bug ED-2561
+    while show_more_button.is_displayed() and counter <= max_clicks:
+        show_more_button.click()
+        counter += 1
+    if counter > max_clicks:
+        logging.warning(
+            "Expected 'Show more' button to disappear after clicking on it for"
+            " %d times.", counter)
     take_screenshot(driver, NAME + " after showing all articles")
 
 
