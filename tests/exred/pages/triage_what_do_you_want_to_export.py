@@ -46,25 +46,28 @@ def should_be_here(driver: webdriver):
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
-def enter(driver: webdriver, sector: str) -> str:
+def enter(driver: webdriver, code: str, sector: str) -> tuple:
     """Enter information about the things you want to export.
 
     :param driver: webdriver object
+    :param code: sector code. Codes for:
+                 Goods start with HS, and for Services with EB (no facts are
+                 available for such codes)
     :param sector: specific product to use. Will select random if not set.
-    :return: selected sector, might be different that t
+    :return: selected code & sector name
     """
-    if not sector:
-        sector = random.choice(list(EXRED_SECTORS.values()))
+    if not code and not sector:
+        code, sector = random.choice(list(EXRED_SECTORS.items()))
     with selenium_action(driver, "Can't find Sector selector input box"):
         input_field = driver.find_element_by_css_selector(SECTORS_INPUT)
     input_field.click()
     input_field.clear()
-    input_field.send_keys(sector)
+    input_field.send_keys(code or sector)
     with selenium_action(driver, "Can't find Autocomplete 1st option"):
         option = driver.find_element_by_css_selector(AUTOCOMPLETE_1ST_OPTION)
     option.click()
     take_screenshot(driver, NAME)
-    return sector
+    return code, sector
 
 
 def submit(driver: webdriver):
