@@ -18,6 +18,7 @@ URL = urljoin(EXRED_UI_URL, "custom")
 
 SHOW_MORE_BUTTON = "#js-paginate-list-more"
 READ_COUNTER = "#articles .scope-indicator .position > span.from"
+TOTAL_ARTICLES = "#articles .scope-indicator .position > span.to"
 
 MARKET_RESEARCH_LINK = "#resource-guidance a[href='/market-research']"
 CUSTOMER_INSIGHT_LINK = "#resource-guidance a[href='/customer-insight']"
@@ -161,12 +162,31 @@ def show_all_articles(driver: webdriver):
     take_screenshot(driver, NAME + " after showing all articles")
 
 
-def should_see_read_counter(driver: webdriver, *, exporter_status: str = None):
+def should_see_read_counter(
+        driver: webdriver, *, exporter_status: str = None,
+        expected_number_articles: int = 0):
     show_all_articles(driver)
     with selenium_action(
-            driver, "Could not find 'Show More' button using '%s'",
-            SHOW_MORE_BUTTON):
+            driver, "Could not find 'Article Read Counter' using '%s'",
+            READ_COUNTER):
         counter = driver.find_element_by_css_selector(READ_COUNTER)
+    with assertion_msg(
+            "Guidance Article Read Counter is not visible on '%s' page", NAME):
+        assert counter.is_displayed()
+    given_number_articles = int(counter.text)
+    with assertion_msg(
+            "Expected the Article Read Counter to be: %d but got %d",
+            expected_number_articles, given_number_articles):
+        assert given_number_articles == expected_number_articles
+
+
+def should_see_total_articles_to_read(
+        driver: webdriver, *, exporter_status: str = None):
+    show_all_articles(driver)
+    with selenium_action(
+            driver, "Could not find 'Total Articles to Read' using '%s'",
+            TOTAL_ARTICLES):
+        counter = driver.find_element_by_css_selector(TOTAL_ARTICLES)
     with assertion_msg(
             "Guidance Article Read Counter is not visible on '%s' page", NAME):
         assert counter.is_displayed()
