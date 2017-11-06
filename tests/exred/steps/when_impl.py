@@ -79,12 +79,14 @@ def start_triage(context: Context, actor_alias: str):
 
 
 def triage_say_what_do_you_want_to_export(
-        context: Context, actor_alias: str, *, sector: str = None):
+        context: Context, actor_alias: str, *, code: str = None,
+        sector: str = None):
     driver = context.driver
-    final_sector = triage_what_do_you_want_to_export.enter(driver, sector)
+    code, sector = triage_what_do_you_want_to_export.enter(driver, code, sector)
     triage_what_do_you_want_to_export.submit(driver)
     triage_have_you_exported.should_be_here(driver)
-    update_actor(context, actor_alias, what_do_you_want_to_export=final_sector)
+    update_actor(
+        context, actor_alias, what_do_you_want_to_export=(code, sector))
 
 
 def triage_say_you_exported_before(context: Context, actor_alias: str):
