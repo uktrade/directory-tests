@@ -78,3 +78,9 @@ def get_questions_and_answers(driver: webdriver) -> dict:
     for q, a in list(zip(questions, answers)):
         result.update({q.text: a.text})
     return result
+
+
+def change_answers(driver: webdriver):
+    link = driver.find_element_by_css_selector(CHANGE_ANSWERS_LINK)
+    link.click()
+    take_screenshot(driver, NAME + " after deciding to change the answers")
