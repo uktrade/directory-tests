@@ -23,6 +23,7 @@ Feature: Home Page
   @triage
   Scenario: Any Exporter visiting the home page after triage should be able to get to personalised page
     Given "Robert" answered triage questions
+    And "Robert" decided to create his personalised journey page
     And "Robert" goes to the "Home" page
 
     When "Robert" decides to continue in Exporting journey section
