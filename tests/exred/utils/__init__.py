@@ -16,7 +16,10 @@ from os.path import abspath, join
 import requests
 from behave.runner import Context
 from selenium import webdriver
-from selenium.common.exceptions import WebDriverException
+from selenium.common.exceptions import (
+    WebDriverException,
+    NoSuchElementException
+)
 
 from settings import (
     BROWSERSTACK_SESSIONS_URL,
