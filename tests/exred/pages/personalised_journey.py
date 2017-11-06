@@ -212,3 +212,15 @@ def check_top_facts_values(driver: webdriver):
         logging.debug(
             "Country mentioned in Top Facts: %s is not present in the Top 10 "
             "Importers table. Won't check the the trade value")
+
+
+def check_facts_and_top_10(driver: webdriver, sector_code: str):
+    """There are no Facts & Top 10 data for Service Sectors (start with EB)."""
+    if sector_code.startswith("EB"):
+        logging.debug(
+            "Exported chose service sector: %s for which there are no facts "
+            "and information on top 10 importers", sector_code)
+    else:
+        should_see_section(driver, "facts")
+        should_see_section(driver, "top 10")
+        check_top_facts_values(driver)
