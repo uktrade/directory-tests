@@ -52,9 +52,9 @@ SECTIONS = {
     },
     "guidance": {
         "itself": "#resource-guidance",
-        "header": "#resource-guidance > .container .section-header",
-        "intro": "#resource-guidance > .container .section-intro",
-        "groups": "#resource-guidance > .container .group",
+        "header": "#resource-guidance .section-header",
+        "intro": "#resource-guidance .intro",
+        "groups": "#resource-guidance .group",
         "market research": MARKET_RESEARCH_LINK,
         "customer insight": CUSTOMER_INSIGHT_LINK,
         "finance": FINANCE_LINK,
