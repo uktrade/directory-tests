@@ -8,6 +8,7 @@ from steps.when_impl import (
     personalised_journey_create_page,
     start_triage,
     triage_are_you_incorporated,
+    triage_change_answers,
     triage_create_exporting_journey,
     triage_do_you_export_regularly,
     triage_have_you_exported_before,
@@ -91,3 +92,9 @@ def when_actor_says_whether_he_used_online_marktet_places(
         context, actor_alias, decision):
     triage_say_whether_you_use_online_marketplaces(
         context, actor_alias, decision)
+
+
+@when('"{actor_alias}" decides to change her answers')
+@when('"{actor_alias}" decides to change his answers')
+def when_actor_decides_to_change_the_answers(context, actor_alias):
+    triage_change_answers(context, actor_alias)

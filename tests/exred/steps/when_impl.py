@@ -346,3 +346,9 @@ def personalised_journey_create_page(context: Context, actor_alias: str):
     exporter_status = actor.self_classification
     triage_classify_as(context, actor_alias, exporter_status=exporter_status)
     personalised_journey.should_be_here(context.driver)
+
+
+def triage_change_answers(context, actor_alias):
+    triage_result.change_answers(context.driver)
+    triage_what_do_you_want_to_export.should_be_here(context.driver)
+    logging.debug("%s was able to change the Triage answers", actor_alias)
