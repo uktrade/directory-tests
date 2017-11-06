@@ -49,7 +49,7 @@ Feature: Guidance articles
   @<relevant>
   @bug
   @ED-2508
-  @fixme
+  @fixed
   Scenario Outline: "<relevant>" Exporter should see Guidance Articles Read Counter on the personalised page
     Given "Nadia" classifies herself as "<relevant>" exporter
 
