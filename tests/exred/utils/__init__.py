@@ -171,7 +171,7 @@ def selenium_action(driver: webdriver, message: str, *args):
     """
     try:
         yield
-    except WebDriverException as e:
+    except (WebDriverException, NoSuchElementException) as e:
         browser = driver.capabilities.get("browserName", "unknown browser")
         version = driver.capabilities.get("version", "unknown version")
         platform = driver.capabilities.get("platform", "unknown platform")
@@ -180,6 +180,7 @@ def selenium_action(driver: webdriver, message: str, *args):
                 .format(browser, version, platform, session_id))
         if args:
             message = message % args
+        print("%s - %s" % (info, message))
         logging.error("%s - %s", info, message)
         e.args += (message,)
         _, _, tb = sys.exc_info()
