@@ -321,8 +321,8 @@ def triage_should_see_answers_to_questions(context, actor_alias):
     actor = get_actor(context, actor_alias)
     q_and_a = triage_result.get_questions_and_answers(context.driver)
     if actor.what_do_you_want_to_export is not None:
-        what = actor.what_do_you_want_to_export
-        assert q_and_a["What do you want to export?"] == what
+        code, sector = actor.what_do_you_want_to_export
+        assert q_and_a["What do you want to export?"] == sector
     if actor.company_name is not None:
         name = actor.company_name
         assert q_and_a["Company name"] == name
