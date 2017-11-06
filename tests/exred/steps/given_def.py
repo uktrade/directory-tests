@@ -54,3 +54,9 @@ def given_actor_opened_guidance(context, actor_alias, category, location):
 @given('"{actor_alias}" decided to build his exporting journey')
 def given_actor_starts_exporting_journey(context, actor_alias):
     start_triage(context, actor_alias)
+
+
+@given('"{actor_alias}" decided to create her personalised journey page')
+@given('"{actor_alias}" decided to create his personalised journey page')
+def given_actor_decided_to_create_personalised_page(context, actor_alias):
+    triage_create_exporting_journey(context, actor_alias)
