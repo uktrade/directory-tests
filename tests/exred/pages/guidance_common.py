@@ -167,7 +167,8 @@ def check_elements_are_visible(driver: webdriver, elements: list):
                 driver, "Could not find '%s' on '%s' using '%s' selector",
                 element, driver.current_url, selector):
             page_element = driver.find_element_by_css_selector(selector)
-            if driver.capabilities["browserName"].lower() == "edge":
+            if "firefox" not in driver.capabilities["browserName"].lower():
+                logging.debug("Moving focus to '%s' element", element)
                 action_chains = ActionChains(driver)
                 action_chains.move_to_element(page_element)
                 action_chains.perform()

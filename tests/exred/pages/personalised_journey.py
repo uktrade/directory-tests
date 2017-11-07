@@ -172,7 +172,8 @@ def should_see_read_counter(
             driver, "Could not find 'Article Read Counter' using '%s'",
             READ_COUNTER):
         counter = driver.find_element_by_css_selector(READ_COUNTER)
-        if driver.capabilities["browserName"].lower() == "edge":
+        if "firefox" not in driver.capabilities["browserName"].lower():
+            logging.debug("Moving focus to 'Read Counter' on %s", NAME)
             action_chains = ActionChains(driver)
             action_chains.move_to_element(counter)
             action_chains.perform()
