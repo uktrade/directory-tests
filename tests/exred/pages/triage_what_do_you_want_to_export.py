@@ -79,3 +79,17 @@ def submit(driver: webdriver):
     assert button.is_displayed()
     button.click()
     take_screenshot(driver, NAME + " after submitting")
+
+
+def is_sector(driver: webdriver, code: str, sector: str):
+    with selenium_action(driver, "Can't find Sector selector input box"):
+        input_field = driver.find_element_by_css_selector(SECTORS_INPUT)
+    input_field_value = input_field.get_attribute("value").lower()
+    with assertion_msg(
+            "Expected the sector input field to be pre-populated with Sector "
+            "Code: '%s' but instead found '%s'", code, input_field_value):
+        assert code.lower() in input_field_value
+    with assertion_msg(
+            "Expected the sector input field to be pre-populated with Sector "
+            "Name: '%s' but instead found '%s'", sector, input_field_value):
+        assert sector.lower() in input_field_value

@@ -11,6 +11,8 @@ from utils import assertion_msg, take_screenshot
 NAME = "ExRed Triage - have you exported before"
 URL = urljoin(EXRED_UI_URL, "triage")
 
+YES_RADIO = "#id_EXPORTED_BEFORE-exported_before_0"
+NO_RADIO = "#id_EXPORTED_BEFORE-exported_before_1"
 YES_CHECKBOX = "#id_EXPORTED_BEFORE-exported_before > li:nth-child(1) > label"
 NO_CHECKBOX = "#id_EXPORTED_BEFORE-exported_before > li:nth-child(2) > label"
 CONTINUE_BUTTON = ".exred-triage-form button.button"
@@ -53,3 +55,15 @@ def submit(driver: webdriver):
     button = driver.find_element_by_css_selector(CONTINUE_BUTTON)
     button.click()
     take_screenshot(driver, NAME + " after submitting")
+
+
+def is_yes_selected(driver: webdriver):
+    yes = driver.find_element_by_css_selector(YES_RADIO)
+    with assertion_msg("Expected Yes option to be selected"):
+        assert yes.get_property("checked")
+
+
+def is_no_selected(driver: webdriver):
+    no = driver.find_element_by_css_selector(NO_RADIO)
+    with assertion_msg("Expected No option to be selected"):
+        assert no.get_property("checked")
