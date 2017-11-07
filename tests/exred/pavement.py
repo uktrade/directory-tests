@@ -3,8 +3,9 @@
 import os
 import sys
 from multiprocessing import Process
+from optparse import make_option
 
-from paver.easy import consume_nargs, sh, task
+from paver.easy import cmdopts, sh, task
 from paver.setuputils import setup
 
 # Append current directory to Paver's class path.
@@ -24,23 +25,42 @@ setup(
 )
 
 
-def run_behave_test(config_name: str, task_id: int = 0):
-    sh("CONFIG={} TASK_ID={} behave -k --format progress3 --no-logcapture "
-       "--tags=-wip --tags=-skip --tags=~fixme".format(config_name, task_id))
+def run_behave_test(
+        config_name: str, task_id: int = 0, *, browsers: str = "",
+        versions: str = "", tag: str = None):
+    extra_tag = "--tags={}".format(tag) if tag else ""
+    sh("BROWSERS={} VERSIONS={} CONFIG={} TASK_ID={} behave -k --format "
+       "progress3 --no-logcapture --tags=-wip --tags=-skip --tags=~fixme {}"
+        .format(browsers, versions, config_name, task_id, extra_tag))
 
 
 @task
-@consume_nargs(1)
-def run(args):
+@cmdopts([
+    make_option('-c', '--config', help='Configuration name: local, hub or browsertstack', default="local"),
+    make_option('-t', '--tag', help='Scenario tag for a selective test run', default=''),
+    make_option('-b', '--browsers', help='A comma separated list of Browsers to run the tests with', default='Chrome'),
+    make_option('-v', '--versions', help='A comma separated list of Browsers Versions to run the tests with', default='')
+])
+def run(options):
     """Run single, local and parallel test using different config."""
     jobs = []
-    if args[0] == "local":
-        run_behave_test(args[0])
+    if options.config == "local":
+        run_behave_test(
+            config_name="local", tag=options.tag, browsers=options.browsers,
+            versions=options.versions
+        )
     else:
         import config
-        browser_num = len(config.get(args[0])["environments"])
+        browser_num = len(config.get(options.config)["environments"])
         for idx in range(browser_num):
-            process = Process(target=run_behave_test, args=(args[0], idx))
+            process = Process(
+                target=run_behave_test,
+                args=(options.config, idx),
+                kwargs={
+                    "tag": options.tag,
+                    "browsers": options.browsers,
+                    "versions": options.versions
+                })
             jobs.append(process)
             process.start()
 
