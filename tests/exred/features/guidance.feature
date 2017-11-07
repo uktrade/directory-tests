@@ -86,26 +86,28 @@ Feature: Guidance articles
       | Getting paid      |
 
 
-  @wip
   @ED-2466
   @personalised-page
   @articles
-  Scenario Outline: Regular Exporter should get to a relevant article list from Guidance section on the personalised page
-    Given "Nadia" is interested in "<guidance_category>" guidance
+  @regular
+  @optimize
+  @<specific>
+  Scenario Outline: Regular Exporter should see "<specific>" Guidance Articles accessed via personalised journey page
+    Given "Nadia" was classified as "regular" exporter in the triage process
 
-    When "Nadia" goes to the relevant "<guidance_category>" link in the Guidance section on the personalised page
+    When "Nadia" goes to the "<specific>" Guidance articles via "personalised journey"
 
-    Then "Nadia" should see an ordered list of all articles  selected for "<guidance_category>" + "next category"
-    And "Nadia" should see a Articles Read counter, Total number of Articles and Time to complete remaining chapters
-    And "Nadia" should see a link to the next Guidance category
+    Then "Nadia" should see an ordered list of all articles selected for "<specific>" category
+    And "Nadia" should see on the Guidance Articles page "Articles Read counter, Total number of Articles, Time to complete remaining chapters"
+    And "Nadia" should see a link to the "<next>" Guidance category
 
-    Examples:
-      | guidance_category |
-      | Market research   |
-      | Customer insight  |
-      | Finance           |
-      | Business planning |
-      | Getting paid      |
+    Examples: Guidance categories
+      | specific          | next              |
+      | Market research   | Customer insight  |
+      | Customer insight  | Finance           |
+      | Finance           | Business planning |
+      | Business planning | Getting paid      |
+      | Getting paid      | last              |
 
 
   @ED-2467
