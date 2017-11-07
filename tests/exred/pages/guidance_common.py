@@ -3,6 +3,7 @@
 import logging
 
 from selenium import webdriver
+from selenium.webdriver import ActionChains
 
 from registry.articles import get_articles
 from utils import assertion_msg, selenium_action, take_screenshot
@@ -166,5 +167,8 @@ def check_elements_are_visible(driver: webdriver, elements: list):
                 driver, "Could not find '%s' on '%s' using '%s' selector",
                 element, driver.current_url, selector):
             page_element = driver.find_element_by_css_selector(selector)
+            action_chains = ActionChains(driver)
+            action_chains.move_to_element(page_element)
+            action_chains.perform()
         with assertion_msg("Expected to see '%s' but can't see it", element):
             assert page_element.is_displayed()
