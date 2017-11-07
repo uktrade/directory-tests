@@ -72,10 +72,12 @@ def before_scenario(context: Context, scenario: Scenario):
     context.driver.set_page_load_timeout(time_to_wait=30)
     try:
         context.driver.maximize_window()
+        logging.debug("Maximized the window.")
     except WebDriverException:
-        logging.warning("Failed to maximize the window.")
+        logging.debug("Failed to maximize the window.")
         try:
             context.driver.set_window_size(1600, 1200)
+            logging.warning("Set window size to 1600x1200")
         except WebDriverException:
             logging.warning("Failed to set window size, will continue as is")
 
