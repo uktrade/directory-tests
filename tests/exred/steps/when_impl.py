@@ -371,4 +371,56 @@ def personalised_journey_create_page(context: Context, actor_alias: str):
 def triage_change_answers(context, actor_alias):
     triage_result.change_answers(context.driver)
     triage_what_do_you_want_to_export.should_be_here(context.driver)
+    logging.debug("%s decided to change the Triage answers", actor_alias)
+
+
+def triage_answer_questions_again(context, actor_alias):
+    driver = context.driver
+    actor = get_actor(context, actor_alias)
+    code, sector = actor.what_do_you_want_to_export
+    triage_what_do_you_want_to_export.is_sector(driver, code, sector)
+    triage_what_do_you_want_to_export.submit(driver)
+
+    def continue_from_are_you_incorporated():
+        if actor.are_you_incorporated:
+            company_name = actor.company_name
+            triage_are_you_registered_with_companies_house.is_yes_selected(driver)
+            triage_are_you_registered_with_companies_house.submit(driver)
+            triage_company_name.should_be_here(driver)
+            triage_company_name.is_company_name(driver, company_name)
+            triage_company_name.submit(driver)
+        else:
+            triage_are_you_registered_with_companies_house.is_no_selected(driver)
+            triage_are_you_registered_with_companies_house.submit(driver)
+        triage_result.should_be_here(driver)
+
+    if actor.have_you_exported_before is not None:
+        if actor.have_you_exported_before:
+            triage_have_you_exported.is_yes_selected(driver)
+            triage_have_you_exported.submit(driver)
+            triage_are_you_regular_exporter.should_be_here(driver)
+            if actor.do_you_export_regularly:
+                triage_are_you_regular_exporter.is_yes_selected(driver)
+                triage_are_you_regular_exporter.submit(driver)
+                triage_are_you_registered_with_companies_house.should_be_here(driver)
+                continue_from_are_you_incorporated()
+                triage_result.should_be_classified_as_regular(driver)
+            else:
+                triage_are_you_regular_exporter.is_no_selected(driver)
+                triage_are_you_regular_exporter.submit(driver)
+                triage_do_you_use_online_marketplaces.should_be_here(driver)
+                if actor.do_you_use_online_marketplaces:
+                    triage_do_you_use_online_marketplaces.is_yes_selected(driver)
+                else:
+                    triage_do_you_use_online_marketplaces.is_no_selected(driver)
+                triage_do_you_use_online_marketplaces.submit(driver)
+                continue_from_are_you_incorporated()
+                triage_result.should_be_classified_as_occasional(driver)
+        else:
+            triage_have_you_exported.is_no_selected(driver)
+            triage_have_you_exported.submit(driver)
+            triage_are_you_registered_with_companies_house.should_be_here(driver)
+            continue_from_are_you_incorporated()
+            triage_result.should_be_classified_as_new(driver)
+        triage_should_see_answers_to_questions(context, actor_alias)
     logging.debug("%s was able to change the Triage answers", actor_alias)
