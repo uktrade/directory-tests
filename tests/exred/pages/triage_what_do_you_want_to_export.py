@@ -60,9 +60,13 @@ def enter(driver: webdriver, code: str, sector: str) -> tuple:
         code, sector = random.choice(list(EXRED_SECTORS.items()))
     with selenium_action(driver, "Can't find Sector selector input box"):
         input_field = driver.find_element_by_css_selector(SECTORS_INPUT)
-    input_field.click()
-    input_field.clear()
-    input_field.send_keys(code or sector)
+    max_retries = 5
+    counter = 0
+    while (code.lower() not in input_field.get_attribute("value").lower()) and (counter < max_retries):
+        input_field.click()
+        input_field.clear()
+        input_field.send_keys(code or sector)
+        counter += 1
     with selenium_action(driver, "Can't find Autocomplete 1st option"):
         option = driver.find_element_by_css_selector(AUTOCOMPLETE_1ST_OPTION)
     option.click()
