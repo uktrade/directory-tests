@@ -156,9 +156,10 @@ def show_all_articles(driver: webdriver):
         show_more_button.click()
         counter += 1
     if counter > max_clicks:
-        logging.warning(
-            "Expected 'Show more' button to disappear after clicking on it for"
-            " %d times.", counter)
+        with assertion_msg(
+                "'Show more' button didn't disappear after clicking on it for"
+                " %d times", counter):
+            assert counter == max_clicks
     take_screenshot(driver, NAME + " after showing all articles")
 
 
