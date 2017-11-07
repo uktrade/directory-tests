@@ -319,16 +319,32 @@ def triage_should_see_answers_to_questions(context, actor_alias):
     q_and_a = triage_result.get_questions_and_answers(context.driver)
     if actor.what_do_you_want_to_export is not None:
         code, sector = actor.what_do_you_want_to_export
-        assert q_and_a["What do you want to export?"] == sector
+        question = "What do you want to export?"
+        with assertion_msg(
+                "Expected answer to question '%s' to be '%s', but got '%s' "
+                "instead", question, sector, q_and_a[question]):
+            assert q_and_a[question] == sector
     if actor.company_name is not None:
         name = actor.company_name
-        assert q_and_a["Company name"] == name
+        question = "Company name"
+        with assertion_msg(
+                "Expected answer to question '%s' to be '%s', but got '%s' "
+                "instead", question, name, q_and_a[question]):
+            assert q_and_a[question] == name
     if actor.have_you_exported_before is not None:
         exported_before = "Yes" if actor.have_you_exported_before else "No"
-        assert q_and_a["Have you exported before?"] == exported_before
+        question = "Have you exported before?"
+        with assertion_msg(
+                "Expected answer to question '%s' to be '%s', but got '%s' "
+                "instead", question, exported_before, q_and_a[question]):
+            assert q_and_a[question] == exported_before
     if actor.do_you_export_regularly is not None:
         export_regularly = "Yes" if actor.do_you_export_regularly else "No"
-        assert q_and_a["Is exporting a regular part of your business activities?"] == export_regularly
+        question = "Is exporting a regular part of your business activities?"
+        with assertion_msg(
+                "Expected answer to question '%s' to be '%s', but got '%s' "
+                "instead", question, export_regularly, q_and_a[question]):
+            assert q_and_a[question] == export_regularly
     # TODO uncomment when ED-2494 & ED-2536 are fixed
     # if actor.are_you_incorporated is not None:
     #     incorporated = "Yes" if actor.are_you_incorporated else "No"
