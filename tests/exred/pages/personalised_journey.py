@@ -172,9 +172,10 @@ def should_see_read_counter(
             driver, "Could not find 'Article Read Counter' using '%s'",
             READ_COUNTER):
         counter = driver.find_element_by_css_selector(READ_COUNTER)
-        action_chains = ActionChains(driver)
-        action_chains.move_to_element(counter)
-        action_chains.perform()
+        if driver.capabilities["browserName"].lower() == "edge":
+            action_chains = ActionChains(driver)
+            action_chains.move_to_element(counter)
+            action_chains.perform()
     with assertion_msg(
             "Guidance Article Read Counter is not visible on '%s' page", NAME):
         assert counter.is_displayed()
