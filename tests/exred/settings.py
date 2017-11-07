@@ -15,6 +15,7 @@ TASK_ID = int(os.environ.get("TASK_ID", 0))
 
 # optional variables set by user
 BROWSERS = os.environ.get("BROWSERS", "").split()
+BROWSERS_VERSIONS = os.environ.get("VERSIONS", "").split()
 HUB_URL = os.environ.get("HUB_URL", None)
 CAPABILITIES = os.environ.get("CAPABILITIES", None)
 BUILD_ID = os.environ.get("CIRCLE_SHA1", str(datetime.date(datetime.now())))
@@ -30,10 +31,10 @@ BROWSERSTACK_EXECUTOR_URL = ("http://{}:{}@{}/wd/hub".format(
 BROWSERSTACK_SESSIONS_URL = "https://www.browserstack.com/automate/sessions/{}.json"
 
 
-if (CONFIG_NAME == "browserstack" and
+if (CONFIG_NAME.startswith("browserstack") and
         (BROWSERSTACK_SERVER and BROWSERSTACK_USER and BROWSERSTACK_PASS)):
     HUB_URL = BROWSERSTACK_EXECUTOR_URL
 
 CONFIG = config.get(
-    config_file=CONFIG_NAME, hub_url=HUB_URL,
-    capabilities=CAPABILITIES, browsers=BROWSERS, build_id=BUILD_ID)
+    config_file=CONFIG_NAME, hub_url=HUB_URL, capabilities=CAPABILITIES,
+    browsers=BROWSERS, versions=BROWSERS_VERSIONS, build_id=BUILD_ID)
