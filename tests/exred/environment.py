@@ -80,6 +80,7 @@ def before_scenario(context: Context, scenario: Scenario):
             logging.warning("Set window size to 1600x1200")
         except WebDriverException:
             logging.warning("Failed to set window size, will continue as is")
+    logging.debug("Browser Capabilities: %s", context.driver.capabilities)
 
 
 def after_scenario(context: Context, scenario: Scenario):
