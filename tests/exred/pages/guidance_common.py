@@ -160,6 +160,9 @@ def check_elements_are_visible(driver: webdriver, elements: list):
     take_screenshot(driver, NAME)
     for element in elements:
         selector = SCOPE_ELEMENTS[element.lower()]
-        page_element = driver.find_element_by_css_selector(selector)
-        with assertion_msg("Expected to see '%s' but can't see it"):
+        with selenium_action(
+                driver, "Could not find '%s' on '%s' using '%s' selector",
+                element, driver.current_url, selector):
+            page_element = driver.find_element_by_css_selector(selector)
+        with assertion_msg("Expected to see '%s' but can't see it", element):
             assert page_element.is_displayed()
