@@ -161,7 +161,7 @@ exred_local:
 
 exred_browserstack:
 	$(EXRED_SET_DOCKER_ENV_VARS) && \
-	cd tests/exred && paver run --config=browserstacka --tag=${TAG}
+	cd tests/exred && paver run --config=browserstack --tag=${TAG}
 
 exred_browserstack_single:
 	$(EXRED_SET_DOCKER_ENV_VARS) && \
