@@ -4,7 +4,12 @@ import logging
 
 from behave.runner import Context
 
-from pages import guidance_common, home, personalised_journey
+from pages import (
+    export_readiness_common,
+    guidance_common,
+    home,
+    personalised_journey
+)
 from registry.pages import get_page_object
 from steps.when_impl import (
     triage_should_be_classified_as_new,
@@ -135,3 +140,12 @@ def personalised_should_see_layout_for(
     logging.debug(
         "%s saw Personalised Journey page layout tailored for %s exporter",
         actor_alias, classification)
+
+
+def exred_should_see_articles(
+        context: Context, actor_alias: str, category: str):
+    export_readiness_common.check_if_correct_articles_are_displayed(
+        context.driver, category)
+    logging.debug(
+        "%s can see correct Articles for Guidance '%s' category and link to "
+        "the next category wherever possible", actor_alias, category)
