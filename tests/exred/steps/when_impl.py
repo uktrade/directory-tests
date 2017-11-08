@@ -20,6 +20,7 @@ from pages import (
     triage_what_do_you_want_to_export
 )
 from registry.pages import get_page_object
+from settings import EXRED_SECTORS
 from utils import (
     add_actor,
     assertion_msg,
@@ -313,21 +314,55 @@ def triage_classify_as_regular(
 
 
 def triage_classify_as(
-        context: Context, actor_alias: str, *, exporter_status: str = None):
+        context: Context, actor_alias: str, *, exporter_status: str = None,
+        is_incorporated: str = None):
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
-    classifications = {
-        "new": triage_classify_as_new,
-        "occasional": triage_classify_as_occasional,
-        "regular": triage_classify_as_regular
-    }
-    exporter_status = exporter_status or random.choice(list(classifications))
+    actor = get_actor(context, actor_alias)
+
+    if actor.what_do_you_want_to_export is not None:
+        code, sector = actor.what_do_you_want_to_export
+    else:
+        code, sector = random.choice(list(EXRED_SECTORS.items()))
+
+    if actor.do_you_use_online_marketplaces is not None:
+        use_online_marketplaces = actor.do_you_use_online_marketplaces
+    else:
+        use_online_marketplaces = random.choice([True, False])
+
+    if exporter_status:
+        exporter_status = exporter_status.lower()
+    else:
+        exporter_status = random.choice(["new", "occasional", "regular"])
+
+    if is_incorporated is not None:
+        if is_incorporated.lower() == "has":
+            incorporated = True
+        elif is_incorporated.lower() == "has not":
+            incorporated = False
+        else:
+            raise KeyError(
+                "Could not recognise: '%s'. Please use 'has' or 'has not'"
+                .format(is_incorporated))
+    else:
+        incorporated = random.choice([True, False])
+
     visit_page(context, actor_alias, "home")
-    step = classifications[exporter_status.lower()]
+
     logging.debug(
         "%s decided to classify himself/herself as %s Exporter", actor_alias,
         exporter_status)
-    step(context, actor_alias)
+
+    if exporter_status == "new":
+        triage_classify_as_new(
+            context, actor_alias, incorporated, code, sector)
+    elif exporter_status == "occasional":
+        triage_classify_as_occasional(
+            context, actor_alias, incorporated, use_online_marketplaces, code,
+            sector)
+    elif exporter_status == "regular":
+        triage_classify_as_regular(
+            context, actor_alias, incorporated, code, sector)
 
 
 def triage_should_see_answers_to_questions(context, actor_alias):
