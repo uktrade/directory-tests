@@ -777,11 +777,21 @@ ARTICLES = {
                 "previous": "types of intellectual property",
                 "next": None
             },
+        },
+    },
+    "next steps for occasional exporters": {
+        "time to read": 0,
+        "export readiness": {
             "occasional": {
                 "index": 37,
                 "next": None,
                 "previous": "ip protection in multiple countries"
             },
+        },
+    },
+    "next steps for regular exporters": {
+        "time to read": 0,
+        "export readiness": {
             "regular": {
                 "index": 18,
                 "next": None,
