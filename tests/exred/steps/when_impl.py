@@ -503,3 +503,28 @@ def set_sector_preference(
     logging.debug(
         "%s decided that her/his preffered sector is: %s %s", actor_alias,
         code, sector)
+
+
+def set_online_marketplace_preference(
+        context: Context, actor_alias: str, used_or_not: str):
+    """Will set preference for past usage of Online Marketplaces
+
+     NOTE:
+     It will add new Actor is specified one doesn't exist,
+    """
+    if not get_actor(context, actor_alias):
+        add_actor(context, unauthenticated_actor(actor_alias))
+    if used_or_not.lower() == "used":
+        used = True
+    elif used_or_not.lower() == "never used":
+        used = False
+    else:
+        raise KeyError(
+            "Could not recognise '%s' as valid preference for pass usage of"
+            " Online Marketplaces. Please use 'used' or 'never used'"
+            % used_or_not)
+    update_actor(
+        context, actor_alias, do_you_use_online_marketplaces=used)
+    logging.debug(
+        "%s decided that he/she %s online marketplaces before", actor_alias,
+        used_or_not)

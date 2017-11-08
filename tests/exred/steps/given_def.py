@@ -6,6 +6,7 @@ from steps.then_impl import should_be_on_page
 from steps.when_impl import (
     actor_classifies_himself_as,
     guidance_open_category,
+    set_online_marketplace_preference,
     set_sector_preference,
     start_triage,
     triage_classify_as,
@@ -68,3 +69,6 @@ def given_actor_sets_sector_preference(context, actor_alias, goods_or_services):
     set_sector_preference(context, actor_alias, goods_or_services)
 
 
+@given('"{actor_alias}" "{used_or_not}" online marketplaces before')
+def step_impl(context, actor_alias, used_or_not):
+    set_online_marketplace_preference(context, actor_alias, used_or_not)
