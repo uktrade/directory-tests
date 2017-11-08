@@ -16,13 +16,14 @@ Feature: Home Page
 
     When "Robert" decides to get started in Exporting journey section
 
-    Then "Robert" should be on the "Triage - what is your sector" page
+    Then "Robert" should be on the "Triage - what do you want to export" page
 
 
   @ED-2366
   @triage
   Scenario: Any Exporter visiting the home page after triage should be able to get to personalised page
-    Given "Robert" has answered triage questions
+    Given "Robert" answered triage questions
+    And "Robert" decided to create his personalised journey page
     And "Robert" goes to the "Home" page
 
     When "Robert" decides to continue in Exporting journey section

@@ -36,6 +36,7 @@ def after_step(context: Context, step: Step):
                                                          step.name,
                                                          step.exception)
         logging.error(message)
+        logging.debug(context.scenario_data)
         if CONFIG_NAME == "browserstack":
             if hasattr(context, "driver"):
                 session_id = context.driver.session_id
@@ -71,8 +72,15 @@ def before_scenario(context: Context, scenario: Scenario):
     context.driver.set_page_load_timeout(time_to_wait=30)
     try:
         context.driver.maximize_window()
+        logging.debug("Maximized the window.")
     except WebDriverException:
-        logging.error("Failed to maximize the window, will continue as is")
+        logging.debug("Failed to maximize the window.")
+        try:
+            context.driver.set_window_size(1600, 1200)
+            logging.warning("Set window size to 1600x1200")
+        except WebDriverException:
+            logging.warning("Failed to set window size, will continue as is")
+    logging.debug("Browser Capabilities: %s", context.driver.capabilities)
 
 
 def after_scenario(context: Context, scenario: Scenario):
@@ -82,6 +90,7 @@ def after_scenario(context: Context, scenario: Scenario):
     :param scenario: Behave Scenario object
     """
     logging.debug("Closing Selenium Driver after scenario: %s", scenario.name)
+    logging.debug(context.scenario_data)
     context.driver.quit()
 
 

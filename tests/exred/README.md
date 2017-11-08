@@ -25,9 +25,15 @@ make exred_local
 ```
 
 
-If you want to run the scenarios in a different browser then specify it using `BROWSERS` environment variable:  
+If you want to run all the scenarios in a specific browser, then use `BROWSERS` environment variable:  
 ```bash
 BROWSERS=firefox make exred_local
+```
+
+
+If you want to run specific scenario in a specific browser, then use `TAG` & `BROWSERS` environment variables:  
+```bash
+TAG=ED-2366 BROWSERS=firefox make exred_local
 ```
 
 
@@ -51,11 +57,22 @@ Run all scenarios on [BrowserStack](https://www.browserstack.com/automate) in pa
 make exred_browserstack
 ```
 
+Run specific scenario on [BrowserStack](https://www.browserstack.com/automate) in parallel:  
+```bash
+TAG=ED-2366 make exred_browserstack
+```
+
+
+Run specific scenario on [BrowserStack](https://www.browserstack.com/automate) using specific browser and browser version:
+```bash
+TAG=ED-2366 BROWSERS=Edge VERSIONS=16.0 make exred_browserstack_single
+```
+
 
 To run all scenarios on [BrowserStack](https://www.browserstack.com/automate) in parallel with `paver` command:
 ```bash
 cd tests/exred
-paver run browserstack
+paver run --config=browserstack
 ```
 
 
@@ -63,6 +80,13 @@ To run all scenarios on [BrowserStack](https://www.browserstack.com/automate) wi
 ```bash
 cd tests/exred
 CONFIG=browserstack behave -k --format progress3 --no-logcapture --stop --tags=-wip --tags=-skip --tags=~fixme
+```
+
+
+To run specific scenario on [BrowserStack](https://www.browserstack.com/automate) with `behave` command):   
+```bash
+cd tests/exred
+BROWSERS=Edge VERSIONS=16.0 CONFIG=browserstack-single behave -k --format progress3 --no-logcapture --stop --tags=-wip --tags=-skip --tags=~fixme --tags={YOUR_TAG}
 ```
 
 # Run scenarios in Docker container on BrowserStack

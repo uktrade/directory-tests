@@ -16,7 +16,10 @@ from os.path import abspath, join
 import requests
 from behave.runner import Context
 from selenium import webdriver
-from selenium.common.exceptions import WebDriverException
+from selenium.common.exceptions import (
+    WebDriverException,
+    NoSuchElementException
+)
 
 from settings import (
     BROWSERSTACK_SESSIONS_URL,
@@ -34,7 +37,10 @@ Actor = namedtuple(
     "Actor",
     [
         "alias", "email", "password", "self_classification",
-        "triage_classification"
+        "triage_classification", "what_do_you_want_to_export",
+        "have_you_exported_before", "do_you_export_regularly",
+        "are_you_incorporated", "company_name",
+        "do_you_use_online_marketplaces", "created_personalised_journey"
     ]
 )
 
@@ -97,24 +103,17 @@ def get_actor(context, alias) -> Actor:
     return context.scenario_data.actors.get(alias)
 
 
-def update_actor(
-        context: Context, alias: str, *, self_classification: str = None,
-        triage_classification: str = None):
+def update_actor(context: Context, alias: str, **kwargs):
     """Update Actor's details stored in context.scenario_data
 
     :param context: behave `context` object
     :param alias: alias of the Actor to update
-    :param self_classification: Actor's perception of its Export Status
-    :param triage_classification: Actor's Exporting Classification after Triage
     """
     actors = context.scenario_data.actors
-    if self_classification:
-        actors[alias] = actors[alias]._replace(
-            self_classification=self_classification)
-    if triage_classification:
-        actors[alias] = actors[alias]._replace(
-            triage_classification=triage_classification)
-
+    for arg in kwargs:
+        if arg in Actor._fields:
+            logging.debug("Set '%s'='%s' for %s", arg, kwargs[arg], alias)
+            actors[alias] = actors[alias]._replace(**{arg: kwargs[arg]})
     logging.debug(
         "Successfully updated %s's details: %s", alias, actors[alias])
 
@@ -175,7 +174,7 @@ def selenium_action(driver: webdriver, message: str, *args):
     """
     try:
         yield
-    except WebDriverException as e:
+    except (WebDriverException, NoSuchElementException) as e:
         browser = driver.capabilities.get("browserName", "unknown browser")
         version = driver.capabilities.get("version", "unknown version")
         platform = driver.capabilities.get("platform", "unknown platform")
@@ -184,6 +183,7 @@ def selenium_action(driver: webdriver, message: str, *args):
                 .format(browser, version, platform, session_id))
         if args:
             message = message % args
+        print("%s - %s" % (info, message))
         logging.error("%s - %s", info, message)
         e.args += (message,)
         _, _, tb = sys.exc_info()

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Triage - What is you sector? Page Object."""
+"""Triage - What do you want to export? Page Object."""
 import logging
 import random
 from urllib.parse import urljoin
@@ -9,7 +9,7 @@ from selenium import webdriver
 from settings import EXRED_SECTORS, EXRED_UI_URL
 from utils import assertion_msg, selenium_action, take_screenshot
 
-NAME = "ExRed Triage - what is your sector"
+NAME = "ExRed Triage - what do you want to export"
 URL = urljoin(EXRED_UI_URL, "triage")
 
 SECTORS_COMBOBOX = ".exred-triage-form div[role=combobox]"
@@ -46,18 +46,32 @@ def should_be_here(driver: webdriver):
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
-def select_sector(driver: webdriver, sector: str):
-    if not sector:
-        sector = random.choice(list(EXRED_SECTORS.values()))
+def enter(driver: webdriver, code: str, sector: str) -> tuple:
+    """Enter information about the things you want to export.
+
+    :param driver: webdriver object
+    :param code: sector code. Codes for:
+                 Goods start with HS, and for Services with EB (no facts are
+                 available for such codes)
+    :param sector: specific product to use. Will select random if not set.
+    :return: selected code & sector name
+    """
+    if not code and not sector:
+        code, sector = random.choice(list(EXRED_SECTORS.items()))
     with selenium_action(driver, "Can't find Sector selector input box"):
         input_field = driver.find_element_by_css_selector(SECTORS_INPUT)
-    input_field.click()
-    input_field.clear()
-    input_field.send_keys(sector)
+    max_retries = 5
+    counter = 0
+    while (code.lower() not in input_field.get_attribute("value").lower()) and (counter < max_retries):
+        input_field.click()
+        input_field.clear()
+        input_field.send_keys(code or sector)
+        counter += 1
     with selenium_action(driver, "Can't find Autocomplete 1st option"):
         option = driver.find_element_by_css_selector(AUTOCOMPLETE_1ST_OPTION)
     option.click()
     take_screenshot(driver, NAME)
+    return code, sector
 
 
 def submit(driver: webdriver):

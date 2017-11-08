@@ -1,0 +1,16 @@
+{{
+  "hub_url": {HUB_URL},
+  "capabilities": {{
+    "browserstack.debug": true,
+    "browserstack.selenium_version": "3.5.2",
+    "build": {BUILD_ID},
+    "project": "ExRed",
+    "resolution": "1600x1200"
+  }},
+  "environments": [
+    {{
+      "browser": {BROWSERS[0]},
+      "browser_version": {VERSIONS[0]}
+    }}
+  ]
+}}

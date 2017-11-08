@@ -12,15 +12,16 @@ NAME = "ExRed Triage - result"
 URL = urljoin(EXRED_UI_URL, "triage/result")
 
 CLASSIFICATION = ".question > h2"
-ANSWERS = "div.answers"
+ANSWERS_SECTION = "div.answers"
 CREATE_MY_JOURNEY_BUTTON = "input.button.next"
 PREVIOUS_STEP_BUTTON = "input.button.next ~ button.previous-step"
 CHANGE_ANSWERS_LINK = "#change-answers-button-container > button"
 BACK_TO_HOME_LINK = ".home-link a"
-
+QUESTIONS = ".answers > dl > dt"
+ANSWERS = ".answers > dl > dd"
 EXPECTED_ELEMENTS = {
     "classification": CLASSIFICATION,
-    "answers section": ANSWERS,
+    "answers section": ANSWERS_SECTION,
     "continue button": CREATE_MY_JOURNEY_BUTTON,
     "change answers link": CHANGE_ANSWERS_LINK,
     "back to home link": BACK_TO_HOME_LINK
@@ -68,3 +69,18 @@ def create_exporting_journey(driver: webdriver):
     assert button.is_displayed()
     button.click()
     take_screenshot(driver, NAME + " after submitting")
+
+
+def get_questions_and_answers(driver: webdriver) -> dict:
+    questions = driver.find_elements_by_css_selector(QUESTIONS)
+    answers = driver.find_elements_by_css_selector(ANSWERS)
+    result = {}
+    for q, a in list(zip(questions, answers)):
+        result.update({q.text: a.text})
+    return result
+
+
+def change_answers(driver: webdriver):
+    link = driver.find_element_by_css_selector(CHANGE_ANSWERS_LINK)
+    link.click()
+    take_screenshot(driver, NAME + " after deciding to change the answers")

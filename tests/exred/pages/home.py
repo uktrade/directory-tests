@@ -6,7 +6,7 @@ from urllib.parse import urljoin
 from selenium import webdriver
 
 from settings import EXRED_UI_URL
-from utils import assertion_msg, take_screenshot
+from utils import assertion_msg, selenium_action, take_screenshot
 
 NAME = "ExRed Home"
 URL = urljoin(EXRED_UI_URL, "")
@@ -52,9 +52,9 @@ SECTIONS = {
     },
     "guidance": {
         "itself": "#resource-guidance",
-        "header": "#resource-guidance > .container .section-header",
-        "intro": "#resource-guidance > .container .section-intro",
-        "groups": "#resource-guidance > .container .group",
+        "header": "#resource-guidance .section-header",
+        "intro": "#resource-guidance .intro",
+        "groups": "#resource-guidance .group",
         "market research": MARKET_RESEARCH_LINK,
         "customer insight": CUSTOMER_INSIGHT_LINK,
         "finance": FINANCE_LINK,
@@ -117,7 +117,12 @@ def should_see_sections(driver: webdriver, section_names: list):
             logging.debug(
                 "Looking for '%s' element in '%s' section with '%s' selector",
                 element_name, section_name, element_selector)
-            element = driver.find_element_by_css_selector(element_selector)
+            with selenium_action(
+                    driver,
+                    "Could not find '%s' in '%s' section using following "
+                    "selector '%s'", element_name, section_name,
+                    element_selector):
+                element = driver.find_element_by_css_selector(element_selector)
             with assertion_msg(
                     "It looks like '%s' in '%s' section is not visible (%s)",
                     element_name, section_name, browser):

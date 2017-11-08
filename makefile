@@ -157,11 +157,15 @@ EXRED_DOCKER_REMOVE_ALL:
 
 exred_local:
 	$(EXRED_SET_LOCAL_ENV_VARS) && \
-	cd tests/exred && BROWSERS=$(BROWSERS) paver run local
+	cd tests/exred && paver run --config=local --browsers=${BROWSERS} --tag=${TAG}
 
 exred_browserstack:
 	$(EXRED_SET_DOCKER_ENV_VARS) && \
-	cd tests/exred && paver run browserstack
+	cd tests/exred && paver run --config=browserstack --tag=${TAG}
+
+exred_browserstack_single:
+	$(EXRED_SET_DOCKER_ENV_VARS) && \
+	cd tests/exred && paver run --config=browserstack-single --browsers=${BROWSERS} --versions=${VERSIONS} --tag=${TAG}
 
 exred_docker_browserstack: EXRED_DOCKER_REMOVE_ALL
 	$(EXRED_SET_DOCKER_ENV_VARS) && \

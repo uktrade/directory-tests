@@ -4,6 +4,11 @@ import logging
 from urllib.parse import urljoin
 
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver import ActionChains
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
 
 from registry.articles import get_articles
 from settings import EXRED_UI_URL
@@ -14,6 +19,7 @@ URL = urljoin(EXRED_UI_URL, "custom")
 
 SHOW_MORE_BUTTON = "#js-paginate-list-more"
 READ_COUNTER = "#articles .scope-indicator .position > span.from"
+TOTAL_ARTICLES = "#articles .scope-indicator .position > span.to"
 
 MARKET_RESEARCH_LINK = "#resource-guidance a[href='/market-research']"
 CUSTOMER_INSIGHT_LINK = "#resource-guidance a[href='/customer-insight']"
@@ -21,41 +27,96 @@ FINANCE_LINK = "#resource-guidance a[href='/finance']"
 BUSINESS_LINK = "#resource-guidance a[href='/business-planning']"
 GETTING_PAID_LINK = "#resource-guidance a[href='/getting-paid']"
 OPERATIONS_AND_COMPLIANCE_LINK = "#resource-guidance a[href='/operations-and-compliance']"
-
+TOP_IMPORTER = "#top_importer_name"
+TRADE_VALUE = "#top_importer_global_trade_value"
+TOP_10_TRADE_VALUE = ".cell-global_trade_value"
 SECTIONS = {
     "hero": {
-        "hero - title": "section.hero-section h1",
-        "hero - introduction": "section.hero-section p",
-        "hero - exporting is great logo": "section.hero-section img",
+        "title": "section.hero-section h1",
+        "introduction": "section.hero-section p",
+        "exporting is great logo": "section.hero-section img",
+        "update preferences link": "section.hero-section a.preferences",
     },
     "facts": {
-        "facts - intro": "#content > section.sector-fact p.intro",
-        "facts - figures": "#content > section.sector-fact p.figure",
+        "intro": "#content > section.sector-fact p.intro",
+        "figures": "#content > section.sector-fact p.figure",
     },
     "articles": {
-        "articles - heading": "#persona-overview h2",
-        "articles - introduction": "#persona-overview p.intro",
-        "articles - article list": "#persona-overview div.section-content-list",
+        "heading": "#persona-overview h2",
+        "introduction": "#persona-overview p.intro",
+        "article list": "#persona-overview div.section-content-list",
     },
     "top 10": {
-        "top 10 - heading": "#content > section.markets h1",
-        "top 10 - table": "#content > section.markets table",
+        "heading": "section.top-markets h2",
+        "intro": "section.top-markets .intro",
+        "table": "#top-of-the-markets",
+        "source data": "section.top-markets #market-source-data",
     },
     "services": {
-        "services - heading": "section.service-section h2",
-        "services - intro": "section.service-section .intro",
-        "services - other": "#other-services > div > div",
+        "heading": "section.service-section h2",
+        "intro": "section.service-section .intro",
+        "other": "#other-services > div > div",
+    },
+    "fas section": {
+        "heading": "section.service-section.fas h2",
+        "fas image": "section.service-section.fas img",
+        "intro": "section.service-section.fas .intro",
+        "create a trade profile": "section.service-section.fas .intro .button",
+    },
+    "exopps tile": {
+        "heading": "#other-services div.lg-2:nth-child(2) h3",
+        "soo image": "#other-services div.lg-2:nth-child(2) img",
+        "intro": "#other-services div.lg-2:nth-child(2) p",
+        "find marketplaces link": "#other-services div.lg-2:nth-child(2) a",
+    },
+    "exopps section": {
+        "heading": "section.service-section.soo h2",
+        "soo image": "section.service-section.soo img",
+        "intro": "section.service-section.soo .intro",
+        "find marketplaces button": "section.service-section.soo .intro .button",
+    },
+    "soo section": {
+        "heading": "section.service-section.soo h2",
+        "soo image": "section.service-section.soo img",
+        "intro": "section.service-section.soo .intro",
+        "find marketplaces button": "section.service-section.soo .intro .button",
+    },
+    "soo tile": {
+        "heading": "#other-services div.lg-2:nth-child(1) h3",
+        "soo image": "#other-services div.lg-2:nth-child(1) img",
+        "intro": "#other-services div.lg-2:nth-child(1) p",
+        "find marketplaces link": "#other-services div.lg-2:nth-child(1) a",
+    },
+    "article list": {
+        "itself": "#articles",
+        "heading": "#articles h2",
+        "introduction": "#articles .intro",
+        "article list": "#articles .section-content-list",
     },
     "guidance": {
-        "guidance - heading": "#resource-guidance h2",
-        "guidance - introduction": "#resource-guidance p.section-intro",
-        "guidance - categories": "#resource-guidance div.group",
+        "itself": "#resource-guidance",
+        "guidance - heading": "#resource-guidance h2.section-header",
+        "guidance - introduction": "#resource-guidance p.intro",
+        "guidance - categories": "#resource-guidance .group",
         "market research": MARKET_RESEARCH_LINK,
         "customer insight": CUSTOMER_INSIGHT_LINK,
         "finance": FINANCE_LINK,
         "business planning": BUSINESS_LINK,
         "getting paid": GETTING_PAID_LINK,
         "operations and compliance": OPERATIONS_AND_COMPLIANCE_LINK,
+    },
+    "case studies": {
+        "heading": "#carousel h2",
+        "intro": "#carousel .intro",
+        "article": "#carousel .ed-carousel-container",
+        "previous article": "#carousel label.ed-carousel__control--backward",
+        "next article": "#carousel label.ed-carousel__control--forward",
+        "case study head link": ".ed-carousel__track > div:nth-child(1) h3 a",
+        "case study intro": ".ed-carousel__track > div:nth-child(1) p",
+        "case study intro link": ".ed-carousel__track > div:nth-child(1) div > a",
+        "carousel indicator #1": "#carousel .ed-carousel__indicator[for='1']",
+        "carousel indicator #2": "#carousel .ed-carousel__indicator[for='2']",
+        "carousel indicator #3": "#carousel .ed-carousel__indicator[for='3']",
     }
 }
 
@@ -88,18 +149,51 @@ def show_all_articles(driver: webdriver):
     with selenium_action(
             driver, "Could not find 'Show More' button using '%s'",
             SHOW_MORE_BUTTON):
-        button = driver.find_element_by_css_selector(SHOW_MORE_BUTTON)
-    while button.is_displayed():
-        button.click()
+        show_more_button = driver.find_element_by_css_selector(SHOW_MORE_BUTTON)
+    max_clicks = 10
+    counter = 0
+    # click up to 11 times - see bug ED-2561
+    while show_more_button.is_displayed() and counter <= max_clicks:
+        show_more_button.click()
+        counter += 1
+    if counter > max_clicks:
+        with assertion_msg(
+                "'Show more' button didn't disappear after clicking on it for"
+                " %d times", counter):
+            assert counter == max_clicks
     take_screenshot(driver, NAME + " after showing all articles")
 
 
-def should_see_read_counter(driver: webdriver, *, exporter_status: str = None):
+def should_see_read_counter(
+        driver: webdriver, *, exporter_status: str = None,
+        expected_number_articles: int = 0):
     show_all_articles(driver)
     with selenium_action(
-            driver, "Could not find 'Show More' button using '%s'",
-            SHOW_MORE_BUTTON):
+            driver, "Could not find 'Article Read Counter' using '%s'",
+            READ_COUNTER):
         counter = driver.find_element_by_css_selector(READ_COUNTER)
+        if "firefox" not in driver.capabilities["browserName"].lower():
+            logging.debug("Moving focus to 'Read Counter' on %s", NAME)
+            action_chains = ActionChains(driver)
+            action_chains.move_to_element(counter)
+            action_chains.perform()
+    with assertion_msg(
+            "Guidance Article Read Counter is not visible on '%s' page", NAME):
+        assert counter.is_displayed()
+    given_number_articles = int(counter.text)
+    with assertion_msg(
+            "Expected the Article Read Counter to be: %d but got %d",
+            expected_number_articles, given_number_articles):
+        assert given_number_articles == expected_number_articles
+
+
+def should_see_total_articles_to_read(
+        driver: webdriver, *, exporter_status: str = None):
+    show_all_articles(driver)
+    with selenium_action(
+            driver, "Could not find 'Total Articles to Read' using '%s'",
+            TOTAL_ARTICLES):
+        counter = driver.find_element_by_css_selector(TOTAL_ARTICLES)
     with assertion_msg(
             "Guidance Article Read Counter is not visible on '%s' page", NAME):
         assert counter.is_displayed()
@@ -120,3 +214,99 @@ def open(driver: webdriver, group: str, element: str):
     button.click()
     take_screenshot(
         driver, NAME + " after clicking on: %s link".format(element))
+
+
+def should_see_section(driver: webdriver, name: str):
+    section = SECTIONS[name]
+    for key, selector in section.items():
+        with selenium_action(
+                driver, "Could not find: '%s' element in '%s' section using "
+                        "'%s' selector",
+                key, name, selector):
+            element = driver.find_element_by_css_selector(selector)
+            WebDriverWait(driver, 5).until(
+                EC.visibility_of_element_located((By.CSS_SELECTOR, selector)))
+        with assertion_msg(
+                "'%s' in '%s' is not displayed", key, name):
+            assert element.is_displayed()
+
+
+def check_top_facts_values(driver: webdriver):
+    top_importer = driver.find_element_by_css_selector(TOP_IMPORTER).text
+    trade_value = driver.find_element_by_css_selector(TRADE_VALUE).text
+
+    try:
+        tr = driver.find_element_by_css_selector(
+            "#row-{}".format(top_importer))
+        cell = tr.find_element_by_css_selector(TOP_10_TRADE_VALUE).text
+        with assertion_msg(
+                "Expected to see 'Export value from the world' for %s to be %s"
+                " but got %s", top_importer, trade_value, cell):
+            assert cell == trade_value
+    except NoSuchElementException:
+        logging.debug(
+            "Country mentioned in Top Facts: %s is not present in the Top 10 "
+            "Importers table. Won't check the the trade value")
+
+
+def check_facts_and_top_10(driver: webdriver, sector_code: str):
+    """There are no Facts & Top 10 data for Service Sectors (start with EB)."""
+    if sector_code.startswith("EB"):
+        logging.debug(
+            "Exported chose service sector: %s for which there are no facts "
+            "and information on top 10 importers", sector_code)
+    else:
+        should_see_section(driver, "facts")
+        should_see_section(driver, "top 10")
+        check_top_facts_values(driver)
+
+
+def layout_for_new_exporter(
+        driver: webdriver, incorporated: bool, sector_code: str):
+    """
+    * a new exporter says his company incorporated, then only `FAB` is displayed
+    * a new exporter says his company is not incorporated, then `no services are displayed`
+    """
+    should_see_section(driver, "hero")
+    check_facts_and_top_10(driver, sector_code)
+    should_see_section(driver, "article list")
+    if incorporated:
+        should_see_section(driver, "fas section")
+    should_see_section(driver, "case studies")
+
+
+def layout_for_occasional_exporter(
+        driver: webdriver, incorporated: bool, use_online_marketplaces: bool,
+        sector_code: str):
+    """
+    * an occasional exporter says his company used online marketplaces and is incorporated, then `FAB & SOO` are displayed
+    * an occasional exporter says his company used online marketplaces but it is not incorporated, then only `SOO` is displayed
+    * an occasional exporter says his company haven't used online marketplaces but it is incorporated, then only `FAB` is displayed
+    * an occasional exporter says his company haven't used online marketplaces and it is not incorporated, then `no services are displayed`
+    """
+    should_see_section(driver, "hero")
+    check_facts_and_top_10(driver, sector_code)
+    should_see_section(driver, "article list")
+    if incorporated and use_online_marketplaces:
+        should_see_section(driver, "fas section")
+        should_see_section(driver, "soo section")
+    if not incorporated and use_online_marketplaces:
+        should_see_section(driver, "soo section")
+    if not incorporated and not use_online_marketplaces:
+        logging.debug("Nothing to show here")
+    should_see_section(driver, "case studies")
+
+
+def layout_for_regular_exporter(
+        driver: webdriver, incorporated: bool, sector_code: str):
+    """
+    * a regular exporter says his company is incorporated, then `FAB, SOO & ExOpps` are displayed
+    * a regular exporter says his company is not incorporated, then `SOO & ExOpps` are displayed
+    """
+    should_see_section(driver, "hero")
+    check_facts_and_top_10(driver, sector_code)
+    if incorporated:
+        should_see_section(driver, "fas section")
+    should_see_section(driver, "soo tile")
+    should_see_section(driver, "exopps tile")
+    should_see_section(driver, "guidance")

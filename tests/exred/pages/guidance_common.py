@@ -3,6 +3,7 @@
 import logging
 
 from selenium import webdriver
+from selenium.webdriver import ActionChains
 
 from registry.articles import get_articles
 from utils import assertion_msg, selenium_action, take_screenshot
@@ -89,9 +90,19 @@ def correct_article_read_counter(
 
 
 def show_all_articles(driver: webdriver):
-    button = driver.find_element_by_css_selector(SHOW_MORE_BUTTON)
-    while button.is_displayed():
-        button.click()
+    show_more_button = driver.find_element_by_css_selector(SHOW_MORE_BUTTON)
+    max_clicks = 10
+    counter = 0
+    # click up to 11 times - see bug ED-2561
+    while show_more_button.is_displayed() and counter <= max_clicks:
+        show_more_button.click()
+        counter += 1
+    if counter > max_clicks:
+        with assertion_msg(
+                "'Show more' button didn't disappear after clicking on it for"
+                " %d times", counter):
+            assert counter == max_clicks
+    take_screenshot(driver, NAME + " after showing all articles")
 
 
 def check_if_correct_articles_are_displayed(
@@ -152,6 +163,14 @@ def check_elements_are_visible(driver: webdriver, elements: list):
     take_screenshot(driver, NAME)
     for element in elements:
         selector = SCOPE_ELEMENTS[element.lower()]
-        page_element = driver.find_element_by_css_selector(selector)
-        with assertion_msg("Expected to see '%s' but can't see it"):
+        with selenium_action(
+                driver, "Could not find '%s' on '%s' using '%s' selector",
+                element, driver.current_url, selector):
+            page_element = driver.find_element_by_css_selector(selector)
+            if "firefox" not in driver.capabilities["browserName"].lower():
+                logging.debug("Moving focus to '%s' element", element)
+                action_chains = ActionChains(driver)
+                action_chains.move_to_element(page_element)
+                action_chains.perform()
+        with assertion_msg("Expected to see '%s' but can't see it", element):
             assert page_element.is_displayed()
