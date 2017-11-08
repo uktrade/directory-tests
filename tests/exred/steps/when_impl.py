@@ -479,3 +479,27 @@ def exred_open_category(
         actor_alias, category, location)
     open_group_element(
         context, group="personas", element=category, location=location)
+
+
+def set_sector_preference(
+        context: Context, actor_alias: str, goods_or_services: str):
+    if not get_actor(context, actor_alias):
+        add_actor(context, unauthenticated_actor(actor_alias))
+    if goods_or_services.lower() == "goods":
+        sectors = [(code, sector)
+                   for code, sector in EXRED_SECTORS.items()
+                   if code.startswith("HS")]
+    elif goods_or_services.lower() == "services":
+        sectors = [(code, sector)
+                   for code, sector in EXRED_SECTORS.items()
+                   if code.startswith("EB")]
+    else:
+        raise KeyError(
+            "Could not recognise '%s' as valid sector. Please use 'goods' or "
+            "'services'" % goods_or_services)
+    code, sector = random.choice(sectors)
+    update_actor(
+        context, actor_alias, what_do_you_want_to_export=(code, sector))
+    logging.debug(
+        "%s decided that her/his preffered sector is: %s %s", actor_alias,
+        code, sector)
