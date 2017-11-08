@@ -92,7 +92,7 @@ def then_actor_should_see_answers_to_questions(context, actor_alias):
     triage_should_see_answers_to_questions(context, actor_alias)
 
 
-@then('"{actor_alias}" should be on the personalised "{classification}" exporter journey page')
+@then('"{actor_alias}" should be on the Personalised Journey page for "{classification}" exporters')
 def then_classified_exporter_should_be_on_personalised_journey_page(
         context, actor_alias, classification):
     personalised_should_see_layout_for(context, actor_alias, classification)
