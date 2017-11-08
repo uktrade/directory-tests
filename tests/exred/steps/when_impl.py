@@ -88,7 +88,8 @@ def triage_say_what_do_you_want_to_export(
         context: Context, actor_alias: str, *, code: str = None,
         sector: str = None):
     driver = context.driver
-    code, sector = triage_what_do_you_want_to_export.enter(driver, code, sector)
+    code, sector = triage_what_do_you_want_to_export.enter(
+        driver, code, sector)
     triage_what_do_you_want_to_export.submit(driver)
     triage_have_you_exported.should_be_here(driver)
     update_actor(
@@ -257,11 +258,14 @@ def triage_create_exporting_journey(context: Context, actor_alias: str):
     update_actor(context, alias=actor_alias, created_personalised_journey=True)
 
 
-def triage_classify_as_new(context: Context, actor_alias: str):
+def triage_classify_as_new(
+        context: Context, actor_alias: str, incorporated: bool, code: str,
+        sector: str):
     start_triage(context, actor_alias)
-    triage_say_what_do_you_want_to_export(context, actor_alias)
+    triage_say_what_do_you_want_to_export(
+        context, actor_alias, code=code, sector=sector)
     triage_say_you_never_exported_before(context, actor_alias)
-    if random.choice([True, False]):
+    if incorporated:
         triage_say_you_are_incorporated(context, actor_alias)
         triage_enter_company_name(context, actor_alias, use_suggestions=True)
     else:
@@ -270,16 +274,19 @@ def triage_classify_as_new(context: Context, actor_alias: str):
     update_actor(context, alias=actor_alias, triage_classification="new")
 
 
-def triage_classify_as_occasional(context: Context, actor_alias: str):
+def triage_classify_as_occasional(
+        context: Context, actor_alias: str, incorporated: bool,
+        use_online_marketplaces: bool, code: str, sector: str):
     start_triage(context, actor_alias)
-    triage_say_what_do_you_want_to_export(context, actor_alias)
+    triage_say_what_do_you_want_to_export(
+        context, actor_alias, code=code, sector=sector)
     triage_say_you_exported_before(context, actor_alias)
     triage_say_you_do_not_export_regularly(context, actor_alias)
-    if random.choice([True, False]):
+    if use_online_marketplaces:
         triage_say_you_use_online_marketplaces(context, actor_alias)
     else:
         triage_say_you_do_not_use_online_marketplaces(context, actor_alias)
-    if random.choice([True, False]):
+    if incorporated:
         triage_say_you_are_incorporated(context, actor_alias)
         triage_enter_company_name(context, actor_alias, use_suggestions=True)
     else:
@@ -288,12 +295,15 @@ def triage_classify_as_occasional(context: Context, actor_alias: str):
     update_actor(context, alias=actor_alias, triage_classification="occasional")
 
 
-def triage_classify_as_regular(context: Context, actor_alias: str):
+def triage_classify_as_regular(
+        context: Context, actor_alias: str, incorporated: bool, code: str,
+        sector: str):
     start_triage(context, actor_alias)
-    triage_say_what_do_you_want_to_export(context, actor_alias)
+    triage_say_what_do_you_want_to_export(
+        context, actor_alias, code=code, sector=sector)
     triage_say_you_exported_before(context, actor_alias)
     triage_say_you_export_regularly(context, actor_alias)
-    if random.choice([True, False]):
+    if incorporated:
         triage_say_you_are_incorporated(context, actor_alias)
         triage_enter_company_name(context, actor_alias, use_suggestions=True)
     else:
