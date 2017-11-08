@@ -46,9 +46,9 @@ SECTIONS = {
         "header": "#personas > .container > .header",
         "intro": "#personas > .container > .intro",
         "groups": "#personas > .container > .group",
-        "new_to_exporting_link": NEW_TO_EXPORTING_LINK,
-        "occasional_exporter_link": OCCASIONAL_EXPORTER_LINK,
-        "regular_exported_link": REGULAR_EXPORTED_LINK,
+        "new": NEW_TO_EXPORTING_LINK,
+        "occasional": OCCASIONAL_EXPORTER_LINK,
+        "regular": REGULAR_EXPORTED_LINK,
     },
     "guidance": {
         "itself": "#resource-guidance",
