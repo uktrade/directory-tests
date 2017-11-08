@@ -108,7 +108,7 @@ def then_should_see_exred_articles(context, actor_alias, category):
     export_readiness_should_see_articles(context, actor_alias, category)
 
 
-@then('"{actor_alias}" should see on the Export Reading Articles page "{elements}"')
+@then('"{actor_alias}" should see on the Export Readiness Articles page "{elements}"')
 def then_expected_export_readiness_page_elements_should_be_visible(
         context, actor_alias, elements):
     export_readiness_expected_page_elements_should_be_visible(
