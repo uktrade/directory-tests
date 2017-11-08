@@ -55,7 +55,7 @@ def then_total_number_of_articles_should_be_visible(context, actor_alias, catego
     guidance_should_see_total_number_of_articles(context, actor_alias, category)
 
 
-@then('"{actor_alias}" should see an ordered list of all articles selected for "{category}" category')
+@then('"{actor_alias}" should see an ordered list of all Guidance Articles selected for "{category}" category')
 def then_should_see_guidance_articles(context, actor_alias, category):
     guidance_should_see_articles(context, actor_alias, category)
 
