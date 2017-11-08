@@ -57,7 +57,7 @@ SECTIONS = {
         "intro": "section.service-section .intro",
         "other": "#other-services > div > div",
     },
-    "fas section": {
+    "fab section": {
         "heading": "section.service-section.fas h2",
         "fas image": "section.service-section.fas img",
         "intro": "section.service-section.fas .intro",
@@ -217,7 +217,7 @@ def open(driver: webdriver, group: str, element: str):
 
 
 def should_see_section(driver: webdriver, name: str):
-    section = SECTIONS[name]
+    section = SECTIONS[name.lower()]
     for key, selector in section.items():
         with selenium_action(
                 driver, "Could not find: '%s' element in '%s' section using "
@@ -273,7 +273,7 @@ def layout_for_new_exporter(
     check_facts_and_top_10(driver, sector_code)
     should_see_section(driver, "article list")
     if incorporated:
-        should_see_section(driver, "fas section")
+        should_see_section(driver, "fab section")
     should_see_section(driver, "case studies")
 
 
@@ -290,7 +290,7 @@ def layout_for_occasional_exporter(
     check_facts_and_top_10(driver, sector_code)
     should_see_section(driver, "article list")
     if incorporated and use_online_marketplaces:
-        should_see_section(driver, "fas section")
+        should_see_section(driver, "fab section")
         should_see_section(driver, "soo section")
     if not incorporated and use_online_marketplaces:
         should_see_section(driver, "soo section")
@@ -308,7 +308,7 @@ def layout_for_regular_exporter(
     should_see_section(driver, "hero")
     check_facts_and_top_10(driver, sector_code)
     if incorporated:
-        should_see_section(driver, "fas section")
+        should_see_section(driver, "fab section")
     should_see_section(driver, "soo tile")
     should_see_section(driver, "exopps tile")
     should_see_section(driver, "guidance")
