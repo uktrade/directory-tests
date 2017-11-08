@@ -23,6 +23,11 @@ ARTICLES = {
                 "index": 5,
                 "next": "know your customers",
                 "previous": "visit a trade show"
+            },
+            "regular": {
+                "index": 3,
+                "next": "license your product or service",
+                "previous": "do field research"
             }
         }
     },
@@ -45,6 +50,11 @@ ARTICLES = {
         "export readiness": {
             "occasional": {
                 "index": 20,
+                "next": "raise money with investment",
+                "previous": "raise money by borrowing"
+            },
+            "regular": {
+                "index": 12,
                 "next": "raise money with investment",
                 "previous": "raise money by borrowing"
             }
@@ -76,6 +86,11 @@ ARTICLES = {
                 "index": 17,
                 "next": "get export finance",
                 "previous": "get money to export"
+            },
+            "regular": {
+                "index": 9,
+                "next": "get export finance",
+                "previous": "understand your customer's culture"
             }
         },
     },
@@ -187,6 +202,11 @@ ARTICLES = {
                 "index": 2,
                 "previous": "do research first",
                 "next": "do field research"
+            },
+            "regular": {
+                "index": 1,
+                "next": "do field research",
+                "previous": None
             }
         },
     },
@@ -211,6 +231,11 @@ ARTICLES = {
                 "index": 3,
                 "previous": "define market potential",
                 "next": "visit a trade show"
+            },
+            "regular": {
+                "index": 2,
+                "next": "analyse the competition",
+                "previous": "define market potential"
             }
         },
     },
@@ -286,6 +311,13 @@ ARTICLES = {
                 "next": "start a joint venture"
             }
         },
+        "export readiness": {
+            "regular": {
+                "index": 5,
+                "next": "start a joint venture",
+                "previous": "license your product or service"
+            }
+        }
     },
     "get export finance": {
         "time to read": 0,
@@ -306,6 +338,11 @@ ARTICLES = {
         "export readiness": {
             "occasional": {
                 "index": 18,
+                "next": "raise money by borrowing",
+                "previous": "choose the right finance"
+            },
+            "regular": {
+                "index": 10,
                 "next": "raise money by borrowing",
                 "previous": "choose the right finance"
             }
@@ -331,6 +368,11 @@ ARTICLES = {
             "occasional": {
                 "index": 22,
                 "next": "consider how you'll get paid",
+                "previous": "raise money with investment"
+            },
+            "regular": {
+                "index": 14,
+                "next": "insure against non-payment",
                 "previous": "raise money with investment"
             }
         }
@@ -414,6 +456,11 @@ ARTICLES = {
                 "index": 36,
                 "next": "next steps for occasional exporters",
                 "previous": "know what IP you have"
+            },
+            "regular": {
+                "index": 17,
+                "next": "next steps for regular exporters",
+                "previous": "know what IP you have"
             }
         }
     },
@@ -438,6 +485,11 @@ ARTICLES = {
                 "index": 27,
                 "next": "use a freight forwarder",
                 "previous": "payment methods"
+            },
+            "regular": {
+                "index": 15,
+                "next": "know what IP you have",
+                "previous": "get government finance support"
             }
         }
     },
@@ -520,6 +572,11 @@ ARTICLES = {
                 "index": 35,
                 "next": "ip protection in multiple countries",
                 "previous": "types of intellectual property"
+            },
+            "regular": {
+                "index": 16,
+                "next": "ip protection in multiple countries",
+                "previous": "insure against non-payment"
             }
         }
     },
@@ -588,6 +645,11 @@ ARTICLES = {
                 "index": 12,
                 "next": "start a joint venture",
                 "previous": "choosing an agent or distributor"
+            },
+            "regular": {
+                "index": 4,
+                "next": "franchise your business",
+                "previous": "analyse the competition"
             }
         }
     },
@@ -719,6 +781,11 @@ ARTICLES = {
                 "index": 37,
                 "next": None,
                 "previous": "ip protection in multiple countries"
+            },
+            "regular": {
+                "index": 18,
+                "next": None,
+                "previous": "ip protection in multiple countries"
             }
         },
     },
@@ -791,6 +858,11 @@ ARTICLES = {
                 "index": 19,
                 "next": "borrow against assets",
                 "previous": "get export finance"
+            },
+            "regular": {
+                "index": 11,
+                "next": "borrow against assets",
+                "previous": "get export finance"
             }
         }
     },
@@ -815,6 +887,11 @@ ARTICLES = {
                 "index": 21,
                 "next": "get government finance support",
                 "previous": "borrow against assets"
+            },
+            "regular": {
+                "index": 13,
+                "next": "get government finance support",
+                "previous": "borrow against assets"
             }
         }
     },
@@ -825,6 +902,13 @@ ARTICLES = {
                 "index": 10,
                 "previous": "start a joint venture",
                 "next": None
+            }
+        },
+        "export readiness": {
+            "regular": {
+                "index": 7,
+                "next": "understand your customer's culture",
+                "previous": "start a joint venture"
             }
         },
     },
@@ -849,6 +933,11 @@ ARTICLES = {
                 "index": 13,
                 "next": "manage language differences",
                 "previous": "license your product or service"
+            },
+            "regular": {
+                "index": 6,
+                "next": "set up an overseas operation",
+                "previous": "franchise your business"
             }
         }
     },
@@ -907,7 +996,12 @@ ARTICLES = {
                 "index": 15,
                 "next": "get money to export",
                 "previous": "manage language differences"
-            }
+            },
+            "regular": {
+                "index": 8,
+                "next": "choose the right finance",
+                "previous": "set up an overseas operation"
+            },
         }
     },
     "use a distributor": {
