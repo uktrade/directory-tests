@@ -142,10 +142,18 @@ def personalised_should_see_layout_for(
         actor_alias, classification)
 
 
-def exred_should_see_articles(
+def export_readiness_should_see_articles(
         context: Context, actor_alias: str, category: str):
     export_readiness_common.check_if_correct_articles_are_displayed(
         context.driver, category)
     logging.debug(
         "%s can see correct Articles for Guidance '%s' category and link to "
         "the next category wherever possible", actor_alias, category)
+
+
+def export_readiness_expected_page_elements_should_be_visible(
+        context: Context, actor_alias: str, elements: list):
+    export_readiness_common.check_elements_are_visible(context.driver, elements)
+    logging.debug(
+        "%s can see all expected page elements: '%s' on current Guidance "
+        "Articles page: %s", actor_alias, elements, context.driver.current_url)

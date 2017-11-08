@@ -3,7 +3,8 @@
 from behave import then
 
 from steps.then_impl import (
-    exred_should_see_articles,
+    export_readiness_expected_page_elements_should_be_visible,
+    export_readiness_should_see_articles,
     guidance_check_if_link_to_next_category_is_displayed,
     guidance_expected_page_elements_should_be_visible,
     guidance_ribbon_should_be_visible,
@@ -104,4 +105,11 @@ def then_actor_should_be_able_to_answer_again(context, actor_alias):
 
 @then('"{actor_alias}" should see an ordered list of all Export Readiness Articles selected for "{category}" Exporters')
 def then_should_see_exred_articles(context, actor_alias, category):
-    exred_should_see_articles(context, actor_alias, category)
+    export_readiness_should_see_articles(context, actor_alias, category)
+
+
+@then('"{actor_alias}" should see on the Export Reading Articles page "{elements}"')
+def then_expected_export_readiness_page_elements_should_be_visible(
+        context, actor_alias, elements):
+    export_readiness_expected_page_elements_should_be_visible(
+        context, actor_alias, elements.split(", "))
