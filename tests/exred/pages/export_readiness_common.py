@@ -3,9 +3,10 @@
 import logging
 
 from selenium import webdriver
+from selenium.webdriver import ActionChains
 
 from registry.articles import get_articles
-from utils import assertion_msg, take_screenshot
+from utils import assertion_msg, selenium_action, take_screenshot
 
 NAME = "ExRed Common Export Readiness"
 URL = None
@@ -95,3 +96,20 @@ def check_if_correct_articles_are_displayed(
                 "Expected article '%s' to be at position %d but found it at "
                 "position no. %d ", name, expected_position, position):
             assert expected_position == position
+
+
+def check_elements_are_visible(driver: webdriver, elements: list):
+    take_screenshot(driver, NAME)
+    for element in elements:
+        selector = SCOPE_ELEMENTS[element.lower()]
+        with selenium_action(
+                driver, "Could not find '%s' on '%s' using '%s' selector",
+                element, driver.current_url, selector):
+            page_element = driver.find_element_by_css_selector(selector)
+            if "firefox" not in driver.capabilities["browserName"].lower():
+                logging.debug("Moving focus to '%s' element", element)
+                action_chains = ActionChains(driver)
+                action_chains.move_to_element(page_element)
+                action_chains.perform()
+        with assertion_msg("Expected to see '%s' but can't see it", element):
+            assert page_element.is_displayed()
