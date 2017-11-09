@@ -10,13 +10,14 @@ from pages import (
     home,
     personalised_journey
 )
+from registry.articles import find_article, get_articles
 from registry.pages import get_page_object
 from steps.when_impl import (
     triage_should_be_classified_as_new,
     triage_should_be_classified_as_occasional,
     triage_should_be_classified_as_regular
 )
-from utils import get_actor
+from utils import assertion_msg, get_actor
 
 
 def should_see_sections_on_home_page(
@@ -167,3 +168,20 @@ def should_see_sections(
         logging.debug(
             "%s can see '%s' section on %s page", actor_alias, section,
             page_name)
+
+
+def articles_should_see_in_correct_order(context: Context, actor_alias: str):
+    actor = get_actor(context, actor_alias)
+    group = actor.article_group
+    category = actor.article_category
+    visited_articles = actor.visited_articles
+    for idx, visited_article in enumerate(visited_articles):
+        expected_article = find_article(group, category, visited_article)
+        with assertion_msg(
+                "Expected to see '%s' '%s' article '%s' on position %d but %s "
+                "viewed it as %d", group, category, visited_article,
+                expected_article["index"], idx + 1):
+            assert expected_article["index"] == (idx + 1)
+        logging.debug(
+            "%s saw '%s' '%s' article '%s' at correct position %d",
+            actor_alias, group, category, visited_article, idx + 1)
