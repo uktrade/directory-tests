@@ -1270,3 +1270,9 @@ def find_article(group: str, category: str, name: str) -> dict:
                 "time to read": article[current]['time to read']
             }
     return result
+
+
+def get_first_article(group: str, category: str) -> dict:
+    articles = get_articles(group, category)
+    name = list(articles[0].keys())[0]
+    return find_article(group, category, name)
