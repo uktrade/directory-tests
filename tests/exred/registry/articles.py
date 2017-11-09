@@ -1230,3 +1230,43 @@ def get_articles(group: str, category: str) -> list:
     """
     filtered = filter_articles(group.lower(), category.lower())
     return sorted(filtered, key=get_article_index)
+
+
+def find_article(group: str, category: str, name: str) -> dict:
+    result = {}
+    articles = get_articles(group, category)
+    for idx, article in enumerate(articles):
+        current = list(article.keys())[0]
+        if current == name:
+            if (idx - 1) >= 0:
+                prev_name = list(articles[idx-1].keys())[0]
+                prev_article = {
+                    "index": articles[idx-1][prev_name]['index'],
+                    "name": prev_name,
+                    "next": articles[idx-1][prev_name]['next'],
+                    "previous": articles[idx-1][prev_name]['previous'],
+                    "time to read": articles[idx-1][prev_name]['time to read'],
+                }
+            else:
+                prev_article = None
+
+            if (idx + 1) < len(articles):
+                next_name = list(articles[idx+1].keys())[0]
+                next_article = {
+                    "index": articles[idx+1][next_name]['index'],
+                    "name": next_name,
+                    "next": articles[idx+1][next_name]['next'],
+                    "previous": articles[idx+1][next_name]['previous'],
+                    "time to read": articles[idx+1][next_name]['time to read'],
+                }
+            else:
+                next_article = None
+
+            result = {
+                "index": article[current]['index'],
+                "name": current,
+                "next": next_article,
+                "previous": prev_article,
+                "time to read": article[current]['time to read']
+            }
+    return result
