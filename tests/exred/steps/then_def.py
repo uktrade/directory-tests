@@ -15,6 +15,7 @@ from steps.then_impl import (
     personalised_journey_should_see_read_counter,
     personalised_should_see_layout_for,
     should_be_on_page,
+    should_see_sections,
     should_see_sections_on_home_page,
     triage_should_be_classified_as
 )
@@ -92,7 +93,7 @@ def then_actor_should_see_answers_to_questions(context, actor_alias):
     triage_should_see_answers_to_questions(context, actor_alias)
 
 
-@then('"{actor_alias}" should be on the personalised "{classification}" exporter journey page')
+@then('"{actor_alias}" should be on the Personalised Journey page for "{classification}" exporters')
 def then_classified_exporter_should_be_on_personalised_journey_page(
         context, actor_alias, classification):
     personalised_should_see_layout_for(context, actor_alias, classification)
@@ -113,3 +114,8 @@ def then_expected_export_readiness_page_elements_should_be_visible(
         context, actor_alias, elements):
     export_readiness_expected_page_elements_should_be_visible(
         context, actor_alias, elements.split(", "))
+
+
+@then('"{actor_alias}" should see "{sections}" sections on "{page_name}" page')
+def then_should_see_sections(context, actor_alias, sections, page_name):
+    should_see_sections(context, actor_alias, sections.split(", "), page_name)

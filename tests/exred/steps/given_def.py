@@ -6,6 +6,8 @@ from steps.then_impl import should_be_on_page
 from steps.when_impl import (
     actor_classifies_himself_as,
     guidance_open_category,
+    set_online_marketplace_preference,
+    set_sector_preference,
     start_triage,
     triage_classify_as,
     triage_create_exporting_journey,
@@ -60,3 +62,21 @@ def given_actor_starts_exporting_journey(context, actor_alias):
 @given('"{actor_alias}" decided to create his personalised journey page')
 def given_actor_decided_to_create_personalised_page(context, actor_alias):
     triage_create_exporting_journey(context, actor_alias)
+
+
+@given('"{actor_alias}" was classified as "{exporter_status}" Exporter which "{is_incorporated}" incorporated the company')
+def given_actor_was_classified_as(
+        context, actor_alias, exporter_status, is_incorporated):
+    triage_classify_as(
+        context, actor_alias, exporter_status=exporter_status,
+        is_incorporated=is_incorporated)
+
+
+@given('"{actor_alias}" exports "{goods_or_services}"')
+def given_actor_sets_sector_preference(context, actor_alias, goods_or_services):
+    set_sector_preference(context, actor_alias, goods_or_services)
+
+
+@given('"{actor_alias}" "{used_or_not}" online marketplaces before')
+def step_impl(context, actor_alias, used_or_not):
+    set_online_marketplace_preference(context, actor_alias, used_or_not)

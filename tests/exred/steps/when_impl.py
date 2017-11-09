@@ -20,6 +20,7 @@ from pages import (
     triage_what_do_you_want_to_export
 )
 from registry.pages import get_page_object
+from settings import EXRED_SECTORS
 from utils import (
     add_actor,
     assertion_msg,
@@ -88,7 +89,8 @@ def triage_say_what_do_you_want_to_export(
         context: Context, actor_alias: str, *, code: str = None,
         sector: str = None):
     driver = context.driver
-    code, sector = triage_what_do_you_want_to_export.enter(driver, code, sector)
+    code, sector = triage_what_do_you_want_to_export.enter(
+        driver, code, sector)
     triage_what_do_you_want_to_export.submit(driver)
     triage_have_you_exported.should_be_here(driver)
     update_actor(
@@ -257,11 +259,14 @@ def triage_create_exporting_journey(context: Context, actor_alias: str):
     update_actor(context, alias=actor_alias, created_personalised_journey=True)
 
 
-def triage_classify_as_new(context: Context, actor_alias: str):
+def triage_classify_as_new(
+        context: Context, actor_alias: str, incorporated: bool, code: str,
+        sector: str):
     start_triage(context, actor_alias)
-    triage_say_what_do_you_want_to_export(context, actor_alias)
+    triage_say_what_do_you_want_to_export(
+        context, actor_alias, code=code, sector=sector)
     triage_say_you_never_exported_before(context, actor_alias)
-    if random.choice([True, False]):
+    if incorporated:
         triage_say_you_are_incorporated(context, actor_alias)
         triage_enter_company_name(context, actor_alias, use_suggestions=True)
     else:
@@ -270,16 +275,19 @@ def triage_classify_as_new(context: Context, actor_alias: str):
     update_actor(context, alias=actor_alias, triage_classification="new")
 
 
-def triage_classify_as_occasional(context: Context, actor_alias: str):
+def triage_classify_as_occasional(
+        context: Context, actor_alias: str, incorporated: bool,
+        use_online_marketplaces: bool, code: str, sector: str):
     start_triage(context, actor_alias)
-    triage_say_what_do_you_want_to_export(context, actor_alias)
+    triage_say_what_do_you_want_to_export(
+        context, actor_alias, code=code, sector=sector)
     triage_say_you_exported_before(context, actor_alias)
     triage_say_you_do_not_export_regularly(context, actor_alias)
-    if random.choice([True, False]):
+    if use_online_marketplaces:
         triage_say_you_use_online_marketplaces(context, actor_alias)
     else:
         triage_say_you_do_not_use_online_marketplaces(context, actor_alias)
-    if random.choice([True, False]):
+    if incorporated:
         triage_say_you_are_incorporated(context, actor_alias)
         triage_enter_company_name(context, actor_alias, use_suggestions=True)
     else:
@@ -288,12 +296,15 @@ def triage_classify_as_occasional(context: Context, actor_alias: str):
     update_actor(context, alias=actor_alias, triage_classification="occasional")
 
 
-def triage_classify_as_regular(context: Context, actor_alias: str):
+def triage_classify_as_regular(
+        context: Context, actor_alias: str, incorporated: bool, code: str,
+        sector: str):
     start_triage(context, actor_alias)
-    triage_say_what_do_you_want_to_export(context, actor_alias)
+    triage_say_what_do_you_want_to_export(
+        context, actor_alias, code=code, sector=sector)
     triage_say_you_exported_before(context, actor_alias)
     triage_say_you_export_regularly(context, actor_alias)
-    if random.choice([True, False]):
+    if incorporated:
         triage_say_you_are_incorporated(context, actor_alias)
         triage_enter_company_name(context, actor_alias, use_suggestions=True)
     else:
@@ -303,21 +314,55 @@ def triage_classify_as_regular(context: Context, actor_alias: str):
 
 
 def triage_classify_as(
-        context: Context, actor_alias: str, *, exporter_status: str = None):
+        context: Context, actor_alias: str, *, exporter_status: str = None,
+        is_incorporated: str = None):
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
-    classifications = {
-        "new": triage_classify_as_new,
-        "occasional": triage_classify_as_occasional,
-        "regular": triage_classify_as_regular
-    }
-    exporter_status = exporter_status or random.choice(list(classifications))
+    actor = get_actor(context, actor_alias)
+
+    if actor.what_do_you_want_to_export is not None:
+        code, sector = actor.what_do_you_want_to_export
+    else:
+        code, sector = random.choice(list(EXRED_SECTORS.items()))
+
+    if actor.do_you_use_online_marketplaces is not None:
+        use_online_marketplaces = actor.do_you_use_online_marketplaces
+    else:
+        use_online_marketplaces = random.choice([True, False])
+
+    if exporter_status:
+        exporter_status = exporter_status.lower()
+    else:
+        exporter_status = random.choice(["new", "occasional", "regular"])
+
+    if is_incorporated is not None:
+        if is_incorporated.lower() == "has":
+            incorporated = True
+        elif is_incorporated.lower() == "has not":
+            incorporated = False
+        else:
+            raise KeyError(
+                "Could not recognise: '%s'. Please use 'has' or 'has not'"
+                .format(is_incorporated))
+    else:
+        incorporated = random.choice([True, False])
+
     visit_page(context, actor_alias, "home")
-    step = classifications[exporter_status.lower()]
+
     logging.debug(
         "%s decided to classify himself/herself as %s Exporter", actor_alias,
         exporter_status)
-    step(context, actor_alias)
+
+    if exporter_status == "new":
+        triage_classify_as_new(
+            context, actor_alias, incorporated, code, sector)
+    elif exporter_status == "occasional":
+        triage_classify_as_occasional(
+            context, actor_alias, incorporated, use_online_marketplaces, code,
+            sector)
+    elif exporter_status == "regular":
+        triage_classify_as_regular(
+            context, actor_alias, incorporated, code, sector)
 
 
 def triage_should_see_answers_to_questions(context, actor_alias):
@@ -434,3 +479,52 @@ def exred_open_category(
         actor_alias, category, location)
     open_group_element(
         context, group="personas", element=category, location=location)
+
+
+def set_sector_preference(
+        context: Context, actor_alias: str, goods_or_services: str):
+    if not get_actor(context, actor_alias):
+        add_actor(context, unauthenticated_actor(actor_alias))
+    if goods_or_services.lower() == "goods":
+        sectors = [(code, sector)
+                   for code, sector in EXRED_SECTORS.items()
+                   if code.startswith("HS")]
+    elif goods_or_services.lower() == "services":
+        sectors = [(code, sector)
+                   for code, sector in EXRED_SECTORS.items()
+                   if code.startswith("EB")]
+    else:
+        raise KeyError(
+            "Could not recognise '%s' as valid sector. Please use 'goods' or "
+            "'services'" % goods_or_services)
+    code, sector = random.choice(sectors)
+    update_actor(
+        context, actor_alias, what_do_you_want_to_export=(code, sector))
+    logging.debug(
+        "%s decided that her/his preffered sector is: %s %s", actor_alias,
+        code, sector)
+
+
+def set_online_marketplace_preference(
+        context: Context, actor_alias: str, used_or_not: str):
+    """Will set preference for past usage of Online Marketplaces
+
+     NOTE:
+     It will add new Actor is specified one doesn't exist,
+    """
+    if not get_actor(context, actor_alias):
+        add_actor(context, unauthenticated_actor(actor_alias))
+    if used_or_not.lower() == "used":
+        used = True
+    elif used_or_not.lower() == "never used":
+        used = False
+    else:
+        raise KeyError(
+            "Could not recognise '%s' as valid preference for pass usage of"
+            " Online Marketplaces. Please use 'used' or 'never used'"
+            % used_or_not)
+    update_actor(
+        context, actor_alias, do_you_use_online_marketplaces=used)
+    logging.debug(
+        "%s decided that he/she %s online marketplaces before", actor_alias,
+        used_or_not)

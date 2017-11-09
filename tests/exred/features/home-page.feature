@@ -34,7 +34,8 @@ Feature: Home Page
   @ED-2366
   @personas
   @articles
-  Scenario Outline: "<exporter_status>" Exporter should be able to get to a relevant Export Readiness Article List from Personas section on the home page
+  @<specific>
+  Scenario Outline: "<specific>" Exporter should be able to get to a relevant Export Readiness Article List from Personas section on the home page
     Given "Robert" classifies himself as "<specific>" exporter
 
     When "Robert" goes to the Export Readiness Articles for "<specific>" Exporters via "home page"

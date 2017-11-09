@@ -157,3 +157,13 @@ def export_readiness_expected_page_elements_should_be_visible(
     logging.debug(
         "%s can see all expected page elements: '%s' on current Guidance "
         "Articles page: %s", actor_alias, elements, context.driver.current_url)
+
+
+def should_see_sections(
+        context: Context, actor_alias: str, sections: list, page_name: str):
+    page = get_page_object(page_name)
+    for section in sections:
+        page.should_see_section(context.driver, section)
+        logging.debug(
+            "%s can see '%s' section on %s page", actor_alias, section,
+            page_name)

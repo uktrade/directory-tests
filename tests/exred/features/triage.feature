@@ -17,7 +17,7 @@ Feature: Triage
     And "Nadia" can see that she was classified as a "regular" exporter
     And "Nadia" decides to create her personalised journey page
 
-    Then "Nadia" should be on the personalised "regular" exporter journey page
+    Then "Nadia" should be on the Personalised Journey page for "regular" exporters
 
     Examples:
       | company_name_action  |
@@ -41,7 +41,7 @@ Feature: Triage
     And "Nadia" can see that she was classified as a "regular" exporter
     And "Nadia" decides to create her personalised journey page
 
-    Then "Nadia" should be on the personalised "regular" exporter journey page
+    Then "Nadia" should be on the Personalised Journey page for "regular" exporters
 
 
   @ED-2521
@@ -61,7 +61,7 @@ Feature: Triage
     And "Inigo" can see that she was classified as a "occasional" exporter
     And "Inigo" decides to create her personalised journey page
 
-    Then "Inigo" should be on the personalised "occasional" exporter journey page
+    Then "Inigo" should be on the Personalised Journey page for "occasional" exporters
 
     Examples:
       | online_action | company_name_action  |
@@ -89,7 +89,7 @@ Feature: Triage
     And "Inigo" can see that she was classified as a "occasional" exporter
     And "Inigo" decides to create her personalised journey page
 
-    Then "Inigo" should be on the personalised "occasional" exporter journey page
+    Then "Inigo" should be on the Personalised Journey page for "occasional" exporters
 
     Examples:
       | online_action |
@@ -112,7 +112,7 @@ Feature: Triage
     And "Jonah" can see that he was classified as a "new" exporter
     And "Jonah" decides to create his personalised journey page
 
-    Then "Jonah" should be on the personalised "new" exporter journey page
+    Then "Jonah" should be on the Personalised Journey page for "new" exporters
 
     Examples:
       | company_name_action  |
@@ -135,7 +135,7 @@ Feature: Triage
     And "Jonah" can see that he was classified as a "new" exporter
     And "Jonah" decides to create his personalised journey page
 
-    Then "Jonah" should be on the personalised "new" exporter journey page
+    Then "Jonah" should be on the Personalised Journey page for "new" exporters
 
 
   @ED-2523
