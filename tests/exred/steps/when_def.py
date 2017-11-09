@@ -6,6 +6,7 @@ from steps.then_impl import triage_should_be_classified_as
 from steps.when_impl import (
     exred_open_category,
     guidance_open_category,
+    guidance_read_through_all_articles,
     personalised_journey_create_page,
     start_triage,
     triage_are_you_incorporated,
@@ -104,3 +105,8 @@ def when_actor_decides_to_change_the_answers(context, actor_alias):
 @when('"{actor_alias}" goes to the Export Readiness Articles for "{category}" Exporters via "{location}"')
 def when_actor_goes_to_exred_articles(context, actor_alias, category, location):
     exred_open_category(context, actor_alias, category, location)
+
+
+@when('"{actor_alias}" decides to read through all Articles from selected list')
+def when_actor_reads_through_all_guidance_articles(context, actor_alias):
+    guidance_read_through_all_articles(context, actor_alias)

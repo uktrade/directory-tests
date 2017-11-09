@@ -549,3 +549,39 @@ def guidance_open_first_article(context: Context, actor_alias: str):
     logging.debug(
         "%s is on the first article %s: %s", actor_alias,
         first_article["name"], driver.current_url)
+
+
+def guidance_read_through_all_articles(context: Context, actor_alias: str):
+    driver = context.driver
+    actor = get_actor(context, actor_alias)
+    group = actor.article_group
+    category = actor.article_category
+
+    visited_articles = []
+
+    current_article_name = article_common.get_article_name(driver)
+    logging.debug("%s is on '%s' article", actor_alias, current_article_name)
+    current_article = find_article(group, category, current_article_name)
+    assert current_article, "Could not find Article: %s" % current_article_name
+    visited_articles.append(current_article_name)
+    next_article = current_article["next"]
+
+    while next_article is not None:
+        visited_articles.append(next_article["name"])
+        article_common.check_if_link_to_next_article_is_displayed(
+            driver, next_article["name"])
+        article_common.go_to_next_article(driver)
+        current_article_name = article_common.get_article_name(driver)
+        logging.debug(
+            "%s is on '%s' article", actor_alias, current_article_name)
+        current_article = find_article(group, category, current_article_name)
+        assert current_article, ("Could not find Article: %s" %
+                                 current_article_name)
+        next_article = current_article["next"]
+        if next_article:
+            logging.debug(
+                "The next article to visit is: %s", next_article["name"])
+        else:
+            logging.debug("There's no more articles to see")
+
+    update_actor(context, actor_alias, visited_articles=visited_articles)
