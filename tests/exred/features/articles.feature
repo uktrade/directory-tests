@@ -24,6 +24,39 @@ Feature: Articles
 
 
   @wip
+  @ED-2613
+  @personas
+  @articles
+  Scenario Outline: Any Exporter accessing Articles through the Guidance Article List should be able to navigate to the next article
+    Given "Robert" classifies himself as "<specific>" Exporter
+    And "Robert" accessed Export Readiness articles for "<specific>" Exporters via "home page"
+    And "Robert" opened any Article which is not the last one
+
+    When "Robert" decides to read an Article from the list
+
+    Then "Robert" should be able to navigate to the next article from the List following the Article Order for "<exporting_status>" Exporter
+
+    Examples:
+      | specific         |
+      | New              |
+      | Occasional       |
+      | Regular          |
+
+
+  @wip
+  @ED-2605
+  Scenario: Any Exporter should see his progress through the articles list
+    Given "Robert" is on the Article List page
+
+    When "Robert" views any article on the list
+    And "Robert" goes back to the Article List page
+
+    Then "Robert" should see this article as read (ticked)
+    And Chapters read counter should increase by 1
+    And Time to complete remaining chapters should decrease
+
+
+  @wip
   @guidance
   @articles
   Scenario Outline: Any Exporter accessing the last Article from the Guidance Article List should not be able to navigate to the next article
@@ -44,25 +77,6 @@ Feature: Articles
       | Business planning         |
       | Getting paid              |
       | Operations and Compliance |
-
-
-  @wip
-  @personas
-  @articles
-  Scenario Outline: Any Exporter accessing Articles through the Guidance Article List should be able to navigate to the next article
-    Given "Robert" classifies himself as "<specific>" Exporter
-    And "Robert" accessed Export Readiness articles for "<specific>" Exporters via "home page"
-    And "Robert" opened any Article which is not the last one
-
-    When "Robert" decides to read an Article from the list
-
-    Then "Robert" should be able to navigate to the next article from the List following the Article Order for "<exporting_status>" Exporter
-
-    Examples:
-      | specific         |
-      | New              |
-      | Occasional       |
-      | Regular          |
 
 
   @wip
@@ -145,19 +159,6 @@ Feature: Articles
       | New        |
       | Occasional |
       | Regular    |
-
-
-  @wip
-  @ED-2605
-  Scenario: Any Exporter should see his progress through the articles list
-    Given "Robert" is on the Article List page
-
-    When "Robert" views any article on the list
-    And "Robert" goes back to the Article List page
-
-    Then "Robert" should see this article as read (ticked)
-    And Chapters read counter should increase by 1
-    And Time to complete remaining chapters should decrease
 
 
   @wip
