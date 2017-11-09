@@ -138,12 +138,18 @@ Feature: Triage
     Then "Jonah" should be on the personalised "new" exporter journey page
 
 
-  @wip
   @ED-2523
   @first-time
-  Scenario: Any Exporter should be able to change their answers to at the end of triage
-    Given "Robert" answered triage questions
+  @<specific>
+  Scenario Outline: "<specific>" Exporter should be able to change their answers to at the end of triage
+    Given "Robert" was classified as "<specific>" exporter in the triage process
 
     When "Robert" decides to change his answers
 
     Then "Robert" should be able to answer the triage questions again with his previous answers pre-populated
+
+    Examples: classifications
+      | specific   |
+      | New        |
+      | Occasional |
+      | Regular    |

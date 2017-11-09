@@ -16,7 +16,11 @@ from steps.then_impl import (
     should_see_sections_on_home_page,
     triage_should_be_classified_as
 )
-from steps.when_impl import triage_should_see_answers_to_questions
+from steps.when_impl import (
+    triage_answer_questions_again,
+    triage_change_answers,
+    triage_should_see_answers_to_questions
+)
 
 
 @then('"{actor_name}" should see the "{sections}" sections on home page')
@@ -91,3 +95,8 @@ def then_actor_should_see_answers_to_questions(context, actor_alias):
 def then_classified_exporter_should_be_on_personalised_journey_page(
         context, actor_alias, classification):
     personalised_should_see_layout_for(context, actor_alias, classification)
+
+
+@then('"{actor_alias}" should be able to answer the triage questions again with his previous answers pre-populated')
+def then_actor_should_be_able_to_answer_again(context, actor_alias):
+    triage_answer_questions_again(context, actor_alias)

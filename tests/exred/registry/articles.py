@@ -52,6 +52,13 @@ ARTICLES = {
                 "next": "get export finance"
             }
         },
+        "export readiness": {
+            "new": {
+                "index": 11,
+                "previous": "get money to export",
+                "next": "consider how you'll get paid"
+            },
+        },
     },
     "choosing an agent or distributor": {
         "time to read": 0,
@@ -68,6 +75,13 @@ ARTICLES = {
                 "previous": "use a distributor",
                 "next": "license your product or service"
             }
+        },
+        "export readiness": {
+            "new": {
+                "index": 7,
+                "previous": "use a distributor",
+                "next": "meet your customers"
+            },
         },
     },
     "consider how you'll get paid": {
@@ -90,6 +104,13 @@ ARTICLES = {
                 "previous": "start a joint venture",
                 "next": "invoice currency and contents"
             }
+        },
+        "export readiness": {
+            "new": {
+                "index": 12,
+                "previous": "choose the right finance",
+                "next": "plan the logistics"
+            },
         },
     },
     "decide when you'll get paid": {
@@ -159,6 +180,13 @@ ARTICLES = {
                 "next": "know your customers"
             }
         },
+        "export readiness": {
+            "new": {
+                "index": 1,
+                "previous": None,
+                "next": "know your customers"
+            }
+        },
     },
     "find a route to market": {
         "time to read": 0,
@@ -180,6 +208,13 @@ ARTICLES = {
                 "previous": "make an export plan",
                 "next": "use an overseas agent"
             }
+        },
+        "export readiness": {
+            "new": {
+                "index": 4,
+                "previous": "make an export plan",
+                "next": "use an overseas agent"
+            },
         },
     },
     "franchise your business": {
@@ -246,6 +281,13 @@ ARTICLES = {
                 "previous": "understand your customer's culture",
                 "next": "choose the right finance"
             }
+        },
+        "export readiness": {
+            "new": {
+                "index": 10,
+                "previous": "manage language differences",
+                "next": "choose the right finance"
+            },
         },
     },
     "get your export documents right": {
@@ -320,6 +362,13 @@ ARTICLES = {
                 "next": "what intellectual property is"
             }
         },
+        "export readiness": {
+            "new": {
+                "index": 14,
+                "previous": "plan the logistics",
+                "next": "what intellectual property is"
+            },
+        },
     },
     "invoice currency and contents": {
         "time to read": 0,
@@ -374,6 +423,13 @@ ARTICLES = {
                 "index": 4,
                 "previous": "analyse the competition",
                 "next": "manage language differences"
+            },
+        },
+        "export readiness": {
+            "new": {
+                "index": 2,
+                "previous": "do research first",
+                "next": "make an export plan"
             }
         },
     },
@@ -425,6 +481,13 @@ ARTICLES = {
                 "next": "find a route to market"
             }
         },
+        "export readiness": {
+            "new": {
+                "index": 3,
+                "previous": "know your customers",
+                "next": "find a route to market"
+            },
+        },
     },
     "manage language differences": {
         "time to read": 0,
@@ -446,6 +509,13 @@ ARTICLES = {
                 "previous": "know your customers",
                 "next": "understand your customer's culture"
             }
+        },
+        "export readiness": {
+            "new": {
+                "index": 9,
+                "previous": "meet your customers",
+                "next": "get money to export"
+            },
         },
     },
     "match your website to your audience": {
@@ -481,6 +551,23 @@ ARTICLES = {
                 "next": "manage language differences"
             }
         },
+        "export readiness": {
+            "new": {
+                "index": 8,
+                "previous": "choosing an agent or distributor",
+                "next": "manage language differences"
+            },
+        },
+    },
+    "next steps for new to exporting": {
+        "time to read": 0,
+        "export readiness": {
+            "new": {
+                "index": 17,
+                "previous": "types of intellectual property",
+                "next": None
+            },
+        },
     },
     "payment methods": {
         "time to read": 0,
@@ -514,6 +601,13 @@ ARTICLES = {
                 "previous": "consider how you'll get paid",
                 "next": "internationalise your website"
             }
+        },
+        "export readiness": {
+            "new": {
+                "index": 13,
+                "previous": "consider how you'll get paid",
+                "next": "internationalise your website"
+            },
         },
     },
     "raise money by borrowing": {
@@ -598,6 +692,13 @@ ARTICLES = {
                 "next": "know what ip you have"
             }
         },
+        "export readiness": {
+            "new": {
+                "index": 16,
+                "previous": "what intellectual property is",
+                "next": "next steps for new to exporting"
+            },
+        },
     },
     "understand your customer's culture": {
         "time to read": 0,
@@ -637,6 +738,13 @@ ARTICLES = {
                 "next": "choosing an agent or distributor"
             }
         },
+        "export readiness": {
+            "new": {
+                "index": 6,
+                "previous": "use an overseas agent",
+                "next": "choosing an agent or distributor"
+            },
+        },
     },
     "use a freight forwarder": {
         "time to read": 0,
@@ -675,6 +783,13 @@ ARTICLES = {
                 "previous": "find a route to market",
                 "next": "use a distributor"
             }
+        },
+        "export readiness": {
+            "new": {
+                "index": 5,
+                "previous": "find a route to market",
+                "next": "use a distributor"
+            },
         },
     },
     "user incoterms in contracts": {
@@ -724,6 +839,13 @@ ARTICLES = {
                 "previous": "internationalise your website",
                 "next": "types of intellectual property"
             }
+        },
+        "export readiness": {
+            "new": {
+                "index": 15,
+                "previous": "internationalise your website",
+                "next": "types of intellectual property"
+            },
         },
     },
 }

@@ -79,3 +79,11 @@ def submit(driver: webdriver):
     button = driver.find_element_by_css_selector(CONTINUE_BUTTON)
     button.click()
     take_screenshot(driver, NAME + " after submitting")
+
+
+def is_company_name(driver: webdriver, company_name: str):
+    given = get_company_name(driver)
+    with assertion_msg(
+            "Expected the company name input box to be prepopulated with: '%s'"
+            " but got '%s' instead", company_name, given):
+        assert given.lower() == company_name.lower()
