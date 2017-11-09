@@ -7,7 +7,9 @@ from behave.runner import Context
 from retrying import retry
 
 from pages import (
+    article_common,
     footer,
+    guidance_common,
     header,
     home,
     personalised_journey,
@@ -19,6 +21,7 @@ from pages import (
     triage_result,
     triage_what_do_you_want_to_export
 )
+from registry.articles import find_article, get_articles, get_first_article
 from registry.pages import get_page_object
 from settings import EXRED_SECTORS
 from utils import (
@@ -71,13 +74,18 @@ def open_group_element(
 
 
 def guidance_open_category(
-        context: Context, actor: str, category: str, location: str):
+        context: Context, actor_alias: str, category: str, location: str):
+    if not get_actor(context, actor_alias):
+        add_actor(context, unauthenticated_actor(actor_alias))
     home.visit(driver=context.driver)
     logging.debug(
         "%s is about to open Guidance '%s' category from %s",
-        actor, category, location)
+        actor_alias, category, location)
     open_group_element(
         context, group="guidance", element=category, location=location)
+    update_actor(
+        context, actor_alias, article_group="guidance",
+        article_category=category, article_location=location)
 
 
 def start_triage(context: Context, actor_alias: str):
@@ -528,3 +536,52 @@ def set_online_marketplace_preference(
     logging.debug(
         "%s decided that he/she %s online marketplaces before", actor_alias,
         used_or_not)
+
+
+def guidance_open_first_article(context: Context, actor_alias: str):
+    driver = context.driver
+    actor = get_actor(context, actor_alias)
+    group = actor.article_group
+    category = actor.article_category
+    first_article = get_first_article(group, category)
+    guidance_common.open_first_article(driver)
+    article_common.should_see_article(driver, first_article["name"])
+    logging.debug(
+        "%s is on the first article %s: %s", actor_alias,
+        first_article["name"], driver.current_url)
+
+
+def guidance_read_through_all_articles(context: Context, actor_alias: str):
+    driver = context.driver
+    actor = get_actor(context, actor_alias)
+    group = actor.article_group
+    category = actor.article_category
+
+    visited_articles = []
+
+    current_article_name = article_common.get_article_name(driver)
+    logging.debug("%s is on '%s' article", actor_alias, current_article_name)
+    current_article = find_article(group, category, current_article_name)
+    assert current_article, "Could not find Article: %s" % current_article_name
+    visited_articles.append(current_article_name)
+    next_article = current_article["next"]
+
+    while next_article is not None:
+        visited_articles.append(next_article["name"])
+        article_common.check_if_link_to_next_article_is_displayed(
+            driver, next_article["name"])
+        article_common.go_to_next_article(driver)
+        current_article_name = article_common.get_article_name(driver)
+        logging.debug(
+            "%s is on '%s' article", actor_alias, current_article_name)
+        current_article = find_article(group, category, current_article_name)
+        assert current_article, ("Could not find Article: %s" %
+                                 current_article_name)
+        next_article = current_article["next"]
+        if next_article:
+            logging.debug(
+                "The next article to visit is: %s", next_article["name"])
+        else:
+            logging.debug("There's no more articles to see")
+
+    update_actor(context, actor_alias, visited_articles=visited_articles)

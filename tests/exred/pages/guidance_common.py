@@ -27,6 +27,7 @@ TIME_TO_COMPLETE = "#articles div.scope-indicator dd.time > span.value"
 SHOW_MORE_BUTTON = "#js-paginate-list-more"
 ARTICLES_LIST = "#js-paginate-list > li"
 NEXT_CATEGORY_LINK = ""
+FIRST_ARTICLE = "#js-paginate-list > li:nth-child(1) > a"
 
 SCOPE_ELEMENTS = {
     "total number of articles": TOTAL_NUMBER_OF_ARTICLES,
@@ -174,3 +175,15 @@ def check_elements_are_visible(driver: webdriver, elements: list):
                 action_chains.perform()
         with assertion_msg("Expected to see '%s' but can't see it", element):
             assert page_element.is_displayed()
+
+
+def open_first_article(driver: webdriver):
+    with selenium_action(
+            driver,
+            "Could not find link to the first article using '%s' selector",
+            FIRST_ARTICLE):
+        first_article = driver.find_element_by_css_selector(FIRST_ARTICLE)
+    with assertion_msg("The link to the first article is not visible"):
+        assert first_article.is_displayed()
+    first_article.click()
+    take_screenshot(driver, "after opening first article")

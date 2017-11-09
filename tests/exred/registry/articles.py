@@ -98,7 +98,7 @@ ARTICLES = {
         "time to read": 0,
         "guidance": {
             "business planning": {
-                "index": 5,
+                "index": 6,
                 "previous": "use a distributor",
                 "next": "licensing and franchising"
             }
@@ -153,7 +153,7 @@ ARTICLES = {
             "occasional": {
                 "index": 23,
                 "next": "invoice currency and contents",
-                "previous": "get government finance support"
+                "previous": "get finance support from government"
             }
         },
     },
@@ -274,7 +274,7 @@ ARTICLES = {
             "business planning": {
                 "index": 2,
                 "previous": "make an export plan",
-                "next": "use an overseas agent"
+                "next": "sell overseas directly"
             }
         },
         "personalised journey": {
@@ -306,7 +306,7 @@ ARTICLES = {
         "time to read": 0,
         "guidance": {
             "business planning": {
-                "index": 8,
+                "index": 9,
                 "previous": "license your product or service",
                 "next": "start a joint venture"
             }
@@ -348,7 +348,7 @@ ARTICLES = {
             }
         }
     },
-    "get government finance support": {
+    "get finance support from government": {
         "time to read": 0,
         "guidance": {
             "finance": {
@@ -489,7 +489,7 @@ ARTICLES = {
             "regular": {
                 "index": 15,
                 "next": "know what IP you have",
-                "previous": "get government finance support"
+                "previous": "get finance support from government"
             }
         }
     },
@@ -618,7 +618,7 @@ ARTICLES = {
         "time to read": 0,
         "guidance": {
             "business planning": {
-                "index": 6,
+                "index": 7,
                 "previous": "choosing an agent or distributor",
                 "next": "license your product or service"
             }
@@ -628,7 +628,7 @@ ARTICLES = {
         "time to read": 0,
         "guidance": {
             "business planning": {
-                "index": 7,
+                "index": 8,
                 "previous": "licensing and franchising",
                 "next": "franchise your business"
             }
@@ -670,7 +670,7 @@ ARTICLES = {
             },
             "occasional": {
                 "index": 14,
-                "previous": "get government finance support",
+                "previous": "get finance support from government",
                 "next": "find a route to market"
             }
         },
@@ -889,27 +889,37 @@ ARTICLES = {
             "occasional": {
                 "index": 12,
                 "previous": "borrow against assets",
-                "next": "get government finance support"
+                "next": "get finance support from government"
             }
         },
         "export readiness": {
             "occasional": {
                 "index": 21,
-                "next": "get government finance support",
+                "next": "get finance support from government",
                 "previous": "borrow against assets"
             },
             "regular": {
                 "index": 13,
-                "next": "get government finance support",
+                "next": "get finance support from government",
                 "previous": "borrow against assets"
             }
         }
+    },
+    "sell overseas directly": {
+        "time to read": 0,
+        "guidance": {
+            "business planning": {
+                "index": 3,
+                "previous": "find a route to market",
+                "next": "use an overseas agent"
+            }
+        },
     },
     "set up an overseas operation": {
         "time to read": 0,
         "guidance": {
             "business planning": {
-                "index": 10,
+                "index": 11,
                 "previous": "start a joint venture",
                 "next": None
             }
@@ -926,7 +936,7 @@ ARTICLES = {
         "time to read": 0,
         "guidance": {
             "business planning": {
-                "index": 9,
+                "index": 10,
                 "previous": "franchise your business",
                 "next": "set up an overseas operation"
             }
@@ -1018,7 +1028,7 @@ ARTICLES = {
         "time to read": 0,
         "guidance": {
             "business planning": {
-                "index": 4,
+                "index": 5,
                 "previous": "use an overseas agent",
                 "next": "choosing an agent or distributor"
             }
@@ -1076,8 +1086,8 @@ ARTICLES = {
         "time to read": 0,
         "guidance": {
             "business planning": {
-                "index": 3,
-                "previous": "find a route to market",
+                "index": 4,
+                "previous": "sell overseas directly",
                 "next": "use a distributor"
             }
         },
@@ -1220,3 +1230,49 @@ def get_articles(group: str, category: str) -> list:
     """
     filtered = filter_articles(group.lower(), category.lower())
     return sorted(filtered, key=get_article_index)
+
+
+def find_article(group: str, category: str, name: str) -> dict:
+    result = {}
+    articles = get_articles(group, category)
+    for idx, article in enumerate(articles):
+        current = list(article.keys())[0]
+        if current == name:
+            if (idx - 1) >= 0:
+                prev_name = list(articles[idx-1].keys())[0]
+                prev_article = {
+                    "index": articles[idx-1][prev_name]['index'],
+                    "name": prev_name,
+                    "next": articles[idx-1][prev_name]['next'],
+                    "previous": articles[idx-1][prev_name]['previous'],
+                    "time to read": articles[idx-1][prev_name]['time to read'],
+                }
+            else:
+                prev_article = None
+
+            if (idx + 1) < len(articles):
+                next_name = list(articles[idx+1].keys())[0]
+                next_article = {
+                    "index": articles[idx+1][next_name]['index'],
+                    "name": next_name,
+                    "next": articles[idx+1][next_name]['next'],
+                    "previous": articles[idx+1][next_name]['previous'],
+                    "time to read": articles[idx+1][next_name]['time to read'],
+                }
+            else:
+                next_article = None
+
+            result = {
+                "index": article[current]['index'],
+                "name": current,
+                "next": next_article,
+                "previous": prev_article,
+                "time to read": article[current]['time to read']
+            }
+    return result
+
+
+def get_first_article(group: str, category: str) -> dict:
+    articles = get_articles(group, category)
+    name = list(articles[0].keys())[0]
+    return find_article(group, category, name)
