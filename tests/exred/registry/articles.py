@@ -98,7 +98,7 @@ ARTICLES = {
         "time to read": 0,
         "guidance": {
             "business planning": {
-                "index": 5,
+                "index": 6,
                 "previous": "use a distributor",
                 "next": "licensing and franchising"
             }
@@ -274,7 +274,7 @@ ARTICLES = {
             "business planning": {
                 "index": 2,
                 "previous": "make an export plan",
-                "next": "use an overseas agent"
+                "next": "sell overseas directly"
             }
         },
         "personalised journey": {
@@ -306,7 +306,7 @@ ARTICLES = {
         "time to read": 0,
         "guidance": {
             "business planning": {
-                "index": 8,
+                "index": 9,
                 "previous": "license your product or service",
                 "next": "start a joint venture"
             }
@@ -618,7 +618,7 @@ ARTICLES = {
         "time to read": 0,
         "guidance": {
             "business planning": {
-                "index": 6,
+                "index": 7,
                 "previous": "choosing an agent or distributor",
                 "next": "license your product or service"
             }
@@ -628,7 +628,7 @@ ARTICLES = {
         "time to read": 0,
         "guidance": {
             "business planning": {
-                "index": 7,
+                "index": 8,
                 "previous": "licensing and franchising",
                 "next": "franchise your business"
             }
@@ -905,11 +905,21 @@ ARTICLES = {
             }
         }
     },
+    "sell overseas directly": {
+        "time to read": 0,
+        "guidance": {
+            "business planning": {
+                "index": 3,
+                "previous": "find a route to market",
+                "next": "use an overseas agent"
+            }
+        },
+    },
     "set up an overseas operation": {
         "time to read": 0,
         "guidance": {
             "business planning": {
-                "index": 10,
+                "index": 11,
                 "previous": "start a joint venture",
                 "next": None
             }
@@ -926,7 +936,7 @@ ARTICLES = {
         "time to read": 0,
         "guidance": {
             "business planning": {
-                "index": 9,
+                "index": 10,
                 "previous": "franchise your business",
                 "next": "set up an overseas operation"
             }
@@ -1018,7 +1028,7 @@ ARTICLES = {
         "time to read": 0,
         "guidance": {
             "business planning": {
-                "index": 4,
+                "index": 5,
                 "previous": "use an overseas agent",
                 "next": "choosing an agent or distributor"
             }
@@ -1076,8 +1086,8 @@ ARTICLES = {
         "time to read": 0,
         "guidance": {
             "business planning": {
-                "index": 3,
-                "previous": "find a route to market",
+                "index": 4,
+                "previous": "sell overseas directly",
                 "next": "use a distributor"
             }
         },
