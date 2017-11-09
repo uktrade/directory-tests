@@ -31,20 +31,19 @@ Feature: Home Page
     Then "Robert" should be on the "Personalised Journey" page
 
 
-  @wip
   @ED-2366
   @personas
   @articles
-  Scenario Outline: "<exporter_status>" Exporter should be able to get to a relevant article list from Personas section on the homepage
-    Given "Robert" classifies himself as "<exporter_status>" exporter
+  Scenario Outline: "<exporter_status>" Exporter should be able to get to a relevant Export Readiness Article List from Personas section on the home page
+    Given "Robert" classifies himself as "<specific>" exporter
 
-    When "Robert" goes to the relevant "<exporter_status>" exporter link in the Personas section on the Home page
+    When "Robert" goes to the Export Readiness Articles for "<specific>" Exporters via "home page"
 
-    Then "Robert" should see an ordered list of "previous + next 5" articles selected for "<exporter_status>" exporter
-    And "Robert" should see a Articles Read counter, Total number of Articles and Time to complete remaining chapters
+    Then "Robert" should see an ordered list of all Export Readiness Articles selected for "<specific>" Exporters
+    And "Robert" should see on the Export Readiness Articles page "Articles Read counter, Total number of Articles, Time to complete remaining chapters"
 
     Examples:
-      | exporter_status |
-      | New             |
-      | Occasional      |
-      | Regular         |
+      | specific   |
+      | New        |
+      | Occasional |
+      | Regular    |

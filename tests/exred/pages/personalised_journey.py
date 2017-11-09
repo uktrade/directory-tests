@@ -237,7 +237,9 @@ def check_top_facts_values(driver: webdriver):
 
     try:
         tr = driver.find_element_by_css_selector(
-            "#row-{}".format(top_importer))
+            "#row-{}".format(top_importer
+                             .replace(",", "\,")
+                             .replace(" ", "\ ")))
         cell = tr.find_element_by_css_selector(TOP_10_TRADE_VALUE).text
         with assertion_msg(
                 "Expected to see 'Export value from the world' for %s to be %s"

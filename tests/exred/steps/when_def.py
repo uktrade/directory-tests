@@ -4,6 +4,7 @@ from behave import when
 
 from steps.then_impl import triage_should_be_classified_as
 from steps.when_impl import (
+    exred_open_category,
     guidance_open_category,
     personalised_journey_create_page,
     start_triage,
@@ -98,3 +99,8 @@ def when_actor_says_whether_he_used_online_marktet_places(
 @when('"{actor_alias}" decides to change his answers')
 def when_actor_decides_to_change_the_answers(context, actor_alias):
     triage_change_answers(context, actor_alias)
+
+
+@when('"{actor_alias}" goes to the Export Readiness Articles for "{category}" Exporters via "{location}"')
+def when_actor_goes_to_exred_articles(context, actor_alias, category, location):
+    exred_open_category(context, actor_alias, category, location)

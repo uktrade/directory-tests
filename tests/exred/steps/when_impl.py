@@ -424,3 +424,13 @@ def triage_answer_questions_again(context, actor_alias):
             triage_result.should_be_classified_as_new(driver)
         triage_should_see_answers_to_questions(context, actor_alias)
     logging.debug("%s was able to change the Triage answers", actor_alias)
+
+
+def exred_open_category(
+        context: Context, actor_alias: str, category: str, location: str):
+    home.visit(driver=context.driver)
+    logging.debug(
+        "%s is about to open Export Readiness '%s' category from %s",
+        actor_alias, category, location)
+    open_group_element(
+        context, group="personas", element=category, location=location)

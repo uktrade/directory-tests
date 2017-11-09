@@ -10,7 +10,7 @@ Feature: Guidance articles
 
     When "Robert" goes to the "<specific>" Guidance articles via "home page"
 
-    Then "Robert" should see an ordered list of all articles selected for "<specific>" category
+    Then "Robert" should see an ordered list of all Guidance Articles selected for "<specific>" category
     And "Robert" should see on the Guidance Articles page "Articles Read counter, Total number of Articles, Time to complete remaining chapters"
     And "Robert" should see a link to the "<next>" Guidance category
 
@@ -99,7 +99,7 @@ Feature: Guidance articles
 
     When "Nadia" goes to the "<specific>" Guidance articles via "personalised journey"
 
-    Then "Nadia" should see an ordered list of all articles selected for "<specific>" category
+    Then "Nadia" should see an ordered list of all Guidance Articles selected for "<specific>" category
     And "Nadia" should see on the Guidance Articles page "Articles Read counter, Total number of Articles, Time to complete remaining chapters"
     And "Nadia" should see a link to the "<next>" Guidance category
 
