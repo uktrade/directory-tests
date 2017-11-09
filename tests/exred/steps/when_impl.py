@@ -74,13 +74,18 @@ def open_group_element(
 
 
 def guidance_open_category(
-        context: Context, actor: str, category: str, location: str):
+        context: Context, actor_alias: str, category: str, location: str):
+    if not get_actor(context, actor_alias):
+        add_actor(context, unauthenticated_actor(actor_alias))
     home.visit(driver=context.driver)
     logging.debug(
         "%s is about to open Guidance '%s' category from %s",
-        actor, category, location)
+        actor_alias, category, location)
     open_group_element(
         context, group="guidance", element=category, location=location)
+    update_actor(
+        context, actor_alias, article_group="guidance",
+        article_category=category, article_location=location)
 
 
 def start_triage(context: Context, actor_alias: str):
