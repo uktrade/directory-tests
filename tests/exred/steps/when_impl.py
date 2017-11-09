@@ -7,7 +7,9 @@ from behave.runner import Context
 from retrying import retry
 
 from pages import (
+    article_common,
     footer,
+    guidance_common,
     header,
     home,
     personalised_journey,
@@ -19,6 +21,7 @@ from pages import (
     triage_result,
     triage_what_do_you_want_to_export
 )
+from registry.articles import find_article, get_articles, get_first_article
 from registry.pages import get_page_object
 from settings import EXRED_SECTORS
 from utils import (
@@ -528,3 +531,16 @@ def set_online_marketplace_preference(
     logging.debug(
         "%s decided that he/she %s online marketplaces before", actor_alias,
         used_or_not)
+
+
+def guidance_open_first_article(context: Context, actor_alias: str):
+    driver = context.driver
+    actor = get_actor(context, actor_alias)
+    group = actor.article_group
+    category = actor.article_category
+    first_article = get_first_article(group, category)
+    guidance_common.open_first_article(driver)
+    article_common.should_see_article(driver, first_article["name"])
+    logging.debug(
+        "%s is on the first article %s: %s", actor_alias,
+        first_article["name"], driver.current_url)
