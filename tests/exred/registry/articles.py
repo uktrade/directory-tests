@@ -153,7 +153,7 @@ ARTICLES = {
             "occasional": {
                 "index": 23,
                 "next": "invoice currency and contents",
-                "previous": "get government finance support"
+                "previous": "get finance support from government"
             }
         },
     },
@@ -348,7 +348,7 @@ ARTICLES = {
             }
         }
     },
-    "get government finance support": {
+    "get finance support from government": {
         "time to read": 0,
         "guidance": {
             "finance": {
@@ -489,7 +489,7 @@ ARTICLES = {
             "regular": {
                 "index": 15,
                 "next": "know what IP you have",
-                "previous": "get government finance support"
+                "previous": "get finance support from government"
             }
         }
     },
@@ -670,7 +670,7 @@ ARTICLES = {
             },
             "occasional": {
                 "index": 14,
-                "previous": "get government finance support",
+                "previous": "get finance support from government",
                 "next": "find a route to market"
             }
         },
@@ -889,18 +889,18 @@ ARTICLES = {
             "occasional": {
                 "index": 12,
                 "previous": "borrow against assets",
-                "next": "get government finance support"
+                "next": "get finance support from government"
             }
         },
         "export readiness": {
             "occasional": {
                 "index": 21,
-                "next": "get government finance support",
+                "next": "get finance support from government",
                 "previous": "borrow against assets"
             },
             "regular": {
                 "index": 13,
-                "next": "get government finance support",
+                "next": "get finance support from government",
                 "previous": "borrow against assets"
             }
         }
