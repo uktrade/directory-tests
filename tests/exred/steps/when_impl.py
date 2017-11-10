@@ -514,7 +514,7 @@ def set_sector_preference(
     update_actor(
         context, actor_alias, what_do_you_want_to_export=(code, sector))
     logging.debug(
-        "%s decided that her/his preffered sector is: %s %s", actor_alias,
+        "%s decided that her/his preferred sector is: %s %s", actor_alias,
         code, sector)
 
 
