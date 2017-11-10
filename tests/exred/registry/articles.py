@@ -411,7 +411,7 @@ GROUPS = {
         "occasional": PERSONA_OCCASIONAL_ARTICLES,
         "new": PERSONA_NEW_ARTICLES,
     },
-    "export readiness": {
+    "personas": {
         "regular": PERSONA_REGULAR_ARTICLES,
         "occasional": PERSONA_OCCASIONAL_ARTICLES,
         "new": PERSONA_NEW_ARTICLES
@@ -444,9 +444,11 @@ def get_article(group: str, category: str, name: str) -> Article:
 
             if (idx - 1) >= 0:
                 previous_article = articles[idx - 1]
+                previous_article.index = idx - 1
 
             if (idx + 1) < len(articles):
                 next_article = articles[idx + 1]
+                next_article.index = idx + 1
 
             article.index = idx
             article.previous = previous_article
