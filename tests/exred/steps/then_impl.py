@@ -10,7 +10,7 @@ from pages import (
     home,
     personalised_journey
 )
-from registry.articles import find_article, get_articles
+from registry.articles import get_article
 from registry.pages import get_page_object
 from steps.when_impl import (
     triage_should_be_classified_as_new,
@@ -175,13 +175,13 @@ def articles_should_see_in_correct_order(context: Context, actor_alias: str):
     group = actor.article_group
     category = actor.article_category
     visited_articles = actor.visited_articles
-    for idx, visited_article in enumerate(visited_articles):
-        expected_article = find_article(group, category, visited_article)
+    for position, visited_article in visited_articles:
+        expected_article = get_article(group, category, visited_article)
         with assertion_msg(
                 "Expected to see '%s' '%s' article '%s' on position %d but %s "
                 "viewed it as %d", group, category, visited_article,
-                expected_article["index"], idx + 1):
-            assert expected_article["index"] == (idx + 1)
+                expected_article.index, actor_alias, position):
+            assert expected_article.index == position
         logging.debug(
             "%s saw '%s' '%s' article '%s' at correct position %d",
-            actor_alias, group, category, visited_article, idx + 1)
+            actor_alias, group, category, visited_article, position)
