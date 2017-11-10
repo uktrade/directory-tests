@@ -479,14 +479,19 @@ def triage_answer_questions_again(context, actor_alias):
     logging.debug("%s was able to change the Triage answers", actor_alias)
 
 
-def exred_open_category(
+def export_readiness_open_category(
         context: Context, actor_alias: str, category: str, location: str):
+    if not get_actor(context, actor_alias):
+        add_actor(context, unauthenticated_actor(actor_alias))
     home.visit(driver=context.driver)
     logging.debug(
         "%s is about to open Export Readiness '%s' category from %s",
         actor_alias, category, location)
     open_group_element(
         context, group="personas", element=category, location=location)
+    update_actor(
+        context, actor_alias, article_group="personas",
+        article_category=category, article_location=location)
 
 
 def set_sector_preference(

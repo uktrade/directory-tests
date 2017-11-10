@@ -6,6 +6,7 @@ from steps.then_impl import should_be_on_page
 from steps.when_impl import (
     actor_classifies_himself_as,
     articles_open_first,
+    export_readiness_open_category,
     guidance_open_category,
     set_online_marketplace_preference,
     set_sector_preference,
@@ -87,3 +88,9 @@ def given_actor_set_preferences_for_online_marketplaces(
 @given('"{actor_alias}" opened first Article from the list')
 def given_actor_opened_first_article(context, actor_alias):
     articles_open_first(context, actor_alias)
+
+
+@given('"{actor_alias}" accessed Export Readiness articles for "{category}" Exporters via "{location}"')
+def given_actor_goes_to_export_readiness_articles(
+        context, actor_alias, category, location):
+    export_readiness_open_category(context, actor_alias, category, location)
