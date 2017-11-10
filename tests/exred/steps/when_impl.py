@@ -580,26 +580,26 @@ def guidance_read_through_all_articles(context: Context, actor_alias: str):
 
     current_article_name = article_common.get_article_name(driver)
     logging.debug("%s is on '%s' article", actor_alias, current_article_name)
-    current_article = find_article(group, category, current_article_name)
+    current_article = get_article(group, category, current_article_name)
     assert current_article, "Could not find Article: %s" % current_article_name
-    visited_articles.append(current_article_name)
-    next_article = current_article["next"]
+    visited_articles.append((current_article.index, current_article_name))
+    next_article = current_article.next
 
     while next_article is not None:
-        visited_articles.append(next_article["name"])
         article_common.check_if_link_to_next_article_is_displayed(
-            driver, next_article["name"])
+            driver, next_article.title)
         article_common.go_to_next_article(driver)
         current_article_name = article_common.get_article_name(driver)
+        visited_articles.append((next_article.index, next_article.title))
         logging.debug(
             "%s is on '%s' article", actor_alias, current_article_name)
-        current_article = find_article(group, category, current_article_name)
+        current_article = get_article(group, category, current_article_name)
         assert current_article, ("Could not find Article: %s" %
                                  current_article_name)
-        next_article = current_article["next"]
+        next_article = current_article.next
         if next_article:
             logging.debug(
-                "The next article to visit is: %s", next_article["name"])
+                "The next article to visit is: %s", next_article.title)
         else:
             logging.debug("There's no more articles to see")
 
