@@ -5,7 +5,7 @@ import logging
 from selenium import webdriver
 from selenium.webdriver import ActionChains
 
-from registry.articles import get_articles
+from registry.articles import get_article, get_articles
 from utils import assertion_msg, selenium_action, take_screenshot
 
 NAME = "ExRed Common Export Readiness"
@@ -77,21 +77,15 @@ def check_if_correct_articles_are_displayed(
     :param driver: selenium webdriver
     :param category: expected Guidance Article category
     """
-    expected_list = get_articles("export readiness", category.lower())
-    # convert list of dict to a simpler dict, which will help in comparison
-    expected_articles = {}
-    for article in expected_list:
-        expected_articles.update(article)
     show_all_articles(driver)
     # extract displayed list of articles and their indexes
     articles = driver.find_elements_by_css_selector(ARTICLES_LIST)
-    given_articles = [(idx+1, article.find_element_by_tag_name("a").text)
+    given_articles = [(idx, article.find_element_by_tag_name("a").text)
                       for idx, article in enumerate(articles)]
     # check whether article is on the right position
-    logging.debug("Expected articles: %s", expected_articles)
     logging.debug("Given articles: %s", given_articles)
     for position, name in given_articles:
-        expected_position = expected_articles[name.lower()]["index"]
+        expected_position = get_article("export readiness", category, name).index
         with assertion_msg(
                 "Expected article '%s' to be at position %d but found it at "
                 "position no. %d ", name, expected_position, position):
