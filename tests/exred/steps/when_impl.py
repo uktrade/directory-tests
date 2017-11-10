@@ -538,17 +538,17 @@ def set_online_marketplace_preference(
         used_or_not)
 
 
-def guidance_open_first_article(context: Context, actor_alias: str):
+def articles_open_first(context: Context, actor_alias: str):
     driver = context.driver
     actor = get_actor(context, actor_alias)
     group = actor.article_group
     category = actor.article_category
-    first_article = get_first_article(group, category)
+    first_article = get_articles(group, category)[0]
     guidance_common.open_first_article(driver)
-    article_common.should_see_article(driver, first_article["name"])
+    article_common.should_see_article(driver, first_article.title)
     logging.debug(
         "%s is on the first article %s: %s", actor_alias,
-        first_article["name"], driver.current_url)
+        first_article.title, driver.current_url)
 
 
 def guidance_read_through_all_articles(context: Context, actor_alias: str):
