@@ -23,21 +23,19 @@ Feature: Articles
       | Operations and Compliance |
 
 
-  @wip
   @ED-2613
   @personas
   @articles
-  Scenario Outline: Any Exporter accessing Articles through the Guidance Article List should be able to navigate to the next article
-    Given "Robert" classifies himself as "<specific>" Exporter
-    And "Robert" accessed Export Readiness articles for "<specific>" Exporters via "home page"
-    And "Robert" opened any Article which is not the last one
+  Scenario Outline: "<relevant>" Exporter accessing Articles through the Export Readiness Article List should be able to navigate to the next article
+    Given "Robert" accessed Export Readiness articles for "<relevant>" Exporters via "home page"
+    And "Robert" opened any Article but the last one
 
-    When "Robert" decides to read an Article from the list
+    When "Robert" decides to read through all remaining Articles from selected list
 
-    Then "Robert" should be able to navigate to the next article from the List following the Article Order for "<exporting_status>" Exporter
+    Then "Robert" should be able to navigate to the next article from the List following the Article Order
 
     Examples:
-      | specific         |
+      | relevant         |
       | New              |
       | Occasional       |
       | Regular          |
