@@ -4,6 +4,7 @@ from behave import when
 
 from steps.then_impl import triage_should_be_classified_as
 from steps.when_impl import (
+    articles_open_any_but_the_last,
     export_readiness_open_category,
     guidance_open_category,
     guidance_read_through_all_articles,
@@ -110,3 +111,8 @@ def when_actor_goes_to_exred_articles(context, actor_alias, category, location):
 @when('"{actor_alias}" decides to read through all Articles from selected list')
 def when_actor_reads_through_all_guidance_articles(context, actor_alias):
     guidance_read_through_all_articles(context, actor_alias)
+
+
+@when('"{actor_alias}" opens any Article but the last one')
+def when_actor_opens_any_article_but_the_last_one(context, actor_alias):
+    articles_open_any_but_the_last(context, actor_alias)

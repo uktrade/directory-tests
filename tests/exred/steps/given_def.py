@@ -5,6 +5,7 @@ from behave import given
 from steps.then_impl import should_be_on_page
 from steps.when_impl import (
     actor_classifies_himself_as,
+    articles_open_any_but_the_last,
     articles_open_first,
     export_readiness_open_category,
     guidance_open_category,
@@ -94,3 +95,8 @@ def given_actor_opened_first_article(context, actor_alias):
 def given_actor_goes_to_export_readiness_articles(
         context, actor_alias, category, location):
     export_readiness_open_category(context, actor_alias, category, location)
+
+
+@given('"{actor_alias}" opened any Article but the last one')
+def given_actor_opens_any_article_but_the_last_one(context, actor_alias):
+    articles_open_any_but_the_last(context, actor_alias)
