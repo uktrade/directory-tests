@@ -96,9 +96,19 @@ def check_elements_are_visible(driver: webdriver, elements: list):
             assert page_element.is_displayed()
 
 
+def go_to_article(driver: webdriver, title: str):
+    with selenium_action(driver, "Could not find article: %s", title):
+        article = driver.find_element_by_link_text(title)
+    with assertion_msg(
+            "Found a link to '%s' article but it's not visible", title):
+        assert article.is_displayed()
+    article.click()
+    take_screenshot(driver, "After going to the '%s' Article".format(title))
+
+
 def get_article_name(driver: webdriver) -> str:
     current_article = driver.find_element_by_css_selector(ARTICLE_NAME)
-    return current_article.text.lower()
+    return current_article.text
 
 
 def should_see_article(driver: webdriver, name: str):
