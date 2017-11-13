@@ -15,14 +15,6 @@
     {{
       "browser": "Firefox",
       "browser_version": "56.0"
-    }},
-    {{
-      "browser": "IE",
-      "browser_version": "11.0"
-    }},
-    {{
-      "browser": "Edge",
-      "browser_version": "16.0"
     }}
   ]
 }}
