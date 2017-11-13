@@ -4,6 +4,7 @@ from behave import when
 
 from steps.then_impl import triage_should_be_classified_as
 from steps.when_impl import (
+    articles_go_back_to_article_list,
     articles_open_any,
     articles_open_any_but_the_last,
     export_readiness_open_category,
@@ -127,3 +128,8 @@ def when_actor_reads_through_all_remaining_articles(context, actor_alias):
 @when('"{actor_alias}" opens any article on the list')
 def given_actor_opens_any_article(context, actor_alias):
     articles_open_any(context, actor_alias)
+
+
+@when('"{actor_alias}" goes back to the Article List page')
+def when_actor_goes_back_to_article_list(context, actor_alias):
+    articles_go_back_to_article_list(context, actor_alias)

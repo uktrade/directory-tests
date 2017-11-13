@@ -663,3 +663,8 @@ def articles_open_group(context: Context, actor_alias: str, group: str):
     update_actor(
         context, actor_alias, articles_read_counter=articles_read_counter,
         articles_time_to_complete=time_to_complete)
+
+
+def articles_go_back_to_article_list(context: Context, actor_alias: str):
+    article_common.go_back_to_article_list(context.driver)
+    logging.debug("%s went back to the Article List page", actor_alias)
