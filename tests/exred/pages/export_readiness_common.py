@@ -12,9 +12,9 @@ NAME = "ExRed Common Export Readiness"
 URL = None
 
 
-TOTAL_NUMBER_OF_ARTICLES = "#articles div.scope-indicator dd.position > span.to"
-ARTICLES_TO_READ_COUNTER = "#articles div.scope-indicator dd.position > span.from"
-TIME_TO_COMPLETE = "#articles div.scope-indicator dd.time > span.value"
+TOTAL_NUMBER_OF_ARTICLES = "dd.position > span.to"
+ARTICLES_TO_READ_COUNTER = "dd.position > span.from"
+TIME_TO_COMPLETE = "dd.time > span.value"
 SHOW_MORE_BUTTON = "#js-paginate-list-more"
 ARTICLES_LIST = "#js-paginate-list > li"
 

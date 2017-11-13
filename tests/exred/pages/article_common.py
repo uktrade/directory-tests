@@ -14,9 +14,9 @@ URL = None
 
 
 ARTICLE_NAME = "#top > h1"
-TOTAL_NUMBER_OF_ARTICLES = "#top dd.position > span.to"
-ARTICLES_TO_READ_COUNTER = "#top dd.position > span.from"
-TIME_TO_COMPLETE = "#top dd.time span.value"
+TOTAL_NUMBER_OF_ARTICLES = "dd.position > span.to"
+ARTICLES_TO_READ_COUNTER = "dd.position > span.from"
+TIME_TO_COMPLETE = "dd.time span.value"
 NEXT_ARTICLE_LINK = "#next-article-link"
 SHARE_MENU = "ul.sharing-links"
 SHOW_MORE_BUTTON = "#js-paginate-list-more"
