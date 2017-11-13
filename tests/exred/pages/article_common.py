@@ -100,7 +100,9 @@ def check_elements_are_visible(driver: webdriver, elements: list):
 
 
 def show_all_articles(driver: webdriver):
-    show_more_button = driver.find_element_by_css_selector(SHOW_MORE_BUTTON)
+    with selenium_action(
+            driver, "Can't find 'Show more' button @'%s'", driver.current_url):
+        show_more_button = driver.find_element_by_css_selector(SHOW_MORE_BUTTON)
     max_clicks = 10
     counter = 0
     # click up to 11 times - see bug ED-2561
