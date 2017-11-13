@@ -411,7 +411,7 @@ GROUPS = {
         "occasional": PERSONA_OCCASIONAL_ARTICLES,
         "new": PERSONA_NEW_ARTICLES,
     },
-    "personas": {
+    "export readiness": {
         "regular": PERSONA_REGULAR_ARTICLES,
         "occasional": PERSONA_OCCASIONAL_ARTICLES,
         "new": PERSONA_NEW_ARTICLES

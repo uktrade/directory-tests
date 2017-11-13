@@ -488,9 +488,9 @@ def export_readiness_open_category(
         "%s is about to open Export Readiness '%s' category from %s",
         actor_alias, category, location)
     open_group_element(
-        context, group="personas", element=category, location=location)
+        context, group="export readiness", element=category, location=location)
     update_actor(
-        context, actor_alias, article_group="personas",
+        context, actor_alias, article_group="export readiness",
         article_category=category, article_location=location)
 
 

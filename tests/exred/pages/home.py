@@ -41,7 +41,7 @@ SECTIONS = {
         "get_started_button": GET_STARTED_BUTTON,
         "image": "#content > section.triage.triage-section .container > img"
     },
-    "personas": {
+    "export readiness": {
         "itself": "#personas",
         "header": "#personas > .container > .header",
         "intro": "#personas > .container > .intro",
