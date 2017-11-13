@@ -5,6 +5,7 @@ import logging
 from behave.runner import Context
 
 from pages import (
+    article_common,
     export_readiness_common,
     guidance_common,
     home,
@@ -185,3 +186,8 @@ def articles_should_see_in_correct_order(context: Context, actor_alias: str):
         logging.debug(
             "%s saw '%s' '%s' article '%s' at correct position %d",
             actor_alias, group, category, visited_article, position)
+
+
+def articles_should_not_see_link_to_next_article(
+        context: Context, actor_alias: str):
+    article_common.should_not_see_link_to_next_article(context.driver)
