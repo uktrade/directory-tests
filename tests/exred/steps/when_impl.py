@@ -570,6 +570,20 @@ def articles_open_any_but_the_last(context: Context, actor_alias: str):
         any_article_but_the_last.title, driver.current_url)
 
 
+def articles_open_any(context: Context, actor_alias: str):
+    driver = context.driver
+    actor = get_actor(context, actor_alias)
+    group = actor.article_group
+    category = actor.article_category
+    articles = get_articles(group, category)
+    any_article = random.choice(articles)
+    article_common.show_all_articles(driver)
+    article_common.go_to_article(driver, any_article .title)
+    logging.debug(
+        "%s is on '%s' article page: %s", actor_alias,
+        any_article .title, driver.current_url)
+
+
 def guidance_read_through_all_articles(context: Context, actor_alias: str):
     driver = context.driver
     actor = get_actor(context, actor_alias)
