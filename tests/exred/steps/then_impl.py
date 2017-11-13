@@ -191,6 +191,8 @@ def articles_should_see_in_correct_order(context: Context, actor_alias: str):
 def articles_should_not_see_link_to_next_article(
         context: Context, actor_alias: str):
     article_common.should_not_see_link_to_next_article(context.driver)
+    logging.debug(
+        "As expected %s didn't see link to the next article", actor_alias)
 
 
 def articles_should_not_see_personas_end_page(
@@ -209,3 +211,41 @@ def articles_should_see_link_to_first_article_from_next_category(
     logging.debug(
         "%s can see link to the first article '%s' from '%s' category",
         actor_alias, first_article.title, next_category)
+    logging.debug("%s wasn't presented with Personas end page", actor_alias)
+
+
+def articles_should_see_article_as_read(context: Context, actor_alias: str):
+    actor = get_actor(context, actor_alias)
+    _, visited_article = actor.visited_articles[0]
+    article_common.show_all_articles(context.driver)
+    article_common.should_see_article_as_read(context.driver, visited_article)
+    logging.debug(
+        "%s can see that '%s' articles is marked as read", actor_alias,
+        visited_article)
+
+
+def articles_should_see_read_counter_increase(
+        context: Context, actor_alias: str, increase: int):
+    actor = get_actor(context, actor_alias)
+    previous_read_counter = actor.articles_read_counter
+    current_read_counter = article_common.get_read_counter(context.driver)
+    difference = current_read_counter - previous_read_counter
+    with assertion_msg(
+            "Expected the Read Counter to increase by '%s', but it increased"
+            " by '%s'", increase, difference):
+        assert difference == increase
+
+
+def articles_should_see_time_to_complete_decrease(
+        context: Context, actor_alias: str):
+    actor = get_actor(context, actor_alias)
+    previous_time_to_complete = actor.articles_time_to_complete
+    current_time_to_complete = article_common.get_time_to_complete(context.driver)
+    difference = current_time_to_complete - previous_time_to_complete
+    logging.debug(
+        "Time to Complete remaining Articles changed by %d mins", difference)
+    with assertion_msg(
+            "Expected the Time to Complete reading remaining articles to "
+            "decrease, not to increase or stay the same. Time difference: %d",
+            difference):
+        assert difference < 0
