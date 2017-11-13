@@ -49,6 +49,9 @@ SECTIONS = {
         "new": NEW_TO_EXPORTING_LINK,
         "occasional": OCCASIONAL_EXPORTER_LINK,
         "regular": REGULAR_EXPORTED_LINK,
+        "i'm new to exporting": NEW_TO_EXPORTING_LINK,
+        "i export occasionally": OCCASIONAL_EXPORTER_LINK,
+        "i'm a regular exporter": REGULAR_EXPORTED_LINK,
     },
     "guidance": {
         "itself": "#resource-guidance",

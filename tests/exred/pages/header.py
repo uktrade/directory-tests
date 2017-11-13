@@ -18,6 +18,9 @@ HOME_LINK = "#menu > ul > li:nth-child(1) > a"
 SECTIONS = {
     "export readiness": {
         "menu": "#nav-export-readiness",
+        "new": "#nav-export-readiness-list a[href='/new']",
+        'occasional': "#nav-export-readiness-list a[href='/occasional']",
+        "regular": "#nav-export-readiness-list a[href='/regular']",
         "i'm new to exporting": "#nav-export-readiness-list a[href='/new']",
         'i export occasionally': "#nav-export-readiness-list a[href='/occasional']",
         "i'm a regular exporter": "#nav-export-readiness-list a[href='/regular']"

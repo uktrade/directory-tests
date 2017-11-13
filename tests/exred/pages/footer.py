@@ -12,6 +12,9 @@ URL = None
 SECTIONS = {
     "export readiness": {
         "label": "#footer-links-2",
+        "new": "#footer-links-2  ~ ul > li:nth-child(1) > a",
+        "occasional": "#footer-links-2  ~ ul > li:nth-child(2) > a",
+        "regular": "#footer-links-2  ~ ul > li:nth-child(3) > a",
         "i'm new to exporting": "#footer-links-2  ~ ul > li:nth-child(1) > a",
         "i export occasionally": "#footer-links-2  ~ ul > li:nth-child(2) > a",
         "i'm a regular exporter": "#footer-links-2  ~ ul > li:nth-child(3) > a"
