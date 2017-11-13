@@ -69,7 +69,7 @@ def run(options):
                 args=(options.config, idx),
                 kwargs={
                     "tag": options.tag,
-                    "browsers": options.browsers,
+                    "browsers": options.browsers if browser_num == 1 else "",
                     "versions": options.versions
                 })
             jobs.append(process)
