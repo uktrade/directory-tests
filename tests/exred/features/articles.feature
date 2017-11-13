@@ -41,17 +41,22 @@ Feature: Articles
       | Regular    |
 
 
-  @wip
   @ED-2605
-  Scenario: Any Exporter should see his progress through the articles list
-    Given "Robert" is on the Article List page
+  @progress
+  Scenario Outline: Any Exporter should see his progress through the articles list
+    Given "Robert" is on the "<group>" Article List for randomly selected category
 
-    When "Robert" views any article on the list
+    When "Robert" opens any article on the list
     And "Robert" goes back to the Article List page
 
-    Then "Robert" should see this article as read (ticked)
-    And Chapters read counter should increase by 1
-    And Time to complete remaining chapters should decrease
+    Then "Robert" should see this article as read
+    And "Robert" should see that Article Read Counter increased by "1"
+    And "Robert" should see that Time to Complete remaining chapters decreased
+
+    Examples: article groups
+      | group            |
+      | Export Readiness |
+      | Guidance         |
 
 
   @ED-2616
