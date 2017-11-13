@@ -174,3 +174,26 @@ def go_back_to_article_list(driver: webdriver):
     with assertion_msg("Go back link is not visible"):
         go_back_link.is_displayed()
     go_back_link.click()
+
+
+def should_see_article_as_read(driver: webdriver, title: str):
+    with selenium_action(driver, "Could not find article: %s", title):
+        article = driver.find_element_by_link_text(title)
+    with assertion_msg(
+            "It looks like '%s' article is marked as unread", title):
+        assert "article-read" in article.get_attribute("class")
+
+
+def get_read_counter(driver: webdriver) -> int:
+    counter = driver.find_element_by_css_selector(ARTICLES_TO_READ_COUNTER)
+    with assertion_msg("Article Read Counter is not visible"):
+        assert counter.is_displayed()
+    return int(counter.text)
+
+
+def get_time_to_complete(driver: webdriver) -> int:
+    ttc = driver.find_element_by_css_selector(TIME_TO_COMPLETE)
+    with assertion_msg("Time To Complete Reading Articles is not visible"):
+        assert ttc.is_displayed()
+    ttc_value = [int(word) for word in ttc.text.split() if word.isdigit()][0]
+    return ttc_value
