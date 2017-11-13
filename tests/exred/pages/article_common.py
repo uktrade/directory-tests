@@ -20,6 +20,7 @@ TIME_TO_COMPLETE = "dd.time span.value"
 NEXT_ARTICLE_LINK = "#next-article-link"
 SHARE_MENU = "ul.sharing-links"
 SHOW_MORE_BUTTON = "#js-paginate-list-more"
+GO_BACK_LINK = "#category-link"
 
 SCOPE_ELEMENTS = {
     "total number of articles": TOTAL_NUMBER_OF_ARTICLES,
@@ -164,3 +165,12 @@ def should_not_see_link_to_next_article(driver: webdriver):
 def should_not_see_personas_end_page(driver: webdriver):
     """Check if Actor is stil on an Article page."""
     check_elements_are_visible(driver, ["article name"])
+
+
+def go_back_to_article_list(driver: webdriver):
+    with selenium_action(
+            driver, "Could not find Go back link on '%s'", driver.current_url):
+        go_back_link = driver.find_element_by_css_selector(GO_BACK_LINK)
+    with assertion_msg("Go back link is not visible"):
+        go_back_link.is_displayed()
+    go_back_link.click()
