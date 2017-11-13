@@ -36,10 +36,21 @@ def run_behave_test(
 
 @task
 @cmdopts([
-    make_option('-c', '--config', help='Configuration name: local, hub or browsertstack', default="local"),
-    make_option('-t', '--tag', help='Scenario tag for a selective test run', default=''),
-    make_option('-b', '--browsers', help='A comma separated list of Browsers to run the tests with', default='Chrome'),
-    make_option('-v', '--versions', help='A comma separated list of Browsers Versions to run the tests with', default='')
+    make_option('-c', '--config',
+                help='Configuration name: local, hub, '
+                     'browsertstack-first-browser-set or '
+                     'browserstack-second-browser-set',
+                default="local"),
+    make_option('-t', '--tag',
+                help='Scenario tag for a selective test run', default=''),
+    make_option('-b', '--browsers',
+                help='A comma separated list of Browsers to run the tests '
+                     'with',
+                default='Chrome'),
+    make_option('-v', '--versions',
+                help='A comma separated list of Browsers Versions to run the '
+                     'tests with',
+                default='')
 ])
 def run(options):
     """Run single, local and parallel test using different config."""
