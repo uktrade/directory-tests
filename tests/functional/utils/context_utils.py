@@ -52,7 +52,8 @@ Company = namedtuple(
 Feedback = namedtuple(
     'Feedback',
     [
-        'name', 'email', 'company_name', 'country', 'comment', 'terms'
+        'name', 'email', 'company_name', 'country', 'comment', 'terms',
+        'g_recaptcha_response'
     ]
 )
 Message = namedtuple(

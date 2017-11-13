@@ -81,8 +81,9 @@ def submit(
         "company_name": feedback.company_name,
         "country": feedback.country,
         "comment": feedback.comment,
-        "terms": feedback.terms
+        "terms": feedback.terms,
+        "g-recaptcha-response": feedback.g_recaptcha_response,
     }
     response = make_request(
-        Method.POST, URL, session=session, headers=headers, data=data)
+        Method.POST, URL, session=session, headers=headers, data=data, trim=False)
     return response
