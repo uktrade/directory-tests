@@ -795,18 +795,20 @@ def random_case_study_data(alias: str) -> CaseStudy:
 def random_feedback_data(
         *, name: str = None, email: str = None, company_name: str = None,
         country: str = None, comment: str = None,
-        terms: str = None) -> Feedback:
+        terms: str = None, g_recaptcha_response: str = None) -> Feedback:
     name = name or rare_word(min_length=12)
     email = email or ("test+buyer_{}@directory.uktrade.io"
                       .format(rare_word(min_length=15)))
     company_name = company_name or rare_word(min_length=12)
     country = country or rare_word(min_length=12)
     comment = comment or sentence(max_length=1000)
+    g_recaptcha_response = g_recaptcha_response or "test mode"
     terms = terms or "on"
 
     feedback = Feedback(
         name=name, email=email, company_name=company_name,
-        country=country, comment=comment, terms=terms)
+        country=country, comment=comment, terms=terms,
+        g_recaptcha_response=g_recaptcha_response)
 
     return feedback
 
