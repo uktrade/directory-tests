@@ -191,3 +191,8 @@ def articles_should_see_in_correct_order(context: Context, actor_alias: str):
 def articles_should_not_see_link_to_next_article(
         context: Context, actor_alias: str):
     article_common.should_not_see_link_to_next_article(context.driver)
+
+
+def articles_should_not_see_personas_end_page(
+        context: Context, actor_alias: str):
+    article_common.should_not_see_personas_end_page(context.driver)
