@@ -618,3 +618,41 @@ def guidance_read_through_all_articles(context: Context, actor_alias: str):
             logging.debug("There's no more articles to see")
 
     update_actor(context, actor_alias, visited_articles=visited_articles)
+
+
+def articles_open_group(context: Context, actor_alias: str, group: str):
+    categories = {
+        "guidance": [
+            "market research",
+            "customer insight",
+            "finance",
+            "business planning",
+            "getting paid",
+            "operations and compliance"
+        ],
+        "export readiness": [
+            "new",
+            "occasional",
+            "regular"
+        ]
+    }
+    category = random.choice(categories[group.lower()])
+    location = random.choice(["header menu", "footer links", "home page"])
+
+    if not get_actor(context, actor_alias):
+        add_actor(context, unauthenticated_actor(actor_alias))
+    update_actor(
+        context, actor_alias, article_group=group, article_category=category)
+
+    logging.debug(
+        "%s decided to open '%s' '%s' Articles via '%s'", actor_alias,
+        category, group, location)
+    if group.lower() == "export readiness":
+        export_readiness_open_category(
+            context, actor_alias, category=category, location=location)
+    elif group.lower() == "guidance":
+        guidance_open_category(context, actor_alias, category, location)
+    else:
+        raise KeyError(
+            "Did not recognize '{}'. Please use: 'Guidance' or 'Export "
+            "Readiness'".format(group))
