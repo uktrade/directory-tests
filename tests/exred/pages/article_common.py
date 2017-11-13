@@ -3,6 +3,7 @@
 import logging
 
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver import ActionChains
 
 from registry.articles import get_articles
@@ -129,3 +130,12 @@ def go_to_next_article(driver: webdriver):
     assert next_article.is_displayed()
     next_article.click()
     take_screenshot(driver, "After going to the next Article")
+
+
+def should_not_see_link_to_next_article(driver: webdriver):
+    try:
+        next_article = driver.find_element_by_css_selector(NEXT_ARTICLE_LINK)
+        with assertion_msg("Link to the next article is visible"):
+            assert not next_article.is_displayed()
+    except NoSuchElementException:
+        logging.debug("As expected link to the next article, is not present")
