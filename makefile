@@ -163,7 +163,6 @@ exred_browserstack:
 	$(EXRED_SET_DOCKER_ENV_VARS) && \
 	cd tests/exred && \
 	paver run --config=browserstack-first-browser-set --tag=${TAG}; \
-	cd tests/exred && \
 	paver run --config=browserstack-second-browser-set --tag=${TAG}
 
 exred_browserstack_single:
