@@ -123,6 +123,7 @@ def then_expected_export_readiness_page_elements_should_be_visible(
         context, actor_alias, elements.split(", "))
 
 
+@then('"{actor_alias}" should see "{sections}" section on "{page_name}" page')
 @then('"{actor_alias}" should see "{sections}" sections on "{page_name}" page')
 def then_should_see_sections(context, actor_alias, sections, page_name):
     should_see_sections(context, actor_alias, sections.split(", "), page_name)

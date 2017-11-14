@@ -125,21 +125,33 @@ Feature: Articles
       | Regular    | footer links  |
 
 
-  @wip
+  @ED-2632
   @articles
-  Scenario Outline:  A triaged Exporter should see relevant article list on the customised page
+  @<relevant>
+  Scenario Outline: An Exporter classified as "<relevant>" in the Triage process should see a list of relevant articles on the personalised journey page
     Given "Robert" was classified as "<relevant>" exporter in the triage process
 
-    When "Robert" goes to the personalised page
+    When "Robert" decides to create his personalised journey page
 
-    Then "Robert" should see an ordered list of "first 5" articles selected for "<exporter_status>" exporter
-    And "Robert" should see a Articles Read counter, Total number of Articles, Time to complete remaining chapters, Tasks completed counter and task Total number
+    Then "Robert" should see an ordered list of all Export Readiness Articles selected for "<relevant>" Exporters
+    And "Robert" should see on the Export Readiness Articles page "Articles Read counter, Total number of Articles, Time to complete remaining chapters"
 
     Examples:
       | relevant   |
       | New        |
       | Occasional |
-      | Regular    |
+
+
+  @ED-2632
+  @articles
+  @regular
+  Scenario: An Exporter classified as "Regular" in the Triage process should see a list of relevant articles on the personalised journey page
+    Given "Robert" was classified as "Regular" exporter in the triage process
+
+    When "Robert" decides to create his personalised journey page
+
+    Then "Robert" should be on the Personalised Journey page for "regular" exporters
+    And "Robert" should see "Guidance" section on "personalised journey" page
 
 
   @wip
