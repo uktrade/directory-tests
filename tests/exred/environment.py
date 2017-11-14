@@ -37,7 +37,7 @@ def after_step(context: Context, step: Step):
                                                          step.exception)
         logging.error(message)
         logging.debug(context.scenario_data)
-        if CONFIG_NAME == "browserstack":
+        if "browserstack" in CONFIG_NAME:
             if hasattr(context, "driver"):
                 session_id = context.driver.session_id
                 flag_browserstack_session_as_failed(session_id, message)
