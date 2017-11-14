@@ -96,24 +96,24 @@ Feature: Articles
       | Operations and Compliance |
 
 
-  @wip
+  @ED-2628
   @articles
-  Scenario Outline: Any Exporter should see relevant article list from "<link_location>"
+  Scenario Outline: "<relevant>" Exporter should see a list of relevant Export Readiness Articles when accessed via "<location>"
     Given "Robert" classifies himself as "<specific>" exporter
 
-    When "Robert" goes to the relevant "<specific>" exporter link from "<link_location>"
+    When "Robert" goes to the Export Readiness Articles for "<relevant>" Exporters via "<location>"
 
-    Then "Robert" should see an ordered list of first 5 articles selected for "<exporter_status>" exporter
-    And "Robert" should see a Articles Read counter, Total number of Articles, Time to complete remaining chapters, Tasks completed counter and task Total number
+    Then "Robert" should see an ordered list of all Export Readiness Articles selected for "<relevant>" Exporters
+    And "Robert" should see on the Export Readiness Articles page "Articles Read counter, Total number of Articles, Time to complete remaining chapters"
 
     Examples:
-      | specific   | link_location |
+      | relevant   | location      |
       | New        | header menu   |
       | Occasional | header menu   |
       | Regular    | header menu   |
-      | New        | page body     |
-      | Occasional | page body     |
-      | Regular    | page body     |
+      | New        | home page     |
+      | Occasional | home page     |
+      | Regular    | home page     |
       | New        | footer links  |
       | Occasional | footer links  |
       | Regular    | footer links  |
