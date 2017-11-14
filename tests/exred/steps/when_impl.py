@@ -374,6 +374,9 @@ def triage_classify_as(
     elif exporter_status == "regular":
         triage_classify_as_regular(
             context, actor_alias, incorporated, code, sector)
+    update_actor(
+        context, actor_alias, article_group="personalised journey",
+        article_category=exporter_status)
 
 
 def triage_should_see_answers_to_questions(context, actor_alias):
