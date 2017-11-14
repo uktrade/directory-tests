@@ -99,6 +99,11 @@ def check_elements_are_visible(driver: webdriver, elements: list):
 def go_to_article(driver: webdriver, title: str):
     with selenium_action(driver, "Could not find article: %s", title):
         article = driver.find_element_by_link_text(title)
+        if "firefox" not in driver.capabilities["browserName"].lower():
+            logging.debug("Moving focus to '%s' article link", title)
+            action_chains = ActionChains(driver)
+            action_chains.move_to_element(article)
+            action_chains.perform()
     with assertion_msg(
             "Found a link to '%s' article but it's not visible", title):
         assert article.is_displayed()
