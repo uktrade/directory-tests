@@ -34,7 +34,7 @@ SECTIONS = {
         "teaser_title": "#content > section.hero-section div.hero-teaser h1.title",
         "teaser_logo": "#content > section.hero-section div.hero-teaser img",
     },
-    "exporting_journey": {
+    "exporting journey": {
         "itself": "#content > section.triage.triage-section",
         "heading": "#content > section.triage.triage-section .heading",
         "introduction": "#content > section.triage.triage-section .intro",
@@ -73,7 +73,7 @@ SECTIONS = {
         "online_marketplaces_service_link": ONLINE_MARKETPLACES_SERVICE_LINK,
         "export_opportunities_service_link": EXPORT_OPPORTUNITIES_SERVICE_LINK,
     },
-    "case_studies": {
+    "case studies": {
         "itself": "#carousel",
         "heading": "#carousel .heading",
         "intro": "#carousel .intro",
@@ -105,14 +105,8 @@ def should_see_sections(driver: webdriver, section_names: list):
     :param driver: Any Selenium Driver (Remote, Chrome, Firefox, PhantomJS etc.
     :param section_names: list of page section to check
     """
-    browser = "%s v:%s %s" % (driver.capabilities.get("browserName",
-                                                      "unknown browse"),
-                              driver.capabilities.get("version",
-                                                      "unknown version"),
-                              driver.capabilities.get("platform",
-                                                      "unknown platform"))
     for section_name in section_names:
-        section = SECTIONS[section_name.lower().replace(" ", "_")]
+        section = SECTIONS[section_name.lower()]
         for element_name, element_selector in section.items():
             logging.debug(
                 "Looking for '%s' element in '%s' section with '%s' selector",
@@ -124,8 +118,8 @@ def should_see_sections(driver: webdriver, section_names: list):
                     element_selector):
                 element = driver.find_element_by_css_selector(element_selector)
             with assertion_msg(
-                    "It looks like '%s' in '%s' section is not visible (%s)",
-                    element_name, section_name, browser):
+                    "It looks like '%s' in '%s' section is not visible",
+                    element_name, section_name):
                 assert element.is_displayed()
         logging.debug("All elements in '%s' section are visible", section_name)
     logging.debug(
