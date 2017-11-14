@@ -229,6 +229,7 @@ def should_see_section(driver: webdriver, name: str):
         with assertion_msg(
                 "'%s' in '%s' is not displayed", key, name):
             assert element.is_displayed()
+            logging.debug("'%s' in '%s' is displayed", key, name)
 
 
 def check_top_facts_values(driver: webdriver):
