@@ -178,13 +178,13 @@ exred_docker_browserstack_first_browser_set: EXRED_DOCKER_REMOVE_ALL
 	$(EXRED_DOCKER_COMPOSE_CREATE_ENVS) && \
 	$(EXRED_DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
 	docker-compose -f docker-compose-exred.yml -p exred build && \
-	docker-compose -f docker-compose-exred.yml -p exred run --rm tests_first_browser_set
+	docker-compose -f docker-compose-exred.yml -p exred run tests_first_browser_set
 
-exred_docker_browserstack_second_browser_set: EXRED_DOCKER_REMOVE_ALL
+exred_docker_browserstack_second_browser_set:
 	$(EXRED_SET_DOCKER_ENV_VARS) && \
 	$(EXRED_DOCKER_COMPOSE_CREATE_ENVS) && \
 	$(EXRED_DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
 	docker-compose -f docker-compose-exred.yml -p exred build && \
-	docker-compose -f docker-compose-exred.yml -p exred run --rm tests_second_browser_set
+	docker-compose -f docker-compose-exred.yml -p exred run tests_second_browser_set
 
 .PHONY: build clean requirements test docker_remove_all docker_integration_tests smoke_tests exred_docker_browserstack load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal functional_tests pep8
