@@ -252,3 +252,13 @@ def articles_should_see_time_to_complete_decrease(
             "increased by %d. Expected time to read in seconds: %d",
             article_title, difference, time_to_read):
         assert difference <= 0
+
+
+def articles_should_not_see_feedback_widget(context: Context):
+    article_common.should_not_see_feedback_widget(context.driver)
+    logging.debug("Feedback widget is not visible any more")
+
+
+def articles_should_be_thanked_for_feedback(context, actor_alias):
+    article_common.should_see_feedback_result(context.driver)
+    logging.debug("%s was thanked for the feedback", actor_alias)

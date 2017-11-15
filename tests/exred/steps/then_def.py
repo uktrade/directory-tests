@@ -3,6 +3,8 @@
 from behave import then
 
 from steps.then_impl import (
+    articles_should_be_thanked_for_feedback,
+    articles_should_not_see_feedback_widget,
     articles_should_not_see_link_to_next_article,
     articles_should_not_see_personas_end_page,
     articles_should_see_article_as_read,
@@ -165,3 +167,13 @@ def then_actor_should_see_read_counter_increase(
 @then('"{actor_alias}" should see that Time to Complete remaining chapters decreased or remained unchanged for short articles')
 def then_actor_should_see_time_to_complete_decrease(context, actor_alias):
     articles_should_see_time_to_complete_decrease(context, actor_alias)
+
+
+@then('feedback widget should disappear')
+def then_feedback_widget_should_disappear(context):
+    articles_should_not_see_feedback_widget(context)
+
+
+@then('"{actor_alias}" should be thanked for his feedback')
+def then_actor_should_be_thanked_for_the_feedback(context, actor_alias):
+    articles_should_be_thanked_for_feedback(context, actor_alias)
