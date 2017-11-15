@@ -180,7 +180,7 @@ exred_docker_browserstack_first_browser_set: EXRED_DOCKER_REMOVE_ALL
 	docker-compose -f docker-compose-exred.yml -p exred build && \
 	docker-compose -f docker-compose-exred.yml -p exred run tests_first_browser_set
 
-exred_docker_browserstack_second_browser_set:
+exred_docker_browserstack_second_browser_set: EXRED_DOCKER_REMOVE_ALL
 	$(EXRED_SET_DOCKER_ENV_VARS) && \
 	$(EXRED_DOCKER_COMPOSE_CREATE_ENVS) && \
 	$(EXRED_DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
