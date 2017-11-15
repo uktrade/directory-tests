@@ -597,12 +597,6 @@ def articles_open_any(context: Context, actor_alias: str):
     total_articles = article_common.get_total_articles(context.driver)
     articles_read_counter = article_common.get_read_counter(context.driver)
     time_to_complete = article_common.get_time_to_complete(context.driver)
-    visited_articles = [(any_article.index, any_article.title)]
-    update_actor(
-        context, actor_alias, articles_read_counter=articles_read_counter,
-        articles_time_to_complete=time_to_complete,
-        articles_total_number=total_articles,
-        visited_articles=visited_articles)
 
     article_common.go_to_article(driver, any_article.title)
     time_to_read = article_common.time_to_read_in_seconds(context.driver)
@@ -610,7 +604,11 @@ def articles_open_any(context: Context, actor_alias: str):
         "%s is on '%s' article page: %s", actor_alias,
         any_article .title, driver.current_url)
     visited_articles = [(any_article.index, any_article.title, time_to_read)]
-    update_actor(context, actor_alias, visited_articles=visited_articles)
+    update_actor(
+        context, actor_alias, articles_read_counter=articles_read_counter,
+        articles_time_to_complete=time_to_complete,
+        articles_total_number=total_articles,
+        visited_articles=visited_articles)
 
 
 def guidance_read_through_all_articles(context: Context, actor_alias: str):
