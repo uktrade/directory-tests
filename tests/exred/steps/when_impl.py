@@ -93,6 +93,12 @@ def guidance_open_category(
 
 
 @retry(wait_fixed=30000, stop_max_attempt_number=3)
+def guidance_open_random_category(
+        context, actor_alias, *, location: str = "personalised journey"):
+    category = random.choice(list(GUIDANCE.keys()))
+    guidance_open_category(context, actor_alias, category, location)
+
+
 def start_triage(context: Context, actor_alias: str):
     home.start_exporting_journey(context.driver)
     logging.debug("%s started triage process", actor_alias)

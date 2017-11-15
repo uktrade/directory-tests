@@ -10,6 +10,7 @@ from steps.when_impl import (
     articles_open_group,
     export_readiness_open_category,
     guidance_open_category,
+    guidance_open_random_category,
     set_online_marketplace_preference,
     set_sector_preference,
     start_triage,
@@ -106,3 +107,8 @@ def given_actor_opens_any_article_but_the_last_one(context, actor_alias):
 @given('"{actor_alias}" is on the "{group}" Article List for randomly selected category')
 def given_actor_is_on_article_list(context, actor_alias, group):
     articles_open_group(context, actor_alias, group)
+
+
+@given('"{actor_alias}" went to randomly selected Guidance Articles category')
+def given_actor_selects_random_guidance_category(context, actor_alias):
+    guidance_open_random_category(context, actor_alias)
