@@ -5,6 +5,7 @@ from behave import given
 from steps.then_impl import should_be_on_page
 from steps.when_impl import (
     actor_classifies_himself_as,
+    articles_open_any,
     articles_open_any_but_the_last,
     articles_open_first,
     articles_open_group,
@@ -102,6 +103,11 @@ def given_actor_goes_to_export_readiness_articles(
 @given('"{actor_alias}" opened any Article but the last one')
 def given_actor_opens_any_article_but_the_last_one(context, actor_alias):
     articles_open_any_but_the_last(context, actor_alias)
+
+
+@given('"{actor_alias}" opened any Article')
+def given_actor_opens_any_article(context, actor_alias):
+    articles_open_any(context, actor_alias)
 
 
 @given('"{actor_alias}" is on the "{group}" Article List for randomly selected category')
