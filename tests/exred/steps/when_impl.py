@@ -72,6 +72,8 @@ def open_group_element(
         footer.open(driver, group, element)
     elif location == "personalised journey":
         personalised_journey.open(driver, group, element)
+    else:
+        raise KeyError("Could not recognize location: {}".format(location))
 
 
 def guidance_open_category(
