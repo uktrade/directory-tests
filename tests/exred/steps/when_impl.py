@@ -593,7 +593,7 @@ def articles_open_any(context: Context, actor_alias: str):
     articles = get_articles(group, category)
     any_article = random.choice(articles)
     article_common.show_all_articles(driver)
-    article_common.go_to_article(driver, any_article .title)
+    article_common.go_to_article(driver, any_article.title)
     time_to_read = article_common.time_to_read_in_seconds(context.driver)
     logging.debug(
         "%s is on '%s' article page: %s", actor_alias,
