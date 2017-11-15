@@ -6,6 +6,7 @@ from steps.then_impl import (
     articles_should_not_see_link_to_next_article,
     articles_should_not_see_personas_end_page,
     articles_should_see_in_correct_order,
+    articles_should_see_link_to_first_article_from_next_category,
     export_readiness_expected_page_elements_should_be_visible,
     export_readiness_should_see_articles,
     guidance_check_if_link_to_next_category_is_displayed,
@@ -137,3 +138,10 @@ def then_there_should_no_link_to_the_next_article(context, actor_alias):
 @then('"{actor_alias}" should not see the Personas End Page')
 def then_actor_should_not_see_pesonas_end_page(context, actor_alias):
     articles_should_not_see_personas_end_page(context, actor_alias)
+
+
+@then('"{actor_alias}" should see a link to the fist article from the "{next_category}" category')
+def then_actor_should_see_link_to_next_category(
+        context, actor_alias, next_category):
+    articles_should_see_link_to_first_article_from_next_category(
+        context, actor_alias, next_category)
