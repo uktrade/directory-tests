@@ -3,7 +3,10 @@
 import logging
 
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
 
 from utils import assertion_msg, selenium_action, take_screenshot
 
@@ -82,8 +85,15 @@ def open(driver: webdriver, group: str, element: str):
         menu = driver.find_element_by_css_selector(menu_selector)
         menu.send_keys(Keys.DOWN)
     menu_item_selector = SECTIONS[group.lower()][element.lower()]
-    menu_item = driver.find_element_by_css_selector(menu_item_selector)
-    assert menu_item.is_displayed()
+    with selenium_action(
+            driver, "Could not find %s element in %s group with '%s' selector",
+            element, group, menu_item_selector):
+        menu_item = driver.find_element_by_css_selector(menu_item_selector)
+        WebDriverWait(driver, 5).until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR,
+                                              menu_item_selector)))
+    with assertion_msg("%s menu item: '%s' is not visible", group, element):
+        assert menu_item.is_displayed()
     menu_item.click()
     take_screenshot(
         driver, NAME + " after clicking on: {} link".format(element))

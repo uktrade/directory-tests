@@ -21,7 +21,7 @@ from pages import (
     triage_result,
     triage_what_do_you_want_to_export
 )
-from registry.articles import find_article, get_articles, get_first_article
+from registry.articles import get_article, get_articles
 from registry.pages import get_page_object
 from settings import EXRED_SECTORS
 from utils import (
@@ -479,14 +479,19 @@ def triage_answer_questions_again(context, actor_alias):
     logging.debug("%s was able to change the Triage answers", actor_alias)
 
 
-def exred_open_category(
+def export_readiness_open_category(
         context: Context, actor_alias: str, category: str, location: str):
+    if not get_actor(context, actor_alias):
+        add_actor(context, unauthenticated_actor(actor_alias))
     home.visit(driver=context.driver)
     logging.debug(
         "%s is about to open Export Readiness '%s' category from %s",
         actor_alias, category, location)
     open_group_element(
-        context, group="personas", element=category, location=location)
+        context, group="export readiness", element=category, location=location)
+    update_actor(
+        context, actor_alias, article_group="export readiness",
+        article_category=category, article_location=location)
 
 
 def set_sector_preference(
@@ -509,7 +514,7 @@ def set_sector_preference(
     update_actor(
         context, actor_alias, what_do_you_want_to_export=(code, sector))
     logging.debug(
-        "%s decided that her/his preffered sector is: %s %s", actor_alias,
+        "%s decided that her/his preferred sector is: %s %s", actor_alias,
         code, sector)
 
 
@@ -538,17 +543,31 @@ def set_online_marketplace_preference(
         used_or_not)
 
 
-def guidance_open_first_article(context: Context, actor_alias: str):
+def articles_open_first(context: Context, actor_alias: str):
     driver = context.driver
     actor = get_actor(context, actor_alias)
     group = actor.article_group
     category = actor.article_category
-    first_article = get_first_article(group, category)
+    first_article = get_articles(group, category)[0]
     guidance_common.open_first_article(driver)
-    article_common.should_see_article(driver, first_article["name"])
+    article_common.should_see_article(driver, first_article.title)
     logging.debug(
         "%s is on the first article %s: %s", actor_alias,
-        first_article["name"], driver.current_url)
+        first_article.title, driver.current_url)
+
+
+def articles_open_any_but_the_last(context: Context, actor_alias: str):
+    driver = context.driver
+    actor = get_actor(context, actor_alias)
+    group = actor.article_group
+    category = actor.article_category
+    articles = get_articles(group, category)
+    any_article_but_the_last = random.choice(articles[:-1])
+    guidance_common.show_all_articles(driver)
+    article_common.go_to_article(driver, any_article_but_the_last.title)
+    logging.debug(
+        "%s is on '%s' article page: %s", actor_alias,
+        any_article_but_the_last.title, driver.current_url)
 
 
 def guidance_read_through_all_articles(context: Context, actor_alias: str):
@@ -561,26 +580,26 @@ def guidance_read_through_all_articles(context: Context, actor_alias: str):
 
     current_article_name = article_common.get_article_name(driver)
     logging.debug("%s is on '%s' article", actor_alias, current_article_name)
-    current_article = find_article(group, category, current_article_name)
+    current_article = get_article(group, category, current_article_name)
     assert current_article, "Could not find Article: %s" % current_article_name
-    visited_articles.append(current_article_name)
-    next_article = current_article["next"]
+    visited_articles.append((current_article.index, current_article_name))
+    next_article = current_article.next
 
     while next_article is not None:
-        visited_articles.append(next_article["name"])
         article_common.check_if_link_to_next_article_is_displayed(
-            driver, next_article["name"])
+            driver, next_article.title)
         article_common.go_to_next_article(driver)
         current_article_name = article_common.get_article_name(driver)
+        visited_articles.append((next_article.index, next_article.title))
         logging.debug(
             "%s is on '%s' article", actor_alias, current_article_name)
-        current_article = find_article(group, category, current_article_name)
+        current_article = get_article(group, category, current_article_name)
         assert current_article, ("Could not find Article: %s" %
                                  current_article_name)
-        next_article = current_article["next"]
+        next_article = current_article.next
         if next_article:
             logging.debug(
-                "The next article to visit is: %s", next_article["name"])
+                "The next article to visit is: %s", next_article.title)
         else:
             logging.debug("There's no more articles to see")
 

@@ -1,12 +1,23 @@
 version: '2'
 services:
 
-  exred_tests:
+  tests_first_browser_set:
     build:
       context: .
       dockerfile: Dockerfile-exred
     working_dir: /usr/src/app
-    command: ./docker/cmd-exred.sh
+    command: ./docker/cmd-exred-first-browser-set.sh
+    env_file: ./docker/.env
+    volumes:
+      - ./tests/exred/reports:/usr/src/app/tests/exred/reports
+      - ./tests/exred/screenshots:/usr/src/app/tests/exred/screenshots
+
+  tests_second_browser_set:
+    build:
+      context: .
+      dockerfile: Dockerfile-exred
+    working_dir: /usr/src/app
+    command: ./docker/cmd-exred-second-browser-set.sh
     env_file: ./docker/.env
     volumes:
       - ./tests/exred/reports:/usr/src/app/tests/exred/reports

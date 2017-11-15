@@ -146,7 +146,7 @@ EXRED_DOCKER_COMPOSE_CREATE_ENVS := \
 	python ./docker/env_writer.py ./docker/env_exred.json
 
 EXRED_DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL := \
-	docker-compose -f docker-compose-exred.yml -p exred rm && \
+	docker-compose -f docker-compose-exred.yml -p exred rm -f && \
 	docker-compose -f docker-compose-exred.yml -p exred pull
 
 EXRED_DOCKER_REMOVE_ALL:
@@ -159,19 +159,32 @@ exred_local:
 	$(EXRED_SET_LOCAL_ENV_VARS) && \
 	cd tests/exred && paver run --config=local --browsers=${BROWSERS} --tag=${TAG}
 
-exred_browserstack:
+exred_browserstack_first_browser_set:
 	$(EXRED_SET_DOCKER_ENV_VARS) && \
-	cd tests/exred && paver run --config=browserstack --tag=${TAG}
+	cd tests/exred && \
+	paver run --config=browserstack-first-browser-set --tag=${TAG}
+
+exred_browserstack_second_browser_set:
+	$(EXRED_SET_DOCKER_ENV_VARS) && \
+	cd tests/exred && \
+	paver run --config=browserstack-second-browser-set --tag=${TAG}
 
 exred_browserstack_single:
 	$(EXRED_SET_DOCKER_ENV_VARS) && \
 	cd tests/exred && paver run --config=browserstack-single --browsers=${BROWSERS} --versions=${VERSIONS} --tag=${TAG}
 
-exred_docker_browserstack: EXRED_DOCKER_REMOVE_ALL
+exred_docker_browserstack_first_browser_set: EXRED_DOCKER_REMOVE_ALL
 	$(EXRED_SET_DOCKER_ENV_VARS) && \
 	$(EXRED_DOCKER_COMPOSE_CREATE_ENVS) && \
 	$(EXRED_DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
 	docker-compose -f docker-compose-exred.yml -p exred build && \
-	docker-compose -f docker-compose-exred.yml -p exred run exred_tests
+	docker-compose -f docker-compose-exred.yml -p exred run tests_first_browser_set
+
+exred_docker_browserstack_second_browser_set:
+	$(EXRED_SET_DOCKER_ENV_VARS) && \
+	$(EXRED_DOCKER_COMPOSE_CREATE_ENVS) && \
+	$(EXRED_DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
+	docker-compose -f docker-compose-exred.yml -p exred build && \
+	docker-compose -f docker-compose-exred.yml -p exred run tests_second_browser_set
 
 .PHONY: build clean requirements test docker_remove_all docker_integration_tests smoke_tests exred_docker_browserstack load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal functional_tests pep8

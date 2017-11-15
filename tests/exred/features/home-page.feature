@@ -4,9 +4,9 @@ Feature: Home Page
 
   @ED-2366
   @sections
-  Scenario: Any Exporter should see the "Video, Exporting Journey, Personas, Guidance, Services, Case Studies" sections on the home page.
+  Scenario: Any Exporter should see the "Video, Exporting Journey, Export Readiness, Guidance, Services, Case Studies" sections on the home page.
       Given "Robert" visits the "Home" page
-      Then "Robert" should see the "Video, Exporting Journey, Personas, Guidance, Services, Case Studies" sections on Home page
+      Then "Robert" should see the "Video, Exporting Journey, Export Readiness, Guidance, Services, Case Studies" sections on Home page
 
 
   @ED-2366
@@ -35,7 +35,7 @@ Feature: Home Page
   @personas
   @articles
   @<specific>
-  Scenario Outline: "<specific>" Exporter should be able to get to a relevant Export Readiness Article List from Personas section on the home page
+  Scenario Outline: "<specific>" Exporter should be able to get to a relevant Export Readiness Article List from Export Readiness section on the home page
     Given "Robert" classifies himself as "<specific>" exporter
 
     When "Robert" goes to the Export Readiness Articles for "<specific>" Exporters via "home page"
