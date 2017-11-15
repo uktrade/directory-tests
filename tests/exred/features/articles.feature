@@ -57,7 +57,27 @@ Feature: Articles
   @ED-2616
   @guidance
   @articles
-  Scenario Outline: Any Exporter accessing the last Article from the Guidance Article "<category>" List should not be able to navigate to the next article
+  Scenario Outline: Any Exporter accessing the last Article from the Guidance Article "<category>" List should be able to navigate to the "<next>" Articles
+    Given "Robert" accessed "<category>" guidance articles using "home page"
+    And "Robert" opened any Article but the last one
+
+    When "Robert" decides to read through all remaining Articles from selected list
+
+    Then "Robert" should see a link to the fist article from the "<next>" category
+
+    Examples:
+      | category                  | next                      |
+      | Market research           | Customer insight          |
+      | Customer insight          | Finance                   |
+      | Finance                   | Business planning         |
+      | Business planning         | Getting paid              |
+      | Getting paid              | Operations and Compliance |
+
+
+  @ED-2616
+  @guidance
+  @articles
+  Scenario Outline: Any Exporter accessing the last Article from the last Guidance Article category "<category>" should not see link to the next article
     Given "Robert" accessed "<category>" guidance articles using "home page"
     And "Robert" opened any Article but the last one
 
@@ -68,11 +88,6 @@ Feature: Articles
 
     Examples:
       | category                  |
-      | Market research           |
-      | Customer insight          |
-      | Finance                   |
-      | Business planning         |
-      | Getting paid              |
       | Operations and Compliance |
 
 
