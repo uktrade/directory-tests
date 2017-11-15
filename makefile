@@ -146,7 +146,7 @@ EXRED_DOCKER_COMPOSE_CREATE_ENVS := \
 	python ./docker/env_writer.py ./docker/env_exred.json
 
 EXRED_DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL := \
-	docker-compose -f docker-compose-exred.yml -p exred rm && \
+	docker-compose -f docker-compose-exred.yml -p exred rm -f && \
 	docker-compose -f docker-compose-exred.yml -p exred pull
 
 EXRED_DOCKER_REMOVE_ALL:
