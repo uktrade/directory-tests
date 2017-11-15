@@ -21,7 +21,7 @@ from pages import (
     triage_result,
     triage_what_do_you_want_to_export
 )
-from registry.articles import get_article, get_articles
+from registry.articles import GUIDANCE, get_article, get_articles
 from registry.pages import get_page_object
 from settings import EXRED_SECTORS
 from utils import (
@@ -690,3 +690,16 @@ def articles_open_group(context: Context, actor_alias: str, group: str):
 def articles_go_back_to_article_list(context: Context, actor_alias: str):
     article_common.go_back_to_article_list(context.driver)
     logging.debug("%s went back to the Article List page", actor_alias)
+
+
+def articles_found_useful_or_not(
+        context: Context, actor_alias: str, useful_or_not: str):
+    if useful_or_not.lower() == "found":
+        article_common.flag_as_useful(context.driver)
+    elif useful_or_not.lower() in ["haven't found", "hasn't found"]:
+        article_common.flag_as_not_useful(context.driver)
+    else:
+        raise KeyError(
+            "Could not recognize: '{}'. Please use 'found' or 'did not find'"
+            .format(useful_or_not))
+    logging.debug("%s %s current article useful", actor_alias, useful_or_not)
