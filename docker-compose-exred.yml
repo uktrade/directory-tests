@@ -1,7 +1,7 @@
 version: '2'
 services:
 
-  exred_tests_first_browser_set:
+  tests_first_browser_set:
     build:
       context: .
       dockerfile: Dockerfile-exred
@@ -12,7 +12,7 @@ services:
       - ./tests/exred/reports:/usr/src/app/tests/exred/reports
       - ./tests/exred/screenshots:/usr/src/app/tests/exred/screenshots
 
-  exred_tests_second_browser_set:
+  tests_second_browser_set:
     build:
       context: .
       dockerfile: Dockerfile-exred
