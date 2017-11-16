@@ -5,12 +5,13 @@ import logging
 from behave.runner import Context
 
 from pages import (
+    article_common,
     export_readiness_common,
     guidance_common,
     home,
     personalised_journey
 )
-from registry.articles import get_article
+from registry.articles import get_article, get_articles
 from registry.pages import get_page_object
 from steps.when_impl import (
     triage_should_be_classified_as_new,
@@ -185,3 +186,26 @@ def articles_should_see_in_correct_order(context: Context, actor_alias: str):
         logging.debug(
             "%s saw '%s' '%s' article '%s' at correct position %d",
             actor_alias, group, category, visited_article, position)
+
+
+def articles_should_not_see_link_to_next_article(
+        context: Context, actor_alias: str):
+    article_common.should_not_see_link_to_next_article(context.driver)
+
+
+def articles_should_not_see_personas_end_page(
+        context: Context, actor_alias: str):
+    article_common.should_not_see_personas_end_page(context.driver)
+
+
+def articles_should_see_link_to_first_article_from_next_category(
+        context: Context, actor_alias: str, next_category: str):
+    driver = context.driver
+    actor = get_actor(context, actor_alias)
+    group = actor.article_group
+    first_article = get_articles(group, next_category)[0]
+    article_common.check_if_link_to_next_article_is_displayed(
+        driver, first_article.title)
+    logging.debug(
+        "%s can see link to the first article '%s' from '%s' category",
+        actor_alias, first_article.title, next_category)
