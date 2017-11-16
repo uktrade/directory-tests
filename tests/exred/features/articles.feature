@@ -65,7 +65,6 @@ Feature: Articles
   @ED-2616
   @guidance
   @articles
-<<<<<<< c9bd7d3850c6c0ea143db6f91057c8e50ee5e15b
   Scenario Outline: Any Exporter accessing the last Article from the Guidance Article "<category>" List should be able to navigate to the "<next>" Articles
     Given "Robert" accessed "<category>" guidance articles using "home page"
     And "Robert" opened any Article but the last one
