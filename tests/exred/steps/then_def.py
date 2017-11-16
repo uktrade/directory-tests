@@ -12,6 +12,7 @@ from steps.then_impl import (
     articles_should_see_link_to_first_article_from_next_category,
     articles_should_see_read_counter_increase,
     articles_should_see_time_to_complete_decrease,
+    articles_total_number_of_articles_should_not_change,
     export_readiness_expected_page_elements_should_be_visible,
     export_readiness_should_see_articles,
     guidance_check_if_link_to_next_category_is_displayed,
@@ -177,3 +178,8 @@ def then_feedback_widget_should_disappear(context):
 @then('"{actor_alias}" should be thanked for his feedback')
 def then_actor_should_be_thanked_for_the_feedback(context, actor_alias):
     articles_should_be_thanked_for_feedback(context, actor_alias)
+
+
+@then('"{actor_alias}" should see that Total Number of Articles did not change')
+def then_total_number_of_articles_should_not_change(context, actor_alias):
+    articles_total_number_of_articles_should_not_change(context, actor_alias)

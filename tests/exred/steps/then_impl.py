@@ -262,3 +262,15 @@ def articles_should_not_see_feedback_widget(context: Context):
 def articles_should_be_thanked_for_feedback(context, actor_alias):
     article_common.should_see_feedback_result(context.driver)
     logging.debug("%s was thanked for the feedback", actor_alias)
+
+
+def articles_total_number_of_articles_should_not_change(
+        context: Context, actor_alias: str):
+    actor = get_actor(context, actor_alias)
+    driver = context.driver
+    previous_total_articles = actor.articles_total_number
+    current_total_articles = article_common.get_total_articles(driver)
+    with assertion_msg(
+            "Expected Total Number of Articles to Read to be: %d but got "
+            "%d", previous_total_articles, current_total_articles):
+        assert current_total_articles == previous_total_articles
