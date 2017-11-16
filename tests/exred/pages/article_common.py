@@ -205,6 +205,13 @@ def get_read_counter(driver: webdriver) -> int:
     return int(counter.text)
 
 
+def get_total_articles(driver: webdriver) -> int:
+    counter = driver.find_element_by_css_selector(TOTAL_NUMBER_OF_ARTICLES)
+    with assertion_msg("Total Number or Articles to Read is not visible"):
+        assert counter.is_displayed()
+    return int(counter.text)
+
+
 def get_time_to_complete(driver: webdriver) -> int:
     ttc = driver.find_element_by_css_selector(TIME_TO_COMPLETE)
     with assertion_msg("Time To Complete Reading Articles is not visible"):

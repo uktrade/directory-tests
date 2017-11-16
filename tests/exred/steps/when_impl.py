@@ -593,6 +593,17 @@ def articles_open_any(context: Context, actor_alias: str):
     articles = get_articles(group, category)
     any_article = random.choice(articles)
     article_common.show_all_articles(driver)
+
+    total_articles = article_common.get_total_articles(context.driver)
+    articles_read_counter = article_common.get_read_counter(context.driver)
+    time_to_complete = article_common.get_time_to_complete(context.driver)
+    visited_articles = [(any_article.index, any_article.title)]
+    update_actor(
+        context, actor_alias, articles_read_counter=articles_read_counter,
+        articles_time_to_complete=time_to_complete,
+        articles_total_number=total_articles,
+        visited_articles=visited_articles)
+
     article_common.go_to_article(driver, any_article.title)
     time_to_read = article_common.time_to_read_in_seconds(context.driver)
     logging.debug(
@@ -683,11 +694,13 @@ def articles_open_group(
         raise KeyError(
             "Did not recognize '{}'. Please use: 'Guidance' or 'Export "
             "Readiness'".format(group))
+    total_articles = article_common.get_total_articles(context.driver)
     articles_read_counter = article_common.get_read_counter(context.driver)
     time_to_complete = article_common.get_time_to_complete(context.driver)
     update_actor(
         context, actor_alias, articles_read_counter=articles_read_counter,
-        articles_time_to_complete=time_to_complete)
+        articles_time_to_complete=time_to_complete,
+        articles_total_number=total_articles)
 
 
 def articles_go_back_to_article_list(context: Context, actor_alias: str):
