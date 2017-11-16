@@ -271,20 +271,68 @@ Feature: Articles
       | Regular  | haven't found |
 
 
-  @wip
+
+  @ED-2654
+  @counters
+  @<group>
+  @<location>
   Scenario Outline: Article read counter on the specific Article page and Articles list page should be the same
-    Given "Robert" accessed the article list from "<link_location>"
+    Given "Robert" went to randomly selected "<group>" Article category via "<location>"
 
     When "Robert" opens any article on the list
 
-    Then "Robert" should see the same "Articles Read counter, Total number of Articles, Time to complete remaining chapters" as on the Articles list page
+    Then "Robert" should see that Total number of Articles did not change
+    And "Robert" should see that Article Read Counter increased by "1"
+    And "Robert" should see that Time to Complete remaining chapters decreased
 
     Examples:
-      | link_location             |
-      | header menu               |
-      | home page                 |
-      | personalised journey page |
-      | footer links              |
+      | group            | location     |
+      | Export Readiness | header menu  |
+      | Export Readiness | home page    |
+      | Export Readiness | footer links |
+      | Guidance         | header menu  |
+      | Guidance         | home page    |
+      | Guidance         | footer links |
+
+
+  @ED-2654
+  @counters
+  @<relevant>
+  Scenario Outline: Article read counter on the specific Article page and Articles list page should be the same
+    Given "Robert" was classified as "<relevant>" exporter in the triage process
+    And "Robert" decided to create her personalised journey page
+
+    When "Robert" opens any article on the list
+
+    Then "Robert" should see that Total Number of Articles did not change
+    And "Robert" should see that Article Read Counter increased by "1"
+    And "Robert" should see that Time to Complete remaining chapters decreased
+
+    Examples:
+      | relevant   |
+      | New        |
+      | Occasional |
+
+
+  @ED-2654
+  @counters
+  @<group>
+  @<relevant>
+  @<location>
+  Scenario Outline: Article read counter on the specific Article page and Articles list page should be the same
+    Given "Robert" was classified as "<relevant>" exporter in the triage process
+    And "Robert" decided to create her personalised journey page
+    And "Robert" went to randomly selected "<group>" Article category via "<location>"
+
+    When "Robert" opens any article on the list
+
+    Then "Robert" should see that Total number of Articles did not change
+    And "Robert" should see that Article Read Counter increased by "1"
+    And "Robert" should see that Time to Complete remaining chapters decreased
+
+    Examples:
+      | relevant | group    | location             |
+      | Regular  | Guidance | personalised journey |
 
 
   @wip
