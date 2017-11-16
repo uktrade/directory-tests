@@ -118,3 +118,8 @@ def given_actor_is_on_article_list(context, actor_alias, group):
 @given('"{actor_alias}" went to randomly selected Guidance Articles category')
 def given_actor_selects_random_guidance_category(context, actor_alias):
     guidance_open_random_category(context, actor_alias)
+
+
+@given('"{actor_alias}" went to randomly selected "{group}" Article category via "{location}"')
+def given_actor_is_on_article_list(context, actor_alias, group, location):
+    articles_open_group(context, actor_alias, group, location=location)

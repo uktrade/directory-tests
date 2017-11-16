@@ -644,7 +644,9 @@ def guidance_read_through_all_articles(context: Context, actor_alias: str):
     update_actor(context, actor_alias, visited_articles=visited_articles)
 
 
-def articles_open_group(context: Context, actor_alias: str, group: str):
+def articles_open_group(
+        context: Context, actor_alias: str, group: str, *,
+        location: str = None):
     categories = {
         "guidance": [
             "market research",
@@ -661,7 +663,8 @@ def articles_open_group(context: Context, actor_alias: str, group: str):
         ]
     }
     category = random.choice(categories[group.lower()])
-    location = random.choice(["header menu", "footer links", "home page"])
+    locations = ["header menu", "footer links", "home page"]
+    location = location or random.choice(locations)
 
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
