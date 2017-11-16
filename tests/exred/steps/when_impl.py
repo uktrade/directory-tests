@@ -597,7 +597,6 @@ def articles_open_any(context: Context, actor_alias: str):
     total_articles = article_common.get_total_articles(context.driver)
     articles_read_counter = article_common.get_read_counter(context.driver)
     time_to_complete = article_common.get_time_to_complete(context.driver)
-
     article_common.go_to_article(driver, any_article.title)
     time_to_read = article_common.time_to_read_in_seconds(context.driver)
     logging.debug(
