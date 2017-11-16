@@ -276,7 +276,7 @@ Feature: Articles
   @counters
   @<group>
   @<location>
-  Scenario Outline: Article read counter on the specific Article page and Articles list page should be the same
+  Scenario Outline: Article Indicators should be updated accordingly after opening "<group>" Article
     Given "Robert" went to randomly selected "<group>" Article category via "<location>"
 
     When "Robert" opens any article on the list
@@ -298,7 +298,7 @@ Feature: Articles
   @ED-2654
   @counters
   @<relevant>
-  Scenario Outline: Article read counter on the specific Article page and Articles list page should be the same
+  Scenario Outline: Article Indicators should be updated accordingly after opening Export Readiness Article relevant to "<relevant>" Exporters
     Given "Robert" was classified as "<relevant>" exporter in the triage process
     And "Robert" decided to create her personalised journey page
 
@@ -319,7 +319,7 @@ Feature: Articles
   @<group>
   @<relevant>
   @<location>
-  Scenario Outline: Article read counter on the specific Article page and Articles list page should be the same
+  Scenario Outline: Article Indicators should be updated accordingly after opening "<group>" Article relevant to "<relevant>" Exporters
     Given "Robert" was classified as "<relevant>" exporter in the triage process
     And "Robert" decided to create her personalised journey page
     And "Robert" went to randomly selected "<group>" Article category via "<location>"
