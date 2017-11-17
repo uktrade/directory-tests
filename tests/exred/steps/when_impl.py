@@ -724,3 +724,20 @@ def case_studies_go_to(context: Context, actor_alias: str, case_number: str):
     logging.debug(
         "%s opened %s case study, entitled: %s", actor_alias, case_number,
         case_study_title)
+
+
+def open_link(
+        context: Context, actor_alias: str, group: str, category: str,
+        location: str):
+    if not get_actor(context, actor_alias):
+        add_actor(context, unauthenticated_actor(actor_alias))
+    update_actor(
+        context, actor_alias, article_group=group, article_category=category)
+    logging.debug(
+        "%s is about to open link to '%s' '%s' via %s", actor_alias, group,
+        category, location)
+    open_group_element(
+        context, group=group, element=category, location=location)
+    update_actor(
+        context, actor_alias, article_group="guidance",
+        article_category=category, article_location=location)
