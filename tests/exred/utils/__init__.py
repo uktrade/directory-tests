@@ -48,7 +48,8 @@ Actor = namedtuple(
         "do_you_use_online_marketplaces", "created_personalised_journey",
         "article_group", "article_category", "article_location",
         "visited_articles", "articles_read_counter",
-        "articles_time_to_complete", "articles_total_number"
+        "articles_time_to_complete", "articles_total_number",
+        "case_study_title"
     ]
 )
 

@@ -720,4 +720,9 @@ def articles_found_useful_or_not(
 
 
 def case_studies_go_to(context: Context, actor_alias: str, case_number: str):
+    case_study_title = home.get_case_study_title(context.driver, case_number)
     home.open_case_study(context.driver, case_number)
+    update_actor(context, actor_alias, case_study_title=case_study_title)
+    logging.debug(
+        "%s opened %s case study, entitled: %s", actor_alias, case_number,
+        case_study_title)
