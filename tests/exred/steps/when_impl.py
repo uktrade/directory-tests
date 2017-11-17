@@ -418,13 +418,12 @@ def triage_should_see_answers_to_questions(context, actor_alias):
                 "Expected answer to question '%s' to be '%s', but got '%s' "
                 "instead", question, export_regularly, q_and_a[question]):
             assert q_and_a[question] == export_regularly
-    # TODO uncomment when ED-2494 & ED-2536 are fixed
-    # if actor.are_you_incorporated is not None:
-    #     incorporated = "Yes" if actor.are_you_incorporated else "No"
-    #     assert q_and_a["Is your company incorporated in the UK?"] == incorporated
-    # if actor.do_you_use_online_marketplaces is not None:
-    #     sell_online = "Yes" if actor.do_you_use_online_marketplaces else "No"
-    #     assert q_and_a["Do you use online marketplaces to sell your products?"] == sell_online
+    if actor.are_you_incorporated is not None:
+        incorporated = "Yes" if actor.are_you_incorporated else "No"
+        assert q_and_a["Is your company incorporated in the UK?"] == incorporated
+    if actor.do_you_use_online_marketplaces is not None:
+        sell_online = "Yes" if actor.do_you_use_online_marketplaces else "No"
+        assert q_and_a["Do you use online marketplaces to sell your products?"] == sell_online
 
 
 def personalised_journey_create_page(context: Context, actor_alias: str):
