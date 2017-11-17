@@ -4,7 +4,7 @@ import logging
 
 from selenium import webdriver
 
-from utils import assertion_msg, selenium_action, take_screenshot
+from utils import assertion_msg, selenium_action, take_screenshot, find_element
 
 NAME = "ExRed Common Case Study"
 URL = None
@@ -13,16 +13,19 @@ URL = None
 SHARE_WIDGET = "#top > ul.sharing-links"
 CASE_STUDIES = {
     1: {
+        "breadcrumb": "#content > div > p.breadcrumbs > span.current",
         "title": "#top > h1",
         "type": "#top > p.type",
         "description": "#top > p.description",
     },
     2: {
+        "breadcrumb": "#content > div > p.breadcrumbs > span.current",
         "title": "#top > h1",
         "type": "#top > p.type",
         "description": "#top > p.description",
     },
     3: {
+        "breadcrumb": "#content > div > p.breadcrumbs > span.current",
         "title": "#top > h1",
         "type": "#top > p.type",
         "description": "#top > p.description",
@@ -30,7 +33,9 @@ CASE_STUDIES = {
 }
 
 
-def should_be_here(driver: webdriver, case_study_number: int):
+def should_be_here(
+        driver: webdriver, case_study_number: int, *, title: str = None):
+    take_screenshot(driver, NAME)
     for element_name, element_selector in CASE_STUDIES[case_study_number].items():
         with selenium_action(
                 driver, "Could not find '%s' using '%s'", element_name,
@@ -40,7 +45,13 @@ def should_be_here(driver: webdriver, case_study_number: int):
                 "It looks like '%s' element is not visible on %s",
                 element_name, NAME):
             assert element.is_displayed()
-    take_screenshot(driver, NAME)
+        if title:
+            if element_name in ["title", "breadcrumb"]:
+                element = find_element(driver, by_css=element_selector)
+                with assertion_msg(
+                        "Expected case study %s to be '%s' but got '%s'",
+                        element_name, title, element.text):
+                    assert element.text.lower() == title.lower()
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
