@@ -15,6 +15,7 @@ from os.path import abspath, join
 
 import requests
 from behave.runner import Context
+from retrying import retry
 from selenium import webdriver
 from selenium.common.exceptions import (
     WebDriverException,
@@ -121,6 +122,7 @@ def update_actor(context: Context, alias: str, **kwargs):
         "Successfully updated %s's details: %s", alias, actors[alias])
 
 
+@retry(stop_max_attempt_number=3)
 def take_screenshot(driver: webdriver, page_name: str):
     """Will take a screenshot of current page.
 
