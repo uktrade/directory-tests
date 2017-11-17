@@ -5,6 +5,10 @@ from urllib.parse import urljoin
 
 from retrying import retry
 from selenium import webdriver
+from selenium.webdriver import ActionChains
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.wait import WebDriverWait
 
 from settings import EXRED_UI_URL
 from utils import assertion_msg, selenium_action, take_screenshot
@@ -21,6 +25,9 @@ ONLINE_MARKETPLACES_SERVICE_LINK = "#services div:nth-child(2) > article > a"
 EXPORT_OPPORTUNITIES_SERVICE_LINK = "#services div:nth-child(3) > article > a"
 CAROUSEL_PREVIOUS_BUTTON = "#carousel label.ed-carousel__control--backward"
 CAROUSEL_NEXT_BUTTON = "#carousel label.ed-carousel__control--forward"
+CAROUSEL_FIRST_INDICATOR = ".ed-carousel__indicator[for='1']"
+CAROUSEL_SECOND_INDICATOR = ".ed-carousel__indicator[for='2']"
+CAROUSEL_THIRD_INDICATOR = ".ed-carousel__indicator[for='3']"
 MARKET_RESEARCH_LINK = "#resource-guidance a[href='/market-research']"
 CUSTOMER_INSIGHT_LINK = "#resource-guidance a[href='/customer-insight']"
 FINANCE_LINK = "#resource-guidance a[href='/finance']"
@@ -139,6 +146,43 @@ def start_exporting_journey(driver: webdriver):
     button = driver.find_element_by_css_selector(GET_STARTED_BUTTON)
     assert button.is_displayed()
     button.click()
+
+
+def get_number_of_current_carousel_article(driver: webdriver) -> int:
+    indicators = driver.find_elements_by_css_selector(".ed-carousel__indicator")
+    opacities = [(k, float(v.value_of_css_property("opacity")))
+                 for k, v in enumerate(indicators)]
+    active_indicator = [opacity[0] for opacity in opacities if opacity[1] == 1]
+    return active_indicator[0] + 1
+
+
+def open_case_study(driver: webdriver, case_number: str):
+    case_study_numbers = {
+        "first": 1,
+        "second": 2,
+        "third": 3
+    }
+    to_open = case_study_numbers[case_number.lower()]
+    next_buttons = driver.find_elements_by_css_selector(CAROUSEL_NEXT_BUTTON)
+    next_button = [nb for nb in next_buttons if nb.is_displayed()][0]
+    current = get_number_of_current_carousel_article(driver)
+
+    if "firefox" not in driver.capabilities["browserName"].lower():
+        logging.debug("Moving focus to 'Next Case Study' button")
+        action_chains = ActionChains(driver)
+        action_chains.move_to_element(next_button)
+        action_chains.perform()
+
+    while current != to_open:
+        next_button.click()
+        next_buttons = driver.find_elements_by_css_selector(CAROUSEL_NEXT_BUTTON)
+        next_button = [nb for nb in next_buttons if nb.is_displayed()][0]
+        current = get_number_of_current_carousel_article(driver)
+        take_screenshot(driver, "Moving from Case Study {}".format(current))
+
+    links = driver.find_elements_by_css_selector("#carousel h3 > a")
+    link = [lnk for lnk in links if lnk.is_displayed()][0]
+    link.click()
 
 
 def open(driver: webdriver, group: str, element: str):
