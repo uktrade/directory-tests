@@ -12,6 +12,7 @@ from utils import (
     assertion_msg,
     find_element,
     find_elements,
+    selenium_action,
     take_screenshot,
     wait_for_visibility
 )
@@ -87,9 +88,9 @@ SECTIONS = {
         "find_a_buyer_service": "#services div:nth-child(1) > article",
         "online_marketplaces_service": "#services div:nth-child(2) > article",
         "export_opportunities_service": "#services div:nth-child(3) > article",
-        "find_a_buyer_service_link": FIND_A_BUYER_SERVICE_LINK,
-        "online_marketplaces_service_link": ONLINE_MARKETPLACES_SERVICE_LINK,
-        "export_opportunities_service_link": EXPORT_OPPORTUNITIES_SERVICE_LINK,
+        "find a buyer": FIND_A_BUYER_SERVICE_LINK,
+        "selling online overseas": ONLINE_MARKETPLACES_SERVICE_LINK,
+        "export opportunities": EXPORT_OPPORTUNITIES_SERVICE_LINK,
     },
     "case studies": {
         "itself": "#carousel",
@@ -138,6 +139,18 @@ def should_see_sections(driver: webdriver, section_names: list):
     logging.debug(
         "All expected sections: %s on %s page are visible", section_names,
         NAME)
+
+
+def should_see_link_to(driver: webdriver, section: str, item_name: str):
+    item_selector = SECTIONS[section.lower()][item_name.lower()]
+    with selenium_action(
+            driver, "Could not find '%s' using '%s'", item_name,
+            item_selector):
+        menu_item = driver.find_element_by_css_selector(item_selector)
+    with assertion_msg(
+            "It looks like '%s' in '%s' section is not visible", item_name,
+            section):
+        assert menu_item.is_displayed()
 
 
 def start_exporting_journey(driver: webdriver):

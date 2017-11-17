@@ -66,6 +66,18 @@ def should_see_all_menus(driver: webdriver):
         "All expected sections on %s are visible", NAME)
 
 
+def should_see_link_to(driver: webdriver, section: str, item_name: str):
+    item_selector = SECTIONS[section.lower()][item_name.lower()]
+    with selenium_action(
+            driver, "Could not find '%s' using '%s'", item_name,
+            item_selector):
+        menu_item = driver.find_element_by_css_selector(item_selector)
+    with assertion_msg(
+            "It looks like '%s' in '%s' section is not visible", item_name,
+            section):
+        assert menu_item.is_displayed()
+
+
 def open(driver: webdriver, group: str, element: str):
     link = SECTIONS[group.lower()][element.lower()]
     button = driver.find_element_by_css_selector(link)
