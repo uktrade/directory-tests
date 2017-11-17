@@ -296,5 +296,12 @@ def case_studies_should_see_case_study(
         context.driver, number, title=case_study_title)
 
 
+def case_studies_should_see_case_study(
+        context: Context, actor_alias: str, case_study_number: str):
+    case_study_numbers = { "first": 1, "second": 2, "third": 3 }
+    number = case_study_numbers[case_study_number.lower()]
+    case_studies_common.should_be_here(context.driver, number)
+
+
 def should_see_share_widget(context: Context, actor_alias: str):
     case_studies_common.should_see_share_widget(context.driver)
