@@ -187,7 +187,7 @@ def then_total_number_of_articles_should_not_change(context, actor_alias):
     articles_total_number_of_articles_should_not_change(context, actor_alias)
 
 
-@then('"{actor_alias}" should see "{case_study_number}" case study with a Share widget')
+@then('"{actor_alias}" should see "{case_study_number}" case study')
 def then_actor_should_see_case_study(context, actor_alias, case_study_number):
     case_studies_should_see_case_study(context, actor_alias, case_study_number)
 
