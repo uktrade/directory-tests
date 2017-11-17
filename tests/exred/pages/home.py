@@ -26,7 +26,8 @@ REGULAR_EXPORTED_LINK = "#personas > .container > .group div:nth-child(3) a"
 FIND_A_BUYER_SERVICE_LINK = "#services div:nth-child(1) > article > a"
 ONLINE_MARKETPLACES_SERVICE_LINK = "#services div:nth-child(2) > article > a"
 EXPORT_OPPORTUNITIES_SERVICE_LINK = "#services div:nth-child(3) > article > a"
-CAROUSEL_INDICATORS = "#carousel  div.ed-carousel__indicators"
+CAROUSEL_INDICATORS_SECTION = "#carousel  div.ed-carousel__indicators"
+CAROUSEL_INDICATORS = ".ed-carousel__indicator"
 CAROUSEL_PREV_BUTTON = "#carousel label.ed-carousel__control--backward"
 CAROUSEL_NEXT_BUTTON = "#carousel label.ed-carousel__control--forward"
 CAROUSEL_FIRST_INDICATOR = ".ed-carousel__indicator[for='1']"
@@ -168,7 +169,8 @@ def find_case_study_by_going_left(driver: webdriver, to_open: int):
         prev_button = [nb for nb in prev_buttons if nb.is_displayed()][0]
         current = get_number_of_current_carousel_article(driver)
         take_screenshot(
-            driver, "After moving left to find Case Study {}".format(to_open))
+            driver,
+            "After moving left to find Case Study {}".format(to_open))
         max_actions -= 1
 
 
@@ -183,12 +185,14 @@ def find_case_study_by_going_right(driver: webdriver, to_open: int):
         next_button = [nb for nb in next_buttons if nb.is_displayed()][0]
         current = get_number_of_current_carousel_article(driver)
         take_screenshot(
-            driver, "After moving right to find Case Study {}".format(to_open))
+            driver,
+            "After moving right to find Case Study {}".format(to_open))
         max_actions -= 1
 
 
 def move_to_case_study_indicators(driver: webdriver):
-    indicators = driver.find_element_by_css_selector(CAROUSEL_INDICATORS)
+    indicators = driver.find_element_by_css_selector(
+        CAROUSEL_INDICATORS_SECTION)
     vertical_position = indicators.location['y']
     logging.debug("Moving focus to Carousel indicators")
     driver.execute_script("window.scrollTo(0, {});".format(vertical_position))
@@ -200,16 +204,18 @@ def open_case_study(driver: webdriver, case_number: str):
         "second": 2,
         "third": 3
     }
-    to_open = case_study_numbers[case_number.lower()]
+    case_study_number = case_study_numbers[case_number.lower()]
 
     move_to_case_study_indicators(driver)
 
-    if random.choice([True, False]):
-        find_case_study_by_going_left(driver, to_open)
-    else:
-        find_case_study_by_going_right(driver, to_open)
+    current_case_study_number = get_number_of_current_carousel_article(driver)
+    if current_case_study_number != case_study_number:
+        if random.choice([True, False]):
+            find_case_study_by_going_left(driver, case_study_number)
+        else:
+            find_case_study_by_going_right(driver, case_study_number)
 
-    link_selector = CASE_STUDY_LINK.format(to_open)
+    link_selector = CASE_STUDY_LINK.format(case_study_number)
     wait_for_visibility(driver, by_css=link_selector)
     case_study_link = find_element(driver, by_css=link_selector)
     case_study_link.click()
