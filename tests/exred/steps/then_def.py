@@ -13,6 +13,7 @@ from steps.then_impl import (
     articles_should_see_read_counter_increase,
     articles_should_see_time_to_complete_decrease,
     articles_total_number_of_articles_should_not_change,
+    case_studies_should_see_case_study,
     export_readiness_expected_page_elements_should_be_visible,
     export_readiness_should_see_articles,
     guidance_check_if_link_to_next_category_is_displayed,
@@ -27,6 +28,7 @@ from steps.then_impl import (
     should_be_on_page,
     should_see_sections,
     should_see_sections_on_home_page,
+    should_see_share_widget,
     triage_should_be_classified_as
 )
 from steps.when_impl import (
@@ -183,3 +185,13 @@ def then_actor_should_be_thanked_for_the_feedback(context, actor_alias):
 @then('"{actor_alias}" should see that Total Number of Articles did not change')
 def then_total_number_of_articles_should_not_change(context, actor_alias):
     articles_total_number_of_articles_should_not_change(context, actor_alias)
+
+
+@then('"{actor_alias}" should see "{case_study_number}" case study with a Share widget')
+def then_actor_should_see_case_study(context, actor_alias, case_study_number):
+    case_studies_should_see_case_study(context, actor_alias, case_study_number)
+
+
+@then('"{actor_alias}" should see the Share Widget')
+def then_actor_should_see_share_widget(context, actor_alias):
+    should_see_share_widget(context, actor_alias)
