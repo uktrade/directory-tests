@@ -21,6 +21,10 @@ from selenium.common.exceptions import (
     WebDriverException,
     NoSuchElementException
 )
+from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.wait import WebDriverWait
 
 from settings import (
     BROWSERSTACK_SESSIONS_URL,
@@ -250,3 +254,62 @@ def flag_browserstack_session_as_failed(session_id: str, reason: str):
             response.status_code, response.content)
     else:
         logging.error("Flagged BrowserStack session: %s as failed", session_id)
+
+
+def wait_for_visibility(
+        driver: webdriver, *, by_css: str = None,
+        by_id: str = None, time_to_wait: int = 5):
+    """Wait until element is visible.
+
+    :param driver: Selenium driver
+    :param by_css: CSS selector to locate the element to wait for
+    :param by_id: ID of the element to wait for
+    :param time_to_wait: maximum number of seconds to wait
+    """
+    assert by_id or by_css, "Provide ID or CSS selector"
+    if by_css:
+        by_locator = (By.CSS_SELECTOR, by_css)
+    else:
+        by_locator = (By.ID, by_id)
+    WebDriverWait(driver, time_to_wait).until(
+        expected_conditions.visibility_of_element_located(by_locator))
+
+
+def find_element(
+        driver: webdriver, *, by_css: str = None,
+        by_id: str = None) -> WebElement:
+    """Find element by CSS selector or it's ID.
+
+    :param driver: Selenium driver
+    :param by_css: CSS selector to locate the element to wait for
+    :param by_id: ID of the element to wait for
+    :return: found WebElement
+    """
+    assert by_id or by_css, "Provide ID or CSS selector"
+    with selenium_action(
+            driver, "Couldn't find element using '%s'", by_css or by_id):
+        if by_css:
+            element = driver.find_element_by_css_selector(by_css)
+        else:
+            element = driver.find_element_by_id(by_id)
+    return element
+
+
+def find_elements(
+        driver: webdriver, *, by_css: str = None,
+        by_id: str = None) -> list:
+    """Find element by CSS selector or it's ID.
+
+    :param driver: Selenium driver
+    :param by_css: CSS selector to locate the element to wait for
+    :param by_id: ID of the element to wait for
+    :return: a list of found WebElements
+    """
+    assert by_id or by_css, "Provide ID or CSS selector"
+    with selenium_action(
+            driver, "Couldn't find elements using '%s'", by_css or by_id):
+        if by_css:
+            element = driver.find_elements_by_css_selector(by_css)
+        else:
+            element = driver.find_elements_by_id(by_id)
+    return element
