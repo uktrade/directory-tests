@@ -12,29 +12,29 @@ URL = None
 SECTIONS = {
     "export readiness": {
         "label": "#footer-links-2",
-        "new": "#footer-links-2  ~ ul > li:nth-child(1) > a",
-        "occasional": "#footer-links-2  ~ ul > li:nth-child(2) > a",
-        "regular": "#footer-links-2  ~ ul > li:nth-child(3) > a",
-        "i'm new to exporting": "#footer-links-2  ~ ul > li:nth-child(1) > a",
-        "i export occasionally": "#footer-links-2  ~ ul > li:nth-child(2) > a",
-        "i'm a regular exporter": "#footer-links-2  ~ ul > li:nth-child(3) > a"
+        "new": "#footer-links-2 ~ ul > li:nth-child(1) > a",
+        "occasional": "#footer-links-2 ~ ul > li:nth-child(2) > a",
+        "regular": "#footer-links-2 ~ ul > li:nth-child(3) > a",
+        "i'm new to exporting": "#footer-links-2 ~ ul > li:nth-child(1) > a",
+        "i export occasionally": "#footer-links-2 ~ ul > li:nth-child(2) > a",
+        "i'm a regular exporter": "#footer-links-2 ~ ul > li:nth-child(3) > a"
     },
     "guidance": {
         "label": "#footer-links-3",
-        "market research": "#footer-links-3  ~ ul a[href='/market-research']",
-        "customer insight": "#footer-links-3  ~ ul a[href='/customer-insight']",
-        "finance": "#footer-links-3  ~ ul a[href='/finance']",
-        "business planning": "#footer-links-3  ~ ul a[href='/business-planning']",
-        "getting paid": "#footer-links-3  ~ ul a[href='/getting-paid']",
-        "operations and compliance": "#footer-links-3  ~ ul a[href='/operations-and-compliance']"
+        "market research": "#footer-links-3 ~ ul a[href='/market-research']",
+        "customer insight": "#footer-links-3 ~ ul a[href='/customer-insight']",
+        "finance": "#footer-links-3 ~ ul a[href='/finance']",
+        "business planning": "#footer-links-3 ~ ul a[href='/business-planning']",
+        "getting paid": "#footer-links-3 ~ ul a[href='/getting-paid']",
+        "operations and compliance": "#footer-links-3 ~ ul a[href='/operations-and-compliance']"
     },
     "services": {
         "label": "#footer-links-4",
-        "export opportunities": "#footer-links-4  ~ ul > li:nth-child(1) > a",
-        "selling online overseas": "#footer-links-4  ~ ul > li:nth-child(2) > a",
-        "find a buyer": "#footer-links-4  ~ ul > li:nth-child(3) > a",
-        "get finance": "#footer-links-4  ~ ul > li:nth-child(4) > a",
-        "events": "#footer-links-4  ~ ul > li:nth-child(5) > a"
+        "find a buyer": "#footer-links-4 ~ ul > li:nth-child(1) > a",
+        "selling online overseas": "#footer-links-4 ~ ul > li:nth-child(2) > a",
+        "export opportunities": "#footer-links-4 ~ ul > li:nth-child(3) > a",
+        "get finance": "#footer-links-4 ~ ul > li:nth-child(4) > a",
+        "events": "#footer-links-4 ~ ul > li:nth-child(5) > a"
     },
     "general links": {
         "part of great.gov.uk": "#footer > .site-links > ul > li:nth-child(1) > a",
