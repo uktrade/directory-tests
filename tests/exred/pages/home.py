@@ -215,6 +215,14 @@ def open_case_study(driver: webdriver, case_number: str):
     case_study_link.click()
 
 
+def get_case_study_title(driver: webdriver, case_number: str) -> str:
+    case_study_numbers = {"first": 1, "second": 2, "third": 3}
+    case_number = case_study_numbers[case_number.lower()]
+    link_selector = CASE_STUDY_LINK.format(case_number)
+    case_study_link = find_element(driver, by_css=link_selector)
+    return case_study_link.text.strip()
+
+
 def open(driver: webdriver, group: str, element: str):
     selector = SECTIONS[group.lower()][element.lower()]
     link = driver.find_element_by_css_selector(selector)
