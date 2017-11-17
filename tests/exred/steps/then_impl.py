@@ -304,4 +304,16 @@ def case_studies_should_see_case_study(
 
 
 def should_see_share_widget(context: Context, actor_alias: str):
-    case_studies_common.should_see_share_widget(context.driver)
+    driver = context.driver
+    case_studies_common.should_see_share_widget(driver)
+    logging.debug(
+        "%s can see Share Widget on %s", actor_alias, driver.current_url)
+
+
+def should_see_links_to_services(
+        context: Context, actor_alias: str, services: list, location: str):
+    page_object = get_page_object(location)
+    for service in services:
+        page_object.should_see_link_to(context.driver, "services", service)
+        logging.debug(
+            "%s can see link to '%s' in '%s'", actor_alias, service, location)

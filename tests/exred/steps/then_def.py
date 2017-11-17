@@ -26,6 +26,7 @@ from steps.then_impl import (
     personalised_journey_should_see_read_counter,
     personalised_should_see_layout_for,
     should_be_on_page,
+    should_see_links_to_services,
     should_see_sections,
     should_see_sections_on_home_page,
     should_see_share_widget,
@@ -195,3 +196,10 @@ def then_actor_should_see_case_study(context, actor_alias, case_study_number):
 @then('"{actor_alias}" should see the Share Widget')
 def then_actor_should_see_share_widget(context, actor_alias):
     should_see_share_widget(context, actor_alias)
+
+
+@then('"{actor_alias}" should see links to following Services "{services}" in "{location}"')
+def then_should_see_links_to_services(
+        context, actor_alias, services, location):
+    should_see_links_to_services(
+        context, actor_alias, services.split(", "), location)
