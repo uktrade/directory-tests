@@ -5,6 +5,7 @@ from pages import (
     footer,
     header,
     home,
+    interim_exporting_opportunities,
     personalised_journey,
     triage_are_you_registered_with_companies_house,
     triage_are_you_regular_exporter,
@@ -64,6 +65,10 @@ EXRED_PAGE_REGISTRY = {
         "url": None,
         "po": footer
     },
+    "interim export opportunities": {
+        "url": interim_exporting_opportunities.URL,
+        "po": interim_exporting_opportunities
+    }
 }
 
 
