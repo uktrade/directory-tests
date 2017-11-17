@@ -309,7 +309,7 @@ def find_elements(
     with selenium_action(
             driver, "Couldn't find elements using '%s'", by_css or by_id):
         if by_css:
-            element = driver.find_elements_by_css_selector(by_css)
+            elements = driver.find_elements_by_css_selector(by_css)
         else:
-            element = driver.find_elements_by_id(by_id)
-    return element
+            elements = driver.find_elements_by_id(by_id)
+    return elements
