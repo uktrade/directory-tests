@@ -8,6 +8,7 @@ from steps.when_impl import (
     articles_go_back_to_article_list,
     articles_open_any,
     articles_open_any_but_the_last,
+    case_studies_go_to,
     export_readiness_open_category,
     guidance_open_category,
     guidance_read_through_all_articles,
@@ -140,3 +141,8 @@ def when_actor_goes_back_to_article_list(context, actor_alias):
 @when('"{actor_alias}" decides to tell us that she "{useful_or_not}" this article useful')
 def when_actor_tells_us_about_usefulness(context, actor_alias, useful_or_not):
     articles_found_useful_or_not(context, actor_alias, useful_or_not)
+
+
+@when('"{actor_alias}" goes to the "{case_number}" Case Study via carousel')
+def when_actor_goes_to_case_study(context, actor_alias, case_number):
+    case_studies_go_to(context, actor_alias, case_number)

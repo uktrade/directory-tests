@@ -717,3 +717,7 @@ def articles_found_useful_or_not(
             "Could not recognize: '{}'. Please use 'found' or 'did not find'"
             .format(useful_or_not))
     logging.debug("%s %s current article useful", actor_alias, useful_or_not)
+
+
+def case_studies_go_to(context: Context, actor_alias: str, case_number: str):
+    home.open_case_study(context.driver, case_number)
