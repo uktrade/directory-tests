@@ -2,6 +2,8 @@
 """ExRed Page Object Registry"""
 
 from pages import (
+    footer,
+    header,
     home,
     personalised_journey,
     triage_are_you_registered_with_companies_house,
@@ -15,6 +17,10 @@ from pages import (
 
 EXRED_PAGE_REGISTRY = {
     "home": {
+        "url": home.URL,
+        "po": home
+    },
+    "home page": {
         "url": home.URL,
         "po": home
     },
@@ -49,6 +55,14 @@ EXRED_PAGE_REGISTRY = {
     "personalised journey": {
         "url": personalised_journey.URL,
         "po": personalised_journey
+    },
+    "header menu": {
+        "url": None,
+        "po": header
+    },
+    "footer links": {
+        "url": None,
+        "po": footer
     },
 }
 

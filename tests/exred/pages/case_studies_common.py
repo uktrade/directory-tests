@@ -4,7 +4,7 @@ import logging
 
 from selenium import webdriver
 
-from utils import assertion_msg, selenium_action, take_screenshot, find_element
+from utils import assertion_msg, find_element, selenium_action, take_screenshot
 
 NAME = "ExRed Common Case Study"
 URL = None
