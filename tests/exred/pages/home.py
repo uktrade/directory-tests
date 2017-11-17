@@ -3,6 +3,7 @@
 import logging
 from urllib.parse import urljoin
 
+from retrying import retry
 from selenium import webdriver
 
 from settings import EXRED_UI_URL

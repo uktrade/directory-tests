@@ -33,7 +33,7 @@ from utils import (
 )
 
 
-@retry(wait_fixed=31000, stop_max_attempt_number=3)
+@retry(wait_fixed=15000, stop_max_attempt_number=3)
 def visit_page(
         context: Context, actor_alias: str, page_name: str, *,
         first_time: bool = False):
