@@ -17,20 +17,20 @@ Feature: Accessing Services
       | Find a buyer, Export opportunities, Selling online overseas, Get Finance, Events | footer links  |
 
 
-  @wip
   @ED-2660
   @home-page
   @accessing-services
   @interim-pages
-  Scenario Outline: Any Exporter should be presented with interim pages leading to "<service_name>" Service page
+  @<service>
+  Scenario Outline: Any Exporter should be presented with interim pages leading to "<service>" Service page
     Given "Robert" visits the "Home" page
 
-    When "Robert" opens the link to "<service_name>" from "<link_location>"
+    When "Robert" goes to "<service>" using "Services" links in "<link_location>"
 
-    Then "Robert" should be presented with Interim "<service_name>" page
+    Then "Robert" should be on the "Interim <service>" page
 
     Examples:
-      | service_name         | link_location |
+      | service              | link_location |
       | Export Opportunities | header menu   |
       | Export Opportunities | home page     |
       | Export Opportunities | footer links  |
@@ -41,15 +41,16 @@ Feature: Accessing Services
   @home-page
   @accessing-services
   @interim-pages
-  Scenario Outline: Any Exporter should be presented with interim pages leading to "<service_name>" Service page
+  @<service>
+  Scenario Outline: Any Exporter should be presented with interim pages leading to "<service>" Service page
     Given "Robert" visits the "Home" page
 
-    When "Robert" opens the link to "<service_name>" from "<link_location>"
+    When "Robert" goes to "<service>" using "Services" links in "<link_location>"
 
-    Then "Robert" should be presented with Interim "<service_name>" page
+    Then "Robert" should be on the "Interim <service>" page
 
     Examples:
-      | service_name            | link_location |
+      | service                 | link_location |
       | Find a Buyer            | header menu   |
       | Find a Buyer            | home page     |
       | Find a Buyer            | footer links  |
