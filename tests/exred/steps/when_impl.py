@@ -60,6 +60,7 @@ def actor_classifies_himself_as(
     add_actor(context, actor)
 
 
+@retry(wait_fixed=10000, stop_max_attempt_number=3)
 def open_group_element(
         context: Context, group: str, element: str, location: str):
     driver = context.driver
@@ -87,6 +88,7 @@ def guidance_open_category(
         article_category=category, article_location=location)
 
 
+@retry(wait_fixed=10000, stop_max_attempt_number=3)
 def start_triage(context: Context, actor_alias: str):
     home.start_exporting_journey(context.driver)
     logging.debug("%s started triage process", actor_alias)
