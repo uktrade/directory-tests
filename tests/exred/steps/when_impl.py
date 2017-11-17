@@ -77,7 +77,6 @@ def guidance_open_category(
         context: Context, actor_alias: str, category: str, location: str):
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
-    home.visit(driver=context.driver)
     logging.debug(
         "%s is about to open Guidance '%s' category from %s",
         actor_alias, category, location)
