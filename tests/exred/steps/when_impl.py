@@ -33,7 +33,7 @@ from utils import (
 )
 
 
-@retry(wait_fixed=31000, stop_max_attempt_number=3)
+@retry(wait_fixed=15000, stop_max_attempt_number=3)
 def visit_page(
         context: Context, actor_alias: str, page_name: str, *,
         first_time: bool = False):
@@ -60,6 +60,7 @@ def actor_classifies_himself_as(
     add_actor(context, actor)
 
 
+@retry(wait_fixed=10000, stop_max_attempt_number=3)
 def open_group_element(
         context: Context, group: str, element: str, location: str):
     driver = context.driver
@@ -77,7 +78,8 @@ def guidance_open_category(
         context: Context, actor_alias: str, category: str, location: str):
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
-    home.visit(driver=context.driver)
+    if location.lower() != "personalised journey":
+        home.visit(driver=context.driver)
     logging.debug(
         "%s is about to open Guidance '%s' category from %s",
         actor_alias, category, location)
@@ -88,6 +90,7 @@ def guidance_open_category(
         article_category=category, article_location=location)
 
 
+@retry(wait_fixed=10000, stop_max_attempt_number=3)
 def start_triage(context: Context, actor_alias: str):
     home.start_exporting_journey(context.driver)
     logging.debug("%s started triage process", actor_alias)
@@ -483,7 +486,8 @@ def export_readiness_open_category(
         context: Context, actor_alias: str, category: str, location: str):
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
-    home.visit(driver=context.driver)
+    if location.lower() != "personalised journey":
+        home.visit(driver=context.driver)
     logging.debug(
         "%s is about to open Export Readiness '%s' category from %s",
         actor_alias, category, location)
@@ -570,6 +574,22 @@ def articles_open_any_but_the_last(context: Context, actor_alias: str):
         any_article_but_the_last.title, driver.current_url)
 
 
+def articles_open_any(context: Context, actor_alias: str):
+    driver = context.driver
+    actor = get_actor(context, actor_alias)
+    group = actor.article_group
+    category = actor.article_category
+    articles = get_articles(group, category)
+    any_article = random.choice(articles)
+    article_common.show_all_articles(driver)
+    article_common.go_to_article(driver, any_article .title)
+    logging.debug(
+        "%s is on '%s' article page: %s", actor_alias,
+        any_article .title, driver.current_url)
+    visited_articles = [(any_article.index, any_article.title)]
+    update_actor(context, actor_alias, visited_articles=visited_articles)
+
+
 def guidance_read_through_all_articles(context: Context, actor_alias: str):
     driver = context.driver
     actor = get_actor(context, actor_alias)
@@ -604,3 +624,51 @@ def guidance_read_through_all_articles(context: Context, actor_alias: str):
             logging.debug("There's no more articles to see")
 
     update_actor(context, actor_alias, visited_articles=visited_articles)
+
+
+def articles_open_group(context: Context, actor_alias: str, group: str):
+    categories = {
+        "guidance": [
+            "market research",
+            "customer insight",
+            "finance",
+            "business planning",
+            "getting paid",
+            "operations and compliance"
+        ],
+        "export readiness": [
+            "new",
+            "occasional",
+            "regular"
+        ]
+    }
+    category = random.choice(categories[group.lower()])
+    location = random.choice(["header menu", "footer links", "home page"])
+
+    if not get_actor(context, actor_alias):
+        add_actor(context, unauthenticated_actor(actor_alias))
+    update_actor(
+        context, actor_alias, article_group=group, article_category=category)
+
+    logging.debug(
+        "%s decided to open '%s' '%s' Articles via '%s'", actor_alias,
+        category, group, location)
+    if group.lower() == "export readiness":
+        export_readiness_open_category(
+            context, actor_alias, category=category, location=location)
+    elif group.lower() == "guidance":
+        guidance_open_category(context, actor_alias, category, location)
+    else:
+        raise KeyError(
+            "Did not recognize '{}'. Please use: 'Guidance' or 'Export "
+            "Readiness'".format(group))
+    articles_read_counter = article_common.get_read_counter(context.driver)
+    time_to_complete = article_common.get_time_to_complete(context.driver)
+    update_actor(
+        context, actor_alias, articles_read_counter=articles_read_counter,
+        articles_time_to_complete=time_to_complete)
+
+
+def articles_go_back_to_article_list(context: Context, actor_alias: str):
+    article_common.go_back_to_article_list(context.driver)
+    logging.debug("%s went back to the Article List page", actor_alias)

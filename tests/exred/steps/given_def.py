@@ -7,6 +7,7 @@ from steps.when_impl import (
     actor_classifies_himself_as,
     articles_open_any_but_the_last,
     articles_open_first,
+    articles_open_group,
     export_readiness_open_category,
     guidance_open_category,
     set_online_marketplace_preference,
@@ -100,3 +101,8 @@ def given_actor_goes_to_export_readiness_articles(
 @given('"{actor_alias}" opened any Article but the last one')
 def given_actor_opens_any_article_but_the_last_one(context, actor_alias):
     articles_open_any_but_the_last(context, actor_alias)
+
+
+@given('"{actor_alias}" is on the "{group}" Article List for randomly selected category')
+def given_actor_is_on_article_list(context, actor_alias, group):
+    articles_open_group(context, actor_alias, group)

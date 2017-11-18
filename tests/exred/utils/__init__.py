@@ -15,6 +15,7 @@ from os.path import abspath, join
 
 import requests
 from behave.runner import Context
+from retrying import retry
 from selenium import webdriver
 from selenium.common.exceptions import (
     WebDriverException,
@@ -42,7 +43,8 @@ Actor = namedtuple(
         "are_you_incorporated", "company_name",
         "do_you_use_online_marketplaces", "created_personalised_journey",
         "article_group", "article_category", "article_location",
-        "visited_articles"
+        "visited_articles", "articles_read_counter",
+        "articles_time_to_complete"
     ]
 )
 
@@ -120,6 +122,7 @@ def update_actor(context: Context, alias: str, **kwargs):
         "Successfully updated %s's details: %s", alias, actors[alias])
 
 
+@retry(stop_max_attempt_number=3)
 def take_screenshot(driver: webdriver, page_name: str):
     """Will take a screenshot of current page.
 

@@ -14,11 +14,13 @@ URL = None
 
 
 ARTICLE_NAME = "#top > h1"
-TOTAL_NUMBER_OF_ARTICLES = "#top dd.position > span.to"
-ARTICLES_TO_READ_COUNTER = "#top dd.position > span.from"
-TIME_TO_COMPLETE = "#top dd.time span.value"
+TOTAL_NUMBER_OF_ARTICLES = "dd.position > span.to"
+ARTICLES_TO_READ_COUNTER = "dd.position > span.from"
+TIME_TO_COMPLETE = "dd.time span.value"
 NEXT_ARTICLE_LINK = "#next-article-link"
 SHARE_MENU = "ul.sharing-links"
+SHOW_MORE_BUTTON = "#js-paginate-list-more"
+GO_BACK_LINK = "#category-link"
 
 SCOPE_ELEMENTS = {
     "total number of articles": TOTAL_NUMBER_OF_ARTICLES,
@@ -98,6 +100,24 @@ def check_elements_are_visible(driver: webdriver, elements: list):
             assert page_element.is_displayed()
 
 
+def show_all_articles(driver: webdriver):
+    with selenium_action(
+            driver, "Can't find 'Show more' button @'%s'", driver.current_url):
+        show_more_button = driver.find_element_by_css_selector(SHOW_MORE_BUTTON)
+    max_clicks = 10
+    counter = 0
+    # click up to 11 times - see bug ED-2561
+    while show_more_button.is_displayed() and counter <= max_clicks:
+        show_more_button.click()
+        counter += 1
+    if counter > max_clicks:
+        with assertion_msg(
+                "'Show more' button didn't disappear after clicking on it for"
+                " %d times", counter):
+            assert counter == max_clicks
+    take_screenshot(driver, NAME + " after showing all articles")
+
+
 def go_to_article(driver: webdriver, title: str):
     with selenium_action(driver, "Could not find article: %s", title):
         article = driver.find_element_by_link_text(title)
@@ -145,3 +165,41 @@ def should_not_see_link_to_next_article(driver: webdriver):
 def should_not_see_personas_end_page(driver: webdriver):
     """Check if Actor is stil on an Article page."""
     check_elements_are_visible(driver, ["article name"])
+
+
+def go_back_to_article_list(driver: webdriver):
+    with selenium_action(
+            driver, "Could not find Go back link on '%s'", driver.current_url):
+        go_back_link = driver.find_element_by_css_selector(GO_BACK_LINK)
+    with assertion_msg("Go back link is not visible"):
+        go_back_link.is_displayed()
+    go_back_link.click()
+
+
+def should_see_article_as_read(driver: webdriver, title: str):
+    with selenium_action(driver, "Could not find article: %s", title):
+        article = driver.find_element_by_link_text(title)
+    with assertion_msg(
+            "It looks like '%s' article is marked as unread", title):
+        assert "article-read" in article.get_attribute("class")
+
+
+def get_read_counter(driver: webdriver) -> int:
+    with selenium_action(driver, "Could not find Article Read Counter"):
+        counter = driver.find_element_by_css_selector(ARTICLES_TO_READ_COUNTER)
+        if "firefox" not in driver.capabilities["browserName"].lower():
+            logging.debug("Moving focus to Article Read Counter")
+            action_chains = ActionChains(driver)
+            action_chains.move_to_element(counter)
+            action_chains.perform()
+    with assertion_msg("Article Read Counter is not visible"):
+        assert counter.is_displayed()
+    return int(counter.text)
+
+
+def get_time_to_complete(driver: webdriver) -> int:
+    ttc = driver.find_element_by_css_selector(TIME_TO_COMPLETE)
+    with assertion_msg("Time To Complete Reading Articles is not visible"):
+        assert ttc.is_displayed()
+    ttc_value = [int(word) for word in ttc.text.split() if word.isdigit()][0]
+    return ttc_value
