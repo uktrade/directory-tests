@@ -176,7 +176,7 @@ def articles_should_see_in_correct_order(context: Context, actor_alias: str):
     group = actor.article_group
     category = actor.article_category
     visited_articles = actor.visited_articles
-    for position, visited_article in visited_articles:
+    for position, visited_article, _ in visited_articles:
         expected_article = get_article(group, category, visited_article)
         with assertion_msg(
                 "Expected to see '%s' '%s' article '%s' on position %d but %s "
@@ -216,7 +216,7 @@ def articles_should_see_link_to_first_article_from_next_category(
 
 def articles_should_see_article_as_read(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
-    _, visited_article = actor.visited_articles[0]
+    _, visited_article, _ = actor.visited_articles[0]
     article_common.show_all_articles(context.driver)
     article_common.should_see_article_as_read(context.driver, visited_article)
     logging.debug(
@@ -241,11 +241,20 @@ def articles_should_see_time_to_complete_decrease(
     actor = get_actor(context, actor_alias)
     previous_time_to_complete = actor.articles_time_to_complete
     current_time_to_complete = article_common.get_time_to_complete(context.driver)
+    _, _, time_to_read = actor.visited_articles[0]
     difference = current_time_to_complete - previous_time_to_complete
     logging.debug(
         "Time to Complete remaining Articles changed by %d mins", difference)
-    with assertion_msg(
-            "Expected the Time to Complete reading remaining articles to "
-            "decrease, not to increase or stay the same. Time difference: %d",
-            difference):
-        assert difference < 0
+    if time_to_read >= 60:
+        with assertion_msg(
+                "Expected the Time to Complete reading remaining articles to "
+                "decrease, not to increase or stay the same. Time difference:"
+                " %d, and expected time to read in seconds: %d", difference,
+                time_to_read):
+            assert difference < 0
+    else:
+        with assertion_msg(
+                "Expected the Time to Complete remaining articles to be "
+                "unchanged. Time difference: %d, and expected time to read in "
+                "seconds: %d", difference, time_to_read):
+            assert difference == 0
