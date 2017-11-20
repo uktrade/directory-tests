@@ -12,7 +12,9 @@ from utils import assertion_msg, selenium_action, take_screenshot
 NAME = "ExRed Common Articles"
 URL = None
 
-
+WORDS_PER_SECOND = 1.5  # Average word per second on screen
+ARTICLE_TEXT = "#top"
+INDICATORS_TEXT = "#top div.scope-indicator"
 ARTICLE_NAME = "#top > h1"
 TOTAL_NUMBER_OF_ARTICLES = "dd.position > span.to"
 ARTICLES_TO_READ_COUNTER = "dd.position > span.from"
@@ -203,3 +205,28 @@ def get_time_to_complete(driver: webdriver) -> int:
         assert ttc.is_displayed()
     ttc_value = [int(word) for word in ttc.text.split() if word.isdigit()][0]
     return ttc_value
+
+
+def filter_lines(lines_list):
+    """BeautifulSoup returns \n as lines as well, we filter them out.
+    It's a function because more filtering can be added later.
+    """
+    return filter(lambda x: x != '\n', lines_list)
+
+
+def count_average_word_number_in_lines_list(lines_list, word_length=5):
+    """Assume average word length, counts how many words in all the lines."""
+    total_words = 0
+    for line in lines_list:
+        total_words += len(line)/word_length
+    return total_words
+
+
+def time_to_read_in_seconds(driver: webdriver):
+    """Return time to read in minutes give an Article object."""
+    article_text = driver.find_element_by_css_selector(ARTICLE_TEXT).text
+    indicators_text = driver.find_element_by_css_selector(INDICATORS_TEXT).text
+    only_article = article_text.replace(indicators_text, '')
+    filtered_lines = filter_lines(only_article)
+    total_words_count = count_average_word_number_in_lines_list(filtered_lines)
+    return round(total_words_count / WORDS_PER_SECOND)
