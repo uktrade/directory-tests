@@ -22,6 +22,7 @@ BUILD_ID = os.environ.get("CIRCLE_SHA1", str(datetime.date(datetime.now())))
 EXRED_UI_URL = os.environ["EXRED_UI_URL"]
 DIRECTORY_UI_BUYER_URL = os.environ["DIRECTORY_UI_BUYER_URL"]
 SELLING_ONLINE_OVERSEAS_UI_URL = os.environ["SELLING_ONLINE_OVERSEAS_UI_URL"]
+EXPORT_OPPORTUNITIES_UI_URL = os.environ["EXPORT_OPPORTUNITIES_UI_URL"]
 
 # BrowserStack variables
 BROWSERSTACK_SERVER = os.environ.get(

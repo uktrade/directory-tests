@@ -2,6 +2,7 @@
 """ExRed Page Object Registry"""
 
 from pages import (
+    export_opportunities,
     find_a_buyer,
     footer,
     header,
@@ -78,6 +79,10 @@ EXRED_PAGE_REGISTRY = {
     "selling online overseas": {
         "url": selling_online_overseas.URL,
         "po": selling_online_overseas
+    },
+    "export opportunities": {
+        "url": export_opportunities.URL,
+        "po": export_opportunities
     },
 }
 
