@@ -59,27 +59,42 @@ Feature: Accessing Services
       | Selling online overseas | footer links  |
 
 
-  @wip
   @ED-2661
   @home-page
   @accessing-services
   @interim-pages
-  Scenario Outline: Any Exporter should be able to get to the "<service_name>" Service page
+  @<service_name>
+  Scenario Outline: Any Exporter should be able to get to the "<service>" Service page via interim page
     Given "Robert" visits the "Home" page
 
-    When "Robert" opens the link to "<service_name>" from "<link_location>"
-    And "Robert" opens the link to "<service_name>" from interim page
+    When "Robert" goes to "<service>" using "Services" links in "<link_location>"
+    And "Robert" opens the link to "<service>" from interim page
 
-    Then "Robert" should be redirect to "<service_name>" page
+    Then "Robert" should be on the "<service>" page
 
     Examples:
-      | service_name            | link_location |
-      | Find a Buyer            | header menu   |
-      | Find a Buyer            | home page     |
-      | Find a Buyer            | footer links  |
+      | service                 | link_location |
       | Export Opportunities    | header menu   |
       | Export Opportunities    | home page     |
       | Export Opportunities    | footer links  |
+
+
+  @ED-2661
+  @home-page
+  @accessing-services
+  @<service_name>
+  Scenario Outline: Any Exporter should be able to get to the "<service_name>" Service page
+    Given "Robert" visits the "Home" page
+
+    When "Robert" goes to "<service>" using "Services" links in "<link_location>"
+
+    Then "Robert" should be on the "<service>" page
+
+    Examples:
+      | service                 | link_location |
+      | Find a Buyer            | header menu   |
+      | Find a Buyer            | home page     |
+      | Find a Buyer            | footer links  |
       | Selling online overseas | header menu   |
       | Selling online overseas | home page     |
       | Selling online overseas | footer links  |
