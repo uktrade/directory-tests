@@ -54,7 +54,7 @@ Feature: Articles
 
     Then "Robert" should see this article as read
     And "Robert" should see that Article Read Counter increased by "1"
-    And "Robert" should see that Time to Complete remaining chapters decreased
+    And "Robert" should see that Time to Complete remaining chapters decreased or remained unchanged for short articles
 
     Examples: article groups
       | group            |

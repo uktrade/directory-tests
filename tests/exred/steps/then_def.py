@@ -162,6 +162,6 @@ def then_actor_should_see_read_counter_increase(
     articles_should_see_read_counter_increase(context, actor_alias, increase)
 
 
-@then('"{actor_alias}" should see that Time to Complete remaining chapters decreased')
+@then('"{actor_alias}" should see that Time to Complete remaining chapters decreased or remained unchanged for short articles')
 def then_actor_should_see_time_to_complete_decrease(context, actor_alias):
     articles_should_see_time_to_complete_decrease(context, actor_alias)
