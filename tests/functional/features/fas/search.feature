@@ -127,10 +127,10 @@ Feature: Find a Supplier
     Given "Annette Geissinger" is a buyer
 
     When "Annette Geissinger" searches for Suppliers using product name, service name and a keyword
-      | product                      | service                                  | keyword                    | company                                                  |
-      | Aerosol Paints               | Supply all types of Aerosols             | vanishing spray            | KING OF PAINTS                                           |
-      | LINSIG traffic signal models | management of transport                  | drainage civil engineering | CALLIDUS TRANSPORT & ENGINEERING LTD                     |
-      | peristaltic pump             | deliver the maximum possible performance | brushless                  | ZIKODRIVE MOTOR CONTROLLERS (ROUND BANK ENGINEERING LTD) |
+      | product          | service                                  | keyword         | company                                                  |
+      | Aerosol Paints   | Supply all types of Aerosols             | vanishing spray | KING OF PAINTS                                           |
+      | SmartMed         | seamlessly integrated eHealth solution   | Telehealth      | SmartMed Global                                          |
+      | peristaltic pump | deliver the maximum possible performance | brushless       | ZIKODRIVE MOTOR CONTROLLERS (ROUND BANK ENGINEERING LTD) |
 
     Then "Annette Geissinger" should be able to find all sought companies
 
