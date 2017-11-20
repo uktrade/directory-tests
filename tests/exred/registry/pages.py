@@ -2,11 +2,13 @@
 """ExRed Page Object Registry"""
 
 from pages import (
+    find_a_buyer,
     footer,
     header,
     home,
     interim_exporting_opportunities,
     personalised_journey,
+    selling_online_overseas,
     triage_are_you_registered_with_companies_house,
     triage_are_you_regular_exporter,
     triage_company_name,
@@ -68,7 +70,15 @@ EXRED_PAGE_REGISTRY = {
     "interim export opportunities": {
         "url": interim_exporting_opportunities.URL,
         "po": interim_exporting_opportunities
-    }
+    },
+    "find a buyer": {
+        "url": find_a_buyer.URL,
+        "po": find_a_buyer
+    },
+    "selling online overseas": {
+        "url": selling_online_overseas.URL,
+        "po": selling_online_overseas
+    },
 }
 
 
