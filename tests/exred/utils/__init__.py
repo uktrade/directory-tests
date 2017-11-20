@@ -181,6 +181,7 @@ def selenium_action(driver: webdriver, message: str, *args):
     :param message: a message that will be printed & logged when assertion fails
     :param args: values that will replace % conversion specifications in message
                  like: %s, %d
+    :raises WebDriverException or NoSuchElementException
     """
     try:
         yield
