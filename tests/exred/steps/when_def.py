@@ -13,6 +13,7 @@ from steps.when_impl import (
     guidance_open_category,
     guidance_read_through_all_articles,
     open_link,
+    open_service_link_on_interim_page,
     personalised_journey_create_page,
     start_triage,
     triage_are_you_incorporated,
@@ -152,3 +153,8 @@ def when_actor_goes_to_case_study(context, actor_alias, case_number):
 @when('"{actor_alias}" goes to "{category}" using "{group}" links in "{location}"')
 def when_actor_opens_link(context, actor_alias, category, group, location):
     open_link(context, actor_alias, group, category, location)
+
+
+@when('"{actor_alias}" opens the link to "{service}" from interim page')
+def when_open_service_link_on_interim_page(context, actor_alias, service):
+    open_service_link_on_interim_page(context, actor_alias, service)

@@ -741,3 +741,11 @@ def open_link(
     update_actor(
         context, actor_alias, article_group="guidance",
         article_category=category, article_location=location)
+
+
+def open_service_link_on_interim_page(
+        context: Context, actor_alias: str, service: str):
+    page_name = "interim {}".format(service)
+    page = get_page_object(page_name)
+    page.go_to_service(context.driver)
+    logging.debug("%s went to %s service page", actor_alias, service)
