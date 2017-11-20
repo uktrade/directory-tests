@@ -4,6 +4,7 @@ import logging
 
 from behave.model import Scenario, Step
 from behave.runner import Context
+from retrying import retry
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 
@@ -43,6 +44,7 @@ def after_step(context: Context, step: Step):
                 flag_browserstack_session_as_failed(session_id, message)
 
 
+@retry(stop_max_attempt_number=3)
 def before_scenario(context: Context, scenario: Scenario):
     """Place here code which has to be executed before every Scenario.
 
