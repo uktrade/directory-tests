@@ -79,7 +79,7 @@ def guidance_open_category(
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
     if location.lower() != "personalised journey":
-        home.visit(driver=context.driver)
+        visit_page(context, actor_alias, "Home")
     logging.debug(
         "%s is about to open Guidance '%s' category from %s",
         actor_alias, category, location)
@@ -487,7 +487,7 @@ def export_readiness_open_category(
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
     if location.lower() != "personalised journey":
-        home.visit(driver=context.driver)
+        visit_page(context, actor_alias, "Home")
     logging.debug(
         "%s is about to open Export Readiness '%s' category from %s",
         actor_alias, category, location)
