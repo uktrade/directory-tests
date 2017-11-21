@@ -83,7 +83,7 @@ Feature: Accessing Services
   @home-page
   @accessing-services
   @<service_name>
-  Scenario Outline: Any Exporter should be able to get to the "<service_name>" Service page
+  Scenario Outline: Any Exporter should be able to get to the "<service>" Service page
     Given "Robert" visits the "Home" page
 
     When "Robert" goes to "<service>" using "Services" links in "<link_location>"
