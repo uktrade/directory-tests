@@ -460,4 +460,3 @@ Feature: Articles
       | specific   |
       | New        |
       | Occasional |
-

@@ -37,6 +37,7 @@ Feature: Accessing Services
 
 
   @wip
+  @out-of-scope
   @ED-2660
   @home-page
   @accessing-services
