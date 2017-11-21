@@ -241,20 +241,14 @@ def articles_should_see_time_to_complete_decrease(
     actor = get_actor(context, actor_alias)
     previous_time_to_complete = actor.articles_time_to_complete
     current_time_to_complete = article_common.get_time_to_complete(context.driver)
-    _, _, time_to_read = actor.visited_articles[0]
+    _, article_title, time_to_read = actor.visited_articles[0]
     difference = current_time_to_complete - previous_time_to_complete
     logging.debug(
-        "Time to Complete remaining Articles changed by %d mins", difference)
-    if time_to_read >= 60:
-        with assertion_msg(
-                "Expected the Time to Complete reading remaining articles to "
-                "decrease, not to increase or stay the same. Time difference:"
-                " %d, and expected time to read in seconds: %d", difference,
-                time_to_read):
-            assert difference < 0
-    else:
-        with assertion_msg(
-                "Expected the Time to Complete remaining articles to be "
-                "unchanged. Time difference: %d, and expected time to read in "
-                "seconds: %d", difference, time_to_read):
-            assert difference == 0
+        "Time to Complete remaining Articles changed by %d mins after reading"
+        " %s", difference, article_title)
+    with assertion_msg(
+            "Expected the Time to Complete reading remaining Articles to "
+            "decrease or remain unchanged after reading '%s', but it actually "
+            "increased by %d. Expected time to read in seconds: %d",
+            article_title, difference, time_to_read):
+        assert difference <= 0
