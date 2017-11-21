@@ -8,6 +8,7 @@ from pages import (
     article_common,
     case_studies_common,
     export_readiness_common,
+    get_finance,
     guidance_common,
     home,
     personalised_journey
@@ -285,6 +286,14 @@ def articles_should_not_see_feedback_widget(context: Context):
 def articles_should_be_thanked_for_feedback(context, actor_alias):
     article_common.should_see_feedback_result(context.driver)
     logging.debug("%s was thanked for the feedback", actor_alias)
+
+
+def expected_page_elements_should_not_be_visible_on_get_finance(
+        context: Context, actor_alias: str, elements: list):
+    get_finance.check_elements_are_not_visible(context.driver, elements)
+    logging.debug(
+        "%s cannot see all expected page elements: '%s' on current page %s",
+        actor_alias, elements, context.driver.current_url)
 
 
 def case_studies_should_see_case_study(

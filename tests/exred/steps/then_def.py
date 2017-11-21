@@ -14,6 +14,7 @@ from steps.then_impl import (
     articles_should_see_time_to_complete_decrease,
     articles_total_number_of_articles_should_not_change,
     case_studies_should_see_case_study,
+    expected_page_elements_should_not_be_visible_on_get_finance,
     export_readiness_expected_page_elements_should_be_visible,
     export_readiness_should_see_articles,
     guidance_check_if_link_to_next_category_is_displayed,
@@ -203,3 +204,9 @@ def then_should_see_links_to_services(
         context, actor_alias, services, location):
     should_see_links_to_services(
         context, actor_alias, services.split(", "), location)
+
+
+@then('"{actor_alias}" should not see "{elements}"')
+def step_impl(context, actor_alias, elements):
+    expected_page_elements_should_not_be_visible_on_get_finance(
+        context, actor_alias, elements.split(", "))
