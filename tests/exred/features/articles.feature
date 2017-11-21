@@ -283,7 +283,7 @@ Feature: Articles
 
     Then "Robert" should see that Total number of Articles did not change
     And "Robert" should see that Article Read Counter increased by "1"
-    And "Robert" should see that Time to Complete remaining chapters decreased
+    And "Robert" should see that Time to Complete remaining chapters decreased or remained unchanged for short articles
 
     Examples:
       | group            | location     |
@@ -306,7 +306,7 @@ Feature: Articles
 
     Then "Robert" should see that Total Number of Articles did not change
     And "Robert" should see that Article Read Counter increased by "1"
-    And "Robert" should see that Time to Complete remaining chapters decreased
+    And "Robert" should see that Time to Complete remaining chapters decreased or remained unchanged for short articles
 
     Examples:
       | relevant   |
@@ -328,7 +328,7 @@ Feature: Articles
 
     Then "Robert" should see that Total number of Articles did not change
     And "Robert" should see that Article Read Counter increased by "1"
-    And "Robert" should see that Time to Complete remaining chapters decreased
+    And "Robert" should see that Time to Complete remaining chapters decreased or remained unchanged for short articles
 
     Examples:
       | relevant | group    | location             |
