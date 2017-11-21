@@ -106,20 +106,23 @@ Feature: Accessing Services
   @ED-2647
   @fixme
   @ED-2662
+  @ED-2667
   @home-page
+  @finance
   @accessing-services
-  @<service_name>
-  Scenario Outline: Any Exporter should be able to get to the "<service_name>" Service page
+  @interim-pages
+  Scenario Outline: Any Exporter should see "Get finance" service page not as a Guidance Article
     Given "Robert" visits the "Home" page
 
     When "Robert" goes to "<service>" using "Services" links in "<link_location>"
 
     Then "Robert" should be on the "<service>" page
+    And  "Robert" should not see "Articles Read counter, Total number of Articles, Time to complete remaining chapters, Tasks completed counter, Task Total number"
 
     Examples:
-      | service     | link_location |
-      | Get Finance | header menu   |
-      | Get Finance | footer links  |
+      | service      | link_location |
+      | Get Finance  | header menu   |
+      | Get Finance  | footer links  |
 
 
   @wip
@@ -190,23 +193,3 @@ Feature: Accessing Services
       | Selling online overseas | header menu   |
       | Selling online overseas | home page     |
       | Selling online overseas | footer links  |
-
-
-  @wip
-  @ED-2667
-  @home-page
-  @finance
-  @accessing-services
-  @interim-pages
-  Scenario Outline: Any Exporter should see "Get finance" service page not as a Guidance Article
-    Given "Robert" has decided not to have interim pages shown in the past
-
-    When "Robert" opens the link to "<service_name>" from "<link_location>"
-
-    Then "Robert" should be redirected to "<service_name>" page
-    And  "Robert" should not see "Articles Read counter, Total number of Articles, Time to complete remaining chapters, Tasks completed counter and task Total number"
-
-    Examples:
-      | service_name | link_location |
-      | Get Finance  | header menu   |
-      | Get Finance  | footer links  |
