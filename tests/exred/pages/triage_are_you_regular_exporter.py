@@ -11,8 +11,8 @@ from utils import assertion_msg, take_screenshot
 NAME = "ExRed Triage - are you regular exporter"
 URL = urljoin(EXRED_UI_URL, "triage/regular-exporter")
 
-YES_RADIO = "#id_regular_exporter-regular_exporter_0"
-NO_RADIO = "#id_regular_exporter-regular_exporter_1"
+YES_RADIO = "#id_regular-exporter-regular_exporter_0"
+NO_RADIO = "#id_regular-exporter-regular_exporter_1"
 YES_CHECKBOX = "#id_regular-exporter-regular_exporter > li:nth-child(1) > label"
 NO_CHECKBOX = "#id_regular-exporter-regular_exporter > li:nth-child(2) > label"
 CONTINUE_BUTTON = ".exred-triage-form button.button"
