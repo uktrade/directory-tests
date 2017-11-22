@@ -32,7 +32,8 @@ from steps.when_impl import (
     triage_say_what_do_you_want_to_export,
     triage_say_whether_you_use_online_marketplaces,
     triage_should_see_answers_to_questions,
-    triage_what_is_your_company_name
+    triage_what_is_your_company_name,
+    visit_page
 )
 
 
@@ -211,3 +212,8 @@ def when_actor_clears_the_cookies(context, actor_alias):
 @when('"{actor_alias}" signs in using link visible in the "{location}"')
 def step_impl(context, actor_alias, location):
     sign_in(context, actor_alias, location)
+
+
+@when('"{actor_alias}" goes to the "{page_name}" page')
+def when_actor_goes_to_page(context, actor_alias, page_name):
+    visit_page(context, actor_alias, page_name)
