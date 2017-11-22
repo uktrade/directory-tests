@@ -24,6 +24,7 @@ from steps.then_impl import (
     guidance_should_see_articles,
     guidance_should_see_total_number_of_articles,
     guidance_tile_should_be_highlighted,
+    personalised_journey_should_not_see_banner_and_top_10_table,
     personalised_journey_should_see_read_counter,
     personalised_should_see_layout_for,
     should_be_on_page,
@@ -210,3 +211,9 @@ def then_should_see_links_to_services(
 def step_impl(context, actor_alias, elements):
     expected_page_elements_should_not_be_visible_on_get_finance(
         context, actor_alias, elements.split(", "))
+
+
+@then('"{actor_alias}" should not see the Top Importer banner and Top 10 Importers table for their sector')
+def then_actor_should_not_see_banner_and_top_10_table(context, actor_alias):
+    personalised_journey_should_not_see_banner_and_top_10_table(
+        context, actor_alias)

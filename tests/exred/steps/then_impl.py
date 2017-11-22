@@ -326,3 +326,13 @@ def should_see_links_to_services(
         page_object.should_see_link_to(context.driver, "services", service)
         logging.debug(
             "%s can see link to '%s' in '%s'", actor_alias, service, location)
+
+
+def personalised_journey_should_not_see_banner_and_top_10_table(
+        context: Context, actor_alias: str):
+    personalised_journey.should_not_see_banner_and_top_10_table(context.driver)
+    actor = get_actor(context, actor_alias)
+    code, sector = actor.what_do_you_want_to_export
+    logging.debug(
+        "As expected %s can't see Top Importer banner and Top 10 Importers "
+        "table on personalised page for '%s - %s' sector", code, sector)
