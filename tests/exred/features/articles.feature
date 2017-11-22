@@ -106,7 +106,7 @@ Feature: Articles
   @<relevant>
   @<location>
   Scenario Outline: "<relevant>" Exporter should see a list of relevant Export Readiness Articles when accessed via "<location>"
-    Given "Robert" classifies himself as "<specific>" exporter
+    Given "Robert" classifies himself as "<relevant>" exporter
 
     When "Robert" goes to the Export Readiness Articles for "<relevant>" Exporters via "<location>"
 
