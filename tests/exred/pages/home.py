@@ -203,11 +203,10 @@ def find_case_study_by_going_right(driver: webdriver, to_open: int):
         max_actions -= 1
 
 
-def move_to_case_study_indicators(driver: webdriver):
-    indicators = driver.find_element_by_css_selector(
-        CAROUSEL_INDICATORS_SECTION)
-    vertical_position = indicators.location['y']
-    logging.debug("Moving focus to Carousel indicators")
+def move_to_case_study_navigation_buttons(driver: webdriver):
+    prev_button = driver.find_element_by_css_selector(CAROUSEL_PREV_BUTTON)
+    vertical_position = prev_button.location['y']
+    logging.debug("Moving focus to Carousel navigation buttons")
     driver.execute_script("window.scrollTo(0, {});".format(vertical_position))
 
 
@@ -219,7 +218,7 @@ def open_case_study(driver: webdriver, case_number: str):
     }
     case_study_number = case_study_numbers[case_number.lower()]
 
-    move_to_case_study_indicators(driver)
+    move_to_case_study_navigation_buttons(driver)
 
     current_case_study_number = get_number_of_current_carousel_article(driver)
     if current_case_study_number != case_study_number:
