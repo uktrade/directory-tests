@@ -9,6 +9,7 @@ from retrying import retry
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 
+from pages.sso_common import delete_supplier_data
 from settings import CONFIG, CONFIG_NAME, TASK_ID
 from utils import (
     flag_browserstack_session_as_failed,
@@ -104,6 +105,10 @@ def after_scenario(context: Context, scenario: Scenario):
     logging.debug("Closing Selenium Driver after scenario: %s", scenario.name)
     logging.debug(context.scenario_data)
     context.driver.quit()
+    actors = context.scenario_data.actors
+    for actor in actors.values():
+        if actor.registered:
+            delete_supplier_data("SSO", actor.email)
 
 
 def before_all(context: Context):
