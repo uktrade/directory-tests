@@ -8,13 +8,15 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
-from utils import assertion_msg, selenium_action, take_screenshot
+from utils import assertion_msg, find_element, selenium_action, take_screenshot
 
 NAME = "ExRed Header"
 URL = None
 
 
 HOME_LINK = "#menu > ul > li:nth-child(1) > a"
+REGISTRATION_LINK = "#header-bar > div > ul > li:nth-child(1) > a"
+SIGN_IN_LINK = "#header-bar > div > ul > li:nth-child(2) > a"
 SECTIONS = {
     "export readiness": {
         "menu": "#export-readiness-links",
@@ -117,3 +119,13 @@ def open(driver: webdriver, group: str, element: str):
     menu_item.click()
     take_screenshot(
         driver, NAME + " after clicking on: {} link".format(element))
+
+
+def go_to_registration(driver: webdriver):
+    registration_link = find_element(driver, by_css=REGISTRATION_LINK)
+    registration_link.click()
+
+
+def go_to_sign_in(driver: webdriver):
+    registration_link = find_element(driver, by_css=SIGN_IN_LINK)
+    registration_link.click()

@@ -7,7 +7,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver import ActionChains
 
 from registry.articles import get_articles
-from utils import assertion_msg, selenium_action, take_screenshot
+from utils import assertion_msg, find_element, selenium_action, take_screenshot
 
 NAME = "ExRed Common Articles"
 URL = None
@@ -27,6 +27,8 @@ FEEDBACK_QUESTION = "#js-feedback > p"
 USEFUL_BUTTON = "#js-feedback-positive"
 NOT_USEFUL_BUTTON = "#js-feedback-negative"
 FEEDBACK_RESULT = "#js-feedback-success"
+REGISTRATION_LINK = "#articles div.scope-indicator > p > a:nth-child(1)"
+SIGN_IN_LINK = "#articles > div > div.scope-indicator > p > a:nth-child(2)"
 
 
 SCOPE_ELEMENTS = {
@@ -138,7 +140,7 @@ def go_to_article(driver: webdriver, title: str):
             "Found a link to '%s' article but it's not visible", title):
         assert article.is_displayed()
     article.click()
-    take_screenshot(driver, "After going to the '%s' Article".format(title))
+    take_screenshot(driver, "After going to the '{}' Article".format(title))
 
 
 def get_article_name(driver: webdriver) -> str:
@@ -286,3 +288,13 @@ def should_see_feedback_result(driver: webdriver):
             "Expected to be thanked for the Feedback, but can't see such "
             "message"):
         assert result.is_displayed()
+
+
+def go_to_registration(driver: webdriver):
+    registration_link = find_element(driver, by_css=REGISTRATION_LINK)
+    registration_link.click()
+
+
+def go_to_sign_in(driver: webdriver):
+    registration_link = find_element(driver, by_css=SIGN_IN_LINK)
+    registration_link.click()
