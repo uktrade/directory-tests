@@ -336,6 +336,36 @@ Feature: Articles
 
 
   @wip
+  @ED-2706
+  @session
+  @register
+  Scenario Outline: Any Exporter should be able to register from the "<group>" Articles list page in order to save their progress
+    Given "Robert" went to randomly selected "<group>" Article category via "<location>"
+    And "Robert" read "<number>" of articles
+
+    When "Robert" decides to register to save his reading progress using link visible in the "<element>"
+    And "Robert" completes the registration and email verification process
+    And "Robert" clears the cookies
+    And "Robert" goes to the "home" page
+    And "Robert" clears the cookies
+    And "Robert" goes back to the same "<group>" Article category via "<location>"
+    Then "Robert" should see that his reading progress is gone
+
+    When "Robert" signs in using link visible in the "top bar"
+    And "Robert" goes back to the same "<group>" Article category via "<location>"
+    Then "Robert" should see his reading progress same as before registration
+
+    Examples:
+      | group            | location     | number    | element |
+      | Export Readiness | header menu  | a sixth   | article  |
+      | Export Readiness | home page    | a quarter | top bar  |
+      | Export Readiness | footer links | a third   | article  |
+      | Guidance         | header menu  | a fifth   | top bar  |
+      | Guidance         | home page    | a quarter | article  |
+      | Guidance         | footer links | a third   | top bar  |
+
+
+  @wip
   @session
   Scenario: An Exporter should be able to register from the Articles list page in order to save their progress
     Given "Robert" is on the Article List page
