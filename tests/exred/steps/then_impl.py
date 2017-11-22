@@ -278,16 +278,6 @@ def articles_total_number_of_articles_should_not_change(
         assert current_total_articles == previous_total_articles
 
 
-def articles_should_not_see_feedback_widget(context: Context):
-    article_common.should_not_see_feedback_widget(context.driver)
-    logging.debug("Feedback widget is not visible any more")
-
-
-def articles_should_be_thanked_for_feedback(context, actor_alias):
-    article_common.should_see_feedback_result(context.driver)
-    logging.debug("%s was thanked for the feedback", actor_alias)
-
-
 def expected_page_elements_should_not_be_visible_on_get_finance(
         context: Context, actor_alias: str, elements: list):
     get_finance.check_elements_are_not_visible(context.driver, elements)
@@ -303,13 +293,6 @@ def case_studies_should_see_case_study(
     case_study_title = get_actor(context, actor_alias).case_study_title
     case_studies_common.should_be_here(
         context.driver, number, title=case_study_title)
-
-
-def case_studies_should_see_case_study(
-        context: Context, actor_alias: str, case_study_number: str):
-    case_study_numbers = { "first": 1, "second": 2, "third": 3 }
-    number = case_study_numbers[case_study_number.lower()]
-    case_studies_common.should_be_here(context.driver, number)
 
 
 def should_see_share_widget(context: Context, actor_alias: str):
