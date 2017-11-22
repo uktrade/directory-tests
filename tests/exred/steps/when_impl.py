@@ -853,3 +853,13 @@ def registration_create_and_verify_account(context: Context, actor_alias: str):
     sso_registration_confirmation.should_be_here(driver)
     sso_common.verify_account(email)
     update_actor(context, actor_alias, registered=True)
+
+
+def clear_the_cookies(context: Context, actor_alias: str):
+    try:
+        cookies = context.driver.get_cookies()
+        logging.debug("COOKIES: %s", cookies)
+        context.driver.delete_all_cookies()
+        logging.debug("Successfully cleared cookies for %s", actor_alias)
+    except WebDriverException:
+        logging.error("Failed to clear cookies for %s", actor_alias)

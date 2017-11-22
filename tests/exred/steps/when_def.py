@@ -10,6 +10,7 @@ from steps.when_impl import (
     articles_open_any_but_the_last,
     case_studies_go_to,
     continue_export_journey,
+    clear_the_cookies,
     export_readiness_open_category,
     guidance_open_category,
     guidance_read_through_all_articles,
@@ -199,3 +200,8 @@ def when_actor_decides_to_register(context, actor_alias, location):
 @when('"{actor_alias}" completes the registration and email verification process')
 def when_actor_registers(context, actor_alias):
     registration_create_and_verify_account(context, actor_alias)
+
+
+@when('"{actor_alias}" clears the cookies')
+def when_actor_clears_the_cookies(context, actor_alias):
+    clear_the_cookies(context, actor_alias)
