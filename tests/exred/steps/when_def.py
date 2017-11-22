@@ -17,6 +17,7 @@ from steps.when_impl import (
     open_service_link_on_interim_page,
     personalised_journey_create_page,
     personalised_journey_update_preference,
+    registration_go_to,
     set_sector_preference,
     start_triage,
     triage_are_you_incorporated,
@@ -186,3 +187,9 @@ def when_actor_updates_triage_preferences(context, actor_alias):
 @when('"{actor_alias}" goes through triage again')
 def when_actor_goes_through_triage_again(context, actor_alias):
     triage_go_through_again(context, actor_alias)
+
+
+@when('"{actor_alias}" decides to register to save her reading progress using link visible in the "{location}"')
+@when('"{actor_alias}" decides to register to save his reading progress using link visible in the "{location}"')
+def when_actor_decides_to_register(context, actor_alias, location):
+    registration_go_to(context, actor_alias, location)

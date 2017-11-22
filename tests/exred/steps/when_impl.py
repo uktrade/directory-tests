@@ -827,3 +827,17 @@ def articles_read_a_number_of_them(
             "%s read %d article(s) out of %d (%s) he/she decided to read from "
             "%d '%s' articles", actor_alias, idx, number_to_read, number,
             len(articles), category)
+
+
+def registration_go_to(context: Context, actor_alias: str, location: str):
+    logging.debug(
+        "%s decided to go to registration via %s link", actor_alias, location)
+    if location.lower() == "article":
+        article_common.go_to_registration(context.driver)
+    elif location.lower() == "top bar":
+        header.go_to_registration(context.driver)
+    else:
+        raise KeyError(
+            "Could not recognise registration link location: %s. Please use "
+            "'article' or 'top bar'".format(location))
+    sso_registration.should_be_here(context.driver)
