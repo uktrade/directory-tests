@@ -441,13 +441,13 @@ def personalised_journey_create_page(context: Context, actor_alias: str):
     personalised_journey.should_be_here(context.driver)
 
 
-def triage_change_answers(context, actor_alias):
+def triage_change_answers(context: Context, actor_alias: str):
     triage_result.change_answers(context.driver)
     triage_what_do_you_want_to_export.should_be_here(context.driver)
     logging.debug("%s decided to change the Triage answers", actor_alias)
 
 
-def triage_answer_questions_again(context, actor_alias):
+def triage_answer_questions_again(context: Context, actor_alias: str):
     driver = context.driver
     actor = get_actor(context, actor_alias)
     code, sector = actor.what_do_you_want_to_export
