@@ -11,6 +11,7 @@ from steps.then_impl import (
     articles_should_see_in_correct_order,
     articles_should_see_link_to_first_article_from_next_category,
     articles_should_see_read_counter_increase,
+    articles_should_see_read_counter_set_to,
     articles_should_see_time_to_complete_decrease,
     articles_total_number_of_articles_should_not_change,
     case_studies_should_see_case_study,
@@ -224,3 +225,8 @@ def then_actor_should_not_see_banner_and_top_10_table(context, actor_alias):
 def then_actor_should_see_banner_and_top_10_table(context, actor_alias):
     personalised_journey_should_see_banner_and_top_10_table(
         context, actor_alias)
+
+
+@then('"{actor_alias}" should see that his reading progress is gone')
+def then_reading_progress_should_be_gone(context, actor_alias):
+    articles_should_see_read_counter_set_to(context, actor_alias, 0)

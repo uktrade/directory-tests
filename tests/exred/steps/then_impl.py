@@ -330,3 +330,15 @@ def personalised_journey_should_see_banner_and_top_10_table(
     logging.debug(
         "As expected %s can see Top Importer banner and Top 10 Importers "
         "table on personalised page for '%s - %s' sector", code, sector)
+
+
+def articles_should_see_read_counter_set_to(
+        context: Context, actor_alias: str, expected_value: int):
+    current_read_counter = article_common.get_read_counter(context.driver)
+    with assertion_msg(
+            "Expected to see Read Counter set to %d but got %s",
+            expected_value, current_read_counter):
+        assert current_read_counter == expected_value
+    logging.debug(
+        "%s saw Reading Counter set to expected value of: %d", actor_alias,
+        expected_value)
