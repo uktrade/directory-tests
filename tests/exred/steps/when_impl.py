@@ -33,7 +33,7 @@ from utils import (
 )
 
 
-@retry(wait_fixed=15000, stop_max_attempt_number=3)
+@retry(wait_fixed=30000, stop_max_attempt_number=3)
 def visit_page(
         context: Context, actor_alias: str, page_name: str, *,
         first_time: bool = False):
@@ -60,7 +60,7 @@ def actor_classifies_himself_as(
     add_actor(context, actor)
 
 
-@retry(wait_fixed=10000, stop_max_attempt_number=3)
+@retry(wait_fixed=30000, stop_max_attempt_number=3)
 def open_group_element(
         context: Context, group: str, element: str, location: str):
     driver = context.driver
@@ -79,7 +79,7 @@ def guidance_open_category(
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
     if location.lower() != "personalised journey":
-        home.visit(driver=context.driver)
+        visit_page(context, actor_alias, "Home")
     logging.debug(
         "%s is about to open Guidance '%s' category from %s",
         actor_alias, category, location)
@@ -90,7 +90,7 @@ def guidance_open_category(
         article_category=category, article_location=location)
 
 
-@retry(wait_fixed=10000, stop_max_attempt_number=3)
+@retry(wait_fixed=30000, stop_max_attempt_number=3)
 def start_triage(context: Context, actor_alias: str):
     home.start_exporting_journey(context.driver)
     logging.debug("%s started triage process", actor_alias)
@@ -487,7 +487,7 @@ def export_readiness_open_category(
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
     if location.lower() != "personalised journey":
-        home.visit(driver=context.driver)
+        visit_page(context, actor_alias, "Home")
     logging.debug(
         "%s is about to open Export Readiness '%s' category from %s",
         actor_alias, category, location)
@@ -583,10 +583,11 @@ def articles_open_any(context: Context, actor_alias: str):
     any_article = random.choice(articles)
     article_common.show_all_articles(driver)
     article_common.go_to_article(driver, any_article .title)
+    time_to_read = article_common.time_to_read_in_seconds(context.driver)
     logging.debug(
         "%s is on '%s' article page: %s", actor_alias,
         any_article .title, driver.current_url)
-    visited_articles = [(any_article.index, any_article.title)]
+    visited_articles = [(any_article.index, any_article.title, time_to_read)]
     update_actor(context, actor_alias, visited_articles=visited_articles)
 
 
@@ -599,10 +600,13 @@ def guidance_read_through_all_articles(context: Context, actor_alias: str):
     visited_articles = []
 
     current_article_name = article_common.get_article_name(driver)
+    time_to_read = article_common.time_to_read_in_seconds(context.driver)
     logging.debug("%s is on '%s' article", actor_alias, current_article_name)
     current_article = get_article(group, category, current_article_name)
     assert current_article, "Could not find Article: %s" % current_article_name
-    visited_articles.append((current_article.index, current_article_name))
+    visited_articles.append(
+        (current_article.index, current_article_name, time_to_read)
+    )
     next_article = current_article.next
 
     while next_article is not None:
@@ -610,7 +614,10 @@ def guidance_read_through_all_articles(context: Context, actor_alias: str):
             driver, next_article.title)
         article_common.go_to_next_article(driver)
         current_article_name = article_common.get_article_name(driver)
-        visited_articles.append((next_article.index, next_article.title))
+        time_to_read = article_common.time_to_read_in_seconds(context.driver)
+        visited_articles.append(
+            (next_article.index, next_article.title, time_to_read)
+        )
         logging.debug(
             "%s is on '%s' article", actor_alias, current_article_name)
         current_article = get_article(group, category, current_article_name)

@@ -28,6 +28,7 @@ BUSINESS_LINK = "#resource-guidance a[href='/business-planning']"
 GETTING_PAID_LINK = "#resource-guidance a[href='/getting-paid']"
 OPERATIONS_AND_COMPLIANCE_LINK = "#resource-guidance a[href='/operations-and-compliance']"
 TOP_IMPORTER = "#top_importer_name"
+TOP_IMPORTERS = "#content > section.top-markets > div > ol > li > dl"
 TRADE_VALUE = "#top_importer_global_trade_value"
 TOP_10_TRADE_VALUE = ".cell-global_trade_value"
 SECTIONS = {
@@ -49,7 +50,7 @@ SECTIONS = {
     "top 10": {
         "heading": "section.top-markets h2",
         "intro": "section.top-markets .intro",
-        "table": "#top-of-the-markets",
+        "table": "ol.top-markets-list",
         "source data": "section.top-markets #market-source-data",
     },
     "services": {
@@ -229,23 +230,27 @@ def should_see_section(driver: webdriver, name: str):
         with assertion_msg(
                 "'%s' in '%s' is not displayed", key, name):
             assert element.is_displayed()
+            logging.debug("'%s' in '%s' is displayed", key, name)
 
 
 def check_top_facts_values(driver: webdriver):
     top_importer = driver.find_element_by_css_selector(TOP_IMPORTER).text
-    trade_value = driver.find_element_by_css_selector(TRADE_VALUE).text
+    top_trade_value = driver.find_element_by_css_selector(TRADE_VALUE).text
+    top_importers_list = driver.find_elements_by_css_selector(TOP_IMPORTERS)
 
-    try:
-        tr = driver.find_element_by_css_selector(
-            "#row-{}".format(top_importer
-                             .replace(",", "\,")
-                             .replace(" ", "\ ")))
-        cell = tr.find_element_by_css_selector(TOP_10_TRADE_VALUE).text
+    exporting_values = {}
+    for importer in top_importers_list:
+        country = importer.find_element_by_css_selector("dd.country").text
+        trade_value = importer.find_element_by_css_selector("dd.world").text
+        exporting_values.update({country: trade_value})
+
+    if top_importer in exporting_values:
         with assertion_msg(
-                "Expected to see 'Export value from the world' for %s to be %s"
-                " but got %s", top_importer, trade_value, cell):
-            assert cell == trade_value
-    except NoSuchElementException:
+                "Expected to see 'Export value from the world' for %s to "
+                "be %s but got %s", top_importer, top_trade_value,
+                exporting_values[top_importer]):
+            assert exporting_values[top_importer] == top_trade_value
+    else:
         logging.debug(
             "Country mentioned in Top Facts: %s is not present in the Top 10 "
             "Importers table. Won't check the the trade value")

@@ -1187,7 +1187,7 @@ def fas_get_company_profile_url(response: Response, name: str) -> str:
         links_to_profiles_selector).extract()
     profile_url = None
     for link in links_to_profiles:
-        if escape_html(name).lower() in link.lower():
+        if escape_html(name).lower() in escape_html(link).lower():
             profile_url = Selector(text=link).css(href_selector).extract()[0]
     with assertion_msg(
             "Couldn't find link to '%s' company profile page in the response",
