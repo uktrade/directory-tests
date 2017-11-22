@@ -2,6 +2,7 @@
 """Behave configuration file."""
 import logging
 
+from behave.contrib.scenario_autoretry import patch_scenario_with_autoretry
 from behave.model import Scenario, Step
 from behave.runner import Context
 from retrying import retry
@@ -42,6 +43,15 @@ def after_step(context: Context, step: Step):
             if hasattr(context, "driver"):
                 session_id = context.driver.session_id
                 flag_browserstack_session_as_failed(session_id, message)
+
+
+def before_feature(context, feature):
+    """Use autoretry feature of upcoming Behave 1.2.6 which automatically
+    retries failing scenarios.
+    Here PR for it https://github.com/behave/behave/pull/328
+    """
+    for scenario in feature.scenarios:
+        patch_scenario_with_autoretry(scenario, max_attempts=2)
 
 
 @retry(stop_max_attempt_number=3)
