@@ -2,7 +2,11 @@
 """Given step definitions."""
 from behave import given
 
-from steps.then_impl import should_be_on_page
+from steps.then_impl import (
+    personalised_journey_should_not_see_banner_and_top_10_table,
+    should_be_on_page,
+    should_see_sections
+)
 from steps.when_impl import (
     actor_classifies_himself_as,
     articles_open_any,
@@ -80,7 +84,8 @@ def given_actor_was_classified_as(
 
 @given('"{actor_alias}" exports "{goods_or_services}"')
 def given_actor_sets_sector_preference(context, actor_alias, goods_or_services):
-    set_sector_preference(context, actor_alias, goods_or_services)
+    set_sector_preference(
+        context, actor_alias, goods_or_services=goods_or_services)
 
 
 @given('"{actor_alias}" "{used_or_not}" online marketplaces before')
