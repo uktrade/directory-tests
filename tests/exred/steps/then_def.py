@@ -3,6 +3,7 @@
 from behave import then
 
 from steps.then_impl import (
+    articles_read_counter_same_as_before_registration,
     articles_should_be_thanked_for_feedback,
     articles_should_not_see_feedback_widget,
     articles_should_not_see_link_to_next_article,
@@ -230,3 +231,8 @@ def then_actor_should_see_banner_and_top_10_table(context, actor_alias):
 @then('"{actor_alias}" should see that his reading progress is gone')
 def then_reading_progress_should_be_gone(context, actor_alias):
     articles_should_see_read_counter_set_to(context, actor_alias, 0)
+
+
+@then('"{actor_alias}" should see his reading progress same as before registration')
+def then_actor_should_see_previous_reading_progress(context, actor_alias):
+    articles_read_counter_same_as_before_registration(context, actor_alias)
