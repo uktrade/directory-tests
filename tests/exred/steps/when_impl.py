@@ -841,3 +841,15 @@ def registration_go_to(context: Context, actor_alias: str, location: str):
             "Could not recognise registration link location: %s. Please use "
             "'article' or 'top bar'".format(location))
     sso_registration.should_be_here(context.driver)
+
+
+def registration_create_and_verify_account(context: Context, actor_alias: str):
+    driver = context.driver
+    actor = get_actor(context, actor_alias)
+    email = actor.email
+    password = actor.password
+    sso_registration.fill_out(driver, email, password)
+    sso_registration.submit(driver)
+    sso_registration_confirmation.should_be_here(driver)
+    sso_common.verify_account(email)
+    update_actor(context, actor_alias, registered=True)
