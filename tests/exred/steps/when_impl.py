@@ -777,3 +777,7 @@ def open_service_link_on_interim_page(
     page = get_page_object(page_name)
     page.go_to_service(context.driver)
     logging.debug("%s went to %s service page", actor_alias, service)
+
+
+def personalised_journey_update_preference(context, actor_alias):
+    personalised_journey.update_preferences(context.driver)

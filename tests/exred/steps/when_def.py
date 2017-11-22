@@ -15,6 +15,7 @@ from steps.when_impl import (
     open_link,
     open_service_link_on_interim_page,
     personalised_journey_create_page,
+    personalised_journey_update_preference,
     set_sector_preference,
     start_triage,
     triage_are_you_incorporated,
@@ -169,3 +170,8 @@ def when_actor_sets_sector_service_preference(context, actor_alias, service):
 @when('"{actor_alias}" decides to change the sector to "{good}" good')
 def when_actor_sets_sector_good_preference(context, actor_alias, good):
     set_sector_preference(context, actor_alias, good=good)
+
+
+@when('"{actor_alias}" decides to update his triage preferences')
+def when_actor_updates_triage_preferences(context, actor_alias):
+    personalised_journey_update_preference(context, actor_alias)
