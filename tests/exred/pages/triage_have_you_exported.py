@@ -9,12 +9,12 @@ from settings import EXRED_UI_URL
 from utils import assertion_msg, take_screenshot
 
 NAME = "ExRed Triage - have you exported before"
-URL = urljoin(EXRED_UI_URL, "triage")
+URL = urljoin(EXRED_UI_URL, "triage/exported-before")
 
-YES_RADIO = "#id_EXPORTED_BEFORE-exported_before_0"
-NO_RADIO = "#id_EXPORTED_BEFORE-exported_before_1"
-YES_CHECKBOX = "#id_EXPORTED_BEFORE-exported_before > li:nth-child(1) > label"
-NO_CHECKBOX = "#id_EXPORTED_BEFORE-exported_before > li:nth-child(2) > label"
+YES_RADIO = "#id_exported-before-exported_before_0"
+NO_RADIO = "#id_exported-before-exported_before_1"
+YES_CHECKBOX = "#id_exported-before-exported_before > li:nth-child(1) > label"
+NO_CHECKBOX = "#id_exported-before-exported_before > li:nth-child(2) > label"
 CONTINUE_BUTTON = ".exred-triage-form button.button"
 PREVIOUS_STEP_BUTTON = ".exred-triage-form button.previous-step"
 BACK_TO_HOME_LINK = ".home-link a"

@@ -8,8 +8,8 @@ from selenium import webdriver
 from settings import EXRED_UI_URL
 from utils import assertion_msg, take_screenshot
 
-NAME = "ExRed Triage - result"
-URL = urljoin(EXRED_UI_URL, "triage/result")
+NAME = "ExRed Triage - summary"
+URL = urljoin(EXRED_UI_URL, "triage/summary")
 
 CLASSIFICATION = ".question > h2"
 ANSWERS_SECTION = "div.answers"

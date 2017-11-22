@@ -9,12 +9,12 @@ from settings import EXRED_UI_URL
 from utils import assertion_msg, take_screenshot
 
 NAME = "ExRed Triage - are you regular exporter"
-URL = urljoin(EXRED_UI_URL, "triage")
+URL = urljoin(EXRED_UI_URL, "triage/regular-exporter")
 
-YES_RADIO = "#id_REGULAR_EXPORTER-regular_exporter_0"
-NO_RADIO = "#id_REGULAR_EXPORTER-regular_exporter_1"
-YES_CHECKBOX = "#id_REGULAR_EXPORTER-regular_exporter li:nth-child(1) > label"
-NO_CHECKBOX = "#id_REGULAR_EXPORTER-regular_exporter li:nth-child(2) > label"
+YES_RADIO = "#id_regular_exporter-regular_exporter_0"
+NO_RADIO = "#id_regular_exporter-regular_exporter_1"
+YES_CHECKBOX = "#id_regular-exporter-regular_exporter > li:nth-child(1) > label"
+NO_CHECKBOX = "#id_regular-exporter-regular_exporter > li:nth-child(2) > label"
 CONTINUE_BUTTON = ".exred-triage-form button.button"
 PREVIOUS_STEP_BUTTON = ".exred-triage-form button.previous-step"
 BACK_TO_HOME_LINK = ".home-link a"

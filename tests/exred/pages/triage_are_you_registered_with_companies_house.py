@@ -9,12 +9,12 @@ from settings import EXRED_UI_URL
 from utils import assertion_msg, take_screenshot
 
 NAME = "ExRed Triage - are you registered with Companies House"
-URL = urljoin(EXRED_UI_URL, "triage")
+URL = urljoin(EXRED_UI_URL, "triage/companies_house")
 
-YES_RADIO = "#id_COMPANIES_HOUSE-is_in_companies_house_0"
-NO_RADIO = "#id_COMPANIES_HOUSE-is_in_companies_house_1"
-YES_CHECKBOX = "#id_COMPANIES_HOUSE-is_in_companies_house_0 ~ label"
-NO_CHECKBOX = "#id_COMPANIES_HOUSE-is_in_companies_house_1 ~ label"
+YES_RADIO = "#id_companies_house-is_in_companies_house_0"
+NO_RADIO = "#id_companies_house-is_in_companies_house_1"
+YES_CHECKBOX = "#id_companies_house-is_in_companies_house_0 ~ label"
+NO_CHECKBOX = "#id_companies_house-is_in_companies_house_1 ~ label"
 CONTINUE_BUTTON = ".exred-triage-form button.button"
 PREVIOUS_STEP_BUTTON = ".exred-triage-form button.previous-step"
 BACK_TO_HOME_LINK = ".home-link a"
