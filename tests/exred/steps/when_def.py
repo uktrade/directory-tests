@@ -15,6 +15,7 @@ from steps.when_impl import (
     open_link,
     open_service_link_on_interim_page,
     personalised_journey_create_page,
+    set_sector_preference,
     start_triage,
     triage_are_you_incorporated,
     triage_change_answers,
@@ -158,3 +159,13 @@ def when_actor_opens_link(context, actor_alias, category, group, location):
 @when('"{actor_alias}" opens the link to "{service}" from interim page')
 def when_open_service_link_on_interim_page(context, actor_alias, service):
     open_service_link_on_interim_page(context, actor_alias, service)
+
+
+@when('"{actor_alias}" decides to change the sector to "{service}" service')
+def when_actor_sets_sector_service_preference(context, actor_alias, service):
+    set_sector_preference(context, actor_alias, service=service)
+
+
+@when('"{actor_alias}" decides to change the sector to "{good}" good')
+def when_actor_sets_sector_good_preference(context, actor_alias, good):
+    set_sector_preference(context, actor_alias, good=good)

@@ -516,22 +516,43 @@ def export_readiness_open_category(
 
 
 def set_sector_preference(
-        context: Context, actor_alias: str, goods_or_services: str):
+        context: Context, actor_alias: str, *, goods_or_services: str = None,
+        good: str = None, service: str = None):
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
-    if goods_or_services.lower() == "goods":
-        sectors = [(code, sector)
-                   for code, sector in EXRED_SECTORS.items()
-                   if code.startswith("HS")]
-    elif goods_or_services.lower() == "services":
-        sectors = [(code, sector)
-                   for code, sector in EXRED_SECTORS.items()
-                   if code.startswith("EB")]
+    assert goods_or_services or not (good and service)
+    message = ("You can provide only one of the following arguments: "
+               "`goods_or_services`, `good` or `service`. You've passed: "
+               "`goods_or_services={} good={} service={}"
+               .format(goods_or_services, good, service))
+    optional_args = [goods_or_services, good, service]
+    assert len([arg for arg in optional_args if arg is not None]) == 1, message
+    logging.debug(
+        "%s exports: `goods_or_services=%s good=%s service=5s",
+        goods_or_services, good, service)
+    if goods_or_services is not None:
+        if goods_or_services.lower() == "goods":
+            sectors = [(code, sector)
+                       for code, sector in EXRED_SECTORS.items()
+                       if code.startswith("HS")]
+        elif goods_or_services.lower() == "services":
+            sectors = [(code, sector)
+                       for code, sector in EXRED_SECTORS.items()
+                       if code.startswith("EB")]
+        else:
+            raise KeyError(
+                "Could not recognise '%s' as valid sector. Please use 'goods' "
+                "or 'services'" % goods_or_services)
+        code, sector = random.choice(sectors)
     else:
-        raise KeyError(
-            "Could not recognise '%s' as valid sector. Please use 'goods' or "
-            "'services'" % goods_or_services)
-    code, sector = random.choice(sectors)
+        filtered_sectors = [(code, sector)
+                            for code, sector in EXRED_SECTORS.items()
+                            if sector == (good or service)
+                            ]
+        assert len(filtered_sectors) == 1, ("Could not find code & sector for"
+                                            " '{}'".format((good or service)))
+        code, sector = filtered_sectors[0]
+    logging.debug("Code: %s - Sector: %s", code, sector)
     update_actor(
         context, actor_alias, what_do_you_want_to_export=(code, sector))
     logging.debug(
