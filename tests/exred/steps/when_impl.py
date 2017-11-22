@@ -796,3 +796,34 @@ def open_service_link_on_interim_page(
 
 def personalised_journey_update_preference(context, actor_alias):
     personalised_journey.update_preferences(context.driver)
+
+
+def articles_read_a_number_of_them(
+        context: Context, actor_alias: str, number: str):
+    numbers = {
+        "a tenth": 10,
+        "a ninth": 9,
+        "an eight": 8,
+        "a seventh": 7,
+        "a sixth": 6,
+        "a fifth": 5,
+        "a fourth": 4,
+        "a quarter": 4,
+        "a third": 3,
+        "a half": 2,
+        "all": 1
+    }
+    divider = numbers[number.lower()]
+    actor = get_actor(context, actor_alias)
+    group = actor.article_group
+    category = actor.article_category
+    articles = get_articles(group, category)
+    number_to_read = int(len(articles) / divider)
+    number_to_read = number_to_read if number_to_read > 0 else 1
+    for idx in range(1, number_to_read + 1):
+        articles_open_any(context, actor_alias)
+        articles_go_back_to_article_list(context, actor_alias)
+        logging.debug(
+            "%s read %d article(s) out of %d (%s) he/she decided to read from "
+            "%d '%s' articles", actor_alias, idx, number_to_read, number,
+            len(articles), category)
