@@ -280,8 +280,9 @@ def triage_create_exporting_journey(context: Context, actor_alias: str):
 
 def triage_classify_as_new(
         context: Context, actor_alias: str, incorporated: bool, code: str,
-        sector: str):
-    start_triage(context, actor_alias)
+        sector: str, *, start_from_home_page: bool = True):
+    if start_from_home_page:
+        start_triage(context, actor_alias)
     triage_say_what_do_you_want_to_export(
         context, actor_alias, code=code, sector=sector)
     triage_say_you_never_exported_before(context, actor_alias)
@@ -296,8 +297,10 @@ def triage_classify_as_new(
 
 def triage_classify_as_occasional(
         context: Context, actor_alias: str, incorporated: bool,
-        use_online_marketplaces: bool, code: str, sector: str):
-    start_triage(context, actor_alias)
+        use_online_marketplaces: bool, code: str, sector: str, *,
+        start_from_home_page: bool = True):
+    if start_from_home_page:
+        start_triage(context, actor_alias)
     triage_say_what_do_you_want_to_export(
         context, actor_alias, code=code, sector=sector)
     triage_say_you_exported_before(context, actor_alias)
@@ -317,8 +320,9 @@ def triage_classify_as_occasional(
 
 def triage_classify_as_regular(
         context: Context, actor_alias: str, incorporated: bool, code: str,
-        sector: str):
-    start_triage(context, actor_alias)
+        sector: str, *, start_from_home_page: bool = True):
+    if start_from_home_page:
+        start_triage(context, actor_alias)
     triage_say_what_do_you_want_to_export(
         context, actor_alias, code=code, sector=sector)
     triage_say_you_exported_before(context, actor_alias)
@@ -334,7 +338,7 @@ def triage_classify_as_regular(
 
 def triage_classify_as(
         context: Context, actor_alias: str, *, exporter_status: str = None,
-        is_incorporated: str = None):
+        is_incorporated: str = None, start_from_home_page: bool = True):
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
     actor = get_actor(context, actor_alias)
@@ -366,7 +370,8 @@ def triage_classify_as(
     else:
         incorporated = random.choice([True, False])
 
-    visit_page(context, actor_alias, "home")
+    if start_from_home_page:
+        visit_page(context, actor_alias, "home")
 
     logging.debug(
         "%s decided to classify himself/herself as %s Exporter", actor_alias,
@@ -374,14 +379,16 @@ def triage_classify_as(
 
     if exporter_status == "new":
         triage_classify_as_new(
-            context, actor_alias, incorporated, code, sector)
+            context, actor_alias, incorporated, code, sector,
+            start_from_home_page=start_from_home_page)
     elif exporter_status == "occasional":
         triage_classify_as_occasional(
             context, actor_alias, incorporated, use_online_marketplaces, code,
-            sector)
+            sector, start_from_home_page=start_from_home_page)
     elif exporter_status == "regular":
         triage_classify_as_regular(
-            context, actor_alias, incorporated, code, sector)
+            context, actor_alias, incorporated, code, sector,
+            start_from_home_page=start_from_home_page)
     update_actor(
         context, actor_alias, article_group="personalised journey",
         article_category=exporter_status)
