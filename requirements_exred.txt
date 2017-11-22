@@ -4,7 +4,7 @@
 #
 #    pip-compile --output-file requirements_exred.txt requirements_exred.ini
 #
--e git+https://git@github.com/uktrade/directory-constants.git@v6.1.0#egg=directory-constants
+-e git+https://git@github.com/uktrade/directory-constants.git@v6.3.1#egg=directory-constants
 behave==1.2.5
 django==1.11.5
 parse-type==0.4.2         # via behave
