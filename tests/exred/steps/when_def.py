@@ -22,6 +22,7 @@ from steps.when_impl import (
     triage_change_answers,
     triage_create_exporting_journey,
     triage_do_you_export_regularly,
+    triage_go_through_again,
     triage_have_you_exported_before,
     triage_say_what_do_you_want_to_export,
     triage_say_whether_you_use_online_marketplaces,
@@ -175,3 +176,8 @@ def when_actor_sets_sector_good_preference(context, actor_alias, good):
 @when('"{actor_alias}" decides to update his triage preferences')
 def when_actor_updates_triage_preferences(context, actor_alias):
     personalised_journey_update_preference(context, actor_alias)
+
+
+@when('"{actor_alias}" goes through triage again')
+def when_actor_goes_through_triage_again(context, actor_alias):
+    triage_go_through_again(context, actor_alias)

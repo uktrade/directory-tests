@@ -499,6 +499,12 @@ def triage_answer_questions_again(context: Context, actor_alias: str):
     logging.debug("%s was able to change the Triage answers", actor_alias)
 
 
+def triage_go_through_again(context: Context, actor_alias: str):
+    personalised_journey_update_preference(context, actor_alias)
+    triage_change_answers(context, actor_alias)
+    triage_classify_as(context, actor_alias, start_from_home_page=False)
+
+
 def export_readiness_open_category(
         context: Context, actor_alias: str, category: str, location: str):
     if not get_actor(context, actor_alias):
