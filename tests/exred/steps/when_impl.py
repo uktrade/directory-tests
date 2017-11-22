@@ -13,6 +13,7 @@ from pages import (
     header,
     home,
     personalised_journey,
+    sso_sign_in,
     triage_are_you_registered_with_companies_house,
     triage_are_you_regular_exporter,
     triage_company_name,
@@ -863,3 +864,24 @@ def clear_the_cookies(context: Context, actor_alias: str):
         logging.debug("Successfully cleared cookies for %s", actor_alias)
     except WebDriverException:
         logging.error("Failed to clear cookies for %s", actor_alias)
+
+
+def sign_in_go_to(context, actor_alias, location):
+    if location.lower() == "article":
+        article_common.go_to_sign_in(context.driver)
+    elif location.lower() == "top bar":
+        header.go_to_sign_in(context.driver)
+    else:
+        raise KeyError(
+            "Could not recognise registration link location: %s. Please use "
+            "'article' or 'top bar'".format(location))
+    sso_sign_in.should_be_here(context.driver)
+
+
+def sign_in(context, actor_alias, location):
+    actor = get_actor(context, actor_alias)
+    email = actor.email
+    password = actor.password
+    sign_in_go_to(context, actor_alias, location)
+    sso_sign_in.fill_out(context.driver, email, password)
+    sso_sign_in.submit(context.driver)

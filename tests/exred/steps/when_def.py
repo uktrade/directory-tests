@@ -21,6 +21,7 @@ from steps.when_impl import (
     registration_create_and_verify_account,
     registration_go_to,
     set_sector_preference,
+    sign_in,
     start_triage,
     triage_are_you_incorporated,
     triage_change_answers,
@@ -205,3 +206,8 @@ def when_actor_registers(context, actor_alias):
 @when('"{actor_alias}" clears the cookies')
 def when_actor_clears_the_cookies(context, actor_alias):
     clear_the_cookies(context, actor_alias)
+
+
+@when('"{actor_alias}" signs in using link visible in the "{location}"')
+def step_impl(context, actor_alias, location):
+    sign_in(context, actor_alias, location)
