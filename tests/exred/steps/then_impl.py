@@ -336,3 +336,14 @@ def personalised_journey_should_not_see_banner_and_top_10_table(
     logging.debug(
         "As expected %s can't see Top Importer banner and Top 10 Importers "
         "table on personalised page for '%s - %s' sector", code, sector)
+
+
+def personalised_journey_should_see_banner_and_top_10_table(
+        context: Context, actor_alias: str):
+    actor = get_actor(context, actor_alias)
+    code, sector = actor.what_do_you_want_to_export
+    personalised_journey.should_see_banner_and_top_10_table(
+        context.driver, sector)
+    logging.debug(
+        "As expected %s can see Top Importer banner and Top 10 Importers "
+        "table on personalised page for '%s - %s' sector", code, sector)

@@ -25,6 +25,7 @@ from steps.then_impl import (
     guidance_should_see_total_number_of_articles,
     guidance_tile_should_be_highlighted,
     personalised_journey_should_not_see_banner_and_top_10_table,
+    personalised_journey_should_see_banner_and_top_10_table,
     personalised_journey_should_see_read_counter,
     personalised_should_see_layout_for,
     should_be_on_page,
@@ -216,4 +217,10 @@ def step_impl(context, actor_alias, elements):
 @then('"{actor_alias}" should not see the Top Importer banner and Top 10 Importers table for their sector')
 def then_actor_should_not_see_banner_and_top_10_table(context, actor_alias):
     personalised_journey_should_not_see_banner_and_top_10_table(
+        context, actor_alias)
+
+
+@then('"{actor_alias}" should see a Banner and Top importers table for their sector on personalised journey page')
+def then_actor_should_see_banner_and_top_10_table(context, actor_alias):
+    personalised_journey_should_see_banner_and_top_10_table(
         context, actor_alias)
