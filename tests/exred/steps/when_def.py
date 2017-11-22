@@ -6,8 +6,10 @@ from steps.then_impl import triage_should_be_classified_as
 from steps.when_impl import (
     articles_found_useful_or_not,
     articles_go_back_to_article_list,
+    articles_go_back_to_same_group,
     articles_open_any,
     articles_open_any_but_the_last,
+    articles_open_group,
     case_studies_go_to,
     continue_export_journey,
     clear_the_cookies,
@@ -217,3 +219,9 @@ def step_impl(context, actor_alias, location):
 @when('"{actor_alias}" goes to the "{page_name}" page')
 def when_actor_goes_to_page(context, actor_alias, page_name):
     visit_page(context, actor_alias, page_name)
+
+
+@when('"{actor_alias}" goes back to the same "{group}" Article category via "{location}"')
+def when_actor_goes_to_the_same_article_group(
+        context, actor_alias, group, location):
+    articles_go_back_to_same_group(context, actor_alias, group, location=location)

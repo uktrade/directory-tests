@@ -5,6 +5,7 @@ import random
 
 from behave.runner import Context
 from retrying import retry
+from selenium.common.exceptions import WebDriverException
 
 from pages import (
     article_common,
@@ -13,6 +14,9 @@ from pages import (
     header,
     home,
     personalised_journey,
+    sso_common,
+    sso_registration,
+    sso_registration_confirmation,
     sso_sign_in,
     triage_are_you_registered_with_companies_house,
     triage_are_you_regular_exporter,
@@ -629,6 +633,7 @@ def articles_open_any(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     group = actor.article_group
     category = actor.article_category
+    visited_articles = actor.visited_articles
     articles = get_articles(group, category)
     any_article = random.choice(articles)
     article_common.show_all_articles(driver)
@@ -741,6 +746,24 @@ def articles_open_group(
         context, actor_alias, articles_read_counter=articles_read_counter,
         articles_time_to_complete=time_to_complete,
         articles_total_number=total_articles)
+
+
+def articles_go_back_to_same_group(
+        context: Context, actor_alias: str, group: str, location: str):
+    actor = get_actor(context, actor_alias)
+    category = actor.article_category
+    logging.debug(
+        "%s decided to open '%s' '%s' Articles via '%s'", actor_alias,
+        category, group, location)
+    if group.lower() == "export readiness":
+        export_readiness_open_category(
+            context, actor_alias, category=category, location=location)
+    elif group.lower() == "guidance":
+        guidance_open_category(context, actor_alias, category, location)
+    else:
+        raise KeyError(
+            "Did not recognize '{}'. Please use: 'Guidance' or 'Export "
+            "Readiness'".format(group))
 
 
 def articles_go_back_to_article_list(context: Context, actor_alias: str):
