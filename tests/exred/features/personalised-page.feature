@@ -69,7 +69,7 @@ Feature: Customised page
   Scenario: Any Exporter should be able to update preferences from personalised page
     Given "Robert" is on personalised page
 
-    When "Robert" decides to update preferences
+    When "Robert" decides to update his triage preferences
 
     Then "Robert" should be redirected to the triage summary where he can change his answers
 

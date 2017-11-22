@@ -128,3 +128,25 @@ def given_actor_selects_random_guidance_category(context, actor_alias):
 @given('"{actor_alias}" went to randomly selected "{group}" Article category via "{location}"')
 def given_actor_is_on_article_list(context, actor_alias, group, location):
     articles_open_group(context, actor_alias, group, location=location)
+
+
+@given('"{actor_alias}" exports "{service}" service')
+def given_actor_sets_sector_service_preference(context, actor_alias, service):
+    set_sector_preference(context, actor_alias, service=service)
+
+
+@given('"{actor_alias}" can see "{sections}" section on "{page_name}" page')
+@given('"{actor_alias}" can see "{sections}" sections on "{page_name}" page')
+def given_can_see_sections(context, actor_alias, sections, page_name):
+    should_see_sections(context, actor_alias, sections.split(", "), page_name)
+
+
+@given('"{actor_alias}" exports "{good}" good')
+def given_actor_sets_sector_good_preference(context, actor_alias, good):
+    set_sector_preference(context, actor_alias, good=good)
+
+
+@given('"{actor_alias}" cannot see the Top Importer banner and Top 10 Importers table for their sector')
+def given_actor_cannot_see_banner_and_top_10_table(context, actor_alias):
+    personalised_journey_should_not_see_banner_and_top_10_table(
+        context, actor_alias)
