@@ -47,6 +47,17 @@ jobs:
             pip install -r requirements_exred.txt
       - run:
           command: |
+            wget -q https://cli-assets.heroku.com/heroku-cli/channels/stable/heroku-cli-linux-x64.tar.gz -O heroku.tar.gz
+            tar -xzf heroku.tar.gz
+            mkdir -p /usr/local/lib /usr/local/bin
+            sudo mv heroku-cli-v6.*-linux-x64 /usr/local/lib/heroku
+            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/local/bin/heroku
+            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/bin/heroku
+            heroku -v
+            which heroku
+            rm -fr heroku.tar.gz
+      - run:
+          command: |
             . venv/bin/activate
             python ./docker/env_writer.py ./docker/env_exred.json
             source ./docker/.env;
@@ -60,6 +71,17 @@ jobs:
       - restore_cache:
           keys:
             - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          command: |
+            wget -q https://cli-assets.heroku.com/heroku-cli/channels/stable/heroku-cli-linux-x64.tar.gz -O heroku.tar.gz
+            tar -xzf heroku.tar.gz
+            mkdir -p /usr/local/lib /usr/local/bin
+            sudo mv heroku-cli-v6.*-linux-x64 /usr/local/lib/heroku
+            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/local/bin/heroku
+            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/bin/heroku
+            heroku -v
+            which heroku
+            rm -fr heroku.tar.gz
       - run:
           command: |
             python3 -m venv venv
