@@ -111,8 +111,42 @@ jobs:
     steps:
       - restore_cache:
           keys:
-            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - run: echo "Running fabs_integration_tests_sso..."
+            - dependency-cache-{{ checksum "requirements_functional.txt" }}
+      - run:
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            source ./docker/.env;
+            FEATURE_DIR=fas make functional_tests_feature_dir
+
+  sso_functional_tests:
+    docker:
+      - image: circleci/python:3.5.3
+    steps:
+      - restore_cache:
+          keys:
+            - dependency-cache-{{ checksum "requirements_functional.txt" }}
+      - run:
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            source ./docker/.env;
+            FEATURE_DIR=sso make functional_tests_feature_dir
+
+  sud_functional_tests:
+    docker:
+      - image: circleci/python:3.5.3
+    steps:
+      - restore_cache:
+          keys:
+            - dependency-cache-{{ checksum "requirements_functional.txt" }}
+      - run:
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            source ./docker/.env;
+            FEATURE_DIR=sud make functional_tests_feature_dir
+
 
 workflows:
   version: 2
