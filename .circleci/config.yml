@@ -15,8 +15,8 @@ jobs:
   fabs_smoke_tests:
     docker:
       - image: circleci/python:3.5.3
-    environment:
-      - MAILGUN_SSO_DOMAIN: {{ .Environment.DIRECTORY_TESTS_MAILGUN_SSO_DOMAIN }}
+        environment:
+          MAILGUN_SSO_DOMAIN: {{ .Environment.DIRECTORY_TESTS_MAILGUN_SSO_DOMAIN }}
     working_directory: ~/directory-tests
     steps:
       - restore_cache:
