@@ -2,18 +2,23 @@ version: 2.0
 
 jobs:
   fabs_smoke_tests:
+     machine: true
      steps:
        - run: echo "Running FABS Smoke tests..."
   exred_functional_tests_chrome:
+     machine: true
      steps:
        - run: echo "Running exred_functional_tests_chrome..."
   exred_functional_tests_firefox:
+     machine: true
      steps:
        - run: echo "Running exred_functional_tests_firefox..."
   fabs_integration_tests_fab:
+     machine: true
      steps:
        - run: echo "Running fabs_integration_tests_fab..."
   fabs_integration_tests_sso:
+     machine: true
      steps:
        - run: echo "Running fabs_integration_tests_sso..."
 
