@@ -40,7 +40,7 @@ class DockerComposeEnvWriter:
                     var
                 ))
                 if value:
-                    dest.write("{}={}\n".format(var, value))
+                    dest.write("export {}={}\n".format(var, value))
 
     @staticmethod
     def validate(config):
