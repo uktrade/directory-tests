@@ -92,8 +92,8 @@ smoke_tests:
 	pytest tests/smoke $(pytest_args)
 
 SET_DB_URLS := \
-	export DIR_DATABASE_URL=`/usr/local/bin/heroku config:get DATABASE_URL -a directory-api-dev` && \
-	export SSO_DATABASE_URL=`/usr/local/bin/heroku config:get DATABASE_URL -a directory-sso-dev`
+	export DIR_DATABASE_URL=`heroku config:get DATABASE_URL -a directory-api-dev` && \
+	export SSO_DATABASE_URL=`heroku config:get DATABASE_URL -a directory-sso-dev`
 
 functional_tests:
 	$(SET_PYTEST_ENV_VARS) && \

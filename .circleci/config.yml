@@ -11,15 +11,13 @@ jobs:
           command: |
             wget -q https://cli-assets.heroku.com/heroku-cli/channels/stable/heroku-cli-linux-x64.tar.gz -O heroku.tar.gz && \
             tar -xzf heroku.tar.gz && \
-            mkdir -p /usr/local/lib /usr/local/bin && \
-            sudo mv heroku-cli-v6.*-linux-x64 /usr/local/lib/heroku && \
-            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/local/bin/heroku
+            mv heroku-cli-v6.*-linux-x64 ./heroku && \
+            ln -s ./heroku/bin/heroku heroku && \
+            rm -fr heroku.tar.gz
       - save_cache:
           key: cached-repo-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - ~/directory-tests
-            - /usr/local/lib/heroku
-            - /usr/local/bin
 
   smoke_tests:
     docker:
