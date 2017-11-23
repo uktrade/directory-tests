@@ -17,33 +17,33 @@ URL = None
 HOME_LINK = "#menu > ul > li:nth-child(1) > a"
 SECTIONS = {
     "export readiness": {
-        "menu": "#nav-export-readiness",
-        "new": "#nav-export-readiness-list a[href='/new']",
-        'occasional': "#nav-export-readiness-list a[href='/occasional']",
-        "regular": "#nav-export-readiness-list a[href='/regular']",
-        "i'm new to exporting": "#nav-export-readiness-list a[href='/new']",
-        'i export occasionally': "#nav-export-readiness-list a[href='/occasional']",
-        "i'm a regular exporter": "#nav-export-readiness-list a[href='/regular']"
+        "menu": "#export-readiness-links",
+        "new": "#export-readiness-links-list a[href='/new']",
+        'occasional': "#export-readiness-links-list a[href='/occasional']",
+        "regular": "#export-readiness-links-list a[href='/regular']",
+        "i'm new to exporting": "#export-readiness-links-list a[href='/new']",
+        'i export occasionally': "#export-readiness-links-list a[href='/occasional']",
+        "i'm a regular exporter": "#export-readiness-links-list a[href='/regular']"
     },
     "guidance": {
-        "menu": "#nav-guidance",
-        "market research": "#nav-guidance-list  a[href='/market-research']",
-        "customer insight": "#nav-guidance-list  a[href='/customer-insight']",
-        "finance": "#nav-guidance-list  a[href='/finance']",
-        "business planning": "#nav-guidance-list  a[href='/business-planning']",
-        "getting paid": "#nav-guidance-list  a[href='/getting-paid']",
-        "operations and compliance": "#nav-guidance-list  a[href='/operations-and-compliance']"
+        "menu": "#guidance-links",
+        "market research": "#guidance-links-list a[href='/market-research']",
+        "customer insight": "#guidance-links-list a[href='/customer-insight']",
+        "finance": "#guidance-links-list a[href='/finance']",
+        "business planning": "#guidance-links-list a[href='/business-planning']",
+        "getting paid": "#guidance-links-list a[href='/getting-paid']",
+        "operations and compliance": "#guidance-links-list a[href='/operations-and-compliance']"
     },
     "services": {
         "menu": "#nav-services",
-        "find a buyer": "#nav-services-list > li:nth-child(1) > a",
-        "selling online overseas": "#nav-services-list > li:nth-child(2) > a",
-        "export opportunities": "#nav-services-list > li:nth-child(3) > a",
-        "get finance": "#nav-services-list > li:nth-child(4) > a",
-        "events": "#nav-services-list > li:nth-child(5) > a"
+        "find a buyer": "#services-links-list > li:nth-child(1) > a",
+        "selling online overseas": "#services-links-list > li:nth-child(2) > a",
+        "export opportunities": "#services-links-list > li:nth-child(3) > a",
+        "get finance": "#services-links-list > li:nth-child(4) > a",
+        "events": "#services-links-list > li:nth-child(5) > a"
     },
     "government links": {
-        "part of great.gov.uk": "#header-bar > div > p > a"
+        "part of great.gov.uk": "#header-bar p.government-links > a"
     },
     "account links": {
         "register": "#header-bar .account-links li:nth-child(1) > a",
