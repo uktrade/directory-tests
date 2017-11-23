@@ -166,6 +166,7 @@ exred_local:
 
 exred_browserstack:
 	$(EXRED_SET_DOCKER_ENV_VARS) && \
+	$(SET_DB_URLS) && \
 	cd tests/exred && \
 	paver run --config=browserstack-single --browsers=${BROWSERS} --versions=${VERSIONS}
 
