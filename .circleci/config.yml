@@ -2,7 +2,8 @@ version: 2.0
 
 jobs:
   checkout_code:
-    machine: true
+    docker:
+      - image: circleci/python:3.5.3
     working_directory: ~/directory-tests
     steps:
       - checkout
@@ -12,7 +13,8 @@ jobs:
             - ~/directory-tests
 
   fabs_smoke_tests:
-    machine: true
+    docker:
+      - image: circleci/python:3.5.3
     steps:
       - restore_cache:
           keys:
@@ -20,7 +22,8 @@ jobs:
       - run: echo "Running FABS Smoke tests..."
 
   exred_functional_tests_chrome:
-    machine: true
+    docker:
+      - image: circleci/python:3.5.3
     steps:
       - restore_cache:
           keys:
@@ -28,7 +31,8 @@ jobs:
       - run: echo "Running exred_functional_tests_chrome..."
 
   exred_functional_tests_firefox:
-    machine: true
+    docker:
+      - image: circleci/python:3.5.3
     steps:
       - restore_cache:
           keys:
@@ -36,7 +40,8 @@ jobs:
       - run: echo "Running exred_functional_tests_firefox..."
 
   fabs_integration_tests_fab:
-    machine: true
+    docker:
+      - image: circleci/python:3.5.3
     steps:
       - restore_cache:
           keys:
@@ -44,7 +49,8 @@ jobs:
       - run: echo "Running fabs_integration_tests_fab..."
 
   fabs_integration_tests_sso:
-    machine: true
+    docker:
+      - image: circleci/python:3.5.3
     steps:
       - restore_cache:
           keys:
