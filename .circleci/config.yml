@@ -50,7 +50,7 @@ jobs:
             . venv/bin/activate
             python ./docker/env_writer.py ./docker/env_exred.json
             source ./docker/.env;
-            TAG=ED-2605 BROWSERS=Chrome VERSIONS=62.0 make exred_browserstack_single
+            BROWSERS=Chrome VERSIONS=62.0 make exred_browserstack
 
   exred_functional_tests_firefox:
     docker:
@@ -70,7 +70,7 @@ jobs:
             . venv/bin/activate
             python ./docker/env_writer.py ./docker/env_exred.json
             source ./docker/.env;
-            TAG=ED-2605 BROWSERS=Firefox VERSIONS=56.0 make exred_browserstack_single
+            BROWSERS=Firefox VERSIONS=56.0 make exred_browserstack
 
   fabs_integration_tests_fab:
     docker:
