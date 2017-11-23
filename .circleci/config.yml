@@ -15,6 +15,7 @@ jobs:
   fabs_smoke_tests:
     docker:
       - image: circleci/python:3.5.3
+    working_directory: ~/directory-tests
     steps:
       - restore_cache:
           keys:
