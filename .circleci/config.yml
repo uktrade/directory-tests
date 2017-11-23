@@ -1,44 +1,76 @@
 version: 2.0
 
 jobs:
+  checkout_code:
+    machine: true
+    working_directory: ~/directory-tests
+    steps:
+      - checkout
+      - save_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/directory-tests
+
   fabs_smoke_tests:
-     machine: true
-     steps:
-       - run: echo "Running FABS Smoke tests..."
+    machine: true
+    steps:
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - run: echo "Running FABS Smoke tests..."
+
   exred_functional_tests_chrome:
-     machine: true
-     steps:
-       - run: echo "Running exred_functional_tests_chrome..."
+    machine: true
+    steps:
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - run: echo "Running exred_functional_tests_chrome..."
+
   exred_functional_tests_firefox:
-     machine: true
-     steps:
-       - run: echo "Running exred_functional_tests_firefox..."
+    machine: true
+    steps:
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - run: echo "Running exred_functional_tests_firefox..."
+
   fabs_integration_tests_fab:
-     machine: true
-     steps:
-       - run: echo "Running fabs_integration_tests_fab..."
+    machine: true
+    steps:
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - run: echo "Running fabs_integration_tests_fab..."
+
   fabs_integration_tests_sso:
-     machine: true
-     steps:
-       - run: echo "Running fabs_integration_tests_sso..."
+    machine: true
+    steps:
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - run: echo "Running fabs_integration_tests_sso..."
 
 workflows:
   version: 2
-  build_accept_deploy:
+  run_all_tests:
     jobs:
-      - fabs_smoke_tests
+      - checkout_code
+      - fabs_smoke_tests:
+          requires:
+            - checkout_code
       - exred_functional_tests_chrome:
           requires:
-            - smoke_tests
+            - fabs_smoke_tests
       - exred_functional_tests_firefox:
           requires:
-            - smoke_tests
+            - fabs_smoke_tests
       - fabs_integration_tests_fab:
           requires:
-            - smoke_tests
+            - fabs_smoke_tests
       - fabs_integration_tests_fas:
           requires:
-            - smoke_tests
+            - fabs_smoke_tests
       - fabs_integration_tests_sso:
           requires:
-            - smoke_tests
+            - fabs_smoke_tests
