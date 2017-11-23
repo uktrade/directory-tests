@@ -13,11 +13,13 @@ jobs:
             tar -xzf heroku.tar.gz && \
             mkdir -p /usr/local/lib /usr/local/bin && \
             sudo mv heroku-cli-v6.*-linux-x64 /usr/local/lib/heroku && \
-            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/bin/heroku
+            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/local/bin/heroku
       - save_cache:
           key: cached-repo-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - ~/directory-tests
+            - /usr/local/lib/heroku
+            - /usr/local/bin
 
   smoke_tests:
     docker:
