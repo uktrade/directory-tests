@@ -48,6 +48,15 @@ jobs:
             - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
       - run: echo "Running fabs_integration_tests_fab..."
 
+  fabs_integration_tests_fas:
+    docker:
+      - image: circleci/python:3.5.3
+    steps:
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - run: echo "Running fabs_integration_tests_fas..."
+
   fabs_integration_tests_sso:
     docker:
       - image: circleci/python:3.5.3
