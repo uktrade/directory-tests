@@ -20,8 +20,15 @@ jobs:
       - restore_cache:
           keys:
             - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - run: pip install -r requirements_smoke.txt
-      - run: make smoke_tests
+      - run:
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements_smoke.txt
+      - run:
+          command: |
+            . venv/bin/activate
+            make smoke_tests
 
   exred_functional_tests_chrome:
     docker:
@@ -31,8 +38,15 @@ jobs:
       - restore_cache:
           keys:
             - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - run: pip install -r requirements_exred.txt
-      - run: TAG=ED-2605 BROWSERS=Chrome VERSIONS=62.0 make exred_browserstack_single
+      - run:
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements_exred.txt
+      - run:
+          command: |
+            . venv/bin/activate
+            TAG=ED-2605 BROWSERS=Chrome VERSIONS=62.0 make exred_browserstack_single
 
   exred_functional_tests_firefox:
     docker:
@@ -42,8 +56,15 @@ jobs:
       - restore_cache:
           keys:
             - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - run: pip install -r requirements_exred.txt
-      - run: TAG=ED-2605 BROWSERS=Firefox VERSIONS=56.0 make exred_browserstack_single
+      - run:
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements_exred.txt
+      - run:
+          command: |
+            . venv/bin/activate
+            TAG=ED-2605 BROWSERS=Firefox VERSIONS=56.0 make exred_browserstack_single
 
   fabs_integration_tests_fab:
     docker:
