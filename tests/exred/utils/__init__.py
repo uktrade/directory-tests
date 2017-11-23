@@ -82,8 +82,8 @@ def unauthenticated_actor(
     email = ("test+{}{}@directory.uktrade.io"
              .format(alias, str(uuid.uuid4()))
              .replace("-", "").replace(" ", "").lower())
-    password_length = 10
-    password = ''.join(random.choice(string.ascii_letters)
+    password_length = 20
+    password = ''.join(random.choice(string.ascii_letters + string.digits)
                        for _ in range(password_length))
     return Actor(
         alias=alias, email=email, password=password,
