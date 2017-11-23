@@ -100,6 +100,11 @@ functional_tests:
 	$(SET_DB_URLS) && \
 	behave -k --format progress3 --no-logcapture --stop --tags=-wip --tags=-skip --tags=~fixme tests/functional/features $(BEHAVE_ARGS)
 
+functional_tests_feature_dir:
+	$(SET_PYTEST_ENV_VARS) && \
+	$(SET_DB_URLS) && \
+	behave -k --format progress3 --no-logcapture --stop --tags=-wip --tags=-skip --tags=~fixme tests/functional/features/${FEATURE_DIR} $(BEHAVE_ARGS)
+
 functional_update_companies:
 	$(SET_PYTEST_ENV_VARS) && \
 	$(SET_DB_URLS) && \
@@ -158,6 +163,11 @@ EXRED_DOCKER_REMOVE_ALL:
 exred_local:
 	$(EXRED_SET_LOCAL_ENV_VARS) && \
 	cd tests/exred && paver run --config=local --browsers=${BROWSERS} --tag=${TAG}
+
+exred_browserstack:
+	$(EXRED_SET_DOCKER_ENV_VARS) && \
+	cd tests/exred && \
+	paver run --config=browserstack-single --browsers=${BROWSERS} --versions=${VERSIONS}
 
 exred_browserstack_first_browser_set:
 	$(EXRED_SET_DOCKER_ENV_VARS) && \
