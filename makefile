@@ -29,11 +29,11 @@ LOCUST := \
 		--only-summary
 
 SET_LOCUST_ENV_VARS := \
-	export DIRECTORY_API_URL=http://directory-api-dev.herokuapp.com/; \
-	export DIRECTORY_SSO_URL=http://www.dev.sso.uktrade.io/; \
-	export DIRECTORY_UI_BUYER_URL=http://dev.buyer.directory.uktrade.io/; \
-	export DIRECTORY_PROFILE_URL=http://www.dev.profile.uktrade.io; \
-	export DIRECTORY_UI_SUPPLIER_URL=http://dev.supplier.directory.uktrade.io/; \
+	export DIRECTORY_API_URL=https://directory-api-dev.herokuapp.com/; \
+	export DIRECTORY_SSO_URL=https://www.dev.sso.uktrade.io/; \
+	export DIRECTORY_UI_BUYER_URL=https://dev.buyer.directory.uktrade.io/; \
+	export DIRECTORY_PROFILE_URL=https://www.dev.profile.uktrade.io; \
+	export DIRECTORY_UI_SUPPLIER_URL=https://dev.supplier.directory.uktrade.io/; \
 	export LOCUST_NUM_CLIENTS=5; \
 	export LOCUST_HATCH_RATE=5; \
 	export LOCUST_TIMEOUT=120; \
@@ -71,12 +71,12 @@ PYTEST_ARGS :=
 
 SET_PYTEST_ENV_VARS := \
 	export API_CLIENT_KEY=debug; \
-	export DIRECTORY_API_URL=http://directory-api-dev.herokuapp.com; \
-	export DIRECTORY_BUYER_API_URL=http://dev.buyer.directory.uktrade.io; \
-	export DIRECTORY_SSO_URL=http://www.dev.sso.uktrade.io; \
-	export DIRECTORY_PROFILE_URL=http://dev.profile.uktrade.io; \
-	export DIRECTORY_UI_BUYER_URL=http://dev.buyer.directory.uktrade.io; \
-	export DIRECTORY_UI_SUPPLIER_URL=http://dev.supplier.directory.uktrade.io; \
+	export DIRECTORY_API_URL=https://directory-api-dev.herokuapp.com; \
+	export DIRECTORY_BUYER_API_URL=https://dev.buyer.directory.uktrade.io; \
+	export DIRECTORY_SSO_URL=https://www.dev.sso.uktrade.io; \
+	export DIRECTORY_PROFILE_URL=https://dev.profile.uktrade.io; \
+	export DIRECTORY_UI_BUYER_URL=https://dev.buyer.directory.uktrade.io; \
+	export DIRECTORY_UI_SUPPLIER_URL=https://dev.supplier.directory.uktrade.io; \
 	export SSO_USER_ID=120
 
 selenium_tests:
@@ -114,12 +114,12 @@ DOCKER_REMOVE_ALL := \
 	xargs -I {} docker rm -f {}
 
 DOCKER_SET_DIRECTORY_TESTS_ENV_VARS := \
-	export DIRECTORY_TESTS_DIRECTORY_API_URL=http://directory-api-dev.herokuapp.com; \
-	export DIRECTORY_TESTS_DIRECTORY_BUYER_API_URL=http://dev.buyer.directory.uktrade.io; \
-	export DIRECTORY_TESTS_DIRECTORY_SSO_URL=http://www.dev.sso.uktrade.io; \
-	export DIRECTORY_TESTS_DIRECTORY_UI_BUYER_URL=http://dev.buyer.directory.uktrade.io; \
-	export DIRECTORY_TESTS_DIRECTORY_UI_SUPPLIER_URL=http://dev.supplier.directory.uktrade.io; \
-	export DIRECTORY_TESTS_DIRECTORY_PROFILE_URL=http://dev.profile.uktrade.io; \
+	export DIRECTORY_TESTS_DIRECTORY_API_URL=https://directory-api-dev.herokuapp.com; \
+	export DIRECTORY_TESTS_DIRECTORY_BUYER_API_URL=https://dev.buyer.directory.uktrade.io; \
+	export DIRECTORY_TESTS_DIRECTORY_SSO_URL=https://www.dev.sso.uktrade.io; \
+	export DIRECTORY_TESTS_DIRECTORY_UI_BUYER_URL=https://dev.buyer.directory.uktrade.io; \
+	export DIRECTORY_TESTS_DIRECTORY_UI_SUPPLIER_URL=https://dev.supplier.directory.uktrade.io; \
+	export DIRECTORY_TESTS_DIRECTORY_PROFILE_URL=https://dev.profile.uktrade.io; \
 	export DIRECTORY_TESTS_LOCUST_HATCH_RATE=150; \
 	export DIRECTORY_TESTS_LOCUST_NUM_CLIENTS=150
 
