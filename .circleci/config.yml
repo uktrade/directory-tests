@@ -89,13 +89,16 @@ jobs:
       - save_cache:
           key: dependency-cache-{{ checksum "requirements_functional.txt" }}
           paths:
-            - ~/directory-tests
+            - ~/directory-tests/venv
 
   fab_functional_tests:
     docker:
       - image: circleci/python:3.5.3
     working_directory: ~/directory-tests
     steps:
+      - restore_cache:
+          keys:
+            - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
       - restore_cache:
           keys:
             - dependency-cache-{{ checksum "requirements_functional.txt" }}
@@ -113,6 +116,9 @@ jobs:
     steps:
       - restore_cache:
           keys:
+            - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
             - dependency-cache-{{ checksum "requirements_functional.txt" }}
       - run:
           command: |
@@ -128,6 +134,9 @@ jobs:
     steps:
       - restore_cache:
           keys:
+            - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
             - dependency-cache-{{ checksum "requirements_functional.txt" }}
       - run:
           command: |
@@ -141,6 +150,9 @@ jobs:
       - image: circleci/python:3.5.3
     working_directory: ~/directory-tests
     steps:
+      - restore_cache:
+          keys:
+            - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
       - restore_cache:
           keys:
             - dependency-cache-{{ checksum "requirements_functional.txt" }}
