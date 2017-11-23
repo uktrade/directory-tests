@@ -203,3 +203,17 @@ def test_profile_social_media_edit_200_company_user(logged_in_session):
     )
 
     assert response.status_code == http.client.OK
+
+
+def test_not_existing_page_return_404_anon_user():
+    url = get_absolute_url('ui-buyer:landing') + '/foobar'
+    response = requests.get(url, allow_redirects=False)
+
+    assert response.status_code == 404
+
+
+def test_not_existing_page_return_404_user(logged_in_session):
+    url = get_absolute_url('ui-buyer:landing') + '/foobar'
+    response = logged_in_session.get(url, allow_redirects=False)
+
+    assert response.status_code == 404
