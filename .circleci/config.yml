@@ -73,22 +73,37 @@ jobs:
             BROWSERS=Firefox VERSIONS=56.0 make exred_browserstack
 
   fabs_integration_tests_fab:
+  functional_tests_requirements:
     docker:
       - image: circleci/python:3.5.3
     steps:
       - restore_cache:
           keys:
-            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - run: echo "Running fabs_integration_tests_fab..."
+            - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements_functional.txt
+            python ./docker/env_writer.py ./docker/env.json
+      - save_cache:
+          key: dependency-cache-{{ checksum "requirements_functional.txt" }}
+          paths:
+            - ~/directory-tests
 
-  fabs_integration_tests_fas:
+  fab_functional_tests:
     docker:
       - image: circleci/python:3.5.3
     steps:
       - restore_cache:
           keys:
-            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - run: echo "Running fabs_integration_tests_fas..."
+            - dependency-cache-{{ checksum "requirements_functional.txt" }}
+      - run:
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            source ./docker/.env;
+            FEATURE_DIR=fab make functional_tests_feature_dir
 
   fabs_integration_tests_sso:
     docker:
