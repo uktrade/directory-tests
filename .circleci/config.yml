@@ -75,6 +75,7 @@ jobs:
   functional_tests_requirements:
     docker:
       - image: circleci/python:3.5.3
+    working_directory: ~/directory-tests
     steps:
       - restore_cache:
           keys:
@@ -93,6 +94,7 @@ jobs:
   fab_functional_tests:
     docker:
       - image: circleci/python:3.5.3
+    working_directory: ~/directory-tests
     steps:
       - restore_cache:
           keys:
@@ -107,6 +109,7 @@ jobs:
   fas_functional_tests:
     docker:
       - image: circleci/python:3.5.3
+    working_directory: ~/directory-tests
     steps:
       - restore_cache:
           keys:
@@ -121,6 +124,7 @@ jobs:
   sso_functional_tests:
     docker:
       - image: circleci/python:3.5.3
+    working_directory: ~/directory-tests
     steps:
       - restore_cache:
           keys:
@@ -135,6 +139,7 @@ jobs:
   sud_functional_tests:
     docker:
       - image: circleci/python:3.5.3
+    working_directory: ~/directory-tests
     steps:
       - restore_cache:
           keys:
