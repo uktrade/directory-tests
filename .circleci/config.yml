@@ -19,25 +19,30 @@ jobs:
       - restore_cache:
           keys:
             - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - run: echo "Running FABS Smoke tests..."
+      - run: pip install -r requirements_smoke.txt
+      - run: make smoke_tests
 
   exred_functional_tests_chrome:
     docker:
       - image: circleci/python:3.5.3
+    working_directory: ~/directory-tests
     steps:
       - restore_cache:
           keys:
             - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - run: echo "Running exred_functional_tests_chrome..."
+      - run: pip install -r requirements_exred.txt
+      - run: TAG=ED-2605 BROWSERS=Chrome VERSIONS=62.0 make exred_browserstack_single
 
   exred_functional_tests_firefox:
     docker:
       - image: circleci/python:3.5.3
+    working_directory: ~/directory-tests
     steps:
       - restore_cache:
           keys:
             - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - run: echo "Running exred_functional_tests_firefox..."
+      - run: pip install -r requirements_exred.txt
+      - run: TAG=ED-2605 BROWSERS=Firefox VERSIONS=56.0 make exred_browserstack_single
 
   fabs_integration_tests_fab:
     docker:
