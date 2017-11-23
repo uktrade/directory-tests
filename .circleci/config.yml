@@ -12,7 +12,7 @@ jobs:
           paths:
             - ~/directory-tests
 
-  fabs_smoke_tests:
+  smoke_tests:
     docker:
       - image: circleci/python:3.5.3
     working_directory: ~/directory-tests
@@ -32,7 +32,7 @@ jobs:
             source ./docker/.env;
             make smoke_tests
 
-  exred_functional_tests_chrome:
+  exred_tests_chrome:
     docker:
       - image: circleci/python:3.5.3
     working_directory: ~/directory-tests
@@ -52,7 +52,7 @@ jobs:
             source ./docker/.env;
             BROWSERS=Chrome VERSIONS=62.0 make exred_browserstack
 
-  exred_functional_tests_firefox:
+  exred_tests_firefox:
     docker:
       - image: circleci/python:3.5.3
     working_directory: ~/directory-tests
@@ -72,7 +72,6 @@ jobs:
             source ./docker/.env;
             BROWSERS=Firefox VERSIONS=56.0 make exred_browserstack
 
-  fabs_integration_tests_fab:
   functional_tests_requirements:
     docker:
       - image: circleci/python:3.5.3
@@ -105,7 +104,7 @@ jobs:
             source ./docker/.env;
             FEATURE_DIR=fab make functional_tests_feature_dir
 
-  fabs_integration_tests_sso:
+  fas_functional_tests:
     docker:
       - image: circleci/python:3.5.3
     steps:
@@ -153,21 +152,31 @@ workflows:
   run_all_tests:
     jobs:
       - checkout_code
-      - fabs_smoke_tests:
+      - functional_tests_requirements:
           requires:
             - checkout_code
-      - exred_functional_tests_chrome:
+      - smoke_tests:
           requires:
-            - fabs_smoke_tests
-      - exred_functional_tests_firefox:
+            - checkout_code
+      - exred_tests_chrome:
           requires:
-            - fabs_smoke_tests
-      - fabs_integration_tests_fab:
+            - smoke_tests
+      - exred_tests_firefox:
           requires:
-            - fabs_smoke_tests
-      - fabs_integration_tests_fas:
+            - smoke_tests
+      - fab_functional_tests:
           requires:
-            - fabs_smoke_tests
-      - fabs_integration_tests_sso:
+            - smoke_tests
+            - functional_tests_requirements
+      - fas_functional_tests:
           requires:
-            - fabs_smoke_tests
+            - smoke_tests
+            - functional_tests_requirements
+      - sso_functional_tests:
+          requires:
+            - smoke_tests
+            - functional_tests_requirements
+      - sud_functional_tests:
+          requires:
+            - smoke_tests
+            - functional_tests_requirements
