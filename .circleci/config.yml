@@ -27,8 +27,9 @@ jobs:
             pip install -r requirements_smoke.txt
       - run:
           command: |
-            export MAILGUN_SSO_DOMAIN=${DIRECTORY_TESTS_MAILGUN_SSO_DOMAIN}
             . venv/bin/activate
+            python ./docker/env_writer.py ./docker/env.json
+            source ./docker/.env;
             make smoke_tests
 
   exred_functional_tests_chrome:
