@@ -109,7 +109,7 @@ jobs:
             pip install -r requirements_functional.txt
             python ./docker/env_writer.py ./docker/env.json
       - save_cache:
-          key: dependency-cache-{{ checksum "requirements_functional.txt" }}
+          key: dependency-cache-{{ .Revision }}
           paths:
             - ~/directory-tests/venv
 
@@ -123,7 +123,7 @@ jobs:
             - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
       - restore_cache:
           keys:
-            - dependency-cache-{{ checksum "requirements_functional.txt" }}
+            - dependency-cache-{{ .Revision }}
       - run:
           command: |
             wget -q https://cli-assets.heroku.com/heroku-cli/channels/stable/heroku-cli-linux-x64.tar.gz -O heroku.tar.gz
@@ -152,7 +152,7 @@ jobs:
             - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
       - restore_cache:
           keys:
-            - dependency-cache-{{ checksum "requirements_functional.txt" }}
+            - dependency-cache-{{ .Revision }}
       - run:
           command: |
             wget -q https://cli-assets.heroku.com/heroku-cli/channels/stable/heroku-cli-linux-x64.tar.gz -O heroku.tar.gz
@@ -180,7 +180,7 @@ jobs:
             - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
       - restore_cache:
           keys:
-            - dependency-cache-{{ checksum "requirements_functional.txt" }}
+            - dependency-cache-{{ .Revision }}
       - run:
           command: |
             wget -q https://cli-assets.heroku.com/heroku-cli/channels/stable/heroku-cli-linux-x64.tar.gz -O heroku.tar.gz
@@ -208,7 +208,7 @@ jobs:
             - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
       - restore_cache:
           keys:
-            - dependency-cache-{{ checksum "requirements_functional.txt" }}
+            - dependency-cache-{{ .Revision }}
       - run:
           command: |
             wget -q https://cli-assets.heroku.com/heroku-cli/channels/stable/heroku-cli-linux-x64.tar.gz -O heroku.tar.gz
