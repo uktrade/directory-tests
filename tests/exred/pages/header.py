@@ -35,7 +35,7 @@ SECTIONS = {
         "operations and compliance": "#guidance-links-list a[href='/operations-and-compliance']"
     },
     "services": {
-        "menu": "#nav-services",
+        "menu": "#services-links",
         "find a buyer": "#services-links-list > li:nth-child(1) > a",
         "selling online overseas": "#services-links-list > li:nth-child(2) > a",
         "export opportunities": "#services-links-list > li:nth-child(3) > a",
