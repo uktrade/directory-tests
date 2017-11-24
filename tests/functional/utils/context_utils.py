@@ -110,24 +110,13 @@ def get_actor(self, alias):
     return self.scenario_data.actors.get(alias, None)
 
 
-def update_actor(
-        self, alias, *, password_reset_link: str = None,
-        company_alias: str = None, has_sso_account: bool = None,
-        email_confirmation_link: str = None, csrfmiddlewaretoken: str = None,
-        password: str = None):
+def update_actor(self, alias: str, **kwargs):
     actors = self.scenario_data.actors
-    if password_reset_link:
-        actors[alias] = actors[alias]._replace(password_reset_link=password_reset_link)
-    if company_alias:
-        actors[alias] = actors[alias]._replace(company_alias=company_alias)
-    if has_sso_account:
-        actors[alias] = actors[alias]._replace(has_sso_account=has_sso_account)
-    if email_confirmation_link:
-        actors[alias] = actors[alias]._replace(email_confirmation_link=email_confirmation_link)
-    if csrfmiddlewaretoken:
-        actors[alias] = actors[alias]._replace(csrfmiddlewaretoken=csrfmiddlewaretoken)
-    if password:
-        actors[alias] = actors[alias]._replace(password=password)
+
+    for arg in kwargs:
+        if arg in Actor._fields:
+            logging.debug("Set '%s'='%s' for %s", arg, kwargs[arg], alias)
+            actors[alias] = actors[alias]._replace(**{arg: kwargs[arg]})
 
     logging.debug(
         "Successfully updated Actors's details %s: %s", alias, actors[alias])
@@ -191,43 +180,13 @@ def get_company(self, alias):
     return self.scenario_data.companies[alias]
 
 
-def set_company_details(self, alias, *, title=None, website=None, keywords=None,
-                        no_employees=None, sector=None, letter_recipient=None,
-                        facebook=None, linkedin=None, twitter=None,
-                        summary=None, description=None,
-                        export_to_countries=None, fas_profile_endpoint=None,
-                        slug=None, verification_code=None):
+def set_company_details(self, alias: str, **kwargs):
     companies = self.scenario_data.companies
-    if title:
-        companies[alias] = companies[alias]._replace(title=title)
-    if website:
-        companies[alias] = companies[alias]._replace(website=website)
-    if keywords:
-        companies[alias] = companies[alias]._replace(keywords=keywords)
-    if no_employees:
-        companies[alias] = companies[alias]._replace(no_employees=no_employees)
-    if sector:
-        companies[alias] = companies[alias]._replace(sector=sector)
-    if letter_recipient:
-        companies[alias] = companies[alias]._replace(letter_recipient=letter_recipient)
-    if facebook:
-        companies[alias] = companies[alias]._replace(facebook=facebook)
-    if linkedin:
-        companies[alias] = companies[alias]._replace(linkedin=linkedin)
-    if twitter:
-        companies[alias] = companies[alias]._replace(twitter=twitter)
-    if summary:
-        companies[alias] = companies[alias]._replace(summary=summary)
-    if description:
-        companies[alias] = companies[alias]._replace(description=description)
-    if export_to_countries:
-        companies[alias] = companies[alias]._replace(export_to_countries=export_to_countries)
-    if fas_profile_endpoint:
-        companies[alias] = companies[alias]._replace(fas_profile_endpoint=fas_profile_endpoint)
-    if slug:
-        companies[alias] = companies[alias]._replace(slug=slug)
-    if verification_code:
-        companies[alias] = companies[alias]._replace(verification_code=verification_code)
+
+    for arg in kwargs:
+        if arg in Company._fields:
+            logging.debug("Set '%s'='%s' for %s", arg, kwargs[arg], alias)
+            companies[alias] = companies[alias]._replace(**{arg: kwargs[arg]})
 
     logging.debug("Successfully updated Company's details %s: %s", alias,
                   companies[alias])
