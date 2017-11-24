@@ -102,7 +102,8 @@ def unauthenticated_buyer(buyer_alias: str) -> Actor:
 
 def reg_create_sso_account_associated_with_company(
         context: Context, supplier_alias: str, company_alias: str):
-    context.add_actor(unauthenticated_supplier(supplier_alias))
+    if not context.get_actor(supplier_alias):
+        context.add_actor(unauthenticated_supplier(supplier_alias))
     select_random_company(context, supplier_alias, company_alias)
     reg_confirm_company_selection(context, supplier_alias, company_alias)
     reg_confirm_export_status(context, supplier_alias, exported=True)
