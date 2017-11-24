@@ -56,7 +56,7 @@ class Method(Enum):
 
 def make_request(
         method: Method, url: str, *, session: Session = None,
-        params: dict = None, headers: dict = None, cookies: dict = None,
+        params: dict = None, headers: dict = None,
         data: dict = None, files: dict = None,
         allow_redirects: bool = True, auth: tuple = None, trim: bool = True) \
         -> Response:
@@ -94,12 +94,14 @@ def make_request(
     with assertion_msg("Can't make a request without a valid URL!"):
         assert url is not None
 
+    if not session:
+        logging.debug("Session object not provided. Will default to Requests")
     req = session or requests
 
     connect_timeout = 3.05
     read_timeout = 60
     request_kwargs = dict(
-        url=url, params=params, headers=headers, cookies=cookies, data=data,
+        url=url, params=params, headers=headers, data=data,
         files=files, allow_redirects=allow_redirects,
         timeout=(connect_timeout, read_timeout), auth=auth)
 
@@ -133,7 +135,6 @@ def make_request(
         if headers.get('Authorization'):
             headers['Authorization'] = 'STRIPPED_OUT'
         red("Headers: {}".format(headers))
-        red("Cookies: {}".format(cookies))
         red("Data: {}".format(data))
         red("Files: {}".format(files))
         raise ex
