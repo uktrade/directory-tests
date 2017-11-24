@@ -2,8 +2,8 @@
 """FAB Given step implementations."""
 import logging
 import random
-import string
 import uuid
+from string import ascii_letters, digits
 from urllib.parse import urlsplit
 
 from behave.runner import Context
@@ -71,7 +71,7 @@ def unauthenticated_supplier(supplier_alias: str) -> Actor:
              .format(supplier_alias, str(uuid.uuid4()))
              .replace("-", "").replace(" ", "").lower())
     password_length = 15
-    password = ''.join(random.choice(string.ascii_letters + string.digits)
+    password = ''.join(random.choice(ascii_letters) + random.choice(digits)
                        for _ in range(password_length))
     return Actor(
         alias=supplier_alias, email=email, password=password, session=session,
