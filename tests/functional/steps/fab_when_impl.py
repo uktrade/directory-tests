@@ -594,17 +594,22 @@ def reg_create_standalone_unverified_sso_account(
     response = sso_ui_register.go_to(session)
     context.response = response
 
-    # Step 2: Check if User is not logged in
+    # Step 2 - extract CSRF token
+    token = extract_csrf_middleware_token(response)
+    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
+    actor = context.get_actor(supplier_alias)
+
+    # Step 3: Check if User is not logged in
     with assertion_msg(
             "It looks like user is still logged in, as the "
             "sso_display_logged_in cookie is not equal to False"):
         assert response.cookies.get("sso_display_logged_in") == "false"
 
-    # Step 3: POST SSO accounts/signup/
+    # Step 4: POST SSO accounts/signup/
     response = sso_ui_register.submit_no_company(actor)
     context.response = response
 
-    # Step 3: Check if Supplier is on Verify your email page & is not logged in
+    # Step 5: Check if Supplier is on Verify your email page & is not logged in
     sso_ui_verify_your_email.should_be_here(response)
     with assertion_msg(
             "It looks like user is still logged in, as the "
