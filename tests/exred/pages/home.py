@@ -46,10 +46,10 @@ OPERATIONS_AND_COMPLIANCE_LINK = "#resource-guidance a[href='/operations-and-com
 
 SECTIONS = {
     "video": {
-        "itself": "#content > section.hero-section",
-        "teaser": "#content > section.hero-section div.hero-teaser",
-        "teaser_title": "#content > section.hero-section div.hero-teaser h1.title",
-        "teaser_logo": "#content > section.hero-section div.hero-teaser img",
+        "itself": "section.hero-campaign-section > div > div",
+        "teaser_title": "section.hero-campaign-section > div > div > h1",
+        "teaser description": "section.hero-campaign-section > div > div > p:nth-child(2)",
+        "teaser_logo": "section.hero-campaign-section > div > div > img",
     },
     "exporting journey": {
         "itself": "#content > section.triage.triage-section",
