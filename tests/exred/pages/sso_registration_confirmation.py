@@ -11,7 +11,7 @@ from utils import assertion_msg, find_element, take_screenshot
 NAME = "SSO Registration Confirmation page"
 URL = urljoin(DIRECTORY_UI_SSO_URL, "accounts/confirm-email/")
 
-SIGN_IN_LINK = "header ul:nth-child(2) > li.float--left.soft-half--right > a"
+SIGN_IN_LINK = "a.signin"
 EXPECTED_ELEMENTS = {
     "title": "#content > div > div > h1",
     "description": "#content > div > div > p:nth-child(2)",
