@@ -123,7 +123,7 @@ Feature: Accessing Services
 
   @bug
   @ED-2647
-  @fixme
+  @fixed
   @ED-2662
   @ED-2667
   @home-page
@@ -136,7 +136,7 @@ Feature: Accessing Services
     When "Robert" goes to "<service>" using "Services" links in "<link_location>"
 
     Then "Robert" should be on the "<service>" page
-    And  "Robert" should not see "Articles Read counter, Total number of Articles, Time to complete remaining chapters, Tasks completed counter, Task Total number"
+    And  "Robert" should not see "Articles Read counter, Total number of Articles, Time to complete remaining chapters, Tasks completed counter, Tasks Total number"
 
     Examples:
       | service      | link_location |

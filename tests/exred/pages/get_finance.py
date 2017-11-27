@@ -19,6 +19,8 @@ TOTAL_NUMBER_OF_ARTICLES = "dd.position > span.to"
 ARTICLES_TO_READ_COUNTER = "dd.position > span.from"
 TIME_TO_COMPLETE = "dd.time span.value"
 SHARE_MENU = "ul.sharing-links"
+TASKS_COMPLETED_COUNTER = ".TASKS_ARE_NOT_IMPLEMENTED_YES"
+TASKS_TOTAL_NUMBER = ".TASKS_ARE_NOT_IMPLEMENTED_YES"
 
 EXPECTED_ELEMENTS = {
     "header": "#top > h1",
@@ -27,6 +29,8 @@ EXPECTED_ELEMENTS = {
 UNEXPECTED_ELEMENTS = {
     "share widget": "ul.sharing-links",
     "article counters and indicators": "#top > div.scope-indicator",
+    "tasks completed counter": TASKS_COMPLETED_COUNTER,
+    "tasks total number": TASKS_TOTAL_NUMBER,
     "total number of articles": TOTAL_NUMBER_OF_ARTICLES,
     "articles read counter": ARTICLES_TO_READ_COUNTER,
     "time to complete remaining chapters": TIME_TO_COMPLETE,
