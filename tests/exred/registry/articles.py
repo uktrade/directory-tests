@@ -424,7 +424,7 @@ GROUPS = {
 
 
 def get_articles(group: str, category: str, *, sub_category: str = None) -> list:
-    """Find matching articles and sort them by their category index.
+    """Get an ordered list of articles for specific group & category.
 
     :param group: Article Group: Guidance, Export Readiness, Triage
     :param category: Category of Articles that belong to a specific Group
