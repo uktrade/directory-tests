@@ -71,13 +71,22 @@ PYTEST_ARGS :=
 
 SET_PYTEST_ENV_VARS := \
 	export API_CLIENT_KEY=debug; \
-	export DIRECTORY_API_URL=http://directory-api-dev.herokuapp.com; \
-	export DIRECTORY_BUYER_API_URL=http://dev.buyer.directory.uktrade.io; \
-	export DIRECTORY_SSO_URL=http://www.dev.sso.uktrade.io; \
-	export DIRECTORY_PROFILE_URL=http://dev.profile.uktrade.io; \
-	export DIRECTORY_UI_BUYER_URL=http://dev.buyer.directory.uktrade.io; \
-	export DIRECTORY_UI_SUPPLIER_URL=http://dev.supplier.directory.uktrade.io; \
-	export SSO_USER_ID=120
+	export DIRECTORY_API_URL=https://directory-api-dev.herokuapp.com; \
+	export DIRECTORY_BUYER_API_URL=https://dev.buyer.directory.uktrade.io; \
+	export DIRECTORY_SSO_URL=https://www.dev.sso.uktrade.io; \
+	export DIRECTORY_PROFILE_URL=https://dev.profile.uktrade.io; \
+	export DIRECTORY_UI_BUYER_URL=https://dev.buyer.directory.uktrade.io; \
+	export DIRECTORY_UI_SUPPLIER_URL=https://dev.supplier.directory.uktrade.io; \
+	export SSO_USER_ID=120; \
+	export MAILGUN_SSO_DOMAIN=debug; \
+	export MAILGUN_SSO_SECRET_API_KEY=debug; \
+	export MAILGUN_DIRECTORY_DOMAIN=debug; \
+	export MAILGUN_DIRECTORY_SECRET_API_KEY=debug; \
+	export SSO_USER_USERNAME=debug; \
+	export SSO_USER_PASSWORD=debug; \
+	export SSO_USER_TOKEN=debug; \
+	export SSO_USER_SSO_ID=1; \
+	export SSO_UNVERIFIED_USER_TOKEN=2
 
 selenium_tests:
 	$(SET_PYTEST_ENV_VARS); \
