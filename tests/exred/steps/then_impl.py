@@ -348,6 +348,5 @@ def articles_read_counter_same_as_before_registration(
         context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     preregistration_value = actor.articles_read_counter
-    context.driver.refresh()
     articles_should_see_read_counter_set_to(
         context, actor_alias, preregistration_value)
