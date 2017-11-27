@@ -235,7 +235,7 @@ Feature: Articles
   @ED-2639
   @feedback
   @<relevant>
-  Scenario Outline: "<relevant>" Exporters should be able to tell us that they "<found_or_not>" the "<group>" article useful
+  Scenario Outline: "<relevant>" Exporters should be able to tell us that they "<found_or_not>" the article relevant to them useful
     Given "Robert" was classified as "<relevant>" exporter in the triage process
     And "Robert" decided to create her personalised journey page
     And "Robert" opened any Article
