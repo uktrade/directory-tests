@@ -104,6 +104,11 @@ def start_triage(context: Context, actor_alias: str):
     logging.debug("%s started triage process", actor_alias)
 
 
+def continue_export_journey(context: Context, actor_alias: str):
+    home.continue_export_journey(context.driver)
+    logging.debug("%s decided to continue export journey", actor_alias)
+
+
 def triage_say_what_do_you_want_to_export(
         context: Context, actor_alias: str, *, code: str = None,
         sector: str = None):

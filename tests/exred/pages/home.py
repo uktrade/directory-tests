@@ -21,6 +21,7 @@ NAME = "ExRed Home"
 URL = urljoin(EXRED_UI_URL, "")
 
 GET_STARTED_BUTTON = ".triage a.button-cta"
+CONTINUE_EXPORT_JOURNEY = "#continue-export-journey"
 NEW_TO_EXPORTING_LINK = "#personas > .container > .group div:nth-child(1) a"
 OCCASIONAL_EXPORTER_LINK = "#personas > .container > .group div:nth-child(2) a"
 REGULAR_EXPORTED_LINK = "#personas > .container > .group div:nth-child(3) a"
@@ -159,6 +160,13 @@ def start_exporting_journey(driver: webdriver):
     :param driver: Any Selenium Driver (Remote, Chrome, Firefox, PhantomJS etc.
     """
     button = find_element(driver, by_css=GET_STARTED_BUTTON)
+    assert button.is_displayed()
+    button.click()
+
+
+def continue_export_journey(driver: webdriver):
+    """Continue your Export Journey (Triage)."""
+    button = find_element(driver, by_css=CONTINUE_EXPORT_JOURNEY)
     assert button.is_displayed()
     button.click()
 

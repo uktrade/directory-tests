@@ -9,6 +9,7 @@ from steps.when_impl import (
     articles_open_any,
     articles_open_any_but_the_last,
     case_studies_go_to,
+    continue_export_journey,
     export_readiness_open_category,
     guidance_open_category,
     guidance_read_through_all_articles,
@@ -31,10 +32,14 @@ from steps.when_impl import (
 )
 
 
-@when('"{actor_alias}" decides to continue in Exporting journey section')
 @when('"{actor_alias}" decides to get started in Exporting journey section')
 def when_actor_starts_triage(context, actor_alias):
     start_triage(context, actor_alias)
+
+
+@when('"{actor_alias}" decides to continue in Exporting journey section')
+def when_actor_continues_export_journey(context, actor_alias):
+    continue_export_journey(context, actor_alias)
 
 
 @when('"{actor_alias}" goes to the "{category}" Guidance articles via "{location}"')
