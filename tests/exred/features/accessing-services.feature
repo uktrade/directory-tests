@@ -102,7 +102,7 @@ Feature: Accessing Services
 
   @bug
   @ED-2702
-  @fixme
+  @fixed
   @ED-2661
   @home-page
   @accessing-services
