@@ -158,10 +158,6 @@ MATCH_YOUR_WEBSITE_TO_YOUR_AUDIENCE = Article(
     title='Match your website to your audience',
     time_to_read=0
 )
-WHAT_INTELLECTUAL_PROPERTY_IS = Article(
-    title='What intellectual property is',
-    time_to_read=0
-)
 TYPES_OF_INTELLECTUAL_PROPERTY = Article(
     title='Types of intellectual property',
     time_to_read=0
@@ -387,7 +383,7 @@ ALL_ARTICLES = [
     GET_YOUR_EXPORT_DOCUMENTS_RIGHT,
     INTERNATIONALISE_WESBITE,
     MATCH_YOUR_WEBSITE_TO_YOUR_AUDIENCE,
-    WHAT_INTELLECTUAL_PROPERTY_IS,
+    PROTECT_YOUR_INTELLECTUAL_PROPERTY,
     TYPES_OF_INTELLECTUAL_PROPERTY,
     KNOW_WHAT_INTELLECTUAL_PROPERTY_YOU_HAVE,
     INTELLECTUAL_PROPERTY_PROTECTION,
