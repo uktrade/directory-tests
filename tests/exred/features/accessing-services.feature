@@ -80,26 +80,6 @@ Feature: Accessing Services
       | Export Opportunities    | footer links  |
 
 
-  @ED-2661
-  @home-page
-  @accessing-services
-  @<service_name>
-  Scenario Outline: Any Exporter should be able to get to the "<service>" Service page
-    Given "Robert" visits the "Home" page
-
-    When "Robert" goes to "<service>" using "Services" links in "<link_location>"
-
-    Then "Robert" should be on the "<service>" page
-
-    Examples:
-      | service                 | link_location |
-      | Find a Buyer            | header menu   |
-      | Find a Buyer            | home page     |
-      | Find a Buyer            | footer links  |
-      | Events                  | header menu   |
-      | Events                  | footer links  |
-
-
   @bug
   @ED-2702
   @fixed
@@ -116,9 +96,15 @@ Feature: Accessing Services
 
     Examples:
       | service                 | link_location |
+      | Find a Buyer            | header menu   |
+      | Find a Buyer            | home page     |
+      | Find a Buyer            | footer links  |
       | Selling online overseas | header menu   |
       | Selling online overseas | home page     |
       | Selling online overseas | footer links  |
+      | Events                  | header menu   |
+      | Events                  | footer links  |
+
 
 
   @bug
