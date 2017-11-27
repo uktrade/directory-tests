@@ -32,6 +32,11 @@ TAKE_SCREENSHOTS = (True
                     if __take_screenshots
                     and __take_screenshots.lower() in ["true", "1", "yes"]
                     else False)
+__auto_retry = os.environ.get("AUTO_RETRY", "true")
+AUTO_RETRY = (True
+              if __auto_retry
+              and __auto_retry.lower() in ["true", "1", "yes"]
+              else False)
 
 # BrowserStack variables
 BROWSERSTACK_SERVER = os.environ.get(

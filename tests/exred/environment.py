@@ -10,7 +10,7 @@ from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 
 from pages.sso_common import delete_supplier_data
-from settings import CONFIG, CONFIG_NAME, TASK_ID
+from settings import AUTO_RETRY, CONFIG, CONFIG_NAME, TASK_ID
 from utils import (
     flag_browserstack_session_as_failed,
     init_loggers,
@@ -51,8 +51,9 @@ def before_feature(context, feature):
     retries failing scenarios.
     Here PR for it https://github.com/behave/behave/pull/328
     """
-    for scenario in feature.scenarios:
-        patch_scenario_with_autoretry(scenario, max_attempts=2)
+    if AUTO_RETRY:
+        for scenario in feature.scenarios:
+            patch_scenario_with_autoretry(scenario, max_attempts=2)
 
 
 @retry(stop_max_attempt_number=3)
