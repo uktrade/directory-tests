@@ -25,6 +25,12 @@ SELLING_ONLINE_OVERSEAS_UI_URL = os.environ["SELLING_ONLINE_OVERSEAS_UI_URL"]
 EXPORT_OPPORTUNITIES_UI_URL = os.environ["EXPORT_OPPORTUNITIES_UI_URL"]
 EVENTS_UI_URL = os.environ["EVENTS_UI_URL"]
 
+__take_screenshots = os.environ.get("TAKE_SCREENSHOTS")
+TAKE_SCREENSHOTS = (True
+                    if __take_screenshots
+                    and __take_screenshots.lower() in ["true", "1", "yes"]
+                    else False)
+
 # BrowserStack variables
 BROWSERSTACK_SERVER = os.environ.get(
     "BROWSERSTACK_SERVER", "hub.browserstack.com")

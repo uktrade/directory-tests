@@ -30,6 +30,7 @@ from settings import (
     BROWSERSTACK_SESSIONS_URL,
     BROWSERSTACK_USER,
     BROWSERSTACK_PASS,
+    TAKE_SCREENSHOTS
 )
 
 ScenarioData = namedtuple(
@@ -134,17 +135,23 @@ def take_screenshot(driver: webdriver, page_name: str):
     :param driver: Any of the WebDrivers
     :param page_name: page name which will be used in the screenshot filename
     """
-    session_id = driver.session_id
-    browser = driver.capabilities.get("browserName", "unknown_browser")
-    version = driver.capabilities.get("version", "unknown_version")
-    platform = driver.capabilities.get("platform", "unknown_platform")
-    stamp = datetime.isoformat(datetime.utcnow())
-    filename = ("{}-{}-{}-{}-{}-{}.png"
-                .format(stamp, page_name, browser, version, platform,
-                        session_id))
-    file_path = abspath(join("screenshots", filename))
-    driver.save_screenshot(file_path)
-    logging.debug("Screenshot of %s page saved in: %s", page_name, filename)
+    if TAKE_SCREENSHOTS:
+        session_id = driver.session_id
+        browser = driver.capabilities.get("browserName", "unknown_browser")
+        version = driver.capabilities.get("version", "unknown_version")
+        platform = driver.capabilities.get("platform", "unknown_platform")
+        stamp = datetime.isoformat(datetime.utcnow())
+        filename = ("{}-{}-{}-{}-{}-{}.png"
+                    .format(stamp, page_name, browser, version, platform,
+                            session_id))
+        file_path = abspath(join("screenshots", filename))
+        driver.save_screenshot(file_path)
+        logging.debug(
+            "Screenshot of %s page saved in: %s", page_name, filename)
+    else:
+        logging.debug(
+            "Taking screenshots is disabled. In order to turn it on please set"
+            " n environment variable TAKE_SCREENSHOTS=true")
 
 
 @contextmanager
