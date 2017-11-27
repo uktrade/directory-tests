@@ -15,6 +15,8 @@ from pages import (
     home,
     personalised_journey,
     sso_common,
+    sso_confirm_your_email,
+    sso_profile_about,
     sso_registration,
     sso_registration_confirmation,
     sso_sign_in,
@@ -36,6 +38,7 @@ from utils import (
     unauthenticated_actor,
     update_actor
 )
+from utils.mail_gun import get_verification_link
 
 
 @retry(wait_fixed=30000, stop_max_attempt_number=3)
@@ -867,7 +870,40 @@ def registration_go_to(context: Context, actor_alias: str, location: str):
     sso_registration.should_be_here(context.driver)
 
 
-def registration_create_and_verify_account(context: Context, actor_alias: str):
+def registration_should_get_verification_email(context: Context, actor_alias: str):
+    """Will check if the Exporter received an email verification message.
+
+    :param context: behave `context` object
+    :param actor_alias: alias of the Actor used in the scope of the scenario
+    """
+    logging.debug("Searching for an email verification message...")
+    actor = get_actor(context, actor_alias)
+    link = get_verification_link(context, actor.email)
+    update_actor(context, actor_alias, email_confirmation_link=link)
+
+
+def registration_open_email_confirmation_link(context, actor_alias):
+    """Given Supplier has received a message with email confirmation link
+    Then Supplier has to click on that link.
+
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param actor_alias: alias of the Actor used in the scope of the scenario
+    :type actor_alias: str
+    """
+    actor = get_actor(context, actor_alias)
+    link = actor.email_confirmation_link
+
+    # Step 1 - open confirmation link
+    context.driver.get(link)
+
+    # Step 3 - confirm that Supplier is on SSO Confirm Your Email page
+    sso_confirm_your_email.should_be_here(context.driver)
+    logging.debug("Supplier is on the SSO Confirm your email address page")
+
+
+def registration_create_and_verify_account(
+        context: Context, actor_alias: str, *, fake_verification: bool = True):
     driver = context.driver
     actor = get_actor(context, actor_alias)
     email = actor.email
@@ -875,7 +911,13 @@ def registration_create_and_verify_account(context: Context, actor_alias: str):
     sso_registration.fill_out(driver, email, password)
     sso_registration.submit(driver)
     sso_registration_confirmation.should_be_here(driver)
-    sso_common.verify_account(email)
+    if fake_verification:
+        sso_common.verify_account(email)
+    else:
+        registration_should_get_verification_email(context, actor_alias)
+        registration_open_email_confirmation_link(context, actor_alias)
+        sso_confirm_your_email.submit(context.driver)
+        sso_profile_about.should_be_here(context.driver)
     update_actor(context, actor_alias, registered=True)
 
 

@@ -11,8 +11,8 @@ from steps.when_impl import (
     articles_open_any_but_the_last,
     articles_open_group,
     case_studies_go_to,
-    continue_export_journey,
     clear_the_cookies,
+    continue_export_journey,
     export_readiness_open_category,
     guidance_open_category,
     guidance_read_through_all_articles,
@@ -201,9 +201,16 @@ def when_actor_decides_to_register(context, actor_alias, location):
     registration_go_to(context, actor_alias, location)
 
 
-@when('"{actor_alias}" completes the registration and email verification process')
+@when('"{actor_alias}" completes the registration and fake email verification process')
 def when_actor_registers(context, actor_alias):
-    registration_create_and_verify_account(context, actor_alias)
+    registration_create_and_verify_account(
+        context, actor_alias, fake_verification=True)
+
+
+@when('"{actor_alias}" completes the registration and real email verification process')
+def when_actor_registers(context, actor_alias):
+    registration_create_and_verify_account(
+        context, actor_alias, fake_verification=False)
 
 
 @when('"{actor_alias}" clears the cookies')
