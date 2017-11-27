@@ -4,11 +4,11 @@
 #
 #    pip-compile --output-file requirements_functional.txt requirements_functional.ini
 #
+git+https://github.com/behave/behave.git@06f05a934838f30de834013aa492a0efb347982d#egg=behave
 asn1crypto==0.23.0        # via cryptography
 attrs==17.2.0             # via automat, service-identity
 automat==0.6.0            # via twisted
 beautifulsoup4==4.6.0
-behave==1.2.5
 certifi==2017.7.27.1      # via requests
 cffi==1.11.2              # via cryptography
 chardet==3.0.4            # via requests
@@ -23,8 +23,8 @@ jsonschema==2.6.0
 langdetect==1.0.7
 lxml==4.1.0               # via parsel, scrapy
 mccabe==0.6.1             # via flake8
-parse-type==0.4.2         # via behave
-parse==1.8.2              # via behave, parse-type
+parse-type==0.4.2
+parse==1.8.2              # via parse-type
 parsel==1.2.0             # via scrapy
 psycopg2==2.7.3.1
 pyasn1-modules==0.1.5     # via service-identity
@@ -39,7 +39,7 @@ requests==2.18.4
 retrying==1.3.3
 scrapy==1.4.0
 service-identity==17.0.0  # via scrapy
-six==1.11.0               # via automat, behave, cryptography, langdetect, parse-type, parsel, pyopenssl, retrying, scrapy, w3lib
+six==1.11.0               # via automat, cryptography, langdetect, parse-type, parsel, pyopenssl, retrying, scrapy, w3lib
 termcolor==1.1.0
 twisted==17.9.0           # via scrapy
 urllib3==1.22             # via requests
