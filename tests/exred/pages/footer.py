@@ -33,7 +33,7 @@ SECTIONS = {
         "find a buyer": "#footer > nav > div:nth-child(4) > ul > li:nth-child(1) > a",
         "selling online overseas": "#footer > nav > div:nth-child(4) > ul > li:nth-child(1) > a",
         "export opportunities": "#footer a[href='/export-opportunities']",
-        "get finance": "#footer a[href='/finance/get-finance-support-from-government']",
+        "get finance": "#footer a[href='/get-finance']",
         "events": "#footer > nav > div:nth-child(4) > ul > li:nth-child(5) > a"
     },
     "general links": {
