@@ -848,8 +848,8 @@ def articles_read_a_number_of_them(
         articles_open_any(context, actor_alias)
         articles_go_back_to_article_list(context, actor_alias)
         logging.debug(
-            "%s read %d article(s) out of %d (%s) he/she decided to read from "
-            "%d '%s' articles", actor_alias, idx, number_to_read, number,
+            "%s read %d article(s) out of %d (%s of %d articles from '%s'"
+            " articles)", actor_alias, idx, number_to_read, number,
             len(articles), category)
 
 
