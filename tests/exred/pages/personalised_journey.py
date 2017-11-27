@@ -40,7 +40,6 @@ SECTIONS = {
     "hero": {
         "title": "section.hero-section h1",
         "introduction": "section.hero-section p",
-        "exporting is great logo": "section.hero-section img",
         "update preferences link": "section.hero-section a.preferences",
     },
     "facts": {
