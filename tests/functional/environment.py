@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Behave configuration file."""
 import logging
+import os
 from pprint import pformat
 
 from behave.contrib.scenario_autoretry import patch_scenario_with_autoretry
@@ -94,7 +95,12 @@ def after_scenario(context, scenario):
 
 
 def before_all(context):
-    init_loggers(context)
+    suffix = ""
+    task_id = os.environ.get("TASK_ID", "")
+    feature_dir = os.environ.get("FEATURE_DIR", "")
+    if task_id and feature_dir:
+        suffix = "{}-{}".format(task_id, feature_dir)
+    init_loggers(context, suffix=suffix)
     # this will add some handy functions to the `context` object
     patch_context(context)
 
