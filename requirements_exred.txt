@@ -6,13 +6,17 @@
 #
 git+https://github.com/behave/behave.git@06f05a934838f30de834013aa492a0efb347982d#egg=behave
 git+https://git@github.com/uktrade/directory-constants.git@v6.3.1#egg=directory-constants
+certifi==2017.11.5        # via requests
+chardet==3.0.4            # via requests
 django==1.11.5
+idna==2.6                 # via requests
 parse-type==0.4.2
 parse==1.8.2              # via parse-type
 paver==1.2.4
 psycopg2==2.7.3.1
 pytz==2017.2              # via django
-requests==2.11.1
+requests==2.18.4
 retrying==1.3.3
 selenium==3.7.0
 six==1.11.0               # via parse-type, retrying
+urllib3==1.22             # via requests
