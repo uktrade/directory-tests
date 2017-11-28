@@ -1,0 +1,263 @@
+version: 2.0
+
+jobs:
+  checkout_code:
+    docker:
+      - image: circleci/python:3.5.3
+    working_directory: ~/directory-tests
+    steps:
+      - checkout
+      - save_cache:
+          key: cached-repo-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/directory-tests
+
+  smoke_tests:
+    docker:
+      - image: circleci/python:3.5.3
+    working_directory: ~/directory-tests
+    steps:
+      - restore_cache:
+          keys:
+            - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements_smoke.txt
+      - run:
+          command: |
+            . venv/bin/activate
+            python ./docker/env_writer.py ./docker/env.json
+            source ./docker/.env;
+            make smoke_tests
+
+  exred_tests_chrome:
+    docker:
+      - image: circleci/python:3.5.3
+    working_directory: ~/directory-tests
+    steps:
+      - restore_cache:
+          keys:
+            - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements_exred.txt
+      - run:
+          command: |
+            wget -q https://cli-assets.heroku.com/heroku-cli/channels/stable/heroku-cli-linux-x64.tar.gz -O heroku.tar.gz
+            tar -xzf heroku.tar.gz
+            mkdir -p /usr/local/lib /usr/local/bin
+            sudo mv heroku-cli-v6.*-linux-x64 /usr/local/lib/heroku
+            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/local/bin/heroku
+            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/bin/heroku
+            heroku -v
+            which heroku
+            rm -fr heroku.tar.gz
+      - run:
+          command: |
+            . venv/bin/activate
+            python ./docker/env_writer.py ./docker/env_exred.json
+            source ./docker/.env;
+            BROWSERS=Chrome VERSIONS=62.0 make exred_browserstack
+
+  exred_tests_firefox:
+    docker:
+      - image: circleci/python:3.5.3
+    working_directory: ~/directory-tests
+    steps:
+      - restore_cache:
+          keys:
+            - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          command: |
+            wget -q https://cli-assets.heroku.com/heroku-cli/channels/stable/heroku-cli-linux-x64.tar.gz -O heroku.tar.gz
+            tar -xzf heroku.tar.gz
+            mkdir -p /usr/local/lib /usr/local/bin
+            sudo mv heroku-cli-v6.*-linux-x64 /usr/local/lib/heroku
+            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/local/bin/heroku
+            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/bin/heroku
+            heroku -v
+            which heroku
+            rm -fr heroku.tar.gz
+      - run:
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements_exred.txt
+      - run:
+          command: |
+            . venv/bin/activate
+            python ./docker/env_writer.py ./docker/env_exred.json
+            source ./docker/.env;
+            BROWSERS=Firefox VERSIONS=56.0 make exred_browserstack
+
+  functional_tests_requirements:
+    docker:
+      - image: circleci/python:3.5.3
+    working_directory: ~/directory-tests
+    steps:
+      - restore_cache:
+          keys:
+            - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements_functional.txt
+            python ./docker/env_writer.py ./docker/env.json
+      - save_cache:
+          key: dependency-cache-{{ .Revision }}
+          paths:
+            - ~/directory-tests/venv
+            - ~/directory-tests/docker/.env
+
+  fab_functional_tests:
+    docker:
+      - image: circleci/python:3.5.3
+    working_directory: ~/directory-tests
+    steps:
+      - restore_cache:
+          keys:
+            - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+            - dependency-cache-{{ .Revision }}
+      - run:
+          command: |
+            wget -q https://cli-assets.heroku.com/heroku-cli/channels/stable/heroku-cli-linux-x64.tar.gz -O heroku.tar.gz
+            tar -xzf heroku.tar.gz
+            mkdir -p /usr/local/lib /usr/local/bin
+            sudo mv heroku-cli-v6.*-linux-x64 /usr/local/lib/heroku
+            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/local/bin/heroku
+            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/bin/heroku
+            heroku -v
+            which heroku
+            rm -fr heroku.tar.gz
+      - run:
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            source ./docker/.env;
+            FEATURE_DIR=fab make functional_tests_feature_dir
+
+  fas_functional_tests:
+    docker:
+      - image: circleci/python:3.5.3
+    working_directory: ~/directory-tests
+    steps:
+      - restore_cache:
+          keys:
+            - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+            - dependency-cache-{{ .Revision }}
+      - run:
+          command: |
+            wget -q https://cli-assets.heroku.com/heroku-cli/channels/stable/heroku-cli-linux-x64.tar.gz -O heroku.tar.gz
+            tar -xzf heroku.tar.gz
+            mkdir -p /usr/local/lib /usr/local/bin
+            sudo mv heroku-cli-v6.*-linux-x64 /usr/local/lib/heroku
+            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/local/bin/heroku
+            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/bin/heroku
+            heroku -v
+            rm -fr heroku.tar.gz
+      - run:
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            source ./docker/.env;
+            FEATURE_DIR=fas make functional_tests_feature_dir
+
+  sso_functional_tests:
+    docker:
+      - image: circleci/python:3.5.3
+    working_directory: ~/directory-tests
+    steps:
+      - restore_cache:
+          keys:
+            - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+            - dependency-cache-{{ .Revision }}
+      - run:
+          command: |
+            wget -q https://cli-assets.heroku.com/heroku-cli/channels/stable/heroku-cli-linux-x64.tar.gz -O heroku.tar.gz
+            tar -xzf heroku.tar.gz
+            mkdir -p /usr/local/lib /usr/local/bin
+            sudo mv heroku-cli-v6.*-linux-x64 /usr/local/lib/heroku
+            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/local/bin/heroku
+            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/bin/heroku
+            heroku -v
+            rm -fr heroku.tar.gz
+      - run:
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            source ./docker/.env;
+            FEATURE_DIR=sso make functional_tests_feature_dir
+
+  sud_functional_tests:
+    docker:
+      - image: circleci/python:3.5.3
+    working_directory: ~/directory-tests
+    steps:
+      - restore_cache:
+          keys:
+            - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+            - dependency-cache-{{ .Revision }}
+      - run:
+          command: |
+            wget -q https://cli-assets.heroku.com/heroku-cli/channels/stable/heroku-cli-linux-x64.tar.gz -O heroku.tar.gz
+            tar -xzf heroku.tar.gz
+            mkdir -p /usr/local/lib /usr/local/bin
+            sudo mv heroku-cli-v6.*-linux-x64 /usr/local/lib/heroku
+            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/local/bin/heroku
+            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/bin/heroku
+            heroku -v
+            rm -fr heroku.tar.gz
+      - run:
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            source ./docker/.env;
+            FEATURE_DIR=sud make functional_tests_feature_dir
+
+
+workflows:
+  version: 2
+  run_all_tests:
+    jobs:
+      - checkout_code
+      - functional_tests_requirements:
+          requires:
+            - checkout_code
+      - smoke_tests:
+          requires:
+            - checkout_code
+      - exred_tests_chrome:
+          requires:
+            - smoke_tests
+      - exred_tests_firefox:
+          requires:
+            - smoke_tests
+      - fab_functional_tests:
+          requires:
+            - smoke_tests
+            - functional_tests_requirements
+      - fas_functional_tests:
+          requires:
+            - smoke_tests
+            - functional_tests_requirements
+      - sso_functional_tests:
+          requires:
+            - smoke_tests
+            - functional_tests_requirements
+      - sud_functional_tests:
+          requires:
+            - smoke_tests
+            - functional_tests_requirements

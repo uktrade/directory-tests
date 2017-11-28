@@ -21,11 +21,16 @@ from selenium.common.exceptions import (
     WebDriverException,
     NoSuchElementException
 )
+from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webelement import WebElement
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.wait import WebDriverWait
 
 from settings import (
     BROWSERSTACK_SESSIONS_URL,
     BROWSERSTACK_USER,
     BROWSERSTACK_PASS,
+    TAKE_SCREENSHOTS
 )
 
 ScenarioData = namedtuple(
@@ -44,7 +49,8 @@ Actor = namedtuple(
         "do_you_use_online_marketplaces", "created_personalised_journey",
         "article_group", "article_category", "article_location",
         "visited_articles", "articles_read_counter",
-        "articles_time_to_complete"
+        "articles_time_to_complete", "articles_total_number",
+        "case_study_title"
     ]
 )
 
@@ -77,8 +83,8 @@ def unauthenticated_actor(
     email = ("test+{}{}@directory.uktrade.io"
              .format(alias, str(uuid.uuid4()))
              .replace("-", "").replace(" ", "").lower())
-    password_length = 10
-    password = ''.join(random.choice(string.ascii_letters)
+    password_length = 20
+    password = ''.join(random.choice(string.ascii_letters + string.digits)
                        for _ in range(password_length))
     return Actor(
         alias=alias, email=email, password=password,
@@ -129,17 +135,23 @@ def take_screenshot(driver: webdriver, page_name: str):
     :param driver: Any of the WebDrivers
     :param page_name: page name which will be used in the screenshot filename
     """
-    session_id = driver.session_id
-    browser = driver.capabilities.get("browserName", "unknown_browser")
-    version = driver.capabilities.get("version", "unknown_version")
-    platform = driver.capabilities.get("platform", "unknown_platform")
-    stamp = datetime.isoformat(datetime.utcnow())
-    filename = ("{}-{}-{}-{}-{}-{}.png"
-                .format(stamp, page_name, browser, version, platform,
-                        session_id))
-    file_path = abspath(join("screenshots", filename))
-    driver.save_screenshot(file_path)
-    logging.debug("Screenshot of %s page saved in: %s", page_name, filename)
+    if TAKE_SCREENSHOTS:
+        session_id = driver.session_id
+        browser = driver.capabilities.get("browserName", "unknown_browser")
+        version = driver.capabilities.get("version", "unknown_version")
+        platform = driver.capabilities.get("platform", "unknown_platform")
+        stamp = datetime.isoformat(datetime.utcnow())
+        filename = ("{}-{}-{}-{}-{}-{}.png"
+                    .format(stamp, page_name, browser, version, platform,
+                            session_id))
+        file_path = abspath(join("screenshots", filename))
+        driver.save_screenshot(file_path)
+        logging.debug(
+            "Screenshot of %s page saved in: %s", page_name, filename)
+    else:
+        logging.debug(
+            "Taking screenshots is disabled. In order to turn it on please set"
+            " n environment variable TAKE_SCREENSHOTS=true")
 
 
 @contextmanager
@@ -176,6 +188,7 @@ def selenium_action(driver: webdriver, message: str, *args):
     :param message: a message that will be printed & logged when assertion fails
     :param args: values that will replace % conversion specifications in message
                  like: %s, %d
+    :raises WebDriverException or NoSuchElementException
     """
     try:
         yield
@@ -250,3 +263,62 @@ def flag_browserstack_session_as_failed(session_id: str, reason: str):
             response.status_code, response.content)
     else:
         logging.error("Flagged BrowserStack session: %s as failed", session_id)
+
+
+def wait_for_visibility(
+        driver: webdriver, *, by_css: str = None,
+        by_id: str = None, time_to_wait: int = 5):
+    """Wait until element is visible.
+
+    :param driver: Selenium driver
+    :param by_css: CSS selector to locate the element to wait for
+    :param by_id: ID of the element to wait for
+    :param time_to_wait: maximum number of seconds to wait
+    """
+    assert by_id or by_css, "Provide ID or CSS selector"
+    if by_css:
+        by_locator = (By.CSS_SELECTOR, by_css)
+    else:
+        by_locator = (By.ID, by_id)
+    WebDriverWait(driver, time_to_wait).until(
+        expected_conditions.visibility_of_element_located(by_locator))
+
+
+def find_element(
+        driver: webdriver, *, by_css: str = None,
+        by_id: str = None) -> WebElement:
+    """Find element by CSS selector or it's ID.
+
+    :param driver: Selenium driver
+    :param by_css: CSS selector to locate the element to wait for
+    :param by_id: ID of the element to wait for
+    :return: found WebElement
+    """
+    assert by_id or by_css, "Provide ID or CSS selector"
+    with selenium_action(
+            driver, "Couldn't find element using '%s'", by_css or by_id):
+        if by_css:
+            element = driver.find_element_by_css_selector(by_css)
+        else:
+            element = driver.find_element_by_id(by_id)
+    return element
+
+
+def find_elements(
+        driver: webdriver, *, by_css: str = None,
+        by_id: str = None) -> list:
+    """Find element by CSS selector or it's ID.
+
+    :param driver: Selenium driver
+    :param by_css: CSS selector to locate the element to wait for
+    :param by_id: ID of the element to wait for
+    :return: a list of found WebElements
+    """
+    assert by_id or by_css, "Provide ID or CSS selector"
+    with selenium_action(
+            driver, "Couldn't find elements using '%s'", by_css or by_id):
+        if by_css:
+            elements = driver.find_elements_by_css_selector(by_css)
+        else:
+            elements = driver.find_elements_by_id(by_id)
+    return elements

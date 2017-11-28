@@ -12,29 +12,29 @@ URL = None
 SECTIONS = {
     "export readiness": {
         "label": "#footer-links-2",
-        "new": "#footer-links-2  ~ ul > li:nth-child(1) > a",
-        "occasional": "#footer-links-2  ~ ul > li:nth-child(2) > a",
-        "regular": "#footer-links-2  ~ ul > li:nth-child(3) > a",
-        "i'm new to exporting": "#footer-links-2  ~ ul > li:nth-child(1) > a",
-        "i export occasionally": "#footer-links-2  ~ ul > li:nth-child(2) > a",
-        "i'm a regular exporter": "#footer-links-2  ~ ul > li:nth-child(3) > a"
+        "new": "#footer a[href='/new']",
+        "occasional": "#footer a[href='/occasional']",
+        "regular": "#footer a[href='/regular']",
+        "i'm new to exporting": "#footer a[href='/new']",
+        "i export occasionally": "#footer a[href='/occasional']",
+        "i'm a regular exporter": "#footer a[href='/regular']"
     },
     "guidance": {
         "label": "#footer-links-3",
-        "market research": "#footer-links-3  ~ ul a[href='/market-research']",
-        "customer insight": "#footer-links-3  ~ ul a[href='/customer-insight']",
-        "finance": "#footer-links-3  ~ ul a[href='/finance']",
-        "business planning": "#footer-links-3  ~ ul a[href='/business-planning']",
-        "getting paid": "#footer-links-3  ~ ul a[href='/getting-paid']",
-        "operations and compliance": "#footer-links-3  ~ ul a[href='/operations-and-compliance']"
+        "market research": "#footer a[href='/market-research']",
+        "customer insight": "#footer a[href='/customer-insight']",
+        "finance": "#footer a[href='/finance']",
+        "business planning": "#footer a[href='/business-planning']",
+        "getting paid": "#footer a[href='/getting-paid']",
+        "operations and compliance": "#footer a[href='/operations-and-compliance']"
     },
     "services": {
         "label": "#footer-links-4",
-        "export opportunities": "#footer-links-4  ~ ul > li:nth-child(1) > a",
-        "selling online overseas": "#footer-links-4  ~ ul > li:nth-child(2) > a",
-        "find a buyer": "#footer-links-4  ~ ul > li:nth-child(3) > a",
-        "get finance": "#footer-links-4  ~ ul > li:nth-child(4) > a",
-        "events": "#footer-links-4  ~ ul > li:nth-child(5) > a"
+        "find a buyer": "#footer > nav > div:nth-child(4) > ul > li:nth-child(1) > a",
+        "selling online overseas": "#footer > nav > div:nth-child(4) > ul > li:nth-child(2) > a",
+        "export opportunities": "#footer a[href='/export-opportunities']",
+        "get finance": "#footer a[href='/get-finance']",
+        "events": "#footer > nav > div:nth-child(4) > ul > li:nth-child(5) > a"
     },
     "general links": {
         "part of great.gov.uk": "#footer > .site-links > ul > li:nth-child(1) > a",
@@ -64,6 +64,18 @@ def should_see_all_menus(driver: webdriver):
         logging.debug("All elements in '%s' section are visible", section)
     logging.debug(
         "All expected sections on %s are visible", NAME)
+
+
+def should_see_link_to(driver: webdriver, section: str, item_name: str):
+    item_selector = SECTIONS[section.lower()][item_name.lower()]
+    with selenium_action(
+            driver, "Could not find '%s' using '%s'", item_name,
+            item_selector):
+        menu_item = driver.find_element_by_css_selector(item_selector)
+    with assertion_msg(
+            "It looks like '%s' in '%s' section is not visible", item_name,
+            section):
+        assert menu_item.is_displayed()
 
 
 def open(driver: webdriver, group: str, element: str):

@@ -3,6 +3,8 @@
 import logging
 from pprint import pformat
 
+from behave.contrib.scenario_autoretry import patch_scenario_with_autoretry
+
 from tests.functional.utils.context_utils import (
     initialize_scenario_data,
     patch_context
@@ -22,6 +24,15 @@ from tests.functional.utils.generic import (
     red
 )
 from tests.functional.utils.request import REQUEST_EXCEPTIONS
+
+
+def before_feature(context, feature):
+    """Use autoretry feature of upcoming Behave 1.2.6 which automatically
+    retries failing scenarios.
+    Here PR for it https://github.com/behave/behave/pull/328
+    """
+    for scenario in feature.scenarios:
+        patch_scenario_with_autoretry(scenario, max_attempts=2)
 
 
 def before_step(context, step):
@@ -69,6 +80,9 @@ def after_scenario(context, scenario):
     logging.debug("Deleting supplier data from FAB & SSO DBs")
     actors = context.scenario_data.actors
     for actor in actors.values():
+        if actor.session:
+            actor.session.close()
+            logging.debug("Closed Requests session for %s", actor.alias)
         if actor.type == "supplier":
             delete_supplier_data("DIRECTORY", actor.email)
             delete_supplier_data("SSO", actor.email)

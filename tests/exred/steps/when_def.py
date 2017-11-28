@@ -4,18 +4,26 @@ from behave import when
 
 from steps.then_impl import triage_should_be_classified_as
 from steps.when_impl import (
+    articles_found_useful_or_not,
     articles_go_back_to_article_list,
     articles_open_any,
     articles_open_any_but_the_last,
+    case_studies_go_to,
+    continue_export_journey,
     export_readiness_open_category,
     guidance_open_category,
     guidance_read_through_all_articles,
+    open_link,
+    open_service_link_on_interim_page,
     personalised_journey_create_page,
+    personalised_journey_update_preference,
+    set_sector_preference,
     start_triage,
     triage_are_you_incorporated,
     triage_change_answers,
     triage_create_exporting_journey,
     triage_do_you_export_regularly,
+    triage_go_through_again,
     triage_have_you_exported_before,
     triage_say_what_do_you_want_to_export,
     triage_say_whether_you_use_online_marketplaces,
@@ -24,10 +32,14 @@ from steps.when_impl import (
 )
 
 
-@when('"{actor_alias}" decides to continue in Exporting journey section')
 @when('"{actor_alias}" decides to get started in Exporting journey section')
 def when_actor_starts_triage(context, actor_alias):
     start_triage(context, actor_alias)
+
+
+@when('"{actor_alias}" decides to continue in Exporting journey section')
+def when_actor_continues_export_journey(context, actor_alias):
+    continue_export_journey(context, actor_alias)
 
 
 @when('"{actor_alias}" goes to the "{category}" Guidance articles via "{location}"')
@@ -133,3 +145,44 @@ def given_actor_opens_any_article(context, actor_alias):
 @when('"{actor_alias}" goes back to the Article List page')
 def when_actor_goes_back_to_article_list(context, actor_alias):
     articles_go_back_to_article_list(context, actor_alias)
+
+
+@when('"{actor_alias}" decides to tell us that he "{useful_or_not}" this article useful')
+@when('"{actor_alias}" decides to tell us that she "{useful_or_not}" this article useful')
+def when_actor_tells_us_about_usefulness(context, actor_alias, useful_or_not):
+    articles_found_useful_or_not(context, actor_alias, useful_or_not)
+
+
+@when('"{actor_alias}" goes to the "{case_number}" Case Study via carousel')
+def when_actor_goes_to_case_study(context, actor_alias, case_number):
+    case_studies_go_to(context, actor_alias, case_number)
+
+
+@when('"{actor_alias}" goes to "{category}" using "{group}" links in "{location}"')
+def when_actor_opens_link(context, actor_alias, category, group, location):
+    open_link(context, actor_alias, group, category, location)
+
+
+@when('"{actor_alias}" opens the link to "{service}" from interim page')
+def when_open_service_link_on_interim_page(context, actor_alias, service):
+    open_service_link_on_interim_page(context, actor_alias, service)
+
+
+@when('"{actor_alias}" decides to change the sector to "{service}" service')
+def when_actor_sets_sector_service_preference(context, actor_alias, service):
+    set_sector_preference(context, actor_alias, service=service)
+
+
+@when('"{actor_alias}" decides to change the sector to "{good}" good')
+def when_actor_sets_sector_good_preference(context, actor_alias, good):
+    set_sector_preference(context, actor_alias, good=good)
+
+
+@when('"{actor_alias}" decides to update his triage preferences')
+def when_actor_updates_triage_preferences(context, actor_alias):
+    personalised_journey_update_preference(context, actor_alias)
+
+
+@when('"{actor_alias}" goes through triage again')
+def when_actor_goes_through_triage_again(context, actor_alias):
+    triage_go_through_again(context, actor_alias)

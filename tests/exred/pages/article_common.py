@@ -23,6 +23,11 @@ NEXT_ARTICLE_LINK = "#next-article-link"
 SHARE_MENU = "ul.sharing-links"
 SHOW_MORE_BUTTON = "#js-paginate-list-more"
 GO_BACK_LINK = "#category-link"
+FEEDBACK_QUESTION = "#js-feedback > p"
+USEFUL_BUTTON = "#js-feedback-positive"
+NOT_USEFUL_BUTTON = "#js-feedback-negative"
+FEEDBACK_RESULT = "#js-feedback-success"
+
 
 SCOPE_ELEMENTS = {
     "total number of articles": TOTAL_NUMBER_OF_ARTICLES,
@@ -103,21 +108,22 @@ def check_elements_are_visible(driver: webdriver, elements: list):
 
 
 def show_all_articles(driver: webdriver):
-    with selenium_action(
-            driver, "Can't find 'Show more' button @'%s'", driver.current_url):
+    try:
         show_more_button = driver.find_element_by_css_selector(SHOW_MORE_BUTTON)
-    max_clicks = 10
-    counter = 0
-    # click up to 11 times - see bug ED-2561
-    while show_more_button.is_displayed() and counter <= max_clicks:
-        show_more_button.click()
-        counter += 1
-    if counter > max_clicks:
-        with assertion_msg(
-                "'Show more' button didn't disappear after clicking on it for"
-                " %d times", counter):
-            assert counter == max_clicks
-    take_screenshot(driver, NAME + " after showing all articles")
+        max_clicks = 10
+        counter = 0
+        # click up to 11 times - see bug ED-2561
+        while show_more_button.is_displayed() and counter <= max_clicks:
+            show_more_button.click()
+            counter += 1
+        if counter > max_clicks:
+            with assertion_msg(
+                    "'Show more' button didn't disappear after clicking on it"
+                    " for %d times", counter):
+                assert counter == max_clicks
+        take_screenshot(driver, NAME + " after showing all articles")
+    except NoSuchElementException:
+        logging.debug("Nothing to click as 'Show More' button is not visible")
 
 
 def go_to_article(driver: webdriver, title: str):
@@ -199,6 +205,13 @@ def get_read_counter(driver: webdriver) -> int:
     return int(counter.text)
 
 
+def get_total_articles(driver: webdriver) -> int:
+    counter = driver.find_element_by_css_selector(TOTAL_NUMBER_OF_ARTICLES)
+    with assertion_msg("Total Number or Articles to Read is not visible"):
+        assert counter.is_displayed()
+    return int(counter.text)
+
+
 def get_time_to_complete(driver: webdriver) -> int:
     ttc = driver.find_element_by_css_selector(TIME_TO_COMPLETE)
     with assertion_msg("Time To Complete Reading Articles is not visible"):
@@ -230,3 +243,46 @@ def time_to_read_in_seconds(driver: webdriver):
     filtered_lines = filter_lines(only_article)
     total_words_count = count_average_word_number_in_lines_list(filtered_lines)
     return round(total_words_count / WORDS_PER_SECOND)
+
+
+def flag_as_useful(driver: webdriver):
+    with selenium_action(
+            driver, "Could not find the 'YES' feedback button using: %s",
+            USEFUL_BUTTON):
+        useful = driver.find_element_by_css_selector(USEFUL_BUTTON)
+    assert useful.is_displayed()
+    useful.click()
+    take_screenshot(driver, "After telling us that Article was useful")
+
+
+def flag_as_not_useful(driver: webdriver):
+    with selenium_action(
+            driver, "Could not find the 'NO' feedback button using: %s",
+            NOT_USEFUL_BUTTON):
+        not_useful = driver.find_element_by_css_selector(NOT_USEFUL_BUTTON)
+    assert not_useful.is_displayed()
+    not_useful.click()
+    take_screenshot(driver, "After telling us that Article was not useful")
+
+
+def should_not_see_feedback_widget(driver: webdriver):
+    with selenium_action(
+            driver, "Could not find all elements of feedback widget"):
+        question = driver.find_element_by_css_selector(FEEDBACK_QUESTION)
+        useful = driver.find_element_by_css_selector(USEFUL_BUTTON)
+        not_useful = driver.find_element_by_css_selector(NOT_USEFUL_BUTTON)
+    with assertion_msg(
+            "Expected Feedback Widget to be hidden, but it's still visible"):
+        assert not question.is_displayed()
+        assert not useful.is_displayed()
+        assert not not_useful.is_displayed()
+
+
+def should_see_feedback_result(driver: webdriver):
+    with selenium_action(
+            driver, "Could not find the 'Thank you for the feedback' message"):
+        result = driver.find_element_by_css_selector(FEEDBACK_RESULT)
+    with assertion_msg(
+            "Expected to be thanked for the Feedback, but can't see such "
+            "message"):
+        assert result.is_displayed()

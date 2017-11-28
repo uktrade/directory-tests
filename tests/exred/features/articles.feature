@@ -65,6 +65,7 @@ Feature: Articles
   @ED-2616
   @guidance
   @articles
+  @<category>
   Scenario Outline: Any Exporter accessing the last Article from the Guidance Article "<category>" List should be able to navigate to the "<next>" Articles
     Given "Robert" accessed "<category>" guidance articles using "home page"
     And "Robert" opened any Article but the last one
@@ -105,7 +106,7 @@ Feature: Articles
   @<relevant>
   @<location>
   Scenario Outline: "<relevant>" Exporter should see a list of relevant Export Readiness Articles when accessed via "<location>"
-    Given "Robert" classifies himself as "<specific>" exporter
+    Given "Robert" classifies himself as "<relevant>" exporter
 
     When "Robert" goes to the Export Readiness Articles for "<relevant>" Exporters via "<location>"
 
@@ -154,49 +155,188 @@ Feature: Articles
     And "Robert" should see "Guidance" section on "personalised journey" page
 
 
-  @wip
+  @ED-2638
+  @triage
   @articles
-  Scenario Outline: Any Exporter should be able to get to the relevant article list using link from "<link_location>"
-    Given "Robert" classifies himself as "<exporter_status>" exporter
-    And "Robert" is on the Articles list page
-
-    When "Robert" decides to show more articles
-
-    Then "Robert" should see an ordered list of "previous + next 5" articles selected for "<exporter_status>" exporter
-    And "Robert" should see a Articles Read counter, Total number of Articles, Time to complete remaining chapters, Tasks completed counter and task Total number
-
-    Examples:
-      | exporter_status | link_location |
-      | New             | header menu   |
-      | Occasional      | header menu   |
-      | Regular         | header menu   |
-      | New             | page body     |
-      | Occasional      | page body     |
-      | Regular         | page body     |
-      | New             | footer links  |
-      | Occasional      | footer links  |
-      | Regular         | footer links  |
-
-
-  @wip
-  @articles
-  Scenario Outline: A triaged Exporter should be able to show more relevant articles on the customised page
+  @<relevant>
+  Scenario Outline: "<relevant>" Exporter accessing Guidance Articles through the Personalised Page should be able to navigate to the next article
     Given "Robert" was classified as "<relevant>" exporter in the triage process
-    And "Robert" is on the "Personalised Journey" page
+    And "Robert" decided to create her personalised journey page
 
-    When "Robert" decides to show more articles
+    When "Robert" opens any Article but the last one
+    And "Robert" decides to read through all remaining Articles from selected list
 
-    Then "Robert" should see an ordered list of "previous + next 5" articles selected for "<exporter_status>" exporter
-    And "Robert" should see a Articles Read counter, Total number of Articles, Time to complete remaining chapters, Tasks completed counter and task Total number
+    Then "Robert" should be able to navigate to the next article from the List following the Article Order
 
     Examples:
       | relevant   |
       | New        |
       | Occasional |
-      | Regular    |
+
+
+  @ED-2638
+  @triage
+  @articles
+  @regular
+  Scenario Outline: Regular Exporter accessing "<specific>" Guidance Articles through the Personalised Page should be able to navigate to the next article
+    Given "Robert" was classified as "regular" exporter in the triage process
+    And "Robert" decided to create her personalised journey page
+
+    When "Robert" goes to the "<specific>" Guidance Articles via "personalised journey"
+    When "Robert" opens any Article but the last one
+    And "Robert" decides to read through all remaining Articles from selected list
+
+    Then "Robert" should be able to navigate to the next article from the List following the Article Order
+
+    Examples:
+      | specific          |
+      | Market research   |
+      | Customer insight  |
+      | Finance           |
+      | Business planning |
+      | Getting paid      |
 
 
   @wip
+  @sharing
+  Scenario Outline: Any Exporter should be able to share the article via Facebook, Twitter, Linked and email on the article page
+    Given "Robert" is on the "<group>" Article List for randomly selected category
+    And "Robert" opened any Article
+
+    When "Robert" decides to share the article via "<social_media>"
+
+    Then "Robert" should be taken to a new tab with the "<sharing_option>" opened and pre-populated message with the link to the article
+
+    Examples:
+      | group            | sharing_option |
+      | Export Readiness | Facebook       |
+      | Guidance         | Twitter        |
+      | Export Readiness | LinkedIn       |
+      | Guidance         | email          |
+
+
+  @ED-2639
+  @feedback
+  Scenario Outline: Any Exporter should be able to tell us that they "<found_or_not>" the "<group>" article useful
+    Given "Robert" is on the "<group>" Article List for randomly selected category
+    And "Robert" opened any Article
+
+    When "Robert" decides to tell us that he "<found_or_not>" this article useful
+
+    Then feedback widget should disappear
+    And "Robert" should be thanked for his feedback
+
+    Examples: article groups
+      | group            | found_or_not  |
+      | Export Readiness | found         |
+      | Guidance         | haven't found |
+
+
+  @ED-2639
+  @feedback
+  @<relevant>
+  Scenario Outline: "<relevant>" Exporters should be able to tell us that they "<found_or_not>" the article relevant to them useful
+    Given "Robert" was classified as "<relevant>" exporter in the triage process
+    And "Robert" decided to create her personalised journey page
+    And "Robert" opened any Article
+
+    When "Robert" decides to tell us that he "<found_or_not>" this article useful
+
+    Then feedback widget should disappear
+    And "Robert" should be thanked for his feedback
+
+    Examples:
+      | relevant   | found_or_not  |
+      | New        | found         |
+      | Occasional | haven't found |
+
+
+  @ED-2639
+  @feedback
+  @<relevant>
+  Scenario Outline: "<relevant>" Exporters should be able to tell us that they "<found_or_not>" the "<group>" article useful
+    Given "Robert" was classified as "<relevant>" exporter in the triage process
+    And "Robert" decided to create her personalised journey page
+    And "Robert" went to randomly selected Guidance Articles category
+    And "Robert" opened any Article
+
+    When "Robert" decides to tell us that he "<found_or_not>" this article useful
+
+    Then feedback widget should disappear
+    And "Robert" should be thanked for his feedback
+
+    Examples:
+      | relevant | found_or_not  |
+      | Regular  | found         |
+      | Regular  | haven't found |
+
+
+
+  @ED-2654
+  @counters
+  @<group>
+  @<location>
+  Scenario Outline: Article Indicators should be updated accordingly after opening "<group>" Article
+    Given "Robert" went to randomly selected "<group>" Article category via "<location>"
+
+    When "Robert" opens any article on the list
+
+    Then "Robert" should see that Total number of Articles did not change
+    And "Robert" should see that Article Read Counter increased by "1"
+    And "Robert" should see that Time to Complete remaining chapters decreased or remained unchanged for short articles
+
+    Examples:
+      | group            | location     |
+      | Export Readiness | header menu  |
+      | Export Readiness | home page    |
+      | Export Readiness | footer links |
+      | Guidance         | header menu  |
+      | Guidance         | home page    |
+      | Guidance         | footer links |
+
+
+  @ED-2654
+  @counters
+  @<relevant>
+  Scenario Outline: Article Indicators should be updated accordingly after opening Export Readiness Article relevant to "<relevant>" Exporters
+    Given "Robert" was classified as "<relevant>" exporter in the triage process
+    And "Robert" decided to create her personalised journey page
+
+    When "Robert" opens any article on the list
+
+    Then "Robert" should see that Total Number of Articles did not change
+    And "Robert" should see that Article Read Counter increased by "1"
+    And "Robert" should see that Time to Complete remaining chapters decreased or remained unchanged for short articles
+
+    Examples:
+      | relevant   |
+      | New        |
+      | Occasional |
+
+
+  @ED-2654
+  @counters
+  @<group>
+  @<relevant>
+  @<location>
+  Scenario Outline: Article Indicators should be updated accordingly after opening "<group>" Article relevant to "<relevant>" Exporters
+    Given "Robert" was classified as "<relevant>" exporter in the triage process
+    And "Robert" decided to create her personalised journey page
+    And "Robert" went to randomly selected "<group>" Article category via "<location>"
+
+    When "Robert" opens any article on the list
+
+    Then "Robert" should see that Total number of Articles did not change
+    And "Robert" should see that Article Read Counter increased by "1"
+    And "Robert" should see that Time to Complete remaining chapters decreased or remained unchanged for short articles
+
+    Examples:
+      | relevant | group    | location             |
+      | Regular  | Guidance | personalised journey |
+
+
+  @wip
+  @session
   Scenario: An Exporter should be able to register from the Articles list page in order to save their progress
     Given "Robert" is on the Article List page
     And "Robert" read some of the articles
@@ -209,6 +349,7 @@ Feature: Articles
 
 
   @wip
+  @session
   Scenario: An Exporter should be able to sing in from the Articles list page in order to save their progress
     Given "Robert" is on the Article List page
     And "Robert" read some of the articles
@@ -220,6 +361,7 @@ Feature: Articles
 
 
   @wip
+  @session
   Scenario: An Exporter should be able to register from the specific Article page in order to save their progress
     Given "Robert" read some of the articles
     And "Robert" is on the specific Article page
@@ -232,6 +374,7 @@ Feature: Articles
 
 
   @wip
+  @session
   Scenario: A logged in Exporter should not see the register link on Article page
     Given "Robert" is signed in
     And "Robert" is on the specific Article page
@@ -240,6 +383,7 @@ Feature: Articles
 
 
   @wip
+  @session
   Scenario: A logged in Exporter should not see the register link on Article List page
     Given "Robert" is signed in
     And "Robert" is on the specific Article List page
@@ -248,6 +392,7 @@ Feature: Articles
 
 
   @wip
+  @session
   Scenario: An Exporter should be able to sign in from the specific Article page in order to save their progress
     Given "Robert" read some of the articles
     And "Robert" is on the specific Article page
@@ -259,6 +404,7 @@ Feature: Articles
 
 
   @wip
+  @session
   Scenario: A signed in Exporter's progress should be updated with temporary information (cookie data merged with persistent storage)
     Given "Robert" is signed in
     And "Robert" reads some articles
@@ -274,22 +420,7 @@ Feature: Articles
 
 
   @wip
-  Scenario Outline: Article read counter on the specific Article page and Articles list page should be the same
-    Given "Robert" accessed the article list from "<link_location>"
-
-    When "Robert" views any article on that list
-
-    Then "Robert" should see the same "Articles Read counter, Total number of Articles, Time to complete remaining chapters" as on the Articles list page
-
-    Examples:
-      | link_location             |
-      | header menu               |
-      | home page body            |
-      | personalised journey page |
-      | footer links              |
-
-
-  @wip
+  @out-of-scope
   Scenario: Any Exporter should see his task completion progress on the articles list page
     Given "Robert" is on the Article page
 
@@ -300,6 +431,7 @@ Feature: Articles
 
 
   @wip
+  @out-of-scope
   Scenario: Any Exporter should see his task completion progress on the article page
     Given "Robert" is on the Article page
     And "Robert" marks any task as completed
@@ -310,40 +442,10 @@ Feature: Articles
     Then "Robert" should see the tasks he already marked as completed
 
 
-  @articles
-  @wip
-  Scenario Outline: Any Exporter should be able to tell us whether they found the article useful or not
-    Given "Robert" is on the Article page
-
-    When "Robert" decides to tell us that he "<article_feedback_action>" this article useful
-
-    Then "Robert" feedback widget should disappear
-    And "Robert" should thanked for his feeback
-
-    Examples:
-      | article_feedback_action |
-      | found                   |
-      | did not find            |
   @wip
   @triage
   @articles
-  Scenario Outline: Any Exporter accessing Articles through the Triage should be able to navigate to the next article for his Persona
-    Given "Robert" was classified as "<specific>" exporter in the triage process
-
-    When "Robert" opens any Article from the Personalised Page which is not the last one
-
-    Then "Robert" should be able to navigate to the next article from the List following the Article Order for "<exporting_status>" Persona
-    And "Robert" should not see any Articles that are not relevant to his "<exporting_status>" Persona
-
-    Examples:
-      | specific   |
-      | New        |
-      | Occasional |
-
-
-  @wip
-  @triage
-  @articles
+  @out-of-scope
   Scenario Outline: Any Exporter that reads through all the Articles specific to his Persona should be presented with a dedicated Persona End Page
     Given "Robert" was classified as "<specific>" exporter in the triage process
     And "Robert" opens any Article from the Personalised Page which is not the last one
@@ -358,18 +460,3 @@ Feature: Articles
       | specific   |
       | New        |
       | Occasional |
-
-
-  @wip
-  Scenario Outline: Any Exporter should be able to share the article via Facebook, Twitter, Linked and email on the article page
-    Given "Robert" is on the Article page
-    And "Robert" decides to share the article via "<sharing_option>"
-
-    Then "Robert" should be taken to a new tab with the "<sharing_option>" opened and pre-populated message with the link to the article
-
-    Examples:
-      | sharing_option |
-      | Facebook       |
-      | Twitter        |
-      | Linked         |
-      | email          |

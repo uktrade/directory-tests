@@ -3,6 +3,8 @@
 from behave import then
 
 from steps.then_impl import (
+    articles_should_be_thanked_for_feedback,
+    articles_should_not_see_feedback_widget,
     articles_should_not_see_link_to_next_article,
     articles_should_not_see_personas_end_page,
     articles_should_see_article_as_read,
@@ -10,6 +12,9 @@ from steps.then_impl import (
     articles_should_see_link_to_first_article_from_next_category,
     articles_should_see_read_counter_increase,
     articles_should_see_time_to_complete_decrease,
+    articles_total_number_of_articles_should_not_change,
+    case_studies_should_see_case_study,
+    expected_page_elements_should_not_be_visible_on_get_finance,
     export_readiness_expected_page_elements_should_be_visible,
     export_readiness_should_see_articles,
     guidance_check_if_link_to_next_category_is_displayed,
@@ -19,11 +24,15 @@ from steps.then_impl import (
     guidance_should_see_articles,
     guidance_should_see_total_number_of_articles,
     guidance_tile_should_be_highlighted,
+    personalised_journey_should_not_see_banner_and_top_10_table,
+    personalised_journey_should_see_banner_and_top_10_table,
     personalised_journey_should_see_read_counter,
     personalised_should_see_layout_for,
     should_be_on_page,
+    should_see_links_to_services,
     should_see_sections,
     should_see_sections_on_home_page,
+    should_see_share_widget,
     triage_should_be_classified_as
 )
 from steps.when_impl import (
@@ -165,3 +174,53 @@ def then_actor_should_see_read_counter_increase(
 @then('"{actor_alias}" should see that Time to Complete remaining chapters decreased or remained unchanged for short articles')
 def then_actor_should_see_time_to_complete_decrease(context, actor_alias):
     articles_should_see_time_to_complete_decrease(context, actor_alias)
+
+
+@then('feedback widget should disappear')
+def then_feedback_widget_should_disappear(context):
+    articles_should_not_see_feedback_widget(context)
+
+
+@then('"{actor_alias}" should be thanked for his feedback')
+def then_actor_should_be_thanked_for_the_feedback(context, actor_alias):
+    articles_should_be_thanked_for_feedback(context, actor_alias)
+
+
+@then('"{actor_alias}" should see that Total Number of Articles did not change')
+def then_total_number_of_articles_should_not_change(context, actor_alias):
+    articles_total_number_of_articles_should_not_change(context, actor_alias)
+
+
+@then('"{actor_alias}" should see "{case_study_number}" case study')
+def then_actor_should_see_case_study(context, actor_alias, case_study_number):
+    case_studies_should_see_case_study(context, actor_alias, case_study_number)
+
+
+@then('"{actor_alias}" should see the Share Widget')
+def then_actor_should_see_share_widget(context, actor_alias):
+    should_see_share_widget(context, actor_alias)
+
+
+@then('"{actor_alias}" should see links to following Services "{services}" in "{location}"')
+def then_should_see_links_to_services(
+        context, actor_alias, services, location):
+    should_see_links_to_services(
+        context, actor_alias, services.split(", "), location)
+
+
+@then('"{actor_alias}" should not see "{elements}"')
+def step_impl(context, actor_alias, elements):
+    expected_page_elements_should_not_be_visible_on_get_finance(
+        context, actor_alias, elements.split(", "))
+
+
+@then('"{actor_alias}" should not see the Top Importer banner and Top 10 Importers table for their sector')
+def then_actor_should_not_see_banner_and_top_10_table(context, actor_alias):
+    personalised_journey_should_not_see_banner_and_top_10_table(
+        context, actor_alias)
+
+
+@then('"{actor_alias}" should see a Banner and Top importers table for their sector on personalised journey page')
+def then_actor_should_see_banner_and_top_10_table(context, actor_alias):
+    personalised_journey_should_see_banner_and_top_10_table(
+        context, actor_alias)

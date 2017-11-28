@@ -2,14 +2,20 @@
 """Given step definitions."""
 from behave import given
 
-from steps.then_impl import should_be_on_page
+from steps.then_impl import (
+    personalised_journey_should_not_see_banner_and_top_10_table,
+    should_be_on_page,
+    should_see_sections
+)
 from steps.when_impl import (
     actor_classifies_himself_as,
+    articles_open_any,
     articles_open_any_but_the_last,
     articles_open_first,
     articles_open_group,
     export_readiness_open_category,
     guidance_open_category,
+    guidance_open_random_category,
     set_online_marketplace_preference,
     set_sector_preference,
     start_triage,
@@ -78,7 +84,8 @@ def given_actor_was_classified_as(
 
 @given('"{actor_alias}" exports "{goods_or_services}"')
 def given_actor_sets_sector_preference(context, actor_alias, goods_or_services):
-    set_sector_preference(context, actor_alias, goods_or_services)
+    set_sector_preference(
+        context, actor_alias, goods_or_services=goods_or_services)
 
 
 @given('"{actor_alias}" "{used_or_not}" online marketplaces before')
@@ -103,6 +110,43 @@ def given_actor_opens_any_article_but_the_last_one(context, actor_alias):
     articles_open_any_but_the_last(context, actor_alias)
 
 
+@given('"{actor_alias}" opened any Article')
+def given_actor_opens_any_article(context, actor_alias):
+    articles_open_any(context, actor_alias)
+
+
 @given('"{actor_alias}" is on the "{group}" Article List for randomly selected category')
 def given_actor_is_on_article_list(context, actor_alias, group):
     articles_open_group(context, actor_alias, group)
+
+
+@given('"{actor_alias}" went to randomly selected Guidance Articles category')
+def given_actor_selects_random_guidance_category(context, actor_alias):
+    guidance_open_random_category(context, actor_alias)
+
+
+@given('"{actor_alias}" went to randomly selected "{group}" Article category via "{location}"')
+def given_actor_is_on_article_list(context, actor_alias, group, location):
+    articles_open_group(context, actor_alias, group, location=location)
+
+
+@given('"{actor_alias}" exports "{service}" service')
+def given_actor_sets_sector_service_preference(context, actor_alias, service):
+    set_sector_preference(context, actor_alias, service=service)
+
+
+@given('"{actor_alias}" can see "{sections}" section on "{page_name}" page')
+@given('"{actor_alias}" can see "{sections}" sections on "{page_name}" page')
+def given_can_see_sections(context, actor_alias, sections, page_name):
+    should_see_sections(context, actor_alias, sections.split(", "), page_name)
+
+
+@given('"{actor_alias}" exports "{good}" good')
+def given_actor_sets_sector_good_preference(context, actor_alias, good):
+    set_sector_preference(context, actor_alias, good=good)
+
+
+@given('"{actor_alias}" cannot see the Top Importer banner and Top 10 Importers table for their sector')
+def given_actor_cannot_see_banner_and_top_10_table(context, actor_alias):
+    personalised_journey_should_not_see_banner_and_top_10_table(
+        context, actor_alias)

@@ -4,7 +4,10 @@ import logging
 from urllib.parse import urljoin
 
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import (
+    NoSuchElementException,
+    WebDriverException
+)
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
@@ -12,7 +15,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 from registry.articles import get_articles
 from settings import EXRED_UI_URL
-from utils import assertion_msg, selenium_action, take_screenshot
+from utils import assertion_msg, find_element, selenium_action, take_screenshot
 
 NAME = "ExRed Personalised Journey"
 URL = urljoin(EXRED_UI_URL, "custom")
@@ -21,6 +24,8 @@ SHOW_MORE_BUTTON = "#js-paginate-list-more"
 READ_COUNTER = "#articles .scope-indicator .position > span.from"
 TOTAL_ARTICLES = "#articles .scope-indicator .position > span.to"
 
+UPDATE_PREFERENCE_LINK = "#content a.preferences"
+SECTOR_NAME = "#largest-importers > p.commodity-name"
 MARKET_RESEARCH_LINK = "#resource-guidance a[href='/market-research']"
 CUSTOMER_INSIGHT_LINK = "#resource-guidance a[href='/customer-insight']"
 FINANCE_LINK = "#resource-guidance a[href='/finance']"
@@ -35,7 +40,6 @@ SECTIONS = {
     "hero": {
         "title": "section.hero-section h1",
         "introduction": "section.hero-section p",
-        "exporting is great logo": "section.hero-section img",
         "update preferences link": "section.hero-section a.preferences",
     },
     "facts": {
@@ -233,6 +237,20 @@ def should_see_section(driver: webdriver, name: str):
             logging.debug("'%s' in '%s' is displayed", key, name)
 
 
+def should_not_see_section(driver: webdriver, name: str):
+    section = SECTIONS[name.lower()]
+    for key, selector in section.items():
+        try:
+            element = find_element(driver, by_css=selector)
+            with assertion_msg(
+                    "'%s' in '%s' is displayed", key, name):
+                assert not element.is_displayed()
+                logging.debug(
+                    "As expected '%s' in '%s' is not visible", key, name)
+        except (WebDriverException, NoSuchElementException):
+            logging.debug("As expected '%s' in '%s' is not visible", key, name)
+
+
 def check_top_facts_values(driver: webdriver):
     top_importer = driver.find_element_by_css_selector(TOP_IMPORTER).text
     top_trade_value = driver.find_element_by_css_selector(TRADE_VALUE).text
@@ -317,3 +335,31 @@ def layout_for_regular_exporter(
     should_see_section(driver, "soo tile")
     should_see_section(driver, "exopps tile")
     should_see_section(driver, "guidance")
+
+
+def should_not_see_banner_and_top_10_table(driver: webdriver):
+    should_not_see_section(driver, "facts")
+    should_not_see_section(driver, "top 10")
+
+
+def should_see_top_10_importers_in_sector(driver: webdriver, sector: str):
+    visible_sector_name = find_element(driver, by_css=SECTOR_NAME).text
+    with assertion_msg(
+            "Expected to see Top 10 Importers table for '%s' sector but got it"
+            " for '%s' sector", sector, visible_sector_name):
+        assert visible_sector_name == sector
+
+
+def should_see_banner_and_top_10_table(driver: webdriver, sector: str):
+    should_see_section(driver, "facts")
+    should_see_section(driver, "top 10")
+    should_see_top_10_importers_in_sector(driver, sector)
+
+
+def update_preferences(driver: webdriver):
+    update_preferences_link = find_element(
+        driver, by_css=UPDATE_PREFERENCE_LINK)
+    with assertion_msg("Update preferences link is not displayed"):
+        assert update_preferences_link.is_displayed()
+    update_preferences_link.click()
+    take_screenshot(driver, NAME + " after deciding to update preferences")

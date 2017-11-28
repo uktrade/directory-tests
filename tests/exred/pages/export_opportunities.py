@@ -1,0 +1,22 @@
+# -*- coding: utf-8 -*-
+"""Export Opportunities Home Page Object."""
+import logging
+from urllib.parse import urljoin
+
+from selenium import webdriver
+
+from settings import EXPORT_OPPORTUNITIES_UI_URL
+from utils import assertion_msg, take_screenshot
+
+NAME = "Export Opportunities Home page"
+URL = urljoin(EXPORT_OPPORTUNITIES_UI_URL, "")
+PAGE_TITLE = "Exporting is GREAT"
+
+
+def should_be_here(driver: webdriver):
+    with assertion_msg(
+            "Expected page title to be: '%s' but got '%s'", PAGE_TITLE,
+            driver.title):
+        assert driver.title.lower() == PAGE_TITLE.lower()
+    take_screenshot(driver, NAME)
+    logging.debug("All expected elements are visible on '%s' page", NAME)

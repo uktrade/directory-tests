@@ -6,7 +6,9 @@ from behave.runner import Context
 
 from pages import (
     article_common,
+    case_studies_common,
     export_readiness_common,
+    get_finance,
     guidance_common,
     home,
     personalised_journey
@@ -252,3 +254,79 @@ def articles_should_see_time_to_complete_decrease(
             "increased by %d. Expected time to read in seconds: %d",
             article_title, difference, time_to_read):
         assert difference <= 0
+
+
+def articles_should_not_see_feedback_widget(context: Context):
+    article_common.should_not_see_feedback_widget(context.driver)
+    logging.debug("Feedback widget is not visible any more")
+
+
+def articles_should_be_thanked_for_feedback(context, actor_alias):
+    article_common.should_see_feedback_result(context.driver)
+    logging.debug("%s was thanked for the feedback", actor_alias)
+
+
+def articles_total_number_of_articles_should_not_change(
+        context: Context, actor_alias: str):
+    actor = get_actor(context, actor_alias)
+    driver = context.driver
+    previous_total_articles = actor.articles_total_number
+    current_total_articles = article_common.get_total_articles(driver)
+    with assertion_msg(
+            "Expected Total Number of Articles to Read to be: %d but got "
+            "%d", previous_total_articles, current_total_articles):
+        assert current_total_articles == previous_total_articles
+
+
+def expected_page_elements_should_not_be_visible_on_get_finance(
+        context: Context, actor_alias: str, elements: list):
+    get_finance.check_elements_are_not_visible(context.driver, elements)
+    logging.debug(
+        "%s cannot see all expected page elements: '%s' on current page %s",
+        actor_alias, elements, context.driver.current_url)
+
+
+def case_studies_should_see_case_study(
+        context: Context, actor_alias: str, case_study_number: str):
+    case_study_numbers = {"first": 1, "second": 2, "third": 3}
+    number = case_study_numbers[case_study_number.lower()]
+    case_study_title = get_actor(context, actor_alias).case_study_title
+    case_studies_common.should_be_here(
+        context.driver, number, title=case_study_title)
+
+
+def should_see_share_widget(context: Context, actor_alias: str):
+    driver = context.driver
+    case_studies_common.should_see_share_widget(driver)
+    logging.debug(
+        "%s can see Share Widget on %s", actor_alias, driver.current_url)
+
+
+def should_see_links_to_services(
+        context: Context, actor_alias: str, services: list, location: str):
+    page_object = get_page_object(location)
+    for service in services:
+        page_object.should_see_link_to(context.driver, "services", service)
+        logging.debug(
+            "%s can see link to '%s' in '%s'", actor_alias, service, location)
+
+
+def personalised_journey_should_not_see_banner_and_top_10_table(
+        context: Context, actor_alias: str):
+    personalised_journey.should_not_see_banner_and_top_10_table(context.driver)
+    actor = get_actor(context, actor_alias)
+    code, sector = actor.what_do_you_want_to_export
+    logging.debug(
+        "As expected %s can't see Top Importer banner and Top 10 Importers "
+        "table on personalised page for '%s - %s' sector", code, sector)
+
+
+def personalised_journey_should_see_banner_and_top_10_table(
+        context: Context, actor_alias: str):
+    actor = get_actor(context, actor_alias)
+    code, sector = actor.what_do_you_want_to_export
+    personalised_journey.should_see_banner_and_top_10_table(
+        context.driver, sector)
+    logging.debug(
+        "As expected %s can see Top Importer banner and Top 10 Importers "
+        "table on personalised page for '%s - %s' sector", code, sector)

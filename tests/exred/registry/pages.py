@@ -2,19 +2,31 @@
 """ExRed Page Object Registry"""
 
 from pages import (
+    events,
+    export_opportunities,
+    find_a_buyer,
+    footer,
+    get_finance,
+    header,
     home,
+    interim_exporting_opportunities,
     personalised_journey,
+    selling_online_overseas,
     triage_are_you_registered_with_companies_house,
     triage_are_you_regular_exporter,
     triage_company_name,
     triage_do_you_use_online_marketplaces,
     triage_have_you_exported,
-    triage_result,
+    triage_summary,
     triage_what_do_you_want_to_export
 )
 
 EXRED_PAGE_REGISTRY = {
     "home": {
+        "url": home.URL,
+        "po": home
+    },
+    "home page": {
         "url": home.URL,
         "po": home
     },
@@ -42,13 +54,45 @@ EXRED_PAGE_REGISTRY = {
         "url": triage_company_name.URL,
         "po": triage_company_name
     },
-    "triage - result": {
-        "url": triage_result.URL,
-        "po": triage_result
+    "triage - summary": {
+        "url": triage_summary.URL,
+        "po": triage_summary
     },
     "personalised journey": {
         "url": personalised_journey.URL,
         "po": personalised_journey
+    },
+    "header menu": {
+        "url": None,
+        "po": header
+    },
+    "footer links": {
+        "url": None,
+        "po": footer
+    },
+    "interim export opportunities": {
+        "url": interim_exporting_opportunities.URL,
+        "po": interim_exporting_opportunities
+    },
+    "find a buyer": {
+        "url": find_a_buyer.URL,
+        "po": find_a_buyer
+    },
+    "selling online overseas": {
+        "url": selling_online_overseas.URL,
+        "po": selling_online_overseas
+    },
+    "export opportunities": {
+        "url": export_opportunities.URL,
+        "po": export_opportunities
+    },
+    "events": {
+        "url": events.URL,
+        "po": events
+    },
+    "get finance": {
+        "url": get_finance.URL,
+        "po": get_finance
     },
 }
 

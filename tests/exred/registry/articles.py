@@ -167,11 +167,11 @@ TYPES_OF_INTELLECTUAL_PROPERTY = Article(
     time_to_read=0
 )
 KNOW_WHAT_INTELLECTUAL_PROPERTY_YOU_HAVE = Article(
-    title='Know what IP you have',
+    title='Know what intellectual property you have',
     time_to_read=0
 )
 INTELLECTUAL_PROPERTY_PROTECTION = Article(
-    title='IP protection in multiple countries',
+    title='International intellectual property protection',
     time_to_read=0
 )
 MEET_YOUR_CUSTOMER = Article(
@@ -180,6 +180,10 @@ MEET_YOUR_CUSTOMER = Article(
 )
 MANAGE_LANGUAGE_DIFFERENCES = Article(
     title='Manage language differences',
+    time_to_read=0
+)
+PROTECT_YOUR_INTELLECTUAL_PROPERTY = Article(
+    title='Protect your intellectual property',
     time_to_read=0
 )
 UNDERSTAND_YOUR_CUSTOMERS_CULTURE = Article(
@@ -218,7 +222,7 @@ PERSONA_NEW_ARTICLES = [
     CONSIDER_HOW_PAID,
     PLAN_THE_LOGISTICS,
     INTERNATIONALISE_WESBITE,
-    WHAT_INTELLECTUAL_PROPERTY_IS,
+    PROTECT_YOUR_INTELLECTUAL_PROPERTY,
     TYPES_OF_INTELLECTUAL_PROPERTY,
     NEXT_STEPS_NEW_EXPORTER
 ]
@@ -258,7 +262,7 @@ PERSONA_OCCASIONAL_ARTICLES = [
     GET_YOUR_EXPORT_DOCUMENTS_RIGHT,
     INTERNATIONALISE_WESBITE,
     MATCH_YOUR_WEBSITE_TO_YOUR_AUDIENCE,
-    WHAT_INTELLECTUAL_PROPERTY_IS,
+    PROTECT_YOUR_INTELLECTUAL_PROPERTY,
     TYPES_OF_INTELLECTUAL_PROPERTY,
     KNOW_WHAT_INTELLECTUAL_PROPERTY_YOU_HAVE,
     INTELLECTUAL_PROPERTY_PROTECTION,
@@ -341,7 +345,7 @@ GUIDANCE_OPERATIONS_AND_COMPLIANCE_ARTICLES = [
     GET_YOUR_EXPORT_DOCUMENTS_RIGHT,
     MATCH_YOUR_WEBSITE_TO_YOUR_AUDIENCE,
     INTERNATIONALISE_WESBITE,
-    WHAT_INTELLECTUAL_PROPERTY_IS,
+    PROTECT_YOUR_INTELLECTUAL_PROPERTY,
     TYPES_OF_INTELLECTUAL_PROPERTY,
     KNOW_WHAT_INTELLECTUAL_PROPERTY_YOU_HAVE,
     INTELLECTUAL_PROPERTY_PROTECTION,
@@ -420,7 +424,7 @@ GROUPS = {
 
 
 def get_articles(group: str, category: str, *, sub_category: str = None) -> list:
-    """Find matching articles and sort them by their category index.
+    """Get an ordered list of articles for specific group & category.
 
     :param group: Article Group: Guidance, Export Readiness, Triage
     :param category: Category of Articles that belong to a specific Group

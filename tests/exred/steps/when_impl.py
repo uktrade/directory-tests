@@ -18,10 +18,10 @@ from pages import (
     triage_company_name,
     triage_do_you_use_online_marketplaces,
     triage_have_you_exported,
-    triage_result,
+    triage_summary,
     triage_what_do_you_want_to_export
 )
-from registry.articles import get_article, get_articles
+from registry.articles import GUIDANCE, get_article, get_articles
 from registry.pages import get_page_object
 from settings import EXRED_SECTORS
 from utils import (
@@ -72,6 +72,8 @@ def open_group_element(
         footer.open(driver, group, element)
     elif location == "personalised journey":
         personalised_journey.open(driver, group, element)
+    else:
+        raise KeyError("Could not recognize location: {}".format(location))
 
 
 def guidance_open_category(
@@ -91,9 +93,20 @@ def guidance_open_category(
 
 
 @retry(wait_fixed=30000, stop_max_attempt_number=3)
+def guidance_open_random_category(
+        context, actor_alias, *, location: str = "personalised journey"):
+    category = random.choice(list(GUIDANCE.keys()))
+    guidance_open_category(context, actor_alias, category, location)
+
+
 def start_triage(context: Context, actor_alias: str):
     home.start_exporting_journey(context.driver)
     logging.debug("%s started triage process", actor_alias)
+
+
+def continue_export_journey(context: Context, actor_alias: str):
+    home.continue_export_journey(context.driver)
+    logging.debug("%s decided to continue export journey", actor_alias)
 
 
 def triage_say_what_do_you_want_to_export(
@@ -148,7 +161,7 @@ def triage_say_you_are_not_incorporated(context: Context, actor_alias: str):
     driver = context.driver
     triage_are_you_registered_with_companies_house.select_no(driver)
     triage_are_you_registered_with_companies_house.submit(driver)
-    triage_result.should_be_here(driver)
+    triage_summary.should_be_here(driver)
     update_actor(context, actor_alias, are_you_incorporated=False)
 
 
@@ -229,14 +242,14 @@ def triage_enter_company_name(
         triage_company_name.hide_suggestions(driver)
     final_company_name = triage_company_name.get_company_name(driver)
     triage_company_name.submit(driver)
-    triage_result.should_be_here(driver)
+    triage_summary.should_be_here(driver)
     update_actor(context, actor_alias, company_name=final_company_name)
 
 
 def triage_do_not_enter_company_name(context: Context, actor_alias: str):
     driver = context.driver
     triage_company_name.submit(driver)
-    triage_result.should_be_here(driver)
+    triage_summary.should_be_here(driver)
     update_actor(context, actor_alias, company_name=None)
 
 
@@ -254,26 +267,27 @@ def triage_what_is_your_company_name(context, actor_alias, decision):
 
 
 def triage_should_be_classified_as_new(context: Context):
-    triage_result.should_be_classified_as_new(context.driver)
+    triage_summary.should_be_classified_as_new(context.driver)
 
 
 def triage_should_be_classified_as_occasional(context: Context):
-    triage_result.should_be_classified_as_occasional(context.driver)
+    triage_summary.should_be_classified_as_occasional(context.driver)
 
 
 def triage_should_be_classified_as_regular(context: Context):
-    triage_result.should_be_classified_as_regular(context.driver)
+    triage_summary.should_be_classified_as_regular(context.driver)
 
 
 def triage_create_exporting_journey(context: Context, actor_alias: str):
-    triage_result.create_exporting_journey(context.driver)
+    triage_summary.create_exporting_journey(context.driver)
     update_actor(context, alias=actor_alias, created_personalised_journey=True)
 
 
 def triage_classify_as_new(
         context: Context, actor_alias: str, incorporated: bool, code: str,
-        sector: str):
-    start_triage(context, actor_alias)
+        sector: str, *, start_from_home_page: bool = True):
+    if start_from_home_page:
+        start_triage(context, actor_alias)
     triage_say_what_do_you_want_to_export(
         context, actor_alias, code=code, sector=sector)
     triage_say_you_never_exported_before(context, actor_alias)
@@ -288,8 +302,10 @@ def triage_classify_as_new(
 
 def triage_classify_as_occasional(
         context: Context, actor_alias: str, incorporated: bool,
-        use_online_marketplaces: bool, code: str, sector: str):
-    start_triage(context, actor_alias)
+        use_online_marketplaces: bool, code: str, sector: str, *,
+        start_from_home_page: bool = True):
+    if start_from_home_page:
+        start_triage(context, actor_alias)
     triage_say_what_do_you_want_to_export(
         context, actor_alias, code=code, sector=sector)
     triage_say_you_exported_before(context, actor_alias)
@@ -309,8 +325,9 @@ def triage_classify_as_occasional(
 
 def triage_classify_as_regular(
         context: Context, actor_alias: str, incorporated: bool, code: str,
-        sector: str):
-    start_triage(context, actor_alias)
+        sector: str, *, start_from_home_page: bool = True):
+    if start_from_home_page:
+        start_triage(context, actor_alias)
     triage_say_what_do_you_want_to_export(
         context, actor_alias, code=code, sector=sector)
     triage_say_you_exported_before(context, actor_alias)
@@ -326,7 +343,7 @@ def triage_classify_as_regular(
 
 def triage_classify_as(
         context: Context, actor_alias: str, *, exporter_status: str = None,
-        is_incorporated: str = None):
+        is_incorporated: str = None, start_from_home_page: bool = True):
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
     actor = get_actor(context, actor_alias)
@@ -358,7 +375,8 @@ def triage_classify_as(
     else:
         incorporated = random.choice([True, False])
 
-    visit_page(context, actor_alias, "home")
+    if start_from_home_page:
+        visit_page(context, actor_alias, "home")
 
     logging.debug(
         "%s decided to classify himself/herself as %s Exporter", actor_alias,
@@ -366,19 +384,24 @@ def triage_classify_as(
 
     if exporter_status == "new":
         triage_classify_as_new(
-            context, actor_alias, incorporated, code, sector)
+            context, actor_alias, incorporated, code, sector,
+            start_from_home_page=start_from_home_page)
     elif exporter_status == "occasional":
         triage_classify_as_occasional(
             context, actor_alias, incorporated, use_online_marketplaces, code,
-            sector)
+            sector, start_from_home_page=start_from_home_page)
     elif exporter_status == "regular":
         triage_classify_as_regular(
-            context, actor_alias, incorporated, code, sector)
+            context, actor_alias, incorporated, code, sector,
+            start_from_home_page=start_from_home_page)
+    update_actor(
+        context, actor_alias, article_group="personalised journey",
+        article_category=exporter_status)
 
 
 def triage_should_see_answers_to_questions(context, actor_alias):
     actor = get_actor(context, actor_alias)
-    q_and_a = triage_result.get_questions_and_answers(context.driver)
+    q_and_a = triage_summary.get_questions_and_answers(context.driver)
     if actor.what_do_you_want_to_export is not None:
         code, sector = actor.what_do_you_want_to_export
         question = "What do you want to export?"
@@ -407,13 +430,12 @@ def triage_should_see_answers_to_questions(context, actor_alias):
                 "Expected answer to question '%s' to be '%s', but got '%s' "
                 "instead", question, export_regularly, q_and_a[question]):
             assert q_and_a[question] == export_regularly
-    # TODO uncomment when ED-2494 & ED-2536 are fixed
-    # if actor.are_you_incorporated is not None:
-    #     incorporated = "Yes" if actor.are_you_incorporated else "No"
-    #     assert q_and_a["Is your company incorporated in the UK?"] == incorporated
-    # if actor.do_you_use_online_marketplaces is not None:
-    #     sell_online = "Yes" if actor.do_you_use_online_marketplaces else "No"
-    #     assert q_and_a["Do you use online marketplaces to sell your products?"] == sell_online
+    if actor.are_you_incorporated is not None:
+        incorporated = "Yes" if actor.are_you_incorporated else "No"
+        assert q_and_a["Is your company incorporated in the UK?"] == incorporated
+    if actor.do_you_use_online_marketplaces is not None:
+        sell_online = "Yes" if actor.do_you_use_online_marketplaces else "No"
+        assert q_and_a["Do you use online marketplaces to sell your products?"] == sell_online
 
 
 def personalised_journey_create_page(context: Context, actor_alias: str):
@@ -424,13 +446,13 @@ def personalised_journey_create_page(context: Context, actor_alias: str):
     personalised_journey.should_be_here(context.driver)
 
 
-def triage_change_answers(context, actor_alias):
-    triage_result.change_answers(context.driver)
+def triage_change_answers(context: Context, actor_alias: str):
+    triage_summary.change_answers(context.driver)
     triage_what_do_you_want_to_export.should_be_here(context.driver)
     logging.debug("%s decided to change the Triage answers", actor_alias)
 
 
-def triage_answer_questions_again(context, actor_alias):
+def triage_answer_questions_again(context: Context, actor_alias: str):
     driver = context.driver
     actor = get_actor(context, actor_alias)
     code, sector = actor.what_do_you_want_to_export
@@ -448,7 +470,7 @@ def triage_answer_questions_again(context, actor_alias):
         else:
             triage_are_you_registered_with_companies_house.is_no_selected(driver)
             triage_are_you_registered_with_companies_house.submit(driver)
-        triage_result.should_be_here(driver)
+        triage_summary.should_be_here(driver)
 
     if actor.have_you_exported_before is not None:
         if actor.have_you_exported_before:
@@ -460,7 +482,7 @@ def triage_answer_questions_again(context, actor_alias):
                 triage_are_you_regular_exporter.submit(driver)
                 triage_are_you_registered_with_companies_house.should_be_here(driver)
                 continue_from_are_you_incorporated()
-                triage_result.should_be_classified_as_regular(driver)
+                triage_summary.should_be_classified_as_regular(driver)
             else:
                 triage_are_you_regular_exporter.is_no_selected(driver)
                 triage_are_you_regular_exporter.submit(driver)
@@ -471,15 +493,21 @@ def triage_answer_questions_again(context, actor_alias):
                     triage_do_you_use_online_marketplaces.is_no_selected(driver)
                 triage_do_you_use_online_marketplaces.submit(driver)
                 continue_from_are_you_incorporated()
-                triage_result.should_be_classified_as_occasional(driver)
+                triage_summary.should_be_classified_as_occasional(driver)
         else:
             triage_have_you_exported.is_no_selected(driver)
             triage_have_you_exported.submit(driver)
             triage_are_you_registered_with_companies_house.should_be_here(driver)
             continue_from_are_you_incorporated()
-            triage_result.should_be_classified_as_new(driver)
+            triage_summary.should_be_classified_as_new(driver)
         triage_should_see_answers_to_questions(context, actor_alias)
     logging.debug("%s was able to change the Triage answers", actor_alias)
+
+
+def triage_go_through_again(context: Context, actor_alias: str):
+    personalised_journey_update_preference(context, actor_alias)
+    triage_change_answers(context, actor_alias)
+    triage_classify_as(context, actor_alias, start_from_home_page=False)
 
 
 def export_readiness_open_category(
@@ -499,22 +527,43 @@ def export_readiness_open_category(
 
 
 def set_sector_preference(
-        context: Context, actor_alias: str, goods_or_services: str):
+        context: Context, actor_alias: str, *, goods_or_services: str = None,
+        good: str = None, service: str = None):
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
-    if goods_or_services.lower() == "goods":
-        sectors = [(code, sector)
-                   for code, sector in EXRED_SECTORS.items()
-                   if code.startswith("HS")]
-    elif goods_or_services.lower() == "services":
-        sectors = [(code, sector)
-                   for code, sector in EXRED_SECTORS.items()
-                   if code.startswith("EB")]
+    assert goods_or_services or not (good and service)
+    message = ("You can provide only one of the following arguments: "
+               "`goods_or_services`, `good` or `service`. You've passed: "
+               "`goods_or_services={} good={} service={}"
+               .format(goods_or_services, good, service))
+    optional_args = [goods_or_services, good, service]
+    assert len([arg for arg in optional_args if arg is not None]) == 1, message
+    logging.debug(
+        "%s exports: `goods_or_services=%s good=%s service=5s",
+        goods_or_services, good, service)
+    if goods_or_services is not None:
+        if goods_or_services.lower() == "goods":
+            sectors = [(code, sector)
+                       for code, sector in EXRED_SECTORS.items()
+                       if code.startswith("HS")]
+        elif goods_or_services.lower() == "services":
+            sectors = [(code, sector)
+                       for code, sector in EXRED_SECTORS.items()
+                       if code.startswith("EB")]
+        else:
+            raise KeyError(
+                "Could not recognise '%s' as valid sector. Please use 'goods' "
+                "or 'services'" % goods_or_services)
+        code, sector = random.choice(sectors)
     else:
-        raise KeyError(
-            "Could not recognise '%s' as valid sector. Please use 'goods' or "
-            "'services'" % goods_or_services)
-    code, sector = random.choice(sectors)
+        filtered_sectors = [(code, sector)
+                            for code, sector in EXRED_SECTORS.items()
+                            if sector == (good or service)
+                            ]
+        assert len(filtered_sectors) == 1, ("Could not find code & sector for"
+                                            " '{}'".format((good or service)))
+        code, sector = filtered_sectors[0]
+    logging.debug("Code: %s - Sector: %s", code, sector)
     update_actor(
         context, actor_alias, what_do_you_want_to_export=(code, sector))
     logging.debug(
@@ -582,13 +631,21 @@ def articles_open_any(context: Context, actor_alias: str):
     articles = get_articles(group, category)
     any_article = random.choice(articles)
     article_common.show_all_articles(driver)
-    article_common.go_to_article(driver, any_article .title)
+
+    total_articles = article_common.get_total_articles(context.driver)
+    articles_read_counter = article_common.get_read_counter(context.driver)
+    time_to_complete = article_common.get_time_to_complete(context.driver)
+    article_common.go_to_article(driver, any_article.title)
     time_to_read = article_common.time_to_read_in_seconds(context.driver)
     logging.debug(
         "%s is on '%s' article page: %s", actor_alias,
         any_article .title, driver.current_url)
     visited_articles = [(any_article.index, any_article.title, time_to_read)]
-    update_actor(context, actor_alias, visited_articles=visited_articles)
+    update_actor(
+        context, actor_alias, articles_read_counter=articles_read_counter,
+        articles_time_to_complete=time_to_complete,
+        articles_total_number=total_articles,
+        visited_articles=visited_articles)
 
 
 def guidance_read_through_all_articles(context: Context, actor_alias: str):
@@ -633,7 +690,9 @@ def guidance_read_through_all_articles(context: Context, actor_alias: str):
     update_actor(context, actor_alias, visited_articles=visited_articles)
 
 
-def articles_open_group(context: Context, actor_alias: str, group: str):
+def articles_open_group(
+        context: Context, actor_alias: str, group: str, *,
+        location: str = None):
     categories = {
         "guidance": [
             "market research",
@@ -650,7 +709,8 @@ def articles_open_group(context: Context, actor_alias: str, group: str):
         ]
     }
     category = random.choice(categories[group.lower()])
-    location = random.choice(["header menu", "footer links", "home page"])
+    locations = ["header menu", "footer links", "home page"]
+    location = location or random.choice(locations)
 
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
@@ -669,13 +729,66 @@ def articles_open_group(context: Context, actor_alias: str, group: str):
         raise KeyError(
             "Did not recognize '{}'. Please use: 'Guidance' or 'Export "
             "Readiness'".format(group))
+    total_articles = article_common.get_total_articles(context.driver)
     articles_read_counter = article_common.get_read_counter(context.driver)
     time_to_complete = article_common.get_time_to_complete(context.driver)
     update_actor(
         context, actor_alias, articles_read_counter=articles_read_counter,
-        articles_time_to_complete=time_to_complete)
+        articles_time_to_complete=time_to_complete,
+        articles_total_number=total_articles)
 
 
 def articles_go_back_to_article_list(context: Context, actor_alias: str):
     article_common.go_back_to_article_list(context.driver)
     logging.debug("%s went back to the Article List page", actor_alias)
+
+
+def articles_found_useful_or_not(
+        context: Context, actor_alias: str, useful_or_not: str):
+    if useful_or_not.lower() == "found":
+        article_common.flag_as_useful(context.driver)
+    elif useful_or_not.lower() in ["haven't found", "hasn't found"]:
+        article_common.flag_as_not_useful(context.driver)
+    else:
+        raise KeyError(
+            "Could not recognize: '{}'. Please use 'found' or 'did not find'"
+            .format(useful_or_not))
+    logging.debug("%s %s current article useful", actor_alias, useful_or_not)
+
+
+def case_studies_go_to(context: Context, actor_alias: str, case_number: str):
+    case_study_title = home.get_case_study_title(context.driver, case_number)
+    home.open_case_study(context.driver, case_number)
+    update_actor(context, actor_alias, case_study_title=case_study_title)
+    logging.debug(
+        "%s opened %s case study, entitled: %s", actor_alias, case_number,
+        case_study_title)
+
+
+def open_link(
+        context: Context, actor_alias: str, group: str, category: str,
+        location: str):
+    if not get_actor(context, actor_alias):
+        add_actor(context, unauthenticated_actor(actor_alias))
+    update_actor(
+        context, actor_alias, article_group=group, article_category=category)
+    logging.debug(
+        "%s is about to open link to '%s' '%s' via %s", actor_alias, group,
+        category, location)
+    open_group_element(
+        context, group=group, element=category, location=location)
+    update_actor(
+        context, actor_alias, article_group="guidance",
+        article_category=category, article_location=location)
+
+
+def open_service_link_on_interim_page(
+        context: Context, actor_alias: str, service: str):
+    page_name = "interim {}".format(service)
+    page = get_page_object(page_name)
+    page.go_to_service(context.driver)
+    logging.debug("%s went to %s service page", actor_alias, service)
+
+
+def personalised_journey_update_preference(context, actor_alias):
+    personalised_journey.update_preferences(context.driver)

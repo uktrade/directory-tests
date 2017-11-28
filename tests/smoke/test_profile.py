@@ -99,7 +99,7 @@ def test_directory_supplier_verified_user():
         'company_number': '12345679',
         'sso_id': users['verified']['sso_id'],
         'company_email': 'testo@useri.com',
-        'profile_url': 'http://dev.supplier.directory.uktrade.io/'
+        'profile_url': 'https://dev.supplier.directory.uktrade.io/'
                        'suppliers/12345679',
         'company_has_exported_before': True,
         'is_company_owner': True,

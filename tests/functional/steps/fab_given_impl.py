@@ -2,8 +2,8 @@
 """FAB Given step implementations."""
 import logging
 import random
-import string
 import uuid
+from string import ascii_letters, digits
 from urllib.parse import urlsplit
 
 from behave.runner import Context
@@ -70,8 +70,8 @@ def unauthenticated_supplier(supplier_alias: str) -> Actor:
     email = ("test+{}{}@directory.uktrade.io"
              .format(supplier_alias, str(uuid.uuid4()))
              .replace("-", "").replace(" ", "").lower())
-    password_length = 10
-    password = ''.join(random.choice(string.ascii_letters)
+    password_length = 15
+    password = ''.join(random.choice(ascii_letters) + random.choice(digits)
                        for _ in range(password_length))
     return Actor(
         alias=supplier_alias, email=email, password=password, session=session,
@@ -102,7 +102,8 @@ def unauthenticated_buyer(buyer_alias: str) -> Actor:
 
 def reg_create_sso_account_associated_with_company(
         context: Context, supplier_alias: str, company_alias: str):
-    context.add_actor(unauthenticated_supplier(supplier_alias))
+    if not context.get_actor(supplier_alias):
+        context.add_actor(unauthenticated_supplier(supplier_alias))
     select_random_company(context, supplier_alias, company_alias)
     reg_confirm_company_selection(context, supplier_alias, company_alias)
     reg_confirm_export_status(context, supplier_alias, exported=True)

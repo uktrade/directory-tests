@@ -1,26 +1,42 @@
 # -*- coding: utf-8 -*-
 """ExRed Home Page Object."""
 import logging
+import random
 from urllib.parse import urljoin
 
 from retrying import retry
 from selenium import webdriver
 
 from settings import EXRED_UI_URL
-from utils import assertion_msg, selenium_action, take_screenshot
+from utils import (
+    assertion_msg,
+    find_element,
+    find_elements,
+    selenium_action,
+    take_screenshot,
+    wait_for_visibility
+)
 
 NAME = "ExRed Home"
 URL = urljoin(EXRED_UI_URL, "")
 
 GET_STARTED_BUTTON = ".triage a.button-cta"
+CONTINUE_EXPORT_JOURNEY = "#continue-export-journey"
 NEW_TO_EXPORTING_LINK = "#personas > .container > .group div:nth-child(1) a"
 OCCASIONAL_EXPORTER_LINK = "#personas > .container > .group div:nth-child(2) a"
 REGULAR_EXPORTED_LINK = "#personas > .container > .group div:nth-child(3) a"
 FIND_A_BUYER_SERVICE_LINK = "#services div:nth-child(1) > article > a"
 ONLINE_MARKETPLACES_SERVICE_LINK = "#services div:nth-child(2) > article > a"
 EXPORT_OPPORTUNITIES_SERVICE_LINK = "#services div:nth-child(3) > article > a"
-CAROUSEL_PREVIOUS_BUTTON = "#carousel label.ed-carousel__control--backward"
+CAROUSEL_INDICATORS_SECTION = "#carousel  div.ed-carousel__indicators"
+CAROUSEL_INDICATORS = ".ed-carousel__indicator"
+CAROUSEL_PREV_BUTTON = "#carousel label.ed-carousel__control--backward"
 CAROUSEL_NEXT_BUTTON = "#carousel label.ed-carousel__control--forward"
+CAROUSEL_FIRST_INDICATOR = ".ed-carousel__indicator[for='1']"
+CAROUSEL_SECOND_INDICATOR = ".ed-carousel__indicator[for='2']"
+CAROUSEL_THIRD_INDICATOR = ".ed-carousel__indicator[for='3']"
+CASE_STUDIES_LINK = "#carousel h3 > a"
+CASE_STUDY_LINK = "#carousel div.ed-carousel__slide:nth-child({}) h3 > a"
 MARKET_RESEARCH_LINK = "#resource-guidance a[href='/market-research']"
 CUSTOMER_INSIGHT_LINK = "#resource-guidance a[href='/customer-insight']"
 FINANCE_LINK = "#resource-guidance a[href='/finance']"
@@ -30,10 +46,10 @@ OPERATIONS_AND_COMPLIANCE_LINK = "#resource-guidance a[href='/operations-and-com
 
 SECTIONS = {
     "video": {
-        "itself": "#content > section.hero-section",
-        "teaser": "#content > section.hero-section div.hero-teaser",
-        "teaser_title": "#content > section.hero-section div.hero-teaser h1.title",
-        "teaser_logo": "#content > section.hero-section div.hero-teaser img",
+        "itself": "section.hero-campaign-section > div > div",
+        "teaser_title": "section.hero-campaign-section > div > div > h1",
+        "teaser description": "section.hero-campaign-section > div > div > p:nth-child(2)",
+        "teaser_logo": "section.hero-campaign-section > div > div > img",
     },
     "exporting journey": {
         "itself": "#content > section.triage.triage-section",
@@ -73,15 +89,15 @@ SECTIONS = {
         "find_a_buyer_service": "#services div:nth-child(1) > article",
         "online_marketplaces_service": "#services div:nth-child(2) > article",
         "export_opportunities_service": "#services div:nth-child(3) > article",
-        "find_a_buyer_service_link": FIND_A_BUYER_SERVICE_LINK,
-        "online_marketplaces_service_link": ONLINE_MARKETPLACES_SERVICE_LINK,
-        "export_opportunities_service_link": EXPORT_OPPORTUNITIES_SERVICE_LINK,
+        "find a buyer": FIND_A_BUYER_SERVICE_LINK,
+        "selling online overseas": ONLINE_MARKETPLACES_SERVICE_LINK,
+        "export opportunities": EXPORT_OPPORTUNITIES_SERVICE_LINK,
     },
     "case studies": {
         "itself": "#carousel",
         "heading": "#carousel .heading",
         "intro": "#carousel .intro",
-        "carousel_previous_button": CAROUSEL_PREVIOUS_BUTTON,
+        "carousel_previous_button": CAROUSEL_PREV_BUTTON,
         "carousel_next_button": CAROUSEL_NEXT_BUTTON
     }
 }
@@ -115,12 +131,7 @@ def should_see_sections(driver: webdriver, section_names: list):
             logging.debug(
                 "Looking for '%s' element in '%s' section with '%s' selector",
                 element_name, section_name, element_selector)
-            with selenium_action(
-                    driver,
-                    "Could not find '%s' in '%s' section using following "
-                    "selector '%s'", element_name, section_name,
-                    element_selector):
-                element = driver.find_element_by_css_selector(element_selector)
+            element = find_element(driver, by_css=element_selector)
             with assertion_msg(
                     "It looks like '%s' in '%s' section is not visible",
                     element_name, section_name):
@@ -131,14 +142,111 @@ def should_see_sections(driver: webdriver, section_names: list):
         NAME)
 
 
+def should_see_link_to(driver: webdriver, section: str, item_name: str):
+    item_selector = SECTIONS[section.lower()][item_name.lower()]
+    with selenium_action(
+            driver, "Could not find '%s' using '%s'", item_name,
+            item_selector):
+        menu_item = driver.find_element_by_css_selector(item_selector)
+    with assertion_msg(
+            "It looks like '%s' in '%s' section is not visible", item_name,
+            section):
+        assert menu_item.is_displayed()
+
+
 def start_exporting_journey(driver: webdriver):
     """Start Exporting Journey (Triaging).
 
     :param driver: Any Selenium Driver (Remote, Chrome, Firefox, PhantomJS etc.
     """
-    button = driver.find_element_by_css_selector(GET_STARTED_BUTTON)
+    button = find_element(driver, by_css=GET_STARTED_BUTTON)
     assert button.is_displayed()
     button.click()
+
+
+def continue_export_journey(driver: webdriver):
+    """Continue your Export Journey (Triage)."""
+    button = find_element(driver, by_css=CONTINUE_EXPORT_JOURNEY)
+    assert button.is_displayed()
+    button.click()
+
+
+def get_number_of_current_carousel_article(driver: webdriver) -> int:
+    indicators = find_elements(driver, by_css=CAROUSEL_INDICATORS)
+    opacities = [(k, float(v.value_of_css_property("opacity")))
+                 for k, v in enumerate(indicators)]
+    active_indicator = [opacity[0] for opacity in opacities if opacity[1] == 1]
+    return active_indicator[0] + 1
+
+
+def find_case_study_by_going_left(driver: webdriver, to_open: int):
+    current = get_number_of_current_carousel_article(driver)
+    prev_buttons = find_elements(driver, by_css=CAROUSEL_PREV_BUTTON)
+    prev_button = [nb for nb in prev_buttons if nb.is_displayed()][0]
+    max_actions = 5
+    while (current != to_open) and (max_actions > 0):
+        prev_button.click()
+        prev_buttons = find_elements(driver, by_css=CAROUSEL_PREV_BUTTON)
+        prev_button = [nb for nb in prev_buttons if nb.is_displayed()][0]
+        current = get_number_of_current_carousel_article(driver)
+        take_screenshot(
+            driver,
+            "After moving left to find Case Study {}".format(to_open))
+        max_actions -= 1
+
+
+def find_case_study_by_going_right(driver: webdriver, to_open: int):
+    current = get_number_of_current_carousel_article(driver)
+    next_buttons = find_elements(driver, by_css=CAROUSEL_NEXT_BUTTON)
+    next_button = [nb for nb in next_buttons if nb.is_displayed()][0]
+    max_actions = 5
+    while (current != to_open) and (max_actions > 0):
+        next_button.click()
+        next_buttons = find_elements(driver, by_css=CAROUSEL_NEXT_BUTTON)
+        next_button = [nb for nb in next_buttons if nb.is_displayed()][0]
+        current = get_number_of_current_carousel_article(driver)
+        take_screenshot(
+            driver,
+            "After moving right to find Case Study {}".format(to_open))
+        max_actions -= 1
+
+
+def move_to_case_study_navigation_buttons(driver: webdriver):
+    prev_button = driver.find_element_by_css_selector(CAROUSEL_PREV_BUTTON)
+    vertical_position = prev_button.location['y']
+    logging.debug("Moving focus to Carousel navigation buttons")
+    driver.execute_script("window.scrollTo(0, {});".format(vertical_position))
+
+
+def open_case_study(driver: webdriver, case_number: str):
+    case_study_numbers = {
+        "first": 1,
+        "second": 2,
+        "third": 3
+    }
+    case_study_number = case_study_numbers[case_number.lower()]
+
+    move_to_case_study_navigation_buttons(driver)
+
+    current_case_study_number = get_number_of_current_carousel_article(driver)
+    if current_case_study_number != case_study_number:
+        if random.choice([True, False]):
+            find_case_study_by_going_left(driver, case_study_number)
+        else:
+            find_case_study_by_going_right(driver, case_study_number)
+
+    link_selector = CASE_STUDY_LINK.format(case_study_number)
+    wait_for_visibility(driver, by_css=link_selector)
+    case_study_link = find_element(driver, by_css=link_selector)
+    case_study_link.click()
+
+
+def get_case_study_title(driver: webdriver, case_number: str) -> str:
+    case_study_numbers = {"first": 1, "second": 2, "third": 3}
+    case_number = case_study_numbers[case_number.lower()]
+    link_selector = CASE_STUDY_LINK.format(case_number)
+    case_study_link = find_element(driver, by_css=link_selector)
+    return case_study_link.text.strip()
 
 
 def open(driver: webdriver, group: str, element: str):
