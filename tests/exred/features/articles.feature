@@ -197,24 +197,6 @@ Feature: Articles
       | Getting paid      |
 
 
-  @wip
-  @sharing
-  Scenario Outline: Any Exporter should be able to share the article via Facebook, Twitter, Linked and email on the article page
-    Given "Robert" is on the "<group>" Article List for randomly selected category
-    And "Robert" opened any Article
-
-    When "Robert" decides to share the article via "<social_media>"
-
-    Then "Robert" should be taken to a new tab with the "<sharing_option>" opened and pre-populated message with the link to the article
-
-    Examples:
-      | group            | sharing_option |
-      | Export Readiness | Facebook       |
-      | Guidance         | Twitter        |
-      | Export Readiness | LinkedIn       |
-      | Guidance         | email          |
-
-
   @ED-2639
   @feedback
   Scenario Outline: Any Exporter should be able to tell us that they "<found_or_not>" the "<group>" article useful
@@ -338,9 +320,13 @@ Feature: Articles
   @ED-2706
   @session
   @register
+  @real-sso-email-verification
+  @<group>
+  @<location>
   Scenario Outline: Any Exporter should be able to register from the "<group>" Articles list page in order to save their progress
     Given "Robert" went to randomly selected "<group>" Article category via "<location>"
     And "Robert" read "<number>" of articles
+    And "Robert" is on the "Article list" page
 
     When "Robert" decides to register to save his reading progress using link visible in the "<element>"
     And "Robert" completes the registration and real email verification process
@@ -367,10 +353,11 @@ Feature: Articles
 
 
   @wip
+  @ED-2769
   @session
-  Scenario: An Exporter should be able to register from the Articles list page in order to save their progress
-    Given "Robert" is on the Article List page
-    And "Robert" read some of the articles
+  Scenario: An Exporter should be able to register from the Article page in order to save their progress
+    Given "Robert" read some of the articles
+    And "Robert" is on the "Article" page
 
     When "Robert" decides to "register"
     And "Robert" completes registration and email verification process
@@ -380,10 +367,11 @@ Feature: Articles
 
 
   @wip
+  @ED-2770
   @session
   Scenario: An Exporter should be able to sing in from the Articles list page in order to save their progress
-    Given "Robert" is on the Article List page
-    And "Robert" read some of the articles
+    Given "Robert" read some of the articles
+    And "Robert" is on the "Article list" page
 
     When "Robert" decides to "sign in"
     And "Robert" signs in
@@ -392,49 +380,42 @@ Feature: Articles
 
 
   @wip
+  @ED-2771
   @session
-  Scenario: An Exporter should be able to register from the specific Article page in order to save their progress
+  Scenario: An Exporter should be able to sign in from the specific Article page in order to save their progress
     Given "Robert" read some of the articles
-    And "Robert" is on the specific Article page
+    And "Robert" is on the "Article" page
 
-    When "Robert" decides to "register"
-    And "Robert" completes registration and email verification process
+    When "Robert" decides to "sign in"
     And "Robert" signs in
 
     Then "Robert"'s current progress should be saved
 
 
   @wip
+  @ED-2772
   @session
-  Scenario: A logged in Exporter should not see the register link on Article page
+  Scenario: A logged in Exporter should not see the "Register" and "Sign in" links on Article page
     Given "Robert" is signed in
     And "Robert" is on the specific Article page
 
     Then "Robert"'s should not see the link to register
+    And "Robert"'s should not see the link to sign in
 
 
   @wip
+  @ED-2772
   @session
-  Scenario: A logged in Exporter should not see the register link on Article List page
+  Scenario: A logged in Exporter should not see the "Register" and "Sign in" links on Article List page
     Given "Robert" is signed in
     And "Robert" is on the specific Article List page
 
     Then "Robert"'s should not see the link to register
+    And "Robert"'s should not see the link to sign in
 
 
   @wip
-  @session
-  Scenario: An Exporter should be able to sign in from the specific Article page in order to save their progress
-    Given "Robert" read some of the articles
-    And "Robert" is on the specific Article page
-
-    When "Robert" decides to "sign in"
-    And "Robert" signs in
-
-    Then "Robert"'s current progress should be saved
-
-
-  @wip
+  @ED-2773
   @session
   Scenario: A signed in Exporter's progress should be updated with temporary information (cookie data merged with persistent storage)
     Given "Robert" is signed in
@@ -451,7 +432,28 @@ Feature: Articles
 
 
   @wip
+  @ED-2640
+  @sharing
+  Scenario Outline: Any Exporter should be able to share the article via Facebook, Twitter, Linked and email on the article page
+    Given "Robert" is on the "<group>" Article List for randomly selected category
+    And "Robert" opened any Article
+
+    When "Robert" decides to share the article via "<social_media>"
+
+    Then "Robert" should be taken to a new tab with the "<sharing_option>" opened and pre-populated message with the link to the article
+
+    Examples:
+      | group            | sharing_option |
+      | Export Readiness | Facebook       |
+      | Guidance         | Twitter        |
+      | Export Readiness | LinkedIn       |
+      | Guidance         | email          |
+
+
+  @wip
+  @ED-2774
   @out-of-scope
+  @tasks
   Scenario: Any Exporter should see his task completion progress on the articles list page
     Given "Robert" is on the Article page
 
@@ -462,7 +464,9 @@ Feature: Articles
 
 
   @wip
+  @ED-2774
   @out-of-scope
+  @tasks
   Scenario: Any Exporter should see his task completion progress on the article page
     Given "Robert" is on the Article page
     And "Robert" marks any task as completed
@@ -474,20 +478,22 @@ Feature: Articles
 
 
   @wip
+  @ED-2775
+  @out-of-scope
   @triage
   @articles
-  @out-of-scope
   Scenario Outline: Any Exporter that reads through all the Articles specific to his Persona should be presented with a dedicated Persona End Page
     Given "Robert" was classified as "<specific>" exporter in the triage process
     And "Robert" opens any Article from the Personalised Page which is not the last one
     And "Robert" navigates through Articles
 
-    When "Robert" reaches the last Article from the List of Articles for "<exporting_status>" Persona
+    When "Robert" reaches the last Article from the List of Articles for "<specific>" Persona
 
-    Then "Robert" should see the End Page for "<exporting_status>" Persona
+    Then "Robert" should see the End Page for "<specific>" Persona
     And "Robert" should not see the link to the next Article
 
     Examples:
       | specific   |
       | New        |
       | Occasional |
+      | Regular    |
