@@ -10,7 +10,7 @@ from tests.functional.utils.generic import escape_html
 from tests.functional.utils.request import Method, check_response, make_request
 
 LANDING = get_absolute_url("ui-supplier:landing")
-URL = "{}/{}".format(LANDING, 'suppliers/{company_number}/contact')
+URL = "{}/{}".format(LANDING, 'suppliers/{company_number}/contact/')
 EXPECTED_STRINGS = [
     "Send a message to",
     ("Fill in your details and a brief message summarising your needs that will"
