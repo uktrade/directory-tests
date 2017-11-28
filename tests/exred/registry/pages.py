@@ -2,6 +2,8 @@
 """ExRed Page Object Registry"""
 
 from pages import (
+    article_common,
+    article_list,
     events,
     export_opportunities,
     find_a_buyer,
@@ -108,6 +110,14 @@ EXRED_PAGE_REGISTRY = {
     "sso registration confirmation": {
         "url": sso_registration_confirmation.URL,
         "po": sso_registration_confirmation
+    },
+    "article": {
+        "url": None,
+        "po": article_common
+    },
+    "article list": {
+        "url": None,
+        "po": article_list
     },
 }
 
