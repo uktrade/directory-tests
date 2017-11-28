@@ -29,7 +29,7 @@ def go_to(session: Session, company_number: str) -> Response:
     :param company_number: (optional) explicit company number
     :return: response object
     """
-    full_url = "{}/{}".format(URL, company_number)
+    full_url = "{}{}".format(URL, company_number)
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
     response = make_request(
         Method.GET, full_url, session=session, headers=headers)
@@ -157,7 +157,9 @@ def get_case_studies_details(response: Response):
         title = Selector(text=article).css("h3::text").extract()[0]
         summary = Selector(text=article).css("p::text").extract()[0]
         href = Selector(text=article).css("a::attr(href)").extract()[0]
-        slug = href.split("/")[-1]
+        slug = href.split("/")[-2]
+        assert slug, "Could not extract case study slug from {}".format(article)
         logging.debug("Got case study slug: %s", slug)
         result.append((title, summary, href, slug))
+    assert result, "No Case Study details extracted from {}".format(articles)
     return result
