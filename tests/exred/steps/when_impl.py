@@ -839,7 +839,8 @@ def personalised_journey_update_preference(context, actor_alias):
 
 
 def articles_read_a_number_of_them(
-        context: Context, actor_alias: str, number: str):
+        context: Context, actor_alias: str, number: str, *,
+        stay_on_last_article_page: bool = False):
     numbers = {
         "a tenth": 10,
         "a ninth": 9,
@@ -862,7 +863,10 @@ def articles_read_a_number_of_them(
     number_to_read = number_to_read if number_to_read > 0 else 1
     for idx in range(1, number_to_read + 1):
         articles_open_any(context, actor_alias)
-        articles_go_back_to_article_list(context, actor_alias)
+        if stay_on_last_article_page and (idx == number_to_read):
+            logging.debug("%s will stay on the last article page", actor_alias)
+        else:
+            articles_go_back_to_article_list(context, actor_alias)
         logging.debug(
             "%s read %d article(s) out of %d (%s of %d articles from '%s'"
             " articles)", actor_alias, idx, number_to_read, number,
