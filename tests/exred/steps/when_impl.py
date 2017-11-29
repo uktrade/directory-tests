@@ -999,3 +999,12 @@ def sign_in(context, actor_alias, location):
     sign_in_go_to(context, actor_alias, location)
     sso_sign_in.fill_out(context.driver, email, password)
     sso_sign_in.submit(context.driver)
+
+
+def articles_go_back_to_last_read_article(context: Context, actor_alias: str):
+    actor = get_actor(context, actor_alias)
+    group = actor.article_group
+    location = actor.article_location
+    last_read_article = actor.visited_articles[-1].title
+    articles_go_back_to_same_group(context, actor_alias, group, location)
+    articles_open_specific(context, actor_alias, last_read_article)

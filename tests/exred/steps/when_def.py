@@ -35,7 +35,8 @@ from steps.when_impl import (
     triage_say_whether_you_use_online_marketplaces,
     triage_should_see_answers_to_questions,
     triage_what_is_your_company_name,
-    visit_page
+    visit_page,
+    articles_go_back_to_last_read_article
 )
 
 
@@ -232,3 +233,9 @@ def when_actor_goes_to_page(context, actor_alias, page_name):
 def when_actor_goes_to_the_same_article_group(
         context, actor_alias, group, location):
     articles_go_back_to_same_group(context, actor_alias, group, location=location)
+
+
+@when('"{actor_alias}" goes back to the last Article he read')
+@when('"{actor_alias}" goes back to the last Article she read')
+def when_actor_goes_to_last_read_article(context, actor_alias):
+    articles_go_back_to_last_read_article(context, actor_alias)
