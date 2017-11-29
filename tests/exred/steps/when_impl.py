@@ -36,7 +36,8 @@ from utils import (
     assertion_msg,
     get_actor,
     unauthenticated_actor,
-    update_actor
+    update_actor,
+    VisitedArticle
 )
 from utils.mail_gun import get_verification_link
 
@@ -656,7 +657,8 @@ def articles_open_any(context: Context, actor_alias: str):
     logging.debug(
         "%s is on '%s' article page: %s", actor_alias,
         any_article .title, driver.current_url)
-    just_read = (any_article.index, any_article.title, time_to_read)
+    just_read = VisitedArticle(
+        any_article.index, any_article.title, time_to_read)
     if visited_articles:
         visited_articles.append(just_read)
     else:
@@ -685,9 +687,9 @@ def guidance_read_through_all_articles(context: Context, actor_alias: str):
     logging.debug("%s is on '%s' article", actor_alias, current_article_name)
     current_article = get_article(group, category, current_article_name)
     assert current_article, "Could not find Article: %s" % current_article_name
-    visited_articles.append(
-        (current_article.index, current_article_name, time_to_read)
-    )
+    visited = VisitedArticle(
+        current_article.index, current_article_name, time_to_read)
+    visited_articles.append(visited)
     next_article = current_article.next
 
     while next_article is not None:
@@ -696,9 +698,9 @@ def guidance_read_through_all_articles(context: Context, actor_alias: str):
         article_common.go_to_next_article(driver)
         current_article_name = article_common.get_article_name(driver)
         time_to_read = article_common.time_to_read_in_seconds(context.driver)
-        visited_articles.append(
-            (next_article.index, next_article.title, time_to_read)
-        )
+        visited = VisitedArticle(
+            next_article.index, next_article.title, time_to_read)
+        visited_articles.append(visited)
         logging.debug(
             "%s is on '%s' article", actor_alias, current_article_name)
         current_article = get_article(group, category, current_article_name)
