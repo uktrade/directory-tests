@@ -9,7 +9,7 @@ from utils import assertion_msg, find_element, take_screenshot
 NAME = "ExRed Article List"
 URL = None
 
-ARTICLE_CATEGORY = "section.hero-section.new h1"
+ARTICLE_CATEGORY = "#content > section h1.title"
 BREADCRUMBS = "p.breadcrumbs"
 ARTICLE_CATEGORY_INTRO = "div.section-intro"
 LIST_OF_ARTICLES = "#js-paginate-list"
@@ -17,8 +17,8 @@ TOTAL_NUMBER_OF_ARTICLES = "dd.position > span.to"
 ARTICLES_TO_READ_COUNTER = "dd.position > span.from"
 TIME_TO_COMPLETE = "dd.time span.value"
 SHOW_MORE_BUTTON = "#js-paginate-list-more"
-REGISTRATION_LINK = "#articles div.scope-indicator > p > a:nth-child(1)"
-SIGN_IN_LINK = "#articles > div > div.scope-indicator > p > a:nth-child(2)"
+REGISTRATION_LINK = "#articles p.register > a:nth-child(1)"
+SIGN_IN_LINK = "#articles p.register > a:nth-child(2)"
 IS_THERE_ANYTHING_WRONG_WITH_THIS_PAGE_LINK = "section.error-reporting a"
 
 EXPECTED_ELEMENTS = {
