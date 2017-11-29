@@ -56,8 +56,16 @@ Actor = namedtuple(
     ]
 )
 
+VisitedArticle = namedtuple(
+    "VisitedArticle",
+    [
+        "index", "title", "time_to_read"
+    ]
+)
+
 # Set all fields to None by default.
 Actor.__new__.__defaults__ = (None,) * len(Actor._fields)
+VisitedArticle.__new__.__defaults__ = (None,) * len(VisitedArticle._fields)
 
 
 def initialize_scenario_data() -> ScenarioData:
