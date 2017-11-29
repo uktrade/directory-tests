@@ -35,3 +35,4 @@ def should_be_here(driver: webdriver):
 def go_to_sign_in(driver: webdriver):
     registration_link = find_element(driver, by_css=SIGN_IN_LINK)
     registration_link.click()
+    take_screenshot(driver, NAME + "after signing in")
