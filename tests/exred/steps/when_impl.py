@@ -910,6 +910,8 @@ def registration_go_to(context: Context, actor_alias: str, location: str):
         "%s decided to go to registration via %s link", actor_alias, location)
     if location.lower() == "article":
         article_common.go_to_registration(context.driver)
+    elif location.lower() == "article list":
+        article_list.go_to_registration(context.driver)
     elif location.lower() == "top bar":
         header.go_to_registration(context.driver)
     else:
