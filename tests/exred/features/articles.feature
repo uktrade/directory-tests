@@ -343,27 +343,46 @@ Feature: Articles
     Then "Robert" should see his reading progress same as before registration
 
     Examples:
-      | group            | location     | number    | element |
+      | group            | location     | number    | element      |
+      | Export Readiness | header menu  | a sixth   | article list |
+      | Export Readiness | home page    | a quarter | top bar      |
+      | Export Readiness | footer links | a third   | article list |
+      | Guidance         | header menu  | a fifth   | top bar      |
+      | Guidance         | home page    | a quarter | article list |
+      | Guidance         | footer links | a third   | top bar      |
+
+
+  @ED-2769
+  @session
+  @register
+  @real-sso-email-verification
+  Scenario Outline: An Exporter should be able to register from the Article page in order to save their progress
+    Given "Robert" went to randomly selected "<group>" Article category via "<location>"
+    And "Robert" read "<a number>" of articles and stays on the last read article page
+    And "Robert" is on the "Article" page
+
+    When "Robert" decides to register to save his reading progress using link visible in the "<element>"
+    And "Robert" completes the registration and real email verification process
+    And "Robert" goes to the "home" page
+    And "Robert" goes back to the last Article he read
+    Then "Robert" should see his reading progress same as before registration
+
+    When "Robert" logs out and forgets the article reading history by clearing the cookies
+    And "Robert" goes to the "home" page
+    And "Robert" goes back to the same "<group>" Article category via "<location>"
+    Then "Robert" should see that his reading progress is gone
+
+    When "Robert" signs in using link visible in the "top bar"
+    Then "Robert" should see his reading progress same as before registration
+
+    Examples:
+      | group            | location     | a number  | element |
       | Export Readiness | header menu  | a sixth   | article |
       | Export Readiness | home page    | a quarter | top bar |
       | Export Readiness | footer links | a third   | article |
       | Guidance         | header menu  | a fifth   | top bar |
       | Guidance         | home page    | a quarter | article |
       | Guidance         | footer links | a third   | top bar |
-
-
-  @wip
-  @ED-2769
-  @session
-  Scenario: An Exporter should be able to register from the Article page in order to save their progress
-    Given "Robert" read some of the articles
-    And "Robert" is on the "Article" page
-
-    When "Robert" decides to "register"
-    And "Robert" completes registration and email verification process
-    And "Robert" signs in
-
-    Then "Robert"'s current progress should be saved
 
 
   @wip
