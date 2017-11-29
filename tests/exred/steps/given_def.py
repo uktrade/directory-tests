@@ -153,6 +153,12 @@ def given_actor_cannot_see_banner_and_top_10_table(context, actor_alias):
         context, actor_alias)
 
 
+@given('"{actor_alias}" read "{number}" of articles and stays on the last read article page')
+def given_actor_reads_few_articles(context, actor_alias, number):
+    articles_read_a_number_of_them(
+        context, actor_alias, number, stay_on_last_article_page=True)
+
+
 @given('"{actor_alias}" read "{number}" of articles')
 def given_actor_reads_few_articles(context, actor_alias, number):
     articles_read_a_number_of_them(context, actor_alias, number)
