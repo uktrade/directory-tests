@@ -42,3 +42,13 @@ def should_be_here(driver: webdriver):
                 element_name, NAME):
             assert element.is_displayed()
     logging.debug("All expected elements are visible on '%s' page", NAME)
+
+
+def go_to_registration(driver: webdriver):
+    registration_link = find_element(driver, by_css=REGISTRATION_LINK)
+    registration_link.click()
+
+
+def go_to_sign_in(driver: webdriver):
+    registration_link = find_element(driver, by_css=SIGN_IN_LINK)
+    registration_link.click()
