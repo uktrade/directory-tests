@@ -296,7 +296,7 @@ def wait_for_visibility(
 
 def find_element(
         driver: webdriver, *, by_css: str = None,
-        by_id: str = None) -> WebElement:
+        by_id: str = None, element_name: str = "") -> WebElement:
     """Find element by CSS selector or it's ID.
 
     :param driver: Selenium driver
@@ -306,7 +306,8 @@ def find_element(
     """
     assert by_id or by_css, "Provide ID or CSS selector"
     with selenium_action(
-            driver, "Couldn't find element using '%s'", by_css or by_id):
+            driver, "Couldn't find element %s using '%s'", element_name,
+            by_css or by_id):
         if by_css:
             element = driver.find_element_by_css_selector(by_css)
         else:
