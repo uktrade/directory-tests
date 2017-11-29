@@ -26,7 +26,8 @@ from pages import (
     triage_do_you_use_online_marketplaces,
     triage_have_you_exported,
     triage_summary,
-    triage_what_do_you_want_to_export
+    triage_what_do_you_want_to_export,
+    article_list
 )
 from registry.articles import GUIDANCE, get_article, get_articles
 from registry.pages import get_page_object
@@ -630,6 +631,37 @@ def articles_open_any_but_the_last(context: Context, actor_alias: str):
     logging.debug(
         "%s is on '%s' article page: %s", actor_alias,
         any_article_but_the_last.title, driver.current_url)
+
+
+def articles_open_specific(context: Context, actor_alias: str, name: str):
+    driver = context.driver
+    actor = get_actor(context, actor_alias)
+    group = actor.article_group
+    category = actor.article_category
+    article = get_article(group, category, name)
+    visited_articles = actor.visited_articles
+
+    article_common.show_all_articles(driver)
+
+    article_common.go_to_article(driver, name)
+
+    total_articles = article_common.get_total_articles(context.driver)
+    articles_read_counter = article_common.get_read_counter(context.driver)
+    time_to_complete = article_common.get_time_to_complete(context.driver)
+    time_to_read = article_common.time_to_read_in_seconds(context.driver)
+
+    logging.debug(
+        "%s is on '%s' article: %s", actor_alias, name, driver.current_url)
+    just_read = VisitedArticle(article.index, article.title, time_to_read)
+    if visited_articles:
+        visited_articles.append(just_read)
+    else:
+        visited_articles = [just_read]
+    update_actor(
+        context, actor_alias, articles_read_counter=articles_read_counter,
+        articles_time_to_complete=time_to_complete,
+        articles_total_number=total_articles,
+        visited_articles=visited_articles)
 
 
 def articles_open_any(context: Context, actor_alias: str):
