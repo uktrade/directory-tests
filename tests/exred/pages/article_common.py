@@ -24,11 +24,11 @@ SHARE_MENU = "ul.sharing-links"
 SHOW_MORE_BUTTON = "#js-paginate-list-more"
 GO_BACK_LINK = "#category-link"
 FEEDBACK_QUESTION = "#js-feedback > p"
-USEFUL_BUTTON = "#js-feedback-positive"
 NOT_USEFUL_BUTTON = "#js-feedback-negative"
+REGISTRATION_LINK = "#top > div > p > a:nth-child(1)"
+SIGN_IN_LINK = "#top > div > p > a:nth-child(2)"
+USEFUL_BUTTON = "#js-feedback-positive"
 FEEDBACK_RESULT = "#js-feedback-success"
-REGISTRATION_LINK = "#articles div.scope-indicator > p > a:nth-child(1)"
-SIGN_IN_LINK = "#articles > div > div.scope-indicator > p > a:nth-child(2)"
 
 
 SCOPE_ELEMENTS = {

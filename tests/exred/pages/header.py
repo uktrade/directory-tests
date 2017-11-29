@@ -15,8 +15,8 @@ URL = None
 
 
 HOME_LINK = "#menu > ul > li:nth-child(1) > a"
-REGISTRATION_LINK = "#header-bar > div > ul > li:nth-child(1) > a"
-SIGN_IN_LINK = "#header-bar > div > ul > li:nth-child(2) > a"
+REGISTRATION_LINK = "#header-bar a.register"
+SIGN_IN_LINK = "#header-bar a.signin"
 SECTIONS = {
     "export readiness": {
         "menu": "#export-readiness-links",
@@ -105,7 +105,7 @@ def open(driver: webdriver, group: str, element: str):
         # Open the menu by sending "Down Arrow" key
         menu_selector = SECTIONS[group.lower()]["menu"]
         menu = driver.find_element_by_css_selector(menu_selector)
-        menu.send_keys(Keys.DOWN)
+        menu.send_keys(Keys.RIGHT)
     menu_item_selector = SECTIONS[group.lower()][element.lower()]
     with selenium_action(
             driver, "Could not find %s element in %s group with '%s' selector",
