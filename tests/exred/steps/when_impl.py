@@ -5,6 +5,7 @@ import random
 
 from behave.runner import Context
 from retrying import retry
+from selenium.common.exceptions import WebDriverException
 
 from pages import (
     article_common,
@@ -13,6 +14,12 @@ from pages import (
     header,
     home,
     personalised_journey,
+    sso_common,
+    sso_confirm_your_email,
+    sso_profile_about,
+    sso_registration,
+    sso_registration_confirmation,
+    sso_sign_in,
     triage_are_you_registered_with_companies_house,
     triage_are_you_regular_exporter,
     triage_company_name,
@@ -31,6 +38,7 @@ from utils import (
     unauthenticated_actor,
     update_actor
 )
+from utils.mail_gun import get_verification_link
 
 
 @retry(wait_fixed=30000, stop_max_attempt_number=3)
@@ -628,19 +636,24 @@ def articles_open_any(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     group = actor.article_group
     category = actor.article_category
+    visited_articles = actor.visited_articles
     articles = get_articles(group, category)
     any_article = random.choice(articles)
     article_common.show_all_articles(driver)
 
+    article_common.go_to_article(driver, any_article.title)
     total_articles = article_common.get_total_articles(context.driver)
     articles_read_counter = article_common.get_read_counter(context.driver)
     time_to_complete = article_common.get_time_to_complete(context.driver)
-    article_common.go_to_article(driver, any_article.title)
     time_to_read = article_common.time_to_read_in_seconds(context.driver)
     logging.debug(
         "%s is on '%s' article page: %s", actor_alias,
         any_article .title, driver.current_url)
-    visited_articles = [(any_article.index, any_article.title, time_to_read)]
+    just_read = (any_article.index, any_article.title, time_to_read)
+    if visited_articles:
+        visited_articles.append(just_read)
+    else:
+        visited_articles = [just_read]
     update_actor(
         context, actor_alias, articles_read_counter=articles_read_counter,
         articles_time_to_complete=time_to_complete,
@@ -738,6 +751,24 @@ def articles_open_group(
         articles_total_number=total_articles)
 
 
+def articles_go_back_to_same_group(
+        context: Context, actor_alias: str, group: str, location: str):
+    actor = get_actor(context, actor_alias)
+    category = actor.article_category
+    logging.debug(
+        "%s decided to open '%s' '%s' Articles via '%s'", actor_alias,
+        category, group, location)
+    if group.lower() == "export readiness":
+        export_readiness_open_category(
+            context, actor_alias, category=category, location=location)
+    elif group.lower() == "guidance":
+        guidance_open_category(context, actor_alias, category, location)
+    else:
+        raise KeyError(
+            "Did not recognize '{}'. Please use: 'Guidance' or 'Export "
+            "Readiness'".format(group))
+
+
 def articles_go_back_to_article_list(context: Context, actor_alias: str):
     article_common.go_back_to_article_list(context.driver)
     logging.debug("%s went back to the Article List page", actor_alias)
@@ -792,3 +823,130 @@ def open_service_link_on_interim_page(
 
 def personalised_journey_update_preference(context, actor_alias):
     personalised_journey.update_preferences(context.driver)
+
+
+def articles_read_a_number_of_them(
+        context: Context, actor_alias: str, number: str):
+    numbers = {
+        "a tenth": 10,
+        "a ninth": 9,
+        "an eight": 8,
+        "a seventh": 7,
+        "a sixth": 6,
+        "a fifth": 5,
+        "a fourth": 4,
+        "a quarter": 4,
+        "a third": 3,
+        "a half": 2,
+        "all": 1
+    }
+    divider = numbers[number.lower()]
+    actor = get_actor(context, actor_alias)
+    group = actor.article_group
+    category = actor.article_category
+    articles = get_articles(group, category)
+    number_to_read = int(len(articles) / divider)
+    number_to_read = number_to_read if number_to_read > 0 else 1
+    for idx in range(1, number_to_read + 1):
+        articles_open_any(context, actor_alias)
+        articles_go_back_to_article_list(context, actor_alias)
+        logging.debug(
+            "%s read %d article(s) out of %d (%s of %d articles from '%s'"
+            " articles)", actor_alias, idx, number_to_read, number,
+            len(articles), category)
+
+
+def registration_go_to(context: Context, actor_alias: str, location: str):
+    logging.debug(
+        "%s decided to go to registration via %s link", actor_alias, location)
+    if location.lower() == "article":
+        article_common.go_to_registration(context.driver)
+    elif location.lower() == "top bar":
+        header.go_to_registration(context.driver)
+    else:
+        raise KeyError(
+            "Could not recognise registration link location: %s. Please use "
+            "'article' or 'top bar'".format(location))
+    sso_registration.should_be_here(context.driver)
+
+
+def registration_should_get_verification_email(context: Context, actor_alias: str):
+    """Will check if the Exporter received an email verification message.
+
+    :param context: behave `context` object
+    :param actor_alias: alias of the Actor used in the scope of the scenario
+    """
+    logging.debug("Searching for an email verification message...")
+    actor = get_actor(context, actor_alias)
+    link = get_verification_link(context, actor.email)
+    update_actor(context, actor_alias, email_confirmation_link=link)
+
+
+def registration_open_email_confirmation_link(context, actor_alias):
+    """Given Supplier has received a message with email confirmation link
+    Then Supplier has to click on that link.
+
+    :param context: behave `context` object
+    :type context: behave.runner.Context
+    :param actor_alias: alias of the Actor used in the scope of the scenario
+    :type actor_alias: str
+    """
+    actor = get_actor(context, actor_alias)
+    link = actor.email_confirmation_link
+
+    # Step 1 - open confirmation link
+    context.driver.get(link)
+
+    # Step 3 - confirm that Supplier is on SSO Confirm Your Email page
+    sso_confirm_your_email.should_be_here(context.driver)
+    logging.debug("Supplier is on the SSO Confirm your email address page")
+
+
+def registration_create_and_verify_account(
+        context: Context, actor_alias: str, *, fake_verification: bool = True):
+    driver = context.driver
+    actor = get_actor(context, actor_alias)
+    email = actor.email
+    password = actor.password
+    sso_registration.fill_out(driver, email, password)
+    sso_registration.submit(driver)
+    sso_registration_confirmation.should_be_here(driver)
+    if fake_verification:
+        sso_common.verify_account(email)
+    else:
+        registration_should_get_verification_email(context, actor_alias)
+        registration_open_email_confirmation_link(context, actor_alias)
+        sso_confirm_your_email.submit(context.driver)
+        sso_profile_about.should_be_here(context.driver)
+    update_actor(context, actor_alias, registered=True)
+
+
+def clear_the_cookies(context: Context, actor_alias: str):
+    try:
+        cookies = context.driver.get_cookies()
+        logging.debug("COOKIES: %s", cookies)
+        context.driver.delete_all_cookies()
+        logging.debug("Successfully cleared cookies for %s", actor_alias)
+    except WebDriverException:
+        logging.error("Failed to clear cookies for %s", actor_alias)
+
+
+def sign_in_go_to(context, actor_alias, location):
+    if location.lower() == "article":
+        article_common.go_to_sign_in(context.driver)
+    elif location.lower() == "top bar":
+        header.go_to_sign_in(context.driver)
+    else:
+        raise KeyError(
+            "Could not recognise registration link location: %s. Please use "
+            "'article' or 'top bar'".format(location))
+    sso_sign_in.should_be_here(context.driver)
+
+
+def sign_in(context, actor_alias, location):
+    actor = get_actor(context, actor_alias)
+    email = actor.email
+    password = actor.password
+    sign_in_go_to(context, actor_alias, location)
+    sso_sign_in.fill_out(context.driver, email, password)
+    sso_sign_in.submit(context.driver)

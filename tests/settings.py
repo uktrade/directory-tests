@@ -2,6 +2,11 @@ import os
 from glob import glob
 from urllib import parse as urlparse
 
+__auto_retry = os.environ.get("AUTO_RETRY", "true")
+AUTO_RETRY = (True
+              if __auto_retry
+              and __auto_retry.lower() in ["true", "1", "yes"]
+              else False)
 
 DIRECTORY_API_URL = os.environ["DIRECTORY_API_URL"]
 DIRECTORY_BUYER_API_URL = os.environ["DIRECTORY_BUYER_API_URL"]
