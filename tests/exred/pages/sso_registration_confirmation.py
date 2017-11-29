@@ -21,13 +21,14 @@ EXPECTED_ELEMENTS = {
 
 
 def should_be_here(driver: webdriver):
+    take_screenshot(driver, NAME)
     for element_name, element_selector in EXPECTED_ELEMENTS.items():
-        element = driver.find_element_by_css_selector(element_selector)
+        element = find_element(
+            driver, by_css=element_selector, element_name=element_name)
         with assertion_msg(
                 "It looks like '%s' element is not visible on %s",
                 element_name, NAME):
             assert element.is_displayed()
-    take_screenshot(driver, NAME)
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
