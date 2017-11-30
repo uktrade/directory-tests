@@ -641,7 +641,14 @@ def articles_open_any(context: Context, actor_alias: str):
     any_article = random.choice(articles)
     article_common.show_all_articles(driver)
 
+    # capture the counter values from Article List page
+    article_list_total = article_common.get_total_articles(context.driver)
+    article_list_read_counter = article_common.get_read_counter(context.driver)
+    article_list_time_to_complete = article_common.get_time_to_complete(context.driver)
+
     article_common.go_to_article(driver, any_article.title)
+
+    # capture the counter values from Article page
     total_articles = article_common.get_total_articles(context.driver)
     articles_read_counter = article_common.get_read_counter(context.driver)
     time_to_complete = article_common.get_time_to_complete(context.driver)
@@ -655,9 +662,13 @@ def articles_open_any(context: Context, actor_alias: str):
     else:
         visited_articles = [just_read]
     update_actor(
-        context, actor_alias, articles_read_counter=articles_read_counter,
+        context, actor_alias,
+        articles_read_counter=articles_read_counter,
         articles_time_to_complete=time_to_complete,
         articles_total_number=total_articles,
+        article_list_read_counter=article_list_read_counter,
+        article_list_time_to_complete=article_list_time_to_complete,
+        article_list_total_number=article_list_total,
         visited_articles=visited_articles)
 
 
@@ -746,9 +757,9 @@ def articles_open_group(
     articles_read_counter = article_common.get_read_counter(context.driver)
     time_to_complete = article_common.get_time_to_complete(context.driver)
     update_actor(
-        context, actor_alias, articles_read_counter=articles_read_counter,
-        articles_time_to_complete=time_to_complete,
-        articles_total_number=total_articles)
+        context, actor_alias, article_list_read_counter=articles_read_counter,
+        article_list_time_to_complete=time_to_complete,
+        article_list_total_number=total_articles)
 
 
 def articles_go_back_to_same_group(

@@ -50,6 +50,8 @@ Actor = namedtuple(
         "article_group", "article_category", "article_location",
         "visited_articles", "articles_read_counter",
         "articles_time_to_complete", "articles_total_number",
+        "article_list_read_counter", "article_list_time_to_complete",
+        "article_list_total_number",
         "case_study_title", "email_confirmation_link", "registered"
     ]
 )

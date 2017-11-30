@@ -229,7 +229,7 @@ def articles_should_see_article_as_read(context: Context, actor_alias: str):
 def articles_should_see_read_counter_increase(
         context: Context, actor_alias: str, increase: int):
     actor = get_actor(context, actor_alias)
-    previous_read_counter = actor.articles_read_counter
+    previous_read_counter = actor.article_list_read_counter
     current_read_counter = article_common.get_read_counter(context.driver)
     difference = current_read_counter - previous_read_counter
     with assertion_msg(
@@ -241,7 +241,7 @@ def articles_should_see_read_counter_increase(
 def articles_should_see_time_to_complete_decrease(
         context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
-    previous_time_to_complete = actor.articles_time_to_complete
+    previous_time_to_complete = actor.article_list_time_to_complete
     current_time_to_complete = article_common.get_time_to_complete(context.driver)
     _, article_title, time_to_read = actor.visited_articles[0]
     difference = current_time_to_complete - previous_time_to_complete
