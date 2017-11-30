@@ -17,6 +17,7 @@ from steps.when_impl import (
     export_readiness_open_category,
     guidance_open_category,
     guidance_open_random_category,
+    registration_submit_form_and_verify_account,
     set_online_marketplace_preference,
     set_sector_preference,
     start_triage,

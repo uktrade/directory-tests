@@ -953,7 +953,7 @@ def registration_open_email_confirmation_link(context, actor_alias):
     logging.debug("Supplier is on the SSO Confirm your email address page")
 
 
-def registration_create_and_verify_account(
+def registration_submit_form_and_verify_account(
         context: Context, actor_alias: str, *, fake_verification: bool = True):
     driver = context.driver
     actor = get_actor(context, actor_alias)
