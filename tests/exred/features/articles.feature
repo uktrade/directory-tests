@@ -317,6 +317,9 @@ Feature: Articles
       | Regular  | Guidance | personalised journey |
 
 
+  @bug
+  @ED-2807
+  @fixme
   @ED-2706
   @session
   @register
@@ -350,6 +353,9 @@ Feature: Articles
       | Guidance         | footer links | a third   | top bar      |
 
 
+  @bug
+  @ED-2807
+  @fixme
   @ED-2769
   @session
   @register
