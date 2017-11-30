@@ -971,6 +971,14 @@ def registration_submit_form_and_verify_account(
     update_actor(context, actor_alias, registered=True)
 
 
+def registration_create_and_verify_account(
+        context: Context, actor_alias: str, *, fake_verification: bool = True):
+    visit_page(context, actor_alias, "Home")
+    registration_go_to(context, actor_alias, "top bar")
+    registration_submit_form_and_verify_account(
+        context, actor_alias, fake_verification=fake_verification)
+
+
 def clear_the_cookies(context: Context, actor_alias: str):
     try:
         cookies = context.driver.get_cookies()
