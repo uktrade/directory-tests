@@ -112,7 +112,7 @@ jobs:
           key: dependency-cache-{{ .Revision }}
           paths:
             - ~/directory-tests/venv
-            - ~/directory-tests/docker/.env
+            - ~/directory-tests/docker/.env_*
 
   fab_functional_tests:
     docker:
