@@ -6,7 +6,7 @@ Feature: Top importers
   @triage
   @personalised-page
   @services
-  Scenario Outline: Any Exporter should NOT see a Banner and Top importers for their "<specific>" Services sector
+  Scenario Outline: Any Exporter should NOT see the Top Importer Banner and Top 10 Importers table for "<specific>" Services sector
     Given "Robert" exports "<specific>" service
     And "Robert" answered triage questions
 
@@ -14,7 +14,7 @@ Feature: Top importers
 
     Then "Robert" should not see the Top Importer banner and Top 10 Importers table for their sector
 
-    Examples: sectors
+    Examples: service sectors
       | specific                                      |
       | Transportation                                |
       | Travel                                        |
@@ -32,7 +32,7 @@ Feature: Top importers
   @ED-2699
   @triage
   @personalised-page
-  Scenario Outline: Exporters should not see appropriate Banner and Top importers for their sector after updating their Triage preferences
+  Scenario Outline: Exporters should NOT see the Top Importer Banner and Top 10 Importers table after changing from exporting "Goods" to "<specific>" Services
     Given "Robert" exports "goods"
     And "Robert" answered triage questions
     And "Robert" decided to create her personalised journey page
@@ -43,7 +43,7 @@ Feature: Top importers
 
     Then "Robert" should not see the Top Importer banner and Top 10 Importers table for their sector
 
-    Examples: sectors
+    Examples: service sectors
       | specific                                      |
       | Transportation                                |
       | Travel                                        |

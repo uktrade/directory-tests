@@ -7,27 +7,30 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver import ActionChains
 
 from registry.articles import get_articles
-from utils import assertion_msg, selenium_action, take_screenshot
+from utils import assertion_msg, find_element, selenium_action, take_screenshot
 
 NAME = "ExRed Common Articles"
 URL = None
-
 WORDS_PER_SECOND = 1.5  # Average word per second on screen
-ARTICLE_TEXT = "#top"
-INDICATORS_TEXT = "#top div.scope-indicator"
+
 ARTICLE_NAME = "#top > h1"
-TOTAL_NUMBER_OF_ARTICLES = "dd.position > span.to"
+ARTICLE_TEXT = "#top"
 ARTICLES_TO_READ_COUNTER = "dd.position > span.from"
-TIME_TO_COMPLETE = "dd.time span.value"
+BREADCRUMBS = "p.breadcrumbs"
+FEEDBACK_QUESTION = "#js-feedback > p"
+FEEDBACK_RESULT = "#js-feedback-success"
+GO_BACK_LINK = "#category-link"
+INDICATORS_TEXT = "#top div.scope-indicator"
+IS_THERE_ANYTHING_WRONG_WITH_THIS_PAGE_LINK = "section.error-reporting a"
 NEXT_ARTICLE_LINK = "#next-article-link"
+NOT_USEFUL_BUTTON = "#js-feedback-negative"
+REGISTRATION_LINK = "#top > div > p > a:nth-child(1)"
 SHARE_MENU = "ul.sharing-links"
 SHOW_MORE_BUTTON = "#js-paginate-list-more"
-GO_BACK_LINK = "#category-link"
-FEEDBACK_QUESTION = "#js-feedback > p"
+SIGN_IN_LINK = "#top > div > p > a:nth-child(2)"
+TIME_TO_COMPLETE = "dd.time span.value"
+TOTAL_NUMBER_OF_ARTICLES = "dd.position > span.to"
 USEFUL_BUTTON = "#js-feedback-positive"
-NOT_USEFUL_BUTTON = "#js-feedback-negative"
-FEEDBACK_RESULT = "#js-feedback-success"
-
 
 SCOPE_ELEMENTS = {
     "total number of articles": TOTAL_NUMBER_OF_ARTICLES,
@@ -36,6 +39,28 @@ SCOPE_ELEMENTS = {
     "share menu": SHARE_MENU,
     "article name": ARTICLE_NAME
 }
+
+EXPECTED_ELEMENTS = {
+    "breadcrumbs": BREADCRUMBS,
+    "share menu": SHARE_MENU,
+    "total number of articles": TOTAL_NUMBER_OF_ARTICLES,
+    "articles read counter": ARTICLES_TO_READ_COUNTER,
+    "time to complete remaining chapters": TIME_TO_COMPLETE,
+    "article name": ARTICLE_NAME,
+    "article text": ARTICLE_TEXT,
+    "report page link": IS_THERE_ANYTHING_WRONG_WITH_THIS_PAGE_LINK
+}
+
+
+def should_be_here(driver: webdriver):
+    take_screenshot(driver, NAME)
+    for element_name, element_selector in EXPECTED_ELEMENTS.items():
+        element = find_element(driver, by_css=element_selector)
+        with assertion_msg(
+                "It looks like '%s' element is not visible on %s",
+                element_name, NAME):
+            assert element.is_displayed()
+    logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
 def correct_total_number_of_articles(
@@ -138,7 +163,7 @@ def go_to_article(driver: webdriver, title: str):
             "Found a link to '%s' article but it's not visible", title):
         assert article.is_displayed()
     article.click()
-    take_screenshot(driver, "After going to the '%s' Article".format(title))
+    take_screenshot(driver, "After going to the '{}' Article".format(title))
 
 
 def get_article_name(driver: webdriver) -> str:
@@ -286,3 +311,13 @@ def should_see_feedback_result(driver: webdriver):
             "Expected to be thanked for the Feedback, but can't see such "
             "message"):
         assert result.is_displayed()
+
+
+def go_to_registration(driver: webdriver):
+    registration_link = find_element(driver, by_css=REGISTRATION_LINK)
+    registration_link.click()
+
+
+def go_to_sign_in(driver: webdriver):
+    registration_link = find_element(driver, by_css=SIGN_IN_LINK)
+    registration_link.click()

@@ -99,4 +99,5 @@ Temporary Items
 
 # Docker
 .env
+.env_*
 .env-postgres

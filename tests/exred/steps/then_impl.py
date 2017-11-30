@@ -178,16 +178,18 @@ def articles_should_see_in_correct_order(context: Context, actor_alias: str):
     group = actor.article_group
     category = actor.article_category
     visited_articles = actor.visited_articles
-    for position, visited_article, _ in visited_articles:
-        expected_article = get_article(group, category, visited_article)
+    for visited_article in visited_articles:
+        index = visited_article.index
+        title = visited_article.title
+        expected_article = get_article(group, category, title)
         with assertion_msg(
                 "Expected to see '%s' '%s' article '%s' on position %d but %s "
-                "viewed it as %d", group, category, visited_article,
-                expected_article.index, actor_alias, position):
-            assert expected_article.index == position
+                "viewed it as %d", group, category, title,
+                expected_article.index, actor_alias, index):
+            assert expected_article.index == index
         logging.debug(
             "%s saw '%s' '%s' article '%s' at correct position %d",
-            actor_alias, group, category, visited_article, position)
+            actor_alias, group, category, title, index)
 
 
 def articles_should_not_see_link_to_next_article(
@@ -218,18 +220,19 @@ def articles_should_see_link_to_first_article_from_next_category(
 
 def articles_should_see_article_as_read(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
-    _, visited_article, _ = actor.visited_articles[0]
+    visited_article = actor.visited_articles[0]
     article_common.show_all_articles(context.driver)
-    article_common.should_see_article_as_read(context.driver, visited_article)
+    article_common.should_see_article_as_read(
+        context.driver, visited_article.title)
     logging.debug(
         "%s can see that '%s' articles is marked as read", actor_alias,
-        visited_article)
+        visited_article.title)
 
 
 def articles_should_see_read_counter_increase(
         context: Context, actor_alias: str, increase: int):
     actor = get_actor(context, actor_alias)
-    previous_read_counter = actor.articles_read_counter
+    previous_read_counter = actor.article_list_read_counter
     current_read_counter = article_common.get_read_counter(context.driver)
     difference = current_read_counter - previous_read_counter
     with assertion_msg(
@@ -241,18 +244,18 @@ def articles_should_see_read_counter_increase(
 def articles_should_see_time_to_complete_decrease(
         context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
-    previous_time_to_complete = actor.articles_time_to_complete
+    previous_time_to_complete = actor.article_list_time_to_complete
     current_time_to_complete = article_common.get_time_to_complete(context.driver)
-    _, article_title, time_to_read = actor.visited_articles[0]
+    visited_article = actor.visited_articles[0]
     difference = current_time_to_complete - previous_time_to_complete
     logging.debug(
         "Time to Complete remaining Articles changed by %d mins after reading"
-        " %s", difference, article_title)
+        " %s", difference, visited_article.title)
     with assertion_msg(
             "Expected the Time to Complete reading remaining Articles to "
             "decrease or remain unchanged after reading '%s', but it actually "
             "increased by %d. Expected time to read in seconds: %d",
-            article_title, difference, time_to_read):
+            visited_article.title, difference, visited_article.time_to_read):
         assert difference <= 0
 
 
@@ -330,3 +333,23 @@ def personalised_journey_should_see_banner_and_top_10_table(
     logging.debug(
         "As expected %s can see Top Importer banner and Top 10 Importers "
         "table on personalised page for '%s - %s' sector", code, sector)
+
+
+def articles_should_see_read_counter_set_to(
+        context: Context, actor_alias: str, expected_value: int):
+    current_read_counter = article_common.get_read_counter(context.driver)
+    with assertion_msg(
+            "Expected to see Read Counter set to %d but got %s",
+            expected_value, current_read_counter):
+        assert current_read_counter == expected_value
+    logging.debug(
+        "%s saw Reading Counter set to expected value of: %d", actor_alias,
+        expected_value)
+
+
+def articles_read_counter_same_as_before_registration(
+        context: Context, actor_alias: str):
+    actor = get_actor(context, actor_alias)
+    preregistration_value = actor.articles_read_counter
+    articles_should_see_read_counter_set_to(
+        context, actor_alias, preregistration_value)

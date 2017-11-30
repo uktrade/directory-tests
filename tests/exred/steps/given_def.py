@@ -13,6 +13,7 @@ from steps.when_impl import (
     articles_open_any_but_the_last,
     articles_open_first,
     articles_open_group,
+    articles_read_a_number_of_them,
     export_readiness_open_category,
     guidance_open_category,
     guidance_open_random_category,
@@ -150,3 +151,14 @@ def given_actor_sets_sector_good_preference(context, actor_alias, good):
 def given_actor_cannot_see_banner_and_top_10_table(context, actor_alias):
     personalised_journey_should_not_see_banner_and_top_10_table(
         context, actor_alias)
+
+
+@given('"{actor_alias}" read "{number}" of articles and stays on the last read article page')
+def given_actor_reads_few_articles(context, actor_alias, number):
+    articles_read_a_number_of_them(
+        context, actor_alias, number, stay_on_last_article_page=True)
+
+
+@given('"{actor_alias}" read "{number}" of articles')
+def given_actor_reads_few_articles(context, actor_alias, number):
+    articles_read_a_number_of_them(context, actor_alias, number)

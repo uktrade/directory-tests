@@ -14,12 +14,12 @@ URL = None
 
 RIBBON = {
     "itself": ".navigation-ribbon",
-    "market research": ".navigation-ribbon a[href='/market-research']",
-    "customer insight": ".navigation-ribbon a[href='/customer-insight']",
-    "finance": ".navigation-ribbon a[href='/finance']",
-    "business planning": ".navigation-ribbon a[href='/business-planning']",
-    "getting paid": ".navigation-ribbon a[href='/getting-paid']",
-    "operations and compliance": ".navigation-ribbon a[href='/operations-and-compliance']"
+    "market research": ".navigation-ribbon a[href='/market-research/']",
+    "customer insight": ".navigation-ribbon a[href='/customer-insight/']",
+    "finance": ".navigation-ribbon a[href='/finance/']",
+    "business planning": ".navigation-ribbon a[href='/business-planning/']",
+    "getting paid": ".navigation-ribbon a[href='/getting-paid/']",
+    "operations and compliance": ".navigation-ribbon a[href='/operations-and-compliance/']"
 }
 TOTAL_NUMBER_OF_ARTICLES = "dd.position > span.to"
 ARTICLES_TO_READ_COUNTER = "dd.position > span.from"

@@ -37,12 +37,12 @@ CAROUSEL_SECOND_INDICATOR = ".ed-carousel__indicator[for='2']"
 CAROUSEL_THIRD_INDICATOR = ".ed-carousel__indicator[for='3']"
 CASE_STUDIES_LINK = "#carousel h3 > a"
 CASE_STUDY_LINK = "#carousel div.ed-carousel__slide:nth-child({}) h3 > a"
-MARKET_RESEARCH_LINK = "#resource-guidance a[href='/market-research']"
-CUSTOMER_INSIGHT_LINK = "#resource-guidance a[href='/customer-insight']"
-FINANCE_LINK = "#resource-guidance a[href='/finance']"
-BUSINESS_LINK = "#resource-guidance a[href='/business-planning']"
-GETTING_PAID_LINK = "#resource-guidance a[href='/getting-paid']"
-OPERATIONS_AND_COMPLIANCE_LINK = "#resource-guidance a[href='/operations-and-compliance']"
+MARKET_RESEARCH_LINK = "#resource-guidance a[href='/market-research/']"
+CUSTOMER_INSIGHT_LINK = "#resource-guidance a[href='/customer-insight/']"
+FINANCE_LINK = "#resource-guidance a[href='/finance/']"
+BUSINESS_LINK = "#resource-guidance a[href='/business-planning/']"
+GETTING_PAID_LINK = "#resource-guidance a[href='/getting-paid/']"
+OPERATIONS_AND_COMPLIANCE_LINK = "#resource-guidance a[href='/operations-and-compliance/']"
 
 SECTIONS = {
     "video": {

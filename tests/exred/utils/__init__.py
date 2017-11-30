@@ -50,12 +50,22 @@ Actor = namedtuple(
         "article_group", "article_category", "article_location",
         "visited_articles", "articles_read_counter",
         "articles_time_to_complete", "articles_total_number",
-        "case_study_title"
+        "article_list_read_counter", "article_list_time_to_complete",
+        "article_list_total_number",
+        "case_study_title", "email_confirmation_link", "registered"
+    ]
+)
+
+VisitedArticle = namedtuple(
+    "VisitedArticle",
+    [
+        "index", "title", "time_to_read"
     ]
 )
 
 # Set all fields to None by default.
 Actor.__new__.__defaults__ = (None,) * len(Actor._fields)
+VisitedArticle.__new__.__defaults__ = (None,) * len(VisitedArticle._fields)
 
 
 def initialize_scenario_data() -> ScenarioData:
@@ -286,7 +296,7 @@ def wait_for_visibility(
 
 def find_element(
         driver: webdriver, *, by_css: str = None,
-        by_id: str = None) -> WebElement:
+        by_id: str = None, element_name: str = "") -> WebElement:
     """Find element by CSS selector or it's ID.
 
     :param driver: Selenium driver
@@ -296,7 +306,8 @@ def find_element(
     """
     assert by_id or by_css, "Provide ID or CSS selector"
     with selenium_action(
-            driver, "Couldn't find element using '%s'", by_css or by_id):
+            driver, "Couldn't find element %s using '%s'", element_name,
+            by_css or by_id):
         if by_css:
             element = driver.find_element_by_css_selector(by_css)
         else:

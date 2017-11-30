@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile-smoke
     working_dir: /usr/src/app
     command: ./docker/cmd-smoke.sh
-    env_file: ./docker/.env
+    env_file: ./docker/.env_without_export
     restart: "no"
 
   functional_tests:
@@ -16,7 +16,7 @@ services:
       dockerfile: Dockerfile-functional
     working_dir: /usr/src/app
     command: ./docker/cmd-functional.sh
-    env_file: ./docker/.env
+    env_file: ./docker/.env_without_export
     restart: "no"
     volumes:
       - ./tests/functional/reports:/usr/src/app/tests/functional/reports

@@ -6,9 +6,12 @@ from steps.then_impl import triage_should_be_classified_as
 from steps.when_impl import (
     articles_found_useful_or_not,
     articles_go_back_to_article_list,
+    articles_go_back_to_same_group,
     articles_open_any,
     articles_open_any_but_the_last,
+    articles_open_group,
     case_studies_go_to,
+    clear_the_cookies,
     continue_export_journey,
     export_readiness_open_category,
     guidance_open_category,
@@ -17,7 +20,10 @@ from steps.when_impl import (
     open_service_link_on_interim_page,
     personalised_journey_create_page,
     personalised_journey_update_preference,
+    registration_create_and_verify_account,
+    registration_go_to,
     set_sector_preference,
+    sign_in,
     start_triage,
     triage_are_you_incorporated,
     triage_change_answers,
@@ -28,7 +34,9 @@ from steps.when_impl import (
     triage_say_what_do_you_want_to_export,
     triage_say_whether_you_use_online_marketplaces,
     triage_should_see_answers_to_questions,
-    triage_what_is_your_company_name
+    triage_what_is_your_company_name,
+    visit_page,
+    articles_go_back_to_last_read_article
 )
 
 
@@ -186,3 +194,48 @@ def when_actor_updates_triage_preferences(context, actor_alias):
 @when('"{actor_alias}" goes through triage again')
 def when_actor_goes_through_triage_again(context, actor_alias):
     triage_go_through_again(context, actor_alias)
+
+
+@when('"{actor_alias}" decides to register to save her reading progress using link visible in the "{location}"')
+@when('"{actor_alias}" decides to register to save his reading progress using link visible in the "{location}"')
+def when_actor_decides_to_register(context, actor_alias, location):
+    registration_go_to(context, actor_alias, location)
+
+
+@when('"{actor_alias}" completes the registration and fake email verification process')
+def when_actor_registers(context, actor_alias):
+    registration_create_and_verify_account(
+        context, actor_alias, fake_verification=True)
+
+
+@when('"{actor_alias}" completes the registration and real email verification process')
+def when_actor_registers(context, actor_alias):
+    registration_create_and_verify_account(
+        context, actor_alias, fake_verification=False)
+
+
+@when('"{actor_alias}" logs out and forgets the article reading history by clearing the cookies')
+def when_actor_clears_the_cookies(context, actor_alias):
+    clear_the_cookies(context, actor_alias)
+
+
+@when('"{actor_alias}" signs in using link visible in the "{location}"')
+def step_impl(context, actor_alias, location):
+    sign_in(context, actor_alias, location)
+
+
+@when('"{actor_alias}" goes to the "{page_name}" page')
+def when_actor_goes_to_page(context, actor_alias, page_name):
+    visit_page(context, actor_alias, page_name)
+
+
+@when('"{actor_alias}" goes back to the same "{group}" Article category via "{location}"')
+def when_actor_goes_to_the_same_article_group(
+        context, actor_alias, group, location):
+    articles_go_back_to_same_group(context, actor_alias, group, location=location)
+
+
+@when('"{actor_alias}" goes back to the last Article he read')
+@when('"{actor_alias}" goes back to the last Article she read')
+def when_actor_goes_to_last_read_article(context, actor_alias):
+    articles_go_back_to_last_read_article(context, actor_alias)

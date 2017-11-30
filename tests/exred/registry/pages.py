@@ -2,6 +2,8 @@
 """ExRed Page Object Registry"""
 
 from pages import (
+    article_common,
+    article_list,
     events,
     export_opportunities,
     find_a_buyer,
@@ -12,6 +14,9 @@ from pages import (
     interim_exporting_opportunities,
     personalised_journey,
     selling_online_overseas,
+    sso_registration,
+    sso_registration_confirmation,
+    sso_sign_in,
     triage_are_you_registered_with_companies_house,
     triage_are_you_regular_exporter,
     triage_company_name,
@@ -93,6 +98,26 @@ EXRED_PAGE_REGISTRY = {
     "get finance": {
         "url": get_finance.URL,
         "po": get_finance
+    },
+    "sso registration": {
+        "url": sso_registration.URL,
+        "po": sso_registration
+    },
+    "sso sign in": {
+        "url": sso_sign_in.URL,
+        "po": sso_sign_in
+    },
+    "sso registration confirmation": {
+        "url": sso_registration_confirmation.URL,
+        "po": sso_registration_confirmation
+    },
+    "article": {
+        "url": None,
+        "po": article_common
+    },
+    "article list": {
+        "url": None,
+        "po": article_list
     },
 }
 
