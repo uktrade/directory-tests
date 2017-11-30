@@ -1,5 +1,7 @@
 """
-Creates .env files for docker-compose from prefixed host env vars
+Creates .env_* files in two forms:
+1) with `export ` prefix (.env_with_export), for `source ` or `. ` shell commands
+2) without `export ` prefix (.env_without_export), for docker-compose from prefixed host env vars
 
 Usage: python docker-compose-env_writer.py <path_to_json_config>
 
@@ -24,15 +26,13 @@ import sys
 
 class DockerComposeEnvWriter:
 
-    @classmethod
-    def create(cls, config):
-        cls.validate(config)
-
-        all_env_vars = (
-            config['env_vars']['required'] + config['env_vars']['optional']
-        )
-
-        with open(config['file_path'], 'w') as dest:
+    @staticmethod
+    def save_env_vars(config, all_env_vars, export_mode):
+        if export_mode:
+            filename = '{}_with_export'.format(config['file_path'])
+        else:
+            filename = '{}_without_export'.format(config['file_path'])
+        with open(filename, 'w') as dest:
             for var in all_env_vars:
                 # Get value of the prefixed host env var
                 value = os.getenv('{}_{}'.format(
@@ -40,7 +40,21 @@ class DockerComposeEnvWriter:
                     var
                 ))
                 if value:
-                    dest.write("export {}={}\n".format(var, value))
+                    if export_mode:
+                        export_prefix = "export "
+                    else:
+                        export_prefix = ""
+                    dest.write("{}{}={}\n".format(export_prefix, var, value))
+
+    @classmethod
+    def create(cls, config):
+        cls.validate(config)
+
+        all_env_vars = (
+            config['env_vars']['required'] + config['env_vars']['optional']
+        )
+        cls.save_env_vars(config, all_env_vars, export_mode=True)
+        cls.save_env_vars(config, all_env_vars, export_mode=False)
 
     @staticmethod
     def validate(config):

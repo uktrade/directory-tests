@@ -29,7 +29,7 @@ jobs:
           command: |
             . venv/bin/activate
             python ./docker/env_writer.py ./docker/env.json
-            source ./docker/.env;
+            source ./docker/.env_with_export;
             make smoke_tests
 
   exred_tests_chrome:
@@ -60,7 +60,7 @@ jobs:
           command: |
             . venv/bin/activate
             python ./docker/env_writer.py ./docker/env_exred.json
-            source ./docker/.env;
+            source ./docker/.env_with_export;
             BROWSERS=Chrome VERSIONS=62.0 make exred_browserstack
 
   exred_tests_firefox:
@@ -91,7 +91,7 @@ jobs:
           command: |
             . venv/bin/activate
             python ./docker/env_writer.py ./docker/env_exred.json
-            source ./docker/.env;
+            source ./docker/.env_with_export;
             BROWSERS=Firefox VERSIONS=56.0 make exred_browserstack
 
   functional_tests_requirements:
@@ -140,7 +140,7 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            source ./docker/.env;
+            source ./docker/.env_with_export;
             FEATURE_DIR=fab make functional_tests_feature_dir
 
   fas_functional_tests:
@@ -168,7 +168,7 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            source ./docker/.env;
+            source ./docker/.env_with_export;
             FEATURE_DIR=fas make functional_tests_feature_dir
 
   sso_functional_tests:
@@ -196,7 +196,7 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            source ./docker/.env;
+            source ./docker/.env_with_export;
             FEATURE_DIR=sso make functional_tests_feature_dir
 
   sud_functional_tests:
@@ -224,7 +224,7 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            source ./docker/.env;
+            source ./docker/.env_with_export;
             FEATURE_DIR=sud make functional_tests_feature_dir
 
 
