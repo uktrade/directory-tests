@@ -968,7 +968,6 @@ def registration_create_and_verify_account(
         registration_should_get_verification_email(context, actor_alias)
         registration_open_email_confirmation_link(context, actor_alias)
         sso_confirm_your_email.submit(context.driver)
-        sso_profile_about.should_be_here(context.driver)
     update_actor(context, actor_alias, registered=True)
 
 

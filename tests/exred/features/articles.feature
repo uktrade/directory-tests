@@ -330,8 +330,6 @@ Feature: Articles
 
     When "Robert" decides to register to save his reading progress using link visible in the "<element>"
     And "Robert" completes the registration and real email verification process
-    And "Robert" goes to the "home" page
-    And "Robert" goes back to the same "<group>" Article category via "<location>"
     Then "Robert" should see his reading progress same as before registration
 
     When "Robert" logs out and forgets the article reading history by clearing the cookies
@@ -363,8 +361,6 @@ Feature: Articles
 
     When "Robert" decides to register to save his reading progress using link visible in the "<element>"
     And "Robert" completes the registration and real email verification process
-    And "Robert" goes to the "home" page
-    And "Robert" goes back to the last Article he read
     Then "Robert" should see his reading progress same as before registration
 
     When "Robert" logs out and forgets the article reading history by clearing the cookies
