@@ -387,30 +387,58 @@ Feature: Articles
       | Guidance         | footer links | a third   | top bar |
 
 
-  @wip
+  @bug
+  @ED-2807
+  @fixme
   @ED-2770
   @session
-  Scenario: An Exporter should be able to sing in from the Articles list page in order to save their progress
-    Given "Robert" read some of the articles
+  Scenario Outline: An Exporter should be able to sing in from the Articles list page using "<element>" Sign-in link in order to save their reading progress for "<group>" articles
+    Given "Robert" is a registered and verified user
+    And "Robert" went to the "Home" page
+    And "Robert" went to randomly selected "<group>" Article category via "<location>"
+    And "Robert" read "<a number>" of articles
     And "Robert" is on the "Article list" page
 
-    When "Robert" decides to "sign in"
-    And "Robert" signs in
+    When "Robert" signs in using link visible in the "<element>"
 
-    Then "Robert"'s current progress should be saved
+    Then "Robert" should be on the "Article List" page
+    And "Robert" should see his reading progress same as before signing in
+
+    Examples:
+      | group            | location     | a number  | element      |
+      | Export Readiness | header menu  | a sixth   | article list |
+      | Export Readiness | home page    | a quarter | top bar      |
+      | Export Readiness | footer links | a third   | article list |
+      | Guidance         | header menu  | a fifth   | top bar      |
+      | Guidance         | home page    | a quarter | article list |
+      | Guidance         | footer links | a third   | top bar      |
 
 
-  @wip
+  @bug
+  @ED-2807
+  @fixme
   @ED-2771
   @session
-  Scenario: An Exporter should be able to sign in from the specific Article page in order to save their progress
-    Given "Robert" read some of the articles
+  Scenario Outline: An Exporter should be able to sing in from the Article page using "<element>" Sign-in link in order to save their reading progress for "<group>" articles
+    Given "Robert" is a registered and verified user
+    And "Robert" went to the "Home" page
+    And "Robert" went to randomly selected "<group>" Article category via "<location>"
+    And "Robert" read "<a number>" of articles and stays on the last read article page
     And "Robert" is on the "Article" page
 
-    When "Robert" decides to "sign in"
-    And "Robert" signs in
+    When "Robert" signs in using link visible in the "<element>"
 
-    Then "Robert"'s current progress should be saved
+    Then "Robert" should be on the "Article" page
+    And "Robert" should see his reading progress same as before signing in
+
+    Examples:
+      | group            | location     | a number  | element |
+      | Export Readiness | header menu  | a sixth   | article |
+      | Export Readiness | home page    | a quarter | top bar |
+      | Export Readiness | footer links | a third   | article |
+      | Guidance         | header menu  | a fifth   | top bar |
+      | Guidance         | home page    | a quarter | article |
+      | Guidance         | footer links | a third   | top bar |
 
 
   @wip
