@@ -6,6 +6,7 @@ from steps.then_impl import triage_should_be_classified_as
 from steps.when_impl import (
     articles_found_useful_or_not,
     articles_go_back_to_article_list,
+    articles_go_back_to_last_read_article,
     articles_go_back_to_same_group,
     articles_open_any,
     articles_open_any_but_the_last,
@@ -24,6 +25,7 @@ from steps.when_impl import (
     registration_submit_form_and_verify_account,
     set_sector_preference,
     sign_in,
+    sign_in_go_to,
     start_triage,
     triage_are_you_incorporated,
     triage_change_answers,
@@ -35,8 +37,7 @@ from steps.when_impl import (
     triage_say_whether_you_use_online_marketplaces,
     triage_should_see_answers_to_questions,
     triage_what_is_your_company_name,
-    visit_page,
-    articles_go_back_to_last_read_article
+    visit_page
 )
 
 
