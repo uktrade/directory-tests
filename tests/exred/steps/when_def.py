@@ -20,8 +20,8 @@ from steps.when_impl import (
     open_service_link_on_interim_page,
     personalised_journey_create_page,
     personalised_journey_update_preference,
-    registration_create_and_verify_account,
     registration_go_to,
+    registration_submit_form_and_verify_account,
     set_sector_preference,
     sign_in,
     start_triage,
@@ -204,13 +204,13 @@ def when_actor_decides_to_register(context, actor_alias, location):
 
 @when('"{actor_alias}" completes the registration and fake email verification process')
 def when_actor_registers(context, actor_alias):
-    registration_create_and_verify_account(
+    registration_submit_form_and_verify_account(
         context, actor_alias, fake_verification=True)
 
 
 @when('"{actor_alias}" completes the registration and real email verification process')
 def when_actor_registers(context, actor_alias):
-    registration_create_and_verify_account(
+    registration_submit_form_and_verify_account(
         context, actor_alias, fake_verification=False)
 
 
