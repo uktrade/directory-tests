@@ -69,7 +69,7 @@ Feature: Guidance articles
   @articles
   @regular
   @optimize
-  Scenario Outline: Regular Exporter should see article read count for each tile in the Guidance section on the personalised page
+  Scenario Outline: Regular Exporter should see article read count for each tile in the "<specific>" Guidance section on the personalised page
     Given "Nadia" was classified as "regular" exporter in the triage process
     And "Nadia" decided to create her personalised journey page
 

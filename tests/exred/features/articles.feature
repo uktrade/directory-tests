@@ -6,7 +6,7 @@ Feature: Articles
   @guidance
   @articles
   @<category>
-  Scenario Outline: Any Exporter accessing Articles through the Guidance Article List should be able to navigate to the next article
+  Scenario Outline: Any Exporter accessing "<category>" Articles through the Guidance Article List should be able to navigate to the next article
     Given "Robert" accessed "<category>" guidance articles using "home page"
     And "Robert" opened first Article from the list
 
@@ -46,7 +46,7 @@ Feature: Articles
   @ED-2605
   @progress
   @<group>
-  Scenario Outline: Any Exporter should see his progress through the articles list
+  Scenario Outline: Any Exporter should see his reading progress through the "<group>" articles list
     Given "Robert" is on the "<group>" Article List for randomly selected category
 
     When "Robert" opens any article on the list
@@ -236,7 +236,7 @@ Feature: Articles
   @ED-2639
   @feedback
   @<relevant>
-  Scenario Outline: "<relevant>" Exporters should be able to tell us that they "<found_or_not>" the "<group>" article useful
+  Scenario Outline: "<relevant>" Exporters should be able to tell us that they "<found_or_not>" the article useful
     Given "Robert" was classified as "<relevant>" exporter in the triage process
     And "Robert" decided to create her personalised journey page
     And "Robert" went to randomly selected Guidance Articles category
@@ -258,7 +258,7 @@ Feature: Articles
   @counters
   @<group>
   @<location>
-  Scenario Outline: Article Indicators should be updated accordingly after opening "<group>" Article
+  Scenario Outline: Article Indicators should be updated accordingly after opening "<group>" Article via "<location>"
     Given "Robert" went to randomly selected "<group>" Article category via "<location>"
 
     When "Robert" opens any article on the list
@@ -326,7 +326,7 @@ Feature: Articles
   @real-sso-email-verification
   @<group>
   @<location>
-  Scenario Outline: Any Exporter should be able to register from the "<group>" Articles list page in order to save their progress
+  Scenario Outline: Any Exporter should be able to register via link in "<element>" present on the "<group>" Article list page, in order to save their progress
     Given "Robert" went to randomly selected "<group>" Article category via "<location>"
     And "Robert" read "<number>" of articles
     And "Robert" is on the "Article list" page
@@ -360,7 +360,7 @@ Feature: Articles
   @session
   @register
   @real-sso-email-verification
-  Scenario Outline: An Exporter should be able to register from the Article page in order to save their progress
+  Scenario Outline: An Exporter should be able to register via link in "<element>" present on the "<group>" Article page in order to save their progress
     Given "Robert" went to randomly selected "<group>" Article category via "<location>"
     And "Robert" read "<a number>" of articles and stays on the last read article page
     And "Robert" is on the "Article" page
