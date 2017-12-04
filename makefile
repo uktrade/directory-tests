@@ -36,10 +36,10 @@ SET_LOCUST_ENV_VARS := \
 	export DIRECTORY_PROFILE_URL=https://www.dev.profile.uktrade.io; \
 	export DIRECTORY_UI_SUPPLIER_URL=https://dev.supplier.directory.uktrade.io/; \
 	export EXRED_UI_URL=https://dev.exportreadiness.directory.uktrade.io/; \
-	export LOCUST_NUM_CLIENTS=10; \
-	export LOCUST_HATCH_RATE=1; \
+	export LOCUST_NUM_CLIENTS=500; \
+	export LOCUST_HATCH_RATE=2; \
 	export LOCUST_TIMEOUT=30; \
-	export LOCUST_RUN_TIME=120s; \
+	export LOCUST_RUN_TIME=5m; \
 	export SSO_USER_ID=2147483647; \
 	export LOCUST_FILE=./locustfile.py
 
