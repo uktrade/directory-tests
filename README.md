@@ -40,6 +40,7 @@ Tests can be run either against locally provisioned environment or any other one
 * ``DIRECTORY_TESTS_DIRECTORY_SSO_URL``
 * ``DIRECTORY_TESTS_DIRECTORY_UI_BUYER_URL``
 * ``DIRECTORY_TESTS_DIRECTORY_UI_SUPPLIER_URL``
+* ``DIRECTORY_TESTS_EXRED_UI_URL``
 * ``DIRECTORY_TESTS_S3_SECRET_ACCESS_KEY``
 * ``DIRECTORY_TESTS_S3_ACCESS_KEY_ID``
 * ``DIRECTORY_TESTS_S3_REGION``
@@ -70,6 +71,7 @@ This will run flake8 linting, integration tests and finally load tests. This doe
     make test_load_buyer
     make test_load_supplier
     make test_load_sso
+    make test_load_exred
 
 3) To run functional tests locally:
 
@@ -104,7 +106,7 @@ The env variables you are likely to need to change (please see the makefile - th
 - ``LOCUST_TIMEOUT`` The number of seconds you would like the tests to run for
 - ``LOCUST_NUM_CLIENTS`` The number of clients per second you would like to test.
 - ``LOCUST_HATCH_RATE`` How the load will grow when you leave the tests running. Presuming you want to start hammering the servers at full load straight away, this needs to be equal to ``LOCUST_NUM_CLIENTS``
-- ``DIRECTORY_API_URL``, ``DIRECTORY_SSO_URL``, ``DIRECTORY_UI_BUYER_URL``, ``DIRECTORY_UI_SUPPLIER_URL`` The urls you want to load test.
+- ``DIRECTORY_API_URL``, ``DIRECTORY_SSO_URL``, ``DIRECTORY_UI_BUYER_URL``, ``DIRECTORY_UI_SUPPLIER_URL``, ``EXRED_UI_URL`` The urls you want to load test.
 
 You probably won't need to change these but you may also set:
 
