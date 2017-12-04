@@ -3,7 +3,7 @@
 
 from locust import HttpLocust, TaskSet, task
 
-from tests import get_relative_url, get_absolute_url, settings
+from tests import get_relative_url, settings
 
 
 class PublicPagesSupplierUI(TaskSet):
@@ -137,7 +137,7 @@ class PublicPagesSupplierUI(TaskSet):
         self.client.get(get_relative_url('ui-exred:story-thrid'))
 
 
-class RegularUserSupplierUI(HttpLocust):
+class RegularUserExRedUI(HttpLocust):
     host = settings.EXRED_UI_URL
     task_set = PublicPagesSupplierUI
     stop_timeout = settings.LOCUST_TIMEOUT
