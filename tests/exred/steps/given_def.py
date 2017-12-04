@@ -15,10 +15,10 @@ from steps.when_impl import (
     articles_open_group,
     articles_read_a_number_of_them,
     export_readiness_open_category,
+    get_geo_ip,
     guidance_open_category,
     guidance_open_random_category,
     registration_create_and_verify_account,
-    registration_submit_form_and_verify_account,
     set_online_marketplace_preference,
     set_sector_preference,
     start_triage,
@@ -171,3 +171,9 @@ def given_actor_reads_few_articles(context, actor_alias, number):
 def given_actor_is_registered_and_verified(context, actor_alias):
     registration_create_and_verify_account(
         context, actor_alias, fake_verification=True)
+
+
+@given("{actor_alias} checks her geoip")
+@given("{actor_alias} checks his geoip")
+def given_actor_checks_the_goeip(context, actor_alias):
+    get_geo_ip(context, actor_alias)
