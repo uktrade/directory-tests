@@ -84,7 +84,7 @@ def should_see_link_to(driver: webdriver, section: str, item_name: str):
         logging.debug("Open the menu by sending 'Right Arrow' key")
         menu_selector = SECTIONS[section.lower()]["menu"]
         menu = find_element(driver, by_css=menu_selector)
-        if "firefox" not in driver.capabilities["browserName"].lower():
+        if "firefox" in driver.capabilities["browserName"].lower():
             logging.debug("Opening '%s' menu under Firefox", section)
             action_chains = ActionChains(driver)
             action_chains.move_to_element(menu)
@@ -113,7 +113,7 @@ def open(driver: webdriver, group: str, element: str):
         # Open the menu by sending "Down Arrow" key
         menu_selector = SECTIONS[group.lower()]["menu"]
         menu = driver.find_element_by_css_selector(menu_selector)
-        if "firefox" not in driver.capabilities["browserName"].lower():
+        if "firefox" in driver.capabilities["browserName"].lower():
             logging.debug("Opening '%s' menu under Firefox", group)
             action_chains = ActionChains(driver)
             action_chains.move_to_element(menu)
@@ -121,13 +121,8 @@ def open(driver: webdriver, group: str, element: str):
         else:
             menu.send_keys(Keys.ENTER)
     menu_item_selector = SECTIONS[group.lower()][element.lower()]
-    with selenium_action(
-            driver, "Could not find %s element in %s group with '%s' selector",
-            element, group, menu_item_selector):
-        menu_item = driver.find_element_by_css_selector(menu_item_selector)
-        WebDriverWait(driver, 5).until(
-            EC.visibility_of_element_located((By.CSS_SELECTOR,
-                                              menu_item_selector)))
+    menu_item = find_element(driver, by_css=menu_item_selector)
+    wait_for_visibility(driver, by_css=menu_item_selector)
     with assertion_msg("%s menu item: '%s' is not visible", group, element):
         assert menu_item.is_displayed()
     menu_item.click()
