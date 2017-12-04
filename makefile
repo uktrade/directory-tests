@@ -34,6 +34,7 @@ SET_LOCUST_ENV_VARS := \
 	export DIRECTORY_UI_BUYER_URL=https://dev.buyer.directory.uktrade.io/; \
 	export DIRECTORY_PROFILE_URL=https://www.dev.profile.uktrade.io; \
 	export DIRECTORY_UI_SUPPLIER_URL=https://dev.supplier.directory.uktrade.io/; \
+	export EXRED_UI_URL=https://dev.exportreadiness.directory.uktrade.io/; \
 	export LOCUST_NUM_CLIENTS=5; \
 	export LOCUST_HATCH_RATE=5; \
 	export LOCUST_TIMEOUT=120; \
@@ -57,6 +58,11 @@ load_test_supplier:
 load_test_sso:
 	$(SET_LOCUST_ENV_VARS); \
 	export LOCUST_FILE=./locustfile_sso.py; \
+	$(LOCUST)
+
+load_test_exred:
+	$(SET_LOCUST_ENV_VARS); \
+	export LOCUST_FILE=./locustfile_exred.py; \
 	$(LOCUST)
 
 load_test_minimal:
