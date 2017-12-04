@@ -119,6 +119,18 @@ def visit(driver: webdriver, *, first_time: bool = False):
     take_screenshot(driver, NAME)
 
 
+def should_be_here(driver: webdriver):
+    take_screenshot(driver, NAME)
+    for section in SECTIONS:
+        for element_name, element_selector in SECTIONS[section].items():
+            element = driver.find_element_by_css_selector(element_selector)
+            with assertion_msg(
+                    "It looks like '%s' element is not visible on %s",
+                    element_name, NAME):
+                assert element.is_displayed()
+    logging.debug("All expected elements are visible on '%s' page", NAME)
+
+
 def should_see_sections(driver: webdriver, section_names: list):
     """Will check if Actor can see all expected page sections.
 

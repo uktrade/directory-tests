@@ -6,7 +6,7 @@ Feature: Articles
   @guidance
   @articles
   @<category>
-  Scenario Outline: Any Exporter accessing Articles through the Guidance Article List should be able to navigate to the next article
+  Scenario Outline: Any Exporter accessing "<category>" Articles through the Guidance Article List should be able to navigate to the next article
     Given "Robert" accessed "<category>" guidance articles using "home page"
     And "Robert" opened first Article from the list
 
@@ -46,7 +46,7 @@ Feature: Articles
   @ED-2605
   @progress
   @<group>
-  Scenario Outline: Any Exporter should see his progress through the articles list
+  Scenario Outline: Any Exporter should see his reading progress through the "<group>" articles list
     Given "Robert" is on the "<group>" Article List for randomly selected category
 
     When "Robert" opens any article on the list
@@ -236,7 +236,7 @@ Feature: Articles
   @ED-2639
   @feedback
   @<relevant>
-  Scenario Outline: "<relevant>" Exporters should be able to tell us that they "<found_or_not>" the "<group>" article useful
+  Scenario Outline: "<relevant>" Exporters should be able to tell us that they "<found_or_not>" the article useful
     Given "Robert" was classified as "<relevant>" exporter in the triage process
     And "Robert" decided to create her personalised journey page
     And "Robert" went to randomly selected Guidance Articles category
@@ -258,7 +258,7 @@ Feature: Articles
   @counters
   @<group>
   @<location>
-  Scenario Outline: Article Indicators should be updated accordingly after opening "<group>" Article
+  Scenario Outline: Article Indicators should be updated accordingly after opening "<group>" Article via "<location>"
     Given "Robert" went to randomly selected "<group>" Article category via "<location>"
 
     When "Robert" opens any article on the list
@@ -326,7 +326,7 @@ Feature: Articles
   @real-sso-email-verification
   @<group>
   @<location>
-  Scenario Outline: Any Exporter should be able to register from the "<group>" Articles list page in order to save their progress
+  Scenario Outline: Any Exporter should be able to register via link in "<element>" present on the "<group>" Article list page, in order to save their progress
     Given "Robert" went to randomly selected "<group>" Article category via "<location>"
     And "Robert" read "<number>" of articles
     And "Robert" is on the "Article list" page
@@ -360,7 +360,7 @@ Feature: Articles
   @session
   @register
   @real-sso-email-verification
-  Scenario Outline: An Exporter should be able to register from the Article page in order to save their progress
+  Scenario Outline: An Exporter should be able to register via link in "<element>" present on the "<group>" Article page in order to save their progress
     Given "Robert" went to randomly selected "<group>" Article category via "<location>"
     And "Robert" read "<a number>" of articles and stays on the last read article page
     And "Robert" is on the "Article" page
@@ -387,30 +387,58 @@ Feature: Articles
       | Guidance         | footer links | a third   | top bar |
 
 
-  @wip
+  @bug
+  @ED-2807
+  @fixme
   @ED-2770
   @session
-  Scenario: An Exporter should be able to sing in from the Articles list page in order to save their progress
-    Given "Robert" read some of the articles
+  Scenario Outline: An Exporter should be able to sing in from the Articles list page using "<element>" Sign-in link in order to save their reading progress for "<group>" articles
+    Given "Robert" is a registered and verified user
+    And "Robert" went to the "Home" page
+    And "Robert" went to randomly selected "<group>" Article category via "<location>"
+    And "Robert" read "<a number>" of articles
     And "Robert" is on the "Article list" page
 
-    When "Robert" decides to "sign in"
-    And "Robert" signs in
+    When "Robert" signs in using link visible in the "<element>"
 
-    Then "Robert"'s current progress should be saved
+    Then "Robert" should be on the "Article List" page
+    And "Robert" should see his reading progress same as before signing in
+
+    Examples:
+      | group            | location     | a number  | element      |
+      | Export Readiness | header menu  | a sixth   | article list |
+      | Export Readiness | home page    | a quarter | top bar      |
+      | Export Readiness | footer links | a third   | article list |
+      | Guidance         | header menu  | a fifth   | top bar      |
+      | Guidance         | home page    | a quarter | article list |
+      | Guidance         | footer links | a third   | top bar      |
 
 
-  @wip
+  @bug
+  @ED-2807
+  @fixme
   @ED-2771
   @session
-  Scenario: An Exporter should be able to sign in from the specific Article page in order to save their progress
-    Given "Robert" read some of the articles
+  Scenario Outline: An Exporter should be able to sing in from the Article page using "<element>" Sign-in link in order to save their reading progress for "<group>" articles
+    Given "Robert" is a registered and verified user
+    And "Robert" went to the "Home" page
+    And "Robert" went to randomly selected "<group>" Article category via "<location>"
+    And "Robert" read "<a number>" of articles and stays on the last read article page
     And "Robert" is on the "Article" page
 
-    When "Robert" decides to "sign in"
-    And "Robert" signs in
+    When "Robert" signs in using link visible in the "<element>"
 
-    Then "Robert"'s current progress should be saved
+    Then "Robert" should be on the "Article" page
+    And "Robert" should see his reading progress same as before signing in
+
+    Examples:
+      | group            | location     | a number  | element |
+      | Export Readiness | header menu  | a sixth   | article |
+      | Export Readiness | home page    | a quarter | top bar |
+      | Export Readiness | footer links | a third   | article |
+      | Guidance         | header menu  | a fifth   | top bar |
+      | Guidance         | home page    | a quarter | article |
+      | Guidance         | footer links | a third   | top bar |
 
 
   @wip

@@ -47,7 +47,7 @@ Feature: Triage
   @ED-2521
   @first-time
   @occasional
-  Scenario Outline: Occasional Exporter visiting the home page for the 1st time should be able to get to personalised page after going through triage process
+  Scenario Outline: Occasional Exporter which "<online_action>" used online marketplaces and visiting the home page for the 1st time should be able to get to personalised page after going through triage process
     Given "Inigo" visits the "home" page for the first time
     And "Inigo" decided to build his exporting journey
 
@@ -76,7 +76,7 @@ Feature: Triage
   @ED-2521
   @first-time
   @occasional
-  Scenario Outline: Not incorporated Occasional Exporter visiting the home page for the 1st time should be able to get to personalised page after going through triage process
+  Scenario Outline: Not incorporated Occasional Exporter which "<online_action>" used online marketplaces and visiting the home page for the 1st time should be able to get to personalised page after going through triage process
     Given "Inigo" visits the "home" page for the first time
     And "Inigo" decided to build his exporting journey
 

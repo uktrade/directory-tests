@@ -3,6 +3,7 @@
 import logging
 
 from selenium import webdriver
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
@@ -83,7 +84,13 @@ def should_see_link_to(driver: webdriver, section: str, item_name: str):
         logging.debug("Open the menu by sending 'Right Arrow' key")
         menu_selector = SECTIONS[section.lower()]["menu"]
         menu = find_element(driver, by_css=menu_selector)
-        menu.send_keys(Keys.RIGHT)
+        if "firefox" not in driver.capabilities["browserName"].lower():
+            logging.debug("Opening '%s' menu under Firefox", section)
+            action_chains = ActionChains(driver)
+            action_chains.move_to_element(menu)
+            action_chains.perform()
+        else:
+            menu.send_keys(Keys.ENTER)
     menu_item = find_element(driver, by_css=item_selector)
     with assertion_msg(
             "It looks like '%s' in '%s' section is not visible", item_name,
@@ -106,7 +113,13 @@ def open(driver: webdriver, group: str, element: str):
         # Open the menu by sending "Down Arrow" key
         menu_selector = SECTIONS[group.lower()]["menu"]
         menu = driver.find_element_by_css_selector(menu_selector)
-        menu.send_keys(Keys.RIGHT)
+        if "firefox" not in driver.capabilities["browserName"].lower():
+            logging.debug("Opening '%s' menu under Firefox", group)
+            action_chains = ActionChains(driver)
+            action_chains.move_to_element(menu)
+            action_chains.perform()
+        else:
+            menu.send_keys(Keys.ENTER)
     menu_item_selector = SECTIONS[group.lower()][element.lower()]
     with selenium_action(
             driver, "Could not find %s element in %s group with '%s' selector",
