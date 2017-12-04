@@ -4,7 +4,6 @@ import logging
 import random
 from urllib.parse import urljoin
 
-from retrying import retry
 from selenium import webdriver
 
 from settings import EXRED_UI_URL
@@ -18,7 +17,7 @@ from utils import (
 )
 
 NAME = "ExRed Home"
-URL = urljoin(EXRED_UI_URL, "")
+URL = urljoin(EXRED_UI_URL, "?lang=en-gb")
 
 GET_STARTED_BUTTON = ".triage a.button-cta"
 CONTINUE_EXPORT_JOURNEY = "#continue-export-journey"
