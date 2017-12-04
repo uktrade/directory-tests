@@ -37,6 +37,7 @@ from utils import (
     add_actor,
     assertion_msg,
     get_actor,
+    take_screenshot,
     unauthenticated_actor,
     update_actor
 )
@@ -1021,3 +1022,10 @@ def articles_go_back_to_last_read_article(context: Context, actor_alias: str):
     last_read_article = actor.visited_articles[-1].title
     articles_go_back_to_same_group(context, actor_alias, group, location)
     articles_open_specific(context, actor_alias, last_read_article)
+
+
+def get_geo_ip(context: Context, actor_alias: str):
+    driver = context.driver
+    driver.get("https://www.geoiptool.com/")
+    take_screenshot(driver, "geoip")
+    logging.debug("%s checked the geoip", actor_alias)
