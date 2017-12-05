@@ -22,6 +22,7 @@ Feature: Accessing Services
   @accessing-services
   @interim-pages
   @<service>
+  @external-service
   Scenario Outline: Any Exporter should be presented with interim pages leading to "<service>" Service page when accessed via "<link_location>"
     Given "Robert" visits the "Home" page
 
@@ -65,6 +66,7 @@ Feature: Accessing Services
   @accessing-services
   @interim-pages
   @<service_name>
+  @external-service
   Scenario Outline: Any Exporter should be able to get to the "<service>" Service page via interim page which was accessed via "<link_location>"
     Given "Robert" visits the "Home" page
 
@@ -87,6 +89,7 @@ Feature: Accessing Services
   @home-page
   @accessing-services
   @<service_name>
+  @external-service
   Scenario Outline: Any Exporter should be able to get to the "<service>" Service page using "<link_location>"
     Given "Robert" visits the "Home" page
 
