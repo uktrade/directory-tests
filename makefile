@@ -26,7 +26,8 @@ LOCUST := \
 		--clients=$$LOCUST_NUM_CLIENTS \
 		--hatch-rate=$$LOCUST_HATCH_RATE \
 		--no-web \
-		--only-summary
+		--only-summary \
+		--run-time=$$LOCUST_RUN_TIME
 
 SET_LOCUST_ENV_VARS := \
 	export DIRECTORY_API_URL=https://directory-api-dev.herokuapp.com/; \
@@ -34,9 +35,11 @@ SET_LOCUST_ENV_VARS := \
 	export DIRECTORY_UI_BUYER_URL=https://dev.buyer.directory.uktrade.io/; \
 	export DIRECTORY_PROFILE_URL=https://www.dev.profile.uktrade.io; \
 	export DIRECTORY_UI_SUPPLIER_URL=https://dev.supplier.directory.uktrade.io/; \
-	export LOCUST_NUM_CLIENTS=5; \
-	export LOCUST_HATCH_RATE=5; \
-	export LOCUST_TIMEOUT=120; \
+	export EXRED_UI_URL=https://dev.exportreadiness.directory.uktrade.io/; \
+	export LOCUST_NUM_CLIENTS=500; \
+	export LOCUST_HATCH_RATE=2; \
+	export LOCUST_TIMEOUT=30; \
+	export LOCUST_RUN_TIME=5m; \
 	export SSO_USER_ID=2147483647; \
 	export LOCUST_FILE=./locustfile.py
 
@@ -57,6 +60,11 @@ load_test_supplier:
 load_test_sso:
 	$(SET_LOCUST_ENV_VARS); \
 	export LOCUST_FILE=./locustfile_sso.py; \
+	$(LOCUST)
+
+load_test_exred:
+	$(SET_LOCUST_ENV_VARS); \
+	export LOCUST_FILE=./locustfile_exred.py; \
 	$(LOCUST)
 
 load_test_minimal:
