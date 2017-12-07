@@ -4,33 +4,46 @@
 #
 #    pip-compile --output-file requirements_load.txt requirements_load.ini
 #
-beautifulsoup4==4.5.3
+git+https://git@github.com/uktrade/directory-constants.git@v6.3.1#egg=directory-constants
+asn1crypto==0.23.0        # via cryptography
+attrs==17.3.0             # via automat, service-identity
+automat==0.6.0            # via twisted
+beautifulsoup4==4.6.0
+certifi==2017.11.5        # via requests
+cffi==1.11.2              # via cryptography
+chardet==3.0.4            # via requests
 click==6.7                # via flask
-configparser==3.5.0       # via flake8
-enum34==1.1.6             # via flake8
-flake8==3.0.4
+constantly==15.1.0        # via twisted
+cryptography==2.1.4       # via pyopenssl
+cssselect==1.0.1          # via parsel, scrapy
+django==1.11.5
 flask==0.12.2             # via locustio
 gevent==1.2.2             # via locustio
 greenlet==0.4.12          # via gevent
+hyperlink==17.3.1         # via twisted
+idna==2.6                 # via cryptography, requests
+incremental==17.5.0       # via twisted
 itsdangerous==0.24        # via flask
-jinja2==2.9.6             # via flask
-locustio==0.8a2
+jinja2==2.10              # via flask
+locustio==0.8.1
+lxml==4.1.1               # via parsel, scrapy
 markupsafe==1.0           # via jinja2
-mccabe==0.5.3             # via flake8
 msgpack-python==0.4.8     # via locustio
-py==1.4.34                # via pytest
-pycodestyle==2.0.0        # via flake8
-pyflakes==1.2.3           # via flake8
-pytest-base-url==1.4.1    # via pytest-selenium
-pytest-html==1.15.1       # via pytest-selenium
-pytest-metadata==1.5.0    # via pytest-html
-pytest-selenium==1.5.0
-pytest-sugar==0.8.0
-pytest-variables==1.6.1   # via pytest-selenium
-pytest==3.0.2
-pyzmq==15.2.0
-requests==2.11.1
-selenium==3.4.3           # via pytest-selenium
-six==1.10.0               # via locustio
-termcolor==1.1.0          # via pytest-sugar
+parsel==1.2.0             # via scrapy
+pyasn1-modules==0.2.1     # via service-identity
+pyasn1==0.4.2             # via pyasn1-modules, service-identity
+pycparser==2.18           # via cffi
+pydispatcher==2.0.5       # via scrapy
+pyopenssl==17.5.0         # via scrapy, service-identity
+pytz==2017.2              # via django
+pyzmq==16.0.3             # via locustio
+queuelib==1.4.2           # via scrapy
+requests==2.18.4
+scrapy==1.4.0
+service-identity==17.0.0  # via scrapy
+six==1.11.0               # via automat, cryptography, locustio, parsel, pyopenssl, scrapy, w3lib
+twisted==17.9.0           # via scrapy
+urllib3==1.22             # via requests
+w3lib==1.18.0             # via parsel, scrapy
 werkzeug==0.12.2          # via flask
+zope.interface==4.4.3     # via twisted
