@@ -17,18 +17,18 @@ constantly==15.1.0        # via twisted
 cryptography==2.1.4       # via pyopenssl
 cssselect==1.0.1          # via parsel, scrapy
 django==1.11.5
-flask==0.12.2             # via locustio
-gevent==1.2.2             # via locustio
+flask==0.12.2             # via locust
+gevent==1.2.2             # via locust
 greenlet==0.4.12          # via gevent
 hyperlink==17.3.1         # via twisted
 idna==2.6                 # via cryptography, requests
 incremental==17.5.0       # via twisted
 itsdangerous==0.24        # via flask
 jinja2==2.10              # via flask
-locustio==0.8.1
+locust==0.8
 lxml==4.1.1               # via parsel, scrapy
 markupsafe==1.0           # via jinja2
-msgpack-python==0.4.8     # via locustio
+msgpack-python==0.4.8     # via locust
 parsel==1.2.0             # via scrapy
 pyasn1-modules==0.2.1     # via service-identity
 pyasn1==0.4.2             # via pyasn1-modules, service-identity
@@ -36,14 +36,14 @@ pycparser==2.18           # via cffi
 pydispatcher==2.0.5       # via scrapy
 pyopenssl==17.5.0         # via scrapy, service-identity
 pytz==2017.2              # via django
-pyzmq==16.0.3             # via locustio
+pyzmq==16.0.3             # via locust
 queuelib==1.4.2           # via scrapy
 requests==2.18.4
 scrapy==1.4.0
 service-identity==17.0.0  # via scrapy
-six==1.11.0               # via automat, cryptography, locustio, parsel, pyopenssl, scrapy, w3lib
+six==1.11.0               # via automat, cryptography, locust, parsel, pyopenssl, scrapy, w3lib
 twisted==17.9.0           # via scrapy
 urllib3==1.22             # via requests
 w3lib==1.18.0             # via parsel, scrapy
-werkzeug==0.12.2          # via flask
+werkzeug==0.13            # via flask
 zope.interface==4.4.3     # via twisted
