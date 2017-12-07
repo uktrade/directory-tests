@@ -84,6 +84,7 @@ def should_see_link_to(driver: webdriver, section: str, item_name: str):
             logging.debug("Opening '%s' menu under Firefox", section)
             action_chains = ActionChains(driver)
             action_chains.move_to_element(menu)
+            action_chains.send_keys(Keys.ENTER)
             action_chains.perform()
         else:
             menu.send_keys(Keys.ENTER)
@@ -113,6 +114,7 @@ def open(driver: webdriver, group: str, element: str):
             logging.debug("Opening '%s' menu under Firefox", group)
             action_chains = ActionChains(driver)
             action_chains.move_to_element(menu)
+            action_chains.send_keys(Keys.ENTER)
             action_chains.perform()
         else:
             menu.send_keys(Keys.ENTER)
