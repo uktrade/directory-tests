@@ -6,7 +6,7 @@ from locust import HttpLocust, TaskSet, task
 from tests import get_relative_url, settings
 
 
-class PublicPagesSupplierUI(TaskSet):
+class PublicPagesUI(TaskSet):
 
     @task
     def landing_page(self):
@@ -139,7 +139,7 @@ class PublicPagesSupplierUI(TaskSet):
 
 class RegularUserExRedUI(HttpLocust):
     host = settings.EXRED_UI_URL
-    task_set = PublicPagesSupplierUI
+    task_set = PublicPagesUI
     stop_timeout = settings.LOCUST_TIMEOUT
     min_wait = settings.LOCUST_MIN_WAIT
     max_wait = settings.LOCUST_MAX_WAIT
