@@ -20,7 +20,7 @@ NAME = "ExRed Home"
 URL = urljoin(EXRED_UI_URL, "?lang=en-gb")
 
 GET_STARTED_BUTTON = ".triage a.button-cta"
-CONTINUE_EXPORT_JOURNEY = "#continue-export-journey"
+CONTINUE_EXPORT_JOURNEY = ".triage a.button-cta"
 NEW_TO_EXPORTING_LINK = "#personas > .container > .group div:nth-child(1) a"
 OCCASIONAL_EXPORTER_LINK = "#personas > .container > .group div:nth-child(2) a"
 REGULAR_EXPORTED_LINK = "#personas > .container > .group div:nth-child(3) a"
