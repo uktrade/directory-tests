@@ -107,17 +107,10 @@ def open(driver: webdriver, group: str, element: str):
     the focus of the menu and which will make menu to fold.
     """
     if "menu" in SECTIONS[group.lower()]:
-        # Open the menu by sending "Down Arrow" key
+        # Open the menu by sending "Enter" key
         menu_selector = SECTIONS[group.lower()]["menu"]
         menu = driver.find_element_by_css_selector(menu_selector)
-        if "firefox" in driver.capabilities["browserName"].lower():
-            logging.debug("Opening '%s' menu under Firefox", group)
-            action_chains = ActionChains(driver)
-            action_chains.move_to_element(menu)
-            action_chains.send_keys(Keys.ENTER)
-            action_chains.perform()
-        else:
-            menu.send_keys(Keys.ENTER)
+        menu.send_keys(Keys.ENTER)
     menu_item_selector = SECTIONS[group.lower()][element.lower()]
     menu_item = find_element(driver, by_css=menu_item_selector)
     wait_for_visibility(driver, by_css=menu_item_selector)
