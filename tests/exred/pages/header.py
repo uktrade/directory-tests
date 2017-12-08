@@ -80,15 +80,9 @@ def should_see_link_to(driver: webdriver, section: str, item_name: str):
         logging.debug("Open the menu by sending 'Right Arrow' key")
         menu_selector = SECTIONS[section.lower()]["menu"]
         menu = find_element(driver, by_css=menu_selector)
-        if "firefox" in driver.capabilities["browserName"].lower():
-            logging.debug("Opening '%s' menu under Firefox", section)
-            action_chains = ActionChains(driver)
-            action_chains.move_to_element(menu)
-            action_chains.send_keys(Keys.ENTER)
-            action_chains.perform()
-        else:
-            menu.send_keys(Keys.ENTER)
+        menu.send_keys(Keys.ENTER)
     menu_item = find_element(driver, by_css=item_selector)
+    wait_for_visibility(driver, by_css=item_selector)
     with assertion_msg(
             "It looks like '%s' in '%s' section is not visible", item_name,
             section):
