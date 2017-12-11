@@ -5,7 +5,7 @@ Feature: Customised page
   @ED-2588
   @personalised-page
   @regular
-  Scenario Outline: Regular Exporter should see "<expected>" sections on personalised page
+  Scenario Outline: Regular Exporter which exports "<goods_or_services>" and "<has_or_has_not>" incorporated his company should see "<expected>" sections on personalised page
     Given "Nadia" exports "<goods_or_services>"
     And "Nadia" was classified as "Regular" Exporter which "<has_or_has_not>" incorporated the company
 
@@ -25,7 +25,7 @@ Feature: Customised page
   @ED-2589
   @personalised-page
   @occasional
-  Scenario Outline: Occasional Exporter should see "<expected>" sections on personalised page
+  Scenario Outline: Occasional Exporter which exports "<goods_or_services>", "<used_or_not>" online marketplaces and "<has_or_has_not>" incorporated his company should see "<expected>" sections on personalised page
     Given "Inigo" exports "<goods_or_services>"
     And "Inigo" "<used_or_not>" online marketplaces before
     And "Inigo" was classified as "Occasional" Exporter which "<has_or_has_not>" incorporated the company
@@ -46,7 +46,7 @@ Feature: Customised page
   @ED-2590
   @personalised-page
   @new
-  Scenario Outline: New Exporter should see "<expected>" sections on personalised page
+  Scenario Outline: New Exporter which exports "<goods_or_services>" and "<has_or_has_not>" incorporated his company should see "<expected>" sections on personalised page
     Given "Jonah" exports "<goods_or_services>"
     And "Jonah" was classified as "New" Exporter which "<has_or_has_not>" incorporated the company
 

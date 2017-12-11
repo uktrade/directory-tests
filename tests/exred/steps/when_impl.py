@@ -9,6 +9,7 @@ from selenium.common.exceptions import WebDriverException
 
 from pages import (
     article_common,
+    article_list,
     footer,
     guidance_common,
     header,
@@ -26,19 +27,18 @@ from pages import (
     triage_do_you_use_online_marketplaces,
     triage_have_you_exported,
     triage_summary,
-    triage_what_do_you_want_to_export,
-    article_list
+    triage_what_do_you_want_to_export
 )
 from registry.articles import GUIDANCE, get_article, get_articles
 from registry.pages import get_page_object
 from settings import EXRED_SECTORS
 from utils import (
+    VisitedArticle,
     add_actor,
     assertion_msg,
     get_actor,
     unauthenticated_actor,
-    update_actor,
-    VisitedArticle
+    update_actor
 )
 from utils.mail_gun import get_verification_link
 
@@ -917,7 +917,7 @@ def registration_go_to(context: Context, actor_alias: str, location: str):
     else:
         raise KeyError(
             "Could not recognise registration link location: %s. Please use "
-            "'article' or 'top bar'".format(location))
+            "'article', 'article list' or 'top bar'".format(location))
     sso_registration.should_be_here(context.driver)
 
 
@@ -953,7 +953,7 @@ def registration_open_email_confirmation_link(context, actor_alias):
     logging.debug("Supplier is on the SSO Confirm your email address page")
 
 
-def registration_create_and_verify_account(
+def registration_submit_form_and_verify_account(
         context: Context, actor_alias: str, *, fake_verification: bool = True):
     driver = context.driver
     actor = get_actor(context, actor_alias)
@@ -971,6 +971,14 @@ def registration_create_and_verify_account(
     update_actor(context, actor_alias, registered=True)
 
 
+def registration_create_and_verify_account(
+        context: Context, actor_alias: str, *, fake_verification: bool = True):
+    visit_page(context, actor_alias, "Home")
+    registration_go_to(context, actor_alias, "top bar")
+    registration_submit_form_and_verify_account(
+        context, actor_alias, fake_verification=fake_verification)
+
+
 def clear_the_cookies(context: Context, actor_alias: str):
     try:
         cookies = context.driver.get_cookies()
@@ -981,15 +989,19 @@ def clear_the_cookies(context: Context, actor_alias: str):
         logging.error("Failed to clear cookies for %s", actor_alias)
 
 
-def sign_in_go_to(context, actor_alias, location):
+def sign_in_go_to(context: Context, actor_alias: str, location: str):
+    logging.debug(
+        "%s decided to go to sign in page via %s link", actor_alias, location)
     if location.lower() == "article":
         article_common.go_to_sign_in(context.driver)
+    elif location.lower() == "article list":
+        article_list.go_to_sign_in(context.driver)
     elif location.lower() == "top bar":
         header.go_to_sign_in(context.driver)
     else:
         raise KeyError(
-            "Could not recognise registration link location: %s. Please use "
-            "'article' or 'top bar'".format(location))
+            "Could not recognise 'sign in' link location: %s. Please use "
+            "'article', 'article list' or 'top bar'".format(location))
     sso_sign_in.should_be_here(context.driver)
 
 

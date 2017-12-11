@@ -10,10 +10,10 @@ from selenium.common.exceptions import (
 )
 
 from settings import EXRED_UI_URL
-from utils import assertion_msg, find_element, take_screenshot
+from utils import assertion_msg, take_screenshot
 
 NAME = "Get Finance Home page"
-URL = urljoin(EXRED_UI_URL, "finance/get-finance-support-from-government")
+URL = urljoin(EXRED_UI_URL, "get-finance")
 
 TOTAL_NUMBER_OF_ARTICLES = "dd.position > span.to"
 ARTICLES_TO_READ_COUNTER = "dd.position > span.from"

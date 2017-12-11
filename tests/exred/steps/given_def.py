@@ -17,6 +17,8 @@ from steps.when_impl import (
     export_readiness_open_category,
     guidance_open_category,
     guidance_open_random_category,
+    registration_create_and_verify_account,
+    registration_submit_form_and_verify_account,
     set_online_marketplace_preference,
     set_sector_preference,
     start_triage,
@@ -26,6 +28,7 @@ from steps.when_impl import (
 )
 
 
+@given('"{actor_alias}" went to the "{page_name}" page')
 @given('"{actor_alias}" goes to the "{page_name}" page')
 @given('"{actor_alias}" visits the "{page_name}" page')
 def given_actor_visits_page(context, actor_alias, page_name):
@@ -162,3 +165,9 @@ def given_actor_reads_few_articles(context, actor_alias, number):
 @given('"{actor_alias}" read "{number}" of articles')
 def given_actor_reads_few_articles(context, actor_alias, number):
     articles_read_a_number_of_them(context, actor_alias, number)
+
+
+@given('"{actor_alias}" is a registered and verified user')
+def given_actor_is_registered_and_verified(context, actor_alias):
+    registration_create_and_verify_account(
+        context, actor_alias, fake_verification=True)

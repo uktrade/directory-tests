@@ -3,15 +3,12 @@
 import logging
 
 from selenium import webdriver
-from selenium.webdriver.common.by import By
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
 
 from utils import (
     assertion_msg,
     find_element,
-    selenium_action,
     take_screenshot,
     wait_for_visibility
 )
@@ -83,8 +80,9 @@ def should_see_link_to(driver: webdriver, section: str, item_name: str):
         logging.debug("Open the menu by sending 'Right Arrow' key")
         menu_selector = SECTIONS[section.lower()]["menu"]
         menu = find_element(driver, by_css=menu_selector)
-        menu.send_keys(Keys.RIGHT)
+        menu.send_keys(Keys.ENTER)
     menu_item = find_element(driver, by_css=item_selector)
+    wait_for_visibility(driver, by_css=item_selector)
     with assertion_msg(
             "It looks like '%s' in '%s' section is not visible", item_name,
             section):
@@ -103,18 +101,13 @@ def open(driver: webdriver, group: str, element: str):
     the focus of the menu and which will make menu to fold.
     """
     if "menu" in SECTIONS[group.lower()]:
-        # Open the menu by sending "Down Arrow" key
+        # Open the menu by sending "Enter" key
         menu_selector = SECTIONS[group.lower()]["menu"]
         menu = driver.find_element_by_css_selector(menu_selector)
-        menu.send_keys(Keys.RIGHT)
+        menu.send_keys(Keys.ENTER)
     menu_item_selector = SECTIONS[group.lower()][element.lower()]
-    with selenium_action(
-            driver, "Could not find %s element in %s group with '%s' selector",
-            element, group, menu_item_selector):
-        menu_item = driver.find_element_by_css_selector(menu_item_selector)
-        WebDriverWait(driver, 5).until(
-            EC.visibility_of_element_located((By.CSS_SELECTOR,
-                                              menu_item_selector)))
+    menu_item = find_element(driver, by_css=menu_item_selector)
+    wait_for_visibility(driver, by_css=menu_item_selector)
     with assertion_msg("%s menu item: '%s' is not visible", group, element):
         assert menu_item.is_displayed()
     menu_item.click()

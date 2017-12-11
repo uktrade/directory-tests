@@ -5,7 +5,7 @@ Feature: Accessing Services
   @ED-2659
   @home-page
   @accessing-services
-  Scenario Outline: Any Exporter visiting the home page should be able to see links to Services
+  Scenario Outline: Any Exporter visiting the home page should be able to see links to selected Services in/on "<link_location>"
     Given "Robert" visits the "Home" page
 
     Then "Robert" should see links to following Services "<services>" in "<link_location>"
@@ -22,7 +22,8 @@ Feature: Accessing Services
   @accessing-services
   @interim-pages
   @<service>
-  Scenario Outline: Any Exporter should be presented with interim pages leading to "<service>" Service page
+  @external-service
+  Scenario Outline: Any Exporter should be presented with interim pages leading to "<service>" Service page when accessed via "<link_location>"
     Given "Robert" visits the "Home" page
 
     When "Robert" goes to "<service>" using "Services" links in "<link_location>"
@@ -43,7 +44,7 @@ Feature: Accessing Services
   @accessing-services
   @interim-pages
   @<service>
-  Scenario Outline: Any Exporter should be presented with interim pages leading to "<service>" Service page
+  Scenario Outline: Any Exporter should be presented with an interim page leading to "<service>" Service page which was accessed via "<link_location>"
     Given "Robert" visits the "Home" page
 
     When "Robert" goes to "<service>" using "Services" links in "<link_location>"
@@ -65,7 +66,8 @@ Feature: Accessing Services
   @accessing-services
   @interim-pages
   @<service_name>
-  Scenario Outline: Any Exporter should be able to get to the "<service>" Service page via interim page
+  @external-service
+  Scenario Outline: Any Exporter should be able to get to the "<service>" Service page via interim page which was accessed via "<link_location>"
     Given "Robert" visits the "Home" page
 
     When "Robert" goes to "<service>" using "Services" links in "<link_location>"
@@ -87,6 +89,7 @@ Feature: Accessing Services
   @home-page
   @accessing-services
   @<service_name>
+  @external-service
   Scenario Outline: Any Exporter should be able to get to the "<service>" Service page using "<link_location>"
     Given "Robert" visits the "Home" page
 

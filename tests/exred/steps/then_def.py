@@ -233,6 +233,7 @@ def then_reading_progress_should_be_gone(context, actor_alias):
     articles_should_see_read_counter_set_to(context, actor_alias, 0)
 
 
+@then('"{actor_alias}" should see his reading progress same as before signing in')
 @then('"{actor_alias}" should see his reading progress same as before registration')
 def then_actor_should_see_previous_reading_progress(context, actor_alias):
     articles_read_counter_same_as_before_registration(context, actor_alias)

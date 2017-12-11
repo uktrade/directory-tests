@@ -6,6 +6,7 @@ from steps.then_impl import triage_should_be_classified_as
 from steps.when_impl import (
     articles_found_useful_or_not,
     articles_go_back_to_article_list,
+    articles_go_back_to_last_read_article,
     articles_go_back_to_same_group,
     articles_open_any,
     articles_open_any_but_the_last,
@@ -20,10 +21,11 @@ from steps.when_impl import (
     open_service_link_on_interim_page,
     personalised_journey_create_page,
     personalised_journey_update_preference,
-    registration_create_and_verify_account,
     registration_go_to,
+    registration_submit_form_and_verify_account,
     set_sector_preference,
     sign_in,
+    sign_in_go_to,
     start_triage,
     triage_are_you_incorporated,
     triage_change_answers,
@@ -35,8 +37,7 @@ from steps.when_impl import (
     triage_say_whether_you_use_online_marketplaces,
     triage_should_see_answers_to_questions,
     triage_what_is_your_company_name,
-    visit_page,
-    articles_go_back_to_last_read_article
+    visit_page
 )
 
 
@@ -204,13 +205,13 @@ def when_actor_decides_to_register(context, actor_alias, location):
 
 @when('"{actor_alias}" completes the registration and fake email verification process')
 def when_actor_registers(context, actor_alias):
-    registration_create_and_verify_account(
+    registration_submit_form_and_verify_account(
         context, actor_alias, fake_verification=True)
 
 
 @when('"{actor_alias}" completes the registration and real email verification process')
 def when_actor_registers(context, actor_alias):
-    registration_create_and_verify_account(
+    registration_submit_form_and_verify_account(
         context, actor_alias, fake_verification=False)
 
 
