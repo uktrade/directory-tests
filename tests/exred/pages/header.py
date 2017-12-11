@@ -23,21 +23,21 @@ SIGN_IN_LINK = "#header-bar a.signin"
 SECTIONS = {
     "export readiness": {
         "menu": "#export-readiness-links",
-        "new": "#export-readiness-links-list a[href='/new']",
-        'occasional': "#export-readiness-links-list a[href='/occasional']",
-        "regular": "#export-readiness-links-list a[href='/regular']",
-        "i'm new to exporting": "#export-readiness-links-list a[href='/new']",
-        'i export occasionally': "#export-readiness-links-list a[href='/occasional']",
-        "i'm a regular exporter": "#export-readiness-links-list a[href='/regular']"
+        "new": "#export-readiness-links-list > li:nth-child(1) > a",
+        'occasional': "#export-readiness-links-list > li:nth-child(2) > a",
+        "regular": "#export-readiness-links-list > li:nth-child(3) > a",
+        "i'm new to exporting": "#export-readiness-links-list > li:nth-child(1) > a",
+        'i export occasionally': "#export-readiness-links-list > li:nth-child(2) > a",
+        "i'm a regular exporter": "#export-readiness-links-list > li:nth-child(3) > a"
     },
     "guidance": {
         "menu": "#guidance-links",
-        "market research": "#guidance-links-list a[href='/market-research']",
-        "customer insight": "#guidance-links-list a[href='/customer-insight']",
-        "finance": "#guidance-links-list a[href='/finance']",
-        "business planning": "#guidance-links-list a[href='/business-planning']",
-        "getting paid": "#guidance-links-list a[href='/getting-paid']",
-        "operations and compliance": "#guidance-links-list a[href='/operations-and-compliance']"
+        "market research": "#guidance-links-list > li:nth-child(1) > a",
+        "customer insight": "#guidance-links-list > li:nth-child(2) > a",
+        "finance": "#guidance-links-list > li:nth-child(3) > a",
+        "business planning": "#guidance-links-list > li:nth-child(4) > a",
+        "getting paid": "#guidance-links-list > li:nth-child(5) > a",
+        "operations and compliance": "#guidance-links-list > li:nth-child(6) > a"
     },
     "services": {
         "menu": "#services-links",
@@ -47,8 +47,8 @@ SECTIONS = {
         "get finance": "#services-links-list > li:nth-child(4) > a",
         "events": "#services-links-list > li:nth-child(5) > a"
     },
-    "government links": {
-        "part of great.gov.uk": "#header-bar p.government-links > a"
+    "general": {
+        "logo": "#header-bar > div:nth-child(2) > a > img"
     },
     "account links": {
         "register": "#header-bar .account-links li:nth-child(1) > a",

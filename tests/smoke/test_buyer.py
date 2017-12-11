@@ -34,9 +34,7 @@ def test_landing_page_post_company_not_found():
     response = requests.post(
         get_absolute_url('ui-buyer:landing'), data=data, allow_redirects=False
     )
-    assert 'Company not found. Please check the number.' in str(
-        response.content
-    )
+    assert 'Error. Please try again later.' in str(response.content)
 
 
 def test_landing_page_post_company_happy_path():
