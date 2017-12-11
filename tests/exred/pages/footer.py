@@ -11,38 +11,37 @@ URL = None
 
 SECTIONS = {
     "export readiness": {
-        "label": "#footer-links-2",
-        "new": "#footer a[href='/new']",
-        "occasional": "#footer a[href='/occasional']",
-        "regular": "#footer a[href='/regular']",
-        "i'm new to exporting": "#footer a[href='/new']",
-        "i export occasionally": "#footer a[href='/occasional']",
-        "i'm a regular exporter": "#footer a[href='/regular']"
+        "label": "#footer-export-readiness-links",
+        "new": "#footer ul[aria-labelledby='footer-export-readiness-links'] > li:nth-child(1) > a",
+        "occasional": "#footer ul[aria-labelledby='footer-export-readiness-links'] > li:nth-child(2) > a",
+        "regular": "#footer ul[aria-labelledby='footer-export-readiness-links'] > li:nth-child(3) > a",
+        "i'm new to exporting": "#footer ul[aria-labelledby='footer-export-readiness-links'] > li:nth-child(1) > a",
+        "i export occasionally": "#footer ul[aria-labelledby='footer-export-readiness-links'] > li:nth-child(2) > a",
+        "i'm a regular exporter": "#footer ul[aria-labelledby='footer-export-readiness-links'] > li:nth-child(3) > a"
     },
     "guidance": {
-        "label": "#footer-links-3",
-        "market research": "#footer a[href='/market-research']",
-        "customer insight": "#footer a[href='/customer-insight']",
-        "finance": "#footer a[href='/finance']",
-        "business planning": "#footer a[href='/business-planning']",
-        "getting paid": "#footer a[href='/getting-paid']",
-        "operations and compliance": "#footer a[href='/operations-and-compliance']"
+        "label": "#footer-guidance-links",
+        "market research": "#footer ul[aria-labelledby='footer-guidance-links'] > li:nth-child(1) > a",
+        "customer insight": "#footer ul[aria-labelledby='footer-guidance-links'] > li:nth-child(2) > a",
+        "finance": "#footer ul[aria-labelledby='footer-guidance-links'] > li:nth-child(3) > a",
+        "business planning": "#footer ul[aria-labelledby='footer-guidance-links'] > li:nth-child(4) > a",
+        "getting paid": "#footer ul[aria-labelledby='footer-guidance-links'] > li:nth-child(5) > a",
+        "operations and compliance": "#footer ul[aria-labelledby='footer-guidance-links'] > li:nth-child(6) > a"
     },
     "services": {
-        "label": "#footer-links-4",
-        "find a buyer": "#footer > nav > div:nth-child(4) > ul > li:nth-child(1) > a",
-        "selling online overseas": "#footer > nav > div:nth-child(4) > ul > li:nth-child(2) > a",
-        "export opportunities": "#footer a[href='/export-opportunities']",
-        "get finance": "#footer a[href='/get-finance']",
-        "events": "#footer > nav > div:nth-child(4) > ul > li:nth-child(5) > a"
+        "label": "footer-services-links",
+        "find a buyer": "#footer ul[aria-labelledby='footer-services-links'] > li:nth-child(1) > a",
+        "selling online overseas": "#footer ul[aria-labelledby='footer-services-links'] > li:nth-child(2) > a",
+        "export opportunities": "#footer ul[aria-labelledby='footer-services-links'] > li:nth-child(3) > a",
+        "get finance": "#footer ul[aria-labelledby='footer-services-links'] > li:nth-child(4) > a",
+        "events": "#footer ul[aria-labelledby='footer-services-links'] > li:nth-child(5) > a"
     },
     "general links": {
-        "part of great.gov.uk": "#footer > .site-links > ul > li:nth-child(1) > a",
-        "about": "#footer > .site-links > ul > li:nth-child(2) > a",
-        "contact us": "#footer > .site-links > ul > li:nth-child(3) > a",
-        "privacy and cookies": "#footer > .site-links > ul > li:nth-child(4) > a",
-        "terms and conditions": "#footer > .site-links > ul > li:nth-child(5) > a",
-        "department for international trade": "#footer > .site-links > ul > li:nth-child(6) > a"
+        "about": "#footer > .site-links > ul > li:nth-child(1) > a",
+        "contact us": "#footer > .site-links > ul > li:nth-child(2) > a",
+        "privacy and cookies": "#footer > .site-links > ul > li:nth-child(3) > a",
+        "terms and conditions": "#footer > .site-links > ul > li:nth-child(4) > a",
+        "department for international trade": "#footer > .site-links > ul > li:nth-child(5) > a"
     }
 }
 
