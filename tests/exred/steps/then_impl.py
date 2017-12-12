@@ -353,3 +353,21 @@ def articles_read_counter_same_as_before_registration(
     preregistration_value = actor.articles_read_counter
     articles_should_see_read_counter_set_to(
         context, actor_alias, preregistration_value)
+
+
+def articles_should_not_see_link_to_sign_in(
+        context: Context, actor_alias: str, page_name: str):
+    page_object = get_page_object(page_name)
+    page_object.should_not_see_link_to_sign_in(context.driver)
+    logging.debug(
+        "As expected %s did not see 'Sign In' link on the '%s' page",
+        actor_alias, page_name)
+
+
+def articles_should_not_see_link_to_register(
+        context: Context, actor_alias: str, page_name: str):
+    page_object = get_page_object(page_name)
+    page_object.should_not_see_link_to_register(context.driver)
+    logging.debug(
+        "As expected %s did not see 'Register' link on the '%s' page",
+        actor_alias, page_name)
