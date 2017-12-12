@@ -294,6 +294,31 @@ def wait_for_visibility(
         expected_conditions.visibility_of_element_located(by_locator))
 
 
+def check_if_element_is_not_present(
+        driver: webdriver, *, by_css: str = None,
+        by_id: str = None, element_name: str = ""):
+    """Find element by CSS selector or it's ID.
+
+    :param driver: Selenium driver
+    :param by_css: CSS selector to locate the element to wait for
+    :param by_id: ID of the element to wait for
+    :return: found WebElement
+    """
+    assert by_id or by_css, "Provide ID or CSS selector"
+    try:
+        if by_css:
+            driver.find_element_by_css_selector(by_css)
+        else:
+            driver.find_element_by_id(by_id)
+        found = True
+    except NoSuchElementException:
+        found = False
+    with assertion_msg(
+            "Expected not to find %s element identified by '%s'", element_name,
+            by_id or by_css):
+        assert not found
+
+
 def find_element(
         driver: webdriver, *, by_css: str = None,
         by_id: str = None, element_name: str = "") -> WebElement:
@@ -302,6 +327,7 @@ def find_element(
     :param driver: Selenium driver
     :param by_css: CSS selector to locate the element to wait for
     :param by_id: ID of the element to wait for
+    :param element_name: (optional) human friend element name
     :return: found WebElement
     """
     assert by_id or by_css, "Provide ID or CSS selector"
