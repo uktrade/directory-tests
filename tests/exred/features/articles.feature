@@ -443,26 +443,45 @@ Feature: Articles
       | Guidance         | footer links | a third   | top bar |
 
 
-  @wip
   @ED-2772
   @session
-  Scenario: A logged in Exporter should not see the "Register" and "Sign in" links on Article page
-    Given "Robert" is signed in
-    And "Robert" is on the specific Article page
+  @<group>
+  @<location>
+  Scenario Outline: A logged in Exporter should not see the "Register" and "Sign in" links on Article page
+    Given "Robert" is a registered and verified user
+    And "Robert" is signed in
+    And "Robert" went to the "Home" page
+    And "Robert" went to randomly selected "<group>" Article category via "<location>"
 
-    Then "Robert"'s should not see the link to register
-    And "Robert"'s should not see the link to sign in
+    When "Robert" opens any article on the list
+
+    Then "Robert" should not see the link to register on the "Article" page
+    And "Robert" should not see the link to sign in on the "Article" page
+
+    Examples:
+      | group            | location    |
+      | Export Readiness | header menu |
+      | Guidance         | home page   |
 
 
-  @wip
   @ED-2772
   @session
-  Scenario: A logged in Exporter should not see the "Register" and "Sign in" links on Article List page
-    Given "Robert" is signed in
-    And "Robert" is on the specific Article List page
+  @<relevant>
+  @<location>
+  Scenario Outline: A logged in Exporter should not see the "Register" and "Sign in" links on Article List page
+    Given "Robert" is a registered and verified user
+    And "Robert" is signed in
+    And "Robert" went to the "Home" page
 
-    Then "Robert"'s should not see the link to register
-    And "Robert"'s should not see the link to sign in
+    When "Robert" goes to the Export Readiness Articles for "<relevant>" Exporters via "<location>"
+
+    Then "Robert" should not see the link to register on the "Article List" page
+    And "Robert" should not see the link to sign in on the "Article List" page
+
+    Examples:
+      | relevant | location    |
+      | New      | header menu |
+      | Regular  | home page   |
 
 
   @wip
