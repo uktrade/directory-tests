@@ -392,6 +392,7 @@ Feature: Articles
   @fixed
   @ED-2770
   @session
+  @fake-sso-email-verification
   Scenario Outline: An Exporter should be able to sing in from the Articles list page using "<element>" Sign-in link in order to save their reading progress for "<group>" articles
     Given "Robert" is a registered and verified user
     And "Robert" went to the "Home" page
@@ -419,6 +420,7 @@ Feature: Articles
   @fixed
   @ED-2771
   @session
+  @fake-sso-email-verification
   Scenario Outline: An Exporter should be able to sing in from the Article page using "<element>" Sign-in link in order to save their reading progress for "<group>" articles
     Given "Robert" is a registered and verified user
     And "Robert" went to the "Home" page
