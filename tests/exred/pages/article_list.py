@@ -4,7 +4,12 @@ import logging
 
 from selenium import webdriver
 
-from utils import assertion_msg, find_element, take_screenshot
+from utils import (
+    assertion_msg,
+    check_if_element_is_not_present,
+    find_element,
+    take_screenshot
+)
 
 NAME = "ExRed Article List"
 URL = None
@@ -50,5 +55,15 @@ def go_to_registration(driver: webdriver):
 
 
 def go_to_sign_in(driver: webdriver):
-    registration_link = find_element(driver, by_css=SIGN_IN_LINK)
-    registration_link.click()
+    sign_in_link = find_element(driver, by_css=SIGN_IN_LINK)
+    sign_in_link.click()
+
+
+def should_not_see_link_to_register(driver: webdriver):
+    check_if_element_is_not_present(
+        driver, by_css=REGISTRATION_LINK, element_name="Registration link")
+
+
+def should_not_see_link_to_sign_in(driver: webdriver):
+    check_if_element_is_not_present(
+        driver, by_css=SIGN_IN_LINK, element_name="Sign in link")
