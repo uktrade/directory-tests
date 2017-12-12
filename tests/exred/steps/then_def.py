@@ -7,6 +7,8 @@ from steps.then_impl import (
     articles_should_be_thanked_for_feedback,
     articles_should_not_see_feedback_widget,
     articles_should_not_see_link_to_next_article,
+    articles_should_not_see_link_to_register,
+    articles_should_not_see_link_to_sign_in,
     articles_should_not_see_personas_end_page,
     articles_should_see_article_as_read,
     articles_should_see_in_correct_order,
@@ -237,3 +239,13 @@ def then_reading_progress_should_be_gone(context, actor_alias):
 @then('"{actor_alias}" should see his reading progress same as before registration')
 def then_actor_should_see_previous_reading_progress(context, actor_alias):
     articles_read_counter_same_as_before_registration(context, actor_alias)
+
+
+@then('"{actor_alias}" should not see the link to sign in on the "{page_name}" page')
+def then_actor_should_not_see_register_link(context, actor_alias, page_name):
+    articles_should_not_see_link_to_sign_in(context, actor_alias, page_name)
+
+
+@then('"{actor_alias}" should not see the link to register on the "{page_name}" page')
+def then_actor_should_not_see_register_link(context, actor_alias, page_name):
+    articles_should_not_see_link_to_register(context, actor_alias, page_name)
