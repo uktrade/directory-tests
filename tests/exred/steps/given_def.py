@@ -21,6 +21,7 @@ from steps.when_impl import (
     registration_create_and_verify_account,
     set_online_marketplace_preference,
     set_sector_preference,
+    sign_in,
     start_triage,
     triage_classify_as,
     triage_create_exporting_journey,
@@ -177,3 +178,9 @@ def given_actor_is_registered_and_verified(context, actor_alias):
 @given("{actor_alias} checks his geoip")
 def given_actor_checks_the_goeip(context, actor_alias):
     get_geo_ip(context, actor_alias)
+
+
+@given('"{actor_alias}" signed in using link in the "{location}"')
+@given('"{actor_alias}" is signed in')
+def given_actor_is_signed_in(context, actor_alias, *, location="top bar"):
+    sign_in(context, actor_alias, location)
