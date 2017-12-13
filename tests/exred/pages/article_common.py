@@ -31,6 +31,7 @@ IS_THERE_ANYTHING_WRONG_WITH_THIS_PAGE_LINK = "section.error-reporting a"
 NEXT_ARTICLE_LINK = "#next-article-link"
 NOT_USEFUL_BUTTON = "#js-feedback-negative"
 REGISTRATION_LINK = "#top > div > p > a:nth-child(1)"
+READ_ARTICLES = "a.article-read"
 SHARE_MENU = "ul.sharing-links"
 SHOW_MORE_BUTTON = "#js-paginate-list-more"
 SIGN_IN_LINK = "#top > div > p > a:nth-child(2)"
@@ -337,3 +338,7 @@ def should_not_see_link_to_register(driver: webdriver):
 def should_not_see_link_to_sign_in(driver: webdriver):
     check_if_element_is_not_present(
         driver, by_css=SIGN_IN_LINK, element_name="Sign in link")
+
+
+def get_read_articles(driver: webdriver) -> list:
+    return [art.text for art in find_elements(driver, by_css=READ_ARTICLES)]
