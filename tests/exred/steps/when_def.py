@@ -25,7 +25,7 @@ from steps.when_impl import (
     registration_submit_form_and_verify_account,
     set_sector_preference,
     sign_in,
-    sign_in_go_to,
+    sign_out,
     start_triage,
     triage_are_you_incorporated,
     triage_change_answers,
@@ -237,3 +237,8 @@ def when_actor_goes_to_the_same_article_group(
 @when('"{actor_alias}" goes back to the last Article she read')
 def when_actor_goes_to_last_read_article(context, actor_alias):
     articles_go_back_to_last_read_article(context, actor_alias)
+
+
+@when('"{actor_alias}" signs out')
+def when_actor_signs_out(context, actor_alias):
+    sign_out(context, actor_alias)

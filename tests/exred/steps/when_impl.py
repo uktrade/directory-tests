@@ -1015,6 +1015,12 @@ def sign_in(context, actor_alias, location):
     sso_sign_in.submit(context.driver)
 
 
+def sign_out(context: Context, actor_alias: str):
+    header.go_to_sign_out(context.driver)
+    sso_sign_out.submit(context.driver)
+    logging.debug("%s signed out", actor_alias)
+
+
 def articles_go_back_to_last_read_article(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     group = actor.article_group
