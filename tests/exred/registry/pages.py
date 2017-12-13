@@ -17,6 +17,7 @@ from pages import (
     sso_registration,
     sso_registration_confirmation,
     sso_sign_in,
+    sso_sign_out,
     triage_are_you_registered_with_companies_house,
     triage_are_you_regular_exporter,
     triage_company_name,
@@ -106,6 +107,10 @@ EXRED_PAGE_REGISTRY = {
     "sso sign in": {
         "url": sso_sign_in.URL,
         "po": sso_sign_in
+    },
+    "sso sign out": {
+        "url": sso_sign_out.URL,
+        "po": sso_sign_out
     },
     "sso registration confirmation": {
         "url": sso_registration_confirmation.URL,
