@@ -116,7 +116,8 @@ def before_scenario(context: Context, scenario: Scenario):
     """
     logging.debug('Starting scenario: %s', scenario.name)
     context.scenario_data = initialize_scenario_data()
-    start_driver_session(context, scenario.name)
+    if RESTART_BROWSER == "scenario":
+        start_driver_session(context, scenario.name)
 
 
 def after_scenario(context: Context, scenario: Scenario):
