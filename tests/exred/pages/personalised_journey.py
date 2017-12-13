@@ -70,13 +70,13 @@ SECTIONS = {
     },
     "exopps tile": {
         "heading": "#other-services div.lg-2:nth-child(2) h3",
-        "soo image": "#other-services div.lg-2:nth-child(2) img",
+        "exopps image": "#other-services div.lg-2:nth-child(2) img",
         "intro": "#other-services div.lg-2:nth-child(2) p",
         "find marketplaces link": "#other-services div.lg-2:nth-child(2) a",
     },
     "exopps section": {
         "heading": "section.service-section.soo h2",
-        "soo image": "section.service-section.soo img",
+        "exopps image": "section.service-section.soo img",
         "intro": "section.service-section.soo .intro",
         "find marketplaces button": "section.service-section.soo .intro .button",
     },
