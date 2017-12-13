@@ -48,14 +48,14 @@ SECTIONS = {
         "itself": "section.hero-campaign-section > div > div",
         "teaser_title": "section.hero-campaign-section > div > div > h1",
         "teaser description": "section.hero-campaign-section > div > div > p:nth-child(2)",
-        "teaser_logo": "section.hero-campaign-section > div > div > img",
+        "teaser_logo": "section.hero-campaign-section picture > img",
     },
     "exporting journey": {
         "itself": "#content > section.triage.triage-section",
         "heading": "#content > section.triage.triage-section .heading",
         "introduction": "#content > section.triage.triage-section .intro",
         "get_started_button": GET_STARTED_BUTTON,
-        "image": "#content > section.triage.triage-section .container > img"
+        "image": "section.triage.triage-section  picture > img"
     },
     "export readiness": {
         "itself": "#personas",
