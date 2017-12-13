@@ -335,7 +335,7 @@ Feature: Articles
     And "Robert" completes the registration and real email verification process
     Then "Robert" should see his reading progress same as before registration
 
-    When "Robert" logs out and forgets the article reading history by clearing the cookies
+    When "Robert" signs out and forgets the article reading history by clearing the cookies
     And "Robert" goes to the "home" page
     And "Robert" goes back to the same "<group>" Article category via "<location>"
     Then "Robert" should see that his reading progress is gone
@@ -369,7 +369,7 @@ Feature: Articles
     And "Robert" completes the registration and real email verification process
     Then "Robert" should see his reading progress same as before registration
 
-    When "Robert" logs out and forgets the article reading history by clearing the cookies
+    When "Robert" signs out and forgets the article reading history by clearing the cookies
     And "Robert" goes to the "home" page
     And "Robert" goes back to the same "<group>" Article category via "<location>"
     Then "Robert" should see that his reading progress is gone

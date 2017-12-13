@@ -211,7 +211,7 @@ def when_actor_registers(context, actor_alias):
         context, actor_alias, fake_verification=False)
 
 
-@when('"{actor_alias}" logs out and forgets the article reading history by clearing the cookies')
+@when('"{actor_alias}" signs out and forgets the article reading history by clearing the cookies')
 def when_actor_clears_the_cookies(context, actor_alias):
     clear_the_cookies(context, actor_alias)
 
