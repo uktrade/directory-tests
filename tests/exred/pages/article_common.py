@@ -11,6 +11,7 @@ from utils import (
     assertion_msg,
     check_if_element_is_not_present,
     find_element,
+    find_elements,
     selenium_action,
     take_screenshot
 )
