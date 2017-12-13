@@ -183,7 +183,7 @@ Feature: Articles
     And "Robert" decided to create her personalised journey page
 
     When "Robert" goes to the "<specific>" Guidance Articles via "personalised journey"
-    When "Robert" opens any Article but the last one
+    And "Robert" opens any Article but the last one
     And "Robert" decides to read through all remaining Articles from selected list
 
     Then "Robert" should be able to navigate to the next article from the List following the Article Order
