@@ -242,3 +242,8 @@ def when_actor_goes_to_last_read_article(context, actor_alias):
 @when('"{actor_alias}" signs out')
 def when_actor_signs_out(context, actor_alias):
     sign_out(context, actor_alias)
+
+
+@when('"{actor_alias}" goes to randomly selected "{group}" Article category via "{location}"')
+def when_actor_is_on_article_list(context, actor_alias, group, location):
+    articles_open_group(context, actor_alias, group, location=location)
