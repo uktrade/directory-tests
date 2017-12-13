@@ -216,8 +216,9 @@ def when_actor_clears_the_cookies(context, actor_alias):
     clear_the_cookies(context, actor_alias)
 
 
+@when('"{actor_alias}" signs in')
 @when('"{actor_alias}" signs in using link visible in the "{location}"')
-def step_impl(context, actor_alias, location):
+def when_actor_signs_in(context, actor_alias, *, location="top bar"):
     sign_in(context, actor_alias, location)
 
 
