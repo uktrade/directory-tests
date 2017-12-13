@@ -21,8 +21,8 @@ class Article:
             "index: {index}, "
             "title: {title}, "
             "time_to_read: {time_to_read}, "
-            "previous: {previous.title}, "
-            "next: {next.title}"
+            "previous: {previous}, "
+            "next: {next}"
         ).format(**self.__dict__)
 
 
