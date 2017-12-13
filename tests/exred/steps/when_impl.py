@@ -999,6 +999,8 @@ def clear_the_cookies(context: Context, actor_alias: str):
         logging.debug("COOKIES: %s", cookies)
         context.driver.delete_all_cookies()
         logging.debug("Successfully cleared cookies for %s", actor_alias)
+        cookies = context.driver.get_cookies()
+        logging.debug("Driver cookies after clearing them: %s", cookies)
     except WebDriverException:
         logging.error("Failed to clear cookies for %s", actor_alias)
 
