@@ -4,6 +4,7 @@ from behave import then
 
 from steps.then_impl import (
     articles_read_counter_same_as_before_registration,
+    articles_read_counter_should_be_merged,
     articles_should_be_thanked_for_feedback,
     articles_should_not_see_feedback_widget,
     articles_should_not_see_link_to_next_article,
@@ -249,3 +250,8 @@ def then_actor_should_not_see_register_link(context, actor_alias, page_name):
 @then('"{actor_alias}" should not see the link to register on the "{page_name}" page')
 def then_actor_should_not_see_register_link(context, actor_alias, page_name):
     articles_should_not_see_link_to_register(context, actor_alias, page_name)
+
+
+@then('"{actor_alias}"\'s current reading progress should be merged with the one from before signing out without any overwriting')
+def then_actror_should_see_reading_progress_merged(context, actor_alias):
+    articles_read_counter_should_be_merged(context, actor_alias)

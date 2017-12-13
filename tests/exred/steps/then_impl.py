@@ -371,3 +371,15 @@ def articles_should_not_see_link_to_register(
     logging.debug(
         "As expected %s did not see 'Register' link on the '%s' page",
         actor_alias, page_name)
+
+
+def articles_read_counter_should_be_merged(context: Context, actor_alias: str):
+    actor = get_actor(context, actor_alias)
+    visited_articles = actor.visited_articles
+    current_read_counter = article_common.get_read_counter(context.driver)
+    number_of_visited_articles = len(set(visited_articles))
+    with assertion_msg(
+            "%s expected to see current article reading counter to be %d but "
+            "got %d", actor_alias, number_of_visited_articles,
+            current_read_counter):
+        assert current_read_counter == number_of_visited_articles
