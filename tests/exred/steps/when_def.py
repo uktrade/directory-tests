@@ -131,6 +131,7 @@ def when_actor_goes_to_exred_articles(context, actor_alias, category, location):
     export_readiness_open_category(context, actor_alias, category, location)
 
 
+@when('"{actor_alias}" decides to read through all remaining Articles from selected list')
 @when('"{actor_alias}" decides to read through all Articles from selected list')
 def when_actor_reads_through_all_guidance_articles(context, actor_alias):
     guidance_read_through_all_articles(context, actor_alias)
@@ -139,11 +140,6 @@ def when_actor_reads_through_all_guidance_articles(context, actor_alias):
 @when('"{actor_alias}" opens any Article but the last one')
 def when_actor_opens_any_article_but_the_last_one(context, actor_alias):
     articles_open_any_but_the_last(context, actor_alias)
-
-
-@when('"{actor_alias}" decides to read through all remaining Articles from selected list')
-def when_actor_reads_through_all_remaining_articles(context, actor_alias):
-    guidance_read_through_all_articles(context, actor_alias)
 
 
 @when('"{actor_alias}" opens any article on the list')
