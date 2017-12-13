@@ -16,6 +16,15 @@ class Article:
         self.next = next
         self.index = index
 
+    def __str__(self):
+        return (
+            "index: {index}, "
+            "title: {title}, "
+            "time_to_read: {time_to_read}, "
+            "previous: {previous.title}, "
+            "next: {next.title}"
+        ).format(**self.__dict__)
+
 
 RESEARCH_YOUR_MARKET = Article(
     title='Research your market',
