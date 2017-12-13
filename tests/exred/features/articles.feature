@@ -484,21 +484,66 @@ Feature: Articles
       | Regular  | home page   |
 
 
-  @wip
   @ED-2773
   @session
-  Scenario: A signed in Exporter's progress should be updated with temporary information (cookie data merged with persistent storage)
-    Given "Robert" is signed in
-    And "Robert" reads some articles
-    And "Robert" completes some tasks
-    And "Robert"'s current progress is saved
+  @<group>
+  @<location>
+  Scenario Outline: A signed in Exporter's progress should be updated with temporary information (cookie data merged with persistent storage)
+    Given "Robert" is a registered and verified user
+    And "Robert" is signed in
+    And "Robert" went to the "Home" page
+    And "Robert" went to randomly selected "<group>" Article category via "<location>"
+    And "Robert" read "<a number>" of articles and stays on the last read article page
 
-    When "Robert" decides to "sign out"
-    And "Robert" reads some more articles
-    And "Robert" completes some more tasks
-    And "Robert" decides to "sign in"
+    When "Robert" signs out
+    And "Robert" goes to the "Home" page
+    And "Robert" goes back to the same "<group>" Article category via "<location>"
+    And "Robert" opens any Article but the last one
+    And "Robert" decides to read through all remaining Articles from selected list
+    And "Robert" signs in
 
-    Then "Robert"'s current progress should be updated without overwriting (merged / accumulated)
+    Then "Robert" should be on the "Article" page
+    And "Robert"'s current reading progress should be merged with the one from before signing out without any overwriting
+
+    Examples:
+      | group            | location     | a number  |
+      | Export Readiness | header menu  | a sixth   |
+      | Export Readiness | home page    | a quarter |
+      | Export Readiness | footer links | a third   |
+      | Guidance         | header menu  | a fifth   |
+      | Guidance         | home page    | a quarter |
+      | Guidance         | footer links | a third   |
+
+
+  @ED-2773
+  @session
+  @<group>
+  @<location>
+  Scenario Outline: A signed in Exporter's progress should be updated with temporary information (cookie data merged with persistent storage)
+    Given "Robert" is a registered and verified user
+    And "Robert" is signed in
+    And "Robert" went to the "Home" page
+    And "Robert" went to randomly selected "<group>" Article category via "<location>"
+    And "Robert" read "<a number>" of articles and stays on the last read article page
+
+    When "Robert" signs out and forgets the article reading history by clearing the cookies
+    And "Robert" goes to the "Home" page
+    And "Robert" goes back to the same "<group>" Article category via "<location>"
+    And "Robert" opens any Article but the last one
+    And "Robert" decides to read through all remaining Articles from selected list
+    And "Robert" signs in
+
+    Then "Robert" should be on the "Article" page
+    And "Robert"'s current reading progress should be merged with the one from before signing out without any overwriting
+
+    Examples:
+      | group            | location     | a number  |
+      | Export Readiness | header menu  | a sixth   |
+      | Export Readiness | home page    | a quarter |
+      | Export Readiness | footer links | a third   |
+      | Guidance         | header menu  | a fifth   |
+      | Guidance         | home page    | a quarter |
+      | Guidance         | footer links | a third   |
 
 
   @wip
