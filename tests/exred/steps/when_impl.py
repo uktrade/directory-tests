@@ -17,10 +17,10 @@ from pages import (
     personalised_journey,
     sso_common,
     sso_confirm_your_email,
-    sso_profile_about,
     sso_registration,
     sso_registration_confirmation,
     sso_sign_in,
+    sso_sign_out,
     triage_are_you_registered_with_companies_house,
     triage_are_you_regular_exporter,
     triage_company_name,
@@ -29,7 +29,12 @@ from pages import (
     triage_summary,
     triage_what_do_you_want_to_export
 )
-from registry.articles import GUIDANCE, get_article, get_articles
+from registry.articles import (
+    GUIDANCE,
+    get_article,
+    get_articles,
+    get_random_article
+)
 from registry.pages import get_page_object
 from settings import EXRED_SECTORS
 from utils import (
@@ -623,15 +628,29 @@ def articles_open_first(context: Context, actor_alias: str):
 def articles_open_any_but_the_last(context: Context, actor_alias: str):
     driver = context.driver
     actor = get_actor(context, actor_alias)
+    visited_articles = actor.visited_articles
     group = actor.article_group
     category = actor.article_category
     articles = get_articles(group, category)
-    any_article_but_the_last = random.choice(articles[:-1])
+    # select random article
+    random_article = random.choice(articles[:-1])
+    # then get it's index in the reading list
+    any_article_but_the_last = get_article(group, category, random_article.title)
     guidance_common.show_all_articles(driver)
     article_common.go_to_article(driver, any_article_but_the_last.title)
+    time_to_read = article_common.time_to_read_in_seconds(context.driver)
     logging.debug(
         "%s is on '%s' article page: %s", actor_alias,
         any_article_but_the_last.title, driver.current_url)
+    just_read = VisitedArticle(
+        any_article_but_the_last.index,
+        any_article_but_the_last.title,
+        time_to_read)
+    if visited_articles:
+        visited_articles.append(just_read)
+    else:
+        visited_articles = [just_read]
+    update_actor(context, actor_alias, visited_articles=visited_articles)
 
 
 def articles_open_specific(context: Context, actor_alias: str, name: str):
@@ -671,8 +690,7 @@ def articles_open_any(context: Context, actor_alias: str):
     group = actor.article_group
     category = actor.article_category
     visited_articles = actor.visited_articles
-    articles = get_articles(group, category)
-    any_article = random.choice(articles)
+    any_article = get_random_article(group, category)
     article_common.show_all_articles(driver)
 
     # capture the counter values from Article List page
@@ -712,17 +730,12 @@ def guidance_read_through_all_articles(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     group = actor.article_group
     category = actor.article_category
-
-    visited_articles = []
+    visited_articles = actor.visited_articles
 
     current_article_name = article_common.get_article_name(driver)
-    time_to_read = article_common.time_to_read_in_seconds(context.driver)
     logging.debug("%s is on '%s' article", actor_alias, current_article_name)
     current_article = get_article(group, category, current_article_name)
     assert current_article, "Could not find Article: %s" % current_article_name
-    visited = VisitedArticle(
-        current_article.index, current_article_name, time_to_read)
-    visited_articles.append(visited)
     next_article = current_article.next
 
     while next_article is not None:
