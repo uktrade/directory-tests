@@ -359,3 +359,15 @@ def find_elements(
         else:
             elements = driver.find_elements_by_id(by_id)
     return elements
+
+
+def clear_driver_cookies(driver: webdriver):
+    try:
+        cookies = driver.get_cookies()
+        logging.debug("COOKIES: %s", cookies)
+        driver.delete_all_cookies()
+        logging.debug("Successfully cleared cookies")
+        cookies = driver.get_cookies()
+        logging.debug("Driver cookies after clearing them: %s", cookies)
+    except WebDriverException as ex:
+        logging.error("Failed to clear cookies: '%s'", ex.msg)
