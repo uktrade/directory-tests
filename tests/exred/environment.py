@@ -10,63 +10,18 @@ from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 
 from pages.sso_common import delete_supplier_data
-from settings import AUTO_RETRY, CONFIG, CONFIG_NAME, TASK_ID
+from settings import AUTO_RETRY, CONFIG, CONFIG_NAME, RESTART_BROWSER, TASK_ID
 from utils import (
+    clear_driver_cookies,
     flag_browserstack_session_as_failed,
     init_loggers,
     initialize_scenario_data
 )
 
 
-def before_step(context: Context, step: Step):
-    """Place here code which that has to be executed before every step.
-
-    :param context: Behave Context object
-    :param step: Behave Step object
-    """
-    logging.debug('Started Step: %s %s', step.step_type, str(repr(step.name)))
-
-
-def after_step(context: Context, step: Step):
-    """Place here code which that has to be executed after every step.
-
-    :param context: Behave Context object
-    :param step: Behave Step object
-    """
-    logging.debug("Finished Step: %s %s", step.step_type, str(repr(step.name)))
-    if step.status == "failed":
-        message = "Step '%s %s' failed. Reason: '%s'" % (step.step_type,
-                                                         step.name,
-                                                         step.exception)
-        logging.error(message)
-        logging.debug(context.scenario_data)
-        if "browserstack" in CONFIG_NAME:
-            if hasattr(context, "driver"):
-                session_id = context.driver.session_id
-                flag_browserstack_session_as_failed(session_id, message)
-
-
-def before_feature(context, feature):
-    """Use autoretry feature of upcoming Behave 1.2.6 which automatically
-    retries failing scenarios.
-    Here PR for it https://github.com/behave/behave/pull/328
-    """
-    if AUTO_RETRY:
-        for scenario in feature.scenarios:
-            patch_scenario_with_autoretry(scenario, max_attempts=2)
-
-
-@retry(stop_max_attempt_number=3)
-def before_scenario(context: Context, scenario: Scenario):
-    """Place here code which has to be executed before every Scenario.
-
-    :param context: Behave Context object
-    :param scenario: Behave Scenario object
-    """
-    logging.debug('Starting scenario: %s', scenario.name)
-    context.scenario_data = initialize_scenario_data()
+def start_driver_session(context: Context, session_name: str):
     desired_capabilities = context.desired_capabilities
-    desired_capabilities["name"] = scenario.name
+    desired_capabilities["name"] = session_name
     if CONFIG["hub_url"]:
         context.driver = webdriver.Remote(
             desired_capabilities=desired_capabilities,
@@ -97,6 +52,73 @@ def before_scenario(context: Context, scenario: Scenario):
     logging.debug("Browser Capabilities: %s", context.driver.capabilities)
 
 
+def before_step(context: Context, step: Step):
+    """Place here code which that has to be executed before every step.
+
+    :param context: Behave Context object
+    :param step: Behave Step object
+    """
+    logging.debug('Started Step: %s %s', step.step_type, str(repr(step.name)))
+
+
+def after_step(context: Context, step: Step):
+    """Place here code which that has to be executed after every step.
+
+    :param context: Behave Context object
+    :param step: Behave Step object
+    """
+    logging.debug("Finished Step: %s %s", step.step_type, str(repr(step.name)))
+    if RESTART_BROWSER == "scenario":
+        if step.status == "failed":
+            message = ("Step '%s %s' failed. Reason: '%s'" %
+                       (step.step_type, step.name, step.exception))
+            logging.error(message)
+            logging.debug(context.scenario_data)
+            if "browserstack" in CONFIG_NAME:
+                if hasattr(context, "driver"):
+                    session_id = context.driver.session_id
+                    flag_browserstack_session_as_failed(session_id, message)
+
+
+def before_feature(context, feature):
+    """Use autoretry feature of upcoming Behave 1.2.6 which automatically
+    retries failing scenarios.
+    Here PR for it https://github.com/behave/behave/pull/328
+    """
+    if AUTO_RETRY:
+        for scenario in feature.scenarios:
+            patch_scenario_with_autoretry(scenario, max_attempts=2)
+    if RESTART_BROWSER == "feature":
+        start_driver_session(context, feature.name)
+
+
+def after_feature(context: Context, feature):
+    if RESTART_BROWSER == "feature":
+        context.driver.quit()
+        if feature.status == "failed":
+            message = ("Feature '%s %s' failed. Reason: '%s'" %
+                       (feature.step_type, feature.name, feature.exception))
+            logging.error(message)
+            logging.debug(context.scenario_data)
+            if "browserstack" in CONFIG_NAME:
+                if hasattr(context, "driver"):
+                    session_id = context.driver.session_id
+                    flag_browserstack_session_as_failed(session_id, message)
+    logging.debug("QUIT DRIVER AFTER FEATURE: %s", feature.name)
+
+
+@retry(stop_max_attempt_number=3)
+def before_scenario(context: Context, scenario: Scenario):
+    """Place here code which has to be executed before every Scenario.
+
+    :param context: Behave Context object
+    :param scenario: Behave Scenario object
+    """
+    logging.debug('Starting scenario: %s', scenario.name)
+    context.scenario_data = initialize_scenario_data()
+    start_driver_session(context, scenario.name)
+
+
 def after_scenario(context: Context, scenario: Scenario):
     """Place here code which has to be executed after every scenario.
 
@@ -105,7 +127,10 @@ def after_scenario(context: Context, scenario: Scenario):
     """
     logging.debug("Closing Selenium Driver after scenario: %s", scenario.name)
     logging.debug(context.scenario_data)
-    context.driver.quit()
+    if RESTART_BROWSER == "scenario":
+        context.driver.quit()
+    if RESTART_BROWSER == "feature":
+        clear_driver_cookies(context.driver)
     actors = context.scenario_data.actors
     for actor in actors.values():
         if actor.registered:

@@ -15,6 +15,7 @@ CONFIG_NAME = os.environ.get("CONFIG", "local")
 TASK_ID = int(os.environ.get("TASK_ID", 0))
 
 # optional variables set by user
+RESTART_BROWSER = os.environ.get("RESTART_BROWSER", "feature")
 BROWSERS = os.environ.get("BROWSERS", "").split()
 BROWSERS_VERSIONS = os.environ.get("VERSIONS", "").split()
 HUB_URL = os.environ.get("HUB_URL", None)
