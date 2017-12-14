@@ -1795,8 +1795,12 @@ def sso_change_password_with_password_reset_link(
 
     if new:
         password_length = 15
-        password = "".join(random.choice(string.ascii_letters + string.digits)
-                           for _ in range(password_length))
+        if letters_only:
+            password = "".join(choice(ascii_letters)
+                               for _ in range(password_length))
+        else:
+            password = "".join(choice(ascii_letters) + choice(digits)
+                               for _ in range(password_length))
         context.update_actor(supplier_alias, password=password)
     if same:
         password = actor.password
