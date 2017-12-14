@@ -3,7 +3,7 @@
 import logging
 
 from behave.contrib.scenario_autoretry import patch_scenario_with_autoretry
-from behave.model import Scenario, Step
+from behave.model import Feature, Scenario, Step
 from behave.runner import Context
 from retrying import retry
 from selenium import webdriver
@@ -80,7 +80,7 @@ def after_step(context: Context, step: Step):
                     flag_browserstack_session_as_failed(session_id, message)
 
 
-def before_feature(context, feature):
+def before_feature(context: Context, feature: Feature):
     """Use autoretry feature of upcoming Behave 1.2.6 which automatically
     retries failing scenarios.
     Here PR for it https://github.com/behave/behave/pull/328
@@ -92,12 +92,12 @@ def before_feature(context, feature):
         start_driver_session(context, feature.name)
 
 
-def after_feature(context: Context, feature):
+def after_feature(context: Context, feature: Feature):
     if RESTART_BROWSER == "feature":
         context.driver.quit()
         if feature.status == "failed":
-            message = ("Feature '%s %s' failed. Reason: '%s'" %
-                       (feature.step_type, feature.name, feature.exception))
+            message = ("Feature '%s' failed. Reason: '%s': '%s'" %
+                       (feature.name, feature.exception, feature.error_message))
             logging.error(message)
             logging.debug(context.scenario_data)
             if "browserstack" in CONFIG_NAME:
