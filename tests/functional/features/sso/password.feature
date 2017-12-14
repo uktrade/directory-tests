@@ -49,6 +49,22 @@ Feature: SSO password management
       Then "Peter Alder" should be on Welcome to your great.gov.uk profile page
 
 
+    @ED-2251
+    @sso
+    @account
+    @manage
+    @password
+    @fake-sso-email-verification
+    Scenario: Suppliers should not be able to change the password to one with only letters
+      Given "Peter Alder" has a verified standalone SSO/great.gov.uk account
+      And "Peter Alder" signed out from SSO/great.gov.uk account
+      And "Peter Alder" received a password reset email
+
+      When "Peter Alder" attempts to change the password to one with only letters and using the password reset link
+
+      Then "Peter Alder" should see "This password contains letters only." message
+
+
     @ED-2146
     @sso
     @account
@@ -70,7 +86,7 @@ Feature: SSO password management
     @manage
     @password
     @fake-sso-email-verification
-    Scenario: Suppliers should not be to use the password reset link more than once
+    Scenario: Suppliers should not be able to use the password reset link more than once
       Given "Peter Alder" has a verified standalone SSO/great.gov.uk account
       And "Peter Alder" signed out from SSO/great.gov.uk account
       And "Peter Alder" received a password reset email
