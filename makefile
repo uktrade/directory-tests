@@ -99,6 +99,9 @@ smoke_tests:
 	$(SET_PYTEST_ENV_VARS) && \
 	pytest tests/smoke $(pytest_args)
 
+smoke_tests_links_checker:
+	pylinkvalidate.py -P -d 5 -w 10 -t a --parser=lxml --ignore=https://trade.great.gov.uk/search/ https://www.great.gov.uk/ https://www.export.great.gov.uk/ https://find-a-buyer.export.great.gov.uk/ https://sso.trade.great.gov.uk/accounts/login/ https://trade.great.gov.uk/ https://profile.great.gov.uk/about/
+
 SET_DB_URLS := \
 	export DIR_DATABASE_URL=`heroku config:get DATABASE_URL -a directory-api-dev` && \
 	export SSO_DATABASE_URL=`heroku config:get DATABASE_URL -a directory-sso-dev`
@@ -205,5 +208,25 @@ exred_docker_browserstack_second_browser_set:
 	$(EXRED_DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
 	docker-compose -f docker-compose-exred.yml -p exred build && \
 	docker-compose -f docker-compose-exred.yml -p exred run tests_second_browser_set
+
+compile_requirements:
+	python3 -m piptools compile requirements.in
+
+compile_exred_requirements:
+	python3 -m piptools compile requirements_exred.in
+
+compile_functional_requirements:
+	python3 -m piptools compile requirements_functional.in
+
+compile_smoke_requirements:
+	python3 -m piptools compile requirements_smoke.in
+
+compile_selenium_requirements:
+	python3 -m piptools compile requirements_selenium.in
+
+compile_load_requirements:
+	python3 -m piptools compile requirements_load.in
+
+compile_all_requirements: compile_requirements compile_exred_requirements compile_functional_requirements compile_smoke_requirements compile_selenium_requirements compile_load_requirements
 
 .PHONY: build clean requirements test docker_remove_all docker_integration_tests smoke_tests exred_docker_browserstack load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal functional_tests pep8

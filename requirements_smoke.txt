@@ -4,13 +4,14 @@
 #
 #    pip-compile --output-file requirements_smoke.txt requirements_smoke.ini
 #
-configparser==3.5.0       # via flake8
-enum34==1.1.6             # via flake8
+beautifulsoup4==4.6.0     # via pylinkvalidator
 flake8==3.0.4
+lxml==4.1.1
 mccabe==0.5.3             # via flake8
 py==1.4.34                # via pytest
 pycodestyle==2.0.0        # via flake8
 pyflakes==1.2.3           # via flake8
+pylinkvalidator==0.3
 pytest-sugar==0.8.0
 pytest==3.0.2
 requests==2.11.1

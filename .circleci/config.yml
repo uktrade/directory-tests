@@ -32,6 +32,26 @@ jobs:
             source ./docker/.env_with_export;
             make smoke_tests
 
+  smoke_tests_links_checker:
+    docker:
+      - image: circleci/python:3.5.3
+    working_directory: ~/directory-tests
+    steps:
+      - restore_cache:
+          keys:
+            - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements_smoke.txt
+      - run:
+          command: |
+            . venv/bin/activate
+            python ./docker/env_writer.py ./docker/env.json
+            source ./docker/.env_with_export;
+            make smoke_tests_links_checker
+
   exred_tests_chrome:
     docker:
       - image: circleci/python:3.5.3
@@ -238,6 +258,9 @@ workflows:
           requires:
             - checkout_code
       - smoke_tests:
+          requires:
+            - checkout_code
+      - smoke_tests_links_checker:
           requires:
             - checkout_code
       - exred_tests_chrome:
