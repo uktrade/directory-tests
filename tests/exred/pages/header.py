@@ -3,7 +3,6 @@
 import logging
 
 from selenium import webdriver
-from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 
 from utils import (
@@ -20,6 +19,8 @@ URL = None
 HOME_LINK = "#menu > ul > li:nth-child(1) > a"
 REGISTRATION_LINK = "#header-bar a.register"
 SIGN_IN_LINK = "#header-bar a.signin"
+PROFILE_LINK = "#header-bar a.profile"
+SIGN_OUT_LINK = "#header-bar a.signout"
 SECTIONS = {
     "export readiness": {
         "menu": "#export-readiness-links",
@@ -121,5 +122,15 @@ def go_to_registration(driver: webdriver):
 
 
 def go_to_sign_in(driver: webdriver):
-    registration_link = find_element(driver, by_css=SIGN_IN_LINK)
-    registration_link.click()
+    sign_in = find_element(driver, by_css=SIGN_IN_LINK)
+    sign_in.click()
+
+
+def go_to_profile(driver: webdriver):
+    profile_link = find_element(driver, by_css=PROFILE_LINK)
+    profile_link.click()
+
+
+def go_to_sign_out(driver: webdriver):
+    sign_out_link = find_element(driver, by_css=SIGN_OUT_LINK)
+    sign_out_link.click()

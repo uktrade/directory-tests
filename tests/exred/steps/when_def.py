@@ -25,7 +25,7 @@ from steps.when_impl import (
     registration_submit_form_and_verify_account,
     set_sector_preference,
     sign_in,
-    sign_in_go_to,
+    sign_out,
     start_triage,
     triage_are_you_incorporated,
     triage_change_answers,
@@ -131,6 +131,7 @@ def when_actor_goes_to_exred_articles(context, actor_alias, category, location):
     export_readiness_open_category(context, actor_alias, category, location)
 
 
+@when('"{actor_alias}" decides to read through all remaining Articles from selected list')
 @when('"{actor_alias}" decides to read through all Articles from selected list')
 def when_actor_reads_through_all_guidance_articles(context, actor_alias):
     guidance_read_through_all_articles(context, actor_alias)
@@ -139,11 +140,6 @@ def when_actor_reads_through_all_guidance_articles(context, actor_alias):
 @when('"{actor_alias}" opens any Article but the last one')
 def when_actor_opens_any_article_but_the_last_one(context, actor_alias):
     articles_open_any_but_the_last(context, actor_alias)
-
-
-@when('"{actor_alias}" decides to read through all remaining Articles from selected list')
-def when_actor_reads_through_all_remaining_articles(context, actor_alias):
-    guidance_read_through_all_articles(context, actor_alias)
 
 
 @when('"{actor_alias}" opens any article on the list')
@@ -215,13 +211,14 @@ def when_actor_registers(context, actor_alias):
         context, actor_alias, fake_verification=False)
 
 
-@when('"{actor_alias}" logs out and forgets the article reading history by clearing the cookies')
+@when('"{actor_alias}" signs out and forgets the article reading history by clearing the cookies')
 def when_actor_clears_the_cookies(context, actor_alias):
     clear_the_cookies(context, actor_alias)
 
 
+@when('"{actor_alias}" signs in')
 @when('"{actor_alias}" signs in using link visible in the "{location}"')
-def step_impl(context, actor_alias, location):
+def when_actor_signs_in(context, actor_alias, *, location="top bar"):
     sign_in(context, actor_alias, location)
 
 
@@ -240,3 +237,13 @@ def when_actor_goes_to_the_same_article_group(
 @when('"{actor_alias}" goes back to the last Article she read')
 def when_actor_goes_to_last_read_article(context, actor_alias):
     articles_go_back_to_last_read_article(context, actor_alias)
+
+
+@when('"{actor_alias}" signs out')
+def when_actor_signs_out(context, actor_alias):
+    sign_out(context, actor_alias)
+
+
+@when('"{actor_alias}" goes to randomly selected "{group}" Article category via "{location}"')
+def when_actor_is_on_article_list(context, actor_alias, group, location):
+    articles_open_group(context, actor_alias, group, location=location)

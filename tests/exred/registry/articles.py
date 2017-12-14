@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """ExRed Articles Registry"""
+import random
 from collections import namedtuple
+from copy import copy
 
 ArticleParent = namedtuple('ArticleParent', ['uuid', 'title'])
 
@@ -15,6 +17,15 @@ class Article:
         self.previous = previous
         self.next = next
         self.index = index
+
+    def __str__(self):
+        return (
+            "index: {index}, "
+            "title: {title}, "
+            "time_to_read: {time_to_read}, "
+            "previous: {previous}, "
+            "next: {next}"
+        ).format(**self.__dict__)
 
 
 RESEARCH_YOUR_MARKET = Article(
@@ -422,16 +433,46 @@ GROUPS = {
 def get_articles(group: str, category: str, *, sub_category: str = None) -> list:
     """Get an ordered list of articles for specific group & category.
 
+    NOTE:
+    in order to avoid the trouble with creating overly nested structure of
+    related articles, a `copy` of article object is created inside the loop,
+    that find `previous` and `next` article.
+
     :param group: Article Group: Guidance, Export Readiness, Triage
     :param category: Category of Articles that belong to a specific Group
     :param sub_category: an article sub-category for Regular exporters
     :return: a list of matching Articles sorted by their category index
     """
+    ret = []
     if sub_category is not None:
-        result = GROUPS[group.lower()][category.lower()][sub_category.lower()]
+        articles = GROUPS[group.lower()][category.lower()][sub_category.lower()]
     else:
-        result = GROUPS[group.lower()][category.lower()]
-    return result
+        articles = GROUPS[group.lower()][category.lower()]
+
+    for idx, article in enumerate(articles):
+        article = copy(article)
+        previous_article = None
+        next_article = None
+
+        if (idx - 1) >= 0:
+            previous_article = articles[idx - 1]
+            previous_article.index = idx - 1
+
+        if (idx + 1) < len(articles):
+            next_article = articles[idx + 1]
+            next_article.index = idx + 1
+
+        article.index = idx
+        article.previous = previous_article
+        article.next = next_article
+        ret.append(article)
+    return ret
+
+
+def get_random_article(
+        group: str, category: str, *, sub_category: str = None) -> Article:
+    group_articles = get_articles(group, category, sub_category=sub_category)
+    return random.choice(group_articles)
 
 
 def get_article(group: str, category: str, name: str) -> Article:
@@ -439,19 +480,5 @@ def get_article(group: str, category: str, name: str) -> Article:
     articles = get_articles(group, category)
     for idx, article in enumerate(articles):
         if article.title.lower() == name.lower():
-            previous_article = None
-            next_article = None
-
-            if (idx - 1) >= 0:
-                previous_article = articles[idx - 1]
-                previous_article.index = idx - 1
-
-            if (idx + 1) < len(articles):
-                next_article = articles[idx + 1]
-                next_article.index = idx + 1
-
-            article.index = idx
-            article.previous = previous_article
-            article.next = next_article
             result = article
     return result

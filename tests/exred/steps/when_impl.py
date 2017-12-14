@@ -17,10 +17,10 @@ from pages import (
     personalised_journey,
     sso_common,
     sso_confirm_your_email,
-    sso_profile_about,
     sso_registration,
     sso_registration_confirmation,
     sso_sign_in,
+    sso_sign_out,
     triage_are_you_registered_with_companies_house,
     triage_are_you_regular_exporter,
     triage_company_name,
@@ -29,7 +29,12 @@ from pages import (
     triage_summary,
     triage_what_do_you_want_to_export
 )
-from registry.articles import GUIDANCE, get_article, get_articles
+from registry.articles import (
+    GUIDANCE,
+    get_article,
+    get_articles,
+    get_random_article
+)
 from registry.pages import get_page_object
 from settings import EXRED_SECTORS
 from utils import (
@@ -623,15 +628,29 @@ def articles_open_first(context: Context, actor_alias: str):
 def articles_open_any_but_the_last(context: Context, actor_alias: str):
     driver = context.driver
     actor = get_actor(context, actor_alias)
+    visited_articles = actor.visited_articles
     group = actor.article_group
     category = actor.article_category
     articles = get_articles(group, category)
-    any_article_but_the_last = random.choice(articles[:-1])
+    # select random article
+    random_article = random.choice(articles[:-1])
+    # then get it's index in the reading list
+    any_article_but_the_last = get_article(group, category, random_article.title)
     guidance_common.show_all_articles(driver)
     article_common.go_to_article(driver, any_article_but_the_last.title)
+    time_to_read = article_common.time_to_read_in_seconds(context.driver)
     logging.debug(
         "%s is on '%s' article page: %s", actor_alias,
         any_article_but_the_last.title, driver.current_url)
+    just_read = VisitedArticle(
+        any_article_but_the_last.index,
+        any_article_but_the_last.title,
+        time_to_read)
+    if visited_articles:
+        visited_articles.append(just_read)
+    else:
+        visited_articles = [just_read]
+    update_actor(context, actor_alias, visited_articles=visited_articles)
 
 
 def articles_open_specific(context: Context, actor_alias: str, name: str):
@@ -654,10 +673,7 @@ def articles_open_specific(context: Context, actor_alias: str, name: str):
     logging.debug(
         "%s is on '%s' article: %s", actor_alias, name, driver.current_url)
     just_read = VisitedArticle(article.index, article.title, time_to_read)
-    if visited_articles:
-        visited_articles.append(just_read)
-    else:
-        visited_articles = [just_read]
+    visited_articles.append(just_read)
     update_actor(
         context, actor_alias, articles_read_counter=articles_read_counter,
         articles_time_to_complete=time_to_complete,
@@ -671,8 +687,7 @@ def articles_open_any(context: Context, actor_alias: str):
     group = actor.article_group
     category = actor.article_category
     visited_articles = actor.visited_articles
-    articles = get_articles(group, category)
-    any_article = random.choice(articles)
+    any_article = get_random_article(group, category)
     article_common.show_all_articles(driver)
 
     # capture the counter values from Article List page
@@ -692,10 +707,7 @@ def articles_open_any(context: Context, actor_alias: str):
         any_article .title, driver.current_url)
     just_read = VisitedArticle(
         any_article.index, any_article.title, time_to_read)
-    if visited_articles:
-        visited_articles.append(just_read)
-    else:
-        visited_articles = [just_read]
+    visited_articles.append(just_read)
     update_actor(
         context, actor_alias,
         articles_read_counter=articles_read_counter,
@@ -712,17 +724,12 @@ def guidance_read_through_all_articles(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     group = actor.article_group
     category = actor.article_category
-
-    visited_articles = []
+    visited_articles = actor.visited_articles
 
     current_article_name = article_common.get_article_name(driver)
-    time_to_read = article_common.time_to_read_in_seconds(context.driver)
     logging.debug("%s is on '%s' article", actor_alias, current_article_name)
     current_article = get_article(group, category, current_article_name)
     assert current_article, "Could not find Article: %s" % current_article_name
-    visited = VisitedArticle(
-        current_article.index, current_article_name, time_to_read)
-    visited_articles.append(visited)
     next_article = current_article.next
 
     while next_article is not None:
@@ -986,6 +993,8 @@ def clear_the_cookies(context: Context, actor_alias: str):
         logging.debug("COOKIES: %s", cookies)
         context.driver.delete_all_cookies()
         logging.debug("Successfully cleared cookies for %s", actor_alias)
+        cookies = context.driver.get_cookies()
+        logging.debug("Driver cookies after clearing them: %s", cookies)
     except WebDriverException:
         logging.error("Failed to clear cookies for %s", actor_alias)
 
@@ -1013,6 +1022,12 @@ def sign_in(context, actor_alias, location):
     sign_in_go_to(context, actor_alias, location)
     sso_sign_in.fill_out(context.driver, email, password)
     sso_sign_in.submit(context.driver)
+
+
+def sign_out(context: Context, actor_alias: str):
+    header.go_to_sign_out(context.driver)
+    sso_sign_out.submit(context.driver)
+    logging.debug("%s signed out", actor_alias)
 
 
 def articles_go_back_to_last_read_article(context: Context, actor_alias: str):
