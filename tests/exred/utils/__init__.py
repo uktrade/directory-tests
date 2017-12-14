@@ -98,7 +98,7 @@ def unauthenticated_actor(
                        for _ in range(password_length))
     return Actor(
         alias=alias, email=email, password=password,
-        self_classification=self_classification)
+        self_classification=self_classification, visited_articles=[])
 
 
 def add_actor(context: Context, actor: Actor):

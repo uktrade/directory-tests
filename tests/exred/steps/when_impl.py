@@ -673,10 +673,7 @@ def articles_open_specific(context: Context, actor_alias: str, name: str):
     logging.debug(
         "%s is on '%s' article: %s", actor_alias, name, driver.current_url)
     just_read = VisitedArticle(article.index, article.title, time_to_read)
-    if visited_articles:
-        visited_articles.append(just_read)
-    else:
-        visited_articles = [just_read]
+    visited_articles.append(just_read)
     update_actor(
         context, actor_alias, articles_read_counter=articles_read_counter,
         articles_time_to_complete=time_to_complete,
@@ -710,10 +707,7 @@ def articles_open_any(context: Context, actor_alias: str):
         any_article .title, driver.current_url)
     just_read = VisitedArticle(
         any_article.index, any_article.title, time_to_read)
-    if visited_articles:
-        visited_articles.append(just_read)
-    else:
-        visited_articles = [just_read]
+    visited_articles.append(just_read)
     update_actor(
         context, actor_alias,
         articles_read_counter=articles_read_counter,
