@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 """FAB Given step implementations."""
 import logging
-import random
 import re
-import string
-from random import choice
+from random import choice, randrange
+from string import ascii_letters, digits
 from urllib.parse import parse_qsl, quote, urljoin, urlsplit
 
 from behave.model import Table
@@ -291,7 +290,7 @@ def bp_provide_company_details(context, supplier_alias):
     # Step 0 - generate random details & update Company matching details
     # Need to get Company details after updating it in the Scenario Data
     title = "{} {}".format(company.title, sentence())
-    size = random.choice(NO_OF_EMPLOYEES)
+    size = choice(NO_OF_EMPLOYEES)
     website = "http://{}.{}".format(rare_word(min_length=15), rare_word())
     keywords = ", ".join(sentence().split())
     context.set_company_details(
@@ -327,8 +326,8 @@ def bp_select_random_sector_and_export_to_country(context, supplier_alias):
     :type supplier_alias: str
     """
     actor = context.get_actor(supplier_alias)
-    sector = random.choice(SECTORS)
-    countries = [COUNTRIES[random.choice(list(COUNTRIES))]]
+    sector = choice(SECTORS)
+    countries = [COUNTRIES[choice(list(COUNTRIES))]]
     other = ""
 
     # Step 1 - Submit the Choose Your Sector form
@@ -1457,8 +1456,8 @@ def fas_browse_suppliers_by_multiple_sectors(
     content = response.content.decode("utf-8")
     filters = Selector(text=content).css(sector_selector).extract()
 
-    sectors = list(set(random.choice(filters)
-                       for _ in range(random.randrange(1, len(filters)))))
+    sectors = list(set(choice(filters)
+                       for _ in range(randrange(1, len(filters)))))
     results = {}
     logging.debug(
         "%s will browse Suppliers by multiple Industry sector filters '%s'",
@@ -1485,8 +1484,8 @@ def fas_browse_suppliers_by_invalid_sectors(
     content = response.content.decode("utf-8")
     filters = Selector(text=content).css(sector_selector).extract()
 
-    sectors = list(set(random.choice(filters)
-                       for _ in range(random.randrange(1, len(filters)))))
+    sectors = list(set(choice(filters)
+                       for _ in range(randrange(1, len(filters)))))
 
     sectors.append("this_is_an_invalid_sector_filter")
     logging.debug(
@@ -1667,7 +1666,7 @@ def get_form_value(key: str) -> str or list or int or None:
         (" predefined countries$", get_n_country_codes(get_number_from_key(key))),
         ("1 predefined country$", get_n_country_codes(1)),
         ("none selected", None),
-        ("sector", random.choice(SECTORS))
+        ("sector", choice(SECTORS))
     ]
 
     found = False
@@ -1777,7 +1776,7 @@ def sso_sign_in(context: Context, supplier_alias: str):
 
 def sso_change_password_with_password_reset_link(
         context: Context, supplier_alias: str, *, new: bool = False,
-        same: bool = False, mismatch: bool = False):
+        same: bool = False, mismatch: bool = False, letters_only: bool = False):
     actor = context.get_actor(supplier_alias)
     session = actor.session
     link = actor.password_reset_link
