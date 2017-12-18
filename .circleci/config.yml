@@ -12,7 +12,7 @@ jobs:
           paths:
             - ~/directory-tests
 
-  smoke_tests_dependencies:
+  smoke_tests_requirements:
     docker:
       - image: circleci/python:3.5.3
     working_directory: ~/directory-tests
