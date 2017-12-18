@@ -12,7 +12,7 @@ jobs:
           paths:
             - ~/directory-tests
 
-  smoke_tests:
+  smoke_tests_dependencies:
     docker:
       - image: circleci/python:3.5.3
     working_directory: ~/directory-tests
@@ -25,6 +25,20 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements_smoke.txt
+      - save_cache:
+          key: smoke-tests-dependency-cache-{{ .Revision }}
+          paths:
+            - ~/directory-tests/venv
+
+  smoke_tests:
+    docker:
+      - image: circleci/python:3.5.3
+    working_directory: ~/directory-tests
+    steps:
+      - restore_cache:
+          keys:
+            - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
+            - smoke-tests-dependency-cache-{{ .Revision }}
       - run:
           command: |
             . venv/bin/activate
@@ -40,11 +54,7 @@ jobs:
       - restore_cache:
           keys:
             - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - run:
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            pip install -r requirements_smoke.txt
+            - smoke-tests-dependency-cache-{{ .Revision }}
       - run:
           command: |
             . venv/bin/activate
@@ -257,12 +267,17 @@ workflows:
       - functional_tests_requirements:
           requires:
             - checkout_code
+      - smoke_tests_requirements:
+          requires:
+            - checkout_code
       - smoke_tests:
           requires:
             - checkout_code
+            - smoke_tests_requirements
       - smoke_tests_links_checker:
           requires:
             - checkout_code
+            - smoke_tests_requirements
       - exred_tests_chrome:
           requires:
             - smoke_tests
