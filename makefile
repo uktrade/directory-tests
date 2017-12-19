@@ -99,6 +99,36 @@ smoke_tests:
 	$(SET_PYTEST_ENV_VARS) && \
 	pytest tests/smoke $(pytest_args)
 
+SET_PYLINK_CHECKER_ENV_VARS_PROD := \
+	export IGNORED_PREFIXES="https://www.linkedin.com/shareArticle,https://twitter.com/intent/tweet,http://www.yellow.com,https://www.contactus.trade.gov.uk,https://trade.great.gov.uk/search/,https://trade.great.gov.uk/suppliers/" && \
+	export TEST_URLS="https://www.great.gov.uk/ https://www.export.great.gov.uk/ https://find-a-buyer.export.great.gov.uk/ https://sso.trade.great.gov.uk/accounts/login/ https://trade.great.gov.uk/ https://profile.great.gov.uk/about/"
+
+SET_PYLINK_CHECKER_ENV_VARS_STAGE := \
+	export IGNORED_PREFIXES="https://www.linkedin.com/shareArticle,https://twitter.com/intent/tweet,http://www.yellow.com,https://www.contactus.trade.gov.uk,https://stage.supplier.directory.uktrade.io/search/,https://stage.supplier.directory.uktrade.io/suppliers/" && \
+	export TEST_URLS="https://export.great.uat.uktrade.io/ https://stage.buyer.directory.uktrade.io/ https://stage.sso.uktrade.io/accounts/login/  https://stage.profile.uktrade.io/about/"
+
+SET_PYLINK_CHECKER_ENV_VARS_DEV := \
+	export IGNORED_PREFIXES="https://www.linkedin.com/shareArticle,https://twitter.com/intent/tweet,http://www.yellow.com,https://www.contactus.trade.gov.uk,https://dev.supplier.directory.uktrade.io/search/,https://dev.supplier.directory.uktrade.io/suppliers/" && \
+	export TEST_URLS="https://dev.exportreadiness.directory.uktrade.io/ https://dev.buyer.directory.uktrade.io/ https://www.dev.sso.uktrade.io/accounts/login/  https://dev.profile.uktrade.io/about/"
+
+# default to DEV environment if TEST_ENV is not set
+TEST_ENV ?= DEV
+
+smoke_tests_links_checker:
+	$(SET_PYLINK_CHECKER_ENV_VARS_$(TEST_ENV)) && \
+	echo "Running pylinkchecker agaisnt: $${TEST_URLS} environment" && \
+	pylinkvalidate.py \
+	    --progress \
+	    --timeout=25 \
+	    --depth=2 \
+	    --workers=10 \
+	    --types=a \
+	    --test-outside \
+	    --parser=lxml \
+	    --header="User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.97 Safari/537.36 Vivaldi/1.94.1008.36" \
+	    --ignore="$${IGNORED_PREFIXES}" \
+	    $${TEST_URLS}
+
 SET_DB_URLS := \
 	export DIR_DATABASE_URL=`heroku config:get DATABASE_URL -a directory-api-dev` && \
 	export SSO_DATABASE_URL=`heroku config:get DATABASE_URL -a directory-sso-dev`
@@ -205,5 +235,25 @@ exred_docker_browserstack_second_browser_set:
 	$(EXRED_DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
 	docker-compose -f docker-compose-exred.yml -p exred build && \
 	docker-compose -f docker-compose-exred.yml -p exred run tests_second_browser_set
+
+compile_requirements:
+	python3 -m piptools compile requirements.in
+
+compile_exred_requirements:
+	python3 -m piptools compile requirements_exred.in
+
+compile_functional_requirements:
+	python3 -m piptools compile requirements_functional.in
+
+compile_smoke_requirements:
+	python3 -m piptools compile requirements_smoke.in
+
+compile_selenium_requirements:
+	python3 -m piptools compile requirements_selenium.in
+
+compile_load_requirements:
+	python3 -m piptools compile requirements_load.in
+
+compile_all_requirements: compile_requirements compile_exred_requirements compile_functional_requirements compile_smoke_requirements compile_selenium_requirements compile_load_requirements
 
 .PHONY: build clean requirements test docker_remove_all docker_integration_tests smoke_tests exred_docker_browserstack load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal functional_tests pep8
