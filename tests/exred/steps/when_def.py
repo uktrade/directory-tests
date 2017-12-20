@@ -11,6 +11,7 @@ from steps.when_impl import (
     articles_open_any,
     articles_open_any_but_the_last,
     articles_open_group,
+    articles_share_on_social_media,
     case_studies_go_to,
     clear_the_cookies,
     continue_export_journey,
@@ -247,3 +248,8 @@ def when_actor_signs_out(context, actor_alias):
 @when('"{actor_alias}" goes to randomly selected "{group}" Article category via "{location}"')
 def when_actor_is_on_article_list(context, actor_alias, group, location):
     articles_open_group(context, actor_alias, group, location=location)
+
+
+@when('"{actor_alias}" decides to share the article via "{social_media}"')
+def when_actor_shares_article(context, actor_alias, social_media):
+    articles_share_on_social_media(context, actor_alias, social_media)
