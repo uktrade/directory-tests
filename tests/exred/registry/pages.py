@@ -14,6 +14,9 @@ from pages import (
     interim_exporting_opportunities,
     personalised_journey,
     selling_online_overseas,
+    share_on_facebook,
+    share_on_linkedin,
+    share_on_twitter,
     sso_registration,
     sso_registration_confirmation,
     sso_sign_in,
@@ -123,6 +126,18 @@ EXRED_PAGE_REGISTRY = {
     "article list": {
         "url": None,
         "po": article_list
+    },
+    "share on facebook": {
+        "url": share_on_facebook.URL,
+        "po": share_on_facebook
+    },
+    "share on linkedin": {
+        "url": share_on_linkedin.URL,
+        "po": share_on_linkedin
+    },
+    "share on twitter": {
+        "url": share_on_twitter.URL,
+        "po": share_on_twitter
     },
 }
 
