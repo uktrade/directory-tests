@@ -63,16 +63,24 @@ Feature: Customised page
       | services          | has not        | Article list, Case studies                      |
 
 
-  @wip
   @ED-2591
+  @triage
+  @change-answers
   @personalised-page
-  Scenario: Any Exporter should be able to update preferences from personalised page
-    Given "Robert" is on personalised page
+  Scenario Outline: "<relevant>" Exporter should be able to update preferences from personalised journey page
+    Given "Robert" was classified as "<relevant>" exporter in the triage process
+    And "Robert" decided to create her personalised journey page
 
     When "Robert" decides to update his triage preferences
 
-    Then "Robert" should be redirected to the triage summary where he can change his answers
+    Then "Robert" should be on the "Triage - Summary" page
+    And "Robert" should see an option to change his triage answers
 
+    Examples:
+      | relevant   |
+      | New        |
+      | Occasional |
+      | Regular    |
 
   @wip
   @ED-2592
