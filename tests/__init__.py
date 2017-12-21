@@ -30,6 +30,7 @@ urls = {
     # UI-BUYER
     'ui-buyer:landing': '',
     'ui-buyer:healthcheck-api': 'healthcheck/api/',
+    'ui-buyer:healthcheck-sso': 'healthcheck/single-sign-on/',
     'ui-buyer:register': 'register',
     'ui-buyer:register-confirm-company': 'register/company',
     'ui-buyer:register-confirm-export-status': 'register/exports',
@@ -85,6 +86,8 @@ urls = {
     'internal-api:companies-house-search': 'api/internal/companies-house-search/',
 
     # SSO-PROFILE
+    'profile:healthcheck-api': 'healthcheck/api/',
+    'profile:healthcheck-sso-proxy': 'healthcheck/single-sign-on/',
     'profile:soo': 'selling-online-overseas/',
     'profile:fab': 'find-a-buyer/',
     'profile:exops-alerts': 'export-opportunities/email-alerts/',
@@ -94,6 +97,8 @@ urls = {
     'profile:directory-supplier': 'api/v1/directory/supplier/',
 
     # ExRed UI
+    'ui-exred:healthcheck-api': 'healthcheck/api/',
+    'ui-exred:healthcheck-sso-proxy': 'healthcheck/single-sign-on/',
     'ui-exred:landing': '',
     'ui-exred:landing-uk': '?lang=en-gb',
     'ui-exred:international': 'international/',
