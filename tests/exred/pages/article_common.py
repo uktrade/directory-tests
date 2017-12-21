@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """ExRed Common Articles Page Object."""
 import logging
+from urllib import parse as urlparse
 
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
@@ -57,6 +58,17 @@ EXPECTED_ELEMENTS = {
     "article name": ARTICLE_NAME,
     "article text": ARTICLE_TEXT,
     "report page link": IS_THERE_ANYTHING_WRONG_WITH_THIS_PAGE_LINK
+}
+
+FACEBOOK_BUTTON = "#share-facebook"
+LINKEDIN_BUTTON = "#share-linkedin"
+TWITTER_BUTTON = "#share-twitter"
+EMAIL_BUTTON = "#share-email"
+SHARE_BUTTONS = {
+    "facebook": FACEBOOK_BUTTON,
+    "twitter": TWITTER_BUTTON,
+    "linkedin": LINKEDIN_BUTTON,
+    "email": EMAIL_BUTTON,
 }
 
 
@@ -343,3 +355,53 @@ def should_not_see_link_to_sign_in(driver: webdriver):
 
 def get_read_articles(driver: webdriver) -> list:
     return [art.text for art in find_elements(driver, by_css=READ_ARTICLES)]
+
+
+def check_if_link_opens_new_tab(driver: webdriver, social_media: str):
+    share_button_selector = SHARE_BUTTONS[social_media.lower()]
+    share_button = find_element(driver, by_css=share_button_selector)
+    target = share_button.get_attribute("target")
+    with assertion_msg(
+            "Expected link to '%s' share page to open in new tab, but instead "
+            "found a link with target attribute set to '%s'", social_media,
+            target):
+        assert target == "_blank"
+
+
+def check_if_link_opens_email_client(driver: webdriver):
+    share_button_selector = SHARE_BUTTONS["email"]
+    share_button = find_element(driver, by_css=share_button_selector)
+    href = share_button.get_attribute("href")
+    with assertion_msg(
+            "Expected the 'share via email' link to open in Email Client, but "
+            "got a invalid link: %s", href):
+        assert href.startswith("mailto:")
+
+
+def check_share_via_email_link_details(
+        driver: webdriver, expected_subject: str, expected_body: str):
+    share_button_selector = SHARE_BUTTONS["email"]
+    share_button = find_element(driver, by_css=share_button_selector)
+    href = share_button.get_attribute("href")
+    parsed_url = urlparse.urlparse(href)
+    query_parameters = urlparse.parse_qs(parsed_url.query)
+    subject = query_parameters["subject"][0]
+    body = query_parameters["body"][0]
+    with assertion_msg(
+            "Expected 'share via email' link to contain message body '%s' but "
+            "got '%s' instead", expected_body, body):
+        assert body == expected_body
+    with assertion_msg(
+            "Expected 'share via email' link's message subject to contain "
+            "Article title '%s' but got '%s' instead", expected_subject,
+            subject):
+        assert expected_subject in subject
+
+
+def share_via(driver: webdriver, social_media: str):
+    share_button_selector = SHARE_BUTTONS[social_media.lower()]
+    share_button = find_element(driver, by_css=share_button_selector)
+    href = share_button.get_attribute("href")
+    logging.debug(
+        "Opening 'Share on %s' link '%s' in the same tab", social_media, href)
+    driver.get(href)

@@ -1044,3 +1044,17 @@ def get_geo_ip(context: Context, actor_alias: str):
     driver.get("https://www.geoiptool.com/")
     take_screenshot(driver, "geoip")
     logging.debug("%s checked the geoip", actor_alias)
+
+
+@retry(wait_fixed=30000, stop_max_attempt_number=3)
+def articles_share_on_social_media(
+        context: Context, actor_alias: str, social_media: str):
+    context.article_url = context.driver.current_url
+    if social_media.lower() == "email":
+        article_common.check_if_link_opens_email_client(context.driver)
+    else:
+        article_common.check_if_link_opens_new_tab(context.driver, social_media)
+        article_common.share_via(context.driver, social_media)
+    logging.debug(
+        "%s successfully got to the share article on '%s'", actor_alias,
+        social_media)

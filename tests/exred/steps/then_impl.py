@@ -20,7 +20,7 @@ from steps.when_impl import (
     triage_should_be_classified_as_occasional,
     triage_should_be_classified_as_regular
 )
-from utils import assertion_msg, get_actor
+from utils import assertion_msg, clear_driver_cookies, get_actor
 
 
 def should_see_sections_on_home_page(
@@ -383,3 +383,32 @@ def articles_read_counter_should_be_merged(context: Context, actor_alias: str):
             "got %d", actor_alias, number_of_visited_articles,
             current_read_counter):
         assert current_read_counter == number_of_visited_articles
+
+
+def articles_should_be_on_share_page(
+        context: Context, actor_alias: str, social_media: str):
+    page_name = "share on {}".format(social_media.lower())
+    social_media_page = get_page_object(page_name)
+    social_media_page.should_be_here(context.driver)
+    logging.debug("%s is on the '%s' share page", actor_alias, social_media)
+
+
+def share_page_should_be_prepopulated(context: Context, actor_alias: str, social_media: str):
+    page_name = "share on {}".format(social_media.lower())
+    social_media_page = get_page_object(page_name)
+    shared_url = context.article_url
+    social_media_page.check_if_populated(context.driver, shared_url)
+    clear_driver_cookies(driver=context.driver)
+    logging.debug(
+        "%s saw '%s' share page populated with appropriate data", actor_alias)
+
+
+def share_page_via_email_should_have_article_details(
+        context: Context, actor_alias: str):
+    driver = context.driver
+    body = driver.current_url
+    subject = article_common.get_article_name(driver)
+    article_common.check_share_via_email_link_details(driver, subject, body)
+    logging.debug(
+        "%s checked that the 'share via email' link contain correct subject: "
+        "'%s' and message body: '%s'", actor_alias, subject, body)
