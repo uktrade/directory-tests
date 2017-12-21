@@ -11,7 +11,8 @@ from pages import (
     get_finance,
     guidance_common,
     home,
-    personalised_journey
+    personalised_journey,
+    triage_summary
 )
 from registry.articles import get_article, get_articles
 from registry.pages import get_page_object
@@ -422,3 +423,9 @@ def share_page_via_email_should_have_article_details(
     logging.debug(
         "%s checked that the 'share via email' link contain correct subject: "
         "'%s' and message body: '%s'", actor_alias, subject, body)
+
+
+def triage_should_see_change_your_answers_link(
+        context: Context, actor_alias: str):
+    triage_summary.should_see_change_your_answers_link(context.driver)
+    logging.debug("%s can see 'change your answers' link", actor_alias)

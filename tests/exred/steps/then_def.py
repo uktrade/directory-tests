@@ -42,7 +42,8 @@ from steps.then_impl import (
     should_see_sections,
     should_see_sections_on_home_page,
     should_see_share_widget,
-    triage_should_be_classified_as
+    triage_should_be_classified_as,
+    triage_should_see_change_your_answers_link
 )
 from steps.when_impl import (
     triage_answer_questions_again,
@@ -280,3 +281,8 @@ def then_share_page_should_be_prepopulated(context, actor_alias, social_media):
 @then('"{actor_alias}" should see that the share via email link will pre-populate the message subject and body with Article title and URL')
 def then_check_share_via_email_link(context, actor_alias):
     share_page_via_email_should_have_article_details(context, actor_alias)
+
+
+@then('"{actor_alias}" should see an option to change his triage answers')
+def then_actor_should_see_option_to_change_triage_answers(context, actor_alias):
+    triage_should_see_change_your_answers_link(context, actor_alias)
