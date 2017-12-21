@@ -1,10 +1,13 @@
 import json
+
+from locust import HttpLocust, TaskSet, task
+
 from tests import (
     get_random_email_address,
     get_relative_url,
     settings
 )
-from locust import HttpLocust, TaskSet, task
+from tests.settings import DIRECTORY_API_HEALTH_CHECK_TOKEN as TOKEN
 
 
 class PublicPagesSSO(TaskSet):
@@ -56,8 +59,10 @@ class PublicPagesSSO(TaskSet):
         )
 
     @task
-    def health(self):
-        self.client.get(get_relative_url('sso:health'))
+    def healthcheck_database(self):
+        params = {'token': TOKEN}
+        resp = self.client.get(
+                get_relative_url('sso:healthcheck-database'), params=params)
 
     @task
     def email_confirm_GET(self):

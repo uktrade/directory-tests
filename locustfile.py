@@ -12,5 +12,5 @@ from tests.locust.test_api import (
     AuthenticatedUserAPI
 )
 from tests.locust.test_exred_ui import (
-    RegularUserSupplierUI
+    RegularUserExRedUI
 )

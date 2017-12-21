@@ -11,10 +11,12 @@ join_sso = partial(urljoin, settings.DIRECTORY_SSO_URL)
 join_profile = partial(urljoin, settings.DIRECTORY_PROFILE_URL)
 join_ui_buyer = partial(urljoin, settings.DIRECTORY_UI_BUYER_URL)
 join_ui_supplier = partial(urljoin, settings.DIRECTORY_UI_SUPPLIER_URL)
+join_exred = partial(urljoin, settings.EXRED_UI_URL)
 
 urls = {
     # SSO
     'sso:landing': '',
+    'sso:healthcheck-database': 'api/v1/healthcheck/database/',
     'sso:login': 'accounts/login/',
     'sso:signup': 'accounts/signup/',
     'sso:logout': 'accounts/logout/',
@@ -28,6 +30,8 @@ urls = {
 
     # UI-BUYER
     'ui-buyer:landing': '',
+    'ui-buyer:healthcheck-api': 'healthcheck/api/',
+    'ui-buyer:healthcheck-sso': 'healthcheck/single-sign-on/',
     'ui-buyer:register': 'register',
     'ui-buyer:register-confirm-company': 'register/company',
     'ui-buyer:register-confirm-export-status': 'register/exports',
@@ -70,7 +74,9 @@ urls = {
 
     # API
     'api:docs': 'docs/',
-    'api:health': '',
+    'api:healthcheck-database': 'healthcheck/database/',
+    'api:healthcheck-cache': 'healthcheck/cache/',
+    'api:healthcheck-elasticsearch': 'healthcheck/elasticsearch/',
     'api:enrolment': 'enrolment/',
     'api:company': 'supplier/{sso_id}/company/',
     'api:user': 'supplier/{sso_id}/',
@@ -81,6 +87,8 @@ urls = {
     'internal-api:companies-house-search': 'api/internal/companies-house-search/',
 
     # SSO-PROFILE
+    'profile:healthcheck-api': 'healthcheck/api/',
+    'profile:healthcheck-sso-proxy': 'healthcheck/single-sign-on/',
     'profile:soo': 'selling-online-overseas/',
     'profile:fab': 'find-a-buyer/',
     'profile:exops-alerts': 'export-opportunities/email-alerts/',
@@ -90,6 +98,8 @@ urls = {
     'profile:directory-supplier': 'api/v1/directory/supplier/',
 
     # ExRed UI
+    'ui-exred:healthcheck-api': 'healthcheck/api/',
+    'ui-exred:healthcheck-sso-proxy': 'healthcheck/single-sign-on/',
     'ui-exred:landing': '',
     'ui-exred:landing-uk': '?lang=en-gb',
     'ui-exred:international': 'international/',
@@ -170,6 +180,8 @@ def get_absolute_url(name):
         return join_internal_api(relative_url)
     elif name.startswith('profile:'):
         return join_profile(relative_url)
+    elif name.startswith('ui-exred:'):
+        return join_exred(relative_url)
 
 
 def get_random_email_address():
