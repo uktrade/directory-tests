@@ -92,7 +92,7 @@ Feature: Top importers
       | Meat, fish or crustaceans, molluscs or other aquatic invertebrates; preparations thereof                                                                                                                                                  |
       | Sugars and sugar confectionery                                                                                                                                                                                                            |
       | Cocoa and cocoa preparations                                                                                                                                                                                                              |
-      | Preparations of cereals, flour, starch or milk; pastrycooks' products                                                                                                                                                                    |
+      | Preparations of cereals, flour, starch or milk; pastrycooks' products                                                                                                                                                                     |
       | Preparations of vegetables, fruit, nuts or other parts of plants                                                                                                                                                                          |
       | Miscellaneous edible preparations                                                                                                                                                                                                         |
       | Beverages, spirits and vinegar                                                                                                                                                                                                            |
@@ -168,7 +168,7 @@ Feature: Top importers
       | Furniture; bedding, mattresses, mattress supports, cushions and similar stuffed furnishings; lamps and lighting fittings, n.e.c.; illuminated signs, illuminated name-plates and the like; prefabricated buildings                        |
       | Toys, games and sports requisites; parts and accessories thereof                                                                                                                                                                          |
       | Miscellaneous manufactured articles                                                                                                                                                                                                       |
-      | Works of art; collectors' pieces and antiques                                                                                                                                                                                            |
+      | Works of art; collectors' pieces and antiques                                                                                                                                                                                             |
       | Commodities not specified according to kind                                                                                                                                                                                               |
 
 

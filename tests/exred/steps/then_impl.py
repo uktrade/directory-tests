@@ -128,14 +128,14 @@ def personalised_should_see_layout_for(
     incorporated = actor.are_you_incorporated
     online_marketplaces = actor.do_you_use_online_marketplaces
     code, _ = actor.what_do_you_want_to_export
-    if classification == "new":
+    if classification.lower() == "new":
         personalised_journey.layout_for_new_exporter(
             context.driver, incorporated=incorporated, sector_code=code)
-    elif classification == "occasional":
+    elif classification.lower() == "occasional":
         personalised_journey.layout_for_occasional_exporter(
             context.driver, incorporated=incorporated,
             use_online_marketplaces=online_marketplaces, sector_code=code)
-    elif classification == "regular":
+    elif classification.lower() == "regular":
         personalised_journey.layout_for_regular_exporter(
             context.driver, incorporated=incorporated, sector_code=code)
     else:

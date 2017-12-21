@@ -10,7 +10,7 @@ Feature: Case Studies
     When "Robert" goes to the "<relevant>" Case Study via carousel
 
     Then "Robert" should see "<relevant>" case study
-    Then "Robert" should see the Share Widget
+    And "Robert" should see the Share Widget
 
     Examples:
       | relevant |
