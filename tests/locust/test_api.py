@@ -5,13 +5,29 @@ from locust import HttpLocust, TaskSet, task
 
 from tests import get_random_email_address, get_relative_url, settings
 from tests.locust.helpers import AuthedClientMixin
+from tests.settings import DIRECTORY_API_HEALTH_CHECK_TOKEN as TOKEN
 
 
 class PublicPagesAPI(TaskSet):
 
     @task
-    def health(self):
-        self.client.get(get_relative_url('api:health'))
+    def api_healthcheck_database(self):
+        params = {'token': TOKEN}
+        self.client.get(
+                get_relative_url('api:healthcheck-database'), params=params)
+
+    @task
+    def api_healthcheck_cache(self):
+        params = {'token': TOKEN}
+        self.client.get(
+                get_relative_url('api:healthcheck-cache'), params=params)
+
+    @task
+    def api_healthcheck_elasticsearch(self):
+        params = {'token': TOKEN}
+        self.client.get(
+                get_relative_url('api:healthcheck-elasticsearch'),
+                params=params)
 
 
 class AuthenticatedPagesAPI(TaskSet):
