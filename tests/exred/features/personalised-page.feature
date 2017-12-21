@@ -82,27 +82,36 @@ Feature: Customised page
       | Occasional |
       | Regular    |
 
-  @wip
-  @ED-2592
-  @personalised-page
-  Scenario: Any Exporter should see the Banner & Top 10 table specific to the sector they selected in triage
-    Given "Robert" has created the personalised journey page
 
-    Then "Robert" should see the Banner & Top 10 table specific to the sector they selected in triage
-
-
-  @wip
   @ED-2593
   @personalised-page
-  Scenario Outline: Any Exporter should get to a relevant case study from Case Studies carousel on the personalised page
-    Given "Robert" is interested in "<case_study_name>" case study
+  @case-studies
+  Scenario Outline: "<relevant>" Exporter should get to a "<selected>" case study from Case Studies carousel on the personalised journey page
+    Given "Robert" was classified as "<relevant>" exporter in the triage process
+    And "Robert" decided to create his personalised journey page
 
-    When "Robert" goes to the relevant "<case_study_name>" link in the Case Studies carousel on the personalised page
+    When "Robert" goes to the "<selected>" Case Study via carousel
 
-    Then "Robert" should see "<case_study_name>" page with a Share widget
+    Then "Robert" should see "<selected>" case study
+    And "Robert" should see the Share Widget
 
     Examples:
-      | case_study_name   |
-      | First case study  |
-      | Second case study |
-      | Third case study  |
+      | relevant   | selected |
+      | New        | First    |
+      | Occasional | Second   |
+
+
+  @ED-2593
+  @personalised-page
+  @case-studies
+  Scenario Outline: "<relevant>" Exporter should not see Case Studies carousel on the personalised journey page
+    Given "Robert" was classified as "<relevant>" exporter in the triage process
+
+    When "Robert" decides to create her personalised journey page
+
+    Then "Robert" should be on the Personalised Journey page for "<relevant>" exporters
+    And "Robert" should not see "case studies" sections on "personalised journey" page
+
+    Examples:
+      | relevant |
+      | Regular  |
