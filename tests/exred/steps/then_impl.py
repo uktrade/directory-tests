@@ -173,6 +173,16 @@ def should_see_sections(
             page_name)
 
 
+def should_not_see_sections(
+        context: Context, actor_alias: str, sections: list, page_name: str):
+    page = get_page_object(page_name)
+    for section in sections:
+        page.should_not_see_section(context.driver, section)
+        logging.debug(
+            "As expected %s cannot see '%s' section on %s page", actor_alias,
+            section, page_name)
+
+
 def articles_should_see_in_correct_order(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     group = actor.article_group

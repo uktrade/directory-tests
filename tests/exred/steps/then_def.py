@@ -37,6 +37,7 @@ from steps.then_impl import (
     share_page_should_be_prepopulated,
     share_page_via_email_should_have_article_details,
     should_be_on_page,
+    should_not_see_sections,
     should_see_links_to_services,
     should_see_sections,
     should_see_sections_on_home_page,
@@ -144,6 +145,12 @@ def then_expected_export_readiness_page_elements_should_be_visible(
 @then('"{actor_alias}" should see "{sections}" sections on "{page_name}" page')
 def then_should_see_sections(context, actor_alias, sections, page_name):
     should_see_sections(context, actor_alias, sections.split(", "), page_name)
+
+
+@then('"{actor_alias}" should not see "{sections}" section on "{page_name}" page')
+@then('"{actor_alias}" should not see "{sections}" sections on "{page_name}" page')
+def then_should_not_see_sections(context, actor_alias, sections, page_name):
+    should_not_see_sections(context, actor_alias, sections.split(", "), page_name)
 
 
 @then('"{actor_alias}" should be able to navigate to the next article from the List following the Article Order')
