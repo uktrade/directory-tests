@@ -15,6 +15,7 @@ join_ui_supplier = partial(urljoin, settings.DIRECTORY_UI_SUPPLIER_URL)
 urls = {
     # SSO
     'sso:landing': '',
+    'sso:healthcheck-database': 'api/v1/healthcheck/database/',
     'sso:login': 'accounts/login/',
     'sso:signup': 'accounts/signup/',
     'sso:logout': 'accounts/logout/',
@@ -28,6 +29,7 @@ urls = {
 
     # UI-BUYER
     'ui-buyer:landing': '',
+    'ui-buyer:healthcheck-api': 'healthcheck/api/',
     'ui-buyer:register': 'register',
     'ui-buyer:register-confirm-company': 'register/company',
     'ui-buyer:register-confirm-export-status': 'register/exports',
@@ -70,7 +72,9 @@ urls = {
 
     # API
     'api:docs': 'docs/',
-    'api:health': '',
+    'api:healthcheck-database': 'healthcheck/database/',
+    'api:healthcheck-cache': 'healthcheck/cache/',
+    'api:healthcheck-elasticsearch': 'healthcheck/elasticsearch/',
     'api:enrolment': 'enrolment/',
     'api:company': 'supplier/{sso_id}/company/',
     'api:user': 'supplier/{sso_id}/',
