@@ -14,6 +14,7 @@ from steps.when_impl import (
     articles_open_first,
     articles_open_group,
     articles_read_a_number_of_them,
+    case_studies_go_to_random,
     export_readiness_open_category,
     get_geo_ip,
     guidance_open_category,
@@ -184,3 +185,8 @@ def given_actor_checks_the_goeip(context, actor_alias):
 @given('"{actor_alias}" is signed in')
 def given_actor_is_signed_in(context, actor_alias, *, location="top bar"):
     sign_in(context, actor_alias, location)
+
+
+@given('"{actor_alias}" is on the Case Study page accessed via "{page_name}" page')
+def given_actor_is_on_random_case_study_page(context, actor_alias, page_name):
+    case_studies_go_to_random(context, actor_alias, page_name)

@@ -6,7 +6,7 @@ from urllib.parse import urljoin
 from selenium import webdriver
 
 from settings import EXRED_UI_URL
-from utils import assertion_msg, take_screenshot
+from utils import assertion_msg, find_element, take_screenshot
 
 NAME = "ExRed Triage - summary"
 URL = urljoin(EXRED_UI_URL, "triage/summary")
@@ -84,3 +84,10 @@ def change_answers(driver: webdriver):
     link = driver.find_element_by_css_selector(CHANGE_ANSWERS_LINK)
     link.click()
     take_screenshot(driver, NAME + " after deciding to change the answers")
+
+
+def should_see_change_your_answers_link(driver: webdriver):
+    take_screenshot(driver, NAME + " change your answers")
+    change_answers_link = find_element(driver, by_css=CHANGE_ANSWERS_LINK)
+    with assertion_msg("Expected to see 'Change your answers' link"):
+        assert change_answers_link.is_displayed()

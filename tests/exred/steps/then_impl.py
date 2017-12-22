@@ -11,7 +11,8 @@ from pages import (
     get_finance,
     guidance_common,
     home,
-    personalised_journey
+    personalised_journey,
+    triage_summary
 )
 from registry.articles import get_article, get_articles
 from registry.pages import get_page_object
@@ -127,14 +128,14 @@ def personalised_should_see_layout_for(
     incorporated = actor.are_you_incorporated
     online_marketplaces = actor.do_you_use_online_marketplaces
     code, _ = actor.what_do_you_want_to_export
-    if classification == "new":
+    if classification.lower() == "new":
         personalised_journey.layout_for_new_exporter(
             context.driver, incorporated=incorporated, sector_code=code)
-    elif classification == "occasional":
+    elif classification.lower() == "occasional":
         personalised_journey.layout_for_occasional_exporter(
             context.driver, incorporated=incorporated,
             use_online_marketplaces=online_marketplaces, sector_code=code)
-    elif classification == "regular":
+    elif classification.lower() == "regular":
         personalised_journey.layout_for_regular_exporter(
             context.driver, incorporated=incorporated, sector_code=code)
     else:
@@ -171,6 +172,16 @@ def should_see_sections(
         logging.debug(
             "%s can see '%s' section on %s page", actor_alias, section,
             page_name)
+
+
+def should_not_see_sections(
+        context: Context, actor_alias: str, sections: list, page_name: str):
+    page = get_page_object(page_name)
+    for section in sections:
+        page.should_not_see_section(context.driver, section)
+        logging.debug(
+            "As expected %s cannot see '%s' section on %s page", actor_alias,
+            section, page_name)
 
 
 def articles_should_see_in_correct_order(context: Context, actor_alias: str):
@@ -412,3 +423,9 @@ def share_page_via_email_should_have_article_details(
     logging.debug(
         "%s checked that the 'share via email' link contain correct subject: "
         "'%s' and message body: '%s'", actor_alias, subject, body)
+
+
+def triage_should_see_change_your_answers_link(
+        context: Context, actor_alias: str):
+    triage_summary.should_see_change_your_answers_link(context.driver)
+    logging.debug("%s can see 'change your answers' link", actor_alias)

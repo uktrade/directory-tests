@@ -28,15 +28,15 @@ BREADCRUMBS = "p.breadcrumbs"
 FEEDBACK_QUESTION = "#js-feedback > p"
 FEEDBACK_RESULT = "#js-feedback-success"
 GO_BACK_LINK = "#category-link"
-INDICATORS_TEXT = "#top div.scope-indicator"
+INDICATORS_TEXT = "div.scope-indicator"
 IS_THERE_ANYTHING_WRONG_WITH_THIS_PAGE_LINK = "section.error-reporting a"
 NEXT_ARTICLE_LINK = "#next-article-link"
 NOT_USEFUL_BUTTON = "#js-feedback-negative"
-REGISTRATION_LINK = "#top > div > p > a:nth-child(1)"
+REGISTRATION_LINK = "#content div.article-container p.register > a:nth-child(1)"
 READ_ARTICLES = "a.article-read"
 SHARE_MENU = "ul.sharing-links"
 SHOW_MORE_BUTTON = "#js-paginate-list-more"
-SIGN_IN_LINK = "#top > div > p > a:nth-child(2)"
+SIGN_IN_LINK = "#content div.article-container p.register > a:nth-child(2)"
 TIME_TO_COMPLETE = "dd.time span.value"
 TOTAL_NUMBER_OF_ARTICLES = "dd.position > span.to"
 USEFUL_BUTTON = "#js-feedback-positive"
@@ -283,9 +283,7 @@ def count_average_word_number_in_lines_list(lines_list, word_length=5):
 def time_to_read_in_seconds(driver: webdriver):
     """Return time to read in minutes give an Article object."""
     article_text = driver.find_element_by_css_selector(ARTICLE_TEXT).text
-    indicators_text = driver.find_element_by_css_selector(INDICATORS_TEXT).text
-    only_article = article_text.replace(indicators_text, '')
-    filtered_lines = filter_lines(only_article)
+    filtered_lines = filter_lines(article_text)
     total_words_count = count_average_word_number_in_lines_list(filtered_lines)
     return round(total_words_count / WORDS_PER_SECOND)
 

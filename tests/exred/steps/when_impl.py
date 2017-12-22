@@ -849,6 +849,13 @@ def case_studies_go_to(context: Context, actor_alias: str, case_number: str):
         case_study_title)
 
 
+def case_studies_go_to_random(context, actor_alias, page_name):
+    assert page_name.lower() in ["home"]
+    visit_page(context, actor_alias, page_name)
+    case_number = random.choice(["first", "second", "third"])
+    case_studies_go_to(context, actor_alias, case_number)
+
+
 def open_link(
         context: Context, actor_alias: str, group: str, category: str,
         location: str):
