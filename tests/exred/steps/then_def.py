@@ -34,6 +34,7 @@ from steps.then_impl import (
     personalised_journey_should_see_banner_and_top_10_table,
     personalised_journey_should_see_read_counter,
     personalised_should_see_layout_for,
+    promo_video_check_watch_time,
     share_page_should_be_prepopulated,
     share_page_via_email_should_have_article_details,
     should_be_on_page,
@@ -286,3 +287,9 @@ def then_check_share_via_email_link(context, actor_alias):
 @then('"{actor_alias}" should see an option to change his triage answers')
 def then_actor_should_see_option_to_change_triage_answers(context, actor_alias):
     triage_should_see_change_your_answers_link(context, actor_alias)
+
+
+@then('"{actor_alias}" should be able to watch at least first "{expected_watch_time:d}" seconds of the promotional video')
+def then_actor_should_watch_the_promo_video(
+        context, actor_alias, expected_watch_time: int):
+    promo_video_check_watch_time(context, actor_alias, expected_watch_time)

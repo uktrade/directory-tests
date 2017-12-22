@@ -429,3 +429,14 @@ def triage_should_see_change_your_answers_link(
         context: Context, actor_alias: str):
     triage_summary.should_see_change_your_answers_link(context.driver)
     logging.debug("%s can see 'change your answers' link", actor_alias)
+
+
+def promo_video_check_watch_time(
+        context: Context, actor_alias: str, expected_watch_time: int):
+    watch_time = home.get_video_watch_time(context.driver)
+    with assertion_msg(
+            "%s expected to watch at least first '%d' seconds of the video but"
+            " got '%d'", actor_alias, expected_watch_time, watch_time):
+        assert watch_time >= expected_watch_time
+    logging.debug("%s was able to watch see at least first '%d' seconds of the"
+                  " promotional video", actor_alias, expected_watch_time)
