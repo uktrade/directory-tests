@@ -19,14 +19,14 @@ from utils import (
 NAME = "ExRed Home"
 URL = urljoin(EXRED_UI_URL, "?lang=en-gb")
 
-GET_STARTED_BUTTON = ".triage a.button-cta"
-CONTINUE_EXPORT_JOURNEY = ".triage a.button-cta"
-NEW_TO_EXPORTING_LINK = "#personas div:nth-child(1) > div > a"
-OCCASIONAL_EXPORTER_LINK = "#personas div:nth-child(2) > div > a"
-REGULAR_EXPORTED_LINK = "#personas div:nth-child(3) > div > a"
-FIND_A_BUYER_SERVICE_LINK = "#services div:nth-child(1) > article > a"
-ONLINE_MARKETPLACES_SERVICE_LINK = "#services div:nth-child(2) > article > a"
-EXPORT_OPPORTUNITIES_SERVICE_LINK = "#services div:nth-child(3) > article > a"
+GET_STARTED_BUTTON = "#triage-section-get-started"
+CONTINUE_EXPORT_JOURNEY = "#triage-section-continue-your-journey"
+NEW_TO_EXPORTING_LINK = "#personas-section-new"
+OCCASIONAL_EXPORTER_LINK = "#personas-section-occasional"
+REGULAR_EXPORTED_LINK = "#personas-section-regular"
+FIND_A_BUYER_SERVICE_LINK = "#services-section-find-a-buyer-link"
+SELLING_ONLINE_OVERSEAS_SERVICE_LINK = "#services-section-selling-online-overseas-link"
+EXPORT_OPPORTUNITIES_SERVICE_LINK = "#services-section-export-opportunities-link"
 CAROUSEL_INDICATORS_SECTION = "#carousel  div.ed-carousel__indicators"
 CAROUSEL_INDICATORS = ".ed-carousel__indicator"
 CAROUSEL_PREV_BUTTON = "#carousel label.ed-carousel__control--backward"
@@ -36,31 +36,47 @@ CAROUSEL_SECOND_INDICATOR = ".ed-carousel__indicator[for='2']"
 CAROUSEL_THIRD_INDICATOR = ".ed-carousel__indicator[for='3']"
 CASE_STUDIES_LINK = "#carousel h3 > a"
 CASE_STUDY_LINK = "#carousel div.ed-carousel__slide:nth-child({}) h3 > a"
-MARKET_RESEARCH_LINK = "#resource-guidance div:nth-child(1) > div > a"
-CUSTOMER_INSIGHT_LINK = "#resource-guidance div:nth-child(2) > div > a"
-FINANCE_LINK = "#resource-guidance div:nth-child(3) > div > a"
-BUSINESS_LINK = "#resource-guidance div:nth-child(4) > div > a"
-GETTING_PAID_LINK = "#resource-guidance div:nth-child(5) > div > a"
-OPERATIONS_AND_COMPLIANCE_LINK = "#resource-guidance div:nth-child(6) > div > a"
+MARKET_RESEARCH_LINK = "#guidance-market-research-link"
+CUSTOMER_INSIGHT_LINK = "#guidance-section-customer-insight-link"
+FINANCE_LINK = "#guidance-section-finance-link"
+BUSINESS_LINK = "#guidance-section-business-planning-link"
+GETTING_PAID_LINK = "#guidance-section-getting-paid-link"
+OPERATIONS_AND_COMPLIANCE_LINK = "#guidance-section-operations-and-compliance-link"
+CAROUSEL = {
+    "itself": "#carousel",
+    "title": "#case-studies-section-title",
+    "description": "#case-studies-section-description",
+    "carousel_previous_button": CAROUSEL_PREV_BUTTON,
+    "carousel_next_button": CAROUSEL_NEXT_BUTTON,
+    "carousel - indicator 1": "#case-studies-section-indicator-1",
+    "carousel - indicator 2": "#case-studies-section-indicator-2",
+    "carousel - indicator 3": "#case-studies-section-indicator-3",
+    "carousel - case study 1 - link": "#case-studies-section-case-study-1-link",
+    "carousel - case study 2 - link": "#case-studies-section-case-study-2-link",
+    "carousel - case study 3 - link": "#case-studies-section-case-study-3-link",
+    "carousel - case study 1 - image": "#case-studies-section-case-study-1-image",
+    "carousel - case study 2 - image": "#case-studies-section-case-study-2-image",
+    "carousel - case study 3 - image": "#case-studies-section-case-study-3-image",
+}
 
 SECTIONS = {
-    "video": {
-        "itself": "section.hero-campaign-section > div > div",
-        "teaser_title": "section.hero-campaign-section > div > div > h1",
-        "teaser description": "section.hero-campaign-section > div > div > p:nth-child(2)",
-        "teaser_logo": "section.hero-campaign-section picture > img",
+    "hero": {
+        "itself": "#content > section.hero-campaign-section",
+        "title": "#hero-campaign-section-title",
+        "description": "#hero-campaign-section-description",
+        "logo": "#hero-campaign-section-eig-logo",
     },
     "exporting journey": {
         "itself": "#content > section.triage.triage-section",
-        "heading": "#content > section.triage.triage-section .heading",
-        "introduction": "#content > section.triage.triage-section .intro",
+        "heading": "#triage-section-title",
+        "introduction": "#triage-section-description",
         "get_started_button": GET_STARTED_BUTTON,
-        "image": "section.triage.triage-section  picture > img"
+        "image": "#triage-section-image"
     },
     "export readiness": {
         "itself": "#personas",
-        "header": "#personas > .container > .header",
-        "intro": "#personas > .container > .intro",
+        "title": "#personas-section-title",
+        "description": "#personas-section-description",
         "groups": "#personas > .container > .group",
         "new": NEW_TO_EXPORTING_LINK,
         "occasional": OCCASIONAL_EXPORTER_LINK,
@@ -68,12 +84,50 @@ SECTIONS = {
         "i'm new to exporting": NEW_TO_EXPORTING_LINK,
         "i export occasionally": OCCASIONAL_EXPORTER_LINK,
         "i'm a regular exporter": REGULAR_EXPORTED_LINK,
+        "new exporter - image": "#personas-section-new-image",
+        "occasional exporter - image": "#personas-section-occasional-image",
+        "regular exporter - image": "#personas-section-regular-image",
     },
     "guidance": {
         "itself": "#resource-guidance",
-        "header": "#resource-guidance .section-header",
-        "intro": "#resource-guidance .intro",
+        "title": "#guidance-section-title",
+        "description": "#guidance-section-description",
         "groups": "#resource-guidance .group",
+        "market research - group": "#guidance-section-market-research",
+        "customer insight - group": "#guidance-section-customer-insight",
+        "finance - group": "#guidance-section-finance",
+        "business planning - group": "#guidance-section-business-planning",
+        "getting paid - group": "#guidance-section-getting-paid",
+        "operations and compliance - group": "#guidance-section-operations-and-compliance",
+
+        "market research - icon": "#guidance-section-market-research-icon",
+        "customer insight - icon": "#guidance-section-customer-insight-icon",
+        "finance - icon": "#guidance-section-finance-icon",
+        "business planning - icon": "#guidance-section-business-planning-icon",
+        "getting paid - icon": "#guidance-section-getting-paid-icon",
+        "operations and compliance - icon": "#guidance-section-operations-and-compliance-icon",
+
+        "market research - read counter": "#guidance-section-market-research-read-counter",
+        "customer insight - read counter": "#guidance-section-customer-insight-read-counter",
+        "finance - read counter": "#guidance-section-finance-article-read-counter",
+        "business planning - read counter": "#guidance-section-business-planning-article-read-counter",
+        "getting paid - read counter": "#guidance-section-getting-paid-article-read-counter",
+        "operations and compliance - read counter": "#guidance-section-operations-and-compliance-article-read-counter",
+
+        "market research - total number of articles": "#guidance-section-market-research-total-number-of-articles",
+        "customer insight - total number of articles": "#guidance-section-customer-insight-total-number-of-articles",
+        "finance - total number of articles": "#guidance-section-finance-total-number-of-articles",
+        "business planning - total number of articles": "#guidance-section-business-planning-total-number-of-articles",
+        "getting paid - total number of articles": "#guidance-section-getting-paid-total-number-of-articles",
+        "operations and compliance - total number of articles": "#guidance-section-operations-and-compliance-total-number-of-articles",
+
+        "market research - description": "#guidance-section-market-research-description",
+        "customer insight - description": "#guidance-section-customer-insight-description",
+        "finance - description": "#guidance-section-finance-description",
+        "business planning - description": "#guidance-section-business-planning-description",
+        "getting paid - description": "#guidance-section-getting-paid-description",
+        "operations and compliance - description": "#guidance-section-operations-and-compliance-description",
+
         "market research": MARKET_RESEARCH_LINK,
         "customer insight": CUSTOMER_INSIGHT_LINK,
         "finance": FINANCE_LINK,
@@ -83,21 +137,48 @@ SECTIONS = {
     },
     "services": {
         "itself": "#services",
-        "intro": "#services .intro",
+        "title": "#services-section-title",
+        "description": "#services-section-description",
         "groups": "#services .group",
-        "find_a_buyer_service": "#services div:nth-child(1) > article",
-        "online_marketplaces_service": "#services div:nth-child(2) > article",
-        "export_opportunities_service": "#services div:nth-child(3) > article",
+
+        "find a buyer - article": "#services div:nth-child(1) > article",
+        "online marketplaces - article": "#services div:nth-child(2) > article",
+        "export opportunities - article": "#services div:nth-child(3) > article",
+
+        "find a buyer - image": "#services-section-find-a-buyer-image",
+        "online marketplaces - image": "#services-section-selling-online-overseas-image",
+        "export opportunities - image": "#services-section-export-opportunities-image",
+
+        "find a buyer - description": "#services-section-find-a-buyer-description",
+        "online marketplaces - description": "#services-section-selling-online-overseas-description",
+        "export opportunities - description": "#services-section-export-opportunities-description",
+
         "find a buyer": FIND_A_BUYER_SERVICE_LINK,
-        "selling online overseas": ONLINE_MARKETPLACES_SERVICE_LINK,
+        "selling online overseas": SELLING_ONLINE_OVERSEAS_SERVICE_LINK,
         "export opportunities": EXPORT_OPPORTUNITIES_SERVICE_LINK,
     },
     "case studies": {
         "itself": "#carousel",
-        "heading": "#carousel .heading",
-        "intro": "#carousel .intro",
+        "title": "#case-studies-section-title",
+        "description": "#case-studies-section-description",
         "carousel_previous_button": CAROUSEL_PREV_BUTTON,
-        "carousel_next_button": CAROUSEL_NEXT_BUTTON
+        "carousel_next_button": CAROUSEL_NEXT_BUTTON,
+        "carousel - indicator 1": "#case-studies-section-indicator-1",
+        "carousel - indicator 2": "#case-studies-section-indicator-2",
+        "carousel - indicator 3": "#case-studies-section-indicator-3",
+        "carousel - case study 1 - link": "#case-studies-section-case-study-1-link",
+        "carousel - case study 1 - image": "#case-studies-section-case-study-1-image",
+    },
+    "business is great": {
+        "itself": "#beis",
+        "title": "#business-is-great-title",
+        # "image": "#business-is-great-image",
+        "description": "#business-is-great-description",
+        "link": "#business-is-great-link",
+    },
+    "error reporting": {
+        "itself": "section.error-reporting",
+        "link": "#error-reporting-section-contact-us"
     }
 }
 

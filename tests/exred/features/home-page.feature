@@ -4,9 +4,9 @@ Feature: Home Page
 
   @ED-2366
   @sections
-  Scenario: Any Exporter should see the "Video, Exporting Journey, Export Readiness, Guidance, Services, Case Studies" sections on the home page.
+  Scenario: Any Exporter should see the "Hero, Exporting Journey, Export Readiness, Guidance, Services, Case Studies, Business is Great, Error Reporting" sections on the home page.
       Given "Robert" visits the "Home" page
-      Then "Robert" should see the "Video, Exporting Journey, Export Readiness, Guidance, Services, Case Studies" sections on Home page
+      Then "Robert" should see the "Hero, Exporting Journey, Export Readiness, Guidance, Services, Case Studies, Business is Great, Error Reporting" sections on Home page
 
 
   @ED-2366
