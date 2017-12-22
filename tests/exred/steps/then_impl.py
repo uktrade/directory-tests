@@ -440,3 +440,9 @@ def promo_video_check_watch_time(
         assert watch_time >= expected_watch_time
     logging.debug("%s was able to watch see at least first '%d' seconds of the"
                   " promotional video", actor_alias, expected_watch_time)
+
+
+def promo_video_should_not_see_modal_window(context: Context, actor_alias: str):
+    home.should_not_see_video_modal_window(context.driver)
+    logging.debug(
+        "As expected %s can't see promotional video modal window", actor_alias)
