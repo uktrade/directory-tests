@@ -10,6 +10,10 @@ NAME = "ExRed Footer"
 URL = None
 
 SECTIONS = {
+    "logos": {
+        "dit logo": "#footer-dit-logo",
+        "eig logo": "#footer-eig-logo"
+    },
     "export readiness": {
         "label": "#footer-export-readiness-links",
         "new": "#footer ul[aria-labelledby='footer-export-readiness-links'] > li:nth-child(1) > a",
@@ -41,7 +45,8 @@ SECTIONS = {
         "contact us": "#footer > .site-links > ul > li:nth-child(2) > a",
         "privacy and cookies": "#footer > .site-links > ul > li:nth-child(3) > a",
         "terms and conditions": "#footer > .site-links > ul > li:nth-child(4) > a",
-        "department for international trade": "#footer > .site-links > ul > li:nth-child(5) > a"
+        "department for international trade": "#footer > .site-links > ul > li:nth-child(5) > a",
+        "copyright": "#footer > div.global-footer > p > span"
     }
 }
 
