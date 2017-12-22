@@ -22,6 +22,7 @@ from steps.when_impl import (
     open_service_link_on_interim_page,
     personalised_journey_create_page,
     personalised_journey_update_preference,
+    promo_video_watch,
     registration_go_to,
     registration_submit_form_and_verify_account,
     set_sector_preference,
@@ -253,3 +254,10 @@ def when_actor_is_on_article_list(context, actor_alias, group, location):
 @when('"{actor_alias}" decides to share the article via "{social_media}"')
 def when_actor_shares_article(context, actor_alias, social_media):
     articles_share_on_social_media(context, actor_alias, social_media)
+
+
+@when('"{actor_alias}" decides to watch "{play_time:d}" seconds of the promotional video')
+@when('"{actor_alias}" decides to watch the promotional video')
+def when_actor_decides_to_watch_promo_video(
+        context, actor_alias, *, play_time: int = None):
+    promo_video_watch(context, actor_alias, play_time=play_time)
