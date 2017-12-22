@@ -1072,3 +1072,7 @@ def promo_video_watch(
     home.open(context.driver, group="hero", element="watch video")
     home.play_video(context.driver, play_time=play_time)
     logging.debug("%s was able to play the video", actor_alias)
+
+
+def promo_video_close(context, actor_alias):
+    home.close_video(context.driver)
