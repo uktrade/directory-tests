@@ -2,6 +2,7 @@
 """ExRed Home Page Object."""
 import logging
 import random
+import time
 from urllib.parse import urljoin
 
 from selenium import webdriver
@@ -9,6 +10,7 @@ from selenium import webdriver
 from settings import EXRED_UI_URL
 from utils import (
     assertion_msg,
+    check_if_element_is_not_present,
     find_element,
     find_elements,
     selenium_action,
@@ -19,6 +21,9 @@ from utils import (
 NAME = "ExRed Home"
 URL = urljoin(EXRED_UI_URL, "?lang=en-gb")
 
+PROMO_VIDEO = "body > div.video-container.Modal-Container.open > div > video"
+CLOSE_VIDEO = "#hero-campaign-section-videoplayer-close"
+VIDEO_MODAL_WINDOW = "body > div.video-container.Modal-Container.open"
 GET_STARTED_BUTTON = "#triage-section-get-started"
 CONTINUE_EXPORT_JOURNEY = "#triage-section-continue-your-journey"
 NEW_TO_EXPORTING_LINK = "#personas-section-new"
@@ -71,6 +76,7 @@ SECTIONS = {
         "title": "#hero-campaign-section-title",
         "description": "#hero-campaign-section-description",
         "logo": "#hero-campaign-section-eig-logo",
+        "watch video": "#hero-campaign-section-watch-video-button"
     },
     "exporting journey": {
         "itself": "#content > section.triage.triage-section",
@@ -354,3 +360,36 @@ def open(driver: webdriver, group: str, element: str):
     link.click()
     take_screenshot(
         driver, NAME + " after clicking on: %s link".format(element))
+
+
+def play_video(driver: webdriver, *, play_time: int = 5):
+    video_load_delay = 2
+    play_js = "document.querySelector(\"{}\").play()".format(PROMO_VIDEO)
+    pause = "document.querySelector(\"{}\").pause()".format(PROMO_VIDEO)
+    driver.execute_script(play_js)
+    if play_time:
+        time.sleep(play_time + video_load_delay)
+        driver.execute_script(pause)
+
+
+def get_video_watch_time(driver: webdriver) -> int:
+    watch_time_js = (
+        "return document.querySelector(\"{}\").currentTime"
+        .format(PROMO_VIDEO))
+    duration_js = (
+        "return document.querySelector(\"{}\").duration".format(PROMO_VIDEO))
+    watch_time = driver.execute_script(watch_time_js)
+    duration = driver.execute_script(duration_js)
+    logging.debug("Video watch time: %d", watch_time)
+    logging.debug("Video duration : %d", duration)
+    return int(watch_time)
+
+
+def close_video(driver: webdriver):
+    take_screenshot(driver, NAME + " before closing video modal window")
+    close_button = find_element(driver, by_css=CLOSE_VIDEO)
+    close_button.click()
+
+
+def should_not_see_video_modal_window(driver: webdriver):
+    check_if_element_is_not_present(driver, by_css=VIDEO_MODAL_WINDOW)

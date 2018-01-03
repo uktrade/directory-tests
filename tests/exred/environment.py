@@ -94,7 +94,8 @@ def before_feature(context: Context, feature: Feature):
 
 def after_feature(context: Context, feature: Feature):
     if RESTART_BROWSER == "feature":
-        context.driver.quit()
+        if hasattr(context, "driver"):
+            context.driver.quit()
         if feature.status == "failed":
             message = ("Feature '%s' failed. Reason: '%s': '%s'" %
                        (feature.name, feature.exception, feature.error_message))

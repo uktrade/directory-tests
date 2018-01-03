@@ -1065,3 +1065,14 @@ def articles_share_on_social_media(
     logging.debug(
         "%s successfully got to the share article on '%s'", actor_alias,
         social_media)
+
+
+def promo_video_watch(
+        context: Context, actor_alias: str, *, play_time: int = None):
+    home.open(context.driver, group="hero", element="watch video")
+    home.play_video(context.driver, play_time=play_time)
+    logging.debug("%s was able to play the video", actor_alias)
+
+
+def promo_video_close(context, actor_alias):
+    home.close_video(context.driver)

@@ -49,3 +49,24 @@ Feature: Home Page
       | New        |
       | Occasional |
       | Regular    |
+
+
+  @ED-3014
+  @video
+  Scenario: Any Exporter should be able to play promotional video on the Home page
+    Given "Robert" visits the "Home" page
+
+    When "Robert" decides to watch "6" seconds of the promotional video
+
+    Then "Robert" should be able to watch at least first "5" seconds of the promotional video
+
+
+  @ED-3014
+  @video
+  Scenario: Any Exporter should be able to close the window with promotional video on the Home page
+    Given "Robert" visits the "Home" page
+
+    When "Robert" decides to watch "6" seconds of the promotional video
+    And "Robert" closes the window with promotional video
+
+    Then "Robert" should not see the window with promotional video
