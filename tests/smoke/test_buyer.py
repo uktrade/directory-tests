@@ -83,7 +83,7 @@ def test_profile_redirects_anon_user():
         get_absolute_url('ui-buyer:company-profile'), allow_redirects=False
     )
 
-    assert response.status_code == http.client.MOVED_PERMANENTLY
+    assert response.status_code == http.client.FOUND
 
 
 def test_enrolment_200_company_user(logged_in_session):
@@ -134,7 +134,7 @@ def test_profile_description_edit_redirects_anon_user():
         allow_redirects=False
     )
 
-    assert response.status_code == http.client.MOVED_PERMANENTLY
+    assert response.status_code == http.client.FOUND
 
 
 def test_profile_description_edit_200_company_user(logged_in_session):
