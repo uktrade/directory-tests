@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """FAB - Confirm Company page"""
 import logging
+from urllib.parse import urljoin
 
 from requests import Response, Session
 
@@ -57,9 +58,8 @@ def confirm_company_selection(
     :param company: a named tuple with Company details
     :param token: a CSRF token required to submit the form
     """
-    url = ("{}?company_number={}"
-           .format(get_absolute_url('ui-buyer:register-confirm-company'),
-                   company.number))
+    query = "?company_number={}".format(company.number)
+    url = urljoin(get_absolute_url('ui-buyer:register-confirm-company'), query)
     headers = {"Referer": url}
     data = {
         "csrfmiddlewaretoken": token,

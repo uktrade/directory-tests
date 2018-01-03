@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """FAB - Add Case Study - Basic page"""
 import logging
+from urllib.parse import urljoin
 
 from requests import Response, Session
 
@@ -50,7 +51,7 @@ def go_to(session: Session, *, case_number: int = None) -> Response:
     :param session: Supplier session object
     :param case_number: (optional) case study number
     """
-    url = "{}{}".format(URL, case_number) if case_number else URL
+    url = urljoin(URL, case_number) if case_number else URL
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
     response = make_request(Method.GET, url, session=session, headers=headers)
     should_be_here(response)
