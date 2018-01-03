@@ -975,6 +975,7 @@ def prof_add_case_study(context, supplier_alias, case_alias):
     # Step 1 - go to "Add case study" form & extract CSRF token
     response = fab_ui_case_study_basic.go_to(session)
     context.response = response
+    fab_ui_case_study_basic.should_be_here(response)
     token = extract_csrf_middleware_token(response)
 
     # Step 2 - submit the "basic case study data" form & extract CSRF token
@@ -1025,6 +1026,7 @@ def fab_update_case_study(
     response = fab_ui_case_study_basic.go_to(
         session, case_number=current_number)
     context.response = response
+    fab_ui_case_study_basic.should_be_here(response)
     token = extract_csrf_middleware_token(response)
 
     # Step 3 - submit the "basic case study data" form & extract CSRF token
@@ -1714,6 +1716,7 @@ def fab_attempt_to_add_case_study(
 
         response = fab_ui_case_study_basic.go_to(session)
         context.response = response
+        fab_ui_case_study_basic.should_be_here(response)
 
         token = extract_csrf_middleware_token(response)
 

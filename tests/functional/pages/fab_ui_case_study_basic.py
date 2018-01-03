@@ -54,7 +54,6 @@ def go_to(session: Session, *, case_number: int = None) -> Response:
     url = urljoin(URL, case_number) if case_number else URL
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
     response = make_request(Method.GET, url, session=session, headers=headers)
-    should_be_here(response)
     logging.debug("Supplier is on the Add Case Study - Basic page")
     return response
 
