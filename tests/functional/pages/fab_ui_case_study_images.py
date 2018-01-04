@@ -101,7 +101,7 @@ def submit_form(session: Session, token: str, case_study: CaseStudy) -> Response
 
     response = make_request(
         Method.POST, URL, session=session, headers=headers, data=data,
-        files=files)
+        files=files, trim=True)
     logging.debug("Supplier successfully submitted case study images: %s", data)
 
     return response

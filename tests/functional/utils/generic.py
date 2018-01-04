@@ -186,7 +186,7 @@ def print_response(response: Response, *, trim: bool = True):
     :return:
     """
     request = response.request
-    trim_offset = 1024  # define the length of logged response content
+    trim_offset = 2048  # define the length of logged response content
 
     if response.history:
         blue("REQ was redirected")
@@ -198,7 +198,7 @@ def print_response(response: Response, *, trim: bool = True):
             pprint(r.request.headers)
             if r.request.body:
                 body = decode_as_utf8(r.request.body)
-                if trim:
+                if trim or len(body) > trim_offset:
                     blue("Intermediate REQ Body (trimmed):")
                     print(body[0:trim_offset])
                 else:
