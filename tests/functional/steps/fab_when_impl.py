@@ -1005,16 +1005,15 @@ def fab_update_case_study(
 
     # Step 0 - extract links to Case Studies and do a crude mapping to
     # Case Study titles.
-    css_selector_titles = ("div.ed-company-profile-sector-case-study-container"
-                           ".company-profile-module-container h4::text")
-    css_selector = ("div.row-fluid.ed-company-profile-sector-case-study-inner "
-                    "p + a::attr(href)")
-    titles = Selector(text=content).css(css_selector_titles).extract()
-    links = Selector(text=content).css(css_selector).extract()
+    css_titles = ".company-profile-module-container h4::text"
+    css_links = "div.ed-company-profile-sector-case-study-inner a::attr(href)"
+    titles = Selector(text=content).css(css_titles).extract()
+    links = Selector(text=content).css(css_links).extract()
     case_link_mappings = {k: v for (k, v) in zip(titles, links)}
     current = company.case_studies[case_alias]
     current_link = case_link_mappings[current.title]
-    current_number = int(current_link.split('/')[-1])
+    index_of_case_id_in_url = -2
+    current_number = int(current_link.split('/')[index_of_case_id_in_url])
     logging.debug(
         "Extracted link for case study: %s is: %s", case_alias, current_link)
 
