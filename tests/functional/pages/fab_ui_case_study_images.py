@@ -10,7 +10,7 @@ from tests import get_absolute_url
 from tests.functional.utils.context_utils import CaseStudy
 from tests.functional.utils.request import Method, check_response, make_request
 
-URL = get_absolute_url("ui-buyer:case-study-add")
+URL = get_absolute_url("ui-buyer:case-study-create")
 EXPECTED_STRINGS = [
     "Add images and testimonial", "Basic", "Images",
     "Upload main image for this case study:",
