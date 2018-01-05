@@ -4,15 +4,23 @@
 #
 #    pip-compile --output-file requirements_smoke.txt requirements_smoke.ini
 #
+git+https://git@github.com/uktrade/directory-sso-api-client.git@v2.2.0#egg=directory-sso-api-client
+git+https://git@github.com/uktrade/directory-signature-auth.git@v2.0.1#egg=sigauth
 beautifulsoup4==4.6.0     # via pylinkvalidator
-flake8==3.0.4
+django==1.11.5
+djangorestframework==3.4.7
+flake8==3.5.0
 lxml==4.1.1
-mccabe==0.5.3             # via flake8
+mccabe==0.6.1             # via flake8
+mohawk==0.3.4
+monotonic==1.2
 py==1.5.2                 # via pytest
 pycodestyle==2.0.0        # via flake8
-pyflakes==1.2.3           # via flake8
+pyflakes==1.6.0           # via flake8
 pylinkvalidator==0.3
-pytest-sugar==0.8.0
+pytest-sugar==0.9.0
 pytest==3.0.2
-requests==2.11.1
+pytz==2017.2              # via django
+requests==2.13.0
+six==1.11.0               # via mohawk
 termcolor==1.1.0          # via pytest-sugar
