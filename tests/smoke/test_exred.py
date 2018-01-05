@@ -1,20 +1,17 @@
 import http.client
 
+import pytest
 import requests
 
 from tests import get_absolute_url
 from tests.settings import DIRECTORY_API_HEALTH_CHECK_TOKEN as TOKEN
 
 
-def test_healthcheck_api():
+@pytest.mark.parametrize("absolute_url", [
+    get_absolute_url('ui-exred:healthcheck-api'),
+    get_absolute_url('ui-exred:healthcheck-sso-proxy'),
+])
+def test_health_check_endpoints(absolute_url):
     params = {'token': TOKEN}
-    response = requests.get(
-            get_absolute_url('ui-exred:healthcheck-api'), params=params)
-    assert response.status_code == http.client.OK
-
-
-def test_healthcheck_sso_proxy():
-    params = {'token': TOKEN}
-    response = requests.get(
-            get_absolute_url('ui-exred:healthcheck-sso-proxy'), params=params)
+    response = requests.get(absolute_url, params=params)
     assert response.status_code == http.client.OK
