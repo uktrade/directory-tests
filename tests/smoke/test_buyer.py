@@ -86,21 +86,14 @@ def test_redirects_for_health_check_endpoints(absolute_url):
     get_absolute_url('ui-buyer:company-profile'),
     get_absolute_url('ui-buyer:company-edit'),
     get_absolute_url('ui-buyer:company-edit-description'),
-])
-def test_301_redirects_for_anon_user(absolute_url):
-    response = requests.get(absolute_url, allow_redirects=False)
-    assert response.status_code == http.client.FOUND
-
-
-@pytest.mark.parametrize("absolute_url", [
     get_absolute_url('ui-buyer:company-edit-key-facts'),
     get_absolute_url('ui-buyer:company-edit-sectors'),
     get_absolute_url('ui-buyer:company-edit-contact'),
     get_absolute_url('ui-buyer:company-edit-social-media'),
 ])
-def test_302_redirects_for_anon_user(absolute_url):
+def test_301_redirects_for_anon_user(absolute_url):
     response = requests.get(absolute_url, allow_redirects=False)
-    assert response.status_code == http.client.MOVED_PERMANENTLY
+    assert response.status_code == http.client.FOUND
 
 
 @pytest.mark.parametrize("absolute_url", [
@@ -118,6 +111,10 @@ def test_302_redirects_for_anon_user(absolute_url):
     get_absolute_url('ui-buyer:company-profile'),
     get_absolute_url('ui-buyer:company-edit'),
     get_absolute_url('ui-buyer:company-edit-description'),
+    get_absolute_url('ui-buyer:company-edit-key-facts'),
+    get_absolute_url('ui-buyer:company-edit-sectors'),
+    get_absolute_url('ui-buyer:company-edit-contact'),
+    get_absolute_url('ui-buyer:company-edit-social-media'),
 ])
 def test_302_redirects_after_removing_trailing_slash_for_anon_user(
         absolute_url):
