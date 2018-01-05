@@ -66,10 +66,10 @@ CAROUSEL = {
 
 SECTIONS = {
     "beta": {
-        "itself": "#content > div.beta",
-        "sticker": "#content > div.beta > div > div.sticker",
-        "message": "#content > div.beta > div > p.beta-message",
-        "link": "#content > div.beta > div > p.beta-message > a"
+        "itself": "#header-beta-bar",
+        "sticker": "#header-beta-bar .sticker",
+        "message": "#header-beta-bar p.beta-message",
+        "link": "#header-beta-bar-feedback-link"
     },
     "hero": {
         "itself": "#content > section.hero-campaign-section",
