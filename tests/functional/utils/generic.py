@@ -258,7 +258,7 @@ def print_response(response: Response, *, trim: bool = True):
 
 def log_response(response: Response, *, trim: bool = True):
     request = response.request
-    trim_offset = 1024  # define the length of logged response content
+    trim_offset = 2048  # define the length of logged response content
 
     logging.debug(
         "RESPONSE TIME | %s | %s %s", str(response.elapsed), request.method,
@@ -284,7 +284,7 @@ def log_response(response: Response, *, trim: bool = True):
             logging.debug("Intermediate RESP Headers: %s", r.headers)
             if r.content:
                 content = decode_as_utf8(r.content)
-                if trim:
+                if trim or len(r.content) > trim_offset:
                     logging.debug(
                         "Intermediate RESP Content: %s", content[0:trim_offset])
                 else:
@@ -303,7 +303,7 @@ def log_response(response: Response, *, trim: bool = True):
 
         if request.body:
             body = decode_as_utf8(request.body)
-            if trim:
+            if trim or len(body) > trim_offset:
                 logging.debug("REQ Body (trimmed): %s", body[0:trim_offset])
             else:
                 logging.debug("REQ Body: %s", body)
