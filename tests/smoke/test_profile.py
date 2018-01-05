@@ -1,31 +1,10 @@
 import http.client
 
+import pytest
 import requests
 
 from tests import get_absolute_url, users
 from tests.settings import DIRECTORY_API_HEALTH_CHECK_TOKEN as TOKEN
-
-
-def test_healthcheck_api():
-    params = {'token': TOKEN}
-    response = requests.get(
-            get_absolute_url('profile:healthcheck-api'), params=params)
-    assert response.status_code == http.client.OK
-
-
-def test_healthcheck_sso_proxy():
-    params = {'token': TOKEN}
-    response = requests.get(
-            get_absolute_url('profile:healthcheck-sso-proxy'), params=params)
-    assert response.status_code == http.client.OK
-
-
-def test_landing_302():
-    response = requests.get(
-        get_absolute_url('profile:landing'), allow_redirects=False
-    )
-
-    assert response.status_code == http.client.FOUND
 
 
 def test_about_200():
@@ -34,70 +13,6 @@ def test_about_200():
     )
 
     assert response.status_code == http.client.OK
-
-
-def test_soo_logged_in_user_200(logged_in_session):
-    response = logged_in_session.get(
-        get_absolute_url('profile:soo'), allow_redirects=False
-    )
-
-    assert response.status_code == http.client.OK
-
-
-def test_soo_anon_user_302():
-    response = requests.get(
-        get_absolute_url('profile:soo'), allow_redirects=False
-    )
-
-    assert response.status_code == http.client.FOUND
-
-
-def test_fab_logged_in_user_200(logged_in_session):
-    response = logged_in_session.get(
-        get_absolute_url('profile:fab'), allow_redirects=False
-    )
-
-    assert response.status_code == http.client.OK
-
-
-def test_fab_anon_user_302():
-    response = requests.get(
-        get_absolute_url('profile:fab'), allow_redirects=False
-    )
-
-    assert response.status_code == http.client.FOUND
-
-
-def test_exops_applications_logged_in_user_200(logged_in_session):
-    response = logged_in_session.get(
-        get_absolute_url('profile:exops-applications'), allow_redirects=False
-    )
-
-    assert response.status_code == http.client.OK
-
-
-def test_exops_applications_anon_user_302():
-    response = requests.get(
-        get_absolute_url('profile:exops-applications'), allow_redirects=False
-    )
-
-    assert response.status_code == http.client.FOUND
-
-
-def test_exops_alerts_logged_in_user_200(logged_in_session):
-    response = logged_in_session.get(
-        get_absolute_url('profile:exops-alerts'), allow_redirects=False
-    )
-
-    assert response.status_code == http.client.OK
-
-
-def test_exops_alerts_anon_user_302():
-    response = requests.get(
-        get_absolute_url('profile:exops-alerts'), allow_redirects=False
-    )
-
-    assert response.status_code == http.client.FOUND
 
 
 def test_directory_supplier_verified_user():
@@ -137,3 +52,61 @@ def test_directory_supplier_invalid_user_token():
     response = requests.get(url, headers=headers)
 
     assert response.status_code == 401
+
+
+@pytest.mark.parametrize("absolute_url", [
+    get_absolute_url('profile:healthcheck-api'),
+    get_absolute_url('profile:healthcheck-sso-proxy'),
+])
+def test_health_check_endpoints(absolute_url):
+    params = {'token': TOKEN}
+    response = requests.get(absolute_url, params=params)
+    assert response.status_code == http.client.OK
+
+
+@pytest.mark.parametrize("absolute_url", [
+    get_absolute_url('profile:landing'),
+    get_absolute_url('profile:soo'),
+    get_absolute_url('profile:fab'),
+    get_absolute_url('profile:exops-alerts'),
+    get_absolute_url('profile:exops-applications'),
+])
+def test_301_redirects_for_anon_user(absolute_url):
+    response = requests.get(absolute_url, allow_redirects=False)
+    assert response.status_code == http.client.FOUND
+
+
+@pytest.mark.skip(reason="see bug ED-3050")
+@pytest.mark.parametrize("absolute_url", [
+    get_absolute_url('profile:soo'),
+    get_absolute_url('profile:fab'),
+    get_absolute_url('profile:exops-alerts'),
+    get_absolute_url('profile:exops-applications'),
+])
+def test_302_redirects_after_removing_trailing_slash_for_anon_user(absolute_url):
+    # get rid of trailing slash
+    if absolute_url[-1] == "/":
+        absolute_url = absolute_url[:-1]
+    response = requests.get(absolute_url, allow_redirects=False)
+    assert response.status_code == http.client.MOVED_PERMANENTLY
+
+
+@pytest.mark.parametrize("absolute_url", [
+    get_absolute_url('profile:directory-supplier'),
+])
+def test_401_redirects_for_anon_user(absolute_url):
+    response = requests.get(absolute_url, allow_redirects=False)
+    assert response.status_code == 401
+
+
+@pytest.mark.parametrize("absolute_url", [
+    get_absolute_url('profile:landing'),
+    get_absolute_url('profile:soo'),
+    get_absolute_url('profile:fab'),
+    get_absolute_url('profile:exops-alerts'),
+    get_absolute_url('profile:exops-applications'),
+])
+def test_access_to_non_health_check_endpoints_as_logged_in_user(
+        logged_in_session, absolute_url):
+    response = logged_in_session.get(absolute_url, allow_redirects=True)
+    assert response.status_code == http.client.OK
