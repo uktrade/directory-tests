@@ -3,8 +3,11 @@ import http.client
 import pytest
 import requests
 
+from directory_sso_api_client.client import DirectorySSOAPIClient
+
 from tests import get_absolute_url
 from tests.settings import DIRECTORY_API_HEALTH_CHECK_TOKEN as TOKEN
+from tests.settings import SSO_PROXY_SIGNATURE_SECRET
 
 
 def test_health_check_database():
@@ -20,6 +23,15 @@ def test_legacy_api_health_check_endpoint_should_not_exist(logged_in_session):
     assert response.status_code == 404
 
 
+def test_sso_authentication_using_api_client(logged_in_session):
+    """This test actually verifies output from 'sso:user' endpoint.
+    'sso:user' endpoint unfolds to: 'api/v1/session-user/'
+    """
+    base_url = get_absolute_url('sso:landing')
+    api_client = DirectorySSOAPIClient(
+        base_url=base_url, api_key=SSO_PROXY_SIGNATURE_SECRET)
+    user_session_id = logged_in_session.cookies.get("directory_sso_dev_session")
+    response = api_client.user.get_session_user(session_id=user_session_id)
     assert response.status_code == http.client.OK
 
 
