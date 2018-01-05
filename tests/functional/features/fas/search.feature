@@ -13,7 +13,7 @@ Feature: Find a Supplier
   @fixed
   @bug
   @ED-3031
-  @fixme
+  @fixed
   @found-with-automated-tests
   @fake-sso-email-verification
   Scenario: Buyers should be able to find Supplier by uniquely identifying words present on Supplier's case study
@@ -48,7 +48,7 @@ Feature: Find a Supplier
   @published
   @bug
   @ED-3031
-  @fixme
+  @fixed
   @found-with-automated-tests
   @fake-sso-email-verification
   Scenario: Buyers should be able to find Supplier by uniquely identifying words present on any of Supplier's case studies
@@ -75,7 +75,7 @@ Feature: Find a Supplier
   @unpublished
   @bug
   @ED-3031
-  @fixme
+  @fixed
   @found-with-automated-tests
   @no-sso-email-verification-required
   Scenario: Buyers should NOT be able to find unverified Supplier by uniquely identifying words present on Supplier's case study
