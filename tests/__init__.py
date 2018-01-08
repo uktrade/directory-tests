@@ -155,7 +155,7 @@ companies = {
         "SSO_COMPANY_NOT_ACTIVE", '06542942'
     ),
     'already_registered': os.getenv(
-        "SSO_COMPANY_ALREADY_REGISTERED", '12345678'
+        "SSO_COMPANY_ALREADY_REGISTERED", '10416664'
     ),
     'active_not_registered': os.getenv(
         "SSO_COMPANY_ACTIVE_NOT_REGISTERED", '01624297'

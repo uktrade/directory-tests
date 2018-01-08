@@ -23,14 +23,19 @@ def test_directory_supplier_verified_user():
 
     assert response.status_code == http.client.OK
     assert response.json() == {
-        'company_industries': [],
-        'name': 'Testo Useri',
-        'company_name': 'Test company 57',
-        'company_number': '12345679',
+        'company_industries': [
+            "BUSINESS_AND_CONSUMER_SERVICES", "COMMUNICATIONS",
+            "CREATIVE_AND_MEDIA", "FINANCIAL_AND_PROFESSIONAL_SERVICES",
+            "HEALTHCARE_AND_MEDICAL", "RAILWAYS",
+            "SOFTWARE_AND_COMPUTER_SERVICES"
+        ],
+        'name': 'Test user 50',
+        'company_name': 'Tiramisu Design Consultants',
+        'company_number': '07619397',
         'sso_id': users['verified']['sso_id'],
-        'company_email': 'testo@useri.com',
+        'company_email': 'newverifieduser@example.com',
         'profile_url': 'https://dev.supplier.directory.uktrade.io/'
-                       'suppliers/12345679',
+                       'suppliers/07619397',
         'company_has_exported_before': True,
         'is_company_owner': True,
     }
