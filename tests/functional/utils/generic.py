@@ -339,7 +339,7 @@ def int_api_ch_search(term: str) -> dict:
     response = make_request(
         Method.GET, url, params=params, allow_redirects=False)
     with assertion_msg(
-            "Expected 200 OK from GET %s but instead got {}. In case you're "
+            "Expected 200 OK from GET %s but instead got %s. In case you're "
             "getting 301 Redirect then check if you're using correct protocol "
             "https or http", response.url, response.status_code):
         assert response.status_code == 200
