@@ -42,11 +42,11 @@ SECTIONS = {
     },
     "services": {
         "menu": "#header-services-links",
-        "find a buyer": "#services-links-list > li:nth-child(1) > a",
-        "selling online overseas": "#services-links-list > li:nth-child(2) > a",
-        "export opportunities": "#services-links-list > li:nth-child(3) > a",
-        "get finance": "#services-links-list > li:nth-child(4) > a",
-        "events": "#services-links-list > li:nth-child(5) > a"
+        "find a buyer": "#header-services-find-a-buyer",
+        "selling online overseas": "#header-services-selling-online-overseas",
+        "export opportunities": "#header-services-export-opportunities",
+        "get finance": "#header-services-get-finance",
+        "events": "#header-services-events"
     },
     "general": {
         "logo": "#header-dit-logo > img"
