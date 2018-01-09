@@ -18,7 +18,7 @@ URL = None
 
 HOME_LINK = "#header-home-link"
 REGISTRATION_LINK = "#header-register-link"
-SIGN_IN_LINK = "#header-sign-in-link"
+SIGN_IN_LINK = "#header-bar .top-bar li:nth-child(2) > a"  # "#header-sign-in-link"
 PROFILE_LINK = "#header-profile-link"
 SIGN_OUT_LINK = "#header-sign-out-link"
 SECTIONS = {
