@@ -338,7 +338,7 @@ Feature: Trade Profile
     @profile
     @bug
     @ED-1833
-    @fixme
+    @fixed
     @fake-sso-email-verification
     Scenario: Supplier should NOT be able to use invalid links to Online Profiles (social media URLs)
       Given "Peter Alder" has created and verified profile for randomly selected company "Y"
