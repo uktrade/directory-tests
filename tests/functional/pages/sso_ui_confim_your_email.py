@@ -2,6 +2,7 @@
 """SSO - Verify your email page"""
 import logging
 from urllib.parse import unquote
+from urllib.parse import urljoin
 
 from requests import Response, Session
 
@@ -47,8 +48,7 @@ def confirm(actor: Actor, form_action_value: str) -> Response:
     session = actor.session
     # in order to be redirected to the correct URL we have `unquote`
     # the form_action_value
-    url = "{}{}".format(
-        get_absolute_url("sso:landing"), unquote(form_action_value))
+    url = urljoin(get_absolute_url("sso:landing"), unquote(form_action_value))
     headers = {"Referer": url}
     data = {"csrfmiddlewaretoken": actor.csrfmiddlewaretoken}
 

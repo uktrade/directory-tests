@@ -16,37 +16,37 @@ SECTIONS = {
     },
     "export readiness": {
         "label": "#footer-export-readiness-links",
-        "new": "#footer ul[aria-labelledby='footer-export-readiness-links'] > li:nth-child(1) > a",
-        "occasional": "#footer ul[aria-labelledby='footer-export-readiness-links'] > li:nth-child(2) > a",
-        "regular": "#footer ul[aria-labelledby='footer-export-readiness-links'] > li:nth-child(3) > a",
-        "i'm new to exporting": "#footer ul[aria-labelledby='footer-export-readiness-links'] > li:nth-child(1) > a",
-        "i export occasionally": "#footer ul[aria-labelledby='footer-export-readiness-links'] > li:nth-child(2) > a",
-        "i'm a regular exporter": "#footer ul[aria-labelledby='footer-export-readiness-links'] > li:nth-child(3) > a"
+        "new": "#footer-export-readiness-new",
+        "occasional": "#footer-export-readiness-occasional",
+        "regular": "#footer-export-readiness-regular",
+        "i'm new to exporting": "#footer-export-readiness-new",
+        "i export occasionally": "#footer-export-readiness-occasional",
+        "i'm a regular exporter": "#footer-export-readiness-regular"
     },
     "guidance": {
         "label": "#footer-guidance-links",
-        "market research": "#footer ul[aria-labelledby='footer-guidance-links'] > li:nth-child(1) > a",
-        "customer insight": "#footer ul[aria-labelledby='footer-guidance-links'] > li:nth-child(2) > a",
-        "finance": "#footer ul[aria-labelledby='footer-guidance-links'] > li:nth-child(3) > a",
-        "business planning": "#footer ul[aria-labelledby='footer-guidance-links'] > li:nth-child(4) > a",
-        "getting paid": "#footer ul[aria-labelledby='footer-guidance-links'] > li:nth-child(5) > a",
-        "operations and compliance": "#footer ul[aria-labelledby='footer-guidance-links'] > li:nth-child(6) > a"
+        "market research": "#footer-guidance-market-research",
+        "customer insight": "#footer-guidance-customer-insight",
+        "finance": "#footer-guidance-finance",
+        "business planning": "#footer-guidance-business-planning",
+        "getting paid": "#footer-guidance-getting-paid",
+        "operations and compliance": "#footer-guidance-operations-and-compliance"
     },
     "services": {
-        "label": "footer-services-links",
-        "find a buyer": "#footer ul[aria-labelledby='footer-services-links'] > li:nth-child(1) > a",
-        "selling online overseas": "#footer ul[aria-labelledby='footer-services-links'] > li:nth-child(2) > a",
-        "export opportunities": "#footer ul[aria-labelledby='footer-services-links'] > li:nth-child(3) > a",
-        "get finance": "#footer ul[aria-labelledby='footer-services-links'] > li:nth-child(4) > a",
-        "events": "#footer ul[aria-labelledby='footer-services-links'] > li:nth-child(5) > a"
+        "label": "#footer-services-links",
+        "find a buyer": "#footer-services-find-a-buyer",
+        "selling online overseas": "#footer-services-selling-online-overseas",
+        "export opportunities": "#footer-services-export-opportunities",
+        "get finance": "#footer-services-get-finance",
+        "events": "#footer-services-events"
     },
     "general links": {
-        "about": "#footer > .site-links > ul > li:nth-child(1) > a",
-        "contact us": "#footer > .site-links > ul > li:nth-child(2) > a",
-        "privacy and cookies": "#footer > .site-links > ul > li:nth-child(3) > a",
-        "terms and conditions": "#footer > .site-links > ul > li:nth-child(4) > a",
-        "department for international trade": "#footer > .site-links > ul > li:nth-child(5) > a",
-        "copyright": "#footer > div.global-footer > p > span"
+        "about": "#footer-site-links-about",
+        "contact us": "#footer-site-links-contact-us",
+        "privacy and cookies": "#footer-site-links-privacy-and-cookies",
+        "terms and conditions": "#footer-site-links-t-and-c",
+        "department for international trade": "#footer-site-links-dit",
+        "copyright": "#footer-copyright"
     }
 }
 

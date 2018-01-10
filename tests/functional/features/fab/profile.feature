@@ -435,6 +435,10 @@ Feature: Trade Profile
   @case-study
   @profile
   @fake-sso-email-verification
+  @bug
+  @ED-3040
+  @fixme
+  @found-with-automated-tests
   Scenario: Supplier should be able to update a case study for an unverified company
     Given "Peter Alder" created an unverified profile for randomly selected company "Y"
     And "Peter Alder" added a complete case study called "no 1"
@@ -449,6 +453,10 @@ Feature: Trade Profile
   @case-study
   @profile
   @fake-sso-email-verification
+  @bug
+  @ED-3040
+  @fixme
+  @found-with-automated-tests
   Scenario: Supplier should be able to update a case study for a verified company
     Given "Peter Alder" has created and verified profile for randomly selected company "Y"
     And "Peter Alder" added a complete case study called "no 1"
@@ -464,6 +472,10 @@ Feature: Trade Profile
   @case-study
   @profile
   @fake-sso-email-verification
+  @bug
+  @ED-3040
+  @fixme
+  @found-with-automated-tests
   Scenario: Supplier should be able to update multiple case studies for an unverified company
     Given "Peter Alder" created an unverified profile for randomly selected company "Y"
     And "Peter Alder" added a complete case study called "no 1"
@@ -482,6 +494,10 @@ Feature: Trade Profile
   @case-study
   @profile
   @fake-sso-email-verification
+  @bug
+  @ED-3040
+  @fixme
+  @found-with-automated-tests
   Scenario: Supplier should be able to update multiple case studies for a verified company
     Given "Peter Alder" has created and verified profile for randomly selected company "Y"
     And "Peter Alder" added a complete case study called "no 1"

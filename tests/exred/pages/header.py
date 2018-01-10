@@ -16,44 +16,44 @@ NAME = "ExRed Header"
 URL = None
 
 
-HOME_LINK = "#menu > ul > li:nth-child(1) > a"
-REGISTRATION_LINK = "#header-bar a.register"
-SIGN_IN_LINK = "#header-bar a.signin"
-PROFILE_LINK = "#header-bar a.profile"
-SIGN_OUT_LINK = "#header-bar a.signout"
+HOME_LINK = "#header-home-link"
+REGISTRATION_LINK = "#header-register-link"
+SIGN_IN_LINK = "#header-bar .top-bar li:nth-child(2) > a"  # "#header-sign-in-link"
+PROFILE_LINK = "#header-profile-link"
+SIGN_OUT_LINK = "#header-sign-out-link"
 SECTIONS = {
     "export readiness": {
         "menu": "#export-readiness-links",
-        "new": "#export-readiness-links-list > li:nth-child(1) > a",
-        'occasional': "#export-readiness-links-list > li:nth-child(2) > a",
-        "regular": "#export-readiness-links-list > li:nth-child(3) > a",
-        "i'm new to exporting": "#export-readiness-links-list > li:nth-child(1) > a",
-        'i export occasionally': "#export-readiness-links-list > li:nth-child(2) > a",
-        "i'm a regular exporter": "#export-readiness-links-list > li:nth-child(3) > a"
+        "new": "#header-export-readiness-new",
+        'occasional': "#header-export-readiness-occasional",
+        "regular": "#header-export-readiness-regular",
+        "i'm new to exporting": "#header-export-readiness-new",
+        'i export occasionally': "#header-export-readiness-occasional",
+        "i'm a regular exporter": "#header-export-readiness-regular"
     },
     "guidance": {
-        "menu": "#guidance-links",
-        "market research": "#guidance-links-list > li:nth-child(1) > a",
-        "customer insight": "#guidance-links-list > li:nth-child(2) > a",
-        "finance": "#guidance-links-list > li:nth-child(3) > a",
-        "business planning": "#guidance-links-list > li:nth-child(4) > a",
-        "getting paid": "#guidance-links-list > li:nth-child(5) > a",
-        "operations and compliance": "#guidance-links-list > li:nth-child(6) > a"
+        "menu": "#header-guidance-links",
+        "market research": "#header-guidance-market-research",
+        "customer insight": "#header-guidance-customer-insight",
+        "finance": "#header-guidance-finance",
+        "business planning": "#header-guidance-business-planning",
+        "getting paid": "#header-guidance-getting-paid",
+        "operations and compliance": "#header-guidance-operations-and-compliance"
     },
     "services": {
-        "menu": "#services-links",
-        "find a buyer": "#services-links-list > li:nth-child(1) > a",
-        "selling online overseas": "#services-links-list > li:nth-child(2) > a",
-        "export opportunities": "#services-links-list > li:nth-child(3) > a",
-        "get finance": "#services-links-list > li:nth-child(4) > a",
-        "events": "#services-links-list > li:nth-child(5) > a"
+        "menu": "#header-services-links",
+        "find a buyer": "#header-services-find-a-buyer",
+        "selling online overseas": "#header-services-selling-online-overseas",
+        "export opportunities": "#header-services-export-opportunities",
+        "get finance": "#header-services-get-finance",
+        "events": "#header-services-events"
     },
     "general": {
-        "logo": "#header-bar > div:nth-child(2) > a > img"
+        "logo": "#header-dit-logo > img"
     },
     "account links": {
-        "register": "#header-bar .account-links li:nth-child(1) > a",
-        "sign in": "#header-bar .account-links li:nth-child(2) > a"
+        "register": REGISTRATION_LINK,
+        "sign in": SIGN_IN_LINK,
     }
 }
 

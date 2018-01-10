@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """FAB - Add Case Study - Basic page"""
 import logging
+from urllib.parse import urljoin
 
 from requests import Response, Session
 
@@ -8,7 +9,8 @@ from tests import get_absolute_url
 from tests.functional.utils.context_utils import CaseStudy
 from tests.functional.utils.request import Method, check_response, make_request
 
-URL = get_absolute_url("ui-buyer:case-study-add")
+URL = get_absolute_url("ui-buyer:case-study-create")
+EDIT_URL = get_absolute_url("ui-buyer:case-study-edit")
 EXPECTED_STRINGS = [
     "Create case study or project", "Basic", "Images",
     ("Describe something significant your company has done that will be "
@@ -50,10 +52,12 @@ def go_to(session: Session, *, case_number: int = None) -> Response:
     :param session: Supplier session object
     :param case_number: (optional) case study number
     """
-    url = "{}{}".format(URL, case_number) if case_number else URL
+    if case_number:
+        url = urljoin(EDIT_URL, str(case_number), "/")
+    else:
+        url = URL
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
     response = make_request(Method.GET, url, session=session, headers=headers)
-    should_be_here(response)
     logging.debug("Supplier is on the Add Case Study - Basic page")
     return response
 

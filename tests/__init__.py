@@ -33,23 +33,24 @@ urls = {
     'ui-buyer:healthcheck-api': 'healthcheck/api/',
     'ui-buyer:healthcheck-sso': 'healthcheck/single-sign-on/',
     'ui-buyer:register': 'register',
-    'ui-buyer:register-confirm-company': 'register/company',
-    'ui-buyer:register-confirm-export-status': 'register/exports',
-    'ui-buyer:register-finish': 'register/finished',
-    'ui-buyer:register-submit-account-details': 'register-submit',
-    'ui-buyer:upload-logo': 'company-profile/edit/logo',
-    'ui-buyer:case-study-add': 'company/case-study/edit/',
+    'ui-buyer:register-confirm-company': 'register/company/',
+    'ui-buyer:register-confirm-export-status': 'register/exports/',
+    'ui-buyer:register-finish': 'register/finished/',
+    'ui-buyer:register-submit-account-details': 'register-submit/',
+    'ui-buyer:upload-logo': 'company-profile/edit/logo/',
+    'ui-buyer:case-study-create': 'company/case-study/create/',
+    'ui-buyer:case-study-edit': 'company/case-study/edit/',
     'ui-buyer:confirm-company-address': 'verify/letter-confirm/',
     'ui-buyer:confirm-identity': '/verify/',
-    'ui-buyer:confirm-identity-letter': '/verify/letter-send',
-    'ui-buyer:company-profile': 'company-profile',
-    'ui-buyer:company-edit': 'company-profile/edit',
+    'ui-buyer:confirm-identity-letter': '/verify/letter-send/',
+    'ui-buyer:company-profile': 'company-profile/',
+    'ui-buyer:company-edit': 'company-profile/edit/',
     'ui-buyer:company-edit-address': 'company-profile/edit/address',
-    'ui-buyer:company-edit-description': 'company-profile/edit/description',
-    'ui-buyer:company-edit-key-facts': 'company-profile/edit/key-facts',
-    'ui-buyer:company-edit-sectors': 'company-profile/edit/sectors',
-    'ui-buyer:company-edit-contact': 'company-profile/edit/contact',
-    'ui-buyer:company-edit-social-media': 'company-profile/edit/social-media',
+    'ui-buyer:company-edit-description': 'company-profile/edit/description/',
+    'ui-buyer:company-edit-key-facts': 'company-profile/edit/key-facts/',
+    'ui-buyer:company-edit-sectors': 'company-profile/edit/sectors/',
+    'ui-buyer:company-edit-contact': 'company-profile/edit/contact/',
+    'ui-buyer:company-edit-social-media': 'company-profile/edit/social-media/',
 
     # UI-SUPPLIER
     'ui-supplier:landing': '',
@@ -154,7 +155,7 @@ companies = {
         "SSO_COMPANY_NOT_ACTIVE", '06542942'
     ),
     'already_registered': os.getenv(
-        "SSO_COMPANY_ALREADY_REGISTERED", '12345678'
+        "SSO_COMPANY_ALREADY_REGISTERED", '10416664'
     ),
     'active_not_registered': os.getenv(
         "SSO_COMPANY_ACTIVE_NOT_REGISTERED", '01624297'

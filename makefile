@@ -119,7 +119,7 @@ smoke_tests_links_checker:
 	echo "Running pylinkchecker agaisnt: $${TEST_URLS} environment" && \
 	pylinkvalidate.py \
 	    --progress \
-	    --timeout=25 \
+	    --timeout=35 \
 	    --depth=2 \
 	    --workers=10 \
 	    --types=a \

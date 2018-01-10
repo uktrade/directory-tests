@@ -2,6 +2,7 @@
 """SSO - Registration page"""
 import logging
 from urllib.parse import quote
+from urllib.parse import urljoin
 
 from requests import Response, Session
 
@@ -51,10 +52,11 @@ def submit(actor: Actor, company: Company, exported: bool) -> Response:
     """
     session = actor.session
     next_url = get_absolute_url("ui-buyer:register-submit-account-details")
-    next_link = quote(
-        "{}?company_number={}&has_exported_before={}"
-        .format(next_url, company.number, exported))
-    headers = {"Referer": "{}?next={}".format(URL, next_link)}
+    next_link_query = ("?company_number={}&has_exported_before={}"
+                       .format(company.number, exported))
+    next_link = quote(urljoin(next_url, next_link_query))
+    referer_query = "?next={}".format(next_link)
+    headers = {"Referer": urljoin(URL, referer_query)}
     data = {
         "csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
         "email": actor.email,

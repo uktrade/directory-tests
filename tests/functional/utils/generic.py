@@ -186,7 +186,7 @@ def print_response(response: Response, *, trim: bool = True):
     :return:
     """
     request = response.request
-    trim_offset = 1024  # define the length of logged response content
+    trim_offset = 2048  # define the length of logged response content
 
     if response.history:
         blue("REQ was redirected")
@@ -198,7 +198,7 @@ def print_response(response: Response, *, trim: bool = True):
             pprint(r.request.headers)
             if r.request.body:
                 body = decode_as_utf8(r.request.body)
-                if trim:
+                if trim or len(body) > trim_offset:
                     blue("Intermediate REQ Body (trimmed):")
                     print(body[0:trim_offset])
                 else:
@@ -258,7 +258,7 @@ def print_response(response: Response, *, trim: bool = True):
 
 def log_response(response: Response, *, trim: bool = True):
     request = response.request
-    trim_offset = 1024  # define the length of logged response content
+    trim_offset = 2048  # define the length of logged response content
 
     logging.debug(
         "RESPONSE TIME | %s | %s %s", str(response.elapsed), request.method,
@@ -284,7 +284,7 @@ def log_response(response: Response, *, trim: bool = True):
             logging.debug("Intermediate RESP Headers: %s", r.headers)
             if r.content:
                 content = decode_as_utf8(r.content)
-                if trim:
+                if trim or len(r.content) > trim_offset:
                     logging.debug(
                         "Intermediate RESP Content: %s", content[0:trim_offset])
                 else:
@@ -303,7 +303,7 @@ def log_response(response: Response, *, trim: bool = True):
 
         if request.body:
             body = decode_as_utf8(request.body)
-            if trim:
+            if trim or len(body) > trim_offset:
                 logging.debug("REQ Body (trimmed): %s", body[0:trim_offset])
             else:
                 logging.debug("REQ Body: %s", body)
@@ -339,7 +339,7 @@ def int_api_ch_search(term: str) -> dict:
     response = make_request(
         Method.GET, url, params=params, allow_redirects=False)
     with assertion_msg(
-            "Expected 200 OK from GET %s but instead got {}. In case you're "
+            "Expected 200 OK from GET %s but instead got %s. In case you're "
             "getting 301 Redirect then check if you're using correct protocol "
             "https or http", response.url, response.status_code):
         assert response.status_code == 200

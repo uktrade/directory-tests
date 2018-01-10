@@ -44,7 +44,11 @@ class DockerComposeEnvWriter:
                         export_prefix = "export "
                     else:
                         export_prefix = ""
-                    dest.write("{}{}={}\n".format(export_prefix, var, value))
+                    special_chars = '!$'
+                    if any(special in value for special in special_chars):
+                        dest.write("{}{}='{}'\n".format(export_prefix, var, value))
+                    else:
+                        dest.write("{}{}={}\n".format(export_prefix, var, value))
 
     @classmethod
     def create(cls, config):

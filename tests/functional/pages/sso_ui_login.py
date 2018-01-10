@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """SSO - Verify your email page"""
 import logging
+from urllib.parse import urljoin
 
 from requests import Response, Session
 
@@ -57,7 +58,8 @@ def login(
         "password": actor.password,
         "remember": "on"
     }
-    referer = "{}?next={}".format(URL, referer or fab_landing)
+    query = "?next={}".format(referer or fab_landing)
+    referer = urljoin(URL, query)
     headers = {"Referer": referer}
 
     response = make_request(

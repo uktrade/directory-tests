@@ -67,7 +67,7 @@ def after_step(context, step):
                 red("Found form related error(s)")
                 print(form_errors)
             green("Last recorded request & response")
-            print_response(res, trim=False)
+            print_response(res, trim=True)
         else:
             blue("There's no response content to log")
 

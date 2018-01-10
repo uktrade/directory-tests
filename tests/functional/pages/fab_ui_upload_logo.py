@@ -62,7 +62,7 @@ def upload(session: Session, token: str, file_path: str) -> Response:
     files = {"logo-logo": (os.path.basename(file_path), picture, mime)}
     response = make_request(
         Method.POST, url, session=session, headers=headers, data=data,
-        files=files)
+        files=files, trim=True)
     return response
 
 

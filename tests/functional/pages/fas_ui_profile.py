@@ -29,7 +29,7 @@ def go_to(session: Session, company_number: str) -> Response:
     :param company_number: (optional) explicit company number
     :return: response object
     """
-    full_url = "{}{}".format(URL, company_number)
+    full_url = urljoin(URL, company_number)
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
     response = make_request(
         Method.GET, full_url, session=session, headers=headers)
@@ -56,6 +56,7 @@ def should_be_here(response, *, number=None):
     """Check if User is on the correct page.
 
     :param response: response object
+    :param number: (optional) expected company number
     """
     expected = EXPECTED_STRINGS + [number] if number else EXPECTED_STRINGS
     check_response(response, 200, body_contains=expected)

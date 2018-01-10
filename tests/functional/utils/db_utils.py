@@ -64,7 +64,9 @@ BEGIN
     DELETE FROM company_companycasestudy WHERE company_id = companyID;
     -- STEP 4 - delete user details
     DELETE FROM user_user WHERE company_id = companyID;
-    -- STEP 5 - and finally delete company details
+    -- STEP 5 - delete supplier data
+    DELETE FROM supplier_supplier WHERE company_id = companyID;
+    -- STEP 6 - and finally delete company details
     DELETE FROM company_company WHERE id = companyID;
 END $$;
 """
