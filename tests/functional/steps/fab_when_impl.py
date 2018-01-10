@@ -99,6 +99,8 @@ def select_random_company(
     """
     actor = context.get_actor(supplier_alias)
     session = actor.session
+    max_attempts = 15
+    counter = 0
 
     while True:
         # Step 1 - find an active company without a FAS profile
@@ -108,6 +110,12 @@ def select_random_company(
         response = fab_ui_confirm_company.go_to(session, company)
         registered = is_already_registered(response)
         inactive = is_inactive(response)
+        counter += 1
+        if counter >= max_attempts:
+            with assertion_msg(
+                    "Failed to find an active company which is not registered "
+                    "with FAB after %d attempts", max_attempts):
+                assert False
         if registered or inactive:
             logging.warning(
                 "Company '%s' is already registered or inactive, will use "
