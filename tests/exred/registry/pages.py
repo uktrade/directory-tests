@@ -12,6 +12,7 @@ from pages import (
     header,
     home,
     interim_exporting_opportunities,
+    international,
     personalised_journey,
     selling_online_overseas,
     share_on_facebook,
@@ -138,6 +139,10 @@ EXRED_PAGE_REGISTRY = {
     "share on twitter": {
         "url": share_on_twitter.URL,
         "po": share_on_twitter
+    },
+    "international": {
+        "url": international.URL,
+        "po": international
     },
 }
 
