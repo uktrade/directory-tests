@@ -6,11 +6,7 @@ from urllib.parse import urljoin
 from selenium import webdriver
 
 from settings import SELLING_ONLINE_OVERSEAS_UI_URL
-from utils import (
-    assertion_msg,
-    find_element,
-    take_screenshot
-)
+from utils import assertion_msg, find_element, take_screenshot
 
 NAME = "Selling Online Overseas Home page"
 URL = urljoin(SELLING_ONLINE_OVERSEAS_UI_URL, "")

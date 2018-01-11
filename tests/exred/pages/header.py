@@ -5,11 +5,7 @@ import logging
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
-from utils import (
-    assertion_msg,
-    find_element,
-    take_screenshot
-)
+from utils import assertion_msg, find_element, take_screenshot
 
 NAME = "ExRed Header"
 URL = None

@@ -5,11 +5,7 @@ from urllib.parse import urljoin
 
 from selenium import webdriver
 
-from utils import (
-    assertion_msg,
-    find_element,
-    take_screenshot
-)
+from utils import assertion_msg, find_element, take_screenshot
 
 NAME = "Share on Twitter page"
 URL = urljoin("https://twitter.com/", "intent/tweet?text=")
