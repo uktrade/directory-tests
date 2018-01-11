@@ -20,6 +20,7 @@ REGISTRATION_LINK = "#header-register-link"
 SIGN_IN_LINK = "#header-bar .top-bar li:nth-child(2) > a"  # "#header-sign-in-link"
 PROFILE_LINK = "#header-profile-link"
 SIGN_OUT_LINK = "#header-sign-out-link"
+LANGUAGE_SELECTOR = "#header-bar .LanguageSelectorDialog-Tracker"
 SECTIONS = {
     "export readiness": {
         "menu": "#export-readiness-links",
