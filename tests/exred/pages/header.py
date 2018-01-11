@@ -113,7 +113,8 @@ def open(driver: webdriver, group: str, element: str):
 
 
 def go_to_registration(driver: webdriver):
-    registration_link = find_element(driver, by_css=REGISTRATION_LINK)
+    registration_link = find_element(
+        driver, by_css=REGISTRATION_LINK, wait_for_it=False)
     registration_link.click()
 
 

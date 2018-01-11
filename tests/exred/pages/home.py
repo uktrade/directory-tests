@@ -347,7 +347,8 @@ def get_case_study_title(driver: webdriver, case_number: str) -> str:
     case_study_numbers = {"first": 1, "second": 2, "third": 3}
     case_number = case_study_numbers[case_number.lower()]
     link_selector = CASE_STUDY_LINK.format(case_number)
-    case_study_link = find_element(driver, by_css=link_selector)
+    case_study_link = find_element(
+        driver, by_css=link_selector, wait_for_it=False)
     return case_study_link.text.strip()
 
 
