@@ -8,6 +8,7 @@ from selenium import webdriver
 from settings import EXRED_UI_URL
 from utils import (
     assertion_msg,
+    clear_driver_cookies,
     find_element,
     take_screenshot
 )
@@ -73,7 +74,9 @@ SECTIONS = {
 }
 
 
-def visit(driver: webdriver):
+def visit(driver: webdriver, *, first_time: bool = False):
+    if first_time:
+        clear_driver_cookies(driver)
     driver.get(URL)
     take_screenshot(driver, NAME)
 
