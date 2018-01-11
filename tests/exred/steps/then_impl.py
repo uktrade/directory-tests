@@ -24,13 +24,6 @@ from steps.when_impl import (
 from utils import assertion_msg, clear_driver_cookies, get_actor
 
 
-def should_see_sections_on_home_page(
-        context: Context, actor_name: str, sections: str):
-    section_names = sections.lower().split(", ")
-    home.should_see_sections(context.driver, section_names)
-    logging.debug("%s saw all expected sections on 'Home' page", actor_name)
-
-
 def should_be_on_page(context: Context, actor_alias: str, page_name: str):
     page = get_page_object(page_name)
     page.should_be_here(context.driver)
