@@ -14,8 +14,7 @@ from utils import (
     find_element,
     find_elements,
     selenium_action,
-    take_screenshot,
-    wait_for_visibility
+    take_screenshot
 )
 
 NAME = "ExRed Home"
@@ -340,7 +339,6 @@ def open_case_study(driver: webdriver, case_number: str):
             find_case_study_by_going_right(driver, case_study_number)
 
     link_selector = CASE_STUDY_LINK.format(case_study_number)
-    wait_for_visibility(driver, by_css=link_selector)
     case_study_link = find_element(driver, by_css=link_selector)
     case_study_link.click()
 
