@@ -100,7 +100,8 @@ def after_feature(context: Context, feature: Feature):
             message = ("Feature '%s' failed. Reason: '%s': '%s'" %
                        (feature.name, feature.exception, feature.error_message))
             logging.error(message)
-            logging.debug(context.scenario_data)
+            if hasattr(context, "scenario_data"):
+                logging.debug(context.scenario_data)
             if "browserstack" in CONFIG_NAME:
                 if hasattr(context, "driver"):
                     session_id = context.driver.session_id

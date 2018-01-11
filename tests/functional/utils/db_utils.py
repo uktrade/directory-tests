@@ -53,7 +53,7 @@ companyID INTEGER;
 BEGIN
     -- STEP 0 - get company ID (need to explicitly cast it to Integer)
     actor_email := %s;
-    companyID := (SELECT company_id::INTEGER FROM user_user WHERE company_email = actor_email);
+    companyID := (SELECT company_id::INTEGER FROM supplier_supplier WHERE company_email = actor_email);
     -- STEP 1 - delete all possible notifications
     DELETE FROM notifications_supplieremailnotification WHERE supplier_id = companyID;
     DELETE FROM notifications_anonymousunsubscribe WHERE email = actor_email;

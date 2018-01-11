@@ -338,7 +338,7 @@ Feature: Trade Profile
     @profile
     @bug
     @ED-1833
-    @fixme
+    @fixed
     @fake-sso-email-verification
     Scenario: Supplier should NOT be able to use invalid links to Online Profiles (social media URLs)
       Given "Peter Alder" has created and verified profile for randomly selected company "Y"
@@ -437,7 +437,7 @@ Feature: Trade Profile
   @fake-sso-email-verification
   @bug
   @ED-3040
-  @fixme
+  @fixed
   @found-with-automated-tests
   Scenario: Supplier should be able to update a case study for an unverified company
     Given "Peter Alder" created an unverified profile for randomly selected company "Y"
@@ -455,7 +455,7 @@ Feature: Trade Profile
   @fake-sso-email-verification
   @bug
   @ED-3040
-  @fixme
+  @fixed
   @found-with-automated-tests
   Scenario: Supplier should be able to update a case study for a verified company
     Given "Peter Alder" has created and verified profile for randomly selected company "Y"
@@ -474,7 +474,7 @@ Feature: Trade Profile
   @fake-sso-email-verification
   @bug
   @ED-3040
-  @fixme
+  @fixed
   @found-with-automated-tests
   Scenario: Supplier should be able to update multiple case studies for an unverified company
     Given "Peter Alder" created an unverified profile for randomly selected company "Y"
@@ -496,7 +496,7 @@ Feature: Trade Profile
   @fake-sso-email-verification
   @bug
   @ED-3040
-  @fixme
+  @fixed
   @found-with-automated-tests
   Scenario: Supplier should be able to update multiple case studies for a verified company
     Given "Peter Alder" has created and verified profile for randomly selected company "Y"

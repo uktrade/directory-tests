@@ -45,7 +45,7 @@ def fill_out(driver: webdriver, email: str, password: str):
     password_input = find_element(driver, by_css=PASSWORD_INPUT)
     password_confirmation_input = find_element(
         driver, by_css=PASSWORD_CONFIRMATION_INPUT)
-    t_and_c = find_element(driver, by_css=T_AND_C_BUTTON)
+    t_and_c = find_element(driver, by_css=T_AND_C_BUTTON, wait_for_it=False)
     email_input.clear()
     email_input.send_keys(email)
     email_confirmation_input.clear()

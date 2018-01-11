@@ -9,8 +9,7 @@ from selenium import webdriver
 from utils import (
     assertion_msg,
     find_element,
-    take_screenshot,
-    wait_for_visibility
+    take_screenshot
 )
 
 NAME = "Share on LinkedIn page"
@@ -30,7 +29,6 @@ def should_be_here(driver: webdriver):
         assert driver.title.lower() == PAGE_TITLE.lower()
     for element_name, element_selector in EXPECTED_ELEMENTS.items():
         element = find_element(driver, by_css=element_selector)
-        wait_for_visibility(driver, by_css=element_selector)
         with assertion_msg(
                 "It looks like '%s' element is not visible on %s",
                 element_name, NAME):

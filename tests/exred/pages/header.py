@@ -8,8 +8,7 @@ from selenium.webdriver.common.keys import Keys
 from utils import (
     assertion_msg,
     find_element,
-    take_screenshot,
-    wait_for_visibility
+    take_screenshot
 )
 
 NAME = "ExRed Header"
@@ -65,7 +64,6 @@ def should_see_all_links(driver: webdriver):
                 "Looking for '%s' element in '%s' section with '%s' selector",
                 element_name, section, element_selector)
             element = find_element(driver, by_css=element_selector)
-            wait_for_visibility(driver, by_css=element_selector)
             with assertion_msg(
                     "It looks like '%s' in '%s' section is not visible",
                     element_name, section):
@@ -83,7 +81,6 @@ def should_see_link_to(driver: webdriver, section: str, item_name: str):
         menu = find_element(driver, by_css=menu_selector)
         menu.send_keys(Keys.ENTER)
     menu_item = find_element(driver, by_css=item_selector)
-    wait_for_visibility(driver, by_css=item_selector)
     with assertion_msg(
             "It looks like '%s' in '%s' section is not visible", item_name,
             section):
@@ -108,7 +105,6 @@ def open(driver: webdriver, group: str, element: str):
         menu.send_keys(Keys.ENTER)
     menu_item_selector = SECTIONS[group.lower()][element.lower()]
     menu_item = find_element(driver, by_css=menu_item_selector)
-    wait_for_visibility(driver, by_css=menu_item_selector)
     with assertion_msg("%s menu item: '%s' is not visible", group, element):
         assert menu_item.is_displayed()
     menu_item.click()
@@ -117,7 +113,8 @@ def open(driver: webdriver, group: str, element: str):
 
 
 def go_to_registration(driver: webdriver):
-    registration_link = find_element(driver, by_css=REGISTRATION_LINK)
+    registration_link = find_element(
+        driver, by_css=REGISTRATION_LINK, wait_for_it=False)
     registration_link.click()
 
 

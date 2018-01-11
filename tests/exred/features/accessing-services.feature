@@ -40,6 +40,7 @@ Feature: Accessing Services
   @wip
   @out-of-scope
   @ED-2660
+  @ED-3089
   @home-page
   @accessing-services
   @interim-pages
