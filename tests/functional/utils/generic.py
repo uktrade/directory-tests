@@ -515,7 +515,7 @@ def check_hash_of_remote_file(expected_hash, file_url):
     file_hash = hashlib.md5(response.content).hexdigest()
     with assertion_msg(
             "Expected hash of file downloaded from %s to be %s but got %s",
-            expected_hash, file_hash):
+            file_url, expected_hash, file_hash):
         assert expected_hash == file_hash
 
 
