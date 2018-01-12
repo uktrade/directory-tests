@@ -35,7 +35,6 @@ NOT_USEFUL_BUTTON = "#js-feedback-negative"
 REGISTRATION_LINK = "#content div.article-container p.register > a:nth-child(1)"
 READ_ARTICLES = "a.article-read"
 SHARE_MENU = "ul.sharing-links"
-SHOW_MORE_BUTTON = "#js-paginate-list-more"
 SIGN_IN_LINK = "#content div.article-container p.register > a:nth-child(2)"
 TIME_TO_COMPLETE = "dd.time span.value"
 TOTAL_NUMBER_OF_ARTICLES = "dd.position > span.to"
@@ -150,25 +149,6 @@ def check_elements_are_visible(driver: webdriver, elements: list):
                 action_chains.perform()
         with assertion_msg("Expected to see '%s' but can't see it", element):
             assert page_element.is_displayed()
-
-
-def show_all_articles(driver: webdriver):
-    try:
-        show_more_button = driver.find_element_by_css_selector(SHOW_MORE_BUTTON)
-        max_clicks = 10
-        counter = 0
-        # click up to 11 times - see bug ED-2561
-        while show_more_button.is_displayed() and counter <= max_clicks:
-            show_more_button.click()
-            counter += 1
-        if counter > max_clicks:
-            with assertion_msg(
-                    "'Show more' button didn't disappear after clicking on it"
-                    " for %d times", counter):
-                assert counter == max_clicks
-        take_screenshot(driver, NAME + " after showing all articles")
-    except NoSuchElementException:
-        logging.debug("Nothing to click as 'Show More' button is not visible")
 
 
 def go_to_article(driver: webdriver, title: str):

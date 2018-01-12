@@ -223,7 +223,6 @@ def articles_should_see_link_to_first_article_from_next_category(
 def articles_should_see_article_as_read(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     visited_article = actor.visited_articles[0]
-    article_common.show_all_articles(context.driver)
     article_common.should_see_article_as_read(
         context.driver, visited_article.title)
     logging.debug(
