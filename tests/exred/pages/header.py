@@ -3,6 +3,7 @@
 import logging
 
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
 
 from settings import DIT_LOGO_MD5_CHECKSUM
@@ -138,7 +139,14 @@ def go_to_sign_out(driver: webdriver):
 
 
 def check_dit_logo(driver: webdriver):
-    logo = find_element(driver, by_css=LOGO)
+    old = "#header-bar > div:nth-child(2) > a > img"
+    try:
+        logo = find_element(driver, by_css=LOGO)
+    except NoSuchElementException:
+        try:
+            logo = find_element(driver, by_css=old)
+        except NoSuchElementException:
+            raise
     src = logo.get_attribute("src")
     check_hash_of_remote_file(DIT_LOGO_MD5_CHECKSUM, src)
     logging.debug("%s has correct MD5sum %s", src, DIT_LOGO_MD5_CHECKSUM)
