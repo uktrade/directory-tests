@@ -49,7 +49,14 @@ from utils import (
 from utils.mail_gun import get_verification_link
 
 
-@retry(wait_fixed=30000, stop_max_attempt_number=3)
+def retry_if_webdriver_error(exception):
+    """Return True if we should retry on WebDriverException, False otherwise"""
+    return isinstance(exception, WebDriverException)
+
+
+@retry(
+    wait_fixed=30000, stop_max_attempt_number=3,
+    retry_on_exception=retry_if_webdriver_error, wrap_exception=True)
 def visit_page(
         context: Context, actor_alias: str, page_name: str, *,
         first_time: bool = False):
@@ -62,11 +69,12 @@ def visit_page(
     """
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
-    context.current_page = get_page_object(page_name)
+    page = get_page_object(page_name)
     logging.debug(
         "%s will visit '%s' page using: '%s'", actor_alias, page_name,
-        context.current_page.URL)
-    context.current_page.visit(context.driver, first_time=first_time)
+        page.URL)
+    assert hasattr(page, "visit")
+    page.visit(context.driver, first_time=first_time)
 
 
 def actor_classifies_himself_as(
