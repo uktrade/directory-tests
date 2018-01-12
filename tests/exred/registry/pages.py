@@ -18,6 +18,7 @@ from pages import (
     share_on_facebook,
     share_on_linkedin,
     share_on_twitter,
+    sso_profile_about,
     sso_registration,
     sso_registration_confirmation,
     sso_sign_in,

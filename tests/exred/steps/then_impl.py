@@ -10,6 +10,7 @@ from pages import (
     export_readiness_common,
     get_finance,
     guidance_common,
+    header,
     home,
     personalised_journey,
     triage_summary
@@ -445,3 +446,8 @@ def promo_video_should_not_see_modal_window(context: Context, actor_alias: str):
     home.should_not_see_video_modal_window(context.driver)
     logging.debug(
         "As expected %s can't see promotional video modal window", actor_alias)
+
+
+def header_check_dit_logo(context, actor_alias):
+    header.check_dit_logo(context.driver)
+    logging.debug("As expected %s can see correct DIT logo", actor_alias)
