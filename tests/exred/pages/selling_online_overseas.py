@@ -5,6 +5,7 @@ from urllib.parse import urljoin
 
 from selenium import webdriver
 
+from pages.common_actions import visit as common_visit
 from settings import SELLING_ONLINE_OVERSEAS_UI_URL
 from utils import assertion_msg, find_element, take_screenshot
 
@@ -17,6 +18,10 @@ EXPECTED_ELEMENTS = {
     "what do you sell input": "#search-product",
     "where do you want to sell input": "#search-country",
 }
+
+
+def visit(driver: webdriver, *, first_time: bool = False):
+    common_visit(driver, URL, NAME, first_time=first_time)
 
 
 def should_be_here(driver: webdriver):

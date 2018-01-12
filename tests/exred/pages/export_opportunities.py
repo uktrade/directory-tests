@@ -5,6 +5,7 @@ from urllib.parse import urljoin
 
 from selenium import webdriver
 
+from pages.common_actions import visit as common_visit
 from settings import EXPORT_OPPORTUNITIES_UI_URL
 from utils import assertion_msg, take_screenshot, wait_for_visibility
 
@@ -13,6 +14,10 @@ URL = urljoin(EXPORT_OPPORTUNITIES_UI_URL, "")
 PAGE_TITLE = "Export opportunities"
 
 WELCOME_MESSAGE = "#content-top > div.hero__specialContainer > h1"
+
+
+def visit(driver: webdriver, *, first_time: bool = False):
+    common_visit(driver, URL, NAME, first_time=first_time)
 
 
 def should_be_here(driver: webdriver):
