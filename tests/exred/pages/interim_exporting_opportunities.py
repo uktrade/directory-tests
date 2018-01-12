@@ -14,7 +14,7 @@ from utils import (
 )
 
 NAME = "ExRed Interim Export Opportunities"
-URL = urljoin(EXRED_UI_URL, "export-opportunities")
+URL = urljoin(EXRED_UI_URL, "export-opportunities/")
 
 SERVICE_BUTTON = "a.button-primary"
 REPORT_THIS_PAGE_LINK = "section.error-reporting a"

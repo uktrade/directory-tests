@@ -9,7 +9,7 @@ from settings import EXRED_UI_URL
 from utils import assertion_msg, take_screenshot
 
 NAME = "ExRed Triage - have you exported before"
-URL = urljoin(EXRED_UI_URL, "triage/exported-before")
+URL = urljoin(EXRED_UI_URL, "triage/exported-before/")
 
 YES_RADIO = "#id_exported-before-exported_before_0"
 NO_RADIO = "#id_exported-before-exported_before_1"

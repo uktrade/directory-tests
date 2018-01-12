@@ -13,7 +13,7 @@ from settings import EXRED_UI_URL
 from utils import assertion_msg, take_screenshot
 
 NAME = "ExRed Triage - What is your company name"
-URL = urljoin(EXRED_UI_URL, "triage/company")
+URL = urljoin(EXRED_UI_URL, "triage/company/")
 
 QUESTION = "label[for=js-typeahead-company-name]"
 COMPANY_NAME_INPUT = "js-typeahead-company-name"

@@ -13,7 +13,7 @@ from settings import EXRED_UI_URL
 from utils import assertion_msg, take_screenshot
 
 NAME = "Get Finance Home page"
-URL = urljoin(EXRED_UI_URL, "get-finance")
+URL = urljoin(EXRED_UI_URL, "get-finance/")
 
 TOTAL_NUMBER_OF_ARTICLES = "dd.position > span.to"
 ARTICLES_TO_READ_COUNTER = "dd.position > span.from"

@@ -10,7 +10,7 @@ from settings import EXRED_SECTORS, EXRED_UI_URL
 from utils import assertion_msg, selenium_action, take_screenshot
 
 NAME = "ExRed Triage - what do you want to export"
-URL = urljoin(EXRED_UI_URL, "triage/sector")
+URL = urljoin(EXRED_UI_URL, "triage/sector/")
 
 SECTORS_COMBOBOX = ".exred-triage-form div[role=combobox]"
 SECTORS_INPUT = "#js-sector-select"

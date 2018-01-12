@@ -9,7 +9,7 @@ from settings import EXRED_UI_URL
 from utils import assertion_msg, take_screenshot
 
 NAME = "ExRed Triage - do you use online marketplaces"
-URL = urljoin(EXRED_UI_URL, "triage/online-marketplace")
+URL = urljoin(EXRED_UI_URL, "triage/online-marketplace/")
 
 YES_RADIO = "#id_online-marketplace-used_online_marketplace_0"
 NO_RADIO = "#id_online-marketplace-used_online_marketplace_1"
