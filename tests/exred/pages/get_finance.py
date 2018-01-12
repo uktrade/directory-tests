@@ -9,6 +9,7 @@ from selenium.common.exceptions import (
     WebDriverException
 )
 
+from pages.common_actions import visit as common_visit
 from settings import EXRED_UI_URL
 from utils import assertion_msg, take_screenshot
 
@@ -36,6 +37,10 @@ UNEXPECTED_ELEMENTS = {
     "time to complete remaining chapters": TIME_TO_COMPLETE,
     "share menu": SHARE_MENU,
 }
+
+
+def visit(driver: webdriver, *, first_time: bool = False):
+    common_visit(driver, URL, NAME, first_time=first_time)
 
 
 def should_be_here(driver: webdriver):

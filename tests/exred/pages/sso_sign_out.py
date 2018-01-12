@@ -5,6 +5,7 @@ from urllib.parse import urljoin
 
 from selenium import webdriver
 
+from pages.common_actions import visit as common_visit
 from settings import DIRECTORY_UI_SSO_URL
 from utils import assertion_msg, find_element, take_screenshot
 
@@ -16,6 +17,10 @@ EXPECTED_ELEMENTS = {
     "title": "#content > div > div > h1",
     "sign in button": SIGN_OUT_BUTTON,
 }
+
+
+def visit(driver: webdriver, *, first_time: bool = False):
+    common_visit(driver, URL, NAME, first_time=first_time)
 
 
 def should_be_here(driver: webdriver):

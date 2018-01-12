@@ -6,6 +6,7 @@ from urllib.parse import urljoin
 
 from selenium import webdriver
 
+from pages.common_actions import visit as common_visit
 from settings import EXRED_SECTORS, EXRED_UI_URL
 from utils import assertion_msg, selenium_action, take_screenshot
 
@@ -26,13 +27,7 @@ EXPECTED_ELEMENTS = {
 
 
 def visit(driver: webdriver, *, first_time: bool = False):
-    if first_time:
-        logging.debug(
-            "Deleting all cookies in order to enforce the first time visit "
-            "simulation")
-        driver.delete_all_cookies()
-    driver.get(URL)
-    take_screenshot(driver, NAME)
+    common_visit(driver, URL, NAME, first_time=first_time)
 
 
 def should_be_here(driver: webdriver):

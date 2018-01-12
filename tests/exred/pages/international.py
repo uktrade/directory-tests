@@ -5,14 +5,9 @@ from urllib.parse import urljoin
 
 from selenium import webdriver
 
+from pages.common_actions import visit as common_visit
 from settings import EXRED_UI_URL
-from utils import (
-    assertion_msg,
-    clear_driver_cookies,
-    find_element,
-    selenium_action,
-    take_screenshot
-)
+from utils import assertion_msg, find_element, selenium_action, take_screenshot
 
 NAME = "International"
 URL = urljoin(EXRED_UI_URL, "international/")
@@ -76,10 +71,7 @@ SECTIONS = {
 
 
 def visit(driver: webdriver, *, first_time: bool = False):
-    if first_time:
-        clear_driver_cookies(driver)
-    driver.get(URL)
-    take_screenshot(driver, NAME)
+    common_visit(driver, URL, NAME, first_time=first_time)
 
 
 def should_be_here(driver: webdriver):

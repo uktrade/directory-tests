@@ -5,6 +5,7 @@ from urllib.parse import urljoin
 
 from selenium import webdriver
 
+from pages.common_actions import visit as common_visit
 from settings import EXRED_UI_URL
 from utils import (
     assertion_msg,
@@ -25,6 +26,10 @@ EXPECTED_ELEMENTS = {
     "go to export opportunities": SERVICE_BUTTON,
     "is there anything wrong with this page?": REPORT_THIS_PAGE_LINK
 }
+
+
+def visit(driver: webdriver, *, first_time: bool = False):
+    common_visit(driver, URL, NAME, first_time=first_time)
 
 
 def should_be_here(driver: webdriver):

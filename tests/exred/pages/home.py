@@ -7,6 +7,7 @@ from urllib.parse import urljoin
 
 from selenium import webdriver
 
+from pages.common_actions import visit as common_visit
 from settings import EXRED_UI_URL
 from utils import (
     assertion_msg,
@@ -195,19 +196,7 @@ SECTIONS = {
 
 
 def visit(driver: webdriver, *, first_time: bool = False):
-    """Visit the Home Page.
-
-    :param driver: Any Selenium Driver (Remote, Chrome, Firefox, PhantomJS etc.
-    :param first_time: (optional) will delete all cookies if True
-    """
-    if first_time:
-        logging.debug(
-            "Deleting all cookies in order to enforce the first time visit"
-            " simulation")
-        # if driver.get_cookies():
-        #     driver.delete_all_cookies()
-    driver.get(URL)
-    take_screenshot(driver, NAME)
+    common_visit(driver, URL, NAME, first_time=first_time)
 
 
 def should_be_here(driver: webdriver):
