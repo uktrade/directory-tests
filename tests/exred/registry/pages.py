@@ -121,6 +121,10 @@ EXRED_PAGE_REGISTRY = {
         "url": sso_registration_confirmation.URL,
         "po": sso_registration_confirmation
     },
+    "sso profile about": {
+        "url": sso_profile_about.URL,
+        "po": sso_profile_about
+    },
     "article": {
         "url": None,
         "po": article_common
