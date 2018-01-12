@@ -881,6 +881,7 @@ def open_service_link_on_interim_page(
         context: Context, actor_alias: str, service: str):
     page_name = "interim {}".format(service)
     page = get_page_object(page_name)
+    assert hasattr(page, "go_to_service")
     page.go_to_service(context.driver)
     logging.debug("%s went to %s service page", actor_alias, service)
 
