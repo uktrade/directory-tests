@@ -322,6 +322,31 @@ def check_if_element_is_not_present(
         assert not found
 
 
+def check_if_element_is_not_visible(
+        driver: webdriver, *, by_css: str = None,
+        by_id: str = None, element_name: str = ""):
+    """Find element by CSS selector or it's ID.
+
+    :param driver: Selenium driver
+    :param by_css: CSS selector to locate the element to wait for
+    :param by_id: ID of the element to wait for
+    :param element_name: human friendly name of the element used in log msg
+    :return: found WebElement
+    """
+    assert by_id or by_css, "Provide ID or CSS selector"
+    try:
+        if by_css:
+            element = driver.find_element_by_css_selector(by_css)
+        else:
+            element = driver.find_element_by_id(by_id)
+        with assertion_msg(
+                "Expected not to see '%s' element identified by '%s'",
+                element_name, by_id or by_css):
+            assert not element.is_displayed()
+    except NoSuchElementException:
+        pass
+
+
 def find_element(
         driver: webdriver, *, by_css: str = None,
         by_id: str = None, element_name: str = "",
