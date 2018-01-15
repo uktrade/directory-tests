@@ -14,13 +14,14 @@ URL = urljoin(EXRED_UI_URL, "international/")
 
 
 LANGUAGE_SELECTOR = "#header-bar .LanguageSelectorDialog-Tracker"
+LANGUAGE_SELECTOR_CLOSE = "#header-language-selector-close"
 FIND_A_SUPPLIER = "section.international-links article:nth-child(1) > a"
 SEE_THE_POTENTIAL = "section.international-links article:nth-child(2) > a"
 LEARN_MORE = "section.international-links article:nth-child(3) > a"
 PLAN_YOUR_TRIP = "section.international-links article:nth-child(4) > a"
 BETA_FEEDBACK = "#header-beta-bar-feedback-link"
 SECTIONS = {
-    "header-bar": {
+    "header bar": {
         "itself": "#header-bar",
         "language selector": LANGUAGE_SELECTOR
     },
