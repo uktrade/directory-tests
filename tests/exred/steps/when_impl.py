@@ -15,6 +15,7 @@ from pages import (
     header,
     home,
     international,
+    language_selector,
     personalised_journey,
     sso_common,
     sso_confirm_your_email,
@@ -1087,3 +1088,13 @@ def promo_video_watch(
 
 def promo_video_close(context, actor_alias):
     home.close_video(context.driver)
+
+
+def language_selector_close(context: Context, actor_alias: str):
+    logging.debug("%s decided to close language selector", actor_alias)
+    language_selector.close(context.driver)
+
+
+def language_selector_open(context: Context, actor_alias: str):
+    logging.debug("%s decided to go open language selector", actor_alias)
+    language_selector.open(context.driver)

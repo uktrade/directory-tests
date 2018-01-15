@@ -18,6 +18,8 @@ from steps.when_impl import (
     export_readiness_open_category,
     guidance_open_category,
     guidance_read_through_all_articles,
+    language_selector_close,
+    language_selector_open,
     open_link,
     open_service_link_on_interim_page,
     personalised_journey_create_page,
@@ -268,3 +270,13 @@ def when_actor_decides_to_watch_promo_video(
 @when('"{actor_alias}" closes the window with promotional video')
 def when_actor_decides_to_close_the_promotional_video(context, actor_alias):
     promo_video_close(context, actor_alias)
+
+
+@when('"{actor_alias}" opens up the language selector')
+def when_actor_opens_up_language_selector(context, actor_alias):
+    language_selector_open(context, actor_alias)
+
+
+@when('"{actor_alias}" closes the language selector')
+def when_actor_closes_language_selector(context, actor_alias):
+    language_selector_close(context, actor_alias)
