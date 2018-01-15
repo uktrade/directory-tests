@@ -4,15 +4,18 @@
 from pages import (
     article_common,
     article_list,
+    british_council,
     events,
     export_opportunities,
     find_a_buyer,
+    find_a_supplier,
     footer,
     get_finance,
     header,
     home,
     interim_exporting_opportunities,
     international,
+    invest_in_great,
     personalised_journey,
     selling_online_overseas,
     share_on_facebook,
@@ -29,7 +32,8 @@ from pages import (
     triage_do_you_use_online_marketplaces,
     triage_have_you_exported,
     triage_summary,
-    triage_what_do_you_want_to_export
+    triage_what_do_you_want_to_export,
+    visit_britain
 )
 
 EXRED_PAGE_REGISTRY = {
@@ -88,6 +92,22 @@ EXRED_PAGE_REGISTRY = {
     "find a buyer": {
         "url": find_a_buyer.URL,
         "po": find_a_buyer
+    },
+    "find a supplier": {
+        "url": find_a_supplier.URL,
+        "po": find_a_supplier
+    },
+    "invest in great": {
+        "url": invest_in_great.URL,
+        "po": invest_in_great
+    },
+    "british council": {
+        "url": british_council.URL,
+        "po": british_council
+    },
+    "visit britain": {
+        "url": visit_britain.URL,
+        "po": visit_britain
     },
     "selling online overseas": {
         "url": selling_online_overseas.URL,
