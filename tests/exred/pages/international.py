@@ -101,10 +101,16 @@ def should_see_section(driver: webdriver, name: str):
             logging.debug("'%s' in '%s' is displayed", key, name)
 
 
-def open(driver: webdriver, group: str, element: str):
+def open(
+        driver: webdriver, group: str, element: str, *, same_tab: bool = True):
     selector = SECTIONS[group.lower()][element.lower()]
     link = driver.find_element_by_css_selector(selector)
     assert link.is_displayed()
-    link.click()
+    if same_tab:
+        href = link.get_attribute("href")
+        logging.debug("Opening '%s' link '%s' in the same tab", element, href)
+        driver.get(href)
+    else:
+        link.click()
     take_screenshot(
         driver, NAME + " after clicking on: %s link".format(element))
