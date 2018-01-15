@@ -12,11 +12,13 @@ from pages import (
     header,
     home,
     interim_exporting_opportunities,
+    international,
     personalised_journey,
     selling_online_overseas,
     share_on_facebook,
     share_on_linkedin,
     share_on_twitter,
+    sso_profile_about,
     sso_registration,
     sso_registration_confirmation,
     sso_sign_in,
@@ -119,6 +121,10 @@ EXRED_PAGE_REGISTRY = {
         "url": sso_registration_confirmation.URL,
         "po": sso_registration_confirmation
     },
+    "sso profile about": {
+        "url": sso_profile_about.URL,
+        "po": sso_profile_about
+    },
     "article": {
         "url": None,
         "po": article_common
@@ -138,6 +144,10 @@ EXRED_PAGE_REGISTRY = {
     "share on twitter": {
         "url": share_on_twitter.URL,
         "po": share_on_twitter
+    },
+    "international": {
+        "url": international.URL,
+        "po": international
     },
 }
 

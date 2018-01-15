@@ -6,11 +6,7 @@ from urllib.parse import urljoin
 
 from selenium import webdriver
 
-from utils import (
-    assertion_msg,
-    find_element,
-    take_screenshot
-)
+from utils import assertion_msg, find_element, take_screenshot
 
 NAME = "Share on Facebook page"
 URL = urljoin("https://www.facebook.com/", "share.php?u=")

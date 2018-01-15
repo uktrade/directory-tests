@@ -9,7 +9,7 @@ from settings import EXRED_UI_URL
 from utils import assertion_msg, take_screenshot
 
 NAME = "ExRed Triage - are you regular exporter"
-URL = urljoin(EXRED_UI_URL, "triage/regular-exporter")
+URL = urljoin(EXRED_UI_URL, "triage/regular-exporter/")
 
 YES_RADIO = "#id_regular-exporter-regular_exporter_0"
 NO_RADIO = "#id_regular-exporter-regular_exporter_1"

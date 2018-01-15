@@ -38,22 +38,3 @@ Feature: Case Studies
       |source_company|256 characters  |          |Ensure this value has at most 255 characters (it has 256).                           |
 
     Then "Peter Alder" should see expected case study error message
-
-
-  @ED-2142
-  @fab
-  @case-study
-  @profile
-  @bug
-  @ED-2248
-  @fixme
-  @fake-sso-email-verification
-  Scenario: Supplier should not be able to use invalid values when adding a case study
-    Given "Peter Alder" created an unverified profile for randomly selected company "Y"
-
-    When "Peter Alder" attempts to add a case study using following values
-      |field         |value type      |separator |error             |
-      |website       |invalid http    |          |Enter a valid URL.|
-      |website       |invalid https   |          |Enter a valid URL.|
-
-    Then "Peter Alder" should see expected case study error message

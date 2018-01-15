@@ -78,6 +78,13 @@ def after_step(context: Context, step: Step):
                 if hasattr(context, "driver"):
                     session_id = context.driver.session_id
                     flag_browserstack_session_as_failed(session_id, message)
+    if step.status == "failed":
+        if hasattr(step.exception, "msg"):
+            if "Session not started or terminated" in step.exception.msg:
+                if hasattr(context, "driver"):
+                    if hasattr(context.driver, "quit"):
+                        context.driver.quit()
+                start_driver_session(context, "recovered-session")
 
 
 def before_feature(context: Context, feature: Feature):

@@ -10,6 +10,7 @@ from pages import (
     export_readiness_common,
     get_finance,
     guidance_common,
+    header,
     home,
     personalised_journey,
     triage_summary
@@ -24,17 +25,9 @@ from steps.when_impl import (
 from utils import assertion_msg, clear_driver_cookies, get_actor
 
 
-def should_see_sections_on_home_page(
-        context: Context, actor_name: str, sections: str):
-    section_names = sections.lower().split(", ")
-    home.should_see_sections(context.driver, section_names)
-    logging.debug(
-        "%s saw all expected sections on '%s' page", actor_name,
-        context.current_page.NAME)
-
-
 def should_be_on_page(context: Context, actor_alias: str, page_name: str):
     page = get_page_object(page_name)
+    assert hasattr(page, "should_be_here")
     page.should_be_here(context.driver)
     logging.debug("%s is on %s page", actor_alias, page_name)
 
@@ -167,6 +160,7 @@ def export_readiness_expected_page_elements_should_be_visible(
 def should_see_sections(
         context: Context, actor_alias: str, sections: list, page_name: str):
     page = get_page_object(page_name)
+    assert hasattr(page, "should_see_section")
     for section in sections:
         page.should_see_section(context.driver, section)
         logging.debug(
@@ -177,6 +171,7 @@ def should_see_sections(
 def should_not_see_sections(
         context: Context, actor_alias: str, sections: list, page_name: str):
     page = get_page_object(page_name)
+    assert hasattr(page, "should_not_see_section")
     for section in sections:
         page.should_not_see_section(context.driver, section)
         logging.debug(
@@ -232,7 +227,6 @@ def articles_should_see_link_to_first_article_from_next_category(
 def articles_should_see_article_as_read(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     visited_article = actor.visited_articles[0]
-    article_common.show_all_articles(context.driver)
     article_common.should_see_article_as_read(
         context.driver, visited_article.title)
     logging.debug(
@@ -319,6 +313,7 @@ def should_see_share_widget(context: Context, actor_alias: str):
 def should_see_links_to_services(
         context: Context, actor_alias: str, services: list, location: str):
     page_object = get_page_object(location)
+    assert hasattr(page_object, "should_see_link_to")
     for service in services:
         page_object.should_see_link_to(context.driver, "services", service)
         logging.debug(
@@ -369,6 +364,7 @@ def articles_read_counter_same_as_before_registration(
 def articles_should_not_see_link_to_sign_in(
         context: Context, actor_alias: str, page_name: str):
     page_object = get_page_object(page_name)
+    assert hasattr(page_object, "should_not_see_link_to_sign_in")
     page_object.should_not_see_link_to_sign_in(context.driver)
     logging.debug(
         "As expected %s did not see 'Sign In' link on the '%s' page",
@@ -378,6 +374,7 @@ def articles_should_not_see_link_to_sign_in(
 def articles_should_not_see_link_to_register(
         context: Context, actor_alias: str, page_name: str):
     page_object = get_page_object(page_name)
+    assert hasattr(page_object, "should_not_see_link_to_register")
     page_object.should_not_see_link_to_register(context.driver)
     logging.debug(
         "As expected %s did not see 'Register' link on the '%s' page",
@@ -400,13 +397,16 @@ def articles_should_be_on_share_page(
         context: Context, actor_alias: str, social_media: str):
     page_name = "share on {}".format(social_media.lower())
     social_media_page = get_page_object(page_name)
+    assert hasattr(social_media_page, "should_be_here")
     social_media_page.should_be_here(context.driver)
     logging.debug("%s is on the '%s' share page", actor_alias, social_media)
 
 
-def share_page_should_be_prepopulated(context: Context, actor_alias: str, social_media: str):
+def share_page_should_be_prepopulated(
+        context: Context, actor_alias: str, social_media: str):
     page_name = "share on {}".format(social_media.lower())
     social_media_page = get_page_object(page_name)
+    assert hasattr(social_media_page, "check_if_populated")
     shared_url = context.article_url
     social_media_page.check_if_populated(context.driver, shared_url)
     clear_driver_cookies(driver=context.driver)
@@ -446,3 +446,8 @@ def promo_video_should_not_see_modal_window(context: Context, actor_alias: str):
     home.should_not_see_video_modal_window(context.driver)
     logging.debug(
         "As expected %s can't see promotional video modal window", actor_alias)
+
+
+def header_check_dit_logo(context, actor_alias):
+    header.check_dit_logo(context.driver)
+    logging.debug("As expected %s can see correct DIT logo", actor_alias)

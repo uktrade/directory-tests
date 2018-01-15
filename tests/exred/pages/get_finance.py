@@ -9,11 +9,12 @@ from selenium.common.exceptions import (
     WebDriverException
 )
 
+from pages.common_actions import visit as common_visit
 from settings import EXRED_UI_URL
 from utils import assertion_msg, take_screenshot
 
 NAME = "Get Finance Home page"
-URL = urljoin(EXRED_UI_URL, "get-finance")
+URL = urljoin(EXRED_UI_URL, "get-finance/")
 
 TOTAL_NUMBER_OF_ARTICLES = "dd.position > span.to"
 ARTICLES_TO_READ_COUNTER = "dd.position > span.from"
@@ -36,6 +37,10 @@ UNEXPECTED_ELEMENTS = {
     "time to complete remaining chapters": TIME_TO_COMPLETE,
     "share menu": SHARE_MENU,
 }
+
+
+def visit(driver: webdriver, *, first_time: bool = False):
+    common_visit(driver, URL, NAME, first_time=first_time)
 
 
 def should_be_here(driver: webdriver):

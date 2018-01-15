@@ -9,9 +9,6 @@ from selenium.common.exceptions import (
     WebDriverException
 )
 from selenium.webdriver import ActionChains
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
 
 from registry.articles import get_articles
 from settings import EXRED_UI_URL
@@ -20,7 +17,6 @@ from utils import assertion_msg, find_element, selenium_action, take_screenshot
 NAME = "ExRed Personalised Journey"
 URL = urljoin(EXRED_UI_URL, "custom")
 
-SHOW_MORE_BUTTON = "#js-paginate-list-more"
 READ_COUNTER = "#articles .scope-indicator .position > span.from"
 TOTAL_ARTICLES = "#articles .scope-indicator .position > span.to"
 
@@ -140,39 +136,9 @@ def should_be_here(driver: webdriver):
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
-def show_more(driver: webdriver):
-    with selenium_action(
-            driver, "Could not find 'Show More' button using '%s'",
-            SHOW_MORE_BUTTON):
-        button = driver.find_element_by_css_selector(SHOW_MORE_BUTTON)
-        assert button.is_displayed()
-    button.click()
-    take_screenshot(driver, NAME + " after showing more")
-
-
-def show_all_articles(driver: webdriver):
-    with selenium_action(
-            driver, "Could not find 'Show More' button using '%s'",
-            SHOW_MORE_BUTTON):
-        show_more_button = driver.find_element_by_css_selector(SHOW_MORE_BUTTON)
-    max_clicks = 10
-    counter = 0
-    # click up to 11 times - see bug ED-2561
-    while show_more_button.is_displayed() and counter <= max_clicks:
-        show_more_button.click()
-        counter += 1
-    if counter > max_clicks:
-        with assertion_msg(
-                "'Show more' button didn't disappear after clicking on it for"
-                " %d times", counter):
-            assert counter == max_clicks
-    take_screenshot(driver, NAME + " after showing all articles")
-
-
 def should_see_read_counter(
         driver: webdriver, *, exporter_status: str = None,
         expected_number_articles: int = 0):
-    show_all_articles(driver)
     with selenium_action(
             driver, "Could not find 'Article Read Counter' using '%s'",
             READ_COUNTER):
@@ -194,7 +160,6 @@ def should_see_read_counter(
 
 def should_see_total_articles_to_read(
         driver: webdriver, *, exporter_status: str = None):
-    show_all_articles(driver)
     with selenium_action(
             driver, "Could not find 'Total Articles to Read' using '%s'",
             TOTAL_ARTICLES):
@@ -228,9 +193,7 @@ def should_see_section(driver: webdriver, name: str):
                 driver, "Could not find: '%s' element in '%s' section using "
                         "'%s' selector",
                 key, name, selector):
-            element = driver.find_element_by_css_selector(selector)
-            WebDriverWait(driver, 5).until(
-                EC.visibility_of_element_located((By.CSS_SELECTOR, selector)))
+            element = find_element(driver, by_css=selector)
         with assertion_msg(
                 "'%s' in '%s' is not displayed", key, name):
             assert element.is_displayed()

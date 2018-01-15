@@ -3,10 +3,13 @@
 import logging
 
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
 
+from settings import DIT_LOGO_MD5_CHECKSUM
 from utils import (
     assertion_msg,
+    check_hash_of_remote_file,
     find_element,
     take_screenshot
 )
@@ -15,11 +18,13 @@ NAME = "ExRed Header"
 URL = None
 
 
+LOGO = "#header-dit-logo > img"
 HOME_LINK = "#header-home-link"
 REGISTRATION_LINK = "#header-register-link"
 SIGN_IN_LINK = "#header-bar .top-bar li:nth-child(2) > a"  # "#header-sign-in-link"
 PROFILE_LINK = "#header-profile-link"
 SIGN_OUT_LINK = "#header-sign-out-link"
+LANGUAGE_SELECTOR = "#header-bar .LanguageSelectorDialog-Tracker"
 SECTIONS = {
     "export readiness": {
         "menu": "#export-readiness-links",
@@ -48,7 +53,7 @@ SECTIONS = {
         "events": "#header-services-events"
     },
     "general": {
-        "logo": "#header-dit-logo > img"
+        "logo": LOGO
     },
     "account links": {
         "register": REGISTRATION_LINK,
@@ -131,3 +136,17 @@ def go_to_profile(driver: webdriver):
 def go_to_sign_out(driver: webdriver):
     sign_out_link = find_element(driver, by_css=SIGN_OUT_LINK)
     sign_out_link.click()
+
+
+def check_dit_logo(driver: webdriver):
+    old = "#header-bar > div:nth-child(2) > a > img"
+    try:
+        logo = find_element(driver, by_css=LOGO)
+    except NoSuchElementException:
+        try:
+            logo = find_element(driver, by_css=old)
+        except NoSuchElementException:
+            raise
+    src = logo.get_attribute("src")
+    check_hash_of_remote_file(DIT_LOGO_MD5_CHECKSUM, src)
+    logging.debug("%s has correct MD5sum %s", src, DIT_LOGO_MD5_CHECKSUM)

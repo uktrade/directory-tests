@@ -7,6 +7,7 @@ from urllib.parse import urljoin
 
 from selenium import webdriver
 
+from pages.common_actions import visit as common_visit
 from settings import EXRED_UI_URL
 from utils import (
     assertion_msg,
@@ -195,19 +196,7 @@ SECTIONS = {
 
 
 def visit(driver: webdriver, *, first_time: bool = False):
-    """Visit the Home Page.
-
-    :param driver: Any Selenium Driver (Remote, Chrome, Firefox, PhantomJS etc.
-    :param first_time: (optional) will delete all cookies if True
-    """
-    if first_time:
-        logging.debug(
-            "Deleting all cookies in order to enforce the first time visit"
-            " simulation")
-        # if driver.get_cookies():
-        #     driver.delete_all_cookies()
-    driver.get(URL)
-    take_screenshot(driver, NAME)
+    common_visit(driver, URL, NAME, first_time=first_time)
 
 
 def should_be_here(driver: webdriver):
@@ -222,27 +211,18 @@ def should_be_here(driver: webdriver):
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
-def should_see_sections(driver: webdriver, section_names: list):
-    """Will check if Actor can see all expected page sections.
-
-    :param driver: Any Selenium Driver (Remote, Chrome, Firefox, PhantomJS etc.
-    :param section_names: list of page section to check
-    """
-    for section_name in section_names:
-        section = SECTIONS[section_name.lower()]
-        for element_name, element_selector in section.items():
-            logging.debug(
-                "Looking for '%s' element in '%s' section with '%s' selector",
-                element_name, section_name, element_selector)
-            element = find_element(driver, by_css=element_selector)
-            with assertion_msg(
-                    "It looks like '%s' in '%s' section is not visible",
-                    element_name, section_name):
-                assert element.is_displayed()
-        logging.debug("All elements in '%s' section are visible", section_name)
-    logging.debug(
-        "All expected sections: %s on %s page are visible", section_names,
-        NAME)
+def should_see_section(driver: webdriver, name: str):
+    section = SECTIONS[name.lower()]
+    for key, selector in section.items():
+        with selenium_action(
+                driver, "Could not find: '%s' element in '%s' section using "
+                        "'%s' selector",
+                key, name, selector):
+            element = find_element(driver, by_css=selector)
+        with assertion_msg(
+                "'%s' in '%s' is not displayed", key, name):
+            assert element.is_displayed()
+            logging.debug("'%s' in '%s' is displayed", key, name)
 
 
 def should_see_link_to(driver: webdriver, section: str, item_name: str):

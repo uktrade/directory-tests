@@ -49,7 +49,14 @@ from utils import (
 from utils.mail_gun import get_verification_link
 
 
-@retry(wait_fixed=30000, stop_max_attempt_number=3)
+def retry_if_webdriver_error(exception):
+    """Return True if we should retry on WebDriverException, False otherwise"""
+    return isinstance(exception, WebDriverException)
+
+
+@retry(
+    wait_fixed=30000, stop_max_attempt_number=3,
+    retry_on_exception=retry_if_webdriver_error, wrap_exception=True)
 def visit_page(
         context: Context, actor_alias: str, page_name: str, *,
         first_time: bool = False):
@@ -62,11 +69,12 @@ def visit_page(
     """
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
-    context.current_page = get_page_object(page_name)
+    page = get_page_object(page_name)
     logging.debug(
         "%s will visit '%s' page using: '%s'", actor_alias, page_name,
-        context.current_page.URL)
-    context.current_page.visit(context.driver, first_time=first_time)
+        page.URL)
+    assert hasattr(page, "visit")
+    page.visit(context.driver, first_time=first_time)
 
 
 def actor_classifies_himself_as(
@@ -636,7 +644,6 @@ def articles_open_any_but_the_last(context: Context, actor_alias: str):
     random_article = random.choice(articles[:-1])
     # then get it's index in the reading list
     any_article_but_the_last = get_article(group, category, random_article.title)
-    guidance_common.show_all_articles(driver)
     article_common.go_to_article(driver, any_article_but_the_last.title)
     time_to_read = article_common.time_to_read_in_seconds(context.driver)
     logging.debug(
@@ -660,8 +667,6 @@ def articles_open_specific(context: Context, actor_alias: str, name: str):
     category = actor.article_category
     article = get_article(group, category, name)
     visited_articles = actor.visited_articles
-
-    article_common.show_all_articles(driver)
 
     article_common.go_to_article(driver, name)
 
@@ -688,7 +693,6 @@ def articles_open_any(context: Context, actor_alias: str):
     category = actor.article_category
     visited_articles = actor.visited_articles
     any_article = get_random_article(group, category)
-    article_common.show_all_articles(driver)
 
     # capture the counter values from Article List page
     article_list_total = article_common.get_total_articles(context.driver)
@@ -877,6 +881,7 @@ def open_service_link_on_interim_page(
         context: Context, actor_alias: str, service: str):
     page_name = "interim {}".format(service)
     page = get_page_object(page_name)
+    assert hasattr(page, "go_to_service")
     page.go_to_service(context.driver)
     logging.debug("%s went to %s service page", actor_alias, service)
 

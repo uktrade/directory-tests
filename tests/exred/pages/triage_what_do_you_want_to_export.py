@@ -6,11 +6,12 @@ from urllib.parse import urljoin
 
 from selenium import webdriver
 
+from pages.common_actions import visit as common_visit
 from settings import EXRED_SECTORS, EXRED_UI_URL
 from utils import assertion_msg, selenium_action, take_screenshot
 
 NAME = "ExRed Triage - what do you want to export"
-URL = urljoin(EXRED_UI_URL, "triage/sector")
+URL = urljoin(EXRED_UI_URL, "triage/sector/")
 
 SECTORS_COMBOBOX = ".exred-triage-form div[role=combobox]"
 SECTORS_INPUT = "#js-sector-select"
@@ -26,13 +27,7 @@ EXPECTED_ELEMENTS = {
 
 
 def visit(driver: webdriver, *, first_time: bool = False):
-    if first_time:
-        logging.debug(
-            "Deleting all cookies in order to enforce the first time visit "
-            "simulation")
-        driver.delete_all_cookies()
-    driver.get(URL)
-    take_screenshot(driver, NAME)
+    common_visit(driver, URL, NAME, first_time=first_time)
 
 
 def should_be_here(driver: webdriver):

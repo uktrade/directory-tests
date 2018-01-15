@@ -13,6 +13,7 @@ from contextlib import contextmanager
 from datetime import datetime
 from os.path import abspath, join
 
+import hashlib
 import requests
 from behave.runner import Context
 from retrying import retry
@@ -377,3 +378,18 @@ def clear_driver_cookies(driver: webdriver):
         logging.debug("Driver cookies after clearing them: %s", cookies)
     except WebDriverException as ex:
         logging.error("Failed to clear cookies: '%s'", ex.msg)
+
+
+def check_hash_of_remote_file(expected_hash, file_url):
+    """Check if the md5 hash of the file is the same as expected.
+
+    :param expected_hash: expected md5 hash
+    :param file_url: URL to the file to check
+    """
+    logging.debug("Fetching file: %s", file_url)
+    response = requests.get(file_url)
+    file_hash = hashlib.md5(response.content).hexdigest()
+    with assertion_msg(
+            "Expected hash of file downloaded from %s to be %s but got %s",
+            file_url, expected_hash, file_hash):
+        assert expected_hash == file_hash
