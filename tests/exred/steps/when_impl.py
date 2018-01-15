@@ -76,6 +76,7 @@ def visit_page(
         page.URL)
     assert hasattr(page, "visit")
     page.visit(context.driver, first_time=first_time)
+    update_actor(context, actor_alias, visited_page=page_name)
 
 
 def actor_classifies_himself_as(
