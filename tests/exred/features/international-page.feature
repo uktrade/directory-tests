@@ -9,20 +9,22 @@ Feature: International Page
     Then "Robert" should see "Buy from the UK, Invest in the UK, Study in the UK, Visit the UK" sections on "International" page
 
 
-  @wip
+  @ED-3136
+  @external-service
+  @<expected_service>
   Scenario Outline: Visitors should be able to go to "<expected>" page from the International page
     Given "Robert" visits the "International" page
 
-    When "Robert" decides to go to the website in "<selected>" section
+    When "Robert" goes to "<expected_service>" using "<section>" link on "International Page"
 
-    Then "Robert" should be on the "<expected>" page
+    Then "Robert" should be on the "<expected_service>" page
 
     Examples:
-      | selected         | expected        |
-      | Buy from the UK  | Find a Supplier |
-      | Invest in the UK | Invest in Great |
-      | Study in the UK  | British Council |
-      | Visit the UK     | Visit Britain   |
+      | expected_service | section          |
+      | Find a Supplier  | Buy from the UK  |
+      | Invest in Great  | Invest in the UK |
+      | British Council  | Study in the UK  |
+      | Visit Britain    | Visit the UK     |
 
 
   @wip

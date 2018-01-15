@@ -43,6 +43,7 @@ Feature: Accessing Services
   @ED-3089
   @home-page
   @accessing-services
+  @external-service
   @interim-pages
   @<service>
   Scenario Outline: Any Exporter should be presented with an interim page leading to "<service>" Service page which was accessed via "<link_location>"
@@ -154,6 +155,7 @@ Feature: Accessing Services
   @personalised-page
   @accessing-services
   @interim-pages
+  @external-service
   Scenario: Any Exporter who finished triage should be able to get to the actual Service page
     Given "Robert" is on the personalised journey page
 
@@ -169,6 +171,7 @@ Feature: Accessing Services
   @personalised-page
   @accessing-services
   @interim-pages
+  @external-service
   Scenario: Users that opted-out from showing interim pages should be taken directly to the service page
     Given "Robert" has decided not to have interim pages shown in the past
     And "Robert" is on the personalised journey page
@@ -184,6 +187,7 @@ Feature: Accessing Services
   @home-page
   @accessing-services
   @interim-pages
+  @external-service
   Scenario Outline: Any Exporter that opted-out from showing interim pages should be redirected to the Services directly without seeing interim pages
     Given "Robert" has decided not to have interim pages shown in the past
 
