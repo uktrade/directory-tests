@@ -85,7 +85,8 @@ def actor_classifies_himself_as(
     add_actor(context, actor)
 
 
-@retry(wait_fixed=30000, stop_max_attempt_number=3)
+@retry(wait_fixed=30000, stop_max_attempt_number=3,
+       retry_on_exception=retry_if_webdriver_error)
 def open_group_element(
         context: Context, group: str, element: str, location: str):
     driver = context.driver
@@ -119,7 +120,8 @@ def guidance_open_category(
         article_category=category, article_location=location)
 
 
-@retry(wait_fixed=30000, stop_max_attempt_number=3)
+@retry(wait_fixed=30000, stop_max_attempt_number=3,
+       retry_on_exception=retry_if_webdriver_error)
 def guidance_open_random_category(
         context, actor_alias, *, location: str = "personalised journey"):
     category = random.choice(list(GUIDANCE.keys()))
