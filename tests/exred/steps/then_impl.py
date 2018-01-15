@@ -12,6 +12,7 @@ from pages import (
     guidance_common,
     header,
     home,
+    language_selector,
     personalised_journey,
     triage_summary
 )
@@ -451,3 +452,18 @@ def promo_video_should_not_see_modal_window(context: Context, actor_alias: str):
 def header_check_dit_logo(context, actor_alias):
     header.check_dit_logo(context.driver)
     logging.debug("As expected %s can see correct DIT logo", actor_alias)
+
+
+def language_selector_should_see_it(context: Context, actor_alias: str):
+    actor = get_actor(context, actor_alias)
+    visited_page = actor.visited_page
+    language_selector.should_see_it_on(context.driver, page_name=visited_page)
+    logging.debug("As expected %s can see language selector", actor_alias)
+
+
+def language_selector_should_not_see_it(context: Context, actor_alias: str):
+    actor = get_actor(context, actor_alias)
+    visited_page = actor.visited_page
+    language_selector.should_not_see_it_on(
+        context.driver, page_name=visited_page)
+    logging.debug("As expected %s cannot see language selector", actor_alias)
