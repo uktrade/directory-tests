@@ -14,6 +14,7 @@ from pages import (
     guidance_common,
     header,
     home,
+    international,
     personalised_journey,
     sso_common,
     sso_confirm_your_email,
@@ -88,14 +89,16 @@ def actor_classifies_himself_as(
 def open_group_element(
         context: Context, group: str, element: str, location: str):
     driver = context.driver
-    if location == "home page":
+    if location.lower() == "home page":
         home.open(driver, group, element)
-    elif location == "header menu":
+    elif location.lower() == "header menu":
         header.open(driver, group, element)
-    elif location == "footer links":
+    elif location.lower() == "footer links":
         footer.open(driver, group, element)
-    elif location == "personalised journey":
+    elif location.lower() == "personalised journey":
         personalised_journey.open(driver, group, element)
+    elif location.lower() == "international page":
+        international.open(driver, group, element, same_tab=True)
     else:
         raise KeyError("Could not recognize location: {}".format(location))
 
