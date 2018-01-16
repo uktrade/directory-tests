@@ -30,6 +30,7 @@ def test_sso_authentication_using_api_client(logged_in_session):
     base_url = get_absolute_url('sso:landing')
     api_client = DirectorySSOAPIClient(
         base_url=base_url, api_key=SSO_PROXY_SIGNATURE_SECRET)
+    print(SSO_PROXY_SIGNATURE_SECRET)
     user_session_id = logged_in_session.cookies.get("directory_sso_dev_session")
     response = api_client.user.get_session_user(session_id=user_session_id)
     assert response.status_code == http.client.OK
