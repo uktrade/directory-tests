@@ -47,7 +47,10 @@ class DockerComposeEnvWriter:
                         else:
                             dest.write("export {}={}\n".format(var, value))
                     else:
-                        dest.write("{}={}\n".format(var, value))
+                        if "$" in value:
+                            dest.write("{}={}\n".format(var, value.replace("$", "$$")))
+                        else:
+                            dest.write("{}={}\n".format(var, value))
 
     @classmethod
     def create(cls, config):
