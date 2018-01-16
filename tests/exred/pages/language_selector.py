@@ -4,6 +4,7 @@ import logging
 import time
 
 from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 
 from utils import (
     assertion_msg,
@@ -54,19 +55,25 @@ ELEMENTS_ON = {
 }
 
 
-def close(driver: webdriver):
+def close(driver: webdriver, *, with_keyboard: bool = False):
     close_language_selector_button = find_element(
         driver, by_css=LANGUAGE_SELECTOR_CLOSE)
     with assertion_msg("Close Language Selector button is not visible"):
         assert close_language_selector_button.is_displayed()
-    close_language_selector_button.click()
+    if with_keyboard:
+        close_language_selector_button.send_keys(Keys.ENTER)
+    else:
+        close_language_selector_button.click()
 
 
-def open(driver: webdriver):
+def open(driver: webdriver, *, with_keyboard: bool = False):
     language_selector = find_element(driver, by_css=LANGUAGE_SELECTOR_OPEN)
     with assertion_msg("Language Selector button is not visible"):
         assert language_selector.is_displayed()
-    language_selector.click()
+    if with_keyboard:
+        language_selector.send_keys(Keys.ENTER)
+    else:
+        language_selector.click()
 
 
 def should_see_it_on(driver: webdriver, page_name: str):
