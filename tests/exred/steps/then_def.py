@@ -45,6 +45,7 @@ from steps.then_impl import (
     should_be_on_page,
     should_not_see_sections,
     should_see_links_to_services,
+    should_see_page_in_preferred_language,
     should_see_sections,
     should_see_share_widget,
     triage_should_be_classified_as,
@@ -317,3 +318,9 @@ def then_actor_should_not_see_language_selector(context, actor_alias):
 @then('"{actor_alias}"\'s keyboard should be trapped to the language selector')
 def then_keyboard_should_be_trapped_to_language_selector(context, actor_alias):
     language_selector_keyboard_should_be_trapped(context, actor_alias)
+
+
+@then('"{actor_alias}" should see the page in "{preferred_language}"')
+def then_page_language_should_be(context, actor_alias, preferred_language):
+    should_see_page_in_preferred_language(
+        context, actor_alias, preferred_language)
