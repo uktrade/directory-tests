@@ -12,17 +12,16 @@ from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("sso:password_reset")
 EXPECTED_STRINGS = [
-    "Password reset",
-    "Enter the email address you used to register to get a password reset link",
-    "E-mail:", "Reset my password",
-    "Please", "contact us", "if you have any trouble resetting your password."
+    "Password reset", "Enter the email address you used to register",
+    "Email:", "Reset my password", "Contact us",
+    "if the password reset doesn't work."
 ]
 
 EXPECTED_STRINGS_PASSWORD_RESET = [
-    "Password reset",
-    ("We will send a password reset link by email if there is an account "
-     "registered for this address. Please"),
-    "contact us", "if you do not receive it within a few minutes."
+    "Password reset email",
+    ("We've sent a password reset email. Click on the link to reset your "
+     "password"),
+    "Contact us", "if you haven't received the email within 10 minutes"
 ]
 
 

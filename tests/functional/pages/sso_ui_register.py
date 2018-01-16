@@ -12,10 +12,14 @@ from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("sso:signup")
 EXPECTED_STRINGS = [
-    "Register", "Create a great.gov.uk account and you can",
-    "gain access to worldwide exporting opportunities",
-    "promote your business to international buyers",
+    "Register", "Create a great.gov.uk account to",
+    "save your progress through our export guidance",
+    "create a profile to showcase your business to overseas buyers",
+    "apply for opportunities to sell your product or service overseas",
     "Email:", "Confirm email:", "Password:", "Confirm password:",
+    "Your password must:", "be at least 10 characters",
+    "contain at least one letter", "contain at least one number",
+    'not contain the word "password"',
     "Tick this box to accept the", "terms and conditions",
     "of the great.gov.uk service."
 ]
