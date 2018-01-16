@@ -18,30 +18,37 @@ NAME = "Language selector"
 LANGUAGE_SELECTOR_OPEN = "#header-bar a.LanguageSelectorDialog-Tracker"
 LANGUAGE_SELECTOR_CLOSE = "#header-language-selector-close"
 DOMESTIC_PAGE = "section.language-selector-dialog div.domestic-redirect > p > a"
+ENGLISH = "#header-language-selector-en-gb"
+CHINESE = "#header-language-selector-zh-hans"
+GERMAN = "#header-language-selector-de"
+JAPANESE = "#header-language-selector-ja"
+SPANISH = "#header-language-selector-es"
+PORTUGUESE = "#header-language-selector-pt"
+ARABIC = "#header-language-selector-ar"
 ELEMENTS_ON = {
     "home": {
         "itself": "section.language-selector-dialog",
         "title": "#great-languages-selector",
-        "English": "#header-language-selector-en-gb",
-        "简体中文": "#header-language-selector-zh-hans",
-        "Deutsch": "#header-language-selector-de",
-        "日本語": "#header-language-selector-ja",
-        "Español": "#header-language-selector-es",
-        "Português": "#header-language-selector-pt",
-        "العربيّة": "#header-language-selector-ar",
+        "English": ENGLISH,
+        "简体中文": CHINESE,
+        "Deutsch": GERMAN,
+        "日本語": JAPANESE,
+        "Español": SPANISH,
+        "Português": PORTUGUESE,
+        "العربيّة": ARABIC,
         "close": LANGUAGE_SELECTOR_CLOSE
     },
     "international": {
         "itself": "section.language-selector-dialog",
         "title": "#great-languages-selector",
         "domestic page": DOMESTIC_PAGE,
-        "English": "#header-language-selector-en-gb",
-        "简体中文": "#header-language-selector-zh-hans",
-        "Deutsch": "#header-language-selector-de",
-        "日本語": "#header-language-selector-ja",
-        "Español": "#header-language-selector-es",
-        "Português": "#header-language-selector-pt",
-        "العربيّة": "#header-language-selector-ar",
+        "English": ENGLISH,
+        "简体中文": CHINESE,
+        "Deutsch": GERMAN,
+        "日本語": JAPANESE,
+        "Español": SPANISH,
+        "Português": PORTUGUESE,
+        "العربيّة": ARABIC,
         "close": LANGUAGE_SELECTOR_CLOSE
     }
 }
