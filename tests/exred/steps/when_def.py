@@ -166,6 +166,7 @@ def when_actor_goes_to_case_study(context, actor_alias, case_number):
     case_studies_go_to(context, actor_alias, case_number)
 
 
+@when('"{actor_alias}" goes to "{category}" using "{group}" link on "{location}"')
 @when('"{actor_alias}" goes to "{category}" using "{group}" links in "{location}"')
 def when_actor_opens_link(context, actor_alias, category, group, location):
     open_link(context, actor_alias, group, category, location)

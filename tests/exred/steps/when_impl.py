@@ -14,6 +14,7 @@ from pages import (
     guidance_common,
     header,
     home,
+    international,
     personalised_journey,
     sso_common,
     sso_confirm_your_email,
@@ -84,18 +85,21 @@ def actor_classifies_himself_as(
     add_actor(context, actor)
 
 
-@retry(wait_fixed=30000, stop_max_attempt_number=3)
+@retry(wait_fixed=30000, stop_max_attempt_number=3,
+       retry_on_exception=retry_if_webdriver_error)
 def open_group_element(
         context: Context, group: str, element: str, location: str):
     driver = context.driver
-    if location == "home page":
+    if location.lower() == "home page":
         home.open(driver, group, element)
-    elif location == "header menu":
+    elif location.lower() == "header menu":
         header.open(driver, group, element)
-    elif location == "footer links":
+    elif location.lower() == "footer links":
         footer.open(driver, group, element)
-    elif location == "personalised journey":
+    elif location.lower() == "personalised journey":
         personalised_journey.open(driver, group, element)
+    elif location.lower() == "international page":
+        international.open(driver, group, element, same_tab=True)
     else:
         raise KeyError("Could not recognize location: {}".format(location))
 
@@ -116,7 +120,8 @@ def guidance_open_category(
         article_category=category, article_location=location)
 
 
-@retry(wait_fixed=30000, stop_max_attempt_number=3)
+@retry(wait_fixed=30000, stop_max_attempt_number=3,
+       retry_on_exception=retry_if_webdriver_error)
 def guidance_open_random_category(
         context, actor_alias, *, location: str = "personalised journey"):
     category = random.choice(list(GUIDANCE.keys()))
