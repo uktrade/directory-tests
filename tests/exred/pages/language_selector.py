@@ -42,7 +42,7 @@ ELEMENTS_ON = {
     "international": {
         "itself": "section.language-selector-dialog",
         "title": "#great-languages-selector",
-        "domestic page": DOMESTIC_PAGE,
+        "English (UK)": DOMESTIC_PAGE,
         "English": ENGLISH,
         "简体中文": CHINESE,
         "Deutsch": GERMAN,
@@ -137,3 +137,14 @@ def keyboard_should_be_trapped(driver: webdriver, page_name: str):
     number_of_navigation_iterations = 2
     for _ in range(number_of_navigation_iterations):
         navigate_through_links_with_keyboard(driver, page_name)
+
+
+def change_to(
+        driver: webdriver, page_name: str, language: str, *,
+        with_keyboard: bool = False):
+    language_selector = ELEMENTS_ON[page_name.lower()][language]
+    language_button = find_element(driver, by_css=language_selector)
+    if with_keyboard:
+        language_button.send_keys(Keys.ENTER)
+    else:
+        language_button.click()

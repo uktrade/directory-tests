@@ -1111,3 +1111,15 @@ def language_selector_navigate_through_links_with_keyboard(
     visited_page = actor.visited_page
     language_selector.navigate_through_links_with_keyboard(
         context.driver, page_name=visited_page)
+
+
+def language_selector_change_to(
+        context: Context, actor_alias: str, preferred_language: str):
+    actor = get_actor(context, actor_alias)
+    visited_page = actor.visited_page
+    logging.debug(
+        "%s decided to change language on %s to %s", actor_alias, visited_page,
+        preferred_language)
+    language_selector_open(context, actor_alias)
+    language_selector.change_to(
+        context.driver, visited_page, preferred_language)
