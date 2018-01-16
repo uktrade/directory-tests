@@ -1090,11 +1090,24 @@ def promo_video_close(context, actor_alias):
     home.close_video(context.driver)
 
 
-def language_selector_close(context: Context, actor_alias: str):
+def language_selector_close(
+        context: Context, actor_alias: str, *, with_keyboard: bool = False):
     logging.debug("%s decided to close language selector", actor_alias)
-    language_selector.close(context.driver)
+    language_selector.close(context.driver, with_keyboard=with_keyboard)
 
 
-def language_selector_open(context: Context, actor_alias: str):
+def language_selector_open(
+        context: Context, actor_alias: str, *, with_keyboard: bool = False):
     logging.debug("%s decided to go open language selector", actor_alias)
-    language_selector.open(context.driver)
+    language_selector.open(context.driver, with_keyboard=with_keyboard)
+
+
+def language_selector_navigate_through_links_with_keyboard(
+        context: Context, actor_alias: str):
+    logging.debug(
+        "%s decided to navigate through all language selector links with"
+        " keyboard", actor_alias)
+    actor = get_actor(context, actor_alias)
+    visited_page = actor.visited_page
+    language_selector.navigate_through_links_with_keyboard(
+        context.driver, page_name=visited_page)

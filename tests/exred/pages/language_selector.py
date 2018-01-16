@@ -53,6 +53,29 @@ ELEMENTS_ON = {
         "close": LANGUAGE_SELECTOR_CLOSE
     }
 }
+KEYBOARD_NAVIGABLE_ELEMENTS = {
+    "home": [
+        ("English", ENGLISH),
+        ("简体中文", CHINESE),
+        ("Deutsch", GERMAN),
+        ("日本語", JAPANESE),
+        ("Español", SPANISH),
+        ("Português", PORTUGUESE),
+        ("العربيّة", ARABIC),
+        ("close", LANGUAGE_SELECTOR_CLOSE)
+    ],
+    "international": [
+        ("English", ENGLISH),
+        ("简体中文", CHINESE),
+        ("Deutsch", GERMAN),
+        ("日本語", JAPANESE),
+        ("Español", SPANISH),
+        ("Português", PORTUGUESE),
+        ("العربيّة", ARABIC),
+        ("domestic page", DOMESTIC_PAGE),
+        ("close", LANGUAGE_SELECTOR_CLOSE),
+    ]
+}
 
 
 def close(driver: webdriver, *, with_keyboard: bool = False):
@@ -99,3 +122,18 @@ def should_not_see_it_on(driver: webdriver, page_name: str):
     for key, selector in page_elements.items():
         check_if_element_is_not_visible(
             driver, by_css=selector, element_name=key)
+
+
+def navigate_through_links_with_keyboard(driver: webdriver, page_name: str):
+    for name, selector in KEYBOARD_NAVIGABLE_ELEMENTS[page_name.lower()]:
+        element = find_element(driver, by_css=selector, element_name=name)
+        with assertion_msg("Expected '%s' element to be in focus", name):
+            assert element.id == driver.switch_to.active_element.id
+            logging.debug("%s is focused, moving to the next one", name)
+        element.send_keys(Keys.TAB)
+
+
+def keyboard_should_be_trapped(driver: webdriver, page_name: str):
+    number_of_navigation_iterations = 2
+    for _ in range(number_of_navigation_iterations):
+        navigate_through_links_with_keyboard(driver, page_name)
