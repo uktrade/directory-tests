@@ -100,15 +100,15 @@ smoke_tests:
 	pytest tests/smoke $(pytest_args)
 
 SET_PYLINK_CHECKER_ENV_VARS_PROD := \
-	export IGNORED_PREFIXES="https://www.linkedin.com/shareArticle,https://twitter.com/intent/tweet,http://www.yellow.com,https://www.contactus.trade.gov.uk,https://trade.great.gov.uk/search/,https://trade.great.gov.uk/suppliers/" && \
+	export IGNORED_PREFIXES="http://www.kwintessential.co.uk/resources/guides/,https://www.ukbaa.org.uk/,http://gb.kompass.com/,https://ico.org.uk/concerns/getting/,http://www.iata.org/whatwedo/cargo/e/efreight/Pages/index.aspx,https://developer.google.com/,http://www.yellow.com,https://www.contactus.trade.gov.uk,https://trade.great.gov.uk/search/,https://trade.great.gov.uk/suppliers/" && \
 	export TEST_URLS="https://www.great.gov.uk/ https://www.export.great.gov.uk/ https://find-a-buyer.export.great.gov.uk/ https://sso.trade.great.gov.uk/accounts/login/ https://trade.great.gov.uk/ https://profile.great.gov.uk/about/"
 
 SET_PYLINK_CHECKER_ENV_VARS_STAGE := \
-	export IGNORED_PREFIXES="https://www.linkedin.com/shareArticle,https://twitter.com/intent/tweet,http://www.yellow.com,https://www.contactus.trade.gov.uk,https://stage.supplier.directory.uktrade.io/search/,https://stage.supplier.directory.uktrade.io/suppliers/" && \
+	export IGNORED_PREFIXES="http://www.kwintessential.co.uk/resources/guides/,https://www.ukbaa.org.uk/,http://gb.kompass.com/,https://ico.org.uk/concerns/getting/,http://www.iata.org/whatwedo/cargo/e/efreight/Pages/index.aspx,https://developer.google.com/,http://www.yellow.com,https://www.contactus.trade.gov.uk,https://stage.supplier.directory.uktrade.io/search/,https://stage.supplier.directory.uktrade.io/suppliers/" && \
 	export TEST_URLS="https://export.great.uat.uktrade.io/ https://stage.buyer.directory.uktrade.io/ https://stage.sso.uktrade.io/accounts/login/  https://stage.profile.uktrade.io/about/"
 
 SET_PYLINK_CHECKER_ENV_VARS_DEV := \
-	export IGNORED_PREFIXES="http://www.yellow.com,https://www.contactus.trade.gov.uk,https://dev.supplier.directory.uktrade.io/search/,https://dev.supplier.directory.uktrade.io/suppliers/" && \
+	export IGNORED_PREFIXES="http://www.kwintessential.co.uk/resources/guides/,https://www.ukbaa.org.uk/,http://gb.kompass.com/,https://ico.org.uk/concerns/getting/,http://www.iata.org/whatwedo/cargo/e/efreight/Pages/index.aspx,https://developer.google.com/,http://www.yellow.com,https://www.contactus.trade.gov.uk,https://dev.supplier.directory.uktrade.io/search/,https://dev.supplier.directory.uktrade.io/suppliers/" && \
 	export TEST_URLS="https://dev.exportreadiness.directory.uktrade.io/ https://dev.buyer.directory.uktrade.io/ https://www.dev.sso.uktrade.io/accounts/login/  https://dev.profile.uktrade.io/about/"
 
 # default to DEV environment if TEST_ENV is not set
