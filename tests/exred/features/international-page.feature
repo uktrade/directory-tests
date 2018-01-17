@@ -27,39 +27,38 @@ Feature: International Page
       | Visit Britain    | Visit the UK     |
 
 
-  @wip
+  @ED-3083
   @language-selector
   Scenario: Visitor should be able to open and close the language selector
     Given "Robert" visits the "International" page
 
-    When "Robert" opens up the language selector on "International" page
-    Then "Robert" should see the language selector on "International" page
+    When "Robert" opens up the language selector
+    Then "Robert" should see the language selector
 
     When "Robert" closes the language selector
-    Then "Robert" should not see the language selector on "International" page
+    Then "Robert" should not see the language selector
 
 
-  @wip
+  @ED-3083
   @language-selector
   @accessibility
-  Scenario: Keyboard users should be able to open and close the language selector
+  Scenario: Keyboard users should be able to open and close the language selector using just the keyboard
     Given "Robert" visits the "International" page
 
-    When "Robert" uses his keyboard to open the language selector on "International" page
-    Then "Robert" should see the language selector on "International" page
+    When "Robert" opens up the language selector using his keyboard
+    Then "Robert" should see the language selector
 
-    When "Robert" uses his keyboard to close the language selector
-    Then "Robert" should not see the language selector on "International" page
+    When "Robert" closes the language selector using his keyboard
+    Then "Robert" should not see the language selector
 
 
-  @wip
-  @ED-2865
+  @ED-3083
   @language-selector
   @accessibility
   Scenario: Language selector should trap the keyboard in order to help Keyboard users to navigate
     Given "Robert" visits the "International" page
 
-    When "Robert" uses his keyboard to open the language selector on "International" page
+    When "Robert" opens up the language selector using his keyboard
     And "Robert" uses his keyboard to navigate through all links visible on language selector
 
     Then "Robert"'s keyboard should be trapped to the language selector
@@ -70,9 +69,9 @@ Feature: International Page
   Scenario Outline: Visitors should be able to view International page in "<preferred_language>"
     Given "Robert" visits the "International" page
 
-    When "Robert" decides to view the International page in "<preferred_language>"
+    When "Robert" decides to view the "International" page in "<preferred_language>"
 
-    Then "Robert" should see the International page in "<preferred_language>"
+    Then "Robert" should see the "International" page in "<preferred_language>"
 
     Examples: available languages
       | language     |

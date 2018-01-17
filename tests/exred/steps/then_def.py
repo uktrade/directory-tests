@@ -31,6 +31,9 @@ from steps.then_impl import (
     guidance_should_see_total_number_of_articles,
     guidance_tile_should_be_highlighted,
     header_check_dit_logo,
+    language_selector_keyboard_should_be_trapped,
+    language_selector_should_not_see_it,
+    language_selector_should_see_it,
     personalised_journey_should_not_see_banner_and_top_10_table,
     personalised_journey_should_see_banner_and_top_10_table,
     personalised_journey_should_see_read_counter,
@@ -299,3 +302,18 @@ def then_actor_should_not_see_video_modal_window(context, actor_alias):
 @then('"{actor_alias}" should see correct DIT logo in page header')
 def then_actor_should_see_correct_dit_logo(context, actor_alias):
     header_check_dit_logo(context, actor_alias)
+
+
+@then('"{actor_alias}" should see the language selector')
+def then_actor_should_see_language_selector(context, actor_alias):
+    language_selector_should_see_it(context, actor_alias)
+
+
+@then('"{actor_alias}" should not see the language selector')
+def then_actor_should_not_see_language_selector(context, actor_alias):
+    language_selector_should_not_see_it(context, actor_alias)
+
+
+@then('"{actor_alias}"\'s keyboard should be trapped to the language selector')
+def then_keyboard_should_be_trapped_to_language_selector(context, actor_alias):
+    language_selector_keyboard_should_be_trapped(context, actor_alias)

@@ -40,15 +40,14 @@ class DockerComposeEnvWriter:
                     var
                 ))
                 if value:
-                    if export_mode:
-                        export_prefix = "export "
-                    else:
-                        export_prefix = ""
                     special_chars = '!$'
-                    if any(special in value for special in special_chars):
-                        dest.write("{}{}='{}'\n".format(export_prefix, var, value))
+                    if export_mode:
+                        if any(special in value for special in special_chars):
+                            dest.write("export {}='{}'\n".format(var, value))
+                        else:
+                            dest.write("export {}={}\n".format(var, value))
                     else:
-                        dest.write("{}{}={}\n".format(export_prefix, var, value))
+                        dest.write("{}={}\n".format(var, value))
 
     @classmethod
     def create(cls, config):

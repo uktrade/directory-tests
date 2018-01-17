@@ -12,8 +12,7 @@ from tests.functional.utils.generic import assertion_msg
 from tests.functional.utils.request import Method, check_response, make_request
 
 EXPECTED_STRINGS = [
-    "Confirm email Address", "Please confirm that", "is an email",
-    "address for user"
+    "Confirm email address", "Confirm that ", "is an email address for user"
 ]
 
 

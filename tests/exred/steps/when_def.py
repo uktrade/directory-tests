@@ -18,6 +18,9 @@ from steps.when_impl import (
     export_readiness_open_category,
     guidance_open_category,
     guidance_read_through_all_articles,
+    language_selector_close,
+    language_selector_navigate_through_links_with_keyboard,
+    language_selector_open,
     open_link,
     open_service_link_on_interim_page,
     personalised_journey_create_page,
@@ -268,3 +271,31 @@ def when_actor_decides_to_watch_promo_video(
 @when('"{actor_alias}" closes the window with promotional video')
 def when_actor_decides_to_close_the_promotional_video(context, actor_alias):
     promo_video_close(context, actor_alias)
+
+
+@when('"{actor_alias}" opens up the language selector')
+def when_actor_opens_up_language_selector(context, actor_alias):
+    language_selector_open(context, actor_alias)
+
+
+@when('"{actor_alias}" closes the language selector')
+def when_actor_closes_language_selector(context, actor_alias):
+    language_selector_close(context, actor_alias)
+
+
+@when('"{actor_alias}" opens up the language selector using her keyboard')
+@when('"{actor_alias}" opens up the language selector using his keyboard')
+def when_actor_opens_up_language_selector_with_keyboard(context, actor_alias):
+    language_selector_open(context, actor_alias, with_keyboard=True)
+
+
+@when('"{actor_alias}" closes the language selector using his keyboard')
+def when_actor_closes_language_selector_with_keyboard(context, actor_alias):
+    language_selector_close(context, actor_alias, with_keyboard=True)
+
+
+@when('"{actor_alias}" uses her keyboard to navigate through all links visible on language selector')
+@when('"{actor_alias}" uses his keyboard to navigate through all links visible on language selector')
+def when_actor_navigates_through_language_selector_links_with_keyboard(
+        context, actor_alias):
+    language_selector_navigate_through_links_with_keyboard(context, actor_alias)

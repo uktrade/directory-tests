@@ -11,9 +11,8 @@ from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("sso:login")
 EXPECTED_STRINGS = [
-    "Sign in", "If you have not created an account yet, then please",
-    "register", "first", "Email", "Password", "Remember me", "Sign in",
-    "Reset your password"
+    "Sign in", "Register", "if you don't have an account", "Email", "Password",
+    "Remember me", "Sign in", "Reset your password"
 ]
 
 

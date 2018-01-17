@@ -202,6 +202,9 @@ Feature: Trade Profile
     @ED-1760
     @ED-1766
     @fab
+    @bug
+    @ED-3151
+    @fixme
     @profile
     @fake-sso-email-verification
     Scenario: Supplier should be able to update company's details
