@@ -108,7 +108,7 @@ SET_PYLINK_CHECKER_ENV_VARS_STAGE := \
 	export TEST_URLS="https://export.great.uat.uktrade.io/ https://stage.buyer.directory.uktrade.io/ https://stage.sso.uktrade.io/accounts/login/  https://stage.profile.uktrade.io/about/"
 
 SET_PYLINK_CHECKER_ENV_VARS_DEV := \
-	export IGNORED_PREFIXES="https://www.linkedin.com/shareArticle,https://twitter.com/intent/tweet,http://www.yellow.com,https://www.contactus.trade.gov.uk,https://dev.supplier.directory.uktrade.io/search/,https://dev.supplier.directory.uktrade.io/suppliers/" && \
+	export IGNORED_PREFIXES="http://www.yellow.com,https://www.contactus.trade.gov.uk,https://dev.supplier.directory.uktrade.io/search/,https://dev.supplier.directory.uktrade.io/suppliers/" && \
 	export TEST_URLS="https://dev.exportreadiness.directory.uktrade.io/ https://dev.buyer.directory.uktrade.io/ https://www.dev.sso.uktrade.io/accounts/login/  https://dev.profile.uktrade.io/about/"
 
 # default to DEV environment if TEST_ENV is not set
@@ -119,13 +119,13 @@ smoke_tests_links_checker:
 	echo "Running pylinkchecker agaisnt: $${TEST_URLS} environment" && \
 	pylinkvalidate.py \
 	    --progress \
-	    --timeout=35 \
+	    --timeout=55 \
 	    --depth=2 \
 	    --workers=10 \
 	    --types=a \
 	    --test-outside \
 	    --parser=lxml \
-	    --header="User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.97 Safari/537.36 Vivaldi/1.94.1008.36" \
+	    --header="User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; FSL 7.0.6.01001)" \
 	    --ignore="$${IGNORED_PREFIXES}" \
 	    $${TEST_URLS}
 
