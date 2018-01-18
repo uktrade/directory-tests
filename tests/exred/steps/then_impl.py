@@ -454,6 +454,11 @@ def header_check_dit_logo(context, actor_alias):
     logging.debug("As expected %s can see correct DIT logo", actor_alias)
 
 
+def header_check_favicon(context: Context, actor_alias: str):
+    header.check_dit_favicon(context.driver)
+    logging.debug("As expected %s can see correct DIT favicon", actor_alias)
+
+
 def language_selector_should_see_it(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     visited_page = actor.visited_page

@@ -31,6 +31,7 @@ from steps.then_impl import (
     guidance_should_see_total_number_of_articles,
     guidance_tile_should_be_highlighted,
     header_check_dit_logo,
+    header_check_favicon,
     language_selector_keyboard_should_be_trapped,
     language_selector_should_not_see_it,
     language_selector_should_see_it,
@@ -324,3 +325,8 @@ def then_keyboard_should_be_trapped_to_language_selector(context, actor_alias):
 def then_page_language_should_be(context, actor_alias, preferred_language):
     should_see_page_in_preferred_language(
         context, actor_alias, preferred_language)
+
+
+@then('"{actor_alias}" should see the correct favicon')
+def then_actor_should_see_correct_favicon(context, actor_alias):
+    header_check_favicon(context, actor_alias)
