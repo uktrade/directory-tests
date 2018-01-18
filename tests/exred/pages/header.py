@@ -6,7 +6,7 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
 
-from settings import DIT_LOGO_MD5_CHECKSUM
+from settings import DIT_FAVICON_MD5_CHECKSUM, DIT_LOGO_MD5_CHECKSUM
 from utils import (
     assertion_msg,
     check_hash_of_remote_file,
@@ -18,6 +18,8 @@ NAME = "ExRed Header"
 URL = None
 
 
+FAVICON = "link[rel='shortcut icon']"
+EXOPPS_FAVICON = "link[rel='icon']"
 LOGO = "#header-dit-logo > img"
 HOME_LINK = "#header-home-link"
 REGISTRATION_LINK = "#header-register-link"
@@ -150,3 +152,19 @@ def check_dit_logo(driver: webdriver):
     src = logo.get_attribute("src")
     check_hash_of_remote_file(DIT_LOGO_MD5_CHECKSUM, src)
     logging.debug("%s has correct MD5sum %s", src, DIT_LOGO_MD5_CHECKSUM)
+
+
+def check_dit_favicon(driver: webdriver):
+    try:
+        favicon = find_element(
+            driver, by_css=FAVICON, element_name="Favicon", wait_for_it=False)
+    except NoSuchElementException:
+        try:
+            favicon = find_element(
+                driver, by_css=EXOPPS_FAVICON, element_name="Favicon",
+                wait_for_it=False)
+        except NoSuchElementException:
+            raise
+    src = favicon.get_attribute("href")
+    check_hash_of_remote_file(DIT_FAVICON_MD5_CHECKSUM, src)
+    logging.debug("Favicon %s has correct MD5sum %s", src, DIT_FAVICON_MD5_CHECKSUM)
