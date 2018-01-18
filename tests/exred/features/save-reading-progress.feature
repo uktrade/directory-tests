@@ -174,6 +174,7 @@ Feature: Save reading progress
     When "Robert" signs out
     And "Robert" goes to the "Home" page
     And "Robert" goes back to the same "<group>" Article category via "<location>"
+    And "Robert" shows all of the articles on the page whenever possible
     And "Robert" opens any Article but the last one
     And "Robert" decides to read through all remaining Articles from selected list
     And "Robert" signs in
@@ -194,7 +195,7 @@ Feature: Save reading progress
   @ED-2773
   @<group>
   @<location>
-  Scenario Outline: A signed in Exporter's progress should be updated with temporary information (cookie data merged with persistent storage)
+  Scenario Outline: A signed in Exporter's progress should be updated with temporary information (cookie data merged with persistent storage) even after clearing the cookies
     Given "Robert" is a registered and verified user
     And "Robert" is signed in
     And "Robert" went to the "Home" page
