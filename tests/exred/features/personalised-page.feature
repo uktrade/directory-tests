@@ -63,6 +63,26 @@ Feature: Customised page
       | services          | has not        | Article list, Case studies                      |
 
 
+  @ED-2465
+  @personalised-page
+  @articles
+  @<relevant>
+  @bug
+  @ED-2508
+  @fixed
+  Scenario Outline: "<relevant>" Exporter should see Export Readiness Articles Read Counter on the personalised page
+    Given "Nadia" classifies herself as "<relevant>" exporter
+
+    When "Nadia" creates a personalised journey page for herself
+
+    Then "Nadia" should see a Guidance Articles read counter for the "<relevant>" exporter
+
+    Examples:
+      | relevant   |
+      | New        |
+      | Occasional |
+
+
   @ED-2591
   @triage
   @change-answers
