@@ -14,6 +14,7 @@ from utils import (
 NAME = "ExRed Article List"
 URL = None
 
+SHOW_MORE_BUTTON = "#js-paginate-list-more"
 ARTICLE_CATEGORY = "#content > section h1.title"
 BREADCRUMBS = "p.breadcrumbs"
 ARTICLE_CATEGORY_INTRO = "div.section-intro"
@@ -66,3 +67,29 @@ def should_not_see_link_to_register(driver: webdriver):
 def should_not_see_link_to_sign_in(driver: webdriver):
     check_if_element_is_not_present(
         driver, by_css=SIGN_IN_LINK, element_name="Sign in link")
+
+
+def show_more(driver: webdriver):
+    button = find_element(
+        driver, by_css=SHOW_MORE_BUTTON, element_name="Show more button")
+    assert button.is_displayed()
+    button.click()
+    take_screenshot(driver, NAME + " after showing more")
+
+
+def show_all_articles(driver: webdriver):
+    take_screenshot(driver, NAME + " before showing all articles")
+    show_more_button = find_element(
+        driver, by_css=SHOW_MORE_BUTTON, wait_for_it=False)
+    max_clicks = 10
+    counter = 0
+    # click up to 11 times - see bug ED-2561
+    while show_more_button.is_displayed() and counter <= max_clicks:
+        show_more_button.click()
+        counter += 1
+    if counter > max_clicks:
+        with assertion_msg(
+                "'Show more' button didn't disappear after clicking on it for"
+                " %d times", counter):
+            assert counter == max_clicks
+    take_screenshot(driver, NAME + " after showing all articles")
