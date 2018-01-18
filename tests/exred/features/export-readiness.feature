@@ -1,7 +1,7 @@
 @articles
-@export-readiness
 @personas
-Feature: Articles
+@export-readiness
+Feature: Export Readiness
 
 
   @ED-2613
