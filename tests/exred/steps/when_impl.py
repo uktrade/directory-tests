@@ -700,6 +700,7 @@ def articles_open_any(context: Context, actor_alias: str):
     category = actor.article_category
     visited_articles = actor.visited_articles
     any_article = get_random_article(group, category)
+    article_common.show_all_articles(driver)
 
     # capture the counter values from Article List page
     article_list_total = article_common.get_total_articles(context.driver)
