@@ -29,6 +29,26 @@ Feature: Articles
   @<group>
   Scenario Outline: Any Exporter should see his reading progress through the "<group>" articles list
     Given "Robert" is on the "<group>" Article List for randomly selected category
+    And "Robert" shows all of the articles on the page
+
+    When "Robert" opens any article on the list
+    And "Robert" goes back to the Article List page
+    And "Robert" shows all of the articles on the page
+
+    Then "Robert" should see this article as read
+    And "Robert" should see that Article Read Counter increased by "1"
+    And "Robert" should see that Time to Complete remaining chapters decreased or remained unchanged for short articles
+
+    Examples: article groups
+      | group            |
+      | Export Readiness |
+
+
+  @ED-2605
+  @progress
+  @<group>
+  Scenario Outline: Any Exporter should see his reading progress through the "<group>" articles list
+    Given "Robert" is on the "<group>" Article List for randomly selected category
 
     When "Robert" opens any article on the list
     And "Robert" goes back to the Article List page
@@ -39,7 +59,6 @@ Feature: Articles
 
     Examples: article groups
       | group            |
-      | Export Readiness |
       | Guidance         |
 
 
@@ -89,6 +108,7 @@ Feature: Articles
     Given "Robert" was classified as "<relevant>" exporter in the triage process
 
     When "Robert" decides to create his personalised journey page
+    And "Robert" shows all of the articles on the page
 
     Then "Robert" should see an ordered list of all Export Readiness Articles selected for "<relevant>" Exporters
     And "Robert" should see on the Export Readiness Articles page "Articles Read counter, Total number of Articles, Time to complete remaining chapters"
@@ -118,6 +138,7 @@ Feature: Articles
   Scenario Outline: "<relevant>" Exporter accessing Guidance Articles through the Personalised Page should be able to navigate to the next article
     Given "Robert" was classified as "<relevant>" exporter in the triage process
     And "Robert" decided to create her personalised journey page
+    And "Robert" shows all of the articles on the page
 
     When "Robert" opens any Article but the last one
     And "Robert" decides to read through all remaining Articles from selected list
@@ -159,6 +180,7 @@ Feature: Articles
   @<location>
   Scenario Outline: Article Indicators should be updated accordingly after opening "<group>" Article via "<location>"
     Given "Robert" went to randomly selected "<group>" Article category via "<location>"
+    And "Robert" shows all of the articles on the page
 
     When "Robert" opens any article on the list
 
@@ -171,6 +193,23 @@ Feature: Articles
       | Export Readiness | header menu  |
       | Export Readiness | home page    |
       | Export Readiness | footer links |
+
+
+  @ED-2654
+  @counters
+  @<group>
+  @<location>
+  Scenario Outline: Article Indicators should be updated accordingly after opening "<group>" Article via "<location>"
+    Given "Robert" went to randomly selected "<group>" Article category via "<location>"
+
+    When "Robert" opens any article on the list
+
+    Then "Robert" should see that Total number of Articles did not change
+    And "Robert" should see that Article Read Counter increased by "1"
+    And "Robert" should see that Time to Complete remaining chapters decreased or remained unchanged for short articles
+
+    Examples:
+      | group            | location     |
       | Guidance         | header menu  |
       | Guidance         | home page    |
       | Guidance         | footer links |
@@ -182,6 +221,7 @@ Feature: Articles
   Scenario Outline: Article Indicators should be updated accordingly after opening Export Readiness Article relevant to "<relevant>" Exporters
     Given "Robert" was classified as "<relevant>" exporter in the triage process
     And "Robert" decided to create her personalised journey page
+    And "Robert" shows all of the articles on the page
 
     When "Robert" opens any article on the list
 
