@@ -6,7 +6,7 @@ from selenium import webdriver
 from selenium.webdriver import ActionChains
 
 from registry.articles import get_article, get_articles
-from utils import assertion_msg, selenium_action, take_screenshot
+from utils import assertion_msg, find_element, take_screenshot
 
 NAME = "ExRed Common Export Readiness"
 URL = None
@@ -76,16 +76,15 @@ def check_if_correct_articles_are_displayed(
 
 def check_elements_are_visible(driver: webdriver, elements: list):
     take_screenshot(driver, NAME)
-    for element in elements:
-        selector = SCOPE_ELEMENTS[element.lower()]
-        with selenium_action(
-                driver, "Could not find '%s' on '%s' using '%s' selector",
-                element, driver.current_url, selector):
-            page_element = driver.find_element_by_css_selector(selector)
-            if "firefox" not in driver.capabilities["browserName"].lower():
-                logging.debug("Moving focus to '%s' element", element)
-                action_chains = ActionChains(driver)
-                action_chains.move_to_element(page_element)
-                action_chains.perform()
-        with assertion_msg("Expected to see '%s' but can't see it", element):
+    for element_name in elements:
+        selector = SCOPE_ELEMENTS[element_name.lower()]
+        page_element = find_element(
+            driver, by_css=selector, element_name=element_name)
+        if "firefox" not in driver.capabilities["browserName"].lower():
+            logging.debug("Moving focus to '%s' element", element_name)
+            action_chains = ActionChains(driver)
+            action_chains.move_to_element(page_element)
+            action_chains.perform()
+        with assertion_msg(
+                "Expected to see '%s' but can't see it", element_name):
             assert page_element.is_displayed()

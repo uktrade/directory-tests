@@ -12,7 +12,7 @@ from selenium.webdriver import ActionChains
 
 from registry.articles import get_articles
 from settings import EXRED_UI_URL
-from utils import assertion_msg, find_element, selenium_action, take_screenshot
+from utils import assertion_msg, find_element, take_screenshot
 
 NAME = "ExRed Personalised Journey"
 URL = urljoin(EXRED_UI_URL, "custom")
@@ -124,10 +124,8 @@ SECTIONS = {
 
 def should_be_here(driver: webdriver):
     for element_name, element_selector in SECTIONS["hero"].items():
-        with selenium_action(
-                driver, "Could not find '%s' using '%s'", element_name,
-                element_selector):
-            element = driver.find_element_by_css_selector(element_selector)
+        element = find_element(
+            driver, by_css=element_selector, element_name=element_name)
         with assertion_msg(
                 "It looks like '%s' element is not visible on %s",
                 element_name, NAME):
@@ -139,15 +137,12 @@ def should_be_here(driver: webdriver):
 def should_see_read_counter(
         driver: webdriver, *, exporter_status: str = None,
         expected_number_articles: int = 0):
-    with selenium_action(
-            driver, "Could not find 'Article Read Counter' using '%s'",
-            READ_COUNTER):
-        counter = driver.find_element_by_css_selector(READ_COUNTER)
-        if "firefox" not in driver.capabilities["browserName"].lower():
-            logging.debug("Moving focus to 'Read Counter' on %s", NAME)
-            action_chains = ActionChains(driver)
-            action_chains.move_to_element(counter)
-            action_chains.perform()
+    counter = find_element(driver, by_css=READ_COUNTER, element_name="Article Read Counter")
+    if "firefox" not in driver.capabilities["browserName"].lower():
+        logging.debug("Moving focus to 'Read Counter' on %s", NAME)
+        action_chains = ActionChains(driver)
+        action_chains.move_to_element(counter)
+        action_chains.perform()
     with assertion_msg(
             "Guidance Article Read Counter is not visible on '%s' page", NAME):
         assert counter.is_displayed()
@@ -160,10 +155,8 @@ def should_see_read_counter(
 
 def should_see_total_articles_to_read(
         driver: webdriver, *, exporter_status: str = None):
-    with selenium_action(
-            driver, "Could not find 'Total Articles to Read' using '%s'",
-            TOTAL_ARTICLES):
-        counter = driver.find_element_by_css_selector(TOTAL_ARTICLES)
+    counter = find_element(
+        driver, by_css=TOTAL_ARTICLES, element_name='Total Articles to Read')
     with assertion_msg(
             "Guidance Article Read Counter is not visible on '%s' page", NAME):
         assert counter.is_displayed()
@@ -188,16 +181,13 @@ def open(driver: webdriver, group: str, element: str):
 
 def should_see_section(driver: webdriver, name: str):
     section = SECTIONS[name.lower()]
-    for key, selector in section.items():
-        with selenium_action(
-                driver, "Could not find: '%s' element in '%s' section using "
-                        "'%s' selector",
-                key, name, selector):
-            element = find_element(driver, by_css=selector)
+    for element_name, selector in section.items():
+        element = find_element(
+            driver, by_css=selector, element_name=element_name)
         with assertion_msg(
-                "'%s' in '%s' is not displayed", key, name):
+                "'%s' in '%s' is not displayed", element_name, name):
             assert element.is_displayed()
-            logging.debug("'%s' in '%s' is displayed", key, name)
+            logging.debug("'%s' in '%s' is displayed", element_name, name)
 
 
 def should_not_see_section(driver: webdriver, name: str):
