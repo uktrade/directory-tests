@@ -193,6 +193,6 @@ def given_actor_is_on_random_case_study_page(context, actor_alias, page_name):
     case_studies_go_to_random(context, actor_alias, page_name)
 
 
-@given('"{actor_alias}" shows all of the articles on the page')
+@given('"{actor_alias}" shows all of the articles on the page whenever possible')
 def given_actor_shows_all_articles(context, actor_alias):
     articles_show_all(context, actor_alias)

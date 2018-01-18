@@ -204,7 +204,7 @@ Feature: Save reading progress
     When "Robert" signs out and forgets the article reading history by clearing the cookies
     And "Robert" goes to the "Home" page
     And "Robert" goes back to the same "<group>" Article category via "<location>"
-    And "Robert" shows all of the articles on the page
+    And "Robert" shows all of the articles on the page whenever possible
     And "Robert" opens any Article but the last one
     And "Robert" decides to read through all remaining Articles from selected list
     And "Robert" signs in

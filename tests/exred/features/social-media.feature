@@ -9,7 +9,7 @@ Feature: Sharing on Social Media and via emails
   @<social_media>
   Scenario Outline: Any Exporter should be able to share the article via "<social_media>"
     Given "Robert" is on the "<group>" Article List for randomly selected category
-    And "Robert" shows all of the articles on the page
+    And "Robert" shows all of the articles on the page whenever possible
     And "Robert" opened any Article
 
     When "Robert" decides to share the article via "<social_media>"

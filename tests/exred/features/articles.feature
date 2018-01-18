@@ -29,11 +29,11 @@ Feature: Articles
   @<group>
   Scenario Outline: Any Exporter should see his reading progress through the "<group>" articles list
     Given "Robert" is on the "<group>" Article List for randomly selected category
-    And "Robert" shows all of the articles on the page
+    And "Robert" shows all of the articles on the page whenever possible
 
     When "Robert" opens any article on the list
     And "Robert" goes back to the Article List page
-    And "Robert" shows all of the articles on the page
+    And "Robert" shows all of the articles on the page whenever possible
 
     Then "Robert" should see this article as read
     And "Robert" should see that Article Read Counter increased by "1"
@@ -91,7 +91,7 @@ Feature: Articles
     Given "Robert" was classified as "<relevant>" exporter in the triage process
 
     When "Robert" decides to create his personalised journey page
-    And "Robert" shows all of the articles on the page
+    And "Robert" shows all of the articles on the page whenever possible
 
     Then "Robert" should see an ordered list of all Export Readiness Articles selected for "<relevant>" Exporters
     And "Robert" should see on the Export Readiness Articles page "Articles Read counter, Total number of Articles, Time to complete remaining chapters"
@@ -121,7 +121,7 @@ Feature: Articles
   Scenario Outline: "<relevant>" Exporter accessing Guidance Articles through the Personalised Page should be able to navigate to the next article
     Given "Robert" was classified as "<relevant>" exporter in the triage process
     And "Robert" decided to create her personalised journey page
-    And "Robert" shows all of the articles on the page
+    And "Robert" shows all of the articles on the page whenever possible
 
     When "Robert" opens any Article but the last one
     And "Robert" decides to read through all remaining Articles from selected list
@@ -163,7 +163,7 @@ Feature: Articles
   @<location>
   Scenario Outline: Article Indicators should be updated accordingly after opening "<group>" Article via "<location>"
     Given "Robert" went to randomly selected "<group>" Article category via "<location>"
-    And "Robert" shows all of the articles on the page
+    And "Robert" shows all of the articles on the page whenever possible
 
     When "Robert" opens any article on the list
 
@@ -187,7 +187,7 @@ Feature: Articles
   Scenario Outline: Article Indicators should be updated accordingly after opening Export Readiness Article relevant to "<relevant>" Exporters
     Given "Robert" was classified as "<relevant>" exporter in the triage process
     And "Robert" decided to create her personalised journey page
-    And "Robert" shows all of the articles on the page
+    And "Robert" shows all of the articles on the page whenever possible
 
     When "Robert" opens any article on the list
 
