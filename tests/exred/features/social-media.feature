@@ -20,8 +20,11 @@ Feature: Sharing on Social Media and via emails
     Examples:
       | group            | social_media |
       | Export Readiness | Facebook     |
-      | Guidance         | Twitter      |
       | Export Readiness | LinkedIn     |
+      | Export Readiness | Twitter      |
+      | Guidance         | Twitter      |
+      | Guidance         | Facebook     |
+      | Guidance         | LinkedIn     |
 
 
   @ED-2640

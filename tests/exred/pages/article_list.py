@@ -3,6 +3,7 @@
 import logging
 
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 
 from utils import (
     assertion_msg,
@@ -79,17 +80,20 @@ def show_more(driver: webdriver):
 
 def show_all_articles(driver: webdriver):
     take_screenshot(driver, NAME + " before showing all articles")
-    show_more_button = find_element(
-        driver, by_css=SHOW_MORE_BUTTON, wait_for_it=False)
-    max_clicks = 10
-    counter = 0
-    # click up to 11 times - see bug ED-2561
-    while show_more_button.is_displayed() and counter <= max_clicks:
-        show_more_button.click()
-        counter += 1
-    if counter > max_clicks:
-        with assertion_msg(
-                "'Show more' button didn't disappear after clicking on it for"
-                " %d times", counter):
-            assert counter == max_clicks
-    take_screenshot(driver, NAME + " after showing all articles")
+    try:
+        show_more_button = find_element(
+            driver, by_css=SHOW_MORE_BUTTON, wait_for_it=False)
+        max_clicks = 10
+        counter = 0
+        # click up to 11 times - see bug ED-2561
+        while show_more_button.is_displayed() and counter <= max_clicks:
+            show_more_button.click()
+            counter += 1
+        if counter > max_clicks:
+            with assertion_msg(
+                    "'Show more' button didn't disappear after clicking on it for"
+                    " %d times", counter):
+                assert counter == max_clicks
+        take_screenshot(driver, NAME + " after showing all articles")
+    except NoSuchElementException:
+        logging.debug("Nothing to click as 'Show More' button is not visible")

@@ -42,23 +42,6 @@ Feature: Articles
     Examples: article groups
       | group            |
       | Export Readiness |
-
-
-  @ED-2605
-  @progress
-  @<group>
-  Scenario Outline: Any Exporter should see his reading progress through the "<group>" articles list
-    Given "Robert" is on the "<group>" Article List for randomly selected category
-
-    When "Robert" opens any article on the list
-    And "Robert" goes back to the Article List page
-
-    Then "Robert" should see this article as read
-    And "Robert" should see that Article Read Counter increased by "1"
-    And "Robert" should see that Time to Complete remaining chapters decreased or remained unchanged for short articles
-
-    Examples: article groups
-      | group            |
       | Guidance         |
 
 
@@ -193,23 +176,6 @@ Feature: Articles
       | Export Readiness | header menu  |
       | Export Readiness | home page    |
       | Export Readiness | footer links |
-
-
-  @ED-2654
-  @counters
-  @<group>
-  @<location>
-  Scenario Outline: Article Indicators should be updated accordingly after opening "<group>" Article via "<location>"
-    Given "Robert" went to randomly selected "<group>" Article category via "<location>"
-
-    When "Robert" opens any article on the list
-
-    Then "Robert" should see that Total number of Articles did not change
-    And "Robert" should see that Article Read Counter increased by "1"
-    And "Robert" should see that Time to Complete remaining chapters decreased or remained unchanged for short articles
-
-    Examples:
-      | group            | location     |
       | Guidance         | header menu  |
       | Guidance         | home page    |
       | Guidance         | footer links |
