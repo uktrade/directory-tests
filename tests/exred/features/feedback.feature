@@ -24,6 +24,7 @@ Feature: Feedback (tell us why)
   Scenario Outline: "<relevant>" Exporters should be able to tell us that they "<found_or_not>" the article relevant to them useful
     Given "Robert" was classified as "<relevant>" exporter in the triage process
     And "Robert" decided to create her personalised journey page
+    And "Robert" shows all of the articles on the page
     And "Robert" opened any Article
 
     When "Robert" decides to tell us that he "<found_or_not>" this article useful
