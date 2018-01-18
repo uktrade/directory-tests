@@ -1123,3 +1123,10 @@ def language_selector_change_to(
     language_selector_open(context, actor_alias)
     language_selector.change_to(
         context.driver, visited_page, preferred_language)
+
+
+def articles_show_all(context: Context, actor_alias: str):
+    article_list.show_all_articles(context.driver)
+    logging.debug(
+        "%s showed up all articled on the page: %s", actor_alias,
+        context.driver.current_url)
