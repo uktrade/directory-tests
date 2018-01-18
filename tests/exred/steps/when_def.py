@@ -18,6 +18,7 @@ from steps.when_impl import (
     export_readiness_open_category,
     guidance_open_category,
     guidance_read_through_all_articles,
+    language_selector_change_to,
     language_selector_close,
     language_selector_navigate_through_links_with_keyboard,
     language_selector_open,
@@ -299,3 +300,9 @@ def when_actor_closes_language_selector_with_keyboard(context, actor_alias):
 def when_actor_navigates_through_language_selector_links_with_keyboard(
         context, actor_alias):
     language_selector_navigate_through_links_with_keyboard(context, actor_alias)
+
+
+@when('"{actor_alias}" decides to view the page in "{preferred_language}"')
+def when_actor_views_page_in_selected_language(
+        context, actor_alias, preferred_language):
+    language_selector_change_to(context, actor_alias, preferred_language)

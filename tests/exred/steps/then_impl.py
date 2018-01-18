@@ -475,3 +475,8 @@ def language_selector_keyboard_should_be_trapped(
     visited_page = actor.visited_page
     language_selector.keyboard_should_be_trapped(
         context.driver, page_name=visited_page)
+
+
+def should_see_page_in_preferred_language(
+        context: Context, actor_alias: str, preferred_language: str):
+    language_selector.check_page_language_is(context.driver, preferred_language)

@@ -154,7 +154,7 @@ USE_FREIGHT_FORWARDER = Article(
     time_to_read=0
 )
 USE_INCOTERMS_IN_CONTRACTS = Article(
-    title='User incoterms in contracts',
+    title='Use incoterms in contracts',
     time_to_read=0
 )
 GET_YOUR_EXPORT_DOCUMENTS_RIGHT = Article(

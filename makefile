@@ -100,15 +100,15 @@ smoke_tests:
 	pytest tests/smoke $(pytest_args)
 
 SET_PYLINK_CHECKER_ENV_VARS_PROD := \
-	export IGNORED_PREFIXES="https://www.linkedin.com/shareArticle,https://twitter.com/intent/tweet,http://www.yellow.com,https://www.contactus.trade.gov.uk,https://trade.great.gov.uk/search/,https://trade.great.gov.uk/suppliers/" && \
+	export IGNORED_PREFIXES="http://www.kwintessential.co.uk/resources/guides/,https://www.ukbaa.org.uk/,http://gb.kompass.com/,https://ico.org.uk/concerns/getting/,http://www.iata.org/whatwedo/cargo/e/efreight/Pages/index.aspx,https://developer.google.com/,http://www.yellow.com,https://www.contactus.trade.gov.uk,https://trade.great.gov.uk/search/,https://trade.great.gov.uk/suppliers/" && \
 	export TEST_URLS="https://www.great.gov.uk/ https://www.export.great.gov.uk/ https://find-a-buyer.export.great.gov.uk/ https://sso.trade.great.gov.uk/accounts/login/ https://trade.great.gov.uk/ https://profile.great.gov.uk/about/"
 
 SET_PYLINK_CHECKER_ENV_VARS_STAGE := \
-	export IGNORED_PREFIXES="https://www.linkedin.com/shareArticle,https://twitter.com/intent/tweet,http://www.yellow.com,https://www.contactus.trade.gov.uk,https://stage.supplier.directory.uktrade.io/search/,https://stage.supplier.directory.uktrade.io/suppliers/" && \
+	export IGNORED_PREFIXES="http://www.kwintessential.co.uk/resources/guides/,https://www.ukbaa.org.uk/,http://gb.kompass.com/,https://ico.org.uk/concerns/getting/,http://www.iata.org/whatwedo/cargo/e/efreight/Pages/index.aspx,https://developer.google.com/,http://www.yellow.com,https://www.contactus.trade.gov.uk,https://stage.supplier.directory.uktrade.io/search/,https://stage.supplier.directory.uktrade.io/suppliers/" && \
 	export TEST_URLS="https://export.great.uat.uktrade.io/ https://stage.buyer.directory.uktrade.io/ https://stage.sso.uktrade.io/accounts/login/  https://stage.profile.uktrade.io/about/"
 
 SET_PYLINK_CHECKER_ENV_VARS_DEV := \
-	export IGNORED_PREFIXES="https://www.linkedin.com/shareArticle,https://twitter.com/intent/tweet,http://www.yellow.com,https://www.contactus.trade.gov.uk,https://dev.supplier.directory.uktrade.io/search/,https://dev.supplier.directory.uktrade.io/suppliers/" && \
+	export IGNORED_PREFIXES="http://www.kwintessential.co.uk/resources/guides/,https://www.ukbaa.org.uk/,http://gb.kompass.com/,https://ico.org.uk/concerns/getting/,http://www.iata.org/whatwedo/cargo/e/efreight/Pages/index.aspx,https://developer.google.com/,http://www.yellow.com,https://www.contactus.trade.gov.uk,https://dev.supplier.directory.uktrade.io/search/,https://dev.supplier.directory.uktrade.io/suppliers/" && \
 	export TEST_URLS="https://dev.exportreadiness.directory.uktrade.io/ https://dev.buyer.directory.uktrade.io/ https://www.dev.sso.uktrade.io/accounts/login/  https://dev.profile.uktrade.io/about/"
 
 # default to DEV environment if TEST_ENV is not set
@@ -119,13 +119,13 @@ smoke_tests_links_checker:
 	echo "Running pylinkchecker agaisnt: $${TEST_URLS} environment" && \
 	pylinkvalidate.py \
 	    --progress \
-	    --timeout=35 \
+	    --timeout=55 \
 	    --depth=2 \
 	    --workers=10 \
 	    --types=a \
 	    --test-outside \
 	    --parser=lxml \
-	    --header="User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.97 Safari/537.36 Vivaldi/1.94.1008.36" \
+	    --header="User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; FSL 7.0.6.01001)" \
 	    --ignore="$${IGNORED_PREFIXES}" \
 	    $${TEST_URLS}
 

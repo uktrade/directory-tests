@@ -64,34 +64,35 @@ Feature: International Page
     Then "Robert"'s keyboard should be trapped to the language selector
 
 
-  @wip
+  @ED-3149
   @language-selector
   Scenario Outline: Visitors should be able to view International page in "<preferred_language>"
     Given "Robert" visits the "International" page
 
-    When "Robert" decides to view the "International" page in "<preferred_language>"
+    When "Robert" decides to view the page in "<preferred_language>"
 
-    Then "Robert" should see the "International" page in "<preferred_language>"
+    Then "Robert" should be on the "International" page
+    And "Robert" should see the page in "<preferred_language>"
 
     Examples: available languages
-      | language     |
-      | English      |
-      | 简体中文     |
-      | Deutsch      |
-      | 日本語       |
-      | Español      |
-      | Português    |
-      | العربيّة     |
+      | preferred_language |
+      | English            |
+      | 简体中文            |
+      | Deutsch            |
+      | 日本語              |
+      | Español            |
+      | Português          |
+      | العربيّة            |
 
 
-  @wip
+  @ED-3149
   @language-selector
   Scenario: Visitors should be able to "get guidance and services to help them export" (visit ExRed) from International page
     Given "Robert" visits the "International" page
 
-    When "Robert" decides to view the International page in "English (UK)"
+    When "Robert" decides to view the page in "English (UK)"
 
-    Then "Robert" should be on the "ExRed Home" page
+    Then "Robert" should be on the "Home" page
 
 
   @wip

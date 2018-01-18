@@ -16,6 +16,7 @@ from utils import (
 
 NAME = "Language selector"
 
+LANGUAGE_INDICATOR = "#header-bar span.lang"
 LANGUAGE_SELECTOR_OPEN = "#header-bar a.LanguageSelectorDialog-Tracker"
 LANGUAGE_SELECTOR_CLOSE = "#header-language-selector-close"
 DOMESTIC_PAGE = "section.language-selector-dialog div.domestic-redirect > p > a"
@@ -42,7 +43,7 @@ ELEMENTS_ON = {
     "international": {
         "itself": "section.language-selector-dialog",
         "title": "#great-languages-selector",
-        "domestic page": DOMESTIC_PAGE,
+        "English (UK)": DOMESTIC_PAGE,
         "English": ENGLISH,
         "简体中文": CHINESE,
         "Deutsch": GERMAN,
@@ -75,6 +76,16 @@ KEYBOARD_NAVIGABLE_ELEMENTS = {
         ("domestic page", DOMESTIC_PAGE),
         ("close", LANGUAGE_SELECTOR_CLOSE),
     ]
+}
+LANGUAGE_INDICATOR_VALUES = {
+    "English": "en-gb",
+    "English (UK)": "en-gb",
+    "简体中文": "zh-hans",
+    "Deutsch": "de",
+    "日本語": "ja",
+    "Español": "es",
+    "Português": "pt",
+    "العربيّة": "ar",
 }
 
 
@@ -137,3 +148,24 @@ def keyboard_should_be_trapped(driver: webdriver, page_name: str):
     number_of_navigation_iterations = 2
     for _ in range(number_of_navigation_iterations):
         navigate_through_links_with_keyboard(driver, page_name)
+
+
+def change_to(
+        driver: webdriver, page_name: str, language: str, *,
+        with_keyboard: bool = False):
+    language_selector = ELEMENTS_ON[page_name.lower()][language]
+    language_button = find_element(driver, by_css=language_selector)
+    if with_keyboard:
+        language_button.send_keys(Keys.ENTER)
+    else:
+        language_button.click()
+
+
+def check_page_language_is(driver: webdriver, expected_language: str):
+    expected_language_code = LANGUAGE_INDICATOR_VALUES[expected_language]
+    language_indicator = find_element(driver, by_css=LANGUAGE_INDICATOR)
+    language_indicator_code = language_indicator.text.lower()
+    with assertion_msg(
+            "Expected to see page in '%s' but got '%s'",
+            expected_language_code, language_indicator_code):
+        assert language_indicator_code == expected_language_code
