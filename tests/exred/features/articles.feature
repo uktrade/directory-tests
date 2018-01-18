@@ -260,43 +260,6 @@ Feature: Articles
       | Regular  | Guidance | personalised journey |
 
 
-  @ED-2640
-  @sharing
-  @<group>
-  @<social_media>
-  Scenario Outline: Any Exporter should be able to share the article via "<social_media>"
-    Given "Robert" is on the "<group>" Article List for randomly selected category
-    And "Robert" opened any Article
-
-    When "Robert" decides to share the article via "<social_media>"
-
-    Then "Robert" should be taken to a new tab with the "<social_media>" share page opened
-    And "Robert" should that "<social_media>" share page has been pre-populated with message and the link to the article
-
-    Examples:
-      | group            | social_media |
-      | Export Readiness | Facebook     |
-      | Guidance         | Twitter      |
-      | Export Readiness | LinkedIn     |
-
-
-  @ED-2640
-  @sharing
-  @<group>
-  @<social_media>
-  Scenario Outline: Any Exporter should be able to share the article via "<social_media>"
-    Given "Robert" is on the "<group>" Article List for randomly selected category
-    And "Robert" opened any Article
-
-    When "Robert" decides to share the article via "<social_media>"
-
-    Then "Robert" should see that the share via email link will pre-populate the message subject and body with Article title and URL
-
-    Examples:
-      | group            | social_media |
-      | Guidance         | email        |
-
-
   @wip
   @ED-2775
   @out-of-scope
