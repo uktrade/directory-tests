@@ -3,7 +3,7 @@
 # and this is causing some problems when running scenarios from within IDE
 # https://youtrack.jetbrains.com/issue/PY-14219
 # https://youtrack.jetbrains.com/issue/PY-18316
-#junit=True
-#junit_directory=./reports/
+junit=True
+junit_directory=./reports/
 verbose=True
 logging_level=DEBUG

@@ -97,7 +97,7 @@ DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL := docker-compose rm && docker-compose pull
 
 smoke_tests:
 	$(SET_PYTEST_ENV_VARS) && \
-	pytest tests/smoke $(pytest_args)
+	pytest --junitxml=tests/smoke/reports/smoke.xml tests/smoke $(pytest_args)
 
 SET_PYLINK_CHECKER_ENV_VARS_PROD := \
 	export IGNORED_PREFIXES="https://www.nationalarchives.gov.uk,https://euipo.europa.eu/,http://www.kwintessential.co.uk/resources/guides/,https://www.ukbaa.org.uk/,http://gb.kompass.com/,https://ico.org.uk/concerns/getting/,http://www.iata.org/whatwedo/cargo/e/efreight/Pages/index.aspx,https://developer.google.com/,http://www.yellow.com,https://www.contactus.trade.gov.uk,https://trade.great.gov.uk/search/,https://trade.great.gov.uk/suppliers/" && \
