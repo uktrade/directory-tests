@@ -24,18 +24,20 @@ Run all scenarios using local browser (defaults to Chrome):
 make exred_local
 ```
 
-
+## Use specific browser
 If you want to run all the scenarios in a specific browser, then use `BROWSERS` environment variable:  
 ```bash
 BROWSERS=firefox make exred_local
 ```
 
+## Run scenarios for specific tag
 
 If you want to run specific scenario in a specific browser, then use `TAG` & `BROWSERS` environment variables:  
 ```bash
 TAG=ED-2366 BROWSERS=firefox make exred_local
 ```
 
+## Run scenarios with "behave" command
 
 You can also run the scenarios with `behave` command (defaults to Chrome): 
 ```bash
@@ -43,12 +45,28 @@ cd tests/exred
 behave -k --format progress3 --no-logcapture --stop --tags=-wip --tags=-skip --tags=~fixme
 ```
 
+### Use specific browser with "behave" command
+
 You can also use different browser when running the scenarios with `behave` command:  
 ```bash
 cd tests/exred
 BROWSERS=firefox behave -k --format progress3 --no-logcapture --stop --tags=-wip --tags=-skip --tags=~fixme
 ```
 
+## Custom capabilities
+
+In order to use custom browser capabilities, please provide them as a dict string in `CAPABILITIES` env var:
+```shell
+CAPABILITIES='{"pageLoadStrategy":"eager","marionette":true}' AUTO_RETRY=false BROWSERS=firefox behave -k --no-logcapture -t ~wip -t ~fixme features/ --stop -t <your_tag>
+```
+
+PS. When using custom browser capabilities in Firefox, then the [geckodriver](https://github.com/mozilla/geckodriver/) will always expect `marionette` set to `true`.
+
+In order to change `pageLoadStrategy` to `eager` in Chrome you'll have to set its value to `none`.
+See [this answer](https://stackoverflow.com/a/43737358) for more details.
+```shell
+CAPABILITIES='{"pageLoadStrategy":"none"}' AUTO_RETRY=false BROWSERS=chrome behave -k --no-logcapture -t ~wip -t ~fixme features/ --stop -t <your_tag>
+```
 
 # Run scenarios on BrowserStack
 
