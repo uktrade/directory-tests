@@ -101,3 +101,7 @@ Temporary Items
 .env
 .env_*
 .env-postgres
+
+# NodeJS (nodeenv)
+package-lock.json
+node_modules/
