@@ -20,11 +20,12 @@ from utils import (
 
 
 def start_driver_session(context: Context, session_name: str):
-    desired_capabilities = context.desired_capabilities
-    desired_capabilities["name"] = session_name
+    remote_desired_capabilities = context.remote_desired_capabilities
+    remote_desired_capabilities["name"] = session_name
+    local_desired_capabilities = context.local_desired_capabilities
     if CONFIG["hub_url"]:
         context.driver = webdriver.Remote(
-            desired_capabilities=desired_capabilities,
+            desired_capabilities=remote_desired_capabilities,
             command_executor=CONFIG["hub_url"])
     else:
         browser_name = CONFIG["environments"][0]["browser"]
@@ -36,8 +37,20 @@ def start_driver_session(context: Context, session_name: str):
             "phantomjs": webdriver.PhantomJS,
             "safari": webdriver.Safari,
         }
-        # start the browser
-        context.driver = drivers[browser_name.lower()]()
+        print("Starting local instance of {}".format(browser_name))
+        if local_desired_capabilities:
+            print(
+                "Will use following browser capabilities: {}"
+                .format(local_desired_capabilities))
+            if browser_name.lower() in ["firefox", "edge", "ie"]:
+                context.driver = drivers[browser_name.lower()](
+                    capabilities=local_desired_capabilities)
+            elif browser_name.lower() in ["chrome", "phantomjs", "safari"]:
+                context.driver = drivers[browser_name.lower()](
+                    desired_capabilities=local_desired_capabilities)
+        else:
+            print("Will use default browser capabilities")
+            context.driver = drivers[browser_name.lower()]()
     context.driver.set_page_load_timeout(time_to_wait=27)
     try:
         context.driver.maximize_window()
@@ -152,15 +165,17 @@ def before_all(context: Context):
 
     :param context: Behave Context object
     """
-    desired_capabilities = CONFIG["environments"][TASK_ID]
+    remote_desired_capabilities = CONFIG["environments"][TASK_ID]
+    local_desired_capabilities = CONFIG["capabilities"]
 
     for key in CONFIG["capabilities"]:
-        if key not in desired_capabilities:
-            desired_capabilities[key] = CONFIG["capabilities"][key]
+        if key not in remote_desired_capabilities:
+            remote_desired_capabilities[key] = CONFIG["capabilities"][key]
 
-    context.desired_capabilities = desired_capabilities
-    browser_name = desired_capabilities["browser"]
-    browser_version = desired_capabilities.get("browser_version", "")
+    context.remote_desired_capabilities = remote_desired_capabilities
+    context.local_desired_capabilities = local_desired_capabilities
+    browser_name = remote_desired_capabilities["browser"]
+    browser_version = remote_desired_capabilities.get("browser_version", "")
     task_id = "{}-{}-v{}".format(TASK_ID, browser_name, browser_version)
 
     init_loggers(context, task_id=task_id)

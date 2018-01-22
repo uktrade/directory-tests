@@ -19,28 +19,35 @@ Feature: Case Studies
       | Third    |
 
 
-  @ED-2656
-  @<social-media>
-  Scenario Outline: Any Exporter should be able to share the Case Study Article via "<social-media>"
-    Given "Robert" is on the Case Study page accessed via "Home" page
+  @ED-2593
+  @personalised-page
+  @case-studies
+  Scenario Outline: "<relevant>" Exporter should get to a "<selected>" case study from Case Studies carousel on the personalised journey page
+    Given "Robert" was classified as "<relevant>" exporter in the triage process
+    And "Robert" decided to create his personalised journey page
 
-    When "Robert" decides to share the article via "<social-media>"
+    When "Robert" goes to the "<selected>" Case Study via carousel
 
-    Then "Robert" should be taken to a new tab with the "<social-media>" share page opened
-    And "Robert" should that "<social-media>" share page has been pre-populated with message and the link to the article
+    Then "Robert" should see "<selected>" case study
+    And "Robert" should see the Share Widget
 
     Examples:
-      | social-media |
-      | Facebook     |
-      | Twitter      |
-      | LinkedIn     |
+      | relevant   | selected |
+      | New        | First    |
+      | Occasional | Second   |
 
 
-  @ED-2656
-  @email
-  Scenario: Any Exporter should be able to share the Case Study Article via Email
-    Given "Robert" is on the Case Study page accessed via "Home" page
+  @ED-2593
+  @personalised-page
+  @case-studies
+  Scenario Outline: "<relevant>" Exporter should not see Case Studies carousel on the personalised journey page
+    Given "Robert" was classified as "<relevant>" exporter in the triage process
 
-    When "Robert" decides to share the article via "email"
+    When "Robert" decides to create her personalised journey page
 
-    Then "Robert" should see that the share via email link will pre-populate the message subject and body with Article title and URL
+    Then "Robert" should be on the Personalised Journey page for "<relevant>" exporters
+    And "Robert" should not see "case studies" sections on "personalised journey" page
+
+    Examples:
+      | relevant |
+      | Regular  |

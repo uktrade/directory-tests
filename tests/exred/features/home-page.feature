@@ -40,6 +40,7 @@ Feature: Home Page
     Given "Robert" classifies himself as "<specific>" exporter
 
     When "Robert" goes to the Export Readiness Articles for "<specific>" Exporters via "home page"
+    And "Robert" shows all of the articles on the page whenever possible
 
     Then "Robert" should see an ordered list of all Export Readiness Articles selected for "<specific>" Exporters
     And "Robert" should see on the Export Readiness Articles page "Articles Read counter, Total number of Articles, Time to complete remaining chapters"

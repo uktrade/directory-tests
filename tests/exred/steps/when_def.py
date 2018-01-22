@@ -12,6 +12,7 @@ from steps.when_impl import (
     articles_open_any_but_the_last,
     articles_open_group,
     articles_share_on_social_media,
+    articles_show_all,
     case_studies_go_to,
     clear_the_cookies,
     continue_export_journey,
@@ -306,3 +307,8 @@ def when_actor_navigates_through_language_selector_links_with_keyboard(
 def when_actor_views_page_in_selected_language(
         context, actor_alias, preferred_language):
     language_selector_change_to(context, actor_alias, preferred_language)
+
+
+@when('"{actor_alias}" shows all of the articles on the page whenever possible')
+def given_actor_shows_all_articles(context, actor_alias):
+    articles_show_all(context, actor_alias)

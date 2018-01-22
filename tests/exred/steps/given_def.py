@@ -14,6 +14,7 @@ from steps.when_impl import (
     articles_open_first,
     articles_open_group,
     articles_read_a_number_of_them,
+    articles_show_all,
     case_studies_go_to_random,
     export_readiness_open_category,
     get_geo_ip,
@@ -190,3 +191,8 @@ def given_actor_is_signed_in(context, actor_alias, *, location="top bar"):
 @given('"{actor_alias}" is on the Case Study page accessed via "{page_name}" page')
 def given_actor_is_on_random_case_study_page(context, actor_alias, page_name):
     case_studies_go_to_random(context, actor_alias, page_name)
+
+
+@given('"{actor_alias}" shows all of the articles on the page whenever possible')
+def given_actor_shows_all_articles(context, actor_alias):
+    articles_show_all(context, actor_alias)

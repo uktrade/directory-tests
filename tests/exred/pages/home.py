@@ -371,4 +371,5 @@ def close_video(driver: webdriver):
 
 
 def should_not_see_video_modal_window(driver: webdriver):
+    time.sleep(1)
     check_if_element_is_not_present(driver, by_css=VIDEO_MODAL_WINDOW)

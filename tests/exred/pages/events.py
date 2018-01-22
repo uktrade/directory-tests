@@ -5,18 +5,22 @@ from urllib.parse import urljoin
 
 from selenium import webdriver
 
+from pages.common_actions import visit as common_visit
 from settings import EVENTS_UI_URL
 from utils import assertion_msg, take_screenshot, wait_for_visibility
 
 NAME = "Events Home page"
 URL = urljoin(EVENTS_UI_URL, "")
 PAGE_TITLE = "Department for International Trade (DIT): exporting from or investing in the UK"
+GREAT_LOGO = "#portal-top > h1 > a > img"
 
-WELCOME_MESSAGE = "#feature > div.contain.slider > article.tile.initial.visible > div > h2"
+
+def visit(driver: webdriver, *, first_time: bool = False):
+    common_visit(driver, URL, NAME, first_time=first_time)
 
 
 def should_be_here(driver: webdriver):
-    wait_for_visibility(driver, by_css=WELCOME_MESSAGE, time_to_wait=15)
+    wait_for_visibility(driver, by_css=GREAT_LOGO, time_to_wait=15)
     with assertion_msg(
             "Expected page title to be: '%s' but got '%s'", PAGE_TITLE,
             driver.title):

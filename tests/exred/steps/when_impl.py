@@ -700,6 +700,7 @@ def articles_open_any(context: Context, actor_alias: str):
     category = actor.article_category
     visited_articles = actor.visited_articles
     any_article = get_random_article(group, category)
+    article_list.show_all_articles(driver)
 
     # capture the counter values from Article List page
     article_list_total = article_common.get_total_articles(context.driver)
@@ -1123,3 +1124,10 @@ def language_selector_change_to(
     language_selector_open(context, actor_alias)
     language_selector.change_to(
         context.driver, visited_page, preferred_language)
+
+
+def articles_show_all(context: Context, actor_alias: str):
+    article_list.show_all_articles(context.driver)
+    logging.debug(
+        "%s showed up all articled on the page: %s", actor_alias,
+        context.driver.current_url)

@@ -10,11 +10,13 @@
   "environments": [
     {{
       "browser": "Chrome",
-      "browser_version": "62.0"
+      "browser_version": "63.0",
+      "pageLoadStrategy": "none"
     }},
     {{
       "browser": "Firefox",
-      "browser_version": "56.0"
+      "browser_version": "57.0",
+      "pageLoadStrategy": "eager"
     }}
   ]
 }}
