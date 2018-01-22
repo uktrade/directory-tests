@@ -107,6 +107,7 @@ jobs:
             BROWSERS=Chrome VERSIONS=62.0 make exred_browserstack
       - run:
           name: merge JUnit XML reports
+          when: always
           command: |
             python3 -m venv venv
             . venv/bin/activate
@@ -155,6 +156,7 @@ jobs:
             BROWSERS=Firefox VERSIONS=56.0 make exred_browserstack
       - run:
           name: merge JUnit XML reports
+          when: always
           command: |
             python3 -m venv venv
             . venv/bin/activate
@@ -263,6 +265,7 @@ jobs:
             FEATURE_DIR=fas make functional_tests_feature_dir
       - run:
           name: merge JUnit XML reports
+          when: always
           command: |
             python3 -m venv venv
             . venv/bin/activate
@@ -305,6 +308,7 @@ jobs:
             FEATURE_DIR=sso make functional_tests_feature_dir
       - run:
           name: merge JUnit XML reports
+          when: always
           command: |
             python3 -m venv venv
             . venv/bin/activate
@@ -347,6 +351,7 @@ jobs:
             FEATURE_DIR=sud make functional_tests_feature_dir
       - run:
           name: merge JUnit XML reports
+          when: always
           command: |
             python3 -m venv venv
             . venv/bin/activate
