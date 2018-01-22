@@ -47,6 +47,10 @@ jobs:
             python ./docker/env_writer.py ./docker/env.json
             source ./docker/.env_with_export;
             make smoke_tests
+      - store_test_results:
+          path: ./tests/smoke/reports
+      - store_artifacts:
+          path: ./tests/smoke/reports
 
   smoke_tests_links_checker:
     docker:
