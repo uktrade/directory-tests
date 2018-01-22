@@ -20,6 +20,7 @@ from utils import (
 
 NAME = "ExRed Home"
 URL = urljoin(EXRED_UI_URL, "?lang=en-gb")
+PAGE_TITLE = "Welcome to great.gov.uk - export guidance and services"
 
 PROMO_VIDEO = "body > div.video-container.Modal-Container.open > div > video"
 CLOSE_VIDEO = "#hero-campaign-section-videoplayer-close"
@@ -201,6 +202,14 @@ def visit(driver: webdriver, *, first_time: bool = False):
 
 def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
+    with assertion_msg(
+            "Expected page URL to be: '%s' but got '%s'", URL,
+            driver.current_url):
+        assert driver.current_url in URL
+    with assertion_msg(
+            "Expected page title to be: '%s' but got '%s'", PAGE_TITLE,
+            driver.title):
+        assert PAGE_TITLE.lower() in driver.title.lower()
     for section in SECTIONS:
         for element_name, element_selector in SECTIONS[section].items():
             element = driver.find_element_by_css_selector(element_selector)
