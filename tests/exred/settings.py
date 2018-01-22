@@ -71,6 +71,10 @@ if (CONFIG_NAME.startswith("browserstack") and
         (BROWSERSTACK_SERVER and BROWSERSTACK_USER and BROWSERSTACK_PASS)):
     HUB_URL = BROWSERSTACK_EXECUTOR_URL
 
+if CAPABILITIES:
+    import json
+    CAPABILITIES = json.loads(CAPABILITIES)
+
 CONFIG = config.get(
     config_file=CONFIG_NAME, hub_url=HUB_URL, capabilities=CAPABILITIES,
     browsers=BROWSERS, versions=BROWSERS_VERSIONS, build_id=BUILD_ID)
