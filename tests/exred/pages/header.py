@@ -22,6 +22,7 @@ FAVICON = "link[rel='shortcut icon']"
 EXOPPS_FAVICON = "link[rel='icon']"
 LOGO = "#header-dit-logo > img"
 HOME_LINK = "#header-home-link"
+YOUR_EXPORT_JOURNEY = "#header-custom-page-link"
 REGISTRATION_LINK = "#header-register-link"
 SIGN_IN_LINK = "#header-bar .top-bar li:nth-child(2) > a"  # "#header-sign-in-link"
 PROFILE_LINK = "#header-profile-link"
@@ -55,7 +56,9 @@ SECTIONS = {
         "events": "#header-services-events"
     },
     "general": {
-        "logo": LOGO
+        "logo": LOGO,
+        "home": HOME_LINK,
+        "your export journey": YOUR_EXPORT_JOURNEY
     },
     "account links": {
         "register": REGISTRATION_LINK,
