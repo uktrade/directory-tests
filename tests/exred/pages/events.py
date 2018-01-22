@@ -12,6 +12,7 @@ from utils import assertion_msg, take_screenshot, wait_for_visibility
 NAME = "Events Home page"
 URL = urljoin(EVENTS_UI_URL, "")
 PAGE_TITLE = "Department for International Trade (DIT): exporting from or investing in the UK"
+GREAT_LOGO = "#portal-top > h1 > a > img"
 
 
 def visit(driver: webdriver, *, first_time: bool = False):
@@ -19,6 +20,7 @@ def visit(driver: webdriver, *, first_time: bool = False):
 
 
 def should_be_here(driver: webdriver):
+    wait_for_visibility(driver, by_css=GREAT_LOGO, time_to_wait=15)
     with assertion_msg(
             "Expected page title to be: '%s' but got '%s'", PAGE_TITLE,
             driver.title):
