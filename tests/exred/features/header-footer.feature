@@ -75,3 +75,19 @@ Feature: Header-Footer
     Examples: Export Opportunities
       | specific             |
       | Export Opportunities |
+
+
+  @ED-3215
+  @home-page
+  @<specific-page>
+  Scenario Outline: Any Exported should be able to get to the Domestic Home page via Home link in the header menu
+    Given "Robert" visits the "Home" page
+
+    When "Robert" goes to the "<specific>" page via "General" links in header menu
+
+    Then "Robert" should be on the "<expected>" page
+
+    Examples:
+      | specific            | expected                   |
+      | Home                | Home                       |
+      | Your export journey | Create your export journey |
