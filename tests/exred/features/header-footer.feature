@@ -42,3 +42,36 @@ Feature: Header-Footer
       | selected                            |
       | Export Opportunities                |
       | Selling Online Overseas             |
+
+
+  @ED-3091
+  @favicon
+  Scenario Outline: Any user should see the correct favicon on whichever page they're on
+    Given "Robert" visits the "<specific>" page
+
+    Then "Robert" should see the correct favicon
+
+    Examples: Export Readiness pages
+      | specific                            |
+      | Home                                |
+      | Triage - what do you want to export |
+      | Interim export opportunities        |
+
+    Examples: FABS pages
+      | specific        |
+      | Find a Buyer    |
+      | Find a Supplier |
+
+    Examples: SSO pages
+      | specific          |
+      | SSO Registration  |
+      | SSO Sign in       |
+      | SSO Profile about |
+
+    Examples: SOO pages
+      | specific                |
+      | Selling Online Overseas |
+
+    Examples: Export Opportunities
+      | specific             |
+      | Export Opportunities |
