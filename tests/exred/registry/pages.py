@@ -29,6 +29,7 @@ from pages import (
     triage_are_you_registered_with_companies_house,
     triage_are_you_regular_exporter,
     triage_company_name,
+    triage_create_your_export_journey,
     triage_do_you_use_online_marketplaces,
     triage_have_you_exported,
     triage_summary,
@@ -100,6 +101,10 @@ EXRED_PAGE_REGISTRY = {
     "invest in great": {
         "url": invest_in_great.URL,
         "po": invest_in_great
+    },
+    "create your export journey": {
+        "url": triage_create_your_export_journey.URL,
+        "po": triage_create_your_export_journey
     },
     "british council": {
         "url": british_council.URL,

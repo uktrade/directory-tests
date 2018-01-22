@@ -6,7 +6,7 @@ from urllib.parse import urljoin
 from selenium import webdriver
 
 from settings import EXRED_UI_URL
-from utils import assertion_msg, take_screenshot, find_element
+from utils import assertion_msg, find_element, take_screenshot
 
 NAME = "Create your export journey"
 URL = urljoin(EXRED_UI_URL, "custom/")
