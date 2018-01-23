@@ -103,7 +103,7 @@ Feature: Header-Footer
 
   @wip
   @ED-2737
-  @custom-link
+  @your-export-journey-link
   Scenario: Any user  who has not completed triage should create their export journey from the "Your export journey" page
     Given "Robert" is on the "Your export journey" page
     And "Robert" has not completed triage before
@@ -112,7 +112,7 @@ Feature: Header-Footer
 
   @wip
   @ED-2737
-  @custom-link
+  @your-export-journey-link
   Scenario: Any user who is not signed be prompted to sign in on the "start your journey" page
     Given "Robert" is not signed in
     When "Robert" visits the "Start your export journey" page
@@ -121,7 +121,7 @@ Feature: Header-Footer
 
   @wip
   @ED-2737
-  @custom-link
+  @your-export-journey-link
   Scenario: Any user who is not signed be prompted to sign in on the "home" page
     Given "Robert" is not signed in
     When "Robert" visits the "Start your export journey" page
@@ -130,7 +130,7 @@ Feature: Header-Footer
 
   @wip
   @ED-2737
-  @custom-link
+  @your-export-journey-link
   Scenario: Any user who has completed triage should be able to get to the custom page from the header
     Given "Robert" has completed the triage questions
     When "Robert" goes to his export journey via appropriate header link
@@ -139,7 +139,7 @@ Feature: Header-Footer
 
   @wip
   @ED-2737
-  @custom-link
+  @your-export-journey-link
   Scenario: Any user who hasn’t signed in should be asked to register or sign in, in the Guidance section of the custom page.
     Given "Robert" is not a registered user
     When "Robert" visits the "Custom" page
@@ -148,7 +148,7 @@ Feature: Header-Footer
 
   @wip
   @ED-2737
-  @custom-link
+  @your-export-journey-link
   Scenario: Any user who signed in should not be asked to register or sign in in the Guidance section of the custom page.
     Given "Robert" is not a registered user
     When "Robert" visits the "Custom" page
@@ -157,7 +157,7 @@ Feature: Header-Footer
 
   @wip
   @ED-2737
-  @custom-link
+  @your-export-journey-link
   Scenario: Any user who hasn’t signed in should be asked to register in the article pages
     Given "Robert" is not a registered user
     When "Robert" visits any "Article" page
@@ -166,7 +166,7 @@ Feature: Header-Footer
 
   @wip
   @ED-2737
-  @custom-link
+  @your-export-journey-link
   Scenario: Any user who signed in should not be told to register in article pages
     Given "Robert" is a registered user
     When "Robert" visits any "Article" page
