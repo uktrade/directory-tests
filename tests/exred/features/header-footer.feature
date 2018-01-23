@@ -90,4 +90,10 @@ Feature: Header-Footer
     Examples:
       | specific            | expected                   |
       | Home                | Home                       |
+
+    @bug
+    @ED-3216
+    @fixme
+    Examples:
+      | specific            | expected                   |
       | Your export journey | Create your export journey |
