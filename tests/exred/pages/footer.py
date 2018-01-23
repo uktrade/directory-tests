@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 """ExRed Footer Page Object."""
-import logging
-
 from selenium import webdriver
 
-from utils import assertion_msg, selenium_action, take_screenshot
+from pages.common_actions import check_for_expected_elements
+from utils import assertion_msg, find_element, take_screenshot
 
 NAME = "ExRed Footer"
 URL = None
@@ -53,22 +52,7 @@ SECTIONS = {
 
 
 def should_see_all_menus(driver: webdriver):
-    for section in SECTIONS:
-        for name, selector in SECTIONS[section].items():
-            logging.debug(
-                "Looking for '%s' link in '%s' section with '%s' selector",
-                name, section, selector)
-            with selenium_action(
-                    driver, "Could not find '%s link' using '%s'",
-                    name, selector):
-                element = driver.find_element_by_css_selector(selector)
-            with assertion_msg(
-                    "It looks like '%s' in '%s' section is not visible",
-                    name, section):
-                assert element.is_displayed()
-        logging.debug("All elements in '%s' section are visible", section)
-    logging.debug(
-        "All expected sections on %s are visible", NAME)
+    check_for_expected_elements(driver, SECTIONS)
 
 
 def should_see_link_to(driver: webdriver, section: str, item_name: str):

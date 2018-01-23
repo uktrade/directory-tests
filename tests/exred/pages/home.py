@@ -208,36 +208,13 @@ def visit(driver: webdriver, *, first_time: bool = False):
 
 def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
-    with assertion_msg(
-            "Expected page URL to be: '%s' but got '%s'", URL,
-            driver.current_url):
-        assert driver.current_url in URL
-    with assertion_msg(
-            "Expected page title to be: '%s' but got '%s'", PAGE_TITLE,
-            driver.title):
-        assert PAGE_TITLE.lower() in driver.title.lower()
-    for section in SECTIONS:
-        for element_name, element_selector in SECTIONS[section].items():
-            element = driver.find_element_by_css_selector(element_selector)
-            with assertion_msg(
-                    "It looks like '%s' element is not visible on %s",
-                    element_name, NAME):
-                assert element.is_displayed()
-    logging.debug("All expected elements are visible on '%s' page", NAME)
+    check_url(driver, URL, exact_match=False)
+    check_title(driver, PAGE_TITLE, exact_match=False)
+    check_for_expected_elements(driver, SECTIONS)
 
 
 def should_see_section(driver: webdriver, name: str):
-    section = SECTIONS[name.lower()]
-    for key, selector in section.items():
-        with selenium_action(
-                driver, "Could not find: '%s' element in '%s' section using "
-                        "'%s' selector",
-                key, name, selector):
-            element = find_element(driver, by_css=selector)
-        with assertion_msg(
-                "'%s' in '%s' is not displayed", key, name):
-            assert element.is_displayed()
-            logging.debug("'%s' in '%s' is displayed", key, name)
+    check_for_section(driver, all_sections=SECTIONS, sought_section=name)
 
 
 def should_see_link_to(driver: webdriver, section: str, item_name: str):
