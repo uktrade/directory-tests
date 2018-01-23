@@ -117,12 +117,15 @@ def after_feature(context: Context, feature: Feature):
         if hasattr(context, "driver"):
             context.driver.quit()
         if feature.status == "failed":
-            message = ("Feature '%s' failed. Reason: '%s': '%s'" %
-                       (feature.name, feature.exception, feature.error_message))
-            logging.error(message)
             if hasattr(context, "scenario_data"):
                 logging.debug(context.scenario_data)
             if "browserstack" in CONFIG_NAME:
+                failed = [scenario for scenario in feature.scenarios
+                          if scenario.status == "failed"]
+                message = (
+                        "Feature '%s' failed because of issues with %d "
+                        "%s" % (feature.name, len(failed),
+                                "scenarios" if len(failed) > 1 else "scenario"))
                 if hasattr(context, "driver"):
                     session_id = context.driver.session_id
                     flag_browserstack_session_as_failed(session_id, message)
