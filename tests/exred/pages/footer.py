@@ -40,7 +40,8 @@ SECTIONS = {
         "get finance": "#footer-services-get-finance",
         "events": "#footer-services-events"
     },
-    "general links": {
+    "general": {
+        "your export journey": "#footer-custom-page-link",
         "about": "#footer-site-links-about",
         "contact us": "#footer-site-links-contact-us",
         "privacy and cookies": "#footer-site-links-privacy-and-cookies",
