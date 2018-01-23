@@ -1,17 +1,22 @@
 # -*- coding: utf-8 -*-
 """Triage - What do you want to export? Page Object."""
-import logging
 import random
 from urllib.parse import urljoin
 
 from selenium import webdriver
 
-from pages.common_actions import go_to_url
+from pages.common_actions import (
+    check_for_expected_elements,
+    check_title,
+    check_url,
+    go_to_url
+)
 from settings import EXRED_SECTORS, EXRED_UI_URL
 from utils import assertion_msg, selenium_action, take_screenshot
 
 NAME = "ExRed Triage - what do you want to export"
 URL = urljoin(EXRED_UI_URL, "triage/sector/")
+PAGE_TITLE = "Welcome to great.gov.uk"
 
 SECTORS_COMBOBOX = ".exred-triage-form div[role=combobox]"
 SECTORS_INPUT = "#js-sector-select"
@@ -31,14 +36,10 @@ def visit(driver: webdriver, *, first_time: bool = False):
 
 
 def should_be_here(driver: webdriver):
-    for element_name, element_selector in EXPECTED_ELEMENTS.items():
-        element = driver.find_element_by_css_selector(element_selector)
-        with assertion_msg(
-                "It looks like '%s' element is not visible on %s",
-                element_name, NAME):
-            assert element.is_displayed()
     take_screenshot(driver, NAME)
-    logging.debug("All expected elements are visible on '%s' page", NAME)
+    check_url(driver, URL, exact_match=True)
+    check_title(driver, PAGE_TITLE, exact_match=False)
+    check_for_expected_elements(driver, EXPECTED_ELEMENTS)
 
 
 def enter(driver: webdriver, code: str, sector: str) -> tuple:

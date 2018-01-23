@@ -1,16 +1,21 @@
 # -*- coding: utf-8 -*-
 """SSO Registration Page Object."""
-import logging
 from urllib.parse import urljoin
 
 from selenium import webdriver
 
-from pages.common_actions import go_to_url
+from pages.common_actions import (
+    check_for_expected_elements,
+    check_title,
+    check_url,
+    go_to_url
+)
 from settings import DIRECTORY_UI_SSO_URL
-from utils import assertion_msg, find_element, take_screenshot
+from utils import find_element, take_screenshot
 
 NAME = "SSO Registration page"
 URL = urljoin(DIRECTORY_UI_SSO_URL, "accounts/signup/")
+PAGE_TITLE = "Register - great.gov.uk"
 
 EMAIL_INPUT = "#id_email"
 EMAIL_CONFIRMATION_INPUT = "#id_email2"
@@ -34,13 +39,9 @@ def visit(driver: webdriver, *, first_time: bool = False):
 
 def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
-    for element_name, element_selector in EXPECTED_ELEMENTS.items():
-        element = find_element(driver, by_css=element_selector)
-        with assertion_msg(
-                "It looks like '%s' element is not visible on %s",
-                element_name, NAME):
-            assert element.is_displayed()
-    logging.debug("All expected elements are visible on '%s' page", NAME)
+    check_url(driver, URL, exact_match=False)
+    check_title(driver, PAGE_TITLE, exact_match=False)
+    check_for_expected_elements(driver, EXPECTED_ELEMENTS)
 
 
 def fill_out(driver: webdriver, email: str, password: str):

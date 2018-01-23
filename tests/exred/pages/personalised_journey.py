@@ -10,12 +10,14 @@ from selenium.common.exceptions import (
 )
 from selenium.webdriver import ActionChains
 
+from pages.common_actions import check_for_section, check_title, check_url
 from registry.articles import get_articles
 from settings import EXRED_UI_URL
 from utils import assertion_msg, find_element, take_screenshot
 
 NAME = "ExRed Personalised Journey"
-URL = urljoin(EXRED_UI_URL, "custom")
+URL = urljoin(EXRED_UI_URL, "custom/")
+PAGE_TITLE = "Your export journey - great.gov.uk"
 
 READ_COUNTER = "#articles .scope-indicator .position > span.from"
 TOTAL_ARTICLES = "#articles .scope-indicator .position > span.to"
@@ -123,14 +125,10 @@ SECTIONS = {
 
 
 def should_be_here(driver: webdriver):
-    for element_name, element_selector in SECTIONS["hero"].items():
-        element = find_element(
-            driver, by_css=element_selector, element_name=element_name)
-        with assertion_msg(
-                "It looks like '%s' element is not visible on %s",
-                element_name, NAME):
-            assert element.is_displayed()
     take_screenshot(driver, NAME)
+    check_url(driver, URL, exact_match=True)
+    check_title(driver, PAGE_TITLE, exact_match=False)
+    check_for_section(driver, SECTIONS, sought_section="hero")
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
@@ -180,14 +178,7 @@ def open(driver: webdriver, group: str, element: str):
 
 
 def should_see_section(driver: webdriver, name: str):
-    section = SECTIONS[name.lower()]
-    for element_name, selector in section.items():
-        element = find_element(
-            driver, by_css=selector, element_name=element_name)
-        with assertion_msg(
-                "'%s' in '%s' is not displayed", element_name, name):
-            assert element.is_displayed()
-            logging.debug("'%s' in '%s' is displayed", element_name, name)
+    check_for_section(driver, SECTIONS, sought_section=name)
 
 
 def should_not_see_section(driver: webdriver, name: str):

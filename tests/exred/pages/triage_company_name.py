@@ -9,11 +9,18 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 
+from pages.common_actions import (
+    check_for_expected_elements,
+    check_title,
+    check_url,
+    go_to_url
+)
 from settings import EXRED_UI_URL
 from utils import assertion_msg, take_screenshot
 
 NAME = "ExRed Triage - What is your company name"
 URL = urljoin(EXRED_UI_URL, "triage/company/")
+PAGE_TITLE = "Welcome to great.gov.uk"
 
 QUESTION = "label[for=js-typeahead-company-name]"
 COMPANY_NAME_INPUT = "js-typeahead-company-name"
@@ -33,14 +40,10 @@ EXPECTED_ELEMENTS = {
 
 
 def should_be_here(driver: webdriver):
-    for element_name, element_selector in EXPECTED_ELEMENTS.items():
-        element = driver.find_element_by_css_selector(element_selector)
-        with assertion_msg(
-                "It looks like '%s' element is not visible on %s",
-                element_name, NAME):
-            assert element.is_displayed()
     take_screenshot(driver, NAME)
-    logging.debug("All expected elements are visible on '%s' page", NAME)
+    check_url(driver, URL, exact_match=True)
+    check_title(driver, PAGE_TITLE, exact_match=False)
+    check_for_expected_elements(driver, EXPECTED_ELEMENTS)
 
 
 def hide_suggestions(driver: webdriver):

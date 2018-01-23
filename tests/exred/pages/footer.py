@@ -67,7 +67,6 @@ def should_see_link_to(driver: webdriver, section: str, item_name: str):
 
 def open(driver: webdriver, group: str, element: str):
     link = SECTIONS[group.lower()][element.lower()]
-    button = driver.find_element_by_css_selector(link)
     assert button.is_displayed()
     button.click()
     take_screenshot(

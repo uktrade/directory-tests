@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
 """Interim Export Opportunities Page Object."""
-import logging
 from urllib.parse import urljoin
 
 from selenium import webdriver
 
-from pages.common_actions import go_to_url
-from settings import EXRED_UI_URL
-from utils import (
-    assertion_msg,
-    find_element,
-    take_screenshot,
-    wait_for_visibility
+from pages.common_actions import (
+    check_for_expected_elements,
+    check_title,
+    check_url,
+    go_to_url
 )
+from settings import EXRED_UI_URL
+from utils import find_element, take_screenshot, wait_for_visibility
 
 NAME = "ExRed Interim Export Opportunities"
 URL = urljoin(EXRED_UI_URL, "export-opportunities/")
+PAGE_TITLE = "Make sure you're export ready - great.gov.uk"
 
 SERVICE_BUTTON = "a.button-primary"
 REPORT_THIS_PAGE_LINK = "section.error-reporting a"
@@ -33,14 +33,10 @@ def visit(driver: webdriver, *, first_time: bool = False):
 
 
 def should_be_here(driver: webdriver):
-    for element_name, element_selector in EXPECTED_ELEMENTS.items():
-        element = driver.find_element_by_css_selector(element_selector)
-        with assertion_msg(
-                "It looks like '%s' element is not visible on %s",
-                element_name, NAME):
-            assert element.is_displayed()
     take_screenshot(driver, NAME)
-    logging.debug("All expected elements are visible on '%s' page", NAME)
+    check_url(driver, URL, exact_match=True)
+    check_title(driver, PAGE_TITLE, exact_match=False)
+    check_for_expected_elements(driver, EXPECTED_ELEMENTS)
 
 
 def go_to_service(driver: webdriver):

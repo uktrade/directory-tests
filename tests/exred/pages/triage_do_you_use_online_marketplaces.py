@@ -1,15 +1,20 @@
 # -*- coding: utf-8 -*-
 """Triage - Do yoy use online marketplaces? Page Object."""
-import logging
 from urllib.parse import urljoin
 
 from selenium import webdriver
 
+from pages.common_actions import (
+    check_for_expected_elements,
+    check_title,
+    check_url
+)
 from settings import EXRED_UI_URL
 from utils import assertion_msg, take_screenshot
 
 NAME = "ExRed Triage - do you use online marketplaces"
 URL = urljoin(EXRED_UI_URL, "triage/online-marketplace/")
+PAGE_TITLE = "Welcome to great.gov.uk"
 
 YES_RADIO = "#id_online-marketplace-used_online_marketplace_0"
 NO_RADIO = "#id_online-marketplace-used_online_marketplace_1"
@@ -27,14 +32,10 @@ EXPECTED_ELEMENTS = {
 
 
 def should_be_here(driver: webdriver):
-    for element_name, element_selector in EXPECTED_ELEMENTS.items():
-        element = driver.find_element_by_css_selector(element_selector)
-        with assertion_msg(
-                "It looks like '%s' element is not visible on %s",
-                element_name, NAME):
-            assert element.is_displayed()
     take_screenshot(driver, NAME)
-    logging.debug("All expected elements are visible on '%s' page", NAME)
+    check_url(driver, URL, exact_match=True)
+    check_title(driver, PAGE_TITLE, exact_match=False)
+    check_for_expected_elements(driver, EXPECTED_ELEMENTS)
 
 
 def select_yes(driver: webdriver):
