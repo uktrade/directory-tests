@@ -81,50 +81,32 @@ Feature: Header-Footer
   @header
   @home-page
   @<specific>
-  Scenario Outline: Any Exported should be able to get to the Domestic "<expected>" page via "<specific>" link in the header menu
+  Scenario Outline: Any Exported should be able to get to the Domestic "<expected>" page via "<specific>" link in the "<selected section>"
     Given "Robert" visits the "Home" page for the first time
 
-    When "Robert" goes to the "<specific>" page via "General" links in "header menu"
+    When "Robert" goes to the "<specific>" page via "General" links in "<selected section>"
 
     Then "Robert" should be on the "<expected>" page
 
     Examples:
-      | specific            | expected                   |
-      | Home                | Home                       |
+      | specific            | expected                   | selected section |
+      | Home                | Home                       | header menu      |
 
     @bug
     @ED-3216
     @fixme
-    Examples:
-      | specific            | expected                   |
-      | Your export journey | Create your export journey |
-
-
-  @wip
-  @ED-2737
-  @custom-link
-  Scenario: Any user should be able to get to "your export journey" from the header
-    Given "Robert" has not completed the triage questions
-    And "Robert" is a registered user
-    When "Robert" goes to his export journey via appropriate header link
-    Then "Robert" should be on the "Start your export journey" page
-
-
-  @wip
-  @ED-2737
-  @custom-link
-  Scenario: Any user should be able to get to "your export journey" from the footer
-    Given "Robert" has not completed the triage questions
-    And "Robert" is a registered user
-    When "Robert" goes to his export journey via appropriate header link
-    Then "Robert" should be on the "Start your export journey" page
+    Examples: failing examples
+      | specific            | expected                   | selected section |
+      | Your export journey | Create your export journey | header menu      |
+      | Your export journey | Create your export journey | footer links     |
 
 
   @wip
   @ED-2737
   @custom-link
   Scenario: Any user  who has not completed triage should create their export journey from the "Your export journey" page
-    Given "Robert" is on the "Your export journey" page and "Robert" has not completed triage before
+    Given "Robert" is on the "Your export journey" page
+    And "Robert" has not completed triage before
     Then "Robert" should see the "Start your export journey" section
 
 
