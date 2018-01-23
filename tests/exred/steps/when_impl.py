@@ -1134,9 +1134,10 @@ def articles_show_all(context: Context, actor_alias: str):
 
 
 def header_footer_open_link(
-        context: Context, actor_alias: str, group: str, link_name: str):
+        context: Context, actor_alias: str, group: str, link_name: str,
+        location: str):
     open_group_element(
-        context, group=group, element=link_name, location="header menu")
+        context, group=group, element=link_name, location=location)
     logging.debug(
         "%s decided to go to '%s' page via '%s' links in header menu",
         actor_alias, link_name, group)

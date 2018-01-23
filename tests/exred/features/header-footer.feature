@@ -78,12 +78,13 @@ Feature: Header-Footer
 
 
   @ED-3215
+  @header
   @home-page
-  @<specific-page>
-  Scenario Outline: Any Exported should be able to get to the Domestic Home page via Home link in the header menu
-    Given "Robert" visits the "Home" page
+  @<specific>
+  Scenario Outline: Any Exported should be able to get to the Domestic "<expected>" page via "<specific>" link in the header menu
+    Given "Robert" visits the "Home" page for the first time
 
-    When "Robert" goes to the "<specific>" page via "General" links in header menu
+    When "Robert" goes to the "<specific>" page via "General" links in "header menu"
 
     Then "Robert" should be on the "<expected>" page
 

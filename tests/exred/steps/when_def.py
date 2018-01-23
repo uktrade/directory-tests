@@ -315,6 +315,6 @@ def given_actor_shows_all_articles(context, actor_alias):
     articles_show_all(context, actor_alias)
 
 
-@when('"{actor_alias}" goes to the "{page_name}" page via "{group}" links in header menu')
-def when_actor_opens_link_from_header_menu(context, actor_alias, page_name, group):
-    header_footer_open_link(context, actor_alias, group, page_name)
+@when('"{actor_alias}" goes to the "{page_name}" page via "{group}" links in "{location}"')
+def when_actor_opens_link_from_header_menu(context, actor_alias, page_name, group, location):
+    header_footer_open_link(context, actor_alias, group, page_name, location)
