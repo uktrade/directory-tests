@@ -20,7 +20,6 @@ from utils import (
     check_if_element_is_not_present,
     find_element,
     find_elements,
-    selenium_action,
     take_screenshot
 )
 
@@ -219,10 +218,8 @@ def should_see_section(driver: webdriver, name: str):
 
 def should_see_link_to(driver: webdriver, section: str, item_name: str):
     item_selector = SECTIONS[section.lower()][item_name.lower()]
-    with selenium_action(
-            driver, "Could not find '%s' using '%s'", item_name,
-            item_selector):
-        menu_item = driver.find_element_by_css_selector(item_selector)
+    menu_item = find_element(
+        driver, by_css=item_selector, element_name=item_name)
     with assertion_msg(
             "It looks like '%s' in '%s' section is not visible", item_name,
             section):
@@ -241,7 +238,9 @@ def start_exporting_journey(driver: webdriver):
 
 def continue_export_journey(driver: webdriver):
     """Continue your Export Journey (Triage)."""
-    button = find_element(driver, by_css=CONTINUE_EXPORT_JOURNEY)
+    button = find_element(
+        driver, by_css=CONTINUE_EXPORT_JOURNEY,
+        element_name="Continue your export journey button")
     assert button.is_displayed()
     button.click()
 
