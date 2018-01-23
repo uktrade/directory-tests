@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
-"""Common PageObject actions
+"""Common PageObject actions."""
+import logging
 
-REMEMBER:
- to overwrite variables from this module in your PageObject.
-"""
 from selenium import webdriver
 
-from utils import clear_driver_cookies, take_screenshot
+from utils import (
+    assertion_msg,
+    clear_driver_cookies,
+    find_element,
+    take_screenshot
+)
 
 
 def go_to_url(
@@ -23,3 +26,91 @@ def go_to_url(
         clear_driver_cookies(driver)
     driver.get(url)
     take_screenshot(driver, page_name)
+
+
+def check_url(
+        driver: webdriver, expected_url: str, *, exact_match: bool = True):
+    """Check if current page URL matches the expected one.
+
+    :param driver: Any Selenium Driver (Remote, Chrome, Firefox, PhantomJS etc.
+    :param expected_url: expected page URL
+    :param exact_match: (optional) if `True` then will do a `==` comparison.
+                        If `False` then will do a `in` comparison.
+                        Defaults to `True`.
+    """
+    with assertion_msg(
+            "Expected page URL to be: '%s' but got '%s'", expected_url,
+            driver.current_url):
+        if exact_match:
+            assert driver.current_url == expected_url
+        else:
+            assert driver.current_url in expected_url
+    logging.debug("Current page URL matches expected '%s'", driver.current_url)
+
+
+def check_title(
+        driver: webdriver, expected_title: str, *, exact_match: bool = False):
+    """Check if current page title matches the expected one.
+
+    :param driver: Any Selenium Driver (Remote, Chrome, Firefox, PhantomJS etc.
+    :param expected_title: expected page title
+    :param exact_match: (optional) if `True` then will do a `==` comparison.
+                        If `False` then will do a `in` comparison.
+                        Defaults to `False`.
+    """
+    with assertion_msg(
+            "Expected page title to be: '%s' but got '%s'", expected_title,
+            driver.title):
+        if exact_match:
+            assert expected_title.lower() == driver.title.lower()
+        else:
+            assert expected_title.lower() in driver.title.lower()
+    logging.debug(
+        "Page title on '%s' matches expected '%s'", driver.current_url,
+        expected_title)
+
+
+def check_for_section(
+        driver: webdriver, all_sections: dict, sought_section: str):
+    """Check if all page elements from sought section are visible.
+
+    :param driver: Any Selenium Driver (Remote, Chrome, Firefox, PhantomJS etc.
+    :param all_sections: a dict with page elements selectors grouped into page
+                         sections.
+    :param sought_section: section for which visibility check will be performed
+    """
+    section = all_sections[sought_section.lower()]
+    for element_name, selector in section.items():
+        element = find_element(
+            driver, by_css=selector, element_name=element_name)
+        with assertion_msg(
+                "'%s' in '%s' is not displayed", element_name, sought_section):
+            assert element.is_displayed()
+            logging.debug(
+                "'%s' in '%s' is displayed", element_name, sought_section)
+
+
+def check_for_expected_elements(driver: webdriver, sections: dict):
+    """Check if all elements in page sections are visible.
+
+    :param driver: Any Selenium Driver (Remote, Chrome, Firefox, PhantomJS etc.
+    :param sections: a dict with page elements selectors grouped into page
+                     sections. e.g.:
+                     SECTIONS = {
+                        "start now": {
+                            "start now button": "<css_selector>",
+                            "register link": "<css_selector>"
+                            "sign-in link": "<css_selector>"
+                        }
+                     }
+    """
+    for section in sections:
+        for element_name, element_selector in sections[section].items():
+            element = find_element(
+                driver, by_css=element_selector, element_name=element_name)
+            with assertion_msg(
+                    "It looks like '%s' element in '%s' section is not visible"
+                    " on %s", element_name, section, driver.current_url):
+                assert element.is_displayed()
+        logging.debug(
+            "All expected elements are visible on '%s'", driver.current_url)
