@@ -19,6 +19,7 @@ from steps.when_impl import (
     export_readiness_open_category,
     guidance_open_category,
     guidance_read_through_all_articles,
+    header_footer_open_link,
     language_selector_change_to,
     language_selector_close,
     language_selector_navigate_through_links_with_keyboard,
@@ -312,3 +313,8 @@ def when_actor_views_page_in_selected_language(
 @when('"{actor_alias}" shows all of the articles on the page whenever possible')
 def given_actor_shows_all_articles(context, actor_alias):
     articles_show_all(context, actor_alias)
+
+
+@when('"{actor_alias}" goes to the "{page_name}" page via "{group}" links in header menu')
+def when_actor_opens_link_from_header_menu(context, actor_alias, page_name, group):
+    header_footer_open_link(context, actor_alias, group, page_name)

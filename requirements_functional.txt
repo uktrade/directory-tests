@@ -23,6 +23,7 @@ jsonschema==2.6.0
 langdetect==1.0.7
 lxml==4.1.0               # via parsel, scrapy
 mccabe==0.6.1             # via flake8
+nodeenv==1.2.0
 parse-type==0.4.2
 parse==1.8.2              # via parse-type
 parsel==1.2.0             # via scrapy

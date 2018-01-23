@@ -1131,3 +1131,12 @@ def articles_show_all(context: Context, actor_alias: str):
     logging.debug(
         "%s showed up all articled on the page: %s", actor_alias,
         context.driver.current_url)
+
+
+def header_footer_open_link(
+        context: Context, actor_alias: str, group: str, link_name: str):
+    open_group_element(
+        context, group=group, element=link_name, location="header menu")
+    logging.debug(
+        "%s decided to go to '%s' page via '%s' links in header menu",
+        actor_alias, link_name, group)
