@@ -2,7 +2,7 @@
 """ExRed Footer Page Object."""
 from selenium import webdriver
 
-from pages.common_actions import check_for_expected_elements
+from pages.common_actions import check_for_expected_sections_elements
 from utils import assertion_msg, find_element, take_screenshot
 
 NAME = "ExRed Footer"
@@ -52,7 +52,7 @@ SECTIONS = {
 
 
 def should_see_all_menus(driver: webdriver):
-    check_for_expected_elements(driver, SECTIONS)
+    check_for_expected_sections_elements(driver, SECTIONS)
 
 
 def should_see_link_to(driver: webdriver, section: str, item_name: str):

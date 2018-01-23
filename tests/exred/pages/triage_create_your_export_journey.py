@@ -5,7 +5,7 @@ from urllib.parse import urljoin
 from selenium import webdriver
 
 from pages.common_actions import (
-    check_for_expected_elements,
+    check_for_expected_sections_elements,
     check_for_section,
     check_title,
     check_url,
@@ -52,7 +52,7 @@ def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=True)
     check_title(driver, PAGE_TITLE, exact_match=False)
-    check_for_expected_elements(driver, SECTIONS)
+    check_for_expected_sections_elements(driver, SECTIONS)
 
 
 def start_now(driver: webdriver):

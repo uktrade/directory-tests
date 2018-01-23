@@ -90,7 +90,29 @@ def check_for_section(
                 "'%s' in '%s' is displayed", element_name, sought_section)
 
 
-def check_for_expected_elements(driver: webdriver, sections: dict):
+def check_for_expected_elements(driver: webdriver, elements: dict):
+    """Check if all page elements are visible.
+
+    :param driver: Any Selenium Driver (Remote, Chrome, Firefox, PhantomJS etc.
+    :param elements: a dict with page elements selectors. e.g.:
+                     EXPECTED_ELEMENTS = {
+                        "start now button": "<css_selector>",
+                        "register link": "<css_selector>"
+                        "sign-in link": "<css_selector>"
+                     }
+    """
+    for element_name, element_selector in elements.items():
+        element = find_element(
+            driver, by_css=element_selector, element_name=element_name)
+        with assertion_msg(
+                "It looks like '%s' element is not visible on %s",
+                element_name, driver.current_url):
+            assert element.is_displayed()
+    logging.debug(
+        "All expected elements are visible on '%s'", driver.current_url)
+
+
+def check_for_expected_sections_elements(driver: webdriver, sections: dict):
     """Check if all elements in page sections are visible.
 
     :param driver: Any Selenium Driver (Remote, Chrome, Firefox, PhantomJS etc.
