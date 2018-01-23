@@ -5,7 +5,7 @@ from urllib.parse import urljoin
 
 from selenium import webdriver
 
-from pages.common_actions import visit as common_visit
+from pages.common_actions import go_to_url
 from settings import EVENTS_UI_URL
 from utils import assertion_msg, take_screenshot, wait_for_visibility
 
@@ -16,7 +16,7 @@ GREAT_LOGO = "#portal-top > h1 > a > img"
 
 
 def visit(driver: webdriver, *, first_time: bool = False):
-    common_visit(driver, URL, NAME, first_time=first_time)
+    go_to_url(driver, URL, NAME, first_time=first_time)
 
 
 def should_be_here(driver: webdriver):

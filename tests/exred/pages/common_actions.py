@@ -9,10 +9,10 @@ from selenium import webdriver
 from utils import clear_driver_cookies, take_screenshot
 
 
-def visit(
+def go_to_url(
         driver: webdriver, url: str, page_name: str, *,
         first_time: bool = False):
-    """Open the URL.
+    """Go to the specified URL and take a screenshot afterwards.
 
     :param driver: Any Selenium Driver (Remote, Chrome, Firefox, PhantomJS etc.
     :param url: URL to open
