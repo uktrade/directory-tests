@@ -101,13 +101,12 @@ Feature: Header-Footer
       | Your export journey | Create your export journey | footer links     |
 
 
-  @wip
-  @ED-2737
+  @ED-3240
   @your-export-journey-link
-  Scenario: Any user  who has not completed triage should create their export journey from the "Your export journey" page
-    Given "Robert" is on the "Your export journey" page
-    And "Robert" has not completed triage before
-    Then "Robert" should see the "Start your export journey" section
+  Scenario: Any user who visits the "Your export journey" page for the first time, should be able to Start the journey (triage)
+    Given "Robert" visits the "Create your export journey" page for the first time
+
+    Then "Robert" should see "Description, Start now, Report this page" sections on "Create your export journey" page
 
 
   @wip
