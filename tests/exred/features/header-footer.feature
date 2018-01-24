@@ -103,10 +103,10 @@ Feature: Header-Footer
 
   @ED-3240
   @your-export-journey-link
-  Scenario: Any user who visits the "Your export journey" page for the first time, should be able to Start the journey (triage)
+  Scenario: Any user who visits the "Create your export journey" page for the first time, should be able to see all expected sections
     Given "Robert" visits the "Create your export journey" page for the first time
 
-    Then "Robert" should see "Description, Start now, Report this page" sections on "Create your export journey" page
+    Then "Robert" should see "Description, Start now, Save progress, Report this page" sections on "Create your export journey" page
 
 
   @wip
