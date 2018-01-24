@@ -61,3 +61,10 @@ def should_be_here(driver: webdriver):
 def click_on_page_element(driver: webdriver, element_name: str):
     find_and_click_on_page_element(driver, SECTIONS, element_name)
     take_screenshot(driver, NAME + " after clicking on " + element_name)
+
+
+def should_not_see_section(driver: webdriver, name: str):
+    section = SECTIONS[name.lower()]
+    for key, selector in section.items():
+        check_if_element_is_not_visible(
+            driver, by_css=selector, element_name=key)
