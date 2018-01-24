@@ -73,7 +73,7 @@ jobs:
             source ./docker/.env_with_export;
             make smoke_tests_links_checker
 
-  exred_tests_chrome:
+  exred_tests_requirements:
     docker:
       - image: circleci/python:3.5.3
     working_directory: ~/directory-tests
@@ -90,24 +90,40 @@ jobs:
             nodeenv -p
             npm install -g junit-merge@1.2.3
       - run:
-          name: Install Heroku-CLI
+          name: Install Heroku-CLI to project root dir
           command: |
             wget -q https://cli-assets.heroku.com/heroku-cli/channels/stable/heroku-cli-linux-x64.tar.gz -O heroku.tar.gz
             tar -xzf heroku.tar.gz
-            mkdir -p /usr/local/lib /usr/local/bin
-            sudo mv heroku-cli-v6.*-linux-x64 /usr/local/lib/heroku
-            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/local/bin/heroku
-            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/bin/heroku
-            heroku -v
-            which heroku
+            mkdir -p ./heroku-cli
+            tar -xzf heroku.tar.gz --strip-components 1 -C ./heroku-cli
             rm -fr heroku.tar.gz
+            ln -s ./heroku-cli/bin/heroku ./heroku
+            heroku -v
+      - save_cache:
+          key: exred-tests-dependency-cache-{{ .Revision }}
+          paths:
+            - ~/directory-tests/heroku-cli
+            - ~/directory-tests/heroku
+
+
+  exred_tests_chrome:
+    docker:
+      - image: circleci/python:3.5.3
+    working_directory: ~/directory-tests
+    steps:
+      - restore_cache:
+          keys:
+            - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+            - exred-tests-dependency-cache-{{ .Revision }}
       - run:
           name: Run functional ExRed tests in Chrome
           command: |
             . venv/bin/activate
             python ./docker/env_writer.py ./docker/env_exred.json
             source ./docker/.env_with_export;
-            BROWSERS=Chrome VERSIONS=62.0 make exred_browserstack
+            BROWSERS=Chrome VERSIONS=63.0 make exred_browserstack
       - run:
           name: Merge JUnit XML reports
           when: always
@@ -130,33 +146,16 @@ jobs:
       - restore_cache:
           keys:
             - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - run:
-          name: Install dependencies
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            pip install -r requirements_exred.txt
-            nodeenv -p
-            npm install -g junit-merge@1.2.3
-      - run:
-          name: Install Heroku-CLI
-          command: |
-            wget -q https://cli-assets.heroku.com/heroku-cli/channels/stable/heroku-cli-linux-x64.tar.gz -O heroku.tar.gz
-            tar -xzf heroku.tar.gz
-            mkdir -p /usr/local/lib /usr/local/bin
-            sudo mv heroku-cli-v6.*-linux-x64 /usr/local/lib/heroku
-            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/local/bin/heroku
-            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/bin/heroku
-            heroku -v
-            which heroku
-            rm -fr heroku.tar.gz
+      - restore_cache:
+          keys:
+            - exred-tests-dependency-cache-{{ .Revision }}
       - run:
           name: Run functional ExRed tests in Firefox
           command: |
             . venv/bin/activate
             python ./docker/env_writer.py ./docker/env_exred.json
             source ./docker/.env_with_export;
-            BROWSERS=Firefox VERSIONS=56.0 make exred_browserstack
+            BROWSERS=Firefox VERSIONS=57.0 make exred_browserstack
       - run:
           name: Merge JUnit XML reports
           when: always
@@ -380,6 +379,9 @@ workflows:
       - smoke_tests_requirements:
           requires:
             - checkout_code
+      - exred_tests_requirements:
+          requires:
+            - checkout_code
       - smoke_tests:
           requires:
             - checkout_code
@@ -391,9 +393,11 @@ workflows:
       - exred_tests_chrome:
           requires:
             - smoke_tests
+            - exred_tests_requirements
       - exred_tests_firefox:
           requires:
             - smoke_tests
+            - exred_tests_requirements
       - fab_functional_tests:
           requires:
             - smoke_tests
