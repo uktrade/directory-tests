@@ -94,16 +94,16 @@ jobs:
           command: |
             wget -q https://cli-assets.heroku.com/heroku-cli/channels/stable/heroku-cli-linux-x64.tar.gz -O heroku.tar.gz
             tar -xzf heroku.tar.gz
-            mkdir -p ./heroku-cli
-            tar -xzf heroku.tar.gz --strip-components 1 -C ./heroku-cli
+            mkdir -p ~/bin/heroku-cli
+            tar -xzf heroku.tar.gz --strip-components 1 -C ~/bin/heroku-cli
             rm -fr heroku.tar.gz
-            ln -s ./heroku-cli/bin/heroku ./heroku
+            ln -s ~/bin/heroku-cli/bin/heroku ~/bin/heroku
+            export PATH=$PATH:$HOME/bin
             heroku -v
       - save_cache:
           key: exred-tests-dependency-cache-{{ .Revision }}
           paths:
-            - ~/directory-tests/heroku-cli
-            - ~/directory-tests/heroku
+            - ~/bin
 
 
   exred_tests_chrome:
@@ -123,6 +123,7 @@ jobs:
             . venv/bin/activate
             python ./docker/env_writer.py ./docker/env_exred.json
             source ./docker/.env_with_export;
+            export PATH=$PATH:$HOME/bin
             BROWSERS=Chrome VERSIONS=63.0 make exred_browserstack
       - run:
           name: Merge JUnit XML reports
@@ -155,6 +156,7 @@ jobs:
             . venv/bin/activate
             python ./docker/env_writer.py ./docker/env_exred.json
             source ./docker/.env_with_export;
+            export PATH=$PATH:$HOME/bin
             BROWSERS=Firefox VERSIONS=57.0 make exred_browserstack
       - run:
           name: Merge JUnit XML reports
