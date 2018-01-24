@@ -213,8 +213,7 @@ def selenium_action(driver: webdriver, message: str, *args):
                 .format(browser, version, platform, session_id))
         if args:
             message = message % args
-        print("%s - %s" % (info, message))
-        logging.error("%s - %s", info, message)
+        logging.debug("%s - %s", info, message)
         e.args += (message,)
         _, _, tb = sys.exc_info()
         traceback.print_tb(tb)
