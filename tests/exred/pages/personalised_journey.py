@@ -13,7 +13,12 @@ from selenium.webdriver import ActionChains
 from pages.common_actions import check_for_section, check_title, check_url
 from registry.articles import get_articles
 from settings import EXRED_UI_URL
-from utils import assertion_msg, find_element, take_screenshot
+from utils import (
+    assertion_msg,
+    check_if_element_is_not_visible,
+    find_element,
+    take_screenshot
+)
 
 NAME = "ExRed Personalised Journey"
 URL = urljoin(EXRED_UI_URL, "custom/")
@@ -184,15 +189,8 @@ def should_see_section(driver: webdriver, name: str):
 def should_not_see_section(driver: webdriver, name: str):
     section = SECTIONS[name.lower()]
     for key, selector in section.items():
-        try:
-            element = find_element(driver, by_css=selector)
-            with assertion_msg(
-                    "'%s' in '%s' is displayed", key, name):
-                assert not element.is_displayed()
-                logging.debug(
-                    "As expected '%s' in '%s' is not visible", key, name)
-        except (WebDriverException, NoSuchElementException):
-            logging.debug("As expected '%s' in '%s' is not visible", key, name)
+        check_if_element_is_not_visible(
+            driver, by_css=selector, element_name=key)
 
 
 def check_top_facts_values(driver: webdriver):
