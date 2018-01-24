@@ -6,6 +6,7 @@ from selenium import webdriver
 
 from pages.common_actions import (
     check_for_expected_elements,
+    check_title,
     check_url,
     go_to_url
 )
@@ -14,6 +15,7 @@ from utils import find_element, take_screenshot
 
 NAME = "SSO Sign out page"
 URL = urljoin(DIRECTORY_UI_SSO_URL, "accounts/logout/")
+PAGE_TITLE = "Sign out - great.gov.uk"
 
 SIGN_OUT_BUTTON = "#content > div > div > form > button"
 EXPECTED_ELEMENTS = {
@@ -29,6 +31,7 @@ def visit(driver: webdriver, *, first_time: bool = False):
 def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
+    check_title(driver, PAGE_TITLE, exact_match=False)
     check_for_expected_elements(driver, EXPECTED_ELEMENTS)
 
 
