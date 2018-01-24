@@ -109,22 +109,42 @@ Feature: Header-Footer
     Then "Robert" should see "Description, Start now, Save progress, Report this page" sections on "Create your export journey" page
 
 
-  @wip
-  @ED-2737
+  @ED-3261
+  @bug
+  @ED-3216
+  @fixme
   @your-export-journey-link
-  Scenario: Any user who is not signed be prompted to sign in on the "start your journey" page
-    Given "Robert" is not signed in
-    When "Robert" visits the "Start your export journey" page
-    Then "Robert" should be asked to sign in or register in the "your export journey" section
+  Scenario: Unauthenticated user should be prompted to sign in or to register on the "Create your export journey" page
+    Given "Robert" visits the "Home" page for the first time
+
+    When "Robert" decides to use "Your export journey" link in "header menu"
+
+    Then "Robert" should be on the "Create your export journey" page
+    And "Robert" should see "Save Progress" section on "Create your export journey" page
 
 
-  @wip
-  @ED-2737
+  @ED-3262
   @your-export-journey-link
-  Scenario: Any user who is not signed be prompted to sign in on the "home" page
-    Given "Robert" is not signed in
-    When "Robert" visits the "Start your export journey" page
-    Then "Robert" should be asked to sign in or register in the  home page "create export journey" section
+  Scenario: Any user who visits the "Create your export journey" page for the first time, should be able to Start the journey (get to the first Triage question)
+    Given "Robert" visits the "Create your export journey" page for the first time
+
+    When "Robert" decides to use "Start now button" on "Create your export journey" page
+
+    Then "Robert" should be on the "Triage - what do you want to export" page
+
+
+  @ED-3263
+  @your-export-journey-link
+  @session
+  @fake-sso-email-verification
+  Scenario: Any authenticated user should not be prompted to sign in or register on the "Create your export journey" page
+    Given "Robert" is a registered and verified user
+    And "Robert" is signed in
+    And "Robert" went to the "Home" page
+
+    When "Robert" goes to the "Create your export journey" page
+
+    Then "Robert" should not see "Save Progress" section on "Create your export journey" page
 
 
   @wip
