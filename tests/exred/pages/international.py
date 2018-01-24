@@ -16,6 +16,7 @@ from utils import take_screenshot
 
 NAME = "International"
 URL = urljoin(EXRED_UI_URL, "international/")
+PAGE_TITLE = "Welcome to great.gov.uk - buy from or invest in the UK"
 
 
 LANGUAGE_SELECTOR = "#header-bar .LanguageSelectorDialog-Tracker"
@@ -83,6 +84,7 @@ def visit(driver: webdriver, *, first_time: bool = False):
 def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
+    check_title(driver, PAGE_TITLE, exact_match=True)
     check_for_expected_sections_elements(driver, SECTIONS)
 
 
