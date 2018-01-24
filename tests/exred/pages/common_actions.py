@@ -44,7 +44,7 @@ def check_url(
         if exact_match:
             assert driver.current_url == expected_url
         else:
-            assert driver.current_url in expected_url
+            assert driver.current_url in expected_url or expected_url in driver.current_url
     logging.debug("Current page URL matches expected '%s'", driver.current_url)
 
 
