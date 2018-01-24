@@ -2,7 +2,10 @@
 """ExRed Footer Page Object."""
 from selenium import webdriver
 
-from pages.common_actions import check_for_expected_sections_elements
+from pages.common_actions import (
+    check_for_expected_sections_elements,
+    find_and_click_on_page_element
+)
 from utils import assertion_msg, find_element, take_screenshot
 
 NAME = "ExRed Footer"
@@ -71,3 +74,8 @@ def open(driver: webdriver, group: str, element: str):
     button.click()
     take_screenshot(
         driver, NAME + " after clicking on: %s link".format(element))
+
+
+def click_on_page_element(driver: webdriver, element_name: str):
+    find_and_click_on_page_element(driver, SECTIONS, element_name)
+    take_screenshot(driver, NAME + " after clicking on " + element_name)

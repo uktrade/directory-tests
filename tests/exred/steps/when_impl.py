@@ -1141,3 +1141,13 @@ def header_footer_open_link(
     logging.debug(
         "%s decided to go to '%s' page via '%s' links in header menu",
         actor_alias, link_name, group)
+
+
+def click_on_page_element(
+        context: Context, actor_alias: str, element_name: str, page_name: str):
+    page_object = get_page_object(page_name)
+    assert hasattr(page_object, "click_on_page_element")
+    page_object.click_on_page_element(context.driver, element_name)
+    logging.debug(
+        "%s decided to click on '%s' on '%s' page", actor_alias, element_name,
+        page_name)

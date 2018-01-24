@@ -9,10 +9,11 @@ from pages.common_actions import (
     check_for_section,
     check_title,
     check_url,
+    find_and_click_on_page_element,
     go_to_url
 )
 from settings import EXRED_UI_URL
-from utils import find_element, take_screenshot
+from utils import check_if_element_is_not_visible, take_screenshot
 
 NAME = "Create your export journey"
 URL = urljoin(EXRED_UI_URL, "custom/")
@@ -31,6 +32,8 @@ SECTIONS = {
     },
     "start now": {
         "start now button": START_NOW,
+    },
+    "save progress": {
         "register link": REGISTER,
         "sign-in link": SIGN_IN
     },
@@ -55,3 +58,6 @@ def should_be_here(driver: webdriver):
     check_for_expected_sections_elements(driver, SECTIONS)
 
 
+def click_on_page_element(driver: webdriver, element_name: str):
+    find_and_click_on_page_element(driver, SECTIONS, element_name)
+    take_screenshot(driver, NAME + " after clicking on " + element_name)

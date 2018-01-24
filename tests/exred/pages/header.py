@@ -6,6 +6,7 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
 
+from pages.common_actions import find_and_click_on_page_element
 from settings import DIT_FAVICON_MD5_CHECKSUM, DIT_LOGO_MD5_CHECKSUM
 from utils import (
     assertion_msg,
@@ -171,3 +172,8 @@ def check_dit_favicon(driver: webdriver):
     src = favicon.get_attribute("href")
     check_hash_of_remote_file(DIT_FAVICON_MD5_CHECKSUM, src)
     logging.debug("Favicon %s has correct MD5sum %s", src, DIT_FAVICON_MD5_CHECKSUM)
+
+
+def click_on_page_element(driver: webdriver, element_name: str):
+    find_and_click_on_page_element(driver, SECTIONS, element_name)
+    take_screenshot(driver, NAME + " after clicking on " + element_name)
