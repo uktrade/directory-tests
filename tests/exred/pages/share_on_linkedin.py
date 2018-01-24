@@ -24,7 +24,6 @@ EXPECTED_ELEMENTS = {
 
 def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
-    check_url(driver, URL, exact_match=False)
     check_title(driver, PAGE_TITLE, exact_match=True)
     check_for_expected_elements(driver, EXPECTED_ELEMENTS)
 
