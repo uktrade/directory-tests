@@ -334,21 +334,21 @@ def check_if_element_is_visible(web_element: WebElement, element_name: str):
 
 def check_if_element_is_not_visible(
         driver: webdriver, *, by_css: str = None,
-        by_id: str = None, element_name: str = ""):
+        by_id: str = None, element_name: str = "", wait_for_it: bool = True):
     """Find element by CSS selector or it's ID.
 
     :param driver: Selenium driver
     :param by_css: CSS selector to locate the element to wait for
     :param by_id: ID of the element to wait for
     :param element_name: human friendly name of the element used in log msg
-    :return: found WebElement
+    :param wait_for_it: (optional) flag to decide whether you want to wait for
+                        the visibility of the element. Defaults to True`
     """
     assert by_id or by_css, "Provide ID or CSS selector"
     try:
-        if by_css:
-            element = driver.find_element_by_css_selector(by_css)
-        else:
-            element = driver.find_element_by_id(by_id)
+        element = find_element(
+            driver, by_css=by_css, by_id=by_id, element_name=element_name,
+            wait_for_it=wait_for_it)
         with assertion_msg(
                 "Expected not to see '%s' element identified by '%s'",
                 element_name, by_id or by_css):
@@ -368,7 +368,7 @@ def find_element(
     :param by_id: ID of the element to wait for
     :param element_name: (optional) human friend element name
     :param wait_for_it: (optional) flag to decide whether you want to wait for
-                        the visibility of the element
+                        the visibility of the element. Defaults to True`
     :return: found WebElement
     """
     assert by_id or by_css, "Provide ID or CSS selector"
