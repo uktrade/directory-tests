@@ -321,6 +321,17 @@ def check_if_element_is_not_present(
         assert not found
 
 
+def check_if_element_is_visible(web_element: WebElement, element_name: str):
+    """Check if provided web element is visible.
+
+    :param web_element: A WebElement object
+    :param element_name: human friendly name of the element used in log msg
+    """
+    with assertion_msg(
+            "Expected to see '%s' element but it is not visible", element_name):
+        assert web_element.is_displayed()
+
+
 def check_if_element_is_not_visible(
         driver: webdriver, *, by_css: str = None,
         by_id: str = None, element_name: str = ""):
