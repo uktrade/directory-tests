@@ -6,6 +6,7 @@ from selenium import webdriver
 
 from utils import (
     assertion_msg,
+    check_if_element_is_visible,
     clear_driver_cookies,
     find_element,
     take_screenshot
@@ -136,3 +137,33 @@ def check_for_expected_sections_elements(driver: webdriver, sections: dict):
                 assert element.is_displayed()
         logging.debug(
             "All expected elements are visible on '%s'", driver.current_url)
+
+
+def find_and_click_on_page_element(
+        driver: webdriver, sections: dict, element_name: str, *,
+        wait_for_it: bool = True):
+    """Find page element in any page section selectors and click on it.
+
+    :param driver: Any Selenium Driver (Remote, Chrome, Firefox, PhantomJS etc.
+    :param sections: a dict with page elements selectors grouped into page
+                     sections.
+    :param element_name: name of the sought page element to click
+    :param wait_for_it: (optional) Use `True` to wait for the element's
+                        visibility or use `False` not to do so.
+                        Defaults to `True`
+    """
+    found_selector = False
+    for section_name, element_selectors in sections.items():
+        if element_name.lower() in element_selectors:
+            found_selector = True
+            selector = element_selectors[element_name.lower()]
+            logging.debug(
+                "Found '%s' in '%s' section with following selector: '%s'",
+                element_name, section_name, selector)
+            web_element = find_element(
+                driver, by_css=selector, element_name=element_name,
+                wait_for_it=wait_for_it)
+            check_if_element_is_visible(web_element, element_name)
+            web_element.click()
+    with assertion_msg("Could not find '%s' in any section", element_name):
+        assert found_selector
