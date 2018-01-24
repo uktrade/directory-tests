@@ -13,7 +13,7 @@ from settings import EXRED_UI_URL
 from utils import assertion_msg, take_screenshot
 
 NAME = "ExRed Triage - are you registered with Companies House"
-URL = urljoin(EXRED_UI_URL, "triage/companies_house/")
+URL = urljoin(EXRED_UI_URL, "triage/companies-house/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 YES_RADIO = "#id_companies-house-is_in_companies_house_0"
