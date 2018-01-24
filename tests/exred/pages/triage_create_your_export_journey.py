@@ -55,7 +55,3 @@ def should_be_here(driver: webdriver):
     check_for_expected_sections_elements(driver, SECTIONS)
 
 
-def start_now(driver: webdriver):
-    star_now = find_element(driver, by_css=START_NOW)
-    star_now.click()
-    take_screenshot(driver, NAME)
