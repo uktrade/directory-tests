@@ -81,6 +81,7 @@ def after_step(context: Context, step: Step):
     :param step: Behave Step object
     """
     logging.debug("Finished Step: %s %s", step.step_type, str(repr(step.name)))
+    logging.debug("Step Duration: %s %s", str(repr(step.name)), step.duration)
     if RESTART_BROWSER == "scenario":
         if step.status == "failed":
             message = ("Step '%s %s' failed. Reason: '%s'" %
