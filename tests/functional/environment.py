@@ -19,7 +19,6 @@ from tests.functional.utils.generic import (
     extract_main_error,
     extract_section_error,
     green,
-    init_loggers,
     print_response,
     red
 )
@@ -96,7 +95,7 @@ def after_scenario(context, scenario):
 
 
 def before_all(context):
-    init_loggers(context)
+    context.config.setup_logging(configfile=".behave_logging")
     # this will add some handy functions to the `context` object
     patch_context(context)
 

@@ -1,0 +1,29 @@
+[loggers]
+keys=root
+
+[handlers]
+keys=Console,File
+
+[formatters]
+keys=Brief
+
+[logger_root]
+level = NOTSET
+handlers = File
+
+# handlers = Console,File
+[handler_File]
+class=FileHandler
+args=("tests/functional/reports/behave.log", 'w')
+level=NOTSET
+formatter=Brief
+
+[handler_Console]
+class=StreamHandler
+args=(sys.stderr,)
+level=INFO
+formatter=Brief
+
+[formatter_Brief]
+format=%(asctime)s-%(filename)s[line:%(lineno)d]-%(name)s-%(levelname)s: %(message)s
+datefmt=
