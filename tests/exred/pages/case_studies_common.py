@@ -19,21 +19,21 @@ SHARE_WIDGET = "#top > ul.sharing-links"
 CASE_STUDIES = {
     1: {
         "breadcrumb": "#content > div > p.breadcrumbs > span.current",
-        "title": "#top > h1",
-        "type": "#top > p.type",
-        "description": "#top > p.description",
+        "title": "#top h1",
+        "type": "#top p.type",
+        "description": "#top p.description",
     },
     2: {
         "breadcrumb": "#content > div > p.breadcrumbs > span.current",
-        "title": "#top > h1",
-        "type": "#top > p.type",
-        "description": "#top > p.description",
+        "title": "#top h1",
+        "type": "#top p.type",
+        "description": "#top p.description",
     },
     3: {
         "breadcrumb": "#content > div > p.breadcrumbs > span.current",
-        "title": "#top > h1",
-        "type": "#top > p.type",
-        "description": "#top > p.description",
+        "title": "#top h1",
+        "type": "#top p.type",
+        "description": "#top p.description",
     }
 }
 
