@@ -30,8 +30,8 @@ def run_behave_test(
         versions: str = "", tag: str = None):
     extra_tag = "--tags={}".format(tag) if tag else ""
     sh("BROWSERS={} VERSIONS={} CONFIG={} TASK_ID={} behave -k --format "
-       "progress3 --tags=-wip --tags=-skip --tags=~long "
-       "--tags=~fixme {}"
+       "progress3 --logging-filter=-root --tags=-wip --tags=-skip --tags=~long"
+       " --tags=~fixme {}"
         .format(browsers, versions, config_name, task_id, extra_tag))
 
 
