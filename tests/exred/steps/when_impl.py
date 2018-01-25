@@ -1030,7 +1030,7 @@ def sign_in_go_to(context: Context, actor_alias: str, location: str):
         header.go_to_sign_in(context.driver)
     else:
         raise KeyError(
-            "Could not recognise 'sign in' link location: %s. Please use "
+            "Could not recognise 'sign in' link location: {}. Please use "
             "'article', 'article list' or 'top bar'".format(location))
     sso_sign_in.should_be_here(context.driver)
 

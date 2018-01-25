@@ -80,8 +80,8 @@ def guidance_check_if_link_to_next_category_is_displayed(
     guidance_common.check_if_link_to_next_category_is_displayed(
         context.driver, next_category)
     logging.debug(
-        "%s was able t see the link to the next category wherever expected",
-        actor_alias, next_category)
+        "%s was able to see the link to the next category '%s' wherever"
+        " expected", actor_alias, next_category)
 
 
 def guidance_expected_page_elements_should_be_visible(
@@ -110,7 +110,9 @@ def triage_should_be_classified_as(
     elif classification == "regular":
         triage_should_be_classified_as_regular(context)
     else:
-        raise KeyError("Could not recognize: '%s'. Please use: ")
+        raise KeyError(
+            "Couldn't recognize: '%s'. Please use: new, occasional or regular",
+            classification)
     logging.debug(
         "%s was properly classified as %s exporter", actor_alias,
         classification)
@@ -328,7 +330,8 @@ def personalised_journey_should_not_see_banner_and_top_10_table(
     code, sector = actor.what_do_you_want_to_export
     logging.debug(
         "As expected %s can't see Top Importer banner and Top 10 Importers "
-        "table on personalised page for '%s - %s' sector", code, sector)
+        "table on personalised page for '%s - %s' sector", actor_alias, code,
+        sector)
 
 
 def personalised_journey_should_see_banner_and_top_10_table(
@@ -339,7 +342,8 @@ def personalised_journey_should_see_banner_and_top_10_table(
         context.driver, sector)
     logging.debug(
         "As expected %s can see Top Importer banner and Top 10 Importers "
-        "table on personalised page for '%s - %s' sector", code, sector)
+        "table on personalised page for '%s - %s' sector", actor_alias, code,
+        sector)
 
 
 def articles_should_see_read_counter_set_to(
@@ -412,7 +416,8 @@ def share_page_should_be_prepopulated(
     social_media_page.check_if_populated(context.driver, shared_url)
     clear_driver_cookies(driver=context.driver)
     logging.debug(
-        "%s saw '%s' share page populated with appropriate data", actor_alias)
+        "%s saw '%s' share page populated with appropriate data", actor_alias,
+        social_media)
 
 
 def share_page_via_email_should_have_article_details(

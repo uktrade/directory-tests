@@ -213,7 +213,7 @@ def check_top_facts_values(driver: webdriver):
     else:
         logging.debug(
             "Country mentioned in Top Facts: %s is not present in the Top 10 "
-            "Importers table. Won't check the the trade value")
+            "Importers table. Won't check the the trade value", top_importer)
 
 
 def check_facts_and_top_10(driver: webdriver, sector_code: str):

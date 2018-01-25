@@ -69,8 +69,9 @@ def verify_account(email: str):
 def delete_supplier_data(service_name, email_address):
     sql = SSO_CLEAN_UP
     connection, cursor = get_sso_db_connection()
-    logging.debug("Deleting Supplier data from %s DB for: %s", service_name,
-                  email_address)
+    logging.debug(
+        "Deleting Supplier data from %s DB for: %s", service_name,
+        email_address)
     data = (email_address, )
     cursor.execute(sql, data)
     if cursor.description:
