@@ -11,11 +11,10 @@ from selenium.webdriver.support.wait import WebDriverWait
 from pages.common_actions import (
     check_for_expected_elements,
     check_title,
-    check_url,
-    go_to_url
+    check_url
 )
 from settings import EXRED_UI_URL
-from utils import assertion_msg, take_screenshot
+from utils import assertion_msg, take_screenshot, find_element
 
 NAME = "ExRed Triage - What is your company name"
 URL = urljoin(EXRED_UI_URL, "triage/company/")
@@ -55,11 +54,12 @@ def hide_suggestions(driver: webdriver):
 
 
 def click_on_first_suggestion(driver: webdriver):
-    suggestions = driver.find_element_by_css_selector(SUGGESTIONS)
-    WebDriverWait(driver, 5).until(
-        EC.visibility_of_element_located((By.CSS_SELECTOR, SUGGESTIONS)))
+    suggestions = find_element(
+        driver, by_css=SUGGESTIONS, element_name="Suggestions",
+        wait_for_it=True)
     if suggestions.is_displayed():
-        first_suggestion = driver.find_element_by_css_selector(FIRST_SUGGESTION)
+        first_suggestion = find_element(
+            driver, by_css=FIRST_SUGGESTION, element_name="First suggestion")
         first_suggestion.click()
 
 
