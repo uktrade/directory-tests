@@ -25,7 +25,7 @@ LOGO = "#header-dit-logo > img"
 HOME_LINK = "#header-home-link"
 YOUR_EXPORT_JOURNEY = "#header-custom-page-link"
 REGISTRATION_LINK = "#header-register-link"
-SIGN_IN_LINK = "#header-bar .top-bar li:nth-child(2) > a"  # "#header-sign-in-link"
+SIGN_IN_LINK = "#header-bar .top-bar li:nth-child(2) > a"
 PROFILE_LINK = "#header-profile-link"
 SIGN_OUT_LINK = "#header-sign-out-link"
 LANGUAGE_SELECTOR = "#header-bar .LanguageSelectorDialog-Tracker"
@@ -46,7 +46,8 @@ SECTIONS = {
         "finance": "#header-guidance-finance",
         "business planning": "#header-guidance-business-planning",
         "getting paid": "#header-guidance-getting-paid",
-        "operations and compliance": "#header-guidance-operations-and-compliance"
+        "operations and compliance":
+            "#header-guidance-operations-and-compliance"
     },
     "services": {
         "menu": "#header-services-links",
@@ -171,7 +172,8 @@ def check_dit_favicon(driver: webdriver):
             raise
     src = favicon.get_attribute("href")
     check_hash_of_remote_file(DIT_FAVICON_MD5_CHECKSUM, src)
-    logging.debug("Favicon %s has correct MD5sum %s", src, DIT_FAVICON_MD5_CHECKSUM)
+    logging.debug(
+        "Favicon %s has correct MD5sum %s", src, DIT_FAVICON_MD5_CHECKSUM)
 
 
 def click_on_page_element(driver: webdriver, element_name: str):

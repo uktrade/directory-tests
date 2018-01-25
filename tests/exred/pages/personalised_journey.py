@@ -4,10 +4,6 @@ import logging
 from urllib.parse import urljoin
 
 from selenium import webdriver
-from selenium.common.exceptions import (
-    NoSuchElementException,
-    WebDriverException
-)
 from selenium.webdriver import ActionChains
 
 from pages.common_actions import check_for_section, check_title, check_url
@@ -34,7 +30,8 @@ CUSTOMER_INSIGHT_LINK = "#resource-guidance a[href='/customer-insight/']"
 FINANCE_LINK = "#resource-guidance a[href='/finance/']"
 BUSINESS_LINK = "#resource-guidance a[href='/business-planning/']"
 GETTING_PAID_LINK = "#resource-guidance a[href='/getting-paid/']"
-OPERATIONS_AND_COMPLIANCE_LINK = "#resource-guidance a[href='/operations-and-compliance/']"
+OPERATIONS_AND_COMPLIANCE_LINK = \
+    "#resource-guidance a[href='/operations-and-compliance/']"
 TOP_IMPORTER = "#top_importer_name"
 TOP_IMPORTERS = "#content > section.top-markets > div > ol > li > dl"
 TRADE_VALUE = "#top_importer_global_trade_value"
@@ -81,13 +78,15 @@ SECTIONS = {
         "heading": "section.service-section.soo h2",
         "exopps image": "section.service-section.soo img",
         "intro": "section.service-section.soo .intro",
-        "find marketplaces button": "section.service-section.soo .intro .button",
+        "find marketplaces button":
+            "section.service-section.soo .intro .button",
     },
     "soo section": {
         "heading": "section.service-section.soo h2",
         "soo image": "section.service-section.soo img",
         "intro": "section.service-section.soo .intro",
-        "find marketplaces button": "section.service-section.soo .intro .button",
+        "find marketplaces button":
+            "section.service-section.soo .intro .button",
     },
     "soo tile": {
         "heading": "#other-services div.lg-2:nth-child(1) h3",
@@ -121,7 +120,8 @@ SECTIONS = {
         "next article": "#carousel label.ed-carousel__control--forward",
         "case study head link": ".ed-carousel__track > div:nth-child(1) h3 a",
         "case study intro": ".ed-carousel__track > div:nth-child(1) p",
-        "case study intro link": ".ed-carousel__track > div:nth-child(1) div > a",
+        "case study intro link":
+            ".ed-carousel__track > div:nth-child(1) div > a",
         "carousel indicator #1": "#carousel .ed-carousel__indicator[for='1']",
         "carousel indicator #2": "#carousel .ed-carousel__indicator[for='2']",
         "carousel indicator #3": "#carousel .ed-carousel__indicator[for='3']",
@@ -140,7 +140,8 @@ def should_be_here(driver: webdriver):
 def should_see_read_counter(
         driver: webdriver, *, exporter_status: str = None,
         expected_number_articles: int = 0):
-    counter = find_element(driver, by_css=READ_COUNTER, element_name="Article Read Counter")
+    counter = find_element(
+        driver, by_css=READ_COUNTER, element_name="Article Read Counter")
     if "firefox" not in driver.capabilities["browserName"].lower():
         logging.debug("Moving focus to 'Read Counter' on %s", NAME)
         action_chains = ActionChains(driver)
@@ -231,8 +232,9 @@ def check_facts_and_top_10(driver: webdriver, sector_code: str):
 def layout_for_new_exporter(
         driver: webdriver, incorporated: bool, sector_code: str):
     """
-    * a new exporter says his company incorporated, then only `FAB` is displayed
-    * a new exporter says his company is not incorporated, then `no services are displayed`
+    * a new exporter says his company:
+    ** incorporated, then only `FAB` is displayed
+    ** is not incorporated, then `no services are displayed`
     """
     should_see_section(driver, "hero")
     check_facts_and_top_10(driver, sector_code)
@@ -246,10 +248,15 @@ def layout_for_occasional_exporter(
         driver: webdriver, incorporated: bool, use_online_marketplaces: bool,
         sector_code: str):
     """
-    * an occasional exporter says his company used online marketplaces and is incorporated, then `FAB & SOO` are displayed
-    * an occasional exporter says his company used online marketplaces but it is not incorporated, then only `SOO` is displayed
-    * an occasional exporter says his company haven't used online marketplaces but it is incorporated, then only `FAB` is displayed
-    * an occasional exporter says his company haven't used online marketplaces and it is not incorporated, then `no services are displayed`
+    * an occasional exporter says his company:
+    ** used online marketplaces and is incorporated,
+        then `FAB & SOO` are displayed
+    ** used online marketplaces but it is not incorporated,
+        then only `SOO` is displayed
+    ** haven't used online marketplaces but it is incorporated,
+        then only `FAB` is displayed
+    ** haven't used online marketplaces and it is not incorporated,
+        then `no services are displayed`
     """
     should_see_section(driver, "hero")
     check_facts_and_top_10(driver, sector_code)
@@ -267,8 +274,9 @@ def layout_for_occasional_exporter(
 def layout_for_regular_exporter(
         driver: webdriver, incorporated: bool, sector_code: str):
     """
-    * a regular exporter says his company is incorporated, then `FAB, SOO & ExOpps` are displayed
-    * a regular exporter says his company is not incorporated, then `SOO & ExOpps` are displayed
+    * a regular exporter says his company is:
+    ** incorporated, then `FAB, SOO & ExOpps` are displayed
+    ** not incorporated, then `SOO & ExOpps` are displayed
     """
     should_see_section(driver, "hero")
     check_facts_and_top_10(driver, sector_code)

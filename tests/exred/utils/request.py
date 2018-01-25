@@ -35,8 +35,8 @@ REQUEST_EXCEPTIONS = (
     BaseHTTPError, RequestException, HTTPError, ConnectionError, ProxyError,
     SSLError, Timeout, ConnectTimeout, ReadTimeout, URLRequired,
     TooManyRedirects, MissingSchema, InvalidSchema, InvalidURL, InvalidHeader,
-    ChunkedEncodingError, ContentDecodingError, StreamConsumedError, RetryError,
-    UnrewindableBodyError
+    ChunkedEncodingError, ContentDecodingError, StreamConsumedError,
+    RetryError, UnrewindableBodyError
 )
 
 
@@ -114,7 +114,8 @@ def log_response(response: Response, *, trim: bool = True):
                 content = decode_as_utf8(r.content)
                 if trim:
                     logging.debug(
-                        "Intermediate RESP Content: %s", content[0:trim_offset])
+                        "Intermediate RESP Content: %s",
+                        content[0:trim_offset])
                 else:
                     logging.debug("Intermediate RSP Content: %s", content)
         logging.debug(
@@ -178,7 +179,7 @@ def make_request(
                   For more details please refer to:
                   http://docs.python-requests.org/en/master/user/quickstart/#post-a-multipart-encoded-file
     :param allow_redirects: Follow or do not follow redirects
-    :param auth: (optional) authentication tuple, e.g.: ("username", "password")
+    :param auth: (optional) authentication tuple e.g.: ("username", "password")
     :param trim: (optional) trim long request body/response content if True
     :return: a response object
     """

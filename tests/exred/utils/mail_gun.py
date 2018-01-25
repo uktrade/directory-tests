@@ -164,7 +164,7 @@ def mailgun_get_message(context: Context, url: str) -> dict:
     context.response = response
 
     with assertion_msg(
-            "Expected 200 from MailGun when getting message details but got %s",
+            "Expected 200 from MailGun when getting message but got %s",
             response.status_code):
         assert response.status_code == 200
     return response.json()
@@ -180,6 +180,7 @@ def mailgun_get_message_url(
 
     :param context: behave `context` object
     :param recipient: email address of the message recipient
+    :param subject: (optional) subject of sought email
     :return: mailgun message URL
     """
     message_limit = 1

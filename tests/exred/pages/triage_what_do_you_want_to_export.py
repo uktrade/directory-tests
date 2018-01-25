@@ -58,7 +58,8 @@ def enter(driver: webdriver, code: str, sector: str) -> tuple:
         input_field = driver.find_element_by_css_selector(SECTORS_INPUT)
     max_retries = 5
     counter = 0
-    while (code.lower() not in input_field.get_attribute("value").lower()) and (counter < max_retries):
+    while (code.lower() not in input_field.get_attribute("value").lower()) \
+            and (counter < max_retries):
         input_field.click()
         input_field.clear()
         input_field.send_keys(code or sector)

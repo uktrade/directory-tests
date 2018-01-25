@@ -430,7 +430,8 @@ GROUPS = {
 }
 
 
-def get_articles(group: str, category: str, *, sub_category: str = None) -> list:
+def get_articles(
+        group: str, category: str, *, sub_category: str = None) -> list:
     """Get an ordered list of articles for specific group & category.
 
     NOTE:
@@ -445,7 +446,8 @@ def get_articles(group: str, category: str, *, sub_category: str = None) -> list
     """
     ret = []
     if sub_category is not None:
-        articles = GROUPS[group.lower()][category.lower()][sub_category.lower()]
+        sub_category = sub_category.lower()
+        articles = GROUPS[group.lower()][category.lower()][sub_category]
     else:
         articles = GROUPS[group.lower()][category.lower()]
 

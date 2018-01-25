@@ -32,7 +32,8 @@ SECTIONS = {
         "finance": "#footer-guidance-finance",
         "business planning": "#footer-guidance-business-planning",
         "getting paid": "#footer-guidance-getting-paid",
-        "operations and compliance": "#footer-guidance-operations-and-compliance"
+        "operations and compliance":
+            "#footer-guidance-operations-and-compliance"
     },
     "services": {
         "label": "#footer-services-links",

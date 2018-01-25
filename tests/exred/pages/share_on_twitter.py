@@ -5,11 +5,7 @@ from urllib.parse import urljoin
 
 from selenium import webdriver
 
-from pages.common_actions import (
-    check_for_expected_elements,
-    check_title,
-    check_url
-)
+from pages.common_actions import check_for_expected_elements, check_title
 from utils import assertion_msg, find_element, take_screenshot
 
 NAME = "Share on Twitter page"

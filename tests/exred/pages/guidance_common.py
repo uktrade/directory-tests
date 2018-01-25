@@ -19,7 +19,8 @@ RIBBON = {
     "finance": ".navigation-ribbon a[href='/finance/']",
     "business planning": ".navigation-ribbon a[href='/business-planning/']",
     "getting paid": ".navigation-ribbon a[href='/getting-paid/']",
-    "operations and compliance": ".navigation-ribbon a[href='/operations-and-compliance/']"
+    "operations and compliance":
+        ".navigation-ribbon a[href='/operations-and-compliance/']"
 }
 TOTAL_NUMBER_OF_ARTICLES = "dd.position > span.to"
 ARTICLES_TO_READ_COUNTER = "dd.position > span.from"

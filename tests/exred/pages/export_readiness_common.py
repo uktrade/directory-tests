@@ -67,7 +67,8 @@ def check_if_correct_articles_are_displayed(
     # check whether article is on the right position
     logging.debug("Given articles: %s", given_articles)
     for position, name in given_articles:
-        expected_position = get_article("export readiness", category, name).index
+        expected_position = get_article(
+            "export readiness", category, name).index
         with assertion_msg(
                 "Expected article '%s' to be at position %d but found it at "
                 "position no. %d ", name, expected_position, position):

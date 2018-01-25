@@ -14,7 +14,6 @@ from settings import AUTO_RETRY, CONFIG, CONFIG_NAME, RESTART_BROWSER, TASK_ID
 from utils import (
     clear_driver_cookies,
     flag_browserstack_session_as_failed,
-    init_loggers,
     initialize_scenario_data
 )
 
@@ -121,12 +120,12 @@ def after_feature(context: Context, feature: Feature):
             if hasattr(context, "scenario_data"):
                 logging.debug(context.scenario_data)
             if "browserstack" in CONFIG_NAME:
-                failed = [scenario for scenario in feature.scenarios
-                          if scenario.status == "failed"]
+                failed = len([scenario for scenario in feature.scenarios
+                             if scenario.status == "failed"])
                 message = (
                         "Feature '%s' failed because of issues with %d "
-                        "%s" % (feature.name, len(failed),
-                                "scenarios" if len(failed) > 1 else "scenario"))
+                        "%s" % (feature.name, failed,
+                                "scenarios" if failed > 1 else "scenario"))
                 if hasattr(context, "driver"):
                     session_id = context.driver.session_id
                     flag_browserstack_session_as_failed(session_id, message)

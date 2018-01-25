@@ -11,7 +11,9 @@ from utils import take_screenshot, wait_for_visibility
 
 NAME = "Events Home page"
 URL = urljoin(EVENTS_UI_URL, "")
-PAGE_TITLE = "Department for International Trade (DIT): exporting from or investing in the UK"
+PAGE_TITLE = (
+    "Department for International Trade (DIT): exporting from or investing in "
+    "the UK")
 GREAT_LOGO = "#portal-top > h1 > a > img"
 
 

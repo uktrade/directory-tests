@@ -18,8 +18,10 @@ PAGE_TITLE = "Welcome to great.gov.uk"
 
 YES_RADIO = "#id_online-marketplace-used_online_marketplace_0"
 NO_RADIO = "#id_online-marketplace-used_online_marketplace_1"
-YES_CHECKBOX = "#id_online-marketplace-used_online_marketplace > li:nth-child(1) > label"
-NO_CHECKBOX = "#id_online-marketplace-used_online_marketplace > li:nth-child(2) > label"
+YES_CHECKBOX = \
+    "#id_online-marketplace-used_online_marketplace > li:nth-child(1) > label"
+NO_CHECKBOX = \
+    "#id_online-marketplace-used_online_marketplace > li:nth-child(2) > label"
 CONTINUE_BUTTON = ".exred-triage-form button.button"
 PREVIOUS_STEP_BUTTON = ".exred-triage-form button.previous-step"
 BACK_TO_HOME_LINK = ".home-link a"

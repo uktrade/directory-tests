@@ -19,7 +19,9 @@ URL = urljoin(DIRECTORY_UI_PROFILE_URL, "about/")
 PAGE_TITLE = "Exporting is Great Profile - GREAT.gov.uk"
 
 EXPECTED_ELEMENTS = {
-    "title": "#content > div:nth-child(1) > div > div.span8.sso-profile-toolbar-labels-container > h1",
+    "title": (
+        "#content > div:nth-child(1) > div > "
+        "div.span8.sso-profile-toolbar-labels-container > h1"),
     "welcome message": "#welcome-message > h2",
 }
 

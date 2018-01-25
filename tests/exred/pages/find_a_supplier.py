@@ -7,11 +7,12 @@ from selenium import webdriver
 
 from pages.common_actions import check_title, check_url, go_to_url
 from settings import DIRECTORY_UI_SUPPLIER_URL
-from utils import assertion_msg, take_screenshot
+from utils import take_screenshot
 
 NAME = "Find a Supplier Home page"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "")
-PAGE_TITLE = "Find trade profiles of reliable UK suppliers - trade.great.gov.uk"
+PAGE_TITLE = \
+    "Find trade profiles of reliable UK suppliers - trade.great.gov.uk"
 
 
 def visit(driver: webdriver, *, first_time: bool = False):

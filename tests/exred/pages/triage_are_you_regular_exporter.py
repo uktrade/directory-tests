@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """Triage  Are you regular exporter? Page Object."""
-import logging
 from urllib.parse import urljoin
 
 from selenium import webdriver
@@ -19,7 +18,8 @@ PAGE_TITLE = "Welcome to great.gov.uk"
 
 YES_RADIO = "#id_regular-exporter-regular_exporter_0"
 NO_RADIO = "#id_regular-exporter-regular_exporter_1"
-YES_CHECKBOX = "#id_regular-exporter-regular_exporter > li:nth-child(1) > label"
+YES_CHECKBOX = \
+    "#id_regular-exporter-regular_exporter > li:nth-child(1) > label"
 NO_CHECKBOX = "#id_regular-exporter-regular_exporter > li:nth-child(2) > label"
 CONTINUE_BUTTON = ".exred-triage-form button.button"
 PREVIOUS_STEP_BUTTON = ".exred-triage-form button.previous-step"

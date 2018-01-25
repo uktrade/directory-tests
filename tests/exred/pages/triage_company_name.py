@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """Triage - What is your company name? Page Object."""
-import logging
 import random
 from urllib.parse import urljoin
 

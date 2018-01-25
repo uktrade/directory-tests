@@ -197,9 +197,9 @@ def selenium_action(driver: webdriver, message: str, *args):
         * raise the original AssertionError exception
 
     :param driver: Selenium WebDriver required to extract browser information
-    :param message: a message that will be printed & logged when assertion fails
-    :param args: values that will replace % conversion specifications in message
-                 like: %s, %d
+    :param message: message that will be printed & logged when assertion fails
+    :param args: values that will replace % conversion specifications in
+                 message like: %s, %d
     :raises WebDriverException or NoSuchElementException
     """
     try:
@@ -328,7 +328,7 @@ def check_if_element_is_visible(web_element: WebElement, element_name: str):
     :param element_name: human friendly name of the element used in log msg
     """
     with assertion_msg(
-            "Expected to see '%s' element but it is not visible", element_name):
+            "Expected to see '%s' element but it's not visible", element_name):
         assert web_element.is_displayed()
 
 

@@ -52,7 +52,8 @@ CUSTOMER_INSIGHT_LINK = "#guidance-section-customer-insight-link"
 FINANCE_LINK = "#guidance-section-finance-link"
 BUSINESS_LINK = "#guidance-section-business-planning-link"
 GETTING_PAID_LINK = "#guidance-section-getting-paid-link"
-OPERATIONS_AND_COMPLIANCE_LINK = "#guidance-section-operations-and-compliance-link"
+OPERATIONS_AND_COMPLIANCE_LINK = \
+    "#guidance-section-operations-and-compliance-link"
 CAROUSEL = {
     "itself": "#carousel",
     "title": "#case-studies-section-title",
@@ -62,12 +63,18 @@ CAROUSEL = {
     "carousel - indicator 1": "#case-studies-section-indicator-1",
     "carousel - indicator 2": "#case-studies-section-indicator-2",
     "carousel - indicator 3": "#case-studies-section-indicator-3",
-    "carousel - case study 1 - link": "#case-studies-section-case-study-1-link",
-    "carousel - case study 2 - link": "#case-studies-section-case-study-2-link",
-    "carousel - case study 3 - link": "#case-studies-section-case-study-3-link",
-    "carousel - case study 1 - image": "#case-studies-section-case-study-1-image",
-    "carousel - case study 2 - image": "#case-studies-section-case-study-2-image",
-    "carousel - case study 3 - image": "#case-studies-section-case-study-3-image",
+    "carousel - case study 1 - link":
+        "#case-studies-section-case-study-1-link",
+    "carousel - case study 2 - link":
+        "#case-studies-section-case-study-2-link",
+    "carousel - case study 3 - link":
+        "#case-studies-section-case-study-3-link",
+    "carousel - case study 1 - image":
+        "#case-studies-section-case-study-1-image",
+    "carousel - case study 2 - image":
+        "#case-studies-section-case-study-2-image",
+    "carousel - case study 3 - image":
+        "#case-studies-section-case-study-3-image",
 }
 
 SECTIONS = {
@@ -116,35 +123,55 @@ SECTIONS = {
         "finance - group": "#guidance-section-finance",
         "business planning - group": "#guidance-section-business-planning",
         "getting paid - group": "#guidance-section-getting-paid",
-        "operations and compliance - group": "#guidance-section-operations-and-compliance",
+        "operations and compliance - group":
+            "#guidance-section-operations-and-compliance",
 
         "market research - icon": "#guidance-section-market-research-icon",
         "customer insight - icon": "#guidance-section-customer-insight-icon",
         "finance - icon": "#guidance-section-finance-icon",
         "business planning - icon": "#guidance-section-business-planning-icon",
         "getting paid - icon": "#guidance-section-getting-paid-icon",
-        "operations and compliance - icon": "#guidance-section-operations-and-compliance-icon",
+        "operations and compliance - icon":
+            "#guidance-section-operations-and-compliance-icon",
 
-        "market research - read counter": "#guidance-section-market-research-read-counter",
-        "customer insight - read counter": "#guidance-section-customer-insight-read-counter",
-        "finance - read counter": "#guidance-section-finance-article-read-counter",
-        "business planning - read counter": "#guidance-section-business-planning-article-read-counter",
-        "getting paid - read counter": "#guidance-section-getting-paid-article-read-counter",
-        "operations and compliance - read counter": "#guidance-section-operations-and-compliance-article-read-counter",
+        "market research - read counter":
+            "#guidance-section-market-research-read-counter",
+        "customer insight - read counter":
+            "#guidance-section-customer-insight-read-counter",
+        "finance - read counter":
+            "#guidance-section-finance-article-read-counter",
+        "business planning - read counter":
+            "#guidance-section-business-planning-article-read-counter",
+        "getting paid - read counter":
+            "#guidance-section-getting-paid-article-read-counter",
+        "operations and compliance - read counter":
+            "#guidance-section-operations-and-compliance-article-read-counter",
 
-        "market research - total number of articles": "#guidance-section-market-research-total-number-of-articles",
-        "customer insight - total number of articles": "#guidance-section-customer-insight-total-number-of-articles",
-        "finance - total number of articles": "#guidance-section-finance-total-number-of-articles",
-        "business planning - total number of articles": "#guidance-section-business-planning-total-number-of-articles",
-        "getting paid - total number of articles": "#guidance-section-getting-paid-total-number-of-articles",
-        "operations and compliance - total number of articles": "#guidance-section-operations-and-compliance-total-number-of-articles",
+        "market research - total number of articles":
+            "#guidance-section-market-research-total-number-of-articles",
+        "customer insight - total number of articles":
+            "#guidance-section-customer-insight-total-number-of-articles",
+        "finance - total number of articles":
+            "#guidance-section-finance-total-number-of-articles",
+        "business planning - total number of articles":
+            "#guidance-section-business-planning-total-number-of-articles",
+        "getting paid - total number of articles":
+            "#guidance-section-getting-paid-total-number-of-articles",
+        "operations and compliance - total number of articles":
+            "#guidance-section-operations-and-compliance-total-number-of-articles",
 
-        "market research - description": "#guidance-section-market-research-description",
-        "customer insight - description": "#guidance-section-customer-insight-description",
-        "finance - description": "#guidance-section-finance-description",
-        "business planning - description": "#guidance-section-business-planning-description",
-        "getting paid - description": "#guidance-section-getting-paid-description",
-        "operations and compliance - description": "#guidance-section-operations-and-compliance-description",
+        "market research - description":
+            "#guidance-section-market-research-description",
+        "customer insight - description":
+            "#guidance-section-customer-insight-description",
+        "finance - description":
+            "#guidance-section-finance-description",
+        "business planning - description":
+            "#guidance-section-business-planning-description",
+        "getting paid - description":
+            "#guidance-section-getting-paid-description",
+        "operations and compliance - description":
+            "#guidance-section-operations-and-compliance-description",
 
         "market research": MARKET_RESEARCH_LINK,
         "customer insight": CUSTOMER_INSIGHT_LINK,
@@ -160,16 +187,23 @@ SECTIONS = {
         "groups": "#services .group",
 
         "find a buyer - article": "#services div:nth-child(1) > article",
-        "online marketplaces - article": "#services div:nth-child(2) > article",
-        "export opportunities - article": "#services div:nth-child(3) > article",
+        "online marketplaces - article":
+            "#services div:nth-child(2) > article",
+        "export opportunities - article":
+            "#services div:nth-child(3) > article",
 
         "find a buyer - image": "#services-section-find-a-buyer-image",
-        "online marketplaces - image": "#services-section-selling-online-overseas-image",
-        "export opportunities - image": "#services-section-export-opportunities-image",
+        "online marketplaces - image":
+            "#services-section-selling-online-overseas-image",
+        "export opportunities - image":
+            "#services-section-export-opportunities-image",
 
-        "find a buyer - description": "#services-section-find-a-buyer-description",
-        "online marketplaces - description": "#services-section-selling-online-overseas-description",
-        "export opportunities - description": "#services-section-export-opportunities-description",
+        "find a buyer - description":
+            "#services-section-find-a-buyer-description",
+        "online marketplaces - description":
+            "#services-section-selling-online-overseas-description",
+        "export opportunities - description":
+            "#services-section-export-opportunities-description",
 
         "find a buyer": FIND_A_BUYER_SERVICE_LINK,
         "selling online overseas": SELLING_ONLINE_OVERSEAS_SERVICE_LINK,
@@ -184,8 +218,10 @@ SECTIONS = {
         "carousel - indicator 1": "#case-studies-section-indicator-1",
         "carousel - indicator 2": "#case-studies-section-indicator-2",
         "carousel - indicator 3": "#case-studies-section-indicator-3",
-        "carousel - case study 1 - link": "#case-studies-section-case-study-1-link",
-        "carousel - case study 1 - image": "#case-studies-section-case-study-1-image",
+        "carousel - case study 1 - link":
+            "#case-studies-section-case-study-1-link",
+        "carousel - case study 1 - image":
+            "#case-studies-section-case-study-1-image",
     },
     "business is great": {
         "itself": "#beis",
