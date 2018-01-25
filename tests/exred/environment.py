@@ -182,4 +182,5 @@ def before_all(context: Context):
     browser_version = remote_desired_capabilities.get("browser_version", "")
     task_id = "{}-{}-v{}".format(TASK_ID, browser_name, browser_version)
 
-    init_loggers(context, task_id=task_id)
+    # init_loggers(context, task_id=task_id)
+    context.config.setup_logging(configfile=".behave_logging")
