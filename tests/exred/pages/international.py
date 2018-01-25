@@ -26,7 +26,7 @@ FIND_A_SUPPLIER = "section.international-links article:nth-child(1) > a"
 SEE_THE_POTENTIAL = "section.international-links article:nth-child(2) > a"
 LEARN_MORE = "section.international-links article:nth-child(3) > a"
 PLAN_YOUR_TRIP = "section.international-links article:nth-child(4) > a"
-BETA_FEEDBACK = "#header-beta-bar-feedback-link"
+BETA_FEEDBACK = "#header-beta-bar span > a"
 SECTIONS = {
     "header bar": {
         "itself": "#header-bar",
@@ -34,8 +34,8 @@ SECTIONS = {
     },
     "beta": {
         "itself": "#header-beta-bar",
-        "sticker": "#header-beta-bar .sticker",
-        "message": "#header-beta-bar p.beta-message",
+        "sticker": "#header-beta-bar .phase-tag",
+        "message": "#header-beta-bar p > span",
         "link": BETA_FEEDBACK
     },
     "header-menu": {
