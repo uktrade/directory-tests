@@ -102,8 +102,8 @@ SECTIONS = {
     },
     "guidance": {
         "itself": "#resource-guidance",
-        "guidance - heading": "#resource-guidance h2.section-header",
-        "guidance - introduction": "#resource-guidance p.intro",
+        "guidance - title": "#guidance-section-title",
+        "guidance - description": "#guidance-section-description",
         "guidance - categories": "#resource-guidance .group",
         "market research": MARKET_RESEARCH_LINK,
         "customer insight": CUSTOMER_INSIGHT_LINK,
