@@ -58,7 +58,7 @@ def retry_if_webdriver_error(exception):
 
 @retry(
     wait_fixed=30000, stop_max_attempt_number=3,
-    retry_on_exception=retry_if_webdriver_error, wrap_exception=True)
+    retry_on_exception=retry_if_webdriver_error, wrap_exception=False)
 def visit_page(
         context: Context, actor_alias: str, page_name: str, *,
         first_time: bool = False):
