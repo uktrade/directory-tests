@@ -14,7 +14,7 @@ from pages.common_actions import (
     check_url
 )
 from settings import EXRED_UI_URL
-from utils import assertion_msg, take_screenshot, find_element
+from utils import assertion_msg, find_element, take_screenshot
 
 NAME = "ExRed Triage - What is your company name"
 URL = urljoin(EXRED_UI_URL, "triage/company/")
