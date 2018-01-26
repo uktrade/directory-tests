@@ -4,10 +4,6 @@ import logging
 from urllib.parse import urljoin
 
 from selenium import webdriver
-from selenium.common.exceptions import (
-    NoSuchElementException,
-    WebDriverException
-)
 
 from pages.common_actions import (
     check_for_expected_elements,
@@ -16,11 +12,7 @@ from pages.common_actions import (
     go_to_url
 )
 from settings import EXRED_UI_URL
-from utils import (
-    assertion_msg,
-    check_if_element_is_not_visible,
-    take_screenshot
-)
+from utils import check_if_element_is_not_visible, take_screenshot
 
 NAME = "Get Finance interim page"
 URL = urljoin(EXRED_UI_URL, "get-finance/")

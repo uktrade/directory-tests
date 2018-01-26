@@ -19,7 +19,8 @@ PAGE_TITLE = "Welcome to Selling online overseas"
 
 SECTIONS = {
     "expected elements": {
-        "title": "#content div.outer-container.soft-half--top.text-shadow > h1",
+        "title":
+            "#content div.outer-container.soft-half--top.text-shadow > h1",
         "what do you sell input": "#search-product",
         "where do you want to sell input": "#search-country",
     }

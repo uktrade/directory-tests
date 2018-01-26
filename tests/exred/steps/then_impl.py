@@ -154,7 +154,8 @@ def export_readiness_should_see_articles(
 
 def export_readiness_expected_page_elements_should_be_visible(
         context: Context, actor_alias: str, elements: list):
-    export_readiness_common.check_elements_are_visible(context.driver, elements)
+    export_readiness_common.check_elements_are_visible(
+        context.driver, elements)
     logging.debug(
         "%s can see all expected page elements: '%s' on current Guidance "
         "Articles page: %s", actor_alias, elements, context.driver.current_url)
@@ -253,7 +254,8 @@ def articles_should_see_time_to_complete_decrease(
         context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     previous_time_to_complete = actor.article_list_time_to_complete
-    current_time_to_complete = article_common.get_time_to_complete(context.driver)
+    current_time_to_complete = article_common.get_time_to_complete(
+        context.driver)
     visited_article = actor.visited_articles[0]
     difference = current_time_to_complete - previous_time_to_complete
     logging.debug(
@@ -448,7 +450,8 @@ def promo_video_check_watch_time(
                   " promotional video", actor_alias, expected_watch_time)
 
 
-def promo_video_should_not_see_modal_window(context: Context, actor_alias: str):
+def promo_video_should_not_see_modal_window(
+        context: Context, actor_alias: str):
     home.should_not_see_video_modal_window(context.driver)
     logging.debug(
         "As expected %s can't see promotional video modal window", actor_alias)
@@ -489,4 +492,8 @@ def language_selector_keyboard_should_be_trapped(
 
 def should_see_page_in_preferred_language(
         context: Context, actor_alias: str, preferred_language: str):
-    language_selector.check_page_language_is(context.driver, preferred_language)
+    language_selector.check_page_language_is(
+        context.driver, preferred_language)
+    logging.debug(
+        "%s can see '%' page in '%s", actor_alias, context.current_url,
+        preferred_language)

@@ -4,9 +4,6 @@ import random
 from urllib.parse import urljoin
 
 from selenium import webdriver
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.wait import WebDriverWait
 
 from pages.common_actions import (
     check_for_expected_elements,

@@ -37,8 +37,10 @@ NEW_TO_EXPORTING_LINK = "#personas-section-new"
 OCCASIONAL_EXPORTER_LINK = "#personas-section-occasional"
 REGULAR_EXPORTED_LINK = "#personas-section-regular"
 FIND_A_BUYER_SERVICE_LINK = "#services-section-find-a-buyer-link"
-SELLING_ONLINE_OVERSEAS_SERVICE_LINK = "#services-section-selling-online-overseas-link"
-EXPORT_OPPORTUNITIES_SERVICE_LINK = "#services-section-export-opportunities-link"
+SELLING_ONLINE_OVERSEAS_SERVICE_LINK = \
+    "#services-section-selling-online-overseas-link"
+EXPORT_OPPORTUNITIES_SERVICE_LINK = \
+    "#services-section-export-opportunities-link"
 CAROUSEL_INDICATORS_SECTION = "#carousel  div.ed-carousel__indicators"
 CAROUSEL_INDICATORS = ".ed-carousel__indicator"
 CAROUSEL_PREV_BUTTON = "#carousel label.ed-carousel__control--backward"
