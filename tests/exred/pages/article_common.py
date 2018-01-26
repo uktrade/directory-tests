@@ -285,15 +285,15 @@ def flag_as_not_useful(driver: webdriver):
 
 
 def should_not_see_feedback_widget(driver: webdriver):
-    question = find_element(
-        driver, by_css=FEEDBACK_QUESTION, wait_for_it=False)
-    useful = find_element(
-        driver, by_css=USEFUL_BUTTON, wait_for_it=False)
-    not_useful = find_element(
-        driver, by_css=NOT_USEFUL_BUTTON, wait_for_it=False)
-    check_if_element_is_visible(question, "Feedback question")
-    check_if_element_is_visible(useful, "Useful button")
-    check_if_element_is_visible(not_useful, "Not useful button")
+    check_if_element_is_not_visible(
+        driver, by_css=FEEDBACK_QUESTION, element_name="Feedback question",
+        wait_for_it=False)
+    check_if_element_is_not_visible(
+        driver, by_css=USEFUL_BUTTON, element_name="Useful button",
+        wait_for_it=False)
+    check_if_element_is_not_visible(
+        driver, by_css=NOT_USEFUL_BUTTON, element_name="Not useful button",
+        wait_for_it=False)
 
 
 def should_see_feedback_result(driver: webdriver):
