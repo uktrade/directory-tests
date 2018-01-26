@@ -76,7 +76,7 @@ def create_exporting_journey(driver: webdriver):
     element_name = "Create my journey button"
     button = find_element(
         driver, by_css=CREATE_MY_JOURNEY_BUTTON,
-        element_name=element_name)
+        element_name=element_name, wait_for_it=False)
     check_if_element_is_visible(button, element_name=element_name)
     button.click()
     take_screenshot(driver, NAME + " after submitting")

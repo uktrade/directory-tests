@@ -45,11 +45,13 @@ def should_be_here(driver: webdriver):
 
 
 def hide_suggestions(driver: webdriver):
-    suggestions = driver.find_element_by_css_selector(SUGGESTIONS)
-    WebDriverWait(driver, 5).until(
-        EC.visibility_of_element_located((By.CSS_SELECTOR, SUGGESTIONS)))
+    suggestions = find_element(
+        driver, by_css=SUGGESTIONS, element_name="Suggestions list",
+        wait_for_it=True)
     if suggestions.is_displayed():
-        question = driver.find_element_by_css_selector(QUESTION)
+        question = find_element(
+            driver, by_css=QUESTION, element_name="Question text",
+            wait_for_it=False)
         question.click()
 
 
@@ -66,19 +68,25 @@ def click_on_first_suggestion(driver: webdriver):
 def enter_company_name(driver: webdriver, company_name: str = None):
     if not company_name:
         company_name = random.choice(["automated", "browser", "tests"])
-    input_field = driver.find_element_by_id(COMPANY_NAME_INPUT)
+    input_field = find_element(
+        driver, by_id=COMPANY_NAME_INPUT, element_name="Company name input",
+        wait_for_it=False)
     input_field.clear()
     input_field.send_keys(company_name)
     take_screenshot(driver, NAME + " after typing in company name")
 
 
 def get_company_name(driver: webdriver) -> str:
-    input_field = driver.find_element_by_id(COMPANY_NAME_INPUT)
+    input_field = find_element(
+        driver, by_id=COMPANY_NAME_INPUT, element_name="Company name input",
+        wait_for_it=False)
     return input_field.get_attribute("value")
 
 
 def submit(driver: webdriver):
-    button = driver.find_element_by_css_selector(CONTINUE_BUTTON)
+    button = find_element(
+        driver, by_css=CONTINUE_BUTTON, element_name="Continue button",
+        wait_for_it=False)
     button.click()
     take_screenshot(driver, NAME + " after submitting")
 

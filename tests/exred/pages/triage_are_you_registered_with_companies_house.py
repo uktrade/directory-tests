@@ -10,7 +10,7 @@ from pages.common_actions import (
     check_url
 )
 from settings import EXRED_UI_URL
-from utils import assertion_msg, take_screenshot
+from utils import assertion_msg, find_element, take_screenshot
 
 NAME = "ExRed Triage - are you registered with Companies House"
 URL = urljoin(EXRED_UI_URL, "triage/companies-house/")
@@ -41,30 +41,40 @@ def should_be_here(driver: webdriver):
 
 
 def select_yes(driver: webdriver):
-    yes = driver.find_element_by_css_selector(YES_CHECKBOX)
+    yes = find_element(
+        driver, by_css=YES_CHECKBOX, element_name="Yes checkbox",
+        wait_for_it=False)
     yes.click()
     take_screenshot(driver, NAME)
 
 
 def select_no(driver: webdriver):
-    no = driver.find_element_by_css_selector(NO_CHECKBOX)
+    no = find_element(
+        driver, by_css=NO_CHECKBOX, element_name="No checkbox",
+        wait_for_it=False)
     no.click()
     take_screenshot(driver, NAME)
 
 
 def submit(driver: webdriver):
-    button = driver.find_element_by_css_selector(CONTINUE_BUTTON)
+    button = find_element(
+        driver, by_css=CONTINUE_BUTTON, element_name="Continue button",
+        wait_for_it=False)
     button.click()
     take_screenshot(driver, NAME + " after submitting")
 
 
 def is_yes_selected(driver: webdriver):
-    yes = driver.find_element_by_css_selector(YES_RADIO)
+    yes = find_element(
+        driver, by_css=YES_RADIO, element_name="Yes radio button",
+        wait_for_it=False)
     with assertion_msg("Expected Yes option to be selected"):
         assert yes.get_property("checked")
 
 
 def is_no_selected(driver: webdriver):
-    no = driver.find_element_by_css_selector(NO_RADIO)
+    no = find_element(
+        driver, by_css=NO_RADIO, element_name="No radio button",
+        wait_for_it=False)
     with assertion_msg("Expected No option to be selected"):
         assert no.get_property("checked")

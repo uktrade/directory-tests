@@ -42,31 +42,38 @@ def should_be_here(driver: webdriver):
 
 def select_yes(driver: webdriver):
     yes = find_element(
-        driver, by_css=YES_CHECKBOX, element_name="YES checkbox")
+        driver, by_css=YES_CHECKBOX, element_name="YES checkbox",
+        wait_for_it=False)
     yes.click()
     take_screenshot(driver, NAME)
 
 
 def select_no(driver: webdriver):
-    no = find_element(driver, by_css=NO_CHECKBOX, element_name="NO checkbox")
+    no = find_element(
+        driver, by_css=NO_CHECKBOX, element_name="NO checkbox",
+        wait_for_it=False)
     no.click()
     take_screenshot(driver, NAME)
 
 
 def submit(driver: webdriver):
     button = find_element(
-        driver, by_css=CONTINUE_BUTTON, element_name="Submit button")
+        driver, by_css=CONTINUE_BUTTON, element_name="Submit button",
+        wait_for_it=False)
     button.click()
     take_screenshot(driver, NAME + " after submitting")
 
 
 def is_yes_selected(driver: webdriver):
-    yes = find_element(driver, by_css=YES_RADIO, element_name="Yes checkbox")
+    yes = find_element(
+        driver, by_css=YES_RADIO, element_name="Yes checkbox",
+        wait_for_it=False)
     with assertion_msg("Expected Yes option to be selected"):
         assert yes.get_property("checked")
 
 
 def is_no_selected(driver: webdriver):
-    no = find_element(driver, by_css=NO_RADIO, element_name="No checkbox")
+    no = find_element(
+        driver, by_css=NO_RADIO, element_name="No checkbox", wait_for_it=False)
     with assertion_msg("Expected No option to be selected"):
         assert no.get_property("checked")
