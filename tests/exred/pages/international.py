@@ -13,7 +13,7 @@ from pages.common_actions import (
     go_to_url
 )
 from settings import EXRED_UI_URL
-from utils import take_screenshot
+from utils import check_if_element_is_visible, find_element, take_screenshot
 
 NAME = "International"
 URL = urljoin(EXRED_UI_URL, "international/")
@@ -96,8 +96,9 @@ def should_see_section(driver: webdriver, name: str):
 def open(
         driver: webdriver, group: str, element: str, *, same_tab: bool = True):
     selector = SECTIONS[group.lower()][element.lower()]
-    link = driver.find_element_by_css_selector(selector)
-    assert link.is_displayed()
+    link = find_element(
+        driver, by_css=selector, element_name=element, wait_for_it=False)
+    check_if_element_is_visible(link, element_name=element)
     if same_tab:
         href = link.get_attribute("href")
         logging.debug("Opening '%s' link '%s' in the same tab", element, href)

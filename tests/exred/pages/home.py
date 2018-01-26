@@ -18,6 +18,7 @@ from settings import EXRED_UI_URL
 from utils import (
     assertion_msg,
     check_if_element_is_not_present,
+    check_if_element_is_visible,
     find_element,
     find_elements,
     take_screenshot
@@ -322,7 +323,9 @@ def find_case_study_by_going_right(driver: webdriver, to_open: int):
 
 
 def move_to_case_study_navigation_buttons(driver: webdriver):
-    prev_button = driver.find_element_by_css_selector(CAROUSEL_PREV_BUTTON)
+    prev_button = find_element(
+        driver, by_css=CAROUSEL_PREV_BUTTON,
+        element_name="Carousel Previous button", wait_for_it=False)
     vertical_position = prev_button.location['y']
     logging.debug("Moving focus to Carousel navigation buttons")
     driver.execute_script("window.scrollTo(0, {});".format(vertical_position))
@@ -361,8 +364,9 @@ def get_case_study_title(driver: webdriver, case_number: str) -> str:
 
 def open(driver: webdriver, group: str, element: str):
     selector = SECTIONS[group.lower()][element.lower()]
-    link = driver.find_element_by_css_selector(selector)
-    assert link.is_displayed()
+    link = find_element(
+        driver, by_css=selector, element_name=element, wait_for_it=False)
+    check_if_element_is_visible(link, element_name=element)
     link.click()
     take_screenshot(
         driver, NAME + " after clicking on: %s link".format(element))

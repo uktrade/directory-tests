@@ -16,7 +16,11 @@ from pages.common_actions import (
     go_to_url
 )
 from settings import EXRED_UI_URL
-from utils import assertion_msg, take_screenshot
+from utils import (
+    assertion_msg,
+    check_if_element_is_not_visible,
+    take_screenshot
+)
 
 NAME = "Get Finance interim page"
 URL = urljoin(EXRED_UI_URL, "get-finance/")
@@ -59,12 +63,8 @@ def should_be_here(driver: webdriver):
 
 def check_elements_are_not_visible(driver: webdriver, elements: list):
     take_screenshot(driver, NAME + " should not see some elements")
-    for element in elements:
-        selector = UNEXPECTED_ELEMENTS[element.lower()]
-        try:
-            page_element = driver.find_element_by_css_selector(selector)
-            with assertion_msg(
-                    "Expected not to see '%s' but we can see it", element):
-                assert not page_element.is_displayed()
-        except (WebDriverException, NoSuchElementException):
-            logging.debug("As expected we can't see '%s' on the page", element)
+    for element_name in elements:
+        selector = UNEXPECTED_ELEMENTS[element_name.lower()]
+        check_if_element_is_not_visible(
+            driver, by_css=selector, element_name=element_name,
+            wait_for_it=False)

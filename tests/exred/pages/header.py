@@ -113,7 +113,9 @@ def open(driver: webdriver, group: str, element: str):
     if "menu" in SECTIONS[group.lower()]:
         # Open the menu by sending "Enter" key
         menu_selector = SECTIONS[group.lower()]["menu"]
-        menu = driver.find_element_by_css_selector(menu_selector)
+        menu = find_element(
+            driver, by_css=menu_selector,
+            element_name="Header menu {}".format(group))
         menu.send_keys(Keys.ENTER)
     menu_item_selector = SECTIONS[group.lower()][element.lower()]
     menu_item = find_element(driver, by_css=menu_item_selector)

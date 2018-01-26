@@ -13,6 +13,7 @@ from utils import (
     assertion_msg,
     check_if_element_is_not_visible,
     find_element,
+    find_elements,
     take_screenshot
 )
 
@@ -176,7 +177,8 @@ def should_see_total_articles_to_read(
 
 def open(driver: webdriver, group: str, element: str):
     link = SECTIONS[group.lower()][element.lower()]
-    button = driver.find_element_by_css_selector(link)
+    button = find_element(
+        driver, by_css=link, element_name=element, wait_for_it=False)
     assert button.is_displayed()
     button.click()
     take_screenshot(
@@ -195,9 +197,9 @@ def should_not_see_section(driver: webdriver, name: str):
 
 
 def check_top_facts_values(driver: webdriver):
-    top_importer = driver.find_element_by_css_selector(TOP_IMPORTER).text
-    top_trade_value = driver.find_element_by_css_selector(TRADE_VALUE).text
-    top_importers_list = driver.find_elements_by_css_selector(TOP_IMPORTERS)
+    top_importer = find_element(driver, by_css=TOP_IMPORTER).text
+    top_trade_value = find_element(driver, by_css=TRADE_VALUE).text
+    top_importers_list = find_elements(driver, by_css=TOP_IMPORTERS)
 
     exporting_values = {}
     for importer in top_importers_list:
