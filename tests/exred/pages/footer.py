@@ -71,7 +71,8 @@ def should_see_link_to(driver: webdriver, section: str, item_name: str):
 
 def open(driver: webdriver, group: str, element: str):
     link = SECTIONS[group.lower()][element.lower()]
-    button = find_element(driver, by_css=link, element_name=element)
+    button = find_element(
+        driver, by_css=link, element_name=element, wait_for_it=False)
     button.click()
     take_screenshot(
         driver, NAME + " after clicking on: %s link".format(element))
