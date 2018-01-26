@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """ExRed Common Articles Page Object."""
 import logging
+import time
 from urllib import parse as urlparse
 
 from selenium import webdriver
@@ -285,6 +286,7 @@ def flag_as_not_useful(driver: webdriver):
 
 
 def should_not_see_feedback_widget(driver: webdriver):
+    time.sleep(1)
     check_if_element_is_not_visible(
         driver, by_css=FEEDBACK_QUESTION, element_name="Feedback question",
         wait_for_it=False)
