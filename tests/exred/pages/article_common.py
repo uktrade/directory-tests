@@ -21,7 +21,7 @@ NAME = "ExRed Common Articles"
 URL = None
 WORDS_PER_SECOND = 1.5  # Average word per second on screen
 
-ARTICLE_NAME = "#top > h1"
+ARTICLE_NAME = "#top h1"
 ARTICLE_TEXT = "#top"
 ARTICLES_TO_READ_COUNTER = "dd.position > span.from"
 BREADCRUMBS = "p.breadcrumbs"
