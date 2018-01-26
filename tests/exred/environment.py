@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Behave configuration file."""
 import logging
+import socket
 
 from behave.contrib.scenario_autoretry import patch_scenario_with_autoretry
 from behave.model import Feature, Scenario, Step
@@ -16,6 +17,11 @@ from utils import (
     flag_browserstack_session_as_failed,
     initialize_scenario_data
 )
+
+try:
+    import http.client as httplib
+except ImportError:  # above is available in py3+, below is py2.7
+    import httplib as httplib
 
 
 def start_driver_session(context: Context, session_name: str):
@@ -91,13 +97,6 @@ def after_step(context: Context, step: Step):
                 if hasattr(context, "driver"):
                     session_id = context.driver.session_id
                     flag_browserstack_session_as_failed(session_id, message)
-    if step.status == "failed":
-        if hasattr(step.exception, "msg"):
-            if "Session not started or terminated" in step.exception.msg:
-                if hasattr(context, "driver"):
-                    if hasattr(context.driver, "quit"):
-                        context.driver.quit()
-                start_driver_session(context, "recovered-session")
 
 
 def before_feature(context: Context, feature: Feature):
@@ -153,14 +152,26 @@ def after_scenario(context: Context, scenario: Scenario):
     """
     logging.debug("Closing Selenium Driver after scenario: %s", scenario.name)
     logging.debug(context.scenario_data)
-    if RESTART_BROWSER == "scenario":
-        context.driver.quit()
-    if RESTART_BROWSER == "feature":
-        clear_driver_cookies(context.driver)
     actors = context.scenario_data.actors
     for actor in actors.values():
         if actor.registered:
             delete_supplier_data("SSO", actor.email)
+    if RESTART_BROWSER == "scenario":
+        context.driver.quit()
+    if RESTART_BROWSER == "feature":
+        clear_driver_cookies(context.driver)
+    if scenario.status == "failed":
+        if hasattr(context, "driver"):
+            from selenium.webdriver.remote.command import Command
+            try:
+                context.driver.execute(Command.STATUS)
+            except (socket.error, httplib.CannotSendRequest):
+                msg = ("Remote driver is unresponsive after scenario: %s. Will"
+                       " try to recover selenium session" % scenario.name)
+                print(msg)
+                logging.error(msg)
+                start_driver_session(
+                    context, "session-recovered-after-scenario")
 
 
 def before_all(context: Context):
