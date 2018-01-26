@@ -367,7 +367,7 @@ def get_case_study_title(driver: webdriver, case_number: str) -> str:
 def open(driver: webdriver, group: str, element: str):
     selector = SECTIONS[group.lower()][element.lower()]
     link = find_element(
-        driver, by_css=selector, element_name=element, wait_for_it=False)
+        driver, by_css=selector, element_name=element, wait_for_it=True)
     check_if_element_is_visible(link, element_name=element)
     link.click()
     take_screenshot(
