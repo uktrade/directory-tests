@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """Share on Twitter Page Object."""
-import logging
 from urllib.parse import urljoin
 
 from selenium import webdriver
@@ -32,15 +31,3 @@ def check_if_populated(driver: webdriver, shared_url: str):
             "textbox, but couldn't find it in : %s", shared_url,
             status_update_message.text):
         assert shared_url in status_update_message.text
-
-
-def close_all_windows_except_first(driver: webdriver):
-    """This action works only locally, and doesn't work on BrowserStack :("""
-    while len(driver.window_handles) > 1:
-        driver.switch_to.window(driver.window_handles[-1])
-        logging.debug(
-            "Closing window: %s opened with URL %s", driver.window_handles[1],
-            driver.current_url)
-        # driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + 'w')
-        driver.close()
-    driver.switch_to.window(driver.window_handles[0])

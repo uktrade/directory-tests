@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """Share on Facebook Page Object."""
-import logging
 from urllib import parse as urlparse
 from urllib.parse import urljoin
 
@@ -40,15 +39,3 @@ def check_if_populated(driver: webdriver, shared_url: str):
             "Expected to find link to Article '%s' in the Facebook share page "
             "URL, but got '%s' instead", shared_url, found_shared_url):
         assert shared_url == found_shared_url
-
-
-def close_all_windows_except_first(driver: webdriver):
-    """This action works only locally, and doesn't work on BrowserStack :("""
-    while len(driver.window_handles) > 1:
-        driver.switch_to.window(driver.window_handles[-1])
-        logging.debug(
-            "Closing window: %s opened with URL %s", driver.window_handles[1],
-            driver.current_url)
-        driver.close()
-        # driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + 'w')
-    driver.switch_to.window(driver.window_handles[0])
