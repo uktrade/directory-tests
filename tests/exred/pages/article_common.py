@@ -168,7 +168,8 @@ def go_to_article(driver: webdriver, title: str):
 
 
 def get_article_name(driver: webdriver) -> str:
-    current_article = driver.find_element_by_css_selector(ARTICLE_NAME)
+    current_article = find_element(
+        driver, by_css=ARTICLE_NAME, element_name="Article name")
     return current_article.text
 
 
