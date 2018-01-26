@@ -21,11 +21,16 @@ Feature: International Page
 
     Examples:
       | expected_service | section          |
-      | Find a Supplier  | Buy from the UK  |
       | Invest in Great  | Invest in the UK |
       | British Council  | Study in the UK  |
       | Visit Britain    | Visit the UK     |
 
+    @bug
+    @ED-3242
+    @fixme
+    Examples:
+      | expected_service | section          |
+      | Find a Supplier  | Buy from the UK  |
 
   @ED-3083
   @language-selector

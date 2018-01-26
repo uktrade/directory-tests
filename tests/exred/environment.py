@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Behave configuration file."""
 import logging
+import socket
 
 from behave.contrib.scenario_autoretry import patch_scenario_with_autoretry
 from behave.model import Feature, Scenario, Step
@@ -14,9 +15,13 @@ from settings import AUTO_RETRY, CONFIG, CONFIG_NAME, RESTART_BROWSER, TASK_ID
 from utils import (
     clear_driver_cookies,
     flag_browserstack_session_as_failed,
-    init_loggers,
     initialize_scenario_data
 )
+
+try:
+    import http.client as httplib
+except ImportError:  # above is available in py3+, below is py2.7
+    import httplib as httplib
 
 
 def start_driver_session(context: Context, session_name: str):
@@ -81,6 +86,7 @@ def after_step(context: Context, step: Step):
     :param step: Behave Step object
     """
     logging.debug("Finished Step: %s %s", step.step_type, str(repr(step.name)))
+    logging.debug("Step Duration: %s %s", str(repr(step.name)), step.duration)
     if RESTART_BROWSER == "scenario":
         if step.status == "failed":
             message = ("Step '%s %s' failed. Reason: '%s'" %
@@ -91,13 +97,6 @@ def after_step(context: Context, step: Step):
                 if hasattr(context, "driver"):
                     session_id = context.driver.session_id
                     flag_browserstack_session_as_failed(session_id, message)
-    if step.status == "failed":
-        if hasattr(step.exception, "msg"):
-            if "Session not started or terminated" in step.exception.msg:
-                if hasattr(context, "driver"):
-                    if hasattr(context.driver, "quit"):
-                        context.driver.quit()
-                start_driver_session(context, "recovered-session")
 
 
 def before_feature(context: Context, feature: Feature):
@@ -117,12 +116,15 @@ def after_feature(context: Context, feature: Feature):
         if hasattr(context, "driver"):
             context.driver.quit()
         if feature.status == "failed":
-            message = ("Feature '%s' failed. Reason: '%s': '%s'" %
-                       (feature.name, feature.exception, feature.error_message))
-            logging.error(message)
             if hasattr(context, "scenario_data"):
                 logging.debug(context.scenario_data)
             if "browserstack" in CONFIG_NAME:
+                failed = len([scenario for scenario in feature.scenarios
+                             if scenario.status == "failed"])
+                message = (
+                        "Feature '%s' failed because of issues with %d "
+                        "%s" % (feature.name, failed,
+                                "scenarios" if failed > 1 else "scenario"))
                 if hasattr(context, "driver"):
                     session_id = context.driver.session_id
                     flag_browserstack_session_as_failed(session_id, message)
@@ -150,14 +152,26 @@ def after_scenario(context: Context, scenario: Scenario):
     """
     logging.debug("Closing Selenium Driver after scenario: %s", scenario.name)
     logging.debug(context.scenario_data)
-    if RESTART_BROWSER == "scenario":
-        context.driver.quit()
-    if RESTART_BROWSER == "feature":
-        clear_driver_cookies(context.driver)
     actors = context.scenario_data.actors
     for actor in actors.values():
         if actor.registered:
             delete_supplier_data("SSO", actor.email)
+    if RESTART_BROWSER == "scenario":
+        context.driver.quit()
+    if RESTART_BROWSER == "feature":
+        clear_driver_cookies(context.driver)
+    if scenario.status == "failed":
+        if hasattr(context, "driver"):
+            from selenium.webdriver.remote.command import Command
+            try:
+                context.driver.execute(Command.STATUS)
+            except (socket.error, httplib.CannotSendRequest):
+                msg = ("Remote driver is unresponsive after scenario: %s. Will"
+                       " try to recover selenium session" % scenario.name)
+                print(msg)
+                logging.error(msg)
+                start_driver_session(
+                    context, "session-recovered-after-scenario")
 
 
 def before_all(context: Context):
@@ -174,8 +188,5 @@ def before_all(context: Context):
 
     context.remote_desired_capabilities = remote_desired_capabilities
     context.local_desired_capabilities = local_desired_capabilities
-    browser_name = remote_desired_capabilities["browser"]
-    browser_version = remote_desired_capabilities.get("browser_version", "")
-    task_id = "{}-{}-v{}".format(TASK_ID, browser_name, browser_version)
 
-    init_loggers(context, task_id=task_id)
+    context.config.setup_logging(configfile=".behave_logging")

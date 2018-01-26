@@ -31,6 +31,77 @@ jobs:
           paths:
             - ~/directory-tests/venv
 
+  functional_tests_requirements:
+    docker:
+      - image: circleci/python:3.5.3
+    working_directory: ~/directory-tests
+    steps:
+      - restore_cache:
+          keys:
+            - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          name: Create virtualenv and install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements_functional.txt
+            python ./docker/env_writer.py ./docker/env.json
+            nodeenv -p
+            npm install -g junit-merge@1.2.3
+      - run:
+          name: Install Heroku-CLI to project root dir
+          command: |
+            wget -q https://cli-assets.heroku.com/heroku-cli/channels/stable/heroku-cli-linux-x64.tar.gz -O heroku.tar.gz
+            tar -xzf heroku.tar.gz
+            mkdir -p ~/bin/heroku-cli
+            tar -xzf heroku.tar.gz --strip-components 1 -C ~/bin/heroku-cli
+            rm -fr heroku.tar.gz
+            ln -s ~/bin/heroku-cli/bin/heroku ~/bin/heroku
+            export PATH=$PATH:$HOME/bin
+            heroku -v
+      - save_cache:
+          key: functional-tests-dependency-cache-{{ .Revision }}
+          paths:
+            - ~/bin
+            - ~/directory-tests/venv
+            - ~/directory-tests/docker/.env_with_export
+            - ~/directory-tests/docker/.env_without_export
+
+  exred_tests_requirements:
+    docker:
+      - image: circleci/python:3.5.3
+    working_directory: ~/directory-tests
+    steps:
+      - restore_cache:
+          keys:
+            - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          name: Install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements_exred.txt
+            nodeenv -p
+            npm install -g junit-merge@1.2.3
+      - run:
+          name: Install Heroku-CLI to project root dir
+          command: |
+            wget -q https://cli-assets.heroku.com/heroku-cli/channels/stable/heroku-cli-linux-x64.tar.gz -O heroku.tar.gz
+            tar -xzf heroku.tar.gz
+            mkdir -p ~/bin/heroku-cli
+            tar -xzf heroku.tar.gz --strip-components 1 -C ~/bin/heroku-cli
+            rm -fr heroku.tar.gz
+            ln -s ~/bin/heroku-cli/bin/heroku ~/bin/heroku
+            export PATH=$PATH:$HOME/bin
+            heroku -v
+      - save_cache:
+          key: exred-tests-dependency-cache-{{ .Revision }}
+          paths:
+            - ~/bin
+            - ~/directory-tests/venv
+            - ~/directory-tests/docker/.env_with_export
+            - ~/directory-tests/docker/.env_without_export
+
   smoke_tests:
     docker:
       - image: circleci/python:3.5.3
@@ -81,33 +152,17 @@ jobs:
       - restore_cache:
           keys:
             - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - run:
-          name: Install dependencies
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            pip install -r requirements_exred.txt
-            nodeenv -p
-            npm install -g junit-merge@1.2.3
-      - run:
-          name: Install Heroku-CLI
-          command: |
-            wget -q https://cli-assets.heroku.com/heroku-cli/channels/stable/heroku-cli-linux-x64.tar.gz -O heroku.tar.gz
-            tar -xzf heroku.tar.gz
-            mkdir -p /usr/local/lib /usr/local/bin
-            sudo mv heroku-cli-v6.*-linux-x64 /usr/local/lib/heroku
-            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/local/bin/heroku
-            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/bin/heroku
-            heroku -v
-            which heroku
-            rm -fr heroku.tar.gz
+      - restore_cache:
+          keys:
+            - exred-tests-dependency-cache-{{ .Revision }}
       - run:
           name: Run functional ExRed tests in Chrome
           command: |
             . venv/bin/activate
             python ./docker/env_writer.py ./docker/env_exred.json
             source ./docker/.env_with_export;
-            BROWSERS=Chrome VERSIONS=62.0 make exred_browserstack
+            export PATH=$PATH:$HOME/bin
+            BROWSERS=Chrome VERSIONS=63.0 make exred_browserstack
       - run:
           name: Merge JUnit XML reports
           when: always
@@ -130,33 +185,17 @@ jobs:
       - restore_cache:
           keys:
             - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - run:
-          name: Install dependencies
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            pip install -r requirements_exred.txt
-            nodeenv -p
-            npm install -g junit-merge@1.2.3
-      - run:
-          name: Install Heroku-CLI
-          command: |
-            wget -q https://cli-assets.heroku.com/heroku-cli/channels/stable/heroku-cli-linux-x64.tar.gz -O heroku.tar.gz
-            tar -xzf heroku.tar.gz
-            mkdir -p /usr/local/lib /usr/local/bin
-            sudo mv heroku-cli-v6.*-linux-x64 /usr/local/lib/heroku
-            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/local/bin/heroku
-            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/bin/heroku
-            heroku -v
-            which heroku
-            rm -fr heroku.tar.gz
+      - restore_cache:
+          keys:
+            - exred-tests-dependency-cache-{{ .Revision }}
       - run:
           name: Run functional ExRed tests in Firefox
           command: |
             . venv/bin/activate
             python ./docker/env_writer.py ./docker/env_exred.json
             source ./docker/.env_with_export;
-            BROWSERS=Firefox VERSIONS=56.0 make exred_browserstack
+            export PATH=$PATH:$HOME/bin
+            BROWSERS=Firefox VERSIONS=57.0 make exred_browserstack
       - run:
           name: Merge JUnit XML reports
           when: always
@@ -171,30 +210,6 @@ jobs:
       - store_artifacts:
           path: ./tests/exred/reports
 
-  functional_tests_requirements:
-    docker:
-      - image: circleci/python:3.5.3
-    working_directory: ~/directory-tests
-    steps:
-      - restore_cache:
-          keys:
-            - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
-      - run:
-          name: Create virtualenv and install dependencies
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            pip install -r requirements_functional.txt
-            python ./docker/env_writer.py ./docker/env.json
-            nodeenv -p
-            npm install -g junit-merge@1.2.3
-      - save_cache:
-          key: dependency-cache-{{ .Revision }}
-          paths:
-            - ~/directory-tests/venv
-            - ~/directory-tests/docker/.env_with_export
-            - ~/directory-tests/docker/.env_without_export
-
   fab_functional_tests:
     docker:
       - image: circleci/python:3.5.3
@@ -205,25 +220,14 @@ jobs:
             - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
       - restore_cache:
           keys:
-            - dependency-cache-{{ .Revision }}
-      - run:
-          name: Install Heroku-CLI
-          command: |
-            wget -q https://cli-assets.heroku.com/heroku-cli/channels/stable/heroku-cli-linux-x64.tar.gz -O heroku.tar.gz
-            tar -xzf heroku.tar.gz
-            mkdir -p /usr/local/lib /usr/local/bin
-            sudo mv heroku-cli-v6.*-linux-x64 /usr/local/lib/heroku
-            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/local/bin/heroku
-            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/bin/heroku
-            heroku -v
-            which heroku
-            rm -fr heroku.tar.gz
+            - functional-tests-dependency-cache-{{ .Revision }}
       - run:
           name: Run FAB functional tests
           command: |
             python3 -m venv venv
             . venv/bin/activate
             source ./docker/.env_with_export;
+            export PATH=$PATH:$HOME/bin
             FEATURE_DIR=fab make functional_tests_feature_dir
       - run:
           name: Merge JUnit XML reports
@@ -249,24 +253,14 @@ jobs:
             - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
       - restore_cache:
           keys:
-            - dependency-cache-{{ .Revision }}
-      - run:
-          name: Install Heroku-CLI
-          command: |
-            wget -q https://cli-assets.heroku.com/heroku-cli/channels/stable/heroku-cli-linux-x64.tar.gz -O heroku.tar.gz
-            tar -xzf heroku.tar.gz
-            mkdir -p /usr/local/lib /usr/local/bin
-            sudo mv heroku-cli-v6.*-linux-x64 /usr/local/lib/heroku
-            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/local/bin/heroku
-            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/bin/heroku
-            heroku -v
-            rm -fr heroku.tar.gz
+            - functional-tests-dependency-cache-{{ .Revision }}
       - run:
           name: Run FAS functional tests
           command: |
             python3 -m venv venv
             . venv/bin/activate
             source ./docker/.env_with_export;
+            export PATH=$PATH:$HOME/bin
             FEATURE_DIR=fas make functional_tests_feature_dir
       - run:
           name: Merge JUnit XML reports
@@ -292,24 +286,14 @@ jobs:
             - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
       - restore_cache:
           keys:
-            - dependency-cache-{{ .Revision }}
-      - run:
-          name: Install Heroku-CLI
-          command: |
-            wget -q https://cli-assets.heroku.com/heroku-cli/channels/stable/heroku-cli-linux-x64.tar.gz -O heroku.tar.gz
-            tar -xzf heroku.tar.gz
-            mkdir -p /usr/local/lib /usr/local/bin
-            sudo mv heroku-cli-v6.*-linux-x64 /usr/local/lib/heroku
-            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/local/bin/heroku
-            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/bin/heroku
-            heroku -v
-            rm -fr heroku.tar.gz
+            - functional-tests-dependency-cache-{{ .Revision }}
       - run:
           name: Run SSO functional tests
           command: |
             python3 -m venv venv
             . venv/bin/activate
             source ./docker/.env_with_export;
+            export PATH=$PATH:$HOME/bin
             FEATURE_DIR=sso make functional_tests_feature_dir
       - run:
           name: Merge JUnit XML reports
@@ -335,24 +319,14 @@ jobs:
             - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
       - restore_cache:
           keys:
-            - dependency-cache-{{ .Revision }}
-      - run:
-          name: Install Heroku-CLI
-          command: |
-            wget -q https://cli-assets.heroku.com/heroku-cli/channels/stable/heroku-cli-linux-x64.tar.gz -O heroku.tar.gz
-            tar -xzf heroku.tar.gz
-            mkdir -p /usr/local/lib /usr/local/bin
-            sudo mv heroku-cli-v6.*-linux-x64 /usr/local/lib/heroku
-            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/local/bin/heroku
-            sudo ln -s /usr/local/lib/heroku/bin/heroku /usr/bin/heroku
-            heroku -v
-            rm -fr heroku.tar.gz
+            - functional-tests-dependency-cache-{{ .Revision }}
       - run:
           name: Run SUD functional tests
           command: |
             python3 -m venv venv
             . venv/bin/activate
             source ./docker/.env_with_export;
+            export PATH=$PATH:$HOME/bin
             FEATURE_DIR=sud make functional_tests_feature_dir
       - run:
           name: Merge JUnit XML reports
@@ -380,6 +354,9 @@ workflows:
       - smoke_tests_requirements:
           requires:
             - checkout_code
+      - exred_tests_requirements:
+          requires:
+            - checkout_code
       - smoke_tests:
           requires:
             - checkout_code
@@ -391,9 +368,11 @@ workflows:
       - exred_tests_chrome:
           requires:
             - smoke_tests
+            - exred_tests_requirements
       - exred_tests_firefox:
           requires:
             - smoke_tests
+            - exred_tests_requirements
       - fab_functional_tests:
           requires:
             - smoke_tests

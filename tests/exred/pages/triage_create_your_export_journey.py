@@ -1,12 +1,19 @@
 # -*- coding: utf-8 -*-
 """Triage - Create your export journey Page Object."""
-import logging
 from urllib.parse import urljoin
 
 from selenium import webdriver
 
+from pages.common_actions import (
+    check_for_expected_sections_elements,
+    check_for_section,
+    check_title,
+    check_url,
+    find_and_click_on_page_element,
+    go_to_url
+)
 from settings import EXRED_UI_URL
-from utils import assertion_msg, find_element, take_screenshot
+from utils import check_if_element_is_not_visible, take_screenshot
 
 NAME = "Create your export journey"
 URL = urljoin(EXRED_UI_URL, "custom/")
@@ -16,37 +23,48 @@ START_NOW = "#start-now-container > a"
 REGISTER = "#start-now-container > div > a:nth-child(2)"
 SIGN_IN = "#start-now-container > div > a:nth-child(3)"
 REPORT_THIS_PAGE = "#error-reporting-section-contact-us"
-EXPECTED_ELEMENTS = {
-    "title": "#start-now-container > h1",
-    "description": "#start-now-container > p:nth-child(3)",
-    "list of benefits": "#start-now-container > ul",
-    "start now": START_NOW,
-    "register": REGISTER,
-    "sign in": SIGN_IN,
-    "report this page": REPORT_THIS_PAGE
+
+SECTIONS = {
+    "description": {
+        "title": "#start-now-container > h1",
+        "description": "#start-now-container > p:nth-child(3)",
+        "list of benefits": "#start-now-container > ul",
+    },
+    "start now": {
+        "start now button": START_NOW,
+    },
+    "save progress": {
+        "register link": REGISTER,
+        "sign-in link": SIGN_IN
+    },
+    "report this page": {
+        "report this page link": REPORT_THIS_PAGE
+    }
 }
+
+
+def visit(driver: webdriver, *, first_time: bool = False):
+    go_to_url(driver, URL, NAME, first_time=first_time)
+
+
+def should_see_section(driver: webdriver, name: str):
+    check_for_section(driver, all_sections=SECTIONS, sought_section=name)
 
 
 def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
-    with assertion_msg(
-            "Expected page URL to be: '%s' but got '%s'", URL,
-            driver.current_url):
-        assert driver.current_url in URL
-    with assertion_msg(
-            "Expected page title to be: '%s' but got '%s'", PAGE_TITLE,
-            driver.title):
-        assert PAGE_TITLE.lower() in driver.title.lower()
-    for element_name, element_selector in EXPECTED_ELEMENTS.items():
-        element = driver.find_element_by_css_selector(element_selector)
-        with assertion_msg(
-                "It looks like '%s' element is not visible on %s",
-                element_name, NAME):
-            assert element.is_displayed()
-    logging.debug("All expected elements are visible on '%s' page", NAME)
+    check_url(driver, URL, exact_match=True)
+    check_title(driver, PAGE_TITLE, exact_match=False)
+    check_for_expected_sections_elements(driver, SECTIONS)
 
 
-def start_now(driver: webdriver):
-    star_now = find_element(driver, by_css=START_NOW)
-    star_now.click()
-    take_screenshot(driver, NAME)
+def click_on_page_element(driver: webdriver, element_name: str):
+    find_and_click_on_page_element(driver, SECTIONS, element_name)
+    take_screenshot(driver, NAME + " after clicking on " + element_name)
+
+
+def should_not_see_section(driver: webdriver, name: str):
+    section = SECTIONS[name.lower()]
+    for key, selector in section.items():
+        check_if_element_is_not_visible(
+            driver, by_css=selector, element_name=key)

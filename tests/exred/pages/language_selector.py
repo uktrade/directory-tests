@@ -19,7 +19,8 @@ NAME = "Language selector"
 LANGUAGE_INDICATOR = "#header-bar span.lang"
 LANGUAGE_SELECTOR_OPEN = "#header-bar a.LanguageSelectorDialog-Tracker"
 LANGUAGE_SELECTOR_CLOSE = "#header-language-selector-close"
-DOMESTIC_PAGE = "section.language-selector-dialog div.domestic-redirect > p > a"
+DOMESTIC_PAGE = \
+    "section.language-selector-dialog div.domestic-redirect > p > a"
 ENGLISH = "#header-language-selector-en-gb"
 CHINESE = "#header-language-selector-zh-hans"
 GERMAN = "#header-language-selector-de"
@@ -132,7 +133,7 @@ def should_not_see_it_on(driver: webdriver, page_name: str):
     page_elements = ELEMENTS_ON[page_name.lower()]
     for key, selector in page_elements.items():
         check_if_element_is_not_visible(
-            driver, by_css=selector, element_name=key)
+            driver, by_css=selector, element_name=key, wait_for_it=False)
 
 
 def navigate_through_links_with_keyboard(driver: webdriver, page_name: str):

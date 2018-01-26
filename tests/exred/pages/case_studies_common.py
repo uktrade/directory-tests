@@ -4,7 +4,12 @@ import logging
 
 from selenium import webdriver
 
-from utils import assertion_msg, find_element, selenium_action, take_screenshot
+from utils import (
+    assertion_msg,
+    check_if_element_is_visible,
+    find_element,
+    take_screenshot
+)
 
 NAME = "ExRed Common Case Study"
 URL = None
@@ -14,21 +19,21 @@ SHARE_WIDGET = "#top > ul.sharing-links"
 CASE_STUDIES = {
     1: {
         "breadcrumb": "#content > div > p.breadcrumbs > span.current",
-        "title": "#top > h1",
-        "type": "#top > p.type",
-        "description": "#top > p.description",
+        "title": "#top h1",
+        "type": "#top p.type",
+        "description": "#top p.description",
     },
     2: {
         "breadcrumb": "#content > div > p.breadcrumbs > span.current",
-        "title": "#top > h1",
-        "type": "#top > p.type",
-        "description": "#top > p.description",
+        "title": "#top h1",
+        "type": "#top p.type",
+        "description": "#top p.description",
     },
     3: {
         "breadcrumb": "#content > div > p.breadcrumbs > span.current",
-        "title": "#top > h1",
-        "type": "#top > p.type",
-        "description": "#top > p.description",
+        "title": "#top h1",
+        "type": "#top p.type",
+        "description": "#top p.description",
     }
 }
 
@@ -36,18 +41,14 @@ CASE_STUDIES = {
 def should_be_here(
         driver: webdriver, case_study_number: int, *, title: str = None):
     take_screenshot(driver, NAME)
-    for element_name, element_selector in CASE_STUDIES[case_study_number].items():
-        with selenium_action(
-                driver, "Could not find '%s' using '%s'", element_name,
-                element_selector):
-            element = driver.find_element_by_css_selector(element_selector)
-        with assertion_msg(
-                "It looks like '%s' element is not visible on %s",
-                element_name, NAME):
-            assert element.is_displayed()
+    for element_name, selector in CASE_STUDIES[case_study_number].items():
+        element = find_element(
+            driver, by_css=selector, element_name=element_name)
+        check_if_element_is_visible(element, element_name)
         if title:
             if element_name in ["title", "breadcrumb"]:
-                element = find_element(driver, by_css=element_selector)
+                element = find_element(
+                    driver, by_css=selector, element_name=element_name)
                 with assertion_msg(
                         "Expected case study %s to be '%s' but got '%s'",
                         element_name, title, element.text):
@@ -56,9 +57,6 @@ def should_be_here(
 
 
 def should_see_share_widget(driver: webdriver):
-    with selenium_action(
-            driver, "Could not find Share Widget with '%s'", SHARE_WIDGET):
-        share_widget = driver.find_element_by_css_selector(SHARE_WIDGET)
-    with assertion_msg(
-            "Share widget is not visible on: %s", driver.current_url):
-        assert share_widget.is_displayed()
+    share_widget = find_element(
+        driver, by_css=SHARE_WIDGET, element_name="Share widget")
+    check_if_element_is_visible(share_widget, element_name="share widget")

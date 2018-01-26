@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# flake8: noqa
 """When step definitions."""
 from behave import when
 
@@ -15,6 +16,7 @@ from steps.when_impl import (
     articles_show_all,
     case_studies_go_to,
     clear_the_cookies,
+    click_on_page_element,
     continue_export_journey,
     export_readiness_open_category,
     guidance_open_category,
@@ -210,13 +212,13 @@ def when_actor_decides_to_register(context, actor_alias, location):
 
 
 @when('"{actor_alias}" completes the registration and fake email verification process')
-def when_actor_registers(context, actor_alias):
+def when_actor_registers_fake_email_verification(context, actor_alias):
     registration_submit_form_and_verify_account(
         context, actor_alias, fake_verification=True)
 
 
 @when('"{actor_alias}" completes the registration and real email verification process')
-def when_actor_registers(context, actor_alias):
+def when_actor_registers_real_email_verification(context, actor_alias):
     registration_submit_form_and_verify_account(
         context, actor_alias, fake_verification=False)
 
@@ -315,6 +317,17 @@ def given_actor_shows_all_articles(context, actor_alias):
     articles_show_all(context, actor_alias)
 
 
-@when('"{actor_alias}" goes to the "{page_name}" page via "{group}" links in header menu')
-def when_actor_opens_link_from_header_menu(context, actor_alias, page_name, group):
-    header_footer_open_link(context, actor_alias, group, page_name)
+@when('"{actor_alias}" goes to the "{page_name}" page via "{group}" links in "{location}"')
+def when_actor_opens_link_from_header_menu(context, actor_alias, page_name, group, location):
+    header_footer_open_link(context, actor_alias, group, page_name, location)
+
+
+@when('"{actor_alias}" decides to use "{element_name}" button on "{page_name}" page')
+@when('"{actor_alias}" decides to use "{element_name}" link on "{page_name}" page')
+@when('"{actor_alias}" decides to use "{element_name}" on "{page_name}" page')
+@when('"{actor_alias}" decides to use "{element_name}" button in "{page_name}"')
+@when('"{actor_alias}" decides to use "{element_name}" link in "{page_name}"')
+@when('"{actor_alias}" decides to use "{element_name}" in "{page_name}"')
+def when_actor_decides_to_click_on_page_element(
+        context, actor_alias, element_name, page_name):
+    click_on_page_element(context, actor_alias, element_name, page_name)

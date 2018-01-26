@@ -4,17 +4,19 @@ import logging
 from urllib.parse import urljoin
 
 from selenium import webdriver
-from selenium.common.exceptions import (
-    NoSuchElementException,
-    WebDriverException
+
+from pages.common_actions import (
+    check_for_expected_elements,
+    check_title,
+    check_url,
+    go_to_url
 )
-
-from pages.common_actions import visit as common_visit
 from settings import EXRED_UI_URL
-from utils import assertion_msg, take_screenshot
+from utils import check_if_element_is_not_visible, take_screenshot
 
-NAME = "Get Finance Home page"
+NAME = "Get Finance interim page"
 URL = urljoin(EXRED_UI_URL, "get-finance/")
+PAGE_TITLE = "Get finance - great.gov.uk"
 
 TOTAL_NUMBER_OF_ARTICLES = "dd.position > span.to"
 ARTICLES_TO_READ_COUNTER = "dd.position > span.from"
@@ -40,28 +42,21 @@ UNEXPECTED_ELEMENTS = {
 
 
 def visit(driver: webdriver, *, first_time: bool = False):
-    common_visit(driver, URL, NAME, first_time=first_time)
+    go_to_url(driver, URL, NAME, first_time=first_time)
 
 
 def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
-    for element_name, element_selector in EXPECTED_ELEMENTS.items():
-        element = driver.find_element_by_css_selector(element_selector)
-        with assertion_msg(
-                "It looks like '%s' element is not visible on %s",
-                element_name, NAME):
-            assert element.is_displayed()
+    check_url(driver, URL, exact_match=True)
+    check_title(driver, PAGE_TITLE, exact_match=True)
+    check_for_expected_elements(driver, EXPECTED_ELEMENTS)
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
 def check_elements_are_not_visible(driver: webdriver, elements: list):
     take_screenshot(driver, NAME + " should not see some elements")
-    for element in elements:
-        selector = UNEXPECTED_ELEMENTS[element.lower()]
-        try:
-            page_element = driver.find_element_by_css_selector(selector)
-            with assertion_msg(
-                    "Expected not to see '%s' but we can see it", element):
-                assert not page_element.is_displayed()
-        except (WebDriverException, NoSuchElementException):
-            logging.debug("As expected we can't see '%s' on the page", element)
+    for element_name in elements:
+        selector = UNEXPECTED_ELEMENTS[element_name.lower()]
+        check_if_element_is_not_visible(
+            driver, by_css=selector, element_name=element_name,
+            wait_for_it=False)

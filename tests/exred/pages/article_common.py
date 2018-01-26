@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 """ExRed Common Articles Page Object."""
 import logging
+import time
 from urllib import parse as urlparse
 
 from selenium import webdriver
-from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver import ActionChains
 
 from registry.articles import get_articles
 from utils import (
     assertion_msg,
     check_if_element_is_not_present,
+    check_if_element_is_not_visible,
+    check_if_element_is_visible,
     find_element,
     find_elements,
     selenium_action,
@@ -21,7 +23,7 @@ NAME = "ExRed Common Articles"
 URL = None
 WORDS_PER_SECOND = 1.5  # Average word per second on screen
 
-ARTICLE_NAME = "#top > h1"
+ARTICLE_NAME = "#top h1"
 ARTICLE_TEXT = "#top"
 ARTICLES_TO_READ_COUNTER = "dd.position > span.from"
 BREADCRUMBS = "p.breadcrumbs"
@@ -32,7 +34,8 @@ INDICATORS_TEXT = "div.scope-indicator"
 IS_THERE_ANYTHING_WRONG_WITH_THIS_PAGE_LINK = "section.error-reporting a"
 NEXT_ARTICLE_LINK = "#next-article-link"
 NOT_USEFUL_BUTTON = "#js-feedback-negative"
-REGISTRATION_LINK = "#content div.article-container p.register > a:nth-child(1)"
+REGISTRATION_LINK = \
+    "#content div.article-container p.register > a:nth-child(1)"
 READ_ARTICLES = "a.article-read"
 SHARE_MENU = "ul.sharing-links"
 SHOW_MORE_BUTTON = "#js-paginate-list-more"
@@ -86,11 +89,10 @@ def should_be_here(driver: webdriver):
 def correct_total_number_of_articles(
         driver: webdriver, group: str, category: str):
     expected = len(get_articles(group, category))
-    total = driver.find_element_by_css_selector(TOTAL_NUMBER_OF_ARTICLES)
-    with assertion_msg(
-            "Total Number of Articles to read for %s '%s' category is "
-            "not visible", group, category):
-        assert total.is_displayed()
+    total = find_element(
+        driver, by_css=TOTAL_NUMBER_OF_ARTICLES,
+        element_name="Total number of articles", wait_for_it=False)
+    check_if_element_is_visible(total, element_name="Total number of articles")
     given = int(total.text)
     with assertion_msg(
             "Expected Total Number of Articles to read in %s '%s' "
@@ -99,9 +101,11 @@ def correct_total_number_of_articles(
 
 
 def correct_article_read_counter(driver: webdriver, expected: int):
-    counter = driver.find_element_by_css_selector(ARTICLES_TO_READ_COUNTER)
-    with assertion_msg("Article Read Counter is not visible"):
-        assert counter.is_displayed()
+    counter = find_element(
+        driver, by_css=ARTICLES_TO_READ_COUNTER,
+        element_name="Remaining number of articles to read", wait_for_it=False)
+    check_if_element_is_visible(
+        counter, element_name="Remaining number of articles to read")
     given = int(counter.text)
     with assertion_msg(
             "Expected Article Read Counter to be %d but got %s",
@@ -117,18 +121,11 @@ def check_if_link_to_next_article_is_displayed(
     :param driver: selenium webdriver
     :param next_article: Category for which "next" link should be visible
     """
-    if next_article.lower() == "last":
-        link = driver.find_element_by_css_selector(NEXT_ARTICLE_LINK)
-        with assertion_msg(
-                "Found a link to the next Article on '%s' page: '%s'",
-                next_article, driver.current_url):
-            assert not link.is_displayed()
-    else:
-        link = driver.find_element_by_css_selector(NEXT_ARTICLE_LINK)
-        with assertion_msg(
-                "Link to the next Article is not visible on '%s'",
-                driver.current_url):
-            assert link.is_displayed()
+    name = "Link to the next article"
+    link = find_element(
+        driver, by_css=NEXT_ARTICLE_LINK, element_name=name)
+    check_if_element_is_visible(link, element_name=name)
+    if next_article.lower() != "last":
         with assertion_msg(
                 "Expected to see a link to '%s' but got '%s'",
                 next_article, link.text):
@@ -139,17 +136,14 @@ def check_elements_are_visible(driver: webdriver, elements: list):
     take_screenshot(driver, NAME)
     for element in elements:
         selector = SCOPE_ELEMENTS[element.lower()]
-        with selenium_action(
-                driver, "Could not find '%s' on '%s' using '%s' selector",
-                element, driver.current_url, selector):
-            page_element = driver.find_element_by_css_selector(selector)
-            if "firefox" not in driver.capabilities["browserName"].lower():
-                logging.debug("Moving focus to '%s' element", element)
-                action_chains = ActionChains(driver)
-                action_chains.move_to_element(page_element)
-                action_chains.perform()
-        with assertion_msg("Expected to see '%s' but can't see it", element):
-            assert page_element.is_displayed()
+        page_element = find_element(
+            driver, by_css=selector, element_name=element)
+        if "firefox" not in driver.capabilities["browserName"].lower():
+            logging.debug("Moving focus to '%s' element", element)
+            action_chains = ActionChains(driver)
+            action_chains.move_to_element(page_element)
+            action_chains.perform()
+        check_if_element_is_visible(page_element, element_name=element)
 
 
 def go_to_article(driver: webdriver, title: str):
@@ -160,15 +154,14 @@ def go_to_article(driver: webdriver, title: str):
             action_chains = ActionChains(driver)
             action_chains.move_to_element(article)
             action_chains.perform()
-    with assertion_msg(
-            "Found a link to '%s' article but it's not visible", title):
-        assert article.is_displayed()
+    check_if_element_is_visible(article, element_name=title)
     article.click()
     take_screenshot(driver, "After going to the '{}' Article".format(title))
 
 
 def get_article_name(driver: webdriver) -> str:
-    current_article = driver.find_element_by_css_selector(ARTICLE_NAME)
+    current_article = find_element(
+        driver, by_css=ARTICLE_NAME, element_name="Article name")
     return current_article.text
 
 
@@ -181,19 +174,19 @@ def should_see_article(driver: webdriver, name: str):
 
 
 def go_to_next_article(driver: webdriver):
-    next_article = driver.find_element_by_css_selector(NEXT_ARTICLE_LINK)
-    assert next_article.is_displayed()
+    next_article = find_element(
+        driver, by_css=NEXT_ARTICLE_LINK,
+        element_name="Link to the next article", wait_for_it=False)
+    check_if_element_is_visible(
+        next_article, element_name="Link to the next article")
     next_article.click()
     take_screenshot(driver, "After going to the next Article")
 
 
 def should_not_see_link_to_next_article(driver: webdriver):
-    try:
-        next_article = driver.find_element_by_css_selector(NEXT_ARTICLE_LINK)
-        with assertion_msg("Link to the next article is visible"):
-            assert not next_article.is_displayed()
-    except NoSuchElementException:
-        logging.debug("As expected link to the next article, is not present")
+    check_if_element_is_not_visible(
+        driver, by_css=NEXT_ARTICLE_LINK,
+        element_name="Link to the next article")
 
 
 def should_not_see_personas_end_page(driver: webdriver):
@@ -202,46 +195,49 @@ def should_not_see_personas_end_page(driver: webdriver):
 
 
 def go_back_to_article_list(driver: webdriver):
-    with selenium_action(
-            driver, "Could not find Go back link on '%s'", driver.current_url):
-        go_back_link = driver.find_element_by_css_selector(GO_BACK_LINK)
-    with assertion_msg("Go back link is not visible"):
-        go_back_link.is_displayed()
+    element_name = "Go Back link"
+    go_back_link = find_element(
+        driver, by_css=GO_BACK_LINK, element_name=element_name,
+        wait_for_it=False)
+    check_if_element_is_visible(go_back_link, element_name)
     go_back_link.click()
 
 
 def should_see_article_as_read(driver: webdriver, title: str):
-    with selenium_action(driver, "Could not find article: %s", title):
-        article = driver.find_element_by_link_text(title)
+    article = driver.find_element_by_link_text(title)
     with assertion_msg(
             "It looks like '%s' article is marked as unread", title):
         assert "article-read" in article.get_attribute("class")
 
 
 def get_read_counter(driver: webdriver) -> int:
-    with selenium_action(driver, "Could not find Article Read Counter"):
-        counter = driver.find_element_by_css_selector(ARTICLES_TO_READ_COUNTER)
-        if "firefox" not in driver.capabilities["browserName"].lower():
-            logging.debug("Moving focus to Article Read Counter")
-            action_chains = ActionChains(driver)
-            action_chains.move_to_element(counter)
-            action_chains.perform()
-    with assertion_msg("Article Read Counter is not visible"):
-        assert counter.is_displayed()
+    element_name = "Article read counter"
+    counter = find_element(
+        driver, by_css=ARTICLES_TO_READ_COUNTER,
+        element_name=element_name, wait_for_it=False)
+    if "firefox" not in driver.capabilities["browserName"].lower():
+        logging.debug("Moving focus to Article Read Counter")
+        action_chains = ActionChains(driver)
+        action_chains.move_to_element(counter)
+        action_chains.perform()
+    check_if_element_is_visible(counter, element_name=element_name)
     return int(counter.text)
 
 
 def get_total_articles(driver: webdriver) -> int:
-    counter = driver.find_element_by_css_selector(TOTAL_NUMBER_OF_ARTICLES)
-    with assertion_msg("Total Number or Articles to Read is not visible"):
-        assert counter.is_displayed()
+    element_name = "Total Number or Articles to Read"
+    counter = find_element(
+        driver, by_css=TOTAL_NUMBER_OF_ARTICLES, element_name=element_name,
+        wait_for_it=False)
+    check_if_element_is_visible(counter, element_name)
     return int(counter.text)
 
 
 def get_time_to_complete(driver: webdriver) -> int:
-    ttc = driver.find_element_by_css_selector(TIME_TO_COMPLETE)
-    with assertion_msg("Time To Complete Reading Articles is not visible"):
-        assert ttc.is_displayed()
+    element_name = "Time to complete reading remaining articles"
+    ttc = find_element(
+        driver, by_css=TIME_TO_COMPLETE, element_name=element_name)
+    check_if_element_is_visible(ttc, element_name)
     ttc_value = [int(word) for word in ttc.text.split() if word.isdigit()][0]
     return ttc_value
 
@@ -263,53 +259,50 @@ def count_average_word_number_in_lines_list(lines_list, word_length=5):
 
 def time_to_read_in_seconds(driver: webdriver):
     """Return time to read in minutes give an Article object."""
-    article_text = driver.find_element_by_css_selector(ARTICLE_TEXT).text
+    article_text = find_element(
+        driver, by_css=ARTICLE_TEXT, wait_for_it=False).text
     filtered_lines = filter_lines(article_text)
     total_words_count = count_average_word_number_in_lines_list(filtered_lines)
     return round(total_words_count / WORDS_PER_SECOND)
 
 
 def flag_as_useful(driver: webdriver):
-    with selenium_action(
-            driver, "Could not find the 'YES' feedback button using: %s",
-            USEFUL_BUTTON):
-        useful = driver.find_element_by_css_selector(USEFUL_BUTTON)
-    assert useful.is_displayed()
+    element_name = "Yes - this article was useful button"
+    useful = find_element(
+        driver, by_css=USEFUL_BUTTON, element_name=element_name,
+        wait_for_it=False)
+    check_if_element_is_visible(useful, element_name)
     useful.click()
     take_screenshot(driver, "After telling us that Article was useful")
 
 
 def flag_as_not_useful(driver: webdriver):
-    with selenium_action(
-            driver, "Could not find the 'NO' feedback button using: %s",
-            NOT_USEFUL_BUTTON):
-        not_useful = driver.find_element_by_css_selector(NOT_USEFUL_BUTTON)
-    assert not_useful.is_displayed()
+    element_name = "No - this article was not useful button"
+    not_useful = find_element(
+        driver, by_css=NOT_USEFUL_BUTTON, element_name=element_name)
+    check_if_element_is_visible(not_useful, element_name)
     not_useful.click()
     take_screenshot(driver, "After telling us that Article was not useful")
 
 
 def should_not_see_feedback_widget(driver: webdriver):
-    with selenium_action(
-            driver, "Could not find all elements of feedback widget"):
-        question = driver.find_element_by_css_selector(FEEDBACK_QUESTION)
-        useful = driver.find_element_by_css_selector(USEFUL_BUTTON)
-        not_useful = driver.find_element_by_css_selector(NOT_USEFUL_BUTTON)
-    with assertion_msg(
-            "Expected Feedback Widget to be hidden, but it's still visible"):
-        assert not question.is_displayed()
-        assert not useful.is_displayed()
-        assert not not_useful.is_displayed()
+    time.sleep(1)
+    check_if_element_is_not_visible(
+        driver, by_css=FEEDBACK_QUESTION, element_name="Feedback question",
+        wait_for_it=False)
+    check_if_element_is_not_visible(
+        driver, by_css=USEFUL_BUTTON, element_name="Useful button",
+        wait_for_it=False)
+    check_if_element_is_not_visible(
+        driver, by_css=NOT_USEFUL_BUTTON, element_name="Not useful button",
+        wait_for_it=False)
 
 
 def should_see_feedback_result(driver: webdriver):
-    with selenium_action(
-            driver, "Could not find the 'Thank you for the feedback' message"):
-        result = driver.find_element_by_css_selector(FEEDBACK_RESULT)
-    with assertion_msg(
-            "Expected to be thanked for the Feedback, but can't see such "
-            "message"):
-        assert result.is_displayed()
+    element_name = "Feedback result (thank you message)"
+    result = find_element(
+        driver, by_css=FEEDBACK_RESULT, element_name=element_name)
+    check_if_element_is_visible(result, element_name)
 
 
 def go_to_registration(driver: webdriver):

@@ -6,7 +6,13 @@ from selenium import webdriver
 from selenium.webdriver import ActionChains
 
 from registry.articles import get_article, get_articles
-from utils import assertion_msg, find_element, take_screenshot
+from utils import (
+    assertion_msg,
+    check_if_element_is_visible,
+    find_element,
+    find_elements,
+    take_screenshot
+)
 
 NAME = "ExRed Common Export Readiness"
 URL = None
@@ -26,11 +32,10 @@ SCOPE_ELEMENTS = {
 
 def correct_total_number_of_articles(driver: webdriver, category: str):
     expected = len(get_articles("export readiness", category))
-    total = driver.find_element_by_css_selector(TOTAL_NUMBER_OF_ARTICLES)
-    with assertion_msg(
-            "Total Number of Export Readiness Articles to read for '%s' "
-            "Exporter is not visible", category):
-        assert total.is_displayed()
+    total = find_element(
+        driver, by_css=TOTAL_NUMBER_OF_ARTICLES,
+        element_name="Total number of articles", wait_for_it=False)
+    check_if_element_is_visible(total, element_name="Total number of articles")
     given = int(total.text)
     with assertion_msg(
             "Expected Total Number of Export Readiness Articles to read for "
@@ -40,11 +45,11 @@ def correct_total_number_of_articles(driver: webdriver, category: str):
 
 def correct_article_read_counter(
         driver: webdriver, category: str, expected: int):
-    counter = driver.find_element_by_css_selector(ARTICLES_TO_READ_COUNTER)
-    with assertion_msg(
-            "Export Readiness Article Read Counter for '%s' Exporter is not "
-            "visible", category):
-        assert counter.is_displayed()
+    counter = find_element(
+        driver, by_css=ARTICLES_TO_READ_COUNTER,
+        element_name="Remaining number of articles to read", wait_for_it=False)
+    check_if_element_is_visible(
+        counter, element_name="Remaining number of articles to read")
     given = int(counter.text)
     with assertion_msg(
             "Expected Export Readiness Article Read Counter for '%s' Exporter"
@@ -61,13 +66,14 @@ def check_if_correct_articles_are_displayed(
     :param category: expected Guidance Article category
     """
     # extract displayed list of articles and their indexes
-    articles = driver.find_elements_by_css_selector(ARTICLES_LIST)
+    articles = find_elements(driver, by_css=ARTICLES_LIST)
     given_articles = [(idx, article.find_element_by_tag_name("a").text)
                       for idx, article in enumerate(articles)]
     # check whether article is on the right position
     logging.debug("Given articles: %s", given_articles)
     for position, name in given_articles:
-        expected_position = get_article("export readiness", category, name).index
+        expected_position = get_article(
+            "export readiness", category, name).index
         with assertion_msg(
                 "Expected article '%s' to be at position %d but found it at "
                 "position no. %d ", name, expected_position, position):

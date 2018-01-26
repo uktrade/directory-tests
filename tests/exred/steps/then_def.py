@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# flake8: noqa
 """Then steps definitions."""
 from behave import then
 
@@ -112,7 +113,7 @@ def then_actor_should_see_guidance_articles_read_counter(
 
 
 @then('"{actor_alias}" should be classified as "{classification}" exporter')
-def step_impl(context, actor_alias, classification):
+def then_actor_should_be_classified_as(context, actor_alias, classification):
     triage_should_be_classified_as(context, actor_alias, classification)
 
 
@@ -256,7 +257,7 @@ def then_actor_should_see_previous_reading_progress(context, actor_alias):
 
 
 @then('"{actor_alias}" should not see the link to sign in on the "{page_name}" page')
-def then_actor_should_not_see_register_link(context, actor_alias, page_name):
+def then_actor_should_not_see_sign_in_link(context, actor_alias, page_name):
     articles_should_not_see_link_to_sign_in(context, actor_alias, page_name)
 
 

@@ -58,7 +58,7 @@ def retry_if_webdriver_error(exception):
 
 @retry(
     wait_fixed=30000, stop_max_attempt_number=3,
-    retry_on_exception=retry_if_webdriver_error, wrap_exception=True)
+    retry_on_exception=retry_if_webdriver_error, wrap_exception=False)
 def visit_page(
         context: Context, actor_alias: str, page_name: str, *,
         first_time: bool = False):
@@ -203,7 +203,7 @@ def triage_are_you_incorporated(context, actor_alias, is_or_not):
         triage_say_you_are_not_incorporated(context, actor_alias)
     else:
         raise KeyError(
-            "Could not recognize '%s', please use 'is' or 'is not'" % is_or_not)
+            "Could not recognize %s, please use 'is' or 'is not'" % is_or_not)
 
 
 def triage_say_you_export_regularly(context: Context, actor_alias: str):
@@ -351,7 +351,8 @@ def triage_classify_as_occasional(
     else:
         triage_say_you_are_not_incorporated(context, actor_alias)
     triage_should_be_classified_as_occasional(context)
-    update_actor(context, alias=actor_alias, triage_classification="occasional")
+    update_actor(
+        context, alias=actor_alias, triage_classification="occasional")
 
 
 def triage_classify_as_regular(
@@ -463,10 +464,12 @@ def triage_should_see_answers_to_questions(context, actor_alias):
             assert q_and_a[question] == export_regularly
     if actor.are_you_incorporated is not None:
         incorporated = "Yes" if actor.are_you_incorporated else "No"
-        assert q_and_a["Is your company incorporated in the UK?"] == incorporated
+        question = "Is your company incorporated in the UK?"
+        assert q_and_a[question] == incorporated
     if actor.do_you_use_online_marketplaces is not None:
         sell_online = "Yes" if actor.do_you_use_online_marketplaces else "No"
-        assert q_and_a["Do you use online marketplaces to sell your products?"] == sell_online
+        question = "Do you use online marketplaces to sell your products?"
+        assert q_and_a[question] == sell_online
 
 
 def personalised_journey_create_page(context: Context, actor_alias: str):
@@ -493,13 +496,15 @@ def triage_answer_questions_again(context: Context, actor_alias: str):
     def continue_from_are_you_incorporated():
         if actor.are_you_incorporated:
             company_name = actor.company_name
-            triage_are_you_registered_with_companies_house.is_yes_selected(driver)
+            triage_are_you_registered_with_companies_house.is_yes_selected(
+                driver)
             triage_are_you_registered_with_companies_house.submit(driver)
             triage_company_name.should_be_here(driver)
             triage_company_name.is_company_name(driver, company_name)
             triage_company_name.submit(driver)
         else:
-            triage_are_you_registered_with_companies_house.is_no_selected(driver)
+            triage_are_you_registered_with_companies_house.is_no_selected(
+                driver)
             triage_are_you_registered_with_companies_house.submit(driver)
         triage_summary.should_be_here(driver)
 
@@ -511,7 +516,8 @@ def triage_answer_questions_again(context: Context, actor_alias: str):
             if actor.do_you_export_regularly:
                 triage_are_you_regular_exporter.is_yes_selected(driver)
                 triage_are_you_regular_exporter.submit(driver)
-                triage_are_you_registered_with_companies_house.should_be_here(driver)
+                triage_are_you_registered_with_companies_house.should_be_here(
+                    driver)
                 continue_from_are_you_incorporated()
                 triage_summary.should_be_classified_as_regular(driver)
             else:
@@ -519,16 +525,19 @@ def triage_answer_questions_again(context: Context, actor_alias: str):
                 triage_are_you_regular_exporter.submit(driver)
                 triage_do_you_use_online_marketplaces.should_be_here(driver)
                 if actor.do_you_use_online_marketplaces:
-                    triage_do_you_use_online_marketplaces.is_yes_selected(driver)
+                    triage_do_you_use_online_marketplaces.is_yes_selected(
+                        driver)
                 else:
-                    triage_do_you_use_online_marketplaces.is_no_selected(driver)
+                    triage_do_you_use_online_marketplaces.is_no_selected(
+                        driver)
                 triage_do_you_use_online_marketplaces.submit(driver)
                 continue_from_are_you_incorporated()
                 triage_summary.should_be_classified_as_occasional(driver)
         else:
             triage_have_you_exported.is_no_selected(driver)
             triage_have_you_exported.submit(driver)
-            triage_are_you_registered_with_companies_house.should_be_here(driver)
+            triage_are_you_registered_with_companies_house.should_be_here(
+                driver)
             continue_from_are_you_incorporated()
             triage_summary.should_be_classified_as_new(driver)
         triage_should_see_answers_to_questions(context, actor_alias)
@@ -650,7 +659,8 @@ def articles_open_any_but_the_last(context: Context, actor_alias: str):
     # select random article
     random_article = random.choice(articles[:-1])
     # then get it's index in the reading list
-    any_article_but_the_last = get_article(group, category, random_article.title)
+    any_article_but_the_last = get_article(
+        group, category, random_article.title)
     article_common.go_to_article(driver, any_article_but_the_last.title)
     time_to_read = article_common.time_to_read_in_seconds(context.driver)
     logging.debug(
@@ -705,7 +715,8 @@ def articles_open_any(context: Context, actor_alias: str):
     # capture the counter values from Article List page
     article_list_total = article_common.get_total_articles(context.driver)
     article_list_read_counter = article_common.get_read_counter(context.driver)
-    article_list_time_to_complete = article_common.get_time_to_complete(context.driver)
+    article_list_time_to_complete = article_common.get_time_to_complete(
+        context.driver)
 
     article_common.go_to_article(driver, any_article.title)
 
@@ -949,7 +960,8 @@ def registration_go_to(context: Context, actor_alias: str, location: str):
     sso_registration.should_be_here(context.driver)
 
 
-def registration_should_get_verification_email(context: Context, actor_alias: str):
+def registration_should_get_verification_email(
+        context: Context, actor_alias: str):
     """Will check if the Exporter received an email verification message.
 
     :param context: behave `context` object
@@ -1030,7 +1042,7 @@ def sign_in_go_to(context: Context, actor_alias: str, location: str):
         header.go_to_sign_in(context.driver)
     else:
         raise KeyError(
-            "Could not recognise 'sign in' link location: %s. Please use "
+            "Could not recognise 'sign in' link location: {}. Please use "
             "'article', 'article list' or 'top bar'".format(location))
     sso_sign_in.should_be_here(context.driver)
 
@@ -1073,7 +1085,8 @@ def articles_share_on_social_media(
     if social_media.lower() == "email":
         article_common.check_if_link_opens_email_client(context.driver)
     else:
-        article_common.check_if_link_opens_new_tab(context.driver, social_media)
+        article_common.check_if_link_opens_new_tab(
+            context.driver, social_media)
         article_common.share_via(context.driver, social_media)
     logging.debug(
         "%s successfully got to the share article on '%s'", actor_alias,
@@ -1134,9 +1147,20 @@ def articles_show_all(context: Context, actor_alias: str):
 
 
 def header_footer_open_link(
-        context: Context, actor_alias: str, group: str, link_name: str):
+        context: Context, actor_alias: str, group: str, link_name: str,
+        location: str):
     open_group_element(
-        context, group=group, element=link_name, location="header menu")
+        context, group=group, element=link_name, location=location)
     logging.debug(
         "%s decided to go to '%s' page via '%s' links in header menu",
         actor_alias, link_name, group)
+
+
+def click_on_page_element(
+        context: Context, actor_alias: str, element_name: str, page_name: str):
+    page_object = get_page_object(page_name)
+    assert hasattr(page_object, "click_on_page_element")
+    page_object.click_on_page_element(context.driver, element_name)
+    logging.debug(
+        "%s decided to click on '%s' on '%s' page", actor_alias, element_name,
+        page_name)

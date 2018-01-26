@@ -6,6 +6,7 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
 
+from pages.common_actions import find_and_click_on_page_element
 from settings import DIT_FAVICON_MD5_CHECKSUM, DIT_LOGO_MD5_CHECKSUM
 from utils import (
     assertion_msg,
@@ -24,7 +25,7 @@ LOGO = "#header-dit-logo > img"
 HOME_LINK = "#header-home-link"
 YOUR_EXPORT_JOURNEY = "#header-custom-page-link"
 REGISTRATION_LINK = "#header-register-link"
-SIGN_IN_LINK = "#header-bar .top-bar li:nth-child(2) > a"  # "#header-sign-in-link"
+SIGN_IN_LINK = "#header-bar .top-bar li:nth-child(2) > a"
 PROFILE_LINK = "#header-profile-link"
 SIGN_OUT_LINK = "#header-sign-out-link"
 LANGUAGE_SELECTOR = "#header-bar .LanguageSelectorDialog-Tracker"
@@ -45,7 +46,8 @@ SECTIONS = {
         "finance": "#header-guidance-finance",
         "business planning": "#header-guidance-business-planning",
         "getting paid": "#header-guidance-getting-paid",
-        "operations and compliance": "#header-guidance-operations-and-compliance"
+        "operations and compliance":
+            "#header-guidance-operations-and-compliance"
     },
     "services": {
         "menu": "#header-services-links",
@@ -111,7 +113,9 @@ def open(driver: webdriver, group: str, element: str):
     if "menu" in SECTIONS[group.lower()]:
         # Open the menu by sending "Enter" key
         menu_selector = SECTIONS[group.lower()]["menu"]
-        menu = driver.find_element_by_css_selector(menu_selector)
+        menu = find_element(
+            driver, by_css=menu_selector,
+            element_name="Header menu {}".format(group), wait_for_it=False)
         menu.send_keys(Keys.ENTER)
     menu_item_selector = SECTIONS[group.lower()][element.lower()]
     menu_item = find_element(driver, by_css=menu_item_selector)
@@ -170,4 +174,10 @@ def check_dit_favicon(driver: webdriver):
             raise
     src = favicon.get_attribute("href")
     check_hash_of_remote_file(DIT_FAVICON_MD5_CHECKSUM, src)
-    logging.debug("Favicon %s has correct MD5sum %s", src, DIT_FAVICON_MD5_CHECKSUM)
+    logging.debug(
+        "Favicon %s has correct MD5sum %s", src, DIT_FAVICON_MD5_CHECKSUM)
+
+
+def click_on_page_element(driver: webdriver, element_name: str):
+    find_and_click_on_page_element(driver, SECTIONS, element_name)
+    take_screenshot(driver, NAME + " after clicking on " + element_name)

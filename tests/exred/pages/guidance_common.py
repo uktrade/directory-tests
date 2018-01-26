@@ -6,7 +6,13 @@ from selenium import webdriver
 from selenium.webdriver import ActionChains
 
 from registry.articles import get_article, get_articles
-from utils import assertion_msg, selenium_action, take_screenshot
+from utils import (
+    assertion_msg,
+    check_if_element_is_visible,
+    find_element,
+    find_elements,
+    take_screenshot
+)
 
 NAME = "ExRed Common Guidance"
 URL = None
@@ -19,7 +25,8 @@ RIBBON = {
     "finance": ".navigation-ribbon a[href='/finance/']",
     "business planning": ".navigation-ribbon a[href='/business-planning/']",
     "getting paid": ".navigation-ribbon a[href='/getting-paid/']",
-    "operations and compliance": ".navigation-ribbon a[href='/operations-and-compliance/']"
+    "operations and compliance":
+        ".navigation-ribbon a[href='/operations-and-compliance/']"
 }
 TOTAL_NUMBER_OF_ARTICLES = "dd.position > span.to"
 ARTICLES_TO_READ_COUNTER = "dd.position > span.from"
@@ -36,25 +43,20 @@ SCOPE_ELEMENTS = {
 
 
 def ribbon_should_be_visible(driver: webdriver):
+    take_screenshot(driver, NAME + " Ribbon")
     for element_name, element_selector in RIBBON.items():
         logging.debug(
             "Looking for Ribbon '%s' element with '%s' selector",
             element_name, element_selector)
-        with selenium_action(
-                driver, "Could not find '%s' using '%s'", element_name,
-                element_selector):
-            element = driver.find_element_by_css_selector(element_selector)
-        with assertion_msg(
-                "It looks like '%s' is not visible", element_name):
-            assert element.is_displayed()
-    take_screenshot(driver, NAME + " Ribbon")
+        element = find_element(
+            driver, by_css=element_selector, element_name=element_name)
+        check_if_element_is_visible(element, element_name=element_name)
 
 
 def ribbon_tile_should_be_highlighted(driver: webdriver, tile: str):
     tile_selector = RIBBON[tile.lower()]
-    with selenium_action(driver, "Could not find '%s' tile", tile):
-        tile_link = driver.find_element_by_css_selector(tile_selector)
-        tile_class = tile_link.get_attribute("class")
+    tile_link = find_element(driver, by_css=tile_selector)
+    tile_class = tile_link.get_attribute("class")
     with assertion_msg(
             "It looks like '%s' tile is not active (it's class is %s)",
             tile, tile_class):
@@ -63,11 +65,10 @@ def ribbon_tile_should_be_highlighted(driver: webdriver, tile: str):
 
 def correct_total_number_of_articles(driver: webdriver, category: str):
     expected = len(get_articles("guidance", category))
-    total = driver.find_element_by_css_selector(TOTAL_NUMBER_OF_ARTICLES)
-    with assertion_msg(
-            "Total Number of Articles to read for Guidance '%s' category is "
-            "not visible", category):
-        assert total.is_displayed()
+    total = find_element(
+        driver, by_css=TOTAL_NUMBER_OF_ARTICLES,
+        element_name="Total number of articles")
+    check_if_element_is_visible(total, element_name="Total number of articles")
     given = int(total.text)
     with assertion_msg(
             "Expected Total Number of Articles to read in Guidance '%s' "
@@ -77,11 +78,12 @@ def correct_total_number_of_articles(driver: webdriver, category: str):
 
 def correct_article_read_counter(
         driver: webdriver, category: str, expected: int):
-    counter = driver.find_element_by_css_selector(ARTICLES_TO_READ_COUNTER)
-    with assertion_msg(
-            "Article Read Counter for Guidance '%s' category is not visible",
-            category):
-        assert counter.is_displayed()
+    counter = find_element(
+        driver, by_css=ARTICLES_TO_READ_COUNTER,
+        element_name="Number of remaining articles to read",
+        wait_for_it=False)
+    check_if_element_is_visible(
+        counter, element_name="Number of remaining articles to read")
     given = int(counter.text)
     with assertion_msg(
             "Expected Article Read Counter Guidance '%s' category to be %d but"
@@ -98,7 +100,7 @@ def check_if_correct_articles_are_displayed(
     :param category: expected Guidance Article category
     """
     # extract displayed list of articles and their indexes
-    articles = driver.find_elements_by_css_selector(ARTICLES_LIST)
+    articles = find_elements(driver, by_css=ARTICLES_LIST)
     given_articles = [(idx, article.find_element_by_tag_name("a").text)
                       for idx, article in enumerate(articles)]
     # check whether article is on the right position
@@ -140,26 +142,21 @@ def check_elements_are_visible(driver: webdriver, elements: list):
     take_screenshot(driver, NAME)
     for element in elements:
         selector = SCOPE_ELEMENTS[element.lower()]
-        with selenium_action(
-                driver, "Could not find '%s' on '%s' using '%s' selector",
-                element, driver.current_url, selector):
-            page_element = driver.find_element_by_css_selector(selector)
-            if "firefox" not in driver.capabilities["browserName"].lower():
-                logging.debug("Moving focus to '%s' element", element)
-                action_chains = ActionChains(driver)
-                action_chains.move_to_element(page_element)
-                action_chains.perform()
-        with assertion_msg("Expected to see '%s' but can't see it", element):
-            assert page_element.is_displayed()
+        page_element = find_element(
+            driver, by_css=selector, element_name=element)
+        if "firefox" not in driver.capabilities["browserName"].lower():
+            logging.debug("Moving focus to '%s' element", element)
+            action_chains = ActionChains(driver)
+            action_chains.move_to_element(page_element)
+            action_chains.perform()
+        check_if_element_is_visible(page_element, element_name=element)
 
 
 def open_first_article(driver: webdriver):
-    with selenium_action(
-            driver,
-            "Could not find link to the first article using '%s' selector",
-            FIRST_ARTICLE):
-        first_article = driver.find_element_by_css_selector(FIRST_ARTICLE)
-    with assertion_msg("The link to the first article is not visible"):
-        assert first_article.is_displayed()
+    first_article = find_element(
+        driver, by_css=FIRST_ARTICLE, element_name="First article on list",
+        wait_for_it=False)
+    check_if_element_is_visible(
+        first_article, element_name="First article on list")
     first_article.click()
     take_screenshot(driver, "after opening first article")

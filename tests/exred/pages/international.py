@@ -5,12 +5,19 @@ from urllib.parse import urljoin
 
 from selenium import webdriver
 
-from pages.common_actions import visit as common_visit
+from pages.common_actions import (
+    check_for_expected_sections_elements,
+    check_for_section,
+    check_title,
+    check_url,
+    go_to_url
+)
 from settings import EXRED_UI_URL
-from utils import assertion_msg, find_element, selenium_action, take_screenshot
+from utils import check_if_element_is_visible, find_element, take_screenshot
 
 NAME = "International"
 URL = urljoin(EXRED_UI_URL, "international/")
+PAGE_TITLE = "Welcome to great.gov.uk - buy from or invest in the UK"
 
 
 LANGUAGE_SELECTOR = "#header-bar .LanguageSelectorDialog-Tracker"
@@ -19,7 +26,7 @@ FIND_A_SUPPLIER = "section.international-links article:nth-child(1) > a"
 SEE_THE_POTENTIAL = "section.international-links article:nth-child(2) > a"
 LEARN_MORE = "section.international-links article:nth-child(3) > a"
 PLAN_YOUR_TRIP = "section.international-links article:nth-child(4) > a"
-BETA_FEEDBACK = "#header-beta-bar-feedback-link"
+BETA_FEEDBACK = "#header-beta-bar span > a"
 SECTIONS = {
     "header bar": {
         "itself": "#header-bar",
@@ -27,8 +34,8 @@ SECTIONS = {
     },
     "beta": {
         "itself": "#header-beta-bar",
-        "sticker": "#header-beta-bar .sticker",
-        "message": "#header-beta-bar p.beta-message",
+        "sticker": "#header-beta-bar .phase-tag",
+        "message": "#header-beta-bar p > span",
         "link": BETA_FEEDBACK
     },
     "header-menu": {
@@ -72,41 +79,26 @@ SECTIONS = {
 
 
 def visit(driver: webdriver, *, first_time: bool = False):
-    common_visit(driver, URL, NAME, first_time=first_time)
+    go_to_url(driver, URL, NAME, first_time=first_time)
 
 
 def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
-    for section in SECTIONS:
-        for element_name, element_selector in SECTIONS[section].items():
-            element = find_element(
-                driver, by_css=element_selector, wait_for_it=False)
-            with assertion_msg(
-                    "It looks like '%s' element is not visible on %s",
-                    element_name, NAME):
-                assert element.is_displayed()
-    logging.debug("All expected elements are visible on '%s' page", NAME)
+    check_url(driver, URL, exact_match=False)
+    check_title(driver, PAGE_TITLE, exact_match=True)
+    check_for_expected_sections_elements(driver, SECTIONS)
 
 
 def should_see_section(driver: webdriver, name: str):
-    section = SECTIONS[name.lower()]
-    for key, selector in section.items():
-        with selenium_action(
-                driver, "Could not find: '%s' element in '%s' section using "
-                        "'%s' selector",
-                key, name, selector):
-            element = find_element(driver, by_css=selector)
-        with assertion_msg(
-                "'%s' in '%s' is not displayed", key, name):
-            assert element.is_displayed()
-            logging.debug("'%s' in '%s' is displayed", key, name)
+    check_for_section(driver, SECTIONS, sought_section=name)
 
 
 def open(
         driver: webdriver, group: str, element: str, *, same_tab: bool = True):
     selector = SECTIONS[group.lower()][element.lower()]
-    link = driver.find_element_by_css_selector(selector)
-    assert link.is_displayed()
+    link = find_element(
+        driver, by_css=selector, element_name=element, wait_for_it=False)
+    check_if_element_is_visible(link, element_name=element)
     if same_tab:
         href = link.get_attribute("href")
         logging.debug("Opening '%s' link '%s' in the same tab", element, href)

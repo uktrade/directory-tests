@@ -7,14 +7,20 @@ from urllib.parse import urljoin
 
 from selenium import webdriver
 
-from pages.common_actions import visit as common_visit
+from pages.common_actions import (
+    check_for_expected_sections_elements,
+    check_for_section,
+    check_title,
+    check_url,
+    go_to_url
+)
 from settings import EXRED_UI_URL
 from utils import (
     assertion_msg,
     check_if_element_is_not_present,
+    check_if_element_is_visible,
     find_element,
     find_elements,
-    selenium_action,
     take_screenshot
 )
 
@@ -31,8 +37,10 @@ NEW_TO_EXPORTING_LINK = "#personas-section-new"
 OCCASIONAL_EXPORTER_LINK = "#personas-section-occasional"
 REGULAR_EXPORTED_LINK = "#personas-section-regular"
 FIND_A_BUYER_SERVICE_LINK = "#services-section-find-a-buyer-link"
-SELLING_ONLINE_OVERSEAS_SERVICE_LINK = "#services-section-selling-online-overseas-link"
-EXPORT_OPPORTUNITIES_SERVICE_LINK = "#services-section-export-opportunities-link"
+SELLING_ONLINE_OVERSEAS_SERVICE_LINK = \
+    "#services-section-selling-online-overseas-link"
+EXPORT_OPPORTUNITIES_SERVICE_LINK = \
+    "#services-section-export-opportunities-link"
 CAROUSEL_INDICATORS_SECTION = "#carousel  div.ed-carousel__indicators"
 CAROUSEL_INDICATORS = ".ed-carousel__indicator"
 CAROUSEL_PREV_BUTTON = "#carousel label.ed-carousel__control--backward"
@@ -47,7 +55,8 @@ CUSTOMER_INSIGHT_LINK = "#guidance-section-customer-insight-link"
 FINANCE_LINK = "#guidance-section-finance-link"
 BUSINESS_LINK = "#guidance-section-business-planning-link"
 GETTING_PAID_LINK = "#guidance-section-getting-paid-link"
-OPERATIONS_AND_COMPLIANCE_LINK = "#guidance-section-operations-and-compliance-link"
+OPERATIONS_AND_COMPLIANCE_LINK = \
+    "#guidance-section-operations-and-compliance-link"
 CAROUSEL = {
     "itself": "#carousel",
     "title": "#case-studies-section-title",
@@ -57,20 +66,26 @@ CAROUSEL = {
     "carousel - indicator 1": "#case-studies-section-indicator-1",
     "carousel - indicator 2": "#case-studies-section-indicator-2",
     "carousel - indicator 3": "#case-studies-section-indicator-3",
-    "carousel - case study 1 - link": "#case-studies-section-case-study-1-link",
-    "carousel - case study 2 - link": "#case-studies-section-case-study-2-link",
-    "carousel - case study 3 - link": "#case-studies-section-case-study-3-link",
-    "carousel - case study 1 - image": "#case-studies-section-case-study-1-image",
-    "carousel - case study 2 - image": "#case-studies-section-case-study-2-image",
-    "carousel - case study 3 - image": "#case-studies-section-case-study-3-image",
+    "carousel - case study 1 - link":
+        "#case-studies-section-case-study-1-link",
+    "carousel - case study 2 - link":
+        "#case-studies-section-case-study-2-link",
+    "carousel - case study 3 - link":
+        "#case-studies-section-case-study-3-link",
+    "carousel - case study 1 - image":
+        "#case-studies-section-case-study-1-image",
+    "carousel - case study 2 - image":
+        "#case-studies-section-case-study-2-image",
+    "carousel - case study 3 - image":
+        "#case-studies-section-case-study-3-image",
 }
 
 SECTIONS = {
     "beta": {
         "itself": "#header-beta-bar",
-        "sticker": "#header-beta-bar .sticker",
-        "message": "#header-beta-bar p.beta-message",
-        "link": "#header-beta-bar-feedback-link"
+        "sticker": "#header-beta-bar .phase-tag",
+        "message": "#header-beta-bar p > span",
+        "link": "#header-beta-bar span > a"
     },
     "hero": {
         "itself": "#content > section.hero-campaign-section",
@@ -111,35 +126,55 @@ SECTIONS = {
         "finance - group": "#guidance-section-finance",
         "business planning - group": "#guidance-section-business-planning",
         "getting paid - group": "#guidance-section-getting-paid",
-        "operations and compliance - group": "#guidance-section-operations-and-compliance",
+        "operations and compliance - group":
+            "#guidance-section-operations-and-compliance",
 
         "market research - icon": "#guidance-section-market-research-icon",
         "customer insight - icon": "#guidance-section-customer-insight-icon",
         "finance - icon": "#guidance-section-finance-icon",
         "business planning - icon": "#guidance-section-business-planning-icon",
         "getting paid - icon": "#guidance-section-getting-paid-icon",
-        "operations and compliance - icon": "#guidance-section-operations-and-compliance-icon",
+        "operations and compliance - icon":
+            "#guidance-section-operations-and-compliance-icon",
 
-        "market research - read counter": "#guidance-section-market-research-read-counter",
-        "customer insight - read counter": "#guidance-section-customer-insight-read-counter",
-        "finance - read counter": "#guidance-section-finance-article-read-counter",
-        "business planning - read counter": "#guidance-section-business-planning-article-read-counter",
-        "getting paid - read counter": "#guidance-section-getting-paid-article-read-counter",
-        "operations and compliance - read counter": "#guidance-section-operations-and-compliance-article-read-counter",
+        "market research - read counter":
+            "#guidance-section-market-research-read-counter",
+        "customer insight - read counter":
+            "#guidance-section-customer-insight-read-counter",
+        "finance - read counter":
+            "#guidance-section-finance-article-read-counter",
+        "business planning - read counter":
+            "#guidance-section-business-planning-article-read-counter",
+        "getting paid - read counter":
+            "#guidance-section-getting-paid-article-read-counter",
+        "operations and compliance - read counter":
+            "#guidance-section-operations-and-compliance-article-read-counter",
 
-        "market research - total number of articles": "#guidance-section-market-research-total-number-of-articles",
-        "customer insight - total number of articles": "#guidance-section-customer-insight-total-number-of-articles",
-        "finance - total number of articles": "#guidance-section-finance-total-number-of-articles",
-        "business planning - total number of articles": "#guidance-section-business-planning-total-number-of-articles",
-        "getting paid - total number of articles": "#guidance-section-getting-paid-total-number-of-articles",
-        "operations and compliance - total number of articles": "#guidance-section-operations-and-compliance-total-number-of-articles",
+        "market research - total number of articles":
+            "#guidance-section-market-research-total-number-of-articles",
+        "customer insight - total number of articles":
+            "#guidance-section-customer-insight-total-number-of-articles",
+        "finance - total number of articles":
+            "#guidance-section-finance-total-number-of-articles",
+        "business planning - total number of articles":
+            "#guidance-section-business-planning-total-number-of-articles",
+        "getting paid - total number of articles":
+            "#guidance-section-getting-paid-total-number-of-articles",
+        "operations and compliance - total number of articles":
+            "#guidance-section-operations-and-compliance-total-number-of-articles",
 
-        "market research - description": "#guidance-section-market-research-description",
-        "customer insight - description": "#guidance-section-customer-insight-description",
-        "finance - description": "#guidance-section-finance-description",
-        "business planning - description": "#guidance-section-business-planning-description",
-        "getting paid - description": "#guidance-section-getting-paid-description",
-        "operations and compliance - description": "#guidance-section-operations-and-compliance-description",
+        "market research - description":
+            "#guidance-section-market-research-description",
+        "customer insight - description":
+            "#guidance-section-customer-insight-description",
+        "finance - description":
+            "#guidance-section-finance-description",
+        "business planning - description":
+            "#guidance-section-business-planning-description",
+        "getting paid - description":
+            "#guidance-section-getting-paid-description",
+        "operations and compliance - description":
+            "#guidance-section-operations-and-compliance-description",
 
         "market research": MARKET_RESEARCH_LINK,
         "customer insight": CUSTOMER_INSIGHT_LINK,
@@ -155,16 +190,23 @@ SECTIONS = {
         "groups": "#services .group",
 
         "find a buyer - article": "#services div:nth-child(1) > article",
-        "online marketplaces - article": "#services div:nth-child(2) > article",
-        "export opportunities - article": "#services div:nth-child(3) > article",
+        "online marketplaces - article":
+            "#services div:nth-child(2) > article",
+        "export opportunities - article":
+            "#services div:nth-child(3) > article",
 
         "find a buyer - image": "#services-section-find-a-buyer-image",
-        "online marketplaces - image": "#services-section-selling-online-overseas-image",
-        "export opportunities - image": "#services-section-export-opportunities-image",
+        "online marketplaces - image":
+            "#services-section-selling-online-overseas-image",
+        "export opportunities - image":
+            "#services-section-export-opportunities-image",
 
-        "find a buyer - description": "#services-section-find-a-buyer-description",
-        "online marketplaces - description": "#services-section-selling-online-overseas-description",
-        "export opportunities - description": "#services-section-export-opportunities-description",
+        "find a buyer - description":
+            "#services-section-find-a-buyer-description",
+        "online marketplaces - description":
+            "#services-section-selling-online-overseas-description",
+        "export opportunities - description":
+            "#services-section-export-opportunities-description",
 
         "find a buyer": FIND_A_BUYER_SERVICE_LINK,
         "selling online overseas": SELLING_ONLINE_OVERSEAS_SERVICE_LINK,
@@ -179,8 +221,10 @@ SECTIONS = {
         "carousel - indicator 1": "#case-studies-section-indicator-1",
         "carousel - indicator 2": "#case-studies-section-indicator-2",
         "carousel - indicator 3": "#case-studies-section-indicator-3",
-        "carousel - case study 1 - link": "#case-studies-section-case-study-1-link",
-        "carousel - case study 1 - image": "#case-studies-section-case-study-1-image",
+        "carousel - case study 1 - link":
+            "#case-studies-section-case-study-1-link",
+        "carousel - case study 1 - image":
+            "#case-studies-section-case-study-1-image",
     },
     "business is great": {
         "itself": "#beis",
@@ -197,49 +241,24 @@ SECTIONS = {
 
 
 def visit(driver: webdriver, *, first_time: bool = False):
-    common_visit(driver, URL, NAME, first_time=first_time)
+    go_to_url(driver, URL, NAME, first_time=first_time)
 
 
 def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
-    with assertion_msg(
-            "Expected page URL to be: '%s' but got '%s'", URL,
-            driver.current_url):
-        assert driver.current_url in URL
-    with assertion_msg(
-            "Expected page title to be: '%s' but got '%s'", PAGE_TITLE,
-            driver.title):
-        assert PAGE_TITLE.lower() in driver.title.lower()
-    for section in SECTIONS:
-        for element_name, element_selector in SECTIONS[section].items():
-            element = driver.find_element_by_css_selector(element_selector)
-            with assertion_msg(
-                    "It looks like '%s' element is not visible on %s",
-                    element_name, NAME):
-                assert element.is_displayed()
-    logging.debug("All expected elements are visible on '%s' page", NAME)
+    check_url(driver, URL, exact_match=False)
+    check_title(driver, PAGE_TITLE, exact_match=False)
+    check_for_expected_sections_elements(driver, SECTIONS)
 
 
 def should_see_section(driver: webdriver, name: str):
-    section = SECTIONS[name.lower()]
-    for key, selector in section.items():
-        with selenium_action(
-                driver, "Could not find: '%s' element in '%s' section using "
-                        "'%s' selector",
-                key, name, selector):
-            element = find_element(driver, by_css=selector)
-        with assertion_msg(
-                "'%s' in '%s' is not displayed", key, name):
-            assert element.is_displayed()
-            logging.debug("'%s' in '%s' is displayed", key, name)
+    check_for_section(driver, all_sections=SECTIONS, sought_section=name)
 
 
 def should_see_link_to(driver: webdriver, section: str, item_name: str):
     item_selector = SECTIONS[section.lower()][item_name.lower()]
-    with selenium_action(
-            driver, "Could not find '%s' using '%s'", item_name,
-            item_selector):
-        menu_item = driver.find_element_by_css_selector(item_selector)
+    menu_item = find_element(
+        driver, by_css=item_selector, element_name=item_name)
     with assertion_msg(
             "It looks like '%s' in '%s' section is not visible", item_name,
             section):
@@ -258,7 +277,9 @@ def start_exporting_journey(driver: webdriver):
 
 def continue_export_journey(driver: webdriver):
     """Continue your Export Journey (Triage)."""
-    button = find_element(driver, by_css=CONTINUE_EXPORT_JOURNEY)
+    button = find_element(
+        driver, by_css=CONTINUE_EXPORT_JOURNEY,
+        element_name="Continue your export journey button")
     assert button.is_displayed()
     button.click()
 
@@ -304,7 +325,9 @@ def find_case_study_by_going_right(driver: webdriver, to_open: int):
 
 
 def move_to_case_study_navigation_buttons(driver: webdriver):
-    prev_button = driver.find_element_by_css_selector(CAROUSEL_PREV_BUTTON)
+    prev_button = find_element(
+        driver, by_css=CAROUSEL_PREV_BUTTON,
+        element_name="Carousel Previous button", wait_for_it=False)
     vertical_position = prev_button.location['y']
     logging.debug("Moving focus to Carousel navigation buttons")
     driver.execute_script("window.scrollTo(0, {});".format(vertical_position))
@@ -343,8 +366,9 @@ def get_case_study_title(driver: webdriver, case_number: str) -> str:
 
 def open(driver: webdriver, group: str, element: str):
     selector = SECTIONS[group.lower()][element.lower()]
-    link = driver.find_element_by_css_selector(selector)
-    assert link.is_displayed()
+    link = find_element(
+        driver, by_css=selector, element_name=element, wait_for_it=True)
+    check_if_element_is_visible(link, element_name=element)
     link.click()
     take_screenshot(
         driver, NAME + " after clicking on: %s link".format(element))

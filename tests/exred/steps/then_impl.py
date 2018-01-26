@@ -80,8 +80,8 @@ def guidance_check_if_link_to_next_category_is_displayed(
     guidance_common.check_if_link_to_next_category_is_displayed(
         context.driver, next_category)
     logging.debug(
-        "%s was able t see the link to the next category wherever expected",
-        actor_alias, next_category)
+        "%s was able to see the link to the next category '%s' wherever"
+        " expected", actor_alias, next_category)
 
 
 def guidance_expected_page_elements_should_be_visible(
@@ -110,7 +110,9 @@ def triage_should_be_classified_as(
     elif classification == "regular":
         triage_should_be_classified_as_regular(context)
     else:
-        raise KeyError("Could not recognize: '%s'. Please use: ")
+        raise KeyError(
+            "Couldn't recognize: '%s'. Please use: new, occasional or regular",
+            classification)
     logging.debug(
         "%s was properly classified as %s exporter", actor_alias,
         classification)
@@ -152,7 +154,8 @@ def export_readiness_should_see_articles(
 
 def export_readiness_expected_page_elements_should_be_visible(
         context: Context, actor_alias: str, elements: list):
-    export_readiness_common.check_elements_are_visible(context.driver, elements)
+    export_readiness_common.check_elements_are_visible(
+        context.driver, elements)
     logging.debug(
         "%s can see all expected page elements: '%s' on current Guidance "
         "Articles page: %s", actor_alias, elements, context.driver.current_url)
@@ -251,7 +254,8 @@ def articles_should_see_time_to_complete_decrease(
         context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     previous_time_to_complete = actor.article_list_time_to_complete
-    current_time_to_complete = article_common.get_time_to_complete(context.driver)
+    current_time_to_complete = article_common.get_time_to_complete(
+        context.driver)
     visited_article = actor.visited_articles[0]
     difference = current_time_to_complete - previous_time_to_complete
     logging.debug(
@@ -328,7 +332,8 @@ def personalised_journey_should_not_see_banner_and_top_10_table(
     code, sector = actor.what_do_you_want_to_export
     logging.debug(
         "As expected %s can't see Top Importer banner and Top 10 Importers "
-        "table on personalised page for '%s - %s' sector", code, sector)
+        "table on personalised page for '%s - %s' sector", actor_alias, code,
+        sector)
 
 
 def personalised_journey_should_see_banner_and_top_10_table(
@@ -339,7 +344,8 @@ def personalised_journey_should_see_banner_and_top_10_table(
         context.driver, sector)
     logging.debug(
         "As expected %s can see Top Importer banner and Top 10 Importers "
-        "table on personalised page for '%s - %s' sector", code, sector)
+        "table on personalised page for '%s - %s' sector", actor_alias, code,
+        sector)
 
 
 def articles_should_see_read_counter_set_to(
@@ -412,7 +418,8 @@ def share_page_should_be_prepopulated(
     social_media_page.check_if_populated(context.driver, shared_url)
     clear_driver_cookies(driver=context.driver)
     logging.debug(
-        "%s saw '%s' share page populated with appropriate data", actor_alias)
+        "%s saw '%s' share page populated with appropriate data", actor_alias,
+        social_media)
 
 
 def share_page_via_email_should_have_article_details(
@@ -443,7 +450,8 @@ def promo_video_check_watch_time(
                   " promotional video", actor_alias, expected_watch_time)
 
 
-def promo_video_should_not_see_modal_window(context: Context, actor_alias: str):
+def promo_video_should_not_see_modal_window(
+        context: Context, actor_alias: str):
     home.should_not_see_video_modal_window(context.driver)
     logging.debug(
         "As expected %s can't see promotional video modal window", actor_alias)
@@ -484,4 +492,8 @@ def language_selector_keyboard_should_be_trapped(
 
 def should_see_page_in_preferred_language(
         context: Context, actor_alias: str, preferred_language: str):
-    language_selector.check_page_language_is(context.driver, preferred_language)
+    language_selector.check_page_language_is(
+        context.driver, preferred_language)
+    logging.debug(
+        "%s can see '%' page in '%s", actor_alias, context.driver.current_url,
+        preferred_language)

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# flake8: noqa
 """Given step definitions."""
 from behave import given
 
@@ -82,7 +83,7 @@ def given_actor_decided_to_create_personalised_page(context, actor_alias):
 
 
 @given('"{actor_alias}" was classified as "{exporter_status}" Exporter which "{is_incorporated}" incorporated the company')
-def given_actor_was_classified_as(
+def given_incorporated_actor_was_classified_as(
         context, actor_alias, exporter_status, is_incorporated):
     triage_classify_as(
         context, actor_alias, exporter_status=exporter_status,
@@ -133,7 +134,8 @@ def given_actor_selects_random_guidance_category(context, actor_alias):
 
 
 @given('"{actor_alias}" went to randomly selected "{group}" Article category via "{location}"')
-def given_actor_is_on_article_list(context, actor_alias, group, location):
+def given_actor_is_on_randomly_selected_article_list(
+        context, actor_alias, group, location):
     articles_open_group(context, actor_alias, group, location=location)
 
 
@@ -166,7 +168,7 @@ def given_actor_reads_few_articles(context, actor_alias, number):
 
 
 @given('"{actor_alias}" read "{number}" of articles')
-def given_actor_reads_few_articles(context, actor_alias, number):
+def given_actor_reads_a_number_of_articles(context, actor_alias, number):
     articles_read_a_number_of_them(context, actor_alias, number)
 
 

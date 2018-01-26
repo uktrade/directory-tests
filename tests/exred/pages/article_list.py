@@ -91,8 +91,8 @@ def show_all_articles(driver: webdriver):
             counter += 1
         if counter > max_clicks:
             with assertion_msg(
-                    "'Show more' button didn't disappear after clicking on it for"
-                    " %d times", counter):
+                    "'Show more' button didn't disappear after clicking on it"
+                    " for %d times", counter):
                 assert counter == max_clicks
         take_screenshot(driver, NAME + " after showing all articles")
     except NoSuchElementException:

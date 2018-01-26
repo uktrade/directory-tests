@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """Share on Twitter Page Object."""
-import logging
 from urllib.parse import urljoin
 
 from selenium import webdriver
 
+from pages.common_actions import check_for_expected_elements, check_title
 from utils import assertion_msg, find_element, take_screenshot
 
 NAME = "Share on Twitter page"
@@ -20,17 +20,8 @@ EXPECTED_ELEMENTS = {
 
 def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
-    with assertion_msg(
-            "Expected page title to be: '%s' but got '%s'", PAGE_TITLE,
-            driver.title):
-        assert driver.title.lower() == PAGE_TITLE.lower()
-    for element_name, element_selector in EXPECTED_ELEMENTS.items():
-        element = find_element(driver, by_css=element_selector)
-        with assertion_msg(
-                "It looks like '%s' element is not visible on %s",
-                element_name, NAME):
-            assert element.is_displayed()
-    logging.debug("All expected elements are visible on '%s' page", NAME)
+    check_title(driver, PAGE_TITLE, exact_match=True)
+    check_for_expected_elements(driver, EXPECTED_ELEMENTS)
 
 
 def check_if_populated(driver: webdriver, shared_url: str):
@@ -40,15 +31,3 @@ def check_if_populated(driver: webdriver, shared_url: str):
             "textbox, but couldn't find it in : %s", shared_url,
             status_update_message.text):
         assert shared_url in status_update_message.text
-
-
-def close_all_windows_except_first(driver: webdriver):
-    """This action works only locally, and doesn't work on BrowserStack :("""
-    while len(driver.window_handles) > 1:
-        driver.switch_to.window(driver.window_handles[-1])
-        logging.debug(
-            "Closing window: %s opened with URL %s", driver.window_handles[1],
-            driver.current_url)
-        # driver.find_element_by_tag_name('body').send_keys(Keys.CONTROL + 'w')
-        driver.close()
-    driver.switch_to.window(driver.window_handles[0])

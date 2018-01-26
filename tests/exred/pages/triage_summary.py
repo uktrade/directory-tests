@@ -1,15 +1,26 @@
 # -*- coding: utf-8 -*-
 """Triage - Result Page Object."""
-import logging
 from urllib.parse import urljoin
 
 from selenium import webdriver
 
+from pages.common_actions import (
+    check_for_expected_elements,
+    check_title,
+    check_url
+)
 from settings import EXRED_UI_URL
-from utils import assertion_msg, find_element, take_screenshot
+from utils import (
+    assertion_msg,
+    check_if_element_is_visible,
+    find_element,
+    find_elements,
+    take_screenshot
+)
 
 NAME = "ExRed Triage - summary"
 URL = urljoin(EXRED_UI_URL, "triage/summary/")
+PAGE_TITLE = "Welcome to great.gov.uk"
 
 CLASSIFICATION = ".question > h2"
 ANSWERS_SECTION = "div.answers"
@@ -29,18 +40,15 @@ EXPECTED_ELEMENTS = {
 
 
 def should_be_here(driver: webdriver):
-    for element_name, element_selector in EXPECTED_ELEMENTS.items():
-        element = driver.find_element_by_css_selector(element_selector)
-        with assertion_msg(
-                "It looks like '%s' element is not visible on %s",
-                element_name, NAME):
-            assert element.is_displayed()
     take_screenshot(driver, NAME)
-    logging.debug("All expected elements are visible on '%s' page", NAME)
+    check_url(driver, URL, exact_match=True)
+    check_title(driver, PAGE_TITLE, exact_match=False)
+    check_for_expected_elements(driver, EXPECTED_ELEMENTS)
 
 
 def get_classification(driver: webdriver) -> str:
-    element = driver.find_element_by_css_selector(CLASSIFICATION)
+    element = find_element(
+        driver, by_css=CLASSIFICATION, element_name="Exporter classification")
     return element.text.lower()
 
 
@@ -65,15 +73,18 @@ def should_be_classified_as_regular(driver: webdriver):
 
 
 def create_exporting_journey(driver: webdriver):
-    button = driver.find_element_by_css_selector(CREATE_MY_JOURNEY_BUTTON)
-    assert button.is_displayed()
+    element_name = "Create my journey button"
+    button = find_element(
+        driver, by_css=CREATE_MY_JOURNEY_BUTTON,
+        element_name=element_name, wait_for_it=False)
+    check_if_element_is_visible(button, element_name=element_name)
     button.click()
     take_screenshot(driver, NAME + " after submitting")
 
 
 def get_questions_and_answers(driver: webdriver) -> dict:
-    questions = driver.find_elements_by_css_selector(QUESTIONS)
-    answers = driver.find_elements_by_css_selector(ANSWERS)
+    questions = find_elements(driver, by_css=QUESTIONS)
+    answers = find_elements(driver, by_css=ANSWERS)
     result = {}
     for q, a in list(zip(questions, answers)):
         result.update({q.text: a.text})
@@ -81,7 +92,8 @@ def get_questions_and_answers(driver: webdriver) -> dict:
 
 
 def change_answers(driver: webdriver):
-    link = driver.find_element_by_css_selector(CHANGE_ANSWERS_LINK)
+    link = find_element(
+        driver, by_css=CHANGE_ANSWERS_LINK, element_name="Change answers link")
     link.click()
     take_screenshot(driver, NAME + " after deciding to change the answers")
 

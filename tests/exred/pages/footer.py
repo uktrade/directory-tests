@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 """ExRed Footer Page Object."""
-import logging
-
 from selenium import webdriver
 
-from utils import assertion_msg, selenium_action, take_screenshot
+from pages.common_actions import (
+    check_for_expected_sections_elements,
+    find_and_click_on_page_element
+)
+from utils import assertion_msg, find_element, take_screenshot
 
 NAME = "ExRed Footer"
 URL = None
@@ -30,7 +32,8 @@ SECTIONS = {
         "finance": "#footer-guidance-finance",
         "business planning": "#footer-guidance-business-planning",
         "getting paid": "#footer-guidance-getting-paid",
-        "operations and compliance": "#footer-guidance-operations-and-compliance"
+        "operations and compliance":
+            "#footer-guidance-operations-and-compliance"
     },
     "services": {
         "label": "#footer-services-links",
@@ -40,7 +43,8 @@ SECTIONS = {
         "get finance": "#footer-services-get-finance",
         "events": "#footer-services-events"
     },
-    "general links": {
+    "general": {
+        "your export journey": "#footer-custom-page-link",
         "about": "#footer-site-links-about",
         "contact us": "#footer-site-links-contact-us",
         "privacy and cookies": "#footer-site-links-privacy-and-cookies",
@@ -52,30 +56,13 @@ SECTIONS = {
 
 
 def should_see_all_menus(driver: webdriver):
-    for section in SECTIONS:
-        for name, selector in SECTIONS[section].items():
-            logging.debug(
-                "Looking for '%s' link in '%s' section with '%s' selector",
-                name, section, selector)
-            with selenium_action(
-                    driver, "Could not find '%s link' using '%s'",
-                    name, selector):
-                element = driver.find_element_by_css_selector(selector)
-            with assertion_msg(
-                    "It looks like '%s' in '%s' section is not visible",
-                    name, section):
-                assert element.is_displayed()
-        logging.debug("All elements in '%s' section are visible", section)
-    logging.debug(
-        "All expected sections on %s are visible", NAME)
+    check_for_expected_sections_elements(driver, SECTIONS)
 
 
 def should_see_link_to(driver: webdriver, section: str, item_name: str):
     item_selector = SECTIONS[section.lower()][item_name.lower()]
-    with selenium_action(
-            driver, "Could not find '%s' using '%s'", item_name,
-            item_selector):
-        menu_item = driver.find_element_by_css_selector(item_selector)
+    menu_item = find_element(
+        driver, by_css=item_selector, element_name=item_name)
     with assertion_msg(
             "It looks like '%s' in '%s' section is not visible", item_name,
             section):
@@ -84,8 +71,13 @@ def should_see_link_to(driver: webdriver, section: str, item_name: str):
 
 def open(driver: webdriver, group: str, element: str):
     link = SECTIONS[group.lower()][element.lower()]
-    button = driver.find_element_by_css_selector(link)
-    assert button.is_displayed()
+    button = find_element(
+        driver, by_css=link, element_name=element, wait_for_it=False)
     button.click()
     take_screenshot(
         driver, NAME + " after clicking on: %s link".format(element))
+
+
+def click_on_page_element(driver: webdriver, element_name: str):
+    find_and_click_on_page_element(driver, SECTIONS, element_name)
+    take_screenshot(driver, NAME + " after clicking on " + element_name)

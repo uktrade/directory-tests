@@ -29,8 +29,10 @@ DIRECTORY_UI_PROFILE_URL = os.environ["DIRECTORY_UI_PROFILE_URL"]
 SELLING_ONLINE_OVERSEAS_UI_URL = os.environ["SELLING_ONLINE_OVERSEAS_UI_URL"]
 EXPORT_OPPORTUNITIES_UI_URL = os.environ["EXPORT_OPPORTUNITIES_UI_URL"]
 EVENTS_UI_URL = os.environ["EVENTS_UI_URL"]
-DIT_LOGO_MD5_CHECKSUM = os.environ.get("DIT_LOGO_MD5_CHECKSUM", "c4873f79300c7726f227e7934aff8e70")
-DIT_FAVICON_MD5_CHECKSUM = os.environ.get("DIT_FAVICON_MD5_CHECKSUM", "93bd34ac9de2cb059c65c5e7931667a2")
+DIT_LOGO_MD5_CHECKSUM = os.environ.get(
+    "DIT_LOGO_MD5_CHECKSUM", "c4873f79300c7726f227e7934aff8e70")
+DIT_FAVICON_MD5_CHECKSUM = os.environ.get(
+    "DIT_FAVICON_MD5_CHECKSUM", "93bd34ac9de2cb059c65c5e7931667a2")
 
 __take_screenshots = os.environ.get("TAKE_SCREENSHOTS", "false")
 TAKE_SCREENSHOTS = (True
@@ -45,7 +47,8 @@ AUTO_RETRY = (True
 
 # Mailgun details required to get verification emails
 MAILGUN_SSO_DOMAIN = os.environ["MAILGUN_SSO_DOMAIN"]
-MAILGUN_SSO_EVENTS_URL = "https://api.mailgun.net/v3/%s/events" % MAILGUN_SSO_DOMAIN
+MAILGUN_SSO_EVENTS_URL = (
+        "https://api.mailgun.net/v3/%s/events" % MAILGUN_SSO_DOMAIN)
 MAILGUN_SSO_API_USER = "api"
 MAILGUN_SSO_SECRET_API_KEY = os.environ["MAILGUN_SSO_SECRET_API_KEY"]
 
@@ -56,7 +59,8 @@ BROWSERSTACK_USER = os.environ.get("BROWSERSTACK_USER", "")
 BROWSERSTACK_PASS = os.environ.get("BROWSERSTACK_PASS", "")
 BROWSERSTACK_EXECUTOR_URL = ("http://{}:{}@{}/wd/hub".format(
     BROWSERSTACK_USER, BROWSERSTACK_PASS, BROWSERSTACK_SERVER))
-BROWSERSTACK_SESSIONS_URL = "https://www.browserstack.com/automate/sessions/{}.json"
+BROWSERSTACK_SESSIONS_URL = (
+    "https://www.browserstack.com/automate/sessions/{}.json")
 
 
 # These DB details are required to do post-test clean-up in SSO DB
