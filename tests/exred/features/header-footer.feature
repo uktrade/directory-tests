@@ -147,17 +147,38 @@ Feature: Header-Footer
     Then "Robert" should not see "Save Progress" section on "Create your export journey" page
 
 
-  @wip
-  @ED-2737
+  @ED-3283
   @your-export-journey-link
-  Scenario: Any user who has completed triage should be able to get to the custom page from the header
-    Given "Robert" has completed the triage questions
-    When "Robert" goes to his export journey via appropriate header link
-    Then "Robert" should be on the "Custom" page
+  @<specific>
+  Scenario Outline: Any user who has created his/her "Personalised Journey page" should be able to return to it using "Your export journey" link
+    Given "Robert" answered triage questions
+    And "Robert" decided to create his personalised journey page
+    And "Robert" is on the "Personalised Journey" page
+    And "Robert" goes to the "<specific>" page
 
+    When "Robert" decides to use "Your export journey" link in "header menu"
 
-  @wip
-  @ED-2737
+    Then "Robert" should be on the "Personalised Journey" page
+
+    Examples:
+      | specific                     |
+      | Home                         |
+      | Interim Export Opportunities |
+      | Export Opportunities         |
+
+    @bug
+    @ED-3282
+    @fixme
+    Examples: header needs to be updated
+      | specific                     |
+      | Selling Online Overseas      |
+
+    @bug
+    @ED-3242
+    @fixme
+    Examples: header needs to be updated
+      | specific                     |
+      | Find a Buyer                 |
   @your-export-journey-link
   Scenario: Any user who hasn’t signed in should be asked to register or sign in, in the Guidance section of the custom page.
     Given "Robert" is not a registered user
