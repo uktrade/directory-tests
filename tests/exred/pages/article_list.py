@@ -36,7 +36,7 @@ SIGN_IN = "#articles > div > div.scope-indicator > p > a:nth-child(2)"
 
 SECTIONS = {
     "hero": {
-        "itself": "#content > section.hero-section.regular",
+        "itself": "#content > section.hero-section",
         "heading title": ARTICLE_CATEGORY,
     },
     "breadcrumbs": {
