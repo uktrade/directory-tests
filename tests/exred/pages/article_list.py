@@ -5,9 +5,14 @@ import logging
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 
+from pages.common_actions import (
+    check_for_expected_sections_elements,
+    check_for_section
+)
 from utils import (
     assertion_msg,
     check_if_element_is_not_present,
+    check_if_element_is_not_visible,
     find_element,
     take_screenshot
 )
@@ -26,28 +31,54 @@ TIME_TO_COMPLETE = "dd.time span.value"
 REGISTRATION_LINK = "#articles p.register > a:nth-child(1)"
 SIGN_IN_LINK = "#articles p.register > a:nth-child(2)"
 IS_THERE_ANYTHING_WRONG_WITH_THIS_PAGE_LINK = "section.error-reporting a"
+REGISTER = "#articles > div > div.scope-indicator > p > a:nth-child(1)"
+SIGN_IN = "#articles > div > div.scope-indicator > p > a:nth-child(2)"
 
-EXPECTED_ELEMENTS = {
-    "article category name": ARTICLE_CATEGORY,
-    "breadcrumbs": BREADCRUMBS,
-    "article category introduction": ARTICLE_CATEGORY_INTRO,
-    "total number of articles": TOTAL_NUMBER_OF_ARTICLES,
-    "articles read counter": ARTICLES_TO_READ_COUNTER,
-    "time to complete remaining chapters": TIME_TO_COMPLETE,
-    "list of articles": LIST_OF_ARTICLES,
-    "report page link": IS_THERE_ANYTHING_WRONG_WITH_THIS_PAGE_LINK
+SECTIONS = {
+    "hero": {
+        "itself": "#content > section.hero-section.regular",
+        "heading title": ARTICLE_CATEGORY,
+    },
+    "breadcrumbs": {
+        "breadcrumbs": BREADCRUMBS,
+    },
+    "scope": {
+        "article category introduction": ARTICLE_CATEGORY_INTRO,
+        "total number of articles": TOTAL_NUMBER_OF_ARTICLES,
+        "articles read counter": ARTICLES_TO_READ_COUNTER,
+        "time to complete remaining chapters": TIME_TO_COMPLETE,
+    },
+    "list of articles": {
+        "itself": LIST_OF_ARTICLES,
+    },
+    "error reporting": {
+        "itself": "section.error-reporting",
+        "report page link": IS_THERE_ANYTHING_WRONG_WITH_THIS_PAGE_LINK
+    },
+    "save progress": {
+        "register link": REGISTER,
+        "sign-in link": SIGN_IN
+    }
 }
 
 
 def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
-    for element_name, element_selector in EXPECTED_ELEMENTS.items():
-        element = find_element(driver, by_css=element_selector)
-        with assertion_msg(
-                "It looks like '%s' element is not visible on %s",
-                element_name, NAME):
-            assert element.is_displayed()
-    logging.debug("All expected elements are visible on '%s' page", NAME)
+    import copy
+    all_except_save_progress = copy.copy(SECTIONS)
+    all_except_save_progress.pop("save progress")
+    check_for_expected_sections_elements(driver, all_except_save_progress)
+
+
+def should_see_section(driver: webdriver, name: str):
+    check_for_section(driver, all_sections=SECTIONS, sought_section=name)
+
+
+def should_not_see_section(driver: webdriver, name: str):
+    section = SECTIONS[name.lower()]
+    for key, selector in section.items():
+        check_if_element_is_not_visible(
+            driver, by_css=selector, element_name=key)
 
 
 def go_to_registration(driver: webdriver):
