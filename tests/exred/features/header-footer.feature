@@ -270,3 +270,22 @@ Feature: Header-Footer
       | group            |
       | Export Readiness |
       | Guidance         |
+
+
+  @ED-3289
+  @<group>
+  @articles
+  @your-export-journey-link
+  @fake-sso-email-verification
+  Scenario Outline: Any user who signed in should not be told to Register or Sign-in whilst being on the Article List page
+    Given "Robert" is a registered and verified user
+    And "Robert" is signed in
+
+    When "Robert" goes to randomly selected "<group>" Article category
+
+    Then "Robert" should not see "Save Progress" section on "Article List" page
+
+    Examples: article groups
+      | group            |
+      | Export Readiness |
+      | Guidance         |
