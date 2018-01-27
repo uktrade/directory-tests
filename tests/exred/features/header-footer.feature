@@ -179,15 +179,39 @@ Feature: Header-Footer
     Examples: header needs to be updated
       | specific                     |
       | Find a Buyer                 |
+
+
+  @ED-3284
   @your-export-journey-link
-  Scenario: Any user who hasn’t signed in should be asked to register or sign in, in the Guidance section of the custom page.
-    Given "Robert" is not a registered user
-    When "Robert" visits the "Custom" page
-    Then "Robert" should see registration text in the "Guidance" section
+  @<specific>
+  Scenario Outline: Any user who has completed triage (without creating Personalised Journey page) should be redirected to "Create your export journey" page when using related header link
+    Given "Robert" answered triage questions
+    And "Robert" is on the "Triage - summary" page
+    And "Robert" goes to the "<specific>" page
 
+    When "Robert" decides to use "Your export journey" link in "header menu"
 
-  @wip
-  @ED-2737
+    Then "Robert" should be on the "Create your export journey" page
+
+    Examples:
+      | specific                     |
+      | Home                         |
+      | Interim Export Opportunities |
+      | Export Opportunities         |
+
+    @bug
+    @ED-3282
+    @fixme
+    Examples: header needs to be updated
+      | specific                     |
+      | Selling Online Overseas      |
+
+    @bug
+    @ED-3242
+    @fixme
+    Examples: header needs to be updated
+      | specific                     |
+      | Find a Buyer                 |
   @your-export-journey-link
   Scenario: Any user who signed in should not be asked to register or sign in in the Guidance section of the custom page.
     Given "Robert" is not a registered user
