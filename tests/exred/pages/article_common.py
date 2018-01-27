@@ -7,6 +7,10 @@ from urllib import parse as urlparse
 from selenium import webdriver
 from selenium.webdriver import ActionChains
 
+from pages.common_actions import (
+    check_for_expected_sections_elements,
+    check_for_section
+)
 from registry.articles import get_articles
 from utils import (
     assertion_msg,
@@ -43,47 +47,67 @@ SIGN_IN_LINK = "#content div.article-container p.register > a:nth-child(2)"
 TIME_TO_COMPLETE = "dd.time span.value"
 TOTAL_NUMBER_OF_ARTICLES = "dd.position > span.to"
 USEFUL_BUTTON = "#js-feedback-positive"
-
-SCOPE_ELEMENTS = {
-    "total number of articles": TOTAL_NUMBER_OF_ARTICLES,
-    "articles read counter": ARTICLES_TO_READ_COUNTER,
-    "time to complete remaining chapters": TIME_TO_COMPLETE,
-    "share menu": SHARE_MENU,
-    "article name": ARTICLE_NAME
-}
-
-EXPECTED_ELEMENTS = {
-    "breadcrumbs": BREADCRUMBS,
-    "share menu": SHARE_MENU,
-    "total number of articles": TOTAL_NUMBER_OF_ARTICLES,
-    "articles read counter": ARTICLES_TO_READ_COUNTER,
-    "time to complete remaining chapters": TIME_TO_COMPLETE,
-    "article name": ARTICLE_NAME,
-    "article text": ARTICLE_TEXT,
-    "report page link": IS_THERE_ANYTHING_WRONG_WITH_THIS_PAGE_LINK
-}
-
 FACEBOOK_BUTTON = "#share-facebook"
 LINKEDIN_BUTTON = "#share-linkedin"
 TWITTER_BUTTON = "#share-twitter"
 EMAIL_BUTTON = "#share-email"
+REGISTER = "div.article-container p.register a:nth-child(1)"
+SIGN_IN = "div.article-container p.register a:nth-child(2)"
+
 SHARE_BUTTONS = {
+    "itself": SHARE_MENU,
     "facebook": FACEBOOK_BUTTON,
     "twitter": TWITTER_BUTTON,
     "linkedin": LINKEDIN_BUTTON,
     "email": EMAIL_BUTTON,
 }
 
+SECTIONS = {
+    "share buttons": SHARE_BUTTONS,
+    "save progress": {
+        "register link": REGISTER,
+        "sign-in link": SIGN_IN
+    },
+    "breadcrumbs": {
+        "breadcrumbs": BREADCRUMBS,
+    },
+    "scope": {
+        "total number of articles": TOTAL_NUMBER_OF_ARTICLES,
+        "articles read counter": ARTICLES_TO_READ_COUNTER,
+        "time to complete remaining chapters": TIME_TO_COMPLETE,
+    },
+    "article": {
+        "article name": ARTICLE_NAME,
+        "article text": ARTICLE_TEXT,
+    },
+    "feedback": {
+        "not useful button": NOT_USEFUL_BUTTON,
+        "useful button": USEFUL_BUTTON
+    },
+    "error reporting": {
+        "itself": "section.error-reporting",
+        "report page link": IS_THERE_ANYTHING_WRONG_WITH_THIS_PAGE_LINK
+    },
+}
+
 
 def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
-    for element_name, element_selector in EXPECTED_ELEMENTS.items():
-        element = find_element(driver, by_css=element_selector)
-        with assertion_msg(
-                "It looks like '%s' element is not visible on %s",
-                element_name, NAME):
-            assert element.is_displayed()
-    logging.debug("All expected elements are visible on '%s' page", NAME)
+    import copy
+    all_except_save_progress = copy.copy(SECTIONS)
+    all_except_save_progress.pop("save progress")
+    check_for_expected_sections_elements(driver, all_except_save_progress)
+
+
+def should_see_section(driver: webdriver, name: str):
+    check_for_section(driver, SECTIONS, sought_section=name)
+
+
+def should_not_see_section(driver: webdriver, name: str):
+    section = SECTIONS[name.lower()]
+    for key, selector in section.items():
+        check_if_element_is_not_visible(
+            driver, by_css=selector, element_name=key)
 
 
 def correct_total_number_of_articles(
