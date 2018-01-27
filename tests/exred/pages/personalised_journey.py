@@ -37,6 +37,8 @@ TOP_IMPORTER = "#top_importer_name"
 TOP_IMPORTERS = "#content > section.top-markets > div > ol > li > dl"
 TRADE_VALUE = "#top_importer_global_trade_value"
 TOP_10_TRADE_VALUE = ".cell-global_trade_value"
+REGISTER = "#articles > div > div.scope-indicator > p > a:nth-child(1)"
+SIGN_IN = "#articles > div > div.scope-indicator > p > a:nth-child(2)"
 SECTIONS = {
     "hero": {
         "title": "section.hero-section h1",
@@ -112,6 +114,10 @@ SECTIONS = {
         "business planning": BUSINESS_LINK,
         "getting paid": GETTING_PAID_LINK,
         "operations and compliance": OPERATIONS_AND_COMPLIANCE_LINK,
+    },
+    "save progress": {
+        "register link": REGISTER,
+        "sign-in link": SIGN_IN
     },
     "case studies": {
         "heading": "#carousel h2",
