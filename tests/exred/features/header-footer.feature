@@ -237,4 +237,18 @@ Feature: Header-Footer
 
     Then "Robert" should be on the "Personalised Journey" page
     And "Robert" should not see "Save Progress" section on "Personalised Journey" page
+
+
+  @ED-3287
+  @<group>
+  @articles
   @your-export-journey-link
+  Scenario Outline: Any user who has not signed-in should be asked to register or sign-in whilst being on the Article List page
+    Given "Robert" is on the "<group>" Article List for randomly selected category
+
+    Then "Robert" should see "Save Progress" section on "Article List" page
+
+    Examples: article groups
+      | group            |
+      | Export Readiness |
+      | Guidance         |
