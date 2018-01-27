@@ -223,7 +223,18 @@ Feature: Header-Footer
 
     Then "Robert" should be on the "Personalised Journey" page
     And "Robert" should see "Save Progress" section on "Personalised Journey" page
+
+
+  @ED-3286
   @your-export-journey-link
+  @fake-sso-email-verification
+  Scenario: Any signed-in user who has created his/her "Personalised Journey page" should not be asked to register or sign-in, in the Guidance section on the Personalised Journey page.
+    Given "Robert" is a registered and verified user
+    And "Robert" is signed in
+    And "Robert" answered triage questions
 
+    When "Robert" decides to create his personalised journey page
 
+    Then "Robert" should be on the "Personalised Journey" page
+    And "Robert" should not see "Save Progress" section on "Personalised Journey" page
   @your-export-journey-link
