@@ -252,3 +252,21 @@ Feature: Header-Footer
       | group            |
       | Export Readiness |
       | Guidance         |
+
+
+  @ED-3288
+  @<group>
+  @articles
+  @your-export-journey-link
+  Scenario Outline: Any user who has not signed-in should be asked to register or sign-in whilst being on the the Article page
+    Given "Robert" is on the "<group>" Article List for randomly selected category
+    And "Robert" shows all of the articles on the page whenever possible
+
+    When "Robert" opens any article on the list
+
+    Then "Robert" should see "Save Progress" section on "Article" page
+
+    Examples: article groups
+      | group            |
+      | Export Readiness |
+      | Guidance         |
