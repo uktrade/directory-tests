@@ -212,9 +212,17 @@ Feature: Header-Footer
     Examples: header needs to be updated
       | specific                     |
       | Find a Buyer                 |
+
+
+  @ED-3285
   @your-export-journey-link
+  Scenario: Any user who has created his/her "Personalised Journey page" and hasn't signed-in should be asked to register or sign-in, in the Guidance section on the Personalised Journey page.
+    Given "Robert" answered triage questions
 
+    When "Robert" decides to create his personalised journey page
 
+    Then "Robert" should be on the "Personalised Journey" page
+    And "Robert" should see "Save Progress" section on "Personalised Journey" page
   @your-export-journey-link
 
 
