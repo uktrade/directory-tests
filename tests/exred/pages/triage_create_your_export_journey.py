@@ -16,7 +16,7 @@ from settings import EXRED_UI_URL
 from utils import check_if_element_is_not_visible, take_screenshot
 
 NAME = "Create your export journey"
-URL = urljoin(EXRED_UI_URL, "custom/")
+URL = urljoin(EXRED_UI_URL, "triage/")
 PAGE_TITLE = "Your export journey - great.gov.uk"
 
 START_NOW = "#start-now-container > a"
