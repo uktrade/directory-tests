@@ -132,20 +132,6 @@ def check_if_link_to_next_article_is_displayed(
             assert link.text.lower() == next_article.lower()
 
 
-def check_elements_are_visible(driver: webdriver, elements: list):
-    take_screenshot(driver, NAME)
-    for element in elements:
-        selector = SCOPE_ELEMENTS[element.lower()]
-        page_element = find_element(
-            driver, by_css=selector, element_name=element)
-        if "firefox" not in driver.capabilities["browserName"].lower():
-            logging.debug("Moving focus to '%s' element", element)
-            action_chains = ActionChains(driver)
-            action_chains.move_to_element(page_element)
-            action_chains.perform()
-        check_if_element_is_visible(page_element, element_name=element)
-
-
 def go_to_article(driver: webdriver, title: str):
     with selenium_action(driver, "Could not find article: %s", title):
         article = driver.find_element_by_link_text(title)
@@ -187,11 +173,6 @@ def should_not_see_link_to_next_article(driver: webdriver):
     check_if_element_is_not_visible(
         driver, by_css=NEXT_ARTICLE_LINK,
         element_name="Link to the next article")
-
-
-def should_not_see_personas_end_page(driver: webdriver):
-    """Check if Actor is stil on an Article page."""
-    check_elements_are_visible(driver, ["article name"])
 
 
 def go_back_to_article_list(driver: webdriver):

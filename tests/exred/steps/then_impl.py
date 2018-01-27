@@ -211,7 +211,7 @@ def articles_should_not_see_link_to_next_article(
 
 def articles_should_not_see_personas_end_page(
         context: Context, actor_alias: str):
-    article_common.should_not_see_personas_end_page(context.driver)
+    article_common.should_be_here(context.driver)
 
 
 def articles_should_see_link_to_first_article_from_next_category(
