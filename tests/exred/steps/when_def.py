@@ -261,6 +261,11 @@ def when_actor_is_on_article_list(context, actor_alias, group, location):
     articles_open_group(context, actor_alias, group, location=location)
 
 
+@when('"{actor_alias}" goes to randomly selected "{group}" Article category')
+def when_actor_goes_to_random_article_group(context, actor_alias, group):
+    articles_open_group(context, actor_alias, group)
+
+
 @when('"{actor_alias}" decides to share the article via "{social_media}"')
 def when_actor_shares_article(context, actor_alias, social_media):
     articles_share_on_social_media(context, actor_alias, social_media)
