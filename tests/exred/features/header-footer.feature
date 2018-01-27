@@ -213,25 +213,9 @@ Feature: Header-Footer
       | specific                     |
       | Find a Buyer                 |
   @your-export-journey-link
-  Scenario: Any user who signed in should not be asked to register or sign in in the Guidance section of the custom page.
-    Given "Robert" is not a registered user
-    When "Robert" visits the "Custom" page
-    Then "Robert" should not see registration text in the "Guidance" section
 
 
-  @wip
-  @ED-2737
   @your-export-journey-link
-  Scenario: Any user who hasn’t signed in should be asked to register in the article pages
-    Given "Robert" is not a registered user
-    When "Robert" visits any "Article" page
-    Then "Robert" should see registration text
 
 
-  @wip
-  @ED-2737
   @your-export-journey-link
-  Scenario: Any user who signed in should not be told to register in article pages
-    Given "Robert" is a registered user
-    When "Robert" visits any "Article" page
-    Then "Robert" should not see registration text
