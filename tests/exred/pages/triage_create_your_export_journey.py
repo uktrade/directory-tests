@@ -27,7 +27,7 @@ REPORT_THIS_PAGE = "#error-reporting-section-contact-us"
 SECTIONS = {
     "description": {
         "title": "#start-now-container > h1",
-        "description": "#start-now-container > p:nth-child(3)",
+        "description": "#start-now-container > p",
         "list of benefits": "#start-now-container > ul",
     },
     "start now": {
