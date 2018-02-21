@@ -32,7 +32,6 @@ nodeenv==1.2.0
 parse-type==0.4.2
 parse==1.8.2              # via parse-type
 parsel==1.4.0             # via scrapy
-psycopg2==2.7.3.1
 pyasn1-modules==0.2.1     # via service-identity
 pyasn1==0.4.2             # via pyasn1-modules, service-identity
 pycodestyle==2.3.1        # via flake8
