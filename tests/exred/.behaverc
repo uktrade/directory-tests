@@ -8,4 +8,3 @@ junit_directory=./reports/
 verbose=True
 log_capture=False
 logging_level=DEBUG
-#logging_format = LOG.%(levelname)-8s  %(name)-10s: %(message)s
