@@ -39,8 +39,9 @@ from tests.functional.utils.context_utils import (
     Message
 )
 from tests.functional.utils.db_utils import (
-    delete_supplier_data,
-    get_company_email
+    get_company_email,
+    delete_supplier_data_from_sso,
+    delete_supplier_data_from_dir
 )
 from tests.functional.utils.request import Method, make_request
 from tests.settings import (
@@ -1013,9 +1014,9 @@ def update_companies():
                     registered_counter += 1
                     red("Company is already registered with FAB")
                     blue("Will remove company data from DIR & SSO DBs")
-                    email = get_company_email(company.number)
-                    delete_supplier_data("DIRECTORY", email)
-                    delete_supplier_data("SSO", email)
+                    delete_supplier_data_from_dir(company.number)
+                    email_address = get_company_email(company.number)
+                    delete_supplier_data_from_sso(email_address)
                     blue("Successfully deleted company data from DIR & SSO DBs")
                     is_registered = False
             else:

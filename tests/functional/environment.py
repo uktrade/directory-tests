@@ -10,8 +10,8 @@ from tests.functional.utils.context_utils import (
     patch_context
 )
 from tests.functional.utils.db_utils import (
-    delete_expired_django_sessions,
-    delete_supplier_data
+    delete_supplier_data_from_sso,
+    delete_supplier_data_from_dir
 )
 from tests.functional.utils.generic import (
     blue,
@@ -78,17 +78,20 @@ def before_scenario(context, scenario):
 
 
 def after_scenario(context, scenario):
-    logging.debug("Deleting supplier data from FAB & SSO DBs")
+    logging.debug("Deleting supplier data from Directory & SSO DBs")
     actors = context.scenario_data.actors
+    companies = context.scenario_data.companies
     for actor in actors.values():
         if actor.session:
             actor.session.close()
             logging.debug("Closed Requests session for %s", actor.alias)
         if actor.type == "supplier":
-            delete_supplier_data("DIRECTORY", actor.email)
-            delete_supplier_data("SSO", actor.email)
+            delete_supplier_data_from_sso(actor.email)
             if scenario.status == "failed":
-                red("Deleted data from DIR/SSO DBs for user: %s" % actor.email)
+                red("Deleted %s supplier data from SSO DB" % actor.email)
+    for company in companies.values():
+        logging.debug(company)
+        delete_supplier_data_from_dir(company.number)
     # clear the scenario data after every scenario
     context.scenario_data = None
     logging.debug('Finished scenario: %s', scenario.name)
@@ -98,7 +101,3 @@ def before_all(context):
     context.config.setup_logging(configfile=".behave_logging")
     # this will add some handy functions to the `context` object
     patch_context(context)
-
-
-def after_all(context):
-    delete_expired_django_sessions()
