@@ -6,4 +6,5 @@
 junit=True
 junit_directory=./tests/functional/reports/
 verbose=True
-logging_level=INFO
+log_capture=False
+logging_level=DEBUG
