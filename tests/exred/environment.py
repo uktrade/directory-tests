@@ -10,7 +10,7 @@ from retrying import retry
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 
-from pages.sso_common import delete_supplier_data
+from pages.sso_common import delete_supplier_data_from_sso
 from settings import AUTO_RETRY, CONFIG, CONFIG_NAME, RESTART_BROWSER, TASK_ID
 from utils import (
     clear_driver_cookies,
@@ -155,7 +155,7 @@ def after_scenario(context: Context, scenario: Scenario):
     actors = context.scenario_data.actors
     for actor in actors.values():
         if actor.registered:
-            delete_supplier_data("SSO", actor.email)
+            delete_supplier_data_from_sso(actor.email)
     if RESTART_BROWSER == "scenario":
         context.driver.quit()
     if RESTART_BROWSER == "feature":
