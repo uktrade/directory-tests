@@ -28,7 +28,7 @@ def get_company_email(number: str) -> str:
     """
     response = DIRECTORY_CLIENT.get_company_by_ch_id(number)
     assert response.status_code == 200, (
-        "Expected 200 but got %d with content".format(
+        "Expected 200 but got {} with content: {}".format(
             response.status_code, response.content)
     )
     email = response.json()['company_email']
@@ -43,7 +43,7 @@ def get_published_companies() -> list:
     """
     response = DIRECTORY_CLIENT.get_published_companies()
     assert response.status_code == 200, (
-        "Expected 200 but got %d with content".format(
+        "Expected 200 but got {} with content: {}".format(
             response.status_code, response.content)
     )
     return response.json()
@@ -58,7 +58,7 @@ def get_published_companies_with_n_sectors(number_of_sectors: int) -> list:
     response = DIRECTORY_CLIENT.get_published_companies(
         minimal_number_of_sectors=number_of_sectors)
     assert response.status_code == 200, (
-        "Expected 200 but got %d with content".format(
+        "Expected 200 but got {} with content: {}".format(
             response.status_code, response.content)
     )
     return response.json()
@@ -72,7 +72,7 @@ def get_verification_code(company_number):
     """
     response = DIRECTORY_CLIENT.get_company_by_ch_id(company_number)
     assert response.status_code == 200, (
-        "Expected 200 but got %d with content".format(
+        "Expected 200 but got {} with content: {}".format(
             response.status_code, response.content)
     )
     verification_code = response.json()['letter_verification_code']
@@ -87,7 +87,7 @@ def is_verification_letter_sent(company_number: str) -> bool:
     """
     response = DIRECTORY_CLIENT.get_company_by_ch_id(company_number)
     assert response.status_code == 200, (
-        "Expected 200 but got %d with content".format(
+        "Expected 200 but got {} with content: {}".format(
             response.status_code, response.content)
     )
     result = response.json()['is_verification_letter_sent']
