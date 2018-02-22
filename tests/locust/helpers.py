@@ -21,7 +21,7 @@ class AuthenticatedClient(HttpSession):
         try:
             request = requests.Request(method=method, url=url, **kwargs)
             signed_request = self.sign_request(
-                api_key=settings.API_CLIENT_KEY,
+                api_key=settings.DIRECTORY_API_CLIENT_KEY,
                 prepared_request=request.prepare(),
             )
             return requests.Session().send(signed_request)

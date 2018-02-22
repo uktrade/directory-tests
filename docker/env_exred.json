@@ -3,10 +3,10 @@
   "file_path": "./docker/.env",
   "env_vars": {
     "required": [
-      "API_CLIENT_KEY",
       "BROWSERSTACK_PASS",
       "BROWSERSTACK_SERVER",
       "BROWSERSTACK_USER",
+      "DIRECTORY_API_CLIENT_KEY",
       "DIRECTORY_API_URL",
       "DIRECTORY_UI_BUYER_URL",
       "DIRECTORY_UI_PROFILE_URL",

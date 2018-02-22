@@ -9,7 +9,7 @@ AUTO_RETRY = (True
               else False)
 
 DIRECTORY_API_URL = os.environ["DIRECTORY_API_URL"]
-DIRECTORY_API_CLIENT_KEY = os.environ["API_CLIENT_KEY"]
+DIRECTORY_API_CLIENT_KEY = os.environ["DIRECTORY_API_CLIENT_KEY"]
 DIRECTORY_API_HEALTH_CHECK_TOKEN = os.environ["DIRECTORY_API_HEALTH_CHECK_TOKEN"]
 DIRECTORY_BUYER_API_URL = os.environ["DIRECTORY_BUYER_API_URL"]
 DIRECTORY_SSO_URL = os.environ['DIRECTORY_SSO_URL']
@@ -24,7 +24,6 @@ LOCUST_MIN_WAIT = int(os.getenv("LOCUST_MIN_WAIT", 500))
 
 # run tests for 2.5min by default
 LOCUST_TIMEOUT = int(os.getenv("LOCUST_TIMEOUT", 150))
-API_CLIENT_KEY = os.getenv("API_CLIENT_KEY")
 SSO_USER_ID = int(os.getenv("SSO_USER_ID", 0))
 
 # These DB details are required to do post-test clean-up in Directory DB

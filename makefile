@@ -78,7 +78,7 @@ PYTEST_ARGS :=
 	--driver-path /usr/bin/phantomjs $(pytest_args)
 
 SET_PYTEST_ENV_VARS := \
-	export API_CLIENT_KEY=debug; \
+	export DIRECTORY_API_CLIENT_KEY=debug; \
 	export DIRECTORY_API_URL=https://directory-api-dev.herokuapp.com; \
 	export DIRECTORY_BUYER_API_URL=https://dev.buyer.directory.uktrade.io; \
 	export DIRECTORY_SSO_URL=https://www.dev.sso.uktrade.io; \
