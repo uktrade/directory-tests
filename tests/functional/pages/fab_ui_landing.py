@@ -10,9 +10,9 @@ from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("ui-buyer:landing")
 EXPECTED_STRINGS = [
-    "Find a Buyer - GREAT.gov.uk", "Get promoted internationally",
+    "Find a buyer - great.gov.uk", "Get promoted internationally",
     "with a great.gov.uk trade profile",
-    "Enter your Companies House number"
+    "Enter your company name"
 ]
 
 
