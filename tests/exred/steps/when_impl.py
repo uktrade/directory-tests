@@ -48,7 +48,7 @@ from utils import (
     unauthenticated_actor,
     update_actor
 )
-from utils.mail_gun import get_verification_link
+from utils.gov_notify import get_verification_link
 
 
 def retry_if_webdriver_error(exception):
@@ -969,7 +969,7 @@ def registration_should_get_verification_email(
     """
     logging.debug("Searching for an email verification message...")
     actor = get_actor(context, actor_alias)
-    link = get_verification_link(context, actor.email)
+    link = get_verification_link(actor.email)
     update_actor(context, actor_alias, email_confirmation_link=link)
 
 
