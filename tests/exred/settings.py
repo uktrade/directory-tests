@@ -26,6 +26,7 @@ DIRECTORY_UI_BUYER_URL = os.environ["DIRECTORY_UI_BUYER_URL"]
 DIRECTORY_UI_SUPPLIER_URL = os.environ["DIRECTORY_UI_SUPPLIER_URL"]
 DIRECTORY_UI_SSO_URL = os.environ["DIRECTORY_UI_SSO_URL"]
 DIRECTORY_UI_PROFILE_URL = os.environ["DIRECTORY_UI_PROFILE_URL"]
+GOV_NOTIFY_API_KEY = os.environ["GOV_NOTIFY_API_KEY"]
 SSO_PROXY_API_CLIENT_BASE_URL = os.environ["SSO_PROXY_API_CLIENT_BASE_URL"]
 SSO_PROXY_SIGNATURE_SECRET = os.environ["SSO_PROXY_SIGNATURE_SECRET"]
 SELLING_ONLINE_OVERSEAS_UI_URL = os.environ["SELLING_ONLINE_OVERSEAS_UI_URL"]
@@ -46,13 +47,6 @@ AUTO_RETRY = (True
               if __auto_retry
               and __auto_retry.lower() in ["true", "1", "yes"]
               else False)
-
-# Mailgun details required to get verification emails
-MAILGUN_SSO_DOMAIN = os.environ["MAILGUN_SSO_DOMAIN"]
-MAILGUN_SSO_EVENTS_URL = (
-        "https://api.mailgun.net/v3/%s/events" % MAILGUN_SSO_DOMAIN)
-MAILGUN_SSO_API_USER = "api"
-MAILGUN_SSO_SECRET_API_KEY = os.environ["MAILGUN_SSO_SECRET_API_KEY"]
 
 # BrowserStack variables
 BROWSERSTACK_SERVER = os.environ.get(
