@@ -53,13 +53,11 @@ MAILGUN_DIRECTORY_EVENTS_URL = "https://api.mailgun.net/v3/%s/events" % MAILGUN_
 MAILGUN_DIRECTORY_API_USER = "api"
 MAILGUN_DIRECTORY_SECRET_API_KEY = os.environ["MAILGUN_DIRECTORY_SECRET_API_KEY"]
 
-# Static data used across the project
-EMAIL_VERIFICATION_MSG_SUBJECT = ("Your great.gov.uk account: Please Confirm "
-                                  "Your E-mail Address")
+# Static data used across the projects
+EMAIL_VERIFICATION_MSG_SUBJECT = "Confirm your email address"
 FAS_MESSAGE_FROM_BUYER_SUBJECT = ("Someone is interested in your Find a Buyer "
                                   "profile")
-SSO_PASSWORD_RESET_MSG_SUBJECT = ("Your great.gov.uk account: Password Reset "
-                                  "E-mail")
+SSO_PASSWORD_RESET_MSG_SUBJECT = "Reset your great.gov.uk password"
 NO_OF_EMPLOYEES = ["1-10", "11-50", "51-200", "201-500", "501-1000",
                    "1001-10000", "10001+"]
 SECTORS = [
