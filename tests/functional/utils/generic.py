@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Various utils used across the project."""
+from enum import Enum
 
-import email
 import hashlib
 import json
 import logging
@@ -10,11 +10,10 @@ import random
 import re
 import sys
 import traceback
-from collections import namedtuple
 from contextlib import contextmanager
-from datetime import datetime, timedelta
-from enum import Enum
 from pprint import pprint
+
+from collections import namedtuple
 from random import choice
 from string import ascii_uppercase
 from typing import List
@@ -53,7 +52,6 @@ from tests.settings import (
     MAILGUN_SSO_SECRET_API_KEY,
     RARE_WORDS,
     SECTORS,
-    SSO_PASSWORD_RESET_MSG_SUBJECT,
     TEST_IMAGES_DIR,
     JPEGs,
     JPGs,
@@ -177,6 +175,72 @@ class MailGunService(Enum):
     @property
     def password(self):
         return self.value.password
+
+
+@retry(wait_fixed=15000, stop_max_attempt_number=9)
+def find_mail_gun_events(
+        context: Context, service: MailGunService, *, sender: str = None,
+        recipient: str = None, to: str = None, subject: str = None,
+        limit: int = None, event: MailGunEvent = None, begin: str = None,
+        end: str = None, ascending: str = None) -> Response:
+    """
+
+    :param context: behave `context` object
+    :param service: an object with MailGun service details
+    :param sender: (optional) email address of the sender
+    :param recipient: (optional) email address of the recipient
+    :param to: (optional) email address of the recipient (from the MIME header)
+    :param subject: (optional) subject of the message
+    :param limit: (optional) Number of entries to return. (300 max)
+    :param event: (optional) An event type
+    :param begin: (optional)
+    :param end: (optional)
+    :param ascending: (optional) yes/no
+    :return: a response object
+    """
+    params = {}
+
+    if sender:
+        params.update({"from": sender})
+    if recipient:
+        params.update({"recipient": recipient})
+    if to:
+        params.update({"to": to})
+    if subject:
+        params.update({"subject": subject})
+    if limit:
+        params.update({"limit": limit})
+    if event:
+        params.update({"event": str(event)})
+    if begin:
+        params.update({"begin": begin})
+    if end:
+        params.update({"end": end})
+    if ascending:
+        params.update({"ascending": ascending})
+
+    response = make_request(
+        Method.GET, service.url, auth=(service.user, service.password),
+        params=params)
+    context.response = response
+    with assertion_msg(
+            "Expected 200 OK from MailGun when searching for an event %s",
+            response.status_code):
+        assert response.status_code == 200
+    number_of_events = len(response.json()["items"])
+    if limit:
+        with assertion_msg(
+                "Expected (maximum) %d events but got %d instead.", limit,
+                number_of_events):
+            assert number_of_events <= limit
+    with assertion_msg(
+            "Expected to find at least 1 MailGun event, got 0 instead. User "
+            "parameters: %s", params):
+        assert number_of_events > 0
+    logging.debug(
+        "Found {} event(s) that matched following criteria: {}"
+            .format(number_of_events, params))
+    return response
 
 
 def print_response(response: Response, *, trim: bool = True):
@@ -384,63 +448,6 @@ def extract_form_action(response: Response) -> str:
     return action
 
 
-def extract_plain_text_payload(msg):
-    """Extract plain text payload (7bit) from email message.
-
-    :param msg: an email message
-    :type msg: email.mime.text.MIMEText
-    :return: a plain text message (no HTML)
-    :rtype: str
-    """
-    res = None
-    if msg.is_multipart():
-        for part in msg.get_payload():
-            if part.get_content_type() == "text/plain":
-                res = part.get_payload()
-    else:
-        seven_bit = "Content-Transfer-Encoding: 7bit"
-        payload = msg.get_payload()
-        with assertion_msg("Could not find plain text msg in email payload"):
-            assert seven_bit in payload
-        start_7bit = payload.find(seven_bit)
-        start = start_7bit + len(seven_bit)
-        end = payload.find("--===============", start)
-        res = payload[start:end]
-    return res
-
-
-def extract_email_confirmation_link(payload):
-    """Find email confirmation link inside the plain text email payload.
-
-    :param payload: plain text email message payload
-    :type  payload: str
-    :return: email confirmation link
-    :rtype:  str
-    """
-    start = payload.find("http")
-    end = payload.find("\n", start) - 1  # `- 1` to skip the newline char
-    activation_link = payload[start:end]
-    logging.debug("Found email confirmation link: %s", activation_link)
-    return activation_link
-
-
-def extract_password_reset_link(payload: str) -> str:
-    """Find password reset link inside the plain text email payload.
-
-    :param payload: plain text email message payload
-    :return: password reset link
-    """
-    start = payload.find("http")
-    end = payload.find("\n", start) - 1  # `- 1` to skip the newline char
-    password_reset_link = payload[start:end]
-    with assertion_msg(
-            "Extracted link is not a correct password reset link: %s",
-            password_reset_link):
-        assert "accounts/password/reset/key/" in password_reset_link
-    logging.debug("Found password reset link: %s", password_reset_link)
-    return password_reset_link
-
-
 def get_absolute_path_of_file(filename):
     """Returns absolute path to a file stored in ./tests/functional/files dir.
 
@@ -520,54 +527,6 @@ def check_hash_of_remote_file(expected_hash, file_url):
         assert expected_hash == file_hash
 
 
-@retry(wait_fixed=10000, stop_max_attempt_number=9)
-def mailgun_get_message(context: Context, url: str) -> dict:
-    """Get message detail by its URL.
-
-    :param context: behave `context` object
-    :param url: unique mailgun message URL
-    :return: a dictionary with message details and message body
-    """
-    api_key = MAILGUN_SSO_SECRET_API_KEY
-    # this will help us to get the raw MIME
-    headers = {"Accept": "message/rfc2822"}
-    response = make_request(
-        Method.GET, url, headers=headers, auth=("api", api_key))
-    context.response = response
-
-    with assertion_msg(
-            "Expected 200 from MailGun when getting message details but got %s",
-            response.status_code):
-        assert response.status_code == 200
-    return response.json()
-
-
-def mailgun_get_message_url(
-        context: Context, recipient: str, *, subject: str = None) -> str:
-    """Will try to find the message URL among 100 emails sent in last 1 hour.
-
-    NOTE:
-    More on MailGun's Event Polling:
-    https://documentation.mailgun.com/en/latest/api-events.html#event-polling
-
-    :param context: behave `context` object
-    :param recipient: email address of the message recipient
-    :return: mailgun message URL
-    """
-    message_limit = 1
-    pattern = '%a, %d %b %Y %H:%M:%S GMT'
-    begin = (datetime.utcnow() - timedelta(minutes=60)).strftime(pattern)
-
-    response = find_mailgun_events(
-        context, MailGunService.SSO, limit=message_limit, recipient=recipient,
-        event=MailGunEvent.ACCEPTED, begin=begin, ascending="yes",
-        subject=subject
-    )
-    context.response = response
-    logging.debug("Found event with recipient: {}".format(recipient))
-    return response.json()["items"][0]["storage"]["url"]
-
-
 @contextmanager
 def assertion_msg(message: str, *args):
     """This will:
@@ -591,37 +550,6 @@ def assertion_msg(message: str, *args):
         raise
 
 
-def get_password_reset_link(context: Context, recipient: str) -> str:
-    """Get email verification link sent by SSO to specified recipient.
-
-    :param context: behave `context` object
-    :param recipient: email address of the message recipient
-    :return: email verification link sent by SSO
-    """
-    logging.debug("Searching for password reset email of: {}".format(recipient))
-
-    message_url = mailgun_get_message_url(
-        context, recipient, subject=SSO_PASSWORD_RESET_MSG_SUBJECT)
-    raw_response = mailgun_get_message(context, message_url)["body-mime"]
-    message = email.message_from_string(raw_response)
-    plain_text_message = message.get_payload()[0].get_payload()
-    return extract_password_reset_link(plain_text_message)
-
-
-def get_verification_link(context: Context, recipient: str) -> str:
-    """Get email verification link sent by SSO to specified recipient.
-
-    :param context: behave `context` object
-    :param recipient: email address of the message recipient
-    :return: email verification link sent by SSO
-    """
-    logging.debug("Searching for verification email of: {}".format(recipient))
-    message_url = mailgun_get_message_url(context, recipient)
-    message = mailgun_get_message(context, message_url)
-    body = message["body-mime"]
-    return extract_email_confirmation_link(body)
-
-
 def red(x: str):
     cprint(x, 'red', attrs=['bold'])
 
@@ -642,72 +570,6 @@ def surround(text: str, tag: str):
     :return: original text surrounded with tag
     """
     return "<{tag}>{text}</{tag}>".format(tag=tag, text=text)
-
-
-@retry(wait_fixed=15000, stop_max_attempt_number=9)
-def find_mailgun_events(
-        context: Context, service: MailGunService, *, sender: str = None,
-        recipient: str = None, to: str = None, subject: str = None,
-        limit: int = None, event: MailGunEvent = None, begin: str = None,
-        end: str = None, ascending: str = None) -> Response:
-    """
-
-    :param context: behave `context` object
-    :param service: an object with MailGun service details
-    :param sender: (optional) email address of the sender
-    :param recipient: (optional) email address of the recipient
-    :param to: (optional) email address of the recipient (from the MIME header)
-    :param subject: (optional) subject of the message
-    :param limit: (optional) Number of entries to return. (300 max)
-    :param event: (optional) An event type
-    :param begin: (optional)
-    :param end: (optional)
-    :param ascending: (optional) yes/no
-    :return: a response object
-    """
-    params = {}
-
-    if sender:
-        params.update({"from": sender})
-    if recipient:
-        params.update({"recipient": recipient})
-    if to:
-        params.update({"to": to})
-    if subject:
-        params.update({"subject": subject})
-    if limit:
-        params.update({"limit": limit})
-    if event:
-        params.update({"event": str(event)})
-    if begin:
-        params.update({"begin": begin})
-    if end:
-        params.update({"end": end})
-    if ascending:
-        params.update({"ascending": ascending})
-
-    response = make_request(
-        Method.GET, service.url, auth=(service.user, service.password),
-        params=params)
-    context.response = response
-    with assertion_msg(
-            "Expected 200 OK from MailGun when searching for an event %s",
-            response.status_code):
-        assert response.status_code == 200
-    number_of_events = len(response.json()["items"])
-    if limit:
-        with assertion_msg(
-                "Expected (maximum) %d events but got %d instead.", limit,
-                number_of_events):
-            assert number_of_events <= limit
-    with assertion_msg(
-            "Expected to find at least 1 MailGun event, got 0 instead. User "
-            "parameters: %s", params):
-        assert number_of_events > 0
-    logging.debug(
-        "Found {} event(s) that matched following criteria: {}"
-        .format(number_of_events, params))
-    return response
 
 
 def random_chars(size, *, chars=ascii_uppercase):
