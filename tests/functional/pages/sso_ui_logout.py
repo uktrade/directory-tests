@@ -51,7 +51,7 @@ def logout(session: Session, token: str, *, next_param: str = None) -> Response:
         "csrfmiddlewaretoken": token,
         "next": next_param or fab_landing
     }
-    query = "?next={}".format(URL, fab_landing)
+    query = "?next={}".format(fab_landing)
     headers = {"Referer": urljoin(URL, query)}
     response = make_request(
         Method.POST, URL, session=session, headers=headers, data=data)
