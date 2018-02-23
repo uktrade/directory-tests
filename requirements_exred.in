@@ -4,6 +4,7 @@
 -e git+https://git@github.com/uktrade/directory-sso-api-client.git@v2.4.0#egg=directory-sso-api-client
 -e git+https://github.com/behave/behave.git@e8c56c9e6ea4d99a6d024ab02f02902b5dcee15e#egg=behave
 nodeenv==1.2.0
+notifications-python-client==4.7.2
 paver==1.3.4
 requests==2.13.0
 retrying==1.3.3
