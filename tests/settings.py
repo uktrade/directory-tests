@@ -44,10 +44,6 @@ SSO_DB_HOST = SSO_DB_URL.hostname if SSO_DB_URL else None
 SSO_DB_PORT = SSO_DB_URL.port if SSO_DB_URL else None
 
 # Mailgun details required to get verification emails
-MAILGUN_SSO_DOMAIN = os.environ["MAILGUN_SSO_DOMAIN"]
-MAILGUN_SSO_EVENTS_URL = "https://api.mailgun.net/v3/%s/events" % MAILGUN_SSO_DOMAIN
-MAILGUN_SSO_API_USER = "api"
-MAILGUN_SSO_SECRET_API_KEY = os.environ["MAILGUN_SSO_SECRET_API_KEY"]
 MAILGUN_DIRECTORY_DOMAIN = os.environ["MAILGUN_DIRECTORY_DOMAIN"]
 MAILGUN_DIRECTORY_EVENTS_URL = "https://api.mailgun.net/v3/%s/events" % MAILGUN_DIRECTORY_DOMAIN
 MAILGUN_DIRECTORY_API_USER = "api"

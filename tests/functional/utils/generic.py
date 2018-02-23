@@ -47,9 +47,6 @@ from tests.settings import (
     MAILGUN_DIRECTORY_API_USER,
     MAILGUN_DIRECTORY_EVENTS_URL,
     MAILGUN_DIRECTORY_SECRET_API_KEY,
-    MAILGUN_SSO_API_USER,
-    MAILGUN_SSO_EVENTS_URL,
-    MAILGUN_SSO_SECRET_API_KEY,
     RARE_WORDS,
     SECTORS,
     TEST_IMAGES_DIR,
@@ -151,9 +148,6 @@ class MailGunEvent(Enum):
 class MailGunService(Enum):
     """Lists all MailGun's events states"""
     ServiceDetails = namedtuple('ServiceDetails', ['url', 'user', 'password'])
-    SSO = ServiceDetails(
-        url=MAILGUN_SSO_EVENTS_URL, user=MAILGUN_SSO_API_USER,
-        password=MAILGUN_SSO_SECRET_API_KEY)
     DIRECTORY = ServiceDetails(
         url=MAILGUN_DIRECTORY_EVENTS_URL, user=MAILGUN_DIRECTORY_API_USER,
         password=MAILGUN_DIRECTORY_SECRET_API_KEY)
