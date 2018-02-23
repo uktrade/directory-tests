@@ -1195,15 +1195,15 @@ def detect_page_language(
         content = requests.get(url).content.decode("utf-8")
 
     soup = BeautifulSoup(content, "lxml")
-    # strip out all of JavaScript & CSS that might not be filtered out initially
+    # strip out all of JS & CSS that might not be filtered out initially
     for element in soup.findAll(['script', 'style']):
         element.extract()
 
     if main:
         # ignore page header & footer
         logging.debug(
-            "Will analyse only the main content of the page and ignore the page"
-            " header & footer")
+            "Will analyse only the main content of the page and ignore the "
+            "page header & footer")
         for element in soup.findAll(['header', 'footer']):
             element.extract()
 
