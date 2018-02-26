@@ -37,7 +37,7 @@ from tests.functional.utils.context_utils import (
     Feedback,
     Message
 )
-from tests.functional.utils.db_utils import (
+from tests.functional.utils.test_api_utils import (
     get_company_email,
     delete_supplier_data_from_sso,
     delete_supplier_data_from_dir

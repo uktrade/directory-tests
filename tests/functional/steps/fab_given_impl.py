@@ -44,7 +44,7 @@ from tests.functional.steps.fab_when_impl import (
     sso_sign_in
 )
 from tests.functional.utils.context_utils import Actor, Company
-from tests.functional.utils.db_utils import (
+from tests.functional.utils.test_api_utils import (
     flag_sso_account_as_verified,
     get_published_companies,
     get_published_companies_with_n_sectors,

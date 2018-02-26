@@ -47,7 +47,7 @@ from tests.functional.pages import (
 )
 from tests.functional.registry import get_fabs_page_object, get_fabs_page_url
 from tests.functional.utils.context_utils import Company
-from tests.functional.utils.db_utils import get_verification_code
+from tests.functional.utils.test_api_utils import get_verification_code
 from tests.functional.utils.generic import (
     assertion_msg,
     escape_html,
