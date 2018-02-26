@@ -81,6 +81,7 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements_exred.txt
+            python ./docker/env_writer.py ./docker/env_exred.json
             nodeenv -p
             npm install -g junit-merge@1.2.3
       - run:
@@ -159,7 +160,6 @@ jobs:
           name: Run functional ExRed tests in Chrome
           command: |
             . venv/bin/activate
-            python ./docker/env_writer.py ./docker/env_exred.json
             source ./docker/.env_with_export;
             export PATH=$PATH:$HOME/bin
             BROWSERS=Chrome VERSIONS=63.0 make exred_browserstack
@@ -192,7 +192,6 @@ jobs:
           name: Run functional ExRed tests in Firefox
           command: |
             . venv/bin/activate
-            python ./docker/env_writer.py ./docker/env_exred.json
             source ./docker/.env_with_export;
             export PATH=$PATH:$HOME/bin
             BROWSERS=Firefox VERSIONS=57.0 make exred_browserstack
