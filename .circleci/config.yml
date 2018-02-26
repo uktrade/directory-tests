@@ -8,7 +8,7 @@ jobs:
     steps:
       - checkout
       - save_cache:
-          key: cached-repo-{{ .Environment.CIRCLE_SHA1 }}
+          key: cached-repo-{{ .Revision }}
           paths:
             - ~/directory-tests
 
@@ -19,7 +19,7 @@ jobs:
     steps:
       - restore_cache:
           keys:
-            - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
+            - cached-repo-{{ .Revision }}
       - run:
           name: Create virtualenv and install dependencies
           command: |
@@ -38,7 +38,7 @@ jobs:
     steps:
       - restore_cache:
           keys:
-            - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
+            - cached-repo-{{ .Revision }}
       - run:
           name: Create virtualenv and install dependencies
           command: |
@@ -74,7 +74,7 @@ jobs:
     steps:
       - restore_cache:
           keys:
-            - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
+            - cached-repo-{{ .Revision }}
       - run:
           name: Install dependencies
           command: |
@@ -109,7 +109,7 @@ jobs:
     steps:
       - restore_cache:
           keys:
-            - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
+            - cached-repo-{{ .Revision }}
       - restore_cache:
           keys:
             - smoke-tests-dependency-cache-{{ .Revision }}
@@ -132,7 +132,7 @@ jobs:
     steps:
       - restore_cache:
           keys:
-            - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
+            - cached-repo-{{ .Revision }}
       - restore_cache:
           keys:
             - smoke-tests-dependency-cache-{{ .Revision }}
@@ -151,7 +151,7 @@ jobs:
     steps:
       - restore_cache:
           keys:
-            - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
+            - cached-repo-{{ .Revision }}
       - restore_cache:
           keys:
             - exred-tests-dependency-cache-{{ .Revision }}
@@ -184,7 +184,7 @@ jobs:
     steps:
       - restore_cache:
           keys:
-            - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
+            - cached-repo-{{ .Revision }}
       - restore_cache:
           keys:
             - exred-tests-dependency-cache-{{ .Revision }}
@@ -217,7 +217,7 @@ jobs:
     steps:
       - restore_cache:
           keys:
-            - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
+            - cached-repo-{{ .Revision }}
       - restore_cache:
           keys:
             - functional-tests-dependency-cache-{{ .Revision }}
@@ -250,7 +250,7 @@ jobs:
     steps:
       - restore_cache:
           keys:
-            - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
+            - cached-repo-{{ .Revision }}
       - restore_cache:
           keys:
             - functional-tests-dependency-cache-{{ .Revision }}
@@ -283,7 +283,7 @@ jobs:
     steps:
       - restore_cache:
           keys:
-            - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
+            - cached-repo-{{ .Revision }}
       - restore_cache:
           keys:
             - functional-tests-dependency-cache-{{ .Revision }}
@@ -316,7 +316,7 @@ jobs:
     steps:
       - restore_cache:
           keys:
-            - cached-repo-{{ .Environment.CIRCLE_SHA1 }}
+            - cached-repo-{{ .Revision }}
       - restore_cache:
           keys:
             - functional-tests-dependency-cache-{{ .Revision }}
