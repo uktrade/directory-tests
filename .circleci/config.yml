@@ -50,6 +50,7 @@ jobs:
             npm install -g junit-merge@1.2.3
       - save_cache:
           key: functional-tests-dependency-cache
+          when: always
           paths:
             - ~/bin
             - ~/directory-tests/venv
@@ -75,6 +76,7 @@ jobs:
             npm install -g junit-merge@1.2.3
       - save_cache:
           key: exred-tests-dependency-cache
+          when: always
           paths:
             - ~/bin
             - ~/directory-tests/venv
