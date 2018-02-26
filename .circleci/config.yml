@@ -49,7 +49,7 @@ jobs:
             nodeenv -p
             npm install -g junit-merge@1.2.3
       - save_cache:
-          key: functional-tests-dependency-cache
+          key: functional-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
           when: always
           paths:
             - ~/bin
@@ -75,7 +75,7 @@ jobs:
             nodeenv -p
             npm install -g junit-merge@1.2.3
       - save_cache:
-          key: exred-tests-dependency-cache
+          key: exred-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
           when: always
           paths:
             - ~/bin
@@ -135,7 +135,7 @@ jobs:
             - cached-repo-{{ .Revision }}
       - restore_cache:
           keys:
-            - exred-tests-dependency-cache
+            - exred-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
       - run:
           name: Run functional ExRed tests in Chrome
           command: |
@@ -167,7 +167,7 @@ jobs:
             - cached-repo-{{ .Revision }}
       - restore_cache:
           keys:
-            - exred-tests-dependency-cache
+            - exred-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
       - run:
           name: Run functional ExRed tests in Firefox
           command: |
@@ -199,7 +199,7 @@ jobs:
             - cached-repo-{{ .Revision }}
       - restore_cache:
           keys:
-            - functional-tests-dependency-cache
+            - functional-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
       - run:
           name: Run FAB functional tests
           command: |
@@ -232,7 +232,7 @@ jobs:
             - cached-repo-{{ .Revision }}
       - restore_cache:
           keys:
-            - functional-tests-dependency-cache
+            - functional-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
       - run:
           name: Run FAS functional tests
           command: |
@@ -265,7 +265,7 @@ jobs:
             - cached-repo-{{ .Revision }}
       - restore_cache:
           keys:
-            - functional-tests-dependency-cache
+            - functional-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
       - run:
           name: Run SSO functional tests
           command: |
@@ -298,7 +298,7 @@ jobs:
             - cached-repo-{{ .Revision }}
       - restore_cache:
           keys:
-            - functional-tests-dependency-cache
+            - functional-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
       - run:
           name: Run SUD functional tests
           command: |
