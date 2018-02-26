@@ -86,12 +86,12 @@ def after_scenario(context, scenario):
             actor.session.close()
             logging.debug("Closed Requests session for %s", actor.alias)
         if actor.type == "supplier":
-            delete_supplier_data_from_sso(actor.email)
+            delete_supplier_data_from_sso(actor.email, context=context)
             if scenario.status == "failed":
                 red("Deleted %s supplier data from SSO DB" % actor.email)
     for company in companies.values():
         logging.debug(company)
-        delete_supplier_data_from_dir(company.number)
+        delete_supplier_data_from_dir(company.number, context=context)
     # clear the scenario data after every scenario
     context.scenario_data = None
     logging.debug('Finished scenario: %s', scenario.name)

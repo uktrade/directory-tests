@@ -437,7 +437,7 @@ def prof_verify_company(context, supplier_alias):
     session = actor.session
 
     # STEP 0 - get the verification code from DB
-    verification_code = get_verification_code(company.number)
+    verification_code = get_verification_code(context, company.number)
 
     # STEP 1 - go to the "Verify your company" page
     response = fab_ui_verify_company.go_to(session)

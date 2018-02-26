@@ -2,6 +2,7 @@
 """Remove User & Accounts from FAB & SSO after test."""
 import logging
 
+from behave.runner import Context
 from directory_api_client.testapiclient import DirectoryTestAPIClient
 from directory_sso_api_client.testapiclient import DirectorySSOTestAPIClient
 
@@ -20,12 +21,7 @@ SSO_CLIENT = DirectorySSOTestAPIClient(
 
 
 def get_company_email(number: str) -> str:
-    """Get email address associated with company.
-
-    :param number: company number given by Companies House.
-    :return: email address or None if couldn't find company or user associated
-             with it
-    """
+    """Get email address associated with company."""
     response = DIRECTORY_CLIENT.get_company_by_ch_id(number)
     assert response.status_code == 200, (
         "Expected 200 but got {} with content: {}".format(
@@ -36,12 +32,13 @@ def get_company_email(number: str) -> str:
     return email
 
 
-def get_published_companies() -> list:
+def get_published_companies(context: Context) -> list:
     """Get a List of dicts with published companies.
 
     :return: a list of dictionaries with published companies
     """
     response = DIRECTORY_CLIENT.get_published_companies()
+    context.response = response
     assert response.status_code == 200, (
         "Expected 200 but got {} with content: {}".format(
             response.status_code, response.content)
@@ -49,14 +46,15 @@ def get_published_companies() -> list:
     return response.json()
 
 
-def get_published_companies_with_n_sectors(number_of_sectors: int) -> list:
+def get_published_companies_with_n_sectors(
+        context: Context, number_of_sectors: int) -> list:
     """Get a List of published companies with at least N associated sectors.
 
-    :param number_of_sectors: minimal number of sectors associated with company
     :return: a list of dictionaries with matching published companies
     """
     response = DIRECTORY_CLIENT.get_published_companies(
         minimal_number_of_sectors=number_of_sectors)
+    context.response = response
     assert response.status_code == 200, (
         "Expected 200 but got {} with content: {}".format(
             response.status_code, response.content)
@@ -64,13 +62,13 @@ def get_published_companies_with_n_sectors(number_of_sectors: int) -> list:
     return response.json()
 
 
-def get_verification_code(company_number):
+def get_verification_code(context: Context, company_number: str):
     """Will get the verification code (sent by post) for specified company.
 
-    :param company_number: company number given by Companies House
     :return: verification code sent by post
     """
     response = DIRECTORY_CLIENT.get_company_by_ch_id(company_number)
+    context.response = response
     assert response.status_code == 200, (
         "Expected 200 but got {} with content: {}".format(
             response.status_code, response.content)
@@ -79,13 +77,14 @@ def get_verification_code(company_number):
     return verification_code
 
 
-def is_verification_letter_sent(company_number: str) -> bool:
+def is_verification_letter_sent(
+        context: Context, company_number: str) -> bool:
     """Check if verification letter was sent.
 
-    :param company_number: company number
     :return: True if letter was sent and False if it wasn't
     """
     response = DIRECTORY_CLIENT.get_company_by_ch_id(company_number)
+    context.response = response
     assert response.status_code == 200, (
         "Expected 200 but got {} with content: {}".format(
             response.status_code, response.content)
@@ -94,8 +93,11 @@ def is_verification_letter_sent(company_number: str) -> bool:
     return result
 
 
-def delete_supplier_data_from_sso(email_address):
+def delete_supplier_data_from_sso(
+        email_address: str, *, context: Context = None):
     response = SSO_CLIENT.delete_user_by_email(email_address)
+    if context:
+        context.response = response
     if response.status_code == 204:
         logging.debug(
             "Successfully deleted %s user data from SSO DB", email_address)
@@ -105,8 +107,10 @@ def delete_supplier_data_from_sso(email_address):
             "SSO DB", email_address)
 
 
-def delete_supplier_data_from_dir(ch_id):
+def delete_supplier_data_from_dir(ch_id: str, *, context: Context = None):
     response = DIRECTORY_CLIENT.delete_company_by_ch_id(ch_id)
+    if context:
+        context.response = response
     if response.status_code == 204:
         logging.debug(
             "Successfully deleted supplier data for company %s from DIR DB",
@@ -117,9 +121,10 @@ def delete_supplier_data_from_dir(ch_id):
             "company %s from DIR DB", ch_id)
 
 
-def flag_sso_account_as_verified(email_address):
+def flag_sso_account_as_verified(context: Context, email_address: str):
     response = SSO_CLIENT.flag_user_email_as_verified_or_not(
         email_address, verified=True)
+    context.response = response
     if response.status_code == 204:
         logging.debug("Flagged '%s' account as verified", email_address)
     else:

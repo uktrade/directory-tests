@@ -134,7 +134,7 @@ def reg_create_verified_profile(
     reg_create_sso_account_associated_with_company(
         context, supplier_alias, company_alias)
     supplier = context.get_actor(supplier_alias)
-    flag_sso_account_as_verified(supplier.email)
+    flag_sso_account_as_verified(context, supplier.email)
     sso_sign_in(context, supplier_alias)
     finish_registration_after_flagging_as_verified(context, supplier_alias)
     bp_build_company_profile(context, supplier_alias)
@@ -155,7 +155,7 @@ def sso_create_standalone_verified_sso_account(
         context: Context, supplier_alias: str):
     sso_create_standalone_unverified_sso_account(context, supplier_alias)
     supplier = context.get_actor(supplier_alias)
-    flag_sso_account_as_verified(supplier.email)
+    flag_sso_account_as_verified(context, supplier.email)
     sso_sign_in(context, supplier_alias)
     profile_ui_landing.should_be_here(context.response)
     sso_should_be_signed_in_to_sso_account(context, supplier_alias)
@@ -206,9 +206,10 @@ def fab_find_published_company(
         context: Context, actor_alias: str, company_alias: str, *,
         min_number_sectors: int = None):
     if min_number_sectors:
-        companies = get_published_companies_with_n_sectors(min_number_sectors)
+        companies = get_published_companies_with_n_sectors(
+            context, min_number_sectors)
     else:
-        companies = get_published_companies()
+        companies = get_published_companies(context)
 
     with assertion_msg(
             "Expected to find at least 1 published company but got none!"):
@@ -248,12 +249,12 @@ def fas_get_company_slug(context, actor_alias, company_alias):
 def reg_should_get_verification_letter(context, supplier_alias):
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
-    sent = is_verification_letter_sent(company.number)
+    sent = is_verification_letter_sent(context, company.number)
 
     with assertion_msg("Verification letter wasn't sent"):
         assert sent
 
-    verification_code = get_verification_code(company.number)
+    verification_code = get_verification_code(context, company.number)
     context.set_company_details(
         company.alias, verification_code=verification_code)
 
@@ -279,6 +280,6 @@ def reg_create_verified_sso_account_associated_with_company(
     reg_create_sso_account_associated_with_company(
         context, supplier_alias, company_alias)
     supplier = context.get_actor(supplier_alias)
-    flag_sso_account_as_verified(supplier.email)
+    flag_sso_account_as_verified(context, supplier.email)
     sso_sign_in(context, supplier_alias)
     finish_registration_after_flagging_as_verified(context, supplier_alias)
