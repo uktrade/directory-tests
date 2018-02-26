@@ -2,7 +2,6 @@
 """Project Settings."""
 import os
 from datetime import datetime
-from urllib import parse as urlparse
 
 from directory_constants.constants.exred_sector_names import CODES_SECTORS_DICT
 
@@ -57,15 +56,6 @@ BROWSERSTACK_EXECUTOR_URL = ("http://{}:{}@{}/wd/hub".format(
     BROWSERSTACK_USER, BROWSERSTACK_PASS, BROWSERSTACK_SERVER))
 BROWSERSTACK_SESSIONS_URL = (
     "https://www.browserstack.com/automate/sessions/{}.json")
-
-
-# These DB details are required to do post-test clean-up in SSO DB
-SSO_DB_URL = urlparse.urlparse(os.getenv('SSO_DATABASE_URL'))
-SSO_DB_NAME = SSO_DB_URL.path[1:] if SSO_DB_URL else None
-SSO_DB_USER = SSO_DB_URL.username if SSO_DB_URL else None
-SSO_DB_PASSWORD = SSO_DB_URL.password if SSO_DB_URL else None
-SSO_DB_HOST = SSO_DB_URL.hostname if SSO_DB_URL else None
-SSO_DB_PORT = SSO_DB_URL.port if SSO_DB_URL else None
 
 
 if (CONFIG_NAME.startswith("browserstack") and

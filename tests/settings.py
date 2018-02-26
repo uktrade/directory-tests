@@ -1,6 +1,5 @@
 import os
 from glob import glob
-from urllib import parse as urlparse
 
 __auto_retry = os.environ.get("AUTO_RETRY", "true")
 AUTO_RETRY = (True
@@ -26,22 +25,6 @@ LOCUST_MIN_WAIT = int(os.getenv("LOCUST_MIN_WAIT", 500))
 # run tests for 2.5min by default
 LOCUST_TIMEOUT = int(os.getenv("LOCUST_TIMEOUT", 150))
 SSO_USER_ID = int(os.getenv("SSO_USER_ID", 0))
-
-# These DB details are required to do post-test clean-up in Directory DB
-DIR_DB_URL = urlparse.urlparse(os.getenv('DIR_DATABASE_URL'))
-DIR_DB_NAME = DIR_DB_URL.path[1:] if DIR_DB_URL else None
-DIR_DB_USER = DIR_DB_URL.username if DIR_DB_URL else None
-DIR_DB_PASSWORD = DIR_DB_URL.password if DIR_DB_URL else None
-DIR_DB_HOST = DIR_DB_URL.hostname if DIR_DB_URL else None
-DIR_DB_PORT = DIR_DB_URL.port if DIR_DB_URL else None
-
-# These DB details are required to do post-test clean-up in SSO DB
-SSO_DB_URL = urlparse.urlparse(os.getenv('SSO_DATABASE_URL'))
-SSO_DB_NAME = SSO_DB_URL.path[1:] if SSO_DB_URL else None
-SSO_DB_USER = SSO_DB_URL.username if SSO_DB_URL else None
-SSO_DB_PASSWORD = SSO_DB_URL.password if SSO_DB_URL else None
-SSO_DB_HOST = SSO_DB_URL.hostname if SSO_DB_URL else None
-SSO_DB_PORT = SSO_DB_URL.port if SSO_DB_URL else None
 
 # Mailgun details required to get verification emails
 MAILGUN_DIRECTORY_DOMAIN = os.environ["MAILGUN_DIRECTORY_DOMAIN"]
