@@ -60,7 +60,7 @@ jobs:
             export PATH=$PATH:$HOME/bin
             heroku -v
       - save_cache:
-          key: functional-tests-dependency-cache-{{ .Revision }}
+          key: functional-tests-dependency-cache-{{ checksum "~/directory-tests/docker/.env_with_export" }}
           paths:
             - ~/bin
             - ~/directory-tests/venv
@@ -95,7 +95,7 @@ jobs:
             export PATH=$PATH:$HOME/bin
             heroku -v
       - save_cache:
-          key: exred-tests-dependency-cache-{{ .Revision }}
+          key: exred-tests-dependency-cache-{{ checksum "~/directory-tests/docker/.env_with_export" }}
           paths:
             - ~/bin
             - ~/directory-tests/venv
@@ -154,7 +154,7 @@ jobs:
             - cached-repo-{{ .Revision }}
       - restore_cache:
           keys:
-            - exred-tests-dependency-cache-{{ .Revision }}
+            - exred-tests-dependency-cache-{{ checksum "~/directory-tests/docker/.env_with_export" }}
       - run:
           name: Run functional ExRed tests in Chrome
           command: |
@@ -187,7 +187,7 @@ jobs:
             - cached-repo-{{ .Revision }}
       - restore_cache:
           keys:
-            - exred-tests-dependency-cache-{{ .Revision }}
+            - exred-tests-dependency-cache-{{ checksum "~/directory-tests/docker/.env_with_export" }}
       - run:
           name: Run functional ExRed tests in Firefox
           command: |
@@ -220,7 +220,7 @@ jobs:
             - cached-repo-{{ .Revision }}
       - restore_cache:
           keys:
-            - functional-tests-dependency-cache-{{ .Revision }}
+            - functional-tests-dependency-cache-{{ checksum "~/directory-tests/docker/.env_with_export" }}
       - run:
           name: Run FAB functional tests
           command: |
@@ -253,7 +253,7 @@ jobs:
             - cached-repo-{{ .Revision }}
       - restore_cache:
           keys:
-            - functional-tests-dependency-cache-{{ .Revision }}
+            - functional-tests-dependency-cache-{{ checksum "~/directory-tests/docker/.env_with_export" }}
       - run:
           name: Run FAS functional tests
           command: |
@@ -286,7 +286,7 @@ jobs:
             - cached-repo-{{ .Revision }}
       - restore_cache:
           keys:
-            - functional-tests-dependency-cache-{{ .Revision }}
+            - functional-tests-dependency-cache-{{ checksum "~/directory-tests/docker/.env_with_export" }}
       - run:
           name: Run SSO functional tests
           command: |
@@ -319,7 +319,7 @@ jobs:
             - cached-repo-{{ .Revision }}
       - restore_cache:
           keys:
-            - functional-tests-dependency-cache-{{ .Revision }}
+            - functional-tests-dependency-cache-{{ checksum "~/directory-tests/docker/.env_with_export" }}
       - run:
           name: Run SUD functional tests
           command: |
