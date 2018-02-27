@@ -5,6 +5,7 @@ import logging
 from behave.runner import Context
 from directory_api_client.testapiclient import DirectoryTestAPIClient
 from directory_sso_api_client.testapiclient import DirectorySSOTestAPIClient
+from retrying import retry
 
 from tests.settings import (
     DIRECTORY_API_URL,
@@ -62,13 +63,20 @@ def get_published_companies_with_n_sectors(
     return response.json()
 
 
+@retry(wait_fixed=1000, stop_max_attempt_number=10)
 def get_verification_code(context: Context, company_number: str):
     """Will get the verification code (sent by post) for specified company.
 
     :return: verification code sent by post
     """
+    print("GETTING VERIFICATION CODE")
     response = DIRECTORY_CLIENT.get_company_by_ch_id(company_number)
     context.response = response
+    if response.status_code != 200:
+        print("GOT %d instead of 200", response.status_code)
+        print(response.request.headers)
+        print(response.request.data)
+        print(response.content)
     assert response.status_code == 200, (
         "Expected 200 but got {} with content: {}".format(
             response.status_code, response.content)
