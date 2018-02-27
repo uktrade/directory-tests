@@ -1135,13 +1135,13 @@ def get_published_companies_with_n_sectors(
     return response.json()
 
 
-@retry(wait_fixed=1000, stop_max_attempt_number=10)
 def get_verification_code(context: Context, company_number: str):
     """Will get the verification code (sent by post) for specified company.
 
     :return: verification code sent by post
     """
     print("GETTING VERIFICATION CODE")
+    print(DIRECTORY_API_CLIENT_KEY[-15:])
     response = DIRECTORY_CLIENT.get_company_by_ch_id(company_number)
     context.response = response
     if response.status_code != 200:
