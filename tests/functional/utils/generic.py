@@ -1140,15 +1140,8 @@ def get_verification_code(context: Context, company_number: str):
 
     :return: verification code sent by post
     """
-    print("GETTING VERIFICATION CODE")
-    print(DIRECTORY_API_CLIENT_KEY[-15:])
     response = DIRECTORY_CLIENT.get_company_by_ch_id(company_number)
     context.response = response
-    if response.status_code != 200:
-        print("GOT {} instead of 200".format(response.status_code))
-        print(response.request.url)
-        print(response.request.headers)
-        print(response.content)
     check_response(response, 200)
     verification_code = response.json()['letter_verification_code']
     return verification_code
