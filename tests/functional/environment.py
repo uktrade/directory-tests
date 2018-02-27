@@ -9,10 +9,6 @@ from tests.functional.utils.context_utils import (
     initialize_scenario_data,
     patch_context
 )
-from tests.functional.utils.test_api_utils import (
-    delete_supplier_data_from_sso,
-    delete_supplier_data_from_dir
-)
 from tests.functional.utils.generic import (
     blue,
     extract_form_errors,
@@ -20,7 +16,9 @@ from tests.functional.utils.generic import (
     extract_section_error,
     green,
     print_response,
-    red
+    red,
+    delete_supplier_data_from_sso,
+    delete_supplier_data_from_dir
 )
 from tests.functional.utils.request import REQUEST_EXCEPTIONS
 from tests.settings import AUTO_RETRY

@@ -44,14 +44,15 @@ from tests.functional.steps.fab_when_impl import (
     sso_sign_in
 )
 from tests.functional.utils.context_utils import Actor, Company
-from tests.functional.utils.test_api_utils import (
-    flag_sso_account_as_verified,
+from tests.functional.utils.generic import (
+    assertion_msg,
+    sentence,
     get_published_companies,
     get_published_companies_with_n_sectors,
     get_verification_code,
-    is_verification_letter_sent
+    is_verification_letter_sent,
+    flag_sso_account_as_verified
 )
-from tests.functional.utils.generic import assertion_msg, sentence
 
 
 def unauthenticated_supplier(supplier_alias: str) -> Actor:
