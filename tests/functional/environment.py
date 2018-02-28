@@ -78,18 +78,16 @@ def before_scenario(context, scenario):
 def after_scenario(context, scenario):
     logging.debug("Deleting supplier data from Directory & SSO DBs")
     actors = context.scenario_data.actors
-    companies = context.scenario_data.companies
     for actor in actors.values():
         if actor.session:
             actor.session.close()
             logging.debug("Closed Requests session for %s", actor.alias)
         if actor.type == "supplier":
             delete_supplier_data_from_sso(actor.email, context=context)
+            company = context.get_company(actor.company_alias)
+            delete_supplier_data_from_dir(company.number, context=context)
             if scenario.status == "failed":
-                red("Deleted %s supplier data from SSO DB" % actor.email)
-    for company in companies.values():
-        logging.debug(company)
-        delete_supplier_data_from_dir(company.number, context=context)
+                red("Deleted %s supplier data from DIR & SSO DB" % actor.email)
     # clear the scenario data after every scenario
     context.scenario_data = None
     logging.debug('Finished scenario: %s', scenario.name)
