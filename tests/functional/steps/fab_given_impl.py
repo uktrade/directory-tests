@@ -8,6 +8,7 @@ from urllib.parse import urlsplit
 
 from behave.runner import Context
 from requests import Session
+from retrying import retry
 
 from tests.functional.pages import (
     fab_ui_profile,
@@ -51,7 +52,8 @@ from tests.functional.utils.generic import (
     get_published_companies_with_n_sectors,
     get_verification_code,
     is_verification_letter_sent,
-    flag_sso_account_as_verified
+    flag_sso_account_as_verified,
+    filter_out_legacy_industries
 )
 
 
@@ -203,6 +205,7 @@ def fas_find_company_by_name(
         company_alias, fas_profile_endpoint=profile_endpoint)
 
 
+@retry(wait_fixed=3000, stop_max_attempt_number=5)
 def fab_find_published_company(
         context: Context, actor_alias: str, company_alias: str, *,
         min_number_sectors: int = None):
@@ -215,10 +218,13 @@ def fab_find_published_company(
     with assertion_msg(
             "Expected to find at least 1 published company but got none!"):
         assert len(companies) > 0
-    company_dict = random.choice(companies)
+    filtered_companies = [c for c in companies
+                          if '@directory.uktrade.io' not in c['company_email']]
+    company_dict = random.choice(filtered_companies)
+    sectors = filter_out_legacy_industries(company_dict)
     company = Company(
         alias=company_alias, title=company_dict['name'],
-        number=company_dict['number'], sector=company_dict['sectors'],
+        number=company_dict['number'], sector=sectors,
         description=company_dict['description'],
         summary=company_dict['summary'],
         no_employees=company_dict['employees'],

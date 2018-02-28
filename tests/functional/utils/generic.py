@@ -15,6 +15,7 @@ from pprint import pprint
 
 from collections import namedtuple
 from directory_api_client.testapiclient import DirectoryTestAPIClient
+from directory_constants.constants import choices
 from directory_sso_api_client.testapiclient import DirectorySSOTestAPIClient
 from random import choice
 from string import ascii_uppercase
@@ -56,6 +57,7 @@ from tests.settings import (
     SSO_PROXY_SIGNATURE_SECRET
 )
 
+INDUSTRY_CHOICES = dict(choices.INDUSTRIES)
 
 DIRECTORY_CLIENT = DirectoryTestAPIClient(
     DIRECTORY_API_URL, DIRECTORY_API_CLIENT_KEY)
@@ -1193,3 +1195,11 @@ def flag_sso_account_as_verified(context: Context, email_address: str):
         email_address, verified=True)
     context.response = response
     check_response(response, 204)
+
+
+def filter_out_legacy_industries(company: dict) -> list:
+    sectors = company['sectors']
+    logging.error('Sectors before: %s', sectors)
+    result = [sector for sector in sectors if sector in INDUSTRY_CHOICES]
+    logging.error('Sectors after: %s', result)
+    return result

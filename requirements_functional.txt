@@ -6,6 +6,7 @@
 #
 git+https://github.com/behave/behave.git@e8c56c9e6ea4d99a6d024ab02f02902b5dcee15e#egg=behave
 git+https://git@github.com/uktrade/directory-api-client.git@v9.14.0#egg=directory-api-client
+git+https://git@github.com/uktrade/directory-constants.git@v6.4.1#egg=directory-constants
 git+https://git@github.com/uktrade/directory-sso-api-client.git@v2.4.1#egg=directory-sso-api-client
 git+https://git@github.com/uktrade/directory-signature-auth.git@v2.0.1#egg=sigauth
 asn1crypto==0.24.0        # via cryptography
