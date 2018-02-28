@@ -13,8 +13,7 @@ GOV_NOTIFY_CLIENT = NotificationsAPIClient(GOV_NOTIFY_API_KEY)
 def extract_email_confirmation_link(payload: str) -> str:
     """Find email confirmation link inside the plain text email payload."""
     start = payload.find("https")
-    end = payload.find("\n", start) - 1  # `- 1` to skip the newline char
-    activation_link = payload[start:end]
+    activation_link = payload[start:]
     logging.debug("Found email confirmation link: %s", activation_link)
     return activation_link
 
