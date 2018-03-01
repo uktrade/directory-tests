@@ -18,7 +18,7 @@ JIRA_CLIENT = JiraClient(JIRA_HOST, basic_auth=(JIRA_USERNAME, JIRA_PASSWORD))
 GECKO_CLIENT = GeckoClient(GECKOBOARD_API_KEY)
 
 # other variables
-TODAY = str(date.today())
+TODAY = date.today().isoformat()
 
 # Jira JQL queries
 JQL_WIP_BUGS = "project = ED AND issuetype = Bug AND status != Backlog AND status != Done ORDER BY created DESC"
