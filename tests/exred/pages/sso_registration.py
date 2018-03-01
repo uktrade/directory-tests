@@ -11,7 +11,11 @@ from pages.common_actions import (
     go_to_url
 )
 from settings import DIRECTORY_UI_SSO_URL
-from utils import find_element, take_screenshot
+from utils import (
+    find_element,
+    take_screenshot,
+    wait_for_page_load_after_action
+)
 
 NAME = "SSO Registration page"
 URL = urljoin(DIRECTORY_UI_SSO_URL, "accounts/signup/")
@@ -66,4 +70,5 @@ def fill_out(driver: webdriver, email: str, password: str):
 
 def submit(driver: webdriver):
     sign_up_button = find_element(driver, by_css=SIGN_UP_BUTTON)
-    sign_up_button.click()
+    with wait_for_page_load_after_action(driver):
+        sign_up_button.click()

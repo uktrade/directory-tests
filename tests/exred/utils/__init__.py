@@ -25,6 +25,7 @@ from selenium.common.exceptions import (
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.expected_conditions import staleness_of
 from selenium.webdriver.support.wait import WebDriverWait
 
 from settings import (
@@ -429,3 +430,49 @@ def check_hash_of_remote_file(expected_hash, file_url):
             "Expected hash of file downloaded from %s to be %s but got %s",
             file_url, expected_hash, file_hash):
         assert expected_hash == file_hash
+
+
+@contextmanager
+def wait_for_page_load(driver: webdriver, timeout: int = 30):
+    """Alternative Context manager for waiting for page to load.
+    src:
+    http://www.obeythetestinggoat.com/how-to-get-selenium-to-wait-for-page-load-after-a-click.html
+    """
+    old_page = driver.find_element_by_tag_name('html')
+    yield
+    logging.debug("WAITING FOR STALENESS OF OLD PAGE %s", driver.current_url)
+    WebDriverWait(driver, timeout).until(staleness_of(old_page))
+
+
+class wait_for_page_load_after_action(object):
+    """Context manager for waiting the page to load.
+    Proved to be a more reliable than wait_for_page_load() ^^^
+    src:
+    http://www.obeythetestinggoat.com/how-to-get-selenium-to-wait-for-page-load-after-a-click.html
+    https://www.develves.net/blogs/asd/2017-03-04-selenium-waiting-for-page-load/
+    """
+    def __init__(self, driver: webdriver):
+        self.driver = driver
+
+    def __enter__(self):
+        self.old_page = self.driver.find_element_by_tag_name('html')
+
+    def page_has_loaded(self):
+        new_page = self.driver.find_element_by_tag_name('html')
+        return new_page.id != self.old_page.id
+
+    def __exit__(self, *_):
+        self.wait_for(self.page_has_loaded)
+
+    def wait_for(self, condition_function):
+        import time
+        start_time = time.time()
+        while time.time() < start_time + 3:
+            if condition_function():
+                return True
+            else:
+                time.sleep(0.1)
+        raise Exception(
+            'Timeout waiting for {}'.format(condition_function.__name__)
+        )
+

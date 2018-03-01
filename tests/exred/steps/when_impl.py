@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """When step implementations."""
 import logging
+from contextlib import contextmanager
+
 import random
 
 from behave.runner import Context
