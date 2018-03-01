@@ -125,12 +125,12 @@ def find_issues(
         jql_str=jql, maxResults=max_results, json_result=True, fields=fields)
 
 
-def get_labels_quantity(
-        query_result: dict, *, label_prefix: str = 'qa_',
+def get_quantity_per_label(
+        jql_query_result: dict, *, label_prefix: str = 'qa_',
         remove_label_prefix: bool = True, ignored_labels: List[str] = None,
         look_for: List[str] = None) -> dict:
     result = {}
-    issues = query_result['issues']
+    issues = jql_query_result['issues']
     for issue in issues:
         labels = [label for label in issue['fields']['labels']
                   if label.startswith(label_prefix)]
@@ -152,7 +152,7 @@ def get_labels_quantity(
 
 def get_number_of_wip_bugs_by_type() -> List[dict]:
     wip_bugs = find_issues(JQL_WIP_BUGS)
-    types = get_labels_quantity(wip_bugs, ignored_labels=['auto', 'manual'])
+    types = get_quantity_per_label(wip_bugs, ignored_labels=['auto', 'manual'])
     result = []
     for bug_type in types:
         item = {'date': TODAY, 'label': bug_type, 'quantity': types[bug_type]}
@@ -176,7 +176,7 @@ def get_number_of_unlabelled_bugs_in_backlog():
 
 def get_number_of_automated_vs_manual() -> List[dict]:
     vs = find_issues(JQL_MANUAL_VS_AUTOMATED)
-    labels = get_labels_quantity(vs, look_for=['auto', 'manual'])
+    labels = get_quantity_per_label(vs, look_for=['auto', 'manual'])
     auto = labels['auto']
     manual = labels['manual']
     return [{'date': TODAY, 'auto': auto, 'manual': manual}]
