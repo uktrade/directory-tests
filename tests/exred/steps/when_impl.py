@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
 """When step implementations."""
 import logging
-from contextlib import contextmanager
 
 import random
 
 from behave.runner import Context
 from retrying import retry
-from selenium.common.exceptions import WebDriverException
+from selenium.common.exceptions import TimeoutException, WebDriverException
 
 from pages import (
     article_common,
@@ -55,7 +54,7 @@ from utils.gov_notify import get_verification_link
 
 def retry_if_webdriver_error(exception):
     """Return True if we should retry on WebDriverException, False otherwise"""
-    return isinstance(exception, WebDriverException)
+    return isinstance(exception, (TimeoutException, WebDriverException))
 
 
 @retry(
