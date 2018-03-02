@@ -51,6 +51,7 @@ urls = {
     'ui-buyer:company-edit-sectors': 'company-profile/edit/sectors/',
     'ui-buyer:company-edit-contact': 'company-profile/edit/contact/',
     'ui-buyer:company-edit-social-media': 'company-profile/edit/social-media/',
+    'ui-buyer:account-add-collaborator': 'account/add-collaborator/',
 
     # UI-SUPPLIER
     'ui-supplier:landing': '',
