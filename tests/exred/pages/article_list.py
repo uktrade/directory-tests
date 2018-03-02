@@ -108,8 +108,7 @@ def show_more(driver: webdriver):
     button = find_element(
         driver, by_css=SHOW_MORE_BUTTON, element_name="Show more button")
     assert button.is_displayed()
-    with wait_for_page_load_after_action(driver):
-        button.click()
+    button.click()
     take_screenshot(driver, NAME + " after showing more")
 
 
@@ -122,8 +121,7 @@ def show_all_articles(driver: webdriver):
         counter = 0
         # click up to 11 times - see bug ED-2561
         while show_more_button.is_displayed() and counter <= max_clicks:
-            with wait_for_page_load_after_action(driver):
-                show_more_button.click()
+            show_more_button.click()
             counter += 1
         if counter > max_clicks:
             with assertion_msg(
