@@ -373,8 +373,7 @@ def open(driver: webdriver, group: str, element: str):
     link = find_element(
         driver, by_css=selector, element_name=element, wait_for_it=True)
     check_if_element_is_visible(link, element_name=element)
-    with wait_for_page_load_after_action(driver):
-        link.click()
+    link.click()
     take_screenshot(
         driver, NAME + " after clicking on: %s link".format(element))
 
