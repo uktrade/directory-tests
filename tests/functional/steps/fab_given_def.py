@@ -197,3 +197,12 @@ def given_verified_sso_account_associated_with_company(
         context, supplier_alias, company_alias):
     reg_create_verified_sso_account_associated_with_company(
         context, supplier_alias, company_alias)
+
+
+@given('"{actor_alias}" has created "{verified_or_not}" profile for randomly selected company "{company_alias}"')
+def create_verified_or_not_profile(
+        context, actor_alias, verified_or_not, company_alias):
+    if verified_or_not == "a verified":
+        reg_create_verified_profile(context, actor_alias, company_alias)
+    else:
+        reg_create_unverified_profile(context, actor_alias, company_alias)
