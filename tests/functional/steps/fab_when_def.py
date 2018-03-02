@@ -53,7 +53,8 @@ from tests.functional.steps.fab_when_impl import (
     sso_open_password_reset_link,
     sso_request_password_reset,
     sso_sign_in,
-    sso_supplier_confirms_email_address
+    sso_supplier_confirms_email_address,
+    prof_add_collaborator
 )
 
 
@@ -367,3 +368,8 @@ def when_supplier_tries_to_change_password_to_letters_only(
         context, supplier_alias):
     sso_change_password_with_password_reset_link(
         context, supplier_alias, new=True, letters_only=True)
+
+
+@when('"{supplier_alias}" decides to add "{collaborator_alias}" as a collaborator')
+def when_owner_adds_a_collaborator(context, supplier_alias, collaborator_alias):
+    prof_add_collaborator(context, supplier_alias, collaborator_alias)
