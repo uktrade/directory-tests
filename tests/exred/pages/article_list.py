@@ -14,7 +14,8 @@ from utils import (
     check_if_element_is_not_present,
     check_if_element_is_not_visible,
     find_element,
-    take_screenshot
+    take_screenshot,
+    wait_for_page_load_after_action
 )
 
 NAME = "ExRed Article List"
@@ -83,12 +84,14 @@ def should_not_see_section(driver: webdriver, name: str):
 
 def go_to_registration(driver: webdriver):
     registration_link = find_element(driver, by_css=REGISTRATION_LINK)
-    registration_link.click()
+    with wait_for_page_load_after_action(driver):
+        registration_link.click()
 
 
 def go_to_sign_in(driver: webdriver):
     sign_in_link = find_element(driver, by_css=SIGN_IN_LINK)
-    sign_in_link.click()
+    with wait_for_page_load_after_action(driver):
+        sign_in_link.click()
 
 
 def should_not_see_link_to_register(driver: webdriver):
@@ -105,7 +108,8 @@ def show_more(driver: webdriver):
     button = find_element(
         driver, by_css=SHOW_MORE_BUTTON, element_name="Show more button")
     assert button.is_displayed()
-    button.click()
+    with wait_for_page_load_after_action(driver):
+        button.click()
     take_screenshot(driver, NAME + " after showing more")
 
 
@@ -118,7 +122,8 @@ def show_all_articles(driver: webdriver):
         counter = 0
         # click up to 11 times - see bug ED-2561
         while show_more_button.is_displayed() and counter <= max_clicks:
-            show_more_button.click()
+            with wait_for_page_load_after_action(driver):
+                show_more_button.click()
             counter += 1
         if counter > max_clicks:
             with assertion_msg(

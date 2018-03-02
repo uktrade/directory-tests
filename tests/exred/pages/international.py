@@ -13,7 +13,12 @@ from pages.common_actions import (
     go_to_url
 )
 from settings import EXRED_UI_URL
-from utils import check_if_element_is_visible, find_element, take_screenshot
+from utils import (
+    check_if_element_is_visible,
+    find_element,
+    take_screenshot,
+    wait_for_page_load_after_action
+)
 
 NAME = "International"
 URL = urljoin(EXRED_UI_URL, "international/")
@@ -104,6 +109,7 @@ def open(
         logging.debug("Opening '%s' link '%s' in the same tab", element, href)
         driver.get(href)
     else:
-        link.click()
+        with wait_for_page_load_after_action(driver):
+            link.click()
     take_screenshot(
         driver, NAME + " after clicking on: %s link".format(element))

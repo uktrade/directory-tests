@@ -11,7 +11,8 @@ from utils import (
     check_if_element_is_visible,
     find_element,
     find_elements,
-    take_screenshot
+    take_screenshot,
+    wait_for_page_load_after_action
 )
 
 NAME = "ExRed Common Guidance"
@@ -158,5 +159,6 @@ def open_first_article(driver: webdriver):
         wait_for_it=False)
     check_if_element_is_visible(
         first_article, element_name="First article on list")
-    first_article.click()
+    with wait_for_page_load_after_action(driver):
+        first_article.click()
     take_screenshot(driver, "after opening first article")

@@ -12,7 +12,12 @@ from pages.common_actions import (
     go_to_url
 )
 from settings import EXRED_SECTORS, EXRED_UI_URL
-from utils import assertion_msg, find_element, take_screenshot
+from utils import (
+    assertion_msg,
+    find_element,
+    take_screenshot,
+    wait_for_page_load_after_action
+)
 
 NAME = "ExRed Triage - what do you want to export"
 URL = urljoin(EXRED_UI_URL, "triage/sector/")
@@ -77,7 +82,8 @@ def submit(driver: webdriver):
     button = find_element(
         driver, by_css=CONTINUE_BUTTON, element_name="Continue button",
         wait_for_it=True)
-    button.click()
+    with wait_for_page_load_after_action(driver):
+        button.click()
     take_screenshot(driver, NAME + " after submitting")
 
 

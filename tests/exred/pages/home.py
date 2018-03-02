@@ -21,7 +21,8 @@ from utils import (
     check_if_element_is_visible,
     find_element,
     find_elements,
-    take_screenshot
+    take_screenshot,
+    wait_for_page_load_after_action
 )
 
 NAME = "ExRed Home"
@@ -272,7 +273,8 @@ def start_exporting_journey(driver: webdriver):
     """
     button = find_element(driver, by_css=GET_STARTED_BUTTON)
     assert button.is_displayed()
-    button.click()
+    with wait_for_page_load_after_action(driver):
+        button.click()
 
 
 def continue_export_journey(driver: webdriver):
@@ -281,7 +283,8 @@ def continue_export_journey(driver: webdriver):
         driver, by_css=CONTINUE_EXPORT_JOURNEY,
         element_name="Continue your export journey button")
     assert button.is_displayed()
-    button.click()
+    with wait_for_page_load_after_action(driver):
+        button.click()
 
 
 def get_number_of_current_carousel_article(driver: webdriver) -> int:
@@ -352,7 +355,8 @@ def open_case_study(driver: webdriver, case_number: str):
 
     link_selector = CASE_STUDY_LINK.format(case_study_number)
     case_study_link = find_element(driver, by_css=link_selector)
-    case_study_link.click()
+    with wait_for_page_load_after_action(driver):
+        case_study_link.click()
 
 
 def get_case_study_title(driver: webdriver, case_number: str) -> str:
@@ -369,7 +373,8 @@ def open(driver: webdriver, group: str, element: str):
     link = find_element(
         driver, by_css=selector, element_name=element, wait_for_it=True)
     check_if_element_is_visible(link, element_name=element)
-    link.click()
+    with wait_for_page_load_after_action(driver):
+        link.click()
     take_screenshot(
         driver, NAME + " after clicking on: %s link".format(element))
 

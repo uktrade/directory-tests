@@ -6,7 +6,11 @@ from selenium import webdriver
 
 from pages.common_actions import check_for_expected_elements, check_url
 from settings import DIRECTORY_UI_SSO_URL
-from utils import find_element, take_screenshot
+from utils import (
+    find_element,
+    take_screenshot,
+    wait_for_page_load_after_action
+)
 
 NAME = "SSO Registration Confirmation page"
 URL = urljoin(DIRECTORY_UI_SSO_URL, "accounts/confirm-email/")
@@ -28,5 +32,6 @@ def should_be_here(driver: webdriver):
 
 def go_to_sign_in(driver: webdriver):
     registration_link = find_element(driver, by_css=SIGN_IN_LINK)
-    registration_link.click()
+    with wait_for_page_load_after_action(driver):
+        registration_link.click()
     take_screenshot(driver, NAME + "after signing in")

@@ -11,7 +11,12 @@ from pages.common_actions import (
     go_to_url
 )
 from settings import EXRED_UI_URL
-from utils import find_element, take_screenshot, wait_for_visibility
+from utils import (
+    find_element,
+    take_screenshot,
+    wait_for_visibility,
+    wait_for_page_load_after_action
+)
 
 NAME = "ExRed Interim Export Opportunities"
 URL = urljoin(EXRED_UI_URL, "export-opportunities/")
@@ -42,5 +47,6 @@ def should_be_here(driver: webdriver):
 def go_to_service(driver: webdriver):
     service_button = find_element(driver, by_css=SERVICE_BUTTON)
     wait_for_visibility(driver, by_css=SERVICE_BUTTON, time_to_wait=10)
-    service_button.click()
+    with wait_for_page_load_after_action(driver):
+        service_button.click()
     take_screenshot(driver, NAME + " after going to Export Opportunities")

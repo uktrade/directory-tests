@@ -6,7 +6,12 @@ from pages.common_actions import (
     check_for_expected_sections_elements,
     find_and_click_on_page_element
 )
-from utils import assertion_msg, find_element, take_screenshot
+from utils import (
+    assertion_msg,
+    find_element,
+    take_screenshot,
+    wait_for_page_load_after_action
+)
 
 NAME = "ExRed Footer"
 URL = None
@@ -73,7 +78,8 @@ def open(driver: webdriver, group: str, element: str):
     link = SECTIONS[group.lower()][element.lower()]
     button = find_element(
         driver, by_css=link, element_name=element, wait_for_it=False)
-    button.click()
+    with wait_for_page_load_after_action(driver):
+        button.click()
     take_screenshot(
         driver, NAME + " after clicking on: %s link".format(element))
 

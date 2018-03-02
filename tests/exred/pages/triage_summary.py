@@ -96,7 +96,8 @@ def get_questions_and_answers(driver: webdriver) -> dict:
 def change_answers(driver: webdriver):
     link = find_element(
         driver, by_css=CHANGE_ANSWERS_LINK, element_name="Change answers link")
-    link.click()
+    with wait_for_page_load_after_action(driver):
+        link.click()
     take_screenshot(driver, NAME + " after deciding to change the answers")
 
 

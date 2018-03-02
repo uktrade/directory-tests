@@ -64,7 +64,8 @@ def fill_out(driver: webdriver, email: str, password: str):
     password_input.send_keys(password)
     password_confirmation_input.clear()
     password_confirmation_input.send_keys(password)
-    t_and_c.click()
+    with wait_for_page_load_after_action(driver):
+        t_and_c.click()
     take_screenshot(driver, NAME + "after filling out the form")
 
 
