@@ -3,6 +3,14 @@
 from urllib.parse import urljoin
 
 from selenium import webdriver
+from utils import (
+    assertion_msg,
+    check_if_element_is_visible,
+    find_element,
+    find_elements,
+    take_screenshot,
+    wait_for_page_load_after_action
+)
 
 from pages.common_actions import (
     check_for_expected_elements,
@@ -10,13 +18,6 @@ from pages.common_actions import (
     check_url
 )
 from settings import EXRED_UI_URL
-from utils import (
-    assertion_msg,
-    check_if_element_is_visible,
-    find_element,
-    find_elements,
-    take_screenshot
-)
 
 NAME = "ExRed Triage - summary"
 URL = urljoin(EXRED_UI_URL, "triage/summary/")
@@ -78,7 +79,8 @@ def create_exporting_journey(driver: webdriver):
         driver, by_css=CREATE_MY_JOURNEY_BUTTON,
         element_name=element_name, wait_for_it=False)
     check_if_element_is_visible(button, element_name=element_name)
-    button.click()
+    with wait_for_page_load_after_action(driver):
+        button.click()
     take_screenshot(driver, NAME + " after submitting")
 
 
