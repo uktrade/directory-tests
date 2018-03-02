@@ -9,6 +9,7 @@ Feature: Home Page
       Then "Robert" should see "Beta, Hero, Exporting Journey, Export Readiness, Guidance, Services, Case Studies, Business is Great, Error Reporting" sections on "Home" page
 
 
+  @new-triage
   @ED-2366
   @triage
   Scenario: Any Exporter visiting the home page should be able to get to triage
@@ -16,7 +17,7 @@ Feature: Home Page
 
     When "Robert" decides to get started in Exporting journey section
 
-    Then "Robert" should be on the "Triage - what do you want to export" page
+    Then "Robert" should be on the "Triage - have you exported before" page
 
 
   @ED-2366
