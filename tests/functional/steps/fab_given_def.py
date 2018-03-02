@@ -206,3 +206,9 @@ def create_verified_or_not_profile(
         reg_create_verified_profile(context, actor_alias, company_alias)
     else:
         reg_create_unverified_profile(context, actor_alias, company_alias)
+
+
+@given('"{actor_alias}" "{has_or_does_not_have}" an SSO/great.gov.uk account')
+def step_impl(context, actor_alias, has_or_does_not_have):
+    if has_or_does_not_have == "has":
+        sso_create_standalone_verified_sso_account(context, actor_alias)
