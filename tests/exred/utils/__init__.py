@@ -475,4 +475,3 @@ class wait_for_page_load_after_action(object):
         raise Exception(
             'Timeout waiting for {}'.format(condition_function.__name__)
         )
-

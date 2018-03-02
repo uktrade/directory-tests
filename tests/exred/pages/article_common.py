@@ -281,8 +281,7 @@ def flag_as_useful(driver: webdriver):
         driver, by_css=USEFUL_BUTTON, element_name=element_name,
         wait_for_it=False)
     check_if_element_is_visible(useful, element_name)
-    with wait_for_page_load_after_action(driver):
-        useful.click()
+    useful.click()
     take_screenshot(driver, "After telling us that Article was useful")
 
 
@@ -291,8 +290,7 @@ def flag_as_not_useful(driver: webdriver):
     not_useful = find_element(
         driver, by_css=NOT_USEFUL_BUTTON, element_name=element_name)
     check_if_element_is_visible(not_useful, element_name)
-    with wait_for_page_load_after_action(driver):
-        not_useful.click()
+    not_useful.click()
     take_screenshot(driver, "After telling us that Article was not useful")
 
 
