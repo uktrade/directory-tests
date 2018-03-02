@@ -78,7 +78,7 @@ PYTEST_ARGS :=
 	--driver-path /usr/bin/phantomjs $(pytest_args)
 
 SET_PYTEST_ENV_VARS := \
-	export API_CLIENT_KEY=debug; \
+	export DIRECTORY_API_CLIENT_KEY=debug; \
 	export DIRECTORY_API_URL=https://directory-api-dev.herokuapp.com; \
 	export DIRECTORY_BUYER_API_URL=https://dev.buyer.directory.uktrade.io; \
 	export DIRECTORY_SSO_URL=https://www.dev.sso.uktrade.io; \
@@ -129,23 +129,13 @@ smoke_tests_links_checker:
 	    --ignore="$${IGNORED_PREFIXES}" \
 	    $${TEST_URLS}
 
-SET_DB_URLS := \
-	export DIR_DATABASE_URL=`heroku config:get DATABASE_URL -a directory-api-dev` && \
-	export SSO_DATABASE_URL=`heroku config:get DATABASE_URL -a directory-sso-dev`
-
 functional_tests:
-	$(SET_PYTEST_ENV_VARS) && \
-	$(SET_DB_URLS) && \
 	behave -k --format progress3 --logging-filter=-root --stop --tags=-wip --tags=-skip --tags=~fixme tests/functional/features $(BEHAVE_ARGS)
 
 functional_tests_feature_dir:
-	$(SET_PYTEST_ENV_VARS) && \
-	$(SET_DB_URLS) && \
 	behave -k --format progress3 --logging-filter=-root --stop --tags=-wip --tags=-skip --tags=~fixme tests/functional/features/${FEATURE_DIR} $(BEHAVE_ARGS)
 
 functional_update_companies:
-	$(SET_PYTEST_ENV_VARS) && \
-	$(SET_DB_URLS) && \
 	python -c "from tests.functional.utils.generic import update_companies; update_companies()"
 
 test: pep8 smoke_tests integration_test load_test_minimal
@@ -204,7 +194,6 @@ exred_local:
 
 exred_browserstack:
 	$(EXRED_SET_DOCKER_ENV_VARS) && \
-	$(SET_DB_URLS) && \
 	cd tests/exred && \
 	paver run --config=browserstack-single --browsers=${BROWSERS} --versions=${VERSIONS}
 

@@ -1,6 +1,5 @@
 import os
 from glob import glob
-from urllib import parse as urlparse
 
 __auto_retry = os.environ.get("AUTO_RETRY", "true")
 AUTO_RETRY = (True
@@ -9,55 +8,35 @@ AUTO_RETRY = (True
               else False)
 
 DIRECTORY_API_URL = os.environ["DIRECTORY_API_URL"]
+DIRECTORY_API_CLIENT_KEY = os.environ["DIRECTORY_API_CLIENT_KEY"]
 DIRECTORY_API_HEALTH_CHECK_TOKEN = os.environ["DIRECTORY_API_HEALTH_CHECK_TOKEN"]
 DIRECTORY_BUYER_API_URL = os.environ["DIRECTORY_BUYER_API_URL"]
 DIRECTORY_SSO_URL = os.environ['DIRECTORY_SSO_URL']
 DIRECTORY_UI_BUYER_URL = os.environ["DIRECTORY_UI_BUYER_URL"]
 DIRECTORY_UI_SUPPLIER_URL = os.environ["DIRECTORY_UI_SUPPLIER_URL"]
 DIRECTORY_PROFILE_URL = os.environ["DIRECTORY_PROFILE_URL"]
+SSO_PROXY_API_CLIENT_BASE_URL = os.environ["SSO_PROXY_API_CLIENT_BASE_URL"]
 SSO_PROXY_SIGNATURE_SECRET = os.environ["SSO_PROXY_SIGNATURE_SECRET"]
 EXRED_UI_URL = os.environ["EXRED_UI_URL"]
+GOV_NOTIFY_API_KEY = os.environ["GOV_NOTIFY_API_KEY"]
 LOCUST_MAX_WAIT = int(os.getenv("LOCUST_MAX_WAIT", 6000))
 LOCUST_MIN_WAIT = int(os.getenv("LOCUST_MIN_WAIT", 500))
 
 # run tests for 2.5min by default
 LOCUST_TIMEOUT = int(os.getenv("LOCUST_TIMEOUT", 150))
-API_CLIENT_KEY = os.getenv("API_CLIENT_KEY")
 SSO_USER_ID = int(os.getenv("SSO_USER_ID", 0))
 
-# These DB details are required to do post-test clean-up in Directory DB
-DIR_DB_URL = urlparse.urlparse(os.getenv('DIR_DATABASE_URL'))
-DIR_DB_NAME = DIR_DB_URL.path[1:] if DIR_DB_URL else None
-DIR_DB_USER = DIR_DB_URL.username if DIR_DB_URL else None
-DIR_DB_PASSWORD = DIR_DB_URL.password if DIR_DB_URL else None
-DIR_DB_HOST = DIR_DB_URL.hostname if DIR_DB_URL else None
-DIR_DB_PORT = DIR_DB_URL.port if DIR_DB_URL else None
-
-# These DB details are required to do post-test clean-up in SSO DB
-SSO_DB_URL = urlparse.urlparse(os.getenv('SSO_DATABASE_URL'))
-SSO_DB_NAME = SSO_DB_URL.path[1:] if SSO_DB_URL else None
-SSO_DB_USER = SSO_DB_URL.username if SSO_DB_URL else None
-SSO_DB_PASSWORD = SSO_DB_URL.password if SSO_DB_URL else None
-SSO_DB_HOST = SSO_DB_URL.hostname if SSO_DB_URL else None
-SSO_DB_PORT = SSO_DB_URL.port if SSO_DB_URL else None
-
 # Mailgun details required to get verification emails
-MAILGUN_SSO_DOMAIN = os.environ["MAILGUN_SSO_DOMAIN"]
-MAILGUN_SSO_EVENTS_URL = "https://api.mailgun.net/v3/%s/events" % MAILGUN_SSO_DOMAIN
-MAILGUN_SSO_API_USER = "api"
-MAILGUN_SSO_SECRET_API_KEY = os.environ["MAILGUN_SSO_SECRET_API_KEY"]
 MAILGUN_DIRECTORY_DOMAIN = os.environ["MAILGUN_DIRECTORY_DOMAIN"]
 MAILGUN_DIRECTORY_EVENTS_URL = "https://api.mailgun.net/v3/%s/events" % MAILGUN_DIRECTORY_DOMAIN
 MAILGUN_DIRECTORY_API_USER = "api"
 MAILGUN_DIRECTORY_SECRET_API_KEY = os.environ["MAILGUN_DIRECTORY_SECRET_API_KEY"]
 
-# Static data used across the project
-EMAIL_VERIFICATION_MSG_SUBJECT = ("Your great.gov.uk account: Please Confirm "
-                                  "Your E-mail Address")
+# Static data used across the projects
+EMAIL_VERIFICATION_MSG_SUBJECT = "Confirm your email address"
 FAS_MESSAGE_FROM_BUYER_SUBJECT = ("Someone is interested in your Find a Buyer "
                                   "profile")
-SSO_PASSWORD_RESET_MSG_SUBJECT = ("Your great.gov.uk account: Password Reset "
-                                  "E-mail")
+SSO_PASSWORD_RESET_MSG_SUBJECT = "Reset your great.gov.uk password"
 NO_OF_EMPLOYEES = ["1-10", "11-50", "51-200", "201-500", "501-1000",
                    "1001-10000", "10001+"]
 SECTORS = [

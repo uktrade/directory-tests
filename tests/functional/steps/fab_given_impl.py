@@ -8,6 +8,7 @@ from urllib.parse import urlsplit
 
 from behave.runner import Context
 from requests import Session
+from retrying import retry
 
 from tests.functional.pages import (
     fab_ui_profile,
@@ -44,14 +45,16 @@ from tests.functional.steps.fab_when_impl import (
     sso_sign_in
 )
 from tests.functional.utils.context_utils import Actor, Company
-from tests.functional.utils.db_utils import (
-    flag_sso_account_as_verified,
+from tests.functional.utils.generic import (
+    assertion_msg,
+    sentence,
     get_published_companies,
     get_published_companies_with_n_sectors,
     get_verification_code,
-    is_verification_letter_sent
+    is_verification_letter_sent,
+    flag_sso_account_as_verified,
+    filter_out_legacy_industries
 )
-from tests.functional.utils.generic import assertion_msg, sentence
 
 
 def unauthenticated_supplier(supplier_alias: str) -> Actor:
@@ -134,7 +137,7 @@ def reg_create_verified_profile(
     reg_create_sso_account_associated_with_company(
         context, supplier_alias, company_alias)
     supplier = context.get_actor(supplier_alias)
-    flag_sso_account_as_verified(supplier.email)
+    flag_sso_account_as_verified(context, supplier.email)
     sso_sign_in(context, supplier_alias)
     finish_registration_after_flagging_as_verified(context, supplier_alias)
     bp_build_company_profile(context, supplier_alias)
@@ -155,7 +158,7 @@ def sso_create_standalone_verified_sso_account(
         context: Context, supplier_alias: str):
     sso_create_standalone_unverified_sso_account(context, supplier_alias)
     supplier = context.get_actor(supplier_alias)
-    flag_sso_account_as_verified(supplier.email)
+    flag_sso_account_as_verified(context, supplier.email)
     sso_sign_in(context, supplier_alias)
     profile_ui_landing.should_be_here(context.response)
     sso_should_be_signed_in_to_sso_account(context, supplier_alias)
@@ -202,21 +205,26 @@ def fas_find_company_by_name(
         company_alias, fas_profile_endpoint=profile_endpoint)
 
 
+@retry(wait_fixed=3000, stop_max_attempt_number=5)
 def fab_find_published_company(
         context: Context, actor_alias: str, company_alias: str, *,
         min_number_sectors: int = None):
     if min_number_sectors:
-        companies = get_published_companies_with_n_sectors(min_number_sectors)
+        companies = get_published_companies_with_n_sectors(
+            context, min_number_sectors)
     else:
-        companies = get_published_companies()
+        companies = get_published_companies(context)
 
     with assertion_msg(
             "Expected to find at least 1 published company but got none!"):
         assert len(companies) > 0
-    company_dict = random.choice(companies)
+    filtered_companies = [c for c in companies
+                          if '@directory.uktrade.io' not in c['company_email']]
+    company_dict = random.choice(filtered_companies)
+    sectors = filter_out_legacy_industries(company_dict)
     company = Company(
         alias=company_alias, title=company_dict['name'],
-        number=company_dict['number'], sector=company_dict['sectors'],
+        number=company_dict['number'], sector=sectors,
         description=company_dict['description'],
         summary=company_dict['summary'],
         no_employees=company_dict['employees'],
@@ -248,12 +256,12 @@ def fas_get_company_slug(context, actor_alias, company_alias):
 def reg_should_get_verification_letter(context, supplier_alias):
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
-    sent = is_verification_letter_sent(company.number)
+    sent = is_verification_letter_sent(context, company.number)
 
     with assertion_msg("Verification letter wasn't sent"):
         assert sent
 
-    verification_code = get_verification_code(company.number)
+    verification_code = get_verification_code(context, company.number)
     context.set_company_details(
         company.alias, verification_code=verification_code)
 
@@ -279,6 +287,6 @@ def reg_create_verified_sso_account_associated_with_company(
     reg_create_sso_account_associated_with_company(
         context, supplier_alias, company_alias)
     supplier = context.get_actor(supplier_alias)
-    flag_sso_account_as_verified(supplier.email)
+    flag_sso_account_as_verified(context, supplier.email)
     sso_sign_in(context, supplier_alias)
     finish_registration_after_flagging_as_verified(context, supplier_alias)

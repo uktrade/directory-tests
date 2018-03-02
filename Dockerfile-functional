@@ -7,13 +7,6 @@ COPY requirements_functional.txt /usr/src/app/
 # Different src directory for pip to prevent 'pip install -e' packages to be installed in /usr/src/app/
 RUN pip install -q --no-cache-dir -r requirements_functional.txt --src /usr/local/src
 
-# install heroku app
-RUN wget -q https://cli-assets.heroku.com/heroku-cli/channels/stable/heroku-cli-linux-x64.tar.gz -O heroku.tar.gz && \
-	tar -xzf heroku.tar.gz && \
-	mkdir -p /usr/local/lib /usr/local/bin && \
-	mv heroku-cli-v6.*-linux-x64 /usr/local/lib/heroku && \
-	ln -s /usr/local/lib/heroku/bin/heroku /usr/local/bin/heroku
-
 # Install dockerize https://github.com/jwilder/dockerize
 ENV DOCKERIZE_VERSION v0.5.0
 RUN wget -q https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \

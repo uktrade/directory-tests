@@ -20,9 +20,9 @@ PAGE_TITLE = "Make sure you're export ready - great.gov.uk"
 SERVICE_BUTTON = "a.button-primary"
 REPORT_THIS_PAGE_LINK = "section.error-reporting a"
 EXPECTED_ELEMENTS = {
-    "title": "#content article > h1",
-    "description": "#content article > p",
-    "links to selected articles": "#content article > ul",
+    "title": "#content h1",
+    "description": "#content p",
+    "links to selected articles": "#content ul.list",
     "go to export opportunities": SERVICE_BUTTON,
     "is there anything wrong with this page?": REPORT_THIS_PAGE_LINK
 }

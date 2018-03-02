@@ -14,7 +14,8 @@ EXPECTED_STRINGS = [
 ]
 
 EXPECTED_STRINGS_WITH_PROFILE = [
-    "Edit profile", "Add case study", "Edit logo"
+    "Edit profile", "Add case study", "Edit logo", "Account details",
+    "Add user to account", "Remove user from account", "Transfer account"
 ]
 
 EXPECTED_STRINGS_NO_PROFILE = [

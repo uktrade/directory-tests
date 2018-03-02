@@ -12,7 +12,7 @@ Feature: International Page
   @ED-3136
   @external-service
   @<expected_service>
-  Scenario Outline: Visitors should be able to go to "<expected>" page from the International page
+  Scenario Outline: Visitors should be able to go to "<expected_service>" page from the International page
     Given "Robert" visits the "International" page
 
     When "Robert" goes to "<expected_service>" using "<section>" link on "International Page"

@@ -36,12 +36,14 @@ from tests.functional.utils.generic import (
     detect_page_language,
     extract_csrf_middleware_token,
     extract_logo_url,
-    find_mailgun_events,
+    find_mail_gun_events,
     get_language_code,
     get_number_of_search_result_pages,
-    get_password_reset_link,
-    get_verification_link,
     surround
+)
+from tests.functional.utils.gov_notify import (
+    get_verification_link,
+    get_password_reset_link
 )
 from tests.settings import (
     FAS_LOGO_PLACEHOLDER_IMAGE,
@@ -72,7 +74,7 @@ def reg_should_get_verification_email(context: Context, alias: str):
     """
     logging.debug("Searching for an email verification message...")
     actor = context.get_actor(alias)
-    link = get_verification_link(context, actor.email)
+    link = get_verification_link(actor.email)
     context.update_actor(alias, email_confirmation_link=link)
 
 
@@ -628,7 +630,7 @@ def fas_should_be_told_that_message_has_been_sent(
 def fas_supplier_should_receive_message_from_buyer(
         context: Context, supplier_alias: str, buyer_alias: str):
     supplier = context.get_actor(supplier_alias)
-    response = find_mailgun_events(
+    response = find_mail_gun_events(
         context, service=MailGunService.DIRECTORY, recipient=supplier.email,
         event=MailGunEvent.ACCEPTED, subject=FAS_MESSAGE_FROM_BUYER_SUBJECT)
     context.response = response
@@ -786,7 +788,7 @@ def sso_should_get_password_reset_email(context: Context, supplier_alias: str):
     """
     logging.debug("Searching for a password reset email...")
     actor = context.get_actor(supplier_alias)
-    link = get_password_reset_link(context, actor.email)
+    link = get_password_reset_link(actor.email)
     context.update_actor(supplier_alias, password_reset_link=link)
 
 

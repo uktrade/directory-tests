@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 """When step implementations."""
 import logging
+
 import random
 
 from behave.runner import Context
 from retrying import retry
-from selenium.common.exceptions import WebDriverException
+from selenium.common.exceptions import TimeoutException, WebDriverException
 
 from pages import (
     article_common,
@@ -48,12 +49,12 @@ from utils import (
     unauthenticated_actor,
     update_actor
 )
-from utils.mail_gun import get_verification_link
+from utils.gov_notify import get_verification_link
 
 
 def retry_if_webdriver_error(exception):
     """Return True if we should retry on WebDriverException, False otherwise"""
-    return isinstance(exception, WebDriverException)
+    return isinstance(exception, (TimeoutException, WebDriverException))
 
 
 @retry(
@@ -969,7 +970,7 @@ def registration_should_get_verification_email(
     """
     logging.debug("Searching for an email verification message...")
     actor = get_actor(context, actor_alias)
-    link = get_verification_link(context, actor.email)
+    link = get_verification_link(actor.email)
     update_actor(context, actor_alias, email_confirmation_link=link)
 
 
