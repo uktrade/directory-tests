@@ -12,7 +12,8 @@ from utils import (
     assertion_msg,
     check_hash_of_remote_file,
     find_element,
-    take_screenshot
+    take_screenshot,
+    wait_for_page_load_after_action
 )
 
 NAME = "ExRed Header"
@@ -121,7 +122,8 @@ def open(driver: webdriver, group: str, element: str):
     menu_item = find_element(driver, by_css=menu_item_selector)
     with assertion_msg("%s menu item: '%s' is not visible", group, element):
         assert menu_item.is_displayed()
-    menu_item.click()
+    with wait_for_page_load_after_action(driver):
+        menu_item.click()
     take_screenshot(
         driver, NAME + " after clicking on: {} link".format(element))
 
@@ -129,22 +131,26 @@ def open(driver: webdriver, group: str, element: str):
 def go_to_registration(driver: webdriver):
     registration_link = find_element(
         driver, by_css=REGISTRATION_LINK, wait_for_it=False)
-    registration_link.click()
+    with wait_for_page_load_after_action(driver):
+        registration_link.click()
 
 
 def go_to_sign_in(driver: webdriver):
     sign_in = find_element(driver, by_css=SIGN_IN_LINK)
-    sign_in.click()
+    with wait_for_page_load_after_action(driver):
+        sign_in.click()
 
 
 def go_to_profile(driver: webdriver):
     profile_link = find_element(driver, by_css=PROFILE_LINK)
-    profile_link.click()
+    with wait_for_page_load_after_action(driver):
+        profile_link.click()
 
 
 def go_to_sign_out(driver: webdriver):
     sign_out_link = find_element(driver, by_css=SIGN_OUT_LINK)
-    sign_out_link.click()
+    with wait_for_page_load_after_action(driver):
+        sign_out_link.click()
 
 
 def check_dit_logo(driver: webdriver):

@@ -9,7 +9,8 @@ from utils import (
     check_if_element_is_visible,
     clear_driver_cookies,
     find_element,
-    take_screenshot
+    take_screenshot,
+    wait_for_page_load_after_action
 )
 
 
@@ -165,6 +166,7 @@ def find_and_click_on_page_element(
                 driver, by_css=selector, element_name=element_name,
                 wait_for_it=wait_for_it)
             check_if_element_is_visible(web_element, element_name)
-            web_element.click()
+            with wait_for_page_load_after_action(driver):
+                web_element.click()
     with assertion_msg("Could not find '%s' in any section", element_name):
         assert found_selector

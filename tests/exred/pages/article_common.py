@@ -20,7 +20,8 @@ from utils import (
     find_element,
     find_elements,
     selenium_action,
-    take_screenshot
+    take_screenshot,
+    wait_for_page_load_after_action
 )
 
 NAME = "ExRed Common Articles"
@@ -165,7 +166,8 @@ def go_to_article(driver: webdriver, title: str):
             action_chains.move_to_element(article)
             action_chains.perform()
     check_if_element_is_visible(article, element_name=title)
-    article.click()
+    with wait_for_page_load_after_action(driver):
+        article.click()
     take_screenshot(driver, "After going to the '{}' Article".format(title))
 
 
@@ -189,7 +191,8 @@ def go_to_next_article(driver: webdriver):
         element_name="Link to the next article", wait_for_it=False)
     check_if_element_is_visible(
         next_article, element_name="Link to the next article")
-    next_article.click()
+    with wait_for_page_load_after_action(driver):
+        next_article.click()
     take_screenshot(driver, "After going to the next Article")
 
 
@@ -205,7 +208,8 @@ def go_back_to_article_list(driver: webdriver):
         driver, by_css=GO_BACK_LINK, element_name=element_name,
         wait_for_it=False)
     check_if_element_is_visible(go_back_link, element_name)
-    go_back_link.click()
+    with wait_for_page_load_after_action(driver):
+        go_back_link.click()
 
 
 def should_see_article_as_read(driver: webdriver, title: str):
@@ -312,12 +316,14 @@ def should_see_feedback_result(driver: webdriver):
 
 def go_to_registration(driver: webdriver):
     registration_link = find_element(driver, by_css=REGISTRATION_LINK)
-    registration_link.click()
+    with wait_for_page_load_after_action(driver):
+        registration_link.click()
 
 
 def go_to_sign_in(driver: webdriver):
     sign_in_link = find_element(driver, by_css=SIGN_IN_LINK)
-    sign_in_link.click()
+    with wait_for_page_load_after_action(driver):
+        sign_in_link.click()
 
 
 def should_not_see_link_to_register(driver: webdriver):

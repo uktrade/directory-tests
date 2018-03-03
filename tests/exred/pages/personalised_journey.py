@@ -14,7 +14,8 @@ from utils import (
     check_if_element_is_not_visible,
     find_element,
     find_elements,
-    take_screenshot
+    take_screenshot,
+    wait_for_page_load_after_action
 )
 
 NAME = "ExRed Personalised Journey"
@@ -186,7 +187,8 @@ def open(driver: webdriver, group: str, element: str):
     button = find_element(
         driver, by_css=link, element_name=element, wait_for_it=False)
     assert button.is_displayed()
-    button.click()
+    with wait_for_page_load_after_action(driver):
+        button.click()
     take_screenshot(
         driver, NAME + " after clicking on: %s link".format(element))
 
@@ -319,5 +321,6 @@ def update_preferences(driver: webdriver):
         driver, by_css=UPDATE_PREFERENCE_LINK)
     with assertion_msg("Update preferences link is not displayed"):
         assert update_preferences_link.is_displayed()
-    update_preferences_link.click()
+    with wait_for_page_load_after_action(driver):
+        update_preferences_link.click()
     take_screenshot(driver, NAME + " after deciding to update preferences")

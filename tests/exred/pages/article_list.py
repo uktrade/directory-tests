@@ -14,7 +14,8 @@ from utils import (
     check_if_element_is_not_present,
     check_if_element_is_not_visible,
     find_element,
-    take_screenshot
+    take_screenshot,
+    wait_for_page_load_after_action
 )
 
 NAME = "ExRed Article List"
@@ -83,12 +84,14 @@ def should_not_see_section(driver: webdriver, name: str):
 
 def go_to_registration(driver: webdriver):
     registration_link = find_element(driver, by_css=REGISTRATION_LINK)
-    registration_link.click()
+    with wait_for_page_load_after_action(driver):
+        registration_link.click()
 
 
 def go_to_sign_in(driver: webdriver):
     sign_in_link = find_element(driver, by_css=SIGN_IN_LINK)
-    sign_in_link.click()
+    with wait_for_page_load_after_action(driver):
+        sign_in_link.click()
 
 
 def should_not_see_link_to_register(driver: webdriver):
