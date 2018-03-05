@@ -1,4 +1,3 @@
-@wip
 @multi-user
 Feature: Multi-user accounts
 
@@ -12,16 +11,17 @@ Feature: Multi-user accounts
 
     When "Peter Alder" decides to add "Annette Geissinger" as a collaborator
 
-    Then "Annette" should receive an email with a request for becoming a collaborator to company "Y" profile
+    Then "Annette Geissinger" should receive an email with a request for becoming a collaborator to company "Y" profile
 
     Examples:
-      | has or does not have | a             |
-      | has                  | a verified    |
-      | has                  | an unverified |
-      | does not have        | a verified    |
-      | does not have        | an unverified |
+      | a             | has or does not have |
+      | a verified    | has                  |
+      | a verified    | does not have        |
+      | an unverified | has                  |
+      | an unverified | does not have        |
 
 
+  @wip
   @ED-3555
   @multi-user
   @add-collaborator
@@ -37,6 +37,7 @@ Feature: Multi-user accounts
     Then "Annette Geissinger" should be on "Edit Company profile" page
 
 
+  @wip
   @ED-3556
   @multi-user
   @add-collaborator
@@ -51,6 +52,7 @@ Feature: Multi-user accounts
     Then "Annette Geissinger" should be on "SSO registration" page
 
 
+  @wip
   @ED-3557
   @multi-user
   @add-collaborator
@@ -68,6 +70,7 @@ Feature: Multi-user accounts
     Then "Annette Geissinger" should be on "Edit Company profile" page
 
 
+  @wip
   @ED-3558
   @multi-user
   @add-collaborator
@@ -80,6 +83,7 @@ Feature: Multi-user accounts
     Then "Annette Geissinger, Betty Jones, James Weir" should receive an email with a request for becoming a collaborator to company "Y" profile
 
 
+  @wip
   @ED-3559
   @multi-user
   @add-collaborator
@@ -99,7 +103,7 @@ Feature: Multi-user accounts
     And "James Weir" should be on "Edit Company profile" page
 
 
-
+  @wip
   @ED-3560
   @multi-user
   @add-collaborator
@@ -113,6 +117,7 @@ Feature: Multi-user accounts
     Then "Annette Geissinger" should not see options to manage account users on "SSO - Find a buyer" page
 
 
+  @wip
   @ED-3561
   @multi-user
   @transfer-ownership
@@ -133,6 +138,7 @@ Feature: Multi-user accounts
       | does not have        | an unverified |
 
 
+  @wip
   @ED-3562
   @multi-user
   @transfer-ownership
@@ -154,6 +160,7 @@ Feature: Multi-user accounts
       | does not have        | an unverified |
 
 
+  @wip
   @ED-3564
   @multi-user
   @remove-collaborator
@@ -169,6 +176,7 @@ Feature: Multi-user accounts
     And "Annette Geissinger" should not be able to access "Edit profile" page
 
 
+  @wip
   @ED-3565
   @multi-user
   @remove-collaborator
@@ -186,6 +194,7 @@ Feature: Multi-user accounts
     And "James Weir" should not be able to access "Edit profile" page
 
 
+  @wip
   @ED-3566
   @multi-user
   @transfer-ownership
@@ -203,6 +212,7 @@ Feature: Multi-user accounts
     And "Annette Geissinger" should be told that her company is published
 
 
+  @wip
   @ED-3567
   @multi-user
   @add-content
@@ -237,6 +247,7 @@ Feature: Multi-user accounts
       | sector of interest          |
 
 
+  @wip
   @ED-3568
   @multi-user
   @add-content
@@ -256,6 +267,7 @@ Feature: Multi-user accounts
       | Anfiteatro_El_Jem.jpeg |
 
 
+  @wip
   @ED-3569
   @multi-user
   @add-content
@@ -271,6 +283,7 @@ Feature: Multi-user accounts
     And "Annette Geissinger" should see all case studies on the FAS Company's Directory Profile page
 
 
+  @wip
   @ED-3570
   @multi-user
   @edge-case
@@ -287,6 +300,7 @@ Feature: Multi-user accounts
     And "Annette Geissinger" should not see options to manage account users on "SSO - Find a buyer" page
 
 
+  @wip
   @ED-3571
   @multi-user
   @edge-case
@@ -302,6 +316,7 @@ Feature: Multi-user accounts
     Then "Peter Alder" should be on "Edit Company profile" page
 
 
+  @wip
   @ED-3572
   @multi-user
   @edge-case
@@ -315,6 +330,7 @@ Feature: Multi-user accounts
     Then "Annette" should receive an email with a request for becoming a collaborator to company "Y" profile
 
 
+  @wip
   @ED-3573
   @multi-user
   @edge-case
