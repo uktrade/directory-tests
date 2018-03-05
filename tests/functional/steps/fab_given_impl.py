@@ -290,3 +290,21 @@ def reg_create_verified_sso_account_associated_with_company(
     flag_sso_account_as_verified(context, supplier.email)
     sso_sign_in(context, supplier_alias)
     finish_registration_after_flagging_as_verified(context, supplier_alias)
+
+
+def create_actor_with_or_without_sso_account(
+        context: Context, actor_alias: str, has_or_does_not_have: str):
+    if has_or_does_not_have == "has":
+        sso_create_standalone_verified_sso_account(context, actor_alias)
+    else:
+        supplier = unauthenticated_supplier(actor_alias)
+        context.add_actor(supplier)
+
+
+def create_actor_with_verified_or_unverified_fab_profile(
+        context: Context, actor_alias: str, verified_or_not: str,
+        company_alias: str):
+    if verified_or_not == "a verified":
+        reg_create_verified_profile(context, actor_alias, company_alias)
+    else:
+        reg_create_unverified_profile(context, actor_alias, company_alias)

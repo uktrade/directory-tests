@@ -18,7 +18,9 @@ from tests.functional.steps.fab_given_impl import (
     sso_create_standalone_verified_sso_account,
     sso_get_password_reset_link,
     unauthenticated_buyer,
-    unauthenticated_supplier
+    unauthenticated_supplier,
+    create_actor_with_or_without_sso_account,
+    create_actor_with_verified_or_unverified_fab_profile
 )
 from tests.functional.steps.fab_then_impl import (
     fab_should_see_all_case_studies,
@@ -203,16 +205,16 @@ def given_verified_sso_account_associated_with_company(
         context, supplier_alias, company_alias)
 
 
-@given('"{actor_alias}" has created "{verified_or_not}" profile for randomly selected company "{company_alias}"')
-def create_verified_or_not_profile(
+@given('"{actor_alias}" has created "{verified_or_not}" profile for randomly '
+       'selected company "{company_alias}"')
+def given_actor_with_verified_or_not_profile(
         context, actor_alias, verified_or_not, company_alias):
-    if verified_or_not == "a verified":
-        reg_create_verified_profile(context, actor_alias, company_alias)
-    else:
-        reg_create_unverified_profile(context, actor_alias, company_alias)
+    create_actor_with_verified_or_unverified_fab_profile(
+        context, actor_alias, verified_or_not, company_alias)
 
 
 @given('"{actor_alias}" "{has_or_does_not_have}" an SSO/great.gov.uk account')
-def step_impl(context, actor_alias, has_or_does_not_have):
-    if has_or_does_not_have == "has":
-        sso_create_standalone_verified_sso_account(context, actor_alias)
+def given_actor_with_or_without_sso_account(
+        context, actor_alias, has_or_does_not_have):
+    create_actor_with_or_without_sso_account(
+        context, actor_alias, has_or_does_not_have)
