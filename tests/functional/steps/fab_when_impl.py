@@ -1885,6 +1885,7 @@ def prof_add_collaborator(
     context.response = response
 
     token = extract_csrf_middleware_token(response)
+    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
     response = fab_ui_account_add_collaborator.add_collaborator(
         supplier.session, token, collaborator.email)
