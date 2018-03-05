@@ -48,7 +48,8 @@ from tests.functional.utils.gov_notify import (
 from tests.settings import (
     FAS_LOGO_PLACEHOLDER_IMAGE,
     FAS_MESSAGE_FROM_BUYER_SUBJECT,
-    SEARCHABLE_CASE_STUDY_DETAILS
+    SEARCHABLE_CASE_STUDY_DETAILS,
+    FAB_CONFIRM_COLLABORATION_SUBJECT
 )
 
 
@@ -828,3 +829,21 @@ def should_see_message(context: Context, actor_alias: str, message: str):
             "Response content doesn't contain expected message: '%s'", message):
         assert message in content
     logging.debug("%s saw expected message: '%s'", actor_alias, message)
+
+
+def sso_should_get_request_for_collaboration_email(
+        context: Context, actor_alias: str, company_alias: str):
+    actor = context.get_actor(actor_alias)
+    company = context.get_company(company_alias)
+    logging.debug(
+        "Trying to find email with a request for collaboration with company: "
+        "%s", company.title)
+    subject = FAB_CONFIRM_COLLABORATION_SUBJECT.format(company.title)
+    response = find_mail_gun_events(
+        context, service=MailGunService.DIRECTORY, recipient=actor.email,
+        event=MailGunEvent.ACCEPTED, subject=subject)
+    context.response = response
+    with assertion_msg(
+            "Expected to find an email with a request for collaboration with "
+            "company: '%s'", company_alias):
+        assert response.status_code == 200
