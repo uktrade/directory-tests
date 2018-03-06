@@ -36,6 +36,8 @@ MAILGUN_DIRECTORY_SECRET_API_KEY = os.environ["MAILGUN_DIRECTORY_SECRET_API_KEY"
 EMAIL_VERIFICATION_MSG_SUBJECT = "Confirm your email address"
 FAS_MESSAGE_FROM_BUYER_SUBJECT = ("Someone is interested in your Find a Buyer "
                                   "profile")
+FAB_CONFIRM_COLLABORATION_SUBJECT = ("Confirm you’ve been added to {}’s Find a"
+                                     " buyer profile")
 SSO_PASSWORD_RESET_MSG_SUBJECT = "Reset your great.gov.uk password"
 NO_OF_EMPLOYEES = ["1-10", "11-50", "51-200", "201-500", "501-1000",
                    "1001-10000", "10001+"]

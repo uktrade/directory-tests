@@ -27,8 +27,12 @@ from tests.functional.pages import (
     sso_ui_password_reset,
     sso_ui_register,
     sud_ui_landing,
-    sud_ui_selling_online_overseas, sud_ui_find_a_buyer,
-    sud_ui_export_opportunities)
+    sud_ui_selling_online_overseas,
+    sud_ui_find_a_buyer,
+    sud_ui_export_opportunities,
+    fab_ui_account_add_collaborator,
+    fab_ui_confim_your_collaboration
+)
 
 from tests import get_absolute_url
 from tests.functional.pages import fab_ui_case_study_basic
@@ -212,6 +216,14 @@ FAB_PAGE_REGISTRY = {
         "url": "ui-buyer:company-edit-social-media",
         "po": fab_ui_edit_online_profiles
     },
+    "fab add collaborator": {
+        "url": "ui-buyer:account-add-collaborator",
+        "po": fab_ui_account_add_collaborator
+    },
+    "fab confirm you want to be added to the profile": {
+        "url": None,
+        "po": fab_ui_confim_your_collaboration
+    }
 }
 
 SUD_PAGE_REGISTRY = {

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """FAB Given step definitions."""
+import email
 import logging
 from statistics import median
 
@@ -39,7 +40,10 @@ from tests.functional.utils.generic import (
     find_mail_gun_events,
     get_language_code,
     get_number_of_search_result_pages,
-    surround
+    surround,
+    mailgun_find_email_with_request_for_collaboration,
+    extract_link_with_invitation_for_collaboration,
+    extract_plain_text_payload
 )
 from tests.functional.utils.gov_notify import (
     get_verification_link,
@@ -828,3 +832,18 @@ def should_see_message(context: Context, actor_alias: str, message: str):
             "Response content doesn't contain expected message: '%s'", message):
         assert message in content
     logging.debug("%s saw expected message: '%s'", actor_alias, message)
+
+
+def sso_should_get_request_for_collaboration_email(
+        context: Context, actor_alias: str, company_alias: str):
+    actor = context.get_actor(actor_alias)
+    company = context.get_company(company_alias)
+    mailgun_response = mailgun_find_email_with_request_for_collaboration(
+        context, actor, company)
+    raw_message_payload = mailgun_response["body-mime"]
+    email_message = email.message_from_string(raw_message_payload)
+    # plain_text_message = email_message.get_payload()[0].get_payload()
+    payload = extract_plain_text_payload(email_message)
+    link = extract_link_with_invitation_for_collaboration(payload)
+    context.update_actor(actor_alias, invitation_for_collaboration_link=link)
+

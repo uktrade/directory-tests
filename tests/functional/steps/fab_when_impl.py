@@ -43,7 +43,9 @@ from tests.functional.pages import (
     sso_ui_logout,
     sso_ui_password_reset,
     sso_ui_register,
-    sso_ui_verify_your_email
+    sso_ui_verify_your_email,
+    fab_ui_account_add_collaborator,
+    fab_ui_confim_your_collaboration
 )
 from tests.functional.registry import get_fabs_page_object, get_fabs_page_url
 from tests.functional.utils.context_utils import Company
@@ -1874,3 +1876,59 @@ def finish_registration_after_flagging_as_verified(
            .format(register_url, company.number))
     response = make_request(Method.GET, url, session=actor.session)
     context.response = response
+
+
+def prof_add_collaborator(
+        context: Context, supplier_alias: str, collaborator_alias: str):
+    supplier = context.get_actor(supplier_alias)
+    company = context.get_company(supplier.company_alias)
+    collaborator = context.get_actor(collaborator_alias)
+    response = fab_ui_account_add_collaborator.go_to(supplier.session)
+    context.response = response
+
+    token = extract_csrf_middleware_token(response)
+    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
+
+    response = fab_ui_account_add_collaborator.add_collaborator(
+        supplier.session, token, collaborator.email)
+
+    profile_ui_find_a_buyer.should_be_here(response)
+    collaborators = company.collaborators
+    if collaborators:
+        collaborators.append(collaborator_alias)
+    else:
+        collaborators = [collaborator_alias]
+    context.set_company_details(company.alias, collaborators=collaborators)
+
+
+def fab_confirm_collaboration_request(
+        context: Context, collaborator_alias: str, company_alias: str):
+    collaborator = context.get_actor(collaborator_alias)
+    session = collaborator.session
+    link = collaborator.invitation_for_collaboration_link
+
+    # Step 1 - open confirmation link
+    response = fab_ui_confim_your_collaboration.open_confirmation_link(
+        session, link)
+    context.response = response
+
+    # Step 3 - confirm that Supplier is on SSO Confirm Your Email page
+    fab_ui_confim_your_collaboration.should_be_here(response)
+    logging.debug(
+        "Collaborator %s is on the FAB Confirm your collaboration page",
+        collaborator_alias
+    )
+
+    # Step 4 - extract & store CSRF token & form action value
+    # Form Action Value is required to successfully confirm email
+    token = extract_csrf_middleware_token(response)
+    context.update_actor(collaborator_alias, csrfmiddlewaretoken=token)
+    form_action_value = extract_form_action(response)
+    context.form_action_value = form_action_value
+
+    # Step 5 - submit the form
+    response = fab_ui_confim_your_collaboration.confirm(session, token, link)
+    context.response = response
+    logging.debug(
+        "%s confirmed that he/she wants to be added to the profile for %s",
+        collaborator_alias, company_alias)
