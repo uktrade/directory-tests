@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Various utils used across the project."""
+from email.mime.text import MIMEText
 from enum import Enum
 
 import hashlib
@@ -38,7 +39,8 @@ from tests.functional.utils.context_utils import (
     CaseStudy,
     Company,
     Feedback,
-    Message
+    Message,
+    Actor
 )
 from tests.functional.utils.request import Method, make_request, check_response
 from tests.settings import (
@@ -54,7 +56,8 @@ from tests.settings import (
     DIRECTORY_API_URL,
     DIRECTORY_API_CLIENT_KEY,
     SSO_PROXY_API_CLIENT_BASE_URL,
-    SSO_PROXY_SIGNATURE_SECRET
+    SSO_PROXY_SIGNATURE_SECRET,
+    FAB_CONFIRM_COLLABORATION_SUBJECT
 )
 
 INDUSTRY_CHOICES = dict(choices.INDUSTRIES)
@@ -1205,3 +1208,68 @@ def filter_out_legacy_industries(company: dict) -> list:
     result = [sector for sector in sectors if sector in INDUSTRY_CHOICES]
     logging.error('Sectors after: %s', result)
     return result
+
+
+@retry(wait_fixed=10000, stop_max_attempt_number=9)
+def mailgun_get_directory_message(context: Context, message_url: str) -> dict:
+    """Get message details from MailGun by its URL."""
+    # this will help us to get the raw MIME
+    headers = {"Accept": "message/rfc2822"}
+    response = make_request(
+        Method.GET, message_url, headers=headers,
+        auth=("api", MAILGUN_DIRECTORY_SECRET_API_KEY))
+    context.response = response
+
+    with assertion_msg(
+            "Expected to get 200 OK from MailGun when getting message details"
+            " but got %s %s instead", response.status_code, response.reason):
+        assert response.status_code == 200
+
+    return response.json()
+
+
+def mailgun_find_email_with_request_for_collaboration(
+        context: Context, actor: Actor, company: Company) -> dict:
+    logging.debug(
+        "Trying to find email with a request for collaboration with company: "
+        "%s", company.title)
+    subject = FAB_CONFIRM_COLLABORATION_SUBJECT.format(company.title)
+    response = find_mail_gun_events(
+        context, service=MailGunService.DIRECTORY, recipient=actor.email,
+        event=MailGunEvent.ACCEPTED, subject=subject)
+    context.response = response
+    with assertion_msg(
+            "Expected to find an email with a request for collaboration with "
+            "company: '%s'", company.alias):
+        assert response.status_code == 200
+    message_url = response.json()["items"][0]["storage"]["url"]
+    return mailgun_get_directory_message(context, message_url)
+
+
+def extract_plain_text_payload(msg: MIMEText) -> str:
+    """Extract plain text payload (7bit) from email message."""
+    res = None
+    if msg.is_multipart():
+        for part in msg.get_payload():
+            if part.get_content_type() == "text/plain":
+                res = part.get_payload()
+    else:
+        seven_bit = "Content-Transfer-Encoding: 7bit"
+        payload = msg.get_payload()
+        with assertion_msg("Could not find plain text msg in email payload"):
+            assert seven_bit in payload
+        start_7bit = payload.find(seven_bit)
+        start = start_7bit + len(seven_bit)
+        end = payload.find("--===============", start)
+        res = payload[start:end]
+    return res
+
+
+def extract_link_with_invitation_for_collaboration(payload: str) -> str:
+    start = payload.find("http")
+    end = payload.find("\n", start) - 1  # `- 1` to skip the newline char
+    invitation_link = payload[start:end]
+    assert invitation_link
+    logging.debug(
+        "Found the link with invitation for collaboration %s", invitation_link)
+    return invitation_link
