@@ -36,7 +36,6 @@ Feature: Multi-user accounts
     Then "Annette Geissinger" should see "FAB Company profile" page
 
 
-  @wip
   @ED-3556
   @multi-user
   @add-collaborator
@@ -46,9 +45,9 @@ Feature: Multi-user accounts
     And "Peter Alder" added "Annette Geissinger" as a collaborator
     And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
 
-    When "Annette Geissinger" decides to confirm that she wants to become a collaborator to company "Y" profile
+    When "Annette Geissinger" opens the invitation from company "Y", creates a SSO/great.gov.uk account and confirms that he wants to be added to the FAB profile
 
-    Then "Annette Geissinger" should be on "SSO registration" page
+    Then "Annette Geissinger" should see "FAB Company profile" page
 
 
   @wip
