@@ -1875,6 +1875,7 @@ def finish_registration_after_flagging_as_verified(
 def prof_add_collaborator(
         context: Context, supplier_alias: str, collaborator_alias: str):
     supplier = context.get_actor(supplier_alias)
+    company = context.get_company(supplier.company_alias)
     collaborator = context.get_actor(collaborator_alias)
     response = fab_ui_account_add_collaborator.go_to(supplier.session)
     context.response = response
@@ -1886,3 +1887,9 @@ def prof_add_collaborator(
         supplier.session, token, collaborator.email)
 
     profile_ui_find_a_buyer.should_be_here(response)
+    collaborators = company.collaborators
+    if collaborators:
+        collaborators.append(collaborator_alias)
+    else:
+        collaborators = [collaborator_alias]
+    context.set_company_details(company.alias, collaborators=collaborators)
