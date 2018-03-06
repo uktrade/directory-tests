@@ -48,6 +48,9 @@ from tests.functional.pages import (
     fab_ui_confim_your_collaboration
 )
 from tests.functional.registry import get_fabs_page_object, get_fabs_page_url
+from tests.functional.steps.fab_then_impl import (
+    reg_should_get_verification_email
+)
 from tests.functional.utils.context_utils import Company
 from tests.functional.utils.generic import (
     assertion_msg,
@@ -69,7 +72,8 @@ from tests.functional.utils.generic import (
     random_message_data,
     rare_word,
     sentence,
-    get_verification_code
+    get_verification_code,
+    extract_registration_page_link
 )
 from tests.functional.utils.request import Method, check_response, make_request
 from tests.settings import (
@@ -624,6 +628,26 @@ def reg_create_standalone_unverified_sso_account(
             "It looks like user is still logged in, as the "
             "sso_display_logged_in cookie is not equal to False"):
         assert response.cookies.get("sso_display_logged_in") == "false"
+
+
+def sso_collaborator_confirm_email_address(
+        context: Context, supplier_alias: str):
+    """Given that invited collaborator has clicked on the email confirmation
+     link, he/she has to confirm that the provided email address is the
+      correct one.
+    """
+    actor = context.get_actor(supplier_alias)
+    form_action_value = context.form_action_value
+
+    # STEP 1 - Submit "Confirm your email address" form
+    response = sso_ui_confim_your_email.confirm(actor, form_action_value)
+    context.response = response
+
+    # STEP 2 - Check if Supplier if on SSO Profile Landing page
+    fab_ui_confim_your_collaboration.should_be_here(response)
+
+    # STEP 3 - Update Actor's data
+    context.update_actor(supplier_alias, has_sso_account=True)
 
 
 def sso_supplier_confirms_email_address(context, supplier_alias):
@@ -1902,18 +1926,19 @@ def prof_add_collaborator(
 
 
 def fab_confirm_collaboration_request(
-        context: Context, collaborator_alias: str, company_alias: str):
+        context: Context, collaborator_alias: str, company_alias: str,
+        open_invitation_link: bool = True):
     collaborator = context.get_actor(collaborator_alias)
     session = collaborator.session
     link = collaborator.invitation_for_collaboration_link
 
     # Step 1 - open confirmation link
-    response = fab_ui_confim_your_collaboration.open_confirmation_link(
-        session, link)
-    context.response = response
+    if open_invitation_link:
+        response = fab_ui_confim_your_collaboration.open(session, link)
+        context.response = response
 
     # Step 3 - confirm that Supplier is on SSO Confirm Your Email page
-    fab_ui_confim_your_collaboration.should_be_here(response)
+    fab_ui_confim_your_collaboration.should_be_here(context.response)
     logging.debug(
         "Collaborator %s is on the FAB Confirm your collaboration page",
         collaborator_alias
@@ -1921,9 +1946,9 @@ def fab_confirm_collaboration_request(
 
     # Step 4 - extract & store CSRF token & form action value
     # Form Action Value is required to successfully confirm email
-    token = extract_csrf_middleware_token(response)
+    token = extract_csrf_middleware_token(context.response)
     context.update_actor(collaborator_alias, csrfmiddlewaretoken=token)
-    form_action_value = extract_form_action(response)
+    form_action_value = extract_form_action(context.response)
     context.form_action_value = form_action_value
 
     # Step 5 - submit the form
@@ -1932,3 +1957,75 @@ def fab_confirm_collaboration_request(
     logging.debug(
         "%s confirmed that he/she wants to be added to the profile for %s",
         collaborator_alias, company_alias)
+
+
+def fab_open_collaboration_request_link(
+        context: Context, collaborator_alias: str, company_alias: str):
+    collaborator = context.get_actor(collaborator_alias)
+    session = collaborator.session
+    link = collaborator.invitation_for_collaboration_link
+
+    response = fab_ui_confim_your_collaboration.open(session, link)
+    context.response = response
+    logging.debug(
+        "%s opened the collaboration request link from company %s",
+        collaborator_alias, company_alias)
+
+
+def reg_create_standalone_unverified_sso_account_from_sso_login_page(
+        context: Context, actor_alias: str):
+    """Create a standalone SSO/great.gov.uk account."""
+    actor = context.get_actor(actor_alias)
+    response = context.response
+
+    # Step 1: Check if we are on the SSO/great.gov.uk login page
+    sso_ui_login.should_be_here(response)
+
+    # Step 2 - extract CSRF token
+    token = extract_csrf_middleware_token(response)
+    context.update_actor(actor_alias, csrfmiddlewaretoken=token)
+
+    # Step 3 - extract Registration link
+    referer = response.url
+    registration_page_link = extract_registration_page_link(response)
+
+    # Step 4: Go to the SSO/great.gov.uk registration page
+    response = sso_ui_register.go_to(
+        actor.session, next=registration_page_link, referer=referer)
+    context.response = response
+
+    # Step 5 - extract CSRF token
+    token = extract_csrf_middleware_token(response)
+    context.update_actor(actor_alias, csrfmiddlewaretoken=token)
+
+    # Step 6: Check if User is not logged in
+    with assertion_msg(
+            "It looks like user is still logged in, as the "
+            "sso_display_logged_in cookie is not equal to False"):
+        assert response.cookies.get("sso_display_logged_in") == "false"
+
+    # Step 7: POST SSO accounts/signup/
+    response = sso_ui_register.submit_no_company(
+        actor, next=registration_page_link, referer=response.url)
+    context.response = response
+
+    # Step 8: Check if Supplier is on Verify your email page & is not logged in
+    sso_ui_verify_your_email.should_be_here(response)
+    with assertion_msg(
+            "It looks like user is still logged in, as the "
+            "sso_display_logged_in cookie is not equal to False"):
+        assert response.cookies.get("sso_display_logged_in") == "false"
+
+
+def fab_collaborator_create_sso_account_and_confirm_email(
+        context: Context, collaborator_alias: str, company_alias: str):
+    fab_open_collaboration_request_link(
+        context, collaborator_alias, company_alias)
+    sso_ui_login.should_be_here(context.response)
+    reg_create_standalone_unverified_sso_account_from_sso_login_page(
+        context, collaborator_alias)
+    reg_should_get_verification_email(context, collaborator_alias)
+    reg_open_email_confirmation_link(context, collaborator_alias)
+    sso_collaborator_confirm_email_address(context, collaborator_alias)
+    fab_confirm_collaboration_request(
+        context, collaborator_alias, company_alias, open_invitation_link=False)

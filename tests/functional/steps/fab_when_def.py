@@ -55,7 +55,8 @@ from tests.functional.steps.fab_when_impl import (
     sso_sign_in,
     sso_supplier_confirms_email_address,
     prof_add_collaborator,
-    fab_confirm_collaboration_request
+    fab_confirm_collaboration_request,
+    fab_collaborator_create_sso_account_and_confirm_email
 )
 
 
@@ -382,4 +383,12 @@ def when_owner_adds_a_collaborator(
 def when_collaborator_confirms_the_collaboration_request(
         context, collaborator_alias, company_alias):
     fab_confirm_collaboration_request(
+        context, collaborator_alias, company_alias)
+
+
+@when('"{collaborator_alias}" opens the invitation from company "{company_alias}", creates a SSO/great.gov.uk account and confirms that he wants to be added to the FAB profile')
+@when('"{collaborator_alias}" opens the invitation from company "{company_alias}", creates a SSO/great.gov.uk account and confirms that she wants to be added to the FAB profile')
+def when_collaborator_creates_sso_account_and_confirms_email(
+        context, collaborator_alias, company_alias):
+    fab_collaborator_create_sso_account_and_confirm_email(
         context, collaborator_alias, company_alias)
