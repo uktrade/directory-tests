@@ -31,7 +31,7 @@ Feature: Multi-user accounts
     And "Peter Alder" added "Annette Geissinger" as a collaborator
     And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
 
-    When "Annette Geissinger" confirms that she wants to collaborate with company "Y" profile
+    When "Annette Geissinger" confirms that she wants to be added to the company "Y" Find a Buyer profile
 
     Then "Annette Geissinger" should see "FAB Company profile" page
 
