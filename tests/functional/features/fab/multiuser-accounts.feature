@@ -21,7 +21,6 @@ Feature: Multi-user accounts
       | an unverified | does not have        |
 
 
-  @wip
   @ED-3555
   @multi-user
   @add-collaborator
@@ -30,11 +29,11 @@ Feature: Multi-user accounts
     And "Annette Geissinger" has a verified standalone SSO/great.gov.uk account
     And "Annette Geissinger" is signed in to SSO/great.gov.uk account
     And "Peter Alder" added "Annette Geissinger" as a collaborator
-    And "Annette Geissinger" has received an email with a request for becoming a collaborator to company "Y" profile
+    And "Annette Geissinger" has received an email with a request for becoming a collaborator with company "Y" profile
 
-    When "Annette Geissinger" confirms that she wants to become a collaborator to company "Y" profile
+    When "Annette Geissinger" confirms that she wants to collaborate with company "Y" profile
 
-    Then "Annette Geissinger" should be on "Edit Company profile" page
+    Then "Annette Geissinger" should see "FAB Company profile" page
 
 
   @wip
