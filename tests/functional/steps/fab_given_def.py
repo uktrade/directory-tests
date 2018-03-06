@@ -18,7 +18,9 @@ from tests.functional.steps.fab_given_impl import (
     sso_create_standalone_verified_sso_account,
     sso_get_password_reset_link,
     unauthenticated_buyer,
-    unauthenticated_supplier
+    unauthenticated_supplier,
+    create_actor_with_or_without_sso_account,
+    create_actor_with_verified_or_unverified_fab_profile
 )
 from tests.functional.steps.fab_then_impl import (
     fab_should_see_all_case_studies,
@@ -26,7 +28,8 @@ from tests.functional.steps.fab_then_impl import (
     prof_should_see_logo_picture,
     reg_should_get_verification_email,
     sso_should_be_signed_in_to_sso_account,
-    sso_should_be_signed_out_from_sso_account
+    sso_should_be_signed_out_from_sso_account,
+    sso_should_get_request_for_collaboration_email
 )
 from tests.functional.steps.fab_when_impl import (
     go_to_page,
@@ -34,7 +37,8 @@ from tests.functional.steps.fab_when_impl import (
     prof_add_online_profiles,
     prof_set_company_description,
     prof_sign_out_from_fab,
-    prof_supplier_uploads_logo
+    prof_supplier_uploads_logo,
+    prof_add_collaborator
 )
 
 
@@ -110,18 +114,20 @@ def given_supplier_is_signed_out_from_sso(context, supplier_alias):
 
 @given('"{supplier_alias}" selected an active company without a Directory '
        'Profile identified by an alias "{company_alias}"')
-def given_supplier_selects_random_company(context, supplier_alias, company_alias):
+def given_supplier_selects_random_company(
+        context, supplier_alias, company_alias):
     reg_select_random_company_and_confirm_export_status(
         context, supplier_alias, company_alias)
 
 
 @given('"{supplier_alias}" has added links to online profiles')
-def given_supplier_adds_valid_links_to_online_profiles(context, supplier_alias):
+def given_supplier_adds_valid_links_to_online_profiles(
+        context, supplier_alias):
     prof_add_online_profiles(context, supplier_alias, context.table)
 
 
-@given('"{supplier_alias}" created an unverified profile for randomly selected '
-       'company "{company_alias}"')
+@given('"{supplier_alias}" created an unverified profile for randomly selected'
+       ' company "{company_alias}"')
 def given_unverified_profile(context, supplier_alias, company_alias):
     reg_create_unverified_profile(context, supplier_alias, company_alias)
 
@@ -133,12 +139,14 @@ def given_supplier_sets_logo_picture(context, supplier_alias, picture):
 
 @given('"{supplier_alias}" can see that logo on FAB Company\'s Directory '
        'Profile page')
-def given_supplier_can_see_correct_logo_on_fab_profile(context, supplier_alias):
+def given_supplier_can_see_correct_logo_on_fab_profile(
+        context, supplier_alias):
     prof_should_see_logo_picture(context, supplier_alias)
 
 
 @given('"{supplier_alias}" added a complete case study called "{case_alias}"')
-def given_supplier_added_complete_case_study(context, supplier_alias, case_alias):
+def given_supplier_added_complete_case_study(
+        context, supplier_alias, case_alias):
     prof_add_case_study(context, supplier_alias, case_alias)
     fab_should_see_all_case_studies(context, supplier_alias)
 
@@ -182,7 +190,7 @@ def given_actor_gets_company_slug(context, actor_alias, company_alias):
 
 
 @given('"{supplier_alias}" received the letter with verification code')
-def step_impl(context, supplier_alias):
+def given_supplier_received_verification_letter(context, supplier_alias):
     reg_should_get_verification_letter(context, supplier_alias)
 
 
@@ -196,4 +204,33 @@ def given_supplier_received_password_reset_email(context, supplier_alias):
 def given_verified_sso_account_associated_with_company(
         context, supplier_alias, company_alias):
     reg_create_verified_sso_account_associated_with_company(
+        context, supplier_alias, company_alias)
+
+
+@given('"{actor_alias}" has created "{verified_or_not}" profile for randomly '
+       'selected company "{company_alias}"')
+def given_actor_with_verified_or_not_profile(
+        context, actor_alias, verified_or_not, company_alias):
+    create_actor_with_verified_or_unverified_fab_profile(
+        context, actor_alias, verified_or_not, company_alias)
+
+
+@given('"{actor_alias}" "{has_or_does_not_have}" an SSO/great.gov.uk account')
+def given_actor_with_or_without_sso_account(
+        context, actor_alias, has_or_does_not_have):
+    create_actor_with_or_without_sso_account(
+        context, actor_alias, has_or_does_not_have)
+
+
+@given('"{supplier_alias}" added "{collaborator_alias}" as a collaborator')
+def given_supplier_added_a_collaborator(
+        context, supplier_alias, collaborator_alias):
+    prof_add_collaborator(context, supplier_alias, collaborator_alias)
+
+
+@given('"{supplier_alias}" has received an email with a request to confirm that he\'s been added to company "{company_alias}" Find a Buyer profile')
+@given('"{supplier_alias}" has received an email with a request to confirm that she\'s been added to company "{company_alias}" Find a Buyer profile')
+def given_actor_should_receive_email_with_request_for_collaboration(
+        context, supplier_alias, company_alias):
+    sso_should_get_request_for_collaboration_email(
         context, supplier_alias, company_alias)

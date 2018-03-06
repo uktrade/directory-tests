@@ -49,7 +49,8 @@ from tests.functional.steps.fab_then_impl import (
     sso_should_be_signed_in_to_sso_account,
     sso_should_be_told_about_password_reset,
     sso_should_get_password_reset_email,
-    sso_should_see_invalid_password_reset_link_error
+    sso_should_see_invalid_password_reset_link_error,
+    sso_should_get_request_for_collaboration_email
 )
 from tests.functional.steps.fab_when_impl import (
     fas_feedback_request_should_be_submitted,
@@ -364,3 +365,11 @@ def then_supplier_should_be_asked_about_verification(context, supplier_alias):
 @then('"{actor_alias}" should see "{message}" message')
 def then_actor_should_see_a_message(context, actor_alias, message):
     should_see_message(context, actor_alias, message)
+
+
+@then('"{actor_alias}" should receive an email with a request to confirm that he\'s been added to company "{company_alias}" Find a Buyer profile')
+@then('"{actor_alias}" should receive an email with a request to confirm that she\'s been added to company "{company_alias}" Find a Buyer profile')
+def then_actor_should_receive_email_with_request_for_collaboration(
+        context, actor_alias, company_alias):
+    sso_should_get_request_for_collaboration_email(
+        context, actor_alias, company_alias)
