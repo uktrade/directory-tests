@@ -228,8 +228,8 @@ def given_supplier_added_a_collaborator(
     prof_add_collaborator(context, supplier_alias, collaborator_alias)
 
 
-@given('"{supplier_alias}" has received an email with a request for becoming a'
-       ' collaborator with company "{company_alias}" profile')
+@given('"{supplier_alias}" has received an email with a request to confirm that he\'s been added to company "{company_alias}" Find a Buyer profile')
+@given('"{supplier_alias}" has received an email with a request to confirm that she\'s been added to company "{company_alias}" Find a Buyer profile')
 def given_actor_should_receive_email_with_request_for_collaboration(
         context, supplier_alias, company_alias):
     sso_should_get_request_for_collaboration_email(
