@@ -11,7 +11,7 @@ Feature: Multi-user accounts
 
     When "Peter Alder" decides to add "Annette Geissinger" as a collaborator
 
-    Then "Annette Geissinger" should receive an email with a request for becoming a collaborator to company "Y" profile
+    Then "Annette Geissinger" should receive an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
 
     Examples:
       | a             | has or does not have |
@@ -29,7 +29,7 @@ Feature: Multi-user accounts
     And "Annette Geissinger" has a verified standalone SSO/great.gov.uk account
     And "Annette Geissinger" is signed in to SSO/great.gov.uk account
     And "Peter Alder" added "Annette Geissinger" as a collaborator
-    And "Annette Geissinger" has received an email with a request for becoming a collaborator with company "Y" profile
+    And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
 
     When "Annette Geissinger" confirms that she wants to collaborate with company "Y" profile
 
@@ -44,7 +44,7 @@ Feature: Multi-user accounts
     Given "Peter Alder" has created and verified profile for randomly selected company "Y"
     And "Annette Geissinger" "does not have" an SSO/great.gov.uk account
     And "Peter Alder" added "Annette Geissinger" as a collaborator
-    And "Annette Geissinger" has received an email with a request for becoming a collaborator to company "Y" profile
+    And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
 
     When "Annette Geissinger" decides to confirm that she wants to become a collaborator to company "Y" profile
 
