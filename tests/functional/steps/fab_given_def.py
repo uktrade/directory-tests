@@ -188,7 +188,7 @@ def given_actor_gets_company_slug(context, actor_alias, company_alias):
 
 
 @given('"{supplier_alias}" received the letter with verification code')
-def step_impl(context, supplier_alias):
+def given_supplier_received_verification_letter(context, supplier_alias):
     reg_should_get_verification_letter(context, supplier_alias)
 
 
