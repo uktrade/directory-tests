@@ -28,7 +28,8 @@ from tests.functional.steps.fab_then_impl import (
     prof_should_see_logo_picture,
     reg_should_get_verification_email,
     sso_should_be_signed_in_to_sso_account,
-    sso_should_be_signed_out_from_sso_account
+    sso_should_be_signed_out_from_sso_account,
+    sso_should_get_request_for_collaboration_email
 )
 from tests.functional.steps.fab_when_impl import (
     go_to_page,
@@ -36,7 +37,8 @@ from tests.functional.steps.fab_when_impl import (
     prof_add_online_profiles,
     prof_set_company_description,
     prof_sign_out_from_fab,
-    prof_supplier_uploads_logo
+    prof_supplier_uploads_logo,
+    prof_add_collaborator
 )
 
 
@@ -218,3 +220,17 @@ def given_actor_with_or_without_sso_account(
         context, actor_alias, has_or_does_not_have):
     create_actor_with_or_without_sso_account(
         context, actor_alias, has_or_does_not_have)
+
+
+@given('"{supplier_alias}" added "{collaborator_alias}" as a collaborator')
+def given_supplier_added_a_collaborator(
+        context, supplier_alias, collaborator_alias):
+    prof_add_collaborator(context, supplier_alias, collaborator_alias)
+
+
+@given('"{supplier_alias}" has received an email with a request for becoming a'
+       ' collaborator with company "{company_alias}" profile')
+def given_actor_should_receive_email_with_request_for_collaboration(
+        context, supplier_alias, company_alias):
+    sso_should_get_request_for_collaboration_email(
+        context, supplier_alias, company_alias)
