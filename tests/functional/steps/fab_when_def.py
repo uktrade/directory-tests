@@ -54,7 +54,8 @@ from tests.functional.steps.fab_when_impl import (
     sso_request_password_reset,
     sso_sign_in,
     sso_supplier_confirms_email_address,
-    prof_add_collaborator
+    prof_add_collaborator,
+    fab_confirm_collaboration_request
 )
 
 
@@ -373,3 +374,13 @@ def when_supplier_tries_to_change_password_to_letters_only(
 @when('"{supplier_alias}" decides to add "{collaborator_alias}" as a collaborator')
 def when_owner_adds_a_collaborator(context, supplier_alias, collaborator_alias):
     prof_add_collaborator(context, supplier_alias, collaborator_alias)
+
+
+@when('"{collaborator_alias}" confirms that he wants to collaborate with '
+      'company "{company_alias}" profile')
+@when('"{collaborator_alias}" confirms that she wants to collaborate with '
+      'company "{company_alias}" profile')
+def when_collaborator_confirms_the_collaboration_request(
+        context, collaborator_alias, company_alias):
+    fab_confirm_collaboration_request(
+        context, collaborator_alias, company_alias)
