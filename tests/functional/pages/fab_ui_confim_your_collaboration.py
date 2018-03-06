@@ -19,7 +19,7 @@ def should_be_here(response: Response):
     logging.debug("Successfully got to the FAB Confirm your collaboration page")
 
 
-def open_confirmation_link(session: Session, link: str) -> Response:
+def open(session: Session, link: str) -> Response:
     """Open the invitation link sent to the Collaborator."""
     with assertion_msg("Expected a non-empty invitation link"):
         assert link
