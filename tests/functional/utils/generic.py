@@ -439,6 +439,17 @@ def extract_csrf_middleware_token(response: Response):
     return token
 
 
+def extract_registration_page_link(response: Response) -> str:
+    with assertion_msg(
+            "Can't extract link to the Registration page as the response has "
+            "no content"):
+        assert response.content
+    css_selector = "#header-register-link::attr(href)"
+    link = extract_by_css(response, css_selector)
+    logging.debug("Found link to the Registration page token: %s", link)
+    return link
+
+
 def extract_form_action(response: Response) -> str:
     """Extract the form action (endpoint).
 
