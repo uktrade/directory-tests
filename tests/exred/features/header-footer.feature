@@ -19,7 +19,7 @@ Feature: Header-Footer
       | SSO profile about                   |
       | Get finance                         |
       | Interim export opportunities        |
-      | Triage - what do you want to export |
+      | Triage - have you exported before   |
       | Find a Buyer                        |
 #      | Find a Supplier                     |
 #      | Events                              |
@@ -54,7 +54,7 @@ Feature: Header-Footer
     Examples: Export Readiness pages
       | specific                            |
       | Home                                |
-      | Triage - what do you want to export |
+      | Triage - have you exported before   |
       | Interim export opportunities        |
 
     Examples: FABS pages
