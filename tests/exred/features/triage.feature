@@ -11,7 +11,7 @@ Feature: Triage
 
     When "Nadia" says that she "has" exported before
     And "Nadia" says that exporting is "a regular" part of her business
-    And "Nadia" says what she wants to export "<goods_or_services>"
+#    And "Nadia" says what she wants to export "<goods_or_services>"
     And "Nadia" says that her company "is" incorporated
     And "Nadia" "<company_name_action>" her company name
     And "Nadia" sees the summary page with answers to the questions she was asked
@@ -37,7 +37,7 @@ Feature: Triage
 
     When "Nadia" says that she "has" exported before
     And "Nadia" says that exporting is "a regular" part of her business
-    And "Nadia" says what she wants to export "<goods_or_services>"
+#    And "Nadia" says what she wants to export "<goods_or_services>"
     And "Nadia" says that her company "is not" incorporated
     And "Nadia" sees the summary page with answers to the questions she was asked
     And "Nadia" can see that she was classified as a "regular" exporter
@@ -48,7 +48,7 @@ Feature: Triage
     Examples:
       | goods_or_services |
       | goods             |
-      | services          |
+#      | services          |
 
 
   @new-triage
@@ -62,7 +62,7 @@ Feature: Triage
     When "Inigo" says that she "has" exported before
     And "Inigo" says that exporting is "not a regular" part of her business
     And "Inigo" says that she "<online_action>" used online marketplaces
-    And "Inigo" says what she wants to export "<goods_or_services>"
+#    And "Inigo" says what she wants to export "<goods_or_services>"
     And "Inigo" says that her company "is" incorporated
     And "Inigo" "<company_name_action>" his company name
     And "Inigo" sees the summary page with answers to the questions he was asked
@@ -92,7 +92,7 @@ Feature: Triage
     When "Inigo" says that she "has" exported before
     And "Inigo" says that exporting is "not a regular" part of her business
     And "Inigo" says that she "<online_action>" used online marketplaces
-    And "Inigo" says what she wants to export "<goods_or_services>"
+#    And "Inigo" says what she wants to export "<goods_or_services>"
     And "Inigo" says that her company "is not" incorporated
     And "Inigo" sees the summary page with answers to the questions he was asked
     And "Inigo" can see that she was classified as a "occasional" exporter
@@ -115,7 +115,7 @@ Feature: Triage
     And "Jonah" decided to build his exporting journey
 
     When "Jonah" says that he "has never" exported before
-    And "Inigo" says what she wants to export "<goods_or_services>"
+#    And "Inigo" says what she wants to export "<goods_or_services>"
     And "Jonah" says that his company "is" incorporated
     And "Jonah" "<company_name_action>" his company name
     And "Jonah" sees the summary page with answers to the questions he was asked
@@ -140,7 +140,7 @@ Feature: Triage
     And "Jonah" decided to build his exporting journey
 
     When "Jonah" says that he "has never" exported before
-    And "Jonah" says what he wants to export "<goods_or_services>"
+#    And "Jonah" says what he wants to export "<goods_or_services>"
     And "Jonah" says that his company "is not" incorporated
     And "Jonah" sees the summary page with answers to the questions he was asked
     And "Jonah" can see that he was classified as a "new" exporter
@@ -151,8 +151,7 @@ Feature: Triage
     Examples:
       | goods_or_services |
       | goods             |
-      | services          |
-      | goods             |
+#      | services          |
 
 
   @ED-2523
@@ -168,5 +167,5 @@ Feature: Triage
     Examples: classifications
       | specific   |
       | New        |
-      | Occasional |
-      | Regular    |
+#      | Occasional |
+#      | Regular    |
