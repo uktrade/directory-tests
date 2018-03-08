@@ -123,7 +123,9 @@ def personalised_should_see_layout_for(
     actor = get_actor(context, actor_alias)
     incorporated = actor.are_you_incorporated
     online_marketplaces = actor.do_you_use_online_marketplaces
-    code, _ = actor.what_do_you_want_to_export
+    code = None
+    if actor.what_do_you_want_to_export:
+        code, _ = actor.what_do_you_want_to_export
     if classification.lower() == "new":
         personalised_journey.layout_for_new_exporter(
             context.driver, incorporated=incorporated, sector_code=code)
