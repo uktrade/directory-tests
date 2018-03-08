@@ -320,8 +320,6 @@ def triage_classify_as_new(
         sector: str, *, start_from_home_page: bool = True):
     if start_from_home_page:
         start_triage(context, actor_alias)
-    triage_say_what_do_you_want_to_export(
-        context, actor_alias, code=code, sector=sector)
     triage_say_you_never_exported_before(context, actor_alias)
     if incorporated:
         triage_say_you_are_incorporated(context, actor_alias)
@@ -338,8 +336,6 @@ def triage_classify_as_occasional(
         start_from_home_page: bool = True):
     if start_from_home_page:
         start_triage(context, actor_alias)
-    triage_say_what_do_you_want_to_export(
-        context, actor_alias, code=code, sector=sector)
     triage_say_you_exported_before(context, actor_alias)
     triage_say_you_do_not_export_regularly(context, actor_alias)
     if use_online_marketplaces:
@@ -361,8 +357,6 @@ def triage_classify_as_regular(
         sector: str, *, start_from_home_page: bool = True):
     if start_from_home_page:
         start_triage(context, actor_alias)
-    triage_say_what_do_you_want_to_export(
-        context, actor_alias, code=code, sector=sector)
     triage_say_you_exported_before(context, actor_alias)
     triage_say_you_export_regularly(context, actor_alias)
     if incorporated:
@@ -490,9 +484,6 @@ def triage_change_answers(context: Context, actor_alias: str):
 def triage_answer_questions_again(context: Context, actor_alias: str):
     driver = context.driver
     actor = get_actor(context, actor_alias)
-    code, sector = actor.what_do_you_want_to_export
-    triage_what_do_you_want_to_export.is_sector(driver, code, sector)
-    triage_what_do_you_want_to_export.submit(driver)
 
     def continue_from_are_you_incorporated():
         if actor.are_you_incorporated:
