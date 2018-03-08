@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Triage - What do you want to export? Page Object."""
-import random
+"""Triage What do you want to export page."""
 from urllib.parse import urljoin
 
 from selenium import webdriver
@@ -8,10 +7,9 @@ from selenium import webdriver
 from pages.common_actions import (
     check_for_expected_elements,
     check_title,
-    check_url,
-    go_to_url
+    check_url
 )
-from settings import EXRED_SECTORS, EXRED_UI_URL
+from settings import EXRED_UI_URL
 from utils import (
     assertion_msg,
     find_element,
@@ -19,25 +17,28 @@ from utils import (
     wait_for_page_load_after_action
 )
 
-NAME = "ExRed Triage - what do you want to export"
-URL = urljoin(EXRED_UI_URL, "triage/sector/")
+NAME = "ExRed Triage - What do you want to export"
+URL = urljoin(EXRED_UI_URL, "triage/good-or-services/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
-SECTORS_COMBOBOX = ".exred-triage-form div[role=combobox]"
-SECTORS_INPUT = "#js-sector-select"
-AUTOCOMPLETE_1ST_OPTION = "#js-sector-select__option--0"
-CONTINUE_BUTTON = "#content .exred-triage-form button[type=submit]"
-BACK_TO_HOME_LINK = "#content .home-link a"
+QUESTION_LABEL = "#triage-question-label"
+QUESTION = "#triage-question"
+SERVICES_CHECKBOX = "#triage-answer-services"
+GOODS_CHECKBOX = "#triage-answer-goods"
+SERVICES_CHECKBOX_LABEL = "#triage-answer-services-label"
+GOODS_CHECKBOX_LABEL = "#triage-answer-goods-label"
+CONTINUE_BUTTON = "#triage-continue"
+PREVIOUS_STEP_BUTTON = "#triage-previous-step"
+BACK_TO_HOME_LINK = "#triage-go-back-home"
+SKIP_THIS_STEP_LINK = "#triage-skip-this-step"
 EXPECTED_ELEMENTS = {
-    "question": "#content .exred-triage-form label",
-    "sectors combobox": SECTORS_COMBOBOX,
+    "question": "#id_triage_wizard_form_view-current_step ~ li > label",
+    "services checkbox": SERVICES_CHECKBOX,
+    "goods checkbox": GOODS_CHECKBOX,
     "continue button": CONTINUE_BUTTON,
+    "previous step button": PREVIOUS_STEP_BUTTON,
     "back to home link": BACK_TO_HOME_LINK
 }
-
-
-def visit(driver: webdriver, *, first_time: bool = False):
-    go_to_url(driver, URL, NAME, first_time=first_time)
 
 
 def should_be_here(driver: webdriver):
@@ -47,56 +48,42 @@ def should_be_here(driver: webdriver):
     check_for_expected_elements(driver, EXPECTED_ELEMENTS)
 
 
-def enter(driver: webdriver, code: str, sector: str) -> tuple:
-    """Enter information about the things you want to export.
-
-    :param driver: webdriver object
-    :param code: sector code. Codes for:
-                 Goods start with HS, and for Services with EB (no facts are
-                 available for such codes)
-    :param sector: specific product to use. Will select random if not set.
-    :return: selected code & sector name
-    """
-    if not code and not sector:
-        code, sector = random.choice(list(EXRED_SECTORS.items()))
-    input_field = find_element(
-        driver, by_css=SECTORS_INPUT, element_name="Sectors input field",
+def select_services(driver: webdriver):
+    yes = find_element(
+        driver, by_css=SERVICES_CHECKBOX, element_name="Services checkbox",
         wait_for_it=False)
-    max_retries = 5
-    counter = 0
-    while (code.lower() not in input_field.get_attribute("value").lower()) \
-            and (counter < max_retries):
-        input_field.click()
-        input_field.clear()
-        input_field.send_keys(code or sector)
-        counter += 1
-    option = find_element(
-        driver, by_css=AUTOCOMPLETE_1ST_OPTION,
-        element_name="Autocomplete list - 1st option", wait_for_it=False)
-    option.click()
+    yes.click()
     take_screenshot(driver, NAME)
-    return code, sector
+
+
+def select_goods(driver: webdriver):
+    no = find_element(
+        driver, by_css=GOODS_CHECKBOX, element_name="Goods checkbox",
+        wait_for_it=False)
+    no.click()
+    take_screenshot(driver, NAME)
 
 
 def submit(driver: webdriver):
     button = find_element(
-        driver, by_css=CONTINUE_BUTTON, element_name="Continue button",
-        wait_for_it=True)
+        driver, by_css=CONTINUE_BUTTON, element_name="Submit button",
+        wait_for_it=False)
     with wait_for_page_load_after_action(driver):
         button.click()
     take_screenshot(driver, NAME + " after submitting")
 
 
-def is_sector(driver: webdriver, code: str, sector: str):
-    input_field = find_element(
-        driver, by_css=SECTORS_INPUT, element_name="Sector selector",
+def is_yes_selected(driver: webdriver):
+    yes = find_element(
+        driver, by_css=SERVICES_CHECKBOX, element_name="Yes radio button",
         wait_for_it=False)
-    input_field_value = input_field.get_attribute("value").lower()
-    with assertion_msg(
-            "Expected the sector input field to be pre-populated with Sector "
-            "Code: '%s' but instead found '%s'", code, input_field_value):
-        assert code.lower() in input_field_value
-    with assertion_msg(
-            "Expected the sector input field to be pre-populated with Sector "
-            "Name: '%s' but instead found '%s'", sector, input_field_value):
-        assert sector.lower() in input_field_value
+    with assertion_msg("Expected Yes option to be selected"):
+        assert yes.get_property("checked")
+
+
+def is_no_selected(driver: webdriver):
+    no = find_element(
+        driver, by_css=GOODS_CHECKBOX, element_name="No radio button",
+        wait_for_it=False)
+    with assertion_msg("Expected No option to be selected"):
+        assert no.get_property("checked")
