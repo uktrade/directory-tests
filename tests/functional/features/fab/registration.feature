@@ -13,7 +13,6 @@ Feature: Trade Profile
       And "Annette Geissinger" received the letter with verification code
 
       When "Annette Geissinger" goes to the verification link from the letter as authenticated user
-      And "Annette Geissinger" decides to verify her identity with the address
       And "Annette Geissinger" submits the verification code
 
       Then "Annette Geissinger" should be told that company has been verified
@@ -32,7 +31,6 @@ Feature: Trade Profile
       And "Annette Geissinger" received the letter with verification code
 
       When "Annette Geissinger" goes to the verification link from the letter as unauthenticated user
-      And "Annette Geissinger" decides to verify her identity with the address
       And "Annette Geissinger" submits the verification code
 
       Then "Annette Geissinger" should be told that company has been verified
