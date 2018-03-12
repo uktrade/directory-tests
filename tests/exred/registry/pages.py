@@ -46,7 +46,7 @@ EXRED_PAGE_REGISTRY = {
         "url": home.URL,
         "po": home
     },
-    "tirage - what do you want to export": {
+    "triage - what do you want to export": {
         "url": triage_what_do_you_want_to_export.URL,
         "po": triage_what_do_you_want_to_export
     },
