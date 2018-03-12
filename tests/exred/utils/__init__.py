@@ -214,6 +214,7 @@ def selenium_action(driver: webdriver, message: str, *args):
                 .format(browser, version, platform, session_id))
         if args:
             message = message % args
+        print("{} - {}".format(info, message))
         logging.debug("%s - %s", info, message)
         e.args += (message,)
         _, _, tb = sys.exc_info()
@@ -374,8 +375,8 @@ def find_element(
     """
     assert by_id or by_css, "Provide ID or CSS selector"
     with selenium_action(
-            driver, "Couldn't find element %s using '%s'", element_name,
-            by_css or by_id):
+            driver, "Couldn't find element called '%s' using selector '%s' on"
+                    " %s", element_name, by_css or by_id, driver.current_url):
         if by_css:
             element = driver.find_element_by_css_selector(by_css)
         else:
