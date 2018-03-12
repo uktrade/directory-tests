@@ -126,6 +126,7 @@ def personalised_should_see_layout_for(
     code = None
     if actor.what_do_you_want_to_export:
         code, _ = actor.what_do_you_want_to_export
+    personalised_journey.should_be_here(context.driver)
     if classification.lower() == "new":
         personalised_journey.layout_for_new_exporter(
             context.driver, incorporated=incorporated, sector_code=code)
