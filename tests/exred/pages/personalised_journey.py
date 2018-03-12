@@ -247,8 +247,6 @@ def layout_for_new_exporter(
     ** is not incorporated, then `no services are displayed`
     """
     should_see_section(driver, "hero")
-    if sector_code:
-        check_facts_and_top_10(driver, sector_code)
     should_see_section(driver, "article list")
     if incorporated:
         should_see_section(driver, "fab section")
@@ -270,8 +268,6 @@ def layout_for_occasional_exporter(
         then `no services are displayed`
     """
     should_see_section(driver, "hero")
-    if sector_code:
-        check_facts_and_top_10(driver, sector_code)
     should_see_section(driver, "article list")
     if incorporated and use_online_marketplaces:
         should_see_section(driver, "fab section")
