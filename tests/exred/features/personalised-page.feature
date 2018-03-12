@@ -16,8 +16,8 @@ Feature: Customised page
 
     Examples:
       | goods_or_services | has_or_has_not | expected                                             |
-      | goods             | has            | Top 10, FAB section, SOO tile, ExOpps tile, Guidance |
-      | goods             | has not        | Top 10, SOO tile, ExOpps tile, Guidance              |
+      | goods             | has            | FAB section, SOO tile, ExOpps tile, Guidance |
+      | goods             | has not        | SOO tile, ExOpps tile, Guidance              |
       | services          | has            | FAB section, SOO tile, ExOpps tile, Guidance         |
       | services          | has not        | SOO tile, ExOpps tile, Guidance                      |
 
