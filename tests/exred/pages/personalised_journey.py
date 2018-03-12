@@ -291,8 +291,6 @@ def layout_for_regular_exporter(
     ** not incorporated, then `SOO & ExOpps` are displayed
     """
     should_see_section(driver, "hero")
-    if sector_code:
-        check_facts_and_top_10(driver, sector_code)
     if incorporated:
         should_see_section(driver, "fab section")
     should_see_section(driver, "soo tile")
