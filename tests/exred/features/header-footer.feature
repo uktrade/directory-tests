@@ -130,7 +130,7 @@ Feature: Header-Footer
 
     When "Robert" decides to use "Start now button" on "Create your export journey" page
 
-    Then "Robert" should be on the "Triage - what do you want to export" page
+    Then "Robert" should be on the "Triage - have you exported before" page
 
 
   @ED-3263
