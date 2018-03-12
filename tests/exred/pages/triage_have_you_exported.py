@@ -7,7 +7,8 @@ from selenium import webdriver
 from pages.common_actions import (
     check_for_expected_elements,
     check_title,
-    check_url
+    check_url,
+    go_to_url
 )
 from settings import EXRED_UI_URL
 from utils import (
@@ -34,6 +35,10 @@ EXPECTED_ELEMENTS = {
     "continue button": CONTINUE_BUTTON,
     "back to home link": BACK_TO_HOME_LINK
 }
+
+
+def visit(driver: webdriver, *, first_time: bool = False):
+    go_to_url(driver, URL, NAME, first_time=first_time)
 
 
 def should_be_here(driver: webdriver):
