@@ -6,6 +6,7 @@ AUTO_RETRY = (True
               if __auto_retry
               and __auto_retry.lower() in ["true", "1", "yes"]
               else False)
+AUTO_RETRY_MAX_ATTEMPTS = int(os.environ.get("AUTO_RETRY_MAX_ATTEMPTS", "2"))
 
 DIRECTORY_API_URL = os.environ["DIRECTORY_API_URL"]
 DIRECTORY_API_CLIENT_KEY = os.environ["DIRECTORY_API_CLIENT_KEY"]
