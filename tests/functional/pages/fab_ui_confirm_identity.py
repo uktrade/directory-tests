@@ -59,7 +59,7 @@ def should_be_here(
     logging.debug("Successfully got to the FAB Confirm your Identity page")
 
 
-def send(actor: Actor) -> Response:
+def confirm_with_letter(actor: Actor) -> Response:
     """Choose to verify your identity with a physical letter.
 
     :param actor: a namedtuple with Actor details

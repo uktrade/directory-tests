@@ -357,7 +357,7 @@ def bp_verify_identity_with_letter(context: Context, supplier_alias: str):
     session = actor.session
 
     # Step 1 - Choose to verify with a letter
-    response = fab_ui_confirm_identity.send(actor)
+    response = fab_ui_confirm_identity.confirm_with_letter(actor)
     context.response = response
 
     # Step 2 - check if Supplier is on the We've sent you a verification letter
