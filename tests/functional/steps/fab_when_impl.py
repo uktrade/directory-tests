@@ -1596,8 +1596,7 @@ def fab_go_to_letter_verification(
     context.response = response
 
     if logged_in:
-        fab_ui_confirm_identity.should_be_here(
-            response, letter_verification=True)
+        fab_ui_verify_company.should_be_here(response)
     else:
         sso_ui_login.should_be_here(response)
 
@@ -1616,11 +1615,7 @@ def fab_go_to_letter_verification(
         response = sso_ui_login.login(actor, referer=referer, next_param=next)
         context.response = response
 
-        fab_ui_confirm_identity.should_be_here(
-            response, letter_verification=True)
-
-    response = fab_ui_confirm_identity.send(actor)
-    context.response = response
+        fab_ui_verify_company.should_be_here(response)
 
 
 def fab_choose_to_verify_with_code(context: Context, supplier_alias: str):
