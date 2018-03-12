@@ -16,6 +16,9 @@ Feature: Top importers
     Then "Robert" should not see the Top Importer banner and Top 10 Importers table for their sector
 
 
+  @bug
+  @ED-3702
+  @fixme
   @new-triage
   @ED-2699
   @triage
@@ -47,6 +50,9 @@ Feature: Top importers
       | Government services, n.i.e.                   |
 
 
+  @bug
+  @ED-3702
+  @fixme
   @new-triage
   @wip
   @long
@@ -163,6 +169,9 @@ Feature: Top importers
       | Commodities not specified according to kind                                                                                                                                                                                               |
 
 
+  @bug
+  @ED-3702
+  @fixme
   @new-triage
   @wip
   @long
