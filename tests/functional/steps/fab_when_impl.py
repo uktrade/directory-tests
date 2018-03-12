@@ -1592,7 +1592,7 @@ def fas_search_with_term(context, actor_alias, search_term):
 def fab_go_to_letter_verification(
         context: Context, supplier_alias: str, logged_in: bool):
     actor = context.get_actor(supplier_alias)
-    response = fab_ui_confirm_identity.go_to(actor.session, logged_in=logged_in)
+    response = fab_ui_confirm_identity.go_to(actor.session)
     context.response = response
 
     if logged_in:

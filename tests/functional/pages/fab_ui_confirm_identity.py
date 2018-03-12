@@ -31,10 +31,8 @@ EXPECTED_STRINGS_DURING_PROFILE_BUILDING = ["Send"]
 EXPECTED_STRINGS_WHILE_LETTER_VERIFICATION = ["Verify with your address"]
 
 
-def go_to(session: Session, *, logged_in: bool = True):
+def go_to(session: Session):
     response = make_request(Method.GET, URL, session=session)
-    if logged_in:
-        should_be_here(response, letter_verification=True)
     return response
 
 
