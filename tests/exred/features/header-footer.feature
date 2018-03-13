@@ -230,6 +230,9 @@ Feature: Header-Footer
       | Occasional |
 
 
+  @bug
+  @ED-3702
+  @fixed
   @ED-3286
   @your-export-journey-link
   @fake-sso-email-verification
