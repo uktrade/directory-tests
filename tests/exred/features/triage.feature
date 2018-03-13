@@ -1,6 +1,7 @@
 @triage
 Feature: Triage
 
+  @new-triage
   @ED-2520
   @first-time
   @regular
@@ -8,9 +9,9 @@ Feature: Triage
     Given "Nadia" visits the "Home" page for the first time
     And "Nadia" decided to build her exporting journey
 
-    When "Nadia" says what does she wants to export
-    And "Nadia" says that she "has" exported before
+    When "Nadia" says that she "has" exported before
     And "Nadia" says that exporting is "a regular" part of her business
+#    And "Nadia" says what she wants to export "<goods_or_services>"
     And "Nadia" says that her company "is" incorporated
     And "Nadia" "<company_name_action>" her company name
     And "Nadia" sees the summary page with answers to the questions she was asked
@@ -20,22 +21,23 @@ Feature: Triage
     Then "Nadia" should be on the Personalised Journey page for "regular" exporters
 
     Examples:
-      | company_name_action  |
-      | types in             |
-      | does not provide     |
-      | types in and selects |
+      | company_name_action  | goods_or_services |
+      | types in             | goods             |
+      | does not provide     | services          |
+      | types in and selects | good              |
 
 
+  @new-triage
   @ED-2520
   @first-time
   @regular
-  Scenario: Not incorporated Regular Exporter visiting the home page for the 1st time should be able to get to personalised page after going through triage process
+  Scenario Outline: Not incorporated Regular Exporter visiting the home page for the 1st time should be able to get to personalised page after going through triage process
     Given "Nadia" visits the "Home" page for the first time
     And "Nadia" decided to build her exporting journey
 
-    When "Nadia" says what does she wants to export
-    And "Nadia" says that she "has" exported before
+    When "Nadia" says that she "has" exported before
     And "Nadia" says that exporting is "a regular" part of her business
+#    And "Nadia" says what she wants to export "<goods_or_services>"
     And "Nadia" says that her company "is not" incorporated
     And "Nadia" sees the summary page with answers to the questions she was asked
     And "Nadia" can see that she was classified as a "regular" exporter
@@ -43,7 +45,13 @@ Feature: Triage
 
     Then "Nadia" should be on the Personalised Journey page for "regular" exporters
 
+    Examples:
+      | goods_or_services |
+      | goods             |
+#      | services          |
 
+
+  @new-triage
   @ED-2521
   @first-time
   @occasional
@@ -51,10 +59,10 @@ Feature: Triage
     Given "Inigo" visits the "home" page for the first time
     And "Inigo" decided to build his exporting journey
 
-    When "Inigo" says what does she wants to export
-    And "Inigo" says that she "has" exported before
+    When "Inigo" says that she "has" exported before
     And "Inigo" says that exporting is "not a regular" part of her business
     And "Inigo" says that she "<online_action>" used online marketplaces
+#    And "Inigo" says what she wants to export "<goods_or_services>"
     And "Inigo" says that her company "is" incorporated
     And "Inigo" "<company_name_action>" his company name
     And "Inigo" sees the summary page with answers to the questions he was asked
@@ -64,15 +72,16 @@ Feature: Triage
     Then "Inigo" should be on the Personalised Journey page for "occasional" exporters
 
     Examples:
-      | online_action | company_name_action  |
-      | has           | types in             |
-      | has never     | types in             |
-      | has           | does not provide     |
-      | has never     | does not provide     |
-      | has           | types in and selects |
-      | has never     | types in and selects |
+      | online_action | company_name_action  | goods_or_services |
+      | has           | types in             | goods             |
+      | has never     | types in             | services          |
+      | has           | does not provide     | goods             |
+      | has never     | does not provide     | services          |
+      | has           | types in and selects | goods             |
+      | has never     | types in and selects | services          |
 
 
+  @new-triage
   @ED-2521
   @first-time
   @occasional
@@ -80,10 +89,10 @@ Feature: Triage
     Given "Inigo" visits the "home" page for the first time
     And "Inigo" decided to build his exporting journey
 
-    When "Inigo" says what does she wants to export
-    And "Inigo" says that she "has" exported before
+    When "Inigo" says that she "has" exported before
     And "Inigo" says that exporting is "not a regular" part of her business
     And "Inigo" says that she "<online_action>" used online marketplaces
+#    And "Inigo" says what she wants to export "<goods_or_services>"
     And "Inigo" says that her company "is not" incorporated
     And "Inigo" sees the summary page with answers to the questions he was asked
     And "Inigo" can see that she was classified as a "occasional" exporter
@@ -92,11 +101,12 @@ Feature: Triage
     Then "Inigo" should be on the Personalised Journey page for "occasional" exporters
 
     Examples:
-      | online_action |
-      | has           |
-      | has never     |
+      | online_action | online_action |
+      | has           | goods         |
+      | has never     | services      |
 
 
+  @new-triage
   @ED-2522
   @first-time
   @new
@@ -104,8 +114,8 @@ Feature: Triage
     Given "Jonah" visits the "home" page for the first time
     And "Jonah" decided to build his exporting journey
 
-    When "Jonah" says what does he wants to export
-    And "Jonah" says that he "has never" exported before
+    When "Jonah" says that he "has never" exported before
+#    And "Inigo" says what she wants to export "<goods_or_services>"
     And "Jonah" says that his company "is" incorporated
     And "Jonah" "<company_name_action>" his company name
     And "Jonah" sees the summary page with answers to the questions he was asked
@@ -115,27 +125,33 @@ Feature: Triage
     Then "Jonah" should be on the Personalised Journey page for "new" exporters
 
     Examples:
-      | company_name_action  |
-      | types in             |
-      | does not provide     |
-      | types in and selects |
+      | company_name_action  | goods_or_services |
+      | types in             | goods             |
+      | does not provide     | services          |
+      | types in and selects | goods             |
 
 
+  @new-triage
   @ED-2522
   @first-time
   @new
-  Scenario: Not incorporated New Exporter visiting the home page for the 1st time should be able to get to personalised page after going through triage process
+  Scenario Outline: Not incorporated New Exporter visiting the home page for the 1st time should be able to get to personalised page after going through triage process
     Given "Jonah" visits the "home" page for the first time
     And "Jonah" decided to build his exporting journey
 
-    When "Jonah" says what does he wants to export
-    And "Jonah" says that he "has never" exported before
+    When "Jonah" says that he "has never" exported before
+#    And "Jonah" says what he wants to export "<goods_or_services>"
     And "Jonah" says that his company "is not" incorporated
     And "Jonah" sees the summary page with answers to the questions he was asked
     And "Jonah" can see that he was classified as a "new" exporter
     And "Jonah" decides to create his personalised journey page
 
     Then "Jonah" should be on the Personalised Journey page for "new" exporters
+
+    Examples:
+      | goods_or_services |
+      | goods             |
+#      | services          |
 
 
   @ED-2523
@@ -151,5 +167,5 @@ Feature: Triage
     Examples: classifications
       | specific   |
       | New        |
-      | Occasional |
-      | Regular    |
+#      | Occasional |
+#      | Regular    |

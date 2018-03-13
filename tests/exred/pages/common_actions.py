@@ -87,7 +87,8 @@ def check_for_section(
         element = find_element(
             driver, by_css=selector, element_name=element_name)
         with assertion_msg(
-                "'%s' in '%s' is not displayed", element_name, sought_section):
+                "'%s' in '%s' is not displayed on: %s", element_name,
+                sought_section, driver.current_url):
             assert element.is_displayed()
             logging.debug(
                 "'%s' in '%s' is displayed", element_name, sought_section)

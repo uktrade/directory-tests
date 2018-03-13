@@ -240,14 +240,13 @@ def check_facts_and_top_10(driver: webdriver, sector_code: str):
 
 
 def layout_for_new_exporter(
-        driver: webdriver, incorporated: bool, sector_code: str):
+        driver: webdriver, incorporated: bool, *, sector_code: str = None):
     """
     * a new exporter says his company:
     ** incorporated, then only `FAB` is displayed
     ** is not incorporated, then `no services are displayed`
     """
     should_see_section(driver, "hero")
-    check_facts_and_top_10(driver, sector_code)
     should_see_section(driver, "article list")
     if incorporated:
         should_see_section(driver, "fab section")
@@ -256,7 +255,7 @@ def layout_for_new_exporter(
 
 def layout_for_occasional_exporter(
         driver: webdriver, incorporated: bool, use_online_marketplaces: bool,
-        sector_code: str):
+        *, sector_code: str = None):
     """
     * an occasional exporter says his company:
     ** used online marketplaces and is incorporated,
@@ -269,7 +268,6 @@ def layout_for_occasional_exporter(
         then `no services are displayed`
     """
     should_see_section(driver, "hero")
-    check_facts_and_top_10(driver, sector_code)
     should_see_section(driver, "article list")
     if incorporated and use_online_marketplaces:
         should_see_section(driver, "fab section")
@@ -282,14 +280,13 @@ def layout_for_occasional_exporter(
 
 
 def layout_for_regular_exporter(
-        driver: webdriver, incorporated: bool, sector_code: str):
+        driver: webdriver, incorporated: bool, *, sector_code: str = None):
     """
     * a regular exporter says his company is:
     ** incorporated, then `FAB, SOO & ExOpps` are displayed
     ** not incorporated, then `SOO & ExOpps` are displayed
     """
     should_see_section(driver, "hero")
-    check_facts_and_top_10(driver, sector_code)
     if incorporated:
         should_see_section(driver, "fab section")
     should_see_section(driver, "soo tile")

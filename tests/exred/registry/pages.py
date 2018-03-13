@@ -33,8 +33,8 @@ from pages import (
     triage_do_you_use_online_marketplaces,
     triage_have_you_exported,
     triage_summary,
-    triage_what_do_you_want_to_export,
-    visit_britain
+    visit_britain,
+    triage_what_do_you_want_to_export
 )
 
 EXRED_PAGE_REGISTRY = {

@@ -19,7 +19,7 @@ Feature: Header-Footer
       | SSO profile about                   |
       | Get finance                         |
       | Interim export opportunities        |
-      | Triage - what do you want to export |
+      | Triage - have you exported before   |
       | Find a Buyer                        |
 #      | Find a Supplier                     |
 #      | Events                              |
@@ -54,7 +54,7 @@ Feature: Header-Footer
     Examples: Export Readiness pages
       | specific                            |
       | Home                                |
-      | Triage - what do you want to export |
+      | Triage - have you exported before   |
       | Interim export opportunities        |
 
     Examples: FABS pages
@@ -130,7 +130,7 @@ Feature: Header-Footer
 
     When "Robert" decides to use "Start now button" on "Create your export journey" page
 
-    Then "Robert" should be on the "Triage - what do you want to export" page
+    Then "Robert" should be on the "Triage - have you exported before" page
 
 
   @ED-3263
@@ -230,6 +230,9 @@ Feature: Header-Footer
       | Occasional |
 
 
+  @bug
+  @ED-3702
+  @fixed
   @ED-3286
   @your-export-journey-link
   @fake-sso-email-verification

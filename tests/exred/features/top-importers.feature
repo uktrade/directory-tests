@@ -2,40 +2,32 @@
 Feature: Top importers
 
 
+  @new-triage
   @ED-2697
   @triage
   @personalised-page
   @services
-  Scenario Outline: Any Exporter should NOT see the Top Importer Banner and Top 10 Importers table for "<specific>" Services sector
-    Given "Robert" exports "<specific>" service
+  Scenario: Service Exporter should NOT see the Top Importer Banner and Top 10 Importers table
+    Given "Robert" exports "services"
     And "Robert" answered triage questions
 
-    When "Robert" decides to create her personalised journey page
+    When "Robert" decides to create his personalised journey page
 
     Then "Robert" should not see the Top Importer banner and Top 10 Importers table for their sector
 
-    Examples: service sectors
-      | specific                                      |
-      | Transportation                                |
-      | Travel                                        |
-      | Communications services                       |
-      | Construction services                         |
-      | Insurance services                            |
-      | Financial services                            |
-      | Computer and information services             |
-      | Royalties and license fees                    |
-      | Other business services                       |
-      | Personal, cultural, and recreational services |
-      | Government services, n.i.e.                   |
 
-
+  @bug
+  @ED-3702
+  @fixme
+  @new-triage
   @ED-2699
   @triage
   @personalised-page
-  Scenario Outline: Exporters should NOT see the Top Importer Banner and Top 10 Importers table after changing from exporting "Goods" to "<specific>" Services
+  Scenario Outline: Exporters should NOT see the Top Importer Banner and Top 10 Importers table after changing from exporting "Goods" to Services
     Given "Robert" exports "goods"
     And "Robert" answered triage questions
     And "Robert" decided to create her personalised journey page
+#    And "Robert" selected the goods category he'd like to export
     And "Robert" can see "Top 10" section on "personalised journey" page
 
     When "Robert" decides to change the sector to "<specific>" service
@@ -58,16 +50,21 @@ Feature: Top importers
       | Government services, n.i.e.                   |
 
 
+  @bug
+  @ED-3702
+  @fixme
+  @new-triage
   @wip
   @long
   @ED-2696
   @triage
   @personalised-page
   Scenario Outline: Any Exporter should see a Banner and Top importers for their "<specific>" Goods sector
-    Given "Robert" exports "<specific>" good
+    Given "Robert" exports "goods"
     And "Robert" answered triage questions
 
     When "Robert" decides to create his personalised journey page
+#    And "Robert" selects "<specific>" as the goods category he'd like to export
 
     Then "Robert" should see a Banner and Top importers table for their sector on personalised journey page
 
@@ -172,6 +169,10 @@ Feature: Top importers
       | Commodities not specified according to kind                                                                                                                                                                                               |
 
 
+  @bug
+  @ED-3702
+  @fixme
+  @new-triage
   @wip
   @long
   @ED-2698
@@ -185,6 +186,7 @@ Feature: Top importers
 
     When "Robert" decides to change the sector to "<specific>" good
     And "Robert" goes through triage again
+#    And "Robert" selects "<specific>" as the goods category he'd like to export
 
     Then "Robert" should see a Banner and Top importers table for their sector on personalised journey page
 

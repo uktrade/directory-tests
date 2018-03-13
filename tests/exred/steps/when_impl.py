@@ -30,6 +30,7 @@ from pages import (
     triage_do_you_use_online_marketplaces,
     triage_have_you_exported,
     triage_summary,
+    personalised_what_do_you_want_to_export,
     triage_what_do_you_want_to_export
 )
 from registry.articles import (
@@ -141,16 +142,25 @@ def continue_export_journey(context: Context, actor_alias: str):
     logging.debug("%s decided to continue export journey", actor_alias)
 
 
-def triage_say_what_do_you_want_to_export(
+def personalised_choose_sector(
         context: Context, actor_alias: str, *, code: str = None,
         sector: str = None):
     driver = context.driver
-    code, sector = triage_what_do_you_want_to_export.enter(
+    code, sector = personalised_what_do_you_want_to_export.enter(
         driver, code, sector)
-    triage_what_do_you_want_to_export.submit(driver)
+    personalised_what_do_you_want_to_export.submit(driver)
     triage_have_you_exported.should_be_here(driver)
     update_actor(
         context, actor_alias, what_do_you_want_to_export=(code, sector))
+
+
+def triage_what_do_you_export(
+        context: Context, actor_alias: str, goods_or_services: str):
+    if goods_or_services.lower() == "services":
+        triage_what_do_you_want_to_export.select_services(context.driver)
+    else:
+        triage_what_do_you_want_to_export.select_goods(context.driver)
+    logging.debug("%s chose to export %s", actor_alias, goods_or_services)
 
 
 def triage_say_you_exported_before(context: Context, actor_alias: str):
@@ -320,8 +330,6 @@ def triage_classify_as_new(
         sector: str, *, start_from_home_page: bool = True):
     if start_from_home_page:
         start_triage(context, actor_alias)
-    triage_say_what_do_you_want_to_export(
-        context, actor_alias, code=code, sector=sector)
     triage_say_you_never_exported_before(context, actor_alias)
     if incorporated:
         triage_say_you_are_incorporated(context, actor_alias)
@@ -338,8 +346,6 @@ def triage_classify_as_occasional(
         start_from_home_page: bool = True):
     if start_from_home_page:
         start_triage(context, actor_alias)
-    triage_say_what_do_you_want_to_export(
-        context, actor_alias, code=code, sector=sector)
     triage_say_you_exported_before(context, actor_alias)
     triage_say_you_do_not_export_regularly(context, actor_alias)
     if use_online_marketplaces:
@@ -361,8 +367,6 @@ def triage_classify_as_regular(
         sector: str, *, start_from_home_page: bool = True):
     if start_from_home_page:
         start_triage(context, actor_alias)
-    triage_say_what_do_you_want_to_export(
-        context, actor_alias, code=code, sector=sector)
     triage_say_you_exported_before(context, actor_alias)
     triage_say_you_export_regularly(context, actor_alias)
     if incorporated:
@@ -483,16 +487,13 @@ def personalised_journey_create_page(context: Context, actor_alias: str):
 
 def triage_change_answers(context: Context, actor_alias: str):
     triage_summary.change_answers(context.driver)
-    triage_what_do_you_want_to_export.should_be_here(context.driver)
+    triage_have_you_exported.should_be_here(context.driver)
     logging.debug("%s decided to change the Triage answers", actor_alias)
 
 
 def triage_answer_questions_again(context: Context, actor_alias: str):
     driver = context.driver
     actor = get_actor(context, actor_alias)
-    code, sector = actor.what_do_you_want_to_export
-    triage_what_do_you_want_to_export.is_sector(driver, code, sector)
-    triage_what_do_you_want_to_export.submit(driver)
 
     def continue_from_are_you_incorporated():
         if actor.are_you_incorporated:

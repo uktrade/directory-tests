@@ -31,10 +31,8 @@ EXPECTED_STRINGS_DURING_PROFILE_BUILDING = ["Send"]
 EXPECTED_STRINGS_WHILE_LETTER_VERIFICATION = ["Verify with your address"]
 
 
-def go_to(session: Session, *, logged_in: bool = True):
+def go_to(session: Session):
     response = make_request(Method.GET, URL, session=session)
-    if logged_in:
-        should_be_here(response, letter_verification=True)
     return response
 
 
@@ -59,7 +57,7 @@ def should_be_here(
     logging.debug("Successfully got to the FAB Confirm your Identity page")
 
 
-def send(actor: Actor) -> Response:
+def confirm_with_letter(actor: Actor) -> Response:
     """Choose to verify your identity with a physical letter.
 
     :param actor: a namedtuple with Actor details

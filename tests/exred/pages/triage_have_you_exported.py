@@ -7,7 +7,8 @@ from selenium import webdriver
 from pages.common_actions import (
     check_for_expected_elements,
     check_title,
-    check_url
+    check_url,
+    go_to_url
 )
 from settings import EXRED_UI_URL
 from utils import (
@@ -26,16 +27,18 @@ NO_RADIO = "#id_exported-before-exported_before_1"
 YES_CHECKBOX = "#id_exported-before-exported_before > li:nth-child(1) > label"
 NO_CHECKBOX = "#id_exported-before-exported_before > li:nth-child(2) > label"
 CONTINUE_BUTTON = ".exred-triage-form button.button"
-PREVIOUS_STEP_BUTTON = ".exred-triage-form button.previous-step"
 BACK_TO_HOME_LINK = ".home-link a"
 EXPECTED_ELEMENTS = {
     "question": "#id_triage_wizard_form_view-current_step ~ li > label",
     "yes checkbox": YES_CHECKBOX,
     "no checkbox": NO_CHECKBOX,
     "continue button": CONTINUE_BUTTON,
-    "previous step button": PREVIOUS_STEP_BUTTON,
     "back to home link": BACK_TO_HOME_LINK
 }
+
+
+def visit(driver: webdriver, *, first_time: bool = False):
+    go_to_url(driver, URL, NAME, first_time=first_time)
 
 
 def should_be_here(driver: webdriver):

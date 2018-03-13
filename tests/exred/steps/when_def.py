@@ -28,6 +28,7 @@ from steps.when_impl import (
     language_selector_open,
     open_link,
     open_service_link_on_interim_page,
+    personalised_choose_sector,
     personalised_journey_create_page,
     personalised_journey_update_preference,
     promo_video_close,
@@ -44,7 +45,6 @@ from steps.when_impl import (
     triage_do_you_export_regularly,
     triage_go_through_again,
     triage_have_you_exported_before,
-    triage_say_what_do_you_want_to_export,
     triage_say_whether_you_use_online_marketplaces,
     triage_should_see_answers_to_questions,
     triage_what_is_your_company_name,
@@ -76,7 +76,7 @@ def when_actor_creates_personalised_journey_page(context, actor_alias):
 @when('"{actor_alias}" says what does he wants to export')
 @when('"{actor_alias}" says what does she wants to export')
 def when_actor_says_what_he_wants_to_export(context, actor_alias):
-    triage_say_what_do_you_want_to_export(context, actor_alias)
+    personalised_choose_sector(context, actor_alias)
 
 
 @when('"{actor_alias}" says that he "{has_or_has_never}" exported before')
@@ -336,3 +336,9 @@ def when_actor_opens_link_from_header_menu(context, actor_alias, page_name, grou
 def when_actor_decides_to_click_on_page_element(
         context, actor_alias, element_name, page_name):
     click_on_page_element(context, actor_alias, element_name, page_name)
+
+
+@when('"{actor_alias}" says what he wants to export "{goods_or_services}"')
+@when('"{actor_alias}" says what she wants to export "{goods_or_services}"')
+def when_actor_says_what_is_exported(context, actor_alias, goods_or_services):
+    triage_what_do_export(context, actor_alias, goods_or_services)

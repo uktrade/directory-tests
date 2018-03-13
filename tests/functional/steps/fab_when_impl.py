@@ -357,7 +357,7 @@ def bp_verify_identity_with_letter(context: Context, supplier_alias: str):
     session = actor.session
 
     # Step 1 - Choose to verify with a letter
-    response = fab_ui_confirm_identity.send(actor)
+    response = fab_ui_confirm_identity.confirm_with_letter(actor)
     context.response = response
 
     # Step 2 - check if Supplier is on the We've sent you a verification letter
@@ -1592,12 +1592,11 @@ def fas_search_with_term(context, actor_alias, search_term):
 def fab_go_to_letter_verification(
         context: Context, supplier_alias: str, logged_in: bool):
     actor = context.get_actor(supplier_alias)
-    response = fab_ui_confirm_identity.go_to(actor.session, logged_in=logged_in)
+    response = fab_ui_confirm_identity.go_to(actor.session)
     context.response = response
 
     if logged_in:
-        fab_ui_confirm_identity.should_be_here(
-            response, letter_verification=True)
+        fab_ui_verify_company.should_be_here(response)
     else:
         sso_ui_login.should_be_here(response)
 
@@ -1616,11 +1615,7 @@ def fab_go_to_letter_verification(
         response = sso_ui_login.login(actor, referer=referer, next_param=next)
         context.response = response
 
-        fab_ui_confirm_identity.should_be_here(
-            response, letter_verification=True)
-
-    response = fab_ui_confirm_identity.send(actor)
-    context.response = response
+        fab_ui_verify_company.should_be_here(response)
 
 
 def fab_choose_to_verify_with_code(context: Context, supplier_alias: str):

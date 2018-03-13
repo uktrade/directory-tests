@@ -15,11 +15,11 @@ Feature: Customised page
     And "Nadia" should see "<expected>" sections on "personalised journey" page
 
     Examples:
-      | goods_or_services | has_or_has_not | expected                                             |
-      | goods             | has            | Top 10, FAB section, SOO tile, ExOpps tile, Guidance |
-      | goods             | has not        | Top 10, SOO tile, ExOpps tile, Guidance              |
-      | services          | has            | FAB section, SOO tile, ExOpps tile, Guidance         |
-      | services          | has not        | SOO tile, ExOpps tile, Guidance                      |
+      | goods_or_services | has_or_has_not | expected                                     |
+      | goods             | has            | FAB section, SOO tile, ExOpps tile, Guidance |
+      | goods             | has not        | SOO tile, ExOpps tile, Guidance              |
+      | services          | has            | FAB section, SOO tile, ExOpps tile, Guidance |
+      | services          | has not        | SOO tile, ExOpps tile, Guidance              |
 
 
   @ED-2589
@@ -36,11 +36,11 @@ Feature: Customised page
     And "Inigo" should see "<expected>" sections on "personalised journey" page
 
     Examples:
-      | goods_or_services | used_or_not | has_or_has_not | expected                                                     |
-      | goods             | used        | has            | Top 10, Article list, FAB section, SOO section, Case studies |
-      | goods             | used        | has not        | Top 10, Article list, SOO section, Case studies              |
-      | services          | never used  | has            | Article list, FAB section, Case studies                      |
-      | services          | never used  | has not        | Article list, Case studies                                   |
+      | goods_or_services | used_or_not | has_or_has_not | expected                                             |
+      | goods             | used        | has            | Article list, FAB section, SOO section, Case studies |
+      | goods             | used        | has not        | Article list, SOO section, Case studies              |
+      | services          | never used  | has            | Article list, FAB section, Case studies              |
+      | services          | never used  | has not        | Article list, Case studies                           |
 
 
   @ED-2590
@@ -56,11 +56,11 @@ Feature: Customised page
     And "Jonah" should see "<expected>" sections on "personalised journey" page
 
     Examples:
-      | goods_or_services | has_or_has_not | expected                                        |
-      | goods             | has            | Top 10, Article list, FAB section, Case studies |
-      | goods             | has not        | Top 10, Article list, Case studies              |
-      | services          | has            | Article list, FAB section, Case studies         |
-      | services          | has not        | Article list, Case studies                      |
+      | goods_or_services | has_or_has_not | expected                                |
+      | goods             | has            | Article list, FAB section, Case studies |
+      | goods             | has not        | Article list, Case studies              |
+      | services          | has            | Article list, FAB section, Case studies |
+      | services          | has not        | Article list, Case studies              |
 
 
   @ED-2465

@@ -21,7 +21,7 @@ from tests.functional.utils.generic import (
     delete_supplier_data_from_dir
 )
 from tests.functional.utils.request import REQUEST_EXCEPTIONS
-from tests.settings import AUTO_RETRY
+from tests.settings import AUTO_RETRY, AUTO_RETRY_MAX_ATTEMPTS
 
 
 def before_feature(context, feature):
@@ -31,7 +31,8 @@ def before_feature(context, feature):
     """
     if AUTO_RETRY:
         for scenario in feature.scenarios:
-            patch_scenario_with_autoretry(scenario, max_attempts=2)
+            patch_scenario_with_autoretry(
+                scenario, max_attempts=AUTO_RETRY_MAX_ATTEMPTS)
 
 
 def before_step(context, step):
