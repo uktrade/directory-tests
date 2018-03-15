@@ -300,6 +300,28 @@ def circle_ci_get_last_workflow_test_results(
     return test_results
 
 
+def circle_ci_get_last_build_results(build: dict) -> dict:
+    frmt = '%Y-%m-%dT%H:%M:%S.%fZ'
+    datetime_object = datetime.strptime(build['start_time'], frmt)
+    last_build_date = datetime_object.strftime('%d %b %H:%M')
+    build_time = None
+    if build['build_time_millis']:
+        build_time = round(build['build_time_millis'] / 1000)
+    test_results = {
+        'user_avatar': build['user']['avatar_url'],
+        'user_name': build['user']['name'],
+        'user_login': build['user']['login'],
+        'last_build_date': last_build_date,
+        'start_time': build['start_time'],
+        'stop_time': build['stop_time'],
+        'build_time': build_time,
+        'build_num': build['build_num'],
+        'build_url': build['build_url'],
+        'status': build['status']
+    }
+    return test_results
+
+
 def circle_ci_get_last_test_results(project_name: str):
     recent_builds = circle_ci_get_recent_builds(project_name)
     last_workflow_id = circle_ci_get_last_workflow_id(recent_builds)
