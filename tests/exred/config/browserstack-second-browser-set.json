@@ -2,7 +2,7 @@
   "hub_url": {HUB_URL},
   "capabilities": {{
     "browserstack.debug": true,
-    "browserstack.selenium_version": "3.8.1",
+    "browserstack.selenium_version": "3.10.0",
     "build": {BUILD_ID},
     "project": "ExRed",
     "resolution": "1600x1200"
@@ -10,11 +10,15 @@
   "environments": [
     {{
       "browser": "IE",
-      "browser_version": "11.0"
+      "browser_version": "11.0",
+      "os": "Windows",
+      "os_version": "10"
     }},
     {{
       "browser": "Edge",
-      "browser_version": "16.0"
+      "browser_version": "16.0",
+      "os": "Windows",
+      "os_version": "10"
     }}
   ]
 }}
