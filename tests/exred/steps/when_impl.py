@@ -386,8 +386,9 @@ def triage_classify_as(
     actor = get_actor(context, actor_alias)
 
     if actor.what_do_you_want_to_export is not None:
-        code, sector = actor.what_do_you_want_to_export
+        goods_or_services, code, sector = actor.what_do_you_want_to_export
     else:
+        goods_or_services = random.choice(["goods", "services"])
         code, sector = random.choice(list(EXRED_SECTORS.items()))
 
     if actor.do_you_use_online_marketplaces is not None:
@@ -440,7 +441,7 @@ def triage_should_see_answers_to_questions(context, actor_alias):
     actor = get_actor(context, actor_alias)
     q_and_a = triage_summary.get_questions_and_answers(context.driver)
     if actor.what_do_you_want_to_export is not None:
-        code, sector = actor.what_do_you_want_to_export
+        goods_or_services, code, sector = actor.what_do_you_want_to_export
         question = "What do you want to export?"
         with assertion_msg(
                 "Expected answer to question '%s' to be '%s', but got '%s' "
@@ -607,7 +608,8 @@ def set_sector_preference(
         code, sector = filtered_sectors[0]
     logging.debug("Code: %s - Sector: %s", code, sector)
     update_actor(
-        context, actor_alias, what_do_you_want_to_export=(code, sector))
+        context, actor_alias,
+        what_do_you_want_to_export=(goods_or_services.lower(), code, sector))
     logging.debug(
         "%s decided that her/his preferred sector is: %s %s", actor_alias,
         code, sector)
