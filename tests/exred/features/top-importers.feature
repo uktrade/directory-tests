@@ -16,9 +16,11 @@ Feature: Top importers
     Then "Robert" should not see the Top Importer banner and Top 10 Importers table for their sector
 
 
+  @wip
+  @out-of-scope
   @bug
   @ED-3702
-  @fixme
+  @fixed
   @new-triage
   @ED-2699
   @triage
@@ -27,7 +29,7 @@ Feature: Top importers
     Given "Robert" exports "goods"
     And "Robert" answered triage questions
     And "Robert" decided to create her personalised journey page
-#    And "Robert" selected the goods category he'd like to export
+    And "Robert" selected the goods category he'd like to export
     And "Robert" can see "Top 10" section on "personalised journey" page
 
     When "Robert" decides to change the sector to "<specific>" service
@@ -50,9 +52,10 @@ Feature: Top importers
       | Government services, n.i.e.                   |
 
 
+  @out-of-scope
   @bug
   @ED-3702
-  @fixme
+  @fixed
   @new-triage
   @wip
   @long
@@ -64,7 +67,7 @@ Feature: Top importers
     And "Robert" answered triage questions
 
     When "Robert" decides to create his personalised journey page
-#    And "Robert" selects "<specific>" as the goods category he'd like to export
+    And "Robert" selects "<specific>" as the goods category he'd like to export
 
     Then "Robert" should see a Banner and Top importers table for their sector on personalised journey page
 
@@ -169,9 +172,10 @@ Feature: Top importers
       | Commodities not specified according to kind                                                                                                                                                                                               |
 
 
+  @out-of-scope
   @bug
   @ED-3702
-  @fixme
+  @fixed
   @new-triage
   @wip
   @long
@@ -186,7 +190,7 @@ Feature: Top importers
 
     When "Robert" decides to change the sector to "<specific>" good
     And "Robert" goes through triage again
-#    And "Robert" selects "<specific>" as the goods category he'd like to export
+    And "Robert" selects "<specific>" as the goods category he'd like to export
 
     Then "Robert" should see a Banner and Top importers table for their sector on personalised journey page
 
