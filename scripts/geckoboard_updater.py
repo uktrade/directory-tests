@@ -416,7 +416,7 @@ def geckoboard_generate_table_rows_for_test_results(services_test_results: dict)
                 last_build_date=test_results['last_build_date'],
                 build_url=test_results['build_url'],
                 status_color=geckoboard_get_job_color(test_results['status']),
-                summary='',
+                summary=geckoboard_get_build_summary(test_results),
                 status=test_results['status'].capitalize(),
             )
             continue
