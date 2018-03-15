@@ -339,10 +339,16 @@ def circle_ci_get_last_test_results(project_name: str):
 
 
 def circle_ci_get_last_test_results_per_project() -> dict:
-    result = {
-        'Directory Tests': circle_ci_get_last_test_results('directory-tests')
+    return {
+        'Tests': circle_ci_get_last_test_results('directory-tests'),
+        'API': circle_ci_get_last_test_results('directory-api'),
+        'FAS': circle_ci_get_last_test_results('directory-ui-supplier'),
+        'FAB': circle_ci_get_last_test_results('directory-ui-buyer'),
+        'ExRed': circle_ci_get_last_test_results('directory-ui-export-readiness'),
+        'SSO': circle_ci_get_last_test_results('directory-sso'),
+        'SUD': circle_ci_get_last_test_results('directory-sso-profile'),
+        'SSO Proxy': circle_ci_get_last_test_results('directory-sso-proxy'),
     }
-    return result
 
 
 def geckoboard_get_job_color(status: str) -> str:
