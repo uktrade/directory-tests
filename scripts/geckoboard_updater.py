@@ -328,9 +328,14 @@ def circle_ci_get_last_build_results(build: dict) -> dict:
 def circle_ci_get_last_test_results(project_name: str):
     recent_builds = circle_ci_get_recent_builds(project_name)
     last_workflow_id = circle_ci_get_last_workflow_id(recent_builds)
-    last_workflow_builds = circle_ci_get_builds_for_workflow(
-        recent_builds, last_workflow_id)
-    return circle_ci_get_last_workflow_test_results(last_workflow_builds)
+    if last_workflow_id:
+        last_workflow_builds = circle_ci_get_builds_for_workflow(
+            recent_builds, last_workflow_id)
+        result = circle_ci_get_last_workflow_test_results(last_workflow_builds)
+    else:
+        most_recent_build = recent_builds[0]
+        result = circle_ci_get_last_build_results(most_recent_build)
+    return result
 
 
 def circle_ci_get_last_test_results_per_project() -> dict:
