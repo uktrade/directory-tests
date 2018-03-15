@@ -33,7 +33,7 @@ JQL_MANUAL_VS_AUTOMATED = "project = ED AND resolution = Unresolved AND labels i
 JQL_SCENARIOS_TO_AUTOMATE = "project = ED AND issuetype in (Task, Sub-task) AND resolution = Unresolved AND labels = qa_automated_scenario ORDER BY created DESC"
 
 # Mapping of CircleCI job names to more human friendly ones
-CIRCLE_CI_JOB_NAME_MAPPINGS = {
+CIRCLE_CI_WORKFLOW_JOB_NAME_MAPPINGS = {
     'exred_tests_chrome': 'ER Chrome',
     'exred_tests_firefox': 'ER Firefox',
     'fab_functional_tests': 'FAB',
@@ -273,7 +273,7 @@ def circle_ci_get_builds_for_workflow(
 
 def circle_ci_get_last_workflow_test_results(
         last_workflow_builds: List[dict], *,
-        job_name_mappings: dict = CIRCLE_CI_JOB_NAME_MAPPINGS) -> dict:
+        job_name_mappings: dict = CIRCLE_CI_WORKFLOW_JOB_NAME_MAPPINGS) -> dict:
     most_recent_build = last_workflow_builds[0]
     frmt = '%Y-%m-%dT%H:%M:%S.%fZ'
     datetime_object = datetime.strptime(most_recent_build['start_time'], frmt)
