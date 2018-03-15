@@ -340,6 +340,17 @@ def circle_ci_get_last_test_results_per_project() -> dict:
     return result
 
 
+def geckoboard_get_job_color(status: str) -> str:
+    status_colors = {
+        'failed': 'red',
+        'fixed': 'green',
+        'not_run': 'grey',
+        'queued': 'purple',
+        'running': 'blue',
+        'success': 'green',
+    }
+    return status_colors[status]
+
 def geckoboard_generate_table_rows_for_test_results(services_test_results: dict) -> str:
     row_template = """
         <tr style="font-size:20pt">
