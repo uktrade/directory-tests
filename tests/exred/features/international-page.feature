@@ -32,6 +32,7 @@ Feature: International Page
       | expected_service | section          |
       | Find a Supplier  | Buy from the UK  |
 
+
   @ED-3083
   @language-selector
   Scenario: Visitor should be able to open and close the language selector
