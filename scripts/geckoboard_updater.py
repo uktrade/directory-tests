@@ -369,10 +369,11 @@ def geckoboard_get_build_summary(test_results: dict) -> str:
 
 
 def geckoboard_generate_table_rows_for_test_results(services_test_results: dict) -> str:
-    row_template = """
+    workflow_row_template = """
         <tr style="font-size:20pt">
             <td>{service_name}<img src="{user_avatar_url}" alt="{user_name}" width="25" height="25"/></td>
             <td>{last_build_date}</td>
+            <td></td>
             <td><a target="_blank" href="{smoke_build_url}" style="color:{smoke_status_color}" title="{smoke_build_summary}">{smoke_status}</a></td>
             <td><a target="_blank" href="{urls_build_url}" style="color:{urls_status_color}" title="{urls_build_summary}">{urls_status}</td>
             <td><a target="_blank" href="{fab_build_url}" style="color:{fab_status_color}" title="{fab_build_summary}">{fab_status}</td>
@@ -383,56 +384,90 @@ def geckoboard_generate_table_rows_for_test_results(services_test_results: dict)
             <td><a target="_blank" href="{exred_firefox_build_url}" style="color:{exred_firefox_status_color}" title="{exred_firefox_build_summary}">{exred_firefox_status}</td>
         </tr>
     """
+    build_row_template = """
+        <tr style="font-size:20pt">
+            <td>{service_name}<img src="{user_avatar_url}" alt="{user_name}" width="25" height="25"/></td>
+            <td>{last_build_date}</td>
+            <td><a target="_blank" href="{build_url}" style="color:{status_color}" title="{summary}">{status}</a></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    """
     result = ''
-    success_color = 'green'
-    failed_color = 'red'
     for service_name, test_results in services_test_results.items():
-        result += row_template.format(
+        if 'workflow_id' not in test_results:
+            result += build_row_template.format(
+                service_name=service_name,
+                user_avatar_url=test_results['user_avatar'],
+                user_name=test_results['user_name'],
+
+                last_build_date=test_results['last_build_date'],
+                build_url=test_results['build_url'],
+                status_color=geckoboard_get_job_color(test_results['status']),
+                summary='',
+                status=test_results['status'].capitalize(),
+            )
+            continue
+        smoke = test_results['Smoke']
+        urls = test_results['URLs']
+        fab = test_results['FAB']
+        fas = test_results['FAS']
+        sso = test_results['SSO']
+        sud = test_results['SUD']
+        chrome = test_results['ER Chrome']
+        firefox = test_results['ER Firefox']
+        result += workflow_row_template.format(
             service_name=service_name,
             user_avatar_url=test_results['user_avatar'],
             user_name=test_results['user_name'],
 
             last_build_date=test_results['last_build_date'],
 
-            smoke_build_url=test_results['Smoke']['build_url'],
-            smoke_status_color=success_color if test_results['Smoke']['status'] == 'success' else failed_color,
-            smoke_build_summary="",
-            smoke_status=test_results['Smoke']['status'].capitalize(),
+            smoke_build_url=smoke['build_url'],
+            smoke_status_color=geckoboard_get_job_color(smoke['status']),
+            smoke_build_summary=geckoboard_get_build_summary(smoke),
+            smoke_status=smoke['status'].capitalize(),
 
-            urls_build_url=test_results['URLs']['build_url'],
-            urls_status_color=success_color if test_results['URLs']['status'] == 'success' else failed_color,
-            urls_build_summary="",
-            urls_status=test_results['URLs']['status'].capitalize(),
+            urls_build_url=urls['build_url'],
+            urls_status_color=geckoboard_get_job_color(urls['status']),
+            urls_build_summary=geckoboard_get_build_summary(urls),
+            urls_status=urls['status'].capitalize(),
 
-            fab_build_url=test_results['FAB']['build_url'],
-            fab_status_color=success_color if test_results['FAB']['status'] == 'success' else failed_color,
-            fab_build_summary="",
-            fab_status=test_results['FAB']['status'].capitalize(),
+            fab_build_url=fab['build_url'],
+            fab_status_color=geckoboard_get_job_color(fab['status']),
+            fab_build_summary=geckoboard_get_build_summary(fab),
+            fab_status=fab['status'].capitalize(),
 
-            fas_build_url=test_results['FAS']['build_url'],
-            fas_status_color=success_color if test_results['FAS']['status'] == 'success' else failed_color,
-            fas_build_summary="",
-            fas_status=test_results['FAS']['status'].capitalize(),
+            fas_build_url=fas['build_url'],
+            fas_status_color=geckoboard_get_job_color(fas['status']),
+            fas_build_summary=geckoboard_get_build_summary(fas),
+            fas_status=fas['status'].capitalize(),
 
-            sso_build_url=test_results['SSO']['build_url'],
-            sso_status_color=success_color if test_results['SSO']['status'] == 'success' else failed_color,
-            sso_build_summary="",
-            sso_status=test_results['SSO']['status'].capitalize(),
+            sso_build_url=sso['build_url'],
+            sso_status_color=geckoboard_get_job_color(sso['status']),
+            sso_build_summary=geckoboard_get_build_summary(sso),
+            sso_status=sso['status'].capitalize(),
 
-            sud_build_url=test_results['SUD']['build_url'],
-            sud_status_color=success_color if test_results['SUD']['status'] == 'success' else failed_color,
-            sud_build_summary="",
-            sud_status=test_results['SUD']['status'].capitalize(),
+            sud_build_url=sud['build_url'],
+            sud_status_color=geckoboard_get_job_color(sud['status']),
+            sud_build_summary=geckoboard_get_build_summary(sud),
+            sud_status=sud['status'].capitalize(),
 
-            exred_chrome_build_url=test_results['ER Chrome']['build_url'],
-            exred_chrome_status_color=success_color if test_results['ER Chrome']['status'] == 'success' else failed_color,
-            exred_chrome_build_summary="",
-            exred_chrome_status=test_results['ER Chrome']['status'].capitalize(),
+            exred_chrome_build_url=chrome['build_url'],
+            exred_chrome_status_color=geckoboard_get_job_color(chrome['status']),
+            exred_chrome_build_summary=geckoboard_get_build_summary(chrome),
+            exred_chrome_status=chrome['status'].capitalize(),
 
-            exred_firefox_build_url=test_results['ER Firefox']['build_url'],
-            exred_firefox_status_color=success_color if test_results['ER Firefox']['status'] == 'success' else failed_color,
-            exred_firefox_build_summary="",
-            exred_firefox_status=test_results['ER Firefox']['status'].capitalize(),
+            exred_firefox_build_url=firefox['build_url'],
+            exred_firefox_status_color=geckoboard_get_job_color(firefox['status']),
+            exred_firefox_build_summary=geckoboard_get_build_summary(firefox),
+            exred_firefox_status=firefox['status'].capitalize(),
         )
     return result
 
@@ -445,6 +480,7 @@ def geckoboard_generate_content_for_test_results_widget_update(
     <tr style="font-size:20pt">
         <th>Project</th>
         <th>When</th>
+        <th>Build</th>
         <th>Smoke</th>
         <th>URLs</th>
         <th>FAB</th>
