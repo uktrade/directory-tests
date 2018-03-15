@@ -351,6 +351,18 @@ def geckoboard_get_job_color(status: str) -> str:
     }
     return status_colors[status]
 
+
+def geckoboard_get_build_summary(test_results: dict) -> str:
+    details = {
+        'start': test_results['start_time'],
+        'stop': test_results['stop_time'],
+        'seconds': test_results['build_time'],
+        'number': test_results['build_num']
+    }
+    return ("Build #{number} took {seconds} seconds to run. It started at "
+            "{start} and finished at {stop}".format(**details))
+
+
 def geckoboard_generate_table_rows_for_test_results(services_test_results: dict) -> str:
     row_template = """
         <tr style="font-size:20pt">
