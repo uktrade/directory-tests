@@ -155,12 +155,14 @@ def personalised_choose_sector(
         what_do_you_want_to_export=(goods_or_services, code, sector))
 
 
-def triage_what_do_you_export(
+def triage_question_what_do_you_want_to_export(
         context: Context, actor_alias: str, goods_or_services: str):
     if goods_or_services.lower() == "services":
         triage_what_do_you_want_to_export.select_services(context.driver)
     else:
         triage_what_do_you_want_to_export.select_goods(context.driver)
+    triage_what_do_you_want_to_export.submit(context.driver)
+    triage_are_you_registered_with_companies_house.should_be_here(context.driver)
     logging.debug("%s chose to export %s", actor_alias, goods_or_services)
 
 
@@ -176,7 +178,7 @@ def triage_say_you_never_exported_before(context: Context, actor_alias: str):
     driver = context.driver
     triage_have_you_exported.select_no(driver)
     triage_have_you_exported.submit(driver)
-    triage_are_you_registered_with_companies_house.should_be_here(driver)
+    triage_what_do_you_want_to_export.should_be_here(driver)
     update_actor(context, actor_alias, have_you_exported_before=False)
 
 
@@ -189,6 +191,28 @@ def triage_have_you_exported_before(context, actor_alias, has_or_has_never):
         raise KeyError(
             "Could not recognize '%s', please use 'has' or 'has never'" %
             has_or_has_never)
+
+
+def triage_say_you_want_to_export_goods(
+        context: Context, actor_alias: str, code: str, sector: str):
+    triage_what_do_you_want_to_export.select_goods(context.driver)
+    triage_what_do_you_want_to_export.submit(context.driver)
+    triage_are_you_registered_with_companies_house.should_be_here(
+        context.driver)
+    update_actor(
+        context, actor_alias,
+        what_do_you_want_to_export=('goods', code, sector))
+
+
+def triage_say_you_want_to_export_services(
+        context: Context, actor_alias: str, code: str, sector: str):
+    triage_what_do_you_want_to_export.select_services(context.driver)
+    triage_what_do_you_want_to_export.submit(context.driver)
+    triage_are_you_registered_with_companies_house.should_be_here(
+        context.driver)
+    update_actor(
+        context, actor_alias,
+        what_do_you_want_to_export=('services', code, sector))
 
 
 def triage_say_you_are_incorporated(
@@ -222,7 +246,7 @@ def triage_say_you_export_regularly(context: Context, actor_alias: str):
     driver = context.driver
     triage_are_you_regular_exporter.select_yes(driver)
     triage_are_you_regular_exporter.submit(driver)
-    triage_are_you_registered_with_companies_house.should_be_here(driver)
+    triage_what_do_you_want_to_export.should_be_here(driver)
     update_actor(context, actor_alias, do_you_export_regularly=True)
 
 
@@ -249,7 +273,7 @@ def triage_say_you_use_online_marketplaces(context: Context, actor_alias: str):
     driver = context.driver
     triage_do_you_use_online_marketplaces.select_yes(driver)
     triage_do_you_use_online_marketplaces.submit(driver)
-    triage_are_you_registered_with_companies_house.should_be_here(driver)
+    triage_what_do_you_want_to_export.should_be_here(driver)
     update_actor(context, actor_alias, do_you_use_online_marketplaces=True)
 
 
@@ -258,7 +282,7 @@ def triage_say_you_do_not_use_online_marketplaces(
     driver = context.driver
     triage_do_you_use_online_marketplaces.select_no(driver)
     triage_do_you_use_online_marketplaces.submit(driver)
-    triage_are_you_registered_with_companies_house.should_be_here(driver)
+    triage_what_do_you_want_to_export.should_be_here(driver)
     update_actor(context, actor_alias, do_you_use_online_marketplaces=False)
 
 
@@ -333,6 +357,11 @@ def triage_classify_as_new(
     if start_from_home_page:
         start_triage(context, actor_alias)
     triage_say_you_never_exported_before(context, actor_alias)
+    if goods_or_services == 'goods':
+        triage_say_you_want_to_export_goods(context, actor_alias, code, sector)
+    else:
+        triage_say_you_want_to_export_services(
+            context, actor_alias, code, sector)
     if incorporated:
         triage_say_you_are_incorporated(context, actor_alias)
         triage_enter_company_name(context, actor_alias, use_suggestions=True)
@@ -354,6 +383,11 @@ def triage_classify_as_occasional(
         triage_say_you_use_online_marketplaces(context, actor_alias)
     else:
         triage_say_you_do_not_use_online_marketplaces(context, actor_alias)
+    if goods_or_services == 'goods':
+        triage_say_you_want_to_export_goods(context, actor_alias, code, sector)
+    else:
+        triage_say_you_want_to_export_services(
+            context, actor_alias, code, sector)
     if incorporated:
         triage_say_you_are_incorporated(context, actor_alias)
         triage_enter_company_name(context, actor_alias, use_suggestions=True)
@@ -372,6 +406,11 @@ def triage_classify_as_regular(
         start_triage(context, actor_alias)
     triage_say_you_exported_before(context, actor_alias)
     triage_say_you_export_regularly(context, actor_alias)
+    if goods_or_services == 'goods':
+        triage_say_you_want_to_export_goods(context, actor_alias, code, sector)
+    else:
+        triage_say_you_want_to_export_services(
+            context, actor_alias, code, sector)
     if incorporated:
         triage_say_you_are_incorporated(context, actor_alias)
         triage_enter_company_name(context, actor_alias, use_suggestions=True)
@@ -523,6 +562,14 @@ def triage_answer_questions_again(context: Context, actor_alias: str):
             if actor.do_you_export_regularly:
                 triage_are_you_regular_exporter.is_yes_selected(driver)
                 triage_are_you_regular_exporter.submit(driver)
+                goods_or_services, _, _ = actor.what_do_you_want_to_export
+                if goods_or_services == 'goods':
+                    triage_what_do_you_want_to_export.is_goods_selected(
+                        context.driver)
+                else:
+                    triage_what_do_you_want_to_export.is_services_selected(
+                        context.driver)
+                triage_what_do_you_want_to_export.submit(driver)
                 triage_are_you_registered_with_companies_house.should_be_here(
                     driver)
                 continue_from_are_you_incorporated()
@@ -538,11 +585,30 @@ def triage_answer_questions_again(context: Context, actor_alias: str):
                     triage_do_you_use_online_marketplaces.is_no_selected(
                         driver)
                 triage_do_you_use_online_marketplaces.submit(driver)
+                triage_what_do_you_want_to_export.should_be_here(driver)
+                goods_or_services, _, _ = actor.what_do_you_want_to_export
+                if goods_or_services == 'goods':
+                    triage_what_do_you_want_to_export.is_goods_selected(
+                        context.driver)
+                else:
+                    triage_what_do_you_want_to_export.is_services_selected(
+                        context.driver)
+                triage_what_do_you_want_to_export.submit(driver)
+                triage_are_you_registered_with_companies_house.should_be_here(
+                    driver)
                 continue_from_are_you_incorporated()
                 triage_summary.should_be_classified_as_occasional(driver)
         else:
             triage_have_you_exported.is_no_selected(driver)
             triage_have_you_exported.submit(driver)
+            goods_or_services, _, _ = actor.what_do_you_want_to_export
+            if goods_or_services == 'goods':
+                triage_what_do_you_want_to_export.is_goods_selected(
+                    context.driver)
+            else:
+                triage_what_do_you_want_to_export.is_services_selected(
+                    context.driver)
+            triage_what_do_you_want_to_export.submit(driver)
             triage_are_you_registered_with_companies_house.should_be_here(
                 driver)
             continue_from_are_you_incorporated()
