@@ -262,7 +262,10 @@ def circle_ci_get_recent_builds(
 
 
 def circle_ci_get_last_workflow_id(recent_builds: List[dict]) -> str:
-    return recent_builds[0]['workflows']['workflow_id']
+    result = ''
+    if 'workflows' in recent_builds[0]:
+        result = recent_builds[0]['workflows']['workflow_id']
+    return result
 
 
 def circle_ci_get_builds_for_workflow(
