@@ -20,7 +20,8 @@ from retrying import retry
 from selenium import webdriver
 from selenium.common.exceptions import (
     WebDriverException,
-    NoSuchElementException
+    NoSuchElementException,
+    TimeoutException
 )
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
@@ -205,7 +206,7 @@ def selenium_action(driver: webdriver, message: str, *args):
     """
     try:
         yield
-    except (WebDriverException, NoSuchElementException) as e:
+    except (WebDriverException, NoSuchElementException, TimeoutException) as e:
         browser = driver.capabilities.get("browserName", "unknown browser")
         version = driver.capabilities.get("version", "unknown version")
         platform = driver.capabilities.get("platform", "unknown platform")
@@ -293,8 +294,11 @@ def wait_for_visibility(
         by_locator = (By.CSS_SELECTOR, by_css)
     else:
         by_locator = (By.ID, by_id)
-    WebDriverWait(driver, time_to_wait).until(
-        expected_conditions.visibility_of_element_located(by_locator))
+    with selenium_action(driver,
+            "Element identified by '{}' was not visible after waiting for {}"
+            " seconds".format(by_css or by_id, time_to_wait)):
+        WebDriverWait(driver, time_to_wait).until(
+            expected_conditions.visibility_of_element_located(by_locator))
 
 
 def check_if_element_is_not_present(
