@@ -488,8 +488,8 @@ def triage_should_see_answers_to_questions(context, actor_alias):
         question = "What do you want to export?"
         with assertion_msg(
                 "Expected answer to question '%s' to be '%s', but got '%s' "
-                "instead", question, sector, q_and_a[question]):
-            assert q_and_a[question] == sector
+                "instead", question, goods_or_services, q_and_a[question]):
+            assert q_and_a[question] == goods_or_services.capitalize()
     if actor.company_name is not None:
         name = actor.company_name
         question = "Company name"
