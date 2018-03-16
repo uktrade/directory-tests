@@ -24,22 +24,20 @@ PAGE_TITLE = "Welcome to great.gov.uk"
 QUESTION_LABEL = "#triage-question-label"
 QUESTION = "#triage-question"
 SERVICES_CHECKBOX = "#id_goods-services-is_exporting_services"
-SERVICES_CHECKBOX_LABEL = "#id_goods-services-is_exporting_services ~ label[for='id_goods-services-is_exporting_services']"
+SERVICES_CHECKBOX_LABEL = "input ~ label[for='id_goods-services-is_exporting_services']"
 GOODS_CHECKBOX = "#id_goods-services-is_exporting_goods"
-GOODS_CHECKBOX_LABEL = "#id_goods-services-is_exporting_goods ~ label[for='id_goods-services-is_exporting_goods']"
+GOODS_CHECKBOX_LABEL = "input ~ label[for='id_goods-services-is_exporting_goods']"
 CONTINUE_BUTTON = "button[type='submit'].button"
 PREVIOUS_STEP_BUTTON = "#triage-previous-step"
-BACK_TO_HOME_LINK = ".home-link > a"
 EXPECTED_ELEMENTS = {
     "question": QUESTION,
     "question label": QUESTION_LABEL,
     # "services checkbox": SERVICES_CHECKBOX,
-    # "services checkbox label": SERVICES_CHECKBOX_LABEL,
+    "services checkbox label": SERVICES_CHECKBOX_LABEL,
     # "goods checkbox": GOODS_CHECKBOX,
-    # "goods checkbox label": GOODS_CHECKBOX_LABEL,
+    "goods checkbox label": GOODS_CHECKBOX_LABEL,
     "continue button": CONTINUE_BUTTON,
     "previous step button": PREVIOUS_STEP_BUTTON,
-    "back to home link": BACK_TO_HOME_LINK
 }
 
 
