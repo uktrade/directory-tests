@@ -14,3 +14,7 @@ from tests.locust.test_api import (
 from tests.locust.test_exred_ui import (
     RegularUserExRedUI
 )
+
+from tests.locust.test_ch_search import (
+    RegularUserCHSearch
+)
