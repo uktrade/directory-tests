@@ -348,6 +348,7 @@ def circle_ci_get_last_test_results_per_project() -> dict:
         'SSO': circle_ci_get_last_test_results('directory-sso'),
         'SUD': circle_ci_get_last_test_results('directory-sso-profile'),
         'SSO Proxy': circle_ci_get_last_test_results('directory-sso-proxy'),
+        'CH Search': circle_ci_get_last_test_results('directory-companies-house-search'),
     }
 
 
