@@ -83,6 +83,7 @@ urls = {
     'api:user': 'supplier/{sso_id}/',
     'api:validate-company-number': 'validate/company-number/',
     'api:companies-house-profile': 'company/companies-house-profile/',
+    'api:companies-house-search': 'api/internal/companies-house-search/',
 
     # INTERNAL API
     'internal-api:companies-house-search': 'api/internal/companies-house-search/',
