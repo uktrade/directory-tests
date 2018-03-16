@@ -52,7 +52,7 @@ def select_services(driver: webdriver):
     services = find_element(
         driver, by_css=SERVICES_CHECKBOX, element_name="Services checkbox",
         wait_for_it=False)
-    # services.click()
+    services.click()
     take_screenshot(driver, NAME)
 
 
@@ -60,7 +60,7 @@ def select_goods(driver: webdriver):
     goods = find_element(
         driver, by_css=GOODS_CHECKBOX, element_name="Goods checkbox",
         wait_for_it=False)
-    # goods.click()
+    goods.click()
     take_screenshot(driver, NAME)
 
 
