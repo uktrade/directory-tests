@@ -1185,9 +1185,11 @@ def delete_supplier_data_from_dir(ch_id: str, *, context: Context = None):
             "Successfully deleted supplier data for company %s from DIR DB",
             ch_id)
     else:
-        logging.error(
-            "Something went wrong when trying to delete supplier data for "
-            "company %s from DIR DB", ch_id)
+        msg = ("Something went wrong when trying to delete supplier data for "
+               "company %s from DIR DB. Here's the response: \n%s", ch_id,
+               response.content)
+        red(msg)
+        logging.error(msg)
 
 
 def flag_sso_account_as_verified(context: Context, email_address: str):
