@@ -24,7 +24,7 @@ Feature: Triage
       | company_name_action  | goods_or_services  |
       | types in             | goods              |
       | does not provide     | services           |
-      | types in and selects | good               |
+      | types in and selects | goods              |
       | types in             | goods and services |
 
 
