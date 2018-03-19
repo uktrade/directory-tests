@@ -376,8 +376,11 @@ def triage_classify_as_new(
     triage_say_you_never_exported_before(context, actor_alias)
     if goods_or_services == 'goods':
         triage_say_you_want_to_export_goods(context, actor_alias, code, sector)
-    else:
+    elif goods_or_services == 'services':
         triage_say_you_want_to_export_services(
+            context, actor_alias, code, sector)
+    else:
+        triage_say_you_want_to_export_goods_and_services(
             context, actor_alias, code, sector)
     if incorporated:
         triage_say_you_are_incorporated(context, actor_alias)
@@ -402,8 +405,11 @@ def triage_classify_as_occasional(
         triage_say_you_do_not_use_online_marketplaces(context, actor_alias)
     if goods_or_services == 'goods':
         triage_say_you_want_to_export_goods(context, actor_alias, code, sector)
-    else:
+    elif goods_or_services == 'services':
         triage_say_you_want_to_export_services(
+            context, actor_alias, code, sector)
+    else:
+        triage_say_you_want_to_export_goods_and_services(
             context, actor_alias, code, sector)
     if incorporated:
         triage_say_you_are_incorporated(context, actor_alias)
@@ -425,8 +431,11 @@ def triage_classify_as_regular(
     triage_say_you_export_regularly(context, actor_alias)
     if goods_or_services == 'goods':
         triage_say_you_want_to_export_goods(context, actor_alias, code, sector)
-    else:
+    elif goods_or_services == 'services':
         triage_say_you_want_to_export_services(
+            context, actor_alias, code, sector)
+    else:
+        triage_say_you_want_to_export_goods_and_services(
             context, actor_alias, code, sector)
     if incorporated:
         triage_say_you_are_incorporated(context, actor_alias)
@@ -447,7 +456,8 @@ def triage_classify_as(
     if actor.what_do_you_want_to_export is not None:
         goods_or_services, code, sector = actor.what_do_you_want_to_export
     else:
-        goods_or_services = random.choice(["goods", "services"])
+        options = ["goods", "services", "goods and services"]
+        goods_or_services = random.choice(options)
         code, sector = random.choice(list(EXRED_SECTORS.items()))
 
     if actor.do_you_use_online_marketplaces is not None:
@@ -680,6 +690,14 @@ def set_sector_preference(
             sectors = [(code, sector)
                        for code, sector in EXRED_SECTORS.items()
                        if code.startswith("EB")]
+        elif goods_or_services.lower() == "goods and services":
+            goods_sectors = [(code, sector)
+                             for code, sector in EXRED_SECTORS.items()
+                             if code.startswith("HS")]
+            services_sectors = [(code, sector)
+                                for code, sector in EXRED_SECTORS.items()
+                                if code.startswith("EB")]
+            sectors = goods_sectors + services_sectors
         else:
             raise KeyError(
                 "Could not recognise '%s' as valid sector. Please use 'goods' "
