@@ -292,10 +292,13 @@ def circle_ci_get_last_workflow_test_results(
         job_name = build['workflows']['job_name']
         if job_name in job_name_mappings.keys():
             friendly_name = job_name_mappings[job_name]
+            build_time = 0
+            if build['build_time_millis']:
+                build_time = round(build['build_time_millis'] / 1000)
             test_results[friendly_name] = {
                 'start_time': build['start_time'],
                 'stop_time': build['stop_time'],
-                'build_time': round(build['build_time_millis'] / 1000),
+                'build_time': build_time,
                 'build_num': build['build_num'],
                 'build_url': build['build_url'],
                 'status': build['status']
