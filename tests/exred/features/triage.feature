@@ -104,7 +104,7 @@ Feature: Triage
     Then "Inigo" should be on the Personalised Journey page for "occasional" exporters
 
     Examples:
-      | online_action | online_action      |
+      | online_action | goods_or_services  |
       | has           | goods              |
       | has never     | services           |
       | has           | goods and services |
