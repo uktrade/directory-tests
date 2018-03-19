@@ -159,8 +159,13 @@ def triage_question_what_do_you_want_to_export(
         context: Context, actor_alias: str, goods_or_services: str):
     if goods_or_services.lower() == "services":
         triage_what_do_you_want_to_export.select_services(context.driver)
-    else:
+    elif goods_or_services.lower() == "goods":
         triage_what_do_you_want_to_export.select_goods(context.driver)
+    elif goods_or_services.lower() == "goods and services":
+        triage_what_do_you_want_to_export.select_goods_and_services(
+            context.driver)
+    else:
+        raise KeyError("Could not recognize what you want to export!")
     triage_what_do_you_want_to_export.submit(context.driver)
     triage_are_you_registered_with_companies_house.should_be_here(context.driver)
     logging.debug("%s chose to export %s", actor_alias, goods_or_services)
