@@ -220,6 +220,18 @@ def triage_say_you_want_to_export_services(
         what_do_you_want_to_export=('services', code, sector))
 
 
+def triage_say_you_want_to_export_goods_and_services(
+        context: Context, actor_alias: str, code: str, sector: str):
+    triage_what_do_you_want_to_export.select_goods(context.driver)
+    triage_what_do_you_want_to_export.select_services(context.driver)
+    triage_what_do_you_want_to_export.submit(context.driver)
+    triage_are_you_registered_with_companies_house.should_be_here(
+        context.driver)
+    update_actor(
+        context, actor_alias,
+        what_do_you_want_to_export=('goods and services', code, sector))
+
+
 def triage_say_you_are_incorporated(
         context: Context, actor_alias: str):
     driver = context.driver
