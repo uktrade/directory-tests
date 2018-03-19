@@ -64,6 +64,18 @@ def select_goods(driver: webdriver):
     take_screenshot(driver, NAME)
 
 
+def select_goods_and_services(driver: webdriver):
+    goods = find_element(
+        driver, by_css=GOODS_CHECKBOX, element_name="Goods checkbox",
+        wait_for_it=False)
+    goods.click()
+    services = find_element(
+        driver, by_css=SERVICES_CHECKBOX, element_name="Services checkbox",
+        wait_for_it=False)
+    services.click()
+    take_screenshot(driver, NAME)
+
+
 def submit(driver: webdriver):
     submit_button = find_element(
         driver, by_css=CONTINUE_BUTTON, element_name="Submit button",
