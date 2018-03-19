@@ -165,7 +165,9 @@ def triage_question_what_do_you_want_to_export(
         triage_what_do_you_want_to_export.select_goods_and_services(
             context.driver)
     else:
-        raise KeyError("Could not recognize what you want to export!")
+        raise KeyError(
+            "Could not recognize what you want to export! {}"
+            .format(goods_or_services))
     triage_what_do_you_want_to_export.submit(context.driver)
     triage_are_you_registered_with_companies_house.should_be_here(context.driver)
     logging.debug("%s chose to export %s", actor_alias, goods_or_services)
