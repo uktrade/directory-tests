@@ -23,12 +23,11 @@ NAME = "ExRed Triage - summary"
 URL = urljoin(EXRED_UI_URL, "triage/summary/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
-CLASSIFICATION = ".question > h2"
-ANSWERS_SECTION = "div.answers"
-CREATE_MY_JOURNEY_BUTTON = "input.button.next"
-PREVIOUS_STEP_BUTTON = "input.button.next ~ button.previous-step"
-CHANGE_ANSWERS_LINK = "#change-answers-button-container > button"
-BACK_TO_HOME_LINK = ".home-link a"
+CLASSIFICATION = ".exred-triage-form h2"
+ANSWERS_SECTION = ".answers"
+CREATE_MY_JOURNEY_BUTTON = "#triage-continue"
+PREVIOUS_STEP_BUTTON = "#triage-previous-step"
+CHANGE_ANSWERS_LINK = "button.link.previous-step"
 QUESTIONS = ".answers > dl > dt"
 ANSWERS = ".answers > dl > dd"
 EXPECTED_ELEMENTS = {
@@ -36,7 +35,6 @@ EXPECTED_ELEMENTS = {
     "answers section": ANSWERS_SECTION,
     "continue button": CREATE_MY_JOURNEY_BUTTON,
     "change answers link": CHANGE_ANSWERS_LINK,
-    "back to home link": BACK_TO_HOME_LINK
 }
 
 

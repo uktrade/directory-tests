@@ -29,7 +29,7 @@ NO_CHECKBOX = "#id_exported-before-exported_before > li:nth-child(2) > label"
 CONTINUE_BUTTON = ".exred-triage-form button.button"
 BACK_TO_HOME_LINK = ".home-link a"
 EXPECTED_ELEMENTS = {
-    "question": "#id_triage_wizard_form_view-current_step ~ li > label",
+    "question": "div.form-group > label",
     "yes checkbox": YES_CHECKBOX,
     "no checkbox": NO_CHECKBOX,
     "continue button": CONTINUE_BUTTON,

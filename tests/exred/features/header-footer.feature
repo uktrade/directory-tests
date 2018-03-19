@@ -25,13 +25,13 @@ Feature: Header-Footer
 #      | Events                              |
 
 
-  @ED-3118
   @bug
   @ED-3116
-  @fixme
+  @fixed
   @logo
   @header
   @footer
+  @ED-3118
   Scenario Outline: Any Exporter should see correct DIT logo (with boat) in the page header and footer
     Given "Robert" visits the "<selected>" page
 
@@ -77,6 +77,9 @@ Feature: Header-Footer
       | Export Opportunities |
 
 
+  @bug
+  @ED-3216
+  @fixed
   @ED-3215
   @header
   @home-page
@@ -91,12 +94,6 @@ Feature: Header-Footer
     Examples:
       | specific            | expected                   | selected section |
       | Home                | Home                       | header menu      |
-
-    @bug
-    @ED-3216
-    @fixme
-    Examples: failing examples
-      | specific            | expected                   | selected section |
       | Your export journey | Create your export journey | header menu      |
       | Your export journey | Create your export journey | footer links     |
 
@@ -112,7 +109,7 @@ Feature: Header-Footer
   @ED-3261
   @bug
   @ED-3216
-  @fixme
+  @fixed
   @your-export-journey-link
   Scenario: Unauthenticated user should be prompted to sign in or to register on the "Create your export journey" page
     Given "Robert" visits the "Home" page for the first time

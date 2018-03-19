@@ -7,6 +7,8 @@ from tests import get_absolute_url, companies
 from tests.settings import DIRECTORY_API_HEALTH_CHECK_TOKEN as TOKEN
 
 
+@pytest.mark.skip(reason="ATM we're not caching inactive companies: see "
+                         "tickets: ED-3188, ED-3782")
 def test_landing_page_post_company_not_active():
     data = {'company_number': companies['not_active']}
     response = requests.post(

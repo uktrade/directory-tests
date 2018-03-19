@@ -48,7 +48,8 @@ from steps.when_impl import (
     triage_say_whether_you_use_online_marketplaces,
     triage_should_see_answers_to_questions,
     triage_what_is_your_company_name,
-    visit_page
+    visit_page,
+    triage_question_what_do_you_want_to_export
 )
 
 
@@ -341,4 +342,4 @@ def when_actor_decides_to_click_on_page_element(
 @when('"{actor_alias}" says what he wants to export "{goods_or_services}"')
 @when('"{actor_alias}" says what she wants to export "{goods_or_services}"')
 def when_actor_says_what_is_exported(context, actor_alias, goods_or_services):
-    triage_what_do_export(context, actor_alias, goods_or_services)
+    triage_question_what_do_you_want_to_export(context, actor_alias, goods_or_services)

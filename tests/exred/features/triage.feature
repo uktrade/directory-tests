@@ -11,7 +11,7 @@ Feature: Triage
 
     When "Nadia" says that she "has" exported before
     And "Nadia" says that exporting is "a regular" part of her business
-#    And "Nadia" says what she wants to export "<goods_or_services>"
+    And "Nadia" says what she wants to export "<goods_or_services>"
     And "Nadia" says that her company "is" incorporated
     And "Nadia" "<company_name_action>" her company name
     And "Nadia" sees the summary page with answers to the questions she was asked
@@ -21,10 +21,11 @@ Feature: Triage
     Then "Nadia" should be on the Personalised Journey page for "regular" exporters
 
     Examples:
-      | company_name_action  | goods_or_services |
-      | types in             | goods             |
-      | does not provide     | services          |
-      | types in and selects | good              |
+      | company_name_action  | goods_or_services  |
+      | types in             | goods              |
+      | does not provide     | services           |
+      | types in and selects | goods              |
+      | types in             | goods and services |
 
 
   @new-triage
@@ -37,7 +38,7 @@ Feature: Triage
 
     When "Nadia" says that she "has" exported before
     And "Nadia" says that exporting is "a regular" part of her business
-#    And "Nadia" says what she wants to export "<goods_or_services>"
+    And "Nadia" says what she wants to export "<goods_or_services>"
     And "Nadia" says that her company "is not" incorporated
     And "Nadia" sees the summary page with answers to the questions she was asked
     And "Nadia" can see that she was classified as a "regular" exporter
@@ -46,9 +47,10 @@ Feature: Triage
     Then "Nadia" should be on the Personalised Journey page for "regular" exporters
 
     Examples:
-      | goods_or_services |
-      | goods             |
-#      | services          |
+      | goods_or_services  |
+      | goods              |
+      | services           |
+      | goods and services |
 
 
   @new-triage
@@ -62,7 +64,7 @@ Feature: Triage
     When "Inigo" says that she "has" exported before
     And "Inigo" says that exporting is "not a regular" part of her business
     And "Inigo" says that she "<online_action>" used online marketplaces
-#    And "Inigo" says what she wants to export "<goods_or_services>"
+    And "Inigo" says what she wants to export "<goods_or_services>"
     And "Inigo" says that her company "is" incorporated
     And "Inigo" "<company_name_action>" his company name
     And "Inigo" sees the summary page with answers to the questions he was asked
@@ -72,13 +74,14 @@ Feature: Triage
     Then "Inigo" should be on the Personalised Journey page for "occasional" exporters
 
     Examples:
-      | online_action | company_name_action  | goods_or_services |
-      | has           | types in             | goods             |
-      | has never     | types in             | services          |
-      | has           | does not provide     | goods             |
-      | has never     | does not provide     | services          |
-      | has           | types in and selects | goods             |
-      | has never     | types in and selects | services          |
+      | online_action | company_name_action  | goods_or_services  |
+      | has           | types in             | goods              |
+      | has never     | types in             | services           |
+      | has           | does not provide     | goods              |
+      | has never     | does not provide     | services           |
+      | has           | types in and selects | goods              |
+      | has never     | types in and selects | services           |
+      | has           | types in             | goods and services |
 
 
   @new-triage
@@ -92,7 +95,7 @@ Feature: Triage
     When "Inigo" says that she "has" exported before
     And "Inigo" says that exporting is "not a regular" part of her business
     And "Inigo" says that she "<online_action>" used online marketplaces
-#    And "Inigo" says what she wants to export "<goods_or_services>"
+    And "Inigo" says what she wants to export "<goods_or_services>"
     And "Inigo" says that her company "is not" incorporated
     And "Inigo" sees the summary page with answers to the questions he was asked
     And "Inigo" can see that she was classified as a "occasional" exporter
@@ -101,9 +104,10 @@ Feature: Triage
     Then "Inigo" should be on the Personalised Journey page for "occasional" exporters
 
     Examples:
-      | online_action | online_action |
-      | has           | goods         |
-      | has never     | services      |
+      | online_action | goods_or_services  |
+      | has           | goods              |
+      | has never     | services           |
+      | has           | goods and services |
 
 
   @new-triage
@@ -115,7 +119,7 @@ Feature: Triage
     And "Jonah" decided to build his exporting journey
 
     When "Jonah" says that he "has never" exported before
-#    And "Inigo" says what she wants to export "<goods_or_services>"
+    And "Inigo" says what she wants to export "<goods_or_services>"
     And "Jonah" says that his company "is" incorporated
     And "Jonah" "<company_name_action>" his company name
     And "Jonah" sees the summary page with answers to the questions he was asked
@@ -125,10 +129,11 @@ Feature: Triage
     Then "Jonah" should be on the Personalised Journey page for "new" exporters
 
     Examples:
-      | company_name_action  | goods_or_services |
-      | types in             | goods             |
-      | does not provide     | services          |
-      | types in and selects | goods             |
+      | company_name_action  | goods_or_services  |
+      | types in             | goods              |
+      | does not provide     | services           |
+      | types in and selects | goods              |
+      | types in and selects | goods and services |
 
 
   @new-triage
@@ -140,7 +145,7 @@ Feature: Triage
     And "Jonah" decided to build his exporting journey
 
     When "Jonah" says that he "has never" exported before
-#    And "Jonah" says what he wants to export "<goods_or_services>"
+    And "Jonah" says what he wants to export "<goods_or_services>"
     And "Jonah" says that his company "is not" incorporated
     And "Jonah" sees the summary page with answers to the questions he was asked
     And "Jonah" can see that he was classified as a "new" exporter
@@ -149,9 +154,10 @@ Feature: Triage
     Then "Jonah" should be on the Personalised Journey page for "new" exporters
 
     Examples:
-      | goods_or_services |
-      | goods             |
-#      | services          |
+      | goods_or_services  |
+      | goods              |
+      | services           |
+      | goods and services |
 
 
   @ED-2523
@@ -167,5 +173,5 @@ Feature: Triage
     Examples: classifications
       | specific   |
       | New        |
-#      | Occasional |
-#      | Regular    |
+      | Occasional |
+      | Regular    |

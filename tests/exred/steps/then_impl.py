@@ -125,7 +125,7 @@ def personalised_should_see_layout_for(
     online_marketplaces = actor.do_you_use_online_marketplaces
     code = None
     if actor.what_do_you_want_to_export:
-        code, _ = actor.what_do_you_want_to_export
+        _, code, _ = actor.what_do_you_want_to_export
     personalised_journey.should_be_here(context.driver)
     if classification.lower() == "new":
         personalised_journey.layout_for_new_exporter(
@@ -332,7 +332,7 @@ def personalised_journey_should_not_see_banner_and_top_10_table(
         context: Context, actor_alias: str):
     personalised_journey.should_not_see_banner_and_top_10_table(context.driver)
     actor = get_actor(context, actor_alias)
-    code, sector = actor.what_do_you_want_to_export
+    _, code, sector = actor.what_do_you_want_to_export
     logging.debug(
         "As expected %s can't see Top Importer banner and Top 10 Importers "
         "table on personalised page for '%s - %s' sector", actor_alias, code,
@@ -342,7 +342,7 @@ def personalised_journey_should_not_see_banner_and_top_10_table(
 def personalised_journey_should_see_banner_and_top_10_table(
         context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
-    code, sector = actor.what_do_you_want_to_export
+    _, code, sector = actor.what_do_you_want_to_export
     personalised_journey.should_see_banner_and_top_10_table(
         context.driver, sector)
     logging.debug(

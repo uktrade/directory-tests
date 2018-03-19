@@ -27,15 +27,13 @@ COMPANY_NAME_INPUT = "js-typeahead-company-name"
 SUGGESTIONS = "ul.SelectiveLookupDisplay"
 FIRST_SUGGESTION = "ul.SelectiveLookupDisplay > li:nth-child(1)"
 CONTINUE_BUTTON = ".exred-triage-form button.button"
-PREVIOUS_STEP_BUTTON = ".exred-triage-form button.previous-step"
-CONTINUE_WO_NAME_BUTTON = "div.exred-triage-form button[name=wizard_skip_step]"
-BACK_TO_HOME_LINK = ".home-link a"
+PREVIOUS_STEP_BUTTON = "button[name=wizard_goto_step]"
+CONTINUE_WO_NAME_BUTTON = "button[name=wizard_skip_step]"
 EXPECTED_ELEMENTS = {
     "question": "label[for=js-typeahead-company-name]",
     "continue button": CONTINUE_BUTTON,
     "previous step button": PREVIOUS_STEP_BUTTON,
     "continue without providing name": CONTINUE_WO_NAME_BUTTON,
-    "back to home link": BACK_TO_HOME_LINK
 }
 
 

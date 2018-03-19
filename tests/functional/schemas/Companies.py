@@ -120,7 +120,6 @@ COMPANIES = {
         },
         "required": [
             "date_of_creation",
-            "kind",
             "description",
             "links",
             "title",
