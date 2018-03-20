@@ -3,6 +3,8 @@
   "capabilities": {{
     "browserstack.debug": true,
     "browserstack.selenium_version": "3.10.0",
+    "browserstack.use_w3c": true,
+    "browserstack.geckodriver": "0.19.1",
     "build": {BUILD_ID},
     "project": "ExRed",
     "resolution": "1600x1200"
