@@ -50,22 +50,20 @@ Feature: Multi-user accounts
     Then "Annette Geissinger" should see "FAB Company profile" page
 
 
-  @wip
   @ED-3557
   @multi-user
   @add-collaborator
-  Scenario: Add "1" collaborator without an SSO/great.gov.uk account to a verified company
+  Scenario: Add "1" collaborator with an SSO/great.gov.uk account to a verified company
     Given "Peter Alder" has created and verified profile for randomly selected company "Y"
-    And "Annette Geissinger" "does not have" an SSO/great.gov.uk account
-    And "Peter Alder" added "Annette Geissinger" as a collaborator to company "Y" profile
-    And "Annette Geissinger" has received an email with a request for becoming a collaborator to company "Y" profile
-    And "Annette Geissinger" decides to confirm that she wants to be added to the profile
-    And "Annette Geissinger" should be on "SSO registration" page
+    And "Annette Geissinger" "has" an SSO/great.gov.uk account
+    And "Peter Alder" added "Annette Geissinger" as a collaborator
+    And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
+    And "Annette Geissinger" decides to open the invitation from company "Y"
+    And "Annette Geissinger" should be on "FAB confirm you want to be added to the profile" page
 
-    When "Annette Geissinger" creates an SSO/great.gov.uk account
-    And "Annette Geissinger" confirms that she wants to be added to the profile
+    When "Annette Geissinger" confirms that he wants to be added to the company "Y" Find a Buyer profile
 
-    Then "Annette Geissinger" should be on "Edit Company profile" page
+    Then "Annette Geissinger" should see "FAB Company profile" page
 
 
   @wip
