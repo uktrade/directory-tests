@@ -29,7 +29,8 @@ from tests.functional.steps.fab_then_impl import (
     reg_should_get_verification_email,
     sso_should_be_signed_in_to_sso_account,
     sso_should_be_signed_out_from_sso_account,
-    sso_should_get_request_for_collaboration_email
+    sso_should_get_request_for_collaboration_email,
+    should_be_at
 )
 from tests.functional.steps.fab_when_impl import (
     go_to_page,
@@ -38,7 +39,8 @@ from tests.functional.steps.fab_when_impl import (
     prof_set_company_description,
     prof_sign_out_from_fab,
     prof_supplier_uploads_logo,
-    prof_add_collaborator
+    prof_add_collaborator,
+    fab_open_collaboration_request_link
 )
 
 
@@ -234,3 +236,15 @@ def given_actor_should_receive_email_with_request_for_collaboration(
         context, supplier_alias, company_alias):
     sso_should_get_request_for_collaboration_email(
         context, supplier_alias, company_alias)
+
+
+@given('"{actor_alias}" should be on "{page_name}" page')
+def given_actor_is_on_specific_page(context, actor_alias, page_name):
+    should_be_at(context, actor_alias, page_name)
+
+
+@given('"{collaborator_alias}" decides to open the invitation from company "{company_alias}"')
+def given_collaborator_decides_to_open_invitation(
+        context, collaborator_alias, company_alias):
+    fab_open_collaboration_request_link(
+        context, collaborator_alias, company_alias)
