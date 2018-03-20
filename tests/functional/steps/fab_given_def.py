@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# flake8: noqa
 """FAB Given step definitions."""
 from behave import given
 from tests.functional.steps.fab_given_impl import (
