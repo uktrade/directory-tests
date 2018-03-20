@@ -101,7 +101,7 @@ def select_random_company(
 
     :param context: behave `context` object
     :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :param company_alias: alias of the company used in the scope of the scenario
+    :param company_alias: alias of the company used in the scenario
     """
     actor = context.get_actor(supplier_alias)
     session = actor.session
@@ -150,7 +150,7 @@ def reg_confirm_company_selection(
 
     :param context: behave `context` object
     :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :param company_alias: alias of the company used in the scope of the scenario
+    :param company_alias: alias of the company used in the scenario
     """
     actor = context.get_actor(supplier_alias)
     token = actor.csrfmiddlewaretoken
@@ -166,7 +166,8 @@ def reg_confirm_company_selection(
     # Step 2 - check if we're on the Confirm Export Status page
     fab_ui_confirm_export_status.should_be_here(response)
     if not has_sso_account:
-        fab_ui_confirm_export_status.should_see_info_about_sso_account(response)
+        fab_ui_confirm_export_status.should_see_info_about_sso_account(
+            response)
 
     logging.debug("Confirmed selection of Company: %s", company.number)
 
@@ -331,8 +332,8 @@ def bp_select_random_sector_and_export_to_country(context, supplier_alias):
     interested in working in.
 
     NOTE:
-    This will set `context.details` which will contain company details extracted
-    from the page displayed after Supplier selects the sector.
+    This will set `context.details` which will contain company details
+    extracted from the page displayed after Supplier selects the sector.
 
     :param context: behave `context` object
     :type context: behave.runner.Context
@@ -345,7 +346,8 @@ def bp_select_random_sector_and_export_to_country(context, supplier_alias):
     other = ""
 
     # Step 1 - Submit the Choose Your Sector form
-    response = fab_ui_build_profile_sector.submit(actor, sector, countries, other)
+    response = fab_ui_build_profile_sector.submit(
+        actor, sector, countries, other)
     context.response = response
 
     # Step 2 - check if Supplier is on Confirm Address page
@@ -391,8 +393,8 @@ def bp_verify_identity_with_letter(context: Context, supplier_alias: str):
 def prof_set_company_description(context, supplier_alias):
     """Edit Profile - Will set company description.
 
-    This is quasi-mandatory (*) step before Supplier can verify the company with
-    the code sent in a letter.
+    This is quasi-mandatory (*) step before Supplier can verify the company
+    with the code sent in a letter.
 
     (*) it's quasi mandatory, because Supplier can actually go to the company
     verification page using the link provided in the letter without the need
@@ -677,7 +679,8 @@ def sso_go_to_create_trade_profile(context, supplier_alias):
     """Follow the 'Create a trade profile' button on the "Find a Buyer" tab.
 
     NOTE:
-    It's assumed that Supplier already has a standalone SSO/great.gov.uk account
+    It's assumed that Supplier already has a standalone SSO/great.gov.uk
+    account
 
     :param context: behave `context` object
     :type context: behave.runner.Context
@@ -880,9 +883,9 @@ def prof_update_company_details(
         no_employees=new_details.no_employees, sector=new_sector,
         export_to_countries=new_countries)
     logging.debug(
-        "%s successfully updated basic Company's details: title=%s, website=%s,"
-        " keywords=%s, number of employees=%s, sector=%s, countries=%s",
-        supplier_alias, new_details.title, new_details.website,
+        "%s successfully updated basic Company's details: title=%s, "
+        "website=%s, keywords=%s, number of employees=%s, sector=%s, "
+        "countries=%s", supplier_alias, new_details.title, new_details.website,
         new_details.keywords, new_details.no_employees, new_sector,
         new_countries)
 
@@ -1000,7 +1003,7 @@ def prof_add_case_study(context, supplier_alias, case_alias):
 
     :param context: behave `context` object
     :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :param case_alias: alias of the Case Study used in the scope of the scenario
+    :param case_alias: alias of the Case Study used in the scenario
     """
     actor = context.get_actor(supplier_alias)
     session = actor.session
@@ -1090,7 +1093,7 @@ def fas_search_using_company_details(
 
     :param context: behave `context` object
     :param buyer_alias: alias of the Actor used in the scope of the scenario
-    :param company_alias: alias of the Company used in the scope of the scenario
+    :param company_alias: alias of the Company used in the scenario
     :param table_of_details: (optional) a table with selected company details
                              which will be used in search
     """
@@ -1145,8 +1148,8 @@ def fas_search_using_company_details(
                     response = fas_ui_find_supplier.go_to(
                         session, term=term, page=next_page)
                 else:
-                    logging.debug("Couldn't find the Supplier even on the last "
-                                  "page of the search results")
+                    logging.debug("Couldn't find the Supplier even on the last"
+                                  " page of the search results")
     context.search_results = search_results
     context.search_responses = search_responses
 
@@ -1693,7 +1696,8 @@ def get_form_value(key: str) -> str or list or int or None:
         ("invalid image", choice(BMPs + JP2s + WEBPs)),
         (" characters$", get_n_chars(get_number_from_key(key))),
         (" words$", get_n_words(get_number_from_key(key))),
-        (" predefined countries$", get_n_country_codes(get_number_from_key(key))),
+        (" predefined countries$", get_n_country_codes(
+            get_number_from_key(key))),
         ("1 predefined country$", get_n_country_codes(1)),
         ("none selected", None),
         ("sector", choice(SECTORS))
@@ -1749,13 +1753,16 @@ def fab_attempt_to_add_case_study(
         token = extract_csrf_middleware_token(response)
 
         if field in page_1_fields:
-            response = fab_ui_case_study_basic.submit_form(session, token, case_study)
+            response = fab_ui_case_study_basic.submit_form(
+                session, token, case_study)
             context.response = response
         elif field in page_2_fields:
-            response = fab_ui_case_study_basic.submit_form(session, token, case_study)
+            response = fab_ui_case_study_basic.submit_form(
+                session, token, case_study)
             context.response = response
             token = extract_csrf_middleware_token(response)
-            response = fab_ui_case_study_images.submit_form(session, token, case_study)
+            response = fab_ui_case_study_images.submit_form(
+                session, token, case_study)
             context.response = response
         else:
             raise KeyError(
@@ -1773,7 +1780,8 @@ def sso_request_password_reset(context: Context, supplier_alias: str):
     else:
         next_param = get_fabs_page_url(page_name="fab landing")
 
-    response = sso_ui_password_reset.go_to(actor.session, next_param=next_param)
+    response = sso_ui_password_reset.go_to(
+        actor.session, next_param=next_param)
     context.response = response
 
     sso_ui_password_reset.should_be_here(response)
@@ -1807,7 +1815,8 @@ def sso_sign_in(context: Context, supplier_alias: str):
 
 def sso_change_password_with_password_reset_link(
         context: Context, supplier_alias: str, *, new: bool = False,
-        same: bool = False, mismatch: bool = False, letters_only: bool = False):
+        same: bool = False, mismatch: bool = False,
+        letters_only: bool = False):
     actor = context.get_actor(supplier_alias)
     session = actor.session
     link = actor.password_reset_link

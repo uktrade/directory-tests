@@ -67,7 +67,8 @@ def reg_sso_account_should_be_created(response: Response, supplier_alias: str):
     :param supplier_alias: alias of the Actor used in the scope of the scenario
     """
     sso_ui_verify_your_email.should_be_here(response)
-    logging.debug("Successfully created new SSO account for %s", supplier_alias)
+    logging.debug(
+        "Successfully created new SSO account for %s", supplier_alias)
 
 
 def reg_should_get_verification_email(context: Context, alias: str):
@@ -307,7 +308,7 @@ def fas_should_see_different_png_logo_thumbnail(context, actor_alias):
 
 def prof_all_unsupported_files_should_be_rejected(
         context: Context, supplier_alias: str):
-    """Check if all unsupported files were rejected upon upload as company logo.
+    """Check if all unsupported files were rejected upon upload as company logo
 
     NOTE:
     This require `context.rejections` to be set.
@@ -424,17 +425,17 @@ def fas_should_see_company_details(context: Context, supplier_alias: str):
 
 @retry(wait_fixed=5000, stop_max_attempt_number=3)
 def fas_find_supplier_using_case_study_details(
-        context: Context, buyer_alias: str, company_alias: str, case_alias: str,
-        *, properties: Table = None):
+        context: Context, buyer_alias: str, company_alias: str,
+        case_alias: str, *, properties: Table = None):
     """Find Supplier on FAS using parts of the Case Study added by Supplier.
 
     :param context: behave `context` object
     :param buyer_alias: alias of the Actor used in the scope of the scenario
     :param company_alias: alias of the sought Company
     :param case_alias: alias of the Case Study used in the search
-    :param properties: (optional) table containing the names of Case Study parts
-                       that will be used search. If not provided, then all parts
-                       will be used except 'alias'.
+    :param properties: (optional) table containing the names of Case Study
+                       parts that will be used search. If not provided, then
+                       all parts will be used except 'alias'.
     """
     actor = context.get_actor(buyer_alias)
     session = actor.session
@@ -457,7 +458,8 @@ def fas_find_supplier_using_case_study_details(
         term = search_terms[term_name]
         response = fas_ui_find_supplier.go_to(session, term=term)
         context.response = response
-        found = fas_ui_find_supplier.should_see_company(response, company.title)
+        found = fas_ui_find_supplier.should_see_company(
+            response, company.title)
         if found:
             logging.debug(
                 "Found Supplier '%s' using '%s' : '%s' on 1st result page",
@@ -490,7 +492,8 @@ def fas_find_supplier_using_case_study_details(
 
 
 def fas_supplier_cannot_be_found_using_case_study_details(
-        context: Context, buyer_alias: str, company_alias: str, case_alias: str):
+        context: Context, buyer_alias: str, company_alias: str,
+        case_alias: str):
     actor = context.get_actor(buyer_alias)
     session = actor.session
     company = context.get_company(company_alias)
@@ -513,7 +516,8 @@ def fas_supplier_cannot_be_found_using_case_study_details(
             term_name, search_terms)
         response = fas_ui_find_supplier.go_to(session, term=term)
         context.response = response
-        found = fas_ui_find_supplier.should_not_see_company(response, company.title)
+        found = fas_ui_find_supplier.should_not_see_company(
+            response, company.title)
         with assertion_msg(
                 "Buyer found Supplier '%s' on FAS using %s: %s", company.title,
                 term_name, term):
@@ -525,14 +529,14 @@ def fas_supplier_cannot_be_found_using_case_study_details(
 
 def fas_should_find_with_company_details(
         context: Context, buyer_alias: str, company_alias: str):
-    """Check if Buyer was able to find Supplier using all selected search terms.
+    """Check if Buyer was able to find Supplier using all selected search terms
 
     NOTE:
     This step requires the search_results dict to be stored in context
 
     :param context: behave `context` object
     :param buyer_alias: alias of the Actor used in the scope of the scenario
-    :param company_alias: alias of the Company used in the scope of the scenario
+    :param company_alias: alias of the Company used in the scenario
     """
     assert hasattr(context, "search_results")
     company = context.get_company(company_alias)
@@ -540,8 +544,8 @@ def fas_should_find_with_company_details(
         # get response for specific search request. This helps to debug
         context.response = context.search_responses[result]
         with assertion_msg(
-                "%s wasn't able to find '%s' (alias: %s) using %s", buyer_alias,
-                company.title, company_alias, result):
+                "%s wasn't able to find '%s' (alias: %s) using %s",
+                buyer_alias, company.title, company_alias, result):
             assert context.search_results[result]
 
 
@@ -557,7 +561,7 @@ def fas_pages_should_be_in_selected_language(
     :param pages_table: a table with viewed FAS pages
     :param language: expected language of the view FAS page content
     :param page_part: detect language of the whole page or just the main part
-    :param probability: expected probability of expected language to be detected
+    :param probability: expected probability of expected language
     """
     with assertion_msg("Required dictionary with page views is missing"):
         assert hasattr(context, "views")
@@ -583,7 +587,8 @@ def fas_pages_should_be_in_selected_language(
         logging.debug("Detecting the language of FAS %s page", page_name)
         results = detect_page_language(content=content, main=main)
         detected = set(lang.lang for idx in results for lang in results[idx])
-        logging.debug("`langdetect` detected FAS %s page to be in %s", detected)
+        logging.debug(
+            "`langdetect` detected FAS %s page to be in %s", detected)
 
         error_msg = ""
         for lang_code in detected:
@@ -682,7 +687,8 @@ def fas_should_see_filtered_search_results(context, actor_alias):
         filters = Selector(text=content).css(sector_filters_selector).extract()
         for fil in filters:
             sector = Selector(text=fil).css("input::attr(value)").extract()[0]
-            checked = True if Selector(text=fil).css("input::attr(checked)").extract() else False
+            input = Selector(text=fil).css("input::attr(checked)").extract()
+            checked = True if input else False
             if sector in result["sectors"]:
                 with assertion_msg(
                         "Expected search results to be filtered by '%s' sector"
@@ -751,8 +757,8 @@ def fas_should_see_highlighted_search_term(context, actor_alias, search_term):
         assert any(founds)
 
     logging.debug(
-        "{alias} found highlighted search {term}: '{keywords}' {founds} {times}"
-        " in {results} search results".format(
+        "{alias} found highlighted search {term}: '{keywords}' {founds} "
+        "{times} in {results} search results".format(
             alias=actor_alias, term="terms" if len(keywords) > 1 else "term",
             keywords=", ".join(keywords), founds=len([f for f in founds if f]),
             times="times" if len([f for f in founds if f]) > 1 else "time",
@@ -771,8 +777,8 @@ def fab_should_see_case_study_error_message(context, supplier_alias):
         context.response = response
         with assertion_msg(
                 "Could not find expected error message: '%s' in the response, "
-                "after submitting the add case study form with '%s' value being"
-                " '%s' following and other details: '%s'", error, field,
+                "after submitting the add case study form with '%s' value "
+                "being '%s' following and other details: '%s'", error, field,
                 value_type, case_study):
             assert error in response.content.decode("utf-8")
     logging.debug("%s has seen all expected case study errors", supplier_alias)
@@ -816,7 +822,8 @@ def should_see_selected_pages(context: Context, actor_alias: str):
         context.response = response
         page = get_fabs_page_object(page_name.lower())
         page.should_be_here(response)
-        logging.debug("%s successfully got to '%s' page", actor_alias, page_name)
+        logging.debug(
+            "%s successfully got to '%s' page", actor_alias, page_name)
 
 
 def fab_should_be_asked_about_verification_form(
@@ -829,7 +836,8 @@ def fab_should_be_asked_about_verification_form(
 def should_see_message(context: Context, actor_alias: str, message: str):
     content = context.response.content.decode("utf-8")
     with assertion_msg(
-            "Response content doesn't contain expected message: '%s'", message):
+            "Response content doesn't contain expected message: '%s'",
+            message):
         assert message in content
     logging.debug("%s saw expected message: '%s'", actor_alias, message)
 
