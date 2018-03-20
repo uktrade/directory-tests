@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 """SSO - Registration page"""
 import logging
-from urllib.parse import quote
-from urllib.parse import urljoin
+from urllib.parse import quote, urljoin
 
 from requests import Response, Session
-
 from tests import get_absolute_url
 from tests.functional.utils.context_utils import Actor, Company
 from tests.functional.utils.request import Method, check_response, make_request

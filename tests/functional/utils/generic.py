@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
 """Various utils used across the project."""
-from email.mime.text import MIMEText
-from enum import Enum
-
 import hashlib
 import json
 import logging
@@ -11,54 +8,55 @@ import random
 import re
 import sys
 import traceback
-from contextlib import contextmanager
-from pprint import pprint
-
 from collections import namedtuple
-from directory_api_client.testapiclient import DirectoryTestAPIClient
-from directory_constants.constants import choices
-from directory_sso_api_client.testapiclient import DirectorySSOTestAPIClient
+from contextlib import contextmanager
+from email.mime.text import MIMEText
+from enum import Enum
+from pprint import pprint
 from random import choice
 from string import ascii_uppercase
 from typing import List
 
-import lxml
 import requests
 from behave.runner import Context
-from bs4 import BeautifulSoup
-from jsonschema import validate
-from langdetect import DetectorFactory, detect_langs
+from directory_api_client.testapiclient import DirectoryTestAPIClient
+from directory_constants.constants import choices
+from directory_sso_api_client.testapiclient import DirectorySSOTestAPIClient
 from requests import Response
 from retrying import retry
-from scrapy.selector import Selector
 from termcolor import cprint
-
 from tests import get_absolute_url
 from tests.functional.schemas.Companies import COMPANIES
 from tests.functional.utils.context_utils import (
+    Actor,
     CaseStudy,
     Company,
     Feedback,
-    Message,
-    Actor
+    Message
 )
-from tests.functional.utils.request import Method, make_request, check_response
+from tests.functional.utils.request import Method, check_response, make_request
 from tests.settings import (
+    DIRECTORY_API_CLIENT_KEY,
+    DIRECTORY_API_URL,
+    FAB_CONFIRM_COLLABORATION_SUBJECT,
     MAILGUN_DIRECTORY_API_USER,
     MAILGUN_DIRECTORY_EVENTS_URL,
     MAILGUN_DIRECTORY_SECRET_API_KEY,
     RARE_WORDS,
     SECTORS,
+    SSO_PROXY_API_CLIENT_BASE_URL,
+    SSO_PROXY_SIGNATURE_SECRET,
     TEST_IMAGES_DIR,
     JPEGs,
     JPGs,
-    PNGs,
-    DIRECTORY_API_URL,
-    DIRECTORY_API_CLIENT_KEY,
-    SSO_PROXY_API_CLIENT_BASE_URL,
-    SSO_PROXY_SIGNATURE_SECRET,
-    FAB_CONFIRM_COLLABORATION_SUBJECT
+    PNGs
 )
+
+import lxml
+from bs4 import BeautifulSoup
+from jsonschema import validate
+from langdetect import DetectorFactory, detect_langs
+from scrapy.selector import Selector
 
 INDUSTRY_CHOICES = dict(choices.INDUSTRIES)
 

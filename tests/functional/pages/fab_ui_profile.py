@@ -4,7 +4,6 @@ import logging
 
 from behave.model import Table
 from requests import Response
-
 from tests import get_absolute_url
 from tests.functional.common import DETAILS
 from tests.functional.utils.context_utils import Company

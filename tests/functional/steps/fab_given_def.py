@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """FAB Given step definitions."""
 from behave import given
-
 from tests.functional.steps.fab_given_impl import (
     bp_build_company_profile,
+    create_actor_with_or_without_sso_account,
+    create_actor_with_verified_or_unverified_fab_profile,
     fab_find_published_company,
     fas_find_company_by_name,
     fas_get_company_slug,
@@ -18,29 +19,27 @@ from tests.functional.steps.fab_given_impl import (
     sso_create_standalone_verified_sso_account,
     sso_get_password_reset_link,
     unauthenticated_buyer,
-    unauthenticated_supplier,
-    create_actor_with_or_without_sso_account,
-    create_actor_with_verified_or_unverified_fab_profile
+    unauthenticated_supplier
 )
 from tests.functional.steps.fab_then_impl import (
     fab_should_see_all_case_studies,
     fas_should_see_png_logo_thumbnail,
     prof_should_see_logo_picture,
     reg_should_get_verification_email,
+    should_be_at,
     sso_should_be_signed_in_to_sso_account,
     sso_should_be_signed_out_from_sso_account,
-    sso_should_get_request_for_collaboration_email,
-    should_be_at
+    sso_should_get_request_for_collaboration_email
 )
 from tests.functional.steps.fab_when_impl import (
+    fab_open_collaboration_request_link,
     go_to_page,
     prof_add_case_study,
+    prof_add_collaborator,
     prof_add_online_profiles,
     prof_set_company_description,
     prof_sign_out_from_fab,
-    prof_supplier_uploads_logo,
-    prof_add_collaborator,
-    fab_open_collaboration_request_link
+    prof_supplier_uploads_logo
 )
 
 

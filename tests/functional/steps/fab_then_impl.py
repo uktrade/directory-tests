@@ -8,8 +8,6 @@ from behave.model import Table
 from behave.runner import Context
 from requests import Response
 from retrying import retry
-from scrapy import Selector
-
 from tests import get_absolute_url
 from tests.functional.pages import (
     fab_ui_build_profile_basic,
@@ -36,24 +34,26 @@ from tests.functional.utils.generic import (
     check_hash_of_remote_file,
     detect_page_language,
     extract_csrf_middleware_token,
+    extract_link_with_invitation_for_collaboration,
     extract_logo_url,
+    extract_plain_text_payload,
     find_mail_gun_events,
     get_language_code,
     get_number_of_search_result_pages,
-    surround,
     mailgun_find_email_with_request_for_collaboration,
-    extract_link_with_invitation_for_collaboration,
-    extract_plain_text_payload
+    surround
 )
 from tests.functional.utils.gov_notify import (
-    get_verification_link,
-    get_password_reset_link
+    get_password_reset_link,
+    get_verification_link
 )
 from tests.settings import (
     FAS_LOGO_PLACEHOLDER_IMAGE,
     FAS_MESSAGE_FROM_BUYER_SUBJECT,
     SEARCHABLE_CASE_STUDY_DETAILS
 )
+
+from scrapy import Selector
 
 
 def reg_sso_account_should_be_created(response: Response, supplier_alias: str):
@@ -846,4 +846,3 @@ def sso_should_get_request_for_collaboration_email(
     payload = extract_plain_text_payload(email_message)
     link = extract_link_with_invitation_for_collaboration(payload)
     context.update_actor(actor_alias, invitation_for_collaboration_link=link)
-

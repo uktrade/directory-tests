@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 """FAB Given step definitions."""
 from behave import when
-
 from tests.functional.steps.fab_when_impl import (
     bp_provide_company_details,
     bp_select_random_sector_and_export_to_country,
     bp_verify_identity_with_letter,
     fab_attempt_to_add_case_study,
     fab_choose_to_verify_with_code,
+    fab_collaborator_create_sso_account_and_confirm_email,
+    fab_confirm_collaboration_request,
     fab_go_to_letter_verification,
     fab_provide_company_details,
     fab_select_preferred_countries_of_export,
@@ -31,6 +32,7 @@ from tests.functional.steps.fab_when_impl import (
     go_to_page,
     go_to_pages,
     prof_add_case_study,
+    prof_add_collaborator,
     prof_add_invalid_online_profiles,
     prof_add_online_profiles,
     prof_attempt_to_sign_in_to_fab,
@@ -53,10 +55,7 @@ from tests.functional.steps.fab_when_impl import (
     sso_open_password_reset_link,
     sso_request_password_reset,
     sso_sign_in,
-    sso_supplier_confirms_email_address,
-    prof_add_collaborator,
-    fab_confirm_collaboration_request,
-    fab_collaborator_create_sso_account_and_confirm_email
+    sso_supplier_confirms_email_address
 )
 
 

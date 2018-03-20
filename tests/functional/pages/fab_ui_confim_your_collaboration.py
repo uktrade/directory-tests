@@ -3,7 +3,6 @@
 import logging
 
 from requests import Response, Session
-
 from tests.functional.utils.generic import assertion_msg
 from tests.functional.utils.request import Method, check_response, make_request
 

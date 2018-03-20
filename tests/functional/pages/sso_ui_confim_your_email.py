@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 """SSO - Verify your email page"""
 import logging
-from urllib.parse import unquote
-from urllib.parse import urljoin
+from urllib.parse import unquote, urljoin
 
 from requests import Response, Session
-
 from tests import get_absolute_url
 from tests.functional.utils.context_utils import Actor
 from tests.functional.utils.generic import assertion_msg

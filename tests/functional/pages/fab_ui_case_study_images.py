@@ -5,7 +5,6 @@ from mimetypes import MimeTypes
 from os.path import basename
 
 from requests import Response, Session
-
 from tests import get_absolute_url
 from tests.functional.utils.context_utils import CaseStudy
 from tests.functional.utils.request import Method, check_response, make_request

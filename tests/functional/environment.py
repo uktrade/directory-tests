@@ -4,21 +4,20 @@ import logging
 from pprint import pformat
 
 from behave.contrib.scenario_autoretry import patch_scenario_with_autoretry
-
 from tests.functional.utils.context_utils import (
     initialize_scenario_data,
     patch_context
 )
 from tests.functional.utils.generic import (
     blue,
+    delete_supplier_data_from_dir,
+    delete_supplier_data_from_sso,
     extract_form_errors,
     extract_main_error,
     extract_section_error,
     green,
     print_response,
-    red,
-    delete_supplier_data_from_sso,
-    delete_supplier_data_from_dir
+    red
 )
 from tests.functional.utils.request import REQUEST_EXCEPTIONS
 from tests.settings import AUTO_RETRY, AUTO_RETRY_MAX_ATTEMPTS

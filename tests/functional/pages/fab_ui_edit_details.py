@@ -3,7 +3,6 @@
 import random
 
 from requests import Response, Session
-
 from tests import get_absolute_url
 from tests.functional.utils.context_utils import Actor, Company
 from tests.functional.utils.generic import (

@@ -9,16 +9,16 @@ from urllib.parse import parse_qsl, quote, urljoin, urlsplit
 from behave.model import Table
 from behave.runner import Context
 from requests import Response, Session
-from scrapy import Selector
-
 from tests import get_absolute_url
 from tests.functional.common import DETAILS, PROFILES
 from tests.functional.pages import (
+    fab_ui_account_add_collaborator,
     fab_ui_build_profile_basic,
     fab_ui_build_profile_sector,
     fab_ui_build_profile_verification_letter,
     fab_ui_case_study_basic,
     fab_ui_case_study_images,
+    fab_ui_confim_your_collaboration,
     fab_ui_confirm_company,
     fab_ui_confirm_export_status,
     fab_ui_confirm_identity,
@@ -43,9 +43,7 @@ from tests.functional.pages import (
     sso_ui_logout,
     sso_ui_password_reset,
     sso_ui_register,
-    sso_ui_verify_your_email,
-    fab_ui_account_add_collaborator,
-    fab_ui_confim_your_collaboration
+    sso_ui_verify_your_email
 )
 from tests.functional.registry import get_fabs_page_object, get_fabs_page_url
 from tests.functional.steps.fab_then_impl import (
@@ -59,11 +57,13 @@ from tests.functional.utils.generic import (
     extract_csrf_middleware_token,
     extract_form_action,
     extract_logo_url,
+    extract_registration_page_link,
     get_absolute_path_of_file,
     get_active_company_without_fas_profile,
     get_language_code,
     get_md5_hash_of_file,
     get_number_of_search_result_pages,
+    get_verification_code,
     is_already_registered,
     is_inactive,
     random_case_study_data,
@@ -71,9 +71,7 @@ from tests.functional.utils.generic import (
     random_feedback_data,
     random_message_data,
     rare_word,
-    sentence,
-    get_verification_code,
-    extract_registration_page_link
+    sentence
 )
 from tests.functional.utils.request import Method, check_response, make_request
 from tests.settings import (
@@ -85,6 +83,8 @@ from tests.settings import (
     JP2s,
     WEBPs
 )
+
+from scrapy import Selector
 
 
 def select_random_company(
