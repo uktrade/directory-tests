@@ -10,7 +10,9 @@
   "environments": [
     {{
       "browser": {BROWSERS[0]},
-      "browser_version": {VERSIONS[0]}
+      "browser_version": {VERSIONS[0]},
+      "os": "Windows",
+      "os_version": "10"
     }}
   ]
 }}
