@@ -292,12 +292,14 @@ def reg_create_verified_sso_account_associated_with_company(
 
 
 def create_actor_with_or_without_sso_account(
-        context: Context, actor_alias: str, has_or_does_not_have: str):
-    if has_or_does_not_have == "has":
-        sso_create_standalone_verified_sso_account(context, actor_alias)
-    else:
-        supplier = unauthenticated_supplier(actor_alias)
-        context.add_actor(supplier)
+        context: Context, actor_aliases: str, has_or_does_not_have: str):
+    actor_aliases = actor_aliases.split(", ")
+    for actor_alias in actor_aliases:
+        if has_or_does_not_have in ["has", "have"]:
+            sso_create_standalone_verified_sso_account(context, actor_alias)
+        else:
+            supplier = unauthenticated_supplier(actor_alias)
+            context.add_actor(supplier)
 
 
 def create_actor_with_verified_or_unverified_fab_profile(

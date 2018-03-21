@@ -217,11 +217,11 @@ def given_actor_with_verified_or_not_profile(
         context, actor_alias, verified_or_not, company_alias)
 
 
-@given('"{actor_alias}" "{has_or_does_not_have}" an SSO/great.gov.uk account')
+@given('"{actor_aliases}" "{has_or_does_not_have}" an SSO/great.gov.uk account')
 def given_actor_with_or_without_sso_account(
-        context, actor_alias, has_or_does_not_have):
+        context, actor_aliases, has_or_does_not_have):
     create_actor_with_or_without_sso_account(
-        context, actor_alias, has_or_does_not_have)
+        context, actor_aliases, has_or_does_not_have)
 
 
 @given('"{supplier_alias}" added "{collaborator_alias}" as a collaborator')
