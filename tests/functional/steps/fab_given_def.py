@@ -40,7 +40,8 @@ from tests.functional.steps.fab_when_impl import (
     prof_add_online_profiles,
     prof_set_company_description,
     prof_sign_out_from_fab,
-    prof_supplier_uploads_logo
+    prof_supplier_uploads_logo,
+    fab_confirm_collaboration_request
 )
 
 
@@ -247,4 +248,12 @@ def given_actor_is_on_specific_page(context, actor_alias, page_name):
 def given_collaborator_decides_to_open_invitation(
         context, collaborator_alias, company_alias):
     fab_open_collaboration_request_link(
+        context, collaborator_alias, company_alias)
+
+
+@given('"{collaborator_alias}" confirmed that he wants to be added to the company "{company_alias}" Find a Buyer profile')
+@given('"{collaborator_alias}" confirmed that she wants to be added to the company "{company_alias}" Find a Buyer profile')
+def given_collaborator_confirms_the_collaboration_request(
+        context, collaborator_alias, company_alias):
+    fab_confirm_collaboration_request(
         context, collaborator_alias, company_alias)
