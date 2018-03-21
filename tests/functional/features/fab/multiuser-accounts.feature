@@ -78,24 +78,22 @@ Feature: Multi-user accounts
     Then "Annette Geissinger, Betty Jones, James Weir" should receive an email with a request to confirm that they've been added to company "Y" Find a Buyer profile
 
 
-  @wip
   @ED-3559
   @multi-user
   @add-collaborator
   Scenario: Add "3" collaborators with an SSO/great.gov.uk account to a verified company
-    Given "Peter Alder" has created an unverified profile for randomly selected company "Y"
-    And "Annette Geissinger" has a verified standalone SSO/great.gov.uk account
-    And "Betty Jones" has a verified standalone SSO/great.gov.uk account
-    And "James Weir" has a verified standalone SSO/great.gov.uk account
-    And "Peter Alder" added "Annette Geissinger, Betty Jones, James Weir" as collaborators to company "Y"
+    Given "Peter Alder" has created "an unverified" profile for randomly selected company "Y"
+    And "Annette Geissinger, Betty Jones, James Weir" "have" an SSO/great.gov.uk account
+    And "Peter Alder" added "Annette Geissinger, Betty Jones, James Weir" as a collaborator
 
-    When "Annette Geissinger" confirms that she wants to be added as a collaborator
-    And "Betty Jones" confirms that she wants to be added as a collaborator
-    And "James Weir" confirms that he wants to be added as a collaborator
+    When "Annette Geissinger" confirms that she wants to be added to the company "Y" Find a Buyer profile
+    Then "Annette Geissinger" should see "FAB Company profile" page
 
-    Then "Annette Geissinger" should be on "Edit Company profile" page
-    And "Betty Jones" should be on "Edit Company profile" page
-    And "James Weir" should be on "Edit Company profile" page
+    When "Betty Jones" confirms that she wants to be added to the company "Y" Find a Buyer profile
+    Then "Betty Jones" should see "FAB Company profile" page
+
+    When "James Weir" confirms that he wants to be added to the company "Y" Find a Buyer profile
+    Then "James Weir" should see "FAB Company profile" page
 
 
   @wip
