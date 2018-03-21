@@ -18,7 +18,9 @@ from tests.functional.steps.fab_given_impl import (
     sso_create_standalone_verified_sso_account,
     sso_get_password_reset_link,
     unauthenticated_buyer,
-    unauthenticated_supplier
+    unauthenticated_supplier,
+    create_actor_with_or_without_sso_account,
+    create_actor_with_verified_or_unverified_fab_profile
 )
 from tests.functional.steps.fab_then_impl import (
     fab_should_see_all_case_studies,
@@ -110,18 +112,20 @@ def given_supplier_is_signed_out_from_sso(context, supplier_alias):
 
 @given('"{supplier_alias}" selected an active company without a Directory '
        'Profile identified by an alias "{company_alias}"')
-def given_supplier_selects_random_company(context, supplier_alias, company_alias):
+def given_supplier_selects_random_company(
+        context, supplier_alias, company_alias):
     reg_select_random_company_and_confirm_export_status(
         context, supplier_alias, company_alias)
 
 
 @given('"{supplier_alias}" has added links to online profiles')
-def given_supplier_adds_valid_links_to_online_profiles(context, supplier_alias):
+def given_supplier_adds_valid_links_to_online_profiles(
+        context, supplier_alias):
     prof_add_online_profiles(context, supplier_alias, context.table)
 
 
-@given('"{supplier_alias}" created an unverified profile for randomly selected '
-       'company "{company_alias}"')
+@given('"{supplier_alias}" created an unverified profile for randomly selected'
+       ' company "{company_alias}"')
 def given_unverified_profile(context, supplier_alias, company_alias):
     reg_create_unverified_profile(context, supplier_alias, company_alias)
 
@@ -133,12 +137,14 @@ def given_supplier_sets_logo_picture(context, supplier_alias, picture):
 
 @given('"{supplier_alias}" can see that logo on FAB Company\'s Directory '
        'Profile page')
-def given_supplier_can_see_correct_logo_on_fab_profile(context, supplier_alias):
+def given_supplier_can_see_correct_logo_on_fab_profile(
+        context, supplier_alias):
     prof_should_see_logo_picture(context, supplier_alias)
 
 
 @given('"{supplier_alias}" added a complete case study called "{case_alias}"')
-def given_supplier_added_complete_case_study(context, supplier_alias, case_alias):
+def given_supplier_added_complete_case_study(
+        context, supplier_alias, case_alias):
     prof_add_case_study(context, supplier_alias, case_alias)
     fab_should_see_all_case_studies(context, supplier_alias)
 
@@ -197,3 +203,18 @@ def given_verified_sso_account_associated_with_company(
         context, supplier_alias, company_alias):
     reg_create_verified_sso_account_associated_with_company(
         context, supplier_alias, company_alias)
+
+
+@given('"{actor_alias}" has created "{verified_or_not}" profile for randomly '
+       'selected company "{company_alias}"')
+def given_actor_with_verified_or_not_profile(
+        context, actor_alias, verified_or_not, company_alias):
+    create_actor_with_verified_or_unverified_fab_profile(
+        context, actor_alias, verified_or_not, company_alias)
+
+
+@given('"{actor_alias}" "{has_or_does_not_have}" an SSO/great.gov.uk account')
+def given_actor_with_or_without_sso_account(
+        context, actor_alias, has_or_does_not_have):
+    create_actor_with_or_without_sso_account(
+        context, actor_alias, has_or_does_not_have)

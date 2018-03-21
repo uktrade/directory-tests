@@ -43,7 +43,8 @@ from tests.functional.pages import (
     sso_ui_logout,
     sso_ui_password_reset,
     sso_ui_register,
-    sso_ui_verify_your_email
+    sso_ui_verify_your_email,
+    fab_ui_account_add_collaborator
 )
 from tests.functional.registry import get_fabs_page_object, get_fabs_page_url
 from tests.functional.utils.context_utils import Company
@@ -1869,3 +1870,19 @@ def finish_registration_after_flagging_as_verified(
            .format(register_url, company.number))
     response = make_request(Method.GET, url, session=actor.session)
     context.response = response
+
+
+def prof_add_collaborator(
+        context: Context, supplier_alias: str, collaborator_alias: str):
+    supplier = context.get_actor(supplier_alias)
+    collaborator = context.get_actor(collaborator_alias)
+    response = fab_ui_account_add_collaborator.go_to(supplier.session)
+    context.response = response
+
+    token = extract_csrf_middleware_token(response)
+    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
+
+    response = fab_ui_account_add_collaborator.add_collaborator(
+        supplier.session, token, collaborator.email)
+
+    profile_ui_find_a_buyer.should_be_here(response)
