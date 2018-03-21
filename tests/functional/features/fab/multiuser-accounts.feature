@@ -61,7 +61,7 @@ Feature: Multi-user accounts
     And "Annette Geissinger" decides to open the invitation from company "Y"
     And "Annette Geissinger" should be on "FAB confirm you want to be added to the profile" page
 
-    When "Annette Geissinger" confirms that he wants to be added to the company "Y" Find a Buyer profile
+    When "Annette Geissinger" confirms that she wants to be added to the company "Y" Find a Buyer profile
 
     Then "Annette Geissinger" should see "FAB Company profile" page
 
