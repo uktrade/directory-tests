@@ -367,9 +367,10 @@ def then_actor_should_see_a_message(context, actor_alias, message):
     should_see_message(context, actor_alias, message)
 
 
-@then('"{actor_alias}" should receive an email with a request to confirm that he\'s been added to company "{company_alias}" Find a Buyer profile')
-@then('"{actor_alias}" should receive an email with a request to confirm that she\'s been added to company "{company_alias}" Find a Buyer profile')
+@then('"{actor_aliases}" should receive an email with a request to confirm that he\'s been added to company "{company_alias}" Find a Buyer profile')
+@then('"{actor_aliases}" should receive an email with a request to confirm that she\'s been added to company "{company_alias}" Find a Buyer profile')
+@then('"{actor_aliases}" should receive an email with a request to confirm that they\'ve been added to company "{company_alias}" Find a Buyer profile')
 def then_actor_should_receive_email_with_request_for_collaboration(
-        context, actor_alias, company_alias):
+        context, actor_aliases, company_alias):
     sso_should_get_request_for_collaboration_email(
-        context, actor_alias, company_alias)
+        context, actor_aliases, company_alias)

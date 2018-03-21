@@ -843,14 +843,17 @@ def should_see_message(context: Context, actor_alias: str, message: str):
 
 
 def sso_should_get_request_for_collaboration_email(
-        context: Context, actor_alias: str, company_alias: str):
-    actor = context.get_actor(actor_alias)
-    company = context.get_company(company_alias)
-    mailgun_response = mailgun_find_email_with_request_for_collaboration(
-        context, actor, company)
-    raw_message_payload = mailgun_response["body-mime"]
-    email_message = email.message_from_string(raw_message_payload)
-    # plain_text_message = email_message.get_payload()[0].get_payload()
-    payload = extract_plain_text_payload(email_message)
-    link = extract_link_with_invitation_for_collaboration(payload)
-    context.update_actor(actor_alias, invitation_for_collaboration_link=link)
+        context: Context, actor_aliases: str, company_alias: str):
+    actor_aliases = actor_aliases.split(", ")
+    for actor_alias in actor_aliases:
+        actor = context.get_actor(actor_alias)
+        company = context.get_company(company_alias)
+        mailgun_response = mailgun_find_email_with_request_for_collaboration(
+            context, actor, company)
+        raw_message_payload = mailgun_response["body-mime"]
+        email_message = email.message_from_string(raw_message_payload)
+        # plain_text_message = email_message.get_payload()[0].get_payload()
+        payload = extract_plain_text_payload(email_message)
+        link = extract_link_with_invitation_for_collaboration(payload)
+        context.update_actor(
+            actor_alias, invitation_for_collaboration_link=link)
