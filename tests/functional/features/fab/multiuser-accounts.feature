@@ -66,17 +66,16 @@ Feature: Multi-user accounts
     Then "Annette Geissinger" should see "FAB Company profile" page
 
 
-  @wip
   @ED-3558
   @multi-user
   @add-collaborator
   Scenario: Invited collaborators should receive an email with an invitation to collaborate
     Given "Peter Alder" has created "an unverified" profile for randomly selected company "Y"
-    And "Annette Geissinger, Betty Jones, James Weir" "does not have" a SSO/great.gov.uk account
+    And "Annette Geissinger, Betty Jones, James Weir" "don't have" an SSO/great.gov.uk account
 
     When "Peter Alder" decides to add "Annette Geissinger, Betty Jones, James Weir" as a collaborator
 
-    Then "Annette Geissinger, Betty Jones, James Weir" should receive an email with a request for becoming a collaborator to company "Y" profile
+    Then "Annette Geissinger, Betty Jones, James Weir" should receive an email with a request to confirm that they've been added to company "Y" Find a Buyer profile
 
 
   @wip
