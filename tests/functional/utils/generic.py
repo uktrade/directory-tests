@@ -1198,8 +1198,8 @@ def delete_supplier_data_from_dir(ch_id: str, *, context: Context = None):
             ch_id)
     else:
         msg = ("Something went wrong when trying to delete supplier data for "
-               "company %s from DIR DB. Here's the response: \n%s", ch_id,
-               response.content)
+               "company {} from DIR DB. Here's the response: \n{}"
+                .format(ch_id, response.content))
         red(msg)
         logging.error(msg)
 
