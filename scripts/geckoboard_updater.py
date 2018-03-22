@@ -263,8 +263,15 @@ def circle_ci_get_recent_builds(
 
 def circle_ci_get_last_workflow_id(recent_builds: List[dict]) -> str:
     result = ''
-    if 'workflows' in recent_builds[0]:
-        result = recent_builds[0]['workflows']['workflow_id']
+    for build in recent_builds:
+        if build['status'] == 'not_run':
+            print(
+                'Ignoring skipped {} build: {}'
+                .format(build['reponame'], build['build_num']))
+            continue
+        if 'workflows' in build:
+            result = build['workflows']['workflow_id']
+            break
     return result
 
 
