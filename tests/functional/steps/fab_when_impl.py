@@ -1907,10 +1907,11 @@ def finish_registration_after_flagging_as_verified(
 
 
 def prof_add_collaborator(
-        context: Context, supplier_aliases: str, collaborator_alias: str):
-    supplier_aliases = supplier_aliases.split(", ")
+        context: Context, supplier_alias: str, collaborator_aliases: str):
 
-    for supplier_alias in supplier_aliases:
+    aliases = [alias.strip() for alias in collaborator_aliases.split(",")]
+
+    for collaborator_alias in aliases:
         supplier = context.get_actor(supplier_alias)
         company = context.get_company(supplier.company_alias)
         collaborator = context.get_actor(collaborator_alias)
