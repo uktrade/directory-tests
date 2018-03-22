@@ -210,7 +210,7 @@ def get_number_of_bugs_on_kanban_board_by_labels() -> List[dict]:
     return result
 
 
-def get_number_of_bugs_in_backlog_by_labels():
+def get_number_of_bugs_in_backlog_by_labels() -> List[dict]:
     backlog_bugs = find_issues(JQL_BACKLOG_BUGS)
     types = get_quantity_per_label(
             backlog_bugs, ignored_labels=['auto', 'manual'])
@@ -221,14 +221,14 @@ def get_number_of_bugs_in_backlog_by_labels():
     return result
 
 
-def get_number_of_unlabelled_bugs_on_kanban_board():
+def get_number_of_unlabelled_bugs_on_kanban_board() -> List[dict]:
     unlabelled = find_issues(JQL_KANBAN_BUGS)
     number = len([issue for issue in unlabelled['issues']
                   if not issue['fields']['labels']])
     return [{'date': TODAY, 'quantity': number}]
 
 
-def get_number_of_unlabelled_bugs_in_backlog():
+def get_number_of_unlabelled_bugs_in_backlog() -> List[dict]:
     unlabelled = find_issues(JQL_BACKLOG_BUGS)
     number = len([issue for issue in unlabelled['issues']
                   if not issue['fields']['labels']])
@@ -268,15 +268,16 @@ def circle_ci_get_last_workflow_id(recent_builds: List[dict]) -> str:
     return result
 
 
-def circle_ci_get_builds_for_workflow(
-        recent_circle_ci_builds: List[dict], last_workflow_id: str) -> List[dict]:
+def circle_ci_get_builds_for_workflow(recent_circle_ci_builds: List[dict],
+                                      last_workflow_id: str) -> List[dict]:
     return [build for build in recent_circle_ci_builds
             if build['workflows']['workflow_id'] == last_workflow_id]
 
 
 def circle_ci_get_last_workflow_test_results(
         last_workflow_builds: List[dict], *,
-        job_name_mappings: dict = CIRCLE_CI_WORKFLOW_JOB_NAME_MAPPINGS) -> dict:
+        job_name_mappings: dict = CIRCLE_CI_WORKFLOW_JOB_NAME_MAPPINGS
+) -> dict:
     most_recent_build = last_workflow_builds[0]
     frmt = '%Y-%m-%dT%H:%M:%S.%fZ'
     datetime_object = datetime.strptime(most_recent_build['start_time'], frmt)
@@ -328,7 +329,7 @@ def circle_ci_get_last_build_results(build: dict) -> dict:
     return test_results
 
 
-def circle_ci_get_last_test_results(project_name: str):
+def circle_ci_get_last_test_results(project_name: str) -> dict:
     recent_builds = circle_ci_get_recent_builds(project_name)
     last_workflow_id = circle_ci_get_last_workflow_id(recent_builds)
     if last_workflow_id:
@@ -378,7 +379,8 @@ def geckoboard_get_build_summary(test_results: dict) -> str:
             "{start} and finished at {stop}".format(**details))
 
 
-def geckoboard_generate_table_rows_for_test_results(services_test_results: dict) -> str:
+def geckoboard_generate_table_rows_for_test_results(
+        services_test_results: dict) -> str:
     workflow_row_template = """
         <tr style="font-size:20pt">
             <td>{service_name}<img src="{user_avatar_url}" alt="{user_name}" width="25" height="25"/></td>
