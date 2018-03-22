@@ -287,8 +287,11 @@ def circle_ci_get_last_workflow_test_results(
 ) -> dict:
     most_recent_build = last_workflow_builds[0]
     frmt = '%Y-%m-%dT%H:%M:%S.%fZ'
-    datetime_object = datetime.strptime(most_recent_build['start_time'], frmt)
-    last_build_date = datetime_object.strftime('%d %b %H:%M')
+    last_build_date = ""
+    if most_recent_build['start_time']:
+        datetime_object = datetime.strptime(
+            most_recent_build['start_time'], frmt)
+        last_build_date = datetime_object.strftime('%d %b %H:%M')
     test_results = {
         'user_avatar': most_recent_build['user']['avatar_url'],
         'user_name': most_recent_build['user']['name'],
@@ -316,8 +319,10 @@ def circle_ci_get_last_workflow_test_results(
 
 def circle_ci_get_last_build_results(build: dict) -> dict:
     frmt = '%Y-%m-%dT%H:%M:%S.%fZ'
-    datetime_object = datetime.strptime(build['start_time'], frmt)
-    last_build_date = datetime_object.strftime('%d %b %H:%M')
+    last_build_date = ""
+    if build['start_time']:
+        datetime_object = datetime.strptime(build['start_time'], frmt)
+        last_build_date = datetime_object.strftime('%d %b %H:%M')
     build_time = None
     if build['build_time_millis']:
         build_time = round(build['build_time_millis'] / 1000)
