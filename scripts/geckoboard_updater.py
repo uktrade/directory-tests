@@ -292,12 +292,14 @@ def circle_ci_get_last_workflow_test_results(
         datetime_object = datetime.strptime(
             most_recent_build['start_time'], frmt)
         last_build_date = datetime_object.strftime('%d %b %H:%M')
+    skipped = True if last_workflow_builds[0]['status'] == 'not_run' else False
     test_results = {
         'user_avatar': most_recent_build['user']['avatar_url'],
         'user_name': most_recent_build['user']['name'],
         'user_login': most_recent_build['user']['login'],
         'workflow_id': most_recent_build['workflows']['workflow_id'],
-        'last_build_date': last_build_date
+        'last_build_date': last_build_date,
+        'skipped': skipped
     }
     for build in last_workflow_builds:
         job_name = build['workflows']['job_name']
@@ -425,7 +427,7 @@ def geckoboard_generate_table_rows_for_test_results(
     """
     result = ''
     for service_name, test_results in services_test_results.items():
-        if 'workflow_id' not in test_results:
+        if ('workflow_id' not in test_results) or (test_results['skipped']):
             result += build_row_template.format(
                 service_name=service_name,
                 user_avatar_url=test_results['user_avatar'],
