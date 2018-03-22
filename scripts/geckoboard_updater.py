@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
-from collections import namedtuple
+from collections import namedtuple, Counter
 from datetime import date, datetime
 from typing import List
 
@@ -174,29 +174,49 @@ def find_issues(
         jql_str=jql, maxResults=max_results, json_result=True, fields=fields)
 
 
+def count_labels(issues: list) -> Counter:
+    counter = Counter()
+    for issue in issues:
+        for label in issue['fields']['labels']:
+            counter[label] += 1
+    return counter
+
+
+def filter_labels_by_prefix(
+        labels: Counter, prefix: str, *, remove_prefix: bool = True) -> Counter:
+    filtered = dict(filter(lambda x: x[0].startswith(prefix), labels.items()))
+    if remove_prefix:
+        filtered = {k.replace(prefix, ''): v for k, v in filtered.items()}
+    return Counter(filtered)
+
+
+def filter_out_ignored_labels(
+        counter: Counter, ignored_labels: List[str]) -> Counter:
+    if not ignored_labels:
+        return counter
+    filtered = filter(lambda x: x[0] not in ignored_labels, counter.items())
+    return Counter(dict(filtered))
+
+
+def filter_by_sought_labels(
+        counter: Counter, sought_labels: List[str]) -> Counter:
+    if not sought_labels:
+        return counter
+    filtered = filter(lambda x: x[0] in sought_labels, counter.items())
+    return Counter(dict(filtered))
+
+
 def get_quantity_per_label(
         jql_query_result: dict, *, label_prefix: str = 'qa_',
         remove_label_prefix: bool = True, ignored_labels: List[str] = None,
         look_for: List[str] = None) -> dict:
-    result = {}
     issues = jql_query_result['issues']
-    for issue in issues:
-        labels = [label for label in issue['fields']['labels']
-                  if label.startswith(label_prefix)]
-        for label in labels:
-            if remove_label_prefix:
-                label = label.replace(label_prefix, '')
-            if ignored_labels:
-                if label in ignored_labels:
-                    continue
-            if look_for:
-                if label not in look_for:
-                    continue
-            if label in result:
-                result[label] += 1
-            else:
-                result[label] = 1
-    return result
+    all_labels = count_labels(issues)
+    by_prefix = filter_labels_by_prefix(
+        all_labels, label_prefix, remove_prefix=remove_label_prefix)
+    without_ignored = filter_out_ignored_labels(by_prefix, ignored_labels)
+    sought = filter_by_sought_labels(without_ignored, look_for)
+    return dict(sought)
 
 
 def get_number_of_bugs_on_kanban_board_by_labels() -> List[dict]:
