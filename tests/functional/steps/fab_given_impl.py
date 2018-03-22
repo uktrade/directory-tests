@@ -293,7 +293,7 @@ def reg_create_verified_sso_account_associated_with_company(
 
 def create_actor_with_or_without_sso_account(
         context: Context, actor_aliases: str, has_or_does_not_have: str):
-    actor_aliases = actor_aliases.split(", ")
+    actor_aliases = [alias.strip() for alias in actor_aliases.split(",")]
     for actor_alias in actor_aliases:
         if has_or_does_not_have in ["has", "have"]:
             sso_create_standalone_verified_sso_account(context, actor_alias)

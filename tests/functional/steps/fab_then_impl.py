@@ -844,7 +844,7 @@ def should_see_message(context: Context, actor_alias: str, message: str):
 
 def sso_should_get_request_for_collaboration_email(
         context: Context, actor_aliases: str, company_alias: str):
-    actor_aliases = actor_aliases.split(", ")
+    actor_aliases = [alias.strip() for alias in actor_aliases.split(",")]
     for actor_alias in actor_aliases:
         actor = context.get_actor(actor_alias)
         company = context.get_company(company_alias)
