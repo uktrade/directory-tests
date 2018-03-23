@@ -25,7 +25,8 @@ from tests.functional.pages import (
     sso_ui_invalid_password_reset_link,
     sso_ui_logout,
     sso_ui_password_reset,
-    sso_ui_verify_your_email
+    sso_ui_verify_your_email,
+    sud_ui_find_a_buyer
 )
 from tests.functional.registry import get_fabs_page_object
 from tests.functional.utils.generic import (
@@ -857,3 +858,16 @@ def sso_should_get_request_for_collaboration_email(
         context.update_actor(
             actor_alias, invitation_for_collaboration_link=link,
             company_alias=company_alias)
+
+
+def sud_should_see_options_to_manage_users(context: Context, actor_alias: str):
+    response = context.response
+    sud_ui_find_a_buyer.should_see_options_to_manage_users(response)
+    logging.debug("%s can see options to control user accounts", actor_alias)
+
+
+def sud_should_not_see_options_to_manage_users(
+        context: Context, actor_alias: str):
+    response = context.response
+    sud_ui_find_a_buyer.should_not_see_options_to_manage_users(response)
+    logging.debug("%s can't see options to control user accounts", actor_alias)

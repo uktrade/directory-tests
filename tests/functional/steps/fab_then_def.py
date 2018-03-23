@@ -2,6 +2,7 @@
 # flake8: noqa
 """FAB Given step definitions."""
 from behave import then
+from behave.runner import Context
 from tests.functional.steps.fab_then_impl import (
     bp_should_be_prompted_to_build_your_profile,
     fab_company_should_be_verified,
@@ -50,7 +51,9 @@ from tests.functional.steps.fab_then_impl import (
     sso_should_be_told_about_password_reset,
     sso_should_get_password_reset_email,
     sso_should_get_request_for_collaboration_email,
-    sso_should_see_invalid_password_reset_link_error
+    sso_should_see_invalid_password_reset_link_error,
+    sud_should_not_see_options_to_manage_users,
+    sud_should_see_options_to_manage_users
 )
 from tests.functional.steps.fab_when_impl import (
     fas_feedback_request_should_be_submitted,
@@ -374,3 +377,15 @@ def then_actor_should_receive_email_with_request_for_collaboration(
         context, actor_aliases, company_alias):
     sso_should_get_request_for_collaboration_email(
         context, actor_aliases, company_alias)
+
+
+@then('"{actor_alias}" should see options to manage Find a Buyer profile users')
+def then_actor_should_see_options_to_manage_account_users(
+        context: Context, actor_alias: str):
+    sud_should_see_options_to_manage_users(context, actor_alias)
+
+
+@then('"{actor_alias}" should not see options to manage Find a Buyer profile users')
+def then_actor_should_not_see_options_to_manage_account_users(
+        context: Context, actor_alias: str):
+    sud_should_not_see_options_to_manage_users(context, actor_alias)
