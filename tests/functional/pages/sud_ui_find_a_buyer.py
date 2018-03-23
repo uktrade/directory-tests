@@ -19,6 +19,12 @@ EXPECTED_STRINGS = [
 ]
 
 
+MANAGE_USER_ACCOUNTS_STRINGS = [
+    "Account details", "Add user to account", "Remove user from account",
+    "Transfer account"
+]
+
+
 def go_to(session: Session) -> Response:
     response = make_request(Method.GET, URL, session=session)
     return response
@@ -27,3 +33,14 @@ def go_to(session: Session) -> Response:
 def should_be_here(response: Response):
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Successfully got to the SUD (Profile) Find A Buyer page")
+
+
+def should_see_options_to_manage_users(response: Response):
+    check_response(response, 200, body_contains=MANAGE_USER_ACCOUNTS_STRINGS)
+    logging.debug("User can see options to control FAB profile user accounts")
+
+
+def should_not_see_options_to_manage_users(response: Response):
+    check_response(
+        response, 200, unexpected_strings=MANAGE_USER_ACCOUNTS_STRINGS)
+    logging.debug("User can't see options to manage FAB profile user accounts")
