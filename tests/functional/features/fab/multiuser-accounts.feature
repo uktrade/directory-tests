@@ -85,6 +85,7 @@ Feature: Multi-user accounts
     Given "Peter Alder" has created "an unverified" profile for randomly selected company "Y"
     And "Annette Geissinger, Betty Jones, James Weir" "have" an SSO/great.gov.uk account
     And "Peter Alder" added "Annette Geissinger, Betty Jones, James Weir" as a collaborator
+    And "Annette Geissinger, Betty Jones, James Weir" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
 
     When "Annette Geissinger" confirms that she wants to be added to the company "Y" Find a Buyer profile
     Then "Annette Geissinger" should see "FAB Company profile" page
@@ -101,11 +102,11 @@ Feature: Multi-user accounts
   @multi-user
   @add-collaborator
   Scenario: Collaborators should not be able to add/remove other collaborators or transfer account ownership
-    Given "Peter Alder" has created an unverified profile for randomly selected company "Y"
-    And "Peter Alder" added "Annette Geissinger" as a collaborator to company "Y"
+    Given "Peter Alder" has created "an unverified" profile for randomly selected company "Y"
+    And "Peter Alder" added "Annette Geissinger" as a collaborator
     And "Annette Geissinger" is signed in to SSO/great.gov.uk account
 
-    When "Annette Geissinger" goes to the SSO "Find a buyer" tab
+    When "Annette Geissinger" goes to the "SUD Find a buyer" page
 
     Then "Annette Geissinger" should not see options to manage account users on "SSO - Find a buyer" page
 
@@ -116,7 +117,7 @@ Feature: Multi-user accounts
   @transfer-ownership
   Scenario Outline: New Account Owner should receive an email with a request to confirm account ownership
     Given "Peter Alder" has created "<a>" profile for randomly selected company "Y"
-    And "Annette Geissinger" "<has or does not have>" a SSO/great.gov.uk account
+    And "Annette Geissinger" "<has or does not have>" an SSO/great.gov.uk account
 
     When "Peter Alder" decides to transfer the company "Y" account ownership to "Annette Geissinger"
     And "Peter Alder" confirms his password before transferring the ownership
@@ -137,7 +138,7 @@ Feature: Multi-user accounts
   @transfer-ownership
   Scenario Outline: Company account owner should be able to transfer the account ownership to a user who "has or does not have" an SSO/great.gov.uk account
     Given "Peter Alder" has created "<a>" profile for randomly selected company "Y"
-    And "Annette Geissinger" "<has or does not have>" a SSO/great.gov.uk account
+    And "Annette Geissinger" "<has or does not have>" an SSO/great.gov.uk account
 
     When "Peter Alder" transfers the company "Y" account ownership to "Annette Geissinger"
     And "Annette Geissinger" accepts the request for becoming the owner of company "Y" profile
@@ -159,14 +160,14 @@ Feature: Multi-user accounts
   @remove-collaborator
   @fake-sso-email-verification
   Scenario: Account owner should be able to remove one account collaborator
-    Given "Peter Alder" has created an unverified profile for randomly selected company "Y"
-    And "Peter Alder" added "Annette Geissinger" as a collaborator to company "Y"
-    And "Annette Geissinger" accepted request for becoming a collaborator to company "Y"
+    Given "Peter Alder" has created "an unverified" profile for randomly selected company "Y"
+    And "Peter Alder" added "Annette Geissinger" as a collaborator
+    And "Annette Geissinger" confirmed that she wants to be added to the company "Y" Find a Buyer profile
 
     When "Peter Alder" removes "Annette Geissinger" from the list of collaborators to the company "Y"
 
     Then "Peter Alder" should not see "Annette Geissinger" on the list of collaborators to the company "Y"
-    And "Annette Geissinger" should not be able to access "Edit profile" page
+    And "Annette Geissinger" should not be able to access "FAB company profile" page
 
 
   @wip
@@ -175,29 +176,33 @@ Feature: Multi-user accounts
   @remove-collaborator
   @fake-sso-email-verification
   Scenario: Account owner should be able to remove multiple account collaborators
-    Given "Peter Alder" has created a unverified profile for randomly selected company "Y"
-    And "Peter Alder" added "Annette Geissinger, Betty Jones, James Weir" as collaborators to company "Y"
-    And "Annette Geissinger, Betty Jones, James Weir" accepted request for becoming a collaborator to company "Y"
+    Given "Peter Alder" has created "an unverified" profile for randomly selected company "Y"
+    And "Peter Alder" added "Annette Geissinger, Betty Jones, James Weir" as a collaborator
+    And "Annette Geissinger" confirmed that she wants to be added to the company "Y" Find a Buyer profile
+    And "Betty Jones" confirmed that she wants to be added to the company "Y" Find a Buyer profile
+    And "James Weir" confirmed that he wants to be added to the company "Y" Find a Buyer profile
 
     When "Peter Alder" removes "Annette Geissinger, Betty Jones, James Weir" from the list of collaborators to the company "Y"
 
     Then "Peter Alder" should not see "Annette Geissinger, Betty Jones, James Weir" on the list of collaborators to the company "Y"
-    And "Annette Geissinger" should not be able to access "Edit profile" page
-    And "Betty Jones" should not be able to access "Edit profile" page
-    And "James Weir" should not be able to access "Edit profile" page
+    And "Annette Geissinger" should not be able to access "FAB company profile" page
+    And "Betty Jones" should not be able to access "FAB company profile" page
+    And "James Weir" should not be able to access "FAB company profile" page
 
 
-  @wip
   @ED-3566
   @multi-user
   @transfer-ownership
   @verification
   @letter
   @fake-sso-email-verification
-  Scenario: Collaborators should be able to verify company profile with verification code
-    Given "Peter Alder" has created an unverified profile for randomly selected company "Y"
-    And "Peter Alder" added "Annette Geissinger" as a collaborator to company "Y"
-    And "Annette Geissinger" accepted request for becoming a collaborator to company "Y"
+  Scenario: Collaborators should be able to set cthe company description and verify company profile with verification code
+    Given "Peter Alder" has created "an unverified" profile for randomly selected company "Y"
+    And "Annette Geissinger" "has" an SSO/great.gov.uk account
+    And "Peter Alder" added "Annette Geissinger" as a collaborator
+    And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
+    And "Annette Geissinger" confirmed that she wants to be added to the company "Y" Find a Buyer profile
+    And "Annette Geissinger" set the company description
 
     When "Annette Geissinger" verifies the company with the verification code from the letter sent after Directory Profile was created
 
@@ -205,15 +210,16 @@ Feature: Multi-user accounts
     And "Annette Geissinger" should be told that her company is published
 
 
-  @wip
   @ED-3567
   @multi-user
   @add-content
   @fake-sso-email-verification
   Scenario: Account collaborators should be able to update company's details
-    Given "Peter Alder" has created a verified profile for randomly selected company "Y"
-    And "Peter Alder" added "Annette Geissinger" as a collaborator to company "Y"
-    And "Annette Geissinger" accepted request for becoming a collaborator to company "Y"
+    Given "Peter Alder" has created "a verified" profile for randomly selected company "Y"
+    And "Annette Geissinger" "has" an SSO/great.gov.uk account
+    And "Peter Alder" added "Annette Geissinger" as a collaborator
+    And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
+    And "Annette Geissinger" confirmed that she wants to be added to the company "Y" Find a Buyer profile
 
     When "Annette Geissinger" updates company's details
       | detail                      |
@@ -240,15 +246,16 @@ Feature: Multi-user accounts
       | sector of interest          |
 
 
-  @wip
   @ED-3568
   @multi-user
   @add-content
   @fake-sso-email-verification
   Scenario Outline: Account collaborators should be able to upload company's logo
-    Given "Peter Alder" has created a verified profile for randomly selected company "Y"
-    And "Peter Alder" added "Annette Geissinger" as a collaborator to company "Y"
-    And "Annette Geissinger" accepted request for becoming a collaborator to company "Y"
+    Given "Peter Alder" has created "a verified" profile for randomly selected company "Y"
+    And "Annette Geissinger" "has" an SSO/great.gov.uk account
+    And "Peter Alder" added "Annette Geissinger" as a collaborator
+    And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
+    And "Annette Geissinger" confirmed that she wants to be added to the company "Y" Find a Buyer profile
 
     When "Annette Geissinger" uploads "<valid_image>" as company's logo
 
@@ -260,15 +267,16 @@ Feature: Multi-user accounts
       | Anfiteatro_El_Jem.jpeg |
 
 
-  @wip
   @ED-3569
   @multi-user
   @add-content
   @fake-sso-email-verification
   Scenario: Account collaborators should be able to add a case study
-    Given "Peter Alder" has created a verified profile for randomly selected company "Y"
-    And "Peter Alder" added "Annette Geissinger" as a collaborator to company "Y"
-    And "Annette Geissinger" accepted request for becoming a collaborator to company "Y"
+    Given "Peter Alder" has created "a verified" profile for randomly selected company "Y"
+    And "Annette Geissinger" "has" an SSO/great.gov.uk account
+    And "Peter Alder" added "Annette Geissinger" as a collaborator
+    And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
+    And "Annette Geissinger" confirmed that she wants to be added to the company "Y" Find a Buyer profile
 
     When "Annette Geissinger" adds a complete case study called "no 1"
 
@@ -282,9 +290,10 @@ Feature: Multi-user accounts
   @edge-case
   @fake-sso-email-verification
   Scenario: New account owner should be able to transfer it back to the original owner
-    Given "Peter Alder" has created an unverified profile for randomly selected company "Y"
-    And "Peter Alder" transferred the company "Y" account ownership to "Annette Geissinger"
+    Given "Peter Alder" has created "an unverified" profile for randomly selected company "Y"
+    And "Annette Geissinger" "has" an SSO/great.gov.uk account
     And "Annette Geissinger" accepted request for becoming the owner of company "Y" profile
+    And "Annette Geissinger" has received an email with a request to become owner of the Find a Buyer profile for company "Y"
 
     When "Annette Geissinger" transfers the company "Y" account ownership to "Peter Alder"
     And "Peter Alder" accepts the request for becoming the owner of company "Y" profile
@@ -299,14 +308,15 @@ Feature: Multi-user accounts
   @edge-case
   @fake-sso-email-verification
   Scenario: New account owner should be able to add the original owner as a collaborator to the company profile
-    Given "Peter Alder" has created an unverified profile for randomly selected company "Y"
+    Given "Peter Alder" has created "an unverified" profile for randomly selected company "Y"
+    And "Annette Geissinger" "has" an SSO/great.gov.uk account
     And "Peter Alder" transferred the company "Y" account ownership to "Annette Geissinger"
     And "Annette Geissinger" accepted request for becoming the owner of company "Y" profile
 
-    When "Annette Geissinger" adds "Peter Alder" as a collaborator
-    And "Peter Alder" confirms that he wants to become a collaborator to company "Y" profile
+    When "Annette Geissinger" decides to add "Peter Alder" as a collaborator
+    When "Peter Alder" confirms that he wants to be added to the company "Y" Find a Buyer profile
 
-    Then "Peter Alder" should be on "Edit Company profile" page
+    Then "Annette Geissinger" should see "FAB Company profile" page
 
 
   @wip
