@@ -861,13 +861,42 @@ def sso_should_get_request_for_collaboration_email(
 
 
 def sud_should_see_options_to_manage_users(context: Context, actor_alias: str):
-    response = context.response
-    sud_ui_find_a_buyer.should_see_options_to_manage_users(response)
+    """
+    Due to bug ED-2268 the first time you visit SUD pages by going directly
+    to SUD "Find a Buyer" page, then you're redirected to SUD "About" page
+    To circumvent this behaviour we have to go to the "About" page first, and
+    then visit the SUD "Find a Buyer" page
+    """
+    actor = context.get_actor(actor_alias)
+    session = actor.session
+    context.response = sud_ui_landing.go_to(session, set_next_page=False)
+    sud_ui_landing.should_be_here(context.response)
+
+    context.response = sud_ui_find_a_buyer.go_to(session)
+    sud_ui_find_a_buyer.should_be_here(
+        context.response, as_logged_in_user=True)
+
+    sud_ui_find_a_buyer.should_see_options_to_manage_users(context.response)
     logging.debug("%s can see options to control user accounts", actor_alias)
 
 
 def sud_should_not_see_options_to_manage_users(
         context: Context, actor_alias: str):
-    response = context.response
-    sud_ui_find_a_buyer.should_not_see_options_to_manage_users(response)
+    """
+    Due to bug ED-2268 the first time you visit SUD pages by going directly
+    to SUD "Find a Buyer" page, then you're redirected to SUD "About" page
+    To circumvent this behaviour we have to go to the "About" page first, and
+    then visit the SUD "Find a Buyer" page
+    """
+    actor = context.get_actor(actor_alias)
+    session = actor.session
+    context.response = sud_ui_landing.go_to(session, set_next_page=False)
+    sud_ui_landing.should_be_here(context.response)
+
+    context.response = sud_ui_find_a_buyer.go_to(session)
+    sud_ui_find_a_buyer.should_be_here(
+        context.response, as_logged_in_user=True)
+
+    sud_ui_find_a_buyer.should_not_see_options_to_manage_users(
+        context.response)
     logging.debug("%s can't see options to control user accounts", actor_alias)

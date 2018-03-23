@@ -100,18 +100,19 @@ Feature: Multi-user accounts
   @ED-3560
   @multi-user
   @add-collaborator
+  @bug
+  @ED-2268
   Scenario: Find a Buyer profile owners should see options to manage account users on SSO - Profile
     Given "Peter Alder" has created "an unverified" profile for randomly selected company "Y"
 
-    When "Peter Alder" goes to "SUD About" page
-    And "Peter Alder" goes to "SUD Find a buyer" page
-
-    Then "Peter Alder" should see options to manage Find a Buyer profile users
+    Then "Peter Alder" should see options to manage Find a Buyer profile users on SSO Profile
 
 
   @ED-3560
   @multi-user
   @add-collaborator
+  @bug
+  @ED-2268
   Scenario: Collaborators should not be able to add/remove other collaborators or transfer account ownership
     Given "Peter Alder" has created "an unverified" profile for randomly selected company "Y"
     And "Annette Geissinger" "has" an SSO/great.gov.uk account
@@ -119,9 +120,7 @@ Feature: Multi-user accounts
     And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
     And "Annette Geissinger" confirmed that she wants to be added to the company "Y" Find a Buyer profile
 
-    When "Annette Geissinger" goes to "SUD Find a buyer" page
-
-    Then "Annette Geissinger" should not see options to manage Find a Buyer profile users
+    Then "Annette Geissinger" should not see options to manage Find a Buyer profile users on SSO Profile
 
 
   @wip
@@ -149,15 +148,18 @@ Feature: Multi-user accounts
   @ED-3562
   @multi-user
   @transfer-ownership
+  @bug
+  @ED-2268
   Scenario Outline: Company account owner should be able to transfer the account ownership to a user who "has or does not have" an SSO/great.gov.uk account
     Given "Peter Alder" has created "<a>" profile for randomly selected company "Y"
     And "Annette Geissinger" "<has or does not have>" an SSO/great.gov.uk account
 
     When "Peter Alder" transfers the company "Y" account ownership to "Annette Geissinger"
+    And "Annette Geissinger" received an email with a request for becoming the owner of the company "Y" profile
     And "Annette Geissinger" accepts the request for becoming the owner of company "Y" profile
 
-    Then "Annette Geissinger" should see options to manage account users on "SSO - Find a buyer" page
-    And "Peter Alder" should not see options to manage account users on "SSO - Find a buyer" page
+    Then "Annette Geissinger" should see options to manage Find a Buyer profile users on SSO Profile
+    And "Peter Alder" should not see options to manage Find a Buyer profile users on SSO Profile
 
     Examples:
       | has or does not have | a             |
