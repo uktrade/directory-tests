@@ -1197,10 +1197,14 @@ def delete_supplier_data_from_dir(ch_id: str, *, context: Context = None):
             "Successfully deleted supplier data for company %s from DIR DB",
             ch_id)
     else:
-        msg = ("Something went wrong when trying to delete supplier data for "
-               "company {} from DIR DB. Here's the response: \n{}"
-                .format(ch_id, response.content))
-        red(msg)
+        msg = ("INFO: Could not delete company {} from DIR DB!\n"
+               "If, in the scenario, there is more than one supplier actor "
+               "associated with the same company, then you're seeing this "
+               "message most likely because company data was already "
+               "deleted with the deletion of the first supplier data.\nJust in"
+               "case here's the response from the server: \n{}"
+               .format(ch_id, response.content))
+        blue(msg)
         logging.error(msg)
 
 
