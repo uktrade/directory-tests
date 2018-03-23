@@ -1936,6 +1936,7 @@ def prof_add_collaborator(
 def fab_confirm_collaboration_request(
         context: Context, collaborator_alias: str, company_alias: str,
         open_invitation_link: bool = True):
+    context.response = None
     collaborator = context.get_actor(collaborator_alias)
     session = collaborator.session
     link = collaborator.invitation_for_collaboration_link
