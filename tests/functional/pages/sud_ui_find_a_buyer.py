@@ -6,7 +6,7 @@ from requests import Response, Session
 from tests import get_absolute_url
 from tests.functional.utils.request import Method, check_response, make_request
 
-URL = get_absolute_url("profile:exops-applications")
+URL = get_absolute_url("profile:fab")
 EXPECTED_STRINGS = [
     "Profile", "You are signed in as", "Export opportunities", "Find a buyer",
     "Selling online overseas", "Get a trade profile",
