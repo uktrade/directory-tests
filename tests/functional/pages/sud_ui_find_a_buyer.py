@@ -18,6 +18,11 @@ EXPECTED_STRINGS = [
     "Create a trade profile"
 ]
 
+EXPECTED_STRINGS_AS_LOGGED_IN_USER = [
+    "Profile", "You are signed in as", "Export opportunities", "Find a buyer",
+    "Selling online overseas", "About", "Edit profile", "Add case study",
+    "Edit logo"
+]
 
 MANAGE_USER_ACCOUNTS_STRINGS = [
     "Account details", "Add user to account", "Remove user from account",
@@ -30,8 +35,12 @@ def go_to(session: Session) -> Response:
     return response
 
 
-def should_be_here(response: Response):
-    check_response(response, 200, body_contains=EXPECTED_STRINGS)
+def should_be_here(response: Response, *, as_logged_in_user: bool = False):
+    if as_logged_in_user:
+        check_response(
+            response, 200, body_contains=EXPECTED_STRINGS_AS_LOGGED_IN_USER)
+    else:
+        check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Successfully got to the SUD (Profile) Find A Buyer page")
 
 
