@@ -134,7 +134,7 @@ Feature: Multi-user accounts
     When "Peter Alder" decides to transfer the company "Y" account ownership to "Annette Geissinger"
     And "Peter Alder" confirms his password before transferring the ownership
 
-    Then "Annette" should receive an email with a request for becoming the owner of the company "Y" profile
+    Then "Annette Geissinger" should receive an email with a request for becoming the owner of the company "Y" profile
 
     Examples:
       | has or does not have | a             |
@@ -181,7 +181,7 @@ Feature: Multi-user accounts
 
     When "Peter Alder" removes "Annette Geissinger" from the list of collaborators to the company "Y"
 
-    Then "Peter Alder" should not see "Annette Geissinger" on the list of collaborators to the company "Y"
+    Then "Peter Alder" should not see "Annette Geissinger" among the users associated with company's profile
     And "Annette Geissinger" should not be able to access "FAB company profile" page
 
 
@@ -199,7 +199,7 @@ Feature: Multi-user accounts
 
     When "Peter Alder" removes "Annette Geissinger, Betty Jones, James Weir" from the list of collaborators to the company "Y"
 
-    Then "Peter Alder" should not see "Annette Geissinger, Betty Jones, James Weir" on the list of collaborators to the company "Y"
+    Then "Peter Alder" should not see "Annette Geissinger, Betty Jones, James Weir" among the users associated with company's profile
     And "Annette Geissinger" should not be able to access "FAB company profile" page
     And "Betty Jones" should not be able to access "FAB company profile" page
     And "James Weir" should not be able to access "FAB company profile" page

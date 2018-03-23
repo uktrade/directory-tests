@@ -379,13 +379,13 @@ def then_actor_should_receive_email_with_request_for_collaboration(
         context, actor_aliases, company_alias)
 
 
-@then('"{actor_alias}" should see options to manage Find a Buyer profile users')
+@then('"{actor_alias}" should see options to manage Find a Buyer profile users on SSO Profile')
 def then_actor_should_see_options_to_manage_account_users(
         context: Context, actor_alias: str):
     sud_should_see_options_to_manage_users(context, actor_alias)
 
 
-@then('"{actor_alias}" should not see options to manage Find a Buyer profile users')
+@then('"{actor_alias}" should not see options to manage Find a Buyer profile users on SSO Profile')
 def then_actor_should_not_see_options_to_manage_account_users(
         context: Context, actor_alias: str):
     sud_should_not_see_options_to_manage_users(context, actor_alias)
