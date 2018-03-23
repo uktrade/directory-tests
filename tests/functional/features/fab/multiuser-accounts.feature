@@ -313,8 +313,8 @@ Feature: Multi-user accounts
     When "Annette Geissinger" transfers the company "Y" account ownership to "Peter Alder"
     And "Peter Alder" accepts the request for becoming the owner of company "Y" profile
 
-    Then "Peter Alder" should see options to manage account users on "SSO - Find a buyer" page
-    And "Annette Geissinger" should not see options to manage account users on "SSO - Find a buyer" page
+    Then "Peter Alder" should see options to manage Find a Buyer profile users on SSO Profile
+    And "Annette Geissinger" should not see options to manage Find a Buyer profile users on SSO Profile
 
 
   @wip
