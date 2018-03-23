@@ -1962,6 +1962,7 @@ def fab_confirm_collaboration_request(
     # Step 5 - submit the form
     response = fab_ui_confim_your_collaboration.confirm(session, token, link)
     context.response = response
+    context.update_actor(collaborator_alias, company_alias=company_alias)
     logging.debug(
         "%s confirmed that he/she wants to be added to the profile for %s",
         collaborator_alias, company_alias)

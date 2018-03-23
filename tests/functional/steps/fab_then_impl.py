@@ -856,4 +856,5 @@ def sso_should_get_request_for_collaboration_email(
         payload = extract_plain_text_payload(email_message)
         link = extract_link_with_invitation_for_collaboration(payload)
         context.update_actor(
-            actor_alias, invitation_for_collaboration_link=link)
+            actor_alias, invitation_for_collaboration_link=link,
+            company_alias=company_alias)
