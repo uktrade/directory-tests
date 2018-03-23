@@ -97,18 +97,31 @@ Feature: Multi-user accounts
     Then "James Weir" should see "FAB Company profile" page
 
 
-  @wip
+  @ED-3560
+  @multi-user
+  @add-collaborator
+  Scenario: Find a Buyer profile owners should see options to manage account users on SSO - Profile
+    Given "Peter Alder" has created "an unverified" profile for randomly selected company "Y"
+
+    When "Peter Alder" goes to "SUD About" page
+    And "Peter Alder" goes to "SUD Find a buyer" page
+
+    Then "Peter Alder" should see options to manage Find a Buyer profile users
+
+
   @ED-3560
   @multi-user
   @add-collaborator
   Scenario: Collaborators should not be able to add/remove other collaborators or transfer account ownership
     Given "Peter Alder" has created "an unverified" profile for randomly selected company "Y"
+    And "Annette Geissinger" "has" an SSO/great.gov.uk account
     And "Peter Alder" added "Annette Geissinger" as a collaborator
-    And "Annette Geissinger" is signed in to SSO/great.gov.uk account
+    And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
+    And "Annette Geissinger" confirmed that she wants to be added to the company "Y" Find a Buyer profile
 
-    When "Annette Geissinger" goes to the "SUD Find a buyer" page
+    When "Annette Geissinger" goes to "SUD Find a buyer" page
 
-    Then "Annette Geissinger" should not see options to manage account users on "SSO - Find a buyer" page
+    Then "Annette Geissinger" should not see options to manage Find a Buyer profile users
 
 
   @wip
