@@ -319,31 +319,21 @@ Feature: Multi-user accounts
     Then "Annette Geissinger" should see "FAB Company profile" page
 
 
-  @wip
+  @bug
+  @ED-3852
+  @fixme
   @ED-3572
   @multi-user
   @edge-case
   @fake-sso-email-verification
-  Scenario: Supplier should receive an email with a request for becoming a collaborator despite already having a profile
-    Given "Peter Alder" has created an unverified profile for randomly selected company "Y"
-    And "Annette Geissinger" has created an unverified profile for randomly selected company "Z"
+  Scenario Outline: Suppliers should not be able to add collaborators which already have a Finda Buyer profile
+    Given "Peter Alder" has created "an unverified" profile for randomly selected company "Alpha"
+    And "Annette Geissinger" has created "an unverified" profile for randomly selected company "Omega"
 
     When "Peter Alder" decides to add "Annette Geissinger" as a collaborator
 
-    Then "Annette" should receive an email with a request for becoming a collaborator to company "Y" profile
+    Then "Peter Alder" should see "<error>" message
 
-
-  @wip
-  @ED-3573
-  @multi-user
-  @edge-case
-  @fake-sso-email-verification
-  Scenario: Adding Collaborator which is already an owner of a different profile shouldn't work
-    Given "Peter Alder" has created an unverified profile for randomly selected company "Y"
-    And "Annette Geissinger" has created an unverified profile for randomly selected company "Z"
-    And "Peter Alder" added "Annette Geissinger" as a collaborator
-    And "Annette Geissinger" has received an email with a request for becoming a collaborator to company "Y" profile
-
-    When "Annette Geissinger" confirms that she wants to become a collaborator to company "Y" profile
-
-    Then "Annette Geissinger" should be on "Edit Company profile" page
+    Examples:
+      | error               |
+      | Can't add this user |
