@@ -15,10 +15,12 @@ EXPECTED_STRINGS = [
 ]
 
 
-def go_to(session: Session) -> Response:
+def go_to(session: Session, *, set_next_page: bool = True) -> Response:
     fab_landing = get_absolute_url("ui-buyer:landing")
     params = {"next": fab_landing}
     headers = {"Referer": fab_landing}
+    if not set_next_page:
+        params = None
     response = make_request(
         Method.GET, URL, session=session, params=params, headers=headers)
     return response
