@@ -27,9 +27,5 @@ def go_to(session: Session, *, set_next_page: bool = True) -> Response:
 
 
 def should_be_here(response: Response):
-    """Check if Supplier is on SUD (Profile) About page.
-
-    :param response: response object
-    """
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Successfully got to the SUD (Profile) About page")

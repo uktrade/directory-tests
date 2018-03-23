@@ -26,7 +26,8 @@ from tests.functional.pages import (
     sso_ui_logout,
     sso_ui_password_reset,
     sso_ui_verify_your_email,
-    sud_ui_find_a_buyer
+    sud_ui_find_a_buyer,
+    sud_ui_landing
 )
 from tests.functional.registry import get_fabs_page_object
 from tests.functional.utils.generic import (
@@ -49,6 +50,7 @@ from tests.functional.utils.gov_notify import (
     get_password_reset_link,
     get_verification_link
 )
+from tests.functional.utils.request import make_request, Method
 from tests.settings import (
     FAS_LOGO_PLACEHOLDER_IMAGE,
     FAS_MESSAGE_FROM_BUYER_SUBJECT,
@@ -639,10 +641,10 @@ def fas_should_be_told_that_message_has_been_sent(
 def fas_supplier_should_receive_message_from_buyer(
         context: Context, supplier_alias: str, buyer_alias: str):
     supplier = context.get_actor(supplier_alias)
-    response = find_mail_gun_events(
+    context.response = find_mail_gun_events(
         context, service=MailGunService.DIRECTORY, recipient=supplier.email,
         event=MailGunEvent.ACCEPTED, subject=FAS_MESSAGE_FROM_BUYER_SUBJECT)
-    context.response = response
+    logging.debug("%s received message from %s", supplier_alias, buyer_alias)
 
 
 def fab_should_see_expected_error_messages(context, supplier_alias):
@@ -768,6 +770,8 @@ def fas_should_see_highlighted_search_term(context, actor_alias, search_term):
 def fab_company_should_be_verified(context, supplier_alias):
     response = context.response
     fab_ui_verify_company.should_see_company_is_verified(response)
+    logging.debug(
+        "%s saw that his company's FAB profile is verified", supplier_alias)
 
 
 def fab_should_see_case_study_error_message(context, supplier_alias):
@@ -791,11 +795,7 @@ def sso_should_be_told_about_password_reset(
 
 
 def sso_should_get_password_reset_email(context: Context, supplier_alias: str):
-    """Will check if the Supplier received an email verification message.
-
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    """
+    """Will check if the Supplier received an email verification message."""
     logging.debug("Searching for a password reset email...")
     actor = context.get_actor(supplier_alias)
     link = get_password_reset_link(actor.email)
