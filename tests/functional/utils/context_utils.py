@@ -46,7 +46,7 @@ Company = namedtuple(
         'companies_house_details', 'facebook', 'linkedin', 'twitter',
         'case_studies', 'logo_picture', 'logo_url', 'logo_hash',
         'export_to_countries', 'fas_profile_endpoint', 'slug',
-        'verification_code', 'collaborators'
+        'verification_code', 'collaborators', 'deleted'
     ]
 )
 Feedback = namedtuple(
