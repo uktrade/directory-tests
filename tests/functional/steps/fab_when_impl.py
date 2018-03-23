@@ -9,6 +9,7 @@ from urllib.parse import parse_qsl, quote, urljoin, urlsplit
 from behave.model import Table
 from behave.runner import Context
 from requests import Response, Session
+from scrapy import Selector
 from tests import get_absolute_url
 from tests.functional.common import DETAILS, PROFILES
 from tests.functional.pages import (
@@ -83,8 +84,6 @@ from tests.settings import (
     JP2s,
     WEBPs
 )
-
-from scrapy import Selector
 
 
 def select_random_company(

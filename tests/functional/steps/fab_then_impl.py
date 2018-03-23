@@ -8,6 +8,7 @@ from behave.model import Table
 from behave.runner import Context
 from requests import Response
 from retrying import retry
+from scrapy import Selector
 from tests import get_absolute_url
 from tests.functional.pages import (
     fab_ui_build_profile_basic,
@@ -52,8 +53,6 @@ from tests.settings import (
     FAS_MESSAGE_FROM_BUYER_SUBJECT,
     SEARCHABLE_CASE_STUDY_DETAILS
 )
-
-from scrapy import Selector
 
 
 def reg_sso_account_should_be_created(response: Response, supplier_alias: str):

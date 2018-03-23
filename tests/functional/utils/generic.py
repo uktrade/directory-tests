@@ -17,13 +17,18 @@ from random import choice
 from string import ascii_uppercase
 from typing import List
 
+import lxml
 import requests
 from behave.runner import Context
+from bs4 import BeautifulSoup
 from directory_api_client.testapiclient import DirectoryTestAPIClient
 from directory_constants.constants import choices
 from directory_sso_api_client.testapiclient import DirectorySSOTestAPIClient
+from jsonschema import validate
+from langdetect import DetectorFactory, detect_langs
 from requests import Response
 from retrying import retry
+from scrapy.selector import Selector
 from termcolor import cprint
 from tests import get_absolute_url
 from tests.functional.schemas.Companies import COMPANIES
@@ -51,12 +56,6 @@ from tests.settings import (
     JPGs,
     PNGs
 )
-
-import lxml
-from bs4 import BeautifulSoup
-from jsonschema import validate
-from langdetect import DetectorFactory, detect_langs
-from scrapy.selector import Selector
 
 INDUSTRY_CHOICES = dict(choices.INDUSTRIES)
 
