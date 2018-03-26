@@ -22,15 +22,15 @@ NAME = "ExRed Triage - What is your company name"
 URL = urljoin(EXRED_UI_URL, "triage/company/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
-QUESTION = "label[for=js-typeahead-company-name]"
-COMPANY_NAME_INPUT = "js-typeahead-company-name"
+QUESTION = "#triage-question"
+COMPANY_NAME_INPUT = "#triage-company-name"
 SUGGESTIONS = "ul.SelectiveLookupDisplay"
 FIRST_SUGGESTION = "ul.SelectiveLookupDisplay > li:nth-child(1)"
-CONTINUE_BUTTON = ".exred-triage-form button.button"
-PREVIOUS_STEP_BUTTON = "button[name=wizard_goto_step]"
+CONTINUE_BUTTON = "#triage-continue"
+PREVIOUS_STEP_BUTTON = "#triage-previous-step"
 CONTINUE_WO_NAME_BUTTON = "button[name=wizard_skip_step]"
 EXPECTED_ELEMENTS = {
-    "question": "label[for=js-typeahead-company-name]",
+    "question": QUESTION,
     "continue button": CONTINUE_BUTTON,
     "previous step button": PREVIOUS_STEP_BUTTON,
     "continue without providing name": CONTINUE_WO_NAME_BUTTON,

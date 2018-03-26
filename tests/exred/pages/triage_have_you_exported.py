@@ -22,14 +22,14 @@ NAME = "ExRed Triage - have you exported before"
 URL = urljoin(EXRED_UI_URL, "triage/exported-before/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
-YES_RADIO = "#id_exported-before-exported_before_0"
-NO_RADIO = "#id_exported-before-exported_before_1"
-YES_CHECKBOX = "#id_exported-before-exported_before > li:nth-child(1) > label"
-NO_CHECKBOX = "#id_exported-before-exported_before > li:nth-child(2) > label"
-CONTINUE_BUTTON = ".exred-triage-form button.button"
-BACK_TO_HOME_LINK = ".home-link a"
+YES_RADIO = "#triage-exported-before-yes"
+NO_RADIO = "#triage-exported-before-no"
+YES_CHECKBOX = "#triage-exported-before-yes-label"
+NO_CHECKBOX = "#triage-exported-before-no-label"
+CONTINUE_BUTTON = "#triage-continue"
+BACK_TO_HOME_LINK = "#triage-question-back-to-home"
 EXPECTED_ELEMENTS = {
-    "question": "div.form-group > label",
+    "question": "#triage-question",
     "yes checkbox": YES_CHECKBOX,
     "no checkbox": NO_CHECKBOX,
     "continue button": CONTINUE_BUTTON,
