@@ -102,6 +102,26 @@ def parse_urlsfile(path: str) -> List[str]:
         return clean_lines(urls.read().splitlines())
 
 
+def print_results(results: dict):
+    for url, status_codes in results.items():
+        non_200 = [status for status in status_codes if status != 200]
+        attempts = 'attempts' if len(status_codes) > 1 else 'attempt'
+        if non_200:
+            times = 'times' if len(non_200) > 1 else 'time'
+            print(
+                '{:<75} responded with status code other than "200 OK" {} {} '
+                'out of {} {}'.format(
+                    url, len(non_200), times, len(status_codes), attempts))
+            print('Here\'s a list of status codes: {}'.format(status_codes))
+        else:
+            times = 'times' if len(status_codes) > 1 else 'time'
+            print(
+                '{:<75} responded with "200 OK" {} {} out of {} {}'
+                .format(
+                    url, len(status_codes), times, len(status_codes),
+                    attempts))
+
+
 if __name__ == '__main__':
     arguments = parse_arguments(sys.argv[1:])
     urls = parse_urlsfile(arguments.urlsfile)
@@ -123,7 +143,7 @@ if __name__ == '__main__':
                     urls, limit, interval, responses, user_agent, timeout,
                     verbose))
         loop.run_until_complete(future)
-        pprint(responses)
+        print_results(responses)
     finally:
         # see: https://docs.python.org/3/library/asyncio-eventloop.html#asyncio.AbstractEventLoop.shutdown_asyncgens
         loop.run_until_complete(loop.shutdown_asyncgens())
