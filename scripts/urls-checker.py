@@ -94,8 +94,7 @@ def parse_arguments(argv: List[str]) -> Namespace:
 
 
 def clean_lines(lines: List[str]) -> List[str]:
-    return [line for line in lines
-        if line or line.startswith('#')]
+    return [line for line in lines if line or line.startswith('#')]
 
 
 def parse_urlsfile(path: str) -> List[str]:
