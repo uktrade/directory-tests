@@ -131,7 +131,7 @@ Feature: Multi-user accounts
     Given "Peter Alder" has created "<a>" profile for randomly selected company "Y"
     And "Annette Geissinger" "<has or does not have>" an SSO/great.gov.uk account
 
-    When "Peter Alder" decides to transfer the company "Y" account ownership to "Annette Geissinger"
+    When "Peter Alder" decides to transfer the ownership of company's "Y" Find a Buyer profile to "Annette Geissinger"
     And "Peter Alder" confirms his password before transferring the ownership
 
     Then "Annette Geissinger" should receive an email with a request for becoming the owner of the company "Y" profile
@@ -154,9 +154,7 @@ Feature: Multi-user accounts
     Given "Peter Alder" has created "<a>" profile for randomly selected company "Y"
     And "Annette Geissinger" "<has or does not have>" an SSO/great.gov.uk account
 
-    When "Peter Alder" transfers the company "Y" account ownership to "Annette Geissinger"
-    And "Annette Geissinger" received an email with a request for becoming the owner of the company "Y" profile
-    And "Annette Geissinger" accepts the request for becoming the owner of company "Y" profile
+    When "Peter Alder" transfers the ownership of company's "Y" Find a Buyer profile to "Annette Geissinger"
 
     Then "Annette Geissinger" should see options to manage Find a Buyer profile users on SSO Profile
     And "Peter Alder" should not see options to manage Find a Buyer profile users on SSO Profile
