@@ -23,7 +23,7 @@ URL = urljoin(EXRED_UI_URL, "triage/company/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 QUESTION = "#triage-question"
-COMPANY_NAME_INPUT = "#triage-company-name"
+COMPANY_NAME_INPUT = "triage-company-name"
 SUGGESTIONS = "ul.SelectiveLookupDisplay"
 FIRST_SUGGESTION = "ul.SelectiveLookupDisplay > li:nth-child(1)"
 CONTINUE_BUTTON = "#triage-continue"
