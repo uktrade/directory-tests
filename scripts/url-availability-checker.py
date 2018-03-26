@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3.5
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """Modified version of fetch function with semaphore created by: Paweł Miech
 src: https://pawelmhm.github.io/asyncio/python/aiohttp/2016/04/22/asyncio-aiohttp.html
