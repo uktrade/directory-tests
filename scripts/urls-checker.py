@@ -5,14 +5,12 @@ src: https://pawelmhm.github.io/asyncio/python/aiohttp/2016/04/22/asyncio-aiohtt
 """
 import argparse
 import asyncio
-import random
 import sys
 from argparse import Namespace
 from asyncio import Semaphore
 from pprint import pprint
 from typing import List
 
-import aiohttp
 import async_timeout
 from aiohttp import ClientSession
 
