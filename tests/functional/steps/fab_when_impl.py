@@ -14,6 +14,8 @@ from tests import get_absolute_url
 from tests.functional.common import DETAILS, PROFILES
 from tests.functional.pages import (
     fab_ui_account_add_collaborator,
+    fab_ui_account_confrim_password,
+    fab_ui_account_transfer_ownership,
     fab_ui_build_profile_basic,
     fab_ui_build_profile_sector,
     fab_ui_build_profile_verification_letter,
@@ -44,7 +46,8 @@ from tests.functional.pages import (
     sso_ui_logout,
     sso_ui_password_reset,
     sso_ui_register,
-    sso_ui_verify_your_email
+    sso_ui_verify_your_email,
+    sud_ui_landing
 )
 from tests.functional.registry import get_fabs_page_object, get_fabs_page_url
 from tests.functional.steps.fab_then_impl import (
@@ -2037,3 +2040,52 @@ def fab_collaborator_create_sso_account_and_confirm_email(
     sso_collaborator_confirm_email_address(context, collaborator_alias)
     fab_confirm_collaboration_request(
         context, collaborator_alias, company_alias, open_invitation_link=False)
+
+
+def profile_send_transfer_ownership_request(
+        context: Context, supplier_alias: str, company_alias: str,
+        new_owner_alias: str):
+    """
+    Due to bug ED-2268 the first time you visit SUD pages by going directly
+    to SUD "Find a Buyer" page, then you're redirected to SUD "About" page
+    To circumvent this behaviour we have to go to the "About" page first, and
+    then visit the SUD "Find a Buyer" page
+    """
+    supplier = context.get_actor(supplier_alias)
+    company = context.get_company(company_alias)
+    new_owner = context.get_actor(new_owner_alias)
+
+    context.response = sud_ui_landing.go_to(
+        supplier.session, set_next_page=False)
+    sud_ui_landing.should_be_here(context.response)
+
+    response = fab_ui_account_transfer_ownership.go_to(
+        supplier.session)
+    context.response = response
+
+    token = extract_csrf_middleware_token(response)
+    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
+
+    response = fab_ui_account_transfer_ownership.submit(
+        supplier.session, token, new_owner.email)
+    context.response = response
+
+    fab_ui_account_confrim_password.should_be_here(response)
+
+    token = extract_csrf_middleware_token(response)
+    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
+
+    response = fab_ui_account_confrim_password.submit(
+        supplier.session, token, supplier.password)
+    context.response = response
+
+    profile_ui_find_a_buyer.should_be_here(response, owner_transferred=True)
+
+    context.update_actor(supplier_alias, ex_owner=True)
+    context.update_actor(new_owner_alias, company_alias=company_alias)
+    context.set_company_details(
+        company.alias, owner=new_owner_alias, owner_email=new_owner.email)
+    logging.debug(
+        "%s successfully sent a account ownership transfer request to %s %s",
+        supplier_alias, new_owner_alias, new_owner.email
+    )
