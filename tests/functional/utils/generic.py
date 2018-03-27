@@ -44,6 +44,7 @@ from tests.settings import (
     DIRECTORY_API_CLIENT_KEY,
     DIRECTORY_API_URL,
     FAB_CONFIRM_COLLABORATION_SUBJECT,
+    FAB_TRANSFER_OWNERSHIP_SUBJECT,
     MAILGUN_DIRECTORY_API_USER,
     MAILGUN_DIRECTORY_EVENTS_URL,
     MAILGUN_DIRECTORY_SECRET_API_KEY,
@@ -1258,6 +1259,24 @@ def mailgun_find_email_with_request_for_collaboration(
     return mailgun_get_directory_message(context, message_url)
 
 
+def mailgun_find_email_with_ownership_transfer_request(
+        context: Context, actor: Actor, company: Company) -> dict:
+    logging.debug(
+        "Trying to find email with an account ownership transfer request for "
+        "company: %s", company.title)
+    subject = FAB_TRANSFER_OWNERSHIP_SUBJECT.format(company.title)
+    response = find_mail_gun_events(
+        context, service=MailGunService.DIRECTORY, recipient=actor.email,
+        event=MailGunEvent.ACCEPTED, subject=subject)
+    context.response = response
+    with assertion_msg(
+            "Expected to find an email with an account ownership transfer "
+            "request for company: '%s'", company.alias):
+        assert response.status_code == 200
+    message_url = response.json()["items"][0]["storage"]["url"]
+    return mailgun_get_directory_message(context, message_url)
+
+
 def extract_plain_text_payload(msg: MIMEText) -> str:
     """Extract plain text payload (7bit) from email message."""
     res = None
@@ -1285,3 +1304,14 @@ def extract_link_with_invitation_for_collaboration(payload: str) -> str:
     logging.debug(
         "Found the link with invitation for collaboration %s", invitation_link)
     return invitation_link
+
+
+def extract_link_with_ownership_transfer_request(payload: str) -> str:
+    start = payload.find("http")
+    end = payload.find("\n", start) - 1  # `- 1` to skip the newline char
+    ownership_request_link = payload[start:end]
+    assert ownership_request_link
+    logging.debug(
+        "Found the link with FAB profile ownership request %s",
+        ownership_request_link)
+    return ownership_request_link
