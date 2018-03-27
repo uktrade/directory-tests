@@ -4,6 +4,7 @@ import logging
 
 from requests import Response, Session
 from tests import get_absolute_url
+from tests.functional.utils.generic import assertion_msg
 from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("profile:fab")
@@ -26,6 +27,10 @@ EXPECTED_STRINGS_NO_PROFILE = [
     "have buyers contact your sales team directly to get deals moving"
 ]
 
+EXPECTED_STRINGS_OWNER_TRANSFERRED = [
+    "We’ve sent a confirmation email to the new profile owner."
+]
+
 
 def go_to(session: Session) -> Response:
     """Go to the Profile 'Find a buyer' page / tab.
@@ -40,15 +45,21 @@ def go_to(session: Session) -> Response:
     return response
 
 
-def should_be_here(response: Response):
+def should_be_here(response: Response, *, owner_transferred: bool = False):
     """Check if Supplier is on Profile 'Find a Buyer' page.
 
     NOTE:
     Supplier has to be logged in to get to this page.
-
-    :param response: response object
     """
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
+    if owner_transferred:
+        expected_query = "?owner-transferred"
+        with assertion_msg(
+                "Expected to see '{}' in the URL but got: '{}' instead"
+                .format(expected_query, response.url)):
+            assert expected_query in response.url
+        check_response(
+            response, 200, body_contains=EXPECTED_STRINGS_OWNER_TRANSFERRED)
     logging.debug("Successfully got to the Profile 'Find a Buyer' page")
 
 
