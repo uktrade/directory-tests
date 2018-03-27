@@ -24,12 +24,17 @@ async def fetch(
     headers = {
         'User-Agent': user_agent
     }
-    async with async_timeout.timeout(timeout):
-        async with session.get(url, headers=headers) as response:
-            if verbose:
-                print('{:<75} → {:>4}'.format(url, response.status))
-            await response.read()
-            return response.status
+    try:
+        async with async_timeout.timeout(timeout):
+            async with session.get(url, headers=headers) as response:
+                if verbose:
+                    print('{:<75} → {:>3}'.format(url, response.status))
+                await response.read()
+                return response.status
+    except asyncio.TimeoutError:
+        if verbose:
+            print('{:<75} → timed out'.format(url))
+        return 'timedout'
 
 
 async def bound_fetch(
