@@ -123,7 +123,6 @@ Feature: Multi-user accounts
     Then "Annette Geissinger" should not see options to manage Find a Buyer profile users on SSO Profile
 
 
-  @wip
   @ED-3561
   @multi-user
   @transfer-ownership
@@ -132,7 +131,6 @@ Feature: Multi-user accounts
     And "Annette Geissinger" "<has or does not have>" an SSO/great.gov.uk account
 
     When "Peter Alder" decides to transfer the ownership of company's "Y" Find a Buyer profile to "Annette Geissinger"
-    And "Peter Alder" confirms his password before transferring the ownership
 
     Then "Annette Geissinger" should receive an email with a request for becoming the owner of the company "Y" profile
 
