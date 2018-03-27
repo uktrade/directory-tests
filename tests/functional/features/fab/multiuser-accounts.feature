@@ -126,7 +126,7 @@ Feature: Multi-user accounts
   @ED-3561
   @multi-user
   @transfer-ownership
-  Scenario Outline: New Account Owner should receive an email with a request to confirm account ownership
+  Scenario Outline: New Account Owner which "<has or does not have>" a SSO/great.gov.uk account should receive an email with a request for becoming the owner of "<a>" company profile
     Given "Peter Alder" has created "<a>" profile for randomly selected company "Y"
     And "Annette Geissinger" "<has or does not have>" an SSO/great.gov.uk account
 
