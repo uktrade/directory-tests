@@ -21,16 +21,14 @@ NAME = "ExRed Triage - do you use online marketplaces"
 URL = urljoin(EXRED_UI_URL, "triage/online-marketplace/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
-YES_RADIO = "#id_online-marketplace-used_online_marketplace_0"
-NO_RADIO = "#id_online-marketplace-used_online_marketplace_1"
-YES_CHECKBOX = \
-    "#id_online-marketplace-used_online_marketplace > li:nth-child(1) > label"
-NO_CHECKBOX = \
-    "#id_online-marketplace-used_online_marketplace > li:nth-child(2) > label"
-CONTINUE_BUTTON = ".exred-triage-form button.button"
+YES_RADIO = "#triage-online-marketplace-yes"
+NO_RADIO = "#triage-online-marketplace-no"
+YES_CHECKBOX = "#triage-online-marketplace-yes-label"
+NO_CHECKBOX = "#triage-online-marketplace-no-label"
+CONTINUE_BUTTON = "#triage-continue"
 PREVIOUS_STEP_BUTTON = "#triage-previous-step"
 EXPECTED_ELEMENTS = {
-    "question": "div.form-group > label",
+    "question": "#triage-question",
     "continue button": CONTINUE_BUTTON,
     "previous step button": PREVIOUS_STEP_BUTTON,
 }

@@ -30,7 +30,8 @@ from tests.functional.pages import (
     sud_ui_selling_online_overseas,
     sud_ui_find_a_buyer,
     sud_ui_export_opportunities,
-    fab_ui_account_add_collaborator
+    fab_ui_account_add_collaborator,
+    fab_ui_confim_your_collaboration
 )
 
 from tests import get_absolute_url
@@ -219,6 +220,10 @@ FAB_PAGE_REGISTRY = {
         "url": "ui-buyer:account-add-collaborator",
         "po": fab_ui_account_add_collaborator
     },
+    "fab confirm you want to be added to the profile": {
+        "url": None,
+        "po": fab_ui_confim_your_collaboration
+    }
 }
 
 SUD_PAGE_REGISTRY = {

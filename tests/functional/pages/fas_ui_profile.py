@@ -6,7 +6,6 @@ from urllib.parse import urljoin
 from behave.model import Table
 from requests import Response, Session
 from scrapy import Selector
-
 from tests import get_absolute_url
 from tests.functional.common import DETAILS
 from tests.functional.utils.context_utils import Company

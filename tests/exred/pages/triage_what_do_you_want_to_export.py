@@ -23,11 +23,11 @@ PAGE_TITLE = "Welcome to great.gov.uk"
 
 QUESTION_LABEL = "#triage-question-label"
 QUESTION = "#triage-question"
-SERVICES_CHECKBOX = "#id_goods-services-is_exporting_services"
-SERVICES_CHECKBOX_LABEL = "input ~ label[for='id_goods-services-is_exporting_services']"
-GOODS_CHECKBOX = "#id_goods-services-is_exporting_goods"
-GOODS_CHECKBOX_LABEL = "input ~ label[for='id_goods-services-is_exporting_goods']"
-CONTINUE_BUTTON = "button[type='submit'].button"
+SERVICES_CHECKBOX = "#triage-services"
+SERVICES_CHECKBOX_LABEL = "#triage-services-label"
+GOODS_CHECKBOX = "#triage-goods"
+GOODS_CHECKBOX_LABEL = "#triage-goods-label"
+CONTINUE_BUTTON = "#triage-continue"
 PREVIOUS_STEP_BUTTON = "#triage-previous-step"
 EXPECTED_ELEMENTS = {
     "question": QUESTION,

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """SSO - Verify your email page"""
 from requests import Response
-
 from tests.functional.utils.generic import assertion_msg
 from tests.functional.utils.request import check_response
 

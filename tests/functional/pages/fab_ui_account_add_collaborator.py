@@ -1,12 +1,8 @@
 # -*- coding: utf-8 -*-
 """FAB - Add Collaborator page"""
 from requests import Response, Session
-
 from tests import get_absolute_url
-from tests.functional.utils.generic import (
-    Method,
-    make_request,
-)
+from tests.functional.utils.generic import Method, make_request
 from tests.functional.utils.request import check_response
 
 URL = get_absolute_url("ui-buyer:account-add-collaborator")

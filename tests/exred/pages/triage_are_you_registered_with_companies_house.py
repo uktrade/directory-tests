@@ -21,14 +21,14 @@ NAME = "ExRed Triage - are you registered with Companies House"
 URL = urljoin(EXRED_UI_URL, "triage/companies-house/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
-YES_RADIO = "#id_companies-house-is_in_companies_house_0"
-NO_RADIO = "#id_companies-house-is_in_companies_house_1"
-YES_CHECKBOX = "#id_companies-house-is_in_companies_house_0 ~ label"
-NO_CHECKBOX = "#id_companies-house-is_in_companies_house_1 ~ label"
-CONTINUE_BUTTON = ".exred-triage-form button.button"
+YES_RADIO = "#triage-is-in-companies-house-yes"
+NO_RADIO = "#triage-is-in-companies-house-no"
+YES_CHECKBOX = "#triage-is-in-companies-house-yes-label"
+NO_CHECKBOX = "#triage-is-in-companies-house-no-label"
+CONTINUE_BUTTON = "#triage-continue"
 PREVIOUS_STEP_BUTTON = "#triage-previous-step"
 EXPECTED_ELEMENTS = {
-    "question": "#triage-question-label",
+    "question": "#triage-question",
     "yes checkbox": YES_CHECKBOX,
     "no checkbox": NO_CHECKBOX,
     "continue button": CONTINUE_BUTTON,

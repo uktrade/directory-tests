@@ -10,15 +10,16 @@ from behave.model import Table
 from behave.runner import Context
 from requests import Response, Session
 from scrapy import Selector
-
 from tests import get_absolute_url
 from tests.functional.common import DETAILS, PROFILES
 from tests.functional.pages import (
+    fab_ui_account_add_collaborator,
     fab_ui_build_profile_basic,
     fab_ui_build_profile_sector,
     fab_ui_build_profile_verification_letter,
     fab_ui_case_study_basic,
     fab_ui_case_study_images,
+    fab_ui_confim_your_collaboration,
     fab_ui_confirm_company,
     fab_ui_confirm_export_status,
     fab_ui_confirm_identity,
@@ -43,10 +44,12 @@ from tests.functional.pages import (
     sso_ui_logout,
     sso_ui_password_reset,
     sso_ui_register,
-    sso_ui_verify_your_email,
-    fab_ui_account_add_collaborator
+    sso_ui_verify_your_email
 )
 from tests.functional.registry import get_fabs_page_object, get_fabs_page_url
+from tests.functional.steps.fab_then_impl import (
+    reg_should_get_verification_email
+)
 from tests.functional.utils.context_utils import Company
 from tests.functional.utils.generic import (
     assertion_msg,
@@ -55,11 +58,13 @@ from tests.functional.utils.generic import (
     extract_csrf_middleware_token,
     extract_form_action,
     extract_logo_url,
+    extract_registration_page_link,
     get_absolute_path_of_file,
     get_active_company_without_fas_profile,
     get_language_code,
     get_md5_hash_of_file,
     get_number_of_search_result_pages,
+    get_verification_code,
     is_already_registered,
     is_inactive,
     random_case_study_data,
@@ -67,8 +72,7 @@ from tests.functional.utils.generic import (
     random_feedback_data,
     random_message_data,
     rare_word,
-    sentence,
-    get_verification_code
+    sentence
 )
 from tests.functional.utils.request import Method, check_response, make_request
 from tests.settings import (
@@ -96,7 +100,7 @@ def select_random_company(
 
     :param context: behave `context` object
     :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :param company_alias: alias of the company used in the scope of the scenario
+    :param company_alias: alias of the company used in the scenario
     """
     actor = context.get_actor(supplier_alias)
     session = actor.session
@@ -145,7 +149,7 @@ def reg_confirm_company_selection(
 
     :param context: behave `context` object
     :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :param company_alias: alias of the company used in the scope of the scenario
+    :param company_alias: alias of the company used in the scenario
     """
     actor = context.get_actor(supplier_alias)
     token = actor.csrfmiddlewaretoken
@@ -161,7 +165,8 @@ def reg_confirm_company_selection(
     # Step 2 - check if we're on the Confirm Export Status page
     fab_ui_confirm_export_status.should_be_here(response)
     if not has_sso_account:
-        fab_ui_confirm_export_status.should_see_info_about_sso_account(response)
+        fab_ui_confirm_export_status.should_see_info_about_sso_account(
+            response)
 
     logging.debug("Confirmed selection of Company: %s", company.number)
 
@@ -326,8 +331,8 @@ def bp_select_random_sector_and_export_to_country(context, supplier_alias):
     interested in working in.
 
     NOTE:
-    This will set `context.details` which will contain company details extracted
-    from the page displayed after Supplier selects the sector.
+    This will set `context.details` which will contain company details
+    extracted from the page displayed after Supplier selects the sector.
 
     :param context: behave `context` object
     :type context: behave.runner.Context
@@ -340,7 +345,8 @@ def bp_select_random_sector_and_export_to_country(context, supplier_alias):
     other = ""
 
     # Step 1 - Submit the Choose Your Sector form
-    response = fab_ui_build_profile_sector.submit(actor, sector, countries, other)
+    response = fab_ui_build_profile_sector.submit(
+        actor, sector, countries, other)
     context.response = response
 
     # Step 2 - check if Supplier is on Confirm Address page
@@ -386,8 +392,8 @@ def bp_verify_identity_with_letter(context: Context, supplier_alias: str):
 def prof_set_company_description(context, supplier_alias):
     """Edit Profile - Will set company description.
 
-    This is quasi-mandatory (*) step before Supplier can verify the company with
-    the code sent in a letter.
+    This is quasi-mandatory (*) step before Supplier can verify the company
+    with the code sent in a letter.
 
     (*) it's quasi mandatory, because Supplier can actually go to the company
     verification page using the link provided in the letter without the need
@@ -625,6 +631,26 @@ def reg_create_standalone_unverified_sso_account(
         assert response.cookies.get("sso_display_logged_in") == "false"
 
 
+def sso_collaborator_confirm_email_address(
+        context: Context, supplier_alias: str):
+    """Given that invited collaborator has clicked on the email confirmation
+     link, he/she has to confirm that the provided email address is the
+      correct one.
+    """
+    actor = context.get_actor(supplier_alias)
+    form_action_value = context.form_action_value
+
+    # STEP 1 - Submit "Confirm your email address" form
+    response = sso_ui_confim_your_email.confirm(actor, form_action_value)
+    context.response = response
+
+    # STEP 2 - Check if Supplier if on SSO Profile Landing page
+    fab_ui_confim_your_collaboration.should_be_here(response)
+
+    # STEP 3 - Update Actor's data
+    context.update_actor(supplier_alias, has_sso_account=True)
+
+
 def sso_supplier_confirms_email_address(context, supplier_alias):
     """Given Supplier has clicked on the email confirmation link, Suppliers has
     to confirm that the provided email address is the correct one.
@@ -652,7 +678,8 @@ def sso_go_to_create_trade_profile(context, supplier_alias):
     """Follow the 'Create a trade profile' button on the "Find a Buyer" tab.
 
     NOTE:
-    It's assumed that Supplier already has a standalone SSO/great.gov.uk account
+    It's assumed that Supplier already has a standalone SSO/great.gov.uk
+    account
 
     :param context: behave `context` object
     :type context: behave.runner.Context
@@ -855,9 +882,9 @@ def prof_update_company_details(
         no_employees=new_details.no_employees, sector=new_sector,
         export_to_countries=new_countries)
     logging.debug(
-        "%s successfully updated basic Company's details: title=%s, website=%s,"
-        " keywords=%s, number of employees=%s, sector=%s, countries=%s",
-        supplier_alias, new_details.title, new_details.website,
+        "%s successfully updated basic Company's details: title=%s, "
+        "website=%s, keywords=%s, number of employees=%s, sector=%s, "
+        "countries=%s", supplier_alias, new_details.title, new_details.website,
         new_details.keywords, new_details.no_employees, new_sector,
         new_countries)
 
@@ -975,7 +1002,7 @@ def prof_add_case_study(context, supplier_alias, case_alias):
 
     :param context: behave `context` object
     :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :param case_alias: alias of the Case Study used in the scope of the scenario
+    :param case_alias: alias of the Case Study used in the scenario
     """
     actor = context.get_actor(supplier_alias)
     session = actor.session
@@ -1065,7 +1092,7 @@ def fas_search_using_company_details(
 
     :param context: behave `context` object
     :param buyer_alias: alias of the Actor used in the scope of the scenario
-    :param company_alias: alias of the Company used in the scope of the scenario
+    :param company_alias: alias of the Company used in the scenario
     :param table_of_details: (optional) a table with selected company details
                              which will be used in search
     """
@@ -1120,8 +1147,8 @@ def fas_search_using_company_details(
                     response = fas_ui_find_supplier.go_to(
                         session, term=term, page=next_page)
                 else:
-                    logging.debug("Couldn't find the Supplier even on the last "
-                                  "page of the search results")
+                    logging.debug("Couldn't find the Supplier even on the last"
+                                  " page of the search results")
     context.search_results = search_results
     context.search_responses = search_responses
 
@@ -1668,7 +1695,8 @@ def get_form_value(key: str) -> str or list or int or None:
         ("invalid image", choice(BMPs + JP2s + WEBPs)),
         (" characters$", get_n_chars(get_number_from_key(key))),
         (" words$", get_n_words(get_number_from_key(key))),
-        (" predefined countries$", get_n_country_codes(get_number_from_key(key))),
+        (" predefined countries$", get_n_country_codes(
+            get_number_from_key(key))),
         ("1 predefined country$", get_n_country_codes(1)),
         ("none selected", None),
         ("sector", choice(SECTORS))
@@ -1724,13 +1752,16 @@ def fab_attempt_to_add_case_study(
         token = extract_csrf_middleware_token(response)
 
         if field in page_1_fields:
-            response = fab_ui_case_study_basic.submit_form(session, token, case_study)
+            response = fab_ui_case_study_basic.submit_form(
+                session, token, case_study)
             context.response = response
         elif field in page_2_fields:
-            response = fab_ui_case_study_basic.submit_form(session, token, case_study)
+            response = fab_ui_case_study_basic.submit_form(
+                session, token, case_study)
             context.response = response
             token = extract_csrf_middleware_token(response)
-            response = fab_ui_case_study_images.submit_form(session, token, case_study)
+            response = fab_ui_case_study_images.submit_form(
+                session, token, case_study)
             context.response = response
         else:
             raise KeyError(
@@ -1748,7 +1779,8 @@ def sso_request_password_reset(context: Context, supplier_alias: str):
     else:
         next_param = get_fabs_page_url(page_name="fab landing")
 
-    response = sso_ui_password_reset.go_to(actor.session, next_param=next_param)
+    response = sso_ui_password_reset.go_to(
+        actor.session, next_param=next_param)
     context.response = response
 
     sso_ui_password_reset.should_be_here(response)
@@ -1782,7 +1814,8 @@ def sso_sign_in(context: Context, supplier_alias: str):
 
 def sso_change_password_with_password_reset_link(
         context: Context, supplier_alias: str, *, new: bool = False,
-        same: bool = False, mismatch: bool = False, letters_only: bool = False):
+        same: bool = False, mismatch: bool = False,
+        letters_only: bool = False):
     actor = context.get_actor(supplier_alias)
     session = actor.session
     link = actor.password_reset_link
@@ -1873,16 +1906,134 @@ def finish_registration_after_flagging_as_verified(
 
 
 def prof_add_collaborator(
-        context: Context, supplier_alias: str, collaborator_alias: str):
-    supplier = context.get_actor(supplier_alias)
+        context: Context, supplier_alias: str, collaborator_aliases: str):
+
+    aliases = [alias.strip() for alias in collaborator_aliases.split(",")]
+
+    for collaborator_alias in aliases:
+        supplier = context.get_actor(supplier_alias)
+        company = context.get_company(supplier.company_alias)
+        collaborator = context.get_actor(collaborator_alias)
+        response = fab_ui_account_add_collaborator.go_to(supplier.session)
+        context.response = response
+
+        token = extract_csrf_middleware_token(response)
+        context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
+
+        response = fab_ui_account_add_collaborator.add_collaborator(
+            supplier.session, token, collaborator.email)
+
+        profile_ui_find_a_buyer.should_be_here(response)
+        collaborators = company.collaborators
+        if collaborators:
+            collaborators.append(collaborator_alias)
+        else:
+            collaborators = [collaborator_alias]
+        context.set_company_details(company.alias, collaborators=collaborators)
+
+
+def fab_confirm_collaboration_request(
+        context: Context, collaborator_alias: str, company_alias: str,
+        open_invitation_link: bool = True):
     collaborator = context.get_actor(collaborator_alias)
-    response = fab_ui_account_add_collaborator.go_to(supplier.session)
+    session = collaborator.session
+    link = collaborator.invitation_for_collaboration_link
+
+    # Step 1 - open confirmation link
+    if open_invitation_link:
+        response = fab_ui_confim_your_collaboration.open(session, link)
+        context.response = response
+
+    # Step 3 - confirm that Supplier is on SSO Confirm Your Email page
+    fab_ui_confim_your_collaboration.should_be_here(context.response)
+    logging.debug(
+        "Collaborator %s is on the FAB Confirm your collaboration page",
+        collaborator_alias
+    )
+
+    # Step 4 - extract & store CSRF token & form action value
+    # Form Action Value is required to successfully confirm email
+    token = extract_csrf_middleware_token(context.response)
+    context.update_actor(collaborator_alias, csrfmiddlewaretoken=token)
+    form_action_value = extract_form_action(context.response)
+    context.form_action_value = form_action_value
+
+    # Step 5 - submit the form
+    response = fab_ui_confim_your_collaboration.confirm(session, token, link)
+    context.response = response
+    context.update_actor(collaborator_alias, company_alias=company_alias)
+    logging.debug(
+        "%s confirmed that he/she wants to be added to the profile for %s",
+        collaborator_alias, company_alias)
+
+
+def fab_open_collaboration_request_link(
+        context: Context, collaborator_alias: str, company_alias: str):
+    collaborator = context.get_actor(collaborator_alias)
+    session = collaborator.session
+    link = collaborator.invitation_for_collaboration_link
+
+    response = fab_ui_confim_your_collaboration.open(session, link)
+    context.response = response
+    logging.debug(
+        "%s opened the collaboration request link from company %s",
+        collaborator_alias, company_alias)
+
+
+def reg_create_standalone_unverified_sso_account_from_sso_login_page(
+        context: Context, actor_alias: str):
+    """Create a standalone SSO/great.gov.uk account."""
+    actor = context.get_actor(actor_alias)
+    response = context.response
+
+    # Step 1: Check if we are on the SSO/great.gov.uk login page
+    sso_ui_login.should_be_here(response)
+
+    # Step 2 - extract CSRF token
+    token = extract_csrf_middleware_token(response)
+    context.update_actor(actor_alias, csrfmiddlewaretoken=token)
+
+    # Step 3 - extract Registration link
+    referer = response.url
+    registration_page_link = extract_registration_page_link(response)
+
+    # Step 4: Go to the SSO/great.gov.uk registration page
+    response = sso_ui_register.go_to(
+        actor.session, next=registration_page_link, referer=referer)
     context.response = response
 
+    # Step 5 - extract CSRF token
     token = extract_csrf_middleware_token(response)
-    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
+    context.update_actor(actor_alias, csrfmiddlewaretoken=token)
 
-    response = fab_ui_account_add_collaborator.add_collaborator(
-        supplier.session, token, collaborator.email)
+    # Step 6: Check if User is not logged in
+    with assertion_msg(
+            "It looks like user is still logged in, as the "
+            "sso_display_logged_in cookie is not equal to False"):
+        assert response.cookies.get("sso_display_logged_in") == "false"
 
-    profile_ui_find_a_buyer.should_be_here(response)
+    # Step 7: POST SSO accounts/signup/
+    response = sso_ui_register.submit_no_company(
+        actor, next=registration_page_link, referer=response.url)
+    context.response = response
+
+    # Step 8: Check if Supplier is on Verify your email page & is not logged in
+    sso_ui_verify_your_email.should_be_here(response)
+    with assertion_msg(
+            "It looks like user is still logged in, as the "
+            "sso_display_logged_in cookie is not equal to False"):
+        assert response.cookies.get("sso_display_logged_in") == "false"
+
+
+def fab_collaborator_create_sso_account_and_confirm_email(
+        context: Context, collaborator_alias: str, company_alias: str):
+    fab_open_collaboration_request_link(
+        context, collaborator_alias, company_alias)
+    sso_ui_login.should_be_here(context.response)
+    reg_create_standalone_unverified_sso_account_from_sso_login_page(
+        context, collaborator_alias)
+    reg_should_get_verification_email(context, collaborator_alias)
+    reg_open_email_confirmation_link(context, collaborator_alias)
+    sso_collaborator_confirm_email_address(context, collaborator_alias)
+    fab_confirm_collaboration_request(
+        context, collaborator_alias, company_alias, open_invitation_link=False)

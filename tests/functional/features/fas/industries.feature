@@ -1,5 +1,6 @@
 Feature: Promoted industries
 
+  @wip
   @ED-2013
   @industries
   @no-sso-email-verification-required
@@ -16,6 +17,7 @@ Feature: Promoted industries
       | Food and drink |
 
 
+  @wip
   @ED-2015
   @industries
   @no-sso-email-verification-required
@@ -38,6 +40,7 @@ Feature: Promoted industries
       | FAS Food and drink Industry Summary |
 
 
+  @wip
   @ED-2016
   @industries
   @no-sso-email-verification-required

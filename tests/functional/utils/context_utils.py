@@ -18,7 +18,7 @@ Actor = namedtuple(
     [
         'alias', 'email', 'password', 'session', 'csrfmiddlewaretoken',
         'email_confirmation_link', 'company_alias', 'has_sso_account', 'type',
-        'password_reset_link'
+        'password_reset_link', 'invitation_for_collaboration_link'
     ]
 )
 CaseStudy = namedtuple(
@@ -46,7 +46,7 @@ Company = namedtuple(
         'companies_house_details', 'facebook', 'linkedin', 'twitter',
         'case_studies', 'logo_picture', 'logo_url', 'logo_hash',
         'export_to_countries', 'fas_profile_endpoint', 'slug',
-        'verification_code'
+        'verification_code', 'collaborators', 'deleted'
     ]
 )
 Feedback = namedtuple(

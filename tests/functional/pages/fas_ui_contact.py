@@ -4,7 +4,6 @@ import logging
 from urllib.parse import urljoin
 
 from requests import Response, Session
-
 from tests import get_absolute_url
 from tests.functional.utils.context_utils import Company, Message
 from tests.functional.utils.generic import escape_html

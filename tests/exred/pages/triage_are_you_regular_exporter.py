@@ -21,17 +21,16 @@ NAME = "ExRed Triage - are you regular exporter"
 URL = urljoin(EXRED_UI_URL, "triage/regular-exporter/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
-YES_RADIO = "#id_regular-exporter-regular_exporter_0"
-NO_RADIO = "#id_regular-exporter-regular_exporter_1"
-YES_CHECKBOX = \
-    "#id_regular-exporter-regular_exporter > li:nth-child(1) > label"
-NO_CHECKBOX = "#id_regular-exporter-regular_exporter > li:nth-child(2) > label"
-CONTINUE_BUTTON = ".exred-triage-form button.button"
+YES_RADIO = "#triage-regular-exporter-yes"
+NO_RADIO = "#triage-regular-exporter-no"
+YES_CHECKBOX_LABEL = "#triage-regular-exporter-yes-label"
+NO_CHECKBOX_LABEL = "#triage-regular-exporter-no-label"
+CONTINUE_BUTTON = "#triage-continue"
 PREVIOUS_STEP_BUTTON = "#triage-previous-step"
 EXPECTED_ELEMENTS = {
-    "question": "div.form-group > label",
-    "yes checkbox": YES_CHECKBOX,
-    "no checkbox": NO_CHECKBOX,
+    "question": "#triage-question",
+    "yes checkbox label": YES_CHECKBOX_LABEL,
+    "no checkbox label": NO_CHECKBOX_LABEL,
     "continue button": CONTINUE_BUTTON,
     "previous step button": PREVIOUS_STEP_BUTTON,
 }
@@ -46,7 +45,7 @@ def should_be_here(driver: webdriver):
 
 def select_yes(driver: webdriver):
     yes = find_element(
-        driver, by_css=YES_CHECKBOX, element_name="Yes checkbox",
+        driver, by_css=YES_CHECKBOX_LABEL, element_name="Yes checkbox",
         wait_for_it=False)
     yes.click()
     take_screenshot(driver, NAME)
@@ -54,7 +53,7 @@ def select_yes(driver: webdriver):
 
 def select_no(driver: webdriver):
     no = find_element(
-        driver, by_css=NO_CHECKBOX, element_name="No checkbox",
+        driver, by_css=NO_CHECKBOX_LABEL, element_name="No checkbox",
         wait_for_it=False)
     no.click()
     take_screenshot(driver, NAME)

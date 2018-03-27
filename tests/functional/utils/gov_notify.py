@@ -4,12 +4,11 @@ import logging
 
 from notifications_python_client import NotificationsAPIClient
 from retrying import retry
-
 from tests.functional.utils.generic import assertion_msg
 from tests.settings import (
+    EMAIL_VERIFICATION_MSG_SUBJECT,
     GOV_NOTIFY_API_KEY,
-    SSO_PASSWORD_RESET_MSG_SUBJECT,
-    EMAIL_VERIFICATION_MSG_SUBJECT
+    SSO_PASSWORD_RESET_MSG_SUBJECT
 )
 
 GOV_NOTIFY_CLIENT = NotificationsAPIClient(GOV_NOTIFY_API_KEY)

@@ -3,7 +3,6 @@
 import logging
 
 from requests import Response, Session
-
 from tests import get_absolute_url
 from tests.functional.utils.request import Method, check_response, make_request
 
@@ -16,19 +15,17 @@ EXPECTED_STRINGS = [
 ]
 
 
-def go_to(session: Session) -> Response:
+def go_to(session: Session, *, set_next_page: bool = True) -> Response:
     fab_landing = get_absolute_url("ui-buyer:landing")
     params = {"next": fab_landing}
     headers = {"Referer": fab_landing}
+    if not set_next_page:
+        params = None
     response = make_request(
         Method.GET, URL, session=session, params=params, headers=headers)
     return response
 
 
 def should_be_here(response: Response):
-    """Check if Supplier is on SUD (Profile) About page.
-
-    :param response: response object
-    """
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Successfully got to the SUD (Profile) About page")

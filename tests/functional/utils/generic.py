@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 """Various utils used across the project."""
-from enum import Enum
-
 import hashlib
 import json
 import logging
@@ -10,13 +8,11 @@ import random
 import re
 import sys
 import traceback
-from contextlib import contextmanager
-from pprint import pprint
-
 from collections import namedtuple
-from directory_api_client.testapiclient import DirectoryTestAPIClient
-from directory_constants.constants import choices
-from directory_sso_api_client.testapiclient import DirectorySSOTestAPIClient
+from contextlib import contextmanager
+from email.mime.text import MIMEText
+from enum import Enum
+from pprint import pprint
 from random import choice
 from string import ascii_uppercase
 from typing import List
@@ -25,36 +21,40 @@ import lxml
 import requests
 from behave.runner import Context
 from bs4 import BeautifulSoup
+from directory_api_client.testapiclient import DirectoryTestAPIClient
+from directory_constants.constants import choices
+from directory_sso_api_client.testapiclient import DirectorySSOTestAPIClient
 from jsonschema import validate
 from langdetect import DetectorFactory, detect_langs
 from requests import Response
 from retrying import retry
 from scrapy.selector import Selector
 from termcolor import cprint
-
 from tests import get_absolute_url
 from tests.functional.schemas.Companies import COMPANIES
 from tests.functional.utils.context_utils import (
+    Actor,
     CaseStudy,
     Company,
     Feedback,
     Message
 )
-from tests.functional.utils.request import Method, make_request, check_response
+from tests.functional.utils.request import Method, check_response, make_request
 from tests.settings import (
+    DIRECTORY_API_CLIENT_KEY,
+    DIRECTORY_API_URL,
+    FAB_CONFIRM_COLLABORATION_SUBJECT,
     MAILGUN_DIRECTORY_API_USER,
     MAILGUN_DIRECTORY_EVENTS_URL,
     MAILGUN_DIRECTORY_SECRET_API_KEY,
     RARE_WORDS,
     SECTORS,
+    SSO_PROXY_API_CLIENT_BASE_URL,
+    SSO_PROXY_SIGNATURE_SECRET,
     TEST_IMAGES_DIR,
     JPEGs,
     JPGs,
-    PNGs,
-    DIRECTORY_API_URL,
-    DIRECTORY_API_CLIENT_KEY,
-    SSO_PROXY_API_CLIENT_BASE_URL,
-    SSO_PROXY_SIGNATURE_SECRET
+    PNGs
 )
 
 INDUSTRY_CHOICES = dict(choices.INDUSTRIES)
@@ -434,6 +434,17 @@ def extract_csrf_middleware_token(response: Response):
     token = extract_by_css(response, css_selector)
     logging.debug("Found CSRF token: %s", token)
     return token
+
+
+def extract_registration_page_link(response: Response) -> str:
+    with assertion_msg(
+            "Can't extract link to the Registration page as the response has "
+            "no content"):
+        assert response.content
+    css_selector = "#header-register-link::attr(href)"
+    link = extract_by_css(response, css_selector)
+    logging.debug("Found link to the Registration page token: %s", link)
+    return link
 
 
 def extract_form_action(response: Response) -> str:
@@ -1185,10 +1196,14 @@ def delete_supplier_data_from_dir(ch_id: str, *, context: Context = None):
             "Successfully deleted supplier data for company %s from DIR DB",
             ch_id)
     else:
-        msg = ("Something went wrong when trying to delete supplier data for "
-               "company %s from DIR DB. Here's the response: \n%s", ch_id,
-               response.content)
-        red(msg)
+        msg = ("INFO: Could not delete company {} from DIR DB!\n"
+               "If, in the scenario, there is more than one supplier actor "
+               "associated with the same company, then you're seeing this "
+               "message most likely because company data was already "
+               "deleted with the deletion of the first supplier data.\nJust in"
+               "case here's the response from the server: \n{}"
+               .format(ch_id, response.content))
+        blue(msg)
         logging.error(msg)
 
 
@@ -1205,3 +1220,68 @@ def filter_out_legacy_industries(company: dict) -> list:
     result = [sector for sector in sectors if sector in INDUSTRY_CHOICES]
     logging.error('Sectors after: %s', result)
     return result
+
+
+@retry(wait_fixed=10000, stop_max_attempt_number=9)
+def mailgun_get_directory_message(context: Context, message_url: str) -> dict:
+    """Get message details from MailGun by its URL."""
+    # this will help us to get the raw MIME
+    headers = {"Accept": "message/rfc2822"}
+    response = make_request(
+        Method.GET, message_url, headers=headers,
+        auth=("api", MAILGUN_DIRECTORY_SECRET_API_KEY))
+    context.response = response
+
+    with assertion_msg(
+            "Expected to get 200 OK from MailGun when getting message details"
+            " but got %s %s instead", response.status_code, response.reason):
+        assert response.status_code == 200
+
+    return response.json()
+
+
+def mailgun_find_email_with_request_for_collaboration(
+        context: Context, actor: Actor, company: Company) -> dict:
+    logging.debug(
+        "Trying to find email with a request for collaboration with company: "
+        "%s", company.title)
+    subject = FAB_CONFIRM_COLLABORATION_SUBJECT.format(company.title)
+    response = find_mail_gun_events(
+        context, service=MailGunService.DIRECTORY, recipient=actor.email,
+        event=MailGunEvent.ACCEPTED, subject=subject)
+    context.response = response
+    with assertion_msg(
+            "Expected to find an email with a request for collaboration with "
+            "company: '%s'", company.alias):
+        assert response.status_code == 200
+    message_url = response.json()["items"][0]["storage"]["url"]
+    return mailgun_get_directory_message(context, message_url)
+
+
+def extract_plain_text_payload(msg: MIMEText) -> str:
+    """Extract plain text payload (7bit) from email message."""
+    res = None
+    if msg.is_multipart():
+        for part in msg.get_payload():
+            if part.get_content_type() == "text/plain":
+                res = part.get_payload()
+    else:
+        seven_bit = "Content-Transfer-Encoding: 7bit"
+        payload = msg.get_payload()
+        with assertion_msg("Could not find plain text msg in email payload"):
+            assert seven_bit in payload
+        start_7bit = payload.find(seven_bit)
+        start = start_7bit + len(seven_bit)
+        end = payload.find("--===============", start)
+        res = payload[start:end]
+    return res
+
+
+def extract_link_with_invitation_for_collaboration(payload: str) -> str:
+    start = payload.find("http")
+    end = payload.find("\n", start) - 1  # `- 1` to skip the newline char
+    invitation_link = payload[start:end]
+    assert invitation_link
+    logging.debug(
+        "Found the link with invitation for collaboration %s", invitation_link)
+    return invitation_link

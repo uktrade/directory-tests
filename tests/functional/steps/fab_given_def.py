@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
+# flake8: noqa
 """FAB Given step definitions."""
 from behave import given
-
 from tests.functional.steps.fab_given_impl import (
     bp_build_company_profile,
+    create_actor_with_or_without_sso_account,
+    create_actor_with_verified_or_unverified_fab_profile,
     fab_find_published_company,
     fas_find_company_by_name,
     fas_get_company_slug,
@@ -18,21 +20,24 @@ from tests.functional.steps.fab_given_impl import (
     sso_create_standalone_verified_sso_account,
     sso_get_password_reset_link,
     unauthenticated_buyer,
-    unauthenticated_supplier,
-    create_actor_with_or_without_sso_account,
-    create_actor_with_verified_or_unverified_fab_profile
+    unauthenticated_supplier
 )
 from tests.functional.steps.fab_then_impl import (
     fab_should_see_all_case_studies,
     fas_should_see_png_logo_thumbnail,
     prof_should_see_logo_picture,
     reg_should_get_verification_email,
+    should_be_at,
     sso_should_be_signed_in_to_sso_account,
-    sso_should_be_signed_out_from_sso_account
+    sso_should_be_signed_out_from_sso_account,
+    sso_should_get_request_for_collaboration_email
 )
 from tests.functional.steps.fab_when_impl import (
+    fab_confirm_collaboration_request,
+    fab_open_collaboration_request_link,
     go_to_page,
     prof_add_case_study,
+    prof_add_collaborator,
     prof_add_online_profiles,
     prof_set_company_description,
     prof_sign_out_from_fab,
@@ -188,7 +193,7 @@ def given_actor_gets_company_slug(context, actor_alias, company_alias):
 
 
 @given('"{supplier_alias}" received the letter with verification code')
-def step_impl(context, supplier_alias):
+def given_supplier_received_verification_letter(context, supplier_alias):
     reg_should_get_verification_letter(context, supplier_alias)
 
 
@@ -213,8 +218,42 @@ def given_actor_with_verified_or_not_profile(
         context, actor_alias, verified_or_not, company_alias)
 
 
-@given('"{actor_alias}" "{has_or_does_not_have}" an SSO/great.gov.uk account')
+@given('"{actor_aliases}" "{has_or_does_not_have}" an SSO/great.gov.uk account')
 def given_actor_with_or_without_sso_account(
-        context, actor_alias, has_or_does_not_have):
+        context, actor_aliases, has_or_does_not_have):
     create_actor_with_or_without_sso_account(
-        context, actor_alias, has_or_does_not_have)
+        context, actor_aliases, has_or_does_not_have)
+
+
+@given('"{supplier_alias}" added "{collaborator_aliases}" as a collaborator')
+def given_supplier_added_a_collaborator(
+        context, supplier_alias, collaborator_aliases):
+    prof_add_collaborator(context, supplier_alias, collaborator_aliases)
+
+
+@given('"{supplier_alias}" has received an email with a request to confirm that he\'s been added to company "{company_alias}" Find a Buyer profile')
+@given('"{supplier_alias}" has received an email with a request to confirm that she\'s been added to company "{company_alias}" Find a Buyer profile')
+def given_actor_should_receive_email_with_request_for_collaboration(
+        context, supplier_alias, company_alias):
+    sso_should_get_request_for_collaboration_email(
+        context, supplier_alias, company_alias)
+
+
+@given('"{actor_alias}" should be on "{page_name}" page')
+def given_actor_is_on_specific_page(context, actor_alias, page_name):
+    should_be_at(context, actor_alias, page_name)
+
+
+@given('"{collaborator_alias}" decides to open the invitation from company "{company_alias}"')
+def given_collaborator_decides_to_open_invitation(
+        context, collaborator_alias, company_alias):
+    fab_open_collaboration_request_link(
+        context, collaborator_alias, company_alias)
+
+
+@given('"{collaborator_alias}" confirmed that he wants to be added to the company "{company_alias}" Find a Buyer profile')
+@given('"{collaborator_alias}" confirmed that she wants to be added to the company "{company_alias}" Find a Buyer profile')
+def given_collaborator_confirms_the_collaboration_request(
+        context, collaborator_alias, company_alias):
+    fab_confirm_collaboration_request(
+        context, collaborator_alias, company_alias)

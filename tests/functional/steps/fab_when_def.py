@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
+# flake8: noqa
 """FAB Given step definitions."""
 from behave import when
-
 from tests.functional.steps.fab_when_impl import (
     bp_provide_company_details,
     bp_select_random_sector_and_export_to_country,
     bp_verify_identity_with_letter,
     fab_attempt_to_add_case_study,
     fab_choose_to_verify_with_code,
+    fab_collaborator_create_sso_account_and_confirm_email,
+    fab_confirm_collaboration_request,
     fab_go_to_letter_verification,
     fab_provide_company_details,
     fab_select_preferred_countries_of_export,
@@ -31,6 +33,7 @@ from tests.functional.steps.fab_when_impl import (
     go_to_page,
     go_to_pages,
     prof_add_case_study,
+    prof_add_collaborator,
     prof_add_invalid_online_profiles,
     prof_add_online_profiles,
     prof_attempt_to_sign_in_to_fab,
@@ -53,8 +56,7 @@ from tests.functional.steps.fab_when_impl import (
     sso_open_password_reset_link,
     sso_request_password_reset,
     sso_sign_in,
-    sso_supplier_confirms_email_address,
-    prof_add_collaborator
+    sso_supplier_confirms_email_address
 )
 
 
@@ -370,6 +372,23 @@ def when_supplier_tries_to_change_password_to_letters_only(
         context, supplier_alias, new=True, letters_only=True)
 
 
-@when('"{supplier_alias}" decides to add "{collaborator_alias}" as a collaborator')
-def when_owner_adds_a_collaborator(context, supplier_alias, collaborator_alias):
-    prof_add_collaborator(context, supplier_alias, collaborator_alias)
+@when('"{supplier_alias}" decides to add "{collaborator_aliases}" as a collaborator')
+def when_owner_adds_a_collaborator(
+        context, supplier_alias, collaborator_aliases):
+    prof_add_collaborator(context, supplier_alias, collaborator_aliases)
+
+
+@when('"{collaborator_alias}" confirms that he wants to be added to the company "{company_alias}" Find a Buyer profile')
+@when('"{collaborator_alias}" confirms that she wants to be added to the company "{company_alias}" Find a Buyer profile')
+def when_collaborator_confirms_the_collaboration_request(
+        context, collaborator_alias, company_alias):
+    fab_confirm_collaboration_request(
+        context, collaborator_alias, company_alias)
+
+
+@when('"{collaborator_alias}" opens the invitation from company "{company_alias}", creates a SSO/great.gov.uk account and confirms that he wants to be added to the FAB profile')
+@when('"{collaborator_alias}" opens the invitation from company "{company_alias}", creates a SSO/great.gov.uk account and confirms that she wants to be added to the FAB profile')
+def when_collaborator_creates_sso_account_and_confirms_email(
+        context, collaborator_alias, company_alias):
+    fab_collaborator_create_sso_account_and_confirm_email(
+        context, collaborator_alias, company_alias)

@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 """SSO - Registration page"""
 import logging
-from urllib.parse import quote
-from urllib.parse import urljoin
+from urllib.parse import quote, urljoin
 
 from requests import Response, Session
-
 from tests import get_absolute_url
 from tests.functional.utils.context_utils import Actor, Company
 from tests.functional.utils.request import Method, check_response, make_request
@@ -34,15 +32,17 @@ def should_be_here(response: Response):
     logging.debug("Successfully got to the SSO Registration page")
 
 
-def go_to(session: Session) -> Response:
-    """Go to the SSO Registration page.
-
-    :param session: Supplier session object
-    :return: response object
-    """
-    headers = {"Referer": get_absolute_url("ui-buyer:landing")}
+def go_to(
+        session: Session, *, next: str = None, referer: str = None) -> Response:
+    """Go to the SSO Registration page."""
+    referer = referer or get_absolute_url("ui-buyer:landing")
+    if next:
+        url = urljoin(URL, "?next={}".format(next))
+    else:
+        url = URL
+    headers = {"Referer": referer}
     response = make_request(
-        Method.GET, URL, session=session, headers=headers)
+        Method.GET, url, session=session, headers=headers)
     should_be_here(response)
     return response
 
@@ -77,15 +77,14 @@ def submit(actor: Actor, company: Company, exported: bool) -> Response:
     return response
 
 
-def submit_no_company(actor: Actor) -> Response:
+def submit_no_company(
+        actor: Actor, *, next: str = None, referer: str = URL) -> Response:
     """Will submit the SSO Registration form without company's details.
 
     Used when Supplier creates a SSO/great.gov.uk account first.
-
-    :param actor: a namedtuple with Actor details
     """
     session = actor.session
-    headers = {"Referer": URL}
+    headers = {"Referer": referer}
     data = {
         "csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
         "email": actor.email,
@@ -94,6 +93,8 @@ def submit_no_company(actor: Actor) -> Response:
         "password2": actor.password,
         "terms_agreed": "on",
     }
+    if next:
+        data["next"] = next
 
     response = make_request(
         Method.POST, URL, session=session, headers=headers, data=data)
