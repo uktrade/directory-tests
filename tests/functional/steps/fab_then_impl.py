@@ -38,11 +38,13 @@ from tests.functional.utils.generic import (
     detect_page_language,
     extract_csrf_middleware_token,
     extract_link_with_invitation_for_collaboration,
+    extract_link_with_ownership_transfer_request,
     extract_logo_url,
     extract_plain_text_payload,
     find_mail_gun_events,
     get_language_code,
     get_number_of_search_result_pages,
+    mailgun_find_email_with_ownership_transfer_request,
     mailgun_find_email_with_request_for_collaboration,
     surround
 )
@@ -50,7 +52,7 @@ from tests.functional.utils.gov_notify import (
     get_password_reset_link,
     get_verification_link
 )
-from tests.functional.utils.request import make_request, Method
+from tests.functional.utils.request import Method, make_request
 from tests.settings import (
     FAS_LOGO_PLACEHOLDER_IMAGE,
     FAS_MESSAGE_FROM_BUYER_SUBJECT,
@@ -852,7 +854,6 @@ def sso_should_get_request_for_collaboration_email(
             context, actor, company)
         raw_message_payload = mailgun_response["body-mime"]
         email_message = email.message_from_string(raw_message_payload)
-        # plain_text_message = email_message.get_payload()[0].get_payload()
         payload = extract_plain_text_payload(email_message)
         link = extract_link_with_invitation_for_collaboration(payload)
         context.update_actor(
@@ -900,3 +901,18 @@ def sud_should_not_see_options_to_manage_users(
     sud_ui_find_a_buyer.should_not_see_options_to_manage_users(
         context.response)
     logging.debug("%s can't see options to control user accounts", actor_alias)
+
+
+def fab_should_get_request_for_becoming_owner(
+        context: Context, new_owner_alias: str, company_alias: str):
+    actor = context.get_actor(new_owner_alias)
+    company = context.get_company(company_alias)
+    mailgun_response = mailgun_find_email_with_ownership_transfer_request(
+        context, actor, company)
+    raw_message_payload = mailgun_response["body-mime"]
+    email_message = email.message_from_string(raw_message_payload)
+    payload = extract_plain_text_payload(email_message)
+    link = extract_link_with_ownership_transfer_request(payload)
+    context.update_actor(
+        new_owner_alias, ownership_request_link=link,
+        company_alias=company_alias)

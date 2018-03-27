@@ -9,6 +9,7 @@ from tests.functional.steps.fab_then_impl import (
     fab_no_links_to_online_profiles_are_visible,
     fab_profile_is_verified,
     fab_should_be_asked_about_verification_form,
+    fab_should_get_request_for_becoming_owner,
     fab_should_see_all_case_studies,
     fab_should_see_case_study_error_message,
     fab_should_see_company_details,
@@ -389,3 +390,10 @@ def then_actor_should_see_options_to_manage_account_users(
 def then_actor_should_not_see_options_to_manage_account_users(
         context: Context, actor_alias: str):
     sud_should_not_see_options_to_manage_users(context, actor_alias)
+
+
+@then('"{new_owner_alias}" should receive an email with a request for becoming the owner of the company "{company_alias}" profile')
+def then_actor_should_receive_email_with_transfer_account_ownership_request(
+        context, new_owner_alias, company_alias):
+    fab_should_get_request_for_becoming_owner(
+        context, new_owner_alias, company_alias)
