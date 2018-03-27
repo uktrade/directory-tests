@@ -8,7 +8,6 @@ import asyncio
 import sys
 from argparse import Namespace
 from asyncio import Semaphore
-from pprint import pprint
 from typing import List
 
 import async_timeout
