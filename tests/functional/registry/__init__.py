@@ -31,7 +31,9 @@ from tests.functional.pages import (
     sud_ui_find_a_buyer,
     sud_ui_export_opportunities,
     fab_ui_account_add_collaborator,
-    fab_ui_confim_your_collaboration
+    fab_ui_confim_your_collaboration,
+    fab_ui_account_transfer_ownership,
+    fab_ui_account_confrim_password
 )
 
 from tests import get_absolute_url
@@ -223,7 +225,15 @@ FAB_PAGE_REGISTRY = {
     "fab confirm you want to be added to the profile": {
         "url": None,
         "po": fab_ui_confim_your_collaboration
-    }
+    },
+    "fab transfer ownership": {
+        "url": fab_ui_account_transfer_ownership.URL,
+        "po": fab_ui_account_transfer_ownership
+    },
+    "fab confirm password": {
+        "url": fab_ui_account_confrim_password.URL,
+        "po": fab_ui_account_confrim_password
+    },
 }
 
 SUD_PAGE_REGISTRY = {
