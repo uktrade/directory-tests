@@ -52,6 +52,7 @@ urls = {
     'ui-buyer:company-edit-contact': 'company-profile/edit/contact/',
     'ui-buyer:company-edit-social-media': 'company-profile/edit/social-media/',
     'ui-buyer:account-add-collaborator': 'account/add-collaborator/',
+    'ui-buyer:account-remove-collaborator': 'account/remove-collaborator/',
     'ui-buyer:account-transfer-ownership': 'account/transfer/',
     'ui-buyer:account-confirm-password': 'account/transfer/',
     'ui-buyer:account-confirm-ownership-transfer': 'account/transfer/accept/?invite_key=',

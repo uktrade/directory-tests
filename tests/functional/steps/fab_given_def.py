@@ -33,12 +33,12 @@ from tests.functional.steps.fab_then_impl import (
     sso_should_get_request_for_collaboration_email
 )
 from tests.functional.steps.fab_when_impl import (
+    fab_add_collaborator,
     fab_confirm_collaboration_request,
     fab_open_collaboration_request_link,
     fab_transfer_ownership,
     go_to_page,
     prof_add_case_study,
-    fab_add_collaborator,
     prof_add_online_profiles,
     prof_set_company_description,
     prof_sign_out_from_fab,
