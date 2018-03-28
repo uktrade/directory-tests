@@ -22,6 +22,7 @@ from tests.functional.pages import (
     fab_ui_case_study_basic,
     fab_ui_case_study_images,
     fab_ui_confim_your_collaboration,
+    fab_ui_confim_your_ownership,
     fab_ui_confirm_company,
     fab_ui_confirm_export_status,
     fab_ui_confirm_identity,
@@ -51,6 +52,7 @@ from tests.functional.pages import (
 )
 from tests.functional.registry import get_fabs_page_object, get_fabs_page_url
 from tests.functional.steps.fab_then_impl import (
+    fab_should_get_request_for_becoming_owner,
     reg_should_get_verification_email
 )
 from tests.functional.utils.context_utils import Company
@@ -2089,3 +2091,62 @@ def fab_send_transfer_ownership_request(
         "%s successfully sent a account ownership transfer request to %s %s",
         supplier_alias, new_owner_alias, new_owner.email
     )
+
+
+def fab_open_transfer_ownership_request_link(
+        context: Context, new_owner_alias: str, company_alias: str):
+    new_owner = context.get_actor(new_owner_alias)
+    session = new_owner.session
+    link = new_owner.ownership_request_link
+
+    response = fab_ui_confim_your_ownership.open(session, link)
+    context.response = response
+    fab_ui_confim_your_ownership.should_be_here(response)
+    logging.debug(
+        "%s opened the transfer ownership request link from company %s",
+        new_owner_alias, company_alias)
+
+
+def fab_confirm_account_ownership_request(
+        context: Context, new_owner_alias: str, company_alias: str):
+    new_owner = context.get_actor(new_owner_alias)
+    session = new_owner.session
+    link = new_owner.ownership_request_link
+
+    # Step 1 - confirm that Supplier is on SSO Confirm Your Email page
+    fab_ui_confim_your_ownership.should_be_here(context.response)
+    logging.debug(
+        "New Owner %s is on the FAB Confirm your request for ownership page",
+        new_owner_alias
+    )
+
+    # Step 2 - extract & store CSRF token & form action value
+    # Form Action Value is required to successfully confirm email
+    token = extract_csrf_middleware_token(context.response)
+    context.update_actor(new_owner_alias, csrfmiddlewaretoken=token)
+    form_action_value = extract_form_action(context.response)
+    context.form_action_value = form_action_value
+
+    # Step 3 - submit the form
+    response = fab_ui_confim_your_ownership.confirm(session, token, link)
+    context.response = response
+
+    fab_ui_profile.should_be_here(response)
+
+    context.update_actor(new_owner_alias, company_alias=company_alias)
+    logging.debug(
+        "%s confirmed that he/she wants to be added to the profile for %s",
+        new_owner_alias, company_alias)
+
+
+def fab_transfer_ownership(
+        context: Context, supplier_alias: str, company_alias: str,
+        new_owner_alias: str):
+    fab_send_transfer_ownership_request(
+        context, supplier_alias, company_alias, new_owner_alias)
+    fab_should_get_request_for_becoming_owner(
+        context, new_owner_alias, company_alias)
+    fab_open_transfer_ownership_request_link(
+        context, new_owner_alias, company_alias)
+    fab_confirm_account_ownership_request(
+        context, new_owner_alias, company_alias)
