@@ -6,12 +6,14 @@ from tests.functional.steps.fab_when_impl import (
     bp_provide_company_details,
     bp_select_random_sector_and_export_to_country,
     bp_verify_identity_with_letter,
+    fab_add_collaborator,
     fab_attempt_to_add_case_study,
     fab_choose_to_verify_with_code,
     fab_collaborator_create_sso_account_and_confirm_email,
     fab_confirm_collaboration_request,
     fab_go_to_letter_verification,
     fab_provide_company_details,
+    fab_remove_collaborators,
     fab_select_preferred_countries_of_export,
     fab_send_transfer_ownership_request,
     fab_submit_verification_code,
@@ -35,7 +37,6 @@ from tests.functional.steps.fab_when_impl import (
     go_to_page,
     go_to_pages,
     prof_add_case_study,
-    fab_add_collaborator,
     prof_add_invalid_online_profiles,
     prof_add_online_profiles,
     prof_attempt_to_sign_in_to_fab,
@@ -408,3 +409,10 @@ def when_supplier_transfers_the_account_ownership(
         context, supplier_alias, company_alias, new_owner_alias):
     fab_transfer_ownership(
         context, supplier_alias, company_alias, new_owner_alias)
+
+
+@when('"{supplier_alias}" removes "{collaborators_aliases}" from the list of collaborators to the company "{company_alias}"')
+def when_supplier_removes_collaborators(
+        context, supplier_alias, collaborators_aliases, company_alias):
+    fab_remove_collaborators(
+        context, supplier_alias, collaborators_aliases, company_alias)
