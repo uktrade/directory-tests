@@ -55,7 +55,8 @@ from tests.functional.steps.fab_then_impl import (
     sso_should_get_request_for_collaboration_email,
     sso_should_see_invalid_password_reset_link_error,
     sud_should_not_see_options_to_manage_users,
-    sud_should_see_options_to_manage_users
+    sud_should_see_options_to_manage_users,
+    should_not_be_able_to_access_page
 )
 from tests.functional.steps.fab_when_impl import (
     fas_feedback_request_should_be_submitted,
@@ -405,3 +406,9 @@ def then_supplier_should_not_see_collaborator(
         context, supplier_alias, collaborators_aliases):
     fab_should_not_see_collaborator(
         context, supplier_alias, collaborators_aliases)
+
+
+@then('"{collaborator_alias}" should not be able to access "{page_name}" page')
+def then_collaborator_should_not_be_able_to_access_page(
+        context, collaborator_alias, page_name):
+    should_not_be_able_to_access_page(context, collaborator_alias, page_name)

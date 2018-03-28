@@ -930,3 +930,19 @@ def fab_should_not_see_collaborator(
         collaborator = context.get_actor(collaborator_alias)
         fab_ui_account_remove_collaborator.should_not_see_collaborator(
             response, collaborator.email)
+
+
+def should_not_be_able_to_access_page(
+        context: Context, collaborator_alias: str, page_name: str):
+    collaborator = context.get_actor(collaborator_alias)
+    page_object = get_fabs_page_object(page_name)
+    response = page_object.go_to(collaborator.session)
+    try:
+        page_object.should_be_here(response)
+        raise Exception(
+            "%s was able to access '%' page", collaborator_alias, page_name)
+    except AssertionError:
+        logging.debug(
+            "As expected %s could not access '%s' page. Current URL is: %s",
+            collaborator_alias, page_name, response.url
+        )
