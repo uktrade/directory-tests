@@ -2042,7 +2042,7 @@ def fab_collaborator_create_sso_account_and_confirm_email(
         context, collaborator_alias, company_alias, open_invitation_link=False)
 
 
-def profile_send_transfer_ownership_request(
+def fab_send_transfer_ownership_request(
         context: Context, supplier_alias: str, company_alias: str,
         new_owner_alias: str):
     """

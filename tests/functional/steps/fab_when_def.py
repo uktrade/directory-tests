@@ -13,6 +13,7 @@ from tests.functional.steps.fab_when_impl import (
     fab_go_to_letter_verification,
     fab_provide_company_details,
     fab_select_preferred_countries_of_export,
+    fab_send_transfer_ownership_request,
     fab_submit_verification_code,
     fab_update_case_study,
     fas_browse_suppliers_by_company_sectors,
@@ -44,7 +45,6 @@ from tests.functional.steps.fab_when_impl import (
     prof_update_company_details,
     prof_verify_company,
     prof_view_published_profile,
-    profile_send_transfer_ownership_request,
     reg_confirm_company_selection,
     reg_confirm_export_status,
     reg_create_sso_account,
@@ -395,8 +395,8 @@ def when_collaborator_creates_sso_account_and_confirms_email(
         context, collaborator_alias, company_alias)
 
 
-@when('"{supplier_alias}" decides to transfer the ownership of company\'s "{company_alias}" Find a Buyer profile to "{collaborator_alias}"')
+@when('"{supplier_alias}" decides to transfer the ownership of company\'s "{company_alias}" Find a Buyer profile to "{new_owner_alias}"')
 def when_supplier_decides_to_transfer_profile_ownership(
-        context, supplier_alias, company_alias, collaborator_alias):
-    profile_send_transfer_ownership_request(
-        context, supplier_alias, company_alias, collaborator_alias)
+        context, supplier_alias, company_alias, new_owner_alias):
+    fab_send_transfer_ownership_request(
+        context, supplier_alias, company_alias, new_owner_alias)
