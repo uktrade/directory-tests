@@ -1910,7 +1910,7 @@ def finish_registration_after_flagging_as_verified(
     context.response = response
 
 
-def prof_add_collaborator(
+def fab_add_collaborator(
         context: Context, supplier_alias: str, collaborator_aliases: str):
 
     aliases = [alias.strip() for alias in collaborator_aliases.split(",")]

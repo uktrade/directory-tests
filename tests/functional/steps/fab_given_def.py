@@ -38,7 +38,7 @@ from tests.functional.steps.fab_when_impl import (
     fab_transfer_ownership,
     go_to_page,
     prof_add_case_study,
-    prof_add_collaborator,
+    fab_add_collaborator,
     prof_add_online_profiles,
     prof_set_company_description,
     prof_sign_out_from_fab,
@@ -229,7 +229,7 @@ def given_actor_with_or_without_sso_account(
 @given('"{supplier_alias}" added "{collaborator_aliases}" as a collaborator')
 def given_supplier_added_a_collaborator(
         context, supplier_alias, collaborator_aliases):
-    prof_add_collaborator(context, supplier_alias, collaborator_aliases)
+    fab_add_collaborator(context, supplier_alias, collaborator_aliases)
 
 
 @given('"{supplier_alias}" has received an email with a request to confirm that he\'s been added to company "{company_alias}" Find a Buyer profile')

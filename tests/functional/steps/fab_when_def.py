@@ -35,7 +35,7 @@ from tests.functional.steps.fab_when_impl import (
     go_to_page,
     go_to_pages,
     prof_add_case_study,
-    prof_add_collaborator,
+    fab_add_collaborator,
     prof_add_invalid_online_profiles,
     prof_add_online_profiles,
     prof_attempt_to_sign_in_to_fab,
@@ -377,7 +377,7 @@ def when_supplier_tries_to_change_password_to_letters_only(
 @when('"{supplier_alias}" decides to add "{collaborator_aliases}" as a collaborator')
 def when_owner_adds_a_collaborator(
         context, supplier_alias, collaborator_aliases):
-    prof_add_collaborator(context, supplier_alias, collaborator_aliases)
+    fab_add_collaborator(context, supplier_alias, collaborator_aliases)
 
 
 @when('"{collaborator_alias}" confirms that he wants to be added to the company "{company_alias}" Find a Buyer profile')
