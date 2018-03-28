@@ -32,3 +32,7 @@ def remove(session: Session, token: str, email: str) -> Response:
     headers = {"Referer": URL}
     return make_request(
         Method.POST, URL, session=session, data=data, headers=headers)
+
+
+def should_not_see_collaborator(response: Response, collaborator_email: str):
+    check_response(response, 200, unexpected_strings=[collaborator_email])
