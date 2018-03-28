@@ -35,6 +35,7 @@ from tests.functional.steps.fab_then_impl import (
 from tests.functional.steps.fab_when_impl import (
     fab_confirm_collaboration_request,
     fab_open_collaboration_request_link,
+    fab_transfer_ownership,
     go_to_page,
     prof_add_case_study,
     prof_add_collaborator,
@@ -257,3 +258,10 @@ def given_collaborator_confirms_the_collaboration_request(
         context, collaborator_alias, company_alias):
     fab_confirm_collaboration_request(
         context, collaborator_alias, company_alias)
+
+
+@given('"{supplier_alias}" transferred the ownership of company\'s "{company_alias}" Find a Buyer profile to "{new_owner_alias}"')
+def given_supplier_transfers_the_account_ownership(
+        context, supplier_alias, company_alias, new_owner_alias):
+    fab_transfer_ownership(
+        context, supplier_alias, company_alias, new_owner_alias)
