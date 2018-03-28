@@ -3,9 +3,11 @@
 import logging
 
 from requests import Response, Session
+from tests import get_absolute_url
 from tests.functional.utils.generic import assertion_msg
 from tests.functional.utils.request import Method, check_response, make_request
 
+URL = get_absolute_url("ui-buyer:account-confirm-ownership-transfer")
 EXPECTED_STRINGS = [
     "Transfer account", "Do you accept transfer of the company profile for",
     "Yes", "No"

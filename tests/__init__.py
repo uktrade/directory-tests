@@ -54,6 +54,7 @@ urls = {
     'ui-buyer:account-add-collaborator': 'account/add-collaborator/',
     'ui-buyer:account-transfer-ownership': 'account/transfer/',
     'ui-buyer:account-confirm-password': 'account/transfer/',
+    'ui-buyer:account-confirm-ownership-transfer': 'account/transfer/accept/?invite_key=',
 
     # UI-SUPPLIER
     'ui-supplier:landing': '',

@@ -33,7 +33,8 @@ from tests.functional.pages import (
     fab_ui_account_add_collaborator,
     fab_ui_confim_your_collaboration,
     fab_ui_account_transfer_ownership,
-    fab_ui_account_confrim_password
+    fab_ui_account_confrim_password,
+    fab_ui_confim_your_ownership
 )
 
 from tests import get_absolute_url
@@ -233,6 +234,10 @@ FAB_PAGE_REGISTRY = {
     "fab confirm password": {
         "url": fab_ui_account_confrim_password.URL,
         "po": fab_ui_account_confrim_password
+    },
+    "": {
+        "url": fab_ui_confim_your_ownership.URL,
+        "po": fab_ui_confim_your_ownership
     },
 }
 
