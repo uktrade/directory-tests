@@ -164,7 +164,6 @@ Feature: Multi-user accounts
       | does not have        | an unverified |
 
 
-  @wip
   @ED-3564
   @multi-user
   @remove-collaborator
@@ -180,7 +179,6 @@ Feature: Multi-user accounts
     And "Annette Geissinger" should not be able to access "FAB company profile" page
 
 
-  @wip
   @ED-3565
   @multi-user
   @remove-collaborator
