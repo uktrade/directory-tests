@@ -10,6 +10,7 @@ from tests.functional.steps.fab_then_impl import (
     fab_profile_is_verified,
     fab_should_be_asked_about_verification_form,
     fab_should_get_request_for_becoming_owner,
+    fab_should_not_see_collaborator,
     fab_should_see_all_case_studies,
     fab_should_see_case_study_error_message,
     fab_should_see_company_details,
@@ -397,3 +398,10 @@ def then_actor_should_receive_email_with_transfer_account_ownership_request(
         context, new_owner_alias, company_alias):
     fab_should_get_request_for_becoming_owner(
         context, new_owner_alias, company_alias)
+
+
+@then('"{supplier_alias}" should not see "{collaborators_aliases}" among the users associated with company\'s profile')
+def then_supplier_should_not_see_collaborator(
+        context, supplier_alias, collaborators_aliases):
+    fab_should_not_see_collaborator(
+        context, supplier_alias, collaborators_aliases)

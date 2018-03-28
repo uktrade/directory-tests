@@ -11,6 +11,7 @@ from retrying import retry
 from scrapy import Selector
 from tests import get_absolute_url
 from tests.functional.pages import (
+    fab_ui_account_remove_collaborator,
     fab_ui_build_profile_basic,
     fab_ui_confirm_identity,
     fab_ui_edit_online_profiles,
@@ -916,3 +917,16 @@ def fab_should_get_request_for_becoming_owner(
     context.update_actor(
         new_owner_alias, ownership_request_link=link,
         company_alias=company_alias)
+
+
+def fab_should_not_see_collaborator(
+        context: Context, supplier_alias: str, collaborators_aliases: str):
+    aliases = [alias.strip() for alias in collaborators_aliases.split(",")]
+    supplier = context.get_actor(supplier_alias)
+    response = fab_ui_account_remove_collaborator.go_to(supplier.session)
+    context.response = response
+
+    for collaborator_alias in aliases:
+        collaborator = context.get_actor(collaborator_alias)
+        fab_ui_account_remove_collaborator.should_not_see_collaborator(
+            response, collaborator.email)
