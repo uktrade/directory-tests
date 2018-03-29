@@ -53,7 +53,6 @@ from tests.functional.utils.gov_notify import (
     get_password_reset_link,
     get_verification_link
 )
-from tests.functional.utils.request import Method, make_request
 from tests.settings import (
     FAS_LOGO_PLACEHOLDER_IMAGE,
     FAS_MESSAGE_FROM_BUYER_SUBJECT,
@@ -67,9 +66,6 @@ def reg_sso_account_should_be_created(response: Response, supplier_alias: str):
     Note:
     It's a very crude check, as it will only check if the response body
     contains selected phrases.
-
-    :param response: response object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
     """
     sso_ui_verify_your_email.should_be_here(response)
     logging.debug(
@@ -77,11 +73,7 @@ def reg_sso_account_should_be_created(response: Response, supplier_alias: str):
 
 
 def reg_should_get_verification_email(context: Context, alias: str):
-    """Will check if the Supplier received an email verification message.
-
-    :param context: behave `context` object
-    :param alias: alias of the Actor used in the scope of the scenario
-    """
+    """Will check if the Supplier received an email verification message."""
     logging.debug("Searching for an email verification message...")
     actor = context.get_actor(alias)
     link = get_verification_link(actor.email)
@@ -156,11 +148,7 @@ def sso_should_be_signed_in_to_sso_account(
 
 def sso_should_be_signed_out_from_sso_account(
         context: Context, supplier_alias: str):
-    """Sign out from SSO.
-
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    """
+    """Sign out from SSO."""
     actor = context.get_actor(supplier_alias)
     session = actor.session
 
@@ -206,22 +194,14 @@ def prof_should_be_told_about_invalid_links(
 
 
 def fab_should_see_all_case_studies(context: Context, supplier_alias: str):
-    """Check if Supplier can see all case studies on FAB profile page.
-
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    """
+    """Check if Supplier can see all case studies on FAB profile page."""
     actor = context.get_actor(supplier_alias)
     case_studies = context.get_company(actor.company_alias).case_studies
     fab_ui_profile.should_see_case_studies(case_studies, context.response)
 
 
 def fas_should_see_all_case_studies(context: Context, supplier_alias: str):
-    """Check if Supplier can see all case studies on FAS profile page.
-
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    """
+    """Check if Supplier can see all case studies on FAS profile page."""
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
     response = fas_ui_profile.go_to(actor.session, company.number)
@@ -235,9 +215,6 @@ def fas_should_see_all_case_studies(context: Context, supplier_alias: str):
 def prof_should_see_logo_picture(context: Context, supplier_alias: str):
     """Will check if Company's Logo visible on FAB profile page is the same as
     the uploaded one.
-
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
     """
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
@@ -253,11 +230,7 @@ def prof_should_see_logo_picture(context: Context, supplier_alias: str):
 
 
 def fas_should_see_png_logo_thumbnail(context: Context, supplier_alias: str):
-    """Will check if Company's PNG thumbnail logo visible on FAS profile.
-
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    """
+    """Will check if Company's PNG thumbnail logo visible on FAS profile."""
     actor = context.get_actor(supplier_alias)
     session = actor.session
     company = context.get_company(actor.company_alias)
@@ -284,9 +257,6 @@ def fas_should_see_different_png_logo_thumbnail(
         context: Context, actor_alias: str):
     """Will check if Company's Logo visible on FAS profile page is the same as
     the one uploaded on FAB.
-
-    :param context: behave `context` object
-    :param actor_alias: alias of the Actor used in the scope of the scenario
     """
     actor = context.get_actor(actor_alias)
     session = actor.session
@@ -319,9 +289,6 @@ def prof_all_unsupported_files_should_be_rejected(
     NOTE:
     This require `context.rejections` to be set.
     It should be a list of bool values.
-
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
     """
     assert hasattr(context, "rejections")
     with assertion_msg(
@@ -333,11 +300,7 @@ def prof_all_unsupported_files_should_be_rejected(
 
 
 def fab_should_see_online_profiles(context: Context, supplier_alias: str):
-    """Check if Supplier can see all online Profiles on FAB Profile page.
-
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    """
+    """Check if Supplier can see all online Profiles on FAB Profile page."""
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
     response = context.response
@@ -347,9 +310,6 @@ def fab_should_see_online_profiles(context: Context, supplier_alias: str):
 def fab_no_links_to_online_profiles_are_visible(
         context: Context, supplier_alias: str):
     """Supplier should't see any links to Online Profiles on FAB Profile page.
-
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
     """
     response = context.response
     fab_ui_profile.should_not_see_online_profiles(response)
@@ -361,9 +321,6 @@ def fab_no_links_to_online_profiles_are_visible(
 def fas_no_links_to_online_profiles_are_visible(
         context: Context, supplier_alias: str):
     """Supplier should't see any links to Online Profiles on FAS Profile page.
-
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
     """
     response = context.response
     fas_ui_profile.should_not_see_online_profiles(response)
@@ -373,22 +330,14 @@ def fas_no_links_to_online_profiles_are_visible(
 
 
 def fab_profile_is_verified(context: Context, supplier_alias: str):
-    """Check if Supplier was told that Company's profile is verified.
-
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    """
+    """Check if Supplier was told that Company's profile is verified."""
     response = context.response
     fab_ui_profile.should_see_profile_is_verified(response)
     logging.debug("%s was told that the profile is verified.", supplier_alias)
 
 
 def fab_should_see_company_details(context: Context, supplier_alias: str):
-    """Supplier should see all expected Company details of FAB profile page.
-
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    """
+    """Supplier should see all expected details of FAB profile page."""
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
     response = context.response
@@ -399,22 +348,14 @@ def fab_should_see_company_details(context: Context, supplier_alias: str):
 
 def profile_supplier_should_be_on_landing_page(
         context: Context, supplier_alias: str):
-    """Check if Supplier is on Profile Landing page.
-
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    """
+    """Check if Supplier is on Profile Landing page."""
     response = context.response
     profile_ui_landing.should_be_here(response)
     logging.debug("%s got to the SSO landing page.", supplier_alias)
 
 
 def fas_should_see_company_details(context: Context, supplier_alias: str):
-    """Supplier should see all expected Company details of FAS profile page.
-
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    """
+    """Supplier should see all expected details of FAS profile page."""
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
     session = actor.session
@@ -539,10 +480,6 @@ def fas_should_find_with_company_details(
 
     NOTE:
     This step requires the search_results dict to be stored in context
-
-    :param context: behave `context` object
-    :param buyer_alias: alias of the Actor used in the scope of the scenario
-    :param company_alias: alias of the Company used in the scenario
     """
     assert hasattr(context, "search_results")
     company = context.get_company(company_alias)
@@ -613,11 +550,7 @@ def fas_pages_should_be_in_selected_language(
 
 
 def fas_should_find_all_sought_companies(context: Context, buyer_alias: str):
-    """Check if all Buyer was able to find Supplier using all provided terms.
-
-    :param context: behave `context` object
-    :param buyer_alias: alias of the Actor used in the scope of the scenario
-    """
+    """Check if Buyer was able to find Supplier using all provided terms."""
     with assertion_msg(
             "Context has no required `search_details` dict. Please check if "
             "one of previous steps sets it correctly."):

@@ -64,9 +64,6 @@ def unauthenticated_supplier(supplier_alias: str) -> Actor:
         registration or signing-in.
      * initialize `requests` Session object that allows you to keep the cookies
         across multiple requests
-
-    :param supplier_alias: alias of the Actor used within the scenario's scope
-    :return: an Actor namedtuple with all required details
     """
     session = Session()
     email = ("test+{}{}@directory.uktrade.io"
@@ -88,9 +85,6 @@ def unauthenticated_buyer(buyer_alias: str) -> Actor:
      * set rudimentary Actor details, all omitted ones will default to None
      * initialize `requests` Session object that allows you to keep the cookies
         across multiple requests
-
-    :param buyer_alias: alias of the Actor used within the scenario's scope
-    :return: an Actor namedtuple with all required details
     """
     session = Session()
     email = ("test+buyer_{}{}@directory.uktrade.io"
@@ -278,12 +272,7 @@ def sso_get_password_reset_link(context: Context, supplier_alias: str):
 
 def reg_create_verified_sso_account_associated_with_company(
         context: Context, supplier_alias: str, company_alias: str):
-    """Select a Company, create a SSO account for it, and verify the email.
-
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used within the scenario's scope
-    :param company_alias: alias of the Actor's Company
-    """
+    """Select a Company, create a SSO account for it, and verify the email."""
     reg_create_sso_account_associated_with_company(
         context, supplier_alias, company_alias)
     supplier = context.get_actor(supplier_alias)

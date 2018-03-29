@@ -103,10 +103,6 @@ def select_random_company(
 
     Once a matching company is found, then it's data will be stored in:
         context.scenario_data.companies[]
-
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :param company_alias: alias of the company used in the scenario
     """
     actor = context.get_actor(supplier_alias)
     session = actor.session
@@ -151,12 +147,7 @@ def select_random_company(
 
 def reg_confirm_company_selection(
         context: Context, supplier_alias: str, company_alias: str):
-    """Will confirm that the selected company is the right one.
-
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :param company_alias: alias of the company used in the scenario
-    """
+    """Will confirm that the selected company is the right one."""
     actor = context.get_actor(supplier_alias)
     token = actor.csrfmiddlewaretoken
     has_sso_account = actor.has_sso_account
@@ -182,13 +173,7 @@ def reg_confirm_company_selection(
 
 
 def reg_supplier_is_not_ready_to_export(context: Context, supplier_alias: str):
-    """Supplier decides that her/his company is not ready to export.
-
-    :param context: behave `context` object
-    :type context: behave.runner.Context
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :type supplier_alias: str
-    """
+    """Supplier decides that her/his company is not ready to export."""
     actor = context.get_actor(supplier_alias)
     session = actor.session
     token = actor.csrfmiddlewaretoken
@@ -205,10 +190,6 @@ def reg_supplier_is_not_ready_to_export(context: Context, supplier_alias: str):
 def reg_confirm_export_status(
         context: Context, supplier_alias: str, exported: bool):
     """Will confirm the current export status of selected unregistered company.
-
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :param exported: True is exported in the past, False if not
     """
     actor = context.get_actor(supplier_alias)
     has_sso_account = actor.has_sso_account
@@ -236,13 +217,6 @@ def reg_create_sso_account(
     NOTE:
     Will use credentials randomly generated at Actor's initialization.
     It will also store final response in `context`
-
-    :param context: behave `context` object
-    :type context: behave.runner.Context
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :type supplier_alias: str
-    :param alias: alias of the company used in the scope of the scenario
-    :type alias: str
     """
     actor = context.get_actor(supplier_alias)
     company = context.get_company(company_alias)
@@ -255,11 +229,6 @@ def reg_create_sso_account(
 def reg_open_email_confirmation_link(context: Context, supplier_alias: str):
     """Given Supplier has received a message with email confirmation link
     Then Supplier has to click on that link.
-
-    :param context: behave `context` object
-    :type context: behave.runner.Context
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :type supplier_alias: str
     """
     actor = context.get_actor(supplier_alias)
     session = actor.session
@@ -284,11 +253,6 @@ def reg_open_email_confirmation_link(context: Context, supplier_alias: str):
 def reg_supplier_confirms_email_address(context: Context, supplier_alias: str):
     """Given Supplier has clicked on the email confirmation link, Suppliers has
     to confirm that the provided email address is the correct one.
-
-    :param context: behave `context` object
-    :type context: behave.runner.Context
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :type supplier_alias: str
     """
     actor = context.get_actor(supplier_alias)
     form_action_value = context.form_action_value
@@ -300,9 +264,6 @@ def reg_supplier_confirms_email_address(context: Context, supplier_alias: str):
 def bp_provide_company_details(context: Context, supplier_alias: str):
     """Build Profile - Provide company details: website (optional), keywords
     and number of employees.
-
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
     """
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
@@ -341,11 +302,6 @@ def bp_select_random_sector_and_export_to_country(
     NOTE:
     This will set `context.details` which will contain company details
     extracted from the page displayed after Supplier selects the sector.
-
-    :param context: behave `context` object
-    :type context: behave.runner.Context
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :type supplier_alias: str
     """
     actor = context.get_actor(supplier_alias)
     sector = choice(SECTORS)
@@ -363,11 +319,7 @@ def bp_select_random_sector_and_export_to_country(
 
 
 def bp_verify_identity_with_letter(context: Context, supplier_alias: str):
-    """Build Profile - verify identity with a physical letter.
-
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    """
+    """Build Profile - verify identity with a physical letter."""
     actor = context.get_actor(supplier_alias)
     session = actor.session
 
@@ -406,11 +358,6 @@ def prof_set_company_description(context: Context, supplier_alias: str):
     (*) it's quasi mandatory, because Supplier can actually go to the company
     verification page using the link provided in the letter without the need
     to set company description.
-
-    :param context: behave `context` object
-    :type context: behave.runner.Context
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :type supplier_alias: str
     """
     actor = context.get_actor(supplier_alias)
     session = actor.session
@@ -441,11 +388,6 @@ def prof_set_company_description(context: Context, supplier_alias: str):
 def prof_verify_company(context: Context, supplier_alias: str):
     """Will verify the company by submitting the verification code that is sent
     by post to the company's address.
-
-    :param context: behave `context` object
-    :type context: behave.runner.Context
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :type supplier_alias: str
     """
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
@@ -480,11 +422,6 @@ def prof_verify_company(context: Context, supplier_alias: str):
 def prof_view_published_profile(context: Context, supplier_alias: str):
     """Whilst being of FAB company profile page it will `click` on
     the `View published profile` link.
-
-    :param context: behave `context` object
-    :type context: behave.runner.Context
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :type supplier_alias: str
     """
     actor = context.get_actor(supplier_alias)
     session = actor.session
@@ -497,13 +434,7 @@ def prof_view_published_profile(context: Context, supplier_alias: str):
 
 
 def prof_attempt_to_sign_in_to_fab(context: Context, supplier_alias: str):
-    """Try to sign in to FAB as a Supplier without verified email address.
-
-    :param context: behave `context` object
-    :type context: behave.runner.Context
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :type supplier_alias: str
-    """
+    """Try to sign in to FAB as a Supplier without verified email address."""
     actor = context.get_actor(supplier_alias)
     session = actor.session
 
@@ -526,13 +457,7 @@ def prof_attempt_to_sign_in_to_fab(context: Context, supplier_alias: str):
 
 
 def prof_sign_out_from_fab(context: Context, supplier_alias: str):
-    """Sign out from Find a Buyer.
-
-    :param context: behave `context` object
-    :type context: behave.runner.Context
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :type supplier_alias: str
-    """
+    """Sign out from Find a Buyer."""
     actor = context.get_actor(supplier_alias)
     session = actor.session
 
@@ -599,9 +524,6 @@ def reg_create_standalone_unverified_sso_account(
 
     NOTE:
     There will be no association between this account and any company.
-
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
     """
     actor = context.get_actor(supplier_alias)
     session = actor.session
@@ -672,11 +594,6 @@ def sso_new_onwer_confirm_email_address(
 def sso_supplier_confirms_email_address(context: Context, supplier_alias: str):
     """Given Supplier has clicked on the email confirmation link, Suppliers has
     to confirm that the provided email address is the correct one.
-
-    :param context: behave `context` object
-    :type context: behave.runner.Context
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :type supplier_alias: str
     """
     actor = context.get_actor(supplier_alias)
     form_action_value = context.form_action_value
@@ -698,11 +615,6 @@ def sso_go_to_create_trade_profile(context: Context, supplier_alias: str):
     NOTE:
     It's assumed that Supplier already has a standalone SSO/great.gov.uk
     account
-
-    :param context: behave `context` object
-    :type context: behave.runner.Context
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :type supplier_alias: str
     """
     actor = context.get_actor(supplier_alias)
     session = actor.session
@@ -801,13 +713,7 @@ def prof_supplier_uploads_logo(
 
 def prof_to_upload_unsupported_logos(
         context: Context, supplier_alias: str, table: Table):
-    """Upload a picture and set it as Company's logo.
-
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :param table: context.table containing data table
-                  see: https://pythonhosted.org/behave/gherkin.html#table
-    """
+    """Upload a picture and set it as Company's logo."""
     actor = context.get_actor(supplier_alias)
     session = actor.session
     files = [row['file'] for row in table]
@@ -829,11 +735,6 @@ def prof_update_company_details(
     Passing `table_of_details` can be avoided as we already have access to
     `context` object, yet in order to be more explicit, we're making it
     a mandatory argument.
-
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :param table_of_details: context.table containing data table
-            see: https://pythonhosted.org/behave/gherkin.html#table
     """
     actor = context.get_actor(supplier_alias)
     session = actor.session
@@ -1076,14 +977,7 @@ def fab_update_case_study(
 def fas_search_using_company_details(
         context: Context, buyer_alias: str, company_alias: str, *,
         table_of_details: Table = None):
-    """Search for Company on FAS using it's all or selected details.
-
-    :param context: behave `context` object
-    :param buyer_alias: alias of the Actor used in the scope of the scenario
-    :param company_alias: alias of the Company used in the scenario
-    :param table_of_details: (optional) a table with selected company details
-                             which will be used in search
-    """
+    """Search for Company on FAS using it's all or selected details."""
     actor = context.get_actor(buyer_alias)
     session = actor.session
     company = context.get_company(company_alias)
@@ -1147,11 +1041,6 @@ def fas_view_pages_in_selected_language(
 
     NOTE:
     This will store a dict with all page views responses in context.views
-
-    :param context: behave `context` object
-    :param buyer_alias: alias of the Buyer Actor
-    :param pages_table: a table with FAS pages to view
-    :param language: expected language of the view FAS page content
     """
     pages = [row['page'] for row in pages_table]
     views = {}
@@ -1273,10 +1162,6 @@ def fas_search_with_product_service_keyword(
     * keyword
 
     NOTE: this will add a dictionary `search_results` to `context`
-
-    :param context: behave `context` object
-    :param buyer_alias: alias of the Buyer Actor
-    :param search_table: a table with FAS pages to view
     """
     actor = context.get_actor(buyer_alias)
     session = actor.session
@@ -1345,10 +1230,6 @@ def fab_provide_company_details(
     * Company namedtuple (with details used in the request)
     * response object
     * expected error message
-
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Supplier Actor
-    :param table: a table with company details to update & expected error msg
     """
     actor = context.get_actor(supplier_alias)
     original_details = context.get_company(actor.company_alias)
@@ -1783,11 +1664,7 @@ def sso_request_password_reset(context: Context, supplier_alias: str):
 
 
 def sso_sign_in(context: Context, supplier_alias: str):
-    """Sign in to standalone SSO account.
-
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Supplier Actor
-    """
+    """Sign in to standalone SSO account."""
     actor = context.get_actor(supplier_alias)
     next_param = get_absolute_url("profile:about")
     referer = get_absolute_url("profile:about")
