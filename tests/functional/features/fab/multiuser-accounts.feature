@@ -170,7 +170,9 @@ Feature: Multi-user accounts
   @fake-sso-email-verification
   Scenario: Account owner should be able to remove one account collaborator
     Given "Peter Alder" has created "an unverified" profile for randomly selected company "Y"
+    And "Annette Geissinger" "has" an SSO/great.gov.uk account
     And "Peter Alder" added "Annette Geissinger" as a collaborator
+    And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
     And "Annette Geissinger" confirmed that she wants to be added to the company "Y" Find a Buyer profile
 
     When "Peter Alder" removes "Annette Geissinger" from the list of collaborators to the company "Y"
@@ -185,7 +187,11 @@ Feature: Multi-user accounts
   @fake-sso-email-verification
   Scenario: Account owner should be able to remove multiple account collaborators
     Given "Peter Alder" has created "an unverified" profile for randomly selected company "Y"
+    And "Annette Geissinger, Betty Jones, James Weir" "have" an SSO/great.gov.uk account
     And "Peter Alder" added "Annette Geissinger, Betty Jones, James Weir" as a collaborator
+    And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
+    And "Betty Jones" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
+    And "James Weir" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
     And "Annette Geissinger" confirmed that she wants to be added to the company "Y" Find a Buyer profile
     And "Betty Jones" confirmed that she wants to be added to the company "Y" Find a Buyer profile
     And "James Weir" confirmed that he wants to be added to the company "Y" Find a Buyer profile
@@ -204,7 +210,7 @@ Feature: Multi-user accounts
   @verification
   @letter
   @fake-sso-email-verification
-  Scenario: Collaborators should be able to set cthe company description and verify company profile with verification code
+  Scenario: Collaborators should be able to set the company description and verify company profile with verification code
     Given "Peter Alder" has created "an unverified" profile for randomly selected company "Y"
     And "Annette Geissinger" "has" an SSO/great.gov.uk account
     And "Peter Alder" added "Annette Geissinger" as a collaborator
