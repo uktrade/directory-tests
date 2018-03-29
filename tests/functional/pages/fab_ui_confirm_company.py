@@ -48,7 +48,8 @@ def confirm_company_selection(
         "enrolment_view-current_step": "company",
         "company-company_name": company.title,
         "company-company_number": company.number,
-        "company-company_address": company.companies_house_details["address_snippet"]
+        "company-company_address":
+            company.companies_house_details["address_snippet"]
     }
 
     return make_request(

@@ -10,8 +10,8 @@ from tests.functional.utils.request import Method, check_response, make_request
 URL = get_absolute_url("ui-buyer:confirm-identity-letter")
 EXPECTED_STRINGS = [
     "Your company address", "Address",
-    ("Enter your name. We’ll then send a confirmation letter to your company’s "
-     "registered address address within 5 working days."),
+    ("Enter your name. We’ll then send a confirmation letter to your company’s"
+     " registered address address within 5 working days."),
     "Your name:", "Company number",
     "Tick to confirm address.",
     ("If you can’t collect the letter yourself, you’ll"

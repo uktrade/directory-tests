@@ -233,7 +233,8 @@ def fab_find_published_company(
     logging.debug("%s found a published company: %s", actor_alias, company)
 
 
-def fas_get_company_slug(context: Context, actor_alias: str, company_alias: str):
+def fas_get_company_slug(
+        context: Context, actor_alias: str, company_alias: str):
     actor = context.get_actor(actor_alias)
     session = actor.session
     company = context.get_company(company_alias)

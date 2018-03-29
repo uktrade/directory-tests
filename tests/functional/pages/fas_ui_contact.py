@@ -36,7 +36,8 @@ def go_to(
 
 
 def should_be_here(response, *, name=None):
-    expected = EXPECTED_STRINGS + [escape_html(name)] if name else EXPECTED_STRINGS
+    extra_strings_to_check = [escape_html(name)] if name else EXPECTED_STRINGS
+    expected = EXPECTED_STRINGS + extra_strings_to_check
     check_response(response, 200, body_contains=expected)
     logging.debug("Supplier is on FAS Contact Company page")
 
