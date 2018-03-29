@@ -298,6 +298,9 @@ Feature: Multi-user accounts
     And "Annette Geissinger" should see all case studies on the FAS Company's Directory Profile page
 
 
+  @bug
+  @ED-3882
+  @fixme
   @ED-3570
   @multi-user
   @edge-case
@@ -315,6 +318,9 @@ Feature: Multi-user accounts
     And "Annette Geissinger" should not see options to manage Find a Buyer profile users on SSO Profile
 
 
+  @bug
+  @ED-3882
+  @fixme
   @ED-3571
   @multi-user
   @edge-case
