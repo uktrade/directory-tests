@@ -19,8 +19,6 @@ def should_be_here(response: Response):
 def go_to(session: Session) -> Response:
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
     response = make_request(Method.GET, URL, session=session, headers=headers)
-
-    should_be_here(response)
     return response
 
 
