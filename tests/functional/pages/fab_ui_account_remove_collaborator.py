@@ -11,10 +11,18 @@ EXPECTED_STRINGS = [
     "Confirm", "Cancel"
 ]
 
+EXPECTED_STRINGS_NO_COLLABORATORS = [
+    "Your company has no collaborators", "Click", "here", "to go back"
+]
 
-def should_be_here(response: Response):
+
+def should_be_here(response: Response, *, have_collaborators: bool = True):
     """Check if User is on the correct page."""
-    check_response(response, 200, body_contains=EXPECTED_STRINGS)
+    if have_collaborators:
+        check_response(response, 200, body_contains=EXPECTED_STRINGS)
+    else:
+        check_response(
+            response, 200, body_contains=EXPECTED_STRINGS_NO_COLLABORATORS)
 
 
 def go_to(session: Session) -> Response:
