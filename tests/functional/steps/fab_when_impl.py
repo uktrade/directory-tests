@@ -2060,7 +2060,7 @@ def fab_send_transfer_ownership_request(
     )
 
 
-def fab_open_transfer_ownership_request_link(
+def fab_open_transfer_ownership_request_link_and_create_sso_account_if_needed(
         context: Context, new_owner_alias: str, company_alias: str):
     new_owner = context.get_actor(new_owner_alias)
     session = new_owner.session
@@ -2113,7 +2113,7 @@ def fab_transfer_ownership(
         context, supplier_alias, company_alias, new_owner_alias)
     fab_should_get_request_for_becoming_owner(
         context, new_owner_alias, company_alias)
-    fab_open_transfer_ownership_request_link(
+    fab_open_transfer_ownership_request_link_and_create_sso_account_if_needed(
         context, new_owner_alias, company_alias)
     fab_confirm_account_ownership_request(
         context, new_owner_alias, company_alias)
