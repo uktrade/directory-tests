@@ -3,12 +3,12 @@
 import logging
 
 from behave.model import Table
-from requests import Response
+from requests import Response, Session
 from tests import get_absolute_url
 from tests.functional.common import DETAILS
 from tests.functional.utils.context_utils import Company
 from tests.functional.utils.generic import assertion_msg
-from tests.functional.utils.request import check_response
+from tests.functional.utils.request import Method, check_response, make_request
 from tests.settings import SECTORS_WITH_LABELS
 
 URL = get_absolute_url("ui-buyer:company-profile")
@@ -32,6 +32,12 @@ EXPECTED_STRINGS_NOT_VERIFIED = [
     "Your company has not yet been verified.", "Verify your company",
     "Your profile can't be published until your company is verified"
 ]
+
+
+def go_to(session: Session) -> Response:
+    headers = {"Referer": URL}
+    response = make_request(Method.GET, URL, session=session, headers=headers)
+    return response
 
 
 def should_be_here(response: Response):
