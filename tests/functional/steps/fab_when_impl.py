@@ -2157,21 +2157,32 @@ def fab_remove_collaborators(
         context: Context, supplier_alias: str, collaborators_aliases: str,
         company_alias: str):
     aliases = [alias.strip() for alias in collaborators_aliases.split(",")]
+    emails = [context.get_actor(alias).email for alias in aliases]
+    supplier = context.get_actor(supplier_alias)
+    company = context.get_company(company_alias)
 
-    for collaborator_alias in aliases:
-        supplier = context.get_actor(supplier_alias)
-        company = context.get_company(company_alias)
-        collaborator = context.get_actor(collaborator_alias)
-        response = fab_ui_account_remove_collaborator.go_to(supplier.session)
-        context.response = response
+    # Step 1: go to the remove collaborators page
+    response = fab_ui_account_remove_collaborator.go_to(supplier.session)
+    context.response = response
 
-        token = extract_csrf_middleware_token(response)
-        context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
+    token = extract_csrf_middleware_token(response)
+    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
-        response = fab_ui_account_remove_collaborator.remove(
-            supplier.session, token, collaborator.email)
+    # Step 2: extract SSO IDs for users to remove
+    emails_to_sso_id = fab_ui_account_remove_collaborator.extract_sso_ids(
+        response)
+    logging.debug("SSO IDs for specific actor: %s", emails_to_sso_id)
+    sso_ids = [sso_id
+               for email, sso_id in emails_to_sso_id.items()
+               if email in emails]
+    logging.debug("List of SSO IDs to remove: %s", sso_ids)
 
-        profile_ui_find_a_buyer.should_be_here(response)
-        collaborators = company.collaborators
-        collaborators.remove(collaborator_alias)
-        context.set_company_details(company.alias, collaborators=collaborators)
+    # Step 3: send the request with SSO IDs of users to remove
+    response = fab_ui_account_remove_collaborator.remove(
+        supplier.session, token, sso_ids)
+    context.response = response
+
+    profile_ui_find_a_buyer.should_be_here(response, user_removed=True)
+    collaborators = company.collaborators
+    collaborators = [alias for alias in collaborators if alias not in aliases]
+    context.set_company_details(company.alias, collaborators=collaborators)
