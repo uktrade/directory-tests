@@ -31,6 +31,10 @@ EXPECTED_STRINGS_OWNER_TRANSFERRED = [
     "We’ve sent a confirmation email to the new profile owner."
 ]
 
+EXPECTED_STRINGS_USER_REMOVED = [
+    "User successfully removed from your profile"
+]
+
 
 def go_to(session: Session) -> Response:
     """Go to the Profile 'Find a buyer' page / tab.
@@ -45,7 +49,9 @@ def go_to(session: Session) -> Response:
     return response
 
 
-def should_be_here(response: Response, *, owner_transferred: bool = False):
+def should_be_here(
+        response: Response, *, owner_transferred: bool = False,
+        user_removed: bool = False):
     """Check if Supplier is on Profile 'Find a Buyer' page.
 
     NOTE:
@@ -60,6 +66,15 @@ def should_be_here(response: Response, *, owner_transferred: bool = False):
             assert expected_query in response.url
         check_response(
             response, 200, body_contains=EXPECTED_STRINGS_OWNER_TRANSFERRED)
+    if user_removed:
+        expected_query = "?user-removed"
+        with assertion_msg(
+                "Expected to see '{}' in the URL but got: '{}' instead"
+                .format(expected_query, response.url)):
+            assert expected_query in response.url
+        check_response(
+            response, 200, body_contains=EXPECTED_STRINGS_USER_REMOVED)
+
     logging.debug("Successfully got to the Profile 'Find a Buyer' page")
 
 
