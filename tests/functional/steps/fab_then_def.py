@@ -47,6 +47,7 @@ from tests.functional.steps.fab_then_impl import (
     reg_supplier_has_to_verify_email_first,
     reg_supplier_is_not_appropriate_for_fab,
     should_be_at,
+    should_not_be_able_to_access_page,
     should_see_message,
     should_see_selected_pages,
     sso_should_be_signed_in_to_sso_account,
@@ -55,8 +56,7 @@ from tests.functional.steps.fab_then_impl import (
     sso_should_get_request_for_collaboration_email,
     sso_should_see_invalid_password_reset_link_error,
     sud_should_not_see_options_to_manage_users,
-    sud_should_see_options_to_manage_users,
-    should_not_be_able_to_access_page
+    sud_should_see_options_to_manage_users
 )
 from tests.functional.steps.fab_when_impl import (
     fas_feedback_request_should_be_submitted,
