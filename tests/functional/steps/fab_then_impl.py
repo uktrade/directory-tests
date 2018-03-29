@@ -280,7 +280,8 @@ def fas_should_see_png_logo_thumbnail(context: Context, supplier_alias: str):
     logging.debug("Set Company's logo URL to: %s", visible_logo_url)
 
 
-def fas_should_see_different_png_logo_thumbnail(context, actor_alias):
+def fas_should_see_different_png_logo_thumbnail(
+        context: Context, actor_alias: str):
     """Will check if Company's Logo visible on FAS profile page is the same as
     the one uploaded on FAB.
 
@@ -555,8 +556,8 @@ def fas_should_find_with_company_details(
 
 
 def fas_pages_should_be_in_selected_language(
-        context, pages_table: Table, language, *, page_part: str = None,
-        probability: float = 0.9):
+        context: Context, pages_table: Table, language: str, *,
+        page_part: str = None, probability: float = 0.9):
     """Check if all viewed pages contain content in expected language
 
     NOTE:
@@ -650,7 +651,8 @@ def fas_supplier_should_receive_message_from_buyer(
     logging.debug("%s received message from %s", supplier_alias, buyer_alias)
 
 
-def fab_should_see_expected_error_messages(context, supplier_alias):
+def fab_should_see_expected_error_messages(
+        context: Context, supplier_alias: str):
     results = context.results
     logging.debug(results)
     for company, response, error in results:
@@ -665,7 +667,8 @@ def fab_should_see_expected_error_messages(context, supplier_alias):
     logging.debug("%s has seen all expected form errors", supplier_alias)
 
 
-def fas_should_be_on_selected_page(context, actor_alias, page_name):
+def fas_should_be_on_selected_page(
+        context: Context, actor_alias: str, page_name: str):
     response = context.response
     page_object = get_fabs_page_object(page_name)
     page_object.should_be_here(response)
@@ -673,7 +676,8 @@ def fas_should_be_on_selected_page(context, actor_alias, page_name):
         "%s successfully got to the %s FAS page", actor_alias, page_name)
 
 
-def fas_should_see_promoted_industries(context, actor_alias, table):
+def fas_should_see_promoted_industries(
+        context: Context, actor_alias: str, table: Table):
     industries = [row['industry'].lower() for row in table]
     response = context.response
     for industry in industries:
@@ -683,7 +687,7 @@ def fas_should_see_promoted_industries(context, actor_alias, table):
         industries)
 
 
-def fas_should_see_filtered_search_results(context, actor_alias):
+def fas_should_see_filtered_search_results(context: Context, actor_alias: str):
     results = context.results
     sector_filters_selector = "#id_sectors input"
     for industry, result in results.items():
@@ -711,7 +715,8 @@ def fas_should_see_filtered_search_results(context, actor_alias):
             ", ".join(result['sectors']))
 
 
-def fas_should_see_unfiltered_search_results(context, actor_alias):
+def fas_should_see_unfiltered_search_results(
+        context: Context, actor_alias: str):
     response = context.response
     content = response.content.decode("utf-8")
     sector_filters_selector = "#id_sectors input"
@@ -745,7 +750,8 @@ def fas_should_see_company_once_in_search_results(
         len(results) + 1)
 
 
-def fas_should_see_highlighted_search_term(context, actor_alias, search_term):
+def fas_should_see_highlighted_search_term(
+        context: Context, actor_alias: str, search_term: str):
     response = context.response
     content = response.content.decode("utf-8")
     search_summaries_selector = ".ed-company-search-summary"
@@ -770,14 +776,15 @@ def fas_should_see_highlighted_search_term(context, actor_alias, search_term):
             results=len(summaries)))
 
 
-def fab_company_should_be_verified(context, supplier_alias):
+def fab_company_should_be_verified(context: Context, supplier_alias: str):
     response = context.response
     fab_ui_verify_company.should_see_company_is_verified(response)
     logging.debug(
         "%s saw that his company's FAB profile is verified", supplier_alias)
 
 
-def fab_should_see_case_study_error_message(context, supplier_alias):
+def fab_should_see_case_study_error_message(
+        context: Context, supplier_alias: str):
     results = context.results
     logging.debug(results)
     for field, value_type, case_study, response, error in results:

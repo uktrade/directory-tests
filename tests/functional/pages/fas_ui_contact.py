@@ -5,7 +5,7 @@ from urllib.parse import urljoin
 
 from requests import Response, Session
 from tests import get_absolute_url
-from tests.functional.utils.context_utils import Company, Message
+from tests.functional.utils.context_utils import Company, Feedback, Message
 from tests.functional.utils.generic import escape_html
 from tests.functional.utils.request import Method, check_response, make_request
 
@@ -47,7 +47,7 @@ def should_be_here(response, *, name=None):
     logging.debug("Supplier is on FAS Contact Company page")
 
 
-def submit(session: Session, message: Message, company_number: str):
+def submit(session: Session, message: Message or Feedback, company_number: str):
     full_url = URL.format(company_number=company_number)
     headers = {"Referer": URL.format(company_number=company_number)}
     data = {

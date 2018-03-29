@@ -175,7 +175,8 @@ def reg_select_random_company_and_confirm_export_status(
     bp_should_be_prompted_to_build_your_profile(context, supplier_alias)
 
 
-def reg_create_unverified_profile(context, supplier_alias, company_alias):
+def reg_create_unverified_profile(
+        context: Context, supplier_alias: str, company_alias: str):
     supplier = unauthenticated_supplier(supplier_alias)
     context.add_actor(supplier)
     reg_create_sso_account_associated_with_company(
@@ -238,7 +239,7 @@ def fab_find_published_company(
     logging.debug("%s found a published company: %s", actor_alias, company)
 
 
-def fas_get_company_slug(context, actor_alias, company_alias):
+def fas_get_company_slug(context: Context, actor_alias: str, company_alias: str):
     actor = context.get_actor(actor_alias)
     session = actor.session
     company = context.get_company(company_alias)
@@ -252,7 +253,7 @@ def fas_get_company_slug(context, actor_alias, company_alias):
     context.set_company_details(company_alias, slug=slug)
 
 
-def reg_should_get_verification_letter(context, supplier_alias):
+def reg_should_get_verification_letter(context: Context, supplier_alias: str):
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
     sent = is_verification_letter_sent(context, company.number)

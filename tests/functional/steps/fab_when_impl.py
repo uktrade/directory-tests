@@ -555,14 +555,8 @@ def prof_sign_out_from_fab(context, supplier_alias):
     context.reset_actor_session(supplier_alias)
 
 
-def prof_sign_in_to_fab(context, supplier_alias):
-    """Sign in to Find a Buyer.
-
-    :param context: behave `context` object
-    :type context: behave.runner.Context
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :type supplier_alias: str
-    """
+def prof_sign_in_to_fab(context: Context, supplier_alias: str):
+    """Sign in to Find a Buyer."""
     actor = context.get_actor(supplier_alias)
     session = actor.session
 
@@ -657,7 +651,7 @@ def sso_collaborator_confirm_email_address(
     context.update_actor(supplier_alias, has_sso_account=True)
 
 
-def sso_supplier_confirms_email_address(context, supplier_alias):
+def sso_supplier_confirms_email_address(context: Context, supplier_alias: str):
     """Given Supplier has clicked on the email confirmation link, Suppliers has
     to confirm that the provided email address is the correct one.
 
@@ -680,7 +674,7 @@ def sso_supplier_confirms_email_address(context, supplier_alias):
     context.update_actor(supplier_alias, has_sso_account=True)
 
 
-def sso_go_to_create_trade_profile(context, supplier_alias):
+def sso_go_to_create_trade_profile(context: Context, supplier_alias: str):
     """Follow the 'Create a trade profile' button on the "Find a Buyer" tab.
 
     NOTE:
@@ -706,18 +700,13 @@ def sso_go_to_create_trade_profile(context, supplier_alias):
     fab_ui_landing.should_be_here(response)
 
 
-def prof_upload_logo(context, supplier_alias, picture: str):
+def prof_upload_logo(context: Context, supplier_alias: str, picture: str):
     """Upload Company's logo & extract newly uploaded logo image URL.
 
     NOTE:
     picture must represent file stored in ./tests/functional/files
 
-    :param context: behave `context` object
-    :type  context: behave.runner.Context
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :type  supplier_alias: str
     :param picture: name of the picture file stored in ./tests/functional/files
-    :type  picture: str
     """
     actor = context.get_actor(supplier_alias)
     session = actor.session
@@ -739,18 +728,14 @@ def prof_upload_logo(context, supplier_alias, picture: str):
         actor.company_alias, picture=picture, hash=md5_hash, url=logo_url)
 
 
-def prof_upload_unsupported_file_as_logo(context, supplier_alias, file):
+def prof_upload_unsupported_file_as_logo(
+        context: Context, supplier_alias: str, file: str):
     """Try to upload unsupported file type as Company's logo.
 
     NOTE:
     file must exist in ./tests/functional/files
 
-    :param context: behave `context` object
-    :type  context: behave.runner.Context
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :type  supplier_alias: str
     :param file: name of the file stored in ./tests/functional/files
-    :type  file: str
     """
     actor = context.get_actor(supplier_alias)
     session = actor.session
@@ -775,13 +760,10 @@ def prof_upload_unsupported_file_as_logo(context, supplier_alias, file):
     return rejected
 
 
-def prof_supplier_uploads_logo(context, supplier_alias, picture):
+def prof_supplier_uploads_logo(
+        context: Context, supplier_alias: str, picture: str):
     """Upload a picture and set it as Company's logo.
 
-    :param context: behave `context` object
-    :type context: behave.runner.Context
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :type supplier_alias: str
     :param picture: name of the picture file stored in ./tests/functional/files
     """
     actor = context.get_actor(supplier_alias)
@@ -897,13 +879,7 @@ def prof_update_company_details(
 
 def prof_add_online_profiles(
         context: Context, supplier_alias: str, online_profiles: Table):
-    """Update links to Company's Online Profiles.
-
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :param online_profiles: context.table containing data table
-            see: https://pythonhosted.org/behave/gherkin.html#table
-    """
+    """Update links to Company's Online Profiles."""
     actor = context.get_actor(supplier_alias)
     session = actor.session
     company = context.get_company(actor.company_alias)
@@ -940,11 +916,6 @@ def prof_add_online_profiles(
 def prof_add_invalid_online_profiles(
         context: Context, supplier_alias: str, online_profiles: Table):
     """Attempt to update links to Company's Online Profiles using invalid URLs.
-
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :param online_profiles: context.table containing data table
-            see: https://pythonhosted.org/behave/gherkin.html#table
     """
     actor = context.get_actor(supplier_alias)
     session = actor.session
@@ -985,12 +956,9 @@ def prof_add_invalid_online_profiles(
     context.response = response
 
 
-def prof_remove_links_to_online_profiles(context, supplier_alias):
-    """Will remove links to existing Online Profiles.
-
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    """
+def prof_remove_links_to_online_profiles(
+        context: Context, supplier_alias: str):
+    """Will remove links to existing Online Profiles."""
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
 
@@ -1003,13 +971,9 @@ def prof_remove_links_to_online_profiles(context, supplier_alias):
     context.response = response
 
 
-def prof_add_case_study(context, supplier_alias, case_alias):
-    """Will add a complete case study (all fields will be filled out).
-
-    :param context: behave `context` object
-    :param supplier_alias: alias of the Actor used in the scope of the scenario
-    :param case_alias: alias of the Case Study used in the scenario
-    """
+def prof_add_case_study(
+        context: Context, supplier_alias: str, case_alias: str):
+    """Will add a complete case study (all fields will be filled out)."""
     actor = context.get_actor(supplier_alias)
     session = actor.session
     case_study = random_case_study_data(case_alias)
@@ -1183,20 +1147,21 @@ def fas_view_pages_in_selected_language(
     context.views = views
 
 
-def fas_view_page(context, actor_alias, page_name):
+def fas_view_page(context: Context, actor_alias: str, page_name: str):
     actor = context.get_actor(actor_alias)
     session = actor.session
     page_object = get_fabs_page_object(page_name)
     context.response = page_object.go_to(session)
 
 
-def fas_search_with_empty_query(context, buyer_alias):
+def fas_search_with_empty_query(context: Context, buyer_alias: str):
     actor = context.get_actor(buyer_alias)
     session = actor.session
     context.response = fas_ui_find_supplier.go_to(session, term="")
 
 
-def fas_should_be_told_about_empty_search_results(context, buyer_alias):
+def fas_should_be_told_about_empty_search_results(
+        context: Context, buyer_alias: str):
     fas_ui_find_supplier.should_see_no_matches(context.response)
     logging.debug(
         "%s was told that the search did not match any UK trade profiles",
@@ -1431,7 +1396,8 @@ def fab_provide_company_details(
     context.results = results
 
 
-def fas_follow_case_study_links_to_related_sectors(context, actor_alias):
+def fas_follow_case_study_links_to_related_sectors(
+        context: Context, actor_alias: str):
     actor = context.get_actor(actor_alias)
     session = actor.session
     content = context.response.content.decode("utf-8")
@@ -1594,8 +1560,8 @@ def fas_browse_suppliers_by_company_sectors(
     context.results = results
 
 
-def fas_get_case_study_slug(context: Context, actor_alias: str,
-                            case_alias: str):
+def fas_get_case_study_slug(
+        context: Context, actor_alias: str, case_alias: str):
     result = None
     actor = context.get_actor(actor_alias)
     company = context.get_company(actor.company_alias)
@@ -1617,7 +1583,7 @@ def fas_get_case_study_slug(context: Context, actor_alias: str,
         "%s got case study '%s' slug: '%s'", actor_alias, case_alias, result)
 
 
-def fas_search_with_term(context, actor_alias, search_term):
+def fas_search_with_term(context: Context, actor_alias: str, search_term: str):
     actor = context.get_actor(actor_alias)
     session = actor.session
     context.response = fas_ui_find_supplier.go_to(session, term=search_term)
@@ -1660,7 +1626,7 @@ def fab_choose_to_verify_with_code(context: Context, supplier_alias: str):
     fab_ui_verify_company.should_be_here(response)
 
 
-def fab_submit_verification_code(context, supplier_alias):
+def fab_submit_verification_code(context: Context, supplier_alias: str):
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
     verification_code = company.verification_code
