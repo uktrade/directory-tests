@@ -651,6 +651,22 @@ def sso_collaborator_confirm_email_address(
     context.update_actor(supplier_alias, has_sso_account=True)
 
 
+def sso_new_onwer_confirm_email_address(
+        context: Context, supplier_alias: str):
+    actor = context.get_actor(supplier_alias)
+    form_action_value = context.form_action_value
+
+    # STEP 1 - Submit "Confirm your email address" form
+    response = sso_ui_confim_your_email.confirm(actor, form_action_value)
+    context.response = response
+
+    # STEP 2 - Check if new account owner is on the correct page
+    fab_ui_confim_your_ownership.should_be_here(response)
+
+    # STEP 3 - Update Actor's data
+    context.update_actor(supplier_alias, has_sso_account=True)
+
+
 def sso_supplier_confirms_email_address(context: Context, supplier_alias: str):
     """Given Supplier has clicked on the email confirmation link, Suppliers has
     to confirm that the provided email address is the correct one.
@@ -2068,7 +2084,14 @@ def fab_open_transfer_ownership_request_link_and_create_sso_account_if_needed(
 
     response = fab_ui_confim_your_ownership.open(session, link)
     context.response = response
-    fab_ui_confim_your_ownership.should_be_here(response)
+    if new_owner.has_sso_account:
+        fab_ui_confim_your_ownership.should_be_here(response)
+    else:
+        reg_create_standalone_unverified_sso_account_from_sso_login_page(
+            context, new_owner_alias)
+        reg_should_get_verification_email(context, new_owner_alias)
+        reg_open_email_confirmation_link(context, new_owner_alias)
+        sso_new_onwer_confirm_email_address(context, new_owner_alias)
     logging.debug(
         "%s opened the transfer ownership request link from company %s",
         new_owner_alias, company_alias)
