@@ -32,8 +32,8 @@ REQUEST_EXCEPTIONS = (
     BaseHTTPError, RequestException, HTTPError, ConnectionError, ProxyError,
     SSLError, Timeout, ConnectTimeout, ReadTimeout, URLRequired,
     TooManyRedirects, MissingSchema, InvalidSchema, InvalidURL, InvalidHeader,
-    ChunkedEncodingError, ContentDecodingError, StreamConsumedError, RetryError,
-    UnrewindableBodyError
+    ChunkedEncodingError, ContentDecodingError, StreamConsumedError,
+    RetryError, UnrewindableBodyError
 )
 
 
@@ -80,7 +80,7 @@ def make_request(
                   For more details please refer to:
                   http://docs.python-requests.org/en/master/user/quickstart/#post-a-multipart-encoded-file
     :param allow_redirects: Follow or do not follow redirects
-    :param auth: (optional) authentication tuple, e.g.: ("username", "password")
+    :param auth: (optional) authentication tuple, e.g. ("username", "password")
     :param trim: (optional) trim long request body/response content if True
     :return: a response object
     """
@@ -143,10 +143,10 @@ def make_request(
     return res
 
 
-def check_response(response: Response, status_code: int, *,
-                   location: str = None, locations: list = None,
-                   location_starts_with: str = None, body_contains: list = None,
-                   unexpected_strings: list = None):
+def check_response(
+        response: Response, status_code: int, *, location: str = None,
+        locations: list = None, location_starts_with: str = None,
+        body_contains: list = None, unexpected_strings: list = None):
     """Check if SUT replied with an expected response.
 
     :param response: Response object return by `requests`
@@ -166,7 +166,7 @@ def check_response(response: Response, status_code: int, *,
         assert response.status_code == status_code
 
     if body_contains:
-        with assertion_msg("Expected response with content, got an empty one!"):
+        with assertion_msg("Expected response with content, got an empty one"):
             assert response.content
         content = response.content.decode("utf-8")
         for string in body_contains:
@@ -174,7 +174,7 @@ def check_response(response: Response, status_code: int, *,
                 assert string in content
 
     if unexpected_strings:
-        with assertion_msg("Expected response with content, got an empty one!"):
+        with assertion_msg("Expected response with content, got an empty one"):
             assert response.content
         content = response.content.decode("utf-8")
         for string in unexpected_strings:
