@@ -7,7 +7,8 @@ from tests.functional.utils.request import check_response
 
 URL = get_absolute_url("ui-buyer:account-remove-collaborator")
 EXPECTED_STRINGS = [
-    "Remove user from your profile",
+    "Remove user from account", "Select the emails you would like to remove",
+    "Confirm", "Cancel"
 ]
 
 
