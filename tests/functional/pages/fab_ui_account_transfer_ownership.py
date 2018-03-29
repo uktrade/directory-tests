@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-"""FAB - Add Collaborator page"""
+"""FAB - Change profile owner page"""
 from requests import Response, Session
 from tests import get_absolute_url
 from tests.functional.utils.generic import Method, make_request
 from tests.functional.utils.request import check_response
 
-URL = get_absolute_url("ui-buyer:account-add-collaborator")
+URL = get_absolute_url("ui-buyer:account-transfer-ownership")
 EXPECTED_STRINGS = [
-    "Add a user to your profile", "Enter the new user’s email address",
-    "Confirm", "Cancel", "Is there anything wrong with this page?"
+    "Transfer account", "Next", "Cancel",
+    "Enter the email address you want your profile transferred to."
 ]
 
 
@@ -22,17 +22,18 @@ def go_to(session: Session) -> Response:
     This requires:
      * Supplier to be logged in
     """
-    headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
+    headers = {"Referer": get_absolute_url("profile:fab")}
     response = make_request(Method.GET, URL, session=session, headers=headers)
 
     should_be_here(response)
     return response
 
 
-def add_collaborator(session: Session, token: str, email: str) -> Response:
+def submit(session: Session, token: str, email: str) -> Response:
     data = {
         "csrfmiddlewaretoken": token,
-        "email_address": email
+        "email-email_address": email,
+        "transfer_account_wizard_view-current_step": "email"
     }
     headers = {"Referer": URL}
     return make_request(

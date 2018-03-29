@@ -34,34 +34,19 @@ def go_to(session: Session, *, next_param: str = None) -> Response:
 
 
 def should_be_here(response: Response):
-    """Check if Supplier is on SSO Password Reset Page.
-
-    :param response: response object
-    """
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Successfully got to the SSO Password Reset page")
 
 
 def should_see_that_password_was_reset(response: Response):
-    """Check if Supplier is on SSO Password Reset confirmation Page.
-
-    :param response: response object
-    """
-    check_response(response, 200, body_contains=EXPECTED_STRINGS_PASSWORD_RESET)
+    check_response(
+        response, 200, body_contains=EXPECTED_STRINGS_PASSWORD_RESET)
     logging.debug("Successfully Reset Password")
 
 
 def reset(
         actor: Actor, token: str, *, referer: str = None,
         next_param: str = None) -> Response:
-    """Try to reset the password to the SSO account.
-
-    :param actor: a namedtuple with Actor details
-    :param token: CSRF token required to submit the password reset form
-    :param referer: (optional) referer URL
-    :param next_param: (optional) URL to go to after successful password reset
-    :return: response object
-    """
     session = actor.session
     fab_landing = get_absolute_url("ui-buyer:landing")
 

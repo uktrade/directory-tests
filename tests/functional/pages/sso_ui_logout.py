@@ -14,12 +14,6 @@ EXPECTED_STRINGS = [
 
 
 def go_to(session: Session, *, next_param: str = None) -> Response:
-    """Go to the SSO Logout page.
-
-    :param session: Supplier session object
-    :param next_param: (optional) URL to redirect to after successful login
-    :return: response object
-    """
     fab_landing = get_absolute_url("ui-buyer:landing")
     params = {"next": next_param or fab_landing}
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
@@ -29,22 +23,12 @@ def go_to(session: Session, *, next_param: str = None) -> Response:
 
 
 def should_be_here(response: Response):
-    """Check if Supplier is on SSO logout page.
-
-    :param response: response object
-    """
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Successfully got to the SSO logout page")
 
 
-def logout(session: Session, token: str, *, next_param: str = None) -> Response:
-    """Sign out from SSO/FAB.
-
-    :param session: Supplier session object
-    :param token: CSRF token required to submit the login form
-    :param next_param: (optional) URL to redirect to after logging out
-    :return: response object
-    """
+def logout(
+        session: Session, token: str, *, next_param: str = None) -> Response:
     fab_landing = get_absolute_url("ui-buyer:landing")
     data = {
         "csrfmiddlewaretoken": token,

@@ -9,6 +9,8 @@ from tests.functional.steps.fab_then_impl import (
     fab_no_links_to_online_profiles_are_visible,
     fab_profile_is_verified,
     fab_should_be_asked_about_verification_form,
+    fab_should_get_request_for_becoming_owner,
+    fab_should_not_see_collaborator,
     fab_should_see_all_case_studies,
     fab_should_see_case_study_error_message,
     fab_should_see_company_details,
@@ -45,6 +47,7 @@ from tests.functional.steps.fab_then_impl import (
     reg_supplier_has_to_verify_email_first,
     reg_supplier_is_not_appropriate_for_fab,
     should_be_at,
+    should_not_be_able_to_access_page,
     should_see_message,
     should_see_selected_pages,
     sso_should_be_signed_in_to_sso_account,
@@ -389,3 +392,23 @@ def then_actor_should_see_options_to_manage_account_users(
 def then_actor_should_not_see_options_to_manage_account_users(
         context: Context, actor_alias: str):
     sud_should_not_see_options_to_manage_users(context, actor_alias)
+
+
+@then('"{new_owner_alias}" should receive an email with a request for becoming the owner of the company "{company_alias}" profile')
+def then_actor_should_receive_email_with_transfer_account_ownership_request(
+        context, new_owner_alias, company_alias):
+    fab_should_get_request_for_becoming_owner(
+        context, new_owner_alias, company_alias)
+
+
+@then('"{supplier_alias}" should not see "{collaborators_aliases}" among the users associated with company\'s profile')
+def then_supplier_should_not_see_collaborator(
+        context, supplier_alias, collaborators_aliases):
+    fab_should_not_see_collaborator(
+        context, supplier_alias, collaborators_aliases)
+
+
+@then('"{collaborator_alias}" should not be able to access "{page_name}" page')
+def then_collaborator_should_not_be_able_to_access_page(
+        context, collaborator_alias, page_name):
+    should_not_be_able_to_access_page(context, collaborator_alias, page_name)

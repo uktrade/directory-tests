@@ -16,7 +16,8 @@ EXPECTED_STRINGS = [
 
 
 def go_to(
-        session: Session, *, next_param: str = None, referer: str = None)-> Response:
+        session: Session, *, next_param: str = None, referer: str = None)\
+        -> Response:
     fab_landing = get_absolute_url("ui-buyer:landing")
     params = {"next": next_param or fab_landing}
     headers = {"Referer": referer or fab_landing}
@@ -26,10 +27,6 @@ def go_to(
 
 
 def should_be_here(response: Response):
-    """Check if Supplier is on SSO Verify your email Page.
-
-    :param response: response object
-    """
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Successfully got to the SSO Verify your email page")
 
@@ -37,15 +34,6 @@ def should_be_here(response: Response):
 def login(
         actor: Actor, *, token: str = None, referer: str = None,
         next_param: str = None) -> Response:
-    """Try to sign in to FAB as a Supplier without verified email address.
-
-    :param actor: a namedtuple with Actor details
-    :param token: (optional) CSRF token required to submit the login form
-    :param referer: (optional) referer URL. Defaults to FAB Landing page
-    :param next_param: (optional) URL to go to after successful login.
-                       Defaults to FAB Landing page
-    :return: response object
-    """
     session = actor.session
     fab_landing = get_absolute_url("ui-buyer:landing")
 

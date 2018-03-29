@@ -4,6 +4,7 @@ import logging
 
 from requests import Response, Session
 from tests import get_absolute_url
+from tests.functional.utils.generic import assertion_msg
 from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("profile:fab")
@@ -26,13 +27,16 @@ EXPECTED_STRINGS_NO_PROFILE = [
     "have buyers contact your sales team directly to get deals moving"
 ]
 
+EXPECTED_STRINGS_OWNER_TRANSFERRED = [
+    "We’ve sent a confirmation email to the new profile owner."
+]
+
+EXPECTED_STRINGS_USER_REMOVED = [
+    "User successfully removed from your profile"
+]
+
 
 def go_to(session: Session) -> Response:
-    """Go to the Profile 'Find a buyer' page / tab.
-
-    :param session: Supplier session object
-    :return: response object
-    """
     headers = {"Referer": get_absolute_url("profile:about")}
     response = make_request(Method.GET, URL, session=session, headers=headers)
     should_be_here(response)
@@ -40,15 +44,32 @@ def go_to(session: Session) -> Response:
     return response
 
 
-def should_be_here(response: Response):
+def should_be_here(
+        response: Response, *, owner_transferred: bool = False,
+        user_removed: bool = False):
     """Check if Supplier is on Profile 'Find a Buyer' page.
 
     NOTE:
     Supplier has to be logged in to get to this page.
-
-    :param response: response object
     """
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
+    if owner_transferred:
+        expected_query = "?owner-transferred"
+        with assertion_msg(
+                "Expected to see '{}' in the URL but got: '{}' instead"
+                .format(expected_query, response.url)):
+            assert expected_query in response.url
+        check_response(
+            response, 200, body_contains=EXPECTED_STRINGS_OWNER_TRANSFERRED)
+    if user_removed:
+        expected_query = "?user-removed"
+        with assertion_msg(
+                "Expected to see '{}' in the URL but got: '{}' instead"
+                .format(expected_query, response.url)):
+            assert expected_query in response.url
+        check_response(
+            response, 200, body_contains=EXPECTED_STRINGS_USER_REMOVED)
+
     logging.debug("Successfully got to the Profile 'Find a Buyer' page")
 
 
@@ -58,8 +79,6 @@ def should_see_get_a_trade_profile(response: Response):
 
     NOTE:
     Supplier has to be logged in to get to this page.
-
-    :param response: response object
     """
     expected = EXPECTED_STRINGS + EXPECTED_STRINGS_NO_PROFILE
     check_response(response, 200, body_contains=expected)
@@ -72,8 +91,6 @@ def should_see_links_to_manage_trade_profile(response: Response):
 
     NOTE:
     Supplier has to be logged in to get to this page.
-
-    :param response: response object
     """
     expected = EXPECTED_STRINGS + EXPECTED_STRINGS_WITH_PROFILE
     check_response(response, 200, body_contains=expected)
@@ -85,9 +102,6 @@ def go_to_create_a_trade_profile(session: Session) -> Response:
 
     NOTE:
     This simulates a 'Click' on the 'Create a trade profile' button.
-
-    :param session: Supplier session object
-    :return: response object
     """
     url = get_absolute_url("ui-buyer:landing")
     response = make_request(Method.GET, url, session=session)

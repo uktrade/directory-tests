@@ -18,7 +18,8 @@ Actor = namedtuple(
     [
         'alias', 'email', 'password', 'session', 'csrfmiddlewaretoken',
         'email_confirmation_link', 'company_alias', 'has_sso_account', 'type',
-        'password_reset_link', 'invitation_for_collaboration_link'
+        'password_reset_link', 'invitation_for_collaboration_link', 'ex_owner',
+        'ownership_request_link'
     ]
 )
 CaseStudy = namedtuple(
@@ -46,7 +47,7 @@ Company = namedtuple(
         'companies_house_details', 'facebook', 'linkedin', 'twitter',
         'case_studies', 'logo_picture', 'logo_url', 'logo_hash',
         'export_to_countries', 'fas_profile_endpoint', 'slug',
-        'verification_code', 'collaborators', 'deleted'
+        'verification_code', 'collaborators', 'deleted', 'owner', 'owner_email'
     ]
 )
 Feedback = namedtuple(
@@ -209,15 +210,14 @@ def add_case_study(
                   "Case Study Data: %s", case_alias, company_alias, case_study)
 
 
-def update_case_study(self, company_alias, case_alias, *, slug=None):
-    # cases = self.get_company(company_alias).case_studies
+def update_case_study(self, company, case, *, slug=None):
     companies = self.scenario_data.companies
     if slug:
-        companies[company_alias].case_studies[case_alias] = companies[company_alias].case_studies[case_alias]._replace(slug=slug)
-        # cases[case_alias] = cases[case_alias]._replace(slug=slug)
+        cases = companies[company].case_studies[case]._replace(slug=slug)
+        companies[company].case_studies[case] = cases
 
     logging.debug("Successfully updated Case Study '%s' for Company %s",
-                  case_alias, company_alias)
+                  case, company)
 
 
 def patch_context(context):
@@ -237,4 +237,5 @@ def patch_context(context):
     context.add_case_study = MethodType(add_case_study, context)
     context.update_case_study = MethodType(update_case_study, context)
     context.set_company_details = MethodType(set_company_details, context)
-    context.set_company_logo_detail = MethodType(set_company_logo_detail, context)
+    context.set_company_logo_detail = MethodType(
+        set_company_logo_detail, context)

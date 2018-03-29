@@ -31,7 +31,11 @@ from tests.functional.pages import (
     sud_ui_find_a_buyer,
     sud_ui_export_opportunities,
     fab_ui_account_add_collaborator,
-    fab_ui_confim_your_collaboration
+    fab_ui_confim_your_collaboration,
+    fab_ui_account_transfer_ownership,
+    fab_ui_account_confrim_password,
+    fab_ui_confim_your_ownership,
+    fab_ui_account_remove_collaborator
 )
 
 from tests import get_absolute_url
@@ -220,10 +224,26 @@ FAB_PAGE_REGISTRY = {
         "url": "ui-buyer:account-add-collaborator",
         "po": fab_ui_account_add_collaborator
     },
+    "fab remove collaborator": {
+        "url": fab_ui_account_remove_collaborator.URL,
+        "po": fab_ui_account_remove_collaborator
+    },
     "fab confirm you want to be added to the profile": {
         "url": None,
         "po": fab_ui_confim_your_collaboration
-    }
+    },
+    "fab transfer ownership": {
+        "url": fab_ui_account_transfer_ownership.URL,
+        "po": fab_ui_account_transfer_ownership
+    },
+    "fab confirm password": {
+        "url": fab_ui_account_confrim_password.URL,
+        "po": fab_ui_account_confrim_password
+    },
+    "fab confirm ownership transfer": {
+        "url": fab_ui_confim_your_ownership.URL,
+        "po": fab_ui_confim_your_ownership
+    },
 }
 
 SUD_PAGE_REGISTRY = {

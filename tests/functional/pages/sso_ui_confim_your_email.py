@@ -15,21 +15,11 @@ EXPECTED_STRINGS = [
 
 
 def should_be_here(response: Response):
-    """Check if Supplier is on SSO Confirm your email Page.
-
-    :param response: response object
-    """
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Successfully got to the SSO Confirm your email page")
 
 
 def open_confirmation_link(session: Session, link: str) -> Response:
-    """Open email confirmation link sent to the Supplier.
-
-    :param session: Supplier session object
-    :param link: email confirmation link
-    :return: response object
-    """
     with assertion_msg("Expected a non-empty email confirmation link"):
         assert link
     return make_request(Method.GET, link, session=session)
@@ -38,9 +28,7 @@ def open_confirmation_link(session: Session, link: str) -> Response:
 def confirm(actor: Actor, form_action_value: str) -> Response:
     """Confirm the email address provided by the Supplier.
 
-    :param actor: a namedtuple with Actor details
     :param form_action_value: form action from SSO Confirm your email page
-    :return: response object
     """
     session = actor.session
     # in order to be redirected to the correct URL we have `unquote`

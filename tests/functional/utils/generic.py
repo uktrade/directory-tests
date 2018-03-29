@@ -44,6 +44,7 @@ from tests.settings import (
     DIRECTORY_API_CLIENT_KEY,
     DIRECTORY_API_URL,
     FAB_CONFIRM_COLLABORATION_SUBJECT,
+    FAB_TRANSFER_OWNERSHIP_SUBJECT,
     MAILGUN_DIRECTORY_API_USER,
     MAILGUN_DIRECTORY_EVENTS_URL,
     MAILGUN_DIRECTORY_SECRET_API_KEY,
@@ -355,7 +356,8 @@ def log_response(response: Response, *, trim: bool = True):
                 content = decode_as_utf8(r.content)
                 if trim or len(r.content) > trim_offset:
                     logging.debug(
-                        "Intermediate RESP Content: %s", content[0:trim_offset])
+                        "Intermediate RESP Content: %s",
+                        content[0:trim_offset])
                 else:
                     logging.debug("Intermediate RSP Content: %s", content)
         logging.debug(
@@ -474,8 +476,8 @@ def get_absolute_path_of_file(filename):
     relative_path = os.path.join("tests", "functional", "files", filename)
     absolute_path = os.path.abspath(relative_path)
     with assertion_msg(
-            "Could not find '%s' in ./tests/functional/files. Please check the "
-            "filename!", filename):
+            "Could not find '%s' in ./tests/functional/files. Please check the"
+            " filename!", filename):
         assert os.path.exists(absolute_path)
 
     return absolute_path
@@ -515,7 +517,7 @@ def extract_logo_url(response, *, fas: bool = False):
     edit profile page content.
 
     :param response: response with the contents of edit profile page
-    :param fas: Use FAS specific CSS selector if True, if False use FAB selector
+    :param fas: Use FAS specific CSS selector if True, else use FAB selector
     :return: a URL to the company's logo image
     """
     css_selector = ".logo-container img::attr(src)"
@@ -549,9 +551,9 @@ def assertion_msg(message: str, *args):
         * print the traceback (stack trace)
         * raise the original AssertionError exception
 
-    :param message: a message that will be printed & logged when assertion fails
-    :param args: values that will replace % conversion specifications in message
-                 like: %s, %d
+    :param message: to be printed & logged when assertion fails
+    :param args: values that will replace % conversion specifications in
+                 message like: %s, %d
     """
     try:
         yield
@@ -732,15 +734,18 @@ def find_active_company_without_fas_profile(alias: str) -> Company:
         random_company_number = str(random.randint(0, 9999999)).zfill(8)
         has_profile = has_fas_profile(random_company_number)
         if has_profile:
-            logging.debug("Selected company has a FAS profile: %s. Will try a "
-                          "different one.", random_company_number)
+            logging.debug(
+                "Selected company has a FAS profile: %s. Will try a "
+                "different one.", random_company_number)
         else:
-            logging.debug("Found a company without a FAS profile: %s.",
-                          random_company_number)
+            logging.debug(
+                "Found a company without a FAS profile: %s.",
+                random_company_number)
         is_registered = already_registered(random_company_number)
         if is_registered:
-            logging.debug("Company %s is already registered with FAB. Will try "
-                          "a different one.", random_company_number)
+            logging.debug(
+                "Company %s is already registered with FAB. Will try a "
+                "different one.", random_company_number)
         else:
             logging.debug("Company %s is not registered with FAB: Getting "
                           "it details from CH...", random_company_number)
@@ -752,18 +757,20 @@ def find_active_company_without_fas_profile(alias: str) -> Company:
             if json[0]["company_status"] == "active":
                 active = True
                 with assertion_msg(
-                        "Expected to get details of company no.: %s but got %s",
+                        "Expected to get details of company no: %s but got %s",
                         random_company_number, json[0]["company_number"]):
                     assert json[0]["company_number"] == random_company_number
             else:
                 counter += 1
-                has_profile, is_registered, exists, active = True, True, False, False
+                has_profile, is_registered, exists, active = \
+                    True, True, False, False
                 logging.debug("Company with number %s is not active. It's %s. "
                               "Trying a different one...",
                               random_company_number, json[0]["company_status"])
         else:
             counter += 1
-            has_profile, is_registered, exists, active = True, True, False, False
+            has_profile, is_registered, exists, active = \
+                True, True, False, False
             logging.debug("Company with number %s does not exist. Trying a "
                           "different one...", random_company_number)
 
@@ -832,7 +839,7 @@ def get_companies(*, number: int = 100) -> CompaniesList:
     """Find a number of active companies without FAS profile.
 
     NOTE:
-    The search is pretty slow. It takes roughly 10 minutes to find 100 companies
+    The search is pretty slow. It takes roughly 10 mins to find 100 companies
 
     :param number: (optional) expected number of companies to find
     :return: a list of Company named tuples (all with "test" alias)
@@ -894,7 +901,7 @@ def update_companies():
                     delete_supplier_data_from_dir(company.number)
                     email_address = get_company_email(company.number)
                     delete_supplier_data_from_sso(email_address)
-                    blue("Successfully deleted company data from DIR & SSO DBs")
+                    blue("Successfully deleted company from DIR & SSO DBs")
                     is_registered = False
             else:
                 inactive_counter += 1
@@ -931,7 +938,7 @@ def escape_html(text: str, *, upper: bool = False) -> str:
     """Escape some of the special characters that are replaced by FAB/SSO.
 
     :param text: a string to escape
-    :param upper: (optional) change to upper case before escaping the characters
+    :param upper: (optional) change to upper case before escaping characters
     :return: a string with escaped characters
     """
     html_escape_table = {"&": "&amp;", "'": "&#39;"}
@@ -1086,7 +1093,9 @@ def detect_page_language(
 
     # clear the page content from the specified characters
     text = re.sub(ignored_characters, '', soup.get_text())
-    lines = [line.strip().lower() for line in text.splitlines() if line.strip()]
+    lines = [line.strip().lower()
+             for line in text.splitlines()
+             if line.strip()]
     results = {}
     for x in range(rounds):
         results[x] = detect_langs('\n'.join(lines))
@@ -1258,6 +1267,24 @@ def mailgun_find_email_with_request_for_collaboration(
     return mailgun_get_directory_message(context, message_url)
 
 
+def mailgun_find_email_with_ownership_transfer_request(
+        context: Context, actor: Actor, company: Company) -> dict:
+    logging.debug(
+        "Trying to find email with an account ownership transfer request for "
+        "company: %s", company.title)
+    subject = FAB_TRANSFER_OWNERSHIP_SUBJECT.format(company.title)
+    response = find_mail_gun_events(
+        context, service=MailGunService.DIRECTORY, recipient=actor.email,
+        event=MailGunEvent.ACCEPTED, subject=subject)
+    context.response = response
+    with assertion_msg(
+            "Expected to find an email with an account ownership transfer "
+            "request for company: '%s'", company.alias):
+        assert response.status_code == 200
+    message_url = response.json()["items"][0]["storage"]["url"]
+    return mailgun_get_directory_message(context, message_url)
+
+
 def extract_plain_text_payload(msg: MIMEText) -> str:
     """Extract plain text payload (7bit) from email message."""
     res = None
@@ -1285,3 +1312,14 @@ def extract_link_with_invitation_for_collaboration(payload: str) -> str:
     logging.debug(
         "Found the link with invitation for collaboration %s", invitation_link)
     return invitation_link
+
+
+def extract_link_with_ownership_transfer_request(payload: str) -> str:
+    start = payload.find("http")
+    end = payload.find("\n", start) - 1  # `- 1` to skip the newline char
+    ownership_request_link = payload[start:end]
+    assert ownership_request_link
+    logging.debug(
+        "Found the link with FAB profile ownership request %s",
+        ownership_request_link)
+    return ownership_request_link

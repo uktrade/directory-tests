@@ -19,8 +19,8 @@ EXPECTED_STRINGS_FORM = [
 EXPECTED_STRINGS_SUCCESSFUL_SUBMISSION = [
     "Your request has been submitted",
     "Thank you for letting us know about your organisation’s needs.",
-    ("UK government staff based in your region will be in touch to let you know"
-     " how UK businesses can help you.")
+    ("UK government staff based in your region will be in touch to let you "
+     "know how UK businesses can help you.")
 ]
 EXPECTED_STRINGS_ERRORS = [
     "This field is required.",
@@ -29,11 +29,6 @@ EXPECTED_STRINGS_ERRORS = [
 
 
 def go_to(session: Session) -> Response:
-    """Go to FAS send Feedback form page.
-
-    :param session: Buyer session object
-    :return: response object
-    """
     headers = {"Referer": get_absolute_url("ui-supplier:feedback")}
     response = make_request(Method.GET, URL, session=session, headers=headers)
     should_be_here(response)
@@ -41,10 +36,6 @@ def go_to(session: Session) -> Response:
 
 
 def should_be_here(response):
-    """Check if User is on the correct page.
-
-    :param response: response object
-    """
     check_response(response, 200, body_contains=EXPECTED_STRINGS_FORM)
     logging.debug("Buyer is on FAS send Feedback page")
 
@@ -61,13 +52,12 @@ def should_see_errors(response):
 
 
 def submit(
-        session: Session, feedback: Feedback, *, referer: str = None) -> Response:
+        session: Session, feedback: Feedback, *, referer: str = None)\
+        -> Response:
     """Submit feedback form.
 
-    :param session: Buyer session object
     :param feedback: a namedtuple with Feedback request details
     :param referer: (optional) Originating page. Defaults to "{FAS}/feedback"
-    :return: response object
     """
     if referer:
         headers = {"Referer": referer}
@@ -84,5 +74,6 @@ def submit(
         "g-recaptcha-response": feedback.g_recaptcha_response,
     }
     response = make_request(
-        Method.POST, URL, session=session, headers=headers, data=data, trim=False)
+        Method.POST, URL, session=session, headers=headers, data=data,
+        trim=False)
     return response

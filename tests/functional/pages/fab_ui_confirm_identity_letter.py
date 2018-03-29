@@ -10,8 +10,8 @@ from tests.functional.utils.request import Method, check_response, make_request
 URL = get_absolute_url("ui-buyer:confirm-identity-letter")
 EXPECTED_STRINGS = [
     "Your company address", "Address",
-    ("Enter your name. We’ll then send a confirmation letter to your company’s "
-     "registered address address within 5 working days."),
+    ("Enter your name. We’ll then send a confirmation letter to your company’s"
+     " registered address address within 5 working days."),
     "Your name:", "Company number",
     "Tick to confirm address.",
     ("If you can’t collect the letter yourself, you’ll"
@@ -20,21 +20,13 @@ EXPECTED_STRINGS = [
 
 
 def should_be_here(response: Response):
-    """Check if Supplier is on FAB Confirm your Identity - with letter page.
-
-    :param response: response object
-    """
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug(
         "Successfully got to the FAB Confirm your Identity - with letter page")
 
 
 def submit(actor: Actor) -> Response:
-    """Verify your identity with a physical letter.
-
-    :param actor: a namedtuple with Actor details
-    :return: response object
-    """
+    """Verify your identity with a physical letter."""
     headers = {"Referer": URL}
     data = {
         "csrfmiddlewaretoken": actor.csrfmiddlewaretoken,

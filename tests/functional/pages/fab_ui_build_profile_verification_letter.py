@@ -17,20 +17,12 @@ EXPECTED_STRINGS = [
 
 
 def should_be_here(response: Response):
-    """Check if Supplier is on FAB Build your profile - Confirm page.
-
-    :param response: response object
-    """
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Supplier is on the FAB Build your profile - Confirm page")
 
 
 def go_to_profile(session: Session) -> Response:
-    """Supplier click on the 'View or amend your company profile' link
-
-    :param session: Supplier session object
-    :return: response object
-    """
+    """Supplier clicks on the 'View or amend your company profile' link."""
     url = get_absolute_url("ui-buyer:company-profile")
     headers = {"Referer": URL}
     response = make_request(

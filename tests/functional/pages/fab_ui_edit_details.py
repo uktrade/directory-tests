@@ -19,7 +19,7 @@ EXPECTED_STRINGS = [
     "Build and improve your profile", "Your company details", "Company name:",
     "Enter your preferred business name", "Website (optional):",
     "The website address must start with either http:// or https://",
-    "Enter up to 10 keywords that describe your company (separated by commas):",
+    "Enter up to 10 keywords that describe your company (separated by commas)",
     ("These keywords will be used to help potential overseas buyers find your "
      "company."), "How many employees are in your company?",
     ("Tell international buyers more about your business to ensure the right "
@@ -28,10 +28,6 @@ EXPECTED_STRINGS = [
 
 
 def should_be_here(response: Response):
-    """Check if User is on the correct page.
-
-    :param response: response object
-    """
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
 
 
@@ -40,7 +36,6 @@ def go_to(session: Session) -> Response:
 
     This requires:
      * Supplier to be logged in
-
     """
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
     response = make_request(Method.GET, URL, session=session, headers=headers)
@@ -56,19 +51,6 @@ def update_details(
     """Update basic Company's details: business name, website, keywords & size.
 
     Will use random details or specific values if they are provided.
-
-    :param actor: a namedtuple with Actor details
-    :param company: a namedtuple with Company details
-    :param title: change business title if True, or use the current one if False
-    :param website: change website if True, or use the current one if False
-    :param keywords: change keywords if True, or use the current one if False
-    :param size: change number of employees if True, or use the current one
-    :param specific_title: use specific business title (if provided)
-    :param specific_website: use specific website (if provided)
-    :param specific_keywords: use specific keywords (if provided)
-    :param specific_size: use specific number of employees (if provided)
-    :return: a tuple consisting of Response object and Company details that were
-             actually send in the update request.
     """
     session = actor.session
     token = actor.csrfmiddlewaretoken

@@ -3,12 +3,12 @@
 import logging
 
 from behave.model import Table
-from requests import Response
+from requests import Response, Session
 from tests import get_absolute_url
 from tests.functional.common import DETAILS
 from tests.functional.utils.context_utils import Company
 from tests.functional.utils.generic import assertion_msg
-from tests.functional.utils.request import check_response
+from tests.functional.utils.request import Method, check_response, make_request
 from tests.settings import SECTORS_WITH_LABELS
 
 URL = get_absolute_url("ui-buyer:company-profile")
@@ -34,23 +34,20 @@ EXPECTED_STRINGS_NOT_VERIFIED = [
 ]
 
 
-def should_be_here(response: Response):
-    """Check if User is on the correct page.
+def go_to(session: Session) -> Response:
+    headers = {"Referer": URL}
+    response = make_request(Method.GET, URL, session=session, headers=headers)
+    return response
 
-    :param response: response object
-    """
+
+def should_be_here(response: Response):
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Supplier is on FAB Company's Profile page")
 
 
 def should_see_details(
         company: Company, response: Response, table_of_details: Table):
-    """Supplier should see all expected Company details of FAB profile page.
-
-    :param company: a namedtuple with Company details
-    :param response: a response object
-    :param table_of_details: a table of expected company details
-    """
+    """Supplier should see all expected Company details of FAB profile page."""
     visible_details = [row["detail"] for row in table_of_details]
     content = response.content.decode("utf-8")
 

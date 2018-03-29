@@ -123,16 +123,14 @@ Feature: Multi-user accounts
     Then "Annette Geissinger" should not see options to manage Find a Buyer profile users on SSO Profile
 
 
-  @wip
   @ED-3561
   @multi-user
   @transfer-ownership
-  Scenario Outline: New Account Owner should receive an email with a request to confirm account ownership
+  Scenario Outline: New Account Owner which "<has or does not have>" a SSO/great.gov.uk account should receive an email with a request for becoming the owner of "<a>" company profile
     Given "Peter Alder" has created "<a>" profile for randomly selected company "Y"
     And "Annette Geissinger" "<has or does not have>" an SSO/great.gov.uk account
 
     When "Peter Alder" decides to transfer the ownership of company's "Y" Find a Buyer profile to "Annette Geissinger"
-    And "Peter Alder" confirms his password before transferring the ownership
 
     Then "Annette Geissinger" should receive an email with a request for becoming the owner of the company "Y" profile
 
@@ -144,13 +142,12 @@ Feature: Multi-user accounts
       | does not have        | an unverified |
 
 
-  @wip
   @ED-3562
   @multi-user
   @transfer-ownership
   @bug
   @ED-2268
-  Scenario Outline: Company account owner should be able to transfer the account ownership to a user who "has or does not have" an SSO/great.gov.uk account
+  Scenario Outline: Company account owner should be able to transfer the ownership of "<a>" profile to a user who "<has or does not have>" an SSO/great.gov.uk account
     Given "Peter Alder" has created "<a>" profile for randomly selected company "Y"
     And "Annette Geissinger" "<has or does not have>" an SSO/great.gov.uk account
 
@@ -160,21 +157,22 @@ Feature: Multi-user accounts
     And "Peter Alder" should not see options to manage Find a Buyer profile users on SSO Profile
 
     Examples:
-      | has or does not have | a             |
-      | has                  | a verified    |
-      | has                  | an unverified |
-      | does not have        | a verified    |
-      | does not have        | an unverified |
+      | a             | has or does not have |
+      | a verified    | has                  |
+      | a verified    | does not have        |
+      | an unverified | has                  |
+      | an unverified | does not have        |
 
 
-  @wip
   @ED-3564
   @multi-user
   @remove-collaborator
   @fake-sso-email-verification
   Scenario: Account owner should be able to remove one account collaborator
     Given "Peter Alder" has created "an unverified" profile for randomly selected company "Y"
+    And "Annette Geissinger" "has" an SSO/great.gov.uk account
     And "Peter Alder" added "Annette Geissinger" as a collaborator
+    And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
     And "Annette Geissinger" confirmed that she wants to be added to the company "Y" Find a Buyer profile
 
     When "Peter Alder" removes "Annette Geissinger" from the list of collaborators to the company "Y"
@@ -183,14 +181,17 @@ Feature: Multi-user accounts
     And "Annette Geissinger" should not be able to access "FAB company profile" page
 
 
-  @wip
   @ED-3565
   @multi-user
   @remove-collaborator
   @fake-sso-email-verification
   Scenario: Account owner should be able to remove multiple account collaborators
     Given "Peter Alder" has created "an unverified" profile for randomly selected company "Y"
+    And "Annette Geissinger, Betty Jones, James Weir" "have" an SSO/great.gov.uk account
     And "Peter Alder" added "Annette Geissinger, Betty Jones, James Weir" as a collaborator
+    And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
+    And "Betty Jones" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
+    And "James Weir" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
     And "Annette Geissinger" confirmed that she wants to be added to the company "Y" Find a Buyer profile
     And "Betty Jones" confirmed that she wants to be added to the company "Y" Find a Buyer profile
     And "James Weir" confirmed that he wants to be added to the company "Y" Find a Buyer profile
@@ -209,7 +210,7 @@ Feature: Multi-user accounts
   @verification
   @letter
   @fake-sso-email-verification
-  Scenario: Collaborators should be able to set cthe company description and verify company profile with verification code
+  Scenario: Collaborators should be able to set the company description and verify company profile with verification code
     Given "Peter Alder" has created "an unverified" profile for randomly selected company "Y"
     And "Annette Geissinger" "has" an SSO/great.gov.uk account
     And "Peter Alder" added "Annette Geissinger" as a collaborator
@@ -297,7 +298,9 @@ Feature: Multi-user accounts
     And "Annette Geissinger" should see all case studies on the FAS Company's Directory Profile page
 
 
-  @wip
+  @bug
+  @ED-3882
+  @fixme
   @ED-3570
   @multi-user
   @edge-case
@@ -305,17 +308,19 @@ Feature: Multi-user accounts
   Scenario: New account owner should be able to transfer it back to the original owner
     Given "Peter Alder" has created "an unverified" profile for randomly selected company "Y"
     And "Annette Geissinger" "has" an SSO/great.gov.uk account
-    And "Annette Geissinger" accepted request for becoming the owner of company "Y" profile
-    And "Annette Geissinger" has received an email with a request to become owner of the Find a Buyer profile for company "Y"
 
-    When "Annette Geissinger" transfers the company "Y" account ownership to "Peter Alder"
-    And "Peter Alder" accepts the request for becoming the owner of company "Y" profile
+    When "Peter Alder" transfers the ownership of company's "Y" Find a Buyer profile to "Annette Geissinger"
+    Then "Annette Geissinger" should see options to manage Find a Buyer profile users on SSO Profile
+    And "Peter Alder" should not see options to manage Find a Buyer profile users on SSO Profile
 
+    When "Annette Geissinger" transfers the ownership of company's "Y" Find a Buyer profile to "Peter Alder"
     Then "Peter Alder" should see options to manage Find a Buyer profile users on SSO Profile
     And "Annette Geissinger" should not see options to manage Find a Buyer profile users on SSO Profile
 
 
-  @wip
+  @bug
+  @ED-3882
+  @fixme
   @ED-3571
   @multi-user
   @edge-case
@@ -323,13 +328,12 @@ Feature: Multi-user accounts
   Scenario: New account owner should be able to add the original owner as a collaborator to the company profile
     Given "Peter Alder" has created "an unverified" profile for randomly selected company "Y"
     And "Annette Geissinger" "has" an SSO/great.gov.uk account
-    And "Peter Alder" transferred the company "Y" account ownership to "Annette Geissinger"
-    And "Annette Geissinger" accepted request for becoming the owner of company "Y" profile
+    And "Peter Alder" transferred the ownership of company's "Y" Find a Buyer profile to "Annette Geissinger"
 
     When "Annette Geissinger" decides to add "Peter Alder" as a collaborator
     When "Peter Alder" confirms that he wants to be added to the company "Y" Find a Buyer profile
 
-    Then "Annette Geissinger" should see "FAB Company profile" page
+    Then "Peter Alder" should see "FAB Company profile" page
 
 
   @bug
