@@ -25,11 +25,9 @@ def go_to(
         sectors: list = None) -> Response:
     """Go to "FAS Find a Supplier" page.
 
-    :param session: Supplier session object
     :param term: (optional) search term
     :param page: (optional) number of search result page
     :param sectors: (optional) a list of Industry sector filters
-    :return: response object
     """
     params = {}
     if term is not None:
@@ -47,11 +45,6 @@ def go_to(
 
 
 def should_be_here(response, *, number=None):
-    """Check if User is on the correct page.
-
-    :param response: response object
-    :param number: (optional) company number
-    """
     expected = EXPECTED_STRINGS + [number] if number else EXPECTED_STRINGS
     check_response(response, 200, body_contains=expected)
     logging.debug("Buyer is on the FAS Find a Supplier page")

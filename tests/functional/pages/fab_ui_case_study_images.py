@@ -22,8 +22,8 @@ EXPECTED_STRINGS = [
     "Upload a third image (optional):",
     "Add a caption that tells visitors what this third image represents:",
     "Testimonial or block quote (optional):",
-    ("Add testimonial from a satisfied client or use this space to highlight an"
-     " important part of your case study."),
+    ("Add testimonial from a satisfied client or use this space to highlight "
+     "an important part of your case study."),
     "Full name of the source of the testimonial (optional):",
     ("Add the source to make the quote more credible and to help buyers "
      "understand the importance of the testimonial."),
@@ -33,21 +33,13 @@ EXPECTED_STRINGS = [
 
 
 def should_be_here(response: Response):
-    """Check if User is on the correct page.
-
-    :param response: response object
-    """
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
-    logging.debug("Supplier is on 'Create case study or project' - images page")
+    logging.debug(
+        "Supplier is on 'Create case study or project' - images page")
 
 
 def prepare_form_data(token: str, case_study: CaseStudy) -> (dict, dict):
-    """Prepare form data based on the flags and custom values provided.
-
-    :param token: CSRF middleware token required to submit the form
-    :param case_study: a CaseStudy namedtuple with random data
-    :return: a tuple consisting of form data and files to upload
-    """
+    """Prepare form data based on the flags and custom values provided."""
     data = {
         "csrfmiddlewaretoken": token,
         "supplier_case_study_wizard_view-current_step": "rich-media",
@@ -87,14 +79,9 @@ def prepare_form_data(token: str, case_study: CaseStudy) -> (dict, dict):
     return data, files
 
 
-def submit_form(session: Session, token: str, case_study: CaseStudy) -> Response:
-    """Submit the form with case study images and extra data.
-
-    :param session: Supplier session object
-    :param token: CSRF token required to submit the form
-    :param case_study: a CaseStudy namedtuple with random data
-    :return: response object
-    """
+def submit_form(
+        session: Session, token: str, case_study: CaseStudy) -> Response:
+    """Submit the form with case study images and extra data."""
     data, files = prepare_form_data(token, case_study)
     headers = {"Referer": URL}
 

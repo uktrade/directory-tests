@@ -14,14 +14,14 @@ EXPECTED_STRINGS = [
     "Create case study or project", "Basic", "Images",
     ("Describe something significant your company has done that will be "
      "relevant to international buyers. For example, you could add details of "
-     "a significant collaboration on a recent international project or a major "
-     "export deal."), "Title of your case study or project:",
+     "a significant collaboration on a recent international project or a major"
+     " export deal."), "Title of your case study or project:",
     "Give your case study a title of 60 characters or fewer.",
     "Summary of your case study or project:",
     ("Summarise your case study in 200 characters or fewer. This will appear "
-     "on your main trade profile page"), "Describe your case study or project:",
-    ("Describe the project or case study in 1,000 characters or fewer. Use this"
-     " space to demonstrate the value of your company to an international "
+     "on your main trade profile page"), "Describe your case study or project",
+    ("Describe the project or case study in 1,000 characters or fewer. Use "
+     "this space to demonstrate the value of your company to an international "
      "business audience."), "Sector:",
     "Select the sector most relevant to your case study or project.",
     "The web address for your case study (optional):",
@@ -34,10 +34,6 @@ EXPECTED_STRINGS = [
 
 
 def should_be_here(response: Response):
-    """Check if User is on the correct page.
-
-    :param response: response object
-    """
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Supplier is on 'Create case study or project' - basic page")
 
@@ -47,9 +43,6 @@ def go_to(session: Session, *, case_number: int = None) -> Response:
 
     This requires:
      * Supplier to be logged in
-
-    :param session: Supplier session object
-    :param case_number: (optional) case study number
     """
     if case_number:
         url = urljoin(EDIT_URL, str(case_number), "/")
@@ -62,12 +55,7 @@ def go_to(session: Session, *, case_number: int = None) -> Response:
 
 
 def prepare_form_data(token: str, case_study: CaseStudy) -> dict:
-    """Prepare form data based on the flags and custom values provided.
-
-    :param token: CSRF middleware token required to submit the form
-    :param case_study: a CaseStudy namedtuple with random data
-    :return: form data with all fields filled out
-    """
+    """Prepare form data based on the flags and custom values provided."""
     data = {
         "csrfmiddlewaretoken": token,
         "supplier_case_study_wizard_view-current_step": "basic",
@@ -81,13 +69,9 @@ def prepare_form_data(token: str, case_study: CaseStudy) -> dict:
     return data
 
 
-def submit_form(session: Session, token: str, case_study: CaseStudy) -> Response:
-    """Submit the form with basic case study data.
-
-    :param session: Supplier session object
-    :param token: CSRF token required to submit the form
-    :param case_study: a CaseStudy namedtuple with random data
-    """
+def submit_form(
+        session: Session, token: str, case_study: CaseStudy) -> Response:
+    """Submit the form with basic case study data."""
     data = prepare_form_data(token, case_study)
     headers = {"Referer": URL}
     response = make_request(

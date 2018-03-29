@@ -14,9 +14,5 @@ EXPECTED_STRINGS = [
 
 
 def should_be_here(response: Response):
-    """Check if Supplier is on SSO Verify your email Page.
-
-    :param response: response object
-    """
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Successfully got to the SSO Verify your email page")

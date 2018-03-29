@@ -22,12 +22,6 @@ EXPECTED_STRINGS_VERIFIED = [
 
 
 def go_to(session: Session, *, referer: str = None) -> Response:
-    """Go to "Confirm Company" page. This requires Company
-
-    :param session: Supplier session object
-    :param referer: (optional) custom referer header value
-    :return: response object
-    """
     referer = referer or get_absolute_url("ui-buyer:company-profile")
     headers = {"Referer": referer}
     response = make_request(Method.GET, URL, session=session, headers=headers)
@@ -35,24 +29,13 @@ def go_to(session: Session, *, referer: str = None) -> Response:
 
 
 def should_be_here(response: Response):
-    """Check if Supplier is on Verify Company page.
-
-    :param response: response with Verify Company page.
-    """
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Supplier is on the Verify Company page")
 
 
 def submit(session: Session, token: str, verification_code: str, *,
            referer: str = None) -> Response:
-    """Submit the form with verification code.
-
-    :param session: Supplier session object
-    :param token: CSRF token required to submit the form
-    :param verification_code: code required to verify company's profile
-    :param referer: (optional) custom referer header value
-    :return: response object
-    """
+    """Submit the form with verification code."""
     if referer is None:
         referer = get_absolute_url("ui-buyer:company-profile")
     headers = {"Referer": referer}
@@ -73,11 +56,7 @@ def should_see_company_is_verified(response: Response):
 
 
 def view_or_amend_profile(session: Session) -> Response:
-    """Simulate clicking on the 'View or amend your company profile' link.
-
-    :param session: Supplier session object
-    :return: response object
-    """
+    """Simulate clicking on the 'View or amend your company profile' link."""
     headers = {"Referer": URL}
     url = get_absolute_url("ui-buyer:company-profile")
     response = make_request(Method.GET, url, session=session, headers=headers)

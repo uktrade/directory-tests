@@ -22,12 +22,6 @@ EXPECTED_STRINGS = [
 
 
 def go_to(session: Session, company: Company) -> Response:
-    """Go to "Confirm Company" page. This requires Company
-
-    :param session: Supplier session object
-    :param company: a namedtuple with Company details
-    :return: response object
-    """
     data = {"company_name": company.title, "company_number": company.number}
     headers = {"Referer": URL}
 
@@ -38,11 +32,6 @@ def go_to(session: Session, company: Company) -> Response:
 
 
 def should_be_here(response: Response, company: Company):
-    """Check if Supplier is on Confirm Export Status page.
-
-    :param response: response with Confirm Export Status page
-    :param company: a namedtuple with Company details
-    """
     escaped_company_title = escape_html(company.title, upper=True)
     expected = EXPECTED_STRINGS + [escaped_company_title, company.number]
     check_response(response, 200, body_contains=expected)
@@ -51,12 +40,6 @@ def should_be_here(response: Response, company: Company):
 
 def confirm_company_selection(
         session: Session, company: Company, token: str) -> Response:
-    """Confirm that the selected company is the right one.
-
-    :param session: Supplier session object
-    :param company: a named tuple with Company details
-    :param token: a CSRF token required to submit the form
-    """
     query = "?company_number={}".format(company.number)
     url = urljoin(get_absolute_url('ui-buyer:register-confirm-company'), query)
     headers = {"Referer": url}

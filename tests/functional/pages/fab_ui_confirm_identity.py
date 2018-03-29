@@ -57,11 +57,7 @@ def should_be_here(
 
 
 def confirm_with_letter(actor: Actor) -> Response:
-    """Choose to verify your identity with a physical letter.
-
-    :param actor: a namedtuple with Actor details
-    :return: response object
-    """
+    """Choose to verify your identity with a physical letter."""
     headers = {"Referer": URL}
     letter_url = get_absolute_url("ui-buyer:confirm-identity-letter")
     response = make_request(

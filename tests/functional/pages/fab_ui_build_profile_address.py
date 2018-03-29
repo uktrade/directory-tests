@@ -11,8 +11,8 @@ URL = get_absolute_url("ui-buyer:company-edit")
 EXPECTED_STRINGS = [
     "Your company address", "About your company", "Industry and exporting",
     "Confirmation",
-    ("Enter your name. We’ll then send a confirmation letter to your company’s "
-     "registered address address within 5 working days."),
+    ("Enter your name. We’ll then send a confirmation letter to your company’s"
+     " registered address address within 5 working days."),
     "Your name:", "Company number", "Tick to confirm address.",
     ("If you can’t collect the letter yourself, you’ll need to make sure "
      "someone can send it on to you."), "Back to previous step", "Send"
@@ -20,21 +20,15 @@ EXPECTED_STRINGS = [
 
 
 def should_be_here(response: Response):
-    """Check if Supplier is on FAB Build your profile - Choose Sector page.
-
-    :param response: response object
-    """
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
-    logging.debug("Successfully got to the FAB Build and improve your profile. "
-                  "Choose Your company sector")
+    logging.debug(
+        "Successfully got to the FAB Build and improve your profile. Choose "
+        "Your company sector")
 
 
 def submit(actor: Actor) -> Response:
     """Build Profile - Provide Supplier's full name, which will be use when
     sending verification letter.
-
-    :param actor: a namedtuple with Actor details
-    :return: response object
     """
     headers = {"Referer": URL}
     data = {
@@ -43,7 +37,5 @@ def submit(actor: Actor) -> Response:
         "address-postal_full_name": actor.alias,
         "address-address_confirmed": "on"
     }
-    response = make_request(
+    return make_request(
         Method.POST, URL, session=actor.session, headers=headers, data=data)
-
-    return response

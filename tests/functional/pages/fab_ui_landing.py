@@ -16,29 +16,17 @@ EXPECTED_STRINGS = [
 
 
 def go_to(session: Session) -> Response:
-    """Go to the FAB Landing page.
-
-    :param session: Supplier session object
-    :return: response object
-    """
     response = make_request(Method.GET, URL, session=session)
     return response
 
 
 def should_be_here(response: Response):
-    """Check if Supplier is on FAB Landing page
-
-    :param response: response object
-    """
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Successfully got to the FAB Landing page")
 
 
 def should_be_logged_out(response: Response):
-    """Check if Supplier is logged out by checking the cookies.
-
-    :param response: response object
-    """
+    """Check if Supplier is logged out by checking the cookies."""
     with assertion_msg(
             "Found sso_display_logged_in cookie in the response. Maybe user is"
             " still logged in?"):

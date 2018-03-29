@@ -23,22 +23,12 @@ EXPECTED_STRINGS_WO_SSO_ACCOUNT = [
 
 
 def should_be_here(response: Response):
-    """Check if Supplier is on Confirm Export Status page.
-
-    :param response: response with Confirm Export Status page
-    """
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Supplier is on Confirm Export Status page")
 
 
 def submit(session: Session, token: str, exported: bool) -> Response:
-    """Submit the Export Status form.
-
-    :param session: Supplier session object
-    :param token: a CSRF token required to submit the form
-    :param exported: True is exported in the past, False if not
-    :return: response object
-    """
+    """Submit the Export Status form."""
     url = get_absolute_url("ui-buyer:register-confirm-export-status")
     headers = {"Referer": url}
     data = {
@@ -60,8 +50,6 @@ def should_see_info_about_sso_account(response: Response):
 
     NOTE:
     This requires Supplier not to have a SSO account.
-
-    :param response: response with Confirm Export Status page
     """
     expected = EXPECTED_STRINGS + EXPECTED_STRINGS_WO_SSO_ACCOUNT
     check_response(response, 200, body_contains=expected)

@@ -37,11 +37,6 @@ EXPECTED_STRINGS_USER_REMOVED = [
 
 
 def go_to(session: Session) -> Response:
-    """Go to the Profile 'Find a buyer' page / tab.
-
-    :param session: Supplier session object
-    :return: response object
-    """
     headers = {"Referer": get_absolute_url("profile:about")}
     response = make_request(Method.GET, URL, session=session, headers=headers)
     should_be_here(response)
@@ -84,8 +79,6 @@ def should_see_get_a_trade_profile(response: Response):
 
     NOTE:
     Supplier has to be logged in to get to this page.
-
-    :param response: response object
     """
     expected = EXPECTED_STRINGS + EXPECTED_STRINGS_NO_PROFILE
     check_response(response, 200, body_contains=expected)
@@ -98,8 +91,6 @@ def should_see_links_to_manage_trade_profile(response: Response):
 
     NOTE:
     Supplier has to be logged in to get to this page.
-
-    :param response: response object
     """
     expected = EXPECTED_STRINGS + EXPECTED_STRINGS_WITH_PROFILE
     check_response(response, 200, body_contains=expected)
@@ -111,9 +102,6 @@ def go_to_create_a_trade_profile(session: Session) -> Response:
 
     NOTE:
     This simulates a 'Click' on the 'Create a trade profile' button.
-
-    :param session: Supplier session object
-    :return: response object
     """
     url = get_absolute_url("ui-buyer:landing")
     response = make_request(Method.GET, url, session=session)

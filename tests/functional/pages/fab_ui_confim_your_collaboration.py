@@ -13,13 +13,12 @@ EXPECTED_STRINGS = [
 
 
 def should_be_here(response: Response):
-    """Check if Collaborator is on FAB Confirm your collaboration Page."""
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
-    logging.debug("Successfully got to the FAB Confirm your collaboration page")
+    logging.debug(
+        "Successfully got to the FAB Confirm your collaboration page")
 
 
 def open(session: Session, link: str) -> Response:
-    """Open the invitation link sent to the Collaborator."""
     with assertion_msg("Expected a non-empty invitation link"):
         assert link
     return make_request(Method.GET, link, session=session)

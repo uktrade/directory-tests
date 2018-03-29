@@ -13,9 +13,9 @@ LANDING = get_absolute_url("ui-supplier:landing")
 URL = urljoin(LANDING, 'suppliers/{company_number}/contact/')
 EXPECTED_STRINGS = [
     "Send a message to",
-    ("Fill in your details and a brief message summarising your needs that will"
-     " be sent to the UK company."), "Your full name:", "Your company name:",
-    "Country:", "Your email address:", "Industry:",
+    ("Fill in your details and a brief message summarising your needs that "
+     "will be sent to the UK company."), "Your full name:",
+    "Your company name:", "Country:", "Your email address:", "Industry:",
     "Enter a subject line for your message:", "Maximum 200 characters.",
     "Enter your message to the UK company:", "Maximum 1000 characters.",
     "Captcha:", "I agree to the great.gov.uk terms and conditions", "Send",
@@ -27,14 +27,8 @@ EXPECTED_STRINGS_MESSAGE_SENT = [
 ]
 
 
-def go_to(session: Session, company_number: str, company_name: str) -> Response:
-    """Go to Company's FAS profile page using company's number.
-
-    :param session: Supplier session object
-    :param company_number: company number
-    :param company_name: name of the company
-    :return: response object
-    """
+def go_to(
+        session: Session, company_number: str, company_name: str) -> Response:
     full_url = URL.format(company_number=company_number)
     response = make_request(Method.GET, full_url, session=session)
     should_be_here(response, name=company_name)
@@ -47,7 +41,8 @@ def should_be_here(response, *, name=None):
     logging.debug("Supplier is on FAS Contact Company page")
 
 
-def submit(session: Session, message: Message or Feedback, company_number: str):
+def submit(
+        session: Session, message: Message or Feedback, company_number: str):
     full_url = URL.format(company_number=company_number)
     headers = {"Referer": URL.format(company_number=company_number)}
     data = {
@@ -66,7 +61,8 @@ def submit(session: Session, message: Message or Feedback, company_number: str):
     return response
 
 
-def should_see_that_message_has_been_sent(company: Company, response: Response):
+def should_see_that_message_has_been_sent(
+        company: Company, response: Response):
     expected = EXPECTED_STRINGS_MESSAGE_SENT + [escape_html(company.title)]
     check_response(response, 200, body_contains=expected)
     logging.debug("Buyer was told that the message has been sent")

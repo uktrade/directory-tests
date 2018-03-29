@@ -15,7 +15,6 @@ EXPECTED_STRINGS = [
 
 
 def should_be_here(response: Response):
-    """Check if Collaborator is on FAB Confirm your profile ownership Page."""
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Successfully got to the FAB Confirm your ownership page")
 

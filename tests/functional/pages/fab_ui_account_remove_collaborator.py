@@ -20,7 +20,6 @@ EXPECTED_STRINGS_NO_COLLABORATORS = [
 
 
 def should_be_here(response: Response, *, have_collaborators: bool = True):
-    """Check if User is on the correct page."""
     if have_collaborators:
         check_response(response, 200, body_contains=EXPECTED_STRINGS)
     else:
@@ -30,8 +29,7 @@ def should_be_here(response: Response, *, have_collaborators: bool = True):
 
 def go_to(session: Session) -> Response:
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
-    response = make_request(Method.GET, URL, session=session, headers=headers)
-    return response
+    return make_request(Method.GET, URL, session=session, headers=headers)
 
 
 def extract_email_to_id_mapping(label: str) -> Tuple[str, str]:

@@ -20,21 +20,13 @@ EXPECTED_STRINGS = [
 
 
 def should_be_here(response: Response):
-    """Check if Supplier is on FAB Confirm your Identity - with letter page.
-
-    :param response: response object
-    """
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug(
         "Successfully got to the FAB Confirm your Identity - with letter page")
 
 
 def submit(actor: Actor) -> Response:
-    """Verify your identity with a physical letter.
-
-    :param actor: a namedtuple with Actor details
-    :return: response object
-    """
+    """Verify your identity with a physical letter."""
     headers = {"Referer": URL}
     data = {
         "csrfmiddlewaretoken": actor.csrfmiddlewaretoken,

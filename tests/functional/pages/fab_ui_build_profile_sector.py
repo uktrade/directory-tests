@@ -19,24 +19,14 @@ EXPECTED_STRINGS = [
 
 
 def should_be_here(response: Response):
-    """Check if Supplier is on FAB Build and improve your profile page.
-
-    :param response: response object
-    """
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
-    logging.debug("Successfully got to the FAB Build and improve your profile. "
-                  "Choose Your company sector")
+    logging.debug(
+        "Successfully got to the FAB Build and improve your profile. Choose "
+        "Your company sector")
 
 
 def submit(actor: Actor, sector: str, countries: list, other: str) -> Response:
-    """Submit Build your profile - Choose your sector form.
-
-    :param actor: a namedtuple with Actor details
-    :param sector: Industry Sector in which company is interested in
-    :param countries: a list of country codes of preferred countries to export
-    :param other: list of other countries your company is exporting to
-    :return: response object
-    """
+    """Submit Build your profile - Choose your sector form."""
     headers = {"Referer": URL}
     data = {
         "csrfmiddlewaretoken": actor.csrfmiddlewaretoken,

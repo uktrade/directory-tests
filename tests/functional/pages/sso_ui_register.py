@@ -24,17 +24,13 @@ EXPECTED_STRINGS = [
 
 
 def should_be_here(response: Response):
-    """Check if Supplier is on SSO Registration Page.
-
-    :param response: response object
-    """
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Successfully got to the SSO Registration page")
 
 
 def go_to(
-        session: Session, *, next: str = None, referer: str = None) -> Response:
-    """Go to the SSO Registration page."""
+        session: Session, *, next: str = None, referer: str = None)\
+        -> Response:
     referer = referer or get_absolute_url("ui-buyer:landing")
     if next:
         url = urljoin(URL, "?next={}".format(next))

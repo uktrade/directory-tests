@@ -23,32 +23,16 @@ EXPECTED_STRINGS_INVALID = [
 
 
 def go_to(session: Session) -> Response:
-    """Go to the FAB Upload Logo page.
-
-    :param session: Supplier session object
-    :return: response object
-    """
     response = make_request(Method.GET, URL, session=session)
     return response
 
 
 def should_be_here(response: Response):
-    """Check if Supplier is on FAB Upload Logo page
-
-    :param response: response object
-    """
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Successfully got to the FAB Upload Logo page")
 
 
 def upload(session: Session, token: str, file_path: str) -> Response:
-    """Upload logo.
-
-    :param session: Supplier session object
-    :param token: CSRF token required to upload the file
-    :param file_path: absolute path to the uploaded file
-    :return: response object
-    """
     headers = {"Referer": get_absolute_url("ui-buyer:upload-logo")}
     url = get_absolute_url("ui-buyer:upload-logo")
     data = {
@@ -66,11 +50,7 @@ def upload(session: Session, token: str, file_path: str) -> Response:
 
 
 def was_upload_rejected(response: Response) -> bool:
-    """Check if uploaded file was rejected or not.
-
-    :param response: response object
-    :return: True if file was rejected and False if it was accepted
-    """
+    """Check if uploaded file was rejected or not."""
     content = response.content.decode("utf-8")
     has_error = any([phrase in content for phrase in EXPECTED_STRINGS_INVALID])
     is_200 = response.status_code == 200

@@ -22,12 +22,7 @@ EXPECTED_STRINGS = [
 
 
 def go_to(session: Session, company_number: str) -> Response:
-    """Go to Company's FAS profile page using company's number.
-
-    :param session: Supplier session object
-    :param company_number: (optional) explicit company number
-    :return: response object
-    """
+    """Go to Company's FAS profile page using company's number."""
     full_url = urljoin(URL, company_number)
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
     response = make_request(
@@ -42,9 +37,7 @@ def go_to(session: Session, company_number: str) -> Response:
 def go_to_endpoint(session: Session, endpoint: str) -> Response:
     """Go to Company's FAS profile page using explicit FAS endpoint.
 
-    :param session: Supplier session object
     :param endpoint: FAS endpoint that leads directly to Company's profile page
-    :return: response object
     """
     fas_url = get_absolute_url("ui-supplier:landing")
     profile_url = urljoin(fas_url, endpoint)
@@ -52,11 +45,6 @@ def go_to_endpoint(session: Session, endpoint: str) -> Response:
 
 
 def should_be_here(response, *, number=None):
-    """Check if User is on the correct page.
-
-    :param response: response object
-    :param number: (optional) expected company number
-    """
     expected = EXPECTED_STRINGS + [number] if number else EXPECTED_STRINGS
     check_response(response, 200, body_contains=expected)
     logging.debug("Supplier is on FAS Company's Profile page")
@@ -119,11 +107,13 @@ def should_see_details(
     sector = DETAILS["SECTOR"] in visible_details
 
     if title:
-        with assertion_msg("Couldn't find Company's title '%s'", company.title):
+        with assertion_msg(
+                "Couldn't find Company's title '%s'", company.title):
             assert company.title in content
     if keywords:
         for keyword in company.keywords.split(", "):
-            with assertion_msg("Couldn't find Company's keyword '%s'", keyword):
+            with assertion_msg(
+                    "Couldn't find Company's keyword '%s'", keyword):
                 assert keyword.strip() in content
     if website:
         with assertion_msg(
@@ -158,7 +148,7 @@ def get_case_studies_details(response: Response):
         summary = Selector(text=article).css("p::text").extract()[0]
         href = Selector(text=article).css("a::attr(href)").extract()[0]
         slug = href.split("/")[-2]
-        assert slug, "Could not extract case study slug from {}".format(article)
+        assert slug, "Couldn't extract case study slug from {}".format(article)
         logging.debug("Got case study slug: %s", slug)
         result.append((title, summary, href, slug))
     assert result, "No Case Study details extracted from {}".format(articles)

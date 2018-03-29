@@ -13,7 +13,6 @@ EXPECTED_STRINGS = [
 
 
 def should_be_here(response: Response):
-    """Check if User is on the correct page."""
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
 
 
@@ -22,7 +21,6 @@ def go_to(session: Session) -> Response:
 
     This requires:
      * Supplier to be logged in
-
     """
     headers = {"Referer": get_absolute_url("profile:fab")}
     response = make_request(Method.GET, URL, session=session, headers=headers)

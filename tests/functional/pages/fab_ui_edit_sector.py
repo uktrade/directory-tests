@@ -22,8 +22,6 @@ def go_to(session: Session) -> Response:
 
     This requires:
      * Supplier to be logged in
-
-    :param session: Supplier session object
     """
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
     response = make_request(
@@ -34,10 +32,6 @@ def go_to(session: Session) -> Response:
 
 
 def should_be_here(response):
-    """Check if User is on the correct page.
-
-    :param response: response object
-    """
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Supplier is on the Select Sector page")
 
@@ -67,7 +61,8 @@ def update(
         new_sector = company.sector
 
     if update_countries:
-        new_countries = country_names or COUNTRIES[random.choice(list(COUNTRIES))]
+        random_country = COUNTRIES[random.choice(list(COUNTRIES))]
+        new_countries = country_names or random_country
     else:
         new_countries = company.export_to_countries
 

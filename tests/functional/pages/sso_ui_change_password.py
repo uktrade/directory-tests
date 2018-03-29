@@ -9,18 +9,10 @@ from tests.functional.utils.context_utils import Actor
 from tests.functional.utils.generic import assertion_msg
 from tests.functional.utils.request import Method, check_response, make_request
 
-EXPECTED_STRINGS = [
-    "Change Password",
-    "New Password:",
-    "New Password (again):", "change password"
-]
+EXPECTED_STRINGS = ["Change Password", "New Password:", "New Password (again)"]
 
 
 def should_be_here(response: Response):
-    """Check if Supplier is on SSO Change Password Page.
-
-    :param response: response object
-    """
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Successfully got to the SSO Change Password page")
 
@@ -28,15 +20,6 @@ def should_be_here(response: Response):
 def submit(
         actor: Actor, action: str, *, password: str = None,
         password_again: str = None, referer: str = None) -> Response:
-    """Try to change the password to the SSO account.
-
-    :param actor: a namedtuple with Actor details
-    :param action: target form action
-    :param password: (optional) new password
-    :param password_again: (optional) password confirmation
-    :param referer: (optional) referer URL
-    :return: response object
-    """
     session = actor.session
     URL = urljoin(get_absolute_url("sso:landing"), action)
     profile_about = get_absolute_url("profile:about")

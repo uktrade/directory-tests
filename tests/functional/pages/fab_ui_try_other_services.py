@@ -16,11 +16,5 @@ EXPECTED_STRINGS = [
 
 
 def should_be_here(response: Response):
-    """Check if Supplier is on Try our other services page.
-
-    Supplier can get here, when the company has not exporting intent.
-
-    :param response: response with Try our other services page
-    """
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Supplier is on Try our other services page")

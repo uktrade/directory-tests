@@ -41,22 +41,13 @@ def go_to(session: Session) -> Response:
 
 
 def should_be_here(response: Response):
-    """Check if User is on the correct page.
-
-    :param response: response object
-    """
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Supplier is on FAB Company's Profile page")
 
 
 def should_see_details(
         company: Company, response: Response, table_of_details: Table):
-    """Supplier should see all expected Company details of FAB profile page.
-
-    :param company: a namedtuple with Company details
-    :param response: a response object
-    :param table_of_details: a table of expected company details
-    """
+    """Supplier should see all expected Company details of FAB profile page."""
     visible_details = [row["detail"] for row in table_of_details]
     content = response.content.decode("utf-8")
 
