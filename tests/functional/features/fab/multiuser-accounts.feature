@@ -147,7 +147,7 @@ Feature: Multi-user accounts
   @transfer-ownership
   @bug
   @ED-2268
-  Scenario Outline: Company account owner should be able to transfer the account ownership to a user who "has or does not have" an SSO/great.gov.uk account
+  Scenario Outline: Company account owner should be able to transfer the ownership of "<a>" profile to a user who "<has or does not have>" an SSO/great.gov.uk account
     Given "Peter Alder" has created "<a>" profile for randomly selected company "Y"
     And "Annette Geissinger" "<has or does not have>" an SSO/great.gov.uk account
 
@@ -157,11 +157,11 @@ Feature: Multi-user accounts
     And "Peter Alder" should not see options to manage Find a Buyer profile users on SSO Profile
 
     Examples:
-      | has or does not have | a             |
-      | has                  | a verified    |
-      | has                  | an unverified |
-      | does not have        | a verified    |
-      | does not have        | an unverified |
+      | a             | has or does not have |
+      | a verified    | has                  |
+      | a verified    | does not have        |
+      | an unverified | has                  |
+      | an unverified | does not have        |
 
 
   @ED-3564
