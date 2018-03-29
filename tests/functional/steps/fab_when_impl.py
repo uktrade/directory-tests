@@ -181,7 +181,7 @@ def reg_confirm_company_selection(
     context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
 
-def reg_supplier_is_not_ready_to_export(context, supplier_alias):
+def reg_supplier_is_not_ready_to_export(context: Context, supplier_alias: str):
     """Supplier decides that her/his company is not ready to export.
 
     :param context: behave `context` object
@@ -229,7 +229,8 @@ def reg_confirm_export_status(
         context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
 
-def reg_create_sso_account(context, supplier_alias, alias):
+def reg_create_sso_account(
+        context: Context, supplier_alias: str, company_alias: str):
     """Will create a SSO account for selected company.
 
     NOTE:
@@ -244,14 +245,14 @@ def reg_create_sso_account(context, supplier_alias, alias):
     :type alias: str
     """
     actor = context.get_actor(supplier_alias)
-    company = context.get_company(alias)
+    company = context.get_company(company_alias)
     exported = context.exported
 
     # Submit SSO Registration form with Supplier's & Company's required details
     context.response = sso_ui_register.submit(actor, company, exported)
 
 
-def reg_open_email_confirmation_link(context, supplier_alias):
+def reg_open_email_confirmation_link(context: Context, supplier_alias: str):
     """Given Supplier has received a message with email confirmation link
     Then Supplier has to click on that link.
 
@@ -280,7 +281,7 @@ def reg_open_email_confirmation_link(context, supplier_alias):
     context.form_action_value = form_action_value
 
 
-def reg_supplier_confirms_email_address(context, supplier_alias):
+def reg_supplier_confirms_email_address(context: Context, supplier_alias: str):
     """Given Supplier has clicked on the email confirmation link, Suppliers has
     to confirm that the provided email address is the correct one.
 
@@ -296,7 +297,7 @@ def reg_supplier_confirms_email_address(context, supplier_alias):
     context.response = response
 
 
-def bp_provide_company_details(context, supplier_alias):
+def bp_provide_company_details(context: Context, supplier_alias: str):
     """Build Profile - Provide company details: website (optional), keywords
     and number of employees.
 
@@ -332,7 +333,8 @@ def bp_provide_company_details(context, supplier_alias):
     context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
 
-def bp_select_random_sector_and_export_to_country(context, supplier_alias):
+def bp_select_random_sector_and_export_to_country(
+        context: Context, supplier_alias: str):
     """Build Profile - Randomly select one of available sectors our company is
     interested in working in.
 
@@ -395,7 +397,7 @@ def bp_verify_identity_with_letter(context: Context, supplier_alias: str):
     fab_ui_profile.should_see_missing_description(response)
 
 
-def prof_set_company_description(context, supplier_alias):
+def prof_set_company_description(context: Context, supplier_alias: str):
     """Edit Profile - Will set company description.
 
     This is quasi-mandatory (*) step before Supplier can verify the company
@@ -436,7 +438,7 @@ def prof_set_company_description(context, supplier_alias):
     logging.debug("Supplier is back to the Profile Page")
 
 
-def prof_verify_company(context, supplier_alias):
+def prof_verify_company(context: Context, supplier_alias: str):
     """Will verify the company by submitting the verification code that is sent
     by post to the company's address.
 
@@ -475,7 +477,7 @@ def prof_verify_company(context, supplier_alias):
     fab_ui_profile.should_see_profile_is_verified(response)
 
 
-def prof_view_published_profile(context, supplier_alias):
+def prof_view_published_profile(context: Context, supplier_alias: str):
     """Whilst being of FAB company profile page it will `click` on
     the `View published profile` link.
 
@@ -494,7 +496,7 @@ def prof_view_published_profile(context, supplier_alias):
     logging.debug("Supplier is on the company's FAS page")
 
 
-def prof_attempt_to_sign_in_to_fab(context, supplier_alias):
+def prof_attempt_to_sign_in_to_fab(context: Context, supplier_alias: str):
     """Try to sign in to FAB as a Supplier without verified email address.
 
     :param context: behave `context` object
@@ -523,7 +525,7 @@ def prof_attempt_to_sign_in_to_fab(context, supplier_alias):
     context.response = response
 
 
-def prof_sign_out_from_fab(context, supplier_alias):
+def prof_sign_out_from_fab(context: Context, supplier_alias: str):
     """Sign out from Find a Buyer.
 
     :param context: behave `context` object
