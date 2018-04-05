@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """FAB Given step implementations."""
 import logging
+import os
 import re
 from random import choice, randrange
 from string import ascii_letters, digits
@@ -65,11 +66,13 @@ from tests.functional.utils.generic import (
     extract_form_action,
     extract_logo_url,
     extract_registration_page_link,
+    extract_text_from_pdf,
     get_absolute_path_of_file,
     get_active_company_without_fas_profile,
     get_language_code,
     get_md5_hash_of_file,
     get_number_of_search_result_pages,
+    get_pdf_from_stannp,
     get_verification_code,
     is_already_registered,
     is_inactive,
@@ -2054,3 +2057,21 @@ def fab_remove_collaborators(
     collaborators = company.collaborators
     collaborators = [alias for alias in collaborators if alias not in aliases]
     context.set_company_details(company.alias, collaborators=collaborators)
+
+
+def stannp_download_verification_letter_and_extract_text(
+        context: Context, actor_alias: str):
+    with assertion_msg(
+            "context.response does not contain response from StanNP!"):
+        assert "data" in context.response
+
+    pdf_link = context.response["data"]["pdf"]
+    pdf_path = get_pdf_from_stannp(pdf_link)
+    pdf_text = extract_text_from_pdf(pdf_path)
+
+    try:
+        os.remove(pdf_path)
+    except OSError:
+        logging.error(
+            "Something went wrong when trying to delete: {}".format(pdf_path))
+    context.update_actor(actor_alias, verification_letter=pdf_text)
