@@ -33,6 +33,10 @@ MAILGUN_DIRECTORY_EVENTS_URL = "https://api.mailgun.net/v3/%s/events" % MAILGUN_
 MAILGUN_DIRECTORY_API_USER = "api"
 MAILGUN_DIRECTORY_SECRET_API_KEY = os.environ["MAILGUN_DIRECTORY_SECRET_API_KEY"]
 
+# STANNP API DETAILS
+STANNP_API_KEY = os.environ["STANNP_API_KEY"]
+STANNP_LETTER_TEMPLATE_ID = os.getenv("STANNP_LETTER_TEMPLATE_ID", "5395")
+
 # Static data used across the projects
 EMAIL_VERIFICATION_MSG_SUBJECT = "Confirm your email address"
 FAS_MESSAGE_FROM_BUYER_SUBJECT = ("Someone is interested in your Find a Buyer "

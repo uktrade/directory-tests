@@ -1,6 +1,5 @@
 import requests
 from requests import Response
-
 from tests.settings import STANNP_API_KEY
 
 
