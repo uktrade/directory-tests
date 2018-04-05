@@ -55,6 +55,7 @@ from tests.functional.steps.fab_then_impl import (
     sso_should_get_password_reset_email,
     sso_should_get_request_for_collaboration_email,
     sso_should_see_invalid_password_reset_link_error,
+    stannp_should_see_expected_details_in_verification_letter,
     sud_should_not_see_options_to_manage_users,
     sud_should_see_options_to_manage_users
 )
@@ -412,3 +413,10 @@ def then_supplier_should_not_see_collaborator(
 def then_collaborator_should_not_be_able_to_access_page(
         context, collaborator_alias, page_name):
     should_not_be_able_to_access_page(context, collaborator_alias, page_name)
+
+
+@then('"{actor_alias}" should see correct details in the pdf with the verification letter')
+def then_actor_should_see_expected_details_in_verification_letter(
+        context, actor_alias):
+    stannp_should_see_expected_details_in_verification_letter(
+        context, actor_alias, correct_details=context.table)
