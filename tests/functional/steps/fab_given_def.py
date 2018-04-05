@@ -19,6 +19,7 @@ from tests.functional.steps.fab_given_impl import (
     sso_create_standalone_unverified_sso_account,
     sso_create_standalone_verified_sso_account,
     sso_get_password_reset_link,
+    stannp_send_verification_letter,
     unauthenticated_buyer,
     unauthenticated_supplier
 )
@@ -265,3 +266,8 @@ def given_supplier_transfers_the_account_ownership(
         context, supplier_alias, company_alias, new_owner_alias):
     fab_transfer_ownership(
         context, supplier_alias, company_alias, new_owner_alias)
+
+
+@given('"{actor_alias}" sends a test verification letter via StanNP for randomly selected company')
+def given_actor_sends_a_verification_letter(context, actor_alias):
+    stannp_send_verification_letter(context, actor_alias)

@@ -48,10 +48,12 @@ from tests.functional.utils.generic import (
     assertion_msg,
     filter_out_legacy_industries,
     flag_sso_account_as_verified,
+    get_active_company_without_fas_profile,
     get_published_companies,
     get_published_companies_with_n_sectors,
     get_verification_code,
     is_verification_letter_sent,
+    send_verification_letter,
     sentence
 )
 
@@ -300,3 +302,19 @@ def create_actor_with_verified_or_unverified_fab_profile(
         reg_create_verified_profile(context, actor_alias, company_alias)
     else:
         reg_create_unverified_profile(context, actor_alias, company_alias)
+
+
+def stannp_send_verification_letter(context: Context, actor_alias: str):
+    company_alias = "Test"
+    company = get_active_company_without_fas_profile(alias=company_alias)
+    context.add_company(company)
+    if not context.get_actor(actor_alias):
+        context.add_actor(unauthenticated_buyer(actor_alias))
+    context.update_actor(actor_alias, company_alias=company_alias)
+    verification_code = str(random.randint(1000000, 9999999))
+    context.set_company_details(
+        company_alias, verification_code=verification_code, owner=actor_alias)
+    company = context.get_company(company_alias)
+    response = send_verification_letter(context, company)
+    context.response = response
+    logging.debug("Successfully sent letter in test mode via StanNP")
