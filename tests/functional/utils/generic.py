@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Various utils used across the project."""
+import datetime
 import hashlib
 import json
 import logging
@@ -19,6 +20,7 @@ from typing import List
 
 import lxml
 import requests
+import textract
 from behave.runner import Context
 from bs4 import BeautifulSoup
 from directory_api_client.testapiclient import DirectoryTestAPIClient
@@ -40,6 +42,7 @@ from tests.functional.utils.context_utils import (
     Message
 )
 from tests.functional.utils.request import Method, check_response, make_request
+from tests.functional.utils.stannpclient import STANNP_CLIENT
 from tests.settings import (
     DIRECTORY_API_CLIENT_KEY,
     DIRECTORY_API_URL,
@@ -52,6 +55,7 @@ from tests.settings import (
     SECTORS,
     SSO_PROXY_API_CLIENT_BASE_URL,
     SSO_PROXY_SIGNATURE_SECRET,
+    STANNP_LETTER_TEMPLATE_ID,
     TEST_IMAGES_DIR,
     JPEGs,
     JPGs,
@@ -1323,3 +1327,55 @@ def extract_link_with_ownership_transfer_request(payload: str) -> str:
         "Found the link with FAB profile ownership request %s",
         ownership_request_link)
     return ownership_request_link
+
+
+def send_verification_letter(
+        context: Context, company: Company, *,
+        template: str = STANNP_LETTER_TEMPLATE_ID) -> str:
+    address = company.companies_house_details['address']
+    address_line_1 = address.get('address_line_1', 'Fake address line 1')
+    address_line_2 = address.get('address_line_2', 'Fake address line 2')
+    recipient = {
+        'postal_full_name': company.owner,
+        'address_line_1': address_line_1,
+        'address_line_2': address_line_2,
+        'locality': address['locality'],
+        'country': 'United Kingdom',
+        'postal_code': address['postal_code'],
+        'custom_fields': [
+            ('full_name', company.owner),
+            ('company_name', company.title),
+            ('verification_code', company.verification_code),
+            ('date', datetime.date.today().strftime('%d/%m/%Y')),
+            ('company', company.title),
+        ]
+    }
+    response = STANNP_CLIENT.send_letter(
+        template=template, recipient=recipient)
+    context.response = response
+    with assertion_msg(
+            "Expected to get 200 OK from StanNP API, but got {}"
+            .format(response.status_code)):
+        assert response.status_code == 200
+    with assertion_msg(
+            "Expected to see 'success=True' in StanNP API response, but got {}"
+            .format(response.json()["success"])):
+        assert response.json()["success"]
+    return response.json()
+
+
+def get_pdf_from_stannp(pdf_url: str):
+    response = STANNP_CLIENT.get(url=pdf_url)
+    target_path = os.path.join(TEST_IMAGES_DIR, "letter.pdf")
+    with open(target_path, "wb") as file:
+        file.write(response.content)
+    return target_path
+
+
+def extract_text_from_pdf(
+        filename: str, *, method: str = "pdftotext", language: str = "eng",
+        encoding: str = "UTF-8") -> str:
+    text = textract.process(
+        filename=filename, method=method, language=language,
+        encoding=encoding)
+    return text.decode(encoding)
