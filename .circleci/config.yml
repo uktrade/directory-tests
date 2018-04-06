@@ -42,6 +42,7 @@ jobs:
       - run:
           name: Create virtualenv and install dependencies
           command: |
+            sudo apt-get --yes --force-yes install swig
             python3 -m venv venv
             . venv/bin/activate
             pip install -r requirements_functional.txt
