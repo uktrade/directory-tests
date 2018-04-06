@@ -38,6 +38,7 @@ notifications-python-client==4.8.1
 parse-type==0.4.2         # via behave
 parse==1.8.2              # via behave, parse-type
 parsel==1.4.0             # via scrapy
+pdfminer2==20151206
 pyasn1-modules==0.2.1     # via service-identity
 pyasn1==0.4.2             # via pyasn1-modules, service-identity
 pycodestyle==2.3.1        # via flake8
@@ -53,9 +54,8 @@ retrying==1.3.3
 scrapy==1.5.0
 service-identity==17.0.0  # via scrapy
 sigauth==2.1.2
-six==1.11.0               # via automat, behave, cryptography, langdetect, mohawk, parse-type, parsel, pyopenssl, retrying, scrapy, w3lib
+six==1.11.0               # via automat, behave, cryptography, langdetect, mohawk, parse-type, parsel, pdfminer2, pyopenssl, retrying, scrapy, w3lib
 termcolor==1.1.0
-textract==1.6.1
 twisted==17.9.0           # via scrapy
 urllib3==1.22             # via requests
 w3lib==1.19.0             # via parsel, scrapy

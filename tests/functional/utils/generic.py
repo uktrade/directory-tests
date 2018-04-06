@@ -2,6 +2,7 @@
 """Various utils used across the project."""
 import datetime
 import hashlib
+import io
 import json
 import logging
 import os
@@ -20,7 +21,6 @@ from typing import List
 
 import lxml
 import requests
-import textract
 from behave.runner import Context
 from bs4 import BeautifulSoup
 from directory_api_client.testapiclient import DirectoryTestAPIClient
@@ -28,10 +28,15 @@ from directory_constants.constants import choices
 from directory_sso_api_client.testapiclient import DirectorySSOTestAPIClient
 from jsonschema import validate
 from langdetect import DetectorFactory, detect_langs
+from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
+from pdfminer.converter import TextConverter
+from pdfminer.layout import LAParams
+from pdfminer.pdfpage import PDFPage
 from requests import Response
 from retrying import retry
 from scrapy.selector import Selector
 from termcolor import cprint
+
 from tests import get_absolute_url
 from tests.functional.schemas.Companies import COMPANIES
 from tests.functional.utils.context_utils import (
@@ -1373,9 +1378,25 @@ def get_pdf_from_stannp(pdf_url: str):
 
 
 def extract_text_from_pdf(
-        filename: str, *, method: str = "pdftotext", language: str = "eng",
-        encoding: str = "UTF-8") -> str:
-    text = textract.process(
-        filename=filename, method=method, language=language,
-        encoding=encoding)
-    return text.decode(encoding)
+        path: str, *, codec: str = "utf-8", password: str = "",
+        maxpages: int = 0, caching: bool = True) -> str:
+    rsrcmgr = PDFResourceManager()
+    retstr = io.StringIO()
+    laparams = LAParams()
+    device = TextConverter(rsrcmgr, retstr, codec=codec, laparams=laparams)
+    fp = open(path, 'rb')
+    interpreter = PDFPageInterpreter(rsrcmgr, device)
+    pagenos = set()
+
+    for page in PDFPage.get_pages(fp, pagenos, maxpages=maxpages,
+                                  password=password,
+                                  caching=caching,
+                                  check_extractable=True):
+        interpreter.process_page(page)
+
+    text = retstr.getvalue()
+
+    fp.close()
+    device.close()
+    retstr.close()
+    return text

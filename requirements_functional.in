@@ -9,8 +9,8 @@ jsonschema
 langdetect
 nodeenv
 notifications-python-client
+pdfminer2
 requests
 retrying
 sigauth
 termcolor
-textract  # disable it before regenerating requirements and add it manually to requirements_functional.txt
