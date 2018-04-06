@@ -75,4 +75,4 @@ def test_check_if_verify_endpoint_redirects_to_correct_page(
         logged_in_session, absolute_url):
     response = logged_in_session.get(absolute_url, allow_redirects=True)
     assert response.status_code == http.client.OK
-    assert response.url == get_absolute_url("ui-buyer:landing")
+    assert response.url == get_absolute_url("ui-buyer:confirm-company-address")
