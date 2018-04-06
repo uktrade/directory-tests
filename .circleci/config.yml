@@ -51,7 +51,6 @@ jobs:
       - save_cache:
           key: functional-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
           paths:
-            - ~/bin
             - ~/directory-tests/venv
             - ~/directory-tests/docker/.env_with_export
             - ~/directory-tests/docker/.env_without_export
@@ -76,7 +75,6 @@ jobs:
       - save_cache:
           key: exred-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
           paths:
-            - ~/bin
             - ~/directory-tests/venv
             - ~/directory-tests/docker/.env_with_export
             - ~/directory-tests/docker/.env_without_export
