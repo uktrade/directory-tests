@@ -896,12 +896,14 @@ def stannp_should_see_expected_details_in_verification_letter(
     address = company.companies_house_details["address"]
     address_line_1 = address.get('address_line_1', 'Fake address line 1')
     address_line_2 = address.get('address_line_2', 'Fake address line 2')
+    locality = address.get('address_line_2', 'Fake locality')
     details_mapping = {
         "recipient name": actor.alias,
         "recipient postcode": address["postal_code"],
         "company name": company.title,
         "address line 1": address_line_1,
         "address line 2": address_line_2,
+        "locality": locality,
         "verification code": company.verification_code,
         "verification link": "great.gov.uk/verify",
         "contact us link": "https://contact-us.export.great.gov.uk/",

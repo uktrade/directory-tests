@@ -1340,11 +1340,12 @@ def send_verification_letter(
     address = company.companies_house_details['address']
     address_line_1 = address.get('address_line_1', 'Fake address line 1')
     address_line_2 = address.get('address_line_2', 'Fake address line 2')
+    locality = address.get('address_line_2', 'Fake locality')
     recipient = {
         'postal_full_name': company.owner,
         'address_line_1': address_line_1,
         'address_line_2': address_line_2,
-        'locality': address['locality'],
+        'locality': locality,
         'country': 'United Kingdom',
         'postal_code': address['postal_code'],
         'custom_fields': [
