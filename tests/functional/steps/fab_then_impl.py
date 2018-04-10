@@ -533,7 +533,8 @@ def fas_pages_should_be_in_selected_language(
         results = detect_page_language(content=content, main=main)
         detected = set(lang.lang for idx in results for lang in results[idx])
         logging.debug(
-            "`langdetect` detected FAS %s page to be in %s", detected)
+            "`langdetect` detected that FAS '%s' page is in %s", page_name,
+            detected)
 
         error_msg = ""
         for lang_code in detected:
