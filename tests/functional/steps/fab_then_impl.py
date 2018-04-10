@@ -519,6 +519,8 @@ def fas_pages_should_be_in_selected_language(
         else:
             raise KeyError(
                 "Please select valid part of the page: main or whole")
+    else:
+        main = False
 
     for page_name in pages:
         response = views[page_name]
