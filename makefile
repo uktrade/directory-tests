@@ -133,7 +133,7 @@ functional_tests:
 	behave -k --format progress3 --logging-filter=-root --stop --tags=-wip --tags=-skip --tags=~fixme tests/functional/features $(BEHAVE_ARGS)
 
 functional_tests_feature_dir:
-	behave -k --format progress3 --logging-filter=-root --stop --tags=-wip --tags=-skip --tags=~fixme tests/functional/features/${FEATURE_DIR} $(BEHAVE_ARGS)
+	behave -k --format progress3 --logging-filter=-root --tags=-wip --tags=-skip --tags=~fixme tests/functional/features/${FEATURE_DIR} $(BEHAVE_ARGS)
 
 functional_update_companies:
 	python -c "from tests.functional.utils.generic import update_companies; update_companies()"
