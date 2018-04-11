@@ -519,6 +519,8 @@ def fas_pages_should_be_in_selected_language(
         else:
             raise KeyError(
                 "Please select valid part of the page: main or whole")
+    else:
+        main = False
 
     for page_name in pages:
         response = views[page_name]
@@ -531,7 +533,8 @@ def fas_pages_should_be_in_selected_language(
         results = detect_page_language(content=content, main=main)
         detected = set(lang.lang for idx in results for lang in results[idx])
         logging.debug(
-            "`langdetect` detected FAS %s page to be in %s", detected)
+            "`langdetect` detected that FAS '%s' page is in %s", page_name,
+            detected)
 
         error_msg = ""
         for lang_code in detected:
@@ -886,3 +889,34 @@ def should_not_be_able_to_access_page(
             "As expected %s could not access '%s' page. Current URL is: %s",
             collaborator_alias, page_name, response.url
         )
+
+
+def stannp_should_see_expected_details_in_verification_letter(
+        context: Context, actor_alias: str, correct_details: Table):
+    actor = context.get_actor(actor_alias)
+    company = context.get_company(actor.company_alias)
+    letter = actor.verification_letter
+    address = company.companies_house_details["address"]
+    address_line_1 = address.get('address_line_1', 'Fake address line 1')
+    address_line_2 = address.get('address_line_2', 'Fake address line 2')
+    locality = address.get('address_line_2', 'Fake locality')
+    details_mapping = {
+        "recipient name": actor.alias,
+        "recipient postcode": address["postal_code"],
+        "company name": company.title,
+        "address line 1": address_line_1,
+        "address line 2": address_line_2,
+        "locality": locality,
+        "verification code": company.verification_code,
+        "verification link": "great.gov.uk/verify",
+        "contact us link": "https://contact-us.export.great.gov.uk/",
+    }
+    expected_keys = [row['correct_details'] for row in correct_details]
+    expected_details = {key: details_mapping[key] for key in expected_keys}
+    with assertion_msg(
+            "Could not find all expected details in the verification letter!:"
+            "\nExpected details:\n{}\nVerification letter:\n{}"
+            .format(expected_details, letter)):
+        all(detail in letter for detail in expected_details.values())
+    logging.debug(
+        "All expected details are visible in the verification letter")

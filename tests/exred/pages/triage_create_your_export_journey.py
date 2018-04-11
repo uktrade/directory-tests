@@ -28,7 +28,7 @@ SECTIONS = {
     "description": {
         "title": "#start-now-container > h1",
         "description": "#start-now-container > p",
-        "list of benefits": "#start-now-container > ul",
+        # "list of benefits": "#start-now-container > ul",
     },
     "start now": {
         "start now button": START_NOW,

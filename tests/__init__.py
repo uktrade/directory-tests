@@ -12,6 +12,7 @@ join_profile = partial(urljoin, settings.DIRECTORY_PROFILE_URL)
 join_ui_buyer = partial(urljoin, settings.DIRECTORY_UI_BUYER_URL)
 join_ui_supplier = partial(urljoin, settings.DIRECTORY_UI_SUPPLIER_URL)
 join_exred = partial(urljoin, settings.EXRED_UI_URL)
+join_contact_us = partial(urljoin, settings.DIRECTORY_CONTACT_US_UI_URL)
 
 urls = {
     # SSO
@@ -138,6 +139,10 @@ urls = {
     'ui-exred:story-first': 'story/online-marketplaces-propel-freestyle-xtreme-sales/',
     'ui-exred:story-second': 'story/hello-babys-rapid-online-growth/',
     'ui-exred:story-thrid': 'story/york-bag-retailer-goes-global-via-e-commerce/',
+
+    # Contact-Us UI
+    'ui-contact-us:help': 'help/',
+    'ui-contact-us:feedback-form': 'help/FeedbackForm/',
 }
 
 # these user credentials are hard-coded in `directory-sso`. The users
@@ -188,6 +193,8 @@ def get_absolute_url(name):
         return join_profile(relative_url)
     elif name.startswith('ui-exred:'):
         return join_exred(relative_url)
+    elif name.startswith('ui-contact-us:'):
+        return join_contact_us(relative_url)
 
 
 def get_random_email_address():
