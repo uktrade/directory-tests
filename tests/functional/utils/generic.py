@@ -1199,6 +1199,9 @@ def delete_supplier_data_from_sso(
     if response.status_code == 204:
         logging.debug(
             "Successfully deleted %s user data from SSO DB", email_address)
+        logging.debug(
+            "RESPONSE TIME | %s | %s %s", str(response.elapsed),
+            response.request.method, response.url)
     else:
         logging.error(
             "Something went wrong when trying to delete user data for %s from "
@@ -1213,6 +1216,9 @@ def delete_supplier_data_from_dir(ch_id: str, *, context: Context = None):
         logging.debug(
             "Successfully deleted supplier data for company %s from DIR DB",
             ch_id)
+        logging.debug(
+            "RESPONSE TIME | %s | %s %s", str(response.elapsed),
+            response.request.method, response.url)
     else:
         msg = ("INFO: Could not delete company {} from DIR DB!\n"
                "If, in the scenario, there is more than one supplier actor "
