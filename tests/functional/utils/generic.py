@@ -1199,6 +1199,9 @@ def delete_supplier_data_from_sso(
     if response.status_code == 204:
         logging.debug(
             "Successfully deleted %s user data from SSO DB", email_address)
+        logging.debug(
+            "RESPONSE TIME | %s | %s %s", str(response.elapsed),
+            response.request.method, response.url)
     else:
         logging.error(
             "Something went wrong when trying to delete user data for %s from "
@@ -1213,14 +1216,18 @@ def delete_supplier_data_from_dir(ch_id: str, *, context: Context = None):
         logging.debug(
             "Successfully deleted supplier data for company %s from DIR DB",
             ch_id)
+        logging.debug(
+            "RESPONSE TIME | %s | %s %s", str(response.elapsed),
+            response.request.method, response.url)
     else:
         msg = ("INFO: Could not delete company {} from DIR DB!\n"
-               "If, in the scenario, there is more than one supplier actor "
-               "associated with the same company, then you're seeing this "
-               "message most likely because company data was already "
-               "deleted with the deletion of the first supplier data.\nJust in"
-               "case here's the response from the server: \n{}"
-               .format(ch_id, response.content))
+               "Most likely it's because a FAB profile wasn't created for the "
+               "company used in the scenario or if in the scenario there is "
+               "more than one supplier actor associated with the same company,"
+               " then you're seeing this message because company data was "
+               "already deleted when the data for the first supplier actor was"
+               " deleted.\nJust in case, here's the response from the server: "
+               "\n{}".format(ch_id, response.content))
         blue(msg)
         logging.error(msg)
 
