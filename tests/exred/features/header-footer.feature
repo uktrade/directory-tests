@@ -44,6 +44,32 @@ Feature: Header-Footer
       | Selling Online Overseas             |
 
 
+  @ED-3587
+  @logo
+  @header
+  @footer
+  @ED-3118
+  Scenario Outline: Any Exporter should be able to get to the Home (Trade) page from "<selected>" page by using DIT logo in the page header and footer
+    Given "Robert" visits the "<selected>" page
+
+    When "Robert" decides to click on the DIT logo in the "header"
+
+    Then "Robert" should be on the "Home" page
+
+    Examples:
+      | selected                           |
+      | Home                               |
+      | SSO registration                   |
+      | SSO sign in                        |
+      | SSO profile about                  |
+      | Get finance                        |
+      | Interim export opportunities       |
+      | Triage - have you exported before  |
+      | Find a Buyer                       |
+      | Export Opportunities               |
+#      | Selling Online Overseas            | There's no SOO DEV env
+
+
   @ED-3091
   @favicon
   Scenario Outline: Any user should see the correct favicon on whichever page they're on
