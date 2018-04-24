@@ -96,9 +96,9 @@ def open_group_element(
     driver = context.driver
     if location.lower() == "home page":
         home.open(driver, group, element)
-    elif location.lower() == "header menu":
+    elif location.lower() in ["header menu", "header"]:
         header.open(driver, group, element)
-    elif location.lower() == "footer links":
+    elif location.lower() in ["footer links", "footer"]:
         footer.open(driver, group, element)
     elif location.lower() == "personalised journey":
         personalised_journey.open(driver, group, element)
@@ -1275,3 +1275,9 @@ def click_on_page_element(
     logging.debug(
         "%s decided to click on '%s' on '%s' page", actor_alias, element_name,
         page_name)
+
+
+def header_footer_click_on_dit_logo(
+        context: Context, actor_alias: str, location: str):
+    open_group_element(
+        context, group="general", element="logo", location=location)
