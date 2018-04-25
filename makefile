@@ -108,7 +108,7 @@ SET_PYLINK_CHECKER_ENV_VARS_STAGE := \
 	export TEST_URLS="https://stage.supplier.directory.uktrade.io/ https://export.great.uat.uktrade.io/ https://stage.buyer.directory.uktrade.io/ https://stage.sso.uktrade.io/accounts/login/  https://stage.profile.uktrade.io/about/"
 
 SET_PYLINK_CHECKER_ENV_VARS_DEV := \
-	export IGNORED_PREFIXES="http://www.example.com,https://www.example.com,https://dev.supplier.directory.uktrade.io/suppliers/,https://www.linkedin.com/company/,https://www.contactus.trade.gov.uk/" && \
+	export IGNORED_PREFIXES="http://www.example.com,https://www.example.com,https://dev.supplier.directory.uktrade.io/suppliers/,https://www.linkedin.com/company/,https://www.contactus.trade.gov.uk/,https://euipo.europa.eu/,https://www.marketresearch.com/" && \
 	export TEST_URLS="https://dev.supplier.directory.uktrade.io/ https://dev.exportreadiness.directory.uktrade.io/ https://dev.buyer.directory.uktrade.io/ https://www.dev.sso.uktrade.io/accounts/login/  https://dev.profile.uktrade.io/about/"
 
 # default to DEV environment if TEST_ENV is not set
