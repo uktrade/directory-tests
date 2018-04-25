@@ -116,7 +116,7 @@ TEST_ENV ?= DEV
 
 smoke_tests_links_checker:
 	$(SET_PYLINK_CHECKER_ENV_VARS_$(TEST_ENV)) && \
-	echo "Running pylinkchecker agaisnt: $${TEST_URLS} environment" && \
+	echo "Running pylinkvalidate against: $${TEST_URLS} environment" && \
 	pylinkvalidate.py \
 	    --progress \
 	    --timeout=55 \
