@@ -257,8 +257,6 @@ def find_mail_gun_events(
     return response
 
 
-def print_response(response: Response, *, trim: bool = True):
-    """
 def extract_page_contents(
         content: str, *, ignored_characters: str = '[ا]',
         strip_js: bool = True, strip_css: bool = True,
@@ -266,10 +264,6 @@ def extract_page_contents(
         strip_select_menus: bool = True) -> str:
     soup = BeautifulSoup(content, "lxml")
 
-    :param response:
-    :param trim:
-    :return:
-    """
     if strip_js:
         for element in soup.findAll(['script']):
             element.extract()
@@ -299,8 +293,10 @@ def extract_page_contents(
     return '\n'.join(lines)
 
 
+def print_response(
+        response: Response, *, trim: bool = True, content_only: bool = True,
+        trim_offset: int = 2048):
     request = response.request
-    trim_offset = 2048  # define the length of logged response content
 
     if response.history:
         blue("REQ was redirected")
@@ -325,11 +321,19 @@ def extract_page_contents(
             pprint(r.headers)
             if r.content:
                 content = decode_as_utf8(r.content)
+                content_only_msg = ""
+                if content_only:
+                    content_only_msg = " & without HTML markup"
+                    content = extract_page_contents(content)
                 if trim:
-                    blue("Intermediate RESP Content (trimmed):")
+                    blue(
+                        "Intermediate RESP Content (trimmed{}):"
+                        .format(content_only_msg))
                     print(content[0:trim_offset])
                 else:
-                    blue("Intermediate RESP Content:")
+                    blue(
+                        "Intermediate RESP Content{}:"
+                        .format(content_only_msg))
                     print(content)
 
         blue("Final destination: %s %s -> %d %s" % (
@@ -362,17 +366,22 @@ def extract_page_contents(
 
     if response.content:
         content = decode_as_utf8(response.content)
+        content_only_msg = ""
+        if content_only:
+            content_only_msg = " & without HTML markup"
+            content = extract_page_contents(content)
         if trim:
-            red("RSP Content (trimmed):")
+            red("RSP Content (trimmed{}):".format(content_only_msg))
             print(content[0:trim_offset])
         else:
-            red("RSP Content:")
+            red("RSP Content{}:".format(content_only_msg))
             print(content)
 
 
-def log_response(response: Response, *, trim: bool = True):
+def log_response(
+        response: Response, *, trim: bool = True, trim_offset: int = 2048,
+        content_only: bool = True):
     request = response.request
-    trim_offset = 2048  # define the length of logged response content
 
     logging.debug(
         "RESPONSE TIME | %s | %s %s", str(response.elapsed), request.method,
@@ -398,12 +407,18 @@ def log_response(response: Response, *, trim: bool = True):
             logging.debug("Intermediate RESP Headers: %s", r.headers)
             if r.content:
                 content = decode_as_utf8(r.content)
+                content_only_msg = ""
+                if content_only:
+                    content_only_msg = " & without HTML markup"
+                    content = extract_page_contents(content)
                 if trim or len(r.content) > trim_offset:
                     logging.debug(
-                        "Intermediate RESP Content: %s",
-                        content[0:trim_offset])
+                        "Intermediate RESP Content (trimmed%s): %s",
+                        content[0:trim_offset], content_only_msg)
                 else:
-                    logging.debug("Intermediate RSP Content: %s", content)
+                    logging.debug(
+                        "Intermediate RSP Content%s: %s", content,
+                        content_only_msg)
         logging.debug(
             "Final destination: %s %s -> %d %s", request.method, request.url,
             response.status_code, response.url)
@@ -433,10 +448,16 @@ def log_response(response: Response, *, trim: bool = True):
 
     if response.content:
         content = decode_as_utf8(response.content)
+        content_only_msg = ""
+        if content_only:
+            content_only_msg = " & without HTML markup"
+            content = extract_page_contents(content)
         if trim:
-            logging.debug("RSP Content (trimmed): %s", content[0:trim_offset])
+            logging.debug(
+                "RSP Content (trimmed%s): %s", content[0:trim_offset],
+                content_only_msg)
         else:
-            logging.debug("RSP Content: %s", content)
+            logging.debug("RSP Content%s: %s", content, content_only_msg)
 
 
 def int_api_ch_search(term: str) -> dict:
