@@ -528,28 +528,28 @@ def fas_pages_should_be_in_selected_language(
         # printed out to the console in case of a failing assertion
         context.response = response
         content = response.content.decode("utf-8")
+        url = response.url
         expected_language = get_language_code(language)
-        logging.debug("Detecting the language of FAS %s page", page_name)
-        results = detect_page_language(content=content, main=main)
-        detected = set(lang.lang for idx in results for lang in results[idx])
         logging.debug(
-            "`langdetect` detected that FAS '%s' page is in %s", page_name,
-            detected)
+            "detecting the language of fas %s page %s", page_name,
+            response.url)
+        results = detect_page_language(content=content, main=main)
+        median_results = {language: median(probabilities)
+                          for language, probabilities in results.items()}
 
-        error_msg = ""
-        for lang_code in detected:
-            probabilities = [lang.prob
-                             for idx in results
-                             for lang in results[idx]
-                             if lang.lang == lang_code]
-            error_msg += ("With median probability {} the text is in {}\n"
-                          .format(median(probabilities), lang_code))
+        with assertion_msg(
+                "Expected to see '{}' among languages detected for page '{} ->"
+                " {}', but instead got '{}'"
+                .format(expected_language, page_name, url, median_results)):
+            assert expected_language in median_results
 
-        with assertion_msg(error_msg):
-            assert all(lang.prob > probability
-                       for idx in results
-                       for lang in results[idx]
-                       if lang.lang == expected_language)
+        with assertion_msg(
+                "Expected '{}' page to be '{}' with median probability {} "
+                "but it was detected with {}"
+                .format(
+                    page_name, expected_language, probability,
+                    median_results[expected_language])):
+            assert median_results[expected_language] > probability
 
 
 def fas_should_find_all_sought_companies(context: Context, buyer_alias: str):
