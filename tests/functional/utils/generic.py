@@ -10,14 +10,14 @@ import random
 import re
 import sys
 import traceback
-from collections import namedtuple
+from collections import defaultdict, namedtuple
 from contextlib import contextmanager
 from email.mime.text import MIMEText
 from enum import Enum
 from pprint import pprint
 from random import choice
 from string import ascii_uppercase
-from typing import List
+from typing import DefaultDict, List
 
 import lxml
 import requests
@@ -28,15 +28,14 @@ from directory_constants.constants import choices
 from directory_sso_api_client.testapiclient import DirectorySSOTestAPIClient
 from jsonschema import validate
 from langdetect import DetectorFactory, detect_langs
-from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
 from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
+from pdfminer.pdfinterp import PDFPageInterpreter, PDFResourceManager
 from pdfminer.pdfpage import PDFPage
 from requests import Response
 from retrying import retry
 from scrapy.selector import Selector
 from termcolor import cprint
-
 from tests import get_absolute_url
 from tests.functional.schemas.Companies import COMPANIES
 from tests.functional.utils.context_utils import (
@@ -1115,7 +1114,7 @@ def extract_form_errors(content: str) -> str:
 
 def detect_page_language(
         *, url: str = None, content: str = None, main: bool = False,
-        rounds: int = 15) -> dict:
+        rounds: int = 15) -> DefaultDict[str, List]:
     """Detect the language of the page.
 
     NOTE:
@@ -1139,34 +1138,36 @@ def detect_page_language(
     :return: language code detected by langdetect
     """
     assert rounds > 0, "Rounds can't be lower than 1"
-    ignored_characters = '[ا]'
     if url:
         content = requests.get(url).content.decode("utf-8")
 
-    soup = BeautifulSoup(content, "lxml")
-    # strip out all of JS & CSS that might not be filtered out initially
-    for element in soup.findAll(['script', 'style']):
-        element.extract()
-
-    if main:
-        # ignore page header & footer
+    if not main:
+        logging.debug(
+            "Will analyse the contents of the whole page, including page "
+            "header & footer")
+        text = extract_page_contents(
+            content, strip_header=False, strip_footer=False)
+    else:
         logging.debug(
             "Will analyse only the main content of the page and ignore the "
             "page header & footer")
-        for element in soup.findAll(['header', 'footer']):
-            element.extract()
+        text = extract_page_contents(content)
 
-    # clear the page content from the specified characters
-    text = re.sub(ignored_characters, '', soup.get_text())
-    lines = [line.strip().lower()
-             for line in text.splitlines()
-             if line.strip()]
-    results = {}
+    raw_results = {}
+    logging.debug("Text used to detect the page language(s):")
+    logging.debug(text)
     for x in range(rounds):
-        results[x] = detect_langs('\n'.join(lines))
+        raw_results[x] = detect_langs(text)
+
+    flattened_results = defaultdict(list)
+    for detections in raw_results.values():
+        for detection in detections:
+            flattened_results[detection.lang].append(detection.prob)
+
     logging.debug(
-        "Language detection results after %d rounds: %s", rounds, results)
-    return results
+        "Language detection results after %d rounds: %s", rounds,
+        flattened_results)
+    return flattened_results
 
 
 def get_number_of_search_result_pages(response: Response) -> int:
