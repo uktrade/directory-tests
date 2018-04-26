@@ -259,11 +259,46 @@ def find_mail_gun_events(
 
 def print_response(response: Response, *, trim: bool = True):
     """
+def extract_page_contents(
+        content: str, *, ignored_characters: str = '[ا]',
+        strip_js: bool = True, strip_css: bool = True,
+        strip_header: bool = True, strip_footer: bool = True,
+        strip_select_menus: bool = True) -> str:
+    soup = BeautifulSoup(content, "lxml")
 
     :param response:
     :param trim:
     :return:
     """
+    if strip_js:
+        for element in soup.findAll(['script']):
+            element.extract()
+    if strip_css:
+        for element in soup.findAll(['style']):
+            element.extract()
+    if strip_header:
+        for element in soup.findAll(['header']):
+            element.extract()
+    if strip_footer:
+        for element in soup.findAll(['footer']):
+            element.extract()
+    if strip_select_menus:
+        for element in soup.findAll(['select']):
+            element.extract()
+
+    text = soup.get_text()
+
+    # clear the page content from the specified characters
+    if ignored_characters:
+        text = re.sub(ignored_characters, '', text)
+
+    # remove empty lines
+    lines = [line.strip().lower()
+             for line in text.splitlines()
+             if line.strip()]
+    return '\n'.join(lines)
+
+
     request = response.request
     trim_offset = 2048  # define the length of logged response content
 
