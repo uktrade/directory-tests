@@ -529,7 +529,10 @@ def fas_pages_should_be_in_selected_language(
         context.response = response
         content = response.content.decode("utf-8")
         url = response.url
-        expected_language = get_language_code(language)
+        if language.lower() == "chinese":
+            expected_language = "zh-cn"
+        else:
+            expected_language = get_language_code(language)
         logging.debug(
             "detecting the language of fas %s page %s", page_name,
             response.url)
