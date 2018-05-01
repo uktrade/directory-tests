@@ -86,6 +86,7 @@ ERROR_INDICATORS = [
 FAS_SUPPORTED_LANGUAGES = {
     "arabic": "ar",
     "english": "en",
+    "french": "fr",
     "chinese": "zh-hans",
     "german": "de",
     "japanese": "ja",
