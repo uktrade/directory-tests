@@ -261,7 +261,8 @@ def extract_page_contents(
         content: str, *, ignored_characters: str = '[ا]',
         strip_js: bool = True, strip_css: bool = True,
         strip_header: bool = True, strip_footer: bool = True,
-        strip_select_menus: bool = True) -> str:
+        strip_select_menus: bool = True,
+        strip_unordered_lists: bool = True) -> str:
     soup = BeautifulSoup(content, "lxml")
 
     if strip_js:
@@ -278,6 +279,9 @@ def extract_page_contents(
             element.extract()
     if strip_select_menus:
         for element in soup.findAll(['select']):
+            element.extract()
+    if strip_unordered_lists:
+        for element in soup.findAll(['ul']):
             element.extract()
 
     text = soup.get_text()
@@ -1147,7 +1151,8 @@ def detect_page_language(
             "Will analyse the contents of the whole page, including page "
             "header & footer")
         text = extract_page_contents(
-            content, strip_header=False, strip_footer=False)
+            content, strip_header=False, strip_footer=False,
+            strip_unordered_lists=False)
     else:
         logging.debug(
             "Will analyse only the main content of the page and ignore the "
