@@ -190,11 +190,11 @@ SECTIONS = {
         "description": "#services-section-description",
         "groups": "#services .group",
 
-        "find a buyer - article": "#services div:nth-child(1) > article",
+        "find a buyer - article": "#services div.service-teaser:nth-child(1)",
         "online marketplaces - article":
-            "#services div:nth-child(2) > article",
+            "#services div.service-teaser:nth-child(2)",
         "export opportunities - article":
-            "#services div:nth-child(3) > article",
+            "#services div.service-teaser:nth-child(3)",
 
         "find a buyer - image": "#services-section-find-a-buyer-image",
         "online marketplaces - image":
