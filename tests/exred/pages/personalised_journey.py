@@ -43,8 +43,7 @@ SIGN_IN = "#articles > div > div.scope-indicator > p > a:nth-child(2)"
 SECTIONS = {
     "hero": {
         "title": "section.hero-section h1",
-        "introduction": "section.hero-section p",
-        "update preferences link": "section.hero-section a.preferences",
+        "update preferences link": "section.intro-section a.preferences",
     },
     "facts": {
         "intro": "#content > section.sector-fact p.intro",
