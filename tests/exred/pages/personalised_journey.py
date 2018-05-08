@@ -38,8 +38,8 @@ TOP_IMPORTER = "#top_importer_name"
 TOP_IMPORTERS = "#content > section.top-markets > div > ol > li > dl"
 TRADE_VALUE = "#top_importer_global_trade_value"
 TOP_10_TRADE_VALUE = ".cell-global_trade_value"
-REGISTER = "#articles > div > div.scope-indicator > p > a:nth-child(1)"
-SIGN_IN = "#articles > div > div.scope-indicator > p > a:nth-child(2)"
+REGISTER = "section.intro-section a.link:nth-child(1)"
+SIGN_IN = "section.intro-section a.link:nth-child(2)"
 SECTIONS = {
     "hero": {
         "title": "section.hero-section h1",
@@ -100,7 +100,7 @@ SECTIONS = {
     "article list": {
         "itself": "#articles",
         "heading": "#articles h2",
-        "introduction": "#articles .intro",
+        "introduction": "#articles div.section-intro p",
         "article list": "#articles .section-content-list",
     },
     "guidance": {
