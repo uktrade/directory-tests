@@ -49,7 +49,8 @@ from steps.when_impl import (
     triage_should_see_answers_to_questions,
     triage_what_is_your_company_name,
     visit_page,
-    triage_question_what_do_you_want_to_export
+    triage_question_what_do_you_want_to_export,
+    header_footer_click_on_dit_logo
 )
 
 
@@ -343,3 +344,8 @@ def when_actor_decides_to_click_on_page_element(
 @when('"{actor_alias}" says what she wants to export "{goods_or_services}"')
 def when_actor_says_what_is_exported(context, actor_alias, goods_or_services):
     triage_question_what_do_you_want_to_export(context, actor_alias, goods_or_services)
+
+
+@when('"{actor_alias}" decides to click on the DIT logo in the "{logo_location}"')
+def when_actor_clicks_on_the_dit_logo(context, actor_alias, logo_location):
+    header_footer_click_on_dit_logo(context, actor_alias, logo_location)

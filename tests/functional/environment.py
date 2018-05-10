@@ -55,16 +55,22 @@ def after_step(context, step):
             section_errors = extract_section_error(content)
             form_errors = extract_form_errors(content)
             if main_errors:
-                red("Found errors in the `main` part of the response")
+                red(
+                    "Found words in the `main` part of the response that might"
+                    " suggest the root cause of the error")
                 print(main_errors)
             if section_errors:
-                red("Found errors in the `section` of the response")
+                red(
+                    "Found words in the `section` part of the response that "
+                    "might suggest the root cause of the error")
                 print(section_errors)
             if form_errors:
-                red("Found form related error(s)")
+                red(
+                    "Found words in the `form` part of the response that might"
+                    " suggest the root cause of the error")
                 print(form_errors)
             green("Last recorded request & response")
-            print_response(res, trim=True)
+            print_response(res, trim=True, content_only=True)
         else:
             blue("There's no response content to log")
 

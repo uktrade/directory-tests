@@ -37,12 +37,6 @@ SECTIONS = {
         "itself": "#header-bar",
         "language selector": LANGUAGE_SELECTOR
     },
-    "beta": {
-        "itself": "#header-beta-bar",
-        "sticker": "#header-beta-bar .phase-tag",
-        "message": "#header-beta-bar p > span",
-        "link": BETA_FEEDBACK
-    },
     "header-menu": {
         "itself": "#header-menu",
         "logo": "#header-logo"

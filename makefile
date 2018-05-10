@@ -108,7 +108,7 @@ SET_PYLINK_CHECKER_ENV_VARS_STAGE := \
 	export TEST_URLS="https://stage.supplier.directory.uktrade.io/ https://export.great.uat.uktrade.io/ https://stage.buyer.directory.uktrade.io/ https://stage.sso.uktrade.io/accounts/login/  https://stage.profile.uktrade.io/about/"
 
 SET_PYLINK_CHECKER_ENV_VARS_DEV := \
-	export IGNORED_PREFIXES="https://www.marketresearch.com,http://www.example.com,https://www.example.com,https://www.nationalarchives.gov.uk,https://euipo.europa.eu/,http://www.kwintessential.co.uk/resources/guides/,https://www.ukbaa.org.uk/,http://gb.kompass.com/,https://ico.org.uk/concerns/getting/,http://www.iata.org/whatwedo/cargo/e/efreight/Pages/index.aspx,https://developer.google.com/,http://www.yellow.com,https://www.contactus.trade.gov.uk,https://dev.supplier.directory.uktrade.io/search/,https://dev.supplier.directory.uktrade.io/suppliers/" && \
+	export IGNORED_PREFIXES="http://www.example.com,https://www.example.com,https://dev.supplier.directory.uktrade.io/suppliers/,https://www.linkedin.com/company/,https://www.contactus.trade.gov.uk/,https://euipo.europa.eu/,https://www.marketresearch.com/" && \
 	export TEST_URLS="https://dev.supplier.directory.uktrade.io/ https://dev.exportreadiness.directory.uktrade.io/ https://dev.buyer.directory.uktrade.io/ https://www.dev.sso.uktrade.io/accounts/login/  https://dev.profile.uktrade.io/about/"
 
 # default to DEV environment if TEST_ENV is not set
@@ -116,7 +116,7 @@ TEST_ENV ?= DEV
 
 smoke_tests_links_checker:
 	$(SET_PYLINK_CHECKER_ENV_VARS_$(TEST_ENV)) && \
-	echo "Running pylinkchecker agaisnt: $${TEST_URLS} environment" && \
+	echo "Running pylinkvalidate against: $${TEST_URLS} environment" && \
 	pylinkvalidate.py \
 	    --progress \
 	    --timeout=55 \
@@ -125,7 +125,14 @@ smoke_tests_links_checker:
 	    --types=a \
 	    --test-outside \
 	    --parser=lxml \
-	    --header="User-Agent: Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; FSL 7.0.6.01001)" \
+	    --header="Connection: keep-alive" \
+	    --header="Pragma: no-cache" \
+	    --header="Cache-Control: no-cache" \
+	    --header="Upgrade-Insecure-Requests: 1" \
+	    --header="Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8" \
+	    --header="DNT: 1" \
+	    --header="Accept-Encoding: gzip, deflate" \
+	    --header="User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.117 Safari/537.36" \
 	    --ignore="$${IGNORED_PREFIXES}" \
 	    $${TEST_URLS}
 
