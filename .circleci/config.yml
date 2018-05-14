@@ -360,23 +360,6 @@ jobs:
 workflows:
   version: 2
 
-  refresh_geckoboard_periodically:
-    triggers:
-    - schedule:
-        cron: "0,15,30,45 8-19 * * 1-5"
-        filters:
-          branches:
-            only:
-              - master
-    jobs:
-      - checkout_code
-      - geckoboard_updater_requirements:
-          requires:
-            - checkout_code
-      - refresh_geckoboard:
-          requires:
-            - geckoboard_updater_requirements
-
   run_all_tests:
     jobs:
       - checkout_code
@@ -421,3 +404,20 @@ workflows:
           requires:
             - smoke_tests
             - functional_tests_requirements
+
+  refresh_geckoboard_periodically:
+    triggers:
+    - schedule:
+        cron: "0,15,30,45 8-19 * * 1-5"
+        filters:
+          branches:
+            only:
+              - master
+    jobs:
+      - checkout_code
+      - geckoboard_updater_requirements:
+          requires:
+            - checkout_code
+      - refresh_geckoboard:
+          requires:
+            - geckoboard_updater_requirements
