@@ -97,6 +97,8 @@ jobs:
           key: geckoboard-updater-dependency-cache-{{ .Revision }}
           paths:
             - ~/directory-tests/venv
+            - ~/directory-tests/docker/.env_with_export
+            - ~/directory-tests/docker/.env_without_export
 
   smoke_tests:
     docker:
