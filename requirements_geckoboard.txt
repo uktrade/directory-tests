@@ -4,15 +4,15 @@
 #
 #    pip-compile --output-file requirements_geckoboard.txt requirements_geckoboard.in
 #
-certifi==2018.1.18        # via requests
+certifi==2018.4.16        # via requests
 chardet==3.0.4            # via requests
 circleclient==0.1.6
 defusedxml==0.5.0         # via jira
 geckoboard.py==1.0.0
 idna==2.6                 # via requests
-jira==1.0.14
-oauthlib==2.0.6           # via requests-oauthlib
-pbr==3.1.1                # via jira
+jira==1.0.15
+oauthlib==2.0.7           # via requests-oauthlib
+pbr==4.0.2                # via jira
 requests-oauthlib==0.8.0  # via jira
 requests-toolbelt==0.8.0  # via jira
 requests==2.18.4          # via circleclient, geckoboard.py, jira, requests-oauthlib, requests-toolbelt
