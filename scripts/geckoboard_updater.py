@@ -363,8 +363,14 @@ def circle_ci_get_last_build_results(build: dict) -> dict:
     return test_results
 
 
-def circle_ci_get_last_test_results(project_name: str) -> dict:
-    recent_builds = circle_ci_get_recent_builds(project_name)
+def circle_ci_get_last_test_results(
+        project_name: str, *, ignored_workflows: List[str] = None,
+        limit: int = None) -> dict:
+    recent_builds = circle_ci_get_recent_builds(project_name, limit=limit)
+    if ignored_workflows:
+        recent_builds = [build for build in recent_builds
+                         if build['workflows']['workflow_name']
+                         not in ignored_workflows]
     last_workflow_id = circle_ci_get_last_workflow_id(recent_builds)
     if last_workflow_id:
         last_workflow_builds = circle_ci_get_builds_for_workflow(
@@ -377,8 +383,10 @@ def circle_ci_get_last_test_results(project_name: str) -> dict:
 
 
 def circle_ci_get_last_test_results_per_project() -> dict:
+    ignored_workflows = ['refresh_geckoboard_periodically']
     return {
-        'Tests': circle_ci_get_last_test_results('directory-tests'),
+        'Tests': circle_ci_get_last_test_results(
+            'directory-tests', ignored_workflows=ignored_workflows, limit=100),
         'API': circle_ci_get_last_test_results('directory-api'),
         'FAS': circle_ci_get_last_test_results('directory-ui-supplier'),
         'FAB': circle_ci_get_last_test_results('directory-ui-buyer'),
