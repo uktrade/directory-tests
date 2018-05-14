@@ -156,10 +156,15 @@ def after_scenario(context: Context, scenario: Scenario):
     for actor in actors.values():
         if actor.registered:
             delete_supplier_data_from_sso(actor.email)
-    if RESTART_BROWSER == "scenario":
-        context.driver.quit()
-    if RESTART_BROWSER == "feature":
-        clear_driver_cookies(context.driver)
+    if hasattr(context, "driver"):
+        if RESTART_BROWSER == "scenario":
+            context.driver.quit()
+        if RESTART_BROWSER == "feature":
+            clear_driver_cookies(context.driver)
+    else:
+        logging.warning(
+            "Context does not have Selenium 'driver' object. This might be "
+            "happen when it wasn't initialized properly")
     if scenario.status == "failed":
         if hasattr(context, "driver"):
             from selenium.webdriver.remote.command import Command

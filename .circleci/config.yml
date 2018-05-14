@@ -79,6 +79,27 @@ jobs:
             - ~/directory-tests/docker/.env_with_export
             - ~/directory-tests/docker/.env_without_export
 
+  geckoboard_updater_requirements:
+    docker:
+      - image: circleci/python:3.5.3
+    working_directory: ~/directory-tests
+    steps:
+      - restore_cache:
+          keys:
+            - cached-repo-{{ .Revision }}
+      - run:
+          name: Create virtualenv and install dependencies
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements_geckoboard.txt
+      - save_cache:
+          key: geckoboard-updater-dependency-cache-{{ .Revision }}
+          paths:
+            - ~/directory-tests/venv
+            - ~/directory-tests/docker/.env_with_export
+            - ~/directory-tests/docker/.env_without_export
+
   smoke_tests:
     docker:
       - image: circleci/python:3.5.3
@@ -317,9 +338,28 @@ jobs:
       - store_artifacts:
           path: ./tests/functional/reports
 
+  refresh_geckoboard:
+    docker:
+      - image: circleci/python:3.5.3
+    working_directory: ~/directory-tests
+    steps:
+      - restore_cache:
+          keys:
+            - cached-repo-{{ .Revision }}
+      - restore_cache:
+          keys:
+            - geckoboard-updater-dependency-cache-{{ .Revision }}
+      - run:
+          name: Refresh Geckoboard
+          command: |
+            . venv/bin/activate
+            python ./docker/env_writer.py ./docker/env.json
+            source ./docker/.env_with_export;
+            python scripts/geckoboard_updater.py
 
 workflows:
   version: 2
+
   run_all_tests:
     jobs:
       - checkout_code
@@ -364,3 +404,20 @@ workflows:
           requires:
             - smoke_tests
             - functional_tests_requirements
+
+  refresh_geckoboard_periodically:
+    triggers:
+    - schedule:
+        cron: "0,15,30,45 8-19 * * 1-5"
+        filters:
+          branches:
+            only:
+              - master
+    jobs:
+      - checkout_code
+      - geckoboard_updater_requirements:
+          requires:
+            - checkout_code
+      - refresh_geckoboard:
+          requires:
+            - geckoboard_updater_requirements
