@@ -390,10 +390,4 @@ workflows:
             only:
               - master
     jobs:
-      - checkout_code
-      - geckoboard_updater_requirements:
-          requires:
-            - checkout_code
-      - refresh_geckoboard:
-          requires:
-            - geckoboard_updater_requirements
+      - refresh_geckoboard
