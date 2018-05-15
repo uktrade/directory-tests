@@ -31,6 +31,16 @@ JQL_KANBAN_BUGS = "project = ED AND issuetype = Bug AND status != Backlog AND st
 JQL_BACKLOG_BUGS = "project = ED AND issuetype = Bug AND status = Backlog ORDER BY created DESC"
 JQL_MANUAL_VS_AUTOMATED = "project = ED AND resolution = Unresolved AND labels in (qa_auto, qa_manual) ORDER BY priority DESC, updated DESC"
 JQL_SCENARIOS_TO_AUTOMATE = "project = ED AND issuetype in (Task, Sub-task) AND resolution = Unresolved AND labels = qa_automated_scenario ORDER BY created DESC"
+JQL_BUGS_CLOSED_TODAY = """
+PROJECT in (ED) 
+AND issuetype = Bug 
+AND Status CHANGED FROM ("Blocked!", "Dev - in progress", "Dev - Code Review", 
+"Design - in Progress", "Dev - Planning", "Dev - selected", "Dev To Do", 
+"Testing", "User research") 
+TO (Closed, Done, "Release Candidate", Release) 
+DURING (-1d, now()) 
+ORDER BY key ASC, updated DESC
+"""
 
 # Mapping of CircleCI job names to more human friendly ones
 CIRCLE_CI_WORKFLOW_JOB_NAME_MAPPINGS = {
