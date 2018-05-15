@@ -31,6 +31,16 @@ JQL_KANBAN_BUGS = "project = ED AND issuetype = Bug AND status != Backlog AND st
 JQL_BACKLOG_BUGS = "project = ED AND issuetype = Bug AND status = Backlog ORDER BY created DESC"
 JQL_MANUAL_VS_AUTOMATED = "project = ED AND resolution = Unresolved AND labels in (qa_auto, qa_manual) ORDER BY priority DESC, updated DESC"
 JQL_SCENARIOS_TO_AUTOMATE = "project = ED AND issuetype in (Task, Sub-task) AND resolution = Unresolved AND labels = qa_automated_scenario ORDER BY created DESC"
+JQL_BUGS_CLOSED_TODAY = """
+PROJECT in (ED) 
+AND issuetype = Bug 
+AND Status CHANGED FROM ("Blocked!", "Dev - in progress", "Dev - Code Review", 
+"Design - in Progress", "Dev - Planning", "Dev - selected", "Dev To Do", 
+"Testing", "User research") 
+TO (Closed, Done, "Release Candidate", Release) 
+DURING (-1d, now()) 
+ORDER BY key ASC, updated DESC
+"""
 
 # Mapping of CircleCI job names to more human friendly ones
 CIRCLE_CI_WORKFLOW_JOB_NAME_MAPPINGS = {
@@ -116,13 +126,21 @@ DATASET_VS_FIELDS = {
 }
 DATASET_VS_UNIQUE_BY = ['date']
 
+# Number of bugs closed today (moved to Close, Release or Release Candidate)
+DATASET_BUGS_CLOSED_TODAY_NAME = 'export.bugs_closed_today'
+DATASET_BUGS_CLOSED_TODAY_FIELDS = {
+    'date': {'type': 'date', 'name': 'Date', 'optional': False},
+    'closed': {'type': 'number', 'name': 'Bugs closed today', 'optional': False}
+}
+DATASET_BUGS_CLOSED_TODAY_UNIQUE_BY = ['date']
+
 
 DataSets = namedtuple('DataSets',
                       [
                           'ON_KANBAN_BY_LABELS', 'IN_BACKLOG',
                           'AUTO_VS_MANUAL', 'TO_AUTOMATE',
                           'UNLABELLED_ON_KANBAN', 'UNLABELLED_IN_BACKLOG',
-                          'IN_BACKLOG_BY_LABELS'
+                          'IN_BACKLOG_BY_LABELS', 'BUGS_CLOSED_TODAY'
                       ])
 
 
@@ -161,9 +179,15 @@ def create_datasets(gecko_client: GeckoClient) -> DataSets:
         DATASET_UNLABELLED_IN_BACKLOG_FIELDS,
         DATASET_UNLABELLED_IN_BACKLOG_UNIQUE_BY)
 
+    bugs_closed_today = gecko_client.datasets.find_or_create(
+        DATASET_BUGS_CLOSED_TODAY_NAME,
+        DATASET_BUGS_CLOSED_TODAY_FIELDS,
+        DATASET_BUGS_CLOSED_TODAY_UNIQUE_BY)
+
     return DataSets(
         on_kanban_by_labels, in_backlog, auto_vs_manual, to_automate,
-        unlabelled_on_kanban, unlabelled_in_backlog, in_backlog_by_labels)
+        unlabelled_on_kanban, unlabelled_in_backlog, in_backlog_by_labels,
+        bugs_closed_today)
 
 
 def find_issues(
@@ -272,6 +296,11 @@ def get_number_of_bugs_in_backlog() -> List[dict]:
 def get_number_of_scenarios_to_automate() -> List[dict]:
     scenarios_to_automate = find_issues(JQL_SCENARIOS_TO_AUTOMATE)
     return [{'date': TODAY, 'quantity': scenarios_to_automate['total']}]
+
+
+def get_number_of_closed_bugs_today() -> List[dict]:
+    closed = find_issues(JQL_BUGS_CLOSED_TODAY)
+    return [{'date': TODAY, 'closed': closed['total']}]
 
 
 def circle_ci_get_recent_builds(
@@ -578,6 +607,7 @@ if __name__ == '__main__':
     auto_vs_manual = get_number_of_automated_vs_manual()
     in_backlog = get_number_of_bugs_in_backlog()
     to_automate = get_number_of_scenarios_to_automate()
+    bugs_closed_today = get_number_of_closed_bugs_today()
 
     print('Bugs by labels on the Kanban board: ', kanban_bugs_by_labels)
     print('Unlabelled bugs on the Kanban board: ', unlabelled_on_kanban)
@@ -586,6 +616,7 @@ if __name__ == '__main__':
     print('Unlabelled bugs in Backlog: ', unlabelled_in_backlog)
     print('Automated vs Manual: ', auto_vs_manual)
     print('Number of scenarios to automate: ', to_automate)
+    print('Number of bugs closed today: ', bugs_closed_today)
 
     print('Creating datasets in Geckoboard...')
     datasets = create_datasets(GECKO_CLIENT)
@@ -599,6 +630,7 @@ if __name__ == '__main__':
     datasets.AUTO_VS_MANUAL.post(auto_vs_manual)
     datasets.IN_BACKLOG.post(in_backlog)
     datasets.TO_AUTOMATE.post(to_automate)
+    datasets.BUGS_CLOSED_TODAY.post(bugs_closed_today)
     print('All datasets pushed')
 
     print('Pushing tests results to Geckoboard widget')
