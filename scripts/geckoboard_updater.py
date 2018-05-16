@@ -38,7 +38,7 @@ AND Status CHANGED FROM ("Blocked!", "Dev - in progress", "Dev - Code Review",
 "Design - in Progress", "Dev - Planning", "Dev - selected", "Dev To Do", 
 "Testing", "User research") 
 TO (Closed, Done, "Release Candidate", Release) 
-DURING (-1d, now()) 
+DURING (-0d, now()) 
 ORDER BY key ASC, updated DESC
 """
 
