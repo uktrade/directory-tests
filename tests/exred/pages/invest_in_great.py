@@ -10,7 +10,7 @@ from utils import take_screenshot
 
 NAME = "Invest in Great Home page"
 URL = urljoin(None, "")
-PAGE_TITLE = "Invest home - invest.great.gov.uk"
+PAGE_TITLE = "Invest In Great Britain - Home"
 
 
 def visit(driver: webdriver, *, first_time: bool = False):
