@@ -59,6 +59,12 @@ Feature: Header-Footer
     Examples:
       | selected                           |
       | Home                               |
+
+    @bug
+    @ED-4220
+    @fixme
+    Examples:
+      | selected                           |
       | SSO registration                   |
       | SSO sign in                        |
       | SSO profile about                  |
