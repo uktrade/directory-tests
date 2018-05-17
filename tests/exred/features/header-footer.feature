@@ -54,7 +54,7 @@ Feature: Header-Footer
 
     When "Robert" decides to click on the DIT logo in the "header"
 
-    Then "Robert" should be on the "Home" page
+    Then "Robert" should be on the "Home" page or on the International page
 
     Examples:
       | selected                           |

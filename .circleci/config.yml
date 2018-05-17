@@ -154,7 +154,7 @@ jobs:
             . venv/bin/activate
             source ./docker/.env_with_export;
             export PATH=$PATH:$HOME/bin
-            BROWSERS=Chrome VERSIONS=65.0 make exred_browserstack
+            BROWSERS=Chrome VERSIONS=66.0 make exred_browserstack
       - run:
           name: Merge JUnit XML reports
           when: always
@@ -186,7 +186,7 @@ jobs:
             . venv/bin/activate
             source ./docker/.env_with_export;
             export PATH=$PATH:$HOME/bin
-            BROWSERS=Firefox VERSIONS=58.0 make exred_browserstack
+            BROWSERS=Firefox VERSIONS=60.0 make exred_browserstack
       - run:
           name: Merge JUnit XML reports
           when: always

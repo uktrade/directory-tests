@@ -51,7 +51,8 @@ from steps.then_impl import (
     should_see_sections,
     should_see_share_widget,
     triage_should_be_classified_as,
-    triage_should_see_change_your_answers_link
+    triage_should_see_change_your_answers_link,
+    should_be_on_page_or_international_page
 )
 from steps.when_impl import (
     triage_answer_questions_again,
@@ -62,6 +63,12 @@ from steps.when_impl import (
 @then('"{actor_alias}" should be on the "{page_name}" page')
 def then_actor_should_be_on_page(context, actor_alias, page_name):
     should_be_on_page(context, actor_alias, page_name)
+
+
+@then('"{actor_alias}" should be on the "{page_name}" page or on the International page')
+def then_actor_should_be_on_page_on_international_page(
+        context, actor_alias, page_name):
+    should_be_on_page_or_international_page(context, actor_alias, page_name)
 
 
 @then('"{actor_alias}" should see the Guidance Navigation Ribbon')

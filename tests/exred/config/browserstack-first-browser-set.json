@@ -2,7 +2,7 @@
   "hub_url": {HUB_URL},
   "capabilities": {{
     "browserstack.debug": true,
-    "browserstack.selenium_version": "3.10.0",
+    "browserstack.selenium_version": "3.11.0",
     "build": {BUILD_ID},
     "project": "ExRed",
     "resolution": "1600x1200"
@@ -10,14 +10,14 @@
   "environments": [
     {{
       "browser": "Chrome",
-      "browser_version": "65.0",
+      "browser_version": "66.0",
       "pageLoadStrategy": "none",
       "os": "Windows",
       "os_version": "10"
     }},
     {{
       "browser": "Firefox",
-      "browser_version": "59.0",
+      "browser_version": "60.0",
       "pageLoadStrategy": "eager",
       "os": "Windows",
       "os_version": "10"

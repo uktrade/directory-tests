@@ -13,7 +13,7 @@ NAME = "Export Opportunities Home page"
 URL = urljoin(EXPORT_OPPORTUNITIES_UI_URL, "")
 PAGE_TITLE = "Export opportunities"
 
-WELCOME_MESSAGE = "#content-top > div.hero__specialContainer > h1"
+WELCOME_MESSAGE = "h1.hero__header"
 
 
 def visit(driver: webdriver, *, first_time: bool = False):
