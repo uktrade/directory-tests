@@ -395,7 +395,7 @@ def get_number_of_scenarios_to_automate() -> List[dict]:
     return [{'date': TODAY, 'quantity': scenarios_to_automate['total']}]
 
 
-def get_number_of_closed_bugs_today() -> List[dict]:
+def get_number_of_bugs_closed_today() -> List[dict]:
     closed = find_issues(JQL_BUGS_CLOSED_TODAY)
     return [{'date': TODAY, 'closed': closed['total']}]
 
@@ -719,7 +719,7 @@ if __name__ == '__main__':
     auto_vs_manual = get_number_of_automated_vs_manual()
     in_backlog = get_number_of_bugs_in_backlog()
     to_automate = get_number_of_scenarios_to_automate()
-    bugs_closed_today = get_number_of_closed_bugs_today()
+    bugs_closed_today = get_number_of_bugs_closed_today()
     bugs_per_service = get_number_of_bugs_per_service()
 
     print('Bugs by labels on the Kanban board: ', kanban_bugs_by_labels)
