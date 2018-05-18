@@ -372,6 +372,21 @@ def get_number_of_closed_bugs_today() -> List[dict]:
     return [{'date': TODAY, 'closed': closed['total']}]
 
 
+def get_number_of_bugs_per_service() -> List[dict]:
+    found_bugs = find_all_issues(JQL_BUGS_PER_SERVICE)
+    bugs_per_service = get_quantity_per_label(
+            found_bugs, label_prefix=None, look_for=SERVICE_TAGS)
+    result = []
+    for service_tag in bugs_per_service:
+        item = {
+                'date': TODAY, 
+                'service': service_tag, 
+                'quantity': bugs_per_service[service_tag]
+                }
+        result.append(item)
+    return result
+
+
 def circle_ci_get_recent_builds(
         project: str, *, username: str = 'uktrade', limit: int = 20,
         branch: str = 'master') -> List[dict]:
