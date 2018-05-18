@@ -64,9 +64,10 @@ ORDER BY created DESC"""
 JQL_BUGS_CLOSED_TODAY = """
 PROJECT in (ED) 
 AND issuetype = Bug 
-AND Status CHANGED FROM ("Blocked!", "Dev - in progress", "Dev - Code Review", 
-"Design - in Progress", "Dev - Planning", "Dev - selected", "Dev To Do", 
-"Testing", "User research") 
+AND Status CHANGED FROM (Backlog, Planning, "Blocked!", "Design To Do", 
+"Design - ready", "Design - in Progress", "Sign-off", "User research", 
+"Dev - Planning", "Dev - selected", "Dev To Do", "Dev - ready", 
+"Dev - in progress", "Dev - code review", Testing) 
 TO (Closed, Done, "Release Candidate", Release) 
 DURING (-0d, now()) 
 ORDER BY key ASC, updated DESC
