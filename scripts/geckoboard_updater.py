@@ -27,10 +27,32 @@ CIRCLE_CI_CLIENT = circleclient.CircleClient(CIRCLE_CI_API_TOKEN)
 TODAY = date.today().isoformat()
 
 # Jira JQL queries
-JQL_KANBAN_BUGS = "project = ED AND issuetype = Bug AND status != Backlog AND status != Done ORDER BY created DESC"
-JQL_BACKLOG_BUGS = "project = ED AND issuetype = Bug AND status = Backlog ORDER BY created DESC"
-JQL_MANUAL_VS_AUTOMATED = "project = ED AND resolution = Unresolved AND labels in (qa_auto, qa_manual) ORDER BY priority DESC, updated DESC"
-JQL_SCENARIOS_TO_AUTOMATE = "project = ED AND issuetype in (Task, Sub-task) AND resolution = Unresolved AND labels = qa_automated_scenario ORDER BY created DESC"
+JQL_KANBAN_BUGS = """
+project = ED 
+AND issuetype = Bug 
+AND status != Backlog 
+AND status != Done 
+ORDER BY created DESC"""
+
+JQL_BACKLOG_BUGS = """
+project = ED 
+AND issuetype = Bug 
+AND status = Backlog 
+ORDER BY created DESC"""
+
+JQL_MANUAL_VS_AUTOMATED = """
+project = ED 
+AND resolution = Unresolved 
+AND labels in (qa_auto, qa_manual) 
+ORDER BY priority DESC, updated DESC"""
+
+JQL_SCENARIOS_TO_AUTOMATE = """
+project = ED 
+AND issuetype in (Task, Sub-task) 
+AND resolution = Unresolved 
+AND labels = qa_automated_scenario 
+ORDER BY created DESC"""
+
 JQL_BUGS_CLOSED_TODAY = """
 PROJECT in (ED) 
 AND issuetype = Bug 
