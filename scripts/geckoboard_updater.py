@@ -172,13 +172,23 @@ DATASET_BUGS_CLOSED_TODAY_FIELDS = {
 }
 DATASET_BUGS_CLOSED_TODAY_UNIQUE_BY = ['date']
 
+# Number of bugs per service (only counts tickets with appropriate tags)
+DATASET_BUGS_PER_SERVICE_NAME = 'export.bugs_per_service'
+DATASET_BUGS_PER_SERVICE_FIELDS = {
+    'date': {'type': 'date', 'name': 'Date', 'optional': False},
+    'service': {'type': 'string', 'name': 'Service', 'optional': False},
+    'quantity': {'type': 'number', 'name': 'Quantity', 'optional': False}
+}
+DATASET_BUGS_PER_SERVICE_UNIQUE_BY = ['date', 'service']
+
 
 DataSets = namedtuple('DataSets',
                       [
                           'ON_KANBAN_BY_LABELS', 'IN_BACKLOG',
                           'AUTO_VS_MANUAL', 'TO_AUTOMATE',
                           'UNLABELLED_ON_KANBAN', 'UNLABELLED_IN_BACKLOG',
-                          'IN_BACKLOG_BY_LABELS', 'BUGS_CLOSED_TODAY'
+                          'IN_BACKLOG_BY_LABELS', 'BUGS_CLOSED_TODAY',
+                          'BUGS_PER_SERVICE'
                       ])
 
 
@@ -222,10 +232,15 @@ def create_datasets(gecko_client: GeckoClient) -> DataSets:
         DATASET_BUGS_CLOSED_TODAY_FIELDS,
         DATASET_BUGS_CLOSED_TODAY_UNIQUE_BY)
 
+    bugs_per_service = gecko_client.datasets.find_or_create(
+        DATASET_BUGS_PER_SERVICE_NAME,
+        DATASET_BUGS_PER_SERVICE_FIELDS,
+        DATASET_BUGS_PER_SERVICE_UNIQUE_BY)
+
     return DataSets(
         on_kanban_by_labels, in_backlog, auto_vs_manual, to_automate,
         unlabelled_on_kanban, unlabelled_in_backlog, in_backlog_by_labels,
-        bugs_closed_today)
+        bugs_closed_today, bugs_per_service)
 
 
 def find_issues(
