@@ -26,6 +26,13 @@ CIRCLE_CI_CLIENT = circleclient.CircleClient(CIRCLE_CI_API_TOKEN)
 # other variables
 TODAY = date.today().isoformat()
 
+# Service tags used in Jira to indicate service affected by given bug
+SERVICE_TAGS = [
+    'admin', 'api', 'cms', 'contact-us', 'css-components', 'exopps', 'exred',
+    'fab', 'fas', 'gds', 'header-footer', 'soo', 'sso', 'sso-profile', 
+    'sso-proxy', 'sud' 
+]
+
 # Jira JQL queries
 JQL_KANBAN_BUGS = """
 project = ED 
@@ -63,6 +70,15 @@ TO (Closed, Done, "Release Candidate", Release)
 DURING (-0d, now()) 
 ORDER BY key ASC, updated DESC
 """
+
+JQL_BUGS_PER_SERVICE = """
+project = ED 
+AND issuetype = Bug 
+AND labels IN ({service_tags})
+AND created >= "-90d"
+ORDER BY labels DESC, priority DESC, updated DESC
+""".format(service_tags=', '.join(SERVICE_TAGS))
+
 
 # Mapping of CircleCI job names to more human friendly ones
 CIRCLE_CI_WORKFLOW_JOB_NAME_MAPPINGS = {
