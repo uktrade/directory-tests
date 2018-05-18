@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import math
 import os
 from collections import namedtuple, Counter
 from datetime import date, datetime
@@ -26,11 +27,40 @@ CIRCLE_CI_CLIENT = circleclient.CircleClient(CIRCLE_CI_API_TOKEN)
 # other variables
 TODAY = date.today().isoformat()
 
+# Service tags used in Jira to indicate service affected by given bug
+SERVICE_TAGS = [
+    'admin', 'api', 'cms', 'contact-us', 'css-components', 'exopps', 'exred',
+    'fab', 'fas', 'gds', 'header-footer', 'soo', 'sso', 'sso-profile', 
+    'sso-proxy', 'sud' 
+]
+
 # Jira JQL queries
-JQL_KANBAN_BUGS = "project = ED AND issuetype = Bug AND status != Backlog AND status != Done ORDER BY created DESC"
-JQL_BACKLOG_BUGS = "project = ED AND issuetype = Bug AND status = Backlog ORDER BY created DESC"
-JQL_MANUAL_VS_AUTOMATED = "project = ED AND resolution = Unresolved AND labels in (qa_auto, qa_manual) ORDER BY priority DESC, updated DESC"
-JQL_SCENARIOS_TO_AUTOMATE = "project = ED AND issuetype in (Task, Sub-task) AND resolution = Unresolved AND labels = qa_automated_scenario ORDER BY created DESC"
+JQL_KANBAN_BUGS = """
+project = ED 
+AND issuetype = Bug 
+AND status != Backlog 
+AND status != Done 
+ORDER BY created DESC"""
+
+JQL_BACKLOG_BUGS = """
+project = ED 
+AND issuetype = Bug 
+AND status = Backlog 
+ORDER BY created DESC"""
+
+JQL_MANUAL_VS_AUTOMATED = """
+project = ED 
+AND resolution = Unresolved 
+AND labels in (qa_auto, qa_manual) 
+ORDER BY priority DESC, updated DESC"""
+
+JQL_SCENARIOS_TO_AUTOMATE = """
+project = ED 
+AND issuetype in (Task, Sub-task) 
+AND resolution = Unresolved 
+AND labels = qa_automated_scenario 
+ORDER BY created DESC"""
+
 JQL_BUGS_CLOSED_TODAY = """
 PROJECT in (ED) 
 AND issuetype = Bug 
@@ -41,6 +71,15 @@ TO (Closed, Done, "Release Candidate", Release)
 DURING (-0d, now()) 
 ORDER BY key ASC, updated DESC
 """
+
+JQL_BUGS_PER_SERVICE = """
+project = ED 
+AND issuetype = Bug 
+AND labels IN ({service_tags})
+AND created >= "-90d"
+ORDER BY labels DESC, priority DESC, updated DESC
+""".format(service_tags=', '.join(SERVICE_TAGS))
+
 
 # Mapping of CircleCI job names to more human friendly ones
 CIRCLE_CI_WORKFLOW_JOB_NAME_MAPPINGS = {
@@ -134,13 +173,23 @@ DATASET_BUGS_CLOSED_TODAY_FIELDS = {
 }
 DATASET_BUGS_CLOSED_TODAY_UNIQUE_BY = ['date']
 
+# Number of bugs per service (only counts tickets with appropriate tags)
+DATASET_BUGS_PER_SERVICE_NAME = 'export.bugs_per_service'
+DATASET_BUGS_PER_SERVICE_FIELDS = {
+    'date': {'type': 'date', 'name': 'Date', 'optional': False},
+    'service': {'type': 'string', 'name': 'Service', 'optional': False},
+    'quantity': {'type': 'number', 'name': 'Quantity', 'optional': False}
+}
+DATASET_BUGS_PER_SERVICE_UNIQUE_BY = ['date', 'service']
+
 
 DataSets = namedtuple('DataSets',
                       [
                           'ON_KANBAN_BY_LABELS', 'IN_BACKLOG',
                           'AUTO_VS_MANUAL', 'TO_AUTOMATE',
                           'UNLABELLED_ON_KANBAN', 'UNLABELLED_IN_BACKLOG',
-                          'IN_BACKLOG_BY_LABELS', 'BUGS_CLOSED_TODAY'
+                          'IN_BACKLOG_BY_LABELS', 'BUGS_CLOSED_TODAY',
+                          'BUGS_PER_SERVICE'
                       ])
 
 
@@ -184,18 +233,37 @@ def create_datasets(gecko_client: GeckoClient) -> DataSets:
         DATASET_BUGS_CLOSED_TODAY_FIELDS,
         DATASET_BUGS_CLOSED_TODAY_UNIQUE_BY)
 
+    bugs_per_service = gecko_client.datasets.find_or_create(
+        DATASET_BUGS_PER_SERVICE_NAME,
+        DATASET_BUGS_PER_SERVICE_FIELDS,
+        DATASET_BUGS_PER_SERVICE_UNIQUE_BY)
+
     return DataSets(
         on_kanban_by_labels, in_backlog, auto_vs_manual, to_automate,
         unlabelled_on_kanban, unlabelled_in_backlog, in_backlog_by_labels,
-        bugs_closed_today)
+        bugs_closed_today, bugs_per_service)
 
 
 def find_issues(
         jql: str, *, max_results: int = 100,
-        fields: str = 'key,labels,summary') -> dict:
+        fields: str = 'key,labels,summary', start_at: int = 0) -> dict:
     """Run Jira JQL and return result as JSON."""
     return JIRA_CLIENT.search_issues(
-        jql_str=jql, maxResults=max_results, json_result=True, fields=fields)
+        jql_str=jql, maxResults=max_results, json_result=True, fields=fields,
+        startAt=start_at)
+
+
+def find_all_issues(jql: str) -> dict:
+    """Iterate over all search result pages and return result as JSON."""
+    results = find_issues(jql)
+    current_page = 1
+    total_pages = math.ceil(results['total'] / len(results['issues']))
+    while len(results['issues']) < results['total'] and current_page < total_pages:
+        start_at = current_page * results['maxResults']
+        next_page_results = find_issues(jql, start_at=start_at)
+        results['issues'] += next_page_results['issues']
+        current_page += 1
+    return results
 
 
 def count_labels(issues: list) -> Counter:
@@ -208,10 +276,11 @@ def count_labels(issues: list) -> Counter:
 
 def filter_labels_by_prefix(
         labels: Counter, prefix: str, *, remove_prefix: bool = True) -> Counter:
-    filtered = dict(filter(lambda x: x[0].startswith(prefix), labels.items()))
-    if remove_prefix:
-        filtered = {k.replace(prefix, ''): v for k, v in filtered.items()}
-    return Counter(filtered)
+    if prefix:
+        labels = dict(filter(lambda x: x[0].startswith(prefix), labels.items()))
+        if remove_prefix:
+            labels = {k.replace(prefix, ''): v for k, v in labels.items()}
+    return Counter(labels)
 
 
 def filter_out_ignored_labels(
@@ -301,6 +370,21 @@ def get_number_of_scenarios_to_automate() -> List[dict]:
 def get_number_of_closed_bugs_today() -> List[dict]:
     closed = find_issues(JQL_BUGS_CLOSED_TODAY)
     return [{'date': TODAY, 'closed': closed['total']}]
+
+
+def get_number_of_bugs_per_service() -> List[dict]:
+    found_bugs = find_all_issues(JQL_BUGS_PER_SERVICE)
+    bugs_per_service = get_quantity_per_label(
+            found_bugs, label_prefix=None, look_for=SERVICE_TAGS)
+    result = []
+    for service_tag in bugs_per_service:
+        item = {
+                'date': TODAY, 
+                'service': service_tag, 
+                'quantity': bugs_per_service[service_tag]
+                }
+        result.append(item)
+    return result
 
 
 def circle_ci_get_recent_builds(
@@ -608,6 +692,7 @@ if __name__ == '__main__':
     in_backlog = get_number_of_bugs_in_backlog()
     to_automate = get_number_of_scenarios_to_automate()
     bugs_closed_today = get_number_of_closed_bugs_today()
+    bugs_per_service = get_number_of_bugs_per_service()
 
     print('Bugs by labels on the Kanban board: ', kanban_bugs_by_labels)
     print('Unlabelled bugs on the Kanban board: ', unlabelled_on_kanban)
@@ -617,6 +702,7 @@ if __name__ == '__main__':
     print('Automated vs Manual: ', auto_vs_manual)
     print('Number of scenarios to automate: ', to_automate)
     print('Number of bugs closed today: ', bugs_closed_today)
+    print('Number of bugs per service: ', bugs_per_service)
 
     print('Creating datasets in Geckoboard...')
     datasets = create_datasets(GECKO_CLIENT)
@@ -631,6 +717,7 @@ if __name__ == '__main__':
     datasets.IN_BACKLOG.post(in_backlog)
     datasets.TO_AUTOMATE.post(to_automate)
     datasets.BUGS_CLOSED_TODAY.post(bugs_closed_today)
+    datasets.BUGS_PER_SERVICE.post(bugs_per_service)
     print('All datasets pushed')
 
     print('Pushing tests results to Geckoboard widget')
