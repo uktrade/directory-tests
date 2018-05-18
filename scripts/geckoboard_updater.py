@@ -64,9 +64,22 @@ ORDER BY created DESC"""
 JQL_BUGS_CLOSED_TODAY = """
 PROJECT in (ED) 
 AND issuetype = Bug 
-AND Status CHANGED FROM ("Blocked!", "Dev - in progress", "Dev - Code Review", 
-"Design - in Progress", "Dev - Planning", "Dev - selected", "Dev To Do", 
-"Testing", "User research") 
+AND Status CHANGED FROM (Backlog, Planning, "Blocked!", "Design To Do", 
+"Design - ready", "Design - in Progress", "Sign-off", "User research", 
+"Dev - Planning", "Dev - selected", "Dev To Do", "Dev - ready", 
+"Dev - in progress", "Dev - code review", Testing) 
+TO (Closed, Done, "Release Candidate", Release) 
+DURING (-0d, now()) 
+ORDER BY key ASC, updated DESC
+"""
+
+JQL_TICKETS_CLOSED_TODAY = """
+PROJECT in (ED) 
+AND issuetype != Bug 
+AND Status CHANGED FROM (Backlog, Planning, "Blocked!", "Design To Do", 
+"Design - ready", "Design - in Progress", "Sign-off", "User research", 
+"Dev - Planning", "Dev - selected", "Dev To Do", "Dev - ready", 
+"Dev - in progress", "Dev - code review", Testing) 
 TO (Closed, Done, "Release Candidate", Release) 
 DURING (-0d, now()) 
 ORDER BY key ASC, updated DESC
@@ -173,6 +186,15 @@ DATASET_BUGS_CLOSED_TODAY_FIELDS = {
 }
 DATASET_BUGS_CLOSED_TODAY_UNIQUE_BY = ['date']
 
+# Number of tickets (without bugs) closed today (moved to Close, Release 
+# or Release Candidate)
+DATASET_TICKETS_CLOSED_TODAY_NAME = 'export.tickets_closed_today'
+DATASET_TICKETS_CLOSED_TODAY_FIELDS = {
+    'date': {'type': 'date', 'name': 'Date', 'optional': False},
+    'closed': {'type': 'number', 'name': 'Tickets closed today', 'optional': False}
+}
+DATASET_TICKETS_CLOSED_TODAY_UNIQUE_BY = ['date']
+
 # Number of bugs per service (only counts tickets with appropriate tags)
 DATASET_BUGS_PER_SERVICE_NAME = 'export.bugs_per_service'
 DATASET_BUGS_PER_SERVICE_FIELDS = {
@@ -188,8 +210,8 @@ DataSets = namedtuple('DataSets',
                           'ON_KANBAN_BY_LABELS', 'IN_BACKLOG',
                           'AUTO_VS_MANUAL', 'TO_AUTOMATE',
                           'UNLABELLED_ON_KANBAN', 'UNLABELLED_IN_BACKLOG',
-                          'IN_BACKLOG_BY_LABELS', 'BUGS_CLOSED_TODAY',
-                          'BUGS_PER_SERVICE'
+                          'IN_BACKLOG_BY_LABELS', 'TICKETS_CLOSED_TODAY',
+                          'BUGS_CLOSED_TODAY', 'BUGS_PER_SERVICE'
                       ])
 
 
@@ -228,6 +250,11 @@ def create_datasets(gecko_client: GeckoClient) -> DataSets:
         DATASET_UNLABELLED_IN_BACKLOG_FIELDS,
         DATASET_UNLABELLED_IN_BACKLOG_UNIQUE_BY)
 
+    tickets_closed_today = gecko_client.datasets.find_or_create(
+        DATASET_TICKETS_CLOSED_TODAY_NAME,
+        DATASET_TICKETS_CLOSED_TODAY_FIELDS,
+        DATASET_TICKETS_CLOSED_TODAY_UNIQUE_BY)
+
     bugs_closed_today = gecko_client.datasets.find_or_create(
         DATASET_BUGS_CLOSED_TODAY_NAME,
         DATASET_BUGS_CLOSED_TODAY_FIELDS,
@@ -238,10 +265,11 @@ def create_datasets(gecko_client: GeckoClient) -> DataSets:
         DATASET_BUGS_PER_SERVICE_FIELDS,
         DATASET_BUGS_PER_SERVICE_UNIQUE_BY)
 
+
     return DataSets(
         on_kanban_by_labels, in_backlog, auto_vs_manual, to_automate,
         unlabelled_on_kanban, unlabelled_in_backlog, in_backlog_by_labels,
-        bugs_closed_today, bugs_per_service)
+        tickets_closed_today, bugs_closed_today, bugs_per_service)
 
 
 def find_issues(
@@ -367,8 +395,13 @@ def get_number_of_scenarios_to_automate() -> List[dict]:
     return [{'date': TODAY, 'quantity': scenarios_to_automate['total']}]
 
 
-def get_number_of_closed_bugs_today() -> List[dict]:
+def get_number_of_bugs_closed_today() -> List[dict]:
     closed = find_issues(JQL_BUGS_CLOSED_TODAY)
+    return [{'date': TODAY, 'closed': closed['total']}]
+
+
+def get_number_of_tickets_closed_today() -> List[dict]:
+    closed = find_issues(JQL_TICKETS_CLOSED_TODAY)
     return [{'date': TODAY, 'closed': closed['total']}]
 
 
@@ -691,7 +724,8 @@ if __name__ == '__main__':
     auto_vs_manual = get_number_of_automated_vs_manual()
     in_backlog = get_number_of_bugs_in_backlog()
     to_automate = get_number_of_scenarios_to_automate()
-    bugs_closed_today = get_number_of_closed_bugs_today()
+    tickets_closed_today = get_number_of_tickets_closed_today()
+    bugs_closed_today = get_number_of_bugs_closed_today()
     bugs_per_service = get_number_of_bugs_per_service()
 
     print('Bugs by labels on the Kanban board: ', kanban_bugs_by_labels)
@@ -701,6 +735,7 @@ if __name__ == '__main__':
     print('Unlabelled bugs in Backlog: ', unlabelled_in_backlog)
     print('Automated vs Manual: ', auto_vs_manual)
     print('Number of scenarios to automate: ', to_automate)
+    print('Number of tickets closed today: ', tickets_closed_today)
     print('Number of bugs closed today: ', bugs_closed_today)
     print('Number of bugs per service: ', bugs_per_service)
 
@@ -716,6 +751,7 @@ if __name__ == '__main__':
     datasets.AUTO_VS_MANUAL.post(auto_vs_manual)
     datasets.IN_BACKLOG.post(in_backlog)
     datasets.TO_AUTOMATE.post(to_automate)
+    datasets.TICKETS_CLOSED_TODAY.post(tickets_closed_today)
     datasets.BUGS_CLOSED_TODAY.post(bugs_closed_today)
     datasets.BUGS_PER_SERVICE.post(bugs_per_service)
     print('All datasets pushed')
