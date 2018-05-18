@@ -245,10 +245,24 @@ def create_datasets(gecko_client: GeckoClient) -> DataSets:
 
 def find_issues(
         jql: str, *, max_results: int = 100,
-        fields: str = 'key,labels,summary') -> dict:
+        fields: str = 'key,labels,summary', start_at: int = 0) -> dict:
     """Run Jira JQL and return result as JSON."""
     return JIRA_CLIENT.search_issues(
-        jql_str=jql, maxResults=max_results, json_result=True, fields=fields)
+        jql_str=jql, maxResults=max_results, json_result=True, fields=fields,
+        startAt=start_at)
+
+
+def find_all_issues(jql: str) -> dict:
+    """Iterate over all search result pages and return result as JSON."""
+    results = find_issues(jql)
+    current_page = 1
+    total_pages = math.ceil(results['total'] / len(results['issues']))
+    while len(results['issues']) < results['total'] and current_page < total_pages:
+        start_at = current_page * results['maxResults']
+        next_page_results = find_issues(jql, start_at=start_at)
+        results['issues'] += next_page_results['issues']
+        current_page += 1
+    return results
 
 
 def count_labels(issues: list) -> Counter:
