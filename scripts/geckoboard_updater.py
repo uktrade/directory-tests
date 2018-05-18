@@ -275,10 +275,11 @@ def count_labels(issues: list) -> Counter:
 
 def filter_labels_by_prefix(
         labels: Counter, prefix: str, *, remove_prefix: bool = True) -> Counter:
-    filtered = dict(filter(lambda x: x[0].startswith(prefix), labels.items()))
-    if remove_prefix:
-        filtered = {k.replace(prefix, ''): v for k, v in filtered.items()}
-    return Counter(filtered)
+    if prefix:
+        labels = dict(filter(lambda x: x[0].startswith(prefix), labels.items()))
+        if remove_prefix:
+            labels = {k.replace(prefix, ''): v for k, v in labels.items()}
+    return Counter(labels)
 
 
 def filter_out_ignored_labels(
