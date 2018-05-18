@@ -400,6 +400,11 @@ def get_number_of_bugs_closed_today() -> List[dict]:
     return [{'date': TODAY, 'closed': closed['total']}]
 
 
+def get_number_of_tickets_closed_today() -> List[dict]:
+    closed = find_issues(JQL_TICKETS_CLOSED_TODAY)
+    return [{'date': TODAY, 'closed': closed['total']}]
+
+
 def get_number_of_bugs_per_service() -> List[dict]:
     found_bugs = find_all_issues(JQL_BUGS_PER_SERVICE)
     bugs_per_service = get_quantity_per_label(
@@ -719,6 +724,7 @@ if __name__ == '__main__':
     auto_vs_manual = get_number_of_automated_vs_manual()
     in_backlog = get_number_of_bugs_in_backlog()
     to_automate = get_number_of_scenarios_to_automate()
+    tickets_closed_today = get_number_of_tickets_closed_today()
     bugs_closed_today = get_number_of_bugs_closed_today()
     bugs_per_service = get_number_of_bugs_per_service()
 
@@ -729,6 +735,7 @@ if __name__ == '__main__':
     print('Unlabelled bugs in Backlog: ', unlabelled_in_backlog)
     print('Automated vs Manual: ', auto_vs_manual)
     print('Number of scenarios to automate: ', to_automate)
+    print('Number of tickets closed today: ', tickets_closed_today)
     print('Number of bugs closed today: ', bugs_closed_today)
     print('Number of bugs per service: ', bugs_per_service)
 
@@ -744,6 +751,7 @@ if __name__ == '__main__':
     datasets.AUTO_VS_MANUAL.post(auto_vs_manual)
     datasets.IN_BACKLOG.post(in_backlog)
     datasets.TO_AUTOMATE.post(to_automate)
+    datasets.TICKETS_CLOSED_TODAY.post(tickets_closed_today)
     datasets.BUGS_CLOSED_TODAY.post(bugs_closed_today)
     datasets.BUGS_PER_SERVICE.post(bugs_per_service)
     print('All datasets pushed')
