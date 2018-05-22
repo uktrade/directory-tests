@@ -50,6 +50,7 @@ from tests.functional.steps.fab_then_impl import (
     should_not_be_able_to_access_page,
     should_see_message,
     should_see_selected_pages,
+    should_see_expected_sections,
     sso_should_be_signed_in_to_sso_account,
     sso_should_be_told_about_password_reset,
     sso_should_get_password_reset_email,
@@ -420,3 +421,10 @@ def then_actor_should_see_expected_details_in_verification_letter(
         context, actor_alias):
     stannp_should_see_expected_details_in_verification_letter(
         context, actor_alias, correct_details=context.table)
+
+
+@then('"{actor_alias}" should see following sections')
+def then_actor_should_see_expected_sections(
+        context: Context, actor_alias: str):
+    should_see_expected_sections(
+        context, actor_alias , expected_sections=context.table)
