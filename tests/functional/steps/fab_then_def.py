@@ -48,7 +48,6 @@ from tests.functional.steps.fab_then_impl import (
     reg_supplier_is_not_appropriate_for_fab,
     should_be_at,
     should_not_be_able_to_access_page,
-    should_see_expected_sections,
     should_see_message,
     should_see_selected_pages,
     sso_should_be_signed_in_to_sso_account,
@@ -421,10 +420,3 @@ def then_actor_should_see_expected_details_in_verification_letter(
         context, actor_alias):
     stannp_should_see_expected_details_in_verification_letter(
         context, actor_alias, correct_details=context.table)
-
-
-@then('"{actor_alias}" should see following sections')
-def then_actor_should_see_expected_sections(
-        context: Context, actor_alias: str):
-    should_see_expected_sections(
-        context, actor_alias , expected_sections=context.table)

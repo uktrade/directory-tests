@@ -923,17 +923,3 @@ def stannp_should_see_expected_details_in_verification_letter(
         all(detail in letter for detail in expected_details.values())
     logging.debug(
         "All expected details are visible in the verification letter")
-
-
-def should_see_expected_sections(
-        context: Context, actor_alias: str, expected_sections: Table):
-    response = context.response
-    content = response.content.decode("utf-8")
-    page_name = context.visited_page
-    page_object = get_fabs_page_object(page_name)
-    sections = [row["expected sections"] for row in expected_sections]
-    for name in sections:
-        page_object.should_see_section(content, name)
-        logging.debug(
-            "{} saw expected '{}' section on {} -> {}".format(
-                actor_alias, name, page_name, response.url))

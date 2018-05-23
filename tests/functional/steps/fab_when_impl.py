@@ -1735,7 +1735,6 @@ def go_to_page(context: Context, supplier_alias: str, page_name: str):
     actor = context.get_actor(supplier_alias)
     url = get_fabs_page_url(page_name)
     context.response = make_request(Method.GET, url, session=actor.session)
-    context.visited_page = page_name
 
 
 def go_to_pages(context: Context, actor_alias: str, table: Table):

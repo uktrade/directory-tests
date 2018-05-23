@@ -25,7 +25,6 @@ from tests.functional.pages import (
     fas_ui_health_industry,
     fas_ui_health_industry_summary,
     fas_ui_industries,
-    fas_ui_landing,
     fas_ui_tech_industry,
     fas_ui_tech_industry_summary,
     sso_ui_confim_your_email,
@@ -45,7 +44,7 @@ from tests.functional.pages import fab_ui_case_study_basic
 FAS_PAGE_REGISTRY = {
     "fas landing": {
         "url": "ui-supplier:landing",
-        "po": fas_ui_landing
+        "po": None
     },
     "fas industries": {
         "url": "ui-supplier:industries",
