@@ -8,7 +8,7 @@ from pages import (
     events,
     export_opportunities,
     find_a_buyer,
-    find_a_supplier,
+    fas_ui_landing,
     footer,
     get_finance,
     header,
@@ -34,7 +34,9 @@ from pages import (
     triage_have_you_exported,
     triage_summary,
     visit_britain,
-    triage_what_do_you_want_to_export
+    triage_what_do_you_want_to_export,
+    fas_ui_empty_search_results,
+    fas_ui_search_results
 )
 
 EXRED_PAGE_REGISTRY = {
@@ -95,8 +97,8 @@ EXRED_PAGE_REGISTRY = {
         "po": find_a_buyer
     },
     "find a supplier": {
-        "url": find_a_supplier.URL,
-        "po": find_a_supplier
+        "url": fas_ui_landing.URL,
+        "po": fas_ui_landing
     },
     "invest in great": {
         "url": invest_in_great.URL,
@@ -177,9 +179,30 @@ EXRED_PAGE_REGISTRY = {
 }
 
 
+FAS_PAGE_REGISTRY = {
+    "fas landing": {
+        "url": fas_ui_landing.URL,
+        "po": fas_ui_landing
+    },
+    "fas empty search results": {
+        "url": fas_ui_empty_search_results.URL,
+        "po": fas_ui_empty_search_results
+    },
+    "fas search results": {
+        "url": fas_ui_search_results.URL,
+        "po": fas_ui_search_results
+    },
+}
+
+
+PAGES = {}
+PAGES.update(EXRED_PAGE_REGISTRY)
+PAGES.update(FAS_PAGE_REGISTRY)
+
+
 def get_page_url(page_name: str):
-    return EXRED_PAGE_REGISTRY[page_name.lower()]["url"]
+    return PAGES[page_name.lower()]["url"]
 
 
 def get_page_object(page_name: str):
-    return EXRED_PAGE_REGISTRY[page_name.lower()]["po"]
+    return PAGES[page_name.lower()]["po"]
