@@ -36,7 +36,10 @@ from pages import (
     visit_britain,
     triage_what_do_you_want_to_export,
     fas_ui_empty_search_results,
-    fas_ui_search_results
+    fas_ui_search_results,
+    fas_ui_contact_us,
+    fas_ui_thank_you_for_your_message,
+    fas_ui_industry
 )
 
 EXRED_PAGE_REGISTRY = {
@@ -192,6 +195,18 @@ FAS_PAGE_REGISTRY = {
         "url": fas_ui_search_results.URL,
         "po": fas_ui_search_results
     },
+    "fas contact us": {
+        "url": fas_ui_contact_us.URL,
+        "po": fas_ui_contact_us
+    },
+    "fas thank you for your message": {
+        "url": fas_ui_thank_you_for_your_message.URL,
+        "po": fas_ui_thank_you_for_your_message
+    },
+    "fas industry": {
+        "url": fas_ui_industry.URL,
+        "po": fas_ui_industry
+    }
 }
 
 
