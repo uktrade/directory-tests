@@ -40,15 +40,15 @@ Feature: FAS landing page
     Then "Robert" should be on the "FAS Contact us" page
 
 
-  @wip
+  @ED-4247
   @contact-us
   Scenario: Buyers should be able to contact us (DIT) from the "FAS landing" page
-    Given "Robert" visits the "FAS landing" page
-    And "Robert" decides to contact us from "FAS landing" page
+    Given "Robert" visits the "FAS Landing" page
+    And "Robert" decided to "contact us" via "FAS Landing" page
 
     When "Robert" fills out and submits the contact us form
 
-    Then "Robert" should see "Thank you for contacting us" page
+    Then "Robert" should be on the "FAS Thank you for your message" page
 
 
   @wip
