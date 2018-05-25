@@ -2,6 +2,7 @@
 # flake8: noqa
 """When step definitions."""
 from behave import when
+from behave.runner import Context
 
 from steps.then_impl import triage_should_be_classified_as
 from steps.when_impl import (
@@ -19,6 +20,8 @@ from steps.when_impl import (
     click_on_page_element,
     continue_export_journey,
     export_readiness_open_category,
+    fas_landing_page_search_for_companies,
+    fas_open_industry_page,
     guidance_open_category,
     guidance_read_through_all_articles,
     header_footer_open_link,
@@ -50,7 +53,8 @@ from steps.when_impl import (
     triage_what_is_your_company_name,
     visit_page,
     triage_question_what_do_you_want_to_export,
-    header_footer_click_on_dit_logo
+    header_footer_click_on_dit_logo,
+    fas_fill_out_and_submit_contact_us_form
 )
 
 
@@ -335,6 +339,7 @@ def when_actor_opens_link_from_header_menu(context, actor_alias, page_name, grou
 @when('"{actor_alias}" decides to use "{element_name}" button in "{page_name}"')
 @when('"{actor_alias}" decides to use "{element_name}" link in "{page_name}"')
 @when('"{actor_alias}" decides to use "{element_name}" in "{page_name}"')
+@when('"{actor_alias}" decides to "{element_name}" via "{page_name}" page')
 def when_actor_decides_to_click_on_page_element(
         context, actor_alias, element_name, page_name):
     click_on_page_element(context, actor_alias, element_name, page_name)
@@ -349,3 +354,23 @@ def when_actor_says_what_is_exported(context, actor_alias, goods_or_services):
 @when('"{actor_alias}" decides to click on the DIT logo in the "{logo_location}"')
 def when_actor_clicks_on_the_dit_logo(context, actor_alias, logo_location):
     header_footer_click_on_dit_logo(context, actor_alias, logo_location)
+
+
+@when('"{actor_alias}" searches for companies using "{keyword}" keyword in "{sector}" sector on "{page_alias}" page')
+def fas_when_actor_searches_for_companies(
+        context: Context, actor_alias: str, keyword: str, sector: str,
+        page_alias: str):
+    fas_landing_page_search_for_companies(
+        context, actor_alias, keyword, sector, page_alias)
+
+
+@when('"{actor_alias}" decides to find out out more about "{industry_name}" industry')
+def fas_when_actor_opens_industry_page(
+        context: Context, actor_alias: str, industry_name: str):
+    fas_open_industry_page(context, actor_alias, industry_name)
+
+
+@when('"{actor_alias}" fills out and submits the contact us form')
+def fas_when_actor_fills_out_and_submits_contanct_us_form(
+        context: Context, actor_alias: str):
+    fas_fill_out_and_submit_contact_us_form(context, actor_alias)

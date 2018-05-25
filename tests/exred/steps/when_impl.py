@@ -31,7 +31,8 @@ from pages import (
     triage_have_you_exported,
     triage_summary,
     personalised_what_do_you_want_to_export,
-    triage_what_do_you_want_to_export
+    triage_what_do_you_want_to_export,
+    fas_ui_contact_us
 )
 from registry.articles import (
     GUIDANCE,
@@ -1281,3 +1282,58 @@ def header_footer_click_on_dit_logo(
         context: Context, actor_alias: str, location: str):
     open_group_element(
         context, group="general", element="logo", location=location)
+
+
+def fas_landing_page_search_for_companies(
+        context: Context, actor_alias: str, keyword: str, sector: str,
+        page_alias: str):
+    page = get_page_object(page_alias)
+    assert hasattr(page, "search")
+    optional_param_keywords = ["n/a", "no", "empty", "without", "any"]
+    if keyword.lower() in optional_param_keywords:
+        keyword = None
+    if sector.lower() in optional_param_keywords:
+        sector = None
+    page.search(context.driver, keyword=keyword, sector=sector)
+    logging.debug(
+        "%s will visit '%s' page using: '%s'", actor_alias, page_alias,
+        page.URL)
+
+
+@retry(
+    wait_fixed=30000, stop_max_attempt_number=3,
+    retry_on_exception=retry_if_webdriver_error, wrap_exception=False)
+def fas_open_industry_page(
+        context: Context, actor_alias: str, industry_name: str):
+    actor = get_actor(context, actor_alias)
+    visited_page = actor.visited_page
+    page = get_page_object(visited_page)
+    assert hasattr(page, "open_industry")
+    page.open_industry(context.driver, industry_name)
+    update_actor(context, actor_alias, visited_page=industry_name)
+    logging.debug(
+        "%s opened '%s' page on %s", actor_alias, industry_name, page.URL)
+
+
+def fas_fill_out_and_submit_contact_us_form(
+        context: Context, actor_alias: str, *, sector: str = None,
+        sources: str = None, company_size: str = None, accept_tc: bool = True):
+    actor = get_actor(context, actor_alias)
+    company_name = actor.company_name or "Automated test"
+    contact_us_details = {
+        "full name": actor.alias,
+        "email": actor.email,
+        "industry": sector,
+        "organisation": company_name,
+        "organisation size": company_size,
+        "country": "DIT QA TEAM",
+        "body": "This is a test message sent via automated tests",
+        "source": sources,
+        "accept t&c": accept_tc,
+    }
+    fas_ui_contact_us.fill_out(context.driver, contact_us_details)
+    import time
+    time.sleep(10)
+    fas_ui_contact_us.submit(context.driver)
+
+
