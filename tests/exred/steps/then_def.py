@@ -2,6 +2,7 @@
 # flake8: noqa
 """Then steps definitions."""
 from behave import then
+from behave.runner import Context
 
 from steps.then_impl import (
     articles_read_counter_same_as_before_registration,
@@ -24,6 +25,7 @@ from steps.then_impl import (
     expected_page_elements_should_not_be_visible_on_get_finance,
     export_readiness_expected_page_elements_should_be_visible,
     export_readiness_should_see_articles,
+    fas_should_see_industry_page,
     guidance_check_if_link_to_next_category_is_displayed,
     guidance_expected_page_elements_should_be_visible,
     guidance_ribbon_should_be_visible,
@@ -338,3 +340,9 @@ def then_page_language_should_be(context, actor_alias, preferred_language):
 @then('"{actor_alias}" should see the correct favicon')
 def then_actor_should_see_correct_favicon(context, actor_alias):
     header_check_favicon(context, actor_alias)
+
+
+@then('"{actor_alias}" should see content specific to "{industry_name}" industry page')
+def fas_then_actor_should_see_industry_page(
+        context: Context, actor_alias: str, industry_name: str):
+    fas_should_see_industry_page(context, actor_alias, industry_name)
