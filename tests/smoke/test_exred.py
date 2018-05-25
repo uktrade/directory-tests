@@ -15,3 +15,17 @@ def test_health_check_endpoints(absolute_url):
     params = {'token': TOKEN}
     response = requests.get(absolute_url, params=params)
     assert response.status_code == http.client.OK
+
+
+def test_terms_200():
+    response = requests.get(get_absolute_url('ui-exred:terms'))
+
+    assert response.status_code == http.client.OK
+
+
+def test_privacy_200():
+    response = requests.get(get_absolute_url('ui-exred:privacy'))
+
+    assert response.status_code == http.client.OK
+
+

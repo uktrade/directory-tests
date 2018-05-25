@@ -73,8 +73,6 @@ urls = {
     'ui-supplier:industries-food-summary': 'industries/food-and-drink/summary/',
     'ui-supplier:feedback': 'feedback/',
     'ui-supplier:search': 'search/',
-    'ui-supplier:terms': 'terms-and-conditions/',
-    'ui-supplier:privacy': 'privacy-policy/',
     # NOTE: the URLS below require data from fixtures/supplier.json
     # to be loaded to the API db of the tested system
     'ui-supplier:suppliers-detail': 'suppliers/99999999',
@@ -140,6 +138,8 @@ urls = {
     'ui-exred:story-first': 'story/online-marketplaces-propel-freestyle-xtreme-sales/',
     'ui-exred:story-second': 'story/hello-babys-rapid-online-growth/',
     'ui-exred:story-thrid': 'story/york-bag-retailer-goes-global-via-e-commerce/',
+    'ui-exred:terms': 'terms-and-conditions/',
+    'ui-exred:privacy': 'privacy-and-cookies/',
 
     # Contact-Us UI
     'ui-contact-us:help': 'help/',
