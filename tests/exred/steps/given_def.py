@@ -28,7 +28,8 @@ from steps.when_impl import (
     start_triage,
     triage_classify_as,
     triage_create_exporting_journey,
-    visit_page
+    visit_page,
+    click_on_page_element
 )
 
 
@@ -198,3 +199,15 @@ def given_actor_is_on_random_case_study_page(context, actor_alias, page_name):
 @given('"{actor_alias}" shows all of the articles on the page whenever possible')
 def given_actor_shows_all_articles(context, actor_alias):
     articles_show_all(context, actor_alias)
+
+
+@given('"{actor_alias}" decided to use "{element_name}" button on "{page_name}" page')
+@given('"{actor_alias}" decided to use "{element_name}" link on "{page_name}" page')
+@given('"{actor_alias}" decided to use "{element_name}" on "{page_name}" page')
+@given('"{actor_alias}" decided to use "{element_name}" button on "{page_name}" page')
+@given('"{actor_alias}" decided to use "{element_name}" link in "{page_name}"')
+@given('"{actor_alias}" decided to use "{element_name}" in "{page_name}"')
+@given('"{actor_alias}" decided to "{element_name}" via "{page_name}" page')
+def given_actor_decides_to_click_on_page_element(
+        context, actor_alias, element_name, page_name):
+    click_on_page_element(context, actor_alias, element_name, page_name)
