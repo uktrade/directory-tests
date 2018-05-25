@@ -79,22 +79,6 @@ jobs:
             - ~/directory-tests/docker/.env_with_export
             - ~/directory-tests/docker/.env_without_export
 
-  refresh_geckoboard:
-    docker:
-      - image: circleci/python:3.5.3
-    working_directory: ~/directory-tests
-    steps:
-      - checkout
-      - run:
-          name: Refresh Geckoboard
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            pip install -r requirements_geckoboard.txt
-            python ./docker/env_writer.py ./docker/env.json
-            source ./docker/.env_with_export;
-            python scripts/geckoboard_updater.py
-
   smoke_tests:
     docker:
       - image: circleci/python:3.5.3
@@ -380,14 +364,3 @@ workflows:
           requires:
             - smoke_tests
             - functional_tests_requirements
-
-  refresh_geckoboard_periodically:
-    triggers:
-    - schedule:
-        cron: "0,15,30,45 8-17 * * 1-5"
-        filters:
-          branches:
-            only:
-              - master
-    jobs:
-      - refresh_geckoboard
