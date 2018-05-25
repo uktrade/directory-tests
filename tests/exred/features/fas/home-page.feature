@@ -30,14 +30,14 @@ Feature: FAS landing page
       | Bridges   | Construction   | FAS search results       |
 
 
-  @wip
+  @ED-4246
   @contact-us
   Scenario: Buyers should be able to get to the "Contact us" page from the "FAS landing" page
     Given "Robert" visits the "FAS landing" page
 
-    When "Robert" decides to contact us from "FAS landing" page
+    When "Robert" decides to "contact us" via "FAS Landing" page
 
-    Then "Robert" should see "Contact us" page
+    Then "Robert" should be on the "FAS Contact us" page
 
 
   @wip
