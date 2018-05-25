@@ -11,7 +11,7 @@ Feature: FAS landing page
     Then "Robert" should see "Hero, Find UK Suppliers, Contact us, UK Industries, UK Services" sections on "FAS landing" page
 
 
-  @ED-4243
+  @ED-4245
   @search
   Scenario Outline: Buyers should be able to "Find UK suppliers" in "<specific>" industry from the "FAS landing" page using "<following>" keyword
     Given "Robert" visits the "FAS landing" page
