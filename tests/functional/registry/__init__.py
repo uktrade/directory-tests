@@ -86,14 +86,6 @@ FAS_PAGE_REGISTRY = {
         "url": "ui-supplier:industries-food-summary",
         "po": fas_ui_food_and_drink_industry_summary
     },
-    "fas terms-and-conditions": {
-        "url": "ui-supplier:terms",
-        "po": None
-    },
-    "fas privacy-policy": {
-        "url": "ui-supplier:privacy",
-        "po": None
-    },
 }
 
 SSO_PAGE_REGISTRY = {

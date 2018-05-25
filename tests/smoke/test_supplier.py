@@ -48,18 +48,6 @@ def test_food_industry_200():
     assert response.status_code == http.client.OK
 
 
-def test_terms_200():
-    response = requests.get(get_absolute_url('ui-supplier:terms'))
-
-    assert response.status_code == http.client.OK
-
-
-def test_privacy_200():
-    response = requests.get(get_absolute_url('ui-supplier:privacy'))
-
-    assert response.status_code == http.client.OK
-
-
 def test_supplier_profile_200():
     # company 09466005 must exist on the environment the tests are ran against.
     url = join_ui_supplier('suppliers/09466005/michboly-ltd')
