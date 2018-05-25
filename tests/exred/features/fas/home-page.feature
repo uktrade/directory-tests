@@ -51,23 +51,21 @@ Feature: FAS landing page
     Then "Robert" should be on the "FAS Thank you for your message" page
 
 
-  @wip
+  @ED-4248
   @industry-page
   Scenario Outline: Buyers should be able to find out more about "<specific>" industry from the "FAS landing" page
     Given "Robert" visits the "FAS landing" page
 
-    When "Rober" decides to find out out more about "<specific>" industry
+    When "Robert" decides to find out out more about "<specific>" industry
 
-    Then "Robert" should see "<specific> Industry" page
+    Then "Robert" should be on the "FAS Industry" page
+    And "Robert" should see content specific to "<specific>" industry page
 
     Examples:
       | specific          |
       | Agritech          |
       | Creative services |
       | Cyber security    |
-#      | Food and drink    |
-#      | Global sports     |
-#      | Healthcare        |
 
 
   @wip
