@@ -7,8 +7,14 @@ from pages import (
     british_council,
     events,
     export_opportunities,
-    find_a_buyer,
+    fas_ui_contact_us,
+    fas_ui_empty_search_results,
+    fas_ui_industries,
+    fas_ui_industry,
     fas_ui_landing,
+    fas_ui_search_results,
+    fas_ui_thank_you_for_your_message,
+    find_a_buyer,
     footer,
     get_finance,
     header,
@@ -33,13 +39,8 @@ from pages import (
     triage_do_you_use_online_marketplaces,
     triage_have_you_exported,
     triage_summary,
-    visit_britain,
     triage_what_do_you_want_to_export,
-    fas_ui_empty_search_results,
-    fas_ui_search_results,
-    fas_ui_contact_us,
-    fas_ui_thank_you_for_your_message,
-    fas_ui_industry
+    visit_britain,
 )
 
 EXRED_PAGE_REGISTRY = {
@@ -206,6 +207,10 @@ FAS_PAGE_REGISTRY = {
     "fas industry": {
         "url": fas_ui_industry.URL,
         "po": fas_ui_industry
+    },
+    "fas industries": {
+        "url": fas_ui_industries.URL,
+        "po": fas_ui_industries
     }
 }
 
