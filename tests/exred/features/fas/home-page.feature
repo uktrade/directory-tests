@@ -79,48 +79,6 @@ Feature: FAS landing page
 
 
   @wip
-  @company-profile
-  Scenario Outline: Buyers should be able to look for more "Latest company profiles" from the "FAS landing" page using "<following>" keyword
-    Given "Robert" visits the "FAS landing" page
-
-    When "Robert" looks for UK suppliers using "Latest company profiles" section and "<following>" keyword
-
-    Then "Robert" should be on the "FAS search" page
-
-    Examples:
-      | following |
-      | SpaceX    |
-      | WiFI      |
-      | Bridges   |
-
-
-  @wip
-  @company-profile
-  Scenario Outline: Buyers should be able to view the "<selected>" latest company profile from the "FAS landing" page
-    Given "Robert" visits the "FAS landing" page
-
-    When "Robert" decides to view the "<selected>" latest company profile
-
-    Then "Robert" should be on the "FAS company profile" page
-
-    Examples:
-      | selected |
-      | first    |
-      | second   |
-      | third    |
-      | fourth   |
-
-
-  @wip
-  @report-this-page
-  Scenario: Buyers should be able to view all latest company profiles from the "FAS landing" page
-    Given "Robert" visits the "FAS landing" page
-
-    When "Robert" decides to view more latest company profiles
-
-    Then "Robert" should be on the "FAS latest company profiles" page
-
-
   @wip
   @report-this-page
   Scenario: Buyers should be able to report a problem with the "FAS landing" page
