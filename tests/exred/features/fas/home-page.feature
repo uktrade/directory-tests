@@ -85,7 +85,7 @@ Feature: FAS landing page
 
     When "Robert" looks for UK suppliers using "Latest company profiles" section and "<following>" keyword
 
-    Then "Robert" should see "FAS search" page
+    Then "Robert" should be on the "FAS search" page
 
     Examples:
       | following |
@@ -101,7 +101,7 @@ Feature: FAS landing page
 
     When "Robert" decides to view the "<selected>" latest company profile
 
-    Then "Robert" should see "FAS company profile" page
+    Then "Robert" should be on the "FAS company profile" page
 
     Examples:
       | selected |
@@ -118,7 +118,7 @@ Feature: FAS landing page
 
     When "Robert" decides to view more latest company profiles
 
-    Then "Robert" should see "FAS latest company profiles" page
+    Then "Robert" should be on the "FAS latest company profiles" page
 
 
   @wip
@@ -129,7 +129,7 @@ Feature: FAS landing page
     When "Robert" decides to report problem with the "FAS landing" page
     And "Robert" fills out and submits the "Help us improve great.gov.uk" form
 
-    Then "Robert" should see "Thank you for your feedback" page
+    Then "Robert" should be on the "Thank you for your feedback" page
 
 
   @wip
@@ -139,4 +139,4 @@ Feature: FAS landing page
 
     When "Robert" decides to go to learn more about marketing on the "FAS landing" page
 
-    Then "Robert" should see the "marketing content" page
+    Then "Robert" should be on the "marketing content" page
