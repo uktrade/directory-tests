@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Find a Supplier Landing Page Object."""
+"""Find a Supplier - Generic Industry Page Object."""
 import logging
 from urllib.parse import urljoin
 
