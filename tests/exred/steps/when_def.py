@@ -20,10 +20,13 @@ from steps.when_impl import (
     click_on_page_element,
     continue_export_journey,
     export_readiness_open_category,
+    fas_fill_out_and_submit_contact_us_form,
     fas_landing_page_search_for_companies,
     fas_open_industry_page,
+    fas_see_more_industries,
     guidance_open_category,
     guidance_read_through_all_articles,
+    header_footer_click_on_dit_logo,
     header_footer_open_link,
     language_selector_change_to,
     language_selector_close,
@@ -48,13 +51,11 @@ from steps.when_impl import (
     triage_do_you_export_regularly,
     triage_go_through_again,
     triage_have_you_exported_before,
+    triage_question_what_do_you_want_to_export,
     triage_say_whether_you_use_online_marketplaces,
     triage_should_see_answers_to_questions,
     triage_what_is_your_company_name,
     visit_page,
-    triage_question_what_do_you_want_to_export,
-    header_footer_click_on_dit_logo,
-    fas_fill_out_and_submit_contact_us_form
 )
 
 
@@ -374,3 +375,8 @@ def fas_when_actor_opens_industry_page(
 def fas_when_actor_fills_out_and_submits_contanct_us_form(
         context: Context, actor_alias: str):
     fas_fill_out_and_submit_contact_us_form(context, actor_alias)
+
+
+@when('"{actor_alias}" decides to see more UK industries from the FAS landing page')
+def fas_landing_page_see_more_industries(context: Context, actor_alias: str):
+    fas_see_more_industries(context, actor_alias)

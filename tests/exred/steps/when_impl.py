@@ -32,7 +32,8 @@ from pages import (
     triage_summary,
     personalised_what_do_you_want_to_export,
     triage_what_do_you_want_to_export,
-    fas_ui_contact_us
+    fas_ui_contact_us,
+    fas_ui_landing
 )
 from registry.articles import (
     GUIDANCE,
@@ -1337,3 +1338,8 @@ def fas_fill_out_and_submit_contact_us_form(
     fas_ui_contact_us.submit(context.driver)
 
 
+def fas_see_more_industries(context: Context, actor_alias: str):
+    fas_ui_landing.see_more_industries(context.driver)
+    logging.debug(
+        "%s clicked on 'See more industries' button on %s", actor_alias,
+        context.driver.current_url)
