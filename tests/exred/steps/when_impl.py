@@ -1333,8 +1333,6 @@ def fas_fill_out_and_submit_contact_us_form(
         "accept t&c": accept_tc,
     }
     fas_ui_contact_us.fill_out(context.driver, contact_us_details)
-    import time
-    time.sleep(10)
     fas_ui_contact_us.submit(context.driver)
 
 
