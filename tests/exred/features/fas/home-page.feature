@@ -79,7 +79,7 @@ Feature: FAS landing page
 
 
   @wip
-  @wip
+  @ED-4250
   @report-this-page
   Scenario: Buyers should be able to report a problem with the "FAS landing" page
     Given "Robert" visits the "FAS landing" page
@@ -91,10 +91,11 @@ Feature: FAS landing page
 
 
   @wip
+  @ED-4251
   @marketing-content-page
   Scenario: Buyers should be able to view the Marketing Content from the "FAS landing" page
     Given "Robert" visits the "FAS landing" page
 
     When "Robert" decides to go to learn more about marketing on the "FAS landing" page
 
-    Then "Robert" should be on the "marketing content" page
+    Then "Robert" should be on the "Marketing content" page
