@@ -45,7 +45,7 @@ SECTIONS = {
         "first industry": "#industries-section a:nth-child(1)",
         "second industry": "#industries-section a:nth-child(2)",
         "third industry": "#industries-section a:nth-child(3)",
-        "see more button": "#industries-section > div > a.button"
+        "see more industries": "#industries-section > div > a.button"
     },
     "uk services": {
         "itself": "#services-section",
@@ -106,3 +106,7 @@ def open_industry(driver: webdriver, industry_name: str):
         element_name="Industry card", wait_for_it=False)
     industry_link.click()
     take_screenshot(driver, NAME + " after opening " + industry_name + " page")
+
+
+def see_more_industries(driver: webdriver):
+    click_on_page_element(driver, "see more industries")
