@@ -68,14 +68,14 @@ Feature: FAS landing page
       | Cyber security    |
 
 
-  @wip
+  @ED-4249
   @industries-page
   Scenario: Buyers should be able to see more UK industries from the "FAS landing" page
     Given "Robert" visits the "FAS landing" page
 
-    When "Robert" decides to see more more UK industries from the FAS landing page
+    When "Robert" decides to see more UK industries from the FAS landing page
 
-    Then "Robert" should see "FAS Industries" page
+    Then "Robert" should be on the "FAS Industries" page
 
 
   @wip
