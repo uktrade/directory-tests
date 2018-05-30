@@ -14,6 +14,9 @@ join_ui_supplier = partial(urljoin, settings.DIRECTORY_UI_SUPPLIER_URL)
 join_exred = partial(urljoin, settings.EXRED_UI_URL)
 join_contact_us = partial(urljoin, settings.DIRECTORY_CONTACT_US_UI_URL)
 join_soo = partial(urljoin, settings.SOO_UI_URL)
+join_cms_url = partial(urljoin, settings.CMS_URL)
+join_cms_api = partial(urljoin, 'api', settings.CMS_URL)
+join_cms_ui = partial(urljoin, 'admin', settings.CMS_URL)
 
 urls = {
     # SSO
@@ -154,7 +157,17 @@ urls = {
     # SOO UI Selling Online Overseas
     'ui-soo:landing': '/',
     'ui-soo:search-results': 'markets/results/',
-    'ui-soo:market-details': 'markets/details/'
+    'ui-soo:market-details': 'markets/details/',
+
+    # CMS API endpoints
+    'cms-healthcheck:landing': '',
+    'cms-healthcheck:ping': 'healthcheck/ping/',
+    'cms-healthcheck:database': 'healthcheck/database/',
+    'cms-api:pages': 'api/pages/',
+    'cms-api:images': 'api/images/',
+    'cms-api:documents': 'api/documents/',
+    'cms-api:pages-by-type': 'api/pages/lookup-by-type/{}/',
+    'cms-api:pages-by-slug': 'api/pages/lookup-by-slug/{}/',
 }
 
 # these user credentials are hard-coded in `directory-sso`. The users
@@ -209,6 +222,12 @@ def get_absolute_url(name):
         return join_contact_us(relative_url)
     elif name.startswith('ui-soo:'):
         return join_soo(relative_url)
+    elif name.startswith('cms-api:'):
+        return join_cms_api(relative_url)
+    elif name.startswith('cms-healthcheck:'):
+        return join_cms_url(relative_url)
+    elif name.startswith('cms-ui:'):
+        return join_cms_ui(relative_url)
 
 
 def get_random_email_address():
