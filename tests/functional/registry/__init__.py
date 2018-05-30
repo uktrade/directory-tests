@@ -1,6 +1,12 @@
 # -*- coding: utf-8 -*-
 """FABS Page Registry"""
 from tests.functional.pages import (
+    fab_ui_account_add_collaborator,
+    fab_ui_account_confrim_password,
+    fab_ui_account_remove_collaborator,
+    fab_ui_account_transfer_ownership,
+    fab_ui_confim_your_collaboration,
+    fab_ui_confim_your_ownership,
     fab_ui_confirm_identity,
     fab_ui_confirm_identity_letter,
     fab_ui_edit_description,
@@ -26,16 +32,10 @@ from tests.functional.pages import (
     sso_ui_logout,
     sso_ui_password_reset,
     sso_ui_register,
-    sud_ui_landing,
-    sud_ui_selling_online_overseas,
-    sud_ui_find_a_buyer,
     sud_ui_export_opportunities,
-    fab_ui_account_add_collaborator,
-    fab_ui_confim_your_collaboration,
-    fab_ui_account_transfer_ownership,
-    fab_ui_account_confrim_password,
-    fab_ui_confim_your_ownership,
-    fab_ui_account_remove_collaborator
+    sud_ui_find_a_buyer,
+    sud_ui_landing,
+    sud_ui_selling_online_overseas
 )
 
 from tests import get_absolute_url

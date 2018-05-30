@@ -14,7 +14,8 @@ from pages import (
     home,
     language_selector,
     personalised_journey,
-    triage_summary
+    triage_summary,
+    fas_ui_industry
 )
 from registry.articles import get_article, get_articles
 from registry.pages import get_page_object
@@ -514,3 +515,12 @@ def should_see_page_in_preferred_language(
     logging.debug(
         "%s can see '%' page in '%s", actor_alias, context.driver.current_url,
         preferred_language)
+
+
+def fas_should_see_industry_page(
+        context: Context, actor_alias: str, industry_name: str):
+    fas_ui_industry.should_see_content_for_industry(
+        context.driver, industry_name)
+    logging.debug(
+        "%s found content specific to %s industry on %s", actor_alias,
+        industry_name, context.driver.current_url)

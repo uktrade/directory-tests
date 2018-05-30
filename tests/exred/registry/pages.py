@@ -7,8 +7,14 @@ from pages import (
     british_council,
     events,
     export_opportunities,
+    fas_ui_contact_us,
+    fas_ui_empty_search_results,
+    fas_ui_industries,
+    fas_ui_industry,
+    fas_ui_landing,
+    fas_ui_search_results,
+    fas_ui_thank_you_for_your_message,
     find_a_buyer,
-    find_a_supplier,
     footer,
     get_finance,
     header,
@@ -33,8 +39,8 @@ from pages import (
     triage_do_you_use_online_marketplaces,
     triage_have_you_exported,
     triage_summary,
+    triage_what_do_you_want_to_export,
     visit_britain,
-    triage_what_do_you_want_to_export
 )
 
 EXRED_PAGE_REGISTRY = {
@@ -95,8 +101,8 @@ EXRED_PAGE_REGISTRY = {
         "po": find_a_buyer
     },
     "find a supplier": {
-        "url": find_a_supplier.URL,
-        "po": find_a_supplier
+        "url": fas_ui_landing.URL,
+        "po": fas_ui_landing
     },
     "invest in great": {
         "url": invest_in_great.URL,
@@ -177,9 +183,46 @@ EXRED_PAGE_REGISTRY = {
 }
 
 
+FAS_PAGE_REGISTRY = {
+    "fas landing": {
+        "url": fas_ui_landing.URL,
+        "po": fas_ui_landing
+    },
+    "fas empty search results": {
+        "url": fas_ui_empty_search_results.URL,
+        "po": fas_ui_empty_search_results
+    },
+    "fas search results": {
+        "url": fas_ui_search_results.URL,
+        "po": fas_ui_search_results
+    },
+    "fas contact us": {
+        "url": fas_ui_contact_us.URL,
+        "po": fas_ui_contact_us
+    },
+    "fas thank you for your message": {
+        "url": fas_ui_thank_you_for_your_message.URL,
+        "po": fas_ui_thank_you_for_your_message
+    },
+    "fas industry": {
+        "url": fas_ui_industry.URL,
+        "po": fas_ui_industry
+    },
+    "fas industries": {
+        "url": fas_ui_industries.URL,
+        "po": fas_ui_industries
+    }
+}
+
+
+PAGES = {}
+PAGES.update(EXRED_PAGE_REGISTRY)
+PAGES.update(FAS_PAGE_REGISTRY)
+
+
 def get_page_url(page_name: str):
-    return EXRED_PAGE_REGISTRY[page_name.lower()]["url"]
+    return PAGES[page_name.lower()]["url"]
 
 
 def get_page_object(page_name: str):
-    return EXRED_PAGE_REGISTRY[page_name.lower()]["po"]
+    return PAGES[page_name.lower()]["po"]
