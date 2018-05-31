@@ -84,6 +84,13 @@ def test_wagtail_get_number_of_pages(cms_client, limit):
     assert len(response.json()["items"]) == limit
 
 
+def test_wagtail_can_list_only_20_pages(cms_client):
+    query = "?limit=21"
+    relative_url = get_relative_url('cms-api:pages') + query
+    response = cms_client.get(relative_url)
+    assert response.json()["message"] == "limit cannot be higher than 20"
+
+
 @pytest.mark.parametrize("application", [
     "Export Readiness pages",
     "Find a Supplier Pages"
