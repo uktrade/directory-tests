@@ -4,22 +4,21 @@ import logging
 from urllib.parse import urljoin
 
 from selenium import webdriver
+from utils import find_element, take_screenshot
 
 from pages.common_actions import (
     check_for_expected_sections_elements,
     check_for_section,
     check_title,
     check_url,
-    go_to_url,
-    find_and_click_on_page_element
+    find_and_click_on_page_element,
+    go_to_url
 )
 from settings import DIRECTORY_UI_SUPPLIER_URL
-from utils import take_screenshot, find_element
 
 NAME = "Find a Supplier Home page"
-URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "")
-PAGE_TITLE = \
-    "Find trade profiles of reliable UK suppliers - trade.great.gov.uk"
+URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "/")
+PAGE_TITLE = "Find UK suppliers - trade.great.gov.uk"
 
 SEARCH_INPUT = "#id_term"
 SEARCH_SECTOR = "#id_sectors"
