@@ -1,21 +1,24 @@
 # -*- coding: utf-8 -*-
 """Then step implementations."""
 import logging
+from typing import List
 
+from behave.model import Table
 from behave.runner import Context
+from utils import assertion_msg, clear_driver_cookies, get_actor
 
 from pages import (
     article_common,
     case_studies_common,
     export_readiness_common,
+    fas_ui_industry,
     get_finance,
     guidance_common,
     header,
     home,
     language_selector,
     personalised_journey,
-    triage_summary,
-    fas_ui_industry
+    triage_summary
 )
 from registry.articles import get_article, get_articles
 from registry.pages import get_page_object
@@ -24,7 +27,6 @@ from steps.when_impl import (
     triage_should_be_classified_as_occasional,
     triage_should_be_classified_as_regular
 )
-from utils import assertion_msg, clear_driver_cookies, get_actor
 
 
 def should_be_on_page(context: Context, actor_alias: str, page_name: str):
@@ -180,7 +182,16 @@ def export_readiness_expected_page_elements_should_be_visible(
 
 
 def should_see_sections(
-        context: Context, actor_alias: str, sections: list, page_name: str):
+        context: Context, actor_alias: str, page_name: str, *,
+        sections_list: List[str]= None, sections_table: Table = None):
+    assert sections_list or sections_table
+    if sections_table:
+        sections = [row[0] for row in sections_table]
+    else:
+        sections = sections_list
+    logging.debug(
+        "%s will look for following sections: '%s' on %s", actor_alias,
+        sections, context.driver.current_url)
     page = get_page_object(page_name)
     assert hasattr(page, "should_see_section")
     for section in sections:

@@ -148,7 +148,8 @@ def given_actor_sets_sector_service_preference(context, actor_alias, service):
 @given('"{actor_alias}" can see "{sections}" section on "{page_name}" page')
 @given('"{actor_alias}" can see "{sections}" sections on "{page_name}" page')
 def given_can_see_sections(context, actor_alias, sections, page_name):
-    should_see_sections(context, actor_alias, sections.split(", "), page_name)
+    should_see_sections(
+        context, actor_alias, page_name, sections_list=sections.split(", "))
 
 
 @given('"{actor_alias}" exports "{good}" good')

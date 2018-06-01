@@ -47,14 +47,14 @@ from steps.then_impl import (
     share_page_should_be_prepopulated,
     share_page_via_email_should_have_article_details,
     should_be_on_page,
+    should_be_on_page_or_international_page,
     should_not_see_sections,
     should_see_links_to_services,
     should_see_page_in_preferred_language,
     should_see_sections,
     should_see_share_widget,
     triage_should_be_classified_as,
-    triage_should_see_change_your_answers_link,
-    should_be_on_page_or_international_page
+    triage_should_see_change_your_answers_link
 )
 from steps.when_impl import (
     triage_answer_questions_again,
@@ -157,7 +157,14 @@ def then_expected_export_readiness_page_elements_should_be_visible(
 @then('"{actor_alias}" should see "{sections}" section on "{page_name}" page')
 @then('"{actor_alias}" should see "{sections}" sections on "{page_name}" page')
 def then_should_see_sections(context, actor_alias, sections, page_name):
-    should_see_sections(context, actor_alias, sections.split(", "), page_name)
+    should_see_sections(
+        context, actor_alias, page_name, sections_list=sections.split(", "))
+
+
+@then('"{actor_alias}" should see expected sections on "{page_name}" page')
+def then_should_see_sections(context, actor_alias, page_name):
+    should_see_sections(
+        context, actor_alias, page_name, sections_table=context.table)
 
 
 @then('"{actor_alias}" should not see "{sections}" section on "{page_name}" page')
