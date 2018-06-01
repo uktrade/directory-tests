@@ -4,21 +4,22 @@ import logging
 from urllib.parse import urljoin
 
 from selenium import webdriver
+from utils import assertion_msg, find_element, find_elements, take_screenshot
 
 from pages.common_actions import (
     check_for_expected_sections_elements,
     check_for_section,
     check_title,
     check_url,
-    go_to_url,
+    go_to_url
 )
 from settings import DIRECTORY_UI_SUPPLIER_URL
-from utils import take_screenshot, find_element, assertion_msg
 
 NAME = "Find a Supplier - Generic Industry page"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "industries/")
 PAGE_TITLE = "trade.great.gov.uk"
 
+BREADCRUMB_LINKS = "p.breadcrumbs > a"
 INDUSTRY_BREADCRUMB = "p.breadcrumbs > span.current.bidi-rtl"
 SECTIONS = {
     "hero": {
@@ -85,3 +86,15 @@ def should_see_content_for_industry(driver: webdriver, industry_name: str):
             "Expected to find term '%s' in the source of the page %s",
             industry_name, driver.current_url):
         assert industry_name.lower() in source.lower()
+
+
+def click_breadcrumb(driver: webdriver, name: str):
+    breadcrumbs = find_elements(driver, by_css=BREADCRUMB_LINKS)
+    url = driver.current_url
+    link = None
+    for breadcrumb in breadcrumbs:
+        if breadcrumb.text.lower() == name.lower():
+            link = breadcrumb
+    assert link, "Couldn't find '{}' breadcrumb on {}".format(name, url)
+    link.click()
+    take_screenshot(driver, " after clicking on " + name + " breadcrumb")
