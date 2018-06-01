@@ -1,16 +1,27 @@
 # -*- coding: utf-8 -*-
 """When step implementations."""
 import logging
-
 import random
 
 from behave.runner import Context
 from retrying import retry
 from selenium.common.exceptions import TimeoutException, WebDriverException
+from utils import (
+    VisitedArticle,
+    add_actor,
+    assertion_msg,
+    get_actor,
+    take_screenshot,
+    unauthenticated_actor,
+    update_actor
+)
+from utils.gov_notify import get_verification_link
 
 from pages import (
     article_common,
     article_list,
+    fas_ui_contact_us,
+    fas_ui_landing,
     footer,
     guidance_common,
     header,
@@ -18,6 +29,7 @@ from pages import (
     international,
     language_selector,
     personalised_journey,
+    personalised_what_do_you_want_to_export,
     sso_common,
     sso_confirm_your_email,
     sso_registration,
@@ -30,10 +42,7 @@ from pages import (
     triage_do_you_use_online_marketplaces,
     triage_have_you_exported,
     triage_summary,
-    personalised_what_do_you_want_to_export,
-    triage_what_do_you_want_to_export,
-    fas_ui_contact_us,
-    fas_ui_landing
+    triage_what_do_you_want_to_export
 )
 from registry.articles import (
     GUIDANCE,
@@ -43,16 +52,6 @@ from registry.articles import (
 )
 from registry.pages import get_page_object
 from settings import EXRED_SECTORS
-from utils import (
-    VisitedArticle,
-    add_actor,
-    assertion_msg,
-    get_actor,
-    take_screenshot,
-    unauthenticated_actor,
-    update_actor
-)
-from utils.gov_notify import get_verification_link
 
 
 def retry_if_webdriver_error(exception):
@@ -1340,4 +1339,15 @@ def fas_see_more_industries(context: Context, actor_alias: str):
     fas_ui_landing.see_more_industries(context.driver)
     logging.debug(
         "%s clicked on 'See more industries' button on %s", actor_alias,
+        context.driver.current_url)
+
+
+def fas_use_breadcrumb(
+        context: Context, actor_alias: str, breadcrumb_name: str,
+        page_name: str):
+    page = get_page_object(page_name)
+    assert hasattr(page, "click_breadcrumb")
+    page.click_breadcrumb(context.driver, breadcrumb_name)
+    logging.debug(
+        "%s clicked on '%s' breadcrumb on %s", actor_alias, breadcrumb_name,
         context.driver.current_url)

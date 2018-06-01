@@ -24,6 +24,7 @@ from steps.when_impl import (
     fas_landing_page_search_for_companies,
     fas_open_industry_page,
     fas_see_more_industries,
+    fas_use_breadcrumb,
     guidance_open_category,
     guidance_read_through_all_articles,
     header_footer_click_on_dit_logo,
@@ -55,7 +56,7 @@ from steps.when_impl import (
     triage_say_whether_you_use_online_marketplaces,
     triage_should_see_answers_to_questions,
     triage_what_is_your_company_name,
-    visit_page,
+    visit_page
 )
 
 
@@ -380,3 +381,10 @@ def fas_when_actor_fills_out_and_submits_contanct_us_form(
 @when('"{actor_alias}" decides to see more UK industries from the FAS landing page')
 def fas_landing_page_see_more_industries(context: Context, actor_alias: str):
     fas_see_more_industries(context, actor_alias)
+
+
+@when('"{actor_alias}" decides to use "{breadcrumb_name}" breadcrumb on the "{page_name}" page')
+def fas_industries_use_breadcrumb(
+        context: Context, actor_alias: str, breadcrumb_name: str,
+        page_name: str):
+    fas_use_breadcrumb(context, actor_alias, breadcrumb_name, page_name)
