@@ -1287,15 +1287,19 @@ def header_footer_click_on_dit_logo(
         context, group="general", element="logo", location=location)
 
 
-def fas_landing_page_search_for_companies(
-        context: Context, actor_alias: str, keyword: str, sector: str,
-        page_alias: str):
+def fas_search_for_companies(
+        context: Context, actor_alias: str, *, page_alias: str = None,
+        keyword: str = None, sector: str = None
+        ):
+    if not page_alias:
+        actor = get_actor(context, actor_alias)
+        page_alias = actor.visited_page
     page = get_page_object(page_alias)
     assert hasattr(page, "search")
     optional_param_keywords = ["n/a", "no", "empty", "without", "any"]
-    if keyword.lower() in optional_param_keywords:
+    if keyword and keyword.lower() in optional_param_keywords:
         keyword = None
-    if sector.lower() in optional_param_keywords:
+    if sector and sector.lower() in optional_param_keywords:
         sector = None
     page.search(context.driver, keyword=keyword, sector=sector)
     logging.debug(

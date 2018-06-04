@@ -21,8 +21,8 @@ from steps.when_impl import (
     continue_export_journey,
     export_readiness_open_category,
     fas_fill_out_and_submit_contact_us_form,
-    fas_landing_page_search_for_companies,
     fas_open_industry_page,
+    fas_search_for_companies,
     fas_see_more_industries,
     fas_use_breadcrumb,
     guidance_open_category,
@@ -362,8 +362,23 @@ def when_actor_clicks_on_the_dit_logo(context, actor_alias, logo_location):
 def fas_when_actor_searches_for_companies(
         context: Context, actor_alias: str, keyword: str, sector: str,
         page_alias: str):
-    fas_landing_page_search_for_companies(
-        context, actor_alias, keyword, sector, page_alias)
+    fas_search_for_companies(
+        context, actor_alias, keyword=keyword, sector=sector,
+        page_alias=page_alias)
+
+
+@when('"{actor_alias}" searches for companies using "{keyword}" keyword on "{page_alias}" page')
+def fas_when_actor_searches_for_companies(
+        context: Context, actor_alias: str, keyword: str, page_alias: str):
+    fas_search_for_companies(
+        context, actor_alias, keyword=keyword, page_alias=page_alias)
+
+
+@when('"{actor_alias}" searches for companies using "{keyword}" keyword')
+def fas_when_actor_searches_for_companies(
+        context: Context, actor_alias: str, keyword: str):
+    fas_search_for_companies(
+        context, actor_alias, keyword=keyword)
 
 
 @when('"{actor_alias}" decides to find out out more about "{industry_name}" industry')
