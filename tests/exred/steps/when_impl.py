@@ -1358,3 +1358,13 @@ def fas_use_breadcrumb(
     logging.debug(
         "%s clicked on '%s' breadcrumb on %s", actor_alias, breadcrumb_name,
         context.driver.current_url)
+
+
+def fas_view_more_companies(context: Context, actor_alias: str):
+    visited_page = get_actor(context, actor_alias).visited_page
+    page = get_page_object(visited_page)
+    assert hasattr(page, "click_on_page_element")
+    page.click_on_page_element(context.driver, "view more")
+    logging.debug(
+        "%s clicked on 'view more companies' button on %s", actor_alias,
+        context.driver.current_url)

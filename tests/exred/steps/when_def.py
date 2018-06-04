@@ -25,6 +25,7 @@ from steps.when_impl import (
     fas_search_for_companies,
     fas_see_more_industries,
     fas_use_breadcrumb,
+    fas_view_more_companies,
     guidance_open_category,
     guidance_read_through_all_articles,
     header_footer_click_on_dit_logo,
@@ -403,3 +404,8 @@ def fas_industries_use_breadcrumb(
         context: Context, actor_alias: str, breadcrumb_name: str,
         page_name: str):
     fas_use_breadcrumb(context, actor_alias, breadcrumb_name, page_name)
+
+
+@when('"{actor_alias}" decides to view more companies in the current industry')
+def fas_when_actors_views_more_companies(context: Context, actor_alias: str):
+    fas_view_more_companies(context, actor_alias)
