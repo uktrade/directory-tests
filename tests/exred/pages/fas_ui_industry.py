@@ -54,6 +54,7 @@ INDUSTRY_BREADCRUMB = "p.breadcrumbs > span.current.bidi-rtl"
 SEARCH_INPUT = "#companies-section form > input[name=term]"
 SEARCH_BUTTON = "#companies-section form > button[type=submit]"
 COMPANY_PROFILE_LINK = "#companies-section li:nth-child({number}) a.link"
+ARTICLE_LINK = "#articles-section article:nth-child({number}) a"
 SECTIONS = {
     "hero": {
         "itself": "#hero",
@@ -169,3 +170,14 @@ def open_profile(driver: webdriver, number: int):
         driver, by_css=COMPANY_PROFILE_LINK.format(number=number))
     link.click()
     take_screenshot(driver, NAME + " after clicking on company profile link")
+
+
+def open_article(driver: webdriver, number: int):
+    link = find_element(
+        driver, by_css=ARTICLE_LINK.format(number=number))
+    if link.get_attribute("target") == "_blank":
+        href = link.get_attribute("href")
+        driver.get(href)
+    else:
+        link.click()
+    take_screenshot(driver, NAME + " after clicking on article link")

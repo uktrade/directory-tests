@@ -58,7 +58,8 @@ from steps.when_impl import (
     triage_say_whether_you_use_online_marketplaces,
     triage_should_see_answers_to_questions,
     triage_what_is_your_company_name,
-    visit_page
+    visit_page,
+    fas_view_article
 )
 
 
@@ -416,3 +417,9 @@ def fas_when_actors_views_more_companies(context: Context, actor_alias: str):
 def fas_when_actor_views_selected_company_profile(
         context: Context, actor_alias: str, profile_number: str):
     fas_view_selected_company_profile(context, actor_alias, profile_number)
+
+
+@when('"{actor_alias}" decides to read "{article_number}" marketing article')
+def fas_when_actor_views_article(
+        context: Context, actor_alias: str, article_number: str):
+    fas_view_article(context, actor_alias, article_number)

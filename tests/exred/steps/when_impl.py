@@ -53,6 +53,11 @@ from registry.articles import (
 from registry.pages import get_page_object
 from settings import EXRED_SECTORS
 
+NUMBERS = {
+    "first": 1, "second": 2, "third": 3, "fourth": 4, "fifth": 5,
+    "sixth": 6
+}
+
 
 def retry_if_webdriver_error(exception):
     """Return True if we should retry on WebDriverException, False otherwise"""
@@ -1372,15 +1377,22 @@ def fas_view_more_companies(context: Context, actor_alias: str):
 
 def fas_view_selected_company_profile(
         context: Context, actor_alias: str, profile_number: str):
-    numbers = {
-        "first": 1, "second": 2, "third": 3, "fourth": 4, "fifth": 5,
-        "sixth": 6
-    }
-    number = numbers[profile_number]
+    number = NUMBERS[profile_number]
     visited_page = get_actor(context, actor_alias).visited_page
     page = get_page_object(visited_page)
     assert hasattr(page, "open_profile")
     page.open_profile(context.driver, number)
     logging.debug(
         "%s clicked on '%s' button on %s", actor_alias, profile_number,
+        context.driver.current_url)
+
+
+def fas_view_article(context: Context, actor_alias: str, article_number: str):
+    number = NUMBERS[article_number]
+    visited_page = get_actor(context, actor_alias).visited_page
+    page = get_page_object(visited_page)
+    assert hasattr(page, "open_article")
+    page.open_article(context.driver, number)
+    logging.debug(
+        "%s clicked on '%s' article on %s", actor_alias, article_number,
         context.driver.current_url)
