@@ -12,7 +12,7 @@ from pages.common_actions import (
 )
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
-NAME = "Find a Supplier - Contact Us page"
+NAME = "Find a Supplier - Thank you for your message page"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "industries/contact/")
 PAGE_TITLE = "Contact us - trade.great.gov.uk"
 
