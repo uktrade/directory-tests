@@ -51,6 +51,8 @@ PAGE_TITLE = "trade.great.gov.uk"
 
 BREADCRUMB_LINKS = "p.breadcrumbs > a"
 INDUSTRY_BREADCRUMB = "p.breadcrumbs > span.current.bidi-rtl"
+SEARCH_INPUT = "#companies-section form > input[name=term]"
+SEARCH_BUTTON = "#companies-section form > button[type=submit]"
 SECTIONS = {
     "hero": {
         "itself": "#hero",
@@ -66,17 +68,17 @@ SECTIONS = {
         "header": "#lede-section h2",
         "contact us": "#lede-section a"
     },
-    "why choose UK industry": {
+    "selling points": {
         "itself": "#lede-columns-section",
         "first": "#lede-columns-section div.column-one-third:nth-child(1)",
         "second": "#lede-columns-section div.column-one-third:nth-child(2)",
         "third": "#lede-columns-section div.column-one-third:nth-child(3)",
     },
-    "companies": {
+    "search for uk suppliers": {
         "itself": "#companies-section",
         "header": "#companies-list-text h2",
-        "search input": "#companies-section form > input[name=term]",
-        "search button": "#companies-section form > button[type=submit]",
+        "search input": SEARCH_INPUT,
+        "search button": SEARCH_BUTTON,
         "list of companies": "#companies-section ul",
         "view more": "#companies-section a.button",
     },
@@ -136,3 +138,21 @@ def click_breadcrumb(driver: webdriver, name: str):
     assert link, "Couldn't find '{}' breadcrumb on {}".format(name, url)
     link.click()
     take_screenshot(driver, " after clicking on " + name + " breadcrumb")
+
+
+def search(driver: webdriver, *, keyword: str = None, sector: str = None):
+    """
+    sector is not used, but kept for compatibility with search() in other POs.
+    """
+    input_field = find_element(
+        driver, by_css=SEARCH_INPUT, element_name="Search input field",
+        wait_for_it=False)
+    input_field.clear()
+    if keyword:
+        input_field.send_keys(keyword)
+    take_screenshot(driver, NAME + " after entering the keyword")
+    button = find_element(
+        driver, by_css=SEARCH_BUTTON, element_name="Search button",
+        wait_for_it=False)
+    button.click()
+    take_screenshot(driver, NAME + " after submitting the search form")
