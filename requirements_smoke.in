@@ -1,0 +1,7 @@
+directory-api-client
+directory-sso-api-client
+flake8
+pytest
+pytest-sugar
+requests
+sigauth
