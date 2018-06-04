@@ -174,12 +174,12 @@ Feature: FAS Industry pages
       | Sports economy    | arenas     | Global sports infrastructure           |
       | Healthcare        | surgery    | Healthcare and medical                 |
       | Technology        | holograms  | Software and computer services         |
-      | Legal services    | lawyer     | Legal services                         |
 
     @wip
     Examples: Industries with no companies in them on DEV
-      | specific          | following  | pre-selected  |
-      | Life sciences     | biotech    | Life sciences |
+      | specific          | following  | pre-selected   |
+      | Legal services    | lawyer     | Legal services |
+      | Life sciences     | biotech    | Life sciences  |
 
     @wip
     # ATM these Industries are not present on Dev
