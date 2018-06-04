@@ -53,6 +53,7 @@ BREADCRUMB_LINKS = "p.breadcrumbs > a"
 INDUSTRY_BREADCRUMB = "p.breadcrumbs > span.current.bidi-rtl"
 SEARCH_INPUT = "#companies-section form > input[name=term]"
 SEARCH_BUTTON = "#companies-section form > button[type=submit]"
+COMPANY_PROFILE_LINK = "#companies-section li:nth-child({number}) a.link"
 SECTIONS = {
     "hero": {
         "itself": "#hero",
@@ -161,3 +162,10 @@ def search(driver: webdriver, *, keyword: str = None, sector: str = None):
         wait_for_it=False)
     button.click()
     take_screenshot(driver, NAME + " after submitting the search form")
+
+
+def open_profile(driver: webdriver, number: int):
+    link = find_element(
+        driver, by_css=COMPANY_PROFILE_LINK.format(number=number))
+    link.click()
+    take_screenshot(driver, NAME + " after clicking on company profile link")
