@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """ExRed Page Object Registry"""
+from urllib.parse import urljoin
 
 from pages import (
     article_common,
@@ -40,7 +41,7 @@ from pages import (
     triage_have_you_exported,
     triage_summary,
     triage_what_do_you_want_to_export,
-    visit_britain,
+    visit_britain
 )
 
 EXRED_PAGE_REGISTRY = {
@@ -211,6 +212,90 @@ FAS_PAGE_REGISTRY = {
     "fas industries": {
         "url": fas_ui_industries.URL,
         "po": fas_ui_industries
+    },
+    "fas aerospace industry": {
+        "url": fas_ui_industry.URLS.AEROSPACE,
+        "po": fas_ui_industry
+    },
+    "fas agritech industry": {
+        "url": fas_ui_industry.URLS.AGRITECH,
+        "po": fas_ui_industry
+    },
+    "fas automotive industry": {
+        "url": fas_ui_industry.URLS.AUTOMOTIVE,
+        "po": fas_ui_industry
+    },
+    "fas business and government partnerships industry": {
+        "url": fas_ui_industry.URLS.BUSINESS_AND_GOVERNMENT_PARTNERSHIPS,
+        "po": fas_ui_industry
+    },
+    "fas consumer retail industry": {
+        "url": fas_ui_industry.URLS.CONSUMER_RETAIL,
+        "po": fas_ui_industry
+    },
+    "fas creative services industry": {
+        "url": fas_ui_industry.URLS.CREATIVE_SERVICES,
+        "po": fas_ui_industry
+    },
+    "fas cyber security industry": {
+        "url": fas_ui_industry.URLS.CYBER_SECURITY,
+        "po": fas_ui_industry
+    },
+    "fas education industry": {
+        "url": fas_ui_industry.URLS.EDUCATION,
+        "po": fas_ui_industry
+    },
+    "fas energy industry": {
+        "url": fas_ui_industry.URLS.ENERGY,
+        "po": fas_ui_industry
+    },
+    "fas engineering industry": {
+        "url": fas_ui_industry.URLS.ENGINEERING,
+        "po": fas_ui_industry
+    },
+    "fas food and drink industry": {
+        "url": fas_ui_industry.URLS.FOOD_AND_DRINK,
+        "po": fas_ui_industry
+    },
+    "fas healthcare industry": {
+        "url": fas_ui_industry.URLS.HEALTHCARE,
+        "po": fas_ui_industry
+    },
+    "fas infrastructure industry": {
+        "url": fas_ui_industry.URLS.INFRASTRUCTURE,
+        "po": fas_ui_industry
+    },
+    "fas innovation industry": {
+        "url": fas_ui_industry.URLS.INNOVATION,
+        "po": fas_ui_industry
+    },
+    "fas legal services industry": {
+        "url": fas_ui_industry.URLS.LEGAL_SERVICES,
+        "po": fas_ui_industry
+    },
+    "fas life sciences industry": {
+        "url": fas_ui_industry.URLS.LIFE_SCIENCES,
+        "po": fas_ui_industry
+    },
+    "fas marine industry": {
+        "url": fas_ui_industry.URLS.MARINE,
+        "po": fas_ui_industry
+    },
+    "fas professional and financial services industry": {
+        "url": fas_ui_industry.URLS.PROFESSIONAL_AND_FINANCIAL_SERVICES,
+        "po": fas_ui_industry
+    },
+    "fas space industry": {
+        "url": fas_ui_industry.URLS.SPACE,
+        "po": fas_ui_industry
+    },
+    "fas sports economy industry": {
+        "url": fas_ui_industry.URLS.SPORTS_ECONOMY,
+        "po": fas_ui_industry
+    },
+    "fas technology industry": {
+        "url": fas_ui_industry.URLS.TECHNOLOGY,
+        "po": fas_ui_industry
     }
 }
 
