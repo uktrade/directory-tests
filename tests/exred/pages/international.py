@@ -10,14 +10,14 @@ from pages.common_actions import (
     check_for_section,
     check_title,
     check_url,
-    go_to_url
+    go_to_url,
 )
 from settings import EXRED_UI_URL
 from utils import (
     check_if_element_is_visible,
     find_element,
     take_screenshot,
-    wait_for_page_load_after_action
+    wait_for_page_load_after_action,
 )
 
 NAME = "International"
@@ -35,45 +35,42 @@ BETA_FEEDBACK = "#header-beta-bar span > a"
 SECTIONS = {
     "header bar": {
         "itself": "#header-bar",
-        "language selector": LANGUAGE_SELECTOR
+        "language selector": LANGUAGE_SELECTOR,
     },
-    "header-menu": {
-        "itself": "#header-menu",
-        "logo": "#header-logo"
-    },
+    "header-menu": {"itself": "#header-menu", "logo": "#header-logo"},
     "intro": {
         "itself": "#content > section.international-intro",
         "title": "#content > section.international-intro > div > h1",
-        "description": "#content > section.international-intro > div > p"
+        "description": "#content > section.international-intro > div > p",
     },
     "buy from the uk": {
         "itself": "section.international-links article:nth-child(1)",
         "image": "section.international-links article:nth-child(1) > img",
         "title": "section.international-links article:nth-child(1) > h2",
         "text": "section.international-links article:nth-child(1) > p",
-        "find a supplier": FIND_A_SUPPLIER
+        "find a supplier": FIND_A_SUPPLIER,
     },
     "invest in the uk": {
         "itself": "section.international-links article:nth-child(2)",
         "image": "section.international-links article:nth-child(2) > img",
         "title": "section.international-links article:nth-child(2) > h2",
         "text": "section.international-links article:nth-child(2) > p",
-        "invest in great": SEE_THE_POTENTIAL
+        "invest in great": SEE_THE_POTENTIAL,
     },
     "study in the uk": {
         "itself": "section.international-links article:nth-child(3)",
         "image": "section.international-links article:nth-child(3) > img",
         "title": "section.international-links article:nth-child(3) > h2",
         "text": "section.international-links article:nth-child(3) > p",
-        "british council": LEARN_MORE
+        "british council": LEARN_MORE,
     },
     "visit the uk": {
         "itself": "section.international-links article:nth-child(4)",
         "image": "section.international-links article:nth-child(4) > img",
         "title": "section.international-links article:nth-child(4) > h2",
         "text": "section.international-links article:nth-child(4) > p",
-        "visit britain": PLAN_YOUR_TRIP
-    }
+        "visit britain": PLAN_YOUR_TRIP,
+    },
 }
 
 
@@ -93,10 +90,12 @@ def should_see_section(driver: webdriver, name: str):
 
 
 def open(
-        driver: webdriver, group: str, element: str, *, same_tab: bool = True):
+    driver: webdriver, group: str, element: str, *, same_tab: bool = True
+):
     selector = SECTIONS[group.lower()][element.lower()]
     link = find_element(
-        driver, by_css=selector, element_name=element, wait_for_it=False)
+        driver, by_css=selector, element_name=element, wait_for_it=False
+    )
     check_if_element_is_visible(link, element_name=element)
     if same_tab:
         href = link.get_attribute("href")
@@ -106,4 +105,5 @@ def open(
         with wait_for_page_load_after_action(driver):
             link.click()
     take_screenshot(
-        driver, NAME + " after clicking on: %s link".format(element))
+        driver, NAME + " after clicking on: %s link".format(element)
+    )

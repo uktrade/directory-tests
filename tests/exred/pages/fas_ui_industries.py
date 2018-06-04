@@ -12,40 +12,39 @@ from pages.common_actions import (
     check_title,
     check_url,
     find_and_click_on_page_element,
-    go_to_url
+    go_to_url,
 )
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
 NAME = "Find a Supplier - Industries page"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "industries/")
-PAGE_TITLE = "Find the best UK suppliers for your industry - trade.great.gov.uk"
+PAGE_TITLE = (
+    "Find the best UK suppliers for your industry - trade.great.gov.uk"
+)
 
 BREADCRUMB_LINKS = "p.breadcrumbs > a"
 INDUSTRIES_BREADCRUMB = "p.breadcrumbs > span.current.bidi-rtl"
 INDUSTRIES_LINKS = "#industry-pages-container > section a"
 MORE_INDUSTRIES_LINKS = "#industry-pages-container > ul a"
 SECTIONS = {
-    "hero": {
-        "itself": "#hero",
-        "header": "#hero h1",
-    },
+    "hero": {"itself": "#hero", "header": "#hero h1"},
     "breadcrumbs": {
         "itself": "#content p.breadcrumbs",
-        "industries": INDUSTRIES_BREADCRUMB
+        "industries": INDUSTRIES_BREADCRUMB,
     },
     "contact us": {
         "itself": "#introduction",
         "header": "#introduction p",
-        "contact us": "#introduction a"
+        "contact us": "#introduction a",
     },
     "industries": {
         "itself": "#industry-pages-container",
-        "industries": INDUSTRIES_LINKS
+        "industries": INDUSTRIES_LINKS,
     },
     "more industries": {
         "itself": "#industry-pages-container > ul",
-        "more industries": MORE_INDUSTRIES_LINKS
-    }
+        "more industries": MORE_INDUSTRIES_LINKS,
+    },
 }
 
 
@@ -72,8 +71,11 @@ def click_on_page_element(driver: webdriver, element_name: str):
 
 def open_industry(driver: webdriver, industry_name: str):
     industry_link = find_element(
-        driver, by_link_text=industry_name,
-        element_name="Industry card", wait_for_it=False)
+        driver,
+        by_link_text=industry_name,
+        element_name="Industry card",
+        wait_for_it=False,
+    )
     industry_link.click()
     take_screenshot(driver, NAME + " after opening " + industry_name + " page")
 

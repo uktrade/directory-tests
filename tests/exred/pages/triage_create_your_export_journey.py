@@ -10,7 +10,7 @@ from pages.common_actions import (
     check_title,
     check_url,
     find_and_click_on_page_element,
-    go_to_url
+    go_to_url,
 )
 from settings import EXRED_UI_URL
 from utils import check_if_element_is_not_visible, take_screenshot
@@ -30,16 +30,9 @@ SECTIONS = {
         "description": "#start-now-container > p",
         # "list of benefits": "#start-now-container > ul",
     },
-    "start now": {
-        "start now button": START_NOW,
-    },
-    "save progress": {
-        "register link": REGISTER,
-        "sign-in link": SIGN_IN
-    },
-    "report this page": {
-        "report this page link": REPORT_THIS_PAGE
-    }
+    "start now": {"start now button": START_NOW},
+    "save progress": {"register link": REGISTER, "sign-in link": SIGN_IN},
+    "report this page": {"report this page link": REPORT_THIS_PAGE},
 }
 
 
@@ -67,4 +60,5 @@ def should_not_see_section(driver: webdriver, name: str):
     section = SECTIONS[name.lower()]
     for key, selector in section.items():
         check_if_element_is_not_visible(
-            driver, by_css=selector, element_name=key)
+            driver, by_css=selector, element_name=key
+        )

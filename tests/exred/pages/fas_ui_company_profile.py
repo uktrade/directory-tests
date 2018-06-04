@@ -8,7 +8,7 @@ from utils import take_screenshot
 
 from pages.common_actions import (
     check_for_expected_sections_elements,
-    check_url
+    check_url,
 )
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
@@ -16,9 +16,7 @@ NAME = "Find a Supplier - Company Profile page"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "suppliers/")
 
 SECTIONS = {
-    "name": {
-        "itself": "#content h1.company-name-title"
-    },
+    "name": {"itself": "#content h1.company-name-title"},
     "company details": {
         "itself": "#company-details",
         "logo": "#company-logo",
@@ -29,12 +27,8 @@ SECTIONS = {
         "itself": "div.company-profile-module-description",
         "read full profile": "div.company-profile-module-description a",
     },
-    "core industry": {
-        "itself": "div.company-profile-industries",
-    },
-    "keywords": {
-        "itself": "div.company-profile-keywords",
-    },
+    "core industry": {"itself": "div.company-profile-industries"},
+    "keywords": {"itself": "div.company-profile-keywords"},
     "report profile": {
         "itself": "div.ed-report-profile-container",
         "report profile": "div.ed-report-profile-container a[href^=mailto]",
@@ -42,16 +36,12 @@ SECTIONS = {
     "contact company": {
         "itself": "div.ed-contact-company-container",
         "contact company": "div.ed-contact-company-container a",
-    }
+    },
 }
 
 OPTIONAL_SECTIONS = {
-    "online profiles": {
-        "itself": "div.company-profile-module-social-links",
-    },
-    "recent projects": {
-        "itself": "#company-projects",
-    },
+    "online profiles": {"itself": "div.company-profile-module-social-links"},
+    "recent projects": {"itself": "#company-projects"},
 }
 
 

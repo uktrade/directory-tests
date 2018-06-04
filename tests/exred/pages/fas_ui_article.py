@@ -8,7 +8,7 @@ from utils import take_screenshot
 
 from pages.common_actions import (
     check_for_expected_sections_elements,
-    check_url
+    check_url,
 )
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
@@ -22,7 +22,7 @@ SECTIONS = {
     },
     "article": {
         "itself": "#industry-article-container",
-        "header": "#industry-article-container h1"
+        "header": "#industry-article-container h1",
     },
     "contact us": {
         "itself": "#contact-area",

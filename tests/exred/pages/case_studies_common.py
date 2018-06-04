@@ -8,7 +8,7 @@ from utils import (
     assertion_msg,
     check_if_element_is_visible,
     find_element,
-    take_screenshot
+    take_screenshot,
 )
 
 NAME = "ExRed Common Case Study"
@@ -34,29 +34,36 @@ CASE_STUDIES = {
         "title": "#top h1",
         "type": "#top p.type",
         "description": "#top p.description",
-    }
+    },
 }
 
 
 def should_be_here(
-        driver: webdriver, case_study_number: int, *, title: str = None):
+    driver: webdriver, case_study_number: int, *, title: str = None
+):
     take_screenshot(driver, NAME)
     for element_name, selector in CASE_STUDIES[case_study_number].items():
         element = find_element(
-            driver, by_css=selector, element_name=element_name)
+            driver, by_css=selector, element_name=element_name
+        )
         check_if_element_is_visible(element, element_name)
         if title:
             if element_name in ["title", "breadcrumb"]:
                 element = find_element(
-                    driver, by_css=selector, element_name=element_name)
+                    driver, by_css=selector, element_name=element_name
+                )
                 with assertion_msg(
-                        "Expected case study %s to be '%s' but got '%s'",
-                        element_name, title, element.text):
+                    "Expected case study %s to be '%s' but got '%s'",
+                    element_name,
+                    title,
+                    element.text,
+                ):
                     assert element.text.lower() == title.lower()
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
 def should_see_share_widget(driver: webdriver):
     share_widget = find_element(
-        driver, by_css=SHARE_WIDGET, element_name="Share widget")
+        driver, by_css=SHARE_WIDGET, element_name="Share widget"
+    )
     check_if_element_is_visible(share_widget, element_name="share widget")

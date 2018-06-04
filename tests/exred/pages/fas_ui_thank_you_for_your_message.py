@@ -8,7 +8,7 @@ from utils import take_screenshot
 
 from pages.common_actions import (
     check_for_expected_sections_elements,
-    check_title
+    check_title,
 )
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
@@ -17,14 +17,12 @@ URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "industries/contact/")
 PAGE_TITLE = "Contact us - trade.great.gov.uk"
 
 SECTIONS = {
-    "breadcrumbs": {
-        "itself": "p.breadcrumbs"
-    },
+    "breadcrumbs": {"itself": "p.breadcrumbs"},
     "message": {
         "itself": "#lede",
         "header": "#lede > div > h2",
-        "go back link": "#lede a"
-    }
+        "go back link": "#lede a",
+    },
 }
 
 

@@ -15,7 +15,7 @@ from utils import (
     find_element,
     find_elements,
     take_screenshot,
-    wait_for_page_load_after_action
+    wait_for_page_load_after_action,
 )
 
 NAME = "ExRed Personalised Journey"
@@ -32,8 +32,9 @@ CUSTOMER_INSIGHT_LINK = "#resource-guidance a[href='/customer-insight/']"
 FINANCE_LINK = "#resource-guidance a[href='/finance/']"
 BUSINESS_LINK = "#resource-guidance a[href='/business-planning/']"
 GETTING_PAID_LINK = "#resource-guidance a[href='/getting-paid/']"
-OPERATIONS_AND_COMPLIANCE_LINK = \
+OPERATIONS_AND_COMPLIANCE_LINK = (
     "#resource-guidance a[href='/operations-and-compliance/']"
+)
 TOP_IMPORTER = "#top_importer_name"
 TOP_IMPORTERS = "#content > section.top-markets > div > ol > li > dl"
 TRADE_VALUE = "#top_importer_global_trade_value"
@@ -81,15 +82,13 @@ SECTIONS = {
         "heading": "section.service-section.soo h2",
         "exopps image": "section.service-section.soo img",
         "intro": "section.service-section.soo .intro",
-        "find marketplaces button":
-            "section.service-section.soo .intro .button",
+        "find marketplaces button": "section.service-section.soo .intro .button",
     },
     "soo section": {
         "heading": "section.service-section.soo h2",
         "soo image": "section.service-section.soo img",
         "intro": "section.service-section.soo .intro",
-        "find marketplaces button":
-            "section.service-section.soo .intro .button",
+        "find marketplaces button": "section.service-section.soo .intro .button",
     },
     "soo tile": {
         "heading": "#other-services div.lg-2:nth-child(1) h3",
@@ -115,10 +114,7 @@ SECTIONS = {
         "getting paid": GETTING_PAID_LINK,
         "operations and compliance": OPERATIONS_AND_COMPLIANCE_LINK,
     },
-    "save progress": {
-        "register link": REGISTER,
-        "sign-in link": SIGN_IN
-    },
+    "save progress": {"register link": REGISTER, "sign-in link": SIGN_IN},
     "case studies": {
         "heading": "#carousel h2",
         "intro": "#carousel .intro",
@@ -127,12 +123,11 @@ SECTIONS = {
         "next article": "#carousel label.ed-carousel__control--forward",
         "case study head link": ".ed-carousel__track > div:nth-child(1) h3 a",
         "case study intro": ".ed-carousel__track > div:nth-child(1) p",
-        "case study intro link":
-            ".ed-carousel__track > div:nth-child(1) div > a",
+        "case study intro link": ".ed-carousel__track > div:nth-child(1) div > a",
         "carousel indicator #1": "#carousel .ed-carousel__indicator[for='1']",
         "carousel indicator #2": "#carousel .ed-carousel__indicator[for='2']",
         "carousel indicator #3": "#carousel .ed-carousel__indicator[for='3']",
-    }
+    },
 }
 
 
@@ -145,51 +140,68 @@ def should_be_here(driver: webdriver):
 
 
 def should_see_read_counter(
-        driver: webdriver, *, exporter_status: str = None,
-        expected_number_articles: int = 0):
+    driver: webdriver,
+    *,
+    exporter_status: str = None,
+    expected_number_articles: int = 0
+):
     counter = find_element(
-        driver, by_css=READ_COUNTER, element_name="Article Read Counter")
+        driver, by_css=READ_COUNTER, element_name="Article Read Counter"
+    )
     if "firefox" not in driver.capabilities["browserName"].lower():
         logging.debug("Moving focus to 'Read Counter' on %s", NAME)
         action_chains = ActionChains(driver)
         action_chains.move_to_element(counter)
         action_chains.perform()
     with assertion_msg(
-            "Guidance Article Read Counter is not visible on '%s' page", NAME):
+        "Guidance Article Read Counter is not visible on '%s' page", NAME
+    ):
         assert counter.is_displayed()
     given_number_articles = int(counter.text)
     with assertion_msg(
-            "Expected the Article Read Counter to be: %d but got %d",
-            expected_number_articles, given_number_articles):
+        "Expected the Article Read Counter to be: %d but got %d",
+        expected_number_articles,
+        given_number_articles,
+    ):
         assert given_number_articles == expected_number_articles
 
 
 def should_see_total_articles_to_read(
-        driver: webdriver, *, exporter_status: str = None):
+    driver: webdriver, *, exporter_status: str = None
+):
     counter = find_element(
-        driver, by_css=TOTAL_ARTICLES, element_name='Total Articles to Read')
+        driver, by_css=TOTAL_ARTICLES, element_name="Total Articles to Read"
+    )
     with assertion_msg(
-            "Guidance Article Read Counter is not visible on '%s' page", NAME):
+        "Guidance Article Read Counter is not visible on '%s' page", NAME
+    ):
         assert counter.is_displayed()
     if exporter_status:
-        expected_number_articles = len(get_articles(
-            group="personalised journey", category=exporter_status.lower()))
+        expected_number_articles = len(
+            get_articles(
+                group="personalised journey", category=exporter_status.lower()
+            )
+        )
         given_number_articles = int(counter.text)
         with assertion_msg(
-                "Expected the Article Read Counter to be: %d but got %d",
-                expected_number_articles, given_number_articles):
+            "Expected the Article Read Counter to be: %d but got %d",
+            expected_number_articles,
+            given_number_articles,
+        ):
             assert given_number_articles == expected_number_articles
 
 
 def open(driver: webdriver, group: str, element: str):
     link = SECTIONS[group.lower()][element.lower()]
     button = find_element(
-        driver, by_css=link, element_name=element, wait_for_it=False)
+        driver, by_css=link, element_name=element, wait_for_it=False
+    )
     assert button.is_displayed()
     with wait_for_page_load_after_action(driver):
         button.click()
     take_screenshot(
-        driver, NAME + " after clicking on: %s link".format(element))
+        driver, NAME + " after clicking on: %s link".format(element)
+    )
 
 
 def should_see_section(driver: webdriver, name: str):
@@ -200,7 +212,8 @@ def should_not_see_section(driver: webdriver, name: str):
     section = SECTIONS[name.lower()]
     for key, selector in section.items():
         check_if_element_is_not_visible(
-            driver, by_css=selector, element_name=key)
+            driver, by_css=selector, element_name=key
+        )
 
 
 def check_top_facts_values(driver: webdriver):
@@ -216,14 +229,19 @@ def check_top_facts_values(driver: webdriver):
 
     if top_importer in exporting_values:
         with assertion_msg(
-                "Expected to see 'Export value from the world' for %s to "
-                "be %s but got %s", top_importer, top_trade_value,
-                exporting_values[top_importer]):
+            "Expected to see 'Export value from the world' for %s to "
+            "be %s but got %s",
+            top_importer,
+            top_trade_value,
+            exporting_values[top_importer],
+        ):
             assert exporting_values[top_importer] == top_trade_value
     else:
         logging.debug(
             "Country mentioned in Top Facts: %s is not present in the Top 10 "
-            "Importers table. Won't check the the trade value", top_importer)
+            "Importers table. Won't check the the trade value",
+            top_importer,
+        )
 
 
 def check_facts_and_top_10(driver: webdriver, sector_code: str):
@@ -231,7 +249,9 @@ def check_facts_and_top_10(driver: webdriver, sector_code: str):
     if sector_code.startswith("EB"):
         logging.debug(
             "Exported chose service sector: %s for which there are no facts "
-            "and information on top 10 importers", sector_code)
+            "and information on top 10 importers",
+            sector_code,
+        )
     else:
         should_see_section(driver, "facts")
         should_see_section(driver, "top 10")
@@ -239,7 +259,8 @@ def check_facts_and_top_10(driver: webdriver, sector_code: str):
 
 
 def layout_for_new_exporter(
-        driver: webdriver, incorporated: bool, *, sector_code: str = None):
+    driver: webdriver, incorporated: bool, *, sector_code: str = None
+):
     """
     * a new exporter says his company:
     ** incorporated, then only `FAB` is displayed
@@ -253,8 +274,12 @@ def layout_for_new_exporter(
 
 
 def layout_for_occasional_exporter(
-        driver: webdriver, incorporated: bool, use_online_marketplaces: bool,
-        *, sector_code: str = None):
+    driver: webdriver,
+    incorporated: bool,
+    use_online_marketplaces: bool,
+    *,
+    sector_code: str = None
+):
     """
     * an occasional exporter says his company:
     ** used online marketplaces and is incorporated,
@@ -279,7 +304,8 @@ def layout_for_occasional_exporter(
 
 
 def layout_for_regular_exporter(
-        driver: webdriver, incorporated: bool, *, sector_code: str = None):
+    driver: webdriver, incorporated: bool, *, sector_code: str = None
+):
     """
     * a regular exporter says his company is:
     ** incorporated, then `FAB, SOO & ExOpps` are displayed
@@ -301,8 +327,11 @@ def should_not_see_banner_and_top_10_table(driver: webdriver):
 def should_see_top_10_importers_in_sector(driver: webdriver, sector: str):
     visible_sector_name = find_element(driver, by_css=SECTOR_NAME).text
     with assertion_msg(
-            "Expected to see Top 10 Importers table for '%s' sector but got it"
-            " for '%s' sector", sector, visible_sector_name):
+        "Expected to see Top 10 Importers table for '%s' sector but got it"
+        " for '%s' sector",
+        sector,
+        visible_sector_name,
+    ):
         assert visible_sector_name == sector
 
 
@@ -314,7 +343,8 @@ def should_see_banner_and_top_10_table(driver: webdriver, sector: str):
 
 def update_preferences(driver: webdriver):
     update_preferences_link = find_element(
-        driver, by_css=UPDATE_PREFERENCE_LINK)
+        driver, by_css=UPDATE_PREFERENCE_LINK
+    )
     with assertion_msg("Update preferences link is not displayed"):
         assert update_preferences_link.is_displayed()
     with wait_for_page_load_after_action(driver):

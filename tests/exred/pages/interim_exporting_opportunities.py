@@ -8,14 +8,14 @@ from pages.common_actions import (
     check_for_expected_elements,
     check_title,
     check_url,
-    go_to_url
+    go_to_url,
 )
 from settings import EXRED_UI_URL
 from utils import (
     find_element,
     take_screenshot,
     wait_for_visibility,
-    wait_for_page_load_after_action
+    wait_for_page_load_after_action,
 )
 
 NAME = "ExRed Interim Export Opportunities"
@@ -29,7 +29,7 @@ EXPECTED_ELEMENTS = {
     "description": "#content p",
     "links to selected articles": "#content ul.list",
     "go to export opportunities": SERVICE_BUTTON,
-    "is there anything wrong with this page?": REPORT_THIS_PAGE_LINK
+    "is there anything wrong with this page?": REPORT_THIS_PAGE_LINK,
 }
 
 

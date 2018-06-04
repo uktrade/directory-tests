@@ -12,7 +12,7 @@ from utils import (
     find_element,
     find_elements,
     take_screenshot,
-    wait_for_page_load_after_action
+    wait_for_page_load_after_action,
 )
 
 NAME = "ExRed Common Guidance"
@@ -26,8 +26,7 @@ RIBBON = {
     "finance": ".navigation-ribbon a[href='/finance/']",
     "business planning": ".navigation-ribbon a[href='/business-planning/']",
     "getting paid": ".navigation-ribbon a[href='/getting-paid/']",
-    "operations and compliance":
-        ".navigation-ribbon a[href='/operations-and-compliance/']"
+    "operations and compliance": ".navigation-ribbon a[href='/operations-and-compliance/']",
 }
 TOTAL_NUMBER_OF_ARTICLES = "dd.position > span.to"
 ARTICLES_TO_READ_COUNTER = "dd.position > span.from"
@@ -39,7 +38,7 @@ FIRST_ARTICLE = "#js-paginate-list > li:nth-child(1) > a"
 SCOPE_ELEMENTS = {
     "total number of articles": TOTAL_NUMBER_OF_ARTICLES,
     "articles read counter": ARTICLES_TO_READ_COUNTER,
-    "time to complete remaining chapters": TIME_TO_COMPLETE
+    "time to complete remaining chapters": TIME_TO_COMPLETE,
 }
 
 
@@ -48,9 +47,12 @@ def ribbon_should_be_visible(driver: webdriver):
     for element_name, element_selector in RIBBON.items():
         logging.debug(
             "Looking for Ribbon '%s' element with '%s' selector",
-            element_name, element_selector)
+            element_name,
+            element_selector,
+        )
         element = find_element(
-            driver, by_css=element_selector, element_name=element_name)
+            driver, by_css=element_selector, element_name=element_name
+        )
         check_if_element_is_visible(element, element_name=element_name)
 
 
@@ -59,41 +61,56 @@ def ribbon_tile_should_be_highlighted(driver: webdriver, tile: str):
     tile_link = find_element(driver, by_css=tile_selector)
     tile_class = tile_link.get_attribute("class")
     with assertion_msg(
-            "It looks like '%s' tile is not active (it's class is %s)",
-            tile, tile_class):
+        "It looks like '%s' tile is not active (it's class is %s)",
+        tile,
+        tile_class,
+    ):
         assert tile_class == "active"
 
 
 def correct_total_number_of_articles(driver: webdriver, category: str):
     expected = len(get_articles("guidance", category))
     total = find_element(
-        driver, by_css=TOTAL_NUMBER_OF_ARTICLES,
-        element_name="Total number of articles")
+        driver,
+        by_css=TOTAL_NUMBER_OF_ARTICLES,
+        element_name="Total number of articles",
+    )
     check_if_element_is_visible(total, element_name="Total number of articles")
     given = int(total.text)
     with assertion_msg(
-            "Expected Total Number of Articles to read in Guidance '%s' "
-            "category to be %d but got %s", category, expected, given):
+        "Expected Total Number of Articles to read in Guidance '%s' "
+        "category to be %d but got %s",
+        category,
+        expected,
+        given,
+    ):
         assert given == expected
 
 
 def correct_article_read_counter(
-        driver: webdriver, category: str, expected: int):
+    driver: webdriver, category: str, expected: int
+):
     counter = find_element(
-        driver, by_css=ARTICLES_TO_READ_COUNTER,
+        driver,
+        by_css=ARTICLES_TO_READ_COUNTER,
         element_name="Number of remaining articles to read",
-        wait_for_it=False)
+        wait_for_it=False,
+    )
     check_if_element_is_visible(
-        counter, element_name="Number of remaining articles to read")
+        counter, element_name="Number of remaining articles to read"
+    )
     given = int(counter.text)
     with assertion_msg(
-            "Expected Article Read Counter Guidance '%s' category to be %d but"
-            " got %s", category, expected, given):
+        "Expected Article Read Counter Guidance '%s' category to be %d but"
+        " got %s",
+        category,
+        expected,
+        given,
+    ):
         assert given == expected
 
 
-def check_if_correct_articles_are_displayed(
-        driver: webdriver, category: str):
+def check_if_correct_articles_are_displayed(driver: webdriver, category: str):
     """Check if all expected articles for given category are displayed and are
      on correct position.
 
@@ -102,20 +119,27 @@ def check_if_correct_articles_are_displayed(
     """
     # extract displayed list of articles and their indexes
     articles = find_elements(driver, by_css=ARTICLES_LIST)
-    given_articles = [(idx, article.find_element_by_tag_name("a").text)
-                      for idx, article in enumerate(articles)]
+    given_articles = [
+        (idx, article.find_element_by_tag_name("a").text)
+        for idx, article in enumerate(articles)
+    ]
     # check whether article is on the right position
     logging.debug("Given articles: %s", given_articles)
     for position, name in given_articles:
         expected_position = get_article("guidance", category, name).index
         with assertion_msg(
-                "Expected article '%s' to be at position %d but found it at "
-                "position no. %d ", name, expected_position, position):
+            "Expected article '%s' to be at position %d but found it at "
+            "position no. %d ",
+            name,
+            expected_position,
+            position,
+        ):
             assert expected_position == position
 
 
 def check_if_link_to_next_category_is_displayed(
-        driver: webdriver, next_category: str):
+    driver: webdriver, next_category: str
+):
     """Check if link to the next Guidance category is displayed, except:
     the "last" Guidance category.
 
@@ -128,7 +152,8 @@ def check_if_link_to_next_category_is_displayed(
         # is_displayed = link.is_displayed()
         is_displayed = False
         with assertion_msg(
-                "Found a link to the next category on the last Category page"):
+            "Found a link to the next category on the last Category page"
+        ):
             assert not is_displayed
     else:
         # TODO uncomment when link to the next category is implemented
@@ -144,7 +169,8 @@ def check_elements_are_visible(driver: webdriver, elements: list):
     for element in elements:
         selector = SCOPE_ELEMENTS[element.lower()]
         page_element = find_element(
-            driver, by_css=selector, element_name=element)
+            driver, by_css=selector, element_name=element
+        )
         if "firefox" not in driver.capabilities["browserName"].lower():
             logging.debug("Moving focus to '%s' element", element)
             action_chains = ActionChains(driver)
@@ -155,10 +181,14 @@ def check_elements_are_visible(driver: webdriver, elements: list):
 
 def open_first_article(driver: webdriver):
     first_article = find_element(
-        driver, by_css=FIRST_ARTICLE, element_name="First article on list",
-        wait_for_it=False)
+        driver,
+        by_css=FIRST_ARTICLE,
+        element_name="First article on list",
+        wait_for_it=False,
+    )
     check_if_element_is_visible(
-        first_article, element_name="First article on list")
+        first_article, element_name="First article on list"
+    )
     with wait_for_page_load_after_action(driver):
         first_article.click()
     take_screenshot(driver, "after opening first article")

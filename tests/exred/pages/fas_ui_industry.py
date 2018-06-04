@@ -13,7 +13,7 @@ from pages.common_actions import (
     check_title,
     check_url,
     find_and_click_on_page_element,
-    go_to_url
+    go_to_url,
 )
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
@@ -22,10 +22,13 @@ BASE_URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "industries/")
 
 class URLS(Enum):
     """Lists all URLs for industry page."""
+
     AEROSPACE = urljoin(BASE_URL, "aerospace/")
     AGRITECH = urljoin(BASE_URL, "agritech/")
     AUTOMOTIVE = urljoin(BASE_URL, "automotive/")
-    BUSINESS_AND_GOVERNMENT_PARTNERSHIPS = urljoin(BASE_URL, "business-and-government-partnerships/")
+    BUSINESS_AND_GOVERNMENT_PARTNERSHIPS = urljoin(
+        BASE_URL, "business-and-government-partnerships/"
+    )
     CONSUMER_RETAIL = urljoin(BASE_URL, "consumer-retail/")
     CREATIVE_SERVICES = urljoin(BASE_URL, "creative-services/")
     CYBER_SECURITY = urljoin(BASE_URL, "cyber-security/")
@@ -39,7 +42,9 @@ class URLS(Enum):
     LEGAL_SERVICES = urljoin(BASE_URL, "legal-services/")
     LIFE_SCIENCES = urljoin(BASE_URL, "life-sciences/")
     MARINE = urljoin(BASE_URL, "marine/")
-    PROFESSIONAL_AND_FINANCIAL_SERVICES = urljoin(BASE_URL, "professional-and-financial-services/")
+    PROFESSIONAL_AND_FINANCIAL_SERVICES = urljoin(
+        BASE_URL, "professional-and-financial-services/"
+    )
     SPACE = urljoin(BASE_URL, "space/")
     SPORTS_ECONOMY = urljoin(BASE_URL, "sports-economy/")
     TECHNOLOGY = urljoin(BASE_URL, "technology/")
@@ -59,16 +64,16 @@ SECTIONS = {
     "hero": {
         "itself": "#hero",
         "header": "#hero h2",
-        "description": "#hero p"
+        "description": "#hero p",
     },
     "breadcrumbs": {
         "itself": "#content p.breadcrumbs",
-        "industry": INDUSTRY_BREADCRUMB
+        "industry": INDUSTRY_BREADCRUMB,
     },
     "contact us": {
         "itself": "#lede-section",
         "header": "#lede-section h2",
-        "contact us": "#lede-section a"
+        "contact us": "#lede-section a",
     },
     "selling points": {
         "itself": "#lede-columns-section",
@@ -84,18 +89,22 @@ SECTIONS = {
         "list of companies": "#companies-section ul",
         "view more": "#companies-section a.button",
     },
-    "articles": {
-        "itself": "#articles-section"
-    },
+    "articles": {"itself": "#articles-section"},
 }
 
 
 def visit(
-        driver: webdriver, *, first_time: bool = False, page_name: str = None):
+    driver: webdriver, *, first_time: bool = False, page_name: str = None
+):
     if page_name:
-        enum_key = page_name.lower()\
-            .replace("fas ", "").replace(" industry", "").replace(" ", "_")\
-            .replace("-", "_").upper()
+        enum_key = (
+            page_name.lower()
+            .replace("fas ", "")
+            .replace(" industry", "")
+            .replace(" ", "_")
+            .replace("-", "_")
+            .upper()
+        )
         url = URLS[enum_key].value
     else:
         url = URL
@@ -116,17 +125,26 @@ def should_see_section(driver: webdriver, name: str):
 
 def should_see_content_for_industry(driver: webdriver, industry_name: str):
     industry_breadcrumb = find_element(
-        driver, by_css=INDUSTRY_BREADCRUMB, element_name="Industry breadcrumb",
-        wait_for_it=False)
+        driver,
+        by_css=INDUSTRY_BREADCRUMB,
+        element_name="Industry breadcrumb",
+        wait_for_it=False,
+    )
     current_industry = industry_breadcrumb.text
     with assertion_msg(
-            "Expected to see breadcrumb for '%s' industry but got '%s' instead"
-            " on %s", industry_name, current_industry, driver.current_url):
+        "Expected to see breadcrumb for '%s' industry but got '%s' instead"
+        " on %s",
+        industry_name,
+        current_industry,
+        driver.current_url,
+    ):
         assert industry_name.lower() == current_industry.lower()
     source = driver.page_source
     with assertion_msg(
-            "Expected to find term '%s' in the source of the page %s",
-            industry_name, driver.current_url):
+        "Expected to find term '%s' in the source of the page %s",
+        industry_name,
+        driver.current_url,
+    ):
         assert industry_name.lower() in source.lower()
 
 
@@ -152,29 +170,35 @@ def search(driver: webdriver, *, keyword: str = None, sector: str = None):
     sector is not used, but kept for compatibility with search() in other POs.
     """
     input_field = find_element(
-        driver, by_css=SEARCH_INPUT, element_name="Search input field",
-        wait_for_it=False)
+        driver,
+        by_css=SEARCH_INPUT,
+        element_name="Search input field",
+        wait_for_it=False,
+    )
     input_field.clear()
     if keyword:
         input_field.send_keys(keyword)
     take_screenshot(driver, NAME + " after entering the keyword")
     button = find_element(
-        driver, by_css=SEARCH_BUTTON, element_name="Search button",
-        wait_for_it=False)
+        driver,
+        by_css=SEARCH_BUTTON,
+        element_name="Search button",
+        wait_for_it=False,
+    )
     button.click()
     take_screenshot(driver, NAME + " after submitting the search form")
 
 
 def open_profile(driver: webdriver, number: int):
     link = find_element(
-        driver, by_css=COMPANY_PROFILE_LINK.format(number=number))
+        driver, by_css=COMPANY_PROFILE_LINK.format(number=number)
+    )
     link.click()
     take_screenshot(driver, NAME + " after clicking on company profile link")
 
 
 def open_article(driver: webdriver, number: int):
-    link = find_element(
-        driver, by_css=ARTICLE_LINK.format(number=number))
+    link = find_element(driver, by_css=ARTICLE_LINK.format(number=number))
     if link.get_attribute("target") == "_blank":
         href = link.get_attribute("href")
         driver.get(href)
