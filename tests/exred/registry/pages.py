@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """ExRed Page Object Registry"""
-from urllib.parse import urljoin
 
 from pages import (
     article_common,
@@ -9,6 +8,7 @@ from pages import (
     events,
     export_opportunities,
     external_legal_services,
+    fas_ui_article,
     fas_ui_company_profile,
     fas_ui_contact_us,
     fas_ui_empty_search_results,
@@ -302,6 +302,10 @@ FAS_PAGE_REGISTRY = {
     "fas company profile": {
         "url": fas_ui_company_profile.URL,
         "po": fas_ui_company_profile
+    },
+    "fas article": {
+        "url": fas_ui_article.URL,
+        "po": fas_ui_article
     }
 }
 
