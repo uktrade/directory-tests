@@ -32,40 +32,55 @@ SELLING_ONLINE_OVERSEAS_UI_URL = os.environ["SELLING_ONLINE_OVERSEAS_UI_URL"]
 EXPORT_OPPORTUNITIES_UI_URL = os.environ["EXPORT_OPPORTUNITIES_UI_URL"]
 EVENTS_UI_URL = os.environ["EVENTS_UI_URL"]
 DIT_LOGO_MD5_CHECKSUM = os.environ.get(
-    "DIT_LOGO_MD5_CHECKSUM", "c4873f79300c7726f227e7934aff8e70")
+    "DIT_LOGO_MD5_CHECKSUM", "c4873f79300c7726f227e7934aff8e70"
+)
 DIT_FAVICON_MD5_CHECKSUM = os.environ.get(
-    "DIT_FAVICON_MD5_CHECKSUM", "93bd34ac9de2cb059c65c5e7931667a2")
+    "DIT_FAVICON_MD5_CHECKSUM", "93bd34ac9de2cb059c65c5e7931667a2"
+)
 
 __take_screenshots = os.environ.get("TAKE_SCREENSHOTS", "false")
-TAKE_SCREENSHOTS = (True
-                    if __take_screenshots
-                    and __take_screenshots.lower() in ["true", "1", "yes"]
-                    else False)
+TAKE_SCREENSHOTS = (
+    True
+    if __take_screenshots
+    and __take_screenshots.lower() in ["true", "1", "yes"]
+    else False
+)
 __auto_retry = os.environ.get("AUTO_RETRY", "true")
-AUTO_RETRY = (True
-              if __auto_retry
-              and __auto_retry.lower() in ["true", "1", "yes"]
-              else False)
+AUTO_RETRY = (
+    True
+    if __auto_retry and __auto_retry.lower() in ["true", "1", "yes"]
+    else False
+)
 
 # BrowserStack variables
 BROWSERSTACK_SERVER = os.environ.get(
-    "BROWSERSTACK_SERVER", "hub.browserstack.com")
+    "BROWSERSTACK_SERVER", "hub.browserstack.com"
+)
 BROWSERSTACK_USER = os.environ.get("BROWSERSTACK_USER", "")
 BROWSERSTACK_PASS = os.environ.get("BROWSERSTACK_PASS", "")
-BROWSERSTACK_EXECUTOR_URL = ("http://{}:{}@{}/wd/hub".format(
-    BROWSERSTACK_USER, BROWSERSTACK_PASS, BROWSERSTACK_SERVER))
+BROWSERSTACK_EXECUTOR_URL = "http://{}:{}@{}/wd/hub".format(
+    BROWSERSTACK_USER, BROWSERSTACK_PASS, BROWSERSTACK_SERVER
+)
 BROWSERSTACK_SESSIONS_URL = (
-    "https://www.browserstack.com/automate/sessions/{}.json")
+    "https://www.browserstack.com/automate/sessions/{}.json"
+)
 
 
-if (CONFIG_NAME.startswith("browserstack") and
-        (BROWSERSTACK_SERVER and BROWSERSTACK_USER and BROWSERSTACK_PASS)):
+if CONFIG_NAME.startswith("browserstack") and (
+    BROWSERSTACK_SERVER and BROWSERSTACK_USER and BROWSERSTACK_PASS
+):
     HUB_URL = BROWSERSTACK_EXECUTOR_URL
 
 if CAPABILITIES:
     import json
+
     CAPABILITIES = json.loads(CAPABILITIES)
 
 CONFIG = config.get(
-    config_file=CONFIG_NAME, hub_url=HUB_URL, capabilities=CAPABILITIES,
-    browsers=BROWSERS, versions=BROWSERS_VERSIONS, build_id=BUILD_ID)
+    config_file=CONFIG_NAME,
+    hub_url=HUB_URL,
+    capabilities=CAPABILITIES,
+    browsers=BROWSERS,
+    versions=BROWSERS_VERSIONS,
+    build_id=BUILD_ID,
+)

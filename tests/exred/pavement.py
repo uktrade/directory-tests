@@ -21,48 +21,73 @@ setup(
     license="MIT",
     keywords="parallel selenium with browserstack",
     url="https://github.com/browserstack/lettuce-browserstack",
-    packages=['features']
+    packages=["features"],
 )
 
 
 def run_behave_test(
-        config_name: str, task_id: int = 0, *, browsers: str = "",
-        versions: str = "", tag: str = None):
+    config_name: str,
+    task_id: int = 0,
+    *,
+    browsers: str = "",
+    versions: str = "",
+    tag: str = None
+):
     extra_tag = "--tags={}".format(tag) if tag else ""
-    sh("BROWSERS={} VERSIONS={} CONFIG={} TASK_ID={} behave -k --format "
-       "progress3 --logging-filter=-root --tags=-wip --tags=-skip --tags=~long"
-       " --tags=~fixme {}"
-        .format(browsers, versions, config_name, task_id, extra_tag))
+    sh(
+        "BROWSERS={} VERSIONS={} CONFIG={} TASK_ID={} behave -k --format "
+        "progress3 --logging-filter=-root --tags=-wip --tags=-skip --tags=~long"
+        " --tags=~fixme {}".format(
+            browsers, versions, config_name, task_id, extra_tag
+        )
+    )
 
 
 @task
-@cmdopts([
-    make_option('-c', '--config',
-                help='Configuration name: local, hub, '
-                     'browsertstack-first-browser-set or '
-                     'browserstack-second-browser-set',
-                default="local"),
-    make_option('-t', '--tag',
-                help='Scenario tag for a selective test run', default=''),
-    make_option('-b', '--browsers',
-                help='A comma separated list of Browsers to run the tests '
-                     'with',
-                default='Chrome'),
-    make_option('-v', '--versions',
-                help='A comma separated list of Browsers Versions to run the '
-                     'tests with',
-                default='')
-])
+@cmdopts(
+    [
+        make_option(
+            "-c",
+            "--config",
+            help="Configuration name: local, hub, "
+            "browsertstack-first-browser-set or "
+            "browserstack-second-browser-set",
+            default="local",
+        ),
+        make_option(
+            "-t",
+            "--tag",
+            help="Scenario tag for a selective test run",
+            default="",
+        ),
+        make_option(
+            "-b",
+            "--browsers",
+            help="A comma separated list of Browsers to run the tests " "with",
+            default="Chrome",
+        ),
+        make_option(
+            "-v",
+            "--versions",
+            help="A comma separated list of Browsers Versions to run the "
+            "tests with",
+            default="",
+        ),
+    ]
+)
 def run(options):
     """Run single, local and parallel test using different config."""
     jobs = []
     if options.config == "local":
         run_behave_test(
-            config_name="local", tag=options.tag, browsers=options.browsers,
-            versions=options.versions
+            config_name="local",
+            tag=options.tag,
+            browsers=options.browsers,
+            versions=options.versions,
         )
     else:
         import config
+
         browser_num = len(config.get(options.config)["environments"])
         for idx in range(browser_num):
             process = Process(
@@ -71,8 +96,9 @@ def run(options):
                 kwargs={
                     "tag": options.tag,
                     "browsers": options.browsers if browser_num == 1 else "",
-                    "versions": options.versions
-                })
+                    "versions": options.versions,
+                },
+            )
             jobs.append(process)
             process.start()
 
@@ -80,5 +106,5 @@ def run(options):
         for job in jobs:
             job.join()
             exit_codes.append(job.exitcode)
-            print('%s.exitcode = %s' % (job.name, job.exitcode))
+            print("%s.exitcode = %s" % (job.name, job.exitcode))
         sys.exit(sum(exit_codes))
