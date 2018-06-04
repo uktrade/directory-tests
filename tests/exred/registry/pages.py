@@ -8,6 +8,7 @@ from pages import (
     british_council,
     events,
     export_opportunities,
+    fas_ui_company_profile,
     fas_ui_contact_us,
     fas_ui_empty_search_results,
     fas_ui_industries,
@@ -296,6 +297,10 @@ FAS_PAGE_REGISTRY = {
     "fas technology industry": {
         "url": fas_ui_industry.URLS.TECHNOLOGY,
         "po": fas_ui_industry
+    },
+    "fas company profile": {
+        "url": fas_ui_company_profile.URL,
+        "po": fas_ui_company_profile
     }
 }
 
