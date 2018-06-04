@@ -12,6 +12,7 @@ from pages import (
     case_studies_common,
     export_readiness_common,
     fas_ui_industry,
+    fas_ui_search_results,
     get_finance,
     guidance_common,
     header,
@@ -535,3 +536,12 @@ def fas_should_see_industry_page(
     logging.debug(
         "%s found content specific to %s industry on %s", actor_alias,
         industry_name, context.driver.current_url)
+
+
+def fas_search_results_filtered_by_industries(
+        context: Context, actor_alias: str, industry_names: List[str]):
+    fas_ui_search_results.should_see_filtered_results(
+        context.driver, industry_names)
+    logging.debug(
+        "%s can see results filtered by %s (%s)", actor_alias,
+        industry_names, context.driver.current_url)

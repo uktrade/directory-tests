@@ -25,6 +25,7 @@ from steps.then_impl import (
     expected_page_elements_should_not_be_visible_on_get_finance,
     export_readiness_expected_page_elements_should_be_visible,
     export_readiness_should_see_articles,
+    fas_search_results_filtered_by_industries,
     fas_should_see_industry_page,
     guidance_check_if_link_to_next_category_is_displayed,
     guidance_expected_page_elements_should_be_visible,
@@ -353,3 +354,11 @@ def then_actor_should_see_correct_favicon(context, actor_alias):
 def fas_then_actor_should_see_industry_page(
         context: Context, actor_alias: str, industry_name: str):
     fas_should_see_industry_page(context, actor_alias, industry_name)
+
+
+@then('"{actor_alias}" should see search results filtered by "{industry_names}" industries')
+@then('"{actor_alias}" should see search results filtered by "{industry_names}" industry')
+def fas_should_see_filtered_search_results(
+        context: Context, actor_alias: str, industry_names: str):
+    fas_search_results_filtered_by_industries(
+        context, actor_alias, industry_names.split(", "))
