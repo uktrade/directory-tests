@@ -128,6 +128,11 @@ def should_see_content_for_industry(driver: webdriver, industry_name: str):
         assert industry_name.lower() in source.lower()
 
 
+def click_on_page_element(driver: webdriver, element_name: str):
+    find_and_click_on_page_element(driver, SECTIONS, element_name)
+    take_screenshot(driver, NAME + " after clicking on " + element_name)
+
+
 def click_breadcrumb(driver: webdriver, name: str):
     breadcrumbs = find_elements(driver, by_css=BREADCRUMB_LINKS)
     url = driver.current_url
