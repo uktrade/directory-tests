@@ -8,6 +8,7 @@ from pages import (
     british_council,
     events,
     export_opportunities,
+    external_legal_services,
     fas_ui_company_profile,
     fas_ui_contact_us,
     fas_ui_empty_search_results,
@@ -42,7 +43,7 @@ from pages import (
     triage_have_you_exported,
     triage_summary,
     triage_what_do_you_want_to_export,
-    visit_britain
+    visit_britain,
 )
 
 EXRED_PAGE_REGISTRY = {
@@ -304,10 +305,18 @@ FAS_PAGE_REGISTRY = {
     }
 }
 
+EXTERNAL_SITES_PAGE_REGISTRY = {
+    "legal services landing": {
+        "url": external_legal_services.URL,
+        "po": external_legal_services
+    }
+
+}
 
 PAGES = {}
 PAGES.update(EXRED_PAGE_REGISTRY)
 PAGES.update(FAS_PAGE_REGISTRY)
+PAGES.update(EXTERNAL_SITES_PAGE_REGISTRY)
 
 
 def get_page_url(page_name: str):
