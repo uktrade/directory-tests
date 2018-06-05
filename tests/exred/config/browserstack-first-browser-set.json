@@ -17,7 +17,7 @@
     }},
     {{
       "browser": "Firefox",
-      "browser_version": "60.0",
+      "browser_version": "61.0",
       "pageLoadStrategy": "eager",
       "os": "Windows",
       "os_version": "10"
