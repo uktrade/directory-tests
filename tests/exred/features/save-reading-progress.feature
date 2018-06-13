@@ -192,6 +192,9 @@ Feature: Save reading progress
       | Guidance         | footer links | a third   |
 
 
+  @bug
+  @CMS-192
+  @fixed
   @ED-2773
   @<group>
   @<location>
