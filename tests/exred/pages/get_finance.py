@@ -28,7 +28,7 @@ TASKS_TOTAL_NUMBER = ".TASKS_ARE_NOT_IMPLEMENTED_YES"
 SECTIONS = {
     "breadcrumbs": {
         "itself": "section.get-finance-banner p.breadcrumbs",
-        "current page": "section.get-finance-banner p > span.current"
+        "current page": "section.get-finance-banner p > span.current",
     },
     "hero": {
         "itself": "section.get-finance-banner",
@@ -45,8 +45,8 @@ SECTIONS = {
     },
     "error reporting": {
         "itself": "section.error-reporting",
-        "link": "#error-reporting-section-contact-us"
-    }
+        "link": "#error-reporting-section-contact-us",
+    },
 }
 
 UNEXPECTED_ELEMENTS = {
@@ -78,5 +78,8 @@ def check_elements_are_not_visible(driver: webdriver, elements: list):
     for element_name in elements:
         selector = UNEXPECTED_ELEMENTS[element_name.lower()]
         check_if_element_is_not_visible(
-            driver, by_css=selector, element_name=element_name,
-            wait_for_it=False)
+            driver,
+            by_css=selector,
+            element_name=element_name,
+            wait_for_it=False,
+        )

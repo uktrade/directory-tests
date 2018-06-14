@@ -9,7 +9,7 @@ from settings import DIRECTORY_UI_SSO_URL
 from utils import (
     find_element,
     take_screenshot,
-    wait_for_page_load_after_action
+    wait_for_page_load_after_action,
 )
 
 NAME = "SSO Confirm your Email address page"

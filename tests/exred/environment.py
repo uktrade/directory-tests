@@ -15,7 +15,7 @@ from settings import AUTO_RETRY, CONFIG, CONFIG_NAME, RESTART_BROWSER, TASK_ID
 from utils import (
     clear_driver_cookies,
     flag_browserstack_session_as_failed,
-    initialize_scenario_data
+    initialize_scenario_data,
 )
 
 try:
@@ -31,7 +31,8 @@ def start_driver_session(context: Context, session_name: str):
     if CONFIG["hub_url"]:
         context.driver = webdriver.Remote(
             desired_capabilities=remote_desired_capabilities,
-            command_executor=CONFIG["hub_url"])
+            command_executor=CONFIG["hub_url"],
+        )
     else:
         browser_name = CONFIG["environments"][0]["browser"]
         drivers = {
@@ -45,14 +46,18 @@ def start_driver_session(context: Context, session_name: str):
         print("Starting local instance of {}".format(browser_name))
         if local_desired_capabilities:
             print(
-                "Will use following browser capabilities: {}"
-                .format(local_desired_capabilities))
+                "Will use following browser capabilities: {}".format(
+                    local_desired_capabilities
+                )
+            )
             if browser_name.lower() in ["firefox", "edge", "ie"]:
                 context.driver = drivers[browser_name.lower()](
-                    capabilities=local_desired_capabilities)
+                    capabilities=local_desired_capabilities
+                )
             elif browser_name.lower() in ["chrome", "phantomjs", "safari"]:
                 context.driver = drivers[browser_name.lower()](
-                    desired_capabilities=local_desired_capabilities)
+                    desired_capabilities=local_desired_capabilities
+                )
         else:
             print("Will use default browser capabilities")
             context.driver = drivers[browser_name.lower()]()
@@ -71,26 +76,21 @@ def start_driver_session(context: Context, session_name: str):
 
 
 def before_step(context: Context, step: Step):
-    """Place here code which that has to be executed before every step.
-
-    :param context: Behave Context object
-    :param step: Behave Step object
-    """
-    logging.debug('Started Step: %s %s', step.step_type, str(repr(step.name)))
+    """Place here code which that has to be executed before every step."""
+    logging.debug("Started Step: %s %s", step.step_type, str(repr(step.name)))
 
 
 def after_step(context: Context, step: Step):
-    """Place here code which that has to be executed after every step.
-
-    :param context: Behave Context object
-    :param step: Behave Step object
-    """
+    """Place here code which that has to be executed after every step."""
     logging.debug("Finished Step: %s %s", step.step_type, str(repr(step.name)))
     logging.debug("Step Duration: %s %s", str(repr(step.name)), step.duration)
     if RESTART_BROWSER == "scenario":
         if step.status == "failed":
-            message = ("Step '%s %s' failed. Reason: '%s'" %
-                       (step.step_type, step.name, step.exception))
+            message = "Step '%s %s' failed. Reason: '%s'" % (
+                step.step_type,
+                step.name,
+                step.exception,
+            )
             logging.error(message)
             logging.debug(context.scenario_data)
             if "browserstack" in CONFIG_NAME:
@@ -119,12 +119,22 @@ def after_feature(context: Context, feature: Feature):
             if hasattr(context, "scenario_data"):
                 logging.debug(context.scenario_data)
             if "browserstack" in CONFIG_NAME:
-                failed = len([scenario for scenario in feature.scenarios
-                             if scenario.status == "failed"])
+                failed = len(
+                    [
+                        scenario
+                        for scenario in feature.scenarios
+                        if scenario.status == "failed"
+                    ]
+                )
                 message = (
-                        "Feature '%s' failed because of issues with %d "
-                        "%s" % (feature.name, failed,
-                                "scenarios" if failed > 1 else "scenario"))
+                    "Feature '%s' failed because of issues with %d "
+                    "%s"
+                    % (
+                        feature.name,
+                        failed,
+                        "scenarios" if failed > 1 else "scenario",
+                    )
+                )
                 if hasattr(context, "driver"):
                     session_id = context.driver.session_id
                     flag_browserstack_session_as_failed(session_id, message)
@@ -133,23 +143,15 @@ def after_feature(context: Context, feature: Feature):
 
 @retry(stop_max_attempt_number=3)
 def before_scenario(context: Context, scenario: Scenario):
-    """Place here code which has to be executed before every Scenario.
-
-    :param context: Behave Context object
-    :param scenario: Behave Scenario object
-    """
-    logging.debug('Starting scenario: %s', scenario.name)
+    """Place here code which has to be executed before every Scenario."""
+    logging.debug("Starting scenario: %s", scenario.name)
     context.scenario_data = initialize_scenario_data()
     if RESTART_BROWSER == "scenario":
         start_driver_session(context, scenario.name)
 
 
 def after_scenario(context: Context, scenario: Scenario):
-    """Place here code which has to be executed after every scenario.
-
-    :param context: Behave Context object
-    :param scenario: Behave Scenario object
-    """
+    """Place here code which has to be executed after every scenario."""
     logging.debug("Closing Selenium Driver after scenario: %s", scenario.name)
     logging.debug(context.scenario_data)
     actors = context.scenario_data.actors
@@ -164,26 +166,30 @@ def after_scenario(context: Context, scenario: Scenario):
     else:
         logging.warning(
             "Context does not have Selenium 'driver' object. This might be "
-            "happen when it wasn't initialized properly")
+            "happen when it wasn't initialized properly"
+        )
     if scenario.status == "failed":
         if hasattr(context, "driver"):
             from selenium.webdriver.remote.command import Command
+
             try:
                 context.driver.execute(Command.STATUS)
             except (socket.error, httplib.CannotSendRequest):
-                msg = ("Remote driver is unresponsive after scenario: %s. Will"
-                       " try to recover selenium session" % scenario.name)
+                msg = (
+                    "Remote driver is unresponsive after scenario: %s. Will"
+                    " try to recover selenium session" % scenario.name
+                )
                 print(msg)
+                session_id = context.driver.session_id
+                flag_browserstack_session_as_failed(session_id, msg)
                 logging.error(msg)
                 start_driver_session(
-                    context, "session-recovered-after-scenario")
+                    context, "session-recovered-after-scenario"
+                )
 
 
 def before_all(context: Context):
-    """Place here code which has to be executed before all scenarios.
-
-    :param context: Behave Context object
-    """
+    """Place here code which has to be executed before all scenarios."""
     remote_desired_capabilities = CONFIG["environments"][TASK_ID]
     local_desired_capabilities = CONFIG["capabilities"]
 

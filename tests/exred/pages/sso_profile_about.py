@@ -9,7 +9,7 @@ from pages.common_actions import (
     check_for_expected_elements,
     check_title,
     check_url,
-    go_to_url
+    go_to_url,
 )
 from settings import DIRECTORY_UI_PROFILE_URL
 from utils import take_screenshot

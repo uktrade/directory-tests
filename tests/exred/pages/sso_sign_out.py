@@ -8,13 +8,13 @@ from pages.common_actions import (
     check_for_expected_elements,
     check_title,
     check_url,
-    go_to_url
+    go_to_url,
 )
 from settings import DIRECTORY_UI_SSO_URL
 from utils import (
     find_element,
     take_screenshot,
-    wait_for_page_load_after_action
+    wait_for_page_load_after_action,
 )
 
 NAME = "SSO Sign out page"
@@ -41,7 +41,8 @@ def should_be_here(driver: webdriver):
 
 def submit(driver: webdriver):
     sign_out_button = find_element(
-        driver, by_css=SIGN_OUT_BUTTON, element_name="Sign-out button")
+        driver, by_css=SIGN_OUT_BUTTON, element_name="Sign-out button"
+    )
     with wait_for_page_load_after_action(driver):
         sign_out_button.click()
     take_screenshot(driver, NAME + "after signing out")

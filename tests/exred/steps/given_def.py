@@ -2,6 +2,7 @@
 # flake8: noqa
 """Given step definitions."""
 from behave import given
+from behave.runner import Context
 
 from steps.then_impl import (
     personalised_journey_should_not_see_banner_and_top_10_table,
@@ -17,7 +18,9 @@ from steps.when_impl import (
     articles_read_a_number_of_them,
     articles_show_all,
     case_studies_go_to_random,
+    click_on_page_element,
     export_readiness_open_category,
+    fas_open_industry_page,
     get_geo_ip,
     guidance_open_category,
     guidance_open_random_category,
@@ -28,8 +31,7 @@ from steps.when_impl import (
     start_triage,
     triage_classify_as,
     triage_create_exporting_journey,
-    visit_page,
-    click_on_page_element
+    visit_page
 )
 
 
@@ -148,7 +150,8 @@ def given_actor_sets_sector_service_preference(context, actor_alias, service):
 @given('"{actor_alias}" can see "{sections}" section on "{page_name}" page')
 @given('"{actor_alias}" can see "{sections}" sections on "{page_name}" page')
 def given_can_see_sections(context, actor_alias, sections, page_name):
-    should_see_sections(context, actor_alias, sections.split(", "), page_name)
+    should_see_sections(
+        context, actor_alias, page_name, sections_list=sections.split(", "))
 
 
 @given('"{actor_alias}" exports "{good}" good')
@@ -211,3 +214,9 @@ def given_actor_shows_all_articles(context, actor_alias):
 def given_actor_decides_to_click_on_page_element(
         context, actor_alias, element_name, page_name):
     click_on_page_element(context, actor_alias, element_name, page_name)
+
+
+@given('"{actor_alias}" decided to find out out more about "{industry_name}" industry')
+def fas_given_actor_opened_industry_page(
+        context: Context, actor_alias: str, industry_name: str):
+    fas_open_industry_page(context, actor_alias, industry_name)

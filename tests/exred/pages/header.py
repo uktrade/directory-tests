@@ -13,7 +13,7 @@ from utils import (
     check_hash_of_remote_file,
     find_element,
     take_screenshot,
-    wait_for_page_load_after_action
+    wait_for_page_load_after_action,
 )
 
 NAME = "ExRed Header"
@@ -34,11 +34,11 @@ SECTIONS = {
     "export readiness": {
         "menu": "#export-readiness-links",
         "new": "#header-export-readiness-new",
-        'occasional': "#header-export-readiness-occasional",
+        "occasional": "#header-export-readiness-occasional",
         "regular": "#header-export-readiness-regular",
         "i'm new to exporting": "#header-export-readiness-new",
-        'i export occasionally': "#header-export-readiness-occasional",
-        "i'm a regular exporter": "#header-export-readiness-regular"
+        "i export occasionally": "#header-export-readiness-occasional",
+        "i'm a regular exporter": "#header-export-readiness-regular",
     },
     "guidance": {
         "menu": "#header-guidance-links",
@@ -47,8 +47,7 @@ SECTIONS = {
         "finance": "#header-guidance-finance",
         "business planning": "#header-guidance-business-planning",
         "getting paid": "#header-guidance-getting-paid",
-        "operations and compliance":
-            "#header-guidance-operations-and-compliance"
+        "operations and compliance": "#header-guidance-operations-and-compliance",
     },
     "services": {
         "menu": "#header-services-links",
@@ -56,17 +55,14 @@ SECTIONS = {
         "selling online overseas": "#header-services-selling-online-overseas",
         "export opportunities": "#header-services-export-opportunities",
         "get finance": "#header-services-get-finance",
-        "events": "#header-services-events"
+        "events": "#header-services-events",
     },
     "general": {
         "logo": LOGO,
         "home": HOME_LINK,
-        "your export journey": YOUR_EXPORT_JOURNEY
+        "your export journey": YOUR_EXPORT_JOURNEY,
     },
-    "account links": {
-        "register": REGISTRATION_LINK,
-        "sign in": SIGN_IN_LINK,
-    }
+    "account links": {"register": REGISTRATION_LINK, "sign in": SIGN_IN_LINK},
 }
 
 
@@ -75,15 +71,19 @@ def should_see_all_links(driver: webdriver):
         for element_name, element_selector in SECTIONS[section].items():
             logging.debug(
                 "Looking for '%s' element in '%s' section with '%s' selector",
-                element_name, section, element_selector)
+                element_name,
+                section,
+                element_selector,
+            )
             element = find_element(driver, by_css=element_selector)
             with assertion_msg(
-                    "It looks like '%s' in '%s' section is not visible",
-                    element_name, section):
+                "It looks like '%s' in '%s' section is not visible",
+                element_name,
+                section,
+            ):
                 assert element.is_displayed()
         logging.debug("All elements in '%s' section are visible", section)
-    logging.debug(
-        "All expected sections on %s are visible", NAME)
+    logging.debug("All expected sections on %s are visible", NAME)
 
 
 def should_see_link_to(driver: webdriver, section: str, item_name: str):
@@ -95,8 +95,8 @@ def should_see_link_to(driver: webdriver, section: str, item_name: str):
         menu.send_keys(Keys.ENTER)
     menu_item = find_element(driver, by_css=item_selector)
     with assertion_msg(
-            "It looks like '%s' in '%s' section is not visible", item_name,
-            section):
+        "It looks like '%s' in '%s' section is not visible", item_name, section
+    ):
         assert menu_item.is_displayed()
 
 
@@ -115,8 +115,11 @@ def open(driver: webdriver, group: str, element: str):
         # Open the menu by sending "Enter" key
         menu_selector = SECTIONS[group.lower()]["menu"]
         menu = find_element(
-            driver, by_css=menu_selector,
-            element_name="Header menu {}".format(group), wait_for_it=False)
+            driver,
+            by_css=menu_selector,
+            element_name="Header menu {}".format(group),
+            wait_for_it=False,
+        )
         menu.send_keys(Keys.ENTER)
     menu_item_selector = SECTIONS[group.lower()][element.lower()]
     menu_item = find_element(driver, by_css=menu_item_selector)
@@ -125,12 +128,14 @@ def open(driver: webdriver, group: str, element: str):
     with wait_for_page_load_after_action(driver):
         menu_item.click()
     take_screenshot(
-        driver, NAME + " after clicking on: {} link".format(element))
+        driver, NAME + " after clicking on: {} link".format(element)
+    )
 
 
 def go_to_registration(driver: webdriver):
     registration_link = find_element(
-        driver, by_css=REGISTRATION_LINK, wait_for_it=False)
+        driver, by_css=REGISTRATION_LINK, wait_for_it=False
+    )
     with wait_for_page_load_after_action(driver):
         registration_link.click()
 
@@ -170,18 +175,23 @@ def check_dit_logo(driver: webdriver):
 def check_dit_favicon(driver: webdriver):
     try:
         favicon = find_element(
-            driver, by_css=FAVICON, element_name="Favicon", wait_for_it=False)
+            driver, by_css=FAVICON, element_name="Favicon", wait_for_it=False
+        )
     except NoSuchElementException:
         try:
             favicon = find_element(
-                driver, by_css=EXOPPS_FAVICON, element_name="Favicon",
-                wait_for_it=False)
+                driver,
+                by_css=EXOPPS_FAVICON,
+                element_name="Favicon",
+                wait_for_it=False,
+            )
         except NoSuchElementException:
             raise
     src = favicon.get_attribute("href")
     check_hash_of_remote_file(DIT_FAVICON_MD5_CHECKSUM, src)
     logging.debug(
-        "Favicon %s has correct MD5sum %s", src, DIT_FAVICON_MD5_CHECKSUM)
+        "Favicon %s has correct MD5sum %s", src, DIT_FAVICON_MD5_CHECKSUM
+    )
 
 
 def click_on_page_element(driver: webdriver, element_name: str):

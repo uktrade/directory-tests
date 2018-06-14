@@ -8,7 +8,7 @@ from pages.common_actions import (
     check_for_expected_sections_elements,
     check_title,
     check_url,
-    go_to_url
+    go_to_url,
 )
 from settings import SELLING_ONLINE_OVERSEAS_UI_URL
 from utils import take_screenshot

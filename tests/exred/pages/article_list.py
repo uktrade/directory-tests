@@ -7,7 +7,7 @@ from selenium.common.exceptions import NoSuchElementException
 
 from pages.common_actions import (
     check_for_expected_sections_elements,
-    check_for_section
+    check_for_section,
 )
 from utils import (
     assertion_msg,
@@ -15,7 +15,7 @@ from utils import (
     check_if_element_is_not_visible,
     find_element,
     take_screenshot,
-    wait_for_page_load_after_action
+    wait_for_page_load_after_action,
 )
 
 NAME = "ExRed Article List"
@@ -40,32 +40,26 @@ SECTIONS = {
         "itself": "#content > section.hero-section",
         "heading title": ARTICLE_CATEGORY,
     },
-    "breadcrumbs": {
-        "breadcrumbs": BREADCRUMBS,
-    },
+    "breadcrumbs": {"breadcrumbs": BREADCRUMBS},
     "scope": {
         "article category introduction": ARTICLE_CATEGORY_INTRO,
         "total number of articles": TOTAL_NUMBER_OF_ARTICLES,
         "articles read counter": ARTICLES_TO_READ_COUNTER,
         "time to complete remaining chapters": TIME_TO_COMPLETE,
     },
-    "list of articles": {
-        "itself": LIST_OF_ARTICLES,
-    },
+    "list of articles": {"itself": LIST_OF_ARTICLES},
     "error reporting": {
         "itself": "section.error-reporting",
-        "report page link": IS_THERE_ANYTHING_WRONG_WITH_THIS_PAGE_LINK
+        "report page link": IS_THERE_ANYTHING_WRONG_WITH_THIS_PAGE_LINK,
     },
-    "save progress": {
-        "register link": REGISTER,
-        "sign-in link": SIGN_IN
-    }
+    "save progress": {"register link": REGISTER, "sign-in link": SIGN_IN},
 }
 
 
 def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
     import copy
+
     all_except_save_progress = copy.copy(SECTIONS)
     all_except_save_progress.pop("save progress")
     check_for_expected_sections_elements(driver, all_except_save_progress)
@@ -79,7 +73,8 @@ def should_not_see_section(driver: webdriver, name: str):
     section = SECTIONS[name.lower()]
     for key, selector in section.items():
         check_if_element_is_not_visible(
-            driver, by_css=selector, element_name=key)
+            driver, by_css=selector, element_name=key
+        )
 
 
 def go_to_registration(driver: webdriver):
@@ -96,17 +91,20 @@ def go_to_sign_in(driver: webdriver):
 
 def should_not_see_link_to_register(driver: webdriver):
     check_if_element_is_not_present(
-        driver, by_css=REGISTRATION_LINK, element_name="Registration link")
+        driver, by_css=REGISTRATION_LINK, element_name="Registration link"
+    )
 
 
 def should_not_see_link_to_sign_in(driver: webdriver):
     check_if_element_is_not_present(
-        driver, by_css=SIGN_IN_LINK, element_name="Sign in link")
+        driver, by_css=SIGN_IN_LINK, element_name="Sign in link"
+    )
 
 
 def show_more(driver: webdriver):
     button = find_element(
-        driver, by_css=SHOW_MORE_BUTTON, element_name="Show more button")
+        driver, by_css=SHOW_MORE_BUTTON, element_name="Show more button"
+    )
     assert button.is_displayed()
     button.click()
     take_screenshot(driver, NAME + " after showing more")
@@ -116,7 +114,8 @@ def show_all_articles(driver: webdriver):
     take_screenshot(driver, NAME + " before showing all articles")
     try:
         show_more_button = find_element(
-            driver, by_css=SHOW_MORE_BUTTON, wait_for_it=False)
+            driver, by_css=SHOW_MORE_BUTTON, wait_for_it=False
+        )
         max_clicks = 10
         counter = 0
         # click up to 11 times - see bug ED-2561
@@ -125,8 +124,10 @@ def show_all_articles(driver: webdriver):
             counter += 1
         if counter > max_clicks:
             with assertion_msg(
-                    "'Show more' button didn't disappear after clicking on it"
-                    " for %d times", counter):
+                "'Show more' button didn't disappear after clicking on it"
+                " for %d times",
+                counter,
+            ):
                 assert counter == max_clicks
         take_screenshot(driver, NAME + " after showing all articles")
     except NoSuchElementException:

@@ -9,13 +9,13 @@ from utils import (
     find_element,
     find_elements,
     take_screenshot,
-    wait_for_page_load_after_action
+    wait_for_page_load_after_action,
 )
 
 from pages.common_actions import (
     check_for_expected_elements,
     check_title,
-    check_url
+    check_url,
 )
 from settings import EXRED_UI_URL
 
@@ -47,15 +47,18 @@ def should_be_here(driver: webdriver):
 
 def get_classification(driver: webdriver) -> str:
     element = find_element(
-        driver, by_css=CLASSIFICATION, element_name="Exporter classification")
+        driver, by_css=CLASSIFICATION, element_name="Exporter classification"
+    )
     return element.text.lower()
 
 
 def should_be_classified_as(driver: webdriver, expected: str):
     classified = get_classification(driver)
     with assertion_msg(
-            "Expected to be classified as '%s' but was classified as: '%s'",
-            expected, classified):
+        "Expected to be classified as '%s' but was classified as: '%s'",
+        expected,
+        classified,
+    ):
         assert classified == expected
 
 
@@ -74,8 +77,11 @@ def should_be_classified_as_regular(driver: webdriver):
 def create_exporting_journey(driver: webdriver):
     element_name = "Create my journey button"
     button = find_element(
-        driver, by_css=CREATE_MY_JOURNEY_BUTTON,
-        element_name=element_name, wait_for_it=False)
+        driver,
+        by_css=CREATE_MY_JOURNEY_BUTTON,
+        element_name=element_name,
+        wait_for_it=False,
+    )
     check_if_element_is_visible(button, element_name=element_name)
     with wait_for_page_load_after_action(driver):
         button.click()
@@ -93,7 +99,8 @@ def get_questions_and_answers(driver: webdriver) -> dict:
 
 def change_answers(driver: webdriver):
     link = find_element(
-        driver, by_css=CHANGE_ANSWERS_LINK, element_name="Change answers link")
+        driver, by_css=CHANGE_ANSWERS_LINK, element_name="Change answers link"
+    )
     with wait_for_page_load_after_action(driver):
         link.click()
     take_screenshot(driver, NAME + " after deciding to change the answers")
