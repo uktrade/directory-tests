@@ -145,15 +145,21 @@ def get_page_ids_by_type(cms_client, page_type):
 @pytest.mark.parametrize(
     "page_type",
     [
-        "find_a_supplier.IndustryPage",
-        "find_a_supplier.IndustryArticlePage",
-        "find_a_supplier.LandingPage",
-        "find_a_supplier.IndustryContactPage",
-        "export_readiness.TermsAndConditionsPage",
-        "export_readiness.PrivacyAndCookiesPage",
         "export_readiness.GetFinancePage",
-        "invest.SectorLandingPage",
+        "export_readiness.PrivacyAndCookiesPage",
+        "export_readiness.TermsAndConditionsPage",
+        "find_a_supplier.IndustryArticlePage",
+        "find_a_supplier.IndustryContactPage",
+        "find_a_supplier.IndustryLandingPage",
+        "find_a_supplier.IndustryPage",
+        "find_a_supplier.LandingPage",
+        "invest.InfoPage",
         "invest.InvestHomePage",
+        "invest.RegionLandingPage",
+        "invest.SectorLandingPage",
+        "invest.SectorPage",
+        "invest.SetupGuideLandingPage",
+        "invest.SetupGuidePage",
     ],
 )
 def test_all_published_pages_should_return_200(cms_client, page_type):
