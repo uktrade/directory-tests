@@ -185,7 +185,7 @@ def test_all_published_pages_should_return_200(cms_client, page_type):
     non_200 = [result for result in results if result[2] != 200]
     template = "Page ID: {} URL: {} Status Code: {}"
     formatted_non_200 = [template.format(*result) for result in non_200]
-    error_msg = "{} out of {} published pages of type {} are broken: {}".format(
+    error_msg = "{} out of {} published pages of type {} are broken {}".format(
         len(non_200), len(results), page_type, pformat(formatted_non_200)
     )
     assert not non_200, error_msg
