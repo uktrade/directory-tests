@@ -278,7 +278,9 @@ def test_draft_pages_should_return_200(cms_client, page_type):
             page = api_response.json()
             draft_token = page["meta"]["draft_token"]
             if draft_token is not None:
-                draft_url = "{}?draft_token={}".format(page["meta"]["url"], draft_token)
+                draft_url = "{}?draft_token={}".format(
+                    page["meta"]["url"], draft_token
+                )
                 lang_codes = [lang[0] for lang in page["meta"]["languages"]]
                 for code in lang_codes:
                     lang_url = "{}&lang={}".format(draft_url, code)
@@ -288,7 +290,9 @@ def test_draft_pages_should_return_200(cms_client, page_type):
                     except Exception as ex:
                         results.append((page_id, lang_url, str(ex)))
                         continue
-                    results.append((page_id, lang_url, draft_response.status_code))
+                    results.append(
+                        (page_id, lang_url, draft_response.status_code)
+                    )
         else:
             print("{} returned {}".format(url, api_response.status_code))
     non_200 = [result for result in results if result[2] != 200]
