@@ -9,15 +9,14 @@ from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("ui-buyer:company-edit")
 EXPECTED_STRINGS = [
-    "Build and improve your profile", "About your company",
+    "Create your trade profile", "About your company",
     "Industry and exporting",
-    ("To set up your Find a Buyer profile, enter your company’s basic details,"
-     " then choose which sectors you’re interested in."),
-    ("You can add extra information and a company logo to complete your "
-     "profile. You can edit your profile at any time."),
-    ("From early 2017, your company profile will be published online and "
-     "promoted to international buyers."), "Your company details",
-    "Company name", "Website (optional)", "Enter your preferred business name",
+    ("Enter your company name and contact details, then select the industry or"
+     " industries you work in."),
+    ("Add extra information and your company logo to complete your profile. "
+     "You can come back and edit your profile at any time."),
+    "Your company details",
+    "Company name", "Website (optional)", "Enter your trading name",
     "The website address must start with either http:// or https://",
     "Enter up to 10 keywords that describe your company (separated by commas)",
     ("These keywords will be used to help potential overseas buyers find your "
