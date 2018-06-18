@@ -39,7 +39,6 @@ def go_to(
     headers = {"Referer": referer}
     response = make_request(
         Method.GET, url, session=session, headers=headers)
-    should_be_here(response)
     return response
 
 
