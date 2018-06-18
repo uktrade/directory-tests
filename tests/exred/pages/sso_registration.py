@@ -8,13 +8,13 @@ from pages.common_actions import (
     check_for_expected_elements,
     check_title,
     check_url,
-    go_to_url
+    go_to_url,
 )
 from settings import DIRECTORY_UI_SSO_URL
 from utils import (
     find_element,
     take_screenshot,
-    wait_for_page_load_after_action
+    wait_for_page_load_after_action,
 )
 
 NAME = "SSO Registration page"
@@ -51,10 +51,12 @@ def should_be_here(driver: webdriver):
 def fill_out(driver: webdriver, email: str, password: str):
     email_input = find_element(driver, by_css=EMAIL_INPUT)
     email_confirmation_input = find_element(
-        driver, by_css=EMAIL_CONFIRMATION_INPUT)
+        driver, by_css=EMAIL_CONFIRMATION_INPUT
+    )
     password_input = find_element(driver, by_css=PASSWORD_INPUT)
     password_confirmation_input = find_element(
-        driver, by_css=PASSWORD_CONFIRMATION_INPUT)
+        driver, by_css=PASSWORD_CONFIRMATION_INPUT
+    )
     t_and_c = find_element(driver, by_css=T_AND_C_BUTTON, wait_for_it=False)
     email_input.clear()
     email_input.send_keys(email)

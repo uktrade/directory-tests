@@ -16,18 +16,17 @@ from utils import take_screenshot
 
 NAME = "Find a Empty Search Results page"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "search/")
-PAGE_TITLE = \
+PAGE_TITLE = (
     "Search the database of UK suppliers' trade profiles - trade.great.gov.uk"
+)
 
 SECTIONS = {
-   "filters": {
+    "filters": {
         "itself": "#ed-search-filters-container",
         "title": "#ed-search-filters-title",
-        "filter list": "#id_sectors"
+        "filter list": "#id_sectors",
     },
-   "no results": {
-       "itself": "#fassearch-no-results-content"
-   }
+    "no results": {"itself": "#fassearch-no-results-content"},
 }
 
 

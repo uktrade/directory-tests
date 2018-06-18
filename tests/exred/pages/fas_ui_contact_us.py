@@ -5,16 +5,15 @@ import random
 from urllib.parse import urljoin
 
 from selenium import webdriver
+from utils import find_element, take_screenshot
 
 from pages.common_actions import (
     check_for_expected_sections_elements,
     check_for_section,
     check_title,
-    check_url,
     go_to_url,
 )
 from settings import DIRECTORY_UI_SUPPLIER_URL
-from utils import take_screenshot, find_element
 
 NAME = "Find a Supplier - Contact Us page"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "industries/contact/")
@@ -42,7 +41,7 @@ SECTIONS = {
         "body": BODY,
         "source": SOURCE,
         "accept t&c": ACCEPT_TC,
-        "submit": SUBMIT_BUTTON
+        "submit": SUBMIT_BUTTON,
     }
 }
 
@@ -53,7 +52,6 @@ def visit(driver: webdriver, *, first_time: bool = False):
 
 def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
-    check_url(driver, URL, exact_match=True)
     check_title(driver, PAGE_TITLE, exact_match=True)
     check_for_expected_sections_elements(driver, SECTIONS)
     logging.debug("All expected elements are visible on '%s' page", NAME)
@@ -70,16 +68,21 @@ def fill_out(driver: webdriver, contact_us_details: dict):
     for field_name in input_fields:
         value = contact_us_details[field_name]
         field = find_element(
-            driver, by_css=SECTIONS["form"][field_name],
-            element_name=field_name, wait_for_it=False)
+            driver,
+            by_css=SECTIONS["form"][field_name],
+            element_name=field_name,
+            wait_for_it=False,
+        )
         field.send_keys(value)
 
     for menu_name in dropdown_menus:
         selector = SECTIONS["form"][menu_name]
         dropdown = find_element(
-            driver, by_css=selector,
+            driver,
+            by_css=selector,
             element_name="{} dropdown menu".format(menu_name),
-            wait_for_it=False)
+            wait_for_it=False,
+        )
         if contact_us_details[menu_name]:
             option = contact_us_details[menu_name].lower().replace(" ", "-")
         else:
@@ -102,7 +105,10 @@ def fill_out(driver: webdriver, contact_us_details: dict):
 def submit(driver: webdriver):
     take_screenshot(driver, "Before submitting the contact us form")
     button = find_element(
-        driver, by_css=SUBMIT_BUTTON, element_name="Submit button",
-        wait_for_it=False)
+        driver,
+        by_css=SUBMIT_BUTTON,
+        element_name="Submit button",
+        wait_for_it=False,
+    )
     button.click()
     take_screenshot(driver, "After submitting the contact us form")

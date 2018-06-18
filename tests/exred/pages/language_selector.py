@@ -11,7 +11,7 @@ from utils import (
     check_if_element_is_not_visible,
     find_element,
     selenium_action,
-    take_screenshot
+    take_screenshot,
 )
 
 NAME = "Language selector"
@@ -19,8 +19,9 @@ NAME = "Language selector"
 LANGUAGE_INDICATOR = "#header-bar span.lang"
 LANGUAGE_SELECTOR_OPEN = "#header-bar a.LanguageSelectorDialog-Tracker"
 LANGUAGE_SELECTOR_CLOSE = "#header-language-selector-close"
-DOMESTIC_PAGE = \
+DOMESTIC_PAGE = (
     "section.language-selector-dialog div.domestic-redirect > p > a"
+)
 ENGLISH = "#header-language-selector-en-gb"
 CHINESE = "#header-language-selector-zh-hans"
 GERMAN = "#header-language-selector-de"
@@ -39,7 +40,7 @@ ELEMENTS_ON = {
         "Español": SPANISH,
         "Português": PORTUGUESE,
         "العربيّة": ARABIC,
-        "close": LANGUAGE_SELECTOR_CLOSE
+        "close": LANGUAGE_SELECTOR_CLOSE,
     },
     "international": {
         "itself": "section.language-selector-dialog",
@@ -52,8 +53,8 @@ ELEMENTS_ON = {
         "Español": SPANISH,
         "Português": PORTUGUESE,
         "العربيّة": ARABIC,
-        "close": LANGUAGE_SELECTOR_CLOSE
-    }
+        "close": LANGUAGE_SELECTOR_CLOSE,
+    },
 }
 KEYBOARD_NAVIGABLE_ELEMENTS = {
     "home": [
@@ -64,7 +65,7 @@ KEYBOARD_NAVIGABLE_ELEMENTS = {
         ("Español", SPANISH),
         ("Português", PORTUGUESE),
         ("العربيّة", ARABIC),
-        ("close", LANGUAGE_SELECTOR_CLOSE)
+        ("close", LANGUAGE_SELECTOR_CLOSE),
     ],
     "international": [
         ("English", ENGLISH),
@@ -76,7 +77,7 @@ KEYBOARD_NAVIGABLE_ELEMENTS = {
         ("العربيّة", ARABIC),
         ("domestic page", DOMESTIC_PAGE),
         ("close", LANGUAGE_SELECTOR_CLOSE),
-    ]
+    ],
 }
 LANGUAGE_INDICATOR_VALUES = {
     "English": "en-gb",
@@ -92,7 +93,8 @@ LANGUAGE_INDICATOR_VALUES = {
 
 def close(driver: webdriver, *, with_keyboard: bool = False):
     close_language_selector_button = find_element(
-        driver, by_css=LANGUAGE_SELECTOR_CLOSE)
+        driver, by_css=LANGUAGE_SELECTOR_CLOSE
+    )
     with assertion_msg("Close Language Selector button is not visible"):
         assert close_language_selector_button.is_displayed()
     if with_keyboard:
@@ -116,12 +118,14 @@ def should_see_it_on(driver: webdriver, page_name: str):
     section = ELEMENTS_ON[page_name.lower()]
     for key, selector in section.items():
         with selenium_action(
-                driver, "Could not find: '%s' element on '%s' using "
-                        "'%s' selector",
-                key, page_name, selector):
+            driver,
+            "Could not find: '%s' element on '%s' using " "'%s' selector",
+            key,
+            page_name,
+            selector,
+        ):
             element = find_element(driver, by_css=selector)
-        with assertion_msg(
-                "'%s' on '%s' is not displayed", key, page_name):
+        with assertion_msg("'%s' on '%s' is not displayed", key, page_name):
             assert element.is_displayed()
             logging.debug("'%s' on '%s' is displayed", key, page_name)
 
@@ -133,7 +137,8 @@ def should_not_see_it_on(driver: webdriver, page_name: str):
     page_elements = ELEMENTS_ON[page_name.lower()]
     for key, selector in page_elements.items():
         check_if_element_is_not_visible(
-            driver, by_css=selector, element_name=key, wait_for_it=False)
+            driver, by_css=selector, element_name=key, wait_for_it=False
+        )
 
 
 def navigate_through_links_with_keyboard(driver: webdriver, page_name: str):
@@ -152,8 +157,12 @@ def keyboard_should_be_trapped(driver: webdriver, page_name: str):
 
 
 def change_to(
-        driver: webdriver, page_name: str, language: str, *,
-        with_keyboard: bool = False):
+    driver: webdriver,
+    page_name: str,
+    language: str,
+    *,
+    with_keyboard: bool = False
+):
     language_selector = ELEMENTS_ON[page_name.lower()][language]
     language_button = find_element(driver, by_css=language_selector)
     if with_keyboard:
@@ -167,6 +176,8 @@ def check_page_language_is(driver: webdriver, expected_language: str):
     language_indicator = find_element(driver, by_css=LANGUAGE_INDICATOR)
     language_indicator_code = language_indicator.text.lower()
     with assertion_msg(
-            "Expected to see page in '%s' but got '%s'",
-            expected_language_code, language_indicator_code):
+        "Expected to see page in '%s' but got '%s'",
+        expected_language_code,
+        language_indicator_code,
+    ):
         assert language_indicator_code == expected_language_code

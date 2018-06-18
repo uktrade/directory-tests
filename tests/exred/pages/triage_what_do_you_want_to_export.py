@@ -7,14 +7,14 @@ from selenium import webdriver
 from pages.common_actions import (
     check_for_expected_elements,
     check_title,
-    check_url
+    check_url,
 )
 from settings import EXRED_UI_URL
 from utils import (
     assertion_msg,
     find_element,
     take_screenshot,
-    wait_for_page_load_after_action
+    wait_for_page_load_after_action,
 )
 
 NAME = "ExRed Triage - What do you want to export"
@@ -50,36 +50,51 @@ def should_be_here(driver: webdriver):
 
 def select_services(driver: webdriver):
     services = find_element(
-        driver, by_css=SERVICES_CHECKBOX, element_name="Services checkbox",
-        wait_for_it=False)
+        driver,
+        by_css=SERVICES_CHECKBOX,
+        element_name="Services checkbox",
+        wait_for_it=False,
+    )
     services.click()
     take_screenshot(driver, NAME)
 
 
 def select_goods(driver: webdriver):
     goods = find_element(
-        driver, by_css=GOODS_CHECKBOX, element_name="Goods checkbox",
-        wait_for_it=False)
+        driver,
+        by_css=GOODS_CHECKBOX,
+        element_name="Goods checkbox",
+        wait_for_it=False,
+    )
     goods.click()
     take_screenshot(driver, NAME)
 
 
 def select_goods_and_services(driver: webdriver):
     goods = find_element(
-        driver, by_css=GOODS_CHECKBOX, element_name="Goods checkbox",
-        wait_for_it=False)
+        driver,
+        by_css=GOODS_CHECKBOX,
+        element_name="Goods checkbox",
+        wait_for_it=False,
+    )
     goods.click()
     services = find_element(
-        driver, by_css=SERVICES_CHECKBOX, element_name="Services checkbox",
-        wait_for_it=False)
+        driver,
+        by_css=SERVICES_CHECKBOX,
+        element_name="Services checkbox",
+        wait_for_it=False,
+    )
     services.click()
     take_screenshot(driver, NAME)
 
 
 def submit(driver: webdriver):
     submit_button = find_element(
-        driver, by_css=CONTINUE_BUTTON, element_name="Submit button",
-        wait_for_it=False)
+        driver,
+        by_css=CONTINUE_BUTTON,
+        element_name="Submit button",
+        wait_for_it=False,
+    )
     with wait_for_page_load_after_action(driver):
         submit_button.click()
     take_screenshot(driver, NAME + " after submitting")
@@ -87,15 +102,21 @@ def submit(driver: webdriver):
 
 def is_services_selected(driver: webdriver):
     services = find_element(
-        driver, by_css=SERVICES_CHECKBOX, element_name="Services radio button",
-        wait_for_it=False)
+        driver,
+        by_css=SERVICES_CHECKBOX,
+        element_name="Services radio button",
+        wait_for_it=False,
+    )
     with assertion_msg("Expected Services option to be selected"):
         assert services.get_property("checked")
 
 
 def is_goods_selected(driver: webdriver):
     goods = find_element(
-        driver, by_css=GOODS_CHECKBOX, element_name="Goods radio button",
-        wait_for_it=False)
+        driver,
+        by_css=GOODS_CHECKBOX,
+        element_name="Goods radio button",
+        wait_for_it=False,
+    )
     with assertion_msg("Expected Goods option to be selected"):
         assert goods.get_property("checked")
