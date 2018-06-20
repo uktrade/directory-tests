@@ -9,10 +9,11 @@ from tests.functional.utils.request import Method, check_response, make_request
 URL = get_absolute_url("ui-buyer:confirm-company-address")
 EXPECTED_STRINGS = [
     "Verify your company",
-    ("Enter the verification code from the letter we sent to you after  "
-     "you created your company profile"),
-    ("We sent you a letter through the mail containing a twelve digit "
-     "code.")
+    "Enter the 12 digit code from the letter that was sent to",
+    "Sign in with Companies House",
+    "Alternatively you can sign in to Companies House to verify",
+    ("You will need your Companies House authentication code and the email and"
+     " password you use to sign in")
 ]
 
 EXPECTED_STRINGS_VERIFIED = [
