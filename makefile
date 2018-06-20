@@ -199,7 +199,7 @@ compile_requirements:
 	python3 -m piptools compile requirements.in
 
 compile_exred_requirements:
-	python3 -m piptools compile requirements_exred.in
+	python3 -m piptools compile requirements_browser.in
 
 compile_functional_requirements:
 	python3 -m piptools compile requirements_functional.in

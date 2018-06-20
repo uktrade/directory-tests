@@ -1,0 +1,13 @@
+behave
+directory-api-client
+directory-constants
+directory-sso-api-client
+nodeenv
+notifications-python-client
+paver
+requests
+retrying
+selenium
+sigauth
+termcolor
+urllib3

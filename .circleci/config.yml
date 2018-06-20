@@ -68,8 +68,8 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            pip install -r requirements_exred.txt
             python ./docker/env_writer.py ./docker/env_exred.json
+            pip install -r requirements_browser.txt
             nodeenv -p
             npm install -g junit-merge@1.2.3
       - save_cache:
