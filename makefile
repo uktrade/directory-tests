@@ -149,8 +149,8 @@ EXRED_DOCKER_COMPOSE_CREATE_ENVS := \
 	python ./docker/env_writer.py ./docker/env_browser.json
 
 EXRED_DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL := \
-	docker-compose -f docker-compose-exred.yml -p exred rm -f && \
-	docker-compose -f docker-compose-exred.yml -p exred pull
+	docker-compose -f docker-compose-browser.yml -p browser rm -f && \
+	docker-compose -f docker-compose-browser.yml -p browser pull
 
 EXRED_DOCKER_REMOVE_ALL:
 	docker ps -a | \
@@ -185,15 +185,15 @@ exred_docker_browserstack_first_browser_set: EXRED_DOCKER_REMOVE_ALL
 	$(EXRED_SET_DOCKER_ENV_VARS) && \
 	$(EXRED_DOCKER_COMPOSE_CREATE_ENVS) && \
 	$(EXRED_DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
-	docker-compose -f docker-compose-exred.yml -p exred build && \
-	docker-compose -f docker-compose-exred.yml -p exred run tests_first_browser_set
+	docker-compose -f docker-compose-browser.yml -p browser build && \
+	docker-compose -f docker-compose-browser.yml -p browser run tests_first_browser_set
 
 exred_docker_browserstack_second_browser_set:
 	$(EXRED_SET_DOCKER_ENV_VARS) && \
 	$(EXRED_DOCKER_COMPOSE_CREATE_ENVS) && \
 	$(EXRED_DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
-	docker-compose -f docker-compose-exred.yml -p exred build && \
-	docker-compose -f docker-compose-exred.yml -p exred run tests_second_browser_set
+	docker-compose -f docker-compose-browser.yml -p browser build && \
+	docker-compose -f docker-compose-browser.yml -p browser run tests_second_browser_set
 
 compile_requirements:
 	python3 -m piptools compile requirements.in
