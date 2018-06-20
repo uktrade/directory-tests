@@ -10,9 +10,6 @@ requirements_load:
 requirements_smoke:
 	pip install -r requirements_smoke.txt
 
-requirements_selenium:
-	pip install -r requirements_selenium.txt
-
 requirements_functional:
 	pip install -r requirements_functional.txt
 
@@ -86,10 +83,6 @@ SET_PYTEST_ENV_VARS := \
 	export DIRECTORY_UI_BUYER_URL=https://dev.buyer.directory.uktrade.io; \
 	export DIRECTORY_UI_SUPPLIER_URL=https://dev.supplier.directory.uktrade.io; \
 	export SSO_USER_ID=120
-
-selenium_tests:
-	$(SET_PYTEST_ENV_VARS); \
-	pytest tests/selenium $(PYTEST_ARGS)
 
 DOCKER_COMPOSE_REMOVE_AND_PULL := docker-compose rm -f && docker-compose pull
 DOCKER_COMPOSE_CREATE_ENVS := python ./docker/env_writer.py ./docker/env.json
@@ -207,12 +200,9 @@ compile_functional_requirements:
 compile_smoke_requirements:
 	python3 -m piptools compile requirements_smoke.in
 
-compile_selenium_requirements:
-	python3 -m piptools compile requirements_selenium.in
-
 compile_load_requirements:
 	python3 -m piptools compile requirements_load.in
 
-compile_all_requirements: compile_requirements compile_browser_requirements compile_functional_requirements compile_smoke_requirements compile_selenium_requirements compile_load_requirements
+compile_all_requirements: compile_requirements compile_browser_requirements compile_functional_requirements compile_smoke_requirements compile_load_requirements
 
 .PHONY: build clean requirements test docker_remove_all docker_integration_tests smoke_tests load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal functional_tests pep8
