@@ -1,4 +1,4 @@
-build: exred_docker_browserstack docker_integration_tests 
+build: docker_integration_tests 
 
 clean:
 	-find . -type f -name "*.pyc" -delete
@@ -9,9 +9,6 @@ requirements_load:
 
 requirements_smoke:
 	pip install -r requirements_smoke.txt
-
-requirements_selenium:
-	pip install -r requirements_selenium.txt
 
 requirements_functional:
 	pip install -r requirements_functional.txt
@@ -87,10 +84,6 @@ SET_PYTEST_ENV_VARS := \
 	export DIRECTORY_UI_SUPPLIER_URL=https://dev.supplier.directory.uktrade.io; \
 	export SSO_USER_ID=120
 
-selenium_tests:
-	$(SET_PYTEST_ENV_VARS); \
-	pytest tests/selenium $(PYTEST_ARGS)
-
 DOCKER_COMPOSE_REMOVE_AND_PULL := docker-compose rm -f && docker-compose pull
 DOCKER_COMPOSE_CREATE_ENVS := python ./docker/env_writer.py ./docker/env.json
 DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL := docker-compose rm && docker-compose pull
@@ -138,68 +131,68 @@ docker_integration_tests: docker_remove_all
 	docker-compose -f docker-compose.yml run functional_tests
 
 
-EXRED_SET_DOCKER_ENV_VARS := \
-	export EXRED_TESTS_EXRED_UI_URL=https://dev.exportreadiness.directory.uktrade.io
-	export EXRED_TESTS_CIRCLE_SHA1=$(CIRCLE_SHA1)
+BROWSER_SET_DOCKER_ENV_VARS := \
+	export BROWSER_TESTS_EXRED_UI_URL=https://dev.exportreadiness.directory.uktrade.io
+	export BROWSER_TESTS_CIRCLE_SHA1=$(CIRCLE_SHA1)
 
-EXRED_SET_LOCAL_ENV_VARS := \
+BROWSER_SET_LOCAL_ENV_VARS := \
 	export EXRED_UI_URL=https://dev.exportreadiness.directory.uktrade.io
 
-EXRED_DOCKER_COMPOSE_CREATE_ENVS := \
-	python ./docker/env_writer.py ./docker/env_exred.json
+BROWSER_DOCKER_COMPOSE_CREATE_ENVS := \
+	python ./docker/env_writer.py ./docker/env_browser.json
 
-EXRED_DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL := \
-	docker-compose -f docker-compose-exred.yml -p exred rm -f && \
-	docker-compose -f docker-compose-exred.yml -p exred pull
+BROWSER_DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL := \
+	docker-compose -f docker-compose-browser.yml -p browser rm -f && \
+	docker-compose -f docker-compose-browser.yml -p browser pull
 
-EXRED_DOCKER_REMOVE_ALL:
+BROWSER_DOCKER_REMOVE_ALL:
 	docker ps -a | \
-	grep -e exred_ | \
+	grep -e browser_ | \
 	awk '{print $$1 }' | \
 	xargs -I {} docker rm -f {}
 
-exred_local:
-	$(EXRED_SET_LOCAL_ENV_VARS) && \
-	cd tests/exred && paver run --config=local --browsers=${BROWSERS} --tag=${TAG}
+browser_local:
+	$(BROWSER_SET_LOCAL_ENV_VARS) && \
+	cd tests/browser && paver run --config=local --browsers=${BROWSERS} --tag=${TAG}
 
-exred_browserstack:
-	$(EXRED_SET_DOCKER_ENV_VARS) && \
-	cd tests/exred && \
+browserstack:
+	$(BROWSER_SET_DOCKER_ENV_VARS) && \
+	cd tests/browser && \
 	paver run --config=browserstack-single --browsers=${BROWSERS} --versions=${VERSIONS}
 
-exred_browserstack_first_browser_set:
-	$(EXRED_SET_DOCKER_ENV_VARS) && \
-	cd tests/exred && \
+browserstack_first_set:
+	$(BROWSER_SET_DOCKER_ENV_VARS) && \
+	cd tests/browser && \
 	paver run --config=browserstack-first-browser-set --tag=${TAG}
 
-exred_browserstack_second_browser_set:
-	$(EXRED_SET_DOCKER_ENV_VARS) && \
-	cd tests/exred && \
+browserstack_second_set:
+	$(BROWSER_SET_DOCKER_ENV_VARS) && \
+	cd tests/browser && \
 	paver run --config=browserstack-second-browser-set --tag=${TAG}
 
-exred_browserstack_single:
-	$(EXRED_SET_DOCKER_ENV_VARS) && \
-	cd tests/exred && paver run --config=browserstack-single --browsers=${BROWSERS} --versions=${VERSIONS} --tag=${TAG}
+browserstack_single:
+	$(BROWSER_SET_DOCKER_ENV_VARS) && \
+	cd tests/browser && paver run --config=browserstack-single --browsers=${BROWSERS} --versions=${VERSIONS} --tag=${TAG}
 
-exred_docker_browserstack_first_browser_set: EXRED_DOCKER_REMOVE_ALL
-	$(EXRED_SET_DOCKER_ENV_VARS) && \
-	$(EXRED_DOCKER_COMPOSE_CREATE_ENVS) && \
-	$(EXRED_DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
-	docker-compose -f docker-compose-exred.yml -p exred build && \
-	docker-compose -f docker-compose-exred.yml -p exred run tests_first_browser_set
+docker_browserstack_first_set: BROWSER_DOCKER_REMOVE_ALL
+	$(BROWSER_SET_DOCKER_ENV_VARS) && \
+	$(BROWSER_DOCKER_COMPOSE_CREATE_ENVS) && \
+	$(BROWSER_DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
+	docker-compose -f docker-compose-browser.yml -p browser build && \
+	docker-compose -f docker-compose-browser.yml -p browser run tests_first_browser_set
 
-exred_docker_browserstack_second_browser_set:
-	$(EXRED_SET_DOCKER_ENV_VARS) && \
-	$(EXRED_DOCKER_COMPOSE_CREATE_ENVS) && \
-	$(EXRED_DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
-	docker-compose -f docker-compose-exred.yml -p exred build && \
-	docker-compose -f docker-compose-exred.yml -p exred run tests_second_browser_set
+docker_browserstack_second_set:
+	$(BROWSER_SET_DOCKER_ENV_VARS) && \
+	$(BROWSER_DOCKER_COMPOSE_CREATE_ENVS) && \
+	$(BROWSER_DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
+	docker-compose -f docker-compose-browser.yml -p browser build && \
+	docker-compose -f docker-compose-browser.yml -p browser run tests_second_browser_set
 
 compile_requirements:
 	python3 -m piptools compile requirements.in
 
-compile_exred_requirements:
-	python3 -m piptools compile requirements_exred.in
+compile_browser_requirements:
+	python3 -m piptools compile requirements_browser.in
 
 compile_functional_requirements:
 	python3 -m piptools compile requirements_functional.in
@@ -207,12 +200,9 @@ compile_functional_requirements:
 compile_smoke_requirements:
 	python3 -m piptools compile requirements_smoke.in
 
-compile_selenium_requirements:
-	python3 -m piptools compile requirements_selenium.in
-
 compile_load_requirements:
 	python3 -m piptools compile requirements_load.in
 
-compile_all_requirements: compile_requirements compile_exred_requirements compile_functional_requirements compile_smoke_requirements compile_selenium_requirements compile_load_requirements
+compile_all_requirements: compile_requirements compile_browser_requirements compile_functional_requirements compile_smoke_requirements compile_load_requirements
 
-.PHONY: build clean requirements test docker_remove_all docker_integration_tests smoke_tests exred_docker_browserstack load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal functional_tests pep8
+.PHONY: build clean requirements test docker_remove_all docker_integration_tests smoke_tests load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal functional_tests pep8

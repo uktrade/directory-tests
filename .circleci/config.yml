@@ -55,7 +55,7 @@ jobs:
             - ~/directory-tests/docker/.env_with_export
             - ~/directory-tests/docker/.env_without_export
 
-  exred_tests_requirements:
+  browser_tests_requirements:
     docker:
       - image: circleci/python:3.5.3
     working_directory: ~/directory-tests
@@ -68,12 +68,12 @@ jobs:
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            pip install -r requirements_exred.txt
-            python ./docker/env_writer.py ./docker/env_exred.json
+            pip install -r requirements_browser.txt
+            python ./docker/env_writer.py ./docker/env_browser.json
             nodeenv -p
             npm install -g junit-merge@1.2.3
       - save_cache:
-          key: exred-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
+          key: browser-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
           paths:
             - ~/directory-tests/venv
             - ~/directory-tests/docker/.env_with_export
@@ -102,7 +102,7 @@ jobs:
       - store_artifacts:
           path: ./tests/smoke/reports
 
-  exred_tests_chrome:
+  browser_tests_chrome:
     docker:
       - image: circleci/python:3.5.3
     working_directory: ~/directory-tests
@@ -112,29 +112,29 @@ jobs:
             - cached-repo-{{ .Revision }}
       - restore_cache:
           keys:
-            - exred-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
+            - browser-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
       - run:
-          name: Run functional ExRed tests in Chrome
+          name: Run functional tests in Chrome
           command: |
             . venv/bin/activate
             source ./docker/.env_with_export;
             export PATH=$PATH:$HOME/bin
-            BROWSERS=Chrome VERSIONS=66.0 make exred_browserstack
+            BROWSERS=Chrome VERSIONS=66.0 make browserstack
       - run:
           name: Merge JUnit XML reports
           when: always
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            cd ./tests/exred/reports
+            cd ./tests/browser/reports
             junit-merge *.xml -o merged.xml
             ls *.xml | grep -v merged.xml | xargs rm
       - store_test_results:
-          path: ./tests/exred/reports
+          path: ./tests/browser/reports
       - store_artifacts:
-          path: ./tests/exred/reports
+          path: ./tests/browser/reports
 
-  exred_tests_firefox:
+  browser_tests_firefox:
     docker:
       - image: circleci/python:3.5.3
     working_directory: ~/directory-tests
@@ -144,27 +144,27 @@ jobs:
             - cached-repo-{{ .Revision }}
       - restore_cache:
           keys:
-            - exred-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
+            - browser-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
       - run:
-          name: Run functional ExRed tests in Firefox
+          name: Run functional tests in Firefox
           command: |
             . venv/bin/activate
             source ./docker/.env_with_export;
             export PATH=$PATH:$HOME/bin
-            BROWSERS=Firefox VERSIONS=60.0 make exred_browserstack
+            BROWSERS=Firefox VERSIONS=60.0 make browserstack
       - run:
           name: Merge JUnit XML reports
           when: always
           command: |
             python3 -m venv venv
             . venv/bin/activate
-            cd ./tests/exred/reports
+            cd ./tests/browser/reports
             junit-merge *.xml -o merged.xml
             ls *.xml | grep -v merged.xml | xargs rm
       - store_test_results:
-          path: ./tests/exred/reports
+          path: ./tests/browser/reports
       - store_artifacts:
-          path: ./tests/exred/reports
+          path: ./tests/browser/reports
 
   fab_functional_tests:
     docker:
@@ -310,21 +310,21 @@ workflows:
       - smoke_tests_requirements:
           requires:
             - checkout_code
-      - exred_tests_requirements:
+      - browser_tests_requirements:
           requires:
             - checkout_code
       - smoke_tests:
           requires:
             - checkout_code
             - smoke_tests_requirements
-      - exred_tests_chrome:
+      - browser_tests_chrome:
           requires:
             - smoke_tests
-            - exred_tests_requirements
-      - exred_tests_firefox:
+            - browser_tests_requirements
+      - browser_tests_firefox:
           requires:
             - smoke_tests
-            - exred_tests_requirements
+            - browser_tests_requirements
       - fab_functional_tests:
           requires:
             - smoke_tests
