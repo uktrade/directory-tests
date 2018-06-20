@@ -375,10 +375,10 @@ def print_response(
             content_only_msg = " & without HTML markup"
             content = extract_page_contents(content)
         if trim:
-            red("RSP Content (trimmed{}):".format(content_only_msg))
+            red("RSP Content (trimmed): {}:".format(content_only_msg))
             print(content[0:trim_offset])
         else:
-            red("RSP Content{}:".format(content_only_msg))
+            red("RSP Content: {}".format(content_only_msg))
             print(content)
 
 
