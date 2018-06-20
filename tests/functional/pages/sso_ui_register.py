@@ -10,10 +10,10 @@ from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("sso:signup")
 EXPECTED_STRINGS = [
-    "Register", "Create a great.gov.uk account to",
-    "save your progress through our export guidance",
-    "create a profile to showcase your business to overseas buyers",
-    "apply for opportunities to sell your product or service overseas",
+    "Register", "Create a great.gov.uk account and you can",
+    "save your progress as you read through our exporting guidance",
+    "create a free trade profile to promote your company to overseas buyers",
+    "express your interest and apply for export opportunities",
     "Email:", "Confirm email:", "Password:", "Confirm password:",
     "Your password must:", "be at least 10 characters",
     "contain at least one letter", "contain at least one number",
@@ -39,7 +39,6 @@ def go_to(
     headers = {"Referer": referer}
     response = make_request(
         Method.GET, url, session=session, headers=headers)
-    should_be_here(response)
     return response
 
 

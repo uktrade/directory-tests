@@ -534,6 +534,7 @@ def reg_create_standalone_unverified_sso_account(
     # Step 1: Go to the SSO/great.gov.uk registration page
     response = sso_ui_register.go_to(session)
     context.response = response
+    sso_ui_register.should_be_here(response)
 
     # Step 2 - extract CSRF token
     token = extract_csrf_middleware_token(response)

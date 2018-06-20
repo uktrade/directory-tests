@@ -9,14 +9,14 @@ from tests.functional.utils.request import Method, check_response, make_request
 EXPECTED_STRINGS = [
     "Your company's previous exports", "Confirm company", "Trading status",
     "Have you exported before?",
-    "Yes", "No", "I accept the", "Find a Buyer terms and conditions",
+    "Yes", "No", "I accept the", "Terms and conditions",
     "< Back to previous step", "Continue"
 ]
 
 EXPECTED_STRINGS_WO_SSO_ACCOUNT = [
-    "An account will let you:",
-    "Create a trade profile that will be promoted to international businesses",
-    "Apply for export opportunities sourced by UK embassies worldwide",
+    "Creating an account means you can:",
+    "promote the products or services you sell to overseas buyers",
+    "give overseas buyers from your industry an easy way to find you",
     ("To confirm that this is your company you must create a great.gov.uk "
      "account")
 ]
