@@ -1,5 +1,5 @@
-Export Readiness - UI Automated Tests
--------------------------------------
+Automated Functional Browser Tests
+----------------------------------
 
 This repository contains UI tests automated using:
 * [Behave](https://pythonhosted.org/behave/)
@@ -15,6 +15,7 @@ This repository contains UI tests automated using:
 * docker-compose
 * [BrowserStack](https://www.browserstack.com/users/sign_up) account (Devs can find them in Rattic)
 * appropriate [browser driver binaries](https://selenium-python.readthedocs.io/installation.html#drivers) installed in `$PATH`
+* a set of environment variables (see `../docker/env_browser.json`)
 
 
 # Run scenarios using locally installed browser
