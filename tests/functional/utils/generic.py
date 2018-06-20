@@ -291,7 +291,7 @@ def extract_page_contents(
         text = re.sub(ignored_characters, '', text)
 
     # remove empty lines
-    lines = [line.strip().lower()
+    lines = [line.strip()
              for line in text.splitlines()
              if line.strip()]
     return '\n'.join(lines)
@@ -1057,13 +1057,13 @@ def extract_main_error(content: str) -> str:
     soup = BeautifulSoup(content, "lxml")
     sections = soup.find_all('main')
     lines = [
-        line.strip().lower()
+        line.strip()
         for section in sections
         for line in section.text.splitlines()
         if line
     ]
     has_errors = any(
-        indicator in line
+        indicator in line.lower()
         for line in lines
         for indicator in ERROR_INDICATORS
     )
@@ -1081,13 +1081,13 @@ def extract_section_error(content: str) -> str:
     soup = BeautifulSoup(content, "lxml")
     sections = soup.find_all('section')
     lines = [
-        line.strip().lower()
+        line.strip()
         for section in sections
         for line in section.text.splitlines()
         if line
     ]
     has_errors = any(
-        indicator in line
+        indicator in line.lower()
         for line in lines
         for indicator in ERROR_INDICATORS
     )
