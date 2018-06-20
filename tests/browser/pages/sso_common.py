@@ -3,7 +3,7 @@
 import logging
 
 from directory_sso_api_client.testapiclient import (
-    DirectoryTestAPIClient as SSOClient
+    DirectorySSOTestAPIClient as SSOClient
 )
 
 from settings import SSO_PROXY_API_CLIENT_BASE_URL, SSO_PROXY_SIGNATURE_SECRET
