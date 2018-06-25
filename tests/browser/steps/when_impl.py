@@ -3,6 +3,7 @@
 import logging
 import random
 
+from behave.model import Table
 from behave.runner import Context
 from retrying import retry
 from selenium.common.exceptions import TimeoutException, WebDriverException
@@ -13,7 +14,7 @@ from utils import (
     get_actor,
     take_screenshot,
     unauthenticated_actor,
-    update_actor,
+    update_actor
 )
 from utils.gov_notify import get_verification_link
 
@@ -42,13 +43,13 @@ from pages import (
     triage_do_you_use_online_marketplaces,
     triage_have_you_exported,
     triage_summary,
-    triage_what_do_you_want_to_export,
+    triage_what_do_you_want_to_export
 )
 from registry.articles import (
     GUIDANCE,
     get_article,
     get_articles,
-    get_random_article,
+    get_random_article
 )
 from registry.pages import get_page_object
 from settings import EXRED_SECTORS
@@ -1736,3 +1737,20 @@ def fas_view_article(context: Context, actor_alias: str, article_number: str):
         article_number,
         context.driver.current_url,
     )
+
+
+def invest_read_more(context: Context, actor_alias: str, topic_names: Table):
+    actor = get_actor(context, actor_alias)
+    visited_page = actor.visited_page
+    page = get_page_object(visited_page)
+    assert hasattr(page, "open_link")
+    topics = [row[0] for row in topic_names]
+    update_actor(context, actor_alias, visited_articles=topics)
+    for topic in topics:
+        page.open_link(context.driver, topic)
+        logging.debug(
+            "%s clicked on '%s' topic on %s",
+            actor_alias,
+            topic,
+            context.driver.current_url,
+        )
