@@ -261,6 +261,10 @@ def should_see_sections(
         context.driver.current_url,
     )
     page = get_page_object(page_name)
+    if hasattr(page, "should_see_sections"):
+        page.should_see_sections(context.driver, sections)
+        return
+
     assert hasattr(page, "should_see_section")
     for section in sections:
         page.should_see_section(context.driver, section)
