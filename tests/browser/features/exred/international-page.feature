@@ -21,7 +21,7 @@ Feature: International Page
 
     Examples:
       | expected_service | section          |
-      | Invest in Great  | Invest in the UK |
+      | Invest - home    | Invest in the UK |
       | British Council  | Study in the UK  |
       | Visit Britain    | Visit the UK     |
 

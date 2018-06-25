@@ -24,7 +24,7 @@ from pages import (
     home,
     interim_exporting_opportunities,
     international,
-    invest_in_great,
+    invest_home,
     personalised_journey,
     selling_online_overseas,
     share_on_facebook,
@@ -86,7 +86,7 @@ EXRED_PAGE_REGISTRY = {
     },
     "find a buyer": {"url": find_a_buyer.URL, "po": find_a_buyer},
     "find a supplier": {"url": fas_ui_landing.URL, "po": fas_ui_landing},
-    "invest in great": {"url": invest_in_great.URL, "po": invest_in_great},
+    "invest - home": {"url": invest_home.URL, "po": invest_home},
     "create your export journey": {
         "url": triage_create_your_export_journey.URL,
         "po": triage_create_your_export_journey,
