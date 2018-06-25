@@ -36,6 +36,7 @@ from steps.then_impl import (
     guidance_tile_should_be_highlighted,
     header_check_dit_logo,
     header_check_favicon,
+    invest_should_see_topic_contents,
     language_selector_keyboard_should_be_trapped,
     language_selector_should_not_see_it,
     language_selector_should_see_it,
@@ -362,3 +363,8 @@ def fas_should_see_filtered_search_results(
         context: Context, actor_alias: str, industry_names: str):
     fas_search_results_filtered_by_industries(
         context, actor_alias, industry_names.split(", "))
+
+
+@then('"{actor_alias}" should see brief explanation why the UK is the best place for his business')
+def then_actor_should_see_topic_content(context: Context, actor_alias: str):
+    invest_should_see_topic_contents(context, actor_alias)

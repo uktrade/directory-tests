@@ -19,14 +19,14 @@ from pages import (
     home,
     language_selector,
     personalised_journey,
-    triage_summary,
+    triage_summary
 )
 from registry.articles import get_article, get_articles
 from registry.pages import get_page_object
 from steps.when_impl import (
     triage_should_be_classified_as_new,
     triage_should_be_classified_as_occasional,
-    triage_should_be_classified_as_regular,
+    triage_should_be_classified_as_regular
 )
 
 
@@ -736,3 +736,17 @@ def fas_search_results_filtered_by_industries(
         industry_names,
         context.driver.current_url,
     )
+
+
+def invest_should_see_topic_contents(context: Context, actor_alias: str):
+    actor = get_actor(context, actor_alias)
+    page = get_page_object(actor.visited_page)
+    assert hasattr(page, "open_link")
+    for topic in actor.visited_articles:
+        page.should_see_topic(context.driver, topic)
+        logging.debug(
+            "%s can see contents of '%s' topic on %s",
+            actor_alias,
+            topic,
+            context.driver.current_url,
+        )
