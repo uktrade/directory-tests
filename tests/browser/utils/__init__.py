@@ -24,6 +24,7 @@ from selenium.common.exceptions import (
     TimeoutException
 )
 from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.expected_conditions import staleness_of
@@ -143,12 +144,16 @@ def update_actor(context: Context, alias: str, **kwargs):
 
 
 @retry(stop_max_attempt_number=3)
-def take_screenshot(driver: webdriver, page_name: str):
+def take_screenshot(driver: WebDriver, page_name: str):
     """Will take a screenshot of current page.
 
     :param driver: Any of the WebDrivers
     :param page_name: page name which will be used in the screenshot filename
     """
+    if not isinstance(driver, WebDriver):
+        logging.debug(
+            "Taking screenshots in non-browser executor is not possible")
+        return
     if TAKE_SCREENSHOTS:
         session_id = driver.session_id
         browser = driver.capabilities.get("browserName", "unknown_browser")
