@@ -21,6 +21,7 @@ HUB_URL = os.environ.get("HUB_URL", None)
 CAPABILITIES = os.environ.get("CAPABILITIES", None)
 BUILD_ID = os.environ.get("CIRCLE_SHA1", str(datetime.date(datetime.now())))
 EXRED_UI_URL = os.environ["EXRED_UI_URL"]
+INVEST_UI_URL = os.environ["INVEST_UI_URL"]
 DIRECTORY_UI_BUYER_URL = os.environ["DIRECTORY_UI_BUYER_URL"]
 DIRECTORY_UI_SUPPLIER_URL = os.environ["DIRECTORY_UI_SUPPLIER_URL"]
 DIRECTORY_UI_SSO_URL = os.environ["DIRECTORY_UI_SSO_URL"]
