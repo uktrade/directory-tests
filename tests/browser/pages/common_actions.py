@@ -3,8 +3,6 @@
 import logging
 
 from selenium import webdriver
-
-from pages import Selector
 from utils import (
     assertion_msg,
     check_if_element_is_visible,
@@ -13,6 +11,8 @@ from utils import (
     take_screenshot,
     wait_for_page_load_after_action,
 )
+
+from pages import Selector
 
 
 def go_to_url(
