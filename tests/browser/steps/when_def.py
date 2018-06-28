@@ -22,12 +22,12 @@ from steps.when_impl import (
     export_readiness_open_category,
     fas_fill_out_and_submit_contact_us_form,
     fas_search_for_companies,
-    fas_see_more_industries,
     fas_use_breadcrumb,
     fas_view_article,
     fas_view_more_companies,
     fas_view_selected_company_profile,
     generic_open_industry_page,
+    generic_see_more_industries,
     guidance_open_category,
     guidance_read_through_all_articles,
     header_footer_click_on_dit_logo,
@@ -397,9 +397,9 @@ def fas_when_actor_fills_out_and_submits_contanct_us_form(
     fas_fill_out_and_submit_contact_us_form(context, actor_alias)
 
 
-@when('"{actor_alias}" decides to see more UK industries from the FAS landing page')
+@when('"{actor_alias}" decides to see more UK industries')
 def fas_landing_page_see_more_industries(context: Context, actor_alias: str):
-    fas_see_more_industries(context, actor_alias)
+    generic_see_more_industries(context, actor_alias)
 
 
 @when('"{actor_alias}" decides to use "{breadcrumb_name}" breadcrumb on the "{page_name}" page')

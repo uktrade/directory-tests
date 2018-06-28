@@ -1674,8 +1674,12 @@ def fas_fill_out_and_submit_contact_us_form(
     fas_ui_contact_us.submit(context.driver)
 
 
-def fas_see_more_industries(context: Context, actor_alias: str):
-    fas_ui_landing.see_more_industries(context.driver)
+def generic_see_more_industries(context: Context, actor_alias: str):
+    actor = get_actor(context, actor_alias)
+    visited_page = actor.visited_page
+    page = get_page_object(visited_page)
+    assert hasattr(page, "see_more_industries")
+    page.see_more_industries(context.driver)
     logging.debug(
         "%s clicked on 'See more industries' button on %s",
         actor_alias,
