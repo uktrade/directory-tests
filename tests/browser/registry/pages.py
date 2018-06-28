@@ -25,6 +25,8 @@ from pages import (
     interim_exporting_opportunities,
     international,
     invest_home,
+    invest_industries,
+    invest_industry,
     personalised_journey,
     selling_online_overseas,
     share_on_facebook,
@@ -86,7 +88,6 @@ EXRED_PAGE_REGISTRY = {
     },
     "find a buyer": {"url": find_a_buyer.URL, "po": find_a_buyer},
     "find a supplier": {"url": fas_ui_landing.URL, "po": fas_ui_landing},
-    "invest - home": {"url": invest_home.URL, "po": invest_home},
     "create your export journey": {
         "url": triage_create_your_export_journey.URL,
         "po": triage_create_your_export_journey,
@@ -244,10 +245,44 @@ EXTERNAL_SITES_PAGE_REGISTRY = {
     }
 }
 
+INVEST_PAGE_REGISTRY = {
+    "invest - home": {"url": invest_home.URL, "po": invest_home},
+    "invest - industry": {"url": invest_industry.URL, "po": invest_industry},
+    "invest - industries": {
+        "url": invest_industries.URL,
+        "po": invest_industries,
+    },
+    "invest - automotive": {
+        "url": invest_industry.URLS.AUTOMOTIVE,
+        "po": invest_industry,
+    },
+    "invest - capital investment": {
+        "url": invest_industry.URLS.CAPITAL_INVESTMENT,
+        "po": invest_industry,
+    },
+    "invest - creative industries": {
+        "url": invest_industry.URLS.CREATIVE_INDUSTRIES,
+        "po": invest_industry,
+    },
+    "invest - financial services": {
+        "url": invest_industry.URLS.FINANCIAL_SERVICES,
+        "po": invest_industry,
+    },
+    "invest - health and life sciences": {
+        "url": invest_industry.URLS.HEALTH_AND_LIFE_SCIENCES,
+        "po": invest_industry,
+    },
+    "invest - technology": {
+        "url": invest_industry.URLS.TECHNOLOGY,
+        "po": invest_industry,
+    },
+}
+
 PAGES = {}
 PAGES.update(EXRED_PAGE_REGISTRY)
 PAGES.update(FAS_PAGE_REGISTRY)
 PAGES.update(EXTERNAL_SITES_PAGE_REGISTRY)
+PAGES.update(INVEST_PAGE_REGISTRY)
 
 
 def get_page_url(page_name: str):
