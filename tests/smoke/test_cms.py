@@ -159,7 +159,7 @@ def get_page_ids_by_type(cms_client, page_type):
         "invest.SectorLandingPage",
         # "invest.SectorPage",
         # "invest.SetupGuideLandingPage",
-        "invest.SetupGuidePage",
+        # "invest.SetupGuidePage",
     ],
 )
 def test_all_published_pages_should_return_200(cms_client, page_type):
@@ -207,8 +207,8 @@ def test_all_published_pages_should_return_200(cms_client, page_type):
         # "invest.RegionLandingPage",
         "invest.SectorLandingPage",
         # "invest.SectorPage",
+        # "invest.SetupGuidePage",
         # "invest.SetupGuideLandingPage",
-        "invest.SetupGuidePage",
     ],
 )
 def test_published_translated_pages_should_return_200(cms_client, page_type):
