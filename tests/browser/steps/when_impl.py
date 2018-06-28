@@ -1634,7 +1634,7 @@ def fas_search_for_companies(
     retry_on_exception=retry_if_webdriver_error,
     wrap_exception=False,
 )
-def fas_open_industry_page(
+def generic_open_industry_page(
     context: Context, actor_alias: str, industry_name: str
 ):
     actor = get_actor(context, actor_alias)

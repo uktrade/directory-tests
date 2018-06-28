@@ -21,13 +21,13 @@ from steps.when_impl import (
     continue_export_journey,
     export_readiness_open_category,
     fas_fill_out_and_submit_contact_us_form,
-    fas_open_industry_page,
     fas_search_for_companies,
     fas_see_more_industries,
     fas_use_breadcrumb,
     fas_view_article,
     fas_view_more_companies,
     fas_view_selected_company_profile,
+    generic_open_industry_page,
     guidance_open_category,
     guidance_read_through_all_articles,
     header_footer_click_on_dit_logo,
@@ -388,7 +388,7 @@ def fas_when_actor_searches_for_companies(
 @when('"{actor_alias}" decides to find out out more about "{industry_name}" industry')
 def fas_when_actor_opens_industry_page(
         context: Context, actor_alias: str, industry_name: str):
-    fas_open_industry_page(context, actor_alias, industry_name)
+    generic_open_industry_page(context, actor_alias, industry_name)
 
 
 @when('"{actor_alias}" fills out and submits the contact us form')

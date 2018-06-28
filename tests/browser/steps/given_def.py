@@ -20,7 +20,7 @@ from steps.when_impl import (
     case_studies_go_to_random,
     click_on_page_element,
     export_readiness_open_category,
-    fas_open_industry_page,
+    generic_open_industry_page,
     get_geo_ip,
     guidance_open_category,
     guidance_open_random_category,
@@ -219,4 +219,4 @@ def given_actor_decides_to_click_on_page_element(
 @given('"{actor_alias}" decided to find out out more about "{industry_name}" industry')
 def fas_given_actor_opened_industry_page(
         context: Context, actor_alias: str, industry_name: str):
-    fas_open_industry_page(context, actor_alias, industry_name)
+    generic_open_industry_page(context, actor_alias, industry_name)
