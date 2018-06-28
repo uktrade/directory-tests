@@ -30,34 +30,32 @@ Feature: Invest home page
     Then "Robert" should see brief explanation why the UK is the best place for his business
 
 
-  @wip
   @browser
   @requests
   Scenario Outline: Overseas businesses should be able to learn more about "<selected>" UK Industry
     Given "Robert" visits the "Invest - home" page
 
-    When "Robert" decides to find out out more about "<selected>" industry
+    When "Robert" decides to find out out more about "Invest - <selected>" industry
 
     Then "Robert" should be on the "Invest - Industry" page
-    And "Robert" should see content specific to "<selected>" industry page
+    And "Robert" should see content specific to "Invest - <selected>" industry page
 
     Examples: promoted industries
-      | selected                          |
-      | Invest - Automotive               |
-      | Invest - Capital Investment       |
-      | Invest - Creative industries      |
-      | Invest - Financial services       |
-      | Invest - Health and life sciences |
-      | Invest - Technology               |
+      | selected                 |
+      | Automotive               |
+      | Capital Investment       |
+      | Creative industries      |
+      | Financial services       |
+      | Health and life sciences |
+      | Technology               |
 
 
-  @wip
   @browser
   @requests
   Scenario: Overseas businesses should be able to also learn more about UK Industries other than the promoted ones
-    Given "Robert" visits the "Invest home" page
+    Given "Robert" visits the "Invest - home" page
 
-    When "Robert" decides to see more UK industries from the "Invest home" page
+    When "Robert" decides to see more UK industries
 
     Then "Robert" should be on the "Invest - Industries" page
 
@@ -87,7 +85,7 @@ Feature: Invest home page
   @browser
   @requests
   Scenario: Overseas businesses should be able to learn how UK government can help them to establish in the UK
-    Given "Robert" visits the "Invest home" page
+    Given "Robert" visits the "Invest - home" page
 
     Then "Robert" should see all the forms of help provided by UK government
       | Build connections   |

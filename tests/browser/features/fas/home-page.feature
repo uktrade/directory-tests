@@ -73,7 +73,7 @@ Feature: FAS landing page
   Scenario: Buyers should be able to see more UK industries from the "FAS landing" page
     Given "Robert" visits the "FAS landing" page
 
-    When "Robert" decides to see more UK industries from the FAS landing page
+    When "Robert" decides to see more UK industries
 
     Then "Robert" should be on the "FAS Industries" page
 
