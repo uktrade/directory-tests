@@ -714,12 +714,14 @@ def should_see_page_in_preferred_language(
     )
 
 
-def fas_should_see_industry_page(
+def generic_should_see_industry_page(
     context: Context, actor_alias: str, industry_name: str
 ):
-    fas_ui_industry.should_see_content_for_industry(
-        context.driver, industry_name
-    )
+    actor = get_actor(context, actor_alias)
+    visited_page = actor.visited_page
+    page = get_page_object(visited_page)
+    assert hasattr(page, "should_see_content_for_industry")
+    page.should_see_content_for_industry(context.driver, industry_name)
     logging.debug(
         "%s found content specific to %s industry on %s",
         actor_alias,
