@@ -6,7 +6,7 @@ from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
-from utils import assertion_msg, take_screenshot
+from utils import assertion_msg, find_element, take_screenshot
 
 from pages import (
     AssertionExecutor,
@@ -15,7 +15,7 @@ from pages import (
     check_for_sections,
     visit_url,
 )
-from pages.common_actions import check_title
+from pages.common_actions import check_title, find_and_click_on_page_element
 from settings import INVEST_UI_URL
 
 URL = urljoin(INVEST_UI_URL, "")
@@ -75,7 +75,7 @@ SECTIONS = {
             By.CSS_SELECTOR,
             "section.landing-page-industries > div > div > div:nth-child(6) > a",
         ),
-        "see more": Selector(
+        "see more industries": Selector(
             By.CSS_SELECTOR, "section.landing-page-industries > div > a"
         ),
     },
@@ -157,3 +157,24 @@ def should_see_topic(driver: WebDriver, name: str):
     content = driver.find_element(by=selector.by, value=selector.value)
     with assertion_msg("Can't see contents for topic: {}".format(name)):
         assert content.is_displayed()
+
+
+def open_industry(driver: WebDriver, industry_name: str):
+    industry_name = industry_name.replace("Invest - ", "")
+    industry_link = find_element(
+        driver,
+        by_partial_link_text=industry_name,
+        element_name="Industry card",
+        wait_for_it=False,
+    )
+    industry_link.click()
+    take_screenshot(driver, PAGE_TITLE + " after opening " + industry_name)
+
+
+def click_on_page_element(driver: WebDriver, element_name: str):
+    find_and_click_on_page_element(driver, SECTIONS, element_name)
+    take_screenshot(driver, PAGE_TITLE + " after clicking on " + element_name)
+
+
+def see_more_industries(driver: WebDriver):
+    click_on_page_element(driver, "see more industries")
