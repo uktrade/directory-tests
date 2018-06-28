@@ -4,6 +4,7 @@ import logging
 
 from selenium import webdriver
 
+from pages import Selector
 from utils import (
     assertion_msg,
     check_if_element_is_visible,
@@ -194,6 +195,8 @@ def find_and_click_on_page_element(
         if element_name.lower() in element_selectors:
             found_selector = True
             selector = element_selectors[element_name.lower()]
+            if isinstance(selector, Selector):
+                selector = selector.value
             logging.debug(
                 "Found '%s' in '%s' section with following selector: '%s'",
                 element_name,
