@@ -103,7 +103,8 @@ def browser_check_for_sections(
 
 
 def requests_check_for_sections(
-        response: Response, all_sections: dict, sought_sections: List[str]):
+    response: Response, all_sections: dict, sought_sections: List[str]
+):
     for name in sought_sections:
         selectors = get_desktop_selectors(all_sections[name.lower()])
         for key, selector in selectors.items():
@@ -116,8 +117,8 @@ def requests_check_for_sections(
 
 
 def check_for_sections(
-        executor: AssertionExecutor, all_sections: dict,
-        sought_sections: List[str]):
+    executor: AssertionExecutor, all_sections: dict, sought_sections: List[str]
+):
     if isinstance(executor, WebDriver):
         browser_check_for_sections(executor, all_sections, sought_sections)
     elif isinstance(executor, Response):
@@ -127,4 +128,3 @@ def check_for_sections(
             "Unsupported type: {}. Please provide one of supported types: "
             "WebDriver or Response".format(type(executor))
         )
-
