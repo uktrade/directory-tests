@@ -171,6 +171,18 @@ def open_industry(driver: WebDriver, industry_name: str):
     take_screenshot(driver, PAGE_TITLE + " after opening " + industry_name)
 
 
+def open_guide(driver: WebDriver, guide_name: str):
+    guide_name = guide_name.replace("Invest - ", "")
+    guide = find_element(
+        driver,
+        by_partial_link_text=guide_name,
+        element_name="Guide card",
+        wait_for_it=False,
+    )
+    guide.click()
+    take_screenshot(driver, PAGE_TITLE + " after opening " + guide_name)
+
+
 def click_on_page_element(driver: WebDriver, element_name: str):
     find_and_click_on_page_element(driver, SECTIONS, element_name)
     take_screenshot(driver, PAGE_TITLE + " after clicking on " + element_name)
