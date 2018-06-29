@@ -6,6 +6,8 @@ from requests import Session, Response
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from utils import assertion_msg, selenium_action
+
 Executor = Union[WebDriver, Session]
 AssertionExecutor = Union[WebDriver, Response]
 
@@ -60,8 +62,14 @@ def visit_url(executor: Executor, url: str) -> Union[Response, None]:
 
 
 def browser_check_for_sections(
-        driver: WebDriver, all_sections: dict, sought_sections: List[str], *,
-        desktop: bool = True, mobile: bool = False, horizontal: bool = False):
+    driver: WebDriver,
+    all_sections: dict,
+    sought_sections: List[str],
+    *,
+    desktop: bool = True,
+    mobile: bool = False,
+    horizontal: bool = False
+):
     for name in sought_sections:
         if desktop:
             selectors = get_desktop_selectors(all_sections[name.lower()])
@@ -72,12 +80,26 @@ def browser_check_for_sections(
         else:
             raise KeyError(
                 "Please choose from desktop, mobile or horizontal (mobile) "
-                "selectors")
-        for key, selector in selectors.items():
-            element = driver.find_element(
-                by=selector.by, value=selector.value
+                "selectors"
             )
-            assert element.is_displayed()
+        for key, selector in selectors.items():
+            with selenium_action(
+                driver,
+                "Could not find element: %s identified by '%s' selector",
+                key,
+                selector.value,
+            ):
+                element = driver.find_element(
+                    by=selector.by, value=selector.value
+                )
+            with assertion_msg(
+                "It looks like '%s' element identified by '%s' selector is"
+                " not visible on %s",
+                key,
+                selector,
+                driver.current_url,
+            ):
+                assert element.is_displayed()
 
 
 def requests_check_for_sections(
