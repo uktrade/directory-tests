@@ -19,14 +19,14 @@ from pages import (
     home,
     language_selector,
     personalised_journey,
-    triage_summary
+    triage_summary,
 )
 from registry.articles import get_article, get_articles
 from registry.pages import get_page_object
 from steps.when_impl import (
     triage_should_be_classified_as_new,
     triage_should_be_classified_as_occasional,
-    triage_should_be_classified_as_regular
+    triage_should_be_classified_as_regular,
 )
 
 
@@ -756,3 +756,19 @@ def invest_should_see_topic_contents(context: Context, actor_alias: str):
             topic,
             context.driver.current_url,
         )
+
+
+def generic_should_see_guide_page(
+    context: Context, actor_alias: str, guide_name: str
+):
+    actor = get_actor(context, actor_alias)
+    visited_page = actor.visited_page
+    page = get_page_object(visited_page)
+    assert hasattr(page, "should_see_content_for_guide")
+    page.should_see_content_for_guide(context.driver, guide_name)
+    logging.debug(
+        "%s found content specific to %s guide on %s",
+        actor_alias,
+        guide_name,
+        context.driver.current_url,
+    )

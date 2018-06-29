@@ -26,6 +26,7 @@ from steps.then_impl import (
     export_readiness_expected_page_elements_should_be_visible,
     export_readiness_should_see_articles,
     fas_search_results_filtered_by_industries,
+    generic_should_see_guide_page,
     generic_should_see_industry_page,
     guidance_check_if_link_to_next_category_is_displayed,
     guidance_expected_page_elements_should_be_visible,
@@ -368,3 +369,9 @@ def fas_should_see_filtered_search_results(
 @then('"{actor_alias}" should see brief explanation why the UK is the best place for his business')
 def then_actor_should_see_topic_content(context: Context, actor_alias: str):
     invest_should_see_topic_contents(context, actor_alias)
+
+
+@then('"{actor_alias}" should see content specific to "{guide_name}" guide page')
+def then_actor_should_see_appropriate_content_on_guide_page(
+        context: Context, actor_alias: str, guide_name: str):
+    generic_should_see_guide_page(context, actor_alias, guide_name)
