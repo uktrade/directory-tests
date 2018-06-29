@@ -13,7 +13,7 @@ from pages import (
     Executor,
     Selector,
     check_for_sections,
-    visit_url,
+    visit_url
 )
 from pages.common_actions import check_title, find_and_click_on_page_element
 from settings import INVEST_UI_URL
@@ -104,6 +104,66 @@ SECTIONS = {
     },
     "how we help": {
         "self": Selector(By.CSS_SELECTOR, "section.landing-page-how-we-help")
+    },
+    "build connections": {
+        "build connections - icon": Selector(
+            By.CSS_SELECTOR,
+            "section.landing-page-how-we-help ul > li:nth-child(1) > div > img",
+        ),
+        "build connections - text": Selector(
+            By.CSS_SELECTOR,
+            "section.landing-page-how-we-help ul > li:nth-child(1) > div > p",
+        ),
+    },
+    "apply for visas": {
+        "apply for visas - icon": Selector(
+            By.CSS_SELECTOR,
+            "section.landing-page-how-we-help ul > li:nth-child(2) > div > img",
+        ),
+        "apply for visas - text": Selector(
+            By.CSS_SELECTOR,
+            "section.landing-page-how-we-help ul > li:nth-child(2) > div > p",
+        ),
+    },
+    "find grants": {
+        "find grants - icon": Selector(
+            By.CSS_SELECTOR,
+            "section.landing-page-how-we-help ul > li:nth-child(3) > div > img",
+        ),
+        "find grants - text": Selector(
+            By.CSS_SELECTOR,
+            "section.landing-page-how-we-help ul > li:nth-child(3) > div > p",
+        ),
+    },
+    "get insights": {
+        "get insights - icon": Selector(
+            By.CSS_SELECTOR,
+            "section.landing-page-how-we-help ul > li:nth-child(4) > div > img",
+        ),
+        "get insights - text": Selector(
+            By.CSS_SELECTOR,
+            "section.landing-page-how-we-help ul > li:nth-child(4) > div > p",
+        ),
+    },
+    "grow workforce": {
+        "grow workforce - icon": Selector(
+            By.CSS_SELECTOR,
+            "section.landing-page-how-we-help ul > li:nth-child(5) > div > img",
+        ),
+        "grow workforce - text": Selector(
+            By.CSS_SELECTOR,
+            "section.landing-page-how-we-help ul > li:nth-child(5) > div > p",
+        ),
+    },
+    "contact us for help": {
+        "contact us for help - link": Selector(
+            By.CSS_SELECTOR,
+            "section.landing-page-how-we-help ul > li:nth-child(6) > div > a",
+        ),
+        "contact us for help - text": Selector(
+            By.CSS_SELECTOR,
+            "section.landing-page-how-we-help ul > li:nth-child(6) > div > p",
+        ),
     },
     "footer": {
         "self": Selector(By.ID, "invest-footer"),
