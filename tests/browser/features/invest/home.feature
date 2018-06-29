@@ -60,25 +60,23 @@ Feature: Invest home page
     Then "Robert" should be on the "Invest - Industries" page
 
 
-  @wip
   @browser
   @requests
   Scenario Outline: Overseas businesses should be able to learn how to grow their businesses in the UK by reading "<selected>" guide
     Given "Robert" visits the "Invest - home" page
 
-    When "Robert" decides to read "<selected>" guide
+    When "Robert" decides to read "Invest - <selected>" guide
 
     Then "Robert" should be on the "Invest - Guide" page
-    And "Robert" should see content specific to "<selected>" guide page
+    And "Robert" should see content specific to "Invest - <selected>" guide page
 
     Examples: UK Setup Guides
-      | selected                                                         |
-      | Invest - Apply for a UK visa                                     |
-      | Invest - Establish a base for business in the UK                 |
-      | Invest - Hire skilled workers for your UK operations             |
-      | Invest - Open a UK business bank account                         |
-      | Invest - Set up a company in the UK                              |
-      | Invest - Understand the UK's tax, incentives and legal framework |
+      | selected                                    |
+      | Apply for a UK visa                         |
+      | Establish a base for business in the UK     |
+      | Hire skilled workers for your UK operations |
+      | Open a UK business bank account             |
+      | Set up a company in the UK                  |
 
 
   @wip
