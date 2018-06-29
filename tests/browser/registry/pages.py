@@ -24,6 +24,7 @@ from pages import (
     home,
     interim_exporting_opportunities,
     international,
+    invest_guide,
     invest_home,
     invest_industries,
     invest_industry,
@@ -275,6 +276,27 @@ INVEST_PAGE_REGISTRY = {
     "invest - technology": {
         "url": invest_industry.URLS.TECHNOLOGY,
         "po": invest_industry,
+    },
+    "invest - guide": {"url": invest_guide.URL, "po": invest_guide},
+    "invest - apply for a uk visa": {
+        "url": invest_guide.URLS.APPLY_FOR_A_UK_VISA,
+        "po": invest_guide,
+    },
+    "invest - establish a base for business in the uk": {
+        "url": invest_guide.URLS.ESTABLISHED_A_BASE_FOR_BUSINESS_IN_THE_UK,
+        "po": invest_guide,
+    },
+    "invest - hire skilled workers for your uk operations": {
+        "url": invest_guide.URLS.HIRE_SKILLED_WORKERS_FOR_YOUR_UK_OPERATIONS,
+        "po": invest_guide,
+    },
+    "invest - open a uk business bank account": {
+        "url": invest_guide.URLS.OPEN_A_BUSINESS_BANK_ACCOUNT,
+        "po": invest_guide,
+    },
+    "invest - set up a company in the uk": {
+        "url": invest_guide.URLS.SET_UP_A_COMPANY_IN_THE_UK,
+        "po": invest_guide,
     },
 }
 
