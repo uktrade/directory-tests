@@ -79,7 +79,6 @@ Feature: Invest home page
       | Set up a company in the UK                  |
 
 
-  @wip
   @browser
   @requests
   Scenario: Overseas businesses should be able to learn how UK government can help them to establish in the UK
@@ -91,4 +90,14 @@ Feature: Invest home page
       | Find grants         |
       | Get insights        |
       | Grow workforce      |
+
+  @bug
+  @CMS-255
+  @fixme
+  @browser
+  @requests
+  Scenario: Overseas businesses should be able to learn how UK government can help them to establish in the UK
+    Given "Robert" visits the "Invest - home" page
+
+    Then "Robert" should see on "Invest - home" page how DIT can help foreign companies
       | Contact us for help |
