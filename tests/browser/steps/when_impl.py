@@ -14,7 +14,7 @@ from utils import (
     get_actor,
     take_screenshot,
     unauthenticated_actor,
-    update_actor
+    update_actor,
 )
 from utils.gov_notify import get_verification_link
 
@@ -43,13 +43,13 @@ from pages import (
     triage_do_you_use_online_marketplaces,
     triage_have_you_exported,
     triage_summary,
-    triage_what_do_you_want_to_export
+    triage_what_do_you_want_to_export,
 )
 from registry.articles import (
     GUIDANCE,
     get_article,
     get_articles,
-    get_random_article
+    get_random_article,
 )
 from registry.pages import get_page_object
 from settings import EXRED_SECTORS
@@ -1758,3 +1758,23 @@ def invest_read_more(context: Context, actor_alias: str, topic_names: Table):
             topic,
             context.driver.current_url,
         )
+
+
+@retry(
+    wait_fixed=30000,
+    stop_max_attempt_number=3,
+    retry_on_exception=retry_if_webdriver_error,
+    wrap_exception=False,
+)
+def generic_open_guide_link(
+    context: Context, actor_alias: str, guide_name: str
+):
+    actor = get_actor(context, actor_alias)
+    visited_page = actor.visited_page
+    page = get_page_object(visited_page)
+    assert hasattr(page, "open_guide")
+    page.open_guide(context.driver, guide_name)
+    update_actor(context, actor_alias, visited_page=guide_name)
+    logging.debug(
+        "%s opened '%s' page on %s", actor_alias, guide_name, page.URL
+    )

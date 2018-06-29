@@ -26,6 +26,7 @@ from steps.when_impl import (
     fas_view_article,
     fas_view_more_companies,
     fas_view_selected_company_profile,
+    generic_open_guide_link,
     generic_open_industry_page,
     generic_see_more_industries,
     guidance_open_category,
@@ -429,3 +430,9 @@ def fas_when_actor_views_article(
 @when('"{actor_alias}" decides to read more on following topics')
 def actor_decides_to_read_more(context: Context, actor_alias: str):
     invest_read_more(context, actor_alias, context.table)
+
+
+@when('"{actor_alias}" decides to read "{guide_name}" guide')
+def when_actor_goes_to_guide(
+        context: Context, actor_alias: str, guide_name: str):
+    generic_open_guide_link(context, actor_alias, guide_name)
