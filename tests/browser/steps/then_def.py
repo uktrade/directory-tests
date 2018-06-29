@@ -164,6 +164,7 @@ def then_should_see_sections(context, actor_alias, sections, page_name):
         context, actor_alias, page_name, sections_list=sections.split(", "))
 
 
+@then('"{actor_alias}" should see on "{page_name}" page how DIT can help foreign companies')
 @then('"{actor_alias}" should see expected sections on "{page_name}" page')
 def then_should_see_sections(context, actor_alias, page_name):
     should_see_sections(

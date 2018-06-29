@@ -85,7 +85,7 @@ Feature: Invest home page
   Scenario: Overseas businesses should be able to learn how UK government can help them to establish in the UK
     Given "Robert" visits the "Invest - home" page
 
-    Then "Robert" should see all the forms of help provided by UK government
+    Then "Robert" should see on "Invest - home" page how DIT can help foreign companies
       | Build connections   |
       | Apply for visas     |
       | Find grants         |
