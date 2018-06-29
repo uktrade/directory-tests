@@ -10,9 +10,14 @@ Feature: Accessing Services
 
     Then "Robert" should see links to following Services "<services>" in "<link_location>"
 
-    Examples:
+    @bug
+    @CMS-256
+    Examples: ID of the SOO link changed
       | services                                                                         | link_location |
       | Find a buyer, Export opportunities, Selling online overseas, Get Finance, Events | header menu   |
+
+    Examples:
+      | services                                                                         | link_location |
       | Find a buyer, Export opportunities, Selling online overseas                      | home page     |
       | Find a buyer, Export opportunities, Selling online overseas, Get Finance, Events | footer links  |
 
