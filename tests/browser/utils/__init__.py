@@ -21,7 +21,7 @@ from selenium import webdriver
 from selenium.common.exceptions import (
     WebDriverException,
     NoSuchElementException,
-    TimeoutException
+    TimeoutException,
 )
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -34,38 +34,44 @@ from settings import (
     BROWSERSTACK_SESSIONS_URL,
     BROWSERSTACK_USER,
     BROWSERSTACK_PASS,
-    TAKE_SCREENSHOTS
+    TAKE_SCREENSHOTS,
 )
 
-ScenarioData = namedtuple(
-    "ScenarioData",
-    [
-        "actors"
-    ]
-)
+ScenarioData = namedtuple("ScenarioData", ["actors"])
 Actor = namedtuple(
     "Actor",
     [
-        "alias", "email", "password", "self_classification",
-        "triage_classification", "what_do_you_want_to_export",
-        "have_you_exported_before", "do_you_export_regularly",
-        "are_you_incorporated", "company_name",
-        "do_you_use_online_marketplaces", "created_personalised_journey",
-        "article_group", "article_category", "article_location",
-        "visited_articles", "articles_read_counter",
-        "articles_time_to_complete", "articles_total_number",
-        "article_list_read_counter", "article_list_time_to_complete",
+        "alias",
+        "email",
+        "password",
+        "self_classification",
+        "triage_classification",
+        "what_do_you_want_to_export",
+        "have_you_exported_before",
+        "do_you_export_regularly",
+        "are_you_incorporated",
+        "company_name",
+        "do_you_use_online_marketplaces",
+        "created_personalised_journey",
+        "article_group",
+        "article_category",
+        "article_location",
+        "visited_articles",
+        "articles_read_counter",
+        "articles_time_to_complete",
+        "articles_total_number",
+        "article_list_read_counter",
+        "article_list_time_to_complete",
         "article_list_total_number",
-        "case_study_title", "email_confirmation_link", "registered",
-        "visited_page"
-    ]
+        "case_study_title",
+        "email_confirmation_link",
+        "registered",
+        "visited_page",
+    ],
 )
 
 VisitedArticle = namedtuple(
-    "VisitedArticle",
-    [
-        "index", "title", "time_to_read"
-    ]
+    "VisitedArticle", ["index", "title", "time_to_read"]
 )
 
 # Set all fields to None by default.
@@ -84,7 +90,8 @@ def initialize_scenario_data() -> ScenarioData:
 
 
 def unauthenticated_actor(
-        alias: str, *, self_classification: str = None) -> Actor:
+    alias: str, *, self_classification: str = None
+) -> Actor:
     """Create an instance of an unauthenticated Actor.
 
     Will:
@@ -95,15 +102,24 @@ def unauthenticated_actor(
     :param self_classification: Actor's perception of its Export Status
     :return: an Actor namedtuple with all required details
     """
-    email = ("test+{}{}@directory.uktrade.io"
-             .format(alias, str(uuid.uuid4()))
-             .replace("-", "").replace(" ", "").lower())
+    email = (
+        "test+{}{}@directory.uktrade.io".format(alias, str(uuid.uuid4()))
+        .replace("-", "")
+        .replace(" ", "")
+        .lower()
+    )
     password_length = 20
-    password = ''.join(random.choice(string.ascii_letters + string.digits)
-                       for _ in range(password_length))
+    password = "".join(
+        random.choice(string.ascii_letters + string.digits)
+        for _ in range(password_length)
+    )
     return Actor(
-        alias=alias, email=email, password=password,
-        self_classification=self_classification, visited_articles=[])
+        alias=alias,
+        email=email,
+        password=password,
+        self_classification=self_classification,
+        visited_articles=[],
+    )
 
 
 def add_actor(context: Context, actor: Actor):
@@ -112,8 +128,9 @@ def add_actor(context: Context, actor: Actor):
     :param context: behave `context` object
     :param actor: an instance of Actor Named Tuple
     """
-    assert isinstance(actor, Actor), ("Expected Actor named tuple but got '{}'"
-                                      " instead".format(type(actor)))
+    assert isinstance(
+        actor, Actor
+    ), "Expected Actor named tuple but got '{}'" " instead".format(type(actor))
     context.scenario_data.actors[actor.alias] = actor
     logging.debug("Successfully added actor: %s to Scenario Data", actor.alias)
 
@@ -140,7 +157,8 @@ def update_actor(context: Context, alias: str, **kwargs):
             logging.debug("Set '%s'='%s' for %s", arg, kwargs[arg], alias)
             actors[alias] = actors[alias]._replace(**{arg: kwargs[arg]})
     logging.debug(
-        "Successfully updated %s's details: %s", alias, actors[alias])
+        "Successfully updated %s's details: %s", alias, actors[alias]
+    )
 
 
 @retry(stop_max_attempt_number=3)
@@ -152,7 +170,8 @@ def take_screenshot(driver: WebDriver, page_name: str):
     """
     if not isinstance(driver, WebDriver):
         logging.debug(
-            "Taking screenshots in non-browser executor is not possible")
+            "Taking screenshots in non-browser executor is not possible"
+        )
         return
     if TAKE_SCREENSHOTS:
         session_id = driver.session_id
@@ -160,17 +179,19 @@ def take_screenshot(driver: WebDriver, page_name: str):
         version = driver.capabilities.get("version", "unknown_version")
         platform = driver.capabilities.get("platform", "unknown_platform")
         stamp = datetime.isoformat(datetime.utcnow())
-        filename = ("{}-{}-{}-{}-{}-{}.png"
-                    .format(stamp, page_name, browser, version, platform,
-                            session_id))
+        filename = "{}-{}-{}-{}-{}-{}.png".format(
+            stamp, page_name, browser, version, platform, session_id
+        )
         file_path = abspath(join("screenshots", filename))
         driver.save_screenshot(file_path)
         logging.debug(
-            "Screenshot of %s page saved in: %s", page_name, filename)
+            "Screenshot of %s page saved in: %s", page_name, filename
+        )
     else:
         logging.debug(
             "Taking screenshots is disabled. In order to turn it on please set"
-            " n environment variable TAKE_SCREENSHOTS=true")
+            " n environment variable TAKE_SCREENSHOTS=true"
+        )
 
 
 @contextmanager
@@ -216,8 +237,9 @@ def selenium_action(driver: webdriver, message: str, *args):
         version = driver.capabilities.get("version", "unknown version")
         platform = driver.capabilities.get("platform", "unknown platform")
         session_id = driver.session_id
-        info = ("[{} v:{} os:{} session_id:{}]"
-                .format(browser, version, platform, session_id))
+        info = "[{} v:{} os:{} session_id:{}]".format(
+            browser, version, platform, session_id
+        )
         if args:
             message = message % args
         print("{} - {}".format(info, message))
@@ -229,8 +251,8 @@ def selenium_action(driver: webdriver, message: str, *args):
 
 
 def get_file_log_handler(
-        log_formatter, *, log_level=logging.DEBUG, task_id: str = None) \
-        -> logging.FileHandler:
+    log_formatter, *, log_level=logging.DEBUG, task_id: str = None
+) -> logging.FileHandler:
     """Configure the console logger.
 
     Will use DEBUG logging level by default.
@@ -254,8 +276,10 @@ def get_file_log_handler(
 def init_loggers(context: Context, *, task_id: str = None):
     """Will initialize console and file loggers."""
     # configure the formatter
-    fmt = ('%(asctime)s-%(filename)s[line:%(lineno)d]-%(name)s-%(levelname)s: '
-           '%(message)s')
+    fmt = (
+        "%(asctime)s-%(filename)s[line:%(lineno)d]-%(name)s-%(levelname)s: "
+        "%(message)s"
+    )
     log_formatter = logging.Formatter(fmt)
     log_file_handler = get_file_log_handler(log_formatter, task_id=task_id)
     # Add log file handler to Behave's logging
@@ -359,8 +383,10 @@ def check_if_element_is_not_present(
     except NoSuchElementException:
         found = False
     with assertion_msg(
-            "Expected not to find %s element identified by '%s'", element_name,
-            by_id or by_css):
+        "Expected not to find %s element identified by '%s'",
+        element_name,
+        by_id or by_css,
+    ):
         assert not found
 
 
@@ -371,13 +397,19 @@ def check_if_element_is_visible(web_element: WebElement, element_name: str):
     :param element_name: human friendly name of the element used in log msg
     """
     with assertion_msg(
-            "Expected to see '%s' element but it's not visible", element_name):
+        "Expected to see '%s' element but it's not visible", element_name
+    ):
         assert web_element.is_displayed()
 
 
 def check_if_element_is_not_visible(
-        driver: webdriver, *, by_css: str = None,
-        by_id: str = None, element_name: str = "", wait_for_it: bool = True):
+    driver: webdriver,
+    *,
+    by_css: str = None,
+    by_id: str = None,
+    element_name: str = "",
+    wait_for_it: bool = True
+):
     """Find element by CSS selector or it's ID.
 
     :param driver: Selenium driver
@@ -390,11 +422,17 @@ def check_if_element_is_not_visible(
     assert by_id or by_css, "Provide ID or CSS selector"
     try:
         element = find_element(
-            driver, by_css=by_css, by_id=by_id, element_name=element_name,
-            wait_for_it=wait_for_it)
+            driver,
+            by_css=by_css,
+            by_id=by_id,
+            element_name=element_name,
+            wait_for_it=wait_for_it,
+        )
         with assertion_msg(
-                "Expected not to see '%s' element identified by '%s'",
-                element_name, by_id or by_css):
+            "Expected not to see '%s' element identified by '%s'",
+            element_name,
+            by_id or by_css,
+        ):
             assert not element.is_displayed()
     except NoSuchElementException:
         pass
@@ -477,7 +515,8 @@ def find_elements(
     """
     assert by_id or by_css, "Provide ID or CSS selector"
     with selenium_action(
-            driver, "Couldn't find elements using '%s'", by_css or by_id):
+        driver, "Couldn't find elements using '%s'", by_css or by_id
+    ):
         if by_css:
             elements = driver.find_elements_by_css_selector(by_css)
         else:
@@ -507,8 +546,11 @@ def check_hash_of_remote_file(expected_hash, file_url):
     response = requests.get(file_url)
     file_hash = hashlib.md5(response.content).hexdigest()
     with assertion_msg(
-            "Expected hash of file downloaded from %s to be %s but got %s",
-            file_url, expected_hash, file_hash):
+        "Expected hash of file downloaded from %s to be %s but got %s",
+        file_url,
+        expected_hash,
+        file_hash,
+    ):
         assert expected_hash == file_hash
 
 
@@ -518,7 +560,7 @@ def wait_for_page_load(driver: webdriver, timeout: int = 30):
     src:
     http://www.obeythetestinggoat.com/how-to-get-selenium-to-wait-for-page-load-after-a-click.html
     """
-    old_page = driver.find_element_by_tag_name('html')
+    old_page = driver.find_element_by_tag_name("html")
     yield
     logging.debug("WAITING FOR STALENESS OF OLD PAGE %s", driver.current_url)
     WebDriverWait(driver, timeout).until(staleness_of(old_page))
@@ -531,14 +573,15 @@ class wait_for_page_load_after_action(object):
     http://www.obeythetestinggoat.com/how-to-get-selenium-to-wait-for-page-load-after-a-click.html
     https://www.develves.net/blogs/asd/2017-03-04-selenium-waiting-for-page-load/
     """
+
     def __init__(self, driver: webdriver):
         self.driver = driver
 
     def __enter__(self):
-        self.old_page = self.driver.find_element_by_tag_name('html')
+        self.old_page = self.driver.find_element_by_tag_name("html")
 
     def page_has_loaded(self):
-        new_page = self.driver.find_element_by_tag_name('html')
+        new_page = self.driver.find_element_by_tag_name("html")
         return new_page.id != self.old_page.id
 
     def __exit__(self, *_):
@@ -546,6 +589,7 @@ class wait_for_page_load_after_action(object):
 
     def wait_for(self, condition_function):
         import time
+
         start_time = time.time()
         while time.time() < start_time + 3:
             if condition_function():
@@ -553,5 +597,5 @@ class wait_for_page_load_after_action(object):
             else:
                 time.sleep(0.1)
         raise Exception(
-            'Timeout waiting for {}'.format(condition_function.__name__)
+            "Timeout waiting for {}".format(condition_function.__name__)
         )
