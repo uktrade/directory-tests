@@ -16,7 +16,7 @@ from tests.settings import NO_OF_EMPLOYEES
 
 URL = get_absolute_url("ui-buyer:company-edit-key-facts")
 EXPECTED_STRINGS = [
-    "Create your trade profile",
+    "Create your business profile",
     ("Enter your company name and contact details, then select the industry or"
      " industries you work in."),
     "Your company details", "Company name:",
