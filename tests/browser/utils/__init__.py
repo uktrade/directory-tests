@@ -265,29 +265,34 @@ def init_loggers(context: Context, *, task_id: str = None):
 
 def flag_browserstack_session_as_failed(session_id: str, reason: str):
     url = BROWSERSTACK_SESSIONS_URL.format(session_id)
-    headers = {
-        "Content-Type": "application/json"
-    }
-    data = {
-        "status": "failed",
-        "reason": reason
-    }
+    headers = {"Content-Type": "application/json"}
+    data = {"status": "failed", "reason": reason}
     auth = (BROWSERSTACK_USER, BROWSERSTACK_PASS)
     response = requests.put(
-        url=url, headers=headers, data=json.dumps(data), auth=auth)
+        url=url, headers=headers, data=json.dumps(data), auth=auth
+    )
     if not response.ok:
         logging.error(
             "Failed to flagged BrowserStack session: %s as failed. "
-            "BrowserStack responded with %d: %s", session_id,
-            response.status_code, response.content)
+            "BrowserStack responded with %d: %s",
+            session_id,
+            response.status_code,
+            response.content,
+        )
     else:
         logging.error("Flagged BrowserStack session: %s as failed", session_id)
 
 
 def wait_for_visibility(
-        driver: webdriver, *, by_css: str = None,
-        by_id: str = None, by_link_text: str = None,
-        by_partial_link_text: str = None, time_to_wait: int = 5):
+    driver: webdriver,
+    *,
+    by_css: str = None,
+    by_id: str = None,
+    by_link_text: str = None,
+    by_partial_link_text: str = None,
+    by_xpath: str = None,
+    time_to_wait: int = 5
+):
     """Wait until element is visible.
 
     :param driver: Selenium driver
@@ -297,8 +302,9 @@ def wait_for_visibility(
     :param by_partial_link_text: Part of the text of sought link
     :param time_to_wait: maximum number of seconds to wait
     """
-    assert by_id or by_css or by_link_text, (
-        "Provide element ID, CSS selector or Link Text")
+    assert (
+        by_id or by_css or by_link_text or by_xpath
+    ), "Provide element ID, CSS selector, Link Text or XPath"
     if by_css:
         by_locator = (By.CSS_SELECTOR, by_css)
     elif by_id:
@@ -307,18 +313,34 @@ def wait_for_visibility(
         by_locator = (By.LINK_TEXT, by_link_text)
     elif by_partial_link_text:
         by_locator = (By.PARTIAL_LINK_TEXT, by_partial_link_text)
+    elif by_xpath:
+        by_locator = (By.XPATH, by_xpath)
     else:
         raise AttributeError("Please provide valid element locator")
     with selenium_action(
-            driver, "Element identified by '{}' was not visible after waiting "
-                    "for {} seconds".format(by_css or by_id, time_to_wait)):
+        driver,
+        "Element identified by '{}' was not visible after waiting "
+        "for {} seconds".format(
+            by_css
+            or by_id
+            or by_link_text
+            or by_partial_link_text
+            or by_xpath,
+            time_to_wait,
+        ),
+    ):
         WebDriverWait(driver, time_to_wait).until(
-            expected_conditions.visibility_of_element_located(by_locator))
+            expected_conditions.visibility_of_element_located(by_locator)
+        )
 
 
 def check_if_element_is_not_present(
-        driver: webdriver, *, by_css: str = None,
-        by_id: str = None, element_name: str = ""):
+    driver: webdriver,
+    *,
+    by_css: str = None,
+    by_id: str = None,
+    element_name: str = ""
+):
     """Find element by CSS selector or it's ID.
 
     :param driver: Selenium driver
@@ -384,10 +406,16 @@ def check_if_only_one_selector_is_set(*args):
 
 
 def find_element(
-        driver: webdriver, *, by_css: str = None,
-        by_id: str = None, by_link_text: str = None,
-        by_partial_link_text: str = None, element_name: str = "",
-        wait_for_it: bool = True) -> WebElement:
+    driver: webdriver,
+    *,
+    by_css: str = None,
+    by_id: str = None,
+    by_link_text: str = None,
+    by_partial_link_text: str = None,
+    by_xpath: str = None,
+    element_name: str = "",
+    wait_for_it: bool = True
+) -> WebElement:
     """Find element by CSS selector or it's ID.
 
     :param driver: Selenium driver
@@ -395,16 +423,22 @@ def find_element(
     :param by_id: ID of the element to wait for
     :param by_link_text: Text of sought link
     :param by_partial_link_text: Partial Text of sought link
+    :param by_xpath: XPath selector
     :param element_name: (optional) human friend element name
     :param wait_for_it: (optional) flag to decide whether you want to wait for
                         the visibility of the element. Defaults to True`
     :return: found WebElement
     """
     check_if_only_one_selector_is_set(
-        by_css, by_id, by_link_text, by_partial_link_text)
+        by_css, by_id, by_link_text, by_partial_link_text, by_xpath
+    )
     with selenium_action(
-            driver, "Couldn't find element called '%s' using selector '%s' on"
-                    " %s", element_name, by_css or by_id, driver.current_url):
+        driver,
+        "Couldn't find element called '%s' using selector '%s' on" " %s",
+        element_name,
+        by_css or by_id,
+        driver.current_url,
+    ):
         if by_css:
             element = driver.find_element_by_css_selector(by_css)
         elif by_id:
@@ -413,19 +447,27 @@ def find_element(
             element = driver.find_element_by_link_text(by_link_text)
         elif by_partial_link_text:
             element = driver.find_element_by_partial_link_text(
-                by_partial_link_text)
+                by_partial_link_text
+            )
+        elif by_xpath:
+            element = driver.find_element_by_xpath(by_xpath)
         else:
             raise AttributeError("Please provide valid element locator")
     if wait_for_it:
         wait_for_visibility(
-            driver, by_css=by_css, by_id=by_id, by_link_text=by_link_text,
-            by_partial_link_text=by_partial_link_text)
+            driver,
+            by_css=by_css,
+            by_id=by_id,
+            by_link_text=by_link_text,
+            by_xpath=by_xpath,
+            by_partial_link_text=by_partial_link_text,
+        )
     return element
 
 
 def find_elements(
-        driver: webdriver, *, by_css: str = None,
-        by_id: str = None) -> list:
+    driver: webdriver, *, by_css: str = None, by_id: str = None
+) -> list:
     """Find element by CSS selector or it's ID.
 
     :param driver: Selenium driver
