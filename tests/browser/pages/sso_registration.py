@@ -25,7 +25,7 @@ EMAIL_INPUT = "#id_email"
 EMAIL_CONFIRMATION_INPUT = "#id_email2"
 PASSWORD_INPUT = "#id_password1"
 PASSWORD_CONFIRMATION_INPUT = "#id_password2"
-T_AND_C_BUTTON = "div.form-field > input"
+T_AND_C_BUTTON = "#id_terms_agreed-label"
 SIGN_UP_BUTTON = "#signup_form > button"
 EXPECTED_ELEMENTS = {
     "title": "#profile-register-intro > h1",
