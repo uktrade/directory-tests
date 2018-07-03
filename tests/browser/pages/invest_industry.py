@@ -126,6 +126,7 @@ def visit(
             .replace("invest - ", "")
             .replace(" industry", "")
             .replace(" ", "_")
+            .replace(",", "")
             .replace("-", "_")
             .upper()
         )
