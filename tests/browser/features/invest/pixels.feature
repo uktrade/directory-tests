@@ -2,7 +2,7 @@
 Feature: Pixels
 
   Scenario Outline: Pixels should be present on "<selected>" page
-    Given "Robert" visits the "<selected>" page
+    Given "Robert" visits the "Invest - <selected>" page
 
     Then following web statistics analysis or tracking elements should be present
       | Google Tag Manager             |
@@ -14,51 +14,51 @@ Feature: Pixels
       | Facebook tracking pixel |
 
     Examples: Various pages
-      | selected            |
-      | Invest - Home       |
-      | Invest - Industries |
-      | Invest - Guide      |
-      | Invest - Contact Us |
-#      | Invest - Feedback   |
+      | selected   |
+      | Home       |
+      | Industries |
+      | Guide      |
+      | Contact Us |
+#      | Feedback   |
 
     Examples: Industry pages
-      | selected                                              |
-      | Invest - Advanced manufacturing Industry              |
-      | Invest - Aerospace Industry                           |
-      | Invest - Agri-tech Industry                           |
-      | Invest - Asset management Industry                    |
-      | Invest - Automotive Industry                          |
-      | Invest - Automotive research and development Industry |
-      | Invest - Automotive supply chain Industry             |
-      | Invest - Capital Investment Industry                  |
-      | Invest - Chemicals Industry                           |
-      | Invest - Creative content and production Industry     |
-      | Invest - Creative industries Industry                 |
-      | Invest - Data Analytics Industry                      |
-      | Invest - Digital media Industry                       |
-      | Invest - Electrical networks Industry                 |
-      | Invest - Energy Industry                              |
-      | Invest - Energy from waste Industry                   |
-      | Invest - Financial services Industry                  |
-      | Invest - Financial technology Industry                |
-      | Invest - Food and drink Industry                      |
-      | Invest - Free-from foods Industry                     |
-      | Invest - Health and life sciences Industry            |
-      | Invest - Meat, poultry and dairy Industry             |
-      | Invest - Medical technology Industry                  |
-      | Invest - Motorsport Industry                          |
-      | Invest - Nuclear energy Industry                      |
-      | Invest - Offshore wind energy Industry                |
-      | Invest - Oil and gas Industry                         |
-      | Invest - Pharmaceutical manufacturing Industry        |
-      | Invest - Retail Industry                              |
-      | Invest - Technology Industry                          |
+      | selected                                     |
+      | Advanced manufacturing Industry              |
+      | Aerospace Industry                           |
+      | Agri-tech Industry                           |
+      | Asset management Industry                    |
+      | Automotive Industry                          |
+      | Automotive research and development Industry |
+      | Automotive supply chain Industry             |
+      | Capital Investment Industry                  |
+      | Chemicals Industry                           |
+      | Creative content and production Industry     |
+      | Creative industries Industry                 |
+      | Data Analytics Industry                      |
+      | Digital media Industry                       |
+      | Electrical networks Industry                 |
+      | Energy Industry                              |
+      | Energy from waste Industry                   |
+      | Financial services Industry                  |
+      | Financial technology Industry                |
+      | Food and drink Industry                      |
+      | Free-from foods Industry                     |
+      | Health and life sciences Industry            |
+      | Meat, poultry and dairy Industry             |
+      | Medical technology Industry                  |
+      | Motorsport Industry                          |
+      | Nuclear energy Industry                      |
+      | Offshore wind energy Industry                |
+      | Oil and gas Industry                         |
+      | Pharmaceutical manufacturing Industry        |
+      | Retail Industry                              |
+      | Technology Industry                          |
 
     Examples: UK Setup Guides
-      | selected                                                         |
-      | Invest - Apply for a UK visa                                     |
-      | Invest - Establish a base for business in the UK                 |
-      | Invest - Hire skilled workers for your UK operations             |
-      | Invest - Open a UK business bank account                         |
-      | Invest - Set up a company in the UK                              |
-#      | Invest - Understand the UK's tax, incentives and legal framework |
+      | selected                                                      |
+      | Apply for a UK visa guide                                     |
+      | Establish a base for business in the UK guide                 |
+      | Hire skilled workers for your UK operations guide             |
+      | Open a UK business bank account guide                         |
+      | Set up a company in the UK guide                              |
+#      | Understand the UK's tax, incentives and legal framework guide |
