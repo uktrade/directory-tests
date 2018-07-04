@@ -730,7 +730,7 @@ def fas_search_results_filtered_by_industries(
 def invest_should_see_topic_contents(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     page = get_page_object(actor.visited_page)
-    assert hasattr(page, "open_link")
+    assert hasattr(page, "should_see_topic")
     for topic in actor.visited_articles:
         page.should_see_topic(context.driver, topic)
         logging.debug(
