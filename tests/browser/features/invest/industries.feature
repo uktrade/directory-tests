@@ -16,7 +16,7 @@ Feature: Industries page
   Scenario Outline: Overseas businesses should be able to learn more about "<selected>" UK Industry from Industries page
     Given "Robert" visits the "Invest - Industries" page
 
-    When "Robert" decides to find out out more about "<selected>" industry
+    When "Robert" decides to find out out more about "<selected>"
 
     Then "Robert" should be on the "Invest - Industry" page
     And "Robert" should see content specific to "<selected>" industry page

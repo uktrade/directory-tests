@@ -35,7 +35,7 @@ Feature: Invest home page
   Scenario Outline: Overseas businesses should be able to learn more about "<selected>" UK Industry
     Given "Robert" visits the "Invest - home" page
 
-    When "Robert" decides to find out out more about "Invest - <selected>" industry
+    When "Robert" decides to find out out more about "Invest - <selected> industry"
 
     Then "Robert" should be on the "Invest - Industry" page
     And "Robert" should see content specific to "Invest - <selected> industry" page

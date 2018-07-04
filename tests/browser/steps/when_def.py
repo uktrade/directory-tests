@@ -386,7 +386,7 @@ def fas_when_actor_searches_for_companies(
         context, actor_alias, keyword=keyword)
 
 
-@when('"{actor_alias}" decides to find out out more about "{industry_name}" industry')
+@when('"{actor_alias}" decides to find out out more about "{industry_name}"')
 def fas_when_actor_opens_industry_page(
         context: Context, actor_alias: str, industry_name: str):
     generic_open_industry_page(context, actor_alias, industry_name)
