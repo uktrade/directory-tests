@@ -24,16 +24,16 @@ Feature: UK Setup Guide
 
     Examples: UK Setup Guides
       | selected                                                         |
-      | Invest - Apply for a UK visa                                     |
-      | Invest - Establish a base for business in the UK                 |
-      | Invest - Hire skilled workers for your UK operations             |
-      | Invest - Open a UK business bank account                         |
-      | Invest - Set up a company in the UK                              |
-      | Invest - Understand the UK's tax, incentives and legal framework |
+      | Apply for a UK visa                                     |
+      | Establish a base for business in the UK                 |
+      | Hire skilled workers for your UK operations             |
+      | Open a UK business bank account                         |
+      | Set up a company in the UK                              |
+      | Understand the UK's tax, incentives and legal framework |
 
 
   Scenario Outline: Visitors should be able to see all expected sections on "<selected>" guide page
-    Given "Robert" visits the "<selected>" page
+    Given "Robert" visits the "Invest - <selected> guide" page
 
     Then "Robert" should see expected page sections
       | Header       |
@@ -44,9 +44,9 @@ Feature: UK Setup Guide
 
     Examples: UK Setup Guides
       | selected                                                         |
-      | Invest - Apply for a UK visa                                     |
-      | Invest - Establish a base for business in the UK                 |
-      | Invest - Hire skilled workers for your UK operations             |
-      | Invest - Open a UK business bank account                         |
-      | Invest - Set up a company in the UK                              |
-      | Invest - Understand the UK's tax, incentives and legal framework |
+      | Apply for a UK visa                                     |
+      | Establish a base for business in the UK                 |
+      | Hire skilled workers for your UK operations             |
+      | Open a UK business bank account                         |
+      | Set up a company in the UK                              |
+      | Understand the UK's tax, incentives and legal framework |

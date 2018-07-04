@@ -253,48 +253,48 @@ INVEST_PAGE_REGISTRY = {
         "url": invest_industries.URL,
         "po": invest_industries,
     },
-    "invest - automotive": {
+    "invest - automotive industry": {
         "url": invest_industry.URLS.AUTOMOTIVE,
         "po": invest_industry,
     },
-    "invest - capital investment": {
+    "invest - capital investment industry": {
         "url": invest_industry.URLS.CAPITAL_INVESTMENT,
         "po": invest_industry,
     },
-    "invest - creative industries": {
+    "invest - creative industries industry": {
         "url": invest_industry.URLS.CREATIVE_INDUSTRIES,
         "po": invest_industry,
     },
-    "invest - financial services": {
+    "invest - financial services industry": {
         "url": invest_industry.URLS.FINANCIAL_SERVICES,
         "po": invest_industry,
     },
-    "invest - health and life sciences": {
+    "invest - health and life sciences industry": {
         "url": invest_industry.URLS.HEALTH_AND_LIFE_SCIENCES,
         "po": invest_industry,
     },
-    "invest - technology": {
+    "invest - technology industry": {
         "url": invest_industry.URLS.TECHNOLOGY,
         "po": invest_industry,
     },
     "invest - guide": {"url": invest_guide.URL, "po": invest_guide},
-    "invest - apply for a uk visa": {
+    "invest - apply for a uk visa guide": {
         "url": invest_guide.URLS.APPLY_FOR_A_UK_VISA,
         "po": invest_guide,
     },
-    "invest - establish a base for business in the uk": {
+    "invest - establish a base for business in the uk guide": {
         "url": invest_guide.URLS.ESTABLISHED_A_BASE_FOR_BUSINESS_IN_THE_UK,
         "po": invest_guide,
     },
-    "invest - hire skilled workers for your uk operations": {
+    "invest - hire skilled workers for your uk operations guide": {
         "url": invest_guide.URLS.HIRE_SKILLED_WORKERS_FOR_YOUR_UK_OPERATIONS,
         "po": invest_guide,
     },
-    "invest - open a uk business bank account": {
+    "invest - open a uk business bank account guide": {
         "url": invest_guide.URLS.OPEN_A_BUSINESS_BANK_ACCOUNT,
         "po": invest_guide,
     },
-    "invest - set up a company in the uk": {
+    "invest - set up a company in the uk guide": {
         "url": invest_guide.URLS.SET_UP_A_COMPANY_IN_THE_UK,
         "po": invest_guide,
     },
