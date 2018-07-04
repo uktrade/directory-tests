@@ -14,7 +14,7 @@ from pages import (
     Executor,
     Selector,
     check_for_sections,
-    visit_url
+    visit_url,
 )
 from pages.common_actions import check_title, check_url
 from settings import INVEST_UI_URL
@@ -113,9 +113,19 @@ def open_link(driver: WebDriver, name: str):
     driver.find_element_by_link_text(name).click()
 
 
-def should_see_content_for_guide(driver: WebDriver, guide_name: str):
+def clean_name(name: str) -> str:
+    return (
+        name.replace("Invest - ", "")
+        .replace("industry", "")
+        .replace("guide", "")
+        .strip()
+    )
+
+
+def should_see_content_for(driver: WebDriver, guide_name: str):
     source = driver.page_source
-    guide_name = guide_name.replace("Invest - ", "")
+    guide_name = clean_name(guide_name)
+    logging.debug("Looking for: {}".format(guide_name))
     with assertion_msg(
         "Expected to find term '%s' in the source of the page %s",
         guide_name,

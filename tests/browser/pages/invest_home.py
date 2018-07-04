@@ -13,7 +13,7 @@ from pages import (
     Executor,
     Selector,
     check_for_sections,
-    visit_url
+    visit_url,
 )
 from pages.common_actions import check_title, find_and_click_on_page_element
 from settings import INVEST_UI_URL
@@ -219,8 +219,18 @@ def should_see_topic(driver: WebDriver, name: str):
         assert content.is_displayed()
 
 
+def clean_name(name: str) -> str:
+    return (
+        name.replace("Invest - ", "")
+        .replace("industry", "")
+        .replace("guide", "")
+        .strip()
+    )
+
+
 def open_industry(driver: WebDriver, industry_name: str):
-    industry_name = industry_name.replace("Invest - ", "")
+    industry_name = clean_name(industry_name)
+    logging.debug("Looking for: {}".format(industry_name))
     industry_link = find_element(
         driver,
         by_partial_link_text=industry_name,
@@ -232,7 +242,8 @@ def open_industry(driver: WebDriver, industry_name: str):
 
 
 def open_guide(driver: WebDriver, guide_name: str):
-    guide_name = guide_name.replace("Invest - ", "")
+    guide_name = clean_name(guide_name)
+    logging.debug("Looking for: {}".format(guide_name))
     guide = find_element(
         driver,
         by_partial_link_text=guide_name,

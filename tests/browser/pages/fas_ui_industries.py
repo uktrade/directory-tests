@@ -69,7 +69,13 @@ def click_on_page_element(driver: webdriver, element_name: str):
     take_screenshot(driver, NAME + " after clicking on " + element_name)
 
 
+def clean_name(name: str) -> str:
+    return name.replace("FAS", "").replace("industry", "").strip()
+
+
 def open_industry(driver: webdriver, industry_name: str):
+    industry_name = clean_name(industry_name)
+    logging.debug("Looking for: {}".format(industry_name))
     industry_link = find_element(
         driver,
         by_link_text=industry_name,
