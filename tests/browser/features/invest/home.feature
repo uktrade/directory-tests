@@ -23,6 +23,7 @@ Feature: Invest home page
     Given "Robert" visits the "Invest - home" page
 
     When "Robert" decides to read more on following topics
+      | topics                            |
       | Bring your business to the UK     |
       | Access a highly skilled workforce |
       | Benefit from low business costs   |
