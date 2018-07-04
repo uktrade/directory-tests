@@ -15,10 +15,9 @@ EXPECTED_STRINGS = [
     "Company number", "Registered address",
     ("I confirm that I am authorised to sign this company up to great.gov.uk "
      "services"), "Creating an account means you can",
-    ("create a free business profile to promote your products and services to "
-     "overseas buyers"),
+    "create a free business profile visible to overseas buyers",
     ("apply for opportunities sourced by overseas trade professionals or "
-     "provided by a third party"), "Register"
+     "provided by a third party"), "Create account"
 ]
 
 
