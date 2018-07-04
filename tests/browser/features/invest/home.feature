@@ -65,7 +65,7 @@ Feature: Invest home page
   Scenario Outline: Overseas businesses should be able to learn how to grow their businesses in the UK by reading "<selected>" guide
     Given "Robert" visits the "Invest - home" page
 
-    When "Robert" decides to read "Invest - <selected>" guide
+    When "Robert" decides to read "Invest - <selected> guide" guide
 
     Then "Robert" should be on the "Invest - Guide" page
     And "Robert" should see content specific to "Invest - <selected> guide" page
