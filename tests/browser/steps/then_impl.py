@@ -11,7 +11,6 @@ from pages import (
     article_common,
     case_studies_common,
     export_readiness_common,
-    fas_ui_industry,
     fas_ui_search_results,
     get_finance,
     guidance_common,
