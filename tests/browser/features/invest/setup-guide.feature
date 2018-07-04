@@ -20,7 +20,7 @@ Feature: UK Setup Guide
     When "Robert" decides to find out out more about "<selected>" guide
 
     Then "Robert" should be on the "Invest UK Setup Guide" page
-    And "Robert" should see content specific to "<selected>" guide page
+    And "Robert" should see content specific to "Invest - <selected> guide" page
 
     Examples: UK Setup Guides
       | selected                                                         |

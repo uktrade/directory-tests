@@ -26,7 +26,7 @@ Feature: FAS Industries page
     When "Robert" decides to find out out more about "<specific>" industry
 
     Then "Robert" should be on the "FAS Industry" page
-    And "Robert" should see content specific to "<specific>" industry page
+    And "Robert" should see content specific to "FAS <specific> industry" page
 
     Examples: promoted industries
       | specific          |

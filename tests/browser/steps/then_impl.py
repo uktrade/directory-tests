@@ -714,22 +714,6 @@ def should_see_page_in_preferred_language(
     )
 
 
-def generic_should_see_industry_page(
-    context: Context, actor_alias: str, industry_name: str
-):
-    actor = get_actor(context, actor_alias)
-    visited_page = actor.visited_page
-    page = get_page_object(visited_page)
-    assert hasattr(page, "should_see_content_for_industry")
-    page.should_see_content_for_industry(context.driver, industry_name)
-    logging.debug(
-        "%s found content specific to %s industry on %s",
-        actor_alias,
-        industry_name,
-        context.driver.current_url,
-    )
-
-
 def fas_search_results_filtered_by_industries(
     context: Context, actor_alias: str, industry_names: List[str]
 ):
@@ -758,17 +742,17 @@ def invest_should_see_topic_contents(context: Context, actor_alias: str):
         )
 
 
-def generic_should_see_guide_page(
-    context: Context, actor_alias: str, guide_name: str
+def generic_should_see_expected_page_content(
+    context: Context, actor_alias: str, expected_page_name: str
 ):
     actor = get_actor(context, actor_alias)
     visited_page = actor.visited_page
     page = get_page_object(visited_page)
-    assert hasattr(page, "should_see_content_for_guide")
-    page.should_see_content_for_guide(context.driver, guide_name)
+    assert hasattr(page, "should_see_content_for")
+    page.should_see_content_for(context.driver, expected_page_name)
     logging.debug(
-        "%s found content specific to %s guide on %s",
+        "%s found content specific to %s on %s",
         actor_alias,
-        guide_name,
+        expected_page_name,
         context.driver.current_url,
     )

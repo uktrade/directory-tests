@@ -38,7 +38,7 @@ Feature: Invest home page
     When "Robert" decides to find out out more about "Invest - <selected>" industry
 
     Then "Robert" should be on the "Invest - Industry" page
-    And "Robert" should see content specific to "Invest - <selected>" industry page
+    And "Robert" should see content specific to "Invest - <selected> industry" page
 
     Examples: promoted industries
       | selected                 |
@@ -68,7 +68,7 @@ Feature: Invest home page
     When "Robert" decides to read "Invest - <selected>" guide
 
     Then "Robert" should be on the "Invest - Guide" page
-    And "Robert" should see content specific to "Invest - <selected>" guide page
+    And "Robert" should see content specific to "Invest - <selected> guide" page
 
     Examples: UK Setup Guides
       | selected                                    |
