@@ -1,8 +1,9 @@
 {{
   "hub_url": {HUB_URL},
   "capabilities": {{
-    "browserstack.debug": true,
+    "browserstack.debug": false,
     "browserstack.selenium_version": "3.11.0",
+    "browserstack.networkLogs": false,
     "build": {BUILD_ID},
     "project": "ExRed",
     "resolution": "1600x1200"
