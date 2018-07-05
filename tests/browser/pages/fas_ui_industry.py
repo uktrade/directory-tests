@@ -123,7 +123,13 @@ def should_see_section(driver: webdriver, name: str):
     check_for_section(driver, SECTIONS, sought_section=name)
 
 
-def should_see_content_for_industry(driver: webdriver, industry_name: str):
+def clean_name(name: str) -> str:
+    return name.replace("FAS", "").replace("industry", "").strip()
+
+
+def should_see_content_for(driver: webdriver, industry_name: str):
+    industry_name = clean_name(industry_name)
+    logging.debug("Looking for: {}".format(industry_name))
     industry_breadcrumb = find_element(
         driver,
         by_css=INDUSTRY_BREADCRUMB,
@@ -138,14 +144,14 @@ def should_see_content_for_industry(driver: webdriver, industry_name: str):
         current_industry,
         driver.current_url,
     ):
-        assert industry_name.lower() == current_industry.lower()
+        assert industry_name == current_industry
     source = driver.page_source
     with assertion_msg(
         "Expected to find term '%s' in the source of the page %s",
         industry_name,
         driver.current_url,
     ):
-        assert industry_name.lower() in source.lower()
+        assert industry_name in source
 
 
 def click_on_page_element(driver: webdriver, element_name: str):

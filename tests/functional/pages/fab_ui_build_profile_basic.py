@@ -9,10 +9,9 @@ from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("ui-buyer:company-edit")
 EXPECTED_STRINGS = [
-    "Create your trade profile", "About your company",
-    "Industry and exporting",
+    "Create your business profile",
     ("Enter your company name and contact details, then select the industry or"
-     " industries you work in."),
+     " industries you work in"),
     ("Add extra information and your company logo to complete your profile. "
      "You can come back and edit your profile at any time."),
     "Your company details",

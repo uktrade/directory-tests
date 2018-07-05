@@ -4,6 +4,7 @@
 #
 #    pip-compile --output-file requirements_browser.txt requirements_browser.in
 #
+beautifulsoup4==4.6.0
 behave==1.2.6
 certifi==2018.4.16        # via requests
 chardet==3.0.4            # via requests

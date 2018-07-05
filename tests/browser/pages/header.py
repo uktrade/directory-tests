@@ -52,7 +52,7 @@ SECTIONS = {
     "services": {
         "menu": "#header-services-links",
         "find a buyer": "#header-services-find-a-buyer",
-        "selling online overseas": "#header-services-selling-online-overseas",
+        "selling online overseas": "#header-services-",
         "export opportunities": "#header-services-export-opportunities",
         "get finance": "#header-services-get-finance",
         "events": "#header-services-events",

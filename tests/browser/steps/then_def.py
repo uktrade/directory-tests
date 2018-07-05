@@ -26,7 +26,6 @@ from steps.then_impl import (
     export_readiness_expected_page_elements_should_be_visible,
     export_readiness_should_see_articles,
     fas_search_results_filtered_by_industries,
-    fas_should_see_industry_page,
     guidance_check_if_link_to_next_category_is_displayed,
     guidance_expected_page_elements_should_be_visible,
     guidance_ribbon_should_be_visible,
@@ -36,6 +35,7 @@ from steps.then_impl import (
     guidance_tile_should_be_highlighted,
     header_check_dit_logo,
     header_check_favicon,
+    invest_should_see_topic_contents,
     language_selector_keyboard_should_be_trapped,
     language_selector_should_not_see_it,
     language_selector_should_see_it,
@@ -55,7 +55,8 @@ from steps.then_impl import (
     should_see_sections,
     should_see_share_widget,
     triage_should_be_classified_as,
-    triage_should_see_change_your_answers_link
+    triage_should_see_change_your_answers_link,
+    generic_should_see_expected_page_content
 )
 from steps.when_impl import (
     triage_answer_questions_again,
@@ -162,6 +163,7 @@ def then_should_see_sections(context, actor_alias, sections, page_name):
         context, actor_alias, page_name, sections_list=sections.split(", "))
 
 
+@then('"{actor_alias}" should see on "{page_name}" page how DIT can help foreign companies')
 @then('"{actor_alias}" should see expected sections on "{page_name}" page')
 def then_should_see_sections(context, actor_alias, page_name):
     should_see_sections(
@@ -350,10 +352,10 @@ def then_actor_should_see_correct_favicon(context, actor_alias):
     header_check_favicon(context, actor_alias)
 
 
-@then('"{actor_alias}" should see content specific to "{industry_name}" industry page')
-def fas_then_actor_should_see_industry_page(
+@then('"{actor_alias}" should see content specific to "{industry_name}" page')
+def fas_then_actor_should_see_expected_content(
         context: Context, actor_alias: str, industry_name: str):
-    fas_should_see_industry_page(context, actor_alias, industry_name)
+    generic_should_see_expected_page_content(context, actor_alias, industry_name)
 
 
 @then('"{actor_alias}" should see search results filtered by "{industry_names}" industries')
@@ -362,3 +364,8 @@ def fas_should_see_filtered_search_results(
         context: Context, actor_alias: str, industry_names: str):
     fas_search_results_filtered_by_industries(
         context, actor_alias, industry_names.split(", "))
+
+
+@then('"{actor_alias}" should see brief explanation why the UK is the best place for his business')
+def then_actor_should_see_topic_content(context: Context, actor_alias: str):
+    invest_should_see_topic_contents(context, actor_alias)

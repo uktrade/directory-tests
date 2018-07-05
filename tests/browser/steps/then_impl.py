@@ -11,7 +11,6 @@ from pages import (
     article_common,
     case_studies_common,
     export_readiness_common,
-    fas_ui_industry,
     fas_ui_search_results,
     get_finance,
     guidance_common,
@@ -261,6 +260,10 @@ def should_see_sections(
         context.driver.current_url,
     )
     page = get_page_object(page_name)
+    if hasattr(page, "should_see_sections"):
+        page.should_see_sections(context.driver, sections)
+        return
+
     assert hasattr(page, "should_see_section")
     for section in sections:
         page.should_see_section(context.driver, section)
@@ -710,20 +713,6 @@ def should_see_page_in_preferred_language(
     )
 
 
-def fas_should_see_industry_page(
-    context: Context, actor_alias: str, industry_name: str
-):
-    fas_ui_industry.should_see_content_for_industry(
-        context.driver, industry_name
-    )
-    logging.debug(
-        "%s found content specific to %s industry on %s",
-        actor_alias,
-        industry_name,
-        context.driver.current_url,
-    )
-
-
 def fas_search_results_filtered_by_industries(
     context: Context, actor_alias: str, industry_names: List[str]
 ):
@@ -734,5 +723,35 @@ def fas_search_results_filtered_by_industries(
         "%s can see results filtered by %s (%s)",
         actor_alias,
         industry_names,
+        context.driver.current_url,
+    )
+
+
+def invest_should_see_topic_contents(context: Context, actor_alias: str):
+    actor = get_actor(context, actor_alias)
+    page = get_page_object(actor.visited_page)
+    assert hasattr(page, "should_see_topic")
+    for topic in actor.visited_articles:
+        page.should_see_topic(context.driver, topic)
+        logging.debug(
+            "%s can see contents of '%s' topic on %s",
+            actor_alias,
+            topic,
+            context.driver.current_url,
+        )
+
+
+def generic_should_see_expected_page_content(
+    context: Context, actor_alias: str, expected_page_name: str
+):
+    actor = get_actor(context, actor_alias)
+    visited_page = actor.visited_page
+    page = get_page_object(visited_page)
+    assert hasattr(page, "should_see_content_for")
+    page.should_see_content_for(context.driver, expected_page_name)
+    logging.debug(
+        "%s found content specific to %s on %s",
+        actor_alias,
+        expected_page_name,
         context.driver.current_url,
     )

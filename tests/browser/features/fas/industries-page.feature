@@ -23,10 +23,10 @@ Feature: FAS Industries page
   Scenario Outline: Buyers should be able to find out more about "<specific>" industry from the "FAS Industries" page
     Given "Robert" visits the "FAS Industries" page
 
-    When "Robert" decides to find out out more about "<specific>" industry
+    When "Robert" decides to find out out more about "FAS <specific> industry"
 
     Then "Robert" should be on the "FAS Industry" page
-    And "Robert" should see content specific to "<specific>" industry page
+    And "Robert" should see content specific to "FAS <specific> industry" page
 
     Examples: promoted industries
       | specific          |

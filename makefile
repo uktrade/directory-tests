@@ -170,6 +170,10 @@ browserstack_second_set:
 	cd tests/browser && \
 	paver run --config=browserstack-second-browser-set --tag=${TAG}
 
+browserstack_mobile:
+	$(BROWSER_SET_DOCKER_ENV_VARS) && \
+	cd tests/browser && paver run --config=browserstack-mobile --browsers=${BROWSERS} --versions=${VERSIONS} --tag=${TAG}
+
 browserstack_single:
 	$(BROWSER_SET_DOCKER_ENV_VARS) && \
 	cd tests/browser && paver run --config=browserstack-single --browsers=${BROWSERS} --versions=${VERSIONS} --tag=${TAG}

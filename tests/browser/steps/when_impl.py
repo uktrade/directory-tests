@@ -3,6 +3,7 @@
 import logging
 import random
 
+from behave.model import Table
 from behave.runner import Context
 from retrying import retry
 from selenium.common.exceptions import TimeoutException, WebDriverException
@@ -21,7 +22,6 @@ from pages import (
     article_common,
     article_list,
     fas_ui_contact_us,
-    fas_ui_landing,
     footer,
     guidance_common,
     header,
@@ -1633,7 +1633,7 @@ def fas_search_for_companies(
     retry_on_exception=retry_if_webdriver_error,
     wrap_exception=False,
 )
-def fas_open_industry_page(
+def generic_open_industry_page(
     context: Context, actor_alias: str, industry_name: str
 ):
     actor = get_actor(context, actor_alias)
@@ -1673,8 +1673,12 @@ def fas_fill_out_and_submit_contact_us_form(
     fas_ui_contact_us.submit(context.driver)
 
 
-def fas_see_more_industries(context: Context, actor_alias: str):
-    fas_ui_landing.see_more_industries(context.driver)
+def generic_see_more_industries(context: Context, actor_alias: str):
+    actor = get_actor(context, actor_alias)
+    visited_page = actor.visited_page
+    page = get_page_object(visited_page)
+    assert hasattr(page, "see_more_industries")
+    page.see_more_industries(context.driver)
     logging.debug(
         "%s clicked on 'See more industries' button on %s",
         actor_alias,
@@ -1735,4 +1739,41 @@ def fas_view_article(context: Context, actor_alias: str, article_number: str):
         actor_alias,
         article_number,
         context.driver.current_url,
+    )
+
+
+def invest_read_more(context: Context, actor_alias: str, topic_names: Table):
+    actor = get_actor(context, actor_alias)
+    visited_page = actor.visited_page
+    page = get_page_object(visited_page)
+    assert hasattr(page, "open_link")
+    topics = [row[0] for row in topic_names]
+    update_actor(context, actor_alias, visited_articles=topics)
+    for topic in topics:
+        page.open_link(context.driver, topic)
+        logging.debug(
+            "%s clicked on '%s' topic on %s",
+            actor_alias,
+            topic,
+            context.driver.current_url,
+        )
+
+
+@retry(
+    wait_fixed=30000,
+    stop_max_attempt_number=3,
+    retry_on_exception=retry_if_webdriver_error,
+    wrap_exception=False,
+)
+def generic_open_guide_link(
+    context: Context, actor_alias: str, guide_name: str
+):
+    actor = get_actor(context, actor_alias)
+    visited_page = actor.visited_page
+    page = get_page_object(visited_page)
+    assert hasattr(page, "open_guide")
+    page.open_guide(context.driver, guide_name)
+    update_actor(context, actor_alias, visited_page=guide_name)
+    logging.debug(
+        "%s opened '%s' page on %s", actor_alias, guide_name, page.URL
     )

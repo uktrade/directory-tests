@@ -21,16 +21,19 @@ from steps.when_impl import (
     continue_export_journey,
     export_readiness_open_category,
     fas_fill_out_and_submit_contact_us_form,
-    fas_open_industry_page,
     fas_search_for_companies,
-    fas_see_more_industries,
     fas_use_breadcrumb,
+    fas_view_article,
     fas_view_more_companies,
     fas_view_selected_company_profile,
+    generic_open_guide_link,
+    generic_open_industry_page,
+    generic_see_more_industries,
     guidance_open_category,
     guidance_read_through_all_articles,
     header_footer_click_on_dit_logo,
     header_footer_open_link,
+    invest_read_more,
     language_selector_change_to,
     language_selector_close,
     language_selector_navigate_through_links_with_keyboard,
@@ -58,8 +61,7 @@ from steps.when_impl import (
     triage_say_whether_you_use_online_marketplaces,
     triage_should_see_answers_to_questions,
     triage_what_is_your_company_name,
-    visit_page,
-    fas_view_article
+    visit_page
 )
 
 
@@ -384,10 +386,10 @@ def fas_when_actor_searches_for_companies(
         context, actor_alias, keyword=keyword)
 
 
-@when('"{actor_alias}" decides to find out out more about "{industry_name}" industry')
+@when('"{actor_alias}" decides to find out out more about "{industry_name}"')
 def fas_when_actor_opens_industry_page(
         context: Context, actor_alias: str, industry_name: str):
-    fas_open_industry_page(context, actor_alias, industry_name)
+    generic_open_industry_page(context, actor_alias, industry_name)
 
 
 @when('"{actor_alias}" fills out and submits the contact us form')
@@ -396,9 +398,9 @@ def fas_when_actor_fills_out_and_submits_contanct_us_form(
     fas_fill_out_and_submit_contact_us_form(context, actor_alias)
 
 
-@when('"{actor_alias}" decides to see more UK industries from the FAS landing page')
+@when('"{actor_alias}" decides to see more UK industries')
 def fas_landing_page_see_more_industries(context: Context, actor_alias: str):
-    fas_see_more_industries(context, actor_alias)
+    generic_see_more_industries(context, actor_alias)
 
 
 @when('"{actor_alias}" decides to use "{breadcrumb_name}" breadcrumb on the "{page_name}" page')
@@ -423,3 +425,14 @@ def fas_when_actor_views_selected_company_profile(
 def fas_when_actor_views_article(
         context: Context, actor_alias: str, article_number: str):
     fas_view_article(context, actor_alias, article_number)
+
+
+@when('"{actor_alias}" decides to read more on following topics')
+def actor_decides_to_read_more(context: Context, actor_alias: str):
+    invest_read_more(context, actor_alias, context.table)
+
+
+@when('"{actor_alias}" decides to read "{guide_name}" guide')
+def when_actor_goes_to_guide(
+        context: Context, actor_alias: str, guide_name: str):
+    generic_open_guide_link(context, actor_alias, guide_name)

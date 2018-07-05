@@ -55,7 +55,7 @@ SECTIONS = {
         "image": "section.international-links article:nth-child(2) > img",
         "title": "section.international-links article:nth-child(2) > h2",
         "text": "section.international-links article:nth-child(2) > p",
-        "invest in great": SEE_THE_POTENTIAL,
+        "invest - home": SEE_THE_POTENTIAL,
     },
     "study in the uk": {
         "itself": "section.international-links article:nth-child(3)",

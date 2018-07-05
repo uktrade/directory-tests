@@ -56,10 +56,10 @@ Feature: FAS landing page
   Scenario Outline: Buyers should be able to find out more about "<specific>" industry from the "FAS landing" page
     Given "Robert" visits the "FAS landing" page
 
-    When "Robert" decides to find out out more about "<specific>" industry
+    When "Robert" decides to find out out more about "FAS <specific> industry"
 
     Then "Robert" should be on the "FAS Industry" page
-    And "Robert" should see content specific to "<specific>" industry page
+    And "Robert" should see content specific to "FAS <specific> industry" page
 
     Examples:
       | specific          |
@@ -73,7 +73,7 @@ Feature: FAS landing page
   Scenario: Buyers should be able to see more UK industries from the "FAS landing" page
     Given "Robert" visits the "FAS landing" page
 
-    When "Robert" decides to see more UK industries from the FAS landing page
+    When "Robert" decides to see more UK industries
 
     Then "Robert" should be on the "FAS Industries" page
 

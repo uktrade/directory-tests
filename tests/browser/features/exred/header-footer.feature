@@ -121,7 +121,7 @@ Feature: Header-Footer
 
     When "Robert" goes to the "<specific>" page via "General" links in "<selected section>"
 
-    Then "Robert" should be on the "<expected>" page
+    Then "Robert" should be on the "<expected>" page or on the International page
 
     Examples:
       | specific            | expected                   | selected section |

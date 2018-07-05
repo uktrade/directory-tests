@@ -1,0 +1,16 @@
+{{
+  "hub_url": {HUB_URL},
+  "capabilities": {{
+    "browserstack.selenium_version": "1.7.2",
+    "build": {BUILD_ID},
+    "project": "DIT mobile",
+    "realMobile": true
+  }},
+  "environments": [
+    {{
+      "device": "Google Pixel",
+      "os": "Android",
+      "os_version": "8.0"
+    }}
+  ]
+}}
