@@ -755,3 +755,23 @@ def generic_should_see_expected_page_content(
         expected_page_name,
         context.driver.current_url,
     )
+
+
+def stats_and_tracking_elements_should_be_present(
+    context: Context, names: Table
+):
+    element_names = [row[0] for row in names]
+    from pages import pixels
+
+    for name in element_names:
+        pixels.should_be_present(context.driver, name)
+
+
+def stats_and_tracking_elements_should_not_be_present(
+    context: Context, names: Table
+):
+    element_names = [row[0] for row in names]
+    from pages import pixels
+
+    for name in element_names:
+        pixels.should_not_be_present(context.driver, name)

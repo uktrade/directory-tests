@@ -24,6 +24,8 @@ from pages import (
     home,
     interim_exporting_opportunities,
     international,
+    invest_contact_us,
+    invest_feedback,
     invest_guide,
     invest_home,
     invest_industries,
@@ -249,6 +251,11 @@ EXTERNAL_SITES_PAGE_REGISTRY = {
 INVEST_PAGE_REGISTRY = {
     "invest - home": {"url": invest_home.URL, "po": invest_home},
     "invest - industry": {"url": invest_industry.URL, "po": invest_industry},
+    "invest - contact us": {
+        "url": invest_contact_us.URL,
+        "po": invest_contact_us,
+    },
+    "invest - feedback": {"url": invest_feedback.URL, "po": invest_feedback},
     "invest - industries": {
         "url": invest_industries.URL,
         "po": invest_industries,
@@ -275,6 +282,102 @@ INVEST_PAGE_REGISTRY = {
     },
     "invest - technology industry": {
         "url": invest_industry.URLS.TECHNOLOGY,
+        "po": invest_industry,
+    },
+    "invest - advanced manufacturing industry": {
+        "url": invest_industry.URLS.ADVANCED_MANUFACTURING,
+        "po": invest_industry,
+    },
+    "invest - aerospace industry": {
+        "url": invest_industry.URLS.AEROSPACE,
+        "po": invest_industry,
+    },
+    "invest - agri-tech industry": {
+        "url": invest_industry.URLS.AGRI_TECH,
+        "po": invest_industry,
+    },
+    "invest - asset management industry": {
+        "url": invest_industry.URLS.ASSET_MANAGEMENT,
+        "po": invest_industry,
+    },
+    "invest - automotive research and development industry": {
+        "url": invest_industry.URLS.AUTOMOTIVE_RESEARCH_AND_DEVELOPMENT,
+        "po": invest_industry,
+    },
+    "invest - automotive supply chain industry": {
+        "url": invest_industry.URLS.AUTOMOTIVE_SUPPLY_CHAIN,
+        "po": invest_industry,
+    },
+    "invest - chemicals industry": {
+        "url": invest_industry.URLS.CHEMICALS,
+        "po": invest_industry,
+    },
+    "invest - creative content and production industry": {
+        "url": invest_industry.URLS.CREATIVE_CONTENT_AND_PRODUCTION,
+        "po": invest_industry,
+    },
+    "invest - data analytics industry": {
+        "url": invest_industry.URLS.DATA_ANALYTICS,
+        "po": invest_industry,
+    },
+    "invest - digital media industry": {
+        "url": invest_industry.URLS.DIGITAL_MEDIA,
+        "po": invest_industry,
+    },
+    "invest - electrical networks industry": {
+        "url": invest_industry.URLS.ELECTRICAL_NETWORKS,
+        "po": invest_industry,
+    },
+    "invest - energy industry": {
+        "url": invest_industry.URLS.ENERGY,
+        "po": invest_industry,
+    },
+    "invest - energy from waste industry": {
+        "url": invest_industry.URLS.ENERGY_FROM_WASTE,
+        "po": invest_industry,
+    },
+    "invest - financial technology industry": {
+        "url": invest_industry.URLS.FINANCIAL_TECHNOLOGY,
+        "po": invest_industry,
+    },
+    "invest - food and drink industry": {
+        "url": invest_industry.URLS.FOOD_AND_DRINK,
+        "po": invest_industry,
+    },
+    "invest - free-from foods industry": {
+        "url": invest_industry.URLS.FREE_FROM_FOODS,
+        "po": invest_industry,
+    },
+    "invest - meat, poultry and dairy industry": {
+        "url": invest_industry.URLS.MEAT_POULTRY_AND_DAIRY,
+        "po": invest_industry,
+    },
+    "invest - medical technology industry": {
+        "url": invest_industry.URLS.MEDICAL_TECHNOLOGY,
+        "po": invest_industry,
+    },
+    "invest - motorsport industry": {
+        "url": invest_industry.URLS.MOTORSPORT,
+        "po": invest_industry,
+    },
+    "invest - nuclear energy industry": {
+        "url": invest_industry.URLS.NUCLEAR_ENERGY,
+        "po": invest_industry,
+    },
+    "invest - offshore wind energy industry": {
+        "url": invest_industry.URLS.OFFSHORE_WIND_ENERGY,
+        "po": invest_industry,
+    },
+    "invest - oil and gas industry": {
+        "url": invest_industry.URLS.OIL_AND_GAS,
+        "po": invest_industry,
+    },
+    "invest - pharmaceutical manufacturing industry": {
+        "url": invest_industry.URLS.PHARMACEUTICAL_MANUFACTURING,
+        "po": invest_industry,
+    },
+    "invest - retail industry": {
+        "url": invest_industry.URLS.RETAIL,
         "po": invest_industry,
     },
     "invest - guide": {"url": invest_guide.URL, "po": invest_guide},

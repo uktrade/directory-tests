@@ -56,7 +56,9 @@ from steps.then_impl import (
     should_see_share_widget,
     triage_should_be_classified_as,
     triage_should_see_change_your_answers_link,
-    generic_should_see_expected_page_content
+    generic_should_see_expected_page_content,
+    stats_and_tracking_elements_should_be_present,
+    stats_and_tracking_elements_should_not_be_present,
 )
 from steps.when_impl import (
     triage_answer_questions_again,
@@ -369,3 +371,13 @@ def fas_should_see_filtered_search_results(
 @then('"{actor_alias}" should see brief explanation why the UK is the best place for his business')
 def then_actor_should_see_topic_content(context: Context, actor_alias: str):
     invest_should_see_topic_contents(context, actor_alias)
+
+
+@then('following web statistics analysis or tracking elements should NOT be present')
+def then_stats_and_tracking_elements_should_be_present(context: Context):
+    stats_and_tracking_elements_should_not_be_present(context, context.table)
+
+
+@then('following web statistics analysis or tracking elements should be present')
+def then_stats_and_tracking_elements_should_be_present(context: Context):
+    stats_and_tracking_elements_should_be_present(context, context.table)
