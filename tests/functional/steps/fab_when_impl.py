@@ -1788,11 +1788,14 @@ def fab_add_collaborator(
         response = fab_ui_account_add_collaborator.go_to(supplier.session)
         context.response = response
 
+        fab_ui_account_add_collaborator.should_be_here(response)
+
         token = extract_csrf_middleware_token(response)
         context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
         response = fab_ui_account_add_collaborator.add_collaborator(
             supplier.session, token, collaborator.email)
+        context.response = response
 
         profile_ui_find_a_buyer.should_be_here(response)
         collaborators = company.collaborators
