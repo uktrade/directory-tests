@@ -24,10 +24,7 @@ def go_to(session: Session) -> Response:
      * Supplier to be logged in
     """
     headers = {"Referer": URL}
-    response = make_request(Method.GET, URL, session=session, headers=headers)
-
-    should_be_here(response)
-    return response
+    return make_request(Method.GET, URL, session=session, headers=headers)
 
 
 def submit(session: Session, token: str, password: str) -> Response:
