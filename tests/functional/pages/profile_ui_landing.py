@@ -10,16 +10,8 @@ EXPECTED_STRINGS = [
      " of our exporting tools in one place. The tools are here to help your "
      "business succeed internationally."),
     ("You can start using any of our exporting tools by clicking on the tabs "
-     "on your profile."), "Export opportunities", "Find a buyer",
+     "on your profile."), "Export opportunities", "Business profile",
     "Selling online overseas",
-    ("Find thousands of exporting opportunities, search and apply within your "
-     "industry or a specific country, and sign up for email alerts so you’re "
-     "the first to know of new opportunities."),
-    ("Promote your business to overseas buyers with your own trade profile, "
-     "add case studies of your company’s best work, and let buyers contact "
-     "your sales team directly."),
-    ("Join major online marketplaces in other countries and access special "
-     "offers negotiated by the Department for International Trade.")
 ]
 
 

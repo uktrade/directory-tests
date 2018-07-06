@@ -8,7 +8,7 @@ from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("profile:exops-applications")
 EXPECTED_STRINGS = [
-    "Profile", "You are signed in as", "Export opportunities", "Find a buyer",
+    "Profile", "You are signed in as", "Export opportunities", "Business profile",
     "Selling online overseas",
     "Start applying for export opportunities. You can quickly and easily:",
     "find thousands of exporting opportunities",

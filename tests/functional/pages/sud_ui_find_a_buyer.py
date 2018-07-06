@@ -8,14 +8,14 @@ from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("profile:fab")
 EXPECTED_STRINGS = [
-    "Profile", "You are signed in as", "Export opportunities", "Find a buyer",
-    "Selling online overseas", "Get a trade profile",
-    "Get a trade profile for your company and you can",
+    "Profile", "You are signed in as", "Export opportunities", "Business profile",
+    "Selling online overseas", "Get a business profile",
+    "Get a business profile for your company and you can",
     "generate new sales leads",
     "promote your business to thousands of overseas buyers",
     "add case studies of your best work to make your company stand out",
     "have buyers contact your sales team directly to get deals moving",
-    "Create a trade profile"
+    "Create a business profile"
 ]
 
 EXPECTED_STRINGS_AS_LOGGED_IN_USER = [

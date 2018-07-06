@@ -19,7 +19,7 @@ EXPECTED_STRINGS = [
     "Give your case study a title of 60 characters or fewer.",
     "Summary of your case study or project:",
     ("Summarise your case study in 200 characters or fewer. This will appear "
-     "on your main trade profile page"), "Describe your case study or project",
+     "on your main business profile page"), "Describe your case study or project",
     ("Describe the project or case study in 1,000 characters or fewer. Use "
      "this space to demonstrate the value of your company to an international "
      "business audience."), "Sector:",
