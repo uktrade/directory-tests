@@ -1226,6 +1226,7 @@ def fas_send_message_to_supplier(
     response = fas_ui_contact.go_to(
         session, company_number=company.number, company_name=company.title)
     context.response = response
+    fas_ui_contact.should_be_here(response)
 
     # Step 3 - submit the form with the message data
     response = fas_ui_contact.submit(session, message, company.number)

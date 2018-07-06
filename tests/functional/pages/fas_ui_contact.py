@@ -30,9 +30,7 @@ EXPECTED_STRINGS_MESSAGE_SENT = [
 def go_to(
         session: Session, company_number: str, company_name: str) -> Response:
     full_url = URL.format(company_number=company_number)
-    response = make_request(Method.GET, full_url, session=session)
-    should_be_here(response, name=company_name)
-    return response
+    return make_request(Method.GET, full_url, session=session)
 
 
 def should_be_here(response, *, name=None):
@@ -57,9 +55,8 @@ def submit(
         "subject": message.subject,
         "terms": message.terms
     }
-    response = make_request(
+    return make_request(
         Method.POST, full_url, session=session, headers=headers, data=data)
-    return response
 
 
 def should_see_that_message_has_been_sent(
