@@ -30,9 +30,7 @@ EXPECTED_STRINGS_ERRORS = [
 
 def go_to(session: Session) -> Response:
     headers = {"Referer": get_absolute_url("ui-supplier:feedback")}
-    response = make_request(Method.GET, URL, session=session, headers=headers)
-    should_be_here(response)
-    return response
+    return make_request(Method.GET, URL, session=session, headers=headers)
 
 
 def should_be_here(response):
@@ -73,7 +71,6 @@ def submit(
         "terms": feedback.terms,
         "g-recaptcha-response": feedback.g_recaptcha_response,
     }
-    response = make_request(
+    return make_request(
         Method.POST, URL, session=session, headers=headers, data=data,
         trim=False)
-    return response
