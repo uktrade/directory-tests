@@ -17,9 +17,8 @@ def go_to(session: Session, *, next_param: str = None) -> Response:
     fab_landing = get_absolute_url("ui-buyer:landing")
     params = {"next": next_param or fab_landing}
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
-    response = make_request(
+    return make_request(
         Method.GET, URL, session=session, params=params, headers=headers)
-    return response
 
 
 def should_be_here(response: Response):
@@ -36,7 +35,5 @@ def logout(
     }
     query = "?next={}".format(fab_landing)
     headers = {"Referer": urljoin(URL, query)}
-    response = make_request(
+    return make_request(
         Method.POST, URL, session=session, headers=headers, data=data)
-
-    return response

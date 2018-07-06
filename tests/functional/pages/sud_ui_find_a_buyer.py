@@ -31,8 +31,7 @@ MANAGE_USER_ACCOUNTS_STRINGS = [
 
 
 def go_to(session: Session) -> Response:
-    response = make_request(Method.GET, URL, session=session)
-    return response
+    return make_request(Method.GET, URL, session=session)
 
 
 def should_be_here(response: Response, *, as_logged_in_user: bool = False):

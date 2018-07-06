@@ -23,8 +23,7 @@ EXPECTED_STRINGS_INVALID = [
 
 
 def go_to(session: Session) -> Response:
-    response = make_request(Method.GET, URL, session=session)
-    return response
+    return make_request(Method.GET, URL, session=session)
 
 
 def should_be_here(response: Response):

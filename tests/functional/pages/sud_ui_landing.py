@@ -21,9 +21,8 @@ def go_to(session: Session, *, set_next_page: bool = True) -> Response:
     headers = {"Referer": fab_landing}
     if not set_next_page:
         params = None
-    response = make_request(
+    return make_request(
         Method.GET, URL, session=session, params=params, headers=headers)
-    return response
 
 
 def should_be_here(response: Response):

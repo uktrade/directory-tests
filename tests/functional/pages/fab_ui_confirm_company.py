@@ -25,10 +25,8 @@ def go_to(session: Session, company: Company) -> Response:
     data = {"company_name": company.title, "company_number": company.number}
     headers = {"Referer": URL}
 
-    response = make_request(
+    return make_request(
         Method.POST, URL, session=session, headers=headers, data=data)
-
-    return response
 
 
 def should_be_here(response: Response, company: Company):

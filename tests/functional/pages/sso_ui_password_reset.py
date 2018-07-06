@@ -28,9 +28,8 @@ def go_to(session: Session, *, next_param: str = None) -> Response:
     fab_landing = get_absolute_url("ui-buyer:landing")
     params = {"next": next_param or fab_landing}
     headers = {"Referer": fab_landing}
-    response = make_request(
+    return make_request(
         Method.GET, URL, session=session, params=params, headers=headers)
-    return response
 
 
 def should_be_here(response: Response):
@@ -60,10 +59,8 @@ def reset(
     referer = referer or urljoin(URL, query)
     headers = {"Referer": referer}
 
-    response = make_request(
+    return make_request(
         Method.POST, URL, session=session, data=data, headers=headers)
-
-    return response
 
 
 def open_link(session: Session, link: str) -> Response:

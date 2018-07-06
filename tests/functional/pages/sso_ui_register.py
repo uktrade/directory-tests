@@ -38,9 +38,8 @@ def go_to(
     else:
         url = URL
     headers = {"Referer": referer}
-    response = make_request(
+    return make_request(
         Method.GET, url, session=session, headers=headers)
-    return response
 
 
 def submit(actor: Actor, company: Company, exported: bool) -> Response:
@@ -67,10 +66,8 @@ def submit(actor: Actor, company: Company, exported: bool) -> Response:
         "next": next_link
     }
 
-    response = make_request(
+    return make_request(
         Method.POST, URL, session=session, headers=headers, data=data)
-
-    return response
 
 
 def submit_no_company(
@@ -92,7 +89,5 @@ def submit_no_company(
     if next:
         data["next"] = next
 
-    response = make_request(
+    return make_request(
         Method.POST, URL, session=session, headers=headers, data=data)
-
-    return response

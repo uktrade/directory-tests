@@ -36,8 +36,7 @@ EXPECTED_STRINGS_NOT_VERIFIED = [
 
 def go_to(session: Session) -> Response:
     headers = {"Referer": URL}
-    response = make_request(Method.GET, URL, session=session, headers=headers)
-    return response
+    return make_request(Method.GET, URL, session=session, headers=headers)
 
 
 def should_be_here(response: Response):
