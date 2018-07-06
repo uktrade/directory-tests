@@ -16,7 +16,6 @@ from tests.functional.pages import (
     fab_ui_confirm_identity,
     fab_ui_edit_online_profiles,
     fab_ui_profile,
-    fab_ui_try_other_services,
     fab_ui_verify_company,
     fas_ui_contact,
     fas_ui_find_supplier,
@@ -118,13 +117,6 @@ def fas_check_profiles(context: Context, supplier_alias: str):
     fas_ui_profile.should_see_online_profiles(company, response)
     logging.debug("%s can see all expected links to Online Profiles on "
                   "FAS Company's Directory Profile Page", supplier_alias)
-
-
-def reg_supplier_is_not_appropriate_for_fab(
-        context: Context, supplier_alias: str):
-    fab_ui_try_other_services.should_be_here(context.response)
-    logging.debug("%s was told that her/his business is not appropriate "
-                  "to feature in the Find a Buyer service", supplier_alias)
 
 
 def reg_supplier_has_to_verify_email_first(
