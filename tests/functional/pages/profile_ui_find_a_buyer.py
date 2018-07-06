@@ -39,10 +39,7 @@ EXPECTED_STRINGS_USER_REMOVED = [
 
 def go_to(session: Session) -> Response:
     headers = {"Referer": get_absolute_url("profile:about")}
-    response = make_request(Method.GET, URL, session=session, headers=headers)
-    should_be_here(response)
-    logging.debug("Supplier is on the Profile 'Find a Buyer' page")
-    return response
+    return make_request(Method.GET, URL, session=session, headers=headers)
 
 
 def should_be_here(
@@ -105,5 +102,4 @@ def go_to_create_a_trade_profile(session: Session) -> Response:
     This simulates a 'Click' on the 'Create a trade profile' button.
     """
     url = get_absolute_url("ui-buyer:landing")
-    response = make_request(Method.GET, url, session=session)
-    return response
+    return make_request(Method.GET, url, session=session)

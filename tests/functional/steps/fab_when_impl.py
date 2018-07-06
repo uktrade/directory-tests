@@ -626,6 +626,7 @@ def sso_go_to_create_trade_profile(context: Context, supplier_alias: str):
     # Step 1 - Go to "Find a Buyer" tab
     response = profile_ui_find_a_buyer.go_to(session)
     context.response = response
+    profile_ui_find_a_buyer.should_be_here(response)
     profile_ui_find_a_buyer.should_see_get_a_trade_profile(response)
 
     # Step 2 - Click on "Create a trade profile" button
