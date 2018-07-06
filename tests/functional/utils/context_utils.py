@@ -7,62 +7,119 @@ from types import MethodType
 from behave.runner import Context
 from requests import Session
 
-ScenarioData = namedtuple(
-    'ScenarioData',
-    [
-        'actors', 'companies'
-    ]
-)
+ScenarioData = namedtuple("ScenarioData", ["actors", "companies"])
 Actor = namedtuple(
-    'Actor',
+    "Actor",
     [
-        'alias', 'email', 'password', 'session', 'csrfmiddlewaretoken',
-        'email_confirmation_link', 'company_alias', 'has_sso_account', 'type',
-        'password_reset_link', 'invitation_for_collaboration_link', 'ex_owner',
-        'ownership_request_link', 'verification_letter'
-    ]
+        "alias",
+        "email",
+        "password",
+        "session",
+        "csrfmiddlewaretoken",
+        "email_confirmation_link",
+        "company_alias",
+        "has_sso_account",
+        "type",
+        "password_reset_link",
+        "invitation_for_collaboration_link",
+        "ex_owner",
+        "ownership_request_link",
+        "verification_letter",
+    ],
 )
 CaseStudy = namedtuple(
-    'CaseStudy',
+    "CaseStudy",
     [
-        'alias', 'title', 'summary', 'description', 'sector', 'website',
-        'keywords', 'image_1', 'image_2', 'image_3', 'caption_1', 'caption_2',
-        'caption_3', 'testimonial', 'source_name', 'source_job',
-        'source_company', 'slug'
-    ]
+        "alias",
+        "title",
+        "summary",
+        "description",
+        "sector",
+        "website",
+        "keywords",
+        "image_1",
+        "image_2",
+        "image_3",
+        "caption_1",
+        "caption_2",
+        "caption_3",
+        "testimonial",
+        "source_name",
+        "source_job",
+        "source_company",
+        "slug",
+    ],
 )
 AddressDetails = namedtuple(
     "AddressDetails",
     [
-        "address_signature", "address_line_1", "address_line_2", "locality",
-        "country", "postal_code", "po_box"
-    ]
+        "address_signature",
+        "address_line_1",
+        "address_line_2",
+        "locality",
+        "country",
+        "postal_code",
+        "po_box",
+    ],
 )
 
 Company = namedtuple(
-    'Company',
+    "Company",
     [
-        'alias', 'title', 'number', 'summary', 'description',
-        'website', 'keywords', 'no_employees', 'sector', 'letter_recipient',
-        'companies_house_details', 'facebook', 'linkedin', 'twitter',
-        'case_studies', 'logo_picture', 'logo_url', 'logo_hash',
-        'export_to_countries', 'fas_profile_endpoint', 'slug',
-        'verification_code', 'collaborators', 'deleted', 'owner', 'owner_email'
-    ]
+        "alias",
+        "title",
+        "number",
+        "summary",
+        "description",
+        "website",
+        "keywords",
+        "no_employees",
+        "sector",
+        "letter_recipient",
+        "companies_house_details",
+        "facebook",
+        "linkedin",
+        "twitter",
+        "case_studies",
+        "logo_picture",
+        "logo_url",
+        "logo_hash",
+        "export_to_countries",
+        "fas_profile_endpoint",
+        "slug",
+        "verification_code",
+        "collaborators",
+        "deleted",
+        "owner",
+        "owner_email",
+    ],
 )
 Feedback = namedtuple(
-    'Feedback',
+    "Feedback",
     [
-        'name', 'email', 'company_name', 'country', 'comment', 'terms',
-        'g_recaptcha_response'
-    ]
+        "name",
+        "email",
+        "company_name",
+        "country",
+        "comment",
+        "terms",
+        "g_recaptcha_response",
+    ],
 )
 Message = namedtuple(
-    'Message',
+    "Message",
     [
-        'alias', 'body', 'company_name', 'country', 'email_address',
-        'full_name', 'g_recaptcha_response', 'sector', 'subject', 'terms'
-    ]
+        "alias",
+        "body",
+        "company_name",
+        "country",
+        "email_address",
+        "full_name",
+        "g_recaptcha_response",
+        "sector",
+        "subject",
+        "terms",
+    ],
 )
 # Set all fields to None by default.
 Actor.__new__.__defaults__ = (None,) * len(Actor._fields)
@@ -92,8 +149,9 @@ def add_actor(self, actor):
     :param actor: an instance of Actor Named Tuple
     :type actor: tests.functional.features.ScenarioData.Actor
     """
-    assert isinstance(actor, Actor), ("Expected Actor named tuple but got '{}'"
-                                      " instead".format(type(actor)))
+    assert isinstance(
+        actor, Actor
+    ), "Expected Actor named tuple but got '{}'" " instead".format(type(actor))
     self.scenario_data.actors[actor.alias] = actor
     logging.debug("Successfully added actor: %s to Scenario Data", actor.alias)
 
@@ -120,7 +178,8 @@ def update_actor(self, alias: str, **kwargs):
             actors[alias] = actors[alias]._replace(**{arg: kwargs[arg]})
 
     logging.debug(
-        "Successfully updated Actors's details %s: %s", alias, actors[alias])
+        "Successfully updated Actors's details %s: %s", alias, actors[alias]
+    )
 
 
 def set_company_logo_detail(self, alias, *, picture=None, url=None, hash=None):
@@ -159,13 +218,18 @@ def add_company(self, company):
     :param company: an instance of Company Tuple
     :type company: test.functional.features.ScenarioData.Company
     """
-    assert isinstance(company, Company), (
-        "Expected Company named tuple but got '{}' instead"
-        .format(type(company)))
+    assert isinstance(
+        company, Company
+    ), "Expected Company named tuple but got '{}' instead".format(
+        type(company)
+    )
     self.scenario_data.companies[company.alias] = company
-    logging.debug("Successfully added Company: %s - %s to "
-                  "Scenario Data as '%s'", company.title, company.number,
-                  company.alias)
+    logging.debug(
+        "Successfully added Company: %s - %s to " "Scenario Data as '%s'",
+        company.title,
+        company.number,
+        company.alias,
+    )
 
 
 def get_company(self, alias):
@@ -189,13 +253,16 @@ def set_company_details(self, alias: str, **kwargs):
             logging.debug("Set '%s'='%s' for %s", arg, kwargs[arg], alias)
             companies[alias] = companies[alias]._replace(**{arg: kwargs[arg]})
 
-    logging.debug("Successfully updated Company's details %s: %s", alias,
-                  companies[alias])
+    logging.debug(
+        "Successfully updated Company's details %s: %s",
+        alias,
+        companies[alias],
+    )
 
 
 def add_case_study(
-        self: Context, company_alias: str, case_alias: str,
-        case_study: CaseStudy):
+    self: Context, company_alias: str, case_alias: str, case_study: CaseStudy
+):
     """This will add a CaseStudy to company's data or replace existing one.
 
     :param self: behave `context` object
@@ -206,8 +273,13 @@ def add_case_study(
     cases = self.get_company(company_alias).case_studies
     cases[case_alias] = case_study
 
-    logging.debug("Successfully added/replaced Case Study %s to Company %s. "
-                  "Case Study Data: %s", case_alias, company_alias, case_study)
+    logging.debug(
+        "Successfully added/replaced Case Study %s to Company %s. "
+        "Case Study Data: %s",
+        case_alias,
+        company_alias,
+        case_study,
+    )
 
 
 def update_case_study(self, company, case, *, slug=None):
@@ -216,8 +288,9 @@ def update_case_study(self, company, case, *, slug=None):
         cases = companies[company].case_studies[case]._replace(slug=slug)
         companies[company].case_studies[case] = cases
 
-    logging.debug("Successfully updated Case Study '%s' for Company %s",
-                  case, company)
+    logging.debug(
+        "Successfully updated Case Study '%s' for Company %s", case, company
+    )
 
 
 def patch_context(context):
@@ -238,4 +311,5 @@ def patch_context(context):
     context.update_case_study = MethodType(update_case_study, context)
     context.set_company_details = MethodType(set_company_details, context)
     context.set_company_logo_detail = MethodType(
-        set_company_logo_detail, context)
+        set_company_logo_detail, context
+    )

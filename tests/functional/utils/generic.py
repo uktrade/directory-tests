@@ -43,7 +43,7 @@ from tests.functional.utils.context_utils import (
     CaseStudy,
     Company,
     Feedback,
-    Message
+    Message,
 )
 from tests.functional.utils.request import Method, check_response, make_request
 from tests.functional.utils.stannpclient import STANNP_CLIENT
@@ -63,13 +63,14 @@ from tests.settings import (
     TEST_IMAGES_DIR,
     JPEGs,
     JPGs,
-    PNGs
+    PNGs,
 )
 
 INDUSTRY_CHOICES = dict(choices.INDUSTRIES)
 
 DIRECTORY_CLIENT = DirectoryTestAPIClient(
-    DIRECTORY_API_URL, DIRECTORY_API_CLIENT_KEY)
+    DIRECTORY_API_URL, DIRECTORY_API_CLIENT_KEY
+)
 SSO_CLIENT = DirectorySSOTestAPIClient(
     SSO_PROXY_API_CLIENT_BASE_URL, SSO_PROXY_SIGNATURE_SECRET
 )
@@ -80,8 +81,15 @@ CompaniesList = List[Company]
 DetectorFactory.seed = 0
 # A dict with currently supported languages on FAS and their short codes
 ERROR_INDICATORS = [
-    'error', 'errors', 'problem', 'problems', 'fail', 'failed', 'failure',
-    'required', 'missing'
+    "error",
+    "errors",
+    "problem",
+    "problems",
+    "fail",
+    "failed",
+    "failure",
+    "required",
+    "missing",
 ]
 FAS_SUPPORTED_LANGUAGES = {
     "arabic": "ar",
@@ -92,14 +100,15 @@ FAS_SUPPORTED_LANGUAGES = {
     "japanese": "ja",
     "portuguese": "pt",
     "portuguese-brazilian": "pt-br",
-    "spanish": "es"
+    "spanish": "es",
 }
 
 
 def get_file_log_handler(
-        log_formatter, log_file=os.path.join(
-            ".", "tests", "functional", "reports", "behave.log"),
-        log_level=logging.DEBUG):
+    log_formatter,
+    log_file=os.path.join(".", "tests", "functional", "reports", "behave.log"),
+    log_level=logging.DEBUG,
+):
     """Configure the console logger.
 
     Will use DEBUG logging level by default.
@@ -119,8 +128,10 @@ def get_file_log_handler(
 def init_loggers(context: Context):
     """Will initialize console and file loggers."""
     # configure the formatter
-    fmt = ('%(asctime)s-%(filename)s[line:%(lineno)d]-%(name)s-%(levelname)s: '
-           '%(message)s')
+    fmt = (
+        "%(asctime)s-%(filename)s[line:%(lineno)d]-%(name)s-%(levelname)s: "
+        "%(message)s"
+    )
     log_formatter = logging.Formatter(fmt)
     log_file_handler = get_file_log_handler(log_formatter)
     # Add log file handler to Behave's logging
@@ -148,6 +159,7 @@ class MailGunEvent(Enum):
     More info here:
     https://documentation.mailgun.com/en/latest/api-events.html#event-types
     """
+
     ACCEPTED = "accepted"
     DELIVERED = "delivered"
     REJECTED = "rejected"
@@ -167,10 +179,13 @@ class MailGunEvent(Enum):
 
 class MailGunService(Enum):
     """Lists all MailGun's events states"""
-    ServiceDetails = namedtuple('ServiceDetails', ['url', 'user', 'password'])
+
+    ServiceDetails = namedtuple("ServiceDetails", ["url", "user", "password"])
     DIRECTORY = ServiceDetails(
-        url=MAILGUN_DIRECTORY_EVENTS_URL, user=MAILGUN_DIRECTORY_API_USER,
-        password=MAILGUN_DIRECTORY_SECRET_API_KEY)
+        url=MAILGUN_DIRECTORY_EVENTS_URL,
+        user=MAILGUN_DIRECTORY_API_USER,
+        password=MAILGUN_DIRECTORY_SECRET_API_KEY,
+    )
 
     def __str__(self):
         return self.value
@@ -193,10 +208,19 @@ class MailGunService(Enum):
 
 @retry(wait_fixed=15000, stop_max_attempt_number=9)
 def find_mail_gun_events(
-        context: Context, service: MailGunService, *, sender: str = None,
-        recipient: str = None, to: str = None, subject: str = None,
-        limit: int = None, event: MailGunEvent = None, begin: str = None,
-        end: str = None, ascending: str = None) -> Response:
+    context: Context,
+    service: MailGunService,
+    *,
+    sender: str = None,
+    recipient: str = None,
+    to: str = None,
+    subject: str = None,
+    limit: int = None,
+    event: MailGunEvent = None,
+    begin: str = None,
+    end: str = None,
+    ascending: str = None
+) -> Response:
     """
 
     :param context: behave `context` object
@@ -234,72 +258,89 @@ def find_mail_gun_events(
         params.update({"ascending": ascending})
 
     response = make_request(
-        Method.GET, service.url, auth=(service.user, service.password),
-        params=params)
+        Method.GET,
+        service.url,
+        auth=(service.user, service.password),
+        params=params,
+    )
     context.response = response
     with assertion_msg(
-            "Expected 200 OK from MailGun when searching for an event %s",
-            response.status_code):
+        "Expected 200 OK from MailGun when searching for an event %s",
+        response.status_code,
+    ):
         assert response.status_code == 200
     number_of_events = len(response.json()["items"])
     if limit:
         with assertion_msg(
-                "Expected (maximum) %d events but got %d instead.", limit,
-                number_of_events):
+            "Expected (maximum) %d events but got %d instead.",
+            limit,
+            number_of_events,
+        ):
             assert number_of_events <= limit
     with assertion_msg(
-            "Expected to find at least 1 MailGun event, got 0 instead. User "
-            "parameters: %s", params):
+        "Expected to find at least 1 MailGun event, got 0 instead. User "
+        "parameters: %s",
+        params,
+    ):
         assert number_of_events > 0
     logging.debug(
-        "Found {} event(s) that matched following criteria: {}"
-        .format(number_of_events, params))
+        "Found {} event(s) that matched following criteria: {}".format(
+            number_of_events, params
+        )
+    )
     return response
 
 
 def extract_page_contents(
-        content: str, *, ignored_characters: str = '[ا]',
-        strip_js: bool = True, strip_css: bool = True,
-        strip_header: bool = True, strip_footer: bool = True,
-        strip_select_menus: bool = True,
-        strip_unordered_lists: bool = True) -> str:
+    content: str,
+    *,
+    ignored_characters: str = "[ا]",
+    strip_js: bool = True,
+    strip_css: bool = True,
+    strip_header: bool = True,
+    strip_footer: bool = True,
+    strip_select_menus: bool = True,
+    strip_unordered_lists: bool = True
+) -> str:
     soup = BeautifulSoup(content, "lxml")
 
     if strip_js:
-        for element in soup.findAll(['script']):
+        for element in soup.findAll(["script"]):
             element.extract()
     if strip_css:
-        for element in soup.findAll(['style']):
+        for element in soup.findAll(["style"]):
             element.extract()
     if strip_header:
-        for element in soup.findAll(['header']):
+        for element in soup.findAll(["header"]):
             element.extract()
     if strip_footer:
-        for element in soup.findAll(['footer']):
+        for element in soup.findAll(["footer"]):
             element.extract()
     if strip_select_menus:
-        for element in soup.findAll(['select']):
+        for element in soup.findAll(["select"]):
             element.extract()
     if strip_unordered_lists:
-        for element in soup.findAll(['ul']):
+        for element in soup.findAll(["ul"]):
             element.extract()
 
     text = soup.get_text()
 
     # clear the page content from the specified characters
     if ignored_characters:
-        text = re.sub(ignored_characters, '', text)
+        text = re.sub(ignored_characters, "", text)
 
     # remove empty lines
-    lines = [line.strip()
-             for line in text.splitlines()
-             if line.strip()]
-    return '\n'.join(lines)
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+    return "\n".join(lines)
 
 
 def print_response(
-        response: Response, *, trim: bool = True, content_only: bool = True,
-        trim_offset: int = 2048):
+    response: Response,
+    *,
+    trim: bool = True,
+    content_only: bool = True,
+    trim_offset: int = 2048
+):
     request = response.request
 
     if response.history:
@@ -307,8 +348,8 @@ def print_response(
         for r in response.history:
             blue("Intermediate REQ: %s %s" % (r.request.method, r.url))
             blue("Intermediate REQ Headers:")
-            if r.request.headers.get('Authorization'):
-                r.request.headers['Authorization'] = 'STRIPPED_OUT'
+            if r.request.headers.get("Authorization"):
+                r.request.headers["Authorization"] = "STRIPPED_OUT"
             pprint(r.request.headers)
             if r.request.body:
                 body = decode_as_utf8(r.request.body)
@@ -331,26 +372,30 @@ def print_response(
                     content = extract_page_contents(content)
                 if trim:
                     blue(
-                        "Intermediate RESP Content (trimmed{}):"
-                        .format(content_only_msg))
+                        "Intermediate RESP Content (trimmed{}):".format(
+                            content_only_msg
+                        )
+                    )
                     print(content[0:trim_offset])
                 else:
                     blue(
-                        "Intermediate RESP Content{}:"
-                        .format(content_only_msg))
+                        "Intermediate RESP Content{}:".format(content_only_msg)
+                    )
                     print(content)
 
-        blue("Final destination: %s %s -> %d %s" % (
-            request.method, request.url, response.status_code, response.url))
+        blue(
+            "Final destination: %s %s -> %d %s"
+            % (request.method, request.url, response.status_code, response.url)
+        )
     else:
         green("REQ URL: %s %s" % (request.method, request.url))
         green("REQ Headers:")
-        if request.headers.get('Authorization'):
-            request.headers['Authorization'] = 'STRIPPED_OUT'
+        if request.headers.get("Authorization"):
+            request.headers["Authorization"] = "STRIPPED_OUT"
         pprint(request.headers)
-        if request.headers.get('Set-Cookie'):
+        if request.headers.get("Set-Cookie"):
             green("REQ Cookies:")
-            pprint(request.headers.get('Set-Cookie'))
+            pprint(request.headers.get("Set-Cookie"))
         if request.body:
             body = decode_as_utf8(request.body)
             if trim:
@@ -383,26 +428,34 @@ def print_response(
 
 
 def log_response(
-        response: Response, *, trim: bool = True, trim_offset: int = 2048,
-        content_only: bool = True):
+    response: Response,
+    *,
+    trim: bool = True,
+    trim_offset: int = 2048,
+    content_only: bool = True
+):
     request = response.request
 
     logging.debug(
-        "RESPONSE TIME | %s | %s %s", str(response.elapsed), request.method,
-        request.url)
+        "RESPONSE TIME | %s | %s %s",
+        str(response.elapsed),
+        request.method,
+        request.url,
+    )
     if response.history:
         logging.debug("REQ was redirected")
         for r in response.history:
             logging.debug("Intermediate REQ: %s %s", r.request.method, r.url)
-            if r.request.headers.get('Authorization'):
-                r.request.headers['Authorization'] = 'STRIPPED_OUT'
+            if r.request.headers.get("Authorization"):
+                r.request.headers["Authorization"] = "STRIPPED_OUT"
             logging.debug("Intermediate REQ Headers: %s", r.request.headers)
             if r.request.body:
                 body = decode_as_utf8(r.request.body)
                 if trim:
                     logging.debug(
                         "Intermediate REQ Body (trimmed): %s",
-                        body[0:trim_offset])
+                        body[0:trim_offset],
+                    )
                 else:
                     logging.debug("Intermediate REQ Body: %s", body)
             else:
@@ -418,22 +471,30 @@ def log_response(
                 if trim or len(r.content) > trim_offset:
                     logging.debug(
                         "Intermediate RESP Content (trimmed%s): %s",
-                        content[0:trim_offset], content_only_msg)
+                        content[0:trim_offset],
+                        content_only_msg,
+                    )
                 else:
                     logging.debug(
-                        "Intermediate RSP Content%s: %s", content,
-                        content_only_msg)
+                        "Intermediate RSP Content%s: %s",
+                        content,
+                        content_only_msg,
+                    )
         logging.debug(
-            "Final destination: %s %s -> %d %s", request.method, request.url,
-            response.status_code, response.url)
+            "Final destination: %s %s -> %d %s",
+            request.method,
+            request.url,
+            response.status_code,
+            response.url,
+        )
     else:
         logging.debug("REQ URL: %s %s", request.method, request.url)
-        if request.headers.get('Authorization'):
-            request.headers['Authorization'] = 'STRIPPED_OUT'
+        if request.headers.get("Authorization"):
+            request.headers["Authorization"] = "STRIPPED_OUT"
         logging.debug("REQ Headers:", request.headers)
 
-        if request.headers.get('Set-Cookie'):
-            logging.debug("REQ Cookies:", request.headers.get('Set-Cookie'))
+        if request.headers.get("Set-Cookie"):
+            logging.debug("REQ Cookies:", request.headers.get("Set-Cookie"))
 
         if request.body:
             body = decode_as_utf8(request.body)
@@ -445,7 +506,8 @@ def log_response(
             logging.debug("REQ had no body")
 
         logging.debug(
-            "RSP Status: %s %s", response.status_code, response.reason)
+            "RSP Status: %s %s", response.status_code, response.reason
+        )
         logging.debug("RSP URL: %s", response.url)
         logging.debug("RSP Headers: %s", response.headers)
         logging.debug("RSP Cookies: %s", response.cookies)
@@ -458,8 +520,10 @@ def log_response(
             content = extract_page_contents(content)
         if trim:
             logging.debug(
-                "RSP Content (trimmed%s): %s", content[0:trim_offset],
-                content_only_msg)
+                "RSP Content (trimmed%s): %s",
+                content[0:trim_offset],
+                content_only_msg,
+            )
         else:
             logging.debug("RSP Content%s: %s", content, content_only_msg)
 
@@ -474,14 +538,18 @@ def int_api_ch_search(term: str) -> dict:
     :type term: str
     :return: a JSON response from Companies House Search endpoint
     """
-    url = get_absolute_url('internal-api:companies-house-search')
+    url = get_absolute_url("internal-api:companies-house-search")
     params = {"term": term}
     response = make_request(
-        Method.GET, url, params=params, allow_redirects=False)
+        Method.GET, url, params=params, allow_redirects=False
+    )
     with assertion_msg(
-            "Expected 200 OK from GET %s but instead got %s. In case you're "
-            "getting 301 Redirect then check if you're using correct protocol "
-            "https or http", response.url, response.status_code):
+        "Expected 200 OK from GET %s but instead got %s. In case you're "
+        "getting 301 Redirect then check if you're using correct protocol "
+        "https or http",
+        response.url,
+        response.status_code,
+    ):
         assert response.status_code == 200
     logging.debug("Company House Search result: %s", response.json())
     validate(response.json(), COMPANIES)
@@ -509,8 +577,9 @@ def extract_csrf_middleware_token(response: Response):
 
 def extract_registration_page_link(response: Response) -> str:
     with assertion_msg(
-            "Can't extract link to the Registration page as the response has "
-            "no content"):
+        "Can't extract link to the Registration page as the response has "
+        "no content"
+    ):
         assert response.content
     css_selector = "#header-register-link::attr(href)"
     link = extract_by_css(response, css_selector)
@@ -545,8 +614,10 @@ def get_absolute_path_of_file(filename):
     relative_path = os.path.join("tests", "functional", "files", filename)
     absolute_path = os.path.abspath(relative_path)
     with assertion_msg(
-            "Could not find '%s' in ./tests/functional/files. Please check the"
-            " filename!", filename):
+        "Could not find '%s' in ./tests/functional/files. Please check the"
+        " filename!",
+        filename,
+    ):
         assert os.path.exists(absolute_path)
 
     return absolute_path
@@ -608,8 +679,11 @@ def check_hash_of_remote_file(expected_hash, file_url):
     response = requests.get(file_url)
     file_hash = hashlib.md5(response.content).hexdigest()
     with assertion_msg(
-            "Expected hash of file downloaded from %s to be %s but got %s",
-            file_url, expected_hash, file_hash):
+        "Expected hash of file downloaded from %s to be %s but got %s",
+        file_url,
+        expected_hash,
+        file_hash,
+    ):
         assert expected_hash == file_hash
 
 
@@ -637,15 +711,15 @@ def assertion_msg(message: str, *args):
 
 
 def red(x: str):
-    cprint(x, 'red', attrs=['bold'])
+    cprint(x, "red", attrs=["bold"])
 
 
 def green(x: str):
-    cprint(x, 'green', attrs=['bold'])
+    cprint(x, "green", attrs=["bold"])
 
 
 def blue(x: str):
-    cprint(x, 'blue', attrs=['bold'])
+    cprint(x, "blue", attrs=["bold"])
 
 
 def surround(text: str, tag: str):
@@ -666,8 +740,12 @@ def random_chars(size, *, chars=ascii_uppercase):
 
 
 def sentence(
-        *, max_length: int = 60, min_word_length: int = 9, max_words: int = 10,
-        min_words: int = 3) -> str:
+    *,
+    max_length: int = 60,
+    min_word_length: int = 9,
+    max_words: int = 10,
+    min_words: int = 3
+) -> str:
     """Generate a random string consisting of rare english words.
 
     NOTE:
@@ -705,7 +783,8 @@ def rare_word(*, min_length: int = 9, max_length: int = 20):
 
 
 def extract_and_set_csrf_middleware_token(
-        context: Context, response: Response, supplier_alias: str):
+    context: Context, response: Response, supplier_alias: str
+):
     """Extract CSRF Token from response & set it in Supplier's scenario data.
 
     :param context: behave `context` object
@@ -725,29 +804,58 @@ def random_case_study_data(alias: str) -> CaseStudy:
     sector = choice(SECTORS)
     images = PNGs + JPGs + JPEGs
     image_1, image_2, image_3 = (choice(images) for _ in range(3))
-    (title, summary, description, caption_1, caption_2, caption_3, testimonial,
-     source_name, source_job, source_company) = (sentence() for _ in range(10))
+    (
+        title,
+        summary,
+        description,
+        caption_1,
+        caption_2,
+        caption_3,
+        testimonial,
+        source_name,
+        source_job,
+        source_company,
+    ) = (sentence() for _ in range(10))
     website = "http://{}.{}".format(rare_word(min_length=15), rare_word())
     keywords = ", ".join(sentence().split())
 
     case_study = CaseStudy(
-        alias=alias, title=title, summary=summary, description=description,
-        sector=sector, website=website, keywords=keywords, image_1=image_1,
-        image_2=image_2, image_3=image_3, caption_1=caption_1,
-        caption_2=caption_2, caption_3=caption_3, testimonial=testimonial,
-        source_name=source_name, source_job=source_job,
-        source_company=source_company)
+        alias=alias,
+        title=title,
+        summary=summary,
+        description=description,
+        sector=sector,
+        website=website,
+        keywords=keywords,
+        image_1=image_1,
+        image_2=image_2,
+        image_3=image_3,
+        caption_1=caption_1,
+        caption_2=caption_2,
+        caption_3=caption_3,
+        testimonial=testimonial,
+        source_name=source_name,
+        source_job=source_job,
+        source_company=source_company,
+    )
 
     return case_study
 
 
 def random_feedback_data(
-        *, name: str = None, email: str = None, company_name: str = None,
-        country: str = None, comment: str = None,
-        terms: str = None, g_recaptcha_response: str = None) -> Feedback:
+    *,
+    name: str = None,
+    email: str = None,
+    company_name: str = None,
+    country: str = None,
+    comment: str = None,
+    terms: str = None,
+    g_recaptcha_response: str = None
+) -> Feedback:
     name = name or rare_word(min_length=12)
-    email = email or ("test+buyer_{}@directory.uktrade.io"
-                      .format(rare_word(min_length=15)))
+    email = email or (
+        "test+buyer_{}@directory.uktrade.io".format(rare_word(min_length=15))
+    )
     company_name = company_name or rare_word(min_length=12)
     country = country or rare_word(min_length=12)
     comment = comment or sentence(max_length=1000)
@@ -755,24 +863,38 @@ def random_feedback_data(
     terms = terms or "on"
 
     feedback = Feedback(
-        name=name, email=email, company_name=company_name,
-        country=country, comment=comment, terms=terms,
-        g_recaptcha_response=g_recaptcha_response)
+        name=name,
+        email=email,
+        company_name=company_name,
+        country=country,
+        comment=comment,
+        terms=terms,
+        g_recaptcha_response=g_recaptcha_response,
+    )
 
     return feedback
 
 
 def random_message_data(
-        *, alias: str = None, body: str = None, company_name: str = None,
-        country: str = None, email_address: str = None, full_name: str = None,
-        g_recaptcha_response: str = None, sector: str = None,
-        subject: str = None, terms: str = None) -> Feedback:
+    *,
+    alias: str = None,
+    body: str = None,
+    company_name: str = None,
+    country: str = None,
+    email_address: str = None,
+    full_name: str = None,
+    g_recaptcha_response: str = None,
+    sector: str = None,
+    subject: str = None,
+    terms: str = None
+) -> Feedback:
     alias = alias or "test message"
     body = body or sentence(max_length=1000)
     company_name = company_name or rare_word(min_length=12)
     country = country or rare_word(min_length=12)
-    email_address = email_address or ("test+buyer_{}@directory.uktrade.io"
-                                      .format(rare_word(min_length=15)))
+    email_address = email_address or (
+        "test+buyer_{}@directory.uktrade.io".format(rare_word(min_length=15))
+    )
     full_name = full_name or sentence(min_words=2, max_words=2)
     sector = sector or random.choice(SECTORS)
     subject = subject or sentence(max_length=200)
@@ -780,10 +902,17 @@ def random_message_data(
     terms = terms or "on"
 
     message = Message(
-        alias=alias, body=body, company_name=company_name, country=country,
-        email_address=email_address, full_name=full_name,
-        g_recaptcha_response=g_recaptcha_response, sector=sector,
-        subject=subject, terms=terms)
+        alias=alias,
+        body=body,
+        company_name=company_name,
+        country=country,
+        email_address=email_address,
+        full_name=full_name,
+        g_recaptcha_response=g_recaptcha_response,
+        sector=sector,
+        subject=subject,
+        terms=terms,
+    )
 
     return message
 
@@ -805,19 +934,27 @@ def find_active_company_without_fas_profile(alias: str) -> Company:
         if has_profile:
             logging.debug(
                 "Selected company has a FAS profile: %s. Will try a "
-                "different one.", random_company_number)
+                "different one.",
+                random_company_number,
+            )
         else:
             logging.debug(
                 "Found a company without a FAS profile: %s.",
-                random_company_number)
+                random_company_number,
+            )
         is_registered = already_registered(random_company_number)
         if is_registered:
             logging.debug(
                 "Company %s is already registered with FAB. Will try a "
-                "different one.", random_company_number)
+                "different one.",
+                random_company_number,
+            )
         else:
-            logging.debug("Company %s is not registered with FAB: Getting "
-                          "it details from CH...", random_company_number)
+            logging.debug(
+                "Company %s is not registered with FAB: Getting "
+                "it details from CH...",
+                random_company_number,
+            )
 
         json = int_api_ch_search(random_company_number)
 
@@ -826,30 +963,53 @@ def find_active_company_without_fas_profile(alias: str) -> Company:
             if json[0]["company_status"] == "active":
                 active = True
                 with assertion_msg(
-                        "Expected to get details of company no: %s but got %s",
-                        random_company_number, json[0]["company_number"]):
+                    "Expected to get details of company no: %s but got %s",
+                    random_company_number,
+                    json[0]["company_number"],
+                ):
                     assert json[0]["company_number"] == random_company_number
             else:
                 counter += 1
-                has_profile, is_registered, exists, active = \
-                    True, True, False, False
-                logging.debug("Company with number %s is not active. It's %s. "
-                              "Trying a different one...",
-                              random_company_number, json[0]["company_status"])
+                has_profile, is_registered, exists, active = (
+                    True,
+                    True,
+                    False,
+                    False,
+                )
+                logging.debug(
+                    "Company with number %s is not active. It's %s. "
+                    "Trying a different one...",
+                    random_company_number,
+                    json[0]["company_status"],
+                )
         else:
             counter += 1
-            has_profile, is_registered, exists, active = \
-                True, True, False, False
-            logging.debug("Company with number %s does not exist. Trying a "
-                          "different one...", random_company_number)
+            has_profile, is_registered, exists, active = (
+                True,
+                True,
+                False,
+                False,
+            )
+            logging.debug(
+                "Company with number %s does not exist. Trying a "
+                "different one...",
+                random_company_number,
+            )
 
-    logging.debug("It took %s attempt(s) to find an active Company without a "
-                  "FAS profile and not already registered with FAB: %s - %s",
-                  counter, json[0]["title"], json[0]["company_number"])
+    logging.debug(
+        "It took %s attempt(s) to find an active Company without a "
+        "FAS profile and not already registered with FAB: %s - %s",
+        counter,
+        json[0]["title"],
+        json[0]["company_number"],
+    )
     company = Company(
-        alias=alias, title=json[0]["title"].strip(),
-        number=json[0]["company_number"], companies_house_details=json[0],
-        case_studies={})
+        alias=alias,
+        title=json[0]["title"].strip(),
+        number=json[0]["company_number"],
+        companies_house_details=json[0],
+        case_studies={},
+    )
     return company
 
 
@@ -865,7 +1025,7 @@ def has_fas_profile(company_number: str) -> bool:
                                                    with zeroes)
     :return: True/False based on the presence of FAS profile
     """
-    endpoint = get_absolute_url('ui-supplier:suppliers')
+    endpoint = get_absolute_url("ui-supplier:suppliers")
     url = "{}/{}".format(endpoint, company_number)
     response = make_request(Method.GET, url, allow_redirects=False)
     return response.status_code == 301
@@ -877,7 +1037,7 @@ def already_registered(company_number: str) -> bool:
     :param company_number:
     :return: True/False based on the presence of FAB profile
     """
-    url = get_absolute_url('ui-buyer:landing')
+    url = get_absolute_url("ui-buyer:landing")
     data = {"company_number": company_number}
     headers = {"Referer": url}
 
@@ -913,8 +1073,9 @@ def get_companies(*, number: int = 100) -> CompaniesList:
     :param number: (optional) expected number of companies to find
     :return: a list of Company named tuples (all with "test" alias)
     """
-    return [find_active_company_without_fas_profile("test") for _ in
-            range(number)]
+    return [
+        find_active_company_without_fas_profile("test") for _ in range(number)
+    ]
 
 
 def save_companies(companies: CompaniesList):
@@ -926,10 +1087,11 @@ def save_companies(companies: CompaniesList):
     list_dict = []
     for company in companies:
         list_dict.append(
-            {key: getattr(company, key) for key in company._fields})
+            {key: getattr(company, key) for key in company._fields}
+        )
 
-    path = os.path.join(TEST_IMAGES_DIR, 'companies.json')
-    with open(path, 'w', encoding='utf8') as f:
+    path = os.path.join(TEST_IMAGES_DIR, "companies.json")
+    with open(path, "w", encoding="utf8") as f:
         f.write(json.dumps(list_dict, indent=4))
 
 
@@ -938,8 +1100,8 @@ def load_companies() -> CompaniesList:
 
     :return: a list of named tuples with basic Company details
     """
-    path = os.path.join(TEST_IMAGES_DIR, 'companies.json')
-    with open(path, 'r', encoding='utf8') as f:
+    path = os.path.join(TEST_IMAGES_DIR, "companies.json")
+    with open(path, "r", encoding="utf8") as f:
         companies = json.load(f)
     return [Company(**company) for company in companies]
 
@@ -953,8 +1115,9 @@ def update_companies():
     inactive_counter = 0
     registered_counter = 0
     for index, company in enumerate(companies):
-        progress_message = ("Updating company {} out of {}: {} - {}".format(
-            index + 1, companies_number, company.number, company.title))
+        progress_message = "Updating company {} out of {}: {} - {}".format(
+            index + 1, companies_number, company.number, company.title
+        )
         blue(progress_message)
         exists, active, is_registered = False, False, False
         ch_result = int_api_ch_search(company.number)
@@ -974,12 +1137,16 @@ def update_companies():
                     is_registered = False
             else:
                 inactive_counter += 1
-                red("Company %s - %s is not active any more" % (company.number,
-                                                                company.title))
+                red(
+                    "Company %s - %s is not active any more"
+                    % (company.number, company.title)
+                )
         else:
             doesnt_exit_counter += 1
-            red("Company %s - %s does not exist any more" % (company.number,
-                                                             company.title))
+            red(
+                "Company %s - %s does not exist any more"
+                % (company.number, company.title)
+            )
         if not exists or (exists and not active):
             blue("Searching for a new replacement company")
             new = find_active_company_without_fas_profile("test")
@@ -987,13 +1154,17 @@ def update_companies():
             blue("Found company %s - %s" % (new.number, new.title))
 
         if exists and active and not is_registered:
-            green("Company %s - %s is still active, it's not registered with "
-                  "FAB" % (company.number, company.title))
+            green(
+                "Company %s - %s is still active, it's not registered with "
+                "FAB" % (company.number, company.title)
+            )
             updated_company = Company(
-                alias="test", title=ch_result[0]["title"].strip(),
+                alias="test",
+                title=ch_result[0]["title"].strip(),
                 number=ch_result[0]["company_number"],
                 companies_house_details=ch_result[0],
-                case_studies={})
+                case_studies={},
+            )
             updated_companies.append(updated_company)
 
     blue("Number of already registered companies %d" % registered_counter)
@@ -1033,6 +1204,7 @@ def get_language_code(language: str):
 
 def get_fas_page_url(page_name: str, *, language_code: str = None):
     from tests.functional.registry import PAGE_REGISTRY
+
     selector = PAGE_REGISTRY[page_name.lower()]
     url = get_absolute_url(selector)
     if language_code:
@@ -1042,6 +1214,7 @@ def get_fas_page_url(page_name: str, *, language_code: str = None):
 
 def get_fabs_page_url(page_name: str, *, language_code: str = None):
     from tests.functional.registry import PAGE_REGISTRY
+
     url = get_absolute_url(PAGE_REGISTRY[page_name.lower()])
     if language_code:
         url += "?lang={}".format(language_code)
@@ -1055,7 +1228,7 @@ def extract_main_error(content: str) -> str:
     :return: error message or None is no error was detected
     """
     soup = BeautifulSoup(content, "lxml")
-    sections = soup.find_all('main')
+    sections = soup.find_all("main")
     lines = [
         line.strip()
         for section in sections
@@ -1079,7 +1252,7 @@ def extract_section_error(content: str) -> str:
     if not content:
         return None
     soup = BeautifulSoup(content, "lxml")
-    sections = soup.find_all('section')
+    sections = soup.find_all("section")
     lines = [
         line.strip()
         for section in sections
@@ -1113,13 +1286,18 @@ def extract_form_errors(content: str) -> str:
     has_errors = any(
         indicator in line.lower()
         for line in form_errors.splitlines()
-        for indicator in ERROR_INDICATORS)
+        for indicator in ERROR_INDICATORS
+    )
     return form_errors if has_errors else ""
 
 
 def detect_page_language(
-        *, url: str = None, content: str = None, main: bool = False,
-        rounds: int = 15) -> DefaultDict[str, List]:
+    *,
+    url: str = None,
+    content: str = None,
+    main: bool = False,
+    rounds: int = 15
+) -> DefaultDict[str, List]:
     """Detect the language of the page.
 
     NOTE:
@@ -1149,14 +1327,19 @@ def detect_page_language(
     if not main:
         logging.debug(
             "Will analyse the contents of the whole page, including page "
-            "header & footer")
+            "header & footer"
+        )
         text = extract_page_contents(
-            content, strip_header=False, strip_footer=False,
-            strip_unordered_lists=False)
+            content,
+            strip_header=False,
+            strip_footer=False,
+            strip_unordered_lists=False,
+        )
     else:
         logging.debug(
             "Will analyse only the main content of the page and ignore the "
-            "page header & footer")
+            "page header & footer"
+        )
         text = extract_page_contents(content)
 
     raw_results = {}
@@ -1171,8 +1354,10 @@ def detect_page_language(
             flattened_results[detection.lang].append(detection.prob)
 
     logging.debug(
-        "Language detection results after %d rounds: %s", rounds,
-        flattened_results)
+        "Language detection results after %d rounds: %s",
+        rounds,
+        flattened_results,
+    )
     return flattened_results
 
 
@@ -1188,8 +1373,9 @@ def get_number_of_search_result_pages(response: Response) -> int:
              information about number of pages
     """
     no_page_counter = 0
-    css_selector = (".company-profile-details-body-toolbar-bottom"
-                    " span.current::text")
+    css_selector = (
+        ".company-profile-details-body-toolbar-bottom" " span.current::text"
+    )
     pages = extract_by_css(response, css_selector).strip()
     page_numbers = [int(word) for word in pages.split() if word.isdigit()]
     last_page = page_numbers[-1] if len(page_numbers) == 2 else no_page_counter
@@ -1200,7 +1386,7 @@ def get_company_email(number: str) -> str:
     """Get email address associated with company."""
     response = DIRECTORY_CLIENT.get_company_by_ch_id(number)
     check_response(response, 200)
-    email = response.json()['company_email']
+    email = response.json()["company_email"]
     logging.debug("Email for company %s is %s", number, email)
     return email
 
@@ -1217,13 +1403,15 @@ def get_published_companies(context: Context) -> list:
 
 
 def get_published_companies_with_n_sectors(
-        context: Context, number_of_sectors: int) -> list:
+    context: Context, number_of_sectors: int
+) -> list:
     """Get a List of published companies with at least N associated sectors.
 
     :return: a list of dictionaries with matching published companies
     """
     response = DIRECTORY_CLIENT.get_published_companies(
-        minimal_number_of_sectors=number_of_sectors)
+        minimal_number_of_sectors=number_of_sectors
+    )
     context.response = response
     check_response(response, 200)
     return response.json()
@@ -1237,12 +1425,11 @@ def get_verification_code(context: Context, company_number: str):
     response = DIRECTORY_CLIENT.get_company_by_ch_id(company_number)
     context.response = response
     check_response(response, 200)
-    verification_code = response.json()['letter_verification_code']
+    verification_code = response.json()["letter_verification_code"]
     return verification_code
 
 
-def is_verification_letter_sent(
-        context: Context, company_number: str) -> bool:
+def is_verification_letter_sent(context: Context, company_number: str) -> bool:
     """Check if verification letter was sent.
 
     :return: True if letter was sent and False if it wasn't
@@ -1250,25 +1437,32 @@ def is_verification_letter_sent(
     response = DIRECTORY_CLIENT.get_company_by_ch_id(company_number)
     context.response = response
     check_response(response, 200)
-    result = response.json()['is_verification_letter_sent']
+    result = response.json()["is_verification_letter_sent"]
     return result
 
 
 def delete_supplier_data_from_sso(
-        email_address: str, *, context: Context = None):
+    email_address: str, *, context: Context = None
+):
     response = SSO_CLIENT.delete_user_by_email(email_address)
     if context:
         context.response = response
     if response.status_code == 204:
         logging.debug(
-            "Successfully deleted %s user data from SSO DB", email_address)
+            "Successfully deleted %s user data from SSO DB", email_address
+        )
         logging.debug(
-            "RESPONSE TIME | %s | %s %s", str(response.elapsed),
-            response.request.method, response.url)
+            "RESPONSE TIME | %s | %s %s",
+            str(response.elapsed),
+            response.request.method,
+            response.url,
+        )
     else:
         logging.error(
             "Something went wrong when trying to delete user data for %s from "
-            "SSO DB", email_address)
+            "SSO DB",
+            email_address,
+        )
 
 
 def delete_supplier_data_from_dir(ch_id: str, *, context: Context = None):
@@ -1278,35 +1472,42 @@ def delete_supplier_data_from_dir(ch_id: str, *, context: Context = None):
     if response.status_code == 204:
         logging.debug(
             "Successfully deleted supplier data for company %s from DIR DB",
-            ch_id)
+            ch_id,
+        )
         logging.debug(
-            "RESPONSE TIME | %s | %s %s", str(response.elapsed),
-            response.request.method, response.url)
+            "RESPONSE TIME | %s | %s %s",
+            str(response.elapsed),
+            response.request.method,
+            response.url,
+        )
     else:
-        msg = ("INFO: Could not delete company {} from DIR DB!\n"
-               "Most likely it's because a FAB profile wasn't created for the "
-               "company used in the scenario or if in the scenario there is "
-               "more than one supplier actor associated with the same company,"
-               " then you're seeing this message because company data was "
-               "already deleted when the data for the first supplier actor was"
-               " deleted.\nJust in case, here's the response from the server: "
-               "\n{}".format(ch_id, response.content))
+        msg = (
+            "INFO: Could not delete company {} from DIR DB!\n"
+            "Most likely it's because a FAB profile wasn't created for the "
+            "company used in the scenario or if in the scenario there is "
+            "more than one supplier actor associated with the same company,"
+            " then you're seeing this message because company data was "
+            "already deleted when the data for the first supplier actor was"
+            " deleted.\nJust in case, here's the response from the server: "
+            "\n{}".format(ch_id, response.content)
+        )
         blue(msg)
         logging.error(msg)
 
 
 def flag_sso_account_as_verified(context: Context, email_address: str):
     response = SSO_CLIENT.flag_user_email_as_verified_or_not(
-        email_address, verified=True)
+        email_address, verified=True
+    )
     context.response = response
     check_response(response, 204)
 
 
 def filter_out_legacy_industries(company: dict) -> list:
-    sectors = company['sectors']
-    logging.error('Sectors before: %s', sectors)
+    sectors = company["sectors"]
+    logging.error("Sectors before: %s", sectors)
     result = [sector for sector in sectors if sector in INDUSTRY_CHOICES]
-    logging.error('Sectors after: %s', result)
+    logging.error("Sectors after: %s", result)
     return result
 
 
@@ -1316,49 +1517,73 @@ def mailgun_get_directory_message(context: Context, message_url: str) -> dict:
     # this will help us to get the raw MIME
     headers = {"Accept": "message/rfc2822"}
     response = make_request(
-        Method.GET, message_url, headers=headers,
-        auth=("api", MAILGUN_DIRECTORY_SECRET_API_KEY))
+        Method.GET,
+        message_url,
+        headers=headers,
+        auth=("api", MAILGUN_DIRECTORY_SECRET_API_KEY),
+    )
     context.response = response
 
     with assertion_msg(
-            "Expected to get 200 OK from MailGun when getting message details"
-            " but got %s %s instead", response.status_code, response.reason):
+        "Expected to get 200 OK from MailGun when getting message details"
+        " but got %s %s instead",
+        response.status_code,
+        response.reason,
+    ):
         assert response.status_code == 200
 
     return response.json()
 
 
 def mailgun_find_email_with_request_for_collaboration(
-        context: Context, actor: Actor, company: Company) -> dict:
+    context: Context, actor: Actor, company: Company
+) -> dict:
     logging.debug(
         "Trying to find email with a request for collaboration with company: "
-        "%s", company.title)
+        "%s",
+        company.title,
+    )
     subject = FAB_CONFIRM_COLLABORATION_SUBJECT.format(company.title)
     response = find_mail_gun_events(
-        context, service=MailGunService.DIRECTORY, recipient=actor.email,
-        event=MailGunEvent.ACCEPTED, subject=subject)
+        context,
+        service=MailGunService.DIRECTORY,
+        recipient=actor.email,
+        event=MailGunEvent.ACCEPTED,
+        subject=subject,
+    )
     context.response = response
     with assertion_msg(
-            "Expected to find an email with a request for collaboration with "
-            "company: '%s'", company.alias):
+        "Expected to find an email with a request for collaboration with "
+        "company: '%s'",
+        company.alias,
+    ):
         assert response.status_code == 200
     message_url = response.json()["items"][0]["storage"]["url"]
     return mailgun_get_directory_message(context, message_url)
 
 
 def mailgun_find_email_with_ownership_transfer_request(
-        context: Context, actor: Actor, company: Company) -> dict:
+    context: Context, actor: Actor, company: Company
+) -> dict:
     logging.debug(
         "Trying to find email with an account ownership transfer request for "
-        "company: %s", company.title)
+        "company: %s",
+        company.title,
+    )
     subject = FAB_TRANSFER_OWNERSHIP_SUBJECT.format(company.title)
     response = find_mail_gun_events(
-        context, service=MailGunService.DIRECTORY, recipient=actor.email,
-        event=MailGunEvent.ACCEPTED, subject=subject)
+        context,
+        service=MailGunService.DIRECTORY,
+        recipient=actor.email,
+        event=MailGunEvent.ACCEPTED,
+        subject=subject,
+    )
     context.response = response
     with assertion_msg(
-            "Expected to find an email with an account ownership transfer "
-            "request for company: '%s'", company.alias):
+        "Expected to find an email with an account ownership transfer "
+        "request for company: '%s'",
+        company.alias,
+    ):
         assert response.status_code == 200
     message_url = response.json()["items"][0]["storage"]["url"]
     return mailgun_get_directory_message(context, message_url)
@@ -1389,7 +1614,8 @@ def extract_link_with_invitation_for_collaboration(payload: str) -> str:
     invitation_link = payload[start:end]
     assert invitation_link
     logging.debug(
-        "Found the link with invitation for collaboration %s", invitation_link)
+        "Found the link with invitation for collaboration %s", invitation_link
+    )
     return invitation_link
 
 
@@ -1400,42 +1626,51 @@ def extract_link_with_ownership_transfer_request(payload: str) -> str:
     assert ownership_request_link
     logging.debug(
         "Found the link with FAB profile ownership request %s",
-        ownership_request_link)
+        ownership_request_link,
+    )
     return ownership_request_link
 
 
 def send_verification_letter(
-        context: Context, company: Company, *,
-        template: str = STANNP_LETTER_TEMPLATE_ID) -> str:
-    address = company.companies_house_details['address']
-    address_line_1 = address.get('address_line_1', 'Fake address line 1')
-    address_line_2 = address.get('address_line_2', 'Fake address line 2')
-    locality = address.get('address_line_2', 'Fake locality')
+    context: Context,
+    company: Company,
+    *,
+    template: str = STANNP_LETTER_TEMPLATE_ID
+) -> str:
+    address = company.companies_house_details["address"]
+    address_line_1 = address.get("address_line_1", "Fake address line 1")
+    address_line_2 = address.get("address_line_2", "Fake address line 2")
+    locality = address.get("address_line_2", "Fake locality")
     recipient = {
-        'postal_full_name': company.owner,
-        'address_line_1': address_line_1,
-        'address_line_2': address_line_2,
-        'locality': locality,
-        'country': 'United Kingdom',
-        'postal_code': address['postal_code'],
-        'custom_fields': [
-            ('full_name', company.owner),
-            ('company_name', company.title),
-            ('verification_code', company.verification_code),
-            ('date', datetime.date.today().strftime('%d/%m/%Y')),
-            ('company', company.title),
-        ]
+        "postal_full_name": company.owner,
+        "address_line_1": address_line_1,
+        "address_line_2": address_line_2,
+        "locality": locality,
+        "country": "United Kingdom",
+        "postal_code": address["postal_code"],
+        "custom_fields": [
+            ("full_name", company.owner),
+            ("company_name", company.title),
+            ("verification_code", company.verification_code),
+            ("date", datetime.date.today().strftime("%d/%m/%Y")),
+            ("company", company.title),
+        ],
     }
     response = STANNP_CLIENT.send_letter(
-        template=template, recipient=recipient)
+        template=template, recipient=recipient
+    )
     context.response = response
     with assertion_msg(
-            "Expected to get 200 OK from StanNP API, but got {}"
-            .format(response.status_code)):
+        "Expected to get 200 OK from StanNP API, but got {}".format(
+            response.status_code
+        )
+    ):
         assert response.status_code == 200
     with assertion_msg(
-            "Expected to see 'success=True' in StanNP API response, but got {}"
-            .format(response.json()["success"])):
+        "Expected to see 'success=True' in StanNP API response, but got {}".format(
+            response.json()["success"]
+        )
+    ):
         assert response.json()["success"]
     return response.json()
 
@@ -1449,20 +1684,29 @@ def get_pdf_from_stannp(pdf_url: str):
 
 
 def extract_text_from_pdf(
-        path: str, *, codec: str = "utf-8", password: str = "",
-        maxpages: int = 0, caching: bool = True) -> str:
+    path: str,
+    *,
+    codec: str = "utf-8",
+    password: str = "",
+    maxpages: int = 0,
+    caching: bool = True
+) -> str:
     rsrcmgr = PDFResourceManager()
     retstr = io.StringIO()
     laparams = LAParams()
     device = TextConverter(rsrcmgr, retstr, codec=codec, laparams=laparams)
-    fp = open(path, 'rb')
+    fp = open(path, "rb")
     interpreter = PDFPageInterpreter(rsrcmgr, device)
     pagenos = set()
 
-    for page in PDFPage.get_pages(fp, pagenos, maxpages=maxpages,
-                                  password=password,
-                                  caching=caching,
-                                  check_extractable=True):
+    for page in PDFPage.get_pages(
+        fp,
+        pagenos,
+        maxpages=maxpages,
+        password=password,
+        caching=caching,
+        check_extractable=True,
+    ):
         interpreter.process_page(page)
 
     text = retstr.getvalue()

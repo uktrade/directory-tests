@@ -23,22 +23,38 @@ from requests.exceptions import (
     Timeout,
     TooManyRedirects,
     UnrewindableBodyError,
-    URLRequired
+    URLRequired,
 )
 from urllib3.exceptions import HTTPError as BaseHTTPError
 
 # a list of exceptions that can be thrown by `requests` (and urllib3)
 REQUEST_EXCEPTIONS = (
-    BaseHTTPError, RequestException, HTTPError, ConnectionError, ProxyError,
-    SSLError, Timeout, ConnectTimeout, ReadTimeout, URLRequired,
-    TooManyRedirects, MissingSchema, InvalidSchema, InvalidURL, InvalidHeader,
-    ChunkedEncodingError, ContentDecodingError, StreamConsumedError,
-    RetryError, UnrewindableBodyError
+    BaseHTTPError,
+    RequestException,
+    HTTPError,
+    ConnectionError,
+    ProxyError,
+    SSLError,
+    Timeout,
+    ConnectTimeout,
+    ReadTimeout,
+    URLRequired,
+    TooManyRedirects,
+    MissingSchema,
+    InvalidSchema,
+    InvalidURL,
+    InvalidHeader,
+    ChunkedEncodingError,
+    ContentDecodingError,
+    StreamConsumedError,
+    RetryError,
+    UnrewindableBodyError,
 )
 
 
 class Method(Enum):
     """Lists all HTTP methods supported by `requests`."""
+
     DELETE = 0
     GET = 1
     HEAD = 2
@@ -55,11 +71,18 @@ class Method(Enum):
 
 
 def make_request(
-        method: Method, url: str, *, session: Session = None,
-        params: dict = None, headers: dict = None,
-        data: dict = None, files: dict = None,
-        allow_redirects: bool = True, auth: tuple = None, trim: bool = True) \
-        -> Response:
+    method: Method,
+    url: str,
+    *,
+    session: Session = None,
+    params: dict = None,
+    headers: dict = None,
+    data: dict = None,
+    files: dict = None,
+    allow_redirects: bool = True,
+    auth: tuple = None,
+    trim: bool = True
+) -> Response:
     """Make a desired HTTP request using optional parameters, headers and data.
 
     NOTE:
@@ -88,7 +111,7 @@ def make_request(
         assertion_msg,
         blue,
         log_response,
-        red
+        red,
     )
 
     with assertion_msg("Can't make a request without a valid URL!"):
@@ -101,9 +124,15 @@ def make_request(
     connect_timeout = 3.05
     read_timeout = 60
     request_kwargs = dict(
-        url=url, params=params, headers=headers, data=data,
-        files=files, allow_redirects=allow_redirects,
-        timeout=(connect_timeout, read_timeout), auth=auth)
+        url=url,
+        params=params,
+        headers=headers,
+        data=data,
+        files=files,
+        allow_redirects=allow_redirects,
+        timeout=(connect_timeout, read_timeout),
+        auth=auth,
+    )
 
     if not allow_redirects:
         msg = "REQ Follow redirects: disabled"
@@ -128,12 +157,14 @@ def make_request(
         else:
             raise KeyError("Unrecognized Method: %s", method.name)
     except REQUEST_EXCEPTIONS as ex:
-        red("Exception UTC datetime: %s" %
-            datetime.isoformat(datetime.utcnow()))
+        red(
+            "Exception UTC datetime: %s"
+            % datetime.isoformat(datetime.utcnow())
+        )
         red("{} {}".format(method, url))
         red("Parameters: {}".format(params))
-        if headers.get('Authorization'):
-            headers['Authorization'] = 'STRIPPED_OUT'
+        if headers.get("Authorization"):
+            headers["Authorization"] = "STRIPPED_OUT"
         red("Headers: {}".format(headers))
         red("Data: {}".format(data))
         red("Files: {}".format(files))
@@ -144,9 +175,15 @@ def make_request(
 
 
 def check_response(
-        response: Response, status_code: int, *, location: str = None,
-        locations: list = None, location_starts_with: str = None,
-        body_contains: list = None, unexpected_strings: list = None):
+    response: Response,
+    status_code: int,
+    *,
+    location: str = None,
+    locations: list = None,
+    location_starts_with: str = None,
+    body_contains: list = None,
+    unexpected_strings: list = None
+):
     """Check if SUT replied with an expected response.
 
     :param response: Response object return by `requests`
@@ -161,8 +198,10 @@ def check_response(
                                present in the response content
     """
     from tests.functional.utils.generic import assertion_msg
+
     with assertion_msg(
-            "Expected %s but got %s", status_code, response.status_code):
+        "Expected %s but got %s", status_code, response.status_code
+    ):
         assert response.status_code == status_code
 
     if body_contains:
@@ -183,21 +222,30 @@ def check_response(
 
     if location:
         new_location = response.headers.get("Location")
-        with assertion_msg("Expected Location header to be: '%s' but got '%s' "
-                           "instead.", location, new_location):
+        with assertion_msg(
+            "Expected Location header to be: '%s' but got '%s' " "instead.",
+            location,
+            new_location,
+        ):
             assert new_location == location
 
     if locations:
         new_location = response.headers.get("Location")
         with assertion_msg(
-                "Should redirect to one of these %d locations '%s' but instead"
-                " was redirected to '%s'", len(locations), locations,
-                new_location):
+            "Should redirect to one of these %d locations '%s' but instead"
+            " was redirected to '%s'",
+            len(locations),
+            locations,
+            new_location,
+        ):
             assert new_location in locations
 
     if location_starts_with:
         new_location = response.headers.get("Location")
         with assertion_msg(
-                "Expected Location header to start with: '%s' but got '%s' "
-                "instead.", location_starts_with, new_location):
+            "Expected Location header to start with: '%s' but got '%s' "
+            "instead.",
+            location_starts_with,
+            new_location,
+        ):
             assert new_location.startswith(location_starts_with)
