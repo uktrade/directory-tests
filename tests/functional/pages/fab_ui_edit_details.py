@@ -41,10 +41,7 @@ def go_to(session: Session) -> Response:
      * Supplier to be logged in
     """
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
-    response = make_request(Method.GET, URL, session=session, headers=headers)
-
-    should_be_here(response)
-    return response
+    return make_request(Method.GET, URL, session=session, headers=headers)
 
 
 def update_details(
