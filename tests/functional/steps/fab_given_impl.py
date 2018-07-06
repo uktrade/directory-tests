@@ -242,6 +242,7 @@ def fas_get_company_slug(
     company = context.get_company(company_alias)
     response = fas_ui_profile.go_to(session, company_number=company.number)
     context.response = response
+    fas_ui_profile.should_be_here(response)
     url = response.request.url
     last_item_idx = -1
     slash_idx = 1

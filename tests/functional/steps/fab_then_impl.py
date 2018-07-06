@@ -113,6 +113,7 @@ def fas_check_profiles(context: Context, supplier_alias: str):
     # Step 1 - go to company's profile page on FAS
     response = fas_ui_profile.go_to(actor.session, company.number)
     context.response = response
+    fas_ui_profile.should_be_here(response)
     # Step 2 - check if links to online profile are visible
     fas_ui_profile.should_see_online_profiles(company, response)
     logging.debug("%s can see all expected links to Online Profiles on "
@@ -198,6 +199,7 @@ def fas_should_see_all_case_studies(context: Context, supplier_alias: str):
     company = context.get_company(actor.company_alias)
     response = fas_ui_profile.go_to(actor.session, company.number)
     context.response = response
+    fas_ui_profile.should_be_here(response)
     case_studies = context.get_company(actor.company_alias).case_studies
     fas_ui_profile.should_see_case_studies(case_studies, response)
     logging.debug("%s can see all %d Case Studies on FAS Company's "
@@ -230,6 +232,7 @@ def fas_should_see_png_logo_thumbnail(context: Context, supplier_alias: str):
     # Step 1 - Go to the FAS profile page & extract URL of visible logo image
     response = fas_ui_profile.go_to(session, company.number)
     context.response = response
+    fas_ui_profile.should_be_here(response)
     visible_logo_url = extract_logo_url(response, fas=True)
     placeholder = FAS_LOGO_PLACEHOLDER_IMAGE
 
@@ -258,6 +261,7 @@ def fas_should_see_different_png_logo_thumbnail(
     # Step 1 - Go to the FAS profile page & extract URL of visible logo image
     response = fas_ui_profile.go_to(session, company.number)
     context.response = response
+    fas_ui_profile.should_be_here(response)
     visible_logo_url = extract_logo_url(response, fas=True)
     placeholder = FAS_LOGO_PLACEHOLDER_IMAGE
 
@@ -355,6 +359,7 @@ def fas_should_see_company_details(context: Context, supplier_alias: str):
     # Step 1 - Go to the FAS profile page & extract URL of visible logo image
     response = fas_ui_profile.go_to(session, company.number)
     context.response = response
+    fas_ui_profile.should_be_here(response)
 
     # Step 2 - Check if all details are visible on FAS
     fas_ui_profile.should_see_details(company, response, context.table)

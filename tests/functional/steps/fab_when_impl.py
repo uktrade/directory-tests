@@ -433,6 +433,7 @@ def prof_view_published_profile(context: Context, supplier_alias: str):
     # STEP 1 - go to the "View published profile" page
     response = fas_ui_profile.go_to(session, company.number)
     context.response = response
+    fas_ui_profile.should_be_here(response)
     logging.debug("Supplier is on the company's FAS page")
 
 
@@ -1476,6 +1477,7 @@ def fas_get_case_study_slug(
 
     response = fas_ui_profile.go_to(actor.session, company.number)
     context.response = response
+    fas_ui_profile.should_be_here(response)
 
     case_studies_details = fas_ui_profile.get_case_studies_details(response)
     for title, summary, href, slug in case_studies_details:

@@ -25,13 +25,8 @@ def go_to(session: Session, company_number: str) -> Response:
     """Go to Company's FAS profile page using company's number."""
     full_url = urljoin(URL, company_number)
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
-    response = make_request(
+    return make_request(
         Method.GET, full_url, session=session, headers=headers)
-
-    should_be_here(response, number=company_number)
-    logging.debug(
-        "User is on the Company %s FAS profile page", company_number)
-    return response
 
 
 def go_to_endpoint(session: Session, endpoint: str) -> Response:
