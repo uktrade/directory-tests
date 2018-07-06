@@ -402,6 +402,7 @@ def fas_find_supplier_using_case_study_details(
         term = search_terms[term_name]
         response = fas_ui_find_supplier.go_to(session, term=term)
         context.response = response
+        fas_ui_find_supplier.should_be_here(response)
         found = fas_ui_find_supplier.should_see_company(
             response, company.title)
         if found:
@@ -415,6 +416,7 @@ def fas_find_supplier_using_case_study_details(
                     response = fas_ui_find_supplier.go_to(
                         session, term=term, page=page_number)
                     context.response = response
+                    fas_ui_find_supplier.should_be_here(response)
                     found = fas_ui_find_supplier.should_see_company(
                         response, company.title)
                     if found:
@@ -460,6 +462,7 @@ def fas_supplier_cannot_be_found_using_case_study_details(
             term_name, search_terms)
         response = fas_ui_find_supplier.go_to(session, term=term)
         context.response = response
+        fas_ui_find_supplier.should_be_here(response)
         found = fas_ui_find_supplier.should_not_see_company(
             response, company.title)
         with assertion_msg(

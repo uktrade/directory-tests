@@ -1015,6 +1015,7 @@ def fas_search_using_company_details(
         term = search_terms[term_name]
         response = fas_ui_find_supplier.go_to(session, term=term)
         context.response = response
+        fas_ui_find_supplier.should_be_here(response)
         number_of_pages = get_number_of_search_result_pages(response)
         for page_number in range(1, number_of_pages + 1):
             search_responses[term_name] = response
@@ -1074,6 +1075,7 @@ def fas_search_with_empty_query(context: Context, buyer_alias: str):
     actor = context.get_actor(buyer_alias)
     session = actor.session
     context.response = fas_ui_find_supplier.go_to(session, term="")
+    fas_ui_find_supplier.should_be_here(context.response)
 
 
 def fas_should_be_told_about_empty_search_results(
@@ -1139,6 +1141,7 @@ def can_find_supplier_by_term(
     found = False
     endpoint = None
     response = fas_ui_find_supplier.go_to(session, term=term)
+    fas_ui_find_supplier.should_be_here(response)
     number_of_pages = get_number_of_search_result_pages(response)
     if number_of_pages == 0:
         return found, response, endpoint
@@ -1156,6 +1159,7 @@ def can_find_supplier_by_term(
             if next_page <= number_of_pages:
                 response = fas_ui_find_supplier.go_to(
                     session, term=term, page=next_page)
+                fas_ui_find_supplier.should_be_here(response)
             else:
                 logging.debug(
                     "Couldn't find the Supplier even on the last page of the "
@@ -1341,6 +1345,7 @@ def fas_browse_suppliers_using_every_sector_filter(
 
     response = fas_ui_find_supplier.go_to(session, term="")
     context.response = response
+    fas_ui_find_supplier.should_be_here(response)
 
     sector_filters_selector = "#id_sectors input::attr(value)"
     content = response.content.decode("utf-8")
@@ -1353,6 +1358,7 @@ def fas_browse_suppliers_using_every_sector_filter(
             actor_alias, sector
         )
         response = fas_ui_find_supplier.go_to(session, sectors=[sector])
+        fas_ui_find_supplier.should_be_here(response)
         results[sector] = {
             "url": response.request.url,
             "sectors": [sector],
@@ -1368,6 +1374,7 @@ def fas_browse_suppliers_by_multiple_sectors(
 
     response = fas_ui_find_supplier.go_to(session, term="")
     context.response = response
+    fas_ui_find_supplier.should_be_here(response)
 
     sector_selector = "#id_sectors input::attr(value)"
     content = response.content.decode("utf-8")
@@ -1381,6 +1388,7 @@ def fas_browse_suppliers_by_multiple_sectors(
         actor_alias, ", ".join(sectors)
     )
     response = fas_ui_find_supplier.go_to(session, sectors=sectors)
+    fas_ui_find_supplier.should_be_here(response)
     results["multiple choice"] = {
         "url": response.request.url,
         "sectors": sectors,
@@ -1396,6 +1404,7 @@ def fas_browse_suppliers_by_invalid_sectors(
 
     response = fas_ui_find_supplier.go_to(session, term="")
     context.response = response
+    fas_ui_find_supplier.should_be_here(response)
 
     sector_selector = "#id_sectors input::attr(value)"
     content = response.content.decode("utf-8")
@@ -1420,6 +1429,7 @@ def fas_clear_search_filters(context: Context, actor_alias: str):
     logging.debug("%s will clear the search filter", actor_alias)
     response = fas_ui_find_supplier.go_to(session, term="")
     context.response = response
+    fas_ui_find_supplier.should_be_here(response)
 
 
 def fas_browse_suppliers_by_company_sectors(
@@ -1433,6 +1443,7 @@ def fas_browse_suppliers_by_company_sectors(
 
     response = fas_ui_find_supplier.go_to(session, sectors=sectors)
     context.response = response
+    fas_ui_find_supplier.should_be_here(response)
 
     found = fas_ui_find_supplier.should_see_company(response, company.title)
 
@@ -1496,6 +1507,7 @@ def fas_search_with_term(context: Context, actor_alias: str, search_term: str):
     actor = context.get_actor(actor_alias)
     session = actor.session
     context.response = fas_ui_find_supplier.go_to(session, term=search_term)
+    fas_ui_find_supplier.should_be_here(context.response)
 
 
 def fab_go_to_letter_verification(

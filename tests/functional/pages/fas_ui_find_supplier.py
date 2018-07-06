@@ -37,11 +37,8 @@ def go_to(
     if sectors is not None:
         params.update({"sectors": sectors})
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
-    response = make_request(
+    return make_request(
         Method.GET, URL, session=session, params=params, headers=headers)
-
-    should_be_here(response)
-    return response
 
 
 def should_be_here(response, *, number=None):
