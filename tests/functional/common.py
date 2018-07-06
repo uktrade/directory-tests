@@ -9,12 +9,12 @@ DETAILS = {
     "SIZE": "number of employees",
     "SECTOR": "sector of interest",
     "RECIPIENT": "letters recipient full name",
-    "COUNTRIES": "countries to export to"
+    "COUNTRIES": "countries to export to",
 }
 
 
 PROFILES = {
     "FACEBOOK": "Facebook",
     "LINKEDIN": "LinkedIn",
-    "TWITTER": "Twitter"
+    "TWITTER": "Twitter",
 }
