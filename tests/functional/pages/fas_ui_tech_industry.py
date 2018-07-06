@@ -10,9 +10,14 @@ URL = get_absolute_url("ui-supplier:industries-tech")
 EXPECTED_STRINGS = [
     "UK technology",
     "See the UK's technology providers on the Find a supplier service",
-    "EVRYTHNG", "Arkessa", "Find other great UK companies", "Key facts",
+    "EVRYTHNG",
+    "Arkessa",
+    "Find other great UK companies",
+    "Key facts",
     "UK technology firms are global success stories",
-    "Read more about the company", "Company showcase", "Read case study"
+    "Read more about the company",
+    "Company showcase",
+    "Read case study",
 ]
 
 

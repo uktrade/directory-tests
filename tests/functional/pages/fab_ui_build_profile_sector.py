@@ -10,11 +10,21 @@ from tests.settings import SECTORS
 
 URL = get_absolute_url("ui-buyer:company-edit")
 EXPECTED_STRINGS = [
-    "Your company sector", "About your company", "Industry and exporting",
-    "What industry is your company in?", "< Back to previous step",
+    "Your company sector",
+    "About your company",
+    "Industry and exporting",
+    "What industry is your company in?",
+    "< Back to previous step",
     "Select the countries you would like to export to:",
-    "China", "Germany", "India", "Japan", "United States", "Other",
-    "Enter 3 maximum", "Back to previous step", "Save"
+    "China",
+    "Germany",
+    "India",
+    "Japan",
+    "United States",
+    "Other",
+    "Enter 3 maximum",
+    "Back to previous step",
+    "Save",
 ] + SECTORS
 
 
@@ -22,7 +32,8 @@ def should_be_here(response: Response):
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug(
         "Successfully got to the FAB Build and improve your profile. Choose "
-        "Your company sector")
+        "Your company sector"
+    )
 
 
 def submit(actor: Actor, sector: str, countries: list, other: str) -> Response:
@@ -33,8 +44,9 @@ def submit(actor: Actor, sector: str, countries: list, other: str) -> Response:
         "company_profile_edit_view-current_step": "classification",
         "classification-sectors": sector,
         "classification-export_destinations": countries,
-        "classification-export_destinations_other": other
+        "classification-export_destinations_other": other,
     }
     response = make_request(
-        Method.POST, URL, session=actor.session, headers=headers, data=data)
+        Method.POST, URL, session=actor.session, headers=headers, data=data
+    )
     return response

@@ -9,7 +9,7 @@ from tests.functional.utils.generic import (
     Method,
     make_request,
     rare_word,
-    sentence
+    sentence,
 )
 from tests.functional.utils.request import check_response
 from tests.settings import NO_OF_EMPLOYEES
@@ -17,16 +17,25 @@ from tests.settings import NO_OF_EMPLOYEES
 URL = get_absolute_url("ui-buyer:company-edit-key-facts")
 EXPECTED_STRINGS = [
     "Create your business profile",
-    ("Enter your company name and contact details, then select the industry or"
-     " industries you work in."),
-    "Your company details", "Company name:",
-    "Enter your trading name", "Website (optional):",
+    (
+        "Enter your company name and contact details, then select the industry or"
+        " industries you work in."
+    ),
+    "Your company details",
+    "Company name:",
+    "Enter your trading name",
+    "Website (optional):",
     "The website address must start with either http:// or https://",
     "Enter up to 10 keywords that describe your company (separated by commas)",
-    ("These keywords will be used to help potential overseas buyers find your "
-     "company."), "How many employees are in your company?",
-    ("Tell international buyers more about your business to ensure the right "
-     "buyers can find you.")
+    (
+        "These keywords will be used to help potential overseas buyers find your "
+        "company."
+    ),
+    "How many employees are in your company?",
+    (
+        "Tell international buyers more about your business to ensure the right "
+        "buyers can find you."
+    ),
 ] + NO_OF_EMPLOYEES
 
 
@@ -45,9 +54,18 @@ def go_to(session: Session) -> Response:
 
 
 def update_details(
-        actor: Actor, company: Company, *, title=True, website=True,
-        keywords=True, size=True, specific_title=None, specific_website=None,
-        specific_keywords=None, specific_size=None) -> (Response, Company):
+    actor: Actor,
+    company: Company,
+    *,
+    title=True,
+    website=True,
+    keywords=True,
+    size=True,
+    specific_title=None,
+    specific_website=None,
+    specific_keywords=None,
+    specific_size=None
+) -> (Response, Company):
     """Update basic Company's details: business name, website, keywords & size.
 
     Will use random details or specific values if they are provided.
@@ -61,8 +79,9 @@ def update_details(
         new_title = company.title
 
     if website:
-        new_website = specific_website or ("http://{}.{}"
-                                           .format(rare_word(), rare_word()))
+        new_website = specific_website or (
+            "http://{}.{}".format(rare_word(), rare_word())
+        )
     else:
         new_website = company.website
 
@@ -84,14 +103,18 @@ def update_details(
         "basic-name": new_title,
         "basic-website": new_website,
         "basic-keywords": new_keywords,
-        "basic-employees": new_size
+        "basic-employees": new_size,
     }
 
     new_details = Company(
-        title=new_title, website=new_website, keywords=new_keywords,
-        no_employees=new_size)
+        title=new_title,
+        website=new_website,
+        keywords=new_keywords,
+        no_employees=new_size,
+    )
 
     response = make_request(
-        Method.POST, URL, session=session, headers=headers, data=data)
+        Method.POST, URL, session=session, headers=headers, data=data
+    )
 
     return response, new_details

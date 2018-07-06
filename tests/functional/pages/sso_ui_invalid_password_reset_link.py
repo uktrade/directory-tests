@@ -6,9 +6,13 @@ from requests import Response
 from tests.functional.utils.request import check_response
 
 EXPECTED_STRINGS = [
-    "Bad Token", "Please request a", "new password reset",
-    ("The password reset link was invalid, possibly because it has already "
-     "been used.")
+    "Bad Token",
+    "Please request a",
+    "new password reset",
+    (
+        "The password reset link was invalid, possibly because it has already "
+        "been used."
+    ),
 ]
 
 

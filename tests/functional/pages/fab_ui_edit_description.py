@@ -8,8 +8,9 @@ from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("ui-buyer:company-edit-description")
 EXPECTED_STRINGS = [
-    "About your company", "Describe your business to overseas buyers",
-    "Brief summary to make your company stand out to buyers"
+    "About your company",
+    "Describe your business to overseas buyers",
+    "Brief summary to make your company stand out to buyers",
 ]
 
 
@@ -24,14 +25,15 @@ def go_to(session: Session) -> Response:
 
 
 def submit(
-        session: Session, token: str, summary: str, description: str)\
-        -> Response:
+    session: Session, token: str, summary: str, description: str
+) -> Response:
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
     data = {
         "csrfmiddlewaretoken": token,
         "company_description_edit_view-current_step": "description",
         "description-summary": summary,
-        "description-description": description
+        "description-description": description,
     }
     return make_request(
-        Method.POST, URL, session=session, headers=headers, data=data)
+        Method.POST, URL, session=session, headers=headers, data=data
+    )

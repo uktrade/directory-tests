@@ -8,10 +8,15 @@ from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("ui-supplier:industries-creative-summary")
 EXPECTED_STRINGS = [
-    "Delivering exceptional creative services", "Find your UK trade partner",
+    "Delivering exceptional creative services",
+    "Find your UK trade partner",
     "See the UK's creative services providers on the Find a supplier service",
-    "Immersive", "Blippar", "Find other great UK companies",
-    "Read more about the company", "Company showcase", "Read case study"
+    "Immersive",
+    "Blippar",
+    "Find other great UK companies",
+    "Read more about the company",
+    "Company showcase",
+    "Read case study",
 ]
 
 

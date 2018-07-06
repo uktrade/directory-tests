@@ -7,9 +7,12 @@ from tests.functional.utils.request import check_response
 
 URL = get_absolute_url("ui-buyer:account-confirm-password")
 EXPECTED_STRINGS = [
-    "Transfer account", "Your password",
+    "Transfer account",
+    "Your password",
     "For your security, please enter your current password",
-    "Back to previous step", "Confirm", "Cancel"
+    "Back to previous step",
+    "Confirm",
+    "Cancel",
 ]
 
 
@@ -31,8 +34,9 @@ def submit(session: Session, token: str, password: str) -> Response:
     data = {
         "csrfmiddlewaretoken": token,
         "password-password": password,
-        "transfer_account_wizard_view-current_step": "password"
+        "transfer_account_wizard_view-current_step": "password",
     }
     headers = {"Referer": URL}
     return make_request(
-        Method.POST, URL, session=session, data=data, headers=headers)
+        Method.POST, URL, session=session, data=data, headers=headers
+    )

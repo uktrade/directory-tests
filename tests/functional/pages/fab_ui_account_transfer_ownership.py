@@ -7,8 +7,10 @@ from tests.functional.utils.request import check_response
 
 URL = get_absolute_url("ui-buyer:account-transfer-ownership")
 EXPECTED_STRINGS = [
-    "Transfer account", "Next", "Cancel",
-    "Enter the email address you want your profile transferred to."
+    "Transfer account",
+    "Next",
+    "Cancel",
+    "Enter the email address you want your profile transferred to.",
 ]
 
 
@@ -33,8 +35,9 @@ def submit(session: Session, token: str, email: str) -> Response:
     data = {
         "csrfmiddlewaretoken": token,
         "email-email_address": email,
-        "transfer_account_wizard_view-current_step": "email"
+        "transfer_account_wizard_view-current_step": "email",
     }
     headers = {"Referer": URL}
     return make_request(
-        Method.POST, URL, session=session, data=data, headers=headers)
+        Method.POST, URL, session=session, data=data, headers=headers
+    )

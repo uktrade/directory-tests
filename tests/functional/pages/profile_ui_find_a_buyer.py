@@ -9,32 +9,41 @@ from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("profile:fab")
 EXPECTED_STRINGS = [
-    "Profile", "You are signed in as", "Export opportunities",
-    "Business profile", "Selling online overseas", "About", "Sign out",
-    "Reset password"
+    "Profile",
+    "You are signed in as",
+    "Export opportunities",
+    "Business profile",
+    "Selling online overseas",
+    "About",
+    "Sign out",
+    "Reset password",
 ]
 
 EXPECTED_STRINGS_WITH_PROFILE = [
-    "Edit profile", "Add case study", "Edit logo", "Account details",
-    "Add user to account", "Remove user from account", "Transfer account"
+    "Edit profile",
+    "Add case study",
+    "Edit logo",
+    "Account details",
+    "Add user to account",
+    "Remove user from account",
+    "Transfer account",
 ]
 
 EXPECTED_STRINGS_NO_PROFILE = [
-    "Get a business profile", "Create a business profile",
+    "Get a business profile",
+    "Create a business profile",
     "Get a business profile for your company and you can:",
     "generate new sales leads",
     "promote your business to thousands of overseas buyers",
     "add case studies of your best work to make your company stand out",
-    "have buyers contact your sales team directly to get deals moving"
+    "have buyers contact your sales team directly to get deals moving",
 ]
 
 EXPECTED_STRINGS_OWNER_TRANSFERRED = [
     "We’ve sent a confirmation email to the new profile owner."
 ]
 
-EXPECTED_STRINGS_USER_REMOVED = [
-    "User successfully removed from your profile"
-]
+EXPECTED_STRINGS_USER_REMOVED = ["User successfully removed from your profile"]
 
 
 def go_to(session: Session) -> Response:
@@ -43,8 +52,11 @@ def go_to(session: Session) -> Response:
 
 
 def should_be_here(
-        response: Response, *, owner_transferred: bool = False,
-        user_removed: bool = False):
+    response: Response,
+    *,
+    owner_transferred: bool = False,
+    user_removed: bool = False
+):
     """Check if Supplier is on Profile 'Find a Buyer' page.
 
     NOTE:
@@ -54,19 +66,25 @@ def should_be_here(
     if owner_transferred:
         expected_query = "?owner-transferred"
         with assertion_msg(
-                "Expected to see '{}' in the URL but got: '{}' instead"
-                .format(expected_query, response.url)):
+            "Expected to see '{}' in the URL but got: '{}' instead".format(
+                expected_query, response.url
+            )
+        ):
             assert expected_query in response.url
         check_response(
-            response, 200, body_contains=EXPECTED_STRINGS_OWNER_TRANSFERRED)
+            response, 200, body_contains=EXPECTED_STRINGS_OWNER_TRANSFERRED
+        )
     if user_removed:
         expected_query = "?user-removed"
         with assertion_msg(
-                "Expected to see '{}' in the URL but got: '{}' instead"
-                .format(expected_query, response.url)):
+            "Expected to see '{}' in the URL but got: '{}' instead".format(
+                expected_query, response.url
+            )
+        ):
             assert expected_query in response.url
         check_response(
-            response, 200, body_contains=EXPECTED_STRINGS_USER_REMOVED)
+            response, 200, body_contains=EXPECTED_STRINGS_USER_REMOVED
+        )
 
     logging.debug("Successfully got to the Profile 'Find a Buyer' page")
 

@@ -8,10 +8,13 @@ from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("profile:about")
 EXPECTED_STRINGS = [
-    "Profile", "Welcome to your great.gov.uk profile",
-    ("From now on, every time you sign in you’ll be able to quickly access all"
-     " of our exporting tools in one place. The tools are here to help your "
-     "business succeed internationally.")
+    "Profile",
+    "Welcome to your great.gov.uk profile",
+    (
+        "From now on, every time you sign in you’ll be able to quickly access all"
+        " of our exporting tools in one place. The tools are here to help your "
+        "business succeed internationally."
+    ),
 ]
 
 
@@ -22,7 +25,8 @@ def go_to(session: Session, *, set_next_page: bool = True) -> Response:
     if not set_next_page:
         params = None
     return make_request(
-        Method.GET, URL, session=session, params=params, headers=headers)
+        Method.GET, URL, session=session, params=params, headers=headers
+    )
 
 
 def should_be_here(response: Response):

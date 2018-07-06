@@ -9,11 +9,18 @@ from tests.functional.utils.request import Method, check_response, make_request
 URL = get_absolute_url("ui-supplier:industries-health")
 EXPECTED_STRINGS = [
     "Delivering the exceptional in healthcare and life sciences",
-    "Key facts", "Work with the UK to create first-rate healthcare",
-    ("See the UK's healthcare and life sciences providers on the Find a "
-     "supplier service"), "RD Biomed", "Touch Bionics",
-    "Find other great UK companies", "Read more about the company",
-    "Company showcase", "Read case study"
+    "Key facts",
+    "Work with the UK to create first-rate healthcare",
+    (
+        "See the UK's healthcare and life sciences providers on the Find a "
+        "supplier service"
+    ),
+    "RD Biomed",
+    "Touch Bionics",
+    "Find other great UK companies",
+    "Read more about the company",
+    "Company showcase",
+    "Read case study",
 ]
 
 

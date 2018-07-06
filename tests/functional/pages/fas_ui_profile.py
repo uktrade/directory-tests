@@ -15,9 +15,14 @@ from tests.settings import SECTORS_WITH_LABELS
 
 URL = get_absolute_url("ui-supplier:suppliers")
 EXPECTED_STRINGS = [
-    "Contact", "Facts &amp; details", "Company description",
-    "Core industry", "Keywords", "Report profile", "Email company",
-    "Contact company"
+    "Contact",
+    "Facts &amp; details",
+    "Company description",
+    "Core industry",
+    "Keywords",
+    "Report profile",
+    "Email company",
+    "Contact company",
 ]
 
 
@@ -25,8 +30,7 @@ def go_to(session: Session, company_number: str) -> Response:
     """Go to Company's FAS profile page using company's number."""
     full_url = urljoin(URL, company_number)
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
-    return make_request(
-        Method.GET, full_url, session=session, headers=headers)
+    return make_request(Method.GET, full_url, session=session, headers=headers)
 
 
 def go_to_endpoint(session: Session, endpoint: str) -> Response:
@@ -75,17 +79,22 @@ def should_see_case_studies(case_studies: dict, response: Response):
     content = response.content.decode("utf-8")
     for case in case_studies:
         with assertion_msg(
-                "Couldn't find Case Study '%s' title '%s'",
-                case_studies[case].alias, case_studies[case].title):
+            "Couldn't find Case Study '%s' title '%s'",
+            case_studies[case].alias,
+            case_studies[case].title,
+        ):
             assert case_studies[case].title in content
         with assertion_msg(
-                "Couldn't find Case Study '%s' description '%s'",
-                case_studies[case].alias, case_studies[case].description):
+            "Couldn't find Case Study '%s' description '%s'",
+            case_studies[case].alias,
+            case_studies[case].description,
+        ):
             assert case_studies[case].summary in content
 
 
 def should_see_details(
-        company: Company, response: Response, table_of_details: Table):
+    company: Company, response: Response, table_of_details: Table
+):
     """Supplier should see all expected Company details of FAS profile page.
 
     :param company: a namedtuple with Company details
@@ -103,21 +112,25 @@ def should_see_details(
 
     if title:
         with assertion_msg(
-                "Couldn't find Company's title '%s'", company.title):
+            "Couldn't find Company's title '%s'", company.title
+        ):
             assert company.title in content
     if keywords:
         for keyword in company.keywords.split(", "):
             with assertion_msg(
-                    "Couldn't find Company's keyword '%s'", keyword):
+                "Couldn't find Company's keyword '%s'", keyword
+            ):
                 assert keyword.strip() in content
     if website:
         with assertion_msg(
-                "Couldn't find Company's website '%s'", company.website):
+            "Couldn't find Company's website '%s'", company.website
+        ):
             assert company.website in content
     if size:
         with assertion_msg(
-                "Couldn't find the size of the company '%s' in the response",
-                company.no_employees):
+            "Couldn't find the size of the company '%s' in the response",
+            company.no_employees,
+        ):
             if company.no_employees == "10001+":
                 assert "10,001+" in content
             elif company.no_employees == "1001-10000":
@@ -128,8 +141,9 @@ def should_see_details(
                 assert company.no_employees in content
     if sector:
         with assertion_msg(
-                "Couldn't find company's sector '%s' in the response",
-                SECTORS_WITH_LABELS[company.sector]):
+            "Couldn't find company's sector '%s' in the response",
+            SECTORS_WITH_LABELS[company.sector],
+        ):
             assert SECTORS_WITH_LABELS[company.sector] in content
 
 

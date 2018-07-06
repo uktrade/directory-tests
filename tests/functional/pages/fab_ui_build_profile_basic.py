@@ -10,18 +10,30 @@ from tests.functional.utils.request import Method, check_response, make_request
 URL = get_absolute_url("ui-buyer:company-edit")
 EXPECTED_STRINGS = [
     "Create your business profile",
-    ("Enter your company name and contact details, then select the industry or"
-     " industries you work in"),
-    ("Add extra information and your company logo to complete your profile. "
-     "You can come back and edit your profile at any time."),
+    (
+        "Enter your company name and contact details, then select the industry or"
+        " industries you work in"
+    ),
+    (
+        "Add extra information and your company logo to complete your profile. "
+        "You can come back and edit your profile at any time."
+    ),
     "Your company details",
-    "Company name", "Website (optional)", "Enter your trading name",
+    "Company name",
+    "Website (optional)",
+    "Enter your trading name",
     "The website address must start with either http:// or https://",
     "Enter up to 10 keywords that describe your company (separated by commas)",
-    ("These keywords will be used to help potential overseas buyers find your "
-     "company."), "How many employees are in your company?", "Next",
-    ("Tell international buyers more about your business to ensure the right "
-     "buyers can find you.")
+    (
+        "These keywords will be used to help potential overseas buyers find your "
+        "company."
+    ),
+    "How many employees are in your company?",
+    "Next",
+    (
+        "Tell international buyers more about your business to ensure the right "
+        "buyers can find you."
+    ),
 ]
 
 
@@ -38,7 +50,7 @@ def submit(actor: Actor, company: Company) -> Response:
     """Submit Build your profile - Basic details form."""
     data = {
         "csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
-        "company_profile_edit_view-current_step": "basic"
+        "company_profile_edit_view-current_step": "basic",
     }
     if company.title is not None:
         data.update({"basic-name": company.title})
@@ -50,4 +62,5 @@ def submit(actor: Actor, company: Company) -> Response:
         data.update({"basic-employees": company.no_employees})
     headers = {"Referer": URL}
     return make_request(
-        Method.POST, URL, session=actor.session, headers=headers, data=data)
+        Method.POST, URL, session=actor.session, headers=headers, data=data
+    )

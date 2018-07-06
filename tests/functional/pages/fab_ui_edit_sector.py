@@ -11,9 +11,16 @@ from tests.settings import COUNTRIES, SECTORS
 
 URL = get_absolute_url("ui-buyer:company-edit-sectors")
 EXPECTED_STRINGS = [
-    "Your company sector", "What industry is your company in?",
+    "Your company sector",
+    "What industry is your company in?",
     "Select the countries you would like to export to:",
-    "China", "Germany", "India", "Japan", "United States", "Other", "Save"
+    "China",
+    "Germany",
+    "India",
+    "Japan",
+    "United States",
+    "Other",
+    "Save",
 ] + SECTORS
 
 
@@ -24,8 +31,7 @@ def go_to(session: Session) -> Response:
      * Supplier to be logged in
     """
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
-    return make_request(
-        Method.GET, URL, session=session, headers=headers)
+    return make_request(Method.GET, URL, session=session, headers=headers)
 
 
 def should_be_here(response):
@@ -34,9 +40,14 @@ def should_be_here(response):
 
 
 def update(
-        actor: Actor, company: Company, *, update_sector: bool = True,
-        sector_name: str = None, update_countries: bool = True,
-        country_names: str = None) -> (Response, str, str):
+    actor: Actor,
+    company: Company,
+    *,
+    update_sector: bool = True,
+    sector_name: str = None,
+    update_countries: bool = True,
+    country_names: str = None
+) -> (Response, str, str):
     """Change Company's Sector of Interest.
 
     :param actor: a namedtuple with Actor details
@@ -70,10 +81,11 @@ def update(
         "supplier_classification_edit_view-current_step": "classification",
         "classification-sectors": new_sector,
         "classification-export_destinations": new_countries,
-        "classification-export_destinations_other": other
+        "classification-export_destinations_other": other,
     }
 
     response = make_request(
-        Method.POST, URL, session=session, headers=headers, data=data)
+        Method.POST, URL, session=session, headers=headers, data=data
+    )
 
     return response, new_sector, new_countries

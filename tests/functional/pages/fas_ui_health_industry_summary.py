@@ -12,10 +12,16 @@ EXPECTED_STRINGS = [
     "Delivering the exceptional in healthcare and life sciences",
     "Find your UK trade partner",
     "Read more about healthcare and life sciences",
-    ("See the UK's healthcare and life sciences providers on the Find a "
-     "supplier service"), "RD Biomed", "Touch Bionics",
-    "Find other great UK companies", "Read more about the company",
-    "Company showcase", "Read case study"
+    (
+        "See the UK's healthcare and life sciences providers on the Find a "
+        "supplier service"
+    ),
+    "RD Biomed",
+    "Touch Bionics",
+    "Find other great UK companies",
+    "Read more about the company",
+    "Company showcase",
+    "Read case study",
 ]
 
 

@@ -7,8 +7,11 @@ from tests.functional.utils.request import check_response
 
 URL = get_absolute_url("ui-buyer:account-add-collaborator")
 EXPECTED_STRINGS = [
-    "Add a user to your profile", "Enter the new user’s email address",
-    "Confirm", "Cancel", "Is there anything wrong with this page?"
+    "Add a user to your profile",
+    "Enter the new user’s email address",
+    "Confirm",
+    "Cancel",
+    "Is there anything wrong with this page?",
 ]
 
 
@@ -27,10 +30,8 @@ def go_to(session: Session) -> Response:
 
 
 def add_collaborator(session: Session, token: str, email: str) -> Response:
-    data = {
-        "csrfmiddlewaretoken": token,
-        "email_address": email
-    }
+    data = {"csrfmiddlewaretoken": token, "email_address": email}
     headers = {"Referer": URL}
     return make_request(
-        Method.POST, URL, session=session, data=data, headers=headers)
+        Method.POST, URL, session=session, data=data, headers=headers
+    )

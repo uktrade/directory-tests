@@ -9,8 +9,10 @@ from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("ui-buyer:account-confirm-ownership-transfer")
 EXPECTED_STRINGS = [
-    "Transfer account", "Do you accept transfer of the company profile for",
-    "Yes", "No"
+    "Transfer account",
+    "Do you accept transfer of the company profile for",
+    "Yes",
+    "No",
 ]
 
 
@@ -26,7 +28,8 @@ def open(session: Session, link: str) -> Response:
 
 
 def confirm(
-        session: Session, csrf_middleware_token: str, link: str) -> Response:
+    session: Session, csrf_middleware_token: str, link: str
+) -> Response:
     # in order to be redirected to the correct URL we have `unquote`
     # the form_action_value
     start = link.index("=") + 1
@@ -34,9 +37,9 @@ def confirm(
     headers = {"Referer": link}
     data = {
         "csrfmiddlewaretoken": csrf_middleware_token,
-        "invite_key": invite_key
+        "invite_key": invite_key,
     }
 
     return make_request(
-        Method.POST, link, session=session, headers=headers,
-        data=data)
+        Method.POST, link, session=session, headers=headers, data=data
+    )

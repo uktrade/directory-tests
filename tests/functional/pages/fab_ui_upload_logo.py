@@ -10,15 +10,21 @@ from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("ui-buyer:upload-logo")
 EXPECTED_STRINGS = [
-    "Upload your company's logo", "Logo:", "Upload file",
-    ("For best results this should be a transparent PNG file of 600 x 600 "
-     "pixels and no more than 2MB")
+    "Upload your company's logo",
+    "Logo:",
+    "Upload file",
+    (
+        "For best results this should be a transparent PNG file of 600 x 600 "
+        "pixels and no more than 2MB"
+    ),
 ]
 
 EXPECTED_STRINGS_INVALID = [
     "Invalid image format, allowed formats: PNG, JPG, JPEG",
-    ("Upload a valid image. The file you uploaded was either not an image or a"
-     " corrupted image.")
+    (
+        "Upload a valid image. The file you uploaded was either not an image or a"
+        " corrupted image."
+    ),
 ]
 
 
@@ -43,8 +49,14 @@ def upload(session: Session, token: str, file_path: str) -> Response:
     mime = mimetypes.MimeTypes().guess_type(file_path)[0]
     files = {"logo-logo": (os.path.basename(file_path), picture, mime)}
     response = make_request(
-        Method.POST, url, session=session, headers=headers, data=data,
-        files=files, trim=True)
+        Method.POST,
+        url,
+        session=session,
+        headers=headers,
+        data=data,
+        files=files,
+        trim=True,
+    )
     return response
 
 
