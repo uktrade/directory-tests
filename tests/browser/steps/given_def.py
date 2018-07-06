@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # flake8: noqa
+# fmt: off
 """Given step definitions."""
 from behave import given
 from behave.runner import Context
