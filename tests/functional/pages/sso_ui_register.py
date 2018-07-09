@@ -48,18 +48,15 @@ def go_to(
     return make_request(Method.GET, url, session=session, headers=headers)
 
 
-def submit(actor: Actor, company: Company, exported: bool) -> Response:
+def submit(actor: Actor, company: Company) -> Response:
     """Will submit the SSO Registration form with Supplier & Company details.
 
     :param actor: a namedtuple with Actor details
     :param company: a namedtuple with Company details
-    :param exported: True is exported in the past, False if not
     """
     session = actor.session
     next_url = get_absolute_url("ui-buyer:register-submit-account-details")
-    next_link_query = "?company_number={}&has_exported_before={}".format(
-        company.number, exported
-    )
+    next_link_query = "?company_number={}".format(company.number)
     next_link = quote(urljoin(next_url, next_link_query))
     referer_query = "?next={}".format(next_link)
     headers = {"Referer": urljoin(URL, referer_query)}

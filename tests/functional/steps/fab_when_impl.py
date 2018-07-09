@@ -235,10 +235,9 @@ def reg_create_sso_account(
     """
     actor = context.get_actor(supplier_alias)
     company = context.get_company(company_alias)
-    exported = context.exported
 
     # Submit SSO Registration form with Supplier's & Company's required details
-    context.response = sso_ui_register.submit(actor, company, exported)
+    context.response = sso_ui_register.submit(actor, company)
 
 
 def reg_open_email_confirmation_link(context: Context, supplier_alias: str):
