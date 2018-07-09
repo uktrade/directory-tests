@@ -200,30 +200,6 @@ def reg_supplier_is_not_ready_to_export(context: Context, supplier_alias: str):
     check_response(response, 200)
 
 
-def reg_confirm_export_status(
-    context: Context, supplier_alias: str, exported: bool
-):
-    """Will confirm the current export status of selected unregistered company.
-    """
-    actor = context.get_actor(supplier_alias)
-    has_sso_account = actor.has_sso_account
-    session = actor.session
-    token = actor.csrfmiddlewaretoken
-    context.exported = exported
-
-    response = fab_ui_confirm_export_status.submit(session, token, exported)
-    context.response = response
-
-    if has_sso_account:
-        logging.debug("Supplier already has a SSO account")
-        fab_ui_build_profile_basic.should_be_here(response)
-    else:
-        logging.debug("Supplier doesn't have a SSO account")
-        sso_ui_register.should_be_here(response)
-        token = extract_csrf_middleware_token(response)
-        context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
-
-
 def reg_create_sso_account(
     context: Context, supplier_alias: str, company_alias: str
 ):

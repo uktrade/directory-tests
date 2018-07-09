@@ -23,7 +23,6 @@ Feature: Trade Profile
 
       When "Peter Alder" randomly selects an active company without a Directory Profile identified by an alias "Company X"
       And "Peter Alder" confirms that "Company X" is the correct one
-      And "Peter Alder" confirms that the company has not exported in the past
       And "Peter Alder" creates a SSO/great.gov.uk account for "Company X" using valid credentials
 
       Then "Peter Alder" should be told about the verification email

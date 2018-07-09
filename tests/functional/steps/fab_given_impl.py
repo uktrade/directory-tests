@@ -33,7 +33,6 @@ from tests.functional.steps.fab_when_impl import (
     prof_set_company_description,
     prof_verify_company,
     reg_confirm_company_selection,
-    reg_confirm_export_status,
     reg_create_sso_account,
     reg_create_standalone_unverified_sso_account,
     reg_open_email_confirmation_link,
@@ -196,7 +195,6 @@ def reg_select_random_company_and_confirm_export_status(
     sso_go_to_create_trade_profile(context, supplier_alias)
     select_random_company(context, supplier_alias, company_alias)
     reg_confirm_company_selection(context, supplier_alias, company_alias)
-    reg_confirm_export_status(context, supplier_alias, exported=True)
     bp_should_be_prompted_to_build_your_profile(context, supplier_alias)
 
 
