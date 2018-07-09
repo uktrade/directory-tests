@@ -284,7 +284,6 @@ def test_draft_pages_should_return_200(cms_client, page_type):
                 lang_codes = [lang[0] for lang in page["meta"]["languages"]]
                 for code in lang_codes:
                     lang_url = "{}&lang={}".format(draft_url, code)
-                    print("TRYING ", lang_url)
                     try:
                         draft_response = requests.get(lang_url)
                     except Exception as ex:

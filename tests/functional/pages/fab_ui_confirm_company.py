@@ -11,21 +11,11 @@ from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("ui-buyer:landing")
 EXPECTED_STRINGS = [
-    "Create your business profile",
-    "Confirm company",
-    "Trading status",
+    "Confirm your company",
+    "Registered name",
     "Company number",
     "Registered address",
-    (
-        "I confirm that I am authorised to sign this company up to great.gov.uk "
-        "services"
-    ),
-    "Creating an account means you can",
-    "create a free business profile visible to overseas buyers",
-    (
-        "apply for opportunities sourced by overseas trade professionals or "
-        "provided by a third party"
-    ),
+    "I confirm that I am authorised to sign this company up to great.gov.uk",
     "Create account",
 ]
 

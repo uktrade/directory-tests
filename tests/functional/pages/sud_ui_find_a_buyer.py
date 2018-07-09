@@ -26,7 +26,7 @@ EXPECTED_STRINGS_AS_LOGGED_IN_USER = [
     "Profile",
     "You are signed in as",
     "Export opportunities",
-    "Find a buyer",
+    "Business profile",
     "Selling online overseas",
     "About",
     "Edit profile",
