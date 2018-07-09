@@ -16,7 +16,6 @@ EXPECTED_STRINGS = [
     "Company number",
     "Registered address",
     "I confirm that I am authorised to sign this company up to great.gov.uk",
-    "Create account",
 ]
 
 
