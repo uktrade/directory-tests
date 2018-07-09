@@ -170,18 +170,18 @@ def reg_confirm_company_selection(
     )
     context.response = response
 
-    # Step 2 - check if we're on the Confirm Export Status page
-    fab_ui_confirm_export_status.should_be_here(response)
-    if not has_sso_account:
-        fab_ui_confirm_export_status.should_see_info_about_sso_account(
-            response
-        )
+
 
     logging.debug("Confirmed selection of Company: %s", company.number)
 
-    # Step 3 - extract & store CSRF token
-    token = extract_csrf_middleware_token(response)
-    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
+    if has_sso_account:
+        logging.debug("Supplier already has a SSO account")
+        fab_ui_build_profile_basic.should_be_here(response)
+    else:
+        logging.debug("Supplier doesn't have a SSO account")
+        sso_ui_register.should_be_here(response)
+        token = extract_csrf_middleware_token(response)
+        context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
 
 def reg_supplier_is_not_ready_to_export(context: Context, supplier_alias: str):
