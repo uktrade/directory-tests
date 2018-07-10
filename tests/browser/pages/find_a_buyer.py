@@ -11,7 +11,7 @@ from utils import take_screenshot
 
 NAME = "Find a Buyer Home page"
 URL = urljoin(DIRECTORY_UI_BUYER_URL, "")
-PAGE_TITLE = "Trade profile - great.gov.uk"
+PAGE_TITLE = "Business profile - great.gov.uk"
 
 
 def visit(driver: webdriver, *, first_time: bool = False):
