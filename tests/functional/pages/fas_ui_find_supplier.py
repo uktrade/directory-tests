@@ -11,18 +11,24 @@ URL = get_absolute_url("ui-supplier:search")
 EXPECTED_STRINGS = [
     "Find UK Suppliers",
     "Search by product, service or company keyword",
-    "Search"
+    "Search",
 ]
 
 NO_MATCH = [
-    "Your search", "&quot;<span class=\"term\">", "</span>&quot;",
-    "did not match any UK trade profiles."
+    "Your search",
+    '&quot;<span class="term">',
+    "</span>&quot;",
+    "did not match any UK trade profiles.",
 ]
 
 
 def go_to(
-        session: Session, *, term: str = None, page: int = None,
-        sectors: list = None) -> Response:
+    session: Session,
+    *,
+    term: str = None,
+    page: int = None,
+    sectors: list = None
+) -> Response:
     """Go to "FAS Find a Supplier" page.
 
     :param term: (optional) search term
@@ -37,11 +43,9 @@ def go_to(
     if sectors is not None:
         params.update({"sectors": sectors})
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
-    response = make_request(
-        Method.GET, URL, session=session, params=params, headers=headers)
-
-    should_be_here(response)
-    return response
+    return make_request(
+        Method.GET, URL, session=session, params=params, headers=headers
+    )
 
 
 def should_be_here(response, *, number=None):
@@ -59,7 +63,7 @@ def should_see_company(response: Response, company_title: str) -> bool:
 
 def should_not_see_company(response: Response, company_title: str) -> bool:
     content = response.content.decode("utf-8")
-    return escape_html(company_title, upper=True)not in content
+    return escape_html(company_title, upper=True) not in content
 
 
 def should_see_no_matches(response: Response, *, term: str = None):

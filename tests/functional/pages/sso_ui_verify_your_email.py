@@ -7,9 +7,12 @@ from tests.functional.utils.request import check_response
 
 EXPECTED_STRINGS = [
     "Verify your email address",
-    ("We've sent you a confirmation email. Click on the link to verify your "
-     "email address."), "Contact us",
-    "if you haven’t received the email within 10 minutes"
+    (
+        "We've sent you a confirmation email. Click on the link to verify your "
+        "email address."
+    ),
+    "Contact us",
+    "if you haven’t received the email within 10 minutes",
 ]
 
 

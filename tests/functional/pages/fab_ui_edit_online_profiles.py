@@ -19,7 +19,8 @@ EXPECTED_STRINGS = [
     "Use a full web address (URL) including http:// or https://",
     "URL for your Facebook company page (optional):",
     "Use a full web address (URL) including http:// or https://",
-    "Save", "Cancel"
+    "Save",
+    "Cancel",
 ]
 
 
@@ -35,15 +36,20 @@ def go_to(session: Session) -> Response:
      * Supplier to be logged in
     """
     headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
-    response = make_request(Method.GET, URL, session=session, headers=headers)
-    should_be_here(response)
-    return response
+    return make_request(Method.GET, URL, session=session, headers=headers)
 
 
 def update_profiles(
-        actor: Actor, company: Company, *, facebook=True, linkedin=True,
-        twitter=True, specific_facebook=None, specific_linkedin=None,
-        specific_twitter=None) -> (Response, Company):
+    actor: Actor,
+    company: Company,
+    *,
+    facebook=True,
+    linkedin=True,
+    twitter=True,
+    specific_facebook=None,
+    specific_linkedin=None,
+    specific_twitter=None
+) -> (Response, Company):
     """Change Company's Sector of Interest.
 
     NOTE:
@@ -52,7 +58,7 @@ def update_profiles(
     """
     session = actor.session
     token = actor.csrfmiddlewaretoken
-    clean_name = re.sub('[|&"-_;# ]', '', company.title.lower())
+    clean_name = re.sub('[|&"-_;# ]', "", company.title.lower())
     random_number = random.randint(9999, 999999999)
     profile_suffix = "{}-{}".format(clean_name, random_number)
 
@@ -61,20 +67,21 @@ def update_profiles(
     fake_tw = "http://twitter.com/{}".format(profile_suffix)
 
     if facebook:
-        new_fb = specific_facebook \
-            if specific_facebook is not None else fake_fb
+        new_fb = (
+            specific_facebook if specific_facebook is not None else fake_fb
+        )
     else:
         new_fb = company.facebook
 
     if linkedin:
-        new_li = specific_linkedin \
-            if specific_linkedin is not None else fake_li
+        new_li = (
+            specific_linkedin if specific_linkedin is not None else fake_li
+        )
     else:
         new_li = company.linkedin
 
     if twitter:
-        new_tw = specific_twitter \
-            if specific_twitter is not None else fake_tw
+        new_tw = specific_twitter if specific_twitter is not None else fake_tw
     else:
         new_tw = company.twitter
 
@@ -84,19 +91,21 @@ def update_profiles(
         "company_social_links_edit_view-current_step": "social",
         "social-facebook_url": new_fb,
         "social-linkedin_url": new_li,
-        "social-twitter_url": new_tw
+        "social-twitter_url": new_tw,
     }
 
     new_details = Company(facebook=new_fb, linkedin=new_li, twitter=new_tw)
 
     response = make_request(
-        Method.POST, URL, session=session, headers=headers, data=data)
+        Method.POST, URL, session=session, headers=headers, data=data
+    )
 
     return response, new_details
 
 
 def should_see_errors(
-        response: Response, *, facebook=True, linkedin=True, twitter=True):
+    response: Response, *, facebook=True, linkedin=True, twitter=True
+):
     content = response.content.decode("utf-8")
     if facebook:
         with assertion_msg("Could't find link to Facebook profile"):
@@ -110,11 +119,22 @@ def should_see_errors(
 
 
 def remove_links(
-        actor: Actor, company: Company, *, facebook=False, linkedin=False,
-        twitter=False) -> Response:
+    actor: Actor,
+    company: Company,
+    *,
+    facebook=False,
+    linkedin=False,
+    twitter=False
+) -> Response:
     """Remove links to all existing Online Profiles."""
     response, _ = update_profiles(
-        actor, company, facebook=facebook, linkedin=linkedin,
-        twitter=twitter, specific_facebook="", specific_linkedin="",
-        specific_twitter="")
+        actor,
+        company,
+        facebook=facebook,
+        linkedin=linkedin,
+        twitter=twitter,
+        specific_facebook="",
+        specific_linkedin="",
+        specific_twitter="",
+    )
     return response

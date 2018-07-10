@@ -10,12 +10,17 @@ from tests.functional.utils.request import check_response
 
 URL = get_absolute_url("ui-buyer:account-remove-collaborator")
 EXPECTED_STRINGS = [
-    "Remove user from account", "Select the emails you would like to remove",
-    "Confirm", "Cancel"
+    "Remove user from account",
+    "Select the emails you would like to remove",
+    "Confirm",
+    "Cancel",
 ]
 
 EXPECTED_STRINGS_NO_COLLABORATORS = [
-    "Your company has no collaborators", "Click", "here", "to go back"
+    "Your company has no collaborators",
+    "Click",
+    "here",
+    "to go back",
 ]
 
 
@@ -24,7 +29,8 @@ def should_be_here(response: Response, *, have_collaborators: bool = True):
         check_response(response, 200, body_contains=EXPECTED_STRINGS)
     else:
         check_response(
-            response, 200, body_contains=EXPECTED_STRINGS_NO_COLLABORATORS)
+            response, 200, body_contains=EXPECTED_STRINGS_NO_COLLABORATORS
+        )
 
 
 def go_to(session: Session) -> Response:
@@ -40,15 +46,20 @@ def extract_email_to_id_mapping(label: str) -> Tuple[str, str]:
 
 def extract_sso_id(html: str, email_to_element_id: Tuple[str, str]):
     email, element_id = email_to_element_id
-    css_selector = '#{}::attr(value)'.format(element_id)
+    css_selector = "#{}::attr(value)".format(element_id)
     value = Selector(text=html).css(css_selector).extract()
     return email, value[0] if value else None
 
 
 def extract_email_to_sso_id(html: str, mapping: dict) -> dict:
-    return dict(map(lambda email_to_element_id:
-                    extract_sso_id(html, email_to_element_id),
-                    mapping.items()))
+    return dict(
+        map(
+            lambda email_to_element_id: extract_sso_id(
+                html, email_to_element_id
+            ),
+            mapping.items(),
+        )
+    )
 
 
 def extract_sso_ids(response: Response) -> dict:
@@ -60,13 +71,11 @@ def extract_sso_ids(response: Response) -> dict:
 
 
 def remove(session: Session, token: str, sso_ids: List[str]) -> Response:
-    data = {
-        "csrfmiddlewaretoken": token,
-        "sso_ids": sso_ids
-    }
+    data = {"csrfmiddlewaretoken": token, "sso_ids": sso_ids}
     headers = {"Referer": URL}
     return make_request(
-        Method.POST, URL, session=session, data=data, headers=headers)
+        Method.POST, URL, session=session, data=data, headers=headers
+    )
 
 
 def should_not_see_collaborator(response: Response, collaborator_email: str):

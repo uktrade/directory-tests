@@ -48,7 +48,6 @@ from tests.functional.steps.fab_when_impl import (
     prof_verify_company,
     prof_view_published_profile,
     reg_confirm_company_selection,
-    reg_confirm_export_status,
     reg_create_sso_account,
     reg_create_standalone_unverified_sso_account,
     reg_open_email_confirmation_link,
@@ -73,18 +72,6 @@ def when_supplier_selects_random_company(context, supplier_alias, alias):
 @when('"{supplier_alias}" confirms that "{alias}" is the correct one')
 def when_company_selection_is_confirmed(context, supplier_alias, alias):
     reg_confirm_company_selection(context, supplier_alias, alias)
-
-
-@when('"{supplier_alias}" confirms that the company has exported in the past')
-def when_supplier_confirm_export_status(context, supplier_alias):
-    reg_confirm_export_status(context, supplier_alias, exported=True)
-
-
-@when('"{supplier_alias}" confirms that the company has not exported in the '
-      'past')
-def when_supplier_confirm_that_company_has_not_exported(
-        context, supplier_alias):
-    reg_confirm_export_status(context, supplier_alias, exported=False)
 
 
 @when('"{supplier_alias}" creates a SSO/great.gov.uk account for "{alias}" '

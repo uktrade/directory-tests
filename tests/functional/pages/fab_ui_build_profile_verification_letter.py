@@ -9,10 +9,12 @@ from tests.functional.utils.request import Method, check_response, make_request
 URL = get_absolute_url("ui-buyer:company-edit")
 EXPECTED_STRINGS = [
     "We've sent your verification letter",
-    ("You should receive your verification letter within a week. When you"
-     " receive the letter, please log in to GREAT.gov.uk to enter your "
-     "verification profile to publish your company profile."),
-    "View or amend your company profile"
+    (
+        "You should receive your verification letter within a week. When you"
+        " receive the letter, please log in to GREAT.gov.uk to enter your "
+        "verification profile to publish your company profile."
+    ),
+    "View or amend your company profile",
 ]
 
 
@@ -25,6 +27,5 @@ def go_to_profile(session: Session) -> Response:
     """Supplier clicks on the 'View or amend your company profile' link."""
     url = get_absolute_url("ui-buyer:company-profile")
     headers = {"Referer": URL}
-    response = make_request(
-        Method.GET, url, session=session, headers=headers)
+    response = make_request(Method.GET, url, session=session, headers=headers)
     return response

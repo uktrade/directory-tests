@@ -10,29 +10,36 @@ from tests.functional.utils.request import Method, check_response, make_request
 URL = get_absolute_url("ui-supplier:feedback")
 EXPECTED_STRINGS_FORM = [
     "Get UK companies to fulfil your business needs",
-    ("Tell us what kind of goods or services you need. We'll put you in touch "
-     "with relevant UK suppliers."),
-    "Your name", "Email address", "Organisation name", "Country",
-    "Describe what you need", "Maximum 1000 characters.",
-    "I agree to the great.gov.uk terms and conditions", "Send"
+    (
+        "Tell us what kind of goods or services you need. We'll put you in touch "
+        "with relevant UK suppliers."
+    ),
+    "Your name",
+    "Email address",
+    "Organisation name",
+    "Country",
+    "Describe what you need",
+    "Maximum 1000 characters.",
+    "I agree to the great.gov.uk terms and conditions",
+    "Send",
 ]
 EXPECTED_STRINGS_SUCCESSFUL_SUBMISSION = [
     "Your request has been submitted",
     "Thank you for letting us know about your organisation’s needs.",
-    ("UK government staff based in your region will be in touch to let you "
-     "know how UK businesses can help you.")
+    (
+        "UK government staff based in your region will be in touch to let you "
+        "know how UK businesses can help you."
+    ),
 ]
 EXPECTED_STRINGS_ERRORS = [
     "This field is required.",
-    "Tick the box to confirm you agree to the terms and conditions."
+    "Tick the box to confirm you agree to the terms and conditions.",
 ]
 
 
 def go_to(session: Session) -> Response:
     headers = {"Referer": get_absolute_url("ui-supplier:feedback")}
-    response = make_request(Method.GET, URL, session=session, headers=headers)
-    should_be_here(response)
-    return response
+    return make_request(Method.GET, URL, session=session, headers=headers)
 
 
 def should_be_here(response):
@@ -42,7 +49,8 @@ def should_be_here(response):
 
 def should_see_feedback_submission_confirmation(response):
     check_response(
-        response, 200, body_contains=EXPECTED_STRINGS_SUCCESSFUL_SUBMISSION)
+        response, 200, body_contains=EXPECTED_STRINGS_SUCCESSFUL_SUBMISSION
+    )
     logging.debug("Feedback submission was confirmed.")
 
 
@@ -52,8 +60,8 @@ def should_see_errors(response):
 
 
 def submit(
-        session: Session, feedback: Feedback, *, referer: str = None)\
-        -> Response:
+    session: Session, feedback: Feedback, *, referer: str = None
+) -> Response:
     """Submit feedback form.
 
     :param feedback: a namedtuple with Feedback request details
@@ -73,7 +81,11 @@ def submit(
         "terms": feedback.terms,
         "g-recaptcha-response": feedback.g_recaptcha_response,
     }
-    response = make_request(
-        Method.POST, URL, session=session, headers=headers, data=data,
-        trim=False)
-    return response
+    return make_request(
+        Method.POST,
+        URL,
+        session=session,
+        headers=headers,
+        data=data,
+        trim=False,
+    )

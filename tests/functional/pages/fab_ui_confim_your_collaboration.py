@@ -7,15 +7,19 @@ from tests.functional.utils.generic import assertion_msg
 from tests.functional.utils.request import Method, check_response, make_request
 
 EXPECTED_STRINGS = [
-    "Collaborate", "Do you want to be added as user to the profile for", "Yes",
-    "No", "Is there anything wrong with this page?"
+    "Collaborate",
+    "Do you want to be added as user to the profile for",
+    "Yes",
+    "No",
+    "Is there anything wrong with this page?",
 ]
 
 
 def should_be_here(response: Response):
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug(
-        "Successfully got to the FAB Confirm your collaboration page")
+        "Successfully got to the FAB Confirm your collaboration page"
+    )
 
 
 def open(session: Session, link: str) -> Response:
@@ -25,8 +29,8 @@ def open(session: Session, link: str) -> Response:
 
 
 def confirm(
-        session: Session, csrf_middleware_token: str, invitation_link: str) \
-        -> Response:
+    session: Session, csrf_middleware_token: str, invitation_link: str
+) -> Response:
     """Confirm the invitation for collaboration.
 
     Example invitation link:
@@ -39,9 +43,13 @@ def confirm(
     headers = {"Referer": invitation_link}
     data = {
         "csrfmiddlewaretoken": csrf_middleware_token,
-        "invite_key": invite_key
+        "invite_key": invite_key,
     }
 
     return make_request(
-        Method.POST, invitation_link, session=session, headers=headers,
-        data=data)
+        Method.POST,
+        invitation_link,
+        session=session,
+        headers=headers,
+        data=data,
+    )

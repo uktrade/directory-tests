@@ -11,25 +11,42 @@ from tests.functional.utils.request import Method, check_response, make_request
 URL = get_absolute_url("ui-buyer:case-study-create")
 EDIT_URL = get_absolute_url("ui-buyer:case-study-edit")
 EXPECTED_STRINGS = [
-    "Create case study or project", "Basic", "Images",
-    ("Describe something significant your company has done that will be "
-     "relevant to international buyers. For example, you could add details of "
-     "a significant collaboration on a recent international project or a major"
-     " export deal."), "Title of your case study or project:",
+    "Create case study or project",
+    "Basic",
+    "Images",
+    (
+        "Describe something significant your company has done that will be "
+        "relevant to international buyers. For example, you could add details of "
+        "a significant collaboration on a recent international project or a major"
+        " export deal."
+    ),
+    "Title of your case study or project:",
     "Give your case study a title of 60 characters or fewer.",
     "Summary of your case study or project:",
-    ("Summarise your case study in 200 characters or fewer. This will appear "
-     "on your main trade profile page"), "Describe your case study or project",
-    ("Describe the project or case study in 1,000 characters or fewer. Use "
-     "this space to demonstrate the value of your company to an international "
-     "business audience."), "Sector:",
+    (
+        "Summarise your case study in 200 characters or fewer. This will appear "
+        "on your main business profile page"
+    ),
+    "Describe your case study or project",
+    (
+        "Describe the project or case study in 1,000 characters or fewer. Use "
+        "this space to demonstrate the value of your company to an international "
+        "business audience."
+    ),
+    "Sector:",
     "Select the sector most relevant to your case study or project.",
     "The web address for your case study (optional):",
     "Enter a full URL including http:// or https://",
-    ("Enter up to 10 keywords that describe your case study. Keywords should "
-     "be separated by commas."),
-    ("These keywords will be used to help potential overseas buyers find your "
-     "case study."), "Next", "Cancel"
+    (
+        "Enter up to 10 keywords that describe your case study. Keywords should "
+        "be separated by commas."
+    ),
+    (
+        "These keywords will be used to help potential overseas buyers find your "
+        "case study."
+    ),
+    "Next",
+    "Cancel",
 ]
 
 
@@ -64,18 +81,21 @@ def prepare_form_data(token: str, case_study: CaseStudy) -> dict:
         "basic-description": case_study.description,
         "basic-sector": case_study.sector,
         "basic-website": case_study.website,
-        "basic-keywords": case_study.keywords
+        "basic-keywords": case_study.keywords,
     }
     return data
 
 
 def submit_form(
-        session: Session, token: str, case_study: CaseStudy) -> Response:
+    session: Session, token: str, case_study: CaseStudy
+) -> Response:
     """Submit the form with basic case study data."""
     data = prepare_form_data(token, case_study)
     headers = {"Referer": URL}
     response = make_request(
-        Method.POST, URL, session=session, headers=headers, data=data)
+        Method.POST, URL, session=session, headers=headers, data=data
+    )
     logging.debug(
-        "Supplier successfully submitted basic case study data: %s", data)
+        "Supplier successfully submitted basic case study data: %s", data
+    )
     return response

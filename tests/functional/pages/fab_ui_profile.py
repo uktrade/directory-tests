@@ -13,31 +13,39 @@ from tests.settings import SECTORS_WITH_LABELS
 
 URL = get_absolute_url("ui-buyer:company-profile")
 EXPECTED_STRINGS = [
-    "Facts &amp; details", "Number of employees", "Registration number",
-    "Company description", "Online profiles", "Recent projects",
-    "+ Add a case study", "Core Sector", "Keywords"
+    "Facts &amp; details",
+    "Number of employees",
+    "Registration number",
+    "Company description",
+    "Online profiles",
+    "Recent projects",
+    "+ Add a case study",
+    "Core Sector",
+    "Keywords",
 ]
 
 EXPECTED_STRINGS_NO_DESCRIPTION = [
-    "Your company has no description.", "Set your description",
+    "Your company has no description.",
+    "Set your description",
     "Your profile can't be published until your company has a description",
 ]
 
 EXPECTED_STRINGS_VERIFIED = [
-    "Your company is published", "View published profile",
-    "Your profile is visible to international buyers"
+    "Your company is published",
+    "View published profile",
+    "Your profile is visible to international buyers",
 ]
 
 EXPECTED_STRINGS_NOT_VERIFIED = [
-    "Your company has not yet been verified.", "Verify your company",
-    "Your profile can't be published until your company is verified"
+    "Your company has not yet been verified.",
+    "Verify your company",
+    "Your profile can't be published until your company is verified",
 ]
 
 
 def go_to(session: Session) -> Response:
     headers = {"Referer": URL}
-    response = make_request(Method.GET, URL, session=session, headers=headers)
-    return response
+    return make_request(Method.GET, URL, session=session, headers=headers)
 
 
 def should_be_here(response: Response):
@@ -46,7 +54,8 @@ def should_be_here(response: Response):
 
 
 def should_see_details(
-        company: Company, response: Response, table_of_details: Table):
+    company: Company, response: Response, table_of_details: Table
+):
     """Supplier should see all expected Company details of FAB profile page."""
     visible_details = [row["detail"] for row in table_of_details]
     content = response.content.decode("utf-8")
@@ -59,23 +68,26 @@ def should_see_details(
 
     if title:
         with assertion_msg(
-                "Couldn't find company's title '%s' in the response",
-                company.title):
+            "Couldn't find company's title '%s' in the response", company.title
+        ):
             assert company.title in content
     if keywords:
         for keyword in company.keywords.split(", "):
             with assertion_msg(
-                    "Couldn't find keyword '%s' in the response", keyword):
+                "Couldn't find keyword '%s' in the response", keyword
+            ):
                 assert keyword.strip() in content
     if website:
         with assertion_msg(
-                "Couldn't find company's website '%s' in the response",
-                company.website):
+            "Couldn't find company's website '%s' in the response",
+            company.website,
+        ):
             assert company.website in content
     if size:
         with assertion_msg(
-                "Couldn't find the size of the company '%s' in the response",
-                company.no_employees):
+            "Couldn't find the size of the company '%s' in the response",
+            company.no_employees,
+        ):
             if company.no_employees == "10001+":
                 assert "10,001+" in content
             elif company.no_employees == "1001-10000":
@@ -86,8 +98,9 @@ def should_see_details(
                 assert company.no_employees in content
     if sector:
         with assertion_msg(
-                "Couldn't find company's sector '%s' in the response",
-                SECTORS_WITH_LABELS[company.sector]):
+            "Couldn't find company's sector '%s' in the response",
+            SECTORS_WITH_LABELS[company.sector],
+        ):
             assert SECTORS_WITH_LABELS[company.sector] in content
 
 
@@ -106,8 +119,10 @@ def should_see_online_profiles(company: Company, response: Response):
         with assertion_msg("Couldn't find link to company's Twitter profile"):
             assert "Visit Twitter" in content
             assert company.twitter in content
-    logging.debug("Supplier can see all expected links to Online Profiles on "
-                  "FAB Company's Directory Profile Page")
+    logging.debug(
+        "Supplier can see all expected links to Online Profiles on "
+        "FAB Company's Directory Profile Page"
+    )
 
 
 def should_not_see_online_profiles(response: Response):
@@ -118,23 +133,32 @@ def should_not_see_online_profiles(response: Response):
         assert "Add LinkedIn" in content
     with assertion_msg("Found a link to 'Add Twitter' profile"):
         assert "Add Twitter" in content
-    logging.debug("Supplier cannot see links to any Online Profile on FAB "
-                  "Company's Directory Profile Page")
+    logging.debug(
+        "Supplier cannot see links to any Online Profile on FAB "
+        "Company's Directory Profile Page"
+    )
 
 
 def should_see_case_studies(case_studies: dict, response: Response):
     content = response.content.decode("utf-8")
     for case in case_studies:
         with assertion_msg(
-                "Couldn't find Case Study '%s' title '%s'",
-                case_studies[case].alias, case_studies[case].title):
+            "Couldn't find Case Study '%s' title '%s'",
+            case_studies[case].alias,
+            case_studies[case].title,
+        ):
             assert case_studies[case].title in content
         with assertion_msg(
-                "Couldn't find Case Study '%s' description '%s'",
-                case_studies[case].alias, case_studies[case].description):
+            "Couldn't find Case Study '%s' description '%s'",
+            case_studies[case].alias,
+            case_studies[case].description,
+        ):
             assert case_studies[case].description in content
-    logging.debug("Supplier can see all %d Case Studies on FAB Company's "
-                  "Directory Profile Page", len(case_studies))
+    logging.debug(
+        "Supplier can see all %d Case Studies on FAB Company's "
+        "Directory Profile Page",
+        len(case_studies),
+    )
 
 
 def should_see_profile_is_not_verified(response: Response):

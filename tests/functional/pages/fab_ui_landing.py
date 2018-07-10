@@ -9,15 +9,15 @@ from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("ui-buyer:landing")
 EXPECTED_STRINGS = [
-    "Trade profile - great.gov.uk", "Get promoted internationally",
-    "with a great.gov.uk trade profile",
-    "Enter your company name"
+    "Business profile - great.gov.uk",
+    "Get promoted internationally",
+    "with a great.gov.uk business profile",
+    "Enter your company name",
 ]
 
 
 def go_to(session: Session) -> Response:
-    response = make_request(Method.GET, URL, session=session)
-    return response
+    return make_request(Method.GET, URL, session=session)
 
 
 def should_be_here(response: Response):
@@ -28,10 +28,12 @@ def should_be_here(response: Response):
 def should_be_logged_out(response: Response):
     """Check if Supplier is logged out by checking the cookies."""
     with assertion_msg(
-            "Found sso_display_logged_in cookie in the response. Maybe user is"
-            " still logged in?"):
+        "Found sso_display_logged_in cookie in the response. Maybe user is"
+        " still logged in?"
+    ):
         assert "sso_display_logged_in" not in response.cookies
     with assertion_msg(
-            "Found directory_sso_dev_session cookie in the response. Maybe "
-            "user is still logged in?"):
+        "Found directory_sso_dev_session cookie in the response. Maybe "
+        "user is still logged in?"
+    ):
         assert "directory_sso_dev_session" not in response.cookies

@@ -18,8 +18,13 @@ def should_be_here(response: Response):
 
 
 def submit(
-        actor: Actor, action: str, *, password: str = None,
-        password_again: str = None, referer: str = None) -> Response:
+    actor: Actor,
+    action: str,
+    *,
+    password: str = None,
+    password_again: str = None,
+    referer: str = None
+) -> Response:
     session = actor.session
     URL = urljoin(get_absolute_url("sso:landing"), action)
     profile_about = get_absolute_url("profile:about")
@@ -28,7 +33,7 @@ def submit(
         "action": "change password",
         "csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
         "password1": password or actor.password,
-        "password2": password_again or password or actor.password
+        "password2": password_again or password or actor.password,
     }
     # Referer is the same as the final URL from the previous request
     query = "?next={}".format(referer or profile_about)
@@ -36,7 +41,8 @@ def submit(
     headers = {"Referer": referer}
 
     response = make_request(
-        Method.POST, URL, session=session, data=data, headers=headers)
+        Method.POST, URL, session=session, data=data, headers=headers
+    )
 
     return response
 

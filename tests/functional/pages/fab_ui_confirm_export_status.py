@@ -7,18 +7,26 @@ from tests import get_absolute_url
 from tests.functional.utils.request import Method, check_response, make_request
 
 EXPECTED_STRINGS = [
-    "Your company's previous exports", "Confirm company", "Trading status",
+    "Your company's previous exports",
+    "Confirm company",
+    "Trading status",
     "Have you exported before?",
-    "Yes", "No", "I accept the", "Terms and conditions",
-    "< Back to previous step", "Continue"
+    "Yes",
+    "No",
+    "I accept the",
+    "Terms and conditions",
+    "< Back to previous step",
+    "Continue",
 ]
 
 EXPECTED_STRINGS_WO_SSO_ACCOUNT = [
     "Creating an account means you can:",
     "promote the products or services you sell to overseas buyers",
     "give overseas buyers from your industry an easy way to find you",
-    ("To confirm that this is your company you must create a great.gov.uk "
-     "account")
+    (
+        "To confirm that this is your company you must create a great.gov.uk "
+        "account"
+    ),
 ]
 
 
@@ -35,11 +43,12 @@ def submit(session: Session, token: str, exported: bool) -> Response:
         "csrfmiddlewaretoken": token,
         "enrolment_view-current_step": "exports",
         "exports-has_exported_before": exported,
-        "exports-terms_agreed": "on"
+        "exports-terms_agreed": "on",
     }
 
     response = make_request(
-        Method.POST, url, session=session, headers=headers, data=data)
+        Method.POST, url, session=session, headers=headers, data=data
+    )
 
     return response
 

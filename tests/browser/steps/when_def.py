@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # flake8: noqa
+# fmt: off
 """When step definitions."""
 from behave import when
 from behave.runner import Context

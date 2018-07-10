@@ -6,7 +6,7 @@ from pprint import pformat
 from behave.contrib.scenario_autoretry import patch_scenario_with_autoretry
 from tests.functional.utils.context_utils import (
     initialize_scenario_data,
-    patch_context
+    patch_context,
 )
 from tests.functional.utils.generic import (
     blue,
@@ -17,7 +17,7 @@ from tests.functional.utils.generic import (
     extract_section_error,
     green,
     print_response,
-    red
+    red,
 )
 from tests.functional.utils.request import REQUEST_EXCEPTIONS
 from tests.settings import AUTO_RETRY, AUTO_RETRY_MAX_ATTEMPTS
@@ -31,18 +31,22 @@ def before_feature(context, feature):
     if AUTO_RETRY:
         for scenario in feature.scenarios:
             patch_scenario_with_autoretry(
-                scenario, max_attempts=AUTO_RETRY_MAX_ATTEMPTS)
+                scenario, max_attempts=AUTO_RETRY_MAX_ATTEMPTS
+            )
 
 
 def before_step(context, step):
-    logging.debug('Step: %s %s', step.step_type, str(repr(step.name)))
+    logging.debug("Step: %s %s", step.step_type, str(repr(step.name)))
 
 
 def after_step(context, step):
     if step.status == "failed":
         logging.debug(
-            'Step "%s %s" failed. Reason: "%s"', step.step_type, step.name,
-            step.exception)
+            'Step "%s %s" failed. Reason: "%s"',
+            step.step_type,
+            step.name,
+            step.exception,
+        )
         logging.debug(context.scenario_data)
         red("\nScenario data:")
         print(pformat(context.scenario_data))
@@ -57,17 +61,20 @@ def after_step(context, step):
             if main_errors:
                 red(
                     "Found words in the `main` part of the response that might"
-                    " suggest the root cause of the error")
+                    " suggest the root cause of the error"
+                )
                 print(main_errors)
             if section_errors:
                 red(
                     "Found words in the `section` part of the response that "
-                    "might suggest the root cause of the error")
+                    "might suggest the root cause of the error"
+                )
                 print(section_errors)
             if form_errors:
                 red(
                     "Found words in the `form` part of the response that might"
-                    " suggest the root cause of the error")
+                    " suggest the root cause of the error"
+                )
                 print(form_errors)
             green("Last recorded request & response")
             print_response(res, trim=True, content_only=True)
@@ -76,7 +83,7 @@ def after_step(context, step):
 
 
 def before_scenario(context, scenario):
-    logging.debug('Starting scenario: %s', scenario.name)
+    logging.debug("Starting scenario: %s", scenario.name)
     # re-initialize the scenario data
     context.scenario_data = initialize_scenario_data()
 
@@ -100,7 +107,7 @@ def after_scenario(context, scenario):
                 red("Deleted %s supplier data from DIR & SSO DB" % actor.email)
     # clear the scenario data after every scenario
     context.scenario_data = None
-    logging.debug('Finished scenario: %s', scenario.name)
+    logging.debug("Finished scenario: %s", scenario.name)
 
 
 def before_all(context):

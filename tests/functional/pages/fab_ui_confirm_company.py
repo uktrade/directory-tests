@@ -9,15 +9,13 @@ from tests.functional.utils.context_utils import Company
 from tests.functional.utils.generic import escape_html
 from tests.functional.utils.request import Method, check_response, make_request
 
-URL = get_absolute_url('ui-buyer:landing')
+URL = get_absolute_url("ui-buyer:landing")
 EXPECTED_STRINGS = [
-    "Create your business profile", "Confirm company", "Trading status",
-    "Company number", "Registered address",
-    ("I confirm that I am authorised to sign this company up to great.gov.uk "
-     "services"), "Creating an account means you can",
-    "create a free business profile visible to overseas buyers",
-    ("apply for opportunities sourced by overseas trade professionals or "
-     "provided by a third party"), "Create account"
+    "Confirm your company",
+    "Registered name",
+    "Company number",
+    "Registered address",
+    "I confirm that I am authorised to sign this company up to great.gov.uk",
 ]
 
 
@@ -25,10 +23,9 @@ def go_to(session: Session, company: Company) -> Response:
     data = {"company_name": company.title, "company_number": company.number}
     headers = {"Referer": URL}
 
-    response = make_request(
-        Method.POST, URL, session=session, headers=headers, data=data)
-
-    return response
+    return make_request(
+        Method.POST, URL, session=session, headers=headers, data=data
+    )
 
 
 def should_be_here(response: Response, company: Company):
@@ -39,9 +36,10 @@ def should_be_here(response: Response, company: Company):
 
 
 def confirm_company_selection(
-        session: Session, company: Company, token: str) -> Response:
+    session: Session, company: Company, token: str
+) -> Response:
     query = "?company_number={}".format(company.number)
-    url = urljoin(get_absolute_url('ui-buyer:register-confirm-company'), query)
+    url = urljoin(get_absolute_url("ui-buyer:register-confirm-company"), query)
     headers = {"Referer": url}
     data = {
         "csrfmiddlewaretoken": token,
@@ -49,9 +47,11 @@ def confirm_company_selection(
         "company-company_name": company.title,
         "company-company_number": company.number,
         "company-confirmed": "on",
-        "company-company_address":
-            company.companies_house_details["address_snippet"]
+        "company-company_address": company.companies_house_details[
+            "address_snippet"
+        ],
     }
 
     return make_request(
-        Method.POST, url, session=session, headers=headers, data=data)
+        Method.POST, url, session=session, headers=headers, data=data
+    )

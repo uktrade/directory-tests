@@ -10,7 +10,9 @@ from tests.functional.utils.generic import assertion_msg
 from tests.functional.utils.request import Method, check_response, make_request
 
 EXPECTED_STRINGS = [
-    "Confirm email address", "Confirm that ", "is an email address for user"
+    "Confirm email address",
+    "Confirm that ",
+    "is an email address for user",
 ]
 
 
@@ -38,4 +40,5 @@ def confirm(actor: Actor, form_action_value: str) -> Response:
     data = {"csrfmiddlewaretoken": actor.csrfmiddlewaretoken}
 
     return make_request(
-        Method.POST, url, session=session, headers=headers, data=data)
+        Method.POST, url, session=session, headers=headers, data=data
+    )

@@ -8,10 +8,15 @@ from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("ui-supplier:industries-tech-summary")
 EXPECTED_STRINGS = [
-    "UK technology", "Find your UK trade partner",
+    "UK technology",
+    "Find your UK trade partner",
     "See the UK's technology providers on the Find a supplier service",
-    "EVRYTHNG", "Arkessa", "Find other great UK companies",
-    "Read more about the company", "Company showcase", "Read case study"
+    "EVRYTHNG",
+    "Arkessa",
+    "Find other great UK companies",
+    "Read more about the company",
+    "Company showcase",
+    "Read case study",
 ]
 
 

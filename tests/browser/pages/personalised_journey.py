@@ -70,7 +70,7 @@ SECTIONS = {
         "heading": "section.service-section.fas h2",
         "fas image": "section.service-section.fas img",
         "intro": "section.service-section.fas .intro",
-        "create a trade profile": "section.service-section.fas .intro .button",
+        "create a business profile": "section.service-section.fas .intro .button",
     },
     "exopps tile": {
         "heading": "#other-services div.lg-2:nth-child(2) h3",

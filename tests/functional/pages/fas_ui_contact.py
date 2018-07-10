@@ -10,29 +10,40 @@ from tests.functional.utils.generic import escape_html
 from tests.functional.utils.request import Method, check_response, make_request
 
 LANDING = get_absolute_url("ui-supplier:landing")
-URL = urljoin(LANDING, 'suppliers/{company_number}/contact/')
+URL = urljoin(LANDING, "suppliers/{company_number}/contact/")
 EXPECTED_STRINGS = [
     "Send a message to",
-    ("Fill in your details and a brief message summarising your needs that "
-     "will be sent to the UK company."), "Your full name:",
-    "Your company name:", "Country:", "Your email address:", "Industry:",
-    "Enter a subject line for your message:", "Maximum 200 characters.",
-    "Enter your message to the UK company:", "Maximum 1000 characters.",
-    "Captcha:", "I agree to the great.gov.uk terms and conditions", "Send",
-    "cancel"
+    (
+        "Fill in your details and a brief message summarising your needs that "
+        "will be sent to the UK company."
+    ),
+    "Your full name:",
+    "Your company name:",
+    "Country:",
+    "Your email address:",
+    "Industry:",
+    "Enter a subject line for your message:",
+    "Maximum 200 characters.",
+    "Enter your message to the UK company:",
+    "Maximum 1000 characters.",
+    "Captcha:",
+    "I agree to the great.gov.uk terms and conditions",
+    "Send",
+    "cancel",
 ]
 
 EXPECTED_STRINGS_MESSAGE_SENT = [
-    "Message sent", "Your message has been sent to", "Browse more companies"
+    "Message sent",
+    "Your message has been sent to",
+    "Browse more companies",
 ]
 
 
 def go_to(
-        session: Session, company_number: str, company_name: str) -> Response:
+    session: Session, company_number: str, company_name: str
+) -> Response:
     full_url = URL.format(company_number=company_number)
-    response = make_request(Method.GET, full_url, session=session)
-    should_be_here(response, name=company_name)
-    return response
+    return make_request(Method.GET, full_url, session=session)
 
 
 def should_be_here(response, *, name=None):
@@ -43,7 +54,8 @@ def should_be_here(response, *, name=None):
 
 
 def submit(
-        session: Session, message: Message or Feedback, company_number: str):
+    session: Session, message: Message or Feedback, company_number: str
+):
     full_url = URL.format(company_number=company_number)
     headers = {"Referer": URL.format(company_number=company_number)}
     data = {
@@ -55,15 +67,16 @@ def submit(
         "g-recaptcha-response": message.g_recaptcha_response,
         "sector": message.sector,
         "subject": message.subject,
-        "terms": message.terms
+        "terms": message.terms,
     }
-    response = make_request(
-        Method.POST, full_url, session=session, headers=headers, data=data)
-    return response
+    return make_request(
+        Method.POST, full_url, session=session, headers=headers, data=data
+    )
 
 
 def should_see_that_message_has_been_sent(
-        company: Company, response: Response):
+    company: Company, response: Response
+):
     expected = EXPECTED_STRINGS_MESSAGE_SENT + [escape_html(company.title)]
     check_response(response, 200, body_contains=expected)
     logging.debug("Buyer was told that the message has been sent")
