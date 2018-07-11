@@ -6,7 +6,7 @@ from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
-from utils import assertion_msg, find_element, take_screenshot
+from utils import find_element, take_screenshot
 
 from pages import (
     AssertionExecutor,
