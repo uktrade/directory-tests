@@ -34,8 +34,8 @@ SECTIONS = {
         "feedback link": Selector(By.CSS_SELECTOR, "#header-beta-bar a"),
     },
     "hero": {"self": Selector(By.CSS_SELECTOR, "#content > section.hero")},
-    "industries": {
-        "self": Selector(By.CSS_SELECTOR, "section.industry-page-accordions"),
+    "sectors": {
+        "self": Selector(By.CSS_SELECTOR, "section.industries"),
         "industry cards": Selector(
             By.CSS_SELECTOR, "section.industries a.labelled-card"
         ),
