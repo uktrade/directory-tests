@@ -83,13 +83,22 @@ SECTIONS = {
     "hero": {"self": Selector(By.CSS_SELECTOR, "#content > section.hero")},
     "industry pullout": {
         "self": Selector(By.CSS_SELECTOR, "section.industry-pullout"),
-        "data": Selector(By.CSS_SELECTOR, "section.industry-pullout div.data"),
     },
-    "industry accordions": {
+    "big number": {
+        "self": Selector(By.CSS_SELECTOR, "section.industry-pullout div.data"),
+    },
+    "content": {
         "self": Selector(By.CSS_SELECTOR, "section.industry-page-accordions"),
         "accordion expanders": Selector(
             By.CSS_SELECTOR,
             "section.industry-page-accordions a.accordion-expander",
+        ),
+    },
+    "related industries": {
+        "self": Selector(By.CSS_SELECTOR, "section.industry-page-related"),
+        "industry cards": Selector(
+            By.CSS_SELECTOR,
+            "section.industry-page-related a.labelled-card",
         ),
     },
     "report this page": {
