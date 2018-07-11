@@ -2,15 +2,18 @@
 @industries
 Feature: Industries page
 
+  @CMS-159
   Scenario: Visitors should be able to view "Invest Industries" page
-    Given "Robert" visits the "Invest Industries" page
+    Given "Robert" visits the "Invest - Industries" page
 
-    Then "Robert" should see expected page sections
-      | Header   |
-      | Beta bar |
-      | Hero     |
-      | Sectors  |
-      | Footer   |
+    Then "Robert" should see expected sections on "Invest - Industries" page
+      | Sections         |
+      | Header           |
+      | Beta bar         |
+      | Hero             |
+      | Sectors          |
+      | Report this page |
+      | Footer           |
 
 
   Scenario Outline: Overseas businesses should be able to learn more about "<selected>" UK Industry from Industries page
