@@ -1,10 +1,9 @@
-@invest-home-page
+@home-page
 @no-sso-email-verification-required
 Feature: Invest home page
 
 
-  @browser
-  @requests
+  @CMS-157
   Scenario: Visitors should be able to view "Invest home" page
     Given "Robert" visits the "Invest - home" page
 
@@ -18,6 +17,7 @@ Feature: Invest home page
       | Footer                             |
 
 
+  @CMS-157
   @browser
   Scenario: Overseas businesses should be able to find out why UK is the best place for their business
     Given "Robert" visits the "Invest - home" page
@@ -31,8 +31,7 @@ Feature: Invest home page
     Then "Robert" should see brief explanation why the UK is the best place for his business
 
 
-  @browser
-  @requests
+  @CMS-157
   Scenario Outline: Overseas businesses should be able to learn more about "<selected>" UK Industry
     Given "Robert" visits the "Invest - home" page
 
@@ -51,8 +50,7 @@ Feature: Invest home page
       | Technology               |
 
 
-  @browser
-  @requests
+  @CMS-157
   Scenario: Overseas businesses should be able to also learn more about UK Industries other than the promoted ones
     Given "Robert" visits the "Invest - home" page
 
@@ -61,8 +59,7 @@ Feature: Invest home page
     Then "Robert" should be on the "Invest - Industries" page
 
 
-  @browser
-  @requests
+  @CMS-157
   Scenario Outline: Overseas businesses should be able to learn how to grow their businesses in the UK by reading "<selected>" guide
     Given "Robert" visits the "Invest - home" page
 
@@ -80,8 +77,7 @@ Feature: Invest home page
       | Set up a company in the UK                  |
 
 
-  @browser
-  @requests
+  @CMS-157
   Scenario: Overseas businesses should be able to learn how UK government can help them to establish in the UK
     Given "Robert" visits the "Invest - home" page
 
@@ -95,8 +91,7 @@ Feature: Invest home page
   @bug
   @CMS-255
   @fixme
-  @browser
-  @requests
+  @CMS-157
   Scenario: Overseas businesses should be able to learn how UK government can help them to establish in the UK
     Given "Robert" visits the "Invest - home" page
 
