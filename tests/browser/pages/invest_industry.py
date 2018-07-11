@@ -88,12 +88,15 @@ SECTIONS = {
     "big number": {
         "self": Selector(By.CSS_SELECTOR, "section.industry-pullout div.data"),
     },
-    "content": {
+    "topics": {
         "self": Selector(By.CSS_SELECTOR, "section.industry-page-accordions"),
         "accordion expanders": Selector(
             By.CSS_SELECTOR,
             "section.industry-page-accordions a.accordion-expander",
         ),
+    },
+    "topics contents": {
+        "paragraphs": Selector(By.CSS_SELECTOR, "div.accordion-content p")
     },
     "related industries": {
         "self": Selector(By.CSS_SELECTOR, "section.industry-page-related"),
