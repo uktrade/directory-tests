@@ -67,7 +67,10 @@ class URLS(Enum):
     RETAIL = urljoin(BASE_URL, "retail/")
     TECHNOLOGY = urljoin(BASE_URL, "technology/")
 
-TOPIC_EXPANDERS = Selector(By.CSS_SELECTOR, "section.industry-page-accordions a.accordion-expander")
+
+TOPIC_EXPANDERS = Selector(
+    By.CSS_SELECTOR, "section.industry-page-accordions a.accordion-expander"
+)
 
 SECTIONS = {
     "header": {
@@ -83,10 +86,10 @@ SECTIONS = {
     },
     "hero": {"self": Selector(By.CSS_SELECTOR, "#content > section.hero")},
     "industry pullout": {
-        "self": Selector(By.CSS_SELECTOR, "section.industry-pullout"),
+        "self": Selector(By.CSS_SELECTOR, "section.industry-pullout")
     },
     "big number": {
-        "self": Selector(By.CSS_SELECTOR, "section.industry-pullout div.data"),
+        "self": Selector(By.CSS_SELECTOR, "section.industry-pullout div.data")
     },
     "topics": {
         "self": Selector(By.CSS_SELECTOR, "section.industry-page-accordions"),
@@ -101,8 +104,7 @@ SECTIONS = {
     "related industries": {
         "self": Selector(By.CSS_SELECTOR, "section.industry-page-related"),
         "industry cards": Selector(
-            By.CSS_SELECTOR,
-            "section.industry-page-related a.labelled-card",
+            By.CSS_SELECTOR, "section.industry-page-related a.labelled-card"
         ),
     },
     "report this page": {
@@ -194,6 +196,10 @@ def should_see_content_for(driver: WebDriver, industry_name: str):
 
 def unfold_topics(driver: WebDriver):
     expanders = find_elements(driver, by_css=TOPIC_EXPANDERS.value)
-    assert expanders, "Expected to see at least 1 topic but found 0 on {}".format(driver.current_url)
+    assert (
+        expanders
+    ), "Expected to see at least 1 topic but found 0 on {}".format(
+        driver.current_url
+    )
     for expander in expanders:
         expander.click()
