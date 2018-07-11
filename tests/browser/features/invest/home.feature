@@ -8,6 +8,7 @@ Feature: Invest home page
     Given "Robert" visits the "Invest - home" page
 
     Then "Robert" should see expected sections on "Invest - home" page
+      | sections                           |
       | Header                             |
       | Beta bar                           |
       | Reasons to move business to the UK |
