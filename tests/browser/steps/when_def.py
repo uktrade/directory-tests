@@ -30,6 +30,7 @@ from steps.when_impl import (
     generic_open_guide_link,
     generic_open_industry_page,
     generic_see_more_industries,
+    generic_unfold_topics,
     guidance_open_category,
     guidance_read_through_all_articles,
     header_footer_click_on_dit_logo,
@@ -62,7 +63,7 @@ from steps.when_impl import (
     triage_say_whether_you_use_online_marketplaces,
     triage_should_see_answers_to_questions,
     triage_what_is_your_company_name,
-    visit_page
+    visit_page,
 )
 
 
@@ -437,3 +438,9 @@ def actor_decides_to_read_more(context: Context, actor_alias: str):
 def when_actor_goes_to_guide(
         context: Context, actor_alias: str, guide_name: str):
     generic_open_guide_link(context, actor_alias, guide_name)
+
+
+@when('"{actor_alias}" unfolds all topic sections on "{page_name}" page')
+def when_actor_unfolds_all_topic_sections(
+        context: Context, actor_alias: str, page_name: str):
+    generic_unfold_topics(context, actor_alias, page_name)
