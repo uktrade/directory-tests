@@ -24,7 +24,7 @@ EXPECTED_STRINGS = [
     "Other",
     "Enter 3 maximum",
     "Back to previous step",
-    "Save",
+    "Next",
 ] + SECTORS
 
 
