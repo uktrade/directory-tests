@@ -24,7 +24,10 @@ EXPECTED_STRINGS = [
     "Other",
     "Enter 3 maximum",
     "Back to previous step",
-    "Next",
+    "Have you exported before?",
+    "Yes",
+    "No",
+    "Save",
 ] + SECTORS
 
 
