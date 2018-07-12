@@ -301,10 +301,11 @@ def bp_select_random_sector_and_export_to_country(
     sector = choice(SECTORS)
     countries = [COUNTRIES[choice(list(COUNTRIES))]]
     other = ""
+    has_exported_before = get_form_value("true or false")
 
     # Step 1 - Submit the Choose Your Sector form
     response = fab_ui_build_profile_sector.submit(
-        actor, sector, countries, other
+        actor, sector, countries, other, has_exported_before
     )
     context.response = response
 
@@ -1731,6 +1732,7 @@ def get_form_value(key: str) -> str or list or int or None:
         ("1 predefined country$", get_n_country_codes(1)),
         ("none selected", None),
         ("sector", choice(SECTORS)),
+        ("true or false", choice([True, False])),
     ]
 
     found = False
@@ -1944,8 +1946,9 @@ def fab_select_preferred_countries_of_export(
     country_codes = get_form_value(country_names)
     other = get_form_value(other_countries)
     sector = get_form_value("sector")
+    has_exported_before = get_form_value("true or false")
     response = fab_ui_build_profile_sector.submit(
-        actor, sector, country_codes, other
+        actor, sector, country_codes, other, has_exported_before
     )
     context.response = response
 
