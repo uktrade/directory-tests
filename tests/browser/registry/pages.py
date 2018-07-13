@@ -385,6 +385,7 @@ INVEST_PAGE_REGISTRY = {
         "po": invest_industry,
     },
     "invest - guide": {"url": invest_guide.URL, "po": invest_guide},
+    "invest - uk setup guide": {"url": invest_guide.URL, "po": invest_guide},
     "invest - apply for a uk visa guide": {
         "url": invest_guide.URLS.APPLY_FOR_A_UK_VISA,
         "po": invest_guide,
