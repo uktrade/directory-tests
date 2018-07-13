@@ -19,6 +19,8 @@ from pages import (
     language_selector,
     personalised_journey,
     triage_summary,
+    invest_header,
+    invest_footer
 )
 from registry.articles import get_article, get_articles
 from registry.pages import get_page_object
@@ -775,3 +777,14 @@ def stats_and_tracking_elements_should_not_be_present(
 
     for name in element_names:
         pixels.should_not_be_present(context.driver, name)
+
+
+def invest_should_see_uk_gov_logo(
+        context: Context, actor_alias: str, section: str):
+    if section.lower() == "header":
+        invest_header.check_logo(context.driver)
+    else:
+        invest_footer.check_logo(context.driver)
+    logging.debug(
+        "%s can see correct UK GOV logo in page %s on %s", actor_alias,
+        section, context.driver.current_url)

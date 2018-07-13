@@ -37,6 +37,7 @@ from steps.then_impl import (
     header_check_dit_logo,
     header_check_favicon,
     invest_should_see_topic_contents,
+    invest_should_see_uk_gov_logo,
     language_selector_keyboard_should_be_trapped,
     language_selector_should_not_see_it,
     language_selector_should_see_it,
@@ -382,3 +383,9 @@ def then_stats_and_tracking_elements_should_be_present(context: Context):
 @then('following web statistics analysis or tracking elements should be present')
 def then_stats_and_tracking_elements_should_be_present(context: Context):
     stats_and_tracking_elements_should_be_present(context, context.table)
+
+
+@then('"{actor_alias}" should see correct UK Government logo in page "{section}"')
+def then_user_should_see_uk_gov_logo(
+        context: Context, actor_alias: str, section: str):
+    invest_should_see_uk_gov_logo(context, actor_alias, section)
