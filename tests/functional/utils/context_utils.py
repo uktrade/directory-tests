@@ -92,6 +92,7 @@ Company = namedtuple(
         "deleted",
         "owner",
         "owner_email",
+        "has_exported_before",
     ],
 )
 Feedback = namedtuple(

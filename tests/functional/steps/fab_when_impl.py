@@ -762,6 +762,7 @@ def prof_update_company_details(
     website = DETAILS["WEBSITE"] in details_to_update
     size = DETAILS["SIZE"] in details_to_update
     sector = DETAILS["SECTOR"] in details_to_update
+    exported_before = DETAILS["HAS_EXPORTED_BEFORE"] in details_to_update
     countries = DETAILS["COUNTRIES"] in details_to_update
 
     # Steps 1 - Go to the FAB Edit Company's details page
@@ -797,8 +798,9 @@ def prof_update_company_details(
     context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
     # Step 6 - Update company's sector
-    response, new_sector, new_countries = fab_ui_edit_sector.update(
-        actor, company, update_sector=sector, update_countries=countries
+    response, new_sector, new_countries, has_exported_before = fab_ui_edit_sector.update(
+        actor, company, update_sector=sector, update_countries=countries,
+        update_has_exported_before=exported_before
     )
     context.response = response
 
@@ -814,11 +816,12 @@ def prof_update_company_details(
         no_employees=new_details.no_employees,
         sector=new_sector,
         export_to_countries=new_countries,
+        has_exported_before=has_exported_before,
     )
     logging.debug(
         "%s successfully updated basic Company's details: title=%s, "
         "website=%s, keywords=%s, number of employees=%s, sector=%s, "
-        "countries=%s",
+        "countries=%s, has_exported_before=%s",
         supplier_alias,
         new_details.title,
         new_details.website,
@@ -826,6 +829,7 @@ def prof_update_company_details(
         new_details.no_employees,
         new_sector,
         new_countries,
+        has_exported_before,
     )
 
 

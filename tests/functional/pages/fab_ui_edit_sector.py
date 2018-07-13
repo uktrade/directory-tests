@@ -46,8 +46,10 @@ def update(
     update_sector: bool = True,
     sector_name: str = None,
     update_countries: bool = True,
-    country_names: str = None
-) -> (Response, str, str):
+    country_names: str = None,
+    update_has_exported_before: bool = True,
+    has_exported_before: bool = None,
+) -> (Response, str, str, bool):
     """Change Company's Sector of Interest.
 
     :param actor: a namedtuple with Actor details
@@ -74,11 +76,18 @@ def update(
     else:
         new_countries = company.export_to_countries
 
+    exported_before = random.choice([True, False])
+    if update_has_exported_before:
+        has_exported_before = has_exported_before or exported_before
+    else:
+        has_exported_before = company.has_exported_before or exported_before
+
     other = ""
     headers = {"Referer": URL}
     data = {
         "csrfmiddlewaretoken": token,
         "supplier_classification_edit_view-current_step": "classification",
+        "classification-has_exported_before": has_exported_before,
         "classification-sectors": new_sector,
         "classification-export_destinations": new_countries,
         "classification-export_destinations_other": other,
@@ -88,4 +97,4 @@ def update(
         Method.POST, URL, session=session, headers=headers, data=data
     )
 
-    return response, new_sector, new_countries
+    return response, new_sector, new_countries, has_exported_before
