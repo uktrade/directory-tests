@@ -344,6 +344,7 @@ def when_actor_opens_link_from_header_menu(context, actor_alias, page_name, grou
 
 @when('"{actor_alias}" decides to use "{element_name}" button on "{page_name}" page')
 @when('"{actor_alias}" decides to use "{element_name}" link on "{page_name}" page')
+@when('"{actor_alias}" decides to use "{element_name}" link from page "{page_name}"')
 @when('"{actor_alias}" decides to use "{element_name}" on "{page_name}" page')
 @when('"{actor_alias}" decides to use "{element_name}" button in "{page_name}"')
 @when('"{actor_alias}" decides to use "{element_name}" link in "{page_name}"')

@@ -27,23 +27,23 @@ Feature: Header-Footer
   @footer
   @home-page
   @<specific>
-  Scenario Outline: Visitors should be able to get to the "<specific>" page via "<menu>" link
+  Scenario Outline: Visitors should be able to get to the "<specific>" page via "<section>" link
     Given "Robert" visits the "Invest - Home" page
 
-    When "Robert" decides to use "<menu>" link to the "<specific>" page
+    When "Robert" decides to use "<specific>" link from page "Invest - <section>"
 
-    Then "Robert" should be on the "<specific>" page
+    Then "Robert" should be on the "Invest - <specific>" page
 
     Examples:
-      | menu   | specific                |
-      | header | Invest - Home           |
-      | header | Invest - Industries     |
-      | header | Invest - UK Setup Guide |
-      | header | Invest - Contact Us     |
-      | footer | Invest - Home           |
-      | footer | Invest - Industries     |
-      | footer | Invest - UK Setup Guide |
-      | footer | Invest - Contact Us     |
+      | specific       | section|
+      | Home           | header |
+      | Industries     | header |
+      | UK Setup Guide | header |
+      | Contact Us     | header |
+      | Home           | footer |
+      | Industries     | footer |
+      | UK Setup Guide | footer |
+      | Contact Us     | footer |
 
 
   @wip
