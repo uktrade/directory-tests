@@ -24,6 +24,7 @@ from selenium.common.exceptions import (
     TimeoutException,
 )
 from selenium.webdriver.common.by import By
+from selenium.webdriver.remote import webelement
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions
@@ -599,3 +600,9 @@ class wait_for_page_load_after_action(object):
         raise Exception(
             "Timeout waiting for {}".format(condition_function.__name__)
         )
+
+
+def scroll_to(driver: WebDriver, element: webelement):
+    vertical_position = element.location["y"]
+    logging.debug("Moving focus to %s", element.id)
+    driver.execute_script("window.scrollTo(0, {});".format(vertical_position))
