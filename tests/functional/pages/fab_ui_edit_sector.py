@@ -60,6 +60,8 @@ def update(
     :param update_countries: update Countries to Export if True
                              or use the current one if False
     :param country_names: use specific Country/Countries.
+    :param update_has_exported_before: update has exported before flag
+    :param has_exported_before: use specific value
     :return: a tuple consisting of Response object, new sector & new countries
     """
     session = actor.session
