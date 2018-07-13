@@ -108,6 +108,9 @@ Feature: Multi-user accounts
     Then "Peter Alder" should see options to manage Find a Buyer profile users on SSO Profile
 
 
+  @bug
+  @TT-217
+  @fixme
   @ED-3560
   @multi-user
   @add-collaborator
@@ -145,6 +148,9 @@ Feature: Multi-user accounts
   @ED-3562
   @multi-user
   @transfer-ownership
+  @bug
+  @TT-217
+  @fixme
   @bug
   @ED-2268
   Scenario Outline: Company account owner should be able to transfer the ownership of "<a>" profile to a user who "<has or does not have>" an SSO/great.gov.uk account
@@ -298,6 +304,9 @@ Feature: Multi-user accounts
     And "Annette Geissinger" should see all case studies on the FAS Company's Directory Profile page
 
 
+  @bug
+  @TT-217
+  @fixme
   @bug
   @ED-3882
   @fixme
