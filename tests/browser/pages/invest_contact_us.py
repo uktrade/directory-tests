@@ -10,7 +10,7 @@ from pages.common_actions import check_title, check_url
 from settings import INVEST_UI_URL
 
 URL = urljoin(INVEST_UI_URL, "contact/")
-PAGE_TITLE = "Invest in Great Britain - "
+PAGE_TITLE = "Invest in Great Britain -"
 
 
 def visit(executor: Executor, *, first_time: bool = False):
