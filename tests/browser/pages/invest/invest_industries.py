@@ -78,11 +78,7 @@ def open_link(driver: WebDriver, name: str):
 
 
 def clean_name(name: str) -> str:
-    return (
-        name.replace("Invest - ", "")
-            .replace("industry", "")
-            .strip()
-    )
+    return name.replace("Invest - ", "").replace("industry", "").strip()
 
 
 def open_industry(driver: WebDriver, industry_name: str):
