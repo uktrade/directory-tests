@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """ExRed Page Object Registry"""
 
-from pages import international
 from pages.exopps import exopps_home
 from pages.exread import (
     exread_article_common,
@@ -23,6 +22,7 @@ from pages.exread import (
     exread_triage_have_you_exported,
     exread_triage_summary,
     exread_triage_what_do_you_want_to_export,
+    international,
 )
 from pages.external import (
     british_council_home,
