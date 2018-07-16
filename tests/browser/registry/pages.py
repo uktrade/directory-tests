@@ -42,7 +42,7 @@ from pages import (
     sso_registration_confirmation,
     sso_sign_in,
     sso_sign_out,
-    triage_are_you_registered_with_companies_house,
+    exread_triage_are_you_registered_with_companies_house,
     triage_are_you_regular_exporter,
     triage_company_name,
     triage_create_your_export_journey,
@@ -73,8 +73,8 @@ EXRED_PAGE_REGISTRY = {
         "po": triage_do_you_use_online_marketplaces,
     },
     "triage - are you registered with companies house": {
-        "url": triage_are_you_registered_with_companies_house.URL,
-        "po": triage_are_you_registered_with_companies_house,
+        "url": exread_triage_are_you_registered_with_companies_house.URL,
+        "po": exread_triage_are_you_registered_with_companies_house,
     },
     "triage - what is your company name": {
         "url": triage_company_name.URL,

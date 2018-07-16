@@ -36,7 +36,7 @@ from pages import (
     sso_registration_confirmation,
     sso_sign_in,
     sso_sign_out,
-    triage_are_you_registered_with_companies_house,
+    exread_triage_are_you_registered_with_companies_house,
     triage_are_you_regular_exporter,
     triage_company_name,
     triage_do_you_use_online_marketplaces,
@@ -223,7 +223,7 @@ def triage_question_what_do_you_want_to_export(
             )
         )
     triage_what_do_you_want_to_export.submit(context.driver)
-    triage_are_you_registered_with_companies_house.should_be_here(
+    exread_triage_are_you_registered_with_companies_house.should_be_here(
         context.driver
     )
     logging.debug("%s chose to export %s", actor_alias, goods_or_services)
@@ -264,7 +264,7 @@ def triage_say_you_want_to_export_goods(
 ):
     triage_what_do_you_want_to_export.select_goods(context.driver)
     triage_what_do_you_want_to_export.submit(context.driver)
-    triage_are_you_registered_with_companies_house.should_be_here(
+    exread_triage_are_you_registered_with_companies_house.should_be_here(
         context.driver
     )
     update_actor(
@@ -279,7 +279,7 @@ def triage_say_you_want_to_export_services(
 ):
     triage_what_do_you_want_to_export.select_services(context.driver)
     triage_what_do_you_want_to_export.submit(context.driver)
-    triage_are_you_registered_with_companies_house.should_be_here(
+    exread_triage_are_you_registered_with_companies_house.should_be_here(
         context.driver
     )
     update_actor(
@@ -295,7 +295,7 @@ def triage_say_you_want_to_export_goods_and_services(
     triage_what_do_you_want_to_export.select_goods(context.driver)
     triage_what_do_you_want_to_export.select_services(context.driver)
     triage_what_do_you_want_to_export.submit(context.driver)
-    triage_are_you_registered_with_companies_house.should_be_here(
+    exread_triage_are_you_registered_with_companies_house.should_be_here(
         context.driver
     )
     update_actor(
@@ -307,16 +307,16 @@ def triage_say_you_want_to_export_goods_and_services(
 
 def triage_say_you_are_incorporated(context: Context, actor_alias: str):
     driver = context.driver
-    triage_are_you_registered_with_companies_house.select_yes(driver)
-    triage_are_you_registered_with_companies_house.submit(driver)
+    exread_triage_are_you_registered_with_companies_house.select_yes(driver)
+    exread_triage_are_you_registered_with_companies_house.submit(driver)
     triage_company_name.should_be_here(driver)
     update_actor(context, actor_alias, are_you_incorporated=True)
 
 
 def triage_say_you_are_not_incorporated(context: Context, actor_alias: str):
     driver = context.driver
-    triage_are_you_registered_with_companies_house.select_no(driver)
-    triage_are_you_registered_with_companies_house.submit(driver)
+    exread_triage_are_you_registered_with_companies_house.select_no(driver)
+    exread_triage_are_you_registered_with_companies_house.submit(driver)
     triage_summary.should_be_here(driver)
     update_actor(context, actor_alias, are_you_incorporated=False)
 
@@ -729,18 +729,18 @@ def triage_answer_questions_again(context: Context, actor_alias: str):
     def continue_from_are_you_incorporated():
         if actor.are_you_incorporated:
             company_name = actor.company_name
-            triage_are_you_registered_with_companies_house.is_yes_selected(
+            exread_triage_are_you_registered_with_companies_house.is_yes_selected(
                 driver
             )
-            triage_are_you_registered_with_companies_house.submit(driver)
+            exread_triage_are_you_registered_with_companies_house.submit(driver)
             triage_company_name.should_be_here(driver)
             triage_company_name.is_company_name(driver, company_name)
             triage_company_name.submit(driver)
         else:
-            triage_are_you_registered_with_companies_house.is_no_selected(
+            exread_triage_are_you_registered_with_companies_house.is_no_selected(
                 driver
             )
-            triage_are_you_registered_with_companies_house.submit(driver)
+            exread_triage_are_you_registered_with_companies_house.submit(driver)
         triage_summary.should_be_here(driver)
 
     if actor.have_you_exported_before is not None:
@@ -761,7 +761,7 @@ def triage_answer_questions_again(context: Context, actor_alias: str):
                         context.driver
                     )
                 triage_what_do_you_want_to_export.submit(driver)
-                triage_are_you_registered_with_companies_house.should_be_here(
+                exread_triage_are_you_registered_with_companies_house.should_be_here(
                     driver
                 )
                 continue_from_are_you_incorporated()
@@ -790,7 +790,7 @@ def triage_answer_questions_again(context: Context, actor_alias: str):
                         context.driver
                     )
                 triage_what_do_you_want_to_export.submit(driver)
-                triage_are_you_registered_with_companies_house.should_be_here(
+                exread_triage_are_you_registered_with_companies_house.should_be_here(
                     driver
                 )
                 continue_from_are_you_incorporated()
@@ -808,7 +808,7 @@ def triage_answer_questions_again(context: Context, actor_alias: str):
                     context.driver
                 )
             triage_what_do_you_want_to_export.submit(driver)
-            triage_are_you_registered_with_companies_house.should_be_here(
+            exread_triage_are_you_registered_with_companies_house.should_be_here(
                 driver
             )
             continue_from_are_you_incorporated()
