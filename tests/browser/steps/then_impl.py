@@ -12,7 +12,7 @@ from pages import (
     exread_case_studies_common,
     exread_common,
     fas_ui_search_results,
-    get_finance,
+    exread_get_finance,
     guidance_common,
     header,
     home,
@@ -447,7 +447,7 @@ def articles_total_number_of_articles_should_not_change(
 def expected_page_elements_should_not_be_visible_on_get_finance(
     context: Context, actor_alias: str, elements: list
 ):
-    get_finance.check_elements_are_not_visible(context.driver, elements)
+    exread_get_finance.check_elements_are_not_visible(context.driver, elements)
     logging.debug(
         "%s cannot see all expected page elements: '%s' on current page %s",
         actor_alias,
