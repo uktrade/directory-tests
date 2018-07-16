@@ -35,9 +35,9 @@ from pages.exread import (
     exread_triage_have_you_exported,
     exread_triage_summary,
     exread_triage_what_do_you_want_to_export,
+    international
 )
 from pages.fas import fas_contact_us
-from pages.international import international
 from pages.sso import (
     sso_common,
     sso_confirm_your_email,

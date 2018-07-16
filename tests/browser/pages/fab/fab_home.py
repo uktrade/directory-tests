@@ -9,9 +9,13 @@ from pages.common_actions import check_title, check_url, go_to_url
 from settings import DIRECTORY_UI_BUYER_URL
 from utils import take_screenshot
 
-NAME = "Find a Buyer Home page"
+NAME = "Home"
+SERVICE = "Find a Buyer"
+TYPE = "home"
 URL = urljoin(DIRECTORY_UI_BUYER_URL, "")
 PAGE_TITLE = "Business profile - great.gov.uk"
+
+SELECTORS = {}
 
 
 def visit(driver: webdriver, *, first_time: bool = False):

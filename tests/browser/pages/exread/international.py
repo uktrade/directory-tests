@@ -21,6 +21,8 @@ from utils import (
 )
 
 NAME = "International"
+SERVICE = "Export Readiness"
+TYPE = "home"
 URL = urljoin(EXRED_UI_URL, "international/")
 PAGE_TITLE = "Welcome to great.gov.uk - buy from or invest in the UK"
 
@@ -32,7 +34,7 @@ SEE_THE_POTENTIAL = "section.international-links article:nth-child(2) > a"
 LEARN_MORE = "section.international-links article:nth-child(3) > a"
 PLAN_YOUR_TRIP = "section.international-links article:nth-child(4) > a"
 BETA_FEEDBACK = "#header-beta-bar span > a"
-SECTIONS = {
+SELECTORS = {
     "header bar": {
         "itself": "#header-bar",
         "language selector": LANGUAGE_SELECTOR,
@@ -82,17 +84,17 @@ def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
     check_title(driver, PAGE_TITLE, exact_match=True)
-    check_for_expected_sections_elements(driver, SECTIONS)
+    check_for_expected_sections_elements(driver, SELECTORS)
 
 
 def should_see_section(driver: webdriver, name: str):
-    check_for_section(driver, SECTIONS, sought_section=name)
+    check_for_section(driver, SELECTORS, sought_section=name)
 
 
 def open(
     driver: webdriver, group: str, element: str, *, same_tab: bool = True
 ):
-    selector = SECTIONS[group.lower()][element.lower()]
+    selector = SELECTORS[group.lower()][element.lower()]
     link = find_element(
         driver, by_css=selector, element_name=element, wait_for_it=False
     )
