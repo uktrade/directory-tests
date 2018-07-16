@@ -23,7 +23,7 @@ from pages import (
     exread_article_list,
     fas_ui_contact_us,
     exread_footer,
-    guidance_common,
+    exread_guidance_common,
     exread_header,
     home,
     international,
@@ -964,7 +964,7 @@ def articles_open_first(context: Context, actor_alias: str):
     group = actor.article_group
     category = actor.article_category
     first_article = get_articles(group, category)[0]
-    guidance_common.open_first_article(driver)
+    exread_guidance_common.open_first_article(driver)
     exread_article_common.should_see_article(driver, first_article.title)
     logging.debug(
         "%s is on the first article %s: %s",

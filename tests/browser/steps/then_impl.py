@@ -13,7 +13,7 @@ from pages import (
     exread_common,
     fas_ui_search_results,
     exread_get_finance,
-    guidance_common,
+    exread_guidance_common,
     exread_header,
     home,
     language_selector,
@@ -56,7 +56,7 @@ def should_be_on_page_or_international_page(
 
 def guidance_ribbon_should_be_visible(context: Context, actor_alias: str):
     driver = context.driver
-    guidance_common.ribbon_should_be_visible(driver)
+    exread_guidance_common.ribbon_should_be_visible(driver)
     logging.debug(
         "%s can see Guidance Ribbon on %s", actor_alias, driver.current_url
     )
@@ -66,7 +66,7 @@ def guidance_tile_should_be_highlighted(
     context: Context, actor_alias: str, tile: str
 ):
     driver = context.driver
-    guidance_common.ribbon_tile_should_be_highlighted(driver, tile)
+    exread_guidance_common.ribbon_tile_should_be_highlighted(driver, tile)
     logging.debug(
         "%s can see highlighted Guidance Ribbon '%s' tile on %s",
         actor_alias,
@@ -78,7 +78,7 @@ def guidance_tile_should_be_highlighted(
 def guidance_should_see_article_read_counter(
     context: Context, actor_alias: str, category: str, expected: int
 ):
-    guidance_common.correct_article_read_counter(
+    exread_guidance_common.correct_article_read_counter(
         context.driver, category, expected
     )
     logging.debug(
@@ -92,7 +92,7 @@ def guidance_should_see_article_read_counter(
 def guidance_should_see_total_number_of_articles(
     context: Context, actor_alias: str, category: str
 ):
-    guidance_common.correct_total_number_of_articles(context.driver, category)
+    exread_guidance_common.correct_total_number_of_articles(context.driver, category)
     logging.debug(
         "%s can see Total Number of Articles for Guidance '%s' category",
         actor_alias,
@@ -103,7 +103,7 @@ def guidance_should_see_total_number_of_articles(
 def guidance_should_see_articles(
     context: Context, actor_alias: str, category: str
 ):
-    guidance_common.check_if_correct_articles_are_displayed(
+    exread_guidance_common.check_if_correct_articles_are_displayed(
         context.driver, category
     )
     logging.debug(
@@ -117,7 +117,7 @@ def guidance_should_see_articles(
 def guidance_check_if_link_to_next_category_is_displayed(
     context: Context, actor_alias: str, next_category: str
 ):
-    guidance_common.check_if_link_to_next_category_is_displayed(
+    exread_guidance_common.check_if_link_to_next_category_is_displayed(
         context.driver, next_category
     )
     logging.debug(
@@ -131,7 +131,7 @@ def guidance_check_if_link_to_next_category_is_displayed(
 def guidance_expected_page_elements_should_be_visible(
     context: Context, actor_alias: str, elements: list
 ):
-    guidance_common.check_elements_are_visible(context.driver, elements)
+    exread_guidance_common.check_elements_are_visible(context.driver, elements)
     logging.debug(
         "%s can see all expected page elements: '%s' on current Guidance "
         "Articles page: %s",
