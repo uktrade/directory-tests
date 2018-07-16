@@ -4,7 +4,7 @@
 from pages import (
     exread_article_common,
     exread_article_list,
-    british_council,
+    external_british_council,
     events,
     exopps_home,
     external_legal_services,
@@ -97,7 +97,7 @@ EXRED_PAGE_REGISTRY = {
         "url": triage_create_your_export_journey.URL,
         "po": triage_create_your_export_journey,
     },
-    "british council": {"url": british_council.URL, "po": british_council},
+    "british council": {"url": external_british_council.URL, "po": external_british_council},
     "visit britain": {"url": visit_britain.URL, "po": visit_britain},
     "selling online overseas": {
         "url": selling_online_overseas.URL,
