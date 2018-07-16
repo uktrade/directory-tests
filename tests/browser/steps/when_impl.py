@@ -22,7 +22,7 @@ from pages import (
     exread_article_common,
     exread_article_list,
     fas_ui_contact_us,
-    footer,
+    exread_footer,
     guidance_common,
     header,
     home,
@@ -125,7 +125,7 @@ def open_group_element(
     elif location.lower() in ["header menu", "header"]:
         header.open(driver, group, element)
     elif location.lower() in ["footer links", "footer"]:
-        footer.open(driver, group, element)
+        exread_footer.open(driver, group, element)
     elif location.lower() == "personalised journey":
         personalised_journey.open(driver, group, element)
     elif location.lower() == "international page":

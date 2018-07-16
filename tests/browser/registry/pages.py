@@ -18,7 +18,7 @@ from pages import (
     fas_ui_search_results,
     fas_ui_thank_you_for_your_message,
     fab_home,
-    footer,
+    exread_footer,
     get_finance,
     header,
     home,
@@ -86,7 +86,7 @@ EXRED_PAGE_REGISTRY = {
         "po": personalised_journey,
     },
     "header menu": {"url": None, "po": header},
-    "footer links": {"url": None, "po": footer},
+    "footer links": {"url": None, "po": exread_footer},
     "interim export opportunities": {
         "url": interim_exporting_opportunities.URL,
         "po": interim_exporting_opportunities,
