@@ -18,27 +18,34 @@ from utils import (
 )
 from utils.gov_notify import get_verification_link
 
-from pages import (
+from pages import common_language_selector
+from pages.exread import (
     exread_article_common,
     exread_article_list,
     exread_footer,
     exread_guidance_common,
     exread_header,
     exread_home,
-    international,
-    common_language_selector,
     exread_personalised_journey,
     exread_personalised_what_do_you_want_to_export,
     exread_triage_are_you_registered_with_companies_house,
     exread_triage_are_you_regular_exporter,
     exread_triage_company_name,
     exread_triage_do_you_use_online_marketplaces,
+    exread_triage_have_you_exported,
+    exread_triage_summary,
+    exread_triage_what_do_you_want_to_export,
 )
-from pages.sso import sso_sign_in, sso_confirm_your_email, sso_common, \
-    sso_registration, sso_registration_confirmation, sso_sign_out
 from pages.fas import fas_contact_us
-from pages.exread import exread_triage_what_do_you_want_to_export, \
-    exread_triage_summary, exread_triage_have_you_exported
+from pages.international import international
+from pages.sso import (
+    sso_common,
+    sso_confirm_your_email,
+    sso_registration,
+    sso_registration_confirmation,
+    sso_sign_in,
+    sso_sign_out,
+)
 from registry.articles import (
     GUIDANCE,
     get_article,

@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """ExRed Page Object Registry"""
 
+from pages import international
+from pages.exopps import exopps_home
 from pages.exread import (
     exread_article_common,
     exread_article_list,
@@ -22,22 +24,42 @@ from pages.exread import (
     exread_triage_summary,
     exread_triage_what_do_you_want_to_export,
 )
-from pages import (
-    international,
+from pages.external import (
+    external_british_council,
+    external_events,
+    external_legal_services,
+    external_visit_britain,
+)
+from pages.fab import fab_home
+from pages.fas import (
+    fas_article,
+    fas_company_profile,
+    fas_contact_us,
+    fas_empty_search_results,
+    fas_home,
+    fas_industries,
+    fas_industry,
+    fas_search_results,
+    fas_thank_you_for_your_message,
+)
+from pages.invest import (
+    invest_contact_us,
+    invest_feedback,
+    invest_footer,
+    invest_guide,
+    invest_header,
+    invest_home,
+    invest_industries,
+    invest_industry,
 )
 from pages.soo import soo_home
-from pages.sso import sso_sign_in, sso_registration, \
-    sso_registration_confirmation, sso_profile_about, sso_sign_out
-from pages.invest import invest_footer, invest_feedback, invest_contact_us, \
-    invest_guide, invest_header, invest_industries, invest_industry, \
-    invest_home
-from pages.fas import fas_empty_search_results, fas_thank_you_for_your_message, \
-    fas_search_results, fas_article, fas_industries, fas_contact_us, \
-    fas_industry, fas_home, fas_company_profile
-from pages.fab import fab_home
-from pages.external import external_events, external_visit_britain, \
-    external_legal_services, external_british_council
-from pages.exopps import exopps_home
+from pages.sso import (
+    sso_profile_about,
+    sso_registration,
+    sso_registration_confirmation,
+    sso_sign_in,
+    sso_sign_out,
+)
 
 EXRED_PAGE_REGISTRY = {
     "home": {"url": exread_home.URL, "po": exread_home},

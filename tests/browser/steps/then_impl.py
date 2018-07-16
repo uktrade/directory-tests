@@ -7,7 +7,8 @@ from behave.model import Table
 from behave.runner import Context
 from utils import assertion_msg, clear_driver_cookies, get_actor
 
-from pages import (
+from pages import common_language_selector
+from pages.exread import (
     exread_article_common,
     exread_case_studies_common,
     exread_common,
@@ -15,12 +16,11 @@ from pages import (
     exread_guidance_common,
     exread_header,
     exread_home,
-    common_language_selector,
-    exread_personalised_journey
+    exread_personalised_journey,
+    exread_triage_summary,
 )
-from pages.invest import invest_footer, invest_header, invest_pixels
 from pages.fas import fas_search_results
-from pages.exread import exread_triage_summary
+from pages.invest import invest_footer, invest_header, invest_pixels
 from registry.articles import get_article, get_articles
 from registry.pages import get_page_object
 from steps.when_impl import (
