@@ -24,7 +24,7 @@ from pages import (
     fas_ui_contact_us,
     exread_footer,
     guidance_common,
-    header,
+    exread_header,
     home,
     international,
     language_selector,
@@ -123,7 +123,7 @@ def open_group_element(
     if location.lower() == "home page":
         home.open(driver, group, element)
     elif location.lower() in ["header menu", "header"]:
-        header.open(driver, group, element)
+        exread_header.open(driver, group, element)
     elif location.lower() in ["footer links", "footer"]:
         exread_footer.open(driver, group, element)
     elif location.lower() == "personalised journey":
@@ -1346,7 +1346,7 @@ def registration_go_to(context: Context, actor_alias: str, location: str):
     elif location.lower() == "article list":
         exread_article_list.go_to_registration(context.driver)
     elif location.lower() == "top bar":
-        header.go_to_registration(context.driver)
+        exread_header.go_to_registration(context.driver)
     else:
         raise KeyError(
             "Could not recognise registration link location: %s. Please use "
@@ -1432,7 +1432,7 @@ def sign_in_go_to(context: Context, actor_alias: str, location: str):
     elif location.lower() == "article list":
         exread_article_list.go_to_sign_in(context.driver)
     elif location.lower() == "top bar":
-        header.go_to_sign_in(context.driver)
+        exread_header.go_to_sign_in(context.driver)
     else:
         raise KeyError(
             "Could not recognise 'sign in' link location: {}. Please use "
@@ -1451,7 +1451,7 @@ def sign_in(context: Context, actor_alias: str, location: str):
 
 
 def sign_out(context: Context, actor_alias: str):
-    header.go_to_sign_out(context.driver)
+    exread_header.go_to_sign_out(context.driver)
     sso_sign_out.submit(context.driver)
     logging.debug("%s signed out", actor_alias)
 

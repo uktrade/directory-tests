@@ -20,7 +20,7 @@ from pages import (
     fab_home,
     exread_footer,
     exread_get_finance,
-    header,
+    exread_header,
     home,
     interim_exporting_opportunities,
     international,
@@ -85,7 +85,7 @@ EXRED_PAGE_REGISTRY = {
         "url": personalised_journey.URL,
         "po": personalised_journey,
     },
-    "header menu": {"url": None, "po": header},
+    "header menu": {"url": None, "po": exread_header},
     "footer links": {"url": None, "po": exread_footer},
     "interim export opportunities": {
         "url": interim_exporting_opportunities.URL,

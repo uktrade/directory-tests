@@ -14,7 +14,7 @@ from pages import (
     fas_ui_search_results,
     exread_get_finance,
     guidance_common,
-    header,
+    exread_header,
     home,
     language_selector,
     personalised_journey,
@@ -666,12 +666,12 @@ def promo_video_should_not_see_modal_window(
 
 
 def header_check_dit_logo(context: Context, actor_alias: str):
-    header.check_dit_logo(context.driver)
+    exread_header.check_dit_logo(context.driver)
     logging.debug("As expected %s can see correct DIT logo", actor_alias)
 
 
 def header_check_favicon(context: Context, actor_alias: str):
-    header.check_dit_favicon(context.driver)
+    exread_header.check_dit_favicon(context.driver)
     logging.debug("As expected %s can see correct DIT favicon", actor_alias)
 
 
