@@ -6,7 +6,6 @@ from pages import (
     exread_article_list,
     external_british_council,
     external_events,
-    exopps_home,
     external_legal_services,
     fas_article,
     fas_company_profile,
@@ -52,6 +51,7 @@ from pages import (
     exread_triage_what_do_you_want_to_export,
     external_visit_britain,
 )
+from pages.exopps import exopps_home
 
 EXRED_PAGE_REGISTRY = {
     "home": {"url": exread_home.URL, "po": exread_home},
