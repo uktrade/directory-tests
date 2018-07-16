@@ -38,7 +38,7 @@ from pages import (
     sso_sign_out,
     exread_triage_are_you_registered_with_companies_house,
     exread_triage_are_you_regular_exporter,
-    triage_company_name,
+    exread_triage_company_name,
     triage_do_you_use_online_marketplaces,
     triage_have_you_exported,
     triage_summary,
@@ -309,7 +309,7 @@ def triage_say_you_are_incorporated(context: Context, actor_alias: str):
     driver = context.driver
     exread_triage_are_you_registered_with_companies_house.select_yes(driver)
     exread_triage_are_you_registered_with_companies_house.submit(driver)
-    triage_company_name.should_be_here(driver)
+    exread_triage_company_name.should_be_here(driver)
     update_actor(context, actor_alias, are_you_incorporated=True)
 
 
@@ -404,20 +404,20 @@ def triage_enter_company_name(
     company_name: str = None
 ):
     driver = context.driver
-    triage_company_name.enter_company_name(driver, company_name)
+    exread_triage_company_name.enter_company_name(driver, company_name)
     if use_suggestions:
-        triage_company_name.click_on_first_suggestion(driver)
+        exread_triage_company_name.click_on_first_suggestion(driver)
     else:
-        triage_company_name.hide_suggestions(driver)
-    final_company_name = triage_company_name.get_company_name(driver)
-    triage_company_name.submit(driver)
+        exread_triage_company_name.hide_suggestions(driver)
+    final_company_name = exread_triage_company_name.get_company_name(driver)
+    exread_triage_company_name.submit(driver)
     triage_summary.should_be_here(driver)
     update_actor(context, actor_alias, company_name=final_company_name)
 
 
 def triage_do_not_enter_company_name(context: Context, actor_alias: str):
     driver = context.driver
-    triage_company_name.submit(driver)
+    exread_triage_company_name.submit(driver)
     triage_summary.should_be_here(driver)
     update_actor(context, actor_alias, company_name=None)
 
@@ -733,9 +733,9 @@ def triage_answer_questions_again(context: Context, actor_alias: str):
                 driver
             )
             exread_triage_are_you_registered_with_companies_house.submit(driver)
-            triage_company_name.should_be_here(driver)
-            triage_company_name.is_company_name(driver, company_name)
-            triage_company_name.submit(driver)
+            exread_triage_company_name.should_be_here(driver)
+            exread_triage_company_name.is_company_name(driver, company_name)
+            exread_triage_company_name.submit(driver)
         else:
             exread_triage_are_you_registered_with_companies_house.is_no_selected(
                 driver
