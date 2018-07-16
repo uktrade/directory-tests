@@ -8,7 +8,7 @@ from pages import (
     external_events,
     exopps_home,
     external_legal_services,
-    fas_ui_article,
+    fas_article,
     fas_ui_company_profile,
     fas_ui_contact_us,
     fas_ui_empty_search_results,
@@ -240,7 +240,7 @@ FAS_PAGE_REGISTRY = {
         "url": fas_ui_company_profile.URL,
         "po": fas_ui_company_profile,
     },
-    "fas article": {"url": fas_ui_article.URL, "po": fas_ui_article},
+    "fas article": {"url": fas_article.URL, "po": fas_article},
 }
 
 EXTERNAL_SITES_PAGE_REGISTRY = {
