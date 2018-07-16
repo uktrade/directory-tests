@@ -33,7 +33,7 @@ from pages import (
     invest_industries,
     invest_industry,
     exread_personalised_journey,
-    selling_online_overseas,
+    soo_home,
     share_on_facebook,
     share_on_linkedin,
     share_on_twitter,
@@ -100,8 +100,8 @@ EXRED_PAGE_REGISTRY = {
     "british council": {"url": external_british_council.URL, "po": external_british_council},
     "visit britain": {"url": external_visit_britain.URL, "po": external_visit_britain},
     "selling online overseas": {
-        "url": selling_online_overseas.URL,
-        "po": selling_online_overseas,
+        "url": soo_home.URL,
+        "po": soo_home,
     },
     "export opportunities": {
         "url": exopps_home.URL,
