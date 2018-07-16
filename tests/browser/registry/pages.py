@@ -43,7 +43,7 @@ from pages import (
     sso_sign_in,
     sso_sign_out,
     exread_triage_are_you_registered_with_companies_house,
-    triage_are_you_regular_exporter,
+    exread_triage_are_you_regular_exporter,
     triage_company_name,
     triage_create_your_export_journey,
     triage_do_you_use_online_marketplaces,
@@ -65,8 +65,8 @@ EXRED_PAGE_REGISTRY = {
         "po": triage_have_you_exported,
     },
     "triage - are you regular exporter": {
-        "url": triage_are_you_regular_exporter.URL,
-        "po": triage_are_you_regular_exporter,
+        "url": exread_triage_are_you_regular_exporter.URL,
+        "po": exread_triage_are_you_regular_exporter,
     },
     "triage - do you use online marketplaces": {
         "url": triage_do_you_use_online_marketplaces.URL,
