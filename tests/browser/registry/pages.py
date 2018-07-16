@@ -17,7 +17,7 @@ from pages import (
     fas_ui_landing,
     fas_ui_search_results,
     fas_ui_thank_you_for_your_message,
-    find_a_buyer,
+    fab_home,
     footer,
     get_finance,
     header,
@@ -91,7 +91,7 @@ EXRED_PAGE_REGISTRY = {
         "url": interim_exporting_opportunities.URL,
         "po": interim_exporting_opportunities,
     },
-    "find a buyer": {"url": find_a_buyer.URL, "po": find_a_buyer},
+    "find a buyer": {"url": fab_home.URL, "po": fab_home},
     "find a supplier": {"url": fas_ui_landing.URL, "po": fas_ui_landing},
     "create your export journey": {
         "url": triage_create_your_export_journey.URL,
