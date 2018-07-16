@@ -50,7 +50,7 @@ from pages import (
     triage_have_you_exported,
     triage_summary,
     triage_what_do_you_want_to_export,
-    visit_britain,
+    external_visit_britain,
 )
 
 EXRED_PAGE_REGISTRY = {
@@ -98,7 +98,7 @@ EXRED_PAGE_REGISTRY = {
         "po": triage_create_your_export_journey,
     },
     "british council": {"url": external_british_council.URL, "po": external_british_council},
-    "visit britain": {"url": visit_britain.URL, "po": visit_britain},
+    "visit britain": {"url": external_visit_britain.URL, "po": external_visit_britain},
     "selling online overseas": {
         "url": selling_online_overseas.URL,
         "po": selling_online_overseas,
