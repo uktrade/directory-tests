@@ -23,15 +23,6 @@ from pages.exread import (
     exread_triage_what_do_you_want_to_export,
 )
 from pages import (
-    fas_article,
-    fas_company_profile,
-    fas_contact_us,
-    fas_empty_search_results,
-    fas_home,
-    fas_industries,
-    fas_industry,
-    fas_search_results,
-    fas_thank_you_for_your_message,
     international,
     invest_contact_us,
     invest_feedback,
@@ -48,6 +39,9 @@ from pages import (
     sso_sign_in,
     sso_sign_out,
 )
+from pages.fas import fas_empty_search_results, fas_thank_you_for_your_message, \
+    fas_search_results, fas_article, fas_industries, fas_contact_us, \
+    fas_industry, fas_home, fas_company_profile
 from pages.fab import fab_home
 from pages.external import external_events, external_visit_britain, \
     external_legal_services, external_british_council

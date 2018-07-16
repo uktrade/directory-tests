@@ -21,7 +21,6 @@ from utils.gov_notify import get_verification_link
 from pages import (
     exread_article_common,
     exread_article_list,
-    fas_contact_us,
     exread_footer,
     exread_guidance_common,
     exread_header,
@@ -41,6 +40,7 @@ from pages import (
     exread_triage_company_name,
     exread_triage_do_you_use_online_marketplaces,
 )
+from pages.fas import fas_contact_us
 from pages.exread import exread_triage_what_do_you_want_to_export, \
     exread_triage_summary, exread_triage_have_you_exported
 from registry.articles import (

@@ -11,7 +11,6 @@ from pages import (
     exread_article_common,
     exread_case_studies_common,
     exread_common,
-    fas_search_results,
     exread_get_finance,
     exread_guidance_common,
     exread_header,
@@ -21,6 +20,7 @@ from pages import (
     invest_header,
     invest_footer
 )
+from pages.fas import fas_search_results
 from pages.exread import exread_triage_summary
 from registry.articles import get_article, get_articles
 from registry.pages import get_page_object
