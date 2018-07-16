@@ -41,7 +41,7 @@ from pages import (
     exread_triage_company_name,
     exread_triage_do_you_use_online_marketplaces,
     exread_triage_have_you_exported,
-    triage_summary,
+    exread_triage_summary,
     triage_what_do_you_want_to_export,
 )
 from registry.articles import (
@@ -317,7 +317,7 @@ def triage_say_you_are_not_incorporated(context: Context, actor_alias: str):
     driver = context.driver
     exread_triage_are_you_registered_with_companies_house.select_no(driver)
     exread_triage_are_you_registered_with_companies_house.submit(driver)
-    triage_summary.should_be_here(driver)
+    exread_triage_summary.should_be_here(driver)
     update_actor(context, actor_alias, are_you_incorporated=False)
 
 
@@ -411,14 +411,14 @@ def triage_enter_company_name(
         exread_triage_company_name.hide_suggestions(driver)
     final_company_name = exread_triage_company_name.get_company_name(driver)
     exread_triage_company_name.submit(driver)
-    triage_summary.should_be_here(driver)
+    exread_triage_summary.should_be_here(driver)
     update_actor(context, actor_alias, company_name=final_company_name)
 
 
 def triage_do_not_enter_company_name(context: Context, actor_alias: str):
     driver = context.driver
     exread_triage_company_name.submit(driver)
-    triage_summary.should_be_here(driver)
+    exread_triage_summary.should_be_here(driver)
     update_actor(context, actor_alias, company_name=None)
 
 
@@ -439,19 +439,19 @@ def triage_what_is_your_company_name(
 
 
 def triage_should_be_classified_as_new(context: Context):
-    triage_summary.should_be_classified_as_new(context.driver)
+    exread_triage_summary.should_be_classified_as_new(context.driver)
 
 
 def triage_should_be_classified_as_occasional(context: Context):
-    triage_summary.should_be_classified_as_occasional(context.driver)
+    exread_triage_summary.should_be_classified_as_occasional(context.driver)
 
 
 def triage_should_be_classified_as_regular(context: Context):
-    triage_summary.should_be_classified_as_regular(context.driver)
+    exread_triage_summary.should_be_classified_as_regular(context.driver)
 
 
 def triage_create_exporting_journey(context: Context, actor_alias: str):
-    triage_summary.create_exporting_journey(context.driver)
+    exread_triage_summary.create_exporting_journey(context.driver)
     update_actor(context, alias=actor_alias, created_personalised_journey=True)
 
 
@@ -653,7 +653,7 @@ def triage_classify_as(
 
 def triage_should_see_answers_to_questions(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
-    q_and_a = triage_summary.get_questions_and_answers(context.driver)
+    q_and_a = exread_triage_summary.get_questions_and_answers(context.driver)
     if actor.what_do_you_want_to_export is not None:
         goods_or_services, code, sector = actor.what_do_you_want_to_export
         question = "What do you want to export?"
@@ -717,7 +717,7 @@ def personalised_journey_create_page(context: Context, actor_alias: str):
 
 
 def triage_change_answers(context: Context, actor_alias: str):
-    triage_summary.change_answers(context.driver)
+    exread_triage_summary.change_answers(context.driver)
     exread_triage_have_you_exported.should_be_here(context.driver)
     logging.debug("%s decided to change the Triage answers", actor_alias)
 
@@ -741,7 +741,7 @@ def triage_answer_questions_again(context: Context, actor_alias: str):
                 driver
             )
             exread_triage_are_you_registered_with_companies_house.submit(driver)
-        triage_summary.should_be_here(driver)
+        exread_triage_summary.should_be_here(driver)
 
     if actor.have_you_exported_before is not None:
         if actor.have_you_exported_before:
@@ -765,7 +765,7 @@ def triage_answer_questions_again(context: Context, actor_alias: str):
                     driver
                 )
                 continue_from_are_you_incorporated()
-                triage_summary.should_be_classified_as_regular(driver)
+                exread_triage_summary.should_be_classified_as_regular(driver)
             else:
                 exread_triage_are_you_regular_exporter.is_no_selected(driver)
                 exread_triage_are_you_regular_exporter.submit(driver)
@@ -794,7 +794,7 @@ def triage_answer_questions_again(context: Context, actor_alias: str):
                     driver
                 )
                 continue_from_are_you_incorporated()
-                triage_summary.should_be_classified_as_occasional(driver)
+                exread_triage_summary.should_be_classified_as_occasional(driver)
         else:
             exread_triage_have_you_exported.is_no_selected(driver)
             exread_triage_have_you_exported.submit(driver)
@@ -812,7 +812,7 @@ def triage_answer_questions_again(context: Context, actor_alias: str):
                 driver
             )
             continue_from_are_you_incorporated()
-            triage_summary.should_be_classified_as_new(driver)
+            exread_triage_summary.should_be_classified_as_new(driver)
         triage_should_see_answers_to_questions(context, actor_alias)
     logging.debug("%s was able to change the Triage answers", actor_alias)
 

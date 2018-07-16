@@ -18,7 +18,7 @@ from pages import (
     exread_home,
     common_language_selector,
     exread_personalised_journey,
-    triage_summary,
+    exread_triage_summary,
     invest_header,
     invest_footer
 )
@@ -632,7 +632,7 @@ def share_page_via_email_should_have_article_details(
 def triage_should_see_change_your_answers_link(
     context: Context, actor_alias: str
 ):
-    triage_summary.should_see_change_your_answers_link(context.driver)
+    exread_triage_summary.should_see_change_your_answers_link(context.driver)
     logging.debug("%s can see 'change your answers' link", actor_alias)
 
 
