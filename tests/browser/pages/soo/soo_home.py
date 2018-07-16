@@ -13,11 +13,13 @@ from pages.common_actions import (
 from settings import SELLING_ONLINE_OVERSEAS_UI_URL
 from utils import take_screenshot
 
-NAME = "Selling Online Overseas Home page"
+NAME = "Home"
 URL = urljoin(SELLING_ONLINE_OVERSEAS_UI_URL, "")
+SERVICE = "Selling Online Overseas"
+TYPE = "home"
 PAGE_TITLE = "Welcome to Selling online overseas"
 
-SECTIONS = {
+SELECTORS = {
     "expected elements": {
         "hero section": ".hero-content",
         "what do you sell input": "#search-product",
@@ -34,4 +36,4 @@ def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=True)
     check_title(driver, PAGE_TITLE, exact_match=True)
-    check_for_expected_sections_elements(driver, SECTIONS)
+    check_for_expected_sections_elements(driver, SELECTORS)

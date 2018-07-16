@@ -25,10 +25,10 @@ from pages.exread import (
     exread_triage_what_do_you_want_to_export,
 )
 from pages.external import (
-    external_british_council,
-    external_events,
-    external_legal_services,
-    external_visit_britain,
+    british_council_home,
+    events_home,
+    legal_services_home,
+    visit_britain_home,
 )
 from pages.fab import fab_home
 from pages.fas import (
@@ -105,8 +105,8 @@ EXRED_PAGE_REGISTRY = {
         "url": exread_triage_create_your_export_journey.URL,
         "po": exread_triage_create_your_export_journey,
     },
-    "british council": {"url": external_british_council.URL, "po": external_british_council},
-    "visit britain": {"url": external_visit_britain.URL, "po": external_visit_britain},
+    "british council": {"url": british_council_home.URL, "po": british_council_home},
+    "visit britain": {"url": visit_britain_home.URL, "po": visit_britain_home},
     "selling online overseas": {
         "url": soo_home.URL,
         "po": soo_home,
@@ -115,7 +115,7 @@ EXRED_PAGE_REGISTRY = {
         "url": exopps_home.URL,
         "po": exopps_home,
     },
-    "events": {"url": external_events.URL, "po": external_events},
+    "events": {"url": events_home.URL, "po": events_home},
     "get finance": {"url": exread_get_finance.URL, "po": exread_get_finance},
     "sso registration": {"url": sso_registration.URL, "po": sso_registration},
     "sso sign in": {"url": sso_sign_in.URL, "po": sso_sign_in},
@@ -253,8 +253,8 @@ FAS_PAGE_REGISTRY = {
 
 EXTERNAL_SITES_PAGE_REGISTRY = {
     "legal services landing": {
-        "url": external_legal_services.URL,
-        "po": external_legal_services,
+        "url": legal_services_home.URL,
+        "po": legal_services_home,
     }
 }
 
