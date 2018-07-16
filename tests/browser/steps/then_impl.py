@@ -10,7 +10,7 @@ from utils import assertion_msg, clear_driver_cookies, get_actor
 from pages import (
     exread_article_common,
     case_studies_common,
-    export_readiness_common,
+    exread_common,
     fas_ui_search_results,
     get_finance,
     guidance_common,
@@ -216,7 +216,7 @@ def personalised_should_see_layout_for(
 def export_readiness_should_see_articles(
     context: Context, actor_alias: str, category: str
 ):
-    export_readiness_common.check_if_correct_articles_are_displayed(
+    exread_common.check_if_correct_articles_are_displayed(
         context.driver, category
     )
     logging.debug(
@@ -230,7 +230,7 @@ def export_readiness_should_see_articles(
 def export_readiness_expected_page_elements_should_be_visible(
     context: Context, actor_alias: str, elements: list
 ):
-    export_readiness_common.check_elements_are_visible(
+    exread_common.check_elements_are_visible(
         context.driver, elements
     )
     logging.debug(
