@@ -1785,3 +1785,11 @@ def generic_unfold_topics(context: Context, actor_alias: str, page_name: str):
     page.unfold_topics(context.driver)
     update_actor(context, actor_alias, visited_page=page_name)
     logging.debug("%s unfolded all topics on %s", actor_alias, page_name)
+
+
+def generic_click_on_uk_gov_logo(
+        context: Context, actor_alias: str, page_name: str):
+    page = get_page_object(page_name)
+    assert hasattr(page, "click_on_page_element")
+    page.click_on_page_element(context.driver, "uk gov logo")
+    logging.debug("%s click on UK Gov logo %s", actor_alias, page_name)

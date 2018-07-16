@@ -27,6 +27,7 @@ from steps.when_impl import (
     fas_view_article,
     fas_view_more_companies,
     fas_view_selected_company_profile,
+    generic_click_on_uk_gov_logo,
     generic_open_guide_link,
     generic_open_industry_page,
     generic_see_more_industries,
@@ -445,3 +446,9 @@ def when_actor_goes_to_guide(
 def when_actor_unfolds_all_topic_sections(
         context: Context, actor_alias: str, page_name: str):
     generic_unfold_topics(context, actor_alias, page_name)
+
+
+@when('"{actor_alias}" decides to click on the UK Government logo in the page "{page_name}"')
+def when_actor_clicks_on_uk_gov_logo(
+        context: Context, actor_alias: str, page_name: str):
+    generic_click_on_uk_gov_logo(context, actor_alias, page_name)

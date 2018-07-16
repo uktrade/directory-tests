@@ -37,6 +37,7 @@ LANGUAGE_SELECTOR = Selector(
 )
 SELECTORS = {
     "general": {
+        "uk gov logo": HEADER_LOGO,
         "home": HOME_LINK,
         "industries": INDUSTRIES_LINK,
         "uk setup guide": UK_SETUP_GUIDE_LINK,
