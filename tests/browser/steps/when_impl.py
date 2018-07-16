@@ -19,7 +19,7 @@ from utils import (
 from utils.gov_notify import get_verification_link
 
 from pages import (
-    article_common,
+    exread_article_common,
     article_list,
     fas_ui_contact_us,
     footer,
@@ -965,7 +965,7 @@ def articles_open_first(context: Context, actor_alias: str):
     category = actor.article_category
     first_article = get_articles(group, category)[0]
     guidance_common.open_first_article(driver)
-    article_common.should_see_article(driver, first_article.title)
+    exread_article_common.should_see_article(driver, first_article.title)
     logging.debug(
         "%s is on the first article %s: %s",
         actor_alias,
@@ -987,8 +987,8 @@ def articles_open_any_but_the_last(context: Context, actor_alias: str):
     any_article_but_the_last = get_article(
         group, category, random_article.title
     )
-    article_common.go_to_article(driver, any_article_but_the_last.title)
-    time_to_read = article_common.time_to_read_in_seconds(context.driver)
+    exread_article_common.go_to_article(driver, any_article_but_the_last.title)
+    time_to_read = exread_article_common.time_to_read_in_seconds(context.driver)
     logging.debug(
         "%s is on '%s' article page: %s",
         actor_alias,
@@ -1015,12 +1015,12 @@ def articles_open_specific(context: Context, actor_alias: str, name: str):
     article = get_article(group, category, name)
     visited_articles = actor.visited_articles
 
-    article_common.go_to_article(driver, name)
+    exread_article_common.go_to_article(driver, name)
 
-    total_articles = article_common.get_total_articles(context.driver)
-    articles_read_counter = article_common.get_read_counter(context.driver)
-    time_to_complete = article_common.get_time_to_complete(context.driver)
-    time_to_read = article_common.time_to_read_in_seconds(context.driver)
+    total_articles = exread_article_common.get_total_articles(context.driver)
+    articles_read_counter = exread_article_common.get_read_counter(context.driver)
+    time_to_complete = exread_article_common.get_time_to_complete(context.driver)
+    time_to_read = exread_article_common.time_to_read_in_seconds(context.driver)
 
     logging.debug(
         "%s is on '%s' article: %s", actor_alias, name, driver.current_url
@@ -1047,19 +1047,19 @@ def articles_open_any(context: Context, actor_alias: str):
     article_list.show_all_articles(driver)
 
     # capture the counter values from Article List page
-    article_list_total = article_common.get_total_articles(context.driver)
-    article_list_read_counter = article_common.get_read_counter(context.driver)
-    article_list_time_to_complete = article_common.get_time_to_complete(
+    article_list_total = exread_article_common.get_total_articles(context.driver)
+    article_list_read_counter = exread_article_common.get_read_counter(context.driver)
+    article_list_time_to_complete = exread_article_common.get_time_to_complete(
         context.driver
     )
 
-    article_common.go_to_article(driver, any_article.title)
+    exread_article_common.go_to_article(driver, any_article.title)
 
     # capture the counter values from Article page
-    total_articles = article_common.get_total_articles(context.driver)
-    articles_read_counter = article_common.get_read_counter(context.driver)
-    time_to_complete = article_common.get_time_to_complete(context.driver)
-    time_to_read = article_common.time_to_read_in_seconds(context.driver)
+    total_articles = exread_article_common.get_total_articles(context.driver)
+    articles_read_counter = exread_article_common.get_read_counter(context.driver)
+    time_to_complete = exread_article_common.get_time_to_complete(context.driver)
+    time_to_read = exread_article_common.time_to_read_in_seconds(context.driver)
     logging.debug(
         "%s is on '%s' article page: %s",
         actor_alias,
@@ -1090,19 +1090,19 @@ def guidance_read_through_all_articles(context: Context, actor_alias: str):
     category = actor.article_category
     visited_articles = actor.visited_articles
 
-    current_article_name = article_common.get_article_name(driver)
+    current_article_name = exread_article_common.get_article_name(driver)
     logging.debug("%s is on '%s' article", actor_alias, current_article_name)
     current_article = get_article(group, category, current_article_name)
     assert current_article, "Could not find Article: %s" % current_article_name
     next_article = current_article.next
 
     while next_article is not None:
-        article_common.check_if_link_to_next_article_is_displayed(
+        exread_article_common.check_if_link_to_next_article_is_displayed(
             driver, next_article.title
         )
-        article_common.go_to_next_article(driver)
-        current_article_name = article_common.get_article_name(driver)
-        time_to_read = article_common.time_to_read_in_seconds(context.driver)
+        exread_article_common.go_to_next_article(driver)
+        current_article_name = exread_article_common.get_article_name(driver)
+        time_to_read = exread_article_common.time_to_read_in_seconds(context.driver)
         visited = VisitedArticle(
             next_article.index, next_article.title, time_to_read
         )
@@ -1167,9 +1167,9 @@ def articles_open_group(
             "Did not recognize '{}'. Please use: 'Guidance' or 'Export "
             "Readiness'".format(group)
         )
-    total_articles = article_common.get_total_articles(context.driver)
-    articles_read_counter = article_common.get_read_counter(context.driver)
-    time_to_complete = article_common.get_time_to_complete(context.driver)
+    total_articles = exread_article_common.get_total_articles(context.driver)
+    articles_read_counter = exread_article_common.get_read_counter(context.driver)
+    time_to_complete = exread_article_common.get_time_to_complete(context.driver)
     update_actor(
         context,
         actor_alias,
@@ -1205,7 +1205,7 @@ def articles_go_back_to_same_group(
 
 
 def articles_go_back_to_article_list(context: Context, actor_alias: str):
-    article_common.go_back_to_article_list(context.driver)
+    exread_article_common.go_back_to_article_list(context.driver)
     logging.debug("%s went back to the Article List page", actor_alias)
 
 
@@ -1213,9 +1213,9 @@ def articles_found_useful_or_not(
     context: Context, actor_alias: str, useful_or_not: str
 ):
     if useful_or_not.lower() == "found":
-        article_common.flag_as_useful(context.driver)
+        exread_article_common.flag_as_useful(context.driver)
     elif useful_or_not.lower() in ["haven't found", "hasn't found"]:
-        article_common.flag_as_not_useful(context.driver)
+        exread_article_common.flag_as_not_useful(context.driver)
     else:
         raise KeyError(
             "Could not recognize: '{}'. Please use 'found' or 'did not find'".format(
@@ -1342,7 +1342,7 @@ def registration_go_to(context: Context, actor_alias: str, location: str):
         "%s decided to go to registration via %s link", actor_alias, location
     )
     if location.lower() == "article":
-        article_common.go_to_registration(context.driver)
+        exread_article_common.go_to_registration(context.driver)
     elif location.lower() == "article list":
         article_list.go_to_registration(context.driver)
     elif location.lower() == "top bar":
@@ -1428,7 +1428,7 @@ def sign_in_go_to(context: Context, actor_alias: str, location: str):
         "%s decided to go to sign in page via %s link", actor_alias, location
     )
     if location.lower() == "article":
-        article_common.go_to_sign_in(context.driver)
+        exread_article_common.go_to_sign_in(context.driver)
     elif location.lower() == "article list":
         article_list.go_to_sign_in(context.driver)
     elif location.lower() == "top bar":
@@ -1478,12 +1478,12 @@ def articles_share_on_social_media(
 ):
     context.article_url = context.driver.current_url
     if social_media.lower() == "email":
-        article_common.check_if_link_opens_email_client(context.driver)
+        exread_article_common.check_if_link_opens_email_client(context.driver)
     else:
-        article_common.check_if_link_opens_new_tab(
+        exread_article_common.check_if_link_opens_new_tab(
             context.driver, social_media
         )
-        article_common.share_via(context.driver, social_media)
+        exread_article_common.share_via(context.driver, social_media)
     logging.debug(
         "%s successfully got to the share article on '%s'",
         actor_alias,

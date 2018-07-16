@@ -2,7 +2,7 @@
 """ExRed Page Object Registry"""
 
 from pages import (
-    article_common,
+    exread_article_common,
     article_list,
     british_council,
     events,
@@ -120,7 +120,7 @@ EXRED_PAGE_REGISTRY = {
         "url": sso_profile_about.URL,
         "po": sso_profile_about,
     },
-    "article": {"url": None, "po": article_common},
+    "article": {"url": None, "po": exread_article_common},
     "article list": {"url": None, "po": article_list},
     "share on facebook": {
         "url": share_on_facebook.URL,

@@ -8,7 +8,7 @@ from behave.runner import Context
 from utils import assertion_msg, clear_driver_cookies, get_actor
 
 from pages import (
-    article_common,
+    exread_article_common,
     case_studies_common,
     export_readiness_common,
     fas_ui_search_results,
@@ -325,7 +325,7 @@ def articles_should_see_in_correct_order(context: Context, actor_alias: str):
 def articles_should_not_see_link_to_next_article(
     context: Context, actor_alias: str
 ):
-    article_common.should_not_see_link_to_next_article(context.driver)
+    exread_article_common.should_not_see_link_to_next_article(context.driver)
     logging.debug(
         "As expected %s didn't see link to the next article", actor_alias
     )
@@ -334,7 +334,7 @@ def articles_should_not_see_link_to_next_article(
 def articles_should_not_see_personas_end_page(
     context: Context, actor_alias: str
 ):
-    article_common.should_be_here(context.driver)
+    exread_article_common.should_be_here(context.driver)
     logging.debug(
         "As expected %s wasn't taken to the personas end page but remained on "
         "the last article page",
@@ -349,7 +349,7 @@ def articles_should_see_link_to_first_article_from_next_category(
     actor = get_actor(context, actor_alias)
     group = actor.article_group
     first_article = get_articles(group, next_category)[0]
-    article_common.check_if_link_to_next_article_is_displayed(
+    exread_article_common.check_if_link_to_next_article_is_displayed(
         driver, first_article.title
     )
     logging.debug(
@@ -364,7 +364,7 @@ def articles_should_see_link_to_first_article_from_next_category(
 def articles_should_see_article_as_read(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     visited_article = actor.visited_articles[0]
-    article_common.should_see_article_as_read(
+    exread_article_common.should_see_article_as_read(
         context.driver, visited_article.title
     )
     logging.debug(
@@ -379,7 +379,7 @@ def articles_should_see_read_counter_increase(
 ):
     actor = get_actor(context, actor_alias)
     previous_read_counter = actor.article_list_read_counter
-    current_read_counter = article_common.get_read_counter(context.driver)
+    current_read_counter = exread_article_common.get_read_counter(context.driver)
     difference = current_read_counter - previous_read_counter
     with assertion_msg(
         "Expected the Read Counter to increase by '%s', but it increased"
@@ -395,7 +395,7 @@ def articles_should_see_time_to_complete_decrease(
 ):
     actor = get_actor(context, actor_alias)
     previous_time_to_complete = actor.article_list_time_to_complete
-    current_time_to_complete = article_common.get_time_to_complete(
+    current_time_to_complete = exread_article_common.get_time_to_complete(
         context.driver
     )
     visited_article = actor.visited_articles[0]
@@ -418,14 +418,14 @@ def articles_should_see_time_to_complete_decrease(
 
 
 def articles_should_not_see_feedback_widget(context: Context):
-    article_common.should_not_see_feedback_widget(context.driver)
+    exread_article_common.should_not_see_feedback_widget(context.driver)
     logging.debug("Feedback widget is not visible any more")
 
 
 def articles_should_be_thanked_for_feedback(
     context: Context, actor_alias: str
 ):
-    article_common.should_see_feedback_result(context.driver)
+    exread_article_common.should_see_feedback_result(context.driver)
     logging.debug("%s was thanked for the feedback", actor_alias)
 
 
@@ -435,7 +435,7 @@ def articles_total_number_of_articles_should_not_change(
     actor = get_actor(context, actor_alias)
     driver = context.driver
     previous_total_articles = actor.articles_total_number
-    current_total_articles = article_common.get_total_articles(driver)
+    current_total_articles = exread_article_common.get_total_articles(driver)
     with assertion_msg(
         "Expected Total Number of Articles to Read to be: %d but got " "%d",
         previous_total_articles,
@@ -522,7 +522,7 @@ def personalised_journey_should_see_banner_and_top_10_table(
 def articles_should_see_read_counter_set_to(
     context: Context, actor_alias: str, expected_value: int
 ):
-    current_read_counter = article_common.get_read_counter(context.driver)
+    current_read_counter = exread_article_common.get_read_counter(context.driver)
     with assertion_msg(
         "Expected to see Read Counter set to %d but got %s",
         expected_value,
@@ -575,7 +575,7 @@ def articles_should_not_see_link_to_register(
 def articles_read_counter_should_be_merged(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     visited_articles = actor.visited_articles
-    current_read_counter = article_common.get_read_counter(context.driver)
+    current_read_counter = exread_article_common.get_read_counter(context.driver)
     number_of_visited_articles = len(set(visited_articles))
     with assertion_msg(
         "%s expected to see current article reading counter to be %d but "
@@ -618,8 +618,8 @@ def share_page_via_email_should_have_article_details(
 ):
     driver = context.driver
     body = driver.current_url
-    subject = article_common.get_article_name(driver)
-    article_common.check_share_via_email_link_details(driver, subject, body)
+    subject = exread_article_common.get_article_name(driver)
+    exread_article_common.check_share_via_email_link_details(driver, subject, body)
     logging.debug(
         "%s checked that the 'share via email' link contain correct subject: "
         "'%s' and message body: '%s'",
