@@ -24,14 +24,6 @@ from pages.exread import (
 )
 from pages import (
     international,
-    invest_contact_us,
-    invest_feedback,
-    invest_footer,
-    invest_guide,
-    invest_header,
-    invest_home,
-    invest_industries,
-    invest_industry,
     soo_home,
     sso_profile_about,
     sso_registration,
@@ -39,6 +31,9 @@ from pages import (
     sso_sign_in,
     sso_sign_out,
 )
+from pages.invest import invest_footer, invest_feedback, invest_contact_us, \
+    invest_guide, invest_header, invest_industries, invest_industry, \
+    invest_home
 from pages.fas import fas_empty_search_results, fas_thank_you_for_your_message, \
     fas_search_results, fas_article, fas_industries, fas_contact_us, \
     fas_industry, fas_home, fas_company_profile

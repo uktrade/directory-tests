@@ -16,10 +16,9 @@ from pages import (
     exread_header,
     exread_home,
     common_language_selector,
-    exread_personalised_journey,
-    invest_header,
-    invest_footer
+    exread_personalised_journey
 )
+from pages.invest import invest_footer, invest_header, invest_pixels
 from pages.fas import fas_search_results
 from pages.exread import exread_triage_summary
 from registry.articles import get_article, get_articles
@@ -763,7 +762,6 @@ def stats_and_tracking_elements_should_be_present(
     context: Context, names: Table
 ):
     element_names = [row[0] for row in names]
-    from pages import invest_pixels
 
     for name in element_names:
         invest_pixels.should_be_present(context.driver, name)
