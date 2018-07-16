@@ -763,20 +763,20 @@ def stats_and_tracking_elements_should_be_present(
     context: Context, names: Table
 ):
     element_names = [row[0] for row in names]
-    from pages import pixels
+    from pages import invest_pixels
 
     for name in element_names:
-        pixels.should_be_present(context.driver, name)
+        invest_pixels.should_be_present(context.driver, name)
 
 
 def stats_and_tracking_elements_should_not_be_present(
     context: Context, names: Table
 ):
     element_names = [row[0] for row in names]
-    from pages import pixels
+    from pages import invest_pixels
 
     for name in element_names:
-        pixels.should_not_be_present(context.driver, name)
+        invest_pixels.should_not_be_present(context.driver, name)
 
 
 def invest_should_see_uk_gov_logo(
