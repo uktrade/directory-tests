@@ -25,7 +25,7 @@ from pages import (
     exread_footer,
     exread_guidance_common,
     exread_header,
-    home,
+    exread_home,
     international,
     language_selector,
     personalised_journey,
@@ -121,7 +121,7 @@ def open_group_element(
 ):
     driver = context.driver
     if location.lower() == "home page":
-        home.open(driver, group, element)
+        exread_home.open(driver, group, element)
     elif location.lower() in ["header menu", "header"]:
         exread_header.open(driver, group, element)
     elif location.lower() in ["footer links", "footer"]:
@@ -175,12 +175,12 @@ def guidance_open_random_category(
 
 
 def start_triage(context: Context, actor_alias: str):
-    home.start_exporting_journey(context.driver)
+    exread_home.start_exporting_journey(context.driver)
     logging.debug("%s started triage process", actor_alias)
 
 
 def continue_export_journey(context: Context, actor_alias: str):
-    home.continue_export_journey(context.driver)
+    exread_home.continue_export_journey(context.driver)
     logging.debug("%s decided to continue export journey", actor_alias)
 
 
@@ -1226,8 +1226,8 @@ def articles_found_useful_or_not(
 
 
 def case_studies_go_to(context: Context, actor_alias: str, case_number: str):
-    case_study_title = home.get_case_study_title(context.driver, case_number)
-    home.open_case_study(context.driver, case_number)
+    case_study_title = exread_home.get_case_study_title(context.driver, case_number)
+    exread_home.open_case_study(context.driver, case_number)
     update_actor(context, actor_alias, case_study_title=case_study_title)
     logging.debug(
         "%s opened %s case study, entitled: %s",
@@ -1494,13 +1494,13 @@ def articles_share_on_social_media(
 def promo_video_watch(
     context: Context, actor_alias: str, *, play_time: int = None
 ):
-    home.open(context.driver, group="hero", element="watch video")
-    home.play_video(context.driver, play_time=play_time)
+    exread_home.open(context.driver, group="hero", element="watch video")
+    exread_home.play_video(context.driver, play_time=play_time)
     logging.debug("%s was able to play the video", actor_alias)
 
 
 def promo_video_close(context: Context, actor_alias: str):
-    home.close_video(context.driver)
+    exread_home.close_video(context.driver)
     logging.debug("%s closed the video", actor_alias)
 
 

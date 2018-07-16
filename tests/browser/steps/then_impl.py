@@ -15,7 +15,7 @@ from pages import (
     exread_get_finance,
     exread_guidance_common,
     exread_header,
-    home,
+    exread_home,
     language_selector,
     personalised_journey,
     triage_summary,
@@ -639,7 +639,7 @@ def triage_should_see_change_your_answers_link(
 def promo_video_check_watch_time(
     context: Context, actor_alias: str, expected_watch_time: int
 ):
-    watch_time = home.get_video_watch_time(context.driver)
+    watch_time = exread_home.get_video_watch_time(context.driver)
     with assertion_msg(
         "%s expected to watch at least first '%d' seconds of the video but"
         " got '%d'",
@@ -659,7 +659,7 @@ def promo_video_check_watch_time(
 def promo_video_should_not_see_modal_window(
     context: Context, actor_alias: str
 ):
-    home.should_not_see_video_modal_window(context.driver)
+    exread_home.should_not_see_video_modal_window(context.driver)
     logging.debug(
         "As expected %s can't see promotional video modal window", actor_alias
     )

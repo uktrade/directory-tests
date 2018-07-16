@@ -21,7 +21,7 @@ from pages import (
     exread_footer,
     exread_get_finance,
     exread_header,
-    home,
+    exread_home,
     interim_exporting_opportunities,
     international,
     invest_contact_us,
@@ -54,8 +54,8 @@ from pages import (
 )
 
 EXRED_PAGE_REGISTRY = {
-    "home": {"url": home.URL, "po": home},
-    "home page": {"url": home.URL, "po": home},
+    "home": {"url": exread_home.URL, "po": exread_home},
+    "home page": {"url": exread_home.URL, "po": exread_home},
     "triage - what do you want to export": {
         "url": triage_what_do_you_want_to_export.URL,
         "po": triage_what_do_you_want_to_export,
