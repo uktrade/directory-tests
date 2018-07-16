@@ -12,7 +12,9 @@ from utils import (
     wait_for_page_load_after_action,
 )
 
-NAME = "SSO Confirm your Email address page"
+NAME = "Confirm your email address"
+SERVICE = "Single sign-on"
+TYPE = "confirmation"
 URL = urljoin(DIRECTORY_UI_SSO_URL, "accounts/confirm-email/")
 PAGE_TITLE = "Confirm email Address"
 
@@ -21,6 +23,7 @@ EXPECTED_ELEMENTS = {
     "title": "#content > div > div > h1",
     "confirm link": CONFIRM_LINK,
 }
+SELECTORS = {}
 
 
 def should_be_here(driver: webdriver):

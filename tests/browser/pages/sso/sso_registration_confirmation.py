@@ -13,6 +13,8 @@ from utils import (
 )
 
 NAME = "SSO Registration Confirmation page"
+SERVICE = "Single sign-on"
+TYPE = "registration"
 URL = urljoin(DIRECTORY_UI_SSO_URL, "accounts/confirm-email/")
 
 SIGN_IN_LINK = "a.signin"
@@ -22,6 +24,7 @@ EXPECTED_ELEMENTS = {
     "contact us link": "#content > div > div > p:nth-child(3) > a",
     "sign in link": SIGN_IN_LINK,
 }
+SELECTORS = {}
 
 
 def should_be_here(driver: webdriver):

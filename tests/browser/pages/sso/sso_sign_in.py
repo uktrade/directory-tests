@@ -17,7 +17,9 @@ from utils import (
     wait_for_page_load_after_action,
 )
 
-NAME = "SSO Sign in page"
+NAME = "Log in"
+SERVICE = "Single sign-on"
+TYPE = "log in"
 URL = urljoin(DIRECTORY_UI_SSO_URL, "accounts/login/")
 PAGE_TITLE = "Sign in - great.gov.uk"
 
@@ -33,6 +35,7 @@ EXPECTED_ELEMENTS = {
     "sign in button": SIGN_IN_BUTTON,
     "reset your password link": RESET_YOUR_PASSWORD_LINK,
 }
+SELECTORS = {}
 
 
 def visit(driver: webdriver, *, first_time: bool = False):

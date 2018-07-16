@@ -17,7 +17,9 @@ from utils import (
     wait_for_page_load_after_action,
 )
 
-NAME = "SSO Sign out page"
+NAME = "Sign out"
+SERVICE = "Single Sign-On"
+TYPE = "log out"
 URL = urljoin(DIRECTORY_UI_SSO_URL, "accounts/logout/")
 PAGE_TITLE = "Sign out - great.gov.uk"
 
@@ -26,6 +28,7 @@ EXPECTED_ELEMENTS = {
     "title": "#content > div > div > h1",
     "sign in button": SIGN_OUT_BUTTON,
 }
+SELECTORS = {}
 
 
 def visit(driver: webdriver, *, first_time: bool = False):

@@ -18,6 +18,8 @@ from utils import (
 )
 
 NAME = "SSO Registration page"
+SERVICE = "Single sign-on"
+TYPE = "registration"
 URL = urljoin(DIRECTORY_UI_SSO_URL, "accounts/signup/")
 PAGE_TITLE = "Register - great.gov.uk"
 
@@ -35,6 +37,7 @@ EXPECTED_ELEMENTS = {
     "password confirmation input": PASSWORD_CONFIRMATION_INPUT,
     "sign up button": SIGN_UP_BUTTON,
 }
+SELECTORS = {}
 
 
 def visit(driver: webdriver, *, first_time: bool = False):
