@@ -11,7 +11,7 @@ from pages import (
     exread_article_common,
     exread_case_studies_common,
     exread_common,
-    fas_ui_search_results,
+    fas_search_results,
     exread_get_finance,
     exread_guidance_common,
     exread_header,
@@ -718,7 +718,7 @@ def should_see_page_in_preferred_language(
 def fas_search_results_filtered_by_industries(
     context: Context, actor_alias: str, industry_names: List[str]
 ):
-    fas_ui_search_results.should_see_filtered_results(
+    fas_search_results.should_see_filtered_results(
         context.driver, industry_names
     )
     logging.debug(

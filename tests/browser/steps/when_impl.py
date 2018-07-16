@@ -21,7 +21,7 @@ from utils.gov_notify import get_verification_link
 from pages import (
     exread_article_common,
     exread_article_list,
-    fas_ui_contact_us,
+    fas_contact_us,
     exread_footer,
     exread_guidance_common,
     exread_header,
@@ -1669,8 +1669,8 @@ def fas_fill_out_and_submit_contact_us_form(
         "source": sources,
         "accept t&c": accept_tc,
     }
-    fas_ui_contact_us.fill_out(context.driver, contact_us_details)
-    fas_ui_contact_us.submit(context.driver)
+    fas_contact_us.fill_out(context.driver, contact_us_details)
+    fas_contact_us.submit(context.driver)
 
 
 def generic_see_more_industries(context: Context, actor_alias: str):
