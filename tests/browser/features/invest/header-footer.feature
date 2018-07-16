@@ -46,17 +46,16 @@ Feature: Header-Footer
       | Contact Us     | footer |
 
 
-  @wip
   @CMS-158
   @logo
   @header
   @footer
   Scenario Outline: Visitors should be able to get to the Home (Invest) page from "<selected>" page by using UK Government logo in the page header
-    Given "Robert" visits the "<selected>" page
+    Given "Robert" visits the "Invest - <selected>" page
 
-    When "Robert" decides to click on the UK Government logo in the page "header"
+    When "Robert" decides to click on the UK Government logo in the page "Invest - header"
 
-    Then "Robert" should be on the "Invest Home" page
+    Then "Robert" should be on the "Invest - Home" page
 
     Examples:
       | selected                          |
@@ -64,10 +63,10 @@ Feature: Header-Footer
       | Industries                        |
       | UK Setup Guide                    |
       | Contact Us                        |
-      | Feedback                          |
-      | Invest - Automotive               |
-      | Invest - Capital Investment       |
-      | Invest - Creative industries      |
-      | Invest - Financial services       |
-      | Invest - Health and life sciences |
-      | Invest - Technology               |
+#      | Feedback                          | it's a separate service with different header & footer
+      | Automotive industry               |
+      | Capital Investment industry       |
+      | Creative industries industry      |
+      | Financial services industry       |
+      | Health and life sciences industry |
+      | Technology industry               |
