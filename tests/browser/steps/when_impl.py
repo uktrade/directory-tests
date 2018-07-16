@@ -27,7 +27,7 @@ from pages import (
     exread_header,
     exread_home,
     international,
-    language_selector,
+    common_language_selector,
     personalised_journey,
     personalised_what_do_you_want_to_export,
     sso_common,
@@ -1508,14 +1508,14 @@ def language_selector_close(
     context: Context, actor_alias: str, *, with_keyboard: bool = False
 ):
     logging.debug("%s decided to close language selector", actor_alias)
-    language_selector.close(context.driver, with_keyboard=with_keyboard)
+    common_language_selector.close(context.driver, with_keyboard=with_keyboard)
 
 
 def language_selector_open(
     context: Context, actor_alias: str, *, with_keyboard: bool = False
 ):
     logging.debug("%s decided to go open language selector", actor_alias)
-    language_selector.open(context.driver, with_keyboard=with_keyboard)
+    common_language_selector.open(context.driver, with_keyboard=with_keyboard)
 
 
 def language_selector_navigate_through_links_with_keyboard(
@@ -1528,7 +1528,7 @@ def language_selector_navigate_through_links_with_keyboard(
     )
     actor = get_actor(context, actor_alias)
     visited_page = actor.visited_page
-    language_selector.navigate_through_links_with_keyboard(
+    common_language_selector.navigate_through_links_with_keyboard(
         context.driver, page_name=visited_page
     )
 
@@ -1545,7 +1545,7 @@ def language_selector_change_to(
         preferred_language,
     )
     language_selector_open(context, actor_alias)
-    language_selector.change_to(
+    common_language_selector.change_to(
         context.driver, visited_page, preferred_language
     )
 

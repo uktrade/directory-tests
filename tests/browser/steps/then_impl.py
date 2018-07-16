@@ -16,7 +16,7 @@ from pages import (
     exread_guidance_common,
     exread_header,
     exread_home,
-    language_selector,
+    common_language_selector,
     personalised_journey,
     triage_summary,
     invest_header,
@@ -678,14 +678,14 @@ def header_check_favicon(context: Context, actor_alias: str):
 def language_selector_should_see_it(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     visited_page = actor.visited_page
-    language_selector.should_see_it_on(context.driver, page_name=visited_page)
+    common_language_selector.should_see_it_on(context.driver, page_name=visited_page)
     logging.debug("As expected %s can see language selector", actor_alias)
 
 
 def language_selector_should_not_see_it(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     visited_page = actor.visited_page
-    language_selector.should_not_see_it_on(
+    common_language_selector.should_not_see_it_on(
         context.driver, page_name=visited_page
     )
     logging.debug("As expected %s cannot see language selector", actor_alias)
@@ -696,7 +696,7 @@ def language_selector_keyboard_should_be_trapped(
 ):
     actor = get_actor(context, actor_alias)
     visited_page = actor.visited_page
-    language_selector.keyboard_should_be_trapped(
+    common_language_selector.keyboard_should_be_trapped(
         context.driver, page_name=visited_page
     )
 
@@ -704,7 +704,7 @@ def language_selector_keyboard_should_be_trapped(
 def should_see_page_in_preferred_language(
     context: Context, actor_alias: str, preferred_language: str
 ):
-    language_selector.check_page_language_is(
+    common_language_selector.check_page_language_is(
         context.driver, preferred_language
     )
     logging.debug(
