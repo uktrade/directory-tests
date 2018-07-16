@@ -1,7 +1,8 @@
-from enum import Enum
-import importlib
-import pkgutil
+import os
 from collections import namedtuple
+from enum import Enum
+from importlib import import_module
+from pkgutil import iter_modules
 from typing import Dict, Union, List
 
 from bs4 import BeautifulSoup
@@ -77,7 +78,7 @@ def browser_check_for_sections(
     *,
     desktop: bool = True,
     mobile: bool = False,
-    horizontal: bool = False
+    horizontal: bool = False,
 ):
     for name in sought_sections:
         if desktop:
@@ -148,6 +149,7 @@ class PageObjects(Enum):
 
     Values can only be modules with properties required for a Page Object.
     """
+
     def __new__(cls, value):
         if not is_page_object(value):
             raise TypeError(
@@ -188,20 +190,30 @@ class PageObjects(Enum):
         return self.value.SELECTORS
 
 
-def get_page_object_modules(package: ModuleType) -> Dict:
-    def get_enum_key(mod: ModuleType) -> str:
-        return "{}_{}".format(mod.SERVICE, mod.NAME).upper().replace(" ", "_")
+def get_enum_key(module: ModuleType) -> str:
+    return f"{module.SERVICE}_{module.NAME}".upper().replace(" ", "_")
 
+
+def get_subpackages_names(package: ModuleType) -> List[str]:
+    path = package.__path__
+    return [name for _, name, is_pkg in iter_modules(path) if is_pkg]
+
+
+def get_page_objects(package: ModuleType) -> Dict[str, ModuleType]:
+    subpackages_names = get_subpackages_names(package)
     result = {}
-    prefix = package.__name__ + "."
-    for _, module_name, is_pkg in pkgutil.iter_modules(package.__path__):
-        if not is_pkg:
-            module = importlib.import_module(prefix + module_name)
-            if is_page_object(module):
-                enum_key = get_enum_key(module)
-                result[enum_key] = module
-
+    root_prefix = f"{package.__name__}."
+    root_path = package.__path__[0]
+    for subpackage_name in subpackages_names:
+        subpackage_path = os.path.join(root_path, subpackage_name)
+        for _, module_name, is_pkg in iter_modules([subpackage_path]):
+            module_path = f"{root_prefix}{subpackage_name}.{module_name}"
+            if not is_pkg:
+                module = import_module(module_path)
+                if is_page_object(module):
+                    enum_key = get_enum_key(module)
+                    result[enum_key] = module
     return result
 
 
-PAGES = PageObjects("PageObjects", names=get_page_object_modules(pages))
+PAGES = PageObjects("PageObjects", names=get_page_objects(pages))
