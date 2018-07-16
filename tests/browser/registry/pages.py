@@ -14,7 +14,7 @@ from pages import (
     fas_empty_search_results,
     fas_industries,
     fas_industry,
-    fas_landing,
+    fas_home,
     fas_search_results,
     fas_thank_you_for_your_message,
     fab_home,
@@ -92,7 +92,7 @@ EXRED_PAGE_REGISTRY = {
         "po": exread_interim_exporting_opportunities,
     },
     "find a buyer": {"url": fab_home.URL, "po": fab_home},
-    "find a supplier": {"url": fas_landing.URL, "po": fas_landing},
+    "find a supplier": {"url": fas_home.URL, "po": fas_home},
     "create your export journey": {
         "url": exread_triage_create_your_export_journey.URL,
         "po": exread_triage_create_your_export_journey,
@@ -136,7 +136,7 @@ EXRED_PAGE_REGISTRY = {
 
 
 FAS_PAGE_REGISTRY = {
-    "fas landing": {"url": fas_landing.URL, "po": fas_landing},
+    "fas landing": {"url": fas_home.URL, "po": fas_home},
     "fas empty search results": {
         "url": fas_empty_search_results.URL,
         "po": fas_empty_search_results,
