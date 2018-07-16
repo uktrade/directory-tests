@@ -29,17 +29,13 @@ from pages import (
     common_language_selector,
     exread_personalised_journey,
     exread_personalised_what_do_you_want_to_export,
-    sso_common,
-    sso_confirm_your_email,
-    sso_registration,
-    sso_registration_confirmation,
-    sso_sign_in,
-    sso_sign_out,
     exread_triage_are_you_registered_with_companies_house,
     exread_triage_are_you_regular_exporter,
     exread_triage_company_name,
     exread_triage_do_you_use_online_marketplaces,
 )
+from pages.sso import sso_sign_in, sso_confirm_your_email, sso_common, \
+    sso_registration, sso_registration_confirmation, sso_sign_out
 from pages.fas import fas_contact_us
 from pages.exread import exread_triage_what_do_you_want_to_export, \
     exread_triage_summary, exread_triage_have_you_exported

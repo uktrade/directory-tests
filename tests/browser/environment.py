@@ -10,7 +10,7 @@ from retrying import retry
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 
-from pages.sso_common import delete_supplier_data_from_sso
+from pages.sso.sso_common import delete_supplier_data_from_sso
 from settings import AUTO_RETRY, CONFIG, CONFIG_NAME, RESTART_BROWSER, TASK_ID
 from utils import (
     clear_driver_cookies,
