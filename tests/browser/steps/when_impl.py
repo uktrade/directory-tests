@@ -29,7 +29,7 @@ from pages import (
     international,
     common_language_selector,
     exread_personalised_journey,
-    personalised_what_do_you_want_to_export,
+    exread_personalised_what_do_you_want_to_export,
     sso_common,
     sso_confirm_your_email,
     sso_registration,
@@ -193,10 +193,10 @@ def personalised_choose_sector(
     sector: str = None
 ):
     driver = context.driver
-    code, sector = personalised_what_do_you_want_to_export.enter(
+    code, sector = exread_personalised_what_do_you_want_to_export.enter(
         driver, code, sector
     )
-    personalised_what_do_you_want_to_export.submit(driver)
+    exread_personalised_what_do_you_want_to_export.submit(driver)
     triage_have_you_exported.should_be_here(driver)
     update_actor(
         context,
