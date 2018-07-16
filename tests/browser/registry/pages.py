@@ -24,8 +24,8 @@ from pages.exread import (
 )
 from pages import (
     international,
-    soo_home,
 )
+from pages.soo import soo_home
 from pages.sso import sso_sign_in, sso_registration, \
     sso_registration_confirmation, sso_profile_about, sso_sign_out
 from pages.invest import invest_footer, invest_feedback, invest_contact_us, \
