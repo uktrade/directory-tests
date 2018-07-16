@@ -17,7 +17,7 @@ from pages import (
     exread_header,
     exread_home,
     common_language_selector,
-    personalised_journey,
+    exread_personalised_journey,
     triage_summary,
     invest_header,
     invest_footer
@@ -144,7 +144,7 @@ def guidance_expected_page_elements_should_be_visible(
 def personalised_journey_should_see_read_counter(
     context: Context, actor_alias: str, exporter_status: str
 ):
-    personalised_journey.should_see_read_counter(
+    exread_personalised_journey.should_see_read_counter(
         context.driver, exporter_status=exporter_status
     )
     logging.debug(
@@ -185,20 +185,20 @@ def personalised_should_see_layout_for(
     code = None
     if actor.what_do_you_want_to_export:
         _, code, _ = actor.what_do_you_want_to_export
-    personalised_journey.should_be_here(context.driver)
+    exread_personalised_journey.should_be_here(context.driver)
     if classification.lower() == "new":
-        personalised_journey.layout_for_new_exporter(
+        exread_personalised_journey.layout_for_new_exporter(
             context.driver, incorporated=incorporated, sector_code=code
         )
     elif classification.lower() == "occasional":
-        personalised_journey.layout_for_occasional_exporter(
+        exread_personalised_journey.layout_for_occasional_exporter(
             context.driver,
             incorporated=incorporated,
             use_online_marketplaces=online_marketplaces,
             sector_code=code,
         )
     elif classification.lower() == "regular":
-        personalised_journey.layout_for_regular_exporter(
+        exread_personalised_journey.layout_for_regular_exporter(
             context.driver, incorporated=incorporated, sector_code=code
         )
     else:
@@ -490,7 +490,7 @@ def should_see_links_to_services(
 def personalised_journey_should_not_see_banner_and_top_10_table(
     context: Context, actor_alias: str
 ):
-    personalised_journey.should_not_see_banner_and_top_10_table(context.driver)
+    exread_personalised_journey.should_not_see_banner_and_top_10_table(context.driver)
     actor = get_actor(context, actor_alias)
     _, code, sector = actor.what_do_you_want_to_export
     logging.debug(
@@ -507,7 +507,7 @@ def personalised_journey_should_see_banner_and_top_10_table(
 ):
     actor = get_actor(context, actor_alias)
     _, code, sector = actor.what_do_you_want_to_export
-    personalised_journey.should_see_banner_and_top_10_table(
+    exread_personalised_journey.should_see_banner_and_top_10_table(
         context.driver, sector
     )
     logging.debug(

@@ -28,7 +28,7 @@ from pages import (
     exread_home,
     international,
     common_language_selector,
-    personalised_journey,
+    exread_personalised_journey,
     personalised_what_do_you_want_to_export,
     sso_common,
     sso_confirm_your_email,
@@ -127,7 +127,7 @@ def open_group_element(
     elif location.lower() in ["footer links", "footer"]:
         exread_footer.open(driver, group, element)
     elif location.lower() == "personalised journey":
-        personalised_journey.open(driver, group, element)
+        exread_personalised_journey.open(driver, group, element)
     elif location.lower() == "international page":
         international.open(driver, group, element, same_tab=True)
     else:
@@ -713,7 +713,7 @@ def personalised_journey_create_page(context: Context, actor_alias: str):
     exporter_status = actor.self_classification
     triage_classify_as(context, actor_alias, exporter_status=exporter_status)
     triage_create_exporting_journey(context, actor_alias)
-    personalised_journey.should_be_here(context.driver)
+    exread_personalised_journey.should_be_here(context.driver)
 
 
 def triage_change_answers(context: Context, actor_alias: str):
@@ -1288,7 +1288,7 @@ def open_service_link_on_interim_page(
 
 
 def personalised_journey_update_preference(context: Context, actor_alias: str):
-    personalised_journey.update_preferences(context.driver)
+    exread_personalised_journey.update_preferences(context.driver)
     logging.debug("%s went to update preferences page", actor_alias)
 
 
