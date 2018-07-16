@@ -4,9 +4,6 @@
 from pages import (
     exread_article_common,
     exread_article_list,
-    external_british_council,
-    external_events,
-    external_legal_services,
     fas_article,
     fas_company_profile,
     fas_contact_us,
@@ -49,8 +46,9 @@ from pages import (
     exread_triage_have_you_exported,
     exread_triage_summary,
     exread_triage_what_do_you_want_to_export,
-    external_visit_britain,
 )
+from pages.external import external_events, external_visit_britain, \
+    external_legal_services, external_british_council
 from pages.exopps import exopps_home
 
 EXRED_PAGE_REGISTRY = {
