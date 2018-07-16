@@ -9,7 +9,7 @@ from utils import assertion_msg, clear_driver_cookies, get_actor
 
 from pages import (
     exread_article_common,
-    case_studies_common,
+    exread_case_studies_common,
     exread_common,
     fas_ui_search_results,
     get_finance,
@@ -462,14 +462,14 @@ def case_studies_should_see_case_study(
     case_study_numbers = {"first": 1, "second": 2, "third": 3}
     number = case_study_numbers[case_study_number.lower()]
     case_study_title = get_actor(context, actor_alias).case_study_title
-    case_studies_common.should_be_here(
+    exread_case_studies_common.should_be_here(
         context.driver, number, title=case_study_title
     )
 
 
 def should_see_share_widget(context: Context, actor_alias: str):
     driver = context.driver
-    case_studies_common.should_see_share_widget(driver)
+    exread_case_studies_common.should_see_share_widget(driver)
     logging.debug(
         "%s can see Share Widget on %s", actor_alias, driver.current_url
     )
