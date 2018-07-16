@@ -3,7 +3,7 @@
 
 from pages import (
     exread_article_common,
-    article_list,
+    exread_article_list,
     british_council,
     events,
     export_opportunities,
@@ -121,7 +121,7 @@ EXRED_PAGE_REGISTRY = {
         "po": sso_profile_about,
     },
     "article": {"url": None, "po": exread_article_common},
-    "article list": {"url": None, "po": article_list},
+    "article list": {"url": None, "po": exread_article_list},
     "share on facebook": {
         "url": share_on_facebook.URL,
         "po": share_on_facebook,

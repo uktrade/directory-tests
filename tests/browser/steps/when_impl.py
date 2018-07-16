@@ -20,7 +20,7 @@ from utils.gov_notify import get_verification_link
 
 from pages import (
     exread_article_common,
-    article_list,
+    exread_article_list,
     fas_ui_contact_us,
     footer,
     guidance_common,
@@ -1044,7 +1044,7 @@ def articles_open_any(context: Context, actor_alias: str):
     category = actor.article_category
     visited_articles = actor.visited_articles
     any_article = get_random_article(group, category)
-    article_list.show_all_articles(driver)
+    exread_article_list.show_all_articles(driver)
 
     # capture the counter values from Article List page
     article_list_total = exread_article_common.get_total_articles(context.driver)
@@ -1344,7 +1344,7 @@ def registration_go_to(context: Context, actor_alias: str, location: str):
     if location.lower() == "article":
         exread_article_common.go_to_registration(context.driver)
     elif location.lower() == "article list":
-        article_list.go_to_registration(context.driver)
+        exread_article_list.go_to_registration(context.driver)
     elif location.lower() == "top bar":
         header.go_to_registration(context.driver)
     else:
@@ -1430,7 +1430,7 @@ def sign_in_go_to(context: Context, actor_alias: str, location: str):
     if location.lower() == "article":
         exread_article_common.go_to_sign_in(context.driver)
     elif location.lower() == "article list":
-        article_list.go_to_sign_in(context.driver)
+        exread_article_list.go_to_sign_in(context.driver)
     elif location.lower() == "top bar":
         header.go_to_sign_in(context.driver)
     else:
@@ -1551,7 +1551,7 @@ def language_selector_change_to(
 
 
 def articles_show_all(context: Context, actor_alias: str):
-    article_list.show_all_articles(context.driver)
+    exread_article_list.show_all_articles(context.driver)
     logging.debug(
         "%s showed up all articled on the page: %s",
         actor_alias,
