@@ -40,7 +40,7 @@ from pages import (
     exread_triage_are_you_regular_exporter,
     exread_triage_company_name,
     exread_triage_do_you_use_online_marketplaces,
-    triage_have_you_exported,
+    exread_triage_have_you_exported,
     triage_summary,
     triage_what_do_you_want_to_export,
 )
@@ -197,7 +197,7 @@ def personalised_choose_sector(
         driver, code, sector
     )
     exread_personalised_what_do_you_want_to_export.submit(driver)
-    triage_have_you_exported.should_be_here(driver)
+    exread_triage_have_you_exported.should_be_here(driver)
     update_actor(
         context,
         actor_alias,
@@ -231,16 +231,16 @@ def triage_question_what_do_you_want_to_export(
 
 def triage_say_you_exported_before(context: Context, actor_alias: str):
     driver = context.driver
-    triage_have_you_exported.select_yes(driver)
-    triage_have_you_exported.submit(driver)
+    exread_triage_have_you_exported.select_yes(driver)
+    exread_triage_have_you_exported.submit(driver)
     exread_triage_are_you_regular_exporter.should_be_here(driver)
     update_actor(context, actor_alias, have_you_exported_before=True)
 
 
 def triage_say_you_never_exported_before(context: Context, actor_alias: str):
     driver = context.driver
-    triage_have_you_exported.select_no(driver)
-    triage_have_you_exported.submit(driver)
+    exread_triage_have_you_exported.select_no(driver)
+    exread_triage_have_you_exported.submit(driver)
     triage_what_do_you_want_to_export.should_be_here(driver)
     update_actor(context, actor_alias, have_you_exported_before=False)
 
@@ -718,7 +718,7 @@ def personalised_journey_create_page(context: Context, actor_alias: str):
 
 def triage_change_answers(context: Context, actor_alias: str):
     triage_summary.change_answers(context.driver)
-    triage_have_you_exported.should_be_here(context.driver)
+    exread_triage_have_you_exported.should_be_here(context.driver)
     logging.debug("%s decided to change the Triage answers", actor_alias)
 
 
@@ -745,8 +745,8 @@ def triage_answer_questions_again(context: Context, actor_alias: str):
 
     if actor.have_you_exported_before is not None:
         if actor.have_you_exported_before:
-            triage_have_you_exported.is_yes_selected(driver)
-            triage_have_you_exported.submit(driver)
+            exread_triage_have_you_exported.is_yes_selected(driver)
+            exread_triage_have_you_exported.submit(driver)
             exread_triage_are_you_regular_exporter.should_be_here(driver)
             if actor.do_you_export_regularly:
                 exread_triage_are_you_regular_exporter.is_yes_selected(driver)
@@ -796,8 +796,8 @@ def triage_answer_questions_again(context: Context, actor_alias: str):
                 continue_from_are_you_incorporated()
                 triage_summary.should_be_classified_as_occasional(driver)
         else:
-            triage_have_you_exported.is_no_selected(driver)
-            triage_have_you_exported.submit(driver)
+            exread_triage_have_you_exported.is_no_selected(driver)
+            exread_triage_have_you_exported.submit(driver)
             goods_or_services, _, _ = actor.what_do_you_want_to_export
             if goods_or_services == "goods":
                 triage_what_do_you_want_to_export.is_goods_selected(
