@@ -10,6 +10,7 @@ DETAILS = {
     "SECTOR": "sector of interest",
     "RECIPIENT": "letters recipient full name",
     "COUNTRIES": "countries to export to",
+    "HAS_EXPORTED_BEFORE": "have you exported before",
 }
 
 

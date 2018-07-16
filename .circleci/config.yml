@@ -3,7 +3,7 @@ version: 2.0
 jobs:
   checkout_code:
     docker:
-      - image: circleci/python:3.5.3
+      - image: circleci/python:3.6.5
     working_directory: ~/directory-tests
     steps:
       - checkout
@@ -14,7 +14,7 @@ jobs:
 
   smoke_tests_requirements:
     docker:
-      - image: circleci/python:3.5.3
+      - image: circleci/python:3.6.5
     working_directory: ~/directory-tests
     steps:
       - restore_cache:
@@ -33,7 +33,7 @@ jobs:
 
   functional_tests_requirements:
     docker:
-      - image: circleci/python:3.5.3
+      - image: circleci/python:3.6.5
     working_directory: ~/directory-tests
     steps:
       - restore_cache:
@@ -57,7 +57,7 @@ jobs:
 
   browser_tests_requirements:
     docker:
-      - image: circleci/python:3.5.3
+      - image: circleci/python:3.6.5
     working_directory: ~/directory-tests
     steps:
       - restore_cache:
@@ -81,7 +81,7 @@ jobs:
 
   smoke_tests:
     docker:
-      - image: circleci/python:3.5.3
+      - image: circleci/python:3.6.5
     working_directory: ~/directory-tests
     steps:
       - restore_cache:
@@ -104,7 +104,7 @@ jobs:
 
   browser_tests_chrome:
     docker:
-      - image: circleci/python:3.5.3
+      - image: circleci/python:3.6.5
     working_directory: ~/directory-tests
     steps:
       - restore_cache:
@@ -136,7 +136,7 @@ jobs:
 
   browser_tests_firefox:
     docker:
-      - image: circleci/python:3.5.3
+      - image: circleci/python:3.6.5
     working_directory: ~/directory-tests
     steps:
       - restore_cache:
@@ -168,7 +168,7 @@ jobs:
 
   fab_functional_tests:
     docker:
-      - image: circleci/python:3.5.3
+      - image: circleci/python:3.6.5
     working_directory: ~/directory-tests
     steps:
       - restore_cache:
@@ -201,7 +201,7 @@ jobs:
 
   fas_functional_tests:
     docker:
-      - image: circleci/python:3.5.3
+      - image: circleci/python:3.6.5
     working_directory: ~/directory-tests
     steps:
       - restore_cache:
@@ -234,7 +234,7 @@ jobs:
 
   sso_functional_tests:
     docker:
-      - image: circleci/python:3.5.3
+      - image: circleci/python:3.6.5
     working_directory: ~/directory-tests
     steps:
       - restore_cache:
@@ -267,7 +267,7 @@ jobs:
 
   sud_functional_tests:
     docker:
-      - image: circleci/python:3.5.3
+      - image: circleci/python:3.6.5
     working_directory: ~/directory-tests
     steps:
       - restore_cache:
