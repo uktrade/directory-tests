@@ -23,7 +23,6 @@ from pages.exread import (
     exread_triage_what_do_you_want_to_export,
 )
 from pages import (
-    fab_home,
     fas_article,
     fas_company_profile,
     fas_contact_us,
@@ -49,6 +48,7 @@ from pages import (
     sso_sign_in,
     sso_sign_out,
 )
+from pages.fab import fab_home
 from pages.external import external_events, external_visit_britain, \
     external_legal_services, external_british_council
 from pages.exopps import exopps_home
