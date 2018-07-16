@@ -18,10 +18,10 @@ from pages import (
     exread_home,
     common_language_selector,
     exread_personalised_journey,
-    exread_triage_summary,
     invest_header,
     invest_footer
 )
+from pages.exread import exread_triage_summary
 from registry.articles import get_article, get_articles
 from registry.pages import get_page_object
 from steps.when_impl import (

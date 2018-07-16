@@ -40,10 +40,9 @@ from pages import (
     exread_triage_are_you_regular_exporter,
     exread_triage_company_name,
     exread_triage_do_you_use_online_marketplaces,
-    exread_triage_have_you_exported,
-    exread_triage_summary,
-    exread_triage_what_do_you_want_to_export,
 )
+from pages.exread import exread_triage_what_do_you_want_to_export, \
+    exread_triage_summary, exread_triage_have_you_exported
 from registry.articles import (
     GUIDANCE,
     get_article,
