@@ -49,7 +49,7 @@ from pages import (
     exread_triage_do_you_use_online_marketplaces,
     exread_triage_have_you_exported,
     exread_triage_summary,
-    triage_what_do_you_want_to_export,
+    exread_triage_what_do_you_want_to_export,
     external_visit_britain,
 )
 
@@ -57,8 +57,8 @@ EXRED_PAGE_REGISTRY = {
     "home": {"url": exread_home.URL, "po": exread_home},
     "home page": {"url": exread_home.URL, "po": exread_home},
     "triage - what do you want to export": {
-        "url": triage_what_do_you_want_to_export.URL,
-        "po": triage_what_do_you_want_to_export,
+        "url": exread_triage_what_do_you_want_to_export.URL,
+        "po": exread_triage_what_do_you_want_to_export,
     },
     "triage - have you exported before": {
         "url": exread_triage_have_you_exported.URL,

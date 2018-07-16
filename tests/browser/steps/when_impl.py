@@ -42,7 +42,7 @@ from pages import (
     exread_triage_do_you_use_online_marketplaces,
     exread_triage_have_you_exported,
     exread_triage_summary,
-    triage_what_do_you_want_to_export,
+    exread_triage_what_do_you_want_to_export,
 )
 from registry.articles import (
     GUIDANCE,
@@ -209,11 +209,11 @@ def triage_question_what_do_you_want_to_export(
     context: Context, actor_alias: str, goods_or_services: str
 ):
     if goods_or_services.lower() == "services":
-        triage_what_do_you_want_to_export.select_services(context.driver)
+        exread_triage_what_do_you_want_to_export.select_services(context.driver)
     elif goods_or_services.lower() == "goods":
-        triage_what_do_you_want_to_export.select_goods(context.driver)
+        exread_triage_what_do_you_want_to_export.select_goods(context.driver)
     elif goods_or_services.lower() == "goods and services":
-        triage_what_do_you_want_to_export.select_goods_and_services(
+        exread_triage_what_do_you_want_to_export.select_goods_and_services(
             context.driver
         )
     else:
@@ -222,7 +222,7 @@ def triage_question_what_do_you_want_to_export(
                 goods_or_services
             )
         )
-    triage_what_do_you_want_to_export.submit(context.driver)
+    exread_triage_what_do_you_want_to_export.submit(context.driver)
     exread_triage_are_you_registered_with_companies_house.should_be_here(
         context.driver
     )
@@ -241,7 +241,7 @@ def triage_say_you_never_exported_before(context: Context, actor_alias: str):
     driver = context.driver
     exread_triage_have_you_exported.select_no(driver)
     exread_triage_have_you_exported.submit(driver)
-    triage_what_do_you_want_to_export.should_be_here(driver)
+    exread_triage_what_do_you_want_to_export.should_be_here(driver)
     update_actor(context, actor_alias, have_you_exported_before=False)
 
 
@@ -262,8 +262,8 @@ def triage_have_you_exported_before(
 def triage_say_you_want_to_export_goods(
     context: Context, actor_alias: str, code: str, sector: str
 ):
-    triage_what_do_you_want_to_export.select_goods(context.driver)
-    triage_what_do_you_want_to_export.submit(context.driver)
+    exread_triage_what_do_you_want_to_export.select_goods(context.driver)
+    exread_triage_what_do_you_want_to_export.submit(context.driver)
     exread_triage_are_you_registered_with_companies_house.should_be_here(
         context.driver
     )
@@ -277,8 +277,8 @@ def triage_say_you_want_to_export_goods(
 def triage_say_you_want_to_export_services(
     context: Context, actor_alias: str, code: str, sector: str
 ):
-    triage_what_do_you_want_to_export.select_services(context.driver)
-    triage_what_do_you_want_to_export.submit(context.driver)
+    exread_triage_what_do_you_want_to_export.select_services(context.driver)
+    exread_triage_what_do_you_want_to_export.submit(context.driver)
     exread_triage_are_you_registered_with_companies_house.should_be_here(
         context.driver
     )
@@ -292,9 +292,9 @@ def triage_say_you_want_to_export_services(
 def triage_say_you_want_to_export_goods_and_services(
     context: Context, actor_alias: str, code: str, sector: str
 ):
-    triage_what_do_you_want_to_export.select_goods(context.driver)
-    triage_what_do_you_want_to_export.select_services(context.driver)
-    triage_what_do_you_want_to_export.submit(context.driver)
+    exread_triage_what_do_you_want_to_export.select_goods(context.driver)
+    exread_triage_what_do_you_want_to_export.select_services(context.driver)
+    exread_triage_what_do_you_want_to_export.submit(context.driver)
     exread_triage_are_you_registered_with_companies_house.should_be_here(
         context.driver
     )
@@ -338,7 +338,7 @@ def triage_say_you_export_regularly(context: Context, actor_alias: str):
     driver = context.driver
     exread_triage_are_you_regular_exporter.select_yes(driver)
     exread_triage_are_you_regular_exporter.submit(driver)
-    triage_what_do_you_want_to_export.should_be_here(driver)
+    exread_triage_what_do_you_want_to_export.should_be_here(driver)
     update_actor(context, actor_alias, do_you_export_regularly=True)
 
 
@@ -368,7 +368,7 @@ def triage_say_you_use_online_marketplaces(context: Context, actor_alias: str):
     driver = context.driver
     exread_triage_do_you_use_online_marketplaces.select_yes(driver)
     exread_triage_do_you_use_online_marketplaces.submit(driver)
-    triage_what_do_you_want_to_export.should_be_here(driver)
+    exread_triage_what_do_you_want_to_export.should_be_here(driver)
     update_actor(context, actor_alias, do_you_use_online_marketplaces=True)
 
 
@@ -378,7 +378,7 @@ def triage_say_you_do_not_use_online_marketplaces(
     driver = context.driver
     exread_triage_do_you_use_online_marketplaces.select_no(driver)
     exread_triage_do_you_use_online_marketplaces.submit(driver)
-    triage_what_do_you_want_to_export.should_be_here(driver)
+    exread_triage_what_do_you_want_to_export.should_be_here(driver)
     update_actor(context, actor_alias, do_you_use_online_marketplaces=False)
 
 
@@ -753,14 +753,14 @@ def triage_answer_questions_again(context: Context, actor_alias: str):
                 exread_triage_are_you_regular_exporter.submit(driver)
                 goods_or_services, _, _ = actor.what_do_you_want_to_export
                 if goods_or_services == "goods":
-                    triage_what_do_you_want_to_export.is_goods_selected(
+                    exread_triage_what_do_you_want_to_export.is_goods_selected(
                         context.driver
                     )
                 else:
-                    triage_what_do_you_want_to_export.is_services_selected(
+                    exread_triage_what_do_you_want_to_export.is_services_selected(
                         context.driver
                     )
-                triage_what_do_you_want_to_export.submit(driver)
+                exread_triage_what_do_you_want_to_export.submit(driver)
                 exread_triage_are_you_registered_with_companies_house.should_be_here(
                     driver
                 )
@@ -779,17 +779,17 @@ def triage_answer_questions_again(context: Context, actor_alias: str):
                         driver
                     )
                 exread_triage_do_you_use_online_marketplaces.submit(driver)
-                triage_what_do_you_want_to_export.should_be_here(driver)
+                exread_triage_what_do_you_want_to_export.should_be_here(driver)
                 goods_or_services, _, _ = actor.what_do_you_want_to_export
                 if goods_or_services == "goods":
-                    triage_what_do_you_want_to_export.is_goods_selected(
+                    exread_triage_what_do_you_want_to_export.is_goods_selected(
                         context.driver
                     )
                 else:
-                    triage_what_do_you_want_to_export.is_services_selected(
+                    exread_triage_what_do_you_want_to_export.is_services_selected(
                         context.driver
                     )
-                triage_what_do_you_want_to_export.submit(driver)
+                exread_triage_what_do_you_want_to_export.submit(driver)
                 exread_triage_are_you_registered_with_companies_house.should_be_here(
                     driver
                 )
@@ -800,14 +800,14 @@ def triage_answer_questions_again(context: Context, actor_alias: str):
             exread_triage_have_you_exported.submit(driver)
             goods_or_services, _, _ = actor.what_do_you_want_to_export
             if goods_or_services == "goods":
-                triage_what_do_you_want_to_export.is_goods_selected(
+                exread_triage_what_do_you_want_to_export.is_goods_selected(
                     context.driver
                 )
             else:
-                triage_what_do_you_want_to_export.is_services_selected(
+                exread_triage_what_do_you_want_to_export.is_services_selected(
                     context.driver
                 )
-            triage_what_do_you_want_to_export.submit(driver)
+            exread_triage_what_do_you_want_to_export.submit(driver)
             exread_triage_are_you_registered_with_companies_house.should_be_here(
                 driver
             )
