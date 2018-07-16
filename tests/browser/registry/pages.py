@@ -34,9 +34,9 @@ from pages import (
     invest_industry,
     exread_personalised_journey,
     soo_home,
-    share_on_facebook,
-    share_on_linkedin,
-    share_on_twitter,
+    exread_share_on_facebook,
+    exread_share_on_linkedin,
+    exread_share_on_twitter,
     sso_profile_about,
     sso_registration,
     sso_registration_confirmation,
@@ -123,14 +123,14 @@ EXRED_PAGE_REGISTRY = {
     "article": {"url": None, "po": exread_article_common},
     "article list": {"url": None, "po": exread_article_list},
     "share on facebook": {
-        "url": share_on_facebook.URL,
-        "po": share_on_facebook,
+        "url": exread_share_on_facebook.URL,
+        "po": exread_share_on_facebook,
     },
     "share on linkedin": {
-        "url": share_on_linkedin.URL,
-        "po": share_on_linkedin,
+        "url": exread_share_on_linkedin.URL,
+        "po": exread_share_on_linkedin,
     },
-    "share on twitter": {"url": share_on_twitter.URL, "po": share_on_twitter},
+    "share on twitter": {"url": exread_share_on_twitter.URL, "po": exread_share_on_twitter},
     "international": {"url": international.URL, "po": international},
 }
 
