@@ -5,17 +5,15 @@ from urllib.parse import urljoin
 from selenium import webdriver
 
 from pages.common_actions import (
+    assertion_msg,
     check_for_expected_elements,
     check_title,
     check_url,
-)
-from settings import EXRED_UI_URL
-from utils import (
-    assertion_msg,
     find_element,
     take_screenshot,
     wait_for_page_load_after_action,
 )
+from settings import EXRED_UI_URL
 
 NAME = "ExRed Triage - are you regular exporter"
 URL = urljoin(EXRED_UI_URL, "triage/regular-exporter/")

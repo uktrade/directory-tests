@@ -4,11 +4,11 @@ import logging
 from urllib.parse import urljoin
 
 from selenium import webdriver
-from utils import take_screenshot
 
 from pages.common_actions import (
     check_for_expected_sections_elements,
     check_url,
+    take_screenshot,
 )
 from settings import DIRECTORY_UI_SUPPLIER_URL
 

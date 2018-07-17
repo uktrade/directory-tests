@@ -6,16 +6,19 @@ from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
-from utils import assertion_msg, find_element, take_screenshot
 
-from pages import (
+from pages.common_actions import (
     AssertionExecutor,
     Executor,
     Selector,
+    assertion_msg,
     check_for_sections,
+    check_title,
+    find_and_click_on_page_element,
+    find_element,
+    take_screenshot,
     visit_url,
 )
-from pages.common_actions import check_title, find_and_click_on_page_element
 from settings import INVEST_UI_URL
 
 URL = urljoin(INVEST_UI_URL, "")

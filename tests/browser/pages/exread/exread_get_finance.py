@@ -7,12 +7,13 @@ from selenium import webdriver
 
 from pages.common_actions import (
     check_for_expected_sections_elements,
+    check_if_element_is_not_visible,
     check_title,
     check_url,
     go_to_url,
+    take_screenshot,
 )
 from settings import EXRED_UI_URL
-from utils import check_if_element_is_not_visible, take_screenshot
 
 NAME = "Get Finance interim page"
 URL = urljoin(EXRED_UI_URL, "get-finance/")

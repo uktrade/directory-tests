@@ -6,11 +6,9 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 
 from pages.common_actions import (
+    assertion_msg,
     check_for_expected_sections_elements,
     check_for_section,
-)
-from utils import (
-    assertion_msg,
     check_if_element_is_not_present,
     check_if_element_is_not_visible,
     find_element,

@@ -4,9 +4,8 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
-from utils import find_element
 
-from pages import Selector
+from pages.common_actions import Selector, find_element
 
 ALLOWED = {
     "google tag manager": Selector(

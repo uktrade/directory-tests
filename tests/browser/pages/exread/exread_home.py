@@ -8,22 +8,20 @@ from urllib.parse import urljoin
 from selenium import webdriver
 
 from pages.common_actions import (
+    assertion_msg,
     check_for_expected_sections_elements,
     check_for_section,
-    check_title,
-    check_url,
-    go_to_url,
-)
-from settings import EXRED_UI_URL
-from utils import (
-    assertion_msg,
     check_if_element_is_not_present,
     check_if_element_is_visible,
+    check_title,
+    check_url,
     find_element,
     find_elements,
+    go_to_url,
     take_screenshot,
     wait_for_page_load_after_action,
 )
+from settings import EXRED_UI_URL
 
 NAME = "ExRed Home"
 URL = urljoin(EXRED_UI_URL, "?lang=en-gb")

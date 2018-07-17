@@ -12,11 +12,8 @@ from selenium.common.exceptions import WebDriverException
 
 from pages.sso.sso_common import delete_supplier_data_from_sso
 from settings import AUTO_RETRY, CONFIG, CONFIG_NAME, RESTART_BROWSER, TASK_ID
-from utils import (
-    clear_driver_cookies,
-    flag_browserstack_session_as_failed,
-    initialize_scenario_data,
-)
+from pages.common_actions import initialize_scenario_data, \
+    flag_browserstack_session_as_failed, clear_driver_cookies
 
 try:
     import http.client as httplib

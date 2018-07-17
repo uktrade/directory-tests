@@ -5,13 +5,14 @@ import random
 from urllib.parse import urljoin
 
 from selenium import webdriver
-from utils import find_element, take_screenshot
 
 from pages.common_actions import (
     check_for_expected_sections_elements,
     check_for_section,
     check_title,
+    find_element,
     go_to_url,
+    take_screenshot,
 )
 from settings import DIRECTORY_UI_SUPPLIER_URL
 

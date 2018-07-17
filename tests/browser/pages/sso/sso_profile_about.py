@@ -10,9 +10,9 @@ from pages.common_actions import (
     check_title,
     check_url,
     go_to_url,
+    take_screenshot,
 )
 from settings import DIRECTORY_UI_PROFILE_URL
-from utils import take_screenshot
 
 NAME = "Profile"
 SERVICE = "Single sign-on"

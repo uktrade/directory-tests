@@ -3,11 +3,9 @@
 from selenium import webdriver
 
 from pages.common_actions import (
+    assertion_msg,
     check_for_expected_sections_elements,
     find_and_click_on_page_element,
-)
-from utils import (
-    assertion_msg,
     find_element,
     take_screenshot,
     wait_for_page_load_after_action,

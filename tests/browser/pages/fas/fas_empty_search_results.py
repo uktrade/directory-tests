@@ -10,9 +10,9 @@ from pages.common_actions import (
     check_for_section,
     check_title,
     check_url,
+    take_screenshot,
 )
 from settings import DIRECTORY_UI_SUPPLIER_URL
-from utils import take_screenshot
 
 NAME = "Find a Empty Search Results page"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "search/")

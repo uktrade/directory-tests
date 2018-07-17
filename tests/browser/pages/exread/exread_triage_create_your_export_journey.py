@@ -7,13 +7,14 @@ from selenium import webdriver
 from pages.common_actions import (
     check_for_expected_sections_elements,
     check_for_section,
+    check_if_element_is_not_visible,
     check_title,
     check_url,
     find_and_click_on_page_element,
     go_to_url,
+    take_screenshot,
 )
 from settings import EXRED_UI_URL
-from utils import check_if_element_is_not_visible, take_screenshot
 
 NAME = "Create your export journey"
 URL = urljoin(EXRED_UI_URL, "triage/")

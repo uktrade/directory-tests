@@ -4,15 +4,15 @@ import logging
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from utils import (
+
+from pages.common_actions import (
+    Selector,
     check_hash_of_remote_file,
+    find_and_click_on_page_element,
     find_element,
     scroll_to,
     take_screenshot,
 )
-
-from pages import Selector
-from pages.common_actions import find_and_click_on_page_element
 from settings import UK_GOV_MD5_CHECKSUM
 
 NAME = "Footer"

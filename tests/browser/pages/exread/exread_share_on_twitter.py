@@ -4,8 +4,13 @@ from urllib.parse import urljoin
 
 from selenium import webdriver
 
-from pages.common_actions import check_for_expected_elements, check_title
-from utils import assertion_msg, find_element, take_screenshot
+from pages.common_actions import (
+    assertion_msg,
+    check_for_expected_elements,
+    check_title,
+    find_element,
+    take_screenshot,
+)
 
 NAME = "Share on Twitter page"
 URL = urljoin("https://twitter.com/", "intent/tweet?text=")

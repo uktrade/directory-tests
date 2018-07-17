@@ -5,14 +5,14 @@ import logging
 from selenium import webdriver
 from selenium.webdriver import ActionChains
 
-from registry.articles import get_article, get_articles
-from utils import (
+from pages.common_actions import (
     assertion_msg,
     check_if_element_is_visible,
     find_element,
     find_elements,
     take_screenshot,
 )
+from registry.articles import get_article, get_articles
 
 NAME = "ExRed Common Export Readiness"
 URL = None

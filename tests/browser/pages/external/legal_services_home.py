@@ -3,9 +3,8 @@
 import logging
 
 from selenium import webdriver
-from utils import take_screenshot
 
-from pages.common_actions import check_url
+from pages.common_actions import check_url, take_screenshot
 
 NAME = "Home"
 SERVICE = "Legal Services"

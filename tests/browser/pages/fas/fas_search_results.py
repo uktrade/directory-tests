@@ -5,13 +5,15 @@ from typing import List
 from urllib.parse import urljoin
 
 from selenium import webdriver
-from utils import assertion_msg, find_elements, take_screenshot
 
 from pages.common_actions import (
+    assertion_msg,
     check_for_expected_sections_elements,
     check_for_section,
     check_title,
     check_url,
+    find_elements,
+    take_screenshot,
 )
 from settings import DIRECTORY_UI_SUPPLIER_URL
 

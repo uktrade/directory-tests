@@ -6,10 +6,15 @@ from urllib.parse import urljoin
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
-from pages import Selector
-from pages.common_actions import check_title, check_url, go_to_url
+from pages.common_actions import (
+    Selector,
+    check_title,
+    check_url,
+    go_to_url,
+    take_screenshot,
+    wait_for_visibility,
+)
 from settings import EVENTS_UI_URL
-from utils import take_screenshot, wait_for_visibility
 
 NAME = "Home"
 SERVICE = "Events"
@@ -21,11 +26,7 @@ PAGE_TITLE = (
 )
 
 GREAT_LOGO = Selector(By.CSS_SELECTOR, "#portal-top > h1 > a > img")
-SELECTORS = {
-    "general": {
-        "great.gov.uk logo": GREAT_LOGO
-    }
-}
+SELECTORS = {"general": {"great.gov.uk logo": GREAT_LOGO}}
 
 
 def visit(driver: webdriver, *, first_time: bool = False):

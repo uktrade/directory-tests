@@ -6,7 +6,7 @@ import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
-from utils import (
+from pages.common_actions import (
     assertion_msg,
     check_if_element_is_not_visible,
     find_element,

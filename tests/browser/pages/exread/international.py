@@ -8,17 +8,15 @@ from selenium import webdriver
 from pages.common_actions import (
     check_for_expected_sections_elements,
     check_for_section,
+    check_if_element_is_visible,
     check_title,
     check_url,
-    go_to_url,
-)
-from settings import EXRED_UI_URL
-from utils import (
-    check_if_element_is_visible,
     find_element,
+    go_to_url,
     take_screenshot,
     wait_for_page_load_after_action,
 )
+from settings import EXRED_UI_URL
 
 NAME = "International"
 SERVICE = "Export Readiness"

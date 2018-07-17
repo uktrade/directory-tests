@@ -9,9 +9,9 @@ from pages.common_actions import (
     check_title,
     check_url,
     go_to_url,
+    take_screenshot,
 )
 from settings import SELLING_ONLINE_OVERSEAS_UI_URL
-from utils import take_screenshot
 
 NAME = "Home"
 URL = urljoin(SELLING_ONLINE_OVERSEAS_UI_URL, "")

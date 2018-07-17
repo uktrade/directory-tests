@@ -4,13 +4,14 @@ from urllib.parse import urljoin
 
 from selenium import webdriver
 
-from pages.common_actions import check_for_expected_elements, check_url
-from settings import DIRECTORY_UI_SSO_URL
-from utils import (
+from pages.common_actions import (
+    check_for_expected_elements,
+    check_url,
     find_element,
     take_screenshot,
     wait_for_page_load_after_action,
 )
+from settings import DIRECTORY_UI_SSO_URL
 
 NAME = "SSO Registration Confirmation page"
 SERVICE = "Single sign-on"

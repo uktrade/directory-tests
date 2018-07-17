@@ -6,15 +6,15 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.keys import Keys
 
-from pages.common_actions import find_and_click_on_page_element
-from settings import DIT_FAVICON_MD5_CHECKSUM, DIT_LOGO_MD5_CHECKSUM
-from utils import (
+from pages.common_actions import (
     assertion_msg,
     check_hash_of_remote_file,
+    find_and_click_on_page_element,
     find_element,
     take_screenshot,
     wait_for_page_load_after_action,
 )
+from settings import DIT_FAVICON_MD5_CHECKSUM, DIT_LOGO_MD5_CHECKSUM
 
 NAME = "ExRed Header"
 URL = None

@@ -3,19 +3,17 @@
 from urllib.parse import urljoin
 
 from selenium import webdriver
-from utils import (
+
+from pages.common_actions import (
     assertion_msg,
+    check_for_expected_elements,
     check_if_element_is_visible,
+    check_title,
+    check_url,
     find_element,
     find_elements,
     take_screenshot,
     wait_for_page_load_after_action,
-)
-
-from pages.common_actions import (
-    check_for_expected_elements,
-    check_title,
-    check_url,
 )
 from settings import EXRED_UI_URL
 

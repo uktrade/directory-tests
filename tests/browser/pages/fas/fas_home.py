@@ -4,7 +4,6 @@ import logging
 from urllib.parse import urljoin
 
 from selenium import webdriver
-from utils import find_element, take_screenshot
 
 from pages.common_actions import (
     check_for_expected_sections_elements,
@@ -12,7 +11,9 @@ from pages.common_actions import (
     check_title,
     check_url,
     find_and_click_on_page_element,
+    find_element,
     go_to_url,
+    take_screenshot,
 )
 from settings import DIRECTORY_UI_SUPPLIER_URL
 

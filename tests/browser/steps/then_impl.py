@@ -5,7 +5,7 @@ from typing import List
 
 from behave.model import Table
 from behave.runner import Context
-from utils import assertion_msg, clear_driver_cookies, get_actor
+from pages.common_actions import get_actor, assertion_msg, clear_driver_cookies
 
 from pages import common_language_selector
 from pages.exread import (

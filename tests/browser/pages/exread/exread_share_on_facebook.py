@@ -5,8 +5,12 @@ from urllib.parse import urljoin
 
 from selenium import webdriver
 
-from pages.common_actions import check_for_expected_elements, check_title
-from utils import assertion_msg, take_screenshot
+from pages.common_actions import (
+    assertion_msg,
+    check_for_expected_elements,
+    check_title,
+    take_screenshot,
+)
 
 NAME = "Share on Facebook page"
 URL = urljoin("https://www.facebook.com/", "share.php?u=")

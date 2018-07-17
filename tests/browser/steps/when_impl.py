@@ -7,15 +7,8 @@ from behave.model import Table
 from behave.runner import Context
 from retrying import retry
 from selenium.common.exceptions import TimeoutException, WebDriverException
-from utils import (
-    VisitedArticle,
-    add_actor,
-    assertion_msg,
-    get_actor,
-    take_screenshot,
-    unauthenticated_actor,
-    update_actor,
-)
+from pages.common_actions import VisitedArticle, unauthenticated_actor, \
+    add_actor, get_actor, update_actor, take_screenshot, assertion_msg
 from utils.gov_notify import get_verification_link
 
 from pages import common_language_selector

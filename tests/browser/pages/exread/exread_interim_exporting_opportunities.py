@@ -8,15 +8,13 @@ from pages.common_actions import (
     check_for_expected_elements,
     check_title,
     check_url,
+    find_element,
     go_to_url,
+    take_screenshot,
+    wait_for_page_load_after_action,
+    wait_for_visibility,
 )
 from settings import EXRED_UI_URL
-from utils import (
-    find_element,
-    take_screenshot,
-    wait_for_visibility,
-    wait_for_page_load_after_action,
-)
 
 NAME = "ExRed Interim Export Opportunities"
 URL = urljoin(EXRED_UI_URL, "export-opportunities/")

@@ -5,8 +5,7 @@ from urllib.parse import urljoin
 
 from selenium import webdriver
 
-from pages.common_actions import check_title, go_to_url
-from utils import take_screenshot
+from pages.common_actions import check_title, go_to_url, take_screenshot
 
 NAME = "Home"
 SERVICE = "British Council"

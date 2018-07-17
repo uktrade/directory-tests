@@ -8,12 +8,9 @@ from selenium import webdriver
 from selenium.webdriver import ActionChains
 
 from pages.common_actions import (
+    assertion_msg,
     check_for_expected_sections_elements,
     check_for_section,
-)
-from registry.articles import get_articles
-from utils import (
-    assertion_msg,
     check_if_element_is_not_present,
     check_if_element_is_not_visible,
     check_if_element_is_visible,
@@ -23,6 +20,7 @@ from utils import (
     take_screenshot,
     wait_for_page_load_after_action,
 )
+from registry.articles import get_articles
 
 NAME = "ExRed Common Articles"
 URL = None

@@ -7,16 +7,18 @@ from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
-from utils import assertion_msg, take_screenshot
 
-from pages import (
+from pages.common_actions import (
     AssertionExecutor,
     Executor,
     Selector,
+    assertion_msg,
     check_for_sections,
+    check_title,
+    check_url,
+    take_screenshot,
     visit_url,
 )
-from pages.common_actions import check_title, check_url
 from settings import INVEST_UI_URL
 
 URL = urljoin(INVEST_UI_URL, "uk-setup-guide/")

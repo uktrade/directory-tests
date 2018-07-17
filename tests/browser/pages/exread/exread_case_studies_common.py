@@ -4,7 +4,7 @@ import logging
 
 from selenium import webdriver
 
-from utils import (
+from pages.common_actions import (
     assertion_msg,
     check_if_element_is_visible,
     find_element,

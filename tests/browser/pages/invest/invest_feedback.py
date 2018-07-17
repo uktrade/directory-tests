@@ -3,10 +3,13 @@
 import logging
 from urllib.parse import urljoin
 
-from utils import take_screenshot
-
-from pages import Executor, visit_url
-from pages.common_actions import check_title, check_url
+from pages.common_actions import (
+    Executor,
+    check_title,
+    check_url,
+    take_screenshot,
+    visit_url,
+)
 from settings import DIRECTORY_CONTACT_US_UI_URL
 
 URL = urljoin(DIRECTORY_CONTACT_US_UI_URL, "directory/")

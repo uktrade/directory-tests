@@ -6,10 +6,15 @@ from urllib.parse import urljoin
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 
-from pages import Selector
-from pages.common_actions import check_title, check_url, go_to_url
+from pages.common_actions import (
+    Selector,
+    check_title,
+    check_url,
+    go_to_url,
+    take_screenshot,
+    wait_for_visibility,
+)
 from settings import EXPORT_OPPORTUNITIES_UI_URL
-from utils import take_screenshot, wait_for_visibility
 
 NAME = "Home"
 SERVICE = "Export Opportunities"
@@ -18,11 +23,7 @@ URL = urljoin(EXPORT_OPPORTUNITIES_UI_URL, "")
 PAGE_TITLE = "Export opportunities"
 
 WELCOME_MESSAGE = Selector(By.CSS_SELECTOR, ".hero-section h1")
-SELECTORS = {
-    "general": {
-        "welcome message": WELCOME_MESSAGE
-    }
-}
+SELECTORS = {"general": {"welcome message": WELCOME_MESSAGE}}
 
 
 def visit(driver: webdriver, *, first_time: bool = False):

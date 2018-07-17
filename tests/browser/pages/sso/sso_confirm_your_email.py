@@ -4,13 +4,14 @@ from urllib.parse import urljoin
 
 from selenium import webdriver
 
-from pages.common_actions import check_title, check_url
-from settings import DIRECTORY_UI_SSO_URL
-from utils import (
+from pages.common_actions import (
+    check_title,
+    check_url,
     find_element,
     take_screenshot,
     wait_for_page_load_after_action,
 )
+from settings import DIRECTORY_UI_SSO_URL
 
 NAME = "Confirm your email address"
 SERVICE = "Single sign-on"
