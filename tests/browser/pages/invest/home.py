@@ -21,10 +21,13 @@ from pages.common_actions import (
 )
 from settings import INVEST_UI_URL
 
+NAME = "Home"
 URL = urljoin(INVEST_UI_URL, "")
+SERVICE = "Invest"
+TYPE = "home"
 PAGE_TITLE = "Invest in Great Britain - Home"
 
-SECTIONS = {
+SELECTORS = {
     "header": {
         "self": Selector(By.ID, "invest-header"),
         "logo": Selector(By.CSS_SELECTOR, "#invest-header > div.header-bar  a"),
@@ -204,7 +207,7 @@ def should_be_here(executor: Executor):
 
 
 def should_see_sections(executor: AssertionExecutor, names: List[str]):
-    check_for_sections(executor, all_sections=SECTIONS, sought_sections=names)
+    check_for_sections(executor, all_sections=SELECTORS, sought_sections=names)
 
 
 def open_link(driver: WebDriver, name: str):
@@ -254,7 +257,7 @@ def open_guide(driver: WebDriver, guide_name: str):
 
 
 def click_on_page_element(driver: WebDriver, element_name: str):
-    find_and_click_on_page_element(driver, SECTIONS, element_name)
+    find_and_click_on_page_element(driver, SELECTORS, element_name)
     take_screenshot(driver, PAGE_TITLE + " after clicking on " + element_name)
 
 

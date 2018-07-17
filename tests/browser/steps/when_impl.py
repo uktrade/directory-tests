@@ -105,7 +105,7 @@ def open_group_element(
         exread.footer.open(driver, group, element)
     elif location.lower() == "export readiness - personalised journey":
         exread.personalised_journey.open(driver, group, element)
-    elif location.lower() == "export readiness - international page":
+    elif location.lower() == "export readiness - international":
         exread.international.open(driver, group, element, same_tab=True)
     else:
         raise KeyError("Could not recognize location: {}".format(location))

@@ -45,7 +45,7 @@ SELECTORS = {
         "image": "section.international-links article:nth-child(1) > img",
         "title": "section.international-links article:nth-child(1) > h2",
         "text": "section.international-links article:nth-child(1) > p",
-        "find a supplier": FIND_A_SUPPLIER,
+        "find a supplier - home": FIND_A_SUPPLIER,
     },
     "invest in the uk": {
         "itself": "section.international-links article:nth-child(2)",
@@ -59,14 +59,14 @@ SELECTORS = {
         "image": "section.international-links article:nth-child(3) > img",
         "title": "section.international-links article:nth-child(3) > h2",
         "text": "section.international-links article:nth-child(3) > p",
-        "british council": LEARN_MORE,
+        "british council - home": LEARN_MORE,
     },
     "visit the uk": {
         "itself": "section.international-links article:nth-child(4)",
         "image": "section.international-links article:nth-child(4) > img",
         "title": "section.international-links article:nth-child(4) > h2",
         "text": "section.international-links article:nth-child(4) > p",
-        "visit britain": PLAN_YOUR_TRIP,
+        "visit britain - home": PLAN_YOUR_TRIP,
     },
 }
 
