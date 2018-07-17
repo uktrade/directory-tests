@@ -8,17 +8,7 @@ from behave.runner import Context
 from pages.common_actions import get_actor, assertion_msg, clear_driver_cookies
 
 from pages import common_language_selector
-from pages.exread import (
-    exread_article_common,
-    exread_case_studies_common,
-    exread_common,
-    exread_get_finance,
-    exread_guidance_common,
-    exread_header,
-    exread_home,
-    exread_personalised_journey,
-    exread_triage_summary,
-)
+from pages import exread
 from pages import fas
 from pages import invest
 from registry.articles import get_article, get_articles
@@ -55,7 +45,7 @@ def should_be_on_page_or_international_page(
 
 def guidance_ribbon_should_be_visible(context: Context, actor_alias: str):
     driver = context.driver
-    exread_guidance_common.ribbon_should_be_visible(driver)
+    exread.guidance_common.ribbon_should_be_visible(driver)
     logging.debug(
         "%s can see Guidance Ribbon on %s", actor_alias, driver.current_url
     )
@@ -65,7 +55,7 @@ def guidance_tile_should_be_highlighted(
     context: Context, actor_alias: str, tile: str
 ):
     driver = context.driver
-    exread_guidance_common.ribbon_tile_should_be_highlighted(driver, tile)
+    exread.guidance_common.ribbon_tile_should_be_highlighted(driver, tile)
     logging.debug(
         "%s can see highlighted Guidance Ribbon '%s' tile on %s",
         actor_alias,
@@ -77,7 +67,7 @@ def guidance_tile_should_be_highlighted(
 def guidance_should_see_article_read_counter(
     context: Context, actor_alias: str, category: str, expected: int
 ):
-    exread_guidance_common.correct_article_read_counter(
+    exread.guidance_common.correct_article_read_counter(
         context.driver, category, expected
     )
     logging.debug(
@@ -91,7 +81,7 @@ def guidance_should_see_article_read_counter(
 def guidance_should_see_total_number_of_articles(
     context: Context, actor_alias: str, category: str
 ):
-    exread_guidance_common.correct_total_number_of_articles(context.driver, category)
+    exread.guidance_common.correct_total_number_of_articles(context.driver, category)
     logging.debug(
         "%s can see Total Number of Articles for Guidance '%s' category",
         actor_alias,
@@ -102,7 +92,7 @@ def guidance_should_see_total_number_of_articles(
 def guidance_should_see_articles(
     context: Context, actor_alias: str, category: str
 ):
-    exread_guidance_common.check_if_correct_articles_are_displayed(
+    exread.guidance_common.check_if_correct_articles_are_displayed(
         context.driver, category
     )
     logging.debug(
@@ -116,7 +106,7 @@ def guidance_should_see_articles(
 def guidance_check_if_link_to_next_category_is_displayed(
     context: Context, actor_alias: str, next_category: str
 ):
-    exread_guidance_common.check_if_link_to_next_category_is_displayed(
+    exread.guidance_common.check_if_link_to_next_category_is_displayed(
         context.driver, next_category
     )
     logging.debug(
@@ -130,7 +120,7 @@ def guidance_check_if_link_to_next_category_is_displayed(
 def guidance_expected_page_elements_should_be_visible(
     context: Context, actor_alias: str, elements: list
 ):
-    exread_guidance_common.check_elements_are_visible(context.driver, elements)
+    exread.guidance_common.check_elements_are_visible(context.driver, elements)
     logging.debug(
         "%s can see all expected page elements: '%s' on current Guidance "
         "Articles page: %s",
@@ -143,7 +133,7 @@ def guidance_expected_page_elements_should_be_visible(
 def personalised_journey_should_see_read_counter(
     context: Context, actor_alias: str, exporter_status: str
 ):
-    exread_personalised_journey.should_see_read_counter(
+    exread.personalised_journey.should_see_read_counter(
         context.driver, exporter_status=exporter_status
     )
     logging.debug(
@@ -184,20 +174,20 @@ def personalised_should_see_layout_for(
     code = None
     if actor.what_do_you_want_to_export:
         _, code, _ = actor.what_do_you_want_to_export
-    exread_personalised_journey.should_be_here(context.driver)
+    exread.personalised_journey.should_be_here(context.driver)
     if classification.lower() == "new":
-        exread_personalised_journey.layout_for_new_exporter(
+        exread.personalised_journey.layout_for_new_exporter(
             context.driver, incorporated=incorporated, sector_code=code
         )
     elif classification.lower() == "occasional":
-        exread_personalised_journey.layout_for_occasional_exporter(
+        exread.personalised_journey.layout_for_occasional_exporter(
             context.driver,
             incorporated=incorporated,
             use_online_marketplaces=online_marketplaces,
             sector_code=code,
         )
     elif classification.lower() == "regular":
-        exread_personalised_journey.layout_for_regular_exporter(
+        exread.personalised_journey.layout_for_regular_exporter(
             context.driver, incorporated=incorporated, sector_code=code
         )
     else:
@@ -215,7 +205,7 @@ def personalised_should_see_layout_for(
 def export_readiness_should_see_articles(
     context: Context, actor_alias: str, category: str
 ):
-    exread_common.check_if_correct_articles_are_displayed(
+    exread.common.check_if_correct_articles_are_displayed(
         context.driver, category
     )
     logging.debug(
@@ -229,7 +219,7 @@ def export_readiness_should_see_articles(
 def export_readiness_expected_page_elements_should_be_visible(
     context: Context, actor_alias: str, elements: list
 ):
-    exread_common.check_elements_are_visible(
+    exread.common.check_elements_are_visible(
         context.driver, elements
     )
     logging.debug(
@@ -324,7 +314,7 @@ def articles_should_see_in_correct_order(context: Context, actor_alias: str):
 def articles_should_not_see_link_to_next_article(
     context: Context, actor_alias: str
 ):
-    exread_article_common.should_not_see_link_to_next_article(context.driver)
+    exread.article_common.should_not_see_link_to_next_article(context.driver)
     logging.debug(
         "As expected %s didn't see link to the next article", actor_alias
     )
@@ -333,7 +323,7 @@ def articles_should_not_see_link_to_next_article(
 def articles_should_not_see_personas_end_page(
     context: Context, actor_alias: str
 ):
-    exread_article_common.should_be_here(context.driver)
+    exread.article_common.should_be_here(context.driver)
     logging.debug(
         "As expected %s wasn't taken to the personas end page but remained on "
         "the last article page",
@@ -348,7 +338,7 @@ def articles_should_see_link_to_first_article_from_next_category(
     actor = get_actor(context, actor_alias)
     group = actor.article_group
     first_article = get_articles(group, next_category)[0]
-    exread_article_common.check_if_link_to_next_article_is_displayed(
+    exread.article_common.check_if_link_to_next_article_is_displayed(
         driver, first_article.title
     )
     logging.debug(
@@ -363,7 +353,7 @@ def articles_should_see_link_to_first_article_from_next_category(
 def articles_should_see_article_as_read(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     visited_article = actor.visited_articles[0]
-    exread_article_common.should_see_article_as_read(
+    exread.article_common.should_see_article_as_read(
         context.driver, visited_article.title
     )
     logging.debug(
@@ -378,7 +368,7 @@ def articles_should_see_read_counter_increase(
 ):
     actor = get_actor(context, actor_alias)
     previous_read_counter = actor.article_list_read_counter
-    current_read_counter = exread_article_common.get_read_counter(context.driver)
+    current_read_counter = exread.article_common.get_read_counter(context.driver)
     difference = current_read_counter - previous_read_counter
     with assertion_msg(
         "Expected the Read Counter to increase by '%s', but it increased"
@@ -394,7 +384,7 @@ def articles_should_see_time_to_complete_decrease(
 ):
     actor = get_actor(context, actor_alias)
     previous_time_to_complete = actor.article_list_time_to_complete
-    current_time_to_complete = exread_article_common.get_time_to_complete(
+    current_time_to_complete = exread.article_common.get_time_to_complete(
         context.driver
     )
     visited_article = actor.visited_articles[0]
@@ -417,14 +407,14 @@ def articles_should_see_time_to_complete_decrease(
 
 
 def articles_should_not_see_feedback_widget(context: Context):
-    exread_article_common.should_not_see_feedback_widget(context.driver)
+    exread.article_common.should_not_see_feedback_widget(context.driver)
     logging.debug("Feedback widget is not visible any more")
 
 
 def articles_should_be_thanked_for_feedback(
     context: Context, actor_alias: str
 ):
-    exread_article_common.should_see_feedback_result(context.driver)
+    exread.article_common.should_see_feedback_result(context.driver)
     logging.debug("%s was thanked for the feedback", actor_alias)
 
 
@@ -434,7 +424,7 @@ def articles_total_number_of_articles_should_not_change(
     actor = get_actor(context, actor_alias)
     driver = context.driver
     previous_total_articles = actor.articles_total_number
-    current_total_articles = exread_article_common.get_total_articles(driver)
+    current_total_articles = exread.article_common.get_total_articles(driver)
     with assertion_msg(
         "Expected Total Number of Articles to Read to be: %d but got " "%d",
         previous_total_articles,
@@ -446,7 +436,7 @@ def articles_total_number_of_articles_should_not_change(
 def expected_page_elements_should_not_be_visible_on_get_finance(
     context: Context, actor_alias: str, elements: list
 ):
-    exread_get_finance.check_elements_are_not_visible(context.driver, elements)
+    exread.get_finance.check_elements_are_not_visible(context.driver, elements)
     logging.debug(
         "%s cannot see all expected page elements: '%s' on current page %s",
         actor_alias,
@@ -461,14 +451,14 @@ def case_studies_should_see_case_study(
     case_study_numbers = {"first": 1, "second": 2, "third": 3}
     number = case_study_numbers[case_study_number.lower()]
     case_study_title = get_actor(context, actor_alias).case_study_title
-    exread_case_studies_common.should_be_here(
+    exread.case_studies_common.should_be_here(
         context.driver, number, title=case_study_title
     )
 
 
 def should_see_share_widget(context: Context, actor_alias: str):
     driver = context.driver
-    exread_case_studies_common.should_see_share_widget(driver)
+    exread.case_studies_common.should_see_share_widget(driver)
     logging.debug(
         "%s can see Share Widget on %s", actor_alias, driver.current_url
     )
@@ -489,7 +479,7 @@ def should_see_links_to_services(
 def personalised_journey_should_not_see_banner_and_top_10_table(
     context: Context, actor_alias: str
 ):
-    exread_personalised_journey.should_not_see_banner_and_top_10_table(context.driver)
+    exread.personalised_journey.should_not_see_banner_and_top_10_table(context.driver)
     actor = get_actor(context, actor_alias)
     _, code, sector = actor.what_do_you_want_to_export
     logging.debug(
@@ -506,7 +496,7 @@ def personalised_journey_should_see_banner_and_top_10_table(
 ):
     actor = get_actor(context, actor_alias)
     _, code, sector = actor.what_do_you_want_to_export
-    exread_personalised_journey.should_see_banner_and_top_10_table(
+    exread.personalised_journey.should_see_banner_and_top_10_table(
         context.driver, sector
     )
     logging.debug(
@@ -521,7 +511,7 @@ def personalised_journey_should_see_banner_and_top_10_table(
 def articles_should_see_read_counter_set_to(
     context: Context, actor_alias: str, expected_value: int
 ):
-    current_read_counter = exread_article_common.get_read_counter(context.driver)
+    current_read_counter = exread.article_common.get_read_counter(context.driver)
     with assertion_msg(
         "Expected to see Read Counter set to %d but got %s",
         expected_value,
@@ -574,7 +564,7 @@ def articles_should_not_see_link_to_register(
 def articles_read_counter_should_be_merged(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     visited_articles = actor.visited_articles
-    current_read_counter = exread_article_common.get_read_counter(context.driver)
+    current_read_counter = exread.article_common.get_read_counter(context.driver)
     number_of_visited_articles = len(set(visited_articles))
     with assertion_msg(
         "%s expected to see current article reading counter to be %d but "
@@ -617,8 +607,8 @@ def share_page_via_email_should_have_article_details(
 ):
     driver = context.driver
     body = driver.current_url
-    subject = exread_article_common.get_article_name(driver)
-    exread_article_common.check_share_via_email_link_details(driver, subject, body)
+    subject = exread.article_common.get_article_name(driver)
+    exread.article_common.check_share_via_email_link_details(driver, subject, body)
     logging.debug(
         "%s checked that the 'share via email' link contain correct subject: "
         "'%s' and message body: '%s'",
@@ -631,14 +621,14 @@ def share_page_via_email_should_have_article_details(
 def triage_should_see_change_your_answers_link(
     context: Context, actor_alias: str
 ):
-    exread_triage_summary.should_see_change_your_answers_link(context.driver)
+    exread.triage_summary.should_see_change_your_answers_link(context.driver)
     logging.debug("%s can see 'change your answers' link", actor_alias)
 
 
 def promo_video_check_watch_time(
     context: Context, actor_alias: str, expected_watch_time: int
 ):
-    watch_time = exread_home.get_video_watch_time(context.driver)
+    watch_time = exread.home.get_video_watch_time(context.driver)
     with assertion_msg(
         "%s expected to watch at least first '%d' seconds of the video but"
         " got '%d'",
@@ -658,19 +648,19 @@ def promo_video_check_watch_time(
 def promo_video_should_not_see_modal_window(
     context: Context, actor_alias: str
 ):
-    exread_home.should_not_see_video_modal_window(context.driver)
+    exread.home.should_not_see_video_modal_window(context.driver)
     logging.debug(
         "As expected %s can't see promotional video modal window", actor_alias
     )
 
 
 def header_check_dit_logo(context: Context, actor_alias: str):
-    exread_header.check_dit_logo(context.driver)
+    exread.header.check_dit_logo(context.driver)
     logging.debug("As expected %s can see correct DIT logo", actor_alias)
 
 
 def header_check_favicon(context: Context, actor_alias: str):
-    exread_header.check_dit_favicon(context.driver)
+    exread.header.check_dit_favicon(context.driver)
     logging.debug("As expected %s can see correct DIT favicon", actor_alias)
 
 

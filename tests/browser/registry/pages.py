@@ -2,28 +2,6 @@
 """ExRed Page Object Registry"""
 
 from pages import exopps
-from pages.exread import (
-    exread_article_common,
-    exread_article_list,
-    exread_footer,
-    exread_get_finance,
-    exread_header,
-    exread_home,
-    exread_interim_exporting_opportunities,
-    exread_personalised_journey,
-    exread_share_on_facebook,
-    exread_share_on_linkedin,
-    exread_share_on_twitter,
-    exread_triage_are_you_registered_with_companies_house,
-    exread_triage_are_you_regular_exporter,
-    exread_triage_company_name,
-    exread_triage_create_your_export_journey,
-    exread_triage_do_you_use_online_marketplaces,
-    exread_triage_have_you_exported,
-    exread_triage_summary,
-    exread_triage_what_do_you_want_to_export,
-    international,
-)
 from pages.external import (
     british_council_home,
     events_home,
@@ -35,51 +13,52 @@ from pages import fas
 from pages import sso
 from pages import invest
 from pages import soo
+from pages import exread
 
 
 EXRED_PAGE_REGISTRY = {
-    "home": {"url": exread_home.URL, "po": exread_home},
-    "home page": {"url": exread_home.URL, "po": exread_home},
+    "home": {"url": exread.home.URL, "po": exread.home},
+    "home page": {"url": exread.home.URL, "po": exread.home},
     "triage - what do you want to export": {
-        "url": exread_triage_what_do_you_want_to_export.URL,
-        "po": exread_triage_what_do_you_want_to_export,
+        "url": exread.triage_what_do_you_want_to_export.URL,
+        "po": exread.triage_what_do_you_want_to_export,
     },
     "triage - have you exported before": {
-        "url": exread_triage_have_you_exported.URL,
-        "po": exread_triage_have_you_exported,
+        "url": exread.triage_have_you_exported.URL,
+        "po": exread.triage_have_you_exported,
     },
     "triage - are you regular exporter": {
-        "url": exread_triage_are_you_regular_exporter.URL,
-        "po": exread_triage_are_you_regular_exporter,
+        "url": exread.triage_are_you_regular_exporter.URL,
+        "po": exread.triage_are_you_regular_exporter,
     },
     "triage - do you use online marketplaces": {
-        "url": exread_triage_do_you_use_online_marketplaces.URL,
-        "po": exread_triage_do_you_use_online_marketplaces,
+        "url": exread.triage_do_you_use_online_marketplaces.URL,
+        "po": exread.triage_do_you_use_online_marketplaces,
     },
     "triage - are you registered with companies house": {
-        "url": exread_triage_are_you_registered_with_companies_house.URL,
-        "po": exread_triage_are_you_registered_with_companies_house,
+        "url": exread.triage_are_you_registered_with_companies_house.URL,
+        "po": exread.triage_are_you_registered_with_companies_house,
     },
     "triage - what is your company name": {
-        "url": exread_triage_company_name.URL,
-        "po": exread_triage_company_name,
+        "url": exread.triage_company_name.URL,
+        "po": exread.triage_company_name,
     },
-    "triage - summary": {"url": exread_triage_summary.URL, "po": exread_triage_summary},
+    "triage - summary": {"url": exread.triage_summary.URL, "po": exread.triage_summary},
     "personalised journey": {
-        "url": exread_personalised_journey.URL,
-        "po": exread_personalised_journey,
+        "url": exread.personalised_journey.URL,
+        "po": exread.personalised_journey,
     },
-    "header menu": {"url": None, "po": exread_header},
-    "footer links": {"url": None, "po": exread_footer},
+    "header menu": {"url": None, "po": exread.header},
+    "footer links": {"url": None, "po": exread.footer},
     "interim export opportunities": {
-        "url": exread_interim_exporting_opportunities.URL,
-        "po": exread_interim_exporting_opportunities,
+        "url": exread.interim_exporting_opportunities.URL,
+        "po": exread.interim_exporting_opportunities,
     },
     "find a buyer": {"url": fab.home.URL, "po": fab.home},
     "find a supplier": {"url": fas.home.URL, "po": fas.home},
     "create your export journey": {
-        "url": exread_triage_create_your_export_journey.URL,
-        "po": exread_triage_create_your_export_journey,
+        "url": exread.triage_create_your_export_journey.URL,
+        "po": exread.triage_create_your_export_journey,
     },
     "british council": {"url": british_council_home.URL, "po": british_council_home},
     "visit britain": {"url": visit_britain_home.URL, "po": visit_britain_home},
@@ -89,7 +68,7 @@ EXRED_PAGE_REGISTRY = {
         "po": exopps.home,
     },
     "events": {"url": events_home.URL, "po": events_home},
-    "get finance": {"url": exread_get_finance.URL, "po": exread_get_finance},
+    "get finance": {"url": exread.get_finance.URL, "po": exread.get_finance},
     "sso registration": {"url": sso.registration.URL, "po": sso.registration},
     "sso sign in": {"url": sso.sign_in.URL, "po": sso.sign_in},
     "sso sign out": {"url": sso.sign_out.URL, "po": sso.sign_out},
@@ -101,18 +80,18 @@ EXRED_PAGE_REGISTRY = {
         "url": sso.profile_about.URL,
         "po": sso.profile_about,
     },
-    "article": {"url": None, "po": exread_article_common},
-    "article list": {"url": None, "po": exread_article_list},
+    "article": {"url": None, "po": exread.article_common},
+    "article list": {"url": None, "po": exread.article_list},
     "share on facebook": {
-        "url": exread_share_on_facebook.URL,
-        "po": exread_share_on_facebook,
+        "url": exread.share_on_facebook.URL,
+        "po": exread.share_on_facebook,
     },
     "share on linkedin": {
-        "url": exread_share_on_linkedin.URL,
-        "po": exread_share_on_linkedin,
+        "url": exread.share_on_linkedin.URL,
+        "po": exread.share_on_linkedin,
     },
-    "share on twitter": {"url": exread_share_on_twitter.URL, "po": exread_share_on_twitter},
-    "international": {"url": international.URL, "po": international},
+    "share on twitter": {"url": exread.share_on_twitter.URL, "po": exread.share_on_twitter},
+    "international": {"url": exread.international.URL, "po": exread.international},
 }
 
 
