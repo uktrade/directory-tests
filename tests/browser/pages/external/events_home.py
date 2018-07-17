@@ -21,8 +21,7 @@ SERVICE = "Events"
 TYPE = "home"
 URL = urljoin(EVENTS_UI_URL, "")
 PAGE_TITLE = (
-    "Department for International Trade (DIT): exporting from or investing in "
-    "the UK"
+    "Department for International Trade (DIT): exporting from or investing in " "the UK"
 )
 
 GREAT_LOGO = Selector(By.CSS_SELECTOR, "#portal-top > h1 > a > img")

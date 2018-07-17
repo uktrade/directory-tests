@@ -51,9 +51,7 @@ def should_be_here(driver: webdriver):
 
 def fill_out(driver: webdriver, email: str, password: str):
     email_input = find_element(driver, by_css=EMAIL_INPUT)
-    email_confirmation_input = find_element(
-        driver, by_css=EMAIL_CONFIRMATION_INPUT
-    )
+    email_confirmation_input = find_element(driver, by_css=EMAIL_CONFIRMATION_INPUT)
     password_input = find_element(driver, by_css=PASSWORD_INPUT)
     password_confirmation_input = find_element(
         driver, by_css=PASSWORD_CONFIRMATION_INPUT

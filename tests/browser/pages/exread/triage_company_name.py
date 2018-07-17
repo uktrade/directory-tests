@@ -44,27 +44,18 @@ def should_be_here(driver: webdriver):
 
 def hide_suggestions(driver: webdriver):
     suggestions = find_element(
-        driver,
-        by_css=SUGGESTIONS,
-        element_name="Suggestions list",
-        wait_for_it=True,
+        driver, by_css=SUGGESTIONS, element_name="Suggestions list", wait_for_it=True
     )
     if suggestions.is_displayed():
         question = find_element(
-            driver,
-            by_css=QUESTION,
-            element_name="Question text",
-            wait_for_it=False,
+            driver, by_css=QUESTION, element_name="Question text", wait_for_it=False
         )
         question.click()
 
 
 def click_on_first_suggestion(driver: webdriver):
     suggestions = find_element(
-        driver,
-        by_css=SUGGESTIONS,
-        element_name="Suggestions",
-        wait_for_it=True,
+        driver, by_css=SUGGESTIONS, element_name="Suggestions", wait_for_it=True
     )
     if suggestions.is_displayed():
         first_suggestion = find_element(

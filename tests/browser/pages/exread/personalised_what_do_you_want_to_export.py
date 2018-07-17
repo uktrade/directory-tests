@@ -65,9 +65,9 @@ def enter(driver: webdriver, code: str, sector: str) -> tuple:
     )
     max_retries = 5
     counter = 0
-    while (
-        code.lower() not in input_field.get_attribute("value").lower()
-    ) and (counter < max_retries):
+    while (code.lower() not in input_field.get_attribute("value").lower()) and (
+        counter < max_retries
+    ):
         input_field.click()
         input_field.clear()
         input_field.send_keys(code or sector)
@@ -85,10 +85,7 @@ def enter(driver: webdriver, code: str, sector: str) -> tuple:
 
 def submit(driver: webdriver):
     button = find_element(
-        driver,
-        by_css=CONTINUE_BUTTON,
-        element_name="Continue button",
-        wait_for_it=True,
+        driver, by_css=CONTINUE_BUTTON, element_name="Continue button", wait_for_it=True
     )
     with wait_for_page_load_after_action(driver):
         button.click()
@@ -97,10 +94,7 @@ def submit(driver: webdriver):
 
 def is_sector(driver: webdriver, code: str, sector: str):
     input_field = find_element(
-        driver,
-        by_css=SECTORS_INPUT,
-        element_name="Sector selector",
-        wait_for_it=False,
+        driver, by_css=SECTORS_INPUT, element_name="Sector selector", wait_for_it=False
     )
     input_field_value = input_field.get_attribute("value").lower()
     with assertion_msg(

@@ -16,10 +16,7 @@ NAME = "Find a Supplier - Article page"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "industry-articles/")
 
 SECTIONS = {
-    "breadcrumbs": {
-        "itself": "p.breadcrumbs",
-        "home": "p.breadcrumbs a[href='/']",
-    },
+    "breadcrumbs": {"itself": "p.breadcrumbs", "home": "p.breadcrumbs a[href='/']"},
     "article": {
         "itself": "#industry-article-container",
         "header": "#industry-article-container h1",

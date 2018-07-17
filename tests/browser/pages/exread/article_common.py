@@ -37,9 +37,7 @@ INDICATORS_TEXT = "div.scope-indicator"
 IS_THERE_ANYTHING_WRONG_WITH_THIS_PAGE_LINK = "section.error-reporting a"
 NEXT_ARTICLE_LINK = "#next-article-link"
 NOT_USEFUL_BUTTON = "#js-feedback-negative"
-REGISTRATION_LINK = (
-    "#content div.article-container p.register > a:nth-child(1)"
-)
+REGISTRATION_LINK = "#content div.article-container p.register > a:nth-child(1)"
 READ_ARTICLES = "a.article-read"
 SHARE_MENU = "ul.sharing-links"
 SHOW_MORE_BUTTON = "#js-paginate-list-more"
@@ -99,14 +97,10 @@ def should_see_section(driver: webdriver, name: str):
 def should_not_see_section(driver: webdriver, name: str):
     section = SECTIONS[name.lower()]
     for key, selector in section.items():
-        check_if_element_is_not_visible(
-            driver, by_css=selector, element_name=key
-        )
+        check_if_element_is_not_visible(driver, by_css=selector, element_name=key)
 
 
-def correct_total_number_of_articles(
-    driver: webdriver, group: str, category: str
-):
+def correct_total_number_of_articles(driver: webdriver, group: str, category: str):
     expected = len(get_articles(group, category))
     total = find_element(
         driver,
@@ -144,9 +138,7 @@ def correct_article_read_counter(driver: webdriver, expected: int):
         assert given == expected
 
 
-def check_if_link_to_next_article_is_displayed(
-    driver: webdriver, next_article: str
-):
+def check_if_link_to_next_article_is_displayed(driver: webdriver, next_article: str):
     """Check if link to the next Guidance Article is displayed, except on
     the last one.
 
@@ -158,9 +150,7 @@ def check_if_link_to_next_article_is_displayed(
     check_if_element_is_visible(link, element_name=name)
     if next_article.lower() != "last":
         with assertion_msg(
-            "Expected to see a link to '%s' but got '%s'",
-            next_article,
-            link.text,
+            "Expected to see a link to '%s' but got '%s'", next_article, link.text
         ):
             assert link.text.lower() == next_article.lower()
 
@@ -201,9 +191,7 @@ def go_to_next_article(driver: webdriver):
         element_name="Link to the next article",
         wait_for_it=False,
     )
-    check_if_element_is_visible(
-        next_article, element_name="Link to the next article"
-    )
+    check_if_element_is_visible(next_article, element_name="Link to the next article")
     with wait_for_page_load_after_action(driver):
         next_article.click()
     take_screenshot(driver, "After going to the next Article")
@@ -211,19 +199,14 @@ def go_to_next_article(driver: webdriver):
 
 def should_not_see_link_to_next_article(driver: webdriver):
     check_if_element_is_not_visible(
-        driver,
-        by_css=NEXT_ARTICLE_LINK,
-        element_name="Link to the next article",
+        driver, by_css=NEXT_ARTICLE_LINK, element_name="Link to the next article"
     )
 
 
 def go_back_to_article_list(driver: webdriver):
     element_name = "Go Back link"
     go_back_link = find_element(
-        driver,
-        by_css=GO_BACK_LINK,
-        element_name=element_name,
-        wait_for_it=False,
+        driver, by_css=GO_BACK_LINK, element_name=element_name, wait_for_it=False
     )
     check_if_element_is_visible(go_back_link, element_name)
     with wait_for_page_load_after_action(driver):
@@ -232,9 +215,7 @@ def go_back_to_article_list(driver: webdriver):
 
 def should_see_article_as_read(driver: webdriver, title: str):
     article = driver.find_element_by_link_text(title)
-    with assertion_msg(
-        "It looks like '%s' article is marked as unread", title
-    ):
+    with assertion_msg("It looks like '%s' article is marked as unread", title):
         assert "article-read" in article.get_attribute("class")
 
 
@@ -269,9 +250,7 @@ def get_total_articles(driver: webdriver) -> int:
 
 def get_time_to_complete(driver: webdriver) -> int:
     element_name = "Time to complete reading remaining articles"
-    ttc = find_element(
-        driver, by_css=TIME_TO_COMPLETE, element_name=element_name
-    )
+    ttc = find_element(driver, by_css=TIME_TO_COMPLETE, element_name=element_name)
     check_if_element_is_visible(ttc, element_name)
     ttc_value = [int(word) for word in ttc.text.split() if word.isdigit()][0]
     return ttc_value
@@ -294,9 +273,7 @@ def count_average_word_number_in_lines_list(lines_list, word_length=5):
 
 def time_to_read_in_seconds(driver: webdriver):
     """Return time to read in minutes give an Article object."""
-    article_text = find_element(
-        driver, by_css=ARTICLE_TEXT, wait_for_it=False
-    ).text
+    article_text = find_element(driver, by_css=ARTICLE_TEXT, wait_for_it=False).text
     filtered_lines = filter_lines(article_text)
     total_words_count = count_average_word_number_in_lines_list(filtered_lines)
     return round(total_words_count / WORDS_PER_SECOND)
@@ -305,10 +282,7 @@ def time_to_read_in_seconds(driver: webdriver):
 def flag_as_useful(driver: webdriver):
     element_name = "Yes - this article was useful button"
     useful = find_element(
-        driver,
-        by_css=USEFUL_BUTTON,
-        element_name=element_name,
-        wait_for_it=False,
+        driver, by_css=USEFUL_BUTTON, element_name=element_name, wait_for_it=False
     )
     check_if_element_is_visible(useful, element_name)
     useful.click()
@@ -334,10 +308,7 @@ def should_not_see_feedback_widget(driver: webdriver):
         wait_for_it=False,
     )
     check_if_element_is_not_visible(
-        driver,
-        by_css=USEFUL_BUTTON,
-        element_name="Useful button",
-        wait_for_it=False,
+        driver, by_css=USEFUL_BUTTON, element_name="Useful button", wait_for_it=False
     )
     check_if_element_is_not_visible(
         driver,
@@ -349,9 +320,7 @@ def should_not_see_feedback_widget(driver: webdriver):
 
 def should_see_feedback_result(driver: webdriver):
     element_name = "Feedback result (thank you message)"
-    result = find_element(
-        driver, by_css=FEEDBACK_RESULT, element_name=element_name
-    )
+    result = find_element(driver, by_css=FEEDBACK_RESULT, element_name=element_name)
     check_if_element_is_visible(result, element_name)
 
 
@@ -438,7 +407,5 @@ def share_via(driver: webdriver, social_media: str):
     share_button_selector = SHARE_BUTTONS[social_media.lower()]
     share_button = find_element(driver, by_css=share_button_selector)
     href = share_button.get_attribute("href")
-    logging.debug(
-        "Opening 'Share on %s' link '%s' in the same tab", social_media, href
-    )
+    logging.debug("Opening 'Share on %s' link '%s' in the same tab", social_media, href)
     driver.get(href)

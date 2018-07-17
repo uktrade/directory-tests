@@ -17,10 +17,7 @@ URL = urljoin("https://twitter.com/", "intent/tweet?text=")
 PAGE_TITLE = "Post a Tweet on Twitter"
 
 MESSAGE_BOX = "#status"
-EXPECTED_ELEMENTS = {
-    "logo": "#header > div > h1 > a",
-    "message_box": MESSAGE_BOX,
-}
+EXPECTED_ELEMENTS = {"logo": "#header > div > h1 > a", "message_box": MESSAGE_BOX}
 
 
 def should_be_here(driver: webdriver):

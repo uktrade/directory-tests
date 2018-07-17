@@ -127,9 +127,7 @@ def open(driver: webdriver, group: str, element: str):
         assert menu_item.is_displayed()
     with wait_for_page_load_after_action(driver):
         menu_item.click()
-    take_screenshot(
-        driver, NAME + " after clicking on: {} link".format(element)
-    )
+    take_screenshot(driver, NAME + " after clicking on: {} link".format(element))
 
 
 def go_to_registration(driver: webdriver):
@@ -180,18 +178,13 @@ def check_dit_favicon(driver: webdriver):
     except NoSuchElementException:
         try:
             favicon = find_element(
-                driver,
-                by_css=EXOPPS_FAVICON,
-                element_name="Favicon",
-                wait_for_it=False,
+                driver, by_css=EXOPPS_FAVICON, element_name="Favicon", wait_for_it=False
             )
         except NoSuchElementException:
             raise
     src = favicon.get_attribute("href")
     check_hash_of_remote_file(DIT_FAVICON_MD5_CHECKSUM, src)
-    logging.debug(
-        "Favicon %s has correct MD5sum %s", src, DIT_FAVICON_MD5_CHECKSUM
-    )
+    logging.debug("Favicon %s has correct MD5sum %s", src, DIT_FAVICON_MD5_CHECKSUM)
 
 
 def click_on_page_element(driver: webdriver, element_name: str):

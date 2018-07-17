@@ -19,9 +19,7 @@ from settings import DIRECTORY_UI_SUPPLIER_URL
 
 NAME = "Find a Search results page"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "search/")
-PAGE_TITLE = (
-    "Search the database of UK suppliers' trade profiles - trade.great.gov.uk"
-)
+PAGE_TITLE = "Search the database of UK suppliers' trade profiles - trade.great.gov.uk"
 
 SECTOR_FILTERS = "#id_sectors input"
 SECTIONS = {
@@ -59,9 +57,7 @@ def should_see_section(driver: webdriver, name: str):
     check_for_section(driver, SECTIONS, sought_section=name)
 
 
-def should_see_filtered_results(
-    driver: webdriver, expected_filters: List[str]
-):
+def should_see_filtered_results(driver: webdriver, expected_filters: List[str]):
     def to_filter_format(name):
         return name.upper().replace(" ", "_").replace("-", "_")
 

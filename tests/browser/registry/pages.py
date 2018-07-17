@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""ExRed Page Object Registry"""
+"""Page Object Registry"""
 
 from pages import exopps
 from pages.external import (

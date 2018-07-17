@@ -24,9 +24,7 @@ class PageObjects(Enum):
     def __new__(cls, value):
         if not is_page_object(value):
             raise TypeError(
-                "Expected to get a Page Object module but got: {}".format(
-                    value
-                )
+                "Expected to get a Page Object module but got: {}".format(value)
             )
         member = object.__new__(cls)
         member._value_ = value
@@ -34,10 +32,7 @@ class PageObjects(Enum):
 
     def __str__(self):
         return "{}-{} [{} - {}]".format(
-            self.value.SERVICE,
-            self.value.NAME,
-            self.value.TYPE,
-            self.value.URL,
+            self.value.SERVICE, self.value.NAME, self.value.TYPE, self.value.URL
         )
 
     @property

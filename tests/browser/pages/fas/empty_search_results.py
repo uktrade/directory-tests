@@ -16,9 +16,7 @@ from settings import DIRECTORY_UI_SUPPLIER_URL
 
 NAME = "Find a Empty Search Results page"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "search/")
-PAGE_TITLE = (
-    "Search the database of UK suppliers' trade profiles - trade.great.gov.uk"
-)
+PAGE_TITLE = "Search the database of UK suppliers' trade profiles - trade.great.gov.uk"
 
 SECTIONS = {
     "filters": {

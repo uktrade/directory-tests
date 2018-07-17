@@ -20,9 +20,7 @@ from settings import DIRECTORY_UI_SUPPLIER_URL
 
 NAME = "Find a Supplier - Industries page"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "industries/")
-PAGE_TITLE = (
-    "Find the best UK suppliers for your industry - trade.great.gov.uk"
-)
+PAGE_TITLE = "Find the best UK suppliers for your industry - trade.great.gov.uk"
 
 BREADCRUMB_LINKS = "p.breadcrumbs > a"
 INDUSTRIES_BREADCRUMB = "p.breadcrumbs > span.current.bidi-rtl"

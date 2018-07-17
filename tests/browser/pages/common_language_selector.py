@@ -19,9 +19,7 @@ NAME = "Language selector"
 LANGUAGE_INDICATOR = "#header-bar span.lang"
 LANGUAGE_SELECTOR_OPEN = "#header-bar a.LanguageSelectorDialog-Tracker"
 LANGUAGE_SELECTOR_CLOSE = "#header-language-selector-close"
-DOMESTIC_PAGE = (
-    "section.language-selector-dialog div.domestic-redirect > p > a"
-)
+DOMESTIC_PAGE = "section.language-selector-dialog div.domestic-redirect > p > a"
 ENGLISH = "#header-language-selector-en-gb"
 CHINESE = "#header-language-selector-zh-hans"
 GERMAN = "#header-language-selector-de"
@@ -157,11 +155,7 @@ def keyboard_should_be_trapped(driver: webdriver, page_name: str):
 
 
 def change_to(
-    driver: webdriver,
-    page_name: str,
-    language: str,
-    *,
-    with_keyboard: bool = False
+    driver: webdriver, page_name: str, language: str, *, with_keyboard: bool = False
 ):
     language_selector = ELEMENTS_ON[page_name.lower()][language]
     language_button = find_element(driver, by_css=language_selector)

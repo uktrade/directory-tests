@@ -23,18 +23,12 @@ FAVICON = Selector(By.CSS_SELECTOR, "link[rel='shortcut icon']")
 HEADER_LOGO = Selector(By.CSS_SELECTOR, "#invest-header img")
 FOOTER_LOGO = Selector(By.CSS_SELECTOR, "#invest-footer img:nth-child(1)")
 HOME_LINK = Selector(By.CSS_SELECTOR, "#invest-header a[href='/']")
-INDUSTRIES_LINK = Selector(
-    By.CSS_SELECTOR, "#invest-header a[href='/industries/']"
-)
+INDUSTRIES_LINK = Selector(By.CSS_SELECTOR, "#invest-header a[href='/industries/']")
 UK_SETUP_GUIDE_LINK = Selector(
     By.CSS_SELECTOR, "#invest-header a[href='/uk-setup-guide/']"
 )
-CONTACT_US_LINK = Selector(
-    By.CSS_SELECTOR, "#invest-header a[href='/contact/']"
-)
-LANGUAGE_SELECTOR = Selector(
-    By.CSS_SELECTOR, "#language-selector-activator > a"
-)
+CONTACT_US_LINK = Selector(By.CSS_SELECTOR, "#invest-header a[href='/contact/']")
+LANGUAGE_SELECTOR = Selector(By.CSS_SELECTOR, "#language-selector-activator > a")
 SELECTORS = {
     "general": {
         "uk gov logo": HEADER_LOGO,
@@ -54,9 +48,7 @@ SELECTORS = {
 def click_on_page_element(driver: webdriver, element: str):
     """Open specific element that belongs to the group."""
     find_and_click_on_page_element(driver, SELECTORS, element)
-    take_screenshot(
-        driver, NAME + " after clicking on: {} link".format(element)
-    )
+    take_screenshot(driver, NAME + " after clicking on: {} link".format(element))
 
 
 def check_logo(driver: webdriver):

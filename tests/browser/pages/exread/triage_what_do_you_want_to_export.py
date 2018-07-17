@@ -59,10 +59,7 @@ def select_services(driver: webdriver):
 
 def select_goods(driver: webdriver):
     goods = find_element(
-        driver,
-        by_css=GOODS_CHECKBOX,
-        element_name="Goods checkbox",
-        wait_for_it=False,
+        driver, by_css=GOODS_CHECKBOX, element_name="Goods checkbox", wait_for_it=False
     )
     goods.click()
     take_screenshot(driver, NAME)
@@ -70,10 +67,7 @@ def select_goods(driver: webdriver):
 
 def select_goods_and_services(driver: webdriver):
     goods = find_element(
-        driver,
-        by_css=GOODS_CHECKBOX,
-        element_name="Goods checkbox",
-        wait_for_it=False,
+        driver, by_css=GOODS_CHECKBOX, element_name="Goods checkbox", wait_for_it=False
     )
     goods.click()
     services = find_element(
@@ -88,10 +82,7 @@ def select_goods_and_services(driver: webdriver):
 
 def submit(driver: webdriver):
     submit_button = find_element(
-        driver,
-        by_css=CONTINUE_BUTTON,
-        element_name="Submit button",
-        wait_for_it=False,
+        driver, by_css=CONTINUE_BUTTON, element_name="Submit button", wait_for_it=False
     )
     with wait_for_page_load_after_action(driver):
         submit_button.click()

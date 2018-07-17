@@ -88,19 +88,12 @@ def search(driver: webdriver, *, keyword: str = None, sector: str = None):
             element_name="Sector dropdown menu",
             wait_for_it=False,
         )
-        sector_value = "option[value='{}']".format(
-            sector.upper().replace(" ", "_")
-        )
-        sector_option = sector_dropdown.find_element_by_css_selector(
-            sector_value
-        )
+        sector_value = "option[value='{}']".format(sector.upper().replace(" ", "_"))
+        sector_option = sector_dropdown.find_element_by_css_selector(sector_value)
         sector_option.click()
     take_screenshot(driver, NAME + " after entering the keyword")
     button = find_element(
-        driver,
-        by_css=SEARCH_BUTTON,
-        element_name="Search button",
-        wait_for_it=False,
+        driver, by_css=SEARCH_BUTTON, element_name="Search button", wait_for_it=False
     )
     button.click()
     take_screenshot(driver, NAME + " after submitting the search form")

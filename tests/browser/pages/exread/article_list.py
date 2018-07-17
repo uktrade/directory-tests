@@ -70,9 +70,7 @@ def should_see_section(driver: webdriver, name: str):
 def should_not_see_section(driver: webdriver, name: str):
     section = SECTIONS[name.lower()]
     for key, selector in section.items():
-        check_if_element_is_not_visible(
-            driver, by_css=selector, element_name=key
-        )
+        check_if_element_is_not_visible(driver, by_css=selector, element_name=key)
 
 
 def go_to_registration(driver: webdriver):

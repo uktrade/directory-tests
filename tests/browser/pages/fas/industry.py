@@ -64,11 +64,7 @@ SEARCH_BUTTON = "#companies-section form > button[type=submit]"
 COMPANY_PROFILE_LINK = "#companies-section li:nth-child({number}) a.link"
 ARTICLE_LINK = "#articles-section article:nth-child({number}) a"
 SECTIONS = {
-    "hero": {
-        "itself": "#hero",
-        "header": "#hero h2",
-        "description": "#hero p",
-    },
+    "hero": {"itself": "#hero", "header": "#hero h2", "description": "#hero p"},
     "breadcrumbs": {
         "itself": "#content p.breadcrumbs",
         "industry": INDUSTRY_BREADCRUMB,
@@ -96,9 +92,7 @@ SECTIONS = {
 }
 
 
-def visit(
-    driver: webdriver, *, first_time: bool = False, page_name: str = None
-):
+def visit(driver: webdriver, *, first_time: bool = False, page_name: str = None):
     if page_name:
         enum_key = (
             page_name.lower()
@@ -141,8 +135,7 @@ def should_see_content_for(driver: webdriver, industry_name: str):
     )
     current_industry = industry_breadcrumb.text
     with assertion_msg(
-        "Expected to see breadcrumb for '%s' industry but got '%s' instead"
-        " on %s",
+        "Expected to see breadcrumb for '%s' industry but got '%s' instead" " on %s",
         industry_name,
         current_industry,
         driver.current_url,
@@ -189,19 +182,14 @@ def search(driver: webdriver, *, keyword: str = None, sector: str = None):
         input_field.send_keys(keyword)
     take_screenshot(driver, NAME + " after entering the keyword")
     button = find_element(
-        driver,
-        by_css=SEARCH_BUTTON,
-        element_name="Search button",
-        wait_for_it=False,
+        driver, by_css=SEARCH_BUTTON, element_name="Search button", wait_for_it=False
     )
     button.click()
     take_screenshot(driver, NAME + " after submitting the search form")
 
 
 def open_profile(driver: webdriver, number: int):
-    link = find_element(
-        driver, by_css=COMPANY_PROFILE_LINK.format(number=number)
-    )
+    link = find_element(driver, by_css=COMPANY_PROFILE_LINK.format(number=number))
     link.click()
     take_screenshot(driver, NAME + " after clicking on company profile link")
 

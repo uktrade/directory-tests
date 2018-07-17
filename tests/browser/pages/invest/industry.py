@@ -65,9 +65,7 @@ class URLS(Enum):
     NUCLEAR_ENERGY = urljoin(BASE_URL, "nuclear-energy/")
     OFFSHORE_WIND_ENERGY = urljoin(BASE_URL, "offshore-wind-energy/")
     OIL_AND_GAS = urljoin(BASE_URL, "oil-and-gas/")
-    PHARMACEUTICAL_MANUFACTURING = urljoin(
-        BASE_URL, "pharmaceutical-manufacturing/"
-    )
+    PHARMACEUTICAL_MANUFACTURING = urljoin(BASE_URL, "pharmaceutical-manufacturing/")
     RETAIL = urljoin(BASE_URL, "retail/")
     TECHNOLOGY = urljoin(BASE_URL, "technology/")
 
@@ -79,9 +77,7 @@ TOPIC_EXPANDERS = Selector(
 SECTIONS = {
     "header": {
         "self": Selector(By.ID, "invest-header"),
-        "logo": Selector(
-            By.CSS_SELECTOR, "#invest-header > div.header-bar  a"
-        ),
+        "logo": Selector(By.CSS_SELECTOR, "#invest-header > div.header-bar  a"),
     },
     "beta bar": {
         "self": Selector(By.ID, "header-beta-bar"),
@@ -89,17 +85,14 @@ SECTIONS = {
         "feedback link": Selector(By.CSS_SELECTOR, "#header-beta-bar a"),
     },
     "hero": {"self": Selector(By.CSS_SELECTOR, "#content > section.hero")},
-    "industry pullout": {
-        "self": Selector(By.CSS_SELECTOR, "section.industry-pullout")
-    },
+    "industry pullout": {"self": Selector(By.CSS_SELECTOR, "section.industry-pullout")},
     "big number": {
         "self": Selector(By.CSS_SELECTOR, "section.industry-pullout div.data")
     },
     "topics": {
         "self": Selector(By.CSS_SELECTOR, "section.industry-page-accordions"),
         "accordion expanders": Selector(
-            By.CSS_SELECTOR,
-            "section.industry-page-accordions a.accordion-expander",
+            By.CSS_SELECTOR, "section.industry-page-accordions a.accordion-expander"
         ),
     },
     "topics contents": {
@@ -118,12 +111,10 @@ SECTIONS = {
     "footer": {
         "self": Selector(By.ID, "invest-footer"),
         "uk gov logo": Selector(
-            By.CSS_SELECTOR,
-            "#invest-footer div.footer-branding > img:nth-child(1)",
+            By.CSS_SELECTOR, "#invest-footer div.footer-branding > img:nth-child(1)"
         ),
         "invest logo": Selector(
-            By.CSS_SELECTOR,
-            "#invest-footer div.footer-branding > img:nth-child(2)",
+            By.CSS_SELECTOR, "#invest-footer div.footer-branding > img:nth-child(2)"
         ),
     },
 }
@@ -136,9 +127,7 @@ OPTIONAL_SECTIONS = {
 }
 
 
-def visit(
-    executor: Executor, *, first_time: bool = False, page_name: str = None
-):
+def visit(executor: Executor, *, first_time: bool = False, page_name: str = None):
     if page_name:
         enum_key = (
             page_name.lower()
@@ -200,9 +189,7 @@ def should_see_content_for(driver: WebDriver, industry_name: str):
 
 def unfold_topics(driver: WebDriver):
     expanders = find_elements(driver, by_css=TOPIC_EXPANDERS.value)
-    assert (
-        expanders
-    ), "Expected to see at least 1 topic but found 0 on {}".format(
+    assert expanders, "Expected to see at least 1 topic but found 0 on {}".format(
         driver.current_url
     )
     for expander in expanders:

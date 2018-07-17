@@ -106,10 +106,7 @@ def fill_out(driver: webdriver, contact_us_details: dict):
 def submit(driver: webdriver):
     take_screenshot(driver, "Before submitting the contact us form")
     button = find_element(
-        driver,
-        by_css=SUBMIT_BUTTON,
-        element_name="Submit button",
-        wait_for_it=False,
+        driver, by_css=SUBMIT_BUTTON, element_name="Submit button", wait_for_it=False
     )
     button.click()
     take_screenshot(driver, "After submitting the contact us form")

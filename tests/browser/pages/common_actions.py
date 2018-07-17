@@ -78,18 +78,14 @@ Actor = namedtuple(
         "visited_page",
     ],
 )
-VisitedArticle = namedtuple(
-    "VisitedArticle", ["index", "title", "time_to_read"]
-)
+VisitedArticle = namedtuple("VisitedArticle", ["index", "title", "time_to_read"])
 
 Actor.__new__.__defaults__ = (None,) * len(Actor._fields)
 VisitedArticle.__new__.__defaults__ = (None,) * len(VisitedArticle._fields)
 Selector.__new__.__defaults__ = (None, None, True, True, True)
 
 
-def go_to_url(
-    driver: WebDriver, url: str, page_name: str, *, first_time: bool = False
-):
+def go_to_url(driver: WebDriver, url: str, page_name: str, *, first_time: bool = False):
     """Go to the specified URL and take a screenshot afterwards."""
     if first_time:
         clear_driver_cookies(driver)
@@ -97,14 +93,10 @@ def go_to_url(
     take_screenshot(driver, page_name)
 
 
-def check_url(
-    driver: WebDriver, expected_url: str, *, exact_match: bool = True
-):
+def check_url(driver: WebDriver, expected_url: str, *, exact_match: bool = True):
     """Check if current page URL matches the expected one."""
     with assertion_msg(
-        "Expected page URL to be: '%s' but got '%s'",
-        expected_url,
-        driver.current_url,
+        "Expected page URL to be: '%s' but got '%s'", expected_url, driver.current_url
     ):
         if exact_match:
             assert driver.current_url == expected_url
@@ -115,35 +107,25 @@ def check_url(
     logging.debug("Current page URL matches expected '%s'", driver.current_url)
 
 
-def check_title(
-    driver: WebDriver, expected_title: str, *, exact_match: bool = False
-):
+def check_title(driver: WebDriver, expected_title: str, *, exact_match: bool = False):
     """Check if current page title matches the expected one."""
     with assertion_msg(
-        "Expected page title to be: '%s' but got '%s'",
-        expected_title,
-        driver.title,
+        "Expected page title to be: '%s' but got '%s'", expected_title, driver.title
     ):
         if exact_match:
             assert expected_title.lower() == driver.title.lower()
         else:
             assert expected_title.lower() in driver.title.lower()
     logging.debug(
-        "Page title on '%s' matches expected '%s'",
-        driver.current_url,
-        expected_title,
+        "Page title on '%s' matches expected '%s'", driver.current_url, expected_title
     )
 
 
-def check_for_section(
-    driver: WebDriver, all_sections: dict, sought_section: str
-):
+def check_for_section(driver: WebDriver, all_sections: dict, sought_section: str):
     """Check if all page elements from sought section are visible."""
     section = all_sections[sought_section.lower()]
     for element_name, selector in section.items():
-        element = find_element(
-            driver, by_css=selector, element_name=element_name
-        )
+        element = find_element(driver, by_css=selector, element_name=element_name)
         with assertion_msg(
             "'%s' in '%s' is not displayed on: %s",
             element_name,
@@ -151,9 +133,7 @@ def check_for_section(
             driver.current_url,
         ):
             assert element.is_displayed()
-            logging.debug(
-                "'%s' in '%s' is displayed", element_name, sought_section
-            )
+            logging.debug("'%s' in '%s' is displayed", element_name, sought_section)
 
 
 def check_for_expected_elements(
@@ -173,9 +153,7 @@ def check_for_expected_elements(
             driver.current_url,
         ):
             assert element.is_displayed()
-    logging.debug(
-        "All expected elements are visible on '%s'", driver.current_url
-    )
+    logging.debug("All expected elements are visible on '%s'", driver.current_url)
 
 
 def check_for_expected_sections_elements(driver: WebDriver, sections: Dict):
@@ -186,24 +164,17 @@ def check_for_expected_sections_elements(driver: WebDriver, sections: Dict):
                 driver, by_css=element_selector, element_name=element_name
             )
             with assertion_msg(
-                "It looks like '%s' element in '%s' section is not visible"
-                " on %s",
+                "It looks like '%s' element in '%s' section is not visible" " on %s",
                 element_name,
                 section,
                 driver.current_url,
             ):
                 assert element.is_displayed()
-        logging.debug(
-            "All expected elements are visible on '%s'", driver.current_url
-        )
+        logging.debug("All expected elements are visible on '%s'", driver.current_url)
 
 
 def find_and_click_on_page_element(
-    driver: WebDriver,
-    sections: dict,
-    element_name: str,
-    *,
-    wait_for_it: bool = True,
+    driver: WebDriver, sections: dict, element_name: str, *, wait_for_it: bool = True
 ):
     """Find page element in any page section selectors and click on it."""
     found_selector = False
@@ -239,9 +210,7 @@ def initialize_scenario_data() -> ScenarioData:
     return scenario_data
 
 
-def unauthenticated_actor(
-    alias: str, *, self_classification: str = None
-) -> Actor:
+def unauthenticated_actor(alias: str, *, self_classification: str = None) -> Actor:
     """Create an instance of an unauthenticated Actor.
 
     Will:
@@ -289,18 +258,14 @@ def update_actor(context: Context, alias: str, **kwargs):
         if arg in Actor._fields:
             logging.debug("Set '%s'='%s' for %s", arg, kwargs[arg], alias)
             actors[alias] = actors[alias]._replace(**{arg: kwargs[arg]})
-    logging.debug(
-        "Successfully updated %s's details: %s", alias, actors[alias]
-    )
+    logging.debug("Successfully updated %s's details: %s", alias, actors[alias])
 
 
 @retry(stop_max_attempt_number=3)
 def take_screenshot(driver: WebDriver, page_name: str):
     """Will take a screenshot of current page."""
     if not isinstance(driver, WebDriver):
-        logging.debug(
-            "Taking screenshots in non-browser executor is not possible"
-        )
+        logging.debug("Taking screenshots in non-browser executor is not possible")
         return
     if TAKE_SCREENSHOTS:
         session_id = driver.session_id
@@ -313,9 +278,7 @@ def take_screenshot(driver: WebDriver, page_name: str):
         )
         file_path = path.abspath(path.join("screenshots", filename))
         driver.save_screenshot(file_path)
-        logging.debug(
-            "Screenshot of %s page saved in: %s", page_name, filename
-        )
+        logging.debug("Screenshot of %s page saved in: %s", page_name, filename)
     else:
         logging.debug(
             "Taking screenshots is disabled. In order to turn it on please set"
@@ -408,9 +371,7 @@ def flag_browserstack_session_as_failed(session_id: str, reason: str):
     headers = {"Content-Type": "application/json"}
     data = {"status": "failed", "reason": reason}
     auth = (BROWSERSTACK_USER, BROWSERSTACK_PASS)
-    response = requests.put(
-        url=url, headers=headers, data=json.dumps(data), auth=auth
-    )
+    response = requests.put(url=url, headers=headers, data=json.dumps(data), auth=auth)
     if not response.ok:
         logging.error(
             "Failed to flagged BrowserStack session: %s as failed. "
@@ -453,11 +414,7 @@ def wait_for_visibility(
         driver,
         "Element identified by '{}' was not visible after waiting "
         "for {} seconds".format(
-            by_css
-            or by_id
-            or by_link_text
-            or by_partial_link_text
-            or by_xpath,
+            by_css or by_id or by_link_text or by_partial_link_text or by_xpath,
             time_to_wait,
         ),
     ):
@@ -467,11 +424,7 @@ def wait_for_visibility(
 
 
 def check_if_element_is_not_present(
-    driver: WebDriver,
-    *,
-    by_css: str = None,
-    by_id: str = None,
-    element_name: str = "",
+    driver: WebDriver, *, by_css: str = None, by_id: str = None, element_name: str = ""
 ) -> WebElement:
     """Find element by CSS selector or it's ID."""
     assert by_id or by_css, "Provide ID or CSS selector"
@@ -561,9 +514,7 @@ def find_element(
         elif by_link_text:
             element = driver.find_element_by_link_text(by_link_text)
         elif by_partial_link_text:
-            element = driver.find_element_by_partial_link_text(
-                by_partial_link_text
-            )
+            element = driver.find_element_by_partial_link_text(by_partial_link_text)
         elif by_xpath:
             element = driver.find_element_by_xpath(by_xpath)
         else:
@@ -585,9 +536,7 @@ def find_elements(
 ) -> List[WebElement]:
     """Find element by CSS selector or it's ID."""
     assert by_id or by_css, "Provide ID or CSS selector"
-    with selenium_action(
-        driver, "Couldn't find elements using '%s'", by_css or by_id
-    ):
+    with selenium_action(driver, "Couldn't find elements using '%s'", by_css or by_id):
         if by_css:
             elements = driver.find_elements_by_css_selector(by_css)
         else:
@@ -663,9 +612,7 @@ class wait_for_page_load_after_action(object):
                 return True
             else:
                 time.sleep(0.1)
-        raise Exception(
-            "Timeout waiting for {}".format(condition_function.__name__)
-        )
+        raise Exception("Timeout waiting for {}".format(condition_function.__name__))
 
 
 def scroll_to(driver: WebDriver, element: webelement):
@@ -706,8 +653,7 @@ def browser_check_for_sections(
             selectors = get_horizontal_selectors(all_sections[name.lower()])
         else:
             raise KeyError(
-                "Please choose from desktop, mobile or horizontal (mobile) "
-                "selectors"
+                "Please choose from desktop, mobile or horizontal (mobile) " "selectors"
             )
         for key, selector in selectors.items():
             with selenium_action(
@@ -716,9 +662,7 @@ def browser_check_for_sections(
                 key,
                 selector.value,
             ):
-                element = driver.find_element(
-                    by=selector.by, value=selector.value
-                )
+                element = driver.find_element(by=selector.by, value=selector.value)
             with assertion_msg(
                 "It looks like '%s' element identified by '%s' selector is"
                 " not visible on %s",
@@ -744,26 +688,16 @@ def requests_check_for_sections(
 
 
 def get_desktop_selectors(section: dict) -> Dict[str, Selector]:
-    return {
-        key: selector
-        for key, selector in section.items()
-        if selector.in_desktop
-    }
+    return {key: selector for key, selector in section.items() if selector.in_desktop}
 
 
 def get_mobile_selectors(section: dict) -> Dict[str, Selector]:
-    return {
-        key: selector
-        for key, selector in section.items()
-        if selector.in_mobile
-    }
+    return {key: selector for key, selector in section.items() if selector.in_mobile}
 
 
 def get_horizontal_selectors(section: dict) -> Dict[str, Selector]:
     return {
-        key: selector
-        for key, selector in section.items()
-        if selector.in_horizontal
+        key: selector for key, selector in section.items() if selector.in_horizontal
     }
 
 

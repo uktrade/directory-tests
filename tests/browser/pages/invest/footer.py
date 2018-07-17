@@ -24,9 +24,7 @@ UK_GOV_LOGO = Selector(By.CSS_SELECTOR, "#invest-footer img:nth-child(1)")
 SELECTORS = {
     "logos": {
         "uk gov": UK_GOV_LOGO,
-        "invest in great": Selector(
-            By.CSS_SELECTOR, "#invest-footer img:nth-child(2)"
-        ),
+        "invest in great": Selector(By.CSS_SELECTOR, "#invest-footer img:nth-child(2)"),
     },
     "links": {
         "home": Selector(By.CSS_SELECTOR, "#invest-footer a[href='/']"),
@@ -36,9 +34,7 @@ SELECTORS = {
         "uk setup guide": Selector(
             By.CSS_SELECTOR, "#invest-footer a[href='/uk-setup-guide/']"
         ),
-        "contact us": Selector(
-            By.CSS_SELECTOR, "#invest-footer a[href='/contact/']"
-        ),
+        "contact us": Selector(By.CSS_SELECTOR, "#invest-footer a[href='/contact/']"),
         "part of great.gov.uk": Selector(
             By.CSS_SELECTOR,
             "#invest-footer div.footer-sub-links-list li:nth-child(1) a",
@@ -62,9 +58,7 @@ SELECTORS = {
 def click_on_page_element(driver: webdriver, element: str):
     """Open specific element that belongs to the group."""
     find_and_click_on_page_element(driver, SELECTORS, element)
-    take_screenshot(
-        driver, NAME + " after clicking on: {} link".format(element)
-    )
+    take_screenshot(driver, NAME + " after clicking on: {} link".format(element))
 
 
 def check_logo(driver: webdriver):

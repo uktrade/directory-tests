@@ -142,10 +142,7 @@ def should_be_here(driver: webdriver):
 
 
 def should_see_read_counter(
-    driver: webdriver,
-    *,
-    exporter_status: str = None,
-    expected_number_articles: int = 0
+    driver: webdriver, *, exporter_status: str = None, expected_number_articles: int = 0
 ):
     counter = find_element(
         driver, by_css=READ_COUNTER, element_name="Article Read Counter"
@@ -180,9 +177,7 @@ def should_see_total_articles_to_read(
         assert counter.is_displayed()
     if exporter_status:
         expected_number_articles = len(
-            get_articles(
-                group="personalised journey", category=exporter_status.lower()
-            )
+            get_articles(group="personalised journey", category=exporter_status.lower())
         )
         given_number_articles = int(counter.text)
         with assertion_msg(
@@ -195,15 +190,11 @@ def should_see_total_articles_to_read(
 
 def open(driver: webdriver, group: str, element: str):
     link = SECTIONS[group.lower()][element.lower()]
-    button = find_element(
-        driver, by_css=link, element_name=element, wait_for_it=False
-    )
+    button = find_element(driver, by_css=link, element_name=element, wait_for_it=False)
     assert button.is_displayed()
     with wait_for_page_load_after_action(driver):
         button.click()
-    take_screenshot(
-        driver, NAME + " after clicking on: %s link".format(element)
-    )
+    take_screenshot(driver, NAME + " after clicking on: %s link".format(element))
 
 
 def should_see_section(driver: webdriver, name: str):
@@ -213,9 +204,7 @@ def should_see_section(driver: webdriver, name: str):
 def should_not_see_section(driver: webdriver, name: str):
     section = SECTIONS[name.lower()]
     for key, selector in section.items():
-        check_if_element_is_not_visible(
-            driver, by_css=selector, element_name=key
-        )
+        check_if_element_is_not_visible(driver, by_css=selector, element_name=key)
 
 
 def check_top_facts_values(driver: webdriver):
@@ -344,9 +333,7 @@ def should_see_banner_and_top_10_table(driver: webdriver, sector: str):
 
 
 def update_preferences(driver: webdriver):
-    update_preferences_link = find_element(
-        driver, by_css=UPDATE_PREFERENCE_LINK
-    )
+    update_preferences_link = find_element(driver, by_css=UPDATE_PREFERENCE_LINK)
     with assertion_msg("Update preferences link is not displayed"):
         assert update_preferences_link.is_displayed()
     with wait_for_page_load_after_action(driver):

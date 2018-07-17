@@ -60,9 +60,7 @@ def should_see_all_menus(driver: webdriver):
 
 def should_see_link_to(driver: webdriver, section: str, item_name: str):
     item_selector = SECTIONS[section.lower()][item_name.lower()]
-    menu_item = find_element(
-        driver, by_css=item_selector, element_name=item_name
-    )
+    menu_item = find_element(driver, by_css=item_selector, element_name=item_name)
     with assertion_msg(
         "It looks like '%s' in '%s' section is not visible", item_name, section
     ):
@@ -71,14 +69,10 @@ def should_see_link_to(driver: webdriver, section: str, item_name: str):
 
 def open(driver: webdriver, group: str, element: str):
     link = SECTIONS[group.lower()][element.lower()]
-    button = find_element(
-        driver, by_css=link, element_name=element, wait_for_it=False
-    )
+    button = find_element(driver, by_css=link, element_name=element, wait_for_it=False)
     with wait_for_page_load_after_action(driver):
         button.click()
-    take_screenshot(
-        driver, NAME + " after clicking on: %s link".format(element)
-    )
+    take_screenshot(driver, NAME + " after clicking on: %s link".format(element))
 
 
 def click_on_page_element(driver: webdriver, element_name: str):

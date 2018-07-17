@@ -50,9 +50,7 @@ def correct_total_number_of_articles(driver: webdriver, category: str):
         assert given == expected
 
 
-def correct_article_read_counter(
-    driver: webdriver, category: str, expected: int
-):
+def correct_article_read_counter(driver: webdriver, category: str, expected: int):
     counter = find_element(
         driver,
         by_css=ARTICLES_TO_READ_COUNTER,
@@ -89,9 +87,7 @@ def check_if_correct_articles_are_displayed(driver: webdriver, category: str):
     # check whether article is on the right position
     logging.debug("Given articles: %s", given_articles)
     for position, name in given_articles:
-        expected_position = get_article(
-            "export readiness", category, name
-        ).index
+        expected_position = get_article("export readiness", category, name).index
         with assertion_msg(
             "Expected article '%s' to be at position %d but found it at "
             "position no. %d ",
@@ -106,15 +102,11 @@ def check_elements_are_visible(driver: webdriver, elements: list):
     take_screenshot(driver, NAME)
     for element_name in elements:
         selector = SCOPE_ELEMENTS[element_name.lower()]
-        page_element = find_element(
-            driver, by_css=selector, element_name=element_name
-        )
+        page_element = find_element(driver, by_css=selector, element_name=element_name)
         if "firefox" not in driver.capabilities["browserName"].lower():
             logging.debug("Moving focus to '%s' element", element_name)
             action_chains = ActionChains(driver)
             action_chains.move_to_element(page_element)
             action_chains.perform()
-        with assertion_msg(
-            "Expected to see '%s' but can't see it", element_name
-        ):
+        with assertion_msg("Expected to see '%s' but can't see it", element_name):
             assert page_element.is_displayed()

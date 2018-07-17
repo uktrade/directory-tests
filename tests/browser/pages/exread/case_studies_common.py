@@ -38,14 +38,10 @@ CASE_STUDIES = {
 }
 
 
-def should_be_here(
-    driver: webdriver, case_study_number: int, *, title: str = None
-):
+def should_be_here(driver: webdriver, case_study_number: int, *, title: str = None):
     take_screenshot(driver, NAME)
     for element_name, selector in CASE_STUDIES[case_study_number].items():
-        element = find_element(
-            driver, by_css=selector, element_name=element_name
-        )
+        element = find_element(driver, by_css=selector, element_name=element_name)
         check_if_element_is_visible(element, element_name)
         if title:
             if element_name in ["title", "breadcrumb"]:

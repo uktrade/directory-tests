@@ -36,20 +36,14 @@ class URLS(Enum):
     HIRE_SKILLED_WORKERS_FOR_YOUR_UK_OPERATIONS = urljoin(
         BASE_URL, "hire-skilled-workers-for-your-uk-operations/"
     )
-    OPEN_A_BUSINESS_BANK_ACCOUNT = urljoin(
-        BASE_URL, "open-a-uk-business-bank-account/"
-    )
-    SET_UP_A_COMPANY_IN_THE_UK = urljoin(
-        BASE_URL, "set-up-a-company-in-the-uk/"
-    )
+    OPEN_A_BUSINESS_BANK_ACCOUNT = urljoin(BASE_URL, "open-a-uk-business-bank-account/")
+    SET_UP_A_COMPANY_IN_THE_UK = urljoin(BASE_URL, "set-up-a-company-in-the-uk/")
 
 
 SECTIONS = {
     "header": {
         "self": Selector(By.ID, "invest-header"),
-        "logo": Selector(
-            By.CSS_SELECTOR, "#invest-header > div.header-bar  a"
-        ),
+        "logo": Selector(By.CSS_SELECTOR, "#invest-header > div.header-bar  a"),
     },
     "beta bar": {
         "self": Selector(By.ID, "header-beta-bar"),
@@ -60,8 +54,7 @@ SECTIONS = {
     "industry accordions": {
         "self": Selector(By.CSS_SELECTOR, "section.industry-page-accordions"),
         "accordion expanders": Selector(
-            By.CSS_SELECTOR,
-            "section.industry-page-accordions a.accordion-expander",
+            By.CSS_SELECTOR, "section.industry-page-accordions a.accordion-expander"
         ),
     },
     "report this page": {
@@ -71,20 +64,16 @@ SECTIONS = {
     "footer": {
         "self": Selector(By.ID, "invest-footer"),
         "uk gov logo": Selector(
-            By.CSS_SELECTOR,
-            "#invest-footer div.footer-branding > img:nth-child(1)",
+            By.CSS_SELECTOR, "#invest-footer div.footer-branding > img:nth-child(1)"
         ),
         "invest logo": Selector(
-            By.CSS_SELECTOR,
-            "#invest-footer div.footer-branding > img:nth-child(2)",
+            By.CSS_SELECTOR, "#invest-footer div.footer-branding > img:nth-child(2)"
         ),
     },
 }
 
 
-def visit(
-    executor: Executor, *, first_time: bool = False, page_name: str = None
-):
+def visit(executor: Executor, *, first_time: bool = False, page_name: str = None):
     if page_name:
         enum_key = (
             page_name.lower()

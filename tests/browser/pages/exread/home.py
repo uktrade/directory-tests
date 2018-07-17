@@ -36,12 +36,8 @@ NEW_TO_EXPORTING_LINK = "#personas-section-new"
 OCCASIONAL_EXPORTER_LINK = "#personas-section-occasional"
 REGULAR_EXPORTED_LINK = "#personas-section-regular"
 FIND_A_BUYER_SERVICE_LINK = "#services-section-find-a-buyer-link"
-SELLING_ONLINE_OVERSEAS_SERVICE_LINK = (
-    "#services-section-selling-online-overseas-link"
-)
-EXPORT_OPPORTUNITIES_SERVICE_LINK = (
-    "#services-section-export-opportunities-link"
-)
+SELLING_ONLINE_OVERSEAS_SERVICE_LINK = "#services-section-selling-online-overseas-link"
+EXPORT_OPPORTUNITIES_SERVICE_LINK = "#services-section-export-opportunities-link"
 CAROUSEL_INDICATORS_SECTION = "#carousel  div.ed-carousel__indicators"
 CAROUSEL_INDICATORS = ".ed-carousel__indicator"
 CAROUSEL_PREV_BUTTON = "#carousel label.ed-carousel__control--backward"
@@ -56,9 +52,7 @@ CUSTOMER_INSIGHT_LINK = "#guidance-section-customer-insight-link"
 FINANCE_LINK = "#guidance-section-finance-link"
 BUSINESS_LINK = "#guidance-section-business-planning-link"
 GETTING_PAID_LINK = "#guidance-section-getting-paid-link"
-OPERATIONS_AND_COMPLIANCE_LINK = (
-    "#guidance-section-operations-and-compliance-link"
-)
+OPERATIONS_AND_COMPLIANCE_LINK = "#guidance-section-operations-and-compliance-link"
 CAROUSEL = {
     "itself": "#carousel",
     "title": "#case-studies-section-title",
@@ -215,9 +209,7 @@ def should_see_section(driver: webdriver, name: str):
 
 def should_see_link_to(driver: webdriver, section: str, item_name: str):
     item_selector = SECTIONS[section.lower()][item_name.lower()]
-    menu_item = find_element(
-        driver, by_css=item_selector, element_name=item_name
-    )
+    menu_item = find_element(driver, by_css=item_selector, element_name=item_name)
     with assertion_msg(
         "It looks like '%s' in '%s' section is not visible", item_name, section
     ):
@@ -250,8 +242,7 @@ def continue_export_journey(driver: webdriver):
 def get_number_of_current_carousel_article(driver: webdriver) -> int:
     indicators = find_elements(driver, by_css=CAROUSEL_INDICATORS)
     opacities = [
-        (k, float(v.value_of_css_property("opacity")))
-        for k, v in enumerate(indicators)
+        (k, float(v.value_of_css_property("opacity"))) for k, v in enumerate(indicators)
     ]
     active_indicator = [opacity[0] for opacity in opacities if opacity[1] == 1]
     return active_indicator[0] + 1
@@ -324,22 +315,16 @@ def get_case_study_title(driver: webdriver, case_number: str) -> str:
     case_study_numbers = {"first": 1, "second": 2, "third": 3}
     case_number = case_study_numbers[case_number.lower()]
     link_selector = CASE_STUDY_LINK.format(case_number)
-    case_study_link = find_element(
-        driver, by_css=link_selector, wait_for_it=False
-    )
+    case_study_link = find_element(driver, by_css=link_selector, wait_for_it=False)
     return case_study_link.text.strip()
 
 
 def open(driver: webdriver, group: str, element: str):
     selector = SECTIONS[group.lower()][element.lower()]
-    link = find_element(
-        driver, by_css=selector, element_name=element, wait_for_it=True
-    )
+    link = find_element(driver, by_css=selector, element_name=element, wait_for_it=True)
     check_if_element_is_visible(link, element_name=element)
     link.click()
-    take_screenshot(
-        driver, NAME + " after clicking on: %s link".format(element)
-    )
+    take_screenshot(driver, NAME + " after clicking on: %s link".format(element))
 
 
 def play_video(driver: webdriver, *, play_time: int = 5):
@@ -356,9 +341,7 @@ def get_video_watch_time(driver: webdriver) -> int:
     watch_time_js = 'return document.querySelector("{}").currentTime'.format(
         PROMO_VIDEO
     )
-    duration_js = 'return document.querySelector("{}").duration'.format(
-        PROMO_VIDEO
-    )
+    duration_js = 'return document.querySelector("{}").duration'.format(PROMO_VIDEO)
     watch_time = driver.execute_script(watch_time_js)
     duration = driver.execute_script(duration_js)
     logging.debug("Video watch time: %d", watch_time)

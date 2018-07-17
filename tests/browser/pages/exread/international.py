@@ -33,10 +33,7 @@ LEARN_MORE = "section.international-links article:nth-child(3) > a"
 PLAN_YOUR_TRIP = "section.international-links article:nth-child(4) > a"
 BETA_FEEDBACK = "#header-beta-bar span > a"
 SELECTORS = {
-    "header bar": {
-        "itself": "#header-bar",
-        "language selector": LANGUAGE_SELECTOR,
-    },
+    "header bar": {"itself": "#header-bar", "language selector": LANGUAGE_SELECTOR},
     "header-menu": {"itself": "#header-menu", "logo": "#header-logo"},
     "intro": {
         "itself": "#content > section.international-intro",
@@ -89,9 +86,7 @@ def should_see_section(driver: webdriver, name: str):
     check_for_section(driver, SELECTORS, sought_section=name)
 
 
-def open(
-    driver: webdriver, group: str, element: str, *, same_tab: bool = True
-):
+def open(driver: webdriver, group: str, element: str, *, same_tab: bool = True):
     selector = SELECTORS[group.lower()][element.lower()]
     link = find_element(
         driver, by_css=selector, element_name=element, wait_for_it=False
@@ -104,6 +99,4 @@ def open(
     else:
         with wait_for_page_load_after_action(driver):
             link.click()
-    take_screenshot(
-        driver, NAME + " after clicking on: %s link".format(element)
-    )
+    take_screenshot(driver, NAME + " after clicking on: %s link".format(element))

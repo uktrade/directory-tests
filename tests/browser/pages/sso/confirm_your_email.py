@@ -20,10 +20,7 @@ URL = urljoin(DIRECTORY_UI_SSO_URL, "accounts/confirm-email/")
 PAGE_TITLE = "Confirm email Address"
 
 CONFIRM_LINK = "#content > div > div > form > button"
-EXPECTED_ELEMENTS = {
-    "title": "#content > div > div > h1",
-    "confirm link": CONFIRM_LINK,
-}
+EXPECTED_ELEMENTS = {"title": "#content > div > div > h1", "confirm link": CONFIRM_LINK}
 SELECTORS = {}
 
 

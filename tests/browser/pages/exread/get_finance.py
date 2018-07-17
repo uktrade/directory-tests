@@ -79,8 +79,5 @@ def check_elements_are_not_visible(driver: webdriver, elements: list):
     for element_name in elements:
         selector = UNEXPECTED_ELEMENTS[element_name.lower()]
         check_if_element_is_not_visible(
-            driver,
-            by_css=selector,
-            element_name=element_name,
-            wait_for_it=False,
+            driver, by_css=selector, element_name=element_name, wait_for_it=False
         )
