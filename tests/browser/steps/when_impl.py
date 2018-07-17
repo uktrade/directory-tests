@@ -31,8 +31,8 @@ from pages.exread import (
     international
 )
 from pages import fas
+from pages import sso
 from pages.sso import (
-    sso_common,
     sso_confirm_your_email,
     sso_registration,
     sso_registration_confirmation,
@@ -1388,7 +1388,7 @@ def registration_submit_form_and_verify_account(
     sso_registration.submit(driver)
     sso_registration_confirmation.should_be_here(driver)
     if fake_verification:
-        sso_common.verify_account(email)
+        sso.common.verify_account(email)
     else:
         registration_should_get_verification_email(context, actor_alias)
         registration_open_email_confirmation_link(context, actor_alias)

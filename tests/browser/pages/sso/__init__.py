@@ -1,4 +1,5 @@
 __all__ = [
+    "common",
     "sso_confirm_your_email",
     "sso_profile_about",
     "sso_registration",
