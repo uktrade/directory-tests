@@ -6,7 +6,7 @@ from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
-from utils import assertion_msg, find_element, take_screenshot
+from utils import find_element, take_screenshot
 
 from pages import (
     AssertionExecutor,
@@ -34,8 +34,8 @@ SECTIONS = {
         "feedback link": Selector(By.CSS_SELECTOR, "#header-beta-bar a"),
     },
     "hero": {"self": Selector(By.CSS_SELECTOR, "#content > section.hero")},
-    "industries": {
-        "self": Selector(By.CSS_SELECTOR, "section.industry-page-accordions"),
+    "sectors": {
+        "self": Selector(By.CSS_SELECTOR, "section.industries"),
         "industry cards": Selector(
             By.CSS_SELECTOR, "section.industries a.labelled-card"
         ),
@@ -77,8 +77,16 @@ def open_link(driver: WebDriver, name: str):
     driver.find_element_by_link_text(name).click()
 
 
+def clean_name(name: str) -> str:
+    return (
+        name.replace("Invest - ", "")
+            .replace("industry", "")
+            .strip()
+    )
+
+
 def open_industry(driver: WebDriver, industry_name: str):
-    industry_name = industry_name.replace("Invest - ", "")
+    industry_name = clean_name(industry_name)
     industry_link = find_element(
         driver,
         by_partial_link_text=industry_name,
