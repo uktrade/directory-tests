@@ -86,7 +86,8 @@ PAGES = PageObjects("PageObjects", names=get_page_objects(pages))
 
 
 def get_page_object(service_and_page: str) -> ModuleType:
-    assert " - " in service_and_page, "Invalid Service & Page name"
+    assert " - " in service_and_page, (
+        f"Invalid Service & Page name: {service_and_page}")
     parts = service_and_page.split(" - ")
     service = parts[0]
     name = parts[1]

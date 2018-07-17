@@ -97,15 +97,15 @@ def open_group_element(
     context: Context, group: str, element: str, location: str
 ):
     driver = context.driver
-    if location.lower() == "home page":
+    if location.lower() == "export readiness - home":
         exread.home.open(driver, group, element)
-    elif location.lower() in ["header menu", "header"]:
+    elif location.lower() in "export readiness - header":
         exread.header.open(driver, group, element)
-    elif location.lower() in ["footer links", "footer"]:
+    elif location.lower() in "export readiness - footer":
         exread.footer.open(driver, group, element)
-    elif location.lower() == "personalised journey":
+    elif location.lower() == "export readiness - personalised journey":
         exread.personalised_journey.open(driver, group, element)
-    elif location.lower() == "international page":
+    elif location.lower() == "export readiness - international page":
         exread.international.open(driver, group, element, same_tab=True)
     else:
         raise KeyError("Could not recognize location: {}".format(location))
@@ -1257,7 +1257,7 @@ def open_link(
 def open_service_link_on_interim_page(
     context: Context, actor_alias: str, service: str
 ):
-    page_name = "interim {}".format(service)
+    page_name = "export readiness - interim {}".format(service)
     page = get_page_object(page_name)
     assert hasattr(page, "go_to_service")
     page.go_to_service(context.driver)

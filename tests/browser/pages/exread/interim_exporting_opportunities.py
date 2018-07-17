@@ -31,6 +31,7 @@ EXPECTED_ELEMENTS = {
     "go to export opportunities": SERVICE_BUTTON,
     "is there anything wrong with this page?": REPORT_THIS_PAGE_LINK,
 }
+SELECTORS = {}
 
 
 def visit(driver: webdriver, *, first_time: bool = False):

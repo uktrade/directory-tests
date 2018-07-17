@@ -40,14 +40,14 @@ Feature: Header-Footer
 
     Examples:
       | selected                            |
-      | Export Opportunities                |
+      | Export Opportunities - Home         |
 
     @bug
     @TT-111
     @fixme
     Examples:
       | selected                            |
-      | Selling Online Overseas             |
+      | Selling Online Overseas - Home      |
 
 
   @ED-3587

@@ -11,10 +11,12 @@ from pages.common_actions import (
     wait_for_page_load_after_action,
 )
 
-NAME = "ExRed Footer"
+NAME = "Footer"
+SERVICE = "Export Readiness"
+TYPE = "header"
 URL = None
 
-SECTIONS = {
+SELECTORS = {
     "logos": {"dit logo": "#footer-dit-logo", "eig logo": "#footer-eig-logo"},
     "export readiness": {
         "label": "#footer-export-readiness-links",
@@ -55,11 +57,11 @@ SECTIONS = {
 
 
 def should_see_all_menus(driver: webdriver):
-    check_for_expected_sections_elements(driver, SECTIONS)
+    check_for_expected_sections_elements(driver, SELECTORS)
 
 
 def should_see_link_to(driver: webdriver, section: str, item_name: str):
-    item_selector = SECTIONS[section.lower()][item_name.lower()]
+    item_selector = SELECTORS[section.lower()][item_name.lower()]
     menu_item = find_element(driver, by_css=item_selector, element_name=item_name)
     with assertion_msg(
         "It looks like '%s' in '%s' section is not visible", item_name, section
@@ -68,7 +70,7 @@ def should_see_link_to(driver: webdriver, section: str, item_name: str):
 
 
 def open(driver: webdriver, group: str, element: str):
-    link = SECTIONS[group.lower()][element.lower()]
+    link = SELECTORS[group.lower()][element.lower()]
     button = find_element(driver, by_css=link, element_name=element, wait_for_it=False)
     with wait_for_page_load_after_action(driver):
         button.click()
@@ -76,5 +78,5 @@ def open(driver: webdriver, group: str, element: str):
 
 
 def click_on_page_element(driver: webdriver, element_name: str):
-    find_and_click_on_page_element(driver, SECTIONS, element_name)
+    find_and_click_on_page_element(driver, SELECTORS, element_name)
     take_screenshot(driver, NAME + " after clicking on " + element_name)

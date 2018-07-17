@@ -16,7 +16,9 @@ from pages.common_actions import (
 )
 from settings import DIT_FAVICON_MD5_CHECKSUM, DIT_LOGO_MD5_CHECKSUM
 
-NAME = "ExRed Header"
+NAME = "Header"
+SERVICE = "Export Readiness"
+TYPE = "header"
 URL = None
 
 
@@ -30,7 +32,7 @@ SIGN_IN_LINK = "#header-sign-in-link"
 PROFILE_LINK = "#header-profile-link"
 SIGN_OUT_LINK = "#header-sign-out-link"
 LANGUAGE_SELECTOR = "#header-bar .LanguageSelectorDialog-Tracker"
-SECTIONS = {
+SELECTORS = {
     "export readiness": {
         "menu": "#export-readiness-links",
         "new": "#header-export-readiness-new",
@@ -67,8 +69,8 @@ SECTIONS = {
 
 
 def should_see_all_links(driver: webdriver):
-    for section in SECTIONS:
-        for element_name, element_selector in SECTIONS[section].items():
+    for section in SELECTORS:
+        for element_name, element_selector in SELECTORS[section].items():
             logging.debug(
                 "Looking for '%s' element in '%s' section with '%s' selector",
                 element_name,
@@ -87,10 +89,10 @@ def should_see_all_links(driver: webdriver):
 
 
 def should_see_link_to(driver: webdriver, section: str, item_name: str):
-    item_selector = SECTIONS[section.lower()][item_name.lower()]
+    item_selector = SELECTORS[section.lower()][item_name.lower()]
     if section.lower() in ["export readiness", "guidance", "services"]:
         logging.debug("Open the menu by sending 'Right Arrow' key")
-        menu_selector = SECTIONS[section.lower()]["menu"]
+        menu_selector = SELECTORS[section.lower()]["menu"]
         menu = find_element(driver, by_css=menu_selector)
         menu.send_keys(Keys.ENTER)
     menu_item = find_element(driver, by_css=item_selector)
@@ -111,9 +113,9 @@ def open(driver: webdriver, group: str, element: str):
     It's because "moving" the cursor diagonally can cause driver to "lose"
     the focus of the menu and which will make menu to fold.
     """
-    if "menu" in SECTIONS[group.lower()]:
+    if "menu" in SELECTORS[group.lower()]:
         # Open the menu by sending "Enter" key
-        menu_selector = SECTIONS[group.lower()]["menu"]
+        menu_selector = SELECTORS[group.lower()]["menu"]
         menu = find_element(
             driver,
             by_css=menu_selector,
@@ -121,7 +123,7 @@ def open(driver: webdriver, group: str, element: str):
             wait_for_it=False,
         )
         menu.send_keys(Keys.ENTER)
-    menu_item_selector = SECTIONS[group.lower()][element.lower()]
+    menu_item_selector = SELECTORS[group.lower()][element.lower()]
     menu_item = find_element(driver, by_css=menu_item_selector)
     with assertion_msg("%s menu item: '%s' is not visible", group, element):
         assert menu_item.is_displayed()
@@ -188,5 +190,5 @@ def check_dit_favicon(driver: webdriver):
 
 
 def click_on_page_element(driver: webdriver, element_name: str):
-    find_and_click_on_page_element(driver, SECTIONS, element_name)
+    find_and_click_on_page_element(driver, SELECTORS, element_name)
     take_screenshot(driver, NAME + " after clicking on " + element_name)
