@@ -145,7 +145,7 @@ def guidance_open_random_category(
     context: Context,
     actor_alias: str,
     *,
-    location: str = "personalised journey"
+    location: str = "export readiness - personalised journey"
 ):
     category = random.choice(list(GUIDANCE.keys()))
     guidance_open_category(context, actor_alias, category, location)
@@ -1385,7 +1385,7 @@ def registration_submit_form_and_verify_account(
 def registration_create_and_verify_account(
     context: Context, actor_alias: str, *, fake_verification: bool = True
 ):
-    visit_page(context, actor_alias, "Home")
+    visit_page(context, actor_alias, "Export Readiness - Home")
     registration_go_to(context, actor_alias, "top bar")
     registration_submit_form_and_verify_account(
         context, actor_alias, fake_verification=fake_verification
