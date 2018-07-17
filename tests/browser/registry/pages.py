@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """ExRed Page Object Registry"""
 
-from pages.exopps import exopps_home
+from pages import exopps
 from pages.exread import (
     exread_article_common,
     exread_article_list,
@@ -109,8 +109,8 @@ EXRED_PAGE_REGISTRY = {
     "visit britain": {"url": visit_britain_home.URL, "po": visit_britain_home},
     "selling online overseas": {"url": soo.home.URL, "po": soo.home},
     "export opportunities": {
-        "url": exopps_home.URL,
-        "po": exopps_home,
+        "url": exopps.home.URL,
+        "po": exopps.home,
     },
     "events": {"url": events_home.URL, "po": events_home},
     "get finance": {"url": exread_get_finance.URL, "po": exread_get_finance},

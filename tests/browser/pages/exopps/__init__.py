@@ -1,1 +1,1 @@
-__all__ = ["exopps_home"]
+__all__ = ["home"]
