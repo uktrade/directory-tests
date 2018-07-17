@@ -697,10 +697,8 @@ def should_see_page_in_preferred_language(
         context.driver, preferred_language
     )
     logging.debug(
-        "%s can see '%' page in '%s",
-        actor_alias,
-        context.driver.current_url,
-        preferred_language,
+        f"{actor_alias} can see '{context.driver.current_url}' page in "
+        f"'{preferred_language}",
     )
 
 

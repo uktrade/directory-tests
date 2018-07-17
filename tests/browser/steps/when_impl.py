@@ -1520,10 +1520,8 @@ def language_selector_change_to(
     actor = get_actor(context, actor_alias)
     visited_page = actor.visited_page
     logging.debug(
-        "%s decided to change language on %s to %s",
-        actor_alias,
-        visited_page,
-        preferred_language,
+        f"{actor_alias} decided to change language on {visit_page} to"
+        f" {preferred_language}",
     )
     language_selector_open(context, actor_alias)
     common_language_selector.change_to(

@@ -356,7 +356,7 @@ def init_loggers(context: Context, *, task_id: str = None):
     """Will initialize console and file loggers."""
     # configure the formatter
     fmt = (
-        "%(asctime)s-%(filename)s[line:%(lineno)d]-%(name)s-%(levelname)s: "
+        u"%(asctime)s-%(filename)s[line:%(lineno)d]-%(name)s-%(levelname)s: "
         "%(message)s"
     )
     log_formatter = logging.Formatter(fmt)
