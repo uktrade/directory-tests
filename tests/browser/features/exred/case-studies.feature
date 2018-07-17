@@ -5,7 +5,7 @@ Feature: Case Studies
   @ED-2655
   @home-page
   Scenario Outline: Any Exporter should get to "<relevant>" case study from Case Studies carousel on the home page
-    Given "Robert" visits the "Home" page
+    Given "Robert" visits the "Export Readiness - Home" page
 
     When "Robert" goes to the "<relevant>" Case Study via carousel
 
@@ -46,7 +46,7 @@ Feature: Case Studies
     When "Robert" decides to create her personalised journey page
 
     Then "Robert" should be on the Personalised Journey page for "<relevant>" exporters
-    And "Robert" should not see "case studies" sections on "personalised journey" page
+    And "Robert" should not see "case studies" sections on "Export Readiness - Personalised Journey" page
 
     Examples:
       | relevant |
