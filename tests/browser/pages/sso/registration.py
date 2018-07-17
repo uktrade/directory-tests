@@ -15,8 +15,8 @@ from pages.common_actions import (
 )
 from settings import DIRECTORY_UI_SSO_URL
 
-NAME = "SSO Registration page"
-SERVICE = "Single sign-on"
+NAME = "Registration"
+SERVICE = "Single Sign-On"
 TYPE = "registration"
 URL = urljoin(DIRECTORY_UI_SSO_URL, "accounts/signup/")
 PAGE_TITLE = "Register - great.gov.uk"

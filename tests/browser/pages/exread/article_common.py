@@ -22,7 +22,9 @@ from pages.common_actions import (
 )
 from registry.articles import get_articles
 
-NAME = "ExRed Common Articles"
+NAME = "Article"
+SERVICE = "Export Readiness"
+TYPE = "article"
 URL = None
 WORDS_PER_SECOND = 1.5  # Average word per second on screen
 
@@ -60,7 +62,7 @@ SHARE_BUTTONS = {
     "email": EMAIL_BUTTON,
 }
 
-SECTIONS = {
+SELECTORS = {
     "share buttons": SHARE_BUTTONS,
     "save progress": {"register link": REGISTER, "sign-in link": SIGN_IN},
     "breadcrumbs": {"breadcrumbs": BREADCRUMBS},
@@ -85,17 +87,17 @@ def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
     import copy
 
-    all_except_save_progress = copy.copy(SECTIONS)
+    all_except_save_progress = copy.copy(SELECTORS)
     all_except_save_progress.pop("save progress")
     check_for_expected_sections_elements(driver, all_except_save_progress)
 
 
 def should_see_section(driver: webdriver, name: str):
-    check_for_section(driver, SECTIONS, sought_section=name)
+    check_for_section(driver, SELECTORS, sought_section=name)
 
 
 def should_not_see_section(driver: webdriver, name: str):
-    section = SECTIONS[name.lower()]
+    section = SELECTORS[name.lower()]
     for key, selector in section.items():
         check_if_element_is_not_visible(driver, by_css=selector, element_name=key)
 

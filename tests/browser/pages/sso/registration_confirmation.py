@@ -13,8 +13,8 @@ from pages.common_actions import (
 )
 from settings import DIRECTORY_UI_SSO_URL
 
-NAME = "SSO Registration Confirmation page"
-SERVICE = "Single sign-on"
+NAME = "Registration Confirmation"
+SERVICE = "Single Sign-On"
 TYPE = "registration"
 URL = urljoin(DIRECTORY_UI_SSO_URL, "accounts/confirm-email/")
 

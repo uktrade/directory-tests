@@ -14,11 +14,11 @@ from pages.common_actions import (
 )
 from settings import DIRECTORY_UI_PROFILE_URL
 
-NAME = "Profile"
-SERVICE = "Single sign-on"
+NAME = "Profile about"
+SERVICE = "Single Sign-On"
 TYPE = "profile"
 URL = urljoin(DIRECTORY_UI_PROFILE_URL, "about/")
-PAGE_TITLE = "Exporting is Great Profile - GREAT.gov.uk"
+PAGE_TITLE = "Exporting is Great Account - GREAT.gov.uk"
 
 EXPECTED_ELEMENTS = {
     "title": ".sso-profile-toolbar-labels-container > h1",

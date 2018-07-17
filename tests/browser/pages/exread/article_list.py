@@ -16,7 +16,9 @@ from pages.common_actions import (
     wait_for_page_load_after_action,
 )
 
-NAME = "ExRed Article List"
+NAME = "Article List"
+SERVICE = "Export Readiness"
+TYPE = "article list"
 URL = None
 
 SHOW_MORE_BUTTON = "#js-paginate-list-more"
@@ -33,7 +35,7 @@ IS_THERE_ANYTHING_WRONG_WITH_THIS_PAGE_LINK = "section.error-reporting a"
 REGISTER = "#articles > div > div.scope-indicator > p > a:nth-child(1)"
 SIGN_IN = "#articles > div > div.scope-indicator > p > a:nth-child(2)"
 
-SECTIONS = {
+SELECTORS = {
     "hero": {
         "itself": "#content > section.hero-section",
         "heading title": ARTICLE_CATEGORY,
@@ -58,17 +60,17 @@ def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
     import copy
 
-    all_except_save_progress = copy.copy(SECTIONS)
+    all_except_save_progress = copy.copy(SELECTORS)
     all_except_save_progress.pop("save progress")
     check_for_expected_sections_elements(driver, all_except_save_progress)
 
 
 def should_see_section(driver: webdriver, name: str):
-    check_for_section(driver, all_sections=SECTIONS, sought_section=name)
+    check_for_section(driver, all_sections=SELECTORS, sought_section=name)
 
 
 def should_not_see_section(driver: webdriver, name: str):
-    section = SECTIONS[name.lower()]
+    section = SELECTORS[name.lower()]
     for key, selector in section.items():
         check_if_element_is_not_visible(driver, by_css=selector, element_name=key)
 
