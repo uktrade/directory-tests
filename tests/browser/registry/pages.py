@@ -52,7 +52,7 @@ from pages.invest import (
     invest_industries,
     invest_industry,
 )
-from pages.soo import soo_home
+from pages import soo
 from pages.sso import (
     sso_profile_about,
     sso_registration,
@@ -107,10 +107,7 @@ EXRED_PAGE_REGISTRY = {
     },
     "british council": {"url": british_council_home.URL, "po": british_council_home},
     "visit britain": {"url": visit_britain_home.URL, "po": visit_britain_home},
-    "selling online overseas": {
-        "url": soo_home.URL,
-        "po": soo_home,
-    },
+    "selling online overseas": {"url": soo.home.URL, "po": soo.home},
     "export opportunities": {
         "url": exopps_home.URL,
         "po": exopps_home,
