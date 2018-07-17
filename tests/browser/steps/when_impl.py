@@ -116,8 +116,8 @@ def guidance_open_category(
 ):
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
-    if location.lower() != "personalised journey":
-        visit_page(context, actor_alias, "Home")
+    if location.lower() != "export readiness - personalised journey":
+        visit_page(context, actor_alias, "export readiness - home")
     logging.debug(
         "%s is about to open Guidance '%s' category from %s",
         actor_alias,
@@ -581,7 +581,7 @@ def triage_classify_as(
         incorporated = random.choice([True, False])
 
     if start_from_home_page:
-        visit_page(context, actor_alias, "home")
+        visit_page(context, actor_alias, "export readiness - home")
 
     logging.debug(
         "%s decided to classify himself/herself as %s Exporter",
@@ -806,7 +806,7 @@ def export_readiness_open_category(
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
     if location.lower() != "personalised journey":
-        visit_page(context, actor_alias, "Home")
+        visit_page(context, actor_alias, "export readiness - home")
     logging.debug(
         "%s is about to open Export Readiness '%s' category from %s",
         actor_alias,
@@ -1117,7 +1117,11 @@ def articles_open_group(
         "export readiness": ["new", "occasional", "regular"],
     }
     category = random.choice(categories[group.lower()])
-    locations = ["header menu", "footer links", "home page"]
+    locations = [
+        "export readiness - header",
+        "export readiness - footer",
+        "export readiness - home"
+    ]
     location = location or random.choice(locations)
 
     if not get_actor(context, actor_alias):

@@ -7,7 +7,7 @@ Feature: Articles
   @articles
   @<category>
   Scenario Outline: Any Exporter accessing "<category>" Articles through the Guidance Article List should be able to navigate to the next article
-    Given "Robert" accessed "<category>" guidance articles using "home page"
+    Given "Robert" accessed "<category>" guidance articles using "Export Readiness - Home"
     And "Robert" opened first Article from the list
 
     When "Robert" decides to read through all Articles from selected list
@@ -50,7 +50,7 @@ Feature: Articles
   @articles
   @<category>
   Scenario Outline: Any Exporter accessing the last Article from the Guidance Article "<category>" List should be able to navigate to the "<next>" Articles
-    Given "Robert" accessed "<category>" guidance articles using "home page"
+    Given "Robert" accessed "<category>" guidance articles using "Export Readiness - Home"
     And "Robert" opened any Article but the last one
 
     When "Robert" decides to read through all remaining Articles from selected list
@@ -58,12 +58,12 @@ Feature: Articles
     Then "Robert" should see a link to the fist article from the "<next>" category
 
     Examples:
-      | category                  | next                      |
-      | Market research           | Customer insight          |
-      | Customer insight          | Finance                   |
-      | Finance                   | Business planning         |
-      | Business planning         | Getting paid              |
-      | Getting paid              | Operations and Compliance |
+      | category          | next                      |
+      | Market research   | Customer insight          |
+      | Customer insight  | Finance                   |
+      | Finance           | Business planning         |
+      | Business planning | Getting paid              |
+      | Getting paid      | Operations and Compliance |
 
 
   @ED-2616
@@ -71,7 +71,7 @@ Feature: Articles
   @articles
   @<category>
   Scenario Outline: Any Exporter accessing the last Article from the last Guidance Article category "<category>" should not see link to the next article
-    Given "Robert" accessed "<category>" guidance articles using "home page"
+    Given "Robert" accessed "<category>" guidance articles using "Export Readiness - Home"
     And "Robert" opened any Article but the last one
 
     When "Robert" decides to read through all remaining Articles from selected list
@@ -111,7 +111,7 @@ Feature: Articles
     When "Robert" decides to create his personalised journey page
 
     Then "Robert" should be on the Personalised Journey page for "regular" exporters
-    And "Robert" should see "Guidance" section on "personalised journey" page
+    And "Robert" should see "Guidance" section on "Export Readiness - Personalised Journey" page
 
 
   @ED-2638
@@ -142,7 +142,7 @@ Feature: Articles
     Given "Robert" was classified as "regular" exporter in the triage process
     And "Robert" decided to create her personalised journey page
 
-    When "Robert" goes to the "<specific>" Guidance Articles via "personalised journey"
+    When "Robert" goes to the "<specific>" Guidance Articles via "Export Readiness - Personalised Journey"
     And "Robert" opens any Article but the last one
     And "Robert" decides to read through all remaining Articles from selected list
 
@@ -162,7 +162,7 @@ Feature: Articles
   @<group>
   @<location>
   Scenario Outline: Article Indicators should be updated accordingly after opening "<group>" Article via "<location>"
-    Given "Robert" went to randomly selected "<group>" Article category via "<location>"
+    Given "Robert" went to randomly selected "<group>" Article category via "Export Readiness - <location>"
     And "Robert" shows all of the articles on the page whenever possible
 
     When "Robert" opens any article on the list
@@ -172,13 +172,13 @@ Feature: Articles
     And "Robert" should see that Time to Complete remaining chapters decreased or remained unchanged for short articles
 
     Examples:
-      | group            | location     |
-      | Export Readiness | header menu  |
-      | Export Readiness | home page    |
-      | Export Readiness | footer links |
-      | Guidance         | header menu  |
-      | Guidance         | home page    |
-      | Guidance         | footer links |
+      | group            | location |
+      | Export Readiness | header   |
+      | Export Readiness | home     |
+      | Export Readiness | footer   |
+      | Guidance         | header   |
+      | Guidance         | home     |
+      | Guidance         | footer   |
 
 
   @ED-2654
@@ -218,8 +218,8 @@ Feature: Articles
     And "Robert" should see that Time to Complete remaining chapters decreased or remained unchanged for short articles
 
     Examples:
-      | relevant | group    | location             |
-      | Regular  | Guidance | personalised journey |
+      | relevant | group    | location                                |
+      | Regular  | Guidance | Export Readiness - Personalised Journey |
 
 
   @wip
