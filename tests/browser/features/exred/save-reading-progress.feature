@@ -161,7 +161,6 @@ Feature: Save reading progress
       | Regular  | home     |
 
 
-    @1
   @ED-2773
   @<group>
   @<location>

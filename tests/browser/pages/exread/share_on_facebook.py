@@ -12,17 +12,19 @@ from pages.common_actions import (
     take_screenshot,
 )
 
-NAME = "Share on Facebook page"
+NAME = "Share on Facebook"
+SERVICE = "facebook"
+TYPE = "share"
 URL = urljoin("https://www.facebook.com/", "share.php?u=")
 PAGE_TITLE = "Facebook"
 
-EXPECTED_ELEMENTS = {"header": "#homelink"}
+SELECTORS = {"header": "#homelink"}
 
 
 def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
     check_title(driver, PAGE_TITLE, exact_match=True)
-    check_for_expected_elements(driver, EXPECTED_ELEMENTS)
+    check_for_expected_elements(driver, SELECTORS)
 
 
 def extract_shared_url(url: str) -> str:

@@ -1221,7 +1221,7 @@ def case_studies_go_to(context: Context, actor_alias: str, case_number: str):
 def case_studies_go_to_random(
     context: Context, actor_alias: str, page_name: str
 ):
-    assert page_name.lower() in ["home"]
+    assert page_name.lower() in ["export readiness - home"]
     visit_page(context, actor_alias, page_name)
     case_number = random.choice(["first", "second", "third"])
     case_studies_go_to(context, actor_alias, case_number)

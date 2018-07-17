@@ -12,19 +12,21 @@ from pages.common_actions import (
     take_screenshot,
 )
 
-NAME = "Share on LinkedIn page"
+NAME = "Share on LinkedIn"
+SERVICE = "linkedin"
+TYPE = "share"
 URL = urljoin("https://www.linkedin.com/", "shareArticle")
-PAGE_TITLE = "Sign Up | LinkedIn"
+PAGE_TITLE = "LinkedIn"
 
-EXPECTED_ELEMENTS = {
+SELECTORS = {
     "logo": "#uno-reg-join > div > div > div > div.header-container > header"
 }
 
 
 def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
-    check_title(driver, PAGE_TITLE, exact_match=True)
-    check_for_expected_elements(driver, EXPECTED_ELEMENTS)
+    check_title(driver, PAGE_TITLE, exact_match=False)
+    check_for_expected_elements(driver, SELECTORS)
 
 
 def extract_shared_url(url: str) -> str:

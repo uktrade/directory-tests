@@ -12,18 +12,20 @@ from pages.common_actions import (
     take_screenshot,
 )
 
-NAME = "Share on Twitter page"
+NAME = "Share on Twitter"
+SERVICE = "twitter"
+TYPE = "share"
 URL = urljoin("https://twitter.com/", "intent/tweet?text=")
 PAGE_TITLE = "Post a Tweet on Twitter"
 
 MESSAGE_BOX = "#status"
-EXPECTED_ELEMENTS = {"logo": "#header > div > h1 > a", "message_box": MESSAGE_BOX}
+SELECTORS = {"logo": "#header > div > h1 > a", "message_box": MESSAGE_BOX}
 
 
 def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
     check_title(driver, PAGE_TITLE, exact_match=True)
-    check_for_expected_elements(driver, EXPECTED_ELEMENTS)
+    check_for_expected_elements(driver, SELECTORS)
 
 
 def check_if_populated(driver: webdriver, shared_url: str):

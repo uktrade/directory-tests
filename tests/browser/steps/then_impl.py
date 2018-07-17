@@ -579,7 +579,7 @@ def articles_read_counter_should_be_merged(context: Context, actor_alias: str):
 def articles_should_be_on_share_page(
     context: Context, actor_alias: str, social_media: str
 ):
-    page_name = "share on {}".format(social_media.lower())
+    page_name = f"{social_media} - share on {social_media}"
     social_media_page = get_page_object(page_name)
     assert hasattr(social_media_page, "should_be_here")
     social_media_page.should_be_here(context.driver)
@@ -589,7 +589,7 @@ def articles_should_be_on_share_page(
 def share_page_should_be_prepopulated(
     context: Context, actor_alias: str, social_media: str
 ):
-    page_name = "share on {}".format(social_media.lower())
+    page_name = f"{social_media} - share on {social_media}"
     social_media_page = get_page_object(page_name)
     assert hasattr(social_media_page, "check_if_populated")
     shared_url = context.article_url
