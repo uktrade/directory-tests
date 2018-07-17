@@ -40,12 +40,6 @@ from settings import (
     TAKE_SCREENSHOTS,
 )
 
-Executor = Union[WebDriver, Session]
-AssertionExecutor = Union[WebDriver, Response]
-Selector = namedtuple(
-    "Selector", ["by", "value", "in_desktop", "in_mobile", "in_horizontal"]
-)
-
 ScenarioData = namedtuple("ScenarioData", ["actors"])
 Actor = namedtuple(
     "Actor",
@@ -79,7 +73,13 @@ Actor = namedtuple(
     ],
 )
 VisitedArticle = namedtuple("VisitedArticle", ["index", "title", "time_to_read"])
+Executor = Union[WebDriver, Session]
+AssertionExecutor = Union[WebDriver, Response]
+Selector = namedtuple(
+    "Selector", ["by", "value", "in_desktop", "in_mobile", "in_horizontal"]
+)
 
+# define default values for various named tuples
 Actor.__new__.__defaults__ = (None,) * len(Actor._fields)
 VisitedArticle.__new__.__defaults__ = (None,) * len(VisitedArticle._fields)
 Selector.__new__.__defaults__ = (None, None, True, True, True)
@@ -425,7 +425,7 @@ def wait_for_visibility(
 
 def check_if_element_is_not_present(
     driver: WebDriver, *, by_css: str = None, by_id: str = None, element_name: str = ""
-) -> WebElement:
+):
     """Find element by CSS selector or it's ID."""
     assert by_id or by_css, "Provide ID or CSS selector"
     try:
