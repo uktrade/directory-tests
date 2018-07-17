@@ -16,7 +16,9 @@ from pages.common_actions import (
 )
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
-NAME = "Find a Supplier - Contact Us page"
+NAME = "Contact Us"
+SERVICE = "Find a Supplier"
+TYPE = "contact"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "industries/contact/")
 PAGE_TITLE = "Contact us - trade.great.gov.uk"
 
@@ -30,7 +32,7 @@ COUNTRY = "#id_country"
 BODY = "#id_body"
 SOURCE = "#id_source"
 ACCEPT_TC = "#id_terms_agreed-label"
-SECTIONS = {
+SELECTORS = {
     "form": {
         "itself": "#lede form",
         "full name": FULL_NAME,
@@ -54,12 +56,12 @@ def visit(driver: webdriver, *, first_time: bool = False):
 def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
     check_title(driver, PAGE_TITLE, exact_match=True)
-    check_for_expected_sections_elements(driver, SECTIONS)
+    check_for_expected_sections_elements(driver, SELECTORS)
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
 def should_see_section(driver: webdriver, name: str):
-    check_for_section(driver, SECTIONS, sought_section=name)
+    check_for_section(driver, SELECTORS, sought_section=name)
 
 
 def fill_out(driver: webdriver, contact_us_details: dict):
@@ -70,14 +72,14 @@ def fill_out(driver: webdriver, contact_us_details: dict):
         value = contact_us_details[field_name]
         field = find_element(
             driver,
-            by_css=SECTIONS["form"][field_name],
+            by_css=SELECTORS["form"][field_name],
             element_name=field_name,
             wait_for_it=False,
         )
         field.send_keys(value)
 
     for menu_name in dropdown_menus:
-        selector = SECTIONS["form"][menu_name]
+        selector = SELECTORS["form"][menu_name]
         dropdown = find_element(
             driver,
             by_css=selector,

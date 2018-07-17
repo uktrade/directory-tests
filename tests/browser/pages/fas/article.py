@@ -12,10 +12,12 @@ from pages.common_actions import (
 )
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
-NAME = "Find a Supplier - Article page"
+NAME = "Article"
+SERVICE = "Find a Supplier"
+TYPE = "article"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "industry-articles/")
 
-SECTIONS = {
+SELECTORS = {
     "breadcrumbs": {"itself": "p.breadcrumbs", "home": "p.breadcrumbs a[href='/']"},
     "article": {
         "itself": "#industry-article-container",
@@ -39,5 +41,5 @@ SECTIONS = {
 def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
-    check_for_expected_sections_elements(driver, SECTIONS)
+    check_for_expected_sections_elements(driver, SELECTORS)
     logging.debug("All expected elements are visible on '%s' page", NAME)

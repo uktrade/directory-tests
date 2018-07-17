@@ -53,7 +53,9 @@ class URLS(Enum):
     TECHNOLOGY = urljoin(BASE_URL, "technology/")
 
 
-NAME = "Find a Supplier - Generic Industry page"
+NAME = "Generic Industry"
+SERVICE = "Find a Supplier"
+TYPE = "industry"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "industries/")
 PAGE_TITLE = "trade.great.gov.uk"
 
@@ -63,7 +65,7 @@ SEARCH_INPUT = "#companies-section form > input[name=term]"
 SEARCH_BUTTON = "#companies-section form > button[type=submit]"
 COMPANY_PROFILE_LINK = "#companies-section li:nth-child({number}) a.link"
 ARTICLE_LINK = "#articles-section article:nth-child({number}) a"
-SECTIONS = {
+SELECTORS = {
     "hero": {"itself": "#hero", "header": "#hero h2", "description": "#hero p"},
     "breadcrumbs": {
         "itself": "#content p.breadcrumbs",
@@ -112,12 +114,12 @@ def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
     check_title(driver, PAGE_TITLE, exact_match=False)
-    check_for_expected_sections_elements(driver, SECTIONS)
+    check_for_expected_sections_elements(driver, SELECTORS)
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
 def should_see_section(driver: webdriver, name: str):
-    check_for_section(driver, SECTIONS, sought_section=name)
+    check_for_section(driver, SELECTORS, sought_section=name)
 
 
 def clean_name(name: str) -> str:
@@ -151,7 +153,7 @@ def should_see_content_for(driver: webdriver, industry_name: str):
 
 
 def click_on_page_element(driver: webdriver, element_name: str):
-    find_and_click_on_page_element(driver, SECTIONS, element_name)
+    find_and_click_on_page_element(driver, SELECTORS, element_name)
     take_screenshot(driver, NAME + " after clicking on " + element_name)
 
 

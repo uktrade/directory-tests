@@ -12,10 +12,12 @@ from pages.common_actions import (
 )
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
-NAME = "Find a Supplier - Company Profile page"
+NAME = "Company Profile"
+SERVICE = "Find a Supplier"
+TYPE = "profile"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "suppliers/")
 
-SECTIONS = {
+SELECTORS = {
     "name": {"itself": "#content h1.company-name-title"},
     "company details": {
         "itself": "#company-details",
@@ -48,5 +50,5 @@ OPTIONAL_SECTIONS = {
 def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
-    check_for_expected_sections_elements(driver, SECTIONS)
+    check_for_expected_sections_elements(driver, SELECTORS)
     logging.debug("All expected elements are visible on '%s' page", NAME)

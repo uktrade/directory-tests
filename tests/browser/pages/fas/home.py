@@ -17,7 +17,9 @@ from pages.common_actions import (
 )
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
-NAME = "Find a Supplier Home page"
+NAME = "Home"
+SERVICE = "Find a Supplier"
+TYPE = "home"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "/")
 PAGE_TITLE = "Find UK suppliers - trade.great.gov.uk"
 
@@ -25,7 +27,7 @@ SEARCH_INPUT = "#id_term"
 SEARCH_SECTOR = "#id_sectors"
 SEARCH_BUTTON = "#search-area > form button"
 CONTACT_US_BUTTON = "#introduction-section a"
-SECTIONS = {
+SELECTORS = {
     "hero": {"itself": "section#hero"},
     "find uk suppliers": {
         "itself": "#search-area",
@@ -63,12 +65,12 @@ def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=True)
     check_title(driver, PAGE_TITLE, exact_match=True)
-    check_for_expected_sections_elements(driver, SECTIONS)
+    check_for_expected_sections_elements(driver, SELECTORS)
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
 def should_see_section(driver: webdriver, name: str):
-    check_for_section(driver, SECTIONS, sought_section=name)
+    check_for_section(driver, SELECTORS, sought_section=name)
 
 
 def search(driver: webdriver, *, keyword: str = None, sector: str = None):
@@ -100,7 +102,7 @@ def search(driver: webdriver, *, keyword: str = None, sector: str = None):
 
 
 def click_on_page_element(driver: webdriver, element_name: str):
-    find_and_click_on_page_element(driver, SECTIONS, element_name)
+    find_and_click_on_page_element(driver, SELECTORS, element_name)
     take_screenshot(driver, NAME + " after clicking on " + element_name)
 
 

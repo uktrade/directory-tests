@@ -12,11 +12,13 @@ from pages.common_actions import (
 )
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
-NAME = "Find a Supplier - Thank you for your message page"
+NAME = "Thank you for your message"
+SERVICE = "Find a Supplier"
+TYPE = "contact"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "industries/contact/")
 PAGE_TITLE = "Contact us - trade.great.gov.uk"
 
-SECTIONS = {
+SELECTORS = {
     "breadcrumbs": {"itself": "p.breadcrumbs"},
     "message": {
         "itself": "#lede",
@@ -29,5 +31,5 @@ SECTIONS = {
 def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
     check_title(driver, PAGE_TITLE, exact_match=True)
-    check_for_expected_sections_elements(driver, SECTIONS)
+    check_for_expected_sections_elements(driver, SELECTORS)
     logging.debug("All expected elements are visible on '%s' page", NAME)
