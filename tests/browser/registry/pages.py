@@ -31,17 +31,7 @@ from pages.external import (
     visit_britain_home,
 )
 from pages import fab
-from pages.fas import (
-    fas_article,
-    fas_company_profile,
-    fas_contact_us,
-    fas_empty_search_results,
-    fas_home,
-    fas_industries,
-    fas_industry,
-    fas_search_results,
-    fas_thank_you_for_your_message,
-)
+from pages import fas
 from pages.invest import (
     invest_contact_us,
     invest_feedback,
@@ -100,7 +90,7 @@ EXRED_PAGE_REGISTRY = {
         "po": exread_interim_exporting_opportunities,
     },
     "find a buyer": {"url": fab.home.URL, "po": fab.home},
-    "find a supplier": {"url": fas_home.URL, "po": fas_home},
+    "find a supplier": {"url": fas.home.URL, "po": fas.home},
     "create your export journey": {
         "url": exread_triage_create_your_export_journey.URL,
         "po": exread_triage_create_your_export_journey,
@@ -141,111 +131,111 @@ EXRED_PAGE_REGISTRY = {
 
 
 FAS_PAGE_REGISTRY = {
-    "fas landing": {"url": fas_home.URL, "po": fas_home},
+    "fas landing": {"url": fas.home.URL, "po": fas.home},
     "fas empty search results": {
-        "url": fas_empty_search_results.URL,
-        "po": fas_empty_search_results,
+        "url": fas.empty_search_results.URL,
+        "po": fas.empty_search_results,
     },
     "fas search results": {
-        "url": fas_search_results.URL,
-        "po": fas_search_results,
+        "url": fas.search_results.URL,
+        "po": fas.search_results,
     },
-    "fas contact us": {"url": fas_contact_us.URL, "po": fas_contact_us},
+    "fas contact us": {"url": fas.contact_us.URL, "po": fas.contact_us},
     "fas thank you for your message": {
-        "url": fas_thank_you_for_your_message.URL,
-        "po": fas_thank_you_for_your_message,
+        "url": fas.thank_you_for_your_message.URL,
+        "po": fas.thank_you_for_your_message,
     },
-    "fas industry": {"url": fas_industry.URL, "po": fas_industry},
-    "fas industries": {"url": fas_industries.URL, "po": fas_industries},
+    "fas industry": {"url": fas.industry.URL, "po": fas.industry},
+    "fas industries": {"url": fas.industries.URL, "po": fas.industries},
     "fas aerospace industry": {
-        "url": fas_industry.URLS.AEROSPACE,
-        "po": fas_industry,
+        "url": fas.industry.URLS.AEROSPACE,
+        "po": fas.industry,
     },
     "fas agritech industry": {
-        "url": fas_industry.URLS.AGRITECH,
-        "po": fas_industry,
+        "url": fas.industry.URLS.AGRITECH,
+        "po": fas.industry,
     },
     "fas automotive industry": {
-        "url": fas_industry.URLS.AUTOMOTIVE,
-        "po": fas_industry,
+        "url": fas.industry.URLS.AUTOMOTIVE,
+        "po": fas.industry,
     },
     "fas business and government partnerships industry": {
-        "url": fas_industry.URLS.BUSINESS_AND_GOVERNMENT_PARTNERSHIPS,
-        "po": fas_industry,
+        "url": fas.industry.URLS.BUSINESS_AND_GOVERNMENT_PARTNERSHIPS,
+        "po": fas.industry,
     },
     "fas consumer retail industry": {
-        "url": fas_industry.URLS.CONSUMER_RETAIL,
-        "po": fas_industry,
+        "url": fas.industry.URLS.CONSUMER_RETAIL,
+        "po": fas.industry,
     },
     "fas creative services industry": {
-        "url": fas_industry.URLS.CREATIVE_SERVICES,
-        "po": fas_industry,
+        "url": fas.industry.URLS.CREATIVE_SERVICES,
+        "po": fas.industry,
     },
     "fas cyber security industry": {
-        "url": fas_industry.URLS.CYBER_SECURITY,
-        "po": fas_industry,
+        "url": fas.industry.URLS.CYBER_SECURITY,
+        "po": fas.industry,
     },
     "fas education industry": {
-        "url": fas_industry.URLS.EDUCATION,
-        "po": fas_industry,
+        "url": fas.industry.URLS.EDUCATION,
+        "po": fas.industry,
     },
     "fas energy industry": {
-        "url": fas_industry.URLS.ENERGY,
-        "po": fas_industry,
+        "url": fas.industry.URLS.ENERGY,
+        "po": fas.industry,
     },
     "fas engineering industry": {
-        "url": fas_industry.URLS.ENGINEERING,
-        "po": fas_industry,
+        "url": fas.industry.URLS.ENGINEERING,
+        "po": fas.industry,
     },
     "fas food and drink industry": {
-        "url": fas_industry.URLS.FOOD_AND_DRINK,
-        "po": fas_industry,
+        "url": fas.industry.URLS.FOOD_AND_DRINK,
+        "po": fas.industry,
     },
     "fas healthcare industry": {
-        "url": fas_industry.URLS.HEALTHCARE,
-        "po": fas_industry,
+        "url": fas.industry.URLS.HEALTHCARE,
+        "po": fas.industry,
     },
     "fas infrastructure industry": {
-        "url": fas_industry.URLS.INFRASTRUCTURE,
-        "po": fas_industry,
+        "url": fas.industry.URLS.INFRASTRUCTURE,
+        "po": fas.industry,
     },
     "fas innovation industry": {
-        "url": fas_industry.URLS.INNOVATION,
-        "po": fas_industry,
+        "url": fas.industry.URLS.INNOVATION,
+        "po": fas.industry,
     },
     "fas legal services industry": {
-        "url": fas_industry.URLS.LEGAL_SERVICES,
-        "po": fas_industry,
+        "url": fas.industry.URLS.LEGAL_SERVICES,
+        "po": fas.industry,
     },
     "fas life sciences industry": {
-        "url": fas_industry.URLS.LIFE_SCIENCES,
-        "po": fas_industry,
+        "url": fas.industry.URLS.LIFE_SCIENCES,
+        "po": fas.industry,
     },
     "fas marine industry": {
-        "url": fas_industry.URLS.MARINE,
-        "po": fas_industry,
+        "url": fas.industry.URLS.MARINE,
+        "po": fas.industry,
     },
     "fas professional and financial services industry": {
-        "url": fas_industry.URLS.PROFESSIONAL_AND_FINANCIAL_SERVICES,
-        "po": fas_industry,
+        "url": fas.industry.URLS.PROFESSIONAL_AND_FINANCIAL_SERVICES,
+        "po": fas.industry,
     },
     "fas space industry": {
-        "url": fas_industry.URLS.SPACE,
-        "po": fas_industry,
+        "url": fas.industry.URLS.SPACE,
+        "po": fas.industry,
     },
     "fas sports economy industry": {
-        "url": fas_industry.URLS.SPORTS_ECONOMY,
-        "po": fas_industry,
+        "url": fas.industry.URLS.SPORTS_ECONOMY,
+        "po": fas.industry,
     },
     "fas technology industry": {
-        "url": fas_industry.URLS.TECHNOLOGY,
-        "po": fas_industry,
+        "url": fas.industry.URLS.TECHNOLOGY,
+        "po": fas.industry,
     },
     "fas company profile": {
-        "url": fas_company_profile.URL,
-        "po": fas_company_profile,
+        "url": fas.company_profile.URL,
+        "po": fas.company_profile,
     },
-    "fas article": {"url": fas_article.URL, "po": fas_article},
+    "fas article": {"url": fas.article.URL, "po": fas.article},
 }
 
 EXTERNAL_SITES_PAGE_REGISTRY = {

@@ -19,7 +19,7 @@ from pages.exread import (
     exread_personalised_journey,
     exread_triage_summary,
 )
-from pages.fas import fas_search_results
+from pages import fas
 from pages.invest import invest_footer, invest_header, invest_pixels
 from registry.articles import get_article, get_articles
 from registry.pages import get_page_object
@@ -717,7 +717,7 @@ def should_see_page_in_preferred_language(
 def fas_search_results_filtered_by_industries(
     context: Context, actor_alias: str, industry_names: List[str]
 ):
-    fas_search_results.should_see_filtered_results(
+    fas.search_results.should_see_filtered_results(
         context.driver, industry_names
     )
     logging.debug(
@@ -771,7 +771,6 @@ def stats_and_tracking_elements_should_not_be_present(
     context: Context, names: Table
 ):
     element_names = [row[0] for row in names]
-    from pages import invest_pixels
 
     for name in element_names:
         invest_pixels.should_not_be_present(context.driver, name)

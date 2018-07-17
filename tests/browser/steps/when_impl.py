@@ -30,7 +30,7 @@ from pages.exread import (
     exread_triage_what_do_you_want_to_export,
     international
 )
-from pages.fas import fas_contact_us
+from pages import fas
 from pages.sso import (
     sso_common,
     sso_confirm_your_email,
@@ -1664,8 +1664,8 @@ def fas_fill_out_and_submit_contact_us_form(
         "source": sources,
         "accept t&c": accept_tc,
     }
-    fas_contact_us.fill_out(context.driver, contact_us_details)
-    fas_contact_us.submit(context.driver)
+    fas.contact_us.fill_out(context.driver, contact_us_details)
+    fas.contact_us.submit(context.driver)
 
 
 def generic_see_more_industries(context: Context, actor_alias: str):
