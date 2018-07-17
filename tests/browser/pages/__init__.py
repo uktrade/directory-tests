@@ -83,3 +83,21 @@ def get_page_objects(package: ModuleType) -> Dict[str, ModuleType]:
 
 
 PAGES = PageObjects("PageObjects", names=get_page_objects(pages))
+
+
+def get_page_object(service_and_page: str) -> ModuleType:
+    assert " - " in service_and_page, "Invalid Service & Page name"
+    parts = service_and_page.split(" - ")
+    service = parts[0]
+    name = parts[1]
+    result = None
+    for page in PAGES.__members__.values():
+        service_name = page.service.lower()
+        page_name = page.name.lower()
+        if (service_name == service.lower()) and (page_name == name.lower()):
+            result = page.value
+
+    if not result:
+        raise KeyError(f"Could not find Page Object for: {service_and_page}")
+
+    return result

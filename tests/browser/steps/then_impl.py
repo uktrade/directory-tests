@@ -11,8 +11,8 @@ from pages import common_language_selector
 from pages import exread
 from pages import fas
 from pages import invest
+from pages import get_page_object
 from registry.articles import get_article, get_articles
-from registry.pages import get_page_object
 from steps.when_impl import (
     triage_should_be_classified_as_new,
     triage_should_be_classified_as_occasional,
@@ -30,7 +30,7 @@ def should_be_on_page(context: Context, actor_alias: str, page_name: str):
 def should_be_on_page_or_international_page(
     context: Context, actor_alias: str, page_name: str
 ):
-    international_page = get_page_object("International")
+    international_page = get_page_object("Export Readiness - International")
     page = get_page_object(page_name)
     assert hasattr(page, "should_be_here")
     try:

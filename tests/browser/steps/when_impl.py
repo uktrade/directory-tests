@@ -7,21 +7,27 @@ from behave.model import Table
 from behave.runner import Context
 from retrying import retry
 from selenium.common.exceptions import TimeoutException, WebDriverException
-from pages.common_actions import VisitedArticle, unauthenticated_actor, \
-    add_actor, get_actor, update_actor, take_screenshot, assertion_msg
+from pages.common_actions import (
+    VisitedArticle,
+    unauthenticated_actor,
+    add_actor, get_actor,
+    update_actor,
+    take_screenshot,
+    assertion_msg,
+)
 from utils.gov_notify import get_verification_link
 
 from pages import common_language_selector
 from pages import exread
 from pages import fas
 from pages import sso
+from pages import get_page_object
 from registry.articles import (
     GUIDANCE,
     get_article,
     get_articles,
     get_random_article,
 )
-from registry.pages import get_page_object
 from settings import EXRED_SECTORS
 
 NUMBERS = {
