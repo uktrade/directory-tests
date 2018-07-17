@@ -30,7 +30,7 @@ from pages.external import (
     legal_services_home,
     visit_britain_home,
 )
-from pages.fab import fab_home
+from pages import fab
 from pages.fas import (
     fas_article,
     fas_company_profile,
@@ -99,7 +99,7 @@ EXRED_PAGE_REGISTRY = {
         "url": exread_interim_exporting_opportunities.URL,
         "po": exread_interim_exporting_opportunities,
     },
-    "find a buyer": {"url": fab_home.URL, "po": fab_home},
+    "find a buyer": {"url": fab.home.URL, "po": fab.home},
     "find a supplier": {"url": fas_home.URL, "po": fas_home},
     "create your export journey": {
         "url": exread_triage_create_your_export_journey.URL,
