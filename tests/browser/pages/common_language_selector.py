@@ -28,7 +28,7 @@ SPANISH = "#header-language-selector-es"
 PORTUGUESE = "#header-language-selector-pt"
 ARABIC = "#header-language-selector-ar"
 ELEMENTS_ON = {
-    "home": {
+    "export readiness - home": {
         "itself": "section.language-selector-dialog",
         "title": "#great-languages-selector",
         "English": ENGLISH,
@@ -40,7 +40,7 @@ ELEMENTS_ON = {
         "العربيّة": ARABIC,
         "close": LANGUAGE_SELECTOR_CLOSE,
     },
-    "international": {
+    "export readiness - international": {
         "itself": "section.language-selector-dialog",
         "title": "#great-languages-selector",
         "English (UK)": DOMESTIC_PAGE,
@@ -55,7 +55,7 @@ ELEMENTS_ON = {
     },
 }
 KEYBOARD_NAVIGABLE_ELEMENTS = {
-    "home": [
+    "export readiness - home": [
         ("English", ENGLISH),
         ("简体中文", CHINESE),
         ("Deutsch", GERMAN),
@@ -65,7 +65,7 @@ KEYBOARD_NAVIGABLE_ELEMENTS = {
         ("العربيّة", ARABIC),
         ("close", LANGUAGE_SELECTOR_CLOSE),
     ],
-    "international": [
+    "export readiness - international": [
         ("English", ENGLISH),
         ("简体中文", CHINESE),
         ("Deutsch", GERMAN),
