@@ -15,7 +15,9 @@ from pages.common_actions import (
 )
 from settings import EXRED_UI_URL
 
-NAME = "Get Finance interim page"
+NAME = "Get Finance"
+SERVICE = "Export Readiness"
+TYPE = "interim"
 URL = urljoin(EXRED_UI_URL, "get-finance/")
 PAGE_TITLE = "Get finance - great.gov.uk"
 
@@ -26,7 +28,7 @@ SHARE_MENU = "ul.sharing-links"
 TASKS_COMPLETED_COUNTER = ".TASKS_ARE_NOT_IMPLEMENTED_YES"
 TASKS_TOTAL_NUMBER = ".TASKS_ARE_NOT_IMPLEMENTED_YES"
 
-SECTIONS = {
+SELECTORS = {
     "breadcrumbs": {
         "itself": "section.get-finance-banner p.breadcrumbs",
         "current page": "section.get-finance-banner p > span.current",
@@ -70,7 +72,7 @@ def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=True)
     check_title(driver, PAGE_TITLE, exact_match=True)
-    check_for_expected_sections_elements(driver, SECTIONS)
+    check_for_expected_sections_elements(driver, SELECTORS)
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 

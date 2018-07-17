@@ -23,7 +23,9 @@ from pages.common_actions import (
 )
 from settings import EXRED_UI_URL
 
-NAME = "ExRed Home"
+NAME = "Home"
+SERVICE = "Export Readiness"
+TYPE = "home"
 URL = urljoin(EXRED_UI_URL, "?lang=en-gb")
 PAGE_TITLE = "Welcome to great.gov.uk - export guidance and services"
 
@@ -70,7 +72,7 @@ CAROUSEL = {
     "carousel - case study 3 - image": "#case-studies-section-case-study-3-image",
 }
 
-SECTIONS = {
+SELECTORS = {
     "beta": {
         "itself": "#content #header-beta-bar",
         "sticker": "#content #header-beta-bar .phase-tag",
@@ -200,15 +202,15 @@ def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
     check_title(driver, PAGE_TITLE, exact_match=False)
-    check_for_expected_sections_elements(driver, SECTIONS)
+    check_for_expected_sections_elements(driver, SELECTORS)
 
 
 def should_see_section(driver: webdriver, name: str):
-    check_for_section(driver, all_sections=SECTIONS, sought_section=name)
+    check_for_section(driver, all_sections=SELECTORS, sought_section=name)
 
 
 def should_see_link_to(driver: webdriver, section: str, item_name: str):
-    item_selector = SECTIONS[section.lower()][item_name.lower()]
+    item_selector = SELECTORS[section.lower()][item_name.lower()]
     menu_item = find_element(driver, by_css=item_selector, element_name=item_name)
     with assertion_msg(
         "It looks like '%s' in '%s' section is not visible", item_name, section
@@ -320,7 +322,7 @@ def get_case_study_title(driver: webdriver, case_number: str) -> str:
 
 
 def open(driver: webdriver, group: str, element: str):
-    selector = SECTIONS[group.lower()][element.lower()]
+    selector = SELECTORS[group.lower()][element.lower()]
     link = find_element(driver, by_css=selector, element_name=element, wait_for_it=True)
     check_if_element_is_visible(link, element_name=element)
     link.click()

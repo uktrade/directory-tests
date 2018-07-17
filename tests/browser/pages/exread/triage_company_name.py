@@ -16,7 +16,9 @@ from pages.common_actions import (
 )
 from settings import EXRED_UI_URL
 
-NAME = "ExRed Triage - What is your company name"
+NAME = "What is your company name"
+SERVICE = "Export Readiness"
+TYPE = "triage"
 URL = urljoin(EXRED_UI_URL, "triage/company/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
@@ -33,6 +35,7 @@ EXPECTED_ELEMENTS = {
     "previous step button": PREVIOUS_STEP_BUTTON,
     "continue without providing name": CONTINUE_WO_NAME_BUTTON,
 }
+SELECTORS = {}
 
 
 def should_be_here(driver: webdriver):

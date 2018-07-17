@@ -20,7 +20,9 @@ from pages.common_actions import (
 from registry.articles import get_articles
 from settings import EXRED_UI_URL
 
-NAME = "ExRed Personalised Journey"
+NAME = "Personalised Journey"
+SERVICE = "Export Readiness"
+TYPE = "custom"
 URL = urljoin(EXRED_UI_URL, "custom/")
 PAGE_TITLE = "Your export journey - great.gov.uk"
 
@@ -43,7 +45,7 @@ TRADE_VALUE = "#top_importer_global_trade_value"
 TOP_10_TRADE_VALUE = ".cell-global_trade_value"
 REGISTER = "section.intro-section a.link:nth-child(1)"
 SIGN_IN = "section.intro-section a.link:nth-child(2)"
-SECTIONS = {
+SELECTORS = {
     "hero": {
         "title": "section.hero-section h1",
         "update preferences link": "section.intro-section a.preferences",
@@ -137,7 +139,7 @@ def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=True)
     check_title(driver, PAGE_TITLE, exact_match=False)
-    check_for_section(driver, SECTIONS, sought_section="hero")
+    check_for_section(driver, SELECTORS, sought_section="hero")
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
@@ -189,7 +191,7 @@ def should_see_total_articles_to_read(
 
 
 def open(driver: webdriver, group: str, element: str):
-    link = SECTIONS[group.lower()][element.lower()]
+    link = SELECTORS[group.lower()][element.lower()]
     button = find_element(driver, by_css=link, element_name=element, wait_for_it=False)
     assert button.is_displayed()
     with wait_for_page_load_after_action(driver):
@@ -198,11 +200,11 @@ def open(driver: webdriver, group: str, element: str):
 
 
 def should_see_section(driver: webdriver, name: str):
-    check_for_section(driver, SECTIONS, sought_section=name)
+    check_for_section(driver, SELECTORS, sought_section=name)
 
 
 def should_not_see_section(driver: webdriver, name: str):
-    section = SECTIONS[name.lower()]
+    section = SELECTORS[name.lower()]
     for key, selector in section.items():
         check_if_element_is_not_visible(driver, by_css=selector, element_name=key)
 

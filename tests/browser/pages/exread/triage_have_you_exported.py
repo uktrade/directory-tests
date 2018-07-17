@@ -16,7 +16,9 @@ from pages.common_actions import (
 )
 from settings import EXRED_UI_URL
 
-NAME = "ExRed Triage - have you exported before"
+NAME = "Have you exported before"
+SERVICE = "Export Readiness"
+TYPE = "triage"
 URL = urljoin(EXRED_UI_URL, "triage/exported-before/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
@@ -33,6 +35,7 @@ EXPECTED_ELEMENTS = {
     "continue button": CONTINUE_BUTTON,
     "back to home link": BACK_TO_HOME_LINK,
 }
+SELECTORS = {}
 
 
 def visit(driver: webdriver, *, first_time: bool = False):

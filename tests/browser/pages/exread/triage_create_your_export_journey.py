@@ -17,6 +17,8 @@ from pages.common_actions import (
 from settings import EXRED_UI_URL
 
 NAME = "Create your export journey"
+SERVICE = "Export Readiness"
+TYPE = "triage"
 URL = urljoin(EXRED_UI_URL, "triage/")
 PAGE_TITLE = "Your export journey - great.gov.uk"
 
@@ -25,7 +27,7 @@ REGISTER = "#start-now-container > div > a:nth-child(2)"
 SIGN_IN = "#start-now-container > div > a:nth-child(3)"
 REPORT_THIS_PAGE = "#error-reporting-section-contact-us"
 
-SECTIONS = {
+SELECTORS = {
     "description": {
         "title": "#start-now-container > h1",
         "description": "#start-now-container > p",
@@ -42,22 +44,22 @@ def visit(driver: webdriver, *, first_time: bool = False):
 
 
 def should_see_section(driver: webdriver, name: str):
-    check_for_section(driver, all_sections=SECTIONS, sought_section=name)
+    check_for_section(driver, all_sections=SELECTORS, sought_section=name)
 
 
 def should_be_here(driver: webdriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=True)
     check_title(driver, PAGE_TITLE, exact_match=False)
-    check_for_expected_sections_elements(driver, SECTIONS)
+    check_for_expected_sections_elements(driver, SELECTORS)
 
 
 def click_on_page_element(driver: webdriver, element_name: str):
-    find_and_click_on_page_element(driver, SECTIONS, element_name)
+    find_and_click_on_page_element(driver, SELECTORS, element_name)
     take_screenshot(driver, NAME + " after clicking on " + element_name)
 
 
 def should_not_see_section(driver: webdriver, name: str):
-    section = SECTIONS[name.lower()]
+    section = SELECTORS[name.lower()]
     for key, selector in section.items():
         check_if_element_is_not_visible(driver, by_css=selector, element_name=key)

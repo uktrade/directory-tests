@@ -16,7 +16,9 @@ from pages.common_actions import (
 )
 from settings import EXRED_UI_URL
 
-NAME = "ExRed Interim Export Opportunities"
+NAME = "Interim Export Opportunities"
+SERVICE = "Export Readiness"
+TYPE = "interim"
 URL = urljoin(EXRED_UI_URL, "export-opportunities/")
 PAGE_TITLE = "Make sure you're export ready - great.gov.uk"
 
