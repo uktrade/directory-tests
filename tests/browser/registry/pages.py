@@ -32,6 +32,7 @@ from pages.external import (
 )
 from pages import fab
 from pages import fas
+from pages import sso
 from pages.invest import (
     invest_contact_us,
     invest_feedback,
@@ -43,13 +44,7 @@ from pages.invest import (
     invest_industry,
 )
 from pages import soo
-from pages.sso import (
-    sso_profile_about,
-    sso_registration,
-    sso_registration_confirmation,
-    sso_sign_in,
-    sso_sign_out,
-)
+
 
 EXRED_PAGE_REGISTRY = {
     "home": {"url": exread_home.URL, "po": exread_home},
@@ -104,16 +99,16 @@ EXRED_PAGE_REGISTRY = {
     },
     "events": {"url": events_home.URL, "po": events_home},
     "get finance": {"url": exread_get_finance.URL, "po": exread_get_finance},
-    "sso registration": {"url": sso_registration.URL, "po": sso_registration},
-    "sso sign in": {"url": sso_sign_in.URL, "po": sso_sign_in},
-    "sso sign out": {"url": sso_sign_out.URL, "po": sso_sign_out},
+    "sso registration": {"url": sso.registration.URL, "po": sso.registration},
+    "sso sign in": {"url": sso.sign_in.URL, "po": sso.sign_in},
+    "sso sign out": {"url": sso.sign_out.URL, "po": sso.sign_out},
     "sso registration confirmation": {
-        "url": sso_registration_confirmation.URL,
-        "po": sso_registration_confirmation,
+        "url": sso.registration_confirmation.URL,
+        "po": sso.registration_confirmation,
     },
     "sso profile about": {
-        "url": sso_profile_about.URL,
-        "po": sso_profile_about,
+        "url": sso.profile_about.URL,
+        "po": sso.profile_about,
     },
     "article": {"url": None, "po": exread_article_common},
     "article list": {"url": None, "po": exread_article_list},

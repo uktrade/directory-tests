@@ -32,13 +32,6 @@ from pages.exread import (
 )
 from pages import fas
 from pages import sso
-from pages.sso import (
-    sso_confirm_your_email,
-    sso_registration,
-    sso_registration_confirmation,
-    sso_sign_in,
-    sso_sign_out,
-)
 from registry.articles import (
     GUIDANCE,
     get_article,
@@ -1347,7 +1340,7 @@ def registration_go_to(context: Context, actor_alias: str, location: str):
             "Could not recognise registration link location: %s. Please use "
             "'article', 'article list' or 'top bar'".format(location)
         )
-    sso_registration.should_be_here(context.driver)
+    sso.registration.should_be_here(context.driver)
 
 
 def registration_should_get_verification_email(
@@ -1373,7 +1366,7 @@ def registration_open_email_confirmation_link(
     context.driver.get(link)
 
     # Step 3 - confirm that Supplier is on SSO Confirm Your Email page
-    sso_confirm_your_email.should_be_here(context.driver)
+    sso.confirm_your_email.should_be_here(context.driver)
     logging.debug("Supplier is on the SSO Confirm your email address page")
 
 
@@ -1384,15 +1377,15 @@ def registration_submit_form_and_verify_account(
     actor = get_actor(context, actor_alias)
     email = actor.email
     password = actor.password
-    sso_registration.fill_out(driver, email, password)
-    sso_registration.submit(driver)
-    sso_registration_confirmation.should_be_here(driver)
+    sso.registration.fill_out(driver, email, password)
+    sso.registration.submit(driver)
+    sso.registration_confirmation.should_be_here(driver)
     if fake_verification:
         sso.common.verify_account(email)
     else:
         registration_should_get_verification_email(context, actor_alias)
         registration_open_email_confirmation_link(context, actor_alias)
-        sso_confirm_your_email.submit(context.driver)
+        sso.confirm_your_email.submit(context.driver)
     update_actor(context, actor_alias, registered=True)
 
 
@@ -1433,7 +1426,7 @@ def sign_in_go_to(context: Context, actor_alias: str, location: str):
             "Could not recognise 'sign in' link location: {}. Please use "
             "'article', 'article list' or 'top bar'".format(location)
         )
-    sso_sign_in.should_be_here(context.driver)
+    sign_in.should_be_here(context.driver)
 
 
 def sign_in(context: Context, actor_alias: str, location: str):
@@ -1441,13 +1434,13 @@ def sign_in(context: Context, actor_alias: str, location: str):
     email = actor.email
     password = actor.password
     sign_in_go_to(context, actor_alias, location)
-    sso_sign_in.fill_out(context.driver, email, password)
-    sso_sign_in.submit(context.driver)
+    sign_in.fill_out(context.driver, email, password)
+    sign_in.submit(context.driver)
 
 
 def sign_out(context: Context, actor_alias: str):
     exread_header.go_to_sign_out(context.driver)
-    sso_sign_out.submit(context.driver)
+    sign_out.submit(context.driver)
     logging.debug("%s signed out", actor_alias)
 
 

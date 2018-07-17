@@ -1,9 +1,9 @@
 __all__ = [
     "common",
-    "sso_confirm_your_email",
-    "sso_profile_about",
-    "sso_registration",
-    "sso_registration_confirmation",
-    "sso_sign_in",
-    "sso_sign_out",
+    "confirm_your_email",
+    "profile_about",
+    "registration",
+    "registration_confirmation",
+    "sign_in",
+    "sign_out",
 ]
