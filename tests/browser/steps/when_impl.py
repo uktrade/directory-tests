@@ -72,7 +72,7 @@ def visit_page(
         "%s will visit '%s' page using: '%s'", actor_alias, page_name, page.URL
     )
     assert hasattr(page, "visit")
-    if "industry" in page_name.lower():
+    if "industry" in page_name.lower() or "guide" in page_name.lower():
         page.visit(context.driver, first_time=first_time, page_name=page_name)
     else:
         page.visit(context.driver, first_time=first_time)
