@@ -7,7 +7,7 @@ Feature: Find a Supplier - Industry pages
 
   @ED-4260
   Scenario Outline: Buyers should be able to see all expected page elements on "<specific>" page
-    Given "Robert" visits the "Find a Supplier - <specific> Industry" page
+    Given "Robert" visits the "Find a Supplier - <specific> industry" page
 
     Then "Robert" should see expected sections on "Find a Supplier - Industry" page
       | Sections                |
@@ -57,7 +57,7 @@ Feature: Find a Supplier - Industry pages
   @ED-4261
   @breadcrumbs
   Scenario Outline: Buyers should be able to go back to the "<expected>" page via "<selected>" breadcrumb on the "Find a Supplier - <specific> Industry" page
-    Given "Robert" visits the "Find a Supplier - <specific> Industry" page
+    Given "Robert" visits the "Find a Supplier - <specific> industry" page
 
     When "Robert" decides to use "<selected>" breadcrumb on the "Find a Supplier - Industry" page
 
@@ -114,7 +114,7 @@ Feature: Find a Supplier - Industry pages
   @contact-us
   Scenario Outline: Buyers should be able to contact us (DIT) from the  "<specific> Industry" page
     Given "Robert" visits the "Find a Supplier - <specific> Industry" page
-    And "Robert" decided to "contact us" via "Find a Supplier - <specific> Industry" page
+    And "Robert" decided to "contact us" via "Find a Supplier - <specific> industry" page
 
     When "Robert" fills out and submits the contact us form
 
@@ -157,7 +157,7 @@ Feature: Find a Supplier - Industry pages
   @ED-4263
   @search
   Scenario Outline: Buyers should be able to find UK suppliers from the "<specific> Industry" page
-    Given "Robert" visits the "Find a Supplier - <specific> Industry" page
+    Given "Robert" visits the "Find a Supplier - <specific> industry" page
 
     When "Robert" searches for companies using "<following>" keyword
 
@@ -202,7 +202,7 @@ Feature: Find a Supplier - Industry pages
   @ED-4264
   @search
   Scenario Outline: Buyers should be able to find more UK suppliers than visible on the "<specific> Industry" page
-    Given "Robert" visits the "Find a Supplier - <specific> Industry" page
+    Given "Robert" visits the "Find a Supplier - <specific> industry" page
 
     When "Robert" decides to view more companies in the current industry
 
@@ -247,7 +247,7 @@ Feature: Find a Supplier - Industry pages
   @ED-4265
   @company-profiles
   Scenario Outline: Buyers should be able to view "<selected>" company profile from the "<specific>" Industry page
-    Given "Robert" visits the "Find a Supplier - <specific> Industry" page
+    Given "Robert" visits the "Find a Supplier - <specific> industry" page
 
     When "Robert" decides to view "<selected>" company profile
 
@@ -290,7 +290,7 @@ Feature: Find a Supplier - Industry pages
   @ED-4266
   @marketing-content
   Scenario Outline: Buyers should be able to view "<selected>" article from the "<specific> Industry" page
-    Given "Robert" visits the "Find a Supplier - <specific> Industry" page
+    Given "Robert" visits the "Find a Supplier - <specific> industry" page
 
     When "Robert" decides to read "<selected>" marketing article
 
@@ -339,11 +339,11 @@ Feature: Find a Supplier - Industry pages
   # link to Legal Services industry page should take users to an external
   # Legal Services website (not hosted on great.gov.uk)
   Scenario: Buyers should be able to learn more from the Legal Services page
-    Given "Annette Geissinger" visits the "Find a Supplier - Legal Services Industry" page
+    Given "Annette Geissinger" visits the "Find a Supplier - Legal Services industry" page
 
     When "Annette Geissinger" decides to read "first" marketing article
 
-    Then "Annette Geissinger" should be on the "Legal Services Home" page
+    Then "Annette Geissinger" should be on the "Legal Services - Home" page
 
 
   @wip
@@ -354,7 +354,7 @@ Feature: Find a Supplier - Industry pages
     When "Robert" decides to report a problem with the page
     And "Robert" fills out and submits the Help us improve great.gov.uk form
 
-    Then "Robert" should be on the "Thank you for your feedback" page
+    Then "Robert" should be on the "Find a Supplier - Thank you for your feedback" page
 
     Examples:
       | specific          |
