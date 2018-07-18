@@ -17,7 +17,7 @@ from settings import UK_GOV_MD5_CHECKSUM
 
 NAME = "Header"
 URL = None
-SERVICE = "Invest"
+SERVICE = "invest"
 TYPE = "header"
 FAVICON = Selector(By.CSS_SELECTOR, "link[rel='shortcut icon']")
 HEADER_LOGO = Selector(By.CSS_SELECTOR, "#invest-header img")

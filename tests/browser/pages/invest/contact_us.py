@@ -12,8 +12,12 @@ from pages.common_actions import (
 )
 from settings import INVEST_UI_URL
 
+NAME = "Contact us"
+SERVICE = "invest"
+TYPE = "contact"
 URL = urljoin(INVEST_UI_URL, "contact/")
 PAGE_TITLE = "Invest in Great Britain -"
+SELECTORS = {}
 
 
 def visit(executor: Executor, *, first_time: bool = False):

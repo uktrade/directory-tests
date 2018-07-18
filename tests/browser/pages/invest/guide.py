@@ -21,6 +21,9 @@ from pages.common_actions import (
 )
 from settings import INVEST_UI_URL
 
+NAME = "UK Setup guide"
+SERVICE = "invest"
+TYPE = "guide"
 URL = urljoin(INVEST_UI_URL, "uk-setup-guide/")
 BASE_URL = urljoin(INVEST_UI_URL, "uk-setup-guide/")
 PAGE_TITLE = "Invest in Great Britain -"
@@ -30,17 +33,18 @@ class URLS(Enum):
     """Lists all URLs for industry pages."""
 
     APPLY_FOR_A_UK_VISA = urljoin(BASE_URL, "apply-for-a-uk-visa/")
-    ESTABLISHED_A_BASE_FOR_BUSINESS_IN_THE_UK = urljoin(
+    ESTABLISH_A_BASE_FOR_BUSINESS_IN_THE_UK = urljoin(
         BASE_URL, "establish-a-base-for-business-in-the-uk/"
     )
     HIRE_SKILLED_WORKERS_FOR_YOUR_UK_OPERATIONS = urljoin(
         BASE_URL, "hire-skilled-workers-for-your-uk-operations/"
     )
-    OPEN_A_BUSINESS_BANK_ACCOUNT = urljoin(BASE_URL, "open-a-uk-business-bank-account/")
+    OPEN_A_UK_BUSINESS_BANK_ACCOUNT = urljoin(BASE_URL, "open-a-uk-business-bank-account/")
     SET_UP_A_COMPANY_IN_THE_UK = urljoin(BASE_URL, "set-up-a-company-in-the-uk/")
+    UNDERSTAND_THE_UKS_TAX_INCENTIVES_AND_LEGAL_FRAMEWORK = urljoin(BASE_URL, "understand-uk-tax-and-incentives/")
 
 
-SECTIONS = {
+SELECTORS = {
     "header": {
         "self": Selector(By.ID, "invest-header"),
         "logo": Selector(By.CSS_SELECTOR, "#invest-header > div.header-bar  a"),
@@ -78,9 +82,13 @@ def visit(executor: Executor, *, first_time: bool = False, page_name: str = None
         enum_key = (
             page_name.lower()
             .replace("invest - ", "")
-            .replace(" industry", "")
+            .replace("industry", "")
+            .replace("guide", "")
+            .strip()
             .replace(" ", "_")
             .replace("-", "_")
+            .replace("'", "")
+            .replace(",", "")
             .upper()
         )
         url = URLS[enum_key].value
@@ -97,7 +105,7 @@ def should_be_here(executor: Executor):
 
 
 def should_see_sections(executor: AssertionExecutor, names: List[str]):
-    check_for_sections(executor, all_sections=SECTIONS, sought_sections=names)
+    check_for_sections(executor, all_sections=SELECTORS, sought_sections=names)
 
 
 def open_link(driver: WebDriver, name: str):

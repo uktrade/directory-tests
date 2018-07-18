@@ -23,6 +23,9 @@ from pages.common_actions import (
 )
 from settings import INVEST_UI_URL
 
+NAME = "Industry"
+SERVICE = "invest"
+TYPE = "industry"
 URL = urljoin(INVEST_UI_URL, "industries/")
 BASE_URL = urljoin(INVEST_UI_URL, "industries/")
 PAGE_TITLE = "Invest in Great Britain - "
@@ -74,7 +77,7 @@ TOPIC_EXPANDERS = Selector(
     By.CSS_SELECTOR, "section.industry-page-accordions a.accordion-expander"
 )
 
-SECTIONS = {
+SELECTORS = {
     "header": {
         "self": Selector(By.ID, "invest-header"),
         "logo": Selector(By.CSS_SELECTOR, "#invest-header > div.header-bar  a"),
@@ -152,7 +155,7 @@ def should_be_here(executor: Executor):
 
 
 def should_see_sections(executor: AssertionExecutor, names: List[str]):
-    check_for_sections(executor, all_sections=SECTIONS, sought_sections=names)
+    check_for_sections(executor, all_sections=SELECTORS, sought_sections=names)
 
 
 def open_link(driver: WebDriver, name: str):

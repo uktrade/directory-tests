@@ -18,7 +18,7 @@ from settings import UK_GOV_MD5_CHECKSUM
 NAME = "Footer"
 URL = None
 SERVICE = "Invest"
-TYPE = "Footer"
+TYPE = "footer"
 
 UK_GOV_LOGO = Selector(By.CSS_SELECTOR, "#invest-footer img:nth-child(1)")
 SELECTORS = {
