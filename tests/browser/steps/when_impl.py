@@ -67,7 +67,7 @@ def visit_page(
     """
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
-    page = get_page_object(page_name)
+    page = get_page_object(page_name, exact_match=False)
     logging.debug(
         "%s will visit '%s' page using: '%s'", actor_alias, page_name, page.URL
     )
@@ -1385,7 +1385,7 @@ def registration_submit_form_and_verify_account(
 def registration_create_and_verify_account(
     context: Context, actor_alias: str, *, fake_verification: bool = True
 ):
-    visit_page(context, actor_alias, "Export Readiness - Home")
+    visit_page(context, actor_alias, "export readiness - home")
     registration_go_to(context, actor_alias, "top bar")
     registration_submit_form_and_verify_account(
         context, actor_alias, fake_verification=fake_verification
@@ -1559,7 +1559,7 @@ def header_footer_open_link(
 def click_on_page_element(
     context: Context, actor_alias: str, element_name: str, page_name: str
 ):
-    page_object = get_page_object(page_name)
+    page_object = get_page_object(page_name, exact_match=False)
     assert hasattr(page_object, "click_on_page_element")
     page_object.click_on_page_element(context.driver, element_name)
     logging.debug(
@@ -1590,7 +1590,7 @@ def fas_search_for_companies(
     if not page_alias:
         actor = get_actor(context, actor_alias)
         page_alias = actor.visited_page
-    page = get_page_object(page_alias)
+    page = get_page_object(page_alias, exact_match=False)
     assert hasattr(page, "search")
     optional_param_keywords = ["n/a", "no", "empty", "without", "any"]
     if keyword and keyword.lower() in optional_param_keywords:
@@ -1681,7 +1681,7 @@ def fas_use_breadcrumb(
 
 def fas_view_more_companies(context: Context, actor_alias: str):
     visited_page = get_actor(context, actor_alias).visited_page
-    page = get_page_object(visited_page)
+    page = get_page_object(visited_page, exact_match=False)
     assert hasattr(page, "click_on_page_element")
     page.click_on_page_element(context.driver, "view more")
     logging.debug(
@@ -1696,7 +1696,7 @@ def fas_view_selected_company_profile(
 ):
     number = NUMBERS[profile_number]
     visited_page = get_actor(context, actor_alias).visited_page
-    page = get_page_object(visited_page)
+    page = get_page_object(visited_page, exact_match=False)
     assert hasattr(page, "open_profile")
     page.open_profile(context.driver, number)
     logging.debug(
@@ -1710,7 +1710,7 @@ def fas_view_selected_company_profile(
 def fas_view_article(context: Context, actor_alias: str, article_number: str):
     number = NUMBERS[article_number]
     visited_page = get_actor(context, actor_alias).visited_page
-    page = get_page_object(visited_page)
+    page = get_page_object(visited_page, exact_match=False)
     assert hasattr(page, "open_article")
     page.open_article(context.driver, number)
     logging.debug(
@@ -1724,7 +1724,7 @@ def fas_view_article(context: Context, actor_alias: str, article_number: str):
 def invest_read_more(context: Context, actor_alias: str, topic_names: Table):
     actor = get_actor(context, actor_alias)
     visited_page = actor.visited_page
-    page = get_page_object(visited_page)
+    page = get_page_object(visited_page, exact_match=False)
     assert hasattr(page, "open_link")
     topics = [row[0] for row in topic_names]
     update_actor(context, actor_alias, visited_articles=topics)

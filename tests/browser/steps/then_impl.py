@@ -735,7 +735,7 @@ def generic_should_see_expected_page_content(
 ):
     actor = get_actor(context, actor_alias)
     visited_page = actor.visited_page
-    page = get_page_object(visited_page)
+    page = get_page_object(visited_page, exact_match=False)
     assert hasattr(page, "should_see_content_for")
     page.should_see_content_for(context.driver, expected_page_name)
     logging.debug(
