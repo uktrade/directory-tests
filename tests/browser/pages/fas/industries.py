@@ -72,7 +72,7 @@ def click_on_page_element(driver: webdriver, element_name: str):
 
 
 def clean_name(name: str) -> str:
-    return name.replace("FAS", "").replace("industry", "").strip()
+    return name.replace("Find a Supplier - ", "").replace("industry", "").strip()
 
 
 def open_industry(driver: webdriver, industry_name: str):

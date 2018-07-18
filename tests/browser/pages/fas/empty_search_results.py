@@ -14,7 +14,7 @@ from pages.common_actions import (
 )
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
-NAME = "Search Results"
+NAME = "Empty Search Results"
 SERVICE = "Find a Supplier"
 TYPE = "search"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "search/")

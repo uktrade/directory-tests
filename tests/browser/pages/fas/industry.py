@@ -53,7 +53,7 @@ class URLS(Enum):
     TECHNOLOGY = urljoin(BASE_URL, "technology/")
 
 
-NAME = "Generic Industry"
+NAME = "Industry"
 SERVICE = "Find a Supplier"
 TYPE = "industry"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "industries/")
@@ -98,8 +98,9 @@ def visit(driver: webdriver, *, first_time: bool = False, page_name: str = None)
     if page_name:
         enum_key = (
             page_name.lower()
-            .replace("fas ", "")
+            .replace("find a supplier - ", "")
             .replace(" industry", "")
+            .strip()
             .replace(" ", "_")
             .replace("-", "_")
             .upper()
@@ -123,7 +124,7 @@ def should_see_section(driver: webdriver, name: str):
 
 
 def clean_name(name: str) -> str:
-    return name.replace("FAS", "").replace("industry", "").strip()
+    return name.replace("Find a Supplier - ", "").replace("industry", "").strip()
 
 
 def should_see_content_for(driver: webdriver, industry_name: str):
