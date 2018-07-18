@@ -26,7 +26,9 @@ from pages import (
     international,
     invest_contact_us,
     invest_feedback,
+    invest_footer,
     invest_guide,
+    invest_header,
     invest_home,
     invest_industries,
     invest_industry,
@@ -251,6 +253,8 @@ EXTERNAL_SITES_PAGE_REGISTRY = {
 INVEST_PAGE_REGISTRY = {
     "invest - home": {"url": invest_home.URL, "po": invest_home},
     "invest - industry": {"url": invest_industry.URL, "po": invest_industry},
+    "invest - header": {"url": None, "po": invest_header},
+    "invest - footer": {"url": None, "po": invest_footer},
     "invest - contact us": {
         "url": invest_contact_us.URL,
         "po": invest_contact_us,
@@ -381,6 +385,7 @@ INVEST_PAGE_REGISTRY = {
         "po": invest_industry,
     },
     "invest - guide": {"url": invest_guide.URL, "po": invest_guide},
+    "invest - uk setup guide": {"url": invest_guide.URL, "po": invest_guide},
     "invest - apply for a uk visa guide": {
         "url": invest_guide.URLS.APPLY_FOR_A_UK_VISA,
         "po": invest_guide,

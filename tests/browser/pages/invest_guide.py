@@ -21,7 +21,7 @@ from settings import INVEST_UI_URL
 
 URL = urljoin(INVEST_UI_URL, "uk-setup-guide/")
 BASE_URL = urljoin(INVEST_UI_URL, "uk-setup-guide/")
-PAGE_TITLE = "Invest in Great Britain - "
+PAGE_TITLE = "Invest in Great Britain -"
 
 
 class URLS(Enum):

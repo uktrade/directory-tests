@@ -1,3 +1,6 @@
+from enum import Enum
+import importlib
+import pkgutil
 from collections import namedtuple
 from typing import Dict, Union, List
 
@@ -7,6 +10,12 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from utils import assertion_msg, selenium_action
+
+from types import ModuleType
+
+import pages
+
+REQUIRED_PROPERTIES = ["SERVICE", "NAME", "TYPE", "URL", "SELECTORS"]
 
 Executor = Union[WebDriver, Session]
 AssertionExecutor = Union[WebDriver, Response]
@@ -128,3 +137,71 @@ def check_for_sections(
             "Unsupported type: {}. Please provide one of supported types: "
             "WebDriver or Response".format(type(executor))
         )
+
+
+def is_page_object(module: ModuleType):
+    return all([hasattr(module, prop) for prop in REQUIRED_PROPERTIES])
+
+
+class PageObjects(Enum):
+    """Page Objects enumeration.
+
+    Values can only be modules with properties required for a Page Object.
+    """
+    def __new__(cls, value):
+        if not is_page_object(value):
+            raise TypeError(
+                "Expected to get a Page Object module but got: {}".format(
+                    value
+                )
+            )
+        member = object.__new__(cls)
+        member._value_ = value
+        return member
+
+    def __str__(self):
+        return "{}-{} [{} - {}]".format(
+            self.value.SERVICE,
+            self.value.NAME,
+            self.value.TYPE,
+            self.value.URL,
+        )
+
+    @property
+    def name(self) -> str:
+        return self.value.NAME
+
+    @property
+    def service(self) -> str:
+        return self.value.SERVICE
+
+    @property
+    def type(self) -> str:
+        return self.value.TYPE
+
+    @property
+    def url(self) -> str:
+        return self.value.URL
+
+    @property
+    def selectors(self) -> Dict:
+        return self.value.SELECTORS
+
+
+def get_page_object_modules(package: ModuleType) -> Dict:
+    def get_enum_key(mod: ModuleType) -> str:
+        return "{}_{}".format(mod.SERVICE, mod.NAME).upper().replace(" ", "_")
+
+    result = {}
+    prefix = package.__name__ + "."
+    for _, module_name, is_pkg in pkgutil.iter_modules(package.__path__):
+        if not is_pkg:
+            module = importlib.import_module(prefix + module_name)
+            if is_page_object(module):
+                enum_key = get_enum_key(module)
+                result[enum_key] = module
+
+    return result
+
+
+PAGES = PageObjects("PageObjects", names=get_page_object_modules(pages))
