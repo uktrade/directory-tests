@@ -1,88 +1,76 @@
-@wip
 @industry
 Feature: Industry pages
 
-  Scenario Outline: Visitors should be able to see the "Invest <industry>" page
-    Given "Robert" visits the "Invest <industry>" page
+  @CMS-160
+  Scenario Outline: Visitors should be able to see the "Invest - <selected> industry" page
+    Given "Robert" visits the "Invest - <selected> industry" page
 
-    Then "Robert" should see expected page sections
-      | Header     |
-      | Beta bar   |
-      | Hero       |
-      | Statistics |
-      | Content    |
-      | Footer     |
+    When "Robert" unfolds all topic sections on "Invest - <selected> industry" page
 
-    Examples: Industries
-      | industry                                     |
-      | Invest - Advanced manufacturing              |
-      | Invest - Aerospace                           |
-      | Invest - Agri-tech                           |
-      | Invest - Asset management                    |
-      | Invest - Automotive                          |
-      | Invest - Automotive research and development |
-      | Invest - Automotive supply chain             |
-      | Invest - Capital Investment                  |
-      | Invest - Chemicals                           |
-      | Invest - Creative content and production     |
-      | Invest - Creative industries                 |
-      | Invest - Data Analytics                      |
-      | Invest - Digital media                       |
-      | Invest - Electrical networks                 |
-      | Invest - Energy                              |
-      | Invest - Energy from waste                   |
-      | Invest - Financial services                  |
-      | Invest - Financial technology                |
-      | Invest - Food and drink                      |
-      | Invest - Free-from foods                     |
-      | Invest - Health and life sciences            |
-      | Invest - Meat, poultry and dairy             |
-      | Invest - Medical technology                  |
-      | Invest - Motorsport                          |
-      | Invest - Nuclear energy                      |
-      | Invest - Offshore wind energy                |
-      | Invest - Oil and gas                         |
-      | Invest - Pharmaceutical manufacturing        |
-      | Invest - Retail                              |
-      | Invest - Technology                          |
-
-
-  Scenario Outline: Visitors should be able to read through all of the sections on the "Invest <industry>" page
-    Given "Robert" visits the "Invest <industry>" page
-
-    When "Robert" unfolds all content sections
-
-    Then "Robert" should see content for every section
+    Then "Robert" should see expected sections on "Invest - <selected> industry" page
+      | Sections         |
+      | Header           |
+      | Beta bar         |
+      | Hero             |
+      | Industry pullout |
+      | Big number       |
+      | Topics           |
+      | Topics contents  |
+      | Report this page |
+      | Footer           |
 
     Examples: Industries
-      | industry                                     |
-      | Invest - Advanced manufacturing              |
-      | Invest - Aerospace                           |
-      | Invest - Agri-tech                           |
-      | Invest - Asset management                    |
-      | Invest - Automotive                          |
-      | Invest - Automotive research and development |
-      | Invest - Automotive supply chain             |
-      | Invest - Capital Investment                  |
-      | Invest - Chemicals                           |
-      | Invest - Creative content and production     |
-      | Invest - Creative industries                 |
-      | Invest - Data Analytics                      |
-      | Invest - Digital media                       |
-      | Invest - Electrical networks                 |
-      | Invest - Energy                              |
-      | Invest - Energy from waste                   |
-      | Invest - Financial services                  |
-      | Invest - Financial technology                |
-      | Invest - Food and drink                      |
-      | Invest - Free-from foods                     |
-      | Invest - Health and life sciences            |
-      | Invest - Meat, poultry and dairy             |
-      | Invest - Medical technology                  |
-      | Invest - Motorsport                          |
-      | Invest - Nuclear energy                      |
-      | Invest - Offshore wind energy                |
-      | Invest - Oil and gas                         |
-      | Invest - Pharmaceutical manufacturing        |
-      | Invest - Retail                              |
-      | Invest - Technology                          |
+      | selected                            |
+      | Advanced manufacturing              |
+      | Aerospace                           |
+      | Agri-tech                           |
+      | Asset management                    |
+      | Automotive research and development |
+      | Automotive supply chain             |
+      | Capital Investment                  |
+      | Chemicals                           |
+      | Creative content and production     |
+      | Data Analytics                      |
+      | Digital media                       |
+      | Electrical networks                 |
+      | Energy from waste                   |
+      | Financial technology                |
+      | Free-from foods                     |
+      | Meat, poultry and dairy             |
+      | Medical technology                  |
+      | Motorsport                          |
+      | Nuclear energy                      |
+      | Offshore wind energy                |
+      | Oil and gas                         |
+      | Pharmaceutical manufacturing        |
+      | Retail                              |
+
+
+  @CMS-160
+  Scenario Outline: Visitors should be able to see the "Invest - <selected> industry" page with related Industries
+    Given "Robert" visits the "Invest - <selected> industry" page
+
+    When "Robert" unfolds all topic sections on "Invest - <selected> industry" page
+
+    Then "Robert" should see expected sections on "Invest - <selected> industry" page
+      | Sections           |
+      | Header             |
+      | Beta bar           |
+      | Hero               |
+      | Industry pullout   |
+      | Big number         |
+      | Topics             |
+      | Topics contents    |
+      | Related industries |
+      | Report this page   |
+      | Footer             |
+
+    Examples: Industries
+      | selected                 |
+      | Automotive               |
+      | Creative industries      |
+      | Energy                   |
+      | Financial services       |
+      | Food and drink           |
+      | Health and life sciences |
+      | Technology               |

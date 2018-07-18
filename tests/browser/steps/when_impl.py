@@ -1777,3 +1777,11 @@ def generic_open_guide_link(
     logging.debug(
         "%s opened '%s' page on %s", actor_alias, guide_name, page.URL
     )
+
+
+def generic_unfold_topics(context: Context, actor_alias: str, page_name: str):
+    page = get_page_object(page_name)
+    assert hasattr(page, "unfold_topics")
+    page.unfold_topics(context.driver)
+    update_actor(context, actor_alias, visited_page=page_name)
+    logging.debug("%s unfolded all topics on %s", actor_alias, page_name)

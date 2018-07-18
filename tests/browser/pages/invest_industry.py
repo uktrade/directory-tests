@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
-from utils import assertion_msg, find_element, take_screenshot
+from utils import assertion_msg, find_element, take_screenshot, find_elements
 
 from pages import (
     AssertionExecutor,
@@ -68,6 +68,10 @@ class URLS(Enum):
     TECHNOLOGY = urljoin(BASE_URL, "technology/")
 
 
+TOPIC_EXPANDERS = Selector(
+    By.CSS_SELECTOR, "section.industry-page-accordions a.accordion-expander"
+)
+
 SECTIONS = {
     "header": {
         "self": Selector(By.ID, "invest-header"),
@@ -82,14 +86,25 @@ SECTIONS = {
     },
     "hero": {"self": Selector(By.CSS_SELECTOR, "#content > section.hero")},
     "industry pullout": {
-        "self": Selector(By.CSS_SELECTOR, "section.industry-pullout"),
-        "data": Selector(By.CSS_SELECTOR, "section.industry-pullout div.data"),
+        "self": Selector(By.CSS_SELECTOR, "section.industry-pullout")
     },
-    "industry accordions": {
+    "big number": {
+        "self": Selector(By.CSS_SELECTOR, "section.industry-pullout div.data")
+    },
+    "topics": {
         "self": Selector(By.CSS_SELECTOR, "section.industry-page-accordions"),
         "accordion expanders": Selector(
             By.CSS_SELECTOR,
             "section.industry-page-accordions a.accordion-expander",
+        ),
+    },
+    "topics contents": {
+        "paragraphs": Selector(By.CSS_SELECTOR, "div.accordion-content p")
+    },
+    "related industries": {
+        "self": Selector(By.CSS_SELECTOR, "section.industry-page-related"),
+        "industry cards": Selector(
+            By.CSS_SELECTOR, "section.industry-page-related a.labelled-card"
         ),
     },
     "report this page": {
@@ -177,3 +192,14 @@ def should_see_content_for(driver: WebDriver, industry_name: str):
         driver.current_url,
     ):
         assert industry_name.lower() in source.lower()
+
+
+def unfold_topics(driver: WebDriver):
+    expanders = find_elements(driver, by_css=TOPIC_EXPANDERS.value)
+    assert (
+        expanders
+    ), "Expected to see at least 1 topic but found 0 on {}".format(
+        driver.current_url
+    )
+    for expander in expanders:
+        expander.click()
