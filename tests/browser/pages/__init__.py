@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import logging
 from enum import Enum
 from importlib import import_module
 from pkgutil import iter_modules
@@ -100,14 +101,15 @@ def get_page_object(
             if (service_name == service.lower()) and (page_name == name.lower()):
                 result = page.value
         else:
-            name_parts = name.lower().split()
-            partial_name_match = any(word in page_name for word in name_parts)
-            if (service_name == service.lower()) and partial_name_match:
-                result = page.value
+            parts = [word for word in name.lower().split() if len(word) > 2]
+            partial_name_match = any(word in page_name for word in parts)
+            if service_name == service.lower():
+                if partial_name_match:
+                    result = page.value
 
     if not result:
         keys = PAGES.__members__.keys()
         raise KeyError(
             f"Could not find Page Object for: '{service_and_page}' in: {keys}")
-
+    logging.debug(F"Found PO for: {service_and_page} → {result}")
     return result
