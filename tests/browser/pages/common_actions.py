@@ -13,6 +13,7 @@ from collections.__init__ import namedtuple
 from contextlib import contextmanager
 from datetime import datetime
 from os import path
+from types import ModuleType
 from typing import Dict, List, Union
 
 import requests
@@ -249,6 +250,12 @@ def add_actor(context: Context, actor: Actor):
 def get_actor(context, alias) -> Actor:
     """Get actor details from context Scenario Data."""
     return context.scenario_data.actors.get(alias)
+
+
+def get_last_visited_page(context: Context, actor_alias: str) -> ModuleType:
+    """Get last visited Page Object context Scenario Data."""
+    actor = context.scenario_data.actors.get(actor_alias)
+    return actor.visited_page
 
 
 def update_actor(context: Context, alias: str, **kwargs):
