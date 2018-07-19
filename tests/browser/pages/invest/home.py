@@ -232,12 +232,10 @@ def clean_name(name: str) -> str:
 
 def open_industry(driver: WebDriver, industry_name: str):
     industry_name = clean_name(industry_name)
+    selector = Selector(By.PARTIAL_LINK_TEXT, industry_name)
     logging.debug("Looking for: {}".format(industry_name))
     industry_link = find_element(
-        driver,
-        by_partial_link_text=industry_name,
-        element_name="Industry card",
-        wait_for_it=False,
+        driver, selector, element_name="Industry card", wait_for_it=False
     )
     industry_link.click()
     take_screenshot(driver, PAGE_TITLE + " after opening " + industry_name)
@@ -245,13 +243,9 @@ def open_industry(driver: WebDriver, industry_name: str):
 
 def open_guide(driver: WebDriver, guide_name: str):
     guide_name = clean_name(guide_name)
+    selector = Selector(By.PARTIAL_LINK_TEXT, guide_name)
     logging.debug("Looking for: {}".format(guide_name))
-    guide = find_element(
-        driver,
-        by_partial_link_text=guide_name,
-        element_name="Guide card",
-        wait_for_it=False,
-    )
+    guide = find_element(driver, selector, element_name="Guide card", wait_for_it=False)
     guide.click()
     take_screenshot(driver, PAGE_TITLE + " after opening " + guide_name)
 

@@ -2,8 +2,8 @@
 """Invest - Page Footer."""
 import logging
 
-from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
     Selector,
@@ -55,14 +55,14 @@ SELECTORS = {
 }
 
 
-def click_on_page_element(driver: webdriver, element: str):
+def click_on_page_element(driver: WebDriver, element: str):
     """Open specific element that belongs to the group."""
     find_and_click_on_page_element(driver, SELECTORS, element)
     take_screenshot(driver, NAME + " after clicking on: {} link".format(element))
 
 
-def check_logo(driver: webdriver):
-    logo = find_element(driver, by_css=UK_GOV_LOGO)
+def check_logo(driver: WebDriver):
+    logo = find_element(driver, UK_GOV_LOGO)
     scroll_to(driver, logo)
     src = logo.get_attribute("src")
     check_hash_of_remote_file(UK_GOV_MD5_CHECKSUM, src)
