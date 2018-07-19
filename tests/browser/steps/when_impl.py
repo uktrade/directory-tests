@@ -76,7 +76,7 @@ def visit_page(
         page.visit(context.driver, first_time=first_time, page_name=page_name)
     else:
         page.visit(context.driver, first_time=first_time)
-    update_actor(context, actor_alias, visited_page=page_name)
+    update_actor(context, actor_alias, visited_page=page)
 
 
 def actor_classifies_himself_as(
