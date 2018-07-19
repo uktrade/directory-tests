@@ -5,7 +5,7 @@ Feature: Industry pages
   Scenario Outline: Visitors should be able to see the "Invest - <selected> industry" page
     Given "Robert" visits the "Invest - <selected> industry" page
 
-    When "Robert" unfolds all topic sections on "Invest - <selected> industry" page
+    When "Robert" unfolds all topic sections
 
     Then "Robert" should see following sections
       | Sections         |
@@ -50,7 +50,7 @@ Feature: Industry pages
   Scenario Outline: Visitors should be able to see the "Invest - <selected> industry" page with related Industries
     Given "Robert" visits the "Invest - <selected> industry" page
 
-    When "Robert" unfolds all topic sections on "Invest - <selected> industry" page
+    When "Robert" unfolds all topic sections
 
     Then "Robert" should see following sections
       | Sections           |

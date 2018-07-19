@@ -442,10 +442,9 @@ def when_actor_goes_to_guide(
     generic_open_guide_link(context, actor_alias, guide_name)
 
 
-@when('"{actor_alias}" unfolds all topic sections on "{page_name}" page')
-def when_actor_unfolds_all_topic_sections(
-        context: Context, actor_alias: str, page_name: str):
-    generic_unfold_topics(context, actor_alias, page_name)
+@when('"{actor_alias}" unfolds all topic sections')
+def when_actor_unfolds_all_topic_sections(context: Context, actor_alias: str):
+    generic_unfold_topics(context, actor_alias)
 
 
 @when('"{actor_alias}" decides to click on the UK Government logo in the page "{page_name}"')
