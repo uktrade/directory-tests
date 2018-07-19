@@ -7,21 +7,19 @@ from behave.model import Table
 from behave.runner import Context
 from retrying import retry
 from selenium.common.exceptions import TimeoutException, WebDriverException
-from pages.common_actions import (
-    VisitedArticle,
-    unauthenticated_actor,
-    add_actor, get_actor,
-    update_actor,
-    take_screenshot,
-    assertion_msg,
-)
 from utils.gov_notify import get_verification_link
 
-from pages import common_language_selector
-from pages import exread
-from pages import fas
-from pages import sso
-from pages import get_page_object
+from pages import common_language_selector, exread, fas, get_page_object, sso
+from pages.common_actions import (
+    VisitedArticle,
+    add_actor,
+    assertion_msg,
+    get_actor,
+    get_last_visited_page,
+    take_screenshot,
+    unauthenticated_actor,
+    update_actor,
+)
 from registry.articles import (
     GUIDANCE,
     get_article,
@@ -1758,12 +1756,12 @@ def generic_open_guide_link(
     )
 
 
-def generic_unfold_topics(context: Context, actor_alias: str, page_name: str):
-    page = get_page_object(page_name)
+def generic_unfold_topics(context: Context, actor_alias: str):
+    page = get_last_visited_page(context, actor_alias)
     assert hasattr(page, "unfold_topics")
     page.unfold_topics(context.driver)
-    update_actor(context, actor_alias, visited_page=page_name)
-    logging.debug("%s unfolded all topics on %s", actor_alias, page_name)
+    update_actor(context, actor_alias, visited_page=page)
+    logging.debug("%s unfolded all topics on %s", actor_alias, page.NAME)
 
 
 def generic_click_on_uk_gov_logo(
