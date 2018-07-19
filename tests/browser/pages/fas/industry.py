@@ -2,14 +2,19 @@
 """Find a Supplier - Generic Industry Page Object."""
 import logging
 from enum import Enum
+from typing import List
 from urllib.parse import urljoin
 
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 
 from pages.common_actions import (
+    AssertionExecutor,
+    Selector,
     assertion_msg,
     check_for_expected_sections_elements,
     check_for_section,
+    check_for_sections,
     check_title,
     check_url,
     find_and_click_on_page_element,
@@ -66,31 +71,34 @@ SEARCH_BUTTON = "#companies-section form > button[type=submit]"
 COMPANY_PROFILE_LINK = "#companies-section li:nth-child({number}) a.link"
 ARTICLE_LINK = "#articles-section article:nth-child({number}) a"
 SELECTORS = {
-    "hero": {"itself": "#hero", "header": "#hero h2", "description": "#hero p"},
+    "hero": {
+        "itself": Selector(By.ID, "hero"),
+        "header": Selector(By.CSS_SELECTOR, "#hero h2"),
+        "description": Selector(By.CSS_SELECTOR, "#hero p")},
     "breadcrumbs": {
-        "itself": "#content p.breadcrumbs",
-        "industry": INDUSTRY_BREADCRUMB,
+        "itself": Selector(By.CSS_SELECTOR, "#content p.breadcrumbs"),
+        "industry": Selector(By.CSS_SELECTOR, INDUSTRY_BREADCRUMB),
     },
     "contact us": {
-        "itself": "#lede-section",
-        "header": "#lede-section h2",
-        "contact us": "#lede-section a",
+        "itself": Selector(By.ID, "lede-section"),
+        "header": Selector(By.CSS_SELECTOR, "#lede-section h2"),
+        "contact us": Selector(By.CSS_SELECTOR, "#lede-section a"),
     },
     "selling points": {
-        "itself": "#lede-columns-section",
-        "first": "#lede-columns-section div.column-one-third:nth-child(1)",
-        "second": "#lede-columns-section div.column-one-third:nth-child(2)",
-        "third": "#lede-columns-section div.column-one-third:nth-child(3)",
+        "itself": Selector(By.ID, "lede-columns-section"),
+        "first": Selector(By.CSS_SELECTOR, "#lede-columns-section div.column-one-third:nth-child(1)"),
+        "second": Selector(By.CSS_SELECTOR, "#lede-columns-section div.column-one-third:nth-child(2)"),
+        "third": Selector(By.CSS_SELECTOR, "#lede-columns-section div.column-one-third:nth-child(3)"),
     },
     "search for uk suppliers": {
-        "itself": "#companies-section",
-        "header": "#companies-list-text h2",
-        "search input": SEARCH_INPUT,
-        "search button": SEARCH_BUTTON,
-        "list of companies": "#companies-section ul",
-        "view more": "#companies-section a.button",
+        "itself": Selector(By.ID, "companies-section"),
+        "header": Selector(By.CSS_SELECTOR, "#companies-list-text h2"),
+        "search input": Selector(By.CSS_SELECTOR, SEARCH_INPUT),
+        "search button": Selector(By.CSS_SELECTOR, SEARCH_BUTTON),
+        "list of companies": Selector(By.CSS_SELECTOR, "#companies-section ul"),
+        "view more": Selector(By.CSS_SELECTOR, "#companies-section a.button"),
     },
-    "articles": {"itself": "#articles-section"},
+    "articles": {"itself": Selector(By.ID, "articles-section")},
 }
 
 
@@ -119,8 +127,8 @@ def should_be_here(driver: webdriver):
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
-def should_see_section(driver: webdriver, name: str):
-    check_for_section(driver, SELECTORS, sought_section=name)
+def should_see_sections(executor: AssertionExecutor, names: List[str]):
+    check_for_sections(executor, all_sections=SELECTORS, sought_sections=names)
 
 
 def clean_name(name: str) -> str:

@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
 """Find a Supplier Landing Page Object."""
 import logging
+from typing import List
 from urllib.parse import urljoin
 
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 
 from pages.common_actions import (
+    AssertionExecutor,
+    Selector,
     check_for_expected_sections_elements,
-    check_for_section,
+    check_for_sections,
     check_title,
     check_url,
     find_and_click_on_page_element,
@@ -23,36 +27,36 @@ TYPE = "home"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "/")
 PAGE_TITLE = "Find UK suppliers - trade.great.gov.uk"
 
-SEARCH_INPUT = "#id_term"
-SEARCH_SECTOR = "#id_sectors"
+SEARCH_INPUT = "id_term"
+SEARCH_SECTOR = "id_sectors"
 SEARCH_BUTTON = "#search-area > form button"
 CONTACT_US_BUTTON = "#introduction-section a"
 SELECTORS = {
-    "hero": {"itself": "section#hero"},
+    "hero": {"itself": Selector(By.CSS_SELECTOR, "section#hero")},
     "find uk suppliers": {
-        "itself": "#search-area",
-        "search term input": SEARCH_INPUT,
-        "search selectors dropdown": SEARCH_SECTOR,
-        "find suppliers button": SEARCH_BUTTON,
+        "itself": Selector(By.ID, "search-area"),
+        "search term input": Selector(By.ID, SEARCH_INPUT),
+        "search selectors dropdown": Selector(By.ID, SEARCH_SECTOR),
+        "find suppliers button": Selector(By.CSS_SELECTOR, SEARCH_BUTTON),
     },
     "contact us": {
-        "itself": "#introduction-section",
-        "introduction text": "#introduction-section p",
-        "contact us": CONTACT_US_BUTTON,
+        "itself": Selector(By.ID, "introduction-section"),
+        "introduction text": Selector(By.CSS_SELECTOR, "#introduction-section p"),
+        "contact us": Selector(By.CSS_SELECTOR, CONTACT_US_BUTTON),
     },
     "uk industries": {
-        "itself": "#industries-section",
-        "first industry": "#industries-section a:nth-child(1)",
-        "second industry": "#industries-section a:nth-child(2)",
-        "third industry": "#industries-section a:nth-child(3)",
-        "see more industries": "#industries-section > div > a.button",
+        "itself": Selector(By.ID, "industries-section"),
+        "first industry": Selector(By.CSS_SELECTOR, "#industries-section a:nth-child(1)"),
+        "second industry": Selector(By.CSS_SELECTOR, "#industries-section a:nth-child(2)"),
+        "third industry": Selector(By.CSS_SELECTOR, "#industries-section a:nth-child(3)"),
+        "see more industries": Selector(By.CSS_SELECTOR, "#industries-section > div > a.button"),
     },
     "uk services": {
-        "itself": "#services-section",
-        "first service": "#services-section div.column-one-quarter:nth-child(3)",
-        "second service": "#services-section div.column-one-quarter:nth-child(4)",
-        "third service": "#services-section div.column-one-quarter:nth-child(5)",
-        "fourth service": "#services-section div.column-one-quarter:nth-child(6)",
+        "itself": Selector(By.ID, "services-section"),
+        "first service": Selector(By.CSS_SELECTOR, "#services-section div.column-one-quarter:nth-child(3)"),
+        "second service": Selector(By.CSS_SELECTOR, "#services-section div.column-one-quarter:nth-child(4)"),
+        "third service": Selector(By.CSS_SELECTOR, "#services-section div.column-one-quarter:nth-child(5)"),
+        "fourth service": Selector(By.CSS_SELECTOR, "#services-section div.column-one-quarter:nth-child(6)"),
     },
 }
 
@@ -69,8 +73,8 @@ def should_be_here(driver: webdriver):
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
-def should_see_section(driver: webdriver, name: str):
-    check_for_section(driver, SELECTORS, sought_section=name)
+def should_see_sections(executor: AssertionExecutor, names: List[str]):
+    check_for_sections(executor, all_sections=SELECTORS, sought_sections=names)
 
 
 def search(driver: webdriver, *, keyword: str = None, sector: str = None):

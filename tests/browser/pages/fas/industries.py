@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
 """Find a Supplier - Industries Page Object."""
 import logging
+from typing import List
 from urllib.parse import urljoin
 
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 
 from pages.common_actions import (
+    AssertionExecutor,
     check_for_expected_sections_elements,
     check_for_section,
+    check_for_sections,
     check_title,
     check_url,
     find_and_click_on_page_element,
@@ -15,6 +19,7 @@ from pages.common_actions import (
     find_elements,
     go_to_url,
     take_screenshot,
+    Selector
 )
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
@@ -29,23 +34,25 @@ INDUSTRIES_BREADCRUMB = "p.breadcrumbs > span.current.bidi-rtl"
 INDUSTRIES_LINKS = "#industry-pages-container > section a"
 MORE_INDUSTRIES_LINKS = "#industry-pages-container > ul a"
 SELECTORS = {
-    "hero": {"itself": "#hero", "header": "#hero h1"},
+    "hero": {
+        "itself": Selector(By.ID, "hero"),
+        "header": Selector(By.CSS_SELECTOR, "#hero h1")},
     "breadcrumbs": {
-        "itself": "#content p.breadcrumbs",
-        "industries": INDUSTRIES_BREADCRUMB,
+        "itself": Selector(By.CSS_SELECTOR, "#content p.breadcrumbs"),
+        "industries": Selector(By.CSS_SELECTOR, INDUSTRIES_BREADCRUMB),
     },
     "contact us": {
-        "itself": "#introduction",
-        "header": "#introduction p",
-        "contact us": "#introduction a",
+        "itself": Selector(By.ID, "introduction"),
+        "header": Selector(By.CSS_SELECTOR, "#introduction p"),
+        "contact us": Selector(By.CSS_SELECTOR, "#introduction a"),
     },
     "industries": {
-        "itself": "#industry-pages-container",
-        "industries": INDUSTRIES_LINKS,
+        "itself": Selector(By.ID, "industry-pages-container"),
+        "industries": Selector(By.CSS_SELECTOR, INDUSTRIES_LINKS),
     },
     "more industries": {
-        "itself": "#industry-pages-container > ul",
-        "more industries": MORE_INDUSTRIES_LINKS,
+        "itself": Selector(By.CSS_SELECTOR, "#industry-pages-container > ul"),
+        "more industries": Selector(By.CSS_SELECTOR, MORE_INDUSTRIES_LINKS,)
     },
 }
 
@@ -62,8 +69,8 @@ def should_be_here(driver: webdriver):
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
-def should_see_section(driver: webdriver, name: str):
-    check_for_section(driver, SELECTORS, sought_section=name)
+def should_see_sections(executor: AssertionExecutor, names: List[str]):
+    check_for_sections(executor, all_sections=SELECTORS, sought_sections=names)
 
 
 def click_on_page_element(driver: webdriver, element_name: str):
