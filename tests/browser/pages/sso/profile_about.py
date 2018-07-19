@@ -3,9 +3,11 @@
 import logging
 from urllib.parse import urljoin
 
-from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    Selector,
     check_for_expected_elements,
     check_title,
     check_url,
@@ -20,20 +22,23 @@ TYPE = "profile"
 URL = urljoin(DIRECTORY_UI_PROFILE_URL, "about/")
 PAGE_TITLE = "Exporting is Great Account - GREAT.gov.uk"
 
-EXPECTED_ELEMENTS = {
-    "title": ".sso-profile-toolbar-labels-container > h1",
-    "welcome message": "#welcome-message > h2",
+SELECTORS = {
+    "general": {
+        "title": Selector(
+            By.CSS_SELECTOR, ".sso-profile-toolbar-labels-container > h1"
+        ),
+        "welcome message": Selector(By.CSS_SELECTOR, "#welcome-message > h2"),
+    }
 }
-SELECTORS = {}
 
 
-def visit(driver: webdriver, *, first_time: bool = False):
+def visit(driver: WebDriver, *, first_time: bool = False):
     go_to_url(driver, URL, NAME, first_time=first_time)
 
 
-def should_be_here(driver: webdriver):
+def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=True)
     check_title(driver, PAGE_TITLE, exact_match=False)
-    check_for_expected_elements(driver, EXPECTED_ELEMENTS)
+    check_for_expected_elements(driver, SELECTORS)
     logging.debug("All expected elements are visible on '%s' page", NAME)
