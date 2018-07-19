@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
-"""Common Language Selector on great pages"""
+"""Common Language Selector on Great pages"""
 import logging
 import time
 
-from selenium import webdriver
+from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    Selector,
     assertion_msg,
     check_if_element_is_not_visible,
     find_element,
@@ -16,21 +18,25 @@ from pages.common_actions import (
 
 NAME = "Language selector"
 
-LANGUAGE_INDICATOR = "#header-bar span.lang"
-LANGUAGE_SELECTOR_OPEN = "#header-bar a.LanguageSelectorDialog-Tracker"
-LANGUAGE_SELECTOR_CLOSE = "#header-language-selector-close"
-DOMESTIC_PAGE = "section.language-selector-dialog div.domestic-redirect > p > a"
-ENGLISH = "#header-language-selector-en-gb"
-CHINESE = "#header-language-selector-zh-hans"
-GERMAN = "#header-language-selector-de"
-JAPANESE = "#header-language-selector-ja"
-SPANISH = "#header-language-selector-es"
-PORTUGUESE = "#header-language-selector-pt"
-ARABIC = "#header-language-selector-ar"
+LANGUAGE_INDICATOR = Selector(By.CSS_SELECTOR, "#header-bar span.lang")
+LANGUAGE_SELECTOR_OPEN = Selector(
+    By.CSS_SELECTOR, "#header-bar a.LanguageSelectorDialog-Tracker"
+)
+LANGUAGE_SELECTOR_CLOSE = Selector(By.ID, "header-language-selector-close")
+DOMESTIC_PAGE = Selector(
+    By.CSS_SELECTOR, "section.language-selector-dialog div.domestic-redirect > p > a"
+)
+ENGLISH = Selector(By.ID, "header-language-selector-en-gb")
+CHINESE = Selector(By.ID, "header-language-selector-zh-hans")
+GERMAN = Selector(By.ID, "header-language-selector-de")
+JAPANESE = Selector(By.ID, "header-language-selector-ja")
+SPANISH = Selector(By.ID, "header-language-selector-es")
+PORTUGUESE = Selector(By.ID, "header-language-selector-pt")
+ARABIC = Selector(By.ID, "header-language-selector-ar")
 ELEMENTS_ON = {
     "export readiness - home": {
-        "itself": "section.language-selector-dialog",
-        "title": "#great-languages-selector",
+        "itself": Selector(By.CSS_SELECTOR, "section.language-selector-dialog"),
+        "title": Selector(By.ID, "great-languages-selector"),
         "English": ENGLISH,
         "简体中文": CHINESE,
         "Deutsch": GERMAN,
@@ -41,8 +47,8 @@ ELEMENTS_ON = {
         "close": LANGUAGE_SELECTOR_CLOSE,
     },
     "export readiness - international": {
-        "itself": "section.language-selector-dialog",
-        "title": "#great-languages-selector",
+        "itself": Selector(By.CSS_SELECTOR, "section.language-selector-dialog"),
+        "title": Selector(By.ID, "great-languages-selector"),
         "English (UK)": DOMESTIC_PAGE,
         "English": ENGLISH,
         "简体中文": CHINESE,
@@ -89,10 +95,8 @@ LANGUAGE_INDICATOR_VALUES = {
 }
 
 
-def close(driver: webdriver, *, with_keyboard: bool = False):
-    close_language_selector_button = find_element(
-        driver, by_css=LANGUAGE_SELECTOR_CLOSE
-    )
+def close(driver: WebDriver, *, with_keyboard: bool = False):
+    close_language_selector_button = find_element(driver, LANGUAGE_SELECTOR_CLOSE)
     with assertion_msg("Close Language Selector button is not visible"):
         assert close_language_selector_button.is_displayed()
     if with_keyboard:
@@ -101,8 +105,8 @@ def close(driver: webdriver, *, with_keyboard: bool = False):
         close_language_selector_button.click()
 
 
-def open(driver: webdriver, *, with_keyboard: bool = False):
-    language_selector = find_element(driver, by_css=LANGUAGE_SELECTOR_OPEN)
+def open(driver: WebDriver, *, with_keyboard: bool = False):
+    language_selector = find_element(driver, LANGUAGE_SELECTOR_OPEN)
     with assertion_msg("Language Selector button is not visible"):
         assert language_selector.is_displayed()
     if with_keyboard:
@@ -111,7 +115,7 @@ def open(driver: webdriver, *, with_keyboard: bool = False):
         language_selector.click()
 
 
-def should_see_it_on(driver: webdriver, page_name: str):
+def should_see_it_on(driver: WebDriver, page_name: str):
     take_screenshot(driver, NAME + page_name)
     section = ELEMENTS_ON[page_name.lower()]
     for key, selector in section.items():
@@ -122,52 +126,52 @@ def should_see_it_on(driver: webdriver, page_name: str):
             page_name,
             selector,
         ):
-            element = find_element(driver, by_css=selector)
+            element = find_element(driver, selector)
         with assertion_msg("'%s' on '%s' is not displayed", key, page_name):
             assert element.is_displayed()
             logging.debug("'%s' on '%s' is displayed", key, page_name)
 
 
-def should_not_see_it_on(driver: webdriver, page_name: str):
+def should_not_see_it_on(driver: WebDriver, page_name: str):
     # wait a second before language selector modal window disappears
     time.sleep(1)
     take_screenshot(driver, NAME + page_name)
     page_elements = ELEMENTS_ON[page_name.lower()]
     for key, selector in page_elements.items():
         check_if_element_is_not_visible(
-            driver, by_css=selector, element_name=key, wait_for_it=False
+            driver, selector, element_name=key, wait_for_it=False
         )
 
 
-def navigate_through_links_with_keyboard(driver: webdriver, page_name: str):
+def navigate_through_links_with_keyboard(driver: WebDriver, page_name: str):
     for name, selector in KEYBOARD_NAVIGABLE_ELEMENTS[page_name.lower()]:
-        element = find_element(driver, by_css=selector, element_name=name)
+        element = find_element(driver, selector, element_name=name)
         with assertion_msg("Expected '%s' element to be in focus", name):
             assert element.id == driver.switch_to.active_element.id
             logging.debug("%s is focused, moving to the next one", name)
         element.send_keys(Keys.TAB)
 
 
-def keyboard_should_be_trapped(driver: webdriver, page_name: str):
+def keyboard_should_be_trapped(driver: WebDriver, page_name: str):
     number_of_navigation_iterations = 2
     for _ in range(number_of_navigation_iterations):
         navigate_through_links_with_keyboard(driver, page_name)
 
 
 def change_to(
-    driver: webdriver, page_name: str, language: str, *, with_keyboard: bool = False
+    driver: WebDriver, page_name: str, language: str, *, with_keyboard: bool = False
 ):
     language_selector = ELEMENTS_ON[page_name.lower()][language]
-    language_button = find_element(driver, by_css=language_selector)
+    language_button = find_element(driver, language_selector)
     if with_keyboard:
         language_button.send_keys(Keys.ENTER)
     else:
         language_button.click()
 
 
-def check_page_language_is(driver: webdriver, expected_language: str):
+def check_page_language_is(driver: WebDriver, expected_language: str):
     expected_language_code = LANGUAGE_INDICATOR_VALUES[expected_language]
-    language_indicator = find_element(driver, by_css=LANGUAGE_INDICATOR)
+    language_indicator = find_element(driver, LANGUAGE_INDICATOR)
     language_indicator_code = language_indicator.text.lower()
     with assertion_msg(
         "Expected to see page in '%s' but got '%s'",
