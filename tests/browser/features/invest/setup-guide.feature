@@ -5,7 +5,7 @@ Feature: UK Setup Guide
   Scenario: Visitors should be able to see the "Invest UK Setup Guide" page
     Given "Robert" visits the "Invest UK Setup Guide" page
 
-    Then "Robert" should see expected page sections
+    Then "Robert" should see following sections
       | Header       |
       | Beta bar     |
       | Hero         |

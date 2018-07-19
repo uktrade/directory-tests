@@ -9,7 +9,7 @@ Feature: Find a Supplier - Industry pages
   Scenario Outline: Buyers should be able to see all expected page elements on "<specific>" page
     Given "Robert" visits the "Find a Supplier - <specific> industry" page
 
-    Then "Robert" should see expected sections on "Find a Supplier - Industry" page
+    Then "Robert" should see following sections
       | Sections                |
       | Hero                    |
       | Breadcrumbs             |

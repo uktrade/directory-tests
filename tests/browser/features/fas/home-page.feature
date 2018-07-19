@@ -8,7 +8,13 @@ Feature: Find a Supplier - home page
   Scenario: Buyers should be able to view "Find a Supplier home" page
     Given "Robert" visits the "Find a Supplier - Home" page
 
-    Then "Robert" should see "Hero, Find UK Suppliers, Contact us, UK Industries, UK Services" sections on "Find a Supplier - Home" page
+    Then "Robert" should see following sections
+      | Sections          |
+      | Hero              |
+      | Find UK Suppliers |
+      | Contact us        |
+      | UK Industries     |
+      | UK Services       |
 
 
   @ED-4245

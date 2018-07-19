@@ -6,7 +6,7 @@ Feature: Industries page
   Scenario: Visitors should be able to view "Invest Industries" page
     Given "Robert" visits the "Invest - Industries" page
 
-    Then "Robert" should see expected sections on "Invest - Industries" page
+    Then "Robert" should see following sections
       | Sections         |
       | Header           |
       | Beta bar         |

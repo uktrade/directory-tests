@@ -7,7 +7,7 @@ Feature: Industry pages
 
     When "Robert" unfolds all topic sections on "Invest - <selected> industry" page
 
-    Then "Robert" should see expected sections on "Invest - <selected> industry" page
+    Then "Robert" should see following sections
       | Sections         |
       | Header           |
       | Beta bar         |
@@ -52,7 +52,7 @@ Feature: Industry pages
 
     When "Robert" unfolds all topic sections on "Invest - <selected> industry" page
 
-    Then "Robert" should see expected sections on "Invest - <selected> industry" page
+    Then "Robert" should see following sections
       | Sections           |
       | Header             |
       | Beta bar           |
