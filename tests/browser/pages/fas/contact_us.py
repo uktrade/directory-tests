@@ -4,9 +4,11 @@ import logging
 import random
 from urllib.parse import urljoin
 
-from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    Selector,
     check_for_expected_sections_elements,
     check_for_section,
     check_title,
@@ -22,19 +24,19 @@ TYPE = "contact"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "industries/contact/")
 PAGE_TITLE = "Contact us - trade.great.gov.uk"
 
-SUBMIT_BUTTON = "form input[type=submit]"
-FULL_NAME = "#id_full_name"
-EMAIL = "#id_email_address"
-INDUSTRY = "#id_sector"
-ORGANISATION = "#id_organisation_name"
-ORGANISATION_SIZE = "#id_organisation_size"
-COUNTRY = "#id_country"
-BODY = "#id_body"
-SOURCE = "#id_source"
-ACCEPT_TC = "#id_terms_agreed-label"
+SUBMIT_BUTTON = Selector(By.CSS_SELECTOR, "form input[type=submit]")
+FULL_NAME = Selector(By.ID, "id_full_name")
+EMAIL = Selector(By.ID, "id_email_address")
+INDUSTRY = Selector(By.ID, "id_sector")
+ORGANISATION = Selector(By.ID, "id_organisation_name")
+ORGANISATION_SIZE = Selector(By.ID, "id_organisation_size")
+COUNTRY = Selector(By.ID, "id_country")
+BODY = Selector(By.ID, "id_body")
+SOURCE = Selector(By.ID, "id_source")
+ACCEPT_TC = Selector(By.ID, "id_terms_agreed-label")
 SELECTORS = {
     "form": {
-        "itself": "#lede form",
+        "itself": Selector(By.CSS_SELECTOR, "#lede form"),
         "full name": FULL_NAME,
         "email": EMAIL,
         "industry": INDUSTRY,
@@ -49,22 +51,22 @@ SELECTORS = {
 }
 
 
-def visit(driver: webdriver, *, first_time: bool = False):
+def visit(driver: WebDriver, *, first_time: bool = False):
     go_to_url(driver, URL, NAME, first_time=first_time)
 
 
-def should_be_here(driver: webdriver):
+def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_title(driver, PAGE_TITLE, exact_match=True)
     check_for_expected_sections_elements(driver, SELECTORS)
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
-def should_see_section(driver: webdriver, name: str):
+def should_see_section(driver: WebDriver, name: str):
     check_for_section(driver, SELECTORS, sought_section=name)
 
 
-def fill_out(driver: webdriver, contact_us_details: dict):
+def fill_out(driver: WebDriver, contact_us_details: dict):
     input_fields = ["full name", "email", "organisation", "country", "body"]
     dropdown_menus = ["industry", "organisation size", "source"]
 
@@ -72,7 +74,7 @@ def fill_out(driver: webdriver, contact_us_details: dict):
         value = contact_us_details[field_name]
         field = find_element(
             driver,
-            by_css=SELECTORS["form"][field_name],
+            SELECTORS["form"][field_name],
             element_name=field_name,
             wait_for_it=False,
         )
@@ -82,7 +84,7 @@ def fill_out(driver: webdriver, contact_us_details: dict):
         selector = SELECTORS["form"][menu_name]
         dropdown = find_element(
             driver,
-            by_css=selector,
+            selector,
             element_name="{} dropdown menu".format(menu_name),
             wait_for_it=False,
         )
@@ -99,16 +101,16 @@ def fill_out(driver: webdriver, contact_us_details: dict):
         sector_option.click()
 
     if contact_us_details["accept t&c"]:
-        checkbox = find_element(driver, by_css=ACCEPT_TC)
+        checkbox = find_element(driver, ACCEPT_TC)
         checkbox.click()
 
     take_screenshot(driver, "After filling out the contact us form")
 
 
-def submit(driver: webdriver):
+def submit(driver: WebDriver):
     take_screenshot(driver, "Before submitting the contact us form")
     button = find_element(
-        driver, by_css=SUBMIT_BUTTON, element_name="Submit button", wait_for_it=False
+        driver, SUBMIT_BUTTON, element_name="Submit button", wait_for_it=False
     )
     button.click()
     take_screenshot(driver, "After submitting the contact us form")

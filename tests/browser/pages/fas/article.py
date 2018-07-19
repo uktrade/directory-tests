@@ -3,9 +3,11 @@
 import logging
 from urllib.parse import urljoin
 
-from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    Selector,
     check_for_expected_sections_elements,
     check_url,
     take_screenshot,
@@ -18,27 +20,30 @@ TYPE = "article"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "industry-articles/")
 
 SELECTORS = {
-    "breadcrumbs": {"itself": "p.breadcrumbs", "home": "p.breadcrumbs a[href='/']"},
+    "breadcrumbs": {
+        "itself": Selector(By.CSS_SELECTOR, "p.breadcrumbs"),
+        "home": Selector(By.CSS_SELECTOR, "p.breadcrumbs a[href='/']"),
+    },
     "article": {
-        "itself": "#industry-article-container",
-        "header": "#industry-article-container h1",
+        "itself": Selector(By.ID, "industry-article-container"),
+        "header": Selector(By.CSS_SELECTOR, "#industry-article-container h1"),
     },
     "contact us": {
-        "itself": "#contact-area",
-        "call to action": "#contact-area p",
-        "contact us link": "#contact-area a",
+        "itself": Selector(By.ID, "contact-area"),
+        "call to action": Selector(By.CSS_SELECTOR, "#contact-area p"),
+        "contact us link": Selector(By.CSS_SELECTOR, "#contact-area a"),
     },
     "share on social media": {
-        "itself": "ul.sharing-links",
-        "twitter": "#share-twitter",
-        "facebook": "#share-facebook",
-        "linkedin": "#share-linkedin",
-        "email": "#share-email",
+        "itself": Selector(By.CSS_SELECTOR, "ul.sharing-links"),
+        "twitter": Selector(By.ID, "share-twitter"),
+        "facebook": Selector(By.ID, "share-facebook"),
+        "linkedin": Selector(By.ID, "share-linkedin"),
+        "email": Selector(By.ID, "share-email"),
     },
 }
 
 
-def should_be_here(driver: webdriver):
+def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
     check_for_expected_sections_elements(driver, SELECTORS)
