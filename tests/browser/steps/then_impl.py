@@ -5,13 +5,14 @@ from typing import List
 
 from behave.model import Table
 from behave.runner import Context
-from pages.common_actions import get_actor, assertion_msg, clear_driver_cookies
 
-from pages import common_language_selector
-from pages import exread
-from pages import fas
-from pages import invest
-from pages import get_page_object
+from pages import common_language_selector, exread, fas, get_page_object, invest
+from pages.common_actions import (
+    assertion_msg,
+    clear_driver_cookies,
+    get_actor,
+    get_last_visited_page,
+)
 from registry.articles import get_article, get_articles
 from steps.when_impl import (
     triage_should_be_classified_as_new,
@@ -234,36 +235,18 @@ def export_readiness_expected_page_elements_should_be_visible(
 def should_see_sections(
     context: Context,
     actor_alias: str,
-    page_name: str,
-    *,
-    sections_list: List[str] = None,
     sections_table: Table = None
 ):
-    assert sections_list or sections_table
-    if sections_table:
-        sections = [row[0] for row in sections_table]
-    else:
-        sections = sections_list
+    sections = [row[0] for row in sections_table]
     logging.debug(
         "%s will look for following sections: '%s' on %s",
         actor_alias,
         sections,
         context.driver.current_url,
     )
-    page = get_page_object(page_name)
-    if hasattr(page, "should_see_sections"):
-        page.should_see_sections(context.driver, sections)
-        return
-
-    assert hasattr(page, "should_see_section")
-    for section in sections:
-        page.should_see_section(context.driver, section)
-        logging.debug(
-            "%s can see '%s' section on %s page",
-            actor_alias,
-            section,
-            page_name,
-        )
+    page = get_last_visited_page(context, actor_alias)
+    assert hasattr(page, "should_see_sections")
+    page.should_see_sections(context.driver, sections)
 
 
 def should_not_see_sections(
