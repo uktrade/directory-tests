@@ -3,7 +3,7 @@
 import logging
 from urllib.parse import urljoin
 
-from selenium import webdriver
+from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import check_title, go_to_url, take_screenshot
 
@@ -15,11 +15,11 @@ PAGE_TITLE = "Study UK | British Council"
 SELECTORS = {}
 
 
-def visit(driver: webdriver, *, first_time: bool = False):
+def visit(driver: WebDriver, *, first_time: bool = False):
     go_to_url(driver, URL, NAME, first_time=first_time)
 
 
-def should_be_here(driver: webdriver):
+def should_be_here(driver: WebDriver):
     check_title(driver, PAGE_TITLE, exact_match=True)
     take_screenshot(driver, NAME)
     logging.debug("All expected elements are visible on '%s' page", NAME)
