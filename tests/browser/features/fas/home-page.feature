@@ -22,7 +22,7 @@ Feature: Find a Supplier - home page
   Scenario Outline: Buyers should be able to "Find UK suppliers" in "<specific>" industry from the "Find a Supplier home" page using "<following>" keyword
     Given "Robert" visits the "Find a Supplier - Home" page
 
-    When "Robert" searches for companies using "<following>" keyword in "<specific>" sector on "Find a Supplier - Home" page
+    When "Robert" searches for companies using "<following>" keyword in "<specific>" sector
 
     Then "Robert" should be on the "<expected>" page
 

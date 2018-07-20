@@ -12,7 +12,7 @@ Feature: Customised page
     When "Nadia" decides to create her personalised journey page
 
     Then "Nadia" should be on the Personalised Journey page for "regular" exporters
-    And "Nadia" should see "<expected>" sections on "Export Readiness - Personalised Journey" page
+    And "Nadia" should see "<expected>" sections
 
     Examples:
       | goods_or_services  | has_or_has_not | expected                                     |
@@ -35,7 +35,7 @@ Feature: Customised page
     When "Inigo" decides to create her personalised journey page
 
     Then "Inigo" should be on the Personalised Journey page for "occasional" exporters
-    And "Inigo" should see "<expected>" sections on "Export Readiness - personalised journey" page
+    And "Inigo" should see "<expected>" sections
 
     Examples:
       | goods_or_services  | used_or_not | has_or_has_not | expected                                             |
@@ -59,7 +59,7 @@ Feature: Customised page
     When "Jonah" decides to create his personalised journey page
 
     Then "Jonah" should be on the Personalised Journey page for "new" exporters
-    And "Jonah" should see "<expected>" sections on "Export Readiness - personalised journey" page
+    And "Jonah" should see "<expected>" sections
 
     Examples:
       | goods_or_services  | has_or_has_not | expected                                |

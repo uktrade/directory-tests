@@ -128,7 +128,12 @@ Feature: Header-Footer
   Scenario: Any user who visits the "Create your export journey" page for the first time, should be able to see all expected sections
     Given "Robert" visits the "Export Readiness - Create your export journey" page for the first time
 
-    Then "Robert" should see "Description, Start now, Save progress, Report this page" sections on "Export Readiness - Create your export journey" page
+    Then "Robert" should see following sections
+      | Sections         |
+      | Description      |
+      | Start now        |
+      | Save progress    |
+      | Report this page |
 
 
   @ED-3261
@@ -142,7 +147,9 @@ Feature: Header-Footer
     When "Robert" decides to use "Your export journey" link in "Export Readiness - Header"
 
     Then "Robert" should be on the "Export Readiness - Create your export journey" page
-    And "Robert" should see "Save Progress" section on "Export Readiness - Create your export journey" page
+    And "Robert" should see following sections
+      | Sections      |
+      | Save progress |
 
 
   @ED-3262
@@ -232,7 +239,9 @@ Feature: Header-Footer
     When "Robert" decides to create his personalised journey page
 
     Then "Robert" should be on the "Export Readiness - Personalised Journey" page
-    And "Robert" should see "Save Progress" section on "Export Readiness - Personalised Journey" page
+    And "Robert" should see following sections
+      | Sections      |
+      | Save progress |
 
     Examples:
       | relevant   |
@@ -264,7 +273,9 @@ Feature: Header-Footer
   Scenario Outline: Any user who has not signed-in should be asked to register or sign-in whilst being on the Article List page
     Given "Robert" is on the "<group>" Article List for randomly selected category
 
-    Then "Robert" should see "Save Progress" section on "Export Readiness - Article List" page
+    Then "Robert" should see following sections
+      | Sections      |
+      | Save progress |
 
     Examples: article groups
       | group            |
@@ -282,7 +293,9 @@ Feature: Header-Footer
 
     When "Robert" opens any article on the list
 
-    Then "Robert" should see "Save Progress" section on "Export Readiness - Article" page
+    Then "Robert" should see following sections
+      | Sections      |
+      | Save progress |
 
     Examples: article groups
       | group            |
