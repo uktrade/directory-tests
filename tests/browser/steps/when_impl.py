@@ -1581,14 +1581,10 @@ def fas_search_for_companies(
     context: Context,
     actor_alias: str,
     *,
-    page_alias: str = None,
     keyword: str = None,
     sector: str = None
 ):
-    if not page_alias:
-        actor = get_actor(context, actor_alias)
-        page_alias = actor.visited_page
-    page = get_page_object(page_alias, exact_match=False)
+    page = get_last_visited_page(context, actor_alias)
     assert hasattr(page, "search")
     optional_param_keywords = ["n/a", "no", "empty", "without", "any"]
     if keyword and keyword.lower() in optional_param_keywords:
@@ -1599,7 +1595,7 @@ def fas_search_for_companies(
     logging.debug(
         "%s will visit '%s' page using: '%s'",
         actor_alias,
-        page_alias,
+        page.NAME,
         page.URL,
     )
 
