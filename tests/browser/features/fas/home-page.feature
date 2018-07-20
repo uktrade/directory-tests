@@ -64,7 +64,7 @@ Feature: Find a Supplier - home page
 
     When "Robert" decides to find out out more about "Find a Supplier - <specific> industry"
 
-    Then "Robert" should be on the "Find a Supplier - Industry" page
+    Then "Robert" should be on the "Find a Supplier - industry" page
     And "Robert" should see content specific to "Find a Supplier - <specific> industry" page
 
     Examples:
