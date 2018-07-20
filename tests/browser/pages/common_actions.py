@@ -440,6 +440,7 @@ def check_if_element_is_not_visible(
         ):
             assert not element.is_displayed()
     except NoSuchElementException:
+        logging.debug("As expected '{}' is not present".format(element_name))
         pass
 
 
