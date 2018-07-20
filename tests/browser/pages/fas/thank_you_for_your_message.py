@@ -24,7 +24,7 @@ SELECTORS = {
     "breadcrumbs": {"itself": Selector(By.CSS_SELECTOR, "p.breadcrumbs")},
     "message": {
         "itself": Selector(By.ID, "lede"),
-        "header": Selector(By.CSS_SELECTOR, "#lede > div > h2"),
+        "header": Selector(By.CSS_SELECTOR, "#lede h2"),
         "go back link": Selector(By.CSS_SELECTOR, "#lede a"),
     },
 }

@@ -80,7 +80,7 @@ SELECTORS = {
     },
     "breadcrumbs": {
         "itself": Selector(By.CSS_SELECTOR, "#content p.breadcrumbs"),
-        "industry": Selector(By.CSS_SELECTOR, INDUSTRY_BREADCRUMB),
+        "industry": INDUSTRY_BREADCRUMB,
     },
     "contact us": {
         "itself": Selector(By.ID, "lede-section"),
@@ -102,8 +102,8 @@ SELECTORS = {
     "search for uk suppliers": {
         "itself": Selector(By.ID, "companies-section"),
         "header": Selector(By.CSS_SELECTOR, "#companies-list-text h2"),
-        "search input": Selector(By.CSS_SELECTOR, SEARCH_INPUT),
-        "search button": Selector(By.CSS_SELECTOR, SEARCH_BUTTON),
+        "search input": SEARCH_INPUT,
+        "search button": SEARCH_BUTTON,
         "list of companies": Selector(By.CSS_SELECTOR, "#companies-section ul"),
         "view more": Selector(By.CSS_SELECTOR, "#companies-section a.button"),
     },

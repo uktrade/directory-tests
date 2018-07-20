@@ -25,7 +25,7 @@ TYPE = "search"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "search/")
 PAGE_TITLE = "Search the database of UK suppliers' trade profiles - trade.great.gov.uk"
 
-SECTOR_FILTERS = Selector(By.ID, "id_sectors input")
+SECTOR_FILTERS = Selector(By.CSS_SELECTOR, "#id_sectors input")
 SELECTORS = {
     "filters": {
         "itself": Selector(By.ID, "ed-search-filters-container"),
