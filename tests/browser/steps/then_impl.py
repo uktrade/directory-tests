@@ -234,9 +234,11 @@ def export_readiness_expected_page_elements_should_be_visible(
 def should_see_sections(
     context: Context,
     actor_alias: str,
-    sections_table: Table = None
+    sections_table: Table = None,
+    *,
+    sections_list: list = None,
 ):
-    sections = [row[0] for row in sections_table]
+    sections = sections_list or [row[0] for row in sections_table]
     logging.debug(
         "%s will look for following sections: '%s' on %s",
         actor_alias,
