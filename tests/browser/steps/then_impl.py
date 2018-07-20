@@ -12,6 +12,7 @@ from pages.common_actions import (
     clear_driver_cookies,
     get_actor,
     get_last_visited_page,
+    update_actor
 )
 from registry.articles import get_article, get_articles
 from steps.when_impl import (
@@ -218,11 +219,9 @@ def export_readiness_should_see_articles(
 
 
 def export_readiness_expected_page_elements_should_be_visible(
-    context: Context, actor_alias: str, elements: list
+    context: Context, actor_alias: str, elements: List[str]
 ):
-    exread.common.check_elements_are_visible(
-        context.driver, elements
-    )
+    exread.common.should_see_sections(context.driver, elements)
     logging.debug(
         "%s can see all expected page elements: '%s' on current Guidance "
         "Articles page: %s",
