@@ -2,7 +2,8 @@
 """Triage - Result Page Object."""
 from urllib.parse import urljoin
 
-from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
     assertion_msg,
@@ -14,6 +15,7 @@ from pages.common_actions import (
     find_elements,
     take_screenshot,
     wait_for_page_load_after_action,
+    Selector
 )
 from settings import EXRED_UI_URL
 
@@ -23,13 +25,13 @@ TYPE = "triage"
 URL = urljoin(EXRED_UI_URL, "triage/summary/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
-CLASSIFICATION = "#triage-classification"
-ANSWERS_SECTION = "#triage-answers"
-CREATE_MY_JOURNEY_BUTTON = "#triage-create-my-export-journey"
-PREVIOUS_STEP_BUTTON = "#triage-previous-step"
-CHANGE_ANSWERS_LINK = "#triage-change-your-answers"
-QUESTIONS = "#triage-answers dt"
-ANSWERS = "#triage-answers dd"
+CLASSIFICATION = Selector(By.ID, "triage-classification")
+ANSWERS_SECTION = Selector(By.ID, "triage-answers")
+CREATE_MY_JOURNEY_BUTTON = Selector(By.ID, "triage-create-my-export-journey")
+PREVIOUS_STEP_BUTTON = Selector(By.ID, "triage-previous-step")
+CHANGE_ANSWERS_LINK = Selector(By.ID, "triage-change-your-answers")
+QUESTIONS = Selector(By.CSS_SELECTOR, "#triage-answers dt")
+ANSWERS = Selector(By.CSS_SELECTOR, "#triage-answers dd")
 EXPECTED_ELEMENTS = {
     "classification": CLASSIFICATION,
     "answers section": ANSWERS_SECTION,
@@ -48,7 +50,7 @@ def should_be_here(driver: WebDriver):
 
 def get_classification(driver: WebDriver) -> str:
     element = find_element(
-        driver, by_css=CLASSIFICATION, element_name="Exporter classification"
+        driver, CLASSIFICATION, element_name="Exporter classification"
     )
     return element.text.lower()
 
@@ -79,7 +81,7 @@ def create_exporting_journey(driver: WebDriver):
     element_name = "Create my journey button"
     button = find_element(
         driver,
-        by_css=CREATE_MY_JOURNEY_BUTTON,
+        CREATE_MY_JOURNEY_BUTTON,
         element_name=element_name,
         wait_for_it=False,
     )
@@ -90,8 +92,8 @@ def create_exporting_journey(driver: WebDriver):
 
 
 def get_questions_and_answers(driver: WebDriver) -> dict:
-    questions = find_elements(driver, by_css=QUESTIONS)
-    answers = find_elements(driver, by_css=ANSWERS)
+    questions = find_elements(driver, QUESTIONS)
+    answers = find_elements(driver, ANSWERS)
     result = {}
     for q, a in list(zip(questions, answers)):
         result.update({q.text: a.text})
@@ -100,7 +102,7 @@ def get_questions_and_answers(driver: WebDriver) -> dict:
 
 def change_answers(driver: WebDriver):
     link = find_element(
-        driver, by_css=CHANGE_ANSWERS_LINK, element_name="Change answers link"
+        driver, CHANGE_ANSWERS_LINK, element_name="Change answers link"
     )
     with wait_for_page_load_after_action(driver):
         link.click()
@@ -109,6 +111,6 @@ def change_answers(driver: WebDriver):
 
 def should_see_change_your_answers_link(driver: WebDriver):
     take_screenshot(driver, NAME + " change your answers")
-    change_answers_link = find_element(driver, by_css=CHANGE_ANSWERS_LINK)
+    change_answers_link = find_element(driver, CHANGE_ANSWERS_LINK)
     with assertion_msg("Expected to see 'Change your answers' link"):
         assert change_answers_link.is_displayed()

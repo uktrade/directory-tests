@@ -2,7 +2,8 @@
 """Triage - Have you exported before? Page Object."""
 from urllib.parse import urljoin
 
-from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
     assertion_msg,
@@ -13,6 +14,7 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
     wait_for_page_load_after_action,
+    Selector
 )
 from settings import EXRED_UI_URL
 
@@ -22,14 +24,14 @@ TYPE = "triage"
 URL = urljoin(EXRED_UI_URL, "triage/exported-before/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
-YES_RADIO = "#triage-exported-before-yes"
-NO_RADIO = "#triage-exported-before-no"
-YES_CHECKBOX = "#triage-exported-before-yes-label"
-NO_CHECKBOX = "#triage-exported-before-no-label"
-CONTINUE_BUTTON = "#triage-continue"
-BACK_TO_HOME_LINK = "#triage-question-back-to-home"
+YES_RADIO = Selector(By.ID, "triage-exported-before-yes")
+NO_RADIO = Selector(By.ID, "triage-exported-before-no")
+YES_CHECKBOX = Selector(By.ID, "triage-exported-before-yes-label")
+NO_CHECKBOX = Selector(By.ID, "triage-exported-before-no-label")
+CONTINUE_BUTTON = Selector(By.ID, "triage-continue")
+BACK_TO_HOME_LINK = Selector(By.ID, "triage-question-back-to-home")
 EXPECTED_ELEMENTS = {
-    "question": "#triage-question",
+    "question": Selector(By.ID, "triage-question"),
     "yes checkbox": YES_CHECKBOX,
     "no checkbox": NO_CHECKBOX,
     "continue button": CONTINUE_BUTTON,
@@ -51,7 +53,7 @@ def should_be_here(driver: WebDriver):
 
 def select_yes(driver: WebDriver):
     yes = find_element(
-        driver, by_css=YES_CHECKBOX, element_name="YES checkbox", wait_for_it=False
+        driver, YES_CHECKBOX, element_name="YES checkbox", wait_for_it=False
     )
     yes.click()
     take_screenshot(driver, NAME)
@@ -59,7 +61,7 @@ def select_yes(driver: WebDriver):
 
 def select_no(driver: WebDriver):
     no = find_element(
-        driver, by_css=NO_CHECKBOX, element_name="NO checkbox", wait_for_it=False
+        driver, NO_CHECKBOX, element_name="NO checkbox", wait_for_it=False
     )
     no.click()
     take_screenshot(driver, NAME)
@@ -67,7 +69,7 @@ def select_no(driver: WebDriver):
 
 def submit(driver: WebDriver):
     button = find_element(
-        driver, by_css=CONTINUE_BUTTON, element_name="Submit button", wait_for_it=False
+        driver, CONTINUE_BUTTON, element_name="Submit button", wait_for_it=False
     )
     with wait_for_page_load_after_action(driver):
         button.click()
@@ -76,7 +78,7 @@ def submit(driver: WebDriver):
 
 def is_yes_selected(driver: WebDriver):
     yes = find_element(
-        driver, by_css=YES_RADIO, element_name="Yes checkbox", wait_for_it=False
+        driver, YES_RADIO, element_name="Yes checkbox", wait_for_it=False
     )
     with assertion_msg("Expected Yes option to be selected"):
         assert yes.get_property("checked")
@@ -84,7 +86,7 @@ def is_yes_selected(driver: WebDriver):
 
 def is_no_selected(driver: WebDriver):
     no = find_element(
-        driver, by_css=NO_RADIO, element_name="No checkbox", wait_for_it=False
+        driver, NO_RADIO, element_name="No checkbox", wait_for_it=False
     )
     with assertion_msg("Expected No option to be selected"):
         assert no.get_property("checked")
