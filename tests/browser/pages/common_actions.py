@@ -13,6 +13,7 @@ from collections.__init__ import namedtuple
 from contextlib import contextmanager
 from datetime import datetime
 from os import path
+from selenium.webdriver import ActionChains
 from types import ModuleType
 from typing import Dict, List, Union
 
@@ -591,6 +592,11 @@ def browser_check_for_sections(
                 selector.value,
             ):
                 element = driver.find_element(by=selector.by, value=selector.value)
+            if "firefox" not in driver.capabilities["browserName"].lower():
+                logging.debug("Moving focus to '%s' element", key)
+                action_chains = ActionChains(driver)
+                action_chains.move_to_element(element)
+                action_chains.perform()
             with assertion_msg(
                 "It looks like '%s' element identified by '%s' selector is"
                 " not visible on %s",
