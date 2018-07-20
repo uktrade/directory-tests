@@ -42,14 +42,14 @@ EXPECTED_ELEMENTS = {
 SELECTORS = {}
 
 
-def should_be_here(driver: webdriver):
+def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=True)
     check_title(driver, PAGE_TITLE, exact_match=False)
     check_for_expected_elements(driver, EXPECTED_ELEMENTS)
 
 
-def select_services(driver: webdriver):
+def select_services(driver: WebDriver):
     services = find_element(
         driver,
         by_css=SERVICES_CHECKBOX,
@@ -60,7 +60,7 @@ def select_services(driver: webdriver):
     take_screenshot(driver, NAME)
 
 
-def select_goods(driver: webdriver):
+def select_goods(driver: WebDriver):
     goods = find_element(
         driver, by_css=GOODS_CHECKBOX, element_name="Goods checkbox", wait_for_it=False
     )
@@ -68,7 +68,7 @@ def select_goods(driver: webdriver):
     take_screenshot(driver, NAME)
 
 
-def select_goods_and_services(driver: webdriver):
+def select_goods_and_services(driver: WebDriver):
     goods = find_element(
         driver, by_css=GOODS_CHECKBOX, element_name="Goods checkbox", wait_for_it=False
     )
@@ -83,7 +83,7 @@ def select_goods_and_services(driver: webdriver):
     take_screenshot(driver, NAME)
 
 
-def submit(driver: webdriver):
+def submit(driver: WebDriver):
     submit_button = find_element(
         driver, by_css=CONTINUE_BUTTON, element_name="Submit button", wait_for_it=False
     )
@@ -92,7 +92,7 @@ def submit(driver: webdriver):
     take_screenshot(driver, NAME + " after submitting")
 
 
-def is_services_selected(driver: webdriver):
+def is_services_selected(driver: WebDriver):
     services = find_element(
         driver,
         by_css=SERVICES_CHECKBOX,
@@ -103,7 +103,7 @@ def is_services_selected(driver: webdriver):
         assert services.get_property("checked")
 
 
-def is_goods_selected(driver: webdriver):
+def is_goods_selected(driver: WebDriver):
     goods = find_element(
         driver,
         by_css=GOODS_CHECKBOX,

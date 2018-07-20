@@ -39,21 +39,21 @@ EXPECTED_ELEMENTS = {
 SELECTORS = {}
 
 
-def should_be_here(driver: webdriver):
+def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=True)
     check_title(driver, PAGE_TITLE, exact_match=False)
     check_for_expected_elements(driver, EXPECTED_ELEMENTS)
 
 
-def get_classification(driver: webdriver) -> str:
+def get_classification(driver: WebDriver) -> str:
     element = find_element(
         driver, by_css=CLASSIFICATION, element_name="Exporter classification"
     )
     return element.text.lower()
 
 
-def should_be_classified_as(driver: webdriver, expected: str):
+def should_be_classified_as(driver: WebDriver, expected: str):
     classified = get_classification(driver)
     with assertion_msg(
         "Expected to be classified as '%s' but was classified as: '%s'",
@@ -63,19 +63,19 @@ def should_be_classified_as(driver: webdriver, expected: str):
         assert classified == expected
 
 
-def should_be_classified_as_new(driver: webdriver):
+def should_be_classified_as_new(driver: WebDriver):
     should_be_classified_as(driver, "new exporter")
 
 
-def should_be_classified_as_occasional(driver: webdriver):
+def should_be_classified_as_occasional(driver: WebDriver):
     should_be_classified_as(driver, "occasional exporter")
 
 
-def should_be_classified_as_regular(driver: webdriver):
+def should_be_classified_as_regular(driver: WebDriver):
     should_be_classified_as(driver, "regular exporter")
 
 
-def create_exporting_journey(driver: webdriver):
+def create_exporting_journey(driver: WebDriver):
     element_name = "Create my journey button"
     button = find_element(
         driver,
@@ -89,7 +89,7 @@ def create_exporting_journey(driver: webdriver):
     take_screenshot(driver, NAME + " after submitting")
 
 
-def get_questions_and_answers(driver: webdriver) -> dict:
+def get_questions_and_answers(driver: WebDriver) -> dict:
     questions = find_elements(driver, by_css=QUESTIONS)
     answers = find_elements(driver, by_css=ANSWERS)
     result = {}
@@ -98,7 +98,7 @@ def get_questions_and_answers(driver: webdriver) -> dict:
     return result
 
 
-def change_answers(driver: webdriver):
+def change_answers(driver: WebDriver):
     link = find_element(
         driver, by_css=CHANGE_ANSWERS_LINK, element_name="Change answers link"
     )
@@ -107,7 +107,7 @@ def change_answers(driver: webdriver):
     take_screenshot(driver, NAME + " after deciding to change the answers")
 
 
-def should_see_change_your_answers_link(driver: webdriver):
+def should_see_change_your_answers_link(driver: WebDriver):
     take_screenshot(driver, NAME + " change your answers")
     change_answers_link = find_element(driver, by_css=CHANGE_ANSWERS_LINK)
     with assertion_msg("Expected to see 'Change your answers' link"):

@@ -38,18 +38,18 @@ EXPECTED_ELEMENTS = {
 SELECTORS = {}
 
 
-def visit(driver: webdriver, *, first_time: bool = False):
+def visit(driver: WebDriver, *, first_time: bool = False):
     go_to_url(driver, URL, NAME, first_time=first_time)
 
 
-def should_be_here(driver: webdriver):
+def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=True)
     check_title(driver, PAGE_TITLE, exact_match=False)
     check_for_expected_elements(driver, EXPECTED_ELEMENTS)
 
 
-def select_yes(driver: webdriver):
+def select_yes(driver: WebDriver):
     yes = find_element(
         driver, by_css=YES_CHECKBOX, element_name="YES checkbox", wait_for_it=False
     )
@@ -57,7 +57,7 @@ def select_yes(driver: webdriver):
     take_screenshot(driver, NAME)
 
 
-def select_no(driver: webdriver):
+def select_no(driver: WebDriver):
     no = find_element(
         driver, by_css=NO_CHECKBOX, element_name="NO checkbox", wait_for_it=False
     )
@@ -65,7 +65,7 @@ def select_no(driver: webdriver):
     take_screenshot(driver, NAME)
 
 
-def submit(driver: webdriver):
+def submit(driver: WebDriver):
     button = find_element(
         driver, by_css=CONTINUE_BUTTON, element_name="Submit button", wait_for_it=False
     )
@@ -74,7 +74,7 @@ def submit(driver: webdriver):
     take_screenshot(driver, NAME + " after submitting")
 
 
-def is_yes_selected(driver: webdriver):
+def is_yes_selected(driver: WebDriver):
     yes = find_element(
         driver, by_css=YES_RADIO, element_name="Yes checkbox", wait_for_it=False
     )
@@ -82,7 +82,7 @@ def is_yes_selected(driver: webdriver):
         assert yes.get_property("checked")
 
 
-def is_no_selected(driver: webdriver):
+def is_no_selected(driver: WebDriver):
     no = find_element(
         driver, by_css=NO_RADIO, element_name="No checkbox", wait_for_it=False
     )

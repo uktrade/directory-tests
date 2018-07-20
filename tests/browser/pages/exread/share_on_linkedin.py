@@ -3,13 +3,15 @@
 from urllib import parse as urlparse
 from urllib.parse import urljoin
 
-from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
     assertion_msg,
     check_for_expected_elements,
     check_title,
     take_screenshot,
+    Selector
 )
 
 NAME = "Share on LinkedIn"
@@ -19,11 +21,11 @@ URL = urljoin("https://www.linkedin.com/", "shareArticle")
 PAGE_TITLE = "LinkedIn"
 
 SELECTORS = {
-    "logo": "#uno-reg-join > div > div > div > div.header-container > header"
+    "logo": Selector(By.CSS_SELECTOR, "#uno-reg-join > div > div > div > div.header-container > header")
 }
 
 
-def should_be_here(driver: webdriver):
+def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_title(driver, PAGE_TITLE, exact_match=False)
     check_for_expected_elements(driver, SELECTORS)
@@ -39,7 +41,7 @@ def extract_shared_url(url: str) -> str:
     return shared_url
 
 
-def check_if_populated(driver: webdriver, shared_url: str):
+def check_if_populated(driver: WebDriver, shared_url: str):
     found_shared_url = extract_shared_url(driver.current_url)
     with assertion_msg(
         "Expected to find link to Article '%s' in the LinkedIn share page "

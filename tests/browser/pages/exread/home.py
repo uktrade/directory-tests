@@ -5,7 +5,8 @@ import random
 import time
 from urllib.parse import urljoin
 
-from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
     assertion_msg,
@@ -20,6 +21,7 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
     wait_for_page_load_after_action,
+    Selector
 )
 from settings import EXRED_UI_URL
 
@@ -29,120 +31,120 @@ TYPE = "home"
 URL = urljoin(EXRED_UI_URL, "?lang=en-gb")
 PAGE_TITLE = "Welcome to great.gov.uk - export guidance and services"
 
-PROMO_VIDEO = "body > div.video-container.Modal-Container.open > div > video"
-CLOSE_VIDEO = "#hero-campaign-section-videoplayer-close"
-VIDEO_MODAL_WINDOW = "body > div.video-container.Modal-Container.open"
-GET_STARTED_BUTTON = "#triage-section-get-started"
-CONTINUE_EXPORT_JOURNEY = "#triage-section-continue-your-journey"
-NEW_TO_EXPORTING_LINK = "#personas-section-new"
-OCCASIONAL_EXPORTER_LINK = "#personas-section-occasional"
-REGULAR_EXPORTED_LINK = "#personas-section-regular"
-FIND_A_BUYER_SERVICE_LINK = "#services-section-find-a-buyer-link"
-SELLING_ONLINE_OVERSEAS_SERVICE_LINK = "#services-section-selling-online-overseas-link"
-EXPORT_OPPORTUNITIES_SERVICE_LINK = "#services-section-export-opportunities-link"
-CAROUSEL_INDICATORS_SECTION = "#carousel  div.ed-carousel__indicators"
-CAROUSEL_INDICATORS = ".ed-carousel__indicator"
-CAROUSEL_PREV_BUTTON = "#carousel label.ed-carousel__control--backward"
-CAROUSEL_NEXT_BUTTON = "#carousel label.ed-carousel__control--forward"
-CAROUSEL_FIRST_INDICATOR = ".ed-carousel__indicator[for='1']"
-CAROUSEL_SECOND_INDICATOR = ".ed-carousel__indicator[for='2']"
-CAROUSEL_THIRD_INDICATOR = ".ed-carousel__indicator[for='3']"
-CASE_STUDIES_LINK = "#carousel h3 > a"
-CASE_STUDY_LINK = "#carousel div.ed-carousel__slide:nth-child({}) h3 > a"
-MARKET_RESEARCH_LINK = "#guidance-market-research-link"
-CUSTOMER_INSIGHT_LINK = "#guidance-section-customer-insight-link"
-FINANCE_LINK = "#guidance-section-finance-link"
-BUSINESS_LINK = "#guidance-section-business-planning-link"
-GETTING_PAID_LINK = "#guidance-section-getting-paid-link"
-OPERATIONS_AND_COMPLIANCE_LINK = "#guidance-section-operations-and-compliance-link"
+PROMO_VIDEO = Selector(By.CSS_SELECTOR, "body > div.video-container.Modal-Container.open > div > video")
+CLOSE_VIDEO = Selector(By.ID, "hero-campaign-section-videoplayer-close")
+VIDEO_MODAL_WINDOW = Selector(By.CSS_SELECTOR, "body > div.video-container.Modal-Container.open")
+GET_STARTED_BUTTON = Selector(By.ID, "triage-section-get-started")
+CONTINUE_EXPORT_JOURNEY = Selector(By.ID, "triage-section-continue-your-journey")
+NEW_TO_EXPORTING_LINK = Selector(By.ID, "personas-section-new")
+OCCASIONAL_EXPORTER_LINK = Selector(By.ID, "personas-section-occasional")
+REGULAR_EXPORTED_LINK = Selector(By.ID, "personas-section-regular")
+FIND_A_BUYER_SERVICE_LINK = Selector(By.ID, "services-section-find-a-buyer-link")
+SELLING_ONLINE_OVERSEAS_SERVICE_LINK = Selector(By.ID, "services-section-selling-online-overseas-link")
+EXPORT_OPPORTUNITIES_SERVICE_LINK = Selector(By.ID, "services-section-export-opportunities-link")
+CAROUSEL_INDICATORS_SECTION = Selector(By.CSS_SELECTOR, "#carousel  div.ed-carousel__indicators")
+CAROUSEL_INDICATORS = Selector(By.CSS_SELECTOR, ".ed-carousel__indicator")
+CAROUSEL_PREV_BUTTON = Selector(By.CSS_SELECTOR, "#carousel label.ed-carousel__control--backward")
+CAROUSEL_NEXT_BUTTON = Selector(By.CSS_SELECTOR, "#carousel label.ed-carousel__control--forward")
+CAROUSEL_FIRST_INDICATOR = Selector(By.CSS_SELECTOR, ".ed-carousel__indicator[for='1']")
+CAROUSEL_SECOND_INDICATOR = Selector(By.CSS_SELECTOR, ".ed-carousel__indicator[for='2']")
+CAROUSEL_THIRD_INDICATOR = Selector(By.CSS_SELECTOR, ".ed-carousel__indicator[for='3']")
+CASE_STUDIES_LINK = Selector(By.CSS_SELECTOR, "#carousel h3 > a")
+CASE_STUDY_LINK = Selector(By.CSS_SELECTOR, "#carousel div.ed-carousel__slide:nth-child({}) h3 > a")
+MARKET_RESEARCH_LINK = Selector(By.ID, "guidance-market-research-link")
+CUSTOMER_INSIGHT_LINK = Selector(By.ID, "guidance-section-customer-insight-link")
+FINANCE_LINK = Selector(By.ID, "guidance-section-finance-link")
+BUSINESS_LINK = Selector(By.ID, "guidance-section-business-planning-link")
+GETTING_PAID_LINK = Selector(By.ID, "guidance-section-getting-paid-link")
+OPERATIONS_AND_COMPLIANCE_LINK = Selector(By.ID, "guidance-section-operations-and-compliance-link")
 CAROUSEL = {
-    "itself": "#carousel",
-    "title": "#case-studies-section-title",
-    "description": "#case-studies-section-description",
+    "itself": Selector(By.ID, "carousel"),
+    "title": Selector(By.ID, "case-studies-section-title"),
+    "description": Selector(By.ID, "case-studies-section-description"),
     "carousel_previous_button": CAROUSEL_PREV_BUTTON,
     "carousel_next_button": CAROUSEL_NEXT_BUTTON,
-    "carousel - indicator 1": "#case-studies-section-indicator-1",
-    "carousel - indicator 2": "#case-studies-section-indicator-2",
-    "carousel - indicator 3": "#case-studies-section-indicator-3",
-    "carousel - case study 1 - link": "#case-studies-section-case-study-1-link",
-    "carousel - case study 2 - link": "#case-studies-section-case-study-2-link",
-    "carousel - case study 3 - link": "#case-studies-section-case-study-3-link",
-    "carousel - case study 1 - image": "#case-studies-section-case-study-1-image",
-    "carousel - case study 2 - image": "#case-studies-section-case-study-2-image",
-    "carousel - case study 3 - image": "#case-studies-section-case-study-3-image",
+    "carousel - indicator 1": Selector(By.ID, "case-studies-section-indicator-1"),
+    "carousel - indicator 2": Selector(By.ID, "case-studies-section-indicator-2"),
+    "carousel - indicator 3": Selector(By.ID, "case-studies-section-indicator-3"),
+    "carousel - case study 1 - link": Selector(By.ID, "case-studies-section-case-study-1-link"),
+    "carousel - case study 2 - link": Selector(By.ID, "case-studies-section-case-study-2-link"),
+    "carousel - case study 3 - link": Selector(By.ID, "case-studies-section-case-study-3-link"),
+    "carousel - case study 1 - image": Selector(By.ID, "case-studies-section-case-study-1-image"),
+    "carousel - case study 2 - image": Selector(By.ID, "case-studies-section-case-study-2-image"),
+    "carousel - case study 3 - image": Selector(By.ID, "case-studies-section-case-study-3-image"),
 }
 
 SELECTORS = {
     "beta": {
-        "itself": "#content #header-beta-bar",
-        "sticker": "#content #header-beta-bar .phase-tag",
-        "message": "#content #header-beta-bar p > span",
-        "link": "#content #header-beta-bar span > a",
+        "itself": Selector(By.CSS_SELECTOR, "#content #header-beta-bar"),
+        "sticker": Selector(By.CSS_SELECTOR, "#content #header-beta-bar .phase-tag"),
+        "message": Selector(By.CSS_SELECTOR, "#content #header-beta-bar p > span"),
+        "link": Selector(By.CSS_SELECTOR, "#content #header-beta-bar span > a"),
     },
     "hero": {
-        "itself": "#content > section.hero-campaign-section",
-        "title": "#hero-campaign-section-title",
-        "description": "#hero-campaign-section-description",
-        "logo": "#hero-campaign-section-eig-logo",
-        "watch video": "#hero-campaign-section-watch-video-button",
+        "itself": Selector(By.CSS_SELECTOR, "#content > section.hero-campaign-section"),
+        "title": Selector(By.ID, "hero-campaign-section-title"),
+        "description": Selector(By.ID, "hero-campaign-section-description"),
+        "logo": Selector(By.ID, "hero-campaign-section-eig-logo"),
+        "watch video": Selector(By.ID, "hero-campaign-section-watch-video-button"),
     },
     "exporting journey": {
-        "itself": "#content > section.triage.triage-section",
-        "heading": "#triage-section-title",
-        "introduction": "#triage-section-description",
+        "itself": Selector(By.CSS_SELECTOR, "#content > section.triage.triage-section"),
+        "heading": Selector(By.ID, "triage-section-title"),
+        "introduction": Selector(By.ID, "triage-section-description"),
         "get_started_button": GET_STARTED_BUTTON,
-        "image": "#triage-section-image",
+        "image": Selector(By.ID, "triage-section-image"),
     },
     "export readiness": {
-        "itself": "#personas",
-        "title": "#personas-section-title",
-        "description": "#personas-section-description",
-        "groups": "#personas > .container > .group",
+        "itself": Selector(By.ID, "personas"),
+        "title": Selector(By.ID, "personas-section-title"),
+        "description": Selector(By.ID, "personas-section-description"),
+        "groups": Selector(By.CSS_SELECTOR, "#personas > .container > .group"),
         "new": NEW_TO_EXPORTING_LINK,
         "occasional": OCCASIONAL_EXPORTER_LINK,
         "regular": REGULAR_EXPORTED_LINK,
         "i'm new to exporting": NEW_TO_EXPORTING_LINK,
         "i export occasionally": OCCASIONAL_EXPORTER_LINK,
         "i'm a regular exporter": REGULAR_EXPORTED_LINK,
-        "new exporter - image": "#personas-section-new-image",
-        "occasional exporter - image": "#personas-section-occasional-image",
-        "regular exporter - image": "#personas-section-regular-image",
+        "new exporter - image": Selector(By.ID, "personas-section-new-image"),
+        "occasional exporter - image": Selector(By.ID, "personas-section-occasional-image"),
+        "regular exporter - image": Selector(By.ID, "personas-section-regular-image"),
     },
     "guidance": {
-        "itself": "#resource-guidance",
-        "title": "#guidance-section-title",
-        "description": "#guidance-section-description",
-        "groups": "#resource-guidance .group",
-        "market research - group": "#guidance-section-market-research",
-        "customer insight - group": "#guidance-section-customer-insight",
-        "finance - group": "#guidance-section-finance",
-        "business planning - group": "#guidance-section-business-planning",
-        "getting paid - group": "#guidance-section-getting-paid",
-        "operations and compliance - group": "#guidance-section-operations-and-compliance",
-        "market research - icon": "#guidance-section-market-research-icon",
-        "customer insight - icon": "#guidance-section-customer-insight-icon",
-        "finance - icon": "#guidance-section-finance-icon",
-        "business planning - icon": "#guidance-section-business-planning-icon",
-        "getting paid - icon": "#guidance-section-getting-paid-icon",
-        "operations and compliance - icon": "#guidance-section-operations-and-compliance-icon",
-        "market research - read counter": "#guidance-section-market-research-read-counter",
-        "customer insight - read counter": "#guidance-section-customer-insight-read-counter",
-        "finance - read counter": "#guidance-section-finance-article-read-counter",
-        "business planning - read counter": "#guidance-section-business-planning-article-read-counter",
-        "getting paid - read counter": "#guidance-section-getting-paid-article-read-counter",
-        "operations and compliance - read counter": "#guidance-section-operations-and-compliance-article-read-counter",
-        "market research - total number of articles": "#guidance-section-market-research-total-number-of-articles",
-        "customer insight - total number of articles": "#guidance-section-customer-insight-total-number-of-articles",
-        "finance - total number of articles": "#guidance-section-finance-total-number-of-articles",
-        "business planning - total number of articles": "#guidance-section-business-planning-total-number-of-articles",
-        "getting paid - total number of articles": "#guidance-section-getting-paid-total-number-of-articles",
-        "operations and compliance - total number of articles": "#guidance-section-operations-and-compliance-total-number-of-articles",
-        "market research - description": "#guidance-section-market-research-description",
-        "customer insight - description": "#guidance-section-customer-insight-description",
-        "finance - description": "#guidance-section-finance-description",
-        "business planning - description": "#guidance-section-business-planning-description",
-        "getting paid - description": "#guidance-section-getting-paid-description",
-        "operations and compliance - description": "#guidance-section-operations-and-compliance-description",
+        "itself": Selector(By.ID, "resource-guidance"),
+        "title": Selector(By.ID, "guidance-section-title"),
+        "description": Selector(By.ID, "guidance-section-description"),
+        "groups": Selector(By.CSS_SELECTOR, "#resource-guidance .group"),
+        "market research - group": Selector(By.ID, "guidance-section-market-research"),
+        "customer insight - group": Selector(By.ID, "guidance-section-customer-insight"),
+        "finance - group": Selector(By.ID, "guidance-section-finance"),
+        "business planning - group": Selector(By.ID, "guidance-section-business-planning"),
+        "getting paid - group": Selector(By.ID, "guidance-section-getting-paid"),
+        "operations and compliance - group": Selector(By.ID, "guidance-section-operations-and-compliance"),
+        "market research - icon": Selector(By.ID, "guidance-section-market-research-icon"),
+        "customer insight - icon": Selector(By.ID, "guidance-section-customer-insight-icon"),
+        "finance - icon": Selector(By.ID, "guidance-section-finance-icon"),
+        "business planning - icon": Selector(By.ID, "guidance-section-business-planning-icon"),
+        "getting paid - icon": Selector(By.ID, "guidance-section-getting-paid-icon"),
+        "operations and compliance - icon": Selector(By.ID, "guidance-section-operations-and-compliance-icon"),
+        "market research - read counter": Selector(By.ID, "guidance-section-market-research-read-counter"),
+        "customer insight - read counter": Selector(By.ID, "guidance-section-customer-insight-read-counter"),
+        "finance - read counter": Selector(By.ID, "guidance-section-finance-article-read-counter"),
+        "business planning - read counter": Selector(By.ID, "guidance-section-business-planning-article-read-counter"),
+        "getting paid - read counter": Selector(By.ID, "guidance-section-getting-paid-article-read-counter"),
+        "operations and compliance - read counter": Selector(By.ID, "guidance-section-operations-and-compliance-article-read-counter"),
+        "market research - total number of articles": Selector(By.ID, "guidance-section-market-research-total-number-of-articles"),
+        "customer insight - total number of articles": Selector(By.ID, "guidance-section-customer-insight-total-number-of-articles"),
+        "finance - total number of articles": Selector(By.ID, "guidance-section-finance-total-number-of-articles"),
+        "business planning - total number of articles": Selector(By.ID, "guidance-section-business-planning-total-number-of-articles"),
+        "getting paid - total number of articles": Selector(By.ID, "guidance-section-getting-paid-total-number-of-articles"),
+        "operations and compliance - total number of articles": Selector(By.ID, "guidance-section-operations-and-compliance-total-number-of-articles"),
+        "market research - description": Selector(By.ID, "guidance-section-market-research-description"),
+        "customer insight - description": Selector(By.ID, "guidance-section-customer-insight-description"),
+        "finance - description": Selector(By.ID, "guidance-section-finance-description"),
+        "business planning - description": Selector(By.ID, "guidance-section-business-planning-description"),
+        "getting paid - description": Selector(By.ID, "guidance-section-getting-paid-description"),
+        "operations and compliance - description": Selector(By.ID, "guidance-section-operations-and-compliance-description"),
         "market research": MARKET_RESEARCH_LINK,
         "customer insight": CUSTOMER_INSIGHT_LINK,
         "finance": FINANCE_LINK,
@@ -151,89 +153,89 @@ SELECTORS = {
         "operations and compliance": OPERATIONS_AND_COMPLIANCE_LINK,
     },
     "services": {
-        "itself": "#services",
-        "title": "#services-section-title",
-        "description": "#services-section-description",
-        "groups": "#services .group",
-        "find a buyer - article": "#services div.service-teaser:nth-child(1)",
-        "online marketplaces - article": "#services div.service-teaser:nth-child(2)",
-        "export opportunities - article": "#services div.service-teaser:nth-child(3)",
-        "find a buyer - image": "#services-section-find-a-buyer-image",
-        "online marketplaces - image": "#services-section-selling-online-overseas-image",
-        "export opportunities - image": "#services-section-export-opportunities-image",
-        "find a buyer - description": "#services-section-find-a-buyer-description",
-        "online marketplaces - description": "#services-section-selling-online-overseas-description",
-        "export opportunities - description": "#services-section-export-opportunities-description",
+        "itself": Selector(By.ID, "services"),
+        "title": Selector(By.ID, "services-section-title"),
+        "description": Selector(By.ID, "services-section-description"),
+        "groups": Selector(By.CSS_SELECTOR, "#services .group"),
+        "find a buyer - article": Selector(By.CSS_SELECTOR, "#services div.service-teaser:nth-child(1)"),
+        "online marketplaces - article": Selector(By.CSS_SELECTOR, "#services div.service-teaser:nth-child(2)"),
+        "export opportunities - article": Selector(By.CSS_SELECTOR, "#services div.service-teaser:nth-child(3)"),
+        "find a buyer - image": Selector(By.ID, "services-section-find-a-buyer-image"),
+        "online marketplaces - image": Selector(By.ID, "services-section-selling-online-overseas-image"),
+        "export opportunities - image": Selector(By.ID, "services-section-export-opportunities-image"),
+        "find a buyer - description": Selector(By.ID, "services-section-find-a-buyer-description"),
+        "online marketplaces - description": Selector(By.ID, "services-section-selling-online-overseas-description"),
+        "export opportunities - description": Selector(By.ID, "services-section-export-opportunities-description"),
         "find a buyer": FIND_A_BUYER_SERVICE_LINK,
         "selling online overseas": SELLING_ONLINE_OVERSEAS_SERVICE_LINK,
         "export opportunities": EXPORT_OPPORTUNITIES_SERVICE_LINK,
     },
     "case studies": {
-        "itself": "#carousel",
-        "title": "#case-studies-section-title",
-        "description": "#case-studies-section-description",
+        "itself": Selector(By.ID, "carousel"),
+        "title": Selector(By.ID, "case-studies-section-title"),
+        "description": Selector(By.ID, "case-studies-section-description"),
         "carousel_previous_button": CAROUSEL_PREV_BUTTON,
         "carousel_next_button": CAROUSEL_NEXT_BUTTON,
-        "carousel - indicator 1": "#case-studies-section-indicator-1",
-        "carousel - indicator 2": "#case-studies-section-indicator-2",
-        "carousel - indicator 3": "#case-studies-section-indicator-3",
-        "carousel - case study 1 - link": "#case-studies-section-case-study-1-link",
-        "carousel - case study 1 - image": "#case-studies-section-case-study-1-image",
+        "carousel - indicator 1": Selector(By.ID, "case-studies-section-indicator-1"),
+        "carousel - indicator 2": Selector(By.ID, "case-studies-section-indicator-2"),
+        "carousel - indicator 3": Selector(By.ID, "case-studies-section-indicator-3"),
+        "carousel - case study 1 - link": Selector(By.ID, "case-studies-section-case-study-1-link"),
+        "carousel - case study 1 - image": Selector(By.ID, "case-studies-section-case-study-1-image"),
     },
     "business is great": {
-        "itself": "#beis",
-        "title": "#business-is-great-title",
-        # "image": "#business-is-great-image",
-        "description": "#business-is-great-description",
-        "link": "#business-is-great-link",
+        "itself": Selector(By.ID, "beis"),
+        "title": Selector(By.ID, "business-is-great-title"),
+        # "image": Selector(By.ID, "business-is-great-image"),
+        "description": Selector(By.ID, "business-is-great-description"),
+        "link": Selector(By.ID, "business-is-great-link"),
     },
     "error reporting": {
-        "itself": "section.error-reporting",
-        "link": "#error-reporting-section-contact-us",
+        "itself": Selector(By.CSS_SELECTOR, "section.error-reporting"),
+        "link": Selector(By.ID, "error-reporting-section-contact-us"),
     },
 }
 
 
-def visit(driver: webdriver, *, first_time: bool = False):
+def visit(driver: WebDriver, *, first_time: bool = False):
     go_to_url(driver, URL, NAME, first_time=first_time)
 
 
-def should_be_here(driver: webdriver):
+def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
     check_title(driver, PAGE_TITLE, exact_match=False)
     check_for_expected_sections_elements(driver, SELECTORS)
 
 
-def should_see_section(driver: webdriver, name: str):
+def should_see_section(driver: WebDriver, name: str):
     check_for_section(driver, all_sections=SELECTORS, sought_section=name)
 
 
-def should_see_link_to(driver: webdriver, section: str, item_name: str):
+def should_see_link_to(driver: WebDriver, section: str, item_name: str):
     item_selector = SELECTORS[section.lower()][item_name.lower()]
-    menu_item = find_element(driver, by_css=item_selector, element_name=item_name)
+    menu_item = find_element(driver, item_selector, element_name=item_name)
     with assertion_msg(
         "It looks like '%s' in '%s' section is not visible", item_name, section
     ):
         assert menu_item.is_displayed()
 
 
-def start_exporting_journey(driver: webdriver):
+def start_exporting_journey(driver: WebDriver):
     """Start Exporting Journey (Triaging).
 
     :param driver: Any Selenium Driver (Remote, Chrome, Firefox, PhantomJS etc.
     """
-    button = find_element(driver, by_css=GET_STARTED_BUTTON)
+    button = find_element(driver, GET_STARTED_BUTTON)
     assert button.is_displayed()
     with wait_for_page_load_after_action(driver):
         button.click()
 
 
-def continue_export_journey(driver: webdriver):
+def continue_export_journey(driver: WebDriver):
     """Continue your Export Journey (Triage)."""
     button = find_element(
         driver,
-        by_css=CONTINUE_EXPORT_JOURNEY,
+        CONTINUE_EXPORT_JOURNEY,
         element_name="Continue your export journey button",
     )
     assert button.is_displayed()
@@ -241,8 +243,8 @@ def continue_export_journey(driver: webdriver):
         button.click()
 
 
-def get_number_of_current_carousel_article(driver: webdriver) -> int:
-    indicators = find_elements(driver, by_css=CAROUSEL_INDICATORS)
+def get_number_of_current_carousel_article(driver: WebDriver) -> int:
+    indicators = find_elements(driver, CAROUSEL_INDICATORS)
     opacities = [
         (k, float(v.value_of_css_property("opacity"))) for k, v in enumerate(indicators)
     ]
@@ -250,14 +252,14 @@ def get_number_of_current_carousel_article(driver: webdriver) -> int:
     return active_indicator[0] + 1
 
 
-def find_case_study_by_going_left(driver: webdriver, to_open: int):
+def find_case_study_by_going_left(driver: WebDriver, to_open: int):
     current = get_number_of_current_carousel_article(driver)
-    prev_buttons = find_elements(driver, by_css=CAROUSEL_PREV_BUTTON)
+    prev_buttons = find_elements(driver, CAROUSEL_PREV_BUTTON)
     prev_button = [nb for nb in prev_buttons if nb.is_displayed()][0]
     max_actions = 5
     while (current != to_open) and (max_actions > 0):
         prev_button.click()
-        prev_buttons = find_elements(driver, by_css=CAROUSEL_PREV_BUTTON)
+        prev_buttons = find_elements(driver, CAROUSEL_PREV_BUTTON)
         prev_button = [nb for nb in prev_buttons if nb.is_displayed()][0]
         current = get_number_of_current_carousel_article(driver)
         take_screenshot(
@@ -266,14 +268,14 @@ def find_case_study_by_going_left(driver: webdriver, to_open: int):
         max_actions -= 1
 
 
-def find_case_study_by_going_right(driver: webdriver, to_open: int):
+def find_case_study_by_going_right(driver: WebDriver, to_open: int):
     current = get_number_of_current_carousel_article(driver)
-    next_buttons = find_elements(driver, by_css=CAROUSEL_NEXT_BUTTON)
+    next_buttons = find_elements(driver, CAROUSEL_NEXT_BUTTON)
     next_button = [nb for nb in next_buttons if nb.is_displayed()][0]
     max_actions = 5
     while (current != to_open) and (max_actions > 0):
         next_button.click()
-        next_buttons = find_elements(driver, by_css=CAROUSEL_NEXT_BUTTON)
+        next_buttons = find_elements(driver, CAROUSEL_NEXT_BUTTON)
         next_button = [nb for nb in next_buttons if nb.is_displayed()][0]
         current = get_number_of_current_carousel_article(driver)
         take_screenshot(
@@ -282,10 +284,10 @@ def find_case_study_by_going_right(driver: webdriver, to_open: int):
         max_actions -= 1
 
 
-def move_to_case_study_navigation_buttons(driver: webdriver):
+def move_to_case_study_navigation_buttons(driver: WebDriver):
     prev_button = find_element(
         driver,
-        by_css=CAROUSEL_PREV_BUTTON,
+        CAROUSEL_PREV_BUTTON,
         element_name="Carousel Previous button",
         wait_for_it=False,
     )
@@ -294,7 +296,7 @@ def move_to_case_study_navigation_buttons(driver: webdriver):
     driver.execute_script("window.scrollTo(0, {});".format(vertical_position))
 
 
-def open_case_study(driver: webdriver, case_number: str):
+def open_case_study(driver: WebDriver, case_number: str):
     case_study_numbers = {"first": 1, "second": 2, "third": 3}
     case_study_number = case_study_numbers[case_number.lower()]
 
@@ -308,28 +310,28 @@ def open_case_study(driver: webdriver, case_number: str):
             find_case_study_by_going_right(driver, case_study_number)
 
     link_selector = CASE_STUDY_LINK.format(case_study_number)
-    case_study_link = find_element(driver, by_css=link_selector)
+    case_study_link = find_element(driver, link_selector)
     with wait_for_page_load_after_action(driver):
         case_study_link.click()
 
 
-def get_case_study_title(driver: webdriver, case_number: str) -> str:
+def get_case_study_title(driver: WebDriver, case_number: str) -> str:
     case_study_numbers = {"first": 1, "second": 2, "third": 3}
     case_number = case_study_numbers[case_number.lower()]
     link_selector = CASE_STUDY_LINK.format(case_number)
-    case_study_link = find_element(driver, by_css=link_selector, wait_for_it=False)
+    case_study_link = find_element(driver, link_selector, wait_for_it=False)
     return case_study_link.text.strip()
 
 
-def open(driver: webdriver, group: str, element: str):
+def open(driver: WebDriver, group: str, element: str):
     selector = SELECTORS[group.lower()][element.lower()]
-    link = find_element(driver, by_css=selector, element_name=element, wait_for_it=True)
+    link = find_element(driver, selector, element_name=element, wait_for_it=True)
     check_if_element_is_visible(link, element_name=element)
     link.click()
     take_screenshot(driver, NAME + " after clicking on: %s link".format(element))
 
 
-def play_video(driver: webdriver, *, play_time: int = 5):
+def play_video(driver: WebDriver, *, play_time: int = 5):
     video_load_delay = 2
     play_js = 'document.querySelector("{}").play()'.format(PROMO_VIDEO)
     pause = 'document.querySelector("{}").pause()'.format(PROMO_VIDEO)
@@ -339,7 +341,7 @@ def play_video(driver: webdriver, *, play_time: int = 5):
         driver.execute_script(pause)
 
 
-def get_video_watch_time(driver: webdriver) -> int:
+def get_video_watch_time(driver: WebDriver) -> int:
     watch_time_js = 'return document.querySelector("{}").currentTime'.format(
         PROMO_VIDEO
     )
@@ -351,12 +353,12 @@ def get_video_watch_time(driver: webdriver) -> int:
     return int(watch_time)
 
 
-def close_video(driver: webdriver):
+def close_video(driver: WebDriver):
     take_screenshot(driver, NAME + " before closing video modal window")
-    close_button = find_element(driver, by_css=CLOSE_VIDEO)
+    close_button = find_element(driver, CLOSE_VIDEO)
     close_button.click()
 
 
-def should_not_see_video_modal_window(driver: webdriver):
+def should_not_see_video_modal_window(driver: WebDriver):
     time.sleep(1)
-    check_if_element_is_not_present(driver, by_css=VIDEO_MODAL_WINDOW)
+    check_if_element_is_not_present(driver, VIDEO_MODAL_WINDOW)
