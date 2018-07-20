@@ -1609,9 +1609,7 @@ def fas_search_for_companies(
 def generic_open_industry_page(
     context: Context, actor_alias: str, industry_name: str
 ):
-    actor = get_actor(context, actor_alias)
-    visited_page = actor.visited_page
-    page = get_page_object(visited_page)
+    page = get_last_visited_page(context, actor_alias)
     assert hasattr(page, "open_industry")
     page.open_industry(context.driver, industry_name)
     update_actor(context, actor_alias, visited_page=industry_name)
@@ -1647,9 +1645,7 @@ def fas_fill_out_and_submit_contact_us_form(
 
 
 def generic_see_more_industries(context: Context, actor_alias: str):
-    actor = get_actor(context, actor_alias)
-    visited_page = actor.visited_page
-    page = get_page_object(visited_page)
+    page = get_last_visited_page(context, actor_alias)
     assert hasattr(page, "see_more_industries")
     page.see_more_industries(context.driver)
     logging.debug(
@@ -1674,8 +1670,7 @@ def fas_use_breadcrumb(
 
 
 def fas_view_more_companies(context: Context, actor_alias: str):
-    visited_page = get_actor(context, actor_alias).visited_page
-    page = get_page_object(visited_page, exact_match=False)
+    page = get_last_visited_page(context, actor_alias)
     assert hasattr(page, "click_on_page_element")
     page.click_on_page_element(context.driver, "view more")
     logging.debug(
@@ -1689,8 +1684,7 @@ def fas_view_selected_company_profile(
     context: Context, actor_alias: str, profile_number: str
 ):
     number = NUMBERS[profile_number]
-    visited_page = get_actor(context, actor_alias).visited_page
-    page = get_page_object(visited_page, exact_match=False)
+    page = get_last_visited_page(context, actor_alias)
     assert hasattr(page, "open_profile")
     page.open_profile(context.driver, number)
     logging.debug(
@@ -1703,8 +1697,7 @@ def fas_view_selected_company_profile(
 
 def fas_view_article(context: Context, actor_alias: str, article_number: str):
     number = NUMBERS[article_number]
-    visited_page = get_actor(context, actor_alias).visited_page
-    page = get_page_object(visited_page, exact_match=False)
+    page = get_last_visited_page(context, actor_alias)
     assert hasattr(page, "open_article")
     page.open_article(context.driver, number)
     logging.debug(
@@ -1716,9 +1709,7 @@ def fas_view_article(context: Context, actor_alias: str, article_number: str):
 
 
 def invest_read_more(context: Context, actor_alias: str, topic_names: Table):
-    actor = get_actor(context, actor_alias)
-    visited_page = actor.visited_page
-    page = get_page_object(visited_page, exact_match=False)
+    page = get_last_visited_page(context, actor_alias)
     assert hasattr(page, "open_link")
     topics = [row[0] for row in topic_names]
     update_actor(context, actor_alias, visited_articles=topics)
@@ -1741,9 +1732,7 @@ def invest_read_more(context: Context, actor_alias: str, topic_names: Table):
 def generic_open_guide_link(
     context: Context, actor_alias: str, guide_name: str
 ):
-    actor = get_actor(context, actor_alias)
-    visited_page = actor.visited_page
-    page = get_page_object(visited_page)
+    page = get_last_visited_page(context, actor_alias)
     assert hasattr(page, "open_guide")
     page.open_guide(context.driver, guide_name)
     update_actor(context, actor_alias, visited_page=guide_name)
