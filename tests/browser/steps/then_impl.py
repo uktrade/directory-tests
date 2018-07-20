@@ -31,14 +31,14 @@ def should_be_on_page(context: Context, actor_alias: str, page_name: str):
 def should_be_on_page_or_international_page(
     context: Context, actor_alias: str, page_name: str
 ):
-    international_page = get_page_object("Export Readiness - International")
     page = get_page_object(page_name)
     assert hasattr(page, "should_be_here")
     try:
         page.should_be_here(context.driver)
+        update_actor(context, actor_alias, visited_page=page)
         logging.debug("%s is on %s page", actor_alias, page_name)
     except AssertionError:
-        international_page.should_be_here(context.driver)
+        exread.international.should_be_here(context.driver)
         logging.debug(
             "%s was redirected to the International page", actor_alias
         )
