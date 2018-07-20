@@ -367,20 +367,11 @@ def when_actor_clicks_on_the_dit_logo(context, actor_alias, logo_location):
     header_footer_click_on_dit_logo(context, actor_alias, logo_location)
 
 
-@when('"{actor_alias}" searches for companies using "{keyword}" keyword in "{sector}" sector on "{page_alias}" page')
+@when('"{actor_alias}" searches for companies using "{keyword}" keyword in "{sector}" sector')
 def fas_when_actor_searches_for_companies(
-        context: Context, actor_alias: str, keyword: str, sector: str,
-        page_alias: str):
+        context: Context, actor_alias: str, keyword: str, sector: str):
     fas_search_for_companies(
-        context, actor_alias, keyword=keyword, sector=sector,
-        page_alias=page_alias)
-
-
-@when('"{actor_alias}" searches for companies using "{keyword}" keyword on "{page_alias}" page')
-def fas_when_actor_searches_for_companies(
-        context: Context, actor_alias: str, keyword: str, page_alias: str):
-    fas_search_for_companies(
-        context, actor_alias, keyword=keyword, page_alias=page_alias)
+        context, actor_alias, keyword=keyword, sector=sector)
 
 
 @when('"{actor_alias}" searches for companies using "{keyword}" keyword')
