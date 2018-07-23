@@ -246,7 +246,8 @@ def should_see_sections(
         context.driver.current_url,
     )
     page = get_last_visited_page(context, actor_alias)
-    assert hasattr(page, "should_see_sections")
+    assert hasattr(page, "should_see_sections"), (
+        f"{page.SERVICE} - {page.NAME} has no 'should_see_sections' action")
     page.should_see_sections(context.driver, sections)
 
 
