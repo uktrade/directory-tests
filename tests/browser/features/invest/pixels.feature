@@ -14,11 +14,11 @@ Feature: Pixels
       | Facebook tracking pixel |
 
     Examples: Various pages
-      | selected   |
-      | Home       |
-      | Industries |
-      | Guide      |
-      | Contact Us |
+      | selected       |
+      | Home           |
+      | Industries     |
+      | UK Setup Guide |
+      | Contact Us     |
 #      | Feedback   |
 
     Examples: Industry pages
@@ -61,4 +61,4 @@ Feature: Pixels
       | Hire skilled workers for your UK operations guide             |
       | Open a UK business bank account guide                         |
       | Set up a company in the UK guide                              |
-#      | Understand the UK's tax, incentives and legal framework guide |
+      | Understand the UK's tax, incentives and legal framework guide |

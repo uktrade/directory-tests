@@ -7,50 +7,27 @@ from behave.model import Table
 from behave.runner import Context
 from retrying import retry
 from selenium.common.exceptions import TimeoutException, WebDriverException
-from utils import (
+from pages.common_actions import (
     VisitedArticle,
-    add_actor,
-    assertion_msg,
-    get_actor,
-    take_screenshot,
     unauthenticated_actor,
+    add_actor, get_actor,
     update_actor,
+    take_screenshot,
+    assertion_msg,
 )
 from utils.gov_notify import get_verification_link
 
-from pages import (
-    article_common,
-    article_list,
-    fas_ui_contact_us,
-    footer,
-    guidance_common,
-    header,
-    home,
-    international,
-    language_selector,
-    personalised_journey,
-    personalised_what_do_you_want_to_export,
-    sso_common,
-    sso_confirm_your_email,
-    sso_registration,
-    sso_registration_confirmation,
-    sso_sign_in,
-    sso_sign_out,
-    triage_are_you_registered_with_companies_house,
-    triage_are_you_regular_exporter,
-    triage_company_name,
-    triage_do_you_use_online_marketplaces,
-    triage_have_you_exported,
-    triage_summary,
-    triage_what_do_you_want_to_export,
-)
+from pages import common_language_selector
+from pages import exread
+from pages import fas
+from pages import sso
+from pages import get_page_object
 from registry.articles import (
     GUIDANCE,
     get_article,
     get_articles,
     get_random_article,
 )
-from registry.pages import get_page_object
 from settings import EXRED_SECTORS
 
 NUMBERS = {
@@ -90,12 +67,12 @@ def visit_page(
     """
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
-    page = get_page_object(page_name)
+    page = get_page_object(page_name, exact_match=False)
     logging.debug(
         "%s will visit '%s' page using: '%s'", actor_alias, page_name, page.URL
     )
     assert hasattr(page, "visit")
-    if "industry" in page_name.lower():
+    if "industry" in page_name.lower() or "guide" in page_name.lower():
         page.visit(context.driver, first_time=first_time, page_name=page_name)
     else:
         page.visit(context.driver, first_time=first_time)
@@ -120,16 +97,16 @@ def open_group_element(
     context: Context, group: str, element: str, location: str
 ):
     driver = context.driver
-    if location.lower() == "home page":
-        home.open(driver, group, element)
-    elif location.lower() in ["header menu", "header"]:
-        header.open(driver, group, element)
-    elif location.lower() in ["footer links", "footer"]:
-        footer.open(driver, group, element)
-    elif location.lower() == "personalised journey":
-        personalised_journey.open(driver, group, element)
-    elif location.lower() == "international page":
-        international.open(driver, group, element, same_tab=True)
+    if location.lower() == "export readiness - home":
+        exread.home.open(driver, group, element)
+    elif location.lower() in "export readiness - header":
+        exread.header.open(driver, group, element)
+    elif location.lower() in "export readiness - footer":
+        exread.footer.open(driver, group, element)
+    elif location.lower() == "export readiness - personalised journey":
+        exread.personalised_journey.open(driver, group, element)
+    elif location.lower() == "export readiness - international":
+        exread.international.open(driver, group, element, same_tab=True)
     else:
         raise KeyError("Could not recognize location: {}".format(location))
 
@@ -139,8 +116,8 @@ def guidance_open_category(
 ):
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
-    if location.lower() != "personalised journey":
-        visit_page(context, actor_alias, "Home")
+    if location.lower() != "export readiness - personalised journey":
+        visit_page(context, actor_alias, "export readiness - home")
     logging.debug(
         "%s is about to open Guidance '%s' category from %s",
         actor_alias,
@@ -168,19 +145,19 @@ def guidance_open_random_category(
     context: Context,
     actor_alias: str,
     *,
-    location: str = "personalised journey"
+    location: str = "export readiness - personalised journey"
 ):
     category = random.choice(list(GUIDANCE.keys()))
     guidance_open_category(context, actor_alias, category, location)
 
 
 def start_triage(context: Context, actor_alias: str):
-    home.start_exporting_journey(context.driver)
+    exread.home.start_exporting_journey(context.driver)
     logging.debug("%s started triage process", actor_alias)
 
 
 def continue_export_journey(context: Context, actor_alias: str):
-    home.continue_export_journey(context.driver)
+    exread.home.continue_export_journey(context.driver)
     logging.debug("%s decided to continue export journey", actor_alias)
 
 
@@ -193,11 +170,11 @@ def personalised_choose_sector(
     sector: str = None
 ):
     driver = context.driver
-    code, sector = personalised_what_do_you_want_to_export.enter(
+    code, sector = exread.personalised_what_do_you_want_to_export.enter(
         driver, code, sector
     )
-    personalised_what_do_you_want_to_export.submit(driver)
-    triage_have_you_exported.should_be_here(driver)
+    exread.personalised_what_do_you_want_to_export.submit(driver)
+    exread.triage_have_you_exported.should_be_here(driver)
     update_actor(
         context,
         actor_alias,
@@ -209,11 +186,11 @@ def triage_question_what_do_you_want_to_export(
     context: Context, actor_alias: str, goods_or_services: str
 ):
     if goods_or_services.lower() == "services":
-        triage_what_do_you_want_to_export.select_services(context.driver)
+        exread.triage_what_do_you_want_to_export.select_services(context.driver)
     elif goods_or_services.lower() == "goods":
-        triage_what_do_you_want_to_export.select_goods(context.driver)
+        exread.triage_what_do_you_want_to_export.select_goods(context.driver)
     elif goods_or_services.lower() == "goods and services":
-        triage_what_do_you_want_to_export.select_goods_and_services(
+        exread.triage_what_do_you_want_to_export.select_goods_and_services(
             context.driver
         )
     else:
@@ -222,8 +199,8 @@ def triage_question_what_do_you_want_to_export(
                 goods_or_services
             )
         )
-    triage_what_do_you_want_to_export.submit(context.driver)
-    triage_are_you_registered_with_companies_house.should_be_here(
+    exread.triage_what_do_you_want_to_export.submit(context.driver)
+    exread.triage_are_you_registered_with_companies_house.should_be_here(
         context.driver
     )
     logging.debug("%s chose to export %s", actor_alias, goods_or_services)
@@ -231,17 +208,17 @@ def triage_question_what_do_you_want_to_export(
 
 def triage_say_you_exported_before(context: Context, actor_alias: str):
     driver = context.driver
-    triage_have_you_exported.select_yes(driver)
-    triage_have_you_exported.submit(driver)
-    triage_are_you_regular_exporter.should_be_here(driver)
+    exread.triage_have_you_exported.select_yes(driver)
+    exread.triage_have_you_exported.submit(driver)
+    exread.triage_are_you_regular_exporter.should_be_here(driver)
     update_actor(context, actor_alias, have_you_exported_before=True)
 
 
 def triage_say_you_never_exported_before(context: Context, actor_alias: str):
     driver = context.driver
-    triage_have_you_exported.select_no(driver)
-    triage_have_you_exported.submit(driver)
-    triage_what_do_you_want_to_export.should_be_here(driver)
+    exread.triage_have_you_exported.select_no(driver)
+    exread.triage_have_you_exported.submit(driver)
+    exread.triage_what_do_you_want_to_export.should_be_here(driver)
     update_actor(context, actor_alias, have_you_exported_before=False)
 
 
@@ -262,9 +239,9 @@ def triage_have_you_exported_before(
 def triage_say_you_want_to_export_goods(
     context: Context, actor_alias: str, code: str, sector: str
 ):
-    triage_what_do_you_want_to_export.select_goods(context.driver)
-    triage_what_do_you_want_to_export.submit(context.driver)
-    triage_are_you_registered_with_companies_house.should_be_here(
+    exread.triage_what_do_you_want_to_export.select_goods(context.driver)
+    exread.triage_what_do_you_want_to_export.submit(context.driver)
+    exread.triage_are_you_registered_with_companies_house.should_be_here(
         context.driver
     )
     update_actor(
@@ -277,9 +254,9 @@ def triage_say_you_want_to_export_goods(
 def triage_say_you_want_to_export_services(
     context: Context, actor_alias: str, code: str, sector: str
 ):
-    triage_what_do_you_want_to_export.select_services(context.driver)
-    triage_what_do_you_want_to_export.submit(context.driver)
-    triage_are_you_registered_with_companies_house.should_be_here(
+    exread.triage_what_do_you_want_to_export.select_services(context.driver)
+    exread.triage_what_do_you_want_to_export.submit(context.driver)
+    exread.triage_are_you_registered_with_companies_house.should_be_here(
         context.driver
     )
     update_actor(
@@ -292,10 +269,10 @@ def triage_say_you_want_to_export_services(
 def triage_say_you_want_to_export_goods_and_services(
     context: Context, actor_alias: str, code: str, sector: str
 ):
-    triage_what_do_you_want_to_export.select_goods(context.driver)
-    triage_what_do_you_want_to_export.select_services(context.driver)
-    triage_what_do_you_want_to_export.submit(context.driver)
-    triage_are_you_registered_with_companies_house.should_be_here(
+    exread.triage_what_do_you_want_to_export.select_goods(context.driver)
+    exread.triage_what_do_you_want_to_export.select_services(context.driver)
+    exread.triage_what_do_you_want_to_export.submit(context.driver)
+    exread.triage_are_you_registered_with_companies_house.should_be_here(
         context.driver
     )
     update_actor(
@@ -307,17 +284,17 @@ def triage_say_you_want_to_export_goods_and_services(
 
 def triage_say_you_are_incorporated(context: Context, actor_alias: str):
     driver = context.driver
-    triage_are_you_registered_with_companies_house.select_yes(driver)
-    triage_are_you_registered_with_companies_house.submit(driver)
-    triage_company_name.should_be_here(driver)
+    exread.triage_are_you_registered_with_companies_house.select_yes(driver)
+    exread.triage_are_you_registered_with_companies_house.submit(driver)
+    exread.triage_company_name.should_be_here(driver)
     update_actor(context, actor_alias, are_you_incorporated=True)
 
 
 def triage_say_you_are_not_incorporated(context: Context, actor_alias: str):
     driver = context.driver
-    triage_are_you_registered_with_companies_house.select_no(driver)
-    triage_are_you_registered_with_companies_house.submit(driver)
-    triage_summary.should_be_here(driver)
+    exread.triage_are_you_registered_with_companies_house.select_no(driver)
+    exread.triage_are_you_registered_with_companies_house.submit(driver)
+    exread.triage_summary.should_be_here(driver)
     update_actor(context, actor_alias, are_you_incorporated=False)
 
 
@@ -336,17 +313,17 @@ def triage_are_you_incorporated(
 
 def triage_say_you_export_regularly(context: Context, actor_alias: str):
     driver = context.driver
-    triage_are_you_regular_exporter.select_yes(driver)
-    triage_are_you_regular_exporter.submit(driver)
-    triage_what_do_you_want_to_export.should_be_here(driver)
+    exread.triage_are_you_regular_exporter.select_yes(driver)
+    exread.triage_are_you_regular_exporter.submit(driver)
+    exread.triage_what_do_you_want_to_export.should_be_here(driver)
     update_actor(context, actor_alias, do_you_export_regularly=True)
 
 
 def triage_say_you_do_not_export_regularly(context: Context, actor_alias: str):
     driver = context.driver
-    triage_are_you_regular_exporter.select_no(driver)
-    triage_are_you_regular_exporter.submit(driver)
-    triage_do_you_use_online_marketplaces.should_be_here(driver)
+    exread.triage_are_you_regular_exporter.select_no(driver)
+    exread.triage_are_you_regular_exporter.submit(driver)
+    exread.triage_do_you_use_online_marketplaces.should_be_here(driver)
     update_actor(context, actor_alias, do_you_export_regularly=False)
 
 
@@ -366,9 +343,9 @@ def triage_do_you_export_regularly(
 
 def triage_say_you_use_online_marketplaces(context: Context, actor_alias: str):
     driver = context.driver
-    triage_do_you_use_online_marketplaces.select_yes(driver)
-    triage_do_you_use_online_marketplaces.submit(driver)
-    triage_what_do_you_want_to_export.should_be_here(driver)
+    exread.triage_do_you_use_online_marketplaces.select_yes(driver)
+    exread.triage_do_you_use_online_marketplaces.submit(driver)
+    exread.triage_what_do_you_want_to_export.should_be_here(driver)
     update_actor(context, actor_alias, do_you_use_online_marketplaces=True)
 
 
@@ -376,9 +353,9 @@ def triage_say_you_do_not_use_online_marketplaces(
     context: Context, actor_alias: str
 ):
     driver = context.driver
-    triage_do_you_use_online_marketplaces.select_no(driver)
-    triage_do_you_use_online_marketplaces.submit(driver)
-    triage_what_do_you_want_to_export.should_be_here(driver)
+    exread.triage_do_you_use_online_marketplaces.select_no(driver)
+    exread.triage_do_you_use_online_marketplaces.submit(driver)
+    exread.triage_what_do_you_want_to_export.should_be_here(driver)
     update_actor(context, actor_alias, do_you_use_online_marketplaces=False)
 
 
@@ -404,21 +381,21 @@ def triage_enter_company_name(
     company_name: str = None
 ):
     driver = context.driver
-    triage_company_name.enter_company_name(driver, company_name)
+    exread.triage_company_name.enter_company_name(driver, company_name)
     if use_suggestions:
-        triage_company_name.click_on_first_suggestion(driver)
+        exread.triage_company_name.click_on_first_suggestion(driver)
     else:
-        triage_company_name.hide_suggestions(driver)
-    final_company_name = triage_company_name.get_company_name(driver)
-    triage_company_name.submit(driver)
-    triage_summary.should_be_here(driver)
+        exread.triage_company_name.hide_suggestions(driver)
+    final_company_name = exread.triage_company_name.get_company_name(driver)
+    exread.triage_company_name.submit(driver)
+    exread.triage_summary.should_be_here(driver)
     update_actor(context, actor_alias, company_name=final_company_name)
 
 
 def triage_do_not_enter_company_name(context: Context, actor_alias: str):
     driver = context.driver
-    triage_company_name.submit(driver)
-    triage_summary.should_be_here(driver)
+    exread.triage_company_name.submit(driver)
+    exread.triage_summary.should_be_here(driver)
     update_actor(context, actor_alias, company_name=None)
 
 
@@ -439,19 +416,19 @@ def triage_what_is_your_company_name(
 
 
 def triage_should_be_classified_as_new(context: Context):
-    triage_summary.should_be_classified_as_new(context.driver)
+    exread.triage_summary.should_be_classified_as_new(context.driver)
 
 
 def triage_should_be_classified_as_occasional(context: Context):
-    triage_summary.should_be_classified_as_occasional(context.driver)
+    exread.triage_summary.should_be_classified_as_occasional(context.driver)
 
 
 def triage_should_be_classified_as_regular(context: Context):
-    triage_summary.should_be_classified_as_regular(context.driver)
+    exread.triage_summary.should_be_classified_as_regular(context.driver)
 
 
 def triage_create_exporting_journey(context: Context, actor_alias: str):
-    triage_summary.create_exporting_journey(context.driver)
+    exread.triage_summary.create_exporting_journey(context.driver)
     update_actor(context, alias=actor_alias, created_personalised_journey=True)
 
 
@@ -604,7 +581,7 @@ def triage_classify_as(
         incorporated = random.choice([True, False])
 
     if start_from_home_page:
-        visit_page(context, actor_alias, "home")
+        visit_page(context, actor_alias, "export readiness - home")
 
     logging.debug(
         "%s decided to classify himself/herself as %s Exporter",
@@ -653,7 +630,7 @@ def triage_classify_as(
 
 def triage_should_see_answers_to_questions(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
-    q_and_a = triage_summary.get_questions_and_answers(context.driver)
+    q_and_a = exread.triage_summary.get_questions_and_answers(context.driver)
     if actor.what_do_you_want_to_export is not None:
         goods_or_services, code, sector = actor.what_do_you_want_to_export
         question = "What do you want to export?"
@@ -713,12 +690,12 @@ def personalised_journey_create_page(context: Context, actor_alias: str):
     exporter_status = actor.self_classification
     triage_classify_as(context, actor_alias, exporter_status=exporter_status)
     triage_create_exporting_journey(context, actor_alias)
-    personalised_journey.should_be_here(context.driver)
+    exread.personalised_journey.should_be_here(context.driver)
 
 
 def triage_change_answers(context: Context, actor_alias: str):
-    triage_summary.change_answers(context.driver)
-    triage_have_you_exported.should_be_here(context.driver)
+    exread.triage_summary.change_answers(context.driver)
+    exread.triage_have_you_exported.should_be_here(context.driver)
     logging.debug("%s decided to change the Triage answers", actor_alias)
 
 
@@ -729,90 +706,90 @@ def triage_answer_questions_again(context: Context, actor_alias: str):
     def continue_from_are_you_incorporated():
         if actor.are_you_incorporated:
             company_name = actor.company_name
-            triage_are_you_registered_with_companies_house.is_yes_selected(
+            exread.triage_are_you_registered_with_companies_house.is_yes_selected(
                 driver
             )
-            triage_are_you_registered_with_companies_house.submit(driver)
-            triage_company_name.should_be_here(driver)
-            triage_company_name.is_company_name(driver, company_name)
-            triage_company_name.submit(driver)
+            exread.triage_are_you_registered_with_companies_house.submit(driver)
+            exread.triage_company_name.should_be_here(driver)
+            exread.triage_company_name.is_company_name(driver, company_name)
+            exread.triage_company_name.submit(driver)
         else:
-            triage_are_you_registered_with_companies_house.is_no_selected(
+            exread.triage_are_you_registered_with_companies_house.is_no_selected(
                 driver
             )
-            triage_are_you_registered_with_companies_house.submit(driver)
-        triage_summary.should_be_here(driver)
+            exread.triage_are_you_registered_with_companies_house.submit(driver)
+        exread.triage_summary.should_be_here(driver)
 
     if actor.have_you_exported_before is not None:
         if actor.have_you_exported_before:
-            triage_have_you_exported.is_yes_selected(driver)
-            triage_have_you_exported.submit(driver)
-            triage_are_you_regular_exporter.should_be_here(driver)
+            exread.triage_have_you_exported.is_yes_selected(driver)
+            exread.triage_have_you_exported.submit(driver)
+            exread.triage_are_you_regular_exporter.should_be_here(driver)
             if actor.do_you_export_regularly:
-                triage_are_you_regular_exporter.is_yes_selected(driver)
-                triage_are_you_regular_exporter.submit(driver)
+                exread.triage_are_you_regular_exporter.is_yes_selected(driver)
+                exread.triage_are_you_regular_exporter.submit(driver)
                 goods_or_services, _, _ = actor.what_do_you_want_to_export
                 if goods_or_services == "goods":
-                    triage_what_do_you_want_to_export.is_goods_selected(
+                    exread.triage_what_do_you_want_to_export.is_goods_selected(
                         context.driver
                     )
                 else:
-                    triage_what_do_you_want_to_export.is_services_selected(
+                    exread.triage_what_do_you_want_to_export.is_services_selected(
                         context.driver
                     )
-                triage_what_do_you_want_to_export.submit(driver)
-                triage_are_you_registered_with_companies_house.should_be_here(
+                exread.triage_what_do_you_want_to_export.submit(driver)
+                exread.triage_are_you_registered_with_companies_house.should_be_here(
                     driver
                 )
                 continue_from_are_you_incorporated()
-                triage_summary.should_be_classified_as_regular(driver)
+                exread.triage_summary.should_be_classified_as_regular(driver)
             else:
-                triage_are_you_regular_exporter.is_no_selected(driver)
-                triage_are_you_regular_exporter.submit(driver)
-                triage_do_you_use_online_marketplaces.should_be_here(driver)
+                exread.triage_are_you_regular_exporter.is_no_selected(driver)
+                exread.triage_are_you_regular_exporter.submit(driver)
+                exread.triage_do_you_use_online_marketplaces.should_be_here(driver)
                 if actor.do_you_use_online_marketplaces:
-                    triage_do_you_use_online_marketplaces.is_yes_selected(
+                    exread.triage_do_you_use_online_marketplaces.is_yes_selected(
                         driver
                     )
                 else:
-                    triage_do_you_use_online_marketplaces.is_no_selected(
+                    exread.triage_do_you_use_online_marketplaces.is_no_selected(
                         driver
                     )
-                triage_do_you_use_online_marketplaces.submit(driver)
-                triage_what_do_you_want_to_export.should_be_here(driver)
+                exread.triage_do_you_use_online_marketplaces.submit(driver)
+                exread.triage_what_do_you_want_to_export.should_be_here(driver)
                 goods_or_services, _, _ = actor.what_do_you_want_to_export
                 if goods_or_services == "goods":
-                    triage_what_do_you_want_to_export.is_goods_selected(
+                    exread.triage_what_do_you_want_to_export.is_goods_selected(
                         context.driver
                     )
                 else:
-                    triage_what_do_you_want_to_export.is_services_selected(
+                    exread.triage_what_do_you_want_to_export.is_services_selected(
                         context.driver
                     )
-                triage_what_do_you_want_to_export.submit(driver)
-                triage_are_you_registered_with_companies_house.should_be_here(
+                exread.triage_what_do_you_want_to_export.submit(driver)
+                exread.triage_are_you_registered_with_companies_house.should_be_here(
                     driver
                 )
                 continue_from_are_you_incorporated()
-                triage_summary.should_be_classified_as_occasional(driver)
+                exread.triage_summary.should_be_classified_as_occasional(driver)
         else:
-            triage_have_you_exported.is_no_selected(driver)
-            triage_have_you_exported.submit(driver)
+            exread.triage_have_you_exported.is_no_selected(driver)
+            exread.triage_have_you_exported.submit(driver)
             goods_or_services, _, _ = actor.what_do_you_want_to_export
             if goods_or_services == "goods":
-                triage_what_do_you_want_to_export.is_goods_selected(
+                exread.triage_what_do_you_want_to_export.is_goods_selected(
                     context.driver
                 )
             else:
-                triage_what_do_you_want_to_export.is_services_selected(
+                exread.triage_what_do_you_want_to_export.is_services_selected(
                     context.driver
                 )
-            triage_what_do_you_want_to_export.submit(driver)
-            triage_are_you_registered_with_companies_house.should_be_here(
+            exread.triage_what_do_you_want_to_export.submit(driver)
+            exread.triage_are_you_registered_with_companies_house.should_be_here(
                 driver
             )
             continue_from_are_you_incorporated()
-            triage_summary.should_be_classified_as_new(driver)
+            exread.triage_summary.should_be_classified_as_new(driver)
         triage_should_see_answers_to_questions(context, actor_alias)
     logging.debug("%s was able to change the Triage answers", actor_alias)
 
@@ -829,7 +806,7 @@ def export_readiness_open_category(
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
     if location.lower() != "personalised journey":
-        visit_page(context, actor_alias, "Home")
+        visit_page(context, actor_alias, "export readiness - home")
     logging.debug(
         "%s is about to open Export Readiness '%s' category from %s",
         actor_alias,
@@ -964,8 +941,8 @@ def articles_open_first(context: Context, actor_alias: str):
     group = actor.article_group
     category = actor.article_category
     first_article = get_articles(group, category)[0]
-    guidance_common.open_first_article(driver)
-    article_common.should_see_article(driver, first_article.title)
+    exread.guidance_common.open_first_article(driver)
+    exread.article_common.should_see_article(driver, first_article.title)
     logging.debug(
         "%s is on the first article %s: %s",
         actor_alias,
@@ -987,8 +964,8 @@ def articles_open_any_but_the_last(context: Context, actor_alias: str):
     any_article_but_the_last = get_article(
         group, category, random_article.title
     )
-    article_common.go_to_article(driver, any_article_but_the_last.title)
-    time_to_read = article_common.time_to_read_in_seconds(context.driver)
+    exread.article_common.go_to_article(driver, any_article_but_the_last.title)
+    time_to_read = exread.article_common.time_to_read_in_seconds(context.driver)
     logging.debug(
         "%s is on '%s' article page: %s",
         actor_alias,
@@ -1015,12 +992,12 @@ def articles_open_specific(context: Context, actor_alias: str, name: str):
     article = get_article(group, category, name)
     visited_articles = actor.visited_articles
 
-    article_common.go_to_article(driver, name)
+    exread.article_common.go_to_article(driver, name)
 
-    total_articles = article_common.get_total_articles(context.driver)
-    articles_read_counter = article_common.get_read_counter(context.driver)
-    time_to_complete = article_common.get_time_to_complete(context.driver)
-    time_to_read = article_common.time_to_read_in_seconds(context.driver)
+    total_articles = exread.article_common.get_total_articles(context.driver)
+    articles_read_counter = exread.article_common.get_read_counter(context.driver)
+    time_to_complete = exread.article_common.get_time_to_complete(context.driver)
+    time_to_read = exread.article_common.time_to_read_in_seconds(context.driver)
 
     logging.debug(
         "%s is on '%s' article: %s", actor_alias, name, driver.current_url
@@ -1044,22 +1021,22 @@ def articles_open_any(context: Context, actor_alias: str):
     category = actor.article_category
     visited_articles = actor.visited_articles
     any_article = get_random_article(group, category)
-    article_list.show_all_articles(driver)
+    exread.article_list.show_all_articles(driver)
 
     # capture the counter values from Article List page
-    article_list_total = article_common.get_total_articles(context.driver)
-    article_list_read_counter = article_common.get_read_counter(context.driver)
-    article_list_time_to_complete = article_common.get_time_to_complete(
+    article_list_total = exread.article_common.get_total_articles(context.driver)
+    article_list_read_counter = exread.article_common.get_read_counter(context.driver)
+    article_list_time_to_complete = exread.article_common.get_time_to_complete(
         context.driver
     )
 
-    article_common.go_to_article(driver, any_article.title)
+    exread.article_common.go_to_article(driver, any_article.title)
 
     # capture the counter values from Article page
-    total_articles = article_common.get_total_articles(context.driver)
-    articles_read_counter = article_common.get_read_counter(context.driver)
-    time_to_complete = article_common.get_time_to_complete(context.driver)
-    time_to_read = article_common.time_to_read_in_seconds(context.driver)
+    total_articles = exread.article_common.get_total_articles(context.driver)
+    articles_read_counter = exread.article_common.get_read_counter(context.driver)
+    time_to_complete = exread.article_common.get_time_to_complete(context.driver)
+    time_to_read = exread.article_common.time_to_read_in_seconds(context.driver)
     logging.debug(
         "%s is on '%s' article page: %s",
         actor_alias,
@@ -1090,19 +1067,19 @@ def guidance_read_through_all_articles(context: Context, actor_alias: str):
     category = actor.article_category
     visited_articles = actor.visited_articles
 
-    current_article_name = article_common.get_article_name(driver)
+    current_article_name = exread.article_common.get_article_name(driver)
     logging.debug("%s is on '%s' article", actor_alias, current_article_name)
     current_article = get_article(group, category, current_article_name)
     assert current_article, "Could not find Article: %s" % current_article_name
     next_article = current_article.next
 
     while next_article is not None:
-        article_common.check_if_link_to_next_article_is_displayed(
+        exread.article_common.check_if_link_to_next_article_is_displayed(
             driver, next_article.title
         )
-        article_common.go_to_next_article(driver)
-        current_article_name = article_common.get_article_name(driver)
-        time_to_read = article_common.time_to_read_in_seconds(context.driver)
+        exread.article_common.go_to_next_article(driver)
+        current_article_name = exread.article_common.get_article_name(driver)
+        time_to_read = exread.article_common.time_to_read_in_seconds(context.driver)
         visited = VisitedArticle(
             next_article.index, next_article.title, time_to_read
         )
@@ -1140,7 +1117,11 @@ def articles_open_group(
         "export readiness": ["new", "occasional", "regular"],
     }
     category = random.choice(categories[group.lower()])
-    locations = ["header menu", "footer links", "home page"]
+    locations = [
+        "export readiness - header",
+        "export readiness - footer",
+        "export readiness - home"
+    ]
     location = location or random.choice(locations)
 
     if not get_actor(context, actor_alias):
@@ -1167,9 +1148,9 @@ def articles_open_group(
             "Did not recognize '{}'. Please use: 'Guidance' or 'Export "
             "Readiness'".format(group)
         )
-    total_articles = article_common.get_total_articles(context.driver)
-    articles_read_counter = article_common.get_read_counter(context.driver)
-    time_to_complete = article_common.get_time_to_complete(context.driver)
+    total_articles = exread.article_common.get_total_articles(context.driver)
+    articles_read_counter = exread.article_common.get_read_counter(context.driver)
+    time_to_complete = exread.article_common.get_time_to_complete(context.driver)
     update_actor(
         context,
         actor_alias,
@@ -1205,7 +1186,7 @@ def articles_go_back_to_same_group(
 
 
 def articles_go_back_to_article_list(context: Context, actor_alias: str):
-    article_common.go_back_to_article_list(context.driver)
+    exread.article_common.go_back_to_article_list(context.driver)
     logging.debug("%s went back to the Article List page", actor_alias)
 
 
@@ -1213,9 +1194,9 @@ def articles_found_useful_or_not(
     context: Context, actor_alias: str, useful_or_not: str
 ):
     if useful_or_not.lower() == "found":
-        article_common.flag_as_useful(context.driver)
+        exread.article_common.flag_as_useful(context.driver)
     elif useful_or_not.lower() in ["haven't found", "hasn't found"]:
-        article_common.flag_as_not_useful(context.driver)
+        exread.article_common.flag_as_not_useful(context.driver)
     else:
         raise KeyError(
             "Could not recognize: '{}'. Please use 'found' or 'did not find'".format(
@@ -1226,8 +1207,8 @@ def articles_found_useful_or_not(
 
 
 def case_studies_go_to(context: Context, actor_alias: str, case_number: str):
-    case_study_title = home.get_case_study_title(context.driver, case_number)
-    home.open_case_study(context.driver, case_number)
+    case_study_title = exread.home.get_case_study_title(context.driver, case_number)
+    exread.home.open_case_study(context.driver, case_number)
     update_actor(context, actor_alias, case_study_title=case_study_title)
     logging.debug(
         "%s opened %s case study, entitled: %s",
@@ -1240,7 +1221,7 @@ def case_studies_go_to(context: Context, actor_alias: str, case_number: str):
 def case_studies_go_to_random(
     context: Context, actor_alias: str, page_name: str
 ):
-    assert page_name.lower() in ["home"]
+    assert page_name.lower() in ["export readiness - home"]
     visit_page(context, actor_alias, page_name)
     case_number = random.choice(["first", "second", "third"])
     case_studies_go_to(context, actor_alias, case_number)
@@ -1280,7 +1261,7 @@ def open_link(
 def open_service_link_on_interim_page(
     context: Context, actor_alias: str, service: str
 ):
-    page_name = "interim {}".format(service)
+    page_name = "export readiness - interim {}".format(service)
     page = get_page_object(page_name)
     assert hasattr(page, "go_to_service")
     page.go_to_service(context.driver)
@@ -1288,7 +1269,7 @@ def open_service_link_on_interim_page(
 
 
 def personalised_journey_update_preference(context: Context, actor_alias: str):
-    personalised_journey.update_preferences(context.driver)
+    exread.personalised_journey.update_preferences(context.driver)
     logging.debug("%s went to update preferences page", actor_alias)
 
 
@@ -1342,17 +1323,17 @@ def registration_go_to(context: Context, actor_alias: str, location: str):
         "%s decided to go to registration via %s link", actor_alias, location
     )
     if location.lower() == "article":
-        article_common.go_to_registration(context.driver)
+        exread.article_common.go_to_registration(context.driver)
     elif location.lower() == "article list":
-        article_list.go_to_registration(context.driver)
+        exread.article_list.go_to_registration(context.driver)
     elif location.lower() == "top bar":
-        header.go_to_registration(context.driver)
+        exread.header.go_to_registration(context.driver)
     else:
         raise KeyError(
             "Could not recognise registration link location: %s. Please use "
             "'article', 'article list' or 'top bar'".format(location)
         )
-    sso_registration.should_be_here(context.driver)
+    sso.registration.should_be_here(context.driver)
 
 
 def registration_should_get_verification_email(
@@ -1378,7 +1359,7 @@ def registration_open_email_confirmation_link(
     context.driver.get(link)
 
     # Step 3 - confirm that Supplier is on SSO Confirm Your Email page
-    sso_confirm_your_email.should_be_here(context.driver)
+    sso.confirm_your_email.should_be_here(context.driver)
     logging.debug("Supplier is on the SSO Confirm your email address page")
 
 
@@ -1389,22 +1370,22 @@ def registration_submit_form_and_verify_account(
     actor = get_actor(context, actor_alias)
     email = actor.email
     password = actor.password
-    sso_registration.fill_out(driver, email, password)
-    sso_registration.submit(driver)
-    sso_registration_confirmation.should_be_here(driver)
+    sso.registration.fill_out(driver, email, password)
+    sso.registration.submit(driver)
+    sso.registration_confirmation.should_be_here(driver)
     if fake_verification:
-        sso_common.verify_account(email)
+        sso.common.verify_account(email)
     else:
         registration_should_get_verification_email(context, actor_alias)
         registration_open_email_confirmation_link(context, actor_alias)
-        sso_confirm_your_email.submit(context.driver)
+        sso.confirm_your_email.submit(context.driver)
     update_actor(context, actor_alias, registered=True)
 
 
 def registration_create_and_verify_account(
     context: Context, actor_alias: str, *, fake_verification: bool = True
 ):
-    visit_page(context, actor_alias, "Home")
+    visit_page(context, actor_alias, "export readiness - home")
     registration_go_to(context, actor_alias, "top bar")
     registration_submit_form_and_verify_account(
         context, actor_alias, fake_verification=fake_verification
@@ -1428,17 +1409,17 @@ def sign_in_go_to(context: Context, actor_alias: str, location: str):
         "%s decided to go to sign in page via %s link", actor_alias, location
     )
     if location.lower() == "article":
-        article_common.go_to_sign_in(context.driver)
+        exread.article_common.go_to_sign_in(context.driver)
     elif location.lower() == "article list":
-        article_list.go_to_sign_in(context.driver)
+        exread.article_list.go_to_sign_in(context.driver)
     elif location.lower() == "top bar":
-        header.go_to_sign_in(context.driver)
+        exread.header.go_to_sign_in(context.driver)
     else:
         raise KeyError(
             "Could not recognise 'sign in' link location: {}. Please use "
             "'article', 'article list' or 'top bar'".format(location)
         )
-    sso_sign_in.should_be_here(context.driver)
+    sso.sign_in.should_be_here(context.driver)
 
 
 def sign_in(context: Context, actor_alias: str, location: str):
@@ -1446,13 +1427,13 @@ def sign_in(context: Context, actor_alias: str, location: str):
     email = actor.email
     password = actor.password
     sign_in_go_to(context, actor_alias, location)
-    sso_sign_in.fill_out(context.driver, email, password)
-    sso_sign_in.submit(context.driver)
+    sso.sign_in.fill_out(context.driver, email, password)
+    sso.sign_in.submit(context.driver)
 
 
 def sign_out(context: Context, actor_alias: str):
-    header.go_to_sign_out(context.driver)
-    sso_sign_out.submit(context.driver)
+    exread.header.go_to_sign_out(context.driver)
+    sso.sign_out.submit(context.driver)
     logging.debug("%s signed out", actor_alias)
 
 
@@ -1478,12 +1459,12 @@ def articles_share_on_social_media(
 ):
     context.article_url = context.driver.current_url
     if social_media.lower() == "email":
-        article_common.check_if_link_opens_email_client(context.driver)
+        exread.article_common.check_if_link_opens_email_client(context.driver)
     else:
-        article_common.check_if_link_opens_new_tab(
+        exread.article_common.check_if_link_opens_new_tab(
             context.driver, social_media
         )
-        article_common.share_via(context.driver, social_media)
+        exread.article_common.share_via(context.driver, social_media)
     logging.debug(
         "%s successfully got to the share article on '%s'",
         actor_alias,
@@ -1494,13 +1475,13 @@ def articles_share_on_social_media(
 def promo_video_watch(
     context: Context, actor_alias: str, *, play_time: int = None
 ):
-    home.open(context.driver, group="hero", element="watch video")
-    home.play_video(context.driver, play_time=play_time)
+    exread.home.open(context.driver, group="hero", element="watch video")
+    exread.home.play_video(context.driver, play_time=play_time)
     logging.debug("%s was able to play the video", actor_alias)
 
 
 def promo_video_close(context: Context, actor_alias: str):
-    home.close_video(context.driver)
+    exread.home.close_video(context.driver)
     logging.debug("%s closed the video", actor_alias)
 
 
@@ -1508,14 +1489,14 @@ def language_selector_close(
     context: Context, actor_alias: str, *, with_keyboard: bool = False
 ):
     logging.debug("%s decided to close language selector", actor_alias)
-    language_selector.close(context.driver, with_keyboard=with_keyboard)
+    common_language_selector.close(context.driver, with_keyboard=with_keyboard)
 
 
 def language_selector_open(
     context: Context, actor_alias: str, *, with_keyboard: bool = False
 ):
     logging.debug("%s decided to go open language selector", actor_alias)
-    language_selector.open(context.driver, with_keyboard=with_keyboard)
+    common_language_selector.open(context.driver, with_keyboard=with_keyboard)
 
 
 def language_selector_navigate_through_links_with_keyboard(
@@ -1528,7 +1509,7 @@ def language_selector_navigate_through_links_with_keyboard(
     )
     actor = get_actor(context, actor_alias)
     visited_page = actor.visited_page
-    language_selector.navigate_through_links_with_keyboard(
+    common_language_selector.navigate_through_links_with_keyboard(
         context.driver, page_name=visited_page
     )
 
@@ -1539,19 +1520,17 @@ def language_selector_change_to(
     actor = get_actor(context, actor_alias)
     visited_page = actor.visited_page
     logging.debug(
-        "%s decided to change language on %s to %s",
-        actor_alias,
-        visited_page,
-        preferred_language,
+        f"{actor_alias} decided to change language on {visit_page} to"
+        f" {preferred_language}",
     )
     language_selector_open(context, actor_alias)
-    language_selector.change_to(
+    common_language_selector.change_to(
         context.driver, visited_page, preferred_language
     )
 
 
 def articles_show_all(context: Context, actor_alias: str):
-    article_list.show_all_articles(context.driver)
+    exread.article_list.show_all_articles(context.driver)
     logging.debug(
         "%s showed up all articled on the page: %s",
         actor_alias,
@@ -1580,7 +1559,7 @@ def header_footer_open_link(
 def click_on_page_element(
     context: Context, actor_alias: str, element_name: str, page_name: str
 ):
-    page_object = get_page_object(page_name)
+    page_object = get_page_object(page_name, exact_match=False)
     assert hasattr(page_object, "click_on_page_element")
     page_object.click_on_page_element(context.driver, element_name)
     logging.debug(
@@ -1611,7 +1590,7 @@ def fas_search_for_companies(
     if not page_alias:
         actor = get_actor(context, actor_alias)
         page_alias = actor.visited_page
-    page = get_page_object(page_alias)
+    page = get_page_object(page_alias, exact_match=False)
     assert hasattr(page, "search")
     optional_param_keywords = ["n/a", "no", "empty", "without", "any"]
     if keyword and keyword.lower() in optional_param_keywords:
@@ -1669,8 +1648,8 @@ def fas_fill_out_and_submit_contact_us_form(
         "source": sources,
         "accept t&c": accept_tc,
     }
-    fas_ui_contact_us.fill_out(context.driver, contact_us_details)
-    fas_ui_contact_us.submit(context.driver)
+    fas.contact_us.fill_out(context.driver, contact_us_details)
+    fas.contact_us.submit(context.driver)
 
 
 def generic_see_more_industries(context: Context, actor_alias: str):
@@ -1702,7 +1681,7 @@ def fas_use_breadcrumb(
 
 def fas_view_more_companies(context: Context, actor_alias: str):
     visited_page = get_actor(context, actor_alias).visited_page
-    page = get_page_object(visited_page)
+    page = get_page_object(visited_page, exact_match=False)
     assert hasattr(page, "click_on_page_element")
     page.click_on_page_element(context.driver, "view more")
     logging.debug(
@@ -1717,7 +1696,7 @@ def fas_view_selected_company_profile(
 ):
     number = NUMBERS[profile_number]
     visited_page = get_actor(context, actor_alias).visited_page
-    page = get_page_object(visited_page)
+    page = get_page_object(visited_page, exact_match=False)
     assert hasattr(page, "open_profile")
     page.open_profile(context.driver, number)
     logging.debug(
@@ -1731,7 +1710,7 @@ def fas_view_selected_company_profile(
 def fas_view_article(context: Context, actor_alias: str, article_number: str):
     number = NUMBERS[article_number]
     visited_page = get_actor(context, actor_alias).visited_page
-    page = get_page_object(visited_page)
+    page = get_page_object(visited_page, exact_match=False)
     assert hasattr(page, "open_article")
     page.open_article(context.driver, number)
     logging.debug(
@@ -1745,7 +1724,7 @@ def fas_view_article(context: Context, actor_alias: str, article_number: str):
 def invest_read_more(context: Context, actor_alias: str, topic_names: Table):
     actor = get_actor(context, actor_alias)
     visited_page = actor.visited_page
-    page = get_page_object(visited_page)
+    page = get_page_object(visited_page, exact_match=False)
     assert hasattr(page, "open_link")
     topics = [row[0] for row in topic_names]
     update_actor(context, actor_alias, visited_articles=topics)

@@ -8,21 +8,20 @@ Feature: Header-Footer
   Scenario Outline: Any Exporter should see correct DIT logo (with boat) in the page header and footer
     Given "Robert" visits the "<selected>" page
 
-    Then "Robert" should be on the "<selected>" page
-    And "Robert" should see correct DIT logo in page header
+    Then "Robert" should see correct DIT logo in page header
 
     Examples:
-      | selected                            |
-      | Home                                |
-      | SSO registration                    |
-      | SSO sign in                         |
-      | SSO profile about                   |
-      | Get finance                         |
-      | Interim export opportunities        |
-      | Triage - have you exported before   |
-      | Find a Buyer                        |
-#      | Find a Supplier                     |
-#      | Events                              |
+      | selected                                        |
+      | Export Readiness - Home                         |
+      | Single Sign-On - Registration                   |
+      | Single Sign-On - Sign in                        |
+      | Single Sign-On - Profile about                  |
+      | Export Readiness - Get finance                  |
+      | Export Readiness - Interim export opportunities |
+      | Export Readiness - Have you exported before     |
+      | Find a Buyer - Home                             |
+#      | Find a Supplier - Home                          |
+#      | Events - Home                                   |
 
 
   @bug
@@ -40,14 +39,8 @@ Feature: Header-Footer
 
     Examples:
       | selected                            |
-      | Export Opportunities                |
-
-    @bug
-    @TT-111
-    @fixme
-    Examples:
-      | selected                            |
-      | Selling Online Overseas             |
+      | Export Opportunities - Home         |
+      | Selling Online Overseas - Home      |
 
 
   @ED-3587
@@ -60,20 +53,20 @@ Feature: Header-Footer
 
     When "Robert" decides to click on the DIT logo in the "header"
 
-    Then "Robert" should be on the "Home" page or on the International page
+    Then "Robert" should be on the "Export Readiness - Home" page or on the International page
 
     Examples:
-      | selected                           |
-      | Home                               |
-      | SSO registration                   |
-      | SSO sign in                        |
-      | SSO profile about                  |
-      | Get finance                        |
-      | Interim export opportunities       |
-      | Triage - have you exported before  |
-      | Find a Buyer                       |
-      | Export Opportunities               |
-#      | Selling Online Overseas            | There's no SOO DEV env
+      | selected                                        |
+      | Export Readiness - Home                         |
+      | Single Sign-On - Registration                   |
+      | Single Sign-On - Sign in                        |
+      | Single Sign-On - Profile about                  |
+      | Export Readiness - Get finance                  |
+      | Export Readiness - Interim export opportunities |
+      | Export Readiness - Have you exported before     |
+      | Find a Buyer - Home                             |
+      | Export Opportunities - Home                     |
+#      | Selling Online Overseas - Home                  | There's no SOO DEV env
 
 
   @ED-3091
@@ -84,29 +77,29 @@ Feature: Header-Footer
     Then "Robert" should see the correct favicon
 
     Examples: Export Readiness pages
-      | specific                            |
-      | Home                                |
-      | Triage - have you exported before   |
-      | Interim export opportunities        |
+      | specific                                        |
+      | Export Readiness - Home                         |
+      | Export Readiness - Have you exported before     |
+      | Export Readiness - Interim export opportunities |
 
     Examples: FABS pages
-      | specific        |
-      | Find a Buyer    |
-      | Find a Supplier |
+      | specific               |
+      | Find a Buyer - Home    |
+      | Find a Supplier - Home |
 
     Examples: SSO pages
-      | specific          |
-      | SSO Registration  |
-      | SSO Sign in       |
-      | SSO Profile about |
+      | specific                       |
+      | Single Sign-On - Registration  |
+      | Single Sign-On - Sign in       |
+      | Single Sign-On - Profile about |
 
     Examples: SOO pages
-      | specific                |
-      | Selling Online Overseas |
+      | specific                       |
+      | Selling Online Overseas - Home |
 
     Examples: Export Opportunities
-      | specific             |
-      | Export Opportunities |
+      | specific                    |
+      | Export Opportunities - Home |
 
 
   @bug
@@ -117,25 +110,25 @@ Feature: Header-Footer
   @home-page
   @<specific>
   Scenario Outline: Any Exported should be able to get to the Domestic "<expected>" page via "<specific>" link in the "<selected section>"
-    Given "Robert" visits the "Home" page for the first time
+    Given "Robert" visits the "Export Readiness - Home" page for the first time
 
-    When "Robert" goes to the "<specific>" page via "General" links in "<selected section>"
+    When "Robert" goes to the "<specific>" page via "General" links in "Export Readiness - <selected section>"
 
     Then "Robert" should be on the "<expected>" page or on the International page
 
     Examples:
-      | specific            | expected                   | selected section |
-      | Home                | Home                       | header menu      |
-      | Your export journey | Create your export journey | header menu      |
-      | Your export journey | Create your export journey | footer links     |
+      | specific            | expected                                      | selected section |
+      | Home                | Export Readiness - Home                       | header           |
+      | Your export journey | Export Readiness - Create your export journey | header           |
+      | Your export journey | Export Readiness - Create your export journey | footer           |
 
 
   @ED-3240
   @your-export-journey-link
   Scenario: Any user who visits the "Create your export journey" page for the first time, should be able to see all expected sections
-    Given "Robert" visits the "Create your export journey" page for the first time
+    Given "Robert" visits the "Export Readiness - Create your export journey" page for the first time
 
-    Then "Robert" should see "Description, Start now, Save progress, Report this page" sections on "Create your export journey" page
+    Then "Robert" should see "Description, Start now, Save progress, Report this page" sections on "Export Readiness - Create your export journey" page
 
 
   @ED-3261
@@ -144,22 +137,22 @@ Feature: Header-Footer
   @fixed
   @your-export-journey-link
   Scenario: Unauthenticated user should be prompted to sign in or to register on the "Create your export journey" page
-    Given "Robert" visits the "Home" page for the first time
+    Given "Robert" visits the "Export Readiness - Home" page for the first time
 
-    When "Robert" decides to use "Your export journey" link in "header menu"
+    When "Robert" decides to use "Your export journey" link in "Export Readiness - Header"
 
-    Then "Robert" should be on the "Create your export journey" page
-    And "Robert" should see "Save Progress" section on "Create your export journey" page
+    Then "Robert" should be on the "Export Readiness - Create your export journey" page
+    And "Robert" should see "Save Progress" section on "Export Readiness - Create your export journey" page
 
 
   @ED-3262
   @your-export-journey-link
   Scenario: Any user who visits the "Create your export journey" page for the first time, should be able to Start the journey (get to the first Triage question)
-    Given "Robert" visits the "Create your export journey" page for the first time
+    Given "Robert" visits the "Export Readiness - Create your export journey" page for the first time
 
-    When "Robert" decides to use "Start now button" on "Create your export journey" page
+    When "Robert" decides to use "Start now button" on "Export Readiness - Create your export journey" page
 
-    Then "Robert" should be on the "Triage - have you exported before" page
+    Then "Robert" should be on the "Export Readiness - have you exported before" page
 
 
   @ED-3263
@@ -169,11 +162,11 @@ Feature: Header-Footer
   Scenario: Any authenticated user should not be prompted to sign in or register on the "Create your export journey" page
     Given "Robert" is a registered and verified user
     And "Robert" is signed in
-    And "Robert" went to the "Home" page
+    And "Robert" went to the "Export Readiness - Home" page
 
-    When "Robert" goes to the "Create your export journey" page
+    When "Robert" goes to the "Export Readiness - Create your export journey" page
 
-    Then "Robert" should not see "Save Progress" section on "Create your export journey" page
+    Then "Robert" should not see "Save Progress" section on "Export Readiness - Create your export journey" page
 
 
   @ED-3283
@@ -182,32 +175,26 @@ Feature: Header-Footer
   Scenario Outline: Any user who has created his/her "Personalised Journey page" should be able to return to it using "Your export journey" link
     Given "Robert" answered triage questions
     And "Robert" decided to create his personalised journey page
-    And "Robert" is on the "Personalised Journey" page
+    And "Robert" is on the "Export Readiness - Personalised Journey" page
     And "Robert" goes to the "<specific>" page
 
-    When "Robert" decides to use "Your export journey" link in "header menu"
+    When "Robert" decides to use "Your export journey" link in "Export Readiness - Header"
 
-    Then "Robert" should be on the "Personalised Journey" page
+    Then "Robert" should be on the "Export Readiness - Personalised Journey" page
 
     Examples:
-      | specific                     |
-      | Home                         |
-      | Interim Export Opportunities |
-      | Export Opportunities         |
+      | specific                                        |
+      | Export Readiness - Home                         |
+      | Export Readiness - Interim Export Opportunities |
+      | Export Opportunities - Home                     |
+      | Find a Buyer - Home                             |
 
     @bug
     @ED-3282
     @fixme
     Examples: header needs to be updated
-      | specific                     |
-      | Selling Online Overseas      |
-
-    @bug
-    @ED-3242
-    @fixme
-    Examples: header needs to be updated
-      | specific                     |
-      | Find a Buyer                 |
+      | specific                       |
+      | Selling Online Overseas - Home |
 
 
   @ED-3284
@@ -215,32 +202,26 @@ Feature: Header-Footer
   @<specific>
   Scenario Outline: Any user who has completed triage (without creating Personalised Journey page) should be redirected to "Create your export journey" page when using related header link
     Given "Robert" answered triage questions
-    And "Robert" is on the "Triage - summary" page
+    And "Robert" is on the "Export Readiness - Triage summary" page
     And "Robert" goes to the "<specific>" page
 
-    When "Robert" decides to use "Your export journey" link in "header menu"
+    When "Robert" decides to use "Your export journey" link in "Export Readiness - Header"
 
-    Then "Robert" should be on the "Create your export journey" page
+    Then "Robert" should be on the "Export Readiness - Create your export journey" page
 
     Examples:
-      | specific                     |
-      | Home                         |
-      | Interim Export Opportunities |
-      | Export Opportunities         |
+      | specific                                        |
+      | Export Readiness - Home                         |
+      | Export Readiness - Interim Export Opportunities |
+      | Export Opportunities - Home                     |
+      | Find a Buyer - Home                             |
 
     @bug
     @ED-3282
     @fixme
     Examples: header needs to be updated
-      | specific                     |
-      | Selling Online Overseas      |
-
-    @bug
-    @ED-3242
-    @fixme
-    Examples: header needs to be updated
-      | specific                     |
-      | Find a Buyer                 |
+      | specific                       |
+      | Selling Online Overseas - Home |
 
 
   @ED-3285
@@ -250,8 +231,8 @@ Feature: Header-Footer
 
     When "Robert" decides to create his personalised journey page
 
-    Then "Robert" should be on the "Personalised Journey" page
-    And "Robert" should see "Save Progress" section on "Personalised Journey" page
+    Then "Robert" should be on the "Export Readiness - Personalised Journey" page
+    And "Robert" should see "Save Progress" section on "Export Readiness - Personalised Journey" page
 
     Examples:
       | relevant   |
@@ -272,8 +253,8 @@ Feature: Header-Footer
 
     When "Robert" decides to create his personalised journey page
 
-    Then "Robert" should be on the "Personalised Journey" page
-    And "Robert" should not see "Save Progress" section on "Personalised Journey" page
+    Then "Robert" should be on the "Export Readiness - Personalised Journey" page
+    And "Robert" should not see "Save Progress" section on "Export Readiness - Personalised Journey" page
 
 
   @ED-3287
@@ -283,7 +264,7 @@ Feature: Header-Footer
   Scenario Outline: Any user who has not signed-in should be asked to register or sign-in whilst being on the Article List page
     Given "Robert" is on the "<group>" Article List for randomly selected category
 
-    Then "Robert" should see "Save Progress" section on "Article List" page
+    Then "Robert" should see "Save Progress" section on "Export Readiness - Article List" page
 
     Examples: article groups
       | group            |
@@ -301,7 +282,7 @@ Feature: Header-Footer
 
     When "Robert" opens any article on the list
 
-    Then "Robert" should see "Save Progress" section on "Article" page
+    Then "Robert" should see "Save Progress" section on "Export Readiness - Article" page
 
     Examples: article groups
       | group            |
@@ -320,7 +301,7 @@ Feature: Header-Footer
 
     When "Robert" goes to randomly selected "<group>" Article category
 
-    Then "Robert" should not see "Save Progress" section on "Article List" page
+    Then "Robert" should not see "Save Progress" section on "Export Readiness - Article List" page
 
     Examples: article groups
       | group            |
@@ -340,7 +321,7 @@ Feature: Header-Footer
     When "Robert" goes to randomly selected "<group>" Article category
     And "Robert" opens any article on the list
 
-    Then "Robert" should not see "Save Progress" section on "Article" page
+    Then "Robert" should not see "Save Progress" section on "Export Readiness - Article" page
 
     Examples: article groups
       | group            |

@@ -28,7 +28,7 @@ from requests.exceptions import (
 from termcolor import cprint
 from urllib3.exceptions import HTTPError as BaseHTTPError
 
-from utils import assertion_msg
+from pages.common_actions import assertion_msg
 
 # a list of exceptions that can be thrown by `requests` (and urllib3)
 REQUEST_EXCEPTIONS = (

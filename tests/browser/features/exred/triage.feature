@@ -6,7 +6,7 @@ Feature: Triage
   @first-time
   @regular
   Scenario Outline: Regular Exporter visiting the home page for the 1st time should be able to get to personalised page after going through triage process
-    Given "Nadia" visits the "Home" page for the first time
+    Given "Nadia" visits the "Export Readiness - Home" page for the first time
     And "Nadia" decided to build her exporting journey
 
     When "Nadia" says that she "has" exported before
@@ -33,7 +33,7 @@ Feature: Triage
   @first-time
   @regular
   Scenario Outline: Not incorporated Regular Exporter visiting the home page for the 1st time should be able to get to personalised page after going through triage process
-    Given "Nadia" visits the "Home" page for the first time
+    Given "Nadia" visits the "Export Readiness - Home" page for the first time
     And "Nadia" decided to build her exporting journey
 
     When "Nadia" says that she "has" exported before
@@ -58,7 +58,7 @@ Feature: Triage
   @first-time
   @occasional
   Scenario Outline: Occasional Exporter which "<online_action>" used online marketplaces and visiting the home page for the 1st time should be able to get to personalised page after going through triage process
-    Given "Inigo" visits the "home" page for the first time
+    Given "Inigo" visits the "Export Readiness - home" page for the first time
     And "Inigo" decided to build his exporting journey
 
     When "Inigo" says that she "has" exported before
@@ -89,7 +89,7 @@ Feature: Triage
   @first-time
   @occasional
   Scenario Outline: Not incorporated Occasional Exporter which "<online_action>" used online marketplaces and visiting the home page for the 1st time should be able to get to personalised page after going through triage process
-    Given "Inigo" visits the "home" page for the first time
+    Given "Inigo" visits the "Export Readiness - home" page for the first time
     And "Inigo" decided to build his exporting journey
 
     When "Inigo" says that she "has" exported before
@@ -115,7 +115,7 @@ Feature: Triage
   @first-time
   @new
   Scenario Outline: New Exporter visiting the home page for the 1st time should be able to get to personalised page after going through triage process
-    Given "Jonah" visits the "home" page for the first time
+    Given "Jonah" visits the "Export Readiness - home" page for the first time
     And "Jonah" decided to build his exporting journey
 
     When "Jonah" says that he "has never" exported before
@@ -141,7 +141,7 @@ Feature: Triage
   @first-time
   @new
   Scenario Outline: Not incorporated New Exporter visiting the home page for the 1st time should be able to get to personalised page after going through triage process
-    Given "Jonah" visits the "home" page for the first time
+    Given "Jonah" visits the "Export Readiness - home" page for the first time
     And "Jonah" decided to build his exporting journey
 
     When "Jonah" says that he "has never" exported before

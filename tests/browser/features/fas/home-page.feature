@@ -1,65 +1,65 @@
 @ED-3580
 @fas-home-page
 @no-sso-email-verification-required
-Feature: FAS landing page
+Feature: Find a Supplier - home page
 
 
   @ED-4242
-  Scenario: Buyers should be able to view "FAS landing" page
-    Given "Robert" visits the "FAS landing" page
+  Scenario: Buyers should be able to view "Find a Supplier home" page
+    Given "Robert" visits the "Find a Supplier - Home" page
 
-    Then "Robert" should see "Hero, Find UK Suppliers, Contact us, UK Industries, UK Services" sections on "FAS landing" page
+    Then "Robert" should see "Hero, Find UK Suppliers, Contact us, UK Industries, UK Services" sections on "Find a Supplier - Home" page
 
 
   @ED-4245
   @search
-  Scenario Outline: Buyers should be able to "Find UK suppliers" in "<specific>" industry from the "FAS landing" page using "<following>" keyword
-    Given "Robert" visits the "FAS landing" page
+  Scenario Outline: Buyers should be able to "Find UK suppliers" in "<specific>" industry from the "Find a Supplier home" page using "<following>" keyword
+    Given "Robert" visits the "Find a Supplier - Home" page
 
-    When "Robert" searches for companies using "<following>" keyword in "<specific>" sector on "FAS landing" page
+    When "Robert" searches for companies using "<following>" keyword in "<specific>" sector on "Find a Supplier - Home" page
 
     Then "Robert" should be on the "<expected>" page
 
     Examples:
-      | following | specific       | expected                 |
-      | no        | any            | FAS empty search results |
-      | Food      | any            | FAS search results       |
-      | no        | Mining         | FAS search results       |
-      | Satellite | Aerospace      | FAS search results       |
-      | WiFi      | Communications | FAS search results       |
-      | Bridges   | Construction   | FAS search results       |
+      | following | specific       | expected                               |
+      | no        | any            | Find a Supplier - Empty search results |
+      | Food      | any            | Find a Supplier - Search results       |
+      | no        | Mining         | Find a Supplier - Search results       |
+      | Satellite | Aerospace      | Find a Supplier - Search results       |
+      | WiFi      | Communications | Find a Supplier - Search results       |
+      | Bridges   | Construction   | Find a Supplier - Search results       |
 
 
   @ED-4246
   @contact-us
-  Scenario: Buyers should be able to get to the "Contact us" page from the "FAS landing" page
-    Given "Robert" visits the "FAS landing" page
+  Scenario: Buyers should be able to get to the "Contact us" page from the "Find a Supplier - home" page
+    Given "Robert" visits the "Find a Supplier - Home" page
 
-    When "Robert" decides to "contact us" via "FAS Landing" page
+    When "Robert" decides to "contact us" via "Find a Supplier - Home" page
 
-    Then "Robert" should be on the "FAS Contact us" page
+    Then "Robert" should be on the "Find a Supplier - Contact us" page
 
 
   @ED-4247
   @contact-us
-  Scenario: Buyers should be able to contact us (DIT) from the "FAS landing" page
-    Given "Robert" visits the "FAS Landing" page
-    And "Robert" decided to "contact us" via "FAS Landing" page
+  Scenario: Buyers should be able to contact us (DIT) from the "Find a Supplier - home" page
+    Given "Robert" visits the "Find a Supplier - Home" page
+    And "Robert" decided to "contact us" via "Find a Supplier - Home" page
 
     When "Robert" fills out and submits the contact us form
 
-    Then "Robert" should be on the "FAS Thank you for your message" page
+    Then "Robert" should be on the "Find a Supplier - Thank you for your message" page
 
 
   @ED-4248
   @industry-page
-  Scenario Outline: Buyers should be able to find out more about "<specific>" industry from the "FAS landing" page
-    Given "Robert" visits the "FAS landing" page
+  Scenario Outline: Buyers should be able to find out more about "<specific>" industry from the "Find a Supplier - home" page
+    Given "Robert" visits the "Find a Supplier - Home" page
 
-    When "Robert" decides to find out out more about "FAS <specific> industry"
+    When "Robert" decides to find out out more about "Find a Supplier - <specific> industry"
 
-    Then "Robert" should be on the "FAS Industry" page
-    And "Robert" should see content specific to "FAS <specific> industry" page
+    Then "Robert" should be on the "Find a Supplier - Industry" page
+    And "Robert" should see content specific to "Find a Supplier - <specific> industry" page
 
     Examples:
       | specific          |
@@ -70,32 +70,32 @@ Feature: FAS landing page
 
   @ED-4249
   @industries-page
-  Scenario: Buyers should be able to see more UK industries from the "FAS landing" page
-    Given "Robert" visits the "FAS landing" page
+  Scenario: Buyers should be able to see more UK industries from the "Find a Supplier - home" page
+    Given "Robert" visits the "Find a Supplier - Home" page
 
     When "Robert" decides to see more UK industries
 
-    Then "Robert" should be on the "FAS Industries" page
+    Then "Robert" should be on the "Find a Supplier - Industries" page
 
 
   @wip
   @ED-4250
   @report-this-page
-  Scenario: Buyers should be able to report a problem with the "FAS landing" page
-    Given "Robert" visits the "FAS landing" page
+  Scenario: Buyers should be able to report a problem with the "Find a Supplier - home" page
+    Given "Robert" visits the "Find a Supplier - Home" page
 
-    When "Robert" decides to report problem with the "FAS landing" page
+    When "Robert" decides to report problem with the "Find a Supplier - home" page
     And "Robert" fills out and submits the "Help us improve great.gov.uk" form
 
-    Then "Robert" should be on the "Thank you for your feedback" page
+    Then "Robert" should be on the "Find a Supplier - Thank you for your feedback" page
 
 
   @wip
   @ED-4251
   @marketing-content-page
-  Scenario: Buyers should be able to view the Marketing Content from the "FAS landing" page
-    Given "Robert" visits the "FAS landing" page
+  Scenario: Buyers should be able to view the Marketing Content from the "Find a Supplier - home" page
+    Given "Robert" visits the "Find a Supplier - Home" page
 
-    When "Robert" decides to go to learn more about marketing on the "FAS landing" page
+    When "Robert" decides to go to learn more about marketing on the "Find a Supplier - home" page
 
-    Then "Robert" should be on the "Marketing content" page
+    Then "Robert" should be on the "Find a Supplier - Marketing content" page

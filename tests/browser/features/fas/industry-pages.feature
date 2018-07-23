@@ -2,14 +2,15 @@
 @ED-4259
 @industry-pages
 @no-sso-email-verification-required
-Feature: FAS Industry pages
+Feature: Find a Supplier - Industry pages
 
 
   @ED-4260
   Scenario Outline: Buyers should be able to see all expected page elements on "<specific>" page
-    Given "Robert" visits the "FAS <specific> Industry" page
+    Given "Robert" visits the "Find a Supplier - <specific> industry" page
 
-    Then "Robert" should see expected sections on "FAS Industry" page
+    Then "Robert" should see expected sections on "Find a Supplier - Industry" page
+      | Sections                |
       | Hero                    |
       | Breadcrumbs             |
       | Contact us              |
@@ -55,69 +56,69 @@ Feature: FAS Industry pages
 
   @ED-4261
   @breadcrumbs
-  Scenario Outline: Buyers should be able to go back to the "<expected>" page via "<selected>" breadcrumb on the "FAS <specific> Industry" page
-    Given "Robert" visits the "FAS <specific> Industry" page
+  Scenario Outline: Buyers should be able to go back to the "<expected>" page via "<selected>" breadcrumb on the "Find a Supplier - <specific> Industry" page
+    Given "Robert" visits the "Find a Supplier - <specific> industry" page
 
-    When "Robert" decides to use "<selected>" breadcrumb on the "FAS Industry" page
+    When "Robert" decides to use "<selected>" breadcrumb on the "Find a Supplier - Industry" page
 
     Then "Robert" should be on the "<expected>" page
 
     Examples: Promoted Industries
-      | specific          | selected   | expected       |
-      | Agritech          | Home       | FAS Landing    |
-      | Creative services | Home       | FAS Landing    |
-      | Cyber security    | Home       | FAS Landing    |
-      | Food and drink    | Home       | FAS Landing    |
-      | Sports economy    | Home       | FAS Landing    |
-      | Healthcare        | Home       | FAS Landing    |
-      | Life sciences     | Home       | FAS Landing    |
-      | Technology        | Home       | FAS Landing    |
-      | Agritech          | Industries | FAS Industries |
-      | Creative services | Industries | FAS Industries |
-      | Cyber security    | Industries | FAS Industries |
-      | Food and drink    | Industries | FAS Industries |
-      | Sports economy    | Industries | FAS Industries |
-      | Healthcare        | Industries | FAS Industries |
-      | Life sciences     | Industries | FAS Industries |
-      | Technology        | Industries | FAS Industries |
+      | specific          | selected   | expected                     |
+      | Agritech          | Home       | Find a Supplier - Home       |
+      | Creative services | Home       | Find a Supplier - Home       |
+      | Cyber security    | Home       | Find a Supplier - Home       |
+      | Food and drink    | Home       | Find a Supplier - Home       |
+      | Sports economy    | Home       | Find a Supplier - Home       |
+      | Healthcare        | Home       | Find a Supplier - Home       |
+      | Life sciences     | Home       | Find a Supplier - Home       |
+      | Technology        | Home       | Find a Supplier - Home       |
+      | Agritech          | Industries | Find a Supplier - Industries |
+      | Creative services | Industries | Find a Supplier - Industries |
+      | Cyber security    | Industries | Find a Supplier - Industries |
+      | Food and drink    | Industries | Find a Supplier - Industries |
+      | Sports economy    | Industries | Find a Supplier - Industries |
+      | Healthcare        | Industries | Find a Supplier - Industries |
+      | Life sciences     | Industries | Find a Supplier - Industries |
+      | Technology        | Industries | Find a Supplier - Industries |
 
     @wip
     # ATM these Industries are not present on Dev
     Examples: More Industries
-      | specific                           | selected   | expected       |
-      | Automotive                         | Home       | FAS Landing    |
-      | Business & Government Partnerships | Home       | FAS Landing    |
-      | Education                          | Home       | FAS Landing    |
-      | Energy                             | Home       | FAS Landing    |
-      | Engineering                        | Home       | FAS Landing    |
-      | Infrastructure                     | Home       | FAS Landing    |
-      | Innovation                         | Home       | FAS Landing    |
-      | Legal services                     | Home       | FAS Landing    |
-      | Marine                             | Home       | FAS Landing    |
-      | Professional & financial services  | Home       | FAS Landing    |
-      | Space                              | Home       | FAS Landing    |
-      | Automotive                         | Industries | FAS Industries |
-      | Business & Government Partnerships | Industries | FAS Industries |
-      | Education                          | Industries | FAS Industries |
-      | Energy                             | Industries | FAS Industries |
-      | Engineering                        | Industries | FAS Industries |
-      | Infrastructure                     | Industries | FAS Industries |
-      | Innovation                         | Industries | FAS Industries |
-      | Legal services                     | Industries | FAS Industries |
-      | Marine                             | Industries | FAS Industries |
-      | Professional & financial services  | Industries | FAS Industries |
-      | Space                              | Industries | FAS Industries |
+      | specific                           | selected   | expected                     |
+      | Automotive                         | Home       | Find a Supplier - Home       |
+      | Business & Government Partnerships | Home       | Find a Supplier - Home       |
+      | Education                          | Home       | Find a Supplier - Home       |
+      | Energy                             | Home       | Find a Supplier - Home       |
+      | Engineering                        | Home       | Find a Supplier - Home       |
+      | Infrastructure                     | Home       | Find a Supplier - Home       |
+      | Innovation                         | Home       | Find a Supplier - Home       |
+      | Legal services                     | Home       | Find a Supplier - Home       |
+      | Marine                             | Home       | Find a Supplier - Home       |
+      | Professional & financial services  | Home       | Find a Supplier - Home       |
+      | Space                              | Home       | Find a Supplier - Home       |
+      | Automotive                         | Industries | Find a Supplier - Industries |
+      | Business & Government Partnerships | Industries | Find a Supplier - Industries |
+      | Education                          | Industries | Find a Supplier - Industries |
+      | Energy                             | Industries | Find a Supplier - Industries |
+      | Engineering                        | Industries | Find a Supplier - Industries |
+      | Infrastructure                     | Industries | Find a Supplier - Industries |
+      | Innovation                         | Industries | Find a Supplier - Industries |
+      | Legal services                     | Industries | Find a Supplier - Industries |
+      | Marine                             | Industries | Find a Supplier - Industries |
+      | Professional & financial services  | Industries | Find a Supplier - Industries |
+      | Space                              | Industries | Find a Supplier - Industries |
 
 
   @ED-4262
   @contact-us
   Scenario Outline: Buyers should be able to contact us (DIT) from the  "<specific> Industry" page
-    Given "Robert" visits the "FAS <specific> Industry" page
-    And "Robert" decided to "contact us" via "FAS <specific> Industry" page
+    Given "Robert" visits the "Find a Supplier - <specific> Industry" page
+    And "Robert" decided to "contact us" via "Find a Supplier - <specific> industry" page
 
     When "Robert" fills out and submits the contact us form
 
-    Then "Robert" should be on the "FAS Thank you for your message" page
+    Then "Robert" should be on the "Find a Supplier - Thank you for your message" page
 
     Examples: Promoted industries
       | specific          |
@@ -156,11 +157,11 @@ Feature: FAS Industry pages
   @ED-4263
   @search
   Scenario Outline: Buyers should be able to find UK suppliers from the "<specific> Industry" page
-    Given "Robert" visits the "FAS <specific> Industry" page
+    Given "Robert" visits the "Find a Supplier - <specific> industry" page
 
     When "Robert" searches for companies using "<following>" keyword
 
-    Then "Robert" should be on the "FAS search results" page
+    Then "Robert" should be on the "Find a Supplier - search results" page
     And "Robert" should see search results filtered by "<pre-selected>" industry
 
     Examples: Promoted Industries
@@ -201,11 +202,11 @@ Feature: FAS Industry pages
   @ED-4264
   @search
   Scenario Outline: Buyers should be able to find more UK suppliers than visible on the "<specific> Industry" page
-    Given "Robert" visits the "FAS <specific> Industry" page
+    Given "Robert" visits the "Find a Supplier - <specific> industry" page
 
     When "Robert" decides to view more companies in the current industry
 
-    Then "Robert" should be on the "FAS search results" page
+    Then "Robert" should be on the "Find a Supplier - search results" page
     And "Robert" should see search results filtered by "<pre-selected>" industry
 
     Examples: Promoted Industries
@@ -246,11 +247,11 @@ Feature: FAS Industry pages
   @ED-4265
   @company-profiles
   Scenario Outline: Buyers should be able to view "<selected>" company profile from the "<specific>" Industry page
-    Given "Robert" visits the "FAS <specific> Industry" page
+    Given "Robert" visits the "Find a Supplier - <specific> industry" page
 
     When "Robert" decides to view "<selected>" company profile
 
-    Then "Robert" should be on the "FAS company profile" page
+    Then "Robert" should be on the "Find a Supplier - company profile" page
 
     Examples:
       | specific          | selected |
@@ -289,31 +290,31 @@ Feature: FAS Industry pages
   @ED-4266
   @marketing-content
   Scenario Outline: Buyers should be able to view "<selected>" article from the "<specific> Industry" page
-    Given "Robert" visits the "FAS <specific> Industry" page
+    Given "Robert" visits the "Find a Supplier - <specific> industry" page
 
     When "Robert" decides to read "<selected>" marketing article
 
     Then "Robert" should be on the "<expected>" page
 
     Examples: Promoted Industries
-      | specific          | selected | expected       |
-      | Agritech          | first    | FAS article    |
-      | Consumer retail   | first    | FAS article    |
-      | Creative services | first    | FAS article    |
-      | Creative services | second   | FAS Contact us |
-      | Cyber security    | first    | FAS article    |
-      | Food and drink    | first    | FAS Contact us |
-      | Sports economy    | first    | FAS Contact us |
-      | Sports economy    | second   | FAS Contact us |
-      | Healthcare        | first    | FAS article    |
-      | Healthcare        | second   | FAS article    |
-      | Life sciences     | first    | FAS article    |
-      | Technology        | first    | FAS article    |
+      | specific          | selected | expected                     |
+      | Agritech          | first    | Find a Supplier - Article    |
+      | Consumer retail   | first    | Find a Supplier - Article    |
+      | Creative services | first    | Find a Supplier - Article    |
+      | Creative services | second   | Find a Supplier - Contact us |
+      | Cyber security    | first    | Find a Supplier - Article    |
+      | Food and drink    | first    | Find a Supplier - Contact us |
+      | Sports economy    | first    | Find a Supplier - Contact us |
+      | Sports economy    | second   | Find a Supplier - Contact us |
+      | Healthcare        | first    | Find a Supplier - Article    |
+      | Healthcare        | second   | Find a Supplier - Article    |
+      | Life sciences     | first    | Find a Supplier - Article    |
+      | Technology        | first    | Find a Supplier - Article    |
 
     @wip
     Examples: Industries without articles
       | specific          | selected | expected       |
-      | Aerospace         | first    | non FAS        |
+      | Aerospace         | first    | non Find a Supplier -        |
 
     @wip
     # ATM these Industries are not present on Dev
@@ -338,22 +339,22 @@ Feature: FAS Industry pages
   # link to Legal Services industry page should take users to an external
   # Legal Services website (not hosted on great.gov.uk)
   Scenario: Buyers should be able to learn more from the Legal Services page
-    Given "Annette Geissinger" visits the "FAS Legal Services Industry" page
+    Given "Annette Geissinger" visits the "Find a Supplier - Legal Services industry" page
 
     When "Annette Geissinger" decides to read "first" marketing article
 
-    Then "Annette Geissinger" should be on the "Legal Services landing" page
+    Then "Annette Geissinger" should be on the "Legal Services - Home" page
 
 
   @wip
   @report-this-page
-  Scenario Outline: Buyers should be able to report a problem with the "FAS Industries" page from the  "<specific> Industry" page
-    Given "Robert" visits the "FAS <specific> Industry" page
+  Scenario Outline: Buyers should be able to report a problem with the "Find a Supplier - Industries" page from the  "<specific> Industry" page
+    Given "Robert" visits the "Find a Supplier - <specific> Industry" page
 
     When "Robert" decides to report a problem with the page
     And "Robert" fills out and submits the Help us improve great.gov.uk form
 
-    Then "Robert" should be on the "Thank you for your feedback" page
+    Then "Robert" should be on the "Find a Supplier - Thank you for your feedback" page
 
     Examples:
       | specific          |

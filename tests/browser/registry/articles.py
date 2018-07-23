@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""ExRed Articles Registry"""
+"""Export Readiness Articles Registry"""
 import random
 from collections import namedtuple
 from copy import copy

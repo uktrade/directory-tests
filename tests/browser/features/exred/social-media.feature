@@ -48,7 +48,7 @@ Feature: Sharing on Social Media and via emails
   @case-studies
   @<social-media>
   Scenario Outline: Any Exporter should be able to share the Case Study Article via "<social-media>"
-    Given "Robert" is on the Case Study page accessed via "Home" page
+    Given "Robert" is on the Case Study page accessed via "Export Readiness - Home" page
 
     When "Robert" decides to share the article via "<social-media>"
 
@@ -66,7 +66,7 @@ Feature: Sharing on Social Media and via emails
   @case-studies
   @email
   Scenario: Any Exporter should be able to share the Case Study Article via Email
-    Given "Robert" is on the Case Study page accessed via "Home" page
+    Given "Robert" is on the Case Study page accessed via "Export Readiness - Home" page
 
     When "Robert" decides to share the article via "email"
 
