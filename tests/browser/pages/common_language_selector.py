@@ -3,6 +3,7 @@
 import logging
 import time
 
+from selenium.common.exceptions import NoSuchElementException
 from types import ModuleType
 
 from selenium.webdriver.common.by import By
@@ -178,7 +179,11 @@ def change_to(
 
 def check_page_language_is(driver: WebDriver, expected_language: str):
     expected_language_code = LANGUAGE_INDICATOR_VALUES[expected_language]
-    language_indicator = find_element(driver, LANGUAGE_INDICATOR)
+    try:
+        language_indicator = find_element(driver, LANGUAGE_INDICATOR)
+    except NoSuchElementException:
+        language_indicator = find_element(driver, INTERNATIONAL_LANGUAGE_INDICATOR)
+
     language_indicator_code = language_indicator.text.lower()
     with assertion_msg(
         "Expected to see page in '%s' but got '%s'",
