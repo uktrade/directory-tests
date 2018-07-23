@@ -353,7 +353,7 @@ def when_actor_opens_link_from_header_menu(context, actor_alias, page_name, grou
 @when('"{actor_alias}" decides to "{element_name}" via "{page_name}" page')
 def when_actor_decides_to_click_on_page_element(
         context, actor_alias, element_name, page_name):
-    click_on_page_element(context, actor_alias, element_name, page_name)
+    click_on_page_element(context, actor_alias, element_name, page_name=page_name)
 
 
 @when('"{actor_alias}" says what he wants to export "{goods_or_services}"')

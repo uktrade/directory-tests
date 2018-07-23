@@ -1575,16 +1575,20 @@ def header_footer_open_link(
 
 
 def click_on_page_element(
-    context: Context, actor_alias: str, element_name: str, page_name: str
+    context: Context, actor_alias: str, element_name: str, *,
+    page_name: str = None,
 ):
-    page = get_page_object(page_name, exact_match=False)
+    if page_name:
+        page = get_page_object(page_name, exact_match=False)
+    else:
+        page = get_last_visited_page(context, actor_alias)
     has_action(page, "click_on_page_element")
     page.click_on_page_element(context.driver, element_name)
     logging.debug(
         "%s decided to click on '%s' on '%s' page",
         actor_alias,
         element_name,
-        page_name,
+        page.NAME,
     )
 
 
