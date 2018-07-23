@@ -30,8 +30,9 @@ PAGE_TITLE = "Invest in Great Britain -"
 
 
 class URLS(Enum):
-    """Lists all URLs for industry pages."""
+    """Lists all URLs for guide pages."""
 
+    UK_SETUP = urljoin(BASE_URL, "")
     APPLY_FOR_A_UK_VISA = urljoin(BASE_URL, "apply-for-a-uk-visa/")
     ESTABLISH_A_BASE_FOR_BUSINESS_IN_THE_UK = urljoin(
         BASE_URL, "establish-a-base-for-business-in-the-uk/"
