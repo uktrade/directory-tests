@@ -1,14 +1,17 @@
 # -*- coding: utf-8 -*-
 """Triage - Create your export journey Page Object."""
+from typing import List
 from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    AssertionExecutor,
     Selector,
     check_for_expected_sections_elements,
     check_for_section,
+    check_for_sections,
     check_if_element_is_not_visible,
     check_title,
     check_url,
@@ -24,20 +27,25 @@ TYPE = "triage"
 URL = urljoin(EXRED_UI_URL, "triage/")
 PAGE_TITLE = "Your export journey - great.gov.uk"
 
-START_NOW = Selector(By.CSS_SELECTOR, "#start-now-container > a")
-REGISTER = Selector(By.CSS_SELECTOR, "#start-now-container > div > a:nth-child(2)")
-SIGN_IN = Selector(By.CSS_SELECTOR, "#start-now-container > div > a:nth-child(3)")
-REPORT_THIS_PAGE = Selector(By.CSS_SELECTOR, "#error-reporting-section-contact-us")
-
 SELECTORS = {
+    "save progress": {
+        "register link": Selector(
+            By.CSS_SELECTOR, "#start-now-container > div > a:nth-child(2)"
+        ),
+        "sign-in link": Selector(
+            By.CSS_SELECTOR, "#start-now-container > div > a:nth-child(3)"
+        ),
+    },
+    "report this page": {
+        "report this page link": Selector(
+            By.CSS_SELECTOR, "#error-reporting-section-contact-us"
+        )
+    },
     "description": {
         "title": Selector(By.CSS_SELECTOR, "#start-now-container > h1"),
         "description": Selector(By.CSS_SELECTOR, "#start-now-container > p"),
-        "list of benefits": Selector(By.CSS_SELECTOR, "#start-now-container > ul"),
+        "start now": Selector(By.CSS_SELECTOR, "#start-now-container > a"),
     },
-    "start now": {"start now button": START_NOW},
-    "save progress": {"register link": REGISTER, "sign-in link": SIGN_IN},
-    "report this page": {"report this page link": REPORT_THIS_PAGE},
 }
 
 
@@ -65,3 +73,7 @@ def should_not_see_section(driver: WebDriver, name: str):
     section = SELECTORS[name.lower()]
     for key, selector in section.items():
         check_if_element_is_not_visible(driver, selector, element_name=key)
+
+
+def should_see_sections(executor: AssertionExecutor, names: List[str]):
+    check_for_sections(executor, all_sections=SELECTORS, sought_sections=names)

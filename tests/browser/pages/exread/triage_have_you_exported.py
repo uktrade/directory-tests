@@ -8,10 +8,10 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from pages.common_actions import (
     Selector,
     assertion_msg,
-    check_for_expected_elements,
     check_for_expected_sections_elements,
     check_title,
     check_url,
+    find_and_click_on_page_element,
     find_element,
     go_to_url,
     take_screenshot,
@@ -90,3 +90,8 @@ def is_no_selected(driver: WebDriver):
     no = find_element(driver, NO_RADIO, element_name="No checkbox", wait_for_it=False)
     with assertion_msg("Expected No option to be selected"):
         assert no.get_property("checked")
+
+
+def click_on_page_element(driver: WebDriver, element_name: str):
+    find_and_click_on_page_element(driver, SELECTORS, element_name)
+    take_screenshot(driver, NAME + " after clicking on " + element_name)

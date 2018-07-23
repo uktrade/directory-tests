@@ -1,16 +1,19 @@
 # -*- coding: utf-8 -*-
 """ExRed Article List Page Object."""
 import logging
+from typing import List
 
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    AssertionExecutor,
     Selector,
     assertion_msg,
     check_for_expected_sections_elements,
     check_for_section,
+    check_for_sections,
     check_if_element_is_not_present,
     check_if_element_is_not_visible,
     find_element,
@@ -75,6 +78,10 @@ def should_be_here(driver: WebDriver):
 
 def should_see_section(driver: WebDriver, name: str):
     check_for_section(driver, all_sections=SELECTORS, sought_section=name)
+
+
+def should_see_sections(executor: AssertionExecutor, names: List[str]):
+    check_for_sections(executor, all_sections=SELECTORS, sought_sections=names)
 
 
 def should_not_see_section(driver: WebDriver, name: str):

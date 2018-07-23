@@ -8,7 +8,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from pages.common_actions import (
     Selector,
     assertion_msg,
-    check_for_expected_elements,
+    check_for_expected_sections_elements,
     check_title,
     find_element,
     take_screenshot,
@@ -32,7 +32,7 @@ SELECTORS = {
 def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_title(driver, PAGE_TITLE, exact_match=True)
-    check_for_expected_elements(driver, SELECTORS)
+    check_for_expected_sections_elements(driver, SELECTORS)
 
 
 def check_if_populated(driver: WebDriver, shared_url: str):
