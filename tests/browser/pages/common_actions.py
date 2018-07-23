@@ -142,6 +142,10 @@ def check_for_expected_elements(
 ):
     """Check if all page elements are visible."""
     for element_name, selector in elements.items():
+        if not isinstance(selector, Selector):
+            raise TypeError(
+                "Expected '{}' to be a Selector, got {}"
+                    .format(selector, type(selector)))
         element = find_element(
             driver, selector, element_name=element_name, wait_for_it=wait_for_it
         )
@@ -158,6 +162,10 @@ def check_for_expected_sections_elements(driver: WebDriver, sections: Dict):
     """Check if all elements in page sections are visible."""
     for section in sections:
         for element_name, selector in sections[section].items():
+            if not isinstance(selector, Selector):
+                raise TypeError(
+                    "Expected '{}' to be a Selector, got {}"
+                        .format(selector, type(selector)))
             element = find_element(driver, selector, element_name=element_name)
             with assertion_msg(
                 "It looks like '%s' element in '%s' section is not visible" " on %s",
