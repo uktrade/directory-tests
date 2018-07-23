@@ -111,7 +111,9 @@ Feature: Articles
     When "Robert" decides to create his personalised journey page
 
     Then "Robert" should be on the Personalised Journey page for "regular" exporters
-    And "Robert" should see "Guidance" section on "Export Readiness - Personalised Journey" page
+    And "Robert" should see following sections
+      | Sections |
+      | Guidance |
 
 
   @ED-2638
