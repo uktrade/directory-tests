@@ -7,6 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    Selector,
     assertion_msg,
     check_for_expected_elements,
     check_title,
@@ -15,7 +16,6 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
     wait_for_page_load_after_action,
-    Selector
 )
 from settings import EXRED_SECTORS, EXRED_UI_URL
 
@@ -28,10 +28,11 @@ PAGE_TITLE = "Welcome to great.gov.uk"
 SECTORS_COMBOBOX = Selector(By.CSS_SELECTOR, ".exred-triage-form div[role=combobox]")
 SECTORS_INPUT = Selector(By.ID, "js-sector-select")
 AUTOCOMPLETE_1ST_OPTION = "#js-sector-select__option--0"
-CONTINUE_BUTTON = Selector(By.CSS_SELECTOR, "#content .exred-triage-form button[type=submit]")
+CONTINUE_BUTTON = Selector(
+    By.CSS_SELECTOR, "#content .exred-triage-form button[type=submit]"
+)
 BACK_TO_HOME_LINK = Selector(By.CSS_SELECTOR, "#content .home-link a")
-EXPECTED_ELEMENTS = {
-}
+EXPECTED_ELEMENTS = {}
 SELECTORS = {
     "general": {
         "question": Selector(By.CSS_SELECTOR, "#content .exred-triage-form label"),
@@ -66,10 +67,7 @@ def enter(driver: WebDriver, code: str, sector: str) -> tuple:
     if not code and not sector:
         code, sector = random.choice(list(EXRED_SECTORS.items()))
     input_field = find_element(
-        driver,
-        SECTORS_INPUT,
-        element_name="Sectors input field",
-        wait_for_it=False,
+        driver, SECTORS_INPUT, element_name="Sectors input field", wait_for_it=False
     )
     max_retries = 5
     counter = 0

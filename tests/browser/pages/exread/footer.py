@@ -4,13 +4,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    Selector,
     assertion_msg,
     check_for_expected_sections_elements,
     find_and_click_on_page_element,
     find_element,
     take_screenshot,
     wait_for_page_load_after_action,
-    Selector
 )
 
 NAME = "Footer"
@@ -21,7 +21,7 @@ URL = None
 SELECTORS = {
     "logos": {
         "dit logo": Selector(By.ID, "footer-dit-logo"),
-        "eig logo": Selector(By.ID, "footer-eig-logo")
+        "eig logo": Selector(By.ID, "footer-eig-logo"),
     },
     "export readiness": {
         "label": Selector(By.ID, "footer-export-readiness-links"),
@@ -39,12 +39,16 @@ SELECTORS = {
         "finance": Selector(By.ID, "footer-guidance-finance"),
         "business planning": Selector(By.ID, "footer-guidance-business-planning"),
         "getting paid": Selector(By.ID, "footer-guidance-getting-paid"),
-        "operations and compliance": Selector(By.ID, "footer-guidance-operations-and-compliance"),
+        "operations and compliance": Selector(
+            By.ID, "footer-guidance-operations-and-compliance"
+        ),
     },
     "services": {
         "label": Selector(By.ID, "footer-services-links"),
         "find a buyer": Selector(By.ID, "footer-services-find-a-buyer"),
-        "selling online overseas": Selector(By.ID, "footer-services-selling-online-overseas"),
+        "selling online overseas": Selector(
+            By.ID, "footer-services-selling-online-overseas"
+        ),
         "export opportunities": Selector(By.ID, "footer-services-export-opportunities"),
         "get finance": Selector(By.ID, "footer-services-get-finance"),
         "events": Selector(By.ID, "footer-services-events"),

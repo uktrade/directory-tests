@@ -6,6 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    Selector,
     check_for_expected_sections_elements,
     check_for_section,
     check_if_element_is_not_visible,
@@ -14,7 +15,6 @@ from pages.common_actions import (
     find_and_click_on_page_element,
     go_to_url,
     take_screenshot,
-    Selector
 )
 from settings import EXRED_UI_URL
 

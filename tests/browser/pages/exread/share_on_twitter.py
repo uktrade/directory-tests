@@ -6,12 +6,12 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    Selector,
     assertion_msg,
     check_for_expected_elements,
     check_title,
     find_element,
     take_screenshot,
-    Selector
 )
 
 NAME = "Share on Twitter"
@@ -24,7 +24,7 @@ MESSAGE_BOX = Selector(By.ID, "status")
 SELECTORS = {
     "general": {
         "logo": Selector(By.CSS_SELECTOR, "#header > div > h1 > a"),
-        "message_box": MESSAGE_BOX
+        "message_box": MESSAGE_BOX,
     }
 }
 

@@ -9,6 +9,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    Selector,
     assertion_msg,
     check_for_expected_sections_elements,
     check_for_section,
@@ -21,7 +22,6 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
     wait_for_page_load_after_action,
-    Selector
 )
 from settings import EXRED_UI_URL
 
@@ -31,32 +31,52 @@ TYPE = "home"
 URL = urljoin(EXRED_UI_URL, "?lang=en-gb")
 PAGE_TITLE = "Welcome to great.gov.uk - export guidance and services"
 
-PROMO_VIDEO = Selector(By.CSS_SELECTOR, "body > div.video-container.Modal-Container.open > div > video")
+PROMO_VIDEO = Selector(
+    By.CSS_SELECTOR, "body > div.video-container.Modal-Container.open > div > video"
+)
 CLOSE_VIDEO = Selector(By.ID, "hero-campaign-section-videoplayer-close")
-VIDEO_MODAL_WINDOW = Selector(By.CSS_SELECTOR, "body > div.video-container.Modal-Container.open")
+VIDEO_MODAL_WINDOW = Selector(
+    By.CSS_SELECTOR, "body > div.video-container.Modal-Container.open"
+)
 GET_STARTED_BUTTON = Selector(By.ID, "triage-section-get-started")
 CONTINUE_EXPORT_JOURNEY = Selector(By.ID, "triage-section-continue-your-journey")
 NEW_TO_EXPORTING_LINK = Selector(By.ID, "personas-section-new")
 OCCASIONAL_EXPORTER_LINK = Selector(By.ID, "personas-section-occasional")
 REGULAR_EXPORTED_LINK = Selector(By.ID, "personas-section-regular")
 FIND_A_BUYER_SERVICE_LINK = Selector(By.ID, "services-section-find-a-buyer-link")
-SELLING_ONLINE_OVERSEAS_SERVICE_LINK = Selector(By.ID, "services-section-selling-online-overseas-link")
-EXPORT_OPPORTUNITIES_SERVICE_LINK = Selector(By.ID, "services-section-export-opportunities-link")
-CAROUSEL_INDICATORS_SECTION = Selector(By.CSS_SELECTOR, "#carousel  div.ed-carousel__indicators")
+SELLING_ONLINE_OVERSEAS_SERVICE_LINK = Selector(
+    By.ID, "services-section-selling-online-overseas-link"
+)
+EXPORT_OPPORTUNITIES_SERVICE_LINK = Selector(
+    By.ID, "services-section-export-opportunities-link"
+)
+CAROUSEL_INDICATORS_SECTION = Selector(
+    By.CSS_SELECTOR, "#carousel  div.ed-carousel__indicators"
+)
 CAROUSEL_INDICATORS = Selector(By.CSS_SELECTOR, ".ed-carousel__indicator")
-CAROUSEL_PREV_BUTTON = Selector(By.CSS_SELECTOR, "#carousel label.ed-carousel__control--backward")
-CAROUSEL_NEXT_BUTTON = Selector(By.CSS_SELECTOR, "#carousel label.ed-carousel__control--forward")
+CAROUSEL_PREV_BUTTON = Selector(
+    By.CSS_SELECTOR, "#carousel label.ed-carousel__control--backward"
+)
+CAROUSEL_NEXT_BUTTON = Selector(
+    By.CSS_SELECTOR, "#carousel label.ed-carousel__control--forward"
+)
 CAROUSEL_FIRST_INDICATOR = Selector(By.CSS_SELECTOR, ".ed-carousel__indicator[for='1']")
-CAROUSEL_SECOND_INDICATOR = Selector(By.CSS_SELECTOR, ".ed-carousel__indicator[for='2']")
+CAROUSEL_SECOND_INDICATOR = Selector(
+    By.CSS_SELECTOR, ".ed-carousel__indicator[for='2']"
+)
 CAROUSEL_THIRD_INDICATOR = Selector(By.CSS_SELECTOR, ".ed-carousel__indicator[for='3']")
 CASE_STUDIES_LINK = Selector(By.CSS_SELECTOR, "#carousel h3 > a")
-CASE_STUDY_LINK = Selector(By.CSS_SELECTOR, "#carousel div.ed-carousel__slide:nth-child({}) h3 > a")
+CASE_STUDY_LINK = Selector(
+    By.CSS_SELECTOR, "#carousel div.ed-carousel__slide:nth-child({}) h3 > a"
+)
 MARKET_RESEARCH_LINK = Selector(By.ID, "guidance-market-research-link")
 CUSTOMER_INSIGHT_LINK = Selector(By.ID, "guidance-section-customer-insight-link")
 FINANCE_LINK = Selector(By.ID, "guidance-section-finance-link")
 BUSINESS_LINK = Selector(By.ID, "guidance-section-business-planning-link")
 GETTING_PAID_LINK = Selector(By.ID, "guidance-section-getting-paid-link")
-OPERATIONS_AND_COMPLIANCE_LINK = Selector(By.ID, "guidance-section-operations-and-compliance-link")
+OPERATIONS_AND_COMPLIANCE_LINK = Selector(
+    By.ID, "guidance-section-operations-and-compliance-link"
+)
 CAROUSEL = {
     "itself": Selector(By.ID, "carousel"),
     "title": Selector(By.ID, "case-studies-section-title"),
@@ -66,12 +86,24 @@ CAROUSEL = {
     "carousel - indicator 1": Selector(By.ID, "case-studies-section-indicator-1"),
     "carousel - indicator 2": Selector(By.ID, "case-studies-section-indicator-2"),
     "carousel - indicator 3": Selector(By.ID, "case-studies-section-indicator-3"),
-    "carousel - case study 1 - link": Selector(By.ID, "case-studies-section-case-study-1-link"),
-    "carousel - case study 2 - link": Selector(By.ID, "case-studies-section-case-study-2-link"),
-    "carousel - case study 3 - link": Selector(By.ID, "case-studies-section-case-study-3-link"),
-    "carousel - case study 1 - image": Selector(By.ID, "case-studies-section-case-study-1-image"),
-    "carousel - case study 2 - image": Selector(By.ID, "case-studies-section-case-study-2-image"),
-    "carousel - case study 3 - image": Selector(By.ID, "case-studies-section-case-study-3-image"),
+    "carousel - case study 1 - link": Selector(
+        By.ID, "case-studies-section-case-study-1-link"
+    ),
+    "carousel - case study 2 - link": Selector(
+        By.ID, "case-studies-section-case-study-2-link"
+    ),
+    "carousel - case study 3 - link": Selector(
+        By.ID, "case-studies-section-case-study-3-link"
+    ),
+    "carousel - case study 1 - image": Selector(
+        By.ID, "case-studies-section-case-study-1-image"
+    ),
+    "carousel - case study 2 - image": Selector(
+        By.ID, "case-studies-section-case-study-2-image"
+    ),
+    "carousel - case study 3 - image": Selector(
+        By.ID, "case-studies-section-case-study-3-image"
+    ),
 }
 
 SELECTORS = {
@@ -107,7 +139,9 @@ SELECTORS = {
         "i export occasionally": OCCASIONAL_EXPORTER_LINK,
         "i'm a regular exporter": REGULAR_EXPORTED_LINK,
         "new exporter - image": Selector(By.ID, "personas-section-new-image"),
-        "occasional exporter - image": Selector(By.ID, "personas-section-occasional-image"),
+        "occasional exporter - image": Selector(
+            By.ID, "personas-section-occasional-image"
+        ),
         "regular exporter - image": Selector(By.ID, "personas-section-regular-image"),
     },
     "guidance": {
@@ -116,35 +150,85 @@ SELECTORS = {
         "description": Selector(By.ID, "guidance-section-description"),
         "groups": Selector(By.CSS_SELECTOR, "#resource-guidance .group"),
         "market research - group": Selector(By.ID, "guidance-section-market-research"),
-        "customer insight - group": Selector(By.ID, "guidance-section-customer-insight"),
+        "customer insight - group": Selector(
+            By.ID, "guidance-section-customer-insight"
+        ),
         "finance - group": Selector(By.ID, "guidance-section-finance"),
-        "business planning - group": Selector(By.ID, "guidance-section-business-planning"),
+        "business planning - group": Selector(
+            By.ID, "guidance-section-business-planning"
+        ),
         "getting paid - group": Selector(By.ID, "guidance-section-getting-paid"),
-        "operations and compliance - group": Selector(By.ID, "guidance-section-operations-and-compliance"),
-        "market research - icon": Selector(By.ID, "guidance-section-market-research-icon"),
-        "customer insight - icon": Selector(By.ID, "guidance-section-customer-insight-icon"),
+        "operations and compliance - group": Selector(
+            By.ID, "guidance-section-operations-and-compliance"
+        ),
+        "market research - icon": Selector(
+            By.ID, "guidance-section-market-research-icon"
+        ),
+        "customer insight - icon": Selector(
+            By.ID, "guidance-section-customer-insight-icon"
+        ),
         "finance - icon": Selector(By.ID, "guidance-section-finance-icon"),
-        "business planning - icon": Selector(By.ID, "guidance-section-business-planning-icon"),
+        "business planning - icon": Selector(
+            By.ID, "guidance-section-business-planning-icon"
+        ),
         "getting paid - icon": Selector(By.ID, "guidance-section-getting-paid-icon"),
-        "operations and compliance - icon": Selector(By.ID, "guidance-section-operations-and-compliance-icon"),
-        "market research - read counter": Selector(By.ID, "guidance-section-market-research-read-counter"),
-        "customer insight - read counter": Selector(By.ID, "guidance-section-customer-insight-read-counter"),
-        "finance - read counter": Selector(By.ID, "guidance-section-finance-article-read-counter"),
-        "business planning - read counter": Selector(By.ID, "guidance-section-business-planning-article-read-counter"),
-        "getting paid - read counter": Selector(By.ID, "guidance-section-getting-paid-article-read-counter"),
-        "operations and compliance - read counter": Selector(By.ID, "guidance-section-operations-and-compliance-article-read-counter"),
-        "market research - total number of articles": Selector(By.ID, "guidance-section-market-research-total-number-of-articles"),
-        "customer insight - total number of articles": Selector(By.ID, "guidance-section-customer-insight-total-number-of-articles"),
-        "finance - total number of articles": Selector(By.ID, "guidance-section-finance-total-number-of-articles"),
-        "business planning - total number of articles": Selector(By.ID, "guidance-section-business-planning-total-number-of-articles"),
-        "getting paid - total number of articles": Selector(By.ID, "guidance-section-getting-paid-total-number-of-articles"),
-        "operations and compliance - total number of articles": Selector(By.ID, "guidance-section-operations-and-compliance-total-number-of-articles"),
-        "market research - description": Selector(By.ID, "guidance-section-market-research-description"),
-        "customer insight - description": Selector(By.ID, "guidance-section-customer-insight-description"),
-        "finance - description": Selector(By.ID, "guidance-section-finance-description"),
-        "business planning - description": Selector(By.ID, "guidance-section-business-planning-description"),
-        "getting paid - description": Selector(By.ID, "guidance-section-getting-paid-description"),
-        "operations and compliance - description": Selector(By.ID, "guidance-section-operations-and-compliance-description"),
+        "operations and compliance - icon": Selector(
+            By.ID, "guidance-section-operations-and-compliance-icon"
+        ),
+        "market research - read counter": Selector(
+            By.ID, "guidance-section-market-research-read-counter"
+        ),
+        "customer insight - read counter": Selector(
+            By.ID, "guidance-section-customer-insight-read-counter"
+        ),
+        "finance - read counter": Selector(
+            By.ID, "guidance-section-finance-article-read-counter"
+        ),
+        "business planning - read counter": Selector(
+            By.ID, "guidance-section-business-planning-article-read-counter"
+        ),
+        "getting paid - read counter": Selector(
+            By.ID, "guidance-section-getting-paid-article-read-counter"
+        ),
+        "operations and compliance - read counter": Selector(
+            By.ID, "guidance-section-operations-and-compliance-article-read-counter"
+        ),
+        "market research - total number of articles": Selector(
+            By.ID, "guidance-section-market-research-total-number-of-articles"
+        ),
+        "customer insight - total number of articles": Selector(
+            By.ID, "guidance-section-customer-insight-total-number-of-articles"
+        ),
+        "finance - total number of articles": Selector(
+            By.ID, "guidance-section-finance-total-number-of-articles"
+        ),
+        "business planning - total number of articles": Selector(
+            By.ID, "guidance-section-business-planning-total-number-of-articles"
+        ),
+        "getting paid - total number of articles": Selector(
+            By.ID, "guidance-section-getting-paid-total-number-of-articles"
+        ),
+        "operations and compliance - total number of articles": Selector(
+            By.ID, "guidance-section-operations-and-compliance-total-number-of-articles"
+        ),
+        "market research - description": Selector(
+            By.ID, "guidance-section-market-research-description"
+        ),
+        "customer insight - description": Selector(
+            By.ID, "guidance-section-customer-insight-description"
+        ),
+        "finance - description": Selector(
+            By.ID, "guidance-section-finance-description"
+        ),
+        "business planning - description": Selector(
+            By.ID, "guidance-section-business-planning-description"
+        ),
+        "getting paid - description": Selector(
+            By.ID, "guidance-section-getting-paid-description"
+        ),
+        "operations and compliance - description": Selector(
+            By.ID, "guidance-section-operations-and-compliance-description"
+        ),
         "market research": MARKET_RESEARCH_LINK,
         "customer insight": CUSTOMER_INSIGHT_LINK,
         "finance": FINANCE_LINK,
@@ -157,15 +241,31 @@ SELECTORS = {
         "title": Selector(By.ID, "services-section-title"),
         "description": Selector(By.ID, "services-section-description"),
         "groups": Selector(By.CSS_SELECTOR, "#services .group"),
-        "find a buyer - article": Selector(By.CSS_SELECTOR, "#services div.service-teaser:nth-child(1)"),
-        "online marketplaces - article": Selector(By.CSS_SELECTOR, "#services div.service-teaser:nth-child(2)"),
-        "export opportunities - article": Selector(By.CSS_SELECTOR, "#services div.service-teaser:nth-child(3)"),
+        "find a buyer - article": Selector(
+            By.CSS_SELECTOR, "#services div.service-teaser:nth-child(1)"
+        ),
+        "online marketplaces - article": Selector(
+            By.CSS_SELECTOR, "#services div.service-teaser:nth-child(2)"
+        ),
+        "export opportunities - article": Selector(
+            By.CSS_SELECTOR, "#services div.service-teaser:nth-child(3)"
+        ),
         "find a buyer - image": Selector(By.ID, "services-section-find-a-buyer-image"),
-        "online marketplaces - image": Selector(By.ID, "services-section-selling-online-overseas-image"),
-        "export opportunities - image": Selector(By.ID, "services-section-export-opportunities-image"),
-        "find a buyer - description": Selector(By.ID, "services-section-find-a-buyer-description"),
-        "online marketplaces - description": Selector(By.ID, "services-section-selling-online-overseas-description"),
-        "export opportunities - description": Selector(By.ID, "services-section-export-opportunities-description"),
+        "online marketplaces - image": Selector(
+            By.ID, "services-section-selling-online-overseas-image"
+        ),
+        "export opportunities - image": Selector(
+            By.ID, "services-section-export-opportunities-image"
+        ),
+        "find a buyer - description": Selector(
+            By.ID, "services-section-find-a-buyer-description"
+        ),
+        "online marketplaces - description": Selector(
+            By.ID, "services-section-selling-online-overseas-description"
+        ),
+        "export opportunities - description": Selector(
+            By.ID, "services-section-export-opportunities-description"
+        ),
         "find a buyer": FIND_A_BUYER_SERVICE_LINK,
         "selling online overseas": SELLING_ONLINE_OVERSEAS_SERVICE_LINK,
         "export opportunities": EXPORT_OPPORTUNITIES_SERVICE_LINK,
@@ -179,8 +279,12 @@ SELECTORS = {
         "carousel - indicator 1": Selector(By.ID, "case-studies-section-indicator-1"),
         "carousel - indicator 2": Selector(By.ID, "case-studies-section-indicator-2"),
         "carousel - indicator 3": Selector(By.ID, "case-studies-section-indicator-3"),
-        "carousel - case study 1 - link": Selector(By.ID, "case-studies-section-case-study-1-link"),
-        "carousel - case study 1 - image": Selector(By.ID, "case-studies-section-case-study-1-image"),
+        "carousel - case study 1 - link": Selector(
+            By.ID, "case-studies-section-case-study-1-link"
+        ),
+        "carousel - case study 1 - image": Selector(
+            By.ID, "case-studies-section-case-study-1-image"
+        ),
     },
     "business is great": {
         "itself": Selector(By.ID, "beis"),
@@ -309,8 +413,10 @@ def open_case_study(driver: WebDriver, case_number: str):
         else:
             find_case_study_by_going_right(driver, case_study_number)
 
-    link_selector = CASE_STUDY_LINK.format(case_study_number)
-    case_study_link = find_element(driver, link_selector)
+    selector = Selector(
+        CASE_STUDY_LINK.by, CASE_STUDY_LINK.value.format(case_study_number)
+    )
+    case_study_link = find_element(driver, selector)
     with wait_for_page_load_after_action(driver):
         case_study_link.click()
 
@@ -318,8 +424,8 @@ def open_case_study(driver: WebDriver, case_number: str):
 def get_case_study_title(driver: WebDriver, case_number: str) -> str:
     case_study_numbers = {"first": 1, "second": 2, "third": 3}
     case_number = case_study_numbers[case_number.lower()]
-    link_selector = CASE_STUDY_LINK.format(case_number)
-    case_study_link = find_element(driver, link_selector, wait_for_it=False)
+    selector = Selector(CASE_STUDY_LINK.by, CASE_STUDY_LINK.value.format(case_number))
+    case_study_link = find_element(driver, selector, wait_for_it=False)
     return case_study_link.text.strip()
 
 

@@ -7,11 +7,11 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    Selector,
     assertion_msg,
     check_for_expected_elements,
     check_title,
     take_screenshot,
-    Selector
 )
 
 NAME = "Share on Facebook"
@@ -20,11 +20,7 @@ TYPE = "share"
 URL = urljoin("https://www.facebook.com/", "share.php?u=")
 PAGE_TITLE = "Facebook"
 
-SELECTORS = {
-    "general": {
-        "header": Selector(By.ID, "homelink")
-    }
-}
+SELECTORS = {"general": {"header": Selector(By.ID, "homelink")}}
 
 
 def should_be_here(driver: WebDriver):

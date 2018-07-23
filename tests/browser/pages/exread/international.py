@@ -8,6 +8,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    Selector,
     check_for_expected_sections_elements,
     check_for_section,
     check_if_element_is_visible,
@@ -17,7 +18,6 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
     wait_for_page_load_after_action,
-    Selector
 )
 from settings import EXRED_UI_URL
 
@@ -28,53 +28,95 @@ URL = urljoin(EXRED_UI_URL, "international/")
 PAGE_TITLE = "Welcome to great.gov.uk - buy from or invest in the UK"
 
 
-LANGUAGE_SELECTOR = Selector(By.CSS_SELECTOR, "#header-bar .LanguageSelectorDialog-Tracker")
+LANGUAGE_SELECTOR = Selector(
+    By.CSS_SELECTOR, "#international-header-bar .LanguageSelectorDialog-Tracker"
+)
 LANGUAGE_SELECTOR_CLOSE = Selector(By.ID, "header-language-selector-close")
-FIND_A_SUPPLIER = Selector(By.CSS_SELECTOR, "section.international-links article:nth-child(1) > a")
-SEE_THE_POTENTIAL = Selector(By.CSS_SELECTOR, "section.international-links article:nth-child(2) > a")
-LEARN_MORE = Selector(By.CSS_SELECTOR, "section.international-links article:nth-child(3) > a")
-PLAN_YOUR_TRIP = Selector(By.CSS_SELECTOR, "section.international-links article:nth-child(4) > a")
+FIND_A_SUPPLIER = Selector(
+    By.CSS_SELECTOR, "div.container > div:nth-child(1) > div:nth-child(1) a"
+)
+SEE_THE_POTENTIAL = Selector(
+    By.CSS_SELECTOR, "div.container > div:nth-child(1) > div:nth-child(2) a"
+)
+LEARN_MORE = Selector(
+    By.CSS_SELECTOR, "div.container > div:nth-child(2) > div:nth-child(1) a"
+)
+PLAN_YOUR_TRIP = Selector(
+    By.CSS_SELECTOR, "div.container > div:nth-child(2) > div:nth-child(2) a"
+)
 BETA_FEEDBACK = Selector(By.CSS_SELECTOR, "#header-beta-bar span > a")
 SELECTORS = {
     "header bar": {
-        "itself": Selector(By.ID, "header-bar"),
-        "language selector": LANGUAGE_SELECTOR
+        "itself": Selector(By.ID, "international-header-bar"),
+        "language selector": LANGUAGE_SELECTOR,
     },
     "header-menu": {
-        "itself": Selector(By.ID, "header-menu"),
-        "logo": Selector(By.ID, "header-logo"),
+        "itself": Selector(By.ID, "international-header-menu"),
+        "logo": Selector(By.ID, "international-header-logo"),
     },
     "intro": {
-        "itself": Selector(By.CSS_SELECTOR, "#content > section.international-intro"),
-        "title": Selector(By.CSS_SELECTOR, "#content > section.international-intro > div > h1"),
-        "description": Selector(By.CSS_SELECTOR, "#content > section.international-intro > div > p"),
+        "itself": Selector(By.CSS_SELECTOR, "#content > section.intro"),
+        "title": Selector(By.CSS_SELECTOR, "#content > section.intro h1"),
+        "description": Selector(By.CSS_SELECTOR, "#content > section.intro p"),
     },
     "buy from the uk": {
-        "itself": Selector(By.CSS_SELECTOR, "section.international-links article:nth-child(1)"),
-        "image": Selector(By.CSS_SELECTOR, "section.international-links article:nth-child(1) > img"),
-        "title": Selector(By.CSS_SELECTOR, "section.international-links article:nth-child(1) > h2"),
-        "text": Selector(By.CSS_SELECTOR, "section.international-links article:nth-child(1) > p"),
+        "itself": Selector(
+            By.CSS_SELECTOR, "div.container > div:nth-child(1) > div:nth-child(1)"
+        ),
+        "image": Selector(
+            By.CSS_SELECTOR, "div.container > div:nth-child(1) > div:nth-child(1) img"
+        ),
+        "title": Selector(
+            By.CSS_SELECTOR, "div.container > div:nth-child(1) > div:nth-child(1) h3"
+        ),
+        "text": Selector(
+            By.CSS_SELECTOR, "div.container > div:nth-child(1) > div:nth-child(1) p"
+        ),
         "find a supplier - home": FIND_A_SUPPLIER,
     },
     "invest in the uk": {
-        "itself": Selector(By.CSS_SELECTOR, "section.international-links article:nth-child(2)"),
-        "image": Selector(By.CSS_SELECTOR, "section.international-links article:nth-child(2) > img"),
-        "title": Selector(By.CSS_SELECTOR, "section.international-links article:nth-child(2) > h2"),
-        "text": Selector(By.CSS_SELECTOR, "section.international-links article:nth-child(2) > p"),
+        "itself": Selector(
+            By.CSS_SELECTOR, "div.container > div:nth-child(1) > div:nth-child(2)"
+        ),
+        "image": Selector(
+            By.CSS_SELECTOR, "div.container > div:nth-child(1) > div:nth-child(2) img"
+        ),
+        "title": Selector(
+            By.CSS_SELECTOR, "div.container > div:nth-child(1) > div:nth-child(2) h3"
+        ),
+        "text": Selector(
+            By.CSS_SELECTOR, "div.container > div:nth-child(1) > div:nth-child(2) p"
+        ),
         "invest - home": SEE_THE_POTENTIAL,
     },
     "study in the uk": {
-        "itself": Selector(By.CSS_SELECTOR, "section.international-links article:nth-child(3)"),
-        "image": Selector(By.CSS_SELECTOR, "section.international-links article:nth-child(3) > img"),
-        "title": Selector(By.CSS_SELECTOR, "section.international-links article:nth-child(3) > h2"),
-        "text": Selector(By.CSS_SELECTOR, "section.international-links article:nth-child(3) > p"),
+        "itself": Selector(
+            By.CSS_SELECTOR, "div.container > div:nth-child(2) > div:nth-child(1)"
+        ),
+        "image": Selector(
+            By.CSS_SELECTOR, "div.container > div:nth-child(2) > div:nth-child(1) img"
+        ),
+        "title": Selector(
+            By.CSS_SELECTOR, "div.container > div:nth-child(2) > div:nth-child(1) h3"
+        ),
+        "text": Selector(
+            By.CSS_SELECTOR, "div.container > div:nth-child(2) > div:nth-child(1) p"
+        ),
         "british council - home": LEARN_MORE,
     },
     "visit the uk": {
-        "itself": Selector(By.CSS_SELECTOR, "section.international-links article:nth-child(4)"),
-        "image": Selector(By.CSS_SELECTOR, "section.international-links article:nth-child(4) > img"),
-        "title": Selector(By.CSS_SELECTOR, "section.international-links article:nth-child(4) > h2"),
-        "text": Selector(By.CSS_SELECTOR, "section.international-links article:nth-child(4) > p"),
+        "itself": Selector(
+            By.CSS_SELECTOR, "div.container > div:nth-child(2) > div:nth-child(2)"
+        ),
+        "image": Selector(
+            By.CSS_SELECTOR, "div.container > div:nth-child(2) > div:nth-child(2) img"
+        ),
+        "title": Selector(
+            By.CSS_SELECTOR, "div.container > div:nth-child(2) > div:nth-child(2) h3"
+        ),
+        "text": Selector(
+            By.CSS_SELECTOR, "div.container > div:nth-child(2) > div:nth-child(2) p"
+        ),
         "visit britain - home": PLAN_YOUR_TRIP,
     },
 }
@@ -97,9 +139,7 @@ def should_see_section(driver: WebDriver, name: str):
 
 def open(driver: WebDriver, group: str, element: str, *, same_tab: bool = True):
     selector = SELECTORS[group.lower()][element.lower()]
-    link = find_element(
-        driver, selector, element_name=element, wait_for_it=False
-    )
+    link = find_element(driver, selector, element_name=element, wait_for_it=False)
     check_if_element_is_visible(link, element_name=element)
     if same_tab:
         href = link.get_attribute("href")

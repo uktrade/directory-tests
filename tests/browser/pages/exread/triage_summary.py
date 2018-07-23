@@ -6,8 +6,10 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    Selector,
     assertion_msg,
     check_for_expected_elements,
+    check_for_expected_sections_elements,
     check_if_element_is_visible,
     check_title,
     check_url,
@@ -15,7 +17,6 @@ from pages.common_actions import (
     find_elements,
     take_screenshot,
     wait_for_page_load_after_action,
-    Selector
 )
 from settings import EXRED_UI_URL
 
@@ -32,20 +33,21 @@ PREVIOUS_STEP_BUTTON = Selector(By.ID, "triage-previous-step")
 CHANGE_ANSWERS_LINK = Selector(By.ID, "triage-change-your-answers")
 QUESTIONS = Selector(By.CSS_SELECTOR, "#triage-answers dt")
 ANSWERS = Selector(By.CSS_SELECTOR, "#triage-answers dd")
-EXPECTED_ELEMENTS = {
-    "classification": CLASSIFICATION,
-    "answers section": ANSWERS_SECTION,
-    "continue button": CREATE_MY_JOURNEY_BUTTON,
-    "change answers link": CHANGE_ANSWERS_LINK,
+SELECTORS = {
+    "general": {
+        "classification": CLASSIFICATION,
+        "answers section": ANSWERS_SECTION,
+        "continue button": CREATE_MY_JOURNEY_BUTTON,
+        "change answers link": CHANGE_ANSWERS_LINK,
+    }
 }
-SELECTORS = {}
 
 
 def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=True)
     check_title(driver, PAGE_TITLE, exact_match=False)
-    check_for_expected_elements(driver, EXPECTED_ELEMENTS)
+    check_for_expected_sections_elements(driver, SELECTORS)
 
 
 def get_classification(driver: WebDriver) -> str:
@@ -80,10 +82,7 @@ def should_be_classified_as_regular(driver: WebDriver):
 def create_exporting_journey(driver: WebDriver):
     element_name = "Create my journey button"
     button = find_element(
-        driver,
-        CREATE_MY_JOURNEY_BUTTON,
-        element_name=element_name,
-        wait_for_it=False,
+        driver, CREATE_MY_JOURNEY_BUTTON, element_name=element_name, wait_for_it=False
     )
     check_if_element_is_visible(button, element_name=element_name)
     with wait_for_page_load_after_action(driver):
@@ -101,9 +100,7 @@ def get_questions_and_answers(driver: WebDriver) -> dict:
 
 
 def change_answers(driver: WebDriver):
-    link = find_element(
-        driver, CHANGE_ANSWERS_LINK, element_name="Change answers link"
-    )
+    link = find_element(driver, CHANGE_ANSWERS_LINK, element_name="Change answers link")
     with wait_for_page_load_after_action(driver):
         link.click()
     take_screenshot(driver, NAME + " after deciding to change the answers")

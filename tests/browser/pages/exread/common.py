@@ -7,13 +7,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    AssertionExecutor,
+    Selector,
     assertion_msg,
+    check_for_sections,
     check_if_element_is_visible,
     find_element,
     find_elements,
-    Selector,
-    check_for_sections,
-    AssertionExecutor
 )
 from registry.articles import get_article, get_articles
 
@@ -27,11 +27,9 @@ TIME_TO_COMPLETE = Selector(By.CSS_SELECTOR, "dd.time > span.value")
 ARTICLES_LIST = Selector(By.CSS_SELECTOR, "#js-paginate-list > li")
 
 SELECTORS = {
-    "general": {
-        "total number of articles": TOTAL_NUMBER_OF_ARTICLES,
-        "articles read counter": ARTICLES_TO_READ_COUNTER,
-        "time to complete remaining chapters": TIME_TO_COMPLETE,
-    }
+    "total number of articles": {"itself": TOTAL_NUMBER_OF_ARTICLES},
+    "articles read counter": {"itself": ARTICLES_TO_READ_COUNTER},
+    "time to complete remaining chapters": {"itself": TIME_TO_COMPLETE},
 }
 
 

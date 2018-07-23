@@ -8,13 +8,13 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    Selector,
     assertion_msg,
     check_hash_of_remote_file,
     find_and_click_on_page_element,
     find_element,
     take_screenshot,
     wait_for_page_load_after_action,
-    Selector
 )
 from settings import DIT_FAVICON_MD5_CHECKSUM, DIT_LOGO_MD5_CHECKSUM
 
@@ -33,7 +33,9 @@ REGISTRATION_LINK = Selector(By.ID, "header-register-link")
 SIGN_IN_LINK = Selector(By.ID, "header-sign-in-link")
 PROFILE_LINK = Selector(By.ID, "header-profile-link")
 SIGN_OUT_LINK = Selector(By.ID, "header-sign-out-link")
-LANGUAGE_SELECTOR = Selector(By.CSS_SELECTOR, "#header-bar .LanguageSelectorDialog-Tracker")
+LANGUAGE_SELECTOR = Selector(
+    By.CSS_SELECTOR, "#header-bar .LanguageSelectorDialog-Tracker"
+)
 SELECTORS = {
     "export readiness": {
         "menu": Selector(By.ID, "export-readiness-links"),
@@ -51,7 +53,9 @@ SELECTORS = {
         "finance": Selector(By.ID, "header-guidance-finance"),
         "business planning": Selector(By.ID, "header-guidance-business-planning"),
         "getting paid": Selector(By.ID, "header-guidance-getting-paid"),
-        "operations and compliance": Selector(By.ID, "header-guidance-operations-and-compliance"),
+        "operations and compliance": Selector(
+            By.ID, "header-guidance-operations-and-compliance"
+        ),
     },
     "services": {
         "menu": Selector(By.ID, "header-services-links"),
@@ -135,9 +139,7 @@ def open(driver: WebDriver, group: str, element: str):
 
 
 def go_to_registration(driver: WebDriver):
-    registration_link = find_element(
-        driver, REGISTRATION_LINK, wait_for_it=False
-    )
+    registration_link = find_element(driver, REGISTRATION_LINK, wait_for_it=False)
     with wait_for_page_load_after_action(driver):
         registration_link.click()
 

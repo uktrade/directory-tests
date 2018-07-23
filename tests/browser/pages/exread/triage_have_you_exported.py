@@ -6,15 +6,16 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    Selector,
     assertion_msg,
     check_for_expected_elements,
+    check_for_expected_sections_elements,
     check_title,
     check_url,
     find_element,
     go_to_url,
     take_screenshot,
     wait_for_page_load_after_action,
-    Selector
 )
 from settings import EXRED_UI_URL
 
@@ -30,14 +31,15 @@ YES_CHECKBOX = Selector(By.ID, "triage-exported-before-yes-label")
 NO_CHECKBOX = Selector(By.ID, "triage-exported-before-no-label")
 CONTINUE_BUTTON = Selector(By.ID, "triage-continue")
 BACK_TO_HOME_LINK = Selector(By.ID, "triage-question-back-to-home")
-EXPECTED_ELEMENTS = {
-    "question": Selector(By.ID, "triage-question"),
-    "yes checkbox": YES_CHECKBOX,
-    "no checkbox": NO_CHECKBOX,
-    "continue button": CONTINUE_BUTTON,
-    "back to home link": BACK_TO_HOME_LINK,
+SELECTORS = {
+    "general": {
+        "question": Selector(By.ID, "triage-question"),
+        "yes checkbox": YES_CHECKBOX,
+        "no checkbox": NO_CHECKBOX,
+        "continue button": CONTINUE_BUTTON,
+        "back to home link": BACK_TO_HOME_LINK,
+    }
 }
-SELECTORS = {}
 
 
 def visit(driver: WebDriver, *, first_time: bool = False):
@@ -48,7 +50,7 @@ def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=True)
     check_title(driver, PAGE_TITLE, exact_match=False)
-    check_for_expected_elements(driver, EXPECTED_ELEMENTS)
+    check_for_expected_sections_elements(driver, SELECTORS)
 
 
 def select_yes(driver: WebDriver):
@@ -85,8 +87,6 @@ def is_yes_selected(driver: WebDriver):
 
 
 def is_no_selected(driver: WebDriver):
-    no = find_element(
-        driver, NO_RADIO, element_name="No checkbox", wait_for_it=False
-    )
+    no = find_element(driver, NO_RADIO, element_name="No checkbox", wait_for_it=False)
     with assertion_msg("Expected No option to be selected"):
         assert no.get_property("checked")

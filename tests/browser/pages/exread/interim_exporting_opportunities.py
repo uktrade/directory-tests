@@ -6,6 +6,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    Selector,
+    check_for_sections,
     check_title,
     check_url,
     find_element,
@@ -13,8 +15,6 @@ from pages.common_actions import (
     take_screenshot,
     wait_for_page_load_after_action,
     wait_for_visibility,
-    Selector,
-    check_for_sections
 )
 from settings import EXRED_UI_URL
 

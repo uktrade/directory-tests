@@ -7,13 +7,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    Selector,
     check_for_expected_sections_elements,
     check_if_element_is_not_visible,
     check_title,
     check_url,
     go_to_url,
     take_screenshot,
-    Selector
 )
 from settings import EXRED_UI_URL
 
@@ -33,7 +33,9 @@ TASKS_TOTAL_NUMBER = Selector(By.CSS_SELECTOR, ".TASKS_ARE_NOT_IMPLEMENTED_YES")
 SELECTORS = {
     "breadcrumbs": {
         "itself": Selector(By.CSS_SELECTOR, "section.get-finance-banner p.breadcrumbs"),
-        "current page": Selector(By.CSS_SELECTOR, "section.get-finance-banner p > span.current"),
+        "current page": Selector(
+            By.CSS_SELECTOR, "section.get-finance-banner p > span.current"
+        ),
     },
     "hero": {
         "itself": Selector(By.CSS_SELECTOR, "section.get-finance-banner"),
@@ -41,7 +43,9 @@ SELECTORS = {
     },
     "intro": {
         "itself": Selector(By.CSS_SELECTOR, "section.intro"),
-        "tell us about your business": Selector(By.CSS_SELECTOR, "section.intro a.button"),
+        "tell us about your business": Selector(
+            By.CSS_SELECTOR, "section.intro a.button"
+        ),
     },
     "video": {
         "itself": Selector(By.CSS_SELECTOR, "section.get-finance-video"),
@@ -56,7 +60,9 @@ SELECTORS = {
 
 UNEXPECTED_ELEMENTS = {
     "share widget": Selector(By.CSS_SELECTOR, "ul.sharing-links"),
-    "article counters and indicators": Selector(By.CSS_SELECTOR, "#top > div.scope-indicator"),
+    "article counters and indicators": Selector(
+        By.CSS_SELECTOR, "#top > div.scope-indicator"
+    ),
     "tasks completed counter": TASKS_COMPLETED_COUNTER,
     "tasks total number": TASKS_TOTAL_NUMBER,
     "total number of articles": TOTAL_NUMBER_OF_ARTICLES,

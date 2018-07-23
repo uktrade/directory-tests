@@ -9,6 +9,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    Selector,
     assertion_msg,
     check_for_expected_sections_elements,
     check_for_section,
@@ -20,7 +21,6 @@ from pages.common_actions import (
     selenium_action,
     take_screenshot,
     wait_for_page_load_after_action,
-    Selector
 )
 from registry.articles import get_articles
 
@@ -38,14 +38,20 @@ FEEDBACK_QUESTION = Selector(By.CSS_SELECTOR, "#js-feedback > p")
 FEEDBACK_RESULT = Selector(By.ID, "js-feedback-success")
 GO_BACK_LINK = Selector(By.ID, "category-link")
 INDICATORS_TEXT = Selector(By.CSS_SELECTOR, "div.scope-indicator")
-IS_THERE_ANYTHING_WRONG_WITH_THIS_PAGE_LINK = Selector(By.CSS_SELECTOR, "section.error-reporting a")
+IS_THERE_ANYTHING_WRONG_WITH_THIS_PAGE_LINK = Selector(
+    By.CSS_SELECTOR, "section.error-reporting a"
+)
 NEXT_ARTICLE_LINK = Selector(By.ID, "next-article-link")
 NOT_USEFUL_BUTTON = Selector(By.ID, "js-feedback-negative")
-REGISTRATION_LINK = Selector(By.CSS_SELECTOR, "#content div.article-container p.register > a:nth-child(1)")
+REGISTRATION_LINK = Selector(
+    By.CSS_SELECTOR, "#content div.article-container p.register > a:nth-child(1)"
+)
 READ_ARTICLES = Selector(By.CSS_SELECTOR, "a.article-read")
 SHARE_MENU = Selector(By.CSS_SELECTOR, "ul.sharing-links")
 SHOW_MORE_BUTTON = Selector(By.ID, "js-paginate-list-more")
-SIGN_IN_LINK = Selector(By.CSS_SELECTOR, "#content div.article-container p.register > a:nth-child(2)")
+SIGN_IN_LINK = Selector(
+    By.CSS_SELECTOR, "#content div.article-container p.register > a:nth-child(2)"
+)
 TIME_TO_COMPLETE = Selector(By.CSS_SELECTOR, "dd.time span.value")
 TOTAL_NUMBER_OF_ARTICLES = Selector(By.CSS_SELECTOR, "dd.position > span.to")
 USEFUL_BUTTON = Selector(By.ID, "js-feedback-positive")
@@ -79,7 +85,7 @@ SELECTORS = {
         "useful button": USEFUL_BUTTON,
     },
     "error reporting": {
-        "itself": "section.error-reporting",
+        "itself": Selector(By.CSS_SELECTOR, "section.error-reporting"),
         "report page link": IS_THERE_ANYTHING_WRONG_WITH_THIS_PAGE_LINK,
     },
 }
@@ -174,9 +180,7 @@ def go_to_article(driver: WebDriver, title: str):
 
 
 def get_article_name(driver: WebDriver) -> str:
-    current_article = find_element(
-        driver, ARTICLE_NAME, element_name="Article name"
-    )
+    current_article = find_element(driver, ARTICLE_NAME, element_name="Article name")
     return current_article.text
 
 
@@ -226,10 +230,7 @@ def should_see_article_as_read(driver: WebDriver, title: str):
 def get_read_counter(driver: WebDriver) -> int:
     element_name = "Article read counter"
     counter = find_element(
-        driver,
-        ARTICLES_TO_READ_COUNTER,
-        element_name=element_name,
-        wait_for_it=False,
+        driver, ARTICLES_TO_READ_COUNTER, element_name=element_name, wait_for_it=False
     )
     if "firefox" not in driver.capabilities["browserName"].lower():
         logging.debug("Moving focus to Article Read Counter")
@@ -243,10 +244,7 @@ def get_read_counter(driver: WebDriver) -> int:
 def get_total_articles(driver: WebDriver) -> int:
     element_name = "Total Number or Articles to Read"
     counter = find_element(
-        driver,
-        TOTAL_NUMBER_OF_ARTICLES,
-        element_name=element_name,
-        wait_for_it=False,
+        driver, TOTAL_NUMBER_OF_ARTICLES, element_name=element_name, wait_for_it=False
     )
     check_if_element_is_visible(counter, element_name)
     return int(counter.text)
@@ -295,9 +293,7 @@ def flag_as_useful(driver: WebDriver):
 
 def flag_as_not_useful(driver: WebDriver):
     element_name = "No - this article was not useful button"
-    not_useful = find_element(
-        driver, NOT_USEFUL_BUTTON, element_name=element_name
-    )
+    not_useful = find_element(driver, NOT_USEFUL_BUTTON, element_name=element_name)
     check_if_element_is_visible(not_useful, element_name)
     not_useful.click()
     take_screenshot(driver, "After telling us that Article was not useful")
@@ -306,19 +302,13 @@ def flag_as_not_useful(driver: WebDriver):
 def should_not_see_feedback_widget(driver: WebDriver):
     time.sleep(1)
     check_if_element_is_not_visible(
-        driver,
-        FEEDBACK_QUESTION,
-        element_name="Feedback question",
-        wait_for_it=False,
+        driver, FEEDBACK_QUESTION, element_name="Feedback question", wait_for_it=False
     )
     check_if_element_is_not_visible(
         driver, USEFUL_BUTTON, element_name="Useful button", wait_for_it=False
     )
     check_if_element_is_not_visible(
-        driver,
-        NOT_USEFUL_BUTTON,
-        element_name="Not useful button",
-        wait_for_it=False,
+        driver, NOT_USEFUL_BUTTON, element_name="Not useful button", wait_for_it=False
     )
 
 
@@ -347,9 +337,7 @@ def should_not_see_link_to_register(driver: WebDriver):
 
 
 def should_not_see_link_to_sign_in(driver: WebDriver):
-    check_if_element_is_not_present(
-        driver, SIGN_IN_LINK, element_name="Sign in link"
-    )
+    check_if_element_is_not_present(driver, SIGN_IN_LINK, element_name="Sign in link")
 
 
 def get_read_articles(driver: WebDriver) -> list:

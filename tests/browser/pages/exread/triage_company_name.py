@@ -7,14 +7,14 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    Selector,
     assertion_msg,
-    check_for_expected_elements,
+    check_for_expected_sections_elements,
     check_title,
     check_url,
     find_element,
     take_screenshot,
     wait_for_page_load_after_action,
-    Selector
 )
 from settings import EXRED_UI_URL
 
@@ -27,7 +27,9 @@ PAGE_TITLE = "Welcome to great.gov.uk"
 QUESTION = Selector(By.ID, "triage-question")
 COMPANY_NAME_INPUT = Selector(By.ID, "triage-company-name")
 SUGGESTIONS = Selector(By.CSS_SELECTOR, "ul.SelectiveLookupDisplay")
-FIRST_SUGGESTION = Selector(By.CSS_SELECTOR, "ul.SelectiveLookupDisplay > li:nth-child(1)")
+FIRST_SUGGESTION = Selector(
+    By.CSS_SELECTOR, "ul.SelectiveLookupDisplay > li:nth-child(1)"
+)
 CONTINUE_BUTTON = Selector(By.ID, "triage-continue")
 PREVIOUS_STEP_BUTTON = Selector(By.ID, "triage-previous-step")
 CONTINUE_WO_NAME_BUTTON = Selector(By.CSS_SELECTOR, "button[name=wizard_skip_step]")
@@ -45,7 +47,7 @@ def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=True)
     check_title(driver, PAGE_TITLE, exact_match=False)
-    check_for_expected_elements(driver, SELECTORS)
+    check_for_expected_sections_elements(driver, SELECTORS)
 
 
 def hide_suggestions(driver: WebDriver):
@@ -61,7 +63,7 @@ def hide_suggestions(driver: WebDriver):
 
 def click_on_first_suggestion(driver: WebDriver):
     suggestions = find_element(
-        driver, SUGGESTIONS, element_name="Suggestions", wait_for_it=True
+        driver, SUGGESTIONS, element_name="Suggestions", wait_for_it=False
     )
     if suggestions.is_displayed():
         first_suggestion = find_element(
@@ -74,10 +76,7 @@ def enter_company_name(driver: WebDriver, company_name: str = None):
     if not company_name:
         company_name = random.choice(["automated", "browser", "tests"])
     input_field = find_element(
-        driver,
-        COMPANY_NAME_INPUT,
-        element_name="Company name input",
-        wait_for_it=False,
+        driver, COMPANY_NAME_INPUT, element_name="Company name input", wait_for_it=False
     )
     input_field.clear()
     input_field.send_keys(company_name)
@@ -86,20 +85,14 @@ def enter_company_name(driver: WebDriver, company_name: str = None):
 
 def get_company_name(driver: WebDriver) -> str:
     input_field = find_element(
-        driver,
-        COMPANY_NAME_INPUT,
-        element_name="Company name input",
-        wait_for_it=False,
+        driver, COMPANY_NAME_INPUT, element_name="Company name input", wait_for_it=False
     )
     return input_field.get_attribute("value")
 
 
 def submit(driver: WebDriver):
     button = find_element(
-        driver,
-        CONTINUE_BUTTON,
-        element_name="Continue button",
-        wait_for_it=False,
+        driver, CONTINUE_BUTTON, element_name="Continue button", wait_for_it=False
     )
     with wait_for_page_load_after_action(driver):
         button.click()

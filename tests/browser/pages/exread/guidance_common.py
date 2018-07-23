@@ -7,13 +7,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    Selector,
     assertion_msg,
     check_if_element_is_visible,
     find_element,
     find_elements,
     take_screenshot,
     wait_for_page_load_after_action,
-    Selector
 )
 from registry.articles import get_article, get_articles
 
@@ -23,12 +23,22 @@ URL = None
 
 RIBBON = {
     "itself": Selector(By.CSS_SELECTOR, ".navigation-ribbon"),
-    "market research": Selector(By.CSS_SELECTOR, ".navigation-ribbon a[href='/market-research/']"),
-    "customer insight": Selector(By.CSS_SELECTOR, ".navigation-ribbon a[href='/customer-insight/']"),
+    "market research": Selector(
+        By.CSS_SELECTOR, ".navigation-ribbon a[href='/market-research/']"
+    ),
+    "customer insight": Selector(
+        By.CSS_SELECTOR, ".navigation-ribbon a[href='/customer-insight/']"
+    ),
     "finance": Selector(By.CSS_SELECTOR, ".navigation-ribbon a[href='/finance/']"),
-    "business planning": Selector(By.CSS_SELECTOR, ".navigation-ribbon a[href='/business-planning/']"),
-    "getting paid": Selector(By.CSS_SELECTOR, ".navigation-ribbon a[href='/getting-paid/']"),
-    "operations and compliance": Selector(By.CSS_SELECTOR, ".navigation-ribbon a[href='/operations-and-compliance/']"),
+    "business planning": Selector(
+        By.CSS_SELECTOR, ".navigation-ribbon a[href='/business-planning/']"
+    ),
+    "getting paid": Selector(
+        By.CSS_SELECTOR, ".navigation-ribbon a[href='/getting-paid/']"
+    ),
+    "operations and compliance": Selector(
+        By.CSS_SELECTOR, ".navigation-ribbon a[href='/operations-and-compliance/']"
+    ),
 }
 TOTAL_NUMBER_OF_ARTICLES = Selector(By.CSS_SELECTOR, "dd.position > span.to")
 ARTICLES_TO_READ_COUNTER = Selector(By.CSS_SELECTOR, "dd.position > span.from")
@@ -51,9 +61,7 @@ def ribbon_should_be_visible(driver: WebDriver):
             element_name,
             element_selector,
         )
-        element = find_element(
-            driver, element_selector, element_name=element_name
-        )
+        element = find_element(driver, element_selector, element_name=element_name)
         check_if_element_is_visible(element, element_name=element_name)
 
 
@@ -171,10 +179,7 @@ def check_elements_are_visible(driver: WebDriver, elements: list):
 
 def open_first_article(driver: WebDriver):
     first_article = find_element(
-        driver,
-        FIRST_ARTICLE,
-        element_name="First article on list",
-        wait_for_it=False,
+        driver, FIRST_ARTICLE, element_name="First article on list", wait_for_it=False
     )
     check_if_element_is_visible(first_article, element_name="First article on list")
     with wait_for_page_load_after_action(driver):

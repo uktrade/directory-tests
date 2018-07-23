@@ -6,14 +6,14 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    Selector,
     assertion_msg,
-    check_for_expected_elements,
+    check_for_expected_sections_elements,
     check_title,
     check_url,
     find_element,
     take_screenshot,
     wait_for_page_load_after_action,
-    Selector
 )
 from settings import EXRED_UI_URL
 
@@ -42,7 +42,7 @@ def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=True)
     check_title(driver, PAGE_TITLE, exact_match=False)
-    check_for_expected_elements(driver, SELECTORS)
+    check_for_expected_sections_elements(driver, SELECTORS)
 
 
 def select_yes(driver: WebDriver):
@@ -63,10 +63,7 @@ def select_no(driver: WebDriver):
 
 def submit(driver: WebDriver):
     button = find_element(
-        driver,
-        CONTINUE_BUTTON,
-        element_name="Continue button",
-        wait_for_it=False,
+        driver, CONTINUE_BUTTON, element_name="Continue button", wait_for_it=False
     )
     with wait_for_page_load_after_action(driver):
         button.click()

@@ -7,11 +7,11 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    Selector,
     assertion_msg,
     check_for_expected_elements,
     check_title,
     take_screenshot,
-    Selector
 )
 
 NAME = "Share on LinkedIn"
@@ -21,7 +21,10 @@ URL = urljoin("https://www.linkedin.com/", "shareArticle")
 PAGE_TITLE = "LinkedIn"
 
 SELECTORS = {
-    "logo": Selector(By.CSS_SELECTOR, "#uno-reg-join > div > div > div > div.header-container > header")
+    "logo": Selector(
+        By.CSS_SELECTOR,
+        "#uno-reg-join > div > div > div > div.header-container > header",
+    )
 }
 
 

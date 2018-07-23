@@ -6,14 +6,14 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    Selector,
     assertion_msg,
-    check_for_expected_elements,
+    check_for_expected_sections_elements,
     check_title,
     check_url,
     find_element,
     take_screenshot,
     wait_for_page_load_after_action,
-    Selector
 )
 from settings import EXRED_UI_URL
 
@@ -31,32 +31,30 @@ GOODS_CHECKBOX = Selector(By.ID, "triage-goods")
 GOODS_CHECKBOX_LABEL = Selector(By.ID, "triage-goods-label")
 CONTINUE_BUTTON = Selector(By.ID, "triage-continue")
 PREVIOUS_STEP_BUTTON = Selector(By.ID, "triage-previous-step")
-EXPECTED_ELEMENTS = {
-    "question": QUESTION,
-    "question label": QUESTION_LABEL,
-    # "services checkbox": SERVICES_CHECKBOX,
-    "services checkbox label": SERVICES_CHECKBOX_LABEL,
-    # "goods checkbox": GOODS_CHECKBOX,
-    "goods checkbox label": GOODS_CHECKBOX_LABEL,
-    "continue button": CONTINUE_BUTTON,
-    "previous step button": PREVIOUS_STEP_BUTTON,
+SELECTORS = {
+    "general": {
+        "question": QUESTION,
+        "question label": QUESTION_LABEL,
+        # "services checkbox": SERVICES_CHECKBOX,
+        "services checkbox label": SERVICES_CHECKBOX_LABEL,
+        # "goods checkbox": GOODS_CHECKBOX,
+        "goods checkbox label": GOODS_CHECKBOX_LABEL,
+        "continue button": CONTINUE_BUTTON,
+        "previous step button": PREVIOUS_STEP_BUTTON,
+    }
 }
-SELECTORS = {}
 
 
 def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=True)
     check_title(driver, PAGE_TITLE, exact_match=False)
-    check_for_expected_elements(driver, EXPECTED_ELEMENTS)
+    check_for_expected_sections_elements(driver, SELECTORS)
 
 
 def select_services(driver: WebDriver):
     services = find_element(
-        driver,
-        SERVICES_CHECKBOX,
-        element_name="Services checkbox",
-        wait_for_it=False,
+        driver, SERVICES_CHECKBOX, element_name="Services checkbox", wait_for_it=False
     )
     services.click()
     take_screenshot(driver, NAME)
@@ -76,10 +74,7 @@ def select_goods_and_services(driver: WebDriver):
     )
     goods.click()
     services = find_element(
-        driver,
-        SERVICES_CHECKBOX,
-        element_name="Services checkbox",
-        wait_for_it=False,
+        driver, SERVICES_CHECKBOX, element_name="Services checkbox", wait_for_it=False
     )
     services.click()
     take_screenshot(driver, NAME)
@@ -107,10 +102,7 @@ def is_services_selected(driver: WebDriver):
 
 def is_goods_selected(driver: WebDriver):
     goods = find_element(
-        driver,
-        GOODS_CHECKBOX,
-        element_name="Goods radio button",
-        wait_for_it=False,
+        driver, GOODS_CHECKBOX, element_name="Goods radio button", wait_for_it=False
     )
     with assertion_msg("Expected Goods option to be selected"):
         assert goods.get_property("checked")
