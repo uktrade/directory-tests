@@ -8,7 +8,7 @@ Feature: Invest home page
     Given "Robert" visits the "Invest - home" page
 
     Then "Robert" should see following sections
-      | sections                           |
+      | Sections                           |
       | Header                             |
       | Beta bar                           |
       | Reasons to move business to the UK |
@@ -66,7 +66,7 @@ Feature: Invest home page
 
     When "Robert" decides to read "Invest - <selected> guide" guide
 
-    Then "Robert" should be on the "Invest - Guide" page
+    Then "Robert" should be on the "Invest - UK Setup Guide" page
     And "Robert" should see content specific to "Invest - <selected> guide" page
 
     Examples: UK Setup Guides
@@ -83,7 +83,7 @@ Feature: Invest home page
     Given "Robert" visits the "Invest - home" page
 
     Then "Robert" should see following sections
-      | How we help sections |
+      | Sections             |
       | Build connections    |
       | Apply for visas      |
       | Find grants          |
@@ -98,5 +98,5 @@ Feature: Invest home page
     Given "Robert" visits the "Invest - home" page
 
     Then "Robert" should see following sections
-      | How we help sections |
+      | Sections             |
       | Contact us for help  |
