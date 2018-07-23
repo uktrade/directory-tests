@@ -21,10 +21,12 @@ URL = urljoin("https://www.linkedin.com/", "shareArticle")
 PAGE_TITLE = "LinkedIn"
 
 SELECTORS = {
-    "logo": Selector(
-        By.CSS_SELECTOR,
-        "#uno-reg-join > div > div > div > div.header-container > header",
-    )
+    "general": {
+        "logo": Selector(
+            By.CSS_SELECTOR,
+            "#uno-reg-join > div > div > div > div.header-container > header",
+        )
+    }
 }
 
 
