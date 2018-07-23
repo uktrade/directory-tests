@@ -66,15 +66,7 @@ def visit_page(
     the webdriver' page load timeout set to value lower than the retry's
     `wait_fixed` timer, e.g `driver.set_page_load_timeout(time_to_wait=30)`
     """
-    if not get_actor(context, actor_alias):
-        add_actor(context, unauthenticated_actor(actor_alias))
-    page = get_page_object(page_name, exact_match=False)
-    logging.debug(
-        "%s will visit '%s' page using: '%s'", actor_alias, page_name, page.URL
-    )
-    has_action(page, "visit")
-
-    def should_pass_page_name(page_name: str) -> bool:
+    def is_special_case(page_name: str) -> bool:
         result = False
         if page_name.lower().endswith("uk setup guide"):
             result = False
@@ -84,7 +76,19 @@ def visit_page(
             result = True
         return result
 
-    if should_pass_page_name(page_name):
+    if not get_actor(context, actor_alias):
+        add_actor(context, unauthenticated_actor(actor_alias))
+
+    if is_special_case(page_name):
+        page = get_page_object(page_name, exact_match=False)
+    else:
+        page = get_page_object(page_name, exact_match=True)
+    logging.debug(
+        "%s will visit '%s' page using: '%s'", actor_alias, page_name, page.URL
+    )
+    has_action(page, "visit")
+
+    if is_special_case(page_name):
         page.visit(context.driver, first_time=first_time, page_name=page_name)
     else:
         page.visit(context.driver, first_time=first_time)
