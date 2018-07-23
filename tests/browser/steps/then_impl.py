@@ -701,7 +701,7 @@ def fas_search_results_filtered_by_industries(
 
 def invest_should_see_topic_contents(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
-    page = get_page_object(actor.visited_page)
+    page = get_last_visited_page(context, actor_alias)
     has_action(page, "should_see_topic")
     for topic in actor.visited_articles:
         page.should_see_topic(context.driver, topic)
@@ -716,9 +716,7 @@ def invest_should_see_topic_contents(context: Context, actor_alias: str):
 def generic_should_see_expected_page_content(
     context: Context, actor_alias: str, expected_page_name: str
 ):
-    actor = get_actor(context, actor_alias)
-    visited_page = actor.visited_page
-    page = get_page_object(visited_page, exact_match=False)
+    page = get_last_visited_page(context, actor_alias)
     has_action(page, "should_see_content_for")
     page.should_see_content_for(context.driver, expected_page_name)
     logging.debug(
