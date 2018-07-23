@@ -145,6 +145,7 @@ def guidance_open_category(
         article_group="guidance",
         article_category=category,
         article_location=location,
+        visited_page=exread.article_list,
     )
 
 
@@ -835,6 +836,7 @@ def export_readiness_open_category(
         article_group="export readiness",
         article_category=category,
         article_location=location,
+        visited_page=exread.article_list,
     )
 
 
@@ -1070,6 +1072,7 @@ def articles_open_any(context: Context, actor_alias: str):
         article_list_time_to_complete=article_list_time_to_complete,
         article_list_total_number=article_list_total,
         visited_articles=visited_articles,
+        visited_page=exread.article_common,
     )
 
 

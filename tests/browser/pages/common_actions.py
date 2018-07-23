@@ -145,7 +145,7 @@ def check_for_expected_elements(
         if not isinstance(selector, Selector):
             raise TypeError(
                 "Expected '{}' to be a Selector, got {}"
-                    .format(selector, type(selector)))
+                .format(selector, type(selector)))
         element = find_element(
             driver, selector, element_name=element_name, wait_for_it=wait_for_it
         )

@@ -27,6 +27,7 @@ def should_be_on_page(context: Context, actor_alias: str, page_name: str):
     page = get_page_object(page_name)
     has_action(page, "should_be_here")
     page.should_be_here(context.driver)
+    update_actor(context, actor_alias, visited_page=page)
     logging.debug("%s is on %s page", actor_alias, page_name)
 
 
