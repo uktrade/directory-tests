@@ -3,16 +3,19 @@
 import logging
 import random
 import time
+from typing import List
 from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    AssertionExecutor,
     Selector,
     assertion_msg,
     check_for_expected_sections_elements,
     check_for_section,
+    check_for_sections,
     check_if_element_is_not_present,
     check_if_element_is_visible,
     check_title,
@@ -315,6 +318,10 @@ def should_see_section(driver: WebDriver, name: str):
     check_for_section(driver, all_sections=SELECTORS, sought_section=name)
 
 
+def should_see_sections(executor: AssertionExecutor, names: List[str]):
+    check_for_sections(executor, all_sections=SELECTORS, sought_sections=names)
+
+
 def should_see_link_to(driver: WebDriver, section: str, item_name: str):
     item_selector = SELECTORS[section.lower()][item_name.lower()]
     menu_item = find_element(driver, item_selector, element_name=item_name)
@@ -439,8 +446,8 @@ def open(driver: WebDriver, group: str, element: str):
 
 def play_video(driver: WebDriver, *, play_time: int = 5):
     video_load_delay = 2
-    play_js = 'document.querySelector("{}").play()'.format(PROMO_VIDEO)
-    pause = 'document.querySelector("{}").pause()'.format(PROMO_VIDEO)
+    play_js = 'document.querySelector("{}").play()'.format(PROMO_VIDEO.value)
+    pause = 'document.querySelector("{}").pause()'.format(PROMO_VIDEO.value)
     driver.execute_script(play_js)
     if play_time:
         time.sleep(play_time + video_load_delay)
@@ -449,9 +456,11 @@ def play_video(driver: WebDriver, *, play_time: int = 5):
 
 def get_video_watch_time(driver: WebDriver) -> int:
     watch_time_js = 'return document.querySelector("{}").currentTime'.format(
-        PROMO_VIDEO
+        PROMO_VIDEO.value
     )
-    duration_js = 'return document.querySelector("{}").duration'.format(PROMO_VIDEO)
+    duration_js = 'return document.querySelector("{}").duration'.format(
+        PROMO_VIDEO.value
+    )
     watch_time = driver.execute_script(watch_time_js)
     duration = driver.execute_script(duration_js)
     logging.debug("Video watch time: %d", watch_time)
