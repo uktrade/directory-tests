@@ -3,9 +3,11 @@
 import logging
 from urllib.parse import urljoin
 
-from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    Selector,
     check_for_expected_sections_elements,
     check_title,
     take_screenshot,
@@ -19,16 +21,16 @@ URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "industries/contact/")
 PAGE_TITLE = "Contact us - trade.great.gov.uk"
 
 SELECTORS = {
-    "breadcrumbs": {"itself": "p.breadcrumbs"},
+    "breadcrumbs": {"itself": Selector(By.CSS_SELECTOR, "p.breadcrumbs")},
     "message": {
-        "itself": "#lede",
-        "header": "#lede > div > h2",
-        "go back link": "#lede a",
+        "itself": Selector(By.ID, "lede"),
+        "header": Selector(By.CSS_SELECTOR, "#lede h2"),
+        "go back link": Selector(By.CSS_SELECTOR, "#lede a"),
     },
 }
 
 
-def should_be_here(driver: webdriver):
+def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_title(driver, PAGE_TITLE, exact_match=True)
     check_for_expected_sections_elements(driver, SELECTORS)

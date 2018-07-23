@@ -1,14 +1,19 @@
 # -*- coding: utf-8 -*-
 """ExRed Personalised Journey - Page Object."""
 import logging
+from typing import List
 from urllib.parse import urljoin
 
-from selenium import webdriver
 from selenium.webdriver import ActionChains
+from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    AssertionExecutor,
+    Selector,
     assertion_msg,
     check_for_section,
+    check_for_sections,
     check_if_element_is_not_visible,
     check_title,
     check_url,
@@ -26,91 +31,129 @@ TYPE = "custom"
 URL = urljoin(EXRED_UI_URL, "custom/")
 PAGE_TITLE = "Your export journey - great.gov.uk"
 
-READ_COUNTER = "#articles .scope-indicator .position > span.from"
-TOTAL_ARTICLES = "#articles .scope-indicator .position > span.to"
-
-UPDATE_PREFERENCE_LINK = "#content a.preferences"
-SECTOR_NAME = "#largest-importers > p.commodity-name"
-MARKET_RESEARCH_LINK = "#resource-guidance a[href='/market-research/']"
-CUSTOMER_INSIGHT_LINK = "#resource-guidance a[href='/customer-insight/']"
-FINANCE_LINK = "#resource-guidance a[href='/finance/']"
-BUSINESS_LINK = "#resource-guidance a[href='/business-planning/']"
-GETTING_PAID_LINK = "#resource-guidance a[href='/getting-paid/']"
-OPERATIONS_AND_COMPLIANCE_LINK = (
-    "#resource-guidance a[href='/operations-and-compliance/']"
+READ_COUNTER = Selector(
+    By.CSS_SELECTOR, "#articles .scope-indicator .position > span.from"
 )
-TOP_IMPORTER = "#top_importer_name"
-TOP_IMPORTERS = "#content > section.top-markets > div > ol > li > dl"
-TRADE_VALUE = "#top_importer_global_trade_value"
-TOP_10_TRADE_VALUE = ".cell-global_trade_value"
-REGISTER = "section.intro-section a.link:nth-child(1)"
-SIGN_IN = "section.intro-section a.link:nth-child(2)"
+TOTAL_ARTICLES = Selector(
+    By.CSS_SELECTOR, "#articles .scope-indicator .position > span.to"
+)
+
+UPDATE_PREFERENCE_LINK = Selector(By.CSS_SELECTOR, "#content a.preferences")
+SECTOR_NAME = Selector(By.CSS_SELECTOR, "#largest-importers > p.commodity-name")
+MARKET_RESEARCH_LINK = Selector(
+    By.CSS_SELECTOR, "#resource-guidance a[href='/market-research/']"
+)
+CUSTOMER_INSIGHT_LINK = Selector(
+    By.CSS_SELECTOR, "#resource-guidance a[href='/customer-insight/']"
+)
+FINANCE_LINK = Selector(By.CSS_SELECTOR, "#resource-guidance a[href='/finance/']")
+BUSINESS_LINK = Selector(
+    By.CSS_SELECTOR, "#resource-guidance a[href='/business-planning/']"
+)
+GETTING_PAID_LINK = Selector(
+    By.CSS_SELECTOR, "#resource-guidance a[href='/getting-paid/']"
+)
+OPERATIONS_AND_COMPLIANCE_LINK = Selector(
+    By.CSS_SELECTOR, "#resource-guidance a[href='/operations-and-compliance/']"
+)
+TOP_IMPORTER = Selector(By.ID, "top_importer_name")
+TOP_IMPORTERS = Selector(
+    By.CSS_SELECTOR, "#content > section.top-markets > div > ol > li > dl"
+)
+TRADE_VALUE = Selector(By.ID, "top_importer_global_trade_value")
+TOP_10_TRADE_VALUE = Selector(By.CSS_SELECTOR, ".cell-global_trade_value")
+REGISTER = Selector(By.CSS_SELECTOR, "section.intro-section a.link:nth-child(1)")
+SIGN_IN = Selector(By.CSS_SELECTOR, "section.intro-section a.link:nth-child(2)")
 SELECTORS = {
     "hero": {
-        "title": "section.hero-section h1",
-        "update preferences link": "section.intro-section a.preferences",
+        "title": Selector(By.CSS_SELECTOR, "section.hero-section h1"),
+        "update preferences link": Selector(
+            By.CSS_SELECTOR, "section.intro-section a.preferences"
+        ),
     },
     "facts": {
-        "intro": "#content > section.sector-fact p.intro",
-        "figures": "#content > section.sector-fact p.figure",
+        "intro": Selector(By.CSS_SELECTOR, "#content > section.sector-fact p.intro"),
+        "figures": Selector(By.CSS_SELECTOR, "#content > section.sector-fact p.figure"),
     },
     "articles": {
-        "heading": "#persona-overview h2",
-        "introduction": "#persona-overview p.intro",
-        "article list": "#persona-overview div.section-content-list",
+        "heading": Selector(By.CSS_SELECTOR, "#persona-overview h2"),
+        "introduction": Selector(By.CSS_SELECTOR, "#persona-overview p.intro"),
+        "article list": Selector(
+            By.CSS_SELECTOR, "#persona-overview div.section-content-list"
+        ),
     },
     "top 10": {
-        "heading": "section.top-markets h2",
-        "intro": "section.top-markets .intro",
-        "table": "ol.top-markets-list",
-        "source data": "section.top-markets #market-source-data",
+        "heading": Selector(By.CSS_SELECTOR, "section.top-markets h2"),
+        "intro": Selector(By.CSS_SELECTOR, "section.top-markets .intro"),
+        "table": Selector(By.CSS_SELECTOR, "ol.top-markets-list"),
+        "source data": Selector(
+            By.CSS_SELECTOR, "section.top-markets #market-source-data"
+        ),
     },
     "services": {
-        "heading": "section.service-section h2",
-        "intro": "section.service-section .intro",
-        "other": "#other-services > div > div",
+        "heading": Selector(By.CSS_SELECTOR, "section.service-section h2"),
+        "intro": Selector(By.CSS_SELECTOR, "section.service-section .intro"),
+        "other": Selector(By.CSS_SELECTOR, "#other-services > div > div"),
     },
     "fab section": {
-        "heading": "section.service-section.fas h2",
-        "fas image": "section.service-section.fas img",
-        "intro": "section.service-section.fas .intro",
-        "create a business profile": "section.service-section.fas .intro .button",
+        "heading": Selector(By.CSS_SELECTOR, "section.service-section.fas h2"),
+        "fas image": Selector(By.CSS_SELECTOR, "section.service-section.fas img"),
+        "intro": Selector(By.CSS_SELECTOR, "section.service-section.fas .intro"),
+        "create a business profile": Selector(
+            By.CSS_SELECTOR, "section.service-section.fas .intro .button"
+        ),
     },
     "exopps tile": {
-        "heading": "#other-services div.lg-2:nth-child(2) h3",
-        "exopps image": "#other-services div.lg-2:nth-child(2) img",
-        "intro": "#other-services div.lg-2:nth-child(2) p",
-        "find marketplaces link": "#other-services div.lg-2:nth-child(2) a",
+        "heading": Selector(
+            By.CSS_SELECTOR, "#other-services div.lg-2:nth-child(2) h3"
+        ),
+        "exopps image": Selector(
+            By.CSS_SELECTOR, "#other-services div.lg-2:nth-child(2) img"
+        ),
+        "intro": Selector(By.CSS_SELECTOR, "#other-services div.lg-2:nth-child(2) p"),
+        "find marketplaces link": Selector(
+            By.CSS_SELECTOR, "#other-services div.lg-2:nth-child(2) a"
+        ),
     },
     "exopps section": {
-        "heading": "section.service-section.soo h2",
-        "exopps image": "section.service-section.soo img",
-        "intro": "section.service-section.soo .intro",
-        "find marketplaces button": "section.service-section.soo .intro .button",
+        "heading": Selector(By.CSS_SELECTOR, "section.service-section.soo h2"),
+        "exopps image": Selector(By.CSS_SELECTOR, "section.service-section.soo img"),
+        "intro": Selector(By.CSS_SELECTOR, "section.service-section.soo .intro"),
+        "find marketplaces button": Selector(
+            By.CSS_SELECTOR, "section.service-section.soo .intro .button"
+        ),
     },
     "soo section": {
-        "heading": "section.service-section.soo h2",
-        "soo image": "section.service-section.soo img",
-        "intro": "section.service-section.soo .intro",
-        "find marketplaces button": "section.service-section.soo .intro .button",
+        "heading": Selector(By.CSS_SELECTOR, "section.service-section.soo h2"),
+        "soo image": Selector(By.CSS_SELECTOR, "section.service-section.soo img"),
+        "intro": Selector(By.CSS_SELECTOR, "section.service-section.soo .intro"),
+        "find marketplaces button": Selector(
+            By.CSS_SELECTOR, "section.service-section.soo .intro .button"
+        ),
     },
     "soo tile": {
-        "heading": "#other-services div.lg-2:nth-child(1) h3",
-        "soo image": "#other-services div.lg-2:nth-child(1) img",
-        "intro": "#other-services div.lg-2:nth-child(1) p",
-        "find marketplaces link": "#other-services div.lg-2:nth-child(1) a",
+        "heading": Selector(
+            By.CSS_SELECTOR, "#other-services div.lg-2:nth-child(1) h3"
+        ),
+        "soo image": Selector(
+            By.CSS_SELECTOR, "#other-services div.lg-2:nth-child(1) img"
+        ),
+        "intro": Selector(By.CSS_SELECTOR, "#other-services div.lg-2:nth-child(1) p"),
+        "find marketplaces link": Selector(
+            By.CSS_SELECTOR, "#other-services div.lg-2:nth-child(1) a"
+        ),
     },
     "article list": {
-        "itself": "#articles",
-        "heading": "#articles h2",
-        "introduction": "#articles div.section-intro p",
-        "article list": "#articles .section-content-list",
+        "itself": Selector(By.ID, "articles"),
+        "heading": Selector(By.CSS_SELECTOR, "#articles h2"),
+        "introduction": Selector(By.CSS_SELECTOR, "#articles div.section-intro p"),
+        "article list": Selector(By.CSS_SELECTOR, "#articles .section-content-list"),
     },
     "guidance": {
-        "itself": "#resource-guidance",
-        "guidance - title": "#guidance-section-title",
-        "guidance - description": "#guidance-section-description",
-        "guidance - categories": "#resource-guidance .group",
+        "itself": Selector(By.ID, "resource-guidance"),
+        "guidance - title": Selector(By.ID, "guidance-section-title"),
+        "guidance - description": Selector(By.ID, "guidance-section-description"),
+        "guidance - categories": Selector(By.CSS_SELECTOR, "#resource-guidance .group"),
         "market research": MARKET_RESEARCH_LINK,
         "customer insight": CUSTOMER_INSIGHT_LINK,
         "finance": FINANCE_LINK,
@@ -120,22 +163,38 @@ SELECTORS = {
     },
     "save progress": {"register link": REGISTER, "sign-in link": SIGN_IN},
     "case studies": {
-        "heading": "#carousel h2",
-        "intro": "#carousel .intro",
-        "article": "#carousel .ed-carousel-container",
-        "previous article": "#carousel label.ed-carousel__control--backward",
-        "next article": "#carousel label.ed-carousel__control--forward",
-        "case study head link": ".ed-carousel__track > div:nth-child(1) h3 a",
-        "case study intro": ".ed-carousel__track > div:nth-child(1) p",
-        "case study intro link": ".ed-carousel__track > div:nth-child(1) div > a",
-        "carousel indicator #1": "#carousel .ed-carousel__indicator[for='1']",
-        "carousel indicator #2": "#carousel .ed-carousel__indicator[for='2']",
-        "carousel indicator #3": "#carousel .ed-carousel__indicator[for='3']",
+        "heading": Selector(By.CSS_SELECTOR, "#carousel h2"),
+        "intro": Selector(By.CSS_SELECTOR, "#carousel .intro"),
+        "article": Selector(By.CSS_SELECTOR, "#carousel .ed-carousel-container"),
+        "previous article": Selector(
+            By.CSS_SELECTOR, "#carousel label.ed-carousel__control--backward"
+        ),
+        "next article": Selector(
+            By.CSS_SELECTOR, "#carousel label.ed-carousel__control--forward"
+        ),
+        "case study head link": Selector(
+            By.CSS_SELECTOR, ".ed-carousel__track > div:nth-child(1) h3 a"
+        ),
+        "case study intro": Selector(
+            By.CSS_SELECTOR, ".ed-carousel__track > div:nth-child(1) p"
+        ),
+        "case study intro link": Selector(
+            By.CSS_SELECTOR, ".ed-carousel__track > div:nth-child(1) div > a"
+        ),
+        "carousel indicator #1": Selector(
+            By.CSS_SELECTOR, "#carousel .ed-carousel__indicator[for='1']"
+        ),
+        "carousel indicator #2": Selector(
+            By.CSS_SELECTOR, "#carousel .ed-carousel__indicator[for='2']"
+        ),
+        "carousel indicator #3": Selector(
+            By.CSS_SELECTOR, "#carousel .ed-carousel__indicator[for='3']"
+        ),
     },
 }
 
 
-def should_be_here(driver: webdriver):
+def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=True)
     check_title(driver, PAGE_TITLE, exact_match=False)
@@ -144,11 +203,9 @@ def should_be_here(driver: webdriver):
 
 
 def should_see_read_counter(
-    driver: webdriver, *, exporter_status: str = None, expected_number_articles: int = 0
+    driver: WebDriver, *, exporter_status: str = None, expected_number_articles: int = 0
 ):
-    counter = find_element(
-        driver, by_css=READ_COUNTER, element_name="Article Read Counter"
-    )
+    counter = find_element(driver, READ_COUNTER, element_name="Article Read Counter")
     if "firefox" not in driver.capabilities["browserName"].lower():
         logging.debug("Moving focus to 'Read Counter' on %s", NAME)
         action_chains = ActionChains(driver)
@@ -168,10 +225,10 @@ def should_see_read_counter(
 
 
 def should_see_total_articles_to_read(
-    driver: webdriver, *, exporter_status: str = None
+    driver: WebDriver, *, exporter_status: str = None
 ):
     counter = find_element(
-        driver, by_css=TOTAL_ARTICLES, element_name="Total Articles to Read"
+        driver, TOTAL_ARTICLES, element_name="Total Articles to Read"
     )
     with assertion_msg(
         "Guidance Article Read Counter is not visible on '%s' page", NAME
@@ -190,29 +247,33 @@ def should_see_total_articles_to_read(
             assert given_number_articles == expected_number_articles
 
 
-def open(driver: webdriver, group: str, element: str):
+def open(driver: WebDriver, group: str, element: str):
     link = SELECTORS[group.lower()][element.lower()]
-    button = find_element(driver, by_css=link, element_name=element, wait_for_it=False)
+    button = find_element(driver, link, element_name=element, wait_for_it=False)
     assert button.is_displayed()
     with wait_for_page_load_after_action(driver):
         button.click()
     take_screenshot(driver, NAME + " after clicking on: %s link".format(element))
 
 
-def should_see_section(driver: webdriver, name: str):
-    check_for_section(driver, SELECTORS, sought_section=name)
+def should_see_section(driver: WebDriver, name: str):
+    check_for_sections(driver, SELECTORS, sought_sections=[name])
 
 
-def should_not_see_section(driver: webdriver, name: str):
+def should_see_sections(executor: AssertionExecutor, names: List[str]):
+    check_for_sections(executor, all_sections=SELECTORS, sought_sections=names)
+
+
+def should_not_see_section(driver: WebDriver, name: str):
     section = SELECTORS[name.lower()]
     for key, selector in section.items():
-        check_if_element_is_not_visible(driver, by_css=selector, element_name=key)
+        check_if_element_is_not_visible(driver, selector, element_name=key)
 
 
-def check_top_facts_values(driver: webdriver):
-    top_importer = find_element(driver, by_css=TOP_IMPORTER).text
-    top_trade_value = find_element(driver, by_css=TRADE_VALUE).text
-    top_importers_list = find_elements(driver, by_css=TOP_IMPORTERS)
+def check_top_facts_values(driver: WebDriver):
+    top_importer = find_element(driver, TOP_IMPORTER).text
+    top_trade_value = find_element(driver, TRADE_VALUE).text
+    top_importers_list = find_elements(driver, TOP_IMPORTERS)
 
     exporting_values = {}
     for importer in top_importers_list:
@@ -237,7 +298,7 @@ def check_top_facts_values(driver: webdriver):
         )
 
 
-def check_facts_and_top_10(driver: webdriver, sector_code: str):
+def check_facts_and_top_10(driver: WebDriver, sector_code: str):
     """There are no Facts & Top 10 data for Service Sectors (start with EB)."""
     if sector_code.startswith("EB"):
         logging.debug(
@@ -252,7 +313,7 @@ def check_facts_and_top_10(driver: webdriver, sector_code: str):
 
 
 def layout_for_new_exporter(
-    driver: webdriver, incorporated: bool, *, sector_code: str = None
+    driver: WebDriver, incorporated: bool, *, sector_code: str = None
 ):
     """
     * a new exporter says his company:
@@ -267,7 +328,7 @@ def layout_for_new_exporter(
 
 
 def layout_for_occasional_exporter(
-    driver: webdriver,
+    driver: WebDriver,
     incorporated: bool,
     use_online_marketplaces: bool,
     *,
@@ -297,7 +358,7 @@ def layout_for_occasional_exporter(
 
 
 def layout_for_regular_exporter(
-    driver: webdriver, incorporated: bool, *, sector_code: str = None
+    driver: WebDriver, incorporated: bool, *, sector_code: str = None
 ):
     """
     * a regular exporter says his company is:
@@ -312,13 +373,13 @@ def layout_for_regular_exporter(
     should_see_section(driver, "guidance")
 
 
-def should_not_see_banner_and_top_10_table(driver: webdriver):
+def should_not_see_banner_and_top_10_table(driver: WebDriver):
     should_not_see_section(driver, "facts")
     should_not_see_section(driver, "top 10")
 
 
-def should_see_top_10_importers_in_sector(driver: webdriver, sector: str):
-    visible_sector_name = find_element(driver, by_css=SECTOR_NAME).text
+def should_see_top_10_importers_in_sector(driver: WebDriver, sector: str):
+    visible_sector_name = find_element(driver, SECTOR_NAME).text
     with assertion_msg(
         "Expected to see Top 10 Importers table for '%s' sector but got it"
         " for '%s' sector",
@@ -328,14 +389,14 @@ def should_see_top_10_importers_in_sector(driver: webdriver, sector: str):
         assert visible_sector_name == sector
 
 
-def should_see_banner_and_top_10_table(driver: webdriver, sector: str):
+def should_see_banner_and_top_10_table(driver: WebDriver, sector: str):
     should_see_section(driver, "facts")
     should_see_section(driver, "top 10")
     should_see_top_10_importers_in_sector(driver, sector)
 
 
-def update_preferences(driver: webdriver):
-    update_preferences_link = find_element(driver, by_css=UPDATE_PREFERENCE_LINK)
+def update_preferences(driver: WebDriver):
+    update_preferences_link = find_element(driver, UPDATE_PREFERENCE_LINK)
     with assertion_msg("Update preferences link is not displayed"):
         assert update_preferences_link.is_displayed()
     with wait_for_page_load_after_action(driver):

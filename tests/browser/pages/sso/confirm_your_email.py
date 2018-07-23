@@ -2,9 +2,11 @@
 """SSO Confirm Your Email Address Page Object."""
 from urllib.parse import urljoin
 
-from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    Selector,
     check_title,
     check_url,
     find_element,
@@ -19,18 +21,22 @@ TYPE = "confirmation"
 URL = urljoin(DIRECTORY_UI_SSO_URL, "accounts/confirm-email/")
 PAGE_TITLE = "Confirm email Address"
 
-CONFIRM_LINK = "#content > div > div > form > button"
-EXPECTED_ELEMENTS = {"title": "#content > div > div > h1", "confirm link": CONFIRM_LINK}
-SELECTORS = {}
+CONFIRM_LINK = Selector(By.CSS_SELECTOR, "#content > div > div > form > button")
+SELECTORS = {
+    "general": {
+        "title": Selector(By.CSS_SELECTOR, "#content > div > div > h1"),
+        "confirm link": CONFIRM_LINK,
+    }
+}
 
 
-def should_be_here(driver: webdriver):
+def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
     check_title(driver, PAGE_TITLE, exact_match=False)
 
 
-def submit(driver: webdriver):
-    confirm_link = find_element(driver, by_css=CONFIRM_LINK)
+def submit(driver: WebDriver):
+    confirm_link = find_element(driver, CONFIRM_LINK)
     with wait_for_page_load_after_action(driver):
         confirm_link.click()

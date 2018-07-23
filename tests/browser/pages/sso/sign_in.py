@@ -2,9 +2,11 @@
 """SSO Sign In Page Object."""
 from urllib.parse import urljoin
 
-from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    Selector,
     check_for_expected_elements,
     check_title,
     check_url,
@@ -21,13 +23,13 @@ TYPE = "log in"
 URL = urljoin(DIRECTORY_UI_SSO_URL, "accounts/login/")
 PAGE_TITLE = "Sign in - great.gov.uk"
 
-EMAIL_INPUT = "#id_login"
-PASSWORD_INPUT = "#id_password"
-REMEMBER_ME_BUTTON = "#id_remember"
-SIGN_IN_BUTTON = "#content > div > div > form > button"
-RESET_YOUR_PASSWORD_LINK = "#content > div > div > form > a"
+EMAIL_INPUT = Selector(By.ID, "id_login")
+PASSWORD_INPUT = Selector(By.ID, "id_password")
+REMEMBER_ME_BUTTON = Selector(By.ID, "id_remember")
+SIGN_IN_BUTTON = Selector(By.CSS_SELECTOR, "#content > div > div > form > button")
+RESET_YOUR_PASSWORD_LINK = Selector(By.CSS_SELECTOR, "#content > div > div > form > a")
 EXPECTED_ELEMENTS = {
-    "title": "#content > div > div > h1",
+    "title": Selector(By.CSS_SELECTOR, "#content > div > div > h1"),
     "email input": EMAIL_INPUT,
     "password input": PASSWORD_INPUT,
     "sign in button": SIGN_IN_BUTTON,
@@ -36,20 +38,20 @@ EXPECTED_ELEMENTS = {
 SELECTORS = {}
 
 
-def visit(driver: webdriver, *, first_time: bool = False):
+def visit(driver: WebDriver, *, first_time: bool = False):
     go_to_url(driver, URL, NAME, first_time=first_time)
 
 
-def should_be_here(driver: webdriver):
+def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
     check_title(driver, PAGE_TITLE, exact_match=False)
     check_for_expected_elements(driver, EXPECTED_ELEMENTS)
 
 
-def fill_out(driver: webdriver, email: str, password: str):
-    email_input = find_element(driver, by_css=EMAIL_INPUT)
-    password_input = find_element(driver, by_css=PASSWORD_INPUT)
+def fill_out(driver: WebDriver, email: str, password: str):
+    email_input = find_element(driver, EMAIL_INPUT)
+    password_input = find_element(driver, PASSWORD_INPUT)
     email_input.clear()
     email_input.send_keys(email)
     password_input.clear()
@@ -57,8 +59,8 @@ def fill_out(driver: webdriver, email: str, password: str):
     take_screenshot(driver, NAME + "after filling out the form")
 
 
-def submit(driver: webdriver):
-    sign_up_button = find_element(driver, by_css=SIGN_IN_BUTTON)
+def submit(driver: WebDriver):
+    sign_up_button = find_element(driver, SIGN_IN_BUTTON)
     with wait_for_page_load_after_action(driver):
         sign_up_button.click()
     take_screenshot(driver, NAME + "after signing in")

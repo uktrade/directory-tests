@@ -1,27 +1,28 @@
 # -*- coding: utf-8 -*-
 """When step implementations."""
 import logging
+
 import random
 
 from behave.model import Table
 from behave.runner import Context
 from retrying import retry
 from selenium.common.exceptions import TimeoutException, WebDriverException
-from pages.common_actions import (
-    VisitedArticle,
-    unauthenticated_actor,
-    add_actor, get_actor,
-    update_actor,
-    take_screenshot,
-    assertion_msg,
-)
+
+from steps import has_action
 from utils.gov_notify import get_verification_link
 
-from pages import common_language_selector
-from pages import exread
-from pages import fas
-from pages import sso
-from pages import get_page_object
+from pages import common_language_selector, exread, fas, get_page_object, sso
+from pages.common_actions import (
+    VisitedArticle,
+    add_actor,
+    assertion_msg,
+    get_actor,
+    get_last_visited_page,
+    take_screenshot,
+    unauthenticated_actor,
+    update_actor,
+)
 from registry.articles import (
     GUIDANCE,
     get_article,
@@ -65,18 +66,33 @@ def visit_page(
     the webdriver' page load timeout set to value lower than the retry's
     `wait_fixed` timer, e.g `driver.set_page_load_timeout(time_to_wait=30)`
     """
+    def is_special_case(page_name: str) -> bool:
+        result = False
+        if page_name.lower().endswith("uk setup guide"):
+            result = False
+        if page_name.lower().endswith("industry"):
+            result = True
+        elif page_name.lower().endswith("guide"):
+            result = True
+        return result
+
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
-    page = get_page_object(page_name, exact_match=False)
+
+    if is_special_case(page_name):
+        page = get_page_object(page_name, exact_match=False)
+    else:
+        page = get_page_object(page_name, exact_match=True)
     logging.debug(
         "%s will visit '%s' page using: '%s'", actor_alias, page_name, page.URL
     )
-    assert hasattr(page, "visit")
-    if "industry" in page_name.lower() or "guide" in page_name.lower():
+    has_action(page, "visit")
+
+    if is_special_case(page_name):
         page.visit(context.driver, first_time=first_time, page_name=page_name)
     else:
         page.visit(context.driver, first_time=first_time)
-    update_actor(context, actor_alias, visited_page=page_name)
+    update_actor(context, actor_alias, visited_page=page)
 
 
 def actor_classifies_himself_as(
@@ -133,6 +149,7 @@ def guidance_open_category(
         article_group="guidance",
         article_category=category,
         article_location=location,
+        visited_page=exread.article_list,
     )
 
 
@@ -430,6 +447,7 @@ def triage_should_be_classified_as_regular(context: Context):
 def triage_create_exporting_journey(context: Context, actor_alias: str):
     exread.triage_summary.create_exporting_journey(context.driver)
     update_actor(context, alias=actor_alias, created_personalised_journey=True)
+    update_actor(context, alias=actor_alias, visited_page=exread.personalised_journey)
 
 
 def triage_classify_as_new(
@@ -822,6 +840,7 @@ def export_readiness_open_category(
         article_group="export readiness",
         article_category=category,
         article_location=location,
+        visited_page=exread.article_list,
     )
 
 
@@ -1057,6 +1076,7 @@ def articles_open_any(context: Context, actor_alias: str):
         article_list_time_to_complete=article_list_time_to_complete,
         article_list_total_number=article_list_total,
         visited_articles=visited_articles,
+        visited_page=exread.article_common,
     )
 
 
@@ -1263,7 +1283,7 @@ def open_service_link_on_interim_page(
 ):
     page_name = "export readiness - interim {}".format(service)
     page = get_page_object(page_name)
-    assert hasattr(page, "go_to_service")
+    has_action(page, "go_to_service")
     page.go_to_service(context.driver)
     logging.debug("%s went to %s service page", actor_alias, service)
 
@@ -1507,25 +1527,23 @@ def language_selector_navigate_through_links_with_keyboard(
         " keyboard",
         actor_alias,
     )
-    actor = get_actor(context, actor_alias)
-    visited_page = actor.visited_page
+    page = get_last_visited_page(context, actor_alias)
     common_language_selector.navigate_through_links_with_keyboard(
-        context.driver, page_name=visited_page
+        context.driver, page=page
     )
 
 
 def language_selector_change_to(
     context: Context, actor_alias: str, preferred_language: str
 ):
-    actor = get_actor(context, actor_alias)
-    visited_page = actor.visited_page
+    page = get_last_visited_page(context, actor_alias)
     logging.debug(
         f"{actor_alias} decided to change language on {visit_page} to"
         f" {preferred_language}",
     )
     language_selector_open(context, actor_alias)
     common_language_selector.change_to(
-        context.driver, visited_page, preferred_language
+        context.driver, page, preferred_language
     )
 
 
@@ -1557,16 +1575,20 @@ def header_footer_open_link(
 
 
 def click_on_page_element(
-    context: Context, actor_alias: str, element_name: str, page_name: str
+    context: Context, actor_alias: str, element_name: str, *,
+    page_name: str = None,
 ):
-    page_object = get_page_object(page_name, exact_match=False)
-    assert hasattr(page_object, "click_on_page_element")
-    page_object.click_on_page_element(context.driver, element_name)
+    if page_name:
+        page = get_page_object(page_name, exact_match=False)
+    else:
+        page = get_last_visited_page(context, actor_alias)
+    has_action(page, "click_on_page_element")
+    page.click_on_page_element(context.driver, element_name)
     logging.debug(
         "%s decided to click on '%s' on '%s' page",
         actor_alias,
         element_name,
-        page_name,
+        page.NAME,
     )
 
 
@@ -1583,15 +1605,11 @@ def fas_search_for_companies(
     context: Context,
     actor_alias: str,
     *,
-    page_alias: str = None,
     keyword: str = None,
     sector: str = None
 ):
-    if not page_alias:
-        actor = get_actor(context, actor_alias)
-        page_alias = actor.visited_page
-    page = get_page_object(page_alias, exact_match=False)
-    assert hasattr(page, "search")
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "search")
     optional_param_keywords = ["n/a", "no", "empty", "without", "any"]
     if keyword and keyword.lower() in optional_param_keywords:
         keyword = None
@@ -1601,7 +1619,7 @@ def fas_search_for_companies(
     logging.debug(
         "%s will visit '%s' page using: '%s'",
         actor_alias,
-        page_alias,
+        page.NAME,
         page.URL,
     )
 
@@ -1615,10 +1633,8 @@ def fas_search_for_companies(
 def generic_open_industry_page(
     context: Context, actor_alias: str, industry_name: str
 ):
-    actor = get_actor(context, actor_alias)
-    visited_page = actor.visited_page
-    page = get_page_object(visited_page)
-    assert hasattr(page, "open_industry")
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "open_industry")
     page.open_industry(context.driver, industry_name)
     update_actor(context, actor_alias, visited_page=industry_name)
     logging.debug(
@@ -1653,10 +1669,8 @@ def fas_fill_out_and_submit_contact_us_form(
 
 
 def generic_see_more_industries(context: Context, actor_alias: str):
-    actor = get_actor(context, actor_alias)
-    visited_page = actor.visited_page
-    page = get_page_object(visited_page)
-    assert hasattr(page, "see_more_industries")
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "see_more_industries")
     page.see_more_industries(context.driver)
     logging.debug(
         "%s clicked on 'See more industries' button on %s",
@@ -1669,7 +1683,7 @@ def fas_use_breadcrumb(
     context: Context, actor_alias: str, breadcrumb_name: str, page_name: str
 ):
     page = get_page_object(page_name)
-    assert hasattr(page, "click_breadcrumb")
+    has_action(page, "click_breadcrumb")
     page.click_breadcrumb(context.driver, breadcrumb_name)
     logging.debug(
         "%s clicked on '%s' breadcrumb on %s",
@@ -1680,9 +1694,8 @@ def fas_use_breadcrumb(
 
 
 def fas_view_more_companies(context: Context, actor_alias: str):
-    visited_page = get_actor(context, actor_alias).visited_page
-    page = get_page_object(visited_page, exact_match=False)
-    assert hasattr(page, "click_on_page_element")
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "click_on_page_element")
     page.click_on_page_element(context.driver, "view more")
     logging.debug(
         "%s clicked on 'view more companies' button on %s",
@@ -1695,9 +1708,8 @@ def fas_view_selected_company_profile(
     context: Context, actor_alias: str, profile_number: str
 ):
     number = NUMBERS[profile_number]
-    visited_page = get_actor(context, actor_alias).visited_page
-    page = get_page_object(visited_page, exact_match=False)
-    assert hasattr(page, "open_profile")
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "open_profile")
     page.open_profile(context.driver, number)
     logging.debug(
         "%s clicked on '%s' button on %s",
@@ -1709,9 +1721,8 @@ def fas_view_selected_company_profile(
 
 def fas_view_article(context: Context, actor_alias: str, article_number: str):
     number = NUMBERS[article_number]
-    visited_page = get_actor(context, actor_alias).visited_page
-    page = get_page_object(visited_page, exact_match=False)
-    assert hasattr(page, "open_article")
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "open_article")
     page.open_article(context.driver, number)
     logging.debug(
         "%s clicked on '%s' article on %s",
@@ -1722,10 +1733,8 @@ def fas_view_article(context: Context, actor_alias: str, article_number: str):
 
 
 def invest_read_more(context: Context, actor_alias: str, topic_names: Table):
-    actor = get_actor(context, actor_alias)
-    visited_page = actor.visited_page
-    page = get_page_object(visited_page, exact_match=False)
-    assert hasattr(page, "open_link")
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "open_link")
     topics = [row[0] for row in topic_names]
     update_actor(context, actor_alias, visited_articles=topics)
     for topic in topics:
@@ -1747,10 +1756,8 @@ def invest_read_more(context: Context, actor_alias: str, topic_names: Table):
 def generic_open_guide_link(
     context: Context, actor_alias: str, guide_name: str
 ):
-    actor = get_actor(context, actor_alias)
-    visited_page = actor.visited_page
-    page = get_page_object(visited_page)
-    assert hasattr(page, "open_guide")
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "open_guide")
     page.open_guide(context.driver, guide_name)
     update_actor(context, actor_alias, visited_page=guide_name)
     logging.debug(
@@ -1758,17 +1765,17 @@ def generic_open_guide_link(
     )
 
 
-def generic_unfold_topics(context: Context, actor_alias: str, page_name: str):
-    page = get_page_object(page_name)
-    assert hasattr(page, "unfold_topics")
+def generic_unfold_topics(context: Context, actor_alias: str):
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "unfold_topics")
     page.unfold_topics(context.driver)
-    update_actor(context, actor_alias, visited_page=page_name)
-    logging.debug("%s unfolded all topics on %s", actor_alias, page_name)
+    update_actor(context, actor_alias, visited_page=page)
+    logging.debug("%s unfolded all topics on %s", actor_alias, page.NAME)
 
 
 def generic_click_on_uk_gov_logo(
         context: Context, actor_alias: str, page_name: str):
     page = get_page_object(page_name)
-    assert hasattr(page, "click_on_page_element")
+    has_action(page, "click_on_page_element")
     page.click_on_page_element(context.driver, "uk gov logo")
     logging.debug("%s click on UK Gov logo %s", actor_alias, page_name)

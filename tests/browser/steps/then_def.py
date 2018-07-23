@@ -160,18 +160,18 @@ def then_expected_export_readiness_page_elements_should_be_visible(
         context, actor_alias, elements.split(", "))
 
 
-@then('"{actor_alias}" should see "{sections}" section on "{page_name}" page')
-@then('"{actor_alias}" should see "{sections}" sections on "{page_name}" page')
-def then_should_see_sections(context, actor_alias, sections, page_name):
+@then('"{actor_alias}" should see "{sections}" sections')
+def then_should_see_sections(context, actor_alias, sections):
     should_see_sections(
-        context, actor_alias, page_name, sections_list=sections.split(", "))
+        context, actor_alias, sections_table=None,
+        sections_list=sections.split(", "))
 
 
-@then('"{actor_alias}" should see on "{page_name}" page how DIT can help foreign companies')
-@then('"{actor_alias}" should see expected sections on "{page_name}" page')
-def then_should_see_sections(context, actor_alias, page_name):
-    should_see_sections(
-        context, actor_alias, page_name, sections_table=context.table)
+@then('"{actor_alias}" should see following sections')
+@then('"{actor_alias}" should see following section')
+def then_should_see_sections(context, actor_alias):
+    should_see_sections(context, actor_alias, sections_table=context.table)
+
 
 
 @then('"{actor_alias}" should not see "{sections}" section on "{page_name}" page')

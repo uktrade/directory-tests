@@ -7,8 +7,8 @@ Feature: Invest home page
   Scenario: Visitors should be able to view "Invest home" page
     Given "Robert" visits the "Invest - home" page
 
-    Then "Robert" should see expected sections on "Invest - home" page
-      | sections                           |
+    Then "Robert" should see following sections
+      | Sections                           |
       | Header                             |
       | Beta bar                           |
       | Reasons to move business to the UK |
@@ -66,7 +66,7 @@ Feature: Invest home page
 
     When "Robert" decides to read "Invest - <selected> guide" guide
 
-    Then "Robert" should be on the "Invest - Guide" page
+    Then "Robert" should be on the "Invest - UK Setup Guide" page
     And "Robert" should see content specific to "Invest - <selected> guide" page
 
     Examples: UK Setup Guides
@@ -82,12 +82,13 @@ Feature: Invest home page
   Scenario: Overseas businesses should be able to learn how UK government can help them to establish in the UK
     Given "Robert" visits the "Invest - home" page
 
-    Then "Robert" should see on "Invest - home" page how DIT can help foreign companies
-      | Build connections   |
-      | Apply for visas     |
-      | Find grants         |
-      | Get insights        |
-      | Grow workforce      |
+    Then "Robert" should see following sections
+      | Sections             |
+      | Build connections    |
+      | Apply for visas      |
+      | Find grants          |
+      | Get insights         |
+      | Grow workforce       |
 
   @bug
   @CMS-255
@@ -96,5 +97,6 @@ Feature: Invest home page
   Scenario: Overseas businesses should be able to learn how UK government can help them to establish in the UK
     Given "Robert" visits the "Invest - home" page
 
-    Then "Robert" should see on "Invest - home" page how DIT can help foreign companies
-      | Contact us for help |
+    Then "Robert" should see following sections
+      | Sections             |
+      | Contact us for help  |

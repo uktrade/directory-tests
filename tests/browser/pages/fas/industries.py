@@ -1,13 +1,17 @@
 # -*- coding: utf-8 -*-
 """Find a Supplier - Industries Page Object."""
 import logging
+from typing import List
 from urllib.parse import urljoin
 
-from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    AssertionExecutor,
+    Selector,
     check_for_expected_sections_elements,
-    check_for_section,
+    check_for_sections,
     check_title,
     check_url,
     find_and_click_on_page_element,
@@ -24,37 +28,42 @@ TYPE = "industries"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "industries/")
 PAGE_TITLE = "Find the best UK suppliers for your industry - trade.great.gov.uk"
 
-BREADCRUMB_LINKS = "p.breadcrumbs > a"
-INDUSTRIES_BREADCRUMB = "p.breadcrumbs > span.current.bidi-rtl"
-INDUSTRIES_LINKS = "#industry-pages-container > section a"
-MORE_INDUSTRIES_LINKS = "#industry-pages-container > ul a"
+BREADCRUMB_LINKS = Selector(By.CSS_SELECTOR, "p.breadcrumbs > a")
+INDUSTRIES_BREADCRUMB = Selector(
+    By.CSS_SELECTOR, "p.breadcrumbs > span.current.bidi-rtl"
+)
+INDUSTRIES_LINKS = Selector(By.CSS_SELECTOR, "#industry-pages-container > section a")
+MORE_INDUSTRIES_LINKS = Selector(By.CSS_SELECTOR, "#industry-pages-container > ul a")
 SELECTORS = {
-    "hero": {"itself": "#hero", "header": "#hero h1"},
+    "hero": {
+        "itself": Selector(By.ID, "hero"),
+        "header": Selector(By.CSS_SELECTOR, "#hero h1"),
+    },
     "breadcrumbs": {
-        "itself": "#content p.breadcrumbs",
+        "itself": Selector(By.CSS_SELECTOR, "#content p.breadcrumbs"),
         "industries": INDUSTRIES_BREADCRUMB,
     },
     "contact us": {
-        "itself": "#introduction",
-        "header": "#introduction p",
-        "contact us": "#introduction a",
+        "itself": Selector(By.ID, "introduction"),
+        "header": Selector(By.CSS_SELECTOR, "#introduction p"),
+        "contact us": Selector(By.CSS_SELECTOR, "#introduction a"),
     },
     "industries": {
-        "itself": "#industry-pages-container",
+        "itself": Selector(By.ID, "industry-pages-container"),
         "industries": INDUSTRIES_LINKS,
     },
     "more industries": {
-        "itself": "#industry-pages-container > ul",
+        "itself": Selector(By.CSS_SELECTOR, "#industry-pages-container > ul"),
         "more industries": MORE_INDUSTRIES_LINKS,
     },
 }
 
 
-def visit(driver: webdriver, *, first_time: bool = False):
+def visit(driver: WebDriver, *, first_time: bool = False):
     go_to_url(driver, URL, NAME, first_time=first_time)
 
 
-def should_be_here(driver: webdriver):
+def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=True)
     check_title(driver, PAGE_TITLE, exact_match=True)
@@ -62,11 +71,11 @@ def should_be_here(driver: webdriver):
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
-def should_see_section(driver: webdriver, name: str):
-    check_for_section(driver, SELECTORS, sought_section=name)
+def should_see_sections(executor: AssertionExecutor, names: List[str]):
+    check_for_sections(executor, all_sections=SELECTORS, sought_sections=names)
 
 
-def click_on_page_element(driver: webdriver, element_name: str):
+def click_on_page_element(driver: WebDriver, element_name: str):
     find_and_click_on_page_element(driver, SELECTORS, element_name)
     take_screenshot(driver, NAME + " after clicking on " + element_name)
 
@@ -75,21 +84,19 @@ def clean_name(name: str) -> str:
     return name.replace("Find a Supplier - ", "").replace("industry", "").strip()
 
 
-def open_industry(driver: webdriver, industry_name: str):
+def open_industry(driver: WebDriver, industry_name: str):
     industry_name = clean_name(industry_name)
+    selector = Selector(By.LINK_TEXT, industry_name)
     logging.debug("Looking for: {}".format(industry_name))
     industry_link = find_element(
-        driver,
-        by_link_text=industry_name,
-        element_name="Industry card",
-        wait_for_it=False,
+        driver, selector, element_name="Industry card", wait_for_it=False
     )
     industry_link.click()
     take_screenshot(driver, NAME + " after opening " + industry_name + " page")
 
 
-def click_breadcrumb(driver: webdriver, name: str):
-    breadcrumbs = find_elements(driver, by_css=BREADCRUMB_LINKS)
+def click_breadcrumb(driver: WebDriver, name: str):
+    breadcrumbs = find_elements(driver, BREADCRUMB_LINKS)
     url = driver.current_url
     link = None
     for breadcrumb in breadcrumbs:

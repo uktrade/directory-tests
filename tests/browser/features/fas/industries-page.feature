@@ -8,7 +8,7 @@ Feature: Find a Supplier - Industries page
   Scenario: Buyers should be able to view "Find a Supplier - Industries" page
     Given "Annette Geissinger" visits the "Find a Supplier - Industries" page
 
-    Then "Annette Geissinger" should see expected sections on "Find a Supplier - Industries" page
+    Then "Annette Geissinger" should see following sections
       | Sections         |
       | Hero             |
       | Breadcrumbs      |

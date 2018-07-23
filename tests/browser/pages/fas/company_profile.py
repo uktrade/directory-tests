@@ -3,9 +3,11 @@
 import logging
 from urllib.parse import urljoin
 
-from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    Selector,
     check_for_expected_sections_elements,
     check_url,
     take_screenshot,
@@ -18,36 +20,41 @@ TYPE = "profile"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "suppliers/")
 
 SELECTORS = {
-    "name": {"itself": "#content h1.company-name-title"},
+    "name": {"itself": Selector(By.CSS_SELECTOR, "#content h1.company-name-title")},
     "company details": {
-        "itself": "#company-details",
-        "logo": "#company-logo",
-        "contact": "div.company-profile-module-details",
-        "facts & details": "div.company-profile-module-facts",
+        "itself": Selector(By.ID, "company-details"),
+        "logo": Selector(By.ID, "company-logo"),
+        "contact": Selector(By.CSS_SELECTOR, "div.company-profile-module-details"),
+        "facts & details": Selector(
+            By.CSS_SELECTOR, "div.company-profile-module-facts"
+        ),
     },
     "description": {
-        "itself": "div.company-profile-module-description",
-        "read full profile": "div.company-profile-module-description a",
+        "itself": Selector(By.CSS_SELECTOR, "div.company-profile-module-description"),
+        "read full profile": Selector(
+            By.CSS_SELECTOR, "div.company-profile-module-description a"
+        ),
     },
-    "core industry": {"itself": "div.company-profile-industries"},
-    "keywords": {"itself": "div.company-profile-keywords"},
+    "core industry": {
+        "itself": Selector(By.CSS_SELECTOR, "div.company-profile-industries")
+    },
+    "keywords": {"itself": Selector(By.CSS_SELECTOR, "div.company-profile-keywords")},
     "report profile": {
-        "itself": "div.ed-report-profile-container",
-        "report profile": "div.ed-report-profile-container a[href^=mailto]",
+        "itself": Selector(By.CSS_SELECTOR, "div.ed-report-profile-container"),
+        "report profile": Selector(
+            By.CSS_SELECTOR, "div.ed-report-profile-container a[href^=mailto]"
+        ),
     },
     "contact company": {
-        "itself": "div.ed-contact-company-container",
-        "contact company": "div.ed-contact-company-container a",
+        "itself": Selector(By.CSS_SELECTOR, "div.ed-contact-company-container"),
+        "contact company": Selector(
+            By.CSS_SELECTOR, "div.ed-contact-company-container a"
+        ),
     },
 }
 
-OPTIONAL_SECTIONS = {
-    "online profiles": {"itself": "div.company-profile-module-social-links"},
-    "recent projects": {"itself": "#company-projects"},
-}
 
-
-def should_be_here(driver: webdriver):
+def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
     check_for_expected_sections_elements(driver, SELECTORS)

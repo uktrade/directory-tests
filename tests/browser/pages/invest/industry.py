@@ -168,11 +168,9 @@ def clean_name(name: str) -> str:
 
 def open_industry(driver: WebDriver, industry_name: str):
     industry_name = clean_name(industry_name)
+    selector = Selector(By.PARTIAL_LINK_TEXT, industry_name)
     industry_link = find_element(
-        driver,
-        by_partial_link_text=industry_name,
-        element_name="Industry card",
-        wait_for_it=False,
+        driver, selector, element_name="Industry card", wait_for_it=False
     )
     industry_link.click()
     take_screenshot(driver, PAGE_TITLE + " after opening " + industry_name)
@@ -191,7 +189,7 @@ def should_see_content_for(driver: WebDriver, industry_name: str):
 
 
 def unfold_topics(driver: WebDriver):
-    expanders = find_elements(driver, by_css=TOPIC_EXPANDERS.value)
+    expanders = find_elements(driver, TOPIC_EXPANDERS)
     assert expanders, "Expected to see at least 1 topic but found 0 on {}".format(
         driver.current_url
     )

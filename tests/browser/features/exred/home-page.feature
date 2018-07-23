@@ -6,7 +6,17 @@ Feature: Home Page
   @sections
   Scenario: Any Exporter should see the "Beta, Hero, Exporting Journey, Export Readiness, Guidance, Services, Case Studies, Business is Great, Error Reporting" sections on the home page.
       Given "Robert" visits the "Export Readiness - Home" page
-      Then "Robert" should see "Beta, Hero, Exporting Journey, Export Readiness, Guidance, Services, Case Studies, Business is Great, Error Reporting" sections on "Export Readiness - Home" page
+      Then "Robert" should see following sections
+        | Sections          |
+        | Beta              |
+        | Hero              |
+        | Exporting Journey |
+        | Export Readiness  |
+        | Guidance          |
+        | Services          |
+        | Case Studies      |
+        | Business is Great |
+        | Error Reporting   |
 
 
   @new-triage

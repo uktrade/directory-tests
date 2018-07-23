@@ -13,6 +13,8 @@ from collections.__init__ import namedtuple
 from contextlib import contextmanager
 from datetime import datetime
 from os import path
+from selenium.webdriver import ActionChains
+from types import ModuleType
 from typing import Dict, List, Union
 
 import requests
@@ -26,7 +28,6 @@ from selenium.common.exceptions import (
     WebDriverException,
 )
 from selenium.webdriver.common.by import By
-from selenium.webdriver.remote import webelement
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions
@@ -125,7 +126,7 @@ def check_for_section(driver: WebDriver, all_sections: dict, sought_section: str
     """Check if all page elements from sought section are visible."""
     section = all_sections[sought_section.lower()]
     for element_name, selector in section.items():
-        element = find_element(driver, by_css=selector, element_name=element_name)
+        element = find_element(driver, selector, element_name=element_name)
         with assertion_msg(
             "'%s' in '%s' is not displayed on: %s",
             element_name,
@@ -140,12 +141,13 @@ def check_for_expected_elements(
     driver: WebDriver, elements: Dict, *, wait_for_it: bool = True
 ):
     """Check if all page elements are visible."""
-    for element_name, element_selector in elements.items():
+    for element_name, selector in elements.items():
+        if not isinstance(selector, Selector):
+            raise TypeError(
+                "Expected '{}' to be a Selector, got {}"
+                .format(selector, type(selector)))
         element = find_element(
-            driver,
-            by_css=element_selector,
-            element_name=element_name,
-            wait_for_it=wait_for_it,
+            driver, selector, element_name=element_name, wait_for_it=wait_for_it
         )
         with assertion_msg(
             "It looks like '%s' element is not visible on %s",
@@ -159,10 +161,12 @@ def check_for_expected_elements(
 def check_for_expected_sections_elements(driver: WebDriver, sections: Dict):
     """Check if all elements in page sections are visible."""
     for section in sections:
-        for element_name, element_selector in sections[section].items():
-            element = find_element(
-                driver, by_css=element_selector, element_name=element_name
-            )
+        for element_name, selector in sections[section].items():
+            if not isinstance(selector, Selector):
+                raise TypeError(
+                    "Expected '{}' to be a Selector, got {}"
+                        .format(selector, type(selector)))
+            element = find_element(driver, selector, element_name=element_name)
             with assertion_msg(
                 "It looks like '%s' element in '%s' section is not visible" " on %s",
                 element_name,
@@ -178,12 +182,10 @@ def find_and_click_on_page_element(
 ):
     """Find page element in any page section selectors and click on it."""
     found_selector = False
-    for section_name, element_selectors in sections.items():
-        if element_name.lower() in element_selectors:
+    for section_name, selectors in sections.items():
+        if element_name.lower() in selectors:
             found_selector = True
-            selector = element_selectors[element_name.lower()]
-            if isinstance(selector, Selector):
-                selector = selector.value
+            selector = selectors[element_name.lower()]
             logging.debug(
                 "Found '%s' in '%s' section with following selector: '%s'",
                 element_name,
@@ -191,10 +193,7 @@ def find_and_click_on_page_element(
                 selector,
             )
             web_element = find_element(
-                driver,
-                by_css=selector,
-                element_name=element_name,
-                wait_for_it=wait_for_it,
+                driver, selector, element_name=element_name, wait_for_it=wait_for_it
             )
             check_if_element_is_visible(web_element, element_name)
             with wait_for_page_load_after_action(driver):
@@ -205,9 +204,7 @@ def find_and_click_on_page_element(
 
 def initialize_scenario_data() -> ScenarioData:
     """Will initialize the Scenario Data."""
-    actors = {}
-    scenario_data = ScenarioData(actors)
-    return scenario_data
+    return ScenarioData(actors={})
 
 
 def unauthenticated_actor(alias: str, *, self_classification: str = None) -> Actor:
@@ -246,9 +243,15 @@ def add_actor(context: Context, actor: Actor):
     logging.debug("Successfully added actor: %s to Scenario Data", actor.alias)
 
 
-def get_actor(context, alias) -> Actor:
+def get_actor(context: Context, alias: str) -> Actor:
     """Get actor details from context Scenario Data."""
     return context.scenario_data.actors.get(alias)
+
+
+def get_last_visited_page(context: Context, actor_alias: str) -> ModuleType:
+    """Get last visited Page Object context Scenario Data."""
+    actor = context.scenario_data.actors.get(actor_alias)
+    return actor.visited_page
 
 
 def update_actor(context: Context, alias: str, **kwargs):
@@ -335,7 +338,10 @@ def selenium_action(driver: WebDriver, message: str, *args):
 
 
 def get_file_log_handler(
-    log_formatter, *, log_level=logging.DEBUG, task_id: str = None
+    log_formatter: logging.Formatter,
+    *,
+    log_level: int = logging.DEBUG,
+    task_id: str = None,
 ) -> logging.FileHandler:
     """Configure the console logger.
 
@@ -356,7 +362,7 @@ def init_loggers(context: Context, *, task_id: str = None):
     """Will initialize console and file loggers."""
     # configure the formatter
     fmt = (
-        u"%(asctime)s-%(filename)s[line:%(lineno)d]-%(name)s-%(levelname)s: "
+        "%(asctime)s-%(filename)s[line:%(lineno)d]-%(name)s-%(levelname)s: "
         "%(message)s"
     )
     log_formatter = logging.Formatter(fmt)
@@ -385,38 +391,14 @@ def flag_browserstack_session_as_failed(session_id: str, reason: str):
 
 
 def wait_for_visibility(
-    driver: WebDriver,
-    *,
-    by_css: str = None,
-    by_id: str = None,
-    by_link_text: str = None,
-    by_partial_link_text: str = None,
-    by_xpath: str = None,
-    time_to_wait: int = 5,
+    driver: WebDriver, selector: Selector, *, time_to_wait: int = 5
 ):
     """Wait until element is visible."""
-    assert (
-        by_id or by_css or by_link_text or by_xpath
-    ), "Provide element ID, CSS selector, Link Text or XPath"
-    if by_css:
-        by_locator = (By.CSS_SELECTOR, by_css)
-    elif by_id:
-        by_locator = (By.ID, by_id)
-    elif by_link_text:
-        by_locator = (By.LINK_TEXT, by_link_text)
-    elif by_partial_link_text:
-        by_locator = (By.PARTIAL_LINK_TEXT, by_partial_link_text)
-    elif by_xpath:
-        by_locator = (By.XPATH, by_xpath)
-    else:
-        raise AttributeError("Please provide valid element locator")
+    by_locator = (selector.by, selector.value)
     with selenium_action(
         driver,
         "Element identified by '{}' was not visible after waiting "
-        "for {} seconds".format(
-            by_css or by_id or by_link_text or by_partial_link_text or by_xpath,
-            time_to_wait,
-        ),
+        "for {} seconds".format(selector.value, time_to_wait),
     ):
         WebDriverWait(driver, time_to_wait).until(
             expected_conditions.visibility_of_element_located(by_locator)
@@ -424,22 +406,18 @@ def wait_for_visibility(
 
 
 def check_if_element_is_not_present(
-    driver: WebDriver, *, by_css: str = None, by_id: str = None, element_name: str = ""
+    driver: WebDriver, selector: Selector, *, element_name: str = ""
 ):
     """Find element by CSS selector or it's ID."""
-    assert by_id or by_css, "Provide ID or CSS selector"
     try:
-        if by_css:
-            driver.find_element_by_css_selector(by_css)
-        else:
-            driver.find_element_by_id(by_id)
+        driver.find_element(by=selector.by, value=selector.value)
         found = True
     except NoSuchElementException:
         found = False
     with assertion_msg(
         "Expected not to find %s element identified by '%s'",
         element_name,
-        by_id or by_css,
+        selector.value,
     ):
         assert not found
 
@@ -454,93 +432,52 @@ def check_if_element_is_visible(web_element: WebElement, element_name: str):
 
 def check_if_element_is_not_visible(
     driver: WebDriver,
+    selector: Selector,
     *,
-    by_css: str = None,
-    by_id: str = None,
     element_name: str = "",
     wait_for_it: bool = True,
 ):
     """Find element by CSS selector or it's ID."""
-    assert by_id or by_css, "Provide ID or CSS selector"
     try:
         element = find_element(
-            driver,
-            by_css=by_css,
-            by_id=by_id,
-            element_name=element_name,
-            wait_for_it=wait_for_it,
+            driver, selector, element_name=element_name, wait_for_it=wait_for_it
         )
         with assertion_msg(
             "Expected not to see '%s' element identified by '%s'",
             element_name,
-            by_id or by_css,
+            selector.value,
         ):
             assert not element.is_displayed()
     except NoSuchElementException:
+        logging.debug("As expected '{}' is not present".format(element_name))
         pass
-
-
-def check_if_only_one_selector_is_set(*args):
-    error_msg = "Provide only one type of element selector"
-    assert len(list(filter(None, args))) == 1, error_msg
 
 
 def find_element(
     driver: WebDriver,
+    selector: Selector,
     *,
-    by_css: str = None,
-    by_id: str = None,
-    by_link_text: str = None,
-    by_partial_link_text: str = None,
-    by_xpath: str = None,
     element_name: str = "",
     wait_for_it: bool = True,
 ) -> WebElement:
     """Find element by CSS selector or it's ID."""
-    check_if_only_one_selector_is_set(
-        by_css, by_id, by_link_text, by_partial_link_text, by_xpath
-    )
     with selenium_action(
         driver,
         "Couldn't find element called '%s' using selector '%s' on" " %s",
         element_name,
-        by_css or by_id,
+        selector.value,
         driver.current_url,
     ):
-        if by_css:
-            element = driver.find_element_by_css_selector(by_css)
-        elif by_id:
-            element = driver.find_element_by_id(by_id)
-        elif by_link_text:
-            element = driver.find_element_by_link_text(by_link_text)
-        elif by_partial_link_text:
-            element = driver.find_element_by_partial_link_text(by_partial_link_text)
-        elif by_xpath:
-            element = driver.find_element_by_xpath(by_xpath)
-        else:
-            raise AttributeError("Please provide valid element locator")
+        element = driver.find_element(by=selector.by, value=selector.value)
     if wait_for_it:
-        wait_for_visibility(
-            driver,
-            by_css=by_css,
-            by_id=by_id,
-            by_link_text=by_link_text,
-            by_xpath=by_xpath,
-            by_partial_link_text=by_partial_link_text,
-        )
+        wait_for_visibility(driver, selector)
     return element
 
 
-def find_elements(
-    driver: WebDriver, *, by_css: str = None, by_id: str = None
-) -> List[WebElement]:
+def find_elements(driver: WebDriver, selector: Selector) -> List[WebElement]:
     """Find element by CSS selector or it's ID."""
-    assert by_id or by_css, "Provide ID or CSS selector"
-    with selenium_action(driver, "Couldn't find elements using '%s'", by_css or by_id):
-        if by_css:
-            elements = driver.find_elements_by_css_selector(by_css)
-        else:
-            elements = driver.find_elements_by_id(by_id)
+    with selenium_action(driver, "Couldn't find elements using '%s'", selector.value):
+        elements = driver.find_elements(by=selector.by, value=selector.value)
     return elements
 
 
@@ -556,7 +493,7 @@ def clear_driver_cookies(driver: WebDriver):
         logging.error("Failed to clear cookies: '%s'", ex.msg)
 
 
-def check_hash_of_remote_file(expected_hash, file_url):
+def check_hash_of_remote_file(expected_hash: str, file_url: str):
     """Check if the md5 hash of the file is the same as expected."""
     logging.debug("Fetching file: %s", file_url)
     response = requests.get(file_url)
@@ -615,7 +552,7 @@ class wait_for_page_load_after_action(object):
         raise Exception("Timeout waiting for {}".format(condition_function.__name__))
 
 
-def scroll_to(driver: WebDriver, element: webelement):
+def scroll_to(driver: WebDriver, element: WebElement):
     vertical_position = element.location["y"]
     logging.debug("Moving focus to %s", element.id)
     driver.execute_script("window.scrollTo(0, {});".format(vertical_position))
@@ -663,6 +600,11 @@ def browser_check_for_sections(
                 selector.value,
             ):
                 element = driver.find_element(by=selector.by, value=selector.value)
+            if "firefox" not in driver.capabilities["browserName"].lower():
+                logging.debug("Moving focus to '%s' element", key)
+                action_chains = ActionChains(driver)
+                action_chains.move_to_element(element)
+                action_chains.perform()
             with assertion_msg(
                 "It looks like '%s' element identified by '%s' selector is"
                 " not visible on %s",

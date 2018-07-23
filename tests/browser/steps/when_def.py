@@ -353,7 +353,14 @@ def when_actor_opens_link_from_header_menu(context, actor_alias, page_name, grou
 @when('"{actor_alias}" decides to "{element_name}" via "{page_name}" page')
 def when_actor_decides_to_click_on_page_element(
         context, actor_alias, element_name, page_name):
-    click_on_page_element(context, actor_alias, element_name, page_name)
+    click_on_page_element(context, actor_alias, element_name, page_name=page_name)
+
+
+@when('"{actor_alias}" decides to use "{element_name}" button')
+@when('"{actor_alias}" decides to use "{element_name}" link')
+def when_actor_decides_to_click_on_page_element(
+        context, actor_alias, element_name):
+    click_on_page_element(context, actor_alias, element_name)
 
 
 @when('"{actor_alias}" says what he wants to export "{goods_or_services}"')
@@ -367,20 +374,11 @@ def when_actor_clicks_on_the_dit_logo(context, actor_alias, logo_location):
     header_footer_click_on_dit_logo(context, actor_alias, logo_location)
 
 
-@when('"{actor_alias}" searches for companies using "{keyword}" keyword in "{sector}" sector on "{page_alias}" page')
+@when('"{actor_alias}" searches for companies using "{keyword}" keyword in "{sector}" sector')
 def fas_when_actor_searches_for_companies(
-        context: Context, actor_alias: str, keyword: str, sector: str,
-        page_alias: str):
+        context: Context, actor_alias: str, keyword: str, sector: str):
     fas_search_for_companies(
-        context, actor_alias, keyword=keyword, sector=sector,
-        page_alias=page_alias)
-
-
-@when('"{actor_alias}" searches for companies using "{keyword}" keyword on "{page_alias}" page')
-def fas_when_actor_searches_for_companies(
-        context: Context, actor_alias: str, keyword: str, page_alias: str):
-    fas_search_for_companies(
-        context, actor_alias, keyword=keyword, page_alias=page_alias)
+        context, actor_alias, keyword=keyword, sector=sector)
 
 
 @when('"{actor_alias}" searches for companies using "{keyword}" keyword')
@@ -442,10 +440,9 @@ def when_actor_goes_to_guide(
     generic_open_guide_link(context, actor_alias, guide_name)
 
 
-@when('"{actor_alias}" unfolds all topic sections on "{page_name}" page')
-def when_actor_unfolds_all_topic_sections(
-        context: Context, actor_alias: str, page_name: str):
-    generic_unfold_topics(context, actor_alias, page_name)
+@when('"{actor_alias}" unfolds all topic sections')
+def when_actor_unfolds_all_topic_sections(context: Context, actor_alias: str):
+    generic_unfold_topics(context, actor_alias)
 
 
 @when('"{actor_alias}" decides to click on the UK Government logo in the page "{page_name}"')

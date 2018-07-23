@@ -5,14 +5,17 @@ from typing import List
 
 from behave.model import Table
 from behave.runner import Context
-from pages.common_actions import get_actor, assertion_msg, clear_driver_cookies
 
-from pages import common_language_selector
-from pages import exread
-from pages import fas
-from pages import invest
-from pages import get_page_object
+from pages import common_language_selector, exread, fas, get_page_object, invest
+from pages.common_actions import (
+    assertion_msg,
+    clear_driver_cookies,
+    get_actor,
+    get_last_visited_page,
+    update_actor
+)
 from registry.articles import get_article, get_articles
+from steps import has_action
 from steps.when_impl import (
     triage_should_be_classified_as_new,
     triage_should_be_classified_as_occasional,
@@ -22,22 +25,23 @@ from steps.when_impl import (
 
 def should_be_on_page(context: Context, actor_alias: str, page_name: str):
     page = get_page_object(page_name)
-    assert hasattr(page, "should_be_here")
+    has_action(page, "should_be_here")
     page.should_be_here(context.driver)
+    update_actor(context, actor_alias, visited_page=page)
     logging.debug("%s is on %s page", actor_alias, page_name)
 
 
 def should_be_on_page_or_international_page(
     context: Context, actor_alias: str, page_name: str
 ):
-    international_page = get_page_object("Export Readiness - International")
     page = get_page_object(page_name)
-    assert hasattr(page, "should_be_here")
+    has_action(page, "should_be_here")
     try:
         page.should_be_here(context.driver)
+        update_actor(context, actor_alias, visited_page=page)
         logging.debug("%s is on %s page", actor_alias, page_name)
     except AssertionError:
-        international_page.should_be_here(context.driver)
+        exread.international.should_be_here(context.driver)
         logging.debug(
             "%s was redirected to the International page", actor_alias
         )
@@ -217,11 +221,9 @@ def export_readiness_should_see_articles(
 
 
 def export_readiness_expected_page_elements_should_be_visible(
-    context: Context, actor_alias: str, elements: list
+    context: Context, actor_alias: str, elements: List[str]
 ):
-    exread.common.check_elements_are_visible(
-        context.driver, elements
-    )
+    exread.common.should_see_sections(context.driver, elements)
     logging.debug(
         "%s can see all expected page elements: '%s' on current Guidance "
         "Articles page: %s",
@@ -234,43 +236,27 @@ def export_readiness_expected_page_elements_should_be_visible(
 def should_see_sections(
     context: Context,
     actor_alias: str,
-    page_name: str,
+    sections_table: Table = None,
     *,
-    sections_list: List[str] = None,
-    sections_table: Table = None
+    sections_list: list = None,
 ):
-    assert sections_list or sections_table
-    if sections_table:
-        sections = [row[0] for row in sections_table]
-    else:
-        sections = sections_list
+    sections = sections_list or [row[0] for row in sections_table]
     logging.debug(
         "%s will look for following sections: '%s' on %s",
         actor_alias,
         sections,
         context.driver.current_url,
     )
-    page = get_page_object(page_name)
-    if hasattr(page, "should_see_sections"):
-        page.should_see_sections(context.driver, sections)
-        return
-
-    assert hasattr(page, "should_see_section")
-    for section in sections:
-        page.should_see_section(context.driver, section)
-        logging.debug(
-            "%s can see '%s' section on %s page",
-            actor_alias,
-            section,
-            page_name,
-        )
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "should_see_sections")
+    page.should_see_sections(context.driver, sections)
 
 
 def should_not_see_sections(
     context: Context, actor_alias: str, sections: list, page_name: str
 ):
     page = get_page_object(page_name)
-    assert hasattr(page, "should_not_see_section")
+    has_action(page, "should_not_see_section")
     for section in sections:
         page.should_not_see_section(context.driver, section)
         logging.debug(
@@ -467,10 +453,10 @@ def should_see_share_widget(context: Context, actor_alias: str):
 def should_see_links_to_services(
     context: Context, actor_alias: str, services: list, location: str
 ):
-    page_object = get_page_object(location)
-    assert hasattr(page_object, "should_see_link_to")
+    page = get_page_object(location)
+    has_action(page, "should_see_link_to")
     for service in services:
-        page_object.should_see_link_to(context.driver, "services", service)
+        page.should_see_link_to(context.driver, "services", service)
         logging.debug(
             "%s can see link to '%s' in '%s'", actor_alias, service, location
         )
@@ -538,9 +524,9 @@ def articles_read_counter_same_as_before_registration(
 def articles_should_not_see_link_to_sign_in(
     context: Context, actor_alias: str, page_name: str
 ):
-    page_object = get_page_object(page_name)
-    assert hasattr(page_object, "should_not_see_link_to_sign_in")
-    page_object.should_not_see_link_to_sign_in(context.driver)
+    page = get_page_object(page_name)
+    has_action(page, "should_not_see_link_to_sign_in")
+    page.should_not_see_link_to_sign_in(context.driver)
     logging.debug(
         "As expected %s did not see 'Sign In' link on the '%s' page",
         actor_alias,
@@ -551,9 +537,9 @@ def articles_should_not_see_link_to_sign_in(
 def articles_should_not_see_link_to_register(
     context: Context, actor_alias: str, page_name: str
 ):
-    page_object = get_page_object(page_name)
-    assert hasattr(page_object, "should_not_see_link_to_register")
-    page_object.should_not_see_link_to_register(context.driver)
+    page = get_page_object(page_name)
+    has_action(page, "should_not_see_link_to_register")
+    page.should_not_see_link_to_register(context.driver)
     logging.debug(
         "As expected %s did not see 'Register' link on the '%s' page",
         actor_alias,
@@ -581,7 +567,7 @@ def articles_should_be_on_share_page(
 ):
     page_name = f"{social_media} - share on {social_media}"
     social_media_page = get_page_object(page_name)
-    assert hasattr(social_media_page, "should_be_here")
+    has_action(social_media_page, "should_be_here")
     social_media_page.should_be_here(context.driver)
     logging.debug("%s is on the '%s' share page", actor_alias, social_media)
 
@@ -590,10 +576,10 @@ def share_page_should_be_prepopulated(
     context: Context, actor_alias: str, social_media: str
 ):
     page_name = f"{social_media} - share on {social_media}"
-    social_media_page = get_page_object(page_name)
-    assert hasattr(social_media_page, "check_if_populated")
+    page = get_page_object(page_name)
+    has_action(page, "check_if_populated")
     shared_url = context.article_url
-    social_media_page.check_if_populated(context.driver, shared_url)
+    page.check_if_populated(context.driver, shared_url)
     clear_driver_cookies(driver=context.driver)
     logging.debug(
         "%s saw '%s' share page populated with appropriate data",
@@ -665,17 +651,15 @@ def header_check_favicon(context: Context, actor_alias: str):
 
 
 def language_selector_should_see_it(context: Context, actor_alias: str):
-    actor = get_actor(context, actor_alias)
-    visited_page = actor.visited_page
-    common_language_selector.should_see_it_on(context.driver, page_name=visited_page)
+    page = get_last_visited_page(context, actor_alias)
+    common_language_selector.should_see_it_on(context.driver, page=page)
     logging.debug("As expected %s can see language selector", actor_alias)
 
 
 def language_selector_should_not_see_it(context: Context, actor_alias: str):
-    actor = get_actor(context, actor_alias)
-    visited_page = actor.visited_page
+    page = get_last_visited_page(context, actor_alias)
     common_language_selector.should_not_see_it_on(
-        context.driver, page_name=visited_page
+        context.driver, page=page
     )
     logging.debug("As expected %s cannot see language selector", actor_alias)
 
@@ -683,10 +667,9 @@ def language_selector_should_not_see_it(context: Context, actor_alias: str):
 def language_selector_keyboard_should_be_trapped(
     context: Context, actor_alias: str
 ):
-    actor = get_actor(context, actor_alias)
-    visited_page = actor.visited_page
+    page = get_last_visited_page(context, actor_alias)
     common_language_selector.keyboard_should_be_trapped(
-        context.driver, page_name=visited_page
+        context.driver, page=page
     )
 
 
@@ -718,8 +701,8 @@ def fas_search_results_filtered_by_industries(
 
 def invest_should_see_topic_contents(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
-    page = get_page_object(actor.visited_page)
-    assert hasattr(page, "should_see_topic")
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "should_see_topic")
     for topic in actor.visited_articles:
         page.should_see_topic(context.driver, topic)
         logging.debug(
@@ -733,10 +716,8 @@ def invest_should_see_topic_contents(context: Context, actor_alias: str):
 def generic_should_see_expected_page_content(
     context: Context, actor_alias: str, expected_page_name: str
 ):
-    actor = get_actor(context, actor_alias)
-    visited_page = actor.visited_page
-    page = get_page_object(visited_page, exact_match=False)
-    assert hasattr(page, "should_see_content_for")
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "should_see_content_for")
     page.should_see_content_for(context.driver, expected_page_name)
     logging.debug(
         "%s found content specific to %s on %s",

@@ -30,8 +30,9 @@ PAGE_TITLE = "Invest in Great Britain -"
 
 
 class URLS(Enum):
-    """Lists all URLs for industry pages."""
+    """Lists all URLs for guide pages."""
 
+    UK_SETUP = urljoin(BASE_URL, "")
     APPLY_FOR_A_UK_VISA = urljoin(BASE_URL, "apply-for-a-uk-visa/")
     ESTABLISH_A_BASE_FOR_BUSINESS_IN_THE_UK = urljoin(
         BASE_URL, "establish-a-base-for-business-in-the-uk/"
@@ -39,9 +40,13 @@ class URLS(Enum):
     HIRE_SKILLED_WORKERS_FOR_YOUR_UK_OPERATIONS = urljoin(
         BASE_URL, "hire-skilled-workers-for-your-uk-operations/"
     )
-    OPEN_A_UK_BUSINESS_BANK_ACCOUNT = urljoin(BASE_URL, "open-a-uk-business-bank-account/")
+    OPEN_A_UK_BUSINESS_BANK_ACCOUNT = urljoin(
+        BASE_URL, "open-a-uk-business-bank-account/"
+    )
     SET_UP_A_COMPANY_IN_THE_UK = urljoin(BASE_URL, "set-up-a-company-in-the-uk/")
-    UNDERSTAND_THE_UKS_TAX_INCENTIVES_AND_LEGAL_FRAMEWORK = urljoin(BASE_URL, "understand-uk-tax-and-incentives/")
+    UNDERSTAND_THE_UKS_TAX_INCENTIVES_AND_LEGAL_FRAMEWORK = urljoin(
+        BASE_URL, "understand-uk-tax-and-incentives/"
+    )
 
 
 SELECTORS = {

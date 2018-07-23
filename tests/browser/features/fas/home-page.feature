@@ -8,7 +8,13 @@ Feature: Find a Supplier - home page
   Scenario: Buyers should be able to view "Find a Supplier home" page
     Given "Robert" visits the "Find a Supplier - Home" page
 
-    Then "Robert" should see "Hero, Find UK Suppliers, Contact us, UK Industries, UK Services" sections on "Find a Supplier - Home" page
+    Then "Robert" should see following sections
+      | Sections          |
+      | Hero              |
+      | Find UK Suppliers |
+      | Contact us        |
+      | UK Industries     |
+      | UK Services       |
 
 
   @ED-4245
@@ -16,7 +22,7 @@ Feature: Find a Supplier - home page
   Scenario Outline: Buyers should be able to "Find UK suppliers" in "<specific>" industry from the "Find a Supplier home" page using "<following>" keyword
     Given "Robert" visits the "Find a Supplier - Home" page
 
-    When "Robert" searches for companies using "<following>" keyword in "<specific>" sector on "Find a Supplier - Home" page
+    When "Robert" searches for companies using "<following>" keyword in "<specific>" sector
 
     Then "Robert" should be on the "<expected>" page
 
@@ -58,7 +64,7 @@ Feature: Find a Supplier - home page
 
     When "Robert" decides to find out out more about "Find a Supplier - <specific> industry"
 
-    Then "Robert" should be on the "Find a Supplier - Industry" page
+    Then "Robert" should be on the "Find a Supplier - industry" page
     And "Robert" should see content specific to "Find a Supplier - <specific> industry" page
 
     Examples:

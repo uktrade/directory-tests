@@ -6,7 +6,12 @@ Feature: International Page
   Scenario: Visitors should see "Buy from the UK, Invest in the UK, Study in the UK, Visit the UK" sections on the International page
     Given "Robert" visits the "Export Readiness - International" page
 
-    Then "Robert" should see "Buy from the UK, Invest in the UK, Study in the UK, Visit the UK" sections on "Export Readiness - International" page
+    Then "Robert" should see following sections
+      | Sections          |
+      | Buy from the UK   |
+      | Invest in the UK  |
+      | Study in the UK   |
+      | Visit the UK      |
 
 
   @ED-3136
