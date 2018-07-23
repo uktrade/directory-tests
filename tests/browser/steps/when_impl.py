@@ -439,6 +439,7 @@ def triage_should_be_classified_as_regular(context: Context):
 def triage_create_exporting_journey(context: Context, actor_alias: str):
     exread.triage_summary.create_exporting_journey(context.driver)
     update_actor(context, alias=actor_alias, created_personalised_journey=True)
+    update_actor(context, alias=actor_alias, visited_page=exread.personalised_journey)
 
 
 def triage_classify_as_new(
