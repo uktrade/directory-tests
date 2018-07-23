@@ -70,7 +70,18 @@ def visit_page(
         "%s will visit '%s' page using: '%s'", actor_alias, page_name, page.URL
     )
     assert hasattr(page, "visit")
-    if "industry" in page_name.lower() or "guide" in page_name.lower():
+
+    def should_pass_page_name(page_name: str) -> bool:
+        result = False
+        if page_name.lower().endswith("uk setup guide"):
+            result = False
+        if page_name.lower().endswith("industry"):
+            result = True
+        elif page_name.lower().endswith("guide"):
+            result = True
+        return result
+
+    if should_pass_page_name(page_name):
         page.visit(context.driver, first_time=first_time, page_name=page_name)
     else:
         page.visit(context.driver, first_time=first_time)
