@@ -157,7 +157,7 @@ Feature: Header-Footer
   Scenario: Any user who visits the "Create your export journey" page for the first time, should be able to Start the journey (get to the first Triage question)
     Given "Robert" visits the "Export Readiness - Create your export journey" page for the first time
 
-    When "Robert" decides to use "Start now button" on "Export Readiness - Create your export journey" page
+    When "Robert" decides to use "Start now" button
 
     Then "Robert" should be on the "Export Readiness - have you exported before" page
 
@@ -273,8 +273,8 @@ Feature: Header-Footer
   Scenario Outline: Any user who has not signed-in should be asked to register or sign-in whilst being on the Article List page
     Given "Robert" is on the "<group>" Article List for randomly selected category
 
-    Then "Robert" should see following sections
-      | Sections      |
+    Then "Robert" should see following section
+      | Section       |
       | Save progress |
 
     Examples: article groups
@@ -293,8 +293,8 @@ Feature: Header-Footer
 
     When "Robert" opens any article on the list
 
-    Then "Robert" should see following sections
-      | Sections      |
+    Then "Robert" should see following section
+      | Section       |
       | Save progress |
 
     Examples: article groups
