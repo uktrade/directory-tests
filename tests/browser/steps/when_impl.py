@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 """When step implementations."""
 import logging
+
 import random
 
 from behave.model import Table
 from behave.runner import Context
 from retrying import retry
 from selenium.common.exceptions import TimeoutException, WebDriverException
+
+from steps import has_action
 from utils.gov_notify import get_verification_link
 
 from pages import common_language_selector, exread, fas, get_page_object, sso
@@ -69,7 +72,7 @@ def visit_page(
     logging.debug(
         "%s will visit '%s' page using: '%s'", actor_alias, page_name, page.URL
     )
-    assert hasattr(page, "visit")
+    has_action(page, "visit")
 
     def should_pass_page_name(page_name: str) -> bool:
         result = False
@@ -1273,7 +1276,7 @@ def open_service_link_on_interim_page(
 ):
     page_name = "export readiness - interim {}".format(service)
     page = get_page_object(page_name)
-    assert hasattr(page, "go_to_service")
+    has_action(page, "go_to_service")
     page.go_to_service(context.driver)
     logging.debug("%s went to %s service page", actor_alias, service)
 
@@ -1567,9 +1570,9 @@ def header_footer_open_link(
 def click_on_page_element(
     context: Context, actor_alias: str, element_name: str, page_name: str
 ):
-    page_object = get_page_object(page_name, exact_match=False)
-    assert hasattr(page_object, "click_on_page_element")
-    page_object.click_on_page_element(context.driver, element_name)
+    page = get_page_object(page_name, exact_match=False)
+    has_action(page, "click_on_page_element")
+    page.click_on_page_element(context.driver, element_name)
     logging.debug(
         "%s decided to click on '%s' on '%s' page",
         actor_alias,
@@ -1595,7 +1598,7 @@ def fas_search_for_companies(
     sector: str = None
 ):
     page = get_last_visited_page(context, actor_alias)
-    assert hasattr(page, "search")
+    has_action(page, "search")
     optional_param_keywords = ["n/a", "no", "empty", "without", "any"]
     if keyword and keyword.lower() in optional_param_keywords:
         keyword = None
@@ -1620,7 +1623,7 @@ def generic_open_industry_page(
     context: Context, actor_alias: str, industry_name: str
 ):
     page = get_last_visited_page(context, actor_alias)
-    assert hasattr(page, "open_industry")
+    has_action(page, "open_industry")
     page.open_industry(context.driver, industry_name)
     update_actor(context, actor_alias, visited_page=industry_name)
     logging.debug(
@@ -1656,7 +1659,7 @@ def fas_fill_out_and_submit_contact_us_form(
 
 def generic_see_more_industries(context: Context, actor_alias: str):
     page = get_last_visited_page(context, actor_alias)
-    assert hasattr(page, "see_more_industries")
+    has_action(page, "see_more_industries")
     page.see_more_industries(context.driver)
     logging.debug(
         "%s clicked on 'See more industries' button on %s",
@@ -1669,7 +1672,7 @@ def fas_use_breadcrumb(
     context: Context, actor_alias: str, breadcrumb_name: str, page_name: str
 ):
     page = get_page_object(page_name)
-    assert hasattr(page, "click_breadcrumb")
+    has_action(page, "click_breadcrumb")
     page.click_breadcrumb(context.driver, breadcrumb_name)
     logging.debug(
         "%s clicked on '%s' breadcrumb on %s",
@@ -1681,7 +1684,7 @@ def fas_use_breadcrumb(
 
 def fas_view_more_companies(context: Context, actor_alias: str):
     page = get_last_visited_page(context, actor_alias)
-    assert hasattr(page, "click_on_page_element")
+    has_action(page, "click_on_page_element")
     page.click_on_page_element(context.driver, "view more")
     logging.debug(
         "%s clicked on 'view more companies' button on %s",
@@ -1695,7 +1698,7 @@ def fas_view_selected_company_profile(
 ):
     number = NUMBERS[profile_number]
     page = get_last_visited_page(context, actor_alias)
-    assert hasattr(page, "open_profile")
+    has_action(page, "open_profile")
     page.open_profile(context.driver, number)
     logging.debug(
         "%s clicked on '%s' button on %s",
@@ -1708,7 +1711,7 @@ def fas_view_selected_company_profile(
 def fas_view_article(context: Context, actor_alias: str, article_number: str):
     number = NUMBERS[article_number]
     page = get_last_visited_page(context, actor_alias)
-    assert hasattr(page, "open_article")
+    has_action(page, "open_article")
     page.open_article(context.driver, number)
     logging.debug(
         "%s clicked on '%s' article on %s",
@@ -1720,7 +1723,7 @@ def fas_view_article(context: Context, actor_alias: str, article_number: str):
 
 def invest_read_more(context: Context, actor_alias: str, topic_names: Table):
     page = get_last_visited_page(context, actor_alias)
-    assert hasattr(page, "open_link")
+    has_action(page, "open_link")
     topics = [row[0] for row in topic_names]
     update_actor(context, actor_alias, visited_articles=topics)
     for topic in topics:
@@ -1743,7 +1746,7 @@ def generic_open_guide_link(
     context: Context, actor_alias: str, guide_name: str
 ):
     page = get_last_visited_page(context, actor_alias)
-    assert hasattr(page, "open_guide")
+    has_action(page, "open_guide")
     page.open_guide(context.driver, guide_name)
     update_actor(context, actor_alias, visited_page=guide_name)
     logging.debug(
@@ -1753,7 +1756,7 @@ def generic_open_guide_link(
 
 def generic_unfold_topics(context: Context, actor_alias: str):
     page = get_last_visited_page(context, actor_alias)
-    assert hasattr(page, "unfold_topics")
+    has_action(page, "unfold_topics")
     page.unfold_topics(context.driver)
     update_actor(context, actor_alias, visited_page=page)
     logging.debug("%s unfolded all topics on %s", actor_alias, page.NAME)
@@ -1762,6 +1765,6 @@ def generic_unfold_topics(context: Context, actor_alias: str):
 def generic_click_on_uk_gov_logo(
         context: Context, actor_alias: str, page_name: str):
     page = get_page_object(page_name)
-    assert hasattr(page, "click_on_page_element")
+    has_action(page, "click_on_page_element")
     page.click_on_page_element(context.driver, "uk gov logo")
     logging.debug("%s click on UK Gov logo %s", actor_alias, page_name)
