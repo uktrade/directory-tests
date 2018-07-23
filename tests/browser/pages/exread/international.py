@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """great.gov.uk International page"""
 import logging
+from typing import List
 from urllib.parse import urljoin
 
 from selenium import webdriver
@@ -18,6 +19,8 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
     wait_for_page_load_after_action,
+    check_for_sections,
+    AssertionExecutor
 )
 from settings import EXRED_UI_URL
 
@@ -135,6 +138,10 @@ def should_be_here(driver: WebDriver):
 
 def should_see_section(driver: WebDriver, name: str):
     check_for_section(driver, SELECTORS, sought_section=name)
+
+
+def should_see_sections(executor: AssertionExecutor, names: List[str]):
+    check_for_sections(executor, all_sections=SELECTORS, sought_sections=names)
 
 
 def open(driver: WebDriver, group: str, element: str, *, same_tab: bool = True):
