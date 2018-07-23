@@ -3,6 +3,8 @@
 import logging
 import time
 
+from types import ModuleType
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -19,6 +21,7 @@ from pages.common_actions import (
 NAME = "Language selector"
 
 LANGUAGE_INDICATOR = Selector(By.CSS_SELECTOR, "#header-bar span.lang")
+INTERNATIONAL_LANGUAGE_INDICATOR = Selector(By.CSS_SELECTOR, "#international-header-bar span.lang")
 LANGUAGE_SELECTOR_OPEN = Selector(
     By.CSS_SELECTOR, "#header-bar a.LanguageSelectorDialog-Tracker"
 )
@@ -115,15 +118,16 @@ def open(driver: WebDriver, *, with_keyboard: bool = False):
         language_selector.click()
 
 
-def should_see_it_on(driver: WebDriver, page_name: str):
-    take_screenshot(driver, NAME + page_name)
-    section = ELEMENTS_ON[page_name.lower()]
+def should_see_it_on(driver: WebDriver, page: ModuleType):
+    take_screenshot(driver, NAME + page.NAME)
+    page_name = f"{page.SERVICE} - {page.NAME}".lower()
+    section = ELEMENTS_ON[page_name]
     for key, selector in section.items():
         with selenium_action(
             driver,
             "Could not find: '%s' element on '%s' using " "'%s' selector",
             key,
-            page_name,
+            page.NAME,
             selector,
         ):
             element = find_element(driver, selector)
@@ -132,19 +136,21 @@ def should_see_it_on(driver: WebDriver, page_name: str):
             logging.debug("'%s' on '%s' is displayed", key, page_name)
 
 
-def should_not_see_it_on(driver: WebDriver, page_name: str):
+def should_not_see_it_on(driver: WebDriver, page: ModuleType):
     # wait a second before language selector modal window disappears
     time.sleep(1)
+    page_name = f"{page.SERVICE} - {page.NAME}".lower()
     take_screenshot(driver, NAME + page_name)
-    page_elements = ELEMENTS_ON[page_name.lower()]
+    page_elements = ELEMENTS_ON[page_name]
     for key, selector in page_elements.items():
         check_if_element_is_not_visible(
             driver, selector, element_name=key, wait_for_it=False
         )
 
 
-def navigate_through_links_with_keyboard(driver: WebDriver, page_name: str):
-    for name, selector in KEYBOARD_NAVIGABLE_ELEMENTS[page_name.lower()]:
+def navigate_through_links_with_keyboard(driver: WebDriver, page: ModuleType):
+    page_name = f"{page.SERVICE} - {page.NAME}".lower()
+    for name, selector in KEYBOARD_NAVIGABLE_ELEMENTS[page_name]:
         element = find_element(driver, selector, element_name=name)
         with assertion_msg("Expected '%s' element to be in focus", name):
             assert element.id == driver.switch_to.active_element.id
@@ -152,16 +158,17 @@ def navigate_through_links_with_keyboard(driver: WebDriver, page_name: str):
         element.send_keys(Keys.TAB)
 
 
-def keyboard_should_be_trapped(driver: WebDriver, page_name: str):
+def keyboard_should_be_trapped(driver: WebDriver, page: ModuleType):
     number_of_navigation_iterations = 2
     for _ in range(number_of_navigation_iterations):
-        navigate_through_links_with_keyboard(driver, page_name)
+        navigate_through_links_with_keyboard(driver, page)
 
 
 def change_to(
-    driver: WebDriver, page_name: str, language: str, *, with_keyboard: bool = False
+    driver: WebDriver, page: ModuleType, language: str, *, with_keyboard: bool = False
 ):
-    language_selector = ELEMENTS_ON[page_name.lower()][language]
+    page_name = f"{page.SERVICE} - {page.NAME}".lower()
+    language_selector = ELEMENTS_ON[page_name][language]
     language_button = find_element(driver, language_selector)
     if with_keyboard:
         language_button.send_keys(Keys.ENTER)
