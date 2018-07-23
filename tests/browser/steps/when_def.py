@@ -356,6 +356,13 @@ def when_actor_decides_to_click_on_page_element(
     click_on_page_element(context, actor_alias, element_name, page_name=page_name)
 
 
+@when('"{actor_alias}" decides to use "{element_name}" button')
+@when('"{actor_alias}" decides to use "{element_name}" link')
+def when_actor_decides_to_click_on_page_element(
+        context, actor_alias, element_name):
+    click_on_page_element(context, actor_alias, element_name)
+
+
 @when('"{actor_alias}" says what he wants to export "{goods_or_services}"')
 @when('"{actor_alias}" says what she wants to export "{goods_or_services}"')
 def when_actor_says_what_is_exported(context, actor_alias, goods_or_services):

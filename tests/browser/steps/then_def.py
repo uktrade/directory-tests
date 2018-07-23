@@ -168,6 +168,7 @@ def then_should_see_sections(context, actor_alias, sections):
 
 
 @then('"{actor_alias}" should see following sections')
+@then('"{actor_alias}" should see following section')
 def then_should_see_sections(context, actor_alias):
     should_see_sections(context, actor_alias, sections_table=context.table)
 
