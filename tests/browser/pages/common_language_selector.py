@@ -26,6 +26,9 @@ INTERNATIONAL_LANGUAGE_INDICATOR = Selector(By.CSS_SELECTOR, "#international-hea
 LANGUAGE_SELECTOR_OPEN = Selector(
     By.CSS_SELECTOR, "#header-bar a.LanguageSelectorDialog-Tracker"
 )
+INTERNATIONAL_LANGUAGE_SELECTOR_OPEN = Selector(
+    By.CSS_SELECTOR, "#international-header-bar a.LanguageSelectorDialog-Tracker"
+)
 LANGUAGE_SELECTOR_CLOSE = Selector(By.ID, "header-language-selector-close")
 DOMESTIC_PAGE = Selector(
     By.CSS_SELECTOR, "section.language-selector-dialog div.domestic-redirect > p > a"
@@ -110,7 +113,11 @@ def close(driver: WebDriver, *, with_keyboard: bool = False):
 
 
 def open(driver: WebDriver, *, with_keyboard: bool = False):
-    language_selector = find_element(driver, LANGUAGE_SELECTOR_OPEN)
+    try:
+        language_selector = find_element(driver, LANGUAGE_SELECTOR_OPEN)
+    except NoSuchElementException:
+        language_selector = find_element(driver, INTERNATIONAL_LANGUAGE_SELECTOR_OPEN)
+
     with assertion_msg("Language Selector button is not visible"):
         assert language_selector.is_displayed()
     if with_keyboard:
