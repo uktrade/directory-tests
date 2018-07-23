@@ -650,17 +650,15 @@ def header_check_favicon(context: Context, actor_alias: str):
 
 
 def language_selector_should_see_it(context: Context, actor_alias: str):
-    actor = get_actor(context, actor_alias)
-    visited_page = actor.visited_page
-    common_language_selector.should_see_it_on(context.driver, page_name=visited_page)
+    page = get_last_visited_page(context, actor_alias)
+    common_language_selector.should_see_it_on(context.driver, page=page)
     logging.debug("As expected %s can see language selector", actor_alias)
 
 
 def language_selector_should_not_see_it(context: Context, actor_alias: str):
-    actor = get_actor(context, actor_alias)
-    visited_page = actor.visited_page
+    page = get_last_visited_page(context, actor_alias)
     common_language_selector.should_not_see_it_on(
-        context.driver, page_name=visited_page
+        context.driver, page=page
     )
     logging.debug("As expected %s cannot see language selector", actor_alias)
 
@@ -668,10 +666,9 @@ def language_selector_should_not_see_it(context: Context, actor_alias: str):
 def language_selector_keyboard_should_be_trapped(
     context: Context, actor_alias: str
 ):
-    actor = get_actor(context, actor_alias)
-    visited_page = actor.visited_page
+    page = get_last_visited_page(context, actor_alias)
     common_language_selector.keyboard_should_be_trapped(
-        context.driver, page_name=visited_page
+        context.driver, page=page
     )
 
 

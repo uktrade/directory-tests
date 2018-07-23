@@ -1505,25 +1505,23 @@ def language_selector_navigate_through_links_with_keyboard(
         " keyboard",
         actor_alias,
     )
-    actor = get_actor(context, actor_alias)
-    visited_page = actor.visited_page
+    page = get_last_visited_page(context, actor_alias)
     common_language_selector.navigate_through_links_with_keyboard(
-        context.driver, page_name=visited_page
+        context.driver, page=page
     )
 
 
 def language_selector_change_to(
     context: Context, actor_alias: str, preferred_language: str
 ):
-    actor = get_actor(context, actor_alias)
-    visited_page = actor.visited_page
+    page = get_last_visited_page(context, actor_alias)
     logging.debug(
         f"{actor_alias} decided to change language on {visit_page} to"
         f" {preferred_language}",
     )
     language_selector_open(context, actor_alias)
     common_language_selector.change_to(
-        context.driver, visited_page, preferred_language
+        context.driver, page, preferred_language
     )
 
 
