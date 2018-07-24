@@ -22,12 +22,12 @@ from settings import INVEST_UI_URL
 
 NAME = "Guide"
 NAMES = [
-    "Apply for a UK visa guide",
-    "Establish a base for business in the UK guide",
-    "Hire skilled workers for your UK operations guide",
-    "Open a UK business bank account guide",
-    "Set up a company in the UK guide",
-    "Understand the UK's tax, incentives and legal framework guide",
+    "Apply for a UK visa",
+    "Establish a base for business in the UK",
+    "Hire skilled workers for your UK operations",
+    "Open a UK business bank account",
+    "Set up a company in the UK",
+    "Understand the UK's tax, incentives and legal framework",
 ]
 SERVICE = "invest"
 TYPE = "guide"
