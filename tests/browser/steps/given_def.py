@@ -214,7 +214,7 @@ def given_actor_shows_all_articles(context, actor_alias):
 @given('"{actor_alias}" decided to "{element_name}" via "{page_name}" page')
 def given_actor_decides_to_click_on_page_element(
         context, actor_alias, element_name, page_name):
-    click_on_page_element(context, actor_alias, element_name, page_name)
+    click_on_page_element(context, actor_alias, element_name, page_name=page_name)
 
 
 @given('"{actor_alias}" decided to find out out more about "{industry_name}" industry')
