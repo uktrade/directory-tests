@@ -36,10 +36,10 @@ Feature: Invest home page
   Scenario Outline: Overseas businesses should be able to learn more about "<selected>" UK Industry
     Given "Robert" visits the "Invest - home" page
 
-    When "Robert" decides to find out out more about "Invest - <selected> industry"
+    When "Robert" decides to find out out more about "Invest - <selected> - industry"
 
-    Then "Robert" should be on the "Invest - Industry" page
-    And "Robert" should see content specific to "Invest - <selected> industry" page
+    Then "Robert" should be on the "Invest - <selected> - industry" page
+    And "Robert" should see content specific to "Invest - <selected> - industry" page
 
     Examples: promoted industries
       | selected                 |
@@ -64,10 +64,10 @@ Feature: Invest home page
   Scenario Outline: Overseas businesses should be able to learn how to grow their businesses in the UK by reading "<selected>" guide
     Given "Robert" visits the "Invest - home" page
 
-    When "Robert" decides to read "Invest - <selected> guide" guide
+    When "Robert" decides to read "Invest - <selected> - guide" guide
 
-    Then "Robert" should be on the "Invest - UK Setup Guide" page
-    And "Robert" should see content specific to "Invest - <selected> guide" page
+    Then "Robert" should be on the "Invest - <selected> - guide" page
+    And "Robert" should see content specific to "Invest - <selected> - guide" page
 
     Examples: UK Setup Guides
       | selected                                    |

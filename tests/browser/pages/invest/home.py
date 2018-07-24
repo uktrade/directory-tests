@@ -222,12 +222,7 @@ def should_see_topic(driver: WebDriver, name: str):
 
 
 def clean_name(name: str) -> str:
-    return (
-        name.replace("Invest - ", "")
-        .replace("industry", "")
-        .replace("guide", "")
-        .strip()
-    )
+    return name.split(" - ")[1].strip()
 
 
 def open_industry(driver: WebDriver, industry_name: str):

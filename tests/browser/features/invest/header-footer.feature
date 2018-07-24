@@ -58,15 +58,16 @@ Feature: Header-Footer
     Then "Robert" should be on the "Invest - Home" page
 
     Examples:
-      | selected                          |
-      | Home                              |
-      | Industries                        |
-      | UK Setup Guide                    |
-      | Contact Us                        |
-#      | Feedback                          | it's a separate service with different header & footer
-      | Automotive industry               |
-      | Capital Investment industry       |
-      | Creative industries industry      |
-      | Financial services industry       |
-      | Health and life sciences industry |
-      | Technology industry               |
+      | selected                            |
+      | Home                                |
+      | Industries                          |
+      | UK Setup Guide                      |
+      | Contact Us                          |
+      | Automotive - industry               |
+      | Capital Investment - industry       |
+      | Creative industries - industry      |
+      | Financial services - industry       |
+      | Health and life sciences - industry |
+      | Technology - industry               |
+      | Apply for a UK visa - guide         |
+#      | Feedback                            | it's a separate service with different header & footer

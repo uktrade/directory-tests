@@ -3,7 +3,7 @@ Feature: Industry pages
 
   @CMS-160
   Scenario Outline: Visitors should be able to see the "Invest - <selected> industry" page
-    Given "Robert" visits the "Invest - <selected> industry" page
+    Given "Robert" visits the "Invest - <selected> - industry" page
 
     When "Robert" unfolds all topic sections
 
@@ -48,7 +48,7 @@ Feature: Industry pages
 
   @CMS-160
   Scenario Outline: Visitors should be able to see the "Invest - <selected> industry" page with related Industries
-    Given "Robert" visits the "Invest - <selected> industry" page
+    Given "Robert" visits the "Invest - <selected> - industry" page
 
     When "Robert" unfolds all topic sections
 

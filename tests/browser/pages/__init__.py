@@ -86,30 +86,35 @@ def get_page_objects(package: ModuleType) -> Dict[str, ModuleType]:
 PAGES = PageObjects("PageObjects", names=get_page_objects(pages))
 
 
-def get_page_object(
-        service_and_page: str, *, exact_match: bool = True) -> ModuleType:
-    assert " - " in service_and_page, (
-        f"Invalid Service & Page name: {service_and_page}")
+def get_page_object(service_and_page: str) -> ModuleType:
+    assert " - " in service_and_page, f"Invalid Service & Page name: {service_and_page}"
     parts = service_and_page.split(" - ")
-    service = parts[0]
-    name = parts[1]
+    sought_service = parts[0]
+    sought_page = parts[1]
     result = None
-    for page in PAGES.__members__.values():
-        service_name = page.service.lower()
-        page_name = page.name.lower()
-        if exact_match:
-            if (service_name == service.lower()) and (page_name == name.lower()):
-                result = page.value
-        else:
-            parts = [word for word in name.lower().split() if len(word) > 2]
-            partial_name_match = any(word in page_name for word in parts)
-            if service_name == service.lower():
-                if partial_name_match:
-                    result = page.value
+    for page_object in PAGES.__members__.values():
+        if sought_service.lower() == page_object.service.lower():
+            if hasattr(page_object.value, "NAMES"):
+                names = page_object.value.NAMES
+                if sought_page.lower() in [name.lower() for name in names]:
+                    result = page_object.value
+                    break
+            else:
+                if sought_page.lower() == page_object.name.lower():
+                    result = page_object.value
+                    break
 
     if not result:
-        keys = PAGES.__members__.keys()
+        service_key = sought_service.replace(" ", "_").upper()
+        keys = [
+            key
+            for key in PAGES.__members__.keys()
+            if key.startswith(service_key)
+        ]
         raise KeyError(
-            f"Could not find Page Object for: '{service_and_page}' in: {keys}")
-    logging.debug(F"Found PO for: {service_and_page} → {result}")
+            f"Could not find Page Object for '{sought_page}' in "
+            f"'{sought_service}' package. Here's a list of available Page "
+            f"Objects: {keys}"
+        )
+    logging.debug(f"Found PO for: {service_and_page} → {result}")
     return result

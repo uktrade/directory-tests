@@ -22,43 +22,43 @@ Feature: Pixels
 #      | Feedback   |
 
     Examples: Industry pages
-      | selected                                     |
-      | Advanced manufacturing Industry              |
-      | Aerospace Industry                           |
-      | Agri-tech Industry                           |
-      | Asset management Industry                    |
-      | Automotive Industry                          |
-      | Automotive research and development Industry |
-      | Automotive supply chain Industry             |
-      | Capital Investment Industry                  |
-      | Chemicals Industry                           |
-      | Creative content and production Industry     |
-      | Creative industries Industry                 |
-      | Data Analytics Industry                      |
-      | Digital media Industry                       |
-      | Electrical networks Industry                 |
-      | Energy Industry                              |
-      | Energy from waste Industry                   |
-      | Financial services Industry                  |
-      | Financial technology Industry                |
-      | Food and drink Industry                      |
-      | Free-from foods Industry                     |
-      | Health and life sciences Industry            |
-      | Meat, poultry and dairy Industry             |
-      | Medical technology Industry                  |
-      | Motorsport Industry                          |
-      | Nuclear energy Industry                      |
-      | Offshore wind energy Industry                |
-      | Oil and gas Industry                         |
-      | Pharmaceutical manufacturing Industry        |
-      | Retail Industry                              |
-      | Technology Industry                          |
+      | selected                                       |
+      | Advanced manufacturing - industry              |
+      | Aerospace - industry                           |
+      | Agri-tech - industry                           |
+      | Asset management - industry                    |
+      | Automotive - industry                          |
+      | Automotive research and development - industry |
+      | Automotive supply chain - industry             |
+      | Capital Investment - industry                  |
+      | Chemicals - industry                           |
+      | Creative content and production - industry     |
+      | Creative industries - industry                 |
+      | Data Analytics - industry                      |
+      | Digital media - industry                       |
+      | Electrical networks - industry                 |
+      | Energy - industry                              |
+      | Energy from waste - industry                   |
+      | Financial services - industry                  |
+      | Financial technology - industry                |
+      | Food and drink - industry                      |
+      | Free-from foods - industry                     |
+      | Health and life sciences - industry            |
+      | Meat, poultry and dairy - industry             |
+      | Medical technology - industry                  |
+      | Motorsport - industry                          |
+      | Nuclear energy - industry                      |
+      | Offshore wind energy - industry                |
+      | Oil and gas - industry                         |
+      | Pharmaceutical manufacturing - industry        |
+      | Retail - industry                              |
+      | Technology - industry                          |
 
     Examples: UK Setup Guides
-      | selected                                                      |
-      | Apply for a UK visa guide                                     |
-      | Establish a base for business in the UK guide                 |
-      | Hire skilled workers for your UK operations guide             |
-      | Open a UK business bank account guide                         |
-      | Set up a company in the UK guide                              |
-      | Understand the UK's tax, incentives and legal framework guide |
+      | selected                                                        |
+      | Apply for a UK visa - guide                                     |
+      | Establish a base for business in the UK - guide                 |
+      | Hire skilled workers for your UK operations - guide             |
+      | Open a UK business bank account - guide                         |
+      | Set up a company in the UK - guide                              |
+      | Understand the UK's tax, incentives and legal framework - guide |
