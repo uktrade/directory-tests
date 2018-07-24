@@ -105,10 +105,11 @@ def get_page_object(service_and_page: str) -> ModuleType:
                     break
 
     if not result:
+        service_key = sought_service.replace(" ", "_").upper()
         keys = [
             key
             for key in PAGES.__members__.keys()
-            if key.startswith(sought_service.upper())
+            if key.startswith(service_key)
         ]
         raise KeyError(
             f"Could not find Page Object for '{sought_page}' in "
