@@ -1626,7 +1626,7 @@ def generic_open_industry_page(
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "open_industry")
     page.open_industry(context.driver, industry_name)
-    update_actor(context, actor_alias, visited_page=industry_name)
+    update_actor(context, actor_alias, visited_page=page)
     logging.debug(
         "%s opened '%s' page on %s", actor_alias, industry_name, page.URL
     )
