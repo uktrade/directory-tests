@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
 """When step implementations."""
 import logging
-
 import random
 
 from behave.model import Table
 from behave.runner import Context
 from retrying import retry
 from selenium.common.exceptions import TimeoutException, WebDriverException
-
-from steps import has_action
 from utils.gov_notify import get_verification_link
 
 from pages import common_language_selector, exread, fas, get_page_object, sso
@@ -30,6 +27,7 @@ from registry.articles import (
     get_random_article,
 )
 from settings import EXRED_SECTORS
+from steps import has_action
 
 NUMBERS = {
     "first": 1,
@@ -68,21 +66,19 @@ def visit_page(
     """
     def is_special_case(page_name: str) -> bool:
         result = False
-        if page_name.lower().endswith("uk setup guide"):
-            result = False
         if page_name.lower().endswith("industry"):
             result = True
-        elif page_name.lower().endswith("guide"):
+        elif ("uk setup guide" not in page_name.lower()) and (
+            page_name.lower().endswith("guide")
+        ):
             result = True
         return result
 
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
 
-    if is_special_case(page_name):
-        page = get_page_object(page_name, exact_match=False)
-    else:
-        page = get_page_object(page_name, exact_match=True)
+    page = get_page_object(page_name)
+
     logging.debug(
         "%s will visit '%s' page using: '%s'", actor_alias, page_name, page.URL
     )
@@ -1579,7 +1575,7 @@ def click_on_page_element(
     page_name: str = None,
 ):
     if page_name:
-        page = get_page_object(page_name, exact_match=False)
+        page = get_page_object(page_name)
     else:
         page = get_last_visited_page(context, actor_alias)
     has_action(page, "click_on_page_element")
