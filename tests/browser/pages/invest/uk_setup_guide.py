@@ -24,7 +24,7 @@ NAME = "UK Setup guide"
 SERVICE = "invest"
 TYPE = "landing"
 URL = urljoin(INVEST_UI_URL, "uk-setup-guide/")
-PAGE_TITLE = "Invest in Great Britain -"
+PAGE_TITLE = "Invest In Great Britain - UK Setup Guide"
 
 
 SELECTORS = {
