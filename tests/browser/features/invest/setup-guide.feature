@@ -1,29 +1,32 @@
-@wip
 @uk-setup-guide
 Feature: UK Setup Guide
 
+  @CMS-161
   Scenario: Visitors should be able to see the "Invest UK Setup Guide" page
     Given "Robert" visits the "Invest - UK Setup Guide" page
 
     Then "Robert" should see following sections
-      | Header       |
-      | Beta bar     |
-      | Hero         |
-      | Introdcution |
-      | Guides       |
-      | Footer       |
+      | Sections         |
+      | Header           |
+      | Beta bar         |
+      | Hero             |
+      | Introduction     |
+      | Guides           |
+      | Report this page |
+      | Footer           |
 
 
+  @CMS-161
   Scenario Outline: Overseas businesses should be able to learn how to Setup in the UK by reading the "<selected>" guide
-    Given "Robert" visits the "Invest UK Setup Guide" page
+    Given "Robert" visits the "Invest - UK Setup Guide" page
 
-    When "Robert" decides to find out out more about "<selected>" guide
+    When "Robert" decides to read "Invest - <selected> guide" guide
 
-    Then "Robert" should be on the "Invest UK Setup Guide" page
+    Then "Robert" should be on the "Invest - <selected> guide" page
     And "Robert" should see content specific to "Invest - <selected> guide" page
 
     Examples: UK Setup Guides
-      | selected                                                         |
+      | selected                                                |
       | Apply for a UK visa                                     |
       | Establish a base for business in the UK                 |
       | Hire skilled workers for your UK operations             |
@@ -32,18 +35,21 @@ Feature: UK Setup Guide
       | Understand the UK's tax, incentives and legal framework |
 
 
+  @CMS-161
   Scenario Outline: Visitors should be able to see all expected sections on "<selected>" guide page
     Given "Robert" visits the "Invest - <selected> guide" page
 
-    Then "Robert" should see expected page sections
-      | Header       |
-      | Beta bar     |
-      | Hero         |
-      | Content      |
-      | Footer       |
+    Then "Robert" should see following sections
+      | Sections         |
+      | Header           |
+      | Beta bar         |
+      | Hero             |
+      | Content          |
+      | Report this page |
+      | Footer           |
 
     Examples: UK Setup Guides
-      | selected                                                         |
+      | selected                                                |
       | Apply for a UK visa                                     |
       | Establish a base for business in the UK                 |
       | Hire skilled workers for your UK operations             |
