@@ -104,12 +104,8 @@ def open_link(driver: WebDriver, name: str):
     driver.find_element_by_link_text(name).click()
 
 
-def clean_name(name: str) -> str:
-    return name.replace("Invest - ", "").replace("guide", "").strip()
-
-
 def open_guide(driver: WebDriver, guide_name: str):
-    guide_name = clean_name(guide_name)
+    guide_name = guide_name.split(" - ")[1].strip()
     selector = Selector(By.PARTIAL_LINK_TEXT, guide_name)
     logging.debug("Looking for: {}".format(guide_name))
     guide = find_element(driver, selector, element_name="Guide card", wait_for_it=False)

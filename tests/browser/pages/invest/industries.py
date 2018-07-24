@@ -78,12 +78,8 @@ def open_link(driver: WebDriver, name: str):
     driver.find_element_by_link_text(name).click()
 
 
-def clean_name(name: str) -> str:
-    return name.replace("Invest - ", "").replace("industry", "").strip()
-
-
 def open_industry(driver: WebDriver, industry_name: str):
-    industry_name = clean_name(industry_name)
+    industry_name = industry_name.split(" - ")[1]
     selector = Selector(By.PARTIAL_LINK_TEXT, industry_name)
     industry_link = find_element(
         driver, selector, element_name="Industry card", wait_for_it=False

@@ -83,17 +83,11 @@ URLs = {
 
 
 def clean_name(name: str) -> str:
-    return (
-        name.lower()
-        .replace("invest - ", "")
-        .replace("industry", "")
-        .replace("guide", "")
-        .strip()
-    )
+    return name.split(" - ")[1].strip()
 
 
 def visit(executor: Executor, *, page_name: str = None, first_time: bool = False):
-    url = URLs[clean_name(page_name)]
+    url = URLs[clean_name(page_name).lower()]
     visit_url(executor, url)
 
 

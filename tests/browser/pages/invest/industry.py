@@ -131,19 +131,8 @@ OPTIONAL_SECTIONS = {
 
 
 def visit(executor: Executor, *, first_time: bool = False, page_name: str = None):
-    if page_name:
-        enum_key = (
-            page_name.lower()
-            .replace("invest - ", "")
-            .replace(" industry", "")
-            .replace(" ", "_")
-            .replace(",", "")
-            .replace("-", "_")
-            .upper()
-        )
-        url = URLS[enum_key].value
-    else:
-        url = URL
+    key = page_name.split(" - ")[1].lower()
+    url = URLs[key]
     visit_url(executor, url)
 
 
@@ -163,7 +152,7 @@ def open_link(driver: WebDriver, name: str):
 
 
 def clean_name(name: str) -> str:
-    return name.replace("Invest - ", "").replace("industry", "").strip()
+    return name.split(" - ")[1].strip()
 
 
 def open_industry(driver: WebDriver, industry_name: str):

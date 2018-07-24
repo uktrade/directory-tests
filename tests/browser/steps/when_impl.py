@@ -65,14 +65,8 @@ def visit_page(
     `wait_fixed` timer, e.g `driver.set_page_load_timeout(time_to_wait=30)`
     """
     def is_special_case(page_name: str) -> bool:
-        result = False
-        if page_name.lower().endswith("industry"):
-            result = True
-        elif ("uk setup guide" not in page_name.lower()) and (
-            page_name.lower().endswith("guide")
-        ):
-            result = True
-        return result
+        parts = page_name.split(" - ")
+        return len(parts) > 2
 
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
