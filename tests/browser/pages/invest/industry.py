@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """Invest in Great Home Page Object."""
 import logging
-from enum import Enum
 from typing import List
 from urllib.parse import urljoin
 
@@ -24,6 +23,38 @@ from pages.common_actions import (
 from settings import INVEST_UI_URL
 
 NAME = "Industry"
+NAMES = [
+    "Advanced manufacturing",
+    "Aerospace",
+    "Agri-tech",
+    "Asset management",
+    "Automotive research and development",
+    "Automotive supply chain",
+    "Automotive",
+    "Capital Investment",
+    "Chemicals",
+    "Creative content and production",
+    "Creative industries",
+    "Data Analytics",
+    "Digital media",
+    "Electrical networks",
+    "Energy from waste",
+    "Energy",
+    "Financial services",
+    "Financial technology",
+    "Food and drink",
+    "Free-from foods",
+    "Health and life sciences",
+    "Meat, poultry and dairy",
+    "Medical technology",
+    "Motorsport",
+    "Nuclear energy",
+    "Offshore wind energy",
+    "Oil and gas",
+    "Pharmaceutical manufacturing",
+    "Retail",
+    "Technology",
+]
 SERVICE = "invest"
 TYPE = "industry"
 URL = urljoin(INVEST_UI_URL, "industries/")
@@ -31,46 +62,41 @@ BASE_URL = urljoin(INVEST_UI_URL, "industries/")
 PAGE_TITLE = "Invest in Great Britain - "
 
 
-class URLS(Enum):
-    """Lists all URLs for industry pages."""
-
-    ADVANCED_MANUFACTURING = urljoin(BASE_URL, "advanced-manufacturing/")
-    AEROSPACE = urljoin(BASE_URL, "aerospace/")
-    AGRI_TECH = urljoin(BASE_URL, "agri-tech/")
-    ASSET_MANAGEMENT = urljoin(BASE_URL, "asset-management/")
-    AUTOMOTIVE = urljoin(BASE_URL, "automotive/")
-    AUTOMOTIVE_RESEARCH_AND_DEVELOPMENT = urljoin(
-        BASE_URL, "automotive-research-and-development/"
-    )
-    AUTOMOTIVE_SUPPLY_CHAIN = urljoin(BASE_URL, "automotive-supply-chain/")
-    CAPITAL_INVESTMENT = urljoin(BASE_URL, "capital-investment/")
-    CHEMICALS = urljoin(BASE_URL, "chemicals/")
-    CREATIVE_CONTENT_AND_PRODUCTION = urljoin(
-        BASE_URL, "creative-content-and-production/"
-    )
-    CREATIVE_INDUSTRIES = urljoin(BASE_URL, "creative-industries/")
-    DATA_ANALYTICS = urljoin(BASE_URL, "data-analytics/")
-    DIGITAL_MEDIA = urljoin(BASE_URL, "digital-media/")
-    ELECTRICAL = urljoin(BASE_URL, "electrical/")
-    ELECTRICAL_NETWORKS = urljoin(BASE_URL, "electrical-networks/")
-    ENERGY = urljoin(BASE_URL, "energy/")
-    ENERGY_FROM_WASTE = urljoin(BASE_URL, "energy-from-waste/")
-    FINANCIAL_SERVICES = urljoin(BASE_URL, "financial-services/")
-    FINANCIAL_TECHNOLOGY = urljoin(BASE_URL, "financial-technology/")
-    FOOD_AND_DRINK = urljoin(BASE_URL, "food-and-drink/")
-    FOOD_SERVICE_AND_CATERING = urljoin(BASE_URL, "food-service-and-catering/")
-    FREE_FROM_FOODS = urljoin(BASE_URL, "free-from-foods/")
-    HEALTH_AND_LIFE_SCIENCES = urljoin(BASE_URL, "health-and-life-sciences/")
-    MEAT_POULTRY_AND_DAIRY = urljoin(BASE_URL, "meat-poultry-and-dairy/")
-    MEDICAL_TECHNOLOGY = urljoin(BASE_URL, "medical-technology/")
-    MOTORSPORT = urljoin(BASE_URL, "motorsport/")
-    NETWORKS = urljoin(BASE_URL, "networks/")
-    NUCLEAR_ENERGY = urljoin(BASE_URL, "nuclear-energy/")
-    OFFSHORE_WIND_ENERGY = urljoin(BASE_URL, "offshore-wind-energy/")
-    OIL_AND_GAS = urljoin(BASE_URL, "oil-and-gas/")
-    PHARMACEUTICAL_MANUFACTURING = urljoin(BASE_URL, "pharmaceutical-manufacturing/")
-    RETAIL = urljoin(BASE_URL, "retail/")
-    TECHNOLOGY = urljoin(BASE_URL, "technology/")
+URLs = {
+    "advanced manufacturing": urljoin(BASE_URL, "advanced-manufacturing/"),
+    "aerospace": urljoin(BASE_URL, "aerospace/"),
+    "agri-tech": urljoin(BASE_URL, "agri-tech/"),
+    "asset management": urljoin(BASE_URL, "asset-management/"),
+    "automotive": urljoin(BASE_URL, "automotive/"),
+    "automotive research and development": urljoin(BASE_URL, "automotive-research-and-development/"),
+    "automotive supply chain": urljoin(BASE_URL, "automotive-supply-chain/"),
+    "capital investment": urljoin(BASE_URL, "capital-investment/"),
+    "chemicals": urljoin(BASE_URL, "chemicals/"),
+    "creative content and production": urljoin(BASE_URL, "creative-content-and-production/"),
+    "creative industries": urljoin(BASE_URL, "creative-industries/"),
+    "data analytics": urljoin(BASE_URL, "data-analytics/"),
+    "digital media": urljoin(BASE_URL, "digital-media/"),
+    "electrical": urljoin(BASE_URL, "electrical/"),
+    "electrical networks": urljoin(BASE_URL, "electrical-networks/"),
+    "energy": urljoin(BASE_URL, "energy/"),
+    "energy from waste": urljoin(BASE_URL, "energy-from-waste/"),
+    "financial services": urljoin(BASE_URL, "financial-services/"),
+    "financial technology": urljoin(BASE_URL, "financial-technology/"),
+    "food and drink": urljoin(BASE_URL, "food-and-drink/"),
+    "food service and catering": urljoin(BASE_URL, "food-service-and-catering/"),
+    "free-from foods": urljoin(BASE_URL, "free-from-foods/"),
+    "health and life sciences": urljoin(BASE_URL, "health-and-life-sciences/"),
+    "meat, poultry and dairy": urljoin(BASE_URL, "meat-poultry-and-dairy/"),
+    "medical technology": urljoin(BASE_URL, "medical-technology/"),
+    "motorsport": urljoin(BASE_URL, "motorsport/"),
+    "networks": urljoin(BASE_URL, "networks/"),
+    "nuclear energy": urljoin(BASE_URL, "nuclear-energy/"),
+    "offshore wind energy": urljoin(BASE_URL, "offshore-wind-energy/"),
+    "oil and gas": urljoin(BASE_URL, "oil-and-gas/"),
+    "pharmaceutical manufacturing": urljoin(BASE_URL, "pharmaceutical-manufacturing/"),
+    "retail": urljoin(BASE_URL, "retail/"),
+    "technology": urljoin(BASE_URL, "technology/"),
+}
 
 
 TOPIC_EXPANDERS = Selector(
