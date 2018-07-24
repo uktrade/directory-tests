@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """Find a Supplier - Generic Industry Page Object."""
 import logging
-from enum import Enum
 from typing import List
 from urllib.parse import urljoin
 
@@ -24,40 +23,20 @@ from pages.common_actions import (
 )
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
-BASE_URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "industries/")
-
-
-class URLS(Enum):
-    """Lists all URLs for industry page."""
-
-    AEROSPACE = urljoin(BASE_URL, "aerospace/")
-    AGRITECH = urljoin(BASE_URL, "agritech/")
-    AUTOMOTIVE = urljoin(BASE_URL, "automotive/")
-    BUSINESS_AND_GOVERNMENT_PARTNERSHIPS = urljoin(
-        BASE_URL, "business-and-government-partnerships/"
-    )
-    CONSUMER_RETAIL = urljoin(BASE_URL, "consumer-retail/")
-    CREATIVE_SERVICES = urljoin(BASE_URL, "creative-services/")
-    CYBER_SECURITY = urljoin(BASE_URL, "cyber-security/")
-    EDUCATION = urljoin(BASE_URL, "education-industry/")
-    ENERGY = urljoin(BASE_URL, "energy/")
-    ENGINEERING = urljoin(BASE_URL, "engineering-industry/")
-    FOOD_AND_DRINK = urljoin(BASE_URL, "food-and-drink/")
-    HEALTHCARE = urljoin(BASE_URL, "healthcare/")
-    INFRASTRUCTURE = urljoin(BASE_URL, "infrastructure/")
-    INNOVATION = urljoin(BASE_URL, "innovation-industry/")
-    LEGAL_SERVICES = urljoin(BASE_URL, "legal-services/")
-    LIFE_SCIENCES = urljoin(BASE_URL, "life-sciences/")
-    MARINE = urljoin(BASE_URL, "marine/")
-    PROFESSIONAL_AND_FINANCIAL_SERVICES = urljoin(
-        BASE_URL, "professional-and-financial-services/"
-    )
-    SPACE = urljoin(BASE_URL, "space/")
-    SPORTS_ECONOMY = urljoin(BASE_URL, "sports-economy/")
-    TECHNOLOGY = urljoin(BASE_URL, "technology/")
-
-
 NAME = "Industry"
+NAMES = [
+    "Aerospace",
+    "Agritech",
+    "Consumer retail",
+    "Creative service",
+    "Cyber security",
+    "Food and drink",
+    "Healthcare",
+    "Life sciences",
+    "Sports economy",
+    "Technology",
+    "Legal services",
+]
 SERVICE = "Find a Supplier"
 TYPE = "industry"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "industries/")
@@ -109,6 +88,31 @@ SELECTORS = {
     },
     "articles": {"itself": Selector(By.ID, "articles-section")},
 }
+
+URLs = {
+    "aerospace": urljoin(URL, "aerospace/"),
+    "agritech": urljoin(URL, "agritech/"),
+    "automotive": urljoin(URL, "automotive/"),
+    "business and government partnerships": urljoin(URL, "business-and-government-partnerships/"),
+    "consumer retail": urljoin(URL, "consumer-retail/"),
+    "creative services": urljoin(URL, "creative-services/"),
+    "cyber security": urljoin(URL, "cyber-security/"),
+    "education": urljoin(URL, "education-industry/"),
+    "energy": urljoin(URL, "energy/"),
+    "engineering": urljoin(URL, "engineering-industry/"),
+    "food and drink": urljoin(URL, "food-and-drink/"),
+    "healthcare": urljoin(URL, "healthcare/"),
+    "infrastructure": urljoin(URL, "infrastructure/"),
+    "innovation": urljoin(URL, "innovation-industry/"),
+    "legal services": urljoin(URL, "legal-services/"),
+    "life sciences": urljoin(URL, "life-sciences/"),
+    "marine": urljoin(URL, "marine/"),
+    "professional and financial services": urljoin(URL, "professional-and-financial-services/"),
+    "space": urljoin(URL, "space/"),
+    "sports economy": urljoin(URL, "sports-economy/"),
+    "technology": urljoin(URL, "technology/"),
+}
+
 
 def clean_name(name: str) -> str:
     return name.split(" - ")[1].strip()
