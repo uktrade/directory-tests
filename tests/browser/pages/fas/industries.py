@@ -80,12 +80,8 @@ def click_on_page_element(driver: WebDriver, element_name: str):
     take_screenshot(driver, NAME + " after clicking on " + element_name)
 
 
-def clean_name(name: str) -> str:
-    return name.replace("Find a Supplier - ", "").replace("industry", "").strip()
-
-
 def open_industry(driver: WebDriver, industry_name: str):
-    industry_name = clean_name(industry_name)
+    industry_name = industry_name.split(" - ")[1].strip()
     selector = Selector(By.LINK_TEXT, industry_name)
     logging.debug("Looking for: {}".format(industry_name))
     industry_link = find_element(

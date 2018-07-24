@@ -110,21 +110,13 @@ SELECTORS = {
     "articles": {"itself": Selector(By.ID, "articles-section")},
 }
 
+def clean_name(name: str) -> str:
+    return name.split(" - ")[1].strip()
+
 
 def visit(driver: WebDriver, *, first_time: bool = False, page_name: str = None):
-    if page_name:
-        enum_key = (
-            page_name.lower()
-            .replace("find a supplier - ", "")
-            .replace(" industry", "")
-            .strip()
-            .replace(" ", "_")
-            .replace("-", "_")
-            .upper()
-        )
-        url = URLS[enum_key].value
-    else:
-        url = URL
+    key = clean_name(page_name).lower()
+    url = URLs[key]
     go_to_url(driver, url, NAME, first_time=first_time)
 
 
@@ -138,10 +130,6 @@ def should_be_here(driver: WebDriver):
 
 def should_see_sections(executor: AssertionExecutor, names: List[str]):
     check_for_sections(executor, all_sections=SELECTORS, sought_sections=names)
-
-
-def clean_name(name: str) -> str:
-    return name.replace("Find a Supplier - ", "").replace("industry", "").strip()
 
 
 def should_see_content_for(driver: WebDriver, industry_name: str):
