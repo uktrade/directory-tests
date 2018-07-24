@@ -20,10 +20,10 @@ Feature: UK Setup Guide
   Scenario Outline: Overseas businesses should be able to learn how to Setup in the UK by reading the "<selected>" guide
     Given "Robert" visits the "Invest - UK Setup Guide" page
 
-    When "Robert" decides to read "Invest - <selected> guide" guide
+    When "Robert" decides to read "Invest - <selected> - guide" guide
 
-    Then "Robert" should be on the "Invest - <selected> guide" page
-    And "Robert" should see content specific to "Invest - <selected> guide" page
+    Then "Robert" should be on the "Invest - <selected> - guide" page
+    And "Robert" should see content specific to "Invest - <selected> - guide" page
 
     Examples: UK Setup Guides
       | selected                                                |
@@ -37,7 +37,7 @@ Feature: UK Setup Guide
 
   @CMS-161
   Scenario Outline: Visitors should be able to see all expected sections on "<selected>" guide page
-    Given "Robert" visits the "Invest - <selected> guide" page
+    Given "Robert" visits the "Invest - <selected> - guide" page
 
     Then "Robert" should see following sections
       | Sections         |
