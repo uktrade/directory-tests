@@ -62,10 +62,10 @@ Feature: Find a Supplier - home page
   Scenario Outline: Buyers should be able to find out more about "<specific>" industry from the "Find a Supplier - home" page
     Given "Robert" visits the "Find a Supplier - Home" page
 
-    When "Robert" decides to find out out more about "Find a Supplier - <specific> industry"
+    When "Robert" decides to find out out more about "Find a Supplier - <specific> - industry"
 
-    Then "Robert" should be on the "Find a Supplier - industry" page
-    And "Robert" should see content specific to "Find a Supplier - <specific> industry" page
+    Then "Robert" should be on the "Find a Supplier - <specific> - industry" page
+    And "Robert" should see content specific to "Find a Supplier - <specific> - industry" page
 
     Examples:
       | specific          |
