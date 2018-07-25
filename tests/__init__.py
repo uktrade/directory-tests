@@ -8,6 +8,7 @@ from tests import settings
 join_api = partial(urljoin, settings.DIRECTORY_API_URL)
 join_internal_api = partial(urljoin, settings.DIRECTORY_BUYER_API_URL)
 join_sso = partial(urljoin, settings.DIRECTORY_SSO_URL)
+join_sso_api = partial(urljoin, settings.SSO_API_CLIENT_BASE_URL)
 join_profile = partial(urljoin, settings.DIRECTORY_PROFILE_URL)
 join_ui_buyer = partial(urljoin, settings.DIRECTORY_UI_BUYER_URL)
 join_ui_supplier = partial(urljoin, settings.DIRECTORY_UI_SUPPLIER_URL)
@@ -21,7 +22,6 @@ join_cms_ui = partial(urljoin, 'admin', settings.CMS_URL)
 urls = {
     # SSO
     'sso:landing': '',
-    'sso:healthcheck-database': 'api/v1/healthcheck/database/',
     'sso:login': 'accounts/login/',
     'sso:signup': 'accounts/signup/',
     'sso:logout': 'accounts/logout/',
@@ -30,8 +30,14 @@ urls = {
     'sso:password_reset': 'accounts/password/reset/',
     'sso:email_confirm': 'accounts/confirm-email/',
     'sso:inactive': 'accounts/inactive/',
+    # Legacy SSO API healthcheck endpoint
     'sso:health': 'api/v1/',
-    'sso:user': 'api/v1/session-user/',
+
+    # SSO API
+    'sso-api:landing': '',
+    'sso-api:healthcheck-database': 'api/v1/healthcheck/database/',
+    'sso-api:healthcheck-ping': 'api/v1/healthcheck/ping/',
+    'sso-api:user': 'api/v1/session-user/',
 
     # UI-BUYER
     'ui-buyer:landing': '',
@@ -206,6 +212,8 @@ def get_absolute_url(name):
     relative_url = get_relative_url(name)
     if name.startswith('sso:'):
         return join_sso(relative_url)
+    elif name.startswith('sso-api:'):
+        return join_sso_api(relative_url)
     elif name.startswith('ui-buyer:'):
         return join_ui_buyer(relative_url)
     elif name.startswith('ui-supplier:'):

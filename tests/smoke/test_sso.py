@@ -1,51 +1,14 @@
 import http.client
 
 import pytest
-import requests
-
-from directory_sso_api_client.client import DirectorySSOAPIClient
 
 from tests import get_absolute_url
-from tests.settings import DIRECTORY_API_HEALTH_CHECK_TOKEN as TOKEN
-from tests.settings import SSO_PROXY_SIGNATURE_SECRET
-
-
-def test_health_check_database():
-    params = {'token': TOKEN}
-    response = requests.get(
-            get_absolute_url('sso:healthcheck-database'), params=params)
-    assert response.status_code == http.client.OK
 
 
 def test_legacy_api_health_check_endpoint_should_not_exist(logged_in_session):
     url = get_absolute_url('sso:health')
     response = logged_in_session.get(url, allow_redirects=True)
     assert response.status_code == 404
-
-
-def test_sso_authentication_using_api_client(logged_in_session):
-    """This test actually verifies output from 'sso:user' endpoint.
-    'sso:user' endpoint unfolds to: 'api/v1/session-user/'
-    """
-    base_url = get_absolute_url('sso:landing')
-    api_client = DirectorySSOAPIClient(
-        base_url=base_url, api_key=SSO_PROXY_SIGNATURE_SECRET)
-    user_session_id = logged_in_session.cookies.get("directory_sso_dev_session")
-    response = api_client.user.get_session_user(session_id=user_session_id)
-    assert response.status_code == http.client.OK
-
-
-def test_invalid_sso_authorization_sessionid(logged_in_session):
-    url = get_absolute_url('sso:user')
-    headers = {"Authorization": "SSO_SESSION_ID invalid_sessionid"}
-    response = logged_in_session.get(url, headers=headers, allow_redirects=True)
-    assert response.status_code == 403
-
-
-def test_missing_sso_authorization_sessionid(logged_in_session):
-    url = get_absolute_url('sso:user')
-    response = logged_in_session.get(url, allow_redirects=True)
-    assert response.status_code == 403
 
 
 @pytest.mark.parametrize("absolute_url", [

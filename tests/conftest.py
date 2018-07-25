@@ -1,9 +1,13 @@
 import pytest
 import requests
 from directory_api_client.testapiclient import DirectoryTestAPIClient
+from directory_sso_api_client.client import DirectorySSOAPIClient
 
 from tests import get_absolute_url, users
-from tests.settings import CMS_SIGNATURE_SECRET_API_KEY
+from tests.settings import (
+    CMS_SIGNATURE_SECRET_API_KEY,
+    SSO_API_SIGNATURE_SECRET,
+)
 
 
 @pytest.fixture
@@ -23,3 +27,10 @@ def cms_client():
     base_url = get_absolute_url('cms-healthcheck:landing')
     return DirectoryTestAPIClient(
         base_url=base_url, api_key=CMS_SIGNATURE_SECRET_API_KEY)
+
+
+@pytest.fixture
+def sso_api_client():
+    base_url = get_absolute_url('sso-api:landing')
+    return DirectorySSOAPIClient(
+        base_url=base_url, api_key=SSO_API_SIGNATURE_SECRET)
