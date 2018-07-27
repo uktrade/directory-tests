@@ -12,6 +12,20 @@ import pages
 REQUIRED_PROPERTIES = ["SERVICE", "NAME", "TYPE", "URL", "SELECTORS"]
 
 
+class Services(Enum):
+    BRITISH_COUNCIL = "British Council"
+    EVENTS = "Events"
+    EXPORT_OPPORTUNITIES = "Export Opportunities"
+    EXPORT_READINESS = "Export Readiness"
+    FIND_A_BUYER = "Find a Buyer"
+    FIND_A_SUPPLIER = "Find a Supplier"
+    INVEST = "Invest"
+    LEGAL_SERVICES = "Legal Services"
+    SELLING_ONLINE_OVERSEAS = "Selling Online Overseas"
+    SINGLE_SIGN_ON = "Single Sign-On"
+    VISIT_BRITAIN = "Visit Britain"
+
+
 def is_page_object(module: ModuleType):
     return all([hasattr(module, prop) for prop in REQUIRED_PROPERTIES])
 
