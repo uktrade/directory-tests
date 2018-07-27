@@ -34,6 +34,9 @@ SELECTORS = {
         "logo": Selector(
             By.CSS_SELECTOR, "#invest-header > div.header-bar  a"
         ),
+        "contact us": Selector(
+            By.CSS_SELECTOR, "#invest-header a[href='/contact/']"
+        ),
     },
     "beta bar": {
         "self": Selector(By.ID, "header-beta-bar"),
