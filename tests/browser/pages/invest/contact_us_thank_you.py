@@ -15,8 +15,8 @@ from settings import INVEST_UI_URL
 NAME = "Thank you for your message"
 SERVICE = "invest"
 TYPE = "contact"
-URL = urljoin(INVEST_UI_URL, "contact/")
-PAGE_TITLE = "Invest in Great Britain -"
+URL = urljoin(INVEST_UI_URL, "contact/success/")
+PAGE_TITLE = ""
 SELECTORS = {}
 
 
