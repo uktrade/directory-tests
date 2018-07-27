@@ -6,12 +6,12 @@ from directory_sso_api_client.testapiclient import (
     DirectorySSOTestAPIClient as SSOClient
 )
 
-from settings import SSO_PROXY_API_CLIENT_BASE_URL, SSO_PROXY_SIGNATURE_SECRET
+from settings import SSO_API_CLIENT_BASE_URL, SSO_API_SIGNATURE_SECRET
 
 
 def verify_account(email: str):
     client = SSOClient(
-        base_url=SSO_PROXY_API_CLIENT_BASE_URL, api_key=SSO_PROXY_SIGNATURE_SECRET
+        base_url=SSO_API_CLIENT_BASE_URL, api_key=SSO_API_SIGNATURE_SECRET
     )
     response = client.flag_user_email_as_verified_or_not(email, verified=True)
     if response.status_code == 204:
@@ -24,7 +24,7 @@ def verify_account(email: str):
 
 def delete_supplier_data_from_sso(email: str):
     client = SSOClient(
-        base_url=SSO_PROXY_API_CLIENT_BASE_URL, api_key=SSO_PROXY_SIGNATURE_SECRET
+        base_url=SSO_API_CLIENT_BASE_URL, api_key=SSO_API_SIGNATURE_SECRET
     )
     response = client.delete_user_by_email(email)
     if response.status_code == 204:
