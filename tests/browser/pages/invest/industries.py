@@ -14,10 +14,10 @@ from pages.common_actions import (
     check_for_sections,
     check_title,
     check_url,
+    find_and_click_on_page_element,
     find_element,
     take_screenshot,
     visit_url,
-    find_and_click_on_page_element
 )
 from settings import INVEST_UI_URL
 
@@ -88,3 +88,8 @@ def open_industry(driver: WebDriver, industry_name: str):
     )
     industry_link.click()
     take_screenshot(driver, PAGE_TITLE + " after opening " + industry_name)
+
+
+def click_on_page_element(driver: WebDriver, element_name: str):
+    find_and_click_on_page_element(driver, SELECTORS, element_name)
+    take_screenshot(driver, PAGE_TITLE + " after clicking on " + element_name)

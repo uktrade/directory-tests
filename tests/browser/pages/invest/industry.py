@@ -15,6 +15,7 @@ from pages.common_actions import (
     check_for_sections,
     check_title,
     check_url,
+    find_and_click_on_page_element,
     find_element,
     find_elements,
     take_screenshot,
@@ -211,3 +212,8 @@ def unfold_topics(driver: WebDriver):
     )
     for expander in expanders:
         expander.click()
+
+
+def click_on_page_element(driver: WebDriver, element_name: str):
+    find_and_click_on_page_element(driver, SELECTORS, element_name)
+    take_screenshot(driver, PAGE_TITLE + " after clicking on " + element_name)

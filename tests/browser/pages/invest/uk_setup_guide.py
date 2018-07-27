@@ -14,6 +14,7 @@ from pages.common_actions import (
     check_for_sections,
     check_title,
     check_url,
+    find_and_click_on_page_element,
     find_element,
     take_screenshot,
     visit_url,
@@ -111,3 +112,8 @@ def open_guide(driver: WebDriver, guide_name: str):
     guide = find_element(driver, selector, element_name="Guide card", wait_for_it=False)
     guide.click()
     take_screenshot(driver, PAGE_TITLE + " after opening " + guide_name)
+
+
+def click_on_page_element(driver: WebDriver, element_name: str):
+    find_and_click_on_page_element(driver, SELECTORS, element_name)
+    take_screenshot(driver, PAGE_TITLE + " after clicking on " + element_name)
