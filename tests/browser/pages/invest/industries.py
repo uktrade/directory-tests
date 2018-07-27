@@ -14,6 +14,7 @@ from pages.common_actions import (
     check_for_sections,
     check_title,
     check_url,
+    find_and_click_on_page_element,
     find_element,
     take_screenshot,
     visit_url,
@@ -29,12 +30,17 @@ PAGE_TITLE = "Invest in Great Britain - Industries"
 SELECTORS = {
     "header": {
         "self": Selector(By.ID, "invest-header"),
-        "logo": Selector(By.CSS_SELECTOR, "#invest-header > div.header-bar  a"),
+        "logo": Selector(
+            By.CSS_SELECTOR, "#invest-header > div.header-bar  a"
+        ),
+        "contact us": Selector(
+            By.CSS_SELECTOR, "#invest-header a[href='/contact/']"
+        ),
     },
     "beta bar": {
         "self": Selector(By.ID, "header-beta-bar"),
         "beta bar": Selector(By.CSS_SELECTOR, "#header-beta-bar strong"),
-        "feedback link": Selector(By.CSS_SELECTOR, "#header-beta-bar a"),
+        "feedback": Selector(By.CSS_SELECTOR, "#header-beta-bar a"),
     },
     "hero": {"self": Selector(By.CSS_SELECTOR, "#content > section.hero")},
     "sectors": {
@@ -50,10 +56,12 @@ SELECTORS = {
     "footer": {
         "self": Selector(By.ID, "invest-footer"),
         "uk gov logo": Selector(
-            By.CSS_SELECTOR, "#invest-footer div.footer-branding > img:nth-child(1)"
+            By.CSS_SELECTOR,
+            "#invest-footer div.footer-branding > img:nth-child(1)",
         ),
         "invest logo": Selector(
-            By.CSS_SELECTOR, "#invest-footer div.footer-branding > img:nth-child(2)"
+            By.CSS_SELECTOR,
+            "#invest-footer div.footer-branding > img:nth-child(2)",
         ),
     },
 }
@@ -86,3 +94,8 @@ def open_industry(driver: WebDriver, industry_name: str):
     )
     industry_link.click()
     take_screenshot(driver, PAGE_TITLE + " after opening " + industry_name)
+
+
+def click_on_page_element(driver: WebDriver, element_name: str):
+    find_and_click_on_page_element(driver, SELECTORS, element_name)
+    take_screenshot(driver, PAGE_TITLE + " after clicking on " + element_name)

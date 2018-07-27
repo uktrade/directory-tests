@@ -217,6 +217,13 @@ def given_actor_decides_to_click_on_page_element(
     click_on_page_element(context, actor_alias, element_name, page_name=page_name)
 
 
+@given('"{actor_alias}" decided to use "{element_name}" button')
+@given('"{actor_alias}" decided to use "{element_name}" link')
+def given_actor_decided_to_click_on_page_element(
+        context, actor_alias, element_name):
+    click_on_page_element(context, actor_alias, element_name)
+
+
 @given('"{actor_alias}" decided to find out out more about "{industry_name}" industry')
 def fas_given_actor_opened_industry_page(
         context: Context, actor_alias: str, industry_name: str):

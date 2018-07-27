@@ -15,6 +15,7 @@ from pages.common_actions import (
     check_for_sections,
     check_title,
     check_url,
+    find_and_click_on_page_element,
     take_screenshot,
     visit_url,
 )
@@ -38,11 +39,14 @@ SELECTORS = {
     "header": {
         "self": Selector(By.ID, "invest-header"),
         "logo": Selector(By.CSS_SELECTOR, "#invest-header > div.header-bar a"),
+        "contact us": Selector(
+            By.CSS_SELECTOR, "#invest-header a[href='/contact/']"
+        ),
     },
     "beta bar": {
         "self": Selector(By.ID, "header-beta-bar"),
         "beta bar": Selector(By.CSS_SELECTOR, "#header-beta-bar strong"),
-        "feedback link": Selector(By.CSS_SELECTOR, "#header-beta-bar a"),
+        "feedback": Selector(By.CSS_SELECTOR, "#header-beta-bar a"),
     },
     "hero": {"self": Selector(By.CSS_SELECTOR, "#content > section.hero")},
     "content": {
@@ -58,10 +62,12 @@ SELECTORS = {
     "footer": {
         "self": Selector(By.ID, "invest-footer"),
         "uk gov logo": Selector(
-            By.CSS_SELECTOR, "#invest-footer div.footer-branding > img:nth-child(1)"
+            By.CSS_SELECTOR,
+            "#invest-footer div.footer-branding > img:nth-child(1)",
         ),
         "invest logo": Selector(
-            By.CSS_SELECTOR, "#invest-footer div.footer-branding > img:nth-child(2)"
+            By.CSS_SELECTOR,
+            "#invest-footer div.footer-branding > img:nth-child(2)",
         ),
     },
 }
@@ -74,7 +80,9 @@ URLs = {
     "hire skilled workers for your uk operations": urljoin(
         URL, "hire-skilled-workers-for-your-uk-operations/"
     ),
-    "open a uk business bank account": urljoin(URL, "open-a-uk-business-bank-account/"),
+    "open a uk business bank account": urljoin(
+        URL, "open-a-uk-business-bank-account/"
+    ),
     "set up a company in the uk": urljoin(URL, "set-up-a-company-in-the-uk/"),
     "understand the uk's tax, incentives and legal framework": urljoin(
         URL, "understand-uk-tax-and-incentives/"
@@ -86,7 +94,9 @@ def clean_name(name: str) -> str:
     return name.split(" - ")[1].strip()
 
 
-def visit(executor: Executor, *, page_name: str = None, first_time: bool = False):
+def visit(
+    executor: Executor, *, page_name: str = None, first_time: bool = False
+):
     url = URLs[clean_name(page_name).lower()]
     visit_url(executor, url)
 
@@ -116,3 +126,8 @@ def should_see_content_for(driver: WebDriver, guide_name: str):
         driver.current_url,
     ):
         assert guide_name.lower() in source.lower()
+
+
+def click_on_page_element(driver: WebDriver, element_name: str):
+    find_and_click_on_page_element(driver, SELECTORS, element_name)
+    take_screenshot(driver, PAGE_TITLE + " after clicking on " + element_name)

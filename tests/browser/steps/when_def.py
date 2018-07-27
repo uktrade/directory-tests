@@ -65,6 +65,7 @@ from steps.when_impl import (
     triage_should_see_answers_to_questions,
     triage_what_is_your_company_name,
     visit_page,
+    generic_fill_out_and_submit_form
 )
 
 
@@ -449,3 +450,8 @@ def when_actor_unfolds_all_topic_sections(context: Context, actor_alias: str):
 def when_actor_clicks_on_uk_gov_logo(
         context: Context, actor_alias: str, page_name: str):
     generic_click_on_uk_gov_logo(context, actor_alias, page_name)
+
+
+@when('"{actor_alias}" fills out and submits the form')
+def when_actor_fills_out_and_submits_the_form(context: Context, actor_alias: str):
+    generic_fill_out_and_submit_form(context, actor_alias)
