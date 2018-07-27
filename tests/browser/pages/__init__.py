@@ -39,7 +39,9 @@ class PageObjects(Enum):
     def __new__(cls, value):
         if not is_page_object(value):
             raise TypeError(
-                "Expected to get a Page Object module but got: {}".format(value)
+                "Expected to get a Page Object module but got: {}".format(
+                    value
+                )
             )
         member = object.__new__(cls)
         member._value_ = value
@@ -47,7 +49,10 @@ class PageObjects(Enum):
 
     def __str__(self):
         return "{}-{} [{} - {}]".format(
-            self.value.SERVICE, self.value.NAME, self.value.TYPE, self.value.URL
+            self.value.SERVICE,
+            self.value.NAME,
+            self.value.TYPE,
+            self.value.URL,
         )
 
     @property
@@ -72,7 +77,11 @@ class PageObjects(Enum):
 
 
 def get_enum_key(module: ModuleType) -> str:
-    return f"{module.SERVICE}_{module.NAME}".upper().replace(" ", "_").replace("-", "_")
+    return (
+        f"{module.SERVICE}_{module.NAME}".upper()
+        .replace(" ", "_")
+        .replace("-", "_")
+    )
 
 
 def get_subpackages_names(package: ModuleType) -> List[str]:
@@ -101,7 +110,9 @@ PAGES = PageObjects("PageObjects", names=get_page_objects(pages))
 
 
 def get_page_object(service_and_page: str) -> ModuleType:
-    assert " - " in service_and_page, f"Invalid Service & Page name: {service_and_page}"
+    assert (
+        " - " in service_and_page
+    ), f"Invalid Service & Page name: {service_and_page}"
     parts = service_and_page.split(" - ")
     sought_service = parts[0]
     sought_page = parts[1]
