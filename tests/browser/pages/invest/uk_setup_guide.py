@@ -35,7 +35,7 @@ SELECTORS = {
     "beta bar": {
         "self": Selector(By.ID, "header-beta-bar"),
         "beta bar": Selector(By.CSS_SELECTOR, "#header-beta-bar strong"),
-        "feedback link": Selector(By.CSS_SELECTOR, "#header-beta-bar a"),
+        "feedback": Selector(By.CSS_SELECTOR, "#header-beta-bar a"),
     },
     "hero": {"self": Selector(By.CSS_SELECTOR, "#content > section.hero")},
     "introduction": {

@@ -17,6 +17,7 @@ from pages.common_actions import (
     find_element,
     take_screenshot,
     visit_url,
+    find_and_click_on_page_element
 )
 from settings import INVEST_UI_URL
 
@@ -30,11 +31,12 @@ SELECTORS = {
     "header": {
         "self": Selector(By.ID, "invest-header"),
         "logo": Selector(By.CSS_SELECTOR, "#invest-header > div.header-bar  a"),
+        "contact us": Selector(By.CSS_SELECTOR, "#invest-header a[href='/contact/']"),
     },
     "beta bar": {
         "self": Selector(By.ID, "header-beta-bar"),
         "beta bar": Selector(By.CSS_SELECTOR, "#header-beta-bar strong"),
-        "feedback link": Selector(By.CSS_SELECTOR, "#header-beta-bar a"),
+        "feedback": Selector(By.CSS_SELECTOR, "#header-beta-bar a"),
     },
     "hero": {"self": Selector(By.CSS_SELECTOR, "#content > section.hero")},
     "sectors": {

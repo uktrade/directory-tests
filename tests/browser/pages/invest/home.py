@@ -31,11 +31,12 @@ SELECTORS = {
     "header": {
         "self": Selector(By.ID, "invest-header"),
         "logo": Selector(By.CSS_SELECTOR, "#invest-header > div.header-bar  a"),
+        "contact us": Selector(By.CSS_SELECTOR, "#invest-header a[href='/contact/']"),
     },
     "beta bar": {
         "self": Selector(By.ID, "header-beta-bar"),
         "beta bar": Selector(By.CSS_SELECTOR, "#header-beta-bar strong"),
-        "feedback link": Selector(By.CSS_SELECTOR, "#header-beta-bar a"),
+        "feedback": Selector(By.CSS_SELECTOR, "#header-beta-bar a"),
     },
     "hero": {"self": Selector(By.CSS_SELECTOR, "#content > section.hero")},
     "reasons to move business to the uk": {
