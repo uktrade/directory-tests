@@ -36,6 +36,7 @@ from steps.then_impl import (
     guidance_tile_should_be_highlighted,
     header_check_dit_logo,
     header_check_favicon,
+    invest_should_receive_contact_confirmation_email,
     invest_should_see_topic_contents,
     invest_should_see_uk_gov_logo,
     language_selector_keyboard_should_be_trapped,
@@ -389,3 +390,10 @@ def then_stats_and_tracking_elements_should_be_present(context: Context):
 def then_user_should_see_uk_gov_logo(
         context: Context, actor_alias: str, section: str):
     invest_should_see_uk_gov_logo(context, actor_alias, section)
+
+
+@then('"{actor_alias}" should receive a contact confirmation email from "{sender_email}"')
+def then_should_receive_contact_confirmation_email(
+        context: Context, actor_alias: str, sender_email: str):
+    invest_should_receive_contact_confirmation_email(
+        context, actor_alias, sender_email)

@@ -21,6 +21,7 @@ from steps.when_impl import (
     triage_should_be_classified_as_occasional,
     triage_should_be_classified_as_regular,
 )
+from utils.mailgun import mailgun_invest_find_contact_confirmation_email
 
 
 def should_be_on_page(context: Context, actor_alias: str, page_name: str):
@@ -754,3 +755,10 @@ def invest_should_see_uk_gov_logo(
     logging.debug(
         "%s can see correct UK GOV logo in page %s on %s", actor_alias,
         section, context.driver.current_url)
+
+
+def invest_should_receive_contact_confirmation_email(
+        context: Context, actor_alias: str, sender_email: str):
+    actor = get_actor(context, actor_alias)
+    mailgun_invest_find_contact_confirmation_email(
+        context, sender_email, actor.email)
