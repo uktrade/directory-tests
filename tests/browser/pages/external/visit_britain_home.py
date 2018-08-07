@@ -11,7 +11,7 @@ NAME = "Home"
 SERVICE = "Visit Britain"
 TYPE = "home"
 URL = urljoin(None, "")
-PAGE_TITLE = "Visit Britain: The Official Tourism Website of Great Britain"
+PAGE_TITLE = "VisitBritain | VisitBritain"
 SELECTORS = {}
 
 
