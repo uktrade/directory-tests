@@ -83,3 +83,22 @@ Feature: Contact us & Leave feedback
       | UK Setup Guide                    |
       | Advanced manufacturing - industry |
       | Apply for a UK visa - guide       |
+
+
+  @CMS-237
+  @contact-us
+  @header
+  @footer
+  Scenario Outline: An email should be sent after visitor submits the contact-us form
+    Given "Robert" visits the "Invest - <selected>" page
+    And "Robert" decided to use "Contact us" link
+    And "Robert" is on the "Invest - Contact us" page
+
+    When "Robert" fills out and submits the form
+
+    Then "Robert" should be on the "Invest - Thank you for your message" page
+    And "Robert" should receive a contact confirmation email from "noreply@invest.uktrade.io"
+
+    Examples: Various pages
+      | selected                          |
+      | Home                              |
