@@ -28,7 +28,7 @@ NAMES = [
     "Aerospace",
     "Agritech",
     "Consumer retail",
-    "Creative service",
+    "Creative services",
     "Cyber security",
     "Food and drink",
     "Healthcare",
