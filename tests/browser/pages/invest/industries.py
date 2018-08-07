@@ -46,7 +46,7 @@ SELECTORS = {
     "sectors": {
         "self": Selector(By.CSS_SELECTOR, "section.industries"),
         "industry cards": Selector(
-            By.CSS_SELECTOR, "section.industries a.labelled-card"
+            By.CSS_SELECTOR, "section.industries a.labelled-image-card"
         ),
     },
     "report this page": {

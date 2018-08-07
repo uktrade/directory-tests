@@ -26,7 +26,7 @@ PAGE_TITLE = "Contact us - trade.great.gov.uk"
 
 SUBMIT_BUTTON = Selector(By.CSS_SELECTOR, "form input[type=submit]")
 FULL_NAME = Selector(By.ID, "id_full_name")
-EMAIL = Selector(By.ID, "id_email_address")
+EMAIL = Selector(By.ID, "id_requester_email")
 INDUSTRY = Selector(By.ID, "id_sector")
 ORGANISATION = Selector(By.ID, "id_organisation_name")
 ORGANISATION_SIZE = Selector(By.ID, "id_organisation_size")

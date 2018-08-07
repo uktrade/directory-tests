@@ -46,7 +46,7 @@ COMPANY_PROFILE_LINK = "#companies-section li:nth-child({number}) a.link"
 ARTICLE_LINK = "#articles-section article:nth-child({number}) a"
 
 BREADCRUMB_LINKS = Selector(By.CSS_SELECTOR, "p.breadcrumbs > a")
-INDUSTRY_BREADCRUMB = Selector(By.CSS_SELECTOR, "p.breadcrumbs > span.current.bidi-rtl")
+INDUSTRY_BREADCRUMB = Selector(By.CSS_SELECTOR, "p.breadcrumbs > span.current")
 SEARCH_INPUT = Selector(By.CSS_SELECTOR, "#companies-section form > input[name=term]")
 SEARCH_BUTTON = Selector(
     By.CSS_SELECTOR, "#companies-section form > button[type=submit]"
