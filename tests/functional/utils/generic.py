@@ -420,7 +420,7 @@ def print_response(
             content_only_msg = " & without HTML markup"
             content = extract_page_contents(content)
         if trim:
-            red("RSP Content (trimmed): {}:".format(content_only_msg))
+            red("RSP Content (trimmed){}:".format(content_only_msg))
             print(content[0:trim_offset])
         else:
             red("RSP Content: {}".format(content_only_msg))
@@ -516,16 +516,16 @@ def log_response(
         content = decode_as_utf8(response.content)
         content_only_msg = ""
         if content_only:
-            content_only_msg = " & without HTML markup"
+            content_only_msg = " without HTML markup"
             content = extract_page_contents(content)
         if trim:
             logging.debug(
-                "RSP Content (trimmed%s): %s",
-                content[0:trim_offset],
+                "RSP Content (trimmed &%s): %s",
                 content_only_msg,
+                content[0:trim_offset],
             )
         else:
-            logging.debug("RSP Content%s: %s", content, content_only_msg)
+            logging.debug("RSP Content%s:\n %s", content_only_msg, content)
 
 
 def int_api_ch_search(term: str) -> dict:

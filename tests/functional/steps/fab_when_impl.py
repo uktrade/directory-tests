@@ -1188,7 +1188,7 @@ def fas_send_feedback_request(
     # Step 2: submit the form
     response = fas_ui_feedback.submit(session, feedback, referer=referer_url)
     context.response = response
-    logging.debug("% submitted the feedback request", buyer_alias)
+    logging.debug("%s submitted the feedback request", buyer_alias)
 
 
 def fas_feedback_request_should_be_submitted(
@@ -1197,7 +1197,7 @@ def fas_feedback_request_should_be_submitted(
     response = context.response
     fas_ui_feedback.should_see_feedback_submission_confirmation(response)
     logging.debug(
-        "% was told that the feedback request has been submitted", buyer_alias
+        "%s was told that the feedback request has been submitted", buyer_alias
     )
 
 
