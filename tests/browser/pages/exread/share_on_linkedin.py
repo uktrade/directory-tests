@@ -22,10 +22,7 @@ PAGE_TITLE = "LinkedIn"
 
 SELECTORS = {
     "general": {
-        "logo": Selector(
-            By.CSS_SELECTOR,
-            "#uno-reg-join > div > div > div > div.header-container > header",
-        )
+        "logo": Selector(By.CSS_SELECTOR, "#linkedin-logo")
     }
 }
 
