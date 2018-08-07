@@ -2,6 +2,7 @@
 """Invest in Great - Contact us Page Object."""
 import logging
 import random
+import time
 from typing import List
 from urllib.parse import urljoin
 
@@ -123,6 +124,9 @@ def fill_out(driver: WebDriver, details: dict):
     driver.switch_to.frame(iframe)
     captcha = find_element(driver, IM_NOT_A_ROBOT)
     captcha.click()
+    # wait 2s after user clicks on the CAPTCHA checkbox
+    # otherwise the test might fail
+    time.sleep(2)
     driver.switch_to.parent_frame()
 
     take_screenshot(driver, "After filling out the contact us form")
