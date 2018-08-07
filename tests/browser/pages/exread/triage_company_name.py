@@ -63,7 +63,7 @@ def hide_suggestions(driver: WebDriver):
 
 def click_on_first_suggestion(driver: WebDriver):
     suggestions = find_element(
-        driver, SUGGESTIONS, element_name="Suggestions", wait_for_it=False
+        driver, SUGGESTIONS, element_name="Suggestions", wait_for_it=True
     )
     if suggestions.is_displayed():
         first_suggestion = find_element(
