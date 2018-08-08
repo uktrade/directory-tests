@@ -1688,6 +1688,7 @@ def fas_fill_out_and_submit_contact_us_form(
     sources: str = None,
     company_size: str = None,
     accept_tc: bool = True,
+    captcha: bool = True,
 ):
     actor = get_actor(context, actor_alias)
     company_name = actor.company_name or "Automated test"
@@ -1702,7 +1703,7 @@ def fas_fill_out_and_submit_contact_us_form(
         "source": sources,
         "accept t&c": accept_tc,
     }
-    fas.contact_us.fill_out(context.driver, contact_us_details)
+    fas.contact_us.fill_out(context.driver, contact_us_details, captcha=captcha)
     fas.contact_us.submit(context.driver)
 
 

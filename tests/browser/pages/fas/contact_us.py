@@ -36,6 +36,7 @@ COUNTRY = Selector(By.ID, "id_country")
 BODY = Selector(By.ID, "id_body")
 SOURCE = Selector(By.ID, "id_source")
 ACCEPT_TC = Selector(By.ID, "id_terms_agreed-label")
+IM_NOT_A_ROBOT = Selector(By.CSS_SELECTOR, ".recaptcha-checkbox-checkmark")
 SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#lede form"),
@@ -68,7 +69,7 @@ def should_see_section(driver: WebDriver, name: str):
     check_for_section(driver, SELECTORS, sought_section=name)
 
 
-def fill_out(driver: WebDriver, contact_us_details: dict):
+def fill_out(driver: WebDriver, contact_us_details: dict, *, captcha: bool = True):
     input_fields = ["full name", "email", "organisation", "country", "body"]
     dropdown_menus = ["industry", "organisation size", "source"]
 
@@ -105,6 +106,9 @@ def fill_out(driver: WebDriver, contact_us_details: dict):
     if contact_us_details["accept t&c"]:
         checkbox = find_element(driver, ACCEPT_TC)
         checkbox.click()
+
+    if captcha:
+        tick_captcha_checkbox(driver)
 
     take_screenshot(driver, "After filling out the contact us form")
 
