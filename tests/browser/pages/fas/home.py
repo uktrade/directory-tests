@@ -102,7 +102,9 @@ SELECTORS = {
     },
     "contact us": {
         "itself": Selector(By.ID, "introduction-section"),
-        "introduction text": Selector(By.CSS_SELECTOR, "#introduction-section p"),
+        "introduction text": Selector(
+            By.CSS_SELECTOR, "#introduction-section p"
+        ),
         "contact us": CONTACT_US_BUTTON,
     },
     "uk industries": {
@@ -123,16 +125,20 @@ SELECTORS = {
     "uk services": {
         "itself": Selector(By.ID, "services-section"),
         "first service": Selector(
-            By.CSS_SELECTOR, "#services-section div.column-one-quarter:nth-child(3)"
+            By.CSS_SELECTOR,
+            "#services-section div.column-one-quarter:nth-child(3)",
         ),
         "second service": Selector(
-            By.CSS_SELECTOR, "#services-section div.column-one-quarter:nth-child(4)"
+            By.CSS_SELECTOR,
+            "#services-section div.column-one-quarter:nth-child(4)",
         ),
         "third service": Selector(
-            By.CSS_SELECTOR, "#services-section div.column-one-quarter:nth-child(5)"
+            By.CSS_SELECTOR,
+            "#services-section div.column-one-quarter:nth-child(5)",
         ),
         "fourth service": Selector(
-            By.CSS_SELECTOR, "#services-section div.column-one-quarter:nth-child(6)"
+            By.CSS_SELECTOR,
+            "#services-section div.column-one-quarter:nth-child(6)",
         ),
     },
 }
@@ -156,7 +162,10 @@ def should_see_sections(executor: AssertionExecutor, names: List[str]):
 
 def search(driver: WebDriver, *, keyword: str = None, sector: str = None):
     input_field = find_element(
-        driver, SEARCH_INPUT, element_name="Search input field", wait_for_it=False
+        driver,
+        SEARCH_INPUT,
+        element_name="Search input field",
+        wait_for_it=False,
     )
     input_field.clear()
     if keyword:
@@ -168,8 +177,12 @@ def search(driver: WebDriver, *, keyword: str = None, sector: str = None):
             element_name="Sector dropdown menu",
             wait_for_it=False,
         )
-        sector_value = "option[value='{}']".format(sector.upper().replace(" ", "_"))
-        sector_option = sector_dropdown.find_element_by_css_selector(sector_value)
+        sector_value = "option[value='{}']".format(
+            sector.upper().replace(" ", "_")
+        )
+        sector_option = sector_dropdown.find_element_by_css_selector(
+            sector_value
+        )
         sector_option.click()
     take_screenshot(driver, NAME + " after entering the keyword")
     button = find_element(
