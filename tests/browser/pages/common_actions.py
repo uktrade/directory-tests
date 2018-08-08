@@ -590,14 +590,16 @@ def browser_check_for_sections(
             selectors = get_horizontal_selectors(all_sections[name.lower()])
         else:
             raise KeyError(
-                "Please choose from desktop, mobile or horizontal (mobile) " "selectors"
+                "Please choose from desktop, mobile or horizontal (mobile) "
+                "selectors"
             )
         for key, selector in selectors.items():
             with selenium_action(
                 driver,
-                "Could not find element: %s identified by '%s' selector",
+                "Could not find element: %s identified by '%s' selector on %s",
                 key,
                 selector.value,
+                driver.current_url
             ):
                 element = driver.find_element(by=selector.by, value=selector.value)
             if "firefox" not in driver.capabilities["browserName"].lower():
