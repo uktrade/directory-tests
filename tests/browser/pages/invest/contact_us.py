@@ -18,6 +18,7 @@ from pages.common_actions import (
     check_url,
     find_element,
     take_screenshot,
+    tick_captcha_checkbox,
     visit_url,
 )
 from settings import INVEST_UI_URL
@@ -120,14 +121,7 @@ def fill_out(driver: WebDriver, details: dict):
             )
             option_element.click()
 
-    iframe = driver.find_element_by_tag_name("iframe")
-    driver.switch_to.frame(iframe)
-    captcha = find_element(driver, IM_NOT_A_ROBOT)
-    captcha.click()
-    # wait 2s after user clicks on the CAPTCHA checkbox
-    # otherwise the test might fail
-    time.sleep(2)
-    driver.switch_to.parent_frame()
+    tick_captcha_checkbox(driver)
 
     take_screenshot(driver, "After filling out the contact us form")
 

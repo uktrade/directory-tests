@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Find a Supplier Landing Page Object."""
 import logging
+
 import random
 from urllib.parse import urljoin
 
@@ -15,6 +16,7 @@ from pages.common_actions import (
     find_element,
     go_to_url,
     take_screenshot,
+    tick_captcha_checkbox,
 )
 from settings import DIRECTORY_UI_SUPPLIER_URL
 

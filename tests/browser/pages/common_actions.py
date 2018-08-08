@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """Common PageObject actions."""
+import time
+
 import hashlib
 import json
 import logging
@@ -663,3 +665,15 @@ def visit_url(executor: Executor, url: str) -> Union[Response, None]:
             "Unsupported type: {}. Please provide one of supported types: "
             "WedDriver or Session".format(type(executor))
         )
+
+
+def tick_captcha_checkbox(driver: WebDriver):
+    im_not_a_robot = Selector(By.CSS_SELECTOR, ".recaptcha-checkbox-checkmark")
+    iframe = driver.find_element_by_tag_name("iframe")
+    driver.switch_to.frame(iframe)
+    captcha = find_element(driver, im_not_a_robot)
+    captcha.click()
+    # wait 2s after user clicks on the CAPTCHA checkbox
+    # otherwise the test might fail
+    time.sleep(2)
+    driver.switch_to.parent_frame()
