@@ -23,7 +23,6 @@ PAGE_TITLE = "Post a Tweet on Twitter"
 MESSAGE_BOX = Selector(By.ID, "status")
 SELECTORS = {
     "general": {
-        "logo": Selector(By.CSS_SELECTOR, "#header > div > h1 > a"),
         "message_box": MESSAGE_BOX,
     }
 }
