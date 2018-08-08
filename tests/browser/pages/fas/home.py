@@ -32,6 +32,67 @@ SEARCH_SECTOR = Selector(By.ID, "id_sectors")
 SEARCH_BUTTON = Selector(By.CSS_SELECTOR, "#search-area > form button")
 CONTACT_US_BUTTON = Selector(By.CSS_SELECTOR, "#introduction-section a")
 SELECTORS = {
+    "header": {
+        "itself": Selector(By.ID, "ed-header"),
+        "gov links": Selector(By.ID, "header-gov-links"),
+        "hm gov link": Selector(
+            By.CSS_SELECTOR, "#header-gov-links  a[href='https://www.gov.uk/']"
+        ),
+        "great gov link": Selector(
+            By.CSS_SELECTOR,
+            "#header-gov-links  a[href='https://www.great.gov.uk/']",
+        ),
+        "language switcher": Selector(
+            By.CSS_SELECTOR, ".ed-language-switcher"
+        ),
+        "navigation bar": Selector(By.ID, "navbar"),
+        "home": Selector(By.CSS_SELECTOR, "#navbar a[href='/']"),
+        "search": Selector(By.CSS_SELECTOR, "#navbar a[href='/search/']"),
+        "industries": Selector(
+            By.CSS_SELECTOR, "#navbar a[href='/industries/']"
+        ),
+    },
+    "footer": {
+        "itself": Selector(By.ID, "ed-footer"),
+        "sub-links": Selector(By.ID, "footer-sub-links"),
+        "hm gov link": Selector(By.CSS_SELECTOR, "#footer-logos > a"),
+        "great gov link": Selector(By.CSS_SELECTOR, "#footer-logos > img"),
+        "home": Selector(By.CSS_SELECTOR, "#footer-main-links a[href='/']"),
+        "search": Selector(
+            By.CSS_SELECTOR, "#footer-main-links a[href='/search/']"
+        ),
+        "industries": Selector(
+            By.CSS_SELECTOR, "#footer-main-links a[href='/industries/']"
+        ),
+        "feedback": Selector(
+            By.CSS_SELECTOR, "#footer-main-links a[href='/feedback/']"
+        ),
+        "about": Selector(
+            By.CSS_SELECTOR,
+            "#footer-sub-links a[href='https://great.gov.uk/about/']",
+        ),
+        "contact us": Selector(
+            By.CSS_SELECTOR,
+            "#footer-sub-links a[href='https://contact-us.export.great.gov.uk/directory/FeedbackForm/']",
+        ),
+        "privacy and cookies": Selector(
+            By.CSS_SELECTOR,
+            "#footer-sub-links a[href='https://great.gov.uk/privacy-and-cookies/']",
+        ),
+        "terms and conditions": Selector(
+            By.CSS_SELECTOR,
+            "#footer-sub-links a[href='https://great.gov.uk/terms-and-conditions/']",
+        ),
+        "performance": Selector(
+            By.CSS_SELECTOR,
+            "#footer-sub-links a[href='https://great.gov.uk/performance-dashboard/']",
+        ),
+        "dit": Selector(
+            By.CSS_SELECTOR,
+            "#footer-sub-links a[href='https://www.gov.uk/government/organisations/department-for-international-trade']",
+        ),
+        "copyright links": Selector(By.ID, "ed-footer-copyright"),
+    },
     "hero": {"itself": Selector(By.CSS_SELECTOR, "section#hero")},
     "find uk suppliers": {
         "itself": Selector(By.ID, "search-area"),
