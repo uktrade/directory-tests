@@ -10,11 +10,13 @@ Feature: Find a Supplier - home page
 
     Then "Robert" should see following sections
       | Sections          |
+      | Header            |
       | Hero              |
       | Find UK Suppliers |
       | Contact us        |
       | UK Industries     |
       | UK Services       |
+      | Footer            |
 
 
   @ED-4245
