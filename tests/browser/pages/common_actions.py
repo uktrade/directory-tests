@@ -560,6 +560,93 @@ def scroll_to(driver: WebDriver, element: WebElement):
     driver.execute_script("window.scrollTo(0, {});".format(vertical_position))
 
 
+def show_message(driver: WebDriver, message: str):
+    script = """
+    function removeElement(id) {{
+        var existing = document.getElementById(id);
+        if(existing) {{
+            existing.parentNode.removeChild(existing);
+        }};
+    }};
+
+    function addElement(tag, innerHTML, id) {{
+        removeElement(id);
+        var node = document.createElement(tag);
+        node.innerHTML = innerHTML;
+        node.id = id;
+        document.body.appendChild(node);
+    }};
+
+    function showSnackBar() {{
+        var x = document.getElementById("snackbar");
+        x.className = "show";
+        setTimeout(function(){{ x.className = x.className.replace("show", ""); }}, 3000);
+    }};
+
+    function createSnackBarElements(message) {{
+        var snackbar_css = `
+        #snackbar {{
+            visibility: hidden;
+            min-width: 250px;
+            margin-left: -125px;
+            background-color: #333;
+            color: #00FF00;
+            text-align: center;
+            border-radius: 2px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            left: 10%;
+            top: 30px;
+        }}
+
+        #snackbar.show {{
+            visibility: visible;
+            -webkit-animation: fadein 0.1s, fadeout 0.1s 2s;
+            animation: fadein 0.1s, fadeout 0.1s 2s;
+        }}
+        
+        @-webkit-keyframes fadein {{
+            from {{top: 0; opacity: 0;}}
+            to {{top: 30px; opacity: 1;}}
+        }}
+        
+        @keyframes fadein {{
+            from {{top: 0; opacity: 0;}}
+            to {{top: 30px; opacity: 1;}}
+        }}
+        
+        @-webkit-keyframes fadeout {{
+            from {{top: 30px; opacity: 1;}}
+            to {{top: 0; opacity: 0;}}
+        }}
+        
+        @keyframes fadeout {{
+            from {{top: 30px; opacity: 1;}}
+            to {{top: 0; opacity: 0;}}
+        }}`;
+
+        addElement('style', snackbar_css, 'snackbar_css');
+        addElement('div', message, 'snackbar');
+    }};
+
+    function deleteSnackBarElements() {{
+        removeElement('snackbar');
+        removeElement('snackbar_css');
+    }};
+
+    function showMessage(message) {{
+        deleteSnackBarElements();
+        createSnackBarElements(message);
+        showSnackBar();
+        setTimeout(deleteSnackBarElements, 3000);  
+    }};
+    
+    showMessage('{message}');
+    """
+    driver.execute_script(script.format(message=message))
+
+
 def check_for_sections(
     executor: AssertionExecutor, all_sections: dict, sought_sections: List[str]
 ):
