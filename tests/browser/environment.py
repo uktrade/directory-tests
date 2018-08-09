@@ -158,7 +158,7 @@ def after_scenario(context: Context, scenario: Scenario):
     """Place here code which has to be executed after every scenario."""
     message = f"Finish: {scenario.name} | {scenario.filename}:{scenario.line}"
     show_message(context.driver, message)
-    time.sleep(0.5)
+    time.sleep(0.2)
     logging.debug("Closing Selenium Driver after scenario: %s", scenario.name)
     logging.debug(context.scenario_data)
     actors = context.scenario_data.actors

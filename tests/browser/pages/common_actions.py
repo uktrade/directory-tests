@@ -602,8 +602,8 @@ def show_message(driver: WebDriver, message: str):
 
         #snackbar.show {{
             visibility: visible;
-            -webkit-animation: fadein 0.1s, fadeout 0.1s 2s;
-            animation: fadein 0.1s, fadeout 0.1s 2s;
+            -webkit-animation: fadein 0.1s, fadeout 0.1s 1s;
+            animation: fadein 0.1s, fadeout 0.1s 1s;
         }}
         
         @-webkit-keyframes fadein {{
@@ -639,7 +639,7 @@ def show_message(driver: WebDriver, message: str):
         deleteSnackBarElements();
         createSnackBarElements(message);
         showSnackBar();
-        setTimeout(deleteSnackBarElements, 3000);  
+        setTimeout(deleteSnackBarElements, 1000);  
     }};
     
     showMessage('{message}');
