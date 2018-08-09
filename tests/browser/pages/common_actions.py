@@ -642,8 +642,9 @@ def show_snackbar_message(driver: WebDriver, message: str):
         setTimeout(deleteSnackBarElements, 1000);  
     }};
     
-    showMessage('{message}');
+    showMessage(`{message}`);
     """
+    message = message.replace("`", "")
     driver.execute_script(script.format(message=message))
 
 
