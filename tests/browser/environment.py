@@ -17,7 +17,7 @@ from pages.common_actions import (
     clear_driver_cookies,
     flag_browserstack_session_as_failed,
     initialize_scenario_data,
-    show_message,
+    show_snackbar_message,
 )
 
 try:
@@ -148,7 +148,7 @@ def before_scenario(context: Context, scenario: Scenario):
     """Place here code which has to be executed before every Scenario."""
     logging.debug("Starting scenario: %s", scenario.name)
     message = f"Start: {scenario.name} | {scenario.filename}:{scenario.line}"
-    show_message(context.driver, message)
+    show_snackbar_message(context.driver, message)
     context.scenario_data = initialize_scenario_data()
     if RESTART_BROWSER == "scenario":
         start_driver_session(context, scenario.name)
@@ -157,7 +157,7 @@ def before_scenario(context: Context, scenario: Scenario):
 def after_scenario(context: Context, scenario: Scenario):
     """Place here code which has to be executed after every scenario."""
     message = f"Finish: {scenario.name} | {scenario.filename}:{scenario.line}"
-    show_message(context.driver, message)
+    show_snackbar_message(context.driver, message)
     time.sleep(0.2)
     logging.debug("Closing Selenium Driver after scenario: %s", scenario.name)
     logging.debug(context.scenario_data)

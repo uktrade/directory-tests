@@ -560,7 +560,7 @@ def scroll_to(driver: WebDriver, element: WebElement):
     driver.execute_script("window.scrollTo(0, {});".format(vertical_position))
 
 
-def show_message(driver: WebDriver, message: str):
+def show_snackbar_message(driver: WebDriver, message: str):
     script = """
     function removeElement(id) {{
         var existing = document.getElementById(id);
