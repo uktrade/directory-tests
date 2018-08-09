@@ -114,7 +114,7 @@ Feature: Find a Supplier - Industry pages
   @contact-us
   Scenario Outline: Buyers should be able to contact us (DIT) from the  "<specific> Industry" page
     Given "Robert" visits the "Find a Supplier - <specific> - industry" page
-    And "Robert" decided to "contact us" via "Find a Supplier - <specific> - industry" page
+    And "Robert" decided to use "contact us" button
 
     When "Robert" fills out and submits the contact us form
 
