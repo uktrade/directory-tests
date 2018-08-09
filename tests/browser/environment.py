@@ -2,6 +2,7 @@
 """Behave configuration file."""
 import logging
 import socket
+import time
 
 from behave.contrib.scenario_autoretry import patch_scenario_with_autoretry
 from behave.model import Feature, Scenario, Step
@@ -12,8 +13,12 @@ from selenium.common.exceptions import WebDriverException
 
 from pages import sso
 from settings import AUTO_RETRY, CONFIG, CONFIG_NAME, RESTART_BROWSER, TASK_ID
-from pages.common_actions import initialize_scenario_data, \
-    flag_browserstack_session_as_failed, clear_driver_cookies
+from pages.common_actions import (
+    clear_driver_cookies,
+    flag_browserstack_session_as_failed,
+    initialize_scenario_data,
+    show_message,
+)
 
 try:
     import http.client as httplib
@@ -142,6 +147,8 @@ def after_feature(context: Context, feature: Feature):
 def before_scenario(context: Context, scenario: Scenario):
     """Place here code which has to be executed before every Scenario."""
     logging.debug("Starting scenario: %s", scenario.name)
+    message = f"Start: {scenario.name} | {scenario.filename}:{scenario.line}"
+    show_message(context.driver, message)
     context.scenario_data = initialize_scenario_data()
     if RESTART_BROWSER == "scenario":
         start_driver_session(context, scenario.name)
@@ -149,6 +156,9 @@ def before_scenario(context: Context, scenario: Scenario):
 
 def after_scenario(context: Context, scenario: Scenario):
     """Place here code which has to be executed after every scenario."""
+    message = f"Finish: {scenario.name} | {scenario.filename}:{scenario.line}"
+    show_message(context.driver, message)
+    time.sleep(0.5)
     logging.debug("Closing Selenium Driver after scenario: %s", scenario.name)
     logging.debug(context.scenario_data)
     actors = context.scenario_data.actors
