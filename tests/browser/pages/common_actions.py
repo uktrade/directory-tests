@@ -99,7 +99,8 @@ def go_to_url(driver: WebDriver, url: str, page_name: str, *, first_time: bool =
 def check_url(driver: WebDriver, expected_url: str, *, exact_match: bool = True):
     """Check if current page URL matches the expected one."""
     with assertion_msg(
-        "Expected page URL to be: '%s' but got '%s'", expected_url, driver.current_url
+        "Expected page URL to be: '%s' but got '%s'", expected_url,
+        driver.current_url
     ):
         if exact_match:
             assert driver.current_url == expected_url
@@ -113,7 +114,8 @@ def check_url(driver: WebDriver, expected_url: str, *, exact_match: bool = True)
 def check_title(driver: WebDriver, expected_title: str, *, exact_match: bool = False):
     """Check if current page title matches the expected one."""
     with assertion_msg(
-        "Expected page title to be: '%s' but got '%s'", expected_title, driver.title
+        "Expected page title to be: '%s' but got '%s' on %s", expected_title,
+        driver.title, driver.current_url
     ):
         if exact_match:
             assert expected_title.lower() == driver.title.lower()
@@ -417,9 +419,10 @@ def check_if_element_is_not_present(
     except NoSuchElementException:
         found = False
     with assertion_msg(
-        "Expected not to find %s element identified by '%s'",
+        "Expected not to find %s element identified by '%s' on %s",
         element_name,
         selector.value,
+        driver.current_url,
     ):
         assert not found
 
@@ -445,9 +448,10 @@ def check_if_element_is_not_visible(
             driver, selector, element_name=element_name, wait_for_it=wait_for_it
         )
         with assertion_msg(
-            "Expected not to see '%s' element identified by '%s'",
+            "Expected not to see '%s' element identified by '%s' on %s",
             element_name,
             selector.value,
+            driver.current_url
         ):
             assert not element.is_displayed()
     except NoSuchElementException:
