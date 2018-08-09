@@ -158,6 +158,8 @@ def after_scenario(context: Context, scenario: Scenario):
     """Place here code which has to be executed after every scenario."""
     message = f"Finish: {scenario.name} | {scenario.filename}:{scenario.line}"
     show_snackbar_message(context.driver, message)
+    # in order to show the snackbar message after scenario, an explicit wait
+    # has to executed
     time.sleep(0.2)
     logging.debug("Closing Selenium Driver after scenario: %s", scenario.name)
     logging.debug(context.scenario_data)
