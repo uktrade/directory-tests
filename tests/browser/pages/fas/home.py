@@ -71,7 +71,7 @@ SELECTORS = {
             By.CSS_SELECTOR,
             "#footer-sub-links a[href='https://great.gov.uk/about/']",
         ),
-        "contact us": Selector(
+        "contact us link": Selector(
             By.CSS_SELECTOR,
             "#footer-sub-links a[href='https://contact-us.export.great.gov.uk/directory/FeedbackForm/']",
         ),
