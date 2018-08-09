@@ -670,6 +670,7 @@ def visit_url(executor: Executor, url: str) -> Union[Response, None]:
 def tick_captcha_checkbox(driver: WebDriver):
     im_not_a_robot = Selector(By.CSS_SELECTOR, ".recaptcha-checkbox-checkmark")
     iframe = driver.find_element_by_tag_name("iframe")
+    scroll_to(driver, iframe)
     driver.switch_to.frame(iframe)
     captcha = find_element(driver, im_not_a_robot)
     captcha.click()
