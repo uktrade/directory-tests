@@ -147,7 +147,7 @@ SELECTORS = {
     "related industries": {
         "self": Selector(By.CSS_SELECTOR, "section.industry-page-related"),
         "industry cards": Selector(
-            By.CSS_SELECTOR, "section.industry-page-related a.labelled-card"
+            By.CSS_SELECTOR, "section.industry-page-related a"
         ),
     },
     "report this page": {
@@ -165,13 +165,6 @@ SELECTORS = {
             "#invest-footer div.footer-branding > img:nth-child(2)",
         ),
     },
-}
-
-OPTIONAL_SECTIONS = {
-    "related industries": {
-        "self": Selector(By.CSS_SELECTOR, "section.industry-page-related"),
-        "links": Selector(By.CSS_SELECTOR, "a.labelled-card"),
-    }
 }
 
 

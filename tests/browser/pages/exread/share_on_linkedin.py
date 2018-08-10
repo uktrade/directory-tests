@@ -20,20 +20,12 @@ TYPE = "share"
 URL = urljoin("https://www.linkedin.com/", "shareArticle")
 PAGE_TITLE = "LinkedIn"
 
-SELECTORS = {
-    "general": {
-        "logo": Selector(
-            By.CSS_SELECTOR,
-            "#uno-reg-join > div > div > div > div.header-container > header",
-        )
-    }
-}
+SELECTORS = {}
 
 
 def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_title(driver, PAGE_TITLE, exact_match=False)
-    check_for_expected_sections_elements(driver, SELECTORS)
 
 
 def extract_shared_url(url: str) -> str:

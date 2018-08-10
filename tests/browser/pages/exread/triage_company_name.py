@@ -63,7 +63,7 @@ def hide_suggestions(driver: WebDriver):
 
 def click_on_first_suggestion(driver: WebDriver):
     suggestions = find_element(
-        driver, SUGGESTIONS, element_name="Suggestions", wait_for_it=False
+        driver, SUGGESTIONS, element_name="Suggestions", wait_for_it=True
     )
     if suggestions.is_displayed():
         first_suggestion = find_element(
@@ -74,7 +74,10 @@ def click_on_first_suggestion(driver: WebDriver):
 
 def enter_company_name(driver: WebDriver, company_name: str = None):
     if not company_name:
-        company_name = random.choice(["automated", "browser", "tests"])
+        company_name = random.choice([
+            "automated services limited",
+            "browsers antiques",
+            "test bit limited"])
     input_field = find_element(
         driver, COMPANY_NAME_INPUT, element_name="Company name input", wait_for_it=False
     )

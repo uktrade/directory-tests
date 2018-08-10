@@ -32,6 +32,67 @@ SEARCH_SECTOR = Selector(By.ID, "id_sectors")
 SEARCH_BUTTON = Selector(By.CSS_SELECTOR, "#search-area > form button")
 CONTACT_US_BUTTON = Selector(By.CSS_SELECTOR, "#introduction-section a")
 SELECTORS = {
+    "header": {
+        "itself": Selector(By.ID, "ed-header"),
+        "gov links": Selector(By.ID, "header-gov-links"),
+        "hm gov link": Selector(
+            By.CSS_SELECTOR, "#header-gov-links  a[href='https://www.gov.uk/']"
+        ),
+        "great gov link": Selector(
+            By.CSS_SELECTOR,
+            "#header-gov-links  a[href='https://www.great.gov.uk/']",
+        ),
+        "language switcher": Selector(
+            By.CSS_SELECTOR, ".ed-language-switcher"
+        ),
+        "navigation bar": Selector(By.ID, "navbar"),
+        "home": Selector(By.CSS_SELECTOR, "#navbar a[href='/']"),
+        "search": Selector(By.CSS_SELECTOR, "#navbar a[href='/search/']"),
+        "industries": Selector(
+            By.CSS_SELECTOR, "#navbar a[href='/industries/']"
+        ),
+    },
+    "footer": {
+        "itself": Selector(By.ID, "ed-footer"),
+        "sub-links": Selector(By.ID, "footer-sub-links"),
+        "hm gov link": Selector(By.CSS_SELECTOR, "#footer-logos > a"),
+        "great gov link": Selector(By.CSS_SELECTOR, "#footer-logos > img"),
+        "home": Selector(By.CSS_SELECTOR, "#footer-main-links a[href='/']"),
+        "search": Selector(
+            By.CSS_SELECTOR, "#footer-main-links a[href='/search/']"
+        ),
+        "industries": Selector(
+            By.CSS_SELECTOR, "#footer-main-links a[href='/industries/']"
+        ),
+        "feedback": Selector(
+            By.CSS_SELECTOR, "#footer-main-links a[href='/feedback/']"
+        ),
+        "about": Selector(
+            By.CSS_SELECTOR,
+            "#footer-sub-links a[href='https://great.gov.uk/about/']",
+        ),
+        "contact us link": Selector(
+            By.CSS_SELECTOR,
+            "#footer-sub-links a[href='https://contact-us.export.great.gov.uk/directory/FeedbackForm/']",
+        ),
+        "privacy and cookies": Selector(
+            By.CSS_SELECTOR,
+            "#footer-sub-links a[href='https://great.gov.uk/privacy-and-cookies/']",
+        ),
+        "terms and conditions": Selector(
+            By.CSS_SELECTOR,
+            "#footer-sub-links a[href='https://great.gov.uk/terms-and-conditions/']",
+        ),
+        "performance": Selector(
+            By.CSS_SELECTOR,
+            "#footer-sub-links a[href='https://great.gov.uk/performance-dashboard/']",
+        ),
+        "dit": Selector(
+            By.CSS_SELECTOR,
+            "#footer-sub-links a[href='https://www.gov.uk/government/organisations/department-for-international-trade']",
+        ),
+        "copyright links": Selector(By.ID, "ed-footer-copyright"),
+    },
     "hero": {"itself": Selector(By.CSS_SELECTOR, "section#hero")},
     "find uk suppliers": {
         "itself": Selector(By.ID, "search-area"),
@@ -41,7 +102,9 @@ SELECTORS = {
     },
     "contact us": {
         "itself": Selector(By.ID, "introduction-section"),
-        "introduction text": Selector(By.CSS_SELECTOR, "#introduction-section p"),
+        "introduction text": Selector(
+            By.CSS_SELECTOR, "#introduction-section p"
+        ),
         "contact us": CONTACT_US_BUTTON,
     },
     "uk industries": {
@@ -62,16 +125,20 @@ SELECTORS = {
     "uk services": {
         "itself": Selector(By.ID, "services-section"),
         "first service": Selector(
-            By.CSS_SELECTOR, "#services-section div.column-one-quarter:nth-child(3)"
+            By.CSS_SELECTOR,
+            "#services-section div.column-one-quarter:nth-child(3)",
         ),
         "second service": Selector(
-            By.CSS_SELECTOR, "#services-section div.column-one-quarter:nth-child(4)"
+            By.CSS_SELECTOR,
+            "#services-section div.column-one-quarter:nth-child(4)",
         ),
         "third service": Selector(
-            By.CSS_SELECTOR, "#services-section div.column-one-quarter:nth-child(5)"
+            By.CSS_SELECTOR,
+            "#services-section div.column-one-quarter:nth-child(5)",
         ),
         "fourth service": Selector(
-            By.CSS_SELECTOR, "#services-section div.column-one-quarter:nth-child(6)"
+            By.CSS_SELECTOR,
+            "#services-section div.column-one-quarter:nth-child(6)",
         ),
     },
 }
@@ -95,7 +162,10 @@ def should_see_sections(executor: AssertionExecutor, names: List[str]):
 
 def search(driver: WebDriver, *, keyword: str = None, sector: str = None):
     input_field = find_element(
-        driver, SEARCH_INPUT, element_name="Search input field", wait_for_it=False
+        driver,
+        SEARCH_INPUT,
+        element_name="Search input field",
+        wait_for_it=False,
     )
     input_field.clear()
     if keyword:
@@ -107,8 +177,12 @@ def search(driver: WebDriver, *, keyword: str = None, sector: str = None):
             element_name="Sector dropdown menu",
             wait_for_it=False,
         )
-        sector_value = "option[value='{}']".format(sector.upper().replace(" ", "_"))
-        sector_option = sector_dropdown.find_element_by_css_selector(sector_value)
+        sector_value = "option[value='{}']".format(
+            sector.upper().replace(" ", "_")
+        )
+        sector_option = sector_dropdown.find_element_by_css_selector(
+            sector_value
+        )
         sector_option.click()
     take_screenshot(driver, NAME + " after entering the keyword")
     button = find_element(

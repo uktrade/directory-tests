@@ -10,11 +10,13 @@ Feature: Find a Supplier - home page
 
     Then "Robert" should see following sections
       | Sections          |
+      | Header            |
       | Hero              |
       | Find UK Suppliers |
       | Contact us        |
       | UK Industries     |
       | UK Services       |
+      | Footer            |
 
 
   @ED-4245
@@ -41,7 +43,7 @@ Feature: Find a Supplier - home page
   Scenario: Buyers should be able to get to the "Contact us" page from the "Find a Supplier - home" page
     Given "Robert" visits the "Find a Supplier - Home" page
 
-    When "Robert" decides to "contact us" via "Find a Supplier - Home" page
+    When "Robert" decides to use "Contact us" button
 
     Then "Robert" should be on the "Find a Supplier - Contact us" page
 
@@ -50,7 +52,7 @@ Feature: Find a Supplier - home page
   @contact-us
   Scenario: Buyers should be able to contact us (DIT) from the "Find a Supplier - home" page
     Given "Robert" visits the "Find a Supplier - Home" page
-    And "Robert" decided to "contact us" via "Find a Supplier - Home" page
+    And "Robert" decided to use "contact us" button
 
     When "Robert" fills out and submits the contact us form
 

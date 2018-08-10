@@ -23,7 +23,7 @@ NAME = "Search results"
 SERVICE = "Find a Supplier"
 TYPE = "search"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "search/")
-PAGE_TITLE = "Find trade profiles of reliable UK suppliers - trade.great.gov.uk"
+PAGE_TITLE = "Search the database of UK suppliers' trade profiles - trade.great.gov.uk"
 
 SECTOR_FILTERS = Selector(By.CSS_SELECTOR, "#id_sectors input")
 SELECTORS = {

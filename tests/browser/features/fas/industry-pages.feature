@@ -114,7 +114,7 @@ Feature: Find a Supplier - Industry pages
   @contact-us
   Scenario Outline: Buyers should be able to contact us (DIT) from the  "<specific> Industry" page
     Given "Robert" visits the "Find a Supplier - <specific> - industry" page
-    And "Robert" decided to "contact us" via "Find a Supplier - <specific> - industry" page
+    And "Robert" decided to use "contact us" button
 
     When "Robert" fills out and submits the contact us form
 
@@ -152,6 +152,17 @@ Feature: Find a Supplier - Industry pages
       | Marine                             |
       | Professional & financial services  |
       | Space                              |
+
+  @bug
+  @TT-277
+  @fixme
+  @contact-us
+  Scenario: Buyers shouldn't be able to submit the contact us form without passing captcha
+    Given "Robert" visits the "Find a Supplier - Contact Us" page
+
+    When "Robert" fills out and submits the contact us form without passing captcha
+
+    Then "Robert" should be on the "Find a Supplier - Contact us" page
 
 
   @ED-4263

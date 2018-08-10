@@ -66,8 +66,8 @@ Feature: Triage
     And "Inigo" says that she "<online_action>" used online marketplaces
     And "Inigo" says what she wants to export "<goods_or_services>"
     And "Inigo" says that her company "is" incorporated
-    And "Inigo" "<company_name_action>" his company name
-    And "Inigo" sees the summary page with answers to the questions he was asked
+    And "Inigo" "<company_name_action>" her company name
+    And "Inigo" sees the summary page with answers to the questions she was asked
     And "Inigo" can see that she was classified as a "occasional" exporter
     And "Inigo" decides to create her personalised journey page
 

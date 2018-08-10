@@ -44,8 +44,10 @@ SELECTORS = {
     "description": {
         "title": Selector(By.CSS_SELECTOR, "#start-now-container > h1"),
         "description": Selector(By.CSS_SELECTOR, "#start-now-container > p"),
-        "start now": Selector(By.CSS_SELECTOR, "#start-now-container > a"),
     },
+    "start now": {
+        "start now": Selector(By.CSS_SELECTOR, "#start-now-container > a"),
+    }
 }
 
 

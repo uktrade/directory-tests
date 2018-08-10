@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """Common PageObject actions."""
+import time
+
 import hashlib
 import json
 import logging
@@ -97,7 +99,8 @@ def go_to_url(driver: WebDriver, url: str, page_name: str, *, first_time: bool =
 def check_url(driver: WebDriver, expected_url: str, *, exact_match: bool = True):
     """Check if current page URL matches the expected one."""
     with assertion_msg(
-        "Expected page URL to be: '%s' but got '%s'", expected_url, driver.current_url
+        "Expected page URL to be: '%s' but got '%s'", expected_url,
+        driver.current_url
     ):
         if exact_match:
             assert driver.current_url == expected_url
@@ -111,7 +114,8 @@ def check_url(driver: WebDriver, expected_url: str, *, exact_match: bool = True)
 def check_title(driver: WebDriver, expected_title: str, *, exact_match: bool = False):
     """Check if current page title matches the expected one."""
     with assertion_msg(
-        "Expected page title to be: '%s' but got '%s'", expected_title, driver.title
+        "Expected page title to be: '%s' but got '%s' on %s", expected_title,
+        driver.title, driver.current_url
     ):
         if exact_match:
             assert expected_title.lower() == driver.title.lower()
@@ -415,9 +419,10 @@ def check_if_element_is_not_present(
     except NoSuchElementException:
         found = False
     with assertion_msg(
-        "Expected not to find %s element identified by '%s'",
+        "Expected not to find %s element identified by '%s' on %s",
         element_name,
         selector.value,
+        driver.current_url,
     ):
         assert not found
 
@@ -443,9 +448,10 @@ def check_if_element_is_not_visible(
             driver, selector, element_name=element_name, wait_for_it=wait_for_it
         )
         with assertion_msg(
-            "Expected not to see '%s' element identified by '%s'",
+            "Expected not to see '%s' element identified by '%s' on %s",
             element_name,
             selector.value,
+            driver.current_url
         ):
             assert not element.is_displayed()
     except NoSuchElementException:
@@ -558,6 +564,94 @@ def scroll_to(driver: WebDriver, element: WebElement):
     driver.execute_script("window.scrollTo(0, {});".format(vertical_position))
 
 
+def show_snackbar_message(driver: WebDriver, message: str):
+    script = """
+    function removeElement(id) {{
+        var existing = document.getElementById(id);
+        if(existing) {{
+            existing.parentNode.removeChild(existing);
+        }};
+    }};
+
+    function addElement(tag, innerHTML, id) {{
+        removeElement(id);
+        var node = document.createElement(tag);
+        node.innerHTML = innerHTML;
+        node.id = id;
+        document.body.appendChild(node);
+    }};
+
+    function showSnackBar() {{
+        var x = document.getElementById("snackbar");
+        x.className = "show";
+        setTimeout(function(){{ x.className = x.className.replace("show", ""); }}, 3000);
+    }};
+
+    function createSnackBarElements(message) {{
+        var snackbar_css = `
+        #snackbar {{
+            visibility: hidden;
+            min-width: 250px;
+            margin-left: -125px;
+            background-color: #333;
+            color: #00FF00;
+            text-align: center;
+            border-radius: 2px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            left: 10%;
+            top: 30px;
+        }}
+
+        #snackbar.show {{
+            visibility: visible;
+            -webkit-animation: fadein 0.1s, fadeout 0.1s 1s;
+            animation: fadein 0.1s, fadeout 0.1s 1s;
+        }}
+        
+        @-webkit-keyframes fadein {{
+            from {{top: 0; opacity: 0;}}
+            to {{top: 30px; opacity: 1;}}
+        }}
+        
+        @keyframes fadein {{
+            from {{top: 0; opacity: 0;}}
+            to {{top: 30px; opacity: 1;}}
+        }}
+        
+        @-webkit-keyframes fadeout {{
+            from {{top: 30px; opacity: 1;}}
+            to {{top: 0; opacity: 0;}}
+        }}
+        
+        @keyframes fadeout {{
+            from {{top: 30px; opacity: 1;}}
+            to {{top: 0; opacity: 0;}}
+        }}`;
+
+        addElement('style', snackbar_css, 'snackbar_css');
+        addElement('div', message, 'snackbar');
+    }};
+
+    function deleteSnackBarElements() {{
+        removeElement('snackbar');
+        removeElement('snackbar_css');
+    }};
+
+    function showMessage(message) {{
+        deleteSnackBarElements();
+        createSnackBarElements(message);
+        showSnackBar();
+        setTimeout(deleteSnackBarElements, 1000);  
+    }};
+    
+    showMessage(`{message}`);
+    """
+    message = message.replace("`", "")
+    driver.execute_script(script.format(message=message))
+
+
 def check_for_sections(
     executor: AssertionExecutor, all_sections: dict, sought_sections: List[str]
 ):
@@ -590,14 +684,16 @@ def browser_check_for_sections(
             selectors = get_horizontal_selectors(all_sections[name.lower()])
         else:
             raise KeyError(
-                "Please choose from desktop, mobile or horizontal (mobile) " "selectors"
+                "Please choose from desktop, mobile or horizontal (mobile) "
+                "selectors"
             )
         for key, selector in selectors.items():
             with selenium_action(
                 driver,
-                "Could not find element: %s identified by '%s' selector",
+                "Could not find element: %s identified by '%s' selector on %s",
                 key,
                 selector.value,
+                driver.current_url
             ):
                 element = driver.find_element(by=selector.by, value=selector.value)
             if "firefox" not in driver.capabilities["browserName"].lower():
@@ -661,3 +757,16 @@ def visit_url(executor: Executor, url: str) -> Union[Response, None]:
             "Unsupported type: {}. Please provide one of supported types: "
             "WedDriver or Session".format(type(executor))
         )
+
+
+def tick_captcha_checkbox(driver: WebDriver):
+    im_not_a_robot = Selector(By.CSS_SELECTOR, ".recaptcha-checkbox-checkmark")
+    iframe = driver.find_element_by_tag_name("iframe")
+    scroll_to(driver, iframe)
+    driver.switch_to.frame(iframe)
+    captcha = find_element(driver, im_not_a_robot)
+    captcha.click()
+    # wait 2s after user clicks on the CAPTCHA checkbox
+    # otherwise the test might fail
+    time.sleep(2)
+    driver.switch_to.parent_frame()
