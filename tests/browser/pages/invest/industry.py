@@ -167,13 +167,6 @@ SELECTORS = {
     },
 }
 
-OPTIONAL_SECTIONS = {
-    "related industries": {
-        "self": Selector(By.CSS_SELECTOR, "section.industry-page-related"),
-        "links": Selector(By.CSS_SELECTOR, "a.labelled-card"),
-    }
-}
-
 
 def visit(
     executor: Executor, *, first_time: bool = False, page_name: str = None
