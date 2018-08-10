@@ -147,7 +147,7 @@ SELECTORS = {
     "related industries": {
         "self": Selector(By.CSS_SELECTOR, "section.industry-page-related"),
         "industry cards": Selector(
-            By.CSS_SELECTOR, "section.industry-page-related a.labelled-image-card"
+            By.CSS_SELECTOR, "section.industry-page-related a"
         ),
     },
     "report this page": {
