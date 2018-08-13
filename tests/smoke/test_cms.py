@@ -61,27 +61,6 @@ def test_wagtail_get_page_by_slug(slug):
     assert response.json()["meta"]["slug"] == slug
 
 
-@pytest.mark.parametrize(
-    "page",
-    [
-        ("find_a_supplier.IndustryPage", None),
-        ("find_a_supplier.IndustryArticlePage", None),
-        ("find_a_supplier.LandingPage", "Find a supplier - homepage"),
-        ("find_a_supplier.IndustryContactPage", "Contact us"),
-        ("export_readiness.TermsAndConditionsPage", "Terms and Conditions"),
-        ("export_readiness.PrivacyAndCookiesPage", "Privacy and cookies"),
-        ("export_readiness.GetFinancePage", "Get finance"),
-    ],
-)
-def test_wagtail_get_page_by_type(cms_client, page):
-    model, title = page
-    relative_url = get_relative_url("cms-api:pages-by-type").format(model)
-    response = cms_client.get(relative_url)
-    assert response.status_code == http.client.OK
-    if title:
-        assert response.json()["title"] == title
-
-
 @pytest.mark.parametrize("limit", [2, 10, 20])
 def test_wagtail_get_number_of_pages(limit):
     query = "?order=id&limit={}".format(limit)
