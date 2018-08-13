@@ -15,9 +15,9 @@ join_ui_supplier = partial(urljoin, settings.DIRECTORY_UI_SUPPLIER_URL)
 join_exred = partial(urljoin, settings.EXRED_UI_URL)
 join_contact_us = partial(urljoin, settings.DIRECTORY_CONTACT_US_UI_URL)
 join_soo = partial(urljoin, settings.SOO_UI_URL)
-join_cms_url = partial(urljoin, settings.CMS_URL)
-join_cms_api = partial(urljoin, 'api', settings.CMS_URL)
-join_cms_ui = partial(urljoin, 'admin', settings.CMS_URL)
+join_cms_url = partial(urljoin, settings.DIRECTORY_CMS_API_CLIENT_BASE_URL)
+join_cms_api = partial(urljoin, 'api', settings.DIRECTORY_CMS_API_CLIENT_BASE_URL)
+join_cms_ui = partial(urljoin, 'admin', settings.DIRECTORY_CMS_API_CLIENT_BASE_URL)
 
 urls = {
     # SSO
@@ -172,7 +172,6 @@ urls = {
     'cms-api:pages': 'api/pages/',
     'cms-api:images': 'api/images/',
     'cms-api:documents': 'api/documents/',
-    'cms-api:pages-by-type': 'api/pages/lookup-by-type/{}/',
     'cms-api:pages-by-slug': 'api/pages/lookup-by-slug/{}/',
 }
 
