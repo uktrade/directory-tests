@@ -3,14 +3,14 @@ from pprint import pformat
 
 import pytest
 import requests
-
+from directory_cms_client.client import cms_api_client
 from tests import get_absolute_url, get_relative_url
 from tests.settings import DIRECTORY_API_HEALTH_CHECK_TOKEN as TOKEN
 
 
-def test_healthcheck_ping_endpoint(cms_client):
+def test_healthcheck_ping_endpoint():
     endpoint = get_relative_url("cms-healthcheck:ping")
-    response = cms_client.get(endpoint)
+    response = cms_api_client.get(url=endpoint, language_code=None, draft_token=None)
     assert response.status_code == http.client.OK
 
 
@@ -32,13 +32,13 @@ def test_healthcheck_database_endpoint():
         get_relative_url("cms-api:documents"),
     ],
 )
-def test_wagtail_get_disabled_content_endpoints(cms_client, relative_url):
-    response = cms_client.get(relative_url)
+def test_wagtail_get_disabled_content_endpoints(relative_url):
+    response = cms_api_client.get(url=relative_url, language_code=None, draft_token=None)
     assert response.status_code == http.client.NOT_FOUND
 
 
-def test_wagtail_get_pages(cms_client):
-    response = cms_client.get(get_relative_url("cms-api:pages"))
+def test_wagtail_get_pages():
+    response = cms_api_client.get(url=get_relative_url("cms-api:pages"), language_code=None, draft_token=None)
     assert response.status_code == http.client.OK
 
 
@@ -54,9 +54,9 @@ def test_wagtail_get_pages(cms_client):
         "legal-services",
     ],
 )
-def test_wagtail_get_page_by_slug(cms_client, slug):
+def test_wagtail_get_page_by_slug(slug):
     relative_url = get_relative_url("cms-api:pages-by-slug").format(slug)
-    response = cms_client.get(relative_url)
+    response = cms_api_client.get(url=relative_url, language_code=None, draft_token=None)
     assert response.status_code == http.client.OK
     assert response.json()["meta"]["slug"] == slug
 
@@ -83,44 +83,44 @@ def test_wagtail_get_page_by_type(cms_client, page):
 
 
 @pytest.mark.parametrize("limit", [2, 10, 20])
-def test_wagtail_get_number_of_pages(cms_client, limit):
+def test_wagtail_get_number_of_pages(limit):
     query = "?order=id&limit={}".format(limit)
     relative_url = get_relative_url("cms-api:pages") + query
-    response = cms_client.get(relative_url)
+    response = cms_api_client.get(url=relative_url, language_code=None, draft_token=None)
     assert len(response.json()["items"]) == limit
 
 
-def test_wagtail_can_list_only_20_pages(cms_client):
+def test_wagtail_can_list_only_20_pages():
     query = "?limit=21"
     relative_url = get_relative_url("cms-api:pages") + query
-    response = cms_client.get(relative_url)
+    response = cms_api_client.get(url=relative_url, language_code=None, draft_token=None)
     assert response.json()["message"] == "limit cannot be higher than 20"
 
 
 @pytest.mark.parametrize(
     "application", ["Export Readiness pages", "Find a Supplier Pages"]
 )
-def test_wagtail_get_pages_per_application(cms_client, application):
+def test_wagtail_get_pages_per_application(application):
     # Get ID of specific application (parent page)
     query = "?title={}".format(application)
     relative_url = get_relative_url("cms-api:pages") + query
-    response = cms_client.get(relative_url)
+    response = cms_api_client.get(url=relative_url, language_code=None, draft_token=None)
     assert response.json()["meta"]["total_count"] == 1
     application_id = response.json()["items"][0]["id"]
 
     # Get inf about its child pages
     query = "?child_of={}".format(application_id)
     relative_url = get_relative_url("cms-api:pages") + query
-    response = cms_client.get(relative_url)
+    response = cms_api_client.get(url=relative_url, language_code=None, draft_token=None)
     assert response.json()["meta"]["total_count"] > 0
 
 
-def get_page_ids_by_type(cms_client, page_type):
+def get_page_ids_by_type(page_type):
     page_ids = []
 
     # get first page of results
     url = "{}?type={}".format(get_relative_url("cms-api:pages"), page_type)
-    response = cms_client.get(url)
+    response = cms_api_client.get(url=url, language_code=None, draft_token=None)
     assert response.status_code == http.client.OK
 
     # get IDs of all pages from the response
@@ -133,7 +133,7 @@ def get_page_ids_by_type(cms_client, page_type):
         url = "{}?type={}&offset={}".format(
             get_relative_url("cms-api:pages"), page_type, offset
         )
-        response = cms_client.get(url)
+        response = cms_api_client.get(url=url, language_code=None, draft_token=None)
         assert response.status_code == http.client.OK
         content = response.json()
         page_ids += [page["id"] for page in content["items"]]
@@ -162,13 +162,13 @@ def get_page_ids_by_type(cms_client, page_type):
         # "invest.SetupGuidePage",
     ],
 )
-def test_all_published_pages_should_return_200(cms_client, page_type):
+def test_all_published_pages_should_return_200(page_type):
     results = []
-    page_ids = get_page_ids_by_type(cms_client, page_type)
+    page_ids = get_page_ids_by_type(page_type)
     for page_id in page_ids:
         url = "{}{}/".format(get_relative_url("cms-api:pages"), page_id)
         try:
-            api_response = cms_client.get(url)
+            api_response = cms_api_client.get(url=url, language_code=None, draft_token=None)
         except Exception as ex:
             results.append((page_id, url, str(ex)))
             continue
@@ -211,13 +211,13 @@ def test_all_published_pages_should_return_200(cms_client, page_type):
         # "invest.SetupGuideLandingPage",
     ],
 )
-def test_published_translated_pages_should_return_200(cms_client, page_type):
+def test_published_translated_pages_should_return_200(page_type):
     results = []
-    page_ids = get_page_ids_by_type(cms_client, page_type)
+    page_ids = get_page_ids_by_type(page_type)
     for page_id in page_ids:
         url = "{}{}/".format(get_relative_url("cms-api:pages"), page_id)
         try:
-            api_response = cms_client.get(url)
+            api_response = cms_api_client.get(url=url, language_code=None, draft_token=None)
         except Exception as ex:
             results.append((page_id, url, str(ex)))
             continue
@@ -264,13 +264,13 @@ def test_published_translated_pages_should_return_200(cms_client, page_type):
         "invest.SetupGuidePage",
     ],
 )
-def test_draft_pages_should_return_200(cms_client, page_type):
+def test_draft_pages_should_return_200(page_type):
     results = []
-    page_ids = get_page_ids_by_type(cms_client, page_type)
+    page_ids = get_page_ids_by_type(page_type)
     for page_id in page_ids:
         url = "{}{}/".format(get_relative_url("cms-api:pages"), page_id)
         try:
-            api_response = cms_client.get(url)
+            api_response = cms_api_client.get(url=url, language_code=None, draft_token=None)
         except Exception as ex:
             results.append((page_id, url, str(ex)))
             continue
