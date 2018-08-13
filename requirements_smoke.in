@@ -1,7 +1,8 @@
-directory-api-client
+directory-cms-client
 directory-sso-api-client
 flake8
 pytest
+pytest-django
 pytest-sugar
 requests
 sigauth
