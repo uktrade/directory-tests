@@ -20,8 +20,12 @@ def status_error(expected_status_code: int, response: Response):
 
 def test_healthcheck_ping_endpoint():
     endpoint = get_relative_url("cms-healthcheck:ping")
-    response = cms_api_client.get(url=endpoint, language_code=None, draft_token=None)
-    assert response.status_code == http.client.OK
+    response = cms_api_client.get(
+        url=endpoint, language_code=None, draft_token=None
+    )
+    assert response.status_code == http.client.OK, status_error(
+        http.client.OK, response
+    )
 
 
 @pytest.mark.skip(reason="check ticket: CMS-146")
@@ -43,13 +47,23 @@ def test_healthcheck_database_endpoint():
     ],
 )
 def test_wagtail_get_disabled_content_endpoints(relative_url):
-    response = cms_api_client.get(url=relative_url, language_code=None, draft_token=None)
-    assert response.status_code == http.client.NOT_FOUND
+    response = cms_api_client.get(
+        url=relative_url, language_code=None, draft_token=None
+    )
+    assert response.status_code == http.client.NOT_FOUND, status_error(
+        http.client.NOT_FOUND, response
+    )
 
 
 def test_wagtail_get_pages():
-    response = cms_api_client.get(url=get_relative_url("cms-api:pages"), language_code=None, draft_token=None)
-    assert response.status_code == http.client.OK
+    response = cms_api_client.get(
+        url=get_relative_url("cms-api:pages"),
+        language_code=None,
+        draft_token=None,
+    )
+    assert response.status_code == http.client.OK, status_error(
+        http.client.OK, response
+    )
 
 
 @pytest.mark.parametrize(
@@ -66,8 +80,12 @@ def test_wagtail_get_pages():
 )
 def test_wagtail_get_page_by_slug(slug):
     relative_url = get_relative_url("cms-api:pages-by-slug").format(slug)
-    response = cms_api_client.get(url=relative_url, language_code=None, draft_token=None)
-    assert response.status_code == http.client.OK
+    response = cms_api_client.get(
+        url=relative_url, language_code=None, draft_token=None
+    )
+    assert response.status_code == http.client.OK, status_error(
+        http.client.OK, response
+    )
     assert response.json()["meta"]["slug"] == slug
 
 
@@ -109,8 +127,12 @@ def get_page_ids_by_type(page_type):
 
     # get first page of results
     url = "{}?type={}".format(get_relative_url("cms-api:pages"), page_type)
-    response = cms_api_client.get(url=url, language_code=None, draft_token=None)
-    assert response.status_code == http.client.OK
+    response = cms_api_client.get(
+        url=url, language_code=None, draft_token=None
+    )
+    assert response.status_code == http.client.OK, status_error(
+        http.client.OK, response
+    )
 
     # get IDs of all pages from the response
     content = response.json()
@@ -122,8 +144,12 @@ def get_page_ids_by_type(page_type):
         url = "{}?type={}&offset={}".format(
             get_relative_url("cms-api:pages"), page_type, offset
         )
-        response = cms_api_client.get(url=url, language_code=None, draft_token=None)
-        assert response.status_code == http.client.OK
+        response = cms_api_client.get(
+            url=url, language_code=None, draft_token=None
+        )
+        assert response.status_code == http.client.OK, status_error(
+            http.client.OK, response
+        )
         content = response.json()
         page_ids += [page["id"] for page in content["items"]]
 
