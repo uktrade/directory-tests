@@ -4,8 +4,18 @@ from pprint import pformat
 import pytest
 import requests
 from directory_cms_client.client import cms_api_client
+from requests import Response
+
 from tests import get_absolute_url, get_relative_url
 from tests.settings import DIRECTORY_API_HEALTH_CHECK_TOKEN as TOKEN
+
+
+def status_error(expected_status_code: int, response: Response):
+    return (
+        f"{response.request.method} {response.url} returned "
+        f"{response.status_code} instead of expected "
+        f"{expected_status_code}"
+    )
 
 
 def test_healthcheck_ping_endpoint():
