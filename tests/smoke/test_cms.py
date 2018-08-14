@@ -93,14 +93,18 @@ def test_wagtail_get_page_by_slug(slug):
 def test_wagtail_get_number_of_pages(limit):
     query = "?order=id&limit={}".format(limit)
     relative_url = get_relative_url("cms-api:pages") + query
-    response = cms_api_client.get(url=relative_url, language_code=None, draft_token=None)
+    response = cms_api_client.get(
+        url=relative_url, language_code=None, draft_token=None
+    )
     assert len(response.json()["items"]) == limit
 
 
 def test_wagtail_can_list_only_20_pages():
     query = "?limit=21"
     relative_url = get_relative_url("cms-api:pages") + query
-    response = cms_api_client.get(url=relative_url, language_code=None, draft_token=None)
+    response = cms_api_client.get(
+        url=relative_url, language_code=None, draft_token=None
+    )
     assert response.json()["message"] == "limit cannot be higher than 20"
 
 
@@ -111,14 +115,18 @@ def test_wagtail_get_pages_per_application(application):
     # Get ID of specific application (parent page)
     query = "?title={}".format(application)
     relative_url = get_relative_url("cms-api:pages") + query
-    response = cms_api_client.get(url=relative_url, language_code=None, draft_token=None)
+    response = cms_api_client.get(
+        url=relative_url, language_code=None, draft_token=None
+    )
     assert response.json()["meta"]["total_count"] == 1
     application_id = response.json()["items"][0]["id"]
 
     # Get inf about its child pages
     query = "?child_of={}".format(application_id)
     relative_url = get_relative_url("cms-api:pages") + query
-    response = cms_api_client.get(url=relative_url, language_code=None, draft_token=None)
+    response = cms_api_client.get(
+        url=relative_url, language_code=None, draft_token=None
+    )
     assert response.json()["meta"]["total_count"] > 0
 
 
@@ -183,7 +191,9 @@ def test_all_published_pages_should_return_200(page_type):
     for page_id in page_ids:
         url = "{}{}/".format(get_relative_url("cms-api:pages"), page_id)
         try:
-            api_response = cms_api_client.get(url=url, language_code=None, draft_token=None)
+            api_response = cms_api_client.get(
+                url=url, language_code=None, draft_token=None
+            )
         except Exception as ex:
             results.append((page_id, url, str(ex)))
             continue
@@ -232,7 +242,9 @@ def test_published_translated_pages_should_return_200(page_type):
     for page_id in page_ids:
         url = "{}{}/".format(get_relative_url("cms-api:pages"), page_id)
         try:
-            api_response = cms_api_client.get(url=url, language_code=None, draft_token=None)
+            api_response = cms_api_client.get(
+                url=url, language_code=None, draft_token=None
+            )
         except Exception as ex:
             results.append((page_id, url, str(ex)))
             continue
@@ -285,7 +297,9 @@ def test_draft_pages_should_return_200(page_type):
     for page_id in page_ids:
         url = "{}{}/".format(get_relative_url("cms-api:pages"), page_id)
         try:
-            api_response = cms_api_client.get(url=url, language_code=None, draft_token=None)
+            api_response = cms_api_client.get(
+                url=url, language_code=None, draft_token=None
+            )
         except Exception as ex:
             results.append((page_id, url, str(ex)))
             continue
