@@ -25,7 +25,13 @@ def pytest_configure():
         DIRECTORY_CMS_API_CLIENT_API_KEY=DIRECTORY_CMS_API_CLIENT_API_KEY,
         DIRECTORY_CMS_API_CLIENT_SENDER_ID=DIRECTORY_CMS_API_CLIENT_SENDER_ID,
         DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT=DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT,
-        DIRECTORY_CMS_API_CLIENT_SERVICE_NAME="cms",
+        DIRECTORY_CMS_API_CLIENT_SERVICE_NAME=SERVICE_NAMES.FIND_A_SUPPLIER,
+        CACHES={
+            'cms_fallback': {
+                'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+                'LOCATION': 'unique-snowflake',
+            }
+        }
     )
 
 
