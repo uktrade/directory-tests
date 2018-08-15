@@ -4,17 +4,20 @@ from pprint import pformat
 import pytest
 import requests
 from directory_cms_client.client import cms_api_client
-from requests import Response
+from directory_cms_client.helpers import AbstractCMSResponse
+from directory_constants.constants import cms as SERVICE_NAMES
 
 from tests import get_absolute_url, get_relative_url
 from tests.settings import DIRECTORY_API_HEALTH_CHECK_TOKEN as TOKEN
 
 
-def status_error(expected_status_code: int, response: Response):
+def status_error(expected_status_code: int, response: AbstractCMSResponse):
     return (
-        f"{response.request.method} {response.url} returned "
-        f"{response.status_code} instead of expected "
-        f"{expected_status_code}"
+        f"{response.raw_response.request.method} {response.raw_response.url} "
+        f"returned {response.status_code} instead of expected "
+        f"{expected_status_code}\n"
+        f"REQ headers: {pformat(response.raw_response.request.headers)}\n"
+        f"RSP headers: {pformat(response.raw_response.headers)}"
     )
 
 
