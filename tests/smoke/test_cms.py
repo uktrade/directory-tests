@@ -86,6 +86,12 @@ def test_wagtail_get_pages():
 
         (SERVICE_NAMES.INVEST, "set-up-a-company-in-the-uk"),
         (SERVICE_NAMES.INVEST, "apply-for-a-uk-visa"),
+        (SERVICE_NAMES.INVEST, "invest-setup-guide-landing-page"),
+        (SERVICE_NAMES.INVEST, "invest-uk-region-landing-page"),
+        (SERVICE_NAMES.INVEST, "chemicals"),
+        (SERVICE_NAMES.INVEST, "energy"),
+        (SERVICE_NAMES.INVEST, "nuclear-energy"),
+        (SERVICE_NAMES.INVEST, "electrical-networks"),
     ],
 )
 def test_wagtail_get_page_by_slug(cms_client, service_name, slug):
@@ -97,18 +103,12 @@ def test_wagtail_get_page_by_slug(cms_client, service_name, slug):
     assert response.json()["meta"]["slug"] == slug
 
 
-@pytest.mark.skip(reason="check ticket: CMS-")
+@pytest.mark.skip(reason="check ticket: CMS-412")
 @pytest.mark.parametrize(
     "service_name, slug",
     [
         (SERVICE_NAMES.INVEST, "invest-sector-landing-page"),
         (SERVICE_NAMES.INVEST, "invest-home-page"),
-        (SERVICE_NAMES.INVEST, "invest-setup-guide-landing-page"),
-        (SERVICE_NAMES.INVEST, "invest-uk-region-landing-page"),
-        (SERVICE_NAMES.INVEST, "chemicals"),
-        (SERVICE_NAMES.INVEST, "energy"),
-        (SERVICE_NAMES.INVEST, "nuclear-energy"),
-        (SERVICE_NAMES.INVEST, "electrical-networks"),
     ],
 )
 def test_wagtail_get_page_by_slug_failing_examples(cms_client, service_name, slug):
