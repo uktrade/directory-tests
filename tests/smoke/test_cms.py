@@ -279,6 +279,7 @@ def test_all_published_pages_should_return_200_failing_examples(page_type):
     "page_type",
     [
         "export_readiness.GetFinancePage",
+        "export_readiness.PerformanceDashboardNotesPage",
         "export_readiness.PrivacyAndCookiesPage",
         "export_readiness.TermsAndConditionsPage",
         "find_a_supplier.IndustryArticlePage",
@@ -288,11 +289,7 @@ def test_all_published_pages_should_return_200_failing_examples(page_type):
         "find_a_supplier.LandingPage",
         "invest.InfoPage",
         "invest.InvestHomePage",
-        # "invest.RegionLandingPage",
         "invest.SectorLandingPage",
-        # "invest.SectorPage",
-        # "invest.SetupGuidePage",
-        # "invest.SetupGuideLandingPage",
     ],
 )
 def test_published_translated_pages_should_return_200(page_type):
@@ -318,7 +315,7 @@ def test_published_translated_pages_should_return_200(page_type):
                     continue
                 results.append((page_id, lang_url, live_response.status_code))
         else:
-            print("{} returned {}".format(url, api_response.status_code))
+            print("{} returned {}".format(endpoint, api_response.status_code))
     non_200 = [result for result in results if result[2] != 200]
     template = "Page ID: {} URL: {} Status Code: {}"
     formatted_non_200 = [template.format(*result) for result in non_200]
