@@ -1,5 +1,8 @@
 import pytest
 import requests
+
+from directory_constants.constants import cms as SERVICE_NAMES
+
 from tests import get_absolute_url, users
 from tests.settings import (
     DIRECTORY_CMS_API_CLIENT_API_KEY,
@@ -32,6 +35,18 @@ def pytest_configure():
                 'LOCATION': 'unique-snowflake',
             }
         }
+    )
+
+
+@pytest.fixture
+def cms_client():
+    from directory_cms_client.client import DirectoryCMSClient
+    return DirectoryCMSClient(
+        base_url=DIRECTORY_CMS_API_CLIENT_BASE_URL,
+        api_key=DIRECTORY_CMS_API_CLIENT_API_KEY,
+        sender_id=DIRECTORY_CMS_API_CLIENT_SENDER_ID,
+        timeout=DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT,
+        service_name="change-me",
     )
 
 
