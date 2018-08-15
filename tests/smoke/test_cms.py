@@ -325,6 +325,51 @@ def test_published_translated_pages_should_return_200(page_type):
     assert not non_200, error_msg
 
 
+@pytest.mark.skip(reason="check ticket: CMS-413")
+@pytest.mark.parametrize(
+    "page_type",
+    [
+        "export_readiness.PerformanceDashboardPage",
+    ],
+)
+def test_published_translated_pages_should_return_200_failing_examples_cms413(page_type):
+    test_published_translated_pages_should_return_200(page_type)
+
+
+@pytest.mark.skip(reason="check ticket: CMS-414")
+@pytest.mark.parametrize(
+    "page_type",
+    [
+        "invest.RegionLandingPage",
+    ],
+)
+def test_published_translated_pages_should_return_200_failing_examples_cms414(page_type):
+    test_published_translated_pages_should_return_200(page_type)
+
+
+@pytest.mark.skip(reason="check ticket: CMS-415")
+@pytest.mark.parametrize(
+    "page_type",
+    [
+        "invest.SectorPage",
+    ],
+)
+def test_published_translated_pages_should_return_200_failing_examples_cms415(page_type):
+    test_published_translated_pages_should_return_200(page_type)
+
+
+@pytest.mark.skip(reason="check ticket: CMS-416")
+@pytest.mark.parametrize(
+    "page_type",
+    [
+        "invest.SetupGuidePage",
+        "invest.SetupGuideLandingPage",
+    ],
+)
+def test_published_translated_pages_should_return_200_failing_examples_cms416(page_type):
+    test_published_translated_pages_should_return_200(page_type)
+
+
 @pytest.mark.parametrize(
     "page_type",
     [
