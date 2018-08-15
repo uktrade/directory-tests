@@ -183,6 +183,7 @@ def get_page_ids_by_type(page_type):
     "page_type",
     [
         "export_readiness.GetFinancePage",
+        "export_readiness.PerformanceDashboardNotesPage",
         "export_readiness.PrivacyAndCookiesPage",
         "export_readiness.TermsAndConditionsPage",
         "find_a_supplier.IndustryArticlePage",
@@ -192,11 +193,7 @@ def get_page_ids_by_type(page_type):
         "find_a_supplier.LandingPage",
         "invest.InfoPage",
         "invest.InvestHomePage",
-        # "invest.RegionLandingPage",
         "invest.SectorLandingPage",
-        # "invest.SectorPage",
-        # "invest.SetupGuideLandingPage",
-        # "invest.SetupGuidePage",
     ],
 )
 def test_all_published_pages_should_return_200(page_type):
@@ -218,7 +215,7 @@ def test_all_published_pages_should_return_200(page_type):
                 continue
             results.append((page_id, live_url, live_response.status_code))
         else:
-            print("{} returned {}".format(url, api_response.status_code))
+            print("{} returned {}".format(endpoint, api_response.status_code))
     non_200 = [result for result in results if result[2] != 200]
     template = "Page ID: {} URL: {} Status Code: {}"
     formatted_non_200 = [template.format(*result) for result in non_200]
@@ -226,6 +223,21 @@ def test_all_published_pages_should_return_200(page_type):
         len(non_200), len(results), page_type, pformat(formatted_non_200)
     )
     assert not non_200, error_msg
+
+
+@pytest.mark.skip(reason="check ticket: CMS-413")
+@pytest.mark.parametrize(
+    "page_type",
+    [
+        "export_readiness.PerformanceDashboardPage",
+        "invest.RegionLandingPage",
+        "invest.SectorPage",
+        "invest.SetupGuideLandingPage",
+        "invest.SetupGuidePage",
+    ],
+)
+def test_all_published_pages_should_return_200_failing_examples(page_type):
+    test_all_published_pages_should_return_200(page_type)
 
 
 @pytest.mark.parametrize(
