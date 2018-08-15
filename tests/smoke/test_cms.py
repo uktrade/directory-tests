@@ -297,6 +297,8 @@ def test_published_translated_pages_should_return_200(page_type):
     "page_type",
     [
         "export_readiness.GetFinancePage",
+        "export_readiness.PerformanceDashboardNotesPage",
+        "export_readiness.PerformanceDashboardPage",
         "export_readiness.PrivacyAndCookiesPage",
         "export_readiness.TermsAndConditionsPage",
         "find_a_supplier.IndustryArticlePage",
@@ -306,10 +308,10 @@ def test_published_translated_pages_should_return_200(page_type):
         "find_a_supplier.LandingPage",
         "invest.InfoPage",
         "invest.InvestHomePage",
-        # "invest.RegionLandingPage",
+        "invest.RegionLandingPage",
         "invest.SectorLandingPage",
-        # "invest.SectorPage",
-        # "invest.SetupGuideLandingPage",
+        "invest.SectorPage",
+        "invest.SetupGuideLandingPage",
         "invest.SetupGuidePage",
     ],
 )
