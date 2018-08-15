@@ -90,7 +90,7 @@ DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL := docker-compose rm && docker-compose pull
 
 smoke_tests:
 	$(SET_PYTEST_ENV_VARS) && \
-	pytest --maxfail=2 --junitxml=tests/smoke/reports/smoke.xml tests/smoke $(pytest_args)
+	pytest --junitxml=tests/smoke/reports/smoke.xml tests/smoke $(pytest_args)
 
 functional_tests:
 	behave -k --format progress3 --logging-filter=-root --stop --tags=-wip --tags=-skip --tags=~fixme tests/functional/features $(BEHAVE_ARGS)

@@ -63,26 +63,56 @@ def test_wagtail_get_pages():
 
 
 @pytest.mark.parametrize(
-    "slug",
+    "service_name, slug",
     [
-        "landing-page",
-        "industry-contact",
-        "industries-landing-page",
-        "get-finance",
-        "terms-and-conditions",
-        "privacy-and-cookies",
-        "legal-services",
+        (SERVICE_NAMES.EXPORT_READINESS, "get-finance"),
+        (SERVICE_NAMES.EXPORT_READINESS, "terms-and-conditions"),
+        (SERVICE_NAMES.EXPORT_READINESS, "privacy-and-cookies"),
+        (SERVICE_NAMES.EXPORT_READINESS, "performance-dashboard"),
+        (SERVICE_NAMES.EXPORT_READINESS, "performance-dashboard-notes"),
+        (SERVICE_NAMES.EXPORT_READINESS, "performance-dashboard-invest"),
+        (SERVICE_NAMES.EXPORT_READINESS, "performance-dashboard-trade-profiles"),
+        (SERVICE_NAMES.EXPORT_READINESS, "performance-dashboard-selling-online-overseas"),
+        (SERVICE_NAMES.EXPORT_READINESS, "performance-dashboard-export-opportunities"),
+
+        (SERVICE_NAMES.FIND_A_SUPPLIER, "landing-page"),
+        (SERVICE_NAMES.FIND_A_SUPPLIER, "industry-contact"),
+        (SERVICE_NAMES.FIND_A_SUPPLIER, "industries-landing-page"),
+        (SERVICE_NAMES.FIND_A_SUPPLIER, "legal-services"),
+        (SERVICE_NAMES.FIND_A_SUPPLIER, "highly-rated-primary-care"),
+        (SERVICE_NAMES.FIND_A_SUPPLIER, "food-and-drink"),
+        (SERVICE_NAMES.FIND_A_SUPPLIER, "agritech"),
+        (SERVICE_NAMES.FIND_A_SUPPLIER, "healthcare"),
+
+        (SERVICE_NAMES.INVEST, "set-up-a-company-in-the-uk"),
+        (SERVICE_NAMES.INVEST, "apply-for-a-uk-visa"),
     ],
 )
-def test_wagtail_get_page_by_slug(slug):
-    relative_url = get_relative_url("cms-api:pages-by-slug").format(slug)
-    response = cms_api_client.get(
-        url=relative_url, language_code=None, draft_token=None
-    )
+def test_wagtail_get_page_by_slug(cms_client, service_name, slug):
+    cms_client.service_name = service_name
+    response = cms_client.lookup_by_slug(slug)
     assert response.status_code == http.client.OK, status_error(
         http.client.OK, response
     )
     assert response.json()["meta"]["slug"] == slug
+
+
+@pytest.mark.skip(reason="check ticket: CMS-")
+@pytest.mark.parametrize(
+    "service_name, slug",
+    [
+        (SERVICE_NAMES.INVEST, "invest-sector-landing-page"),
+        (SERVICE_NAMES.INVEST, "invest-home-page"),
+        (SERVICE_NAMES.INVEST, "invest-setup-guide-landing-page"),
+        (SERVICE_NAMES.INVEST, "invest-uk-region-landing-page"),
+        (SERVICE_NAMES.INVEST, "chemicals"),
+        (SERVICE_NAMES.INVEST, "energy"),
+        (SERVICE_NAMES.INVEST, "nuclear-energy"),
+        (SERVICE_NAMES.INVEST, "electrical-networks"),
+    ],
+)
+def test_wagtail_get_page_by_slug_failing_examples(cms_client, service_name, slug):
+    test_wagtail_get_page_by_slug(cms_client, service_name, slug)
 
 
 @pytest.mark.parametrize("limit", [2, 10, 20])
