@@ -23,9 +23,7 @@ def status_error(expected_status_code: int, response: AbstractCMSResponse):
 
 def test_healthcheck_ping_endpoint():
     endpoint = get_relative_url("cms-healthcheck:ping")
-    response = cms_api_client.get(
-        url=endpoint, language_code=None, draft_token=None
-    )
+    response = cms_api_client.get(endpoint)
     assert response.status_code == http.client.OK, status_error(
         http.client.OK, response
     )
@@ -50,20 +48,15 @@ def test_healthcheck_database_endpoint():
     ],
 )
 def test_wagtail_get_disabled_content_endpoints(relative_url):
-    response = cms_api_client.get(
-        url=relative_url, language_code=None, draft_token=None
-    )
+    response = cms_api_client.get(relative_url)
     assert response.status_code == http.client.NOT_FOUND, status_error(
         http.client.NOT_FOUND, response
     )
 
 
 def test_wagtail_get_pages():
-    response = cms_api_client.get(
-        url=get_relative_url("cms-api:pages"),
-        language_code=None,
-        draft_token=None,
-    )
+    endpoint = get_relative_url("cms-api:pages")
+    response = cms_api_client.get(endpoint)
     assert response.status_code == http.client.OK, status_error(
         http.client.OK, response
     )
@@ -95,19 +88,15 @@ def test_wagtail_get_page_by_slug(slug):
 @pytest.mark.parametrize("limit", [2, 10, 20])
 def test_wagtail_get_number_of_pages(limit):
     query = "?order=id&limit={}".format(limit)
-    relative_url = get_relative_url("cms-api:pages") + query
-    response = cms_api_client.get(
-        url=relative_url, language_code=None, draft_token=None
-    )
+    endpoint = get_relative_url("cms-api:pages") + query
+    response = cms_api_client.get(endpoint)
     assert len(response.json()["items"]) == limit
 
 
 def test_wagtail_can_list_only_20_pages():
     query = "?limit=21"
-    relative_url = get_relative_url("cms-api:pages") + query
-    response = cms_api_client.get(
-        url=relative_url, language_code=None, draft_token=None
-    )
+    endpoint = get_relative_url("cms-api:pages") + query
+    response = cms_api_client.get(endpoint)
     assert response.json()["message"] == "limit cannot be higher than 20"
 
 
@@ -117,19 +106,15 @@ def test_wagtail_can_list_only_20_pages():
 def test_wagtail_get_pages_per_application(application):
     # Get ID of specific application (parent page)
     query = "?title={}".format(application)
-    relative_url = get_relative_url("cms-api:pages") + query
-    response = cms_api_client.get(
-        url=relative_url, language_code=None, draft_token=None
-    )
+    endpoint = get_relative_url("cms-api:pages") + query
+    response = cms_api_client.get(endpoint)
     assert response.json()["meta"]["total_count"] == 1
     application_id = response.json()["items"][0]["id"]
 
     # Get inf about its child pages
     query = "?child_of={}".format(application_id)
-    relative_url = get_relative_url("cms-api:pages") + query
-    response = cms_api_client.get(
-        url=relative_url, language_code=None, draft_token=None
-    )
+    endpoint = get_relative_url("cms-api:pages") + query
+    response = cms_api_client.get(endpoint)
     assert response.json()["meta"]["total_count"] > 0
 
 
@@ -137,10 +122,8 @@ def get_page_ids_by_type(page_type):
     page_ids = []
 
     # get first page of results
-    url = "{}?type={}".format(get_relative_url("cms-api:pages"), page_type)
-    response = cms_api_client.get(
-        url=url, language_code=None, draft_token=None
-    )
+    endpoint = "{}?type={}".format(get_relative_url("cms-api:pages"), page_type)
+    response = cms_api_client.get(endpoint)
     assert response.status_code == http.client.OK, status_error(
         http.client.OK, response
     )
@@ -152,12 +135,10 @@ def get_page_ids_by_type(page_type):
     total_count = content["meta"]["total_count"]
     while len(page_ids) < total_count:
         offset = len(content["items"])
-        url = "{}?type={}&offset={}".format(
+        endpoint = "{}?type={}&offset={}".format(
             get_relative_url("cms-api:pages"), page_type, offset
         )
-        response = cms_api_client.get(
-            url=url, language_code=None, draft_token=None
-        )
+        response = cms_api_client.get(endpoint)
         assert response.status_code == http.client.OK, status_error(
             http.client.OK, response
         )
@@ -192,13 +173,11 @@ def test_all_published_pages_should_return_200(page_type):
     results = []
     page_ids = get_page_ids_by_type(page_type)
     for page_id in page_ids:
-        url = "{}{}/".format(get_relative_url("cms-api:pages"), page_id)
+        endpoint = "{}{}/".format(get_relative_url("cms-api:pages"), page_id)
         try:
-            api_response = cms_api_client.get(
-                url=url, language_code=None, draft_token=None
-            )
+            api_response = cms_api_client.get(endpoint)
         except Exception as ex:
-            results.append((page_id, url, str(ex)))
+            results.append((page_id, endpoint, str(ex)))
             continue
         if api_response.status_code == 200:
             live_url = api_response.json()["meta"]["url"]
@@ -243,13 +222,11 @@ def test_published_translated_pages_should_return_200(page_type):
     results = []
     page_ids = get_page_ids_by_type(page_type)
     for page_id in page_ids:
-        url = "{}{}/".format(get_relative_url("cms-api:pages"), page_id)
+        endpoint = "{}{}/".format(get_relative_url("cms-api:pages"), page_id)
         try:
-            api_response = cms_api_client.get(
-                url=url, language_code=None, draft_token=None
-            )
+            api_response = cms_api_client.get(endpoint)
         except Exception as ex:
-            results.append((page_id, url, str(ex)))
+            results.append((page_id, endpoint, str(ex)))
             continue
         if api_response.status_code == 200:
             page = api_response.json()
@@ -298,13 +275,11 @@ def test_draft_pages_should_return_200(page_type):
     results = []
     page_ids = get_page_ids_by_type(page_type)
     for page_id in page_ids:
-        url = "{}{}/".format(get_relative_url("cms-api:pages"), page_id)
+        endpoint = "{}{}/".format(get_relative_url("cms-api:pages"), page_id)
         try:
-            api_response = cms_api_client.get(
-                url=url, language_code=None, draft_token=None
-            )
+            api_response = cms_api_client.get(endpoint)
         except Exception as ex:
-            results.append((page_id, url, str(ex)))
+            results.append((page_id, endpoint, str(ex)))
             continue
         if api_response.status_code == 200:
             page = api_response.json()
@@ -325,7 +300,7 @@ def test_draft_pages_should_return_200(page_type):
                         (page_id, lang_url, draft_response.status_code)
                     )
         else:
-            print("{} returned {}".format(url, api_response.status_code))
+            print("{} returned {}".format(endpoint, api_response.status_code))
     non_200 = [result for result in results if result[2] != 200]
     template = "Page ID: {} URL: {} Status Code: {}"
     formatted_non_200 = [template.format(*result) for result in non_200]
