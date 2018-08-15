@@ -3,15 +3,18 @@
 import logging
 
 from directory_sso_api_client.testapiclient import (
-    DirectorySSOTestAPIClient as SSOClient
+    DirectorySSOTestAPIClient
 )
 
-from settings import SSO_API_CLIENT_BASE_URL, SSO_API_SIGNATURE_SECRET
+from settings import DIRECTORY_SSO_API_CLIENT_BASE_URL, DIRECTORY_SSO_API_CLIENT_API_KEY
 
 
 def verify_account(email: str):
-    client = SSOClient(
-        base_url=SSO_API_CLIENT_BASE_URL, api_key=SSO_API_SIGNATURE_SECRET
+    client = DirectorySSOTestAPIClient(
+        base_url=DIRECTORY_SSO_API_CLIENT_BASE_URL,
+        api_key=DIRECTORY_SSO_API_CLIENT_API_KEY,
+        sender_id="directory",
+        timeout=5,
     )
     response = client.flag_user_email_as_verified_or_not(email, verified=True)
     if response.status_code == 204:
@@ -23,8 +26,11 @@ def verify_account(email: str):
 
 
 def delete_supplier_data_from_sso(email: str):
-    client = SSOClient(
-        base_url=SSO_API_CLIENT_BASE_URL, api_key=SSO_API_SIGNATURE_SECRET
+    client = DirectorySSOTestAPIClient(
+        base_url=DIRECTORY_SSO_API_CLIENT_BASE_URL,
+        api_key=DIRECTORY_SSO_API_CLIENT_API_KEY,
+        sender_id="directory",
+        timeout=5,
     )
     response = client.delete_user_by_email(email)
     if response.status_code == 204:

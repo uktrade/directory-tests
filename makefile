@@ -69,7 +69,7 @@ load_test_minimal:
 	$(LOCUST)
 
 # Pytest
-PYTEST_ARGS :=
+PYTEST_ARGS := \
 	--capture=no \
 	--driver PhantomJS \
 	--driver-path /usr/bin/phantomjs $(pytest_args)
@@ -132,7 +132,7 @@ docker_integration_tests: docker_remove_all
 
 
 BROWSER_SET_DOCKER_ENV_VARS := \
-	export BROWSER_TESTS_EXRED_UI_URL=https://dev.exportreadiness.directory.uktrade.io
+	export BROWSER_TESTS_EXRED_UI_URL=https://dev.exportreadiness.directory.uktrade.io && \
 	export BROWSER_TESTS_CIRCLE_SHA1=$(CIRCLE_SHA1)
 
 BROWSER_SET_LOCAL_ENV_VARS := \

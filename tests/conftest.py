@@ -1,13 +1,53 @@
 import pytest
 import requests
-from directory_api_client.testapiclient import DirectoryTestAPIClient
-from directory_sso_api_client.client import DirectorySSOAPIClient
+
+from directory_constants.constants import cms as SERVICE_NAMES
 
 from tests import get_absolute_url, users
 from tests.settings import (
-    CMS_SIGNATURE_SECRET_API_KEY,
-    SSO_API_SIGNATURE_SECRET,
+    DIRECTORY_CMS_API_CLIENT_API_KEY,
+    DIRECTORY_CMS_API_CLIENT_BASE_URL,
+    DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT,
+    DIRECTORY_CMS_API_CLIENT_SENDER_ID,
+    DIRECTORY_SSO_API_CLIENT_API_KEY,
+    DIRECTORY_SSO_API_CLIENT_BASE_URL,
+    DIRECTORY_SSO_API_CLIENT_DEFAULT_TIMEOUT,
+    DIRECTORY_SSO_API_CLIENT_SENDER_ID
 )
+
+
+def pytest_configure():
+    from django.conf import settings
+    settings.configure(
+        DIRECTORY_SSO_API_CLIENT_BASE_URL=DIRECTORY_SSO_API_CLIENT_BASE_URL,
+        DIRECTORY_SSO_API_CLIENT_API_KEY=DIRECTORY_SSO_API_CLIENT_API_KEY,
+        DIRECTORY_SSO_API_CLIENT_SENDER_ID=DIRECTORY_SSO_API_CLIENT_SENDER_ID,
+        DIRECTORY_SSO_API_CLIENT_DEFAULT_TIMEOUT=DIRECTORY_SSO_API_CLIENT_DEFAULT_TIMEOUT,
+
+        DIRECTORY_CMS_API_CLIENT_BASE_URL=DIRECTORY_CMS_API_CLIENT_BASE_URL,
+        DIRECTORY_CMS_API_CLIENT_API_KEY=DIRECTORY_CMS_API_CLIENT_API_KEY,
+        DIRECTORY_CMS_API_CLIENT_SENDER_ID=DIRECTORY_CMS_API_CLIENT_SENDER_ID,
+        DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT=DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT,
+        DIRECTORY_CMS_API_CLIENT_SERVICE_NAME=SERVICE_NAMES.FIND_A_SUPPLIER,
+        CACHES={
+            'cms_fallback': {
+                'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+                'LOCATION': 'unique-snowflake',
+            }
+        }
+    )
+
+
+@pytest.fixture
+def cms_client():
+    from directory_cms_client.client import DirectoryCMSClient
+    return DirectoryCMSClient(
+        base_url=DIRECTORY_CMS_API_CLIENT_BASE_URL,
+        api_key=DIRECTORY_CMS_API_CLIENT_API_KEY,
+        sender_id=DIRECTORY_CMS_API_CLIENT_SENDER_ID,
+        timeout=DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT,
+        service_name="change-me",
+    )
 
 
 @pytest.fixture
@@ -20,17 +60,3 @@ def logged_in_session():
     )
     assert 'Sign out' in str(response.content)
     return session
-
-
-@pytest.fixture
-def cms_client():
-    base_url = get_absolute_url('cms-healthcheck:landing')
-    return DirectoryTestAPIClient(
-        base_url=base_url, api_key=CMS_SIGNATURE_SECRET_API_KEY)
-
-
-@pytest.fixture
-def sso_api_client():
-    base_url = get_absolute_url('sso-api:landing')
-    return DirectorySSOAPIClient(
-        base_url=base_url, api_key=SSO_API_SIGNATURE_SECRET)
