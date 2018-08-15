@@ -4,7 +4,6 @@ directory-constants
 flake8
 pytest
 pytest-django
-pytest-parallel
 pytest-sugar
 requests
 sigauth
