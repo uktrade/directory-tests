@@ -90,35 +90,15 @@ def test_wagtail_get_pages():
         (SERVICE_NAMES.FIND_A_SUPPLIER, "sports-economy"),
         (SERVICE_NAMES.FIND_A_SUPPLIER, "technology"),
 
-        (SERVICE_NAMES.INVEST, "apply-for-a-uk-visa"),
-        (SERVICE_NAMES.INVEST, "set-up-a-company-in-the-uk"),
-        (SERVICE_NAMES.INVEST, "london"),
-        (SERVICE_NAMES.INVEST, "advanced-manufacturing"),
-        (SERVICE_NAMES.INVEST, "automotive"),
-        (SERVICE_NAMES.INVEST, "automotive-research-and-development"),
-    ],
-)
-def test_wagtail_get_page_by_slug(cms_client, service_name, slug):
-    cms_client.service_name = service_name
-    response = cms_client.lookup_by_slug(slug)
-    assert response.status_code == http.client.OK, status_error(
-        http.client.OK, response
-    )
-    assert response.json()["meta"]["slug"] == slug
-
-
-@pytest.mark.skip(reason="check ticket: CMS-412")
-@pytest.mark.parametrize(
-    "service_name, slug",
-    [
         (SERVICE_NAMES.INVEST, "home-page"),
+
         (SERVICE_NAMES.INVEST, "sector-landing-page"),
-        (SERVICE_NAMES.INVEST, "setup-guide-landing-page"),
-        (SERVICE_NAMES.INVEST, "uk-region-landing-page"),
-        (SERVICE_NAMES.INVEST, "midlands"),
+        (SERVICE_NAMES.INVEST, "advanced-manufacturing"),
         (SERVICE_NAMES.INVEST, "aerospace"),
         (SERVICE_NAMES.INVEST, "agri-tech"),
         (SERVICE_NAMES.INVEST, "asset-management"),
+        (SERVICE_NAMES.INVEST, "automotive"),
+        (SERVICE_NAMES.INVEST, "automotive-research-and-development"),
         (SERVICE_NAMES.INVEST, "automotive-supply-chain"),
         (SERVICE_NAMES.INVEST, "capital-investment"),
         (SERVICE_NAMES.INVEST, "chemicals"),
@@ -144,10 +124,96 @@ def test_wagtail_get_page_by_slug(cms_client, service_name, slug):
         (SERVICE_NAMES.INVEST, "pharmaceutical-manufacturing"),
         (SERVICE_NAMES.INVEST, "retail"),
         (SERVICE_NAMES.INVEST, "technology"),
+
+        (SERVICE_NAMES.INVEST, "uk-region-landing-page"),
+        (SERVICE_NAMES.INVEST, "london"),
+        (SERVICE_NAMES.INVEST, "north-england"),
+        (SERVICE_NAMES.INVEST, "northern-ireland"),
+        (SERVICE_NAMES.INVEST, "scotland"),
+        (SERVICE_NAMES.INVEST, "south-of-england"),
+        (SERVICE_NAMES.INVEST, "wales"),
+
+        (SERVICE_NAMES.INVEST, "setup-guide-landing-page"),
+        (SERVICE_NAMES.INVEST, "apply-for-a-uk-visa"),
+        (SERVICE_NAMES.INVEST, "establish-a-base-for-business-in-the-uk"),
+        (SERVICE_NAMES.INVEST, "hire-skilled-workers-for-your-uk-operations"),
+        (SERVICE_NAMES.INVEST, "open-a-uk-business-bank-account"),
+        (SERVICE_NAMES.INVEST, "set-up-a-company-in-the-uk"),
+        (SERVICE_NAMES.INVEST, "understand-uk-tax-and-incentives"),
     ],
 )
-def test_wagtail_get_page_by_slug_failing_examples(cms_client, service_name, slug):
-    test_wagtail_get_page_by_slug(cms_client, service_name, slug)
+def test_wagtail_get_page_by_slug(cms_client, service_name, slug):
+    """Check - https://uktrade.atlassian.net/browse/CMS-412"""
+    cms_client.service_name = service_name
+    response = cms_client.lookup_by_slug(slug)
+    assert response.status_code == http.client.OK, status_error(
+        http.client.OK, response
+    )
+    assert response.json()["meta"]["slug"] == slug
+
+
+@pytest.mark.parametrize(
+    "service_name, prefix, slug",
+    [
+        (SERVICE_NAMES.INVEST, "invest-", "home-page"),
+
+        (SERVICE_NAMES.INVEST, "invest-", "sector-landing-page"),
+        (SERVICE_NAMES.INVEST, "invest-", "advanced-manufacturing"),
+        (SERVICE_NAMES.INVEST, "invest-", "aerospace"),
+        (SERVICE_NAMES.INVEST, "invest-", "agri-tech"),
+        (SERVICE_NAMES.INVEST, "invest-", "asset-management"),
+        (SERVICE_NAMES.INVEST, "invest-", "automotive"),
+        (SERVICE_NAMES.INVEST, "invest-", "automotive-research-and-development"),
+        (SERVICE_NAMES.INVEST, "invest-", "automotive-supply-chain"),
+        (SERVICE_NAMES.INVEST, "invest-", "capital-investment"),
+        (SERVICE_NAMES.INVEST, "invest-", "chemicals"),
+        (SERVICE_NAMES.INVEST, "invest-", "creative-content-and-production"),
+        (SERVICE_NAMES.INVEST, "invest-", "creative-industries"),
+        (SERVICE_NAMES.INVEST, "invest-", "data-analytics"),
+        (SERVICE_NAMES.INVEST, "invest-", "digital-media"),
+        (SERVICE_NAMES.INVEST, "invest-", "electrical-networks"),
+        (SERVICE_NAMES.INVEST, "invest-", "energy"),
+        (SERVICE_NAMES.INVEST, "invest-", "energy-from-waste"),
+        (SERVICE_NAMES.INVEST, "invest-", "financial-services"),
+        (SERVICE_NAMES.INVEST, "invest-", "financial-technology"),
+        (SERVICE_NAMES.INVEST, "invest-", "food-and-drink"),
+        (SERVICE_NAMES.INVEST, "invest-", "food-service-and-catering"),
+        (SERVICE_NAMES.INVEST, "invest-", "free-from-foods"),
+        (SERVICE_NAMES.INVEST, "invest-", "health-and-life-sciences"),
+        (SERVICE_NAMES.INVEST, "invest-", "meat-poultry-and-dairy"),
+        (SERVICE_NAMES.INVEST, "invest-", "medical-technology"),
+        (SERVICE_NAMES.INVEST, "invest-", "motorsport"),
+        (SERVICE_NAMES.INVEST, "invest-", "nuclear-energy"),
+        (SERVICE_NAMES.INVEST, "invest-", "offshore-wind-energy"),
+        (SERVICE_NAMES.INVEST, "invest-", "oil-and-gas"),
+        (SERVICE_NAMES.INVEST, "invest-", "pharmaceutical-manufacturing"),
+        (SERVICE_NAMES.INVEST, "invest-", "retail"),
+        (SERVICE_NAMES.INVEST, "invest-", "technology"),
+
+        (SERVICE_NAMES.INVEST, "invest-", "uk-region-landing-page"),
+        (SERVICE_NAMES.INVEST, "invest-", "london"),
+        (SERVICE_NAMES.INVEST, "invest-", "north-england"),
+        (SERVICE_NAMES.INVEST, "invest-", "northern-ireland"),
+        (SERVICE_NAMES.INVEST, "invest-", "scotland"),
+        (SERVICE_NAMES.INVEST, "invest-", "south-of-england"),
+        (SERVICE_NAMES.INVEST, "invest-", "wales"),
+
+        (SERVICE_NAMES.INVEST, "invest-", "setup-guide-landing-page"),
+        (SERVICE_NAMES.INVEST, "invest-", "apply-for-a-uk-visa"),
+        (SERVICE_NAMES.INVEST, "invest-", "establish-a-base-for-business-in-the-uk"),
+        (SERVICE_NAMES.INVEST, "invest-", "hire-skilled-workers-for-your-uk-operations"),
+        (SERVICE_NAMES.INVEST, "invest-", "open-a-uk-business-bank-account"),
+        (SERVICE_NAMES.INVEST, "invest-", "set-up-a-company-in-the-uk"),
+        (SERVICE_NAMES.INVEST, "invest-", "understand-uk-tax-and-incentives"),
+    ],
+)
+def test_wagtail_get_page_by_historic_slug_with_service_prefix(cms_client, service_name, prefix, slug):
+    cms_client.service_name = service_name
+    response = cms_client.lookup_by_slug(prefix + slug)
+    assert response.status_code == http.client.OK, status_error(
+        http.client.OK, response
+    )
+    assert response.json()["meta"]["slug"] == slug
 
 
 @pytest.mark.parametrize("limit", [2, 10, 20])
