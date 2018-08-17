@@ -1,3 +1,4 @@
+import asyncio
 import http.client
 from pprint import pformat
 
@@ -5,10 +6,50 @@ import pytest
 import requests
 from directory_cms_client.client import cms_api_client
 from directory_cms_client.helpers import AbstractCMSResponse
+from directory_cms_client.client import DirectoryCMSClient
 from directory_constants.constants import cms as SERVICE_NAMES
+from urllib.parse import urlparse
 
 from tests import get_absolute_url, get_relative_url
-from tests.settings import DIRECTORY_API_HEALTH_CHECK_TOKEN as TOKEN
+from tests.settings import (
+    DIRECTORY_API_HEALTH_CHECK_TOKEN as TOKEN,
+    DIRECTORY_CMS_API_CLIENT_API_KEY,
+    DIRECTORY_CMS_API_CLIENT_BASE_URL,
+    DIRECTORY_CMS_API_CLIENT_SENDER_ID,
+)
+
+
+class AsyncDirectoryCMSClient(DirectoryCMSClient):
+    """Make CMS Client work with AsyncIO"""
+    async def __aenter__(self):
+        return self
+
+    async def __aexit__(self, *_):
+        pass
+
+
+def async_cms_client():
+    return AsyncDirectoryCMSClient(
+        base_url=DIRECTORY_CMS_API_CLIENT_BASE_URL,
+        api_key=DIRECTORY_CMS_API_CLIENT_API_KEY,
+        sender_id=DIRECTORY_CMS_API_CLIENT_SENDER_ID,
+        timeout=55,
+        service_name=SERVICE_NAMES.INVEST,
+    )
+
+
+async def fetch(endpoints):
+    async_loop = asyncio.get_event_loop()
+    async with async_cms_client() as client:
+        futures = [
+            async_loop.run_in_executor(
+                None,
+                client.get,
+                endpoint
+            )
+            for endpoint in endpoints
+        ]
+        return await asyncio.gather(*futures)
 
 
 def status_error(expected_status_code: int, response: AbstractCMSResponse):
