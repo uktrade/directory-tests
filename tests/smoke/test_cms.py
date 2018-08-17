@@ -525,13 +525,6 @@ def test_published_translated_pages_should_return_200_failing_examples_cms416(pa
         "find_a_supplier.IndustryLandingPage",
         "find_a_supplier.IndustryPage",
         "find_a_supplier.LandingPage",
-        "invest.InfoPage",
-        "invest.InvestHomePage",
-        "invest.RegionLandingPage",
-        "invest.SectorLandingPage",
-        "invest.SectorPage",
-        "invest.SetupGuideLandingPage",
-        "invest.SetupGuidePage",
     ],
 )
 def test_draft_pages_should_return_200(page_type):
@@ -571,3 +564,48 @@ def test_draft_pages_should_return_200(page_type):
         len(non_200), len(results), page_type, pformat(formatted_non_200)
     )
     assert not non_200, error_msg
+
+
+@pytest.mark.parametrize(
+    "page_type",
+    [
+        "invest.InfoPage",
+        "invest.InvestHomePage",
+        "invest.RegionLandingPage",
+        "invest.SectorLandingPage",
+        "invest.SectorPage",
+        "invest.SetupGuideLandingPage",
+        "invest.SetupGuidePage",
+    ],
+)
+def test_draft_invest_pages_should_return_200_async(page_type):
+    page_ids = get_page_ids_by_type(page_type)
+    base = "https://dev.cms.directory.uktrade.io/api/pages/"
+    api_endpoints = [f"{base}{page_id}/" for page_id in page_ids]
+
+    loop = asyncio.get_event_loop()
+    responses = loop.run_until_complete(fetch(api_endpoints))
+    assert all(r.status_code == 200 for r in responses)
+
+    draft_urls = []
+    for response in responses:
+        page = response.json()
+        draft_token = page["meta"]["draft_token"]
+        if draft_token is not None:
+            live_url = response.json()["meta"]["url"]
+            parsed_url = urlparse(live_url)
+            lang_codes = [lang[0] for lang in response.json()["meta"]["languages"]]
+            for code in lang_codes:
+                if code == "en-gb":
+                    url = live_url
+                else:
+                    url = f"{parsed_url.scheme}://{parsed_url.netloc}/{code}{parsed_url.path}"
+                draft_url = f"{url}?draft_token={draft_token}"
+                draft_urls.append(draft_url)
+
+    if draft_urls:
+        loop = asyncio.get_event_loop()
+        responses = loop.run_until_complete(fetch(draft_urls))
+        failed = [r for r in responses if r.status_code != 200]
+        msg = ", ".join([f"{r.raw_response.url} → {r.status_code}" for r in failed])
+        assert all(r.status_code == 200 for r in responses), f"Failed URLs: {msg}"
