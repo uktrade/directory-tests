@@ -9,6 +9,7 @@ from directory_cms_client.helpers import AbstractCMSResponse
 from directory_cms_client.client import DirectoryCMSClient
 from directory_constants.constants import cms as SERVICE_NAMES
 from urllib.parse import urlparse
+from retrying import retry
 
 from tests import get_absolute_url, get_relative_url
 from tests.settings import (
@@ -108,6 +109,11 @@ def test_wagtail_get_pages():
     )
 
 
+@retry(
+    wait_fixed=30000,
+    stop_max_attempt_number=2,
+    retry_on_exception=retriable_error,
+)
 @pytest.mark.parametrize(
     "service_name, slug",
     [
@@ -198,6 +204,11 @@ def test_wagtail_get_page_by_slug(cms_client, service_name, slug):
     assert response.json()["meta"]["slug"] == slug
 
 
+@retry(
+    wait_fixed=30000,
+    stop_max_attempt_number=2,
+    retry_on_exception=retriable_error,
+)
 @pytest.mark.parametrize(
     "service_name, prefix, slug",
     [
@@ -326,6 +337,11 @@ def get_page_ids_by_type(page_type):
     return page_ids
 
 
+@retry(
+    wait_fixed=30000,
+    stop_max_attempt_number=2,
+    retry_on_exception=retriable_error,
+)
 @pytest.mark.parametrize(
     "page_type",
     [
@@ -387,6 +403,11 @@ def test_all_published_pages_should_return_200_failing_examples(page_type):
     test_all_published_pages_should_return_200(page_type)
 
 
+@retry(
+    wait_fixed=30000,
+    stop_max_attempt_number=2,
+    retry_on_exception=retriable_error,
+)
 @pytest.mark.parametrize(
     "page_type",
     [
@@ -434,6 +455,11 @@ def test_published_translated_pages_should_return_200(page_type):
     assert not non_200, error_msg
 
 
+@retry(
+    wait_fixed=30000,
+    stop_max_attempt_number=2,
+    retry_on_exception=retriable_error,
+)
 @pytest.mark.parametrize(
     "page_type",
     [
@@ -517,6 +543,11 @@ def test_published_translated_pages_should_return_200_failing_examples_cms416(pa
     test_published_translated_pages_should_return_200(page_type)
 
 
+@retry(
+    wait_fixed=30000,
+    stop_max_attempt_number=2,
+    retry_on_exception=retriable_error,
+)
 @pytest.mark.parametrize(
     "page_type",
     [
@@ -571,6 +602,11 @@ def test_draft_pages_should_return_200(page_type):
     assert not non_200, error_msg
 
 
+@retry(
+    wait_fixed=30000,
+    stop_max_attempt_number=2,
+    retry_on_exception=retriable_error,
+)
 @pytest.mark.parametrize(
     "page_type",
     [
