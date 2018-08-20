@@ -1,3 +1,4 @@
+import asyncio
 import http.client
 from pprint import pformat
 
@@ -5,10 +6,56 @@ import pytest
 import requests
 from directory_cms_client.client import cms_api_client
 from directory_cms_client.helpers import AbstractCMSResponse
+from directory_cms_client.client import DirectoryCMSClient
 from directory_constants.constants import cms as SERVICE_NAMES
+from urllib.parse import urlparse
+from retrying import retry
 
 from tests import get_absolute_url, get_relative_url
-from tests.settings import DIRECTORY_API_HEALTH_CHECK_TOKEN as TOKEN
+from tests.settings import (
+    DIRECTORY_API_HEALTH_CHECK_TOKEN as TOKEN,
+    DIRECTORY_CMS_API_CLIENT_API_KEY,
+    DIRECTORY_CMS_API_CLIENT_BASE_URL,
+    DIRECTORY_CMS_API_CLIENT_SENDER_ID,
+)
+
+
+def retriable_error(exception):
+    """Return True if test should be re-run based on the Exception"""
+    return isinstance(exception, (AssertionError, ))
+
+
+class AsyncDirectoryCMSClient(DirectoryCMSClient):
+    """Make CMS Client work with AsyncIO"""
+    async def __aenter__(self):
+        return self
+
+    async def __aexit__(self, *_):
+        pass
+
+
+def async_cms_client():
+    return AsyncDirectoryCMSClient(
+        base_url=DIRECTORY_CMS_API_CLIENT_BASE_URL,
+        api_key=DIRECTORY_CMS_API_CLIENT_API_KEY,
+        sender_id=DIRECTORY_CMS_API_CLIENT_SENDER_ID,
+        timeout=55,
+        service_name=SERVICE_NAMES.INVEST,
+    )
+
+
+async def fetch(endpoints):
+    async_loop = asyncio.get_event_loop()
+    async with async_cms_client() as client:
+        futures = [
+            async_loop.run_in_executor(
+                None,
+                client.get,
+                endpoint
+            )
+            for endpoint in endpoints
+        ]
+        return await asyncio.gather(*futures)
 
 
 def status_error(expected_status_code: int, response: AbstractCMSResponse):
@@ -62,6 +109,11 @@ def test_wagtail_get_pages():
     )
 
 
+@retry(
+    wait_fixed=30000,
+    stop_max_attempt_number=2,
+    retry_on_exception=retriable_error,
+)
 @pytest.mark.parametrize(
     "service_name, slug",
     [
@@ -90,35 +142,15 @@ def test_wagtail_get_pages():
         (SERVICE_NAMES.FIND_A_SUPPLIER, "sports-economy"),
         (SERVICE_NAMES.FIND_A_SUPPLIER, "technology"),
 
-        (SERVICE_NAMES.INVEST, "apply-for-a-uk-visa"),
-        (SERVICE_NAMES.INVEST, "set-up-a-company-in-the-uk"),
-        (SERVICE_NAMES.INVEST, "london"),
-        (SERVICE_NAMES.INVEST, "advanced-manufacturing"),
-        (SERVICE_NAMES.INVEST, "automotive"),
-        (SERVICE_NAMES.INVEST, "automotive-research-and-development"),
-    ],
-)
-def test_wagtail_get_page_by_slug(cms_client, service_name, slug):
-    cms_client.service_name = service_name
-    response = cms_client.lookup_by_slug(slug)
-    assert response.status_code == http.client.OK, status_error(
-        http.client.OK, response
-    )
-    assert response.json()["meta"]["slug"] == slug
-
-
-@pytest.mark.skip(reason="check ticket: CMS-412")
-@pytest.mark.parametrize(
-    "service_name, slug",
-    [
         (SERVICE_NAMES.INVEST, "home-page"),
+
         (SERVICE_NAMES.INVEST, "sector-landing-page"),
-        (SERVICE_NAMES.INVEST, "setup-guide-landing-page"),
-        (SERVICE_NAMES.INVEST, "uk-region-landing-page"),
-        (SERVICE_NAMES.INVEST, "midlands"),
+        (SERVICE_NAMES.INVEST, "advanced-manufacturing"),
         (SERVICE_NAMES.INVEST, "aerospace"),
         (SERVICE_NAMES.INVEST, "agri-tech"),
         (SERVICE_NAMES.INVEST, "asset-management"),
+        (SERVICE_NAMES.INVEST, "automotive"),
+        (SERVICE_NAMES.INVEST, "automotive-research-and-development"),
         (SERVICE_NAMES.INVEST, "automotive-supply-chain"),
         (SERVICE_NAMES.INVEST, "capital-investment"),
         (SERVICE_NAMES.INVEST, "chemicals"),
@@ -144,10 +176,101 @@ def test_wagtail_get_page_by_slug(cms_client, service_name, slug):
         (SERVICE_NAMES.INVEST, "pharmaceutical-manufacturing"),
         (SERVICE_NAMES.INVEST, "retail"),
         (SERVICE_NAMES.INVEST, "technology"),
+
+        (SERVICE_NAMES.INVEST, "uk-region-landing-page"),
+        (SERVICE_NAMES.INVEST, "london"),
+        (SERVICE_NAMES.INVEST, "north-england"),
+        (SERVICE_NAMES.INVEST, "northern-ireland"),
+        (SERVICE_NAMES.INVEST, "scotland"),
+        (SERVICE_NAMES.INVEST, "south-of-england"),
+        (SERVICE_NAMES.INVEST, "wales"),
+
+        (SERVICE_NAMES.INVEST, "setup-guide-landing-page"),
+        (SERVICE_NAMES.INVEST, "apply-for-a-uk-visa"),
+        (SERVICE_NAMES.INVEST, "establish-a-base-for-business-in-the-uk"),
+        (SERVICE_NAMES.INVEST, "hire-skilled-workers-for-your-uk-operations"),
+        (SERVICE_NAMES.INVEST, "open-a-uk-business-bank-account"),
+        (SERVICE_NAMES.INVEST, "set-up-a-company-in-the-uk"),
+        (SERVICE_NAMES.INVEST, "understand-uk-tax-and-incentives"),
     ],
 )
-def test_wagtail_get_page_by_slug_failing_examples(cms_client, service_name, slug):
-    test_wagtail_get_page_by_slug(cms_client, service_name, slug)
+def test_wagtail_get_page_by_slug(cms_client, service_name, slug):
+    """Check - https://uktrade.atlassian.net/browse/CMS-412"""
+    cms_client.service_name = service_name
+    response = cms_client.lookup_by_slug(slug)
+    assert response.status_code == http.client.OK, status_error(
+        http.client.OK, response
+    )
+    assert response.json()["meta"]["slug"] == slug
+
+
+@retry(
+    wait_fixed=30000,
+    stop_max_attempt_number=2,
+    retry_on_exception=retriable_error,
+)
+@pytest.mark.parametrize(
+    "service_name, prefix, slug",
+    [
+        (SERVICE_NAMES.INVEST, "invest-", "home-page"),
+
+        (SERVICE_NAMES.INVEST, "invest-", "sector-landing-page"),
+        (SERVICE_NAMES.INVEST, "invest-", "advanced-manufacturing"),
+        (SERVICE_NAMES.INVEST, "invest-", "aerospace"),
+        (SERVICE_NAMES.INVEST, "invest-", "agri-tech"),
+        (SERVICE_NAMES.INVEST, "invest-", "asset-management"),
+        (SERVICE_NAMES.INVEST, "invest-", "automotive"),
+        (SERVICE_NAMES.INVEST, "invest-", "automotive-research-and-development"),
+        (SERVICE_NAMES.INVEST, "invest-", "automotive-supply-chain"),
+        (SERVICE_NAMES.INVEST, "invest-", "capital-investment"),
+        (SERVICE_NAMES.INVEST, "invest-", "chemicals"),
+        (SERVICE_NAMES.INVEST, "invest-", "creative-content-and-production"),
+        (SERVICE_NAMES.INVEST, "invest-", "creative-industries"),
+        (SERVICE_NAMES.INVEST, "invest-", "data-analytics"),
+        (SERVICE_NAMES.INVEST, "invest-", "digital-media"),
+        (SERVICE_NAMES.INVEST, "invest-", "electrical-networks"),
+        (SERVICE_NAMES.INVEST, "invest-", "energy"),
+        (SERVICE_NAMES.INVEST, "invest-", "energy-from-waste"),
+        (SERVICE_NAMES.INVEST, "invest-", "financial-services"),
+        (SERVICE_NAMES.INVEST, "invest-", "financial-technology"),
+        (SERVICE_NAMES.INVEST, "invest-", "food-and-drink"),
+        (SERVICE_NAMES.INVEST, "invest-", "food-service-and-catering"),
+        (SERVICE_NAMES.INVEST, "invest-", "free-from-foods"),
+        (SERVICE_NAMES.INVEST, "invest-", "health-and-life-sciences"),
+        (SERVICE_NAMES.INVEST, "invest-", "meat-poultry-and-dairy"),
+        (SERVICE_NAMES.INVEST, "invest-", "medical-technology"),
+        (SERVICE_NAMES.INVEST, "invest-", "motorsport"),
+        (SERVICE_NAMES.INVEST, "invest-", "nuclear-energy"),
+        (SERVICE_NAMES.INVEST, "invest-", "offshore-wind-energy"),
+        (SERVICE_NAMES.INVEST, "invest-", "oil-and-gas"),
+        (SERVICE_NAMES.INVEST, "invest-", "pharmaceutical-manufacturing"),
+        (SERVICE_NAMES.INVEST, "invest-", "retail"),
+        (SERVICE_NAMES.INVEST, "invest-", "technology"),
+
+        (SERVICE_NAMES.INVEST, "invest-", "uk-region-landing-page"),
+        (SERVICE_NAMES.INVEST, "invest-", "london"),
+        (SERVICE_NAMES.INVEST, "invest-", "north-england"),
+        (SERVICE_NAMES.INVEST, "invest-", "northern-ireland"),
+        (SERVICE_NAMES.INVEST, "invest-", "scotland"),
+        (SERVICE_NAMES.INVEST, "invest-", "south-of-england"),
+        (SERVICE_NAMES.INVEST, "invest-", "wales"),
+
+        (SERVICE_NAMES.INVEST, "invest-", "setup-guide-landing-page"),
+        (SERVICE_NAMES.INVEST, "invest-", "apply-for-a-uk-visa"),
+        (SERVICE_NAMES.INVEST, "invest-", "establish-a-base-for-business-in-the-uk"),
+        (SERVICE_NAMES.INVEST, "invest-", "hire-skilled-workers-for-your-uk-operations"),
+        (SERVICE_NAMES.INVEST, "invest-", "open-a-uk-business-bank-account"),
+        (SERVICE_NAMES.INVEST, "invest-", "set-up-a-company-in-the-uk"),
+        (SERVICE_NAMES.INVEST, "invest-", "understand-uk-tax-and-incentives"),
+    ],
+)
+def test_wagtail_get_page_by_historic_slug_with_service_prefix(cms_client, service_name, prefix, slug):
+    cms_client.service_name = service_name
+    response = cms_client.lookup_by_slug(prefix + slug)
+    assert response.status_code == http.client.OK, status_error(
+        http.client.OK, response
+    )
+    assert response.json()["meta"]["slug"] == slug
 
 
 @pytest.mark.parametrize("limit", [2, 10, 20])
@@ -214,6 +337,11 @@ def get_page_ids_by_type(page_type):
     return page_ids
 
 
+@retry(
+    wait_fixed=30000,
+    stop_max_attempt_number=2,
+    retry_on_exception=retriable_error,
+)
 @pytest.mark.parametrize(
     "page_type",
     [
@@ -275,6 +403,11 @@ def test_all_published_pages_should_return_200_failing_examples(page_type):
     test_all_published_pages_should_return_200(page_type)
 
 
+@retry(
+    wait_fixed=30000,
+    stop_max_attempt_number=2,
+    retry_on_exception=retriable_error,
+)
 @pytest.mark.parametrize(
     "page_type",
     [
@@ -287,9 +420,6 @@ def test_all_published_pages_should_return_200_failing_examples(page_type):
         "find_a_supplier.IndustryLandingPage",
         "find_a_supplier.IndustryPage",
         "find_a_supplier.LandingPage",
-        "invest.InfoPage",
-        "invest.InvestHomePage",
-        "invest.SectorLandingPage",
     ],
 )
 def test_published_translated_pages_should_return_200(page_type):
@@ -323,6 +453,49 @@ def test_published_translated_pages_should_return_200(page_type):
         len(non_200), len(results), page_type, pformat(formatted_non_200)
     )
     assert not non_200, error_msg
+
+
+@retry(
+    wait_fixed=55500,
+    stop_max_attempt_number=2,
+    retry_on_exception=retriable_error,
+)
+@pytest.mark.parametrize(
+    "page_type",
+    [
+        "invest.SectorPage",
+        "invest.InfoPage",
+        "invest.InvestHomePage",
+        "invest.SectorLandingPage",
+    ],
+)
+def test_published_translated_invest_pages_should_return_200_async(page_type):
+    page_ids = get_page_ids_by_type(page_type)
+    base = "https://dev.cms.directory.uktrade.io/api/pages/"
+    api_endpoints = [f"{base}{page_id}/" for page_id in page_ids]
+
+    loop = asyncio.get_event_loop()
+    responses = loop.run_until_complete(fetch(api_endpoints))
+    assert all(r.status_code == 200 for r in responses)
+
+    lang_urls = []
+    for response in responses:
+        live_url = response.json()["meta"]["url"]
+        parsed = urlparse(live_url)
+        lang_codes = [lang[0] for lang in response.json()["meta"]["languages"]]
+        for code in lang_codes:
+            if code == "en-gb":
+                url = live_url
+                lang_urls.append(url)
+            else:
+                url = f"{parsed.scheme}://{parsed.netloc}/{code}{parsed.path}"
+                lang_urls.append(url)
+
+    loop = asyncio.get_event_loop()
+    responses = loop.run_until_complete(fetch(lang_urls))
+    failed = [r for r in responses if r.status_code != 200]
+    msg = ", ".join([f"{r.raw_response.url} → {r.status_code}" for r in failed])
+    assert all(r.status_code == 200 for r in responses), f"Failed URLs: {msg}"
 
 
 @pytest.mark.skip(reason="check ticket: CMS-413")
@@ -370,6 +543,11 @@ def test_published_translated_pages_should_return_200_failing_examples_cms416(pa
     test_published_translated_pages_should_return_200(page_type)
 
 
+@retry(
+    wait_fixed=55500,
+    stop_max_attempt_number=2,
+    retry_on_exception=retriable_error,
+)
 @pytest.mark.parametrize(
     "page_type",
     [
@@ -383,13 +561,6 @@ def test_published_translated_pages_should_return_200_failing_examples_cms416(pa
         "find_a_supplier.IndustryLandingPage",
         "find_a_supplier.IndustryPage",
         "find_a_supplier.LandingPage",
-        "invest.InfoPage",
-        "invest.InvestHomePage",
-        "invest.RegionLandingPage",
-        "invest.SectorLandingPage",
-        "invest.SectorPage",
-        "invest.SetupGuideLandingPage",
-        "invest.SetupGuidePage",
     ],
 )
 def test_draft_pages_should_return_200(page_type):
@@ -429,3 +600,53 @@ def test_draft_pages_should_return_200(page_type):
         len(non_200), len(results), page_type, pformat(formatted_non_200)
     )
     assert not non_200, error_msg
+
+
+@retry(
+    wait_fixed=55500,
+    stop_max_attempt_number=2,
+    retry_on_exception=retriable_error,
+)
+@pytest.mark.parametrize(
+    "page_type",
+    [
+        "invest.InfoPage",
+        "invest.InvestHomePage",
+        "invest.RegionLandingPage",
+        "invest.SectorLandingPage",
+        "invest.SectorPage",
+        "invest.SetupGuideLandingPage",
+        "invest.SetupGuidePage",
+    ],
+)
+def test_draft_invest_pages_should_return_200_async(page_type):
+    page_ids = get_page_ids_by_type(page_type)
+    base = "https://dev.cms.directory.uktrade.io/api/pages/"
+    api_endpoints = [f"{base}{page_id}/" for page_id in page_ids]
+
+    loop = asyncio.get_event_loop()
+    responses = loop.run_until_complete(fetch(api_endpoints))
+    assert all(r.status_code == 200 for r in responses)
+
+    draft_urls = []
+    for response in responses:
+        page = response.json()
+        draft_token = page["meta"]["draft_token"]
+        if draft_token is not None:
+            live_url = response.json()["meta"]["url"]
+            parsed_url = urlparse(live_url)
+            lang_codes = [lang[0] for lang in response.json()["meta"]["languages"]]
+            for code in lang_codes:
+                if code == "en-gb":
+                    url = live_url
+                else:
+                    url = f"{parsed_url.scheme}://{parsed_url.netloc}/{code}{parsed_url.path}"
+                draft_url = f"{url}?draft_token={draft_token}"
+                draft_urls.append(draft_url)
+
+    if draft_urls:
+        loop = asyncio.get_event_loop()
+        responses = loop.run_until_complete(fetch(draft_urls))
+        failed = [r for r in responses if r.status_code != 200]
+        msg = ", ".join([f"{r.raw_response.url} → {r.status_code}" for r in failed])
+        assert all(r.status_code == 200 for r in responses), f"Failed URLs: {msg}"

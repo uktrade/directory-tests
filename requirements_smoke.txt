@@ -9,7 +9,7 @@ attrs==18.1.0             # via pytest
 certifi==2018.8.13        # via requests
 chardet==3.0.4            # via requests
 directory-client-core==4.0.2  # via directory-cms-client, directory-sso-api-client
-directory-cms-client==4.3.1
+directory-cms-client==4.3.2
 directory-constants==7.1.0
 directory-sso-api-client==3.0.2
 django==1.11.15           # via directory-constants, sigauth
@@ -24,13 +24,14 @@ pluggy==0.7.1             # via pytest
 py==1.5.4                 # via pytest
 pycodestyle==2.3.1        # via flake8
 pyflakes==1.6.0           # via flake8
-pytest-django==3.3.3
+pytest-django==3.4.1
 pytest-sugar==0.9.1
-pytest==3.7.1
+pytest==3.7.2
 pytz==2017.2              # via directory-constants, django
 requests==2.19.1
+retrying==1.3.3
 sigauth==4.0.1
-six==1.11.0               # via mohawk, more-itertools, pytest, w3lib
+six==1.11.0               # via mohawk, more-itertools, pytest, retrying, w3lib
 termcolor==1.1.0          # via pytest-sugar
 urllib3==1.23             # via requests
 w3lib==1.19.0             # via directory-cms-client
