@@ -20,16 +20,12 @@ SERVICE = "Single Sign-On"
 TYPE = "registration"
 URL = urljoin(DIRECTORY_UI_SSO_URL, "accounts/confirm-email/")
 
-SIGN_IN_LINK = Selector(By.CSS_SELECTOR, "a.signin")
+SIGN_IN_LINK = Selector(By.ID, "header-sign-in-link")
 SELECTORS = {
     "general": {
-        "title": Selector(By.CSS_SELECTOR, "#content > div > div > h1"),
-        "description": Selector(
-            By.CSS_SELECTOR, "#content > div > div > p:nth-child(2)"
-        ),
-        "contact us link": Selector(
-            By.CSS_SELECTOR, "#content > div > div > p:nth-child(3) > a"
-        ),
+        "title": Selector(By.CSS_SELECTOR, "#content h1"),
+        "description": Selector(By.CSS_SELECTOR, "#content p:nth-child(2)"),
+        "contact us link": Selector(By.CSS_SELECTOR, "#content p > a"),
         "sign in link": SIGN_IN_LINK,
     }
 }

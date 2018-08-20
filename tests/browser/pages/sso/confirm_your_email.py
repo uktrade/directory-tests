@@ -21,10 +21,10 @@ TYPE = "confirmation"
 URL = urljoin(DIRECTORY_UI_SSO_URL, "accounts/confirm-email/")
 PAGE_TITLE = "Confirm email Address"
 
-CONFIRM_LINK = Selector(By.CSS_SELECTOR, "#content > div > div > form > button")
+CONFIRM_LINK = Selector(By.CSS_SELECTOR, "#content form > button[type=submit]")
 SELECTORS = {
     "general": {
-        "title": Selector(By.CSS_SELECTOR, "#content > div > div > h1"),
+        "title": Selector(By.CSS_SELECTOR, "#content h1"),
         "confirm link": CONFIRM_LINK,
     }
 }
