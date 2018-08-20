@@ -456,7 +456,7 @@ def test_published_translated_pages_should_return_200(page_type):
 
 
 @retry(
-    wait_fixed=30000,
+    wait_fixed=55500,
     stop_max_attempt_number=2,
     retry_on_exception=retriable_error,
 )
@@ -544,7 +544,7 @@ def test_published_translated_pages_should_return_200_failing_examples_cms416(pa
 
 
 @retry(
-    wait_fixed=30000,
+    wait_fixed=55500,
     stop_max_attempt_number=2,
     retry_on_exception=retriable_error,
 )
@@ -603,7 +603,7 @@ def test_draft_pages_should_return_200(page_type):
 
 
 @retry(
-    wait_fixed=30000,
+    wait_fixed=55500,
     stop_max_attempt_number=2,
     retry_on_exception=retriable_error,
 )
