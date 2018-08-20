@@ -19,6 +19,11 @@ from tests.settings import (
 )
 
 
+def retriable_error(exception):
+    """Return True if test should be re-run based on the Exception"""
+    return isinstance(exception, (AssertionError, ))
+
+
 class AsyncDirectoryCMSClient(DirectoryCMSClient):
     """Make CMS Client work with AsyncIO"""
     async def __aenter__(self):
