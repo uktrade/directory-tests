@@ -11,8 +11,34 @@ from requests.exceptions import (
     InvalidSchema,
     InvalidURL
 )
+from django.conf import settings as django_settings
+django_settings.configure(
+    DIRECTORY_SSO_API_CLIENT_BASE_URL=None,
+    DIRECTORY_SSO_API_CLIENT_API_KEY=None,
+    DIRECTORY_SSO_API_CLIENT_SENDER_ID=None,
+    DIRECTORY_SSO_API_CLIENT_DEFAULT_TIMEOUT=None,
+    DIRECTORY_CMS_API_CLIENT_BASE_URL=None,
+    DIRECTORY_CMS_API_CLIENT_API_KEY=None,
+    DIRECTORY_CMS_API_CLIENT_SENDER_ID=None,
+    DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT=None,
+    DIRECTORY_CMS_API_CLIENT_SERVICE_NAME=None,
+    CACHES={
+        'cms_fallback': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'unique-snowflake',
+        }
+    }
+)
+# this has to be imported after django settings are set
+from directory_cms_client.client import DirectoryCMSClient
+from directory_constants.constants import cms as SERVICE_NAMES
 
-from tests import settings
+from tests.settings import (
+    DIRECTORY_API_CLIENT_KEY,
+    DIRECTORY_CMS_API_CLIENT_API_KEY,
+    DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT,
+    DIRECTORY_CMS_API_CLIENT_SENDER_ID,
+)
 
 
 class AuthenticatedClient(HttpSession):
@@ -21,7 +47,7 @@ class AuthenticatedClient(HttpSession):
         try:
             request = requests.Request(method=method, url=url, **kwargs)
             signed_request = self.sign_request(
-                api_key=settings.DIRECTORY_API_CLIENT_KEY,
+                api_key=DIRECTORY_API_CLIENT_KEY,
                 prepared_request=request.prepare(),
             )
             return requests.Session().send(signed_request)
