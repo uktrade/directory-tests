@@ -2,9 +2,7 @@ from hashlib import sha256
 from urllib.parse import urlsplit
 
 from locust.clients import LocustResponse, HttpSession
-
-import requests
-from requests import Request
+from requests import Request, Session
 from requests.exceptions import (
     RequestException,
     MissingSchema,
@@ -45,12 +43,12 @@ class AuthenticatedClient(HttpSession):
     def _send_request_safe_mode(self, method, url, **kwargs):
         kwargs.pop('allow_redirects', None)
         try:
-            request = requests.Request(method=method, url=url, **kwargs)
+            request = Request(method=method, url=url, **kwargs)
             signed_request = self.sign_request(
                 api_key=DIRECTORY_API_CLIENT_KEY,
                 prepared_request=request.prepare(),
             )
-            return requests.Session().send(signed_request)
+            return Session().send(signed_request)
         except (MissingSchema, InvalidSchema, InvalidURL):
             raise
         except RequestException as e:
