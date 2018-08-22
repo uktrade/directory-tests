@@ -44,6 +44,11 @@ load_test:
 	$(SET_LOCUST_ENV_VARS); \
 	$(LOCUST)
 
+load_test_cms_api:
+	$(SET_LOCUST_ENV_VARS); \
+	export LOCUST_FILE=./locustfile_cms_api.py; \
+	$(LOCUST)
+
 load_test_buyer:
 	$(SET_LOCUST_ENV_VARS); \
 	export LOCUST_FILE=./locustfile_buyer.py; \
