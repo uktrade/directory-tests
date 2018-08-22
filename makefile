@@ -106,7 +106,7 @@ functional_tests_feature_dir:
 functional_update_companies:
 	python -c "from tests.functional.utils.generic import update_companies; update_companies()"
 
-test: pep8 smoke_tests integration_test load_test_minimal
+test: pep8 smoke_tests functional_tests load_test_minimal
 
 DOCKER_REMOVE_ALL := \
 	docker ps -a | \
