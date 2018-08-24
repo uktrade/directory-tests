@@ -587,7 +587,7 @@ def test_draft_pages_should_return_200(page_type):
                         draft_response = requests.get(lang_url)
                     except Exception as ex:
                         results.append((page_id, lang_url, str(ex)))
-                        continue
+                        raise
                     results.append(
                         (page_id, lang_url, draft_response.status_code)
                     )
