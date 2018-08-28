@@ -44,6 +44,11 @@ load_test:
 	$(SET_LOCUST_ENV_VARS); \
 	$(LOCUST)
 
+load_test_cms_api:
+	$(SET_LOCUST_ENV_VARS); \
+	export LOCUST_FILE=./locustfile_cms_api.py; \
+	$(LOCUST)
+
 load_test_buyer:
 	$(SET_LOCUST_ENV_VARS); \
 	export LOCUST_FILE=./locustfile_buyer.py; \
@@ -101,7 +106,7 @@ functional_tests_feature_dir:
 functional_update_companies:
 	python -c "from tests.functional.utils.generic import update_companies; update_companies()"
 
-test: pep8 smoke_tests integration_test load_test_minimal
+test: pep8 smoke_tests functional_tests load_test_minimal
 
 DOCKER_REMOVE_ALL := \
 	docker ps -a | \

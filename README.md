@@ -67,6 +67,7 @@ This will run flake8 linting, integration tests and finally load tests. This doe
 2) For load testing with proper load (50 clients/s for 2min.):
 
     make test_load_buyer
+    make test_load_cms_api
     make test_load_supplier
     make test_load_sso
     make test_load_exred

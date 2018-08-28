@@ -1,30 +1,56 @@
+import time
 from hashlib import sha256
 from urllib.parse import urlsplit
 
+from locust import HttpLocust, events
 from locust.clients import LocustResponse, HttpSession
-
-import requests
-from requests import Request
+from requests import Request, Session
 from requests.exceptions import (
     RequestException,
     MissingSchema,
     InvalidSchema,
     InvalidURL
 )
+from django.conf import settings as django_settings
+django_settings.configure(
+    DIRECTORY_SSO_API_CLIENT_BASE_URL=None,
+    DIRECTORY_SSO_API_CLIENT_API_KEY=None,
+    DIRECTORY_SSO_API_CLIENT_SENDER_ID=None,
+    DIRECTORY_SSO_API_CLIENT_DEFAULT_TIMEOUT=None,
+    DIRECTORY_CMS_API_CLIENT_BASE_URL=None,
+    DIRECTORY_CMS_API_CLIENT_API_KEY=None,
+    DIRECTORY_CMS_API_CLIENT_SENDER_ID=None,
+    DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT=None,
+    DIRECTORY_CMS_API_CLIENT_SERVICE_NAME=None,
+    CACHES={
+        'cms_fallback': {
+            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+            'LOCATION': 'unique-snowflake',
+        }
+    }
+)
+# this has to be imported after django settings are set
+from directory_cms_client.client import DirectoryCMSClient
+from directory_constants.constants import cms as SERVICE_NAMES
 
-from tests import settings
+from tests.settings import (
+    DIRECTORY_API_CLIENT_KEY,
+    DIRECTORY_CMS_API_CLIENT_API_KEY,
+    DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT,
+    DIRECTORY_CMS_API_CLIENT_SENDER_ID,
+)
 
 
 class AuthenticatedClient(HttpSession):
     def _send_request_safe_mode(self, method, url, **kwargs):
         kwargs.pop('allow_redirects', None)
         try:
-            request = requests.Request(method=method, url=url, **kwargs)
+            request = Request(method=method, url=url, **kwargs)
             signed_request = self.sign_request(
-                api_key=settings.DIRECTORY_API_CLIENT_KEY,
+                api_key=DIRECTORY_API_CLIENT_KEY,
                 prepared_request=request.prepare(),
             )
-            return requests.Session().send(signed_request)
+            return Session().send(signed_request)
         except (MissingSchema, InvalidSchema, InvalidURL):
             raise
         except RequestException as e:
@@ -56,3 +82,46 @@ class AuthedClientMixin(object):
     def __init__(self):
         super(AuthedClientMixin, self).__init__()
         self.client = AuthenticatedClient(base_url=self.host)
+
+
+class CMSAPIAuthenticatedClient(DirectoryCMSClient):
+
+    name = None
+
+    def get(self, *args, **kwargs):
+        self.name = kwargs.pop("name", None) or self.name
+        start_time = time.time()
+        status_code = None
+        try:
+            r = super().get(*args, **kwargs)
+            response_time = int(r.raw_response.elapsed.total_seconds() * 1000)
+            events.request_success.fire(
+                request_type="GET", name=self.name, response_time=response_time,
+                response_length=len(r.content))
+            status_code = r.status_code
+            assert r.status_code in [200, 404]
+            return r
+        except (MissingSchema, InvalidSchema, InvalidURL):
+            raise
+        except (AssertionError, RequestException) as e:
+            total_time = int((time.time() - start_time) * 1000)
+            events.request_failure.fire(
+                request_type="GET", name=self.name, response_time=total_time,
+                exception=status_code or RequestException.errno)
+
+    def lookup_by_slug(self, slug, **kwargs):
+        self.name = kwargs.pop("name")
+        return super().lookup_by_slug(slug, **kwargs)
+
+
+class CMSAPIAuthClientMixin(HttpLocust):
+    def __init__(self):
+        super(CMSAPIAuthClientMixin, self).__init__()
+        self.service_name = SERVICE_NAMES.INVEST
+        self.client = CMSAPIAuthenticatedClient(
+            base_url=self.host,
+            api_key=DIRECTORY_CMS_API_CLIENT_API_KEY,
+            sender_id=DIRECTORY_CMS_API_CLIENT_SENDER_ID,
+            timeout=DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT,
+            service_name=SERVICE_NAMES.INVEST,
+        )
