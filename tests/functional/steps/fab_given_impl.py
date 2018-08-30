@@ -110,7 +110,7 @@ def unauthenticated_buyer(buyer_alias: str) -> Actor:
         .replace(" ", "")
         .lower()
     )
-    company_name = sentence()
+    company_name = f"{sentence()} AUTOTESTS"
     return Actor(
         alias=buyer_alias,
         email=email,

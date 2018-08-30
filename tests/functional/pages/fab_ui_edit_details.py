@@ -74,7 +74,7 @@ def update_details(
     token = actor.csrfmiddlewaretoken
 
     if title:
-        new_title = specific_title or sentence()
+        new_title = specific_title or f"{sentence()} AUTOTESTS"
     else:
         new_title = company.title
 

@@ -261,7 +261,7 @@ def bp_provide_company_details(context: Context, supplier_alias: str):
 
     # Step 0 - generate random details & update Company matching details
     # Need to get Company details after updating it in the Scenario Data
-    title = "{} {}".format(company.title, sentence())
+    title = "{} {} AUTOTESTS".format(company.title, sentence())
     size = choice(NO_OF_EMPLOYEES)
     website = "http://{}.{}".format(rare_word(min_length=15), rare_word())
     keywords = ", ".join(sentence().split())

@@ -856,7 +856,7 @@ def random_feedback_data(
     email = email or (
         "test+buyer_{}@directory.uktrade.io".format(rare_word(min_length=15))
     )
-    company_name = company_name or rare_word(min_length=12)
+    company_name = company_name or f"{rare_word(min_length=12)} AUTOTESTS"
     country = country or rare_word(min_length=12)
     comment = comment or sentence(max_length=1000)
     g_recaptcha_response = g_recaptcha_response or "test mode"
@@ -890,7 +890,7 @@ def random_message_data(
 ) -> Feedback:
     alias = alias or "test message"
     body = body or sentence(max_length=1000)
-    company_name = company_name or rare_word(min_length=12)
+    company_name = company_name or f"{rare_word(min_length=12)} AUTOTESTS"
     country = country or rare_word(min_length=12)
     email_address = email_address or (
         "test+buyer_{}@directory.uktrade.io".format(rare_word(min_length=15))
