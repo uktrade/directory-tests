@@ -11,18 +11,13 @@ from directory_constants.constants import cms as SERVICE_NAMES
 from urllib.parse import urlparse
 from retrying import retry
 
-from tests import get_absolute_url, get_relative_url
+from tests import get_absolute_url, get_relative_url, retriable_error
 from tests.settings import (
     DIRECTORY_API_HEALTH_CHECK_TOKEN as TOKEN,
     DIRECTORY_CMS_API_CLIENT_API_KEY,
     DIRECTORY_CMS_API_CLIENT_BASE_URL,
     DIRECTORY_CMS_API_CLIENT_SENDER_ID,
 )
-
-
-def retriable_error(exception):
-    """Return True if test should be re-run based on the Exception"""
-    return isinstance(exception, (AssertionError, ))
 
 
 class AsyncDirectoryCMSClient(DirectoryCMSClient):

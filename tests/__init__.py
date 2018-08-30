@@ -239,3 +239,8 @@ def get_absolute_url(name):
 
 def get_random_email_address():
     return '{}@example.com'.format(uuid.uuid4())
+
+
+def retriable_error(exception):
+    """Return True if test should be re-run based on the Exception"""
+    return isinstance(exception, (AssertionError, ))
