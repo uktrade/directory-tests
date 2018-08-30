@@ -32,7 +32,8 @@ def test_health_industry_200():
 def test_tech_industry_200():
     response = requests.get(get_absolute_url('ui-supplier:industries-tech'))
 
-    assert response.status_code == http.client.OK
+    error_msg = f"Expected 200 got {response.status_code} from {response.url}"
+    assert response.status_code == http.client.OK, error_msg
 
 
 def test_creative_industry_200():
@@ -45,7 +46,8 @@ def test_creative_industry_200():
 def test_food_industry_200():
     response = requests.get(get_absolute_url('ui-supplier:industries-food'))
 
-    assert response.status_code == http.client.OK
+    error_msg = f"Expected 200 got {response.status_code} from {response.url}"
+    assert response.status_code == http.client.OK, error_msg
 
 
 def test_supplier_profile_200():
