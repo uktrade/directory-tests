@@ -2,8 +2,9 @@ import http.client
 
 import pytest
 import requests
+from retrying import retry
 
-from tests import get_absolute_url, companies
+from tests import get_absolute_url, companies, retriable_error
 from tests.settings import DIRECTORY_API_HEALTH_CHECK_TOKEN as TOKEN
 
 
@@ -76,6 +77,11 @@ def test_redirects_for_health_check_endpoints(absolute_url):
     assert response.status_code == http.client.MOVED_PERMANENTLY
 
 
+@retry(
+    wait_fixed=30000,
+    stop_max_attempt_number=2,
+    retry_on_exception=retriable_error,
+)
 @pytest.mark.parametrize("absolute_url", [
     get_absolute_url('ui-buyer:register'),
     get_absolute_url('ui-buyer:register-confirm-export-status'),
@@ -98,6 +104,11 @@ def test_301_redirects_for_anon_user(absolute_url):
     assert response.status_code == http.client.FOUND
 
 
+@retry(
+    wait_fixed=30000,
+    stop_max_attempt_number=2,
+    retry_on_exception=retriable_error,
+)
 @pytest.mark.parametrize("absolute_url", [
     get_absolute_url('ui-buyer:healthcheck-api'),
     get_absolute_url('ui-buyer:healthcheck-sso'),
@@ -126,6 +137,11 @@ def test_302_redirects_after_removing_trailing_slash_for_anon_user(
     assert response.status_code == http.client.MOVED_PERMANENTLY
 
 
+@retry(
+    wait_fixed=30000,
+    stop_max_attempt_number=2,
+    retry_on_exception=retriable_error,
+)
 @pytest.mark.parametrize("absolute_url", [
     get_absolute_url('ui-buyer:landing'),
     get_absolute_url('ui-buyer:register'),

@@ -2,6 +2,7 @@ import pytest
 import requests
 
 from directory_constants.constants import cms as SERVICE_NAMES
+from retrying import retry
 
 from tests import get_absolute_url, users
 from tests.settings import (
@@ -51,6 +52,7 @@ def cms_client():
 
 
 @pytest.fixture
+@retry(wait_fixed=5000, stop_max_attempt_number=2)
 def logged_in_session():
     session = requests.Session()
     user = users['verified']

@@ -21,7 +21,8 @@ def test_directory_supplier_verified_user():
     url = get_absolute_url('profile:directory-supplier')
     response = requests.get(url, headers=headers)
 
-    assert response.status_code == http.client.OK
+    error_msg = f"Expected 200 got {response.status_code} from {response.url}"
+    assert response.status_code == http.client.OK, error_msg
     assert response.json() == {
         'company_industries': [
             "BUSINESS_AND_CONSUMER_SERVICES", "COMMUNICATIONS",
@@ -47,7 +48,8 @@ def test_directory_supplier_unverified_user():
     url = get_absolute_url('profile:directory-supplier')
     response = requests.get(url, headers=headers)
 
-    assert response.status_code == http.client.NOT_FOUND
+    error_msg = f"Expected 404 got {response.status_code} from {response.url}"
+    assert response.status_code == http.client.NOT_FOUND, error_msg
 
 
 def test_directory_supplier_invalid_user_token():
@@ -56,7 +58,8 @@ def test_directory_supplier_invalid_user_token():
     url = get_absolute_url('profile:directory-supplier')
     response = requests.get(url, headers=headers)
 
-    assert response.status_code == 401
+    error_msg = f"Expected 401 got {response.status_code} from {response.url}"
+    assert response.status_code == 401, error_msg
 
 
 @pytest.mark.parametrize("absolute_url", [
@@ -78,7 +81,8 @@ def test_health_check_endpoints(absolute_url):
 ])
 def test_301_redirects_for_anon_user(absolute_url):
     response = requests.get(absolute_url, allow_redirects=False)
-    assert response.status_code == http.client.FOUND
+    error_msg = f"Expected 301 got {response.status_code} from {response.url}"
+    assert response.status_code == http.client.FOUND, error_msg
 
 
 @pytest.mark.skip(reason="see bug ED-3050")
@@ -93,7 +97,8 @@ def test_302_redirects_after_removing_trailing_slash_for_anon_user(absolute_url)
     if absolute_url[-1] == "/":
         absolute_url = absolute_url[:-1]
     response = requests.get(absolute_url, allow_redirects=False)
-    assert response.status_code == http.client.MOVED_PERMANENTLY
+    error_msg = f"Expected 302 got {response.status_code} from {response.url}"
+    assert response.status_code == http.client.MOVED_PERMANENTLY, error_msg
 
 
 @pytest.mark.parametrize("absolute_url", [
@@ -114,4 +119,5 @@ def test_401_redirects_for_anon_user(absolute_url):
 def test_access_to_non_health_check_endpoints_as_logged_in_user(
         logged_in_session, absolute_url):
     response = logged_in_session.get(absolute_url, allow_redirects=True)
-    assert response.status_code == http.client.OK
+    error_msg = f"Expected 200 got {response.status_code} from {response.url}"
+    assert response.status_code == http.client.OK, error_msg
