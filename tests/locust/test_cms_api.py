@@ -28,7 +28,7 @@ class AuthenticatedPagesAPI(TaskSet):
             "export_readiness.PerformanceDashboardNotesPage",
             "export_readiness.PerformanceDashboardPage",
             "export_readiness.PrivacyAndCookiesPage",
-            "export_readiness.TerAndConditionsPage",
+            "export_readiness.TermsAndConditionsPage",
             "find_a_supplier.IndustryArticlePage",
             "find_a_supplier.IndustryContactPage",
             "find_a_supplier.IndustryLandingPage",
