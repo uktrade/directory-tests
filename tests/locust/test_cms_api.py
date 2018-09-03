@@ -49,7 +49,7 @@ class AuthenticatedPagesAPI(TaskSet):
         services = [
             SERVICE_NAMES.INVEST,
             SERVICE_NAMES.FIND_A_SUPPLIER,
-            SERVICE_NAMES.EXPORT_READINESS
+            SERVICE_NAMES.EXPORT_READINESS,
         ]
         slugs = [
             "advanced-manufacturing", "aerospace", "agri-tech",
@@ -68,9 +68,9 @@ class AuthenticatedPagesAPI(TaskSet):
             "setup-guide-landing-page",
         ]
         slug = choice(slugs)
-        fields = f"*&service_name={choice(services)}"
+        self.client.service_name = choice(services)
         self.client.lookup_by_slug(
-            slug, fields=fields, name="/api/pages/lookup-by-slug/[slug]/")
+            slug, fields=None, name="/api/pages/lookup-by-slug/[slug]/")
 
 
 class AuthenticatedUserAPI(CMSAPIAuthClientMixin):
