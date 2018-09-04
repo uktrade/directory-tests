@@ -207,7 +207,7 @@ def test_wagtail_get_page_by_slug(cms_client, service_name, slug):
 @pytest.mark.parametrize(
     "service_name, prefix, slug",
     [
-        (SERVICE_NAMES.INVEST, "invest-", "home-page"),
+        # (SERVICE_NAMES.INVEST, "invest-", "home-page"),
 
         (SERVICE_NAMES.INVEST, "invest-", "sector-landing-page"),
         (SERVICE_NAMES.INVEST, "invest-", "advanced-manufacturing"),
