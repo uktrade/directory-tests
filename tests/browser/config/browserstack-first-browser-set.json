@@ -2,7 +2,7 @@
   "hub_url": {HUB_URL},
   "capabilities": {{
     "browserstack.debug": false,
-    "browserstack.selenium_version": "3.11.0",
+    "browserstack.selenium_version": "3.14.0",
     "browserstack.timezone": "UTC",
     "browserstack.use_w3c": false,
     "browserstack.networkLogs": false,
@@ -13,7 +13,7 @@
   "environments": [
     {{
       "browser": "Chrome",
-      "browser_version": "67.0",
+      "browser_version": "68.0",
       "pageLoadStrategy": "none",
       "os": "Windows",
       "os_version": "10"

@@ -119,7 +119,7 @@ jobs:
             . venv/bin/activate
             source ./docker/.env_with_export;
             export PATH=$PATH:$HOME/bin
-            BROWSERS=Chrome VERSIONS=67.0 make browserstack
+            BROWSERS=Chrome VERSIONS=68.0 make browserstack
       - run:
           name: Merge JUnit XML reports
           when: always
