@@ -538,7 +538,6 @@ def fas_supplier_cannot_be_found_using_case_study_details(
         term = search_terms[term_name]
         logging.debug(
             "Searching for '%s' using %s: %s",
-            buyer_alias,
             company.title,
             term_name,
             search_terms,
