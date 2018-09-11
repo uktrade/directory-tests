@@ -191,7 +191,7 @@ def after_scenario(context: Context, scenario: Scenario):
                 print(msg)
                 session_id = context.driver.session_id
                 flag_browserstack_session_as_failed(session_id, msg)
-                logging.error(msg, exc_info=True)
+                logging.error(msg)
                 start_driver_session(
                     context, "session-recovered-after-scenario"
                 )

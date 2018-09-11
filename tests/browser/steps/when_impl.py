@@ -1459,8 +1459,7 @@ def clear_the_cookies(context: Context, actor_alias: str):
         cookies = context.driver.get_cookies()
         logging.debug("Driver cookies after clearing them: %s", cookies)
     except WebDriverException:
-        logging.error(
-                "Failed to clear cookies for %s", actor_alias, exc_info=True)
+        logging.error("Failed to clear cookies for %s", actor_alias)
 
 
 def sign_in_go_to(context: Context, actor_alias: str, location: str):

@@ -305,7 +305,7 @@ def assertion_msg(message: str, *args):
     except AssertionError as e:
         if args:
             message = message % args
-        logging.error(message, exc_info=True)
+        logging.error(message)
         e.args += (message,)
         _, _, tb = sys.exc_info()
         traceback.print_tb(tb)
@@ -495,8 +495,8 @@ def clear_driver_cookies(driver: WebDriver):
         logging.debug("Successfully cleared cookies")
         cookies = driver.get_cookies()
         logging.debug("Driver cookies after clearing them: %s", cookies)
-    except WebDriverException:
-        logging.error("Failed to clear cookies", exc_info=True)
+    except WebDriverException as ex:
+        logging.error("Failed to clear cookies: '%s'", ex.msg)
 
 
 def check_hash_of_remote_file(expected_hash: str, file_url: str):
