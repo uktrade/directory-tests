@@ -30,8 +30,8 @@ EXPECTED_STRINGS = [
     "Back",
     (
         "We’ll then send a confirmation letter to your company’s registered "
-        "address address within 5 working days. If you can’t collect the letter "
-        "yourself, you’ll need to make sure someone can send it on to you."
+        "address within 5 working days. If you can’t collect the letter "
+        "yourself, you’ll need to make sure someone can send it on to you"
     ),
 ]
 

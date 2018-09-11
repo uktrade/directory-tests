@@ -9,7 +9,7 @@ from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("profile:fab")
 EXPECTED_STRINGS = [
-    "Profile",
+    "Account",
     "You are signed in as",
     "Export opportunities",
     "Business profile",

@@ -5,7 +5,7 @@ from tests.functional.utils.generic import assertion_msg
 from tests.functional.utils.request import check_response
 
 EXPECTED_STRINGS = [
-    "Welcome to your great.gov.uk profile",
+    "Welcome to your great.gov.uk account",
     (
         "From now on, every time you sign in you’ll be able to quickly access all"
         " of our exporting tools in one place. The tools are here to help your "
@@ -13,7 +13,7 @@ EXPECTED_STRINGS = [
     ),
     (
         "You can start using any of our exporting tools by clicking on the tabs "
-        "on your profile."
+        "on your account."
     ),
     "Export opportunities",
     "Business profile",

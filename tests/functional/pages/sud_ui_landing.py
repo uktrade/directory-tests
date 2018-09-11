@@ -8,8 +8,8 @@ from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("profile:about")
 EXPECTED_STRINGS = [
-    "Profile",
-    "Welcome to your great.gov.uk profile",
+    "Account",
+    "Welcome to your great.gov.uk account",
     (
         "From now on, every time you sign in you’ll be able to quickly access all"
         " of our exporting tools in one place. The tools are here to help your "

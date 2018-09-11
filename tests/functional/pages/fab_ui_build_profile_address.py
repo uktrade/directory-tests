@@ -15,7 +15,7 @@ EXPECTED_STRINGS = [
     "Confirmation",
     (
         "Enter your name. We’ll then send a confirmation letter to your company’s"
-        " registered address address within 5 working days."
+        " registered address within 5 working days."
     ),
     "Your name:",
     "Company number",
