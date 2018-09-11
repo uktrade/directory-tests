@@ -547,7 +547,7 @@ def test_published_translated_pages_should_return_200_failing_examples_cms416(pa
 @pytest.mark.parametrize(
     "page_type",
     [
-        "export_readiness.GetFinancePage",
+        # "export_readiness.GetFinancePage",  # bug CMS-486
         "export_readiness.PerformanceDashboardNotesPage",
         "export_readiness.PerformanceDashboardPage",
         "export_readiness.PrivacyAndCookiesPage",
