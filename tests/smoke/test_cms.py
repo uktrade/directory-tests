@@ -199,6 +199,7 @@ def test_wagtail_get_page_by_slug(cms_client, service_name, slug):
     assert response.json()["meta"]["slug"] == slug
 
 
+@pytest.mark.skip(reason="we don't use invest- prefix any longer")
 @retry(
     wait_fixed=30000,
     stop_max_attempt_number=2,
