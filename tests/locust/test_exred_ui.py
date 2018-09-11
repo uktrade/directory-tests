@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Export Opportunities Load tests"""
+import random
 
 from locust import HttpLocust, TaskSet, task
 
@@ -125,16 +126,13 @@ class PublicPagesSupplierUI(TaskSet):
         self.client.get(get_relative_url('ui-exred:export-opportunities'))
 
     @task
-    def story_first_page(self):
-        self.client.get(get_relative_url('ui-exred:story-first'))
-
-    @task
-    def story_second_page(self):
-        self.client.get(get_relative_url('ui-exred:story-second'))
-
-    @task
-    def story_third_page(self):
-        self.client.get(get_relative_url('ui-exred:story-thrid'))
+    def story_page(self):
+        endpoints = [
+            get_relative_url('ui-exred:story-first'),
+            get_relative_url('ui-exred:story-second'),
+            get_relative_url('ui-exred:story-third'),
+        ]
+        self.client.get(random.choice(endpoints), name="/story/[slug]/")
 
 
 class RegularUserExRedUI(HttpLocust):

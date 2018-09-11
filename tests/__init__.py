@@ -146,7 +146,7 @@ urls = {
     'ui-exred:export-opportunities': 'export-opportunities/',
     'ui-exred:story-first': 'story/online-marketplaces-propel-freestyle-xtreme-sales/',
     'ui-exred:story-second': 'story/hello-babys-rapid-online-growth/',
-    'ui-exred:story-thrid': 'story/york-bag-retailer-goes-global-via-e-commerce/',
+    'ui-exred:story-third': 'story/york-bag-retailer-goes-global-via-e-commerce/',
     'ui-exred:terms': 'terms-and-conditions/',
     'ui-exred:privacy': 'privacy-and-cookies/',
 
