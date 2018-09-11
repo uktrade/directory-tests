@@ -284,9 +284,8 @@ def find_mail_gun_events(
     ):
         assert number_of_events > 0
     logging.debug(
-        "Found {} event(s) that matched following criteria: {}".format(
-            number_of_events, params
-        )
+        "Found %d event(s) that matched following criteria: %s",
+        number_of_events, params
     )
     return response
 

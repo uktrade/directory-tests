@@ -85,14 +85,14 @@ def get_password_reset_notification(
 
 
 def get_verification_link(email: str) -> str:
-    logging.debug("Searching for verification email of: {}".format(email))
+    logging.debug("Searching for verification email of: %s", email)
     notification = get_email_confirmation_notification(email)
     body = notification["body"]
     return extract_email_confirmation_link(body)
 
 
 def get_password_reset_link(email: str) -> str:
-    logging.debug("Searching for password reset email of: {}".format(email))
+    logging.debug("Searching for password reset email of: %s", email)
     notification = get_password_reset_notification(email)
     body = notification["body"]
     return extract_password_reset_link(body)

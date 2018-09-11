@@ -2322,6 +2322,5 @@ def stannp_download_verification_letter_and_extract_text(
         os.remove(pdf_path)
     except OSError:
         logging.error(
-            "Something went wrong when trying to delete: {}".format(pdf_path)
-        )
+            "Something went wrong when trying to delete: %s", pdf_path)
     context.update_actor(actor_alias, verification_letter=pdf_text)
