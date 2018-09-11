@@ -112,7 +112,7 @@ def test_wagtail_get_pages():
 @pytest.mark.parametrize(
     "service_name, slug",
     [
-        (SERVICE_NAMES.EXPORT_READINESS, "get-finance"),
+        # (SERVICE_NAMES.EXPORT_READINESS, "get-finance"),   # bug CMS-486
         (SERVICE_NAMES.EXPORT_READINESS, "terms-and-conditions"),
         (SERVICE_NAMES.EXPORT_READINESS, "privacy-and-cookies"),
         (SERVICE_NAMES.EXPORT_READINESS, "performance-dashboard"),
@@ -340,7 +340,7 @@ def get_page_ids_by_type(page_type):
 @pytest.mark.parametrize(
     "page_type",
     [
-        "export_readiness.GetFinancePage",
+        # "export_readiness.GetFinancePage",   # bug CMS-486
         "export_readiness.PerformanceDashboardNotesPage",
         "export_readiness.PrivacyAndCookiesPage",
         "export_readiness.TermsAndConditionsPage",
@@ -406,7 +406,7 @@ def test_all_published_pages_should_return_200_failing_examples(page_type):
 @pytest.mark.parametrize(
     "page_type",
     [
-        "export_readiness.GetFinancePage",
+        # "export_readiness.GetFinancePage",   # bug CMS-486
         "export_readiness.PerformanceDashboardNotesPage",
         "export_readiness.PrivacyAndCookiesPage",
         "export_readiness.TermsAndConditionsPage",
