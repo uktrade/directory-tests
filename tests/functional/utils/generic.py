@@ -490,10 +490,10 @@ def log_response(
         logging.debug("REQ URL: %s %s", request.method, request.url)
         if request.headers.get("Authorization"):
             request.headers["Authorization"] = "STRIPPED_OUT"
-        logging.debug("REQ Headers:", request.headers)
+        logging.debug("REQ Headers: %s", request.headers)
 
         if request.headers.get("Set-Cookie"):
-            logging.debug("REQ Cookies:", request.headers.get("Set-Cookie"))
+            logging.debug("REQ Cookies: %s", request.headers.get("Set-Cookie"))
 
         if request.body:
             body = decode_as_utf8(request.body)
@@ -996,7 +996,7 @@ def find_active_company_without_fas_profile(alias: str) -> Company:
             )
 
     logging.debug(
-        "It took %s attempt(s) to find an active Company without a "
+        "It took %d attempt(s) to find an active Company without a "
         "FAS profile and not already registered with FAB: %s - %s",
         counter,
         json[0]["title"],
