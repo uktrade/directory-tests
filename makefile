@@ -163,7 +163,7 @@ browser_local:
 browserstack:
 	$(BROWSER_SET_DOCKER_ENV_VARS) && \
 	cd tests/browser && \
-	paver run --config=browserstack-single --browsers=${BROWSERS} --versions=${VERSIONS}
+	paver run --config=browserstack-single --browsers=${BROWSERS} --versions=${VERSIONS} --tag=${TAG}
 
 browserstack_first_set:
 	$(BROWSER_SET_DOCKER_ENV_VARS) && \
