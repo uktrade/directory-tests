@@ -23,10 +23,10 @@ TYPE = "log out"
 URL = urljoin(DIRECTORY_UI_SSO_URL, "accounts/logout/")
 PAGE_TITLE = "Sign out - great.gov.uk"
 
-SIGN_OUT_BUTTON = Selector(By.CSS_SELECTOR, "#content > div > div > form > button")
+SIGN_OUT_BUTTON = Selector(By.CSS_SELECTOR, "form button")
 SELECTORS = {
     "general": {
-        "title": Selector(By.CSS_SELECTOR, "#content > div > div > h1"),
+        "title": Selector(By.CSS_SELECTOR, "#content h1.heading-xlarge"),
         "sign in button": SIGN_OUT_BUTTON,
     }
 }

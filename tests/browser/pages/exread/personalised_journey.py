@@ -105,14 +105,19 @@ SELECTORS = {
     },
     "exopps tile": {
         "heading": Selector(
-            By.CSS_SELECTOR, "#other-services div.lg-2:nth-child(2) h3"
+            By.CSS_SELECTOR,
+            "#other-services  > div > div >  div:nth-child(2) div.card-inner > h3"
         ),
-        "exopps image": Selector(
-            By.CSS_SELECTOR, "#other-services div.lg-2:nth-child(2) img"
+        "soo image": Selector(
+            By.CSS_SELECTOR,
+            "#other-services > div > div > div:nth-child(2) > div > a > div.card-image"
         ),
-        "intro": Selector(By.CSS_SELECTOR, "#other-services div.lg-2:nth-child(2) p"),
+        "intro": Selector(
+            By.CSS_SELECTOR,
+            "#other-services > div > div > div:nth-child(2) > div > a > div.card-inner > p"),
         "find marketplaces link": Selector(
-            By.CSS_SELECTOR, "#other-services div.lg-2:nth-child(2) a"
+            By.CSS_SELECTOR,
+            "#other-services > div > div > div:nth-child(2) > div > a"
         ),
     },
     "exopps section": {
@@ -133,14 +138,19 @@ SELECTORS = {
     },
     "soo tile": {
         "heading": Selector(
-            By.CSS_SELECTOR, "#other-services div.lg-2:nth-child(1) h3"
+            By.CSS_SELECTOR,
+            "#other-services  > div > div >  div:nth-child(1) div.card-inner > h3"
         ),
         "soo image": Selector(
-            By.CSS_SELECTOR, "#other-services div.lg-2:nth-child(1) img"
+            By.CSS_SELECTOR,
+            "#other-services > div > div > div:nth-child(1) > div > a > div.card-image"
         ),
-        "intro": Selector(By.CSS_SELECTOR, "#other-services div.lg-2:nth-child(1) p"),
+        "intro": Selector(
+            By.CSS_SELECTOR,
+            "#other-services > div > div > div:nth-child(1) > div > a > div.card-inner > p"),
         "find marketplaces link": Selector(
-            By.CSS_SELECTOR, "#other-services div.lg-2:nth-child(1) a"
+            By.CSS_SELECTOR,
+            "#other-services > div > div > div:nth-child(1) > div > a"
         ),
     },
     "article list": {

@@ -36,16 +36,16 @@ LANGUAGE_SELECTOR = Selector(
 )
 LANGUAGE_SELECTOR_CLOSE = Selector(By.ID, "header-language-selector-close")
 FIND_A_SUPPLIER = Selector(
-    By.CSS_SELECTOR, "div.container > div:nth-child(1) > div:nth-child(1) a"
+    By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(1) > div > div.card-inner > a"
 )
 SEE_THE_POTENTIAL = Selector(
-    By.CSS_SELECTOR, "div.container > div:nth-child(1) > div:nth-child(2) a"
+    By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(2) > div > div.card-inner > a"
 )
 LEARN_MORE = Selector(
-    By.CSS_SELECTOR, "div.container > div:nth-child(2) > div:nth-child(1) a"
+    By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(3) > div > div.card-inner > a"
 )
 PLAN_YOUR_TRIP = Selector(
-    By.CSS_SELECTOR, "div.container > div:nth-child(2) > div:nth-child(2) a"
+    By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(4) > div > div.card-inner > a"
 )
 BETA_FEEDBACK = Selector(By.CSS_SELECTOR, "#header-beta-bar span > a")
 SELECTORS = {
@@ -64,61 +64,61 @@ SELECTORS = {
     },
     "buy from the uk": {
         "itself": Selector(
-            By.CSS_SELECTOR, "div.container > div:nth-child(1) > div:nth-child(1)"
+            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(1) > div.card"
         ),
         "image": Selector(
-            By.CSS_SELECTOR, "div.container > div:nth-child(1) > div:nth-child(1) img"
+            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(1) > div > div.card-image"
         ),
         "title": Selector(
-            By.CSS_SELECTOR, "div.container > div:nth-child(1) > div:nth-child(1) h3"
+            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(1) > div > div.card-inner > h3"
         ),
         "text": Selector(
-            By.CSS_SELECTOR, "div.container > div:nth-child(1) > div:nth-child(1) p"
+            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(1) > div > div.card-inner > p"
         ),
         "find a supplier - home": FIND_A_SUPPLIER,
     },
     "invest in the uk": {
         "itself": Selector(
-            By.CSS_SELECTOR, "div.container > div:nth-child(1) > div:nth-child(2)"
+            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(2) > div.card"
         ),
         "image": Selector(
-            By.CSS_SELECTOR, "div.container > div:nth-child(1) > div:nth-child(2) img"
+            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(2) > div > div.card-image"
         ),
         "title": Selector(
-            By.CSS_SELECTOR, "div.container > div:nth-child(1) > div:nth-child(2) h3"
+            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(2) > div > div.card-inner > h3"
         ),
         "text": Selector(
-            By.CSS_SELECTOR, "div.container > div:nth-child(1) > div:nth-child(2) p"
+            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(2) > div > div.card-inner > p"
         ),
         "invest - home": SEE_THE_POTENTIAL,
     },
     "study in the uk": {
         "itself": Selector(
-            By.CSS_SELECTOR, "div.container > div:nth-child(2) > div:nth-child(1)"
+            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(3) > div.card"
         ),
         "image": Selector(
-            By.CSS_SELECTOR, "div.container > div:nth-child(2) > div:nth-child(1) img"
+            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(3) > div > div.card-image"
         ),
         "title": Selector(
-            By.CSS_SELECTOR, "div.container > div:nth-child(2) > div:nth-child(1) h3"
+            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(3) > div > div.card-inner > h3"
         ),
         "text": Selector(
-            By.CSS_SELECTOR, "div.container > div:nth-child(2) > div:nth-child(1) p"
+            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(3) > div > div.card-inner > p"
         ),
         "british council - home": LEARN_MORE,
     },
     "visit the uk": {
         "itself": Selector(
-            By.CSS_SELECTOR, "div.container > div:nth-child(2) > div:nth-child(2)"
+            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(4) > div.card"
         ),
         "image": Selector(
-            By.CSS_SELECTOR, "div.container > div:nth-child(2) > div:nth-child(2) img"
+            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(4) > div > div.card-image"
         ),
         "title": Selector(
-            By.CSS_SELECTOR, "div.container > div:nth-child(2) > div:nth-child(2) h3"
+            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(4) > div > div.card-inner > h3"
         ),
         "text": Selector(
-            By.CSS_SELECTOR, "div.container > div:nth-child(2) > div:nth-child(2) p"
+            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(4) > div > div.card-inner > p"
         ),
         "visit britain - home": PLAN_YOUR_TRIP,
     },

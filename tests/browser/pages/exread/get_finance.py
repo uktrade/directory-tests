@@ -41,12 +41,6 @@ SELECTORS = {
         "itself": Selector(By.CSS_SELECTOR, "section.get-finance-banner"),
         "header": Selector(By.CSS_SELECTOR, "section.get-finance-banner h1"),
     },
-    "intro": {
-        "itself": Selector(By.CSS_SELECTOR, "section.intro"),
-        "tell us about your business": Selector(
-            By.CSS_SELECTOR, "section.intro a.button"
-        ),
-    },
     "video": {
         "itself": Selector(By.CSS_SELECTOR, "section.get-finance-video"),
         "header": Selector(By.CSS_SELECTOR, "section.get-finance-video h2"),

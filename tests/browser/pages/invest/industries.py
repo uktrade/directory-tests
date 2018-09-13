@@ -25,7 +25,7 @@ NAME = "Industries"
 SERVICE = "invest"
 TYPE = "industries"
 URL = urljoin(INVEST_UI_URL, "industries/")
-PAGE_TITLE = "Invest in Great Britain - Industries"
+PAGE_TITLE = "Invest In Great Britain - Invest in UK Industries"
 
 SELECTORS = {
     "header": {

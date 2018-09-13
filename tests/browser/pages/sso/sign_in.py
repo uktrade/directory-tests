@@ -26,10 +26,10 @@ PAGE_TITLE = "Sign in - great.gov.uk"
 EMAIL_INPUT = Selector(By.ID, "id_login")
 PASSWORD_INPUT = Selector(By.ID, "id_password")
 REMEMBER_ME_BUTTON = Selector(By.ID, "id_remember")
-SIGN_IN_BUTTON = Selector(By.CSS_SELECTOR, "#content > div > div > form > button")
-RESET_YOUR_PASSWORD_LINK = Selector(By.CSS_SELECTOR, "#content > div > div > form > a")
+SIGN_IN_BUTTON = Selector(By.CSS_SELECTOR, "form button")
+RESET_YOUR_PASSWORD_LINK = Selector(By.CSS_SELECTOR, "form > a")
 EXPECTED_ELEMENTS = {
-    "title": Selector(By.CSS_SELECTOR, "#content > div > div > h1"),
+    "title": Selector(By.CSS_SELECTOR, "#content h1.heading-xlarge"),
     "email input": EMAIL_INPUT,
     "password input": PASSWORD_INPUT,
     "sign in button": SIGN_IN_BUTTON,
