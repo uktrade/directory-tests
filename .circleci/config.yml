@@ -102,7 +102,7 @@ jobs:
       - store_artifacts:
           path: ./tests/smoke/reports
 
-  browser_tests_chrome:
+  browser_tests_chrome_selected_scenarios:
     docker:
       - image: circleci/python:3.6.5
     working_directory: ~/directory-tests
@@ -114,7 +114,39 @@ jobs:
           keys:
             - browser-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
       - run:
-          name: Run functional tests in Chrome
+          name: Run selected functional scenarios in Chrome (skip examples tagged with @full)
+          command: |
+            . venv/bin/activate
+            source ./docker/.env_with_export;
+            export PATH=$PATH:$HOME/bin
+            BROWSERS=Chrome VERSIONS=68.0 TAG=-full make browserstack
+      - run:
+          name: Merge JUnit XML reports
+          when: always
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            cd ./tests/browser/reports
+            junit-merge *.xml -o merged.xml
+            ls *.xml | grep -v merged.xml | xargs rm
+      - store_test_results:
+          path: ./tests/browser/reports
+      - store_artifacts:
+          path: ./tests/browser/reports
+
+  browser_tests_chrome_all_scenarios:
+    docker:
+      - image: circleci/python:3.6.5
+    working_directory: ~/directory-tests
+    steps:
+      - restore_cache:
+          keys:
+            - cached-repo-{{ .Revision }}
+      - restore_cache:
+          keys:
+            - browser-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
+      - run:
+          name: Run all functional scenarios in Chrome
           command: |
             . venv/bin/activate
             source ./docker/.env_with_export;
@@ -134,7 +166,8 @@ jobs:
       - store_artifacts:
           path: ./tests/browser/reports
 
-  browser_tests_firefox:
+
+  browser_tests_firefox_selected_scenarios:
     docker:
       - image: circleci/python:3.6.5
     working_directory: ~/directory-tests
@@ -146,7 +179,39 @@ jobs:
           keys:
             - browser-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
       - run:
-          name: Run functional tests in Firefox
+          name: Run selected functional scenarios in Firefox (skip examples tagged with @full)
+          command: |
+            . venv/bin/activate
+            source ./docker/.env_with_export;
+            export PATH=$PATH:$HOME/bin
+            BROWSERS=Firefox VERSIONS=61.0 TAG=-full make browserstack
+      - run:
+          name: Merge JUnit XML reports
+          when: always
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            cd ./tests/browser/reports
+            junit-merge *.xml -o merged.xml
+            ls *.xml | grep -v merged.xml | xargs rm
+      - store_test_results:
+          path: ./tests/browser/reports
+      - store_artifacts:
+          path: ./tests/browser/reports
+
+  browser_tests_firefox_all_scenarios:
+    docker:
+      - image: circleci/python:3.6.5
+    working_directory: ~/directory-tests
+    steps:
+      - restore_cache:
+          keys:
+            - cached-repo-{{ .Revision }}
+      - restore_cache:
+          keys:
+            - browser-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
+      - run:
+          name: Run all functional scenarios in Firefox
           command: |
             . venv/bin/activate
             source ./docker/.env_with_export;
@@ -317,11 +382,11 @@ workflows:
           requires:
             - checkout_code
             - smoke_tests_requirements
-      - browser_tests_chrome:
+      - browser_tests_chrome_selected_scenarios:
           requires:
             - smoke_tests
             - browser_tests_requirements
-      - browser_tests_firefox:
+      - browser_tests_firefox_selected_scenarios:
           requires:
             - smoke_tests
             - browser_tests_requirements
@@ -341,3 +406,22 @@ workflows:
           requires:
             - smoke_tests
             - functional_tests_requirements
+
+  run_all_browser_scenarios:
+    triggers:
+    - schedule:
+        cron: "0 4 * * 1"
+        filters:
+          branches:
+            only: master
+    jobs:
+      - checkout_code
+      - browser_tests_requirements:
+          requires:
+            - checkout_code
+      - browser_tests_chrome_all_scenarios:
+          requires:
+            - browser_tests_requirements
+      - browser_tests_firefox_all_scenarios:
+          requires:
+            - browser_tests_requirements
