@@ -64,10 +64,14 @@ Feature: Header-Footer
       | UK Setup Guide                      |
       | Contact Us                          |
       | Automotive - industry               |
+      | Apply for a UK visa - guide         |
+
+    @full
+    Examples:
+      | selected                            |
       | Capital Investment - industry       |
       | Creative industries - industry      |
       | Financial services - industry       |
       | Health and life sciences - industry |
       | Technology - industry               |
-      | Apply for a UK visa - guide         |
 #      | Feedback                            | it's a separate service with different header & footer

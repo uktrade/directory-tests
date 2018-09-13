@@ -26,6 +26,10 @@ Feature: Find a Supplier - Industry pages
       | Agritech          |
       | Consumer retail   |
       | Creative services |
+
+    @full
+    Examples: promoted industries
+      | specific          |
       | Cyber security    |
       | Food and drink    |
       | Healthcare        |
@@ -69,6 +73,14 @@ Feature: Find a Supplier - Industry pages
       | Creative services | Home       |
       | Cyber security    | Home       |
       | Food and drink    | Home       |
+      | Sports economy    | Industries |
+      | Healthcare        | Industries |
+      | Life sciences     | Industries |
+      | Technology        | Industries |
+
+    @full
+    Examples: Promoted Industries
+      | specific          | selected   |
       | Sports economy    | Home       |
       | Healthcare        | Home       |
       | Life sciences     | Home       |
@@ -77,10 +89,6 @@ Feature: Find a Supplier - Industry pages
       | Creative services | Industries |
       | Cyber security    | Industries |
       | Food and drink    | Industries |
-      | Sports economy    | Industries |
-      | Healthcare        | Industries |
-      | Life sciences     | Industries |
-      | Technology        | Industries |
 
     @wip
     # ATM these Industries are not present on Dev
@@ -175,12 +183,16 @@ Feature: Find a Supplier - Industry pages
     Then "Robert" should be on the "Find a Supplier - search results" page
     And "Robert" should see search results filtered by "<pre-selected>" industry
 
-    Examples: Promoted Industries
+    Examples: Industries
       | specific          | following  | pre-selected                           |
       | Aerospace         | satellites | Aerospace                              |
       | Agritech          | plants     | Agriculture horticulture and fisheries |
       | Consumer retail   | salon      | Retail and luxury                      |
       | Creative services | digital    | Creative and media                     |
+
+    @full
+    Examples: Industries
+      | specific          | following  | pre-selected                           |
       | Cyber security    | WiFi       | Security                               |
       | Food and drink    | beer       | Food and drink                         |
       | Sports economy    | arenas     | Global sports infrastructure           |
@@ -226,6 +238,10 @@ Feature: Find a Supplier - Industry pages
       | Agritech          | Agriculture horticulture and fisheries |
       | Consumer retail   | Retail and luxury                      |
       | Creative services | Creative and media                     |
+
+    @full
+    Examples: Promoted Industries
+      | specific          | pre-selected                           |
       | Cyber security    | Security                               |
       | Food and drink    | Food and drink                         |
       | Sports economy    | Global sports infrastructure           |
@@ -270,6 +286,10 @@ Feature: Find a Supplier - Industry pages
       | Agritech          | second   |
       | Consumer retail   | third    |
       | Creative services | second   |
+
+    @full
+    Examples:
+      | specific          | selected |
       | Cyber security    | third    |
       | Food and drink    | fourth   |
       | Sports economy    | fifth    |
@@ -307,13 +327,17 @@ Feature: Find a Supplier - Industry pages
 
     Then "Robert" should be on the "<expected>" page
 
-    Examples: Promoted Industries
+    Examples: Industries
       | specific          | selected | expected                     |
       | Agritech          | first    | Find a Supplier - Article    |
       | Consumer retail   | first    | Find a Supplier - Article    |
       | Creative services | first    | Find a Supplier - Article    |
       | Creative services | second   | Find a Supplier - Contact us |
       | Cyber security    | first    | Find a Supplier - Article    |
+
+    @full
+    Examples: Industries
+      | specific          | selected | expected                     |
       | Food and drink    | first    | Find a Supplier - Contact us |
       | Sports economy    | first    | Find a Supplier - Contact us |
       | Sports economy    | second   | Find a Supplier - Contact us |

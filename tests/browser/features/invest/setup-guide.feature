@@ -30,6 +30,10 @@ Feature: UK Setup Guide
       | Apply for a UK visa                                     |
       | Establish a base for business in the UK                 |
       | Hire skilled workers for your UK operations             |
+
+    @full
+    Examples: UK Setup Guides
+      | selected                                                |
       | Open a UK business bank account                         |
       | Set up a company in the UK                              |
       | Understand the UK's tax, incentives and legal framework |

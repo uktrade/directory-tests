@@ -30,6 +30,10 @@ Feature: Industries page
       | Advanced manufacturing              |
       | Aerospace                           |
       | Agri-tech                           |
+
+    @full
+    Examples: Industries
+      | selected                            |
       | Asset management                    |
       | Automotive                          |
       | Automotive research and development |

@@ -28,13 +28,17 @@ Feature: Find a Supplier - Industries page
     Then "Robert" should be on the "Find a Supplier - <specific> - industry" page
     And "Robert" should see content specific to "Find a Supplier - <specific> - industry" page
 
-    Examples: promoted industries
+    Examples: Industries
       | specific          |
       | Aerospace         |
       | Agritech          |
       | Consumer retail   |
       | Creative services |
       | Cyber security    |
+
+    @full
+    Examples: Industries
+      | specific          |
       | Food and drink    |
       | Healthcare        |
 #      | Life sciences     |  # there are no companies in this industry on DEV

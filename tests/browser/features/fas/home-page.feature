@@ -33,6 +33,10 @@ Feature: Find a Supplier - home page
       | no        | any            | Find a Supplier - Empty search results |
       | Food      | any            | Find a Supplier - Search results       |
       | no        | Mining         | Find a Supplier - Search results       |
+
+    @full
+    Examples:
+      | following | specific       | expected                               |
       | Satellite | Aerospace      | Find a Supplier - Search results       |
       | WiFi      | Communications | Find a Supplier - Search results       |
       | Bridges   | Construction   | Find a Supplier - Search results       |

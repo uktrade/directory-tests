@@ -25,6 +25,10 @@ Feature: Industry pages
       | Aerospace                           |
       | Agri-tech                           |
       | Asset management                    |
+
+    @full
+    Examples: Industries
+      | selected                            |
       | Automotive research and development |
       | Automotive supply chain             |
       | Capital Investment                  |
@@ -70,6 +74,10 @@ Feature: Industry pages
       | Automotive               |
       | Creative industries      |
       | Energy                   |
+
+    @full
+    Examples: Industries
+      | selected                 |
       | Financial services       |
       | Food and drink           |
       | Health and life sciences |

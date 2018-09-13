@@ -40,11 +40,15 @@ Feature: Export Readiness
     Examples:
       | relevant   | location |
       | New        | Header   |
+      | Occasional | Home     |
+      | Regular    | Footer   |
+
+    @full
+    Examples:
+      | relevant   | location |
       | Occasional | Header   |
       | Regular    | Header   |
       | New        | Home     |
-      | Occasional | Home     |
       | Regular    | Home     |
       | New        | Footer   |
       | Occasional | Footer   |
-      | Regular    | Footer   |

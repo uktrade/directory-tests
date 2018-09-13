@@ -24,6 +24,10 @@ Feature: Contact us & Leave feedback
       | selected                                       |
       | Advanced manufacturing - industry              |
       | Aerospace - industry                           |
+
+    @full
+    Examples: Industry pages
+      | selected                                       |
       | Agri-tech - industry                           |
       | Asset management - industry                    |
       | Automotive - industry                          |
@@ -57,6 +61,10 @@ Feature: Contact us & Leave feedback
       | selected                                                        |
       | Apply for a UK visa - guide                                     |
       | Establish a base for business in the UK - guide                 |
+
+    @full
+    Examples: UK Setup Guides
+      | selected                                                        |
       | Hire skilled workers for your UK operations - guide             |
       | Open a UK business bank account - guide                         |
       | Set up a company in the UK - guide                              |
@@ -79,6 +87,10 @@ Feature: Contact us & Leave feedback
     Examples: Various pages
       | selected                          |
       | Home                              |
+
+    @full
+    Examples: Various pages
+      | selected                          |
       | Industries                        |
       | UK Setup Guide                    |
       | Advanced manufacturing - industry |

@@ -26,6 +26,10 @@ Feature: Pixels
       | Advanced manufacturing - industry              |
       | Aerospace - industry                           |
       | Agri-tech - industry                           |
+
+    @full
+    Examples: Industry pages
+      | selected                                       |
       | Asset management - industry                    |
       | Automotive - industry                          |
       | Automotive research and development - industry |
@@ -59,6 +63,10 @@ Feature: Pixels
       | Apply for a UK visa - guide                                     |
       | Establish a base for business in the UK - guide                 |
       | Hire skilled workers for your UK operations - guide             |
+
+    @full
+    Examples: UK Setup Guides
+      | selected                                                        |
       | Open a UK business bank account - guide                         |
       | Set up a company in the UK - guide                              |
       | Understand the UK's tax, incentives and legal framework - guide |

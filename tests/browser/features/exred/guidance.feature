@@ -19,6 +19,10 @@ Feature: Guidance articles
       | specific          | next              |
       | Market research   | Customer insight  |
       | Customer insight  | Finance           |
+
+    @full
+    Examples: Guidance categories
+      | specific          | next              |
       | Finance           | Business planning |
       | Business planning | Getting paid      |
       | Getting paid      | last              |

@@ -14,11 +14,15 @@ Feature: Articles
 
     Then "Robert" should be able to navigate to the next article from the List following the Article Order
 
-    Examples: home page
+    Examples: Guidance Articles
       | category                  |
       | Market research           |
       | Customer insight          |
       | Finance                   |
+
+    @full
+    Examples: Guidance Articles
+      | category                  |
       | Business planning         |
       | Getting paid              |
       | Operations and Compliance |
@@ -62,6 +66,10 @@ Feature: Articles
       | Market research   | Customer insight          |
       | Customer insight  | Finance                   |
       | Finance           | Business planning         |
+
+    @full
+    Examples:
+      | category          | next                      |
       | Business planning | Getting paid              |
       | Getting paid      | Operations and Compliance |
 
@@ -154,6 +162,10 @@ Feature: Articles
       | specific          |
       | Market research   |
       | Customer insight  |
+
+    @full
+    Examples:
+      | specific          |
       | Finance           |
       | Business planning |
       | Getting paid      |
