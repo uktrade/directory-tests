@@ -116,6 +116,7 @@ def before_feature(context: Context, feature: Feature):
 def after_feature(context: Context, feature: Feature):
     if RESTART_BROWSER == "feature":
         if hasattr(context, "driver"):
+            logging.debug("QUIT DRIVER AFTER FEATURE: %s", feature.name)
             context.driver.quit()
         if feature.status == "failed":
             if hasattr(context, "scenario_data"):
@@ -140,7 +141,6 @@ def after_feature(context: Context, feature: Feature):
                 if hasattr(context, "driver"):
                     session_id = context.driver.session_id
                     flag_browserstack_session_as_failed(session_id, message)
-    logging.debug("QUIT DRIVER AFTER FEATURE: %s", feature.name)
 
 
 @retry(stop_max_attempt_number=3)
@@ -161,7 +161,6 @@ def after_scenario(context: Context, scenario: Scenario):
     # in order to show the snackbar message after scenario, an explicit wait
     # has to executed
     time.sleep(0.2)
-    logging.debug("Closing Selenium Driver after scenario: %s", scenario.name)
     logging.debug(context.scenario_data)
     actors = context.scenario_data.actors
     for actor in actors.values():
@@ -169,6 +168,7 @@ def after_scenario(context: Context, scenario: Scenario):
             sso.common.delete_supplier_data_from_sso(actor.email)
     if hasattr(context, "driver"):
         if RESTART_BROWSER == "scenario":
+            logging.debug("Closing Selenium Driver after scenario: %s", scenario.name)
             context.driver.quit()
         if RESTART_BROWSER == "feature":
             clear_driver_cookies(context.driver)
