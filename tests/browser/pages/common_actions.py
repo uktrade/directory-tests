@@ -225,7 +225,7 @@ def unauthenticated_actor(alias: str, *, self_classification: str = None) -> Act
         .lower()
     )
     letters = "".join(random.choice(string.ascii_letters) for _ in range(10))
-    digits = "".join(random.choice(string.ascii_letters) for _ in range(10))
+    digits = "".join(random.choice(string.digits) for _ in range(10))
     password = f"{letters}{digits}"
     return Actor(
         alias=alias,
