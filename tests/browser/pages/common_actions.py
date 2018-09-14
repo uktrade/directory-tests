@@ -287,7 +287,7 @@ def take_screenshot(driver: WebDriver, page_name: str):
     else:
         logging.debug(
             "Taking screenshots is disabled. In order to turn it on please set"
-            " n environment variable TAKE_SCREENSHOTS=true"
+            " an environment variable TAKE_SCREENSHOTS=true"
         )
 
 
