@@ -3,6 +3,7 @@
 import logging
 
 from requests import Response, Session
+from retrying import retry
 from tests import get_absolute_url
 from tests.functional.utils.generic import escape_html
 from tests.functional.utils.request import Method, check_response, make_request
@@ -22,6 +23,7 @@ NO_MATCH = [
 ]
 
 
+@retry(wait_fixed=5000, stop_max_attempt_number=2)
 def go_to(
     session: Session,
     *,
