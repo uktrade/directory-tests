@@ -563,7 +563,7 @@ def int_api_ch_search(term: str) -> dict:
     return response.json()
 
 
-def extract_csrf_middleware_token(response: Response):
+def extract_csrf_middleware_token(response: Response) -> str:
     """Extract CSRF middleware token from the response content.
 
     Comes in handy when dealing with e.g. Django forms.
@@ -1553,7 +1553,7 @@ def mailgun_find_email_with_request_for_collaboration(
     response = find_mail_gun_events(
         context,
         service=MailGunService.DIRECTORY,
-        recipient=actor.email,
+        to=actor.email,
         event=MailGunEvent.ACCEPTED,
         subject=subject,
     )
@@ -1580,7 +1580,7 @@ def mailgun_find_email_with_ownership_transfer_request(
     response = find_mail_gun_events(
         context,
         service=MailGunService.DIRECTORY,
-        recipient=actor.email,
+        to=actor.email,
         event=MailGunEvent.ACCEPTED,
         subject=subject,
     )

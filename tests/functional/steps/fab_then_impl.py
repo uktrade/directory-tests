@@ -706,7 +706,7 @@ def fas_supplier_should_receive_message_from_buyer(
     context.response = find_mail_gun_events(
         context,
         service=MailGunService.DIRECTORY,
-        recipient=supplier.email,
+        to=supplier.email,
         event=MailGunEvent.ACCEPTED,
         subject=FAS_MESSAGE_FROM_BUYER_SUBJECT,
     )
