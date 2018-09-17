@@ -68,22 +68,22 @@ SELECTORS = {
             By.CSS_SELECTOR, "#content > section.setup-guide div.card"
         ),
         "Apply for a UK visa": Selector(
-            By.CSS_SELECTOR, "div.card a[href='apply-for-a-uk-visa']"
+            By.CSS_SELECTOR, "div.card a[href='apply-uk-visa']"
         ),
         "Establish a base for business in the UK": Selector(
             By.CSS_SELECTOR,
-            "div.card a[href='establish-a-base-for-business-in-the-uk']",
+            "div.card a[href='establish-base-business-uk']",
         ),
         "Hire skilled workers for your UK operations": Selector(
             By.CSS_SELECTOR,
-            "div.card a[href='hire-skilled-workers-for-your-uk-operations']",
+            "div.card a[href='hire-skilled-workers-your-uk-operations']",
         ),
         "Open a UK business bank account": Selector(
             By.CSS_SELECTOR,
-            "div.card a[href='open-a-uk-business-bank-account']",
+            "div.card a[href='open-uk-business-bank-account']",
         ),
         "Set up a company in the UK": Selector(
-            By.CSS_SELECTOR, "div.card a[href='set-up-a-company-in-the-uk']"
+            By.CSS_SELECTOR, "div.card a[href='setup-your-business-uk']"
         ),
         "Understand the UK's tax, incentives and legal framework": Selector(
             By.CSS_SELECTOR,

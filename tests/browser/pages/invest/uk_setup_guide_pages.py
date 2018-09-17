@@ -73,18 +73,18 @@ SELECTORS = {
 }
 
 URLs = {
-    "apply for a uk visa": urljoin(URL, "apply-for-a-uk-visa/"),
+    "apply for a uk visa": urljoin(URL, "apply-uk-visa/"),
     "establish a base for business in the uk": urljoin(
-        URL, "establish-a-base-for-business-in-the-uk/"
+        URL, "establish-base-business-uk/"
     ),
     "hire skilled workers for your uk operations": urljoin(
-        URL, "hire-skilled-workers-for-your-uk-operations/"
+        URL, "hire-skilled-workers-your-uk-operations/"
     ),
     "open a uk business bank account": urljoin(
-        URL, "open-a-uk-business-bank-account/"
+        URL, "open-uk-business-bank-account/"
     ),
-    "set up a company in the uk": urljoin(URL, "set-up-a-company-in-the-uk/"),
-    "understand the uk's tax, incentives and legal framework": urljoin(
+    "register a company in the uk": urljoin(URL, "setup-your-business-uk/"),
+    "understand uk tax and incentives": urljoin(
         URL, "understand-uk-tax-and-incentives/"
     ),
 }

@@ -106,6 +106,10 @@ SELECTORS = {
             By.CSS_SELECTOR,
             "section.landing-page-setup-guide div.grid-row > div:nth-child(5) a h3",
         ),
+        "sixth": Selector(
+            By.CSS_SELECTOR,
+            "section.landing-page-setup-guide div.grid-row > div:nth-child(6) a h3",
+        ),
     },
     "how we help": {
         "self": Selector(By.CSS_SELECTOR, "section.landing-page-how-we-help")
@@ -182,7 +186,7 @@ SELECTORS = {
 }
 
 TOPIC_CONTENTS = {
-    "Bring your business to the UK": Selector(
+    "Bring your business to the UK now": Selector(
         By.CSS_SELECTOR,
         "#content > section.landing-page-accordions ul > li:nth-child(1) div.accordion-content",
     ),

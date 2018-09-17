@@ -16,7 +16,6 @@ from pages.common_actions import (
     check_title,
     check_url,
     find_and_click_on_page_element,
-    find_element,
     find_elements,
     take_screenshot,
     visit_url,
@@ -46,7 +45,7 @@ URLs = {
     "northern ireland": urljoin(BASE_URL, "northern-ireland/"),
     "scotland": urljoin(BASE_URL, "scotland/"),
     "south of england": urljoin(BASE_URL, "south-of-england/"),
-    "the midlands": urljoin(BASE_URL, "the-midlands/"),
+    "the midlands": urljoin(BASE_URL, "midlands/"),
     "wales": urljoin(BASE_URL, "wales/"),
 }
 
@@ -72,7 +71,7 @@ SELECTORS = {
     },
     "hero": {"self": Selector(By.CSS_SELECTOR, "#content > section.hero")},
     "topics": {
-        "self": Selector(By.CSS_SELECTOR, "section.setup-guide h2 ~ ul"),
+        "self": Selector(By.CSS_SELECTOR, "#content > section.setup-guide > div > ul"),
         "accordion expanders": TOPIC_EXPANDERS,
     },
     "topics contents": {
