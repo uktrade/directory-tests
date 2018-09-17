@@ -247,11 +247,11 @@ Feature: Find a Supplier - Industry pages
       | Sports economy    | Global sports infrastructure           |
       | Healthcare        | Healthcare and medical                 |
       | Technology        | Software and computer services         |
-      | Legal services    | Legal services                         |
 
     @wip
     Examples: Industries with no companies in them on DEV
       | specific          | pre-selected  |
+      | Legal services    | Legal services|
       | Life sciences     | Life sciences |
 
     @wip
