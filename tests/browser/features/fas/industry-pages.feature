@@ -60,7 +60,7 @@ Feature: Find a Supplier - Industry pages
 
   @ED-4261
   @breadcrumbs
-  Scenario Outline: Buyers should be able to go back to the "<expected>" page via "<selected>" breadcrumb on the "Find a Supplier - <specific> Industry" page
+  Scenario Outline: Buyers should be able to go back to the "<specific>" page via "<selected>" breadcrumb on the "Find a Supplier - <specific> Industry" page
     Given "Robert" visits the "Find a Supplier - <specific> - industry" page
 
     When "Robert" decides to use "<selected>" breadcrumb on the "Find a Supplier - <specific> - industry" page
