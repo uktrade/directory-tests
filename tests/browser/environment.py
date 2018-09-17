@@ -10,6 +10,7 @@ from behave.runner import Context
 from retrying import retry
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
+from selenium.webdriver.remote.command import Command
 
 from pages import sso
 from settings import AUTO_RETRY, CONFIG, CONFIG_NAME, RESTART_BROWSER, TASK_ID
@@ -75,6 +76,25 @@ def start_driver_session(context: Context, session_name: str):
         except WebDriverException:
             logging.warning("Failed to set window size, will continue as is")
     logging.debug("Browser Capabilities: %s", context.driver.capabilities)
+
+
+def restart_webdriver_if_unresponsive(context: Context, scenario: Scenario):
+    if hasattr(context, "driver"):
+        try:
+            context.driver.execute(Command.STATUS)
+        except (socket.error, httplib.CannotSendRequest):
+            msg = (
+                f"Remote driver became unresponsive after scenario: "
+                f"{scenario.name}. Will try to recover the selenium session"
+            )
+            print(msg)
+            session_id = context.driver.session_id
+            flag_browserstack_session_as_failed(session_id, msg)
+            logging.error(msg)
+            clean_name = scenario.name.lower().replace(" ", "-")
+            start_driver_session(
+                context, f"session-recovered-after-scenario-{clean_name}"
+            )
 
 
 def before_step(context: Context, step: Step):
@@ -157,6 +177,8 @@ def before_scenario(context: Context, scenario: Scenario):
 def after_scenario(context: Context, scenario: Scenario):
     """Place here code which has to be executed after every scenario."""
     message = f"Finish: {scenario.name} | {scenario.filename}:{scenario.line}"
+    if scenario.status == "failed":
+        restart_webdriver_if_unresponsive(context, scenario)
     show_snackbar_message(context.driver, message)
     # in order to show the snackbar message after scenario, an explicit wait
     # has to executed
@@ -168,7 +190,8 @@ def after_scenario(context: Context, scenario: Scenario):
             sso.common.delete_supplier_data_from_sso(actor.email)
     if hasattr(context, "driver"):
         if RESTART_BROWSER == "scenario":
-            logging.debug("Closing Selenium Driver after scenario: %s", scenario.name)
+            logging.debug(
+                "Closing Selenium Driver after scenario: %s", scenario.name)
             context.driver.quit()
         if RESTART_BROWSER == "feature":
             clear_driver_cookies(context.driver)
@@ -177,24 +200,6 @@ def after_scenario(context: Context, scenario: Scenario):
             "Context does not have Selenium 'driver' object. This might be "
             "happen when it wasn't initialized properly"
         )
-    if scenario.status == "failed":
-        if hasattr(context, "driver"):
-            from selenium.webdriver.remote.command import Command
-
-            try:
-                context.driver.execute(Command.STATUS)
-            except (socket.error, httplib.CannotSendRequest):
-                msg = (
-                    "Remote driver is unresponsive after scenario: %s. Will"
-                    " try to recover selenium session" % scenario.name
-                )
-                print(msg)
-                session_id = context.driver.session_id
-                flag_browserstack_session_as_failed(session_id, msg)
-                logging.error(msg)
-                start_driver_session(
-                    context, "session-recovered-after-scenario"
-                )
 
 
 def before_all(context: Context):
