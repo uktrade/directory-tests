@@ -63,7 +63,7 @@ def start_driver_session(context: Context, session_name: str):
         else:
             print("Will use default browser capabilities")
             context.driver = drivers[browser_name.lower()]()
-    context.driver.set_page_load_timeout(time_to_wait=27)
+    context.driver.set_page_load_timeout(time_to_wait=27.0)
     try:
         context.driver.maximize_window()
         logging.debug("Maximized the window.")
