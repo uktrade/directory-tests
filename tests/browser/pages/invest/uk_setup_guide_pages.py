@@ -27,8 +27,8 @@ NAMES = [
     "Establish a base for business in the UK",
     "Hire skilled workers for your UK operations",
     "Open a UK business bank account",
-    "Set up a company in the UK",
-    "Understand the UK's tax, incentives and legal framework",
+    "Register a company in the UK",
+    "Understand UK tax and incentives",
 ]
 SERVICE = "invest"
 TYPE = "guide"

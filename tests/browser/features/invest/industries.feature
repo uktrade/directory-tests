@@ -42,7 +42,7 @@ Feature: Industries page
       | Chemicals                           |
       | Creative content and production     |
       | Creative industries                 |
-      | Data Analytics                      |
+      | Data analytics                      |
       | Digital media                       |
       | Electrical networks                 |
       | Energy                              |

@@ -58,17 +58,17 @@ Feature: Contact us & Leave feedback
       | Technology - industry                          |
 
     Examples: UK Setup Guides
-      | selected                                                        |
-      | Apply for a UK visa - guide                                     |
-      | Establish a base for business in the UK - guide                 |
+      | selected                                       |
+      | Apply for a UK visa - guide                    |
+      | Establish a base for business in the UK - guide|
 
     @full
     Examples: UK Setup Guides
-      | selected                                                        |
-      | Hire skilled workers for your UK operations - guide             |
-      | Open a UK business bank account - guide                         |
-      | Set up a company in the UK - guide                              |
-      | Understand the UK's tax, incentives and legal framework - guide |
+      | selected                                            |
+      | Hire skilled workers for your UK operations - guide |
+      | Open a UK business bank account - guide             |
+      | Register a company in the UK - guide                |
+      | Understand UK tax and incentives - guide            |
 
 
   @CMS-163

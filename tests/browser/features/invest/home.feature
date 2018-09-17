@@ -25,7 +25,7 @@ Feature: Invest home page
 
     When "Robert" decides to read more on following topics
       | topics                            |
-      | Bring your business to the UK     |
+      | Bring your business to the UK now |
       | Access a highly skilled workforce |
       | Benefit from low business costs   |
 
@@ -75,7 +75,8 @@ Feature: Invest home page
       | Establish a base for business in the UK     |
       | Hire skilled workers for your UK operations |
       | Open a UK business bank account             |
-      | Set up a company in the UK                  |
+      | Register a company in the UK                |
+      | Understand UK tax and incentives            |
 
 
   @CMS-157

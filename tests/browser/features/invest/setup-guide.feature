@@ -33,10 +33,10 @@ Feature: UK Setup Guide
 
     @full
     Examples: UK Setup Guides
-      | selected                                                |
-      | Open a UK business bank account                         |
-      | Set up a company in the UK                              |
-      | Understand the UK's tax, incentives and legal framework |
+      | selected                         |
+      | Open a UK business bank account  |
+      | Register a company in the UK     |
+      | Understand UK tax and incentives |
 
 
   @CMS-161
@@ -53,10 +53,11 @@ Feature: UK Setup Guide
       | Footer           |
 
     Examples: UK Setup Guides
-      | selected                                                |
-      | Apply for a UK visa                                     |
-      | Establish a base for business in the UK                 |
-      | Hire skilled workers for your UK operations             |
-      | Open a UK business bank account                         |
-      | Set up a company in the UK                              |
-      | Understand the UK's tax, incentives and legal framework |
+      | selected                                    |
+      | Apply for a UK visa                         |
+      | Establish a base for business in the UK     |
+      | Hire skilled workers for your UK operations |
+      | Open a UK business bank account             |
+      | Register a company in the UK                |
+      | Understand UK tax and incentives            |
+
