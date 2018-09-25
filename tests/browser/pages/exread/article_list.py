@@ -28,7 +28,7 @@ URL = None
 
 SHOW_MORE_BUTTON = Selector(By.ID, "js-paginate-list-more")
 ARTICLE_CATEGORY = Selector(By.CSS_SELECTOR, "#content > section h1.title")
-BREADCRUMBS = Selector(By.CSS_SELECTOR, "p.breadcrumbs")
+BREADCRUMBS = Selector(By.CSS_SELECTOR, "div.breadcrumbs")
 ARTICLE_CATEGORY_INTRO = Selector(By.CSS_SELECTOR, "div.section-intro")
 LIST_OF_ARTICLES = Selector(By.ID, "js-paginate-list")
 TOTAL_NUMBER_OF_ARTICLES = Selector(By.CSS_SELECTOR, "dd.position > span.to")

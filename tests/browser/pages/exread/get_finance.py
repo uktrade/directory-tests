@@ -32,9 +32,9 @@ TASKS_TOTAL_NUMBER = Selector(By.CSS_SELECTOR, ".TASKS_ARE_NOT_IMPLEMENTED_YES")
 
 SELECTORS = {
     "breadcrumbs": {
-        "itself": Selector(By.CSS_SELECTOR, "section.get-finance-banner p.breadcrumbs"),
+        "itself": Selector(By.CSS_SELECTOR, "div.breadcrumbs"),
         "current page": Selector(
-            By.CSS_SELECTOR, "section.get-finance-banner p > span.current"
+            By.CSS_SELECTOR, "div.breadcrumbs li[aria-current='page']"
         ),
     },
     "hero": {
