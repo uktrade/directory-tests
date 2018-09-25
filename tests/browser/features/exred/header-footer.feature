@@ -179,7 +179,7 @@ Feature: Header-Footer
   @ED-3283
   @your-export-journey-link
   @<specific>
-  Scenario Outline: Any user who has created his/her "Personalised Journey page" should be able to return to it using "Your export journey" link
+  Scenario Outline: Any user who has created his/her "Personalised Journey page" should be able to return to it using "Your export journey" link on "<specific>" page
     Given "Robert" answered triage questions
     And "Robert" decided to create his personalised journey page
     And "Robert" is on the "Export Readiness - Personalised Journey" page
