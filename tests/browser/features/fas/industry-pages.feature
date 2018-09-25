@@ -56,6 +56,9 @@ Feature: Find a Supplier - Industry pages
       | Space                              |
 
 
+  @bug
+  @TT-433
+  @fixed
   @ED-4261
   @breadcrumbs
   Scenario Outline: Buyers should be able to go back to the "<specific>" page via "<selected>" breadcrumb on the "Find a Supplier - <specific> Industry" page
