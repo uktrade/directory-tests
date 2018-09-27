@@ -44,7 +44,7 @@ SELECTORS = {
     "video": {
         "itself": Selector(By.CSS_SELECTOR, "section.get-finance-video"),
         "header": Selector(By.CSS_SELECTOR, "section.get-finance-video h2"),
-        "video": Selector(By.CSS_SELECTOR, "section.get-finance-video iframe"),
+        "video": Selector(By.CSS_SELECTOR, "section.get-finance-video video"),
     },
     "error reporting": {
         "itself": Selector(By.CSS_SELECTOR, "section.error-reporting"),
