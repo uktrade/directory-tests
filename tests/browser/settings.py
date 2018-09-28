@@ -24,6 +24,19 @@ EXRED_UI_URL = os.environ["EXRED_UI_URL"]
 INVEST_UI_URL = os.environ["INVEST_UI_URL"]
 INVEST_CONTACT_CONFIRMATION_SUBJECT = os.getenv(
     "INVEST_CONTACT_CONFIRMATION_SUBJECT", "Contact form user email subject")
+HPO_ENQUIRY_CONFIRMATION_SUBJECT = os.getenv(
+    "HPO_ENQUIRY_CONFIRMATION_SUBJECT",
+    "Your High Potential Opportunity Enquiry – UK Department for International Trade"
+)
+HPO_AGENT_EMAIL_ADDRESS = os.getenv(
+    "HPO_AGENT_EMAIL_ADDRESS", "sylvia.romero-reyes@digital.trade.gov.uk")
+HPO_AGENT_EMAIL_SUBJECT = os.getenv(
+    "HPO_AGENT_EMAIL_SUBJECT", "HPO Enquiry (Invest in GREAT Britain)")
+HPO_PDF_URLS = [
+    "https://directory-cms-public.s3.amazonaws.com/documents/A_High_Potential_Opportunity_in_High_Productivity_Food_Production.pdf",
+    "https://directory-cms-public.s3.amazonaws.com/documents/A_HPO_in_Lightweight_Structures.pdf",
+    "https://directory-cms-public.s3.amazonaws.com/documents/A_HPO_in_Rail_Infrastructure.pdf",
+]
 MAILGUN_API_USER = os.getenv("MAILGUN_API_USER", "api")
 MAILGUN_INVEST_DOMAIN = os.getenv("MAILGUN_INVEST_DOMAIN")
 MAILGUN_INVEST_EVENTS_URL = "https://api.mailgun.net/v3/%s/events" % MAILGUN_INVEST_DOMAIN
