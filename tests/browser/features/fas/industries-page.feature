@@ -41,12 +41,13 @@ Feature: Find a Supplier - Industries page
       | specific          |
       | Food and drink    |
       | Healthcare        |
-#      | Life sciences     |  # there are no companies in this industry on DEV
       | Sports economy    |
       | Technology        |
 
-    Examples: more industries
+    @wip
+    Examples: Industries with no companies in them on DEV
       | specific          |
+      | Life sciences     |
       | Legal services    |
 
 

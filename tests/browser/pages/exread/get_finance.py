@@ -32,9 +32,9 @@ TASKS_TOTAL_NUMBER = Selector(By.CSS_SELECTOR, ".TASKS_ARE_NOT_IMPLEMENTED_YES")
 
 SELECTORS = {
     "breadcrumbs": {
-        "itself": Selector(By.CSS_SELECTOR, "section.get-finance-banner p.breadcrumbs"),
+        "itself": Selector(By.CSS_SELECTOR, "div.breadcrumbs"),
         "current page": Selector(
-            By.CSS_SELECTOR, "section.get-finance-banner p > span.current"
+            By.CSS_SELECTOR, "div.breadcrumbs li[aria-current='page']"
         ),
     },
     "hero": {
@@ -44,7 +44,7 @@ SELECTORS = {
     "video": {
         "itself": Selector(By.CSS_SELECTOR, "section.get-finance-video"),
         "header": Selector(By.CSS_SELECTOR, "section.get-finance-video h2"),
-        "video": Selector(By.CSS_SELECTOR, "section.get-finance-video iframe"),
+        "video": Selector(By.CSS_SELECTOR, "section.get-finance-video video"),
     },
     "error reporting": {
         "itself": Selector(By.CSS_SELECTOR, "section.error-reporting"),

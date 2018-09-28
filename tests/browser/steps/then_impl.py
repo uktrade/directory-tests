@@ -29,7 +29,7 @@ def should_be_on_page(context: Context, actor_alias: str, page_name: str):
     has_action(page, "should_be_here")
     page.should_be_here(context.driver)
     update_actor(context, actor_alias, visited_page=page)
-    logging.debug("%s is on %s page", actor_alias, page_name)
+    logging.debug(f"{actor_alias} is on {page.SERVICE} - {page.NAME} - {page.TYPE} -> {page}")
 
 
 def should_be_on_page_or_international_page(

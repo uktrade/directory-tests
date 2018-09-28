@@ -88,27 +88,27 @@ SELECTORS = {
         "self": Selector(By.CSS_SELECTOR, "section.landing-page-setup-guide"),
         "first": Selector(
             By.CSS_SELECTOR,
-            "section.landing-page-setup-guide div.grid-row > div:nth-child(1) a h3",
+            "section.landing-page-setup-guide div.card-grid > div:nth-child(1) a h3",
         ),
         "second": Selector(
             By.CSS_SELECTOR,
-            "section.landing-page-setup-guide div.grid-row > div:nth-child(2) a h3",
+            "section.landing-page-setup-guide div.card-grid > div:nth-child(2) a h3",
         ),
         "third": Selector(
             By.CSS_SELECTOR,
-            "section.landing-page-setup-guide div.grid-row > div:nth-child(3) a h3",
+            "section.landing-page-setup-guide div.card-grid > div:nth-child(3) a h3",
         ),
         "fourth": Selector(
             By.CSS_SELECTOR,
-            "section.landing-page-setup-guide div.grid-row > div:nth-child(4) a h3",
+            "section.landing-page-setup-guide div.card-grid > div:nth-child(4) a h3",
         ),
         "fifth": Selector(
             By.CSS_SELECTOR,
-            "section.landing-page-setup-guide div.grid-row > div:nth-child(5) a h3",
+            "section.landing-page-setup-guide div.card-grid > div:nth-child(5) a h3",
         ),
         "sixth": Selector(
             By.CSS_SELECTOR,
-            "section.landing-page-setup-guide div.grid-row > div:nth-child(6) a h3",
+            "section.landing-page-setup-guide div.card-grid > div:nth-child(6) a h3",
         ),
     },
     "how we help": {

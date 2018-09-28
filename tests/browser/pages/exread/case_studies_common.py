@@ -21,7 +21,7 @@ SHARE_WIDGET = Selector(By.CSS_SELECTOR, "#top > ul.sharing-links")
 CASE_STUDIES = {
     1: {
         "breadcrumb": Selector(
-            By.CSS_SELECTOR, "#content > div > p.breadcrumbs > span.current"
+            By.CSS_SELECTOR, "div.breadcrumbs li[aria-current='page']"
         ),
         "title": Selector(By.CSS_SELECTOR, "#top h1"),
         "type": Selector(By.CSS_SELECTOR, "#top p.type"),
@@ -29,7 +29,7 @@ CASE_STUDIES = {
     },
     2: {
         "breadcrumb": Selector(
-            By.CSS_SELECTOR, "#content > div > p.breadcrumbs > span.current"
+            By.CSS_SELECTOR, "div.breadcrumbs li[aria-current='page']"
         ),
         "title": Selector(By.CSS_SELECTOR, "#top h1"),
         "type": Selector(By.CSS_SELECTOR, "#top p.type"),
@@ -37,7 +37,7 @@ CASE_STUDIES = {
     },
     3: {
         "breadcrumb": Selector(
-            By.CSS_SELECTOR, "#content > div > p.breadcrumbs > span.current"
+            By.CSS_SELECTOR, "div.breadcrumbs li[aria-current='page']"
         ),
         "title": Selector(By.CSS_SELECTOR, "#top h1"),
         "type": Selector(By.CSS_SELECTOR, "#top p.type"),

@@ -17,8 +17,6 @@ Feature: Find a Supplier - Industry pages
       | Selling points          |
       | Search for UK suppliers |
       | Articles                |
-#      | Case studies            |  # ATM these sections are not present
-#      | Report this page        |
 
     Examples: promoted industries
       | specific          |
@@ -40,10 +38,10 @@ Feature: Find a Supplier - Industry pages
     Examples: Industries with no companies in them on DEV
       | specific          |
       | Life sciences     |
+      | Legal services    |
 
     @wip
-    # ATM these Industries are not present on Dev
-    Examples: more industries
+    Examples: Industries not present on Dev
       | specific                           |
       | Automotive                         |
       | Business & Government Partnerships |
@@ -58,6 +56,9 @@ Feature: Find a Supplier - Industry pages
       | Space                              |
 
 
+  @bug
+  @TT-433
+  @fixed
   @ED-4261
   @breadcrumbs
   Scenario Outline: Buyers should be able to go back to the "<specific>" page via "<selected>" breadcrumb on the "Find a Supplier - <specific> Industry" page
@@ -91,8 +92,7 @@ Feature: Find a Supplier - Industry pages
       | Food and drink    | Industries |
 
     @wip
-    # ATM these Industries are not present on Dev
-    Examples: More Industries
+    Examples: Industries not present on Dev
       | specific                           | selected   |
       | Automotive                         | Home       |
       | Business & Government Partnerships | Home       |
@@ -146,8 +146,7 @@ Feature: Find a Supplier - Industry pages
       | Technology        |
 
     @wip
-    # ATM these Industries are not present on Dev
-    Examples: More Industries
+    Examples: Industries not present on Dev
       | specific                           |
       | Automotive                         |
       | Business & Government Partnerships |
@@ -206,8 +205,7 @@ Feature: Find a Supplier - Industry pages
       | Life sciences     | biotech    | Life sciences  |
 
     @wip
-    # ATM these Industries are not present on Dev
-    Examples: More Industries
+    Examples: Industries not present on Dev
       | specific                           | following   |
       | Automotive                         | vehicles    |
       | Business & Government Partnerships | procurement |
@@ -255,8 +253,7 @@ Feature: Find a Supplier - Industry pages
       | Life sciences     | Life sciences |
 
     @wip
-    # ATM these Industries are not present on Dev
-    Examples: More Industries
+    Examples: Industries not present on Dev
       | specific                           |
       | Automotive                         |
       | Business & Government Partnerships |
@@ -302,8 +299,7 @@ Feature: Find a Supplier - Industry pages
       | Life sciences     | first    |
 
     @wip
-    # ATM these Industries are not present on Dev
-    Examples: More Industries
+    Examples: Industries not present on Dev
       | specific                           | selected |
       | Automotive                         | first    |
       | Business & Government Partnerships | second   |
@@ -348,12 +344,11 @@ Feature: Find a Supplier - Industry pages
 
     @wip
     Examples: Industries without articles
-      | specific          | selected | expected       |
+      | specific          | selected | expected                     |
       | Aerospace         | first    | non Find a Supplier -        |
 
     @wip
-    # ATM these Industries are not present on Dev
-    Examples: More Industries
+    Examples: Industries not present on Dev
       | specific                           |
       | Automotive                         |
       | Business & Government Partnerships |

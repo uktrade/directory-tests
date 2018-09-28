@@ -182,7 +182,7 @@ def check_for_expected_sections_elements(driver: WebDriver, sections: Dict):
 
 
 def find_and_click_on_page_element(
-    driver: WebDriver, sections: dict, element_name: str, *, wait_for_it: bool = True
+    driver: WebDriver, sections: dict, element_name: str, *, wait_for_it: bool=True
 ):
     """Find page element in any page section selectors and click on it."""
     found_selector = False

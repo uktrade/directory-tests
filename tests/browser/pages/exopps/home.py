@@ -3,16 +3,13 @@
 import logging
 from urllib.parse import urljoin
 
-from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
-    Selector,
     check_title,
     check_url,
     go_to_url,
     take_screenshot,
-    wait_for_visibility,
 )
 from settings import EXPORT_OPPORTUNITIES_UI_URL
 
@@ -21,9 +18,7 @@ SERVICE = "Export Opportunities"
 TYPE = "home"
 URL = urljoin(EXPORT_OPPORTUNITIES_UI_URL, "")
 PAGE_TITLE = "Export opportunities"
-
-WELCOME_MESSAGE = Selector(By.CSS_SELECTOR, ".hero-section h1")
-SELECTORS = {"general": {"welcome message": WELCOME_MESSAGE}}
+SELECTORS = {}
 
 
 def visit(driver: WebDriver, *, first_time: bool = False):
@@ -31,7 +26,6 @@ def visit(driver: WebDriver, *, first_time: bool = False):
 
 
 def should_be_here(driver: WebDriver):
-    wait_for_visibility(driver, WELCOME_MESSAGE, time_to_wait=15)
     check_url(driver, URL, exact_match=True)
     check_title(driver, PAGE_TITLE, exact_match=True)
     take_screenshot(driver, NAME)
