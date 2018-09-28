@@ -27,6 +27,7 @@ from directory_api_client.testapiclient import DirectoryTestAPIClient
 from directory_constants.constants import choices
 from directory_sso_api_client.testapiclient import DirectorySSOTestAPIClient
 from jsonschema import validate
+from jsonschema.exceptions import ValidationError
 from langdetect import DetectorFactory, detect_langs
 from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
@@ -546,9 +547,7 @@ def int_api_ch_search(term: str) -> dict:
     """
     url = get_absolute_url("internal-api:companies-house-search")
     params = {"term": term}
-    response = make_request(
-        Method.GET, url, params=params, allow_redirects=False
-    )
+    response = make_request(Method.GET, url, params=params)
     with assertion_msg(
         "Expected 200 OK from GET %s but instead got %s. In case you're "
         "getting 301 Redirect then check if you're using correct protocol "
@@ -557,10 +556,15 @@ def int_api_ch_search(term: str) -> dict:
         response.status_code,
     ):
         assert response.status_code == 200
+    json_data = response.json()
     logging.debug("Company House Search result: %s", response.json())
-    validate(response.json(), COMPANIES)
+    try:
+        validate(json_data, COMPANIES)
+    except ValidationError as ex:
+        red(f"didn't pass JSON Schema validation: {ex}")
+        json_data = {}
 
-    return response.json()
+    return json_data
 
 
 def extract_csrf_middleware_token(response: Response) -> str:
@@ -997,8 +1001,8 @@ def find_active_company_without_fas_profile(alias: str) -> Company:
                 False,
             )
             logging.debug(
-                "Company with number %s does not exist. Trying a "
-                "different one...",
+                "Company with number %s does not exist or it didn't pass JSON "
+                "Schema validation. Trying a different one...",
                 random_company_number,
             )
 
@@ -1150,7 +1154,8 @@ def update_companies():
         else:
             doesnt_exit_counter += 1
             red(
-                "Company %s - %s does not exist any more"
+                "Company %s - %s does not exist any more or it didn't pass "
+                "JSON schema validation"
                 % (company.number, company.title)
             )
         if not exists or (exists and not active):
