@@ -764,3 +764,15 @@ def invest_should_receive_contact_confirmation_email(
     actor = get_actor(context, actor_alias)
     mailgun_invest_find_contact_confirmation_email(
         context, sender_email, actor.email)
+
+
+def hpo_should_receive_enquiry_confirmation_email(
+        context: Context, actor_alias: str):
+    actor = get_actor(context, actor_alias)
+    get_email_confirmations_with_matching_string(
+        recipient_email=actor.email,
+        subject=HPO_ENQUIRY_CONFIRMATION_SUBJECT,
+        strings=HPO_PDF_URLS,
+    )
+
+

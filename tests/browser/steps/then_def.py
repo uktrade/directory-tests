@@ -36,6 +36,7 @@ from steps.then_impl import (
     guidance_tile_should_be_highlighted,
     header_check_dit_logo,
     header_check_favicon,
+    hpo_should_receive_enquiry_confirmation_email,
     invest_should_receive_contact_confirmation_email,
     invest_should_see_topic_contents,
     invest_should_see_uk_gov_logo,
@@ -398,3 +399,12 @@ def then_user_should_see_uk_gov_logo(
 def then_should_receive_contact_confirmation_email(
         context: Context, actor_alias: str, sender_email: str):
     invest_should_receive_contact_confirmation_email(
+        context, actor_alias, sender_email)
+
+
+@then('"{actor_alias}" should receive HPO enquiry confirmation email')
+def then_should_receive_hpo_enquiry_confirmation_email(
+        context: Context, actor_alias: str):
+    hpo_should_receive_enquiry_confirmation_email(context, actor_alias)
+
+
