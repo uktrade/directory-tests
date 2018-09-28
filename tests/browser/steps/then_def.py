@@ -40,6 +40,7 @@ from steps.then_impl import (
     header_check_favicon,
     hpo_agent_should_receive_enquiry_email,
     hpo_should_receive_enquiry_confirmation_email,
+    invest_mailbox_admin_should_receive_contact_confirmation_email,
     invest_should_receive_contact_confirmation_email,
     invest_should_see_topic_contents,
     invest_should_see_uk_gov_logo,
@@ -399,6 +400,13 @@ def then_should_receive_contact_confirmation_email(
         context: Context, actor_alias: str, sender_email: str):
     invest_should_receive_contact_confirmation_email(
         context, actor_alias, sender_email)
+
+
+@then('Invest mailbox admin should also receive a contact confirmation email from "{sender_email}"')
+def then_invest_mailbox_admin_should_also_receive_contact_confirmation_email(
+        context: Context, sender_email: str):
+    invest_mailbox_admin_should_receive_contact_confirmation_email(
+        context, sender_email)
 
 
 @then('"{actor_alias}" should receive HPO enquiry confirmation email')

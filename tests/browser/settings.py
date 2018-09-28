@@ -22,8 +22,13 @@ CAPABILITIES = os.environ.get("CAPABILITIES", None)
 BUILD_ID = os.environ.get("CIRCLE_SHA1", str(datetime.date(datetime.now())))
 EXRED_UI_URL = os.environ["EXRED_UI_URL"]
 INVEST_UI_URL = os.environ["INVEST_UI_URL"]
+INVEST_MAILBOX_ADMIN_EMAIL = os.environ["INVEST_MAILBOX_ADMIN_EMAIL"]
 INVEST_CONTACT_CONFIRMATION_SUBJECT = os.getenv(
     "INVEST_CONTACT_CONFIRMATION_SUBJECT", "Contact form user email subject")
+INVEST_AGENT_CONTACT_CONFIRMATION_SUBJECT = os.getenv(
+    "INVEST_AGENT_CONTACT_CONFIRMATION_SUBJECT",
+    "Contact form agent email subject"
+)
 HPO_ENQUIRY_CONFIRMATION_SUBJECT = os.getenv(
     "HPO_ENQUIRY_CONFIRMATION_SUBJECT",
     "Your High Potential Opportunity Enquiry – UK Department for International Trade"
