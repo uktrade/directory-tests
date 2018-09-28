@@ -172,6 +172,8 @@ def check_for_expected_sections_elements(driver: WebDriver, sections: Dict):
                     "Expected '{}' to be a Selector, got {}"
                         .format(selector, type(selector)))
             element = find_element(driver, selector, element_name=element_name)
+            if not selector.is_visible:
+                continue
             with assertion_msg(
                 "It looks like '%s' element in '%s' section is not visible" " on %s",
                 element_name,
@@ -808,6 +810,9 @@ def fill_out_input_fields(
     input_selectors = get_selectors(form_selectors, ElementType.INPUT)
     for key, selector in input_selectors.items():
         value_to_type = form_details[key]
+        if not value_to_type:
+            continue
+        logging.debug(f"Filling out input field {key} with '{value_to_type}'")
         input_field = find_element(
             driver, selector, element_name=key, wait_for_it=False)
         input_field.send_keys(value_to_type)
@@ -818,10 +823,13 @@ def fill_out_textarea_fields(
         form_details: dict):
     textarea_selectors = get_selectors(form_selectors, ElementType.TEXTAREA)
     for key, selector in textarea_selectors.items():
-        value = form_details[key]
+        value_to_type = form_details[key]
+        if not value_to_type:
+            continue
+        logging.debug(f"Filling out textarea: {key} with '{value_to_type}'")
         textarea = find_element(
             driver, selector, element_name=key, wait_for_it=False)
-        textarea.send_keys(value)
+        textarea.send_keys(value_to_type)
 
 
 def pick_option(
