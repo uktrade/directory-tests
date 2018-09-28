@@ -163,7 +163,8 @@ def check_for_expected_elements(
     logging.debug("All expected elements are visible on '%s'", driver.current_url)
 
 
-def check_for_expected_sections_elements(driver: WebDriver, sections: Dict):
+def check_for_expected_sections_elements(
+        driver: WebDriver, sections: Dict[str, Selector]):
     """Check if all elements in page sections are visible."""
     for section in sections:
         for element_name, selector in sections[section].items():
@@ -837,6 +838,7 @@ def pick_option(
         form_details: dict):
     select_selectors = get_selectors(form_selectors, ElementType.SELECT)
     for key, selector in select_selectors.items():
+        logging.debug(f"Picking option from {key} dropdown list")
         select = find_element(
             driver, selector, element_name=key, wait_for_it=False)
         if form_details.get(key, None):
@@ -859,6 +861,7 @@ def pick_option_from_autosuggestion(
     form_details: dict):
     select_selectors = get_selectors(form_selectors, ElementType.SELECT)
     for key, selector in select_selectors.items():
+        logging.debug(f"Picking option from {key} dropdown list")
         select = find_element(
             driver, selector, element_name=key, wait_for_it=False)
         logging.debug(f"dealing with {key} {selector}")
@@ -892,6 +895,7 @@ def tick_checkboxes(
         form_details: dict):
     checkbox_selectors = get_selectors(form_selectors, ElementType.CHECKBOX)
     for key, selector in checkbox_selectors.items():
+        logging.debug(f"Ticking {key} checkbox (if necessary)")
         if form_details[key]:
             checkbox = find_element(
                 driver, selector, element_name=key, wait_for_it=False)
@@ -904,6 +908,7 @@ def tick_checkboxes_by_labels(
         form_details: dict):
     checkbox_selectors = get_selectors(form_selectors, ElementType.LABEL)
     for key, selector in checkbox_selectors.items():
+        logging.debug(f"Ticking {key} checkbox by its label (if necessary)")
         if form_details[key]:
             checkbox = find_element(
                 driver, selector, element_name=key, wait_for_it=False)
