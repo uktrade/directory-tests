@@ -800,3 +800,104 @@ def tick_captcha_checkbox(driver: WebDriver):
     # otherwise the test might fail
     time.sleep(2)
     driver.switch_to.parent_frame()
+
+
+def fill_out_input_fields(
+        driver: WebDriver, form_selectors: Dict[str, Selector],
+        form_details: dict):
+    input_selectors = get_selectors(form_selectors, ElementType.INPUT)
+    for key, selector in input_selectors.items():
+        value_to_type = form_details[key]
+        input_field = find_element(
+            driver, selector, element_name=key, wait_for_it=False)
+        input_field.send_keys(value_to_type)
+
+
+def fill_out_textarea_fields(
+        driver: WebDriver, form_selectors: Dict[str, Selector],
+        form_details: dict):
+    textarea_selectors = get_selectors(form_selectors, ElementType.TEXTAREA)
+    for key, selector in textarea_selectors.items():
+        value = form_details[key]
+        textarea = find_element(
+            driver, selector, element_name=key, wait_for_it=False)
+        textarea.send_keys(value)
+
+
+def pick_option(
+        driver: WebDriver, form_selectors: Dict[str, Selector],
+        form_details: dict):
+    select_selectors = get_selectors(form_selectors, ElementType.SELECT)
+    for key, selector in select_selectors.items():
+        select = find_element(
+            driver, selector, element_name=key, wait_for_it=False)
+        if form_details.get(key, None):
+            option = form_details[key]
+        else:
+            options = select.find_elements_by_css_selector("option")
+            values = [option.get_property("value")
+                      for option in options
+                      if option.get_property("value")]
+            logging.debug("Available options: {}".format(values))
+            option = random.choice(values)
+        logging.debug("Will select option: {}".format(option))
+        option_value_selector = "option[value='{}']".format(option)
+        option_element = select.find_element_by_css_selector(option_value_selector)
+        option_element.click()
+
+
+def pick_option_from_autosuggestion(
+    driver: WebDriver, form_selectors: Dict[str, Selector],
+    form_details: dict):
+    select_selectors = get_selectors(form_selectors, ElementType.SELECT)
+    for key, selector in select_selectors.items():
+        select = find_element(
+            driver, selector, element_name=key, wait_for_it=False)
+        logging.debug(f"dealing with {key} {selector}")
+        if form_details.get(key, None):
+            option = form_details[key]
+        else:
+            options = select.find_elements_by_css_selector("option")
+            values = [option.get_property("text") for option in options]
+            logging.debug("Available options: {}".format(values))
+            option = random.choice(values)
+        logging.debug("Selected option: {}".format(option))
+        if key == "country":
+            js_field_selector = Selector(By.ID, "js-country-select")
+            js_field = find_element(driver, js_field_selector)
+            js_field.click()
+            js_field.clear()
+            js_field.send_keys(option)
+            first_suggestion_selector = Selector(
+                By.CSS_SELECTOR, "#js-country-select__listbox li:nth-child(1)")
+            first_suggestion = find_element(
+                driver, first_suggestion_selector, wait_for_it=True)
+            first_suggestion.click()
+        else:
+            option_value_selector = "option[value='{}']".format(option)
+            option_element = select.find_element_by_css_selector(option_value_selector)
+            option_element.click()
+
+
+def tick_checkboxes(
+        driver: WebDriver, form_selectors: Dict[str, Selector],
+        form_details: dict):
+    checkbox_selectors = get_selectors(form_selectors, ElementType.CHECKBOX)
+    for key, selector in checkbox_selectors.items():
+        if form_details[key]:
+            checkbox = find_element(
+                driver, selector, element_name=key, wait_for_it=False)
+            if not checkbox.get_property("checked"):
+                checkbox.click()
+
+
+def tick_checkboxes_by_labels(
+        driver: WebDriver, form_selectors: Dict[str, Selector],
+        form_details: dict):
+    checkbox_selectors = get_selectors(form_selectors, ElementType.LABEL)
+    for key, selector in checkbox_selectors.items():
+        if form_details[key]:
+            checkbox = find_element(
+                driver, selector, element_name=key, wait_for_it=False)
+            if not checkbox.get_property("checked"):
+                checkbox.click()
