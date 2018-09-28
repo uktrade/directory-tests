@@ -1836,10 +1836,31 @@ def invest_get_contact_us_details(actor: Actor) -> dict:
     return details
 
 
+def invest_hpo_get_contact_us_details(actor: Actor) -> dict:
+    details = {
+        "full name": actor.company_name or "Automated test",
+        "job title": "QA @ DIT",
+        "email": actor.email,
+        "phone": "0123456789",
+        "company name": actor.company_name or "Automated test - company name",
+        "website url": "https://browser.tests.com",
+        "country": None,
+        "organisation size": None,
+        "comment": "This form was submitted by Automated test",
+        "high productivity food production": True,
+        "lightweight structures": True,
+        "rail infrastructure": True,
+        "terms and conditions": True
+    }
+    return details
+
+
 def generate_form_details(page: ModuleType, actor: Actor) -> dict:
     details = {}
-    if page.SERVICE == Services.INVEST.value:
+    if (page.SERVICE == Services.INVEST.value) and (page.TYPE == "contact"):
         details = invest_get_contact_us_details(actor)
+    elif (page.SERVICE == Services.INVEST.value) and (page.TYPE.lower() == "hpo contact us"):
+        details = invest_hpo_get_contact_us_details(actor)
     return details
 
 
