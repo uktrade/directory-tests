@@ -20,6 +20,7 @@ class ElementType(Enum):
     IFRAME = "iframe"
     SELECT = "select"
     LABEL = "label"
+    BUTTON = "button"
 
     def __str__(self):
         return self.value
