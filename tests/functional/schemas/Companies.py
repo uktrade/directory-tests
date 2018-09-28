@@ -120,15 +120,12 @@ COMPANIES = {
         },
         "required": [
             "date_of_creation",
-            "description",
-            "links",
             "title",
             "company_type",
             "address_snippet",
             "company_number",
             "company_status",
             "address",
-            "description_identifier"
         ],
         "type": "object"
     },
