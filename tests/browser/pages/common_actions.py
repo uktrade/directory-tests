@@ -36,6 +36,7 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.expected_conditions import staleness_of
 from selenium.webdriver.support.wait import WebDriverWait
 
+from pages import ElementType
 from settings import (
     BROWSERSTACK_PASS,
     BROWSERSTACK_SESSIONS_URL,
@@ -473,9 +474,29 @@ def find_element(
         driver.current_url,
     ):
         element = driver.find_element(by=selector.by, value=selector.value)
-    if wait_for_it:
+    if wait_for_it and selector.is_visible:
         wait_for_visibility(driver, selector)
     return element
+
+
+def find_selector_by_name(selectors: dict, name: str) -> Selector:
+    found_selectors = [
+        selector
+        for section_selectors in selectors.values()
+        for selector_name, selector in section_selectors.items()
+        if selector_name.lower() == name.lower()]
+    assert len(found_selectors) == 1
+    return found_selectors[0]
+
+
+def find_selector_by_type(selectors: dict, name: str) -> Selector:
+    found_selectors = [
+        selector
+        for section_selectors in selectors.values()
+        for selector_name, selector in section_selectors.items()
+        if selector_name.lower() == name.lower()]
+    assert len(found_selectors) == 1
+    return found_selectors[0]
 
 
 def find_elements(driver: WebDriver, selector: Selector) -> List[WebElement]:
@@ -699,14 +720,19 @@ def browser_check_for_sections(
                 action_chains = ActionChains(driver)
                 action_chains.move_to_element(element)
                 action_chains.perform()
-            with assertion_msg(
-                "It looks like '%s' element identified by '%s' selector is"
-                " not visible on %s",
-                key,
-                selector,
-                driver.current_url,
-            ):
-                assert element.is_displayed()
+            if selector.is_visible:
+                with assertion_msg(
+                    "It looks like '%s' element identified by '%s' selector is"
+                    " not visible on %s",
+                    key,
+                    selector,
+                    driver.current_url,
+                ):
+                    assert element.is_displayed()
+            else:
+                logging.debug(
+                    f"Skipping visiblity check for '{key} -> {selector}' as "
+                    f"its selector is flagged as not visible")
 
 
 def requests_check_for_sections(
@@ -735,6 +761,12 @@ def get_horizontal_selectors(section: dict) -> Dict[str, Selector]:
     return {
         key: selector for key, selector in section.items() if selector.in_horizontal
     }
+
+
+def get_selectors(section: dict, element_type: ElementType) -> Dict[str, Selector]:
+    return {key: selector
+            for key, selector in section.items()
+            if selector.type == element_type}
 
 
 def browser_visit(driver: WebDriver, url: str):
