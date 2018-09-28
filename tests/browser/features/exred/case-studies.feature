@@ -46,7 +46,9 @@ Feature: Case Studies
     When "Robert" decides to create her personalised journey page
 
     Then "Robert" should be on the Personalised Journey page for "<relevant>" exporters
-    And "Robert" should not see "case studies" sections on "Export Readiness - Personalised Journey" page
+    And  "Robert" should not see following section
+      | section      |
+      | case studies |
 
     Examples:
       | relevant |

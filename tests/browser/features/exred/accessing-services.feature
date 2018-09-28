@@ -132,7 +132,13 @@ Feature: Accessing Services
     When "Robert" goes to "<service>" using "Services" links in "Export Readiness - <link_location>"
 
     Then "Robert" should be on the "Export Readiness - <service>" page
-    And  "Robert" should not see "Articles Read counter, Total number of Articles, Time to complete remaining chapters, Tasks completed counter, Tasks Total number"
+    And  "Robert" should not see following sections
+      | sections                            |
+      | Articles Read counter               |
+      | Total number of Articles            |
+      | Time to complete remaining chapters |
+      | Tasks completed counter             |
+      | Tasks Total number                  |
 
     Examples:
       | service     | link_location |

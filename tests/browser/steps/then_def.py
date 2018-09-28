@@ -62,6 +62,9 @@ from steps.then_impl import (
     generic_should_see_expected_page_content,
     stats_and_tracking_elements_should_be_present,
     stats_and_tracking_elements_should_not_be_present,
+    form_check_state_of_element,
+    hpo_should_receive_enquiry_confirmation_email,
+    hpo_agent_should_receive_enquiry_email
 )
 from steps.when_impl import (
     triage_answer_questions_again,
@@ -168,17 +171,16 @@ def then_should_see_sections(context, actor_alias, sections):
         sections_list=sections.split(", "))
 
 
+@then('"{actor_alias}" should not see following sections')
+@then('"{actor_alias}" should not see following section')
+def then_should_not_see_sections(context, actor_alias):
+    should_not_see_sections(context, actor_alias, sections_table=context.table)
+
+
 @then('"{actor_alias}" should see following sections')
 @then('"{actor_alias}" should see following section')
 def then_should_see_sections(context, actor_alias):
     should_see_sections(context, actor_alias, sections_table=context.table)
-
-
-
-@then('"{actor_alias}" should not see "{sections}" section on "{page_name}" page')
-@then('"{actor_alias}" should not see "{sections}" sections on "{page_name}" page')
-def then_should_not_see_sections(context, actor_alias, sections, page_name):
-    should_not_see_sections(context, actor_alias, sections.split(", "), page_name)
 
 
 @then('"{actor_alias}" should be able to navigate to the next article from the List following the Article Order')
@@ -396,4 +398,3 @@ def then_user_should_see_uk_gov_logo(
 def then_should_receive_contact_confirmation_email(
         context: Context, actor_alias: str, sender_email: str):
     invest_should_receive_contact_confirmation_email(
-        context, actor_alias, sender_email)

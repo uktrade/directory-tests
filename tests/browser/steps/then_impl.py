@@ -254,9 +254,11 @@ def should_see_sections(
 
 
 def should_not_see_sections(
-    context: Context, actor_alias: str, sections: list, page_name: str
+    context: Context, actor_alias: str, sections_table: Table = None
 ):
-    page = get_page_object(page_name)
+    sections = [row[0] for row in sections_table]
+    logging.debug(f"sections {sections}")
+    page = get_last_visited_page(context, actor_alias)
     has_action(page, "should_not_see_section")
     for section in sections:
         page.should_not_see_section(context.driver, section)
@@ -264,7 +266,7 @@ def should_not_see_sections(
             "As expected %s cannot see '%s' section on %s page",
             actor_alias,
             section,
-            page_name,
+            page.NAME,
         )
 
 
