@@ -79,13 +79,13 @@ VisitedArticle = namedtuple("VisitedArticle", ["index", "title", "time_to_read"]
 Executor = Union[WebDriver, Session]
 AssertionExecutor = Union[WebDriver, Response]
 Selector = namedtuple(
-    "Selector", ["by", "value", "in_desktop", "in_mobile", "in_horizontal"]
+    "Selector", ["by", "value", "in_desktop", "in_mobile", "in_horizontal", "type", "is_visible"]
 )
 
 # define default values for various named tuples
 Actor.__new__.__defaults__ = (None,) * len(Actor._fields)
 VisitedArticle.__new__.__defaults__ = (None,) * len(VisitedArticle._fields)
-Selector.__new__.__defaults__ = (None, None, True, True, True)
+Selector.__new__.__defaults__ = (None, None, True, True, True, None, True)
 
 
 def go_to_url(driver: WebDriver, url: str, page_name: str, *, first_time: bool = False):

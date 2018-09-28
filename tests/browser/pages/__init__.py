@@ -12,6 +12,19 @@ import pages
 REQUIRED_PROPERTIES = ["SERVICE", "NAME", "TYPE", "URL", "SELECTORS"]
 
 
+class ElementType(Enum):
+    INPUT = "input"
+    CHECKBOX = "checkbox"
+    RADIO = "radio"
+    TEXTAREA = "textarea",
+    IFRAME = "iframe"
+    SELECT = "select"
+    LABEL = "label"
+
+    def __str__(self):
+        return self.value
+
+
 class Services(Enum):
     BRITISH_COUNCIL = "British Council"
     EVENTS = "Events"
