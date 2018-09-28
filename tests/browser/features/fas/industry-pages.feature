@@ -162,7 +162,8 @@ Feature: Find a Supplier - Industry pages
 
   @bug
   @TT-277
-  @fixme
+  @fixed
+  @full
   @contact-us
   Scenario: Buyers shouldn't be able to submit the contact us form without passing captcha
     Given "Robert" visits the "Find a Supplier - Contact Us" page
