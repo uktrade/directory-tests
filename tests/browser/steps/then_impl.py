@@ -15,12 +15,19 @@ from pages.common_actions import (
     update_actor
 )
 from registry.articles import get_article, get_articles
+from settings import (
+    HPO_AGENT_EMAIL_ADDRESS,
+    HPO_AGENT_EMAIL_SUBJECT,
+    HPO_ENQUIRY_CONFIRMATION_SUBJECT,
+    HPO_PDF_URLS,
+)
 from steps import has_action
 from steps.when_impl import (
     triage_should_be_classified_as_new,
     triage_should_be_classified_as_occasional,
     triage_should_be_classified_as_regular,
 )
+from utils.gov_notify import get_email_confirmations_with_matching_string
 from utils.mailgun import mailgun_invest_find_contact_confirmation_email
 
 
@@ -773,6 +780,16 @@ def hpo_should_receive_enquiry_confirmation_email(
         recipient_email=actor.email,
         subject=HPO_ENQUIRY_CONFIRMATION_SUBJECT,
         strings=HPO_PDF_URLS,
+    )
+
+
+def hpo_agent_should_receive_enquiry_email(
+        context: Context, actor_alias: str):
+    actor = get_actor(context, actor_alias)
+    get_email_confirmations_with_matching_string(
+        recipient_email=HPO_AGENT_EMAIL_ADDRESS,
+        subject=HPO_AGENT_EMAIL_SUBJECT,
+        strings=[actor.email] + HPO_PDF_URLS,
     )
 
 
