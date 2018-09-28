@@ -27,6 +27,8 @@ from steps.then_impl import (
     export_readiness_expected_page_elements_should_be_visible,
     export_readiness_should_see_articles,
     fas_search_results_filtered_by_industries,
+    form_check_state_of_element,
+    generic_should_see_expected_page_content,
     guidance_check_if_link_to_next_category_is_displayed,
     guidance_expected_page_elements_should_be_visible,
     guidance_ribbon_should_be_visible,
@@ -59,14 +61,10 @@ from steps.then_impl import (
     should_see_page_in_preferred_language,
     should_see_sections,
     should_see_share_widget,
-    triage_should_be_classified_as,
-    triage_should_see_change_your_answers_link,
-    generic_should_see_expected_page_content,
     stats_and_tracking_elements_should_be_present,
     stats_and_tracking_elements_should_not_be_present,
-    form_check_state_of_element,
-    hpo_should_receive_enquiry_confirmation_email,
-    hpo_agent_should_receive_enquiry_email
+    triage_should_be_classified_as,
+    triage_should_see_change_your_answers_link,
 )
 from steps.when_impl import (
     triage_answer_questions_again,
@@ -415,3 +413,7 @@ def then_hpo_agent_should_receive_hpo_enquiry_email(
     hpo_agent_should_receive_enquiry_email(context, actor_alias)
 
 
+@then('"{actor_alias}" should see that "{element}" in the form is "{state}"')
+def then_actor_should_see_form_element_in_specific_stage(
+        context: Context, actor_alias: str, element: str, state: str):
+    form_check_state_of_element(context, actor_alias, element, state)

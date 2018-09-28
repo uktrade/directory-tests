@@ -793,3 +793,12 @@ def hpo_agent_should_receive_enquiry_email(
     )
 
 
+def form_check_state_of_element(
+        context: Context, actor_alias: str, element: str, state: str):
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "check_state_of_form_element")
+    page.check_state_of_form_element(context.driver, element, state)
+    logging.debug(
+        f"{actor_alias} saw {element} in expected {state} state on "
+        f"{context.driver.current_url}"
+    )
