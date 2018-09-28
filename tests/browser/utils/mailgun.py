@@ -156,13 +156,13 @@ def find_mailgun_events(
 
 
 def mailgun_invest_find_contact_confirmation_email(
-        context: Context, sender: str, recipient: str):
+        context: Context, sender: str, recipient: str, *,
+        subject: str = INVEST_CONTACT_CONFIRMATION_SUBJECT):
     logging.debug(
         "Trying to find contact confirmation email sent to: "
         "%s",
         recipient,
     )
-    subject = INVEST_CONTACT_CONFIRMATION_SUBJECT
     response = find_mailgun_events(
         context,
         sender=sender,
