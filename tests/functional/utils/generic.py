@@ -1099,7 +1099,7 @@ def save_companies(companies: CompaniesList):
         list_dict.append(
             {key: getattr(company, key) for key in company._fields}
         )
-
+    list_dict = sorted(list_dict, key=lambda company: company['number'])
     path = os.path.join(TEST_IMAGES_DIR, "companies.json")
     with open(path, "w", encoding="utf8") as f:
         f.write(json.dumps(list_dict, indent=4))
