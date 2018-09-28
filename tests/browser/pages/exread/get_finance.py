@@ -23,13 +23,6 @@ TYPE = "interim"
 URL = urljoin(EXRED_UI_URL, "get-finance/")
 PAGE_TITLE = "Get finance - great.gov.uk"
 
-TOTAL_NUMBER_OF_ARTICLES = Selector(By.CSS_SELECTOR, "dd.position > span.to")
-ARTICLES_TO_READ_COUNTER = Selector(By.CSS_SELECTOR, "dd.position > span.from")
-TIME_TO_COMPLETE = Selector(By.CSS_SELECTOR, "dd.time span.value")
-SHARE_MENU = Selector(By.CSS_SELECTOR, "ul.sharing-links")
-TASKS_COMPLETED_COUNTER = Selector(By.CSS_SELECTOR, ".TASKS_ARE_NOT_IMPLEMENTED_YES")
-TASKS_TOTAL_NUMBER = Selector(By.CSS_SELECTOR, ".TASKS_ARE_NOT_IMPLEMENTED_YES")
-
 SELECTORS = {
     "breadcrumbs": {
         "itself": Selector(By.CSS_SELECTOR, "div.breadcrumbs"),
@@ -53,16 +46,30 @@ SELECTORS = {
 }
 
 UNEXPECTED_ELEMENTS = {
-    "share widget": Selector(By.CSS_SELECTOR, "ul.sharing-links"),
-    "article counters and indicators": Selector(
-        By.CSS_SELECTOR, "#top > div.scope-indicator"
-    ),
-    "tasks completed counter": TASKS_COMPLETED_COUNTER,
-    "tasks total number": TASKS_TOTAL_NUMBER,
-    "total number of articles": TOTAL_NUMBER_OF_ARTICLES,
-    "articles read counter": ARTICLES_TO_READ_COUNTER,
-    "time to complete remaining chapters": TIME_TO_COMPLETE,
-    "share menu": SHARE_MENU,
+    "share widget": {
+        "itself": Selector(By.CSS_SELECTOR, "ul.sharing-links"),
+    },
+    "article counters and indicators": {
+        "itself": Selector(By.CSS_SELECTOR, "#top > div.scope-indicator"),
+    },
+    "tasks completed counter": {
+        "itself": Selector(By.CSS_SELECTOR, ".TASKS_ARE_NOT_IMPLEMENTED_YES"),
+    },
+    "tasks total number": {
+        "itself": Selector(By.CSS_SELECTOR, ".TASKS_ARE_NOT_IMPLEMENTED_YES"),
+    },
+    "total number of articles": {
+        "itself": Selector(By.CSS_SELECTOR, "dd.position > span.to"),
+    },
+    "articles read counter": {
+        "itself": Selector(By.CSS_SELECTOR, "dd.position > span.from"),
+    },
+    "time to complete remaining chapters": {
+        "itself": Selector(By.CSS_SELECTOR, "dd.time span.value"),
+    },
+    "share menu": {
+        "itself": Selector(By.CSS_SELECTOR, "ul.sharing-links"),
+    }
 }
 
 
@@ -85,3 +92,9 @@ def check_elements_are_not_visible(driver: WebDriver, elements: list):
         check_if_element_is_not_visible(
             driver, selector, element_name=element_name, wait_for_it=False
         )
+
+
+def should_not_see_section(driver: WebDriver, name: str):
+    section = UNEXPECTED_ELEMENTS[name.lower()]
+    for key, selector in section.items():
+        check_if_element_is_not_visible(driver, selector, element_name=key)
