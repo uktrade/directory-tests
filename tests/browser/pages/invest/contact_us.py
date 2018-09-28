@@ -1,22 +1,24 @@
 # -*- coding: utf-8 -*-
 """Invest in Great - Contact us Page Object."""
 import logging
-import random
-import time
 from typing import List
 from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import ElementType
 from pages.common_actions import (
     AssertionExecutor,
-    Executor,
-    Selector,
     check_for_sections,
     check_title,
     check_url,
+    Executor,
+    fill_out_input_fields,
+    fill_out_textarea_fields,
     find_element,
+    pick_option,
+    Selector,
     take_screenshot,
     tick_captcha_checkbox,
     visit_url,
@@ -38,16 +40,31 @@ SELECTORS = {
     },
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#content form"),
-        "full name": Selector(By.ID, "id_name"),
-        "job title": Selector(By.ID, "id_job_title"),
-        "email": Selector(By.ID, "id_email"),
-        "phone": Selector(By.ID, "id_phone_number"),
-        "company name": Selector(By.ID, "id_company_name"),
-        "website url": Selector(By.ID, "id_company_website"),
-        "country": Selector(By.CSS_SELECTOR, "select[name='country']"),
-        "organisation size": Selector(By.ID, "id_staff_number"),
-        "your plans": Selector(By.ID, "id_description"),
-        "captcha": Selector(By.ID, "recaptcha-accessible-status"),
+        "full name": Selector(By.ID, "id_name", type=ElementType.INPUT),
+        "job title": Selector(By.ID, "id_job_title", type=ElementType.INPUT),
+        "email": Selector(By.ID, "id_email", type=ElementType.INPUT),
+        "phone": Selector(By.ID, "id_phone_number", type=ElementType.INPUT),
+        "company name": Selector(
+            By.ID, "id_company_name", type=ElementType.INPUT
+        ),
+        "website url": Selector(
+            By.ID, "id_company_website", type=ElementType.INPUT
+        ),
+        "country": Selector(
+            By.CSS_SELECTOR,
+            "select[name='country']",
+            type=ElementType.SELECT,
+            is_visible=False,
+        ),
+        "organisation size": Selector(
+            By.ID, "id_staff_number", type=ElementType.SELECT, is_visible=False
+        ),
+        "your plans": Selector(
+            By.ID, "id_description", type=ElementType.TEXTAREA
+        ),
+        "captcha": Selector(
+            By.CSS_SELECTOR, "#form-container iframe", type=ElementType.IFRAME
+        ),
         "i'm not a robot": IM_NOT_A_ROBOT,
         "hint": Selector(By.CSS_SELECTOR, "#content form div.form-hint"),
         "submit": SUBMIT_BUTTON,
@@ -71,56 +88,11 @@ def should_see_sections(executor: AssertionExecutor, names: List[str]):
 
 
 def fill_out(driver: WebDriver, details: dict):
-    input_fields = [
-        "full name",
-        "job title",
-        "email",
-        "phone",
-        "company name",
-        "website url",
-        "your plans",
-    ]
-    dropdown_menus = ["country", "organisation size"]
+    form_selectors = SELECTORS["form"]
 
-    for field_name in input_fields:
-        value = details[field_name]
-        field = find_element(
-            driver,
-            SELECTORS["form"][field_name],
-            element_name=field_name,
-            wait_for_it=False,
-        )
-        field.send_keys(value)
-
-    for menu_name in dropdown_menus:
-        selector = SELECTORS["form"][menu_name]
-        dropdown = find_element(
-            driver,
-            selector,
-            element_name="{} dropdown menu".format(menu_name),
-            wait_for_it=False,
-        )
-        if details[menu_name]:
-            option = details[menu_name]
-        else:
-            options = dropdown.find_elements_by_css_selector("option")
-            values = [option.get_property("value") for option in options]
-            logging.debug("OPTIONS: {}".format(values))
-            option = random.choice(values)
-            logging.debug("OPTION: {}".format(option))
-        if menu_name == "country":
-            js_field_selector = Selector(By.ID, "js-country-select")
-            js_field = find_element(driver, js_field_selector)
-            js_field.click()
-            js_field.clear()
-            js_field.send_keys(option)
-        else:
-            option_value_selector = "option[value='{}']".format(option)
-            option_element = dropdown.find_element_by_css_selector(
-                option_value_selector
-            )
-            option_element.click()
-
+    fill_out_input_fields(driver, form_selectors, details)
+    fill_out_textarea_fields(driver, form_selectors, details)
+    pick_option(driver, form_selectors, details)
     tick_captcha_checkbox(driver)
 
     take_screenshot(driver, "After filling out the contact us form")
