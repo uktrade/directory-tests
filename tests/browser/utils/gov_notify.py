@@ -67,7 +67,8 @@ def get_email_confirmations_with_matching_string(
     assert len(with_matching_string) == 1, (
         f"Expected to find 1 email confirmation notification containing "
         f"'{strings}' in message body send to {recipient_email} but found "
-        f"{len(email_confirmations)}")
+        f"{len(email_confirmations)}. BTW. Check what's the agent's email "
+        f"address used in the Invest application configuration")
 
     return with_matching_string[0]
 

@@ -34,7 +34,7 @@ HPO_ENQUIRY_CONFIRMATION_SUBJECT = os.getenv(
     "Your High Potential Opportunity Enquiry – UK Department for International Trade"
 )
 HPO_AGENT_EMAIL_ADDRESS = os.getenv(
-    "HPO_AGENT_EMAIL_ADDRESS", "sylvia.romero-reyes@digital.trade.gov.uk")
+    "HPO_AGENT_EMAIL_ADDRESS", "test@example.com")
 HPO_AGENT_EMAIL_SUBJECT = os.getenv(
     "HPO_AGENT_EMAIL_SUBJECT", "HPO Enquiry (Invest in GREAT Britain)")
 HPO_PDF_URLS = [
