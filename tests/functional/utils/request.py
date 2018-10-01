@@ -134,11 +134,6 @@ def make_request(
         auth=auth,
     )
 
-    if not allow_redirects:
-        msg = "REQ Follow redirects: disabled"
-        blue(msg)
-        logging.debug(msg)
-
     try:
         if method == Method.DELETE:
             res = req.delete(**request_kwargs)

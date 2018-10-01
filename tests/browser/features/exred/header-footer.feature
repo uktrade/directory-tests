@@ -173,7 +173,9 @@ Feature: Header-Footer
 
     When "Robert" goes to the "Export Readiness - Create your export journey" page
 
-    Then "Robert" should not see "Save Progress" section on "Export Readiness - Create your export journey" page
+    Then "Robert" should not see following section
+      | section       |
+      | Save Progress |
 
 
   @ED-3283
@@ -263,7 +265,9 @@ Feature: Header-Footer
     When "Robert" decides to create his personalised journey page
 
     Then "Robert" should be on the "Export Readiness - Personalised Journey" page
-    And "Robert" should not see "Save Progress" section on "Export Readiness - Personalised Journey" page
+    Then "Robert" should not see following section
+      | section       |
+      | Save Progress |
 
 
   @ED-3287
@@ -314,7 +318,9 @@ Feature: Header-Footer
 
     When "Robert" goes to randomly selected "<group>" Article category
 
-    Then "Robert" should not see "Save Progress" section on "Export Readiness - Article List" page
+    Then "Robert" should not see following section
+      | Section       |
+      | Save progress |
 
     Examples: article groups
       | group            |
@@ -334,7 +340,9 @@ Feature: Header-Footer
     When "Robert" goes to randomly selected "<group>" Article category
     And "Robert" opens any article on the list
 
-    Then "Robert" should not see "Save Progress" section on "Export Readiness - Article" page
+    Then "Robert" should not see following section
+      | Section       |
+      | Save progress |
 
     Examples: article groups
       | group            |

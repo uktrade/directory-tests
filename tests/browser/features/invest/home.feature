@@ -44,7 +44,7 @@ Feature: Invest home page
     Examples: promoted industries
       | selected                 |
       | Automotive               |
-      | Capital Investment       |
+      | Capital investment       |
       | Creative industries      |
       | Financial services       |
       | Health and life sciences |

@@ -12,6 +12,20 @@ import pages
 REQUIRED_PROPERTIES = ["SERVICE", "NAME", "TYPE", "URL", "SELECTORS"]
 
 
+class ElementType(Enum):
+    INPUT = "input"
+    CHECKBOX = "checkbox"
+    RADIO = "radio"
+    TEXTAREA = "textarea",
+    IFRAME = "iframe"
+    SELECT = "select"
+    LABEL = "label"
+    BUTTON = "button"
+
+    def __str__(self):
+        return self.value
+
+
 class Services(Enum):
     BRITISH_COUNCIL = "British Council"
     EVENTS = "Events"
@@ -78,7 +92,7 @@ class PageObjects(Enum):
 
 def get_enum_key(module: ModuleType) -> str:
     return (
-        f"{module.SERVICE}_{module.NAME}".upper()
+        f"{module.SERVICE}_{module.TYPE}_{module.NAME}".upper()
         .replace(" ", "_")
         .replace("-", "_")
     )
@@ -116,18 +130,51 @@ def get_page_object(service_and_page: str) -> ModuleType:
     parts = service_and_page.split(" - ")
     sought_service = parts[0]
     sought_page = parts[1]
+    sought_type = parts[2] if len(parts) == 3 else None
     result = None
     for page_object in PAGES.__members__.values():
+        matched_service = False
+        matched_type = False
+        matched_name = False
+
         if sought_service.lower() == page_object.service.lower():
+            logging.debug(f"matched service {sought_service}: {page_object.service}")
+            matched_service = True
+        else:
+            continue
+
+        # try to find a match based on the PO.NAME
+        if sought_page.lower() == page_object.name.lower():
+            logging.debug(f"matched page name {sought_page}: {page_object.name}")
+            matched_name = True
+        else:
+            # if that doesn't work, then try to do a check PO.NAMES
             if hasattr(page_object.value, "NAMES"):
                 names = page_object.value.NAMES
                 if sought_page.lower() in [name.lower() for name in names]:
+                    logging.debug(f"matched page name {sought_page}: "
+                          f"{page_object.value.NAMES}")
+                    matched_name = True
+                else:
+                    continue
+            else:
+                continue
+
+        if sought_type:
+            if sought_type.lower() == page_object.type.lower():
+                logging.debug(f"matched page type {sought_type}: {page_object.type}")
+                matched_type = True
+            else:
+                continue
+
+        if matched_service and matched_name:
+            if sought_type:
+                if matched_type:
                     result = page_object.value
                     break
             else:
-                if sought_page.lower() == page_object.name.lower():
-                    result = page_object.value
-                    break
+                result = page_object.value
+                break
 
     if not result:
         service_key = sought_service.replace(" ", "_").upper()

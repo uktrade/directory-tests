@@ -36,6 +36,7 @@ from selenium.webdriver.support import expected_conditions
 from selenium.webdriver.support.expected_conditions import staleness_of
 from selenium.webdriver.support.wait import WebDriverWait
 
+from pages import ElementType
 from settings import (
     BROWSERSTACK_PASS,
     BROWSERSTACK_SESSIONS_URL,
@@ -79,13 +80,13 @@ VisitedArticle = namedtuple("VisitedArticle", ["index", "title", "time_to_read"]
 Executor = Union[WebDriver, Session]
 AssertionExecutor = Union[WebDriver, Response]
 Selector = namedtuple(
-    "Selector", ["by", "value", "in_desktop", "in_mobile", "in_horizontal"]
+    "Selector", ["by", "value", "in_desktop", "in_mobile", "in_horizontal", "type", "is_visible"]
 )
 
 # define default values for various named tuples
 Actor.__new__.__defaults__ = (None,) * len(Actor._fields)
 VisitedArticle.__new__.__defaults__ = (None,) * len(VisitedArticle._fields)
-Selector.__new__.__defaults__ = (None, None, True, True, True)
+Selector.__new__.__defaults__ = (None, None, True, True, True, None, True)
 
 
 def go_to_url(driver: WebDriver, url: str, page_name: str, *, first_time: bool = False):
@@ -162,7 +163,8 @@ def check_for_expected_elements(
     logging.debug("All expected elements are visible on '%s'", driver.current_url)
 
 
-def check_for_expected_sections_elements(driver: WebDriver, sections: Dict):
+def check_for_expected_sections_elements(
+        driver: WebDriver, sections: Dict[str, Selector]):
     """Check if all elements in page sections are visible."""
     for section in sections:
         for element_name, selector in sections[section].items():
@@ -171,6 +173,8 @@ def check_for_expected_sections_elements(driver: WebDriver, sections: Dict):
                     "Expected '{}' to be a Selector, got {}"
                         .format(selector, type(selector)))
             element = find_element(driver, selector, element_name=element_name)
+            if not selector.is_visible:
+                continue
             with assertion_msg(
                 "It looks like '%s' element in '%s' section is not visible" " on %s",
                 element_name,
@@ -473,9 +477,29 @@ def find_element(
         driver.current_url,
     ):
         element = driver.find_element(by=selector.by, value=selector.value)
-    if wait_for_it:
+    if wait_for_it and selector.is_visible:
         wait_for_visibility(driver, selector)
     return element
+
+
+def find_selector_by_name(selectors: dict, name: str) -> Selector:
+    found_selectors = [
+        selector
+        for section_selectors in selectors.values()
+        for selector_name, selector in section_selectors.items()
+        if selector_name.lower() == name.lower()]
+    assert len(found_selectors) == 1
+    return found_selectors[0]
+
+
+def find_selector_by_type(selectors: dict, name: str) -> Selector:
+    found_selectors = [
+        selector
+        for section_selectors in selectors.values()
+        for selector_name, selector in section_selectors.items()
+        if selector_name.lower() == name.lower()]
+    assert len(found_selectors) == 1
+    return found_selectors[0]
 
 
 def find_elements(driver: WebDriver, selector: Selector) -> List[WebElement]:
@@ -699,14 +723,19 @@ def browser_check_for_sections(
                 action_chains = ActionChains(driver)
                 action_chains.move_to_element(element)
                 action_chains.perform()
-            with assertion_msg(
-                "It looks like '%s' element identified by '%s' selector is"
-                " not visible on %s",
-                key,
-                selector,
-                driver.current_url,
-            ):
-                assert element.is_displayed()
+            if selector.is_visible:
+                with assertion_msg(
+                    "It looks like '%s' element identified by '%s' selector is"
+                    " not visible on %s",
+                    key,
+                    selector,
+                    driver.current_url,
+                ):
+                    assert element.is_displayed()
+            else:
+                logging.debug(
+                    f"Skipping visiblity check for '{key} -> {selector}' as "
+                    f"its selector is flagged as not visible")
 
 
 def requests_check_for_sections(
@@ -735,6 +764,12 @@ def get_horizontal_selectors(section: dict) -> Dict[str, Selector]:
     return {
         key: selector for key, selector in section.items() if selector.in_horizontal
     }
+
+
+def get_selectors(section: dict, element_type: ElementType) -> Dict[str, Selector]:
+    return {key: selector
+            for key, selector in section.items()
+            if selector.type == element_type}
 
 
 def browser_visit(driver: WebDriver, url: str):
@@ -768,3 +803,114 @@ def tick_captcha_checkbox(driver: WebDriver):
     # otherwise the test might fail
     time.sleep(2)
     driver.switch_to.parent_frame()
+
+
+def fill_out_input_fields(
+        driver: WebDriver, form_selectors: Dict[str, Selector],
+        form_details: dict):
+    input_selectors = get_selectors(form_selectors, ElementType.INPUT)
+    for key, selector in input_selectors.items():
+        value_to_type = form_details[key]
+        if not value_to_type:
+            continue
+        logging.debug(f"Filling out input field {key} with '{value_to_type}'")
+        input_field = find_element(
+            driver, selector, element_name=key, wait_for_it=False)
+        input_field.send_keys(value_to_type)
+
+
+def fill_out_textarea_fields(
+        driver: WebDriver, form_selectors: Dict[str, Selector],
+        form_details: dict):
+    textarea_selectors = get_selectors(form_selectors, ElementType.TEXTAREA)
+    for key, selector in textarea_selectors.items():
+        value_to_type = form_details[key]
+        if not value_to_type:
+            continue
+        logging.debug(f"Filling out textarea: {key} with '{value_to_type}'")
+        textarea = find_element(
+            driver, selector, element_name=key, wait_for_it=False)
+        textarea.send_keys(value_to_type)
+
+
+def pick_option(
+        driver: WebDriver, form_selectors: Dict[str, Selector],
+        form_details: dict):
+    select_selectors = get_selectors(form_selectors, ElementType.SELECT)
+    for key, selector in select_selectors.items():
+        logging.debug(f"Picking option from {key} dropdown list")
+        select = find_element(
+            driver, selector, element_name=key, wait_for_it=False)
+        if form_details.get(key, None):
+            option = form_details[key]
+        else:
+            options = select.find_elements_by_css_selector("option")
+            values = [option.get_property("value")
+                      for option in options
+                      if option.get_property("value")]
+            logging.debug("Available options: {}".format(values))
+            option = random.choice(values)
+        logging.debug("Will select option: {}".format(option))
+        option_value_selector = "option[value='{}']".format(option)
+        option_element = select.find_element_by_css_selector(option_value_selector)
+        option_element.click()
+
+
+def pick_option_from_autosuggestion(
+    driver: WebDriver, form_selectors: Dict[str, Selector],
+    form_details: dict):
+    select_selectors = get_selectors(form_selectors, ElementType.SELECT)
+    for key, selector in select_selectors.items():
+        logging.debug(f"Picking option from {key} dropdown list")
+        select = find_element(
+            driver, selector, element_name=key, wait_for_it=False)
+        logging.debug(f"dealing with {key} {selector}")
+        if form_details.get(key, None):
+            option = form_details[key]
+        else:
+            options = select.find_elements_by_css_selector("option")
+            values = [option.get_property("text") for option in options]
+            logging.debug("Available options: {}".format(values))
+            option = random.choice(values)
+        logging.debug("Selected option: {}".format(option))
+        if key == "country":
+            js_field_selector = Selector(By.ID, "js-country-select")
+            js_field = find_element(driver, js_field_selector)
+            js_field.click()
+            js_field.clear()
+            js_field.send_keys(option)
+            first_suggestion_selector = Selector(
+                By.CSS_SELECTOR, "#js-country-select__listbox li:nth-child(1)")
+            first_suggestion = find_element(
+                driver, first_suggestion_selector, wait_for_it=True)
+            first_suggestion.click()
+        else:
+            option_value_selector = "option[value='{}']".format(option)
+            option_element = select.find_element_by_css_selector(option_value_selector)
+            option_element.click()
+
+
+def tick_checkboxes(
+        driver: WebDriver, form_selectors: Dict[str, Selector],
+        form_details: dict):
+    checkbox_selectors = get_selectors(form_selectors, ElementType.CHECKBOX)
+    for key, selector in checkbox_selectors.items():
+        logging.debug(f"Ticking {key} checkbox (if necessary)")
+        if form_details[key]:
+            checkbox = find_element(
+                driver, selector, element_name=key, wait_for_it=False)
+            if not checkbox.get_property("checked"):
+                checkbox.click()
+
+
+def tick_checkboxes_by_labels(
+        driver: WebDriver, form_selectors: Dict[str, Selector],
+        form_details: dict):
+    checkbox_selectors = get_selectors(form_selectors, ElementType.LABEL)
+    for key, selector in checkbox_selectors.items():
+        logging.debug(f"Ticking {key} checkbox by its label (if necessary)")
+        if form_details[key]:
+            checkbox = find_element(
+                driver, selector, element_name=key, wait_for_it=False)
+            if not checkbox.get_property("checked"):
+                checkbox.click()

@@ -66,7 +66,7 @@ Feature: Pixels
 
     @full
     Examples: UK Setup Guides
-      | selected                                                        |
-      | Open a UK business bank account - guide                         |
-      | Set up a company in the UK - guide                              |
-      | Understand the UK's tax, incentives and legal framework - guide |
+      | selected                                 |
+      | Open a UK business bank account - guide  |
+      | Register a company in the UK - guide     |
+      | Understand UK tax and incentives - guide |

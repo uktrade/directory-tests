@@ -8,6 +8,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import ElementType
 from pages.common_actions import (
     Selector,
     check_for_expected_sections_elements,
@@ -17,6 +18,10 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
     tick_captcha_checkbox,
+    fill_out_input_fields,
+    fill_out_textarea_fields,
+    pick_option,
+    tick_checkboxes_by_labels,
 )
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
@@ -26,17 +31,17 @@ TYPE = "contact"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "industries/contact/")
 PAGE_TITLE = "Contact us - trade.great.gov.uk"
 
-SUBMIT_BUTTON = Selector(By.CSS_SELECTOR, "form input[type=submit]")
-FULL_NAME = Selector(By.ID, "id_full_name")
-EMAIL = Selector(By.ID, "id_email_address")
-INDUSTRY = Selector(By.ID, "id_sector")
-ORGANISATION = Selector(By.ID, "id_organisation_name")
-ORGANISATION_SIZE = Selector(By.ID, "id_organisation_size")
-COUNTRY = Selector(By.ID, "id_country")
-BODY = Selector(By.ID, "id_body")
-SOURCE = Selector(By.ID, "id_source")
-ACCEPT_TC = Selector(By.ID, "id_terms_agreed-label")
+FULL_NAME = Selector(By.ID, "id_full_name", type=ElementType.INPUT)
+EMAIL = Selector(By.ID, "id_email_address", type=ElementType.INPUT)
+INDUSTRY = Selector(By.ID, "id_sector", type=ElementType.SELECT)
+ORGANISATION = Selector(By.ID, "id_organisation_name", type=ElementType.INPUT)
+ORGANISATION_SIZE = Selector(By.ID, "id_organisation_size", type=ElementType.SELECT)
+COUNTRY = Selector(By.ID, "id_country", type=ElementType.INPUT)
+BODY = Selector(By.ID, "id_body", type=ElementType.INPUT)
+SOURCE = Selector(By.ID, "id_source", type=ElementType.INPUT)
+ACCEPT_TC = Selector(By.ID, "id_terms_agreed", type=ElementType.LABEL, is_visible=False)
 IM_NOT_A_ROBOT = Selector(By.CSS_SELECTOR, ".recaptcha-checkbox-checkmark")
+SUBMIT_BUTTON = Selector(By.CSS_SELECTOR, "form input[type=submit]", type=ElementType.BUTTON)
 SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#lede form"),
@@ -70,42 +75,12 @@ def should_see_section(driver: WebDriver, name: str):
 
 
 def fill_out(driver: WebDriver, contact_us_details: dict, *, captcha: bool = True):
-    input_fields = ["full name", "email", "organisation", "country", "body"]
-    dropdown_menus = ["industry", "organisation size", "source"]
+    form_selectors = SELECTORS["form"]
 
-    for field_name in input_fields:
-        value = contact_us_details[field_name]
-        field = find_element(
-            driver,
-            SELECTORS["form"][field_name],
-            element_name=field_name,
-            wait_for_it=False,
-        )
-        field.send_keys(value)
-
-    for menu_name in dropdown_menus:
-        selector = SELECTORS["form"][menu_name]
-        dropdown = find_element(
-            driver,
-            selector,
-            element_name="{} dropdown menu".format(menu_name),
-            wait_for_it=False,
-        )
-        if contact_us_details[menu_name]:
-            option = contact_us_details[menu_name].lower().replace(" ", "-")
-        else:
-            options = dropdown.find_elements_by_css_selector("option")
-            values = [option.get_property("value") for option in options]
-            logging.debug("OPTIONS: {}".format(values))
-            option = random.choice(values)
-            logging.debug("OPTION: {}".format(option))
-        sector_value = "option[value='{}']".format(option)
-        sector_option = dropdown.find_element_by_css_selector(sector_value)
-        sector_option.click()
-
-    if contact_us_details["accept t&c"]:
-        checkbox = find_element(driver, ACCEPT_TC)
-        checkbox.click()
+    fill_out_input_fields(driver, form_selectors, contact_us_details)
+    fill_out_textarea_fields(driver, form_selectors, contact_us_details)
+    pick_option(driver, form_selectors, contact_us_details)
+    tick_checkboxes_by_labels(driver, form_selectors, contact_us_details)
 
     if captcha:
         tick_captcha_checkbox(driver)

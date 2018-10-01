@@ -27,6 +27,8 @@ from steps.then_impl import (
     export_readiness_expected_page_elements_should_be_visible,
     export_readiness_should_see_articles,
     fas_search_results_filtered_by_industries,
+    form_check_state_of_element,
+    generic_should_see_expected_page_content,
     guidance_check_if_link_to_next_category_is_displayed,
     guidance_expected_page_elements_should_be_visible,
     guidance_ribbon_should_be_visible,
@@ -36,6 +38,9 @@ from steps.then_impl import (
     guidance_tile_should_be_highlighted,
     header_check_dit_logo,
     header_check_favicon,
+    hpo_agent_should_receive_enquiry_email,
+    hpo_should_receive_enquiry_confirmation_email,
+    invest_mailbox_admin_should_receive_contact_confirmation_email,
     invest_should_receive_contact_confirmation_email,
     invest_should_see_topic_contents,
     invest_should_see_uk_gov_logo,
@@ -57,11 +62,10 @@ from steps.then_impl import (
     should_see_page_in_preferred_language,
     should_see_sections,
     should_see_share_widget,
-    triage_should_be_classified_as,
-    triage_should_see_change_your_answers_link,
-    generic_should_see_expected_page_content,
     stats_and_tracking_elements_should_be_present,
     stats_and_tracking_elements_should_not_be_present,
+    triage_should_be_classified_as,
+    triage_should_see_change_your_answers_link,
 )
 from steps.when_impl import (
     triage_answer_questions_again,
@@ -168,17 +172,16 @@ def then_should_see_sections(context, actor_alias, sections):
         sections_list=sections.split(", "))
 
 
+@then('"{actor_alias}" should not see following sections')
+@then('"{actor_alias}" should not see following section')
+def then_should_not_see_sections(context, actor_alias):
+    should_not_see_sections(context, actor_alias, sections_table=context.table)
+
+
 @then('"{actor_alias}" should see following sections')
 @then('"{actor_alias}" should see following section')
 def then_should_see_sections(context, actor_alias):
     should_see_sections(context, actor_alias, sections_table=context.table)
-
-
-
-@then('"{actor_alias}" should not see "{sections}" section on "{page_name}" page')
-@then('"{actor_alias}" should not see "{sections}" sections on "{page_name}" page')
-def then_should_not_see_sections(context, actor_alias, sections, page_name):
-    should_not_see_sections(context, actor_alias, sections.split(", "), page_name)
 
 
 @then('"{actor_alias}" should be able to navigate to the next article from the List following the Article Order')
@@ -397,3 +400,28 @@ def then_should_receive_contact_confirmation_email(
         context: Context, actor_alias: str, sender_email: str):
     invest_should_receive_contact_confirmation_email(
         context, actor_alias, sender_email)
+
+
+@then('Invest mailbox admin should also receive a contact confirmation email from "{sender_email}"')
+def then_invest_mailbox_admin_should_also_receive_contact_confirmation_email(
+        context: Context, sender_email: str):
+    invest_mailbox_admin_should_receive_contact_confirmation_email(
+        context, sender_email)
+
+
+@then('"{actor_alias}" should receive HPO enquiry confirmation email')
+def then_should_receive_hpo_enquiry_confirmation_email(
+        context: Context, actor_alias: str):
+    hpo_should_receive_enquiry_confirmation_email(context, actor_alias)
+
+
+@then('HPO Agent should receive HPO enquiry email from "{actor_alias}"')
+def then_hpo_agent_should_receive_hpo_enquiry_email(
+        context: Context, actor_alias: str):
+    hpo_agent_should_receive_enquiry_email(context, actor_alias)
+
+
+@then('"{actor_alias}" should see that "{element}" in the form is "{state}"')
+def then_actor_should_see_form_element_in_specific_stage(
+        context: Context, actor_alias: str, element: str, state: str):
+    form_check_state_of_element(context, actor_alias, element, state)

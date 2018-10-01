@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Then step implementations."""
 import logging
+from time import sleep
 from typing import List
 
 from behave.model import Table
@@ -15,12 +16,21 @@ from pages.common_actions import (
     update_actor
 )
 from registry.articles import get_article, get_articles
+from settings import (
+    HPO_AGENT_EMAIL_ADDRESS,
+    HPO_AGENT_EMAIL_SUBJECT,
+    HPO_ENQUIRY_CONFIRMATION_SUBJECT,
+    HPO_PDF_URLS,
+    INVEST_AGENT_CONTACT_CONFIRMATION_SUBJECT,
+    INVEST_MAILBOX_ADMIN_EMAIL,
+)
 from steps import has_action
 from steps.when_impl import (
     triage_should_be_classified_as_new,
     triage_should_be_classified_as_occasional,
     triage_should_be_classified_as_regular,
 )
+from utils.gov_notify import get_email_confirmations_with_matching_string
 from utils.mailgun import mailgun_invest_find_contact_confirmation_email
 
 
@@ -254,9 +264,11 @@ def should_see_sections(
 
 
 def should_not_see_sections(
-    context: Context, actor_alias: str, sections: list, page_name: str
+    context: Context, actor_alias: str, sections_table: Table = None
 ):
-    page = get_page_object(page_name)
+    sections = [row[0] for row in sections_table]
+    logging.debug(f"sections {sections}")
+    page = get_last_visited_page(context, actor_alias)
     has_action(page, "should_not_see_section")
     for section in sections:
         page.should_not_see_section(context.driver, section)
@@ -264,7 +276,7 @@ def should_not_see_sections(
             "As expected %s cannot see '%s' section on %s page",
             actor_alias,
             section,
-            page_name,
+            page.NAME,
         )
 
 
@@ -760,5 +772,44 @@ def invest_should_see_uk_gov_logo(
 def invest_should_receive_contact_confirmation_email(
         context: Context, actor_alias: str, sender_email: str):
     actor = get_actor(context, actor_alias)
+    sleep(5)
     mailgun_invest_find_contact_confirmation_email(
         context, sender_email, actor.email)
+
+
+def invest_mailbox_admin_should_receive_contact_confirmation_email(
+        context: Context, sender_email: str):
+    mailgun_invest_find_contact_confirmation_email(
+        context, sender_email, INVEST_MAILBOX_ADMIN_EMAIL,
+        subject=INVEST_AGENT_CONTACT_CONFIRMATION_SUBJECT)
+
+
+def hpo_should_receive_enquiry_confirmation_email(
+        context: Context, actor_alias: str):
+    actor = get_actor(context, actor_alias)
+    get_email_confirmations_with_matching_string(
+        recipient_email=actor.email,
+        subject=HPO_ENQUIRY_CONFIRMATION_SUBJECT,
+        strings=HPO_PDF_URLS,
+    )
+
+
+def hpo_agent_should_receive_enquiry_email(
+        context: Context, actor_alias: str):
+    actor = get_actor(context, actor_alias)
+    get_email_confirmations_with_matching_string(
+        recipient_email=HPO_AGENT_EMAIL_ADDRESS,
+        subject=HPO_AGENT_EMAIL_SUBJECT,
+        strings=[actor.email] + HPO_PDF_URLS,
+    )
+
+
+def form_check_state_of_element(
+        context: Context, actor_alias: str, element: str, state: str):
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "check_state_of_form_element")
+    page.check_state_of_form_element(context.driver, element, state)
+    logging.debug(
+        f"{actor_alias} saw {element} in expected {state} state on "
+        f"{context.driver.current_url}"
+    )
