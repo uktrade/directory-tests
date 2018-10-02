@@ -3,7 +3,9 @@
 import logging
 from time import sleep
 from typing import List
+from urllib.parse import urlparse
 
+import requests
 from behave.model import Table
 from behave.runner import Context
 
@@ -32,6 +34,7 @@ from steps.when_impl import (
 )
 from utils.gov_notify import get_email_confirmations_with_matching_string
 from utils.mailgun import mailgun_invest_find_contact_confirmation_email
+from utils.pdf import extract_text_from_pdf_bytes
 
 
 def should_be_on_page(context: Context, actor_alias: str, page_name: str):
@@ -813,3 +816,42 @@ def form_check_state_of_element(
         f"{actor_alias} saw {element} in expected {state} state on "
         f"{context.driver.current_url}"
     )
+
+
+def pdf_check_expected_details(
+        context: Context, actor_alias: str, details_table: Table):
+    pdfs = context.pdfs
+    pdf_texts = [(pdf["href"], extract_text_from_pdf_bytes(pdf["pdf"]))
+                  for pdf in pdfs]
+    details = {
+        item[0].split(" = ")[0]: item[0].split(" = ")[1]
+        for item in details_table
+    }
+    for href, text in pdf_texts:
+        for name, value in details.items():
+            error_message = (
+                f"Could not find {name}: {value} in PDF text downloaded from "
+                f"{href}")
+            assert value in text, error_message
+            logging.debug(
+                f"{actor_alias} saw correct {name} in the PDF downloaded from "
+                f"{href}")
+    context.pdf_texts = pdf_texts
+
+
+def pdf_check_for_dead_links(context: Context):
+    pdf_texts = context.pdf_texts
+    links = set([word
+                 for _, text in pdf_texts
+                 for word in text.split()
+                 if any(item in word for item in ["http", "https", "www"])])
+    logging.debug(f"Links found in PDFs: {links}")
+    for link in links:
+        parsed = urlparse(link)
+        if not parsed.netloc:
+            link = f"http://{link}"
+        response = requests.get(link)
+        error_message = (
+            f"Expected 200 from {link} but got {response.status_code} instead")
+        assert response.status_code == 200, error_message
+    logging.debug("All links in PDFs returned 200 OK")

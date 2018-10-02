@@ -47,6 +47,8 @@ from steps.then_impl import (
     language_selector_keyboard_should_be_trapped,
     language_selector_should_not_see_it,
     language_selector_should_see_it,
+    pdf_check_expected_details,
+    pdf_check_for_dead_links,
     personalised_journey_should_not_see_banner_and_top_10_table,
     personalised_journey_should_see_banner_and_top_10_table,
     personalised_journey_should_see_read_counter,
@@ -425,3 +427,14 @@ def then_hpo_agent_should_receive_hpo_enquiry_email(
 def then_actor_should_see_form_element_in_specific_stage(
         context: Context, actor_alias: str, element: str, state: str):
     form_check_state_of_element(context, actor_alias, element, state)
+
+
+@then('"{actor_alias}" should see correct details in every downloaded PDF')
+def then_pdfs_should_contain_expected_details(
+        context: Context, actor_alias: str):
+    pdf_check_expected_details(context, actor_alias, context.table)
+
+
+@then('there should not be any dead links in every downloaded PDF')
+def then_should_not_see_dead_links_in_pdf(context: Context):
+    pdf_check_for_dead_links(context)
