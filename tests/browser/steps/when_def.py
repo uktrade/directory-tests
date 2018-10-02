@@ -28,6 +28,8 @@ from steps.when_impl import (
     fas_view_more_companies,
     fas_view_selected_company_profile,
     generic_click_on_uk_gov_logo,
+    generic_download_all_pdfs,
+    generic_fill_out_and_submit_form,
     generic_open_guide_link,
     generic_open_industry_page,
     generic_see_more_industries,
@@ -65,7 +67,6 @@ from steps.when_impl import (
     triage_should_see_answers_to_questions,
     triage_what_is_your_company_name,
     visit_page,
-    generic_fill_out_and_submit_form
 )
 
 
@@ -462,3 +463,8 @@ def when_actor_clicks_on_uk_gov_logo(
 @when('"{actor_alias}" fills out and submits the form')
 def when_actor_fills_out_and_submits_the_form(context: Context, actor_alias: str):
     generic_fill_out_and_submit_form(context, actor_alias)
+
+
+@when('"{actor_alias}" downloads all visible PDFs')
+def when_actor_downloads_all_visible_pdfs(context: Context, actor_alias: str):
+    generic_download_all_pdfs(context, actor_alias)

@@ -1877,3 +1877,9 @@ def generic_fill_out_and_submit_form(context: Context, actor_alias: str):
 def generic_get_in_touch(context: Context, actor_alias: str, page_name: str):
     visit_page(context, actor_alias, page_name)
     generic_fill_out_and_submit_form(context, actor_alias)
+
+
+def generic_download_all_pdfs(context: Context, actor_alias: str):
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "download_all_pdfs")
+    context.pdfs = page.download_all_pdfs(context.driver)
