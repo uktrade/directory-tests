@@ -12,7 +12,7 @@ directory-api-client==10.0.2
 directory-client-core==4.0.2  # via directory-api-client, directory-sso-api-client
 directory-constants==8.0.4
 directory-sso-api-client==3.0.2
-django==1.11.15           # via directory-api-client, directory-constants, sigauth
+django==1.11.16           # via directory-api-client, directory-constants, sigauth
 djangorestframework==3.8.2  # via sigauth
 docopt==0.6.2             # via notifications-python-client
 future==0.16.0            # via notifications-python-client
@@ -24,12 +24,13 @@ notifications-python-client==5.2.0
 parse-type==0.4.2         # via behave
 parse==1.8.4              # via behave, parse-type
 paver==1.3.4
+pdfminer2==20151206
 pyjwt==1.6.4              # via notifications-python-client
 pytz==2018.5              # via django
 requests==2.19.1
 retrying==1.3.3
 selenium==3.14.1
 sigauth==4.0.1
-six==1.11.0               # via behave, mohawk, parse-type, paver, retrying
+six==1.11.0               # via behave, mohawk, parse-type, paver, pdfminer2, retrying
 termcolor==1.1.0
 urllib3==1.23
