@@ -1872,3 +1872,8 @@ def generic_fill_out_and_submit_form(context: Context, actor_alias: str):
     details = generate_form_details(page, actor)
     page.fill_out(context.driver, details)
     page.submit(context.driver)
+
+
+def generic_get_in_touch(context: Context, actor_alias: str, page_name: str):
+    visit_page(context, actor_alias, page_name)
+    generic_fill_out_and_submit_form(context, actor_alias)
