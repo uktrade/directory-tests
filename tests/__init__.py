@@ -35,8 +35,9 @@ urls = {
 
     # SSO API
     'sso-api:landing': '',
-    'sso-api:healthcheck-database': 'healthcheck/database/',
-    'sso-api:healthcheck-ping': 'healthcheck/ping/',
+    'sso-api:healthcheck-database': 'api/v1/healthcheck/database/',
+    'sso-api:healthcheck-ping': 'api/v1/healthcheck/ping/',
+    'sso-api:healthcheck-sentry': 'api/v1/healthcheck/sentry/',
     'sso-api:user': 'api/v1/session-user/',
 
     # UI-BUYER
