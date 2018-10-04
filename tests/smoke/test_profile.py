@@ -63,10 +63,19 @@ def test_directory_supplier_invalid_user_token():
 
 
 @pytest.mark.parametrize("absolute_url", [
-    get_absolute_url('profile:healthcheck-api'),
-    get_absolute_url('profile:healthcheck-sso-proxy'),
+    get_absolute_url('profile:healthcheck-ping'),
 ])
 def test_health_check_endpoints(absolute_url):
+    response = requests.get(absolute_url)
+    assert response.status_code == http.client.OK
+
+
+@pytest.mark.parametrize("absolute_url", [
+    get_absolute_url('profile:healthcheck-ping'),
+    get_absolute_url('profile:healthcheck-sentry'),
+    get_absolute_url('profile:healthcheck-sso'),
+])
+def test_health_check_endpoints_auth(absolute_url):
     params = {'token': TOKEN}
     response = requests.get(absolute_url, params=params)
     assert response.status_code == http.client.OK

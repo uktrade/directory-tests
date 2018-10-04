@@ -21,6 +21,7 @@ from steps.when_impl import (
     case_studies_go_to_random,
     click_on_page_element,
     export_readiness_open_category,
+    generic_get_in_touch,
     generic_open_industry_page,
     get_geo_ip,
     guidance_open_category,
@@ -32,7 +33,7 @@ from steps.when_impl import (
     start_triage,
     triage_classify_as,
     triage_create_exporting_journey,
-    visit_page
+    visit_page,
 )
 
 
@@ -228,3 +229,9 @@ def given_actor_decided_to_click_on_page_element(
 def fas_given_actor_opened_industry_page(
         context: Context, actor_alias: str, industry_name: str):
     generic_open_industry_page(context, actor_alias, industry_name)
+
+
+@given('"{actor_alias}" got in touch with us via "{page_name}" page')
+def given_actor_got_in_touch_with_us(
+        context: Context, actor_alias: str, page_name: str):
+    generic_get_in_touch(context, actor_alias, page_name)

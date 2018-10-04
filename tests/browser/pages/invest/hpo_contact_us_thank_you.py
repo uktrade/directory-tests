@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Invest in Great - Contact us - Thank you for your enquiry Page Object."""
 import logging
-from typing import List
+from typing import List, Dict
 from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
@@ -41,6 +41,7 @@ URLs = {
 }
 PAGE_TITLE = "High Potential Opportunities - great.gov.uk"
 
+PDF_LINKS = Selector(By.CSS_SELECTOR, "#documents-section a.link")
 SELECTORS = {
     "beta bar": {
         "self": Selector(By.ID, "header-beta-bar"),
@@ -56,7 +57,7 @@ SELECTORS = {
     "documents": {
         "itself": Selector(By.ID, "documents-section"),
         "heading": Selector(By.CSS_SELECTOR, "#documents-section h2"),
-        "pdf links": Selector(By.CSS_SELECTOR, "#documents-section a.link"),
+        "pdf links": PDF_LINKS,
         "description": Selector(
             By.CSS_SELECTOR, "#documents-section h3 ~ span"
         ),
@@ -87,3 +88,14 @@ def should_not_see_section(driver: WebDriver, name: str):
     section = UNEXPECTED_ELEMENTS[name.lower()]
     for key, selector in section.items():
         check_if_element_is_not_visible(driver, selector, element_name=key)
+
+
+def download_all_pdfs(driver: WebDriver) -> List[Dict[str, bytes]]:
+    import requests
+    anchors = driver.find_elements(by=PDF_LINKS.by, value=PDF_LINKS.value)
+    hrefs = [anchor.get_property("href") for anchor in anchors]
+    responses = [requests.get(href) for href in hrefs]
+    assert all(response.status_code == 200 for response in responses)
+    logging.debug(f"Successfully downloaded all {len(hrefs)} PDFs")
+    pdfs = [{"href": response.url, "pdf": response.content} for response in responses]
+    return pdfs

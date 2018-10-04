@@ -37,6 +37,7 @@ urls = {
     'sso-api:landing': '',
     'sso-api:healthcheck-database': 'api/v1/healthcheck/database/',
     'sso-api:healthcheck-ping': 'api/v1/healthcheck/ping/',
+    'sso-api:healthcheck-sentry': 'api/v1/healthcheck/sentry/',
     'sso-api:user': 'api/v1/session-user/',
 
     # UI-BUYER
@@ -89,9 +90,13 @@ urls = {
 
     # API
     'api:docs': 'docs/',
-    'api:healthcheck-database': 'healthcheck/database/',
     'api:healthcheck-cache': 'healthcheck/cache/',
+    'api:healthcheck-database': 'healthcheck/database/',
     'api:healthcheck-elasticsearch': 'healthcheck/elasticsearch/',
+    'api:healthcheck-single-sign-on': 'healthcheck/single-sign-on/',
+    'api:healthcheck-sentry': 'healthcheck/sentry/',
+    'api:healthcheck-ping': 'healthcheck/ping/',
+
     'api:enrolment': 'enrolment/',
     'api:company': 'supplier/{sso_id}/company/',
     'api:user': 'supplier/{sso_id}/',
@@ -102,8 +107,9 @@ urls = {
     'internal-api:companies-house-search': 'api/internal/companies-house-search/',
 
     # SSO-PROFILE
-    'profile:healthcheck-api': 'healthcheck/api/',
-    'profile:healthcheck-sso-proxy': 'healthcheck/single-sign-on/',
+    'profile:healthcheck-ping': 'healthcheck/ping/',
+    'profile:healthcheck-sentry': 'healthcheck/sentry/',
+    'profile:healthcheck-sso': 'healthcheck/single-sign-on/',
     'profile:soo': 'selling-online-overseas/',
     'profile:fab': 'find-a-buyer/',
     'profile:exops-alerts': 'export-opportunities/email-alerts/',

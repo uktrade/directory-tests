@@ -9,11 +9,15 @@ from tests.settings import DIRECTORY_API_HEALTH_CHECK_TOKEN as TOKEN
 
 
 @pytest.mark.session_auth
-def test_health_check_database():
+@pytest.mark.parametrize("absolute_url", [
+    get_absolute_url('sso-api:healthcheck-database'),
+    get_absolute_url('sso-api:healthcheck-ping'),
+    get_absolute_url('sso-api:healthcheck-sentry'),
+])
+def test_health_check_database(absolute_url):
     """This endpoint still uses session auth instead of HAWK signature check"""
     params = {'token': TOKEN}
-    response = requests.get(
-            get_absolute_url('sso-api:healthcheck-database'), params=params)
+    response = requests.get(absolute_url, params=params)
     assert response.status_code == http.client.OK
 
 
