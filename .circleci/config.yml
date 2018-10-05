@@ -78,12 +78,6 @@ jobs:
       TEST_ENV: "stage"
     <<: *steps_smoke_tests
 
-  smoke_tests_prod:
-    <<: *machine-python3
-    working_directory: ~/directory-tests
-    environment:
-      TEST_ENV: "prod"
-    <<: *steps_smoke_tests
 
 workflows:
   version: 2
@@ -95,7 +89,3 @@ workflows:
   run_all_tests_on_stage:
     jobs:
       - smoke_tests_stage
-
-  run_selected_tests_on_prod:
-    jobs:
-      - smoke_tests_prod
