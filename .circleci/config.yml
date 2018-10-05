@@ -90,12 +90,12 @@ workflows:
 
   run_all_tests_on_dev:
     jobs:
-      - smoke_tests_dev:
+      - smoke_tests_dev
 
   run_all_tests_on_stage:
     jobs:
-      - smoke_tests_stage:
+      - smoke_tests_stage
 
   run_selected_tests_on_prod:
     jobs:
-      - smoke_tests_prod:
+      - smoke_tests_prod
