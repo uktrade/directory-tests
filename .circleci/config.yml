@@ -24,7 +24,7 @@ step_install_requirements_for_smoke_tests: &step_install_requirements_for_smoke_
     command: |
       python3 -m venv venv
       . venv/bin/activate
-            pip install -r requirements_smoke.txt
+      pip install -r requirements_smoke.txt
 
 step_cache_smoke_tests_requirements: &step_cache_smoke_tests_requirements
   save_cache:
@@ -42,7 +42,7 @@ step_run_smoke_tests: &step_run_smoke_tests
     name: Run smoke tests
     command: |
       . venv/bin/activate
-      python ./docker/env_writer.py docker/env_writer.py --env=${TEST_ENV} --config=./docker/env.json
+      python docker/env_writer.py --env=${TEST_ENV} --config=./docker/env.json
       source ./docker/.env_with_export
       make smoke_tests
 
@@ -68,7 +68,7 @@ jobs:
     <<: *machine-python3
     working_directory: ~/directory-tests
     environment:
-      TEST_ENV: dev
+      TEST_ENV: "dev"
     <<: *steps_smoke_tests
 
 workflows:
