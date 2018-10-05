@@ -6,7 +6,8 @@ machine-python3: &machine-python3
 # Individual (shared) steps.
 
 step_checkout_repo: &step_checkout_repo
-  checkout
+  checkout:
+    - path: ~/directory-tests
 
 step_cache_repo: &step_cache_repo
   steps:
