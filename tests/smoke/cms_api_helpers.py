@@ -12,7 +12,7 @@ from directory_cms_client.helpers import AbstractCMSResponse
 from directory_constants.constants import cms as SERVICE_NAMES
 from requests import Response
 
-from tests import get_relative_url
+from tests import get_relative_url, get_absolute_url
 from tests.settings import (
     DIRECTORY_CMS_API_CLIENT_API_KEY,
     DIRECTORY_CMS_API_CLIENT_BASE_URL,
@@ -105,7 +105,7 @@ def get_pages_from_api(page_types: list) -> List[Response]:
         count = str(len(page_ids_of_type)).rjust(2, " ")
         print(f"Found {count} {page_type} pages")
         page_ids += page_ids_of_type
-    base = "https://dev.cms.directory.uktrade.io/api/pages/"
+    base = get_absolute_url("cms-api:pages")
     api_endpoints += [f"{base}{page_id}/" for page_id in page_ids]
     loop = asyncio.get_event_loop()
     responses += loop.run_until_complete(fetch(api_endpoints))
