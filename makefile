@@ -3,6 +3,10 @@ build: docker_integration_tests
 clean:
 	-find . -type f -name "*.pyc" -delete
 	-find . -type d -name "__pycache__" -delete
+	-find . -type f -name "behave.log" -delete
+	-rm -fr ./tests/browser/reports/*.xml
+	-rm -fr ./tests/functional/reports/*.xml
+	-rm -fr ./tests/smoke/reports/*.xml
 
 requirements_load:
 	pip install -r requirements_load.txt
