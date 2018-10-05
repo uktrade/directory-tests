@@ -71,12 +71,31 @@ jobs:
       TEST_ENV: "dev"
     <<: *steps_smoke_tests
 
+  smoke_tests_stage:
+    <<: *machine-python3
+    working_directory: ~/directory-tests
+    environment:
+      TEST_ENV: "stage"
+    <<: *steps_smoke_tests
+
+  smoke_tests_prod:
+    <<: *machine-python3
+    working_directory: ~/directory-tests
+    environment:
+      TEST_ENV: "prod"
+    <<: *steps_smoke_tests
+
 workflows:
   version: 2
 
   run_all_tests_on_dev:
     jobs:
       - smoke_tests_dev:
-          requires:
-            - checkout_code
 
+  run_all_tests_on_stage:
+    jobs:
+      - smoke_tests_stage:
+
+  run_selected_tests_on_prod:
+    jobs:
+      - smoke_tests_prod:
