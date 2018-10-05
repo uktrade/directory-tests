@@ -7,17 +7,6 @@ machine-python3: &machine-python3
 step_checkout_repo: &step_checkout_repo
   checkout
 
-step_cache_repo: &step_cache_repo
-  save_cache:
-    key: cached-repo-{{ .Revision }}
-    paths:
-      - ~/directory-tests
-
-step_restore_cached_repo: &step_restore_cached_repo
-  restore_cache:
-    keys:
-      - cached-repo-{{ .Revision }}
-
 step_install_requirements_for_smoke_tests: &step_install_requirements_for_smoke_tests
   run:
     name: Create virtualenv and install dependencies
@@ -25,17 +14,6 @@ step_install_requirements_for_smoke_tests: &step_install_requirements_for_smoke_
       python3 -m venv venv
       . venv/bin/activate
       pip install -r requirements_smoke.txt
-
-step_cache_smoke_tests_requirements: &step_cache_smoke_tests_requirements
-  save_cache:
-    key: smoke-tests-dependency-cache-{{ .Revision }}
-    paths:
-      - ~/directory-tests/venv
-
-step_restore_cached_smoke_tests_requirements: &step_restore_cached_smoke_tests_requirements
-  restore_cache:
-    keys:
-      - smoke-tests-dependency-cache-{{ .Revision }}
 
 step_run_smoke_tests: &step_run_smoke_tests
   run:
@@ -50,11 +28,7 @@ step_run_smoke_tests: &step_run_smoke_tests
 steps_smoke_tests: &steps_smoke_tests
   steps:
     - *step_checkout_repo
-    - *step_cache_repo
-    - *step_restore_cached_repo
     - *step_install_requirements_for_smoke_tests
-    - *step_cache_smoke_tests_requirements
-    - *step_restore_cached_smoke_tests_requirements
     - *step_run_smoke_tests
     - store_test_results:
         path: ./tests/smoke/reports
