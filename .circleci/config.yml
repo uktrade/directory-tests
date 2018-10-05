@@ -52,9 +52,9 @@ steps_smoke_tests: &steps_smoke_tests
     - *step_checkout_repo
     - *step_cache_repo
     - *step_restore_cached_repo
-    - *step_restore_cached_smoke_tests_requirements
     - *step_install_requirements_for_smoke_tests
     - *step_cache_smoke_tests_requirements
+    - *step_restore_cached_smoke_tests_requirements
     - *step_run_smoke_tests
     - store_test_results:
         path: ./tests/smoke/reports
