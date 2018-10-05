@@ -30,7 +30,6 @@ LOCUST := \
 		--only-summary \
 		--run-time=$$LOCUST_RUN_TIME
 
-
 load_test:
 	$(LOCUST)
 

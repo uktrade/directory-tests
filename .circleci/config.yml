@@ -1,7 +1,10 @@
-# Build machines configs.
+version: 2
+
+# Machines configs
 machine-python3: &machine-python3
   docker:
     - image: circleci/python:3.6.6
+
 
 # Individual (shared) steps.
 step_checkout_repo: &step_checkout_repo
@@ -13,7 +16,19 @@ step_install_requirements_for_smoke_tests: &step_install_requirements_for_smoke_
     command: |
       python3 -m venv venv
       . venv/bin/activate
+      pip install --upgrade pip
       pip install -r requirements_smoke.txt
+
+step_install_requirements_for_functional_tests: &step_install_requirements_for_functional_tests
+  run:
+    name: Create virtualenv and install dependencies
+    command: |
+      python3 -m venv venv
+      . venv/bin/activate
+      pip install --upgrade pip
+      pip install -r requirements_functional.txt
+      nodeenv -p
+      npm install -g junit-merge@1.2.3
 
 step_run_smoke_tests: &step_run_smoke_tests
   run:
@@ -24,7 +39,29 @@ step_run_smoke_tests: &step_run_smoke_tests
       source ./docker/.env_with_export
       make smoke_tests
 
-# List of steps
+step_run_functional_tests: &step_run_functional_tests
+  run:
+    name: Run functional tests
+    command: |
+      python3 -m venv venv
+      . venv/bin/activate
+      python ./docker/env_writer.py --env=${TEST_ENV} --config=./docker/env.json
+      source ./docker/.env_with_export;
+      export PATH=$PATH:$HOME/bin
+      FEATURE_DIR=${FEATURE_DIR} make functional_tests_feature_dir
+
+step_merge_junit_xml_reports_from_functional_tests: &step_merge_junit_xml_reports_from_functional_tests
+  run:
+    name: Merge JUnit XML reports
+    when: always
+    command: |
+      python3 -m venv venv
+      . venv/bin/activate
+      cd ./tests/functional/reports
+      junit-merge *.xml -o merged.xml
+      ls *.xml | grep -v merged.xml | xargs rm
+
+# Lists of steps
 steps_smoke_tests: &steps_smoke_tests
   steps:
     - *step_checkout_repo
@@ -35,8 +72,18 @@ steps_smoke_tests: &steps_smoke_tests
     - store_artifacts:
         path: ./tests/smoke/reports
 
-# list of all jobs
-version: 2
+steps_functional_tests: &steps_functional_tests
+  steps:
+    - *step_checkout_repo
+    - *step_install_requirements_for_functional_tests
+    - *step_run_functional_tests
+    - *step_merge_junit_xml_reports_from_functional_tests
+    - store_test_results:
+        path: ./tests/functional/reports
+    - store_artifacts:
+        path: ./tests/functional/reports
+
+
 jobs:
   smoke_tests_dev:
     <<: *machine-python3
@@ -52,6 +99,69 @@ jobs:
       TEST_ENV: "stage"
     <<: *steps_smoke_tests
 
+  func_fab_test_dev:
+    <<: *machine-python3
+    working_directory: ~/directory-tests
+    environment:
+      TEST_ENV: "dev"
+      FEATURE_DIR: "fab"
+    <<: *steps_functional_tests
+
+  func_fas_test_dev:
+    <<: *machine-python3
+    working_directory: ~/directory-tests
+    environment:
+      TEST_ENV: "dev"
+      FEATURE_DIR: "fas"
+    <<: *steps_functional_tests
+
+  func_sso_test_dev:
+    <<: *machine-python3
+    working_directory: ~/directory-tests
+    environment:
+      TEST_ENV: "dev"
+      FEATURE_DIR: "sso"
+    <<: *steps_functional_tests
+
+  func_sud_test_dev:
+    <<: *machine-python3
+    working_directory: ~/directory-tests
+    environment:
+      TEST_ENV: "dev"
+      FEATURE_DIR: "sud"
+    <<: *steps_functional_tests
+
+  func_fab_test_stage:
+    <<: *machine-python3
+    working_directory: ~/directory-tests
+    environment:
+      TEST_ENV: "stage"
+      FEATURE_DIR: "fab"
+    <<: *steps_functional_tests
+
+  func_fas_test_stage:
+    <<: *machine-python3
+    working_directory: ~/directory-tests
+    environment:
+      TEST_ENV: "stage"
+      FEATURE_DIR: "fas"
+    <<: *steps_functional_tests
+
+  func_sso_test_stage:
+    <<: *machine-python3
+    working_directory: ~/directory-tests
+    environment:
+      TEST_ENV: "stage"
+      FEATURE_DIR: "sso"
+    <<: *steps_functional_tests
+
+  func_sud_test_stage:
+    <<: *machine-python3
+    working_directory: ~/directory-tests
+    environment:
+      TEST_ENV: "stage"
+      FEATURE_DIR: "sud"
+    <<: *steps_functional_tests
 
 workflows:
   version: 2
@@ -59,7 +169,15 @@ workflows:
   run_all_tests_on_dev:
     jobs:
       - smoke_tests_dev
+      - func_fab_test_dev
+      - func_fas_test_dev
+      - func_sso_test_dev
+      - func_sud_test_dev
 
   run_all_tests_on_stage:
     jobs:
       - smoke_tests_stage
+      - func_fab_test_stage
+      - func_fas_test_stage
+      - func_sso_test_stage
+      - func_sud_test_stage
