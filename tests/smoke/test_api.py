@@ -19,7 +19,7 @@ def test_healthcheck_endpoints(absolute_url):
 
 
 @pytest.mark.parametrize("absolute_url", [
-    # get_absolute_url('api:healthcheck-single-sign-on'),
+    get_absolute_url('api:healthcheck-single-sign-on'),
     get_absolute_url('api:healthcheck-sentry'),
     get_absolute_url('api:healthcheck-ping'),
 ])
