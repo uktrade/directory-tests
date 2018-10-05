@@ -4,26 +4,21 @@ machine-python3: &machine-python3
     - image: circleci/python:3.6.6
 
 # Individual (shared) steps.
-
 step_checkout_repo: &step_checkout_repo
-  steps:
-    - checkout
+  checkout
 
 step_cache_repo: &step_cache_repo
-  steps:
-    - save_cache:
-        key: cached-repo-{{ .Revision }}
-        paths:
-          - ~/directory-tests
+  save_cache:
+    key: cached-repo-{{ .Revision }}
+    paths:
+      - ~/directory-tests
 
 step_restore_cached_repo: &step_restore_cached_repo
-  steps:
-    - restore_cache:
-        keys:
-          - cached-repo-{{ .Revision }}
+  restore_cache:
+    keys:
+      - cached-repo-{{ .Revision }}
 
 step_install_requirements_for_smoke_tests: &step_install_requirements_for_smoke_tests
-  working_directory: ~/directory-tests
   run:
     name: Create virtualenv and install dependencies
     command: |
@@ -31,401 +26,57 @@ step_install_requirements_for_smoke_tests: &step_install_requirements_for_smoke_
       . venv/bin/activate
             pip install -r requirements_smoke.txt
 
-step_install_requirements_for_functional_tests: &step_install_requirements_for_functional_tests
-  working_directory: ~/directory-tests
-  run:
-    name: Create virtualenv and install dependencies
-    command: |
-      python3 -m venv venv
-      . venv/bin/activate
-      pip install -r requirements_functional.txt
-      nodeenv -p
-      npm install -g junit-merge@1.2.3
-
-step_install_requirements_for_browser_tests: &step_install_requirements_for_browser_tests
-  working_directory: ~/directory-tests
-  run:
-    name: Create virtualenv and install dependencies
-    command: |
-      python3 -m venv venv
-      . venv/bin/activate
-      pip install -r requirements_browser.txt
-      nodeenv -p
-      npm install -g junit-merge@1.2.3
-
 step_cache_smoke_tests_requirements: &step_cache_smoke_tests_requirements
-  steps:
-    - save_cache:
-        key: smoke-tests-dependency-cache-{{ .Revision }}
-        paths:
-          - ~/directory-tests/venv
-
-step_cache_functional_tests_requirements: &step_cache_functional_tests_requirements
-  steps:
-    - save_cache:
-        key: functional-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
-        paths:
-          - ~/directory-tests/venv
-          - ~/directory-tests/docker/.env_with_export
-          - ~/directory-tests/docker/.env_without_export
-
-step_cache_browser_tests_requirements: &step_cache_browser_tests_requirements
-  steps:
-    - save_cache:
-        key: browser-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
-        paths:
-          - ~/directory-tests/venv
-          - ~/directory-tests/docker/.env_with_export
-          - ~/directory-tests/docker/.env_without_export
+  save_cache:
+    key: smoke-tests-dependency-cache-{{ .Revision }}
+    paths:
+      - ~/directory-tests/venv
 
 step_restore_cached_smoke_tests_requirements: &step_restore_cached_smoke_tests_requirements
-  steps:
-    - *step_restore_cached_repo
-    - restore_cache:
-        keys:
-          - smoke-tests-dependency-cache-{{ .Revision }}
-
-step_restore_cached_functional_tests_requirements: &step_restore_cached_functional_tests_requirements
-  steps:
-    - *step_restore_cached_repo
-    - restore_cache:
-        keys:
-          - functional-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
-
-step_restore_cached_browser_tests_requirements: &step_restore_cached_browser_tests_requirements
-  steps:
-    - *step_restore_cached_repo
-    - restore_cache:
-        keys:
-          - browser-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
+  restore_cache:
+    keys:
+      - smoke-tests-dependency-cache-{{ .Revision }}
 
 step_run_smoke_tests: &step_run_smoke_tests
-  working_directory: ~/directory-tests
   run:
     name: Run smoke tests
     command: |
       . venv/bin/activate
-      python ./docker/env_writer.py docker/env_writer.py --env={{ TEST_ENV }} --config=./docker/env.json
-      source ./docker/.env_with_export;
+      python ./docker/env_writer.py docker/env_writer.py --env=${TEST_ENV} --config=./docker/env.json
+      source ./docker/.env_with_export
       make smoke_tests
 
-step_run_selected_browser_tests_in_chrome: &step_run_selected_browser_tests_in_chrome
-  working_directory: ~/directory-tests
-  run:
-    name: Run selected functional scenarios in Chrome (skip examples tagged with @full)
-    command: |
-      . venv/bin/activate
-      python ./docker/env_writer.py docker/env_writer.py --env=dev --config=./docker/env.json
-      source ./docker/.env_with_export;
-      export PATH=$PATH:$HOME/bin
-      BROWSERS=Chrome VERSIONS=69.0 TAG=-full make browserstack
-
-
-step_run_all_browser_tests_in_chrome: &step_run_all_browser_tests_in_chrome
-  working_directory: ~/directory-tests
-  run:
-    name: Run all functional scenarios in Chrome
-    command: |
-      . venv/bin/activate
-      python ./docker/env_writer.py docker/env_writer.py --env=dev --config=./docker/env.json
-      source ./docker/.env_with_export;
-      export PATH=$PATH:$HOME/bin
-      BROWSERS=Chrome VERSIONS=69.0 make browserstack
-
-step_run_all_browser_tests_in_firefox: &step_run_all_browser_tests_in_firefox
-  working_directory: ~/directory-tests
-  run:
-    name: Run all functional scenarios in Firefox
-    command: |
-      . venv/bin/activate
-      python ./docker/env_writer.py docker/env_writer.py --env=dev --config=./docker/env.json
-      source ./docker/.env_with_export;
-      export PATH=$PATH:$HOME/bin
-      BROWSERS=Firefox VERSIONS=62.0 make browserstack
-
-step_run_selected_browser_tests_in_firefox: &step_run_selected_browser_tests_in_firefox
-  working_directory: ~/directory-tests
-  run:
-    name: Run selected functional scenarios in Firefox (skip examples tagged with @full)
-    command: |
-      . venv/bin/activate
-      python ./docker/env_writer.py docker/env_writer.py --env=dev --config=./docker/env.json
-      source ./docker/.env_with_export;
-      export PATH=$PATH:$HOME/bin
-      BROWSERS=Firefox VERSIONS=62.0 TAG=-full make browserstack
-
-step_merge_junit_xml_reports_from_browser_tests: &step_merge_junit_xml_reports_from_browser_tests
-  working_directory: ~/directory-tests
-  run:
-    name: Merge JUnit XML reports
-    when: always
-    command: |
-      python3 -m venv venv
-      . venv/bin/activate
-      cd ./tests/browser/reports
-      junit-merge *.xml -o merged.xml
-      ls *.xml | grep -v merged.xml | xargs rm
-
-step_run_functional_tests: &step_run_functional_tests
-  working_directory: ~/directory-tests
-  run:
-    name: Run functional tests
-    command: |
-      python3 -m venv venv
-      . venv/bin/activate
-      python ./docker/env_writer.py docker/env_writer.py --env=dev --config=./docker/env.json
-      source ./docker/.env_with_export;
-      export PATH=$PATH:$HOME/bin
-      FEATURE_DIR={{ FEATURE_DIR }} make functional_tests_feature_dir
-
-step_merge_junit_xml_reports_from_functional_tests: &step_merge_junit_xml_reports_from_functional_tests
-  working_directory: ~/directory-tests
-  run:
-    name: Merge JUnit XML reports
-    when: always
-    command: |
-      python3 -m venv venv
-      . venv/bin/activate
-      cd ./tests/functional/reports
-      junit-merge *.xml -o merged.xml
-      ls *.xml | grep -v merged.xml | xargs rm
-
-
 # List of steps
-steps_store_browser_tests_results_and_artifacts: &steps_store_browser_tests_results_and_artifacts
-  steps:
-    - store_tests_results:
-        path: ./tests/browser/reports
-    - store_artifacts:
-        path: ./tests/browser/reports
-
-steps_store_functional_tests_results_and_artifacts: &steps_store_functional_tests_results_and_artifacts
-  steps:
-    - store_tests_results:
-        path: ./tests/functional/reports
-    - store_artifacts:
-        path: ./tests/functional/reports
-
 steps_smoke_tests: &steps_smoke_tests
-  working_directory: ~/directory-tests
   steps:
+    - *step_checkout_repo
+    - *step_cache_repo
+    - *step_restore_cached_repo
     - *step_restore_cached_smoke_tests_requirements
     - *step_install_requirements_for_smoke_tests
     - *step_cache_smoke_tests_requirements
     - *step_run_smoke_tests
-    - store_tests_results:
+    - store_test_results:
         path: ./tests/smoke/reports
     - store_artifacts:
         path: ./tests/smoke/reports
 
-steps_all_browser_tests_in_chrome: &steps_all_browser_tests_in_chrome
-  working_directory: ~/directory-tests
-  steps:
-    - *step_restore_cached_browser_tests_requirements
-    - *step_install_requirements_for_browser_tests
-    - *step_cache_browser_tests_requirements
-    - *step_run_all_browser_tests_in_chrome
-    - *step_merge_junit_xml_reports_from_browser_tests
-    - *steps_store_browser_tests_results_and_artifacts
-
-steps_all_browser_tests_in_firefox: &steps_all_browser_tests_in_firefox
-  working_directory: ~/directory-tests
-  steps:
-    - *step_restore_cached_browser_tests_requirements
-    - *step_install_requirements_for_browser_tests
-    - *step_cache_browser_tests_requirements
-    - *step_run_all_browser_tests_in_firefox
-    - *step_merge_junit_xml_reports_from_browser_tests
-    - *steps_store_browser_tests_results_and_artifacts
-
-steps_selected_browser_tests_in_chrome: &steps_selected_browser_tests_in_chrome
-  working_directory: ~/directory-tests
-  steps:
-    - *step_restore_cached_browser_tests_requirements
-    - *step_install_requirements_for_browser_tests
-    - *step_cache_browser_tests_requirements
-    - *step_run_selected_browser_tests_in_chrome
-    - *step_merge_junit_xml_reports_from_browser_tests
-    - *steps_store_browser_tests_results_and_artifacts
-
-steps_selected_browser_tests_in_firefox: &steps_selected_browser_tests_in_firefox
-  working_directory: ~/directory-tests
-  steps:
-    - *step_restore_cached_browser_tests_requirements
-    - *step_install_requirements_for_browser_tests
-    - *step_cache_browser_tests_requirements
-    - *step_run_selected_browser_tests_in_firefox
-    - *step_merge_junit_xml_reports_from_browser_tests
-    - *steps_store_browser_tests_results_and_artifacts
-
-steps_functional_tests: &steps_functional_tests
-    working_directory: ~/directory-tests
-    steps:
-      - *step_restore_cached_functional_tests_requirements
-      - *step_install_requirements_for_functional_tests
-      - *step_cache_functional_tests_requirements
-      - *step_run_functional_tests
-      - *step_merge_junit_xml_reports_from_functional_tests
-      - *steps_store_functional_tests_results_and_artifacts
-
 # list of all jobs
-version: 2.0
+version: 2
 jobs:
-  checkout_code:
-    <<: *machine-python3
-    steps:
-      - *step_checkout_repo
-      - *step_cache_repo
-
   smoke_tests_dev:
     <<: *machine-python3
+    working_directory: ~/directory-tests
     environment:
-      TEST_ENV: "dev"
-    steps:
-      - *steps_smoke_tests
-
-  smoke_tests_stage:
-    <<: *machine-python3
-    environment:
-      TEST_ENV: "stage"
-    steps:
-      - *steps_smoke_tests
-
-  smoke_tests_prod:
-    <<: *machine-python3
-    environment:
-      TEST_ENV: "prod"
-    steps:
-      - *steps_smoke_tests
-
-  browser_all_in_chrome:
-    <<: *machine-python3
-    environment:
-      TEST_ENV: "dev"
-    steps:
-      - steps_all_browser_tests_in_chrome
-
-  browser_all_in_firefox:
-    <<: *machine-python3
-    environment:
-      TEST_ENV: "dev"
-    steps:
-      - steps_all_browser_tests_in_firefox
-
-  browser_selected_in_chrome:
-    <<: *machine-python3
-    environment:
-      TEST_ENV: "dev"
-    steps:
-      - steps_selected_browser_tests_in_chrome
-
-  browser_selected_in_firefox:
-    <<: *machine-python3
-    environment:
-      TEST_ENV: "dev"
-    steps:
-      - steps_selected_browser_tests_in_firefox
-
-  func_fab_test_dev:
-    <<: *machine-python3
-    environment:
-      TEST_ENV: "dev"
-      FEATURE_DIR: "fab"
-    steps:
-      - steps_functional_tests
-
-  func_fab_test_stage:
-    <<: *machine-python3
-    environment:
-      TEST_ENV: "stage"
-      FEATURE_DIR: "fab"
-    steps:
-      - steps_functional_tests
-
-  func_fas_test_dev:
-    <<: *machine-python3
-    environment:
-      TEST_ENV: "dev"
-      FEATURE_DIR: "fas"
-    steps:
-      - steps_functional_tests
-
-  func_fas_test_stage:
-    <<: *machine-python3
-    environment:
-      TEST_ENV: "stage"
-      FEATURE_DIR: "fas"
-    steps:
-      - steps_functional_tests
-
-  func_sso_test_dev:
-    <<: *machine-python3
-    environment:
-      TEST_ENV: "dev"
-      FEATURE_DIR: "sso"
-    steps:
-      - steps_functional_tests
-
-  func_sso_test_stage:
-    <<: *machine-python3
-    environment:
-      TEST_ENV: "stage"
-      FEATURE_DIR: "sso"
-    steps:
-      - steps_functional_tests
-
-  func_sud_test_dev:
-    <<: *machine-python3
-    environment:
-      TEST_ENV: "dev"
-      FEATURE_DIR: "sud"
-    steps:
-      - steps_functional_tests
-
-  func_sud_test_stage:
-    <<: *machine-python3
-    environment:
-      TEST_ENV: "stage"
-      FEATURE_DIR: "sud"
-    steps:
-      - steps_functional_tests
+      TEST_ENV: dev
+    <<: *steps_smoke_tests
 
 workflows:
   version: 2
 
   run_all_tests_on_dev:
     jobs:
-      - checkout_code
       - smoke_tests_dev:
           requires:
             - checkout_code
-      - browser_selected_in_chrome:
-          requires:
-            - smoke_tests_dev
-      - browser_selected_in_firefox:
-          requires:
-            - smoke_tests_dev
-      - func_fab_test_dev:
-          requires:
-            - smoke_tests_dev
-      - func_fas_test_dev:
-          requires:
-            - smoke_tests_dev
-      - func_sso_test_dev:
-          requires:
-            - smoke_tests_dev
-      - func_sud_test_dev:
-          requires:
-            - smoke_tests_dev
 
-  run_all_browser_scenarios:
-    triggers:
-    - schedule:
-        cron: "0 4 * * 1"
-        filters:
-          branches:
-            only: master
-    jobs:
-      - checkout_code
-      - browser_all_in_chrome
-      - browser_all_in_firefox
