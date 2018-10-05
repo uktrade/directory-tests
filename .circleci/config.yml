@@ -1,3 +1,4 @@
+# Build machines configs.
 machine-python3: &machine-python3
   docker:
     - image: circleci/python:3.6.6
@@ -329,7 +330,6 @@ jobs:
     environment:
       TEST_ENV: "dev"
       FEATURE_DIR: "fab"
-    docker:
     steps:
       - steps_functional_tests
 
@@ -338,7 +338,6 @@ jobs:
     environment:
       TEST_ENV: "stage"
       FEATURE_DIR: "fab"
-    docker:
     steps:
       - steps_functional_tests
 
@@ -347,7 +346,6 @@ jobs:
     environment:
       TEST_ENV: "dev"
       FEATURE_DIR: "fas"
-    docker:
     steps:
       - steps_functional_tests
 
@@ -356,7 +354,6 @@ jobs:
     environment:
       TEST_ENV: "stage"
       FEATURE_DIR: "fas"
-    docker:
     steps:
       - steps_functional_tests
 
@@ -365,7 +362,6 @@ jobs:
     environment:
       TEST_ENV: "dev"
       FEATURE_DIR: "sso"
-    docker:
     steps:
       - steps_functional_tests
 
@@ -374,7 +370,6 @@ jobs:
     environment:
       TEST_ENV: "stage"
       FEATURE_DIR: "sso"
-    docker:
     steps:
       - steps_functional_tests
 
@@ -383,7 +378,6 @@ jobs:
     environment:
       TEST_ENV: "dev"
       FEATURE_DIR: "sud"
-    docker:
     steps:
       - steps_functional_tests
 
@@ -392,7 +386,6 @@ jobs:
     environment:
       TEST_ENV: "stage"
       FEATURE_DIR: "sud"
-    docker:
     steps:
       - steps_functional_tests
 
