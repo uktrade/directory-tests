@@ -361,7 +361,7 @@ jobs:
 workflows:
   version: 2
 
-  run_all_tests_on_dev:
+  run_smoke_all_functional_and_selected_browser_tests_on_dev:
     jobs:
       - setup_env_for_smoke_tests
       - setup_env_for_functional_tests
@@ -390,7 +390,48 @@ workflows:
           requires:
             - setup_env_for_browser_tests
 
+  run_all_tests_on_dev:
+    triggers:
+    - schedule:
+        cron: "0 20 * * 1-5"
+        filters:
+          branches:
+            only: master
+    jobs:
+      - setup_env_for_smoke_tests
+      - setup_env_for_functional_tests
+      - smoke_tests_dev:
+          requires:
+            - setup_env_for_smoke_tests
+      - func_fab_test_dev:
+          requires:
+            - setup_env_for_functional_tests
+      - func_fas_test_dev:
+          requires:
+            - setup_env_for_functional_tests
+      - func_sso_test_dev:
+          requires:
+            - setup_env_for_functional_tests
+      - func_sud_test_dev:
+          requires:
+            - setup_env_for_functional_tests
+      - setup_env_for_browser_tests:
+          requires:
+            - smoke_tests_dev
+      - browser_all_chrome_dev:
+          requires:
+            - setup_env_for_browser_tests
+      - browser_all_firefox_dev:
+          requires:
+            - setup_env_for_browser_tests
+
   run_all_tests_on_stage:
+    triggers:
+    - schedule:
+        cron: "0 4 * * 1-5"
+        filters:
+          branches:
+            only: master
     jobs:
       - setup_env_for_smoke_tests
       - setup_env_for_functional_tests
@@ -412,10 +453,9 @@ workflows:
       - setup_env_for_browser_tests:
           requires:
             - smoke_tests_stage
-      - browser_selected_chrome_stage:
+      - browser_all_chrome_stage:
           requires:
             - setup_env_for_browser_tests
-      - browser_selected_firefox_stage:
+      - browser_all_firefox_stage:
           requires:
             - setup_env_for_browser_tests
-
