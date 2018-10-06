@@ -34,15 +34,13 @@ step_cache_smoke_tests_requirements: &step_cache_smoke_tests_requirements
   save_cache:
     key: smoke-tests-dependency-cache-{{ .Revision }}
     paths:
-      - ~/directory-tests/venv
+      - ~/directory-tests
 
 step_cache_functional_tests_requirements: &step_cache_functional_tests_requirements
   save_cache:
     key: functional-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
     paths:
-      - ~/directory-tests/venv
-      - ~/directory-tests/docker/.env_with_export
-      - ~/directory-tests/docker/.env_without_export
+      - ~/directory-tests
 
 step_restore_cached_smoke_tests_requirements: &step_restore_cached_smoke_tests_requirements
   restore_cache:
