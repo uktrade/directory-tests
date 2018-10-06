@@ -430,12 +430,6 @@ workflows:
             - setup_env_for_browser_tests
 
   run_all_tests_on_stage:
-    triggers:
-    - schedule:
-        cron: "0 4 * * 1-5"
-        filters:
-          branches:
-            only: master
     jobs:
       - setup_env_for_smoke_tests
       - setup_env_for_functional_tests
