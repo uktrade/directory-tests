@@ -279,6 +279,24 @@ jobs:
       FEATURE_DIR: "sud"
     <<: *steps_functional_tests
 
+  browser_all_chrome_dev:
+    <<: *machine_python3
+    working_directory: ~/directory-tests
+    environment:
+      TEST_ENV: "dev"
+      BROWSER: "chrome"
+      <<: *chrome_version
+    <<: *steps_run_browser_tests
+
+  browser_all_firefox_dev:
+    working_directory: ~/directory-tests
+    <<: *machine_python3
+    environment:
+      TEST_ENV: "dev"
+      BROWSER: "firefox"
+      <<: *firefox_version
+    <<: *steps_run_browser_tests
+
   browser_selected_chrome_dev:
     <<: *machine_python3
     working_directory: ~/directory-tests
@@ -297,6 +315,26 @@ jobs:
       BROWSER: "firefox"
       <<: *firefox_version
       TAGS: "-full"
+    <<: *steps_run_browser_tests
+
+  browser_all_chrome_stage:
+    <<: *machine_python3
+    working_directory: ~/directory-tests
+    environment:
+      TEST_ENV: "stage"
+      BROWSER: "chrome"
+      <<: *chrome_version
+      TAGS: "-dev-only"
+    <<: *steps_run_browser_tests
+
+  browser_all_firefox_stage:
+    working_directory: ~/directory-tests
+    <<: *machine_python3
+    environment:
+      TEST_ENV: "stage"
+      BROWSER: "firefox"
+      <<: *firefox_version
+      TAGS: "-dev-only"
     <<: *steps_run_browser_tests
 
   browser_selected_chrome_stage:
