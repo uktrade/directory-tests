@@ -30,6 +30,30 @@ step_install_requirements_for_functional_tests: &step_install_requirements_for_f
       nodeenv -p
       npm install -g junit-merge@1.2.3
 
+step_cache_smoke_tests_requirements: &step_cache_smoke_tests_requirements
+  save_cache:
+    key: smoke-tests-dependency-cache-{{ .Revision }}
+    paths:
+      - ~/directory-tests/venv
+
+step_cache_functional_tests_requirements: &step_cache_functional_tests_requirements
+  save_cache:
+    key: functional-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
+    paths:
+      - ~/directory-tests/venv
+      - ~/directory-tests/docker/.env_with_export
+      - ~/directory-tests/docker/.env_without_export
+
+step_restore_cached_smoke_tests_requirements: &step_restore_cached_smoke_tests_requirements
+  restore_cache:
+    keys:
+      - smoke-tests-dependency-cache-{{ .Revision }}
+
+step_restore_cached_functional_tests_requirements: &step_restore_cached_functional_tests_requirements
+  restore_cache:
+    keys:
+      - functional-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
+
 step_run_smoke_tests: &step_run_smoke_tests
   run:
     name: Run smoke tests
@@ -62,10 +86,21 @@ step_merge_junit_xml_reports_from_functional_tests: &step_merge_junit_xml_report
       ls *.xml | grep -v merged.xml | xargs rm
 
 # Lists of steps
-steps_smoke_tests: &steps_smoke_tests
+steps_setup_env_for_smoke_tests: &steps_setup_env_for_smoke_tests
   steps:
     - *step_checkout_repo
     - *step_install_requirements_for_smoke_tests
+    - *step_cache_smoke_tests_requirements
+
+steps_setup_env_for_functional_tests: &steps_setup_env_for_functional_tests
+  steps:
+    - *step_checkout_repo
+    - *step_install_requirements_for_functional_tests
+    - *step_cache_functional_tests_requirements
+
+steps_smoke_tests: &steps_smoke_tests
+  steps:
+    - *step_restore_cached_smoke_tests_requirements
     - *step_run_smoke_tests
     - store_test_results:
         path: ./tests/smoke/reports
@@ -74,8 +109,7 @@ steps_smoke_tests: &steps_smoke_tests
 
 steps_functional_tests: &steps_functional_tests
   steps:
-    - *step_checkout_repo
-    - *step_install_requirements_for_functional_tests
+    - *step_restore_cached_functional_tests_requirements
     - *step_run_functional_tests
     - *step_merge_junit_xml_reports_from_functional_tests
     - store_test_results:
@@ -85,6 +119,16 @@ steps_functional_tests: &steps_functional_tests
 
 
 jobs:
+  setup_env_for_smoke_tests:
+    <<: *machine-python3
+    working_directory: ~/directory-tests
+    <<: *steps_setup_env_for_smoke_tests
+
+  setup_env_for_functional_tests:
+    <<: *machine-python3
+    working_directory: ~/directory-tests
+    <<: *steps_setup_env_for_functional_tests
+
   smoke_tests_dev:
     <<: *machine-python3
     working_directory: ~/directory-tests
@@ -168,16 +212,41 @@ workflows:
 
   run_all_tests_on_dev:
     jobs:
-      - smoke_tests_dev
-      - func_fab_test_dev
-      - func_fas_test_dev
-      - func_sso_test_dev
-      - func_sud_test_dev
+      - setup_env_for_smoke_tests
+      - setup_env_for_functional_tests
+      - smoke_tests_dev:
+          requires:
+            - setup_env_for_smoke_tests
+      - func_fab_test_dev:
+          requires:
+            - setup_env_for_functional_tests
+      - func_fas_test_dev:
+          requires:
+            - setup_env_for_functional_tests
+      - func_sso_test_dev:
+          requires:
+            - setup_env_for_functional_tests
+      - func_sud_test_dev:
+          requires:
+            - setup_env_for_functional_tests
 
   run_all_tests_on_stage:
     jobs:
-      - smoke_tests_stage
-      - func_fab_test_stage
-      - func_fas_test_stage
-      - func_sso_test_stage
-      - func_sud_test_stage
+      - setup_env_for_smoke_tests
+      - setup_env_for_functional_tests
+      - smoke_tests_stage:
+          requires:
+            - setup_env_for_smoke_tests
+      - func_fab_test_stage:
+          requires:
+            - setup_env_for_functional_tests
+      - func_fas_test_stage:
+          requires:
+            - setup_env_for_functional_tests
+      - func_sso_test_stage:
+          requires:
+            - setup_env_for_functional_tests
+      - func_sud_test_stage:
+          requires:
+            - setup_env_for_functional_tests
+
