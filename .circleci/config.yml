@@ -1,7 +1,7 @@
 version: 2
 
 # Machines configs
-machine-python3: &machine-python3
+machine_python3: &machine_python3
   docker:
     - image: circleci/python:3.6.6
 
@@ -177,36 +177,36 @@ steps_run_browser_tests: &steps_run_browser_tests
 
 jobs:
   setup_env_for_smoke_tests:
-    <<: *machine-python3
+    <<: *machine_python3
     working_directory: ~/directory-tests
     <<: *steps_setup_env_for_smoke_tests
 
   setup_env_for_functional_tests:
-    <<: *machine-python3
+    <<: *machine_python3
     working_directory: ~/directory-tests
     <<: *steps_setup_env_for_functional_tests
 
   setup_env_for_browser_tests:
-    <<: *machine-python3
+    <<: *machine_python3
     working_directory: ~/directory-tests
     <<: *steps_setup_env_for_browser_tests
 
   smoke_tests_dev:
-    <<: *machine-python3
+    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "dev"
     <<: *steps_smoke_tests
 
   smoke_tests_stage:
-    <<: *machine-python3
+    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "stage"
     <<: *steps_smoke_tests
 
   func_fab_test_dev:
-    <<: *machine-python3
+    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "dev"
@@ -214,7 +214,7 @@ jobs:
     <<: *steps_functional_tests
 
   func_fas_test_dev:
-    <<: *machine-python3
+    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "dev"
@@ -222,7 +222,7 @@ jobs:
     <<: *steps_functional_tests
 
   func_sso_test_dev:
-    <<: *machine-python3
+    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "dev"
@@ -230,7 +230,7 @@ jobs:
     <<: *steps_functional_tests
 
   func_sud_test_dev:
-    <<: *machine-python3
+    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "dev"
@@ -238,7 +238,7 @@ jobs:
     <<: *steps_functional_tests
 
   func_fab_test_stage:
-    <<: *machine-python3
+    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "stage"
@@ -246,7 +246,7 @@ jobs:
     <<: *steps_functional_tests
 
   func_fas_test_stage:
-    <<: *machine-python3
+    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "stage"
@@ -254,7 +254,7 @@ jobs:
     <<: *steps_functional_tests
 
   func_sso_test_stage:
-    <<: *machine-python3
+    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "stage"
@@ -262,7 +262,7 @@ jobs:
     <<: *steps_functional_tests
 
   func_sud_test_stage:
-    <<: *machine-python3
+    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "stage"
@@ -270,7 +270,7 @@ jobs:
     <<: *steps_functional_tests
 
   browser_selected_chrome_dev:
-    <<: *machine-python3
+    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "dev"
@@ -281,7 +281,7 @@ jobs:
 
   browser_selected_firefox_dev:
     working_directory: ~/directory-tests
-    <<: *machine-python3
+    <<: *machine_python3
     environment:
       TEST_ENV: "dev"
       BROWSER: "firefox"
@@ -290,7 +290,7 @@ jobs:
     <<: *steps_run_browser_tests
 
   browser_selected_chrome_stage:
-    <<: *machine-python3
+    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "stage"
@@ -301,7 +301,7 @@ jobs:
 
   browser_selected_firefox_stage:
     working_directory: ~/directory-tests
-    <<: *machine-python3
+    <<: *machine_python3
     environment:
       TEST_ENV: "stage"
       BROWSER: "firefox"
