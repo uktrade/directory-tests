@@ -14,7 +14,7 @@ sys.path.append(os.path.dirname(os.path.realpath(__file__)))
 
 setup(
     name="behave-browserstack",
-    version="0.1.0",
+    version="0.1.1",
     author="BrowserStack",
     author_email="support@browserstack.com",
     description="Behave Integration with BrowserStack",
@@ -31,14 +31,14 @@ def run_behave_test(
     *,
     browsers: str = "",
     versions: str = "",
-    tag: str = None
+    tags: str = None
 ):
-    extra_tag = f"--tags={tag}" if tag else ""
+    extra_tags = f"--tags={tags}" if tags else ""
     sh(
         f"BROWSERS={browsers} VERSIONS={versions} CONFIG={config_name} "
         f"TASK_ID={task_id} behave -k --format progress3 "
         f"--logging-filter=-root --tags=-wip --tags=-skip --tags=-long "
-        f"--tags=-fixme {extra_tag}"
+        f"--tags=-fixme {extra_tags}"
     )
 
 
@@ -55,8 +55,8 @@ def run_behave_test(
         ),
         make_option(
             "-t",
-            "--tag",
-            help="Scenario tag for a selective test run",
+            "--tags",
+            help="(Optional) Scenario tags for a selective test run",
             default="",
         ),
         make_option(
@@ -80,9 +80,9 @@ def run(options):
     if options.config == "local":
         run_behave_test(
             config_name="local",
-            tag=options.tag,
             browsers=options.browsers,
             versions=options.versions,
+            tags=options.tags,
         )
     else:
         import config
@@ -93,9 +93,9 @@ def run(options):
                 target=run_behave_test,
                 args=(options.config, idx),
                 kwargs={
-                    "tag": options.tag,
                     "browsers": options.browsers if browser_num == 1 else "",
                     "versions": options.versions,
+                    "tags": options.tags,
                 },
             )
             jobs.append(process)
