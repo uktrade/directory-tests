@@ -100,7 +100,7 @@ step_run_functional_tests: &step_run_functional_tests
       python ./docker/env_writer.py --env=${TEST_ENV} --config=./docker/env.json
       source ./docker/.env_with_export;
       export PATH=$PATH:$HOME/bin
-      FEATURE_DIR=${FEATURE_DIR} make functional_tests_feature_dir
+      FEATURE_DIR=${FEATURE_DIR} TAGS=${TAGS} make functional_tests_feature_dir
 
 step_run_browser_tests: &step_run_browser_tests
   run:
@@ -253,6 +253,7 @@ jobs:
     environment:
       TEST_ENV: "stage"
       FEATURE_DIR: "fab"
+      TAGS: "-dev-only"
     <<: *steps_functional_tests
 
   func_fas_test_stage:
@@ -261,6 +262,7 @@ jobs:
     environment:
       TEST_ENV: "stage"
       FEATURE_DIR: "fas"
+      TAGS: "-dev-only"
     <<: *steps_functional_tests
 
   func_sso_test_stage:
@@ -269,6 +271,7 @@ jobs:
     environment:
       TEST_ENV: "stage"
       FEATURE_DIR: "sso"
+      TAGS: "-dev-only"
     <<: *steps_functional_tests
 
   func_sud_test_stage:
@@ -277,6 +280,7 @@ jobs:
     environment:
       TEST_ENV: "stage"
       FEATURE_DIR: "sud"
+      TAGS: "-dev-only"
     <<: *steps_functional_tests
 
   browser_all_chrome_dev:
