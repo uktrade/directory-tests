@@ -30,6 +30,17 @@ step_install_requirements_for_functional_tests: &step_install_requirements_for_f
       nodeenv -p
       npm install -g junit-merge@1.2.3
 
+step_install_requirements_for_browser_tests: &step_install_requirements_for_browser_tests
+  run:
+    name: Create virtualenv and install dependencies
+    command: |
+      python3 -m venv venv
+      . venv/bin/activate
+      pip install --upgrade pip
+      pip install -r requirements_browser.txt
+      nodeenv -p
+      npm install -g junit-merge@1.2.3
+
 step_cache_smoke_tests_requirements: &step_cache_smoke_tests_requirements
   save_cache:
     key: smoke-tests-dependency-cache-{{ .Revision }}
@@ -42,10 +53,21 @@ step_cache_functional_tests_requirements: &step_cache_functional_tests_requireme
     paths:
       - ~/directory-tests
 
+step_cache_browser_tests_requirements: &step_cache_browser_tests_requirements
+  save_cache:
+    key: browser-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
+    paths:
+      - ~/directory-tests
+
 step_restore_cached_smoke_tests_requirements: &step_restore_cached_smoke_tests_requirements
   restore_cache:
     keys:
       - smoke-tests-dependency-cache-{{ .Revision }}
+
+step_restore_cached_browser_tests_requirements: &step_restore_cached_browser_tests_requirements
+  restore_cache:
+    keys:
+      - browser-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
 
 step_restore_cached_functional_tests_requirements: &step_restore_cached_functional_tests_requirements
   restore_cache:
@@ -72,6 +94,16 @@ step_run_functional_tests: &step_run_functional_tests
       export PATH=$PATH:$HOME/bin
       FEATURE_DIR=${FEATURE_DIR} make functional_tests_feature_dir
 
+step_run_browser_tests: &step_run_browser_tests
+  run:
+    name: Run all functional scenarios in {{ .Environment.BROWSER }}
+    command: |
+      . venv/bin/activate
+      python ./docker/env_writer.py --env=${TEST_ENV} --config=./docker/env_browser.json
+      source ./docker/.env_with_export;
+      export PATH=$PATH:$HOME/bin
+      BROWSERS=${BROWSER} VERSIONS=${BROWSER_VERSION} TAGS=${TAGS} make browserstack
+
 step_merge_junit_xml_reports_from_functional_tests: &step_merge_junit_xml_reports_from_functional_tests
   run:
     name: Merge JUnit XML reports
@@ -80,6 +112,18 @@ step_merge_junit_xml_reports_from_functional_tests: &step_merge_junit_xml_report
       python3 -m venv venv
       . venv/bin/activate
       cd ./tests/functional/reports
+      junit-merge *.xml -o merged.xml
+      ls *.xml | grep -v merged.xml | xargs rm
+
+
+step_merge_junit_xml_reports_from_browser_tests: &step_merge_junit_xml_reports_from_browser_tests
+  run:
+    name: Merge JUnit XML reports
+    when: always
+    command: |
+      python3 -m venv venv
+      . venv/bin/activate
+      cd ./tests/browser/reports
       junit-merge *.xml -o merged.xml
       ls *.xml | grep -v merged.xml | xargs rm
 
@@ -95,6 +139,12 @@ steps_setup_env_for_functional_tests: &steps_setup_env_for_functional_tests
     - *step_checkout_repo
     - *step_install_requirements_for_functional_tests
     - *step_cache_functional_tests_requirements
+
+steps_setup_env_for_browser_tests: &steps_setup_env_for_browser_tests
+  steps:
+    - *step_checkout_repo
+    - *step_install_requirements_for_browser_tests
+    - *step_cache_browser_tests_requirements
 
 steps_smoke_tests: &steps_smoke_tests
   steps:
@@ -115,6 +165,15 @@ steps_functional_tests: &steps_functional_tests
     - store_artifacts:
         path: ./tests/functional/reports
 
+steps_run_browser_tests: &steps_run_browser_tests
+  steps:
+    - *step_restore_cached_browser_tests_requirements
+    - *step_run_browser_tests
+    - *step_merge_junit_xml_reports_from_browser_tests
+    - store_test_results:
+        path: ./tests/browser/reports
+    - store_artifacts:
+        path: ./tests/browser/reports
 
 jobs:
   setup_env_for_smoke_tests:
@@ -126,6 +185,11 @@ jobs:
     <<: *machine-python3
     working_directory: ~/directory-tests
     <<: *steps_setup_env_for_functional_tests
+
+  setup_env_for_browser_tests:
+    <<: *machine-python3
+    working_directory: ~/directory-tests
+    <<: *steps_setup_env_for_browser_tests
 
   smoke_tests_dev:
     <<: *machine-python3
@@ -205,6 +269,46 @@ jobs:
       FEATURE_DIR: "sud"
     <<: *steps_functional_tests
 
+  browser_selected_chrome_dev:
+    <<: *machine-python3
+    working_directory: ~/directory-tests
+    environment:
+      TEST_ENV: "dev"
+      BROWSER: "chrome"
+      BROWSER_VERSION: "69.0"
+      TAGS: "-full"
+    <<: *steps_run_browser_tests
+
+  browser_selected_firefox_dev:
+    working_directory: ~/directory-tests
+    <<: *machine-python3
+    environment:
+      TEST_ENV: "dev"
+      BROWSER: "firefox"
+      BROWSER_VERSION: "62.0"
+      TAGS: "-full"
+    <<: *steps_run_browser_tests
+
+  browser_selected_chrome_stage:
+    <<: *machine-python3
+    working_directory: ~/directory-tests
+    environment:
+      TEST_ENV: "stage"
+      BROWSER: "chrome"
+      BROWSER_VERSION: "69.0"
+      TAGS: "-full,-dev-only"
+    <<: *steps_run_browser_tests
+
+  browser_selected_firefox_stage:
+    working_directory: ~/directory-tests
+    <<: *machine-python3
+    environment:
+      TEST_ENV: "stage"
+      BROWSER: "firefox"
+      BROWSER_VERSION: "62.0"
+      TAGS: "-full,-dev-only"
+    <<: *steps_run_browser_tests
+
 workflows:
   version: 2
 
@@ -227,6 +331,15 @@ workflows:
       - func_sud_test_dev:
           requires:
             - setup_env_for_functional_tests
+      - setup_env_for_browser_tests:
+          requires:
+            - smoke_tests_dev
+      - browser_selected_chrome_dev:
+          requires:
+            - setup_env_for_browser_tests
+      - browser_selected_firefox_dev:
+          requires:
+            - setup_env_for_browser_tests
 
   run_all_tests_on_stage:
     jobs:
@@ -247,4 +360,13 @@ workflows:
       - func_sud_test_stage:
           requires:
             - setup_env_for_functional_tests
+      - setup_env_for_browser_tests:
+          requires:
+            - smoke_tests_stage
+      - browser_selected_chrome_stage:
+          requires:
+            - setup_env_for_browser_tests
+      - browser_selected_firefox_stage:
+          requires:
+            - setup_env_for_browser_tests
 
