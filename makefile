@@ -114,30 +114,30 @@ BROWSER_DOCKER_REMOVE_ALL:
 	xargs -I {} docker rm -f {}
 
 browser_local:
-	cd tests/browser && paver run --config=local --browsers=${BROWSERS} --tag=${TAG}
+	cd tests/browser && paver run --config=local --browsers=${BROWSERS} --tags=${TAGS}
 
 browserstack:
 	$(BROWSER_SET_DOCKER_ENV_VARS) && \
 	cd tests/browser && \
-	paver run --config=browserstack-single --browsers=${BROWSERS} --versions=${VERSIONS} --tag=${TAG}
+	paver run --config=browserstack-single --browsers=${BROWSERS} --versions=${VERSIONS} --tags=${TAGS}
 
 browserstack_first_set:
 	$(BROWSER_SET_DOCKER_ENV_VARS) && \
 	cd tests/browser && \
-	paver run --config=browserstack-first-browser-set --tag=${TAG}
+	paver run --config=browserstack-first-browser-set --tags=${TAGS}
 
 browserstack_second_set:
 	$(BROWSER_SET_DOCKER_ENV_VARS) && \
 	cd tests/browser && \
-	paver run --config=browserstack-second-browser-set --tag=${TAG}
+	paver run --config=browserstack-second-browser-set --tags=${TAGS}
 
 browserstack_mobile:
 	$(BROWSER_SET_DOCKER_ENV_VARS) && \
-	cd tests/browser && paver run --config=browserstack-mobile --browsers=${BROWSERS} --versions=${VERSIONS} --tag=${TAG}
+	cd tests/browser && paver run --config=browserstack-mobile --browsers=${BROWSERS} --versions=${VERSIONS} --tags=${TAGS}
 
 browserstack_single:
 	$(BROWSER_SET_DOCKER_ENV_VARS) && \
-	cd tests/browser && paver run --config=browserstack-single --browsers=${BROWSERS} --versions=${VERSIONS} --tag=${TAG}
+	cd tests/browser && paver run --config=browserstack-single --browsers=${BROWSERS} --versions=${VERSIONS} --tags=${TAGS}
 
 docker_browserstack_first_set: BROWSER_DOCKER_REMOVE_ALL
 	$(BROWSER_SET_DOCKER_ENV_VARS) && \
