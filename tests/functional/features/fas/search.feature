@@ -135,15 +135,14 @@ Feature: Find a Supplier
   @ED-2020
   @search
   @no-sso-email-verification-required
-  Scenario: Buyers should be able to find Suppliers by product, service or company keyword
+  Scenario: Buyers should be able to find Suppliers by product, service or keyword
     Given "Annette Geissinger" is a buyer
 
     When "Annette Geissinger" searches for Suppliers using product name, service name and a keyword
-      | product          | service                                  | keyword         | company                                                  |
-      | Aerosol Paints   | Supply all types of Aerosols             | vanishing spray | KING OF PAINTS                                           |
-      | SmartMed         | seamlessly integrated eHealth solution   | Telehealth      | SmartMed Global                                          |
-      | peristaltic pump | deliver the maximum possible performance | brushless       | ZIKODRIVE MOTOR CONTROLLERS (ROUND BANK ENGINEERING LTD) |
-
+      | product         | service               | keyword  | company                     |
+      | social insights | market research       | B2B      | YOLO COMMUNICATIONS LIMITED |
+      | logo animations | content for broadcast | 3dCG     | LIGHTRHYTHM VISUALS LTD     |
+      | CANbus displays | stabilisation systems | NMEA2000 | CANTRONIK LTD               |
     Then "Annette Geissinger" should be able to find all sought companies
 
 
@@ -228,6 +227,6 @@ Feature: Find a Supplier
     Then "Annette Geissinger" should see that some of the results have the "<specific>" search terms highlighted
 
     Examples: terms
-      | specific                |
-      | sweets                  |
-      | international companies |
+      | specific |
+      | sweets   |
+      | metal    |
