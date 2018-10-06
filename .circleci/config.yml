@@ -1,5 +1,13 @@
 version: 2
 
+# Variables
+chrome_version: &chrome_version
+  BROWSER_VERSION: "69.0"
+
+firefox_version: &firefox_version
+  BROWSER_VERSION: "62.0"
+
+
 # Machines configs
 machine_python3: &machine_python3
   docker:
@@ -127,6 +135,7 @@ step_merge_junit_xml_reports_from_browser_tests: &step_merge_junit_xml_reports_f
       junit-merge *.xml -o merged.xml
       ls *.xml | grep -v merged.xml | xargs rm
 
+
 # Lists of steps
 steps_setup_env_for_smoke_tests: &steps_setup_env_for_smoke_tests
   steps:
@@ -174,6 +183,7 @@ steps_run_browser_tests: &steps_run_browser_tests
         path: ./tests/browser/reports
     - store_artifacts:
         path: ./tests/browser/reports
+
 
 jobs:
   setup_env_for_smoke_tests:
@@ -275,7 +285,7 @@ jobs:
     environment:
       TEST_ENV: "dev"
       BROWSER: "chrome"
-      BROWSER_VERSION: "69.0"
+      <<: *chrome_version
       TAGS: "-full"
     <<: *steps_run_browser_tests
 
@@ -285,7 +295,7 @@ jobs:
     environment:
       TEST_ENV: "dev"
       BROWSER: "firefox"
-      BROWSER_VERSION: "62.0"
+      <<: *firefox_version
       TAGS: "-full"
     <<: *steps_run_browser_tests
 
@@ -295,7 +305,7 @@ jobs:
     environment:
       TEST_ENV: "stage"
       BROWSER: "chrome"
-      BROWSER_VERSION: "69.0"
+      <<: *chrome_version
       TAGS: "-full,-dev-only"
     <<: *steps_run_browser_tests
 
@@ -305,9 +315,10 @@ jobs:
     environment:
       TEST_ENV: "stage"
       BROWSER: "firefox"
-      BROWSER_VERSION: "62.0"
+      <<: *firefox_version
       TAGS: "-full,-dev-only"
     <<: *steps_run_browser_tests
+
 
 workflows:
   version: 2
