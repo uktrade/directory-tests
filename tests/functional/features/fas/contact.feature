@@ -3,6 +3,7 @@ Feature: Contact a Supplier
 
 
   @ED-2011
+  @captcha
   @contact
   @dev-only
   @fake-sso-email-verification

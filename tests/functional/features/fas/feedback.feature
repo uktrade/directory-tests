@@ -3,6 +3,8 @@ Feature: Send feedback
 
 
   @ED-2012
+  @captcha
+  @dev-only
   @feedback
   @no-sso-email-verification-required
   Scenario: Buyer should be able to send us a feedback from "Industries" FAS page
