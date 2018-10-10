@@ -16,8 +16,8 @@ join_exred = partial(urljoin, settings.EXRED_UI_URL)
 join_contact_us = partial(urljoin, settings.DIRECTORY_CONTACT_US_UI_URL)
 join_soo = partial(urljoin, settings.SOO_UI_URL)
 join_cms_url = partial(urljoin, settings.DIRECTORY_CMS_API_CLIENT_BASE_URL)
-join_cms_api = partial(urljoin, 'api', settings.DIRECTORY_CMS_API_CLIENT_BASE_URL)
-join_cms_ui = partial(urljoin, 'admin', settings.DIRECTORY_CMS_API_CLIENT_BASE_URL)
+join_cms_api = partial(urljoin, settings.DIRECTORY_CMS_API_CLIENT_BASE_URL)
+join_cms_ui = partial(urljoin, settings.DIRECTORY_CMS_API_CLIENT_BASE_URL)
 
 urls = {
     # SSO
@@ -96,6 +96,7 @@ urls = {
     'api:healthcheck-single-sign-on': 'healthcheck/single-sign-on/',
     'api:healthcheck-sentry': 'healthcheck/sentry/',
     'api:healthcheck-ping': 'healthcheck/ping/',
+    'api:healthcheck-stannp': 'healthcheck/stannp/',
 
     'api:enrolment': 'enrolment/',
     'api:company': 'supplier/{sso_id}/company/',

@@ -4,7 +4,7 @@ behave
 directory-api-client
 directory-constants
 directory-sso-api-client
-flake8
+docopt
 jsonschema
 langdetect
 nodeenv

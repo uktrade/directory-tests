@@ -3,6 +3,7 @@ behave
 directory-api-client
 directory-constants
 directory-sso-api-client
+docopt
 nodeenv
 notifications-python-client
 paver

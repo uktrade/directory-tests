@@ -548,6 +548,9 @@ def int_api_ch_search(term: str) -> dict:
     url = get_absolute_url("internal-api:companies-house-search")
     params = {"term": term}
     response = make_request(Method.GET, url, params=params)
+    if response.status_code == 404:
+        red(f"404 for {term}")
+        return {}
     with assertion_msg(
         "Expected 200 OK from GET %s but instead got %s. In case you're "
         "getting 301 Redirect then check if you're using correct protocol "
@@ -940,6 +943,7 @@ def find_active_company_without_fas_profile(alias: str) -> Company:
     counter = 1
     while has_profile and is_registered and not exists and not active:
         random_company_number = str(random.randint(0, 9999999)).zfill(8)
+        red(random_company_number)
         has_profile = has_fas_profile(random_company_number)
         if has_profile:
             logging.debug(

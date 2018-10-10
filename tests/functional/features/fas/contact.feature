@@ -3,7 +3,9 @@ Feature: Contact a Supplier
 
 
   @ED-2011
+  @captcha
   @contact
+  @dev-only
   @fake-sso-email-verification
   Scenario: Buyers should be able to contact selected Supplier via FAS
     Given "Annette Geissinger" is a buyer

@@ -3,6 +3,7 @@ Feature: Multi-user accounts
 
 
   @ED-3554
+  @dev-only
   @multi-user
   @add-collaborator
   Scenario Outline: Invited collaborator should receive an email with an invitation to collaborate to "<a>" company profile
@@ -22,6 +23,7 @@ Feature: Multi-user accounts
 
 
   @ED-3555
+  @dev-only
   @multi-user
   @add-collaborator
   Scenario: Add "1" collaborator with an SSO/great.gov.uk account to a verified company
@@ -37,6 +39,7 @@ Feature: Multi-user accounts
 
 
   @ED-3556
+  @dev-only
   @multi-user
   @add-collaborator
   Scenario: Add "1" collaborator without an SSO/great.gov.uk account to a verified company
@@ -51,6 +54,7 @@ Feature: Multi-user accounts
 
 
   @ED-3557
+  @dev-only
   @multi-user
   @add-collaborator
   Scenario: Add "1" collaborator with an SSO/great.gov.uk account to a verified company
@@ -67,6 +71,7 @@ Feature: Multi-user accounts
 
 
   @ED-3558
+  @dev-only
   @multi-user
   @add-collaborator
   Scenario: Invited collaborators should receive an email with an invitation to collaborate
@@ -79,6 +84,7 @@ Feature: Multi-user accounts
 
 
   @ED-3559
+  @dev-only
   @multi-user
   @add-collaborator
   Scenario: Add "3" collaborators with an SSO/great.gov.uk account to a verified company
@@ -112,6 +118,7 @@ Feature: Multi-user accounts
   @TT-217
   @fixme
   @ED-3560
+  @dev-only
   @multi-user
   @add-collaborator
   @bug
@@ -127,6 +134,7 @@ Feature: Multi-user accounts
 
 
   @ED-3561
+  @dev-only
   @multi-user
   @transfer-ownership
   Scenario Outline: New Account Owner which "<has or does not have>" a SSO/great.gov.uk account should receive an email with a request for becoming the owner of "<a>" company profile
@@ -153,6 +161,7 @@ Feature: Multi-user accounts
   @fixme
   @bug
   @ED-2268
+  @dev-only
   Scenario Outline: Company account owner should be able to transfer the ownership of "<a>" profile to a user who "<has or does not have>" an SSO/great.gov.uk account
     Given "Peter Alder" has created "<a>" profile for randomly selected company "Y"
     And "Annette Geissinger" "<has or does not have>" an SSO/great.gov.uk account
@@ -171,6 +180,7 @@ Feature: Multi-user accounts
 
 
   @ED-3564
+  @dev-only
   @multi-user
   @remove-collaborator
   @fake-sso-email-verification
@@ -188,6 +198,7 @@ Feature: Multi-user accounts
 
 
   @ED-3565
+  @dev-only
   @multi-user
   @remove-collaborator
   @fake-sso-email-verification
@@ -211,6 +222,7 @@ Feature: Multi-user accounts
 
 
   @ED-3566
+  @dev-only
   @multi-user
   @transfer-ownership
   @verification
@@ -231,6 +243,7 @@ Feature: Multi-user accounts
 
 
   @ED-3567
+  @dev-only
   @multi-user
   @add-content
   @fake-sso-email-verification
@@ -267,6 +280,7 @@ Feature: Multi-user accounts
 
 
   @ED-3568
+  @dev-only
   @multi-user
   @add-content
   @fake-sso-email-verification
@@ -288,6 +302,7 @@ Feature: Multi-user accounts
 
 
   @ED-3569
+  @dev-only
   @multi-user
   @add-content
   @fake-sso-email-verification
@@ -311,6 +326,7 @@ Feature: Multi-user accounts
   @ED-3882
   @fixme
   @ED-3570
+  @dev-only
   @multi-user
   @edge-case
   @fake-sso-email-verification
@@ -331,6 +347,7 @@ Feature: Multi-user accounts
   @ED-3882
   @fixme
   @ED-3571
+  @dev-only
   @multi-user
   @edge-case
   @fake-sso-email-verification
@@ -349,6 +366,7 @@ Feature: Multi-user accounts
   @ED-3852
   @fixme
   @ED-3572
+  @dev-only
   @multi-user
   @edge-case
   @fake-sso-email-verification

@@ -195,7 +195,8 @@ def check_response(
     from tests.functional.utils.generic import assertion_msg
 
     with assertion_msg(
-        "Expected %s but got %s", status_code, response.status_code
+        f"Expected {status_code} from {response.url} but got "
+        f"{response.status_code}"
     ):
         assert response.status_code == status_code
 

@@ -1,427 +1,465 @@
-version: 2.0
+version: 2
+
+# Variables
+chrome_version: &chrome_version
+  BROWSER_VERSION: "69.0"
+
+firefox_version: &firefox_version
+  BROWSER_VERSION: "62.0"
+
+
+# Machines configs
+machine_python3: &machine_python3
+  docker:
+    - image: circleci/python:3.6.6
+
+
+# Individual (shared) steps.
+step_checkout_repo: &step_checkout_repo
+  checkout
+
+step_install_requirements_for_smoke_tests: &step_install_requirements_for_smoke_tests
+  run:
+    name: Create virtualenv and install dependencies
+    command: |
+      python3 -m venv venv
+      . venv/bin/activate
+      pip install --upgrade pip
+      pip install -r requirements_smoke.txt
+
+step_install_requirements_for_functional_tests: &step_install_requirements_for_functional_tests
+  run:
+    name: Create virtualenv and install dependencies
+    command: |
+      python3 -m venv venv
+      . venv/bin/activate
+      pip install --upgrade pip
+      pip install -r requirements_functional.txt
+      nodeenv -p
+      npm install -g junit-merge@1.2.3
+
+step_install_requirements_for_browser_tests: &step_install_requirements_for_browser_tests
+  run:
+    name: Create virtualenv and install dependencies
+    command: |
+      python3 -m venv venv
+      . venv/bin/activate
+      pip install --upgrade pip
+      pip install -r requirements_browser.txt
+      nodeenv -p
+      npm install -g junit-merge@1.2.3
+
+step_cache_smoke_tests_requirements: &step_cache_smoke_tests_requirements
+  save_cache:
+    key: smoke-tests-dependency-cache-{{ .Revision }}
+    paths:
+      - ~/directory-tests
+
+step_cache_functional_tests_requirements: &step_cache_functional_tests_requirements
+  save_cache:
+    key: functional-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
+    paths:
+      - ~/directory-tests
+
+step_cache_browser_tests_requirements: &step_cache_browser_tests_requirements
+  save_cache:
+    key: browser-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
+    paths:
+      - ~/directory-tests
+
+step_restore_cached_smoke_tests_requirements: &step_restore_cached_smoke_tests_requirements
+  restore_cache:
+    keys:
+      - smoke-tests-dependency-cache-{{ .Revision }}
+
+step_restore_cached_browser_tests_requirements: &step_restore_cached_browser_tests_requirements
+  restore_cache:
+    keys:
+      - browser-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
+
+step_restore_cached_functional_tests_requirements: &step_restore_cached_functional_tests_requirements
+  restore_cache:
+    keys:
+      - functional-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
+
+step_run_smoke_tests: &step_run_smoke_tests
+  run:
+    name: Run smoke tests
+    command: |
+      . venv/bin/activate
+      python docker/env_writer.py --env=${TEST_ENV} --config=./docker/env.json
+      source ./docker/.env_with_export
+      make smoke_tests
+
+step_run_functional_tests: &step_run_functional_tests
+  run:
+    name: Run functional tests
+    command: |
+      python3 -m venv venv
+      . venv/bin/activate
+      python ./docker/env_writer.py --env=${TEST_ENV} --config=./docker/env.json
+      source ./docker/.env_with_export;
+      export PATH=$PATH:$HOME/bin
+      FEATURE_DIR=${FEATURE_DIR} TAGS=${TAGS} make functional_tests_feature_dir
+
+step_run_browser_tests: &step_run_browser_tests
+  run:
+    name: Run all functional scenarios in {{ .Environment.BROWSER }}
+    command: |
+      . venv/bin/activate
+      python ./docker/env_writer.py --env=${TEST_ENV} --config=./docker/env_browser.json
+      source ./docker/.env_with_export;
+      export PATH=$PATH:$HOME/bin
+      BROWSERS=${BROWSER} VERSIONS=${BROWSER_VERSION} TAGS=${TAGS} make browserstack
+
+step_merge_junit_xml_reports_from_functional_tests: &step_merge_junit_xml_reports_from_functional_tests
+  run:
+    name: Merge JUnit XML reports
+    when: always
+    command: |
+      python3 -m venv venv
+      . venv/bin/activate
+      cd ./tests/functional/reports
+      junit-merge *.xml -o merged.xml
+      ls *.xml | grep -v merged.xml | xargs rm
+
+
+step_merge_junit_xml_reports_from_browser_tests: &step_merge_junit_xml_reports_from_browser_tests
+  run:
+    name: Merge JUnit XML reports
+    when: always
+    command: |
+      python3 -m venv venv
+      . venv/bin/activate
+      cd ./tests/browser/reports
+      junit-merge *.xml -o merged.xml
+      ls *.xml | grep -v merged.xml | xargs rm
+
+
+# Lists of steps
+steps_setup_env_for_smoke_tests: &steps_setup_env_for_smoke_tests
+  steps:
+    - *step_checkout_repo
+    - *step_install_requirements_for_smoke_tests
+    - *step_cache_smoke_tests_requirements
+
+steps_setup_env_for_functional_tests: &steps_setup_env_for_functional_tests
+  steps:
+    - *step_checkout_repo
+    - *step_install_requirements_for_functional_tests
+    - *step_cache_functional_tests_requirements
+
+steps_setup_env_for_browser_tests: &steps_setup_env_for_browser_tests
+  steps:
+    - *step_checkout_repo
+    - *step_install_requirements_for_browser_tests
+    - *step_cache_browser_tests_requirements
+
+steps_smoke_tests: &steps_smoke_tests
+  steps:
+    - *step_restore_cached_smoke_tests_requirements
+    - *step_run_smoke_tests
+    - store_test_results:
+        path: ./tests/smoke/reports
+    - store_artifacts:
+        path: ./tests/smoke/reports
+
+steps_functional_tests: &steps_functional_tests
+  steps:
+    - *step_restore_cached_functional_tests_requirements
+    - *step_run_functional_tests
+    - *step_merge_junit_xml_reports_from_functional_tests
+    - store_test_results:
+        path: ./tests/functional/reports
+    - store_artifacts:
+        path: ./tests/functional/reports
+
+steps_run_browser_tests: &steps_run_browser_tests
+  steps:
+    - *step_restore_cached_browser_tests_requirements
+    - *step_run_browser_tests
+    - *step_merge_junit_xml_reports_from_browser_tests
+    - store_test_results:
+        path: ./tests/browser/reports
+    - store_artifacts:
+        path: ./tests/browser/reports
+
 
 jobs:
-  checkout_code:
-    docker:
-      - image: circleci/python:3.6.5
+  setup_env_for_smoke_tests:
+    <<: *machine_python3
     working_directory: ~/directory-tests
-    steps:
-      - checkout
-      - save_cache:
-          key: cached-repo-{{ .Revision }}
-          paths:
-            - ~/directory-tests
+    <<: *steps_setup_env_for_smoke_tests
 
-  smoke_tests_requirements:
-    docker:
-      - image: circleci/python:3.6.5
+  setup_env_for_functional_tests:
+    <<: *machine_python3
     working_directory: ~/directory-tests
-    steps:
-      - restore_cache:
-          keys:
-            - cached-repo-{{ .Revision }}
-      - run:
-          name: Create virtualenv and install dependencies
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            pip install -r requirements_smoke.txt
-      - save_cache:
-          key: smoke-tests-dependency-cache-{{ .Revision }}
-          paths:
-            - ~/directory-tests/venv
+    <<: *steps_setup_env_for_functional_tests
 
-  functional_tests_requirements:
-    docker:
-      - image: circleci/python:3.6.5
+  setup_env_for_browser_tests:
+    <<: *machine_python3
     working_directory: ~/directory-tests
-    steps:
-      - restore_cache:
-          keys:
-            - cached-repo-{{ .Revision }}
-      - run:
-          name: Create virtualenv and install dependencies
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            pip install -r requirements_functional.txt
-            python ./docker/env_writer.py ./docker/env.json
-            nodeenv -p
-            npm install -g junit-merge@1.2.3
-      - save_cache:
-          key: functional-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
-          paths:
-            - ~/directory-tests/venv
-            - ~/directory-tests/docker/.env_with_export
-            - ~/directory-tests/docker/.env_without_export
+    <<: *steps_setup_env_for_browser_tests
 
-  browser_tests_requirements:
-    docker:
-      - image: circleci/python:3.6.5
+  smoke_tests_dev:
+    <<: *machine_python3
     working_directory: ~/directory-tests
-    steps:
-      - restore_cache:
-          keys:
-            - cached-repo-{{ .Revision }}
-      - run:
-          name: Install dependencies
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            pip install -r requirements_browser.txt
-            python ./docker/env_writer.py ./docker/env_browser.json
-            nodeenv -p
-            npm install -g junit-merge@1.2.3
-      - save_cache:
-          key: browser-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
-          paths:
-            - ~/directory-tests/venv
-            - ~/directory-tests/docker/.env_with_export
-            - ~/directory-tests/docker/.env_without_export
+    environment:
+      TEST_ENV: "dev"
+    <<: *steps_smoke_tests
 
-  smoke_tests:
-    docker:
-      - image: circleci/python:3.6.5
+  smoke_tests_stage:
+    <<: *machine_python3
     working_directory: ~/directory-tests
-    steps:
-      - restore_cache:
-          keys:
-            - cached-repo-{{ .Revision }}
-      - restore_cache:
-          keys:
-            - smoke-tests-dependency-cache-{{ .Revision }}
-      - run:
-          name: Run smoke tests
-          command: |
-            . venv/bin/activate
-            python ./docker/env_writer.py ./docker/env.json
-            source ./docker/.env_with_export;
-            make smoke_tests
-      - store_test_results:
-          path: ./tests/smoke/reports
-      - store_artifacts:
-          path: ./tests/smoke/reports
+    environment:
+      TEST_ENV: "stage"
+    <<: *steps_smoke_tests
 
-  browser_tests_chrome_selected_scenarios:
-    docker:
-      - image: circleci/python:3.6.5
+  func_fab_test_dev:
+    <<: *machine_python3
     working_directory: ~/directory-tests
-    steps:
-      - restore_cache:
-          keys:
-            - cached-repo-{{ .Revision }}
-      - restore_cache:
-          keys:
-            - browser-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
-      - run:
-          name: Run selected functional scenarios in Chrome (skip examples tagged with @full)
-          command: |
-            . venv/bin/activate
-            source ./docker/.env_with_export;
-            export PATH=$PATH:$HOME/bin
-            BROWSERS=Chrome VERSIONS=69.0 TAG=-full make browserstack
-      - run:
-          name: Merge JUnit XML reports
-          when: always
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            cd ./tests/browser/reports
-            junit-merge *.xml -o merged.xml
-            ls *.xml | grep -v merged.xml | xargs rm
-      - store_test_results:
-          path: ./tests/browser/reports
-      - store_artifacts:
-          path: ./tests/browser/reports
+    environment:
+      TEST_ENV: "dev"
+      FEATURE_DIR: "fab"
+    <<: *steps_functional_tests
 
-  browser_tests_chrome_all_scenarios:
-    docker:
-      - image: circleci/python:3.6.5
+  func_fas_test_dev:
+    <<: *machine_python3
     working_directory: ~/directory-tests
-    steps:
-      - restore_cache:
-          keys:
-            - cached-repo-{{ .Revision }}
-      - restore_cache:
-          keys:
-            - browser-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
-      - run:
-          name: Run all functional scenarios in Chrome
-          command: |
-            . venv/bin/activate
-            source ./docker/.env_with_export;
-            export PATH=$PATH:$HOME/bin
-            BROWSERS=Chrome VERSIONS=69.0 make browserstack
-      - run:
-          name: Merge JUnit XML reports
-          when: always
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            cd ./tests/browser/reports
-            junit-merge *.xml -o merged.xml
-            ls *.xml | grep -v merged.xml | xargs rm
-      - store_test_results:
-          path: ./tests/browser/reports
-      - store_artifacts:
-          path: ./tests/browser/reports
+    environment:
+      TEST_ENV: "dev"
+      FEATURE_DIR: "fas"
+    <<: *steps_functional_tests
 
-
-  browser_tests_firefox_selected_scenarios:
-    docker:
-      - image: circleci/python:3.6.5
+  func_sso_test_dev:
+    <<: *machine_python3
     working_directory: ~/directory-tests
-    steps:
-      - restore_cache:
-          keys:
-            - cached-repo-{{ .Revision }}
-      - restore_cache:
-          keys:
-            - browser-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
-      - run:
-          name: Run selected functional scenarios in Firefox (skip examples tagged with @full)
-          command: |
-            . venv/bin/activate
-            source ./docker/.env_with_export;
-            export PATH=$PATH:$HOME/bin
-            BROWSERS=Firefox VERSIONS=62.0 TAG=-full make browserstack
-      - run:
-          name: Merge JUnit XML reports
-          when: always
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            cd ./tests/browser/reports
-            junit-merge *.xml -o merged.xml
-            ls *.xml | grep -v merged.xml | xargs rm
-      - store_test_results:
-          path: ./tests/browser/reports
-      - store_artifacts:
-          path: ./tests/browser/reports
+    environment:
+      TEST_ENV: "dev"
+      FEATURE_DIR: "sso"
+    <<: *steps_functional_tests
 
-  browser_tests_firefox_all_scenarios:
-    docker:
-      - image: circleci/python:3.6.5
+  func_sud_test_dev:
+    <<: *machine_python3
     working_directory: ~/directory-tests
-    steps:
-      - restore_cache:
-          keys:
-            - cached-repo-{{ .Revision }}
-      - restore_cache:
-          keys:
-            - browser-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
-      - run:
-          name: Run all functional scenarios in Firefox
-          command: |
-            . venv/bin/activate
-            source ./docker/.env_with_export;
-            export PATH=$PATH:$HOME/bin
-            BROWSERS=Firefox VERSIONS=62.0 make browserstack
-      - run:
-          name: Merge JUnit XML reports
-          when: always
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            cd ./tests/browser/reports
-            junit-merge *.xml -o merged.xml
-            ls *.xml | grep -v merged.xml | xargs rm
-      - store_test_results:
-          path: ./tests/browser/reports
-      - store_artifacts:
-          path: ./tests/browser/reports
+    environment:
+      TEST_ENV: "dev"
+      FEATURE_DIR: "sud"
+    <<: *steps_functional_tests
 
-  fab_functional_tests:
-    docker:
-      - image: circleci/python:3.6.5
+  func_fab_test_stage:
+    <<: *machine_python3
     working_directory: ~/directory-tests
-    steps:
-      - restore_cache:
-          keys:
-            - cached-repo-{{ .Revision }}
-      - restore_cache:
-          keys:
-            - functional-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
-      - run:
-          name: Run FAB functional tests
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            source ./docker/.env_with_export;
-            export PATH=$PATH:$HOME/bin
-            FEATURE_DIR=fab make functional_tests_feature_dir
-      - run:
-          name: Merge JUnit XML reports
-          when: always
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            cd ./tests/functional/reports
-            junit-merge *.xml -o merged.xml
-            ls *.xml | grep -v merged.xml | xargs rm
-      - store_test_results:
-          path: ./tests/functional/reports
-      - store_artifacts:
-          path: ./tests/functional/reports
+    environment:
+      TEST_ENV: "stage"
+      FEATURE_DIR: "fab"
+      TAGS: "-dev-only"
+    <<: *steps_functional_tests
 
-  fas_functional_tests:
-    docker:
-      - image: circleci/python:3.6.5
+  func_fas_test_stage:
+    <<: *machine_python3
     working_directory: ~/directory-tests
-    steps:
-      - restore_cache:
-          keys:
-            - cached-repo-{{ .Revision }}
-      - restore_cache:
-          keys:
-            - functional-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
-      - run:
-          name: Run FAS functional tests
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            source ./docker/.env_with_export;
-            export PATH=$PATH:$HOME/bin
-            FEATURE_DIR=fas make functional_tests_feature_dir
-      - run:
-          name: Merge JUnit XML reports
-          when: always
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            cd ./tests/functional/reports
-            junit-merge *.xml -o merged.xml
-            ls *.xml | grep -v merged.xml | xargs rm
-      - store_test_results:
-          path: ./tests/functional/reports
-      - store_artifacts:
-          path: ./tests/functional/reports
+    environment:
+      TEST_ENV: "stage"
+      FEATURE_DIR: "fas"
+      TAGS: "-dev-only"
+    <<: *steps_functional_tests
 
-  sso_functional_tests:
-    docker:
-      - image: circleci/python:3.6.5
+  func_sso_test_stage:
+    <<: *machine_python3
     working_directory: ~/directory-tests
-    steps:
-      - restore_cache:
-          keys:
-            - cached-repo-{{ .Revision }}
-      - restore_cache:
-          keys:
-            - functional-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
-      - run:
-          name: Run SSO functional tests
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            source ./docker/.env_with_export;
-            export PATH=$PATH:$HOME/bin
-            FEATURE_DIR=sso make functional_tests_feature_dir
-      - run:
-          name: Merge JUnit XML reports
-          when: always
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            cd ./tests/functional/reports
-            junit-merge *.xml -o merged.xml
-            ls *.xml | grep -v merged.xml | xargs rm
-      - store_test_results:
-          path: ./tests/functional/reports
-      - store_artifacts:
-          path: ./tests/functional/reports
+    environment:
+      TEST_ENV: "stage"
+      FEATURE_DIR: "sso"
+      TAGS: "-dev-only"
+    <<: *steps_functional_tests
 
-  sud_functional_tests:
-    docker:
-      - image: circleci/python:3.6.5
+  func_sud_test_stage:
+    <<: *machine_python3
     working_directory: ~/directory-tests
-    steps:
-      - restore_cache:
-          keys:
-            - cached-repo-{{ .Revision }}
-      - restore_cache:
-          keys:
-            - functional-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
-      - run:
-          name: Run SUD functional tests
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            source ./docker/.env_with_export;
-            export PATH=$PATH:$HOME/bin
-            FEATURE_DIR=sud make functional_tests_feature_dir
-      - run:
-          name: Merge JUnit XML reports
-          when: always
-          command: |
-            python3 -m venv venv
-            . venv/bin/activate
-            cd ./tests/functional/reports
-            junit-merge *.xml -o merged.xml
-            ls *.xml | grep -v merged.xml | xargs rm
-      - store_test_results:
-          path: ./tests/functional/reports
-      - store_artifacts:
-          path: ./tests/functional/reports
+    environment:
+      TEST_ENV: "stage"
+      FEATURE_DIR: "sud"
+      TAGS: "-dev-only"
+    <<: *steps_functional_tests
+
+  browser_all_chrome_dev:
+    <<: *machine_python3
+    working_directory: ~/directory-tests
+    environment:
+      TEST_ENV: "dev"
+      BROWSER: "chrome"
+      <<: *chrome_version
+    <<: *steps_run_browser_tests
+
+  browser_all_firefox_dev:
+    working_directory: ~/directory-tests
+    <<: *machine_python3
+    environment:
+      TEST_ENV: "dev"
+      BROWSER: "firefox"
+      <<: *firefox_version
+    <<: *steps_run_browser_tests
+
+  browser_selected_chrome_dev:
+    <<: *machine_python3
+    working_directory: ~/directory-tests
+    environment:
+      TEST_ENV: "dev"
+      BROWSER: "chrome"
+      <<: *chrome_version
+      TAGS: "-full"
+    <<: *steps_run_browser_tests
+
+  browser_selected_firefox_dev:
+    working_directory: ~/directory-tests
+    <<: *machine_python3
+    environment:
+      TEST_ENV: "dev"
+      BROWSER: "firefox"
+      <<: *firefox_version
+      TAGS: "-full"
+    <<: *steps_run_browser_tests
+
+  browser_all_chrome_stage:
+    <<: *machine_python3
+    working_directory: ~/directory-tests
+    environment:
+      TEST_ENV: "stage"
+      BROWSER: "chrome"
+      <<: *chrome_version
+      TAGS: "-dev-only"
+    <<: *steps_run_browser_tests
+
+  browser_all_firefox_stage:
+    working_directory: ~/directory-tests
+    <<: *machine_python3
+    environment:
+      TEST_ENV: "stage"
+      BROWSER: "firefox"
+      <<: *firefox_version
+      TAGS: "-dev-only"
+    <<: *steps_run_browser_tests
+
+  browser_selected_chrome_stage:
+    <<: *machine_python3
+    working_directory: ~/directory-tests
+    environment:
+      TEST_ENV: "stage"
+      BROWSER: "chrome"
+      <<: *chrome_version
+      TAGS: "-full,-dev-only"
+    <<: *steps_run_browser_tests
+
+  browser_selected_firefox_stage:
+    working_directory: ~/directory-tests
+    <<: *machine_python3
+    environment:
+      TEST_ENV: "stage"
+      BROWSER: "firefox"
+      <<: *firefox_version
+      TAGS: "-full,-dev-only"
+    <<: *steps_run_browser_tests
+
 
 workflows:
   version: 2
 
-  run_all_tests:
+  run_smoke_all_functional_and_selected_browser_tests_on_dev:
     jobs:
-      - checkout_code
-      - functional_tests_requirements:
+      - setup_env_for_smoke_tests
+      - setup_env_for_functional_tests
+      - smoke_tests_dev:
           requires:
-            - checkout_code
-      - smoke_tests_requirements:
+            - setup_env_for_smoke_tests
+      - func_fab_test_dev:
           requires:
-            - checkout_code
-      - browser_tests_requirements:
+            - setup_env_for_functional_tests
+      - func_fas_test_dev:
           requires:
-            - checkout_code
-      - smoke_tests:
+            - setup_env_for_functional_tests
+      - func_sso_test_dev:
           requires:
-            - checkout_code
-            - smoke_tests_requirements
-      - browser_tests_chrome_selected_scenarios:
+            - setup_env_for_functional_tests
+      - func_sud_test_dev:
           requires:
-            - smoke_tests
-            - browser_tests_requirements
-      - browser_tests_firefox_selected_scenarios:
+            - setup_env_for_functional_tests
+      - setup_env_for_browser_tests:
           requires:
-            - smoke_tests
-            - browser_tests_requirements
-      - fab_functional_tests:
+            - smoke_tests_dev
+      - browser_selected_chrome_dev:
           requires:
-            - smoke_tests
-            - functional_tests_requirements
-      - fas_functional_tests:
+            - setup_env_for_browser_tests
+      - browser_selected_firefox_dev:
           requires:
-            - smoke_tests
-            - functional_tests_requirements
-      - sso_functional_tests:
-          requires:
-            - smoke_tests
-            - functional_tests_requirements
-      - sud_functional_tests:
-          requires:
-            - smoke_tests
-            - functional_tests_requirements
+            - setup_env_for_browser_tests
 
-  run_all_browser_scenarios:
+  run_all_tests_on_dev:
     triggers:
     - schedule:
-        cron: "0 4 * * 1"
+        cron: "0 20 * * 1-5"
         filters:
           branches:
             only: master
     jobs:
-      - checkout_code
-      - browser_tests_requirements:
+      - setup_env_for_smoke_tests
+      - setup_env_for_functional_tests
+      - smoke_tests_dev:
           requires:
-            - checkout_code
-      - browser_tests_chrome_all_scenarios:
+            - setup_env_for_smoke_tests
+      - func_fab_test_dev:
           requires:
-            - browser_tests_requirements
-      - browser_tests_firefox_all_scenarios:
+            - setup_env_for_functional_tests
+      - func_fas_test_dev:
           requires:
-            - browser_tests_requirements
+            - setup_env_for_functional_tests
+      - func_sso_test_dev:
+          requires:
+            - setup_env_for_functional_tests
+      - func_sud_test_dev:
+          requires:
+            - setup_env_for_functional_tests
+      - setup_env_for_browser_tests:
+          requires:
+            - smoke_tests_dev
+      - browser_all_chrome_dev:
+          requires:
+            - setup_env_for_browser_tests
+      - browser_all_firefox_dev:
+          requires:
+            - setup_env_for_browser_tests
+
+  run_all_tests_on_stage:
+    triggers:
+    - schedule:
+        cron: "0 4 * * 1-5"
+        filters:
+          branches:
+            only: master
+    jobs:
+      - setup_env_for_smoke_tests
+      - setup_env_for_functional_tests
+      - smoke_tests_stage:
+          requires:
+            - setup_env_for_smoke_tests
+      - func_fab_test_stage:
+          requires:
+            - setup_env_for_functional_tests
+      - func_fas_test_stage:
+          requires:
+            - setup_env_for_functional_tests
+      - func_sso_test_stage:
+          requires:
+            - setup_env_for_functional_tests
+      - func_sud_test_stage:
+          requires:
+            - setup_env_for_functional_tests
+      - setup_env_for_browser_tests:
+          requires:
+            - smoke_tests_stage
+      - browser_all_chrome_stage:
+          requires:
+            - setup_env_for_browser_tests
+      - browser_all_firefox_stage:
+          requires:
+            - setup_env_for_browser_tests

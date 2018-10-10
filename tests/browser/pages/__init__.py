@@ -13,14 +13,15 @@ REQUIRED_PROPERTIES = ["SERVICE", "NAME", "TYPE", "URL", "SELECTORS"]
 
 
 class ElementType(Enum):
-    INPUT = "input"
-    CHECKBOX = "checkbox"
-    RADIO = "radio"
-    TEXTAREA = "textarea",
-    IFRAME = "iframe"
-    SELECT = "select"
-    LABEL = "label"
     BUTTON = "button"
+    CHECKBOX = "checkbox"
+    IFRAME = "iframe"
+    INPUT = "input"
+    LABEL = "label"
+    LINK = "a"
+    RADIO = "radio"
+    SELECT = "select"
+    TEXTAREA = "textarea",
 
     def __str__(self):
         return self.value

@@ -53,6 +53,8 @@ Feature: Find a Supplier - home page
 
 
   @ED-4247
+  @captcha
+  @dev-only
   @contact-us
   Scenario: Buyers should be able to contact us (DIT) from the "Find a Supplier - home" page
     Given "Robert" visits the "Find a Supplier - Home" page
@@ -91,6 +93,8 @@ Feature: Find a Supplier - home page
 
 
   @wip
+  @captcha
+  @dev-only
   @ED-4250
   @report-this-page
   Scenario: Buyers should be able to report a problem with the "Find a Supplier - home" page

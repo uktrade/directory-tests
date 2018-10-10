@@ -52,7 +52,7 @@ def test_food_industry_200():
 
 def test_supplier_profile_200():
     # company 09466005 must exist on the environment the tests are ran against.
-    url = join_ui_supplier('suppliers/09466005/michboly-ltd')
+    url = join_ui_supplier('suppliers/09400376/the-coconut-company-uk-ltd/')
     response = requests.get(url)
 
     assert response.status_code == http.client.OK
@@ -60,7 +60,7 @@ def test_supplier_profile_200():
 
 def test_supplier_contact_200():
     # company 09466005 must exist on the environment the tests are ran against.
-    url = join_ui_supplier('suppliers/09466005/contact')
+    url = join_ui_supplier('suppliers/09400376/contact')
     response = requests.get(url)
 
     assert response.status_code == http.client.OK
@@ -68,7 +68,7 @@ def test_supplier_contact_200():
 
 def test_case_study_200():
     # case study 6 must exist on the environment the tests are ran against.
-    url = join_ui_supplier('case-study/6/fred')
+    url = join_ui_supplier('case-study/6/')
 
     response = requests.get(url)
 
