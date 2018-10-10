@@ -62,8 +62,10 @@ PYTEST_ARGS := \
 	--driver PhantomJS \
 	--driver-path /usr/bin/phantomjs $(pytest_args)
 
+TEST_ENV ?= dev
+
 DOCKER_COMPOSE_REMOVE_AND_PULL := docker-compose rm -f && docker-compose pull
-DOCKER_COMPOSE_CREATE_ENVS := python ./docker/env_writer.py ./docker/env.json
+DOCKER_COMPOSE_CREATE_ENVS := python ./docker/env_writer.py --env=$(TEST_ENV) --config=./docker/env.json
 DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL := docker-compose rm && docker-compose pull
 
 smoke_tests:
@@ -105,7 +107,7 @@ BROWSER_SET_DOCKER_ENV_VARS := \
 	export BROWSER_TESTS_CIRCLE_SHA1=$(CIRCLE_SHA1)
 
 BROWSER_DOCKER_COMPOSE_CREATE_ENVS := \
-	python ./docker/env_writer.py ./docker/env_browser.json
+	python ./docker/env_writer.py --env=$(TEST_ENV) --config=./docker/env_browser.json
 
 BROWSER_DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL := \
 	docker-compose -f docker-compose-browser.yml -p browser rm -f && \
