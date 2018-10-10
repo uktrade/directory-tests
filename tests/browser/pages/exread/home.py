@@ -400,6 +400,7 @@ def open(driver: WebDriver, group: str, element: str):
 
 
 def play_video(driver: WebDriver, *, play_time: int = 5):
+    open(driver, group="hero", element="watch video")
     video_load_delay = 2
     play_js = 'document.querySelector("{}").play()'.format(PROMO_VIDEO.value)
     pause = 'document.querySelector("{}").pause()'.format(PROMO_VIDEO.value)
