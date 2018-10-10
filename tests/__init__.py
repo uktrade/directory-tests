@@ -96,6 +96,7 @@ urls = {
     'api:healthcheck-single-sign-on': 'healthcheck/single-sign-on/',
     'api:healthcheck-sentry': 'healthcheck/sentry/',
     'api:healthcheck-ping': 'healthcheck/ping/',
+    'api:healthcheck-stannp': 'healthcheck/stannp/',
 
     'api:enrolment': 'enrolment/',
     'api:company': 'supplier/{sso_id}/company/',

@@ -11,6 +11,7 @@ from tests.settings import DIRECTORY_API_HEALTH_CHECK_TOKEN as TOKEN
     get_absolute_url('api:healthcheck-cache'),
     get_absolute_url('api:healthcheck-database'),
     get_absolute_url('api:healthcheck-elasticsearch'),
+    get_absolute_url('api:healthcheck-stannp'),
 ])
 def test_healthcheck_endpoints(absolute_url):
     params = {'token': TOKEN}
