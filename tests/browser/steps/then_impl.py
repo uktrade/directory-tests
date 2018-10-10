@@ -630,7 +630,9 @@ def triage_should_see_change_your_answers_link(
 def promo_video_check_watch_time(
     context: Context, actor_alias: str, expected_watch_time: int
 ):
-    watch_time = exread.home.get_video_watch_time(context.driver)
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "get_video_watch_time")
+    watch_time = page.get_video_watch_time(context.driver)
     with assertion_msg(
         "%s expected to watch at least first '%d' seconds of the video but"
         " got '%d'",

@@ -1533,8 +1533,9 @@ def articles_share_on_social_media(
 def promo_video_watch(
     context: Context, actor_alias: str, *, play_time: int = None
 ):
-    exread.home.open(context.driver, group="hero", element="watch video")
-    exread.home.play_video(context.driver, play_time=play_time)
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "play_video")
+    page.play_video(context.driver, play_time=play_time)
     logging.debug("%s was able to play the video", actor_alias)
 
 
