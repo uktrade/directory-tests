@@ -59,6 +59,8 @@ Feature: UK Export Finance page & contact-us form
 
 
   @TT-585
+  @captcha
+  @dev-only
   Scenario: Any Exporter should be able to get to the "Check you eligibility" form from "Export Readiness - Get Finance"
     Given "Robert" visits the "Export Readiness - What would you like to know more about? - UKEF Contact us" page
 
