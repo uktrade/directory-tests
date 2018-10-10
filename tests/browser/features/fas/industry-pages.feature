@@ -119,6 +119,8 @@ Feature: Find a Supplier - Industry pages
 
 
   @ED-4262
+  @captcha
+  @dev-only
   @contact-us
   Scenario Outline: Buyers should be able to contact us (DIT) from the  "<specific> Industry" page
     Given "Robert" visits the "Find a Supplier - <specific> - industry" page
