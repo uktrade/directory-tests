@@ -9,6 +9,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages import ElementType
 from pages.common_actions import (
+    Actor,
     AssertionExecutor,
     check_for_sections,
     check_if_element_is_not_visible,
@@ -161,6 +162,25 @@ def check_state_of_form_element(
     element = find_element(driver, element_selector, wait_for_it=False)
     if expected_state == "selected":
         assert element.get_property("checked")
+
+
+def generate_form_details(actor: Actor) -> dict:
+    details = {
+        "full name": actor.company_name or "Automated test",
+        "job title": "QA @ DIT",
+        "email": actor.email,
+        "phone": "0123456789",
+        "company name": actor.company_name or "Automated test - company name",
+        "website url": "https://browser.tests.com",
+        "country": None,
+        "organisation size": None,
+        "comment": "This form was submitted by Automated test",
+        "high productivity food production": True,
+        "lightweight structures": True,
+        "rail infrastructure": True,
+        "terms and conditions": True
+    }
+    return details
 
 
 def fill_out(driver: WebDriver, details: dict):
