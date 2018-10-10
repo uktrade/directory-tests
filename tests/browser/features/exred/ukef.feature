@@ -32,7 +32,6 @@ Feature: UK Export Finance page & contact-us form
 
     When "Robert" decides to "Read more about getting money to grow your business"
 
-    Then "Robert" should see an ordered list of all Guidance Articles selected for "Finance" category
     Then "Robert" should be on the "Export Readiness - Finance - Guidance" page
 
 
@@ -43,3 +42,34 @@ Feature: UK Export Finance page & contact-us form
     When "Robert" decides to use "Export" breadcrumb on the "Export Readiness - Get Finance" page
 
     Then "Robert" should be on the "Export Readiness - Home" page
+
+
+  @TT-585
+  Scenario: Any Exporter should be able to get to the "Check you eligibility" form from "Export Readiness - Get Finance"
+    Given "Robert" visits the "Export Readiness - Get Finance" page
+
+    When "Robert" decides to "Check your eligibility"
+
+    Then "Robert" should be on the "Export Readiness - What would you like to know more about? - UKEF Contact us" page
+    And "Robert" should see following sections
+      | Sections        |
+      | Breadcrumbs     |
+      | Form            |
+      | Error Reporting |
+
+
+  @TT-585
+  Scenario: Any Exporter should be able to get to the "Check you eligibility" form from "Export Readiness - Get Finance"
+    Given "Robert" visits the "Export Readiness - What would you like to know more about? - UKEF Contact us" page
+
+    When "Robert" fills out and submits the form
+    Then "Robert" should be on the "Export Readiness - Your details - UKEF Contact us" page
+
+    When "Robert" fills out and submits the form
+    Then "Robert" should be on the "Export Readiness - Company details - UKEF Contact us" page
+
+    When "Robert" fills out and submits the form
+    Then "Robert" should be on the "Export Readiness - Tell us how we can help - UKEF Contact us" page
+
+    When "Robert" fills out and submits the form
+    Then "Robert" should be on the "Export Readiness - Thank you - UKEF Contact us" page
