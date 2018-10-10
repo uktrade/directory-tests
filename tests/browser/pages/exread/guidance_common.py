@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """ExRed Common Guidance Page Object."""
 import logging
+from urllib.parse import urljoin
 
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
@@ -14,48 +15,80 @@ from pages.common_actions import (
     find_elements,
     take_screenshot,
     wait_for_page_load_after_action,
+    check_title,
+    check_url
 )
 from registry.articles import get_article, get_articles
+from settings import EXRED_UI_URL
 
-NAME = "ExRed Common Guidance"
+NAME = "Guidance"
 URL = None
-
-
-RIBBON = {
-    "itself": Selector(By.CSS_SELECTOR, ".navigation-ribbon"),
-    "market research": Selector(
-        By.CSS_SELECTOR, ".navigation-ribbon a[href='/market-research/']"
-    ),
-    "customer insight": Selector(
-        By.CSS_SELECTOR, ".navigation-ribbon a[href='/customer-insight/']"
-    ),
-    "finance": Selector(By.CSS_SELECTOR, ".navigation-ribbon a[href='/finance/']"),
-    "business planning": Selector(
-        By.CSS_SELECTOR, ".navigation-ribbon a[href='/business-planning/']"
-    ),
-    "getting paid": Selector(
-        By.CSS_SELECTOR, ".navigation-ribbon a[href='/getting-paid/']"
-    ),
-    "operations and compliance": Selector(
-        By.CSS_SELECTOR, ".navigation-ribbon a[href='/operations-and-compliance/']"
-    ),
+TYPE = "guidance"
+SERVICE = "Export Readiness"
+URL = EXRED_UI_URL
+PAGE_TITLE = "export guidance - great.gov.uk"
+NAMES = [
+    "Market research",
+    "Customer insight",
+    "Finance",
+    "Business planning",
+    "Getting paid",
+    "Operations and compliance",
+]
+URLs = {
+    "market research": urljoin(URL, "market-research/"),
+    "customer insight": urljoin(URL, "customer-insight/"),
+    "finance": urljoin(URL, "finance/"),
+    "business planning": urljoin(URL, "business-planning/"),
+    "getting paid": urljoin(URL, "getting-paid/"),
+    "operations and compliance": urljoin(URL, "operations-and-compliance/"),
 }
+
+
 TOTAL_NUMBER_OF_ARTICLES = Selector(By.CSS_SELECTOR, "dd.position > span.to")
 ARTICLES_TO_READ_COUNTER = Selector(By.CSS_SELECTOR, "dd.position > span.from")
 TIME_TO_COMPLETE = Selector(By.CSS_SELECTOR, "dd.time > span.value")
 ARTICLES_LIST = Selector(By.CSS_SELECTOR, "#js-paginate-list > li")
 FIRST_ARTICLE = Selector(By.CSS_SELECTOR, "#js-paginate-list > li:nth-child(1) > a")
 
-SCOPE_ELEMENTS = {
-    "total number of articles": TOTAL_NUMBER_OF_ARTICLES,
-    "articles read counter": ARTICLES_TO_READ_COUNTER,
-    "time to complete remaining chapters": TIME_TO_COMPLETE,
+SELECTORS = {
+    "ribbon": {
+        "itself": Selector(By.CSS_SELECTOR, ".navigation-ribbon"),
+        "market research": Selector(
+            By.CSS_SELECTOR, ".navigation-ribbon a[href='/market-research/']"
+        ),
+        "customer insight": Selector(
+            By.CSS_SELECTOR, ".navigation-ribbon a[href='/customer-insight/']"
+        ),
+        "finance": Selector(By.CSS_SELECTOR, ".navigation-ribbon a[href='/finance/']"),
+        "business planning": Selector(
+            By.CSS_SELECTOR, ".navigation-ribbon a[href='/business-planning/']"
+        ),
+        "getting paid": Selector(
+            By.CSS_SELECTOR, ".navigation-ribbon a[href='/getting-paid/']"
+        ),
+        "operations and compliance": Selector(
+            By.CSS_SELECTOR, ".navigation-ribbon a[href='/operations-and-compliance/']"
+        ),
+    },
+    "scope elements": {
+        "total number of articles": TOTAL_NUMBER_OF_ARTICLES,
+        "articles read counter": ARTICLES_TO_READ_COUNTER,
+        "time to complete remaining chapters": TIME_TO_COMPLETE,
+    }
 }
+
+
+def should_be_here(driver: WebDriver):
+    check_title(driver, PAGE_TITLE, exact_match=False)
+    check_url(driver, URL, exact_match=False)
+    take_screenshot(driver, PAGE_TITLE)
+    logging.debug("All expected elements are visible on '%s' page", PAGE_TITLE)
 
 
 def ribbon_should_be_visible(driver: WebDriver):
     take_screenshot(driver, NAME + " Ribbon")
-    for element_name, element_selector in RIBBON.items():
+    for element_name, element_selector in SELECTORS["ribbon"].items():
         logging.debug(
             "Looking for Ribbon '%s' element with '%s' selector",
             element_name,
@@ -66,7 +99,7 @@ def ribbon_should_be_visible(driver: WebDriver):
 
 
 def ribbon_tile_should_be_highlighted(driver: WebDriver, tile: str):
-    tile_selector = RIBBON[tile.lower()]
+    tile_selector = SELECTORS["ribbon"][tile.lower()]
     tile_link = find_element(driver, tile_selector)
     tile_class = tile_link.get_attribute("class")
     with assertion_msg(
@@ -167,7 +200,7 @@ def check_if_link_to_next_category_is_displayed(driver: WebDriver, next_category
 def check_elements_are_visible(driver: WebDriver, elements: list):
     take_screenshot(driver, NAME)
     for element in elements:
-        selector = SCOPE_ELEMENTS[element.lower()]
+        selector = SELECTORS["scope elements"][element.lower()]
         page_element = find_element(driver, selector, element_name=element)
         if "firefox" not in driver.capabilities["browserName"].lower():
             logging.debug("Moving focus to '%s' element", element)
