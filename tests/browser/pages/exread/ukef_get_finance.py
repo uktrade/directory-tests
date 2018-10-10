@@ -8,6 +8,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import ElementType
 from pages.common_actions import (
     Selector,
     check_for_expected_sections_elements,
@@ -15,15 +16,13 @@ from pages.common_actions import (
     check_if_element_is_not_visible,
     check_title,
     check_url,
-    go_to_url,
-    take_screenshot,
-    scroll_to,
     find_and_click_on_page_element,
-    find_elements
+    find_elements,
+    go_to_url,
+    scroll_to,
+    take_screenshot,
 )
 from settings import EXRED_UI_URL
-
-from pages import ElementType
 
 NAME = "Get Finance"
 SERVICE = "Export Readiness"
@@ -48,26 +47,40 @@ SELECTORS = {
     "check you eligibility": {
         "itself": Selector(By.ID, "contact-section"),
         "description": Selector(By.CSS_SELECTOR, "#contact-section p"),
-        "check your eligibility": Selector(By.CSS_SELECTOR, "#contact-section a", type=ElementType.LINK),
+        "check your eligibility": Selector(
+            By.CSS_SELECTOR, "#contact-section a", type=ElementType.LINK
+        ),
     },
     "video": {
         "itself": Selector(By.CSS_SELECTOR, "section.get-finance-video"),
         "heading": Selector(By.CSS_SELECTOR, "section.get-finance-video h2"),
-        "description": Selector(By.CSS_SELECTOR, "section.get-finance-video p"),
-        "read more about getting money to grow your business": Selector(By.CSS_SELECTOR, "section.get-finance-video a"),
+        "description": Selector(
+            By.CSS_SELECTOR, "section.get-finance-video p"
+        ),
+        "read more about getting money to grow your business": Selector(
+            By.CSS_SELECTOR, "section.get-finance-video a"
+        ),
         "video": PROMO_VIDEO,
     },
     "advantages": {
         "itself": Selector(By.ID, "advantages-section"),
         "heading": Selector(By.CSS_SELECTOR, "#advantages-section h2"),
-        "advantage heading": Selector(By.CSS_SELECTOR, "#advantages-section h3"),
-        "advantage description": Selector(By.CSS_SELECTOR, "#advantages-section p"),
-        "advantage image": Selector(By.CSS_SELECTOR, "#advantages-section img"),
+        "advantage heading": Selector(
+            By.CSS_SELECTOR, "#advantages-section h3"
+        ),
+        "advantage description": Selector(
+            By.CSS_SELECTOR, "#advantages-section p"
+        ),
+        "advantage image": Selector(
+            By.CSS_SELECTOR, "#advantages-section img"
+        ),
     },
     "contact us": {
         "itself": Selector(By.ID, "contact-section-bottom"),
         "description": Selector(By.CSS_SELECTOR, "#contact-section-bottom p"),
-        "check your eligibility": Selector(By.CSS_SELECTOR, "#contact-section-bottom a", type=ElementType.LINK),
+        "check your eligibility bottom": Selector(
+            By.CSS_SELECTOR, "#contact-section-bottom a", type=ElementType.LINK
+        ),
     },
     "error reporting": {
         "itself": Selector(By.CSS_SELECTOR, "section.error-reporting"),
@@ -76,30 +89,26 @@ SELECTORS = {
 }
 
 UNEXPECTED_ELEMENTS = {
-    "share widget": {
-        "itself": Selector(By.CSS_SELECTOR, "ul.sharing-links"),
-    },
+    "share widget": {"itself": Selector(By.CSS_SELECTOR, "ul.sharing-links")},
     "article counters and indicators": {
-        "itself": Selector(By.CSS_SELECTOR, "#top > div.scope-indicator"),
+        "itself": Selector(By.CSS_SELECTOR, "#top > div.scope-indicator")
     },
     "tasks completed counter": {
-        "itself": Selector(By.CSS_SELECTOR, ".TASKS_ARE_NOT_IMPLEMENTED_YES"),
+        "itself": Selector(By.CSS_SELECTOR, ".TASKS_ARE_NOT_IMPLEMENTED_YES")
     },
     "tasks total number": {
-        "itself": Selector(By.CSS_SELECTOR, ".TASKS_ARE_NOT_IMPLEMENTED_YES"),
+        "itself": Selector(By.CSS_SELECTOR, ".TASKS_ARE_NOT_IMPLEMENTED_YES")
     },
     "total number of articles": {
-        "itself": Selector(By.CSS_SELECTOR, "dd.position > span.to"),
+        "itself": Selector(By.CSS_SELECTOR, "dd.position > span.to")
     },
     "articles read counter": {
-        "itself": Selector(By.CSS_SELECTOR, "dd.position > span.from"),
+        "itself": Selector(By.CSS_SELECTOR, "dd.position > span.from")
     },
     "time to complete remaining chapters": {
-        "itself": Selector(By.CSS_SELECTOR, "dd.time span.value"),
+        "itself": Selector(By.CSS_SELECTOR, "dd.time span.value")
     },
-    "share menu": {
-        "itself": Selector(By.CSS_SELECTOR, "ul.sharing-links"),
-    }
+    "share menu": {"itself": Selector(By.CSS_SELECTOR, "ul.sharing-links")},
 }
 
 
