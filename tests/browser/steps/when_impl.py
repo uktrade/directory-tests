@@ -1533,8 +1533,9 @@ def articles_share_on_social_media(
 def promo_video_watch(
     context: Context, actor_alias: str, *, play_time: int = None
 ):
-    exread.home.open(context.driver, group="hero", element="watch video")
-    exread.home.play_video(context.driver, play_time=play_time)
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "play_video")
+    page.play_video(context.driver, play_time=play_time)
     logging.debug("%s was able to play the video", actor_alias)
 
 
@@ -1821,56 +1822,20 @@ def generic_click_on_uk_gov_logo(
     logging.debug("%s click on UK Gov logo %s", actor_alias, page_name)
 
 
-def invest_get_contact_us_details(actor: Actor) -> dict:
-    details = {
-        "full name": actor.company_name or "Automated test",
-        "job title": "QA @ DIT",
-        "email": actor.email,
-        "phone": "0123456789",
-        "company name": actor.company_name or "Automated test - company name",
-        "website url": "https://example.com",
-        "country": None,
-        "organisation size": None,
-        "your plans": "This is a test message sent via automated tests",
-    }
-    return details
-
-
-def invest_hpo_get_contact_us_details(actor: Actor) -> dict:
-    details = {
-        "full name": actor.company_name or "Automated test",
-        "job title": "QA @ DIT",
-        "email": actor.email,
-        "phone": "0123456789",
-        "company name": actor.company_name or "Automated test - company name",
-        "website url": "https://browser.tests.com",
-        "country": None,
-        "organisation size": None,
-        "comment": "This form was submitted by Automated test",
-        "high productivity food production": True,
-        "lightweight structures": True,
-        "rail infrastructure": True,
-        "terms and conditions": True
-    }
-    return details
-
-
-def generate_form_details(page: ModuleType, actor: Actor) -> dict:
-    details = {}
-    if (page.SERVICE == Services.INVEST.value) and (page.TYPE == "contact"):
-        details = invest_get_contact_us_details(actor)
-    elif (page.SERVICE == Services.INVEST.value) and (page.TYPE.lower() == "hpo contact us"):
-        details = invest_hpo_get_contact_us_details(actor)
-    return details
-
-
 def generic_fill_out_and_submit_form(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     page = get_last_visited_page(context, actor_alias)
+    has_action(page, "generate_form_details")
     has_action(page, "fill_out")
     has_action(page, "submit")
-    details = generate_form_details(page, actor)
+    details = page.generate_form_details(actor)
     page.fill_out(context.driver, details)
+    page.submit(context.driver)
+
+
+def generic_submit_form(context: Context, actor_alias: str):
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "submit")
     page.submit(context.driver)
 
 

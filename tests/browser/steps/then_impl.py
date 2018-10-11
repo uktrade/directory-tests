@@ -630,7 +630,9 @@ def triage_should_see_change_your_answers_link(
 def promo_video_check_watch_time(
     context: Context, actor_alias: str, expected_watch_time: int
 ):
-    watch_time = exread.home.get_video_watch_time(context.driver)
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "get_video_watch_time")
+    watch_time = page.get_video_watch_time(context.driver)
     with assertion_msg(
         "%s expected to watch at least first '%d' seconds of the video but"
         " got '%d'",
@@ -855,3 +857,12 @@ def pdf_check_for_dead_links(context: Context):
             f"Expected 200 from {link} but got {response.status_code} instead")
         assert response.status_code == 200, error_message
     logging.debug("All links in PDFs returned 200 OK")
+
+
+def form_should_see_error_messages(
+        context: Context, actor_alias: str,
+        message: str = "This field is required"):
+    page_source = context.driver.page_source
+    assertion_error = f"Expected error message '{message}' is not present"
+    assert message in page_source, assertion_error
+    logging.debug(f"{actor_alias} saw expected error message '{message}'")

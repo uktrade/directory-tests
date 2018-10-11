@@ -9,6 +9,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages import ElementType
 from pages.common_actions import (
+    Actor,
     AssertionExecutor,
     check_for_sections,
     check_title,
@@ -85,6 +86,21 @@ def should_be_here(executor: Executor):
 
 def should_see_sections(executor: AssertionExecutor, names: List[str]):
     check_for_sections(executor, all_sections=SELECTORS, sought_sections=names)
+
+
+def generate_form_details(actor: Actor) -> dict:
+    details = {
+        "full name": actor.company_name or "Automated test",
+        "job title": "QA @ DIT",
+        "email": actor.email,
+        "phone": "0123456789",
+        "company name": actor.company_name or "Automated test - company name",
+        "website url": "https://example.com",
+        "country": None,
+        "organisation size": None,
+        "your plans": "This is a test message sent via automated tests",
+    }
+    return details
 
 
 def fill_out(driver: WebDriver, details: dict):
