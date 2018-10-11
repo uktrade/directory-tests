@@ -27,7 +27,7 @@ Feature: UK Export Finance page & contact-us form
 
 
   @TT-585
-  Scenario: Any Exporter should be able to watch promotional video on the "UKEF Get Finance" page
+  Scenario: Any Exporter should be able to get to "Finance Guidance" page from the "UKEF Get Finance" page
     Given "Robert" visits the "Export Readiness - Get Finance" page
 
     When "Robert" decides to "Read more about getting money to grow your business"
@@ -36,7 +36,7 @@ Feature: UK Export Finance page & contact-us form
 
 
   @TT-585
-  Scenario: Any Exporter should see the all expected sections on the "UKEF Get Finance" page
+  Scenario: Any Exporter should be able to navigate to "Export Readiness - Home" using breadcrumbs on the "UKEF Get Finance" page
     Given "Robert" visits the "Export Readiness - Get Finance" page
 
     When "Robert" decides to use "Export" breadcrumb on the "Export Readiness - Get Finance" page
@@ -45,7 +45,7 @@ Feature: UK Export Finance page & contact-us form
 
 
   @TT-585
-  Scenario: Any Exporter should be able to get to the "Check you eligibility" form from "Export Readiness - Get Finance"
+  Scenario: Any Exporter should be able to get to the "Contact UKEF" form from "Export Readiness - Get Finance"
     Given "Robert" visits the "Export Readiness - Get Finance" page
 
     When "Robert" decides to "Check your eligibility"
@@ -61,7 +61,7 @@ Feature: UK Export Finance page & contact-us form
   @TT-585
   @captcha
   @dev-only
-  Scenario: Any Exporter should be able to get to the "Check you eligibility" form from "Export Readiness - Get Finance"
+  Scenario: Any Exporter should be able to contact UKEF team by submitting the "Check you eligibility" form
     Given "Robert" visits the "Export Readiness - What would you like to know more about? - UKEF Contact us" page
 
     When "Robert" fills out and submits the form
