@@ -28,6 +28,7 @@ from steps.then_impl import (
     export_readiness_should_see_articles,
     fas_search_results_filtered_by_industries,
     form_check_state_of_element,
+    form_should_see_error_messages,
     generic_should_see_expected_page_content,
     guidance_check_if_link_to_next_category_is_displayed,
     guidance_expected_page_elements_should_be_visible,
@@ -438,3 +439,8 @@ def then_pdfs_should_contain_expected_details(
 @then('there should not be any dead links in every downloaded PDF')
 def then_should_not_see_dead_links_in_pdf(context: Context):
     pdf_check_for_dead_links(context)
+
+
+@then('"{actor_alias}" should see error message saying that mandatory fields are required')
+def then_should_see_an_error_message(context: Context, actor_alias: str):
+    form_should_see_error_messages(context, actor_alias)
