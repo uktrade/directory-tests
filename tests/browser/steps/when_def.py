@@ -33,6 +33,7 @@ from steps.when_impl import (
     generic_open_guide_link,
     generic_open_industry_page,
     generic_see_more_industries,
+    generic_submit_form,
     generic_unfold_topics,
     guidance_open_category,
     guidance_read_through_all_articles,
@@ -468,3 +469,8 @@ def when_actor_fills_out_and_submits_the_form(context: Context, actor_alias: str
 @when('"{actor_alias}" downloads all visible PDFs')
 def when_actor_downloads_all_visible_pdfs(context: Context, actor_alias: str):
     generic_download_all_pdfs(context, actor_alias)
+
+
+@when('"{actor_alias}" submits the form')
+def when_actor_submits_the_form(context: Context, actor_alias: str):
+    generic_submit_form(context, actor_alias)
