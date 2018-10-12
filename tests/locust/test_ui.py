@@ -97,20 +97,11 @@ class AuthenticatedPagesBuyerUI(TaskSet):
     @task
     def edit_company_address(self):
         url = get_relative_url('ui-buyer:company-edit-address')
-        response = self.client.get(url, headers=self.headers)
-        soup = BeautifulSoup(response.content, 'html.parser')
-        csrftoken = soup.find(
-            'input', {'name': 'csrfmiddlewaretoken'}
-        ).get('value')
-        name = soup.find(
-            'p', {'class': 'ed-company-edit-address-name'}
-        ).get_text()
-
         data = {
-            'csrfmiddlewaretoken': csrftoken,
+            'csrfmiddlewaretoken': self._get_csrf_token(url),
             'address-address_confirmed': 'on',
             'supplier_address_edit_view-current_step': 'address',
-            'address-postal_full_name': name,
+            'address-postal_full_name': 'load tests',
         }
         self.client.post(url, data=data, headers=self.headers)
 
