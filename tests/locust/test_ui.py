@@ -18,6 +18,18 @@ class PublicPagesBuyerUI(TaskSet):
     def start_registration(self):
         self.client.get(get_relative_url('ui-buyer:register'))
 
+    @task
+    def companies_house_search(self):
+        term = random.choice(
+                ["food", "sweets", "road", "limited", "solutions", "house", 
+                 "finance", "transport", "delivery", "robot"
+                 ])
+        params = {"term": term}
+        self.client.get(
+                get_relative_url("internal-api:companies-house-search"), 
+                params=params,
+                name="api/internal/companies-house-search/?term=[term]")
+
 
 class AuthenticatedPagesBuyerUI(TaskSet):
 
