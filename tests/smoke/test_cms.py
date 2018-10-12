@@ -83,6 +83,7 @@ def test_wagtail_get_disabled_content_endpoints(relative_url):
     )
 
 
+@pytest.mark.skip(reason="check ticket: CMS-550")
 def test_wagtail_get_pages():
     endpoint = get_relative_url("cms-api:pages")
     response = cms_api_client.get(endpoint)
@@ -91,6 +92,7 @@ def test_wagtail_get_pages():
     )
 
 
+@pytest.mark.skip(reason="check ticket: CMS-550")
 @pytest.mark.parametrize("limit", [2, 10, 20])
 def test_wagtail_get_number_of_pages(limit):
     query = "?order=id&limit={}".format(limit)
@@ -106,6 +108,7 @@ def test_wagtail_can_list_only_20_pages():
     assert response.json()["message"] == "limit cannot be higher than 20"
 
 
+@pytest.mark.skip(reason="check ticket: CMS-550")
 @pytest.mark.parametrize(
     "application", ["Export Readiness pages", "Find a Supplier Pages"]
 )
