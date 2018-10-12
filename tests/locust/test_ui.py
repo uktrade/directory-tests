@@ -48,7 +48,7 @@ class AuthenticatedPagesBuyerUI(TaskSet):
         data["csrfmiddlewaretoken"] = csrf_token
 
         with self.client.post(login_url, data=data) as response:
-            cookie = response.history[0].headers['Set-Cookie']
+            cookie = response.headers['Set-Cookie']
         self.headers = {'Cookie': cookie}
 
         logging.info(f"Successfully logged-in as: {self.email}")
