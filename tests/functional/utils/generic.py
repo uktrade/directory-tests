@@ -305,6 +305,9 @@ def extract_page_contents(
     strip_js: bool = True,
     strip_css: bool = True,
     strip_header: bool = True,
+    strip_cookie_notice: bool = True,
+    strip_skip_to_main_content: bool = True,
+    strip_image_captions: bool = True,
     strip_footer: bool = True,
     strip_select_menus: bool = True,
     strip_unordered_lists: bool = True
@@ -319,6 +322,15 @@ def extract_page_contents(
             element.extract()
     if strip_header:
         for element in soup.findAll(["header"]):
+            element.extract()
+    if strip_cookie_notice:
+        for element in soup.select("#header-cookie-notice"):
+            element.extract()
+    if strip_skip_to_main_content:
+        for element in soup.select("#skip-link"):
+            element.extract()
+    if strip_image_captions:
+        for element in soup.select(".image-caption"):
             element.extract()
     if strip_footer:
         for element in soup.findAll(["footer"]):

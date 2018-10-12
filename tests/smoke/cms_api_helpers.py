@@ -2,7 +2,7 @@ import asyncio
 import http.client
 import logging
 from pprint import pformat
-from typing import List
+from typing import List, Tuple
 from urllib.parse import urlparse
 
 import requests
@@ -66,34 +66,39 @@ def get_and_assert(url: str, status_code: int):
     assert response.status_code == status_code, msg
 
 
-def get_page_ids_by_type(page_type):
+def get_page_ids_by_type(page_type: str) -> Tuple[List[int], int]:
     page_ids = []
 
     # get first page of results
     relative_url = get_relative_url("cms-api:pages")
     endpoint = f"{relative_url}?type={page_type}"
     response = cms_api_client.get(endpoint)
+    total_response_time = response.raw_response.elapsed.total_seconds()
     assert response.status_code == http.client.OK, status_error(
         http.client.OK, response
     )
 
     # get IDs of all pages from the response
     content = response.json()
-    page_ids += [page["id"] for page in content["items"]]
+    page_ids += [page["meta"]["pk"] for page in content["items"]]
 
     total_count = content["meta"]["total_count"]
+    if total_count > len(page_ids):
+        print(f"Found more than {len(content['items'])} pages of {page_type} "
+              f"type. Will fetch details of all remaining pages")
     while len(page_ids) < total_count:
         offset = len(content["items"])
         endpoint = f"{relative_url}?type={page_type}&offset={offset}"
         response = cms_api_client.get(endpoint)
+        total_response_time += response.raw_response.elapsed.total_seconds()
         assert response.status_code == http.client.OK, status_error(
             http.client.OK, response
         )
         content = response.json()
-        page_ids += [page["id"] for page in content["items"]]
+        page_ids += [page["meta"]["pk"] for page in content["items"]]
 
     assert len(list(sorted(page_ids))) == total_count
-    return page_ids
+    return page_ids, total_response_time
 
 
 def get_pages_from_api(page_types: list) -> List[Response]:
@@ -101,9 +106,9 @@ def get_pages_from_api(page_types: list) -> List[Response]:
     api_endpoints = []
     responses = []
     for page_type in page_types:
-        page_ids_of_type = get_page_ids_by_type(page_type)
+        page_ids_of_type, responses_time = get_page_ids_by_type(page_type)
         count = str(len(page_ids_of_type)).rjust(2, " ")
-        print(f"Found {count} {page_type} pages")
+        print(f"Found {count} {page_type} pages in {responses_time}s")
         page_ids += page_ids_of_type
     base = get_absolute_url("cms-api:pages")
     api_endpoints += [f"{base}{page_id}/" for page_id in page_ids]
