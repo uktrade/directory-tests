@@ -2,7 +2,7 @@ import asyncio
 import http.client
 import logging
 from pprint import pformat
-from typing import List
+from typing import List, Tuple
 from urllib.parse import urlparse
 
 import requests
@@ -66,7 +66,7 @@ def get_and_assert(url: str, status_code: int):
     assert response.status_code == status_code, msg
 
 
-def get_page_ids_by_type(page_type):
+def get_page_ids_by_type(page_type: str) -> Tuple[List[int], int]:
     page_ids = []
 
     # get first page of results
