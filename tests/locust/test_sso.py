@@ -61,8 +61,11 @@ class PublicPagesSSO(TaskSet):
     @task
     def healthcheck_database(self):
         params = {'token': TOKEN}
-        resp = self.client.get(
-                get_relative_url('sso:healthcheck-database'), params=params)
+        self.client.get(
+            get_relative_url('sso-api:healthcheck-database'), 
+            params=params,
+            name="/healthcheck/database/?token=[token]"
+        )
 
     @task
     def email_confirm_GET(self):
