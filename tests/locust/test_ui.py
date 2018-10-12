@@ -1,38 +1,12 @@
+import logging
 import random
 
 from locust import HttpLocust, TaskSet, task
 from bs4 import BeautifulSoup
 
 from tests import get_relative_url, get_absolute_url, settings
-
-
-USERS = (
-    ('load_tests1@example.com', 'passwordpassword'),
-    ('load_tests2@example.com', 'passwordpassword'),
-    ('load_tests3@example.com', 'passwordpassword'),
-    ('load_tests4@example.com', 'passwordpassword'),
-    ('load_tests5@example.com', 'passwordpassword'),
-    ('load_tests6@example.com', 'passwordpassword'),
-    ('load_tests7@example.com', 'passwordpassword'),
-    ('load_tests8@example.com', 'passwordpassword'),
-    ('load_tests9@example.com', 'passwordpassword'),
-    ('load_tests10@example.com', 'passwordpassword'),
-    ('load_tests11@example.com', 'passwordpassword'),
-    ('load_tests12@example.com', 'passwordpassword'),
-    ('load_tests13@example.com', 'passwordpassword'),
-    ('load_tests14@example.com', 'passwordpassword'),
-    ('load_tests15@example.com', 'passwordpassword'),
-    ('load_tests16@example.com', 'passwordpassword'),
-    ('load_tests17@example.com', 'passwordpassword'),
-    ('load_tests18@example.com', 'passwordpassword'),
-    ('load_tests19@example.com', 'passwordpassword'),
-    ('load_tests20@example.com', 'passwordpassword'),
-    ('load_tests21@example.com', 'passwordpassword'),
-    ('load_tests22@example.com', 'passwordpassword'),
-    ('load_tests23@example.com', 'passwordpassword'),
-    ('load_tests24@example.com', 'passwordpassword'),
-    ('load_tests25@example.com', 'passwordpassword'),
-)
+from tests.locust import USER_CREDENTIALS
+from tests.locust.helpers import extract_main_error
 
 
 class PublicPagesBuyerUI(TaskSet):
@@ -47,25 +21,41 @@ class PublicPagesBuyerUI(TaskSet):
 
 class AuthenticatedPagesBuyerUI(TaskSet):
 
-    def _get_login_data(self):
-        user, password = random.choice(USERS)
-        return {"login": user, "password": password}
+    account_id = "NOT_FOUND"
+    email = "NOT_FOUND"
+    password = "NOT_FOUND"
+    headers = {}
+
+    def _login(self, data: dict):
+        login_url = get_absolute_url('sso:login')
+        with self.client.get(login_url) as response:
+            soup = BeautifulSoup(response.content, 'html.parser')
+            csrf_token = soup.find(
+                'input', {'name': 'csrfmiddlewaretoken'}
+            ).get('value')
+        data["csrfmiddlewaretoken"] = csrf_token
+
+        with self.client.post(login_url, data=data) as response:
+            cookie = response.history[0].headers['Set-Cookie']
+        self.headers = {'Cookie': cookie}
+
+        logging.info(f"Successfully logged-in as: {self.email}")
 
     def on_start(self):
-        data = self._get_login_data()
-        login_url = get_absolute_url('sso:login')
-        response = self.client.post(login_url, data=data)
-        try:
-            cookie = response.history[0].headers['Set-Cookie']
-        except IndexError:
-            raise Exception("Login failed!")
-        self.headers = {'Cookie': cookie}
+        if len(USER_CREDENTIALS) > 0:
+            self.account_id, self.email, self.password = USER_CREDENTIALS.pop()
+        data = {"login": self.email, "password": self.password}
+        self._login(data)
 
     def _get_csrf_token(self, url):
         response = self.client.get(url, headers=self.headers)
         soup = BeautifulSoup(response.content, 'html.parser')
+        if response.status_code == 500:
+            error = extract_main_error(response.content.decode("utf-8"))
+            print(error)
         csrf_input = soup.find('input', {'name': 'csrfmiddlewaretoken'})
-        return csrf_input.get('value')
+        token = csrf_input.get('value')
+        return token
 
     @task
     def company_profile(self):
@@ -79,40 +69,18 @@ class AuthenticatedPagesBuyerUI(TaskSet):
         img = open(path_to_img, 'rb')
         data = {
             'csrfmiddlewaretoken': self._get_csrf_token(url),
-            'supplier_company_profile_logo_edit_view-current_step': 'logo'
+            'company_profile_logo_edit_view-current_step': 'logo'
         }
         self.client.post(
             url, data=data, files={'logo-logo': img}, headers=self.headers)
 
     @task
     def upload_logo(self):
-        self._upload_logo('tests/fixtures/images/sphynx-814164_640.jpg')
+        self._upload_logo('tests/functional/files/Wikipedia-logo-v2-en-alpa-channel.png')
 
     @task
     def upload_large_logo(self):
-        self._upload_logo('tests/fixtures/images/pallas-cat-275930.jpg')
-
-    @task
-    def confirm_company_address_valid_code(self):
-        url = get_relative_url('ui-buyer:confirm-company-address')
-        step = 'supplier_company_address_verification_view-current_step'
-        data = {
-            'csrfmiddlewaretoken': self._get_csrf_token(url),
-            step: 'address',
-            'address-code': '000000000000',
-        }
-        self.client.post(url, data=data, headers=self.headers)
-
-    @task
-    def confirm_company_address_invalid_code(self):
-        url = get_relative_url('ui-buyer:confirm-company-address')
-        step = 'supplier_company_address_verification_view-current_step'
-        data = {
-            'csrfmiddlewaretoken': self._get_csrf_token(url),
-            step: 'address',
-            'address-code': '1111',
-        }
-        self.client.post(url, data=data, headers=self.headers)
+        self._upload_logo('tests/functional/files/Nagoya_Castle_Feb_2011_27.jpg')
 
     @task
     def edit_company_address(self):
@@ -122,21 +90,15 @@ class AuthenticatedPagesBuyerUI(TaskSet):
         csrftoken = soup.find(
             'input', {'name': 'csrfmiddlewaretoken'}
         ).get('value')
-        signature = soup.find(
-            'input', {'id': 'id_address-signature'}
-        ).get('value')
+        name = soup.find(
+            'p', {'class': 'ed-company-edit-address-name'}
+        ).get_text()
 
         data = {
             'csrfmiddlewaretoken': csrftoken,
-            'address-signature': signature,
+            'address-address_confirmed': 'on',
             'supplier_address_edit_view-current_step': 'address',
-            'address-postal_full_name': 'Mr Tester',
-            'address-address_line_1': '80 Strand',
-            'address-address_line_2': '',
-            'address-locality': 'London',
-            'address-country': '',
-            'address-postal_code': 'WC2R 0RL',
-            'address-po_box': '',
+            'address-postal_full_name': name,
         }
         self.client.post(url, data=data, headers=self.headers)
 
@@ -145,51 +107,42 @@ class AuthenticatedPagesBuyerUI(TaskSet):
         url = get_relative_url('ui-buyer:company-edit-address')
         data = {
             'csrfmiddlewaretoken': self._get_csrf_token(url),
-            'address-signature': '',  # Invalid
+            'address-address_confirmed': '',  # Invalid
             'supplier_address_edit_view-current_step': 'address',
-            'address-postal_full_name': 'Mr Tester',
-            'address-address_line_1': '80 Strand',
-            'address-address_line_2': '',
-            'address-locality': 'London',
-            'address-country': '',
-            'address-postal_code': 'WC2R 0RL',
-            'address-po_box': '',
+            'address-postal_full_name': 'DO NOT DELETE - LOAD TESTS',
         }
         self.client.post(url, data=data, headers=self.headers)
 
     @task
     def edit_company_description(self):
         url = get_relative_url('ui-buyer:company-edit-description')
-        step = 'supplier_company_description_edit_view-current_step'
         data = {
             'csrfmiddlewaretoken': self._get_csrf_token(url),
-            step: 'description',
-            'description-summary': 'Test brief summary',
-            'description-description': 'Test proper description',
+            'company_description_edit_view-current_step': 'description',
+            'description-summary': 'DO NOT DELETE - LOAD TESTS',
+            'description-description': 'DO NOT DELETE - LOAD TESTS',
         }
         self.client.post(url, data=data, headers=self.headers)
 
     @task
     def edit_company_description_invalid_data(self):
         url = get_relative_url('ui-buyer:company-edit-description')
-        step = 'supplier_company_description_edit_view-current_step'
         data = {
             'csrfmiddlewaretoken': self._get_csrf_token(url),
-            step: 'description',
+            'company_description_edit_view-current_step': 'description',
             'description-summary': '',  # Invalid
-            'description-description': 'Test proper description',
+            'description-description': '',  # Invalid
         }
         self.client.post(url, data=data, headers=self.headers)
 
     @task
     def edit_company_key_facts(self):
         url = get_relative_url('ui-buyer:company-edit-key-facts')
-        step = 'supplier_basic_info_edit_view-current_step'
         data = {
             'csrfmiddlewaretoken': self._get_csrf_token(url),
-            step: 'basic',
-            'basic-name': 'Mr Tester load test company',
-            'basic-website': 'http://google.com',
+            'supplier_basic_info_edit_view-current_step': 'basic',
+            'basic-name': f'DO NOT DELETE - LOAD TESTS {self.account_id}',
+            'basic-website': f'https://load.test.{self.account_id}.com',
             'basic-keywords': 'load testing',
             'basic-employees': '51-200',
         }
@@ -198,47 +151,47 @@ class AuthenticatedPagesBuyerUI(TaskSet):
     @task
     def edit_company_key_facts_invalid_data(self):
         url = get_relative_url('ui-buyer:company-edit-key-facts')
-        step = 'supplier_basic_info_edit_view-current_step'
         data = {
             'csrfmiddlewaretoken': self._get_csrf_token(url),
-            step: 'basic',
+            'supplier_basic_info_edit_view-current_step': 'basic',
             'basic-name': '',  # Invalid
-            'basic-website': 'http://google.com',
-            'basic-keywords': 'load testing',
-            'basic-employees': '51-200',
+            'basic-website': '',  # Invalid
+            'basic-keywords': '',  # Invalid
+            'basic-employees': '',  # Invalid
         }
         self.client.post(url, data=data, headers=self.headers)
 
     @task
     def edit_company_sectors(self):
         url = get_relative_url('ui-buyer:company-edit-sectors')
-        step = 'supplier_classification_edit_view-current_step'
         data = {
             'csrfmiddlewaretoken': self._get_csrf_token(url),
-            step: 'classification',
-            'classification-sectors': ['MINING', 'RAILWAYS', 'WATER']
+            'supplier_classification_edit_view-current_step': 'classification',
+            'classification-sectors': 'COMMUNICATIONS',
+            'classification-has_exported_before': True,
+            'classification-export_destinations': ['IN', 'US'],
+            'classification-export_destinations_other': ''
         }
         self.client.post(url, data=data, headers=self.headers)
 
     @task
     def edit_company_contact(self):
         url = get_relative_url('ui-buyer:company-edit-contact')
-        step = 'supplier_contact_edit_view-current_step'
         data = {
             'csrfmiddlewaretoken': self._get_csrf_token(url),
-            step: 'contact',
-            'contact-email_full_name': 'Mr Contact',
-            'contact-email_address': 'contact@example.com',
+            'supplier_contact_edit_view-current_step': 'contact',
+            'contact-email_full_name': f'DO NOT DELETE - LOAD TESTS {self.account_id}',
+            'contact-email_address': self.email,
+            'contact-website': f'http://load.test.{self.account_id}.com'
         }
         self.client.post(url, data=data, headers=self.headers)
 
     @task
     def edit_company_contact_invalid_data(self):
         url = get_relative_url('ui-buyer:company-edit-contact')
-        step = 'supplier_contact_edit_view-current_step'
         data = {
             'csrfmiddlewaretoken': self._get_csrf_token(url),
-            step: 'contact',
+            'supplier_contact_edit_view-current_step': 'contact',
             'contact-email_full_name': '',  # Invalid
             'contact-email_address': 'contactme@example.com',
         }
@@ -247,10 +200,9 @@ class AuthenticatedPagesBuyerUI(TaskSet):
     @task
     def edit_company_social_media(self):
         url = get_relative_url('ui-buyer:company-edit-social-media')
-        step = 'supplier_company_social_links_edit_view-current_step'
         data = {
             'csrfmiddlewaretoken': self._get_csrf_token(url),
-            step: 'social',
+            'company_social_links_edit_view-current_step': 'social',
             'social-linkedin_url': 'http://linkedin.com',
             'social-twitter_url': 'http://twitter.com',
             'social-facebook_url': 'http://facebook.com',
@@ -282,23 +234,64 @@ class PublicPagesSupplierUI(TaskSet):
     @task
     def register_interest(self):
         data = {
-            'email_address': 'test@example.com',
-            'full_name': 'Mr Test',
-            'sector': 'GLOBAL_SPORTS_INFRASTRUCTURE',
+            'email_address': 'load@tests.com',
+            'full_name': 'Mr Load Test',
+            'sector': 'BIOTECHNOLOGY_AND_PHARMACEUTICALS',
             'terms': True,
+            'company_name': 'load tests',
+            'country': 'load tests',
         }
         self.client.post(
-            get_relative_url('ui-supplier:landing'),
+            get_relative_url('ui-supplier:subscribe'),
             data=data
         )
 
     @task
-    def suppliers(self):
-        self.client.get(get_relative_url('ui-supplier:suppliers'))
+    def search(self):
+        self.client.get(get_relative_url('ui-supplier:search'))
 
     @task
     def suppliers_detail(self):
-        self.client.get(get_relative_url('ui-supplier:suppliers-detail'))
+        suppliers = [
+            "suppliers/02793489/richmond-design-marketing-limited/",
+            "suppliers/03267051/collinson-plc/",
+            "suppliers/03452628/rs-hydro-limited/",
+            "suppliers/04423574/in2connect-uk-ltd/",
+            "suppliers/05403316/lightrhythm-visuals-ltd/",
+            "suppliers/06057717/cantronik-ltd/",
+            "suppliers/06719513/callidus-transport-engineering-ltd/",
+            "suppliers/07253343/ed-fagan-europe-limited/",
+            "suppliers/07396568/bridwell-company-limited/",
+            "suppliers/07399608/joe-sephs/",
+            "suppliers/07672659/knights-of-old-group-limited/",
+            "suppliers/08191652/flora-harrison-limited/",
+            "suppliers/08415302/fever-tree-drinks/",
+            "suppliers/09314985/anvil-strength-and-conditioning-limited/",
+            "suppliers/09400148/atlantic-pumps-limited/",
+            "suppliers/09609186/outbenz-ltd/",
+            "suppliers/09666195/evade-limited/",
+            "suppliers/SC463767/quantum-aviation-limited/",
+        ]
+        self.client.get(random.choice(suppliers), name="/suppliers/[id]/[slug]/")
+
+    @task
+    def case_study(self):
+        case_studies = [
+            "case-study/12/water-usage-at-an-oil-refinery/",
+            "case-study/13/royal-united-hospital-bath/",
+            "case-study/14/large-residential-development-land-east-of-coldhar/",
+            "case-study/17/cradle-bridge-retail-park/",
+            "case-study/20/recently-developed-alloy-for-precision-tools-and-d/",
+            "case-study/21/collaboration-with-local-university/",
+            "case-study/22/scorpion-tooling-and-ed-fagan-working-to-produce/",
+            "case-study/55/radio-2-hyde-park/",
+            "case-study/61/baja-rally-mexico-consolidation-logistics/",
+            "case-study/66/naiad-dynamics-inc-full-colour-displays/",
+            "case-study/89/atlas-silo-range/",
+            "case-study/93/to-export-high-end-shoes-and-handbags-exhibition-a/",
+            "case-study/163/crimp-contacts-in-m12-connectors-save-time-and-mon/",
+        ]
+        self.client.get(random.choice(case_studies), name="/case-study/[id]/[slug]/")
 
     @task
     def industries(self):
@@ -319,10 +312,6 @@ class PublicPagesSupplierUI(TaskSet):
     @task
     def industries_food(self):
         self.client.get(get_relative_url('ui-supplier:industries-food'))
-
-    @task
-    def case_study(self):
-        self.client.get(get_relative_url('ui-supplier:case-study'))
 
 
 class RegularUserSupplierUI(HttpLocust):
