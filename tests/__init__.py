@@ -73,6 +73,7 @@ urls = {
     'ui-supplier:landing': '',
     'ui-supplier:suppliers': 'suppliers/',
     'ui-supplier:industries': 'industries/',
+    'ui-supplier:subscribe': 'subscribe/',
     'ui-supplier:industries-health': 'industries/healthcare/',
     'ui-supplier:industries-tech': 'industries/technology/',
     'ui-supplier:industries-creative': 'industries/creative-services/',
@@ -85,11 +86,10 @@ urls = {
     'ui-supplier:search': 'search/',
     # NOTE: the URLS below require data from fixtures/supplier.json
     # to be loaded to the API db of the tested system
-    'ui-supplier:suppliers-detail': 'suppliers/99999999',
-    'ui-supplier:case-study': 'case-study/2147483647',
+    'ui-supplier:suppliers-detail': 'suppliers/03074910/ft-solutions-limited/',
+    'ui-supplier:case-study': 'case-study/172/how-a-major-airport-rewards-its-loyal-passengers/',
 
     # API
-    'api:docs': 'docs/',
     'api:healthcheck-cache': 'healthcheck/cache/',
     'api:healthcheck-database': 'healthcheck/database/',
     'api:healthcheck-elasticsearch': 'healthcheck/elasticsearch/',
@@ -99,10 +99,54 @@ urls = {
     'api:healthcheck-stannp': 'healthcheck/stannp/',
 
     'api:enrolment': 'enrolment/',
-    'api:company': 'supplier/{sso_id}/company/',
-    'api:user': 'supplier/{sso_id}/',
+    'api:pre-verified-enrolment': 'pre-verified-enrolment',
+    'api:enrolment-trusted-code': '/trusted-code/{code}/',
+
+    'api:notifications-anonymous-unsubscribe': 'notifications/anonymous-unsubscribe/',
+
+    'api:buyer': 'buyer/',
+    'api:buyer-csv-dump': 'buyer/csv-dump/',
+    'api:supplier-csv-dump': 'supplier/csv-dump/',
+
     'api:validate-company-number': 'validate/company-number/',
     'api:companies-house-profile': 'company/companies-house-profile/',
+
+    'api:supplier': 'supplier/',
+    'api:supplier-unsubscribe': 'supplier/unsubscribe/',
+
+    'api:export-readiness-triage': 'export-readiness/triage/',
+    'api:export-readiness-article-read': 'export-readiness/article-read/',
+    'api:export-readiness-task-completed': 'export-readiness/task-completed/',
+
+    'api:export-opportunity-food': 'export-opportunity/food/',
+    'api:export-opportunity-legal': 'export-opportunity/legal/',
+
+    'api:public-company': 'public/company/',
+    'api:public-company-profile': '/public/company/{companies_house_number}/',
+    'api:public-case-study': 'public/case-study/{id}/',
+
+
+    'api:supplier-company': 'supplier/company/',
+    'api:supplier-company-case-study': 'supplier/company/case-study/',
+    'api:supplier-company-case-study-by-id': 'supplier/company/case-study/{id}/',
+    'api:supplier-company-verify': 'supplier/company/verify/',
+    'api:supplier-company-verify-companies-house': 'supplier/company/verify/companies-house/',
+    'api:contact-supplier': 'contact/supplier/',
+    'api:company-search': 'company/search/',
+    'api:case-study-search': 'case-study/search/',
+
+    'api:supplier-company-collaborators': 'supplier/company/collaborators/',
+    'api:supplier-company-collaboration-invite': 'supplier/company/collaboration-invite/',
+    'api:supplier-company-collaboration-invite-by-uuid': 'supplier/company/collaboration-invite/{uuid}/',
+    'api:supplier-company-remove-collaborators': 'supplier/company/remove-collaborators/',
+
+    'api:supplier-company-transfer-ownership-invite': 'supplier/company/transfer-ownership-invite/',
+    'api:supplier-company-transfer-ownership-invite-by-uuid': 'supplier/company/transfer-ownership-invite/{uuid}/',
+    'api:supplier-gecko-total-registered': 'supplier/gecko/total-registered/',
+    'api:activity-stream': 'activity-stream/',
+    'api:external-supplier-sso': 'external/supplier-sso/',
+    'api:external-supplier': 'external/supplier/',
+
 
     # INTERNAL API
     'internal-api:companies-house-search': 'api/internal/companies-house-search/',
