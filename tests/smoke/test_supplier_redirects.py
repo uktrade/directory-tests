@@ -1,7 +1,7 @@
 import pytest
 import requests
 
-from tests import join_ui_supplier, get_relative_url
+from tests import join_ui_supplier
 
 
 @pytest.mark.parametrize("new_url,old_url", [
