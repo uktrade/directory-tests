@@ -80,9 +80,12 @@ def get_page_ids_by_type(page_type: str) -> Tuple[List[int], int]:
 
     # get IDs of all pages from the response
     content = response.json()
-    page_ids += [page["id"] for page in content["items"]]
+    page_ids += [page["meta"]["pk"] for page in content["items"]]
 
     total_count = content["meta"]["total_count"]
+    if total_count > len(page_ids):
+        print(f"Found more than {len(content['items'])} pages of {page_type} "
+              f"type. Will fetch details of all remaining pages")
     while len(page_ids) < total_count:
         offset = len(content["items"])
         endpoint = f"{relative_url}?type={page_type}&offset={offset}"
@@ -92,7 +95,7 @@ def get_page_ids_by_type(page_type: str) -> Tuple[List[int], int]:
             http.client.OK, response
         )
         content = response.json()
-        page_ids += [page["id"] for page in content["items"]]
+        page_ids += [page["meta"]["pk"] for page in content["items"]]
 
     assert len(list(sorted(page_ids))) == total_count
     return page_ids, total_response_time
