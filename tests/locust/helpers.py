@@ -265,3 +265,87 @@ class CMSAPIAuthClientMixin(HttpLocust):
             timeout=DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT,
             service_name=SERVICE_NAMES.INVEST,
         )
+
+
+def extract_main_error(content: str) -> str:
+    """Extract error from page's `main` section.
+
+    :param content: a raw HTML content
+    :return: error message or empty string if no error is detected
+    """
+    error_indicators = [
+        "error", "errors", "problem", "problems", "fail", "failed", "failure",
+        "required", "missing",
+    ]
+    soup = BeautifulSoup(content, "lxml")
+    sections = soup.find_all("main")
+    lines = [
+        line.strip()
+        for section in sections
+        for line in section.text.splitlines()
+        if line
+    ]
+    has_errors = any(
+        indicator in line.lower()
+        for line in lines
+        for indicator in error_indicators
+    )
+    return "\n".join(lines) if has_errors else ""
+
+
+def get_valid_sso_session_id(*, email: str = None, password: str = None):
+    login_url = get_relative_url('sso:login')
+    client = HttpSession(settings.DIRECTORY_SSO_URL)
+
+    if not email and not password:
+        _, email, password = random.choice(USER_CREDENTIALS)
+    data = {"login": email, "password": password}
+    with client.get(login_url) as response:
+        soup = BeautifulSoup(response.content, 'html.parser')
+        csrf_token = soup.find(
+            'input', {'name': 'csrfmiddlewaretoken'}
+        ).get('value')
+    data["csrfmiddlewaretoken"] = csrf_token
+
+    with client.post(login_url, data=data) as response:
+        set_cookie = response.history[0].headers['Set-Cookie']
+        first_response_cookie = cookies.SimpleCookie()
+        first_response_cookie.load(set_cookie)
+        last_response_set_cookie = response.headers['Set-Cookie']
+        last_response_cookie = cookies.SimpleCookie()
+        last_response_cookie.load(last_response_set_cookie)
+
+        first_session = first_response_cookie.get('directory_sso_dev_session')
+        second_session = last_response_cookie.get('directory_sso_dev_session')
+
+        session = first_session or second_session
+
+    return session.value
+
+
+def get_two_valid_sso_sessions():
+    _, email_1, password_1 = random.choice(USER_CREDENTIALS)
+    _, email_2, password_2 = random.choice(USER_CREDENTIALS)
+    while email_1 == email_2:
+        _, email_2, password_2 = random.choice(USER_CREDENTIALS)
+    session_1 = get_valid_sso_session_id(email=email_1, password=password_1)
+    session_2 = get_valid_sso_session_id(email=email_2, password=password_2)
+    return session_1, session_2
+
+
+def authenticate_with_sso():
+    login_url = get_relative_url('sso:login')
+    client = HttpSession(settings.DIRECTORY_SSO_URL)
+
+    _, email, password = random.choice(USER_CREDENTIALS)
+    data = {"login": email, "password": password}
+    with client.get(login_url) as response:
+        soup = BeautifulSoup(response.content, 'html.parser')
+        csrf_token = soup.find(
+            'input', {'name': 'csrfmiddlewaretoken'}
+        ).get('value')
+    data["csrfmiddlewaretoken"] = csrf_token
+
+    with client.post(login_url, data=data) as response:
+        set_cookie_header = response.headers['Set-Cookie']
+    return set_cookie_header
