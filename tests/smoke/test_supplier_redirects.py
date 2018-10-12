@@ -1,15 +1,15 @@
 import pytest
 import requests
 
-from tests import join_ui_supplier, get_absolute_url
+from tests import join_ui_supplier, get_relative_url
 
 
 @pytest.mark.parametrize("new_url,old_url", [
-    (get_absolute_url('ui-supplier:industries-health'),
+    ('/industries/healthcare/',
      join_ui_supplier('/industries/health/')),
-    (get_absolute_url('ui-supplier:industries-tech'),
+    ('/industries/technology/',
      join_ui_supplier('/industries/tech/')),
-    (get_absolute_url('ui-supplier:industries-creative'),
+    ('/industries/creative-services/',
      join_ui_supplier('/industries/creative/')),
 ])
 def test_ed_4152_redirect_from_old_industry_page(new_url, old_url):
