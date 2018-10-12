@@ -1,0 +1,23 @@
+
+USER_CREDENTIALS = [
+    ('01', 'load_tests1@example.com', 'loadtests4321'),
+    ('02', 'load_tests2@example.com', 'loadtests4321'),
+    ('03', 'load_tests3@example.com', 'loadtests4321'),
+    ('04', 'load_tests4@example.com', 'loadtests4321'),
+    ('05', 'load_tests5@example.com', 'loadtests4321'),
+    ('06', 'load_tests6@example.com', 'loadtests4321'),
+    ('07', 'load_tests7@example.com', 'loadtests4321'),
+    ('08', 'load_tests8@example.com', 'loadtests4321'),
+    ('09', 'load_tests9@example.com', 'loadtests4321'),
+    ('10', 'load_tests10@example.com', 'loadtests4321'),
+    ('11', 'load_tests11@example.com', 'loadtests4321'),
+    ('12', 'load_tests12@example.com', 'loadtests4321'),
+    ('13', 'load_tests13@example.com', 'loadtests4321'),
+    ('14', 'load_tests14@example.com', 'loadtests4321'),
+    ('15', 'load_tests15@example.com', 'loadtests4321'),
+    ('16', 'load_tests16@example.com', 'loadtests4321'),
+    ('17', 'load_tests17@example.com', 'loadtests4321'),
+    ('18', 'load_tests18@example.com', 'loadtests4321'),
+    ('19', 'load_tests19@example.com', 'loadtests4321'),
+    ('20', 'load_tests20@example.com', 'loadtests4321'),
+]
