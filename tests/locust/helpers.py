@@ -1,7 +1,10 @@
+import random
 import time
 from hashlib import sha256
+from http import cookies
 from urllib.parse import urlsplit
 
+from bs4 import BeautifulSoup
 from locust import HttpLocust, events
 from locust.clients import LocustResponse, HttpSession
 from requests import Request, Session
@@ -11,8 +14,21 @@ from requests.exceptions import (
     InvalidSchema,
     InvalidURL
 )
+
+from tests import get_relative_url, settings
+from tests.settings import (
+    DIRECTORY_API_URL,
+    DIRECTORY_API_CLIENT_KEY,
+    DIRECTORY_CMS_API_CLIENT_API_KEY,
+    DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT,
+    DIRECTORY_CMS_API_CLIENT_SENDER_ID,
+)
 from django.conf import settings as django_settings
 django_settings.configure(
+    DIRECTORY_API_CLIENT_BASE_URL=DIRECTORY_API_URL,
+    DIRECTORY_API_CLIENT_API_KEY=DIRECTORY_API_CLIENT_KEY,
+    DIRECTORY_API_CLIENT_SENDER_ID="directory",
+    DIRECTORY_API_CLIENT_DEFAULT_TIMEOUT=30,
     DIRECTORY_SSO_API_CLIENT_BASE_URL=None,
     DIRECTORY_SSO_API_CLIENT_API_KEY=None,
     DIRECTORY_SSO_API_CLIENT_SENDER_ID=None,
@@ -30,15 +46,11 @@ django_settings.configure(
     }
 )
 # this has to be imported after django settings are set
-from directory_cms_client.client import DirectoryCMSClient
 from directory_constants.constants import cms as SERVICE_NAMES
+from directory_api_client.client import DirectoryAPIClient
+from directory_cms_client.client import DirectoryCMSClient
 
-from tests.settings import (
-    DIRECTORY_API_CLIENT_KEY,
-    DIRECTORY_CMS_API_CLIENT_API_KEY,
-    DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT,
-    DIRECTORY_CMS_API_CLIENT_SENDER_ID,
-)
+from tests.locust import USER_CREDENTIALS
 
 
 class AuthenticatedClient(HttpSession):
