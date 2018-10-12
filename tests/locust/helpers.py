@@ -90,18 +90,146 @@ class AuthenticatedClient(HttpSession):
         return prepared_request
 
 
+class APIAuthedClientForLocust(DirectoryAPIClient):
+
+    name = None
+    expected_codes = [200]
+
+    def get(self, *args, **kwargs):
+        self.name = kwargs.pop("name", None) or self.name
+        self.expected_codes = kwargs.pop("expected_codes", None) or self.expected_codes
+        start_time = time.time()
+        status_code = None
+        response = None
+        try:
+            response = super().get(*args, **kwargs)
+            response_time = int(response.elapsed.total_seconds() * 1000)
+            events.request_success.fire(
+                request_type="GET", name=self.name, response_time=response_time,
+                response_length=len(response.content))
+            status_code = response.status_code
+            assert status_code in self.expected_codes
+        except (MissingSchema, InvalidSchema, InvalidURL):
+            raise
+        except (AssertionError, RequestException):
+            total_time = int((time.time() - start_time) * 1000)
+            events.request_failure.fire(
+                request_type="GET", name=self.name, response_time=total_time,
+                exception=status_code or RequestException.errno)
+        return response
+
+    def post(self, *args, **kwargs):
+        self.name = kwargs.pop("name", None) or self.name
+        self.expected_codes = kwargs.pop("expected_codes", None) or self.expected_codes
+        start_time = time.time()
+        status_code = None
+        response = None
+        try:
+            response = super().post(*args, **kwargs)
+            response_time = int(response.elapsed.total_seconds() * 1000)
+            status_code = response.status_code
+            assert status_code in self.expected_codes
+            events.request_success.fire(
+                request_type="POST", name=self.name, response_time=response_time,
+                response_length=len(response.content))
+        except (MissingSchema, InvalidSchema, InvalidURL):
+            raise
+        except (AssertionError, RequestException):
+            total_time = int((time.time() - start_time) * 1000)
+            events.request_failure.fire(
+                request_type="POST", name=self.name, response_time=total_time,
+                exception=status_code or RequestException.errno)
+        return response
+
+    def delete(self, *args, **kwargs):
+        self.name = kwargs.pop("name", None) or self.name
+        self.expected_codes = kwargs.pop("expected_codes", None) or self.expected_codes
+        start_time = time.time()
+        status_code = None
+        response = None
+        try:
+            response = super().delete(*args, **kwargs)
+            response_time = int(response.elapsed.total_seconds() * 1000)
+            status_code = response.status_code
+            assert status_code in self.expected_codes
+            events.request_success.fire(
+                request_type="DELETE", name=self.name, response_time=response_time,
+                response_length=len(response.content))
+        except (MissingSchema, InvalidSchema, InvalidURL):
+            raise
+        except (AssertionError, RequestException):
+            total_time = int((time.time() - start_time) * 1000)
+            events.request_failure.fire(
+                request_type="DELETE", name=self.name, response_time=total_time,
+                exception=status_code or RequestException.errno)
+        return response
+
+    def patch(self, *args, **kwargs):
+        self.name = kwargs.pop("name", None) or self.name
+        self.expected_codes = kwargs.pop("expected_codes", None) or self.expected_codes
+        start_time = time.time()
+        status_code = None
+        response = None
+        try:
+            response = super().patch(*args, **kwargs)
+            response_time = int(response.elapsed.total_seconds() * 1000)
+            status_code = response.status_code
+            assert status_code in self.expected_codes
+            events.request_success.fire(
+                request_type="PATCH", name=self.name, response_time=response_time,
+                response_length=len(response.content))
+        except (MissingSchema, InvalidSchema, InvalidURL):
+            raise
+        except (AssertionError, RequestException):
+            total_time = int((time.time() - start_time) * 1000)
+            events.request_failure.fire(
+                request_type="PATCH", name=self.name, response_time=total_time,
+                exception=status_code or RequestException.errno)
+        return response
+
+    def put(self, *args, **kwargs):
+        self.name = kwargs.pop("name", None) or self.name
+        self.expected_codes = kwargs.pop("expected_codes", None) or self.expected_codes
+        start_time = time.time()
+        status_code = None
+        response = None
+        try:
+            response = super().put(*args, **kwargs)
+            response_time = int(response.elapsed.total_seconds() * 1000)
+            status_code = response.status_code
+            assert status_code in self.expected_codes
+            events.request_success.fire(
+                request_type="PUT", name=self.name, response_time=response_time,
+                response_length=len(response.content))
+        except (MissingSchema, InvalidSchema, InvalidURL):
+            raise
+        except (AssertionError, RequestException):
+            total_time = int((time.time() - start_time) * 1000)
+            events.request_failure.fire(
+                request_type="PUT", name=self.name, response_time=total_time,
+                exception=status_code or RequestException.errno)
+        return response
+
+
 class AuthedClientMixin(object):
     def __init__(self):
         super(AuthedClientMixin, self).__init__()
-        self.client = AuthenticatedClient(base_url=self.host)
+        self.client = APIAuthedClientForLocust(
+            base_url=self.host,
+            api_key=DIRECTORY_API_CLIENT_KEY,
+            sender_id="directory",
+            timeout=30,
+        )
 
 
 class CMSAPIAuthenticatedClient(DirectoryCMSClient):
 
     name = None
+    expected_codes = [200]
 
     def get(self, *args, **kwargs):
         self.name = kwargs.pop("name", None) or self.name
+        self.expected_codes = kwargs.pop("expected_codes", None) or self.expected_codes
         start_time = time.time()
         status_code = None
         try:
@@ -111,7 +239,7 @@ class CMSAPIAuthenticatedClient(DirectoryCMSClient):
                 request_type="GET", name=self.name, response_time=response_time,
                 response_length=len(r.content))
             status_code = r.status_code
-            assert r.status_code in [200, 404]
+            assert status_code in self.expected_codes
             return r
         except (MissingSchema, InvalidSchema, InvalidURL):
             raise
