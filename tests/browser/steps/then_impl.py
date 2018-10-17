@@ -8,6 +8,7 @@ from urllib.parse import urlparse
 import requests
 from behave.model import Table
 from behave.runner import Context
+from retrying import retry
 
 from pages import common_language_selector, exread, fas, get_page_object, invest
 from pages.common_actions import (
@@ -35,6 +36,7 @@ from steps.when_impl import (
 from utils.gov_notify import get_email_confirmations_with_matching_string
 from utils.mailgun import mailgun_invest_find_contact_confirmation_email
 from utils.pdf import extract_text_from_pdf_bytes
+from utils.zendesk import find_tickets
 
 
 def should_be_on_page(context: Context, actor_alias: str, page_name: str):
@@ -866,3 +868,16 @@ def form_should_see_error_messages(
     assertion_error = f"Expected error message '{message}' is not present"
     assert message in page_source, assertion_error
     logging.debug(f"{actor_alias} saw expected error message '{message}'")
+
+
+@retry(wait_fixed=10000, stop_max_attempt_number=6, wrap_exception=False)
+def zendesk_should_receive_confirmation_email(
+        context: Context, actor_alias: str, subject: str):
+    actor = get_actor(context, actor_alias)
+    email = actor.email
+    tickets = find_tickets(email, subject)
+    assert tickets, f"Expected to find at least 1 ticket for {email} but got 0"
+    error_msg = (f"Expected to find only 1 '{subject}' ticket for {email} but "
+                 f"found {len(tickets)} instead")
+    assert len(tickets) == 1, error_msg
+
