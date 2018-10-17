@@ -16,4 +16,3 @@ RUN wget -q https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VE
 CMD ["/usr/src/app/docker/cmd-run.sh"]
 
 COPY . /usr/src/app
-

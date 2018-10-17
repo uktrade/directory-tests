@@ -65,7 +65,7 @@ PYTEST_ARGS := \
 TEST_ENV ?= dev
 
 DOCKER_COMPOSE_REMOVE_AND_PULL := docker-compose rm -f && docker-compose pull
-DOCKER_COMPOSE_CREATE_ENVS := python ./docker/env_writer.py --env=$(TEST_ENV) --config=./docker/env.json
+DOCKER_COMPOSE_CREATE_ENVS := pip install docopt && python3 ./docker/env_writer.py --env=$(TEST_ENV) --config=./docker/env.json
 DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL := docker-compose rm && docker-compose pull
 
 smoke_tests:
