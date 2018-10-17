@@ -67,7 +67,7 @@ TEST_ENV ?= dev
 DOCKER_COMPOSE_REMOVE_AND_PULL := docker-compose rm -f && docker-compose pull
 DOCKER_COMPOSE_CREATE_ENVS := \
 	python3 -m venv env_writer && \
-	source env_writer/bin/activate && \
+	. env_writer/bin/activate && \
 	pip install -U pip docopt docker-compose && \
 	python3 ./docker/env_writer.py --env=$(TEST_ENV) --config=./docker/env.json
 DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL := docker-compose rm && docker-compose pull
