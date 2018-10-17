@@ -171,9 +171,10 @@ def check_for_expected_sections_elements(
             if not isinstance(selector, Selector):
                 raise TypeError(
                     "Expected '{}' to be a Selector, got {}"
-                        .format(selector, type(selector)))
+                    .format(selector, type(selector)))
             element = find_element(driver, selector, element_name=element_name)
             if not selector.is_visible:
+                logging.debug(f"Skipping '{element_name} as it's marker as not visible'")
                 continue
             with assertion_msg(
                 "It looks like '%s' element in '%s' section is not visible" " on %s",

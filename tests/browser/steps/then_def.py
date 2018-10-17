@@ -69,6 +69,7 @@ from steps.then_impl import (
     stats_and_tracking_elements_should_not_be_present,
     triage_should_be_classified_as,
     triage_should_see_change_your_answers_link,
+    zendesk_should_receive_confirmation_email,
 )
 from steps.when_impl import (
     triage_answer_questions_again,
@@ -198,7 +199,7 @@ def then_there_should_no_link_to_the_next_article(context, actor_alias):
 
 
 @then('"{actor_alias}" should not see the Personas End Page')
-def then_actor_should_not_see_pesonas_end_page(context, actor_alias):
+def then_actor_should_not_see_personas_end_page(context, actor_alias):
     articles_should_not_see_personas_end_page(context, actor_alias)
 
 
@@ -403,6 +404,12 @@ def then_should_receive_contact_confirmation_email(
         context: Context, actor_alias: str, sender_email: str):
     invest_should_receive_contact_confirmation_email(
         context, actor_alias, sender_email)
+
+
+@then('"{actor_alias}" should receive an "{subject}" confirmation email from Zendesk')
+def then_should_receive_confirmation_email_from_zendesk(
+        context: Context, actor_alias: str, subject: str):
+    zendesk_should_receive_confirmation_email(context, actor_alias, subject)
 
 
 @then('Invest mailbox admin should also receive a contact confirmation email from "{sender_email}"')
