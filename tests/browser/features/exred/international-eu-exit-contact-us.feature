@@ -30,3 +30,4 @@ Feature: International Page - EU Exit - Contact us
     When "Robert" fills out and submits the form
 
     Then "Robert" should be on the "Export Readiness - International EU Exit - Thank you for contacting us" page
+    And "Robert" should receive an "EU Exit international contact form" confirmation email from Zendesk
