@@ -62,15 +62,7 @@ PYTEST_ARGS := \
 	--driver PhantomJS \
 	--driver-path /usr/bin/phantomjs $(pytest_args)
 
-TEST_ENV ?= dev
-
-DOCKER_COMPOSE_REMOVE_AND_PULL := docker-compose rm -f && docker-compose pull
-DOCKER_COMPOSE_CREATE_ENVS := \
-	python3 -m venv env_writer && \
-	. env_writer/bin/activate && \
-	pip install -U pip docopt docker-compose && \
-	python3 ./docker/env_writer.py --env=$(TEST_ENV) --config=./docker/env.json
-DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL := docker-compose rm && docker-compose pull
+TEST_ENV ?= DEV
 
 smoke_tests:
 	pytest --junitxml=tests/smoke/reports/smoke.xml tests/smoke $(pytest_args)
@@ -90,6 +82,40 @@ functional_update_companies:
 
 test: pep8 smoke_tests functional_tests load_test_minimal
 
+DOCKER_COMPOSE_REMOVE_AND_PULL := docker-compose rm -f && docker-compose pull
+DOCKER_COMPOSE_CREATE_ENVS := \
+	python3 -m venv .venv && \
+	. .venv/bin/activate && \
+	pip install -U pip docopt docker-compose && \
+	python3 ./docker/env_writer.py --env=$(TEST_ENV) --config=./docker/env.json
+DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL := docker-compose rm && docker-compose pull
+
+DOCKER_SET_ENV_VARS_FOR_DEV := \
+	export DEV_DIRECTORY_TESTS_DIRECTORY_API_URL=https://directory-api-dev.herokuapp.com/; \
+	export DEV_DIRECTORY_TESTS_DIRECTORY_BUYER_API_URL=https://dev.buyer.directory.uktrade.io/; \
+	export DEV_DIRECTORY_TESTS_DIRECTORY_CMS_API_CLIENT_BASE_URL=https://dev.cms.directory.uktrade.io/; \
+	export DEV_DIRECTORY_TESTS_DIRECTORY_CONTACT_US_UI_URL=https://contact-us.export.great.gov.uk/; \
+	export DEV_DIRECTORY_TESTS_DIRECTORY_PROFILE_URL=https://dev.profile.uktrade.io/; \
+	export DEV_DIRECTORY_TESTS_DIRECTORY_SSO_API_CLIENT_BASE_URL=https://directory-sso-dev.herokuapp.com/; \
+	export DEV_DIRECTORY_TESTS_DIRECTORY_SSO_URL=https://www.dev.sso.uktrade.io/; \
+	export DEV_DIRECTORY_TESTS_DIRECTORY_UI_BUYER_URL=https://dev.buyer.directory.uktrade.io/; \
+	export DEV_DIRECTORY_TESTS_DIRECTORY_UI_SUPPLIER_URL=https://dev.supplier.directory.uktrade.io/; \
+	export DEV_DIRECTORY_TESTS_EXRED_UI_URL=https://dev.exportreadiness.directory.uktrade.io/; \
+	export DEV_DIRECTORY_TESTS_SOO_UI_URL=https://selling-online-overseas.export.staging.uktrade.io/
+
+DOCKER_SET_ENV_VARS_FOR_STAGE := \
+	export STAGE_DIRECTORY_TESTS_DIRECTORY_API_URL=https://directory-api-staging.cloudapps.digital/; \
+	export STAGE_DIRECTORY_TESTS_DIRECTORY_BUYER_API_URL=https://stage.buyer.directory.uktrade.io/; \
+	export STAGE_DIRECTORY_TESTS_DIRECTORY_CMS_API_CLIENT_BASE_URL=https://stage.cms.directory.uktrade.io/; \
+	export STAGE_DIRECTORY_TESTS_DIRECTORY_CONTACT_US_UI_URL=https://contact-us.export.great.gov.uk/; \
+	export STAGE_DIRECTORY_TESTS_DIRECTORY_PROFILE_URL=https://stage.profile.uktrade.io/; \
+	export STAGE_DIRECTORY_TESTS_DIRECTORY_SSO_API_CLIENT_BASE_URL=https://directory-sso-staging.cloudapps.digital/; \
+	export STAGE_DIRECTORY_TESTS_DIRECTORY_SSO_URL=https://stage.sso.uktrade.io/; \
+	export STAGE_DIRECTORY_TESTS_DIRECTORY_UI_BUYER_URL=https://stage.buyer.directory.uktrade.io/; \
+	export STAGE_DIRECTORY_TESTS_DIRECTORY_UI_SUPPLIER_URL=https://stage.supplier.directory.uktrade.io/; \
+	export STAGE_DIRECTORY_TESTS_EXRED_UI_URL=https://stage.exportreadiness.directory.uktrade.io/; \
+	export STAGE_DIRECTORY_TESTS_SOO_UI_URL=https://selling-online-overseas.export.staging.uktrade.io/
+
 DOCKER_REMOVE_ALL := \
 	docker ps -a | \
 	grep -e directorytests_ | \
@@ -100,6 +126,7 @@ docker_remove_all:
 	$(DOCKER_REMOVE_ALL)
 
 docker_integration_tests: docker_remove_all
+	$(DOCKER_SET_ENV_VARS_FOR_$(TEST_ENV)) && \
 	$(DOCKER_COMPOSE_CREATE_ENVS) && \
 	$(DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
 	docker-compose -f docker-compose.yml build && \
