@@ -12,6 +12,7 @@ from pages.common_actions import (
     check_url,
     go_to_url,
     take_screenshot,
+    check_if_element_is_not_visible
 )
 from settings import EXRED_UI_URL
 
@@ -31,7 +32,13 @@ SUBMIT_BUTTON = Selector(By.CSS_SELECTOR, "form button")
 SELECTORS = {
     "header bar": {
         "itself": Selector(By.ID, "international-header-bar"),
-        "language selector": LANGUAGE_SELECTOR,
+    },
+    "language selector": {
+        "language selector": Selector(
+            By.CSS_SELECTOR,
+            "#international-header-bar .LanguageSelectorDialog-Tracker",
+            is_visible=False
+        ),
     },
     "header-menu": {
         "itself": Selector(By.ID, "international-header-menu"),
@@ -65,3 +72,9 @@ def should_be_here(driver: WebDriver):
     check_url(driver, URL, exact_match=False)
     check_title(driver, PAGE_TITLE, exact_match=True)
     check_for_expected_sections_elements(driver, SELECTORS)
+
+
+def should_not_see_section(driver: WebDriver, name: str):
+    section = SELECTORS[name.lower()]
+    for key, selector in section.items():
+        check_if_element_is_not_visible(driver, selector, element_name=key)
