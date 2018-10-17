@@ -35,6 +35,7 @@ from steps.when_impl import (
     generic_see_more_industries,
     generic_submit_form,
     generic_unfold_topics,
+    generic_visit_current_page_with_lang_param,
     guidance_open_category,
     guidance_read_through_all_articles,
     header_footer_click_on_dit_logo,
@@ -474,3 +475,10 @@ def when_actor_downloads_all_visible_pdfs(context: Context, actor_alias: str):
 @when('"{actor_alias}" submits the form')
 def when_actor_submits_the_form(context: Context, actor_alias: str):
     generic_submit_form(context, actor_alias)
+
+
+@when('"{actor_alias}" manually change the page language to "{preferred_language}"')
+def when_actor_sets_lang_url_query_param(
+        context: Context, actor_alias: str,  preferred_language: str):
+    generic_visit_current_page_with_lang_param(
+        context, actor_alias,  preferred_language)

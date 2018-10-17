@@ -2,7 +2,7 @@
 """When step implementations."""
 import logging
 import random
-from types import ModuleType
+from urllib.parse import urljoin
 
 from behave.model import Table
 from behave.runner import Context
@@ -11,7 +11,6 @@ from selenium.common.exceptions import TimeoutException, WebDriverException
 from utils.gov_notify import get_verification_link
 
 from pages import (
-    Services,
     common_language_selector,
     exread,
     fas,
@@ -19,7 +18,6 @@ from pages import (
     sso,
 )
 from pages.common_actions import (
-    Actor,
     VisitedArticle,
     add_actor,
     assertion_msg,
@@ -1848,3 +1846,10 @@ def generic_download_all_pdfs(context: Context, actor_alias: str):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "download_all_pdfs")
     context.pdfs = page.download_all_pdfs(context.driver)
+
+
+def generic_visit_current_page_with_lang_param(
+        context: Context, actor_alias: str,  preferred_language: str):
+    page = get_last_visited_page(context, actor_alias)
+    url = urljoin(page.URL, f"?lang={preferred_language}")
+    context.driver.get(url)
