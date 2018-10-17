@@ -39,11 +39,6 @@ SELECTORS = {
     "header bar": {
         "itself": Selector(By.ID, "international-header-bar"),
     },
-    "language selector": {
-        "language selector": Selector(
-            By.CSS_SELECTOR, "#international-header-bar .LanguageSelectorDialog-Tracker", is_visible=False
-        ),
-    },
     "header menu": {
         "itself": Selector(By.ID, "international-header-menu"),
         "logo": Selector(By.ID, "international-header-logo"),
@@ -78,6 +73,23 @@ SELECTORS = {
     },
 }
 
+UNEXPECTED_SELECTORS = {
+    "not translated": {
+        "not translated": Selector(By.ID, "header-label-not-translated"),
+    },
+    "language selector": {
+        "language selector": Selector(
+            By.CSS_SELECTOR,
+            "#international-header-bar .LanguageSelectorDialog-Tracker",
+            is_visible=False
+        ),
+    },
+}
+
+ALL_SELECTORS = {}
+ALL_SELECTORS.update(SELECTORS)
+ALL_SELECTORS.update(UNEXPECTED_SELECTORS)
+
 
 def visit(driver: WebDriver, *, page_name: str = None, first_time: bool = False):
     go_to_url(driver, URL, page_name, first_time=first_time)
@@ -90,11 +102,11 @@ def should_be_here(driver: WebDriver):
 
 
 def should_see_sections(executor: AssertionExecutor, names: List[str]):
-    check_for_sections(executor, all_sections=SELECTORS, sought_sections=names)
+    check_for_sections(executor, all_sections=ALL_SELECTORS, sought_sections=names)
 
 
 def should_not_see_section(driver: WebDriver, name: str):
-    section = SELECTORS[name.lower()]
+    section = UNEXPECTED_SELECTORS[name.lower()]
     for key, selector in section.items():
         check_if_element_is_not_visible(driver, selector, element_name=key)
 
