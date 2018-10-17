@@ -22,6 +22,8 @@ __all__ = [
     "triage_summary",
     "triage_what_do_you_want_to_export",
     "international",
+    "international_eu_exit_contact_us",
+    "international_eu_exit_contact_us_thank_you",
     "ukef_get_finance",
     "ukef_your_details",
     "ukef_company_details",
