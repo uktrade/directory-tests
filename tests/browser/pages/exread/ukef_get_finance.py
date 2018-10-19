@@ -27,7 +27,7 @@ from settings import EXRED_UI_URL
 NAME = "Get Finance"
 SERVICE = "Export Readiness"
 TYPE = "interim"
-URL = urljoin(EXRED_UI_URL, "get-finance/")
+URL = urljoin(EXRED_UI_URL, "get-finance/?lang=en-gb")
 PAGE_TITLE = "Get finance - great.gov.uk"
 
 PROMO_VIDEO = Selector(By.CSS_SELECTOR, "section.get-finance-video video")
