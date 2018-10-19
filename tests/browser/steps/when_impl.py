@@ -8,6 +8,8 @@ from behave.model import Table
 from behave.runner import Context
 from retrying import retry
 from selenium.common.exceptions import TimeoutException, WebDriverException
+
+from utils.cms_api import get_news_articles
 from utils.gov_notify import get_verification_link
 
 from pages import (
@@ -1853,3 +1855,12 @@ def generic_visit_current_page_with_lang_param(
     page = get_last_visited_page(context, actor_alias)
     url = urljoin(page.URL, f"?lang={preferred_language}")
     context.driver.get(url)
+
+
+def generic_at_least_n_news_articles(
+        context: Context, n: int, service: str):
+    articles = get_news_articles(service)
+    error = (f"Expected to find at least {n} news articles on {service} but "
+             f"got {len(articles)}")
+    assert len(articles) >= n, error
+    context.articles = articles

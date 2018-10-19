@@ -21,6 +21,7 @@ from steps.when_impl import (
     case_studies_go_to_random,
     click_on_page_element,
     export_readiness_open_category,
+    generic_at_least_n_news_articles,
     generic_get_in_touch,
     generic_open_industry_page,
     get_geo_ip,
@@ -235,3 +236,10 @@ def fas_given_actor_opened_industry_page(
 def given_actor_got_in_touch_with_us(
         context: Context, actor_alias: str, page_name: str):
     generic_get_in_touch(context, actor_alias, page_name)
+
+
+@given('at least "{no_articles:d}" published news articles on "{service}"')
+@given('at least "{no_articles:d}" published news article on "{service}"')
+def given_min_number_of_articles(
+        context: Context, no_articles: int, service: str):
+    generic_at_least_n_news_articles(context, no_articles, service)
