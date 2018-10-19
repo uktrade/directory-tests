@@ -79,7 +79,7 @@ Feature: Find a Supplier - home page
       | specific          |
       | Agritech          |
       | Creative services |
-      | Cyber security    |
+      | Technology        |
 
 
   @ED-4249

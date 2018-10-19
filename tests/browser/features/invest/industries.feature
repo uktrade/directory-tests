@@ -38,7 +38,7 @@ Feature: Industries page
       | Automotive                          |
       | Automotive research and development |
       | Automotive supply chain             |
-      | Capital Investment                  |
+      | Capital investment                  |
       | Chemicals                           |
       | Creative content and production     |
       | Creative industries                 |
