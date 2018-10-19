@@ -44,7 +44,7 @@ URLs = {
     "north england": urljoin(BASE_URL, "north-england/"),
     "northern ireland": urljoin(BASE_URL, "northern-ireland/"),
     "scotland": urljoin(BASE_URL, "scotland/"),
-    "south of england": urljoin(BASE_URL, "south-of-england/"),
+    "south of england": urljoin(BASE_URL, "south-england/"),
     "the midlands": urljoin(BASE_URL, "midlands/"),
     "wales": urljoin(BASE_URL, "wales/"),
 }
