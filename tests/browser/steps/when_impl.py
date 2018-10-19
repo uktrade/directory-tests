@@ -1864,3 +1864,15 @@ def generic_at_least_n_news_articles(
              f"got {len(articles)}")
     assert len(articles) >= n, error
     context.articles = articles
+
+
+def generic_open_news_article(
+        context: Context, actor_alias: str, ordinal_number: str):
+    ordinals = {
+        "first": 1,
+        "second": 2,
+        "third": 3,
+    }
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "open_news_article")
+    page.open_news_article(context.driver, ordinals[ordinal_number.lower()])

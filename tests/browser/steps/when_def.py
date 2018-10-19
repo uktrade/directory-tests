@@ -32,6 +32,7 @@ from steps.when_impl import (
     generic_fill_out_and_submit_form,
     generic_open_guide_link,
     generic_open_industry_page,
+    generic_open_news_article,
     generic_see_more_industries,
     generic_submit_form,
     generic_unfold_topics,
@@ -482,3 +483,9 @@ def when_actor_sets_lang_url_query_param(
         context: Context, actor_alias: str,  preferred_language: str):
     generic_visit_current_page_with_lang_param(
         context, actor_alias,  preferred_language)
+
+
+@when('"{actor_alias}" opens "{ordinal_number}" news article')
+def when_actor_opens_news_article(
+        context: Context, actor_alias: str, ordinal_number: str):
+    generic_open_news_article(context, actor_alias, ordinal_number)
