@@ -10,11 +10,12 @@ cachetools==2.1.0         # via zenpy
 certifi==2018.10.15       # via requests
 chardet==3.0.4            # via requests
 directory-api-client==10.0.2
-directory-client-core==4.0.2  # via directory-api-client, directory-sso-api-client
+directory-client-core==4.0.2  # via directory-api-client, directory-cms-client, directory-sso-api-client
+directory-cms-client==6.2.0
 directory-constants==8.0.4
 directory-sso-api-client==3.0.2
 django==1.11.16           # via directory-api-client, directory-constants, sigauth
-djangorestframework==3.8.2  # via sigauth
+djangorestframework==3.9.0  # via sigauth
 docopt==0.6.2
 future==0.16.0            # via notifications-python-client, zenpy
 idna==2.7                 # via requests
@@ -29,11 +30,12 @@ pdfminer2==20151206
 pyjwt==1.6.4              # via notifications-python-client
 python-dateutil==2.7.3    # via zenpy
 pytz==2018.5              # via django, zenpy
-requests==2.19.1
+requests==2.20.0
 retrying==1.3.3
 selenium==3.14.1
 sigauth==4.0.1
-six==1.11.0               # via behave, mohawk, parse-type, paver, pdfminer2, python-dateutil, retrying
+six==1.11.0               # via behave, mohawk, parse-type, paver, pdfminer2, python-dateutil, retrying, w3lib
 termcolor==1.1.0
-urllib3==1.23
+urllib3==1.24
+w3lib==1.19.0             # via directory-cms-client
 zenpy==2.0.7

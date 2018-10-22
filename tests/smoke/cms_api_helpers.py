@@ -50,6 +50,17 @@ async def fetch(endpoints: List[str]):
         return await asyncio.gather(*futures)
 
 
+def check_for_special_cases(url: str) -> str:
+    # this was added because of BUG CMS-416
+    if "setup-guides" in url:
+        url = url.replace("setup-guides", "uk-setup-guide")
+    if "setup-guide-landing" in url:
+        url = url.replace("setup-guide-landing", "uk-setup-guide")
+    if "performance-dashboard-" in url:
+        url = url.replace("performance-dashboard-", "performance-dashboard/")
+    return url
+
+
 def status_error(expected_status_code: int, response: AbstractCMSResponse):
     return (
         f"{response.raw_response.request.method} {response.raw_response.url} "
@@ -150,17 +161,7 @@ def invest_find_draft_urls(responses: List[Response]) -> List[str]:
                     continue
 
                 draft_url = f"{url}?draft_token={draft_token}"
-
-                # this is added because of BUG CMS-416
-                if "setup-guide-landing" in url:
-                    draft_url = draft_url.replace(
-                        "setup-guide-landing", "uk-setup-guide"
-                    )
-                if "setup-guides" in draft_url:
-                    draft_url = draft_url.replace(
-                        "setup-guides", "uk-setup-guide"
-                    )
-
+                draft_url = check_for_special_cases(draft_url)
                 result.append(draft_url)
 
     return result
@@ -185,15 +186,7 @@ def invest_find_published_translated_urls(
             else:
                 url = f"{parsed.scheme}://{parsed.netloc}/{code}{parsed.path}"
 
-            # this is added because of BUG CMS-416
-            if "setup-guides" in url:
-                url = url.replace("setup-guides", "uk-setup-guide")
-            if "setup-guide-landing" in url:
-                url = url.replace("setup-guide-landing", "uk-setup-guide")
-            if "performance-dashboard-" in url:
-                url = url.replace(
-                    "performance-dashboard-", "performance-dashboard/"
-                )
+            url = check_for_special_cases(url)
             # this was added because of CMS-413
             if url.endswith("uk-regions/") or url.endswith("uk-regions"):
                 continue
@@ -210,7 +203,7 @@ def find_draft_urls(responses: List[Response]) -> List[str]:
             page = response.json()
             draft_token = page["meta"]["draft_token"]
             if draft_token is not None:
-                url = page["meta"]["url"]
+                url = check_for_special_cases(page["meta"]["url"])
                 draft_url = f"{url}?draft_token={draft_token}"
                 lang_codes = [lang[0] for lang in page["meta"]["languages"]]
                 for code in lang_codes:
@@ -228,16 +221,7 @@ def find_published_urls(responses: List[Response]) -> List[str]:
     result = []
     for response in responses:
         page = response.json()
-        url = page["meta"]["url"]
-        # this was added because of BUG CMS-416
-        if "setup-guides" in url:
-            url = url.replace("setup-guides", "uk-setup-guide")
-        if "setup-guide-landing" in url:
-            url = url.replace("setup-guide-landing", "uk-setup-guide")
-        if "performance-dashboard-" in url:
-            url = url.replace(
-                "performance-dashboard-", "performance-dashboard/"
-            )
+        url = check_for_special_cases(page["meta"]["url"])
         # this was added because of CMS-413
         if url.endswith("uk-regions/") or url.endswith("uk-regions"):
             continue
@@ -249,9 +233,8 @@ def find_published_translated_urls(responses: List[Response]) -> List[str]:
     result = []
     for response in responses:
         page = response.json()
-        live_url = page["meta"]["url"]
+        url = check_for_special_cases(page["meta"]["url"])
         lang_codes = [lang[0] for lang in page["meta"]["languages"]]
         for code in lang_codes:
-            lang_url = "{}?lang={}".format(live_url, code)
-            result.append(lang_url)
+            result.append("{}?lang={}".format(url, code))
     return result

@@ -20,6 +20,7 @@ from pages.common_actions import (
     check_if_element_is_visible,
     check_title,
     check_url,
+    find_and_click_on_page_element,
     find_element,
     find_elements,
     go_to_url,
@@ -108,7 +109,7 @@ CAROUSEL = {
         By.ID, "case-studies-section-case-study-3-image"
     ),
 }
-
+ARTICLES = Selector(By.CSS_SELECTOR, "#news .article a")
 SELECTORS = {
     "beta": {
         "itself": Selector(By.CSS_SELECTOR, "#content #header-beta-bar"),
@@ -129,6 +130,12 @@ SELECTORS = {
         "introduction": Selector(By.ID, "triage-section-description"),
         "get_started_button": GET_STARTED_BUTTON,
         "image": Selector(By.ID, "triage-section-image"),
+    },
+    "news": {
+        "itself": Selector(By.ID, "news"),
+        "description": Selector(By.CSS_SELECTOR, "#news p.body-text"),
+        "articles": ARTICLES,
+        "see all news": Selector(By.CSS_SELECTOR, "#news a[href='/news/']"),
     },
     "export readiness": {
         "itself": Selector(By.ID, "personas"),
@@ -433,3 +440,14 @@ def close_video(driver: WebDriver):
 def should_not_see_video_modal_window(driver: WebDriver):
     time.sleep(1)
     check_if_element_is_not_present(driver, VIDEO_MODAL_WINDOW)
+
+
+def open_news_article(driver: WebDriver, article_number: int):
+    article_links = find_elements(driver, ARTICLES)
+    assert len(article_links) >= article_number
+    article_links[article_number - 1].click()
+
+
+def click_on_page_element(driver: WebDriver, element_name: str):
+    find_and_click_on_page_element(driver, SELECTORS, element_name)
+    take_screenshot(driver, NAME + " after clicking on " + element_name)

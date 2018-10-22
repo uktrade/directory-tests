@@ -31,13 +31,13 @@ Feature: Industry pages
       | selected                            |
       | Automotive research and development |
       | Automotive supply chain             |
-      | Capital Investment                  |
+      | Capital investment                  |
       | Chemicals                           |
       | Creative content and production     |
       | Data Analytics                      |
       | Digital media                       |
       | Electrical networks                 |
-      | Energy from waste                   |
+      | Energy from waste market            |
       | Financial technology                |
       | Free-from foods                     |
       | Meat, poultry and dairy             |

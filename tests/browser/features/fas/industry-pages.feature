@@ -199,7 +199,7 @@ Feature: Find a Supplier - Industry pages
       | Food and drink    | beer       | Food and drink                         |
       | Sports economy    | arenas     | Global sports infrastructure           |
       | Healthcare        | surgery    | Healthcare and medical                 |
-      | Technology        | holograms  | Software and computer services         |
+      | Technology        | holograms  | Electronics and IT hardware, Software and computer services |
 
     @wip
     Examples: Industries with no companies in them on DEV
@@ -247,7 +247,7 @@ Feature: Find a Supplier - Industry pages
       | Food and drink    | Food and drink                         |
       | Sports economy    | Global sports infrastructure           |
       | Healthcare        | Healthcare and medical                 |
-      | Technology        | Software and computer services         |
+      | Technology        | Electronics and IT hardware, Software and computer services         |
 
     @wip
     Examples: Industries with no companies in them on DEV
@@ -285,7 +285,7 @@ Feature: Find a Supplier - Industry pages
       | Aerospace         | first    |
       | Agritech          | second   |
       | Consumer retail   | third    |
-      | Creative services | second   |
+      | Creative services | first    |
 
     @full
     Examples:
@@ -294,7 +294,7 @@ Feature: Find a Supplier - Industry pages
       | Food and drink    | fourth   |
       | Sports economy    | fifth    |
       | Healthcare        | sixth    |
-      | Technology        | third    |
+      | Technology        | second   |
 
     @wip
     Examples: Industries with no companies in them on DEV
