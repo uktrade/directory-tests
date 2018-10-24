@@ -36,6 +36,7 @@ from steps.when_impl import (
     triage_create_exporting_journey,
     visit_page,
     generic_open_any_news_article,
+    generic_open_random_news_article
 )
 
 
@@ -249,3 +250,9 @@ def given_min_number_of_articles(
 @given('"{actor_alias}" opened any news Article')
 def given_actor_opens_any_news_article(context, actor_alias):
     generic_open_any_news_article(context, actor_alias)
+
+
+@given('"{actor_alias}" opened random "{article_type}" news article')
+def given_actor_opened_random_news_article(
+        context: Context, actor_alias: str, article_type: str):
+    generic_open_random_news_article(context, actor_alias, article_type)
