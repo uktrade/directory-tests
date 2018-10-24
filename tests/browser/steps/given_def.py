@@ -35,6 +35,7 @@ from steps.when_impl import (
     triage_classify_as,
     triage_create_exporting_journey,
     visit_page,
+    generic_open_any_news_article,
 )
 
 
@@ -243,3 +244,8 @@ def given_actor_got_in_touch_with_us(
 def given_min_number_of_articles(
         context: Context, no_articles: int, visitor_type: str, service: str):
     generic_at_least_n_news_articles(context, no_articles, visitor_type, service)
+
+
+@given('"{actor_alias}" opened any news Article')
+def given_actor_opens_any_news_article(context, actor_alias):
+    generic_open_any_news_article(context, actor_alias)
