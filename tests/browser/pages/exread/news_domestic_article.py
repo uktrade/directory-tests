@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""great.gov.uk International EU Exit News Article page"""
+"""great.gov.uk Domestic EU Exit News Article page"""
 from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
@@ -13,9 +13,9 @@ from pages.common_actions import (
 )
 from settings import EXRED_UI_URL
 
-NAME = "EU Exit news"
+NAME = "Domestic EU Exit news"
 SERVICE = "Export Readiness"
-TYPE = "Domestic"
+TYPE = "article"
 URL = urljoin(EXRED_UI_URL, "news/")
 PAGE_TITLE = ""
 
