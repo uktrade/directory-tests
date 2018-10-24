@@ -238,8 +238,8 @@ def given_actor_got_in_touch_with_us(
     generic_get_in_touch(context, actor_alias, page_name)
 
 
-@given('at least "{no_articles:d}" published news articles on "{service}"')
-@given('at least "{no_articles:d}" published news article on "{service}"')
+@given('at least "{no_articles:d}" published "{visitor_type}" news articles on "{service}"')
+@given('at least "{no_articles:d}" published "{visitor_type}" news article on "{service}"')
 def given_min_number_of_articles(
-        context: Context, no_articles: int, service: str):
-    generic_at_least_n_news_articles(context, no_articles, service)
+        context: Context, no_articles: int, visitor_type: str, service: str):
+    generic_at_least_n_news_articles(context, no_articles, visitor_type, service)

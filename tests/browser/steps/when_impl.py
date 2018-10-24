@@ -1858,8 +1858,8 @@ def generic_visit_current_page_with_lang_param(
 
 
 def generic_at_least_n_news_articles(
-        context: Context, n: int, service: str):
-    articles = get_news_articles(service)
+        context: Context, n: int, visitor_type: str, service: str):
+    articles = get_news_articles(service, visitor_type)
     error = (f"Expected to find at least {n} news articles on {service} but "
              f"got {len(articles)}")
     assert len(articles) >= n, error
