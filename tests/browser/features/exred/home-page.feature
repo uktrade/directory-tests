@@ -8,7 +8,7 @@ Feature: Home Page
       Given "Robert" visits the "Export Readiness - Home" page
       Then "Robert" should see following sections
         | Sections          |
-        | Beta              |
+        | Beta bar          |
         | Hero              |
         | Exporting Journey |
         | Export Readiness  |
