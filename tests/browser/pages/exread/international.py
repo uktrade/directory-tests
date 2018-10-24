@@ -35,27 +35,31 @@ LANGUAGE_SELECTOR = Selector(
     By.CSS_SELECTOR, "#international-header-bar .LanguageSelectorDialog-Tracker"
 )
 LANGUAGE_SELECTOR_CLOSE = Selector(By.ID, "header-language-selector-close")
-FIND_A_SUPPLIER = Selector(
-    By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(1) > div > div.card-inner > a"
-)
-SEE_THE_POTENTIAL = Selector(
-    By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(2) > div > div.card-inner > a"
-)
-LEARN_MORE = Selector(
-    By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(3) > div > div.card-inner > a"
-)
-PLAN_YOUR_TRIP = Selector(
-    By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(4) > div > div.card-inner > a"
-)
+FIND_A_SUPPLIER = Selector(By.ID, "card-fas-link")
+SEE_THE_POTENTIAL = Selector(By.ID, "card-invest-link")
+LEARN_MORE = Selector(By.ID, "card-study-uk-link")
+PLAN_YOUR_TRIP = Selector(By.ID, "card-visit-uk-link")
 BETA_FEEDBACK = Selector(By.CSS_SELECTOR, "#header-beta-bar span > a")
 SELECTORS = {
     "header bar": {
         "itself": Selector(By.ID, "international-header-bar"),
         "language selector": LANGUAGE_SELECTOR,
     },
-    "header-menu": {
+    "beta bar": {
+        "itself": Selector(By.ID, "header-beta-bar"),
+        "badge": Selector(By.CSS_SELECTOR, "#header-beta-bar .phase-tag"),
+        "message": Selector(By.CSS_SELECTOR, "#header-beta-bar span"),
+        "link": Selector(By.CSS_SELECTOR, "#header-beta-bar a"),
+    },
+    "header menu": {
         "itself": Selector(By.ID, "international-header-menu"),
         "logo": Selector(By.ID, "international-header-logo"),
+    },
+    "eu exit updates": {
+        "itself": Selector(By.ID, "eu-exit-banner"),
+        "badge": Selector(By.CSS_SELECTOR, "#eu-exit-banner div.banner-badge"),
+        "see our updates on eu exit": Selector(
+            By.CSS_SELECTOR, "#eu-exit-banner a"),
     },
     "intro": {
         "itself": Selector(By.CSS_SELECTOR, "#content > section.intro"),
@@ -63,63 +67,31 @@ SELECTORS = {
         "description": Selector(By.CSS_SELECTOR, "#content > section.intro p"),
     },
     "buy from the uk": {
-        "itself": Selector(
-            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(1) > div.card"
-        ),
-        "image": Selector(
-            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(1) > div > div.card-image"
-        ),
-        "title": Selector(
-            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(1) > div > div.card-inner > h3"
-        ),
-        "text": Selector(
-            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(1) > div > div.card-inner > p"
-        ),
+        "itself": Selector(By.ID, "card-fas"),
+        "image": Selector(By.ID, "card-fas-image"),
+        "title": Selector(By.CSS_SELECTOR, "#card-fas h3"),
+        "text": Selector(By.CSS_SELECTOR, "#card-fas p"),
         "find a supplier - home": FIND_A_SUPPLIER,
     },
     "invest in the uk": {
-        "itself": Selector(
-            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(2) > div.card"
-        ),
-        "image": Selector(
-            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(2) > div > div.card-image"
-        ),
-        "title": Selector(
-            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(2) > div > div.card-inner > h3"
-        ),
-        "text": Selector(
-            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(2) > div > div.card-inner > p"
-        ),
+        "itself": Selector(By.ID, "card-invest"),
+        "image": Selector(By.ID, "card-invest-image"),
+        "title": Selector(By.CSS_SELECTOR, "#card-invest h3"),
+        "text": Selector(By.CSS_SELECTOR, "#card-invest p"),
         "invest - home": SEE_THE_POTENTIAL,
     },
     "study in the uk": {
-        "itself": Selector(
-            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(3) > div.card"
-        ),
-        "image": Selector(
-            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(3) > div > div.card-image"
-        ),
-        "title": Selector(
-            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(3) > div > div.card-inner > h3"
-        ),
-        "text": Selector(
-            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(3) > div > div.card-inner > p"
-        ),
+        "itself": Selector(By.ID, "card-study-uk"),
+        "image": Selector(By.ID, "card-study-uk-image"),
+        "title": Selector(By.CSS_SELECTOR, "#card-study-uk h3"),
+        "text": Selector(By.CSS_SELECTOR, "#card-study-uk p"),
         "british council - home": LEARN_MORE,
     },
     "visit the uk": {
-        "itself": Selector(
-            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(4) > div.card"
-        ),
-        "image": Selector(
-            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(4) > div > div.card-image"
-        ),
-        "title": Selector(
-            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(4) > div > div.card-inner > h3"
-        ),
-        "text": Selector(
-            By.CSS_SELECTOR, "section:nth-child(2) div:nth-child(4) > div > div.card-inner > p"
-        ),
+        "itself": Selector(By.ID, "card-visit-uk"),
+        "image": Selector(By.ID, "card-visit-uk-image"),
+        "title": Selector(By.CSS_SELECTOR, "#card-visit-uk h3"),
+        "text": Selector(By.CSS_SELECTOR, "#card-visit-uk p"),
         "visit britain - home": PLAN_YOUR_TRIP,
     },
 }

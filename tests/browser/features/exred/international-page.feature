@@ -8,6 +8,11 @@ Feature: International Page
 
     Then "Robert" should see following sections
       | Sections          |
+      | Header bar        |
+      | Beta bar          |
+      | Header menu       |
+      | EU Exit updates   |
+      | Intro             |
       | Buy from the UK   |
       | Invest in the UK  |
       | Study in the UK   |
