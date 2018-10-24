@@ -33,7 +33,7 @@ NAME = "Home"
 SERVICE = "Export Readiness"
 TYPE = "home"
 URL = urljoin(EXRED_UI_URL, "?lang=en-gb")
-PAGE_TITLE = "Welcome to great.gov.uk - export guidance and services"
+PAGE_TITLE = "Welcome to great.gov.uk"
 
 PROMO_VIDEO = Selector(
     By.CSS_SELECTOR, "body > div.video-container.Modal-Container.open > div > video"
@@ -111,11 +111,11 @@ CAROUSEL = {
 }
 ARTICLES = Selector(By.CSS_SELECTOR, "#news .article a")
 SELECTORS = {
-    "beta": {
-        "itself": Selector(By.CSS_SELECTOR, "#content #header-beta-bar"),
-        "sticker": Selector(By.CSS_SELECTOR, "#content #header-beta-bar .phase-tag"),
-        "message": Selector(By.CSS_SELECTOR, "#content #header-beta-bar p > span"),
-        "link": Selector(By.CSS_SELECTOR, "#content #header-beta-bar span > a"),
+    "beta bar": {
+        "itself": Selector(By.ID, "header-beta-bar"),
+        "badge": Selector(By.CSS_SELECTOR, "#header-beta-bar .phase-tag"),
+        "message": Selector(By.CSS_SELECTOR, "#header-beta-bar span"),
+        "link": Selector(By.CSS_SELECTOR, "#header-beta-bar a"),
     },
     "hero": {
         "itself": Selector(By.CSS_SELECTOR, "#content > section.hero"),
