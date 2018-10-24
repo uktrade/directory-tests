@@ -70,6 +70,7 @@ from steps.when_impl import (
     triage_should_see_answers_to_questions,
     triage_what_is_your_company_name,
     visit_page,
+    generic_open_any_tag
 )
 
 
@@ -363,6 +364,8 @@ def when_actor_decides_to_click_on_page_element(
 
 @when('"{actor_alias}" decides to use "{element_name}" button')
 @when('"{actor_alias}" decides to use "{element_name}" link')
+@when('"{actor_alias}" decides to open "{element_name}"')
+@when('"{actor_alias}" decides to see "{element_name}"')
 @when('"{actor_alias}" decides to "{element_name}"')
 def when_actor_decides_to_click_on_page_element(
         context, actor_alias, element_name):
@@ -489,3 +492,8 @@ def when_actor_sets_lang_url_query_param(
 def when_actor_opens_news_article(
         context: Context, actor_alias: str, ordinal_number: str):
     generic_open_news_article(context, actor_alias, ordinal_number)
+
+
+@when('"{actor_alias}" decides to see related news articles by using one of the tags')
+def when_actor_open_tag(context: Context, actor_alias: str):
+    generic_open_any_tag(context, actor_alias)

@@ -1882,3 +1882,10 @@ def generic_open_any_news_article(context: Context, actor_alias: str):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "open_any_news_article")
     page.open_any_news_article(context.driver)
+
+
+def generic_open_any_tag(context: Context, actor_alias: str):
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "open_any_tag")
+    tag = page.open_any_tag(context.driver)
+    update_actor(context, actor_alias, last_tag=tag)
