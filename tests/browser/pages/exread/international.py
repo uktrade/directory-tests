@@ -4,7 +4,6 @@ import logging
 from typing import List
 from urllib.parse import urljoin
 
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
@@ -13,14 +12,14 @@ from pages.common_actions import (
     check_for_expected_sections_elements,
     check_for_section,
     check_if_element_is_visible,
-    check_title,
     check_url,
     find_element,
     go_to_url,
     take_screenshot,
     wait_for_page_load_after_action,
     check_for_sections,
-    AssertionExecutor
+    AssertionExecutor,
+    find_and_click_on_page_element
 )
 from settings import EXRED_UI_URL
 
@@ -127,3 +126,8 @@ def open(driver: WebDriver, group: str, element: str, *, same_tab: bool = True):
         with wait_for_page_load_after_action(driver):
             link.click()
     take_screenshot(driver, NAME + " after clicking on: %s link".format(element))
+
+
+def click_on_page_element(driver: WebDriver, element_name: str):
+    find_and_click_on_page_element(driver, SELECTORS, element_name)
+    take_screenshot(driver, NAME + " after clicking on " + element_name)
