@@ -74,6 +74,7 @@ Actor = namedtuple(
         "email_confirmation_link",
         "registered",
         "visited_page",
+        "last_tag",
     ],
 )
 VisitedArticle = namedtuple("VisitedArticle", ["index", "title", "time_to_read"])
