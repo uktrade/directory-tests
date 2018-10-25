@@ -70,6 +70,7 @@ class LocustCMSAPIAuthenticatedClient(DirectoryCMSClient):
         status_code = None
         try:
             r = super().get(*args, **kwargs)
+            assert r.raw_response
             response_time = int(r.raw_response.elapsed.total_seconds() * 1000)
             events.request_success.fire(
                 request_type="GET",
