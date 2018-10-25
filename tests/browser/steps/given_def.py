@@ -35,6 +35,8 @@ from steps.when_impl import (
     triage_classify_as,
     triage_create_exporting_journey,
     visit_page,
+    generic_open_any_news_article,
+    generic_open_random_news_article
 )
 
 
@@ -238,8 +240,19 @@ def given_actor_got_in_touch_with_us(
     generic_get_in_touch(context, actor_alias, page_name)
 
 
-@given('at least "{no_articles:d}" published news articles on "{service}"')
-@given('at least "{no_articles:d}" published news article on "{service}"')
+@given('at least "{no_articles:d}" published "{visitor_type}" news articles on "{service}"')
+@given('at least "{no_articles:d}" published "{visitor_type}" news article on "{service}"')
 def given_min_number_of_articles(
-        context: Context, no_articles: int, service: str):
-    generic_at_least_n_news_articles(context, no_articles, service)
+        context: Context, no_articles: int, visitor_type: str, service: str):
+    generic_at_least_n_news_articles(context, no_articles, visitor_type, service)
+
+
+@given('"{actor_alias}" opened any news Article')
+def given_actor_opens_any_news_article(context, actor_alias):
+    generic_open_any_news_article(context, actor_alias)
+
+
+@given('"{actor_alias}" opened random "{article_type}" news article')
+def given_actor_opened_random_news_article(
+        context: Context, actor_alias: str, article_type: str):
+    generic_open_random_news_article(context, actor_alias, article_type)

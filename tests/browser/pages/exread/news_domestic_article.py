@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""great.gov.uk International EU Exit News Article page"""
+"""great.gov.uk Domestic EU Exit News Article page"""
 from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
@@ -13,11 +13,11 @@ from pages.common_actions import (
 )
 from settings import EXRED_UI_URL
 
-NAME = "Updates for UK companies on EU Exit"
+NAME = "Domestic EU Exit news"
 SERVICE = "Export Readiness"
-TYPE = "Domestic"
+TYPE = "article"
 URL = urljoin(EXRED_UI_URL, "news/")
-PAGE_TITLE = "Welcome to great.gov.uk"
+PAGE_TITLE = ""
 
 
 BETA_FEEDBACK = Selector(By.CSS_SELECTOR, "#header-beta-bar span > a")
@@ -27,19 +27,17 @@ SELECTORS = {
     "header-menu": {
         "itself": Selector(By.ID, "header-menu"),
         "logo": Selector(By.CSS_SELECTOR, "#header-dit-logo img"),
+        "breadcrumbs": Selector(By.CSS_SELECTOR, ".breadcrumbs"),
     },
-    "hero": {
-        "itself": Selector(By.CSS_SELECTOR, "#content > section.hero"),
-        "heading": Selector(By.ID, "hero-heading"),
-        "counter": Selector(By.CSS_SELECTOR, "section.hero p"),
-    },
-    "news list": {
-        "itself": Selector(By.ID, "news-list-page"),
-        "breadcrumbs": Selector(By.CSS_SELECTOR, "div.breadcrumbs"),
-        "news": Selector(By.CSS_SELECTOR, "#news-list-page ul li"),
-        "links": Selector(By.CSS_SELECTOR, "#news-list-page ul li a"),
-        "last updated dates": Selector(
-            By.CSS_SELECTOR, "#news-list-page ul li p"
+    "article": {
+        "itself": Selector(By.ID, "article"),
+        "header": Selector(By.CSS_SELECTOR, "#article h1"),
+        "lede": Selector(By.CSS_SELECTOR, "#article p.lede"),
+        "back to news": Selector(
+            By.CSS_SELECTOR, "article footer nav > div:nth-child(1) a"
+        ),
+        "back to top": Selector(
+            By.CSS_SELECTOR, "article footer nav > div:nth-child(2) a"
         ),
     },
     "error reporting": {
@@ -51,5 +49,5 @@ SELECTORS = {
 
 def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
-    check_url(driver, URL, exact_match=True)
+    check_url(driver, URL, exact_match=False)
     check_for_expected_sections_elements(driver, SELECTORS)

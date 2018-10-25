@@ -881,3 +881,10 @@ def zendesk_should_receive_confirmation_email(
                  f"found {len(tickets)} instead")
     assert len(tickets) == 1, error_msg
 
+
+def should_see_articles_filtered_by_tag(context: Context, actor_alias: str):
+    actor = get_actor(context, actor_alias)
+    tag = actor.last_tag
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "is_filtered_by_tag")
+    page.is_filtered_by_tag(context.driver, tag)

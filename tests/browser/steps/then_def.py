@@ -70,6 +70,7 @@ from steps.then_impl import (
     triage_should_be_classified_as,
     triage_should_see_change_your_answers_link,
     zendesk_should_receive_confirmation_email,
+    should_see_articles_filtered_by_tag
 )
 from steps.when_impl import (
     triage_answer_questions_again,
@@ -451,3 +452,8 @@ def then_should_not_see_dead_links_in_pdf(context: Context):
 @then('"{actor_alias}" should see error message saying that mandatory fields are required')
 def then_should_see_an_error_message(context: Context, actor_alias: str):
     form_should_see_error_messages(context, actor_alias)
+
+
+@then('"{actor_alias}" should see list of news articles filtered by selected tag')
+def then_should_see_articles_filtered_by_tag(context: Context, actor_alias: str):
+    should_see_articles_filtered_by_tag(context, actor_alias)

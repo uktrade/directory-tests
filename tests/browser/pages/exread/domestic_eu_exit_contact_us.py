@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""great.gov.uk International EU Exit Contact us page"""
+"""great.gov.uk Domestic EU Exit Contact us page"""
 import random
 from typing import List
 from urllib.parse import urljoin
@@ -10,7 +10,6 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from pages import ElementType
 from pages.common_actions import (
     Selector,
-    check_title,
     check_url,
     find_element,
     go_to_url,
@@ -23,25 +22,24 @@ from pages.common_actions import (
     tick_captcha_checkbox,
     fill_out_input_fields,
     pick_option,
-    check_if_element_is_not_visible
 )
 from settings import EXRED_UI_URL
 
-NAME = "International EU Exit"
+NAME = "Domestic EU Exit contact form"
 SERVICE = "Export Readiness"
 TYPE = "Contact us"
-URL = urljoin(EXRED_UI_URL, "eu-exit/international/contact/")
-PAGE_TITLE = "Welcome to great.gov.uk - buy from or invest in the UK"
+URL = urljoin(EXRED_UI_URL, "eu-exit/contact/")
+PAGE_TITLE = ""
 
 
 SUBMIT_BUTTON = Selector(By.CSS_SELECTOR, "form button")
 SELECTORS = {
     "header bar": {
-        "itself": Selector(By.ID, "international-header-bar"),
+        "itself": Selector(By.ID, "header-bar"),
     },
     "header menu": {
-        "itself": Selector(By.ID, "international-header-menu"),
-        "logo": Selector(By.ID, "international-header-logo"),
+        "itself": Selector(By.ID, "header-menu"),
+        "logo": Selector(By.ID, "header-logo"),
         "breadcrumbs": Selector(By.CSS_SELECTOR, ".breadcrumbs"),
     },
     "heading": {
@@ -50,15 +48,13 @@ SELECTORS = {
     },
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#content form"),
-        "given names": Selector(By.ID, "id_first_name", type=ElementType.INPUT),
-        "family name": Selector(By.ID, "id_last_name", type=ElementType.INPUT),
+        "fist name": Selector(By.ID, "id_first_name", type=ElementType.INPUT),
+        "last name": Selector(By.ID, "id_last_name", type=ElementType.INPUT),
         "email": Selector(By.ID, "id_email", type=ElementType.INPUT),
         "company": Selector(By.ID, "id_organisation_type_0", type=ElementType.CHECKBOX, is_visible=False),
         "other type of organisation": Selector(By.ID, "id_organisation_type_0", type=ElementType.CHECKBOX, is_visible=False),
         "company name": Selector(By.ID, "id_company_name", type=ElementType.INPUT),
-        "country": Selector(By.ID, "js-country-select", type=ElementType.SELECT),
-        "city": Selector(By.ID, "id_city", type=ElementType.INPUT),
-        "comment": Selector(By.ID, "id_comment", type=ElementType.TEXTAREA),
+        "your question": Selector(By.ID, "id_comment", type=ElementType.TEXTAREA),
         "terms and conditions": Selector(
             By.ID,
             "id_terms_agreed",
@@ -72,23 +68,6 @@ SELECTORS = {
         "link": Selector(By.ID, "error-reporting-section-contact-us"),
     },
 }
-
-UNEXPECTED_SELECTORS = {
-    "not translated": {
-        "not translated": Selector(By.ID, "header-label-not-translated"),
-    },
-    "language selector": {
-        "language selector": Selector(
-            By.CSS_SELECTOR,
-            "#international-header-bar .LanguageSelectorDialog-Tracker",
-            is_visible=False
-        ),
-    },
-}
-
-ALL_SELECTORS = {}
-ALL_SELECTORS.update(SELECTORS)
-ALL_SELECTORS.update(UNEXPECTED_SELECTORS)
 
 
 def visit(driver: WebDriver, *, page_name: str = None, first_time: bool = False):
@@ -104,24 +83,16 @@ def should_see_sections(executor: AssertionExecutor, names: List[str]):
     check_for_sections(executor, all_sections=ALL_SELECTORS, sought_sections=names)
 
 
-def should_not_see_section(driver: WebDriver, name: str):
-    section = UNEXPECTED_SELECTORS[name.lower()]
-    for key, selector in section.items():
-        check_if_element_is_not_visible(driver, selector, element_name=key)
-
-
 def generate_form_details(actor: Actor) -> dict:
     is_company = random.choice([True, False])
     result = {
-        "given names": f"send by {actor.alias} - automated tests",
-        "family name": actor.alias,
+        "first name": f"send by {actor.alias} - automated tests",
+        "last name": actor.alias,
         "email": actor.email,
         "company": is_company,
         "other type of organisation": not is_company,
         "company name": "automated tests",
-        "country": None,
-        "city": "automated tests",
-        "comment": f"Submitted by automated test {actor.alias}",
+        "your question": f"Submitted by automated test {actor.alias}",
         "terms and conditions": True,
     }
     return result

@@ -95,6 +95,14 @@ def visit_page(
     update_actor(context, actor_alias, visited_page=page)
 
 
+def should_be_on_page(context: Context, actor_alias: str, page_name: str):
+    page = get_page_object(page_name)
+    has_action(page, "should_be_here")
+    page.should_be_here(context.driver)
+    update_actor(context, actor_alias, visited_page=page)
+    logging.debug(f"{actor_alias} is on {page.SERVICE} - {page.NAME} - {page.TYPE} -> {page}")
+
+
 def actor_classifies_himself_as(
     context: Context, actor_alias: str, exporter_status: str
 ):
@@ -1858,8 +1866,8 @@ def generic_visit_current_page_with_lang_param(
 
 
 def generic_at_least_n_news_articles(
-        context: Context, n: int, service: str):
-    articles = get_news_articles(service)
+        context: Context, n: int, visitor_type: str, service: str):
+    articles = get_news_articles(service, visitor_type)
     error = (f"Expected to find at least {n} news articles on {service} but "
              f"got {len(articles)}")
     assert len(articles) >= n, error
@@ -1876,3 +1884,34 @@ def generic_open_news_article(
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "open_news_article")
     page.open_news_article(context.driver, ordinals[ordinal_number.lower()])
+
+
+def generic_open_any_news_article(context: Context, actor_alias: str):
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "open_any_news_article")
+    page.open_any_news_article(context.driver)
+
+
+def generic_open_any_tag(context: Context, actor_alias: str):
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "open_any_tag")
+    tag = page.open_any_tag(context.driver)
+    update_actor(context, actor_alias, last_tag=tag)
+
+
+def generic_open_random_news_article(context: Context, actor_alias: str, article_type: str):
+    flow = {
+        "domestic": {
+            "start": "Export Readiness - Updates for UK companies on EU Exit - Domestic",
+            "finish": "Export Readiness - Domestic EU Exit news - article",
+        },
+        "international": {
+            "start": "Export Readiness - Updates for non-UK companies on EU Exit - International",
+            "finish": "Export Readiness - International EU Exit news - article",
+        }
+    }
+    start = flow[article_type.lower()]["start"]
+    finish = flow[article_type.lower()]["finish"]
+    visit_page(context, actor_alias, start)
+    generic_open_any_news_article(context, actor_alias)
+    should_be_on_page(context, actor_alias, finish)
