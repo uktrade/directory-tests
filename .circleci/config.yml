@@ -132,7 +132,7 @@ step_run_functional_tests: &step_run_functional_tests
 
 step_run_browser_tests: &step_run_browser_tests
   run:
-    name: Run all functional scenarios in {{ .Environment.BROWSER }}
+    name: Run all functional scenarios
     command: |
       . venv/bin/activate
       python ./docker/env_writer.py --env=${TEST_ENV} --config=./docker/env_browser.json
@@ -142,7 +142,7 @@ step_run_browser_tests: &step_run_browser_tests
 
 step_run_load_tests: &step_run_load_tests
   run:
-    name: Run load tests for ${SERVICE}
+    name: Run load tests
     command: |
       . venv/bin/activate
       python ./docker/env_writer.py --env=${TEST_ENV} --config=./docker/env.json
