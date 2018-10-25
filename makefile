@@ -7,6 +7,7 @@ clean:
 	-rm -fr ./tests/browser/reports/*.xml
 	-rm -fr ./tests/functional/reports/*.xml
 	-rm -fr ./tests/smoke/reports/*.xml
+	-rm -fr ./reports/*.csv
 
 requirements_load:
 	pip install -r requirements_load.txt
