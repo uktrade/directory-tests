@@ -89,6 +89,11 @@ urls = {
     'ui-supplier:suppliers-detail': 'suppliers/03074910/ft-solutions-limited/',
     'ui-supplier:case-study': 'case-study/172/how-a-major-airport-rewards-its-loyal-passengers/',
 
+    # UI-INVEST
+    'ui-invest:landing': '',
+    'ui-invest:industries': 'industries/',
+    'ui-invest:uk-setup-guide': 'uk-setup-guide/',
+
     # API
     'api:healthcheck-cache': 'healthcheck/cache/',
     'api:healthcheck-database': 'healthcheck/database/',
@@ -209,7 +214,6 @@ urls = {
     'ui-contact-us:soo-triage': 'triage/',
     'ui-contact-us:soo-triage-form': 'triage/soo/',
     'ui-contact-us:soo-triage-feedback-form': 'FeedbackForm/TriageForm/',
-
 
     # SOO UI Selling Online Overseas
     'ui-soo:landing': '/',
