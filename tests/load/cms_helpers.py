@@ -117,7 +117,7 @@ class LocustCMSAPIAuthenticatedClient(DirectoryCMSClient):
         )
         return self.get(
             url=self.endpoints["page-by-slug"].format(slug=slug),
-            params={**base_params, "service_name": self.service_name},
+            params={**base_params},
             **kwargs,
         )
 
@@ -125,11 +125,10 @@ class LocustCMSAPIAuthenticatedClient(DirectoryCMSClient):
 class CMSAPIAuthClientMixin(HttpLocust):
     def __init__(self):
         super(CMSAPIAuthClientMixin, self).__init__()
-        self.service_name = SERVICE_NAMES.INVEST
         self.client = LocustCMSAPIAuthenticatedClient(
             base_url=self.host,
             api_key=DIRECTORY_CMS_API_CLIENT_API_KEY,
             sender_id=DIRECTORY_CMS_API_CLIENT_SENDER_ID,
             timeout=DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT,
-            service_name=SERVICE_NAMES.INVEST,
+            default_service_name=SERVICE_NAMES.INVEST,
         )
