@@ -24,11 +24,28 @@ pep8:
 LOCUST := \
 	locust \
 		--locustfile $$LOCUST_FILE \
-		--clients=$$LOCUST_NUM_CLIENTS \
-		--hatch-rate=$$LOCUST_HATCH_RATE \
-		--no-web \
+		--clients=$$NUM_CLIENTS \
+		--hatch-rate=$$HATCH_RATE \
 		--only-summary \
-		--run-time=$$LOCUST_RUN_TIME
+		--no-web \
+		--csv=./reports/results \
+		--run-time=$$RUN_TIME
+
+rudimental_load_test_cms:
+	export LOCUST_FILE=./locustfile_rudimental_cms.py; \
+	$(LOCUST)
+
+rudimental_load_test_fab:
+	export LOCUST_FILE=./locustfile_rudimental_fab.py; \
+	$(LOCUST)
+
+rudimental_load_test_fas:
+	export LOCUST_FILE=./locustfile_rudimental_fas.py; \
+	$(LOCUST)
+
+rudimental_load_test_invest:
+	export LOCUST_FILE=./locustfile_rudimental_invest.py; \
+	$(LOCUST)
 
 load_test:
 	$(LOCUST)
