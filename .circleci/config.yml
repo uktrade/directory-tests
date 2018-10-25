@@ -7,6 +7,14 @@ chrome_version: &chrome_version
 firefox_version: &firefox_version
   BROWSER_VERSION: "62.0"
 
+load_hatch_rate: &load_hatch_rate
+    HATCH_RATE: 5
+
+load_num_clients: &load_num_clients
+    NUM_CLIENTS: 20
+
+load_run_time: &load_run_time
+    RUN_TIME: 300
 
 # Machines configs
 machine_python3: &machine_python3
@@ -414,9 +422,9 @@ jobs:
     environment:
       SERVICE: "fab"
       TEST_ENV: "stage"
-      NUM_CLIENTS: 20
-      HATCH_RATE: 5
-      RUN_TIME: 300
+      <<: *load_hatch_rate
+      <<: *load_num_clients
+      <<: *load_run_time
     <<: *steps_run_load_tests
 
 
