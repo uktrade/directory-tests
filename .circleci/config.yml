@@ -558,18 +558,54 @@ workflows:
           requires:
             - setup_env_for_browser_tests
 
-  run_load_tests_on_stage:
+  run_cms_load_tests_on_stage:
+    triggers:
+    - schedule:
+        cron: "0 21 * * 1-5"
+        filters:
+          branches:
+            only: master
+    jobs:
+    - setup_env_for_load_tests
+    - load_cms_tests_stage:
+        requires:
+        - setup_env_for_load_tests
+
+  run_fab_load_tests_on_stage:
+    triggers:
+    - schedule:
+        cron: "5 21 * * 1-5"
+        filters:
+          branches:
+            only: master
     jobs:
     - setup_env_for_load_tests
     - load_fab_tests_stage:
         requires:
         - setup_env_for_load_tests
+
+  run_fas_load_tests_on_stage:
+    triggers:
+    - schedule:
+        cron: "10 21 * * 1-5"
+        filters:
+          branches:
+            only: master
+    jobs:
+    - setup_env_for_load_tests
     - load_fas_tests_stage:
         requires:
-        - load_fab_tests_stage
+        - setup_env_for_load_tests
+
+  run_invest_load_tests_on_stage:
+    triggers:
+    - schedule:
+        cron: "15 21 * * 1-5"
+        filters:
+          branches:
+            only: master
+    jobs:
+    - setup_env_for_load_tests
     - load_invest_tests_stage:
         requires:
-        - load_fas_tests_stage
-    - load_cms_tests_stage:
-        requires:
-        - load_invest_tests_stage
+        - setup_env_for_load_tests
