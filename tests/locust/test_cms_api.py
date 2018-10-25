@@ -28,7 +28,7 @@ class AuthenticatedPagesAPI(TaskSet):
             "export_readiness.PerformanceDashboardNotesPage",
             "export_readiness.PerformanceDashboardPage",
             "export_readiness.PrivacyAndCookiesPage",
-            "export_readiness.TerAndConditionsPage",
+            "export_readiness.TermsAndConditionsPage",
             "find_a_supplier.IndustryArticlePage",
             "find_a_supplier.IndustryContactPage",
             "find_a_supplier.IndustryLandingPage",
@@ -49,7 +49,7 @@ class AuthenticatedPagesAPI(TaskSet):
         services = [
             SERVICE_NAMES.INVEST,
             SERVICE_NAMES.FIND_A_SUPPLIER,
-            SERVICE_NAMES.EXPORT_READINESS
+            SERVICE_NAMES.EXPORT_READINESS,
         ]
         slugs = [
             "advanced-manufacturing", "aerospace", "agri-tech",
@@ -68,9 +68,9 @@ class AuthenticatedPagesAPI(TaskSet):
             "setup-guide-landing-page",
         ]
         slug = choice(slugs)
-        fields = f"*&service_name={choice(services)}"
+        self.client.service_name = choice(services)
         self.client.lookup_by_slug(
-            slug, fields=fields, name="/api/pages/lookup-by-slug/[slug]/")
+            slug, fields=None, name="/api/pages/lookup-by-slug/[slug]/")
 
 
 class AuthenticatedUserAPI(CMSAPIAuthClientMixin):

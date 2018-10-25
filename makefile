@@ -7,6 +7,7 @@ clean:
 	-rm -fr ./tests/browser/reports/*.xml
 	-rm -fr ./tests/functional/reports/*.xml
 	-rm -fr ./tests/smoke/reports/*.xml
+	-rm -fr ./reports/*.csv
 
 requirements_load:
 	pip install -r requirements_load.txt
@@ -24,11 +25,28 @@ pep8:
 LOCUST := \
 	locust \
 		--locustfile $$LOCUST_FILE \
-		--clients=$$LOCUST_NUM_CLIENTS \
-		--hatch-rate=$$LOCUST_HATCH_RATE \
-		--no-web \
+		--clients=$$NUM_CLIENTS \
+		--hatch-rate=$$HATCH_RATE \
 		--only-summary \
-		--run-time=$$LOCUST_RUN_TIME
+		--no-web \
+		--csv=./reports/results \
+		--run-time=$$RUN_TIME
+
+rudimental_load_test_cms:
+	export LOCUST_FILE=./locustfile_rudimental_cms.py; \
+	$(LOCUST)
+
+rudimental_load_test_fab:
+	export LOCUST_FILE=./locustfile_rudimental_fab.py; \
+	$(LOCUST)
+
+rudimental_load_test_fas:
+	export LOCUST_FILE=./locustfile_rudimental_fas.py; \
+	$(LOCUST)
+
+rudimental_load_test_invest:
+	export LOCUST_FILE=./locustfile_rudimental_invest.py; \
+	$(LOCUST)
 
 load_test:
 	$(LOCUST)
@@ -101,6 +119,7 @@ DOCKER_SET_ENV_VARS_FOR_DEV := \
 	export DEV_DIRECTORY_TESTS_DIRECTORY_UI_BUYER_URL=https://dev.buyer.directory.uktrade.io/; \
 	export DEV_DIRECTORY_TESTS_DIRECTORY_UI_SUPPLIER_URL=https://dev.supplier.directory.uktrade.io/; \
 	export DEV_DIRECTORY_TESTS_EXRED_UI_URL=https://dev.exportreadiness.directory.uktrade.io/; \
+	export DEV_DIRECTORY_TESTS_INVEST_UI_URL=https://dev.invest.directory.uktrade.io/; \
 	export DEV_DIRECTORY_TESTS_SOO_UI_URL=https://selling-online-overseas.export.staging.uktrade.io/
 
 DOCKER_SET_ENV_VARS_FOR_STAGE := \
@@ -114,6 +133,7 @@ DOCKER_SET_ENV_VARS_FOR_STAGE := \
 	export STAGE_DIRECTORY_TESTS_DIRECTORY_UI_BUYER_URL=https://stage.buyer.directory.uktrade.io/; \
 	export STAGE_DIRECTORY_TESTS_DIRECTORY_UI_SUPPLIER_URL=https://stage.supplier.directory.uktrade.io/; \
 	export STAGE_DIRECTORY_TESTS_EXRED_UI_URL=https://stage.exportreadiness.directory.uktrade.io/; \
+	export STAGE_DIRECTORY_TESTS_INVEST_UI_URL=https://invest-ui-staging.cloudapps.digital/; \
 	export STAGE_DIRECTORY_TESTS_SOO_UI_URL=https://selling-online-overseas.export.staging.uktrade.io/
 
 DOCKER_REMOVE_ALL := \

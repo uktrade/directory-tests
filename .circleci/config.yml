@@ -7,6 +7,14 @@ chrome_version: &chrome_version
 firefox_version: &firefox_version
   BROWSER_VERSION: "62.0"
 
+load_hatch_rate: &load_hatch_rate
+    HATCH_RATE: 5
+
+load_num_clients: &load_num_clients
+    NUM_CLIENTS: 20
+
+load_run_time: &load_run_time
+    RUN_TIME: 300
 
 # Machines configs
 machine_python3: &machine_python3
@@ -49,6 +57,15 @@ step_install_requirements_for_browser_tests: &step_install_requirements_for_brow
       nodeenv -p
       npm install -g junit-merge@1.2.3
 
+step_install_requirements_for_load_tests: &step_install_requirements_for_load_tests
+  run:
+    name: Create virtualenv and install dependencies
+    command: |
+      python3 -m venv venv
+      . venv/bin/activate
+      pip install --upgrade pip
+      pip install -r requirements_load.txt
+
 step_cache_smoke_tests_requirements: &step_cache_smoke_tests_requirements
   save_cache:
     key: smoke-tests-dependency-cache-{{ .Revision }}
@@ -67,6 +84,12 @@ step_cache_browser_tests_requirements: &step_cache_browser_tests_requirements
     paths:
       - ~/directory-tests
 
+step_cache_load_tests_requirements: &step_cache_load_tests_requirements
+  save_cache:
+    key: load-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
+    paths:
+    - ~/directory-tests
+
 step_restore_cached_smoke_tests_requirements: &step_restore_cached_smoke_tests_requirements
   restore_cache:
     keys:
@@ -81,6 +104,11 @@ step_restore_cached_functional_tests_requirements: &step_restore_cached_function
   restore_cache:
     keys:
       - functional-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
+
+step_restore_cached_load_tests_requirements: &step_restore_cached_load_tests_requirements
+  restore_cache:
+    keys:
+    - load-tests-dependency-cache-{{ .Environment.CIRCLE_WORKFLOW_ID }}
 
 step_run_smoke_tests: &step_run_smoke_tests
   run:
@@ -111,6 +139,16 @@ step_run_browser_tests: &step_run_browser_tests
       source ./docker/.env_with_export;
       export PATH=$PATH:$HOME/bin
       BROWSERS=${BROWSER} VERSIONS=${BROWSER_VERSION} TAGS=${TAGS} make browserstack
+
+step_run_load_tests: &step_run_load_tests
+  run:
+    name: Run load tests for ${SERVICE}
+    command: |
+      . venv/bin/activate
+      python ./docker/env_writer.py --env=${TEST_ENV} --config=./docker/env_browser.json
+      source ./docker/.env_with_export;
+      export PATH=$PATH:$HOME/bin
+      NUM_CLIENTS=${NUM_CLIENTS} HATCH_RATE=${HATCH_RATE} RUN_TIME=${RUN_TIME} make rudimental_load_test_${SERVICE}
 
 step_merge_junit_xml_reports_from_functional_tests: &step_merge_junit_xml_reports_from_functional_tests
   run:
@@ -155,6 +193,12 @@ steps_setup_env_for_browser_tests: &steps_setup_env_for_browser_tests
     - *step_install_requirements_for_browser_tests
     - *step_cache_browser_tests_requirements
 
+steps_setup_env_for_load_tests: &steps_setup_env_for_load_tests
+  steps:
+  - *step_checkout_repo
+  - *step_install_requirements_for_load_tests
+  - *step_cache_load_tests_requirements
+
 steps_smoke_tests: &steps_smoke_tests
   steps:
     - *step_restore_cached_smoke_tests_requirements
@@ -184,6 +228,12 @@ steps_run_browser_tests: &steps_run_browser_tests
     - store_artifacts:
         path: ./tests/browser/reports
 
+steps_run_load_tests: &steps_run_load_tests
+  steps:
+  - *step_restore_cached_load_tests_requirements
+  - *step_run_load_tests
+  - store_artifacts:
+      path: ./reports
 
 jobs:
   setup_env_for_smoke_tests:
@@ -200,6 +250,11 @@ jobs:
     <<: *machine_python3
     working_directory: ~/directory-tests
     <<: *steps_setup_env_for_browser_tests
+
+  setup_env_for_load_tests:
+    <<: *machine_python3
+    working_directory: ~/directory-tests
+    <<: *steps_setup_env_for_load_tests
 
   smoke_tests_dev:
     <<: *machine_python3
@@ -361,6 +416,17 @@ jobs:
       TAGS: "-full,-dev-only"
     <<: *steps_run_browser_tests
 
+  load_fab_tests_stage:
+    <<: *machine_python3
+    working_directory: ~/directory-tests
+    environment:
+      SERVICE: "fab"
+      TEST_ENV: "stage"
+      <<: *load_hatch_rate
+      <<: *load_num_clients
+      <<: *load_run_time
+    <<: *steps_run_load_tests
+
 
 workflows:
   version: 2
@@ -459,3 +525,10 @@ workflows:
       - browser_all_firefox_stage:
           requires:
             - setup_env_for_browser_tests
+
+  run_load_tests_on_stage:
+    jobs:
+    - setup_env_for_load_tests
+    - load_fab_tests_stage:
+        requires:
+        - setup_env_for_load_tests
