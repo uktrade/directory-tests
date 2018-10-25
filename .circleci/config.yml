@@ -11,7 +11,7 @@ load_hatch_rate: &load_hatch_rate
     HATCH_RATE: 5
 
 load_num_clients: &load_num_clients
-    NUM_CLIENTS: 30
+    NUM_CLIENTS: 25
 
 load_run_time: &load_run_time
     RUN_TIME: 300
@@ -561,15 +561,15 @@ workflows:
   run_load_tests_on_stage:
     jobs:
     - setup_env_for_load_tests
-    - load_cms_tests_stage:
-        requires:
-        - setup_env_for_load_tests
     - load_fab_tests_stage:
         requires:
-        - load_cms_tests_stage
+        - setup_env_for_load_tests
     - load_fas_tests_stage:
         requires:
         - load_fab_tests_stage
     - load_invest_tests_stage:
         requires:
         - load_fas_tests_stage
+    - load_cms_tests_stage:
+        requires:
+        - load_invest_tests_stage
