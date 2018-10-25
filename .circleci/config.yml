@@ -415,11 +415,44 @@ jobs:
       TAGS: "-full,-dev-only"
     <<: *steps_run_browser_tests
 
+  load_cms_tests_stage:
+    <<: *machine_python3
+    working_directory: ~/directory-tests
+    environment:
+      SERVICE: "cms"
+      TEST_ENV: "stage"
+      <<: *load_hatch_rate
+      <<: *load_num_clients
+      <<: *load_run_time
+    <<: *steps_run_load_tests
+
   load_fab_tests_stage:
     <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       SERVICE: "fab"
+      TEST_ENV: "stage"
+      <<: *load_hatch_rate
+      <<: *load_num_clients
+      <<: *load_run_time
+    <<: *steps_run_load_tests
+
+  load_fas_tests_stage:
+    <<: *machine_python3
+    working_directory: ~/directory-tests
+    environment:
+      SERVICE: "fas"
+      TEST_ENV: "stage"
+      <<: *load_hatch_rate
+      <<: *load_num_clients
+      <<: *load_run_time
+    <<: *steps_run_load_tests
+
+  load_invest_tests_stage:
+    <<: *machine_python3
+    working_directory: ~/directory-tests
+    environment:
+      SERVICE: "invest"
       TEST_ENV: "stage"
       <<: *load_hatch_rate
       <<: *load_num_clients
@@ -528,6 +561,15 @@ workflows:
   run_load_tests_on_stage:
     jobs:
     - setup_env_for_load_tests
-    - load_fab_tests_stage:
+    - load_cms_tests_stage:
         requires:
         - setup_env_for_load_tests
+    - load_fab_tests_stage:
+        requires:
+        - load_cms_tests_stage
+    - load_fas_tests_stage:
+        requires:
+        - load_fab_tests_stage
+    - load_invest_tests_stage:
+        requires:
+        - load_fas_tests_stage
