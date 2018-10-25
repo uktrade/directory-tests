@@ -119,6 +119,7 @@ DOCKER_SET_ENV_VARS_FOR_DEV := \
 	export DEV_DIRECTORY_TESTS_DIRECTORY_UI_BUYER_URL=https://dev.buyer.directory.uktrade.io/; \
 	export DEV_DIRECTORY_TESTS_DIRECTORY_UI_SUPPLIER_URL=https://dev.supplier.directory.uktrade.io/; \
 	export DEV_DIRECTORY_TESTS_EXRED_UI_URL=https://dev.exportreadiness.directory.uktrade.io/; \
+	export DEV_DIRECTORY_TESTS_INVEST_UI_URL=https://dev.invest.directory.uktrade.io/; \
 	export DEV_DIRECTORY_TESTS_SOO_UI_URL=https://selling-online-overseas.export.staging.uktrade.io/
 
 DOCKER_SET_ENV_VARS_FOR_STAGE := \
@@ -132,6 +133,7 @@ DOCKER_SET_ENV_VARS_FOR_STAGE := \
 	export STAGE_DIRECTORY_TESTS_DIRECTORY_UI_BUYER_URL=https://stage.buyer.directory.uktrade.io/; \
 	export STAGE_DIRECTORY_TESTS_DIRECTORY_UI_SUPPLIER_URL=https://stage.supplier.directory.uktrade.io/; \
 	export STAGE_DIRECTORY_TESTS_EXRED_UI_URL=https://stage.exportreadiness.directory.uktrade.io/; \
+	export STAGE_DIRECTORY_TESTS_INVEST_UI_URL=https://invest-ui-staging.cloudapps.digital/; \
 	export STAGE_DIRECTORY_TESTS_SOO_UI_URL=https://selling-online-overseas.export.staging.uktrade.io/
 
 DOCKER_REMOVE_ALL := \
