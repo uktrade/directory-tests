@@ -1,5 +1,6 @@
--e git+https://github.com/locustio/locust.git@6701f700f2995e0f96a4d76ff50031ae7e55752b#egg=locustio
 beautifulsoup4
 directory-cms-client
 directory-constants
+docopt
+locustio
 requests
