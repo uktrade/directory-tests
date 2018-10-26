@@ -25,25 +25,9 @@ class FASTasks(TaskSet):
         )
 
     @task
-    def blank_search(self):
-        url = get_relative_url("ui-supplier:search")
-        params = {
-            "term": "",
-            "sectors": "",
-        }
-        self.client.get(
-            url,
-            params=params,
-        )
-
-    @task
-    def industries(self):
-        url = get_relative_url("ui-supplier:industries")
-        self.client.get(url)
-
-    @task
     def industry_pages(self):
         urls = [
+            "/industries/",
             "/industries/aerospace/",
             "/industries/agritech/",
             "/industries/consumer-retail/",

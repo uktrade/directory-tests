@@ -11,11 +11,6 @@ class InvestTasks(TaskSet):
         self.client.get(url)
 
     @task
-    def uk_setup_guide(self):
-        url = get_relative_url("ui-invest:uk-setup-guide")
-        self.client.get(url)
-
-    @task
     def uk_setup_guides_pages(self):
         endpoints = [
             "/uk-setup-guide/",
@@ -28,14 +23,11 @@ class InvestTasks(TaskSet):
         ]
         self.client.get(choice(endpoints), name="/uk-setup-guide/[guide]")
 
-    @task
-    def industries(self):
-        url = get_relative_url("ui-invest:industries")
-        self.client.get(url)
 
     @task
     def industry_pages(self):
         urls = [
+            "/industries/",
             "/industries/advanced-manufacturing",
             "/industries/aerospace",
             "/industries/agri-tech",
