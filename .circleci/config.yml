@@ -11,7 +11,7 @@ load_hatch_rate: &load_hatch_rate
     HATCH_RATE: 5
 
 load_num_clients: &load_num_clients
-    NUM_CLIENTS: 25
+    NUM_CLIENTS: 20
 
 load_run_time: &load_run_time
     RUN_TIME: 300
@@ -561,7 +561,7 @@ workflows:
   run_cms_load_tests_on_stage:
     triggers:
     - schedule:
-        cron: "5 15 * * 1-5"
+        cron: "10 15 * * 1-5"
         filters:
           branches:
             only: master
@@ -574,7 +574,7 @@ workflows:
   run_fab_load_tests_on_stage:
     triggers:
     - schedule:
-        cron: "10 15 * * 1-5"
+        cron: "15 15 * * 1-5"
         filters:
           branches:
             only: master
@@ -587,7 +587,7 @@ workflows:
   run_fas_load_tests_on_stage:
     triggers:
     - schedule:
-        cron: "15 15 * * 1-5"
+        cron: "20 15 * * 1-5"
         filters:
           branches:
             only: master
@@ -600,7 +600,7 @@ workflows:
   run_invest_load_tests_on_stage:
     triggers:
     - schedule:
-        cron: "20 15 * * 1-5"
+        cron: "25 15 * * 1-5"
         filters:
           branches:
             only: master
