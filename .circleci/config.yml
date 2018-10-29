@@ -561,7 +561,7 @@ workflows:
   run_cms_load_tests_on_stage:
     triggers:
     - schedule:
-        cron: "10 15 * * 1-5"
+        cron: "0 20 * * *"
         filters:
           branches:
             only: master
@@ -574,7 +574,7 @@ workflows:
   run_fab_load_tests_on_stage:
     triggers:
     - schedule:
-        cron: "15 15 * * 1-5"
+        cron: "5 20 * * *"
         filters:
           branches:
             only: master
@@ -587,7 +587,7 @@ workflows:
   run_fas_load_tests_on_stage:
     triggers:
     - schedule:
-        cron: "20 15 * * 1-5"
+        cron: "10 20 * * *"
         filters:
           branches:
             only: master
@@ -600,7 +600,7 @@ workflows:
   run_invest_load_tests_on_stage:
     triggers:
     - schedule:
-        cron: "25 15 * * 1-5"
+        cron: "15 20 * * *"
         filters:
           branches:
             only: master
