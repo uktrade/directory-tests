@@ -26,7 +26,7 @@ class CMSTasks(TaskSet):
             "/advice-and-guidance/how-to-start-exporting/",
         ]
         path = choice(paths)
-        self.client.service_name = choice(services)
+        self.client.default_service_name = choice(services)
         self.client.lookup_by_full_path(
             path,
             fields=None,
@@ -58,7 +58,7 @@ class CMSTasks(TaskSet):
             "digital-media",
             "electrical-networks",
             "energy",
-            "energy-from-waste",
+            "energy-waste",
             "establish-a-base-for-business-in-the-uk",
             "financial-services",
             "financial-technology",
@@ -73,7 +73,7 @@ class CMSTasks(TaskSet):
             "setup-guide-landing-page",
         ]
         slug = choice(slugs)
-        self.client.service_name = choice(services)
+        self.client.default_service_name = choice(services)
         self.client.lookup_by_slug(
             slug,
             fields=None,

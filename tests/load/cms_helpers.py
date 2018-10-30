@@ -37,7 +37,8 @@ from directory_constants.constants import cms as SERVICE_NAMES
 
 
 def build_params(
-    full_path=None, language_code=None, draft_token=None, fields=None
+    full_path=None, language_code=None, draft_token=None, fields=None,
+    service_name=None,
 ):
     params = {"fields": fields or ["*"]}
     if language_code:
@@ -46,6 +47,8 @@ def build_params(
         params["draft_token"] = draft_token
     if full_path:
         params["full_path"] = full_path
+    if service_name:
+        params["service_name"] = service_name
     return params
 
 
@@ -102,7 +105,8 @@ class LocustCMSAPIAuthenticatedClient(DirectoryCMSClient):
     ):
         base_params = build_params(
             fields=fields, language_code=language_code,
-            draft_token=draft_token, full_path=full_path
+            draft_token=draft_token, full_path=full_path,
+            service_name=self.default_service_name,
         )
         return self.get(
             url=self.endpoints["page-by-full-path"],
@@ -114,7 +118,8 @@ class LocustCMSAPIAuthenticatedClient(DirectoryCMSClient):
         self, slug, fields=None, draft_token=None, language_code=None, **kwargs
     ):
         base_params = build_params(
-            fields=fields, language_code=language_code, draft_token=draft_token
+            fields=fields, language_code=language_code,
+            draft_token=draft_token, service_name=self.default_service_name,
         )
         return self.get(
             url=self.endpoints["page-by-slug"].format(slug=slug),
