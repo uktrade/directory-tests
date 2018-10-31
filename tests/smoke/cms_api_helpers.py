@@ -11,6 +11,7 @@ from directory_cms_client.client import cms_api_client
 from directory_cms_client.helpers import AbstractCMSResponse
 from directory_constants.constants import cms as SERVICE_NAMES
 from requests import Response
+from retrying import retry
 
 from tests import get_relative_url, get_absolute_url
 from tests.settings import (
@@ -112,7 +113,18 @@ def get_page_ids_by_type(page_type: str) -> Tuple[List[int], int]:
     return page_ids, total_response_time
 
 
-def get_pages_from_api(page_types: list) -> List[Response]:
+@retry(wait_fixed=3000, stop_max_attempt_number=3)
+def sync_requests(endpoints: List[str]):
+    result = []
+    for endpoint in endpoints:
+        response = cms_api_client.get(endpoint)
+        print(f"Got response from {response.raw_response.url} in: "
+              f"{response.raw_response.elapsed.total_seconds()}s")
+        result.append(response)
+    return result
+
+
+def get_pages_from_api(page_types: list, *, use_async_client: bool = True) -> List[Response]:
     page_ids = []
     api_endpoints = []
     responses = []
@@ -123,8 +135,11 @@ def get_pages_from_api(page_types: list) -> List[Response]:
         page_ids += page_ids_of_type
     base = get_absolute_url("cms-api:pages")
     api_endpoints += [f"{base}{page_id}/" for page_id in page_ids]
-    loop = asyncio.get_event_loop()
-    responses += loop.run_until_complete(fetch(api_endpoints))
+    if use_async_client:
+        loop = asyncio.get_event_loop()
+        responses += loop.run_until_complete(fetch(api_endpoints))
+    else:
+        responses = sync_requests(api_endpoints)
     failed = [
         f"{r.raw_response.url} -> {r.status_code}"
         for r in responses
