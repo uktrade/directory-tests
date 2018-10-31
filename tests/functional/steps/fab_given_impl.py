@@ -191,7 +191,6 @@ def reg_select_random_company_and_confirm_export_status(
     context: Context, supplier_alias: str, company_alias: str
 ):
     sso_create_standalone_verified_sso_account(context, supplier_alias)
-    sso_should_be_signed_in_to_sso_account(context, supplier_alias)
     sso_go_to_create_trade_profile(context, supplier_alias)
     select_random_company(context, supplier_alias, company_alias)
     reg_confirm_company_selection(context, supplier_alias, company_alias)
