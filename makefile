@@ -83,7 +83,7 @@ PYTEST_ARGS := \
 TEST_ENV ?= DEV
 
 smoke_tests:
-	pytest --junitxml=tests/smoke/reports/smoke.xml tests/smoke $(pytest_args)
+	pytest --capture=no --verbose --junitxml=tests/smoke/reports/smoke.xml tests/smoke $(pytest_args)
 
 functional_tests:
 	export extra_tags=$$([ ! -z "$${TAGS}" ] && echo "--tags=$${TAGS}" || echo "") && \
