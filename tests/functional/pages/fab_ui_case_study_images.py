@@ -5,6 +5,8 @@ from mimetypes import MimeTypes
 from os.path import basename
 
 from requests import Response, Session
+from retrying import retry
+
 from tests import get_absolute_url
 from tests.functional.utils.context_utils import CaseStudy
 from tests.functional.utils.request import Method, check_response, make_request
@@ -91,6 +93,7 @@ def prepare_form_data(token: str, case_study: CaseStudy) -> (dict, dict):
     return data, files
 
 
+@retry(wait_fixed=10000, stop_max_attempt_number=2)
 def submit_form(
     session: Session, token: str, case_study: CaseStudy
 ) -> Response:

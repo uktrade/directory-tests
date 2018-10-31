@@ -827,7 +827,7 @@ def random_case_study_data(alias: str) -> CaseStudy:
     :return: a CaseStudy namedtuple
     """
     sector = choice(SECTORS)
-    images = PNGs + JPGs + JPEGs
+    images = PNGs + JPEGs
     image_1, image_2, image_3 = (choice(images) for _ in range(3))
     (
         title,
