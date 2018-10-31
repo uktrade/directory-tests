@@ -472,16 +472,16 @@ workflows:
             - setup_env_for_smoke_tests
       - func_fab_test_dev:
           requires:
-            - setup_env_for_functional_tests
+            - smoke_tests_dev
       - func_fas_test_dev:
           requires:
-            - setup_env_for_functional_tests
+            - smoke_tests_dev
       - func_sso_test_dev:
           requires:
-            - setup_env_for_functional_tests
+            - smoke_tests_dev
       - func_sud_test_dev:
           requires:
-            - setup_env_for_functional_tests
+            - smoke_tests_dev
       - setup_env_for_browser_tests:
           requires:
             - smoke_tests_dev
