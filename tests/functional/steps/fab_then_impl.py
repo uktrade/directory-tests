@@ -144,10 +144,10 @@ def sso_should_be_signed_in_to_sso_account(
 ):
     response = context.response
     with assertion_msg(
-        "Expected sessionid cookie to be set. It looks like "
+        "Expected profile_sessionid cookie to be set. It looks like "
         "user is not logged in"
     ):
-        assert response.cookies.get("sessionid") is not None
+        assert response.cookies.get("profile_sessionid") is not None
     with assertion_msg(
         "Response doesn't contain 'Sign out' button. It looks "
         "like user is not logged in"
