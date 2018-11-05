@@ -223,7 +223,7 @@ urls = {
     'ui-contact-us:soo-triage-feedback-form': 'FeedbackForm/TriageForm/',
 
     # SOO UI Selling Online Overseas
-    'ui-soo:landing': '/',
+    'ui-soo:landing': '',
     'ui-soo:search-results': 'markets/results/',
     'ui-soo:market-details': 'markets/details/',
 
