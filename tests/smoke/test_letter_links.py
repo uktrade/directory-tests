@@ -75,4 +75,9 @@ def test_check_if_verify_endpoint_redirects_to_correct_page(
         logged_in_session, absolute_url):
     response = logged_in_session.get(absolute_url, allow_redirects=True)
     assert response.status_code == http.client.OK
-    assert response.url == get_absolute_url("ui-buyer:confirm-company-address")
+    # depends on the test account status/configuration user should either get
+    # to the letter verification page or to their profile page if they already
+    # went through verification
+    got_to_letter_confirmation = response.url == get_absolute_url("ui-buyer:confirm-company-address")
+    got_to_profile = response.url == get_absolute_url("ui-buyer:company-profile")
+    assert got_to_letter_confirmation or got_to_profile
