@@ -1,9 +1,16 @@
-from urllib.parse import urljoin
 from functools import partial
 import os
 import uuid
 
 from tests import settings
+
+
+def urljoin(base_url: str, endpoint: str):
+    if base_url.endswith("/"):
+        return f"{base_url}{endpoint}"
+    else:
+        return f"{base_url}/{endpoint}"
+
 
 join_api = partial(urljoin, settings.DIRECTORY_API_URL)
 join_internal_api = partial(urljoin, settings.DIRECTORY_BUYER_API_URL)
