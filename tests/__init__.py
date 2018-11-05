@@ -60,8 +60,8 @@ urls = {
     'ui-buyer:case-study-create': 'company/case-study/create/',
     'ui-buyer:case-study-edit': 'company/case-study/edit/',
     'ui-buyer:confirm-company-address': 'verify/letter-confirm/',
-    'ui-buyer:confirm-identity': '/verify/',
-    'ui-buyer:confirm-identity-letter': '/verify/letter-send/',
+    'ui-buyer:confirm-identity': 'verify/',
+    'ui-buyer:confirm-identity-letter': 'verify/letter-send/',
     'ui-buyer:company-profile': 'company-profile/',
     'ui-buyer:company-edit': 'company-profile/edit/',
     'ui-buyer:company-edit-address': 'company-profile/edit/address',
@@ -112,7 +112,7 @@ urls = {
 
     'api:enrolment': 'enrolment/',
     'api:pre-verified-enrolment': 'pre-verified-enrolment',
-    'api:enrolment-trusted-code': '/trusted-code/{code}/',
+    'api:enrolment-trusted-code': 'trusted-code/{code}/',
 
     'api:notifications-anonymous-unsubscribe': 'notifications/anonymous-unsubscribe/',
 
@@ -134,7 +134,7 @@ urls = {
     'api:export-opportunity-legal': 'export-opportunity/legal/',
 
     'api:public-company': 'public/company/',
-    'api:public-company-profile': '/public/company/{companies_house_number}/',
+    'api:public-company-profile': 'public/company/{companies_house_number}/',
     'api:public-case-study': 'public/case-study/{id}/',
 
 
