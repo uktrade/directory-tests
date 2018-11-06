@@ -38,7 +38,7 @@ Feature: Industries page
       | Automotive                          |
       | Automotive research and development |
       | Automotive supply chain             |
-      | Capital investment                  |
+#      | Capital investment                  |
       | Chemicals                           |
       | Creative content and production     |
       | Creative industries                 |
@@ -46,7 +46,7 @@ Feature: Industries page
       | Digital media                       |
       | Electrical networks                 |
       | Energy                              |
-      | Energy from waste                   |
+      | Energy from waste market            |
       | Financial services                  |
       | Financial technology                |
       | Food and drink                      |
