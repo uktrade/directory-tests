@@ -21,23 +21,23 @@ Feature: Find a Supplier - Industry pages
     Examples: promoted industries
       | specific          |
       | Aerospace         |
-      | Agritech          |
-      | Consumer retail   |
-      | Creative services |
 
     @full
     Examples: promoted industries
       | specific          |
-      | Cyber security    |
+      | Agritech          |
+      | Consumer & retail |
       | Food and drink    |
       | Healthcare        |
       | Sports economy    |
-      | Technology        |
 
     @wip
-    Examples: Industries with no companies in them on DEV
+    Examples: Industries with no companies in them on DEV or STAGE
       | specific          |
+      | Cyber security    |
+      | Creative services |
       | Life sciences     |
+      | Technology        |
       | Legal services    |
 
     @wip
@@ -71,17 +71,15 @@ Feature: Find a Supplier - Industry pages
     Examples: Promoted Industries
       | specific          | selected   |
       | Agritech          | Home       |
-      | Creative services | Home       |
-      | Cyber security    | Home       |
       | Food and drink    | Home       |
       | Sports economy    | Industries |
-      | Healthcare        | Industries |
-      | Life sciences     | Industries |
       | Technology        | Industries |
 
     @full
     Examples: Promoted Industries
       | specific          | selected   |
+      | Creative services | Home       |
+      | Cyber security    | Home       |
       | Sports economy    | Home       |
       | Healthcare        | Home       |
       | Life sciences     | Home       |
@@ -89,6 +87,8 @@ Feature: Find a Supplier - Industry pages
       | Agritech          | Industries |
       | Creative services | Industries |
       | Cyber security    | Industries |
+      | Healthcare        | Industries |
+      | Life sciences     | Industries |
       | Food and drink    | Industries |
 
     @wip
@@ -189,8 +189,8 @@ Feature: Find a Supplier - Industry pages
       | specific          | following  | pre-selected                           |
       | Aerospace         | satellites | Aerospace                              |
       | Agritech          | plants     | Agriculture horticulture and fisheries |
-      | Consumer retail   | salon      | Retail and luxury                      |
       | Creative services | digital    | Creative and media                     |
+      | Healthcare        | surgery    | Healthcare and medical                 |
 
     @full
     Examples: Industries
@@ -198,14 +198,14 @@ Feature: Find a Supplier - Industry pages
       | Cyber security    | WiFi       | Security                               |
       | Food and drink    | beer       | Food and drink                         |
       | Sports economy    | arenas     | Global sports infrastructure           |
-      | Healthcare        | surgery    | Healthcare and medical                 |
       | Technology        | holograms  | Electronics and IT hardware, Software and computer services |
 
     @wip
-    Examples: Industries with no companies in them on DEV
+    Examples: Industries with no companies in them on DEV or STAGE
       | specific          | following  | pre-selected   |
       | Legal services    | lawyer     | Legal services |
       | Life sciences     | biotech    | Life sciences  |
+      | Consumer & retail | salon      | Retail and luxury                      |
 
     @wip
     Examples: Industries not present on Dev
@@ -237,23 +237,18 @@ Feature: Find a Supplier - Industry pages
       | specific          | pre-selected                           |
       | Aerospace         | Aerospace                              |
       | Agritech          | Agriculture horticulture and fisheries |
-      | Consumer retail   | Retail and luxury                      |
-      | Creative services | Creative and media                     |
-
-    @full
-    Examples: Promoted Industries
-      | specific          | pre-selected                           |
-      | Cyber security    | Security                               |
-      | Food and drink    | Food and drink                         |
-      | Sports economy    | Global sports infrastructure           |
       | Healthcare        | Healthcare and medical                 |
-      | Technology        | Electronics and IT hardware, Software and computer services         |
 
     @wip
-    Examples: Industries with no companies in them on DEV
-      | specific          | pre-selected  |
-      | Legal services    | Legal services|
-      | Life sciences     | Life sciences |
+    Examples: Industries with no companies in them on DEV or STAGE
+      | specific       | pre-selected                                                |
+      | Legal services | Legal services                                              |
+      | Life sciences  | Life sciences                                               |
+      | Cyber security | Security                                                    |
+      | Food and drink | Food and drink                                              |
+      | Sports economy | Global sports infrastructure                                |
+      | Creative services | Creative and media                     |
+      | Technology     | Electronics and IT hardware, Software and computer services |
 
     @wip
     Examples: Industries not present on Dev
@@ -283,23 +278,19 @@ Feature: Find a Supplier - Industry pages
     Examples:
       | specific          | selected |
       | Aerospace         | first    |
-      | Agritech          | second   |
-      | Consumer retail   | third    |
-      | Creative services | first    |
-
-    @full
-    Examples:
-      | specific          | selected |
-      | Cyber security    | third    |
-      | Food and drink    | fourth   |
-      | Sports economy    | fifth    |
-      | Healthcare        | sixth    |
-      | Technology        | second   |
+      | Agritech          | first    |
+      | Consumer & retail | first    |
 
     @wip
     Examples: Industries with no companies in them on DEV
       | specific          | selected |
+      | Food and drink    | first    |
+      | Sports economy    | first    |
+      | Healthcare        | first    |
       | Life sciences     | first    |
+      | Creative services | first    |
+      | Cyber security    | first    |
+      | Technology        | first    |
 
     @wip
     Examples: Industries not present on Dev
@@ -329,9 +320,8 @@ Feature: Find a Supplier - Industry pages
     Examples: Industries
       | specific          | selected | expected                     |
       | Agritech          | first    | Find a Supplier - Article    |
-      | Consumer retail   | first    | Find a Supplier - Article    |
+      | Consumer & retail | first    | Find a Supplier - Article    |
       | Creative services | first    | Find a Supplier - Article    |
-      | Creative services | second   | Find a Supplier - Contact us |
       | Cyber security    | first    | Find a Supplier - Article    |
 
     @full
