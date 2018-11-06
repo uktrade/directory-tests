@@ -72,6 +72,8 @@ Feature: Contact us & Leave feedback
 
 
   @CMS-163
+  @dev-only
+  @captcha
   @contact-us
   @header
   @footer
@@ -99,6 +101,8 @@ Feature: Contact us & Leave feedback
 
   @CMS-237
   @contact-us
+  @dev-only
+  @captcha
   @header
   @footer
   Scenario Outline: An email should be sent after visitor submits the contact-us form
