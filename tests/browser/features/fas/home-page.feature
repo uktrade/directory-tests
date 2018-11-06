@@ -67,7 +67,7 @@ Feature: Find a Supplier - home page
 
   @ED-4248
   @industry-page
-  Scenario: Buyers should be able to find out more about "<specific>" industry from the "Find a Supplier - home" page
+  Scenario: Buyers should be able to find out more about featured industries from the "Find a Supplier - home" page
     Given "Robert" visits the "Find a Supplier - Home" page
 
     When "Robert" decides to read about one of listed industries
