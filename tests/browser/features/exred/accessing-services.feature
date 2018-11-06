@@ -112,8 +112,8 @@ Feature: Accessing Services
       | Selling online overseas | header        |
       | Selling online overseas | home          |
       | Selling online overseas | footer        |
-      | Events                  | header        |
-      | Events                  | footer        |
+#      | Events                  | header        |
+#      | Events                  | footer        |
 
 
 
