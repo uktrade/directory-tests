@@ -41,7 +41,7 @@ Feature: Contact us & Leave feedback
       | Digital media - industry                       |
       | Electrical networks - industry                 |
       | Energy - industry                              |
-      | Energy from waste - industry                   |
+      | Energy from waste market - industry            |
       | Financial services - industry                  |
       | Financial technology - industry                |
       | Food and drink - industry                      |
