@@ -130,7 +130,9 @@ Feature: High Potential Opportunities
       | Rail infrastructure               | second   | Lightweight structures            |
 
 
-  @TT-443a
+  @TT-443
+  @dev-only
+  @captcha
   @contact-us
   Scenario Outline: Investors should be able to contact us via "<selected>" HPO page
     Given "Annette Geissinger" visits the "Invest - <selected> - HPO Contact Us" page
@@ -163,6 +165,8 @@ Feature: High Potential Opportunities
   @fixme
   @TT-443
   @contact-us
+  @dev-only
+  @captcha
   Scenario Outline: Investors should not see breadcrumbs on the "Thank you for your enquiry" page
     Given "Annette Geissinger" visits the "Invest - <selected> - HPO Contact Us" page
 

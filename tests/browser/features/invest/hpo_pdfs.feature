@@ -5,6 +5,8 @@ Feature: HPO PDFs sent after
 
 
   @TT-444
+  @dev-only
+  @captcha
   Scenario Outline: Check PDFs listed on "Thank you for your enquiry" page
     Given "Peter Alder" got in touch with us via "Invest - <selected> - HPO Contact Us" page
     And "Peter Alder" is on the "Invest - Thank you for your enquiry - HPO Contact us" page
