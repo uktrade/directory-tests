@@ -92,7 +92,7 @@ URLs = {
     "agritech": urljoin(URL, "agritech/"),
     "automotive": urljoin(URL, "automotive/"),
     "business and government partnerships": urljoin(URL, "business-and-government-partnerships/"),
-    "consumer retail": urljoin(URL, "consumer-retail/"),
+    "consumer & retail": urljoin(URL, "consumer-retail/"),
     "creative services": urljoin(URL, "creative-services/"),
     "cyber security": urljoin(URL, "cyber-security/"),
     "education": urljoin(URL, "education-industry/"),
