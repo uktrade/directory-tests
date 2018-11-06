@@ -12,10 +12,8 @@ from pages.common_actions import (
     AssertionExecutor,
     Selector,
     assertion_msg,
-    check_for_section,
     check_for_sections,
     check_if_element_is_not_visible,
-    check_title,
     check_url,
     find_element,
     find_elements,
@@ -207,8 +205,6 @@ SELECTORS = {
 def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=True)
-    check_title(driver, PAGE_TITLE, exact_match=False)
-    check_for_section(driver, SELECTORS, sought_section="hero")
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 

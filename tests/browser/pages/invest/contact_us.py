@@ -12,7 +12,6 @@ from pages.common_actions import (
     Actor,
     AssertionExecutor,
     check_for_sections,
-    check_title,
     check_url,
     Executor,
     fill_out_input_fields,
@@ -78,9 +77,8 @@ def visit(executor: Executor, *, first_time: bool = False):
 
 
 def should_be_here(executor: Executor):
-    check_title(executor, PAGE_TITLE, exact_match=False)
-    check_url(executor, URL, exact_match=False)
     take_screenshot(executor, PAGE_TITLE)
+    check_url(executor, URL, exact_match=False)
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 

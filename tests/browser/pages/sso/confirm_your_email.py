@@ -7,7 +7,6 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
     Selector,
-    check_title,
     check_url,
     find_element,
     take_screenshot,
@@ -33,7 +32,6 @@ SELECTORS = {
 def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
-    check_title(driver, PAGE_TITLE, exact_match=False)
 
 
 def submit(driver: WebDriver):

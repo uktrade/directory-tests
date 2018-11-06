@@ -5,7 +5,6 @@ from urllib.parse import urljoin
 
 from pages.common_actions import (
     Executor,
-    check_title,
     check_url,
     take_screenshot,
     visit_url,
@@ -25,7 +24,6 @@ def visit(executor: Executor, *, first_time: bool = False):
 
 
 def should_be_here(executor: Executor):
-    check_title(executor, PAGE_TITLE, exact_match=True)
-    check_url(executor, URL, exact_match=True)
     take_screenshot(executor, PAGE_TITLE)
+    check_url(executor, URL, exact_match=True)
     logging.debug("All expected elements are visible on '%s' page", PAGE_TITLE)

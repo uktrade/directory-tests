@@ -206,8 +206,8 @@ def visit(executor: Executor, *, first_time: bool = False):
 
 
 def should_be_here(executor: Executor):
-    check_title(executor, PAGE_TITLE, exact_match=True)
     take_screenshot(executor, PAGE_TITLE)
+    check_title(executor, PAGE_TITLE, exact_match=True)
     logging.debug("All expected elements are visible on '%s' page", PAGE_TITLE)
 
 

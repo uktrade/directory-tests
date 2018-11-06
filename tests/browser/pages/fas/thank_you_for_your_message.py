@@ -8,8 +8,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
     Selector,
-    check_for_expected_sections_elements,
-    check_title,
+    check_url,
     take_screenshot,
 )
 from settings import DIRECTORY_UI_SUPPLIER_URL
@@ -31,7 +30,6 @@ SELECTORS = {
 
 
 def should_be_here(driver: WebDriver):
+    check_url(driver, URL, exact_match=False)
     take_screenshot(driver, NAME)
-    check_title(driver, PAGE_TITLE, exact_match=True)
-    check_for_expected_sections_elements(driver, SELECTORS)
     logging.debug("All expected elements are visible on '%s' page", NAME)

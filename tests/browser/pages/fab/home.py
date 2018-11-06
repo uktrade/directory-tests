@@ -22,7 +22,6 @@ def visit(driver: WebDriver, *, first_time: bool = False):
 
 
 def should_be_here(driver: WebDriver):
-    check_url(driver, URL, exact_match=True)
-    check_title(driver, PAGE_TITLE, exact_match=True)
     take_screenshot(driver, NAME)
+    check_url(driver, URL, exact_match=True)
     logging.debug("All expected elements are visible on '%s' page", NAME)

@@ -13,7 +13,6 @@ from pages.common_actions import (
     Selector,
     assertion_msg,
     check_for_sections,
-    check_title,
     check_url,
     find_and_click_on_page_element,
     find_element,
@@ -177,9 +176,8 @@ def visit(
 
 
 def should_be_here(executor: Executor):
-    check_title(executor, PAGE_TITLE, exact_match=False)
-    check_url(executor, URL, exact_match=False)
     take_screenshot(executor, PAGE_TITLE)
+    check_url(executor, URL, exact_match=False)
     logging.debug("All expected elements are visible on '%s' page", PAGE_TITLE)
 
 

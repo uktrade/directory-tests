@@ -15,7 +15,6 @@ from pages.common_actions import (
     find_elements,
     take_screenshot,
     wait_for_page_load_after_action,
-    check_title,
     check_url
 )
 from registry.articles import get_article, get_articles
@@ -80,9 +79,8 @@ SELECTORS = {
 
 
 def should_be_here(driver: WebDriver):
-    check_title(driver, PAGE_TITLE, exact_match=False)
-    check_url(driver, URL, exact_match=False)
     take_screenshot(driver, PAGE_TITLE)
+    check_url(driver, URL, exact_match=False)
     logging.debug("All expected elements are visible on '%s' page", PAGE_TITLE)
 
 

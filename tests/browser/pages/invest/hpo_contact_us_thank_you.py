@@ -11,7 +11,6 @@ from pages.common_actions import (
     AssertionExecutor,
     check_for_sections,
     check_if_element_is_not_visible,
-    check_title,
     check_url,
     Executor,
     Selector,
@@ -74,9 +73,8 @@ UNEXPECTED_ELEMENTS = {
 
 
 def should_be_here(executor: Executor):
-    check_title(executor, PAGE_TITLE, exact_match=False)
-    check_url(executor, URL, exact_match=False)
     take_screenshot(executor, PAGE_TITLE)
+    check_url(executor, URL, exact_match=False)
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 

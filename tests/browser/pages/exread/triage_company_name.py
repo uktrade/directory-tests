@@ -9,8 +9,6 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from pages.common_actions import (
     Selector,
     assertion_msg,
-    check_for_expected_sections_elements,
-    check_title,
     check_url,
     find_element,
     take_screenshot,
@@ -46,8 +44,6 @@ SELECTORS = {
 def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=True)
-    check_title(driver, PAGE_TITLE, exact_match=False)
-    check_for_expected_sections_elements(driver, SELECTORS)
 
 
 def hide_suggestions(driver: WebDriver):

@@ -9,11 +9,9 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from pages.common_actions import (
     AssertionExecutor,
     Selector,
-    check_for_expected_sections_elements,
     check_for_section,
     check_for_sections,
     check_if_element_is_not_visible,
-    check_title,
     check_url,
     find_and_click_on_page_element,
     go_to_url,
@@ -62,8 +60,6 @@ def should_see_section(driver: WebDriver, name: str):
 def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=True)
-    check_title(driver, PAGE_TITLE, exact_match=False)
-    check_for_expected_sections_elements(driver, SELECTORS)
 
 
 def click_on_page_element(driver: WebDriver, element_name: str):

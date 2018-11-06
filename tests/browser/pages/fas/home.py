@@ -11,9 +11,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from pages.common_actions import (
     AssertionExecutor,
     Selector,
-    check_for_expected_sections_elements,
     check_for_sections,
-    check_title,
     check_url,
     find_and_click_on_page_element,
     find_element,
@@ -153,8 +151,6 @@ def visit(driver: WebDriver, *, first_time: bool = False):
 def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
-    check_title(driver, PAGE_TITLE, exact_match=True)
-    check_for_expected_sections_elements(driver, SELECTORS)
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 

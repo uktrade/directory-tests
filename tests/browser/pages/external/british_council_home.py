@@ -18,6 +18,6 @@ def visit(driver: WebDriver, *, first_time: bool = False):
 
 
 def should_be_here(driver: WebDriver):
-    check_url(driver, URL, exact_match=False)
     take_screenshot(driver, NAME)
+    check_url(driver, URL, exact_match=False)
     logging.debug("All expected elements are visible on '%s' page", NAME)

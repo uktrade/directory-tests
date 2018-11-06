@@ -10,8 +10,6 @@ from pages import ElementType
 from pages.common_actions import (
     Actor,
     Selector,
-    check_for_expected_sections_elements,
-    check_title,
     check_url,
     fill_out_input_fields,
     find_element,
@@ -117,8 +115,6 @@ def visit(
 def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=True)
-    check_title(driver, PAGE_TITLE, exact_match=True)
-    check_for_expected_sections_elements(driver, SELECTORS)
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
