@@ -32,7 +32,7 @@ Feature: Find a Supplier - Industries page
       | specific          |
       | Aerospace         |
       | Agritech          |
-      | Consumer retail   |
+      | Consumer & retail |
       | Creative services |
       | Cyber security    |
 

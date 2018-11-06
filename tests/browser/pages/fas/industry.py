@@ -25,7 +25,7 @@ NAME = "Industry"
 NAMES = [
     "Aerospace",
     "Agritech",
-    "Consumer retail",
+    "Consumer & retail",
     "Creative services",
     "Cyber security",
     "Food and drink",
@@ -155,7 +155,8 @@ def should_see_content_for(driver: WebDriver, industry_name: str):
         industry_name,
         driver.current_url,
     ):
-        assert industry_name in source
+        from html import escape
+        assert escape(industry_name) in source
 
 
 def click_on_page_element(driver: WebDriver, element_name: str):
