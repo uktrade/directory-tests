@@ -27,6 +27,8 @@ from steps.when_impl import (
     fas_view_article,
     fas_view_more_companies,
     fas_view_selected_company_profile,
+    generic_open_any_tag,
+    generic_click_on_random_industry,
     generic_click_on_uk_gov_logo,
     generic_download_all_pdfs,
     generic_fill_out_and_submit_form,
@@ -70,7 +72,6 @@ from steps.when_impl import (
     triage_should_see_answers_to_questions,
     triage_what_is_your_company_name,
     visit_page,
-    generic_open_any_tag
 )
 
 
@@ -497,3 +498,8 @@ def when_actor_opens_news_article(
 @when('"{actor_alias}" decides to see related news articles by using one of the tags')
 def when_actor_open_tag(context: Context, actor_alias: str):
     generic_open_any_tag(context, actor_alias)
+
+
+@when('"{actor_alias}" decides to read about one of listed industries')
+def when_actor_clicks_on_random_industry(context: Context, actor_alias: str):
+    generic_click_on_random_industry(context, actor_alias)

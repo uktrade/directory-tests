@@ -1915,3 +1915,9 @@ def generic_open_random_news_article(context: Context, actor_alias: str, article
     visit_page(context, actor_alias, start)
     generic_open_any_news_article(context, actor_alias)
     should_be_on_page(context, actor_alias, finish)
+
+
+def generic_click_on_random_industry(context: Context, actor_alias: str):
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "open_any_article")
+    page.open_any_article(context.driver)

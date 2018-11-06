@@ -67,19 +67,12 @@ Feature: Find a Supplier - home page
 
   @ED-4248
   @industry-page
-  Scenario Outline: Buyers should be able to find out more about "<specific>" industry from the "Find a Supplier - home" page
+  Scenario: Buyers should be able to find out more about "<specific>" industry from the "Find a Supplier - home" page
     Given "Robert" visits the "Find a Supplier - Home" page
 
-    When "Robert" decides to find out out more about "Find a Supplier - <specific> - industry"
+    When "Robert" decides to read about one of listed industries
 
-    Then "Robert" should be on the "Find a Supplier - <specific> - industry" page
-    And "Robert" should see content specific to "Find a Supplier - <specific> - industry" page
-
-    Examples:
-      | specific          |
-      | Agritech          |
-      | Creative services |
-      | Technology        |
+    Then "Robert" should be on the "Find a Supplier - Industry" page
 
 
   @ED-4249

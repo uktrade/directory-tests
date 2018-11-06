@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Find a Supplier Landing Page Object."""
 import logging
+import random
 from typing import List
 from urllib.parse import urljoin
 
@@ -18,6 +19,7 @@ from pages.common_actions import (
     find_element,
     go_to_url,
     take_screenshot,
+    find_elements
 )
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
@@ -210,3 +212,9 @@ def open_industry(driver: WebDriver, industry_name: str):
 
 def see_more_industries(driver: WebDriver):
     click_on_page_element(driver, "see more industries")
+
+
+def open_any_article(driver: WebDriver):
+    selector = Selector(By.CSS_SELECTOR, "#industries-section a.industry-card")
+    links = find_elements(driver, selector)
+    random.choice(links).click()
