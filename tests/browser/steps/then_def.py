@@ -70,7 +70,8 @@ from steps.then_impl import (
     triage_should_be_classified_as,
     triage_should_see_change_your_answers_link,
     zendesk_should_receive_confirmation_email,
-    should_see_articles_filtered_by_tag
+    should_see_articles_filtered_by_tag,
+    eu_exit_contact_us_should_receive_confirmation_email
 )
 from steps.when_impl import (
     triage_answer_questions_again,
@@ -407,10 +408,10 @@ def then_should_receive_contact_confirmation_email(
         context, actor_alias, sender_email)
 
 
-@then('"{actor_alias}" should receive an "{subject}" confirmation email from Zendesk')
+@then('"{actor_alias}" should receive an "{subject}" confirmation email')
 def then_should_receive_confirmation_email_from_zendesk(
         context: Context, actor_alias: str, subject: str):
-    zendesk_should_receive_confirmation_email(context, actor_alias, subject)
+    eu_exit_contact_us_should_receive_confirmation_email(context, actor_alias, subject)
 
 
 @then('Invest mailbox admin should also receive a contact confirmation email from "{sender_email}"')

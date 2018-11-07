@@ -33,7 +33,10 @@ from steps.when_impl import (
     triage_should_be_classified_as_occasional,
     triage_should_be_classified_as_regular,
 )
-from utils.gov_notify import get_email_confirmations_with_matching_string
+from utils.gov_notify import (
+    get_email_confirmations_with_matching_string,
+    get_email_confirmation_notification
+)
 from utils.mailgun import mailgun_invest_find_contact_confirmation_email
 from utils.pdf import extract_text_from_pdf_bytes
 from utils.zendesk import find_tickets
@@ -888,3 +891,14 @@ def should_see_articles_filtered_by_tag(context: Context, actor_alias: str):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "is_filtered_by_tag")
     page.is_filtered_by_tag(context.driver, tag)
+
+
+@retry(wait_fixed=10000, stop_max_attempt_number=6, wrap_exception=False)
+def eu_exit_contact_us_should_receive_confirmation_email(
+        context: Context, actor_alias: str, subject: str):
+    actor = get_actor(context, actor_alias)
+    confirmation = get_email_confirmation_notification(
+        email=actor.email,
+        subject=subject,
+    )
+    assert confirmation
