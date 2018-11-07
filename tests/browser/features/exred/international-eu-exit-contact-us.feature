@@ -5,7 +5,7 @@ Feature: International Page - EU Exit - Contact us
   @eu-exit
   @contact-us
   @international-page
-  Scenario: International Visitors should be able to submit their questions regarding EU Exit
+  Scenario: International Visitors should see all expected page sections on "International EU Exit - Contact Us form" page
     Given "Robert" visits the "Export Readiness - International EU Exit - Contact Us" page
 
     Then "Robert" should see following sections
@@ -25,7 +25,7 @@ Feature: International Page - EU Exit - Contact us
   @eu-exit
   @contact-us
   @international-page
-  Scenario Outline: International Visitors should be able to submit their questions regarding EU Exit
+  Scenario Outline: International Visitors should not be able view "International EU Exit - Contact Us form" in "<preferred_language>"
     Given "Robert" visits the "Export Readiness - International EU Exit - Contact Us" page
 
     When "Robert" manually change the page language to "<preferred_language>"
