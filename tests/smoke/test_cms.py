@@ -249,8 +249,7 @@ def test_draft_translated_invest_pages_should_return_200_new(url):
 )
 def test_wagtail_get_page_by_slug(cms_client, service_name, slug):
     """Check - https://uktrade.atlassian.net/browse/CMS-412"""
-    cms_client.service_name = service_name
-    response = cms_client.lookup_by_slug(slug)
+    response = cms_client.lookup_by_slug(slug, service_name=service_name)
     assert response.status_code == http.client.OK, status_error(
         http.client.OK, response
     )

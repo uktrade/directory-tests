@@ -37,7 +37,7 @@ def async_cms_client():
         api_key=DIRECTORY_CMS_API_CLIENT_API_KEY,
         sender_id=DIRECTORY_CMS_API_CLIENT_SENDER_ID,
         timeout=55,
-        service_name=SERVICE_NAMES.INVEST,
+        default_service_name=SERVICE_NAMES.INVEST,
     )
 
 

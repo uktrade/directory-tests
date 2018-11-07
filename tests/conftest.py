@@ -50,7 +50,7 @@ def cms_client():
         api_key=DIRECTORY_CMS_API_CLIENT_API_KEY,
         sender_id=DIRECTORY_CMS_API_CLIENT_SENDER_ID,
         timeout=DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT,
-        service_name="change-me",
+        default_service_name="change-me",
     )
 
 
