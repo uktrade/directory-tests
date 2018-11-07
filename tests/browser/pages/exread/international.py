@@ -54,10 +54,10 @@ SELECTORS = {
         "logo": Selector(By.ID, "international-header-logo"),
     },
     "eu exit updates": {
-        "itself": Selector(By.ID, "eu-exit-banner"),
-        "badge": Selector(By.CSS_SELECTOR, "#eu-exit-banner div.banner-badge"),
+        "itself": Selector(By.ID, "information-banner"),
+        "badge": Selector(By.CSS_SELECTOR, "#information-banner div.banner-badge"),
         "see our updates on eu exit": Selector(
-            By.CSS_SELECTOR, "#eu-exit-banner a"),
+            By.CSS_SELECTOR, "#information-banner a"),
     },
     "intro": {
         "itself": Selector(By.CSS_SELECTOR, "#content > section.intro"),
