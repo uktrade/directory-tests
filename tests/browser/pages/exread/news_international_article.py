@@ -18,7 +18,7 @@ from settings import EXRED_UI_URL
 NAME = "International EU Exit news"
 SERVICE = "Export Readiness"
 TYPE = "article"
-URL = urljoin(EXRED_UI_URL, "international/news/")
+URL = urljoin(EXRED_UI_URL, "international/eu-exit-news/")
 PAGE_TITLE = ""
 
 
@@ -54,7 +54,7 @@ SELECTORS = {
         "updates for non-uk companies on eu exit":
             Selector(
                 By.CSS_SELECTOR,
-                ".breadcrumbs a[href='/international/news/']"),
+                ".breadcrumbs a[href='/international/eu-exit-news/']"),
         "header": Selector(By.CSS_SELECTOR, "#article h1"),
         "lede": Selector(By.CSS_SELECTOR, "#article p.lede"),
         "updates for companies on eu exit": Selector(

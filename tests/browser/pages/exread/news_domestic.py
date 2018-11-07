@@ -21,7 +21,7 @@ from settings import EXRED_UI_URL
 NAME = "Updates for UK companies on EU Exit"
 SERVICE = "Export Readiness"
 TYPE = "Domestic"
-URL = urljoin(EXRED_UI_URL, "news/")
+URL = urljoin(EXRED_UI_URL, "eu-exit-news/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 
