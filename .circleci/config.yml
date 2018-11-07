@@ -495,7 +495,7 @@ workflows:
   run_all_tests_on_dev:
     triggers:
     - schedule:
-        cron: "0 22 * * 1-5"
+        cron: "0 19 * * 1-5"
         filters:
           branches:
             only: master
