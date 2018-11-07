@@ -17,7 +17,7 @@ ZENPY_CLIENT = Zenpy(**credentials)
 
 def get_tickets(*, start_time: datetime.datetime = None) -> List[Ticket]:
     if not start_time:
-        start_time = datetime.datetime.now() - datetime.timedelta(days=1)
+        start_time = datetime.datetime.now(tz=datetime.timezone.utc) - datetime.timedelta(days=1)
     return [t for t in ZENPY_CLIENT.tickets.incremental(start_time=start_time)]
 
 
