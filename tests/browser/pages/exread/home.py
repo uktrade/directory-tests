@@ -133,7 +133,7 @@ SELECTORS = {
         "itself": Selector(By.ID, "news"),
         "description": Selector(By.CSS_SELECTOR, "#news p.body-text"),
         "articles": ARTICLES,
-        "see all news": Selector(By.CSS_SELECTOR, "#news a[href='/news/']"),
+        "see all news": Selector(By.CSS_SELECTOR, "#news a[href='/eu-exit-news/']"),
     },
     "export readiness": {
         "itself": Selector(By.ID, "personas"),
