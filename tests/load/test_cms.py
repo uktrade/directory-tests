@@ -47,11 +47,11 @@ class CMSTasks(TaskSet):
             "setup-guide-landing-page",
         ]
         slug = choice(slugs)
-        self.client.default_service_name = choice(services)
         self.client.lookup_by_slug(
             slug,
             fields=None,
             name="/api/pages/lookup-by-slug/[slug]/",
+            service_name=choice(services),
             expected_codes=[200, 404],
         )
 
