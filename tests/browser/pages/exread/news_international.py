@@ -59,10 +59,10 @@ SELECTORS = {
         "article text": Selector(By.CSS_SELECTOR, "li.article p"),
         "article link": ARTICLES,
     },
-    "call to action": {
-        "itself": Selector(By.CSS_SELECTOR, "div.cta-box"),
-        "description": Selector(By.CSS_SELECTOR, "div.cta-box p"),
-        "contact us": Selector(By.CSS_SELECTOR, "div.cta-box a"),
+    "contact us": {
+        "itself": Selector(By.ID, "eu-exit-cta-box"),
+        "description": Selector(By.CSS_SELECTOR, "#eu-exit-cta-box p"),
+        "contact us": Selector(By.CSS_SELECTOR, "#eu-exit-cta-box a"),
     },
     "error reporting": {
         "itself": Selector(By.CSS_SELECTOR, "section.error-reporting"),
