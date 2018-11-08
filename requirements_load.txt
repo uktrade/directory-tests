@@ -8,8 +8,8 @@ beautifulsoup4==4.6.3
 certifi==2018.10.15       # via requests
 chardet==3.0.4            # via requests
 click==7.0                # via flask
-directory-client-core==4.0.2  # via directory-cms-client
-directory-cms-client==8.0.0
+directory-client-core==4.2.0  # via directory-cms-client
+directory-cms-client==8.1.0
 directory-constants==9.1.0
 django==1.11.16           # via directory-constants, sigauth
 djangorestframework==3.9.0  # via sigauth
@@ -27,7 +27,7 @@ monotonic==1.5            # via directory-client-core
 msgpack==0.5.6            # via locustio
 pytz==2018.7              # via django
 pyzmq==17.1.2             # via locustio
-requests==2.20.0
+requests==2.20.1
 sigauth==4.0.1            # via directory-client-core
 six==1.11.0               # via locustio, mohawk, w3lib
 urllib3==1.24.1           # via requests
