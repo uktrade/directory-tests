@@ -37,16 +37,13 @@ from directory_constants.constants import cms as SERVICE_NAMES
 
 
 def build_params(
-    full_path=None, language_code=None, draft_token=None, fields=None,
-    service_name=None,
+    language_code=None, draft_token=None, fields=None, service_name=None,
 ):
     params = {"fields": fields or ["*"]}
     if language_code:
         params["lang"] = language_code
     if draft_token:
         params["draft_token"] = draft_token
-    if full_path:
-        params["full_path"] = full_path
     if service_name:
         params["service_name"] = service_name
     return params
@@ -95,31 +92,13 @@ class LocustCMSAPIAuthenticatedClient(DirectoryCMSClient):
                 exception=status_code or RequestException.errno,
             )
 
-    def lookup_by_full_path(
-        self,
-        full_path,
-        fields=None,
-        draft_token=None,
-        language_code=None,
-        **kwargs,
-    ):
-        base_params = build_params(
-            fields=fields, language_code=language_code,
-            draft_token=draft_token, full_path=full_path,
-            service_name=self.default_service_name,
-        )
-        return self.get(
-            url=self.endpoints["page-by-full-path"],
-            params={**base_params},
-            **kwargs,
-        )
-
     def lookup_by_slug(
-        self, slug, fields=None, draft_token=None, language_code=None, **kwargs
+        self, slug, fields=None, draft_token=None, language_code=None,
+        service_name=None, **kwargs
     ):
         base_params = build_params(
             fields=fields, language_code=language_code,
-            draft_token=draft_token, service_name=self.default_service_name,
+            draft_token=draft_token, service_name=service_name,
         )
         return self.get(
             url=self.endpoints["page-by-slug"].format(slug=slug),

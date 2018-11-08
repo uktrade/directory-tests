@@ -7,32 +7,6 @@ from tests.load.cms_helpers import CMSAPIAuthClientMixin
 
 
 class CMSTasks(TaskSet):
-    @task
-    def lookup_by_full_path(self):
-        """ATM This works only for ExRed prototype pages."""
-        services = [
-            # SERVICE_NAMES.INVEST,
-            # SERVICE_NAMES.FIND_A_SUPPLIER,
-            SERVICE_NAMES.EXPORT_READINESS
-        ]
-        paths = [
-            "/advice-and-guidance/logistics/",
-            "/advice-and-guidance/legal-and-compliance/",
-            "/advice-and-guidance/understand-your-market/",
-            "/advice-and-guidance/finance/",
-            "/advice-and-guidance/tax-and-customs/",
-            "/advice-and-guidance/strategy/",
-            "/advice-and-guidance/preparing-for-exiting-the-eu/",
-            "/advice-and-guidance/how-to-start-exporting/",
-        ]
-        path = choice(paths)
-        self.client.default_service_name = choice(services)
-        self.client.lookup_by_full_path(
-            path,
-            fields=None,
-            name="/api/pages/lookup-by-full-path/",
-            expected_codes=[200, 404],
-        )
 
     @task
     def lookup_by_slug(self):
