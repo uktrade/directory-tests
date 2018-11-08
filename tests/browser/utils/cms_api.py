@@ -8,7 +8,7 @@ def get_news_articles(service: str, visitor_type: str) -> List[dict]:
     news_slugs = {
         "export readiness": {
             "domestic": "home",
-            "international": "international-news",
+            "international": "international-eu-exit-news",
         },
     }
     slug = news_slugs[service.lower()][visitor_type.lower()]
