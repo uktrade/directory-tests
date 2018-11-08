@@ -70,15 +70,15 @@ class LocustCMSAPIAuthenticatedClient(DirectoryCMSClient):
         status_code = None
         try:
             r = super().get(*args, **kwargs)
-            assert r.raw_response
-            response_time = int(r.raw_response.elapsed.total_seconds() * 1000)
-            events.request_success.fire(
-                request_type="GET",
-                name=self.name,
-                response_time=response_time,
-                response_length=len(r.content),
-            )
             status_code = r.status_code
+            if hasattr(r, "raw_response"):
+                response_time = int(r.raw_response.elapsed.total_seconds() * 1000)
+                events.request_success.fire(
+                    request_type="GET",
+                    name=self.name,
+                    response_time=response_time,
+                    response_length=len(r.content),
+                )
             assert status_code in self.expected_codes
             return r
         except (MissingSchema, InvalidSchema, InvalidURL):
