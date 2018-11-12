@@ -32,18 +32,18 @@ class FASTasks(TaskSet):
     @task
     def industry_pages(self):
         urls = [
-            "/industries/",
-            "/industries/aerospace/",
-            "/industries/agritech/",
-            "/industries/consumer-retail/",
-            "/industries/creative-services/",
-            "/industries/cyber-security/",
-            "/industries/food-and-drink/",
-            "/industries/healthcare/",
-            "/industries/legal-services/",
-            "/industries/life-sciences/",
-            "/industries/sports-economy/",
-            "/industries/technology/",
+            "industries/",
+            "industries/aerospace/",
+            "industries/agritech/",
+            "industries/consumer-retail/",
+            "industries/creative-services/",
+            "industries/cyber-security/",
+            "industries/food-and-drink/",
+            "industries/healthcare/",
+            "industries/legal-services/",
+            "industries/life-sciences/",
+            "industries/sports-economy/",
+            "industries/technology/",
         ]
         self.client.get(
             random.choice(urls),
