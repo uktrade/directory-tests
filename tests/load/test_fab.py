@@ -2,6 +2,7 @@ import random
 
 from locust import HttpLocust, TaskSet, task
 from tests import get_relative_url, settings
+from tests.load import USER_AGENT
 from tests.load.utils import random_company_number, rare_word
 
 
@@ -9,7 +10,10 @@ class FABTasks(TaskSet):
     @task
     def home_page(self):
         url = get_relative_url("ui-buyer:landing")
-        self.client.get(url)
+        self.client.get(
+            url,
+            headers=USER_AGENT,
+        )
 
     @task
     def get_promoted(self):
@@ -21,6 +25,7 @@ class FABTasks(TaskSet):
         self.client.post(
             url,
             params=params,
+            headers=USER_AGENT,
             name="/?company_name=[name]&company_number=[number]",
         )
 
@@ -33,6 +38,7 @@ class FABTasks(TaskSet):
         self.client.get(
             url,
             params=params,
+            headers=USER_AGENT,
             name="api/internal/companies-house-search/?term=[term]",
         )
 

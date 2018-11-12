@@ -2,13 +2,17 @@ from random import choice
 
 from locust import HttpLocust, TaskSet, task
 from tests import get_relative_url, settings
+from tests.load import USER_AGENT
 
 
 class InvestTasks(TaskSet):
     @task
     def home_page(self):
         url = get_relative_url("ui-invest:landing")
-        self.client.get(url)
+        self.client.get(
+            url,
+            headers=USER_AGENT,
+        )
 
     @task
     def uk_setup_guides_pages(self):
@@ -21,7 +25,11 @@ class InvestTasks(TaskSet):
             "uk-setup-guide/setup-your-business-uk/",
             "uk-setup-guide/understand-uk-tax-and-incentives/",
         ]
-        self.client.get(choice(endpoints), name="/uk-setup-guide/[guide]/")
+        self.client.get(
+            choice(endpoints),
+            headers=USER_AGENT,
+            name="/uk-setup-guide/[guide]/"
+        )
 
 
     @task
@@ -60,7 +68,11 @@ class InvestTasks(TaskSet):
             "industries/retail/",
             "industries/technology/",
         ]
-        self.client.get(choice(urls), name="/industries/[industry]/")
+        self.client.get(
+            choice(urls),
+            headers=USER_AGENT,
+            name="/industries/[industry]/"
+        )
 
 
 class Invest(HttpLocust):
