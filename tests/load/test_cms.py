@@ -1,9 +1,15 @@
+from collections import namedtuple
 from random import choice
 
 from directory_constants.constants import cms as SERVICE_NAMES
 from locust import TaskSet, task
 from tests import settings
+from tests.load import USER_AGENT
 from tests.load.cms_helpers import CMSAPIAuthClientMixin
+
+
+UA = namedtuple("UA", "headers")
+user_agent = UA(headers=USER_AGENT)
 
 
 class CMSTasks(TaskSet):
@@ -50,6 +56,7 @@ class CMSTasks(TaskSet):
         self.client.lookup_by_slug(
             slug,
             fields=None,
+            authenticator=user_agent,
             name="/api/pages/lookup-by-slug/[slug]/",
             service_name=choice(services),
             expected_codes=[200, 404],
