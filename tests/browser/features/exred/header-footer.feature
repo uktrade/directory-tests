@@ -5,7 +5,7 @@ Feature: Header-Footer
   @logo
   @header
   @footer
-  Scenario Outline: Any Exporter should see correct DIT logo (with boat) in the page header and footer
+  Scenario Outline: Any Exporter should see correct DIT logo, one with the boat, in the page header and footer on "<selected>" page
     Given "Robert" visits the "<selected>" page
 
     Then "Robert" should see correct DIT logo in page header
@@ -31,7 +31,7 @@ Feature: Header-Footer
   @header
   @footer
   @ED-3118
-  Scenario Outline: Any Exporter should see correct DIT logo (with boat) in the page header and footer
+  Scenario Outline: Any Exporter should see correct DIT logo, one with the boat, in the page header and footer on "<selected>" page
     Given "Robert" visits the "<selected>" page
 
     Then "Robert" should be on the "<selected>" page
@@ -48,7 +48,7 @@ Feature: Header-Footer
   @header
   @footer
   @ED-3118
-  Scenario Outline: Any Exporter should be able to get to the Home (Trade) page from "<selected>" page by using DIT logo in the page header and footer
+  Scenario Outline: Any Exporter should be able to get to the Export Readiness Home page from "<selected>" page by using DIT logo in the page header and footer
     Given "Robert" visits the "<selected>" page
 
     When "Robert" decides to click on the DIT logo in the "header"
@@ -71,7 +71,7 @@ Feature: Header-Footer
 
   @ED-3091
   @favicon
-  Scenario Outline: Any user should see the correct favicon on whichever page they're on
+  Scenario Outline: Any user should see the correct favicon on "<specific>" page
     Given "Robert" visits the "<specific>" page
 
     Then "Robert" should see the correct favicon
@@ -154,7 +154,7 @@ Feature: Header-Footer
 
   @ED-3262
   @your-export-journey-link
-  Scenario: Any user who visits the "Create your export journey" page for the first time, should be able to Start the journey (get to the first Triage question)
+  Scenario: Any user who visits the "Create your export journey" page for the first time, should be able to start the Triage
     Given "Robert" visits the "Export Readiness - Create your export journey" page for the first time
 
     When "Robert" decides to use "Start now" button
@@ -209,7 +209,7 @@ Feature: Header-Footer
   @ED-3284
   @your-export-journey-link
   @<specific>
-  Scenario Outline: Any user who has completed triage (without creating Personalised Journey page) should be redirected to "Create your export journey" page when using related header link
+  Scenario Outline: Any user who has completed triage, without creating Personalised Journey page, should be redirected to "Create your export journey" page when using related header link
     Given "Robert" answered triage questions
     And "Robert" is on the "Export Readiness - Triage summary" page
     And "Robert" goes to the "<specific>" page
@@ -235,7 +235,7 @@ Feature: Header-Footer
 
   @ED-3285
   @your-export-journey-link
-  Scenario Outline: "<relevant>" Exporter who has created his/her "Personalised Journey page" and hasn't signed-in should be asked to register or sign-in, in the Guidance section on the Personalised Journey page.
+  Scenario Outline: "<relevant>" Exporters who have created their "Personalised Journey page" and have not signed-in should be asked to register or sign-in, in the Guidance section on the Personalised Journey page
     Given "Robert" was classified as "<relevant>" exporter in the triage process
 
     When "Robert" decides to create his personalised journey page
@@ -257,7 +257,7 @@ Feature: Header-Footer
   @ED-3286
   @your-export-journey-link
   @fake-sso-email-verification
-  Scenario: Any signed-in user who has created his/her "Personalised Journey page" should not be asked to register or sign-in, in the Guidance section on the Personalised Journey page.
+  Scenario: Any signed-in user who has created his/her "Personalised Journey page" should not be asked to register or sign-in, in the Guidance section on the Personalised Journey page
     Given "Robert" is a registered and verified user
     And "Robert" is signed in
     And "Robert" answered triage questions

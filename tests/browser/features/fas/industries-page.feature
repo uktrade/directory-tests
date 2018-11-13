@@ -75,7 +75,7 @@ Feature: Find a Supplier - Industries page
   @captcha
   @dev-only
   @contact-us
-  Scenario: Buyers should be able to contact us (DIT) from the Find a Supplier - home page
+  Scenario: Buyers should be able to contact DIT from the Find a Supplier - home page
     Given "Robert" visits the "Find a Supplier - Industries" page
     And "Robert" decided to use "contact us" button
 

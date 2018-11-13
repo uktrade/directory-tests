@@ -24,7 +24,7 @@ Feature: Updates for UK companies on EU Exit
 
 
   @CMS-506
-  Scenario: Domestic Visitors should see be able to navigate to the "EU Exit contact form"
+  Scenario: Domestic Visitors should see all expected sections on "Export Readiness - Updates for UK companies on EU Exit"
     When "Henry" goes to the "Export Readiness - Updates for UK companies on EU Exit" page
 
     Then "Henry" should see following sections

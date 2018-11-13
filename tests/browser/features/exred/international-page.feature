@@ -39,7 +39,7 @@ Feature: International Page
 
   @ED-3083
   @language-selector
-  Scenario: Visitor should be able to open and close the language selector
+  Scenario: Visitor should be able to open and close the language selector on "Export Readiness - International" page
     Given "Robert" visits the "Export Readiness - International" page
 
     When "Robert" opens up the language selector
@@ -52,7 +52,7 @@ Feature: International Page
   @ED-3083
   @language-selector
   @accessibility
-  Scenario: Keyboard users should be able to open and close the language selector using just the keyboard
+  Scenario: Keyboard users should be able to open and close the language selector using just the keyboard on "Export Readiness - International" page
     Given "Robert" visits the "Export Readiness - International" page
 
     When "Robert" opens up the language selector using his keyboard
@@ -65,7 +65,7 @@ Feature: International Page
   @ED-3083
   @language-selector
   @accessibility
-  Scenario: Language selector should trap the keyboard in order to help Keyboard users to navigate
+  Scenario: Language selector should trap the keyboard in order to help Keyboard users to navigat on "Export Readiness - International" pagee
     Given "Robert" visits the "Export Readiness - International" page
 
     When "Robert" opens up the language selector using his keyboard
@@ -97,7 +97,7 @@ Feature: International Page
 
   @ED-3149
   @language-selector
-  Scenario: Visitors should be able to "get guidance and services to help them export" (visit ExRed) from International page
+  Scenario: Visitors should be able to "get guidance and services to help them export" from International page
     Given "Robert" visits the "Export Readiness - International" page
 
     When "Robert" decides to view the page in "English (UK)"

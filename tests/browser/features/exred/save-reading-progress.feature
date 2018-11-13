@@ -164,7 +164,7 @@ Feature: Save reading progress
   @ED-2773
   @<group>
   @<location>
-  Scenario Outline: A signed in Exporter's progress should be updated with temporary information (cookie data merged with persistent storage)
+  Scenario Outline: Reading progress for signed in Exporter should be updated with temporary information, cookie data merged with persistent storage - Exporters reads "<a number>" of "<group>" articles accessed via "<location>" link
     Given "Robert" is a registered and verified user
     And "Robert" is signed in
     And "Robert" went to the "Export Readiness - Home" page
@@ -198,7 +198,7 @@ Feature: Save reading progress
   @ED-2773
   @<group>
   @<location>
-  Scenario Outline: A signed in Exporter's progress should be updated with temporary information (cookie data merged with persistent storage) even after clearing the cookies
+  Scenario Outline: Reading progress for signed in Exporter should be updated with temporary information, cookie data merged with persistent storage, even after clearing the cookies - Exporters reads "<a number>" of "<group>" articles accessed via "<location>" link
     Given "Robert" is a registered and verified user
     And "Robert" is signed in
     And "Robert" went to the "Export Readiness - Home" page

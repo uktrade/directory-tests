@@ -122,7 +122,7 @@ Feature: Find a Supplier - Industry pages
   @captcha
   @dev-only
   @contact-us
-  Scenario Outline: Buyers should be able to contact us (DIT) from the  "<specific> Industry" page
+  Scenario Outline: Buyers should be able to contact DIT from the "<specific> Industry" page
     Given "Robert" visits the "Find a Supplier - <specific> - industry" page
     And "Robert" decided to use "contact us" button
 

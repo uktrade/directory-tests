@@ -4,7 +4,7 @@ Feature: Home Page
 
   @ED-2366
   @sections
-  Scenario: Any Exporter should see the "Beta, Hero, Exporting Journey, Export Readiness, Guidance, Services, Case Studies, Business is Great, Error Reporting" sections on the home page.
+  Scenario: Any Exporter should see the "Beta, Hero, Exporting Journey, Export Readiness, Guidance, Services, Case Studies, Business is Great, Error Reporting" sections on the home page
       Given "Robert" visits the "Export Readiness - Home" page
       Then "Robert" should see following sections
         | Sections          |
@@ -86,7 +86,7 @@ Feature: Home Page
 
   @ED-3083
   @language-selector
-  Scenario: Visitor should be able to open and close the language selector
+  Scenario: Visitor should be able to open and close the language selector on "Export Readiness - Home" page
     Given "Robert" visits the "Export Readiness - Home" page
 
     When "Robert" opens up the language selector
@@ -99,7 +99,7 @@ Feature: Home Page
   @ED-3083
   @language-selector
   @accessibility
-  Scenario: Keyboard users should be able to open and close the language selector using just the keyboard
+  Scenario: Keyboard users should be able to open and close the language selector using just the keyboard on "Export Readiness - Home" page
     Given "Robert" visits the "Export Readiness - Home" page
 
     When "Robert" opens up the language selector using his keyboard
@@ -112,7 +112,7 @@ Feature: Home Page
   @ED-3083
   @language-selector
   @accessibility
-  Scenario: Language selector should trap the keyboard in order to help Keyboard users to navigate
+  Scenario: Language selector should trap the keyboard in order to help Keyboard users to navigat on "Export Readiness - Home" pagee
     Given "Robert" visits the "Export Readiness - Home" page
 
     When "Robert" opens up the language selector using his keyboard

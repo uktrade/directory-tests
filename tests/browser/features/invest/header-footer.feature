@@ -6,7 +6,7 @@ Feature: Header-Footer
   @logo
   @header
   @footer
-  Scenario Outline: Visitors should see correct UK Government logo (with Union Jack) in the page header and footer on "<selected>" page
+  Scenario Outline: Visitors should see correct UK Government logo, with Union Jack, in the page header and footer on "<selected>" page
     Given "Robert" visits the "<selected>" page
 
     Then "Robert" should be on the "<selected>" page
@@ -50,7 +50,7 @@ Feature: Header-Footer
   @logo
   @header
   @footer
-  Scenario Outline: Visitors should be able to get to the Home (Invest) page from "<selected>" page by using UK Government logo in the page header
+  Scenario Outline: Visitors should be able to get to the Invest home page from "<selected>" page by using UK Government logo in the page header
     Given "Robert" visits the "Invest - <selected>" page
 
     When "Robert" decides to click on the UK Government logo in the page "Invest - header"
