@@ -70,6 +70,16 @@ Feature: Updates for non-UK companies on EU Exit
 
   @CMS-579
   @breadcrumbs
+  Scenario: International Visitors should see be able to get to "International" page by using "Great.gov.uk" breadcrumb on international news article page
+    Given "Henry" opened random "international" news article
+
+    When "Henry" decides to see "Updates for companies on EU Exit"
+
+    Then "Henry" should be on the "Export Readiness - International" page
+
+
+  @CMS-579
+  @breadcrumbs
   Scenario Outline: International Visitors should see be able to get to "<expected page>" by using "<breadcrumb>" breadcrumb on "International EU Exit news" page
     Given "Henry" opened random "international" news article
 
@@ -81,16 +91,6 @@ Feature: Updates for non-UK companies on EU Exit
       | breadcrumb                              | expected page                                              |
       | Great.gov.uk                            | Export Readiness - International                           |
       | Updates for non-UK companies on EU exit | Export Readiness - Updates for non-UK companies on EU Exit |
-
-
-  @CMS-579
-  @breadcrumbs
-  Scenario: International Visitors should see be able to get to "International" page by using "Great.gov.uk" breadcrumb on "Updates for non-UK companies on EU Exit" page
-    Given "Henry" opened random "international" news article
-
-    When "Henry" decides to see "Updates for companies on EU Exit"
-
-    Then "Henry" should be on the "Export Readiness - International" page
 
 
   @wip
