@@ -6,11 +6,11 @@ from tests import join_ui_supplier
 
 @pytest.mark.parametrize("new_url,old_url", [
     ('/industries/healthcare/',
-     join_ui_supplier('/industries/health/')),
+     join_ui_supplier('industries/health/')),
     ('/industries/technology/',
-     join_ui_supplier('/industries/tech/')),
+     join_ui_supplier('industries/tech/')),
     ('/industries/creative-services/',
-     join_ui_supplier('/industries/creative/')),
+     join_ui_supplier('industries/creative/')),
 ])
 def test_ed_4152_redirect_from_old_industry_page(new_url, old_url):
     response = requests.get(old_url, allow_redirects=False)
