@@ -64,8 +64,8 @@ SELECTORS = {
         "industries": Selector(
             By.CSS_SELECTOR, "#footer-main-links a[href='/industries/']"
         ),
-        "feedback": Selector(
-            By.CSS_SELECTOR, "#footer-main-links a[href='/feedback/']"
+        "contact": Selector(
+            By.CSS_SELECTOR, "#footer-main-links a[href='/industries/contact/']"
         ),
         "about": Selector(
             By.CSS_SELECTOR,
@@ -73,7 +73,7 @@ SELECTORS = {
         ),
         "contact us link": Selector(
             By.CSS_SELECTOR,
-            "#footer-sub-links a[href='https://contact-us.export.great.gov.uk/directory/FeedbackForm/']",
+            "#footer-sub-links a[href='https://contact-us.export.great.gov.uk/directory/']",
         ),
         "privacy and cookies": Selector(
             By.CSS_SELECTOR,
