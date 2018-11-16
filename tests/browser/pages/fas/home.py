@@ -3,7 +3,6 @@
 import logging
 import random
 from typing import List
-from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -24,7 +23,7 @@ from settings import DIRECTORY_UI_SUPPLIER_URL
 NAME = "Home"
 SERVICE = "Find a Supplier"
 TYPE = "home"
-URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "/")
+URL = DIRECTORY_UI_SUPPLIER_URL
 PAGE_TITLE = "Find UK suppliers - trade.great.gov.uk"
 
 SEARCH_INPUT = Selector(By.ID, "id_term")
