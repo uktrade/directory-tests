@@ -44,51 +44,51 @@ SELECTORS = {
         "language switcher": Selector(
             By.CSS_SELECTOR, ".ed-language-switcher"
         ),
-        "navigation bar": Selector(By.ID, "navbar"),
-        "home": Selector(By.CSS_SELECTOR, "#navbar a[href='/']"),
-        "search": Selector(By.CSS_SELECTOR, "#navbar a[href='/search/']"),
-        "industries": Selector(
-            By.CSS_SELECTOR, "#navbar a[href='/industries/']"
-        ),
+        "navigation bar": Selector(By.ID, "ed-menu"),
+        "home": Selector(By.CSS_SELECTOR, "#ed-menu > ul > li.active > a"),
+        "search": Selector(By.CSS_SELECTOR, "#ed-menu > ul > li:nth-child(2) > a"),
+        "industries": Selector(By.CSS_SELECTOR, "#ed-menu > ul > li:nth-child(3) > a"),
     },
     "footer": {
         "itself": Selector(By.ID, "ed-footer"),
         "sub-links": Selector(By.ID, "footer-sub-links"),
         "hm gov link": Selector(By.CSS_SELECTOR, "#footer-logos > a"),
         "great gov link": Selector(By.CSS_SELECTOR, "#footer-logos > img"),
-        "home": Selector(By.CSS_SELECTOR, "#footer-main-links a[href='/']"),
+        "home": Selector(
+            By.CSS_SELECTOR, "#footer-main-links > ul > li:nth-child(1) > a"
+        ),
         "search": Selector(
-            By.CSS_SELECTOR, "#footer-main-links a[href='/search/']"
+            By.CSS_SELECTOR, "#footer-main-links > ul > li:nth-child(2) > a"
         ),
         "industries": Selector(
-            By.CSS_SELECTOR, "#footer-main-links a[href='/industries/']"
+            By.CSS_SELECTOR, "#footer-main-links > ul > li:nth-child(3) > a"
         ),
         "contact": Selector(
-            By.CSS_SELECTOR, "#footer-main-links a[href='/industries/contact/']"
+            By.CSS_SELECTOR, "#footer-main-links > ul > li:nth-child(4) > a"
         ),
         "about": Selector(
             By.CSS_SELECTOR,
-            "#footer-sub-links a[href='https://great.gov.uk/about/']",
+            "#footer-sub-links > div > ul > li:nth-child(1) > a",
         ),
         "contact us link": Selector(
             By.CSS_SELECTOR,
-            "#footer-sub-links a[href='https://contact-us.export.great.gov.uk/directory/']",
+            "#footer-sub-links > div > ul > li:nth-child(2) > a",
         ),
         "privacy and cookies": Selector(
             By.CSS_SELECTOR,
-            "#footer-sub-links a[href='https://great.gov.uk/privacy-and-cookies/']",
+            "#footer-sub-links > div > ul > li:nth-child(3) > a",
         ),
         "terms and conditions": Selector(
             By.CSS_SELECTOR,
-            "#footer-sub-links a[href='https://great.gov.uk/terms-and-conditions/']",
+            "#footer-sub-links > div > ul > li:nth-child(4) > a",
         ),
         "performance": Selector(
             By.CSS_SELECTOR,
-            "#footer-sub-links a[href='https://great.gov.uk/performance-dashboard/']",
+            "#footer-sub-links > div > ul > li:nth-child(5) > a",
         ),
         "dit": Selector(
             By.CSS_SELECTOR,
-            "#footer-sub-links a[href='https://www.gov.uk/government/organisations/department-for-international-trade']",
+            "#footer-sub-links > div > ul > li:nth-child(6) > a",
         ),
         "copyright links": Selector(By.ID, "ed-footer-copyright"),
     },
