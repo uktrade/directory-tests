@@ -117,7 +117,7 @@ step_run_smoke_tests: &step_run_smoke_tests
       . venv/bin/activate
       python docker/env_writer.py --env=${TEST_ENV} --config=./docker/env.json
       source ./docker/.env_with_export
-      make smoke_tests
+      PYTEST_ARGS=${PYTEST_ARGS} make smoke_tests
 
 step_run_functional_tests: &step_run_functional_tests
   run:
@@ -260,6 +260,7 @@ jobs:
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "dev"
+      PYTEST_ARGS: '-m "not stage"'
     <<: *steps_smoke_tests
 
   smoke_tests_stage:
@@ -267,6 +268,7 @@ jobs:
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "stage"
+      PYTEST_ARGS: "-m 'not dev'"
     <<: *steps_smoke_tests
 
   func_fab_test_dev:
