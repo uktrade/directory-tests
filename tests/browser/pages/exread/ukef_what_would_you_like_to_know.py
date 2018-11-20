@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """ExRed UKEF Contact Us - Page Object."""
 import logging
+from typing import List
 from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
@@ -15,6 +16,7 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
     tick_checkboxes,
+    check_for_sections
 )
 from settings import EXRED_UI_URL
 
@@ -73,6 +75,10 @@ def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=True)
     logging.debug("All expected elements are visible on '%s' page", NAME)
+
+
+def should_see_sections(driver: WebDriver, names: List[str]):
+    check_for_sections(driver, all_sections=SELECTORS, sought_sections=names)
 
 
 def generate_form_details(actor: Actor) -> dict:
