@@ -171,8 +171,8 @@ SELECTORS = {
     },
     "save progress": {"register link": REGISTER, "sign-in link": SIGN_IN},
     "case studies": {
-        "heading": Selector(By.CSS_SELECTOR, "#carousel h2"),
-        "intro": Selector(By.CSS_SELECTOR, "#carousel .intro"),
+        "heading": Selector(By.ID, "case-studies-section-title"),
+        "intro": Selector(By.ID, "case-studies-section-description"),
         "article": Selector(By.CSS_SELECTOR, "#carousel .ed-carousel-container"),
         "previous article": Selector(
             By.CSS_SELECTOR, "#carousel label.ed-carousel__control--backward"
