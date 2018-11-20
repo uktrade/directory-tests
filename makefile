@@ -74,12 +74,6 @@ load_test_exred:
 load_test_minimal:
 	$(LOCUST)
 
-# Pytest
-PYTEST_ARGS := \
-	--capture=no \
-	--driver PhantomJS \
-	--driver-path /usr/bin/phantomjs $(pytest_args)
-
 TEST_ENV ?= DEV
 
 smoke_tests:
