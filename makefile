@@ -118,15 +118,15 @@ DOCKER_SET_ENV_VARS_FOR_DEV := \
 
 DOCKER_SET_ENV_VARS_FOR_STAGE := \
 	export STAGE_DIRECTORY_TESTS_DIRECTORY_API_URL=https://directory-api-staging.cloudapps.digital/; \
-	export STAGE_DIRECTORY_TESTS_DIRECTORY_BUYER_API_URL=https://stage.buyer.directory.uktrade.io/; \
+	export STAGE_DIRECTORY_TESTS_DIRECTORY_BUYER_API_URL=https://great.uat.uktrade.io/find-a-buyer/; \
 	export STAGE_DIRECTORY_TESTS_DIRECTORY_CMS_API_CLIENT_BASE_URL=https://stage.cms.directory.uktrade.io/; \
 	export STAGE_DIRECTORY_TESTS_DIRECTORY_CONTACT_US_UI_URL=https://contact-us.export.great.gov.uk/; \
-	export STAGE_DIRECTORY_TESTS_DIRECTORY_PROFILE_URL=https://stage.profile.uktrade.io/; \
+	export STAGE_DIRECTORY_TESTS_DIRECTORY_PROFILE_URL=https://great.uat.uktrade.io/profile/; \
 	export STAGE_DIRECTORY_TESTS_DIRECTORY_SSO_API_CLIENT_BASE_URL=https://directory-sso-staging.cloudapps.digital/; \
-	export STAGE_DIRECTORY_TESTS_DIRECTORY_SSO_URL=https://stage.sso.uktrade.io/; \
-	export STAGE_DIRECTORY_TESTS_DIRECTORY_UI_BUYER_URL=https://stage.buyer.directory.uktrade.io/; \
-	export STAGE_DIRECTORY_TESTS_DIRECTORY_UI_SUPPLIER_URL=https://stage.supplier.directory.uktrade.io/; \
-	export STAGE_DIRECTORY_TESTS_EXRED_UI_URL=https://stage.exportreadiness.directory.uktrade.io/; \
+	export STAGE_DIRECTORY_TESTS_DIRECTORY_SSO_URL=https://great.uat.uktrade.io/sso/; \
+	export STAGE_DIRECTORY_TESTS_DIRECTORY_UI_BUYER_URL=https://great.uat.uktrade.io/find-a-buyer/; \
+	export STAGE_DIRECTORY_TESTS_DIRECTORY_UI_SUPPLIER_URL=https://great.uat.uktrade.io/trade/; \
+	export STAGE_DIRECTORY_TESTS_EXRED_UI_URL=https://great.uat.uktrade.io/; \
 	export STAGE_DIRECTORY_TESTS_INVEST_UI_URL=https://invest-ui-staging.cloudapps.digital/; \
 	export STAGE_DIRECTORY_TESTS_SOO_UI_URL=https://selling-online-overseas.export.staging.uktrade.io/
 
