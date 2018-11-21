@@ -27,14 +27,15 @@ from steps.when_impl import (
     fas_view_article,
     fas_view_more_companies,
     fas_view_selected_company_profile,
-    generic_open_any_tag,
     generic_click_on_random_industry,
     generic_click_on_uk_gov_logo,
     generic_download_all_pdfs,
     generic_fill_out_and_submit_form,
+    generic_open_any_tag,
     generic_open_guide_link,
     generic_open_industry_page,
     generic_open_news_article,
+    generic_pick_radio_option_and_submit,
     generic_see_more_industries,
     generic_submit_form,
     generic_unfold_topics,
@@ -414,6 +415,14 @@ def fas_when_actor_fills_out_and_submits_contact_us_form_wo_captcha(
 def fas_when_actor_fills_out_and_submits_contact_us_form(
         context: Context, actor_alias: str):
     fas_fill_out_and_submit_contact_us_form(context, actor_alias)
+
+
+@when('"{actor_alias}" says that his business is in "{option}"')
+@when('"{actor_alias}" says that his business is "{option}"')
+@when('"{actor_alias}" chooses "{option}" option')
+def when_actor_chooses_form_option(
+        context: Context, actor_alias: str, option: str):
+    generic_pick_radio_option_and_submit(context, actor_alias, option)
 
 
 @when('"{actor_alias}" decides to see more UK industries')

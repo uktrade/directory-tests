@@ -1921,3 +1921,10 @@ def generic_click_on_random_industry(context: Context, actor_alias: str):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "open_any_article")
     page.open_any_article(context.driver)
+
+
+def generic_pick_radio_option_and_submit(context: Context, actor_alias: str, option: str):
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "pick_radio_option_and_submit")
+    new_page = page.pick_radio_option_and_submit(context.driver, option)
+    update_actor(context, actor_alias, visited_page=new_page)
