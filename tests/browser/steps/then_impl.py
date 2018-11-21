@@ -45,7 +45,11 @@ from utils.zendesk import find_tickets
 def should_be_on_page(context: Context, actor_alias: str, page_name: str):
     page = get_page_object(page_name)
     has_action(page, "should_be_here")
-    page.should_be_here(context.driver)
+    if hasattr(page, "URLs"):
+        special_page_name = page_name.split(" - ")[1]
+        page.should_be_here(context.driver, page_name=special_page_name)
+    else:
+        page.should_be_here(context.driver)
     update_actor(context, actor_alias, visited_page=page)
     logging.debug(f"{actor_alias} is on {page.SERVICE} - {page.NAME} - {page.TYPE} -> {page}")
 
@@ -902,3 +906,11 @@ def eu_exit_contact_us_should_receive_confirmation_email(
         subject=subject,
     )
     assert confirmation
+
+
+def generic_should_see_form_choices(
+        context: Context, actor_alias: str, option_names: Table):
+    option_names = [row[0] for row in option_names]
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "should_see_form_choices")
+    page.should_see_form_choices(context.driver, option_names)

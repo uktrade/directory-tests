@@ -23,6 +23,7 @@ from steps.then_impl import (
     articles_should_see_time_to_complete_decrease,
     articles_total_number_of_articles_should_not_change,
     case_studies_should_see_case_study,
+    eu_exit_contact_us_should_receive_confirmation_email,
     expected_page_elements_should_not_be_visible_on_get_finance,
     export_readiness_expected_page_elements_should_be_visible,
     export_readiness_should_see_articles,
@@ -30,6 +31,7 @@ from steps.then_impl import (
     form_check_state_of_element,
     form_should_see_error_messages,
     generic_should_see_expected_page_content,
+    generic_should_see_form_choices,
     guidance_check_if_link_to_next_category_is_displayed,
     guidance_expected_page_elements_should_be_visible,
     guidance_ribbon_should_be_visible,
@@ -61,6 +63,7 @@ from steps.then_impl import (
     should_be_on_page,
     should_be_on_page_or_international_page,
     should_not_see_sections,
+    should_see_articles_filtered_by_tag,
     should_see_links_to_services,
     should_see_page_in_preferred_language,
     should_see_sections,
@@ -69,9 +72,6 @@ from steps.then_impl import (
     stats_and_tracking_elements_should_not_be_present,
     triage_should_be_classified_as,
     triage_should_see_change_your_answers_link,
-    zendesk_should_receive_confirmation_email,
-    should_see_articles_filtered_by_tag,
-    eu_exit_contact_us_should_receive_confirmation_email
 )
 from steps.when_impl import (
     triage_answer_questions_again,
@@ -458,3 +458,8 @@ def then_should_see_an_error_message(context: Context, actor_alias: str):
 @then('"{actor_alias}" should see list of news articles filtered by selected tag')
 def then_should_see_articles_filtered_by_tag(context: Context, actor_alias: str):
     should_see_articles_filtered_by_tag(context, actor_alias)
+
+
+@then('"{actor_alias}" should see following form choices')
+def then_should_see_form_choices(context: Context, actor_alias: str):
+    generic_should_see_form_choices(context, actor_alias, context.table)
