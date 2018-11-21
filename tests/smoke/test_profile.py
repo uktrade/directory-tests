@@ -2,8 +2,9 @@ import http.client
 
 import pytest
 import requests
+from retrying import retry
 
-from tests import get_absolute_url, users
+from tests import get_absolute_url, users, is_500
 from tests.settings import DIRECTORY_API_HEALTH_CHECK_TOKEN as TOKEN
 
 
@@ -118,6 +119,7 @@ def test_401_redirects_for_anon_user(absolute_url):
     assert response.status_code == 401
 
 
+@retry(wait_fixed=3000, stop_max_attempt_number=2, retry_on_exception=is_500)
 @pytest.mark.parametrize("absolute_url", [
     get_absolute_url('profile:landing'),
     get_absolute_url('profile:soo'),
