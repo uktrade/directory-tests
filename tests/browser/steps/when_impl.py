@@ -1929,7 +1929,7 @@ def generic_pick_radio_option_and_submit(context: Context, actor_alias: str, opt
 
 def generic_pick_random_radio_option_and_submit(
         context: Context, actor_alias: str, ignored: str):
-    ignored = [item.strip() for item in ignored.split(",")]
+    ignored = [item.strip().lower() for item in ignored.split(",")]
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "pick_random_radio_option_and_submit")
     new_page = page.pick_random_radio_option_and_submit(context.driver, ignored)

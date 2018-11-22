@@ -924,7 +924,7 @@ def choose_one_form_option_except(
     selected = random.choice(without_ignored)
     form_details = defaultdict(bool)
     for key in radio_selectors.keys():
-        form_details[key] = (key == selected)
+        form_details[key.lower()] = (key.lower() == selected)
     logging.debug(f"Form details (with ignored: {ignored}): {form_details}")
     check_radio(driver, radio_selectors, form_details)
     return selected
