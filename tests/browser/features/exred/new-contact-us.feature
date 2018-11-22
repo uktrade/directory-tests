@@ -284,21 +284,24 @@ Feature:  new contact us forms
     And "Robert" should receive an "Thank you for your EU exit enquiry" confirmation email
 
 
-  @wip
+  @TT-758
+  @dev-only
+  @captcha
   @short_form
-  Scenario Outline: Exporters should be able to contact "<expected recipient>"  using "Short contact form (<selected option>)" page accessed via "The UK -> <selected option>"
+  Scenario Outline: Exporters should be able to contact "<expected recipient>" using "Short contact form (<selected option>)" page accessed via "The UK -> <selected option>"
     Given "Robert" got to the "Export Readiness - Short contact form (<selected option>)" page via "The UK -> <selected option>"
 
     When "Robert" fills out and submits the form
 
-    Then "Robert" should be on the "Thank you for your enquiry" page
-    And an email is submitted to "<expected recipient>"
+    Then "Robert" should be on the "Export Readiness - Thank you for your enquiry (<selected option>) - Short Domestic Contact us" page
+    And "Robert" should receive an "<appropriate>" confirmation email
+#    And an email is submitted to "<expected recipient>"
 
     Examples:
-      | selected option                         | expected recipient |
-      | Events                                  | Events mailbox     |
-      | Defence and Security Organisation (DSO) | DSO mailbox        |
-      | Other                                   | DIT Enquiry unit   |
+      | selected option                         | appropriate                                                  | expected recipient |
+      | Events                                  | Thank you for your Events enquiry                            | Events mailbox     |
+      | Defence and Security Organisation (DSO) | Thank you for your Defence and Security Organisation enquiry | DSO mailbox        |
+      | Other                                   | Thank you for your enquiry                                   | DIT Enquiry unit   |
 
 
   @TT-758
