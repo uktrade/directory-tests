@@ -89,7 +89,6 @@ Feature:  new contact us forms
       | radio elements                                              |
       | I haven't had a response from the opportunity I applied for |
       | My daily alerts are not relevant to me                      |
-      | I need more details about the opportunity                   |
       | Other                                                       |
 
 

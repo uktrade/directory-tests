@@ -37,8 +37,7 @@ SELECTORS = {
         "itself": Selector(By.CSS_SELECTOR, "#lede form"),
         "i haven't had a response from the opportunity i applied for": Selector(By.ID, "id_export-opportunities-choice_0", type=ElementType.RADIO, is_visible=False),
         "my daily alerts are not relevant to me": Selector(By.ID, "id_export-opportunities-choice_1", type=ElementType.RADIO, is_visible=False),
-        "i need more details about the opportunity": Selector(By.ID, "id_export-opportunities-choice_2", type=ElementType.RADIO, is_visible=False),
-        "other": Selector(By.ID, "id_export-opportunities-choice_3", type=ElementType.RADIO, is_visible=False),
+        "other": Selector(By.ID, "id_export-opportunities-choice_2", type=ElementType.RADIO, is_visible=False),
         "submit": SUBMIT_BUTTON,
         "back": Selector(By.CSS_SELECTOR, "form button[name='wizard_goto_step']", type=ElementType.LINK)
     }
@@ -49,8 +48,6 @@ POs = {
         contact_us_short_domestic,
     "my daily alerts are not relevant to me":
         contact_us_triage_export_opportunities_dedicated_support_content,
-    "i need more details about the opportunity":
-        contact_us_short_domestic,
     "other": contact_us_short_domestic,
 }
 
