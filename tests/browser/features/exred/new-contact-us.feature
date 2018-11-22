@@ -260,7 +260,6 @@ Feature:  new contact us forms
   @TT-758
   @CMS-506
   @eu_exit
-  @work_in_progress
   @feature_flagged
   Scenario: Exporters should be able to get to the "Domestic EU Exit short contact-us form"
     Given "Robert" got to the "Export Readiness - What can we help you with? - Domestic Contact us" page via "The UK"
@@ -270,18 +269,19 @@ Feature:  new contact us forms
     Then "Robert" should be on the "Export Readiness - Domestic EU Exit contact form" page
 
 
-  # partially covered by CMS-506
-  @wip
+  @TT-758
+  @CMS-506
+  @dev-only
+  @captcha
   @eu_exit
-  @work_in_progress
   @feature_flagged
   Scenario: Exporters should be able to contact "EU Exit mailbox"
-    Given "Robert" got to the "Domestic EU Exit contact-us form" page via EU exit option
+    Given "Robert" got to the "Export Readiness - Domestic EU Exit contact form" page via "The UK -> EU Exit"
 
     When "Robert" fills out and submits the form
 
-    Then "Robert" should be on the "Thank you for your enquiry" page
-    And an email is submitted to "Zendesk for the attention of EU Exit team"
+    Then "Robert" should be on the "Export Readiness - Thank you for your enquiry - Domestic EU Exit Contact us" page
+    And "Robert" should receive an "Thank you for your EU exit enquiry" confirmation email
 
 
   @wip
