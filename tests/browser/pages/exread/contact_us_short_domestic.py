@@ -15,7 +15,7 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from pages.exread import contact_us_triage_domestic
+from pages.exread import contact_us_short_domestic_thank_you
 from settings import EXRED_UI_URL
 
 NAME = "Short contact form (Tell us how we can help)"
@@ -79,4 +79,4 @@ def submit(driver: WebDriver) -> ModuleType:
     )
     button.click()
     take_screenshot(driver, "After submitting the form")
-    return contact_us_triage_domestic
+    return contact_us_short_domestic_thank_you
