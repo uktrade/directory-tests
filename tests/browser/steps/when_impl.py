@@ -8,17 +8,10 @@ from behave.model import Table
 from behave.runner import Context
 from retrying import retry
 from selenium.common.exceptions import TimeoutException, WebDriverException
-
 from utils.cms_api import get_news_articles
 from utils.gov_notify import get_verification_link
 
-from pages import (
-    common_language_selector,
-    exread,
-    fas,
-    get_page_object,
-    sso,
-)
+from pages import common_language_selector, exread, fas, get_page_object, sso
 from pages.common_actions import (
     VisitedArticle,
     add_actor,
@@ -1927,6 +1920,15 @@ def generic_pick_radio_option_and_submit(context: Context, actor_alias: str, opt
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "pick_radio_option_and_submit")
     new_page = page.pick_radio_option_and_submit(context.driver, option)
+    update_actor(context, actor_alias, visited_page=new_page)
+
+
+def generic_pick_random_radio_option_and_submit(
+        context: Context, actor_alias: str, ignored: str):
+    ignored = [item.strip() for item in ignored.split(",")]
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "pick_random_radio_option_and_submit")
+    new_page = page.pick_random_radio_option_and_submit(context.driver, ignored)
     update_actor(context, actor_alias, visited_page=new_page)
 
 

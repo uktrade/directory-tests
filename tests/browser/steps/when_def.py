@@ -36,6 +36,7 @@ from steps.when_impl import (
     generic_open_industry_page,
     generic_open_news_article,
     generic_pick_radio_option_and_submit,
+    generic_pick_random_radio_option_and_submit,
     generic_see_more_industries,
     generic_submit_form,
     generic_unfold_topics,
@@ -512,3 +513,9 @@ def when_actor_open_tag(context: Context, actor_alias: str):
 @when('"{actor_alias}" decides to read about one of listed industries')
 def when_actor_clicks_on_random_industry(context: Context, actor_alias: str):
     generic_click_on_random_industry(context, actor_alias)
+
+
+@when('"{actor_alias}" chooses any available option except "{ignored}"')
+def when_actor_chooses_random_form_option_except(
+        context: Context, actor_alias: str, ignored: str):
+    generic_pick_random_radio_option_and_submit(context, actor_alias, ignored)
