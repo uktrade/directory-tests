@@ -916,6 +916,20 @@ def choose_one_form_option(
     check_radio(driver, radio_selectors, form_details)
 
 
+def choose_one_form_option_except(
+        driver: WebDriver, radio_selectors: Dict[str, Selector],
+        ignored: List[str]) -> str:
+    all_keys = list(radio_selectors.keys())
+    without_ignored = list(set(all_keys) - set(ignored))
+    selected = random.choice(without_ignored)
+    form_details = defaultdict(bool)
+    for key in radio_selectors.keys():
+        form_details[key] = (key == selected)
+    logging.debug(f"Form details (with ignored: {ignored}): {form_details}")
+    check_radio(driver, radio_selectors, form_details)
+    return selected
+
+
 def tick_checkboxes(
         driver: WebDriver, form_selectors: Dict[str, Selector],
         form_details: dict):
