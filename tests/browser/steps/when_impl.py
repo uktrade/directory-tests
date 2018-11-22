@@ -91,7 +91,11 @@ def visit_page(
 def should_be_on_page(context: Context, actor_alias: str, page_name: str):
     page = get_page_object(page_name)
     has_action(page, "should_be_here")
-    page.should_be_here(context.driver)
+    if hasattr(page, "URLs"):
+        special_page_name = page_name.split(" - ")[1]
+        page.should_be_here(context.driver, page_name=special_page_name)
+    else:
+        page.should_be_here(context.driver)
     update_actor(context, actor_alias, visited_page=page)
     logging.debug(f"{actor_alias} is on {page.SERVICE} - {page.NAME} - {page.TYPE} -> {page}")
 
