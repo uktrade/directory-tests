@@ -68,11 +68,8 @@ def visit(driver: WebDriver, *, first_time: bool = False):
 
 def should_be_here(driver: WebDriver, *, page_name: str = None):
     take_screenshot(driver, NAME)
-    if page_name:
-        url = URLs[page_name.lower()]
-        check_url(driver, url, exact_match=True)
-    else:
-        check_url(driver, URL, exact_match=False)
+    url = URLs[page_name.lower()] if page_name else URL
+    check_url(driver, url, exact_match=True)
 
 
 def submit(driver: WebDriver) -> ModuleType:
