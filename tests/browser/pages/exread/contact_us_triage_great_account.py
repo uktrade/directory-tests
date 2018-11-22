@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 """Export Readiness - Domestic Contact us - Great.gov.uk account"""
 import logging
-from typing import List
 from types import ModuleType
-
+from typing import List
 from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
@@ -13,13 +12,17 @@ from pages import ElementType
 from pages.common_actions import (
     Selector,
     check_url,
+    choose_one_form_option,
+    choose_one_form_option_except,
     find_element,
+    get_selectors,
     go_to_url,
     take_screenshot,
-    choose_one_form_option,
-    get_selectors,
 )
-from pages.exread import contact_us_short_domestic
+from pages.exread import (
+    contact_us_short_domestic,
+    contact_us_triage_great_account_dedicated_support_content,
+)
 from settings import EXRED_UI_URL
 
 NAME = "Great.gov.uk account"
@@ -41,6 +44,20 @@ SELECTORS = {
         "submit": SUBMIT_BUTTON,
         "back": Selector(By.CSS_SELECTOR, "form button[name='wizard_goto_step']", type=ElementType.LINK)
     }
+}
+
+POs = {
+    "i have not received an email confirmation":
+        contact_us_triage_great_account_dedicated_support_content,
+    "i need to reset my password":
+        contact_us_triage_great_account_dedicated_support_content,
+    "my companies house login is not working":
+        contact_us_triage_great_account_dedicated_support_content,
+    "i do not know where to enter my verification code":
+        contact_us_triage_great_account_dedicated_support_content,
+    "i have not received my letter containing the verification code":
+        contact_us_triage_great_account_dedicated_support_content,
+    "other": contact_us_short_domestic,
 }
 
 
@@ -74,12 +91,16 @@ def pick_radio_option_and_submit(driver: WebDriver, name: str) -> ModuleType:
     )
     button.click()
     take_screenshot(driver, "After submitting the form")
-    POs = {
-        "i have not received an email confirmation": None,
-        "i need to reset my password": None,
-        "my companies house login is not working": None,
-        "i do not know where to enter my verification code": None,
-        "i have not received my letter containing the verification code": None,
-        "other": contact_us_short_domestic,
-    }
     return POs[name.lower()]
+
+
+def pick_random_radio_option_and_submit(driver: WebDriver, ignored: List[str]):
+    radio_selectors = get_selectors(SELECTORS["form"], ElementType.RADIO)
+    selected = choose_one_form_option_except(driver, radio_selectors, ignored)
+    take_screenshot(driver, "Before submitting the form")
+    button = find_element(
+        driver, SUBMIT_BUTTON, element_name="Submit button", wait_for_it=False
+    )
+    button.click()
+    take_screenshot(driver, "After submitting the form")
+    return POs[selected.lower()]
