@@ -139,22 +139,22 @@ def get_page_object(service_and_page: str) -> ModuleType:
         matched_name = False
 
         if sought_service.lower() == page_object.service.lower():
-            logging.debug(f"matched service {sought_service}: {page_object.service}")
+            logging.debug(f"PO search: matched service '{sought_service}'")
             matched_service = True
         else:
             continue
 
         # try to find a match based on the PO.NAME
         if sought_page.lower() == page_object.name.lower():
-            logging.debug(f"matched page name {sought_page}: {page_object.name}")
+            logging.debug(f"PO search: matched name '{sought_page}'")
             matched_name = True
         else:
             # if that doesn't work, then try to do a check PO.NAMES
             if hasattr(page_object.value, "NAMES"):
                 names = page_object.value.NAMES
                 if sought_page.lower() in [name.lower() for name in names]:
-                    logging.debug(f"matched page name {sought_page}: "
-                          f"{page_object.value.NAMES}")
+                    logging.debug(
+                        f"PO search: matched one of names '{sought_page}'")
                     matched_name = True
                 else:
                     continue
@@ -163,7 +163,7 @@ def get_page_object(service_and_page: str) -> ModuleType:
 
         if sought_type:
             if sought_type.lower() == page_object.type.lower():
-                logging.debug(f"matched page type {sought_type}: {page_object.type}")
+                logging.debug(f"PO search: matched type '{sought_type}'")
                 matched_type = True
             else:
                 continue
@@ -189,5 +189,5 @@ def get_page_object(service_and_page: str) -> ModuleType:
             f"'{sought_service}' package. Here's a list of available Page "
             f"Objects: {keys}"
         )
-    logging.debug(f"Found PO for: {service_and_page} → {result}")
+    logging.debug(f"PO search: found 1 PO for: {service_and_page} → {result}")
     return result
