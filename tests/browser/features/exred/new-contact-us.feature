@@ -128,15 +128,14 @@ Feature:  new contact us forms
     Then "Robert" should be on the "Export Readiness - Short contact form (Tell us how we can help)" page
 
 
-  # define PO with names for all support pages
-  @wip
+  @TT-758
   @account_support
   Scenario: Domestic enquirers should be able to find answers to sought topic about "Great.gov.uk account"
     Given "Robert" got to the "Export Readiness - Great.gov.uk account" page via "The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk"
 
-    When "Robert" checks any available option except "Other"
+    When "Robert" chooses any available option except "Other"
 
-    Then "Robert" should be on the "Export Readiness - Dedicated Support Content" page
+    Then "Robert" should be on the "Export Readiness - Great.gov.uk account - Dedicated Support Content" page
 
 
   # there's no "finish & close" option on the support pages
@@ -145,7 +144,7 @@ Feature:  new contact us forms
   Scenario: Domestic enquirers should be able to return to the Home page after they found find answers to sought topic about "Great.gov.uk account"
     Given "Robert" got to the "Export Readiness - Great.gov.uk account" page via "The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk"
 
-    When "Robert" checks any available option except "Other"
+    When "Robert" chooses any available option except "Other"
     And "Robert" decides to "finish & close"
 
     Then "Robert" should be on the "Export Readiness - Home" page
@@ -207,15 +206,14 @@ Feature:  new contact us forms
       | Other                                                       |
 
 
-  # define PO with names for all support pages
-  @wip
+  @TT-758
   @export_opportunities
-  Scenario: Exporters should be to contact Export Opportunities team via Zendesk using "Short contact form (Tell us how we can help)" page accessed via "The UK -> Great.gov.uk account and services support -> Export opportunities service -> <selected topic>"
+  Scenario: Exporters should be able to find answers to "My daily alerts are not relevant to me" topic
     Given "Robert" got to the "Export Readiness - Export opportunities service" page via "The UK -> Great.gov.uk account and services support -> Export opportunities service"
 
     When "Robert" chooses "My daily alerts are not relevant to me" option
 
-    Then "Robert" should be on the "Export Readiness - My daily alerts are not relevant to me - Support" page
+    Then "Robert" should be on the "Export Readiness - My daily alerts are not relevant to me - Dedicated Support Content" page
 
 
   @TT-758
