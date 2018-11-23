@@ -14,6 +14,13 @@ NAMES = [
     "Thank you for your enquiry (Events)",
     "Thank you for your enquiry (Defence and Security Organisation (DSO))",
     "Thank you for your enquiry (Other)",
+    "Thank you for your enquiry (I haven't had a response from the opportunity I applied for)",
+    "Thank you for your enquiry (My daily alerts are not relevant to me)",
+    "Thank you for your enquiry (I have not received an email confirmation)",
+    "Thank you for your enquiry (I need to reset my password)",
+    "Thank you for your enquiry (My Companies House login is not working)",
+    "Thank you for your enquiry (I do not know where to enter my verification code)",
+    "Thank you for your enquiry (I have not received my letter containing the verification code)",
 ]
 SERVICE = "Export Readiness"
 TYPE = "Short Domestic Contact us"
@@ -43,10 +50,16 @@ SELECTORS = {
 URLs = {
     "thank you for your enquiry": URL,
     "thank you for your enquiry (events)": urljoin(URL, "/contact/events/success/"),
-    "thank you for your enquiry (defence and security organisation (dso))": urljoin(
-        URL, "/contact/defence-and-security-organisation/success/"
-    ),
+    "thank you for your enquiry (defence and security organisation (dso))":
+        urljoin(URL, "/contact/defence-and-security-organisation/success/"),
     "thank you for your enquiry (other)": URL,
+    "thank you for your enquiry (i haven't had a response from the opportunity i applied for)": URL,
+    "thank you for your enquiry (my daily alerts are not relevant to me)": URL,
+    "thank you for your enquiry (i have not received an email confirmation)": URL,
+    "thank you for your enquiry (i need to reset my password)": URL,
+    "thank you for your enquiry (my companies house login is not working)": URL,
+    "thank you for your enquiry (i do not know where to enter my verification code)": URL,
+    "thank you for your enquiry (i have not received my letter containing the verification code)": URL,
 }
 
 
