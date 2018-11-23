@@ -13,11 +13,12 @@ from pages import ElementType
 from pages.common_actions import (
     Selector,
     check_url,
+    choose_one_form_option,
+    find_and_click_on_page_element,
     find_element,
+    get_selectors,
     go_to_url,
     take_screenshot,
-    choose_one_form_option,
-    get_selectors,
 )
 from pages.exread import (
     contact_us_long_export_advice_comment,
@@ -92,3 +93,8 @@ def pick_radio_option_and_submit(driver: WebDriver, name: str) -> ModuleType:
         "other": None,
     }
     return POs[name.lower()]
+
+
+def click_on_page_element(driver: WebDriver, element_name: str):
+    find_and_click_on_page_element(driver, SELECTORS, element_name)
+    take_screenshot(driver, NAME + " after clicking on " + element_name)

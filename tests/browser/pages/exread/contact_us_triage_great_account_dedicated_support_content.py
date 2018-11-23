@@ -6,7 +6,13 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages import ElementType
-from pages.common_actions import Selector, check_url, go_to_url, take_screenshot
+from pages.common_actions import (
+    Selector,
+    check_url,
+    find_and_click_on_page_element,
+    go_to_url,
+    take_screenshot,
+)
 from settings import EXRED_UI_URL
 
 NAME = "Great.gov.uk account"
@@ -66,3 +72,10 @@ def should_be_here(driver: WebDriver, *, page_name: str = None):
     take_screenshot(driver, NAME)
     url = URLs[page_name.lower()] if page_name else URL
     check_url(driver, url, exact_match=False)
+    msg = f"Got 404 on {driver.current_url}"
+    assert "This page cannot be found" not in driver.page_source, msg
+
+
+def click_on_page_element(driver: WebDriver, element_name: str):
+    find_and_click_on_page_element(driver, SELECTORS, element_name)
+    take_screenshot(driver, NAME + " after clicking on " + element_name)

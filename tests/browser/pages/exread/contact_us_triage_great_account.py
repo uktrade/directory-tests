@@ -14,6 +14,7 @@ from pages.common_actions import (
     check_url,
     choose_one_form_option,
     choose_one_form_option_except,
+    find_and_click_on_page_element,
     find_element,
     get_selectors,
     go_to_url,
@@ -104,3 +105,8 @@ def pick_random_radio_option_and_submit(driver: WebDriver, ignored: List[str]):
     button.click()
     take_screenshot(driver, "After submitting the form")
     return POs[selected.lower()]
+
+
+def click_on_page_element(driver: WebDriver, element_name: str):
+    find_and_click_on_page_element(driver, SELECTORS, element_name)
+    take_screenshot(driver, NAME + " after clicking on " + element_name)

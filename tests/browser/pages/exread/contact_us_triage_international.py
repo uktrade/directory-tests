@@ -13,11 +13,12 @@ from pages import ElementType
 from pages.common_actions import (
     Selector,
     check_url,
+    choose_one_form_option,
+    find_and_click_on_page_element,
     find_element,
+    get_selectors,
     go_to_url,
     take_screenshot,
-    choose_one_form_option,
-    get_selectors,
 )
 from pages.invest import contact_us as invest_contact_us
 from settings import EXRED_UI_URL
@@ -76,3 +77,8 @@ def pick_radio_option_and_submit(driver: WebDriver, name: str) -> ModuleType:
         return invest_contact_us
     else:
         return None
+
+
+def click_on_page_element(driver: WebDriver, element_name: str):
+    find_and_click_on_page_element(driver, SELECTORS, element_name)
+    take_screenshot(driver, NAME + " after clicking on " + element_name)
