@@ -58,6 +58,8 @@ def should_be_here(driver: WebDriver, *, page_name: str = None):
     take_screenshot(driver, NAME)
     url = URLs[page_name.lower()] if page_name else URL
     check_url(driver, url, exact_match=False)
+    msg = f"Got 404 on {driver.current_url}"
+    assert "This page cannot be found" not in driver.page_source, msg
 
 
 def click_on_page_element(driver: WebDriver, element_name: str):
