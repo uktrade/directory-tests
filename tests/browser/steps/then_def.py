@@ -409,7 +409,9 @@ def then_should_receive_contact_confirmation_email(
 
 
 @then('"{actor_alias}" should receive an "{subject}" confirmation email')
-def then_should_receive_confirmation_email_from_zendesk(
+@then('"{actor_alias}" should receive a "{subject}" confirmation email')
+@then('"{actor_alias}" should receive "{subject}" confirmation email')
+def then_should_receive_confirmation_email_from_govnotify(
         context: Context, actor_alias: str, subject: str):
     eu_exit_contact_us_should_receive_confirmation_email(context, actor_alias, subject)
 
