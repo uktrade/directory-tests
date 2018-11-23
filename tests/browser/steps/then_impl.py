@@ -887,6 +887,7 @@ def zendesk_should_receive_confirmation_email(
     error_msg = (f"Expected to find only 1 '{subject}' ticket for {email} but "
                  f"found {len(tickets)} instead")
     assert len(tickets) == 1, error_msg
+    logging.debug(f"{actor_alias} received '{subject}' email from Zendesk")
 
 
 def should_see_articles_filtered_by_tag(context: Context, actor_alias: str):
