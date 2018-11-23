@@ -81,6 +81,7 @@ Feature:  new contact us forms
 
 
   @TT-758
+  @exopps
   @account_support
   Scenario: Domestic enquirers should see all expected help options for "Export opportunities service"
     Given "Robert" got to the "Export Readiness - Export opportunities service" page via "The UK -> Great.gov.uk account and services support -> Export opportunities service"
@@ -93,6 +94,7 @@ Feature:  new contact us forms
 
 
   @TT-758
+  @greatgovuk_account
   @account_support
   Scenario: Domestic enquirers should see all expected help options for "Great.gov.uk account"
     Given "Robert" got to the "Export Readiness - Great.gov.uk account" page via "The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk"
@@ -108,6 +110,7 @@ Feature:  new contact us forms
 
 
   @TT-758
+  @short_domestic
   @account_support
   Scenario: Domestic enquirers should be able to get to the "Short Contact Us" form via "The UK -> Great.gov.uk account and services support -> Other"
     Given "Robert" got to the "Export Readiness - Great.gov.uk account and services support" page via "The UK -> Great.gov.uk account and services support"
@@ -118,7 +121,9 @@ Feature:  new contact us forms
 
 
   @TT-758
-  @account_support
+  @short_domestic
+  @greatgovuk_account
+  @support
   Scenario: Domestic enquirers should be able to get to the "Short Contact Us" form via "The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk -> Other"
     Given "Robert" got to the "Export Readiness - Great.gov.uk account" page via "The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk"
 
