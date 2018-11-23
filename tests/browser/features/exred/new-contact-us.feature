@@ -142,16 +142,8 @@ Feature:  new contact us forms
     Then "Robert" should be on the "Export Readiness - Great.gov.uk account - Dedicated Support Content" page
 
 
-  # there's no "finish & close" option on the support pages
-  @wip
-  @account_support
-  Scenario: Domestic enquirers should be able to return to the Home page after they found find answers to sought topic about "Great.gov.uk account"
-    Given "Robert" got to the "Export Readiness - Great.gov.uk account" page via "The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk"
 
-    When "Robert" chooses any available option except "Other"
-    And "Robert" decides to "finish & close"
 
-    Then "Robert" should be on the "Export Readiness - Home" page
 
 
   @wip
@@ -341,7 +333,37 @@ Feature:  new contact us forms
       | Other               | Export Readiness - International Contact us                |
 
 
+  @TT-758
+  @going_back
+  Scenario Outline: Enquirers should be able to navigate back to previous pages
+    Given "Robert" navigates via "<path>"
+
+    When "Robert" decides to use "back" link
+
+    Then "Robert" should be on the "<expected>" page
+
+    Examples:
+      | path                                                                                | expected                                                            |
+      | The UK                                                                              | Export Readiness - Contact us                                       |
+      | Outside the UK                                                                      | Export Readiness - Contact us                                       |
+      | The UK -> Great.gov.uk account and services support                                 | Export Readiness - What can we help you with? - Domestic Contact us |
+      | The UK -> Great.gov.uk account and services support -> Export opportunities service | Export Readiness - Great.gov.uk account and services support        |
+      | The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk | Export Readiness - Great.gov.uk account and services support        |
+
+
 ###### These scenarios will be implemented when v2 is ready
+
+  # there's no "finish & close" option on the support pages
+  @wip
+  @account_support
+  Scenario: Domestic enquirers should be able to return to the Home page after they found find answers to sought topic about "Great.gov.uk account"
+    Given "Robert" got to the "Export Readiness - Great.gov.uk account" page via "The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk"
+
+    When "Robert" chooses any available option except "Other"
+    And "Robert" decides to "finish & close"
+
+    Then "Robert" should be on the "Export Readiness - Home" page
+
 
   @wip
   @v2_or_v1_if_we_have_time
