@@ -231,6 +231,7 @@ Feature:  new contact us forms
     When "Robert" fills out and submits the form
 
     Then "Robert" should be on the "Export Readiness - Thank you - UKEF Contact us" page
+    # TODO check if email is sent to dedicated mailbox
     And an email is submitted to "UKEF mailbox"
 
 
@@ -277,7 +278,7 @@ Feature:  new contact us forms
     When "Robert" fills out and submits the form
 
     Then "Robert" should be on the "Export Readiness - Thank you for your enquiry - Domestic EU Exit Contact us" page
-    And "Robert" should receive an "Thank you for your EU exit enquiry" confirmation email
+    And "Robert" should receive "Thank you for your EU exit enquiry" confirmation email
 
 
   @TT-758
@@ -290,7 +291,8 @@ Feature:  new contact us forms
     When "Robert" fills out and submits the form
 
     Then "Robert" should be on the "Export Readiness - Thank you for your enquiry (<selected option>) - Short Domestic Contact us" page
-    And "Robert" should receive an "<appropriate>" confirmation email
+    And "Robert" should receive "<appropriate>" confirmation email
+    # TODO check if email is sent to dedicated mailbox
 #    And an email is submitted to "<expected recipient>"
 
     Examples:
