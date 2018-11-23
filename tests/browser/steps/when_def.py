@@ -5,7 +5,7 @@
 from behave import when
 from behave.runner import Context
 
-from steps.then_impl import triage_should_be_classified_as
+from steps.then_impl import triage_should_be_classified_as, should_be_on_page
 from steps.when_impl import (
     articles_found_useful_or_not,
     articles_go_back_to_article_list,
@@ -519,3 +519,10 @@ def when_actor_clicks_on_random_industry(context: Context, actor_alias: str):
 def when_actor_chooses_random_form_option_except(
         context: Context, actor_alias: str, ignored: str):
     generic_pick_random_radio_option_and_submit(context, actor_alias, ignored)
+
+
+
+
+@when('"{actor_alias}" is on the "{page_name}" page')
+def step_impl(context: Context, actor_alias: str, page_name: str):
+    should_be_on_page(context, actor_alias, page_name)
