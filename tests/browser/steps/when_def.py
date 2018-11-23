@@ -19,6 +19,7 @@ from steps.when_impl import (
     case_studies_go_to,
     clear_the_cookies,
     click_on_page_element,
+    contact_us_navigate_through_options,
     continue_export_journey,
     export_readiness_open_category,
     fas_fill_out_and_submit_contact_us_form,
@@ -521,6 +522,10 @@ def when_actor_chooses_random_form_option_except(
     generic_pick_random_radio_option_and_submit(context, actor_alias, ignored)
 
 
+@when('"{actor_alias}" navigates via "{via}"')
+def given_actor_navigates_via_contact_us_options(
+        context: Context, actor_alias: str, via: str):
+    contact_us_navigate_through_options(context, actor_alias, via)
 
 
 @when('"{actor_alias}" is on the "{page_name}" page')

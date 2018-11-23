@@ -1946,3 +1946,12 @@ def contact_us_get_to_page_via(
         generic_pick_radio_option_and_submit(context, actor_alias, option)
     # 3) check if we're on the appropriate page
     should_be_on_page(context, actor_alias, final_page)
+
+
+def contact_us_navigate_through_options(context: Context, actor_alias: str, via: str):
+    intermediate = [name.strip() for name in via.split("->")]
+    # 1) start at the Contact us "choose location" page
+    visit_page(context, actor_alias, "Export Readiness - Contact us")
+    # 2) click through every listed option
+    for option in intermediate:
+        generic_pick_radio_option_and_submit(context, actor_alias, option)

@@ -264,3 +264,9 @@ def given_actor_opened_random_news_article(
 def given_actor_gets_to_a_page_via(
         context: Context, actor_alias: str, final_page: str, via: str):
     contact_us_get_to_page_via(context, actor_alias, final_page, via)
+
+
+@given('"{actor_alias}" navigates via "{via}"')
+def given_actor_navigates_via_contact_us_options(
+        context: Context, actor_alias: str, via: str):
+    contact_us_navigate_through_options(context, actor_alias, via)
