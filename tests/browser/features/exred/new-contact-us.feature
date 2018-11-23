@@ -56,16 +56,22 @@ Feature:  new contact us forms
     Then "Robert" should be on the "Export Readiness - Long (Export Advice Comment) - Contact us" page
 
 
-  @wip
+  @TT-758
   @ita
   @exporting_from_the_UK
   Scenario: Domestic Enquirers should be able to contact relevant ITA based on the postcode provided
     Given "Robert" got to the "Export Readiness - Long (Export Advice Comment)" page via "The UK -> Advice to export from the UK"
 
     When "Robert" fills out and submits the form
+    Then "Robert" should be on the "Export Readiness - Long (Personal details) - Contact us" page
+    When "Robert" fills out and submits the form
+    Then "Robert" should be on the "Export Readiness - Long (Business details) - Contact us" page
+    When "Robert" fills out and submits the form
 
-    Then "Robert" should be on the "Thank you for your enquiry" page
-    And an email is submitted to relevant "ITA" (based on the postcode provided)
+    Then "Robert" should be on the "Export Readiness - Thank you for your enquiry" page
+    And "Robert" should receive "Thank you for your enquiry" confirmation email
+    # TODO check if this email is being actually sent
+#    And an email is submitted to relevant "ITA" (based on the postcode provided)
 
 
   @TT-758
@@ -248,6 +254,7 @@ Feature:  new contact us forms
     When "Robert" fills out and submits the form
 
     Then "Robert" should be on the "Export Readiness - Thank you - UKEF Contact us" page
+    # No confirmation email is sent to the user
     # TODO check if email is sent to dedicated mailbox
     And an email is submitted to "UKEF mailbox"
 
