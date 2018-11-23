@@ -16,7 +16,11 @@ from pages.common_actions import (
 from settings import EXRED_UI_URL
 
 NAME = "Export opportunities service"
-NAMES = ["Export opportunities service", "My daily alerts are not relevant to me"]
+NAMES = [
+    "Export opportunities service",
+    "I haven't had a response from the opportunity I applied for",
+    "My daily alerts are not relevant to me",
+]
 SERVICE = "Export Readiness"
 TYPE = "Dedicated Support Content"
 URL = urljoin(EXRED_UI_URL, "contact/triage/export-opportunities/")
@@ -24,6 +28,9 @@ PAGE_TITLE = "Welcome to great.gov.uk"
 
 URLs = {
     "export opportunities service": URL,
+    "i haven't had a response from the opportunity i applied for": urljoin(
+        URL, "opportunity-no-response/"
+    ),
     "my daily alerts are not relevant to me": urljoin(URL, "alerts-not-relevant/"),
 }
 
