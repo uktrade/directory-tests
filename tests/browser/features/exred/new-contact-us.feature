@@ -133,8 +133,9 @@ Feature:  new contact us forms
 
 
   @TT-758
-  @account_support
-  Scenario: Domestic enquirers should be able to find answers to sought topic about "Great.gov.uk account"
+  @greatgovuk_account
+  @support
+  Scenario: Domestic enquirers should be able to find answers to sought topic about "Your account on Great.gov.uk"
     Given "Robert" got to the "Export Readiness - Great.gov.uk account" page via "The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk"
 
     When "Robert" chooses any available option except "Other"
@@ -142,24 +143,44 @@ Feature:  new contact us forms
     Then "Robert" should be on the "Export Readiness - Great.gov.uk account - Dedicated Support Content" page
 
 
+  @TT-758
+  @export_opportunities
+  @support
+  Scenario Outline: Exporters should be able to find answers to Export Opportunities related topic "<selected>"
+    Given "Robert" got to the "Export Readiness - Export opportunities service" page via "The UK -> Great.gov.uk account and services support -> Export opportunities service"
 
+    When "Robert" chooses "<selected>" option
 
-
-
-  @wip
-  @zendesk
-  @account_support
-  Scenario Outline: Domestic Enquirers should be able to contact Great Support team via "The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk -> <selected topic>"
-    Given "Robert" got to the "Export Readiness - Dedicated support content page for selected topic" page via "The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk -> <selected topic>"
-
-    When "Robert" decides to "Submit an enquiry"
-    And "Robert" fills out and submits the form
-
-    Then "Robert" should be on the "Thank you for your enquiry" page
-    And an email is submitted to "Zendesk"
+    Then "Robert" should be on the "Export Readiness - <selected> - Dedicated Support Content" page
 
     Examples:
-      | selected topic                         |
+      | selected                                                    |
+      | I haven't had a response from the opportunity I applied for |
+      | My daily alerts are not relevant to me                      |
+
+
+  @TT-758
+  @zendesk
+  @dev-only
+  @captcha
+  @account_support
+  Scenario Outline: Domestic Enquirers should be able to contact Great Support team via "The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk -> <selected topic>"
+    Given "Robert" got to the "Export Readiness - <selected topic> - Dedicated Support Content" page via "The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk -> <selected topic>"
+
+    When "Robert" decides to "Submit an enquiry"
+    And "Robert" is on the "Export Readiness - Short contact form (Tell us how we can help)" page
+    And "Robert" fills out and submits the form
+
+    Then "Robert" should be on the "Export Readiness - Thank you for your enquiry (<selected topic>)" page
+    And "Robert" should receive a "Great.gov.uk contact form" confirmation email from Zendesk
+
+    Examples:
+      | selected topic                                                 |
+      | I have not received an email confirmation                      |
+
+    @full
+    Examples:
+      | selected topic                                                 |
       | I have not received an email confirmation                      |
       | I need to reset my password                                    |
       | My Companies House login is not working                        |
@@ -167,49 +188,45 @@ Feature:  new contact us forms
       | I have not received my letter containing the verification code |
 
 
-  # Choosing "Other" on the Your account on Great.gov.uk page takes us directly
-  # to the Short contact us form
-  @wip
+  @TT-758
   @zendesk
+  @dev-only
+  @captcha
+  @export_opportunities
+  Scenario Outline: Exporters should be to contact Export Opportunities team via Zendesk using "Short contact form" page accessed via "The UK -> Great.gov.uk account and services support -> Export opportunities service -> <selected topic>"
+    Given "Robert" got to the "Export Readiness - <selected topic> - Dedicated Support Content" page via "The UK -> Great.gov.uk account and services support -> Export opportunities service -> <selected topic>"
+
+    When "Robert" decides to "Submit an enquiry"
+    And "Robert" is on the "Export Readiness - Short contact form (Tell us how we can help)" page
+    And "Robert" fills out and submits the form
+
+    Then "Robert" should be on the "Export Readiness - Thank you for your enquiry (<selected topic>) - Short Domestic Contact us" page
+    And "Robert" should receive a "Great.gov.uk contact form" confirmation email from Zendesk
+
+    Examples:
+      | selected topic                                              |
+      | I haven't had a response from the opportunity I applied for |
+      | My daily alerts are not relevant to me                      |
+
+
+  # Choosing "Other" on the "Your account on Great.gov.uk" page takes us
+  # directly to the short contact us form
+  @TT-758
+  @zendesk
+  @dev-only
+  @captcha
   @account_support
   Scenario Outline: Domestic Enquirers should be able to contact Great Support team via "The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk -> <selected topic>"
     Given "Robert" got to the "Export Readiness - Short contact form (Tell us how we can help)" page via "The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk -> <selected topic>"
 
     When "Robert" fills out and submits the form
 
-    Then "Robert" should be on the "Thank you for your enquiry" page
-    And an email is submitted to "Zendesk"
+    Then "Robert" should be on the "Export Readiness - Thank you for your enquiry (<selected topic>) - Short Domestic Contact us" page
+    And "Robert" should receive a "Great.gov.uk contact form" confirmation email from Zendesk
 
     Examples:
       | selected topic |
       | Other          |
-
-
-  @wip
-  @export_opportunities
-  Scenario Outline: Exporters should be to contact Export Opportunities team via Zendesk using "Short contact form (Tell us how we can help)" page accessed via "The UK -> Great.gov.uk account and services support -> Export opportunities service -> <selected topic>"
-    Given "Robert" got to the "Export Readiness - Short contact form (Tell us how we can help)" page via "The UK -> Great.gov.uk account and services support -> Export opportunities service -> <selected topic>"
-
-    When "Robert" fills out and submits the form
-
-    Then "Robert" should be on the "Thank you for your enquiry" page
-    And an email is submitted to "Zendesk"
-
-    Examples:
-      | selected topic |
-      | I haven't had a response from the opportunity I applied for |
-      | I need more details about the opportunity                   |
-      | Other                                                       |
-
-
-  @TT-758
-  @export_opportunities
-  Scenario: Exporters should be able to find answers to "My daily alerts are not relevant to me" topic
-    Given "Robert" got to the "Export Readiness - Export opportunities service" page via "The UK -> Great.gov.uk account and services support -> Export opportunities service"
-
-    When "Robert" chooses "My daily alerts are not relevant to me" option
-
-    Then "Robert" should be on the "Export Readiness - My daily alerts are not relevant to me - Dedicated Support Content" page
 
 
   @TT-758
