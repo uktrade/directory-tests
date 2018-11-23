@@ -43,8 +43,6 @@ def get_email_confirmation_notification(
     user_notifications = filter_by_recipient(notifications, email)
     email_confirmations = filter_by_subject(user_notifications, subject)
 
-    # logging.debug(pformat(notifications))
-    # logging.debug(pformat(user_notifications))
     logging.debug(pformat(email_confirmations))
     assert len(email_confirmations) == 1, (
         "Expected to find 1 email confirmation notification for {} but found "
