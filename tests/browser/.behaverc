@@ -8,3 +8,6 @@ junit_directory=./reports/
 verbose=True
 log_capture=False
 logging_level=DEBUG
+
+[behave.formatters]
+mini = behave_ext.mini_formatter:MiniFormatter
