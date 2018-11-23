@@ -38,6 +38,7 @@ from steps.when_impl import (
     triage_classify_as,
     triage_create_exporting_journey,
     visit_page,
+    contact_us_navigate_through_options
 )
 
 

@@ -32,23 +32,42 @@ TYPE = "Domestic Contact us"
 URL = urljoin(EXRED_UI_URL, "contact/triage/export-opportunities/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
-SUBMIT_BUTTON = Selector(By.CSS_SELECTOR, "form button[type=submit]", type=ElementType.BUTTON)
+SUBMIT_BUTTON = Selector(
+    By.CSS_SELECTOR, "form button[type=submit]", type=ElementType.BUTTON
+)
 SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#lede form"),
-        "i haven't had a response from the opportunity i applied for": Selector(By.ID, "id_export-opportunities-choice_0", type=ElementType.RADIO, is_visible=False),
-        "my daily alerts are not relevant to me": Selector(By.ID, "id_export-opportunities-choice_1", type=ElementType.RADIO, is_visible=False),
-        "other": Selector(By.ID, "id_export-opportunities-choice_2", type=ElementType.RADIO, is_visible=False),
+        "i haven't had a response from the opportunity i applied for": Selector(
+            By.ID,
+            "id_export-opportunities-choice_0",
+            type=ElementType.RADIO,
+            is_visible=False,
+        ),
+        "my daily alerts are not relevant to me": Selector(
+            By.ID,
+            "id_export-opportunities-choice_1",
+            type=ElementType.RADIO,
+            is_visible=False,
+        ),
+        "other": Selector(
+            By.ID,
+            "id_export-opportunities-choice_2",
+            type=ElementType.RADIO,
+            is_visible=False,
+        ),
         "submit": SUBMIT_BUTTON,
-        "back": Selector(By.CSS_SELECTOR, "form button[name='wizard_goto_step']", type=ElementType.LINK)
+        "back": Selector(
+            By.CSS_SELECTOR,
+            "form button[name='wizard_goto_step']",
+            type=ElementType.LINK,
+        ),
     }
 }
 
 POs = {
-    "i haven't had a response from the opportunity i applied for":
-        contact_us_short_domestic,
-    "my daily alerts are not relevant to me":
-        contact_us_triage_export_opportunities_dedicated_support_content,
+    "i haven't had a response from the opportunity i applied for": contact_us_short_domestic,
+    "my daily alerts are not relevant to me": contact_us_triage_export_opportunities_dedicated_support_content,
     "other": contact_us_short_domestic,
 }
 
@@ -66,12 +85,10 @@ def should_see_form_choices(driver: WebDriver, names: List[str]):
     radio_selectors = get_selectors(SELECTORS["form"], ElementType.RADIO)
     for name in names:
         radio_selector = radio_selectors[name.lower()]
-        find_element(
-            driver, radio_selector, element_name=name, wait_for_it=False
-        )
+        find_element(driver, radio_selector, element_name=name, wait_for_it=False)
     logging.debug(
-        f"All expected form choices: '{names}' are visible on "
-        f"{driver.current_url}")
+        f"All expected form choices: '{names}' are visible on " f"{driver.current_url}"
+    )
 
 
 def pick_radio_option_and_submit(driver: WebDriver, name: str) -> ModuleType:

@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 """Export Readiness - Contact us - Triage location"""
 import logging
-from typing import List
 from types import ModuleType
-
+from typing import List
 from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
@@ -13,16 +12,13 @@ from pages import ElementType
 from pages.common_actions import (
     Selector,
     check_url,
+    choose_one_form_option,
     find_element,
+    get_selectors,
     go_to_url,
     take_screenshot,
-    choose_one_form_option,
-    get_selectors,
 )
-from pages.exread import (
-    contact_us_triage_domestic,
-    contact_us_triage_international,
-)
+from pages.exread import contact_us_triage_domestic, contact_us_triage_international
 from settings import EXRED_UI_URL
 
 NAME = "Contact Us"
@@ -31,14 +27,24 @@ TYPE = "Contact us"
 URL = urljoin(EXRED_UI_URL, "contact/triage/location/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
-THE_UK = Selector(By.ID, "id_location-choice_0", type=ElementType.RADIO, is_visible=False)
-OUTSIDE_THE_UK = Selector(By.ID, "id_location-choice_1", type=ElementType.RADIO, is_visible=False)
-SUBMIT_BUTTON = Selector(By.CSS_SELECTOR, "form button[type=submit]", type=ElementType.BUTTON)
+THE_UK = Selector(
+    By.ID, "id_location-choice_0", type=ElementType.RADIO, is_visible=False
+)
+OUTSIDE_THE_UK = Selector(
+    By.ID, "id_location-choice_1", type=ElementType.RADIO, is_visible=False
+)
+SUBMIT_BUTTON = Selector(
+    By.CSS_SELECTOR, "form button[type=submit]", type=ElementType.BUTTON
+)
 SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#lede form"),
-        "the uk": Selector(By.ID, "id_location-choice_0", type=ElementType.RADIO, is_visible=False),
-        "outside the uk": Selector(By.ID, "id_location-choice_1", type=ElementType.RADIO, is_visible=False),
+        "the uk": Selector(
+            By.ID, "id_location-choice_0", type=ElementType.RADIO, is_visible=False
+        ),
+        "outside the uk": Selector(
+            By.ID, "id_location-choice_1", type=ElementType.RADIO, is_visible=False
+        ),
         "submit": SUBMIT_BUTTON,
     }
 }
@@ -57,12 +63,10 @@ def should_see_form_choices(driver: WebDriver, names: List[str]):
     radio_selectors = get_selectors(SELECTORS["form"], ElementType.RADIO)
     for name in names:
         radio_selector = radio_selectors[name.lower()]
-        find_element(
-            driver, radio_selector, element_name=name, wait_for_it=False
-        )
+        find_element(driver, radio_selector, element_name=name, wait_for_it=False)
     logging.debug(
-        f"All expected form choices: '{names}' are visible on "
-        f"{driver.current_url}")
+        f"All expected form choices: '{names}' are visible on " f"{driver.current_url}"
+    )
 
 
 def pick_radio_option_and_submit(driver: WebDriver, name: str) -> ModuleType:
