@@ -180,7 +180,7 @@ Feature:  new contact us forms
     And "Robert" fills out and submits the form
 
     Then "Robert" should be on the "Export Readiness - Thank you for your enquiry (<selected topic>)" page
-    And "Robert" should receive a "Great.gov.uk contact form" confirmation email from Zendesk
+    And "Robert" should receive a "great.gov.uk contact form" confirmation email from Zendesk
 
     Examples:
       | selected topic                                                 |
@@ -209,7 +209,7 @@ Feature:  new contact us forms
     And "Robert" fills out and submits the form
 
     Then "Robert" should be on the "Export Readiness - Thank you for your enquiry (<selected topic>) - Short Domestic Contact us" page
-    And "Robert" should receive a "Great.gov.uk contact form" confirmation email from Zendesk
+    And "Robert" should receive a "great.gov.uk contact form" confirmation email from Zendesk
 
     Examples:
       | selected topic                                              |
@@ -230,7 +230,7 @@ Feature:  new contact us forms
     When "Robert" fills out and submits the form
 
     Then "Robert" should be on the "Export Readiness - Thank you for your enquiry (<selected topic>) - Short Domestic Contact us" page
-    And "Robert" should receive a "Great.gov.uk contact form" confirmation email from Zendesk
+    And "Robert" should receive a "great.gov.uk contact form" confirmation email from Zendesk
 
     Examples:
       | selected topic |
