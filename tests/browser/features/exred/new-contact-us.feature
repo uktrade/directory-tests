@@ -28,7 +28,7 @@ Feature:  new contact us forms
       | Advice to export from the UK              |
       | Great.gov.uk account and services support |
       | UK Export Finance (UKEF)                  |
-      | EU Exit                                   |
+#      | EU Exit                                   |
       | Events                                    |
       | Defence and Security Organisation (DSO)   |
       | Other                                     |
@@ -338,7 +338,7 @@ Feature:  new contact us forms
       | radio elements                    |
       | Investing in the UK               |
       | Buying from the UK                |
-      | EU Exit                           |
+#      | EU Exit                           |
       | Other                             |
 
 
@@ -355,7 +355,7 @@ Feature:  new contact us forms
       | selected            | expected                                                   |
       | Investing in the UK | Invest - Contact us                                        |
       | Buying from the UK  | Export Readiness - Short contact form (Buying from the UK) |
-      | EU Exit             | Export Readiness - International EU Exit - Contact Us      |
+#      | EU Exit             | Export Readiness - International EU Exit - Contact Us      |
       | Other               | Export Readiness - International Contact us                |
 
 
