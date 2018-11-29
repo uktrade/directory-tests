@@ -357,7 +357,7 @@ Feature:  new contact us forms
     Examples:
       | selected            | expected                                                   |
       | Investing in the UK | Invest - Contact us                                        |
-      | Buying from the UK  | Export Readiness - Short contact form (Buying from the UK) |
+      | Buying from the UK  | Find a Supplier - Contact us                               |
 #      | EU Exit             | Export Readiness - International EU Exit - Contact Us      |
       | Other               | Export Readiness - International Contact us                |
 

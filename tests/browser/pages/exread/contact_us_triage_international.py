@@ -20,10 +20,10 @@ from pages.common_actions import (
     take_screenshot,
 )
 from pages.exread import (
-    contact_us_short_domestic,
     international_contact_us,
     international_eu_exit_contact_us,
 )
+from pages.fas import contact_us as fas_contact_us
 from pages.invest import contact_us as invest_contact_us
 from settings import EXRED_UI_URL
 
@@ -61,7 +61,7 @@ SELECTORS = {
 }
 POs = {
     "investing in the uk": invest_contact_us,
-    "buying from the uk": contact_us_short_domestic,
+    "buying from the uk": fas_contact_us,
     "eu exit": international_eu_exit_contact_us,
     "other": international_contact_us,
 }
