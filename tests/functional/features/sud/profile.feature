@@ -53,6 +53,9 @@ Feature: SUD (Profile) pages
         |SUD Selling Online Overseas|
 
 
+    # I've been told that on non-prod envs ExOpps doesn't keep synced state
+    # between different services and thus ExOpps page on SUD displays
+    # different content based on user ID
     @ED-2267
     @sso
     @account

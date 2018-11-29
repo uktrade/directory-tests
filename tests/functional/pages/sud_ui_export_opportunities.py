@@ -13,15 +13,7 @@ EXPECTED_STRINGS = [
     "Export opportunities",
     "Business profile",
     "Selling online overseas",
-    "Start applying for export opportunities. You can quickly and easily:",
-    "find thousands of exporting opportunities",
-    "search for opportunities within your industry or in a specific country",
-    (
-        "sign up for email alerts so you're the first to know of new "
-        "opportunities"
-    ),
-    "apply for any export opportunity and track your applications",
-    "Find and apply",
+    "Applications",
 ]
 
 
