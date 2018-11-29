@@ -21,6 +21,7 @@ from pages.common_actions import (
     take_screenshot,
     tick_captcha_checkbox,
     tick_checkboxes,
+    pick_option
 )
 from pages.exread import contact_us_short_domestic_thank_you
 from settings import EXRED_UI_URL
@@ -65,19 +66,7 @@ SELECTORS = {
     }
 }
 OTHER_SELECTORS = {
-    "charity": Selector(By.ID, "id_company_type_other_0", type=ElementType.RADIO),
-    "government department": Selector(
-        By.ID, "id_company_type_other_1", type=ElementType.RADIO
-    ),
-    "intermediary": Selector(By.ID, "id_company_type_other_2", type=ElementType.RADIO),
-    "limited partnership": Selector(
-        By.ID, "id_company_type_other_3", type=ElementType.RADIO
-    ),
-    "sole trader": Selector(By.ID, "id_company_type_other_4", type=ElementType.RADIO),
-    "uk branch of foreign company (BR)": Selector(
-        By.ID, "id_company_type_other_5", type=ElementType.RADIO
-    ),
-    "other": Selector(By.ID, "id_company_type_other_6", type=ElementType.RADIO),
+    "other": Selector(By.ID, "id_company_type_other", type=ElementType.SELECT),
 }
 
 URLs = {
@@ -116,30 +105,14 @@ def generate_form_details(actor: Actor) -> dict:
         "postcode": "SW1H 0TL",
         "terms and conditions": True,
     }
-    if not is_company:
-        other_type_of_uk_organisation = [
-            "charity",
-            "government department",
-            "intermediary",
-            "limited partnership",
-            "sole trader",
-            "uk branch of foreign company (BR)",
-            "other",
-        ]
-        other_choices = len(other_type_of_uk_organisation) * [False]
-        other_choices[random.randint(0, len(other_choices) - 1)] = True
-        other = {
-            other_type_of_uk_organisation[i]: other_choices[i]
-            for i in range(len(other_type_of_uk_organisation))
-        }
-        result.update(other)
-        SELECTORS["form"].update(OTHER_SELECTORS)
-    else:
+    if is_company:
         # In order to avoid situation when previous scenario example modified
         # SELECTORS we have to remove OTHER_SELECTORS that were then added
         SELECTORS["form"] = dict(
             set(SELECTORS["form"].items()) - set(OTHER_SELECTORS.items())
         )
+    else:
+        SELECTORS["form"].update(OTHER_SELECTORS)
 
     logging.debug(f"Generated form details: {result}")
     return result
@@ -151,6 +124,7 @@ def fill_out(driver: WebDriver, details: dict):
     fill_out_input_fields(driver, form_selectors, details)
     check_radio(driver, form_selectors, details)
     tick_checkboxes(driver, form_selectors, details)
+    pick_option(driver, form_selectors, details)
     tick_captcha_checkbox(driver)
     take_screenshot(driver, "After filling out the form")
 
