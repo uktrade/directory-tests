@@ -58,6 +58,8 @@ Feature:  new contact us forms
 
   @TT-758
   @ita
+  @captcha
+  @dev-only
   @exporting_from_the_UK
   Scenario: Domestic Enquirers should be able to contact relevant ITA based on the postcode provided
     Given "Robert" got to the "Export Readiness - Long (Export Advice Comment)" page via "The UK -> Advice to export from the UK"
@@ -281,6 +283,7 @@ Feature:  new contact us forms
   @TT-758
   @CMS-506
   @eu_exit
+  @dev-only
   @feature_flagged
   Scenario: Exporters should be able to get to the "Domestic EU Exit short contact-us form"
     Given "Robert" got to the "Export Readiness - What can we help you with? - Domestic Contact us" page via "The UK"
