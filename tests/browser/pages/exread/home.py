@@ -71,7 +71,7 @@ CASE_STUDIES_LINK = Selector(By.CSS_SELECTOR, "#carousel h3 > a")
 CASE_STUDY_LINK = Selector(
     By.CSS_SELECTOR, "#carousel div.ed-carousel__slide:nth-child({}) h3 > a"
 )
-MARKET_RESEARCH_LINK = Selector(By.ID, "guidance-section-market-research-link")
+MARKET_RESEARCH_LINK = Selector(By.ID, "guidance-market-research-link")
 CUSTOMER_INSIGHT_LINK = Selector(By.ID, "guidance-section-customer-insight-link")
 FINANCE_LINK = Selector(By.ID, "guidance-section-finance-link")
 BUSINESS_LINK = Selector(By.ID, "guidance-section-business-planning-link")
