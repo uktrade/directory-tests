@@ -78,7 +78,7 @@ SELECTORS = {
 }
 
 
-def should_be_here(driver: WebDriver):
+def should_be_here(driver: WebDriver, *, page_name: str):
     take_screenshot(driver, PAGE_TITLE)
     check_url(driver, URL, exact_match=False)
     logging.debug("All expected elements are visible on '%s' page", PAGE_TITLE)
