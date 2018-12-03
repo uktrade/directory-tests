@@ -60,7 +60,7 @@ SELECTORS = {
     "services": {
         "menu": Selector(By.ID, "header-services-links"),
         "find a buyer": Selector(By.ID, "header-services-find-a-buyer"),
-        "selling online overseas": Selector(By.ID, "header-services-"),
+        "selling online overseas": Selector(By.ID, "header-services-selling-online-overseas"),
         "export opportunities": Selector(By.ID, "header-services-export-opportunities"),
         "get finance": Selector(By.ID, "header-services-get-finance"),
         "events": Selector(By.ID, "header-services-events"),
