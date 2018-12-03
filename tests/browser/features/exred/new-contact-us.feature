@@ -326,7 +326,25 @@ Feature:  new contact us forms
       | selected option                         | appropriate                                                  | expected recipient |
       | Events                                  | Thank you for your Events enquiry                            | Events mailbox     |
       | Defence and Security Organisation (DSO) | Thank you for your Defence and Security Organisation enquiry | DSO mailbox        |
-      | Other                                   | Thank you for your enquiry                                   | DIT Enquiry unit   |
+
+
+  @TT-758
+  @dev-only
+  @captcha
+  @short_form
+  Scenario Outline: Exporters should be able to contact "<expected recipient>" using "Short contact form (<selected option>)" page accessed via "The UK -> <selected option>"
+    Given "Robert" got to the "Export Readiness - Short contact form (<selected option>)" page via "The UK -> <selected option>"
+
+    When "Robert" fills out and submits the form
+
+    Then "Robert" should be on the "Export Readiness - Thank you for your enquiry (<selected option>) - Short Domestic Contact us" page
+    And "Robert" should receive a "<appropriate>" confirmation email from Zendesk
+    # TODO check if email is sent to dedicated mailbox
+#    And an email is submitted to "<expected recipient>"
+
+    Examples:
+      | selected option | appropriate               | expected recipient |
+      | Other           | great.gov.uk contact form | DIT Enquiry unit   |
 
 
   @TT-758
