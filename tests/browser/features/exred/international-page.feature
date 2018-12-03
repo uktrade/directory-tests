@@ -11,7 +11,7 @@ Feature: International Page
       | Header bar        |
       | Beta bar          |
       | Header menu       |
-      | EU Exit updates   |
+#      | EU Exit updates   |  # EU Exit feature is turned off
       | Intro             |
       | Buy from the UK   |
       | Invest in the UK  |
