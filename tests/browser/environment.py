@@ -63,7 +63,17 @@ def start_driver_session(context: Context, session_name: str):
                 )
         else:
             print("Will use default browser capabilities")
-            context.driver = drivers[browser_name.lower()]()
+            import os
+            from selenium.webdriver.chrome.options import Options
+            options = Options()
+            if os.getenv("HEADLESS", "false") == "true":
+                options.add_argument("--headless")
+                options.add_argument("--window-size=1600x2200")
+            options.add_argument("--start-maximized")
+            options.add_argument("--whitelisted-ips=")
+            options.add_argument("--disable-extensions")
+            options.add_argument("--no-sandbox")
+            context.driver = drivers[browser_name.lower()](options=options)
     context.driver.set_page_load_timeout(time_to_wait=27.0)
     try:
         context.driver.maximize_window()
