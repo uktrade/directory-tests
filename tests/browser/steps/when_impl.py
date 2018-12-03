@@ -8,17 +8,10 @@ from behave.model import Table
 from behave.runner import Context
 from retrying import retry
 from selenium.common.exceptions import TimeoutException, WebDriverException
-
 from utils.cms_api import get_news_articles
 from utils.gov_notify import get_verification_link
 
-from pages import (
-    common_language_selector,
-    exread,
-    fas,
-    get_page_object,
-    sso,
-)
+from pages import common_language_selector, exread, fas, get_page_object, sso
 from pages.common_actions import (
     VisitedArticle,
     add_actor,
@@ -98,7 +91,11 @@ def visit_page(
 def should_be_on_page(context: Context, actor_alias: str, page_name: str):
     page = get_page_object(page_name)
     has_action(page, "should_be_here")
-    page.should_be_here(context.driver)
+    if hasattr(page, "URLs"):
+        special_page_name = page_name.split(" - ")[1]
+        page.should_be_here(context.driver, page_name=special_page_name)
+    else:
+        page.should_be_here(context.driver)
     update_actor(context, actor_alias, visited_page=page)
     logging.debug(f"{actor_alias} is on {page.SERVICE} - {page.NAME} - {page.TYPE} -> {page}")
 
@@ -1921,3 +1918,40 @@ def generic_click_on_random_industry(context: Context, actor_alias: str):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "open_any_article")
     page.open_any_article(context.driver)
+
+
+def generic_pick_radio_option_and_submit(context: Context, actor_alias: str, option: str):
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "pick_radio_option_and_submit")
+    new_page = page.pick_radio_option_and_submit(context.driver, option)
+    update_actor(context, actor_alias, visited_page=new_page)
+
+
+def generic_pick_random_radio_option_and_submit(
+        context: Context, actor_alias: str, ignored: str):
+    ignored = [item.strip().lower() for item in ignored.split(",")]
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "pick_random_radio_option_and_submit")
+    new_page = page.pick_random_radio_option_and_submit(context.driver, ignored)
+    update_actor(context, actor_alias, visited_page=new_page)
+
+
+def contact_us_get_to_page_via(
+        context: Context, actor_alias: str, final_page: str, via: str):
+    intermediate = [name.strip() for name in via.split("->")]
+    # 1) start at the Contact us "choose location" page
+    visit_page(context, actor_alias, "Export Readiness - Contact us")
+    # 2) click through every listed option
+    for option in intermediate:
+        generic_pick_radio_option_and_submit(context, actor_alias, option)
+    # 3) check if we're on the appropriate page
+    should_be_on_page(context, actor_alias, final_page)
+
+
+def contact_us_navigate_through_options(context: Context, actor_alias: str, via: str):
+    intermediate = [name.strip() for name in via.split("->")]
+    # 1) start at the Contact us "choose location" page
+    visit_page(context, actor_alias, "Export Readiness - Contact us")
+    # 2) click through every listed option
+    for option in intermediate:
+        generic_pick_radio_option_and_submit(context, actor_alias, option)

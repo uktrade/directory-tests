@@ -195,8 +195,13 @@ Feature: Header-Footer
       | specific                                        |
       | Export Readiness - Home                         |
       | Export Readiness - Interim Export Opportunities |
-      | Export Opportunities - Home                     |
       | Find a Buyer - Home                             |
+
+    @bug
+    @fixme
+    Examples: invalid link to "Your export journey" on ExOpps site
+      | specific                                        |
+      | Export Opportunities - Home                     |
 
     @bug
     @ED-3282
@@ -222,8 +227,13 @@ Feature: Header-Footer
       | specific                                        |
       | Export Readiness - Home                         |
       | Export Readiness - Interim Export Opportunities |
-      | Export Opportunities - Home                     |
       | Find a Buyer - Home                             |
+
+    @bug
+    @fixme
+    Examples: invalid link to "Your export journey" on ExOpps site
+      | specific                                        |
+      | Export Opportunities - Home                     |
 
     @bug
     @ED-3282

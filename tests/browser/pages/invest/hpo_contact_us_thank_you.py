@@ -72,7 +72,7 @@ UNEXPECTED_ELEMENTS = {
 }
 
 
-def should_be_here(executor: Executor):
+def should_be_here(executor: Executor, *, page_name: str):
     take_screenshot(executor, PAGE_TITLE)
     check_url(executor, URL, exact_match=False)
     logging.debug("All expected elements are visible on '%s' page", NAME)

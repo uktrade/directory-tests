@@ -5,7 +5,7 @@
 from behave import when
 from behave.runner import Context
 
-from steps.then_impl import triage_should_be_classified_as
+from steps.then_impl import triage_should_be_classified_as, should_be_on_page
 from steps.when_impl import (
     articles_found_useful_or_not,
     articles_go_back_to_article_list,
@@ -19,6 +19,7 @@ from steps.when_impl import (
     case_studies_go_to,
     clear_the_cookies,
     click_on_page_element,
+    contact_us_navigate_through_options,
     continue_export_journey,
     export_readiness_open_category,
     fas_fill_out_and_submit_contact_us_form,
@@ -27,14 +28,16 @@ from steps.when_impl import (
     fas_view_article,
     fas_view_more_companies,
     fas_view_selected_company_profile,
-    generic_open_any_tag,
     generic_click_on_random_industry,
     generic_click_on_uk_gov_logo,
     generic_download_all_pdfs,
     generic_fill_out_and_submit_form,
+    generic_open_any_tag,
     generic_open_guide_link,
     generic_open_industry_page,
     generic_open_news_article,
+    generic_pick_radio_option_and_submit,
+    generic_pick_random_radio_option_and_submit,
     generic_see_more_industries,
     generic_submit_form,
     generic_unfold_topics,
@@ -416,6 +419,14 @@ def fas_when_actor_fills_out_and_submits_contact_us_form(
     fas_fill_out_and_submit_contact_us_form(context, actor_alias)
 
 
+@when('"{actor_alias}" says that his business is in "{option}"')
+@when('"{actor_alias}" says that his business is "{option}"')
+@when('"{actor_alias}" chooses "{option}" option')
+def when_actor_chooses_form_option(
+        context: Context, actor_alias: str, option: str):
+    generic_pick_radio_option_and_submit(context, actor_alias, option)
+
+
 @when('"{actor_alias}" decides to see more UK industries')
 def fas_landing_page_see_more_industries(context: Context, actor_alias: str):
     generic_see_more_industries(context, actor_alias)
@@ -503,3 +514,20 @@ def when_actor_open_tag(context: Context, actor_alias: str):
 @when('"{actor_alias}" decides to read about one of listed industries')
 def when_actor_clicks_on_random_industry(context: Context, actor_alias: str):
     generic_click_on_random_industry(context, actor_alias)
+
+
+@when('"{actor_alias}" chooses any available option except "{ignored}"')
+def when_actor_chooses_random_form_option_except(
+        context: Context, actor_alias: str, ignored: str):
+    generic_pick_random_radio_option_and_submit(context, actor_alias, ignored)
+
+
+@when('"{actor_alias}" navigates via "{via}"')
+def given_actor_navigates_via_contact_us_options(
+        context: Context, actor_alias: str, via: str):
+    contact_us_navigate_through_options(context, actor_alias, via)
+
+
+@when('"{actor_alias}" is on the "{page_name}" page')
+def step_impl(context: Context, actor_alias: str, page_name: str):
+    should_be_on_page(context, actor_alias, page_name)

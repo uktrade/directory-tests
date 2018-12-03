@@ -1,4 +1,5 @@
 @news
+@eu-exit
 @domestic
 Feature: Updates for UK companies on EU Exit
 

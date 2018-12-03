@@ -11,6 +11,7 @@ import string
 import sys
 import traceback
 import uuid
+from collections import defaultdict
 from collections.__init__ import namedtuple
 from contextlib import contextmanager
 from datetime import datetime
@@ -890,6 +891,43 @@ def pick_option_from_autosuggestion(
             option_value_selector = "option[value='{}']".format(option)
             option_element = select.find_element_by_css_selector(option_value_selector)
             option_element.click()
+
+
+def check_radio(
+        driver: WebDriver, form_selectors: Dict[str, Selector],
+        form_details: dict):
+    radio_selectors = get_selectors(form_selectors, ElementType.RADIO)
+    for key, selector in radio_selectors.items():
+        assert key in form_details, f"Can't find form detail for '{key}'"
+        if form_details[key]:
+            radio = find_element(
+                driver, selector, element_name=key, wait_for_it=False)
+            if not radio.get_property("checked"):
+                logging.debug(f"Checking '{key}' radio")
+                radio.click()
+
+
+def choose_one_form_option(
+        driver: WebDriver, radio_selectors: Dict[str, Selector], name: str):
+    form_details = defaultdict(bool)
+    for key in radio_selectors.keys():
+        form_details[key] = (key == name.lower())
+    logging.debug(f"Form details: {form_details}")
+    check_radio(driver, radio_selectors, form_details)
+
+
+def choose_one_form_option_except(
+        driver: WebDriver, radio_selectors: Dict[str, Selector],
+        ignored: List[str]) -> str:
+    all_keys = list(radio_selectors.keys())
+    without_ignored = list(set(all_keys) - set(ignored))
+    selected = random.choice(without_ignored)
+    form_details = defaultdict(bool)
+    for key in radio_selectors.keys():
+        form_details[key.lower()] = (key.lower() == selected)
+    logging.debug(f"Form details (with ignored: {ignored}): {form_details}")
+    check_radio(driver, radio_selectors, form_details)
+    return selected
 
 
 def tick_checkboxes(

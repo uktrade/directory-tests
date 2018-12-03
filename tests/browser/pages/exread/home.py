@@ -45,12 +45,12 @@ CONTINUE_EXPORT_JOURNEY = Selector(By.ID, "triage-section-continue-your-journey"
 NEW_TO_EXPORTING_LINK = Selector(By.ID, "personas-section-new")
 OCCASIONAL_EXPORTER_LINK = Selector(By.ID, "personas-section-occasional")
 REGULAR_EXPORTED_LINK = Selector(By.ID, "personas-section-regular")
-FIND_A_BUYER_SERVICE_LINK = Selector(By.CSS_SELECTOR, "#services-section-find-a-buyer a")
+FIND_A_BUYER_SERVICE_LINK = Selector(By.ID, "services-section-find-a-buyer-link")
 SELLING_ONLINE_OVERSEAS_SERVICE_LINK = Selector(
-    By.CSS_SELECTOR, "#services-section-selling-online-overseas a"
+    By.ID, "services-section-selling-online-overseas-link"
 )
 EXPORT_OPPORTUNITIES_SERVICE_LINK = Selector(
-    By.CSS_SELECTOR, "#services-section-export-opportunities a"
+    By.ID, "services-section-export-opportunities-link"
 )
 CAROUSEL_INDICATORS_SECTION = Selector(
     By.CSS_SELECTOR, "#carousel  div.ed-carousel__indicators"
@@ -71,7 +71,7 @@ CASE_STUDIES_LINK = Selector(By.CSS_SELECTOR, "#carousel h3 > a")
 CASE_STUDY_LINK = Selector(
     By.CSS_SELECTOR, "#carousel div.ed-carousel__slide:nth-child({}) h3 > a"
 )
-MARKET_RESEARCH_LINK = Selector(By.ID, "guidance-section-market-research-link")
+MARKET_RESEARCH_LINK = Selector(By.ID, "guidance-market-research-link")
 CUSTOMER_INSIGHT_LINK = Selector(By.ID, "guidance-section-customer-insight-link")
 FINANCE_LINK = Selector(By.ID, "guidance-section-finance-link")
 BUSINESS_LINK = Selector(By.ID, "guidance-section-business-planning-link")
@@ -116,14 +116,14 @@ SELECTORS = {
         "link": Selector(By.CSS_SELECTOR, "#header-beta-bar a"),
     },
     "hero": {
-        "itself": Selector(By.CSS_SELECTOR, "#content > section.hero"),
+        "itself": Selector(By.CSS_SELECTOR, "section.hero-campaign-section"),
         "title": Selector(By.ID, "hero-campaign-section-title"),
         "description": Selector(By.ID, "hero-campaign-section-description"),
         "logo": Selector(By.ID, "hero-campaign-section-eig-logo"),
         "watch video": Selector(By.ID, "hero-campaign-section-watch-video-button"),
     },
     "exporting journey": {
-        "itself": Selector(By.ID, "triage"),
+        "itself": Selector(By.CSS_SELECTOR, "section.triage"),
         "heading": Selector(By.ID, "triage-section-title"),
         "introduction": Selector(By.ID, "triage-section-description"),
         "get_started_button": GET_STARTED_BUTTON,
@@ -156,7 +156,7 @@ SELECTORS = {
         "itself": Selector(By.ID, "resource-guidance"),
         "title": Selector(By.ID, "guidance-section-title"),
         "description": Selector(By.ID, "guidance-section-description"),
-        "groups": Selector(By.CSS_SELECTOR, "#resource-guidance .card-grid"),
+        "groups": Selector(By.CSS_SELECTOR, "#resource-guidance .resources"),
         "market research - group": Selector(By.ID, "guidance-section-market-research"),
         "customer insight - group": Selector(
             By.ID, "guidance-section-customer-insight"
@@ -184,7 +184,7 @@ SELECTORS = {
             By.ID, "guidance-section-operations-and-compliance-icon"
         ),
         "market research - description": Selector(
-            By.CSS_SELECTOR, "#guidance-section-market-research-link p"
+            By.CSS_SELECTOR, "#guidance-market-research-link p"
         ),
         "customer insight - description": Selector(
             By.CSS_SELECTOR, "#guidance-section-customer-insight-link p"
@@ -212,25 +212,25 @@ SELECTORS = {
         "itself": Selector(By.ID, "services"),
         "title": Selector(By.ID, "services-section-title"),
         "description": Selector(By.ID, "services-section-description"),
-        "groups": Selector(By.CSS_SELECTOR, "#services .card-grid"),
+        "groups": Selector(By.CSS_SELECTOR, "#services .service-teaser"),
         "find a buyer": FIND_A_BUYER_SERVICE_LINK,
         "find a buyer - image": Selector(By.ID, "services-section-find-a-buyer-image"),
         "find a buyer - description": Selector(
-            By.CSS_SELECTOR, "#services-section-find-a-buyer a h3 ~ p"
+            By.ID, "services-section-find-a-buyer-description"
         ),
         "selling online overseas": SELLING_ONLINE_OVERSEAS_SERVICE_LINK,
         "selling online overseas - image": Selector(
             By.ID, "services-section-selling-online-overseas-image"
         ),
         "selling online overseas - description": Selector(
-            By.CSS_SELECTOR, "#services-section-selling-online-overseas a h3 ~ p"
+            By.ID, "services-section-selling-online-overseas-description"
         ),
         "export opportunities": EXPORT_OPPORTUNITIES_SERVICE_LINK,
         "export opportunities - image": Selector(
             By.ID, "services-section-export-opportunities-image"
         ),
         "export opportunities - description": Selector(
-            By.CSS_SELECTOR, "#services-section-export-opportunities a h3 ~ p"
+            By.ID, "services-section-export-opportunities-description"
         ),
     },
     "case studies": {

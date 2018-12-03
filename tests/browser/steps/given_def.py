@@ -20,10 +20,13 @@ from steps.when_impl import (
     articles_show_all,
     case_studies_go_to_random,
     click_on_page_element,
+    contact_us_get_to_page_via,
     export_readiness_open_category,
     generic_at_least_n_news_articles,
     generic_get_in_touch,
+    generic_open_any_news_article,
     generic_open_industry_page,
+    generic_open_random_news_article,
     get_geo_ip,
     guidance_open_category,
     guidance_open_random_category,
@@ -35,8 +38,7 @@ from steps.when_impl import (
     triage_classify_as,
     triage_create_exporting_journey,
     visit_page,
-    generic_open_any_news_article,
-    generic_open_random_news_article
+    contact_us_navigate_through_options
 )
 
 
@@ -256,3 +258,15 @@ def given_actor_opens_any_news_article(context, actor_alias):
 def given_actor_opened_random_news_article(
         context: Context, actor_alias: str, article_type: str):
     generic_open_random_news_article(context, actor_alias, article_type)
+
+
+@given('"{actor_alias}" got to the "{final_page}" page via "{via}"')
+def given_actor_gets_to_a_page_via(
+        context: Context, actor_alias: str, final_page: str, via: str):
+    contact_us_get_to_page_via(context, actor_alias, final_page, via)
+
+
+@given('"{actor_alias}" navigates via "{via}"')
+def given_actor_navigates_via_contact_us_options(
+        context: Context, actor_alias: str, via: str):
+    contact_us_navigate_through_options(context, actor_alias, via)
