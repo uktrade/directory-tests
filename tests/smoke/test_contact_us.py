@@ -44,7 +44,7 @@ DOMAIN = "https://contact-us.export.great.gov.uk/"
     ("soo/feedback/",                           "/contact/feedback/"),
     ("triage/",                                 "/contact/triage/location/"),
     ("triage/directory/",                       "/contact/triage/location/"),
-    ("triage/soo/",                             "/contact/triage/location/"),
+    ("triage/soo/",                             "/soo/TriageForm?"),
     ("triage/sso/",                             "/contact/triage/location/"),
 ])
 def test_redirects_for_legacy_contact_us_urls(endpoint, expected_redirect):
