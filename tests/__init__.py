@@ -20,7 +20,7 @@ join_profile = partial(urljoin, settings.DIRECTORY_PROFILE_URL)
 join_ui_buyer = partial(urljoin, settings.DIRECTORY_UI_BUYER_URL)
 join_ui_supplier = partial(urljoin, settings.DIRECTORY_UI_SUPPLIER_URL)
 join_exred = partial(urljoin, settings.EXRED_UI_URL)
-join_contact_us = partial(urljoin, settings.DIRECTORY_CONTACT_US_UI_URL)
+join_legacy_contact_us = partial(urljoin, settings.DIRECTORY_LEGACY_CONTACT_US_UI_URL)
 join_soo = partial(urljoin, settings.SOO_UI_URL)
 join_cms_url = partial(urljoin, settings.DIRECTORY_CMS_API_CLIENT_BASE_URL)
 join_cms_api = partial(urljoin, settings.DIRECTORY_CMS_API_CLIENT_BASE_URL)
@@ -213,14 +213,14 @@ urls = {
     'ui-exred:terms': 'terms-and-conditions/',
     'ui-exred:privacy': 'privacy-and-cookies/',
 
-    # Contact-Us UI
-    'ui-contact-us:help': 'help/',
-    'ui-contact-us:feedback-form': 'help/FeedbackForm/',
-    'ui-contact-us:directory': 'directory/',
-    'ui-contact-us:directory-feedback-form': 'directory/FeedbackForm/',
-    'ui-contact-us:soo-triage': 'triage/',
-    'ui-contact-us:soo-triage-form': 'triage/soo/',
-    'ui-contact-us:soo-triage-feedback-form': 'FeedbackForm/TriageForm/',
+    # Legacy Contact-Us UI
+    'legacy-ui-contact-us:help': 'help/',
+    'legacy-ui-contact-us:feedback-form': 'help/FeedbackForm/',
+    'legacy-ui-contact-us:directory': 'directory/',
+    'legacy-ui-contact-us:directory-feedback-form': 'directory/FeedbackForm/',
+    'legacy-ui-contact-us:soo-triage': 'triage/',
+    'legacy-ui-contact-us:soo-triage-form': 'triage/soo/',
+    'legacy-ui-contact-us:soo-triage-feedback-form': 'FeedbackForm/TriageForm/',
 
     # SOO UI Selling Online Overseas
     'ui-soo:landing': '',
@@ -287,8 +287,8 @@ def get_absolute_url(name):
         return join_profile(relative_url)
     elif name.startswith('ui-exred:'):
         return join_exred(relative_url)
-    elif name.startswith('ui-contact-us:'):
-        return join_contact_us(relative_url)
+    elif name.startswith('legacy-ui-contact-us:'):
+        return join_legacy_contact_us(relative_url)
     elif name.startswith('ui-soo:'):
         return join_soo(relative_url)
     elif name.startswith('cms-api:'):
