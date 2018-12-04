@@ -1,69 +1,59 @@
-import http.client
-
 import pytest
 import requests
-from tests import get_absolute_url
 
 
-@pytest.mark.parametrize("absolute_url", [
-    get_absolute_url('ui-contact-us:help'),
-    get_absolute_url('ui-contact-us:feedback-form'),
-    get_absolute_url('ui-contact-us:directory'),
-    get_absolute_url('ui-contact-us:directory-feedback-form'),
-    get_absolute_url('ui-contact-us:soo-triage'),
-    get_absolute_url('ui-contact-us:soo-triage-form'),
-    get_absolute_url('ui-contact-us:soo-triage-feedback-form'),
+DOMAIN = "https://contact-us.export.great.gov.uk/"
+
+
+@pytest.mark.parametrize("endpoint, expected_redirect", [
+    ("contact/",                                "/contact/triage/location/"),
+    ("directory/",                              "/contact/triage/location/"),
+    ("directory/FeedbackForm/",                 "/contact/feedback/"),
+    ("eig/",                                    "/contact/triage/location/"),
+    ("export-opportunities/FeedbackForm/",      "/contact/feedback/"),
+    ("export_opportunities/",                   "/contact/triage/domestic/"),
+    ("export_opportunities/FeedbackForm/",      "/contact/feedback/"),
+    ("export_ops/",                             "/contact/triage/domestic/"),
+    ("export_readiness/FeedbackForm/",          "/contact/feedback/"),
+    ("feedback/",                               "/contact/feedback/"),
+    ("feedback/datahub/",                       "/contact/feedback/"),
+    ("feedback/directory/",                     "/contact/feedback/"),
+    ("feedback/e_navigator/",                   "/contact/feedback/"),
+    ("feedback/eig/",                           "/contact/feedback/"),
+    ("feedback/export_ops/",                    "/contact/feedback/"),
+    ("feedback/exportingisgreat/",              "/contact/feedback/"),
+    ("feedback/exportopportunities/",           "/contact/feedback/"),
+    ("feedback/invest/",                        "/contact/feedback/"),
+    ("feedback/opportunities/",                 "/contact/feedback/"),
+    ("feedback/selling-online-overseas/",       "/contact/feedback/"),
+    ("feedback/selling_online_overseas/",       "/contact/feedback/"),
+    ("feedback/single_sign_on/",                "/contact/feedback/"),
+    ("feedback/soo/",                           "/contact/feedback/"),
+    ("feedback/sso/",                           "/contact/feedback/"),
+    ("invest/FeedbackForm/",                    "/contact/feedback/"),
+    ("opportunities/FeedbackForm/",             "/contact/feedback/"),
+    ("selling_online_overseas/",                "/contact/triage/domestic/"),
+    ("selling_online_overseas/FeedbackForm/",   "/contact/feedback/"),
+    ("single_sign_on/",                         "/contact/triage/great-account/"),
+    ("single_sign_on/FeedbackForm/",            "/contact/feedback/"),
+    ("soo/FeedbackForm/",                       "/contact/feedback/"),
+    ("soo/Triage/",                             "/contact/triage/location/"),
+    ("soo/TriageForm/",                         "/contact/triage/location/"),
+    ("soo/feedback/",                           "/contact/feedback/"),
+    ("triage/",                                 "/contact/triage/location/"),
+    ("triage/directory/",                       "/contact/triage/location/"),
+    ("triage/soo/",                             "/contact/triage/location/"),
+    ("triage/sso/",                             "/contact/triage/location/"),
 ])
-def test_access_contact_us_endpoints(absolute_url):
-    response = requests.get(absolute_url, allow_redirects=True)
-    assert response.status_code == http.client.OK
-
-
-@pytest.mark.parametrize("absolute_url", [
-    get_absolute_url('ui-contact-us:help'),
-    get_absolute_url('ui-contact-us:feedback-form'),
-    get_absolute_url('ui-contact-us:directory'),
-    get_absolute_url('ui-contact-us:directory-feedback-form'),
-    get_absolute_url('ui-contact-us:soo-triage'),
-    get_absolute_url('ui-contact-us:soo-triage-form'),
-    get_absolute_url('ui-contact-us:soo-triage-feedback-form'),
-])
-def test_access_contact_us_endpoints_without_trailing_slash(
-        absolute_url):
-    # get rid of trailing slash
-    absolute_url = absolute_url[:-1]
-    response = requests.get(absolute_url, allow_redirects=True)
-    assert response.status_code == http.client.OK
-
-
-@pytest.mark.parametrize("market", [
-    "ebay",
-    "etsy",
-    "amazon-france",
-    "rakuten"
-])
-def test_get_market_details(market):
-    url = get_absolute_url("ui-contact-us:soo-triage-form")
-    params = {
-        "market": market
-    }
-    response = requests.get(url, params=params, allow_redirects=True)
-    assert response.status_code == http.client.OK
-
-
-@pytest.mark.parametrize("absolute_url", [
-    get_absolute_url('ui-contact-us:feedback-form'),
-    get_absolute_url('ui-contact-us:directory-feedback-form'),
-])
-def test_submit_feedback_form_without_valid_captcha(absolute_url):
-    data = {
-        "csrfmiddlewaretoken": "invalid_token",
-        "originating_page": "Direct request",
-        "service": "directory",
-        "contact_name": "smoke tests",
-        "contact_email": "smoketests@example.com",
-        "content": "smoke tests",
-        "g-recaptcha-response": "invalid captcha response"
-    }
-    response = requests.post(absolute_url, data=data, allow_redirects=True)
-    assert response.status_code == 403
+def test_redirects_for_legacy_contact_us_urls(endpoint, expected_redirect):
+    url = DOMAIN + endpoint
+    response = requests.get(url, allow_redirects=True)
+    error_message = f"Expected 200 OK but got {response.status_code} from {url}"
+    assert response.status_code == 200, error_message
+    if response.history:
+        redirects = [h.headers['Location'] for h in response.history]
+        last_redirect = redirects[-1]
+        error_message = (f"Expected last redirect for legacy contact-us URL: "
+                         f"{url} to be: '{expected_redirect}' but got "
+                         f"{last_redirect}")
+        assert expected_redirect == last_redirect, error_message
