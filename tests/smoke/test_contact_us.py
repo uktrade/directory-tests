@@ -30,6 +30,8 @@ DOMAIN = "https://contact-us.export.great.gov.uk/"
     ("feedback/single_sign_on/",                "/contact/feedback/"),
     ("feedback/soo/",                           "/contact/feedback/"),
     ("feedback/sso/",                           "/contact/feedback/"),
+    ("help/",                                   "/contact/triage/location/"),
+    ("help/FeedbackForm/",                      "/contact/feedback/"),
     ("invest/FeedbackForm/",                    "/contact/feedback/"),
     ("opportunities/FeedbackForm/",             "/contact/feedback/"),
     ("selling_online_overseas/",                "/contact/triage/domestic/"),
