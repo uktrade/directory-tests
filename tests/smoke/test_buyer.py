@@ -2,10 +2,29 @@ import http.client
 
 import pytest
 import requests
+from mohawk import Sender
 from retrying import retry
 
 from tests import get_absolute_url, companies, retriable_error
 from tests.settings import DIRECTORY_API_HEALTH_CHECK_TOKEN as TOKEN
+from tests.settings import (
+    IP_RESTRICTOR_SKIP_CHECK_SENDER_ID,
+    IP_RESTRICTOR_SKIP_CHECK_SECRET,
+)
+
+
+def get_hawk_authorization_signature(method: str = 'GET'):
+    sender = Sender(
+        credentials={
+            'id': IP_RESTRICTOR_SKIP_CHECK_SENDER_ID,
+            'key': IP_RESTRICTOR_SKIP_CHECK_SECRET,
+            'algorithm': 'sha256'
+        },
+        url='/',
+        method=method,
+        always_hash_content=False
+    )
+    return {"Authorization": sender.request_header}
 
 
 @pytest.mark.skip(reason="ATM we're not caching inactive companies: see "
@@ -20,9 +39,12 @@ def test_landing_page_post_company_not_active():
 
 def test_landing_page_post_company_already_registered():
     data = {'company_number': companies['already_registered']}
+    auth_header = get_hawk_authorization_signature(method='POST')
     response = requests.post(
-        get_absolute_url('ui-buyer:landing'), data=data, allow_redirects=False
+        get_absolute_url('ui-buyer:landing'), data=data, allow_redirects=False,
+        headers=auth_header
     )
+    print(response.request.headers)
     assert 'Already registered' in str(response.content)
 
 
