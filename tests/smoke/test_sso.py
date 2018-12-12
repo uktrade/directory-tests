@@ -3,6 +3,7 @@ import http.client
 import pytest
 
 from tests import get_absolute_url
+from tests.settings import DIRECTORY_PROFILE_URL
 
 
 def test_legacy_api_health_check_endpoint_should_not_exist(logged_in_session, sso_hawk_cookie):
@@ -17,6 +18,24 @@ def test_legacy_api_health_check_endpoint_should_not_exist(logged_in_session, ss
     get_absolute_url('sso:landing'),
     get_absolute_url('sso:login'),
     get_absolute_url('sso:signup'),
+])
+def test_access_sso_endpoints_as_logged_in_user_w_redirect_to_sud(
+        logged_in_session, absolute_url, sso_hawk_cookie, sud_hawk_cookie):
+    response = logged_in_session.get(
+        absolute_url, allow_redirects=True, cookies=sso_hawk_cookie
+    )
+    last_redirect = response.history[-1]
+    assert DIRECTORY_PROFILE_URL in last_redirect.headers["location"]
+    # for certain pages SSO redirects requests to SUD
+    # because of this we have to use separate hawk cookies
+    response = logged_in_session.get(
+        last_redirect.headers["location"], allow_redirects=True,
+        cookies=sud_hawk_cookie
+    )
+    assert response.status_code == http.client.OK
+
+
+@pytest.mark.parametrize("absolute_url", [
     get_absolute_url('sso:logout'),
     get_absolute_url('sso:password_change'),
     get_absolute_url('sso:password_set'),
@@ -24,7 +43,7 @@ def test_legacy_api_health_check_endpoint_should_not_exist(logged_in_session, ss
     get_absolute_url('sso:email_confirm'),
     get_absolute_url('sso:inactive'),
 ])
-def test_access_sso_endpoints_as_logged_in_user(
+def test_access_sso_endpoints_as_logged_in_user_wo_redirect_to_sud(
         logged_in_session, absolute_url, sso_hawk_cookie):
     response = logged_in_session.get(
         absolute_url, allow_redirects=True, cookies=sso_hawk_cookie
