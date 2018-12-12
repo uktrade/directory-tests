@@ -28,6 +28,7 @@ def test_health_check_ping():
     assert response.status_code == http.client.OK
 
 
+@pytest.mark.dev
 @pytest.mark.session_auth
 @pytest.mark.hawk
 def test_sso_authentication_using_api_client(logged_in_session):
@@ -36,6 +37,21 @@ def test_sso_authentication_using_api_client(logged_in_session):
     to get user details
     """
     user_session_id = logged_in_session.cookies.get("directory_sso_dev_session")
+
+    response = sso_api_client.user.get_session_user(session_id=user_session_id)
+
+    assert response.status_code == http.client.OK
+
+
+@pytest.mark.stage
+@pytest.mark.session_auth
+@pytest.mark.hawk
+def test_sso_authentication_using_api_client_and_stage_cookie(logged_in_session):
+    """This test gets the user_session_id from currently logged in session
+    and then uses SSO API 'sso-api:user' endpoint ('api/v1/session-user/')
+    to get user details
+    """
+    user_session_id = logged_in_session.cookies.get("sso_stage_session")
 
     response = sso_api_client.user.get_session_user(session_id=user_session_id)
 
@@ -60,9 +76,19 @@ def test_get_oauth2_user_profile_w_invalid_token(token, sso_hawk_cookie):
     assert response.status_code == 401
 
 
+@pytest.mark.dev
 @pytest.mark.hawk
 def test_check_password(logged_in_session):
     user_session_id = logged_in_session.cookies.get("directory_sso_dev_session")
+    password = users['verified']['password']
+    response = sso_api_client.user.check_password(user_session_id, password)
+    assert response.status_code == http.client.OK
+
+
+@pytest.mark.stage
+@pytest.mark.hawk
+def test_check_password_using_stage_cookie(logged_in_session):
+    user_session_id = logged_in_session.cookies.get("sso_stage_session")
     password = users['verified']['password']
     response = sso_api_client.user.check_password(user_session_id, password)
     assert response.status_code == http.client.OK
