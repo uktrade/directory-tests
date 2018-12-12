@@ -11,21 +11,25 @@ from tests.settings import DIRECTORY_API_HEALTH_CHECK_TOKEN as TOKEN
     get_absolute_url('ui-exred:healthcheck-api'),
     get_absolute_url('ui-exred:healthcheck-sso-proxy'),
 ])
-def test_health_check_endpoints(absolute_url):
+def test_health_check_endpoints(absolute_url, exred_hawk_cookie):
     params = {'token': TOKEN}
-    response = requests.get(absolute_url, params=params)
+    response = requests.get(
+        absolute_url, params=params, cookies=exred_hawk_cookie
+    )
     assert response.status_code == http.client.OK
 
 
-def test_terms_200():
-    response = requests.get(get_absolute_url('ui-exred:terms'))
-
+def test_terms_200(exred_hawk_cookie):
+    response = requests.get(
+        get_absolute_url('ui-exred:terms'), cookies=exred_hawk_cookie
+    )
     assert response.status_code == http.client.OK
 
 
-def test_privacy_200():
-    response = requests.get(get_absolute_url('ui-exred:privacy'))
-
+def test_privacy_200(exred_hawk_cookie):
+    response = requests.get(
+        get_absolute_url('ui-exred:privacy'), cookies=exred_hawk_cookie
+    )
     assert response.status_code == http.client.OK
 
 

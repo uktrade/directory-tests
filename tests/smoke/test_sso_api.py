@@ -43,9 +43,9 @@ def test_sso_authentication_using_api_client(logged_in_session):
 
 
 @pytest.mark.hawk
-def test_get_oauth2_user_profile():
+def test_get_oauth2_user_profile(sso_hawk_cookie):
     token = users['verified']['token']
-    response = sso_api_client.user.get_oauth2_user_profile(bearer_token=token)
+    response = sso_api_client.user.get_oauth2_user_profile(bearer_token=token, cookies=sso_hawk_cookie)
     assert response.status_code == http.client.OK
 
 
@@ -55,8 +55,8 @@ def test_get_oauth2_user_profile():
     "invalid_token",
     None,
 ])
-def test_get_oauth2_user_profile_w_invalid_token(token):
-    response = sso_api_client.user.get_oauth2_user_profile(bearer_token=token)
+def test_get_oauth2_user_profile_w_invalid_token(token, sso_hawk_cookie):
+    response = sso_api_client.user.get_oauth2_user_profile(bearer_token=token, cookies=sso_hawk_cookie)
     assert response.status_code == 401
 
 
