@@ -17,6 +17,7 @@ def test_about_200(sud_hawk_cookie):
     assert response.status_code == http.client.OK
 
 
+@pytest.mark.skip(reason="see TT-858")
 def test_directory_supplier_verified_user(sud_hawk_cookie):
     token = 'Bearer {token}'.format(token=users['verified']['token'])
     headers = {'Authorization': token}
@@ -44,6 +45,7 @@ def test_directory_supplier_verified_user(sud_hawk_cookie):
     }
 
 
+@pytest.mark.skip(reason="see TT-858")
 def test_directory_supplier_unverified_user(sud_hawk_cookie):
     token = 'Bearer {token}'.format(token=users['unverified']['token'])
     headers = {'Authorization': token}
