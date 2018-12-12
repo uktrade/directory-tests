@@ -58,21 +58,23 @@ def test_sso_authentication_using_api_client_and_stage_cookie(logged_in_session)
     assert response.status_code == http.client.OK
 
 
+@pytest.mark.skip(reason="see TT-856")
 @pytest.mark.hawk
-def test_get_oauth2_user_profile(sso_hawk_cookie):
+def test_get_oauth2_user_profile():
     token = users['verified']['token']
-    response = sso_api_client.user.get_oauth2_user_profile(bearer_token=token, cookies=sso_hawk_cookie)
+    response = sso_api_client.user.get_oauth2_user_profile(bearer_token=token)
     assert response.status_code == http.client.OK
 
 
+@pytest.mark.skip(reason="see TT-856")
 @pytest.mark.hawk
 @pytest.mark.parametrize("token", [
     "",
     "invalid_token",
     None,
 ])
-def test_get_oauth2_user_profile_w_invalid_token(token, sso_hawk_cookie):
-    response = sso_api_client.user.get_oauth2_user_profile(bearer_token=token, cookies=sso_hawk_cookie)
+def test_get_oauth2_user_profile_w_invalid_token(token):
+    response = sso_api_client.user.get_oauth2_user_profile(bearer_token=token)
     assert response.status_code == 401
 
 
