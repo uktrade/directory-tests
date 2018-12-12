@@ -6,6 +6,7 @@ import requests
 from tests import get_absolute_url
 
 
+@pytest.mark.stage
 @pytest.mark.parametrize("absolute_url", [
     get_absolute_url("legacy-ui-contact-us:help"),
     get_absolute_url("legacy-ui-contact-us:feedback-form"),
@@ -16,6 +17,7 @@ def test_access_as_anon_user(absolute_url, exred_hawk_cookie):
     assert response.status_code == http.client.OK, error_msg
 
 
+@pytest.mark.stage
 @pytest.mark.parametrize("absolute_url", [
     get_absolute_url("legacy-ui-contact-us:help"),
     get_absolute_url("legacy-ui-contact-us:feedback-form"),
@@ -28,6 +30,7 @@ def test_access_contact_us_as_anon_user_after_removing_trailing_slash(
     assert response.status_code == http.client.OK
 
 
+@pytest.mark.stage
 @pytest.mark.parametrize("absolute_url", [
     get_absolute_url("ui-buyer:confirm-identity"),
 ])
@@ -48,6 +51,7 @@ def test_301_redirects_after_removing_trailing_slash_for_anon_user(
     assert response.status_code == http.client.MOVED_PERMANENTLY
 
 
+@pytest.mark.stage
 @pytest.mark.parametrize("absolute_url", [
     get_absolute_url("legacy-ui-contact-us:help"),
     get_absolute_url("legacy-ui-contact-us:feedback-form"),
@@ -59,6 +63,7 @@ def test_access_endpoints_as_logged_in_user(
     assert response.status_code == http.client.OK
 
 
+@pytest.mark.stage
 @pytest.mark.parametrize("absolute_url", [
     get_absolute_url("legacy-ui-contact-us:help"),
     get_absolute_url("legacy-ui-contact-us:feedback-form"),
@@ -69,6 +74,7 @@ def test_access_endpoints_as_logged_in_user_do_not_follow_redirects(
     assert response.status_code == http.client.OK
 
 
+@pytest.mark.stage
 @pytest.mark.parametrize("absolute_url", [
     get_absolute_url("ui-buyer:confirm-identity"),
 ])
