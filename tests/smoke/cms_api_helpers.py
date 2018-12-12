@@ -72,8 +72,8 @@ def status_error(expected_status_code: int, response: AbstractCMSResponse):
     )
 
 
-def get_and_assert(url: str, status_code: int):
-    response = requests.get(url)
+def get_and_assert(url: str, status_code: int, *, cookies: dict = None):
+    response = requests.get(url, cookies=cookies)
     msg = f"Expected {status_code} but got {response.status_code} from {url}"
     assert response.status_code == status_code, msg
 

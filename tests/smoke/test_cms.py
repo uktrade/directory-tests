@@ -7,6 +7,7 @@ from directory_constants.constants import cms as SERVICE_NAMES
 from retrying import retry
 
 from tests import get_absolute_url, get_relative_url, retriable_error
+from tests.conftest import get_service_cookie
 from tests.settings import DIRECTORY_API_HEALTH_CHECK_TOKEN
 from tests.smoke.cms_api_helpers import (
     find_draft_urls,
@@ -131,31 +132,36 @@ def test_wagtail_get_pages_per_application(application):
 
 @pytest.mark.parametrize("url", find_published_urls(ALL_API_PAGES))
 def test_all_published_english_pages_should_return_200(url):
-    get_and_assert(url, 200)
+    hawk_cookie = get_service_cookie(url)
+    get_and_assert(url, 200, cookies=hawk_cookie)
 
 
 @pytest.mark.parametrize(
     "url", find_published_translated_urls(NON_INVEST_API_PAGES)
 )
 def test_non_invest_published_translated_pages_should_return_200_new(url):
-    get_and_assert(url, 200)
+    hawk_cookie = get_service_cookie(url)
+    get_and_assert(url, 200, cookies=hawk_cookie)
 
 
 @pytest.mark.parametrize("url", find_draft_urls(NON_INVEST_API_PAGES))
 def test_non_invest_draft_translated_pages_should_return_200_new(url):
-    get_and_assert(url, 200)
+    hawk_cookie = get_service_cookie(url)
+    get_and_assert(url, 200, cookies=hawk_cookie)
 
 
 @pytest.mark.parametrize(
     "url", invest_find_published_translated_urls(INVEST_API_PAGES)
 )
 def test_published_translated_invest_pages_should_return_200_new(url):
-    get_and_assert(url, 200)
+    hawk_cookie = get_service_cookie(url)
+    get_and_assert(url, 200, cookies=hawk_cookie)
 
 
 @pytest.mark.parametrize("url", invest_find_draft_urls(INVEST_API_PAGES))
 def test_draft_translated_invest_pages_should_return_200_new(url):
-    get_and_assert(url, 200)
+    hawk_cookie = get_service_cookie(url)
+    get_and_assert(url, 200, cookies=hawk_cookie)
 
 
 @retry(

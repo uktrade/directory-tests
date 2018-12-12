@@ -20,6 +20,7 @@ join_profile = partial(urljoin, settings.DIRECTORY_PROFILE_URL)
 join_ui_buyer = partial(urljoin, settings.DIRECTORY_UI_BUYER_URL)
 join_ui_supplier = partial(urljoin, settings.DIRECTORY_UI_SUPPLIER_URL)
 join_exred = partial(urljoin, settings.EXRED_UI_URL)
+join_contact_us = partial(urljoin, settings.DIRECTORY_CONTACT_US_UI_URL)
 join_legacy_contact_us = partial(urljoin, settings.DIRECTORY_LEGACY_CONTACT_US_UI_URL)
 join_soo = partial(urljoin, settings.SOO_UI_URL)
 join_cms_url = partial(urljoin, settings.DIRECTORY_CMS_API_CLIENT_BASE_URL)
@@ -213,6 +214,33 @@ urls = {
     'ui-exred:terms': 'terms-and-conditions/',
     'ui-exred:privacy': 'privacy-and-cookies/',
 
+    # New Contact-Us UI - Domestic & International
+    'ui-contact-us:triage-landing': 'contact/triage/location/',
+    'ui-contact-us:triage-domestic': 'contact/triage/domestic/',
+    'ui-contact-us:triage-international': 'contact/triage/international/',
+    'ui-contact-us:triage-great-services': 'contact/triage/great-services/',
+    'ui-contact-us:triage-export-opportunities': 'contact/triage/export-opportunities/',
+    'ui-contact-us:triage-export-opportunities-no-response': 'contact/triage/export-opportunities/opportunity-no-response/',
+    'ui-contact-us:triage-export-opportunities-not-relevant': 'contact/triage/export-opportunities/alerts-not-relevant/',
+    'ui-contact-us:triage-great-account': 'contact/triage/great-account/',
+    'ui-contact-us:triage-great-account-password-reset': 'contact/triage/great-account/password-reset/',
+    'ui-contact-us:triage-great-account-ch-login': 'contact/triage/great-account/companies-house-login/',
+    'ui-contact-us:triage-great-account-verification-letter-code': 'contact/triage/great-account/verification-letter-code/',
+    'ui-contact-us:triage-great-account-no-verification-email': 'contact/triage/great-account/no-verification-email/',
+    'ui-contact-us:triage-great-account-no-verification-letter': 'contact/triage/great-account/no-verification-letter/',
+
+    # New Contact-Us UI - forms
+    'ui-contact-us:form-domestic': 'contact/domestic/',
+    'ui-contact-us:form-international': 'contact/international/',
+    'ui-contact-us:form-dso': 'contact/defence-and-security-organisation/',
+    'ui-contact-us:form-events': 'contact/events/',
+    'ui-contact-us:form-export-advice': 'contact/export-advice/comment/',
+
+    # Other Contact-Us pages
+    'ui-contact-us:other-domestic-eu-exit': 'eu-exit-news/contact/',
+    'ui-contact-us:other-international-eu-exit': 'international/eu-exit-news/contact/',
+    'ui-contact-us:other-get-finance': 'get-finance/contact/',
+
     # Legacy Contact-Us UI
     'legacy-ui-contact-us:help': 'help/',
     'legacy-ui-contact-us:feedback-form': 'help/FeedbackForm/',
@@ -287,6 +315,8 @@ def get_absolute_url(name):
         return join_profile(relative_url)
     elif name.startswith('ui-exred:'):
         return join_exred(relative_url)
+    elif name.startswith('ui-contact-us:'):
+        return join_contact_us(relative_url)
     elif name.startswith('legacy-ui-contact-us:'):
         return join_legacy_contact_us(relative_url)
     elif name.startswith('ui-soo:'):

@@ -2,6 +2,7 @@ import pytest
 import requests
 
 from directory_constants.constants import cms as SERVICE_NAMES
+from mohawk import Sender
 from retrying import retry
 
 from tests import get_absolute_url, users
@@ -15,6 +16,25 @@ from tests.settings import (
     DIRECTORY_SSO_API_CLIENT_DEFAULT_TIMEOUT,
     DIRECTORY_SSO_API_CLIENT_SENDER_ID,
     DIRECTORY_CMS_API_CLIENT_CACHE_EXPIRE_SECONDS,
+    IP_RESTRICTOR_SKIP_CHECK_SENDER_ID,
+    IP_RESTRICTOR_SKIP_CHECK_SECRET_CMS,
+    IP_RESTRICTOR_SKIP_CHECK_SECRET_EXRED,
+    IP_RESTRICTOR_SKIP_CHECK_SECRET_FAB,
+    IP_RESTRICTOR_SKIP_CHECK_SECRET_FAS,
+    IP_RESTRICTOR_SKIP_CHECK_SECRET_FORMS,
+    IP_RESTRICTOR_SKIP_CHECK_SECRET_INVEST,
+    IP_RESTRICTOR_SKIP_CHECK_SECRET_SSO,
+    IP_RESTRICTOR_SKIP_CHECK_SECRET_SUD,
+    DIRECTORY_SSO_URL,
+    DIRECTORY_PROFILE_URL,
+    DIRECTORY_UI_BUYER_URL,
+    DIRECTORY_UI_SUPPLIER_URL,
+    EXRED_UI_URL,
+    INVEST_UI_URL,
+    OLD_DIRECTORY_UI_SUPPLIER_URL,
+    OLD_EXRED_UI_URL,
+    DIRECTORY_LEGACY_CONTACT_US_UI_URL,
+    DIRECTORY_FORMS_URL
 )
 
 
@@ -54,14 +74,88 @@ def cms_client():
     )
 
 
+def hawk_cookie(key):
+    sender = Sender(
+        credentials={
+            'id': IP_RESTRICTOR_SKIP_CHECK_SENDER_ID,
+            'key': key,
+            'algorithm': 'sha256'
+        },
+        url='/',
+        method='',
+        always_hash_content=False
+    )
+    return {"ip-restrict-signature": sender.request_header}
+
+
+@pytest.fixture
+def cms_hawk_cookie():
+    return hawk_cookie(IP_RESTRICTOR_SKIP_CHECK_SECRET_CMS)
+
+
+@pytest.fixture
+def fab_hawk_cookie():
+    return hawk_cookie(IP_RESTRICTOR_SKIP_CHECK_SECRET_FAB)
+
+
+@pytest.fixture
+def fas_hawk_cookie():
+    return hawk_cookie(IP_RESTRICTOR_SKIP_CHECK_SECRET_FAS)
+
+
+@pytest.fixture
+def exred_hawk_cookie():
+    return hawk_cookie(IP_RESTRICTOR_SKIP_CHECK_SECRET_EXRED)
+
+
+@pytest.fixture
+def invest_hawk_cookie():
+    return hawk_cookie(IP_RESTRICTOR_SKIP_CHECK_SECRET_INVEST)
+
+
+@pytest.fixture
+def sso_hawk_cookie():
+    return hawk_cookie(IP_RESTRICTOR_SKIP_CHECK_SECRET_SSO)
+
+
+@pytest.fixture
+def sud_hawk_cookie():
+    return hawk_cookie(IP_RESTRICTOR_SKIP_CHECK_SECRET_SUD)
+
+
 @pytest.fixture
 @retry(wait_fixed=5000, stop_max_attempt_number=2)
-def logged_in_session():
+def logged_in_session(sso_hawk_cookie):
     session = requests.Session()
     user = users['verified']
     response = session.post(
         url=get_absolute_url('sso:login'),
-        data={'login': user['username'], 'password': user['password']}
+        data={'login': user['username'], 'password': user['password']},
+        cookies=sso_hawk_cookie,
     )
     assert 'Sign out' in str(response.content)
     return session
+
+
+def get_service_cookie(url: str) -> dict:
+    service_secrets = {
+        DIRECTORY_CMS_API_CLIENT_BASE_URL: IP_RESTRICTOR_SKIP_CHECK_SECRET_CMS,
+        DIRECTORY_UI_BUYER_URL: IP_RESTRICTOR_SKIP_CHECK_SECRET_FAB,
+        DIRECTORY_UI_SUPPLIER_URL: IP_RESTRICTOR_SKIP_CHECK_SECRET_FAS,
+        EXRED_UI_URL: IP_RESTRICTOR_SKIP_CHECK_SECRET_EXRED,
+        INVEST_UI_URL: IP_RESTRICTOR_SKIP_CHECK_SECRET_INVEST,
+        DIRECTORY_SSO_URL: IP_RESTRICTOR_SKIP_CHECK_SECRET_SSO,
+        DIRECTORY_PROFILE_URL: IP_RESTRICTOR_SKIP_CHECK_SECRET_SUD,
+        OLD_DIRECTORY_UI_SUPPLIER_URL: IP_RESTRICTOR_SKIP_CHECK_SECRET_FAS,
+        OLD_EXRED_UI_URL: IP_RESTRICTOR_SKIP_CHECK_SECRET_EXRED,
+        DIRECTORY_FORMS_URL: IP_RESTRICTOR_SKIP_CHECK_SECRET_FORMS,
+        DIRECTORY_LEGACY_CONTACT_US_UI_URL: IP_RESTRICTOR_SKIP_CHECK_SECRET_EXRED,
+    }
+    matches = [
+        secret
+        for service, secret in service_secrets.items()
+        if (service in url) or (url in service)
+    ]
+    error = f"Could not find matching service for: {url}"
+    assert len(matches) == 1, error
+    return hawk_cookie(matches[0])
