@@ -133,3 +133,25 @@ def logged_in_session(sso_hawk_cookie):
     )
     assert 'Sign out' in str(response.content)
     return session
+
+
+def get_service_cookie(url: str) -> dict:
+    service_secrets = {
+        DIRECTORY_CMS_API_CLIENT_BASE_URL: IP_RESTRICTOR_SKIP_CHECK_SECRET_CMS,
+        DIRECTORY_UI_BUYER_URL: IP_RESTRICTOR_SKIP_CHECK_SECRET_FAB,
+        DIRECTORY_UI_SUPPLIER_URL: IP_RESTRICTOR_SKIP_CHECK_SECRET_FAS,
+        EXRED_UI_URL: IP_RESTRICTOR_SKIP_CHECK_SECRET_EXRED,
+        INVEST_UI_URL: IP_RESTRICTOR_SKIP_CHECK_SECRET_INVEST,
+        DIRECTORY_SSO_URL: IP_RESTRICTOR_SKIP_CHECK_SECRET_SSO,
+        DIRECTORY_PROFILE_URL: IP_RESTRICTOR_SKIP_CHECK_SECRET_SUD,
+        OLD_DIRECTORY_UI_SUPPLIER_URL: IP_RESTRICTOR_SKIP_CHECK_SECRET_FAS,
+        OLD_EXRED_UI_URL: IP_RESTRICTOR_SKIP_CHECK_SECRET_EXRED,
+    }
+    matches = [
+        secret
+        for service, secret in service_secrets.items()
+        if (service in url) or (url in service)
+    ]
+    error = f"Could not find matching service for: {url}"
+    assert len(matches) == 1, error
+    return hawk_cookie(matches[0])
