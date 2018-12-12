@@ -123,12 +123,13 @@ def sud_hawk_cookie():
 
 @pytest.fixture
 @retry(wait_fixed=5000, stop_max_attempt_number=2)
-def logged_in_session():
+def logged_in_session(sso_hawk_cookie):
     session = requests.Session()
     user = users['verified']
     response = session.post(
         url=get_absolute_url('sso:login'),
-        data={'login': user['username'], 'password': user['password']}
+        data={'login': user['username'], 'password': user['password']},
+        cookies=sso_hawk_cookie,
     )
     assert 'Sign out' in str(response.content)
     return session
