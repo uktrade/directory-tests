@@ -76,6 +76,9 @@ Feature: Find a Supplier
   @bug
   @ED-3031
   @fixed
+  @bug
+  @TT-727
+  @fixed
   @found-with-automated-tests
   @no-sso-email-verification-required
   Scenario: Buyers should NOT be able to find unverified Supplier by uniquely identifying words present on Supplier's case study

@@ -53,8 +53,8 @@ SELECTORS = {
         "uk export finance (ukef)": Selector(
             By.CSS_SELECTOR, "input[value='finance']", type=ElementType.RADIO, is_visible=False
         ),
-        "eu exit": Selector(
-            By.CSS_SELECTOR, "input[value='eu-exit']", type=ElementType.RADIO, is_visible=False
+        "eu exit enquiries": Selector(
+            By.CSS_SELECTOR, "input[value='euexit']", type=ElementType.RADIO, is_visible=False
         ),
         "events": Selector(
             By.CSS_SELECTOR, "input[value='events']", type=ElementType.RADIO, is_visible=False
@@ -78,7 +78,7 @@ POs = {
     "advice to export from the uk": contact_us_long_export_advice_comment,
     "great.gov.uk account and services support": contact_us_triage_great_services,
     "uk export finance (ukef)": ukef_what_would_you_like_to_know,
-    "eu exit": domestic_eu_exit_contact_us,
+    "eu exit enquiries": domestic_eu_exit_contact_us,
     "events": contact_us_short_domestic,
     "defence and security organisation (dso)": contact_us_short_domestic,
     "other": contact_us_short_domestic,

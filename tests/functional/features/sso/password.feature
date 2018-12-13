@@ -17,6 +17,9 @@ Feature: SSO password management
       Then "Peter Alder" should be on Welcome to your great.gov.uk profile page
 
 
+    @bug
+    @TT-876
+    @fixed
     @ED-2251
     @sso
     @account

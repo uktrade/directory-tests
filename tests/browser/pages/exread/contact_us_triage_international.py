@@ -45,8 +45,8 @@ SELECTORS = {
         "buying from the uk": Selector(
             By.CSS_SELECTOR, "input[value='buying']", type=ElementType.RADIO, is_visible=False
         ),
-        "eu exit": Selector(
-            By.CSS_SELECTOR, "input[value='eu-exit']", type=ElementType.RADIO, is_visible=False
+        "eu exit enquiries": Selector(
+            By.CSS_SELECTOR, "input[value='euexit']", type=ElementType.RADIO, is_visible=False
         ),
         "other": Selector(
             By.CSS_SELECTOR, "input[value='other']", type=ElementType.RADIO, is_visible=False
@@ -62,7 +62,7 @@ SELECTORS = {
 POs = {
     "investing in the uk": invest_contact_us,
     "buying from the uk": fas_contact_us,
-    "eu exit": international_eu_exit_contact_us,
+    "eu exit enquiries": international_eu_exit_contact_us,
     "other": international_contact_us,
 }
 
