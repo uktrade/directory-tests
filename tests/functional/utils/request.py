@@ -27,6 +27,8 @@ from requests.exceptions import (
 )
 from urllib3.exceptions import HTTPError as BaseHTTPError
 
+from tests.conftest import hawk_cookie
+
 # a list of exceptions that can be thrown by `requests` (and urllib3)
 REQUEST_EXCEPTIONS = (
     BaseHTTPError,
@@ -81,7 +83,11 @@ def make_request(
     files: dict = None,
     allow_redirects: bool = True,
     auth: tuple = None,
-    trim: bool = True
+    trim: bool = True,
+    cookies: dict = None,
+    generate_hawk_cookie: bool = True,
+    connect_timeout: float = 3.05,
+    read_timeout: int = 60,
 ) -> Response:
     """Make a desired HTTP request using optional parameters, headers and data.
 
@@ -109,7 +115,6 @@ def make_request(
     """
     from tests.functional.utils.generic import (
         assertion_msg,
-        blue,
         log_response,
         red,
     )
@@ -121,8 +126,9 @@ def make_request(
         logging.debug("Session object not provided. Will default to Requests")
     req = session or requests
 
-    connect_timeout = 3.05
-    read_timeout = 60
+    if generate_hawk_cookie:
+        logging.debug(f"Generated HAWK Cookie for {url}")
+        cookies = cookies.update(hawk_cookie()) if cookies else hawk_cookie()
     request_kwargs = dict(
         url=url,
         params=params,
@@ -132,6 +138,7 @@ def make_request(
         allow_redirects=allow_redirects,
         timeout=(connect_timeout, read_timeout),
         auth=auth,
+        cookies=cookies,
     )
 
     try:
