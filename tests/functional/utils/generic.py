@@ -1528,6 +1528,7 @@ def flag_sso_account_as_verified(context: Context, email_address: str):
     )
     context.response = response
     check_response(response, 204)
+    logging.debug(f"Account for {email_address} was flagged as verified")
 
 
 def filter_out_legacy_industries(company: dict) -> list:
