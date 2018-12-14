@@ -1,6 +1,9 @@
 @uk-setup-guide
 Feature: UK Setup Guide
 
+  Background:
+    Given hawk cookie is set on "Invest - Home" page
+    
   @CMS-161
   Scenario: Visitors should be able to see the "Invest UK Setup Guide" page
     Given "Robert" visits the "Invest - UK Setup Guide" page

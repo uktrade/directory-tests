@@ -1,6 +1,8 @@
 @ukef
 Feature: UK Export Finance page & contact-us form
 
+  Background:
+    Given hawk cookie is set on "Export Readiness - Home" page
 
   @TT-585
   Scenario: Any Exporter should see the all expected sections on the "UKEF Get Finance" page

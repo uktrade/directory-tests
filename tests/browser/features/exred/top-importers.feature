@@ -1,6 +1,8 @@
 @top-importers
 Feature: Top importers
 
+  Background:
+    Given hawk cookie is set on "Export Readiness - Home" page
 
   @new-triage
   @ED-2697

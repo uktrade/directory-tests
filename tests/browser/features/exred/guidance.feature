@@ -1,6 +1,8 @@
 @guidance
 Feature: Guidance articles
 
+  Background:
+    Given hawk cookie is set on "Export Readiness - Home" page
 
   @ED-2463
   @home-page

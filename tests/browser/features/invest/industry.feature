@@ -1,6 +1,9 @@
 @industry
 Feature: Industry pages
 
+  Background:
+    Given hawk cookie is set on "Invest - Home" page
+    
   @CMS-160
   Scenario Outline: Visitors should be able to see the "Invest - <selected> industry" page
     Given "Robert" visits the "Invest - <selected> - industry" page

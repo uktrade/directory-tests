@@ -1,6 +1,9 @@
 @triage
 Feature: Triage
 
+  Background:
+    Given hawk cookie is set on "Export Readiness - Home" page
+
   @new-triage
   @ED-2520
   @first-time

@@ -2,6 +2,9 @@
 @session
 Feature: Save reading progress
 
+  Background:
+    Given hawk cookie is set on "Export Readiness - Home" page
+
   @bug
   @ED-2807
   @fixed

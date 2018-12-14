@@ -1,6 +1,8 @@
 @services
 Feature: Accessing Services
 
+  Background:
+    Given hawk cookie is set on "Export Readiness - Home" page
 
   @ED-2659
   @home-page

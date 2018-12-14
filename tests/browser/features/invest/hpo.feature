@@ -1,6 +1,8 @@
 @hpo
 Feature: High Potential Opportunities
 
+  Background:
+    Given hawk cookie is set on "Invest - Home" page
 
   @TT-442
   Scenario Outline: Investors should be able to view "HPO - <selected>" page

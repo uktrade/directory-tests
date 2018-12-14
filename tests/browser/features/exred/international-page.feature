@@ -1,6 +1,8 @@
 @international-page
 Feature: International Page
 
+  Background:
+    Given hawk cookie is set on "Export Readiness - Home" page
 
   @ED-3114
   Scenario: Visitors should see "Buy from the UK, Invest in the UK, Study in the UK, Visit the UK" sections on the International page

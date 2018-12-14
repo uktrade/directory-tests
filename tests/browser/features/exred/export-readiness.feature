@@ -3,6 +3,8 @@
 @export-readiness
 Feature: Export Readiness
 
+  Background:
+    Given hawk cookie is set on "Export Readiness - Home" page
 
   @ED-2613
   @personas

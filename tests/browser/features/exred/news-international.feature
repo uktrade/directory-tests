@@ -3,6 +3,9 @@
 @international
 Feature: Updates for non-UK companies on EU Exit
 
+  Background:
+    Given hawk cookie is set on "Export Readiness - Home" page
+
   @CMS-579
   Scenario: International Visitors should be able to view news article
     Given at least "1" published "international" news article on "Export Readiness"

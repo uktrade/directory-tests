@@ -1,6 +1,8 @@
 @contact-us
 Feature: Contact us & Leave feedback
 
+  Background:
+    Given hawk cookie is set on "Invest - Home" page
 
   @CMS-163
   @beta

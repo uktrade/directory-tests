@@ -1,6 +1,9 @@
 @regional-pages
 Feature: Regional pages
 
+  Background:
+    Given hawk cookie is set on "Invest - Home" page
+
   @CMS-215
   Scenario Outline: Visitors should be able to see regional page for "<selected>"
     Given "Robert" visits the "Invest - <selected> - region" page

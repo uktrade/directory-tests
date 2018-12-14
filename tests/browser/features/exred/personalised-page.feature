@@ -1,6 +1,8 @@
 @customised-page
 Feature: Customised page
 
+  Background:
+    Given hawk cookie is set on "Export Readiness - Home" page
 
   @ED-2588
   @personalised-page

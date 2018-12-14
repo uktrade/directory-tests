@@ -1,6 +1,9 @@
 @new_contact_us
 Feature:  new contact us forms
 
+  Background:
+    Given hawk cookie is set on "Export Readiness - Home" page
+
   @TT-758
   @enquirer_location
   Scenario: Enquirers should see all expected contact location options on the "Export Readiness - Contact us"

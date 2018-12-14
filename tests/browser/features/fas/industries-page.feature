@@ -3,6 +3,8 @@
 @no-sso-email-verification-required
 Feature: Find a Supplier - Industries page
 
+  Background:
+    Given hawk cookie is set on "Find a Supplier - Home" page
 
   @ED-4253
   Scenario: Buyers should be able to view "Find a Supplier - Industries" page

@@ -1,6 +1,8 @@
 @header-footer
 Feature: Header-Footer
 
+  Background:
+    Given hawk cookie is set on "Invest - Home" page
 
   @CMS-158
   @logo

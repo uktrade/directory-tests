@@ -2,6 +2,8 @@
 @social-media
 Feature: Sharing on Social Media and via emails
 
+  Background:
+    Given hawk cookie is set on "Export Readiness - Home" page
 
   @ED-2640
   @articles

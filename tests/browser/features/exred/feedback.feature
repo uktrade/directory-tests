@@ -2,6 +2,8 @@
 @feedback
 Feature: Feedback (tell us why)
 
+  Background:
+    Given hawk cookie is set on "Export Readiness - Home" page
 
   @ED-2639
   Scenario Outline: Any Exporter should be able to tell us that they "<found_or_not>" the "<group>" article useful

@@ -1,6 +1,8 @@
 @home-page
 Feature: Home Page
 
+  Background:
+    Given hawk cookie is set on "Export Readiness - Home" page
 
   @ED-2366
   @sections
