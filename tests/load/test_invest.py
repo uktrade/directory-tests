@@ -2,7 +2,7 @@ from random import choice
 
 from locust import HttpLocust, TaskSet, task
 from tests import get_relative_url, settings
-from tests.load import USER_AGENT, invest_hawk_cookie
+from tests.load import USER_AGENT, hawk_cookie
 
 
 class InvestTasks(TaskSet):
@@ -12,7 +12,7 @@ class InvestTasks(TaskSet):
         self.client.get(
             url,
             headers=USER_AGENT,
-            cookies=invest_hawk_cookie(),
+            cookies=hawk_cookie(),
         )
 
     @task
@@ -30,7 +30,7 @@ class InvestTasks(TaskSet):
             choice(endpoints),
             headers=USER_AGENT,
             name="/uk-setup-guide/[guide]/",
-            cookies=invest_hawk_cookie(),
+            cookies=hawk_cookie(),
         )
 
 
@@ -74,7 +74,7 @@ class InvestTasks(TaskSet):
             choice(urls),
             headers=USER_AGENT,
             name="/industries/[industry]/",
-            cookies=invest_hawk_cookie(),
+            cookies=hawk_cookie(),
         )
 
 
