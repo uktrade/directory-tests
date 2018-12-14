@@ -10,53 +10,53 @@ from tests.settings import DIRECTORY_API_HEALTH_CHECK_TOKEN as TOKEN
 
 @pytest.mark.skip(reason="ATM we're not caching inactive companies: see "
                          "tickets: ED-3188, ED-3782")
-def test_landing_page_post_company_not_active(fab_hawk_cookie):
+def test_landing_page_post_company_not_active(hawk_cookie):
     data = {'company_number': companies['not_active']}
     response = requests.post(
         get_absolute_url('ui-buyer:landing'), data=data, allow_redirects=False,
-        cookies=fab_hawk_cookie
+        cookies=hawk_cookie
     )
     assert 'Company not active' in str(response.content)
 
 
-def test_landing_page_post_company_already_registered(fab_hawk_cookie):
+def test_landing_page_post_company_already_registered(hawk_cookie):
     data = {'company_number': companies['already_registered']}
     response = requests.post(
         get_absolute_url('ui-buyer:landing'), data=data, allow_redirects=False,
-        cookies=fab_hawk_cookie
+        cookies=hawk_cookie
     )
     assert 'Already registered' in str(response.content)
 
 
-def test_landing_page_post_company_not_found(fab_hawk_cookie):
+def test_landing_page_post_company_not_found(hawk_cookie):
     data = {'company_number': '12345670'}
     response = requests.post(
         get_absolute_url('ui-buyer:landing'), data=data, allow_redirects=False,
-        cookies=fab_hawk_cookie
+        cookies=hawk_cookie
     )
     assert 'Error. Please try again later.' in str(response.content)
 
 
-def test_landing_page_post_company_happy_path(fab_hawk_cookie):
+def test_landing_page_post_company_happy_path(hawk_cookie):
     data = {'company_number': companies['active_not_registered']}
     response = requests.post(
         get_absolute_url('ui-buyer:landing'),
         data=data,
-        cookies=fab_hawk_cookie
+        cookies=hawk_cookie
     )
     assert 'Register' in str(response.content)
 
 
-def test_not_existing_page_return_404_anon_user(fab_hawk_cookie):
+def test_not_existing_page_return_404_anon_user(hawk_cookie):
     url = get_absolute_url('ui-buyer:landing') + '/foobar'
-    response = requests.get(url, allow_redirects=False, cookies=fab_hawk_cookie)
+    response = requests.get(url, allow_redirects=False, cookies=hawk_cookie)
     assert response.status_code == 404
 
 
-def test_not_existing_page_return_404_user(logged_in_session, fab_hawk_cookie):
+def test_not_existing_page_return_404_user(logged_in_session, hawk_cookie):
     url = get_absolute_url('ui-buyer:landing') + '/foobar'
     response = logged_in_session.get(
-        url, allow_redirects=False, cookies=fab_hawk_cookie
+        url, allow_redirects=False, cookies=hawk_cookie
     )
     assert response.status_code == 404
 
@@ -65,9 +65,9 @@ def test_not_existing_page_return_404_user(logged_in_session, fab_hawk_cookie):
     get_absolute_url('ui-buyer:healthcheck-api'),
     get_absolute_url('ui-buyer:healthcheck-sso'),
 ])
-def test_health_check_endpoints(absolute_url, fab_hawk_cookie):
+def test_health_check_endpoints(absolute_url, hawk_cookie):
     params = {'token': TOKEN}
-    response = requests.get(absolute_url, params=params, cookies=fab_hawk_cookie)
+    response = requests.get(absolute_url, params=params, cookies=hawk_cookie)
     assert response.status_code == http.client.OK
 
 
@@ -75,13 +75,13 @@ def test_health_check_endpoints(absolute_url, fab_hawk_cookie):
     get_absolute_url('ui-buyer:healthcheck-api'),
     get_absolute_url('ui-buyer:healthcheck-sso'),
 ])
-def test_redirects_for_health_check_endpoints(absolute_url, fab_hawk_cookie):
+def test_redirects_for_health_check_endpoints(absolute_url, hawk_cookie):
     params = {'token': TOKEN}
     # get rid of trailing slash
     absolute_url = absolute_url[:-1]
     response = requests.get(
         absolute_url, params=params, allow_redirects=False,
-        cookies=fab_hawk_cookie)
+        cookies=hawk_cookie)
     assert response.status_code == http.client.MOVED_PERMANENTLY
 
 
@@ -107,9 +107,9 @@ def test_redirects_for_health_check_endpoints(absolute_url, fab_hawk_cookie):
     get_absolute_url('ui-buyer:company-edit-contact'),
     get_absolute_url('ui-buyer:company-edit-social-media'),
 ])
-def test_301_redirects_for_anon_user(absolute_url, fab_hawk_cookie):
+def test_301_redirects_for_anon_user(absolute_url, hawk_cookie):
     response = requests.get(
-        absolute_url, allow_redirects=False, cookies=fab_hawk_cookie
+        absolute_url, allow_redirects=False, cookies=hawk_cookie
     )
     assert response.status_code == http.client.FOUND
 
@@ -140,11 +140,11 @@ def test_301_redirects_for_anon_user(absolute_url, fab_hawk_cookie):
     get_absolute_url('ui-buyer:company-edit-social-media'),
 ])
 def test_302_redirects_after_removing_trailing_slash_for_anon_user(
-        absolute_url, fab_hawk_cookie):
+        absolute_url, hawk_cookie):
     # get rid of trailing slash
     absolute_url = absolute_url[:-1]
     response = requests.get(
-        absolute_url, allow_redirects=False, cookies=fab_hawk_cookie
+        absolute_url, allow_redirects=False, cookies=hawk_cookie
     )
     assert response.status_code == http.client.MOVED_PERMANENTLY
 
@@ -177,8 +177,8 @@ def test_302_redirects_after_removing_trailing_slash_for_anon_user(
     get_absolute_url('ui-buyer:company-edit-social-media'),
 ])
 def test_access_non_health_check_endpoints_as_logged_in_user(
-        logged_in_session, absolute_url, fab_hawk_cookie):
+        logged_in_session, absolute_url, hawk_cookie):
     response = logged_in_session.get(
-        absolute_url, allow_redirects=True, cookies=fab_hawk_cookie
+        absolute_url, allow_redirects=True, cookies=hawk_cookie
     )
     assert response.status_code == http.client.OK

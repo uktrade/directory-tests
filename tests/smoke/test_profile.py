@@ -8,21 +8,21 @@ from tests import get_absolute_url, users, is_500
 from tests.settings import DIRECTORY_API_HEALTH_CHECK_TOKEN as TOKEN
 
 
-def test_about_200(sud_hawk_cookie):
+def test_about_200(hawk_cookie):
     response = requests.get(
         get_absolute_url('profile:about'), allow_redirects=False,
-        cookies=sud_hawk_cookie
+        cookies=hawk_cookie
     )
 
     assert response.status_code == http.client.OK
 
 
 @pytest.mark.skip(reason="see TT-858")
-def test_directory_supplier_verified_user(sud_hawk_cookie):
+def test_directory_supplier_verified_user(hawk_cookie):
     token = 'Bearer {token}'.format(token=users['verified']['token'])
     headers = {'Authorization': token}
     url = get_absolute_url('profile:directory-supplier')
-    response = requests.get(url, headers=headers, cookies=sud_hawk_cookie)
+    response = requests.get(url, headers=headers, cookies=hawk_cookie)
 
     error_msg = f"Expected 200 got {response.status_code} from {response.url}"
     assert response.status_code == http.client.OK, error_msg
@@ -46,21 +46,21 @@ def test_directory_supplier_verified_user(sud_hawk_cookie):
 
 
 @pytest.mark.skip(reason="see TT-858")
-def test_directory_supplier_unverified_user(sud_hawk_cookie):
+def test_directory_supplier_unverified_user(hawk_cookie):
     token = 'Bearer {token}'.format(token=users['unverified']['token'])
     headers = {'Authorization': token}
     url = get_absolute_url('profile:directory-supplier')
-    response = requests.get(url, headers=headers, cookies=sud_hawk_cookie)
+    response = requests.get(url, headers=headers, cookies=hawk_cookie)
 
     error_msg = f"Expected 404 got {response.status_code} from {response.url}"
     assert response.status_code == http.client.NOT_FOUND, error_msg
 
 
-def test_directory_supplier_invalid_user_token(sud_hawk_cookie):
+def test_directory_supplier_invalid_user_token(hawk_cookie):
     token = 'Bearer {token}'.format(token='foo')
     headers = {'Authorization': token}
     url = get_absolute_url('profile:directory-supplier')
-    response = requests.get(url, headers=headers, cookies=sud_hawk_cookie)
+    response = requests.get(url, headers=headers, cookies=hawk_cookie)
 
     error_msg = f"Expected 401 got {response.status_code} from {response.url}"
     assert response.status_code == 401, error_msg
@@ -69,8 +69,8 @@ def test_directory_supplier_invalid_user_token(sud_hawk_cookie):
 @pytest.mark.parametrize("absolute_url", [
     get_absolute_url('profile:healthcheck-ping'),
 ])
-def test_health_check_endpoints(absolute_url, sud_hawk_cookie):
-    response = requests.get(absolute_url, cookies=sud_hawk_cookie)
+def test_health_check_endpoints(absolute_url, hawk_cookie):
+    response = requests.get(absolute_url, cookies=hawk_cookie)
     assert response.status_code == http.client.OK
 
 
@@ -79,10 +79,10 @@ def test_health_check_endpoints(absolute_url, sud_hawk_cookie):
     get_absolute_url('profile:healthcheck-sentry'),
     get_absolute_url('profile:healthcheck-sso'),
 ])
-def test_health_check_endpoints_auth(absolute_url, sud_hawk_cookie):
+def test_health_check_endpoints_auth(absolute_url, hawk_cookie):
     params = {'token': TOKEN}
     response = requests.get(
-        absolute_url, params=params, cookies=sud_hawk_cookie
+        absolute_url, params=params, cookies=hawk_cookie
     )
     assert response.status_code == http.client.OK
 
@@ -94,9 +94,9 @@ def test_health_check_endpoints_auth(absolute_url, sud_hawk_cookie):
     get_absolute_url('profile:exops-alerts'),
     get_absolute_url('profile:exops-applications'),
 ])
-def test_301_redirects_for_anon_user(absolute_url, sud_hawk_cookie):
+def test_301_redirects_for_anon_user(absolute_url, hawk_cookie):
     response = requests.get(
-        absolute_url, allow_redirects=False, cookies=sud_hawk_cookie
+        absolute_url, allow_redirects=False, cookies=hawk_cookie
     )
     error_msg = f"Expected 301 got {response.status_code} from {response.url}"
     assert response.status_code == http.client.FOUND, error_msg
@@ -110,12 +110,12 @@ def test_301_redirects_for_anon_user(absolute_url, sud_hawk_cookie):
     get_absolute_url('profile:exops-applications'),
 ])
 def test_302_redirects_after_removing_trailing_slash_for_anon_user(
-        absolute_url, sud_hawk_cookie):
+        absolute_url, hawk_cookie):
     # get rid of trailing slash
     if absolute_url[-1] == "/":
         absolute_url = absolute_url[:-1]
     response = requests.get(
-        absolute_url, allow_redirects=False, cookies=sud_hawk_cookie
+        absolute_url, allow_redirects=False, cookies=hawk_cookie
     )
     error_msg = f"Expected 302 got {response.status_code} from {response.url}"
     assert response.status_code == http.client.MOVED_PERMANENTLY, error_msg
@@ -124,9 +124,9 @@ def test_302_redirects_after_removing_trailing_slash_for_anon_user(
 @pytest.mark.parametrize("absolute_url", [
     get_absolute_url('profile:directory-supplier'),
 ])
-def test_401_redirects_for_anon_user(absolute_url, sud_hawk_cookie):
+def test_401_redirects_for_anon_user(absolute_url, hawk_cookie):
     response = requests.get(
-        absolute_url, allow_redirects=False, cookies=sud_hawk_cookie
+        absolute_url, allow_redirects=False, cookies=hawk_cookie
     )
     assert response.status_code == 401
 
@@ -140,9 +140,9 @@ def test_401_redirects_for_anon_user(absolute_url, sud_hawk_cookie):
     get_absolute_url('profile:exops-applications'),
 ])
 def test_access_to_non_health_check_endpoints_as_logged_in_user(
-        logged_in_session, absolute_url, sud_hawk_cookie):
+        logged_in_session, absolute_url, hawk_cookie):
     response = logged_in_session.get(
-        absolute_url, allow_redirects=True, cookies=sud_hawk_cookie
+        absolute_url, allow_redirects=True, cookies=hawk_cookie
     )
     error_msg = f"Expected 200 got {response.status_code} from {response.url}"
     assert response.status_code == http.client.OK, error_msg

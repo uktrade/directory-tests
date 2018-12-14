@@ -11,9 +11,9 @@ from tests import join_ui_supplier
     ('/industries/creative-services/', join_ui_supplier('industries/creative/')),
 ])
 def test_ed_4152_redirect_on_dev_from_old_industry_page(
-        new_url, old_url, fas_hawk_cookie):
+        new_url, old_url, hawk_cookie):
     response = requests.get(
-        old_url, allow_redirects=False, cookies=fas_hawk_cookie
+        old_url, allow_redirects=False, cookies=hawk_cookie
     )
 
     error_msg = (f"Expected request to '{old_url}' to be redirected to "
@@ -29,9 +29,9 @@ def test_ed_4152_redirect_on_dev_from_old_industry_page(
     ('/trade/industries/creative-services/', join_ui_supplier('industries/creative/')),
 ])
 def test_ed_4152_redirect_on_stage_from_old_industry_page(
-        new_url, old_url, fas_hawk_cookie):
+        new_url, old_url, hawk_cookie):
     response = requests.get(
-        old_url, allow_redirects=False, cookies=fas_hawk_cookie
+        old_url, allow_redirects=False, cookies=hawk_cookie
     )
 
     error_msg = (f"Expected request to '{old_url}' to be redirected to "
