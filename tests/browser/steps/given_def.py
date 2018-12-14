@@ -27,6 +27,7 @@ from steps.when_impl import (
     generic_open_any_news_article,
     generic_open_industry_page,
     generic_open_random_news_article,
+    generic_set_hawk_cookie,
     get_geo_ip,
     guidance_open_category,
     guidance_open_random_category,
@@ -38,7 +39,7 @@ from steps.when_impl import (
     triage_classify_as,
     triage_create_exporting_journey,
     visit_page,
-    contact_us_navigate_through_options
+    contact_us_navigate_through_options,
 )
 
 
@@ -270,3 +271,8 @@ def given_actor_gets_to_a_page_via(
 def given_actor_navigates_via_contact_us_options(
         context: Context, actor_alias: str, via: str):
     contact_us_navigate_through_options(context, actor_alias, via)
+
+
+@given('hawk cookie is set on "{page_name}" page')
+def given_hawk_cookie_is_set(context: Context, page_name: str):
+    generic_set_hawk_cookie(context, page_name)

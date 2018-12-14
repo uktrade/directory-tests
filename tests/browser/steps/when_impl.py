@@ -21,6 +21,7 @@ from pages.common_actions import (
     take_screenshot,
     unauthenticated_actor,
     update_actor,
+    get_hawk_cookie,
 )
 from registry.articles import (
     GUIDANCE,
@@ -44,6 +45,16 @@ NUMBERS = {
 def retry_if_webdriver_error(exception):
     """Return True if we should retry on WebDriverException, False otherwise"""
     return isinstance(exception, (TimeoutException, WebDriverException))
+
+
+def generic_set_hawk_cookie(context: Context, page_name: str):
+    page = get_page_object(page_name)
+    driver = context.driver
+    driver.get(page.URL)
+    hawk_cookie = get_hawk_cookie()
+    logging.debug(f"Generated hawk cookie: {hawk_cookie}")
+    driver.add_cookie(hawk_cookie)
+    logging.debug(f"Added hawk cookie to driver! {driver.get_cookies()}")
 
 
 @retry(
