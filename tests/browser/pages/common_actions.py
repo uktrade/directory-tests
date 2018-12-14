@@ -23,6 +23,7 @@ from typing import Dict, List, Union
 import requests
 from behave.runner import Context
 from bs4 import BeautifulSoup
+from mohawk import Sender
 from requests import Response, Session
 from retrying import retry
 from selenium.common.exceptions import (
@@ -42,6 +43,8 @@ from settings import (
     BROWSERSTACK_PASS,
     BROWSERSTACK_SESSIONS_URL,
     BROWSERSTACK_USER,
+    IP_RESTRICTOR_SKIP_CHECK_SENDER_ID,
+    IP_RESTRICTOR_SKIP_CHECK_SECRET,
     TAKE_SCREENSHOTS,
 )
 
@@ -89,6 +92,26 @@ Selector = namedtuple(
 Actor.__new__.__defaults__ = (None,) * len(Actor._fields)
 VisitedArticle.__new__.__defaults__ = (None,) * len(VisitedArticle._fields)
 Selector.__new__.__defaults__ = (None, None, True, True, True, None, True)
+
+
+def get_hawk_cookie():
+    sender = Sender(
+        credentials={
+            'id': IP_RESTRICTOR_SKIP_CHECK_SENDER_ID,
+            'key': IP_RESTRICTOR_SKIP_CHECK_SECRET,
+            'algorithm': 'sha256'
+        },
+        url='/',
+        method='',
+        always_hash_content=False
+    )
+
+    return {
+        # "domain": "/",
+        "name": "ip-restrict-signature",
+        "value": sender.request_header,
+        # 'secure': False,
+    }
 
 
 def go_to_url(driver: WebDriver, url: str, page_name: str, *, first_time: bool = False):
