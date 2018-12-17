@@ -8,26 +8,18 @@ from tests.settings import DIRECTORY_API_HEALTH_CHECK_TOKEN as TOKEN
 
 
 @pytest.mark.parametrize("absolute_url", [
-    get_absolute_url('api:healthcheck-stannp'),
-])
-def test_stannp_healtcheck_and_balance(absolute_url):
-    params = {'token': TOKEN}
-    response = requests.get(absolute_url, params=params)
-    error = (f"Expected 200 OK from StannP healthcheck endpoint but got "
-             f"{response.status_code}. Check the error message: "
-             f"{str(response.content)}")
-    assert response.status_code == http.client.OK, error
-
-
-@pytest.mark.parametrize("absolute_url", [
     get_absolute_url('api:healthcheck-cache'),
     get_absolute_url('api:healthcheck-database'),
     get_absolute_url('api:healthcheck-elasticsearch'),
+    get_absolute_url('api:healthcheck-stannp'),
 ])
 def test_healthcheck_endpoints(absolute_url):
     params = {'token': TOKEN}
     response = requests.get(absolute_url, params=params)
-    assert response.status_code == http.client.OK
+    error = (f"Expected 200 OK from {absolute_url} but got "
+             f"{response.status_code}. Check the reponse content: "
+             f"{str(response.content)}")
+    assert response.status_code == http.client.OK, error
 
 
 @pytest.mark.parametrize("absolute_url", [
@@ -38,4 +30,7 @@ def test_healthcheck_endpoints(absolute_url):
 def test_directory_healthcheck_endpoints(absolute_url):
     params = {'token': TOKEN}
     response = requests.get(absolute_url, params=params)
-    assert response.status_code == http.client.OK
+    error = (f"Expected 200 OK from {absolute_url} but got "
+             f"{response.status_code}. Check the reponse content: "
+             f"{str(response.content)}")
+    assert response.status_code == http.client.OK, error
