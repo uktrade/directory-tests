@@ -18,7 +18,7 @@ Feature: Feedback (tell us why)
     Examples: article groups
       | group            | found_or_not  |
       | Export Readiness | found         |
-      | Guidance         | haven't found |
+      | Advice           | haven't found |
 
 
   @ED-2639
@@ -45,7 +45,7 @@ Feature: Feedback (tell us why)
   Scenario Outline: "<relevant>" Exporters should be able to tell us that they "<found_or_not>" the article useful
     Given "Robert" was classified as "<relevant>" exporter in the triage process
     And "Robert" decided to create her personalised journey page
-    And "Robert" went to randomly selected Guidance Articles category
+    And "Robert" went to randomly selected Advice Articles category
     And "Robert" opened any Article
 
     When "Robert" decides to tell us that he "<found_or_not>" this article useful

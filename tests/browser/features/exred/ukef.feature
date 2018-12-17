@@ -29,12 +29,12 @@ Feature: UK Export Finance page & contact-us form
 
 
   @TT-585
-  Scenario: Any Exporter should be able to get to "Finance Guidance" page from the "UKEF Get Finance" page
+  Scenario: Any Exporter should be able to get to "Finance Advice" page from the "UKEF Get Finance" page
     Given "Robert" visits the "Export Readiness - Get Finance" page
 
     When "Robert" decides to "Read more about getting money to grow your business"
 
-    Then "Robert" should be on the "Export Readiness - Finance - Guidance" page
+    Then "Robert" should be on the "Export Readiness - Finance - Advice" page
 
 
   @TT-585

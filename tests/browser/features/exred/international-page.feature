@@ -99,7 +99,7 @@ Feature: International Page
 
   @ED-3149
   @language-selector
-  Scenario: Visitors should be able to "get guidance and services to help them export" from International page
+  Scenario: Visitors should be able to "get advice and services to help them export" from International page
     Given "Robert" visits the "Export Readiness - International" page
 
     When "Robert" decides to view the page in "English (UK)"

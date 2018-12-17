@@ -32,15 +32,15 @@ SELECTORS = {
         "i export occasionally": Selector(By.ID, "footer-export-readiness-occasional"),
         "i'm a regular exporter": Selector(By.ID, "footer-export-readiness-regular"),
     },
-    "guidance": {
-        "label": Selector(By.ID, "footer-guidance-links"),
-        "market research": Selector(By.ID, "footer-guidance-market-research"),
-        "customer insight": Selector(By.ID, "footer-guidance-customer-insight"),
-        "finance": Selector(By.ID, "footer-guidance-finance"),
-        "business planning": Selector(By.ID, "footer-guidance-business-planning"),
-        "getting paid": Selector(By.ID, "footer-guidance-getting-paid"),
+    "advice": {
+        "label": Selector(By.ID, "footer-advice-links"),
+        "market research": Selector(By.ID, "footer-advice-market-research"),
+        "customer insight": Selector(By.ID, "footer-advice-customer-insight"),
+        "finance": Selector(By.ID, "footer-advice-finance"),
+        "business planning": Selector(By.ID, "footer-advice-business-planning"),
+        "getting paid": Selector(By.ID, "footer-advice-getting-paid"),
         "operations and compliance": Selector(
-            By.ID, "footer-guidance-operations-and-compliance"
+            By.ID, "footer-advice-operations-and-compliance"
         ),
     },
     "services": {

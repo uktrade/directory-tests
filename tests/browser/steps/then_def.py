@@ -32,13 +32,13 @@ from steps.then_impl import (
     form_should_see_error_messages,
     generic_should_see_expected_page_content,
     generic_should_see_form_choices,
-    guidance_check_if_link_to_next_category_is_displayed,
-    guidance_expected_page_elements_should_be_visible,
-    guidance_ribbon_should_be_visible,
-    guidance_should_see_article_read_counter,
-    guidance_should_see_articles,
-    guidance_should_see_total_number_of_articles,
-    guidance_tile_should_be_highlighted,
+    advice_check_if_link_to_next_category_is_displayed,
+    advice_expected_page_elements_should_be_visible,
+    advice_ribbon_should_be_visible,
+    advice_should_see_article_read_counter,
+    advice_should_see_articles,
+    advice_should_see_total_number_of_articles,
+    advice_tile_should_be_highlighted,
     header_check_dit_logo,
     header_check_favicon,
     hpo_agent_should_receive_enquiry_email,
@@ -91,49 +91,49 @@ def then_actor_should_be_on_page_on_international_page(
     should_be_on_page_or_international_page(context, actor_alias, page_name)
 
 
-@then('"{actor_alias}" should see the Guidance Navigation Ribbon')
-def then_guidance_ribbon_should_be_visible(context, actor_alias):
-    guidance_ribbon_should_be_visible(context, actor_alias)
+@then('"{actor_alias}" should see the Advice Navigation Ribbon')
+def then_advice_ribbon_should_be_visible(context, actor_alias):
+    advice_ribbon_should_be_visible(context, actor_alias)
 
 
 @then('"{actor_alias}" should see that the banner tile for "{tile}" category is highlighted')
-def then_guidance_tile_should_be_highlighted(context, actor_alias, tile):
-    guidance_tile_should_be_highlighted(context, actor_alias, tile)
+def then_advice_tile_should_be_highlighted(context, actor_alias, tile):
+    advice_tile_should_be_highlighted(context, actor_alias, tile)
 
 
-@then('"{actor_alias}" should see an article read counter for the "{category}" Guidance category set to "{expected:d}"')
+@then('"{actor_alias}" should see an article read counter for the "{category}" Advice category set to "{expected:d}"')
 def then_should_see_article_read_counter(
         context, actor_alias, category, expected: int):
-    guidance_should_see_article_read_counter(
+    advice_should_see_article_read_counter(
         context, actor_alias, category, expected)
 
 
-@then('"{actor_alias}" should see total number of articles for the "{category}" Guidance category')
+@then('"{actor_alias}" should see total number of articles for the "{category}" Advice category')
 def then_total_number_of_articles_should_be_visible(context, actor_alias, category):
-    guidance_should_see_total_number_of_articles(context, actor_alias, category)
+    advice_should_see_total_number_of_articles(context, actor_alias, category)
 
 
-@then('"{actor_alias}" should see an ordered list of all Guidance Articles selected for "{category}" category')
-def then_should_see_guidance_articles(context, actor_alias, category):
-    guidance_should_see_articles(context, actor_alias, category)
+@then('"{actor_alias}" should see an ordered list of all Advice Articles selected for "{category}" category')
+def then_should_see_advice_articles(context, actor_alias, category):
+    advice_should_see_articles(context, actor_alias, category)
 
 
-@then('"{actor_alias}" should see a link to the "{next_category}" Guidance category')
+@then('"{actor_alias}" should see a link to the "{next_category}" Advice category')
 def then_check_if_link_to_next_category_is_displayed(
         context, actor_alias, next_category):
-    guidance_check_if_link_to_next_category_is_displayed(
+    advice_check_if_link_to_next_category_is_displayed(
         context, actor_alias, next_category)
 
 
-@then('"{actor_alias}" should see on the Guidance Articles page "{elements}"')
-def then_expected_guidance_page_elements_should_be_visible(
+@then('"{actor_alias}" should see on the Advice Articles page "{elements}"')
+def then_expected_advice_page_elements_should_be_visible(
         context, actor_alias, elements):
-    guidance_expected_page_elements_should_be_visible(
+    advice_expected_page_elements_should_be_visible(
         context, actor_alias, elements.split(", "))
 
 
-@then('"{actor_alias}" should see a Guidance Articles read counter for the "{exporter_status}" exporter')
-def then_actor_should_see_guidance_articles_read_counter(
+@then('"{actor_alias}" should see a Advice Articles read counter for the "{exporter_status}" exporter')
+def then_actor_should_see_advice_articles_read_counter(
         context, actor_alias, exporter_status):
     personalised_journey_should_see_read_counter(
         context, actor_alias, exporter_status)

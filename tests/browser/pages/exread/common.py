@@ -79,7 +79,7 @@ def check_if_correct_articles_are_displayed(driver: WebDriver, category: str):
      on correct position.
 
     :param driver: selenium webdriver
-    :param category: expected Guidance Article category
+    :param category: expected Advice Article category
     """
     # extract displayed list of articles and their indexes
     articles = find_elements(driver, ARTICLES_LIST)

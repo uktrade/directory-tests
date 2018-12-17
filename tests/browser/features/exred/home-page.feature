@@ -6,7 +6,7 @@ Feature: Home Page
 
   @ED-2366
   @sections
-  Scenario: Any Exporter should see the "Beta, Hero, Exporting Journey, Export Readiness, Guidance, Services, Case Studies, Business is Great, Error Reporting" sections on the home page
+  Scenario: Any Exporter should see the "Beta, Hero, Exporting Journey, Export Readiness, Advice, Services, Case Studies, Business is Great, Error Reporting" sections on the home page
       Given "Robert" visits the "Export Readiness - Home" page
       Then "Robert" should see following sections
         | Sections          |
@@ -14,7 +14,7 @@ Feature: Home Page
         | Hero              |
         | Exporting Journey |
         | Export Readiness  |
-        | Guidance          |
+        | Advice            |
         | Services          |
         | Case Studies      |
         | Business is Great |

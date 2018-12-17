@@ -24,7 +24,7 @@ from pages.common_actions import (
     get_hawk_cookie,
 )
 from registry.articles import (
-    GUIDANCE,
+    ADVICE,
     get_article,
     get_articles,
     get_random_article,
@@ -143,7 +143,7 @@ def open_group_element(
         raise KeyError("Could not recognize location: {}".format(location))
 
 
-def guidance_open_category(
+def advice_open_category(
     context: Context, actor_alias: str, category: str, location: str
 ):
     if not get_actor(context, actor_alias):
@@ -151,18 +151,18 @@ def guidance_open_category(
     if location.lower() != "export readiness - personalised journey":
         visit_page(context, actor_alias, "export readiness - home")
     logging.debug(
-        "%s is about to open Guidance '%s' category from %s",
+        "%s is about to open advice '%s' category from %s",
         actor_alias,
         category,
         location,
     )
     open_group_element(
-        context, group="guidance", element=category, location=location
+        context, group="advice", element=category, location=location
     )
     update_actor(
         context,
         actor_alias,
-        article_group="guidance",
+        article_group="advice",
         article_category=category,
         article_location=location,
         visited_page=exread.article_list,
@@ -174,14 +174,14 @@ def guidance_open_category(
     stop_max_attempt_number=3,
     retry_on_exception=retry_if_webdriver_error,
 )
-def guidance_open_random_category(
+def advice_open_random_category(
     context: Context,
     actor_alias: str,
     *,
     location: str = "export readiness - personalised journey",
 ):
-    category = random.choice(list(GUIDANCE.keys()))
-    guidance_open_category(context, actor_alias, category, location)
+    category = random.choice(list(advice.keys()))
+    advice_open_category(context, actor_alias, category, location)
 
 
 def start_triage(context: Context, actor_alias: str):
@@ -988,7 +988,7 @@ def articles_open_first(context: Context, actor_alias: str):
     group = actor.article_group
     category = actor.article_category
     first_article = get_articles(group, category)[0]
-    exread.guidance_common.open_first_article(driver)
+    exread.advice_common.open_first_article(driver)
     exread.article_common.should_see_article(driver, first_article.title)
     logging.debug(
         "%s is on the first article %s: %s",
@@ -1126,7 +1126,7 @@ def articles_open_any(context: Context, actor_alias: str):
     )
 
 
-def guidance_read_through_all_articles(context: Context, actor_alias: str):
+def advice_read_through_all_articles(context: Context, actor_alias: str):
     driver = context.driver
     actor = get_actor(context, actor_alias)
     group = actor.article_group
@@ -1174,7 +1174,7 @@ def articles_open_group(
     context: Context, actor_alias: str, group: str, *, location: str = None
 ):
     categories = {
-        "guidance": [
+        "advice": [
             "market research",
             "customer insight",
             "finance",
@@ -1209,11 +1209,11 @@ def articles_open_group(
         export_readiness_open_category(
             context, actor_alias, category=category, location=location
         )
-    elif group.lower() == "guidance":
-        guidance_open_category(context, actor_alias, category, location)
+    elif group.lower() == "advice":
+        advice_open_category(context, actor_alias, category, location)
     else:
         raise KeyError(
-            "Did not recognize '{}'. Please use: 'Guidance' or 'Export "
+            "Did not recognize '{}'. Please use: 'advice' or 'Export "
             "Readiness'".format(group)
         )
     total_articles = exread.article_common.get_total_articles(context.driver)
@@ -1248,11 +1248,11 @@ def articles_go_back_to_same_group(
         export_readiness_open_category(
             context, actor_alias, category=category, location=location
         )
-    elif group.lower() == "guidance":
-        guidance_open_category(context, actor_alias, category, location)
+    elif group.lower() == "advice":
+        advice_open_category(context, actor_alias, category, location)
     else:
         raise KeyError(
-            "Did not recognize '{}'. Please use: 'Guidance' or 'Export "
+            "Did not recognize '{}'. Please use: 'advice' or 'Export "
             "Readiness'".format(group)
         )
 
@@ -1326,7 +1326,7 @@ def open_link(
     update_actor(
         context,
         actor_alias,
-        article_group="guidance",
+        article_group="advice",
         article_category=category,
         article_location=location,
     )

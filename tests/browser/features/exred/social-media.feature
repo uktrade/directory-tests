@@ -23,8 +23,8 @@ Feature: Sharing on Social Media and via emails
       | group            | social_media |
       | Export Readiness | Facebook     |
       | Export Readiness | Twitter      |
-      | Guidance         | Twitter      |
-      | Guidance         | Facebook     |
+      | Advice           | Twitter      |
+      | Advice           | Facebook     |
 
 
   @ED-2640
@@ -43,7 +43,7 @@ Feature: Sharing on Social Media and via emails
     Examples:
       | group            | social_media |
       | Export Readiness | LinkedIn     |
-      | Guidance         | LinkedIn     |
+      | Advice           | LinkedIn     |
 
 
   @ED-2640
@@ -60,7 +60,7 @@ Feature: Sharing on Social Media and via emails
 
     Examples:
       | group            | social_media |
-      | Guidance         | email        |
+      | Advice           | email        |
 
 
   @ED-2656

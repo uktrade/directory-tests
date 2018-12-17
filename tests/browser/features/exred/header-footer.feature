@@ -247,7 +247,7 @@ Feature: Header-Footer
 
   @ED-3285
   @your-export-journey-link
-  Scenario Outline: "<relevant>" Exporters who have created their "Personalised Journey page" and have not signed-in should be asked to register or sign-in, in the Guidance section on the Personalised Journey page
+  Scenario Outline: "<relevant>" Exporters who have created their "Personalised Journey page" and have not signed-in should be asked to register or sign-in, in the Advice section on the Personalised Journey page
     Given "Robert" was classified as "<relevant>" exporter in the triage process
 
     When "Robert" decides to create his personalised journey page
@@ -269,7 +269,7 @@ Feature: Header-Footer
   @ED-3286
   @your-export-journey-link
   @fake-sso-email-verification
-  Scenario: Any signed-in user who has created his/her "Personalised Journey page" should not be asked to register or sign-in, in the Guidance section on the Personalised Journey page
+  Scenario: Any signed-in user who has created his/her "Personalised Journey page" should not be asked to register or sign-in, in the Advice section on the Personalised Journey page
     Given "Robert" is a registered and verified user
     And "Robert" is signed in
     And "Robert" answered triage questions
@@ -296,7 +296,7 @@ Feature: Header-Footer
     Examples: article groups
       | group            |
       | Export Readiness |
-      | Guidance         |
+      | Advice           |
 
 
   @ED-3288
@@ -316,7 +316,7 @@ Feature: Header-Footer
     Examples: article groups
       | group            |
       | Export Readiness |
-      | Guidance         |
+      | Advice           |
 
 
   @ED-3289
@@ -337,7 +337,7 @@ Feature: Header-Footer
     Examples: article groups
       | group            |
       | Export Readiness |
-      | Guidance         |
+      | Advice           |
 
 
   @ED-3290
@@ -359,4 +359,4 @@ Feature: Header-Footer
     Examples: article groups
       | group            |
       | Export Readiness |
-      | Guidance         |
+      | Advice           |
