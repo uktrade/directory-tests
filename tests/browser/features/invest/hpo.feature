@@ -132,6 +132,9 @@ Feature: High Potential Opportunities
       | Rail infrastructure               | second   | Lightweight structures            |
 
 
+  @bug
+  @TT-879
+  @fixed
   @TT-443
   @dev-only
   @captcha
@@ -162,6 +165,9 @@ Feature: High Potential Opportunities
       | Rail infrastructure               |
 
 
+  @bug
+  @TT-879
+  @fixed
   @bug
   @TT-518
   @fixme
