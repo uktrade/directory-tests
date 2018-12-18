@@ -23,6 +23,7 @@ django_settings.configure(
     DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT=None,
     DIRECTORY_CMS_API_CLIENT_SERVICE_NAME=None,
     DIRECTORY_CMS_API_CLIENT_CACHE_EXPIRE_SECONDS=None,
+    DIRECTORY_CLIENT_CORE_CACHE_EXPIRE_SECONDS=None,
     CACHES={
         "cms_fallback": {
             "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
