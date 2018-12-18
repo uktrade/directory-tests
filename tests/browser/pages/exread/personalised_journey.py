@@ -39,20 +39,20 @@ TOTAL_ARTICLES = Selector(
 UPDATE_PREFERENCE_LINK = Selector(By.CSS_SELECTOR, "#content a.preferences")
 SECTOR_NAME = Selector(By.CSS_SELECTOR, "#largest-importers > p.commodity-name")
 MARKET_RESEARCH_LINK = Selector(
-    By.CSS_SELECTOR, "#resource-guidance a[href='/market-research/']"
+    By.CSS_SELECTOR, "#resource-advice a[href='/market-research/']"
 )
 CUSTOMER_INSIGHT_LINK = Selector(
-    By.CSS_SELECTOR, "#resource-guidance a[href='/customer-insight/']"
+    By.CSS_SELECTOR, "#resource-advice a[href='/customer-insight/']"
 )
-FINANCE_LINK = Selector(By.CSS_SELECTOR, "#resource-guidance a[href='/finance/']")
+FINANCE_LINK = Selector(By.CSS_SELECTOR, "#resource-advice a[href='/finance/']")
 BUSINESS_LINK = Selector(
-    By.CSS_SELECTOR, "#resource-guidance a[href='/business-planning/']"
+    By.CSS_SELECTOR, "#resource-advice a[href='/business-planning/']"
 )
 GETTING_PAID_LINK = Selector(
-    By.CSS_SELECTOR, "#resource-guidance a[href='/getting-paid/']"
+    By.CSS_SELECTOR, "#resource-advice a[href='/getting-paid/']"
 )
 OPERATIONS_AND_COMPLIANCE_LINK = Selector(
-    By.CSS_SELECTOR, "#resource-guidance a[href='/operations-and-compliance/']"
+    By.CSS_SELECTOR, "#resource-advice a[href='/operations-and-compliance/']"
 )
 TOP_IMPORTER = Selector(By.ID, "top_importer_name")
 TOP_IMPORTERS = Selector(
@@ -157,11 +157,11 @@ SELECTORS = {
         "introduction": Selector(By.CSS_SELECTOR, "#articles div.section-intro p"),
         "article list": Selector(By.CSS_SELECTOR, "#articles .section-content-list"),
     },
-    "guidance": {
-        "itself": Selector(By.ID, "resource-guidance"),
-        "guidance - title": Selector(By.ID, "guidance-section-title"),
-        "guidance - description": Selector(By.ID, "guidance-section-description"),
-        "guidance - categories": Selector(By.CSS_SELECTOR, "#resource-guidance .group"),
+    "advice": {
+        "itself": Selector(By.ID, "resource-advice"),
+        "advice - title": Selector(By.ID, "advice-section-title"),
+        "advice - description": Selector(By.ID, "advice-section-description"),
+        "advice - categories": Selector(By.CSS_SELECTOR, "#resource-advice .group"),
         "market research": MARKET_RESEARCH_LINK,
         "customer insight": CUSTOMER_INSIGHT_LINK,
         "finance": FINANCE_LINK,
@@ -218,7 +218,7 @@ def should_see_read_counter(
         action_chains.move_to_element(counter)
         action_chains.perform()
     with assertion_msg(
-        "Guidance Article Read Counter is not visible on '%s' page", NAME
+        "Advice Article Read Counter is not visible on '%s' page", NAME
     ):
         assert counter.is_displayed()
     given_number_articles = int(counter.text)
@@ -237,7 +237,7 @@ def should_see_total_articles_to_read(
         driver, TOTAL_ARTICLES, element_name="Total Articles to Read"
     )
     with assertion_msg(
-        "Guidance Article Read Counter is not visible on '%s' page", NAME
+        "Advice Article Read Counter is not visible on '%s' page", NAME
     ):
         assert counter.is_displayed()
     if exporter_status:
@@ -376,7 +376,7 @@ def layout_for_regular_exporter(
         should_see_section(driver, "fab section")
     should_see_section(driver, "soo tile")
     should_see_section(driver, "exopps tile")
-    should_see_section(driver, "guidance")
+    should_see_section(driver, "advice")
 
 
 def should_not_see_banner_and_top_10_table(driver: WebDriver):

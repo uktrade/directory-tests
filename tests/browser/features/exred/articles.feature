@@ -5,25 +5,25 @@ Feature: Articles
     Given hawk cookie is set on "Export Readiness - Home" page
 
   @ED-2606
-  @guidance
+  @advice
   @articles
   @<category>
-  Scenario Outline: Any Exporter accessing "<category>" Articles through the Guidance Article List should be able to navigate to the next article
-    Given "Robert" accessed "<category>" guidance articles using "Export Readiness - Home"
+  Scenario Outline: Any Exporter accessing "<category>" Articles through the Advice Article List should be able to navigate to the next article
+    Given "Robert" accessed "<category>" advice articles using "Export Readiness - Home"
     And "Robert" opened first Article from the list
 
     When "Robert" decides to read through all Articles from selected list
 
     Then "Robert" should be able to navigate to the next article from the List following the Article Order
 
-    Examples: Guidance Articles
+    Examples: Advice Articles
       | category                  |
       | Market research           |
       | Customer insight          |
       | Finance                   |
 
     @full
-    Examples: Guidance Articles
+    Examples: Advice Articles
       | category                  |
       | Business planning         |
       | Getting paid              |
@@ -48,15 +48,15 @@ Feature: Articles
     Examples: article groups
       | group            |
       | Export Readiness |
-      | Guidance         |
+      | Advice           |
 
 
   @ED-2616
-  @guidance
+  @advice
   @articles
   @<category>
-  Scenario Outline: Any Exporter accessing the last Article from the Guidance Article "<category>" List should be able to navigate to the "<next>" Articles
-    Given "Robert" accessed "<category>" guidance articles using "Export Readiness - Home"
+  Scenario Outline: Any Exporter accessing the last Article from the Advice Article "<category>" List should be able to navigate to the "<next>" Articles
+    Given "Robert" accessed "<category>" advice articles using "Export Readiness - Home"
     And "Robert" opened any Article but the last one
 
     When "Robert" decides to read through all remaining Articles from selected list
@@ -77,11 +77,11 @@ Feature: Articles
 
 
   @ED-2616
-  @guidance
+  @advice
   @articles
   @<category>
-  Scenario Outline: Any Exporter accessing the last Article from the last Guidance Article category "<category>" should not see link to the next article
-    Given "Robert" accessed "<category>" guidance articles using "Export Readiness - Home"
+  Scenario Outline: Any Exporter accessing the last Article from the last Advice Article category "<category>" should not see link to the next article
+    Given "Robert" accessed "<category>" advice articles using "Export Readiness - Home"
     And "Robert" opened any Article but the last one
 
     When "Robert" decides to read through all remaining Articles from selected list
@@ -123,14 +123,14 @@ Feature: Articles
     Then "Robert" should be on the Personalised Journey page for "regular" exporters
     And "Robert" should see following sections
       | Sections |
-      | Guidance |
+      | Advice   |
 
 
   @ED-2638
   @triage
   @articles
   @<relevant>
-  Scenario Outline: "<relevant>" Exporter accessing Guidance Articles through the Personalised Page should be able to navigate to the next article
+  Scenario Outline: "<relevant>" Exporter accessing Advice Articles through the Personalised Page should be able to navigate to the next article
     Given "Robert" was classified as "<relevant>" exporter in the triage process
     And "Robert" decided to create her personalised journey page
     And "Robert" shows all of the articles on the page whenever possible
@@ -150,11 +150,11 @@ Feature: Articles
   @triage
   @articles
   @regular
-  Scenario Outline: Regular Exporter accessing "<specific>" Guidance Articles through the Personalised Page should be able to navigate to the next article
+  Scenario Outline: Regular Exporter accessing "<specific>" Advice Articles through the Personalised Page should be able to navigate to the next article
     Given "Robert" was classified as "regular" exporter in the triage process
     And "Robert" decided to create her personalised journey page
 
-    When "Robert" goes to the "<specific>" Guidance Articles via "Export Readiness - Personalised Journey"
+    When "Robert" goes to the "<specific>" Advice Articles via "Export Readiness - Personalised Journey"
     And "Robert" opens any Article but the last one
     And "Robert" decides to read through all remaining Articles from selected list
 
@@ -192,9 +192,9 @@ Feature: Articles
       | Export Readiness | header   |
       | Export Readiness | home     |
       | Export Readiness | footer   |
-      | Guidance         | header   |
-      | Guidance         | home     |
-      | Guidance         | footer   |
+      | Advice           | header   |
+      | Advice           | home     |
+      | Advice           | footer   |
 
 
   @ED-2654
@@ -234,8 +234,8 @@ Feature: Articles
     And "Robert" should see that Time to Complete remaining chapters decreased or remained unchanged for short articles
 
     Examples:
-      | relevant | group    | location                                |
-      | Regular  | Guidance | Export Readiness - Personalised Journey |
+      | relevant | group  | location                                |
+      | Regular  | Advice | Export Readiness - Personalised Journey |
 
 
   @wip

@@ -46,15 +46,15 @@ SELECTORS = {
         "i export occasionally": Selector(By.ID, "header-export-readiness-occasional"),
         "i'm a regular exporter": Selector(By.ID, "header-export-readiness-regular"),
     },
-    "guidance": {
-        "menu": Selector(By.ID, "header-guidance-links"),
-        "market research": Selector(By.ID, "header-guidance-market-research"),
-        "customer insight": Selector(By.ID, "header-guidance-customer-insight"),
-        "finance": Selector(By.ID, "header-guidance-finance"),
-        "business planning": Selector(By.ID, "header-guidance-business-planning"),
-        "getting paid": Selector(By.ID, "header-guidance-getting-paid"),
+    "advice": {
+        "menu": Selector(By.ID, "header-advice-links"),
+        "market research": Selector(By.ID, "header-advice-market-research"),
+        "customer insight": Selector(By.ID, "header-advice-customer-insight"),
+        "finance": Selector(By.ID, "header-advice-finance"),
+        "business planning": Selector(By.ID, "header-advice-business-planning"),
+        "getting paid": Selector(By.ID, "header-advice-getting-paid"),
         "operations and compliance": Selector(
-            By.ID, "header-guidance-operations-and-compliance"
+            By.ID, "header-advice-operations-and-compliance"
         ),
     },
     "services": {
@@ -96,7 +96,7 @@ def should_see_all_links(driver: WebDriver):
 
 def should_see_link_to(driver: WebDriver, section: str, item_name: str):
     item_selector = SELECTORS[section.lower()][item_name.lower()]
-    if section.lower() in ["export readiness", "guidance", "services"]:
+    if section.lower() in ["export readiness", "advice", "services"]:
         logging.debug("Open the menu by sending 'Right Arrow' key")
         menu_selector = SELECTORS[section.lower()]["menu"]
         menu = find_element(driver, menu_selector)

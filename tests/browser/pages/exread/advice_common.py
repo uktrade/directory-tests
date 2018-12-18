@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""ExRed Common Guidance Page Object."""
+"""ExRed Common Advice Page Object."""
 import logging
 from urllib.parse import urljoin
 
@@ -20,12 +20,12 @@ from pages.common_actions import (
 from registry.articles import get_article, get_articles
 from settings import EXRED_UI_URL
 
-NAME = "Guidance"
+NAME = "Advice"
 URL = None
-TYPE = "guidance"
+TYPE = "advice"
 SERVICE = "Export Readiness"
 URL = EXRED_UI_URL
-PAGE_TITLE = "export guidance - great.gov.uk"
+PAGE_TITLE = "export advice - great.gov.uk"
 NAMES = [
     "Market research",
     "Customer insight",
@@ -107,14 +107,14 @@ def ribbon_tile_should_be_highlighted(driver: WebDriver, tile: str):
 
 
 def correct_total_number_of_articles(driver: WebDriver, category: str):
-    expected = len(get_articles("guidance", category))
+    expected = len(get_articles("advice", category))
     total = find_element(
         driver, TOTAL_NUMBER_OF_ARTICLES, element_name="Total number of articles"
     )
     check_if_element_is_visible(total, element_name="Total number of articles")
     given = int(total.text)
     with assertion_msg(
-        "Expected Total Number of Articles to read in Guidance '%s' "
+        "Expected Total Number of Articles to read in Advice '%s' "
         "category to be %d but got %s",
         category,
         expected,
@@ -135,7 +135,7 @@ def correct_article_read_counter(driver: WebDriver, category: str, expected: int
     )
     given = int(counter.text)
     with assertion_msg(
-        "Expected Article Read Counter Guidance '%s' category to be %d but" " got %s",
+        "Expected Article Read Counter Advice '%s' category to be %d but" " got %s",
         category,
         expected,
         given,
@@ -148,7 +148,7 @@ def check_if_correct_articles_are_displayed(driver: WebDriver, category: str):
      on correct position.
 
     :param driver: selenium webdriver
-    :param category: expected Guidance Article category
+    :param category: expected Advice Article category
     """
     # extract displayed list of articles and their indexes
     articles = find_elements(driver, ARTICLES_LIST)
@@ -159,7 +159,7 @@ def check_if_correct_articles_are_displayed(driver: WebDriver, category: str):
     # check whether article is on the right position
     logging.debug("Given articles: %s", given_articles)
     for position, name in given_articles:
-        expected_position = get_article("guidance", category, name).index
+        expected_position = get_article("advice", category, name).index
         with assertion_msg(
             "Expected article '%s' to be at position %d but found it at "
             "position no. %d ",
@@ -171,8 +171,8 @@ def check_if_correct_articles_are_displayed(driver: WebDriver, category: str):
 
 
 def check_if_link_to_next_category_is_displayed(driver: WebDriver, next_category: str):
-    """Check if link to the next Guidance category is displayed, except:
-    the "last" Guidance category.
+    """Check if link to the next Advice category is displayed, except:
+    the "last" Advice category.
 
     :param driver: selenium webdriver
     :param next_category: Category for which "next" link should be visible

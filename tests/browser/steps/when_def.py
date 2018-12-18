@@ -42,8 +42,8 @@ from steps.when_impl import (
     generic_submit_form,
     generic_unfold_topics,
     generic_visit_current_page_with_lang_param,
-    guidance_open_category,
-    guidance_read_through_all_articles,
+    advice_open_category,
+    advice_read_through_all_articles,
     header_footer_click_on_dit_logo,
     header_footer_open_link,
     invest_read_more,
@@ -88,10 +88,10 @@ def when_actor_continues_export_journey(context, actor_alias):
     continue_export_journey(context, actor_alias)
 
 
-@when('"{actor_alias}" goes to the "{category}" Guidance articles via "{location}"')
-def when_actor_goes_to_guidance_articles(
+@when('"{actor_alias}" goes to the "{category}" Advice articles via "{location}"')
+def when_actor_goes_to_advice_articles(
         context, actor_alias, category, location):
-    guidance_open_category(context, actor_alias, category, location)
+    advice_open_category(context, actor_alias, category, location)
 
 
 @when('"{actor_alias}" creates a personalised journey page for herself')
@@ -170,8 +170,8 @@ def when_actor_goes_to_exred_articles(context, actor_alias, category, location):
 
 @when('"{actor_alias}" decides to read through all remaining Articles from selected list')
 @when('"{actor_alias}" decides to read through all Articles from selected list')
-def when_actor_reads_through_all_guidance_articles(context, actor_alias):
-    guidance_read_through_all_articles(context, actor_alias)
+def when_actor_reads_through_all_advice_articles(context, actor_alias):
+    advice_read_through_all_articles(context, actor_alias)
 
 
 @when('"{actor_alias}" opens any Article but the last one')

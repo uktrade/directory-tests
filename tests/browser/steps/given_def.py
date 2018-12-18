@@ -29,8 +29,8 @@ from steps.when_impl import (
     generic_open_random_news_article,
     generic_set_hawk_cookie,
     get_geo_ip,
-    guidance_open_category,
-    guidance_open_random_category,
+    advice_open_category,
+    advice_open_random_category,
     registration_create_and_verify_account,
     set_online_marketplace_preference,
     set_sector_preference,
@@ -76,9 +76,9 @@ def given_actor_answered_triage_questions(context, actor_alias):
     triage_classify_as(context, actor_alias)
 
 
-@given('"{actor_alias}" accessed "{category}" guidance articles using "{location}"')
-def given_actor_opened_guidance(context, actor_alias, category, location):
-    guidance_open_category(context, actor_alias, category, location)
+@given('"{actor_alias}" accessed "{category}" advice articles using "{location}"')
+def given_actor_opened_advice(context, actor_alias, category, location):
+    advice_open_category(context, actor_alias, category, location)
 
 
 @given('"{actor_alias}" decided to build her exporting journey')
@@ -139,9 +139,9 @@ def given_actor_is_on_article_list(context, actor_alias, group):
     articles_open_group(context, actor_alias, group)
 
 
-@given('"{actor_alias}" went to randomly selected Guidance Articles category')
-def given_actor_selects_random_guidance_category(context, actor_alias):
-    guidance_open_random_category(context, actor_alias)
+@given('"{actor_alias}" went to randomly selected Advice Articles category')
+def given_actor_selects_random_advice_category(context, actor_alias):
+    advice_open_random_category(context, actor_alias)
 
 
 @given('"{actor_alias}" went to randomly selected "{group}" Article category via "{location}"')

@@ -18,12 +18,12 @@ Feature: Customised page
 
     Examples:
       | goods_or_services  | has_or_has_not | expected                                     |
-      | goods              | has            | FAB section, SOO tile, ExOpps tile, Guidance |
-      | goods              | has not        | SOO tile, ExOpps tile, Guidance              |
-      | services           | has            | FAB section, SOO tile, ExOpps tile, Guidance |
-      | services           | has not        | SOO tile, ExOpps tile, Guidance              |
-      | goods and services | has            | FAB section, SOO tile, ExOpps tile, Guidance |
-      | goods and services | has not        | SOO tile, ExOpps tile, Guidance              |
+      | goods              | has            | FAB section, SOO tile, ExOpps tile, Advice |
+      | goods              | has not        | SOO tile, ExOpps tile, Advice              |
+      | services           | has            | FAB section, SOO tile, ExOpps tile, Advice |
+      | services           | has not        | SOO tile, ExOpps tile, Advice              |
+      | goods and services | has            | FAB section, SOO tile, ExOpps tile, Advice |
+      | goods and services | has not        | SOO tile, ExOpps tile, Advice              |
 
 
   @ED-2589
@@ -85,7 +85,7 @@ Feature: Customised page
 
     When "Nadia" creates a personalised journey page for herself
 
-    Then "Nadia" should see a Guidance Articles read counter for the "<relevant>" exporter
+    Then "Nadia" should see a Advice Articles read counter for the "<relevant>" exporter
 
     Examples:
       | relevant   |

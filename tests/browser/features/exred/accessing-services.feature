@@ -128,7 +128,7 @@ Feature: Accessing Services
   @finance
   @accessing-services
   @interim-pages
-  Scenario Outline: Any Exporter should see "Get finance" service page not as a Guidance Article
+  Scenario Outline: Any Exporter should see "Get finance" service page not as a Advice Article
     Given "Robert" visits the "Export Readiness - Home" page
 
     When "Robert" goes to "<service>" using "Services" links in "Export Readiness - <link_location>"

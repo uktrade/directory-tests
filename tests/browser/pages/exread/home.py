@@ -71,13 +71,13 @@ CASE_STUDIES_LINK = Selector(By.CSS_SELECTOR, "#carousel h3 > a")
 CASE_STUDY_LINK = Selector(
     By.CSS_SELECTOR, "#carousel div.ed-carousel__slide:nth-child({}) h3 > a"
 )
-MARKET_RESEARCH_LINK = Selector(By.ID, "guidance-market-research-link")
-CUSTOMER_INSIGHT_LINK = Selector(By.ID, "guidance-section-customer-insight-link")
-FINANCE_LINK = Selector(By.ID, "guidance-section-finance-link")
-BUSINESS_LINK = Selector(By.ID, "guidance-section-business-planning-link")
-GETTING_PAID_LINK = Selector(By.ID, "guidance-section-getting-paid-link")
+MARKET_RESEARCH_LINK = Selector(By.ID, "advice-market-research-link")
+CUSTOMER_INSIGHT_LINK = Selector(By.ID, "advice-section-customer-insight-link")
+FINANCE_LINK = Selector(By.ID, "advice-section-finance-link")
+BUSINESS_LINK = Selector(By.ID, "advice-section-business-planning-link")
+GETTING_PAID_LINK = Selector(By.ID, "advice-section-getting-paid-link")
 OPERATIONS_AND_COMPLIANCE_LINK = Selector(
-    By.ID, "guidance-section-operations-and-compliance-link"
+    By.ID, "advice-section-operations-and-compliance-link"
 )
 CAROUSEL = {
     "itself": Selector(By.ID, "carousel"),
@@ -152,54 +152,54 @@ SELECTORS = {
         ),
         "regular exporter - image": Selector(By.ID, "personas-section-regular-image"),
     },
-    "guidance": {
-        "itself": Selector(By.ID, "resource-guidance"),
-        "title": Selector(By.ID, "guidance-section-title"),
-        "description": Selector(By.ID, "guidance-section-description"),
-        "groups": Selector(By.CSS_SELECTOR, "#resource-guidance .resources"),
-        "market research - group": Selector(By.ID, "guidance-section-market-research"),
+    "advice": {
+        "itself": Selector(By.ID, "resource-advice"),
+        "title": Selector(By.ID, "advice-section-title"),
+        "description": Selector(By.ID, "advice-section-description"),
+        "groups": Selector(By.CSS_SELECTOR, "#resource-advice .resources"),
+        "market research - group": Selector(By.ID, "advice-section-market-research"),
         "customer insight - group": Selector(
-            By.ID, "guidance-section-customer-insight"
+            By.ID, "advice-section-customer-insight"
         ),
-        "finance - group": Selector(By.ID, "guidance-section-finance"),
+        "finance - group": Selector(By.ID, "advice-section-finance"),
         "business planning - group": Selector(
-            By.ID, "guidance-section-business-planning"
+            By.ID, "advice-section-business-planning"
         ),
-        "getting paid - group": Selector(By.ID, "guidance-section-getting-paid"),
+        "getting paid - group": Selector(By.ID, "advice-section-getting-paid"),
         "operations and compliance - group": Selector(
-            By.ID, "guidance-section-operations-and-compliance"
+            By.ID, "advice-section-operations-and-compliance"
         ),
         "market research - icon": Selector(
-            By.ID, "guidance-section-market-research-icon"
+            By.ID, "advice-section-market-research-icon"
         ),
         "customer insight - icon": Selector(
-            By.ID, "guidance-section-customer-insight-icon"
+            By.ID, "advice-section-customer-insight-icon"
         ),
-        "finance - icon": Selector(By.ID, "guidance-section-finance-icon"),
+        "finance - icon": Selector(By.ID, "advice-section-finance-icon"),
         "business planning - icon": Selector(
-            By.ID, "guidance-section-business-planning-icon"
+            By.ID, "advice-section-business-planning-icon"
         ),
-        "getting paid - icon": Selector(By.ID, "guidance-section-getting-paid-icon"),
+        "getting paid - icon": Selector(By.ID, "advice-section-getting-paid-icon"),
         "operations and compliance - icon": Selector(
-            By.ID, "guidance-section-operations-and-compliance-icon"
+            By.ID, "advice-section-operations-and-compliance-icon"
         ),
         "market research - description": Selector(
-            By.CSS_SELECTOR, "#guidance-market-research-link p"
+            By.CSS_SELECTOR, "#advice-market-research-link p"
         ),
         "customer insight - description": Selector(
-            By.CSS_SELECTOR, "#guidance-section-customer-insight-link p"
+            By.CSS_SELECTOR, "#advice-section-customer-insight-link p"
         ),
         "finance - description": Selector(
-            By.CSS_SELECTOR, "#guidance-section-finance-link p"
+            By.CSS_SELECTOR, "#advice-section-finance-link p"
         ),
         "business planning - description": Selector(
-            By.CSS_SELECTOR, "#guidance-section-business-planning-link p"
+            By.CSS_SELECTOR, "#advice-section-business-planning-link p"
         ),
         "getting paid - description": Selector(
-            By.CSS_SELECTOR, "#guidance-section-getting-paid-link p"
+            By.CSS_SELECTOR, "#advice-section-getting-paid-link p"
         ),
         "operations and compliance - description": Selector(
-            By.CSS_SELECTOR, "#guidance-section-operations-and-compliance-link p"
+            By.CSS_SELECTOR, "#advice-section-operations-and-compliance-link p"
         ),
         "market research": MARKET_RESEARCH_LINK,
         "customer insight": CUSTOMER_INSIGHT_LINK,

@@ -34,9 +34,9 @@ Feature: Save reading progress
       | Export Readiness | header   | a sixth   | article list |
       | Export Readiness | home     | a quarter | top bar      |
       | Export Readiness | footer   | a third   | article list |
-      | Guidance         | header   | a fifth   | top bar      |
-      | Guidance         | home     | a quarter | article list |
-      | Guidance         | footer   | a third   | top bar      |
+      | Advice           | header   | a fifth   | top bar      |
+      | Advice           | home     | a quarter | article list |
+      | Advice           | footer   | a third   | top bar      |
 
 
   @bug
@@ -66,9 +66,9 @@ Feature: Save reading progress
       | Export Readiness | header   | a sixth   | article |
       | Export Readiness | home     | a quarter | top bar |
       | Export Readiness | footer   | a third   | article |
-      | Guidance         | header   | a fifth   | top bar |
-      | Guidance         | home     | a quarter | article |
-      | Guidance         | footer   | a third   | top bar |
+      | Advice           | header   | a fifth   | top bar |
+      | Advice           | home     | a quarter | article |
+      | Advice           | footer   | a third   | top bar |
 
 
   @bug
@@ -93,9 +93,9 @@ Feature: Save reading progress
       | Export Readiness | header   | a sixth   | article list |
       | Export Readiness | home     | a quarter | top bar      |
       | Export Readiness | footer   | a third   | article list |
-      | Guidance         | header   | a fifth   | top bar      |
-      | Guidance         | home     | a quarter | article list |
-      | Guidance         | footer   | a third   | top bar      |
+      | Advice           | header   | a fifth   | top bar      |
+      | Advice           | home     | a quarter | article list |
+      | Advice           | footer   | a third   | top bar      |
 
 
   @bug
@@ -120,9 +120,9 @@ Feature: Save reading progress
       | Export Readiness | header   | a sixth   | article |
       | Export Readiness | home     | a quarter | top bar |
       | Export Readiness | footer   | a third   | article |
-      | Guidance         | header   | a fifth   | top bar |
-      | Guidance         | home     | a quarter | article |
-      | Guidance         | footer   | a third   | top bar |
+      | Advice           | header   | a fifth   | top bar |
+      | Advice           | home     | a quarter | article |
+      | Advice           | footer   | a third   | top bar |
 
 
   @ED-2772
@@ -142,7 +142,7 @@ Feature: Save reading progress
     Examples:
       | group            | location |
       | Export Readiness | header   |
-      | Guidance         | home     |
+      | Advice           | home     |
 
 
   @ED-2772
@@ -190,9 +190,9 @@ Feature: Save reading progress
       | Export Readiness | header   | a sixth   |
       | Export Readiness | home     | a quarter |
       | Export Readiness | footer   | a third   |
-      | Guidance         | header   | a fifth   |
-      | Guidance         | home     | a quarter |
-      | Guidance         | footer   | a third   |
+      | Advice           | header   | a fifth   |
+      | Advice           | home     | a quarter |
+      | Advice           | footer   | a third   |
 
 
   @bug
@@ -224,6 +224,6 @@ Feature: Save reading progress
       | Export Readiness | header   | a sixth   |
       | Export Readiness | home     | a quarter |
       | Export Readiness | footer   | a third   |
-      | Guidance         | header   | a fifth   |
-      | Guidance         | home     | a quarter |
-      | Guidance         | footer   | a third   |
+      | Advice           | header   | a fifth   |
+      | Advice           | home     | a quarter |
+      | Advice           | footer   | a third   |

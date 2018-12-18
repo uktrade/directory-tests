@@ -156,7 +156,7 @@ def correct_article_read_counter(driver: WebDriver, expected: int):
 
 
 def check_if_link_to_next_article_is_displayed(driver: WebDriver, next_article: str):
-    """Check if link to the next Guidance Article is displayed, except on
+    """Check if link to the next Advice Article is displayed, except on
     the last one.
 
     :param driver: selenium webdriver

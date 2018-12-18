@@ -4,7 +4,7 @@ __all__ = [
     "case_studies_common",
     "common",
     "footer",
-    "guidance_common",
+    "advice_common",
     "header",
     "home",
     "interim_exporting_opportunities",
