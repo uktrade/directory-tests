@@ -85,13 +85,16 @@ VisitedArticle = namedtuple("VisitedArticle", ["index", "title", "time_to_read"]
 Executor = Union[WebDriver, Session]
 AssertionExecutor = Union[WebDriver, Response]
 Selector = namedtuple(
-    "Selector", ["by", "value", "in_desktop", "in_mobile", "in_horizontal", "type", "is_visible"]
+    "Selector", [
+        "by", "value", "in_desktop", "in_mobile", "in_horizontal", "type", 
+        "is_visible", "group_id"
+    ]
 )
 
 # define default values for various named tuples
 Actor.__new__.__defaults__ = (None,) * len(Actor._fields)
 VisitedArticle.__new__.__defaults__ = (None,) * len(VisitedArticle._fields)
-Selector.__new__.__defaults__ = (None, None, True, True, True, None, True)
+Selector.__new__.__defaults__ = (None, None, True, True, True, None, True, None)
 
 
 def get_hawk_cookie():
@@ -798,6 +801,17 @@ def get_selectors(section: dict, element_type: ElementType) -> Dict[str, Selecto
             if selector.type == element_type}
 
 
+def selectors_by_group(form_selectors: Dict[str, Selector]) -> Dict[str, Selector]:
+    groups = defaultdict(lambda: defaultdict(dict))
+    for key, selector in form_selectors.items():
+        if selector.group_id:
+            groups[selector.group_id][key] = selector
+        else:
+            groups["default"][key] = selector
+
+    return groups
+
+
 def browser_visit(driver: WebDriver, url: str):
     driver.get(url)
 
@@ -928,6 +942,20 @@ def check_radio(
             if not radio.get_property("checked"):
                 logging.debug(f"Checking '{key}' radio")
                 radio.click()
+
+
+def check_random_radio(driver: WebDriver, form_selectors: Dict[str, Selector]):
+    radio_selectors = get_selectors(form_selectors, ElementType.RADIO)
+    grouped_selectors = selectors_by_group(radio_selectos)
+    for group, selectors in grouped_selectors.items():
+        logging.debug(f"Selecting random radio option from group: {group}")
+        key = random.choice(list(selectors.keys()))
+        selector = radio_selectors[key]
+        radio = find_element(
+            driver, selector, element_name=key, wait_for_it=False)
+        if not radio.get_property("checked"):
+            logging.debug(f"Checking '{key}' radio")
+            radio.click()
 
 
 def choose_one_form_option(
