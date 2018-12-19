@@ -12,16 +12,11 @@ Feature: Accessing Services
 
     Then "Robert" should see links to following Services "<services>" in "Export Readiness - <link_location>"
 
-    @bug
-    @CMS-256
-    Examples: ID of the SOO link changed
-      | services                                                                         | link_location |
-      | Find a buyer, Export opportunities, Selling online overseas, Get Finance, Events | header        |
-
     Examples:
       | services                                                                         | link_location |
-      | Find a buyer, Export opportunities, Selling online overseas                      | home          |
-      | Find a buyer, Export opportunities, Selling online overseas, Get Finance, Events | footer        |
+      | Find a buyer, Selling online overseas, Export opportunities, Get Finance, Events | header        |
+      | Find a buyer, Selling online overseas, Export opportunities                      | home          |
+      | Find a buyer, Selling online overseas, Export opportunities, Get Finance, Events | footer        |
 
 
   @ED-2660
