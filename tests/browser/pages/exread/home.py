@@ -45,12 +45,12 @@ CONTINUE_EXPORT_JOURNEY = Selector(By.ID, "triage-section-continue-your-journey"
 NEW_TO_EXPORTING_LINK = Selector(By.ID, "personas-section-new")
 OCCASIONAL_EXPORTER_LINK = Selector(By.ID, "personas-section-occasional")
 REGULAR_EXPORTED_LINK = Selector(By.ID, "personas-section-regular")
-FIND_A_BUYER_SERVICE_LINK = Selector(By.ID, "services-section-find-a-buyer-link")
+FIND_A_BUYER_SERVICE_LINK = Selector(By.CSS_SELECTOR, "#services-section-find-a-buyer a")
 SELLING_ONLINE_OVERSEAS_SERVICE_LINK = Selector(
-    By.ID, "services-section-selling-online-overseas-link"
+    By.CSS_SELECTOR, "#services-section-selling-online-overseas a"
 )
 EXPORT_OPPORTUNITIES_SERVICE_LINK = Selector(
-    By.ID, "services-section-export-opportunities-link"
+    By.CSS_SELECTOR, "#services-section-export-opportunities a"
 )
 CAROUSEL_INDICATORS_SECTION = Selector(
     By.CSS_SELECTOR, "#carousel  div.ed-carousel__indicators"
