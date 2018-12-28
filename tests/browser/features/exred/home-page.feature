@@ -142,3 +142,4 @@ Feature: Home Page
       | Español            |
       | Português          |
       | العربيّة            |
+      | Français           |

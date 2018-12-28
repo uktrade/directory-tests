@@ -40,6 +40,7 @@ JAPANESE = Selector(By.ID, "header-language-selector-ja")
 SPANISH = Selector(By.ID, "header-language-selector-es")
 PORTUGUESE = Selector(By.ID, "header-language-selector-pt")
 ARABIC = Selector(By.ID, "header-language-selector-ar")
+FRENCH = Selector(By.ID, "header-language-selector-fr")
 ELEMENTS_ON = {
     "export readiness - home": {
         "itself": Selector(By.CSS_SELECTOR, "section.language-selector-dialog"),
@@ -51,6 +52,7 @@ ELEMENTS_ON = {
         "Español": SPANISH,
         "Português": PORTUGUESE,
         "العربيّة": ARABIC,
+        "Français": FRENCH,
         "close": LANGUAGE_SELECTOR_CLOSE,
     },
     "export readiness - international": {
@@ -64,6 +66,7 @@ ELEMENTS_ON = {
         "Español": SPANISH,
         "Português": PORTUGUESE,
         "العربيّة": ARABIC,
+        "Français": FRENCH,
         "close": LANGUAGE_SELECTOR_CLOSE,
     },
 }
@@ -76,6 +79,7 @@ KEYBOARD_NAVIGABLE_ELEMENTS = {
         ("Español", SPANISH),
         ("Português", PORTUGUESE),
         ("العربيّة", ARABIC),
+        ("Français", FRENCH),
         ("close", LANGUAGE_SELECTOR_CLOSE),
     ],
     "export readiness - international": [
@@ -86,6 +90,7 @@ KEYBOARD_NAVIGABLE_ELEMENTS = {
         ("Español", SPANISH),
         ("Português", PORTUGUESE),
         ("العربيّة", ARABIC),
+        ("Français", FRENCH),
         ("domestic page", DOMESTIC_PAGE),
         ("close", LANGUAGE_SELECTOR_CLOSE),
     ],
@@ -99,6 +104,7 @@ LANGUAGE_INDICATOR_VALUES = {
     "Español": "es",
     "Português": "pt",
     "العربيّة": "ar",
+    "Français": "fr",
 }
 
 
