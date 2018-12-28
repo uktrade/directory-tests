@@ -133,8 +133,13 @@ def open(driver: WebDriver, group: str, element: str):
     menu_item = find_element(driver, menu_item_selector)
     with assertion_msg("%s menu item: '%s' is not visible", group, element):
         assert menu_item.is_displayed()
-    with wait_for_page_load_after_action(driver):
-        menu_item.click()
+    if menu_item.get_attribute("target") == "_blank":
+        with wait_for_page_load_after_action(driver):
+            href = menu_item.get_attribute("href")
+            driver.get(href)
+    else:
+        with wait_for_page_load_after_action(driver):
+            menu_item.click()
     take_screenshot(driver, NAME + " after clicking on: {} link".format(element))
 
 
