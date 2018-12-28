@@ -137,12 +137,12 @@ Feature: Header-Footer
     Examples:
       | specific            | expected                                      | selected section |
       | Home                | Export Readiness - Home                       | header           |
-      | Your export journey | Export Readiness - Create your export journey | footer           |
 
     @decommissioned
     Examples:
       | specific            | expected                                      | selected section |
       | Your export journey | Export Readiness - Create your export journey | header           |
+      | Your export journey | Export Readiness - Create your export journey | footer           |
 
 
   @decommissioned
