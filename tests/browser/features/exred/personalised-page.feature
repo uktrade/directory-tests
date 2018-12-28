@@ -1,3 +1,4 @@
+@decommissioned
 @customised-page
 Feature: Customised page
 

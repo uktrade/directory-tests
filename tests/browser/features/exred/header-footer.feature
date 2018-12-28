@@ -22,8 +22,13 @@ Feature: Header-Footer
       | Export Readiness - Interim export opportunities |
       | Export Readiness - Have you exported before     |
       | Find a Buyer - Home                             |
-#      | Find a Supplier - Home                          |
-#      | Events - Home                                   |
+
+    # these services use different logo
+    @wip
+    Examples:
+      | selected                                        |
+      | Find a Supplier - Home                          |
+      | Events - Home                                   |
 
 
   @bug
@@ -62,13 +67,24 @@ Feature: Header-Footer
       | Export Readiness - Home                         |
       | Single Sign-On - Registration                   |
       | Single Sign-On - Sign in                        |
-      | Single Sign-On - Profile about                  |
       | Export Readiness - Get finance                  |
       | Export Readiness - Interim export opportunities |
       | Export Readiness - Have you exported before     |
       | Find a Buyer - Home                             |
       | Export Opportunities - Home                     |
-#      | Selling Online Overseas - Home                  | There's no SOO DEV env
+    @bug
+    # There's no SOO DEV env
+    @fixme
+    Examples:
+      | selected                                        |
+      | Selling Online Overseas - Home                  | 
+
+    @bug
+    @TT-886
+    @fixme
+    Examples:
+      | selected                                        |
+      | Single Sign-On - Profile about                  |
 
 
   @ED-3091
@@ -121,10 +137,15 @@ Feature: Header-Footer
     Examples:
       | specific            | expected                                      | selected section |
       | Home                | Export Readiness - Home                       | header           |
-      | Your export journey | Export Readiness - Create your export journey | header           |
       | Your export journey | Export Readiness - Create your export journey | footer           |
 
+    @decommissioned
+    Examples:
+      | specific            | expected                                      | selected section |
+      | Your export journey | Export Readiness - Create your export journey | header           |
 
+
+  @decommissioned
   @ED-3240
   @your-export-journey-link
   Scenario: Any user who visits the "Create your export journey" page for the first time, should be able to see all expected sections
@@ -138,6 +159,7 @@ Feature: Header-Footer
       | Report this page |
 
 
+  @decommissioned
   @ED-3261
   @bug
   @ED-3216
@@ -154,6 +176,7 @@ Feature: Header-Footer
       | Save progress |
 
 
+  @decommissioned
   @ED-3262
   @your-export-journey-link
   Scenario: Any user who visits the "Create your export journey" page for the first time, should be able to start the Triage
@@ -164,6 +187,7 @@ Feature: Header-Footer
     Then "Robert" should be on the "Export Readiness - have you exported before" page
 
 
+  @decommissioned
   @ED-3263
   @your-export-journey-link
   @session
@@ -180,6 +204,7 @@ Feature: Header-Footer
       | Save Progress |
 
 
+  @decommissioned
   @ED-3283
   @your-export-journey-link
   @<specific>
@@ -213,6 +238,7 @@ Feature: Header-Footer
       | Selling Online Overseas - Home |
 
 
+  @decommissioned
   @ED-3284
   @your-export-journey-link
   @<specific>
@@ -245,6 +271,7 @@ Feature: Header-Footer
       | Selling Online Overseas - Home |
 
 
+  @decommissioned
   @ED-3285
   @your-export-journey-link
   Scenario Outline: "<relevant>" Exporters who have created their "Personalised Journey page" and have not signed-in should be asked to register or sign-in, in the Advice section on the Personalised Journey page
@@ -263,6 +290,7 @@ Feature: Header-Footer
       | Occasional |
 
 
+  @decommissioned
   @bug
   @ED-3702
   @fixed
@@ -282,6 +310,7 @@ Feature: Header-Footer
       | Save Progress |
 
 
+  @decommissioned
   @ED-3287
   @<group>
   @articles
@@ -295,10 +324,11 @@ Feature: Header-Footer
 
     Examples: article groups
       | group            |
-      | Export Readiness |
       | Advice           |
+      | Export Readiness |
 
 
+  @decommissioned
   @ED-3288
   @<group>
   @articles
@@ -315,10 +345,11 @@ Feature: Header-Footer
 
     Examples: article groups
       | group            |
-      | Export Readiness |
       | Advice           |
+      | Export Readiness |
 
 
+  @decommissioned
   @ED-3289
   @<group>
   @articles
@@ -336,10 +367,11 @@ Feature: Header-Footer
 
     Examples: article groups
       | group            |
-      | Export Readiness |
       | Advice           |
+      | Export Readiness |
 
 
+  @decommissioned
   @ED-3290
   @<group>
   @articles
@@ -358,5 +390,6 @@ Feature: Header-Footer
 
     Examples: article groups
       | group            |
-      | Export Readiness |
       | Advice           |
+      | Export Readiness |
+

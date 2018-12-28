@@ -21,6 +21,7 @@ Feature: Case Studies
       | Third    |
 
 
+  @decommissioned
   @ED-2593
   @personalised-page
   @case-studies
@@ -39,6 +40,7 @@ Feature: Case Studies
       | Occasional | Second   |
 
 
+  @decommissioned
   @ED-2593
   @personalised-page
   @case-studies
