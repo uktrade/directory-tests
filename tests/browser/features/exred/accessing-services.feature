@@ -43,7 +43,7 @@ Feature: Accessing Services
   @home-page
   @accessing-services
   @interim-pages
-  @<service_name>
+  @<service>
   @external-service
   Scenario Outline: Any Exporter should be able to get to the "<service>" Service page via interim page which was accessed via "<link_location>"
     Given "Robert" visits the "Export Readiness - Home" page
@@ -66,7 +66,7 @@ Feature: Accessing Services
   @ED-2661
   @home-page
   @accessing-services
-  @<service_name>
+  @<service>
   @external-service
   Scenario Outline: Any Exporter should be able to get to the "<service>" Service page using "<link_location>"
     Given "Robert" visits the "Export Readiness - Home" page
@@ -95,6 +95,7 @@ Feature: Accessing Services
   @home-page
   @finance
   @accessing-services
+  @<service>
   @interim-pages
   Scenario Outline: Any Exporter should see "Get finance" service page not as a Advice Article
     Given "Robert" visits the "Export Readiness - Home" page
@@ -114,4 +115,3 @@ Feature: Accessing Services
       | service     | link_location |
       | Get Finance | header        |
       | Get Finance | footer        |
-
