@@ -71,14 +71,6 @@ CASE_STUDIES_LINK = Selector(By.CSS_SELECTOR, "#carousel h3 > a")
 CASE_STUDY_LINK = Selector(
     By.CSS_SELECTOR, "#carousel div.ed-carousel__slide:nth-child({}) h3 > a"
 )
-MARKET_RESEARCH_LINK = Selector(By.ID, "advice-market-research-link")
-CUSTOMER_INSIGHT_LINK = Selector(By.ID, "advice-section-customer-insight-link")
-FINANCE_LINK = Selector(By.ID, "advice-section-finance-link")
-BUSINESS_LINK = Selector(By.ID, "advice-section-business-planning-link")
-GETTING_PAID_LINK = Selector(By.ID, "advice-section-getting-paid-link")
-OPERATIONS_AND_COMPLIANCE_LINK = Selector(
-    By.ID, "advice-section-operations-and-compliance-link"
-)
 CAROUSEL = {
     "itself": Selector(By.ID, "carousel"),
     "title": Selector(By.ID, "case-studies-section-title"),
@@ -116,7 +108,7 @@ SELECTORS = {
         "link": Selector(By.CSS_SELECTOR, "#header-beta-bar a"),
     },
     "hero": {
-        "itself": Selector(By.CSS_SELECTOR, "section.hero-campaign-section"),
+        "itself": Selector(By.ID, "hero-campaign-section"),
         "title": Selector(By.ID, "hero-campaign-section-title"),
         "description": Selector(By.ID, "hero-campaign-section-description"),
         "logo": Selector(By.ID, "hero-campaign-section-eig-logo"),
@@ -156,82 +148,19 @@ SELECTORS = {
         "itself": Selector(By.ID, "resource-advice"),
         "title": Selector(By.ID, "advice-section-title"),
         "description": Selector(By.ID, "advice-section-description"),
-        "groups": Selector(By.CSS_SELECTOR, "#resource-advice .resources"),
-        "market research - group": Selector(By.ID, "advice-section-market-research"),
-        "customer insight - group": Selector(
-            By.ID, "advice-section-customer-insight"
-        ),
-        "finance - group": Selector(By.ID, "advice-section-finance"),
-        "business planning - group": Selector(
-            By.ID, "advice-section-business-planning"
-        ),
-        "getting paid - group": Selector(By.ID, "advice-section-getting-paid"),
-        "operations and compliance - group": Selector(
-            By.ID, "advice-section-operations-and-compliance"
-        ),
-        "market research - icon": Selector(
-            By.ID, "advice-section-market-research-icon"
-        ),
-        "customer insight - icon": Selector(
-            By.ID, "advice-section-customer-insight-icon"
-        ),
-        "finance - icon": Selector(By.ID, "advice-section-finance-icon"),
-        "business planning - icon": Selector(
-            By.ID, "advice-section-business-planning-icon"
-        ),
-        "getting paid - icon": Selector(By.ID, "advice-section-getting-paid-icon"),
-        "operations and compliance - icon": Selector(
-            By.ID, "advice-section-operations-and-compliance-icon"
-        ),
-        "market research - description": Selector(
-            By.CSS_SELECTOR, "#advice-market-research-link p"
-        ),
-        "customer insight - description": Selector(
-            By.CSS_SELECTOR, "#advice-section-customer-insight-link p"
-        ),
-        "finance - description": Selector(
-            By.CSS_SELECTOR, "#advice-section-finance-link p"
-        ),
-        "business planning - description": Selector(
-            By.CSS_SELECTOR, "#advice-section-business-planning-link p"
-        ),
-        "getting paid - description": Selector(
-            By.CSS_SELECTOR, "#advice-section-getting-paid-link p"
-        ),
-        "operations and compliance - description": Selector(
-            By.CSS_SELECTOR, "#advice-section-operations-and-compliance-link p"
-        ),
-        "market research": MARKET_RESEARCH_LINK,
-        "customer insight": CUSTOMER_INSIGHT_LINK,
-        "finance": FINANCE_LINK,
-        "business planning": BUSINESS_LINK,
-        "getting paid": GETTING_PAID_LINK,
-        "operations and compliance": OPERATIONS_AND_COMPLIANCE_LINK,
+        "groups": Selector(By.CSS_SELECTOR, "#resource-advice .card"),
+        "cards": Selector(By.CSS_SELECTOR, "#resource-advice .card-link"),
     },
     "services": {
         "itself": Selector(By.ID, "services"),
         "title": Selector(By.ID, "services-section-title"),
         "description": Selector(By.ID, "services-section-description"),
-        "groups": Selector(By.CSS_SELECTOR, "#services .service-teaser"),
+        "fab": Selector(By.ID, "services-section-find-a-buyer"),
+        "soo": Selector(By.ID, "services-section-selling-online-overseas"),
+        "exops": Selector(By.ID, "services-section-export-opportunities"),
         "find a buyer": FIND_A_BUYER_SERVICE_LINK,
-        "find a buyer - image": Selector(By.ID, "services-section-find-a-buyer-image"),
-        "find a buyer - description": Selector(
-            By.ID, "services-section-find-a-buyer-description"
-        ),
         "selling online overseas": SELLING_ONLINE_OVERSEAS_SERVICE_LINK,
-        "selling online overseas - image": Selector(
-            By.ID, "services-section-selling-online-overseas-image"
-        ),
-        "selling online overseas - description": Selector(
-            By.ID, "services-section-selling-online-overseas-description"
-        ),
         "export opportunities": EXPORT_OPPORTUNITIES_SERVICE_LINK,
-        "export opportunities - image": Selector(
-            By.ID, "services-section-export-opportunities-image"
-        ),
-        "export opportunities - description": Selector(
-            By.ID, "services-section-export-opportunities-description"
-        ),
     },
     "case studies": {
         "itself": Selector(By.ID, "carousel"),
@@ -287,29 +216,6 @@ def should_see_link_to(driver: WebDriver, section: str, item_name: str):
         "It looks like '%s' in '%s' section is not visible", item_name, section
     ):
         assert menu_item.is_displayed()
-
-
-def start_exporting_journey(driver: WebDriver):
-    """Start Exporting Journey (Triaging).
-
-    :param driver: Any Selenium Driver (Remote, Chrome, Firefox, PhantomJS etc.
-    """
-    button = find_element(driver, GET_STARTED_BUTTON)
-    assert button.is_displayed()
-    with wait_for_page_load_after_action(driver):
-        button.click()
-
-
-def continue_export_journey(driver: WebDriver):
-    """Continue your Export Journey (Triage)."""
-    button = find_element(
-        driver,
-        CONTINUE_EXPORT_JOURNEY,
-        element_name="Continue your export journey button",
-    )
-    assert button.is_displayed()
-    with wait_for_page_load_after_action(driver):
-        button.click()
 
 
 def get_number_of_current_carousel_article(driver: WebDriver) -> int:
