@@ -1,6 +1,9 @@
 @pixels
 Feature: Pixels
 
+  Background:
+    Given hawk cookie is set on "Invest - Home" page
+
   Scenario Outline: Pixels should be present on "<selected>" page
     Given "Robert" visits the "Invest - <selected>" page
 
