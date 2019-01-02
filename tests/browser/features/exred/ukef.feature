@@ -43,7 +43,7 @@ Feature: UK Export Finance page & contact-us form
 
     When "Robert" decides to use "Export" breadcrumb on the "Export Readiness - Get Finance" page
 
-    Then "Robert" should be on the "Export Readiness - Home" page
+    Then "Robert" should be on the "Export Readiness - Home" page or on the International page
 
 
   @TT-585
