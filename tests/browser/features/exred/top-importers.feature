@@ -1,3 +1,4 @@
+@decommissioned
 @top-importers
 Feature: Top importers
 

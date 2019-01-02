@@ -1,3 +1,4 @@
+@decommissioned
 @articles
 @personas
 @export-readiness

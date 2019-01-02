@@ -1,3 +1,4 @@
+@decommissioned
 @articles
 @session
 Feature: Save reading progress
