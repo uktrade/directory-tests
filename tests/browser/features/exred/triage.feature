@@ -1,3 +1,4 @@
+@decommissioned
 @triage
 Feature: Triage
 

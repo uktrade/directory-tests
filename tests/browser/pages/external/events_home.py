@@ -19,7 +19,7 @@ NAME = "Home"
 SERVICE = "Events"
 TYPE = "home"
 URL = urljoin(EVENTS_UI_URL, "")
-GREAT_LOGO = Selector(By.CSS_SELECTOR, "#portal-top > h1 > a > img")
+GREAT_LOGO = Selector(By.CSS_SELECTOR, "div.event-logo")
 SELECTORS = {"general": {"great.gov.uk logo": GREAT_LOGO}}
 
 
@@ -30,5 +30,5 @@ def visit(driver: WebDriver, *, first_time: bool = False):
 def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     wait_for_visibility(driver, GREAT_LOGO, time_to_wait=15)
-    check_url(driver, URL, exact_match=True)
+    check_url(driver, URL, exact_match=False)
     logging.debug("All expected elements are visible on '%s' page", NAME)

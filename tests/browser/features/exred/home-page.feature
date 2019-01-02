@@ -12,57 +12,11 @@ Feature: Home Page
         | Sections          |
         | Beta bar          |
         | Hero              |
-        | Exporting Journey |
-        | Export Readiness  |
         | Advice            |
         | Services          |
         | Case Studies      |
         | Business is Great |
         | Error Reporting   |
-
-
-  @new-triage
-  @ED-2366
-  @triage
-  Scenario: Any Exporter visiting the home page should be able to get to triage
-    Given "Robert" visits the "Export Readiness - Home" page for the first time
-
-    When "Robert" decides to get started in Exporting journey section
-
-    Then "Robert" should be on the "Export Readiness - Have you exported before" page
-
-
-  @ED-2366
-  @triage
-  Scenario: Any Exporter visiting the home page after triage should be able to get to personalised page
-    Given "Robert" answered triage questions
-    And "Robert" decided to create his personalised journey page
-    And "Robert" is on the "Export Readiness - Personalised Journey" page
-    And "Robert" goes to the "Export Readiness - Home" page
-
-    When "Robert" decides to continue in Exporting journey section
-
-    Then "Robert" should be on the "Export Readiness - Personalised Journey" page
-
-
-  @ED-2366
-  @personas
-  @articles
-  @<specific>
-  Scenario Outline: "<specific>" Exporter should be able to get to a relevant Export Readiness Article List from Export Readiness section on the home page
-    Given "Robert" classifies himself as "<specific>" exporter
-
-    When "Robert" goes to the Export Readiness Articles for "<specific>" Exporters via "Export Readiness - Home"
-    And "Robert" shows all of the articles on the page whenever possible
-
-    Then "Robert" should see an ordered list of all Export Readiness Articles selected for "<specific>" Exporters
-    And "Robert" should see on the Export Readiness Articles page "Articles Read counter, Total number of Articles, Time to complete remaining chapters"
-
-    Examples:
-      | specific   |
-      | New        |
-      | Occasional |
-      | Regular    |
 
 
   @ED-3014
@@ -142,3 +96,52 @@ Feature: Home Page
       | Español            |
       | Português          |
       | العربيّة            |
+      | Français           |
+
+
+  @decommissioned
+  @ED-2366
+  @personas
+  @articles
+  @<specific>
+  Scenario Outline: "<specific>" Exporter should be able to get to a relevant Export Readiness Article List from Export Readiness section on the home page
+    Given "Robert" classifies himself as "<specific>" exporter
+
+    When "Robert" goes to the Export Readiness Articles for "<specific>" Exporters via "Export Readiness - Home"
+    And "Robert" shows all of the articles on the page whenever possible
+
+    Then "Robert" should see an ordered list of all Export Readiness Articles selected for "<specific>" Exporters
+    And "Robert" should see on the Export Readiness Articles page "Articles Read counter, Total number of Articles, Time to complete remaining chapters"
+
+    Examples:
+      | specific   |
+      | New        |
+      | Occasional |
+      | Regular    |
+
+
+  @decommissioned
+  @new-triage
+  @ED-2366
+  @triage
+  Scenario: Any Exporter visiting the home page should be able to get to triage
+    Given "Robert" visits the "Export Readiness - Home" page for the first time
+
+    When "Robert" decides to get started in Exporting journey section
+
+    Then "Robert" should be on the "Export Readiness - Have you exported before" page
+
+
+  @decommissioned
+  @ED-2366
+  @triage
+  Scenario: Any Exporter visiting the home page after triage should be able to get to personalised page
+    Given "Robert" answered triage questions
+    And "Robert" decided to create his personalised journey page
+    And "Robert" is on the "Export Readiness - Personalised Journey" page
+    And "Robert" goes to the "Export Readiness - Home" page
+
+    When "Robert" decides to continue in Exporting journey section
+
+    Then "Robert" should be on the "Export Readiness - Personalised Journey" page
+

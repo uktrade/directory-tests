@@ -1,3 +1,4 @@
+@decommissioned
 @articles
 @feedback
 Feature: Feedback (tell us why)
