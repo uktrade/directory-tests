@@ -51,9 +51,9 @@ SELECTORS = {
             "checkbox-multiple-offering-competitive-but-secure-payment-terms-label",
             type=ElementType.CHECKBOX,
         ),
-        "advice on export finance and insurance": Selector(
+        "guidance on export finance and insurance": Selector(
             By.ID,
-            "checkbox-multiple-advice-on-export-finance-and-insurance-label",
+            "checkbox-multiple-guidance-on-export-finance-and-insurance-label",
             type=ElementType.CHECKBOX,
         ),
         "continue": SUBMIT_BUTTON,
@@ -85,7 +85,7 @@ def generate_form_details(actor: Actor) -> dict:
     result = {
         "securing upfront funding": True,
         "offering competitive but secure payment terms": True,
-        "advice on export finance and insurance": True,
+        "guidance on export finance and insurance": True,
     }
     return result
 
