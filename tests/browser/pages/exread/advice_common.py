@@ -90,18 +90,6 @@ def should_see_sections(driver: WebDriver, names: List[str]):
     check_for_sections(driver, all_sections=SELECTORS, sought_sections=names)
 
 
-def open_first_article(driver: WebDriver):
-    first_article = find_element(
-        driver, FIRST_ARTICLE, element_name="First article on list",
-        wait_for_it=False
-    )
-    check_if_element_is_visible(
-        first_article, element_name="First article on list")
-    with wait_for_page_load_after_action(driver):
-        first_article.click()
-    take_screenshot(driver, "after opening first article")
-
-
 def get_article_counter(driver: WebDriver) -> int:
     article_counter = find_element(
         driver, ARTICLE_COUNTER, element_name="total number of articles",

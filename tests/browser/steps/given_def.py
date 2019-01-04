@@ -14,7 +14,6 @@ from steps.when_impl import (
     actor_classifies_himself_as,
     articles_open_any,
     articles_open_any_but_the_last,
-    articles_open_first,
     articles_open_group,
     articles_read_a_number_of_them,
     articles_show_all,
@@ -111,11 +110,6 @@ def given_actor_sets_sector_preference(context, actor_alias, goods_or_services):
 def given_actor_set_preferences_for_online_marketplaces(
         context, actor_alias, used_or_not):
     set_online_marketplace_preference(context, actor_alias, used_or_not)
-
-
-@given('"{actor_alias}" opened first Article from the list')
-def given_actor_opened_first_article(context, actor_alias):
-    articles_open_first(context, actor_alias)
 
 
 @given('"{actor_alias}" accessed Export Readiness articles for "{category}" Exporters via "{location}"')

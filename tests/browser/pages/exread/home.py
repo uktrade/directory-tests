@@ -387,7 +387,6 @@ def open_any_element_in_section(
     element = random.choice(elements)
     check_if_element_is_visible(element, element_name=selector_key)
     element_text = extract_text(element.text, section_name)
-    logging.debug(element_text)
     with wait_for_page_load_after_action(driver):
         element.click()
     return element_text

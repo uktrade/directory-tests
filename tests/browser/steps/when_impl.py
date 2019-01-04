@@ -981,22 +981,6 @@ def set_online_marketplace_preference(
     )
 
 
-def articles_open_first(context: Context, actor_alias: str):
-    driver = context.driver
-    actor = get_actor(context, actor_alias)
-    group = actor.article_group
-    category = actor.article_category
-    first_article = get_articles(group, category)[0]
-    exread.advice_common.open_first_article(driver)
-    exread.article_common.should_see_article(driver, first_article.title)
-    logging.debug(
-        "%s is on the first article %s: %s",
-        actor_alias,
-        first_article.title,
-        driver.current_url,
-    )
-
-
 def articles_open_any_but_the_last(context: Context, actor_alias: str):
     driver = context.driver
     actor = get_actor(context, actor_alias)
