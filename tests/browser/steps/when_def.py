@@ -77,12 +77,6 @@ def when_open_service_link_on_interim_page(context, actor_alias, service):
     open_service_link_on_interim_page(context, actor_alias, service)
 
 
-@when('"{actor_alias}" decides to register to save her reading progress using link visible in the "{location}"')
-@when('"{actor_alias}" decides to register to save his reading progress using link visible in the "{location}"')
-def when_actor_decides_to_register(context, actor_alias, location):
-    registration_go_to(context, actor_alias, location)
-
-
 @when('"{actor_alias}" completes the registration and fake email verification process')
 def when_actor_registers_fake_email_verification(context, actor_alias):
     registration_submit_form_and_verify_account(
