@@ -114,3 +114,14 @@ Feature: Advice articles
       | Facebook     |
       | Twitter      |
       | Facebook     |
+
+
+  @CMS-686
+  @report
+  Scenario: Any Exporter should be able to report a problem with Advice Article page
+    Given "Robert" is on randomly selected Advice article page
+
+    When "Robert" decides to report a problem with the page
+
+    Then "Robert" should be on the "Export Readiness - Feedback - contact us" page
+
