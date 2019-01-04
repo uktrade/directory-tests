@@ -91,3 +91,26 @@ Feature: Advice articles
       | Breadcrumbs              |
       | List of articles         |
       | Error reporting          |
+
+
+  @CMS-686
+  @bug
+  @CMS-733
+  @fixme
+  @sharing
+  @social-media
+  @<group>
+  @<social_media>
+  Scenario Outline: Any Exporter should be able to share Advice article via "<social_media>"
+    Given "Robert" is on randomly selected Advice article page
+
+    When "Robert" decides to share the article via "<social_media>"
+
+    Then "Robert" should be taken to a new tab with the "<social_media>" share page opened
+    And "Robert" should that "<social_media>" share page has been pre-populated with message and the link to the article
+
+    Examples:
+      | social_media |
+      | Facebook     |
+      | Twitter      |
+      | Facebook     |
