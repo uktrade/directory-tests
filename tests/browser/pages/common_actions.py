@@ -57,6 +57,7 @@ Actor = namedtuple(
         "password",
         "company_name",
         "article_category",
+        "visited_articles",
         "case_study_title",
         "email_confirmation_link",
         "registered",
