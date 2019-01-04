@@ -43,11 +43,6 @@ def given_actor_visits_page(context, actor_alias, page_name):
     visit_page(context, actor_alias, page_name)
 
 
-@given('"{actor_alias}" visits the "{page_name}" page for the first time')
-def given_actor_visits_page_for_the_first_time(context, actor_alias, page_name):
-    visit_page(context, actor_alias, page_name, first_time=True)
-
-
 @given('"{actor_alias}" is on the "{page_name}" page')
 def given_actor_is_on_page(context, actor_alias, page_name):
     should_be_on_page(context, actor_alias, page_name)

@@ -64,8 +64,6 @@ def visit_page(
     context: Context,
     actor_alias: str,
     page_name: str,
-    *,
-    first_time: bool = False,
 ):
     """Will visit specific page.
 
@@ -90,9 +88,9 @@ def visit_page(
     has_action(page, "visit")
 
     if is_special_case(page_name):
-        page.visit(context.driver, first_time=first_time, page_name=page_name)
+        page.visit(context.driver, page_name=page_name)
     else:
-        page.visit(context.driver, first_time=first_time)
+        page.visit(context.driver)
     update_actor(context, actor_alias, visited_page=page)
 
 

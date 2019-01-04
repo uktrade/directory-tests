@@ -87,13 +87,13 @@ def clean_name(name: str) -> str:
     return name.split(" - ")[1].strip()
 
 
-def visit(driver: WebDriver, *, first_time: bool = False, page_name: str = None):
+def visit(driver: WebDriver, *, page_name: str = None):
     if page_name:
         key = clean_name(page_name).lower()
         url = URLs[key]
     else:
         url = URL
-    go_to_url(driver, url, NAME, first_time=first_time)
+    go_to_url(driver, url, NAME)
 
 
 def should_be_here(driver: WebDriver, *, page_name: str):

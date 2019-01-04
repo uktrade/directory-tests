@@ -29,7 +29,7 @@ SELECTORS = {
 }
 
 
-def visit(driver: WebDriver, *, first_time: bool = False):
+def visit(driver: WebDriver):
     visit_url(driver, URL)
 
 

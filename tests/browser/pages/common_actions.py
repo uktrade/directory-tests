@@ -118,10 +118,8 @@ def get_hawk_cookie():
     }
 
 
-def go_to_url(driver: WebDriver, url: str, page_name: str, *, first_time: bool = False):
+def go_to_url(driver: WebDriver, url: str, page_name: str):
     """Go to the specified URL and take a screenshot afterwards."""
-    if first_time:
-        clear_driver_cookies(driver)
     driver.get(url)
     take_screenshot(driver, page_name)
 

@@ -128,7 +128,7 @@ Feature: Header-Footer
   @home-page
   @<specific>
   Scenario Outline: Any Exported should be able to get to the Domestic "<expected>" page via "<specific>" link in the "<selected section>"
-    Given "Robert" visits the "Export Readiness - Home" page for the first time
+    Given "Robert" visits the "Export Readiness - Home" page
 
     When "Robert" goes to the "<specific>" page via "General" links in "Export Readiness - <selected section>"
 
