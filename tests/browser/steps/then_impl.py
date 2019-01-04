@@ -105,31 +105,6 @@ def advice_should_see_article_read_counter(
     )
 
 
-def advice_should_see_total_number_of_articles(
-    context: Context, actor_alias: str, category: str
-):
-    exread.advice_common.correct_total_number_of_articles(context.driver, category)
-    logging.debug(
-        "%s can see Total Number of Articles for Advice '%s' category",
-        actor_alias,
-        category,
-    )
-
-
-def advice_should_see_articles(
-    context: Context, actor_alias: str, category: str
-):
-    exread.advice_common.check_if_correct_articles_are_displayed(
-        context.driver, category
-    )
-    logging.debug(
-        "%s can see correct Articles for Advice '%s' category and link to "
-        "the next category wherever possible",
-        actor_alias,
-        category,
-    )
-
-
 def advice_check_if_link_to_next_category_is_displayed(
     context: Context, actor_alias: str, next_category: str
 ):
@@ -141,19 +116,6 @@ def advice_check_if_link_to_next_category_is_displayed(
         " expected",
         actor_alias,
         next_category,
-    )
-
-
-def advice_expected_page_elements_should_be_visible(
-    context: Context, actor_alias: str, elements: list
-):
-    exread.advice_common.check_elements_are_visible(context.driver, elements)
-    logging.debug(
-        "%s can see all expected page elements: '%s' on current Advice "
-        "Articles page: %s",
-        actor_alias,
-        elements,
-        context.driver.current_url,
     )
 
 

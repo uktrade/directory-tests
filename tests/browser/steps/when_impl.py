@@ -24,7 +24,6 @@ from pages.common_actions import (
     get_hawk_cookie,
 )
 from registry.articles import (
-    ADVICE,
     get_article,
     get_articles,
     get_random_article,

@@ -33,11 +33,8 @@ from steps.then_impl import (
     generic_should_see_expected_page_content,
     generic_should_see_form_choices,
     advice_check_if_link_to_next_category_is_displayed,
-    advice_expected_page_elements_should_be_visible,
     advice_ribbon_should_be_visible,
     advice_should_see_article_read_counter,
-    advice_should_see_articles,
-    advice_should_see_total_number_of_articles,
     advice_tile_should_be_highlighted,
     header_check_dit_logo,
     header_check_favicon,
@@ -108,28 +105,11 @@ def then_should_see_article_read_counter(
         context, actor_alias, category, expected)
 
 
-@then('"{actor_alias}" should see total number of articles for the "{category}" Advice category')
-def then_total_number_of_articles_should_be_visible(context, actor_alias, category):
-    advice_should_see_total_number_of_articles(context, actor_alias, category)
-
-
-@then('"{actor_alias}" should see an ordered list of all Advice Articles selected for "{category}" category')
-def then_should_see_advice_articles(context, actor_alias, category):
-    advice_should_see_articles(context, actor_alias, category)
-
-
 @then('"{actor_alias}" should see a link to the "{next_category}" Advice category')
 def then_check_if_link_to_next_category_is_displayed(
         context, actor_alias, next_category):
     advice_check_if_link_to_next_category_is_displayed(
         context, actor_alias, next_category)
-
-
-@then('"{actor_alias}" should see on the Advice Articles page "{elements}"')
-def then_expected_advice_page_elements_should_be_visible(
-        context, actor_alias, elements):
-    advice_expected_page_elements_should_be_visible(
-        context, actor_alias, elements.split(", "))
 
 
 @then('"{actor_alias}" should see a Advice Articles read counter for the "{exporter_status}" exporter')
