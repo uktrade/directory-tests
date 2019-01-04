@@ -216,7 +216,8 @@ def check_for_expected_sections_elements(
 
 
 def find_and_click_on_page_element(
-    driver: WebDriver, sections: dict, element_name: str, *, wait_for_it: bool=True
+    driver: WebDriver, sections: dict, element_name: str, *,
+    wait_for_it: bool = True
 ):
     """Find page element in any page section selectors and click on it."""
     found_selector = False
@@ -234,8 +235,17 @@ def find_and_click_on_page_element(
                 driver, selector, element_name=element_name, wait_for_it=wait_for_it
             )
             check_if_element_is_visible(web_element, element_name)
-            with wait_for_page_load_after_action(driver):
-                web_element.click()
+            if web_element.get_attribute("target") == "_blank":
+                logging.debug(
+                    f"'{web_element.text}' opens in new tab, but will "
+                    f"forcefully open it in the same one"
+                )
+                with wait_for_page_load_after_action(driver):
+                    href = web_element.get_attribute("href")
+                    driver.get(href)
+            else:
+                with wait_for_page_load_after_action(driver):
+                    web_element.click()
     with assertion_msg("Could not find '%s' in any section", element_name):
         assert found_selector
 
