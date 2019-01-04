@@ -9,14 +9,15 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages import ElementType
 from pages.common_actions import (
-    Selector,
+    check_for_sections,
     check_if_element_is_visible,
+    check_url,
     find_element,
     find_elements,
+    go_to_url,
+    Selector,
     take_screenshot,
     wait_for_page_load_after_action,
-    check_url,
-    check_for_sections
 )
 from settings import EXRED_UI_URL
 
@@ -78,6 +79,16 @@ SELECTORS = {
         "link": Selector(By.ID, "error-reporting-section-contact-us"),
     },
 }
+
+
+def clean_name(name: str) -> str:
+    return name.split(" - ")[1].strip()
+
+
+def visit(driver: WebDriver, *, first_time: bool = False, page_name: str = None):
+    key = clean_name(page_name).lower()
+    url = URLs[key]
+    go_to_url(driver, url, NAME, first_time=first_time)
 
 
 def should_be_here(driver: WebDriver, *, page_name: str):
