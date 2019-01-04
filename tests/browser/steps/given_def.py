@@ -44,11 +44,6 @@ def given_actor_is_on_page(context, actor_alias, page_name):
     should_be_on_page(context, actor_alias, page_name)
 
 
-@given('"{actor_alias}" opened any Article but the last one')
-def given_actor_opens_any_article_but_the_last_one(context, actor_alias):
-    articles_open_any_but_the_last(context, actor_alias)
-
-
 @given('"{actor_alias}" opened any Article')
 def given_actor_opens_any_article(context, actor_alias):
     articles_open_any(context, actor_alias)

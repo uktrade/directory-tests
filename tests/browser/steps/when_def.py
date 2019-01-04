@@ -9,7 +9,6 @@ from steps.then_impl import should_be_on_page
 from steps.when_impl import (
     articles_found_useful_or_not,
     articles_open_any,
-    articles_open_any_but_the_last,
     articles_share_on_social_media,
     articles_show_all,
     case_studies_go_to,
@@ -55,11 +54,6 @@ from steps.when_impl import (
     sign_out,
     visit_page,
 )
-
-
-@when('"{actor_alias}" opens any Article but the last one')
-def when_actor_opens_any_article_but_the_last_one(context, actor_alias):
-    articles_open_any_but_the_last(context, actor_alias)
 
 
 @when('"{actor_alias}" opens any article on the list')

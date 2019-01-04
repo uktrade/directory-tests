@@ -128,41 +128,6 @@ def open_group_element(
         raise KeyError("Could not recognize location: {}".format(location))
 
 
-def articles_open_any_but_the_last(context: Context, actor_alias: str):
-    driver = context.driver
-    actor = get_actor(context, actor_alias)
-    visited_articles = actor.visited_articles
-    group = actor.article_group
-    category = actor.article_category
-    articles = get_articles(group, category)
-    # select random article
-    random_article = random.choice(articles[:-1])
-    # then get it's index in the reading list
-    any_article_but_the_last = get_article(
-        group, category, random_article.title
-    )
-    exread.article_common.go_to_article(driver, any_article_but_the_last.title)
-    time_to_read = exread.article_common.time_to_read_in_seconds(
-        context.driver
-    )
-    logging.debug(
-        "%s is on '%s' article page: %s",
-        actor_alias,
-        any_article_but_the_last.title,
-        driver.current_url,
-    )
-    just_read = VisitedArticle(
-        any_article_but_the_last.index,
-        any_article_but_the_last.title,
-        time_to_read,
-    )
-    if visited_articles:
-        visited_articles.append(just_read)
-    else:
-        visited_articles = [just_read]
-    update_actor(context, actor_alias, visited_articles=visited_articles)
-
-
 def articles_open_specific(context: Context, actor_alias: str, name: str):
     driver = context.driver
     actor = get_actor(context, actor_alias)
