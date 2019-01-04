@@ -9,7 +9,6 @@ from steps.then_impl import should_be_on_page
 from steps.when_impl import (
     articles_open_any,
     articles_share_on_social_media,
-    articles_show_all,
     case_studies_go_to,
     clear_the_cookies,
     click_on_page_element,
@@ -136,12 +135,8 @@ def when_actor_opens_link_from_header_menu(context, actor_alias, page_name, grou
     header_footer_open_link(context, actor_alias, group, page_name, location)
 
 
-@when('"{actor_alias}" decides to use "{element_name}" button on "{page_name}" page')
 @when('"{actor_alias}" decides to use "{element_name}" link on "{page_name}" page')
 @when('"{actor_alias}" decides to use "{element_name}" link from page "{page_name}"')
-@when('"{actor_alias}" decides to use "{element_name}" on "{page_name}" page')
-@when('"{actor_alias}" decides to use "{element_name}" button in "{page_name}"')
-@when('"{actor_alias}" decides to use "{element_name}" link in "{page_name}"')
 @when('"{actor_alias}" decides to use "{element_name}" in "{page_name}"')
 @when('"{actor_alias}" decides to "{element_name}" via "{page_name}" page')
 def when_actor_decides_to_click_on_page_element(

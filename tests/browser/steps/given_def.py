@@ -11,7 +11,6 @@ from steps.then_impl import (
 )
 from steps.when_impl import (
     articles_open_any,
-    articles_show_all,
     case_studies_go_to_random,
     click_on_page_element,
     contact_us_get_to_page_via,

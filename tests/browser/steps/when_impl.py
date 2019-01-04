@@ -17,14 +17,12 @@ from pages.common_actions import (
     get_actor,
     get_hawk_cookie,
     get_last_visited_page,
-    take_screenshot,
     unauthenticated_actor,
     update_actor,
     VisitedArticle,
 )
 from registry.articles import (
     get_article,
-    get_articles,
 )
 from steps import has_action
 
