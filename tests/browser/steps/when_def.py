@@ -48,7 +48,6 @@ from steps.when_impl import (
     open_service_link_on_interim_page,
     promo_video_close,
     promo_video_watch,
-    registration_go_to,
     registration_submit_form_and_verify_account,
     sign_in,
     sign_out,
@@ -75,18 +74,6 @@ def when_actor_opens_link(context, actor_alias, category, group, location):
 @when('"{actor_alias}" opens the link to "{service}" from interim page')
 def when_open_service_link_on_interim_page(context, actor_alias, service):
     open_service_link_on_interim_page(context, actor_alias, service)
-
-
-@when('"{actor_alias}" completes the registration and fake email verification process')
-def when_actor_registers_fake_email_verification(context, actor_alias):
-    registration_submit_form_and_verify_account(
-        context, actor_alias, fake_verification=True)
-
-
-@when('"{actor_alias}" completes the registration and real email verification process')
-def when_actor_registers_real_email_verification(context, actor_alias):
-    registration_submit_form_and_verify_account(
-        context, actor_alias, fake_verification=False)
 
 
 @when('"{actor_alias}" signs out and forgets the article reading history by clearing the cookies')
@@ -354,3 +341,20 @@ def when_user_opens_any_element(
 @when('"{actor_alias}" decides to report a problem with the page')
 def when_actor_reports_problem_with_page(context: Context, actor_alias: str):
     generic_report_problem_with_page(context, actor_alias)
+
+
+###############################################################################
+# Currently unused but useful steps
+###############################################################################
+
+
+@when('"{actor_alias}" completes the registration and fake email verification process')
+def when_actor_registers_fake_email_verification(context, actor_alias):
+    registration_submit_form_and_verify_account(
+        context, actor_alias, fake_verification=True)
+
+
+@when('"{actor_alias}" completes the registration and real email verification process')
+def when_actor_registers_real_email_verification(context, actor_alias):
+    registration_submit_form_and_verify_account(
+        context, actor_alias, fake_verification=False)
