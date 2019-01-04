@@ -7,6 +7,8 @@ from behave.runner import Context
 
 from steps.then_impl import triage_should_be_classified_as, should_be_on_page
 from steps.when_impl import (
+    advice_open_category,
+    advice_read_through_all_articles,
     articles_found_useful_or_not,
     articles_go_back_to_article_list,
     articles_go_back_to_last_read_article,
@@ -42,8 +44,6 @@ from steps.when_impl import (
     generic_submit_form,
     generic_unfold_topics,
     generic_visit_current_page_with_lang_param,
-    advice_open_category,
-    advice_read_through_all_articles,
     header_footer_click_on_dit_logo,
     header_footer_open_link,
     invest_read_more,
@@ -51,6 +51,7 @@ from steps.when_impl import (
     language_selector_close,
     language_selector_navigate_through_links_with_keyboard,
     language_selector_open,
+    open_any_element,
     open_link,
     open_service_link_on_interim_page,
     personalised_choose_sector,
@@ -531,3 +532,9 @@ def given_actor_navigates_via_contact_us_options(
 @when('"{actor_alias}" is on the "{page_name}" page')
 def step_impl(context: Context, actor_alias: str, page_name: str):
     should_be_on_page(context, actor_alias, page_name)
+
+
+@when('"{actor_alias}" opens any "{element_type}" available in the "{section_name}" section')
+def when_user_opens_any_element(
+        context: Context, actor_alias: str, element_type: str, section_name: str):
+    open_any_element(context, actor_alias, element_type, section_name)

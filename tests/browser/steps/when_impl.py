@@ -13,15 +13,15 @@ from utils.gov_notify import get_verification_link
 
 from pages import common_language_selector, exread, fas, get_page_object, sso
 from pages.common_actions import (
-    VisitedArticle,
     add_actor,
     assertion_msg,
     get_actor,
+    get_hawk_cookie,
     get_last_visited_page,
     take_screenshot,
     unauthenticated_actor,
     update_actor,
-    get_hawk_cookie,
+    VisitedArticle,
 )
 from registry.articles import (
     get_article,
@@ -1965,3 +1965,12 @@ def contact_us_navigate_through_options(context: Context, actor_alias: str, via:
     # 2) click through every listed option
     for option in intermediate:
         generic_pick_radio_option_and_submit(context, actor_alias, option)
+
+
+def open_any_element(
+        context: Context, actor_alias: str, element_type: str, section_name: str):
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "open_any_element_in_section")
+    element_details = page.open_any_element_in_section(context.driver, element_type, section_name)
+    update_actor(context, actor_alias, element_details=element_details)
+    logging.info(f"{actor_alias} opened random {element_type} from {section_name}")
