@@ -1,46 +1,49 @@
 # -*- coding: utf-8 -*-
 """ExRed Common Advice Page Object."""
 import logging
+from typing import List
 from urllib.parse import urljoin
 
-from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import ElementType
 from pages.common_actions import (
     Selector,
-    assertion_msg,
     check_if_element_is_visible,
     find_element,
     find_elements,
     take_screenshot,
     wait_for_page_load_after_action,
-    check_url
+    check_url,
+    check_for_sections
 )
-from registry.articles import get_article, get_articles
 from settings import EXRED_UI_URL
 
 NAME = "Advice"
-URL = None
-TYPE = "advice"
+TYPE = "article list"
 SERVICE = "Export Readiness"
-URL = EXRED_UI_URL
-PAGE_TITLE = "export advice - great.gov.uk"
+URL = urljoin(EXRED_UI_URL, "advice/")
+PAGE_TITLE = "Welcome to great.gov.uk"
 NAMES = [
-    "Market research",
-    "Customer insight",
-    "Finance",
-    "Business planning",
-    "Getting paid",
-    "Operations and compliance",
+    "Create an export plan",
+    "Find an export market",
+    "Define route to market",
+    "Get export finance and funding",
+    "Manage payment for export orders",
+    "Prepare to do business in a foreign country",
+    "Manage legal and ethical compliance",
+    "Prepare for export procedures and logistics",
 ]
 URLs = {
-    "market research": urljoin(URL, "market-research/"),
-    "customer insight": urljoin(URL, "customer-insight/"),
-    "finance": urljoin(URL, "finance/"),
-    "business planning": urljoin(URL, "business-planning/"),
-    "getting paid": urljoin(URL, "getting-paid/"),
-    "operations and compliance": urljoin(URL, "operations-and-compliance/"),
+    "create an export plan": urljoin(URL, "create-an-export-plan/"),
+    "find an export market": urljoin(URL, "find-an-export-market/"),
+    "define route to market": urljoin(URL, "define-route-to-market/"),
+    "get export finance and funding": urljoin(URL, "get-export-finance-and-funding/"),
+    "manage payment for export orders": urljoin(URL, "manage-payment-for-export-orders/"),
+    "prepare to do business in a foreign country": urljoin(URL, "prepare-to-do-business-in-a-foreign-country/"),
+    "manage legal and ethical compliance": urljoin(URL, "manage-legal-and-ethical-compliance/"),
+    "prepare for export procedures and logistics": urljoin(URL, "prepare-for-export-procedures-and-logistics/"),
 }
 
 
@@ -50,31 +53,30 @@ TIME_TO_COMPLETE = Selector(By.CSS_SELECTOR, "dd.time > span.value")
 ARTICLES_LIST = Selector(By.CSS_SELECTOR, "#js-paginate-list > li")
 FIRST_ARTICLE = Selector(By.CSS_SELECTOR, "#js-paginate-list > li:nth-child(1) > a")
 
+ARTICLE_COUNTER = Selector(By.ID, "hero-description")
+ARTICLE_LINKS = Selector(
+    By.CSS_SELECTOR, "#article-list-page li.article a", type=ElementType.LINK)
 SELECTORS = {
-    "ribbon": {
-        "itself": Selector(By.CSS_SELECTOR, ".navigation-ribbon"),
-        "market research": Selector(
-            By.CSS_SELECTOR, ".navigation-ribbon a[href='/market-research/']"
-        ),
-        "customer insight": Selector(
-            By.CSS_SELECTOR, ".navigation-ribbon a[href='/customer-insight/']"
-        ),
-        "finance": Selector(By.CSS_SELECTOR, ".navigation-ribbon a[href='/finance/']"),
-        "business planning": Selector(
-            By.CSS_SELECTOR, ".navigation-ribbon a[href='/business-planning/']"
-        ),
-        "getting paid": Selector(
-            By.CSS_SELECTOR, ".navigation-ribbon a[href='/getting-paid/']"
-        ),
-        "operations and compliance": Selector(
-            By.CSS_SELECTOR, ".navigation-ribbon a[href='/operations-and-compliance/']"
-        ),
+    "hero": {
+        "itself": Selector(By.ID, "hero"),
+        "heading": Selector(By.ID, "hero-heading"),
+        "description": Selector(By.ID, "hero-description"),
     },
-    "scope elements": {
-        "total number of articles": TOTAL_NUMBER_OF_ARTICLES,
-        "articles read counter": ARTICLES_TO_READ_COUNTER,
-        "time to complete remaining chapters": TIME_TO_COMPLETE,
-    }
+    "breadcrumbs": {
+        "itself": Selector(By.CSS_SELECTOR, "nav.breadcrumbs"),
+        "links": Selector(By.CSS_SELECTOR, "nav.breadcrumbs a"),
+    },
+    "total number of articles": {
+        "itself": ARTICLE_COUNTER,
+    },
+    "list of articles": {
+        "itself": Selector(By.ID, "article-list-page"),
+        "articles": ARTICLE_LINKS,
+    },
+    "error reporting": {
+        "itself": Selector(By.CSS_SELECTOR, "section.error-reporting"),
+        "link": Selector(By.ID, "error-reporting-section-contact-us"),
+    },
 }
 
 
