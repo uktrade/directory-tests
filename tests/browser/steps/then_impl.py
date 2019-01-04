@@ -18,7 +18,6 @@ from pages.common_actions import (
     get_last_visited_page,
     update_actor
 )
-from registry.articles import get_article, get_articles
 from settings import (
     HPO_AGENT_EMAIL_ADDRESS,
     HPO_AGENT_EMAIL_SUBJECT,

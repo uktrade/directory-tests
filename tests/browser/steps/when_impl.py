@@ -19,10 +19,6 @@ from pages.common_actions import (
     get_last_visited_page,
     unauthenticated_actor,
     update_actor,
-    VisitedArticle,
-)
-from registry.articles import (
-    get_article,
 )
 from steps import has_action
 
@@ -124,42 +120,6 @@ def open_group_element(
         exread.international.open(driver, group, element, same_tab=True)
     else:
         raise KeyError("Could not recognize location: {}".format(location))
-
-
-def articles_open_specific(context: Context, actor_alias: str, name: str):
-    driver = context.driver
-    actor = get_actor(context, actor_alias)
-    group = actor.article_group
-    category = actor.article_category
-    article = get_article(group, category, name)
-    visited_articles = actor.visited_articles
-
-    exread.article_common.go_to_article(driver, name)
-
-    total_articles = exread.article_common.get_total_articles(context.driver)
-    articles_read_counter = exread.article_common.get_read_counter(
-        context.driver
-    )
-    time_to_complete = exread.article_common.get_time_to_complete(
-        context.driver
-    )
-    time_to_read = exread.article_common.time_to_read_in_seconds(
-        context.driver
-    )
-
-    logging.debug(
-        "%s is on '%s' article: %s", actor_alias, name, driver.current_url
-    )
-    just_read = VisitedArticle(article.index, article.title, time_to_read)
-    visited_articles.append(just_read)
-    update_actor(
-        context,
-        actor_alias,
-        articles_read_counter=articles_read_counter,
-        articles_time_to_complete=time_to_complete,
-        articles_total_number=total_articles,
-        visited_articles=visited_articles,
-    )
 
 
 def articles_open_any(context: Context, actor_alias: str):
