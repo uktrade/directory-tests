@@ -6,36 +6,14 @@ from behave import then
 from behave.runner import Context
 
 from steps.then_impl import (
-    articles_read_counter_same_as_before_registration,
-    articles_read_counter_should_be_merged,
     articles_should_be_on_share_page,
-    articles_should_be_thanked_for_feedback,
-    articles_should_not_see_feedback_widget,
-    articles_should_not_see_link_to_next_article,
-    articles_should_not_see_link_to_register,
-    articles_should_not_see_link_to_sign_in,
-    articles_should_not_see_personas_end_page,
-    articles_should_see_article_as_read,
-    articles_should_see_in_correct_order,
-    articles_should_see_link_to_first_article_from_next_category,
-    articles_should_see_read_counter_increase,
-    articles_should_see_read_counter_set_to,
-    articles_should_see_time_to_complete_decrease,
-    articles_total_number_of_articles_should_not_change,
     case_studies_should_see_case_study,
     eu_exit_contact_us_should_receive_confirmation_email,
-    expected_page_elements_should_not_be_visible_on_get_finance,
-    export_readiness_expected_page_elements_should_be_visible,
-    export_readiness_should_see_articles,
     fas_search_results_filtered_by_industries,
     form_check_state_of_element,
     form_should_see_error_messages,
     generic_should_see_expected_page_content,
     generic_should_see_form_choices,
-    advice_check_if_link_to_next_category_is_displayed,
-    advice_ribbon_should_be_visible,
-    advice_should_see_article_read_counter,
-    advice_tile_should_be_highlighted,
     header_check_dit_logo,
     header_check_favicon,
     hpo_agent_should_receive_enquiry_email,
@@ -80,49 +58,6 @@ def then_actor_should_be_on_page_on_international_page(
     should_be_on_page_or_international_page(context, actor_alias, page_name)
 
 
-@then('"{actor_alias}" should see the Advice Navigation Ribbon')
-def then_advice_ribbon_should_be_visible(context, actor_alias):
-    advice_ribbon_should_be_visible(context, actor_alias)
-
-
-@then('"{actor_alias}" should see that the banner tile for "{tile}" category is highlighted')
-def then_advice_tile_should_be_highlighted(context, actor_alias, tile):
-    advice_tile_should_be_highlighted(context, actor_alias, tile)
-
-
-@then('"{actor_alias}" should see an article read counter for the "{category}" Advice category set to "{expected:d}"')
-def then_should_see_article_read_counter(
-        context, actor_alias, category, expected: int):
-    advice_should_see_article_read_counter(
-        context, actor_alias, category, expected)
-
-
-@then('"{actor_alias}" should see a link to the "{next_category}" Advice category')
-def then_check_if_link_to_next_category_is_displayed(
-        context, actor_alias, next_category):
-    advice_check_if_link_to_next_category_is_displayed(
-        context, actor_alias, next_category)
-
-
-@then('"{actor_alias}" should see an ordered list of all Export Readiness Articles selected for "{category}" Exporters')
-def then_should_see_exred_articles(context, actor_alias, category):
-    export_readiness_should_see_articles(context, actor_alias, category)
-
-
-@then('"{actor_alias}" should see on the Export Readiness Articles page "{elements}"')
-def then_expected_export_readiness_page_elements_should_be_visible(
-        context, actor_alias, elements):
-    export_readiness_expected_page_elements_should_be_visible(
-        context, actor_alias, elements.split(", "))
-
-
-@then('"{actor_alias}" should see "{sections}" sections')
-def then_should_see_sections(context, actor_alias, sections):
-    should_see_sections(
-        context, actor_alias, sections_table=None,
-        sections_list=sections.split(", "))
-
-
 @then('"{actor_alias}" should not see following sections')
 @then('"{actor_alias}" should not see following section')
 def then_should_not_see_sections(context, actor_alias):
@@ -133,59 +68,6 @@ def then_should_not_see_sections(context, actor_alias):
 @then('"{actor_alias}" should see following section')
 def then_should_see_sections(context, actor_alias):
     should_see_sections(context, actor_alias, sections_table=context.table)
-
-
-@then('"{actor_alias}" should be able to navigate to the next article from the List following the Article Order')
-def then_actor_should_see_articles_in_correct_order(context, actor_alias):
-    articles_should_see_in_correct_order(context, actor_alias)
-
-
-@then('"{actor_alias}" should not see the link to the next Article')
-def then_there_should_no_link_to_the_next_article(context, actor_alias):
-    articles_should_not_see_link_to_next_article(context, actor_alias)
-
-
-@then('"{actor_alias}" should not see the Personas End Page')
-def then_actor_should_not_see_personas_end_page(context, actor_alias):
-    articles_should_not_see_personas_end_page(context, actor_alias)
-
-
-@then('"{actor_alias}" should see a link to the fist article from the "{next_category}" category')
-def then_actor_should_see_link_to_next_category(
-        context, actor_alias, next_category):
-    articles_should_see_link_to_first_article_from_next_category(
-        context, actor_alias, next_category)
-
-
-@then('"{actor_alias}" should see this article as read')
-def then_actor_should_see_article_as_read(context, actor_alias):
-    articles_should_see_article_as_read(context, actor_alias)
-
-
-@then('"{actor_alias}" should see that Article Read Counter increased by "{increase:d}"')
-def then_actor_should_see_read_counter_increase(
-        context, actor_alias, increase: int):
-    articles_should_see_read_counter_increase(context, actor_alias, increase)
-
-
-@then('"{actor_alias}" should see that Time to Complete remaining chapters decreased or remained unchanged for short articles')
-def then_actor_should_see_time_to_complete_decrease(context, actor_alias):
-    articles_should_see_time_to_complete_decrease(context, actor_alias)
-
-
-@then('feedback widget should disappear')
-def then_feedback_widget_should_disappear(context):
-    articles_should_not_see_feedback_widget(context)
-
-
-@then('"{actor_alias}" should be thanked for his feedback')
-def then_actor_should_be_thanked_for_the_feedback(context, actor_alias):
-    articles_should_be_thanked_for_feedback(context, actor_alias)
-
-
-@then('"{actor_alias}" should see that Total Number of Articles did not change')
-def then_total_number_of_articles_should_not_change(context, actor_alias):
-    articles_total_number_of_articles_should_not_change(context, actor_alias)
 
 
 @then('"{actor_alias}" should see "{case_study_number}" case study')
@@ -203,38 +85,6 @@ def then_should_see_links_to_services(
         context, actor_alias, services, location):
     should_see_links_to_services(
         context, actor_alias, services.split(", "), location)
-
-
-@then('"{actor_alias}" should not see "{elements}"')
-def step_impl(context, actor_alias, elements):
-    expected_page_elements_should_not_be_visible_on_get_finance(
-        context, actor_alias, elements.split(", "))
-
-
-@then('"{actor_alias}" should see that his reading progress is gone')
-def then_reading_progress_should_be_gone(context, actor_alias):
-    articles_should_see_read_counter_set_to(context, actor_alias, 0)
-
-
-@then('"{actor_alias}" should see his reading progress same as before signing in')
-@then('"{actor_alias}" should see his reading progress same as before registration')
-def then_actor_should_see_previous_reading_progress(context, actor_alias):
-    articles_read_counter_same_as_before_registration(context, actor_alias)
-
-
-@then('"{actor_alias}" should not see the link to sign in on the "{page_name}" page')
-def then_actor_should_not_see_sign_in_link(context, actor_alias, page_name):
-    articles_should_not_see_link_to_sign_in(context, actor_alias, page_name)
-
-
-@then('"{actor_alias}" should not see the link to register on the "{page_name}" page')
-def then_actor_should_not_see_register_link(context, actor_alias, page_name):
-    articles_should_not_see_link_to_register(context, actor_alias, page_name)
-
-
-@then('"{actor_alias}"\'s current reading progress should be merged with the one from before signing out without any overwriting')
-def then_actror_should_see_reading_progress_merged(context, actor_alias):
-    articles_read_counter_should_be_merged(context, actor_alias)
 
 
 @then('"{actor_alias}" should be taken to a new tab with the "{social_media}" share page opened')
@@ -409,3 +259,10 @@ def then_article_counter_should_match(context: Context, actor_alias: str):
 @then('"{actor_alias}" should see that article counter matches the number of articles on the page')
 def then_article_counter_should_match_number_of_articles(context: Context, actor_alias: str):
     generic_article_counter_should_match_number_of_articles(context, actor_alias)
+
+
+###############################################################################
+# Currently unused but useful steps
+###############################################################################
+
+
