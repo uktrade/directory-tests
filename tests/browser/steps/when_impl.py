@@ -172,22 +172,6 @@ def articles_open_any(context: Context, actor_alias: str):
     logging.info(f"{actor_alias} opened article: {element_details}")
 
 
-def articles_found_useful_or_not(
-    context: Context, actor_alias: str, useful_or_not: str
-):
-    if useful_or_not.lower() == "found":
-        exread.article_common.flag_as_useful(context.driver)
-    elif useful_or_not.lower() in ["haven't found", "hasn't found"]:
-        exread.article_common.flag_as_not_useful(context.driver)
-    else:
-        raise KeyError(
-            "Could not recognize: '{}'. Please use 'found' or 'did not find'".format(
-                useful_or_not
-            )
-        )
-    logging.debug("%s %s current article useful", actor_alias, useful_or_not)
-
-
 def case_studies_go_to(context: Context, actor_alias: str, case_number: str):
     case_study_title = exread.home.get_case_study_title(
         context.driver, case_number

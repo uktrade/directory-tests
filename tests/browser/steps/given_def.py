@@ -108,9 +108,12 @@ def given_hawk_cookie_is_set(context: Context, page_name: str):
 def given_actor_in_on_random_advice_article(context: Context, actor_alias: str):
     exred_open_random_advice_article(context, actor_alias)
 
+
 ###############################################################################
 # Currently unused but useful steps
 ###############################################################################
+
+
 @given('"{actor_alias}" is a registered and verified user')
 def given_actor_is_registered_and_verified(context, actor_alias):
     registration_create_and_verify_account(
