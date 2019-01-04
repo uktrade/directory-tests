@@ -20,7 +20,7 @@ from pages.common_actions import (
     wait_for_page_load_after_action,
 )
 
-NAME = "Advice Article"
+NAME = "Advice"
 SERVICE = "Export Readiness"
 TYPE = "article"
 URL = None
