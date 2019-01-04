@@ -23,7 +23,6 @@ from steps.when_impl import (
     generic_open_industry_page,
     generic_open_random_news_article,
     generic_set_hawk_cookie,
-    get_geo_ip,
     registration_create_and_verify_account,
     sign_in,
     visit_page,
@@ -75,12 +74,6 @@ def given_actor_decided_to_click_on_page_element(
     click_on_page_element(context, actor_alias, element_name)
 
 
-@given('"{actor_alias}" decided to find out out more about "{industry_name}" industry')
-def fas_given_actor_opened_industry_page(
-        context: Context, actor_alias: str, industry_name: str):
-    generic_open_industry_page(context, actor_alias, industry_name)
-
-
 @given('"{actor_alias}" got in touch with us via "{page_name}" page')
 def given_actor_got_in_touch_with_us(
         context: Context, actor_alias: str, page_name: str):
@@ -92,17 +85,6 @@ def given_actor_got_in_touch_with_us(
 def given_min_number_of_articles(
         context: Context, no_articles: int, visitor_type: str, service: str):
     generic_at_least_n_news_articles(context, no_articles, visitor_type, service)
-
-
-@given('"{actor_alias}" opened any news Article')
-def given_actor_opens_any_news_article(context, actor_alias):
-    generic_open_any_news_article(context, actor_alias)
-
-
-@given('"{actor_alias}" opened random "{article_type}" news article')
-def given_actor_opened_random_news_article(
-        context: Context, actor_alias: str, article_type: str):
-    generic_open_random_news_article(context, actor_alias, article_type)
 
 
 @given('"{actor_alias}" got to the "{final_page}" page via "{via}"')
@@ -126,7 +108,9 @@ def given_hawk_cookie_is_set(context: Context, page_name: str):
 def given_actor_in_on_random_advice_article(context: Context, actor_alias: str):
     exred_open_random_advice_article(context, actor_alias)
 
-# Currently unused but can come in handy
+###############################################################################
+# Currently unused but useful steps
+###############################################################################
 @given('"{actor_alias}" is a registered and verified user')
 def given_actor_is_registered_and_verified(context, actor_alias):
     registration_create_and_verify_account(
@@ -142,3 +126,20 @@ def given_actor_is_signed_in(context, actor_alias, *, location="top bar"):
 @given('"{actor_alias}" shows all articles on the page')
 def given_actor_shows_all_articles(context, actor_alias):
     articles_show_all(context, actor_alias)
+
+
+@given('"{actor_alias}" decided to find out out more about "{industry_name}" industry')
+def fas_given_actor_opened_industry_page(
+        context: Context, actor_alias: str, industry_name: str):
+    generic_open_industry_page(context, actor_alias, industry_name)
+
+
+@given('"{actor_alias}" opened any news Article')
+def given_actor_opens_any_news_article(context, actor_alias):
+    generic_open_any_news_article(context, actor_alias)
+
+
+@given('"{actor_alias}" opened random "{article_type}" news article')
+def given_actor_opened_random_news_article(
+        context: Context, actor_alias: str, article_type: str):
+    generic_open_random_news_article(context, actor_alias, article_type)
