@@ -521,16 +521,6 @@ def find_selector_by_name(selectors: dict, name: str) -> Selector:
     return found_selectors[0]
 
 
-def find_selector_by_type(selectors: dict, name: str) -> Selector:
-    found_selectors = [
-        selector
-        for section_selectors in selectors.values()
-        for selector_name, selector in section_selectors.items()
-        if selector_name.lower() == name.lower()]
-    assert len(found_selectors) == 1
-    return found_selectors[0]
-
-
 def find_elements(driver: WebDriver, selector: Selector) -> List[WebElement]:
     """Find element by CSS selector or it's ID."""
     with selenium_action(driver, "Couldn't find elements using '%s'", selector.value):
