@@ -253,7 +253,7 @@ def initialize_scenario_data() -> ScenarioData:
     return ScenarioData(actors={})
 
 
-def unauthenticated_actor(alias: str, *, self_classification: str = None) -> Actor:
+def unauthenticated_actor(alias: str) -> Actor:
     """Create an instance of an unauthenticated Actor.
 
     Will:
@@ -273,7 +273,6 @@ def unauthenticated_actor(alias: str, *, self_classification: str = None) -> Act
         alias=alias,
         email=email,
         password=password,
-        self_classification=self_classification,
         visited_articles=[],
     )
 
