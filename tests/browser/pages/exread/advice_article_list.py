@@ -15,11 +15,11 @@ from pages.common_actions import (
     check_url,
     find_element,
     find_elements,
+    get_selectors,
     go_to_url,
     Selector,
     take_screenshot,
     wait_for_page_load_after_action,
-    get_selectors
 )
 from settings import EXRED_UI_URL
 
