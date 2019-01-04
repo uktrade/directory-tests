@@ -1,3 +1,4 @@
+@decommissioned
 @articles
 Feature: Articles
 
