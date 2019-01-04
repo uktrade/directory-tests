@@ -1,10 +1,11 @@
 __all__ = [
-    "article_common",
+    "advice_article",
+    "advice_article_list",
+    "advice_landing",
     "article_list",
     "case_studies_common",
     "common",
     "footer",
-    "advice_common",
     "header",
     "home",
     "interim_exporting_opportunities",
