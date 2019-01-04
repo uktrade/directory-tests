@@ -1020,3 +1020,9 @@ def exred_open_random_advice_article(context: Context, actor_alias: str):
     exread.advice_article_list.open_any_article(driver)
     exread.advice_article.should_be_here(driver)
     update_actor(context, actor_alias, visited_page=exread.advice_article)
+
+
+def generic_report_problem_with_page(context: Context, actor_alias: str):
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "report_problem")
+    page.report_problem(context.driver)

@@ -33,6 +33,7 @@ from steps.when_impl import (
     generic_open_news_article,
     generic_pick_radio_option_and_submit,
     generic_pick_random_radio_option_and_submit,
+    generic_report_problem_with_page,
     generic_see_more_industries,
     generic_submit_form,
     generic_unfold_topics,
@@ -383,3 +384,8 @@ def step_impl(context: Context, actor_alias: str, page_name: str):
 def when_user_opens_any_element(
         context: Context, actor_alias: str, element_type: str, section_name: str):
     open_any_element(context, actor_alias, element_type, section_name)
+
+
+@when('"{actor_alias}" decides to report a problem with the page')
+def when_actor_reports_problem_with_page(context: Context, actor_alias: str):
+    generic_report_problem_with_page(context, actor_alias)

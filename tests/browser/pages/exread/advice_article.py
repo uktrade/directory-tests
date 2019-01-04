@@ -14,6 +14,7 @@ from pages.common_actions import (
     check_for_expected_sections_elements,
     check_for_sections,
     check_if_element_is_not_visible,
+    find_and_click_on_page_element,
     find_element,
     take_screenshot,
 )
@@ -144,3 +145,8 @@ def share_via(driver: WebDriver, social_media: str):
     href = share_button.get_attribute("href")
     logging.debug("Opening 'Share on %s' link '%s' in the same tab", social_media, href)
     driver.get(href)
+
+
+def report_problem(driver: WebDriver):
+    find_and_click_on_page_element(
+        driver, SELECTORS, "report page link", wait_for_it=False)
