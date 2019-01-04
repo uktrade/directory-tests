@@ -70,6 +70,7 @@ from steps.then_impl import (
     triage_should_be_classified_as,
     triage_should_see_change_your_answers_link,
     zendesk_should_receive_confirmation_email,
+    generic_article_counters_should_match,
 )
 from steps.when_impl import (
     triage_answer_questions_again,
@@ -452,3 +453,8 @@ def then_should_see_form_choices(context: Context, actor_alias: str):
 @then('"{actor_alias}" should receive a "{subject}" email from Zendesk')
 def step_impl(context: Context, actor_alias: str, subject: str):
     zendesk_should_receive_confirmation_email(context, actor_alias, subject)
+
+
+@then('"{actor_alias}" should see that article counter matches expected number')
+def then_article_counter_should_match(context: Context, actor_alias: str):
+    generic_article_counters_should_match(context, actor_alias)

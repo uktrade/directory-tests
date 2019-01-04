@@ -877,3 +877,11 @@ def generic_should_see_form_choices(
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "should_see_form_choices")
     page.should_see_form_choices(context.driver, option_names)
+
+
+def generic_article_counters_should_match(context: Context, actor_alias: str):
+    actor = get_actor(context, actor_alias)
+    _, expected_article_counter = actor.element_details
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "article_counter_is_equal_to")
+    page.article_counter_is_equal_to(context.driver, expected_article_counter)

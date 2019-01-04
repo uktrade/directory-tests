@@ -100,3 +100,20 @@ def open_first_article(driver: WebDriver):
     with wait_for_page_load_after_action(driver):
         first_article.click()
     take_screenshot(driver, "after opening first article")
+
+
+def get_article_counter(driver: WebDriver) -> int:
+    article_counter = find_element(
+        driver, ARTICLE_COUNTER, element_name="total number of articles",
+        wait_for_it=False
+    )
+    counter_index = 0
+    return int(article_counter.text.split()[counter_index])
+
+
+def article_counter_is_equal_to(driver: WebDriver, expected_article_counter: int):
+    current_counter = get_article_counter(driver)
+    error = (f"Expected Advice article counter to be "
+             f"{expected_article_counter} but found {current_counter} on "
+             f"{driver.current_url}")
+    assert current_counter == expected_article_counter, error
