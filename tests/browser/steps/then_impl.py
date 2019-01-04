@@ -372,38 +372,6 @@ def should_see_links_to_services(
         )
 
 
-def personalised_journey_should_not_see_banner_and_top_10_table(
-    context: Context, actor_alias: str
-):
-    exread.personalised_journey.should_not_see_banner_and_top_10_table(context.driver)
-    actor = get_actor(context, actor_alias)
-    _, code, sector = actor.what_do_you_want_to_export
-    logging.debug(
-        "As expected %s can't see Top Importer banner and Top 10 Importers "
-        "table on personalised page for '%s - %s' sector",
-        actor_alias,
-        code,
-        sector,
-    )
-
-
-def personalised_journey_should_see_banner_and_top_10_table(
-    context: Context, actor_alias: str
-):
-    actor = get_actor(context, actor_alias)
-    _, code, sector = actor.what_do_you_want_to_export
-    exread.personalised_journey.should_see_banner_and_top_10_table(
-        context.driver, sector
-    )
-    logging.debug(
-        "As expected %s can see Top Importer banner and Top 10 Importers "
-        "table on personalised page for '%s - %s' sector",
-        actor_alias,
-        code,
-        sector,
-    )
-
-
 def articles_should_see_read_counter_set_to(
     context: Context, actor_alias: str, expected_value: int
 ):

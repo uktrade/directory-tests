@@ -6,13 +6,11 @@ from behave import given
 from behave.runner import Context
 
 from steps.then_impl import (
-    personalised_journey_should_not_see_banner_and_top_10_table,
     should_be_on_page,
     should_see_sections
 )
 from steps.when_impl import (
     articles_open_any,
-    articles_open_any_but_the_last,
     articles_show_all,
     case_studies_go_to_random,
     click_on_page_element,
@@ -54,12 +52,6 @@ def given_actor_opens_any_article(context, actor_alias):
 def given_can_see_sections(context, actor_alias, sections, page_name):
     should_see_sections(
         context, actor_alias, page_name, sections_list=sections.split(", "))
-
-
-@given('"{actor_alias}" cannot see the Top Importer banner and Top 10 Importers table for their sector')
-def given_actor_cannot_see_banner_and_top_10_table(context, actor_alias):
-    personalised_journey_should_not_see_banner_and_top_10_table(
-        context, actor_alias)
 
 
 @given('"{actor_alias}" is a registered and verified user')
