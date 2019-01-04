@@ -21,6 +21,7 @@ from steps.when_impl import (
     click_on_page_element,
     contact_us_get_to_page_via,
     export_readiness_open_category,
+    exred_open_random_advice_article,
     generic_at_least_n_news_articles,
     generic_get_in_touch,
     generic_open_any_news_article,
@@ -270,3 +271,8 @@ def given_actor_navigates_via_contact_us_options(
 @given('hawk cookie is set on "{page_name}" page')
 def given_hawk_cookie_is_set(context: Context, page_name: str):
     generic_set_hawk_cookie(context, page_name)
+
+
+@given('"{actor_alias}" is on randomly selected Advice article page')
+def given_actor_in_on_random_advice_article(context: Context, actor_alias: str):
+    exred_open_random_advice_article(context, actor_alias)

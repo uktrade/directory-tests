@@ -1909,3 +1909,14 @@ def open_any_element(
     element_details = page.open_any_element_in_section(context.driver, element_type, section_name)
     update_actor(context, actor_alias, element_details=element_details)
     logging.info(f"{actor_alias} opened random {element_type} from {section_name}")
+
+
+def exred_open_random_advice_article(context: Context, actor_alias: str):
+    if not get_actor(context, actor_alias):
+        add_actor(context, unauthenticated_actor(actor_alias))
+    driver = context.driver
+    exread.advice_landing.visit(driver)
+    exread.advice_landing.open_any_article(driver)
+    exread.advice_article_list.open_any_article(driver)
+    exread.advice_article.should_be_here(driver)
+    update_actor(context, actor_alias, visited_page=exread.advice_article)
