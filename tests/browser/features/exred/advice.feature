@@ -13,7 +13,7 @@ Feature: Advice articles
 
     When "Robert" opens any "link" available in the "<specific>" section
 
-    Then "Robert" should be on the "Export Readiness - Advice" page
+    Then "Robert" should be on the "Export Readiness - Advice - article list" page
     And  "Robert" should see following sections
       | sections                 |
       | Hero                     |
@@ -37,7 +37,7 @@ Feature: Advice articles
 
     When "Robert" opens any "link" available in the "Advice" section
 
-    Then "Robert" should be on the "Export Readiness - Advice" page
+    Then "Robert" should be on the "Export Readiness - Advice - Article list" page
     And "Robert" should see that article counter matches expected number
     And "Robert" should see that article counter matches the number of articles on the page
 
@@ -50,7 +50,7 @@ Feature: Advice articles
 
     When "Robert" opens any article on the list
 
-    Then "Robert" should be on the "Export Readiness - Advice Article" page
+    Then "Robert" should be on the "Export Readiness - Advice - Article" page
     And  "Robert" should see following sections
       | sections        |
       | Breadcrumbs     |
