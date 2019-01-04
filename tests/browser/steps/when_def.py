@@ -148,11 +148,6 @@ def when_actor_views_page_in_selected_language(
     language_selector_change_to(context, actor_alias, preferred_language)
 
 
-@when('"{actor_alias}" shows all of the articles on the page whenever possible')
-def given_actor_shows_all_articles(context, actor_alias):
-    articles_show_all(context, actor_alias)
-
-
 @when('"{actor_alias}" goes to the "{page_name}" page via "{group}" links in "{location}"')
 def when_actor_opens_link_from_header_menu(context, actor_alias, page_name, group, location):
     header_footer_open_link(context, actor_alias, group, page_name, location)

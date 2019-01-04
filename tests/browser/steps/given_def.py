@@ -126,11 +126,6 @@ def given_actor_is_signed_in(context, actor_alias, *, location="top bar"):
     sign_in(context, actor_alias, location)
 
 
-@given('"{actor_alias}" shows all articles on the page')
-def given_actor_shows_all_articles(context, actor_alias):
-    articles_show_all(context, actor_alias)
-
-
 @given('"{actor_alias}" decided to find out out more about "{industry_name}" industry')
 def fas_given_actor_opened_industry_page(
         context: Context, actor_alias: str, industry_name: str):

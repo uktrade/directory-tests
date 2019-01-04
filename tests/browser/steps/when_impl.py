@@ -428,15 +428,6 @@ def language_selector_change_to(
     )
 
 
-def articles_show_all(context: Context, actor_alias: str):
-    exread.article_list.show_all_articles(context.driver)
-    logging.debug(
-        "%s showed up all articled on the page: %s",
-        actor_alias,
-        context.driver.current_url,
-    )
-
-
 def header_footer_open_link(
     context: Context,
     actor_alias: str,
