@@ -49,10 +49,6 @@ from steps.then_impl import (
     language_selector_should_see_it,
     pdf_check_expected_details,
     pdf_check_for_dead_links,
-    personalised_journey_should_not_see_banner_and_top_10_table,
-    personalised_journey_should_see_banner_and_top_10_table,
-    personalised_journey_should_see_read_counter,
-    personalised_should_see_layout_for,
     promo_video_check_watch_time,
     promo_video_should_not_see_modal_window,
     share_page_should_be_prepopulated,
@@ -67,15 +63,9 @@ from steps.then_impl import (
     should_see_share_widget,
     stats_and_tracking_elements_should_be_present,
     stats_and_tracking_elements_should_not_be_present,
-    triage_should_be_classified_as,
-    triage_should_see_change_your_answers_link,
     zendesk_should_receive_confirmation_email,
     generic_article_counters_should_match,
     generic_article_counter_should_match_number_of_articles
-)
-from steps.when_impl import (
-    triage_answer_questions_again,
-    triage_should_see_answers_to_questions
 )
 
 
@@ -112,34 +102,6 @@ def then_check_if_link_to_next_category_is_displayed(
         context, actor_alias, next_category):
     advice_check_if_link_to_next_category_is_displayed(
         context, actor_alias, next_category)
-
-
-@then('"{actor_alias}" should see a Advice Articles read counter for the "{exporter_status}" exporter')
-def then_actor_should_see_advice_articles_read_counter(
-        context, actor_alias, exporter_status):
-    personalised_journey_should_see_read_counter(
-        context, actor_alias, exporter_status)
-
-
-@then('"{actor_alias}" should be classified as "{classification}" exporter')
-def then_actor_should_be_classified_as(context, actor_alias, classification):
-    triage_should_be_classified_as(context, actor_alias, classification)
-
-
-@then('"{actor_alias}" should see the summary page with answers to the questions she was asked')
-def then_actor_should_see_answers_to_questions(context, actor_alias):
-    triage_should_see_answers_to_questions(context, actor_alias)
-
-
-@then('"{actor_alias}" should be on the Personalised Journey page for "{classification}" exporters')
-def then_classified_exporter_should_be_on_personalised_journey_page(
-        context, actor_alias, classification):
-    personalised_should_see_layout_for(context, actor_alias, classification)
-
-
-@then('"{actor_alias}" should be able to answer the triage questions again with his previous answers pre-populated')
-def then_actor_should_be_able_to_answer_again(context, actor_alias):
-    triage_answer_questions_again(context, actor_alias)
 
 
 @then('"{actor_alias}" should see an ordered list of all Export Readiness Articles selected for "{category}" Exporters')
@@ -249,18 +211,6 @@ def step_impl(context, actor_alias, elements):
         context, actor_alias, elements.split(", "))
 
 
-@then('"{actor_alias}" should not see the Top Importer banner and Top 10 Importers table for their sector')
-def then_actor_should_not_see_banner_and_top_10_table(context, actor_alias):
-    personalised_journey_should_not_see_banner_and_top_10_table(
-        context, actor_alias)
-
-
-@then('"{actor_alias}" should see a Banner and Top importers table for their sector on personalised journey page')
-def then_actor_should_see_banner_and_top_10_table(context, actor_alias):
-    personalised_journey_should_see_banner_and_top_10_table(
-        context, actor_alias)
-
-
 @then('"{actor_alias}" should see that his reading progress is gone')
 def then_reading_progress_should_be_gone(context, actor_alias):
     articles_should_see_read_counter_set_to(context, actor_alias, 0)
@@ -300,11 +250,6 @@ def then_share_page_should_be_prepopulated(context, actor_alias, social_media):
 @then('"{actor_alias}" should see that the share via email link will pre-populate the message subject and body with Article title and URL')
 def then_check_share_via_email_link(context, actor_alias):
     share_page_via_email_should_have_article_details(context, actor_alias)
-
-
-@then('"{actor_alias}" should see an option to change his triage answers')
-def then_actor_should_see_option_to_change_triage_answers(context, actor_alias):
-    triage_should_see_change_your_answers_link(context, actor_alias)
 
 
 @then('"{actor_alias}" should be able to watch at least first "{expected_watch_time:d}" seconds of the promotional video')

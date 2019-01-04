@@ -28,11 +28,6 @@ from settings import (
     INVEST_MAILBOX_ADMIN_EMAIL,
 )
 from steps import has_action
-from steps.when_impl import (
-    triage_should_be_classified_as_new,
-    triage_should_be_classified_as_occasional,
-    triage_should_be_classified_as_regular,
-)
 from utils.gov_notify import (
     get_email_confirmations_with_matching_string,
     get_email_confirmation_notification
@@ -116,78 +111,6 @@ def advice_check_if_link_to_next_category_is_displayed(
         " expected",
         actor_alias,
         next_category,
-    )
-
-
-def personalised_journey_should_see_read_counter(
-    context: Context, actor_alias: str, exporter_status: str
-):
-    exread.personalised_journey.should_see_read_counter(
-        context.driver, exporter_status=exporter_status
-    )
-    logging.debug(
-        "%s can see Advice Article Read Counter on the Personalised Journey "
-        "page: %s",
-        actor_alias,
-        context.driver.current_url,
-    )
-
-
-def triage_should_be_classified_as(
-    context: Context, actor_alias: str, classification: str
-):
-    if classification == "new":
-        triage_should_be_classified_as_new(context)
-    elif classification == "occasional":
-        triage_should_be_classified_as_occasional(context)
-    elif classification == "regular":
-        triage_should_be_classified_as_regular(context)
-    else:
-        raise KeyError(
-            "Couldn't recognize: '%s'. Please use: new, occasional or regular",
-            classification,
-        )
-    logging.debug(
-        "%s was properly classified as %s exporter",
-        actor_alias,
-        classification,
-    )
-
-
-def personalised_should_see_layout_for(
-    context: Context, actor_alias: str, classification: str
-):
-    actor = get_actor(context, actor_alias)
-    incorporated = actor.are_you_incorporated
-    online_marketplaces = actor.do_you_use_online_marketplaces
-    code = None
-    if actor.what_do_you_want_to_export:
-        _, code, _ = actor.what_do_you_want_to_export
-    exread.personalised_journey.should_be_here(context.driver)
-    if classification.lower() == "new":
-        exread.personalised_journey.layout_for_new_exporter(
-            context.driver, incorporated=incorporated, sector_code=code
-        )
-    elif classification.lower() == "occasional":
-        exread.personalised_journey.layout_for_occasional_exporter(
-            context.driver,
-            incorporated=incorporated,
-            use_online_marketplaces=online_marketplaces,
-            sector_code=code,
-        )
-    elif classification.lower() == "regular":
-        exread.personalised_journey.layout_for_regular_exporter(
-            context.driver, incorporated=incorporated, sector_code=code
-        )
-    else:
-        raise KeyError(
-            "Could not recognise '%s'. Please use: new, occasional or "
-            "regular" % classification
-        )
-    logging.debug(
-        "%s saw Personalised Journey page layout tailored for %s exporter",
-        actor_alias,
-        classification,
     )
 
 

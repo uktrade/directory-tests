@@ -14,10 +14,8 @@ from pages.common_actions import (
     check_for_expected_sections_elements,
     check_for_sections,
     check_if_element_is_not_visible,
-    check_if_element_is_visible,
     find_element,
     take_screenshot,
-    wait_for_page_load_after_action,
 )
 
 NAME = "Advice"
@@ -87,16 +85,6 @@ def should_see_article(driver: WebDriver, name: str):
         "Expected to see '%s' Article but got '%s'", name, current_article
     ):
         assert current_article.lower() == name.lower()
-
-
-def go_back_to_article_list(driver: WebDriver):
-    element_name = "Go Back link"
-    go_back_link = find_element(
-        driver, GO_BACK_LINK, element_name=element_name, wait_for_it=False
-    )
-    check_if_element_is_visible(go_back_link, element_name)
-    with wait_for_page_load_after_action(driver):
-        go_back_link.click()
 
 
 def check_if_link_opens_new_tab(driver: WebDriver, social_media: str):

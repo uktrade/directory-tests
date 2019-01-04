@@ -5,24 +5,17 @@
 from behave import when
 from behave.runner import Context
 
-from steps.then_impl import triage_should_be_classified_as, should_be_on_page
+from steps.then_impl import should_be_on_page
 from steps.when_impl import (
-    advice_open_category,
-    advice_read_through_all_articles,
     articles_found_useful_or_not,
-    articles_go_back_to_article_list,
-    articles_go_back_to_last_read_article,
-    articles_go_back_to_same_group,
     articles_open_any,
     articles_open_any_but_the_last,
-    articles_open_group,
     articles_share_on_social_media,
     articles_show_all,
     case_studies_go_to,
     clear_the_cookies,
     click_on_page_element,
     contact_us_navigate_through_options,
-    continue_export_journey,
     export_readiness_open_category,
     fas_fill_out_and_submit_contact_us_form,
     fas_search_for_companies,
@@ -54,9 +47,6 @@ from steps.when_impl import (
     open_any_element,
     open_link,
     open_service_link_on_interim_page,
-    personalised_choose_sector,
-    personalised_journey_create_page,
-    personalised_journey_update_preference,
     promo_video_close,
     promo_video_watch,
     registration_go_to,
@@ -64,115 +54,13 @@ from steps.when_impl import (
     set_sector_preference,
     sign_in,
     sign_out,
-    start_triage,
-    triage_are_you_incorporated,
-    triage_change_answers,
-    triage_create_exporting_journey,
-    triage_do_you_export_regularly,
-    triage_go_through_again,
-    triage_have_you_exported_before,
-    triage_question_what_do_you_want_to_export,
-    triage_say_whether_you_use_online_marketplaces,
-    triage_should_see_answers_to_questions,
-    triage_what_is_your_company_name,
     visit_page,
 )
-
-
-@when('"{actor_alias}" decides to get started in Exporting journey section')
-def when_actor_starts_triage(context, actor_alias):
-    start_triage(context, actor_alias)
-
-
-@when('"{actor_alias}" decides to continue in Exporting journey section')
-def when_actor_continues_export_journey(context, actor_alias):
-    continue_export_journey(context, actor_alias)
-
-
-@when('"{actor_alias}" goes to the "{category}" Advice articles via "{location}"')
-def when_actor_goes_to_advice_articles(
-        context, actor_alias, category, location):
-    advice_open_category(context, actor_alias, category, location)
-
-
-@when('"{actor_alias}" creates a personalised journey page for herself')
-def when_actor_creates_personalised_journey_page(context, actor_alias):
-    personalised_journey_create_page(context, actor_alias)
-
-
-@when('"{actor_alias}" says what does he wants to export')
-@when('"{actor_alias}" says what does she wants to export')
-def when_actor_says_what_he_wants_to_export(context, actor_alias):
-    personalised_choose_sector(context, actor_alias)
-
-
-@when('"{actor_alias}" says that he "{has_or_has_never}" exported before')
-@when('"{actor_alias}" says that she "{has_or_has_never}" exported before')
-def when_actor_answers_whether_he_exported_before(
-        context, actor_alias, has_or_has_never):
-    triage_have_you_exported_before(context, actor_alias, has_or_has_never)
-
-
-@when('"{actor_alias}" says that exporting is "{regular_or_not}" part of her business')
-@when('"{actor_alias}" says that exporting is "{regular_or_not}" part of his business')
-def when_actor_tells_whether_he_exports_regularly_or_not(
-        context, actor_alias, regular_or_not):
-    triage_do_you_export_regularly(context, actor_alias, regular_or_not)
-
-
-@when('"{actor_alias}" says that her company "{is_or_not}" incorporated')
-@when('"{actor_alias}" says that his company "{is_or_not}" incorporated')
-def when_actor_says_whether_company_is_incorporated(
-        context, actor_alias, is_or_not):
-    triage_are_you_incorporated(context, actor_alias, is_or_not)
-
-
-@when('"{actor_alias}" "{decision}" her company name')
-@when('"{actor_alias}" "{decision}" his company name')
-def when_actor_decide_to_enter_company_name(context, actor_alias, decision):
-    triage_what_is_your_company_name(context, actor_alias, decision)
-
-
-@when('"{actor_alias}" sees the summary page with answers to the questions he was asked')
-@when('"{actor_alias}" sees the summary page with answers to the questions she was asked')
-def when_actor_sees_answers_to_the_questions(context, actor_alias):
-    triage_should_see_answers_to_questions(context, actor_alias)
-
-
-@when('"{actor_alias}" decides to create her personalised journey page')
-@when('"{actor_alias}" decides to create his personalised journey page')
-def when_actor_decides_to_create_personalised_page(context, actor_alias):
-    triage_create_exporting_journey(context, actor_alias)
-
-
-@when('"{actor_alias}" can see that he was classified as a "{classification}" exporter')
-@when('"{actor_alias}" can see that she was classified as a "{classification}" exporter')
-def when_actor_is_classified_as(context, actor_alias, classification):
-    triage_should_be_classified_as(context, actor_alias, classification)
-
-
-@when('"{actor_alias}" says that she "{decision}" used online marketplaces')
-def when_actor_says_whether_he_used_online_marktet_places(
-        context, actor_alias, decision):
-    triage_say_whether_you_use_online_marketplaces(
-        context, actor_alias, decision)
-
-
-@when('"{actor_alias}" decides to change her answers')
-@when('"{actor_alias}" decides to change his answers')
-def when_actor_decides_to_change_the_answers(context, actor_alias):
-    triage_change_answers(context, actor_alias)
 
 
 @when('"{actor_alias}" goes to the Export Readiness Articles for "{category}" Exporters via "{location}"')
 def when_actor_goes_to_exred_articles(context, actor_alias, category, location):
     export_readiness_open_category(context, actor_alias, category, location)
-
-
-@when('"{actor_alias}" decides to read through all remaining Articles from selected list')
-@when('"{actor_alias}" decides to read through all Articles from selected list')
-def when_actor_reads_through_all_advice_articles(context, actor_alias):
-    advice_read_through_all_articles(context, actor_alias)
 
 
 @when('"{actor_alias}" opens any Article but the last one')
@@ -183,11 +71,6 @@ def when_actor_opens_any_article_but_the_last_one(context, actor_alias):
 @when('"{actor_alias}" opens any article on the list')
 def given_actor_opens_any_article(context, actor_alias):
     articles_open_any(context, actor_alias)
-
-
-@when('"{actor_alias}" goes back to the Article List page')
-def when_actor_goes_back_to_article_list(context, actor_alias):
-    articles_go_back_to_article_list(context, actor_alias)
 
 
 @when('"{actor_alias}" decides to tell us that he "{useful_or_not}" this article useful')
@@ -220,16 +103,6 @@ def when_actor_sets_sector_service_preference(context, actor_alias, service):
 @when('"{actor_alias}" decides to change the sector to "{good}" good')
 def when_actor_sets_sector_good_preference(context, actor_alias, good):
     set_sector_preference(context, actor_alias, good=good)
-
-
-@when('"{actor_alias}" decides to update his triage preferences')
-def when_actor_updates_triage_preferences(context, actor_alias):
-    personalised_journey_update_preference(context, actor_alias)
-
-
-@when('"{actor_alias}" goes through triage again')
-def when_actor_goes_through_triage_again(context, actor_alias):
-    triage_go_through_again(context, actor_alias)
 
 
 @when('"{actor_alias}" decides to register to save her reading progress using link visible in the "{location}"')
@@ -266,31 +139,9 @@ def when_actor_goes_to_page(context, actor_alias, page_name):
     visit_page(context, actor_alias, page_name)
 
 
-@when('"{actor_alias}" goes back to the same "{group}" Article category via "{location}"')
-def when_actor_goes_to_the_same_article_group(
-        context, actor_alias, group, location):
-    articles_go_back_to_same_group(context, actor_alias, group, location=location)
-
-
-@when('"{actor_alias}" goes back to the last Article he read')
-@when('"{actor_alias}" goes back to the last Article she read')
-def when_actor_goes_to_last_read_article(context, actor_alias):
-    articles_go_back_to_last_read_article(context, actor_alias)
-
-
 @when('"{actor_alias}" signs out')
 def when_actor_signs_out(context, actor_alias):
     sign_out(context, actor_alias)
-
-
-@when('"{actor_alias}" goes to randomly selected "{group}" Article category via "{location}"')
-def when_actor_is_on_article_list(context, actor_alias, group, location):
-    articles_open_group(context, actor_alias, group, location=location)
-
-
-@when('"{actor_alias}" goes to randomly selected "{group}" Article category')
-def when_actor_goes_to_random_article_group(context, actor_alias, group):
-    articles_open_group(context, actor_alias, group)
 
 
 @when('"{actor_alias}" decides to share the article via "{social_media}"')
@@ -375,12 +226,6 @@ def when_actor_decides_to_click_on_page_element(
 def when_actor_decides_to_click_on_page_element(
         context, actor_alias, element_name):
     click_on_page_element(context, actor_alias, element_name)
-
-
-@when('"{actor_alias}" says what he wants to export "{goods_or_services}"')
-@when('"{actor_alias}" says what she wants to export "{goods_or_services}"')
-def when_actor_says_what_is_exported(context, actor_alias, goods_or_services):
-    triage_question_what_do_you_want_to_export(context, actor_alias, goods_or_services)
 
 
 @when('"{actor_alias}" decides to click on the DIT logo in the "{logo_location}"')
