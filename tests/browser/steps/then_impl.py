@@ -885,3 +885,9 @@ def generic_article_counters_should_match(context: Context, actor_alias: str):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "article_counter_is_equal_to")
     page.article_counter_is_equal_to(context.driver, expected_article_counter)
+
+
+def generic_article_counter_should_match_number_of_articles(context, actor_alias):
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "article_counter_matches_number_of_articles")
+    page.article_counter_matches_number_of_articles(context.driver)

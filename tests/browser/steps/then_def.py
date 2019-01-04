@@ -71,6 +71,7 @@ from steps.then_impl import (
     triage_should_see_change_your_answers_link,
     zendesk_should_receive_confirmation_email,
     generic_article_counters_should_match,
+    generic_article_counter_should_match_number_of_articles
 )
 from steps.when_impl import (
     triage_answer_questions_again,
@@ -458,3 +459,8 @@ def step_impl(context: Context, actor_alias: str, subject: str):
 @then('"{actor_alias}" should see that article counter matches expected number')
 def then_article_counter_should_match(context: Context, actor_alias: str):
     generic_article_counters_should_match(context, actor_alias)
+
+
+@then('"{actor_alias}" should see that article counter matches the number of articles on the page')
+def then_article_counter_should_match_number_of_articles(context: Context, actor_alias: str):
+    generic_article_counter_should_match_number_of_articles(context, actor_alias)
