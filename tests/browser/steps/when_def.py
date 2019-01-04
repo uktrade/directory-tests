@@ -52,7 +52,6 @@ from steps.when_impl import (
     promo_video_watch,
     registration_go_to,
     registration_submit_form_and_verify_account,
-    set_sector_preference,
     sign_in,
     sign_out,
     visit_page,
@@ -94,16 +93,6 @@ def when_actor_opens_link(context, actor_alias, category, group, location):
 @when('"{actor_alias}" opens the link to "{service}" from interim page')
 def when_open_service_link_on_interim_page(context, actor_alias, service):
     open_service_link_on_interim_page(context, actor_alias, service)
-
-
-@when('"{actor_alias}" decides to change the sector to "{service}" service')
-def when_actor_sets_sector_service_preference(context, actor_alias, service):
-    set_sector_preference(context, actor_alias, service=service)
-
-
-@when('"{actor_alias}" decides to change the sector to "{good}" good')
-def when_actor_sets_sector_good_preference(context, actor_alias, good):
-    set_sector_preference(context, actor_alias, good=good)
 
 
 @when('"{actor_alias}" decides to register to save her reading progress using link visible in the "{location}"')

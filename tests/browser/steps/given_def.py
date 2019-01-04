@@ -11,7 +11,6 @@ from steps.then_impl import (
     should_see_sections
 )
 from steps.when_impl import (
-    actor_classifies_himself_as,
     articles_open_any,
     articles_open_any_but_the_last,
     articles_show_all,
@@ -29,8 +28,6 @@ from steps.when_impl import (
     generic_set_hawk_cookie,
     get_geo_ip,
     registration_create_and_verify_account,
-    set_online_marketplace_preference,
-    set_sector_preference,
     sign_in,
     visit_page,
 )
@@ -46,24 +43,6 @@ def given_actor_visits_page(context, actor_alias, page_name):
 @given('"{actor_alias}" is on the "{page_name}" page')
 def given_actor_is_on_page(context, actor_alias, page_name):
     should_be_on_page(context, actor_alias, page_name)
-
-
-@given('"{actor_alias}" classifies herself as "{exporter_status}" exporter')
-@given('"{actor_alias}" classifies himself as "{exporter_status}" exporter')
-def given_actor_classifies_as(context, actor_alias, exporter_status):
-    actor_classifies_himself_as(context, actor_alias, exporter_status)
-
-
-@given('"{actor_alias}" exports "{goods_or_services}"')
-def given_actor_sets_sector_preference(context, actor_alias, goods_or_services):
-    set_sector_preference(
-        context, actor_alias, goods_or_services=goods_or_services)
-
-
-@given('"{actor_alias}" "{used_or_not}" online marketplaces before')
-def given_actor_set_preferences_for_online_marketplaces(
-        context, actor_alias, used_or_not):
-    set_online_marketplace_preference(context, actor_alias, used_or_not)
 
 
 @given('"{actor_alias}" accessed Export Readiness articles for "{category}" Exporters via "{location}"')
@@ -82,21 +61,11 @@ def given_actor_opens_any_article(context, actor_alias):
     articles_open_any(context, actor_alias)
 
 
-@given('"{actor_alias}" exports "{service}" service')
-def given_actor_sets_sector_service_preference(context, actor_alias, service):
-    set_sector_preference(context, actor_alias, service=service)
-
-
 @given('"{actor_alias}" can see "{sections}" section on "{page_name}" page')
 @given('"{actor_alias}" can see "{sections}" sections on "{page_name}" page')
 def given_can_see_sections(context, actor_alias, sections, page_name):
     should_see_sections(
         context, actor_alias, page_name, sections_list=sections.split(", "))
-
-
-@given('"{actor_alias}" exports "{good}" good')
-def given_actor_sets_sector_good_preference(context, actor_alias, good):
-    set_sector_preference(context, actor_alias, good=good)
 
 
 @given('"{actor_alias}" cannot see the Top Importer banner and Top 10 Importers table for their sector')

@@ -26,7 +26,6 @@ from registry.articles import (
     get_article,
     get_articles,
 )
-from settings import EXRED_SECTORS
 from steps import has_action
 
 NUMBERS = {
@@ -106,15 +105,6 @@ def should_be_on_page(context: Context, actor_alias: str, page_name: str):
     logging.debug(f"{actor_alias} is on {page.SERVICE} - {page.NAME} - {page.TYPE} -> {page}")
 
 
-def actor_classifies_himself_as(
-    context: Context, actor_alias: str, exporter_status: str
-):
-    actor = unauthenticated_actor(
-        actor_alias, self_classification=exporter_status
-    )
-    add_actor(context, actor)
-
-
 @retry(
     wait_fixed=30000,
     stop_max_attempt_number=3,
@@ -161,116 +151,6 @@ def export_readiness_open_category(
         article_category=category,
         article_location=location,
         visited_page=exread.article_list,
-    )
-
-
-def set_sector_preference(
-    context: Context,
-    actor_alias: str,
-    *,
-    goods_or_services: str = None,
-    good: str = None,
-    service: str = None,
-):
-    if not get_actor(context, actor_alias):
-        add_actor(context, unauthenticated_actor(actor_alias))
-    assert goods_or_services or not (good and service)
-    message = (
-        "You can provide only one of the following arguments: "
-        "`goods_or_services`, `good` or `service`. You've passed: "
-        "`goods_or_services={} good={} service={}".format(
-            goods_or_services, good, service
-        )
-    )
-    optional_args = [goods_or_services, good, service]
-    assert len([arg for arg in optional_args if arg is not None]) == 1, message
-    logging.debug(
-        "%s exports: `goods_or_services=%s good=%s service=5s",
-        goods_or_services,
-        good,
-        service,
-    )
-    if goods_or_services is not None:
-        if goods_or_services.lower() == "goods":
-            sectors = [
-                (code, sector)
-                for code, sector in EXRED_SECTORS.items()
-                if code.startswith("HS")
-            ]
-        elif goods_or_services.lower() == "services":
-            sectors = [
-                (code, sector)
-                for code, sector in EXRED_SECTORS.items()
-                if code.startswith("EB")
-            ]
-        elif goods_or_services.lower() == "goods and services":
-            goods_sectors = [
-                (code, sector)
-                for code, sector in EXRED_SECTORS.items()
-                if code.startswith("HS")
-            ]
-            services_sectors = [
-                (code, sector)
-                for code, sector in EXRED_SECTORS.items()
-                if code.startswith("EB")
-            ]
-            sectors = goods_sectors + services_sectors
-        else:
-            raise KeyError(
-                "Could not recognise '%s' as valid sector. Please use 'goods' "
-                "or 'services'" % goods_or_services
-            )
-        code, sector = random.choice(sectors)
-    else:
-        filtered_sectors = [
-            (code, sector)
-            for code, sector in EXRED_SECTORS.items()
-            if sector == (good or service)
-        ]
-        assert len(filtered_sectors) == 1, (
-            "Could not find code & sector for"
-            " '{}'".format((good or service))
-        )
-        code, sector = filtered_sectors[0]
-    logging.debug("Code: %s - Sector: %s", code, sector)
-    update_actor(
-        context,
-        actor_alias,
-        what_do_you_want_to_export=(goods_or_services.lower(), code, sector),
-    )
-    logging.debug(
-        "%s decided that her/his preferred sector is: %s %s",
-        actor_alias,
-        code,
-        sector,
-    )
-
-
-def set_online_marketplace_preference(
-    context: Context, actor_alias: str, used_or_not: str
-):
-    """Will set preference for past usage of Online Marketplaces
-
-     NOTE:
-     It will add new Actor is specified one doesn't exist,
-    """
-    if not get_actor(context, actor_alias):
-        add_actor(context, unauthenticated_actor(actor_alias))
-    if used_or_not.lower() == "used":
-        used = True
-    elif used_or_not.lower() == "never used":
-        used = False
-    else:
-        raise KeyError(
-            "Could not recognise '%s' as valid preference for pass usage of"
-            " Online Marketplaces. Please use 'used' or 'never used'"
-            % used_or_not
-        )
-    update_actor(context, actor_alias, do_you_use_online_marketplaces=used)
-    logging.debug(
-        "%s decided that he/she %s online marketplaces before",
-        actor_alias,
-        used_or_not,
     )
 
 
