@@ -259,10 +259,3 @@ def then_article_counter_should_match(context: Context, actor_alias: str):
 @then('"{actor_alias}" should see that article counter matches the number of articles on the page')
 def then_article_counter_should_match_number_of_articles(context: Context, actor_alias: str):
     generic_article_counter_should_match_number_of_articles(context, actor_alias)
-
-
-###############################################################################
-# Currently unused but useful steps
-###############################################################################
-
-
