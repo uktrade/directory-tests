@@ -1053,60 +1053,11 @@ def articles_open_specific(context: Context, actor_alias: str, name: str):
 
 
 def articles_open_any(context: Context, actor_alias: str):
-    driver = context.driver
-    actor = get_actor(context, actor_alias)
-    group = actor.article_group
-    category = actor.article_category
-    visited_articles = actor.visited_articles
-    any_article = get_random_article(group, category)
-    exread.article_list.show_all_articles(driver)
-
-    # capture the counter values from Article List page
-    article_list_total = exread.article_common.get_total_articles(
-        context.driver
-    )
-    article_list_read_counter = exread.article_common.get_read_counter(
-        context.driver
-    )
-    article_list_time_to_complete = exread.article_common.get_time_to_complete(
-        context.driver
-    )
-
-    exread.article_common.go_to_article(driver, any_article.title)
-
-    # capture the counter values from Article page
-    total_articles = exread.article_common.get_total_articles(context.driver)
-    articles_read_counter = exread.article_common.get_read_counter(
-        context.driver
-    )
-    time_to_complete = exread.article_common.get_time_to_complete(
-        context.driver
-    )
-    time_to_read = exread.article_common.time_to_read_in_seconds(
-        context.driver
-    )
-    logging.debug(
-        "%s is on '%s' article page: %s",
-        actor_alias,
-        any_article.title,
-        driver.current_url,
-    )
-    just_read = VisitedArticle(
-        any_article.index, any_article.title, time_to_read
-    )
-    visited_articles.append(just_read)
-    update_actor(
-        context,
-        actor_alias,
-        articles_read_counter=articles_read_counter,
-        articles_time_to_complete=time_to_complete,
-        articles_total_number=total_articles,
-        article_list_read_counter=article_list_read_counter,
-        article_list_time_to_complete=article_list_time_to_complete,
-        article_list_total_number=article_list_total,
-        visited_articles=visited_articles,
-        visited_page=exread.article_common,
-    )
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "open_any_article")
+    element_details = page.open_any_article(context.driver)
+    update_actor(context, actor_alias, element_details=element_details)
+    logging.info(f"{actor_alias} opened article: {element_details}")
 
 
 def advice_read_through_all_articles(context: Context, actor_alias: str):

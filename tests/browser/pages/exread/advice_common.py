@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """ExRed Common Advice Page Object."""
 import logging
+import random
 from typing import List
 from urllib.parse import urljoin
 
@@ -125,3 +126,13 @@ def article_counter_matches_number_of_articles(driver: WebDriver):
              f"number of visible articles {len(article_links)} on"
              f"{driver.current_url}")
     assert current_counter == len(article_links), error
+
+
+def open_any_article(driver: WebDriver) -> str:
+    article_links = find_elements(driver, ARTICLE_LINKS)
+    link = random.choice(article_links)
+    link_text = link.text
+    check_if_element_is_visible(link, element_name=link_text)
+    with wait_for_page_load_after_action(driver):
+        link.click()
+    return link_text
