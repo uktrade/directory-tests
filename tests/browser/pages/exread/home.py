@@ -9,10 +9,10 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import ElementType
 from pages.common_actions import (
-    AssertionExecutor,
-    Selector,
     assertion_msg,
+    AssertionExecutor,
     check_for_section,
     check_for_sections,
     check_if_element_is_not_present,
@@ -21,7 +21,9 @@ from pages.common_actions import (
     find_and_click_on_page_element,
     find_element,
     find_elements,
+    get_selectors,
     go_to_url,
+    Selector,
     take_screenshot,
     wait_for_page_load_after_action,
 )
@@ -99,8 +101,15 @@ CAROUSEL = {
         By.ID, "case-studies-section-case-study-3-image"
     ),
 }
-ARTICLES = Selector(By.CSS_SELECTOR, "#news .article a")
+HEADER_ADVICE_LINKS = Selector(By.ID, "header-advice-links")
+ARTICLES = Selector(By.CSS_SELECTOR, "#eu-exit-news-section .article a")
 SELECTORS = {
+    "header - advice": {
+        "links": Selector(By.CSS_SELECTOR, "#advice-links-list a", type=ElementType.LINK),
+    },
+    "footer - advice": {
+        "links": Selector(By.CSS_SELECTOR, "#footer-advice-links ~ ul a", type=ElementType.LINK),
+    },
     "beta bar": {
         "itself": Selector(By.ID, "header-beta-bar"),
         "badge": Selector(By.CSS_SELECTOR, "#header-beta-bar .phase-tag"),
@@ -122,10 +131,10 @@ SELECTORS = {
         "image": Selector(By.ID, "triage-section-image"),
     },
     "news": {
-        "itself": Selector(By.ID, "news"),
-        "description": Selector(By.CSS_SELECTOR, "#news p.body-text"),
+        "itself": Selector(By.ID, "eu-exit-news-section"),
+        "description": Selector(By.CSS_SELECTOR, "#eu-exit-news-section h2 ~ p"),
         "articles": ARTICLES,
-        "see all news": Selector(By.CSS_SELECTOR, "#news a[href='/eu-exit-news/']"),
+        "see all news": Selector(By.ID, "see-all-eu-exit-news"),
     },
     "export readiness": {
         "itself": Selector(By.ID, "personas"),
@@ -149,7 +158,7 @@ SELECTORS = {
         "title": Selector(By.ID, "advice-section-title"),
         "description": Selector(By.ID, "advice-section-description"),
         "groups": Selector(By.CSS_SELECTOR, "#resource-advice .card"),
-        "cards": Selector(By.CSS_SELECTOR, "#resource-advice .card-link"),
+        "cards": Selector(By.CSS_SELECTOR, "#resource-advice .card-link", type=ElementType.LINK),
     },
     "services": {
         "itself": Selector(By.ID, "services"),
@@ -353,3 +362,32 @@ def open_news_article(driver: WebDriver, article_number: int):
 def click_on_page_element(driver: WebDriver, element_name: str):
     find_and_click_on_page_element(driver, SELECTORS, element_name)
     take_screenshot(driver, NAME + " after clicking on " + element_name)
+
+
+def extract_text(text: str, section_name: str) -> tuple:
+    if section_name.lower() == "advice":
+        advice_name_index = 1
+        article_counter_index = -2
+        name = text.splitlines()[advice_name_index]
+        counter = int(text.split()[article_counter_index])
+        return name, counter
+
+
+def open_any_element_in_section(
+        driver: WebDriver, element_type: str, section_name: str) -> tuple:
+    section = SELECTORS[section_name.lower()]
+    sought_type = ElementType[element_type.upper()]
+    selectors = get_selectors(section, sought_type)
+    assert selectors, f"Could't find any {element_type} in {section_name} section"
+    selector_key = random.choice(list(selectors))
+    selector = SELECTORS[section_name.lower()][selector_key]
+    if section_name.lower().startswith("header"):
+        find_element(driver, HEADER_ADVICE_LINKS).click()
+    elements = find_elements(driver, selector)
+    element = random.choice(elements)
+    check_if_element_is_visible(element, element_name=selector_key)
+    element_text = extract_text(element.text, section_name)
+    logging.debug(element_text)
+    with wait_for_page_load_after_action(driver):
+        element.click()
+    return element_text
