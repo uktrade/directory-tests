@@ -16,7 +16,6 @@ from steps.when_impl import (
     clear_the_cookies,
     click_on_page_element,
     contact_us_navigate_through_options,
-    export_readiness_open_category,
     fas_fill_out_and_submit_contact_us_form,
     fas_search_for_companies,
     fas_use_breadcrumb,
@@ -56,11 +55,6 @@ from steps.when_impl import (
     sign_out,
     visit_page,
 )
-
-
-@when('"{actor_alias}" goes to the Export Readiness Articles for "{category}" Exporters via "{location}"')
-def when_actor_goes_to_exred_articles(context, actor_alias, category, location):
-    export_readiness_open_category(context, actor_alias, category, location)
 
 
 @when('"{actor_alias}" opens any Article but the last one')

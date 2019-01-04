@@ -128,32 +128,6 @@ def open_group_element(
         raise KeyError("Could not recognize location: {}".format(location))
 
 
-def export_readiness_open_category(
-    context: Context, actor_alias: str, category: str, location: str
-):
-    if not get_actor(context, actor_alias):
-        add_actor(context, unauthenticated_actor(actor_alias))
-    if location.lower() != "personalised journey":
-        visit_page(context, actor_alias, "export readiness - home")
-    logging.debug(
-        "%s is about to open Export Readiness '%s' category from %s",
-        actor_alias,
-        category,
-        location,
-    )
-    open_group_element(
-        context, group="export readiness", element=category, location=location
-    )
-    update_actor(
-        context,
-        actor_alias,
-        article_group="export readiness",
-        article_category=category,
-        article_location=location,
-        visited_page=exread.article_list,
-    )
-
-
 def articles_open_any_but_the_last(context: Context, actor_alias: str):
     driver = context.driver
     actor = get_actor(context, actor_alias)

@@ -18,7 +18,6 @@ from steps.when_impl import (
     click_on_page_element,
     contact_us_get_to_page_via,
     contact_us_navigate_through_options,
-    export_readiness_open_category,
     exred_open_random_advice_article,
     generic_at_least_n_news_articles,
     generic_get_in_touch,
@@ -43,12 +42,6 @@ def given_actor_visits_page(context, actor_alias, page_name):
 @given('"{actor_alias}" is on the "{page_name}" page')
 def given_actor_is_on_page(context, actor_alias, page_name):
     should_be_on_page(context, actor_alias, page_name)
-
-
-@given('"{actor_alias}" accessed Export Readiness articles for "{category}" Exporters via "{location}"')
-def given_actor_goes_to_export_readiness_articles(
-        context, actor_alias, category, location):
-    export_readiness_open_category(context, actor_alias, category, location)
 
 
 @given('"{actor_alias}" opened any Article but the last one')
