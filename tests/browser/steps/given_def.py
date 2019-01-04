@@ -60,12 +60,6 @@ def given_actor_is_registered_and_verified(context, actor_alias):
         context, actor_alias, fake_verification=True)
 
 
-@given("{actor_alias} checks her geoip")
-@given("{actor_alias} checks his geoip")
-def given_actor_checks_the_goeip(context, actor_alias):
-    get_geo_ip(context, actor_alias)
-
-
 @given('"{actor_alias}" signed in using link in the "{location}"')
 @given('"{actor_alias}" is signed in')
 def given_actor_is_signed_in(context, actor_alias, *, location="top bar"):

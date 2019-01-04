@@ -369,13 +369,6 @@ def sign_out(context: Context, actor_alias: str):
     logging.debug("%s signed out", actor_alias)
 
 
-def get_geo_ip(context: Context, actor_alias: str):
-    driver = context.driver
-    driver.get("https://www.geoiptool.com/")
-    take_screenshot(driver, "geoip")
-    logging.debug("%s checked the geoip", actor_alias)
-
-
 @retry(wait_fixed=30000, stop_max_attempt_number=3)
 def articles_share_on_social_media(
     context: Context, actor_alias: str, social_media: str
