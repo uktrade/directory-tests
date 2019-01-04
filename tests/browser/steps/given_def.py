@@ -54,26 +54,9 @@ def given_can_see_sections(context, actor_alias, sections, page_name):
         context, actor_alias, page_name, sections_list=sections.split(", "))
 
 
-@given('"{actor_alias}" is a registered and verified user')
-def given_actor_is_registered_and_verified(context, actor_alias):
-    registration_create_and_verify_account(
-        context, actor_alias, fake_verification=True)
-
-
-@given('"{actor_alias}" signed in using link in the "{location}"')
-@given('"{actor_alias}" is signed in')
-def given_actor_is_signed_in(context, actor_alias, *, location="top bar"):
-    sign_in(context, actor_alias, location)
-
-
 @given('"{actor_alias}" is on the Case Study page accessed via "{page_name}" page')
 def given_actor_is_on_random_case_study_page(context, actor_alias, page_name):
     case_studies_go_to_random(context, actor_alias, page_name)
-
-
-@given('"{actor_alias}" shows all of the articles on the page whenever possible')
-def given_actor_shows_all_articles(context, actor_alias):
-    articles_show_all(context, actor_alias)
 
 
 @given('"{actor_alias}" decided to use "{element_name}" button on "{page_name}" page')
@@ -145,3 +128,20 @@ def given_hawk_cookie_is_set(context: Context, page_name: str):
 @given('"{actor_alias}" is on randomly selected Advice article page')
 def given_actor_in_on_random_advice_article(context: Context, actor_alias: str):
     exred_open_random_advice_article(context, actor_alias)
+
+# Currently unused but can come in handy
+@given('"{actor_alias}" is a registered and verified user')
+def given_actor_is_registered_and_verified(context, actor_alias):
+    registration_create_and_verify_account(
+        context, actor_alias, fake_verification=True)
+
+
+@given('"{actor_alias}" signed in using link in the "{location}"')
+@given('"{actor_alias}" is signed in')
+def given_actor_is_signed_in(context, actor_alias, *, location="top bar"):
+    sign_in(context, actor_alias, location)
+
+
+@given('"{actor_alias}" shows all articles on the page')
+def given_actor_shows_all_articles(context, actor_alias):
+    articles_show_all(context, actor_alias)
