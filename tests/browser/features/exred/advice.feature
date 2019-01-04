@@ -72,3 +72,22 @@ Feature: Advice articles
       | Prepare to do business in a foreign country |
       | Manage legal and ethical compliance         |
       | Prepare for export procedures and logistics |
+
+
+  @CMS-686
+  @home-page
+  @articles
+  @<specific>
+  Scenario: Any Exporter should be able to get to a list of Advice articles from the "Advice landing" page
+    Given "Robert" visits the "Export Readiness - Advice - landing" page
+
+    When "Robert" opens any "link" available in the "List of Articles" section
+
+    Then "Robert" should be on the "Export Readiness - Advice - Article list" page
+    And  "Robert" should see following sections
+      | sections                 |
+      | Hero                     |
+      | Total number of Articles |
+      | Breadcrumbs              |
+      | List of articles         |
+      | Error reporting          |
