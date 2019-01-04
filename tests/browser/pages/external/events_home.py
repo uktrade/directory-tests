@@ -23,8 +23,8 @@ GREAT_LOGO = Selector(By.CSS_SELECTOR, "div.event-logo")
 SELECTORS = {"general": {"great.gov.uk logo": GREAT_LOGO}}
 
 
-def visit(driver: WebDriver, *, first_time: bool = False):
-    go_to_url(driver, URL, NAME, first_time=first_time)
+def visit(driver: WebDriver):
+    go_to_url(driver, URL, NAME)
 
 
 def should_be_here(driver: WebDriver):

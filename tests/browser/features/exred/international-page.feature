@@ -105,13 +105,3 @@ Feature: International Page
     When "Robert" decides to view the page in "English (UK)"
 
     Then "Robert" should be on the "Export Readiness - Home" page
-
-
-  @wip
-  @ED-2846
-  @geoip
-  Scenario: Visitors accessing Export Readiness page from Abroad, should be presented with the International Page and if possible in language matching their geographical IP location
-    Given "Robert" checks his geoip
-    And "Robert" visits the "Export Readiness - Home" page
-
-    Then "Robert" should be on the "Export Readiness - Home" page

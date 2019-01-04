@@ -66,8 +66,8 @@ OTHER_SELECTORS = {
 }
 
 
-def visit(driver: WebDriver, *, first_time: bool = False):
-    go_to_url(driver, URL, NAME, first_time=first_time)
+def visit(driver: WebDriver):
+    go_to_url(driver, URL, NAME)
 
 
 def should_be_here(driver: WebDriver):

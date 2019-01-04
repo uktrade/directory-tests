@@ -66,7 +66,7 @@ SELECTORS = {
 }
 
 
-def visit(executor: Executor, *, first_time: bool = False):
+def visit(executor: Executor):
     visit_url(executor, URL)
 
 

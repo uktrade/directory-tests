@@ -94,8 +94,7 @@ def clean_name(name: str) -> str:
 
 
 def visit(
-    executor: Executor, *, page_name: str = None, first_time: bool = False
-):
+    executor: Executor, *, page_name: str = None):
     url = URLs[clean_name(page_name).lower()]
     visit_url(executor, url)
 

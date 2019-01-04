@@ -4,134 +4,124 @@ Feature: Advice articles
   Background:
     Given hawk cookie is set on "Export Readiness - Home" page
 
-  @ED-2463
+  @CMS-686
   @home-page
   @articles
   @<specific>
-  Scenario Outline: Any Exporter should get to a "<specific>" article list from Advice section on the home page
-    Given "Robert" visits the "Export Readiness - Home" page for the first time
+  Scenario Outline: Any Exporter should be able to get to a list of Advice articles from the home page
+    Given "Robert" visits the "Export Readiness - Home" page
 
-    When "Robert" goes to the "<specific>" Advice articles via "Export Readiness - Home"
+    When "Robert" opens any "link" available in the "<specific>" section
 
-    Then "Robert" should see an ordered list of all Advice Articles selected for "<specific>" category
-    And "Robert" should see on the Advice Articles page "Articles Read counter, Total number of Articles, Time to complete remaining chapters"
-    And "Robert" should see a link to the "<next>" Advice category
+    Then "Robert" should be on the "Export Readiness - Advice - article list" page
+    And  "Robert" should see following sections
+      | sections                 |
+      | Hero                     |
+      | Total number of Articles |
+      | Breadcrumbs              |
+      | List of articles         |
+      | Error reporting          |
 
-    Examples: Advice categories
-      | specific          | next              |
-      | Market research   | Customer insight  |
-      | Customer insight  | Finance           |
+    Examples: sections
+      | specific        |
+      | Advice          |
+      | Header - Advice |
+      | Footer - Advice |
+
+
+  @CMS-686
+  @home-page
+  @articles
+  Scenario: Advice article counter on the Home page should match the one on the Advice page
+    Given "Robert" visits the "Export Readiness - Home" page
+
+    When "Robert" opens any "link" available in the "Advice" section
+
+    Then "Robert" should be on the "Export Readiness - Advice - Article list" page
+    And "Robert" should see that article counter matches expected number
+    And "Robert" should see that article counter matches the number of articles on the page
+
+
+  @CMS-686
+  @home-page
+  @articles
+  Scenario Outline: Any Exporter should be able to get to "<advice>" Advice article
+    Given "Robert" visits the "Export Readiness - <advice> - Article list" page
+
+    When "Robert" opens any article on the list
+
+    Then "Robert" should be on the "Export Readiness - Advice - Article" page
+    And  "Robert" should see following sections
+      | sections        |
+      | Breadcrumbs     |
+      | Share buttons   |
+      | Article         |
+      | Error reporting |
+
+    Examples:
+      | advice                                      |
+      | Find an export market                       |
 
     @full
-    Examples: Advice categories
-      | specific          | next              |
-      | Finance           | Business planning |
-      | Business planning | Getting paid      |
-      | Getting paid      | last              |
+    Examples:
+      | advice                                      |
+      | Create an export plan                       |
+      | Define route to market                      |
+      | Get export finance and funding              |
+      | Manage payment for export orders            |
+      | Prepare to do business in a foreign country |
+      | Manage legal and ethical compliance         |
+      | Prepare for export procedures and logistics |
 
 
-  @ED-2464
+  @CMS-686
   @home-page
   @articles
-  Scenario Outline: Any Exporter should see article read count for "<specific>" Advice category when accessed via home page
-    Given "Robert" visits the "Export Readiness - Home" page for the first time
-
-    When "Robert" goes to the "<specific>" Advice articles via "Export Readiness - Home"
-
-    Then "Robert" should see an article read counter for the "<specific>" Advice category set to "0"
-    And "Robert" should see total number of articles for the "<specific>" Advice category
-
-    Examples:
-      | specific          |
-      | Market research   |
-      | Customer insight  |
-      | Finance           |
-      | Business planning |
-      | Getting paid      |
-
-
-  @ED-2465
-  @personalised-page
-  @advice
-  @articles
-  @regular
-  @optimize
-  Scenario Outline: Regular Exporter should see article read count for each tile in the "<specific>" Advice section on the personalised page
-    Given "Nadia" was classified as "regular" exporter in the triage process
-    And "Nadia" decided to create her personalised journey page
-
-    When "Nadia" goes to the "<specific>" Advice articles via "Export Readiness - Personalised Journey"
-
-    Then "Nadia" should see an article read counter for the "<specific>" Advice category set to "0"
-    And "Nadia" should see total number of articles for the "<specific>" Advice category
-
-    Examples:
-      | specific          |
-      | Market research   |
-      | Customer insight  |
-      | Finance           |
-      | Business planning |
-      | Getting paid      |
-
-
-  @ED-2466
-  @personalised-page
-  @articles
-  @regular
-  @optimize
   @<specific>
-  Scenario Outline: Regular Exporter should see "<specific>" Advice Articles accessed via personalised journey page
-    Given "Nadia" was classified as "regular" exporter in the triage process
-    And "Nadia" decided to create her personalised journey page
+  Scenario: Any Exporter should be able to get to a list of Advice articles from the "Advice landing" page
+    Given "Robert" visits the "Export Readiness - Advice - landing" page
 
-    When "Nadia" goes to the "<specific>" Advice articles via "Export Readiness - Personalised Journey"
+    When "Robert" opens any "link" available in the "List of Articles" section
 
-    Then "Nadia" should see an ordered list of all Advice Articles selected for "<specific>" category
-    And "Nadia" should see on the Advice Articles page "Articles Read counter, Total number of Articles, Time to complete remaining chapters"
-    And "Nadia" should see a link to the "<next>" Advice category
-
-    Examples: Advice categories
-      | specific          | next              |
-      | Market research   | Customer insight  |
-      | Customer insight  | Finance           |
-      | Finance           | Business planning |
-      | Business planning | Getting paid      |
-      | Getting paid      | last              |
+    Then "Robert" should be on the "Export Readiness - Advice - Article list" page
+    And  "Robert" should see following sections
+      | sections                 |
+      | Hero                     |
+      | Total number of Articles |
+      | Breadcrumbs              |
+      | List of articles         |
+      | Error reporting          |
 
 
-  @ED-2467
-  @banner
-  @<category>
-  @<location>
-  Scenario Outline: Advice Banner should be visible when on "<category>" Advice Article List accessed via "<location>"
-    Given "Robert" accessed "<category>" advice articles using "Export Readiness - <location>"
+  @CMS-686
+  @bug
+  @CMS-733
+  @fixme
+  @sharing
+  @social-media
+  @<group>
+  @<social_media>
+  Scenario Outline: Any Exporter should be able to share Advice article via "<social_media>"
+    Given "Robert" is on randomly selected Advice article page
 
-    Then "Robert" should see the Advice Navigation Ribbon
-    And "Robert" should see that the banner tile for "<category>" category is highlighted
+    When "Robert" decides to share the article via "<social_media>"
 
-    Examples: header menu
-      | category                  | location |
-      | Market research           | header   |
-      | Customer insight          | header   |
-      | Finance                   | header   |
-      | Business planning         | header   |
-      | Getting paid              | header   |
-      | Operations and Compliance | header   |
+    Then "Robert" should be taken to a new tab with the "<social_media>" share page opened
+    And "Robert" should that "<social_media>" share page has been pre-populated with message and the link to the article
 
-    Examples: footer links
-      | category                  | location |
-      | Market research           | footer   |
-      | Customer insight          | footer   |
-      | Finance                   | footer   |
-      | Business planning         | footer   |
-      | Getting paid              | footer   |
-      | Operations and Compliance | footer   |
+    Examples:
+      | social_media |
+      | Facebook     |
+      | Twitter      |
+      | Facebook     |
 
-    Examples: home page
-      | category                  | location |
-      | Market research           | home     |
-      | Customer insight          | home     |
-      | Finance                   | home     |
-      | Business planning         | home     |
-      | Getting paid              | home     |
-      | Operations and Compliance | home     |
+
+  @CMS-686
+  @report
+  Scenario: Any Exporter should be able to report a problem with Advice Article page
+    Given "Robert" is on randomly selected Advice article page
+
+    When "Robert" decides to report a problem with the page
+
+    Then "Robert" should be on the "Export Readiness - Feedback - contact us" page
+

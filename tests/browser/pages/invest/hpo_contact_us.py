@@ -135,9 +135,7 @@ UNEXPECTED_ELEMENTS = {
 }
 
 
-def visit(
-    executor: Executor, *, first_time: bool = False, page_name: str = None
-):
+def visit(executor: Executor, *, page_name: str = None):
     key = page_name.split(" - ")[1].lower()
     url = URLs[key]
     visit_url(executor, url)

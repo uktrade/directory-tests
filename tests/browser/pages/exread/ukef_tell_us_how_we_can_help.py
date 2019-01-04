@@ -60,9 +60,8 @@ SELECTORS = {
 
 
 def visit(
-    driver: WebDriver, *, page_name: str = None, first_time: bool = False
-):
-    go_to_url(driver, URL, NAME, first_time=first_time)
+    driver: WebDriver, *, page_name: str = None):
+    go_to_url(driver, URL, NAME)
 
 
 def should_be_here(driver: WebDriver):

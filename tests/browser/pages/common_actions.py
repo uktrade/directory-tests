@@ -55,30 +55,15 @@ Actor = namedtuple(
         "alias",
         "email",
         "password",
-        "self_classification",
-        "triage_classification",
-        "what_do_you_want_to_export",
-        "have_you_exported_before",
-        "do_you_export_regularly",
-        "are_you_incorporated",
         "company_name",
-        "do_you_use_online_marketplaces",
-        "created_personalised_journey",
-        "article_group",
         "article_category",
-        "article_location",
         "visited_articles",
-        "articles_read_counter",
-        "articles_time_to_complete",
-        "articles_total_number",
-        "article_list_read_counter",
-        "article_list_time_to_complete",
-        "article_list_total_number",
         "case_study_title",
         "email_confirmation_link",
         "registered",
         "visited_page",
         "last_tag",
+        "element_details"
     ],
 )
 VisitedArticle = namedtuple("VisitedArticle", ["index", "title", "time_to_read"])
@@ -117,10 +102,8 @@ def get_hawk_cookie():
     }
 
 
-def go_to_url(driver: WebDriver, url: str, page_name: str, *, first_time: bool = False):
+def go_to_url(driver: WebDriver, url: str, page_name: str):
     """Go to the specified URL and take a screenshot afterwards."""
-    if first_time:
-        clear_driver_cookies(driver)
     driver.get(url)
     take_screenshot(driver, page_name)
 
@@ -215,7 +198,8 @@ def check_for_expected_sections_elements(
 
 
 def find_and_click_on_page_element(
-    driver: WebDriver, sections: dict, element_name: str, *, wait_for_it: bool=True
+    driver: WebDriver, sections: dict, element_name: str, *,
+    wait_for_it: bool = True
 ):
     """Find page element in any page section selectors and click on it."""
     found_selector = False
@@ -233,8 +217,17 @@ def find_and_click_on_page_element(
                 driver, selector, element_name=element_name, wait_for_it=wait_for_it
             )
             check_if_element_is_visible(web_element, element_name)
-            with wait_for_page_load_after_action(driver):
-                web_element.click()
+            if web_element.get_attribute("target") == "_blank":
+                logging.debug(
+                    f"'{web_element.text}' opens in new tab, but will "
+                    f"forcefully open it in the same one"
+                )
+                with wait_for_page_load_after_action(driver):
+                    href = web_element.get_attribute("href")
+                    driver.get(href)
+            else:
+                with wait_for_page_load_after_action(driver):
+                    web_element.click()
     with assertion_msg("Could not find '%s' in any section", element_name):
         assert found_selector
 
@@ -244,7 +237,7 @@ def initialize_scenario_data() -> ScenarioData:
     return ScenarioData(actors={})
 
 
-def unauthenticated_actor(alias: str, *, self_classification: str = None) -> Actor:
+def unauthenticated_actor(alias: str) -> Actor:
     """Create an instance of an unauthenticated Actor.
 
     Will:
@@ -264,7 +257,6 @@ def unauthenticated_actor(alias: str, *, self_classification: str = None) -> Act
         alias=alias,
         email=email,
         password=password,
-        self_classification=self_classification,
         visited_articles=[],
     )
 
@@ -512,16 +504,6 @@ def find_element(
 
 
 def find_selector_by_name(selectors: dict, name: str) -> Selector:
-    found_selectors = [
-        selector
-        for section_selectors in selectors.values()
-        for selector_name, selector in section_selectors.items()
-        if selector_name.lower() == name.lower()]
-    assert len(found_selectors) == 1
-    return found_selectors[0]
-
-
-def find_selector_by_type(selectors: dict, name: str) -> Selector:
     found_selectors = [
         selector
         for section_selectors in selectors.values()
