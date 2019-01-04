@@ -7,7 +7,6 @@ from behave.runner import Context
 
 from steps.then_impl import should_be_on_page
 from steps.when_impl import (
-    articles_found_useful_or_not,
     articles_open_any,
     articles_share_on_social_media,
     articles_show_all,
@@ -76,25 +75,9 @@ def when_open_service_link_on_interim_page(context, actor_alias, service):
     open_service_link_on_interim_page(context, actor_alias, service)
 
 
-@when('"{actor_alias}" signs out and forgets the article reading history by clearing the cookies')
-def when_actor_clears_the_cookies(context, actor_alias):
-    clear_the_cookies(context, actor_alias)
-
-
-@when('"{actor_alias}" signs in')
-@when('"{actor_alias}" signs in using link visible in the "{location}"')
-def when_actor_signs_in(context, actor_alias, *, location="top bar"):
-    sign_in(context, actor_alias, location)
-
-
 @when('"{actor_alias}" goes to the "{page_name}" page')
 def when_actor_goes_to_page(context, actor_alias, page_name):
     visit_page(context, actor_alias, page_name)
-
-
-@when('"{actor_alias}" signs out')
-def when_actor_signs_out(context, actor_alias):
-    sign_out(context, actor_alias)
 
 
 @when('"{actor_alias}" decides to share the article via "{social_media}"')
@@ -353,3 +336,19 @@ def when_actor_registers_fake_email_verification(context, actor_alias):
 def when_actor_registers_real_email_verification(context, actor_alias):
     registration_submit_form_and_verify_account(
         context, actor_alias, fake_verification=False)
+
+
+@when('"{actor_alias}" clears the cookies')
+def when_actor_clears_the_cookies(context, actor_alias):
+    clear_the_cookies(context, actor_alias)
+
+
+@when('"{actor_alias}" signs in')
+@when('"{actor_alias}" signs in using link visible in the "{location}"')
+def when_actor_signs_in(context, actor_alias, *, location="top bar"):
+    sign_in(context, actor_alias, location)
+
+
+@when('"{actor_alias}" signs out')
+def when_actor_signs_out(context, actor_alias):
+    sign_out(context, actor_alias)
