@@ -86,13 +86,17 @@ def should_be_here(driver: WebDriver, *, page_name: str):
     logging.debug("All expected elements are visible on '%s' page", PAGE_TITLE)
 
 
+def should_see_sections(driver: WebDriver, names: List[str]):
+    check_for_sections(driver, all_sections=SELECTORS, sought_sections=names)
 
 
 def open_first_article(driver: WebDriver):
     first_article = find_element(
-        driver, FIRST_ARTICLE, element_name="First article on list", wait_for_it=False
+        driver, FIRST_ARTICLE, element_name="First article on list",
+        wait_for_it=False
     )
-    check_if_element_is_visible(first_article, element_name="First article on list")
+    check_if_element_is_visible(
+        first_article, element_name="First article on list")
     with wait_for_page_load_after_action(driver):
         first_article.click()
     take_screenshot(driver, "after opening first article")
