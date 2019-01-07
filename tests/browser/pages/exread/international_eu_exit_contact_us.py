@@ -121,7 +121,7 @@ def generate_form_details(actor: Actor) -> dict:
         "company name": "automated tests",
         "country": None,
         "city": "automated tests",
-        "comment": f"Submitted by automated test {actor.alias}",
+        "comment": f"Submitted by automated tests {actor.alias}",
         "terms and conditions": True,
     }
     return result

@@ -91,7 +91,7 @@ def generate_form_details(actor: Actor) -> dict:
         "company": is_company,
         "other type of organisation": not is_company,
         "company name": "automated tests",
-        "your question": f"Submitted by automated test {actor.alias}",
+        "your question": f"Submitted by automated tests {actor.alias}",
         "terms and conditions": True,
     }
     return result

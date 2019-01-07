@@ -54,7 +54,7 @@ def generate_form_details(actor: Actor) -> dict:
     result = {
         "first name": f"send by {actor.alias} - automated tests",
         "last name": actor.alias,
-        "position": "automated test",
+        "position": "automated tests",
         "email": actor.email,
         "phone": "automated tests",
     }

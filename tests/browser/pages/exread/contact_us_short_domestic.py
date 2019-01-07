@@ -95,7 +95,7 @@ def should_be_here(driver: WebDriver, *, page_name: str = None):
 def generate_form_details(actor: Actor) -> dict:
     is_company = random.choice([True, False])
     result = {
-        "comment": f"Submitted by automated test {actor.alias}",
+        "comment": f"Submitted by automated tests {actor.alias}",
         "first name": f"send by {actor.alias} - automated tests",
         "last name": actor.alias,
         "email": actor.email,

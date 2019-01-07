@@ -77,10 +77,10 @@ def should_be_here(driver: WebDriver):
 def generate_form_details(actor: Actor) -> dict:
     result = {
         "first name": actor.alias,
-        "last name": "automated test",
-        "position": "automated test",
+        "last name": "automated tests",
+        "position": "automated tests",
         "email": actor.email,
-        "phone": "automated test",
+        "phone": "automated tests",
     }
     return result
 

@@ -47,7 +47,7 @@ def should_be_here(driver: WebDriver):
 
 
 def generate_form_details(actor: Actor) -> dict:
-    result = {"comment": f"Submitted by automated test {actor.alias}"}
+    result = {"comment": f"Submitted by automated tests {actor.alias}"}
     return result
 
 
