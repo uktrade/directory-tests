@@ -308,6 +308,8 @@ Feature:  new contact us forms
 
   # already partially covered by stories for TT-585
   @wip
+  @dev-only
+  @captcha
   @ukef
   Scenario: Exporters should be able to contact UKEF mailbox
     Given "Robert" got to the "Export Readiness - What would you like to know more about? - UKEF Contact us" page via "The UK -> UK Export Finance (UKEF)"
@@ -342,7 +344,6 @@ Feature:  new contact us forms
   @TT-758
   @CMS-506
   @eu-exit
-  @dev-only
   @feature-flagged
   Scenario: Exporters should be able to get to the "Domestic EU Exit short contact-us form"
     Given "Robert" got to the "Export Readiness - What can we help you with? - Domestic Contact us" page via "The UK"
