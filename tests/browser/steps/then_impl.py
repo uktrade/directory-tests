@@ -18,6 +18,7 @@ from pages.common_actions import (
     get_last_visited_page,
     update_actor
 )
+from pages.exread import contact_us_office_finder_search_results
 from settings import (
     HPO_AGENT_EMAIL_ADDRESS,
     HPO_AGENT_EMAIL_SUBJECT,
@@ -473,3 +474,12 @@ def generic_article_counter_should_match_number_of_articles(context, actor_alias
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "article_counter_matches_number_of_articles")
     page.article_counter_matches_number_of_articles(context.driver)
+
+
+def office_finder_should_see_correct_office_details(
+        context: Context, actor_alias: str, trade_office: str, city: str):
+    contact_us_office_finder_search_results.should_see_office_details(
+        context.driver, trade_office, city)
+    logging.debug(
+        f"{actor_alias} found contact details for trade '{trade_office}' office"
+        f" in '{city}'")

@@ -25,6 +25,7 @@ from steps.then_impl import (
     language_selector_keyboard_should_be_trapped,
     language_selector_should_not_see_it,
     language_selector_should_see_it,
+    office_finder_should_see_correct_office_details,
     pdf_check_expected_details,
     pdf_check_for_dead_links,
     promo_video_check_watch_time,
@@ -259,3 +260,10 @@ def then_article_counter_should_match(context: Context, actor_alias: str):
 @then('"{actor_alias}" should see that article counter matches the number of articles on the page')
 def then_article_counter_should_match_number_of_articles(context: Context, actor_alias: str):
     generic_article_counter_should_match_number_of_articles(context, actor_alias)
+
+
+@then('"{actor_alias}" should see contact details for "{trade_office}" office in "{city}"')
+def then_should_see_correct_trade_office_details(
+        context: Context, actor_alias: str, trade_office: str, city: str):
+    office_finder_should_see_correct_office_details(
+        context, actor_alias, trade_office, city)
