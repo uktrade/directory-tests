@@ -8,7 +8,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
-    AssertionExecutor,
     Selector,
     check_for_sections,
     check_url,
@@ -153,8 +152,8 @@ def should_be_here(driver: WebDriver):
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
-def should_see_sections(executor: AssertionExecutor, names: List[str]):
-    check_for_sections(executor, all_sections=SELECTORS, sought_sections=names)
+def should_see_sections(driver: WebDriver, names: List[str]):
+    check_for_sections(driver, all_sections=SELECTORS, sought_sections=names)
 
 
 def search(driver: WebDriver, *, keyword: str = None, sector: str = None):

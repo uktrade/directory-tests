@@ -18,7 +18,7 @@ from datetime import datetime
 from os import path
 from selenium.webdriver import ActionChains
 from types import ModuleType
-from typing import Dict, List, Union
+from typing import Dict, List
 
 import requests
 from behave.runner import Context
@@ -64,8 +64,6 @@ Actor = namedtuple(
         "element_details"
     ],
 )
-Executor = Union[WebDriver, Session]
-AssertionExecutor = Union[WebDriver, Response]
 Selector = namedtuple(
     "Selector", [
         "by", "value", "in_desktop", "in_mobile", "in_horizontal", "type", 
@@ -682,27 +680,13 @@ def show_snackbar_message(driver: WebDriver, message: str):
 
 
 def check_for_sections(
-    executor: AssertionExecutor, all_sections: dict, sought_sections: List[str]
-):
-    if isinstance(executor, WebDriver):
-        browser_check_for_sections(executor, all_sections, sought_sections)
-    elif isinstance(executor, Response):
-        requests_check_for_sections(executor, all_sections, sought_sections)
-    else:
-        raise NotImplementedError(
-            "Unsupported type: {}. Please provide one of supported types: "
-            "WebDriver or Response".format(type(executor))
-        )
-
-
-def browser_check_for_sections(
-    driver: WebDriver,
-    all_sections: dict,
-    sought_sections: List[str],
-    *,
-    desktop: bool = True,
-    mobile: bool = False,
-    horizontal: bool = False,
+        driver: WebDriver,
+        all_sections: dict,
+        sought_sections: List[str],
+        *,
+        desktop: bool = True,
+        mobile: bool = False,
+        horizontal: bool = False,
 ):
     for name in sought_sections:
         if desktop:
@@ -776,24 +760,8 @@ def selectors_by_group(form_selectors: Dict[str, Selector]) -> Dict[str, Selecto
     return groups
 
 
-def browser_visit(driver: WebDriver, url: str):
+def visit_url(driver: WebDriver, url: str):
     driver.get(url)
-
-
-def requests_visit(session: Session, url: str) -> Response:
-    return session.get(url)
-
-
-def visit_url(executor: Executor, url: str) -> Union[Response, None]:
-    if isinstance(executor, WebDriver):
-        executor.get(url)
-    elif isinstance(executor, Session):
-        return executor.get(url)
-    else:
-        raise NotImplementedError(
-            "Unsupported type: {}. Please provide one of supported types: "
-            "WedDriver or Session".format(type(executor))
-        )
 
 
 def tick_captcha_checkbox(driver: WebDriver):

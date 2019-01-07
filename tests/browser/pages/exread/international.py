@@ -17,7 +17,6 @@ from pages.common_actions import (
     take_screenshot,
     wait_for_page_load_after_action,
     check_for_sections,
-    AssertionExecutor,
     find_and_click_on_page_element
 )
 from settings import EXRED_UI_URL
@@ -108,8 +107,8 @@ def should_see_section(driver: WebDriver, name: str):
     check_for_section(driver, SELECTORS, sought_section=name)
 
 
-def should_see_sections(executor: AssertionExecutor, names: List[str]):
-    check_for_sections(executor, all_sections=SELECTORS, sought_sections=names)
+def should_see_sections(driver: WebDriver, names: List[str]):
+    check_for_sections(driver, all_sections=SELECTORS, sought_sections=names)
 
 
 def open(driver: WebDriver, group: str, element: str, *, same_tab: bool = True):

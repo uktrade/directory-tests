@@ -8,11 +8,9 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
-    AssertionExecutor,
     check_for_sections,
     check_if_element_is_not_visible,
     check_url,
-    Executor,
     Selector,
     take_screenshot,
 )
@@ -72,14 +70,14 @@ UNEXPECTED_ELEMENTS = {
 }
 
 
-def should_be_here(executor: Executor, *, page_name: str):
-    take_screenshot(executor, PAGE_TITLE)
-    check_url(executor, URL, exact_match=False)
+def should_be_here(driver: WebDriver, *, page_name: str):
+    take_screenshot(driver, PAGE_TITLE)
+    check_url(driver, URL, exact_match=False)
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
-def should_see_sections(executor: AssertionExecutor, names: List[str]):
-    check_for_sections(executor, all_sections=SELECTORS, sought_sections=names)
+def should_see_sections(driver: WebDriver, names: List[str]):
+    check_for_sections(driver, all_sections=SELECTORS, sought_sections=names)
 
 
 def should_not_see_section(driver: WebDriver, name: str):

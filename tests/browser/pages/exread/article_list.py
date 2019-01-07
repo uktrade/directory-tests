@@ -8,7 +8,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
-    AssertionExecutor,
+    WebDriver,
     Selector,
     assertion_msg,
     check_for_expected_sections_elements,
@@ -80,8 +80,8 @@ def should_see_section(driver: WebDriver, name: str):
     check_for_section(driver, all_sections=SELECTORS, sought_section=name)
 
 
-def should_see_sections(executor: AssertionExecutor, names: List[str]):
-    check_for_sections(executor, all_sections=SELECTORS, sought_sections=names)
+def should_see_sections(driver: WebDriver, names: List[str]):
+    check_for_sections(driver, all_sections=SELECTORS, sought_sections=names)
 
 
 def should_not_see_section(driver: WebDriver, name: str):

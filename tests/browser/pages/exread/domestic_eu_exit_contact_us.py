@@ -10,7 +10,6 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from pages import ElementType
 from pages.common_actions import (
     Actor,
-    AssertionExecutor,
     Selector,
     check_for_sections,
     check_url,
@@ -78,8 +77,8 @@ def should_be_here(driver: WebDriver):
     check_url(driver, URL, exact_match=False)
 
 
-def should_see_sections(executor: AssertionExecutor, names: List[str]):
-    check_for_sections(executor, all_sections=ALL_SELECTORS, sought_sections=names)
+def should_see_sections(driver: WebDriver, names: List[str]):
+    check_for_sections(driver, all_sections=SELECTORS, sought_sections=names)
 
 
 def generate_form_details(actor: Actor) -> dict:

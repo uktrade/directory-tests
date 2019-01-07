@@ -10,11 +10,9 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from pages import ElementType
 from pages.common_actions import (
     Actor,
-    AssertionExecutor,
     check_for_sections,
     check_if_element_is_not_visible,
     check_url,
-    Executor,
     fill_out_input_fields,
     fill_out_textarea_fields,
     find_element,
@@ -135,20 +133,20 @@ UNEXPECTED_ELEMENTS = {
 }
 
 
-def visit(executor: Executor, *, page_name: str = None):
+def visit(driver: WebDriver, *, page_name: str = None):
     key = page_name.split(" - ")[1].lower()
     url = URLs[key]
-    visit_url(executor, url)
+    visit_url(driver, url)
 
 
-def should_be_here(executor: Executor, *, page_name: str):
-    take_screenshot(executor, PAGE_TITLE)
-    check_url(executor, URL, exact_match=False)
+def should_be_here(driver: WebDriver, *, page_name: str):
+    take_screenshot(driver, PAGE_TITLE)
+    check_url(driver, URL, exact_match=False)
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
-def should_see_sections(executor: AssertionExecutor, names: List[str]):
-    check_for_sections(executor, all_sections=SELECTORS, sought_sections=names)
+def should_see_sections(driver: WebDriver, names: List[str]):
+    check_for_sections(driver, all_sections=SELECTORS, sought_sections=names)
 
 
 def check_state_of_form_element(

@@ -10,13 +10,11 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from pages import ElementType
 from pages.common_actions import (
     Selector,
-    check_title,
     check_url,
     find_element,
     go_to_url,
     take_screenshot,
     check_for_sections,
-    AssertionExecutor,
     Actor,
     fill_out_textarea_fields,
     tick_checkboxes,
@@ -100,8 +98,8 @@ def should_be_here(driver: WebDriver):
     check_url(driver, URL, exact_match=False)
 
 
-def should_see_sections(executor: AssertionExecutor, names: List[str]):
-    check_for_sections(executor, all_sections=ALL_SELECTORS, sought_sections=names)
+def should_see_sections(driver: WebDriver, names: List[str]):
+    check_for_sections(driver, all_sections=ALL_SELECTORS, sought_sections=names)
 
 
 def should_not_see_section(driver: WebDriver, name: str):

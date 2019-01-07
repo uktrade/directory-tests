@@ -12,7 +12,6 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from pages import ElementType
 from pages.common_actions import (
     assertion_msg,
-    AssertionExecutor,
     check_for_section,
     check_for_sections,
     check_if_element_is_not_present,
@@ -214,8 +213,8 @@ def should_see_section(driver: WebDriver, name: str):
     check_for_section(driver, all_sections=SELECTORS, sought_section=name)
 
 
-def should_see_sections(executor: AssertionExecutor, names: List[str]):
-    check_for_sections(executor, all_sections=SELECTORS, sought_sections=names)
+def should_see_sections(driver: WebDriver, names: List[str]):
+    check_for_sections(driver, all_sections=SELECTORS, sought_sections=names)
 
 
 def should_see_link_to(driver: WebDriver, section: str, item_name: str):
