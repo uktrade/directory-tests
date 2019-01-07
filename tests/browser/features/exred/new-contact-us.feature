@@ -37,15 +37,71 @@ Feature:  new contact us forms
       | Other                                     |
 
 
-  @TT-758
+  @TT-363
   @office-finder
-  Scenario: Domestic Enquirers should be able to get to the "Existing Office finder - Home" page
+  Scenario: Domestic Enquirers should be able to get to the "New Office finder - Home" page
     Given "Robert" visits the "Export Readiness - Contact us" page
 
     When "Robert" says that his business is in "the UK"
     And "Robert" chooses "Find your local trade office" option
 
-    Then "Robert" should be on the "EXISTING Office finder - Home" page
+    Then "Robert" should be on the "Export Readiness - New Office Finder" page
+
+
+  @TT-363
+  @office-finder
+  Scenario Outline: Domestic Enquirers should be able to get to find contact details for "<appropriate>" office in "<city>"
+    Given "Robert" visits the "Export Readiness - New Office Finder" page
+
+    When "Robert" searches for local trade office near "<post-code>"
+
+    Then "Robert" should be on the "Export Readiness - New Office Finder - search results" page
+    And "Robert" should see contact details for "<appropriate>" office in "<city>"
+
+    Examples: postcodes and trade offices
+      | post-code | appropriate                  | city        |
+      | LL57 1ST  | Business Wales               | Sarn Mynach |
+      | LE5 3BF   | DIT East Midlands            | Leicester   |
+
+    @full
+    Examples: postcodes and trade offices
+      | post-code | appropriate                  | city        |
+      | AL10 8EP  | DIT East of England          | Hatfield    |
+      | SW1A 2AA  | DIT London                   | London      |
+      | DH1 1SQ   | DIT North East               | Durham      |
+      | M15 6PQ   | DIT North West               | Manchester  |
+      | PO15 5DE  | DIT South East               | Fareham     |
+      | BS1 4RL   | DIT South West               | Bristol     |
+      | B3 2RT    | DIT West Midlands            | Birmingham  |
+      | S70 2PS   | DIT Yorkshire and the Humber | Barnsley    |
+      | BT2 8DN   | Invest NI                    | Belfast     |
+      | G3 6AP    | Scottish Enterprise          | Glasgow     |
+
+
+  @wip
+  @TT-363
+  @office-finder
+  Scenario: Domestic Enquirers should be able to get to the NEW Office finder page
+    Given "Robert" visits the "Export Readiness - New Office Finder" page
+
+    When "Robert" found his local trade office by providing his company's postcode
+    And "Robert" decides to "Contact the local trade office"
+
+    Then "Robert" should be on the "Export Readiness - Short contact form (Office Finder)" page
+
+
+  @wip
+  @TT-363
+  @captcha
+  @dev-only
+  @office-finder
+  Scenario: Domestic Enquirers should be able to contact
+    Given "Robert" got to the "Short contact-us form" page via "Find local trade office"
+
+    When "Robert" fills out and submits the form
+
+    Then "Robert" should be on the "Thank you for your enquiry" page
+    And an email is submitted to "appropriate local office based on the postcode provided"
 
 
   @TT-758
@@ -413,43 +469,3 @@ Feature:  new contact us forms
     And "Robert" decides to "finish & close"
 
     Then "Robert" should be on the "Export Readiness - Home" page
-
-
-  @wip
-  @v2
-  @office-finder
-  Scenario: Domestic Enquirers should be able to get to the NEW Office finder page
-    Given "Robert" visits the "Export Readiness - Contact us" page
-
-    When "Robert" says that his business is in "the UK"
-    And "Robert" decides to "Find your local trade office"
-
-    Then "Robert" should be on the "NEW Office finder" page
-
-
-  @wip
-  @v2
-  @office-finder
-  Scenario: Domestic Enquirers should be able to get to the NEW Office finder page
-    Given "Robert" visits the "Export Readiness - Contact us" page
-
-    When "Robert" says that his business is in "the UK"
-    And "Robert" decides to "Find local trade office"
-    And "Robert" found his local trade office by providing his company's postcode
-    And "Robert" decides to "Contact the local trade office"
-
-    Then "Robert" should be on the "Short contact us form" page
-
-
-  @wip
-  @captcha
-  @dev-only
-  @v2
-  @office-finder
-  Scenario: Domestic Enquirers should be able to contact
-    Given "Robert" got to the "Short contact-us form" page via "Find local trade office"
-
-    When "Robert" fills out and submits the form
-
-    Then "Robert" should be on the "Thank you for your enquiry" page
-    And an email is submitted to "appropriate local office based on the postcode provided"
