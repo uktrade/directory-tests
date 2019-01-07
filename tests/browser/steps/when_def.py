@@ -41,6 +41,7 @@ from steps.when_impl import (
     language_selector_close,
     language_selector_navigate_through_links_with_keyboard,
     language_selector_open,
+    office_finder_find_trade_office,
     open_any_element,
     open_link,
     open_service_link_on_interim_page,
@@ -347,3 +348,8 @@ def when_actor_signs_in(context, actor_alias, *, location="top bar"):
 @when('"{actor_alias}" signs out')
 def when_actor_signs_out(context, actor_alias):
     sign_out(context, actor_alias)
+
+
+@when('"{actor_alias}" searches for local trade office near "{post_code}"')
+def when_actor_looks_for_trade_office(context: Context, actor_alias: str, post_code: str):
+    office_finder_find_trade_office(context, actor_alias, post_code)

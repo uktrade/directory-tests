@@ -767,3 +767,9 @@ def generic_report_problem_with_page(context: Context, actor_alias: str):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "report_problem")
     page.report_problem(context.driver)
+
+
+def office_finder_find_trade_office(context: Context, actor_alias: str, post_code: str):
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "find_trade_office")
+    page.find_trade_office(context.driver, post_code)
