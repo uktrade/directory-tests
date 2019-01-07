@@ -7,8 +7,8 @@ Feature: New Contact-us form
   @exopps
   @captcha
   @dev-only
-  @soo_long_domestic
-  @account_support
+  @soo-long-domestic
+  @account-support
   Scenario: Domestic "Selling Online Overseas" Enquirers should be able to contact us
     Given "Robert" got to the "Selling Online Overseas - Long Domestic (Your Business)" page
 

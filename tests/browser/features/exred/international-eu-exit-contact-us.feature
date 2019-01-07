@@ -47,6 +47,8 @@ Feature: International Page - EU Exit - Contact us
 
 
   @TT-617
+  @dev-only
+  @captcha
   @eu-exit
   @contact-us
   @international-page
