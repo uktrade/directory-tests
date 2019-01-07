@@ -16,7 +16,7 @@ from pages.common_actions import (
     clear_driver_cookies,
     get_actor,
     get_last_visited_page,
-    update_actor
+    update_actor,
 )
 from pages.exread import contact_us_office_finder_search_results
 from settings import (
@@ -29,8 +29,8 @@ from settings import (
 )
 from steps import has_action
 from utils.gov_notify import (
+    get_email_confirmation_notification,
     get_email_confirmations_with_matching_string,
-    get_email_confirmation_notification
 )
 from utils.mailgun import mailgun_invest_find_contact_confirmation_email
 from utils.pdf import extract_text_from_pdf_bytes
