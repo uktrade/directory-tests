@@ -66,7 +66,6 @@ Actor = namedtuple(
         "element_details"
     ],
 )
-VisitedArticle = namedtuple("VisitedArticle", ["index", "title", "time_to_read"])
 Executor = Union[WebDriver, Session]
 AssertionExecutor = Union[WebDriver, Response]
 Selector = namedtuple(
@@ -78,7 +77,6 @@ Selector = namedtuple(
 
 # define default values for various named tuples
 Actor.__new__.__defaults__ = (None,) * len(Actor._fields)
-VisitedArticle.__new__.__defaults__ = (None,) * len(VisitedArticle._fields)
 Selector.__new__.__defaults__ = (None, None, True, True, True, None, True, None)
 
 
