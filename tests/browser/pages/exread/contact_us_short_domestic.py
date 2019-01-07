@@ -21,7 +21,7 @@ from pages.common_actions import (
     take_screenshot,
     tick_captcha_checkbox,
     tick_checkboxes,
-    pick_option
+    pick_option,
 )
 from pages.exread import contact_us_short_domestic_thank_you
 from settings import EXRED_UI_URL
@@ -33,6 +33,7 @@ NAMES = [
     "Short contact form (Defence and Security Organisation (DSO))",
     "Short contact form (Buying from the UK)",
     "Short contact form (Other)",
+    "Short contact form (Office Finder)",
 ]
 SERVICE = "Export Readiness"
 TYPE = "Contact us"
@@ -78,6 +79,9 @@ URLs = {
     "short contact form (other)": URL,
     "short contact form (buying from the uk)": urljoin(
         URL, "/contact/find-uk-companies/"
+    ),
+    "short contact form (office finder)": urljoin(
+        URL, "/contact/office-finder/"
     ),
 }
 
