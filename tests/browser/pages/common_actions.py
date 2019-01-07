@@ -878,7 +878,7 @@ def check_radio(
 
 def check_random_radio(driver: WebDriver, form_selectors: Dict[str, Selector]):
     radio_selectors = get_selectors(form_selectors, ElementType.RADIO)
-    grouped_selectors = selectors_by_group(radio_selectos)
+    grouped_selectors = selectors_by_group(radio_selectors)
     for group, selectors in grouped_selectors.items():
         logging.debug(f"Selecting random radio option from group: {group}")
         key = random.choice(list(selectors.keys()))
