@@ -12,6 +12,8 @@ from steps.then_impl import (
     fas_search_results_filtered_by_industries,
     form_check_state_of_element,
     form_should_see_error_messages,
+    generic_article_counter_should_match_number_of_articles,
+    generic_article_counters_should_match,
     generic_should_see_expected_page_content,
     generic_should_see_form_choices,
     header_check_dit_logo,
@@ -43,8 +45,6 @@ from steps.then_impl import (
     stats_and_tracking_elements_should_be_present,
     stats_and_tracking_elements_should_not_be_present,
     zendesk_should_receive_confirmation_email,
-    generic_article_counters_should_match,
-    generic_article_counter_should_match_number_of_articles
 )
 
 
