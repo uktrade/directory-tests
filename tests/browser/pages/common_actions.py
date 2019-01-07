@@ -22,9 +22,7 @@ from typing import Dict, List, Union
 
 import requests
 from behave.runner import Context
-from bs4 import BeautifulSoup
 from mohawk import Sender
-from requests import Response, Session
 from retrying import retry
 from selenium.common.exceptions import (
     NoSuchElementException,
@@ -745,20 +743,6 @@ def browser_check_for_sections(
                 logging.debug(
                     f"Skipping visiblity check for '{key} -> {selector}' as "
                     f"its selector is flagged as not visible")
-
-
-def requests_check_for_sections(
-    response: Response, all_sections: dict, sought_sections: List[str]
-):
-    for name in sought_sections:
-        selectors = get_desktop_selectors(all_sections[name.lower()])
-        for key, selector in selectors.items():
-            soup = BeautifulSoup(response.content, "lxml")
-            if selector.by == By.ID:
-                element = soup.find_all(id=selector.value)
-            else:
-                element = soup.find_all(selector.value)
-            assert element is not None
 
 
 def get_desktop_selectors(section: dict) -> Dict[str, Selector]:
