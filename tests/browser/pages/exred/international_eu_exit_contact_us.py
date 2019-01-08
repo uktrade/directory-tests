@@ -89,8 +89,8 @@ ALL_SELECTORS.update(SELECTORS)
 ALL_SELECTORS.update(UNEXPECTED_SELECTORS)
 
 
-def visit(driver: WebDriver, *, page_name: str = None):
-    go_to_url(driver, URL, page_name)
+def visit(driver: WebDriver):
+    go_to_url(driver, URL, NAME)
 
 
 def should_be_here(driver: WebDriver):

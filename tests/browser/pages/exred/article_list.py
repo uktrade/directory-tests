@@ -8,7 +8,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
-    WebDriver,
     Selector,
     assertion_msg,
     check_for_expected_sections_elements,

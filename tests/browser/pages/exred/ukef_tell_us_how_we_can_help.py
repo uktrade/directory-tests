@@ -59,8 +59,7 @@ SELECTORS = {
 }
 
 
-def visit(
-    driver: WebDriver, *, page_name: str = None):
+def visit(driver: WebDriver):
     go_to_url(driver, URL, NAME)
 
 

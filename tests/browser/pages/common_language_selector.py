@@ -22,7 +22,9 @@ from pages.common_actions import (
 NAME = "Language selector"
 
 LANGUAGE_INDICATOR = Selector(By.CSS_SELECTOR, "#header-bar span.lang")
-INTERNATIONAL_LANGUAGE_INDICATOR = Selector(By.CSS_SELECTOR, "#international-header-bar span.lang")
+INTERNATIONAL_LANGUAGE_INDICATOR = Selector(
+    By.CSS_SELECTOR, "#international-header-bar span.lang"
+)
 LANGUAGE_SELECTOR_OPEN = Selector(
     By.CSS_SELECTOR, "#header-bar a.LanguageSelectorDialog-Tracker"
 )

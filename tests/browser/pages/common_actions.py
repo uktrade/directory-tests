@@ -66,8 +66,8 @@ Actor = namedtuple(
 )
 Selector = namedtuple(
     "Selector", [
-        "by", "value", "in_desktop", "in_mobile", "in_horizontal", "type", 
-        "is_visible", "group_id"
+        "by", "value", "in_desktop", "in_mobile", "in_horizontal", "type",
+        "is_visible", "group_id",
     ]
 )
 
@@ -89,10 +89,8 @@ def get_hawk_cookie():
     )
 
     return {
-        # "domain": "/",
         "name": "ip-restrict-signature",
         "value": sender.request_header,
-        # 'secure': False,
     }
 
 
@@ -179,7 +177,7 @@ def check_for_expected_sections_elements(
                     .format(selector, type(selector)))
             element = find_element(driver, selector, element_name=element_name)
             if not selector.is_visible:
-                logging.debug(f"Skipping '{element_name} as it's marker as not visible'")
+                logging.debug(f"Skipping '{element_name} as it's marked as invisible'")
                 continue
             with assertion_msg(
                 "It looks like '%s' element in '%s' section is not visible" " on %s",
@@ -382,13 +380,13 @@ def get_file_log_handler(
 def init_loggers(context: Context, *, task_id: str = None):
     """Will initialize console and file loggers."""
     # configure the formatter
-    fmt = (
+    pattern = (
         "%(asctime)s-%(filename)s[line:%(lineno)d]-%(name)s-%(levelname)s: "
         "%(message)s"
     )
-    log_formatter = logging.Formatter(fmt)
+    log_formatter = logging.Formatter(pattern)
     log_file_handler = get_file_log_handler(log_formatter, task_id=task_id)
-    # Add log file handler to Behave's logging
+    # Add log file handler to Behave logging system
     logging.getLogger("selenium").setLevel(logging.WARNING)
     context.config.setup_logging(handlers=[log_file_handler])
 
@@ -636,22 +634,22 @@ def show_snackbar_message(driver: WebDriver, message: str):
             -webkit-animation: fadein 0.1s, fadeout 0.1s 1s;
             animation: fadein 0.1s, fadeout 0.1s 1s;
         }}
-        
+
         @-webkit-keyframes fadein {{
             from {{top: 0; opacity: 0;}}
             to {{top: 30px; opacity: 1;}}
         }}
-        
+
         @keyframes fadein {{
             from {{top: 0; opacity: 0;}}
             to {{top: 30px; opacity: 1;}}
         }}
-        
+
         @-webkit-keyframes fadeout {{
             from {{top: 30px; opacity: 1;}}
             to {{top: 0; opacity: 0;}}
         }}
-        
+
         @keyframes fadeout {{
             from {{top: 30px; opacity: 1;}}
             to {{top: 0; opacity: 0;}}
@@ -670,9 +668,9 @@ def show_snackbar_message(driver: WebDriver, message: str):
         deleteSnackBarElements();
         createSnackBarElements(message);
         showSnackBar();
-        setTimeout(deleteSnackBarElements, 1000);  
+        setTimeout(deleteSnackBarElements, 1000);
     }};
-    
+
     showMessage(`{message}`);
     """
     message = message.replace("`", "")
@@ -771,7 +769,7 @@ def tick_captcha_checkbox(driver: WebDriver):
     driver.switch_to.frame(iframe)
     captcha = find_element(driver, im_not_a_robot)
     captcha.click()
-    # wait 2s after user clicks on the CAPTCHA checkbox
+    # wait 2 s after user clicks on the CAPTCHA checkbox
     # otherwise the test might fail
     time.sleep(2)
     driver.switch_to.parent_frame()
@@ -829,8 +827,8 @@ def pick_option(
 
 
 def pick_option_from_autosuggestion(
-    driver: WebDriver, form_selectors: Dict[str, Selector],
-    form_details: dict):
+    driver: WebDriver, form_selectors: Dict[str, Selector], form_details: dict
+):
     select_selectors = get_selectors(form_selectors, ElementType.SELECT)
     for key, selector in select_selectors.items():
         logging.debug(f"Picking option from {key} dropdown list")
