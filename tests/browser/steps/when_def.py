@@ -33,7 +33,7 @@ from steps.when_impl import (
     generic_see_more_industries,
     generic_submit_form,
     generic_unfold_topics,
-    generic_visit_current_page_with_lang_param,
+    generic_visit_current_page_with_lang_parameter,
     header_footer_click_on_dit_logo,
     header_footer_open_link,
     invest_read_more,
@@ -269,7 +269,7 @@ def when_actor_submits_the_form(context: Context, actor_alias: str):
 @when('"{actor_alias}" manually change the page language to "{preferred_language}"')
 def when_actor_sets_lang_url_query_param(
         context: Context, actor_alias: str,  preferred_language: str):
-    generic_visit_current_page_with_lang_param(
+    generic_visit_current_page_with_lang_parameter(
         context, actor_alias,  preferred_language)
 
 

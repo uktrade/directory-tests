@@ -445,10 +445,10 @@ def fas_search_for_companies(
 ):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "search")
-    optional_param_keywords = ["n/a", "no", "empty", "without", "any"]
-    if keyword and keyword.lower() in optional_param_keywords:
+    optional_parameter_keywords = ["n/a", "no", "empty", "without", "any"]
+    if keyword and keyword.lower() in optional_parameter_keywords:
         keyword = None
-    if sector and sector.lower() in optional_param_keywords:
+    if sector and sector.lower() in optional_parameter_keywords:
         sector = None
     page.search(context.driver, keyword=keyword, sector=sector)
     logging.debug(
@@ -643,7 +643,7 @@ def generic_download_all_pdfs(context: Context, actor_alias: str):
     context.pdfs = page.download_all_pdfs(context.driver)
 
 
-def generic_visit_current_page_with_lang_param(
+def generic_visit_current_page_with_lang_parameter(
         context: Context, actor_alias: str,  preferred_language: str):
     page = get_last_visited_page(context, actor_alias)
     url = urljoin(page.URL, f"?lang={preferred_language}")
