@@ -156,7 +156,8 @@ def open_any_element_in_section(
     section = SELECTORS[section_name.lower()]
     sought_type = ElementType[element_type.upper()]
     selectors = get_selectors(section, sought_type)
-    assert len(selectors) > 0, f"Could't find any {element_type} in {section_name} section"
+    error = f"Could't find any {element_type} in {section_name} section"
+    assert len(selectors) > 0, error
     selector_key = random.choice(list(selectors))
     selector = SELECTORS[section_name.lower()][selector_key]
     elements = find_elements(driver, selector)

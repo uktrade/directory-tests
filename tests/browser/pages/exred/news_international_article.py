@@ -23,7 +23,9 @@ PAGE_TITLE = ""
 
 
 TAGS = Selector(By.CSS_SELECTOR, "ul.tag-list a")
-RELATED_ARTICLES = Selector(By.CSS_SELECTOR, "#article > article > div > div > div.column-quarter ul a")
+RELATED_ARTICLES = Selector(
+    By.CSS_SELECTOR, "#article > article > div > div > div.column-quarter ul a"
+)
 SELECTORS = {
     "header": {
         "itself": Selector(By.ID, "international-header"),
@@ -69,7 +71,10 @@ SELECTORS = {
         "tags": TAGS,
     },
     "related content": {
-        "itself": Selector(By.CSS_SELECTOR, "#article > article > div > div > div.column-quarter"),
+        "itself":
+            Selector(
+                By.CSS_SELECTOR, "#article > article > div > div > div.column-quarter"
+            ),
         "related articles": RELATED_ARTICLES,
     },
     "error reporting": {

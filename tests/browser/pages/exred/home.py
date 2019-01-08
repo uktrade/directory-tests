@@ -46,7 +46,8 @@ CONTINUE_EXPORT_JOURNEY = Selector(By.ID, "triage-section-continue-your-journey"
 NEW_TO_EXPORTING_LINK = Selector(By.ID, "personas-section-new")
 OCCASIONAL_EXPORTER_LINK = Selector(By.ID, "personas-section-occasional")
 REGULAR_EXPORTED_LINK = Selector(By.ID, "personas-section-regular")
-FIND_A_BUYER_SERVICE_LINK = Selector(By.CSS_SELECTOR, "#services-section-find-a-buyer a")
+FIND_A_BUYER_SERVICE_LINK = Selector(
+    By.CSS_SELECTOR, "#services-section-find-a-buyer a")
 SELLING_ONLINE_OVERSEAS_SERVICE_LINK = Selector(
     By.CSS_SELECTOR, "#services-section-selling-online-overseas a"
 )
@@ -104,10 +105,14 @@ HEADER_ADVICE_LINKS = Selector(By.ID, "header-advice-links")
 ARTICLES = Selector(By.CSS_SELECTOR, "#eu-exit-news-section .article a")
 SELECTORS = {
     "header - advice": {
-        "links": Selector(By.CSS_SELECTOR, "#advice-links-list a", type=ElementType.LINK),
+        "links":
+            Selector(By.CSS_SELECTOR, "#advice-links-list a", type=ElementType.LINK),
     },
     "footer - advice": {
-        "links": Selector(By.CSS_SELECTOR, "#footer-advice-links ~ ul a", type=ElementType.LINK),
+        "links":
+            Selector(
+                By.CSS_SELECTOR, "#footer-advice-links ~ ul a", type=ElementType.LINK
+            ),
     },
     "beta bar": {
         "itself": Selector(By.ID, "header-beta-bar"),
@@ -157,7 +162,10 @@ SELECTORS = {
         "title": Selector(By.ID, "advice-section-title"),
         "description": Selector(By.ID, "advice-section-description"),
         "groups": Selector(By.CSS_SELECTOR, "#resource-advice .card"),
-        "cards": Selector(By.CSS_SELECTOR, "#resource-advice .card-link", type=ElementType.LINK),
+        "cards":
+            Selector(
+                By.CSS_SELECTOR, "#resource-advice .card-link", type=ElementType.LINK
+            ),
     },
     "services": {
         "itself": Selector(By.ID, "services"),

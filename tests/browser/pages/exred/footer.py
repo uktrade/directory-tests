@@ -34,14 +34,22 @@ SELECTORS = {
     },
     "advice": {
         "label": Selector(By.ID, "footer-advice-links"),
-        "create an export plan": Selector(By.ID, "footer-advice-make-an-export-plan"),
-        "find an export market": Selector(By.ID, "footer-advice-how-to-find-an-export-market"),
-        "define route to market": Selector(By.ID, "footer-advice-how-to-enter-an-export-market"),
-        "get export finance and funding": Selector(By.ID, "footer-advice-managing-finance"),
-        "manage payment for export orders": Selector(By.ID, "footer-advice-managing-finance"),
-        "prepare to do business in a foreign country": Selector(By.ID, "footer-advice-doing-business-overseas"),
-        "manage legal and ethical compliance": Selector(By.ID, "footer-advice-legal-and-compliance"),
-        "prepare for export procedures and logistics": Selector(By.ID, "footer-advice-legal-and-compliance"),
+        "create an export plan":
+            Selector(By.ID, "footer-advice-make-an-export-plan"),
+        "find an export market":
+            Selector(By.ID, "footer-advice-how-to-find-an-export-market"),
+        "define route to market":
+            Selector(By.ID, "footer-advice-how-to-enter-an-export-market"),
+        "get export finance and funding":
+            Selector(By.ID, "footer-advice-managing-finance"),
+        "manage payment for export orders":
+            Selector(By.ID, "footer-advice-managing-finance"),
+        "prepare to do business in a foreign country":
+            Selector(By.ID, "footer-advice-doing-business-overseas"),
+        "manage legal and ethical compliance":
+            Selector(By.ID, "footer-advice-legal-and-compliance"),
+        "prepare for export procedures and logistics":
+            Selector(By.ID, "footer-advice-legal-and-compliance"),
     },
     "services": {
         "label": Selector(By.ID, "footer-services-links"),

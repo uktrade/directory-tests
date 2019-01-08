@@ -51,8 +51,16 @@ SELECTORS = {
         "given names": Selector(By.ID, "id_first_name", type=ElementType.INPUT),
         "family name": Selector(By.ID, "id_last_name", type=ElementType.INPUT),
         "email": Selector(By.ID, "id_email", type=ElementType.INPUT),
-        "company": Selector(By.ID, "id_organisation_type_0", type=ElementType.CHECKBOX, is_visible=False),
-        "other type of organisation": Selector(By.ID, "id_organisation_type_0", type=ElementType.CHECKBOX, is_visible=False),
+        "company":
+            Selector(
+                By.ID, "id_organisation_type_0", type=ElementType.CHECKBOX,
+                is_visible=False
+            ),
+        "other type of organisation":
+            Selector(
+                By.ID, "id_organisation_type_0", type=ElementType.CHECKBOX,
+                is_visible=False
+            ),
         "company name": Selector(By.ID, "id_company_name", type=ElementType.INPUT),
         "country": Selector(By.ID, "js-country-select", type=ElementType.SELECT),
         "city": Selector(By.ID, "id_city", type=ElementType.INPUT),

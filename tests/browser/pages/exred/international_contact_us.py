@@ -24,7 +24,8 @@ TYPE = "Contact us"
 URL = urljoin(EXRED_UI_URL, "contact/international/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
-SUBMIT_BUTTON = Selector(By.CSS_SELECTOR, "form button[type=submit]", type=ElementType.BUTTON)
+SUBMIT_BUTTON = Selector(
+    By.CSS_SELECTOR, "form button[type=submit]", type=ElementType.BUTTON)
 SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#lede form"),
@@ -32,12 +33,15 @@ SELECTORS = {
         "last name": Selector(By.ID, "id_family_name", type=ElementType.INPUT),
         "email": Selector(By.ID, "id_email", type=ElementType.INPUT),
         "company": Selector(By.ID, "id_organisation_type_0", type=ElementType.CHECKBOX),
-        "other type of organisation": Selector(By.ID, "id_organisation_type_1", type=ElementType.CHECKBOX),
-        "your organisation name": Selector(By.ID, "id_organisation_name", type=ElementType.INPUT),
+        "other type of organisation":
+            Selector(By.ID, "id_organisation_type_1", type=ElementType.CHECKBOX),
+        "your organisation name":
+            Selector(By.ID, "id_organisation_name", type=ElementType.INPUT),
         "country": Selector(By.ID, "id_country_name", type=ElementType.SELECT),
         "city": Selector(By.ID, "id_city", type=ElementType.INPUT),
         "comment": Selector(By.ID, "id_comment", type=ElementType.TEXTAREA),
-        "terms and conditions": Selector(By.ID, "id_terms_agreed", type=ElementType.CHECKBOX),
+        "terms and conditions":
+            Selector(By.ID, "id_terms_agreed", type=ElementType.CHECKBOX),
         "submit": SUBMIT_BUTTON,
     }
 }

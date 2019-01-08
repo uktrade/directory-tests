@@ -52,7 +52,8 @@ def should_be_here(driver: WebDriver):
 def is_filtered_by_tag(driver: WebDriver, tag: str):
     heading = find_element(driver, HERO_HEADING)
     clean_tag = tag.replace(" ", "-").upper()
-    error = f"Expected to see tag: '{clean_tag}' in page heading but got '{heading.text}' instead"
+    error = (f"Expected to see tag: '{clean_tag}' in page heading but got "
+             f"'{heading.text}' instead")
     assert clean_tag in heading.text.upper(), error
 
 

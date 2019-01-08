@@ -40,16 +40,20 @@ SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#lede form"),
         "investing in the uk": Selector(
-            By.CSS_SELECTOR, "input[value='investing']", type=ElementType.RADIO, is_visible=False
+            By.CSS_SELECTOR, "input[value='investing']", type=ElementType.RADIO,
+            is_visible=False
         ),
         "buying from the uk": Selector(
-            By.CSS_SELECTOR, "input[value='buying']", type=ElementType.RADIO, is_visible=False
+            By.CSS_SELECTOR, "input[value='buying']", type=ElementType.RADIO,
+            is_visible=False
         ),
         "eu exit enquiries": Selector(
-            By.CSS_SELECTOR, "input[value='euexit']", type=ElementType.RADIO, is_visible=False
+            By.CSS_SELECTOR, "input[value='euexit']", type=ElementType.RADIO,
+            is_visible=False
         ),
         "other": Selector(
-            By.CSS_SELECTOR, "input[value='other']", type=ElementType.RADIO, is_visible=False
+            By.CSS_SELECTOR, "input[value='other']", type=ElementType.RADIO,
+            is_visible=False
         ),
         "submit": SUBMIT_BUTTON,
         "back": Selector(

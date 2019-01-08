@@ -66,11 +66,16 @@ SELECTORS = {
 }
 
 POs = {
-    "i have not received an email confirmation": contact_us_triage_great_account_dedicated_support_content,
-    "i need to reset my password": contact_us_triage_great_account_dedicated_support_content,
-    "my companies house login is not working": contact_us_triage_great_account_dedicated_support_content,
-    "i do not know where to enter my verification code": contact_us_triage_great_account_dedicated_support_content,
-    "i have not received my letter containing the verification code": contact_us_triage_great_account_dedicated_support_content,
+    "i have not received an email confirmation":
+        contact_us_triage_great_account_dedicated_support_content,
+    "i need to reset my password":
+        contact_us_triage_great_account_dedicated_support_content,
+    "my companies house login is not working":
+        contact_us_triage_great_account_dedicated_support_content,
+    "i do not know where to enter my verification code":
+        contact_us_triage_great_account_dedicated_support_content,
+    "i have not received my letter containing the verification code":
+        contact_us_triage_great_account_dedicated_support_content,
     "other": contact_us_short_domestic,
 }
 
