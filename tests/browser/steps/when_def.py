@@ -302,7 +302,7 @@ def given_actor_navigates_via_contact_us_options(
 
 
 @when('"{actor_alias}" is on the "{page_name}" page')
-def step_impl(context: Context, actor_alias: str, page_name: str):
+def when_actor_is_on_page(context: Context, actor_alias: str, page_name: str):
     should_be_on_page(context, actor_alias, page_name)
 
 
