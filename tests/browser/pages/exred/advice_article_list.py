@@ -134,6 +134,8 @@ def article_counter_matches_number_of_articles(driver: WebDriver):
 
 def open_any_article(driver: WebDriver) -> str:
     article_links = find_elements(driver, ARTICLE_LINKS)
+    error = f"Expected to see at least 1 article but found none on {driver.current_url}"
+    assert article_links, error
     link = random.choice(article_links)
     link_text = link.text
     check_if_element_is_visible(link, element_name=link_text)
