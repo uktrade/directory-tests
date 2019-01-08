@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Export Readiness - Domestic Contact us - Great.gov.uk account"""
+"""Export Readiness - Domestic Contact us - Great.gov.uk account and services support"""
 import logging
 from types import ModuleType
 from typing import List
@@ -13,23 +13,22 @@ from pages.common_actions import (
     Selector,
     check_url,
     choose_one_form_option,
-    choose_one_form_option_except,
     find_and_click_on_page_element,
     find_element,
     get_selectors,
     go_to_url,
     take_screenshot,
 )
-from pages.exread import (
-    contact_us_short_domestic,
-    contact_us_triage_export_opportunities_dedicated_support_content,
+from pages.exred import (
+    contact_us_triage_export_opportunities,
+    contact_us_triage_great_account,
 )
 from settings import EXRED_UI_URL
 
-NAME = "Export opportunities service"
+NAME = "Great.gov.uk account and services support"
 SERVICE = "Export Readiness"
 TYPE = "Domestic Contact us"
-URL = urljoin(EXRED_UI_URL, "contact/triage/export-opportunities/")
+URL = urljoin(EXRED_UI_URL, "contact/triage/great-services/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 SUBMIT_BUTTON = Selector(
@@ -38,21 +37,21 @@ SUBMIT_BUTTON = Selector(
 SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#lede form"),
-        "i haven't had a response from the opportunity i applied for": Selector(
+        "export opportunities service": Selector(
             By.ID,
-            "id_export-opportunities-choice_0",
+            "id_great-services-choice_0",
             type=ElementType.RADIO,
             is_visible=False,
         ),
-        "my daily alerts are not relevant to me": Selector(
+        "your account on great.gov.uk": Selector(
             By.ID,
-            "id_export-opportunities-choice_1",
+            "id_great-services-choice_1",
             type=ElementType.RADIO,
             is_visible=False,
         ),
         "other": Selector(
             By.ID,
-            "id_export-opportunities-choice_2",
+            "id_great-services-choice_2",
             type=ElementType.RADIO,
             is_visible=False,
         ),
@@ -63,12 +62,6 @@ SELECTORS = {
             type=ElementType.LINK,
         ),
     }
-}
-
-POs = {
-    "i haven't had a response from the opportunity i applied for": contact_us_short_domestic,
-    "my daily alerts are not relevant to me": contact_us_triage_export_opportunities_dedicated_support_content,
-    "other": contact_us_short_domestic,
 }
 
 
@@ -100,19 +93,12 @@ def pick_radio_option_and_submit(driver: WebDriver, name: str) -> ModuleType:
     )
     button.click()
     take_screenshot(driver, "After submitting the form")
+    POs = {
+        "export opportunities service": contact_us_triage_export_opportunities,
+        "your account on great.gov.uk": contact_us_triage_great_account,
+        "other": None,
+    }
     return POs[name.lower()]
-
-
-def pick_random_radio_option_and_submit(driver: WebDriver, ignored: List[str]):
-    radio_selectors = get_selectors(SELECTORS["form"], ElementType.RADIO)
-    selected = choose_one_form_option_except(driver, radio_selectors, ignored)
-    take_screenshot(driver, "Before submitting the form")
-    button = find_element(
-        driver, SUBMIT_BUTTON, element_name="Submit button", wait_for_it=False
-    )
-    button.click()
-    take_screenshot(driver, "After submitting the form")
-    return POs[selected.lower()]
 
 
 def click_on_page_element(driver: WebDriver, element_name: str):

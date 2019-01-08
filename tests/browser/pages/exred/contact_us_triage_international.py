@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Export Readiness - Contact us - Triage location"""
+"""Export Readiness - International Contact us - What would you like to know more about?"""
 import logging
 from types import ModuleType
 from typing import List
@@ -13,40 +13,57 @@ from pages.common_actions import (
     Selector,
     check_url,
     choose_one_form_option,
+    find_and_click_on_page_element,
     find_element,
     get_selectors,
     go_to_url,
     take_screenshot,
 )
-from pages.exread import contact_us_triage_domestic, contact_us_triage_international
+from pages.exred import (
+    international_contact_us,
+    international_eu_exit_contact_us,
+)
+from pages.fas import contact_us as fas_contact_us
+from pages.invest import contact_us as invest_contact_us
 from settings import EXRED_UI_URL
 
-NAME = "Contact Us"
+NAME = "What would you like to know more about?"
 SERVICE = "Export Readiness"
-TYPE = "Contact us"
-URL = urljoin(EXRED_UI_URL, "contact/triage/location/")
+TYPE = "International Contact us"
+URL = urljoin(EXRED_UI_URL, "contact/triage/international/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
-THE_UK = Selector(
-    By.ID, "id_location-choice_0", type=ElementType.RADIO, is_visible=False
-)
-OUTSIDE_THE_UK = Selector(
-    By.ID, "id_location-choice_1", type=ElementType.RADIO, is_visible=False
-)
 SUBMIT_BUTTON = Selector(
     By.CSS_SELECTOR, "form button[type=submit]", type=ElementType.BUTTON
 )
 SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#lede form"),
-        "the uk": Selector(
-            By.ID, "id_location-choice_0", type=ElementType.RADIO, is_visible=False
+        "investing in the uk": Selector(
+            By.CSS_SELECTOR, "input[value='investing']", type=ElementType.RADIO, is_visible=False
         ),
-        "outside the uk": Selector(
-            By.ID, "id_location-choice_1", type=ElementType.RADIO, is_visible=False
+        "buying from the uk": Selector(
+            By.CSS_SELECTOR, "input[value='buying']", type=ElementType.RADIO, is_visible=False
+        ),
+        "eu exit enquiries": Selector(
+            By.CSS_SELECTOR, "input[value='euexit']", type=ElementType.RADIO, is_visible=False
+        ),
+        "other": Selector(
+            By.CSS_SELECTOR, "input[value='other']", type=ElementType.RADIO, is_visible=False
         ),
         "submit": SUBMIT_BUTTON,
+        "back": Selector(
+            By.CSS_SELECTOR,
+            "form button[name='wizard_goto_step']",
+            type=ElementType.LINK,
+        ),
     }
+}
+POs = {
+    "investing in the uk": invest_contact_us,
+    "buying from the uk": fas_contact_us,
+    "eu exit enquiries": international_eu_exit_contact_us,
+    "other": international_contact_us,
 }
 
 
@@ -78,7 +95,9 @@ def pick_radio_option_and_submit(driver: WebDriver, name: str) -> ModuleType:
     )
     button.click()
     take_screenshot(driver, "After submitting the form")
-    if name.lower() == "the uk":
-        return contact_us_triage_domestic
-    else:
-        return contact_us_triage_international
+    return POs[name.lower()]
+
+
+def click_on_page_element(driver: WebDriver, element_name: str):
+    find_and_click_on_page_element(driver, SELECTORS, element_name)
+    take_screenshot(driver, NAME + " after clicking on " + element_name)

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Export Readiness - International Contact us - What would you like to know more about?"""
+"""Export Readiness - Domestic Contact us - Great.gov.uk account"""
 import logging
 from types import ModuleType
 from typing import List
@@ -13,24 +13,23 @@ from pages.common_actions import (
     Selector,
     check_url,
     choose_one_form_option,
+    choose_one_form_option_except,
     find_and_click_on_page_element,
     find_element,
     get_selectors,
     go_to_url,
     take_screenshot,
 )
-from pages.exread import (
-    international_contact_us,
-    international_eu_exit_contact_us,
+from pages.exred import (
+    contact_us_short_domestic,
+    contact_us_triage_export_opportunities_dedicated_support_content,
 )
-from pages.fas import contact_us as fas_contact_us
-from pages.invest import contact_us as invest_contact_us
 from settings import EXRED_UI_URL
 
-NAME = "What would you like to know more about?"
+NAME = "Export opportunities service"
 SERVICE = "Export Readiness"
-TYPE = "International Contact us"
-URL = urljoin(EXRED_UI_URL, "contact/triage/international/")
+TYPE = "Domestic Contact us"
+URL = urljoin(EXRED_UI_URL, "contact/triage/export-opportunities/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 SUBMIT_BUTTON = Selector(
@@ -39,17 +38,23 @@ SUBMIT_BUTTON = Selector(
 SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#lede form"),
-        "investing in the uk": Selector(
-            By.CSS_SELECTOR, "input[value='investing']", type=ElementType.RADIO, is_visible=False
+        "i haven't had a response from the opportunity i applied for": Selector(
+            By.ID,
+            "id_export-opportunities-choice_0",
+            type=ElementType.RADIO,
+            is_visible=False,
         ),
-        "buying from the uk": Selector(
-            By.CSS_SELECTOR, "input[value='buying']", type=ElementType.RADIO, is_visible=False
-        ),
-        "eu exit enquiries": Selector(
-            By.CSS_SELECTOR, "input[value='euexit']", type=ElementType.RADIO, is_visible=False
+        "my daily alerts are not relevant to me": Selector(
+            By.ID,
+            "id_export-opportunities-choice_1",
+            type=ElementType.RADIO,
+            is_visible=False,
         ),
         "other": Selector(
-            By.CSS_SELECTOR, "input[value='other']", type=ElementType.RADIO, is_visible=False
+            By.ID,
+            "id_export-opportunities-choice_2",
+            type=ElementType.RADIO,
+            is_visible=False,
         ),
         "submit": SUBMIT_BUTTON,
         "back": Selector(
@@ -59,11 +64,11 @@ SELECTORS = {
         ),
     }
 }
+
 POs = {
-    "investing in the uk": invest_contact_us,
-    "buying from the uk": fas_contact_us,
-    "eu exit enquiries": international_eu_exit_contact_us,
-    "other": international_contact_us,
+    "i haven't had a response from the opportunity i applied for": contact_us_short_domestic,
+    "my daily alerts are not relevant to me": contact_us_triage_export_opportunities_dedicated_support_content,
+    "other": contact_us_short_domestic,
 }
 
 
@@ -96,6 +101,18 @@ def pick_radio_option_and_submit(driver: WebDriver, name: str) -> ModuleType:
     button.click()
     take_screenshot(driver, "After submitting the form")
     return POs[name.lower()]
+
+
+def pick_random_radio_option_and_submit(driver: WebDriver, ignored: List[str]):
+    radio_selectors = get_selectors(SELECTORS["form"], ElementType.RADIO)
+    selected = choose_one_form_option_except(driver, radio_selectors, ignored)
+    take_screenshot(driver, "Before submitting the form")
+    button = find_element(
+        driver, SUBMIT_BUTTON, element_name="Submit button", wait_for_it=False
+    )
+    button.click()
+    take_screenshot(driver, "After submitting the form")
+    return POs[selected.lower()]
 
 
 def click_on_page_element(driver: WebDriver, element_name: str):

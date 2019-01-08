@@ -20,7 +20,7 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from pages.exread import (
+from pages.exred import (
     contact_us_short_domestic,
     contact_us_triage_great_account_dedicated_support_content,
 )

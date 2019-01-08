@@ -10,7 +10,7 @@ from behave.model import Table
 from behave.runner import Context
 from retrying import retry
 
-from pages import common_language_selector, exread, fas, get_page_object, invest
+from pages import common_language_selector, exred, fas, get_page_object, invest
 from pages.common_actions import (
     assertion_msg,
     clear_driver_cookies,
@@ -18,7 +18,7 @@ from pages.common_actions import (
     get_last_visited_page,
     update_actor,
 )
-from pages.exread import contact_us_office_finder_search_results
+from pages.exred import contact_us_office_finder_search_results
 from settings import (
     HPO_AGENT_EMAIL_ADDRESS,
     HPO_AGENT_EMAIL_SUBJECT,
@@ -59,7 +59,7 @@ def should_be_on_page_or_international_page(
         update_actor(context, actor_alias, visited_page=page)
         logging.debug("%s is on %s page", actor_alias, page_name)
     except AssertionError:
-        exread.international.should_be_here(context.driver)
+        exred.international.should_be_here(context.driver)
         logging.debug(
             "%s was redirected to the International page", actor_alias
         )
@@ -107,14 +107,14 @@ def case_studies_should_see_case_study(
     case_study_numbers = {"first": 1, "second": 2, "third": 3}
     number = case_study_numbers[case_study_number.lower()]
     case_study_title = get_actor(context, actor_alias).case_study_title
-    exread.case_studies_common.should_be_here(
+    exred.case_studies_common.should_be_here(
         context.driver, number, title=case_study_title
     )
 
 
 def should_see_share_widget(context: Context, actor_alias: str):
     driver = context.driver
-    exread.case_studies_common.should_see_share_widget(driver)
+    exred.case_studies_common.should_see_share_widget(driver)
     logging.debug(
         "%s can see Share Widget on %s", actor_alias, driver.current_url
     )
@@ -163,8 +163,8 @@ def share_page_via_email_should_have_article_details(
 ):
     driver = context.driver
     body = driver.current_url
-    subject = exread.article_common.get_article_name(driver)
-    exread.article_common.check_share_via_email_link_details(driver, subject, body)
+    subject = exred.article_common.get_article_name(driver)
+    exred.article_common.check_share_via_email_link_details(driver, subject, body)
     logging.debug(
         "%s checked that the 'share via email' link contain correct subject: "
         "'%s' and message body: '%s'",
@@ -177,7 +177,7 @@ def share_page_via_email_should_have_article_details(
 def triage_should_see_change_your_answers_link(
     context: Context, actor_alias: str
 ):
-    exread.triage_summary.should_see_change_your_answers_link(context.driver)
+    exred.triage_summary.should_see_change_your_answers_link(context.driver)
     logging.debug("%s can see 'change your answers' link", actor_alias)
 
 
@@ -206,19 +206,19 @@ def promo_video_check_watch_time(
 def promo_video_should_not_see_modal_window(
     context: Context, actor_alias: str
 ):
-    exread.home.should_not_see_video_modal_window(context.driver)
+    exred.home.should_not_see_video_modal_window(context.driver)
     logging.debug(
         "As expected %s can't see promotional video modal window", actor_alias
     )
 
 
 def header_check_dit_logo(context: Context, actor_alias: str):
-    exread.header.check_dit_logo(context.driver)
+    exred.header.check_dit_logo(context.driver)
     logging.debug("As expected %s can see correct DIT logo", actor_alias)
 
 
 def header_check_favicon(context: Context, actor_alias: str):
-    exread.header.check_dit_favicon(context.driver)
+    exred.header.check_dit_favicon(context.driver)
     logging.debug("As expected %s can see correct DIT favicon", actor_alias)
 
 

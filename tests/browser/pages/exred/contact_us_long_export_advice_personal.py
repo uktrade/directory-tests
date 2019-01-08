@@ -11,18 +11,18 @@ from pages.common_actions import (
     Actor,
     Selector,
     check_url,
-    fill_out_textarea_fields,
+    fill_out_input_fields,
     find_element,
     go_to_url,
     take_screenshot,
 )
-from pages.exread import contact_us_long_export_advice_personal
+from pages.exred import contact_us_long_export_advice_business
 from settings import EXRED_UI_URL
 
-NAME = "Long (Export Advice Comment)"
+NAME = "Long (Personal details)"
 SERVICE = "Export Readiness"
 TYPE = "Contact us"
-URL = urljoin(EXRED_UI_URL, "contact/export-advice/comment/")
+URL = urljoin(EXRED_UI_URL, "contact/export-advice/personal/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 SUBMIT_BUTTON = Selector(
@@ -31,7 +31,11 @@ SUBMIT_BUTTON = Selector(
 SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#lede form"),
-        "comment": Selector(By.ID, "id_comment-comment", type=ElementType.TEXTAREA),
+        "first name": Selector(By.ID, "id_personal-first_name", type=ElementType.INPUT),
+        "last name": Selector(By.ID, "id_personal-last_name", type=ElementType.INPUT),
+        "position": Selector(By.ID, "id_personal-position", type=ElementType.INPUT),
+        "email": Selector(By.ID, "id_personal-email", type=ElementType.INPUT),
+        "phone": Selector(By.ID, "id_personal-phone", type=ElementType.INPUT),
         "submit": SUBMIT_BUTTON,
     }
 }
@@ -47,13 +51,19 @@ def should_be_here(driver: WebDriver):
 
 
 def generate_form_details(actor: Actor) -> dict:
-    result = {"comment": f"Submitted by automated tests {actor.alias}"}
+    result = {
+        "first name": f"send by {actor.alias} - automated tests",
+        "last name": actor.alias,
+        "position": "automated tests",
+        "email": actor.email,
+        "phone": "automated tests",
+    }
     return result
 
 
 def fill_out(driver: WebDriver, details: dict):
     form_selectors = SELECTORS["form"]
-    fill_out_textarea_fields(driver, form_selectors, details)
+    fill_out_input_fields(driver, form_selectors, details)
     take_screenshot(driver, "After filling out the form")
 
 
@@ -64,4 +74,4 @@ def submit(driver: WebDriver) -> ModuleType:
     )
     button.click()
     take_screenshot(driver, "After submitting the form")
-    return contact_us_long_export_advice_personal
+    return contact_us_long_export_advice_business

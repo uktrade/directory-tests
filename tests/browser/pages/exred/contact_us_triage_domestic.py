@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Export Readiness - Domestic Contact us - Great.gov.uk account and services support"""
+"""Export Readiness - Domestic Contact us - What can we help you with?"""
 import logging
 from types import ModuleType
 from typing import List
@@ -19,16 +19,20 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from pages.exread import (
-    contact_us_triage_export_opportunities,
-    contact_us_triage_great_account,
+from pages.exred import (
+    contact_us_long_export_advice_comment,
+    contact_us_short_domestic,
+    contact_us_triage_great_services,
+    domestic_eu_exit_contact_us,
+    ukef_what_would_you_like_to_know,
 )
+from pages.external import office_finder
 from settings import EXRED_UI_URL
 
-NAME = "Great.gov.uk account and services support"
+NAME = "What can we help you with?"
 SERVICE = "Export Readiness"
 TYPE = "Domestic Contact us"
-URL = urljoin(EXRED_UI_URL, "contact/triage/great-services/")
+URL = urljoin(EXRED_UI_URL, "contact/triage/domestic/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 SUBMIT_BUTTON = Selector(
@@ -37,23 +41,29 @@ SUBMIT_BUTTON = Selector(
 SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#lede form"),
-        "export opportunities service": Selector(
-            By.ID,
-            "id_great-services-choice_0",
-            type=ElementType.RADIO,
-            is_visible=False,
+        "find your local trade office": Selector(
+            By.CSS_SELECTOR, "input[value='trade-office']", type=ElementType.RADIO, is_visible=False
         ),
-        "your account on great.gov.uk": Selector(
-            By.ID,
-            "id_great-services-choice_1",
-            type=ElementType.RADIO,
-            is_visible=False,
+        "advice to export from the uk": Selector(
+            By.CSS_SELECTOR, "input[value='export-advice']", type=ElementType.RADIO, is_visible=False
+        ),
+        "great.gov.uk account and services support": Selector(
+            By.CSS_SELECTOR, "input[value='great-services']", type=ElementType.RADIO, is_visible=False
+        ),
+        "uk export finance (ukef)": Selector(
+            By.CSS_SELECTOR, "input[value='finance']", type=ElementType.RADIO, is_visible=False
+        ),
+        "eu exit enquiries": Selector(
+            By.CSS_SELECTOR, "input[value='euexit']", type=ElementType.RADIO, is_visible=False
+        ),
+        "events": Selector(
+            By.CSS_SELECTOR, "input[value='events']", type=ElementType.RADIO, is_visible=False
+        ),
+        "defence and security organisation (dso)": Selector(
+            By.CSS_SELECTOR, "input[value='dso']", type=ElementType.RADIO, is_visible=False
         ),
         "other": Selector(
-            By.ID,
-            "id_great-services-choice_2",
-            type=ElementType.RADIO,
-            is_visible=False,
+            By.CSS_SELECTOR, "input[value='other']", type=ElementType.RADIO, is_visible=False
         ),
         "submit": SUBMIT_BUTTON,
         "back": Selector(
@@ -62,6 +72,16 @@ SELECTORS = {
             type=ElementType.LINK,
         ),
     }
+}
+POs = {
+    "find your local trade office": office_finder,
+    "advice to export from the uk": contact_us_long_export_advice_comment,
+    "great.gov.uk account and services support": contact_us_triage_great_services,
+    "uk export finance (ukef)": ukef_what_would_you_like_to_know,
+    "eu exit enquiries": domestic_eu_exit_contact_us,
+    "events": contact_us_short_domestic,
+    "defence and security organisation (dso)": contact_us_short_domestic,
+    "other": contact_us_short_domestic,
 }
 
 
@@ -93,11 +113,6 @@ def pick_radio_option_and_submit(driver: WebDriver, name: str) -> ModuleType:
     )
     button.click()
     take_screenshot(driver, "After submitting the form")
-    POs = {
-        "export opportunities service": contact_us_triage_export_opportunities,
-        "your account on great.gov.uk": contact_us_triage_great_account,
-        "other": None,
-    }
     return POs[name.lower()]
 
 
