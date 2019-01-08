@@ -8,6 +8,8 @@ from behave.model import Table
 from behave.runner import Context
 from retrying import retry
 from selenium.common.exceptions import TimeoutException, WebDriverException
+
+from settings import SET_HAWK_COOKIE
 from utils.cms_api import get_news_articles
 from utils.gov_notify import get_verification_link
 
@@ -38,6 +40,9 @@ def retry_if_webdriver_error(exception):
 
 
 def generic_set_hawk_cookie(context: Context, page_name: str):
+    if not SET_HAWK_COOKIE:
+        logging.debug("Setting HAWK cookie is disabled")
+        pass
     page = get_page_object(page_name)
     driver = context.driver
     driver.get(page.URL)
