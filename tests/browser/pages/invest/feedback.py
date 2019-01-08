@@ -15,7 +15,7 @@ from settings import DIRECTORY_CONTACT_US_UI_URL
 NAME = "Feedback"
 SERVICE = "invest"
 TYPE = "contact"
-URL = urljoin(DIRECTORY_CONTACT_US_UI_URL, "triage/location/")
+URL = urljoin(DIRECTORY_CONTACT_US_UI_URL, "feedback/")
 PAGE_TITLE = "Contact us - great.gov.uk"
 SELECTORS = {}
 
