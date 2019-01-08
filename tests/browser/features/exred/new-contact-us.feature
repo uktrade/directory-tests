@@ -348,7 +348,7 @@ Feature:  new contact us forms
   Scenario: Exporters should be able to get to the "Domestic EU Exit short contact-us form"
     Given "Robert" got to the "Export Readiness - What can we help you with? - Domestic Contact us" page via "The UK"
 
-    When "Robert" chooses "EU Exit" option
+    When "Robert" chooses "EU Exit enquiries" option
 
     Then "Robert" should be on the "Export Readiness - Domestic EU Exit contact form" page
 
@@ -360,7 +360,7 @@ Feature:  new contact us forms
   @eu-exit
   @feature-flagged
   Scenario: Exporters should be able to contact "EU Exit mailbox"
-    Given "Robert" got to the "Export Readiness - Domestic EU Exit contact form" page via "The UK -> EU Exit"
+    Given "Robert" got to the "Export Readiness - Domestic EU Exit contact form" page via "The UK -> EU Exit enquiries"
 
     When "Robert" fills out and submits the form
 
