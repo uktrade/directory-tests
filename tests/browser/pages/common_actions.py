@@ -18,13 +18,11 @@ from datetime import datetime
 from os import path
 from selenium.webdriver import ActionChains
 from types import ModuleType
-from typing import Dict, List, Union
+from typing import Dict, List
 
 import requests
 from behave.runner import Context
-from bs4 import BeautifulSoup
 from mohawk import Sender
-from requests import Response, Session
 from retrying import retry
 from selenium.common.exceptions import (
     NoSuchElementException,
@@ -66,19 +64,15 @@ Actor = namedtuple(
         "element_details"
     ],
 )
-VisitedArticle = namedtuple("VisitedArticle", ["index", "title", "time_to_read"])
-Executor = Union[WebDriver, Session]
-AssertionExecutor = Union[WebDriver, Response]
 Selector = namedtuple(
     "Selector", [
-        "by", "value", "in_desktop", "in_mobile", "in_horizontal", "type", 
-        "is_visible", "group_id"
+        "by", "value", "in_desktop", "in_mobile", "in_horizontal", "type",
+        "is_visible", "group_id",
     ]
 )
 
 # define default values for various named tuples
 Actor.__new__.__defaults__ = (None,) * len(Actor._fields)
-VisitedArticle.__new__.__defaults__ = (None,) * len(VisitedArticle._fields)
 Selector.__new__.__defaults__ = (None, None, True, True, True, None, True, None)
 
 
@@ -95,10 +89,8 @@ def get_hawk_cookie():
     )
 
     return {
-        # "domain": "/",
         "name": "ip-restrict-signature",
         "value": sender.request_header,
-        # 'secure': False,
     }
 
 
@@ -185,7 +177,7 @@ def check_for_expected_sections_elements(
                     .format(selector, type(selector)))
             element = find_element(driver, selector, element_name=element_name)
             if not selector.is_visible:
-                logging.debug(f"Skipping '{element_name} as it's marker as not visible'")
+                logging.debug(f"Skipping '{element_name} as it's marked as invisible'")
                 continue
             with assertion_msg(
                 "It looks like '%s' element in '%s' section is not visible" " on %s",
@@ -388,13 +380,13 @@ def get_file_log_handler(
 def init_loggers(context: Context, *, task_id: str = None):
     """Will initialize console and file loggers."""
     # configure the formatter
-    fmt = (
+    pattern = (
         "%(asctime)s-%(filename)s[line:%(lineno)d]-%(name)s-%(levelname)s: "
         "%(message)s"
     )
-    log_formatter = logging.Formatter(fmt)
+    log_formatter = logging.Formatter(pattern)
     log_file_handler = get_file_log_handler(log_formatter, task_id=task_id)
-    # Add log file handler to Behave's logging
+    # Add log file handler to Behave logging system
     logging.getLogger("selenium").setLevel(logging.WARNING)
     context.config.setup_logging(handlers=[log_file_handler])
 
@@ -642,22 +634,22 @@ def show_snackbar_message(driver: WebDriver, message: str):
             -webkit-animation: fadein 0.1s, fadeout 0.1s 1s;
             animation: fadein 0.1s, fadeout 0.1s 1s;
         }}
-        
+
         @-webkit-keyframes fadein {{
             from {{top: 0; opacity: 0;}}
             to {{top: 30px; opacity: 1;}}
         }}
-        
+
         @keyframes fadein {{
             from {{top: 0; opacity: 0;}}
             to {{top: 30px; opacity: 1;}}
         }}
-        
+
         @-webkit-keyframes fadeout {{
             from {{top: 30px; opacity: 1;}}
             to {{top: 0; opacity: 0;}}
         }}
-        
+
         @keyframes fadeout {{
             from {{top: 30px; opacity: 1;}}
             to {{top: 0; opacity: 0;}}
@@ -676,9 +668,9 @@ def show_snackbar_message(driver: WebDriver, message: str):
         deleteSnackBarElements();
         createSnackBarElements(message);
         showSnackBar();
-        setTimeout(deleteSnackBarElements, 1000);  
+        setTimeout(deleteSnackBarElements, 1000);
     }};
-    
+
     showMessage(`{message}`);
     """
     message = message.replace("`", "")
@@ -686,27 +678,13 @@ def show_snackbar_message(driver: WebDriver, message: str):
 
 
 def check_for_sections(
-    executor: AssertionExecutor, all_sections: dict, sought_sections: List[str]
-):
-    if isinstance(executor, WebDriver):
-        browser_check_for_sections(executor, all_sections, sought_sections)
-    elif isinstance(executor, Response):
-        requests_check_for_sections(executor, all_sections, sought_sections)
-    else:
-        raise NotImplementedError(
-            "Unsupported type: {}. Please provide one of supported types: "
-            "WebDriver or Response".format(type(executor))
-        )
-
-
-def browser_check_for_sections(
-    driver: WebDriver,
-    all_sections: dict,
-    sought_sections: List[str],
-    *,
-    desktop: bool = True,
-    mobile: bool = False,
-    horizontal: bool = False,
+        driver: WebDriver,
+        all_sections: dict,
+        sought_sections: List[str],
+        *,
+        desktop: bool = True,
+        mobile: bool = False,
+        horizontal: bool = False,
 ):
     for name in sought_sections:
         if desktop:
@@ -749,20 +727,6 @@ def browser_check_for_sections(
                     f"its selector is flagged as not visible")
 
 
-def requests_check_for_sections(
-    response: Response, all_sections: dict, sought_sections: List[str]
-):
-    for name in sought_sections:
-        selectors = get_desktop_selectors(all_sections[name.lower()])
-        for key, selector in selectors.items():
-            soup = BeautifulSoup(response.content, "lxml")
-            if selector.by == By.ID:
-                element = soup.find_all(id=selector.value)
-            else:
-                element = soup.find_all(selector.value)
-            assert element is not None
-
-
 def get_desktop_selectors(section: dict) -> Dict[str, Selector]:
     return {key: selector for key, selector in section.items() if selector.in_desktop}
 
@@ -794,24 +758,8 @@ def selectors_by_group(form_selectors: Dict[str, Selector]) -> Dict[str, Selecto
     return groups
 
 
-def browser_visit(driver: WebDriver, url: str):
+def visit_url(driver: WebDriver, url: str):
     driver.get(url)
-
-
-def requests_visit(session: Session, url: str) -> Response:
-    return session.get(url)
-
-
-def visit_url(executor: Executor, url: str) -> Union[Response, None]:
-    if isinstance(executor, WebDriver):
-        executor.get(url)
-    elif isinstance(executor, Session):
-        return executor.get(url)
-    else:
-        raise NotImplementedError(
-            "Unsupported type: {}. Please provide one of supported types: "
-            "WedDriver or Session".format(type(executor))
-        )
 
 
 def tick_captcha_checkbox(driver: WebDriver):
@@ -821,7 +769,7 @@ def tick_captcha_checkbox(driver: WebDriver):
     driver.switch_to.frame(iframe)
     captcha = find_element(driver, im_not_a_robot)
     captcha.click()
-    # wait 2s after user clicks on the CAPTCHA checkbox
+    # wait 2 s after user clicks on the CAPTCHA checkbox
     # otherwise the test might fail
     time.sleep(2)
     driver.switch_to.parent_frame()
@@ -879,8 +827,8 @@ def pick_option(
 
 
 def pick_option_from_autosuggestion(
-    driver: WebDriver, form_selectors: Dict[str, Selector],
-    form_details: dict):
+    driver: WebDriver, form_selectors: Dict[str, Selector], form_details: dict
+):
     select_selectors = get_selectors(form_selectors, ElementType.SELECT)
     for key, selector in select_selectors.items():
         logging.debug(f"Picking option from {key} dropdown list")
@@ -928,7 +876,7 @@ def check_radio(
 
 def check_random_radio(driver: WebDriver, form_selectors: Dict[str, Selector]):
     radio_selectors = get_selectors(form_selectors, ElementType.RADIO)
-    grouped_selectors = selectors_by_group(radio_selectos)
+    grouped_selectors = selectors_by_group(radio_selectors)
     for group, selectors in grouped_selectors.items():
         logging.debug(f"Selecting random radio option from group: {group}")
         key = random.choice(list(selectors.keys()))

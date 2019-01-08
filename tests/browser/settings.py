@@ -86,6 +86,12 @@ AUTO_RETRY = (
     if __auto_retry and __auto_retry.lower() in ["true", "1", "yes"]
     else False
 )
+__set_hawk_cookie = os.environ.get("SET_HAWK_COOKIE", "true")
+SET_HAWK_COOKIE = (
+    True
+    if __set_hawk_cookie and __set_hawk_cookie.lower() in ["true", "1", "yes"]
+    else False
+)
 
 # BrowserStack variables
 BROWSERSTACK_SERVER = os.environ.get(

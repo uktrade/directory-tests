@@ -8,10 +8,12 @@ from behave.model import Table
 from behave.runner import Context
 from retrying import retry
 from selenium.common.exceptions import TimeoutException, WebDriverException
+
+from settings import SET_HAWK_COOKIE
 from utils.cms_api import get_news_articles
 from utils.gov_notify import get_verification_link
 
-from pages import common_language_selector, exread, fas, get_page_object, sso
+from pages import common_language_selector, exred, fas, get_page_object, sso
 from pages.common_actions import (
     add_actor,
     get_actor,
@@ -38,6 +40,9 @@ def retry_if_webdriver_error(exception):
 
 
 def generic_set_hawk_cookie(context: Context, page_name: str):
+    if not SET_HAWK_COOKIE:
+        logging.debug("Setting HAWK cookie is disabled")
+        pass
     page = get_page_object(page_name)
     driver = context.driver
     driver.get(page.URL)
@@ -96,7 +101,9 @@ def should_be_on_page(context: Context, actor_alias: str, page_name: str):
     else:
         page.should_be_here(context.driver)
     update_actor(context, actor_alias, visited_page=page)
-    logging.debug(f"{actor_alias} is on {page.SERVICE} - {page.NAME} - {page.TYPE} -> {page}")
+    logging.debug(
+        f"{actor_alias} is on {page.SERVICE} - {page.NAME} - {page.TYPE} -> {page}"
+    )
 
 
 @retry(
@@ -109,15 +116,15 @@ def open_group_element(
 ):
     driver = context.driver
     if location.lower() == "export readiness - home":
-        exread.home.open(driver, group, element)
+        exred.home.open(driver, group, element)
     elif location.lower() in "export readiness - header":
-        exread.header.open(driver, group, element)
+        exred.header.open(driver, group, element)
     elif location.lower() in "export readiness - footer":
-        exread.footer.open(driver, group, element)
+        exred.footer.open(driver, group, element)
     elif location.lower() == "export readiness - personalised journey":
-        exread.personalised_journey.open(driver, group, element)
+        exred.personalised_journey.open(driver, group, element)
     elif location.lower() == "export readiness - international":
-        exread.international.open(driver, group, element, same_tab=True)
+        exred.international.open(driver, group, element, same_tab=True)
     else:
         raise KeyError("Could not recognize location: {}".format(location))
 
@@ -131,10 +138,10 @@ def articles_open_any(context: Context, actor_alias: str):
 
 
 def case_studies_go_to(context: Context, actor_alias: str, case_number: str):
-    case_study_title = exread.home.get_case_study_title(
+    case_study_title = exred.home.get_case_study_title(
         context.driver, case_number
     )
-    exread.home.open_case_study(context.driver, case_number)
+    exred.home.open_case_study(context.driver, case_number)
     update_actor(context, actor_alias, case_study_title=case_study_title)
     logging.debug(
         "%s opened %s case study, entitled: %s",
@@ -199,9 +206,9 @@ def registration_go_to(context: Context, actor_alias: str, location: str):
         "%s decided to go to registration via %s link", actor_alias, location
     )
     if location.lower() == "article list":
-        exread.article_list.go_to_registration(context.driver)
+        exred.article_list.go_to_registration(context.driver)
     elif location.lower() == "top bar":
-        exread.header.go_to_registration(context.driver)
+        exred.header.go_to_registration(context.driver)
     else:
         raise KeyError(
             "Could not recognise registration link location: %s. Please use "
@@ -283,11 +290,11 @@ def sign_in_go_to(context: Context, actor_alias: str, location: str):
         "%s decided to go to sign in page via %s link", actor_alias, location
     )
     if location.lower() == "article":
-        exread.article_common.go_to_sign_in(context.driver)
+        exred.article_common.go_to_sign_in(context.driver)
     elif location.lower() == "article list":
-        exread.article_list.go_to_sign_in(context.driver)
+        exred.article_list.go_to_sign_in(context.driver)
     elif location.lower() == "top bar":
-        exread.header.go_to_sign_in(context.driver)
+        exred.header.go_to_sign_in(context.driver)
     else:
         raise KeyError(
             "Could not recognise 'sign in' link location: {}. Please use "
@@ -306,7 +313,7 @@ def sign_in(context: Context, actor_alias: str, location: str):
 
 
 def sign_out(context: Context, actor_alias: str):
-    exread.header.go_to_sign_out(context.driver)
+    exred.header.go_to_sign_out(context.driver)
     sso.sign_out.submit(context.driver)
     logging.debug("%s signed out", actor_alias)
 
@@ -317,12 +324,12 @@ def articles_share_on_social_media(
 ):
     context.article_url = context.driver.current_url
     if social_media.lower() == "email":
-        exread.article_common.check_if_link_opens_email_client(context.driver)
+        exred.article_common.check_if_link_opens_email_client(context.driver)
     else:
-        exread.article_common.check_if_link_opens_new_tab(
+        exred.article_common.check_if_link_opens_new_tab(
             context.driver, social_media
         )
-        exread.article_common.share_via(context.driver, social_media)
+        exred.article_common.share_via(context.driver, social_media)
     logging.debug(
         "%s successfully got to the share article on '%s'",
         actor_alias,
@@ -340,7 +347,7 @@ def promo_video_watch(
 
 
 def promo_video_close(context: Context, actor_alias: str):
-    exread.home.close_video(context.driver)
+    exred.home.close_video(context.driver)
     logging.debug("%s closed the video", actor_alias)
 
 
@@ -443,10 +450,10 @@ def fas_search_for_companies(
 ):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "search")
-    optional_param_keywords = ["n/a", "no", "empty", "without", "any"]
-    if keyword and keyword.lower() in optional_param_keywords:
+    optional_parameter_keywords = ["n/a", "no", "empty", "without", "any"]
+    if keyword and keyword.lower() in optional_parameter_keywords:
         keyword = None
-    if sector and sector.lower() in optional_param_keywords:
+    if sector and sector.lower() in optional_parameter_keywords:
         sector = None
     page.search(context.driver, keyword=keyword, sector=sector)
     logging.debug(
@@ -641,7 +648,7 @@ def generic_download_all_pdfs(context: Context, actor_alias: str):
     context.pdfs = page.download_all_pdfs(context.driver)
 
 
-def generic_visit_current_page_with_lang_param(
+def generic_visit_current_page_with_lang_parameter(
         context: Context, actor_alias: str,  preferred_language: str):
     page = get_last_visited_page(context, actor_alias)
     url = urljoin(page.URL, f"?lang={preferred_language}")
@@ -682,14 +689,18 @@ def generic_open_any_tag(context: Context, actor_alias: str):
     update_actor(context, actor_alias, last_tag=tag)
 
 
-def generic_open_random_news_article(context: Context, actor_alias: str, article_type: str):
+def generic_open_random_news_article(
+        context: Context, actor_alias: str, article_type: str
+):
     flow = {
         "domestic": {
-            "start": "Export Readiness - Updates for UK companies on EU Exit - Domestic",
+            "start":
+                "Export Readiness - Updates for UK companies on EU Exit - Domestic",
             "finish": "Export Readiness - Domestic EU Exit news - article",
         },
         "international": {
-            "start": "Export Readiness - Updates for non-UK companies on EU Exit - International",
+            "start":
+                "Export Readiness - Updates for non-UK companies on EU Exit - International",
             "finish": "Export Readiness - International EU Exit news - article",
         }
     }
@@ -706,7 +717,8 @@ def generic_click_on_random_industry(context: Context, actor_alias: str):
     page.open_any_article(context.driver)
 
 
-def generic_pick_radio_option_and_submit(context: Context, actor_alias: str, option: str):
+def generic_pick_radio_option_and_submit(
+        context: Context, actor_alias: str, option: str):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "pick_radio_option_and_submit")
     new_page = page.pick_radio_option_and_submit(context.driver, option)
@@ -747,7 +759,9 @@ def open_any_element(
         context: Context, actor_alias: str, element_type: str, section_name: str):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "open_any_element_in_section")
-    element_details = page.open_any_element_in_section(context.driver, element_type, section_name)
+    element_details = page.open_any_element_in_section(
+        context.driver, element_type, section_name
+    )
     update_actor(context, actor_alias, element_details=element_details)
     logging.info(f"{actor_alias} opened random {element_type} from {section_name}")
 
@@ -756,14 +770,20 @@ def exred_open_random_advice_article(context: Context, actor_alias: str):
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
     driver = context.driver
-    exread.advice_landing.visit(driver)
-    exread.advice_landing.open_any_article(driver)
-    exread.advice_article_list.open_any_article(driver)
-    exread.advice_article.should_be_here(driver)
-    update_actor(context, actor_alias, visited_page=exread.advice_article)
+    exred.advice_landing.visit(driver)
+    exred.advice_landing.open_any_article(driver)
+    exred.advice_article_list.open_any_article(driver)
+    exred.advice_article.should_be_here(driver)
+    update_actor(context, actor_alias, visited_page=exred.advice_article)
 
 
 def generic_report_problem_with_page(context: Context, actor_alias: str):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "report_problem")
     page.report_problem(context.driver)
+
+
+def office_finder_find_trade_office(context: Context, actor_alias: str, post_code: str):
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "find_trade_office")
+    page.find_trade_office(context.driver, post_code)

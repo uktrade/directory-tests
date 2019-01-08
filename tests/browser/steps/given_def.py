@@ -5,10 +5,7 @@
 from behave import given
 from behave.runner import Context
 
-from steps.then_impl import (
-    should_be_on_page,
-    should_see_sections
-)
+from steps.then_impl import should_be_on_page, should_see_sections
 from steps.when_impl import (
     articles_open_any,
     case_studies_go_to_random,

@@ -8,7 +8,7 @@ Feature: Advice articles
   @home-page
   @articles
   @<specific>
-  Scenario Outline: Any Exporter should be able to get to a list of Advice articles from the home page
+  Scenario Outline: Any Exporter should be able to get to a list of Advice articles from the home page using link in "<specific>" section
     Given "Robert" visits the "Export Readiness - Home" page
 
     When "Robert" opens any "link" available in the "<specific>" section
