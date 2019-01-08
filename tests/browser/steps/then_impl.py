@@ -46,7 +46,10 @@ def should_be_on_page(context: Context, actor_alias: str, page_name: str):
     else:
         page.should_be_here(context.driver)
     update_actor(context, actor_alias, visited_page=page)
-    logging.debug(f"{actor_alias} is on {page.SERVICE} - {page.NAME} - {page.TYPE} -> {page}")
+    logging.debug(
+        f"{actor_alias} is on {page.SERVICE} - {page.NAME} - {page.TYPE} -> "
+        f"{page}"
+    )
 
 
 def should_be_on_page_or_international_page(
@@ -378,7 +381,7 @@ def pdf_check_expected_details(
         context: Context, actor_alias: str, details_table: Table):
     pdfs = context.pdfs
     pdf_texts = [(pdf["href"], extract_text_from_pdf_bytes(pdf["pdf"]))
-                  for pdf in pdfs]
+                 for pdf in pdfs]
     details = {
         item[0].split(" = ")[0]: item[0].split(" = ")[1]
         for item in details_table

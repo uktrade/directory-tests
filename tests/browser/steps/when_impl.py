@@ -96,7 +96,9 @@ def should_be_on_page(context: Context, actor_alias: str, page_name: str):
     else:
         page.should_be_here(context.driver)
     update_actor(context, actor_alias, visited_page=page)
-    logging.debug(f"{actor_alias} is on {page.SERVICE} - {page.NAME} - {page.TYPE} -> {page}")
+    logging.debug(
+        f"{actor_alias} is on {page.SERVICE} - {page.NAME} - {page.TYPE} -> {page}"
+    )
 
 
 @retry(
@@ -682,14 +684,18 @@ def generic_open_any_tag(context: Context, actor_alias: str):
     update_actor(context, actor_alias, last_tag=tag)
 
 
-def generic_open_random_news_article(context: Context, actor_alias: str, article_type: str):
+def generic_open_random_news_article(
+        context: Context, actor_alias: str, article_type: str
+):
     flow = {
         "domestic": {
-            "start": "Export Readiness - Updates for UK companies on EU Exit - Domestic",
+            "start":
+                "Export Readiness - Updates for UK companies on EU Exit - Domestic",
             "finish": "Export Readiness - Domestic EU Exit news - article",
         },
         "international": {
-            "start": "Export Readiness - Updates for non-UK companies on EU Exit - International",
+            "start":
+                "Export Readiness - Updates for non-UK companies on EU Exit - International",
             "finish": "Export Readiness - International EU Exit news - article",
         }
     }
@@ -706,7 +712,8 @@ def generic_click_on_random_industry(context: Context, actor_alias: str):
     page.open_any_article(context.driver)
 
 
-def generic_pick_radio_option_and_submit(context: Context, actor_alias: str, option: str):
+def generic_pick_radio_option_and_submit(
+        context: Context, actor_alias: str, option: str):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "pick_radio_option_and_submit")
     new_page = page.pick_radio_option_and_submit(context.driver, option)
@@ -747,7 +754,9 @@ def open_any_element(
         context: Context, actor_alias: str, element_type: str, section_name: str):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "open_any_element_in_section")
-    element_details = page.open_any_element_in_section(context.driver, element_type, section_name)
+    element_details = page.open_any_element_in_section(
+        context.driver, element_type, section_name
+    )
     update_actor(context, actor_alias, element_details=element_details)
     logging.info(f"{actor_alias} opened random {element_type} from {section_name}")
 
