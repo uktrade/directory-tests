@@ -177,13 +177,6 @@ def share_page_via_email_should_have_article_details(
     )
 
 
-def triage_should_see_change_your_answers_link(
-    context: Context, actor_alias: str
-):
-    exred.triage_summary.should_see_change_your_answers_link(context.driver)
-    logging.debug("%s can see 'change your answers' link", actor_alias)
-
-
 def promo_video_check_watch_time(
     context: Context, actor_alias: str, expected_watch_time: int
 ):
