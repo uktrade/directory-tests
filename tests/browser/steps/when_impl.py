@@ -758,6 +758,7 @@ def exred_open_random_advice_article(context: Context, actor_alias: str):
     exred.advice_article_list.open_any_article(driver)
     exred.advice_article.should_be_here(driver)
     update_actor(context, actor_alias, visited_page=exred.advice_article)
+    update_actor(context, actor_alias, article_url=driver.current_url)
 
 
 def generic_report_problem_with_page(context: Context, actor_alias: str):
