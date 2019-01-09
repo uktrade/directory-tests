@@ -104,15 +104,48 @@ CAROUSEL = {
 HEADER_ADVICE_LINKS = Selector(By.ID, "header-advice-links")
 ARTICLES = Selector(By.CSS_SELECTOR, "#eu-exit-news-section .article a")
 SELECTORS = {
-    "header - advice": {
+    "advice header menu": {
         "links":
             Selector(By.CSS_SELECTOR, "#advice-links-list a", type=ElementType.LINK),
+        "menu": Selector(By.ID, "header-advice-links"),
+        "create an export plan":
+            Selector(By.ID, "header-advice-create-an-export-plan"),
+        "find an export market":
+            Selector(By.ID, "header-advice-find-an-export-market"),
+        "define route to market":
+            Selector(By.ID, "header-advice-define-route-to-market"),
+        "get export finance and funding":
+            Selector(By.ID, "header-advice-get-export-finance-and-funding"),
+        "manage payment for export orders":
+            Selector(By.ID, "header-advice-manage-payment-for-export-orders"),
+        "prepare to do business in a foreign country":
+            Selector(By.ID, "header-advice-prepare-to-do-business-in-a-foreign-country"),
+        "manage legal and ethical compliance":
+            Selector(By.ID, "header-advice-manage-legal-and-ethical-compliance"),
+        "prepare for export procedures and logistics":
+            Selector(By.ID, "header-advice-prepare-for-export-procedures-and-logistics"),
     },
-    "footer - advice": {
+    "advice footer links": {
         "links":
             Selector(
                 By.CSS_SELECTOR, "#footer-advice-links ~ ul a", type=ElementType.LINK
             ),
+        "create an export plan":
+            Selector(By.ID, "footer-advice-create-an-export-plan"),
+        "find an export market":
+            Selector(By.ID, "footer-advice-find-an-export-market"),
+        "define route to market":
+            Selector(By.ID, "footer-advice-define-route-to-market"),
+        "get export finance and funding":
+            Selector(By.ID, "footer-advice-get-export-finance-and-funding"),
+        "manage payment for export orders":
+            Selector(By.ID, "footer-advice-manage-payment-for-export-orders"),
+        "prepare to do business in a foreign country":
+            Selector(By.ID, "footer-advice-prepare-to-do-business-in-a-foreign-country"),
+        "manage legal and ethical compliance":
+            Selector(By.ID, "footer-advice-manage-legal-and-ethical-compliance"),
+        "prepare for export procedures and logistics":
+            Selector(By.ID, "footer-advice-prepare-for-export-procedures-and-logistics"),
     },
     "beta bar": {
         "itself": Selector(By.ID, "header-beta-bar"),
@@ -166,6 +199,22 @@ SELECTORS = {
             Selector(
                 By.CSS_SELECTOR, "#resource-advice .card-link", type=ElementType.LINK
             ),
+        "create an export plan":
+            Selector(By.ID, "create-an-export-plan-link"),
+        "find an export market":
+            Selector(By.ID, "find-an-export-market-link"),
+        "define route to market":
+            Selector(By.ID, "define-route-to-market-link"),
+        "get export finance and funding":
+            Selector(By.ID, "get-export-finance-and-funding-link"),
+        "manage payment for export orders":
+            Selector(By.ID, "manage-payment-for-export-orders-link"),
+        "prepare to do business in a foreign country":
+            Selector(By.ID, "prepare-to-do-business-in-a-foreign-country-link"),
+        "manage legal and ethical compliance":
+            Selector(By.ID, "manage-legal-and-ethical-compliance-link"),
+        "prepare for export procedures and logistics":
+            Selector(By.ID, "prepare-for-export-procedures-and-logistics-link"),
     },
     "services": {
         "itself": Selector(By.ID, "services"),
@@ -388,7 +437,7 @@ def open_any_element_in_section(
     assert selectors, f"Could't find any {element_type} in {section_name} section"
     selector_key = random.choice(list(selectors))
     selector = SELECTORS[section_name.lower()][selector_key]
-    if section_name.lower().startswith("header"):
+    if "header" in section_name.lower():
         find_element(driver, HEADER_ADVICE_LINKS).click()
     elements = find_elements(driver, selector)
     element = random.choice(elements)

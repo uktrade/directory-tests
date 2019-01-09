@@ -49,21 +49,21 @@ SELECTORS = {
     "advice": {
         "menu": Selector(By.ID, "header-advice-links"),
         "create an export plan":
-            Selector(By.ID, "footer-advice-make-an-export-plan"),
+            Selector(By.ID, "header-advice-create-an-export-plan"),
         "find an export market":
-            Selector(By.ID, "footer-advice-how-to-find-an-export-market"),
+            Selector(By.ID, "header-advice-find-an-export-market"),
         "define route to market":
-            Selector(By.ID, "footer-advice-how-to-enter-an-export-market"),
+            Selector(By.ID, "header-advice-define-route-to-market"),
         "get export finance and funding":
-            Selector(By.ID, "footer-advice-managing-finance"),
+            Selector(By.ID, "header-advice-get-export-finance-and-funding"),
         "manage payment for export orders":
-            Selector(By.ID, "footer-advice-managing-finance"),
+            Selector(By.ID, "header-advice-manage-payment-for-export-orders"),
         "prepare to do business in a foreign country":
-            Selector(By.ID, "footer-advice-doing-business-overseas"),
+            Selector(By.ID, "header-advice-prepare-to-do-business-in-a-foreign-country"),
         "manage legal and ethical compliance":
-            Selector(By.ID, "footer-advice-legal-and-compliance"),
+            Selector(By.ID, "header-advice-manage-legal-and-ethical-compliance"),
         "prepare for export procedures and logistics":
-            Selector(By.ID, "footer-advice-legal-and-compliance"),
+            Selector(By.ID, "header-advice-prepare-for-export-procedures-and-logistics"),
     },
     "services": {
         "menu": Selector(By.ID, "header-services-links"),
