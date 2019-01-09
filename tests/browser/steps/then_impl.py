@@ -2,7 +2,7 @@
 """Then step implementations."""
 import logging
 from time import sleep
-from typing import List
+from typing import List, Union
 from urllib.parse import urlparse
 
 import requests
@@ -123,15 +123,17 @@ def should_see_share_widget(context: Context, actor_alias: str):
     )
 
 
-def should_see_links_to_services(
-    context: Context, actor_alias: str, services: list, location: str
+def should_see_links_in_specific_location(
+    context: Context, actor_alias: str, section: str, links: Union[list, Table], location: str
 ):
     page = get_page_object(location)
     has_action(page, "should_see_link_to")
-    for service in services:
-        page.should_see_link_to(context.driver, "services", service)
+    if isinstance(links, Table):
+        links = [row[0] for row in links]
+    for link in links:
+        page.should_see_link_to(context.driver, section, link)
         logging.debug(
-            "%s can see link to '%s' in '%s'", actor_alias, service, location
+            "%s can see link to '%s' in '%s'", actor_alias, link, location
         )
 
 
