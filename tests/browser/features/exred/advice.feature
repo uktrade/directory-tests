@@ -96,10 +96,9 @@ Feature: Advice articles
   @CMS-686
   @bug
   @CMS-733
-  @fixme
+  @fixed
   @sharing
   @social-media
-  @<group>
   @<social_media>
   Scenario Outline: Any Exporter should be able to share Advice article via "<social_media>"
     Given "Robert" is on randomly selected Advice article page
@@ -114,6 +113,20 @@ Feature: Advice articles
       | Facebook     |
       | Twitter      |
       | Facebook     |
+
+  @CMS-686
+  @bug
+  @CMS-733
+  @fixed
+  @sharing
+  @social-media
+  @email
+  Scenario: Any Exporter should be able to share Advice article via "email"
+    Given "Robert" is on randomly selected Advice article page
+
+    When "Robert" decides to share the article via "email"
+
+    Then "Robert" should see that the share via email link will pre-populate the message subject and body with Article title and URL
 
 
   @CMS-686
