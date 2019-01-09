@@ -19,6 +19,7 @@ join_sso_api = partial(urljoin, settings.DIRECTORY_SSO_API_CLIENT_BASE_URL)
 join_profile = partial(urljoin, settings.DIRECTORY_PROFILE_URL)
 join_ui_buyer = partial(urljoin, settings.DIRECTORY_UI_BUYER_URL)
 join_ui_supplier = partial(urljoin, settings.DIRECTORY_UI_SUPPLIER_URL)
+join_ui_invest = partial(urljoin, settings.INVEST_UI_URL)
 join_exred = partial(urljoin, settings.EXRED_UI_URL)
 join_contact_us = partial(urljoin, settings.DIRECTORY_CONTACT_US_UI_URL)
 join_legacy_contact_us = partial(urljoin, settings.DIRECTORY_LEGACY_CONTACT_US_UI_URL)
@@ -38,20 +39,16 @@ urls = {
     'sso:password_reset': 'accounts/password/reset/',
     'sso:email_confirm': 'accounts/confirm-email/',
     'sso:inactive': 'accounts/inactive/',
-    # Legacy SSO API healthcheck endpoint
-    'sso:health': 'api/v1/',
 
     # SSO API
     'sso-api:landing': '',
-    'sso-api:healthcheck-database': 'api/v1/healthcheck/database/',
-    'sso-api:healthcheck-ping': 'api/v1/healthcheck/ping/',
-    'sso-api:healthcheck-sentry': 'api/v1/healthcheck/sentry/',
+    'sso-api:healthcheck': 'healthcheck/',
+    'sso-api:healthcheck-ping': 'healthcheck/ping/',
     'sso-api:user': 'api/v1/session-user/',
 
     # UI-BUYER
     'ui-buyer:landing': '',
-    'ui-buyer:healthcheck-api': 'healthcheck/api/',
-    'ui-buyer:healthcheck-sso': 'healthcheck/single-sign-on/',
+    'ui-buyer:healthcheck': 'healthcheck/',
     'ui-buyer:register': 'register',
     'ui-buyer:register-confirm-company': 'register/company/',
     'ui-buyer:register-confirm-export-status': 'register/exports/',
@@ -79,6 +76,7 @@ urls = {
 
     # UI-SUPPLIER
     'ui-supplier:landing': '',
+    'ui-supplier:healthcheck': 'healthcheck/',
     'ui-supplier:suppliers': 'suppliers/',
     'ui-supplier:industries': 'industries/',
     'ui-supplier:subscribe': 'subscribe/',
@@ -99,17 +97,14 @@ urls = {
 
     # UI-INVEST
     'ui-invest:landing': '',
+    'ui-invest:healthcheck-sentry': 'healthcheck/sentry/',
+    'ui-invest:healthcheck-forms-api': 'healthcheck/forms-api/',
     'ui-invest:industries': 'industries/',
     'ui-invest:uk-setup-guide': 'uk-setup-guide/',
 
     # API
-    'api:healthcheck-cache': 'healthcheck/cache/',
-    'api:healthcheck-database': 'healthcheck/database/',
-    'api:healthcheck-elasticsearch': 'healthcheck/elasticsearch/',
-    'api:healthcheck-single-sign-on': 'healthcheck/single-sign-on/',
-    'api:healthcheck-sentry': 'healthcheck/sentry/',
+    'api:healthcheck': 'healthcheck/',
     'api:healthcheck-ping': 'healthcheck/ping/',
-    'api:healthcheck-stannp': 'healthcheck/stannp/',
 
     'api:enrolment': 'enrolment/',
     'api:pre-verified-enrolment': 'pre-verified-enrolment',
@@ -165,9 +160,8 @@ urls = {
     'internal-api:companies-house-search': 'api/internal/companies-house-search/',
 
     # SSO-PROFILE
+    'profile:healthcheck': 'healthcheck/',
     'profile:healthcheck-ping': 'healthcheck/ping/',
-    'profile:healthcheck-sentry': 'healthcheck/sentry/',
-    'profile:healthcheck-sso': 'healthcheck/single-sign-on/',
     'profile:soo': 'selling-online-overseas/',
     'profile:fab': 'find-a-buyer/',
     'profile:exops-alerts': 'export-opportunities/email-alerts/',
@@ -177,8 +171,8 @@ urls = {
     'profile:directory-supplier': 'api/v1/directory/supplier/',
 
     # ExRed UI
-    'ui-exred:healthcheck-api': 'healthcheck/api/',
-    'ui-exred:healthcheck-sso-proxy': 'healthcheck/single-sign-on/',
+    'ui-exred:healthcheck': 'healthcheck/',
+    'ui-exred:healthcheck-ping': 'healthcheck/ping/',
     'ui-exred:landing': '',
     'ui-exred:landing-uk': '?lang=en-gb',
     'ui-exred:international': 'international/',
@@ -256,9 +250,8 @@ urls = {
     'ui-soo:market-details': 'markets/details/',
 
     # CMS API endpoints
-    'cms-healthcheck:landing': '',
-    'cms-healthcheck:ping': 'healthcheck/ping/',
-    'cms-healthcheck:database': 'healthcheck/database/',
+    'cms-api:healthcheck': 'healthcheck/',
+    'cms-api:healthcheck-ping': 'healthcheck/ping/',
     'cms-api:pages': 'api/pages/',
     'cms-api:images': 'api/images/',
     'cms-api:documents': 'api/documents/',
@@ -307,6 +300,8 @@ def get_absolute_url(name):
         return join_ui_buyer(relative_url)
     elif name.startswith('ui-supplier:'):
         return join_ui_supplier(relative_url)
+    elif name.startswith('ui-invest:'):
+        return join_ui_invest(relative_url)
     elif name.startswith('api:'):
         return join_api(relative_url)
     elif name.startswith('internal-api:'):
