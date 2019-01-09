@@ -1324,6 +1324,7 @@ def fas_send_message_to_supplier(
         assert endpoint
     # Step 0 - generate message data
     message = random_message_data()
+    context.update_actor(buyer_alias, message=message)
 
     # Step 1 - go to Company's profile page
     response = fas_ui_profile.go_to_endpoint(session, endpoint)

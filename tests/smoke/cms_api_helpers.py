@@ -2,7 +2,7 @@ import asyncio
 import http.client
 import logging
 from pprint import pformat
-from typing import List, Tuple
+from typing import List, Tuple, Union
 from urllib.parse import urlparse
 
 import requests
@@ -62,14 +62,24 @@ def check_for_special_cases(url: str) -> str:
     return url
 
 
-def status_error(expected_status_code: int, response: AbstractCMSResponse):
-    return (
-        f"{response.raw_response.request.method} {response.raw_response.url} "
-        f"returned {response.status_code} instead of expected "
-        f"{expected_status_code}\n"
-        f"REQ headers: {pformat(response.raw_response.request.headers)}\n"
-        f"RSP headers: {pformat(response.raw_response.headers)}"
-    )
+def status_error(
+        expected_status_code: int, response: Union[AbstractCMSResponse, Response]):
+    if isinstance(response, AbstractCMSResponse):
+        return (
+            f"{response.raw_response.request.method} {response.raw_response.url} "
+            f"returned {response.status_code} instead of expected "
+            f"{expected_status_code}\n"
+            f"REQ headers: {pformat(response.raw_response.request.headers)}\n"
+            f"RSP headers: {pformat(response.raw_response.headers)}"
+        )
+    elif isinstance(response, Response):
+        return (
+            f"{response.request.method} {response.url} "
+            f"returned {response.status_code} instead of expected "
+            f"{expected_status_code}\n"
+            f"REQ headers: {pformat(response.request.headers)}\n"
+            f"RSP headers: {pformat(response.headers)}"
+        )
 
 
 def get_and_assert(url: str, status_code: int, *, cookies: dict = None):

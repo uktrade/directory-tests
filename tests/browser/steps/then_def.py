@@ -100,7 +100,8 @@ def then_actor_should_be_on_share_page(context, actor_alias, social_media):
     articles_should_be_on_share_page(context, actor_alias, social_media)
 
 
-@then('"{actor_alias}" should that "{social_media}" share page has been pre-populated with message and the link to the article')
+@then('"{actor_alias}" should see that "{social_media}" share link contains link to the article')
+@then('"{actor_alias}" should see that "{social_media}" share page has been pre-populated with message and the link to the article')
 def then_share_page_should_be_prepopulated(context, actor_alias, social_media):
     share_page_should_be_prepopulated(context, actor_alias, social_media)
 

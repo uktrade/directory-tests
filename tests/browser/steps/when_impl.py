@@ -311,7 +311,8 @@ def articles_share_on_social_media(
         exred.advice_article.check_if_link_opens_new_tab(
             context.driver, social_media
         )
-        exred.advice_article.share_via(context.driver, social_media)
+        if not social_media.lower() == "linkedin":
+            exred.advice_article.share_via(context.driver, social_media)
     logging.debug(
         "%s successfully got to the share article on '%s'",
         actor_alias,
@@ -757,6 +758,7 @@ def exred_open_random_advice_article(context: Context, actor_alias: str):
     exred.advice_article_list.open_any_article(driver)
     exred.advice_article.should_be_here(driver)
     update_actor(context, actor_alias, visited_page=exred.advice_article)
+    update_actor(context, actor_alias, article_url=driver.current_url)
 
 
 def generic_report_problem_with_page(context: Context, actor_alias: str):

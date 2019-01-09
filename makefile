@@ -80,14 +80,10 @@ smoke_tests:
 	pytest --capture=no --verbose --junitxml=tests/smoke/reports/smoke.xml tests/smoke $(PYTEST_ARGS)
 
 functional_tests:
-	export extra_tags=$$([ ! -z "$${TAGS}" ] && echo "--tags=$${TAGS}" || echo "") && \
-	[ ! -z "$${TAGS}" ] && echo "Will use extra: $${extra_tags}" || echo "No extra tags were provided" && \
-	behave -k --format progress3 --logging-filter=-root --stop --tags=-wip --tags=-skip --tags=~fixme tests/functional/features ${extra_tags}
+	behave -k --format progress3 --logging-filter=-root --stop --tags=~@wip --tags=~@skip --tags=~@fixme tests/functional/features ${TAGS}
 
 functional_tests_feature_dir:
-	export extra_tags=$$([ ! -z "$${TAGS}" ] && echo "--tags=$${TAGS}" || echo "") && \
-	[ ! -z "$${TAGS}" ] && echo "Will use extra: $${extra_tags}" || echo "No extra tags were provided" && \
-	behave -k --format progress3 --logging-filter=-root --tags=-wip --tags=-skip --tags=~fixme tests/functional/features/${FEATURE_DIR} $${extra_tags}
+	behave -k --format progress3 --logging-filter=-root --tags=~@wip --tags=~@skip --tags=~@fixme tests/functional/features/${FEATURE_DIR} ${TAGS}
 
 functional_update_companies:
 	python -c "from tests.functional.utils.generic import update_companies; update_companies()"
@@ -165,30 +161,30 @@ BROWSER_DOCKER_REMOVE_ALL:
 	xargs -I {} docker rm -f {}
 
 browser_local:
-	cd tests/browser && paver run --config=local --browsers=${BROWSERS} --tags=${TAGS}
+	cd tests/browser && paver run --config=local --browsers=${BROWSERS} --tags="${TAGS}"
 
 browserstack:
 	$(BROWSER_SET_DOCKER_ENV_VARS) && \
 	cd tests/browser && \
-	paver run --config=browserstack-single --browsers=${BROWSERS} --versions=${VERSIONS} --tags=${TAGS}
+	paver run --config=browserstack-single --browsers=${BROWSERS} --versions=${VERSIONS} --tags="${TAGS}"
 
 browserstack_first_set:
 	$(BROWSER_SET_DOCKER_ENV_VARS) && \
 	cd tests/browser && \
-	paver run --config=browserstack-first-browser-set --tags=${TAGS}
+	paver run --config=browserstack-first-browser-set --tags="${TAGS}"
 
 browserstack_second_set:
 	$(BROWSER_SET_DOCKER_ENV_VARS) && \
 	cd tests/browser && \
-	paver run --config=browserstack-second-browser-set --tags=${TAGS}
+	paver run --config=browserstack-second-browser-set --tags="${TAGS}"
 
 browserstack_mobile:
 	$(BROWSER_SET_DOCKER_ENV_VARS) && \
-	cd tests/browser && paver run --config=browserstack-mobile --browsers=${BROWSERS} --versions=${VERSIONS} --tags=${TAGS}
+	cd tests/browser && paver run --config=browserstack-mobile --browsers=${BROWSERS} --versions=${VERSIONS} --tags="${TAGS}"
 
 browserstack_single:
 	$(BROWSER_SET_DOCKER_ENV_VARS) && \
-	cd tests/browser && paver run --config=browserstack-single --browsers=${BROWSERS} --versions=${VERSIONS} --tags=${TAGS}
+	cd tests/browser && paver run --config=browserstack-single --browsers=${BROWSERS} --versions=${VERSIONS} --tags="${TAGS}"
 
 docker_browserstack_first_set: BROWSER_DOCKER_REMOVE_ALL
 	$(BROWSER_SET_DOCKER_ENV_VARS) && \
