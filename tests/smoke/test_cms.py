@@ -1,13 +1,11 @@
 import http.client
 
 import pytest
-import requests
 from directory_cms_client.client import cms_api_client
 from directory_constants.constants import cms as SERVICE_NAMES
 from retrying import retry
 
-from tests import get_absolute_url, get_relative_url, retriable_error
-from tests.settings import DIRECTORY_API_HEALTH_CHECK_TOKEN
+from tests import get_relative_url, retriable_error
 from tests.smoke.cms_api_helpers import (
     find_draft_urls,
     find_published_translated_urls,
@@ -50,25 +48,6 @@ INVEST_API_PAGES = get_pages_from_api(
 NON_INVEST_API_PAGES = get_pages_from_api(
     NON_INVEST_PAGE_TYPES, use_async_client=False)
 ALL_API_PAGES = [] + INVEST_API_PAGES + NON_INVEST_API_PAGES
-
-
-def test_health_check_ping_endpoint():
-    endpoint = get_relative_url("cms-healthcheck:ping")
-    response = cms_api_client.get(endpoint)
-    assert response.status_code == http.client.OK, status_error(
-        http.client.OK, response
-    )
-
-
-@pytest.mark.skip(reason="check ticket: CMS-146")
-def test_health_check_database_endpoint():
-    params = {"token": DIRECTORY_API_HEALTH_CHECK_TOKEN}
-    absolute_url = get_absolute_url("cms-healthcheck:database")
-    response = requests.get(absolute_url, params=params)
-    error_msg = "Expected 200 but got {}\n{}".format(
-        response.status_code, response.content.decode("utf-8")
-    )
-    assert response.status_code == http.client.OK, error_msg
 
 
 @pytest.mark.parametrize(

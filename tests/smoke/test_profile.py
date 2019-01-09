@@ -5,7 +5,6 @@ import requests
 from retrying import retry
 
 from tests import get_absolute_url, users, is_500
-from tests.settings import DIRECTORY_API_HEALTH_CHECK_TOKEN as TOKEN
 
 
 def test_about_200(hawk_cookie):
@@ -64,27 +63,6 @@ def test_directory_supplier_invalid_user_token(hawk_cookie):
 
     error_msg = f"Expected 401 got {response.status_code} from {response.url}"
     assert response.status_code == 401, error_msg
-
-
-@pytest.mark.parametrize("absolute_url", [
-    get_absolute_url('profile:healthcheck-ping'),
-])
-def test_health_check_endpoints(absolute_url, hawk_cookie):
-    response = requests.get(absolute_url, cookies=hawk_cookie)
-    assert response.status_code == http.client.OK
-
-
-@pytest.mark.parametrize("absolute_url", [
-    get_absolute_url('profile:healthcheck-ping'),
-    get_absolute_url('profile:healthcheck-sentry'),
-    get_absolute_url('profile:healthcheck-sso'),
-])
-def test_health_check_endpoints_auth(absolute_url, hawk_cookie):
-    params = {'token': TOKEN}
-    response = requests.get(
-        absolute_url, params=params, cookies=hawk_cookie
-    )
-    assert response.status_code == http.client.OK
 
 
 @pytest.mark.parametrize("absolute_url", [

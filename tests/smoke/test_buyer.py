@@ -5,7 +5,6 @@ import requests
 from retrying import retry
 
 from tests import get_absolute_url, companies, retriable_error
-from tests.settings import DIRECTORY_API_HEALTH_CHECK_TOKEN as TOKEN
 
 
 @pytest.mark.skip(reason="ATM we're not caching inactive companies: see "
@@ -59,30 +58,6 @@ def test_not_existing_page_return_404_user(logged_in_session, hawk_cookie):
         url, allow_redirects=False, cookies=hawk_cookie
     )
     assert response.status_code == 404
-
-
-@pytest.mark.parametrize("absolute_url", [
-    get_absolute_url('ui-buyer:healthcheck-api'),
-    get_absolute_url('ui-buyer:healthcheck-sso'),
-])
-def test_health_check_endpoints(absolute_url, hawk_cookie):
-    params = {'token': TOKEN}
-    response = requests.get(absolute_url, params=params, cookies=hawk_cookie)
-    assert response.status_code == http.client.OK
-
-
-@pytest.mark.parametrize("absolute_url", [
-    get_absolute_url('ui-buyer:healthcheck-api'),
-    get_absolute_url('ui-buyer:healthcheck-sso'),
-])
-def test_redirects_for_health_check_endpoints(absolute_url, hawk_cookie):
-    params = {'token': TOKEN}
-    # get rid of trailing slash
-    absolute_url = absolute_url[:-1]
-    response = requests.get(
-        absolute_url, params=params, allow_redirects=False,
-        cookies=hawk_cookie)
-    assert response.status_code == http.client.MOVED_PERMANENTLY
 
 
 @retry(

@@ -2,30 +2,8 @@ import datetime
 import http.client
 
 import pytest
-import requests
 from directory_sso_api_client.client import sso_api_client
-from tests import get_absolute_url, users
-from tests.settings import DIRECTORY_API_HEALTH_CHECK_TOKEN as TOKEN
-
-
-@pytest.mark.session_auth
-@pytest.mark.parametrize("absolute_url", [
-    get_absolute_url('sso-api:healthcheck-database'),
-    get_absolute_url('sso-api:healthcheck-ping'),
-    get_absolute_url('sso-api:healthcheck-sentry'),
-])
-def test_health_check_database(absolute_url):
-    """This endpoint still uses session auth instead of HAWK signature check"""
-    params = {'token': TOKEN}
-    response = requests.get(absolute_url, params=params)
-    assert response.status_code == http.client.OK
-
-
-@pytest.mark.hawk
-def test_health_check_ping():
-    """Uses HAWK signature check"""
-    response = sso_api_client.ping()
-    assert response.status_code == http.client.OK
+from tests import users
 
 
 @pytest.mark.dev

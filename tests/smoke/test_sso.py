@@ -5,14 +5,6 @@ import pytest
 from tests import get_absolute_url
 
 
-def test_legacy_api_health_check_endpoint_should_not_exist(logged_in_session, hawk_cookie):
-    url = get_absolute_url('sso:health')
-    response = logged_in_session.get(
-        url, allow_redirects=True, cookies=hawk_cookie
-    )
-    assert response.status_code == 404
-
-
 @pytest.mark.parametrize("absolute_url", [
     get_absolute_url('sso:landing'),
     get_absolute_url('sso:login'),
