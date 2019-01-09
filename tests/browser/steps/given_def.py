@@ -116,10 +116,9 @@ def given_actor_is_registered_and_verified(context, actor_alias):
         context, actor_alias, fake_verification=True)
 
 
-@given('"{actor_alias}" signed in using link in the "{location}"')
 @given('"{actor_alias}" is signed in')
-def given_actor_is_signed_in(context, actor_alias, *, location="top bar"):
-    sign_in(context, actor_alias, location)
+def given_actor_is_signed_in(context, actor_alias):
+    sign_in(context, actor_alias)
 
 
 @given('"{actor_alias}" decided to find out out more about "{industry_name}" industry')

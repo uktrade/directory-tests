@@ -13,11 +13,9 @@ from pages.common_actions import (
     check_for_expected_sections_elements,
     check_for_section,
     check_for_sections,
-    check_if_element_is_not_present,
     check_if_element_is_not_visible,
     find_element,
     take_screenshot,
-    wait_for_page_load_after_action,
 )
 
 NAME = "Article List"
@@ -33,8 +31,6 @@ LIST_OF_ARTICLES = Selector(By.ID, "js-paginate-list")
 TOTAL_NUMBER_OF_ARTICLES = Selector(By.CSS_SELECTOR, "dd.position > span.to")
 ARTICLES_TO_READ_COUNTER = Selector(By.CSS_SELECTOR, "dd.position > span.from")
 TIME_TO_COMPLETE = Selector(By.CSS_SELECTOR, "dd.time span.value")
-REGISTRATION_LINK = Selector(By.CSS_SELECTOR, "#articles p.register > a:nth-child(1)")
-SIGN_IN_LINK = Selector(By.CSS_SELECTOR, "#articles p.register > a:nth-child(2)")
 IS_THERE_ANYTHING_WRONG_WITH_THIS_PAGE_LINK = Selector(
     By.CSS_SELECTOR, "section.error-reporting a"
 )
@@ -87,28 +83,6 @@ def should_not_see_section(driver: WebDriver, name: str):
     section = SELECTORS[name.lower()]
     for key, selector in section.items():
         check_if_element_is_not_visible(driver, selector, element_name=key)
-
-
-def go_to_registration(driver: WebDriver):
-    registration_link = find_element(driver, REGISTRATION_LINK)
-    with wait_for_page_load_after_action(driver):
-        registration_link.click()
-
-
-def go_to_sign_in(driver: WebDriver):
-    sign_in_link = find_element(driver, SIGN_IN_LINK)
-    with wait_for_page_load_after_action(driver):
-        sign_in_link.click()
-
-
-def should_not_see_link_to_register(driver: WebDriver):
-    check_if_element_is_not_present(
-        driver, REGISTRATION_LINK, element_name="Registration link"
-    )
-
-
-def should_not_see_link_to_sign_in(driver: WebDriver):
-    check_if_element_is_not_present(driver, SIGN_IN_LINK, element_name="Sign in link")
 
 
 def show_more(driver: WebDriver):

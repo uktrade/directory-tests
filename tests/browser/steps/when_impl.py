@@ -201,19 +201,11 @@ def open_service_link_on_interim_page(
     logging.debug("%s went to %s service page", actor_alias, service)
 
 
-def registration_go_to(context: Context, actor_alias: str, location: str):
+def registration_go_to(context: Context, actor_alias: str):
     logging.debug(
         "%s decided to go to registration via %s link", actor_alias, location
     )
-    if location.lower() == "article list":
-        exred.article_list.go_to_registration(context.driver)
-    elif location.lower() == "top bar":
-        exred.header.go_to_registration(context.driver)
-    else:
-        raise KeyError(
-            "Could not recognise registration link location: %s. Please use "
-            "'article', 'article list' or 'top bar'".format(location)
-        )
+    exred.header.go_to_registration(context.driver)
     sso.registration.should_be_here(context.driver)
 
 
@@ -267,7 +259,7 @@ def registration_create_and_verify_account(
     context: Context, actor_alias: str, *, fake_verification: bool = True
 ):
     visit_page(context, actor_alias, "export readiness - home")
-    registration_go_to(context, actor_alias, "top bar")
+    registration_go_to(context, actor_alias)
     registration_submit_form_and_verify_account(
         context, actor_alias, fake_verification=fake_verification
     )
@@ -289,25 +281,15 @@ def sign_in_go_to(context: Context, actor_alias: str, location: str):
     logging.debug(
         "%s decided to go to sign in page via %s link", actor_alias, location
     )
-    if location.lower() == "article":
-        exred.article_common.go_to_sign_in(context.driver)
-    elif location.lower() == "article list":
-        exred.article_list.go_to_sign_in(context.driver)
-    elif location.lower() == "top bar":
-        exred.header.go_to_sign_in(context.driver)
-    else:
-        raise KeyError(
-            "Could not recognise 'sign in' link location: {}. Please use "
-            "'article', 'article list' or 'top bar'".format(location)
-        )
+    exred.header.go_to_sign_in(context.driver)
     sso.sign_in.should_be_here(context.driver)
 
 
-def sign_in(context: Context, actor_alias: str, location: str):
+def sign_in(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     email = actor.email
     password = actor.password
-    sign_in_go_to(context, actor_alias, location)
+    sign_in_go_to(context, actor_alias)
     sso.sign_in.fill_out(context.driver, email, password)
     sso.sign_in.submit(context.driver)
 
@@ -324,12 +306,12 @@ def articles_share_on_social_media(
 ):
     context.article_url = context.driver.current_url
     if social_media.lower() == "email":
-        exred.article_common.check_if_link_opens_email_client(context.driver)
+        exred.advice_article.check_if_link_opens_email_client(context.driver)
     else:
-        exred.article_common.check_if_link_opens_new_tab(
+        exred.advice_article.check_if_link_opens_new_tab(
             context.driver, social_media
         )
-        exred.article_common.share_via(context.driver, social_media)
+        exred.advice_article.share_via(context.driver, social_media)
     logging.debug(
         "%s successfully got to the share article on '%s'",
         actor_alias,

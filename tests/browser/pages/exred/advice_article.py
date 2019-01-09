@@ -47,6 +47,14 @@ SELECTORS = {
     "breadcrumbs": {
         "itself": Selector(By.CSS_SELECTOR, "nav.breadcrumbs"),
         "links": Selector(By.CSS_SELECTOR, "nav.breadcrumbs a"),
+        "great.gov.uk":
+            Selector(
+                By.CSS_SELECTOR, ".breadcrumbs a[href='/']"),
+        "advice":
+            Selector(
+                By.CSS_SELECTOR, ".breadcrumbs a[href='/advice/']"),
+        "article list":
+            Selector(By.CSS_SELECTOR, ".breadcrumbs > ol > li:nth-child(3) > a"),
     },
     "article": {
         "article name": ARTICLE_NAME,
@@ -149,3 +157,8 @@ def share_via(driver: WebDriver, social_media: str):
 def report_problem(driver: WebDriver):
     find_and_click_on_page_element(
         driver, SELECTORS, "report page link", wait_for_it=False)
+
+
+def click_on_page_element(driver: WebDriver, element_name: str):
+    find_and_click_on_page_element(driver, SELECTORS, element_name)
+    take_screenshot(driver, NAME + " after clicking on " + element_name)

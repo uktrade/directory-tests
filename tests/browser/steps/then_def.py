@@ -38,7 +38,7 @@ from steps.then_impl import (
     should_be_on_page_or_international_page,
     should_not_see_sections,
     should_see_articles_filtered_by_tag,
-    should_see_links_to_services,
+    should_see_links_in_specific_location,
     should_see_page_in_preferred_language,
     should_see_sections,
     should_see_share_widget,
@@ -81,11 +81,18 @@ def then_actor_should_see_share_widget(context, actor_alias):
     should_see_share_widget(context, actor_alias)
 
 
-@then('"{actor_alias}" should see links to following Services "{services}" in "{location}"')
+@then('"{actor_alias}" should see links to following "{section}" categories in "{location}"')
 def then_should_see_links_to_services(
-        context, actor_alias, services, location):
-    should_see_links_to_services(
-        context, actor_alias, services.split(", "), location)
+        context, actor_alias, section, location):
+    should_see_links_in_specific_location(
+        context, actor_alias, section, context.table, location)
+
+
+@then('"{actor_alias}" should see links to following "{section}" "{elements}" in "{location}"')
+def then_should_see_links_to_services(
+        context, actor_alias, section, elements, location):
+    should_see_links_in_specific_location(
+        context, actor_alias, section, elements.split(", "), location)
 
 
 @then('"{actor_alias}" should be taken to a new tab with the "{social_media}" share page opened')

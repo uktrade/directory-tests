@@ -96,10 +96,9 @@ Feature: Advice articles
   @CMS-686
   @bug
   @CMS-733
-  @fixme
+  @fixed
   @sharing
   @social-media
-  @<group>
   @<social_media>
   Scenario Outline: Any Exporter should be able to share Advice article via "<social_media>"
     Given "Robert" is on randomly selected Advice article page
@@ -115,6 +114,20 @@ Feature: Advice articles
       | Twitter      |
       | Facebook     |
 
+  @CMS-686
+  @bug
+  @CMS-733
+  @fixed
+  @sharing
+  @social-media
+  @email
+  Scenario: Any Exporter should be able to share Advice article via "email"
+    Given "Robert" is on randomly selected Advice article page
+
+    When "Robert" decides to share the article via "email"
+
+    Then "Robert" should see that the share via email link will pre-populate the message subject and body with Article title and URL
+
 
   @CMS-686
   @report
@@ -125,3 +138,40 @@ Feature: Advice articles
 
     Then "Robert" should be on the "Export Readiness - Feedback - contact us" page
 
+
+  @CMS-686
+  Scenario Outline: Any Exporter visiting the home page should be able to see links to all Advice categories in "Export Readiness - <link_location>"
+    Given "Robert" visits the "Export Readiness - Home" page
+
+    Then "Robert" should see links to following "Advice" categories in "Export Readiness - <link_location>"
+      | categories                                  |
+      | Create an export plan                       |
+      | Find an export market                       |
+      | Define route to market                      |
+      | Get export finance and funding              |
+      | Manage payment for export orders            |
+      | Prepare to do business in a foreign country |
+      | Manage legal and ethical compliance         |
+      | Prepare for export procedures and logistics |
+
+    Examples:
+      | link_location |
+      | header        |
+      | home          |
+      | footer        |
+
+
+  @CMS-686
+  @breadcrumbs
+  Scenario Outline: Any Exporter should see be to use "<breadcrumb>" breadcrumb on "Advice article" page to get to "<target>" page
+    Given "Robert" is on randomly selected Advice article page
+
+    When "Robert" decides to open "<breadcrumb>"
+
+    Then "Robert" should be on the "Export Readiness - <target>" page
+
+    Examples:
+      | breadcrumb   | target                |
+      | great.gov.uk | Home                  |
+      | Advice       | Advice - Landing      |
+      | Article list | Advice - article list |

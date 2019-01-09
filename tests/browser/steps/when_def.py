@@ -302,7 +302,7 @@ def given_actor_navigates_via_contact_us_options(
 
 
 @when('"{actor_alias}" is on the "{page_name}" page')
-def step_impl(context: Context, actor_alias: str, page_name: str):
+def when_actor_is_on_page(context: Context, actor_alias: str, page_name: str):
     should_be_on_page(context, actor_alias, page_name)
 
 
@@ -340,9 +340,8 @@ def when_actor_clears_the_cookies(context, actor_alias):
 
 
 @when('"{actor_alias}" signs in')
-@when('"{actor_alias}" signs in using link visible in the "{location}"')
-def when_actor_signs_in(context, actor_alias, *, location="top bar"):
-    sign_in(context, actor_alias, location)
+def when_actor_signs_in(context, actor_alias):
+    sign_in(context, actor_alias)
 
 
 @when('"{actor_alias}" signs out')
