@@ -51,8 +51,6 @@ Feature: Sharing on Social Media and via emails
   @fixed
   @advice
   @article
-  @sharing
-  @social-media
   @<social_media>
   Scenario Outline: Any Exporter should be able to share Advice article via "<social_media>"
     Given "Robert" is on randomly selected Advice article page
@@ -74,8 +72,6 @@ Feature: Sharing on Social Media and via emails
   @fixed
   @advice
   @article
-  @sharing
-  @social-media
   @linkedin
   Scenario: Any Exporter should be able to share Advice article via "LinkedIn"
     Given "Robert" is on randomly selected Advice article page
@@ -91,8 +87,6 @@ Feature: Sharing on Social Media and via emails
   @fixed
   @advice
   @article
-  @sharing
-  @social-media
   @email
   Scenario: Any Exporter should be able to share Advice article via "email"
     Given "Robert" is on randomly selected Advice article page
