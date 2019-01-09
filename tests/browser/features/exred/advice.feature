@@ -106,13 +106,28 @@ Feature: Advice articles
     When "Robert" decides to share the article via "<social_media>"
 
     Then "Robert" should be taken to a new tab with the "<social_media>" share page opened
-    And "Robert" should that "<social_media>" share page has been pre-populated with message and the link to the article
+    And "Robert" should see that "<social_media>" share page has been pre-populated with message and the link to the article
 
     Examples:
       | social_media |
       | Facebook     |
       | Twitter      |
-      | Facebook     |
+
+
+  @CMS-686
+  @bug
+  @CMS-733
+  @fixed
+  @sharing
+  @social-media
+  @linkedin
+  Scenario: Any Exporter should be able to share Advice article via "LinkedIn"
+    Given "Robert" is on randomly selected Advice article page
+
+    When "Robert" decides to share the article via "LinkedIn"
+
+    Then "Robert" should see that "LinkedIn" share link contains link to the article
+
 
   @CMS-686
   @bug
@@ -140,6 +155,8 @@ Feature: Advice articles
 
 
   @CMS-686
+  @header
+  @footer
   Scenario Outline: Any Exporter visiting the home page should be able to see links to all Advice categories in "Export Readiness - <link_location>"
     Given "Robert" visits the "Export Readiness - Home" page
 
