@@ -166,8 +166,8 @@ def share_page_via_email_should_have_article_details(
 ):
     driver = context.driver
     body = driver.current_url
-    subject = exred.article_common.get_article_name(driver)
-    exred.article_common.check_share_via_email_link_details(driver, subject, body)
+    subject = exred.advice_article.get_article_name(driver)
+    exred.advice_article.check_share_via_email_link_details(driver, subject, body)
     logging.debug(
         "%s checked that the 'share via email' link contain correct subject: "
         "'%s' and message body: '%s'",

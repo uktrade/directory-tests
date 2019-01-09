@@ -306,12 +306,12 @@ def articles_share_on_social_media(
 ):
     context.article_url = context.driver.current_url
     if social_media.lower() == "email":
-        exred.article_common.check_if_link_opens_email_client(context.driver)
+        exred.advice_article.check_if_link_opens_email_client(context.driver)
     else:
-        exred.article_common.check_if_link_opens_new_tab(
+        exred.advice_article.check_if_link_opens_new_tab(
             context.driver, social_media
         )
-        exred.article_common.share_via(context.driver, social_media)
+        exred.advice_article.share_via(context.driver, social_media)
     logging.debug(
         "%s successfully got to the share article on '%s'",
         actor_alias,
