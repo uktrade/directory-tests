@@ -54,7 +54,6 @@ from tests.functional.utils.gov_notify import (
 )
 from tests.settings import (
     FAS_LOGO_PLACEHOLDER_IMAGE,
-    FAS_MESSAGE_FROM_BUYER_SUBJECT,
     SEARCHABLE_CASE_STUDY_DETAILS,
 )
 
