@@ -95,8 +95,6 @@ def test_301_redirects_for_anon_user(absolute_url, hawk_cookie):
     retry_on_exception=retriable_error,
 )
 @pytest.mark.parametrize("absolute_url", [
-    get_absolute_url('ui-buyer:healthcheck-api'),
-    get_absolute_url('ui-buyer:healthcheck-sso'),
     get_absolute_url('ui-buyer:register-confirm-company'),
     get_absolute_url('ui-buyer:register-confirm-export-status'),
     get_absolute_url('ui-buyer:register-finish'),
