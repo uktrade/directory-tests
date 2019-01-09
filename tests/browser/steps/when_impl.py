@@ -311,7 +311,8 @@ def articles_share_on_social_media(
         exred.advice_article.check_if_link_opens_new_tab(
             context.driver, social_media
         )
-        exred.advice_article.share_via(context.driver, social_media)
+        if not social_media.lower() == "linkedin":
+            exred.advice_article.share_via(context.driver, social_media)
     logging.debug(
         "%s successfully got to the share article on '%s'",
         actor_alias,
