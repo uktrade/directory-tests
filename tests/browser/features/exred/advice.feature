@@ -125,3 +125,24 @@ Feature: Advice articles
 
     Then "Robert" should be on the "Export Readiness - Feedback - contact us" page
 
+
+  @CMS-686
+  Scenario Outline: Any Exporter visiting the home page should be able to see links to all Advice categories in "Export Readiness - <link_location>"
+    Given "Robert" visits the "Export Readiness - Home" page
+
+    Then "Robert" should see links to following "Advice" categories in "Export Readiness - <link_location>"
+      | categories                                  |
+      | Create an export plan                       |
+      | Find an export market                       |
+      | Define route to market                      |
+      | Get export finance and funding              |
+      | Manage payment for export orders            |
+      | Prepare to do business in a foreign country |
+      | Manage legal and ethical compliance         |
+      | Prepare for export procedures and logistics |
+
+    Examples:
+      | link_location |
+      | header        |
+      | home          |
+      | footer        |

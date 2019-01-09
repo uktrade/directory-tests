@@ -10,7 +10,7 @@ Feature: Accessing Services
   Scenario Outline: Any Exporter visiting the home page should be able to see links to selected Services in/on "<link_location>"
     Given "Robert" visits the "Export Readiness - Home" page
 
-    Then "Robert" should see links to following Services "<services>" in "Export Readiness - <link_location>"
+    Then "Robert" should see links to following "Services" "<services>" in "Export Readiness - <link_location>"
 
     Examples:
       | services                                                                         | link_location |
