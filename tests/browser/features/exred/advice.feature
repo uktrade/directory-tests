@@ -159,3 +159,19 @@ Feature: Advice articles
       | header        |
       | home          |
       | footer        |
+
+
+  @CMS-686
+  @breadcrumbs
+  Scenario Outline: Any Exporter should see be to use "<breadcrumb>" breadcrumb on "Advice article" page to get to "<target>" page
+    Given "Robert" is on randomly selected Advice article page
+
+    When "Robert" decides to open "<breadcrumb>"
+
+    Then "Robert" should be on the "Export Readiness - <target>" page
+
+    Examples:
+      | breadcrumb   | target                |
+      | great.gov.uk | Home                  |
+      | Advice       | Advice - Landing      |
+      | Article list | Advice - article list |
