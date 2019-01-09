@@ -23,7 +23,7 @@ SERVICE = "Export Readiness"
 TYPE = "article"
 URL = None
 
-ARTICLE_NAME = Selector(By.CSS_SELECTOR, "#article h1")
+ARTICLE_NAME = Selector(By.CSS_SELECTOR, "article h1")
 ARTICLE_TEXT = Selector(By.CSS_SELECTOR, ".article-content")
 IS_THERE_ANYTHING_WRONG_WITH_THIS_PAGE_LINK = Selector(
     By.CSS_SELECTOR, "section.error-reporting a"
