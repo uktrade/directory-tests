@@ -157,3 +157,8 @@ def share_via(driver: WebDriver, social_media: str):
 def report_problem(driver: WebDriver):
     find_and_click_on_page_element(
         driver, SELECTORS, "report page link", wait_for_it=False)
+
+
+def click_on_page_element(driver: WebDriver, element_name: str):
+    find_and_click_on_page_element(driver, SELECTORS, element_name)
+    take_screenshot(driver, NAME + " after clicking on " + element_name)
