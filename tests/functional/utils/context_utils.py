@@ -25,6 +25,7 @@ Actor = namedtuple(
         "ex_owner",
         "ownership_request_link",
         "verification_letter",
+        "message",
     ],
 )
 CaseStudy = namedtuple(
