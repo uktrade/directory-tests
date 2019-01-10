@@ -23,10 +23,10 @@ Feature: Advice articles
       | Error reporting          |
 
     Examples: sections
-      | specific        |
-      | Advice          |
-      | Header - Advice |
-      | Footer - Advice |
+      | specific            |
+      | Advice              |
+      | Advice header menu  |
+      | Advice footer links |
 
 
   @CMS-686
