@@ -120,17 +120,6 @@ def test_profile_health_check_endpoints_with_hawk(absolute_url, hawk_cookie):
     assert response.status_code == OK
 
 
-@pytest.mark.profile
-@pytest.mark.parametrize("absolute_url", [
-    get_absolute_url('profile:healthcheck'),
-    get_absolute_url('profile:healthcheck-ping'),
-])
-def test_profile_health_check_endpoints_with_token(absolute_url):
-    params = {'token': TOKEN}
-    response = requests.get(absolute_url, params=params)
-    assert response.status_code == OK
-
-
 @pytest.mark.exred
 @pytest.mark.parametrize("absolute_url", [
     get_absolute_url('ui-exred:healthcheck'),
