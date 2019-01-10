@@ -115,8 +115,9 @@ def test_dir_api_health_check_endpoints(absolute_url):
     get_absolute_url('profile:healthcheck'),
     get_absolute_url('profile:healthcheck-ping'),
 ])
-def test_profile_health_check_endpoints_with_hawk(absolute_url, hawk_cookie):
-    response = requests.get(absolute_url, cookies=hawk_cookie)
+def test_profile_health_check_endpoints_with_token(absolute_url):
+    params = {'token': TOKEN}
+    response = requests.get(absolute_url, params=params)
     assert response.status_code == OK
 
 
