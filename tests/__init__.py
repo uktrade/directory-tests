@@ -97,8 +97,7 @@ urls = {
 
     # UI-INVEST
     'ui-invest:landing': '',
-    'ui-invest:healthcheck-sentry': 'healthcheck/sentry/',
-    'ui-invest:healthcheck-forms-api': 'healthcheck/forms-api/',
+    'ui-invest:healthcheck': 'healthcheck/',
     'ui-invest:industries': 'industries/',
     'ui-invest:uk-setup-guide': 'uk-setup-guide/',
 

@@ -87,8 +87,7 @@ def test_fas_health_check_endpoints(absolute_url):
 
 @pytest.mark.invest
 @pytest.mark.parametrize("absolute_url", [
-    get_absolute_url('ui-invest:healthcheck-sentry'),
-    get_absolute_url('ui-invest:healthcheck-forms-api'),
+    get_absolute_url('ui-invest:healthcheck'),
 ])
 def test_invest_health_check_endpoints(absolute_url):
     params = {'token': TOKEN}
