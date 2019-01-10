@@ -702,14 +702,13 @@ def fas_should_be_told_that_message_has_been_sent(
 def fas_supplier_should_receive_message_from_buyer(
     context: Context, supplier_alias: str, buyer_alias: str
 ):
-    buyer = context.get_actor(buyer_alias)
     supplier = context.get_actor(supplier_alias)
     context.response = find_mail_gun_events(
         context,
         service=MailGunService.DIRECTORY,
         to=supplier.email,
         event=MailGunEvent.ACCEPTED,
-        subject=buyer.message.subject,
+        subject=FAS_MESSAGE_FROM_BUYER_SUBJECT,
     )
     logging.debug("%s received message from %s", supplier_alias, buyer_alias)
 
