@@ -126,14 +126,14 @@ def test_profile_health_check_endpoints_with_token(absolute_url):
     get_absolute_url('ui-exred:healthcheck'),
     get_absolute_url('ui-exred:healthcheck-ping'),
 ])
-def test_health_check_endpoints(absolute_url):
+def test_exred_health_check_endpoints(absolute_url):
     params = {'token': TOKEN}
     response = requests.get(absolute_url, params=params)
     assert response.status_code == OK
 
 
 @pytest.mark.cms
-def test_health_check_ping_endpoint_with_cms_api_client():
+def test_cms_health_check_ping_endpoint_with_cms_api_client():
     endpoint = get_relative_url("cms-api:healthcheck-ping")
     response = cms_api_client.get(endpoint)
     assert response.status_code == OK, status_error(OK, response)
@@ -144,7 +144,7 @@ def test_health_check_ping_endpoint_with_cms_api_client():
     get_absolute_url('cms-api:healthcheck'),
     get_absolute_url('cms-api:healthcheck-ping'),
 ])
-def test_health_check_database_endpoint(absolute_url):
+def test_cms_health_check_database_endpoint(absolute_url):
     params = {"token": TOKEN}
     response = requests.get(absolute_url, params=params)
     assert response.status_code == OK, status_error(OK, response)
