@@ -42,7 +42,7 @@ def retry_if_webdriver_error(exception):
 def generic_set_hawk_cookie(context: Context, page_name: str):
     if not SET_HAWK_COOKIE:
         logging.debug("Setting HAWK cookie is disabled")
-        pass
+        return
     page = get_page_object(page_name)
     driver = context.driver
     driver.get(page.URL)
