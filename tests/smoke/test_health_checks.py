@@ -90,9 +90,9 @@ def test_fas_health_check_endpoints(absolute_url, hawk_cookie):
     get_absolute_url('ui-invest:healthcheck-sentry'),
     get_absolute_url('ui-invest:healthcheck-forms-api'),
 ])
-def test_invest_health_check_endpoints(absolute_url, hawk_cookie):
+def test_invest_health_check_endpoints(absolute_url):
     params = {'token': TOKEN}
-    response = requests.get(absolute_url, params=params, cookies=hawk_cookie)
+    response = requests.get(absolute_url, params=params)
     assert response.status_code == OK
 
 
