@@ -134,7 +134,7 @@ Feature: Advice articles
 
     When "Robert" decides to open "<breadcrumb>"
 
-    Then "Robert" should be on the "Export Readiness - <target>" page
+    Then "Robert" should be on the "Export Readiness - <target>" page or on the International page
 
     Examples:
       | breadcrumb   | target                |
