@@ -86,6 +86,12 @@ AUTO_RETRY = (
     if __auto_retry and __auto_retry.lower() in ["true", "1", "yes"]
     else False
 )
+__reuse_cookie = os.environ.get("REUSE_COOKIE", "true")
+REUSE_COOKIE = (
+    True
+    if __reuse_cookie and __reuse_cookie.lower() in ["true", "1", "yes"]
+    else False
+)
 __set_hawk_cookie = os.environ.get("SET_HAWK_COOKIE", "true")
 SET_HAWK_COOKIE = (
     True

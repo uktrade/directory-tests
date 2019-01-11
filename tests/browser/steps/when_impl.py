@@ -2,14 +2,16 @@
 """When step implementations."""
 import logging
 import random
+from datetime import datetime
 from urllib.parse import urljoin
 
 from behave.model import Table
 from behave.runner import Context
 from retrying import retry
 from selenium.common.exceptions import TimeoutException, WebDriverException
+from selenium.webdriver.remote.webdriver import WebDriver
 
-from settings import SET_HAWK_COOKIE
+from settings import SET_HAWK_COOKIE, REUSE_COOKIE
 from utils.cms_api import get_news_articles
 from utils.gov_notify import get_verification_link
 
@@ -39,12 +41,55 @@ def retry_if_webdriver_error(exception):
     return isinstance(exception, (TimeoutException, WebDriverException))
 
 
+def try_to_reuse_hawk_cookie(driver: WebDriver):
+    """
+    An example 'ip-restrict-signature' cookie returned by WebDriver looks like this:
+    {
+     'domain': 'invest.great.gov.uk',
+     'expiry': 2177925215,
+     'httpOnly': False,
+     'name': 'ip-restrict-signature',
+     'path': '/',
+     'secure': True,
+     'value': 'Hawk mac="IzYtf...=", id="test", ts="1547205215", nonce="avYGOt"'
+    }
+    In order to reuse the cookie, we need to check if the difference between current
+    datetime and `ts` value (from 'value' property) is less than 60s.
+    It's because Hawk cookie is valid for 60s.
+    see https://github.com/hueniverse/hawk#replay-protection
+    To avoid situations when cookie is rejected as it expired due to slow page load,
+    we'll renew it when it's older than 50s.
+
+    """
+    logging.debug(f"Checking if IP Restrictor cookie can be reused")
+    cookies = driver.get_cookies()
+    restrictor_cookie = [c for c in cookies if c['name'] == 'ip-restrict-signature']
+    if restrictor_cookie:
+        logging.debug(f"Found IP Restrictor cookie")
+        cookie_ts = int(restrictor_cookie[0]['value'].split(', ')[2][4:-1])
+        now = int(datetime.now().timestamp())
+        time_difference = now - cookie_ts
+        if time_difference < 50:
+            logging.debug(
+                f"IP Restrictor cookie is still valid for {60 - time_difference}s, "
+                f"will re-use it"
+            )
+            return
+        else:
+            logging.debug(f"IP Restrictor cookie is not valid anymore")
+    else:
+        logging.debug(f"IP Restrictor cookie is not present")
+    
+
 def generic_set_hawk_cookie(context: Context, page_name: str):
     if not SET_HAWK_COOKIE:
         logging.debug("Setting HAWK cookie is disabled")
         return
-    page = get_page_object(page_name)
     driver = context.driver
+    if REUSE_COOKIE:
+        try_to_reuse_hawk_cookie(driver)
+    page = get_page_object(page_name)
+    logging.debug(f"Visiting {page.URL} in order to set IP Restrictor cookie")
     driver.get(page.URL)
     hawk_cookie = get_hawk_cookie()
     logging.debug(f"Generated hawk cookie: {hawk_cookie}")

@@ -13,7 +13,14 @@ from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.remote.command import Command
 
 from pages import sso
-from settings import AUTO_RETRY, CONFIG, CONFIG_NAME, RESTART_BROWSER, TASK_ID
+from settings import (
+    AUTO_RETRY,
+    CONFIG,
+    CONFIG_NAME,
+    REUSE_COOKIE,
+    RESTART_BROWSER,
+    TASK_ID,
+)
 from pages.common_actions import (
     clear_driver_cookies,
     flag_browserstack_session_as_failed,
@@ -204,6 +211,9 @@ def after_scenario(context: Context, scenario: Scenario):
                 "Closing Selenium Driver after scenario: %s", scenario.name)
             context.driver.quit()
         if RESTART_BROWSER == "feature":
+            if REUSE_COOKIE:
+                logging.debug(f"Will try to reuse IP Restrictor cookie")
+                return
             clear_driver_cookies(context.driver)
     else:
         logging.warning(
