@@ -22,7 +22,6 @@ Feature: Pixels
       | Industries     |
       | UK Setup Guide |
       | Contact Us     |
-#      | Feedback   |
 
     Examples: Industry pages
       | selected                                       |
