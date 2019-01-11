@@ -1,8 +1,9 @@
 @contact-us
-Feature: Contact us & Leave feedback
+Feature: Contact us and Leave feedback
 
   Background:
     Given hawk cookie is set on "Invest - Home" page
+    And hawk cookie is set on "Export Readiness - Home" page
 
   @CMS-163
   @beta
@@ -14,7 +15,7 @@ Feature: Contact us & Leave feedback
 
     When "Robert" decides to use "Feedback" link on "Invest - <selected>" page
 
-    Then "Robert" should be on the "Invest - Feedback" page
+    Then "Robert" should be on the "Export Readiness - Feedback" page
 
     Examples: Various pages
       | selected       |
