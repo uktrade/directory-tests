@@ -61,10 +61,10 @@ Feature: Pixels
       | Technology - industry                          |
 
     Examples: UK Setup Guides
-      | selected                                                        |
-      | Apply for a UK visa - guide                                     |
-      | Establish a base for business in the UK - guide                 |
-      | Hire skilled workers for your UK operations - guide             |
+      | selected                                            |
+      | Apply for a UK visa - guide                         |
+      | Establish a base for business in the UK - guide     |
+      | Hire skilled workers for your UK operations - guide |
 
     @full
     Examples: UK Setup Guides
