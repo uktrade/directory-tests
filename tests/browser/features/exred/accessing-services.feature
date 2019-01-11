@@ -19,6 +19,36 @@ Feature: Accessing Services
       | Find a buyer, Selling online overseas, Export opportunities, Get Finance, Events | footer        |
 
 
+  @bug
+  @ED-2647
+  @fixed
+  @ED-2662
+  @ED-2667
+  @home-page
+  @finance
+  @accessing-services
+  @<service>
+  @interim-pages
+  Scenario Outline: Any Exporter should see "Get finance" service page not as a Advice Article
+    Given "Robert" visits the "Export Readiness - Home" page
+
+    When "Robert" goes to "<service>" using "Services" links in "Export Readiness - <link_location>"
+
+    Then "Robert" should be on the "Export Readiness - <service>" page
+    And  "Robert" should not see following sections
+      | sections                            |
+      | Articles Read counter               |
+      | Total number of Articles            |
+      | Time to complete remaining chapters |
+      | Tasks completed counter             |
+      | Tasks Total number                  |
+
+    Examples:
+      | service     | link_location |
+      | Get Finance | header        |
+      | Get Finance | footer        |
+
+
   @ED-2660
   @home-page
   @accessing-services
@@ -85,33 +115,3 @@ Feature: Accessing Services
       | Selling online overseas | footer        |
       | Events                  | header        |
       | Events                  | footer        |
-
-
-  @bug
-  @ED-2647
-  @fixed
-  @ED-2662
-  @ED-2667
-  @home-page
-  @finance
-  @accessing-services
-  @<service>
-  @interim-pages
-  Scenario Outline: Any Exporter should see "Get finance" service page not as a Advice Article
-    Given "Robert" visits the "Export Readiness - Home" page
-
-    When "Robert" goes to "<service>" using "Services" links in "Export Readiness - <link_location>"
-
-    Then "Robert" should be on the "Export Readiness - <service>" page
-    And  "Robert" should not see following sections
-      | sections                            |
-      | Articles Read counter               |
-      | Total number of Articles            |
-      | Time to complete remaining chapters |
-      | Tasks completed counter             |
-      | Tasks Total number                  |
-
-    Examples:
-      | service     | link_location |
-      | Get Finance | header        |
-      | Get Finance | footer        |
