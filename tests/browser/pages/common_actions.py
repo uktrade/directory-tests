@@ -323,6 +323,13 @@ def assertion_msg(message: str, *args):
         logging.error(message)
         e.args += (message,)
         _, _, tb = sys.exc_info()
+        if len(sys._current_frames()) == 1:
+            print(f"Found 'shallow' Traceback, will inspect outer traceback frames")
+            import inspect
+            for f in inspect.getouterframes(sys._getframe(0)):
+                print(f"{f.filename} +{f.lineno} - in {f.function}")
+                if "_def.py" in f.filename:
+                    break
         traceback.print_tb(tb)
         raise
 
