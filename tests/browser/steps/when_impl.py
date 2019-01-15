@@ -648,13 +648,30 @@ def generic_click_on_uk_gov_logo(
     logging.debug("%s click on UK Gov logo %s", actor_alias, page_name)
 
 
-def generic_fill_out_and_submit_form(context: Context, actor_alias: str):
+def generic_fill_out_and_submit_form(
+        context: Context, actor_alias: str, *, custom_details_table: Table = None):
     actor = get_actor(context, actor_alias)
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "generate_form_details")
     has_action(page, "fill_out")
     has_action(page, "submit")
-    details = page.generate_form_details(actor)
+    if custom_details_table:
+        custom_details_table.require_column("field")
+        custom_details_table.require_column("value")
+        value_mapping = {
+            "unchecked": False,
+            "checked": True,
+            "empty": None,
+        }
+        custom_details = {}
+        for row in custom_details_table.rows:
+            key = row["field"].lower()
+            value = row["value"]
+            custom_details[key] = value_mapping.get(value, value)
+        details = page.generate_form_details(actor, custom_details=custom_details)
+    else:
+        details = page.generate_form_details(actor)
+    logging.debug(f"{actor_alias} will fill out the form with: {details}")
     page.fill_out(context.driver, details)
     page.submit(context.driver)
 

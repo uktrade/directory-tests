@@ -253,7 +253,7 @@ def when_actor_clicks_on_uk_gov_logo(
 
 @when('"{actor_alias}" fills out and submits the form')
 def when_actor_fills_out_and_submits_the_form(context: Context, actor_alias: str):
-    generic_fill_out_and_submit_form(context, actor_alias)
+    generic_fill_out_and_submit_form(context, actor_alias, custom_details_table=context.table)
 
 
 @when('"{actor_alias}" downloads all visible PDFs')

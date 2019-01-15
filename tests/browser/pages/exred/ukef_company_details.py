@@ -116,7 +116,7 @@ def should_be_here(driver: WebDriver):
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
-def generate_form_details(actor: Actor) -> dict:
+def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
     result = {
         "trading name": "automated tests",
         "companies house number": None,
@@ -131,6 +131,8 @@ def generate_form_details(actor: Actor) -> dict:
         "i supply uk companies that sell overseas": True,
         "i don't currently export or supply businesses that export": True,
     }
+    if custom_details:
+        result.update(custom_details)
     return result
 
 
