@@ -47,7 +47,8 @@ NEW_TO_EXPORTING_LINK = Selector(By.ID, "personas-section-new")
 OCCASIONAL_EXPORTER_LINK = Selector(By.ID, "personas-section-occasional")
 REGULAR_EXPORTED_LINK = Selector(By.ID, "personas-section-regular")
 FIND_A_BUYER_SERVICE_LINK = Selector(
-    By.CSS_SELECTOR, "#services-section-find-a-buyer a")
+    By.CSS_SELECTOR, "#services-section-find-a-buyer a"
+)
 SELLING_ONLINE_OVERSEAS_SERVICE_LINK = Selector(
     By.CSS_SELECTOR, "#services-section-selling-online-overseas a"
 )
@@ -105,47 +106,64 @@ HEADER_ADVICE_LINKS = Selector(By.ID, "header-advice-links")
 ARTICLES = Selector(By.CSS_SELECTOR, "#eu-exit-news-section .article a")
 SELECTORS = {
     "advice header menu": {
-        "links":
-            Selector(By.CSS_SELECTOR, "#advice-links-list a", type=ElementType.LINK),
         "menu": Selector(By.ID, "header-advice-links"),
-        "create an export plan":
-            Selector(By.ID, "header-advice-create-an-export-plan"),
-        "find an export market":
-            Selector(By.ID, "header-advice-find-an-export-market"),
-        "define route to market":
-            Selector(By.ID, "header-advice-define-route-to-market"),
-        "get export finance and funding":
-            Selector(By.ID, "header-advice-get-export-finance-and-funding"),
-        "manage payment for export orders":
-            Selector(By.ID, "header-advice-manage-payment-for-export-orders"),
-        "prepare to do business in a foreign country":
-            Selector(By.ID, "header-advice-prepare-to-do-business-in-a-foreign-country"),
-        "manage legal and ethical compliance":
-            Selector(By.ID, "header-advice-manage-legal-and-ethical-compliance"),
-        "prepare for export procedures and logistics":
-            Selector(By.ID, "header-advice-prepare-for-export-procedures-and-logistics"),
+        "create an export plan": Selector(
+            By.ID, "header-advice-create-an-export-plan", type=ElementType.LINK
+        ),
+        "find an export market": Selector(
+            By.ID, "header-advice-find-an-export-market", type=ElementType.LINK
+        ),
+        "define route to market": Selector(
+            By.ID, "header-advice-define-route-to-market", type=ElementType.LINK
+        ),
+        "get export finance and funding": Selector(
+            By.ID, "header-advice-get-export-finance-and-funding", type=ElementType.LINK
+        ),
+        "manage payment for export orders": Selector(
+            By.ID,
+            "header-advice-manage-payment-for-export-orders",
+            type=ElementType.LINK,
+        ),
+        "prepare to do business in a foreign country": Selector(
+            By.ID,
+            "header-advice-prepare-to-do-business-in-a-foreign-country",
+            type=ElementType.LINK,
+        ),
+        "manage legal and ethical compliance": Selector(
+            By.ID,
+            "header-advice-manage-legal-and-ethical-compliance",
+            type=ElementType.LINK,
+        ),
+        "prepare for export procedures and logistics": Selector(
+            By.ID,
+            "header-advice-prepare-for-export-procedures-and-logistics",
+            type=ElementType.LINK,
+        ),
     },
     "advice footer links": {
-        "links":
-            Selector(
-                By.CSS_SELECTOR, "#footer-advice-links ~ ul a", type=ElementType.LINK
-            ),
-        "create an export plan":
-            Selector(By.ID, "footer-advice-create-an-export-plan"),
-        "find an export market":
-            Selector(By.ID, "footer-advice-find-an-export-market"),
-        "define route to market":
-            Selector(By.ID, "footer-advice-define-route-to-market"),
-        "get export finance and funding":
-            Selector(By.ID, "footer-advice-get-export-finance-and-funding"),
-        "manage payment for export orders":
-            Selector(By.ID, "footer-advice-manage-payment-for-export-orders"),
-        "prepare to do business in a foreign country":
-            Selector(By.ID, "footer-advice-prepare-to-do-business-in-a-foreign-country"),
-        "manage legal and ethical compliance":
-            Selector(By.ID, "footer-advice-manage-legal-and-ethical-compliance"),
-        "prepare for export procedures and logistics":
-            Selector(By.ID, "footer-advice-prepare-for-export-procedures-and-logistics"),
+        "links": Selector(
+            By.CSS_SELECTOR, "#footer-advice-links ~ ul a", type=ElementType.LINK
+        ),
+        "create an export plan": Selector(By.ID, "footer-advice-create-an-export-plan"),
+        "find an export market": Selector(By.ID, "footer-advice-find-an-export-market"),
+        "define route to market": Selector(
+            By.ID, "footer-advice-define-route-to-market"
+        ),
+        "get export finance and funding": Selector(
+            By.ID, "footer-advice-get-export-finance-and-funding"
+        ),
+        "manage payment for export orders": Selector(
+            By.ID, "footer-advice-manage-payment-for-export-orders"
+        ),
+        "prepare to do business in a foreign country": Selector(
+            By.ID, "footer-advice-prepare-to-do-business-in-a-foreign-country"
+        ),
+        "manage legal and ethical compliance": Selector(
+            By.ID, "footer-advice-manage-legal-and-ethical-compliance"
+        ),
+        "prepare for export procedures and logistics": Selector(
+            By.ID, "footer-advice-prepare-for-export-procedures-and-logistics"
+        ),
     },
     "beta bar": {
         "itself": Selector(By.ID, "header-beta-bar"),
@@ -195,26 +213,27 @@ SELECTORS = {
         "title": Selector(By.ID, "advice-section-title"),
         "description": Selector(By.ID, "advice-section-description"),
         "groups": Selector(By.CSS_SELECTOR, "#resource-advice .card"),
-        "cards":
-            Selector(
-                By.CSS_SELECTOR, "#resource-advice .card-link", type=ElementType.LINK
-            ),
-        "create an export plan":
-            Selector(By.ID, "create-an-export-plan-link"),
-        "find an export market":
-            Selector(By.ID, "find-an-export-market-link"),
-        "define route to market":
-            Selector(By.ID, "define-route-to-market-link"),
-        "get export finance and funding":
-            Selector(By.ID, "get-export-finance-and-funding-link"),
-        "manage payment for export orders":
-            Selector(By.ID, "manage-payment-for-export-orders-link"),
-        "prepare to do business in a foreign country":
-            Selector(By.ID, "prepare-to-do-business-in-a-foreign-country-link"),
-        "manage legal and ethical compliance":
-            Selector(By.ID, "manage-legal-and-ethical-compliance-link"),
-        "prepare for export procedures and logistics":
-            Selector(By.ID, "prepare-for-export-procedures-and-logistics-link"),
+        "cards": Selector(
+            By.CSS_SELECTOR, "#resource-advice .card-link", type=ElementType.LINK
+        ),
+        "create an export plan": Selector(By.ID, "create-an-export-plan-link"),
+        "find an export market": Selector(By.ID, "find-an-export-market-link"),
+        "define route to market": Selector(By.ID, "define-route-to-market-link"),
+        "get export finance and funding": Selector(
+            By.ID, "get-export-finance-and-funding-link"
+        ),
+        "manage payment for export orders": Selector(
+            By.ID, "manage-payment-for-export-orders-link"
+        ),
+        "prepare to do business in a foreign country": Selector(
+            By.ID, "prepare-to-do-business-in-a-foreign-country-link"
+        ),
+        "manage legal and ethical compliance": Selector(
+            By.ID, "manage-legal-and-ethical-compliance-link"
+        ),
+        "prepare for export procedures and logistics": Selector(
+            By.ID, "prepare-for-export-procedures-and-logistics-link"
+        ),
     },
     "services": {
         "itself": Selector(By.ID, "services"),
@@ -430,7 +449,8 @@ def extract_text(text: str, section_name: str) -> tuple:
 
 
 def open_any_element_in_section(
-        driver: WebDriver, element_type: str, section_name: str) -> tuple:
+    driver: WebDriver, element_type: str, section_name: str
+) -> tuple:
     section = SELECTORS[section_name.lower()]
     sought_type = ElementType[element_type.upper()]
     selectors = get_selectors(section, sought_type)
