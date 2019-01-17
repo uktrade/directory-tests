@@ -37,7 +37,7 @@ NAMES = [
 ]
 SERVICE = "Export Readiness"
 TYPE = "Contact us"
-URL = urljoin(EXRED_UI_URL, "contact/domestic/")
+URL = urljoin(EXRED_UI_URL, "contact/domestic/enquiries/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 SUBMIT_BUTTON = Selector(
