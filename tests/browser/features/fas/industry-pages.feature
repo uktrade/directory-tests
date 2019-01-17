@@ -121,48 +121,56 @@ Feature: Find a Supplier - Industry pages
 
 
   @ED-4262
+  @TT-942
   @captcha
   @dev-only
   @contact-us
-  Scenario Outline: Buyers should be able to contact DIT from the "<specific> Industry" page
-    Given "Robert" visits the "Find a Supplier - <specific> - industry" page
-    And "Robert" decided to use "contact us" button
+  Scenario Outline: Buyers should be able to contact DIT
+    Given "Robert" visits the "Find a Supplier - Contact Us" page
 
-    When "Robert" fills out and submits the contact us form
+    When "Robert" fills out and submits the form
+      | field    | value      |
+      | industry | <specific> |
 
     Then "Robert" should be on the "Find a Supplier - Thank you for your message" page
+    And "Robert" should receive a "<specific> contact form submitted." confirmation email from Zendesk
 
     Examples: Promoted industries
       | specific          |
       | Agritech          |
-      | Creative services |
 
     @bug
     @TT-82
     @fixme
-    Examples: Promoted industries
+    @full
+    @long
+    Examples: all other industries
       | specific          |
+      | Aerospace         |
+      | Consumer retail   |
+      | Creative services |
       | Cyber security    |
       | Food and drink    |
-      | Sports economy    |
       | Healthcare        |
+      | Legal services    |
       | Life sciences     |
+      | Sports economy    |
       | Technology        |
 
-    @wip
-    Examples: Industries not present on Dev
-      | specific                           |
-      | Automotive                         |
-      | Business & Government Partnerships |
-      | Education                          |
-      | Energy                             |
-      | Engineering                        |
-      | Infrastructure                     |
-      | Innovation                         |
-      | Legal services                     |
-      | Marine                             |
-      | Professional & financial services  |
-      | Space                              |
+
+  @TT-942
+  @captcha
+  @dev-only
+  @contact-us
+  Scenario: Contact requests from certain senders should not be forwarded to us
+    Given "Robert" was barred from contacting us
+    And "Robert" visits the "Find a Supplier - Contact Us" page
+
+    When "Robert" fills out and submits the form
+
+    Then "Robert" should be on the "Find a Supplier - Thank you for your message" page
+    And "Robert" should not receive a confirmation email
+
 
   @bug
   @TT-277
