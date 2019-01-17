@@ -3,6 +3,7 @@
   "file_path": "./docker/.env",
   "env_vars": {
     "required": [
+      "BARRED_USERS",
       "BROWSERSTACK_PASS",
       "BROWSERSTACK_SERVER",
       "BROWSERSTACK_USER",
@@ -18,6 +19,9 @@
       "EVENTS_UI_URL",
       "EXPORT_OPPORTUNITIES_UI_URL",
       "EXRED_UI_URL",
+      "FORMS_API_URL",
+      "FORMS_API_KEY",
+      "FORMS_API_SENDER_ID",
       "GOV_NOTIFY_API_KEY",
       "INVEST_UI_URL",
       "INVEST_MAILBOX_ADMIN_EMAIL",
