@@ -28,6 +28,7 @@ from settings import (
     INVEST_MAILBOX_ADMIN_EMAIL,
 )
 from steps import has_action
+from utils.forms_api import find_form_submissions
 from utils.gov_notify import (
     get_email_confirmation_notification,
     get_email_confirmations_with_matching_string,
@@ -477,3 +478,13 @@ def office_finder_should_see_correct_office_details(
     logging.debug(
         f"{actor_alias} found contact details for trade '{trade_office}' office"
         f" in '{city}'")
+
+
+@retry(wait_fixed=5000, stop_max_attempt_number=3, wrap_exception=False)
+def forms_confirmation_email_should_not_be_sent(context: Context, actor_alias: str):
+    actor = get_actor(context, actor_alias)
+    submissions = find_form_submissions(actor.email)
+    assert submissions, f"No form submissions found for {actor_alias}"
+    error = (f"Expected to find an unsent submission for {actor_alias} but found a sent"
+             f" one. Check spam filters")
+    assert not submissions[0]['is_sent'], error

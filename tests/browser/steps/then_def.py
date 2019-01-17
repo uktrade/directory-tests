@@ -12,6 +12,7 @@ from steps.then_impl import (
     fas_search_results_filtered_by_industries,
     form_check_state_of_element,
     form_should_see_error_messages,
+    forms_confirmation_email_should_not_be_sent,
     generic_article_counter_should_match_number_of_articles,
     generic_article_counters_should_match,
     generic_should_see_expected_page_content,
@@ -275,3 +276,8 @@ def then_should_see_correct_trade_office_details(
         context: Context, actor_alias: str, trade_office: str, city: str):
     office_finder_should_see_correct_office_details(
         context, actor_alias, trade_office, city)
+
+
+@then('"{actor_alias}" should not receive a confirmation email')
+def then_confirmation_email_should_not_be_sent(context: Context, actor_alias: str):
+    forms_confirmation_email_should_not_be_sent(context, actor_alias)
