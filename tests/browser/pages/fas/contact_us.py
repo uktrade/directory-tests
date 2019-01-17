@@ -9,6 +9,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages import ElementType
 from pages.common_actions import (
+    Actor,
     Selector,
     check_for_section,
     check_url,
@@ -36,7 +37,7 @@ ORGANISATION = Selector(By.ID, "id_organisation_name", type=ElementType.INPUT)
 ORGANISATION_SIZE = Selector(By.ID, "id_organisation_size", type=ElementType.SELECT)
 COUNTRY = Selector(By.ID, "id_country", type=ElementType.INPUT)
 BODY = Selector(By.ID, "id_body", type=ElementType.INPUT)
-SOURCE = Selector(By.ID, "id_source", type=ElementType.INPUT)
+SOURCE = Selector(By.ID, "id_source", type=ElementType.SELECT)
 ACCEPT_TC = Selector(By.ID, "id_terms_agreed", type=ElementType.LABEL, is_visible=False)
 IM_NOT_A_ROBOT = Selector(By.CSS_SELECTOR, ".recaptcha-checkbox-checkmark")
 SUBMIT_BUTTON = Selector(By.CSS_SELECTOR, "form input[type=submit]", type=ElementType.BUTTON)
@@ -69,6 +70,26 @@ def should_be_here(driver: WebDriver):
 
 def should_see_section(driver: WebDriver, name: str):
     check_for_section(driver, SELECTORS, sought_section=name)
+
+
+def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
+    company_name = actor.company_name or "Automated test"
+    result = {
+        "full name": actor.alias,
+        "email": actor.email,
+        "industry": None,
+        "organisation": company_name,
+        "organisation size": None,
+        "country": "DIT QA TEAM",
+        "body": "This is a test message sent via automated tests",
+        "source": None,
+        "accept t&c": True,
+    }
+    if custom_details:
+        if custom_details.get("industry", None):
+            custom_details["industry"] = custom_details["industry"].lower().replace(" ", "-")
+        result.update(custom_details)
+    return result
 
 
 def fill_out(driver: WebDriver, contact_us_details: dict, *, captcha: bool = True):
