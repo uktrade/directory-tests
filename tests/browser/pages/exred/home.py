@@ -458,7 +458,18 @@ def open_any_element_in_section(
     selector_key = random.choice(list(selectors))
     selector = SELECTORS[section_name.lower()][selector_key]
     if "header" in section_name.lower():
-        find_element(driver, HEADER_ADVICE_LINKS).click()
+        if "firefox" in driver.capabilities["browserName"].lower():
+            from selenium.webdriver import ActionChains
+
+            menu = find_element(driver, HEADER_ADVICE_LINKS, element_name="header menu")
+            action_chains = ActionChains(driver)
+            action_chains.move_to_element(menu)
+            action_chains.click(menu)
+            action_chains.perform()
+        else:
+            find_element(
+                driver, HEADER_ADVICE_LINKS, element_name="header menu"
+            ).click()
     elements = find_elements(driver, selector)
     element = random.choice(elements)
     check_if_element_is_visible(element, element_name=selector_key)
