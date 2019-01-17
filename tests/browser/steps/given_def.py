@@ -19,6 +19,7 @@ from steps.when_impl import (
     generic_open_industry_page,
     generic_open_random_news_article,
     generic_set_hawk_cookie,
+    get_barred_actor,
     registration_create_and_verify_account,
     sign_in,
     visit_page,
@@ -103,6 +104,11 @@ def given_hawk_cookie_is_set(context: Context, page_name: str):
 @given('"{actor_alias}" is on randomly selected Advice article page')
 def given_actor_in_on_random_advice_article(context: Context, actor_alias: str):
     exred_open_random_advice_article(context, actor_alias)
+
+
+@given('"{actor_alias}" was barred from contacting us')
+def given_a_barred_actor(context: Context, actor_alias: str):
+    get_barred_actor(context, actor_alias)
 
 
 ###############################################################################

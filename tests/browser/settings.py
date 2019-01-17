@@ -18,6 +18,7 @@ TASK_ID = int(os.environ.get("TASK_ID", 0))
 RESTART_BROWSER = os.environ.get("RESTART_BROWSER", "feature")
 BROWSERS = os.environ.get("BROWSERS", "").split()
 BROWSERS_VERSIONS = os.environ.get("VERSIONS", "").split()
+BARRED_USERS = list(filter(None, os.environ.get("BARRED_USERS", "").split(",")))
 HUB_URL = os.environ.get("HUB_URL", None)
 CAPABILITIES = os.environ.get("CAPABILITIES", None)
 BUILD_ID = os.environ.get("CIRCLE_SHA1", str(datetime.date(datetime.now())))
@@ -131,6 +132,9 @@ CONFIG = config.get(
     versions=BROWSERS_VERSIONS,
     build_id=BUILD_ID,
 )
+FORMS_API_URL = os.environ["FORMS_API_URL"]
+FORMS_API_KEY = os.environ["FORMS_API_KEY"]
+FORMS_API_SENDER_ID = os.environ["FORMS_API_SENDER_ID"]
 
 DIRECTORY_CMS_API_CLIENT_BASE_URL = os.environ["DIRECTORY_CMS_API_CLIENT_BASE_URL"]
 DIRECTORY_CMS_API_CLIENT_API_KEY = os.environ["DIRECTORY_CMS_API_CLIENT_API_KEY"]

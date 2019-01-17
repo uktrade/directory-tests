@@ -18,6 +18,7 @@ from utils.gov_notify import get_verification_link
 from pages import common_language_selector, exred, fas, get_page_object, sso
 from pages.common_actions import (
     add_actor,
+    barred_actor,
     get_actor,
     get_hawk_cookie,
     get_last_visited_page,
@@ -247,9 +248,7 @@ def open_service_link_on_interim_page(
 
 
 def registration_go_to(context: Context, actor_alias: str):
-    logging.debug(
-        "%s decided to go to registration via %s link", actor_alias, location
-    )
+    logging.debug("%s decided to go to registration", actor_alias)
     exred.header.go_to_registration(context.driver)
     sso.registration.should_be_here(context.driver)
 
@@ -833,3 +832,8 @@ def office_finder_find_trade_office(context: Context, actor_alias: str, post_cod
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "find_trade_office")
     page.find_trade_office(context.driver, post_code)
+
+
+def get_barred_actor(context: Context, actor_alias: str):
+    if not get_actor(context, actor_alias):
+        add_actor(context, barred_actor(actor_alias))

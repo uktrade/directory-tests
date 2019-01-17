@@ -38,6 +38,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 from pages import ElementType
 from settings import (
+    BARRED_USERS,
     BROWSERSTACK_PASS,
     BROWSERSTACK_SESSIONS_URL,
     BROWSERSTACK_USER,
@@ -251,6 +252,12 @@ def unauthenticated_actor(alias: str) -> Actor:
         password=password,
         visited_articles=[],
     )
+
+
+def barred_actor(alias: str) -> Actor:
+    actor = unauthenticated_actor(alias)
+    actor = actor._replace(**{"email": random.choice(BARRED_USERS)})
+    return actor
 
 
 def add_actor(context: Context, actor: Actor):
