@@ -2,10 +2,10 @@ version: 2
 
 # Variables
 chrome_version: &chrome_version
-  BROWSER_VERSION: "72.0"
+  BROWSER_VERSION: "71.0"
 
 firefox_version: &firefox_version
-  BROWSER_VERSION: "65.0"
+  BROWSER_VERSION: "64.0"
 
 load_hatch_rate: &load_hatch_rate
     HATCH_RATE: 5
