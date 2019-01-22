@@ -51,10 +51,10 @@ SELECTORS = {
         "last name": Selector(By.ID, "id_family_name", type=ElementType.INPUT),
         "email": Selector(By.ID, "id_email", type=ElementType.INPUT),
         "uk private or public limited company": Selector(
-            By.ID, "id_company_type_0", type=ElementType.RADIO
+            By.CSS_SELECTOR, "input[value='LIMITED']", type=ElementType.RADIO
         ),
         "other type of uk organisation": Selector(
-            By.ID, "id_company_type_1", type=ElementType.RADIO
+            By.CSS_SELECTOR, "input[value='OTHER']", type=ElementType.RADIO
         ),
         "organisation name": Selector(
             By.ID, "id_organisation_name", type=ElementType.INPUT

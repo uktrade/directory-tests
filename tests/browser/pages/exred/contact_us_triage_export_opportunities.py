@@ -39,20 +39,20 @@ SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#lede form"),
         "i haven't had a response from the opportunity i applied for": Selector(
-            By.ID,
-            "id_export-opportunities-choice_0",
+            By.CSS_SELECTOR,
+            "input[value='no-response']",
             type=ElementType.RADIO,
             is_visible=False,
         ),
         "my daily alerts are not relevant to me": Selector(
-            By.ID,
-            "id_export-opportunities-choice_1",
+            By.CSS_SELECTOR,
+            "input[value='alerts']",
             type=ElementType.RADIO,
             is_visible=False,
         ),
         "other": Selector(
-            By.ID,
-            "id_export-opportunities-choice_2",
+            By.CSS_SELECTOR,
+            "input[value='other']",
             type=ElementType.RADIO,
             is_visible=False,
         ),

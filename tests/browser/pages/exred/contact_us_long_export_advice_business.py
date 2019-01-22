@@ -38,10 +38,10 @@ SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#lede form"),
         "uk private or public limited company": Selector(
-            By.ID, "id_business-company_type_0", type=ElementType.RADIO
+            By.ID, "input[value='LIMITED']", type=ElementType.RADIO
         ),
         "other type of uk organisation": Selector(
-            By.ID, "id_business-company_type_1", type=ElementType.RADIO
+            By.ID, "input[value='OTHER']", type=ElementType.RADIO
         ),
         "organisation name": Selector(
             By.ID, "id_business-organisation_name", type=ElementType.INPUT

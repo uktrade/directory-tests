@@ -38,20 +38,20 @@ SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#lede form"),
         "export opportunities service": Selector(
-            By.ID,
-            "id_great-services-choice_0",
+            By.CSS_SELECTOR,
+            "input[value='export-opportunities']",
             type=ElementType.RADIO,
             is_visible=False,
         ),
         "your account on great.gov.uk": Selector(
-            By.ID,
-            "id_great-services-choice_1",
+            By.CSS_SELECTOR,
+            "input[value='great-account']",
             type=ElementType.RADIO,
             is_visible=False,
         ),
         "other": Selector(
-            By.ID,
-            "id_great-services-choice_2",
+            By.CSS_SELECTOR,
+            "input[value='other']",
             type=ElementType.RADIO,
             is_visible=False,
         ),

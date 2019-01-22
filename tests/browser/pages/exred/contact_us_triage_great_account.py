@@ -39,22 +39,31 @@ SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#lede form"),
         "i have not received an email confirmation": Selector(
-            By.ID, "id_great-account-choice_0", type=ElementType.RADIO, is_visible=False
+            By.CSS_SELECTOR, "input[value='no-email-confirmation']",
+            type=ElementType.RADIO, is_visible=False
         ),
         "i need to reset my password": Selector(
-            By.ID, "id_great-account-choice_1", type=ElementType.RADIO, is_visible=False
+            By.CSS_SELECTOR, "input[value='password-reset']",
+            type=ElementType.RADIO, is_visible=False
+        ),
+        "i cannot find my company": Selector(
+            By.CSS_SELECTOR, "input[value='company-not-found']",
+            type=ElementType.RADIO, is_visible=False
         ),
         "my companies house login is not working": Selector(
-            By.ID, "id_great-account-choice_2", type=ElementType.RADIO, is_visible=False
+            By.CSS_SELECTOR, "input[value='companies-house-login']",
+            type=ElementType.RADIO, is_visible=False
         ),
         "i do not know where to enter my verification code": Selector(
-            By.ID, "id_great-account-choice_3", type=ElementType.RADIO, is_visible=False
+            By.CSS_SELECTOR, "input[value='verification-code']",
+            type=ElementType.RADIO, is_visible=False
         ),
         "i have not received my letter containing the verification code": Selector(
-            By.ID, "id_great-account-choice_4", type=ElementType.RADIO, is_visible=False
+            By.CSS_SELECTOR, "input[value='no-verification-letter']",
+            type=ElementType.RADIO, is_visible=False
         ),
         "other": Selector(
-            By.ID, "id_great-account-choice_5", type=ElementType.RADIO, is_visible=False
+            By.CSS_SELECTOR, "input[value='other']", type=ElementType.RADIO, is_visible=False
         ),
         "submit": SUBMIT_BUTTON,
         "back": Selector(
