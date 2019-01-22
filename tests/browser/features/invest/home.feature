@@ -25,11 +25,7 @@ Feature: Invest home page
   Scenario: Overseas businesses should be able to find out why UK is the best place for their business
     Given "Robert" visits the "Invest - home" page
 
-    When "Robert" decides to read more on following topics
-      | topics                            |
-      | Bring your business to the UK now |
-      | Access a highly skilled workforce |
-      | Benefit from low business costs   |
+    When "Robert" decides to read more on all reasons to move business to the UK
 
     Then "Robert" should see brief explanation why the UK is the best place for his business
 

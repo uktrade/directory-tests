@@ -597,19 +597,15 @@ def fas_view_article(context: Context, actor_alias: str, article_number: str):
     )
 
 
-def invest_read_more(context: Context, actor_alias: str, topic_names: Table):
+def invest_read_more(context: Context, actor_alias: str):
     page = get_last_visited_page(context, actor_alias)
-    has_action(page, "open_link")
-    topics = [row[0] for row in topic_names]
-    update_actor(context, actor_alias, visited_articles=topics)
-    for topic in topics:
-        page.open_link(context.driver, topic)
-        logging.debug(
-            "%s clicked on '%s' topic on %s",
-            actor_alias,
-            topic,
-            context.driver.current_url,
-        )
+    has_action(page, "open_all_topics")
+    page.open_all_topics(context.driver)
+    logging.debug(
+        "%s clicked on all visible topic on %s",
+        actor_alias,
+        context.driver.current_url,
+    )
 
 
 @retry(

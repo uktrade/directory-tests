@@ -229,9 +229,9 @@ def fas_when_actor_views_article(
     fas_view_article(context, actor_alias, article_number)
 
 
-@when('"{actor_alias}" decides to read more on following topics')
+@when('"{actor_alias}" decides to read more on all reasons to move business to the UK')
 def actor_decides_to_read_more(context: Context, actor_alias: str):
-    invest_read_more(context, actor_alias, context.table)
+    invest_read_more(context, actor_alias)
 
 
 @when('"{actor_alias}" decides to read "{guide_name}" guide')

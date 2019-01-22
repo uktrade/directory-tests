@@ -7,6 +7,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import ElementType
 from pages.common_actions import (
     Selector,
     assertion_msg,
@@ -16,6 +17,7 @@ from pages.common_actions import (
     find_element,
     take_screenshot,
     visit_url,
+    find_elements
 )
 from settings import INVEST_UI_URL
 
@@ -25,6 +27,15 @@ SERVICE = "Invest"
 TYPE = "home"
 PAGE_TITLE = "Invest in Great Britain - Home"
 
+TOPIC_LINKS = Selector(
+    By.CSS_SELECTOR,
+    "section.landing-page-accordions > div > ul > li > a",
+    type=ElementType.LINK
+)
+TOPIC_CONTENTS = Selector(
+    By.CSS_SELECTOR,
+    "section.landing-page-accordions > div > ul > li > .accordion-content",
+)
 SELECTORS = {
     "header": {
         "self": Selector(By.ID, "invest-header"),
@@ -183,21 +194,6 @@ SELECTORS = {
     },
 }
 
-TOPIC_CONTENTS = {
-    "Bring your business to the UK now": Selector(
-        By.CSS_SELECTOR,
-        "#content > section.landing-page-accordions ul > li:nth-child(1) div.accordion-content",
-    ),
-    "Access a highly skilled workforce": Selector(
-        By.CSS_SELECTOR,
-        "#content > section.landing-page-accordions ul > li:nth-child(2) div.accordion-content",
-    ),
-    "Benefit from low business costs": Selector(
-        By.CSS_SELECTOR,
-        "#content > section.landing-page-accordions ul > li:nth-child(3) div.accordion-content",
-    ),
-}
-
 
 def visit(driver: WebDriver):
     visit_url(driver, URL)
@@ -217,11 +213,17 @@ def open_link(driver: WebDriver, name: str):
     driver.find_element_by_link_text(name).click()
 
 
-def should_see_topic(driver: WebDriver, name: str):
-    selector = TOPIC_CONTENTS[name]
-    content = driver.find_element(by=selector.by, value=selector.value)
-    with assertion_msg("Can't see contents for topic: {}".format(name)):
-        assert content.is_displayed()
+def open_all_topics(driver: WebDriver):
+    topic_links = find_elements(driver, TOPIC_LINKS)
+    for link in topic_links:
+        link.click()
+
+
+def should_see_all_topics(driver: WebDriver):
+    contents = find_elements(driver, TOPIC_CONTENTS)
+    for content in contents:
+        with assertion_msg("Can't see contents for: {}".format(content.text)):
+            assert content.is_displayed()
 
 
 def clean_name(name: str) -> str:
