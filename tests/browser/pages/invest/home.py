@@ -41,15 +41,15 @@ SELECTORS = {
         "self": Selector(By.CSS_SELECTOR, "section.landing-page-accordions"),
         "first": Selector(
             By.CSS_SELECTOR,
-            "section.landing-page-accordions.section-underlined li:nth-child(1) > a",
+            "section.landing-page-accordions > div > ul > li:nth-child(1) > a",
         ),
         "second": Selector(
             By.CSS_SELECTOR,
-            "section.landing-page-accordions.section-underlined li:nth-child(2) > a",
+            "section.landing-page-accordions > div > ul > li:nth-child(2) > a",
         ),
         "third": Selector(
             By.CSS_SELECTOR,
-            "section.landing-page-accordions.section-underlined li:nth-child(3) > a",
+            "section.landing-page-accordions > div > ul > li:nth-child(3) > a",
         ),
     },
     "sectors": {
