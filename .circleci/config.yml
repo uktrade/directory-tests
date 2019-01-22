@@ -384,7 +384,7 @@ jobs:
       TEST_ENV: "stage"
       BROWSER: "chrome"
       <<: *chrome_version
-      TAGS: "--tags=~@dev-only --tags=~@eu-exit --tags=~@office-finder"
+      TAGS: "--tags=~@dev-only --tags=~@eu-exit"
     <<: *steps_run_browser_tests
 
   browser_all_firefox_stage:
@@ -394,7 +394,7 @@ jobs:
       TEST_ENV: "stage"
       BROWSER: "firefox"
       <<: *firefox_version
-      TAGS: "--tags=~@dev-only --tags=~@eu-exit --tags=~@office-finder"
+      TAGS: "--tags=~@dev-only --tags=~@eu-exit"
     <<: *steps_run_browser_tests
 
   browser_selected_chrome_stage:
@@ -404,7 +404,7 @@ jobs:
       TEST_ENV: "stage"
       BROWSER: "chrome"
       <<: *chrome_version
-      TAGS: "--tags=~@full --tags=~@dev-only --tags=~@eu-exit --tags=~@office-finder"
+      TAGS: "--tags=~@full --tags=~@dev-only --tags=~@eu-exit"
     <<: *steps_run_browser_tests
 
   browser_selected_firefox_stage:
@@ -414,7 +414,7 @@ jobs:
       TEST_ENV: "stage"
       BROWSER: "firefox"
       <<: *firefox_version
-      TAGS: "--tags=~@full --tags=~@dev-only --tags=~@eu-exit --tags=~@office-finder"
+      TAGS: "--tags=~@full --tags=~@dev-only --tags=~@eu-exit"
     <<: *steps_run_browser_tests
 
   load_cms_tests_stage:
