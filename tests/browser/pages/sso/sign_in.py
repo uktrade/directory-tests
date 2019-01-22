@@ -5,6 +5,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import ElementType
 from pages.common_actions import (
     Selector,
     check_url,
@@ -14,6 +15,8 @@ from pages.common_actions import (
     wait_for_page_load_after_action,
 )
 from settings import DIRECTORY_UI_SSO_URL
+
+from pages.common_actions import find_and_click_on_page_element
 
 NAME = "Sign in"
 SERVICE = "Single Sign-On"
@@ -50,6 +53,11 @@ def visit(driver: WebDriver):
 def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
+
+
+def click_on_page_element(driver: WebDriver, element_name: str):
+    find_and_click_on_page_element(driver, SELECTORS, element_name)
+    take_screenshot(driver, NAME + " after clicking on " + element_name)
 
 
 def fill_out(driver: WebDriver, email: str, password: str):
