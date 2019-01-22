@@ -22,18 +22,25 @@ URL = urljoin(DIRECTORY_UI_SSO_URL, "accounts/login/")
 PAGE_TITLE = "Sign in - great.gov.uk"
 
 EMAIL_INPUT = Selector(By.ID, "id_login")
-PASSWORD_INPUT = Selector(By.ID, "id_password")
-REMEMBER_ME_BUTTON = Selector(By.ID, "id_remember")
+PASSWORD_INPUT = Selector(By.ID, "id_login")
 SIGN_IN_BUTTON = Selector(By.CSS_SELECTOR, "form button")
+REGISTER_BUTTON = Selector(
+    By.CSS_SELECTOR, "#login-form-container > div:nth-child(2) > section > a",
+    type=ElementType.LINK
+)
 RESET_YOUR_PASSWORD_LINK = Selector(By.CSS_SELECTOR, "form > a")
-EXPECTED_ELEMENTS = {
-    "title": Selector(By.CSS_SELECTOR, "#content h1.heading-xlarge"),
-    "email input": EMAIL_INPUT,
-    "password input": PASSWORD_INPUT,
-    "sign in button": SIGN_IN_BUTTON,
-    "reset your password link": RESET_YOUR_PASSWORD_LINK,
+SELECTORS = {
+    "returning user": {
+        "title": Selector(By.CSS_SELECTOR, "#content h1.heading-xlarge"),
+        "email input": EMAIL_INPUT,
+        "password input": PASSWORD_INPUT,
+        "sign in": SIGN_IN_BUTTON,
+        "forgotten password?": RESET_YOUR_PASSWORD_LINK,
+    },
+    "register for an account": {
+        "register": REGISTER_BUTTON,
+    },
 }
-SELECTORS = {}
 
 
 def visit(driver: WebDriver):
