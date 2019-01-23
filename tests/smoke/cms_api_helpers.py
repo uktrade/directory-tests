@@ -1,6 +1,7 @@
 import asyncio
 import http.client
 import logging
+from collections import defaultdict
 from pprint import pformat
 from typing import List, Tuple, Union
 from urllib.parse import urlparse
@@ -51,7 +52,7 @@ async def fetch(endpoints: List[str]):
         return await asyncio.gather(*futures)
 
 
-def check_for_special_cases(url: str) -> str:
+def check_for_special_urls_cases(url: str) -> str:
     # this was added because of BUG CMS-416
     if "setup-guides" in url:
         url = url.replace("setup-guides", "uk-setup-guide")
@@ -59,7 +60,72 @@ def check_for_special_cases(url: str) -> str:
         url = url.replace("setup-guide-landing", "uk-setup-guide")
     if "performance-dashboard-" in url:
         url = url.replace("performance-dashboard-", "performance-dashboard/")
+    if "high-potential-opportunity-submit-success" in url:
+        url = url.replace("high-potential-opportunity-submit-success", "success")
     return url
+
+
+def check_for_special_page_cases(page: dict) -> str:
+    if page["page_type"] in ["ArticlePage", "ArticleListingPage"]:
+        url = check_for_special_urls_cases(page["full_url"])
+    elif page["page_type"] in ["ContactSuccessPage"]:
+        # contact-us success page URLs are broken
+        # we need to remove last part of the URL path
+        url = page["meta"]["url"]
+        p = urlparse(page["meta"]["url"])
+        short_path = p.path[:p.path.rfind("/", 0, p.path.rfind("/", 0))+1]
+        url = url.replace(p.path, short_path)
+    elif page["page_type"] in [
+        "InvestHomePage",
+        "LandingPage",
+        "HomePage",
+        "InternationalLandingPage"
+    ]:
+        # All draft version of pages that use CMS components are affected by bug CMS-754
+        # invest homepage
+        # fas homepage
+        # exred international page
+        # exred international
+        # domestic eu-exit-news list
+        skip_full_paths = [
+            "/home-page/",  # Invest home page
+            "/landing-page/",  # FAS home page
+            "/home/",  # ExRed home page
+            "/international/",  # International landing page
+        ]
+        if any(True for path in skip_full_paths if page["full_path"] == path):
+            if page["meta"]["draft_token"]:
+                url = "http://skip.this.url/check/CMS-754"
+            else:
+                url = page["meta"]["url"]
+        else:
+            url = page["meta"]["url"]
+    else:
+        url = page["meta"]["url"]
+    return url
+
+    
+def should_skip_url(url: str) -> bool:
+    skip = [
+        "/markets/",  # ATM there's no landing page for markets
+        "/asia-pacific/",  #
+        "country-guides",  # Country guides are not ready for testing
+        "/international/",  # International news aren't always enabled
+        "/eu-exit-news/",  # International news aren't always enabled
+        "contact/find-uk-companies/success/",  # this page is not in use anymore
+        "skip.this.url",  # skip URL which was deemed to skip the page checker
+    ]
+    if any(True for bit in skip if bit in url):
+        return True
+
+    skip_endings = [
+        "uk-regions/",  # this was added because of CMS-413
+        "uk-regions",  # there's no landing page for UK Regions
+    ]
+    if any(True for bit in skip_endings if url.endswith(bit)):
+        return True
+
+    return False
 
 
 def status_error(
@@ -102,14 +168,14 @@ def get_page_ids_by_type(page_type: str) -> Tuple[List[int], int]:
 
     # get IDs of all pages from the response
     content = response.json()
-    page_ids += [page["meta"]["pk"] for page in content["items"]]
+    page_ids += [page["id"] for page in content["items"]]
 
     total_count = content["meta"]["total_count"]
     if total_count > len(page_ids):
         print(f"Found more than {len(content['items'])} pages of {page_type} "
               f"type. Will fetch details of all remaining pages")
     while len(page_ids) < total_count:
-        offset = len(content["items"])
+        offset = len(page_ids) + len(content["items"])
         endpoint = f"{relative_url}?type={page_type}&offset={offset}"
         response = cms_api_client.get(endpoint)
         total_response_time += response.raw_response.elapsed.total_seconds()
@@ -117,10 +183,12 @@ def get_page_ids_by_type(page_type: str) -> Tuple[List[int], int]:
             http.client.OK, response
         )
         content = response.json()
-        page_ids += [page["meta"]["pk"] for page in content["items"]]
+        page_ids += [page["id"] for page in content["items"]]
 
-    assert len(list(sorted(page_ids))) == total_count
-    return page_ids, total_response_time
+    result = list(sorted(page_ids))
+    error = f"Expected to get {total_count} IDs but got {len(list(sorted(page_ids)))}"
+    assert len(result) == total_count, error
+    return result, total_response_time
 
 
 @retry(wait_fixed=3000, stop_max_attempt_number=3)
@@ -134,132 +202,154 @@ def sync_requests(endpoints: List[str]):
     return result
 
 
-def get_pages_from_api(page_types: list, *, use_async_client: bool = True) -> List[Response]:
-    page_ids = []
-    api_endpoints = []
-    responses = []
+def get_pages_types(*, skip: list = None) -> List[str]:
+    response = cms_api_client.get(get_relative_url("cms-api:page-types"))
+    assert response.status_code == http.client.OK, status_error(
+        http.client.OK, response
+    )
+    types = response.json()["types"]
+    # remove generic (parent) page type common to all pages
+    types.remove("wagtailcore.page")
+    if skip:
+        types = sorted(list(set(types) - set(skip)))
+    return types
+
+
+def get_pages_from_api(page_types: list, *, use_async_client: bool = True) -> dict:
+    page_endpoints_by_type = defaultdict(list)
+    responses = defaultdict(list)
+    base = get_absolute_url("cms-api:pages")
+
     for page_type in page_types:
         page_ids_of_type, responses_time = get_page_ids_by_type(page_type)
         count = str(len(page_ids_of_type)).rjust(2, " ")
         print(f"Found {count} {page_type} pages in {responses_time}s")
-        page_ids += page_ids_of_type
-    base = get_absolute_url("cms-api:pages")
-    api_endpoints += [f"{base}{page_id}/" for page_id in page_ids]
-    if use_async_client:
-        loop = asyncio.get_event_loop()
-        responses += loop.run_until_complete(fetch(api_endpoints))
-    else:
-        responses = sync_requests(api_endpoints)
-    failed = [
-        f"{r.raw_response.url} -> {r.status_code}"
-        for r in responses
-        if r.status_code != 200
-    ]
-    msg = f"BUG CMS-490: Got non 200 OK response from CMS API for {failed}"
-    assert all(r.status_code == 200 for r in responses), msg
-    return responses
+        page_endpoints_by_type[page_type] += [f"{base}{id}/" for id in page_ids_of_type]
+
+    for page_type in page_endpoints_by_type:
+        if use_async_client:
+            loop = asyncio.get_event_loop()
+            responses[page_type] += loop.run_until_complete(fetch(page_endpoints_by_type[page_type]))
+        else:
+            responses[page_type] = sync_requests(page_endpoints_by_type[page_type])
+
+    return dict(responses)
 
 
-def invest_find_draft_urls(responses: List[Response]) -> List[str]:
+def invest_find_draft_urls(responses: dict) -> List[str]:
     """
     Invest app includes language code in the endpoint rather than using ?lang=
     query param, thus it requires different processing.
     """
     result = []
-    for response in responses:
-        page = response.json()
-        draft_token = page["meta"]["draft_token"]
-        if draft_token is not None:
-            live_url = response.json()["meta"]["url"]
-            parsed = urlparse(live_url)
-            languages = response.json()["meta"]["languages"]
-            language_codes = [language[0] for language in languages]
-            for code in language_codes:
-                if code == "en-gb":
-                    url = live_url
-                else:
-                    scheme = parsed.scheme
-                    netloc = parsed.netloc
-                    url = f"{scheme}://{netloc}/{code}{parsed.path}"
-
-                if url.endswith("uk-regions/") or url.endswith("uk-regions"):
-                    continue
-
-                draft_url = f"{url}?draft_token={draft_token}"
-                draft_url = check_for_special_cases(draft_url)
-                result.append(draft_url)
-
-    return result
-
-
-def invest_find_published_translated_urls(
-    responses: List[Response]
-) -> List[str]:
-    """
-    Invest app includes language code in the endpoint rather than using ?lang=
-    query param, thus it requires different processing.
-    """
-    result = []
-    for response in responses:
-        live_url = response.json()["meta"]["url"]
-        parsed = urlparse(live_url)
-        lang_codes = [lang[0] for lang in response.json()["meta"]["languages"]]
-        for code in lang_codes:
-
-            if code == "en-gb":
-                url = live_url
-            else:
-                url = f"{parsed.scheme}://{parsed.netloc}/{code}{parsed.path}"
-
-            url = check_for_special_cases(url)
-            # this was added because of CMS-413
-            if url.endswith("uk-regions/") or url.endswith("uk-regions"):
-                continue
-
-            result.append(url)
-
-    return result
-
-
-def find_draft_urls(responses: List[Response]) -> List[str]:
-    result = []
-    for response in responses:
-        if response.status_code == 200:
+    for page_type in responses.keys():
+        for response in responses[page_type]:
             page = response.json()
             draft_token = page["meta"]["draft_token"]
             if draft_token is not None:
-                url = check_for_special_cases(page["meta"]["url"])
-                draft_url = f"{url}?draft_token={draft_token}"
-                lang_codes = [lang[0] for lang in page["meta"]["languages"]]
-                for code in lang_codes:
-                    lang_url = f"{draft_url}&lang={code}"
-                    result.append(lang_url)
-        else:
-            logging.error(
-                f"Expected 200 but got {response.status_code} from "
-                f"{response.raw_response.url}"
-            )
+                live_url = check_for_special_page_cases(page)
+                parsed = urlparse(live_url)
+                languages = response.json()["meta"]["languages"]
+                language_codes = [language[0] for language in languages]
+                for code in language_codes:
+                    if code == "en-gb":
+                        url = live_url
+                    else:
+                        scheme = parsed.scheme
+                        netloc = parsed.netloc
+                        url = f"{scheme}://{netloc}/{code}{parsed.path}"
+
+                    if should_skip_url(url):
+                        continue
+
+                    draft_url = f"{url}?draft_token={draft_token}"
+                    draft_url = check_for_special_urls_cases(draft_url)
+                    result.append(draft_url)
+
     return result
 
 
-def find_published_urls(responses: List[Response]) -> List[str]:
+def invest_find_published_translated_urls(responses: dict) -> List[str]:
+    """
+    Invest app includes language code in the endpoint rather than using ?lang=
+    query param, thus it requires different processing.
+    """
     result = []
-    for response in responses:
-        page = response.json()
-        url = check_for_special_cases(page["meta"]["url"])
-        # this was added because of CMS-413
-        if url.endswith("uk-regions/") or url.endswith("uk-regions"):
-            continue
-        result.append(url)
+    for page_type in responses.keys():
+        for response in responses[page_type]:
+            live_url = response.json()["meta"]["url"]
+            parsed = urlparse(live_url)
+            lang_codes = [lang[0] for lang in response.json()["meta"]["languages"]]
+            for code in lang_codes:
+
+                if code == "en-gb":
+                    url = live_url
+                else:
+                    url = f"{parsed.scheme}://{parsed.netloc}/{code}{parsed.path}"
+
+                url = check_for_special_urls_cases(url)
+                if should_skip_url(url):
+                    continue
+
+                result.append(url)
+
     return result
 
 
-def find_published_translated_urls(responses: List[Response]) -> List[str]:
+def find_draft_urls(responses: dict) -> List[str]:
     result = []
-    for response in responses:
-        page = response.json()
-        url = check_for_special_cases(page["meta"]["url"])
-        lang_codes = [lang[0] for lang in page["meta"]["languages"]]
-        for code in lang_codes:
-            result.append("{}?lang={}".format(url, code))
+    for page_type in responses.keys():
+        for response in responses[page_type]:
+            if response.status_code == 200:
+                page = response.json()
+                draft_token = page["meta"]["draft_token"]
+                if draft_token is not None:
+
+                    url = check_for_special_page_cases(page)
+                    url = check_for_special_urls_cases(url)
+                    if should_skip_url(url):
+                        continue
+
+                    draft_url = f"{url}?draft_token={draft_token}"
+                    lang_codes = [lang[0] for lang in page["meta"]["languages"]]
+                    for code in lang_codes:
+                        lang_url = f"{draft_url}&lang={code}"
+                        result.append(lang_url)
+            else:
+                logging.error(
+                    f"Expected 200 but got {response.status_code} from "
+                    f"{response.raw_response.url}"
+                )
+    return result
+
+
+def find_published_urls(responses: dict) -> List[str]:
+    result = []
+    for page_type in responses.keys():
+        for response in responses[page_type]:
+            page = response.json()
+
+            url = check_for_special_page_cases(page)
+            url = check_for_special_urls_cases(url)
+            if should_skip_url(url):
+                continue
+
+            result.append(url)
+    return result
+
+
+def find_published_translated_urls(responses: dict) -> List[str]:
+    result = []
+    for page_type in responses.keys():
+        for response in responses[page_type]:
+            page = response.json()
+
+            url = check_for_special_page_cases(page)
+            url = check_for_special_urls_cases(url)
+            if should_skip_url(url):
+                continue
+
+            lang_codes = [lang[0] for lang in page["meta"]["languages"]]
+            for code in lang_codes:
+                result.append("{}?lang={}".format(url, code))
     return result
