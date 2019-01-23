@@ -12,42 +12,36 @@ from tests.smoke.cms_api_helpers import (
     find_published_urls,
     get_and_assert,
     get_pages_from_api,
+    get_pages_types,
     invest_find_draft_urls,
     invest_find_published_translated_urls,
     status_error,
 )
 
-EXREAD_PAGE_TYPES = [
-    # "export_readiness.GetFinancePage",  # BUG CMS-486
-    "export_readiness.PerformanceDashboardNotesPage",
-    "export_readiness.PerformanceDashboardPage",
-    "export_readiness.PrivacyAndCookiesPage",
-    "export_readiness.TermsAndConditionsPage",
+SKIPPED_PAGE_TYPES = [
+    "export_readiness.superregionpage",
+    "export_readiness.countryguidepage",
 ]
-FAS_PAGE_TYPES = [
-    "find_a_supplier.IndustryArticlePage",
-    "find_a_supplier.IndustryContactPage",
-    "find_a_supplier.IndustryLandingPage",
-    "find_a_supplier.IndustryPage",
-    "find_a_supplier.LandingPage",
-]
-INVEST_PAGE_TYPES = [
-    "invest.InfoPage",
-    "invest.InvestHomePage",
-    # "invest.RegionLandingPage",  # CMS-413
-    "invest.SectorLandingPage",
-    "invest.SectorPage",
-    "invest.SetupGuideLandingPage",
-    "invest.SetupGuidePage",
-]
-NON_INVEST_PAGE_TYPES = [] + FAS_PAGE_TYPES + EXREAD_PAGE_TYPES
-ALL_PAGE_TYPES = [] + FAS_PAGE_TYPES + EXREAD_PAGE_TYPES + INVEST_PAGE_TYPES
 
-INVEST_API_PAGES = get_pages_from_api(
-    INVEST_PAGE_TYPES, use_async_client=False)
-NON_INVEST_API_PAGES = get_pages_from_api(
-    NON_INVEST_PAGE_TYPES, use_async_client=False)
-ALL_API_PAGES = [] + INVEST_API_PAGES + NON_INVEST_API_PAGES
+ALL_PAGE_TYPES = get_pages_types(skip=SKIPPED_PAGE_TYPES)
+
+EXRED_PAGE_TYPES = [t for t in ALL_PAGE_TYPES if t.startswith('export_readiness.')]
+INVEST_PAGE_TYPES = [t for t in ALL_PAGE_TYPES if t.startswith('invest.')]
+FAS_PAGE_TYPES = [t for t in ALL_PAGE_TYPES if t.startswith('find_a_supplier.')]
+COMPONENTS_PAGE_TYPES = [t for t in ALL_PAGE_TYPES if t.startswith('components.')]
+
+INVEST_PAGES = get_pages_from_api(INVEST_PAGE_TYPES, use_async_client=False)
+FAS_PAGES = get_pages_from_api(FAS_PAGE_TYPES, use_async_client=False)
+EXRED_PAGES = get_pages_from_api(EXRED_PAGE_TYPES, use_async_client=False)
+
+ALL_PAGES = {}
+ALL_PAGES.update(INVEST_PAGES)
+ALL_PAGES.update(FAS_PAGES)
+ALL_PAGES.update(EXRED_PAGES)
+
+NON_INVEST_API_PAGES = {}
+NON_INVEST_API_PAGES.update(FAS_PAGES)
+NON_INVEST_API_PAGES.update(EXRED_PAGES)
 
 
 @pytest.mark.parametrize(
@@ -64,7 +58,6 @@ def test_wagtail_get_disabled_content_endpoints(relative_url):
     )
 
 
-@pytest.mark.skip(reason="check ticket: CMS-550")
 def test_wagtail_get_pages():
     endpoint = get_relative_url("cms-api:pages")
     response = cms_api_client.get(endpoint)
@@ -73,7 +66,6 @@ def test_wagtail_get_pages():
     )
 
 
-@pytest.mark.skip(reason="check ticket: CMS-550")
 @pytest.mark.parametrize("limit", [2, 10, 20])
 def test_wagtail_get_number_of_pages(limit):
     query = "?order=id&limit={}".format(limit)
@@ -89,11 +81,16 @@ def test_wagtail_can_list_only_20_pages():
     assert response.json()["message"] == "limit cannot be higher than 20"
 
 
-@pytest.mark.skip(reason="check ticket: CMS-550")
+@pytest.mark.dev
 @pytest.mark.parametrize(
-    "application", ["Export Readiness pages", "Find a Supplier Pages"]
+    "application", [
+        "Great Domestic pages",
+        "Find a Supplier Pages",
+        "Invest pages",
+        "Components"
+    ]
 )
-def test_wagtail_get_pages_per_application(application):
+def test_wagtail_get_pages_per_application_on_dev(application):
     # Get ID of specific application (parent page)
     query = "?title={}".format(application)
     endpoint = get_relative_url("cms-api:pages") + query
@@ -108,7 +105,20 @@ def test_wagtail_get_pages_per_application(application):
     assert response.json()["meta"]["total_count"] > 0
 
 
-@pytest.mark.parametrize("url", find_published_urls(ALL_API_PAGES))
+@pytest.mark.stage
+@pytest.mark.parametrize(
+    "application", [
+        "Export Readiness pages",
+        "Find a Supplier Pages",
+        "Invest pages",
+        "Components"
+    ]
+)
+def test_wagtail_get_pages_per_application_on_stage(application):
+    test_wagtail_get_pages_per_application_on_dev(application)
+
+
+@pytest.mark.parametrize("url", find_published_urls(ALL_PAGES))
 def test_all_published_english_pages_should_return_200(url, hawk_cookie):
     get_and_assert(url, 200, cookies=hawk_cookie)
 
@@ -126,13 +136,13 @@ def test_non_invest_draft_translated_pages_should_return_200_new(url, hawk_cooki
 
 
 @pytest.mark.parametrize(
-    "url", invest_find_published_translated_urls(INVEST_API_PAGES)
+    "url", invest_find_published_translated_urls(INVEST_PAGES)
 )
 def test_published_translated_invest_pages_should_return_200_new(url, hawk_cookie):
     get_and_assert(url, 200, cookies=hawk_cookie)
 
 
-@pytest.mark.parametrize("url", invest_find_draft_urls(INVEST_API_PAGES))
+@pytest.mark.parametrize("url", invest_find_draft_urls(INVEST_PAGES))
 def test_draft_translated_invest_pages_should_return_200_new(url, hawk_cookie):
     get_and_assert(url, 200, cookies=hawk_cookie)
 
@@ -233,3 +243,25 @@ def test_wagtail_get_page_by_slug(cms_client, service_name, slug):
         http.client.OK, response
     )
     assert response.json()["meta"]["slug"] == slug
+
+
+@pytest.mark.parametrize(
+    "service_name, slug",
+    [
+        (SERVICE_NAMES.COMPONENTS, "eu-exit-banner-domestic"),
+        (SERVICE_NAMES.COMPONENTS, "eu-exit-banner-international"),
+        # (SERVICE_NAMES.COMPONENTS, "international-eu-exit-news"),  # See CMS-754
+    ],
+)
+def test_wagtail_get_component_pages(cms_client, service_name, slug):
+    """Check - https://uktrade.atlassian.net/browse/CMS-412"""
+    response = cms_client.lookup_by_slug(slug, service_name=service_name)
+    assert response.status_code == http.client.OK, status_error(
+        http.client.OK, response
+    )
+    assert response.json()["meta"]["slug"] == slug
+
+
+@pytest.mark.parametrize("url", find_published_urls(ALL_PAGES))
+def test_new_all_published_english_pages_should_return_200(url, hawk_cookie):
+    get_and_assert(url, 200, cookies=hawk_cookie)
