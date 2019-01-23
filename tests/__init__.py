@@ -252,6 +252,7 @@ urls = {
     'cms-api:healthcheck': 'healthcheck/',
     'cms-api:healthcheck-ping': 'healthcheck/ping/',
     'cms-api:pages': 'api/pages/',
+    'cms-api:page-types': 'api/pages/types/',
     'cms-api:images': 'api/images/',
     'cms-api:documents': 'api/documents/',
     'cms-api:pages-by-slug': 'api/pages/lookup-by-slug/{}/',
