@@ -104,6 +104,13 @@ def check_for_special_page_cases(page: dict) -> str:
         url = page["meta"]["url"]
     return url
 
+
+def should_skip_never_published_page(response: AbstractResponse) -> bool:
+    if response.status_code == 404:
+        print(f"GET {response.raw_response.request.url} → 404. Maybe this page was never published")
+        return True
+    return False
+    
     
 def should_skip_url(url: str) -> bool:
     skip = [
@@ -277,6 +284,8 @@ def invest_find_published_translated_urls(responses: dict) -> List[str]:
     result = []
     for page_type in responses.keys():
         for response in responses[page_type]:
+            if should_skip_never_published_page(response):
+                continue
             live_url = response.json()["meta"]["url"]
             parsed = urlparse(live_url)
             lang_codes = [lang[0] for lang in response.json()["meta"]["languages"]]
@@ -327,8 +336,9 @@ def find_published_urls(responses: dict) -> List[str]:
     result = []
     for page_type in responses.keys():
         for response in responses[page_type]:
+            if should_skip_never_published_page(response):
+                continue
             page = response.json()
-
             url = check_for_special_page_cases(page)
             url = check_for_special_urls_cases(url)
             if should_skip_url(url):
@@ -342,6 +352,8 @@ def find_published_translated_urls(responses: dict) -> List[str]:
     result = []
     for page_type in responses.keys():
         for response in responses[page_type]:
+            if should_skip_never_published_page(response):
+                continue
             page = response.json()
 
             url = check_for_special_page_cases(page)
