@@ -521,6 +521,7 @@ def fas_fill_out_and_submit_contact_us_form(
     contact_us_details = {
         "full name": actor.alias,
         "email": actor.email,
+        "phone number": "this is a test",
         "industry": sector,
         "organisation": company_name,
         "organisation size": company_size,

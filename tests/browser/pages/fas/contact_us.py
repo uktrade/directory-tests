@@ -35,6 +35,7 @@ EMAIL = Selector(By.ID, "id_email_address", type=ElementType.INPUT)
 INDUSTRY = Selector(By.ID, "id_sector", type=ElementType.SELECT)
 ORGANISATION = Selector(By.ID, "id_organisation_name", type=ElementType.INPUT)
 ORGANISATION_SIZE = Selector(By.ID, "id_organisation_size", type=ElementType.SELECT)
+PHONE_NUMBER = Selector(By.ID, "id_phone_number", type=ElementType.INPUT)
 COUNTRY = Selector(By.ID, "id_country", type=ElementType.INPUT)
 BODY = Selector(By.ID, "id_body", type=ElementType.INPUT)
 SOURCE = Selector(By.ID, "id_source", type=ElementType.SELECT)
@@ -46,6 +47,7 @@ SELECTORS = {
         "itself": Selector(By.CSS_SELECTOR, "#lede form"),
         "full name": FULL_NAME,
         "email": EMAIL,
+        "phone number": PHONE_NUMBER,
         "industry": INDUSTRY,
         "organisation": ORGANISATION,
         "organisation size": ORGANISATION_SIZE,
@@ -77,6 +79,7 @@ def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
     result = {
         "full name": actor.alias,
         "email": actor.email,
+        "phone number": "this is a test",
         "industry": None,
         "organisation": company_name,
         "organisation size": None,
