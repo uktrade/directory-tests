@@ -27,7 +27,7 @@ from settings import DIRECTORY_UI_SUPPLIER_URL
 NAME = "Contact Us"
 SERVICE = "Find a Supplier"
 TYPE = "contact"
-URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "industries/contact/")
+URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "industries/contact/sent/")
 PAGE_TITLE = "Contact us - trade.great.gov.uk"
 
 FULL_NAME = Selector(By.ID, "id_full_name", type=ElementType.INPUT)
