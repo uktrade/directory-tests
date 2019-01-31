@@ -9,7 +9,7 @@ from urllib.parse import urlparse
 import requests
 from directory_cms_client import DirectoryCMSClient
 from directory_cms_client.client import cms_api_client
-from directory_cms_client.helpers import AbstractCMSResponse
+from directory_client_core.helpers import AbstractResponse
 from directory_constants.constants import cms as SERVICE_NAMES
 from requests import Response
 from retrying import retry
@@ -129,8 +129,8 @@ def should_skip_url(url: str) -> bool:
 
 
 def status_error(
-        expected_status_code: int, response: Union[AbstractCMSResponse, Response]):
-    if isinstance(response, AbstractCMSResponse):
+        expected_status_code: int, response: Union[AbstractResponse, Response]):
+    if isinstance(response, AbstractResponse):
         return (
             f"{response.raw_response.request.method} {response.raw_response.url} "
             f"returned {response.status_code} instead of expected "
