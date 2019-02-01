@@ -37,8 +37,8 @@ def run_behave_test(
     sh(
         f"BROWSERS={browsers} VERSIONS={versions} CONFIG={config_name} "
         f"TASK_ID={task_id} behave -k --format progress3 "
-        f"--logging-filter=-root --tags=-wip --tags=-skip --tags=-long "
-        f"--tags=-fixme {extra_tags}"
+        f"--logging-filter=-root --tags=~@wip --tags=~@skip --tags=~@long "
+        f"--tags=~@fixme {extra_tags}"
     )
 
 
