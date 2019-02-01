@@ -27,7 +27,7 @@ from requests.exceptions import (
 )
 from urllib3.exceptions import HTTPError as BaseHTTPError
 
-from tests.conftest import hawk_cookie
+from tests.load import hawk_cookie
 
 # a list of exceptions that can be thrown by `requests` (and urllib3)
 REQUEST_EXCEPTIONS = (
@@ -212,7 +212,7 @@ def check_response(
             assert response.content
         content = response.content.decode("utf-8")
         for string in body_contains:
-            with assertion_msg("Could not find '%s' in the response", string):
+            with assertion_msg(f"Could not find '{string}' in the response from: {response.request.url}"):
                 assert string in content
 
     if unexpected_strings:
