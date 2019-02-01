@@ -18,10 +18,7 @@ from tests.smoke.cms_api_helpers import (
     status_error,
 )
 
-SKIPPED_PAGE_TYPES = [
-    "export_readiness.superregionpage",
-    "export_readiness.countryguidepage",
-]
+SKIPPED_PAGE_TYPES = []
 
 ALL_PAGE_TYPES = get_pages_types(skip=SKIPPED_PAGE_TYPES)
 

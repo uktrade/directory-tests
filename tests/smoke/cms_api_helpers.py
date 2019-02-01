@@ -66,7 +66,9 @@ def check_for_special_urls_cases(url: str) -> str:
 
 
 def check_for_special_page_cases(page: dict) -> str:
-    if page["page_type"] in ["ArticlePage", "ArticleListingPage"]:
+    if page["page_type"] in [
+        "ArticlePage", "ArticleListingPage", "SuperregionPage", "CountryGuidePage"
+    ]:
         url = check_for_special_urls_cases(page["full_url"])
     elif page["page_type"] in ["ContactSuccessPage"]:
         # contact-us success page URLs are broken
