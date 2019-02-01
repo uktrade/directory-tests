@@ -24,10 +24,7 @@ from tests.settings import AUTO_RETRY, AUTO_RETRY_MAX_ATTEMPTS
 
 
 def before_feature(context, feature):
-    """Use autoretry feature of upcoming Behave 1.2.6 which automatically
-    retries failing scenarios.
-    Here PR for it https://github.com/behave/behave/pull/328
-    """
+    """Use autoretry feature which automatically retries failing scenarios."""
     if AUTO_RETRY:
         for scenario in feature.scenarios:
             patch_scenario_with_autoretry(

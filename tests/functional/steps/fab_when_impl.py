@@ -170,8 +170,6 @@ def reg_confirm_company_selection(
     )
     context.response = response
 
-
-
     logging.debug("Confirmed selection of Company: %s", company.number)
 
     if has_sso_account:
