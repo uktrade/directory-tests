@@ -230,7 +230,7 @@ def get_pages_from_api(page_types: list, *, use_async_client: bool = True) -> di
     for page_type in page_types:
         page_ids_of_type, responses_time = get_page_ids_by_type(page_type)
         count = str(len(page_ids_of_type)).rjust(2, " ")
-        print(f"Found {count} {page_type} pages in {responses_time}s")
+        print(f"Found {count} {page_type} pages in {responses_time}s {page_ids_of_type}")
         page_endpoints_by_type[page_type] += [f"{base}{id}/" for id in page_ids_of_type]
 
     for page_type in page_endpoints_by_type:
