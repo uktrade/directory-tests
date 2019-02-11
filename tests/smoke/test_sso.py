@@ -58,39 +58,6 @@ def test_redirects_after_removing_trailing_slash_as_logged_in_user(
     response = logged_in_session.get(
         absolute_url, allow_redirects=False, cookies=hawk_cookie
     )
-
-
-@pytest.mark.dev
-@pytest.mark.parametrize("absolute_url, expected_status_code", [
-    (get_absolute_url('sso:landing'), http.client.FOUND),
-])
-def test_redirects_on_dev_after_removing_trailing_slash_as_logged_in_user(
-        logged_in_session, absolute_url, expected_status_code, hawk_cookie):
-    # get rid of trailing slash
-    if absolute_url[-1] == "/":
-        absolute_url = absolute_url[:-1]
-    response = logged_in_session.get(
-        absolute_url, allow_redirects=False, cookies=hawk_cookie
-    )
-    assert response.status_code == expected_status_code
-
-
-@pytest.mark.stage
-@pytest.mark.parametrize("absolute_url, expected_status_code", [
-    (get_absolute_url('sso:landing'), http.client.MOVED_PERMANENTLY),
-])
-def test_redirects_on_stage_after_removing_trailing_slash_as_logged_in_user(
-        logged_in_session, absolute_url, expected_status_code, hawk_cookie):
-    """
-    Because STAGE is using path based routing the first redirect is 301
-    instead of 302 like on DEV
-    """
-    # get rid of trailing slash
-    if absolute_url[-1] == "/":
-        absolute_url = absolute_url[:-1]
-    response = logged_in_session.get(
-        absolute_url, allow_redirects=False, cookies=hawk_cookie
-    )
     assert response.status_code == expected_status_code, status_error(
         expected_status_code, response
     )
