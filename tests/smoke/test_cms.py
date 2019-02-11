@@ -78,7 +78,6 @@ def test_wagtail_can_list_only_20_pages():
     assert response.json()["message"] == "limit cannot be higher than 20"
 
 
-@pytest.mark.dev
 @pytest.mark.parametrize(
     "application", [
         "Great Domestic pages",
@@ -100,19 +99,6 @@ def test_wagtail_get_pages_per_application_on_dev(application):
     endpoint = get_relative_url("cms-api:pages") + query
     response = cms_api_client.get(endpoint)
     assert response.json()["meta"]["total_count"] > 0
-
-
-@pytest.mark.stage
-@pytest.mark.parametrize(
-    "application", [
-        "Export Readiness pages",
-        "Find a Supplier Pages",
-        "Invest pages",
-        "Components"
-    ]
-)
-def test_wagtail_get_pages_per_application_on_stage(application):
-    test_wagtail_get_pages_per_application_on_dev(application)
 
 
 @pytest.mark.parametrize("url", find_published_urls(ALL_PAGES))
