@@ -84,7 +84,7 @@ def update(
     else:
         has_exported_before = company.has_exported_before or exported_before
 
-    other = ""
+    other = "poland"
     headers = {"Referer": URL}
     data = {
         "csrfmiddlewaretoken": token,
