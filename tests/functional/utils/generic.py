@@ -718,10 +718,6 @@ def assertion_msg(message: str, *args):
         * print the custom assertion message
         * print the traceback (stack trace)
         * raise the original AssertionError exception
-
-    :param message: to be printed & logged when assertion fails
-    :param args: values that will replace % conversion specifications in
-                 message like: %s, %d
     """
     try:
         yield
@@ -731,6 +727,13 @@ def assertion_msg(message: str, *args):
         logging.error(message)
         e.args += (message,)
         _, _, tb = sys.exc_info()
+        if len(sys._current_frames()) == 1:
+            print(f"Found 'shallow' Traceback, will inspect outer traceback frames")
+            import inspect
+            for f in inspect.getouterframes(sys._getframe(0)):
+                print(f"{f.filename} +{f.lineno} - in {f.function}")
+                if "_def.py" in f.filename:
+                    break
         traceback.print_tb(tb)
         raise
 
