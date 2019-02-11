@@ -1,8 +1,9 @@
-import http.client
-
 import pytest
 import requests
+from rest_framework.status import *
+
 from tests import get_absolute_url
+from tests.smoke.cms_api_helpers import status_error
 
 
 @pytest.mark.parametrize("absolute_url", [
@@ -11,7 +12,9 @@ from tests import get_absolute_url
 ])
 def test_access_soo_endpoints(absolute_url):
     response = requests.get(absolute_url, allow_redirects=True)
-    assert response.status_code == http.client.OK
+    assert response.status_code == HTTP_200_OK, status_error(
+        HTTP_200_OK, response
+    )
 
 
 @pytest.mark.parametrize("absolute_url", [
@@ -22,7 +25,9 @@ def test_access_soo_endpoints_without_trailing_slash(
     # get rid of trailing slash
     absolute_url = absolute_url[:-1]
     response = requests.get(absolute_url, allow_redirects=False)
-    assert response.status_code == http.client.MOVED_PERMANENTLY
+    assert response.status_code == HTTP_301_MOVED_PERMANENTLY, status_error(
+        HTTP_301_MOVED_PERMANENTLY, response
+    )
 
 
 @pytest.mark.parametrize("categories, countries", [
@@ -37,7 +42,9 @@ def test_search_works(categories, countries):
         "operating_countries": countries
     }
     response = requests.get(url, params=params, allow_redirects=True)
-    assert response.status_code == http.client.OK
+    assert response.status_code == HTTP_200_OK, status_error(
+        HTTP_200_OK, response
+    )
 
 
 @pytest.mark.parametrize("market", [
@@ -50,4 +57,6 @@ def test_get_market_details(market):
     url = get_absolute_url("ui-soo:market-details")
     absolute_url = "{}{}".format(url, market)
     response = requests.get(absolute_url, allow_redirects=True)
-    assert response.status_code == http.client.OK
+    assert response.status_code == HTTP_200_OK, status_error(
+        HTTP_200_OK, response
+    )

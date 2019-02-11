@@ -1,8 +1,9 @@
-import http.client
+from rest_framework.status import *
 
 import pytest
 
 from tests import get_absolute_url
+from tests.smoke.cms_api_helpers import status_error
 
 
 @pytest.mark.parametrize("absolute_url", [
@@ -15,7 +16,9 @@ def test_access_sso_endpoints_as_logged_in_user_w_redirect_to_sud(
     response = logged_in_session.get(
         absolute_url, allow_redirects=True, cookies=hawk_cookie
     )
-    assert response.status_code == 200
+    assert response.status_code == HTTP_200_OK, status_error(
+        HTTP_200_OK, response
+    )
 
 
 @pytest.mark.parametrize("absolute_url", [
@@ -31,18 +34,21 @@ def test_access_sso_endpoints_as_logged_in_user_wo_redirect_to_sud(
     response = logged_in_session.get(
         absolute_url, allow_redirects=True, cookies=hawk_cookie
     )
-    assert response.status_code == http.client.OK
+    assert response.status_code == HTTP_200_OK, status_error(
+        HTTP_200_OK, response
+    )
 
 
 @pytest.mark.parametrize("absolute_url, expected_status_code", [
-    (get_absolute_url('sso:login'), http.client.MOVED_PERMANENTLY),
-    (get_absolute_url('sso:signup'), http.client.MOVED_PERMANENTLY),
-    (get_absolute_url('sso:logout'), http.client.MOVED_PERMANENTLY),
-    (get_absolute_url('sso:password_change'), http.client.MOVED_PERMANENTLY),
-    (get_absolute_url('sso:password_set'), http.client.MOVED_PERMANENTLY),
-    (get_absolute_url('sso:password_reset'), http.client.MOVED_PERMANENTLY),
-    (get_absolute_url('sso:email_confirm'), http.client.MOVED_PERMANENTLY),
-    (get_absolute_url('sso:inactive'), http.client.MOVED_PERMANENTLY),
+    (get_absolute_url('sso:landing'), HTTP_301_MOVED_PERMANENTLY),
+    (get_absolute_url('sso:login'), HTTP_301_MOVED_PERMANENTLY),
+    (get_absolute_url('sso:signup'), HTTP_301_MOVED_PERMANENTLY),
+    (get_absolute_url('sso:logout'), HTTP_301_MOVED_PERMANENTLY),
+    (get_absolute_url('sso:password_change'), HTTP_301_MOVED_PERMANENTLY),
+    (get_absolute_url('sso:password_set'), HTTP_301_MOVED_PERMANENTLY),
+    (get_absolute_url('sso:password_reset'), HTTP_301_MOVED_PERMANENTLY),
+    (get_absolute_url('sso:email_confirm'), HTTP_301_MOVED_PERMANENTLY),
+    (get_absolute_url('sso:inactive'), HTTP_301_MOVED_PERMANENTLY),
 ])
 def test_redirects_after_removing_trailing_slash_as_logged_in_user(
         logged_in_session, absolute_url, expected_status_code, hawk_cookie):
@@ -52,7 +58,6 @@ def test_redirects_after_removing_trailing_slash_as_logged_in_user(
     response = logged_in_session.get(
         absolute_url, allow_redirects=False, cookies=hawk_cookie
     )
-    assert response.status_code == expected_status_code
 
 
 @pytest.mark.dev
@@ -86,4 +91,6 @@ def test_redirects_on_stage_after_removing_trailing_slash_as_logged_in_user(
     response = logged_in_session.get(
         absolute_url, allow_redirects=False, cookies=hawk_cookie
     )
-    assert response.status_code == expected_status_code
+    assert response.status_code == expected_status_code, status_error(
+        expected_status_code, response
+    )
