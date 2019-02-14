@@ -167,7 +167,6 @@ urls = {
     'profile:exops-applications': 'export-opportunities/applications/',
     'profile:landing': '',
     'profile:about': 'about/',
-    'profile:directory-supplier': 'api/v1/directory/supplier/',
 
     # ExRed UI
     'ui-exred:healthcheck': 'healthcheck/',

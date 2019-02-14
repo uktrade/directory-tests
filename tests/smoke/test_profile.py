@@ -4,7 +4,7 @@ import pytest
 import requests
 from retrying import retry
 
-from tests import get_absolute_url, users, is_500
+from tests import get_absolute_url, is_500
 
 
 def test_about_200(hawk_cookie):
@@ -14,55 +14,6 @@ def test_about_200(hawk_cookie):
     )
 
     assert response.status_code == http.client.OK
-
-
-@pytest.mark.skip(reason="see TT-858")
-def test_directory_supplier_verified_user(hawk_cookie):
-    token = 'Bearer {token}'.format(token=users['verified']['token'])
-    headers = {'Authorization': token}
-    url = get_absolute_url('profile:directory-supplier')
-    response = requests.get(url, headers=headers, cookies=hawk_cookie)
-
-    error_msg = f"Expected 200 got {response.status_code} from {response.url}"
-    assert response.status_code == http.client.OK, error_msg
-    assert response.json() == {
-        'company_industries': [
-            "BUSINESS_AND_CONSUMER_SERVICES", "COMMUNICATIONS",
-            "CREATIVE_AND_MEDIA", "FINANCIAL_AND_PROFESSIONAL_SERVICES",
-            "HEALTHCARE_AND_MEDICAL", "RAILWAYS",
-            "SOFTWARE_AND_COMPUTER_SERVICES"
-        ],
-        'name': 'Test user 50',
-        'company_name': 'Tiramisu Design Consultants',
-        'company_number': '07619397',
-        'sso_id': users['verified']['sso_id'],
-        'company_email': 'newverifieduser@example.com',
-        'profile_url': 'https://dev.supplier.directory.uktrade.io/'
-                       'suppliers/07619397',
-        'company_has_exported_before': True,
-        'is_company_owner': True,
-    }
-
-
-@pytest.mark.skip(reason="see TT-858")
-def test_directory_supplier_unverified_user(hawk_cookie):
-    token = 'Bearer {token}'.format(token=users['unverified']['token'])
-    headers = {'Authorization': token}
-    url = get_absolute_url('profile:directory-supplier')
-    response = requests.get(url, headers=headers, cookies=hawk_cookie)
-
-    error_msg = f"Expected 404 got {response.status_code} from {response.url}"
-    assert response.status_code == http.client.NOT_FOUND, error_msg
-
-
-def test_directory_supplier_invalid_user_token(hawk_cookie):
-    token = 'Bearer {token}'.format(token='foo')
-    headers = {'Authorization': token}
-    url = get_absolute_url('profile:directory-supplier')
-    response = requests.get(url, headers=headers, cookies=hawk_cookie)
-
-    error_msg = f"Expected 401 got {response.status_code} from {response.url}"
-    assert response.status_code == 401, error_msg
 
 
 @pytest.mark.parametrize("absolute_url", [
@@ -97,16 +48,6 @@ def test_302_redirects_after_removing_trailing_slash_for_anon_user(
     )
     error_msg = f"Expected 302 got {response.status_code} from {response.url}"
     assert response.status_code == http.client.MOVED_PERMANENTLY, error_msg
-
-
-@pytest.mark.parametrize("absolute_url", [
-    get_absolute_url('profile:directory-supplier'),
-])
-def test_401_redirects_for_anon_user(absolute_url, hawk_cookie):
-    response = requests.get(
-        absolute_url, allow_redirects=False, cookies=hawk_cookie
-    )
-    assert response.status_code == 401
 
 
 @retry(wait_fixed=3000, stop_max_attempt_number=2, retry_on_exception=is_500)
