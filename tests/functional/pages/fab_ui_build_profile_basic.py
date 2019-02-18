@@ -42,6 +42,7 @@ def go_to(session: Session) -> Response:
 
 
 def should_be_here(response: Response):
+    assert response.url == URL
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Successfully got to the FAB Build and improve your profile")
 

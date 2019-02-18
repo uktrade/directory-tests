@@ -7,9 +7,15 @@ from requests import Response, Session
 from tests import get_absolute_url
 from tests.functional.utils.context_utils import Company
 from tests.functional.utils.generic import escape_html
-from tests.functional.utils.request import Method, check_response, make_request
+from tests.functional.utils.request import (
+    Method,
+    check_response,
+    check_url,
+    make_request,
+)
 
 URL = get_absolute_url("ui-buyer:landing")
+POST_URL = get_absolute_url("ui-buyer:register-confirm-company")
 EXPECTED_STRINGS = [
     "Confirm your company",
     "Registered name",
@@ -28,6 +34,8 @@ def go_to(session: Session, company: Company) -> Response:
 
 
 def should_be_here(response: Response, company: Company):
+    expected_url = f"{POST_URL}?company_number={company.number}"
+    check_url(response, expected_url)
     escaped_company_title = escape_html(company.title, upper=True)
     expected = EXPECTED_STRINGS + [escaped_company_title, company.number]
     check_response(response, 200, body_contains=expected)
