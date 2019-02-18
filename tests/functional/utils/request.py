@@ -180,6 +180,22 @@ def make_request(
     return res
 
 
+def check_url(
+        response: Response, expected_url: str, *, startswith: bool = False
+):
+    # avoid circular imports
+    from tests.functional.utils.generic import assertion_msg
+    if startswith:
+        error = (f"Expected response URL to start with {expected_url} but got "
+                 f"{response.url} instead")
+        with assertion_msg(error):
+            assert response.url.startswith(expected_url)
+    else:
+        error = f"Expected {expected_url} but got {response.url} instead"
+        with assertion_msg(error):
+            assert response.url == expected_url
+
+
 def check_response(
     response: Response,
     status_code: int,
@@ -203,6 +219,7 @@ def check_response(
     :param unexpected_strings: (optional) a list of strings that should NOT be
                                present in the response content
     """
+    # avoid circular imports
     from tests.functional.utils.generic import assertion_msg
 
     with assertion_msg(
