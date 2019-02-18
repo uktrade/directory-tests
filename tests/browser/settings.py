@@ -93,7 +93,7 @@ REUSE_COOKIE = (
     if __reuse_cookie and __reuse_cookie.lower() in ["true", "1", "yes"]
     else False
 )
-__set_hawk_cookie = os.environ.get("SET_HAWK_COOKIE", "true")
+__set_hawk_cookie = os.environ.get("SET_HAWK_COOKIE", False)
 SET_HAWK_COOKIE = (
     True
     if __set_hawk_cookie and __set_hawk_cookie.lower() in ["true", "1", "yes"]
