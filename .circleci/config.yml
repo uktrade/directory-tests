@@ -260,7 +260,7 @@ jobs:
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "dev"
-      PYTEST_ARGS: '-m "not stage"'
+      PYTEST_ARGS: '-m "not stage and not prod"'
     <<: *steps_smoke_tests
 
   smoke_tests_stage:
@@ -268,7 +268,7 @@ jobs:
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "stage"
-      PYTEST_ARGS: "-m 'not dev'"
+      PYTEST_ARGS: "-m 'not dev and not prod'"
     <<: *steps_smoke_tests
 
   func_fab_test_dev:
