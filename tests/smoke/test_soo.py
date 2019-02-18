@@ -48,10 +48,86 @@ def test_search_works(categories, countries):
 
 
 @pytest.mark.parametrize("market", [
-    "ebay",
-    "etsy",
+    "1688com",
+    "amazon-canada",
+    "amazon-china",
     "amazon-france",
-    "rakuten"
+    "amazon-germany",
+    "amazon-italy",
+    "amazon-japan",
+    "amazon-mexico",
+    "amazon-spain",
+    "amazon-usa",
+    "cdiscount",
+    "ebay",
+    "flipkart",
+    "fruugo",
+    "goxip",
+    "jd-worldwide",
+    "kaola",
+    "la-redoute",
+    "linio",
+    "newegg-business",
+    "newegg-canada",
+    "newegg-inc",
+    "privalia",
+    "rakuten",
+    "royal-mail-t-mall",
+    "sfbest",
+    "shangpin",
+    "spartoo",
+    "trademe",
+    "tthigo",
+])
+def test_get_market_details_stage(market):
+    url = get_absolute_url("ui-soo:market-details")
+    absolute_url = "{}{}".format(url, market)
+    response = requests.get(absolute_url, allow_redirects=True)
+    assert response.status_code == HTTP_200_OK, status_error(
+        HTTP_200_OK, response
+    )
+
+
+# test all market pages on Production
+@pytest.mark.prod
+@pytest.mark.parametrize("market", [
+    "1688com",
+    "amazon-canada",
+    "amazon-china",
+    "amazon-france",
+    "amazon-germany",
+    "amazon-italy",
+    "amazon-japan",
+    "amazon-mexico",
+    "amazon-spain",
+    "amazon-usa",
+    "bol",
+    "catch",
+    "cdiscount",
+    "darty",
+    "ebay",
+    "eprice",
+    "flipkart",
+    "fnac",
+    "fruugo",
+    "goxip",
+    "jd-worldwide",
+    "kaola",
+    "la-redoute",
+    "linio",
+    "mano-mano",
+    "newegg-business",
+    "newegg-canada",
+    "newegg-inc",
+    "onbuy",
+    "privalia",
+    "rakuten",
+    "royal-mail-t-mall",
+    "sfbest",
+    "shangpin",
+    "spartoo",
+    "trademe",
+    "tthigo",
 ])
 def test_get_market_details(market):
     url = get_absolute_url("ui-soo:market-details")
