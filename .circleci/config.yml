@@ -494,6 +494,35 @@ workflows:
           requires:
             - setup_env_for_browser_tests
 
+  run_smoke_all_functional_and_selected_browser_tests_on_stage:
+    jobs:
+      - setup_env_for_smoke_tests
+      - setup_env_for_functional_tests
+      - smoke_tests_stage:
+          requires:
+            - setup_env_for_smoke_tests
+      - func_fab_test_stage:
+          requires:
+            - smoke_tests_stage
+      - func_fas_test_stage:
+          requires:
+            - smoke_tests_stage
+      - func_sso_test_stage:
+          requires:
+            - smoke_tests_stage
+      - func_sud_test_stage:
+          requires:
+            - smoke_tests_stage
+      - setup_env_for_browser_tests:
+          requires:
+            - smoke_tests_stage
+      - browser_selected_chrome_stage:
+          requires:
+            - setup_env_for_browser_tests
+      - browser_selected_firefox_stage:
+          requires:
+            - setup_env_for_browser_tests
+
   run_cms_load_tests_on_stage:
     triggers:
     - schedule:
