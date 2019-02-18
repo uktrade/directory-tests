@@ -47,6 +47,42 @@ def test_search_works(categories, countries):
     )
 
 
+@pytest.mark.dev
+@pytest.mark.parametrize("market", [
+    "1688com",
+    "amazon-canada",
+    "amazon-china",
+    "amazon-france",
+    "amazon-germany",
+    "amazon-italy",
+    "amazon-japan",
+    "amazon-spain",
+    "amazon-usa",
+    "cdiscount",
+    "ebay",
+    "etsy",
+    "flipkart",
+    "jd-worldwide",
+    "kaola",
+    "newegg-inc",
+    "privalia",
+    "rakuten",
+    "royal-mail-t-mall",
+    "sfbest",
+    "shangpin",
+    "spartoo",
+    "trademe",
+])
+def test_get_market_details_dev(market):
+    url = get_absolute_url("ui-soo:market-details")
+    absolute_url = "{}{}".format(url, market)
+    response = requests.get(absolute_url, allow_redirects=True)
+    assert response.status_code == HTTP_200_OK, status_error(
+        HTTP_200_OK, response
+    )
+
+
+@pytest.mark.stage
 @pytest.mark.parametrize("market", [
     "1688com",
     "amazon-canada",
@@ -129,7 +165,7 @@ def test_get_market_details_stage(market):
     "trademe",
     "tthigo",
 ])
-def test_get_market_details(market):
+def test_get_market_details_prod(market):
     url = get_absolute_url("ui-soo:market-details")
     absolute_url = "{}{}".format(url, market)
     response = requests.get(absolute_url, allow_redirects=True)
