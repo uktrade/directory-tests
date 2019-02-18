@@ -216,10 +216,6 @@ SUD_PAGE_REGISTRY = {
         "url": "profile:exops-alerts",
         "po": None,
     },
-    "sud directory supplier": {
-        "url": "profile:directory-supplier",
-        "po": None,
-    },
 }
 
 PAGE_REGISTRY = {}
