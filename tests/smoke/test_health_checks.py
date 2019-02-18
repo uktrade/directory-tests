@@ -36,9 +36,9 @@ def test_sso_api_health_check_ping_with_sso_api_client():
 @pytest.mark.parametrize("absolute_url", [
     get_absolute_url('ui-buyer:healthcheck'),
 ])
-def test_fab_health_check_endpoints(absolute_url, hawk_cookie):
+def test_fab_health_check_endpoints(absolute_url, basic_auth):
     params = {'token': TOKEN}
-    response = requests.get(absolute_url, params=params, cookies=hawk_cookie)
+    response = requests.get(absolute_url, params=params, auth=basic_auth)
     assert response.status_code == OK
 
 
@@ -46,13 +46,13 @@ def test_fab_health_check_endpoints(absolute_url, hawk_cookie):
 @pytest.mark.parametrize("absolute_url", [
     get_absolute_url('ui-buyer:healthcheck'),
 ])
-def test_fab_redirects_for_health_check_endpoints(absolute_url, hawk_cookie):
+def test_fab_redirects_for_health_check_endpoints(absolute_url, basic_auth):
     params = {'token': TOKEN}
     # get rid of trailing slash
     absolute_url = absolute_url[:-1]
     response = requests.get(
         absolute_url, params=params, allow_redirects=False,
-        cookies=hawk_cookie)
+        auth=basic_auth)
     assert response.status_code == MOVED_PERMANENTLY
 
 
@@ -66,11 +66,11 @@ def test_fab_redirects_for_health_check_endpoints(absolute_url, hawk_cookie):
     get_absolute_url('ui-buyer:healthcheck'),
 ])
 def test_fab_302_redirects_after_removing_trailing_slash_for_anon_user(
-        absolute_url, hawk_cookie):
+        absolute_url, basic_auth):
     # get rid of trailing slash
     absolute_url = absolute_url[:-1]
     response = requests.get(
-        absolute_url, allow_redirects=False, cookies=hawk_cookie
+        absolute_url, allow_redirects=False, auth=basic_auth
     )
     assert response.status_code == MOVED_PERMANENTLY
 

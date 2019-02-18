@@ -9,53 +9,53 @@ from tests import get_absolute_url, companies, retriable_error
 
 @pytest.mark.skip(reason="ATM we're not caching inactive companies: see "
                          "tickets: ED-3188, ED-3782")
-def test_landing_page_post_company_not_active(hawk_cookie):
+def test_landing_page_post_company_not_active(basic_auth):
     data = {'company_number': companies['not_active']}
     response = requests.post(
         get_absolute_url('ui-buyer:landing'), data=data, allow_redirects=False,
-        cookies=hawk_cookie
+        auth=basic_auth
     )
     assert 'Company not active' in str(response.content)
 
 
-def test_landing_page_post_company_already_registered(hawk_cookie):
+def test_landing_page_post_company_already_registered(basic_auth):
     data = {'company_number': companies['already_registered']}
     response = requests.post(
         get_absolute_url('ui-buyer:landing'), data=data, allow_redirects=False,
-        cookies=hawk_cookie
+        auth=basic_auth
     )
     assert 'Already registered' in str(response.content)
 
 
-def test_landing_page_post_company_not_found(hawk_cookie):
+def test_landing_page_post_company_not_found(basic_auth):
     data = {'company_number': '12345670'}
     response = requests.post(
         get_absolute_url('ui-buyer:landing'), data=data, allow_redirects=False,
-        cookies=hawk_cookie
+        auth=basic_auth
     )
     assert 'Error. Please try again later.' in str(response.content)
 
 
-def test_landing_page_post_company_happy_path(hawk_cookie):
+def test_landing_page_post_company_happy_path(basic_auth):
     data = {'company_number': companies['active_not_registered']}
     response = requests.post(
         get_absolute_url('ui-buyer:landing'),
         data=data,
-        cookies=hawk_cookie
+        auth=basic_auth
     )
     assert 'Register' in str(response.content)
 
 
-def test_not_existing_page_return_404_anon_user(hawk_cookie):
+def test_not_existing_page_return_404_anon_user(basic_auth):
     url = get_absolute_url('ui-buyer:landing') + '/foobar'
-    response = requests.get(url, allow_redirects=False, cookies=hawk_cookie)
+    response = requests.get(url, allow_redirects=False, auth=basic_auth)
     assert response.status_code == 404
 
 
-def test_not_existing_page_return_404_user(logged_in_session, hawk_cookie):
+def test_not_existing_page_return_404_user(logged_in_session, basic_auth):
     url = get_absolute_url('ui-buyer:landing') + '/foobar'
     response = logged_in_session.get(
-        url, allow_redirects=False, cookies=hawk_cookie
+        url, allow_redirects=False, auth=basic_auth
     )
     assert response.status_code == 404
 
@@ -82,9 +82,9 @@ def test_not_existing_page_return_404_user(logged_in_session, hawk_cookie):
     get_absolute_url('ui-buyer:company-edit-contact'),
     get_absolute_url('ui-buyer:company-edit-social-media'),
 ])
-def test_301_redirects_for_anon_user(absolute_url, hawk_cookie):
+def test_301_redirects_for_anon_user(absolute_url, basic_auth):
     response = requests.get(
-        absolute_url, allow_redirects=False, cookies=hawk_cookie
+        absolute_url, allow_redirects=False, auth=basic_auth
     )
     assert response.status_code == http.client.FOUND
 
@@ -113,11 +113,11 @@ def test_301_redirects_for_anon_user(absolute_url, hawk_cookie):
     get_absolute_url('ui-buyer:company-edit-social-media'),
 ])
 def test_302_redirects_after_removing_trailing_slash_for_anon_user(
-        absolute_url, hawk_cookie):
+        absolute_url, basic_auth):
     # get rid of trailing slash
     absolute_url = absolute_url[:-1]
     response = requests.get(
-        absolute_url, allow_redirects=False, cookies=hawk_cookie
+        absolute_url, allow_redirects=False, auth=basic_auth
     )
     assert response.status_code == http.client.MOVED_PERMANENTLY
 
@@ -150,8 +150,8 @@ def test_302_redirects_after_removing_trailing_slash_for_anon_user(
     get_absolute_url('ui-buyer:company-edit-social-media'),
 ])
 def test_access_non_health_check_endpoints_as_logged_in_user(
-        logged_in_session, absolute_url, hawk_cookie):
+        logged_in_session, absolute_url, basic_auth):
     response = logged_in_session.get(
-        absolute_url, allow_redirects=True, cookies=hawk_cookie
+        absolute_url, allow_redirects=True, auth=basic_auth
     )
     assert response.status_code == http.client.OK
