@@ -1159,10 +1159,11 @@ def update_companies():
                     registered_counter += 1
                     red("Company is already registered with FAB")
                     blue("Will remove company data from DIR & SSO DBs")
-                    delete_supplier_data_from_dir(company.number)
                     email_address = get_company_email(company.number)
                     delete_supplier_data_from_sso(email_address)
-                    blue("Successfully deleted company from DIR & SSO DBs")
+                    blue("Successfully deleted supplier data from SSO DB")
+                    delete_supplier_data_from_dir(company.number)
+                    blue("Successfully deleted company from DIR DB")
                     is_registered = False
             else:
                 inactive_counter += 1
