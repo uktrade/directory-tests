@@ -3,10 +3,13 @@ import requests
 
 from directory_constants.constants import cms as SERVICE_NAMES
 from mohawk import Sender
+from requests.auth import HTTPBasicAuth
 from retrying import retry
 
 from tests import get_absolute_url, users
 from tests.settings import (
+    BASICAUTH_USER,
+    BASICAUTH_PASS,
     DIRECTORY_CMS_API_CLIENT_API_KEY,
     DIRECTORY_CMS_API_CLIENT_BASE_URL,
     DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT,
@@ -85,3 +88,8 @@ def logged_in_session(hawk_cookie):
     )
     assert 'Sign out' in str(response.content)
     return session
+
+
+@pytest.fixture
+def basic_auth():
+    return HTTPBasicAuth(BASICAUTH_USER, BASICAUTH_PASS)

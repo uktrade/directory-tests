@@ -4,6 +4,8 @@
   "env_vars": {
     "required": [
       "BARRED_USERS",
+      "BASICAUTH_USER",
+      "BASICAUTH_PASS",
       "BROWSERSTACK_PASS",
       "BROWSERSTACK_SERVER",
       "BROWSERSTACK_USER",
