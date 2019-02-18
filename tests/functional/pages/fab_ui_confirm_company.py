@@ -22,7 +22,6 @@ EXPECTED_STRINGS = [
 def go_to(session: Session, company: Company) -> Response:
     data = {"company_name": company.title, "company_number": company.number}
     headers = {"Referer": URL}
-
     return make_request(
         Method.POST, URL, session=session, headers=headers, data=data
     )

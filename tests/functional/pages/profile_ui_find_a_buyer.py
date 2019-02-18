@@ -42,7 +42,9 @@ EXPECTED_STRINGS_NO_PROFILE = [
 EXPECTED_STRINGS_OWNER_TRANSFERRED = [
     "We’ve sent a confirmation email to the new profile owner."
 ]
-
+EXPECTED_STRINGS_USER_ADDED = [
+    "We’ve sent an invitation to the user you want added to your profile."
+]
 EXPECTED_STRINGS_USER_REMOVED = ["User successfully removed from your profile"]
 
 
@@ -54,6 +56,7 @@ def go_to(session: Session) -> Response:
 def should_be_here(
     response: Response,
     *,
+    user_added: bool = False,
     owner_transferred: bool = False,
     user_removed: bool = False
 ):
@@ -63,28 +66,25 @@ def should_be_here(
     Supplier has to be logged in to get to this page.
     """
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
+
+    expected_query = None
+    expected_strings = None
+    if user_added:
+        expected_query = "?user-added"
+        expected_strings = EXPECTED_STRINGS_USER_ADDED
     if owner_transferred:
         expected_query = "?owner-transferred"
-        with assertion_msg(
-            "Expected to see '{}' in the URL but got: '{}' instead".format(
-                expected_query, response.url
-            )
-        ):
-            assert expected_query in response.url
-        check_response(
-            response, 200, body_contains=EXPECTED_STRINGS_OWNER_TRANSFERRED
-        )
+        expected_strings = EXPECTED_STRINGS_OWNER_TRANSFERRED
     if user_removed:
         expected_query = "?user-removed"
-        with assertion_msg(
-            "Expected to see '{}' in the URL but got: '{}' instead".format(
-                expected_query, response.url
-            )
-        ):
+        expected_strings = EXPECTED_STRINGS_USER_REMOVED
+
+    if expected_strings:
+        error = (f"Expected to see '{expected_query}' in the URL but got: "
+                 f"'{response.url}' instead")
+        with assertion_msg(error):
             assert expected_query in response.url
-        check_response(
-            response, 200, body_contains=EXPECTED_STRINGS_USER_REMOVED
-        )
+        check_response(response, 200, body_contains=expected_strings)
 
     logging.debug("Successfully got to the Profile 'Find a Buyer' page")
 

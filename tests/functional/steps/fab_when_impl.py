@@ -1994,7 +1994,7 @@ def fab_add_collaborator(
         )
         context.response = response
 
-        profile_ui_find_a_buyer.should_be_here(response)
+        profile_ui_find_a_buyer.should_be_here(response, user_added=True)
         collaborators = company.collaborators
         if collaborators:
             collaborators.append(collaborator_alias)
