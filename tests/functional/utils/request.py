@@ -27,9 +27,10 @@ from requests.exceptions import (
 )
 from urllib3.exceptions import HTTPError as BaseHTTPError
 
-from tests.load import hawk_cookie
 
 # a list of exceptions that can be thrown by `requests` (and urllib3)
+from tests.settings import BASICAUTH_USER, BASICAUTH_PASS, USE_BASIC_AUTH
+
 REQUEST_EXCEPTIONS = (
     BaseHTTPError,
     RequestException,
@@ -52,6 +53,10 @@ REQUEST_EXCEPTIONS = (
     RetryError,
     UnrewindableBodyError,
 )
+
+
+def basic_auth() -> tuple:
+    return BASICAUTH_USER, BASICAUTH_PASS
 
 
 class Method(Enum):
@@ -85,9 +90,9 @@ def make_request(
     auth: tuple = None,
     trim: bool = True,
     cookies: dict = None,
-    generate_hawk_cookie: bool = True,
     connect_timeout: float = 3.05,
     read_timeout: int = 60,
+    use_basic_auth: bool = USE_BASIC_AUTH,
 ) -> Response:
     """Make a desired HTTP request using optional parameters, headers and data.
 
@@ -126,9 +131,8 @@ def make_request(
         logging.debug("Session object not provided. Will default to Requests")
     req = session or requests
 
-    if generate_hawk_cookie:
-        logging.debug(f"Generated HAWK Cookie for {url}")
-        cookies = cookies.update(hawk_cookie()) if cookies else hawk_cookie()
+    if use_basic_auth:
+        auth=basic_auth()
     request_kwargs = dict(
         url=url,
         params=params,
