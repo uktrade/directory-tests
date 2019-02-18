@@ -12,9 +12,9 @@ from tests.smoke.cms_api_helpers import status_error
     ('/trade/industries/creative-services/', join_ui_supplier('industries/creative/')),
 ])
 def test_ed_4152_redirect_on_stage_from_old_industry_page(
-        new_url, old_url, basic_auth):
+        new_url, old_url, basic_auth, hawk_cookie):
     response = requests.get(
-        old_url, allow_redirects=False, auth=basic_auth
+        old_url, allow_redirects=False, auth=basic_auth, cookies=hawk_cookie
     )
     assert response.status_code == HTTP_302_FOUND, status_error(
         HTTP_302_FOUND, response

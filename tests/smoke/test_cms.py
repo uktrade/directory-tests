@@ -102,32 +102,32 @@ def test_wagtail_get_pages_per_application_on_dev(application):
 
 
 @pytest.mark.parametrize("url", find_published_urls(ALL_PAGES))
-def test_all_published_english_pages_should_return_200(url, basic_auth):
-    get_and_assert(url, 200, auth=basic_auth)
+def test_all_published_english_pages_should_return_200(url, basic_auth, hawk_cookie):
+    get_and_assert(url, 200, auth=basic_auth, cookies=hawk_cookie)
 
 
 @pytest.mark.parametrize(
     "url", find_published_translated_urls(NON_INVEST_API_PAGES)
 )
-def test_non_invest_published_translated_pages_should_return_200_new(url, basic_auth):
-    get_and_assert(url, 200, auth=basic_auth)
+def test_non_invest_published_translated_pages_should_return_200_new(url, basic_auth, hawk_cookie):
+    get_and_assert(url, 200, auth=basic_auth, cookies=hawk_cookie)
 
 
 @pytest.mark.parametrize("url", find_draft_urls(NON_INVEST_API_PAGES))
-def test_non_invest_draft_translated_pages_should_return_200_new(url, basic_auth):
-    get_and_assert(url, 200, auth=basic_auth)
+def test_non_invest_draft_translated_pages_should_return_200_new(url, basic_auth, hawk_cookie):
+    get_and_assert(url, 200, auth=basic_auth, cookies=hawk_cookie)
 
 
 @pytest.mark.parametrize(
     "url", invest_find_published_translated_urls(INVEST_PAGES)
 )
-def test_published_translated_invest_pages_should_return_200_new(url, basic_auth):
-    get_and_assert(url, 200, auth=basic_auth)
+def test_published_translated_invest_pages_should_return_200_new(url, basic_auth, hawk_cookie):
+    get_and_assert(url, 200, auth=basic_auth, cookies=hawk_cookie)
 
 
 @pytest.mark.parametrize("url", invest_find_draft_urls(INVEST_PAGES))
-def test_draft_translated_invest_pages_should_return_200_new(url, basic_auth):
-    get_and_assert(url, 200, auth=basic_auth)
+def test_draft_translated_invest_pages_should_return_200_new(url, basic_auth, hawk_cookie):
+    get_and_assert(url, 200, auth=basic_auth, cookies=hawk_cookie)
 
 
 @retry(
@@ -246,5 +246,5 @@ def test_wagtail_get_component_pages(cms_client, service_name, slug):
 
 
 @pytest.mark.parametrize("url", find_published_urls(ALL_PAGES))
-def test_new_all_published_english_pages_should_return_200(url, basic_auth):
-    get_and_assert(url, 200, auth=basic_auth)
+def test_new_all_published_english_pages_should_return_200(url, basic_auth, hawk_cookie):
+    get_and_assert(url, 200, auth=basic_auth, cookies=hawk_cookie)
