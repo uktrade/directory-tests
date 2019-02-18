@@ -2,7 +2,6 @@ import pytest
 import requests
 
 from directory_constants.constants import cms as SERVICE_NAMES
-from mohawk import Sender
 from requests.auth import HTTPBasicAuth
 from retrying import retry
 
@@ -19,8 +18,6 @@ from tests.settings import (
     DIRECTORY_SSO_API_CLIENT_DEFAULT_TIMEOUT,
     DIRECTORY_SSO_API_CLIENT_SENDER_ID,
     DIRECTORY_CMS_API_CLIENT_CACHE_EXPIRE_SECONDS,
-    IP_RESTRICTOR_SKIP_CHECK_SENDER_ID,
-    IP_RESTRICTOR_SKIP_CHECK_SECRET,
 )
 
 
@@ -62,34 +59,20 @@ def cms_client():
 
 
 @pytest.fixture
-def hawk_cookie():
-    sender = Sender(
-        credentials={
-            'id': IP_RESTRICTOR_SKIP_CHECK_SENDER_ID,
-            'key': IP_RESTRICTOR_SKIP_CHECK_SECRET,
-            'algorithm': 'sha256'
-        },
-        url='/',
-        method='',
-        always_hash_content=False
-    )
-    return {"ip-restrict-signature": sender.request_header}
+def basic_auth():
+    return HTTPBasicAuth(BASICAUTH_USER, BASICAUTH_PASS)
 
 
 @pytest.fixture
 @retry(wait_fixed=5000, stop_max_attempt_number=2)
-def logged_in_session(hawk_cookie):
+def logged_in_session(basic_auth):
     session = requests.Session()
     user = users['verified']
     response = session.post(
         url=get_absolute_url('sso:login'),
         data={'login': user['username'], 'password': user['password']},
-        cookies=hawk_cookie,
+        auth=basic_auth,
     )
     assert 'Sign out' in str(response.content)
     return session
 
-
-@pytest.fixture
-def basic_auth():
-    return HTTPBasicAuth(BASICAUTH_USER, BASICAUTH_PASS)

@@ -10,7 +10,6 @@ from tests.smoke.cms_api_helpers import status_error
 
 @pytest.mark.dev
 @pytest.mark.session_auth
-@pytest.mark.hawk
 def test_sso_authentication_using_api_client(logged_in_session):
     """This test gets the user_session_id from currently logged in session
     and then uses SSO API 'sso-api:user' endpoint ('api/v1/session-user/')
@@ -27,7 +26,6 @@ def test_sso_authentication_using_api_client(logged_in_session):
 
 @pytest.mark.stage
 @pytest.mark.session_auth
-@pytest.mark.hawk
 def test_sso_authentication_using_api_client_and_stage_cookie(logged_in_session):
     """This test gets the user_session_id from currently logged in session
     and then uses SSO API 'sso-api:user' endpoint ('api/v1/session-user/')
@@ -43,7 +41,6 @@ def test_sso_authentication_using_api_client_and_stage_cookie(logged_in_session)
 
 
 @pytest.mark.skip(reason="see TT-856")
-@pytest.mark.hawk
 def test_get_oauth2_user_profile():
     token = users['verified']['token']
     response = sso_api_client.user.get_oauth2_user_profile(bearer_token=token)
@@ -53,7 +50,6 @@ def test_get_oauth2_user_profile():
 
 
 @pytest.mark.skip(reason="see TT-856")
-@pytest.mark.hawk
 @pytest.mark.parametrize("token", [
     "",
     "invalid_token",
@@ -67,7 +63,6 @@ def test_get_oauth2_user_profile_w_invalid_token(token):
 
 
 @pytest.mark.dev
-@pytest.mark.hawk
 def test_check_password(logged_in_session):
     user_session_id = logged_in_session.cookies.get("directory_sso_dev_session")
     password = users['verified']['password']
@@ -78,7 +73,6 @@ def test_check_password(logged_in_session):
 
 
 @pytest.mark.stage
-@pytest.mark.hawk
 def test_check_password_using_stage_cookie(logged_in_session):
     user_session_id = logged_in_session.cookies.get("sso_stage_session")
     password = users['verified']['password']
@@ -88,7 +82,6 @@ def test_check_password_using_stage_cookie(logged_in_session):
     )
 
 
-@pytest.mark.hawk
 @pytest.mark.parametrize("password", [
     "",
     "invalid_password",
@@ -102,7 +95,6 @@ def test_check_invalid_password(logged_in_session, password):
     )
 
 
-@pytest.mark.hawk
 def test_get_all_login_dates():
     response = sso_api_client.user.get_last_login()
     assert response.status_code == HTTP_200_OK, status_error(
@@ -110,7 +102,6 @@ def test_get_all_login_dates():
     )
 
 
-@pytest.mark.hawk
 def test_get_login_dates_since_today():
     today = str(datetime.date.today())
     response = sso_api_client.user.get_last_login(start=today)

@@ -18,16 +18,15 @@ from tests.smoke.cms_api_helpers import status_error
     get_absolute_url('sso-api:healthcheck-ping'),
 ])
 def test_sso_api_health_check(absolute_url):
-    """This endpoint still uses session auth instead of HAWK signature check"""
+    """This endpoint still uses session auth"""
     params = {'token': TOKEN}
     response = requests.get(absolute_url, params=params)
     assert response.status_code == OK
 
 
 @pytest.mark.sso_api
-@pytest.mark.hawk
 def test_sso_api_health_check_ping_with_sso_api_client():
-    """Use SSO-API client & HAWK signature check"""
+    """Use SSO-API client"""
     response = sso_api_client.ping()
     assert response.status_code == OK
 
