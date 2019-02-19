@@ -9,16 +9,15 @@ Feature: International Page
     Given "Robert" visits the "Export Readiness - International" page
 
     Then "Robert" should see following sections
-      | Sections          |
-      | Header bar        |
-      | Beta bar          |
-      | Header menu       |
+      | Sections              |
+      | Header bar            |
+      | Header menu           |
+      | Service Cards         |
+      | Tariffs               |
+      | News                  |
+      | Study or visit the UK |
+#      | Beta bar          |
 #      | EU Exit updates   |  # EU Exit feature is turned off
-      | Intro             |
-      | Buy from the UK   |
-      | Invest in the UK  |
-      | Study in the UK   |
-      | Visit the UK      |
 
 
   @ED-3136

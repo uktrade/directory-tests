@@ -28,9 +28,7 @@ URL = urljoin(EXRED_UI_URL, "international/")
 PAGE_TITLE = "Welcome to great.gov.uk - buy from or invest in the UK"
 
 
-LANGUAGE_SELECTOR = Selector(
-    By.CSS_SELECTOR, "#international-header-bar .LanguageSelectorDialog-Tracker"
-)
+COUNTRY_SELECTOR = Selector(By.ID, "header-country-selector-activator")
 LANGUAGE_SELECTOR_CLOSE = Selector(By.ID, "header-language-selector-close")
 FIND_A_SUPPLIER = Selector(By.ID, "card-fas-link")
 SEE_THE_POTENTIAL = Selector(By.ID, "card-invest-link")
@@ -39,8 +37,8 @@ PLAN_YOUR_TRIP = Selector(By.ID, "card-visit-uk-link")
 BETA_FEEDBACK = Selector(By.CSS_SELECTOR, "#header-beta-bar span > a")
 SELECTORS = {
     "header bar": {
-        "itself": Selector(By.ID, "international-header-bar"),
-        "language selector": LANGUAGE_SELECTOR,
+        "itself": Selector(By.ID, "great-global-header"),
+        "country selector": COUNTRY_SELECTOR,
     },
     "beta bar": {
         "itself": Selector(By.ID, "header-beta-bar"),
@@ -49,48 +47,25 @@ SELECTORS = {
         "link": Selector(By.CSS_SELECTOR, "#header-beta-bar a"),
     },
     "header menu": {
-        "itself": Selector(By.ID, "international-header-menu"),
-        "logo": Selector(By.ID, "international-header-logo"),
+        "itself": Selector(By.CSS_SELECTOR, ".great-header-menu"),
+        "logo": Selector(By.ID, "great-header-logo"),
     },
-    "eu exit updates": {
-        "itself": Selector(By.ID, "information-banner"),
-        "badge": Selector(By.CSS_SELECTOR, "#information-banner div.banner-badge"),
-        "see our updates on eu exit": Selector(
-            By.CSS_SELECTOR, "#information-banner a"),
+    "service cards": {
+        "itself": Selector(By.ID, "invest-fas-section"),
+        "cards": Selector(By.CSS_SELECTOR, "#invest-fas-section .card"),
     },
-    "intro": {
-        "itself": Selector(By.CSS_SELECTOR, "#content > section.intro"),
-        "title": Selector(By.CSS_SELECTOR, "#content > section.intro h1"),
-        "description": Selector(By.CSS_SELECTOR, "#content > section.intro p"),
+    "tariffs": {
+        "itself": Selector(By.ID, "tariffs-section"),
     },
-    "buy from the uk": {
-        "itself": Selector(By.ID, "card-fas"),
-        "image": Selector(By.ID, "card-fas-image"),
-        "title": Selector(By.CSS_SELECTOR, "#card-fas h3"),
-        "text": Selector(By.CSS_SELECTOR, "#card-fas p"),
-        "find a supplier - home": FIND_A_SUPPLIER,
+    "news": {
+        "itself": Selector(By.ID, "news-events-section"),
+        "cards": Selector(By.CSS_SELECTOR, "#news-events-section .card"),
     },
-    "invest in the uk": {
-        "itself": Selector(By.ID, "card-invest"),
-        "image": Selector(By.ID, "card-invest-image"),
-        "title": Selector(By.CSS_SELECTOR, "#card-invest h3"),
-        "text": Selector(By.CSS_SELECTOR, "#card-invest p"),
-        "invest - home": SEE_THE_POTENTIAL,
-    },
-    "study in the uk": {
-        "itself": Selector(By.ID, "card-study-uk"),
-        "image": Selector(By.ID, "card-study-uk-image"),
-        "title": Selector(By.CSS_SELECTOR, "#card-study-uk h3"),
-        "text": Selector(By.CSS_SELECTOR, "#card-study-uk p"),
-        "british council - home": LEARN_MORE,
-    },
-    "visit the uk": {
-        "itself": Selector(By.ID, "card-visit-uk"),
-        "image": Selector(By.ID, "card-visit-uk-image"),
-        "title": Selector(By.CSS_SELECTOR, "#card-visit-uk h3"),
-        "text": Selector(By.CSS_SELECTOR, "#card-visit-uk p"),
-        "visit britain - home": PLAN_YOUR_TRIP,
-    },
+    "study or visit the uk": {
+        "itself": Selector(By.ID, "study-visit-cta-section"),
+        "study in the uk": Selector(By.LINK_TEXT, "Study in the UK"),
+        "visit the uk": Selector(By.LINK_TEXT, "Visit the UK"),
+    }
 }
 
 
