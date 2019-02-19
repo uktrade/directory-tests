@@ -12,7 +12,6 @@ from tests.smoke.cms_api_helpers import status_error
 
 
 @pytest.mark.sso_api
-@pytest.mark.session_auth
 @pytest.mark.parametrize("absolute_url", [
     get_absolute_url('sso-api:healthcheck'),
     get_absolute_url('sso-api:healthcheck-ping'),

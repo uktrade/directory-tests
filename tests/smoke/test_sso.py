@@ -6,6 +6,7 @@ from tests import get_absolute_url
 from tests.smoke.cms_api_helpers import status_error
 
 
+@pytest.mark.session_auth
 @pytest.mark.parametrize("absolute_url", [
     get_absolute_url('sso:landing'),
     get_absolute_url('sso:login'),
@@ -21,6 +22,7 @@ def test_access_sso_endpoints_as_logged_in_user_w_redirect_to_sud(
     )
 
 
+@pytest.mark.session_auth
 @pytest.mark.parametrize("absolute_url", [
     get_absolute_url('sso:logout'),
     get_absolute_url('sso:password_change'),
@@ -39,6 +41,7 @@ def test_access_sso_endpoints_as_logged_in_user_wo_redirect_to_sud(
     )
 
 
+@pytest.mark.session_auth
 @pytest.mark.parametrize("absolute_url, expected_status_code", [
     (get_absolute_url('sso:landing'), HTTP_301_MOVED_PERMANENTLY),
     (get_absolute_url('sso:login'), HTTP_301_MOVED_PERMANENTLY),

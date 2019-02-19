@@ -51,6 +51,7 @@ def test_302_redirects_after_removing_trailing_slash_for_anon_user(
     assert response.status_code == http.client.MOVED_PERMANENTLY, error_msg
 
 
+@pytest.mark.session_auth
 @retry(wait_fixed=3000, stop_max_attempt_number=2, retry_on_exception=is_500)
 @pytest.mark.parametrize("absolute_url", [
     get_absolute_url('profile:landing'),

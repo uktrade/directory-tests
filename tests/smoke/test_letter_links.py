@@ -51,6 +51,7 @@ def test_301_redirects_after_removing_trailing_slash_for_anon_user(
     assert response.status_code == http.client.MOVED_PERMANENTLY
 
 
+@pytest.mark.session_auth
 @pytest.mark.stage
 @pytest.mark.parametrize("absolute_url", [
     get_absolute_url("legacy-ui-contact-us:help"),
@@ -63,6 +64,7 @@ def test_access_endpoints_as_logged_in_user(
     assert response.status_code == http.client.OK
 
 
+@pytest.mark.session_auth
 @pytest.mark.stage
 @pytest.mark.parametrize("absolute_url", [
     get_absolute_url("legacy-ui-contact-us:help"),
@@ -74,6 +76,7 @@ def test_access_endpoints_as_logged_in_user_do_not_follow_redirects(
     assert response.status_code == http.client.OK
 
 
+@pytest.mark.session_auth
 @pytest.mark.stage
 @pytest.mark.parametrize("absolute_url", [
     get_absolute_url("ui-buyer:confirm-identity"),

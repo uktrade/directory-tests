@@ -52,6 +52,7 @@ def test_not_existing_page_return_404_anon_user(basic_auth, hawk_cookie):
     assert response.status_code == 404
 
 
+@pytest.mark.session_auth
 def test_not_existing_page_return_404_user(logged_in_session, basic_auth, hawk_cookie):
     url = get_absolute_url('ui-buyer:landing') + '/foobar'
     response = logged_in_session.get(
@@ -122,6 +123,7 @@ def test_302_redirects_after_removing_trailing_slash_for_anon_user(
     assert response.status_code == http.client.MOVED_PERMANENTLY
 
 
+@pytest.mark.session_auth
 @retry(
     wait_fixed=30000,
     stop_max_attempt_number=2,

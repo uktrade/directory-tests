@@ -63,6 +63,7 @@ def test_get_oauth2_user_profile_w_invalid_token(token):
 
 
 @pytest.mark.dev
+@pytest.mark.session_auth
 def test_check_password(logged_in_session):
     user_session_id = logged_in_session.cookies.get("directory_sso_dev_session")
     password = users['verified']['password']
@@ -73,6 +74,7 @@ def test_check_password(logged_in_session):
 
 
 @pytest.mark.stage
+@pytest.mark.session_auth
 def test_check_password_using_stage_cookie(logged_in_session):
     user_session_id = logged_in_session.cookies.get("sso_stage_session")
     password = users['verified']['password']
@@ -82,6 +84,7 @@ def test_check_password_using_stage_cookie(logged_in_session):
     )
 
 
+@pytest.mark.session_auth
 @pytest.mark.parametrize("password", [
     "",
     "invalid_password",
