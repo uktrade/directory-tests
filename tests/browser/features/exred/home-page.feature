@@ -85,7 +85,8 @@ Feature: Home Page
     When "Robert" decides to view the page in "<preferred_language>"
 
     Then "Robert" should be on the "Export Readiness - International" page
-    And "Robert" should see the page in "<preferred_language>"
+    # ATM International page doesn't support translations
+    # And "Robert" should see the page in "<preferred_language>"
 
     Examples: available languages
       | preferred_language |
