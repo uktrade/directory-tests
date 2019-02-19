@@ -78,12 +78,14 @@ def test_wagtail_can_list_only_20_pages():
     assert response.json()["message"] == "limit cannot be higher than 20"
 
 
+@pytest.mark.dev
 @pytest.mark.parametrize(
     "application", [
-        "Great Domestic pages",
         "Find a Supplier Pages",
+        "Great Domestic pages",
         "Invest pages",
-        "Components"
+        "Components",
+        "Great International pages",
     ]
 )
 def test_wagtail_get_pages_per_application_on_dev(application):
@@ -101,6 +103,17 @@ def test_wagtail_get_pages_per_application_on_dev(application):
     assert response.json()["meta"]["total_count"] > 0
 
 
+@pytest.mark.stage
+@pytest.mark.parametrize(
+    "application", [
+        "Find a Supplier Pages",
+        "Great Domestic pages",
+        "Invest pages",
+        "Components",
+    ]
+)
+def test_wagtail_get_pages_per_application_on_prod(application):
+    test_wagtail_get_pages_per_application_on_dev(application)
 @pytest.mark.parametrize("url", find_published_urls(ALL_PAGES))
 def test_all_published_english_pages_should_return_200(url, basic_auth, hawk_cookie):
     get_and_assert(url, 200, auth=basic_auth, cookies=hawk_cookie)
