@@ -20,6 +20,7 @@ Feature: International Page
 #      | EU Exit updates   |  # EU Exit feature is turned off
 
 
+  @wip
   @ED-3136
   @external-service
   @<expected_service>
@@ -38,6 +39,7 @@ Feature: International Page
       | Find a Supplier - Home | Buy from the UK  |
 
 
+  @wip
   @ED-3083
   @language-selector
   Scenario: Visitor should be able to open and close the language selector on "Export Readiness - International" page
@@ -50,6 +52,7 @@ Feature: International Page
     Then "Robert" should not see the language selector
 
 
+  @wip
   @ED-3083
   @language-selector
   @accessibility
@@ -63,6 +66,7 @@ Feature: International Page
     Then "Robert" should not see the language selector
 
 
+  @wip
   @ED-3083
   @language-selector
   @accessibility
@@ -75,6 +79,7 @@ Feature: International Page
     Then "Robert"'s keyboard should be trapped to the language selector
 
 
+  @wip
   @ED-3149
   @language-selector
   Scenario Outline: Visitors should be able to view International page in "<preferred_language>"
@@ -96,6 +101,7 @@ Feature: International Page
       | العربيّة            |
 
 
+  @wip
   @ED-3149
   @language-selector
   Scenario: Visitors should be able to "get advice and services to help them export" from International page
