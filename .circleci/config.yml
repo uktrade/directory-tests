@@ -469,24 +469,22 @@ workflows:
     jobs:
       - setup_env_for_smoke_tests
       - setup_env_for_functional_tests
+      - setup_env_for_browser_tests
       - smoke_tests_dev:
           requires:
             - setup_env_for_smoke_tests
       - func_fab_test_dev:
           requires:
-            - smoke_tests_dev
+            - setup_env_for_functional_tests
       - func_fas_test_dev:
           requires:
-            - smoke_tests_dev
+            - setup_env_for_functional_tests
       - func_sso_test_dev:
           requires:
-            - smoke_tests_dev
+            - setup_env_for_functional_tests
       - func_sud_test_dev:
           requires:
-            - smoke_tests_dev
-      - setup_env_for_browser_tests:
-          requires:
-            - smoke_tests_dev
+            - setup_env_for_functional_tests
       - browser_selected_chrome_dev:
           requires:
             - setup_env_for_browser_tests
@@ -498,24 +496,22 @@ workflows:
     jobs:
       - setup_env_for_smoke_tests
       - setup_env_for_functional_tests
+      - setup_env_for_browser_tests
       - smoke_tests_stage:
           requires:
             - setup_env_for_smoke_tests
       - func_fab_test_stage:
           requires:
-            - smoke_tests_stage
+            - setup_env_for_functional_tests
       - func_fas_test_stage:
           requires:
-            - smoke_tests_stage
+            - setup_env_for_functional_tests
       - func_sso_test_stage:
           requires:
-            - smoke_tests_stage
+            - setup_env_for_functional_tests
       - func_sud_test_stage:
           requires:
-            - smoke_tests_stage
-      - setup_env_for_browser_tests:
-          requires:
-            - smoke_tests_stage
+            - setup_env_for_functional_tests
       - browser_selected_chrome_stage:
           requires:
             - setup_env_for_browser_tests
