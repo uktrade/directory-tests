@@ -10,8 +10,14 @@ from behave.runner import Context
 from retrying import retry
 from selenium.common.exceptions import TimeoutException, WebDriverException
 from selenium.webdriver.remote.webdriver import WebDriver
+from urllib.parse import urlparse
 
-from settings import SET_HAWK_COOKIE, REUSE_COOKIE
+from settings import (
+    BASICAUTH_USER,
+    BASICAUTH_PASS,
+    SET_HAWK_COOKIE,
+    REUSE_COOKIE,
+)
 from utils.cms_api import get_news_articles
 from utils.gov_notify import get_verification_link
 
@@ -83,13 +89,19 @@ def try_to_reuse_hawk_cookie(driver: WebDriver):
     
 
 def generic_set_hawk_cookie(context: Context, page_name: str):
+    driver = context.driver
+    page = get_page_object(page_name)
+    if BASICAUTH_USER:
+        parsed = urlparse(page.URL)
+        with_creds = f"{parsed.scheme}://{BASICAUTH_USER}:{BASICAUTH_PASS}@{parsed.netloc}/"
+        logging.debug(f"Visiting {page.URL} in order to pass basic auth")
+        driver.get(with_creds)
+
     if not SET_HAWK_COOKIE:
         logging.debug("Setting HAWK cookie is disabled")
         return
-    driver = context.driver
     if REUSE_COOKIE:
         try_to_reuse_hawk_cookie(driver)
-    page = get_page_object(page_name)
     logging.debug(f"Visiting {page.URL} in order to set IP Restrictor cookie")
     driver.get(page.URL)
     hawk_cookie = get_hawk_cookie()
