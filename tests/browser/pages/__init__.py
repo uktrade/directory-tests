@@ -139,14 +139,14 @@ def get_page_object(service_and_page: str) -> ModuleType:
         matched_name = False
 
         if sought_service.lower() == page_object.service.lower():
-            logging.debug(f"PO search: matched service '{sought_service}'")
+            # logging.debug(f"PO search: matched service '{sought_service}'")
             matched_service = True
         else:
             continue
 
         # try to find a match based on the PO.NAME
         if sought_page.lower() == page_object.name.lower():
-            logging.debug(f"PO search: matched name '{sought_page}'")
+            # logging.debug(f"PO search: matched name '{sought_page}'")
             matched_name = True
         else:
             # if that doesn't work, then try to do a check PO.NAMES
