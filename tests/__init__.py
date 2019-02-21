@@ -27,6 +27,7 @@ join_soo = partial(urljoin, settings.SOO_UI_URL)
 join_cms_url = partial(urljoin, settings.DIRECTORY_CMS_API_CLIENT_BASE_URL)
 join_cms_api = partial(urljoin, settings.DIRECTORY_CMS_API_CLIENT_BASE_URL)
 join_cms_ui = partial(urljoin, settings.DIRECTORY_CMS_API_CLIENT_BASE_URL)
+join_forms_api = partial(urljoin, settings.DIRECTORY_FORMS_API_URL)
 
 urls = {
     # SSO
@@ -255,6 +256,13 @@ urls = {
     'cms-api:images': 'api/images/',
     'cms-api:documents': 'api/documents/',
     'cms-api:pages-by-slug': 'api/pages/lookup-by-slug/{}/',
+
+    # Forms API endpoints
+    'forms-api:healthcheck': 'api/healthcheck/',
+    'forms-api:healthcheck-ping': 'api/healthcheck/ping/',
+    'forms-api:submission': 'api/submission/',
+    'forms-api:admin': 'admin/',
+    'forms-api:testapi': 'testapi/submissions-by-email/',
 }
 
 # these user credentials are hard-coded in `directory-sso`. The users
@@ -321,6 +329,8 @@ def get_absolute_url(name):
         return join_cms_url(relative_url)
     elif name.startswith('cms-ui:'):
         return join_cms_ui(relative_url)
+    elif name.startswith('forms-api:'):
+        return join_forms_api(relative_url)
 
 
 def get_random_email_address():
