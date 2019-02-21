@@ -17,9 +17,9 @@ class FormsClient(AbstractAPIClient):
 
 
 client = FormsClient(
-    base_url=settings.FORMS_API_URL,
-    api_key=settings.FORMS_API_KEY,
-    sender_id=settings.FORMS_API_SENDER_ID,
+    base_url=settings.DIRECTORY_FORMS_API_URL,
+    api_key=settings.DIRECTORY_FORMS_API_KEY,
+    sender_id=settings.DIRECTORY_FORMS_API_SENDER_ID,
     timeout=30,
     default_service_name="testapi"
 )
