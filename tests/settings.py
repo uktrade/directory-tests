@@ -196,9 +196,9 @@ with open(os.path.join(TEST_IMAGES_DIR, "rare.txt"), "r") as f:
 
 
 SEARCHABLE_CASE_STUDY_DETAILS = [
-    'title', 'summary', 'description', 'website', 'keywords', 'caption_1',
-    'caption_2', 'caption_3', 'testimonial', 'source_name', 'source_job',
-    'source_company', 'slug'
+    "title", "summary", "description", "website", "keywords", "caption_1",
+    "caption_2", "caption_3", "testimonial", "source_name", "source_job",
+    "source_company", "slug"
 ]
 
 FAS_LOGO_PLACEHOLDER_IMAGE = "/static/images/placeholder.fc5114289e5b.png"
