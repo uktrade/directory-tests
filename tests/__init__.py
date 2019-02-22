@@ -262,7 +262,7 @@ urls = {
     'forms-api:healthcheck-ping': 'api/healthcheck/ping/',
     'forms-api:submission': 'api/submission/',
     'forms-api:admin': 'admin/',
-    'forms-api:testapi': 'testapi/submissions-by-email/',
+    'forms-api:testapi': 'testapi/submissions-by-email/{email}/',
 }
 
 # these user credentials are hard-coded in `directory-sso`. The users
