@@ -797,9 +797,11 @@ def fill_out_input_fields(
         value_to_type = form_details[key]
         if not value_to_type:
             continue
-        logging.debug(f"Filling out input field {key} with '{value_to_type}'")
+        logging.debug(f"Filling out input field '{key}' with '{value_to_type}' on '{driver.current_url}")
         input_field = find_element(
             driver, selector, element_name=key, wait_for_it=False)
+        if input_field.is_displayed():
+            input_field.clear()
         input_field.send_keys(value_to_type)
 
 
@@ -814,6 +816,8 @@ def fill_out_textarea_fields(
         logging.debug(f"Filling out textarea: {key} with '{value_to_type}'")
         textarea = find_element(
             driver, selector, element_name=key, wait_for_it=False)
+        if textarea.is_displayed():
+            textarea.clear()
         textarea.send_keys(value_to_type)
 
 
