@@ -14,7 +14,8 @@ def test_about_200(basic_auth, hawk_cookie):
         cookies=hawk_cookie
     )
 
-    assert response.status_code == http.client.OK
+    error = f'Expected to get 200 OK but got {response.status_code} from {response.url}'
+    assert response.status_code == http.client.OK, error
 
 
 @pytest.mark.parametrize("absolute_url", [
