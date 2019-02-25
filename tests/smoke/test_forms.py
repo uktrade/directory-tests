@@ -28,16 +28,16 @@ client = FormsClient(
 
 @pytest.mark.forms
 def test_forms_submissions_endpoint_accepts_only_post():
-    response = client.get(get_absolute_url('forms-api:submission'))
+    response = client.get(get_absolute_url("forms-api:submission"))
     assert response.status_code == HTTP_405_METHOD_NOT_ALLOWED, status_error(
         HTTP_405_METHOD_NOT_ALLOWED, response
     )
-    assert response.headers['Allow'] == 'POST, OPTIONS'
+    assert response.headers["Allow"] == "POST, OPTIONS"
 
 
 @pytest.mark.forms
 def test_forms_admin_is_available():
-    response = client.get(get_absolute_url('forms-api:admin'))
+    response = client.get(get_absolute_url("forms-api:admin"))
     assert response.status_code == HTTP_200_OK, status_error(
         HTTP_200_OK, response
     )
@@ -47,7 +47,7 @@ def test_forms_admin_is_available():
 @pytest.mark.forms
 def test_forms_testapi_endpoint_is_present_on_dev():
     response = client.get(
-        get_absolute_url('forms-api:testapi').format(email='test@example.com')
+        get_absolute_url("forms-api:testapi").format(email="test@example.com")
     )
     assert response.status_code == HTTP_200_OK, status_error(
         HTTP_200_OK, response
@@ -63,7 +63,7 @@ def test_forms_testapi_endpoint_is_present_on_stage():
 @pytest.mark.prod
 @pytest.mark.forms
 def test_forms_testapi_endpoints_are_not_present_on_prod():
-    response = client.get(get_absolute_url('forms-api:testapi'))
+    response = client.get(get_absolute_url("forms-api:testapi"))
     assert response.status_code == HTTP_404_NOT_FOUND, status_error(
         HTTP_404_NOT_FOUND, response
     )

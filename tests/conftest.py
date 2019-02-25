@@ -41,9 +41,9 @@ def pytest_configure():
         DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT=DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT,
         DIRECTORY_CMS_API_CLIENT_SERVICE_NAME=SERVICE_NAMES.EXPORT_READINESS,
         CACHES={
-            'cms_fallback': {
-                'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-                'LOCATION': 'unique-snowflake',
+            "cms_fallback": {
+                "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+                "LOCATION": "unique-snowflake",
             }
         }
     )
@@ -65,12 +65,12 @@ def cms_client():
 def hawk_cookie():
     sender = Sender(
         credentials={
-            'id': IP_RESTRICTOR_SKIP_CHECK_SENDER_ID,
-            'key': IP_RESTRICTOR_SKIP_CHECK_SECRET,
-            'algorithm': 'sha256'
+            "id": IP_RESTRICTOR_SKIP_CHECK_SENDER_ID,
+            "key": IP_RESTRICTOR_SKIP_CHECK_SECRET,
+            "algorithm": "sha256"
         },
-        url='/',
-        method='',
+        url="/",
+        method="",
         always_hash_content=False
     )
     return {"ip-restrict-signature": sender.request_header}
@@ -85,13 +85,13 @@ def basic_auth():
 @retry(wait_fixed=5000, stop_max_attempt_number=2)
 def logged_in_session(basic_auth, hawk_cookie):
     session = requests.Session()
-    user = users['verified']
+    user = users["verified"]
     response = session.post(
-        url=get_absolute_url('sso:login'),
-        data={'login': user['username'], 'password': user['password']},
+        url=get_absolute_url("sso:login"),
+        data={"login": user["username"], "password": user["password"]},
         auth=basic_auth,
         cookies=hawk_cookie,
     )
-    assert 'Sign out' in str(response.content)
+    assert "Sign out" in str(response.content)
     return session
 
