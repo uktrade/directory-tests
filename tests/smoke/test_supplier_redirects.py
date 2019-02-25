@@ -7,9 +7,9 @@ from tests.smoke.cms_api_helpers import status_error
 
 
 @pytest.mark.parametrize("new_url,old_url", [
-    ('/trade/industries/healthcare/', join_ui_supplier('industries/health/')),
-    ('/trade/industries/technology/', join_ui_supplier('industries/tech/')),
-    ('/trade/industries/creative-services/', join_ui_supplier('industries/creative/')),
+    ("/trade/industries/healthcare/", join_ui_supplier("industries/health/")),
+    ("/trade/industries/technology/", join_ui_supplier("industries/tech/")),
+    ("/trade/industries/creative-services/", join_ui_supplier("industries/creative/")),
 ])
 def test_ed_4152_redirect_on_stage_from_old_industry_page(
         new_url, old_url, basic_auth, hawk_cookie):
