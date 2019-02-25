@@ -145,3 +145,14 @@ def test_cms_health_check_database_endpoint(absolute_url):
     params = {"token": TOKEN}
     response = requests.get(absolute_url, params=params)
     assert response.status_code == OK, status_error(OK, response)
+
+
+@pytest.mark.forms
+@pytest.mark.parametrize("absolute_url", [
+    get_absolute_url('forms-api:healthcheck'),
+    get_absolute_url('forms-api:healthcheck-ping'),
+])
+def test_forms_healthcheck_endpoint(absolute_url):
+    params = {"token": TOKEN}
+    response = requests.get(absolute_url, params=params)
+    assert response.status_code == OK, status_error(OK, response)
