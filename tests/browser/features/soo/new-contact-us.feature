@@ -2,7 +2,6 @@
 Feature: New Contact-us form
 
 
-  @wip
   @TT-833
   @exopps
   @captcha
@@ -10,7 +9,7 @@ Feature: New Contact-us form
   @soo-long-domestic
   @account-support
   Scenario: Domestic "Selling Online Overseas" Enquirers should be able to contact us
-    Given "Robert" got to the "Selling Online Overseas - Long Domestic (Your Business)" page
+    Given "Robert" visits the "Selling Online Overseas - Long Domestic (Your Business)" page
 
     When "Robert" fills out and submits the form
     Then "Robert" should be on the "Selling Online Overseas - Long Domestic (Organisation details)" page
@@ -22,5 +21,3 @@ Feature: New Contact-us form
 
     Then "Robert" should be on the "Selling Online Overseas - Long Domestic (Thank you for your enquiry)" page
     And "Robert" should receive a "great.gov.uk Selling Online Overseas contact form" confirmation email from Zendesk
-
-
