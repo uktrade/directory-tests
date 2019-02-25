@@ -11,12 +11,12 @@ from pages.common_actions import (
     check_url,
     take_screenshot,
 )
-from settings import SELLING_ONLINE_OVERSEAS_UI_URL
+from settings import EXRED_UI_URL
 
 NAME = "Long Domestic (Thank you for your enquiry)"
 SERVICE = "Selling Online Overseas"
 TYPE = "Contact us"
-URL = urljoin(SELLING_ONLINE_OVERSEAS_UI_URL, "contact/selling-online-overseas/success/")
+URL = urljoin(EXRED_UI_URL, "contact/selling-online-overseas/success/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 PDF_LINKS = Selector(By.CSS_SELECTOR, "#documents-section a.link")

@@ -12,23 +12,20 @@ from pages import ElementType
 from pages.common_actions import (
     Actor,
     Selector,
-    check_radio,
     check_url,
     fill_out_input_fields,
     find_element,
     go_to_url,
-    pick_option,
     take_screenshot,
-    tick_captcha_checkbox,
     tick_checkboxes,
 )
 from pages.soo import contact_us_soo_long_organisation_details
-from settings import SELLING_ONLINE_OVERSEAS_UI_URL
+from settings import EXRED_UI_URL
 
 NAME = "Long Domestic (Your Business)"
 SERVICE = "Selling Online Overseas"
 TYPE = "Contact us"
-URL = urljoin(SELLING_ONLINE_OVERSEAS_UI_URL, "contact/selling-online-overseas/organisation/")
+URL = urljoin(EXRED_UI_URL, "contact/selling-online-overseas/organisation/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 SUBMIT_BUTTON = Selector(

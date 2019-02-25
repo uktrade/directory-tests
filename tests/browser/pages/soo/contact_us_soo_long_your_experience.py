@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 """Export Readiness - First page of Long SOO Contact us form"""
-import logging
-import random
 from types import ModuleType
 from urllib.parse import urljoin
 
@@ -15,20 +13,18 @@ from pages.common_actions import (
     check_random_radio,
     check_url,
     fill_out_input_fields,
+    fill_out_textarea_fields,
     find_element,
     go_to_url,
-    pick_option,
     take_screenshot,
-    tick_captcha_checkbox,
-    tick_checkboxes,
 )
 from pages.soo import contact_us_soo_long_contact_details
-from settings import SELLING_ONLINE_OVERSEAS_UI_URL
+from settings import EXRED_UI_URL
 
 NAME = "Long Domestic (Your experience)"
 SERVICE = "Selling Online Overseas"
 TYPE = "Contact us"
-URL = urljoin(SELLING_ONLINE_OVERSEAS_UI_URL, "contact/selling-online-overseas/your-experience/")
+URL = urljoin(EXRED_UI_URL, "contact/selling-online-overseas/your-experience/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 SUBMIT_BUTTON = Selector(
@@ -70,6 +66,7 @@ def fill_out(driver: WebDriver, details: dict):
     form_selectors = SELECTORS["form"]
     check_random_radio(driver, form_selectors)
     fill_out_input_fields(driver, form_selectors, details)
+    fill_out_textarea_fields(driver, form_selectors, details)
     take_screenshot(driver, "After filling out the form")
 
 

@@ -17,18 +17,15 @@ from pages.common_actions import (
     fill_out_input_fields,
     find_element,
     go_to_url,
-    pick_option,
     take_screenshot,
-    tick_captcha_checkbox,
-    tick_checkboxes,
 )
 from pages.soo import contact_us_soo_long_your_experience
-from settings import SELLING_ONLINE_OVERSEAS_UI_URL
+from settings import EXRED_UI_URL
 
 NAME = "Long Domestic (Organisation details)"
 SERVICE = "Selling Online Overseas"
 TYPE = "Contact us"
-URL = urljoin(SELLING_ONLINE_OVERSEAS_UI_URL, "contact/selling-online-overseas/organisation-details/")
+URL = urljoin(EXRED_UI_URL, "contact/selling-online-overseas/organisation-details/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 SUBMIT_BUTTON = Selector(
