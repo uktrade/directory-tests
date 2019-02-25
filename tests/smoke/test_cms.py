@@ -114,11 +114,32 @@ def test_wagtail_get_pages_per_application_on_dev(application):
 )
 def test_wagtail_get_pages_per_application_on_prod(application):
     test_wagtail_get_pages_per_application_on_dev(application)
+
+
+@pytest.mark.prod
+@pytest.mark.parametrize(
+    "application", [
+        "Export Readiness app",
+        "Find a Supplier app",
+        "Invest pages",
+        "Components",
+        "Great International pages",
+    ]
+)
+def test_wagtail_get_pages_per_application_on_prod(application):
+    test_wagtail_get_pages_per_application_on_dev(application)
+
+
+@pytest.mark.invest
+@pytest.mark.fas
+@pytest.mark.exred
 @pytest.mark.parametrize("url", find_published_urls(ALL_PAGES))
 def test_all_published_english_pages_should_return_200(url, basic_auth, hawk_cookie):
     get_and_assert(url, 200, auth=basic_auth, cookies=hawk_cookie)
 
 
+@pytest.mark.fas
+@pytest.mark.exred
 @pytest.mark.parametrize(
     "url", find_published_translated_urls(NON_INVEST_API_PAGES)
 )
@@ -126,11 +147,14 @@ def test_non_invest_published_translated_pages_should_return_200_new(url, basic_
     get_and_assert(url, 200, auth=basic_auth, cookies=hawk_cookie)
 
 
+@pytest.mark.fas
+@pytest.mark.exred
 @pytest.mark.parametrize("url", find_draft_urls(NON_INVEST_API_PAGES))
 def test_non_invest_draft_translated_pages_should_return_200_new(url, basic_auth, hawk_cookie):
     get_and_assert(url, 200, auth=basic_auth, cookies=hawk_cookie)
 
 
+@pytest.mark.invest
 @pytest.mark.parametrize(
     "url", invest_find_published_translated_urls(INVEST_PAGES)
 )
@@ -138,11 +162,15 @@ def test_published_translated_invest_pages_should_return_200_new(url, basic_auth
     get_and_assert(url, 200, auth=basic_auth, cookies=hawk_cookie)
 
 
+@pytest.mark.invest
 @pytest.mark.parametrize("url", invest_find_draft_urls(INVEST_PAGES))
 def test_draft_translated_invest_pages_should_return_200_new(url, basic_auth, hawk_cookie):
     get_and_assert(url, 200, auth=basic_auth, cookies=hawk_cookie)
 
 
+@pytest.mark.invest
+@pytest.mark.fas
+@pytest.mark.exred
 @retry(
     wait_fixed=30000,
     stop_max_attempt_number=2,
@@ -258,6 +286,9 @@ def test_wagtail_get_component_pages(cms_client, service_name, slug):
     assert response.json()["meta"]["slug"] == slug
 
 
+@pytest.mark.invest
+@pytest.mark.fas
+@pytest.mark.exred
 @pytest.mark.parametrize("url", find_published_urls(ALL_PAGES))
 def test_new_all_published_english_pages_should_return_200(url, basic_auth, hawk_cookie):
     get_and_assert(url, 200, auth=basic_auth, cookies=hawk_cookie)
