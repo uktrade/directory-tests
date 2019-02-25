@@ -5,7 +5,7 @@ from urllib.parse import urljoin
 
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages.common_actions import check_title, check_url, go_to_url, take_screenshot
+from pages.common_actions import check_url, go_to_url, take_screenshot
 from settings import DIRECTORY_UI_BUYER_URL
 
 NAME = "Home"
