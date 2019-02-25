@@ -22,10 +22,10 @@ SKIPPED_PAGE_TYPES = []
 
 ALL_PAGE_TYPES = get_pages_types(skip=SKIPPED_PAGE_TYPES)
 
-EXRED_PAGE_TYPES = [t for t in ALL_PAGE_TYPES if t.startswith('export_readiness.')]
-INVEST_PAGE_TYPES = [t for t in ALL_PAGE_TYPES if t.startswith('invest.')]
-FAS_PAGE_TYPES = [t for t in ALL_PAGE_TYPES if t.startswith('find_a_supplier.')]
-COMPONENTS_PAGE_TYPES = [t for t in ALL_PAGE_TYPES if t.startswith('components.')]
+EXRED_PAGE_TYPES = [t for t in ALL_PAGE_TYPES if t.startswith("export_readiness.")]
+INVEST_PAGE_TYPES = [t for t in ALL_PAGE_TYPES if t.startswith("invest.")]
+FAS_PAGE_TYPES = [t for t in ALL_PAGE_TYPES if t.startswith("find_a_supplier.")]
+COMPONENTS_PAGE_TYPES = [t for t in ALL_PAGE_TYPES if t.startswith("components.")]
 
 INVEST_PAGES = get_pages_from_api(INVEST_PAGE_TYPES, use_async_client=False)
 FAS_PAGES = get_pages_from_api(FAS_PAGE_TYPES, use_async_client=False)

@@ -9,21 +9,21 @@ from tests import get_absolute_url, is_500
 
 def test_about_200(basic_auth, hawk_cookie):
     response = requests.get(
-        get_absolute_url('profile:about'), allow_redirects=False,
+        get_absolute_url("profile:about"), allow_redirects=False,
         auth=basic_auth,
         cookies=hawk_cookie
     )
 
-    error = f'Expected to get 200 OK but got {response.status_code} from {response.url}'
+    error = f"Expected to get 200 OK but got {response.status_code} from {response.url}"
     assert response.status_code == http.client.OK, error
 
 
 @pytest.mark.parametrize("absolute_url", [
-    get_absolute_url('profile:landing'),
-    get_absolute_url('profile:soo'),
-    get_absolute_url('profile:fab'),
-    get_absolute_url('profile:exops-alerts'),
-    get_absolute_url('profile:exops-applications'),
+    get_absolute_url("profile:landing"),
+    get_absolute_url("profile:soo"),
+    get_absolute_url("profile:fab"),
+    get_absolute_url("profile:exops-alerts"),
+    get_absolute_url("profile:exops-applications"),
 ])
 def test_301_redirects_for_anon_user(absolute_url, basic_auth, hawk_cookie):
     response = requests.get(
@@ -35,10 +35,10 @@ def test_301_redirects_for_anon_user(absolute_url, basic_auth, hawk_cookie):
 
 @pytest.mark.skip(reason="see bug ED-3050")
 @pytest.mark.parametrize("absolute_url", [
-    get_absolute_url('profile:soo'),
-    get_absolute_url('profile:fab'),
-    get_absolute_url('profile:exops-alerts'),
-    get_absolute_url('profile:exops-applications'),
+    get_absolute_url("profile:soo"),
+    get_absolute_url("profile:fab"),
+    get_absolute_url("profile:exops-alerts"),
+    get_absolute_url("profile:exops-applications"),
 ])
 def test_302_redirects_after_removing_trailing_slash_for_anon_user(
         absolute_url, basic_auth, hawk_cookie):
@@ -55,11 +55,11 @@ def test_302_redirects_after_removing_trailing_slash_for_anon_user(
 @pytest.mark.session_auth
 @retry(wait_fixed=3000, stop_max_attempt_number=2, retry_on_exception=is_500)
 @pytest.mark.parametrize("absolute_url", [
-    get_absolute_url('profile:landing'),
-    get_absolute_url('profile:soo'),
-    get_absolute_url('profile:fab'),
-    get_absolute_url('profile:exops-alerts'),
-    get_absolute_url('profile:exops-applications'),
+    get_absolute_url("profile:landing"),
+    get_absolute_url("profile:soo"),
+    get_absolute_url("profile:fab"),
+    get_absolute_url("profile:exops-alerts"),
+    get_absolute_url("profile:exops-applications"),
 ])
 def test_access_to_non_health_check_endpoints_as_logged_in_user(
         logged_in_session, absolute_url, basic_auth, hawk_cookie):

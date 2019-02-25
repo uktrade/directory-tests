@@ -23,4 +23,4 @@ def test_ed_4152_redirect_on_stage_from_old_industry_page(
     error_msg = (f"Expected request to '{old_url}' to be redirected to "
                  f"'{new_url}' but instead it was redirected to "
                  f"'{response.headers['Location']}'")
-    assert response.headers['Location'] == new_url, error_msg
+    assert response.headers["Location"] == new_url, error_msg

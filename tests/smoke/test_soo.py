@@ -7,8 +7,8 @@ from tests.smoke.cms_api_helpers import status_error
 
 
 @pytest.mark.parametrize("absolute_url", [
-    get_absolute_url('ui-soo:landing'),
-    get_absolute_url('ui-soo:search-results'),
+    get_absolute_url("ui-soo:landing"),
+    get_absolute_url("ui-soo:search-results"),
 ])
 def test_access_soo_endpoints(absolute_url):
     response = requests.get(absolute_url, allow_redirects=True)
@@ -18,7 +18,7 @@ def test_access_soo_endpoints(absolute_url):
 
 
 @pytest.mark.parametrize("absolute_url", [
-    get_absolute_url('ui-soo:search-results'),
+    get_absolute_url("ui-soo:search-results"),
 ])
 def test_access_soo_endpoints_without_trailing_slash(
         absolute_url):
@@ -36,7 +36,7 @@ def test_access_soo_endpoints_without_trailing_slash(
     (["Clothing & Accessories", "Home & Garden"], ["France", "China"]),
 ])
 def test_search_works(categories, countries):
-    url = get_absolute_url('ui-soo:search-results')
+    url = get_absolute_url("ui-soo:search-results")
     params = {
         "product_categories": categories,
         "operating_countries": countries
