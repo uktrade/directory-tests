@@ -1,11 +1,11 @@
-@news
-@eu-exit
 @international
 Feature: Updates for non-UK companies on EU Exit
 
   Background:
     Given hawk cookie is set on "Export Readiness - Home" page
 
+  @news
+  @eu-exit
   @CMS-579
   Scenario: International Visitors should be able to view news article
     Given at least "1" published "international" news article on "Export Readiness"
@@ -16,6 +16,8 @@ Feature: Updates for non-UK companies on EU Exit
     Then "Henry" should be on the "Export Readiness - International EU Exit news - article" page
 
 
+  @news
+  @eu-exit
   @CMS-579
   Scenario: International Visitors should be able to ge to the "Updates for non-UK companies on EU Exit" from "Export Readiness - International" page
     Given at least "1" published "international" news article on "Export Readiness"
@@ -46,6 +48,8 @@ Feature: Updates for non-UK companies on EU Exit
 
 
   @wip
+  @news
+  @eu-exit
   @CMS-579
   @tags
   Scenario: International Visitors should see be able to filter out news articles by tags
@@ -72,6 +76,8 @@ Feature: Updates for non-UK companies on EU Exit
     Then "Henry" should be on the "Export Readiness - International" page
 
 
+  @news
+  @eu-exit
   @CMS-579
   @breadcrumbs
   Scenario: International Visitors should see be able to get to "International" page by using "Great.gov.uk" breadcrumb on international news article page
@@ -82,6 +88,8 @@ Feature: Updates for non-UK companies on EU Exit
     Then "Henry" should be on the "Export Readiness - International" page
 
 
+  @news
+  @eu-exit
   @CMS-579
   @breadcrumbs
   Scenario Outline: International Visitors should see be able to get to "<expected page>" by using "<breadcrumb>" breadcrumb on "International EU Exit news" page
@@ -98,6 +106,8 @@ Feature: Updates for non-UK companies on EU Exit
 
 
   @wip
+  @news
+  @eu-exit
   @bug
   @fixme
   Scenario: International Visitors should see not see news section on "Export Readiness - International" page if there aren't any published articles
@@ -113,6 +123,8 @@ Feature: Updates for non-UK companies on EU Exit
   @bug
   @CMS-553
   @fixme
+  @news
+  @eu-exit
   Scenario: Publishers should be able to unpublish International news
     Given "Sarah" is a publisher
     And "Henry" is a visitor
@@ -127,6 +139,8 @@ Feature: Updates for non-UK companies on EU Exit
   @bug
   @CMS-556
   @fixme
+  @news
+  @eu-exit
   Scenario: International Visitors should see correct "Last updated" date
     Given "Sarah" is a publisher
     And "Henry" is a visitor
