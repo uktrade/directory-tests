@@ -37,17 +37,20 @@ SELECTORS = {
         "i don't have a company number": Selector(
             By.ID, "id_organisation-soletrader", type=ElementType.CHECKBOX
         ),
-        "company name": Selector(
-            By.ID, "id_organisation-company_name", type=ElementType.INPUT
-        ),
         "company website": Selector(
             By.ID, "id_organisation-website_address", type=ElementType.INPUT
         ),
     }
 }
 
-OTHER_SELECTORS = {
-    "postcode": Selector(
+HAS_COMPANY_NUMBER = {
+    "company name": Selector(
+        By.ID, "id_organisation-company_name", type=ElementType.INPUT
+    ),
+}
+
+DOESNT_HAVE_COMPANY_NUMBER = {
+    "company postcode": Selector(
         By.ID, "id_organisation-company_postcode", type=ElementType.INPUT
     ),
 }
@@ -62,22 +65,31 @@ def should_be_here(driver: WebDriver):
     check_url(driver, URL)
 
 
-def generate_form_details(actor: Actor) -> dict:
-    does_not_have_company_number = random.choice([True, False])
+def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
+    does_not_have_company_number = custom_details.get(
+        "i don't have a company number", random.choice([True, False])
+    )
     result = {
         "i don't have a company number": does_not_have_company_number,
-        "company name": "automated tests",
-        "company website": "http://dit.automated.tests",
+        "company website":
+            f"http://{actor.email}.automated.tests.com".replace("@", "."),
     }
     if does_not_have_company_number:
         result.update({"company postcode": "SW1H 0TL"})
-        SELECTORS["form"].update(OTHER_SELECTORS)
+        SELECTORS["form"].update(DOESNT_HAVE_COMPANY_NUMBER)
+        SELECTORS["form"] = dict(
+            set(SELECTORS["form"].items()) - set(HAS_COMPANY_NUMBER.items())
+        )
     else:
+        result.update({"company name": "automated tests"})
+        SELECTORS["form"].update(HAS_COMPANY_NUMBER)
         # In order to avoid situation when previous scenario example modified
         # SELECTORS we have to remove OTHER_SELECTORS that were then added
         SELECTORS["form"] = dict(
-            set(SELECTORS["form"].items()) - set(OTHER_SELECTORS.items())
+            set(SELECTORS["form"].items()) - set(DOESNT_HAVE_COMPANY_NUMBER.items())
         )
+    if custom_details:
+        result.update(custom_details)
 
     logging.debug(f"Generated form details: {result}")
     return result
