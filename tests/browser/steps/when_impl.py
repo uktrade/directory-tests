@@ -770,6 +770,20 @@ def generic_click_on_random_industry(context: Context, actor_alias: str):
     page.open_any_article(context.driver)
 
 
+def generic_select_dropdown_option(
+        context: Context, actor_alias: str, dropdown: str, option: str):
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "select_dropdown_option")
+    page.select_dropdown_option(context.driver, dropdown, option)
+
+
+def generic_pick_radio_option(
+        context: Context, actor_alias: str, option: str):
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "pick_radio_option")
+    page.pick_radio_option(context.driver, option)
+
+
 def generic_pick_radio_option_and_submit(
         context: Context, actor_alias: str, option: str):
     page = get_last_visited_page(context, actor_alias)

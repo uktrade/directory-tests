@@ -28,6 +28,7 @@ from steps.when_impl import (
     generic_open_industry_page,
     generic_open_news_article,
     generic_pick_radio_option_and_submit,
+    generic_pick_radio_option,
     generic_pick_random_radio_option_and_submit,
     generic_report_problem_with_page,
     generic_see_more_industries,
@@ -51,6 +52,7 @@ from steps.when_impl import (
     sign_in,
     sign_out,
     visit_page,
+    generic_select_dropdown_option
 )
 
 
@@ -195,9 +197,21 @@ def fas_when_actor_fills_out_and_submits_contact_us_form(
 @when('"{actor_alias}" says that his business is in "{option}"')
 @when('"{actor_alias}" says that his business is "{option}"')
 @when('"{actor_alias}" chooses "{option}" option')
-def when_actor_chooses_form_option(
+def when_actor_chooses_form_option_and_submits_form(
         context: Context, actor_alias: str, option: str):
     generic_pick_radio_option_and_submit(context, actor_alias, option)
+
+
+@when('"{actor_alias}" picks "{option}" option')
+def when_actor_chooses_form_option(
+        context: Context, actor_alias: str, option: str):
+    generic_pick_radio_option(context, actor_alias, option)
+
+
+@when('"{actor_alias}" selects "{option}" from "{dropdown_name}" dropdown')
+def when_actor_selects_form_option(
+        context: Context, actor_alias: str, option: str, dropdown: str):
+    generic_select_dropdown_option(context, actor_alias, dropdown, option)
 
 
 @when('"{actor_alias}" decides to see more UK industries')
