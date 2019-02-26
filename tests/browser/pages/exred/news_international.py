@@ -18,7 +18,7 @@ from pages.common_actions import (
 )
 from settings import EXRED_UI_URL
 
-NAME = "Updates for non-UK companies on EU Exit"
+NAME = "Updates for non UK companies on EU Exit"
 SERVICE = "Export Readiness"
 TYPE = "international"
 URL = urljoin(EXRED_UI_URL, "international/eu-exit-news/?lang=en")

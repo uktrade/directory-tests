@@ -10,7 +10,7 @@ Feature: Updates for non-UK companies on EU Exit
   Scenario: International Visitors should be able to view news article
     Given at least "1" published "international" news article on "Export Readiness"
 
-    When "Henry" goes to the "Export Readiness - Updates for non-UK companies on EU Exit" page
+    When "Henry" goes to the "Export Readiness - Updates for non UK companies on EU Exit" page
     And "Henry" opens "first" news article
 
     Then "Henry" should be on the "Export Readiness - International EU Exit news - article" page
@@ -25,7 +25,7 @@ Feature: Updates for non-UK companies on EU Exit
 
     When "Henry" decides to "See our updates on EU Exit"
 
-    Then "Henry" should be on the "Export Readiness - Updates for non-UK companies on EU Exit" page
+    Then "Henry" should be on the "Export Readiness - Updates for non UK companies on EU Exit" page
     And "Henry" should see following sections
       | sections        |
       | Header          |
@@ -40,7 +40,7 @@ Feature: Updates for non-UK companies on EU Exit
   @CMS-579
   @contact-form
   Scenario: International Visitors should see be able to navigate to the "EU Exit contact form"
-    Given "Henry" went to the "Export Readiness - Updates for non-UK companies on EU Exit" page
+    Given "Henry" went to the "Export Readiness - Updates for non UK companies on EU Exit" page
 
     When "Henry" decides to "Contact us"
 
@@ -69,7 +69,7 @@ Feature: Updates for non-UK companies on EU Exit
   @CMS-579
   @breadcrumbs
   Scenario: International Visitors should see be able to get to "International" page by using "Great.gov.uk" breadcrumb on "Updates for non-UK companies on EU Exit" page
-    Given "Henry" went to the "Export Readiness - Updates for non-UK companies on EU Exit" page
+    Given "Henry" went to the "Export Readiness - Updates for non UK companies on EU Exit" page
 
     When "Henry" decides to open "Great.gov.uk"
 
@@ -102,7 +102,7 @@ Feature: Updates for non-UK companies on EU Exit
     Examples: breadcrumbs
       | breadcrumb                              | expected page                                              |
       | Great.gov.uk                            | Export Readiness - International                           |
-      | Updates for non-UK companies on EU exit | Export Readiness - Updates for non-UK companies on EU Exit |
+      | Updates for non-UK companies on EU exit | Export Readiness - Updates for non UK companies on EU Exit |
 
 
   @wip
@@ -131,7 +131,7 @@ Feature: Updates for non-UK companies on EU Exit
     And "1" published "international" news articles on "Export Readiness"
 
     When "Sarah" unpublish an article visible on the "Export Readiness - International" page
-    And "Henry" goes to the "Export Readiness - Updates for non-UK companies on EU Exit - International" page
+    And "Henry" goes to the "Export Readiness - Updates for non UK companies on EU Exit - International" page
 
     Then "Henry" should see "0" most recently published "international" news articles
 
@@ -146,7 +146,7 @@ Feature: Updates for non-UK companies on EU Exit
     And "Henry" is a visitor
     And at least "1" published "international" news articles on "Export Readiness"
 
-    When "Sarah" updates an article visible on the "Export Readiness - Updates for non-UK companies on EU Exit - International" page
-    And "Henry" goes to the "Export Readiness - Updates for non-UK companies on EU Exit - International" page
+    When "Sarah" updates an article visible on the "Export Readiness - Updates for non UK companies on EU Exit - International" page
+    And "Henry" goes to the "Export Readiness - Updates for non UK companies on EU Exit - International" page
 
     Then "Henry" should see that updated news article has a correct "Last updated" date
