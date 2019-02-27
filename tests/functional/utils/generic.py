@@ -23,9 +23,7 @@ import lxml
 import requests
 from behave.runner import Context
 from bs4 import BeautifulSoup
-from directory_api_client.testapiclient import DirectoryTestAPIClient
 from directory_constants.constants import choices
-from directory_sso_api_client.testapiclient import DirectorySSOTestAPIClient
 from jsonschema import validate
 from jsonschema.exceptions import ValidationError
 from langdetect import DetectorFactory, detect_langs
@@ -73,9 +71,27 @@ from tests.settings import (
 
 INDUSTRY_CHOICES = dict(choices.INDUSTRIES)
 
+# This is ugly way of dealing with imports but Django settings have to be 
+# configured before we can import DirectoryTestAPIClient
+from django.conf import settings
+settings.configure(
+    DIRECTORY_CLIENT_CORE_CACHE_EXPIRE_SECONDS=30,
+
+    CACHES={
+        "api_fallback": {
+            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+            "LOCATION": "unique-snowflake",
+        },
+    }
+)
+from directory_api_client.testapiclient import DirectoryTestAPIClient
+from directory_sso_api_client.testapiclient import DirectorySSOTestAPIClient
+
 DIRECTORY_CLIENT = DirectoryTestAPIClient(
-    DIRECTORY_API_URL, DIRECTORY_API_CLIENT_KEY,
-    DIRECTORY_API_CLIENT_SENDER_ID, DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT
+    DIRECTORY_API_URL,
+    DIRECTORY_API_CLIENT_KEY,
+    DIRECTORY_API_CLIENT_SENDER_ID,
+    DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT,
 )
 SSO_CLIENT = DirectorySSOTestAPIClient(
     DIRECTORY_SSO_API_CLIENT_BASE_URL, DIRECTORY_SSO_API_CLIENT_API_KEY,
