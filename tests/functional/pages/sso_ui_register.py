@@ -12,7 +12,6 @@ URL = get_absolute_url("sso:signup")
 EXPECTED_STRINGS = [
     "Register",
     "Create a great.gov.uk account and you can",
-    "save your progress as you read through our exporting guidance",
     "create a free business profile to promote your company to overseas buyers",
     "express your interest and apply for export opportunities",
     "Email:",
