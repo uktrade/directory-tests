@@ -2,7 +2,6 @@ beautifulsoup4
 behave
 directory-api-client
 directory-cms-client
-directory-constants
 directory-sso-api-client
 docopt
 nodeenv

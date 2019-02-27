@@ -3,12 +3,8 @@
 import os
 from datetime import datetime
 
-from directory_constants.constants.exred_sector_names import CODES_SECTORS_DICT
-
 import config
 from django.conf import settings
-
-EXRED_SECTORS = CODES_SECTORS_DICT
 
 # variables set in Paver configuration file
 CONFIG_NAME = os.environ.get("CONFIG", "local")
