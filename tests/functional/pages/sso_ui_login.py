@@ -10,13 +10,12 @@ from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("sso:login")
 EXPECTED_STRINGS = [
-    "Returning User",
-    "Register",
+    "Sign in",
     "Use your great.gov.uk login details to sign in.",
     "Email",
     "Password",
-    "Sign in",
     "Forgotten password?",
+    "Register",
     "Register for an account",
     "It takes less than three minutes to register.",
 ]
