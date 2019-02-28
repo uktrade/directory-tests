@@ -39,8 +39,10 @@ SELECTORS = {
         "links": BREADCRUMB_LINKS,
     },
     "hero": {
-        "itself": Selector(By.CSS_SELECTOR, "section.get-finance-banner"),
-        "header": Selector(By.CSS_SELECTOR, "section.get-finance-banner h1"),
+        "itself": Selector(By.ID, "get-finance-hero"),
+        "header": Selector(By.CSS_SELECTOR, "#get-finance-hero h1"),
+        "description": Selector(By.CSS_SELECTOR, "#get-finance-hero p"),
+        "logo": Selector(By.CSS_SELECTOR, "#get-finance-hero img"),
     },
     "check you eligibility": {
         "itself": Selector(By.ID, "contact-section"),
