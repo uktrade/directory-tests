@@ -2,7 +2,7 @@ import pytest
 import requests
 
 
-DOMAIN = "https://contact-us.export.great.gov.uk/"
+from tests.settings import DIRECTORY_LEGACY_CONTACT_US_UI_URL
 
 
 @pytest.mark.parametrize("endpoint, expected_redirect", [
@@ -48,8 +48,8 @@ DOMAIN = "https://contact-us.export.great.gov.uk/"
     ("triage/sso/",                             "/contact/triage/location/"),
 ])
 def test_redirects_for_legacy_contact_us_urls(endpoint, expected_redirect):
-    url = DOMAIN + endpoint
     response = requests.get(url, allow_redirects=True)
+    url = DIRECTORY_LEGACY_CONTACT_US_UI_URL + endpoint
     error_message = f"Expected 200 OK but got {response.status_code} from {url}"
     assert response.status_code == 200, error_message
     if response.history:
