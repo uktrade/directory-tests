@@ -40,11 +40,11 @@ from tests.settings import DIRECTORY_LEGACY_CONTACT_US_UI_URL
     ("single_sign_on/FeedbackForm/",            "/contact/feedback/"),
     ("soo/FeedbackForm/",                       "/contact/feedback/"),
     ("soo/Triage/",                             "/contact/triage/location/"),
-    ("soo/TriageForm/",                         "/contact/triage/location/"),
+    ("soo/TriageForm/",                         "/contact/selling-online-overseas/organisation/"),
     ("soo/feedback/",                           "/contact/feedback/"),
     ("triage/",                                 "/contact/triage/location/"),
     ("triage/directory/",                       "/contact/triage/location/"),
-    ("triage/soo/",                             "/soo/TriageForm?"),
+    ("triage/soo/",                             "/contact/selling-online-overseas/organisation/"),
     ("triage/sso/",                             "/contact/triage/location/"),
 ])
 def test_redirects_for_legacy_contact_us_urls(
