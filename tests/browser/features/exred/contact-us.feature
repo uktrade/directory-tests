@@ -173,6 +173,7 @@ Feature:  new contact us forms
       | My Companies House login is not working                        |
       | I do not know where to enter my verification code              |
       | I have not received my letter containing the verification code |
+      | I have not received a verification code                        |
       | Other                                                          |
 
 
@@ -253,6 +254,7 @@ Feature:  new contact us forms
       | My Companies House login is not working                        |
       | I do not know where to enter my verification code              |
       | I have not received my letter containing the verification code |
+      | I have not received a verification code                        |
 
 
   @TT-758

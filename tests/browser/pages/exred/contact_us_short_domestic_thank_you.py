@@ -21,6 +21,7 @@ NAMES = [
     "Thank you for your enquiry (My Companies House login is not working)",
     "Thank you for your enquiry (I do not know where to enter my verification code)",
     "Thank you for your enquiry (I have not received my letter containing the verification code)",
+    "Thank you for your enquiry (I have not received a verification code)",
 ]
 SERVICE = "Export Readiness"
 TYPE = "Short Domestic Contact us"
@@ -60,6 +61,7 @@ URLs = {
     "thank you for your enquiry (my companies house login is not working)": URL,
     "thank you for your enquiry (i do not know where to enter my verification code)": URL,
     "thank you for your enquiry (i have not received my letter containing the verification code)": URL,
+    "thank you for your enquiry (i have not received a verification code)": URL,
 }
 
 

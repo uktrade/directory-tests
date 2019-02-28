@@ -46,10 +46,6 @@ SELECTORS = {
             By.CSS_SELECTOR, "input[value='password-reset']",
             type=ElementType.RADIO, is_visible=False
         ),
-        "i cannot find my company": Selector(
-            By.CSS_SELECTOR, "input[value='company-not-found']",
-            type=ElementType.RADIO, is_visible=False
-        ),
         "my companies house login is not working": Selector(
             By.CSS_SELECTOR, "input[value='companies-house-login']",
             type=ElementType.RADIO, is_visible=False
@@ -60,6 +56,10 @@ SELECTORS = {
         ),
         "i have not received my letter containing the verification code": Selector(
             By.CSS_SELECTOR, "input[value='no-verification-letter']",
+            type=ElementType.RADIO, is_visible=False
+        ),
+        "i have not received a verification code": Selector(
+            By.CSS_SELECTOR, "input[value='verification-missing']",
             type=ElementType.RADIO, is_visible=False
         ),
         "other": Selector(
@@ -84,6 +84,8 @@ POs = {
     "i do not know where to enter my verification code":
         contact_us_triage_great_account_dedicated_support_content,
     "i have not received my letter containing the verification code":
+        contact_us_triage_great_account_dedicated_support_content,
+    "i have not received a verification code":
         contact_us_triage_great_account_dedicated_support_content,
     "other": contact_us_short_domestic,
 }

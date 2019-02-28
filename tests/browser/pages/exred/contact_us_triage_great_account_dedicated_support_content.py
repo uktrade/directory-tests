@@ -22,6 +22,7 @@ NAMES = [
     "My Companies House login is not working",
     "I do not know where to enter my verification code",
     "I have not received my letter containing the verification code",
+    "I have not received a verification code",
 ]
 SERVICE = "Export Readiness"
 TYPE = "Dedicated Support Content"
@@ -38,6 +39,9 @@ URLs = {
     ),
     "i have not received my letter containing the verification code": urljoin(
         URL, "no-verification-letter/"
+    ),
+    "i have not received a verification code": urljoin(
+        URL, "verification-missing/"
     ),
 }
 
