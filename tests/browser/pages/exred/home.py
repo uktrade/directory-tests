@@ -174,39 +174,29 @@ SELECTORS = {
     "hero": {
         "itself": Selector(By.ID, "hero-campaign-section"),
         "title": Selector(By.ID, "hero-campaign-section-title"),
-        "description": Selector(By.ID, "hero-campaign-section-description"),
-        "logo": Selector(By.ID, "hero-campaign-section-eig-logo"),
-        "watch video": Selector(By.ID, "hero-campaign-section-watch-video-button"),
+        "description": Selector(By.CSS_SELECTOR, "#hero-campaign-section p"),
+        "become an export advocate": Selector(
+            By.CSS_SELECTOR, "#hero-campaign-section a", type=ElementType.LINK
+        ),
     },
-    "exporting journey": {
-        "itself": Selector(By.CSS_SELECTOR, "section.triage"),
-        "heading": Selector(By.ID, "triage-section-title"),
-        "introduction": Selector(By.ID, "triage-section-description"),
-        "get_started_button": GET_STARTED_BUTTON,
-        "image": Selector(By.ID, "triage-section-image"),
+    "eu exit enquiries banner": {
+        "itself": Selector(By.CSS_SELECTOR, ".eu-exit-banner"),
+        "guidance on how to prepare for eu exit": Selector(
+            By.CSS_SELECTOR,
+            ".eu-exit-banner a:nth-child(1)",
+            type=ElementType.LINK
+        ),
+        "eu exit enquiry form": Selector(
+            By.CSS_SELECTOR,
+            ".eu-exit-banner a:nth-child(2)",
+            type=ElementType.LINK
+        ),
     },
     "news": {
         "itself": Selector(By.ID, "eu-exit-news-section"),
         "description": Selector(By.CSS_SELECTOR, "#eu-exit-news-section h2 ~ p"),
         "articles": ARTICLES,
         "see all news": Selector(By.ID, "see-all-eu-exit-news"),
-    },
-    "export readiness": {
-        "itself": Selector(By.ID, "personas"),
-        "title": Selector(By.ID, "personas-section-title"),
-        "description": Selector(By.ID, "personas-section-description"),
-        "groups": Selector(By.CSS_SELECTOR, "#personas a"),
-        "new": NEW_TO_EXPORTING_LINK,
-        "occasional": OCCASIONAL_EXPORTER_LINK,
-        "regular": REGULAR_EXPORTED_LINK,
-        "i'm new to exporting": NEW_TO_EXPORTING_LINK,
-        "i export occasionally": OCCASIONAL_EXPORTER_LINK,
-        "i'm a regular exporter": REGULAR_EXPORTED_LINK,
-        "new exporter - image": Selector(By.ID, "personas-section-new-image"),
-        "occasional exporter - image": Selector(
-            By.ID, "personas-section-occasional-image"
-        ),
-        "regular exporter - image": Selector(By.ID, "personas-section-regular-image"),
     },
     "advice": {
         "itself": Selector(By.ID, "resource-advice"),
