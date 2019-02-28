@@ -20,6 +20,7 @@ Feature: UK Export Finance page & contact-us form
 
 
   @TT-585
+  @video
   Scenario: Any Exporter should be able to watch promotional video on the "UKEF Get Finance" page
     Given "Robert" visits the "Export Readiness - Get Finance" page
 
