@@ -47,15 +47,18 @@ from tests.settings import DIRECTORY_LEGACY_CONTACT_US_UI_URL
     ("triage/soo/",                             "/soo/TriageForm?"),
     ("triage/sso/",                             "/contact/triage/location/"),
 ])
-def test_redirects_for_legacy_contact_us_urls(endpoint, expected_redirect):
-    response = requests.get(url, allow_redirects=True)
+def test_redirects_for_legacy_contact_us_urls(
+        endpoint, expected_redirect, hawk_cookie
+):
     url = DIRECTORY_LEGACY_CONTACT_US_UI_URL + endpoint
+    response = requests.get(url, allow_redirects=True, cookies=hawk_cookie)
     error_message = f"Expected 200 OK but got {response.status_code} from {url}"
     assert response.status_code == 200, error_message
     if response.history:
         redirects = [h.headers['Location'] for h in response.history]
         last_redirect = redirects[-1]
-        error_message = (f"Expected last redirect for legacy contact-us URL: "
-                         f"{url} to be: '{expected_redirect}' but got "
-                         f"{last_redirect}")
+        error_message = (f"Expected {url} redirect to: '{expected_redirect}' "
+                         f"but got {last_redirect}")
         assert expected_redirect == last_redirect, error_message
+
+
