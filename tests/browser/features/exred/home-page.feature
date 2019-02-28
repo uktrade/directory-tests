@@ -6,17 +6,19 @@ Feature: Home Page
 
   @ED-2366
   @sections
-  Scenario: Any Exporter should see the "Beta, Hero, Exporting Journey, Export Readiness, Advice, Services, Case Studies, Business is Great, Error Reporting" sections on the home page
+  Scenario: Any Exporter should see the "Beta bar, Hero, EU Exit enquiries banner, Advice, Services, Case Studies, Business is Great, Error Reporting" sections on the home page
       Given "Robert" visits the "Export Readiness - Home" page
       Then "Robert" should see following sections
-        | Sections          |
-        | Beta bar          |
-        | Hero              |
-        | Advice            |
-        | Services          |
-        | Case Studies      |
-        | Business is Great |
-        | Error Reporting   |
+        | Sections                 |
+        | Beta bar                 |
+        | Hero                     |
+        | EU Exit enquiries banner |
+#        | News                     |
+        | Advice                   |
+        | Services                 |
+        | Case Studies             |
+        | Business is Great        |
+        | Error Reporting          |
 
 
   @ED-3014
