@@ -8,7 +8,6 @@ from tests.settings import DIRECTORY_LEGACY_CONTACT_US_UI_URL
 @pytest.mark.parametrize("endpoint, expected_redirect", [
     ("contact/",                                "/contact/triage/location/"),
     ("directory/",                              "/contact/triage/location/"),
-    ("directory/FeedbackForm/",                 "/contact/feedback/"),
     ("eig/",                                    "/contact/triage/location/"),
     ("export-opportunities/FeedbackForm/",      "/contact/feedback/"),
     ("export_opportunities/",                   "/contact/triage/domestic/"),
@@ -62,3 +61,14 @@ def test_redirects_for_legacy_contact_us_urls(
         assert expected_redirect == last_redirect, error_message
 
 
+@pytest.mark.parametrize("endpoint, expected_redirect", [
+    ("directory/FeedbackForm/",                 "/contact/feedback/"),
+])
+def test_redirects_for_legacy_contact_us_urls_direct(
+        endpoint, expected_redirect, hawk_cookie
+):
+    url = DIRECTORY_LEGACY_CONTACT_US_UI_URL + endpoint
+    response = requests.get(url, allow_redirects=True, cookies=hawk_cookie)
+    error_message = f"Expected 200 OK but got {response.status_code} from {url}"
+    assert response.status_code == 200, error_message
+    assert response.url.endswith("/contact/feedback/")
