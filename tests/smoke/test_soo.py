@@ -75,7 +75,7 @@ def test_search_works(categories, countries):
 ])
 def test_get_market_details_dev(market):
     url = get_absolute_url("ui-soo:market-details")
-    absolute_url = "{}{}".format(url, market)
+    absolute_url = f"{url}{market}"
     response = requests.get(absolute_url, allow_redirects=True)
     assert response.status_code == HTTP_200_OK, status_error(
         HTTP_200_OK, response
@@ -117,7 +117,7 @@ def test_get_market_details_dev(market):
 ])
 def test_get_market_details_stage(market):
     url = get_absolute_url("ui-soo:market-details")
-    absolute_url = "{}{}".format(url, market)
+    absolute_url = f"{url}{market}"
     response = requests.get(absolute_url, allow_redirects=True)
     assert response.status_code == HTTP_200_OK, status_error(
         HTTP_200_OK, response
@@ -167,7 +167,7 @@ def test_get_market_details_stage(market):
 ])
 def test_get_market_details_prod(market):
     url = get_absolute_url("ui-soo:market-details")
-    absolute_url = "{}{}".format(url, market)
+    absolute_url = f"{url}{market}"
     response = requests.get(absolute_url, allow_redirects=True)
     assert response.status_code == HTTP_200_OK, status_error(
         HTTP_200_OK, response

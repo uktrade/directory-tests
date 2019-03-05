@@ -1,8 +1,9 @@
 import pytest
 import requests
-
-
+from rest_framework.status import *
 from tests.settings import DIRECTORY_LEGACY_CONTACT_US_UI_URL
+from tests import get_absolute_url
+from tests.smoke.cms_api_helpers import status_error
 
 
 @pytest.mark.parametrize("endpoint, expected_redirect", [
@@ -51,8 +52,9 @@ def test_redirects_for_legacy_contact_us_urls(
 ):
     url = DIRECTORY_LEGACY_CONTACT_US_UI_URL + endpoint
     response = requests.get(url, allow_redirects=True, cookies=hawk_cookie)
-    error_message = f"Expected 200 OK but got {response.status_code} from {url}"
-    assert response.status_code == 200, error_message
+    assert response.status_code == HTTP_200_OK, status_error(
+        HTTP_200_OK, response
+    )
     if response.history:
         redirects = [h.headers['Location'] for h in response.history]
         last_redirect = redirects[-1]
@@ -62,13 +64,153 @@ def test_redirects_for_legacy_contact_us_urls(
 
 
 @pytest.mark.parametrize("endpoint, expected_redirect", [
-    ("directory/FeedbackForm/",                 "/contact/feedback/"),
+    ("directory/FeedbackForm/", "/contact/feedback/"),
 ])
 def test_redirects_for_legacy_contact_us_urls_direct(
         endpoint, expected_redirect, hawk_cookie
 ):
     url = DIRECTORY_LEGACY_CONTACT_US_UI_URL + endpoint
     response = requests.get(url, allow_redirects=True, cookies=hawk_cookie)
-    error_message = f"Expected 200 OK but got {response.status_code} from {url}"
-    assert response.status_code == 200, error_message
+    assert response.status_code == HTTP_200_OK, status_error(
+        HTTP_200_OK, response
+    )
     assert response.url.endswith("/contact/feedback/")
+
+
+@pytest.mark.dev
+@pytest.mark.parametrize("market", [
+    "1688com",
+    "amazon-canada",
+    "amazon-china",
+    "amazon-france",
+    "amazon-germany",
+    "amazon-italy",
+    "amazon-japan",
+    "amazon-spain",
+    "amazon-usa",
+    "cdiscount",
+    "ebay",
+    "etsy",
+    "flipkart",
+    "jd-worldwide",
+    "kaola",
+    "newegg-inc",
+    "privalia",
+    "rakuten",
+    "royal-mail-t-mall",
+    "sfbest",
+    "shangpin",
+    "spartoo",
+    "trademe",
+    ])
+def test_access_contact_us_organisation_endpoints_dev(market):
+    absolute_url = get_absolute_url("ui-contact-us:selling-online-overseas:organisation")
+    params = { "market": market }
+    response = requests.get(absolute_url, params=params, allow_redirects=True)
+    assert response.status_code == HTTP_200_OK, status_error(
+        HTTP_200_OK, response
+    )
+
+
+@pytest.mark.stage
+@pytest.mark.parametrize("market", [
+    "1688com",
+    "amazon-canada",
+    "amazon-china",
+    "amazon-france",
+    "amazon-germany",
+    "amazon-italy",
+    "amazon-japan",
+    "amazon-mexico",
+    "amazon-spain",
+    "amazon-usa",
+    "cdiscount",
+    "ebay",
+    "flipkart",
+    "fruugo",
+    "goxip",
+    "jd-worldwide",
+    "kaola",
+    "la-redoute",
+    "linio",
+    "newegg-business",
+    "newegg-canada",
+    "newegg-inc",
+    "privalia",
+    "rakuten",
+    "royal-mail-t-mall",
+    "sfbest",
+    "shangpin",
+    "spartoo",
+    "trademe",
+    "tthigo",
+    ])
+def test_access_contact_us_organisation_endpoints_stage(market):
+    absolute_url = get_absolute_url("ui-contact-us:selling-online-overseas:organisation")
+    params = {"market": market}
+    response = requests.get(absolute_url, params=params, allow_redirects=True)
+    assert response.status_code == HTTP_200_OK, status_error(
+        HTTP_200_OK, response
+    )
+
+
+@pytest.mark.prod
+@pytest.mark.parametrize("market", [
+    "1688com",
+    "amazon-canada",
+    "amazon-china",
+    "amazon-france",
+    "amazon-germany",
+    "amazon-italy",
+    "amazon-japan",
+    "amazon-mexico",
+    "amazon-spain",
+    "amazon-usa",
+    "bol",
+    "catch",
+    "cdiscount",
+    "darty",
+    "ebay",
+    "eprice",
+    "flipkart",
+    "fnac",
+    "fruugo",
+    "goxip",
+    "jd-worldwide",
+    "kaola",
+    "la-redoute",
+    "linio",
+    "mano-mano",
+    "newegg-business",
+    "newegg-canada",
+    "newegg-inc",
+    "onbuy",
+    "privalia",
+    "rakuten",
+    "royal-mail-t-mall",
+    "sfbest",
+    "shangpin",
+    "spartoo",
+    "trademe",
+    "tthigo",
+    ])
+def test_access_contact_us_organisation_endpoints_prod(market):
+    absolute_url = get_absolute_url("ui-contact-us:selling-online-overseas:organisation")
+    params = {"market": market}
+    response = requests.get(absolute_url, params=params, allow_redirects=True)
+    assert response.status_code == HTTP_200_OK, status_error(
+        HTTP_200_OK, response
+    )
+
+
+@pytest.mark.parametrize("absolute_url", [
+    get_absolute_url("ui-contact-us:selling-online-overseas:organisation:details"),
+    get_absolute_url("ui-contact-us:selling-online-overseas:organisation:your-experience"),
+    get_absolute_url("ui-contact-us:selling-online-overseas:organisation:contact-details"),
+    get_absolute_url("ui-contact-us:selling-online-overseas:organisation:success")
+])
+def test_access_contact_us_endpoints(absolute_url):
+    response = requests.get(absolute_url, allow_redirects=True)
+    assert response.status_code == HTTP_200_OK, status_error(
+        HTTP_200_OK, response
+    )
