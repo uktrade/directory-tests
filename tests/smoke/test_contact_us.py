@@ -52,8 +52,9 @@ def test_redirects_for_legacy_contact_us_urls(
 ):
     url = DIRECTORY_LEGACY_CONTACT_US_UI_URL + endpoint
     response = requests.get(url, allow_redirects=True, cookies=hawk_cookie)
-    error_message = f"Expected 200 OK but got {response.status_code} from {url}"
-    assert response.status_code == 200, error_message
+    assert response.status_code == HTTP_200_OK, status_error(
+        HTTP_200_OK, response
+    )
     if response.history:
         redirects = [h.headers['Location'] for h in response.history]
         last_redirect = redirects[-1]
@@ -70,8 +71,9 @@ def test_redirects_for_legacy_contact_us_urls_direct(
 ):
     url = DIRECTORY_LEGACY_CONTACT_US_UI_URL + endpoint
     response = requests.get(url, allow_redirects=True, cookies=hawk_cookie)
-    error_message = f"Expected 200 OK but got {response.status_code} from {url}"
-    assert response.status_code == 200, error_message
+    assert response.status_code == HTTP_200_OK, status_error(
+        HTTP_200_OK, response
+    )
     assert response.url.endswith("/contact/feedback/")
 
 
