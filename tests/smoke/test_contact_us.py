@@ -101,22 +101,10 @@ def test_redirects_for_legacy_contact_us_urls_direct(
     "spartoo",
     "trademe",
     ])
-def test_access_contact_us_endpoints(market):
-    urls = [get_absolute_url(url) for url in [
-        "ui-contact-us:selling-online-overseas:organisation",
-        "ui-contact-us:selling-online-overseas:organisation:details",
-        "ui-contact-us:selling-online-overseas:organisation:your-experience",
-        "ui-contact-us:selling-online-overseas:organisation:contact-details",
-        "ui-contact-us:selling-online-overseas:organisation:success"
-    ]]
+def test_access_contact_us_organisation_endpoints_dev(market):
+    absolute_url = get_absolute_url("ui-contact-us:selling-online-overseas:organisation")
     params = { "market": market }
-
-    for url in urls:
-        if url.endswith("organisation"):
-            response = requests.get(url, params=params, allow_redirects=True)
-        else:
-            response = requests.get(url, allow_redirects=True)
-
+    response = requests.get(absolute_url, params=params, allow_redirects=True)
     assert response.status_code == HTTP_200_OK, status_error(
         HTTP_200_OK, response
     )
@@ -155,22 +143,10 @@ def test_access_contact_us_endpoints(market):
     "trademe",
     "tthigo",
     ])
-def test_access_contact_us_endpoints(market):
-    urls = [get_absolute_url(url) for url in [
-        "ui-contact-us:selling-online-overseas:organisation",
-        "ui-contact-us:selling-online-overseas:organisation:details",
-        "ui-contact-us:selling-online-overseas:organisation:your-experience",
-        "ui-contact-us:selling-online-overseas:organisation:contact-details",
-        "ui-contact-us:selling-online-overseas:organisation:success"
-    ]]
-    params = { "market": market }
-
-    for url in urls:
-        if url.endswith("organisation"):
-            response = requests.get(url, params=params, allow_redirects=True)
-        else:
-            response = requests.get(url, allow_redirects=True)
-
+def test_access_contact_us_organisation_endpoints_stage(market):
+    absolute_url = get_absolute_url("ui-contact-us:selling-online-overseas:organisation")
+    params = {"market": market}
+    response = requests.get(absolute_url, params=params, allow_redirects=True)
     assert response.status_code == HTTP_200_OK, status_error(
         HTTP_200_OK, response
     )
@@ -216,22 +192,23 @@ def test_access_contact_us_endpoints(market):
     "trademe",
     "tthigo",
     ])
-def test_access_contact_us_endpoints(market):
-    urls = [get_absolute_url(url) for url in [
-        "ui-contact-us:selling-online-overseas:organisation",
-        "ui-contact-us:selling-online-overseas:organisation:details",
-        "ui-contact-us:selling-online-overseas:organisation:your-experience",
-        "ui-contact-us:selling-online-overseas:organisation:contact-details",
-        "ui-contact-us:selling-online-overseas:organisation:success"
-    ]]
-    params = { "market": market }
+def test_access_contact_us_organisation_endpoints_prod(market):
+    absolute_url = get_absolute_url("ui-contact-us:selling-online-overseas:organisation")
+    params = {"market": market}
+    response = requests.get(absolute_url, params=params, allow_redirects=True)
+    assert response.status_code == HTTP_200_OK, status_error(
+        HTTP_200_OK, response
+    )
 
-    for url in urls:
-        if url.endswith("organisation"):
-            response = requests.get(url, params=params, allow_redirects=True)
-        else:
-            response = requests.get(url, allow_redirects=True)
 
+@pytest.mark.parametrize("absolute_url", [
+    get_absolute_url("ui-contact-us:selling-online-overseas:organisation:details"),
+    get_absolute_url("ui-contact-us:selling-online-overseas:organisation:your-experience"),
+    get_absolute_url("ui-contact-us:selling-online-overseas:organisation:contact-details"),
+    get_absolute_url("ui-contact-us:selling-online-overseas:organisation:success")
+])
+def test_access_contact_us_endpoints(absolute_url):
+    response = requests.get(absolute_url, allow_redirects=True)
     assert response.status_code == HTTP_200_OK, status_error(
         HTTP_200_OK, response
     )
