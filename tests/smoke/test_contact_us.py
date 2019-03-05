@@ -114,10 +114,8 @@ def test_access_contact_us_endpoints(market):
     for url in urls:
         if url.endswith("organisation"):
             response = requests.get(url, params=params, allow_redirects=True)
-            print(response.url)
         else:
             response = requests.get(url, allow_redirects=True)
-            print(response.url)
 
     assert response.status_code == HTTP_200_OK, status_error(
         HTTP_200_OK, response
@@ -170,10 +168,8 @@ def test_access_contact_us_endpoints(market):
     for url in urls:
         if url.endswith("organisation"):
             response = requests.get(url, params=params, allow_redirects=True)
-            print(response.url)
         else:
             response = requests.get(url, allow_redirects=True)
-            print(response.url)
 
     assert response.status_code == HTTP_200_OK, status_error(
         HTTP_200_OK, response
@@ -233,10 +229,8 @@ def test_access_contact_us_endpoints(market):
     for url in urls:
         if url.endswith("organisation"):
             response = requests.get(url, params=params, allow_redirects=True)
-            print(response.url)
         else:
             response = requests.get(url, allow_redirects=True)
-            print(response.url)
 
     assert response.status_code == HTTP_200_OK, status_error(
         HTTP_200_OK, response
