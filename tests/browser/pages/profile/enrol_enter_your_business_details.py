@@ -51,24 +51,12 @@ SELECTORS = {
     },
     "enter your business details": {
         "itself": Selector(By.CSS_SELECTOR, "section form"),
-        "heading": Selector(By.CSS_SELECTOR, "form-step-body-text h1"),
+        "heading": Selector(By.CSS_SELECTOR, "#form-step-body-text h1"),
         "company name": Selector(
             By.ID,
             "id_search-company_name",
             type=ElementType.INPUT,
             is_visible=False,
-        ),
-        "industry": Selector(
-            By.ID,
-            "id_business-details-industry",
-            is_visible=False,
-            type=ElementType.SELECT,
-        ),
-        "website": Selector(
-            By.ID,
-            "id_business-details-website_address",
-            is_visible=False,
-            type=ElementType.INPUT,
         ),
         "submit": Selector(
             By.CSS_SELECTOR, "form button.button", type=ElementType.BUTTON
