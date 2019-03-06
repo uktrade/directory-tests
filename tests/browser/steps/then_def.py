@@ -8,13 +8,13 @@ from behave.runner import Context
 from steps.then_impl import (
     articles_should_be_on_share_page,
     case_studies_should_see_case_study,
-    eu_exit_contact_us_should_receive_confirmation_email,
     fas_search_results_filtered_by_industries,
     form_check_state_of_element,
     form_should_see_error_messages,
     forms_confirmation_email_should_not_be_sent,
     generic_article_counter_should_match_number_of_articles,
     generic_article_counters_should_match,
+    generic_contact_us_should_receive_confirmation_email,
     generic_should_see_expected_page_content,
     generic_should_see_form_choices,
     header_check_dit_logo,
@@ -47,6 +47,7 @@ from steps.then_impl import (
     stats_and_tracking_elements_should_not_be_present,
     zendesk_should_receive_confirmation_email,
 )
+from steps.when_impl import generic_get_verification_code
 
 
 @then('"{actor_alias}" should be on the "{page_name}" page')
@@ -281,3 +282,8 @@ def then_should_see_correct_trade_office_details(
 @then('"{actor_alias}" should not receive a confirmation email')
 def then_confirmation_email_should_not_be_sent(context: Context, actor_alias: str):
     forms_confirmation_email_should_not_be_sent(context, actor_alias)
+
+
+@then('"{actor_alias}" should receive email confirmation code')
+def then_actor_should_get_verifaction_code(context: Context, actor_alias: str):
+    generic_get_verification_code(context, actor_alias)

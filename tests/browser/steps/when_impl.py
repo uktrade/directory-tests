@@ -275,6 +275,14 @@ def registration_should_get_verification_email(
     update_actor(context, actor_alias, email_confirmation_link=link)
 
 
+def generic_get_verification_code(context: Context, actor_alias: str):
+    """Will check if the Exporter received an email verification message."""
+    logging.debug("Searching for an email verification message...")
+    actor = get_actor(context, actor_alias)
+    code = get_verification_code(actor.email)
+    update_actor(context, actor_alias, email_confirmation_code=code)
+
+
 def registration_open_email_confirmation_link(
     context: Context, actor_alias: str
 ):
