@@ -1,1 +1,4 @@
-__all__ = ["home"]
+__all__ = [
+    "company_profile_edit",
+    "home",
+]
