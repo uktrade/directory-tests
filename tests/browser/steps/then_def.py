@@ -200,9 +200,12 @@ def then_should_receive_contact_confirmation_email(
 @then('"{actor_alias}" should receive an "{subject}" confirmation email')
 @then('"{actor_alias}" should receive a "{subject}" confirmation email')
 @then('"{actor_alias}" should receive "{subject}" confirmation email')
+@then('"{actor_alias}" should receive "{subject}" email')
 def then_should_receive_confirmation_email_from_govnotify(
         context: Context, actor_alias: str, subject: str):
-    eu_exit_contact_us_should_receive_confirmation_email(context, actor_alias, subject)
+    generic_contact_us_should_receive_confirmation_email(
+        context, actor_alias, subject
+    )
 
 
 @then('Invest mailbox admin should also receive a contact confirmation email from "{sender_email}"')
