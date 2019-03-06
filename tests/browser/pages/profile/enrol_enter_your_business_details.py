@@ -82,12 +82,11 @@ def should_see_sections(driver: WebDriver, names: List[str]):
 
 
 def generate_form_details(actor: Actor) -> dict:
-    words = ["food", "sell", "office", "work", "private", "trade"]
-    result = {
-        "company name": random.choice(words),
-        "industry": None,
-        "website": "https://test.com",
-    }
+    words = [
+        "food", "sell", "office", "work", "private", "trade", "fruits",
+        "import", "cars", "animal", "limited", "group", "music", "open",
+    ]
+    result = {"company name": random.choice(words)}
     logging.debug(f"Generated form details: {result}")
     return result
 
@@ -103,7 +102,6 @@ def fill_out(driver: WebDriver, details: dict):
     )
     name.clear()
     name.send_keys(details["company name"])
-    # import time; time.sleep(2)
     find_element(
         driver, AUTOCOMPLETION, element_name="Autocompletion", wait_for_it=True
     )
