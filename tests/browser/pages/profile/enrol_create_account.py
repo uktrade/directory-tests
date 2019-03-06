@@ -9,9 +9,9 @@ from pages import ElementType
 from pages.common_actions import (
     Selector,
     check_url,
+    find_and_click_on_page_element,
     go_to_url,
     take_screenshot,
-    find_and_click_on_page_element
 )
 from settings import DIRECTORY_UI_PROFILE_URL
 
@@ -24,7 +24,9 @@ PAGE_TITLE = ""
 SELECTORS = {
     "enrolment progress bar": {
         "itself": Selector(By.ID, "start-page-progress-indicator"),
-        "start now": Selector(By.ID, "start-now-button", type=ElementType.LINK),
+        "start now": Selector(
+            By.ID, "start-now-button", type=ElementType.LINK
+        ),
     }
 }
 

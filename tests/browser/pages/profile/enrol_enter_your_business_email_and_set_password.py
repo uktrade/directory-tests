@@ -10,16 +10,16 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages import ElementType
 from pages.common_actions import (
+    Actor,
     Selector,
+    check_for_sections,
     check_url,
+    fill_out_input_fields,
+    find_and_click_on_page_element,
     go_to_url,
     take_screenshot,
-    find_and_click_on_page_element,
-    check_for_sections,
-    Actor,
-    fill_out_input_fields,
     tick_captcha_checkbox,
-    tick_checkboxes
+    tick_checkboxes,
 )
 from pages.profile import enrol_enter_your_confirmation_code
 from settings import DIRECTORY_UI_PROFILE_URL
@@ -31,36 +31,53 @@ NAMES = [
 ]
 SERVICE = "Profile"
 TYPE = "Enrol"
-URL = urljoin(DIRECTORY_UI_PROFILE_URL, "enrol/business-type/companies-house/user-account/")
+URL = urljoin(
+    DIRECTORY_UI_PROFILE_URL,
+    "enrol/business-type/companies-house/user-account/",
+)
 URLs = {
-    "enter your email and set a password (ltd, plc or royal charter)": urljoin(DIRECTORY_UI_PROFILE_URL, "enrol/business-type/companies-house/user-account/"),
-    "enter your email and set a password (sole trader or other type of business)": urljoin(DIRECTORY_UI_PROFILE_URL, "enrol/business-type/sole-trader/user-account/"),
+    "enter your email and set a password (ltd, plc or royal charter)": urljoin(
+        DIRECTORY_UI_PROFILE_URL,
+        "enrol/business-type/companies-house/user-account/",
+    ),
+    "enter your email and set a password (sole trader or other type of business)": urljoin(
+        DIRECTORY_UI_PROFILE_URL,
+        "enrol/business-type/sole-trader/user-account/",
+    ),
 }
 PAGE_TITLE = ""
 
 SELECTORS = {
-    "enrolment progress bar": {
-        "itself": Selector(By.ID, "progress-column"),
-    },
+    "enrolment progress bar": {"itself": Selector(By.ID, "progress-column")},
     "registration form": {
         "itself": Selector(By.CSS_SELECTOR, "section form"),
         "email": Selector(
-            By.ID, "id_user-account-email", type=ElementType.INPUT,
-            is_visible=False
+            By.ID,
+            "id_user-account-email",
+            type=ElementType.INPUT,
+            is_visible=False,
         ),
         "password": Selector(
-            By.ID, "id_user-account-password", type=ElementType.INPUT,
-            is_visible=False
+            By.ID,
+            "id_user-account-password",
+            type=ElementType.INPUT,
+            is_visible=False,
         ),
         "confirm password": Selector(
-            By.ID, "id_user-account-password_confirmed", type=ElementType.INPUT,
-            is_visible=False
+            By.ID,
+            "id_user-account-password_confirmed",
+            type=ElementType.INPUT,
+            is_visible=False,
         ),
         "t & c": Selector(
-            By.ID, "id_user-account-terms_agreed", type=ElementType.CHECKBOX,
-            is_visible=False
+            By.ID,
+            "id_user-account-terms_agreed",
+            type=ElementType.CHECKBOX,
+            is_visible=False,
         ),
-        "submit": Selector(By.CSS_SELECTOR, "form button.button", type=ElementType.BUTTON)
+        "submit": Selector(
+            By.CSS_SELECTOR, "form button.button", type=ElementType.BUTTON
+        ),
     },
 }
 
@@ -86,7 +103,7 @@ def generate_form_details(actor: Actor) -> dict:
         "email": actor.email,
         "password": actor.password,
         "confirm password": actor.password,
-        "terms and conditions": True,
+        "t & c": True,
     }
     logging.debug(f"Generated form details: {result}")
     return result
@@ -102,6 +119,8 @@ def fill_out(driver: WebDriver, details: dict):
 
 def submit(driver: WebDriver) -> ModuleType:
     take_screenshot(driver, "Before submitting the form")
-    find_and_click_on_page_element(driver, SELECTORS, "submit", wait_for_it=False)
+    find_and_click_on_page_element(
+        driver, SELECTORS, "submit", wait_for_it=False
+    )
     take_screenshot(driver, "After submitting the form")
     return enrol_enter_your_confirmation_code

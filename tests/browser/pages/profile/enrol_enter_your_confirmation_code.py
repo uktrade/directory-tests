@@ -8,34 +8,35 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages import ElementType
 from pages.common_actions import (
+    Actor,
     Selector,
+    check_for_sections,
     check_url,
+    fill_out_input_fields,
+    find_and_click_on_page_element,
     go_to_url,
     take_screenshot,
-    find_and_click_on_page_element,
-    check_for_sections,
-    Actor,
-    fill_out_input_fields
 )
 from settings import DIRECTORY_UI_PROFILE_URL
 
 NAME = "Enter your confirmation code"
 SERVICE = "Profile"
 TYPE = "Enrol"
-URL = urljoin(DIRECTORY_UI_PROFILE_URL, "enrol/business-type/companies-house/verification/")
+URL = urljoin(
+    DIRECTORY_UI_PROFILE_URL,
+    "enrol/business-type/companies-house/verification/",
+)
 PAGE_TITLE = ""
 
 SELECTORS = {
-    "enrolment progress bar": {
-        "itself": Selector(By.ID, "progress-column"),
-    },
+    "enrolment progress bar": {"itself": Selector(By.ID, "progress-column")},
     "confirmation code message": {
         "message": Selector(
             By.CSS_SELECTOR, "#user-account-verification-header-container p"
-        ),
+        )
     },
     "an option to resend the code": {
-        "resend my code": Selector(By.CSS_SELECTOR, "section form a"),
+        "resend my code": Selector(By.CSS_SELECTOR, "section form a")
     },
     "confirmation code form": {
         "itself": Selector(By.CSS_SELECTOR, "section form"),
@@ -79,5 +80,7 @@ def fill_out(driver: WebDriver, details: dict):
 
 def submit(driver: WebDriver):
     take_screenshot(driver, "Before submitting the form")
-    find_and_click_on_page_element(driver, SELECTORS, "submit", wait_for_it=False)
+    find_and_click_on_page_element(
+        driver, SELECTORS, "submit", wait_for_it=False
+    )
     take_screenshot(driver, "After submitting the form")
