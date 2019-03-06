@@ -21,7 +21,7 @@ Feature: New Enrolment flow
       | Description               |
       | Enrolment progress bar    |
 
-
+  @wip
   @TT-1116
   Scenario: Users should be asked for their business type once they start the registration process
     Given "Natalia" visits the "Profile - Create an account" page
@@ -37,6 +37,7 @@ Feature: New Enrolment flow
       | Overseas Company                      |
 
 
+  @wip
   @TT-1117
   @ltd-plc-royal
   @tax-payer
