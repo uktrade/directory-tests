@@ -8,9 +8,9 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from pages.common_actions import (
     Selector,
     check_url,
+    find_and_click_on_page_element,
     go_to_url,
     take_screenshot,
-    find_and_click_on_page_element
 )
 from settings import DIRECTORY_UI_PROFILE_URL
 
@@ -25,12 +25,12 @@ SELECTORS = {
         "itself": Selector(By.CSS_SELECTOR, ".sso-profile-tab-container"),
         "export opportunities": Selector(By.LINK_TEXT, "Export opportunities"),
         "Business profile": Selector(By.LINK_TEXT, "Business profile"),
-        "Selling online overseas": Selector(By.LINK_TEXT, "Selling online overseas"),
+        "Selling online overseas": Selector(
+            By.LINK_TEXT, "Selling online overseas"
+        ),
         "about": Selector(By.LINK_TEXT, "About"),
     },
-    "welcome": {
-        "welcome message": Selector(By.ID, "welcome-message"),
-    },
+    "welcome": {"welcome message": Selector(By.ID, "welcome-message")},
 }
 
 
