@@ -20,6 +20,16 @@ def extract_email_confirmation_link(payload: str) -> str:
     return activation_link
 
 
+def extract_email_confirmation_code(payload: str) -> str:
+    """Find email confirmation code inside the plain text email payload."""
+    reference = "Your confirmation code is "
+    start = payload.find(reference) + len(reference)
+    end = start + 5
+    confirmation_code = payload[start:end]
+    logging.debug("Found email confirmation code: %s", confirmation_code)
+    return confirmation_code
+
+
 def filter_by_subject(notifications: list, subject: str) -> list:
     return list(filter(lambda x: x["subject"] == subject, notifications))
 
@@ -77,3 +87,13 @@ def get_verification_link(email: str) -> str:
     notification = get_email_confirmation_notification(email)
     body = notification["body"]
     return extract_email_confirmation_link(body)
+
+
+def get_verification_code(email: str) -> str:
+    """Find email confirmation code inside the plain text email payload."""
+    subject = "Your confirmation code for great.gov.uk"
+    notification = get_email_confirmation_notification(email, subject=subject)
+    body = notification["body"]
+    activation_code = extract_email_confirmation_code(body)
+    logging.debug("Found email confirmation code: %s", activation_code)
+    return activation_code
