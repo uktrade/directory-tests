@@ -156,3 +156,14 @@ def test_forms_healthcheck_endpoint(absolute_url):
     params = {"token": TOKEN}
     response = requests.get(absolute_url, params=params)
     assert response.status_code == OK, status_error(OK, response)
+
+
+@pytest.mark.international
+@pytest.mark.parametrize("absolute_url", [
+    get_absolute_url("ui-international:healthcheck-sentry"),
+    get_absolute_url("ui-international:healthcheck-forms-api"),
+])
+def test_international_healthcheck_endpoint(absolute_url):
+    params = {"token": TOKEN}
+    response = requests.get(absolute_url, params=params)
+    assert response.status_code == OK, status_error(OK, response)
