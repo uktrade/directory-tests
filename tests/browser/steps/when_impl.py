@@ -19,7 +19,7 @@ from settings import (
     REUSE_COOKIE,
 )
 from utils.cms_api import get_news_articles
-from utils.gov_notify import get_verification_link
+from utils.gov_notify import get_verification_code, get_verification_link
 
 from pages import common_language_selector, exred, fas, get_page_object, sso
 from pages.common_actions import (
@@ -894,3 +894,14 @@ def office_finder_find_trade_office(context: Context, actor_alias: str, post_cod
 def get_barred_actor(context: Context, actor_alias: str):
     if not get_actor(context, actor_alias):
         add_actor(context, barred_actor(actor_alias))
+
+
+def sso_actor_received_email_confirmation_code(
+        context: Context, actor_alias: str, business_type: str
+):
+    page_name = f"Profile - Enter your email and set a password ({business_type})"
+    visit_page(context, actor_alias, page_name)
+    generic_fill_out_and_submit_form(context, actor_alias)
+    end_page_name = "Profile - Enter your confirmation code"
+    should_be_on_page(context, actor_alias, end_page_name)
+    generic_get_verification_code(context, actor_alias)
