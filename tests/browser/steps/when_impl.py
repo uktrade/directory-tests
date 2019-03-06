@@ -35,6 +35,7 @@ from pages.common_actions import (
     get_last_visited_page,
     unauthenticated_actor,
     update_actor,
+    wait_for_page_load_after_action,
 )
 from steps import has_action
 
@@ -674,13 +675,25 @@ def generic_click_on_uk_gov_logo(
     logging.debug("%s click on UK Gov logo %s", actor_alias, page_name)
 
 
-def check_for_errors(driver: WebDriver):
+def check_for_errors_or_non_trading_companies(
+        driver: WebDriver, *, go_back: bool = False
+):
     """Throws an AssertionError if error message is visible."""
     try:
+        # fail when a non-trading company is selected (SIC=74990)
+        assert "74990" not in driver.page_source, f"Found a non-trading company"
         error = driver.find_element(by=By.CSS_SELECTOR, value=".error-message")
-        assert not error.is_displayed()
+        assert not error.is_displayed(), f"Found error on form page"
     except NoSuchElementException:
+        # skip if no error was found
         pass
+    except AssertionError:
+        logging.debug(f"Found a non-trading company")
+        if go_back:
+            logging.debug(f"Going back 1 page because assertion failed")
+            with wait_for_page_load_after_action(driver):
+                driver.back()
+        raise
 
 
 @retry(
@@ -693,7 +706,8 @@ def generic_fill_out_and_submit_form(
         context: Context, actor_alias: str,
         *,
         custom_details_table: Table = None,
-        retry_on_errors: bool = True
+        retry_on_errors: bool = True,
+        go_back: bool = False,
 ):
     actor = get_actor(context, actor_alias)
     page = get_last_visited_page(context, actor_alias)
@@ -720,7 +734,7 @@ def generic_fill_out_and_submit_form(
     page.fill_out(context.driver, details)
     page.submit(context.driver)
     if retry_on_errors:
-        check_for_errors(context.driver)
+        check_for_errors_or_non_trading_companies(context.driver, go_back=go_back)
 
 
 def generic_submit_form(context: Context, actor_alias: str):
