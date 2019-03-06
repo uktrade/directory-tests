@@ -48,6 +48,11 @@ def retry_if_webdriver_error(exception):
     return isinstance(exception, (TimeoutException, WebDriverException))
 
 
+def retry_if_assertion_error(exception):
+    """Return True if we should retry on AssertionError, False otherwise"""
+    return isinstance(exception, AssertionError)
+
+
 def try_to_reuse_hawk_cookie(driver: WebDriver):
     """
     An example 'ip-restrict-signature' cookie returned by WebDriver looks like this:
@@ -664,8 +669,27 @@ def generic_click_on_uk_gov_logo(
     logging.debug("%s click on UK Gov logo %s", actor_alias, page_name)
 
 
+def check_for_errors(driver: WebDriver):
+    """Throws an AssertionError if error message is visible."""
+    try:
+        error = driver.find_element(by=By.CSS_SELECTOR, value=".error-message")
+        assert not error.is_displayed()
+    except NoSuchElementException:
+        pass
+
+
+@retry(
+    wait_fixed=2000,
+    stop_max_attempt_number=3,
+    retry_on_exception=retry_if_assertion_error,
+    wrap_exception=False,
+)
 def generic_fill_out_and_submit_form(
-        context: Context, actor_alias: str, *, custom_details_table: Table = None):
+        context: Context, actor_alias: str,
+        *,
+        custom_details_table: Table = None,
+        retry_on_errors: bool = True
+):
     actor = get_actor(context, actor_alias)
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "generate_form_details")
@@ -690,6 +714,8 @@ def generic_fill_out_and_submit_form(
     logging.debug(f"{actor_alias} will fill out the form with: {details}")
     page.fill_out(context.driver, details)
     page.submit(context.driver)
+    if retry_on_errors:
+        check_for_errors(context.driver)
 
 
 def generic_submit_form(context: Context, actor_alias: str):
