@@ -93,7 +93,7 @@ def generic_set_hawk_cookie(context: Context, page_name: str):
     page = get_page_object(page_name)
     if BASICAUTH_USER:
         parsed = urlparse(page.URL)
-        with_creds = f"{parsed.scheme}://{BASICAUTH_USER}:{BASICAUTH_PASS}@{parsed.netloc}/"
+        with_creds = f"{parsed.scheme}://{BASICAUTH_USER}:{BASICAUTH_PASS}@{parsed.netloc}{parsed.path}"
         logging.debug(f"Visiting {page.URL} in order to pass basic auth")
         driver.get(with_creds)
 
