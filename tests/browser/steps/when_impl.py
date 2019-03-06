@@ -8,7 +8,12 @@ from urllib.parse import urljoin
 from behave.model import Table
 from behave.runner import Context
 from retrying import retry
-from selenium.common.exceptions import TimeoutException, WebDriverException
+from selenium.common.exceptions import (
+    NoSuchElementException,
+    TimeoutException,
+    WebDriverException,
+)
+from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 from urllib.parse import urlparse
 
@@ -905,3 +910,40 @@ def sso_actor_received_email_confirmation_code(
     end_page_name = "Profile - Enter your confirmation code"
     should_be_on_page(context, actor_alias, end_page_name)
     generic_get_verification_code(context, actor_alias)
+
+
+def generic_create_great_account(
+        context: Context, actor_alias: str, business_type: str
+):
+    page_name = f"Profile - Enter your email and set a password ({business_type})"
+
+    visit_page(context, actor_alias, page_name)
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context, actor_alias, "Profile - Enter your confirmation code"
+    )
+
+    generic_get_verification_code(context, actor_alias)
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        f"Profile - Enter your business details ({business_type})"
+    )
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        f"Profile - Enter your business details [step 2] ({business_type})"
+    )
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        f"Profile - Enter your details ({business_type})"
+    )
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(context, actor_alias, "Profile - Account created")

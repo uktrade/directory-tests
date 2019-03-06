@@ -153,3 +153,10 @@ def given_actor_opens_any_news_article(context, actor_alias):
 def given_actor_opened_random_news_article(
         context: Context, actor_alias: str, article_type: str):
     generic_open_random_news_article(context, actor_alias, article_type)
+
+
+@given('"{actor_alias}" has created a great.gov.uk account for a "{business_type}"')
+def given_actor_created_great_account(
+        context: Context, actor_alias: str, business_type: str
+):
+    generic_create_great_account(context, actor_alias, business_type)
