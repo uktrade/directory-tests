@@ -107,6 +107,7 @@ def fill_out(driver: WebDriver, details: dict):
     )
     options = find_elements(driver, AUTOCOMPLETION_OPTIONS)
     option = random.choice(options)
+    logging.debug(f"Selected company: {option.get_attribute('data-value')} - {option.text}")
     option.click()
     take_screenshot(driver, "After filling out the form")
 
