@@ -16,7 +16,6 @@ EXPECTED_STRINGS = [
     "Selling online overseas",
     "About",
     "Sign out",
-    "Reset password",
 ]
 
 EXPECTED_STRINGS_WITH_PROFILE = [
