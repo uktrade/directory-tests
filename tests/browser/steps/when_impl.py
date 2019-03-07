@@ -2,7 +2,7 @@
 """When step implementations."""
 import logging
 import random
-from urllib.parse import urljoin
+from urllib.parse import urljoin, urlparse
 
 from behave.model import Table
 from behave.runner import Context
@@ -14,7 +14,6 @@ from selenium.common.exceptions import (
 )
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
-from urllib.parse import urlparse
 
 from pages import common_language_selector, exred, fas, get_page_object, sso
 from pages.common_actions import (
