@@ -14,7 +14,7 @@ from pages.common_actions import (
 from settings import EXRED_UI_URL
 
 NAME = "Long Domestic (Thank you for your enquiry)"
-SERVICE = "Selling Online Overseas"
+SERVICE = "Export Readiness"
 TYPE = "Contact us"
 URL = urljoin(EXRED_UI_URL, "contact/selling-online-overseas/success/")
 PAGE_TITLE = "Welcome to great.gov.uk"

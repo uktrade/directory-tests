@@ -19,11 +19,11 @@ from pages.common_actions import (
     take_screenshot,
     tick_checkboxes,
 )
-from pages.soo import contact_us_soo_long_organisation_details
+from pages.exred import contact_us_soo_long_organisation_details
 from settings import EXRED_UI_URL
 
 NAME = "Long Domestic (Your Business)"
-SERVICE = "Selling Online Overseas"
+SERVICE = "Export Readiness"
 TYPE = "Contact us"
 URL = urljoin(EXRED_UI_URL, "contact/selling-online-overseas/organisation/")
 PAGE_TITLE = "Welcome to great.gov.uk"
@@ -62,7 +62,7 @@ def visit(driver: WebDriver):
 
 def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
-    check_url(driver, URL)
+    check_url(driver, URL, exact_match=False)
 
 
 def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:

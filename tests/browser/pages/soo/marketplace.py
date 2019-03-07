@@ -9,36 +9,30 @@ from pages.common_actions import (
     Selector,
     check_url,
     find_and_click_on_page_element,
-    go_to_url,
     take_screenshot,
 )
 from settings import SELLING_ONLINE_OVERSEAS_UI_URL
 
-NAME = "Home"
-URL = urljoin(SELLING_ONLINE_OVERSEAS_UI_URL, "")
 SERVICE = "Selling Online Overseas"
-TYPE = "home"
-PAGE_TITLE = "Welcome to Selling online overseas"
+TYPE = "search"
+NAME = "Marketplace"
+URL = urljoin(SELLING_ONLINE_OVERSEAS_UI_URL, "markets/details")
+PAGE_TITLE = "Marketplace details | Selling Online Overseas"
+
 
 SELECTORS = {
     "expected elements": {
-        "hero section": Selector(By.CSS_SELECTOR, ".hero-content"),
-        "what do you sell input": Selector(By.ID, "search-product"),
-        "where do you want to sell input": Selector(By.ID, "search-country"),
-        "start your search now": Selector(By.CSS_SELECTOR, "form button"),
+        "marketplace": Selector(By.CSS_SELECTOR, ".markets-info h1"),
+        "apply now via dit": Selector(By.ID, "apply-to-join"),
     }
 }
 
 
-def visit(driver: WebDriver):
-    go_to_url(driver, URL, NAME)
-
-
 def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
-    check_url(driver, URL, exact_match=True)
+    check_url(driver, URL, exact_match=False)
 
 
-def click_on_page_element(driver: WebDriver, element_name: str):
+def click_on_page_element(driver, element_name):
     find_and_click_on_page_element(driver, SELECTORS, element_name)
     take_screenshot(driver, NAME + " after clicking on " + element_name)

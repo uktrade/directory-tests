@@ -20,6 +20,7 @@ from steps.when_impl import (
     fas_view_more_companies,
     fas_view_selected_company_profile,
     generic_click_on_random_industry,
+    generic_click_on_random_marketplace,
     generic_click_on_uk_gov_logo,
     generic_download_all_pdfs,
     generic_fill_out_and_submit_form,
@@ -27,11 +28,12 @@ from steps.when_impl import (
     generic_open_guide_link,
     generic_open_industry_page,
     generic_open_news_article,
-    generic_pick_radio_option_and_submit,
     generic_pick_radio_option,
+    generic_pick_radio_option_and_submit,
     generic_pick_random_radio_option_and_submit,
     generic_report_problem_with_page,
     generic_see_more_industries,
+    generic_select_dropdown_option,
     generic_submit_form,
     generic_unfold_topics,
     generic_visit_current_page_with_lang_parameter,
@@ -52,7 +54,6 @@ from steps.when_impl import (
     sign_in,
     sign_out,
     visit_page,
-    generic_select_dropdown_option
 )
 
 
@@ -334,6 +335,11 @@ def when_user_opens_any_element(
 @when('"{actor_alias}" decides to report a problem with the page')
 def when_actor_reports_problem_with_page(context: Context, actor_alias: str):
     generic_report_problem_with_page(context, actor_alias)
+
+
+@when('"{actor_alias}" randomly selects a marketplace')
+def when_actor_selects_marketplace(context: Context, actor_alias: str):
+    generic_click_on_random_marketplace(context, actor_alias)
 
 
 ###############################################################################

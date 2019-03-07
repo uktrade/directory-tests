@@ -2,7 +2,6 @@
 """When step implementations."""
 import logging
 import random
-from datetime import datetime
 from urllib.parse import urljoin
 
 from behave.model import Table
@@ -17,12 +16,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 from urllib.parse import urlparse
 
-from settings import (
-    BASICAUTH_USER,
-    BASICAUTH_PASS,
-)
-from utils.cms_api import get_news_articles
-from utils.gov_notify import get_verification_code, get_verification_link
+from utils.gov_notify import get_verification_code
 
 from pages import common_language_selector, exred, fas, get_page_object, sso
 from pages.common_actions import (
@@ -34,7 +28,13 @@ from pages.common_actions import (
     update_actor,
     wait_for_page_load_after_action,
 )
+from settings import (
+    BASICAUTH_PASS,
+    BASICAUTH_USER,
+)
 from steps import has_action
+from utils.cms_api import get_news_articles
+from utils.gov_notify import get_verification_link
 
 NUMBERS = {
     "first": 1,
@@ -75,11 +75,7 @@ def generic_set_basic_auth_creds(context: Context, page_name: str):
     retry_on_exception=retry_if_webdriver_error,
     wrap_exception=False,
 )
-def visit_page(
-    context: Context,
-    actor_alias: str,
-    page_name: str,
-):
+def visit_page(context: Context, actor_alias: str, page_name: str):
     """Will visit specific page.
 
     NOTE:
@@ -509,7 +505,9 @@ def fas_fill_out_and_submit_contact_us_form(
         "source": sources,
         "accept t&c": accept_tc,
     }
-    fas.contact_us.fill_out(context.driver, contact_us_details, captcha=captcha)
+    fas.contact_us.fill_out(
+        context.driver, contact_us_details, captcha=captcha
+    )
     fas.contact_us.submit(context.driver)
 
 
@@ -665,17 +663,15 @@ def generic_fill_out_and_submit_form(
     if custom_details_table:
         custom_details_table.require_column("field")
         custom_details_table.require_column("value")
-        value_mapping = {
-            "unchecked": False,
-            "checked": True,
-            "empty": None,
-        }
+        value_mapping = {"unchecked": False, "checked": True, "empty": None}
         custom_details = {}
         for row in custom_details_table.rows:
             key = row["field"].lower()
             value = row["value"]
             custom_details[key] = value_mapping.get(value, value)
-        details = page.generate_form_details(actor, custom_details=custom_details)
+        details = page.generate_form_details(
+            actor, custom_details=custom_details
+        )
     else:
         details = page.generate_form_details(actor)
     logging.debug(f"{actor_alias} will fill out the form with: {details}")
@@ -703,28 +699,29 @@ def generic_download_all_pdfs(context: Context, actor_alias: str):
 
 
 def generic_visit_current_page_with_lang_parameter(
-        context: Context, actor_alias: str,  preferred_language: str):
+    context: Context, actor_alias: str, preferred_language: str
+):
     page = get_last_visited_page(context, actor_alias)
     url = urljoin(page.URL, f"?lang={preferred_language}")
     context.driver.get(url)
 
 
 def generic_at_least_n_news_articles(
-        context: Context, n: int, visitor_type: str, service: str):
+    context: Context, n: int, visitor_type: str, service: str
+):
     articles = get_news_articles(service, visitor_type)
-    error = (f"Expected to find at least {n} news articles on {service} but "
-             f"got {len(articles)}")
+    error = (
+        f"Expected to find at least {n} news articles on {service} but "
+        f"got {len(articles)}"
+    )
     assert len(articles) >= n, error
     context.articles = articles
 
 
 def generic_open_news_article(
-        context: Context, actor_alias: str, ordinal_number: str):
-    ordinals = {
-        "first": 1,
-        "second": 2,
-        "third": 3,
-    }
+    context: Context, actor_alias: str, ordinal_number: str
+):
+    ordinals = {"first": 1, "second": 2, "third": 3}
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "open_news_article")
     page.open_news_article(context.driver, ordinals[ordinal_number.lower()])
@@ -744,19 +741,17 @@ def generic_open_any_tag(context: Context, actor_alias: str):
 
 
 def generic_open_random_news_article(
-        context: Context, actor_alias: str, article_type: str
+    context: Context, actor_alias: str, article_type: str
 ):
     flow = {
         "domestic": {
-            "start":
-                "Export Readiness - Updates for UK companies on EU Exit - Domestic",
+            "start": "Export Readiness - Updates for UK companies on EU Exit - Domestic",
             "finish": "Export Readiness - Domestic EU Exit news - article",
         },
         "international": {
-            "start":
-                "Export Readiness - Updates for non-UK companies on EU Exit - International",
+            "start": "Export Readiness - Updates for non-UK companies on EU Exit - International",
             "finish": "Export Readiness - International EU Exit news - article",
-        }
+        },
     }
     start = flow[article_type.lower()]["start"]
     finish = flow[article_type.lower()]["finish"]
@@ -771,22 +766,29 @@ def generic_click_on_random_industry(context: Context, actor_alias: str):
     page.open_any_article(context.driver)
 
 
+def generic_click_on_random_marketplace(context: Context, actor_alias: str):
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "open_any_marketplace")
+    page.open_any_marketplace(context.driver)
+
+
 def generic_select_dropdown_option(
-        context: Context, actor_alias: str, dropdown: str, option: str):
+    context: Context, actor_alias: str, dropdown: str, option: str
+):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "select_dropdown_option")
     page.select_dropdown_option(context.driver, dropdown, option)
 
 
-def generic_pick_radio_option(
-        context: Context, actor_alias: str, option: str):
+def generic_pick_radio_option(context: Context, actor_alias: str, option: str):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "pick_radio_option")
     page.pick_radio_option(context.driver, option)
 
 
 def generic_pick_radio_option_and_submit(
-        context: Context, actor_alias: str, option: str):
+    context: Context, actor_alias: str, option: str
+):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "pick_radio_option_and_submit")
     new_page = page.pick_radio_option_and_submit(context.driver, option)
@@ -794,16 +796,20 @@ def generic_pick_radio_option_and_submit(
 
 
 def generic_pick_random_radio_option_and_submit(
-        context: Context, actor_alias: str, ignored: str):
+    context: Context, actor_alias: str, ignored: str
+):
     ignored = [item.strip().lower() for item in ignored.split(",")]
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "pick_random_radio_option_and_submit")
-    new_page = page.pick_random_radio_option_and_submit(context.driver, ignored)
+    new_page = page.pick_random_radio_option_and_submit(
+        context.driver, ignored
+    )
     update_actor(context, actor_alias, visited_page=new_page)
 
 
 def contact_us_get_to_page_via(
-        context: Context, actor_alias: str, final_page: str, via: str):
+    context: Context, actor_alias: str, final_page: str, via: str
+):
     intermediate = [name.strip() for name in via.split("->")]
     # 1) start at the Contact us "choose location" page
     visit_page(context, actor_alias, "Export Readiness - Contact us")
@@ -814,7 +820,9 @@ def contact_us_get_to_page_via(
     should_be_on_page(context, actor_alias, final_page)
 
 
-def contact_us_navigate_through_options(context: Context, actor_alias: str, via: str):
+def contact_us_navigate_through_options(
+    context: Context, actor_alias: str, via: str
+):
     intermediate = [name.strip() for name in via.split("->")]
     # 1) start at the Contact us "choose location" page
     visit_page(context, actor_alias, "Export Readiness - Contact us")
@@ -824,14 +832,17 @@ def contact_us_navigate_through_options(context: Context, actor_alias: str, via:
 
 
 def open_any_element(
-        context: Context, actor_alias: str, element_type: str, section_name: str):
+    context: Context, actor_alias: str, element_type: str, section_name: str
+):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "open_any_element_in_section")
     element_details = page.open_any_element_in_section(
         context.driver, element_type, section_name
     )
     update_actor(context, actor_alias, element_details=element_details)
-    logging.info(f"{actor_alias} opened random {element_type} from {section_name}")
+    logging.info(
+        f"{actor_alias} opened random {element_type} from {section_name}"
+    )
 
 
 def exred_open_random_advice_article(context: Context, actor_alias: str):
@@ -852,7 +863,9 @@ def generic_report_problem_with_page(context: Context, actor_alias: str):
     page.report_problem(context.driver)
 
 
-def office_finder_find_trade_office(context: Context, actor_alias: str, post_code: str):
+def office_finder_find_trade_office(
+    context: Context, actor_alias: str, post_code: str
+):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "find_trade_office")
     page.find_trade_office(context.driver, post_code)
