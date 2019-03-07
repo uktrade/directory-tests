@@ -16,15 +16,15 @@ from tests.smoke.cms_api_helpers import status_error
     get_absolute_url("sso-api:healthcheck"),
     get_absolute_url("sso-api:healthcheck-ping"),
 ])
-def test_sso_api_health_check(absolute_url):
+def test_sso_api_health_check(absolute_url, basic_auth):
     """This endpoint still uses session auth"""
     params = {"token": TOKEN}
-    response = requests.get(absolute_url, params=params)
+    response = requests.get(absolute_url, params=params, auth=basic_auth)
     assert response.status_code == OK
 
 
 @pytest.mark.sso_api
-def test_sso_api_health_check_ping_with_sso_api_client():
+def test_sso_api_health_check_ping_with_sso_api_client(basic_auth):
     """Use SSO-API client"""
     response = sso_api_client.ping()
     assert response.status_code == OK
@@ -77,9 +77,9 @@ def test_fab_302_redirects_after_removing_trailing_slash_for_anon_user(
 @pytest.mark.parametrize("absolute_url", [
     get_absolute_url("ui-supplier:healthcheck"),
 ])
-def test_fas_health_check_endpoints(absolute_url):
+def test_fas_health_check_endpoints(absolute_url, basic_auth):
     params = {"token": TOKEN}
-    response = requests.get(absolute_url, params=params)
+    response = requests.get(absolute_url, params=params, auth=basic_auth)
     assert response.status_code == OK
 
 
@@ -87,9 +87,9 @@ def test_fas_health_check_endpoints(absolute_url):
 @pytest.mark.parametrize("absolute_url", [
     get_absolute_url("ui-invest:healthcheck"),
 ])
-def test_invest_health_check_endpoints(absolute_url):
+def test_invest_health_check_endpoints(absolute_url, basic_auth):
     params = {"token": TOKEN}
-    response = requests.get(absolute_url, params=params)
+    response = requests.get(absolute_url, params=params, auth=basic_auth)
     assert response.status_code == OK
 
 
@@ -98,9 +98,9 @@ def test_invest_health_check_endpoints(absolute_url):
     get_absolute_url("api:healthcheck"),
     get_absolute_url("api:healthcheck-ping"),
 ])
-def test_dir_api_health_check_endpoints(absolute_url):
+def test_dir_api_health_check_endpoints(absolute_url, basic_auth):
     params = {"token": TOKEN}
-    response = requests.get(absolute_url, params=params)
+    response = requests.get(absolute_url, params=params, auth=basic_auth)
     error = (f"Expected 200 OK from {absolute_url} but got "
              f"{response.status_code}. Check the reponse content: "
              f"{str(response.content)}")
@@ -112,9 +112,9 @@ def test_dir_api_health_check_endpoints(absolute_url):
     get_absolute_url("profile:healthcheck"),
     get_absolute_url("profile:healthcheck-ping"),
 ])
-def test_profile_health_check_endpoints_with_token(absolute_url):
+def test_profile_health_check_endpoints_with_token(absolute_url, basic_auth):
     params = {"token": TOKEN}
-    response = requests.get(absolute_url, params=params)
+    response = requests.get(absolute_url, params=params, auth=basic_auth)
     assert response.status_code == OK
 
 
@@ -123,14 +123,14 @@ def test_profile_health_check_endpoints_with_token(absolute_url):
     get_absolute_url("ui-exred:healthcheck"),
     get_absolute_url("ui-exred:healthcheck-ping"),
 ])
-def test_exred_health_check_endpoints(absolute_url):
+def test_exred_health_check_endpoints(absolute_url, basic_auth):
     params = {"token": TOKEN}
-    response = requests.get(absolute_url, params=params)
+    response = requests.get(absolute_url, params=params, auth=basic_auth)
     assert response.status_code == OK
 
 
 @pytest.mark.cms
-def test_cms_health_check_ping_endpoint_with_cms_api_client():
+def test_cms_health_check_ping_endpoint_with_cms_api_client(basic_auth):
     endpoint = get_relative_url("cms-api:healthcheck-ping")
     response = cms_api_client.get(endpoint)
     assert response.status_code == OK, status_error(OK, response)
@@ -141,9 +141,9 @@ def test_cms_health_check_ping_endpoint_with_cms_api_client():
     get_absolute_url("cms-api:healthcheck"),
     get_absolute_url("cms-api:healthcheck-ping"),
 ])
-def test_cms_health_check_database_endpoint(absolute_url):
+def test_cms_health_check_database_endpoint(absolute_url, basic_auth):
     params = {"token": TOKEN}
-    response = requests.get(absolute_url, params=params)
+    response = requests.get(absolute_url, params=params, auth=basic_auth)
     assert response.status_code == OK, status_error(OK, response)
 
 
@@ -152,9 +152,9 @@ def test_cms_health_check_database_endpoint(absolute_url):
     get_absolute_url("forms-api:healthcheck"),
     get_absolute_url("forms-api:healthcheck-ping"),
 ])
-def test_forms_healthcheck_endpoint(absolute_url):
+def test_forms_healthcheck_endpoint(absolute_url, basic_auth):
     params = {"token": TOKEN}
-    response = requests.get(absolute_url, params=params)
+    response = requests.get(absolute_url, params=params, auth=basic_auth)
     assert response.status_code == OK, status_error(OK, response)
 
 
@@ -163,7 +163,7 @@ def test_forms_healthcheck_endpoint(absolute_url):
     get_absolute_url("ui-international:healthcheck-sentry"),
     get_absolute_url("ui-international:healthcheck-forms-api"),
 ])
-def test_international_healthcheck_endpoint(absolute_url):
+def test_international_healthcheck_endpoint(absolute_url, basic_auth):
     params = {"token": TOKEN}
-    response = requests.get(absolute_url, params=params)
+    response = requests.get(absolute_url, params=params, auth=basic_auth)
     assert response.status_code == OK, status_error(OK, response)
