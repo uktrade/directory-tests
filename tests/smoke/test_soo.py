@@ -1,6 +1,6 @@
 import pytest
 import requests
-from rest_framework.status import *
+from rest_framework.status import HTTP_200_OK, HTTP_301_MOVED_PERMANENTLY
 
 from tests import get_absolute_url
 from tests.smoke.cms_api_helpers import status_error
@@ -10,8 +10,8 @@ from tests.smoke.cms_api_helpers import status_error
     get_absolute_url("ui-soo:landing"),
     get_absolute_url("ui-soo:search-results"),
 ])
-def test_access_soo_endpoints(absolute_url):
-    response = requests.get(absolute_url, allow_redirects=True)
+def test_access_soo_endpoints(absolute_url, basic_auth):
+    response = requests.get(absolute_url, allow_redirects=True, auth=basic_auth)
     assert response.status_code == HTTP_200_OK, status_error(
         HTTP_200_OK, response
     )
@@ -21,10 +21,10 @@ def test_access_soo_endpoints(absolute_url):
     get_absolute_url("ui-soo:search-results"),
 ])
 def test_access_soo_endpoints_without_trailing_slash(
-        absolute_url):
+        absolute_url, basic_auth):
     # get rid of trailing slash
     absolute_url = absolute_url[:-1]
-    response = requests.get(absolute_url, allow_redirects=False)
+    response = requests.get(absolute_url, allow_redirects=False, auth=basic_auth)
     assert response.status_code == HTTP_301_MOVED_PERMANENTLY, status_error(
         HTTP_301_MOVED_PERMANENTLY, response
     )
@@ -35,13 +35,13 @@ def test_access_soo_endpoints_without_trailing_slash(
     (["Clothing & Accessories"], "France"),
     (["Clothing & Accessories", "Home & Garden"], ["France", "China"]),
 ])
-def test_search_works(categories, countries):
+def test_search_works(categories, countries, basic_auth):
     url = get_absolute_url("ui-soo:search-results")
     params = {
         "product_categories": categories,
         "operating_countries": countries
     }
-    response = requests.get(url, params=params, allow_redirects=True)
+    response = requests.get(url, params=params, allow_redirects=True, auth=basic_auth)
     assert response.status_code == HTTP_200_OK, status_error(
         HTTP_200_OK, response
     )
@@ -73,10 +73,10 @@ def test_search_works(categories, countries):
     "spartoo",
     "trademe",
 ])
-def test_get_market_details_dev(market):
+def test_get_market_details_dev(market, basic_auth):
     url = get_absolute_url("ui-soo:market-details")
     absolute_url = f"{url}{market}"
-    response = requests.get(absolute_url, allow_redirects=True)
+    response = requests.get(absolute_url, allow_redirects=True, auth=basic_auth)
     assert response.status_code == HTTP_200_OK, status_error(
         HTTP_200_OK, response
     )
@@ -115,10 +115,10 @@ def test_get_market_details_dev(market):
     "trademe",
     "tthigo",
 ])
-def test_get_market_details_stage(market):
+def test_get_market_details_stage(market, basic_auth):
     url = get_absolute_url("ui-soo:market-details")
     absolute_url = f"{url}{market}"
-    response = requests.get(absolute_url, allow_redirects=True)
+    response = requests.get(absolute_url, allow_redirects=True, auth=basic_auth)
     assert response.status_code == HTTP_200_OK, status_error(
         HTTP_200_OK, response
     )
@@ -165,10 +165,10 @@ def test_get_market_details_stage(market):
     "trademe",
     "tthigo",
 ])
-def test_get_market_details_prod(market):
+def test_get_market_details_prod(market, basic_auth):
     url = get_absolute_url("ui-soo:market-details")
     absolute_url = f"{url}{market}"
-    response = requests.get(absolute_url, allow_redirects=True)
+    response = requests.get(absolute_url, allow_redirects=True, auth=basic_auth)
     assert response.status_code == HTTP_200_OK, status_error(
         HTTP_200_OK, response
     )

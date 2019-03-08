@@ -1,6 +1,6 @@
 import pytest
 import requests
-from rest_framework.status import *
+from rest_framework.status import HTTP_200_OK
 from tests.settings import DIRECTORY_LEGACY_CONTACT_US_UI_URL
 from tests import get_absolute_url
 from tests.smoke.cms_api_helpers import status_error
@@ -48,10 +48,10 @@ from tests.smoke.cms_api_helpers import status_error
     ("triage/sso/",                             "/contact/triage/location/"),
 ])
 def test_redirects_for_legacy_contact_us_urls(
-        endpoint, expected_redirect, hawk_cookie
+        endpoint, expected_redirect, hawk_cookie, basic_auth
 ):
     url = DIRECTORY_LEGACY_CONTACT_US_UI_URL + endpoint
-    response = requests.get(url, allow_redirects=True, cookies=hawk_cookie)
+    response = requests.get(url, allow_redirects=True, cookies=hawk_cookie, auth=basic_auth)
     assert response.status_code == HTTP_200_OK, status_error(
         HTTP_200_OK, response
     )
@@ -67,10 +67,12 @@ def test_redirects_for_legacy_contact_us_urls(
     ("directory/FeedbackForm/", "/contact/feedback/"),
 ])
 def test_redirects_for_legacy_contact_us_urls_direct(
-        endpoint, expected_redirect, hawk_cookie
+        endpoint, expected_redirect, hawk_cookie, basic_auth
 ):
     url = DIRECTORY_LEGACY_CONTACT_US_UI_URL + endpoint
-    response = requests.get(url, allow_redirects=True, cookies=hawk_cookie)
+    response = requests.get(
+        url, allow_redirects=True, cookies=hawk_cookie, auth=basic_auth
+    )
     assert response.status_code == HTTP_200_OK, status_error(
         HTTP_200_OK, response
     )
@@ -103,10 +105,12 @@ def test_redirects_for_legacy_contact_us_urls_direct(
     "spartoo",
     "trademe",
     ])
-def test_access_contact_us_organisation_endpoints_dev(market):
+def test_access_contact_us_organisation_endpoints_dev(market, basic_auth):
     absolute_url = get_absolute_url("ui-contact-us:selling-online-overseas:organisation")
-    params = { "market": market }
-    response = requests.get(absolute_url, params=params, allow_redirects=True)
+    params = {"market": market}
+    response = requests.get(
+        absolute_url, params=params, allow_redirects=True, auth=basic_auth
+    )
     assert response.status_code == HTTP_200_OK, status_error(
         HTTP_200_OK, response
     )
@@ -145,10 +149,12 @@ def test_access_contact_us_organisation_endpoints_dev(market):
     "trademe",
     "tthigo",
     ])
-def test_access_contact_us_organisation_endpoints_stage(market):
+def test_access_contact_us_organisation_endpoints_stage(market, hawk_cookie, basic_auth):
     absolute_url = get_absolute_url("ui-contact-us:selling-online-overseas:organisation")
     params = {"market": market}
-    response = requests.get(absolute_url, params=params, allow_redirects=True)
+    response = requests.get(
+        absolute_url, params=params, allow_redirects=True, cookies=hawk_cookie, auth=basic_auth
+    )
     assert response.status_code == HTTP_200_OK, status_error(
         HTTP_200_OK, response
     )
@@ -209,8 +215,8 @@ def test_access_contact_us_organisation_endpoints_prod(market):
     get_absolute_url("ui-contact-us:selling-online-overseas:organisation:contact-details"),
     get_absolute_url("ui-contact-us:selling-online-overseas:organisation:success")
 ])
-def test_access_contact_us_endpoints(absolute_url):
-    response = requests.get(absolute_url, allow_redirects=True)
+def test_access_contact_us_endpoints(absolute_url, hawk_cookie, basic_auth):
+    response = requests.get(absolute_url, allow_redirects=True, cookies=hawk_cookie, auth=basic_auth)
     assert response.status_code == HTTP_200_OK, status_error(
         HTTP_200_OK, response
     )

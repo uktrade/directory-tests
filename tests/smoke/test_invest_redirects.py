@@ -41,7 +41,7 @@ from tests.smoke.cms_api_helpers import status_error
     ("industries/advanced-manufacturing/", join_ui_international("industries/advanced-manufacturing/")),
 ])
 def test_cms_918_redirect_to_international_if_matching_industry_exists(
-         old_url, new_url,basic_auth, hawk_cookie):
+         old_url, new_url, basic_auth, hawk_cookie):
     """
     A redirect to the International site will happen only if there’s a sector
     page with the same slug in International.
