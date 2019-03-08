@@ -12,50 +12,40 @@ from tests.smoke.cms_api_helpers import status_error
 
 @pytest.mark.stage
 @pytest.mark.parametrize(
-    "absolute_url,redirect",
+    "absolute_url",
     [
-        (
-            get_absolute_url("legacy-ui-contact-us:help"),
-            get_absolute_url("ui-contact-us-legacy-redirects:help"),
-        ),
-        (
-            get_absolute_url("legacy-ui-contact-us:feedback-form"),
-            get_absolute_url("ui-contact-us-legacy-redirects:feedback"),
-        ),
+        get_absolute_url("legacy-ui-contact-us:help"),
+        get_absolute_url("legacy-ui-contact-us:feedback-form"),
     ],
 )
-def test_access_as_anon_user(absolute_url, redirect):
+def test_access_as_anon_user(absolute_url, basic_auth):
     response = requests.get(absolute_url, allow_redirects=False)
-    assert response.status_code == HTTP_302_FOUND, status_error(
-        HTTP_302_FOUND, response
+    redirect = response.headers["location"]
+    response = requests.get(redirect, allow_redirects=True, auth=basic_auth)
+    assert response.status_code == HTTP_200_OK, status_error(
+        HTTP_200_OK, response
     )
-    assert response.headers["location"] == redirect
 
 
 @pytest.mark.stage
 @pytest.mark.parametrize(
-    "absolute_url,redirect",
+    "absolute_url",
     [
-        (
-            get_absolute_url("legacy-ui-contact-us:help"),
-            get_absolute_url("ui-contact-us-legacy-redirects:help"),
-        ),
-        (
-            get_absolute_url("legacy-ui-contact-us:feedback-form"),
-            get_absolute_url("ui-contact-us-legacy-redirects:feedback"),
-        ),
+        get_absolute_url("legacy-ui-contact-us:help"),
+        get_absolute_url("legacy-ui-contact-us:feedback-form"),
     ],
 )
 def test_access_contact_us_as_anon_user_after_removing_trailing_slash(
-    absolute_url, redirect
+    absolute_url, basic_auth
 ):
     # get rid of trailing slash
     absolute_url = absolute_url[:-1]
     response = requests.get(absolute_url, allow_redirects=False)
-    assert response.status_code == HTTP_302_FOUND, status_error(
-        HTTP_302_FOUND, response
+    redirect = response.headers["location"]
+    response = requests.get(redirect, allow_redirects=True, auth=basic_auth)
+    assert response.status_code == HTTP_200_OK, status_error(
+        HTTP_200_OK, response
     )
-    assert response.headers["location"] == redirect[:-1]
 
 
 @pytest.mark.stage
