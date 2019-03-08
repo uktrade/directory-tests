@@ -23,6 +23,7 @@ join_ui_supplier = partial(urljoin, settings.DIRECTORY_UI_SUPPLIER_URL)
 join_ui_invest = partial(urljoin, settings.INVEST_UI_URL)
 join_exred = partial(urljoin, settings.EXRED_UI_URL)
 join_contact_us = partial(urljoin, settings.DIRECTORY_CONTACT_US_UI_URL)
+join_contact_us_legacy_redirects = partial(urljoin, settings.DIRECTORY_CONTACT_US_REDIRECTS_FOR_LEGACY_URLS)
 join_legacy_contact_us = partial(urljoin, settings.DIRECTORY_LEGACY_CONTACT_US_UI_URL)
 join_soo = partial(urljoin, settings.SOO_UI_URL)
 join_cms_url = partial(urljoin, settings.DIRECTORY_CMS_API_CLIENT_BASE_URL)
@@ -235,6 +236,10 @@ urls = {
     "ui-contact-us:form-events": "contact/events/",
     "ui-contact-us:form-export-advice": "contact/export-advice/comment/",
 
+    # New Contact-Us UI - redirects for legacy contact-us application
+    "ui-contact-us-legacy-redirects:help": "contact/help/",
+    "ui-contact-us-legacy-redirects:feedback": "contact/help/FeedbackForm/",
+
     # Other Contact-Us pages
     "ui-contact-us:other-domestic-eu-exit": "eu-exit-news/contact/",
     "ui-contact-us:other-international-eu-exit": "international/eu-exit-news/contact/",
@@ -330,6 +335,8 @@ def get_absolute_url(name):
         return join_exred(relative_url)
     elif name.startswith("ui-contact-us:"):
         return join_contact_us(relative_url)
+    elif name.startswith("ui-contact-us-legacy-redirects:"):
+        return join_contact_us_legacy_redirects(relative_url)
     elif name.startswith("legacy-ui-contact-us:"):
         return join_legacy_contact_us(relative_url)
     elif name.startswith("ui-soo:"):
