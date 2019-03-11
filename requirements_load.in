@@ -1,7 +1,5 @@
-beautifulsoup4
 directory-cms-client
 directory-constants
 docopt
 locustio
-mohawk
 requests
