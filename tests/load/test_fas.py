@@ -2,7 +2,7 @@ import random
 
 from locust import HttpLocust, TaskSet, task
 from tests import get_relative_url, settings
-from tests.load import USER_AGENT
+from tests.load import USER_AGENT, basic_auth
 from tests.load.utils import rare_word, random_sector
 
 
@@ -13,6 +13,7 @@ class FASTasks(TaskSet):
         self.client.get(
             url,
             headers=USER_AGENT,
+            auth=basic_auth(),
         )
 
     @task
@@ -27,6 +28,7 @@ class FASTasks(TaskSet):
             params=params,
             headers=USER_AGENT,
             name="/search/?term=[term]&sectors=[sectors]",
+            auth=basic_auth(),
         )
 
     @task
@@ -49,6 +51,7 @@ class FASTasks(TaskSet):
             random.choice(urls),
             headers=USER_AGENT,
             name="/industries/[industry]/",
+            auth=basic_auth(),
         )
 
 
