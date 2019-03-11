@@ -69,13 +69,13 @@ Actor = namedtuple(
 Selector = namedtuple(
     "Selector", [
         "by", "value", "in_desktop", "in_mobile", "in_horizontal", "type",
-        "is_visible", "group_id",
+        "is_visible", "group_id", "autocomplete_callback"
     ]
 )
 
 # define default values for various named tuples
 Actor.__new__.__defaults__ = (None,) * len(Actor._fields)
-Selector.__new__.__defaults__ = (None, None, True, True, True, None, True, None)
+Selector.__new__.__defaults__ = (None, None, True, True, True, None, True, None, None)
 
 
 def get_hawk_cookie():
@@ -804,6 +804,9 @@ def fill_out_input_fields(
         if input_field.is_displayed():
             input_field.clear()
         input_field.send_keys(value_to_type)
+        if selector.autocomplete_callback:
+            logging.debug(f"Calling autocomplete_callback() ")
+            selector.autocomplete_callback(driver)
 
 
 def fill_out_textarea_fields(
