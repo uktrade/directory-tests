@@ -14,6 +14,7 @@ from steps.when_impl import (
     contact_us_navigate_through_options,
     exred_open_random_advice_article,
     generic_at_least_n_news_articles,
+    generic_create_great_account,
     generic_get_in_touch,
     generic_open_any_news_article,
     generic_open_industry_page,
@@ -22,6 +23,7 @@ from steps.when_impl import (
     get_barred_actor,
     registration_create_and_verify_account,
     sign_in,
+    sso_actor_received_email_confirmation_code,
     visit_page,
 )
 
@@ -111,6 +113,15 @@ def given_a_barred_actor(context: Context, actor_alias: str):
     get_barred_actor(context, actor_alias)
 
 
+@given('"{actor_alias}" has received the email confirmation code by opting to register as "{business_type}"')
+def given_actor_received_email_confirmation_code(
+        context: Context, actor_alias: str, business_type: str
+):
+    sso_actor_received_email_confirmation_code(
+        context, actor_alias, business_type
+    )
+
+
 ###############################################################################
 # Currently unused but useful steps
 ###############################################################################
@@ -142,3 +153,10 @@ def given_actor_opens_any_news_article(context, actor_alias):
 def given_actor_opened_random_news_article(
         context: Context, actor_alias: str, article_type: str):
     generic_open_random_news_article(context, actor_alias, article_type)
+
+
+@given('"{actor_alias}" has created a great.gov.uk account for a "{business_type}"')
+def given_actor_created_great_account(
+        context: Context, actor_alias: str, business_type: str
+):
+    generic_create_great_account(context, actor_alias, business_type)

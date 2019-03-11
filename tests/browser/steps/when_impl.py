@@ -8,7 +8,12 @@ from urllib.parse import urljoin
 from behave.model import Table
 from behave.runner import Context
 from retrying import retry
-from selenium.common.exceptions import TimeoutException, WebDriverException
+from selenium.common.exceptions import (
+    NoSuchElementException,
+    TimeoutException,
+    WebDriverException,
+)
+from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 from urllib.parse import urlparse
 
@@ -19,7 +24,7 @@ from settings import (
     REUSE_COOKIE,
 )
 from utils.cms_api import get_news_articles
-from utils.gov_notify import get_verification_link
+from utils.gov_notify import get_verification_code, get_verification_link
 
 from pages import common_language_selector, exred, fas, get_page_object, sso
 from pages.common_actions import (
@@ -30,6 +35,7 @@ from pages.common_actions import (
     get_last_visited_page,
     unauthenticated_actor,
     update_actor,
+    wait_for_page_load_after_action,
 )
 from steps import has_action
 
@@ -46,6 +52,11 @@ NUMBERS = {
 def retry_if_webdriver_error(exception):
     """Return True if we should retry on WebDriverException, False otherwise"""
     return isinstance(exception, (TimeoutException, WebDriverException))
+
+
+def retry_if_assertion_error(exception):
+    """Return True if we should retry on AssertionError, False otherwise"""
+    return isinstance(exception, AssertionError)
 
 
 def try_to_reuse_hawk_cookie(driver: WebDriver):
@@ -93,7 +104,7 @@ def generic_set_hawk_cookie(context: Context, page_name: str):
     page = get_page_object(page_name)
     if BASICAUTH_USER:
         parsed = urlparse(page.URL)
-        with_creds = f"{parsed.scheme}://{BASICAUTH_USER}:{BASICAUTH_PASS}@{parsed.netloc}/"
+        with_creds = f"{parsed.scheme}://{BASICAUTH_USER}:{BASICAUTH_PASS}@{parsed.netloc}{parsed.path}"
         logging.debug(f"Visiting {page.URL} in order to pass basic auth")
         driver.get(with_creds)
 
@@ -273,6 +284,14 @@ def registration_should_get_verification_email(
     actor = get_actor(context, actor_alias)
     link = get_verification_link(actor.email)
     update_actor(context, actor_alias, email_confirmation_link=link)
+
+
+def generic_get_verification_code(context: Context, actor_alias: str):
+    """Will check if the Exporter received an email verification message."""
+    logging.debug("Searching for an email verification message...")
+    actor = get_actor(context, actor_alias)
+    code = get_verification_code(actor.email)
+    update_actor(context, actor_alias, email_confirmation_code=code)
 
 
 def registration_open_email_confirmation_link(
@@ -656,8 +675,40 @@ def generic_click_on_uk_gov_logo(
     logging.debug("%s click on UK Gov logo %s", actor_alias, page_name)
 
 
+def check_for_errors_or_non_trading_companies(
+        driver: WebDriver, *, go_back: bool = False
+):
+    """Throws an AssertionError if error message is visible."""
+    try:
+        # fail when a non-trading company is selected (SIC=74990)
+        assert "74990" not in driver.page_source, f"Found a non-trading company"
+        error = driver.find_element(by=By.CSS_SELECTOR, value=".error-message")
+        assert not error.is_displayed(), f"Found error on form page"
+    except NoSuchElementException:
+        # skip if no error was found
+        pass
+    except AssertionError:
+        logging.debug(f"Found a non-trading company")
+        if go_back:
+            logging.debug(f"Going back 1 page because assertion failed")
+            with wait_for_page_load_after_action(driver):
+                driver.back()
+        raise
+
+
+@retry(
+    wait_fixed=2000,
+    stop_max_attempt_number=3,
+    retry_on_exception=retry_if_assertion_error,
+    wrap_exception=False,
+)
 def generic_fill_out_and_submit_form(
-        context: Context, actor_alias: str, *, custom_details_table: Table = None):
+        context: Context, actor_alias: str,
+        *,
+        custom_details_table: Table = None,
+        retry_on_errors: bool = True,
+        go_back: bool = False,
+):
     actor = get_actor(context, actor_alias)
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "generate_form_details")
@@ -682,6 +733,8 @@ def generic_fill_out_and_submit_form(
     logging.debug(f"{actor_alias} will fill out the form with: {details}")
     page.fill_out(context.driver, details)
     page.submit(context.driver)
+    if retry_on_errors:
+        check_for_errors_or_non_trading_companies(context.driver, go_back=go_back)
 
 
 def generic_submit_form(context: Context, actor_alias: str):
@@ -860,3 +913,51 @@ def office_finder_find_trade_office(context: Context, actor_alias: str, post_cod
 def get_barred_actor(context: Context, actor_alias: str):
     if not get_actor(context, actor_alias):
         add_actor(context, barred_actor(actor_alias))
+
+
+def sso_actor_received_email_confirmation_code(
+        context: Context, actor_alias: str, business_type: str
+):
+    page_name = f"Profile - Enter your email and set a password ({business_type})"
+    visit_page(context, actor_alias, page_name)
+    generic_fill_out_and_submit_form(context, actor_alias)
+    end_page_name = "Profile - Enter your confirmation code"
+    should_be_on_page(context, actor_alias, end_page_name)
+    generic_get_verification_code(context, actor_alias)
+
+
+def generic_create_great_account(
+        context: Context, actor_alias: str, business_type: str
+):
+    page_name = f"Profile - Enter your email and set a password ({business_type})"
+
+    visit_page(context, actor_alias, page_name)
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context, actor_alias, "Profile - Enter your confirmation code"
+    )
+
+    generic_get_verification_code(context, actor_alias)
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        f"Profile - Enter your business details ({business_type})"
+    )
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        f"Profile - Enter your business details [step 2] ({business_type})"
+    )
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        f"Profile - Enter your details ({business_type})"
+    )
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(context, actor_alias, "Profile - Account created")

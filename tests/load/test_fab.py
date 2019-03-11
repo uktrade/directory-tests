@@ -2,7 +2,7 @@ import random
 
 from locust import HttpLocust, TaskSet, task
 from tests import get_relative_url, settings
-from tests.load import USER_AGENT
+from tests.load import USER_AGENT, basic_auth
 from tests.load.utils import random_company_number, rare_word
 
 
@@ -13,6 +13,7 @@ class FABTasks(TaskSet):
         self.client.get(
             url,
             headers=USER_AGENT,
+            auth=basic_auth(),
         )
 
     @task
@@ -27,6 +28,7 @@ class FABTasks(TaskSet):
             params=params,
             headers=USER_AGENT,
             name="/?company_name=[name]&company_number=[number]",
+            auth=basic_auth(),
         )
 
     @task
@@ -40,6 +42,7 @@ class FABTasks(TaskSet):
             params=params,
             headers=USER_AGENT,
             name="api/internal/companies-house-search/?term=[term]",
+            auth=basic_auth(),
         )
 
 

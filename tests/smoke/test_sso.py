@@ -1,6 +1,7 @@
 from rest_framework.status import *
 
 import pytest
+import requests
 
 from tests import get_absolute_url
 from tests.smoke.cms_api_helpers import status_error
@@ -17,6 +18,22 @@ def test_access_sso_endpoints_as_logged_in_user_w_redirect_to_sud(
     response = logged_in_session.get(
         absolute_url, allow_redirects=True, auth=basic_auth, cookies=hawk_cookie
     )
+    assert response.status_code == HTTP_200_OK, status_error(
+        HTTP_200_OK, response
+    )
+
+
+@pytest.mark.prod
+@pytest.mark.parametrize("absolute_url", [
+    get_absolute_url("sso:logout"),
+    get_absolute_url("sso:password_change"),
+    get_absolute_url("sso:password_set"),
+    get_absolute_url("sso:password_reset"),
+    get_absolute_url("sso:email_confirm"),
+    get_absolute_url("sso:inactive"),
+])
+def test_access_sso_endpoints_as_anonymous_user_yields_200(absolute_url, basic_auth):
+    response = requests.get(absolute_url, allow_redirects=True, auth=basic_auth)
     assert response.status_code == HTTP_200_OK, status_error(
         HTTP_200_OK, response
     )

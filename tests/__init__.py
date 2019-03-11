@@ -14,6 +14,7 @@ def urljoin(base_url: str, endpoint: str):
 
 join_api = partial(urljoin, settings.DIRECTORY_API_URL)
 join_internal_api = partial(urljoin, settings.DIRECTORY_BUYER_API_URL)
+join_ui_international = partial(urljoin, settings.DIRECTORY_UI_INTERNATIONAL_URL)
 join_sso = partial(urljoin, settings.DIRECTORY_SSO_URL)
 join_sso_api = partial(urljoin, settings.DIRECTORY_SSO_API_CLIENT_BASE_URL)
 join_profile = partial(urljoin, settings.DIRECTORY_PROFILE_URL)
@@ -95,6 +96,11 @@ urls = {
     # to be loaded to the API db of the tested system
     "ui-supplier:suppliers-detail": "suppliers/03074910/ft-solutions-limited/",
     "ui-supplier:case-study": "case-study/172/how-a-major-airport-rewards-its-loyal-passengers/",
+    
+    # UI-INTERNATIONAL
+    "ui-international:landing": "",
+    "ui-international:healthcheck-sentry": "healthcheck/international/sentry/",
+    "ui-international:healthcheck-forms-api": "healthcheck/international/forms-api/",
 
     # UI-INVEST
     "ui-invest:landing": "",
@@ -336,6 +342,8 @@ def get_absolute_url(name):
         return join_cms_ui(relative_url)
     elif name.startswith("forms-api:"):
         return join_forms_api(relative_url)
+    elif name.startswith("ui-international"):
+        return join_ui_international(relative_url)
 
 
 def get_random_email_address():

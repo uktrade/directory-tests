@@ -28,7 +28,7 @@ URL = urljoin(EXRED_UI_URL, "international/")
 PAGE_TITLE = "Welcome to great.gov.uk - buy from or invest in the UK"
 
 
-COUNTRY_SELECTOR = Selector(By.ID, "header-country-selector-activator")
+COUNTRY_SELECTOR = Selector(By.ID, "country-selector-activator")
 LANGUAGE_SELECTOR_CLOSE = Selector(By.ID, "header-language-selector-close")
 FIND_A_SUPPLIER = Selector(By.ID, "card-fas-link")
 SEE_THE_POTENTIAL = Selector(By.ID, "card-invest-link")

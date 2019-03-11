@@ -436,7 +436,7 @@ def should_see_articles_filtered_by_tag(context: Context, actor_alias: str):
 
 
 @retry(wait_fixed=10000, stop_max_attempt_number=6, wrap_exception=False)
-def eu_exit_contact_us_should_receive_confirmation_email(
+def generic_contact_us_should_receive_confirmation_email(
         context: Context, actor_alias: str, subject: str):
     actor = get_actor(context, actor_alias)
     confirmation = get_email_confirmation_notification(
