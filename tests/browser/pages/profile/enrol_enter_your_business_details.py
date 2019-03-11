@@ -15,14 +15,15 @@ from pages.common_actions import (
     Selector,
     check_for_sections,
     check_url,
+    fill_out_input_fields,
     find_and_click_on_page_element,
-    find_element,
-    find_elements,
     go_to_url,
     take_screenshot,
 )
 from pages.profile import enrol_enter_your_business_details_step_2
+from pages.profile.autocomplete_callbacks import enrol_autocomplete_company_name
 from settings import DIRECTORY_UI_PROFILE_URL
+
 
 NAME = "Enter your business details"
 NAMES = ["Enter your business details (LTD, PLC or Royal Charter)"]
@@ -57,6 +58,7 @@ SELECTORS = {
             "id_search-company_name",
             type=ElementType.INPUT,
             is_visible=False,
+            autocomplete_callback=enrol_autocomplete_company_name,
         ),
         "submit": Selector(
             By.CSS_SELECTOR, "form button.button", type=ElementType.BUTTON
@@ -93,22 +95,7 @@ def generate_form_details(actor: Actor) -> dict:
 
 def fill_out(driver: WebDriver, details: dict):
     form_selectors = SELECTORS["enter your business details"]
-    company_name_selector = form_selectors["company name"]
-    name = find_element(
-        driver,
-        company_name_selector,
-        element_name="Company name",
-        wait_for_it=False,
-    )
-    name.clear()
-    name.send_keys(details["company name"])
-    find_element(
-        driver, AUTOCOMPLETION, element_name="Autocompletion", wait_for_it=True
-    )
-    options = find_elements(driver, AUTOCOMPLETION_OPTIONS)
-    option = random.choice(options)
-    logging.debug(f"Selected company: {option.get_attribute('data-value')} - {option.text}")
-    option.click()
+    fill_out_input_fields(driver, form_selectors, details)
     take_screenshot(driver, "After filling out the form")
 
 
