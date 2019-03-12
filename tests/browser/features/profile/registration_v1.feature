@@ -7,6 +7,20 @@ Feature: New Enrolment flow
   Background:
     Given basic authentication is done for "Profile - About" page
 
+  @TT-1115
+  Scenario: Users should be presented with the Enrolment Steps prior to starting the registration process
+    Given "Natalia" visits the "Profile - Create an account" page
+
+    When "Natalia" decides to "Start now"
+
+    Then "Natalia" should be on the "Profile - Enter your business email address and set a password" page
+    And "Natalia" should see following sections
+      | sections                  |
+      | Breadcrumbs               |
+      | Registration form         |
+      | Enrolment progress bar    |
+
+
   @TT-1117
   @ltd-plc-royal
   @tax-payer
