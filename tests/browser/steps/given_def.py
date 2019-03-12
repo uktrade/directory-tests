@@ -19,7 +19,7 @@ from steps.when_impl import (
     generic_open_any_news_article,
     generic_open_industry_page,
     generic_open_random_news_article,
-    generic_set_hawk_cookie,
+    generic_set_basic_auth_creds,
     get_barred_actor,
     registration_create_and_verify_account,
     sign_in,
@@ -98,9 +98,9 @@ def given_actor_navigates_via_contact_us_options(
     contact_us_navigate_through_options(context, actor_alias, via)
 
 
-@given('hawk cookie is set on "{page_name}" page')
+@given('basic authentication is done for "{page_name}" page')
 def given_hawk_cookie_is_set(context: Context, page_name: str):
-    generic_set_hawk_cookie(context, page_name)
+    generic_set_basic_auth_creds(context, page_name)
 
 
 @given('"{actor_alias}" is on randomly selected Advice article page')

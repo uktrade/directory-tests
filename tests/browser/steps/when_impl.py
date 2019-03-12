@@ -99,7 +99,7 @@ def try_to_reuse_hawk_cookie(driver: WebDriver):
         logging.debug(f"IP Restrictor cookie is not present")
     
 
-def generic_set_hawk_cookie(context: Context, page_name: str):
+def generic_set_basic_auth_creds(context: Context, page_name: str):
     driver = context.driver
     page = get_page_object(page_name)
     if BASICAUTH_USER:
@@ -107,18 +107,6 @@ def generic_set_hawk_cookie(context: Context, page_name: str):
         with_creds = f"{parsed.scheme}://{BASICAUTH_USER}:{BASICAUTH_PASS}@{parsed.netloc}{parsed.path}"
         logging.debug(f"Visiting {page.URL} in order to pass basic auth")
         driver.get(with_creds)
-
-    if not SET_HAWK_COOKIE:
-        logging.debug("Setting HAWK cookie is disabled")
-        return
-    if REUSE_COOKIE:
-        try_to_reuse_hawk_cookie(driver)
-    logging.debug(f"Visiting {page.URL} in order to set IP Restrictor cookie")
-    driver.get(page.URL)
-    hawk_cookie = get_hawk_cookie()
-    logging.debug(f"Generated hawk cookie: {hawk_cookie}")
-    driver.add_cookie(hawk_cookie)
-    logging.debug(f"Added hawk cookie to driver! {driver.get_cookies()}")
 
 
 @retry(
