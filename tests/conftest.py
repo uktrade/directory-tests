@@ -81,16 +81,31 @@ def basic_auth():
     return HTTPBasicAuth(BASICAUTH_USER, BASICAUTH_PASS)
 
 
+def extract_csrf_middleware_token(content: str) -> str:
+    line = [l for l in content.splitlines() if "csrfmiddlewaretoken" in l][0]
+    fields = line.strip().split("'")
+    token_position = 5
+    return fields[token_position]
+
+
 @pytest.fixture
 @retry(wait_fixed=5000, stop_max_attempt_number=2)
-def logged_in_session(basic_auth, hawk_cookie):
+def logged_in_session():
     session = requests.Session()
+    login_url = get_absolute_url("sso:login")
+    response = session.get(url=login_url)
+    csrfmiddlewaretoken = extract_csrf_middleware_token(response.content.decode("UTF-8"))
     user = users["verified"]
+    data = {
+        "login": user["username"],
+        "password": user["password"],
+        "csrfmiddlewaretoken": csrfmiddlewaretoken
+    }
     response = session.post(
-        url=get_absolute_url("sso:login"),
-        data={"login": user["username"], "password": user["password"]},
-        auth=basic_auth,
-        cookies=hawk_cookie,
+        url=login_url,
+        data=data,
+        allow_redirects=True,
+        auth=(BASICAUTH_USER, BASICAUTH_PASS),
     )
     assert "Sign out" in str(response.content)
     return session
