@@ -42,7 +42,7 @@ Feature: New Enrolment flow
   @sole-trader-other-business
   @tax-payer
   Scenario Outline: "<selected business type>" representative should receive an email with confirmation code
-    Given "Natalia" visits the "Profile - Enter your email and set a password (<business type>)" page
+    Given "Natalia" visits the "Profile - Enter your business email address and set a password (<business type>)" page
 
     When "Natalia" fills out and submits the form
 
@@ -72,7 +72,6 @@ Feature: New Enrolment flow
     Then "Natalia" should be on the "Profile - Enter your business details (<selected business type>)" page
     And "Natalia" should see following sections
       | sections                    |
-      | Your business type          |
       | Enter your business details |
       | Enrolment progress bar      |
 
@@ -98,8 +97,6 @@ Feature: New Enrolment flow
     Then "Natalia" should be on the "Profile - Enter your details (<selected business type>)" page
     And "Natalia" should see following sections
       | sections                    |
-      | Your business type          |
-      | Your business details       |
       | Enter your details form     |
       | Enrolment progress bar      |
 
@@ -135,8 +132,8 @@ Feature: New Enrolment flow
       | Next steps                 |
 
     Examples:
-      | selected business type                |
-      | LTD, PLC or Royal Charter             |
+      | selected business type     |
+      | LTD, PLC or Royal Charter  |
 
 
   @wip
