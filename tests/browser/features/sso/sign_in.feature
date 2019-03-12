@@ -2,7 +2,7 @@
 Feature: Sign in
 
   Background:
-    Given hawk cookie is set on "Single Sign-On - Sign in" page
+    Given basic authentication is done for "Single Sign-On - Sign in" page
 
   Scenario:
     Given "Robert" visits the "Single Sign-On - Sign in" page

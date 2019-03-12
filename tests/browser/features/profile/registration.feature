@@ -5,7 +5,7 @@
 Feature: New Enrolment flow
 
   Background:
-    Given hawk cookie is set on "Profile - About" page
+    Given basic authentication is done for "Profile - About" page
 
   @wip
   @TT-1115

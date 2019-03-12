@@ -2,7 +2,7 @@
 Feature: Updates for non-UK companies on EU Exit
 
   Background:
-    Given hawk cookie is set on "Export Readiness - Home" page
+    Given basic authentication is done for "Export Readiness - Home" page
 
   @news
   @eu-exit

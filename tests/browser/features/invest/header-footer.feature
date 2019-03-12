@@ -2,7 +2,7 @@
 Feature: Header-Footer
 
   Background:
-    Given hawk cookie is set on "Invest - Home" page
+    Given basic authentication is done for "Invest - Home" page
 
   @CMS-158
   @logo

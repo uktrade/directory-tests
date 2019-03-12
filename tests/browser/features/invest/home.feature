@@ -3,7 +3,7 @@
 Feature: Invest home page
 
   Background:
-    Given hawk cookie is set on "Invest - Home" page
+    Given basic authentication is done for "Invest - Home" page
 
   @CMS-157
   Scenario: Visitors should be able to view "Invest home" page

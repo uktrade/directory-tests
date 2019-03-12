@@ -4,7 +4,7 @@
 Feature: HPO PDFs sent after
 
   Background:
-    Given hawk cookie is set on "Invest - Home" page
+    Given basic authentication is done for "Invest - Home" page
 
   @TT-444
   @dev-only

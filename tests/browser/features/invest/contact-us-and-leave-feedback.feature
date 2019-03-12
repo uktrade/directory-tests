@@ -2,8 +2,8 @@
 Feature: Contact us and Leave feedback
 
   Background:
-    Given hawk cookie is set on "Invest - Home" page
-    And hawk cookie is set on "Export Readiness - Home" page
+    Given basic authentication is done for "Invest - Home" page
+    And basic authentication is done for "Export Readiness - Home" page
 
   @CMS-163
   @beta

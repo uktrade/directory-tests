@@ -2,7 +2,7 @@
 Feature: Case Studies
 
   Background:
-    Given hawk cookie is set on "Export Readiness - Home" page
+    Given basic authentication is done for "Export Readiness - Home" page
 
   @ED-2655
   @home-page

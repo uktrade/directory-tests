@@ -2,7 +2,7 @@
 Feature: Advice articles
 
   Background:
-    Given hawk cookie is set on "Export Readiness - Home" page
+    Given basic authentication is done for "Export Readiness - Home" page
 
   @CMS-686
   @home-page

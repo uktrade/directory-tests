@@ -5,7 +5,7 @@
 Feature: Find a Supplier - Industry pages
 
   Background:
-    Given hawk cookie is set on "Find a Supplier - Home" page
+    Given basic authentication is done for "Find a Supplier - Home" page
 
   @ED-4260
   Scenario Outline: Buyers should be able to see all expected page elements on "<specific>" page

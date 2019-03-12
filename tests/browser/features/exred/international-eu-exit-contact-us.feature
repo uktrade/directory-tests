@@ -3,7 +3,7 @@
 Feature: International Page - EU Exit - Contact us
 
   Background:
-    Given hawk cookie is set on "Export Readiness - Home" page
+    Given basic authentication is done for "Export Readiness - Home" page
 
   @TT-617
   @eu-exit

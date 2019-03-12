@@ -4,7 +4,7 @@
 Feature: Find a Supplier - home page
 
   Background:
-    Given hawk cookie is set on "Find a Supplier - Home" page
+    Given basic authentication is done for "Find a Supplier - Home" page
 
   @ED-4242
   Scenario: Buyers should be able to view "Find a Supplier home" page

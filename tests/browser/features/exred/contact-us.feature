@@ -2,7 +2,7 @@
 Feature:  new contact us forms
 
   Background:
-    Given hawk cookie is set on "Export Readiness - Home" page
+    Given basic authentication is done for "Export Readiness - Home" page
 
   @TT-758
   @enquirer-location

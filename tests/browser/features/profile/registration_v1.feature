@@ -5,13 +5,13 @@
 Feature: New Enrolment flow
 
   Background:
-    Given hawk cookie is set on "Profile - About" page
+    Given basic authentication is done for "Profile - About" page
 
   @TT-1117
   @ltd-plc-royal
   @tax-payer
   Scenario Outline: "<business type>" representative should be asked to enter their email and set a password after selecting their business type
-    Given "Natalia" visits the "Profile - Enter your email and set a password (<business type>)" page
+    Given "Natalia" visits the "Profile - Enter your business email address and set a password (<business type>)" page
 
     Then "Natalia" should see following sections
       | sections               |

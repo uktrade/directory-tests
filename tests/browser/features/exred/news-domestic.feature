@@ -4,7 +4,7 @@
 Feature: Updates for UK companies on EU Exit
 
   Background:
-    Given hawk cookie is set on "Export Readiness - Home" page
+    Given basic authentication is done for "Export Readiness - Home" page
 
   @CMS-506
   Scenario: Domestic Visitors should be able to view news article
