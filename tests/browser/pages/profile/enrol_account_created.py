@@ -35,8 +35,21 @@ SELECTORS = {
     },
     "next steps": {
         "itself": Selector(By.ID, "next-container"),
-        "go to great.gov.uk home": Selector(
-            By.CSS_SELECTOR, "#next-container a", type=ElementType.LINK
+        "publish your business profile": Selector(
+            By.CSS_SELECTOR, "#next-container li:nth-child(1) > a",
+            type=ElementType.LINK
+        ),
+        "find export opportunities": Selector(
+            By.CSS_SELECTOR, "#next-container li:nth-child(2) > a",
+            type=ElementType.LINK
+        ),
+        "sell online overseas": Selector(
+            By.CSS_SELECTOR, "#next-container li:nth-child(3) > a",
+            type=ElementType.LINK
+        ),
+        "find events and visits": Selector(
+            By.CSS_SELECTOR, "#next-container li:nth-child(4) > a",
+            type=ElementType.LINK
         ),
     },
 }
