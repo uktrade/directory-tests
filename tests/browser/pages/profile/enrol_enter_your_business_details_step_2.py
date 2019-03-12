@@ -38,13 +38,6 @@ PAGE_TITLE = ""
 
 SELECTORS = {
     "enrolment progress bar": {"itself": Selector(By.ID, "progress-column")},
-    "your business type": {
-        "itself": Selector(By.ID, "business-type-information-box"),
-        "business type": Selector(By.ID, "business-type"),
-        "change business type": Selector(
-            By.ID, "change-business-type", type=ElementType.LINK
-        ),
-    },
     "enter your business details": {
         "itself": Selector(By.CSS_SELECTOR, "section form"),
         "heading": Selector(By.CSS_SELECTOR, "h2"),

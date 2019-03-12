@@ -24,10 +24,11 @@ from pages.common_actions import (
 from pages.profile import enrol_enter_your_confirmation_code
 from settings import DIRECTORY_UI_PROFILE_URL
 
-NAME = "Enter your email and set a password"
+NAME = "Enter your business email address and set a password"
 NAMES = [
-    "Enter your email and set a password (LTD, PLC or Royal Charter)",
-    "Enter your email and set a password (Sole trader or other type of business)",
+    "Enter your business email address and set a password",
+    "Enter your business email address and set a password (LTD, PLC or Royal Charter)",
+    "Enter your business email address and set a password (Sole trader or other type of business)",
 ]
 SERVICE = "Profile"
 TYPE = "Enrol"
@@ -36,11 +37,9 @@ URL = urljoin(
     "enrol/business-type/companies-house/user-account/",
 )
 URLs = {
-    "enter your email and set a password (ltd, plc or royal charter)": urljoin(
-        DIRECTORY_UI_PROFILE_URL,
-        "enrol/business-type/companies-house/user-account/",
-    ),
-    "enter your email and set a password (sole trader or other type of business)": urljoin(
+    "enter your business email address and set a password": URL,
+    "enter your business email address and set a password (ltd, plc or royal charter)": URL,
+    "enter your business email address and set a password (sole trader or other type of business)": urljoin(
         DIRECTORY_UI_PROFILE_URL,
         "enrol/business-type/sole-trader/user-account/",
     ),
@@ -48,6 +47,9 @@ URLs = {
 PAGE_TITLE = ""
 
 SELECTORS = {
+    "breadcrumbs": {
+        "itself": Selector(By.CSS_SELECTOR, "nav.breadcrumbs"),
+    },
     "enrolment progress bar": {"itself": Selector(By.ID, "progress-column")},
     "registration form": {
         "itself": Selector(By.CSS_SELECTOR, "section form"),
