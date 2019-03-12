@@ -163,7 +163,7 @@ Feature: New Enrolment flow
   @TT-1035
   Scenario Outline: Handle case of if the email already present in Profile-Profile
     Given "Natalia" opted to register for a great.gov.uk account as "<selected business type>"
-    And "Natalia" is on the "Profile - Enter your email and set a password" page
+    And "Natalia" is on the "Profile - Enter your business email address and set a password" page
 
     When "Natalia" fills out and submits the form
       | field              | value                             |
