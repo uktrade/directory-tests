@@ -485,3 +485,9 @@ def forms_confirmation_email_should_not_be_sent(context: Context, actor_alias: s
     error = (f"Expected to find an unsent submission for {actor_alias} but found a sent"
              f" one. Check spam filters")
     assert not submissions[0]['is_sent'], error
+
+
+def marketplace_finder_should_see_marketplaces(context: Context, actor_alias: str, country_names: str):
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "should_see_marketplace")
+    page.should_see_marketplace(context.driver, country_names)

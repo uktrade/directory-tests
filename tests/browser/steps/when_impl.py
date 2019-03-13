@@ -649,11 +649,12 @@ def check_for_errors_or_non_trading_companies(
     wrap_exception=False,
 )
 def generic_fill_out_and_submit_form(
-        context: Context, actor_alias: str,
-        *,
-        custom_details_table: Table = None,
-        retry_on_errors: bool = True,
-        go_back: bool = False,
+    context: Context,
+    actor_alias: str,
+    *,
+    custom_details_table: Table = None,
+    retry_on_errors: bool = True,
+    go_back: bool = False,
 ):
     actor = get_actor(context, actor_alias)
     page = get_last_visited_page(context, actor_alias)
@@ -922,3 +923,12 @@ def generic_create_great_account(
 
     generic_fill_out_and_submit_form(context, actor_alias)
     should_be_on_page(context, actor_alias, "Profile - Account created")
+
+
+def marketplace_finder(
+        context: Context, actor_alias: str, product_types: str, country_names: str):
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "search")
+    product_types = product_types.split(",")
+    country_names = country_names.split(",")
+    page.search(context.driver, product_types, country_names)

@@ -46,6 +46,7 @@ from steps.then_impl import (
     stats_and_tracking_elements_should_be_present,
     stats_and_tracking_elements_should_not_be_present,
     zendesk_should_receive_confirmation_email,
+    marketplace_finder_should_see_marketplaces,
 )
 from steps.when_impl import generic_get_verification_code
 
@@ -290,3 +291,9 @@ def then_confirmation_email_should_not_be_sent(context: Context, actor_alias: st
 @then('"{actor_alias}" should receive email confirmation code')
 def then_actor_should_get_verifaction_code(context: Context, actor_alias: str):
     generic_get_verification_code(context, actor_alias)
+
+
+@then('"{actor_alias}" should see the expected markets in {country_names}')
+def then_actor_should_see_expected_markets(
+        context: Context, actor_alias: str, country_names: str):
+    marketplace_finder_should_see_marketplaces(context, actor_alias, country_names)
