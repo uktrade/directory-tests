@@ -12,16 +12,19 @@ from pages import ElementType
 from pages.common_actions import (
     Selector,
     check_url,
+    fill_out_input_fields,
     find_and_click_on_page_element,
     find_element,
     find_elements,
     go_to_url,
+    scroll_to,
     take_screenshot,
-    fill_out_input_fields,
-    scroll_to)
+)
+from pages.soo.autocomplete_callbacks import (
+    autocomplete_country_name,
+    autocomplete_product_type,
+)
 from settings import SELLING_ONLINE_OVERSEAS_UI_URL
-from pages.soo.autocomplete_callbacks import autocomplete_product_type, autocomplete_country_name
-
 
 SERVICE = "Selling Online Overseas"
 TYPE = "search"
@@ -36,18 +39,20 @@ SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "form[method=get]"),
         "product_type": Selector(
-            By.ID, "search-product",
+            By.ID,
+            "search-product",
             type=ElementType.INPUT,
             is_visible=False,
             autocomplete_callback=autocomplete_product_type,
         ),
         "country_name": Selector(
-            By.ID, "search-country",
+            By.ID,
+            "search-country",
             type=ElementType.INPUT,
             is_visible=False,
             autocomplete_callback=autocomplete_country_name,
         ),
-        "start your search now": SEARCH_BUTTON
+        "start your search now": SEARCH_BUTTON,
     }
 }
 
@@ -73,22 +78,34 @@ def open_any_marketplace(driver: WebDriver):
     random.choice(links).click()
 
 
-def collate_products_and_countries(product_types: List[str], country_names: List[str]) -> List[dict]:
-    iterations = len(product_types) if len(product_types) > len(country_names) else len(country_names)
-    list_of_values = []
+def collate_products_and_countries(
+    product_types: List[str], country_names: List[str]
+) -> List[dict]:
+    if len(product_types) > len(country_names):
+        iterations = len(product_types)
+    else:
+        len(country_names)
 
+    list_of_values = []
     for i in range(iterations):
-         list_of_values.append({
-             'product_type': dict(enumerate(product_types)).get(i, None),
-             'country_name': dict(enumerate(country_names)).get(i, None),
-            })
+        list_of_values.append(
+            {
+                "product_type": dict(enumerate(product_types)).get(i, None),
+                "country_name": dict(enumerate(country_names)).get(i, None),
+            }
+        )
     return list_of_values
 
 
-def search(driver: WebDriver, product_types: List[str], country_names: List[str]):
+def search(
+    driver: WebDriver, product_types: List[str], country_names: List[str]
+):
     form_selectors = SELECTORS["form"]
     button = find_element(
-        driver, SEARCH_BUTTON, element_name="start your search now", wait_for_it=True
+        driver,
+        SEARCH_BUTTON,
+        element_name="start your search now",
+        wait_for_it=True,
     )
     scroll_to(driver, button)
     values = collate_products_and_countries(product_types, country_names)
@@ -101,10 +118,13 @@ def search(driver: WebDriver, product_types: List[str], country_names: List[str]
 
 def should_see_marketplace(driver: WebDriver, country_names: str):
     countries = country_names.split(",")
-    countries.append('Global')
+    countries.append("Global")
 
     for country in countries:
-        country_selector = Selector(By.XPATH, f'//dd[contains(text(), country)]')
+        country_selector = Selector(
+            By.XPATH, f"//dd[contains(text(), country)]"
+        )
         find_element(
-            driver, country_selector, element_name=country, wait_for_it=False)
+            driver, country_selector, element_name=country, wait_for_it=False
+        )
         logging.debug(f"As expected {country} is present")

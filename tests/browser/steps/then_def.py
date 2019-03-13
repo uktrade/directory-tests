@@ -28,6 +28,7 @@ from steps.then_impl import (
     language_selector_keyboard_should_be_trapped,
     language_selector_should_not_see_it,
     language_selector_should_see_it,
+    marketplace_finder_should_see_marketplaces,
     office_finder_should_see_correct_office_details,
     pdf_check_expected_details,
     pdf_check_for_dead_links,
@@ -46,7 +47,6 @@ from steps.then_impl import (
     stats_and_tracking_elements_should_be_present,
     stats_and_tracking_elements_should_not_be_present,
     zendesk_should_receive_confirmation_email,
-    marketplace_finder_should_see_marketplaces,
 )
 from steps.when_impl import generic_get_verification_code
 

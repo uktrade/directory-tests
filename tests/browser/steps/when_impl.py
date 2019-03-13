@@ -16,8 +16,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 from urllib.parse import urlparse
 
-from utils.gov_notify import get_verification_code
-
 from pages import common_language_selector, exred, fas, get_page_object, sso
 from pages.common_actions import (
     add_actor,
@@ -34,7 +32,7 @@ from settings import (
 )
 from steps import has_action
 from utils.cms_api import get_news_articles
-from utils.gov_notify import get_verification_link
+from utils.gov_notify import get_verification_code, get_verification_link
 
 NUMBERS = {
     "first": 1,
@@ -622,12 +620,14 @@ def generic_click_on_uk_gov_logo(
 
 
 def check_for_errors_or_non_trading_companies(
-        driver: WebDriver, *, go_back: bool = False
+    driver: WebDriver, *, go_back: bool = False
 ):
     """Throws an AssertionError if error message is visible."""
     try:
         # fail when a non-trading company is selected (SIC=74990)
-        assert "74990" not in driver.page_source, f"Found a non-trading company"
+        assert (
+            "74990" not in driver.page_source
+        ), f"Found a non-trading company"
         error = driver.find_element(by=By.CSS_SELECTOR, value=".error-message")
         assert not error.is_displayed(), f"Found error on form page"
     except NoSuchElementException:
@@ -679,7 +679,9 @@ def generic_fill_out_and_submit_form(
     page.fill_out(context.driver, details)
     page.submit(context.driver)
     if retry_on_errors:
-        check_for_errors_or_non_trading_companies(context.driver, go_back=go_back)
+        check_for_errors_or_non_trading_companies(
+            context.driver, go_back=go_back
+        )
 
 
 def generic_submit_form(context: Context, actor_alias: str):
@@ -878,9 +880,9 @@ def get_barred_actor(context: Context, actor_alias: str):
 
 
 def sso_actor_received_email_confirmation_code(
-        context: Context, actor_alias: str, business_type: str
+    context: Context, actor_alias: str, business_type: str
 ):
-    page_name = f"Profile - Enter your business email address and set a password ({business_type})"
+    page_name = f"Profile - Enter your business email address and set a password ({business_type})"  # noqa
     visit_page(context, actor_alias, page_name)
     generic_fill_out_and_submit_form(context, actor_alias)
     end_page_name = "Profile - Enter your confirmation code"
@@ -889,9 +891,9 @@ def sso_actor_received_email_confirmation_code(
 
 
 def generic_create_great_account(
-        context: Context, actor_alias: str, business_type: str
+    context: Context, actor_alias: str, business_type: str
 ):
-    page_name = f"Profile - Enter your business email address and set a password ({business_type})"
+    page_name = f"Profile - Enter your business email address and set a password ({business_type})"  # noqa
 
     visit_page(context, actor_alias, page_name)
     generic_fill_out_and_submit_form(context, actor_alias)
@@ -904,21 +906,19 @@ def generic_create_great_account(
     should_be_on_page(
         context,
         actor_alias,
-        f"Profile - Enter your business details ({business_type})"
+        f"Profile - Enter your business details ({business_type})",
     )
 
     generic_fill_out_and_submit_form(context, actor_alias)
     should_be_on_page(
         context,
         actor_alias,
-        f"Profile - Enter your business details [step 2] ({business_type})"
+        f"Profile - Enter your business details [step 2] ({business_type})",
     )
 
     generic_fill_out_and_submit_form(context, actor_alias)
     should_be_on_page(
-        context,
-        actor_alias,
-        f"Profile - Enter your details ({business_type})"
+        context, actor_alias, f"Profile - Enter your details ({business_type})"
     )
 
     generic_fill_out_and_submit_form(context, actor_alias)
@@ -926,7 +926,8 @@ def generic_create_great_account(
 
 
 def marketplace_finder(
-        context: Context, actor_alias: str, product_types: str, country_names: str):
+    context: Context, actor_alias: str, product_types: str, country_names: str
+):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "search")
     product_types = product_types.split(",")

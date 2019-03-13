@@ -44,6 +44,7 @@ from steps.when_impl import (
     language_selector_close,
     language_selector_navigate_through_links_with_keyboard,
     language_selector_open,
+    marketplace_finder,
     office_finder_find_trade_office,
     open_any_element,
     open_link,
@@ -54,7 +55,6 @@ from steps.when_impl import (
     sign_in,
     sign_out,
     visit_page,
-    marketplace_finder,
 )
 
 
@@ -384,4 +384,3 @@ def when_actor_looks_for_trade_office(context: Context, actor_alias: str, post_c
 def when_actor_looks_for_marketplace_using_country_names_and_product_types(
         context: Context, actor_alias: str, product_types: str, country_names: str):
     marketplace_finder(context, actor_alias, product_types, country_names)
-
