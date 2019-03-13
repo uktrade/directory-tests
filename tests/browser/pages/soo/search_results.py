@@ -10,7 +10,6 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages import ElementType
 from pages.common_actions import (
-    assertion_msg,
     Selector,
     check_url,
     fill_out_input_fields,
@@ -21,11 +20,9 @@ from pages.common_actions import (
     scroll_to,
     take_screenshot,
 )
-from pages.soo.autocomplete_callbacks import (
-    autocomplete_country_name,
-    autocomplete_product_type,
-)
 from settings import SELLING_ONLINE_OVERSEAS_UI_URL
+from pages.soo.autocomplete_callbacks import autocomplete_product_type, autocomplete_country_name
+
 
 SERVICE = "Selling Online Overseas"
 TYPE = "search"
@@ -118,19 +115,11 @@ def search(
 
 
 def should_see_marketplace(driver: WebDriver, country_names: str):
-    expected_countries = country_names.replace('"', '').split(',')
-    expected_countries.append('Global')
-    country_selector = Selector(By.CSS_SELECTOR, "ul.markets-countries dd")
-    marketplace_countries = [country.text for country in find_elements(driver, country_selector)]
+    countries = country_names.split(",")
+    countries.append('Global')
 
-    logging.debug(f"CURRENT URL: {driver.current_url}")
-    if len(marketplace_countries) > 0:
-        countries = list(set(expected_countries).intersection(marketplace_countries))
-
-        with assertion_msg(
-                "Expected to see '%s' in the marketplace search page but got '%s' instead",
-                countries,
-                marketplace_countries,
-        ):
-
-            assert len(countries) != 0
+    for country in countries:
+        country_selector = Selector(By.XPATH, f'//dd[contains(text(), country)]')
+        find_element(
+            driver, country_selector, element_name=country, wait_for_it=False)
+        logging.debug(f"As expected {country} is present")
