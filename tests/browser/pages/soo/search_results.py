@@ -20,9 +20,11 @@ from pages.common_actions import (
     scroll_to,
     take_screenshot,
 )
+from pages.soo.autocomplete_callbacks import (
+    autocomplete_country_name,
+    autocomplete_product_type,
+)
 from settings import SELLING_ONLINE_OVERSEAS_UI_URL
-from pages.soo.autocomplete_callbacks import autocomplete_product_type, autocomplete_country_name
-
 
 SERVICE = "Selling Online Overseas"
 TYPE = "search"
@@ -116,10 +118,13 @@ def search(
 
 def should_see_marketplace(driver: WebDriver, country_names: str):
     countries = country_names.split(",")
-    countries.append('Global')
+    countries.append("Global")
 
     for country in countries:
-        country_selector = Selector(By.XPATH, f'//dd[contains(text(), country)]')
+        country_selector = Selector(
+            By.XPATH, f"//dd[contains(text(), country)]"
+        )
         find_element(
-            driver, country_selector, element_name=country, wait_for_it=False)
+            driver, country_selector, element_name=country, wait_for_it=False
+        )
         logging.debug(f"As expected {country} is present")

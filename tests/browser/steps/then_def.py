@@ -47,7 +47,6 @@ from steps.then_impl import (
     stats_and_tracking_elements_should_be_present,
     stats_and_tracking_elements_should_not_be_present,
     zendesk_should_receive_confirmation_email,
-    marketplace_finder_should_see_marketplaces,
 )
 from steps.when_impl import generic_get_verification_code
 
