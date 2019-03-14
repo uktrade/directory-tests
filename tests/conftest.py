@@ -93,7 +93,8 @@ def extract_csrf_middleware_token(content: str) -> str:
 def logged_in_session():
     session = requests.Session()
     login_url = get_absolute_url("sso:login")
-    response = session.get(url=login_url)
+    response = session.get(url=login_url, auth=(BASICAUTH_USER, BASICAUTH_PASS))
+    assert response.status_code == 200, f"Expected 200 but got {response.status_code} from {response.url}"
     csrfmiddlewaretoken = extract_csrf_middleware_token(response.content.decode("UTF-8"))
     user = users["verified"]
     data = {
@@ -107,6 +108,7 @@ def logged_in_session():
         allow_redirects=True,
         auth=(BASICAUTH_USER, BASICAUTH_PASS),
     )
-    assert "Sign out" in str(response.content)
+    assert response.status_code == 200, f"Expected 200 but got {response.status_code} from {response.url}"
+    assert "Sign out" in response.content.decode("UTF-8"),  f"Couldn't find 'Sign out' in the response from: {response.url}"
     return session
 
