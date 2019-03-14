@@ -84,7 +84,7 @@ def collate_products_and_countries(
     if len(product_types) > len(country_names):
         iterations = len(product_types)
     else:
-        len(country_names)
+        iterations = len(country_names)
 
     list_of_values = []
     for i in range(iterations):
