@@ -771,8 +771,8 @@ def generic_click_on_random_industry(context: Context, actor_alias: str):
 
 def generic_click_on_random_marketplace(context: Context, actor_alias: str):
     page = get_last_visited_page(context, actor_alias)
-    has_action(page, "open_any_marketplace")
-    page.open_any_marketplace(context.driver)
+    has_action(page, "open_random_marketplace")
+    page.open_random_marketplace(context.driver)
 
 
 def generic_select_dropdown_option(

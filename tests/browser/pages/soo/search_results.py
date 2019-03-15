@@ -10,6 +10,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages import ElementType
 from pages.common_actions import (
+    assertion_msg,
     Selector,
     check_url,
     fill_out_input_fields,
@@ -72,7 +73,7 @@ def click_on_page_element(driver: WebDriver, element_name: str):
     take_screenshot(driver, NAME + " after clicking on " + element_name)
 
 
-def open_any_marketplace(driver: WebDriver):
+def open_random_marketplace(driver: WebDriver):
     selector = Selector(By.CSS_SELECTOR, ".markets-info > a")
     links = find_elements(driver, selector)
     random.choice(links).click()
@@ -117,14 +118,19 @@ def search(
 
 
 def should_see_marketplace(driver: WebDriver, country_names: str):
-    countries = country_names.split(",")
-    countries.append("Global")
+    expected_countries = country_names.replace('"', '').split(',')
+    expected_countries.append('Global')
+    country_selector = Selector(By.CSS_SELECTOR, "ul.markets-countries dd")
+    marketplace_countries = [country.text for country in find_elements(driver, country_selector)]
 
-    for country in countries:
-        country_selector = Selector(
-            By.XPATH, f"//dd[contains(text(), country)]"
-        )
-        find_element(
-            driver, country_selector, element_name=country, wait_for_it=False
-        )
-        logging.debug(f"As expected {country} is present")
+    logging.debug(f"CURRENT URL: {driver.current_url}")
+    if len(marketplace_countries) > 0:
+        countries = list(set(expected_countries).intersection(marketplace_countries))
+
+        with assertion_msg(
+                "Expected to see '%s' in the marketplace search page but got '%s' instead",
+                countries,
+                marketplace_countries,
+        ):
+
+            assert len(countries) != 0

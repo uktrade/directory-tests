@@ -338,9 +338,10 @@ def when_actor_reports_problem_with_page(context: Context, actor_alias: str):
     generic_report_problem_with_page(context, actor_alias)
 
 
-@when('"{actor_alias}" randomly selects a marketplace')
-def when_actor_selects_marketplace(context: Context, actor_alias: str):
-    generic_click_on_random_marketplace(context, actor_alias)
+@when('"{actor_alias}" decides to find marketplaces in "{country_names}" to sell "{product_types}"')
+def when_actor_looks_for_marketplace_using_country_names_and_product_types(
+        context: Context, actor_alias: str, product_types: str, country_names: str):
+    marketplace_finder(context, actor_alias, product_types, country_names)
 
 
 ###############################################################################
@@ -348,10 +349,20 @@ def when_actor_selects_marketplace(context: Context, actor_alias: str):
 ###############################################################################
 
 
+@when('"{actor_alias}" randomly selects a marketplace')
+def when_actor_selects_marketplace(context: Context, actor_alias: str):
+    generic_click_on_random_marketplace(context, actor_alias)
+
+
 @when('"{actor_alias}" completes the registration and fake email verification process')
 def when_actor_registers_fake_email_verification(context, actor_alias):
     registration_submit_form_and_verify_account(
         context, actor_alias, fake_verification=True)
+
+
+@when('"{actor_alias}" signs out')
+def when_actor_signs_out(context, actor_alias):
+    sign_out(context, actor_alias)
 
 
 @when('"{actor_alias}" completes the registration and real email verification process')
@@ -370,17 +381,6 @@ def when_actor_signs_in(context, actor_alias):
     sign_in(context, actor_alias)
 
 
-@when('"{actor_alias}" signs out')
-def when_actor_signs_out(context, actor_alias):
-    sign_out(context, actor_alias)
-
-
 @when('"{actor_alias}" searches for local trade office near "{post_code}"')
 def when_actor_looks_for_trade_office(context: Context, actor_alias: str, post_code: str):
     office_finder_find_trade_office(context, actor_alias, post_code)
-
-
-@when('"{actor_alias}" decides to find marketplaces in "{country_names}" to sell "{product_types}"')
-def when_actor_looks_for_marketplace_using_country_names_and_product_types(
-        context: Context, actor_alias: str, product_types: str, country_names: str):
-    marketplace_finder(context, actor_alias, product_types, country_names)
