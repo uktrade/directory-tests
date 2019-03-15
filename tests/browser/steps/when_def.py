@@ -384,9 +384,3 @@ def when_actor_signs_in(context, actor_alias):
 @when('"{actor_alias}" searches for local trade office near "{post_code}"')
 def when_actor_looks_for_trade_office(context: Context, actor_alias: str, post_code: str):
     office_finder_find_trade_office(context, actor_alias, post_code)
-
-
-@when('"{actor_alias}" decides to find marketplaces in "{country_names}" to sell "{product_types}"')
-def when_actor_looks_for_marketplace_using_country_names_and_product_types(
-        context: Context, actor_alias: str, product_types: str, country_names: str):
-    marketplace_finder(context, actor_alias, product_types, country_names)
