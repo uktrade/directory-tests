@@ -174,6 +174,12 @@ urls = {
     "profile:exops-applications": "export-opportunities/applications/",
     "profile:landing": "",
     "profile:about": "about/",
+    "profile:enrol-user-account": "enrol/business-type/companies-house/user-account/",
+    "profile:enrol-email-verification": "enrol/business-type/companies-house/verification/",
+    "profile:enrol-companies-house-search": "enrol/business-type/companies-house/search/",
+    "profile:enrol-business-details": "enrol/business-type/companies-house/business-details/",
+    "profile:enrol-personal-details": "enrol/business-type/companies-house/personal-details/",
+    "profile:enrol-finished": "enrol/business-type/companies-house/finished/",
 
     # ExRed UI
     "ui-exred:healthcheck": "healthcheck/",
