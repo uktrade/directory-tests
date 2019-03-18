@@ -245,7 +245,7 @@ def reg_create_sso_account(
     actor = context.get_actor(supplier_alias)
     company = context.get_company(company_alias)
 
-    # Submit SSO Registration form with Supplier's & Company's required details
+    logging.debug("Submit SSO Registration form with Supplier's & Company's required details")
     context.response = sso_ui_register.submit(actor, company)
 
 
