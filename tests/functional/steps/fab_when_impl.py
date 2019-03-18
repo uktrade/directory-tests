@@ -1897,6 +1897,9 @@ def sso_sign_in(context: Context, supplier_alias: str):
     context.response = sso_ui_login.login(
         actor, next_param=next_param, referer=referer
     )
+    error = f"User is not logged in. Could not find 'Sign out' in the response from {context.response.url}"
+    assert "Sign out" in context.response.content.decode("UTF-8"), error
+    logging.debug(f"{actor.email} is logged in")
 
 
 def sso_change_password_with_password_reset_link(
