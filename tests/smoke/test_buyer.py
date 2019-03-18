@@ -18,24 +18,6 @@ def test_landing_page_post_company_not_active(basic_auth):
     assert "Company not active" in str(response.content)
 
 
-def test_landing_page_post_company_already_registered(basic_auth):
-    data = {"company_number": companies["already_registered"]}
-    response = requests.post(
-        get_absolute_url("ui-buyer:landing"), data=data, allow_redirects=False,
-        auth=basic_auth
-    )
-    assert "Already registered" in str(response.content)
-
-
-def test_landing_page_post_company_not_found(basic_auth):
-    data = {"company_number": "12345670"}
-    response = requests.post(
-        get_absolute_url("ui-buyer:landing"), data=data, allow_redirects=False,
-        auth=basic_auth
-    )
-    assert "Error. Please try again later." in str(response.content)
-
-
 def test_landing_page_post_company_happy_path(basic_auth):
     data = {"company_number": companies["active_not_registered"]}
     response = requests.post(
