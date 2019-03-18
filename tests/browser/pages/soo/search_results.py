@@ -74,7 +74,7 @@ def click_on_page_element(driver: WebDriver, element_name: str):
 
 
 def open_random_marketplace(driver: WebDriver):
-    selector = Selector(By.CSS_SELECTOR, ".markets-info > a")
+    selector = Selector(By.CSS_SELECTOR, "ul.markets li.markets-item")
     links = find_elements(driver, selector)
     random.choice(links).click()
 

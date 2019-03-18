@@ -20,6 +20,7 @@ from pages.common_actions import (
     tick_checkboxes,
 )
 from pages.exred import contact_us_soo_long_organisation_details
+from pages.exred.autocomplete_callbacks import autocomplete_company_name
 from settings import EXRED_UI_URL
 
 NAME = "Long Domestic (Your Business)"
@@ -39,20 +40,26 @@ SELECTORS = {
         ),
         "company website": Selector(
             By.ID, "id_organisation-website_address", type=ElementType.INPUT
-        ),
+        )
     }
 }
 
 HAS_COMPANY_NUMBER = {
     "company name": Selector(
-        By.ID, "id_organisation-company_name", type=ElementType.INPUT
+        By.ID, "id_organisation-company_name",
+        type=ElementType.INPUT,
+        is_visible=False,
+        autocomplete_callback=autocomplete_company_name,
     ),
+    "companies house number": Selector(
+        By.ID, "id_organisation-company_number", type=ElementType.INPUT
+    )
 }
 
 DOESNT_HAVE_COMPANY_NUMBER = {
     "company postcode": Selector(
         By.ID, "id_organisation-company_postcode", type=ElementType.INPUT
-    ),
+    )
 }
 
 
@@ -74,6 +81,7 @@ def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
         "company website":
             f"http://{actor.email}.automated.tests.com".replace("@", "."),
     }
+
     if does_not_have_company_number:
         result.update({"company postcode": "SW1H 0TL"})
         SELECTORS["form"].update(DOESNT_HAVE_COMPANY_NUMBER)
@@ -81,13 +89,14 @@ def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
             set(SELECTORS["form"].items()) - set(HAS_COMPANY_NUMBER.items())
         )
     else:
-        result.update({"company name": "automated tests"})
+        result.update({
+            "company name": "COLDSPACE COLD ROOMS (UK) LLP",
+            "companies house number": "OC399213",
+            "company postcode": "GL2 2AQ"
+
+        })
         SELECTORS["form"].update(HAS_COMPANY_NUMBER)
-        # In order to avoid situation when previous scenario example modified
-        # SELECTORS we have to remove OTHER_SELECTORS that were then added
-        SELECTORS["form"] = dict(
-            set(SELECTORS["form"].items()) - set(DOESNT_HAVE_COMPANY_NUMBER.items())
-        )
+
     if custom_details:
         result.update(custom_details)
 
