@@ -516,11 +516,12 @@ def log_response(
                         content_only_msg,
                     )
         logging.debug(
-            "Final destination: %s %s -> %d %s",
+            "Final destination: %s %s -> %d %s\n%s",
             request.method,
             request.url,
             response.status_code,
             response.url,
+            response.headers
         )
     else:
         logging.debug("REQ URL: %s %s", request.method, request.url)
