@@ -22,6 +22,16 @@ def extract_email_confirmation_link(payload: str) -> str:
     return activation_link
 
 
+def extract_email_confirmation_code(payload: str) -> str:
+    """Find email confirmation code inside the plain text email payload."""
+    reference = "Your confirmation code is "
+    start = payload.find(reference) + len(reference)
+    end = start + 5
+    confirmation_code = payload[start:end]
+    logging.debug("Found email confirmation code: %s", confirmation_code)
+    return confirmation_code
+
+
 def extract_password_reset_link(payload: str) -> str:
     """Find password reset link inside the plain text email payload."""
     start = payload.find("https")
@@ -96,3 +106,12 @@ def get_password_reset_link(email: str) -> str:
     notification = get_password_reset_notification(email)
     body = notification["body"]
     return extract_password_reset_link(body)
+
+
+@retry(wait_fixed=2000, stop_max_attempt_number=5)
+def get_email_verification_code(email: str) -> str:
+    """Find email confirmation code inside the plain text email payload."""
+    subject = "Your confirmation code for great.gov.uk"
+    notification = get_email_confirmation_notification(email, subject=subject)
+    body = notification["body"]
+    return extract_email_confirmation_code(body)
