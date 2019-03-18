@@ -22,7 +22,6 @@ from typing import Dict, List
 
 import requests
 from behave.runner import Context
-from mohawk import Sender
 from retrying import retry
 from selenium.common.exceptions import (
     NoSuchElementException,
@@ -42,8 +41,6 @@ from settings import (
     BROWSERSTACK_PASS,
     BROWSERSTACK_SESSIONS_URL,
     BROWSERSTACK_USER,
-    IP_RESTRICTOR_SKIP_CHECK_SENDER_ID,
-    IP_RESTRICTOR_SKIP_CHECK_SECRET,
     TAKE_SCREENSHOTS,
 )
 
@@ -76,24 +73,6 @@ Selector = namedtuple(
 # define default values for various named tuples
 Actor.__new__.__defaults__ = (None,) * len(Actor._fields)
 Selector.__new__.__defaults__ = (None, None, True, True, True, None, True, None, None)
-
-
-def get_hawk_cookie():
-    sender = Sender(
-        credentials={
-            'id': IP_RESTRICTOR_SKIP_CHECK_SENDER_ID,
-            'key': IP_RESTRICTOR_SKIP_CHECK_SECRET,
-            'algorithm': 'sha256'
-        },
-        url='/',
-        method='',
-        always_hash_content=False
-    )
-
-    return {
-        "name": "ip-restrict-signature",
-        "value": sender.request_header,
-    }
 
 
 def go_to_url(driver: WebDriver, url: str, page_name: str):

@@ -2,7 +2,6 @@ import pytest
 import requests
 
 from directory_constants.constants import cms as SERVICE_NAMES
-from mohawk import Sender
 from requests.auth import HTTPBasicAuth
 from retrying import retry
 
@@ -19,8 +18,6 @@ from tests.settings import (
     DIRECTORY_SSO_API_CLIENT_DEFAULT_TIMEOUT,
     DIRECTORY_SSO_API_CLIENT_SENDER_ID,
     DIRECTORY_CMS_API_CLIENT_CACHE_EXPIRE_SECONDS,
-    IP_RESTRICTOR_SKIP_CHECK_SENDER_ID,
-    IP_RESTRICTOR_SKIP_CHECK_SECRET,
 )
 
 
@@ -59,21 +56,6 @@ def cms_client():
         timeout=DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT,
         default_service_name="change-me",
     )
-
-
-@pytest.fixture
-def hawk_cookie():
-    sender = Sender(
-        credentials={
-            "id": IP_RESTRICTOR_SKIP_CHECK_SENDER_ID,
-            "key": IP_RESTRICTOR_SKIP_CHECK_SECRET,
-            "algorithm": "sha256"
-        },
-        url="/",
-        method="",
-        always_hash_content=False
-    )
-    return {"ip-restrict-signature": sender.request_header}
 
 
 @pytest.fixture

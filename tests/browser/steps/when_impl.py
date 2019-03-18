@@ -20,8 +20,6 @@ from urllib.parse import urlparse
 from settings import (
     BASICAUTH_USER,
     BASICAUTH_PASS,
-    SET_HAWK_COOKIE,
-    REUSE_COOKIE,
 )
 from utils.cms_api import get_news_articles
 from utils.gov_notify import get_verification_code, get_verification_link
@@ -31,7 +29,6 @@ from pages.common_actions import (
     add_actor,
     barred_actor,
     get_actor,
-    get_hawk_cookie,
     get_last_visited_page,
     unauthenticated_actor,
     update_actor,
@@ -58,46 +55,6 @@ def retry_if_assertion_error(exception):
     """Return True if we should retry on AssertionError, False otherwise"""
     return isinstance(exception, AssertionError)
 
-
-def try_to_reuse_hawk_cookie(driver: WebDriver):
-    """
-    An example 'ip-restrict-signature' cookie returned by WebDriver looks like this:
-    {
-     'domain': 'invest.great.gov.uk',
-     'expiry': 2177925215,
-     'httpOnly': False,
-     'name': 'ip-restrict-signature',
-     'path': '/',
-     'secure': True,
-     'value': 'Hawk mac="IzYtf...=", id="test", ts="1547205215", nonce="avYGOt"'
-    }
-    In order to reuse the cookie, we need to check if the difference between current
-    datetime and `ts` value (from 'value' property) is less than 60s.
-    It's because Hawk cookie is valid for 60s.
-    see https://github.com/hueniverse/hawk#replay-protection
-    To avoid situations when cookie is rejected as it expired due to slow page load,
-    we'll renew it when it's older than 50s.
-
-    """
-    logging.debug(f"Checking if IP Restrictor cookie can be reused")
-    cookies = driver.get_cookies()
-    restrictor_cookie = [c for c in cookies if c['name'] == 'ip-restrict-signature']
-    if restrictor_cookie:
-        logging.debug(f"Found IP Restrictor cookie")
-        cookie_ts = int(restrictor_cookie[0]['value'].split(', ')[2][4:-1])
-        now = int(datetime.now().timestamp())
-        time_difference = now - cookie_ts
-        if time_difference < 50:
-            logging.debug(
-                f"IP Restrictor cookie is still valid for {60 - time_difference}s, "
-                f"will re-use it"
-            )
-            return
-        else:
-            logging.debug(f"IP Restrictor cookie is not valid anymore")
-    else:
-        logging.debug(f"IP Restrictor cookie is not present")
-    
 
 def generic_set_basic_auth_creds(context: Context, page_name: str):
     driver = context.driver
