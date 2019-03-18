@@ -9,9 +9,9 @@ from tests.functional.steps.fab_given_impl import (
     fab_find_published_company,
     fas_find_company_by_name,
     fas_get_company_slug,
+    profile_create_unverified_business_profile,
     reg_confirm_email_address,
     reg_create_sso_account_associated_with_company,
-    reg_create_unverified_profile,
     reg_create_verified_profile,
     reg_create_verified_sso_account_associated_with_company,
     reg_select_random_company_and_confirm_export_status,
@@ -129,12 +129,6 @@ def given_supplier_selects_random_company(
 def given_supplier_adds_valid_links_to_online_profiles(
         context, supplier_alias):
     prof_add_online_profiles(context, supplier_alias, context.table)
-
-
-@given('"{supplier_alias}" created an unverified profile for randomly selected'
-       ' company "{company_alias}"')
-def given_unverified_profile(context, supplier_alias, company_alias):
-    reg_create_unverified_profile(context, supplier_alias, company_alias)
 
 
 @given('"{supplier_alias}" has set "{picture}" picture as company\'s logo')
@@ -271,3 +265,11 @@ def given_supplier_transfers_the_account_ownership(
 @given('"{actor_alias}" sends a test verification letter via StanNP for randomly selected company')
 def given_actor_sends_a_verification_letter(context, actor_alias):
     stannp_send_verification_letter(context, actor_alias)
+
+
+@given('"{supplier_alias}" created an unverified profile for randomly selected'
+       ' company "{company_alias}"')
+def given_unverified_profile_new_reg_flow(context, supplier_alias, company_alias):
+    profile_create_unverified_business_profile(
+        context, supplier_alias, company_alias
+    )

@@ -17,6 +17,7 @@ Actor = namedtuple(
         "session",
         "csrfmiddlewaretoken",
         "email_confirmation_link",
+        "email_confirmation_code",
         "company_alias",
         "has_sso_account",
         "type",

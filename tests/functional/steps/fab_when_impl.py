@@ -41,6 +41,12 @@ from tests.functional.pages import (
     fas_ui_feedback,
     fas_ui_find_supplier,
     fas_ui_profile,
+    profile_enrolment_finished,
+    profile_enter_email_verification_code,
+    profile_enter_your_business_details,
+    profile_enter_your_business_details_part_2,
+    profile_enter_your_email_and_password,
+    profile_enter_your_personal_details,
     profile_ui_find_a_buyer,
     profile_ui_landing,
     sso_ui_change_password,
@@ -69,6 +75,7 @@ from tests.functional.utils.generic import (
     extract_text_from_pdf,
     get_absolute_path_of_file,
     get_active_company_without_fas_profile,
+    get_company_by_id,
     get_language_code,
     get_md5_hash_of_file,
     get_number_of_search_result_pages,
@@ -83,6 +90,7 @@ from tests.functional.utils.generic import (
     rare_word,
     sentence,
 )
+from tests.functional.utils.gov_notify import get_email_verification_code
 from tests.functional.utils.request import Method, check_response, make_request
 from tests.settings import (
     COUNTRIES,
@@ -2349,3 +2357,58 @@ def stannp_download_verification_letter_and_extract_text(
         logging.error(
             "Something went wrong when trying to delete: %s", pdf_path)
     context.update_actor(actor_alias, verification_letter=pdf_text)
+
+
+def enrol_user(context: Context, actor_alias: str, company_alias: str):
+    actor = context.get_actor(actor_alias)
+    company = context.get_company(company_alias)
+
+    # 1) Go to Enter your email & password
+    response = profile_enter_your_email_and_password.go_to(actor.session)
+    context.response = response
+    token = extract_csrf_middleware_token(response)
+    context.update_actor(actor_alias, csrfmiddlewaretoken=token)
+
+    # 2) submit the form
+    response = profile_enter_your_email_and_password.submit(actor)
+    context.response = response
+    token = extract_csrf_middleware_token(response)
+    context.update_actor(actor_alias, csrfmiddlewaretoken=token)
+    profile_enter_email_verification_code.should_be_here(response)
+
+    # 3) get email verification code
+    code = get_email_verification_code(actor.email)
+    assert code, f"Could not find email verification code for {actor.email}"
+    context.update_actor(actor_alias, email_confirmation_code=code)
+
+    # 4) submit email verification code
+    actor = context.get_actor(actor_alias)
+    response = profile_enter_email_verification_code.submit(actor)
+    context.response = response
+    token = extract_csrf_middleware_token(response)
+    context.update_actor(actor_alias, csrfmiddlewaretoken=token)
+    profile_enter_your_business_details.should_be_here(response)
+
+    # 5) submit company details - 1st part
+    response = profile_enter_your_business_details.submit(actor, company)
+    context.response = response
+    token = extract_csrf_middleware_token(response)
+    context.update_actor(actor_alias, csrfmiddlewaretoken=token)
+    profile_enter_your_business_details_part_2.should_be_here(response)
+
+    # 6) submit company details - 2nd part
+    profile_enter_your_business_details_part_2.submit(actor, company)
+    context.response = response
+    token = extract_csrf_middleware_token(response)
+    context.update_actor(actor_alias, csrfmiddlewaretoken=token)
+    profile_enter_your_personal_details.should_be_here(response)
+
+    # 7) submit personal details
+    response = profile_enter_your_personal_details.submit(actor)
+    context.response = response
+    profile_enrolment_finished.should_be_here(response)
+
+    logging.debug(
+        f"'{actor.alias}' created an unverified Business Profile for "
+        f"'{company.title} - {company.number}'"
+    )

@@ -29,6 +29,8 @@ from tests.functional.steps.fab_when_impl import (
     bp_select_random_sector_and_export_to_country,
     bp_verify_identity_with_letter,
     can_find_supplier_by_term,
+    enrol_user,
+    find_unregistered_company,
     finish_registration_after_flagging_as_verified,
     prof_set_company_description,
     prof_verify_company,
@@ -132,6 +134,16 @@ def reg_create_sso_account_associated_with_company(
     context.update_actor(supplier_alias, has_sso_account=True)
 
 
+def profile_create_unverified_business_profile(
+        context: Context, supplier_alias: str, company_alias: str
+):
+    if not context.get_actor(supplier_alias):
+        context.add_actor(unauthenticated_supplier(supplier_alias))
+    find_unregistered_company(context, supplier_alias, company_alias)
+    enrol_user(context, supplier_alias, company_alias)
+    context.update_actor(supplier_alias, has_sso_account=True)
+
+
 def reg_confirm_email_address(context: Context, supplier_alias: str):
     reg_should_get_verification_email(context, supplier_alias)
     reg_open_email_confirmation_link(context, supplier_alias)
@@ -195,18 +207,6 @@ def reg_select_random_company_and_confirm_export_status(
     select_random_company(context, supplier_alias, company_alias)
     reg_confirm_company_selection(context, supplier_alias, company_alias)
     bp_should_be_prompted_to_build_your_profile(context, supplier_alias)
-
-
-def reg_create_unverified_profile(
-    context: Context, supplier_alias: str, company_alias: str
-):
-    supplier = unauthenticated_supplier(supplier_alias)
-    context.add_actor(supplier)
-    reg_create_sso_account_associated_with_company(
-        context, supplier_alias, company_alias
-    )
-    reg_confirm_email_address(context, supplier_alias)
-    bp_build_company_profile(context, supplier_alias)
 
 
 def fas_find_company_by_name(
@@ -359,7 +359,7 @@ def create_actor_with_verified_or_unverified_fab_profile(
     if verified_or_not == "a verified":
         reg_create_verified_profile(context, actor_alias, company_alias)
     else:
-        reg_create_unverified_profile(context, actor_alias, company_alias)
+        profile_create_unverified_business_profile(context, actor_alias, company_alias)
 
 
 def stannp_send_verification_letter(context: Context, actor_alias: str):
