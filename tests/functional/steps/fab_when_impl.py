@@ -154,6 +154,33 @@ def select_random_company(
     context.update_actor(supplier_alias, company_alias=company_alias)
 
 
+def find_unregistered_company(
+        context: Context, supplier_alias: str, company_alias: str
+) -> Company:
+    max_attempts = 15
+    counter = 0
+
+    while True:
+        # Step 1 - find an active company without a FAS profile
+        company = get_active_company_without_fas_profile(company_alias)
+        company_details = get_company_by_id(company.number)
+        counter += 1
+        if counter >= max_attempts:
+            with assertion_msg(
+                    "Failed to find an active company which is not registered "
+                    "with FAB after %d attempts",
+                    max_attempts,
+            ):
+                assert False
+        if not company_details:
+            logging.debug(f"Found company not registered with us: '{company.number}'")
+            break
+
+    context.add_company(company)
+    context.update_actor(supplier_alias, company_alias=company_alias)
+    return company
+
+
 def reg_confirm_company_selection(
     context: Context, supplier_alias: str, company_alias: str
 ):
