@@ -107,6 +107,6 @@ def test_check_if_verify_endpoint_redirects_to_correct_page(
         "ui-buyer:confirm-company-address"
     )
     got_to_profile = response.url == get_absolute_url(
-        "ui-buyer:company-profile"
+        "profile:fab"
     )
     assert got_to_letter_confirmation or got_to_profile
