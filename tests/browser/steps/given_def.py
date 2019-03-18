@@ -99,7 +99,7 @@ def given_actor_navigates_via_contact_us_options(
 
 
 @given('basic authentication is done for "{page_name}" page')
-def given_hawk_cookie_is_set(context: Context, page_name: str):
+def given_user_did_basic_auth(context: Context, page_name: str):
     generic_set_basic_auth_creds(context, page_name)
 
 
