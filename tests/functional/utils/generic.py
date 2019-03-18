@@ -1430,6 +1430,12 @@ def get_number_of_search_result_pages(response: Response) -> int:
     return last_page
 
 
+def get_company_by_id(number: str) -> dict:
+    """Get email address associated with company."""
+    response = DIRECTORY_CLIENT.get_company_by_ch_id(number)
+    return response.json() if response.status_code == 200 else None
+
+
 def get_company_email(number: str) -> str:
     """Get email address associated with company."""
     response = DIRECTORY_CLIENT.get_company_by_ch_id(number)
