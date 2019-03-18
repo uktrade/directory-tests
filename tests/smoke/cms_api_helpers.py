@@ -157,7 +157,9 @@ def status_error(
         )
 
 
-def get_and_assert(url: str, status_code: int, *, auth: tuple = None, cookies: dict = None):
+def get_and_assert(
+        url: str, status_code: int, *, auth: tuple = None, cookies: dict = None
+):
     response = requests.get(url, auth=auth, cookies=cookies)
     msg = f"Expected {status_code} but got {response.status_code} from {url}"
     assert response.status_code == status_code, msg

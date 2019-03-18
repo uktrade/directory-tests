@@ -41,13 +41,13 @@ from tests.smoke.cms_api_helpers import status_error
     ("industries/advanced-manufacturing/", join_ui_international("industries/advanced-manufacturing/")),
 ])
 def test_cms_918_redirect_to_international_if_matching_industry_exists(
-         old_url, new_url, basic_auth, hawk_cookie):
+         old_url, new_url, basic_auth):
     """
     A redirect to the International site will happen only if there’s a sector
     page with the same slug in International.
     """
     response = requests.get(
-        old_url, allow_redirects=False, auth=basic_auth, cookies=hawk_cookie
+        old_url, allow_redirects=False, auth=basic_auth
     )
     assert response.status_code == HTTP_302_FOUND, status_error(
         HTTP_302_FOUND, response
