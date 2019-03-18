@@ -863,7 +863,7 @@ def get_barred_actor(context: Context, actor_alias: str):
 def sso_actor_received_email_confirmation_code(
         context: Context, actor_alias: str, business_type: str
 ):
-    page_name = f"Profile - Enter your email and set a password ({business_type})"
+    page_name = f"Profile - Enter your business email address and set a password ({business_type})"
     visit_page(context, actor_alias, page_name)
     generic_fill_out_and_submit_form(context, actor_alias)
     end_page_name = "Profile - Enter your confirmation code"
@@ -874,7 +874,7 @@ def sso_actor_received_email_confirmation_code(
 def generic_create_great_account(
         context: Context, actor_alias: str, business_type: str
 ):
-    page_name = f"Profile - Enter your email and set a password ({business_type})"
+    page_name = f"Profile - Enter your business email address and set a password ({business_type})"
 
     visit_page(context, actor_alias, page_name)
     generic_fill_out_and_submit_form(context, actor_alias)
