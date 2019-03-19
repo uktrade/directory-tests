@@ -1,4 +1,9 @@
 Feature: New Contact-us form
+
+  Background:
+    Given basic authentication is done for "Selling Online Overseas - Home" page
+
+
   @XOT-631
   @exopps
   @captcha
