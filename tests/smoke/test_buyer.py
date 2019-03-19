@@ -117,21 +117,9 @@ def test_302_redirects_after_removing_trailing_slash_for_anon_user(
     get_absolute_url("ui-buyer:register-confirm-company"),
     get_absolute_url("ui-buyer:register-confirm-export-status"),
     get_absolute_url("ui-buyer:register-finish"),
-    get_absolute_url("ui-buyer:register-submit-account-details"),
-    get_absolute_url("ui-buyer:upload-logo"),
-    get_absolute_url("ui-buyer:case-study-create"),
-    get_absolute_url("ui-buyer:case-study-edit"),
     get_absolute_url("ui-buyer:confirm-company-address"),
     get_absolute_url("ui-buyer:confirm-identity"),
     get_absolute_url("ui-buyer:confirm-identity-letter"),
-    get_absolute_url("ui-buyer:company-profile"),
-    get_absolute_url("ui-buyer:company-edit"),
-    get_absolute_url("ui-buyer:company-edit-address"),
-    get_absolute_url("ui-buyer:company-edit-description"),
-    get_absolute_url("ui-buyer:company-edit-key-facts"),
-    get_absolute_url("ui-buyer:company-edit-sectors"),
-    get_absolute_url("ui-buyer:company-edit-contact"),
-    get_absolute_url("ui-buyer:company-edit-social-media"),
 ])
 def test_access_non_health_check_endpoints_as_logged_in_user(
         logged_in_session, absolute_url, basic_auth):
