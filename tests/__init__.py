@@ -174,6 +174,7 @@ urls = {
     "profile:exops-applications": "export-opportunities/applications/",
     "profile:landing": "",
     "profile:about": "about/",
+    "profile:enrol": "enrol/",
     "profile:enrol-user-account": "enrol/business-type/companies-house/user-account/",
     "profile:enrol-email-verification": "enrol/business-type/companies-house/verification/",
     "profile:enrol-companies-house-search": "enrol/business-type/companies-house/search/",

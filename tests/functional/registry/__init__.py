@@ -36,6 +36,7 @@ from tests.functional.pages import (
     sud_ui_find_a_buyer,
     sud_ui_landing,
     sud_ui_selling_online_overseas,
+    profile_enrol
 )
 
 from tests import get_absolute_url
@@ -215,6 +216,10 @@ SUD_PAGE_REGISTRY = {
     "sud export opportunities email alerts": {
         "url": "profile:exops-alerts",
         "po": None,
+    },
+    "profile - enrol": {
+        "url": "profile:enrol",
+        "po": profile_enrol,
     },
 }
 

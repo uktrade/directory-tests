@@ -23,13 +23,13 @@ Feature: SUD (Profile) pages
       When "Peter Alder" goes to "SUD Landing" page
       And "Peter Alder" goes to "<other SUD>" page
 
-      Then "Peter Alder" should see "SSO Login" page
+      Then "Peter Alder" should see "<expected>" page
 
       Examples: SUD pages
-        |other SUD                  |
-        |SUD Export Opportunities   |
-        |SUD Find a Buyer           |
-        |SUD Selling Online Overseas|
+        |other SUD                  | expected        |
+        |SUD Export Opportunities   | SSO Login       |
+        |SUD Find a Buyer           | Profile - Enrol |
+        |SUD Selling Online Overseas| SSO Login       |
 
 
     @ED-2266
@@ -44,7 +44,7 @@ Feature: SUD (Profile) pages
 
       When "Peter Alder" goes to "<SUD>" page
 
-      Then "Peter Alder" should see "SSO Login" page
+      Then "Peter Alder" should see "Profile - Enrol" page
 
       Examples: SUD pages
         |SUD                        |
