@@ -37,20 +37,20 @@ Feature: SUD (Profile) pages
     @account
     @bug
     @ED-2268
-    @fixme
+    @fixed
     @no-sso-email-verification-required
     Scenario Outline: Users who visit "<SUD>" page for the first time should be redirected to SSO Login page
       Given "Peter Alder" is an unauthenticated supplier
 
       When "Peter Alder" goes to "<SUD>" page
 
-      Then "Peter Alder" should see "Profile - Enrol" page
+      Then "Peter Alder" should see "<expected>" page
 
       Examples: SUD pages
-        |SUD                        |
-        |SUD Export Opportunities   |
-        |SUD Find a Buyer           |
-        |SUD Selling Online Overseas|
+        |SUD                        | expected        |
+        |SUD Export Opportunities   | SSO Login       |
+        |SUD Find a Buyer           | Profile - Enrol |
+        |SUD Selling Online Overseas| SUD Landing     |
 
 
     # I've been told that on non-prod envs ExOpps doesn't keep synced state
