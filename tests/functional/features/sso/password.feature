@@ -25,6 +25,8 @@ Feature: SSO password management
     @account
     @manage
     @password
+    @dev-only
+    @captcha
     @no-sso-email-verification-required
     Scenario: Suppliers with unverified FAB profile should be able to reset password
       Given "Peter Alder" created an unverified profile for randomly selected company "Y"
@@ -41,6 +43,8 @@ Feature: SSO password management
     @account
     @manage
     @password
+    @dev-only
+    @captcha
     @fake-sso-email-verification
     Scenario: Suppliers with verified FAB profile should be able to reset password
       Given "Peter Alder" has created and verified profile for randomly selected company "Y"
