@@ -100,7 +100,6 @@ urls = {
     # UI-INTERNATIONAL
     "ui-international:landing": "",
     "ui-international:healthcheck-sentry": "healthcheck/sentry/",
-    "ui-international:healthcheck-forms-api": "healthcheck/forms-api/",
 
     # UI-INVEST
     "ui-invest:landing": "",
