@@ -84,7 +84,7 @@ Feature: Find a Supplier
   Scenario: Buyers should NOT be able to find unverified Supplier by uniquely identifying words present on Supplier's case study
     Given "Annette Geissinger" is a buyer
     And "Peter Alder" is an unauthenticated supplier
-    And "Peter Alder" created an unverified profile for randomly selected company "Y"
+    And "Peter Alder" created an unverified business profile for randomly selected company "Y"
 
     When "Peter Alder" adds a complete case study called "no 1"
 

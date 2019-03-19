@@ -29,7 +29,7 @@ Feature: SSO password management
     @captcha
     @no-sso-email-verification-required
     Scenario: Suppliers with unverified FAB profile should be able to reset password
-      Given "Peter Alder" created an unverified profile for randomly selected company "Y"
+      Given "Peter Alder" created an unverified business profile for randomly selected company "Y"
       And "Peter Alder" signed out from Find a Buyer service
       And "Peter Alder" received a password reset email
 

@@ -267,7 +267,7 @@ def given_actor_sends_a_verification_letter(context, actor_alias):
     stannp_send_verification_letter(context, actor_alias)
 
 
-@given('"{supplier_alias}" created an unverified profile for randomly selected'
+@given('"{supplier_alias}" created an unverified business profile for randomly selected'
        ' company "{company_alias}"')
 def given_unverified_profile_new_reg_flow(context, supplier_alias, company_alias):
     profile_create_unverified_business_profile(
