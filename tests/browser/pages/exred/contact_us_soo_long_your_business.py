@@ -40,20 +40,24 @@ SELECTORS = {
         ),
         "company website": Selector(
             By.ID, "id_organisation-website_address", type=ElementType.INPUT
-        )
+        ),
+        "company name": Selector(
+            By.ID, "id_organisation-company_name", type=ElementType.INPUT
+        ),
     }
 }
 
 HAS_COMPANY_NUMBER = {
     "company name": Selector(
-        By.ID, "id_organisation-company_name",
+        By.ID,
+        "id_organisation-company_name",
         type=ElementType.INPUT,
         is_visible=False,
         autocomplete_callback=autocomplete_company_name,
     ),
     "companies house number": Selector(
         By.ID, "id_organisation-company_number", type=ElementType.INPUT
-    )
+    ),
 }
 
 DOESNT_HAVE_COMPANY_NUMBER = {
@@ -72,29 +76,35 @@ def should_be_here(driver: WebDriver):
     check_url(driver, URL, exact_match=False)
 
 
-def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
+def generate_form_details(
+    actor: Actor, *, custom_details: dict = None
+) -> dict:
     does_not_have_company_number = custom_details.get(
         "i don't have a company number", random.choice([True, False])
     )
     result = {
         "i don't have a company number": does_not_have_company_number,
-        "company website":
-            f"http://{actor.email}.automated.tests.com".replace("@", "."),
+        "company website": f"http://{actor.email}.automated.tests.com".replace(
+            "@", "."
+        ),
     }
 
     if does_not_have_company_number:
-        result.update({"company postcode": "SW1H 0TL"})
+        result.update(
+            {"company postcode": "SW1H 0TL", "company name": "Automated Test"}
+        )
         SELECTORS["form"].update(DOESNT_HAVE_COMPANY_NUMBER)
         SELECTORS["form"] = dict(
             set(SELECTORS["form"].items()) - set(HAS_COMPANY_NUMBER.items())
         )
     else:
-        result.update({
-            "company name": "COLDSPACE COLD ROOMS (UK) LLP",
-            "companies house number": "OC399213",
-            "company postcode": "GL2 2AQ"
-
-        })
+        result.update(
+            {
+                "company name": "COLDSPACE COLD ROOMS (UK) LLP",
+                "companies house number": "OC399213",
+                "company postcode": "GL2 2AQ",
+            }
+        )
         SELECTORS["form"].update(HAS_COMPANY_NUMBER)
 
     if custom_details:

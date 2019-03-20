@@ -10,8 +10,8 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages import ElementType
 from pages.common_actions import (
-    assertion_msg,
     Selector,
+    assertion_msg,
     check_url,
     fill_out_input_fields,
     find_and_click_on_page_element,
@@ -117,20 +117,23 @@ def search(
     take_screenshot(driver, "After submitting the form")
 
 
-def should_see_marketplace(driver: WebDriver, country_names: str):
-    expected_countries = country_names.replace('"', '').split(',')
-    expected_countries.append('Global')
+def should_see_marketplaces(driver: WebDriver, countries: str):
+    expected_countries = countries.replace('"', "").split(",")
+    expected_countries.append("Global")
     country_selector = Selector(By.CSS_SELECTOR, "ul.markets-countries dd")
-    marketplace_countries = [country.text for country in find_elements(driver, country_selector)]
+    marketplace_countries = [
+        country.text for country in find_elements(driver, country_selector)
+    ]
 
-    logging.debug(f"CURRENT URL: {driver.current_url}")
     if len(marketplace_countries) > 0:
-        countries = list(set(expected_countries).intersection(marketplace_countries))
+        countries = list(
+            set(expected_countries).intersection(marketplace_countries)
+        )
 
         with assertion_msg(
-                "Expected to see '%s' in the marketplace search page but got '%s' instead",
-                countries,
-                marketplace_countries,
+            "Expected to see '%s' in the marketplace search page but got '%s' instead",
+            countries,
+            marketplace_countries,
         ):
 
             assert len(countries) != 0

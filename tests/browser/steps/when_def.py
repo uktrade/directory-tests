@@ -337,11 +337,41 @@ def when_user_opens_any_element(
 def when_actor_reports_problem_with_page(context: Context, actor_alias: str):
     generic_report_problem_with_page(context, actor_alias)
 
+@when('"{actor_alias}" searches for marketplaces in {countries} to sell {products}')
+def when_actor_looks_for_marketplace_using_countries_and_products(
+        context: Context, actor_alias: str, products: str, countries: str):
+    marketplace_finder(context, actor_alias, products, countries)
 
-@when('"{actor_alias}" decides to find marketplaces in "{country_names}" to sell "{product_types}"')
-def when_actor_looks_for_marketplace_using_country_names_and_product_types(
-        context: Context, actor_alias: str, product_types: str, country_names: str):
-    marketplace_finder(context, actor_alias, product_types, country_names)
+
+@when('"{actor_alias}" randomly selects a marketplace')
+def when_actor_selects_marketplace(context: Context, actor_alias: str):
+    generic_click_on_random_marketplace(context, actor_alias)
+
+@when('"{actor_alias}" submits the SOO contact-us form saying that he doesn\'t have a company number')
+def when_actor_submits_soo_contact_us_form(
+        context: Context, actor_alias: str):
+    generic_fill_out_and_submit_form(context, actor_alias, custom_details_table=context.table)
+    context.execute_steps(u'''
+        Then "{actor_alias}" should be on the "Export Readiness - Long Domestic (Organisation details)" page'''
+                          .format(actor_alias=actor_alias))
+    context.execute_steps(u'''
+        When "{actor_alias}" fills out and submits the form'''
+                          .format(actor_alias=actor_alias))
+    context.execute_steps(u'''
+        Then "{actor_alias}" should be on the "Export Readiness - Long Domestic (Your experience)" page'''
+                          .format(actor_alias=actor_alias))
+    context.execute_steps(u'''
+        When "{actor_alias}" fills out and submits the form'''
+                          .format(actor_alias=actor_alias))
+    context.execute_steps(u'''
+       Then "{actor_alias}" should be on the "Export Readiness - Long Domestic (Contact details)" page'''
+                          .format(actor_alias=actor_alias))
+    context.execute_steps(u'''
+       When "{actor_alias}" fills out and submits the form'''
+                          .format(actor_alias=actor_alias))
+    context.execute_steps(u'''
+       Then "{actor_alias}" should be on the "Export Readiness - Long Domestic (Thank you for your enquiry)" page'''
+                          .format(actor_alias=actor_alias))
 
 
 ###############################################################################
@@ -349,9 +379,6 @@ def when_actor_looks_for_marketplace_using_country_names_and_product_types(
 ###############################################################################
 
 
-@when('"{actor_alias}" randomly selects a marketplace')
-def when_actor_selects_marketplace(context: Context, actor_alias: str):
-    generic_click_on_random_marketplace(context, actor_alias)
 
 
 @when('"{actor_alias}" completes the registration and fake email verification process')

@@ -121,7 +121,11 @@ def should_see_share_widget(context: Context, actor_alias: str):
 
 
 def should_see_links_in_specific_location(
-    context: Context, actor_alias: str, section: str, links: Union[list, Table], location: str
+    context: Context,
+    actor_alias: str,
+    section: str,
+    links: Union[list, Table],
+    location: str,
 ):
     page = get_page_object(location)
     has_action(page, "should_see_link_to")
@@ -166,7 +170,9 @@ def share_page_via_email_should_have_article_details(
     driver = context.driver
     body = driver.current_url
     subject = exred.advice_article.get_article_name(driver)
-    exred.advice_article.check_share_via_email_link_details(driver, subject, body)
+    exred.advice_article.check_share_via_email_link_details(
+        driver, subject, body
+    )
     logging.debug(
         "%s checked that the 'share via email' link contain correct subject: "
         "'%s' and message body: '%s'",
@@ -225,9 +231,7 @@ def language_selector_should_see_it(context: Context, actor_alias: str):
 
 def language_selector_should_not_see_it(context: Context, actor_alias: str):
     page = get_last_visited_page(context, actor_alias)
-    common_language_selector.should_not_see_it_on(
-        context.driver, page=page
-    )
+    common_language_selector.should_not_see_it_on(context.driver, page=page)
     logging.debug("As expected %s cannot see language selector", actor_alias)
 
 
@@ -248,7 +252,7 @@ def should_see_page_in_preferred_language(
     )
     logging.debug(
         f"{actor_alias} can see '{context.driver.current_url}' page in "
-        f"'{preferred_language}",
+        f"'{preferred_language}"
     )
 
 
@@ -310,33 +314,44 @@ def stats_and_tracking_elements_should_not_be_present(
 
 
 def invest_should_see_uk_gov_logo(
-        context: Context, actor_alias: str, section: str):
+    context: Context, actor_alias: str, section: str
+):
     if section.lower() == "header":
         invest.header.check_logo(context.driver)
     else:
         invest.footer.check_logo(context.driver)
     logging.debug(
-        "%s can see correct UK GOV logo in page %s on %s", actor_alias,
-        section, context.driver.current_url)
+        "%s can see correct UK GOV logo in page %s on %s",
+        actor_alias,
+        section,
+        context.driver.current_url,
+    )
 
 
 def invest_should_receive_contact_confirmation_email(
-        context: Context, actor_alias: str, sender_email: str):
+    context: Context, actor_alias: str, sender_email: str
+):
     actor = get_actor(context, actor_alias)
     sleep(5)
     mailgun_invest_find_contact_confirmation_email(
-        context, sender_email, actor.email)
+        context, sender_email, actor.email
+    )
 
 
 def invest_mailbox_admin_should_receive_contact_confirmation_email(
-        context: Context, sender_email: str):
+    context: Context, sender_email: str
+):
     mailgun_invest_find_contact_confirmation_email(
-        context, sender_email, INVEST_MAILBOX_ADMIN_EMAIL,
-        subject=INVEST_AGENT_CONTACT_CONFIRMATION_SUBJECT)
+        context,
+        sender_email,
+        INVEST_MAILBOX_ADMIN_EMAIL,
+        subject=INVEST_AGENT_CONTACT_CONFIRMATION_SUBJECT,
+    )
 
 
 def hpo_should_receive_enquiry_confirmation_email(
-        context: Context, actor_alias: str):
+    context: Context, actor_alias: str
+):
     actor = get_actor(context, actor_alias)
     get_email_confirmations_with_matching_string(
         recipient_email=actor.email,
@@ -345,8 +360,7 @@ def hpo_should_receive_enquiry_confirmation_email(
     )
 
 
-def hpo_agent_should_receive_enquiry_email(
-        context: Context, actor_alias: str):
+def hpo_agent_should_receive_enquiry_email(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     get_email_confirmations_with_matching_string(
         recipient_email=HPO_AGENT_EMAIL_ADDRESS,
@@ -356,7 +370,8 @@ def hpo_agent_should_receive_enquiry_email(
 
 
 def form_check_state_of_element(
-        context: Context, actor_alias: str, element: str, state: str):
+    context: Context, actor_alias: str, element: str, state: str
+):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "check_state_of_form_element")
     page.check_state_of_form_element(context.driver, element, state)
@@ -367,10 +382,12 @@ def form_check_state_of_element(
 
 
 def pdf_check_expected_details(
-        context: Context, actor_alias: str, details_table: Table):
+    context: Context, actor_alias: str, details_table: Table
+):
     pdfs = context.pdfs
-    pdf_texts = [(pdf["href"], extract_text_from_pdf_bytes(pdf["pdf"]))
-                 for pdf in pdfs]
+    pdf_texts = [
+        (pdf["href"], extract_text_from_pdf_bytes(pdf["pdf"])) for pdf in pdfs
+    ]
     details = {
         item[0].split(" = ")[0]: item[0].split(" = ")[1]
         for item in details_table
@@ -379,20 +396,26 @@ def pdf_check_expected_details(
         for name, value in details.items():
             error_message = (
                 f"Could not find {name}: {value} in PDF text downloaded from "
-                f"{href}")
+                f"{href}"
+            )
             assert value in text, error_message
             logging.debug(
                 f"{actor_alias} saw correct {name} in the PDF downloaded from "
-                f"{href}")
+                f"{href}"
+            )
     context.pdf_texts = pdf_texts
 
 
 def pdf_check_for_dead_links(context: Context):
     pdf_texts = context.pdf_texts
-    links = set([word
-                 for _, text in pdf_texts
-                 for word in text.split()
-                 if any(item in word for item in ["http", "https", "www"])])
+    links = set(
+        [
+            word
+            for _, text in pdf_texts
+            for word in text.split()
+            if any(item in word for item in ["http", "https", "www"])
+        ]
+    )
     logging.debug(f"Links found in PDFs: {links}")
     for link in links:
         parsed = urlparse(link)
@@ -400,14 +423,15 @@ def pdf_check_for_dead_links(context: Context):
             link = f"http://{link}"
         response = requests.get(link)
         error_message = (
-            f"Expected 200 from {link} but got {response.status_code} instead")
+            f"Expected 200 from {link} but got {response.status_code} instead"
+        )
         assert response.status_code == 200, error_message
     logging.debug("All links in PDFs returned 200 OK")
 
 
 def form_should_see_error_messages(
-        context: Context, actor_alias: str,
-        message: str = "This field is required"):
+    context: Context, actor_alias: str, message: str = "This field is required"
+):
     page_source = context.driver.page_source
     assertion_error = f"Expected error message '{message}' is not present"
     assert message in page_source, assertion_error
@@ -416,13 +440,16 @@ def form_should_see_error_messages(
 
 @retry(wait_fixed=10000, stop_max_attempt_number=6, wrap_exception=False)
 def zendesk_should_receive_confirmation_email(
-        context: Context, actor_alias: str, subject: str):
+    context: Context, actor_alias: str, subject: str
+):
     actor = get_actor(context, actor_alias)
     email = actor.email
     tickets = find_tickets(email, subject)
     assert tickets, f"Expected to find at least 1 ticket for {email} but got 0"
-    error_msg = (f"Expected to find only 1 '{subject}' ticket for {email} but "
-                 f"found {len(tickets)} instead")
+    error_msg = (
+        f"Expected to find only 1 '{subject}' ticket for {email} but "
+        f"found {len(tickets)} instead"
+    )
     assert len(tickets) == 1, error_msg
     logging.debug(f"{actor_alias} received '{subject}' email from Zendesk")
 
@@ -437,17 +464,18 @@ def should_see_articles_filtered_by_tag(context: Context, actor_alias: str):
 
 @retry(wait_fixed=10000, stop_max_attempt_number=6, wrap_exception=False)
 def generic_contact_us_should_receive_confirmation_email(
-        context: Context, actor_alias: str, subject: str):
+    context: Context, actor_alias: str, subject: str
+):
     actor = get_actor(context, actor_alias)
     confirmation = get_email_confirmation_notification(
-        email=actor.email,
-        subject=subject,
+        email=actor.email, subject=subject
     )
     assert confirmation
 
 
 def generic_should_see_form_choices(
-        context: Context, actor_alias: str, option_names: Table):
+    context: Context, actor_alias: str, option_names: Table
+):
     option_names = [row[0] for row in option_names]
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "should_see_form_choices")
@@ -462,32 +490,43 @@ def generic_article_counters_should_match(context: Context, actor_alias: str):
     page.article_counter_is_equal_to(context.driver, expected_article_counter)
 
 
-def generic_article_counter_should_match_number_of_articles(context, actor_alias):
+def generic_article_counter_should_match_number_of_articles(
+    context, actor_alias
+):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "article_counter_matches_number_of_articles")
     page.article_counter_matches_number_of_articles(context.driver)
 
 
 def office_finder_should_see_correct_office_details(
-        context: Context, actor_alias: str, trade_office: str, city: str):
+    context: Context, actor_alias: str, trade_office: str, city: str
+):
     contact_us_office_finder_search_results.should_see_office_details(
-        context.driver, trade_office, city)
+        context.driver, trade_office, city
+    )
     logging.debug(
         f"{actor_alias} found contact details for trade '{trade_office}' office"
-        f" in '{city}'")
+        f" in '{city}'"
+    )
 
 
 @retry(wait_fixed=5000, stop_max_attempt_number=3, wrap_exception=False)
-def forms_confirmation_email_should_not_be_sent(context: Context, actor_alias: str):
+def forms_confirmation_email_should_not_be_sent(
+    context: Context, actor_alias: str
+):
     actor = get_actor(context, actor_alias)
     submissions = find_form_submissions(actor.email)
     assert submissions, f"No form submissions found for {actor_alias}"
-    error = (f"Expected to find an unsent submission for {actor_alias} but found a sent"
-             f" one. Check spam filters")
-    assert not submissions[0]['is_sent'], error
+    error = (
+        f"Expected to find an unsent submission for {actor_alias} but found a sent"
+        f" one. Check spam filters"
+    )
+    assert not submissions[0]["is_sent"], error
 
 
-def marketplace_finder_should_see_marketplaces(context: Context, actor_alias: str, country_names: str):
+def marketplace_finder_should_see_marketplaces(
+    context: Context, actor_alias: str, countries: str
+):
     page = get_last_visited_page(context, actor_alias)
-    has_action(page, "should_see_marketplace")
-    page.should_see_marketplace(context.driver, country_names)
+    has_action(page, "should_see_marketplaces")
+    page.should_see_marketplaces(context.driver, countries)

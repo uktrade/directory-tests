@@ -25,10 +25,7 @@ from pages.common_actions import (
     update_actor,
     wait_for_page_load_after_action,
 )
-from settings import (
-    BASICAUTH_PASS,
-    BASICAUTH_USER,
-)
+from settings import BASICAUTH_PASS, BASICAUTH_USER
 from steps import has_action
 from utils.cms_api import get_news_articles
 from utils.gov_notify import get_verification_code, get_verification_link
@@ -925,10 +922,10 @@ def generic_create_great_account(
 
 
 def marketplace_finder(
-    context: Context, actor_alias: str, product_types: str, country_names: str
+    context: Context, actor_alias: str, products: str, countries: str
 ):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "search")
-    product_types = product_types.split(",")
-    country_names = country_names.split(",")
-    page.search(context.driver, product_types, country_names)
+    products = products.replace('"', "").split(",")
+    countries = countries.replace('"', "").split(",")
+    page.search(context.driver, products, countries)

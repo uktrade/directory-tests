@@ -293,7 +293,7 @@ def then_actor_should_get_verifaction_code(context: Context, actor_alias: str):
     generic_get_verification_code(context, actor_alias)
 
 
-@then('"{actor_alias}" should see the expected markets in {country_names}')
-def then_actor_should_see_expected_markets(
-        context: Context, actor_alias: str, country_names: str):
-    marketplace_finder_should_see_marketplaces(context, actor_alias, country_names)
+@then('"{actor_alias}" should see marketplaces which operate globally or in multiple countries {countries}')
+def then_actor_should_see_expected_marketplaces(
+        context: Context, actor_alias: str, countries: str):
+    marketplace_finder_should_see_marketplaces(context, actor_alias, countries)
