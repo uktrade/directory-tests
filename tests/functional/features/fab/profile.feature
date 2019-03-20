@@ -113,7 +113,7 @@ Feature: Trade Profile
     @FAS
     @fake-sso-email-verification
     Scenario: Once verified Company's Directory Profile should be published on FAS
-      Given "Peter Alder" has created and verified profile for randomly selected company "Y"
+      Given "Peter Alder" has created verified business profile for randomly selected company "Y"
 
       When "Peter Alder" decides to view published Directory Profile
 
@@ -173,7 +173,7 @@ Feature: Trade Profile
     @login
     @fake-sso-email-verification
     Scenario: Suppliers with verified company profile should be able to logout and log back in
-      Given "Peter Alder" has created and verified profile for randomly selected company "Y"
+      Given "Peter Alder" has created verified business profile for randomly selected company "Y"
       And "Peter Alder" signed out from Find a Buyer service
 
       When "Peter Alder" signs in to Find a Buyer profile
@@ -191,7 +191,7 @@ Feature: Trade Profile
     @profile
     @fake-sso-email-verification
     Scenario: Supplier should be able to update company's details
-      Given "Annette Geissinger" has created and verified profile for randomly selected company "Y"
+      Given "Annette Geissinger" has created verified business profile for randomly selected company "Y"
 
       When "Annette Geissinger" updates company's details
         | detail                      |
@@ -227,7 +227,7 @@ Feature: Trade Profile
     @fixed
     @fake-sso-email-verification
     Scenario Outline: Supplier should be able to upload an image to set company's logo
-      Given "Peter Alder" has created and verified profile for randomly selected company "Y"
+      Given "Peter Alder" has created verified business profile for randomly selected company "Y"
 
       When "Peter Alder" uploads "<valid_image>" as company's logo
 
@@ -250,7 +250,7 @@ Feature: Trade Profile
     @logo
     @fake-sso-email-verification
     Scenario Outline: Supplier should be able to replace an existing company's logo with a new one
-      Given "Peter Alder" has created and verified profile for randomly selected company "Y"
+      Given "Peter Alder" has created verified business profile for randomly selected company "Y"
       And "Peter Alder" has set "<original>" picture as company's logo
       And "Peter Alder" can see that logo on FAB Company's Directory Profile page
       And "Peter Alder" can see a PNG logo thumbnail on FAS Company's Directory Profile page
@@ -270,7 +270,7 @@ Feature: Trade Profile
     @logo
     @fake-sso-email-verification
     Scenario: Supplier should not be able to upload files other than images as company's logo
-      Given "Peter Alder" has created and verified profile for randomly selected company "Y"
+      Given "Peter Alder" has created verified business profile for randomly selected company "Y"
 
       When "Peter Alder" attempts to upload a file of unsupported type as company's logo
         | file                  | type                    |
@@ -291,7 +291,7 @@ Feature: Trade Profile
     @profile
     @fake-sso-email-verification
     Scenario: Supplier should be able to add valid links to Online Profiles (social media URLs)
-      Given "Peter Alder" has created and verified profile for randomly selected company "Y"
+      Given "Peter Alder" has created verified business profile for randomly selected company "Y"
 
       When "Peter Alder" adds links to online profiles
         | online profile  |
@@ -308,7 +308,7 @@ Feature: Trade Profile
     @profile
     @fake-sso-email-verification
     Scenario: Supplier should NOT be able to use invalid links to Online Profiles - explicit social media URLs
-      Given "Peter Alder" has created and verified profile for randomly selected company "Y"
+      Given "Peter Alder" has created verified business profile for randomly selected company "Y"
 
       When "Peter Alder" attempts to use invalid links to online profiles
         | online profile  | invalid link               |
@@ -327,7 +327,7 @@ Feature: Trade Profile
     @fixed
     @fake-sso-email-verification
     Scenario: Supplier should NOT be able to use invalid links to Online Profiles (social media URLs)
-      Given "Peter Alder" has created and verified profile for randomly selected company "Y"
+      Given "Peter Alder" has created verified business profile for randomly selected company "Y"
 
       When "Peter Alder" attempts to use invalid links to online profiles
         | online profile  | invalid link           |
@@ -343,7 +343,7 @@ Feature: Trade Profile
     @profile
     @fake-sso-email-verification
     Scenario: Supplier should be able to remove links to all online profiles (social media URLs)
-      Given "Peter Alder" has created and verified profile for randomly selected company "Y"
+      Given "Peter Alder" has created verified business profile for randomly selected company "Y"
       And "Peter Alder" has added links to online profiles
         | online profile  |
         | Facebook        |
@@ -375,7 +375,7 @@ Feature: Trade Profile
     @profile
     @fake-sso-email-verification
     Scenario: Supplier should be able to add a case study to verified company
-      Given "Peter Alder" has created and verified profile for randomly selected company "Y"
+      Given "Peter Alder" has created verified business profile for randomly selected company "Y"
 
       When "Peter Alder" adds a complete case study called "no 1"
 
@@ -405,7 +405,7 @@ Feature: Trade Profile
     @profile
     @fake-sso-email-verification
     Scenario: Supplier should be able to add multiple case studies to verified company
-      Given "Peter Alder" has created and verified profile for randomly selected company "Y"
+      Given "Peter Alder" has created verified business profile for randomly selected company "Y"
 
       When "Peter Alder" adds a complete case study called "no 1"
       And "Peter Alder" adds a complete case study called "no 2"
@@ -444,7 +444,7 @@ Feature: Trade Profile
   @fixed
   @found-with-automated-tests
   Scenario: Supplier should be able to update a case study for a verified company
-    Given "Peter Alder" has created and verified profile for randomly selected company "Y"
+    Given "Peter Alder" has created verified business profile for randomly selected company "Y"
     And "Peter Alder" added a complete case study called "no 1"
 
     When "Peter Alder" updates all the details of case study called "no 1"
@@ -485,7 +485,7 @@ Feature: Trade Profile
   @fixed
   @found-with-automated-tests
   Scenario: Supplier should be able to update multiple case studies for a verified company
-    Given "Peter Alder" has created and verified profile for randomly selected company "Y"
+    Given "Peter Alder" has created verified business profile for randomly selected company "Y"
     And "Peter Alder" added a complete case study called "no 1"
     And "Peter Alder" added a complete case study called "no 2"
     And "Peter Alder" added a complete case study called "no 3"

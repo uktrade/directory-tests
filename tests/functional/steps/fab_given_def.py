@@ -83,7 +83,7 @@ def given_supplier_set_company_description(context, supplier_alias):
     prof_set_company_description(context, supplier_alias)
 
 
-@given('"{supplier_alias}" has created and verified profile for randomly '
+@given('"{supplier_alias}" has created verified business profile for randomly '
        'selected company "{company_alias}"')
 def given_supplier_creates_verified_profile(context, supplier_alias,
                                             company_alias):

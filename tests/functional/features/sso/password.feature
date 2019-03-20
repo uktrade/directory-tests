@@ -47,7 +47,7 @@ Feature: SSO password management
     @captcha
     @fake-sso-email-verification
     Scenario: Suppliers with verified FAB profile should be able to reset password
-      Given "Peter Alder" has created and verified profile for randomly selected company "Y"
+      Given "Peter Alder" has created verified business profile for randomly selected company "Y"
       And "Peter Alder" signed out from Find a Buyer service
       And "Peter Alder" received a password reset email
 
