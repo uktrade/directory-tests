@@ -347,7 +347,7 @@ def bp_select_random_sector_and_export_to_country(
     logging.debug("Supplier is on the Confirm your Identity page")
 
 
-def bp_verify_identity_with_letter(context: Context, supplier_alias: str):
+def fab_decide_to_verify_profile_with_letter(context: Context, supplier_alias: str):
     """Build Profile - verify identity with a physical letter."""
     actor = context.get_actor(supplier_alias)
     session = actor.session
