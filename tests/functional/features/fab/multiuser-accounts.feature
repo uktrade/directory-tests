@@ -38,7 +38,7 @@ Feature: Multi-user accounts
 
     When "Annette Geissinger" confirms that she wants to be added to the company "Y" Find a Buyer profile
 
-    Then "Annette Geissinger" should see "FAB Company profile" page
+    Then "Annette Geissinger" should see "Profile - edit company profile" page
 
 
   @ED-3556
@@ -53,7 +53,7 @@ Feature: Multi-user accounts
 
     When "Annette Geissinger" opens the invitation from company "Y", creates a SSO/great.gov.uk account and confirms that he wants to be added to the FAB profile
 
-    Then "Annette Geissinger" should see "FAB Company profile" page
+    Then "Annette Geissinger" should see "Profile - edit company profile" page
 
 
   @ED-3557
@@ -70,7 +70,7 @@ Feature: Multi-user accounts
 
     When "Annette Geissinger" confirms that she wants to be added to the company "Y" Find a Buyer profile
 
-    Then "Annette Geissinger" should see "FAB Company profile" page
+    Then "Annette Geissinger" should see "Profile - edit company profile" page
 
 
   @ED-3558
@@ -97,13 +97,13 @@ Feature: Multi-user accounts
     And "Annette Geissinger, Betty Jones, James Weir" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
 
     When "Annette Geissinger" confirms that she wants to be added to the company "Y" Find a Buyer profile
-    Then "Annette Geissinger" should see "FAB Company profile" page
+    Then "Annette Geissinger" should see "Profile - edit company profile" page
 
     When "Betty Jones" confirms that she wants to be added to the company "Y" Find a Buyer profile
-    Then "Betty Jones" should see "FAB Company profile" page
+    Then "Betty Jones" should see "Profile - edit company profile" page
 
     When "James Weir" confirms that he wants to be added to the company "Y" Find a Buyer profile
-    Then "James Weir" should see "FAB Company profile" page
+    Then "James Weir" should see "Profile - edit company profile" page
 
 
   @ED-3560
@@ -197,7 +197,7 @@ Feature: Multi-user accounts
     When "Peter Alder" removes "Annette Geissinger" from the list of collaborators to the company "Y"
 
     Then "Peter Alder" should not see "Annette Geissinger" among the users associated with company's profile
-    And "Annette Geissinger" should not be able to access "FAB company profile" page
+    And "Annette Geissinger" should not be able to access "Profile - edit company profile" page
 
 
   @ED-3565
@@ -219,9 +219,9 @@ Feature: Multi-user accounts
     When "Peter Alder" removes "Annette Geissinger, Betty Jones, James Weir" from the list of collaborators to the company "Y"
 
     Then "Peter Alder" should not see "Annette Geissinger, Betty Jones, James Weir" among the users associated with company's profile
-    And "Annette Geissinger" should not be able to access "FAB company profile" page
-    And "Betty Jones" should not be able to access "FAB company profile" page
-    And "James Weir" should not be able to access "FAB company profile" page
+    And "Annette Geissinger" should not be able to access "Profile - edit company profile" page
+    And "Betty Jones" should not be able to access "Profile - edit company profile" page
+    And "James Weir" should not be able to access "Profile - edit company profile" page
 
 
   @ED-3566
@@ -362,7 +362,7 @@ Feature: Multi-user accounts
     When "Annette Geissinger" decides to add "Peter Alder" as a collaborator
     When "Peter Alder" confirms that he wants to be added to the company "Y" Find a Buyer profile
 
-    Then "Peter Alder" should see "FAB Company profile" page
+    Then "Peter Alder" should see "Profile - edit company profile" page
 
 
   @bug

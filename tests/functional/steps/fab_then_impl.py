@@ -15,13 +15,13 @@ from tests.functional.pages import (
     fab_ui_build_profile_basic,
     fab_ui_confirm_identity,
     fab_ui_edit_online_profiles,
-    fab_ui_profile,
     fab_ui_verify_company,
     fas_ui_contact,
     fas_ui_find_supplier,
     fas_ui_industries,
     fas_ui_profile,
     profile_ui_landing,
+    profile_edit_company_profile,
     sso_ui_invalid_password_reset_link,
     sso_ui_logout,
     sso_ui_password_reset,
@@ -92,14 +92,14 @@ def bp_should_be_prompted_to_build_your_profile(
 
 
 def prof_should_be_on_profile_page(response: Response, supplier_alias: str):
-    fab_ui_profile.should_be_here(response)
+    profile_edit_company_profile.should_be_here(response)
     logging.debug("%s is on the company profile page", supplier_alias)
 
 
 def prof_should_be_told_about_missing_description(
     response: Response, supplier_alias: str
 ):
-    fab_ui_profile.should_see_missing_description(response)
+    profile_edit_company_profile.should_see_missing_description(response)
     logging.debug("%s was told about missing description", supplier_alias)
 
 
@@ -213,7 +213,7 @@ def fab_should_see_all_case_studies(context: Context, supplier_alias: str):
     """Check if Supplier can see all case studies on FAB profile page."""
     actor = context.get_actor(supplier_alias)
     case_studies = context.get_company(actor.company_alias).case_studies
-    fab_ui_profile.should_see_case_studies(case_studies, context.response)
+    profile_edit_company_profile.should_see_case_studies(case_studies, context.response)
 
 
 def fas_should_see_all_case_studies(context: Context, supplier_alias: str):
@@ -342,7 +342,7 @@ def fab_should_see_online_profiles(context: Context, supplier_alias: str):
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
     response = context.response
-    fab_ui_profile.should_see_online_profiles(company, response)
+    profile_edit_company_profile.should_see_online_profiles(company, response)
 
 
 def fab_no_links_to_online_profiles_are_visible(
@@ -351,7 +351,7 @@ def fab_no_links_to_online_profiles_are_visible(
     """Supplier should't see any links to Online Profiles on FAB Profile page.
     """
     response = context.response
-    fab_ui_profile.should_not_see_online_profiles(response)
+    profile_edit_company_profile.should_not_see_online_profiles(response)
     logging.debug(
         "%s cannot see links to Online Profiles on FAB Profile page",
         supplier_alias,
@@ -374,7 +374,7 @@ def fas_no_links_to_online_profiles_are_visible(
 def fab_profile_is_verified(context: Context, supplier_alias: str):
     """Check if Supplier was told that Company's profile is verified."""
     response = context.response
-    fab_ui_profile.should_see_profile_is_verified(response)
+    profile_edit_company_profile.should_see_profile_is_verified(response)
     logging.debug("%s was told that the profile is verified.", supplier_alias)
 
 
@@ -383,7 +383,7 @@ def fab_should_see_company_details(context: Context, supplier_alias: str):
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
     response = context.response
-    fab_ui_profile.should_see_details(company, response, context.table)
+    profile_edit_company_profile.should_see_details(company, response, context.table)
     logging.debug(
         "%s can see all expected details are visible of FAB "
         "Company's Directory Profile Page",

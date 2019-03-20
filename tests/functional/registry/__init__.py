@@ -9,12 +9,12 @@ from tests.functional.pages import (
     fab_ui_confim_your_ownership,
     fab_ui_confirm_identity,
     fab_ui_confirm_identity_letter,
-    fab_ui_edit_description,
+    profile_edit_company_description,
     fab_ui_edit_details,
     fab_ui_edit_online_profiles,
     fab_ui_edit_sector,
     fab_ui_landing,
-    fab_ui_profile,
+    profile_edit_company_profile,
     fab_ui_upload_logo,
     fab_ui_verify_company,
     fas_ui_creative_industry,
@@ -139,10 +139,6 @@ FAB_PAGE_REGISTRY = {
         "url": "ui-buyer:confirm-identity-letter",
         "po": fab_ui_confirm_identity_letter,
     },
-    "fab company profile": {
-        "url": "ui-buyer:company-profile",
-        "po": fab_ui_profile,
-    },
     "fab edit company profile": {
         "url": "ui-buyer:company-edit",
         "po": fab_ui_edit_online_profiles,
@@ -150,10 +146,6 @@ FAB_PAGE_REGISTRY = {
     "fab edit company address": {
         "url": "ui-buyer:company-edit-address",
         "po": None,
-    },
-    "fab edit company description": {
-        "url": "ui-buyer:company-edit-description",
-        "po": fab_ui_edit_description,
     },
     "fab edit company key facts": {
         "url": "ui-buyer:company-edit-key-facts",
@@ -220,6 +212,14 @@ SUD_PAGE_REGISTRY = {
     "profile - enrol": {
         "url": "profile:enrol",
         "po": profile_enrol,
+    },
+    "profile - edit company profile": {
+        "url": "ui-buyer:company-profile",
+        "po": profile_edit_company_profile,
+    },
+    "profile - edit company description": {
+        "url": "ui-buyer:company-edit-description",
+        "po": profile_edit_company_description,
     },
 }
 

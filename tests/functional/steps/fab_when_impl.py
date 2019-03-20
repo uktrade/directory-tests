@@ -29,18 +29,18 @@ from tests.functional.pages import (
     fab_ui_confirm_export_status,
     fab_ui_confirm_identity,
     fab_ui_confirm_identity_letter,
-    fab_ui_edit_description,
     fab_ui_edit_details,
     fab_ui_edit_online_profiles,
     fab_ui_edit_sector,
     fab_ui_landing,
-    fab_ui_profile,
     fab_ui_upload_logo,
     fab_ui_verify_company,
     fas_ui_contact,
     fas_ui_feedback,
     fas_ui_find_supplier,
     fas_ui_profile,
+    profile_edit_company_description,
+    profile_edit_company_profile,
     profile_enrolment_finished,
     profile_enter_email_verification_code,
     profile_enter_your_business_details,
@@ -402,13 +402,13 @@ def prof_set_company_description(context: Context, supplier_alias: str):
     # Step 2 - Submit company description
     summary = sentence()
     description = sentence()
-    response = fab_ui_edit_description.submit(
-        session, token, summary, description
+    response = profile_edit_company_description.submit(
+        session, summary, description
     )
     context.response = response
 
     # Step 3 - check if Supplier is on Profile page
-    fab_ui_profile.should_see_profile_is_not_verified(response)
+    profile_edit_company_profile.should_see_profile_is_not_verified(response)
 
     # Step 4 - update company details in Scenario Data
     context.set_company_details(
@@ -444,11 +444,11 @@ def prof_verify_company(context: Context, supplier_alias: str):
     fab_ui_verify_company.should_see_company_is_verified(response)
 
     # STEP 5 - click on the "View or amend your company profile" link
-    response = fab_ui_verify_company.view_or_amend_profile(session)
+    response = profile_edit_company_profile.go_to(session)
     context.response = response
 
     # STEP 6 - check if Supplier is on Verified Profile Page
-    fab_ui_profile.should_see_profile_is_verified(response)
+    profile_edit_company_profile.should_see_profile_is_verified(response)
 
 
 def prof_view_published_profile(context: Context, supplier_alias: str):
@@ -542,7 +542,7 @@ def prof_sign_in_to_fab(context: Context, supplier_alias: str):
     context.response = response
 
     # Step 5 - check if Supplier is on the FAB profile page
-    fab_ui_profile.should_be_here(response)
+    profile_edit_company_profile.should_be_here(response)
     with assertion_msg(
         "Found sso_display_logged_in cookie in the response. Maybe user is"
         " still logged in?"
@@ -690,7 +690,7 @@ def prof_upload_logo(context: Context, supplier_alias: str, picture: str):
     context.response = response
 
     # Step 2 - check if Supplier is on the FAB profile page
-    fab_ui_profile.should_be_here(response)
+    profile_edit_company_profile.should_be_here(response)
     logging.debug("Successfully uploaded logo picture: %s", picture)
 
     # Step 3 - Keep logo details in Company's scenario data
@@ -819,7 +819,7 @@ def prof_update_company_details(
     context.response = response
 
     # Step 4 - Supplier should be on Edit Profile page
-    fab_ui_profile.should_be_here(response)
+    profile_edit_company_profile.should_be_here(response)
 
     # Step 5 - Go to the Edit Sector page
     response = fab_ui_edit_sector.go_to(session)
@@ -838,7 +838,7 @@ def prof_update_company_details(
     context.response = response
 
     # Step 7 - Check if Supplier is on FAB Profile page
-    fab_ui_profile.should_be_here(response)
+    profile_edit_company_profile.should_be_here(response)
 
     # Step 7 - update company's details stored in context.scenario_data
     context.set_company_details(
@@ -893,7 +893,7 @@ def prof_add_online_profiles(
     context.response = response
 
     # Step 4 - Check if Supplier is on FAB Profile page
-    fab_ui_profile.should_be_here(response)
+    profile_edit_company_profile.should_be_here(response)
 
     # Step 5 - Update company's details stored in context.scenario_data
     context.set_company_details(
@@ -1007,7 +1007,7 @@ def prof_add_case_study(
     context.response = response
 
     # Step 4 - check if we're on the FAB Profile page
-    fab_ui_profile.should_be_here(response)
+    profile_edit_company_profile.should_be_here(response)
 
     # Step 5 - Store Case Study data in Scenario Data
     context.add_case_study(actor.company_alias, case_alias, case_study)
@@ -1060,7 +1060,7 @@ def fab_update_case_study(
     context.response = response
 
     # Step 5 - check if we're on the FAB Profile page
-    fab_ui_profile.should_be_here(response)
+    profile_edit_company_profile.should_be_here(response)
 
     # Step 5 - Store new Case Study data in Scenario Data
     # `add_case_study` apart from adding will replace existing case study.
@@ -2272,7 +2272,7 @@ def fab_confirm_account_ownership_request(
     response = fab_ui_confim_your_ownership.confirm(session, token, link)
     context.response = response
 
-    fab_ui_profile.should_be_here(response)
+    profile_edit_company_profile.should_be_here(response)
 
     context.update_actor(new_owner_alias, company_alias=company_alias)
     logging.debug(
