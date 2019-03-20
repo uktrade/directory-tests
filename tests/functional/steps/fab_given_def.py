@@ -41,7 +41,7 @@ from tests.functional.steps.fab_when_impl import (
     go_to_page,
     prof_add_case_study,
     prof_add_online_profiles,
-    prof_set_company_description,
+    profile_add_business_description,
     prof_sign_out_from_fab,
     prof_supplier_uploads_logo
 )
@@ -80,7 +80,7 @@ def given_supplier_built_company_profile(context, supplier_alias):
 
 @given('"{supplier_alias}" set the company description')
 def given_supplier_set_company_description(context, supplier_alias):
-    prof_set_company_description(context, supplier_alias)
+    profile_add_business_description(context, supplier_alias)
 
 
 @given('"{supplier_alias}" has created verified and published business profile for randomly '

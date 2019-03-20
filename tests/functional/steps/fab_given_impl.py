@@ -10,7 +10,6 @@ from behave.runner import Context
 from requests import Session
 from retrying import retry
 from tests.functional.pages import (
-    fab_ui_profile,
     fas_ui_profile,
     profile_ui_landing,
 )
@@ -32,8 +31,8 @@ from tests.functional.steps.fab_when_impl import (
     enrol_user,
     find_unregistered_company,
     finish_registration_after_flagging_as_verified,
-    prof_set_company_description,
-    prof_verify_company,
+    profile_add_business_description,
+    profile_verify_company_profile,
     reg_confirm_company_selection,
     reg_create_sso_account,
     reg_create_standalone_unverified_sso_account,
