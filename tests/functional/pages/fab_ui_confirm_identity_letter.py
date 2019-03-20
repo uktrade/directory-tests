@@ -2,28 +2,22 @@
 """FAB - Confirm Identity - with letter page"""
 import logging
 
-from requests import Response
+from requests import Response, Session
 from tests import get_absolute_url
 from tests.functional.utils.context_utils import Actor
 from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("ui-buyer:confirm-identity-letter")
 EXPECTED_STRINGS = [
-    "Your company address",
-    "Address",
-    (
-        "Enter your name. We’ll then send a confirmation letter to your company’s"
-        " registered address within 5 working days."
-    ),
-    "Your name:",
-    "Company number",
-    "Tick to confirm address.",
-    (
-        "If you can’t collect the letter yourself, you’ll"
-        " need to make sure someone can send it on to you."
-    ),
-    "Send",
+    "Verification letter request",
+    "Your verification letter should arrive within 5 working days",
+    "The letter contains a 12 digit verification code"
 ]
+
+
+def go_to(session: Session) -> Response:
+    headers = {"Referer": URL}
+    return make_request(Method.GET, URL, session=session, headers=headers)
 
 
 def should_be_here(response: Response):

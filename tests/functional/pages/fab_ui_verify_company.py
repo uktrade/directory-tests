@@ -20,7 +20,6 @@ EXPECTED_STRINGS = [
 
 EXPECTED_STRINGS_VERIFIED = [
     "Your company has been verified",
-    "View or amend your company profile",
 ]
 
 
