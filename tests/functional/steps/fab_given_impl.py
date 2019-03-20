@@ -42,6 +42,7 @@ from tests.functional.steps.fab_when_impl import (
     sso_go_to_create_trade_profile,
     sso_request_password_reset,
     sso_sign_in,
+    profile_publish_profile_to_fas
 )
 from tests.functional.utils.context_utils import Actor, Company
 from tests.functional.utils.generic import (
@@ -163,19 +164,20 @@ def bp_build_company_profile(context: Context, supplier_alias: str):
 def profile_create_verified_and_published_business_profile(
     context: Context, supplier_alias: str, company_alias: str
 ):
-    """Create a verified FAB profile with a quick SSO account verification."""
-    reg_create_sso_account_associated_with_company(
-        context, supplier_alias, company_alias
-    )
-    supplier = context.get_actor(supplier_alias)
-    flag_sso_account_as_verified(context, supplier.email)
-    sso_sign_in(context, supplier_alias)
-    finish_registration_after_flagging_as_verified(context, supplier_alias)
-    bp_build_company_profile(context, supplier_alias)
-    prof_set_company_description(context, supplier_alias)
-    prof_verify_company(context, supplier_alias)
-    prof_should_be_on_profile_page(context.response, supplier_alias)
-    fab_ui_profile.should_see_profile_is_verified(context.response)
+    """Create a verified Business profile and publish it to FAS"""
+    logging.debug("1 - find unregistered company & enrol user for that company")
+    profile_create_unverified_business_profile(context, supplier_alias, company_alias)
+    logging.debug("2 - add business description")
+    profile_add_business_description(context, supplier_alias)
+    logging.debug("3 - decide to confirm identity with letter code")
+    fab_decide_to_verify_profile_with_letter(context, supplier_alias)
+    logging.debug("4 - get confirmation code from DB")
+    logging.debug("5 - confirm identity with letter code")
+    logging.debug("6 - provide verification code")
+    logging.debug("7 - check if verified")
+    profile_verify_company_profile(context, supplier_alias)
+    logging.debug("8 - Publish your business profile")
+    profile_publish_profile_to_fas(context, supplier_alias)
 
 
 def sso_create_standalone_unverified_sso_account(
