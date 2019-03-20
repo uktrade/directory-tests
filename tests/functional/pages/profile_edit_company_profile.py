@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""FAB - Edit Company's Directory Profile page"""
+"""Profile - Edit Company's Business Profile page"""
 import logging
 
 from behave.model import Table
@@ -11,35 +11,28 @@ from tests.functional.utils.generic import assertion_msg
 from tests.functional.utils.request import Method, check_response, make_request
 from tests.settings import SECTORS_WITH_LABELS
 
-URL = get_absolute_url("ui-buyer:company-profile")
+URL = get_absolute_url("profile:edit-company-profile")
 EXPECTED_STRINGS = [
-    "Facts &amp; details",
-    "Number of employees",
-    "Registration number",
-    "Company description",
-    "Online profiles",
-    "Recent projects",
-    "+ Add a case study",
-    "Core Sector",
-    "Keywords",
+    "You are signed in as",
+    "About company",
+    "Profile email",
 ]
 
 EXPECTED_STRINGS_NO_DESCRIPTION = [
-    "Your company has no description.",
-    "Set your description",
-    "Your profile can't be published until your company has a description",
+    "Add business description",
 ]
 
 EXPECTED_STRINGS_VERIFIED = [
-    "Your company is published",
-    "View published profile",
-    "Your profile is visible to international buyers",
+    "You can now publish your business profile",
+]
+
+EXPECTED_STRINGS_PUBLISHED = [
+    "View profile",
 ]
 
 EXPECTED_STRINGS_NOT_VERIFIED = [
-    "Your company has not yet been verified.",
-    "Verify your company",
-    "Your profile can't be published until your company is verified",
+    "Confirm your identity",
+    "For security reasons, we need to check you're who you say you are"
 ]
 
 
@@ -50,13 +43,13 @@ def go_to(session: Session) -> Response:
 
 def should_be_here(response: Response):
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
-    logging.debug("Supplier is on FAB Company's Profile page")
+    logging.debug("Supplier is on Profile - Edit Company's Profile page")
 
 
 def should_see_details(
     company: Company, response: Response, table_of_details: Table
 ):
-    """Supplier should see all expected Company details of FAB profile page."""
+    """Supplier should see all expected Company details of Profile page."""
     visible_details = [row["detail"] for row in table_of_details]
     content = response.content.decode("utf-8")
 
@@ -177,3 +170,9 @@ def should_see_missing_description(response: Response):
     expected = EXPECTED_STRINGS + EXPECTED_STRINGS_NO_DESCRIPTION
     check_response(response, 200, body_contains=expected)
     logging.debug("Supplier is on FAB Profile page with missing description")
+
+
+def should_see_profile_is_published(response: Response):
+    expected = EXPECTED_STRINGS + EXPECTED_STRINGS_PUBLISHED
+    check_response(response, 200, body_contains=expected)
+    logging.debug("Supplier is on Published Profile page")

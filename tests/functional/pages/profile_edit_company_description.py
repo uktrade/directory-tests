@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-"""FAB - Edit Company's Description page"""
+"""Profile - Edit Company's Description page"""
 import logging
 
 from requests import Response, Session
 from tests import get_absolute_url
 from tests.functional.utils.request import Method, check_response, make_request
 
-URL = get_absolute_url("ui-buyer:company-edit-description")
+URL = get_absolute_url("profile:edit-company-description")
 EXPECTED_STRINGS = [
-    "About your company",
+    "Company description",
     "Describe your business to overseas buyers",
     "Brief summary to make your company stand out to buyers",
 ]
@@ -24,15 +24,11 @@ def go_to(session: Session) -> Response:
     return make_request(Method.GET, URL, session=session, headers=headers)
 
 
-def submit(
-    session: Session, token: str, summary: str, description: str
-) -> Response:
-    headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
+def submit(session: Session, summary: str, description: str) -> Response:
+    headers = {"Referer": URL}
     data = {
-        "csrfmiddlewaretoken": token,
-        "company_description_edit_view-current_step": "description",
-        "description-summary": summary,
-        "description-description": description,
+        "summary": summary,
+        "description": description,
     }
     return make_request(
         Method.POST, URL, session=session, headers=headers, data=data
