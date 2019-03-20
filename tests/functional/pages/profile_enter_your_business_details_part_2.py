@@ -33,7 +33,7 @@ def submit(actor: Actor, company: Company) -> Response:
         "companies_house_enrolment_view-current_step": "business-details",
         "business-details-company_name": company.title,
         "business-details-postal_code": company.companies_house_details["address"]["postal_code"],
-        "business-details-industry": industry,
+        "business-details-sectors": industry,
         "business-details-website_address": "http://automated.tests.com",
     }
 
