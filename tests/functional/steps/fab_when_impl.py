@@ -433,6 +433,14 @@ def profile_verify_company_profile(context: Context, supplier_alias: str):
     profile_edit_company_profile.should_see_profile_is_verified(response)
 
 
+def profile_publish_profile_to_fas(context: Context, supplier_alias: str):
+    actor = context.get_actor(supplier_alias)
+    response = profile_publish_company_profile.submit(actor.session)
+    context.response = response
+
+    profile_edit_company_profile.should_see_profile_is_published(response)
+
+
 def prof_view_published_profile(context: Context, supplier_alias: str):
     """Whilst being of FAB company profile page it will `click` on
     the `View published profile` link.
