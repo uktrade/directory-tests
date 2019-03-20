@@ -14,6 +14,8 @@ Feature: Find a Supplier
   @bug
   @ED-3031
   @fixed
+  @captcha
+  @dev-only
   @found-with-automated-tests
   @fake-sso-email-verification
   Scenario: Buyers should be able to find Supplier by uniquely identifying words present on Supplier's case study
@@ -49,6 +51,8 @@ Feature: Find a Supplier
   @bug
   @ED-3031
   @fixed
+  @captcha
+  @dev-only
   @found-with-automated-tests
   @fake-sso-email-verification
   Scenario: Buyers should be able to find Supplier by uniquely identifying words present on any of Supplier's case studies
@@ -79,6 +83,8 @@ Feature: Find a Supplier
   @bug
   @TT-727
   @fixed
+  @captcha
+  @dev-only
   @found-with-automated-tests
   @no-sso-email-verification-required
   Scenario: Buyers should NOT be able to find unverified Supplier by uniquely identifying words present on Supplier's case study
@@ -96,6 +102,8 @@ Feature: Find a Supplier
   @profile
   @verified
   @published
+  @captcha
+  @dev-only
   @fake-sso-email-verification
   Scenario: Buyers should be able to find Supplier by uniquely identifying words present on Supplier's profile
     Given "Annette Geissinger" is a buyer
