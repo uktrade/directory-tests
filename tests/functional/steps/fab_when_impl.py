@@ -20,7 +20,6 @@ from tests.functional.pages import (
     fab_ui_account_transfer_ownership,
     fab_ui_build_profile_basic,
     fab_ui_build_profile_sector,
-    fab_ui_build_profile_verification_letter,
     fab_ui_case_study_basic,
     fab_ui_case_study_images,
     fab_ui_confim_your_collaboration,
@@ -47,6 +46,7 @@ from tests.functional.pages import (
     profile_enter_your_business_details_part_2,
     profile_enter_your_email_and_password,
     profile_enter_your_personal_details,
+    profile_publish_company_profile,
     profile_ui_find_a_buyer,
     profile_ui_landing,
     sso_ui_change_password,
@@ -350,10 +350,15 @@ def bp_select_random_sector_and_export_to_country(
 def fab_decide_to_verify_profile_with_letter(context: Context, supplier_alias: str):
     """Build Profile - verify identity with a physical letter."""
     actor = context.get_actor(supplier_alias)
-    session = actor.session
 
-    # Step 1 - Choose to verify with a letter
-    response = fab_ui_confirm_identity.confirm_with_letter(actor)
+    # Step 1 - go to page where you choose to verify with a letter
+    response = fab_ui_confirm_identity_letter.go_to(actor.session)
+    context.response = response
+    token = extract_csrf_middleware_token(response)
+    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
+
+    # Step 2 - Choose to verify with a letter
+    response = fab_ui_confirm_identity_letter.submit(actor)
     context.response = response
 
     # Step 2 - check if Supplier is on the We've sent you a verification letter
@@ -362,24 +367,8 @@ def fab_decide_to_verify_profile_with_letter(context: Context, supplier_alias: s
         "Supplier is on the 'Your company address' letter verification page"
     )
 
-    # Step 3 - extract & store CSRF token
-    token = extract_csrf_middleware_token(response)
-    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
-    # Step 4 - check if Supplier is on the We've sent you a verification letter
-    fab_ui_confirm_identity_letter.submit(actor)
-    context.response = response
-
-    # Step 5 - Click on the "View or amend your company profile" link
-    # use previous url as the referer link
-    response = fab_ui_build_profile_verification_letter.go_to_profile(session)
-    context.response = response
-
-    # Step 6 - check if Supplier is on the FAB profile page
-    fab_ui_profile.should_see_missing_description(response)
-
-
-def prof_set_company_description(context: Context, supplier_alias: str):
+def profile_add_business_description(context: Context, supplier_alias: str):
     """Edit Profile - Will set company description.
 
     This is quasi-mandatory (*) step before Supplier can verify the company
@@ -392,14 +381,7 @@ def prof_set_company_description(context: Context, supplier_alias: str):
     actor = context.get_actor(supplier_alias)
     session = actor.session
 
-    # Step 1 - go to the "Set Company Description" page
-    response = fab_ui_edit_description.go_to(session)
-
-    token = extract_csrf_middleware_token(response)
-    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
-    logging.debug("Supplier is on the Set Company Description page")
-
-    # Step 2 - Submit company description
+    # Step 1 - Submit company description
     summary = sentence()
     description = sentence()
     response = profile_edit_company_description.submit(
