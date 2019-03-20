@@ -10,7 +10,7 @@ Feature: Contact a Supplier
   Scenario: Buyers should be able to contact selected Supplier via FAS
     Given "Annette Geissinger" is a buyer
     And "Peter Alder" is an unauthenticated supplier
-    And "Peter Alder" has created verified business profile for randomly selected company "Y"
+    And "Peter Alder" has created verified and published business profile for randomly selected company "Y"
     And "Annette Geissinger" has found a company "Y" on Find a Supplier site
 
     When "Annette Geissinger" sends a message to company "Y"

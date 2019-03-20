@@ -30,7 +30,7 @@ Feature: Multi-user accounts
   @multi-user
   @add-collaborator
   Scenario: Add "1" collaborator with an SSO/great.gov.uk account to a verified company
-    Given "Peter Alder" has created verified business profile for randomly selected company "Y"
+    Given "Peter Alder" has created verified and published business profile for randomly selected company "Y"
     And "Annette Geissinger" has a verified standalone SSO/great.gov.uk account
     And "Annette Geissinger" is signed in to SSO/great.gov.uk account
     And "Peter Alder" added "Annette Geissinger" as a collaborator
@@ -46,7 +46,7 @@ Feature: Multi-user accounts
   @multi-user
   @add-collaborator
   Scenario: Add "1" collaborator without an SSO/great.gov.uk account to a verified company
-    Given "Peter Alder" has created verified business profile for randomly selected company "Y"
+    Given "Peter Alder" has created verified and published business profile for randomly selected company "Y"
     And "Annette Geissinger" "does not have" an SSO/great.gov.uk account
     And "Peter Alder" added "Annette Geissinger" as a collaborator
     And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
@@ -61,7 +61,7 @@ Feature: Multi-user accounts
   @multi-user
   @add-collaborator
   Scenario: Add "1" collaborator with an SSO/great.gov.uk account to a verified company
-    Given "Peter Alder" has created verified business profile for randomly selected company "Y"
+    Given "Peter Alder" has created verified and published business profile for randomly selected company "Y"
     And "Annette Geissinger" "has" an SSO/great.gov.uk account
     And "Peter Alder" added "Annette Geissinger" as a collaborator
     And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile

@@ -12,7 +12,7 @@ from tests.functional.steps.fab_given_impl import (
     profile_create_unverified_business_profile,
     reg_confirm_email_address,
     reg_create_sso_account_associated_with_company,
-    profile_create_verified_business_profile,
+    profile_create_verified_and_published_business_profile,
     reg_create_verified_sso_account_associated_with_company,
     reg_select_random_company_and_confirm_export_status,
     reg_should_get_verification_letter,
@@ -83,11 +83,11 @@ def given_supplier_set_company_description(context, supplier_alias):
     prof_set_company_description(context, supplier_alias)
 
 
-@given('"{supplier_alias}" has created verified business profile for randomly '
+@given('"{supplier_alias}" has created verified and published business profile for randomly '
        'selected company "{company_alias}"')
 def given_supplier_creates_verified_profile(context, supplier_alias,
                                             company_alias):
-    profile_create_verified_business_profile(context, supplier_alias, company_alias)
+    profile_create_verified_and_published_business_profile(context, supplier_alias, company_alias)
 
 
 @given('"{supplier_alias}" signed out from Find a Buyer service')

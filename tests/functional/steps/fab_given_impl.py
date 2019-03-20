@@ -161,7 +161,7 @@ def bp_build_company_profile(context: Context, supplier_alias: str):
     )
 
 
-def profile_create_verified_business_profile(
+def profile_create_verified_and_published_business_profile(
     context: Context, supplier_alias: str, company_alias: str
 ):
     """Create a verified FAB profile with a quick SSO account verification."""
@@ -357,7 +357,7 @@ def create_actor_with_verified_or_unverified_fab_profile(
     company_alias: str,
 ):
     if verified_or_not == "a verified":
-        profile_create_verified_business_profile(context, actor_alias, company_alias)
+        profile_create_verified_and_published_business_profile(context, actor_alias, company_alias)
     else:
         profile_create_unverified_business_profile(context, actor_alias, company_alias)
 
