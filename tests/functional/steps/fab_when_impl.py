@@ -2366,25 +2366,25 @@ def enrol_user(context: Context, actor_alias: str, company_alias: str):
     actor = context.get_actor(actor_alias)
     company = context.get_company(company_alias)
 
-    # 1) Go to Enter your email & password
+    logging.debug("# 1) Go to Enter your email & password")
     response = profile_enter_your_email_and_password.go_to(actor.session)
     context.response = response
     token = extract_csrf_middleware_token(response)
     context.update_actor(actor_alias, csrfmiddlewaretoken=token)
 
-    # 2) submit the form
+    logging.debug("# 2) submit the form")
     response = profile_enter_your_email_and_password.submit(actor)
     context.response = response
     token = extract_csrf_middleware_token(response)
     context.update_actor(actor_alias, csrfmiddlewaretoken=token)
     profile_enter_email_verification_code.should_be_here(response)
 
-    # 3) get email verification code
+    logging.debug("# 3) get email verification code")
     code = get_email_verification_code(actor.email)
     assert code, f"Could not find email verification code for {actor.email}"
     context.update_actor(actor_alias, email_confirmation_code=code)
 
-    # 4) submit email verification code
+    logging.debug("# 4) submit email verification code")
     actor = context.get_actor(actor_alias)
     response = profile_enter_email_verification_code.submit(actor)
     context.response = response
@@ -2392,21 +2392,21 @@ def enrol_user(context: Context, actor_alias: str, company_alias: str):
     context.update_actor(actor_alias, csrfmiddlewaretoken=token)
     profile_enter_your_business_details.should_be_here(response)
 
-    # 5) submit company details - 1st part
+    logging.debug("# 5) submit company details - 1st part")
     response = profile_enter_your_business_details.submit(actor, company)
     context.response = response
     token = extract_csrf_middleware_token(response)
     context.update_actor(actor_alias, csrfmiddlewaretoken=token)
     profile_enter_your_business_details_part_2.should_be_here(response)
 
-    # 6) submit company details - 2nd part
+    logging.debug("# 6) submit company details - 2nd part")
     profile_enter_your_business_details_part_2.submit(actor, company)
     context.response = response
     token = extract_csrf_middleware_token(response)
     context.update_actor(actor_alias, csrfmiddlewaretoken=token)
     profile_enter_your_personal_details.should_be_here(response)
 
-    # 7) submit personal details
+    logging.debug("# 7) submit personal details")
     response = profile_enter_your_personal_details.submit(actor)
     context.response = response
     profile_enrolment_finished.should_be_here(response)
