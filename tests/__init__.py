@@ -180,6 +180,9 @@ urls = {
     "profile:enrol-business-details": "enrol/business-type/companies-house/business-details/",
     "profile:enrol-personal-details": "enrol/business-type/companies-house/personal-details/",
     "profile:enrol-finished": "enrol/business-type/companies-house/finished/",
+    "profile:edit-company-profile": "find-a-buyer/",
+    "profile:edit-company-description": "find-a-buyer/description/",
+    "profile:publish-business-profile-to-fas": "find-a-buyer/publish/",
 
     # ExRed UI
     "ui-exred:healthcheck": "healthcheck/",
