@@ -399,7 +399,7 @@ def profile_add_business_description(context: Context, supplier_alias: str):
     logging.debug("Supplier is back to the Profile Page")
 
 
-def prof_verify_company(context: Context, supplier_alias: str):
+def profile_verify_company_profile(context: Context, supplier_alias: str):
     """Will verify the company by submitting the verification code that is sent
     by post to the company's address.
     """

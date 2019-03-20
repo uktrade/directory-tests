@@ -45,7 +45,7 @@ from tests.functional.steps.fab_when_impl import (
     prof_supplier_uploads_logo,
     prof_to_upload_unsupported_logos,
     prof_update_company_details,
-    prof_verify_company,
+    profile_verify_company_profile,
     prof_view_published_profile,
     reg_confirm_company_selection,
     reg_create_sso_account,
@@ -121,7 +121,7 @@ def when_supplier_provides_full_name(context, supplier_alias):
 @when('"{supplier_alias}" verifies the company with the verification code '
       'from the letter sent after Directory Profile was created')
 def when_supplier_verifies_company(context, supplier_alias):
-    prof_verify_company(context, supplier_alias)
+    profile_verify_company_profile(context, supplier_alias)
 
 
 @when('"{supplier_alias}" decides to view published Directory Profile')
