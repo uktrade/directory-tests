@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 """Profile - Enter your business details"""
-import random
-
 from requests import Response, Session
-
-from directory_constants.constants import choices
 
 from tests import get_absolute_url
 from tests.functional.utils.context_utils import Actor, Company
@@ -27,14 +23,13 @@ def should_be_here(response: Response):
 def submit(actor: Actor, company: Company) -> Response:
     session = actor.session
     headers = {"Referer": URL}
-    industry, _ = random.choice(choices.INDUSTRIES)
     data = {
         "csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
         "companies_house_enrolment_view-current_step": "business-details",
         "business-details-company_name": company.title,
         "business-details-postal_code": company.companies_house_details["address"]["postal_code"],
-        "business-details-sectors": industry,
-        "business-details-website_address": "http://automated.tests.com",
+        "business-details-sectors": company.sector,
+        "business-details-website_address": company.website,
     }
 
     return make_request(
