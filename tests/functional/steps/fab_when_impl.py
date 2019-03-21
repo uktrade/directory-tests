@@ -2458,6 +2458,16 @@ def enrol_user(context: Context, actor_alias: str, company_alias: str):
     profile_enter_your_business_details_part_2.should_be_here(response)
 
     logging.debug("# 6) submit company details - 2nd part")
+    if not company.website:
+        words = ".".join(sentence().split())
+        context.set_company_details(company_alias, website=f"https://{words}/")
+    if not company.sector:
+        industry, _ = random.choice(choices.INDUSTRIES)
+        context.set_company_details(company_alias, sector=industry)
+    if not company.no_employees:
+        size = random.choice(NO_OF_EMPLOYEES)
+        context.set_company_details(company_alias, no_employees=size)
+    company = context.get_company(company_alias)
     profile_enter_your_business_details_part_2.submit(actor, company)
     context.response = response
     token = extract_csrf_middleware_token(response)
