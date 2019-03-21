@@ -20,8 +20,6 @@ from tests.functional.pages import (
     fab_ui_account_transfer_ownership,
     fab_ui_build_profile_basic,
     fab_ui_build_profile_sector,
-    fab_ui_case_study_basic,
-    fab_ui_case_study_images,
     fab_ui_confim_your_collaboration,
     fab_ui_confim_your_ownership,
     fab_ui_confirm_company,
@@ -38,6 +36,8 @@ from tests.functional.pages import (
     fas_ui_feedback,
     fas_ui_find_supplier,
     fas_ui_profile,
+    profile_case_study_basic,
+    profile_case_study_images,
     profile_edit_company_description,
     profile_edit_company_profile,
     profile_edit_products_and_services_keywords,
@@ -1003,19 +1003,19 @@ def profile_add_case_study(
     case_study = random_case_study_data(case_alias)
 
     # Step 1 - go to "Add case study" form & extract CSRF token
-    response = fab_ui_case_study_basic.go_to(session)
+    response = profile_case_study_basic.go_to(session)
     context.response = response
-    fab_ui_case_study_basic.should_be_here(response)
+    profile_case_study_basic.should_be_here(response)
     token = extract_csrf_middleware_token(response)
 
     # Step 2 - submit the "basic case study data" form & extract CSRF token
-    response = fab_ui_case_study_basic.submit_form(session, token, case_study)
+    response = profile_case_study_basic.submit(session, token, case_study)
     context.response = response
-    fab_ui_case_study_images.should_be_here(response)
+    profile_case_study_images.should_be_here(response)
     token = extract_csrf_middleware_token(response)
 
     # Step 3 - submit the "case study images" form
-    response = fab_ui_case_study_images.submit_form(session, token, case_study)
+    response = profile_case_study_images.submit(session, token, case_study)
     context.response = response
 
     # Step 4 - check if we're on the FAB Profile page
@@ -1054,21 +1054,21 @@ def fab_update_case_study(
     logging.debug("Now will replace case study data with: %s", new_case)
 
     # Step 2 - go to specific "Case study" page form & extract CSRF token
-    response = fab_ui_case_study_basic.go_to(
+    response = profile_case_study_basic.go_to(
         session, case_number=current_number
     )
     context.response = response
-    fab_ui_case_study_basic.should_be_here(response)
+    profile_case_study_basic.should_be_here(response)
     token = extract_csrf_middleware_token(response)
 
     # Step 3 - submit the "basic case study data" form & extract CSRF token
-    response = fab_ui_case_study_basic.submit_form(session, token, new_case)
+    response = profile_case_study_basic.submit(session, token, new_case)
     context.response = response
-    fab_ui_case_study_images.should_be_here(response)
+    profile_case_study_images.should_be_here(response)
     token = extract_csrf_middleware_token(response)
 
     # Step 4 - submit the "case study images" form
-    response = fab_ui_case_study_images.submit_form(session, token, new_case)
+    response = profile_case_study_images.submit(session, token, new_case)
     context.response = response
 
     # Step 5 - check if we're on the FAB Profile page
@@ -1857,24 +1857,24 @@ def fab_attempt_to_add_case_study(
 
         case_study = case_study._replace(**{field: value})
 
-        response = fab_ui_case_study_basic.go_to(session)
+        response = profile_case_study_basic.go_to(session)
         context.response = response
-        fab_ui_case_study_basic.should_be_here(response)
+        profile_case_study_basic.should_be_here(response)
 
         token = extract_csrf_middleware_token(response)
 
         if field in page_1_fields:
-            response = fab_ui_case_study_basic.submit_form(
+            response = profile_case_study_basic.submit(
                 session, token, case_study
             )
             context.response = response
         elif field in page_2_fields:
-            response = fab_ui_case_study_basic.submit_form(
+            response = profile_case_study_basic.submit(
                 session, token, case_study
             )
             context.response = response
             token = extract_csrf_middleware_token(response)
-            response = fab_ui_case_study_images.submit_form(
+            response = profile_case_study_images.submit(
                 session, token, case_study
             )
             context.response = response

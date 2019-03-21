@@ -14,7 +14,9 @@ from tests.functional.pages import (
     fab_ui_edit_online_profiles,
     fab_ui_edit_sector,
     fab_ui_landing,
+    profile_case_study_basic,
     profile_edit_company_profile,
+    profile_enrol,
     fab_ui_upload_logo,
     fab_ui_verify_company,
     fas_ui_creative_industry,
@@ -36,11 +38,9 @@ from tests.functional.pages import (
     sud_ui_find_a_buyer,
     sud_ui_landing,
     sud_ui_selling_online_overseas,
-    profile_enrol
 )
 
 from tests import get_absolute_url
-from tests.functional.pages import fab_ui_case_study_basic
 
 FAS_PAGE_REGISTRY = {
     "fas landing": {"url": "ui-supplier:landing", "po": None},
@@ -122,10 +122,6 @@ FAB_PAGE_REGISTRY = {
     "fab upload logo": {
         "url": "ui-buyer:upload-logo",
         "po": fab_ui_upload_logo,
-    },
-    "fab add case study": {
-        "url": "ui-buyer:case-study-add",
-        "po": fab_ui_case_study_basic,
     },
     "fab company company address": {
         "url": "ui-buyer:confirm-company-address",
@@ -220,6 +216,10 @@ SUD_PAGE_REGISTRY = {
     "profile - edit company description": {
         "url": "ui-buyer:company-edit-description",
         "po": profile_edit_company_description,
+    },
+    "profile add case study": {
+        "url": "ui-buyer:case-study-add",
+        "po": profile_case_study_basic,
     },
 }
 
