@@ -241,3 +241,35 @@ Feature: Find a Supplier
       | specific |
       | sweets   |
       | metal    |
+
+
+  @TT-1258
+  @profile
+  @verified
+  @unpublished
+  @captcha
+  @dev-only
+  @found-with-automated-tests
+  Scenario: Unpublished business profiles (for any or ISD company) shouldn't appear in FAS search results
+    Given "Peter Alder" has created verified yet unpublished business profile for randomly selected company "Y"
+    And "Peter Alder" has added random keywords to describe the products and services his business offers
+
+    When "Peter Alder" searches for company "Y" on FAS using selected company's details
+      | company detail |
+      | title          |
+      | number         |
+      | website        |
+      | summary        |
+      | description    |
+      | slug           |
+      | keywords       |
+
+    Then "Peter Alder" should NOT be able to find company "Y" on FAS using selected company's details
+      | company detail |
+      | title          |
+      | number         |
+      | website        |
+      | summary        |
+      | description    |
+      | slug           |
+      | keywords       |
