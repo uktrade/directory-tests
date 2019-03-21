@@ -2,6 +2,7 @@
 """FAB Given step implementations."""
 import logging
 import os
+import random
 import re
 from random import choice, randrange
 from string import ascii_letters, digits
@@ -9,6 +10,7 @@ from urllib.parse import parse_qsl, quote, urljoin, urlsplit
 
 from behave.model import Table
 from behave.runner import Context
+from directory_constants.constants import choices
 from requests import Response, Session
 from scrapy import Selector
 from tests import get_absolute_url
@@ -833,46 +835,35 @@ def prof_update_company_details(
     # Step 0 - prepare company's details to update
     details_to_update = [row["detail"] for row in table_of_details]
     title = DETAILS["TITLE"] in details_to_update
-    keywords = DETAILS["KEYWORDS"] in details_to_update
     website = DETAILS["WEBSITE"] in details_to_update
     size = DETAILS["SIZE"] in details_to_update
     sector = DETAILS["SECTOR"] in details_to_update
     exported_before = DETAILS["HAS_EXPORTED_BEFORE"] in details_to_update
     countries = DETAILS["COUNTRIES"] in details_to_update
 
-    # Steps 1 - Go to the FAB Edit Company's details page
-    response = fab_ui_edit_details.go_to(session)
-    context.response = response
-    fab_ui_edit_details.should_be_here(response)
-
-    # Step 2 - extract CSRF token
-    token = extract_csrf_middleware_token(response)
-    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
-
-    # Step 3 - Update company's details
-    response, new_details = fab_ui_edit_details.update_details(
+    # Step 1 - Update company's details
+    response, new_details = profile_edit_company_business_details.submit(
         actor,
         company,
         title=title,
-        keywords=keywords,
         website=website,
         size=size,
     )
     context.response = response
 
-    # Step 4 - Supplier should be on Edit Profile page
+    # Step 2 - Supplier should be on Edit Profile page
     profile_edit_company_profile.should_be_here(response)
 
-    # Step 5 - Go to the Edit Sector page
+    # Step 3 - Go to the Edit Sector page
     response = fab_ui_edit_sector.go_to(session)
     context.response = response
     fab_ui_edit_sector.should_be_here(response)
 
-    # Step 5 - extract CSRF token
+    # Step 4 - extract CSRF token
     token = extract_csrf_middleware_token(response)
     context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
-    # Step 6 - Update company's sector
+    # Step 5 - Update company's sector
     response, new_sector, new_countries, has_exported_before = fab_ui_edit_sector.update(
         actor, company, update_sector=sector, update_countries=countries,
         update_has_exported_before=exported_before
@@ -882,7 +873,7 @@ def prof_update_company_details(
     # Step 7 - Check if Supplier is on FAB Profile page
     profile_edit_company_profile.should_be_here(response)
 
-    # Step 7 - update company's details stored in context.scenario_data
+    # Step 8 - update company's details stored in context.scenario_data
     context.set_company_details(
         actor.company_alias,
         title=new_details.title,
