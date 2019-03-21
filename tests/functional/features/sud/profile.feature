@@ -50,7 +50,7 @@ Feature: SUD (Profile) pages
         |SUD                        | expected        |
         |SUD Export Opportunities   | SSO Login       |
         |SUD Find a Buyer           | Profile - Enrol |
-        |SUD Selling Online Overseas| SUD Landing     |
+        |SUD Selling Online Overseas| SSO Login       |
 
 
     # I've been told that on non-prod envs ExOpps doesn't keep synced state
