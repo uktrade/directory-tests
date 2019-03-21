@@ -564,6 +564,30 @@ def fas_supplier_cannot_be_found_using_case_study_details(
         )
 
 
+def fas_should_not_find_with_company_details(
+        context: Context, buyer_alias: str, company_alias: str
+):
+    """Check if Buyer wasn't able to find Supplier using all selected search terms
+
+    NOTE:
+    This step requires the search_results dict to be stored in context
+    """
+    assert hasattr(context, "search_results")
+    company = context.get_company(company_alias)
+    for result in context.search_results:
+        # get response for specific search request. This helps to debug
+        logging.debug(f"Search results: {context.search_results}")
+        context.response = context.search_responses[result]
+        with assertion_msg(
+                "%s was able to find '%s' (alias: %s) using %s",
+                buyer_alias,
+                company.title,
+                company_alias,
+                result,
+        ):
+            assert not context.search_results[result]
+
+
 def fas_should_find_with_company_details(
     context: Context, buyer_alias: str, company_alias: str
 ):

@@ -25,6 +25,7 @@ from tests.functional.steps.fab_then_impl import (
     fas_should_be_told_that_message_has_been_sent,
     fas_should_find_all_sought_companies,
     fas_should_find_with_company_details,
+    fas_should_not_find_with_company_details,
     fas_should_see_all_case_studies,
     fas_should_see_company_details,
     fas_should_see_company_once_in_search_results,
@@ -56,7 +57,7 @@ from tests.functional.steps.fab_then_impl import (
     sso_should_see_invalid_password_reset_link_error,
     stannp_should_see_expected_details_in_verification_letter,
     sud_should_not_see_options_to_manage_users,
-    sud_should_see_options_to_manage_users
+    sud_should_see_options_to_manage_users,
 )
 from tests.functional.steps.fab_when_impl import (
     fas_feedback_request_should_be_submitted,
@@ -217,6 +218,12 @@ def then_buyer_should_find_supplier_using_any_part_of_case_study(
         context, buyer_alias, company_alias, case_alias):
     fas_find_supplier_using_case_study_details(
         context, buyer_alias, company_alias, case_alias)
+
+
+@then('"{buyer_alias}" should NOT be able to find company "{company_alias}" on FAS using selected company\'s details')
+def then_buyer_should_find_supplier_using_company_details(
+        context, buyer_alias, company_alias):
+    fas_should_not_find_with_company_details(context, buyer_alias, company_alias)
 
 
 @then('"{buyer_alias}" should be able to find company "{company_alias}" on FAS '
