@@ -36,7 +36,7 @@ from tests.functional.steps.fab_when_impl import (
     fas_view_pages_in_selected_language,
     go_to_page,
     go_to_pages,
-    prof_add_case_study,
+    profile_add_case_study,
     prof_add_invalid_online_profiles,
     prof_add_online_profiles,
     prof_attempt_to_sign_in_to_fab,
@@ -171,7 +171,7 @@ def when_supplier_removes_links_to_all_online_profiles(context, supplier_alias):
 
 @when('"{supplier_alias}" adds a complete case study called "{case_alias}"')
 def when_supplier_adds_case_study(context, supplier_alias, case_alias):
-    prof_add_case_study(context, supplier_alias, case_alias)
+    profile_add_case_study(context, supplier_alias, case_alias)
 
 
 @when('"{supplier_alias}" uploads "{picture}" as company\'s logo')

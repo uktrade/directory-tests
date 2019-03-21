@@ -994,7 +994,7 @@ def prof_remove_links_to_online_profiles(
     context.response = response
 
 
-def prof_add_case_study(
+def profile_add_case_study(
     context: Context, supplier_alias: str, case_alias: str
 ):
     """Will add a complete case study (all fields will be filled out)."""

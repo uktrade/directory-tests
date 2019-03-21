@@ -40,7 +40,7 @@ from tests.functional.steps.fab_when_impl import (
     fab_open_collaboration_request_link,
     fab_transfer_ownership,
     go_to_page,
-    prof_add_case_study,
+    profile_add_case_study,
     prof_add_online_profiles,
     profile_add_business_description,
     profile_add_product_and_services_keywords,
@@ -157,7 +157,7 @@ def given_supplier_can_see_correct_logo_on_fab_profile(
 @given('"{supplier_alias}" added a complete case study called "{case_alias}"')
 def given_supplier_added_complete_case_study(
         context, supplier_alias, case_alias):
-    prof_add_case_study(context, supplier_alias, case_alias)
+    profile_add_case_study(context, supplier_alias, case_alias)
     fab_should_see_all_case_studies(context, supplier_alias)
 
 
