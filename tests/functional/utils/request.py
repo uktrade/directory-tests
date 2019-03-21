@@ -179,6 +179,11 @@ def make_request(
             red("Files: {}".format(meta))
         raise ex
 
+    blocked = "Unfortunately your IP address does not appear to come from"
+    if blocked in res.content.decode("UTF-8"):
+        logging.debug(f"Looks like we're blocked, will retry")
+        res = make_request(Method.GET, res.url, session=session)
+
     log_response(res, trim=trim)
     return res
 
