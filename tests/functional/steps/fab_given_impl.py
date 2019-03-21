@@ -180,6 +180,23 @@ def profile_create_verified_and_published_business_profile(
     profile_publish_profile_to_fas(context, supplier_alias)
 
 
+def profile_create_verified_yet_unpublished_business_profile(
+    context: Context, supplier_alias: str, company_alias: str
+):
+    """Create a verified Business profile and publish it to FAS"""
+    logging.debug("1 - find unregistered company & enrol user for that company")
+    profile_create_unverified_business_profile(context, supplier_alias, company_alias)
+    logging.debug("2 - add business description")
+    profile_add_business_description(context, supplier_alias)
+    logging.debug("3 - decide to confirm identity with letter code")
+    fab_decide_to_verify_profile_with_letter(context, supplier_alias)
+    logging.debug("4 - get confirmation code from DB")
+    logging.debug("5 - confirm identity with letter code")
+    logging.debug("6 - provide verification code")
+    logging.debug("7 - check if verified")
+    profile_verify_company_profile(context, supplier_alias)
+
+
 def sso_create_standalone_unverified_sso_account(
     context: Context, supplier_alias: str
 ):

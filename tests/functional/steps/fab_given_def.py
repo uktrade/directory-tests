@@ -13,6 +13,7 @@ from tests.functional.steps.fab_given_impl import (
     reg_confirm_email_address,
     reg_create_sso_account_associated_with_company,
     profile_create_verified_and_published_business_profile,
+    profile_create_verified_yet_unpublished_business_profile,
     reg_create_verified_sso_account_associated_with_company,
     reg_select_random_company_and_confirm_export_status,
     reg_should_get_verification_letter,
@@ -21,7 +22,7 @@ from tests.functional.steps.fab_given_impl import (
     sso_get_password_reset_link,
     stannp_send_verification_letter,
     unauthenticated_buyer,
-    unauthenticated_supplier
+    unauthenticated_supplier,
 )
 from tests.functional.steps.fab_then_impl import (
     fab_should_see_all_case_studies,
@@ -42,8 +43,9 @@ from tests.functional.steps.fab_when_impl import (
     prof_add_case_study,
     prof_add_online_profiles,
     profile_add_business_description,
+    profile_add_product_and_services_keywords,
     prof_sign_out_from_fab,
-    prof_supplier_uploads_logo
+    prof_supplier_uploads_logo,
 )
 
 
@@ -88,6 +90,13 @@ def given_supplier_set_company_description(context, supplier_alias):
 def given_supplier_creates_verified_profile(context, supplier_alias,
                                             company_alias):
     profile_create_verified_and_published_business_profile(context, supplier_alias, company_alias)
+
+@given('"{supplier_alias}" has created verified yet unpublished business profile for randomly selected company "{company_alias}"')
+def given_supplier_creates_verified_but_unpublished_profile(
+        context, supplier_alias, company_alias):
+    profile_create_verified_yet_unpublished_business_profile(
+        context, supplier_alias, company_alias
+    )
 
 
 @given('"{supplier_alias}" signed out from Find a Buyer service')
