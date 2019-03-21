@@ -40,6 +40,7 @@ from tests.functional.pages import (
     fas_ui_profile,
     profile_edit_company_description,
     profile_edit_company_profile,
+    profile_edit_products_and_services_keywords,
     profile_enrolment_finished,
     profile_enter_email_verification_code,
     profile_enter_your_business_details,
@@ -397,6 +398,27 @@ def profile_add_business_description(context: Context, supplier_alias: str):
         actor.company_alias, summary=summary, description=description
     )
     logging.debug("Supplier is back to the Profile Page")
+
+
+def profile_add_product_and_services_keywords(context: Context, supplier_alias: str):
+    actor = context.get_actor(supplier_alias)
+    session = actor.session
+
+    # Step 1 - Submit random keywords
+    keywords = ", ".join(sentence().split())
+    response = profile_edit_products_and_services_keywords.submit(
+        session, keywords
+    )
+    context.response = response
+
+    # Step 3 - check if Supplier is on Profile page
+    profile_edit_company_profile.should_be_here(response)
+
+    # Step 4 - update company details in Scenario Data
+    context.set_company_details(
+        actor.company_alias, keywords=keywords
+    )
+    logging.debug("Supplier successfully added keywords to their profile")
 
 
 def profile_verify_company_profile(context: Context, supplier_alias: str):

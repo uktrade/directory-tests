@@ -284,3 +284,8 @@ def given_unverified_profile_new_reg_flow(context, supplier_alias, company_alias
     profile_create_unverified_business_profile(
         context, supplier_alias, company_alias
     )
+
+
+@given('"{actor_alias}" has added random keywords to describe the products and services his business offers')
+def given_supplier_added_products_and_services_keywords(context, actor_alias):
+    profile_add_product_and_services_keywords(context, actor_alias)
