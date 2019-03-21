@@ -85,11 +85,13 @@ def given_supplier_set_company_description(context, supplier_alias):
     profile_add_business_description(context, supplier_alias)
 
 
-@given('"{supplier_alias}" has created verified and published business profile for randomly '
-       'selected company "{company_alias}"')
-def given_supplier_creates_verified_profile(context, supplier_alias,
-                                            company_alias):
-    profile_create_verified_and_published_business_profile(context, supplier_alias, company_alias)
+@given('"{supplier_alias}" has created verified and published business profile for randomly selected company "{company_alias}"')
+def given_supplier_creates_verified_and_published_profile(
+        context, supplier_alias, company_alias):
+    profile_create_verified_and_published_business_profile(
+        context, supplier_alias, company_alias
+    )
+
 
 @given('"{supplier_alias}" has created verified yet unpublished business profile for randomly selected company "{company_alias}"')
 def given_supplier_creates_verified_but_unpublished_profile(
