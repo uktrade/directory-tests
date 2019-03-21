@@ -173,7 +173,9 @@ def make_request(
             headers["Authorization"] = "STRIPPED_OUT"
         red("Headers: {}".format(headers))
         red("Data: {}".format(data))
-        red("Files: {}".format(files))
+        if files:
+            meta = [(k, v[0], v[2]) for k, v in files.items()]
+            red("Files: {}".format(meta))
         raise ex
 
     log_response(res, trim=trim)
