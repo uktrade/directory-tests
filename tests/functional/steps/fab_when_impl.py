@@ -1135,6 +1135,22 @@ def fas_search_using_company_details(
         context.response = response
         fas_ui_find_supplier.should_be_here(response)
         number_of_pages = get_number_of_search_result_pages(response)
+
+        if number_of_pages == 0:
+            found = fas_ui_find_supplier.should_see_company(
+                response, company.title
+            )
+            search_results[term_name] = found
+            search_responses[term_name] = response
+            logging.debug(
+                "Couldn't find Supplier '%s' on the first and only FAS search "
+                "result page. Search was done using '%s' : '%s'",
+                company.title,
+                term_name,
+                term,
+            )
+            continue
+
         for page_number in range(1, number_of_pages + 1):
             search_responses[term_name] = response
             found = fas_ui_find_supplier.should_see_company(

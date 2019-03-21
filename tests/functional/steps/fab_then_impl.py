@@ -600,6 +600,7 @@ def fas_should_find_with_company_details(
     company = context.get_company(company_alias)
     for result in context.search_results:
         # get response for specific search request. This helps to debug
+        logging.debug(f"Search results: {context.search_results}")
         context.response = context.search_responses[result]
         with assertion_msg(
             "%s wasn't able to find '%s' (alias: %s) using %s",
