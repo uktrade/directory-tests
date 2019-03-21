@@ -98,6 +98,8 @@ Feature: Find a Supplier
 
 
   @ED-1967
+  @bug
+  @TT-1256
   @search
   @profile
   @verified
@@ -109,6 +111,8 @@ Feature: Find a Supplier
     Given "Annette Geissinger" is a buyer
     And "Peter Alder" is an unauthenticated supplier
     And "Peter Alder" has created verified and published business profile for randomly selected company "Y"
+    And "Peter Alder" has added random keywords to describe the products and services his business offers
+    And "Peter Alder" has updated business details
     And "Peter Alder" gets the slug for company "Y"
 
     When "Annette Geissinger" searches for company "Y" on FAS using selected company's details
