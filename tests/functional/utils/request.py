@@ -132,7 +132,7 @@ def make_request(
     req = session or requests
 
     if use_basic_auth:
-        auth=basic_auth()
+        auth = basic_auth()
     request_kwargs = dict(
         url=url,
         params=params,
