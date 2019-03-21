@@ -183,6 +183,7 @@ urls = {
     "profile:edit-company-profile": "find-a-buyer/",
     "profile:edit-company-description": "find-a-buyer/description/",
     "profile:publish-business-profile-to-fas": "find-a-buyer/publish/",
+    "profile:add-products-and-services-keywords": "find-a-buyer/products-and-services/",
 
     # ExRed UI
     "ui-exred:healthcheck": "healthcheck/",
