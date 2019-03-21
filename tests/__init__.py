@@ -92,11 +92,7 @@ urls = {
     "ui-supplier:industries-food-summary": "industries/food-and-drink/summary/",
     "ui-supplier:feedback": "feedback/",
     "ui-supplier:search": "search/",
-    # NOTE: the URLS below require data from fixtures/supplier.json
-    # to be loaded to the API db of the tested system
-    "ui-supplier:suppliers-detail": "suppliers/03074910/ft-solutions-limited/",
-    "ui-supplier:case-study": "case-study/172/how-a-major-airport-rewards-its-loyal-passengers/",
-    
+
     # UI-INTERNATIONAL
     "ui-international:landing": "",
     "ui-international:healthcheck-sentry": "healthcheck/sentry/",
