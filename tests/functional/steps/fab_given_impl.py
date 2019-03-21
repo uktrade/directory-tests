@@ -210,6 +210,7 @@ def reg_select_random_company_and_confirm_export_status(
     bp_should_be_prompted_to_build_your_profile(context, supplier_alias)
 
 
+@retry(wait_fixed=2000, stop_max_attempt_number=5)
 def fas_find_company_by_name(
     context: Context, buyer_alias: str, company_alias: str
 ):
