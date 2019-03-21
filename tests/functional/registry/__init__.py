@@ -10,7 +10,6 @@ from tests.functional.pages import (
     fab_ui_confirm_identity,
     fab_ui_confirm_identity_letter,
     profile_edit_company_description,
-    fab_ui_edit_details,
     fab_ui_edit_online_profiles,
     fab_ui_edit_sector,
     fab_ui_landing,
@@ -142,10 +141,6 @@ FAB_PAGE_REGISTRY = {
     "fab edit company address": {
         "url": "ui-buyer:company-edit-address",
         "po": None,
-    },
-    "fab edit company key facts": {
-        "url": "ui-buyer:company-edit-key-facts",
-        "po": fab_ui_edit_details,
     },
     "fab edit company sectors": {
         "url": "ui-buyer:company-edit-sectors",
