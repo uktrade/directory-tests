@@ -603,7 +603,7 @@ def fas_should_find_with_company_details(
         logging.debug(f"Search results: {context.search_results}")
         context.response = context.search_responses[result]
         with assertion_msg(
-            "%s wasn't able to find '%s' (alias: %s) using %s",
+            "%s wasn't able to find '%s' (alias: %s) using its '%s'",
             buyer_alias,
             company.title,
             company_alias,
