@@ -176,6 +176,7 @@ urls = {
     "profile:enrol-finished": "enrol/business-type/companies-house/finished/",
     "profile:edit-company-profile": "find-a-buyer/",
     "profile:edit-company-description": "find-a-buyer/description/",
+    "profile:edit-company-business-details": "find-a-buyer/business-details/",
     "profile:publish-business-profile-to-fas": "find-a-buyer/publish/",
     "profile:add-products-and-services-keywords": "find-a-buyer/products-and-services/",
     "profile:case-study-edit": "find-a-buyer/case-study/{case_number}/details/",
