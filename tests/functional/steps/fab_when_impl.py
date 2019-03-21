@@ -26,7 +26,6 @@ from tests.functional.pages import (
     fab_ui_confirm_export_status,
     fab_ui_confirm_identity,
     fab_ui_confirm_identity_letter,
-    fab_ui_edit_details,
     fab_ui_edit_online_profiles,
     fab_ui_edit_sector,
     fab_ui_landing,
@@ -38,6 +37,7 @@ from tests.functional.pages import (
     fas_ui_profile,
     profile_case_study_basic,
     profile_case_study_images,
+    profile_edit_company_business_details,
     profile_edit_company_description,
     profile_edit_company_profile,
     profile_edit_products_and_services_keywords,
@@ -419,6 +419,36 @@ def profile_add_product_and_services_keywords(context: Context, supplier_alias: 
         actor.company_alias, keywords=keywords
     )
     logging.debug("Supplier successfully added keywords to their profile")
+
+
+def profile_edit_business_details(
+    context: Context, supplier_alias: str, *, table_of_details: Table
+):
+    actor = context.get_actor(supplier_alias)
+    company = context.get_company(actor.company_alias)
+
+    # Step 0 - prepare company's details to update
+    table_of_details = table_of_details or []
+    details_to_update = [row["detail"] for row in table_of_details]
+    title = DETAILS["TITLE"] in details_to_update
+    website = DETAILS["WEBSITE"] in details_to_update
+    size = DETAILS["SIZE"] in details_to_update
+    sector = DETAILS["SECTOR"] in details_to_update
+
+    logging.debug(f"Details to update: {details_to_update}")
+    # Step 1 - Update company's details
+    response, new_details = profile_edit_company_business_details.submit(
+        actor,
+        company,
+        title=title,
+        website=website,
+        size=size,
+        sector=sector,
+    )
+    context.response = response
+
+    # Step 2 - Supplier should be on Edit Profile page
+    profile_edit_company_profile.should_be_here(response)
 
 
 def profile_verify_company_profile(context: Context, supplier_alias: str):

@@ -44,6 +44,7 @@ from tests.functional.steps.fab_when_impl import (
     prof_add_online_profiles,
     profile_add_business_description,
     profile_add_product_and_services_keywords,
+    profile_edit_business_details,
     prof_sign_out_from_fab,
     prof_supplier_uploads_logo,
 )
@@ -289,3 +290,11 @@ def given_unverified_profile_new_reg_flow(context, supplier_alias, company_alias
 @given('"{actor_alias}" has added random keywords to describe the products and services his business offers')
 def given_supplier_added_products_and_services_keywords(context, actor_alias):
     profile_add_product_and_services_keywords(context, actor_alias)
+
+
+@given('"{actor_alias}" has updated business details')
+def given_supplier_edit_business_details(context, actor_alias):
+    """This step was added as a workaround for bug TT-1256"""
+    profile_edit_business_details(
+        context, actor_alias, table_of_details=context.table
+    )
