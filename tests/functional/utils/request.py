@@ -145,6 +145,7 @@ def make_request(
         cookies=cookies,
     )
 
+    logging.debug(f"{method} {url}")
     try:
         if method == Method.DELETE:
             res = req.delete(**request_kwargs)
