@@ -75,7 +75,7 @@ def check_for_special_page_cases(page: dict) -> str:
         "ArticlePage", "ArticleListingPage", "SuperregionPage", "CountryGuidePage"
     ]:
         url = check_for_special_urls_cases(page["full_url"])
-    elif page["page_type"] in ["ContactSuccessPage"]:
+    elif page["page_type"] in ["ContactSuccessPage", "ContactUsGuidancePage"]:
         # contact-us success page URLs are broken
         # we need to remove last part of the URL path
         url = page["meta"]["url"]
