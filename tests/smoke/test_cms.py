@@ -81,11 +81,11 @@ def test_wagtail_can_list_only_20_pages():
 @pytest.mark.dev
 @pytest.mark.parametrize(
     "application", [
+        "Components",
         "Find a Supplier Pages",
         "Great Domestic pages",
-        "Invest pages",
-        "Components",
         "Great International pages",
+        "Invest pages",
     ]
 )
 def test_wagtail_get_pages_per_application_on_dev(application):
@@ -106,10 +106,11 @@ def test_wagtail_get_pages_per_application_on_dev(application):
 @pytest.mark.stage
 @pytest.mark.parametrize(
     "application", [
+        "Components",
         "Find a Supplier Pages",
         "Great Domestic pages",
+        "Great International pages",
         "Invest pages",
-        "Components",
     ]
 )
 def test_wagtail_get_pages_per_application_on_prod(application):
@@ -119,11 +120,11 @@ def test_wagtail_get_pages_per_application_on_prod(application):
 @pytest.mark.prod
 @pytest.mark.parametrize(
     "application", [
-        "Export Readiness app",
-        "Find a Supplier app",
-        "Invest pages",
         "Components",
+        "Find a Supplier app",
+        "Great Domestic",
         "Great International pages",
+        "Invest pages",
     ]
 )
 def test_wagtail_get_pages_per_application_on_prod(application):
