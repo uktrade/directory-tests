@@ -1,69 +1,72 @@
-import http.client
-
 import pytest
-import requests
+from rest_framework.status import (
+    HTTP_200_OK,
+    HTTP_301_MOVED_PERMANENTLY,
+    HTTP_302_FOUND,
+)
 from retrying import retry
 
 from tests import get_absolute_url, is_500
+from tests.smoke.cms_api_helpers import get_and_assert, status_error
 
 
 def test_about_200(basic_auth):
-    response = requests.get(
-        get_absolute_url("profile:about"), allow_redirects=False,
-        auth=basic_auth,
-    )
-
-    error = f"Expected to get 200 OK but got {response.status_code} from {response.url}"
-    assert response.status_code == http.client.OK, error
+    url = get_absolute_url("profile:about")
+    get_and_assert(url=url, status_code=HTTP_200_OK, auth=basic_auth)
 
 
-@pytest.mark.parametrize("absolute_url", [
-    get_absolute_url("profile:landing"),
-    get_absolute_url("profile:soo"),
-    get_absolute_url("profile:fab"),
-    get_absolute_url("profile:exops-alerts"),
-    get_absolute_url("profile:exops-applications"),
-])
-def test_301_redirects_for_anon_user(absolute_url, basic_auth):
-    response = requests.get(
-        absolute_url, allow_redirects=False, auth=basic_auth
-    )
-    error_msg = f"Expected 301 got {response.status_code} from {response.url}"
-    assert response.status_code == http.client.FOUND, error_msg
+@pytest.mark.parametrize(
+    "url",
+    [
+        get_absolute_url("profile:landing"),
+        get_absolute_url("profile:soo"),
+        get_absolute_url("profile:fab"),
+        get_absolute_url("profile:exops-alerts"),
+        get_absolute_url("profile:exops-applications"),
+    ],
+)
+def test_302_redirects_for_anon_user(url, basic_auth):
+    get_and_assert(url=url, status_code=HTTP_302_FOUND, auth=basic_auth)
 
 
-@pytest.mark.skip(reason="see bug ED-3050")
-@pytest.mark.parametrize("absolute_url", [
-    get_absolute_url("profile:soo"),
-    get_absolute_url("profile:fab"),
-    get_absolute_url("profile:exops-alerts"),
-    get_absolute_url("profile:exops-applications"),
-])
-def test_302_redirects_after_removing_trailing_slash_for_anon_user(
-        absolute_url, basic_auth):
+@pytest.mark.parametrize(
+    "url",
+    [
+        get_absolute_url("profile:soo"),
+        get_absolute_url("profile:fab"),
+        get_absolute_url("profile:exops-alerts"),
+        get_absolute_url("profile:exops-applications"),
+    ],
+)
+def test_301_redirects_after_removing_trailing_slash_for_anon_user(
+    url, basic_auth
+):
     # get rid of trailing slash
-    if absolute_url[-1] == "/":
-        absolute_url = absolute_url[:-1]
-    response = requests.get(
-        absolute_url, allow_redirects=False, auth=basic_auth
+    if url[-1] == "/":
+        url = url[:-1]
+    get_and_assert(
+        url=url, status_code=HTTP_301_MOVED_PERMANENTLY, auth=basic_auth
     )
-    error_msg = f"Expected 302 got {response.status_code} from {response.url}"
-    assert response.status_code == http.client.MOVED_PERMANENTLY, error_msg
 
 
 @pytest.mark.session_auth
 @retry(wait_fixed=3000, stop_max_attempt_number=2, retry_on_exception=is_500)
-@pytest.mark.parametrize("absolute_url", [
-    get_absolute_url("profile:landing"),
-    get_absolute_url("profile:soo"),
-    get_absolute_url("profile:fab"),
-    get_absolute_url("profile:exops-alerts"),
-    get_absolute_url("profile:exops-applications"),
-])
+@pytest.mark.parametrize(
+    "url",
+    [
+        get_absolute_url("profile:landing"),
+        get_absolute_url("profile:soo"),
+        get_absolute_url("profile:fab"),
+        get_absolute_url("profile:exops-alerts"),
+        get_absolute_url("profile:exops-applications"),
+    ],
+)
 def test_access_to_non_health_check_endpoints_as_logged_in_user(
-        logged_in_session, absolute_url, basic_auth):
+    logged_in_session, url, basic_auth
+):
     response = logged_in_session.get(
-        absolute_url, allow_redirects=True, auth=basic_auth
+        url, allow_redirects=True, auth=basic_auth
     )
-    error_msg = f"Expected 200 got {response.status_code} from {response.url}"
-    assert response.status_code == http.client.OK, error_msg
+    assert response.status_code == HTTP_200_OK, status_error(
+        HTTP_200_OK, response
+    )
