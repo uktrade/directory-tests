@@ -112,7 +112,7 @@ def test_wagtail_get_pages_per_application_on_dev(application):
         "Invest pages",
     ]
 )
-def test_wagtail_get_pages_per_application_on_prod(application):
+def test_wagtail_get_pages_per_application_on_stage(application):
     test_wagtail_get_pages_per_application_on_dev(application)
 
 
