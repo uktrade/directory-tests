@@ -22,6 +22,7 @@ join_ui_buyer = partial(urljoin, settings.DIRECTORY_UI_BUYER_URL)
 join_ui_supplier = partial(urljoin, settings.DIRECTORY_UI_SUPPLIER_URL)
 join_ui_invest = partial(urljoin, settings.INVEST_UI_URL)
 join_exred = partial(urljoin, settings.EXRED_UI_URL)
+join_exopps = partial(urljoin, settings.EXPORT_OPPORTUNITIES_UI_URL)
 join_contact_us = partial(urljoin, settings.DIRECTORY_CONTACT_US_UI_URL)
 join_legacy_contact_us = partial(urljoin, settings.DIRECTORY_LEGACY_CONTACT_US_UI_URL)
 join_soo = partial(urljoin, settings.SOO_UI_URL)
@@ -253,7 +254,6 @@ urls = {
     "ui-exred:getting-paid": "getting-paid/",
     "ui-exred:operations-and-compliance": "operations-and-compliance/",
     "ui-exred:get-finance": "get-finance/",
-    "ui-exred:export-opportunities": "export-opportunities/",
     "ui-exred:story-first": "story/online-marketplaces-propel-freestyle-xtreme-sales/",
     "ui-exred:story-second": "story/hello-babys-rapid-online-growth/",
     "ui-exred:story-third": "story/york-bag-retailer-goes-global-via-e-commerce/",
@@ -300,6 +300,9 @@ urls = {
     "legacy-ui-contact-us:soo-triage": "triage/",
     "legacy-ui-contact-us:soo-triage-form": "triage/soo/",
     "legacy-ui-contact-us:soo-triage-feedback-form": "FeedbackForm/TriageForm/",
+
+    # ExOpps UI - Export Opportunities
+    "ui-exopps:landing": "",
 
     # SOO UI Selling Online Overseas
     "ui-soo:landing": "",
@@ -391,6 +394,8 @@ def get_absolute_url(name):
         return join_forms_api(relative_url)
     elif name.startswith("ui-international"):
         return join_ui_international(relative_url)
+    elif name.startswith("ui-exopps:"):
+        return join_exopps(relative_url)
 
 
 def get_random_email_address():
