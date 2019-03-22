@@ -158,9 +158,13 @@ def status_error(
 
 
 def get_and_assert(
-        url: str, status_code: int, *, auth: tuple = None, cookies: dict = None
-):
-    response = requests.get(url, auth=auth, cookies=cookies)
+    url: str, status_code: int, *, auth: tuple = None, cookies: dict = None,
+    params: dict = None, allow_redirects: bool = False,
+) -> Response:
+    response = requests.get(
+        url, params=params, auth=auth, cookies=cookies,
+        allow_redirects=allow_redirects,
+    )
     if response.history and (response.status_code in [401, 403]):
         print(
             f"Request to {url} was redirected to {response.url} which asked for"
@@ -168,6 +172,7 @@ def get_and_assert(
         response = requests.get(response.url, auth=auth, cookies=cookies)
     msg = f"Expected {status_code} but got {response.status_code} from {url}"
     assert response.status_code == status_code, msg
+    return response
 
 
 def get_page_ids_by_type(page_type: str) -> Tuple[List[int], int]:
