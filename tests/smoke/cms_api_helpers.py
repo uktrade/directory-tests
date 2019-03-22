@@ -1,5 +1,4 @@
 import asyncio
-import http.client
 import logging
 from collections import defaultdict
 from pprint import pformat
@@ -11,6 +10,12 @@ from directory_cms_client import DirectoryCMSClient
 from directory_cms_client.client import cms_api_client
 from directory_client_core.helpers import AbstractResponse
 from directory_constants.constants import cms as SERVICE_NAMES
+from rest_framework.status import (
+    HTTP_200_OK,
+    HTTP_401_UNAUTHORIZED,
+    HTTP_403_FORBIDDEN,
+    HTTP_404_NOT_FOUND,
+)
 from requests import Response
 from retrying import retry
 
@@ -108,7 +113,7 @@ def check_for_special_page_cases(page: dict) -> str:
 
 
 def should_skip_never_published_page(response: AbstractResponse) -> bool:
-    if response.status_code == 404:
+    if response.status_code == HTTP_404_NOT_FOUND:
         print(f"GET {response.raw_response.request.url} → 404. Maybe this page was never published")
         return True
     return False
@@ -165,7 +170,7 @@ def get_and_assert(
         url, params=params, auth=auth, cookies=cookies,
         allow_redirects=allow_redirects,
     )
-    if response.history and (response.status_code in [401, 403]):
+    if response.history and (response.status_code in [HTTP_401_UNAUTHORIZED, HTTP_403_FORBIDDEN]):
         print(
             f"Request to {url} was redirected to {response.url} which asked for"
             f" credentials, will try to authorize with basic auth")
@@ -183,8 +188,8 @@ def get_page_ids_by_type(page_type: str) -> Tuple[List[int], int]:
     endpoint = f"{relative_url}?type={page_type}"
     response = cms_api_client.get(endpoint)
     total_response_time = response.raw_response.elapsed.total_seconds()
-    assert response.status_code == http.client.OK, status_error(
-        http.client.OK, response
+    assert response.status_code == HTTP_200_OK, status_error(
+        HTTP_200_OK, response
     )
 
     # get IDs of all pages from the response
@@ -200,8 +205,8 @@ def get_page_ids_by_type(page_type: str) -> Tuple[List[int], int]:
         endpoint = f"{relative_url}?type={page_type}&offset={offset}"
         response = cms_api_client.get(endpoint)
         total_response_time += response.raw_response.elapsed.total_seconds()
-        assert response.status_code == http.client.OK, status_error(
-            http.client.OK, response
+        assert response.status_code == HTTP_200_OK, status_error(
+            HTTP_200_OK, response
         )
         content = response.json()
         page_ids += [page["id"] for page in content["items"]]
@@ -225,8 +230,8 @@ def sync_requests(endpoints: List[str]):
 
 def get_pages_types(*, skip: list = None) -> List[str]:
     response = cms_api_client.get(get_relative_url("cms-api:page-types"))
-    assert response.status_code == http.client.OK, status_error(
-        http.client.OK, response
+    assert response.status_code == HTTP_200_OK, status_error(
+        HTTP_200_OK, response
     )
     types = response.json()["types"]
     # remove generic (parent) page type common to all pages
@@ -323,7 +328,7 @@ def find_draft_urls(responses: dict) -> List[str]:
     result = []
     for page_type in responses.keys():
         for response in responses[page_type]:
-            if response.status_code == 200:
+            if response.status_code == HTTP_200_OK:
                 page = response.json()
                 draft_token = page["meta"]["draft_token"]
                 if draft_token is not None:
