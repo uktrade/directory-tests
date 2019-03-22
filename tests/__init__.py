@@ -286,11 +286,11 @@ urls = {
     "ui-contact-us:other-domestic-eu-exit": "eu-exit-news/contact/",
     "ui-contact-us:other-international-eu-exit": "international/eu-exit-news/contact/",
     "ui-contact-us:other-get-finance": "get-finance/contact/",
-    "ui-contact-us:selling-online-overseas:organisation": "selling-online-overseas/organisation",
-    "ui-contact-us:selling-online-overseas:organisation:details": "selling-online-overseas/organisation-details",
-    "ui-contact-us:selling-online-overseas:organisation:your-experience": "selling-online-overseas/your-experience",
-    "ui-contact-us:selling-online-overseas:organisation:contact-details": "selling-online-overseas/contact-details",
-    "ui-contact-us:selling-online-overseas:organisation:success": "selling-online-overseas/success",
+    "ui-contact-us:soo:organisation": "selling-online-overseas/organisation",
+    "ui-contact-us:soo:organisation:details": "selling-online-overseas/organisation-details",
+    "ui-contact-us:soo:organisation:your-experience": "selling-online-overseas/your-experience",
+    "ui-contact-us:soo:organisation:contact-details": "selling-online-overseas/contact-details",
+    "ui-contact-us:soo:organisation:success": "selling-online-overseas/success",
 
     # Legacy Contact-Us UI
     "legacy-ui-contact-us:help": "help/",
