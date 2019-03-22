@@ -1,8 +1,7 @@
-import http.client
-
 import pytest
 from directory_cms_client.client import cms_api_client
 from directory_constants.constants import cms as SERVICE_NAMES
+from rest_framework.status import HTTP_200_OK, HTTP_404_NOT_FOUND
 from retrying import retry
 
 from tests import get_relative_url, retriable_error
@@ -50,16 +49,16 @@ NON_INVEST_API_PAGES.update(EXRED_PAGES)
 )
 def test_wagtail_get_disabled_content_endpoints(relative_url):
     response = cms_api_client.get(relative_url)
-    assert response.status_code == http.client.NOT_FOUND, status_error(
-        http.client.NOT_FOUND, response
+    assert response.status_code == HTTP_404_NOT_FOUND, status_error(
+        HTTP_404_NOT_FOUND, response
     )
 
 
 def test_wagtail_get_pages():
     endpoint = get_relative_url("cms-api:pages")
     response = cms_api_client.get(endpoint)
-    assert response.status_code == http.client.OK, status_error(
-        http.client.OK, response
+    assert response.status_code == HTTP_200_OK, status_error(
+        HTTP_200_OK, response
     )
 
 
@@ -136,7 +135,7 @@ def test_wagtail_get_pages_per_application_on_prod(application):
 @pytest.mark.exred
 @pytest.mark.parametrize("url", find_published_urls(ALL_PAGES))
 def test_all_published_english_pages_should_return_200(url, basic_auth):
-    get_and_assert(url, 200, auth=basic_auth)
+    get_and_assert(url, HTTP_200_OK, auth=basic_auth)
 
 
 @pytest.mark.fas
@@ -145,14 +144,14 @@ def test_all_published_english_pages_should_return_200(url, basic_auth):
     "url", find_published_translated_urls(NON_INVEST_API_PAGES)
 )
 def test_non_invest_published_translated_pages_should_return_200_new(url, basic_auth):
-    get_and_assert(url, 200, auth=basic_auth)
+    get_and_assert(url, HTTP_200_OK, auth=basic_auth)
 
 
 @pytest.mark.fas
 @pytest.mark.exred
 @pytest.mark.parametrize("url", find_draft_urls(NON_INVEST_API_PAGES))
 def test_non_invest_draft_translated_pages_should_return_200_new(url, basic_auth):
-    get_and_assert(url, 200, auth=basic_auth)
+    get_and_assert(url, HTTP_200_OK, auth=basic_auth)
 
 
 @pytest.mark.invest
@@ -160,13 +159,13 @@ def test_non_invest_draft_translated_pages_should_return_200_new(url, basic_auth
     "url", invest_find_published_translated_urls(INVEST_PAGES)
 )
 def test_published_translated_invest_pages_should_return_200_new(url, basic_auth):
-    get_and_assert(url, 200, auth=basic_auth)
+    get_and_assert(url, HTTP_200_OK, auth=basic_auth)
 
 
 @pytest.mark.invest
 @pytest.mark.parametrize("url", invest_find_draft_urls(INVEST_PAGES))
 def test_draft_translated_invest_pages_should_return_200_new(url, basic_auth):
-    get_and_assert(url, 200, auth=basic_auth)
+    get_and_assert(url, HTTP_200_OK, auth=basic_auth)
 
 
 @pytest.mark.invest
@@ -264,8 +263,8 @@ def test_draft_translated_invest_pages_should_return_200_new(url, basic_auth):
 def test_wagtail_get_page_by_slug(cms_client, service_name, slug):
     """Check - https://uktrade.atlassian.net/browse/CMS-412"""
     response = cms_client.lookup_by_slug(slug, service_name=service_name)
-    assert response.status_code == http.client.OK, status_error(
-        http.client.OK, response
+    assert response.status_code == HTTP_200_OK, status_error(
+        HTTP_200_OK, response
     )
     assert response.json()["meta"]["slug"] == slug
 
@@ -281,8 +280,8 @@ def test_wagtail_get_page_by_slug(cms_client, service_name, slug):
 def test_wagtail_get_component_pages(cms_client, service_name, slug):
     """Check - https://uktrade.atlassian.net/browse/CMS-412"""
     response = cms_client.lookup_by_slug(slug, service_name=service_name)
-    assert response.status_code == http.client.OK, status_error(
-        http.client.OK, response
+    assert response.status_code == HTTP_200_OK, status_error(
+        HTTP_200_OK, response
     )
     assert response.json()["meta"]["slug"] == slug
 
@@ -292,4 +291,4 @@ def test_wagtail_get_component_pages(cms_client, service_name, slug):
 @pytest.mark.exred
 @pytest.mark.parametrize("url", find_published_urls(ALL_PAGES))
 def test_new_all_published_english_pages_should_return_200(url, basic_auth):
-    get_and_assert(url, 200, auth=basic_auth)
+    get_and_assert(url, HTTP_200_OK, auth=basic_auth)
