@@ -1,6 +1,8 @@
 Feature: Trade Profile
 
 
+    @wip
+    @needs-rework
     @ED-2094
     @profile
     @verification
@@ -17,6 +19,8 @@ Feature: Trade Profile
       Then "Annette Geissinger" should be told that company has been verified
 
 
+    @wip
+    @needs-rework
     @ED-2094
     @profile
     @verification
