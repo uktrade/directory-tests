@@ -1,20 +1,6 @@
 Feature: Trade Profile
 
 
-    @ED-1659
-    @registration
-    @real-sso-email-verification
-    Scenario: Supplier should receive a verification email after successful registration
-      Given "Peter Alder" is an unauthenticated supplier
-
-      When "Peter Alder" randomly selects an active company without a Directory Profile identified by an alias "Company X"
-      And "Peter Alder" confirms that "Company X" is the correct one
-      And "Peter Alder" creates a SSO/great.gov.uk account for "Company X" using valid credentials
-
-      Then "Peter Alder" should be told about the verification email
-      And "Peter Alder" should receive an email verification msg entitled "Your great.gov.uk account: Please Confirm Your E-mail Address"
-
-
     @ED-1692
     @verification
     @real-sso-email-verification
