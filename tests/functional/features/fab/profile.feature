@@ -87,7 +87,6 @@ Feature: Trade Profile
     @fake-sso-email-verification
     Scenario: Supplier should be able to verify company using code sent in the verification letter
       Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
-      And "Annette Geissinger" built the company profile
       And "Annette Geissinger" set the company description
 
       When "Annette Geissinger" verifies the company with the verification code from the letter sent after Directory Profile was created

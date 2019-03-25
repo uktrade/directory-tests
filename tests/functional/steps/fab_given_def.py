@@ -3,7 +3,6 @@
 """FAB Given step definitions."""
 from behave import given
 from tests.functional.steps.fab_given_impl import (
-    bp_build_company_profile,
     create_actor_with_or_without_sso_account,
     create_actor_with_verified_or_unverified_fab_profile,
     fab_find_published_company,
@@ -62,11 +61,6 @@ def when_supplier_creates_standalone_sso_account(context, supplier_alias):
        'confirmation link')
 def given_supplier_received_verification_email(context, alias):
     reg_should_get_verification_email(context, alias)
-
-
-@given('"{supplier_alias}" built the company profile')
-def given_supplier_built_company_profile(context, supplier_alias):
-    bp_build_company_profile(context, supplier_alias)
 
 
 @given('"{supplier_alias}" set the company description')
