@@ -170,10 +170,15 @@ def get_and_assert(
         url, params=params, auth=auth, cookies=cookies,
         allow_redirects=allow_redirects,
     )
+    was_denied = "Access Denied" in response.content.decode("UTF-8")
+    if response.status_code == HTTP_200_OK and was_denied:
+        print(f"Request to {url} was denied. Will try to re-authorize")
+        response = requests.get(response.url, auth=auth, cookies=cookies)
     if response.history and (response.status_code in [HTTP_401_UNAUTHORIZED, HTTP_403_FORBIDDEN]):
         print(
             f"Request to {url} was redirected to {response.url} which asked for"
-            f" credentials, will try to authorize with basic auth")
+            f" credentials, will try to authorize with basic auth"
+        )
         response = requests.get(response.url, auth=auth, cookies=cookies)
     msg = f"Expected {status_code} but got {response.status_code} from {url}"
     assert response.status_code == status_code, msg
