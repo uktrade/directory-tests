@@ -7,7 +7,7 @@ Feature: Trade Profile
     @letter
     @fake-sso-email-verification
     Scenario: Logged-in Supplier should be able to verify profile by using code and link from the letter
-      Given "Annette Geissinger" created a verified SSO/great.gov.uk account associated with randomly selected company "Company X"
+      Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
       And "Annette Geissinger" built the company profile
       And "Annette Geissinger" set the company description
       And "Annette Geissinger" received the letter with verification code
@@ -24,7 +24,7 @@ Feature: Trade Profile
     @letter
     @fake-sso-email-verification
     Scenario: Logged-out Supplier should be able to verify profile by using code and link from the letter
-      Given "Annette Geissinger" created a verified SSO/great.gov.uk account associated with randomly selected company "Company X"
+      Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
       And "Annette Geissinger" built the company profile
       And "Annette Geissinger" set the company description
       And "Annette Geissinger" signed out from Find a Buyer service

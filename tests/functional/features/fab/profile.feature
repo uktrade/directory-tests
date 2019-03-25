@@ -44,7 +44,7 @@ Feature: Trade Profile
     @profile
     @fake-sso-email-verification
     Scenario: Supplier should be able to build the Directory Profile once the email address is confirmed
-      Given "Annette Geissinger" created a verified SSO/great.gov.uk account associated with randomly selected company "Company X"
+      Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
 
       When "Annette Geissinger" provides valid details of selected company
       And "Annette Geissinger" selects sector the company is in and preferred country of export
@@ -58,7 +58,7 @@ Feature: Trade Profile
     @profile
     @fake-sso-email-verification
     Scenario: Supplier should not be able to use other characters than alphanumerics and commas in profile keywords
-      Given "Annette Geissinger" created a verified SSO/great.gov.uk account associated with randomly selected company "Company X"
+      Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
 
       When "Annette Geissinger" provides company details using following values
         |company name  |website       |keywords         |separator |size    |error                                                       |
@@ -82,7 +82,7 @@ Feature: Trade Profile
     @fixme
     @fake-sso-email-verification
     Scenario: Supplier should not be able to use other characters than alphanumerics and commas in profile keywords
-      Given "Annette Geissinger" created a verified SSO/great.gov.uk account associated with randomly selected company "Company X"
+      Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
 
       When "Annette Geissinger" provides company details using following values
         |company name  |website       |keywords         |separator |size  |error                                                     |
@@ -98,7 +98,7 @@ Feature: Trade Profile
     @letter
     @fake-sso-email-verification
     Scenario: Supplier should be able to verify company using code sent in the verification letter
-      Given "Annette Geissinger" created a verified SSO/great.gov.uk account associated with randomly selected company "Company X"
+      Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
       And "Annette Geissinger" built the company profile
       And "Annette Geissinger" set the company description
 
@@ -125,7 +125,7 @@ Feature: Trade Profile
     @fab
     @fake-sso-email-verification
     Scenario: Suppliers with unverified company profile should be able to logout and log back in
-      Given "Annette Geissinger" created a verified SSO/great.gov.uk account associated with randomly selected company "Company X"
+      Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
       And "Annette Geissinger" signed out from Find a Buyer service
 
       When "Annette Geissinger" signs in to Find a Buyer profile
