@@ -121,22 +121,6 @@ Feature: Trade Profile
       And "Annette Geissinger" should be told that her company has no description
 
 
-    @ED-1770
-    @sso
-    @fab
-    @account
-    @fake-sso-email-verification
-    Scenario: Suppliers with a standalone SSO/great.gov.uk account should be able to select their company for Directory Profile creation
-      Given "Peter Alder" has a verified standalone SSO/great.gov.uk account
-      And "Peter Alder" is signed in to SSO/great.gov.uk account
-
-      When "Peter Alder" decides to create a trade profile
-      And "Peter Alder" randomly selects an active company without a Directory Profile identified by an alias "Company X"
-      And "Peter Alder" confirms that "Company X" is the correct one
-
-      Then "Peter Alder" should be prompted to build and improve your Directory Profile
-
-
     @ED-1758
     @fab
     @login
