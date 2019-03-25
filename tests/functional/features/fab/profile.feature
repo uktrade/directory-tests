@@ -26,7 +26,7 @@ Feature: Trade Profile
       When "Annette Geissinger" decides to confirm her email address by using the email confirmation link
       And "Annette Geissinger" confirms the email address
 
-      Then "Annette Geissinger" should be prompted to build and improve your Directory Profile
+      Then "Annette Geissinger" should see "Profile - About" page
 
 
     @ED-1757
