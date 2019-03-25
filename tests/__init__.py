@@ -57,7 +57,6 @@ urls = {
     "ui-buyer:register-confirm-export-status": "register/exports/",
     "ui-buyer:register-finish": "register/finished/",
     "ui-buyer:register-submit-account-details": "register-submit/",
-    "ui-buyer:upload-logo": "company-profile/edit/logo/",
     "ui-buyer:confirm-company-address": "verify/letter-confirm/",
     "ui-buyer:confirm-identity": "verify/",
     "ui-buyer:confirm-identity-letter": "verify/letter-send/",
@@ -222,6 +221,7 @@ urls = {
     "profile:case-study-edit": "find-a-buyer/case-study/{case_number}/details/",
     "profile:case-study-details": "find-a-buyer/case-study/details/",
     "profile:case-study-images": "find-a-buyer/case-study/images/",
+    "profile:upload-logo": "find-a-buyer/logo/",
 
     # ExRed UI
     "ui-exred:healthcheck": "healthcheck/",
