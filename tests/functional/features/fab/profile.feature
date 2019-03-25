@@ -37,7 +37,7 @@ Feature: Trade Profile
       Given "Annette Geissinger" is an unauthenticated supplier
       And "Annette Geissinger" created an unverified SSO/great.gov.uk account
 
-      When "Annette Geissinger" attempts to sign in to Find a Buyer profile
+      When "Annette Geissinger" attempts to sign in to SSO/great.gov.uk account
 
       Then "Annette Geissinger" should be told that she needs to verify her email address first
 

@@ -510,7 +510,7 @@ def prof_view_published_profile(context: Context, supplier_alias: str):
     logging.debug("Supplier is on the company's FAS page")
 
 
-def prof_attempt_to_sign_in_to_fab(context: Context, supplier_alias: str):
+def prof_attempt_to_sign_in_to_sso(context: Context, supplier_alias: str):
     """Try to sign in to FAB as a Supplier without verified email address."""
     actor = context.get_actor(supplier_alias)
     session = actor.session
