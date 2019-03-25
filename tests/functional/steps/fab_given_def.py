@@ -56,12 +56,9 @@ def given_an_unauthenticated_supplier(context, supplier_alias):
     context.add_actor(supplier)
 
 
-@given('"{supplier_alias}" created an unverified SSO/great.gov.uk account '
-       'associated with randomly selected company "{company_alias}"')
-def given_supplier_created_sso_account_for_company(
-        context, supplier_alias, company_alias):
-    reg_create_sso_account_associated_with_company(
-        context, supplier_alias, company_alias)
+@given('"{supplier_alias}" created an unverified SSO/great.gov.uk account')
+def when_supplier_creates_standalone_sso_account(context, supplier_alias):
+    reg_create_standalone_unverified_sso_account(context, supplier_alias)
 
 
 @given('"{alias}" received the email verification message with the email '

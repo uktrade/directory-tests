@@ -19,7 +19,8 @@ Feature: Trade Profile
     @verification
     @real-sso-email-verification
     Scenario: Unauthenticated Suppliers should be able to verify their email address via confirmation link sent in an email
-      Given "Annette Geissinger" created an unverified SSO/great.gov.uk account associated with randomly selected company "Company X"
+      Given "Annette Geissinger" is an unauthenticated supplier
+      And "Annette Geissinger" created an unverified SSO/great.gov.uk account
       And "Annette Geissinger" received the email verification message with the email confirmation link
 
       When "Annette Geissinger" decides to confirm her email address by using the email confirmation link
@@ -33,7 +34,8 @@ Feature: Trade Profile
     @login
     @no-sso-email-verification-required
     Scenario: Suppliers without verified email should be told to verify the email address first before being able to log in
-      Given "Annette Geissinger" created an unverified SSO/great.gov.uk account associated with randomly selected company "Company X"
+      Given "Annette Geissinger" is an unauthenticated supplier
+      And "Annette Geissinger" created an unverified SSO/great.gov.uk account
 
       When "Annette Geissinger" attempts to sign in to Find a Buyer profile
 
