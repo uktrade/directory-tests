@@ -27,7 +27,7 @@ from tests.functional.pages import (
     sso_ui_password_reset,
     sso_ui_verify_your_email,
     sud_ui_find_a_buyer,
-    sud_ui_landing,
+    profile_about,
 )
 from tests.functional.registry import get_fabs_page_object
 from tests.functional.utils.generic import (
@@ -1019,8 +1019,8 @@ def sud_should_see_options_to_manage_users(context: Context, actor_alias: str):
     """
     actor = context.get_actor(actor_alias)
     session = actor.session
-    context.response = sud_ui_landing.go_to(session, set_next_page=False)
-    sud_ui_landing.should_be_here(context.response)
+    context.response = profile_about.go_to(session, set_next_page=False)
+    profile_about.should_be_here(context.response)
 
     context.response = sud_ui_find_a_buyer.go_to(session)
     sud_ui_find_a_buyer.should_be_here(
@@ -1042,8 +1042,8 @@ def sud_should_not_see_options_to_manage_users(
     """
     actor = context.get_actor(actor_alias)
     session = actor.session
-    context.response = sud_ui_landing.go_to(session, set_next_page=False)
-    sud_ui_landing.should_be_here(context.response)
+    context.response = profile_about.go_to(session, set_next_page=False)
+    profile_about.should_be_here(context.response)
 
     context.response = sud_ui_find_a_buyer.go_to(session)
     sud_ui_find_a_buyer.should_be_here(

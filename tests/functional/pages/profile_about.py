@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""SSO - SUD (Profile) About page"""
+"""Profile - About page"""
 import logging
 
 from requests import Response, Session
@@ -31,4 +31,4 @@ def go_to(session: Session, *, set_next_page: bool = True) -> Response:
 
 def should_be_here(response: Response):
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
-    logging.debug("Successfully got to the SUD (Profile) About page")
+    logging.debug("Successfully got to the Profile About page")

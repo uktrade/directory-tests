@@ -35,7 +35,7 @@ from tests.functional.pages import (
     sso_ui_register,
     sud_ui_export_opportunities,
     sud_ui_find_a_buyer,
-    sud_ui_landing,
+    profile_about,
     sud_ui_selling_online_overseas,
 )
 
@@ -181,8 +181,7 @@ FAB_PAGE_REGISTRY = {
 }
 
 SUD_PAGE_REGISTRY = {
-    "sud about": {"url": "profile:about", "po": sud_ui_landing},
-    "sud landing": {"url": "profile:landing", "po": sud_ui_landing},
+    "sud landing": {"url": "profile:landing", "po": profile_about},
     "sud selling online overseas": {
         "url": "profile:soo",
         "po": sud_ui_selling_online_overseas,
@@ -200,6 +199,7 @@ SUD_PAGE_REGISTRY = {
         "url": "profile:exops-alerts",
         "po": None,
     },
+    "profile - about": {"url": "profile:about", "po": profile_about},
     "profile - enrol": {
         "url": "profile:enrol",
         "po": profile_enrol,

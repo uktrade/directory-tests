@@ -59,7 +59,7 @@ from tests.functional.pages import (
     sso_ui_password_reset,
     sso_ui_register,
     sso_ui_verify_your_email,
-    sud_ui_landing,
+    profile_about,
 )
 from tests.functional.registry import get_fabs_page_object, get_fabs_page_url
 from tests.functional.steps.fab_then_impl import (
@@ -1912,7 +1912,7 @@ def fab_attempt_to_add_case_study(
 def sso_request_password_reset(context: Context, supplier_alias: str):
     actor = context.get_actor(supplier_alias)
     if actor.company_alias is None:
-        next_param = get_fabs_page_url(page_name="sud about")
+        next_param = get_fabs_page_url(page_name="profile - about")
     else:
         next_param = get_fabs_page_url(page_name="fab landing")
 
@@ -2230,10 +2230,10 @@ def fab_send_transfer_ownership_request(
     company = context.get_company(company_alias)
     new_owner = context.get_actor(new_owner_alias)
 
-    context.response = sud_ui_landing.go_to(
+    context.response = profile_about.go_to(
         supplier.session, set_next_page=False
     )
-    sud_ui_landing.should_be_here(context.response)
+    profile_about.should_be_here(context.response)
 
     response = fab_ui_account_transfer_ownership.go_to(supplier.session)
     context.response = response
