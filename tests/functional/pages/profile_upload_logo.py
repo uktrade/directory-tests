@@ -8,11 +8,10 @@ from requests import Response, Session
 from tests import get_absolute_url
 from tests.functional.utils.request import Method, check_response, make_request
 
-URL = get_absolute_url("ui-buyer:upload-logo")
+URL = get_absolute_url("profile:upload-logo")
 EXPECTED_STRINGS = [
-    "Upload your company's logo",
+    "Company logo",
     "Logo:",
-    "Upload file",
     (
         "For best results this should be a transparent PNG file of 600 x 600 "
         "pixels and no more than 2MB"
@@ -38,19 +37,17 @@ def should_be_here(response: Response):
 
 
 def upload(session: Session, token: str, file_path: str) -> Response:
-    headers = {"Referer": get_absolute_url("ui-buyer:upload-logo")}
-    url = get_absolute_url("ui-buyer:upload-logo")
+    headers = {"Referer": get_absolute_url("profile:upload-logo")}
     data = {
-        "csrfmiddlewaretoken": token,
         "company_profile_logo_edit_view-current_step": "logo",
     }
     with open(file_path, "rb") as f:
         picture = f.read()
     mime = mimetypes.MimeTypes().guess_type(file_path)[0]
-    files = {"logo-logo": (os.path.basename(file_path), picture, mime)}
+    files = {"logo": (os.path.basename(file_path), picture, mime)}
     response = make_request(
         Method.POST,
-        url,
+        URL,
         session=session,
         headers=headers,
         data=data,

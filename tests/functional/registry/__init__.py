@@ -16,7 +16,7 @@ from tests.functional.pages import (
     profile_case_study_basic,
     profile_edit_company_profile,
     profile_enrol,
-    fab_ui_upload_logo,
+    profile_upload_logo,
     fab_ui_verify_company,
     fas_ui_creative_industry,
     fas_ui_creative_industry_summary,
@@ -119,8 +119,8 @@ FAB_PAGE_REGISTRY = {
         "po": None,
     },
     "fab upload logo": {
-        "url": "ui-buyer:upload-logo",
-        "po": fab_ui_upload_logo,
+        "url": "profile:upload-logo",
+        "po": profile_upload_logo,
     },
     "fab company company address": {
         "url": "ui-buyer:confirm-company-address",

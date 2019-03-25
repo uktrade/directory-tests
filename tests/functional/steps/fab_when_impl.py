@@ -31,7 +31,7 @@ from tests.functional.pages import (
     fab_ui_edit_online_profiles,
     fab_ui_edit_sector,
     fab_ui_landing,
-    fab_ui_upload_logo,
+    profile_upload_logo,
     fab_ui_verify_company,
     fas_ui_contact,
     fas_ui_feedback,
@@ -730,7 +730,7 @@ def prof_upload_logo(context: Context, supplier_alias: str, picture: str):
     file_path = get_absolute_path_of_file(picture)
 
     # Step 1 - Upload company's logo
-    response = fab_ui_upload_logo.upload(session, token, file_path)
+    response = profile_upload_logo.upload(session, token, file_path)
     context.response = response
 
     # Step 2 - check if Supplier is on the FAB profile page
@@ -762,11 +762,11 @@ def prof_upload_unsupported_file_as_logo(
 
     logging.debug("Attempting to upload %s as company logo", file)
     # Step 1 - Try to upload a file of unsupported type as company's logo
-    response = fab_ui_upload_logo.upload(session, token, file_path)
+    response = profile_upload_logo.upload(session, token, file_path)
     context.response = response
 
     # Step 2 - check if upload was rejected
-    rejected = fab_ui_upload_logo.was_upload_rejected(response)
+    rejected = profile_upload_logo.was_upload_rejected(response)
 
     # There are 2 different error message that you can get, depending of the
     # type of uploaded file.
@@ -789,7 +789,7 @@ def prof_supplier_uploads_logo(
     session = actor.session
 
     # Step 1 - go to Upload Logo page
-    response = fab_ui_upload_logo.go_to(session)
+    response = profile_upload_logo.go_to(session)
     context.response = response
 
     # Step 2 - extract CSRF token
@@ -809,7 +809,7 @@ def prof_to_upload_unsupported_logos(
     files = [row["file"] for row in table]
     rejections = []
     for file in files:
-        fab_ui_upload_logo.go_to(session)
+        profile_upload_logo.go_to(session)
         rejected = prof_upload_unsupported_file_as_logo(
             context, supplier_alias, file
         )
