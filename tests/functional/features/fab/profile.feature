@@ -152,24 +152,6 @@ Feature: Trade Profile
       Then "Peter Alder" should be prompted to build and improve your Directory Profile
 
 
-    @ED-1770
-    @sso
-    @fab
-    @account
-    @fake-sso-email-verification
-    Scenario: Suppliers with a standalone SSO/great.gov.uk account should be able to create a Directory profile
-      Given "Peter Alder" has a verified standalone SSO/great.gov.uk account
-      And "Peter Alder" is signed in to SSO/great.gov.uk account
-      And "Peter Alder" selected an active company without a Directory Profile identified by an alias "Company X"
-
-      When "Peter Alder" provides valid details of selected company
-      And "Peter Alder" selects sector the company is in and preferred country of export
-      And "Peter Alder" decides to verify his identity with a verification letter
-
-      Then "Peter Alder" should be on edit Company's Directory Profile page
-      And "Peter Alder" should be told that her company has no description
-
-
     @ED-1758
     @fab
     @login

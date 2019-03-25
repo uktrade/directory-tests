@@ -14,11 +14,8 @@ from tests.functional.pages import (
     profile_ui_landing,
 )
 from tests.functional.steps.fab_then_impl import (
-    bp_should_be_prompted_to_build_your_profile,
     prof_should_be_on_profile_page,
     prof_should_be_told_about_missing_description,
-    reg_should_get_verification_email,
-    reg_sso_account_should_be_created,
     sso_should_be_signed_in_to_sso_account,
     sso_should_be_told_about_password_reset,
     sso_should_get_password_reset_email,
@@ -30,16 +27,9 @@ from tests.functional.steps.fab_when_impl import (
     can_find_supplier_by_term,
     enrol_user,
     find_unregistered_company,
-    finish_registration_after_flagging_as_verified,
     profile_add_business_description,
     profile_verify_company_profile,
-    reg_confirm_company_selection,
-    reg_create_sso_account,
     reg_create_standalone_unverified_sso_account,
-    reg_open_email_confirmation_link,
-    reg_supplier_confirms_email_address,
-    select_random_company,
-    sso_go_to_create_trade_profile,
     sso_request_password_reset,
     sso_sign_in,
     profile_publish_profile_to_fas
@@ -122,18 +112,6 @@ def unauthenticated_buyer(buyer_alias: str) -> Actor:
     )
 
 
-def reg_create_sso_account_associated_with_company(
-    context: Context, supplier_alias: str, company_alias: str
-):
-    if not context.get_actor(supplier_alias):
-        context.add_actor(unauthenticated_supplier(supplier_alias))
-    select_random_company(context, supplier_alias, company_alias)
-    reg_confirm_company_selection(context, supplier_alias, company_alias)
-    reg_create_sso_account(context, supplier_alias, company_alias)
-    reg_sso_account_should_be_created(context.response, supplier_alias)
-    context.update_actor(supplier_alias, has_sso_account=True)
-
-
 def profile_create_unverified_business_profile(
         context: Context, supplier_alias: str, company_alias: str
 ):
@@ -142,13 +120,6 @@ def profile_create_unverified_business_profile(
     find_unregistered_company(context, supplier_alias, company_alias)
     enrol_user(context, supplier_alias, company_alias)
     context.update_actor(supplier_alias, has_sso_account=True)
-
-
-def reg_confirm_email_address(context: Context, supplier_alias: str):
-    reg_should_get_verification_email(context, supplier_alias)
-    reg_open_email_confirmation_link(context, supplier_alias)
-    reg_supplier_confirms_email_address(context, supplier_alias)
-    bp_should_be_prompted_to_build_your_profile(context, supplier_alias)
 
 
 def bp_build_company_profile(context: Context, supplier_alias: str):
@@ -215,16 +186,6 @@ def sso_create_standalone_verified_sso_account(
     profile_ui_landing.should_be_here(context.response)
     sso_should_be_signed_in_to_sso_account(context, supplier_alias)
     context.update_actor(supplier_alias, has_sso_account=True)
-
-
-def reg_select_random_company_and_confirm_export_status(
-    context: Context, supplier_alias: str, company_alias: str
-):
-    sso_create_standalone_verified_sso_account(context, supplier_alias)
-    sso_go_to_create_trade_profile(context, supplier_alias)
-    select_random_company(context, supplier_alias, company_alias)
-    reg_confirm_company_selection(context, supplier_alias, company_alias)
-    bp_should_be_prompted_to_build_your_profile(context, supplier_alias)
 
 
 @retry(wait_fixed=2000, stop_max_attempt_number=5)
@@ -342,19 +303,6 @@ def sso_get_password_reset_link(context: Context, supplier_alias: str):
     sso_request_password_reset(context, supplier_alias)
     sso_should_be_told_about_password_reset(context, supplier_alias)
     sso_should_get_password_reset_email(context, supplier_alias)
-
-
-def reg_create_verified_sso_account_associated_with_company(
-    context: Context, supplier_alias: str, company_alias: str
-):
-    """Select a Company, create a SSO account for it, and verify the email."""
-    reg_create_sso_account_associated_with_company(
-        context, supplier_alias, company_alias
-    )
-    supplier = context.get_actor(supplier_alias)
-    flag_sso_account_as_verified(context, supplier.email)
-    sso_sign_in(context, supplier_alias)
-    finish_registration_after_flagging_as_verified(context, supplier_alias)
 
 
 def create_actor_with_or_without_sso_account(
