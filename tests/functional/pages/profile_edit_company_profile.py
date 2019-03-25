@@ -19,7 +19,7 @@ EXPECTED_STRINGS = [
 ]
 
 EXPECTED_STRINGS_NO_DESCRIPTION = [
-    "Add business description",
+    "Add a business description",
 ]
 
 EXPECTED_STRINGS_VERIFIED = [
