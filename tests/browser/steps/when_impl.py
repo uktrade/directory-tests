@@ -59,11 +59,14 @@ def retry_if_assertion_error(exception):
 def generic_set_basic_auth_creds(context: Context, page_name: str):
     driver = context.driver
     page = get_page_object(page_name)
-    if BASICAUTH_USER:
-        parsed = urlparse(page.URL)
-        with_creds = f"{parsed.scheme}://{BASICAUTH_USER}:{BASICAUTH_PASS}@{parsed.netloc}{parsed.path}"
-        logging.debug(f"Visiting {page.URL} in order to pass basic auth")
-        driver.get(with_creds)
+    parsed = urlparse(page.URL)
+    with_creds = f"{parsed.scheme}://{BASICAUTH_USER}:{BASICAUTH_PASS}@{parsed.netloc}{parsed.path}"
+    if with_creds.endswith("/"):
+        with_creds += "automated-test-auth"
+    else:
+        with_creds += "/automated-test-auth"
+    logging.debug(f"Visiting {page.URL} in order to pass basic auth")
+    driver.get(with_creds)
 
 
 @retry(
