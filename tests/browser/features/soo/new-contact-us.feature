@@ -1,5 +1,10 @@
 Feature: New Contact-us form
 
+  Background:
+    Given basic authentication is done for "Selling Online Overseas - Home" page
+    And basic authentication is done for "Export Readiness - Home" page
+
+
   @XOT-631
   @XOT-689
   @exopps
