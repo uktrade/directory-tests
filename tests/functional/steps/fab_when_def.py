@@ -7,7 +7,7 @@ from tests.functional.steps.fab_when_impl import (
     bp_select_random_sector_and_export_to_country,
     fab_decide_to_verify_profile_with_letter,
     fab_add_collaborator,
-    fab_attempt_to_add_case_study,
+    profile_attempt_to_add_case_study,
     fab_choose_to_verify_with_code,
     fab_collaborator_create_sso_account_and_confirm_email,
     fab_confirm_collaboration_request,
@@ -306,7 +306,7 @@ def when_supplier_submits_verification_code(context, supplier_alias):
 
 @when('"{supplier_alias}" attempts to add a case study using following values')
 def when_supplier_attempts_to_add_case_study(context, supplier_alias):
-    fab_attempt_to_add_case_study(context, supplier_alias, context.table)
+    profile_attempt_to_add_case_study(context, supplier_alias, context.table)
 
 
 @when('"{supplier_alias}" requests password reset')

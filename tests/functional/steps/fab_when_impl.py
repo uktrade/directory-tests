@@ -1835,7 +1835,7 @@ def get_form_value(key: str) -> str or list or int or None:
     return result
 
 
-def fab_attempt_to_add_case_study(
+def profile_attempt_to_add_case_study(
     context: Context, supplier_alias: str, table: Table
 ):
     actor = context.get_actor(supplier_alias)
