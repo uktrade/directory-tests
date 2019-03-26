@@ -180,7 +180,13 @@ def get_and_assert(
             f" credentials, will try to authorize with basic auth"
         )
         response = requests.get(response.url, auth=auth, cookies=cookies)
-    msg = f"Expected {status_code} but got {response.status_code} from {url}"
+
+    redirect = (
+        f"to {response.headers['location']} "
+        if response.status_code == HTTP_302_FOUND
+        else ""
+    )
+    msg = f"Expected {status_code} but got {response.status_code} {redirect}from {url}"
     assert response.status_code == status_code, msg
     return response
 
