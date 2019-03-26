@@ -15,7 +15,7 @@ from selenium.common.exceptions import (
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import common_language_selector, exred, fas, get_page_object, sso
+from pages import common_language_selector, exred, fas, get_page_object, soo, sso
 from pages.common_actions import (
     add_actor,
     barred_actor,
@@ -25,20 +25,12 @@ from pages.common_actions import (
     update_actor,
     wait_for_page_load_after_action,
 )
-from pages import soo
 from settings import BASICAUTH_PASS, BASICAUTH_USER
 from steps import has_action
 from utils.cms_api import get_news_articles
 from utils.gov_notify import get_verification_code, get_verification_link
 
-NUMBERS = {
-    "first": 1,
-    "second": 2,
-    "third": 3,
-    "fourth": 4,
-    "fifth": 5,
-    "sixth": 6,
-}
+NUMBERS = {"first": 1, "second": 2, "third": 3, "fourth": 4, "fifth": 5, "sixth": 6}
 
 
 def retry_if_webdriver_error(exception):
@@ -119,9 +111,7 @@ def should_be_on_page(context: Context, actor_alias: str, page_name: str):
     stop_max_attempt_number=3,
     retry_on_exception=retry_if_webdriver_error,
 )
-def open_group_element(
-    context: Context, group: str, element: str, location: str
-):
+def open_group_element(context: Context, group: str, element: str, location: str):
     driver = context.driver
     if location.lower() == "export readiness - home":
         exred.home.open(driver, group, element)
@@ -146,9 +136,7 @@ def articles_open_any(context: Context, actor_alias: str):
 
 
 def case_studies_go_to(context: Context, actor_alias: str, case_number: str):
-    case_study_title = exred.home.get_case_study_title(
-        context.driver, case_number
-    )
+    case_study_title = exred.home.get_case_study_title(context.driver, case_number)
     exred.home.open_case_study(context.driver, case_number)
     update_actor(context, actor_alias, case_study_title=case_study_title)
     logging.debug(
@@ -159,9 +147,7 @@ def case_studies_go_to(context: Context, actor_alias: str, case_number: str):
     )
 
 
-def case_studies_go_to_random(
-    context: Context, actor_alias: str, page_name: str
-):
+def case_studies_go_to_random(context: Context, actor_alias: str, page_name: str):
     assert page_name.lower() in ["export readiness - home"]
     visit_page(context, actor_alias, page_name)
     case_number = random.choice(["first", "second", "third"])
@@ -169,17 +155,11 @@ def case_studies_go_to_random(
 
 
 def open_link(
-    context: Context,
-    actor_alias: str,
-    group: str,
-    category: str,
-    location: str,
+    context: Context, actor_alias: str, group: str, category: str, location: str
 ):
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
-    update_actor(
-        context, actor_alias, article_group=group, article_category=category
-    )
+    update_actor(context, actor_alias, article_group=group, article_category=category)
     logging.debug(
         "%s is about to open link to '%s' '%s' via %s",
         actor_alias,
@@ -187,9 +167,7 @@ def open_link(
         category,
         location,
     )
-    open_group_element(
-        context, group=group, element=category, location=location
-    )
+    open_group_element(context, group=group, element=category, location=location)
     update_actor(
         context,
         actor_alias,
@@ -199,9 +177,7 @@ def open_link(
     )
 
 
-def open_service_link_on_interim_page(
-    context: Context, actor_alias: str, service: str
-):
+def open_service_link_on_interim_page(context: Context, actor_alias: str, service: str):
     page_name = "export readiness - interim {}".format(service)
     page = get_page_object(page_name)
     has_action(page, "go_to_service")
@@ -215,9 +191,7 @@ def registration_go_to(context: Context, actor_alias: str):
     sso.registration.should_be_here(context.driver)
 
 
-def registration_should_get_verification_email(
-    context: Context, actor_alias: str
-):
+def registration_should_get_verification_email(context: Context, actor_alias: str):
     """Will check if the Exporter received an email verification message."""
     logging.debug("Searching for an email verification message...")
     actor = get_actor(context, actor_alias)
@@ -233,9 +207,7 @@ def generic_get_verification_code(context: Context, actor_alias: str):
     update_actor(context, actor_alias, email_confirmation_code=code)
 
 
-def registration_open_email_confirmation_link(
-    context: Context, actor_alias: str
-):
+def registration_open_email_confirmation_link(context: Context, actor_alias: str):
     """Given Supplier has received a message with email confirmation link
     Then Supplier has to click on that link.
     """
@@ -292,9 +264,7 @@ def clear_the_cookies(context: Context, actor_alias: str):
 
 
 def sign_in_go_to(context: Context, actor_alias: str, location: str):
-    logging.debug(
-        "%s decided to go to sign in page via %s link", actor_alias, location
-    )
+    logging.debug("%s decided to go to sign in page via %s link", actor_alias, location)
     exred.header.go_to_sign_in(context.driver)
     sso.sign_in.should_be_here(context.driver)
 
@@ -322,21 +292,15 @@ def articles_share_on_social_media(
     if social_media.lower() == "email":
         exred.advice_article.check_if_link_opens_email_client(context.driver)
     else:
-        exred.advice_article.check_if_link_opens_new_tab(
-            context.driver, social_media
-        )
+        exred.advice_article.check_if_link_opens_new_tab(context.driver, social_media)
         if not social_media.lower() == "linkedin":
             exred.advice_article.share_via(context.driver, social_media)
     logging.debug(
-        "%s successfully got to the share article on '%s'",
-        actor_alias,
-        social_media,
+        "%s successfully got to the share article on '%s'", actor_alias, social_media
     )
 
 
-def promo_video_watch(
-    context: Context, actor_alias: str, *, play_time: int = None
-):
+def promo_video_watch(context: Context, actor_alias: str, *, play_time: int = None):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "play_video")
     page.play_video(context.driver, play_time=play_time)
@@ -366,8 +330,7 @@ def language_selector_navigate_through_links_with_keyboard(
     context: Context, actor_alias: str
 ):
     logging.debug(
-        "%s decided to navigate through all language selector links with"
-        " keyboard",
+        "%s decided to navigate through all language selector links with" " keyboard",
         actor_alias,
     )
     page = get_last_visited_page(context, actor_alias)
@@ -385,21 +348,13 @@ def language_selector_change_to(
         f" {preferred_language}"
     )
     language_selector_open(context, actor_alias)
-    common_language_selector.change_to(
-        context.driver, page, preferred_language
-    )
+    common_language_selector.change_to(context.driver, page, preferred_language)
 
 
 def header_footer_open_link(
-    context: Context,
-    actor_alias: str,
-    group: str,
-    link_name: str,
-    location: str,
+    context: Context, actor_alias: str, group: str, link_name: str, location: str
 ):
-    open_group_element(
-        context, group=group, element=link_name, location=location
-    )
+    open_group_element(context, group=group, element=link_name, location=location)
     logging.debug(
         "%s decided to go to '%s' page via '%s' links in header menu",
         actor_alias,
@@ -409,11 +364,7 @@ def header_footer_open_link(
 
 
 def click_on_page_element(
-    context: Context,
-    actor_alias: str,
-    element_name: str,
-    *,
-    page_name: str = None,
+    context: Context, actor_alias: str, element_name: str, *, page_name: str = None
 ):
     if page_name:
         page = get_page_object(page_name)
@@ -422,28 +373,17 @@ def click_on_page_element(
     has_action(page, "click_on_page_element")
     page.click_on_page_element(context.driver, element_name)
     logging.debug(
-        "%s decided to click on '%s' on '%s' page",
-        actor_alias,
-        element_name,
-        page.NAME,
+        "%s decided to click on '%s' on '%s' page", actor_alias, element_name, page.NAME
     )
 
 
-def header_footer_click_on_dit_logo(
-    context: Context, actor_alias: str, location: str
-):
-    open_group_element(
-        context, group="general", element="logo", location=location
-    )
+def header_footer_click_on_dit_logo(context: Context, actor_alias: str, location: str):
+    open_group_element(context, group="general", element="logo", location=location)
     logging.debug("%s clicked on DIT logo", actor_alias)
 
 
 def fas_search_for_companies(
-    context: Context,
-    actor_alias: str,
-    *,
-    keyword: str = None,
-    sector: str = None,
+    context: Context, actor_alias: str, *, keyword: str = None, sector: str = None
 ):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "search")
@@ -464,16 +404,12 @@ def fas_search_for_companies(
     retry_on_exception=retry_if_webdriver_error,
     wrap_exception=False,
 )
-def generic_open_industry_page(
-    context: Context, actor_alias: str, industry_name: str
-):
+def generic_open_industry_page(context: Context, actor_alias: str, industry_name: str):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "open_industry")
     page.open_industry(context.driver, industry_name)
     update_actor(context, actor_alias, visited_page=page)
-    logging.debug(
-        "%s opened '%s' page on %s", actor_alias, industry_name, page.URL
-    )
+    logging.debug("%s opened '%s' page on %s", actor_alias, industry_name, page.URL)
 
 
 def fas_fill_out_and_submit_contact_us_form(
@@ -500,9 +436,7 @@ def fas_fill_out_and_submit_contact_us_form(
         "source": sources,
         "accept t&c": accept_tc,
     }
-    fas.contact_us.fill_out(
-        context.driver, contact_us_details, captcha=captcha
-    )
+    fas.contact_us.fill_out(context.driver, contact_us_details, captcha=captcha)
     fas.contact_us.submit(context.driver)
 
 
@@ -575,9 +509,7 @@ def invest_read_more(context: Context, actor_alias: str):
     has_action(page, "open_all_topics")
     page.open_all_topics(context.driver)
     logging.debug(
-        "%s clicked on all visible topic on %s",
-        actor_alias,
-        context.driver.current_url,
+        "%s clicked on all visible topic on %s", actor_alias, context.driver.current_url
     )
 
 
@@ -587,16 +519,12 @@ def invest_read_more(context: Context, actor_alias: str):
     retry_on_exception=retry_if_webdriver_error,
     wrap_exception=False,
 )
-def generic_open_guide_link(
-    context: Context, actor_alias: str, guide_name: str
-):
+def generic_open_guide_link(context: Context, actor_alias: str, guide_name: str):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "open_guide")
     page.open_guide(context.driver, guide_name)
     update_actor(context, actor_alias, visited_page=guide_name)
-    logging.debug(
-        "%s opened '%s' page on %s", actor_alias, guide_name, page.URL
-    )
+    logging.debug("%s opened '%s' page on %s", actor_alias, guide_name, page.URL)
 
 
 def generic_unfold_topics(context: Context, actor_alias: str):
@@ -607,9 +535,7 @@ def generic_unfold_topics(context: Context, actor_alias: str):
     logging.debug("%s unfolded all topics on %s", actor_alias, page.NAME)
 
 
-def generic_click_on_uk_gov_logo(
-    context: Context, actor_alias: str, page_name: str
-):
+def generic_click_on_uk_gov_logo(context: Context, actor_alias: str, page_name: str):
     page = get_page_object(page_name)
     has_action(page, "click_on_page_element")
     page.click_on_page_element(context.driver, "uk gov logo")
@@ -622,9 +548,7 @@ def check_for_errors_or_non_trading_companies(
     """Throws an AssertionError if error message is visible."""
     try:
         # fail when a non-trading company is selected (SIC=74990)
-        assert (
-            "74990" not in driver.page_source
-        ), f"Found a non-trading company"
+        assert "74990" not in driver.page_source, f"Found a non-trading company"
         error = driver.find_element(by=By.CSS_SELECTOR, value=".error-message")
         assert not error.is_displayed(), f"Found error on form page"
     except NoSuchElementException:
@@ -667,18 +591,14 @@ def generic_fill_out_and_submit_form(
             key = row["field"].lower()
             value = row["value"]
             custom_details[key] = value_mapping.get(value, value)
-        details = page.generate_form_details(
-            actor, custom_details=custom_details
-        )
+        details = page.generate_form_details(actor, custom_details=custom_details)
     else:
         details = page.generate_form_details(actor)
     logging.debug(f"{actor_alias} will fill out the form with: {details}")
     page.fill_out(context.driver, details)
     page.submit(context.driver)
     if retry_on_errors:
-        check_for_errors_or_non_trading_companies(
-            context.driver, go_back=go_back
-        )
+        check_for_errors_or_non_trading_companies(context.driver, go_back=go_back)
 
 
 def generic_submit_form(context: Context, actor_alias: str):
@@ -718,9 +638,7 @@ def generic_at_least_n_news_articles(
     context.articles = articles
 
 
-def generic_open_news_article(
-    context: Context, actor_alias: str, ordinal_number: str
-):
+def generic_open_news_article(context: Context, actor_alias: str, ordinal_number: str):
     ordinals = {"first": 1, "second": 2, "third": 3}
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "open_news_article")
@@ -801,9 +719,7 @@ def generic_pick_random_radio_option_and_submit(
     ignored = [item.strip().lower() for item in ignored.split(",")]
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "pick_random_radio_option_and_submit")
-    new_page = page.pick_random_radio_option_and_submit(
-        context.driver, ignored
-    )
+    new_page = page.pick_random_radio_option_and_submit(context.driver, ignored)
     update_actor(context, actor_alias, visited_page=new_page)
 
 
@@ -820,9 +736,7 @@ def contact_us_get_to_page_via(
     should_be_on_page(context, actor_alias, final_page)
 
 
-def contact_us_navigate_through_options(
-    context: Context, actor_alias: str, via: str
-):
+def contact_us_navigate_through_options(context: Context, actor_alias: str, via: str):
     intermediate = [name.strip() for name in via.split("->")]
     # 1) start at the Contact us "choose location" page
     visit_page(context, actor_alias, "Export Readiness - Contact us")
@@ -840,9 +754,7 @@ def open_any_element(
         context.driver, element_type, section_name
     )
     update_actor(context, actor_alias, element_details=element_details)
-    logging.info(
-        f"{actor_alias} opened random {element_type} from {section_name}"
-    )
+    logging.info(f"{actor_alias} opened random {element_type} from {section_name}")
 
 
 def exred_open_random_advice_article(context: Context, actor_alias: str):
@@ -863,9 +775,7 @@ def generic_report_problem_with_page(context: Context, actor_alias: str):
     page.report_problem(context.driver)
 
 
-def office_finder_find_trade_office(
-    context: Context, actor_alias: str, post_code: str
-):
+def office_finder_find_trade_office(context: Context, actor_alias: str, post_code: str):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "find_trade_office")
     page.find_trade_office(context.driver, post_code)
@@ -894,16 +804,12 @@ def generic_create_great_account(
 
     visit_page(context, actor_alias, page_name)
     generic_fill_out_and_submit_form(context, actor_alias)
-    should_be_on_page(
-        context, actor_alias, "Profile - Enter your confirmation code"
-    )
+    should_be_on_page(context, actor_alias, "Profile - Enter your confirmation code")
 
     generic_get_verification_code(context, actor_alias)
     generic_fill_out_and_submit_form(context, actor_alias)
     should_be_on_page(
-        context,
-        actor_alias,
-        f"Profile - Enter your business details ({business_type})",
+        context, actor_alias, f"Profile - Enter your business details ({business_type})"
     )
 
     generic_fill_out_and_submit_form(context, actor_alias)
@@ -933,14 +839,14 @@ def soo_look_for_marketplace(
 
 
 def soo_look_for_marketplaces_from_home_page(
-        context: Context, actor_alias: str, countries: str, products: str
+    context: Context, actor_alias: str, countries: str, products: str
 ):
     visit_page(context, actor_alias, f"{soo.home.SERVICE} - {soo.home.NAME}")
     soo_look_for_marketplace(context, actor_alias, countries, products)
 
 
 def exred_submit_soo_contact_us_form(
-        context: Context, actor_alias: str, custom_details_table: Table
+    context: Context, actor_alias: str, custom_details_table: Table
 ):
     generic_fill_out_and_submit_form(
         context, actor_alias, custom_details_table=custom_details_table
@@ -948,54 +854,48 @@ def exred_submit_soo_contact_us_form(
     should_be_on_page(
         context,
         actor_alias,
-        f"{exred.contact_us_soo_long_organisation_details.SERVICE} - {exred.contact_us_soo_long_organisation_details.NAME}"
+        f"{exred.contact_us_soo_long_organisation_details.SERVICE} - {exred.contact_us_soo_long_organisation_details.NAME}",
     )
 
     generic_fill_out_and_submit_form(context, actor_alias)
     should_be_on_page(
         context,
         actor_alias,
-        f"{exred.contact_us_soo_long_your_experience.SERVICE} - {exred.contact_us_soo_long_your_experience.NAME}"
+        f"{exred.contact_us_soo_long_your_experience.SERVICE} - {exred.contact_us_soo_long_your_experience.NAME}",
     )
 
     generic_fill_out_and_submit_form(context, actor_alias)
     should_be_on_page(
         context,
         actor_alias,
-        f"{exred.contact_us_soo_long_contact_details.SERVICE} - {exred.contact_us_soo_long_contact_details.NAME}"
+        f"{exred.contact_us_soo_long_contact_details.SERVICE} - {exred.contact_us_soo_long_contact_details.NAME}",
     )
 
     generic_fill_out_and_submit_form(context, actor_alias)
     should_be_on_page(
         context,
         actor_alias,
-        f"{exred.contact_us_soo_long_thank_you.SERVICE} - {exred.contact_us_soo_long_thank_you.NAME}"
+        f"{exred.contact_us_soo_long_thank_you.SERVICE} - {exred.contact_us_soo_long_thank_you.NAME}",
     )
 
 
 def soo_find_and_open_random_marketplace(
-        context: Context, actor_alias: str, countries: str, products: str
+    context: Context, actor_alias: str, countries: str, products: str
 ):
-    soo_look_for_marketplaces_from_home_page(
-        context, actor_alias, countries, products
-    )
+    soo_look_for_marketplaces_from_home_page(context, actor_alias, countries, products)
     generic_click_on_random_marketplace(context, actor_alias)
     should_be_on_page(
-        context,
-        actor_alias,
-        f"{soo.marketplace.SERVICE} - {soo.marketplace.NAME}"
+        context, actor_alias, f"{soo.marketplace.SERVICE} - {soo.marketplace.NAME}"
     )
 
 
 def soo_find_random_marketplace_and_apply_via_dit(
-        context: Context, actor_alias: str, countries: str, products: str
+    context: Context, actor_alias: str, countries: str, products: str
 ):
-    soo_find_and_open_random_marketplace(
-        context, actor_alias, countries, products
-    )
+    soo_find_and_open_random_marketplace(context, actor_alias, countries, products)
     click_on_page_element(context, actor_alias, "Apply now via DIT")
     should_be_on_page(
         context,
         actor_alias,
-        f"{exred.contact_us_soo_long_your_business.SERVICE} - {exred.contact_us_soo_long_your_business.NAME}"
+        f"{exred.contact_us_soo_long_your_business.SERVICE} - {exred.contact_us_soo_long_your_business.NAME}",
     )

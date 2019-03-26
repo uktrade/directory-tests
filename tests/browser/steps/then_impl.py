@@ -48,8 +48,7 @@ def should_be_on_page(context: Context, actor_alias: str, page_name: str):
         page.should_be_here(context.driver)
     update_actor(context, actor_alias, visited_page=page)
     logging.debug(
-        f"{actor_alias} is on {page.SERVICE} - {page.NAME} - {page.TYPE} -> "
-        f"{page}"
+        f"{actor_alias} is on {page.SERVICE} - {page.NAME} - {page.TYPE} -> " f"{page}"
     )
 
 
@@ -60,9 +59,7 @@ def should_be_on_page_or_international_page(
         should_be_on_page(context, actor_alias, page_name)
     except AssertionError:
         exred.international.should_be_here(context.driver)
-        logging.debug(
-            "%s was redirected to the International page", actor_alias
-        )
+        logging.debug("%s was redirected to the International page", actor_alias)
 
 
 def should_see_sections(
@@ -115,9 +112,7 @@ def case_studies_should_see_case_study(
 def should_see_share_widget(context: Context, actor_alias: str):
     driver = context.driver
     exred.case_studies_common.should_see_share_widget(driver)
-    logging.debug(
-        "%s can see Share Widget on %s", actor_alias, driver.current_url
-    )
+    logging.debug("%s can see Share Widget on %s", actor_alias, driver.current_url)
 
 
 def should_see_links_in_specific_location(
@@ -133,9 +128,7 @@ def should_see_links_in_specific_location(
         links = [row[0] for row in links]
     for link in links:
         page.should_see_link_to(context.driver, section, link)
-        logging.debug(
-            "%s can see link to '%s' in '%s'", actor_alias, link, location
-        )
+        logging.debug("%s can see link to '%s' in '%s'", actor_alias, link, location)
 
 
 def articles_should_be_on_share_page(
@@ -170,9 +163,7 @@ def share_page_via_email_should_have_article_details(
     driver = context.driver
     body = driver.current_url
     subject = exred.advice_article.get_article_name(driver)
-    exred.advice_article.check_share_via_email_link_details(
-        driver, subject, body
-    )
+    exred.advice_article.check_share_via_email_link_details(driver, subject, body)
     logging.debug(
         "%s checked that the 'share via email' link contain correct subject: "
         "'%s' and message body: '%s'",
@@ -189,8 +180,7 @@ def promo_video_check_watch_time(
     has_action(page, "get_video_watch_time")
     watch_time = page.get_video_watch_time(context.driver)
     with assertion_msg(
-        "%s expected to watch at least first '%d' seconds of the video but"
-        " got '%d'",
+        "%s expected to watch at least first '%d' seconds of the video but" " got '%d'",
         actor_alias,
         expected_watch_time,
         watch_time,
@@ -204,9 +194,7 @@ def promo_video_check_watch_time(
     )
 
 
-def promo_video_should_not_see_modal_window(
-    context: Context, actor_alias: str
-):
+def promo_video_should_not_see_modal_window(context: Context, actor_alias: str):
     exred.home.should_not_see_video_modal_window(context.driver)
     logging.debug(
         "As expected %s can't see promotional video modal window", actor_alias
@@ -235,21 +223,15 @@ def language_selector_should_not_see_it(context: Context, actor_alias: str):
     logging.debug("As expected %s cannot see language selector", actor_alias)
 
 
-def language_selector_keyboard_should_be_trapped(
-    context: Context, actor_alias: str
-):
+def language_selector_keyboard_should_be_trapped(context: Context, actor_alias: str):
     page = get_last_visited_page(context, actor_alias)
-    common_language_selector.keyboard_should_be_trapped(
-        context.driver, page=page
-    )
+    common_language_selector.keyboard_should_be_trapped(context.driver, page=page)
 
 
 def should_see_page_in_preferred_language(
     context: Context, actor_alias: str, preferred_language: str
 ):
-    common_language_selector.check_page_language_is(
-        context.driver, preferred_language
-    )
+    common_language_selector.check_page_language_is(context.driver, preferred_language)
     logging.debug(
         f"{actor_alias} can see '{context.driver.current_url}' page in "
         f"'{preferred_language}"
@@ -259,9 +241,7 @@ def should_see_page_in_preferred_language(
 def fas_search_results_filtered_by_industries(
     context: Context, actor_alias: str, industry_names: List[str]
 ):
-    fas.search_results.should_see_filtered_results(
-        context.driver, industry_names
-    )
+    fas.search_results.should_see_filtered_results(context.driver, industry_names)
     logging.debug(
         "%s can see results filtered by %s (%s)",
         actor_alias,
@@ -295,27 +275,21 @@ def generic_should_see_expected_page_content(
     )
 
 
-def stats_and_tracking_elements_should_be_present(
-    context: Context, names: Table
-):
+def stats_and_tracking_elements_should_be_present(context: Context, names: Table):
     element_names = [row[0] for row in names]
 
     for name in element_names:
         invest.pixels.should_be_present(context.driver, name)
 
 
-def stats_and_tracking_elements_should_not_be_present(
-    context: Context, names: Table
-):
+def stats_and_tracking_elements_should_not_be_present(context: Context, names: Table):
     element_names = [row[0] for row in names]
 
     for name in element_names:
         invest.pixels.should_not_be_present(context.driver, name)
 
 
-def invest_should_see_uk_gov_logo(
-    context: Context, actor_alias: str, section: str
-):
+def invest_should_see_uk_gov_logo(context: Context, actor_alias: str, section: str):
     if section.lower() == "header":
         invest.header.check_logo(context.driver)
     else:
@@ -333,9 +307,7 @@ def invest_should_receive_contact_confirmation_email(
 ):
     actor = get_actor(context, actor_alias)
     sleep(5)
-    mailgun_invest_find_contact_confirmation_email(
-        context, sender_email, actor.email
-    )
+    mailgun_invest_find_contact_confirmation_email(context, sender_email, actor.email)
 
 
 def invest_mailbox_admin_should_receive_contact_confirmation_email(
@@ -349,9 +321,7 @@ def invest_mailbox_admin_should_receive_contact_confirmation_email(
     )
 
 
-def hpo_should_receive_enquiry_confirmation_email(
-    context: Context, actor_alias: str
-):
+def hpo_should_receive_enquiry_confirmation_email(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     get_email_confirmations_with_matching_string(
         recipient_email=actor.email,
@@ -385,18 +355,14 @@ def pdf_check_expected_details(
     context: Context, actor_alias: str, details_table: Table
 ):
     pdfs = context.pdfs
-    pdf_texts = [
-        (pdf["href"], extract_text_from_pdf_bytes(pdf["pdf"])) for pdf in pdfs
-    ]
+    pdf_texts = [(pdf["href"], extract_text_from_pdf_bytes(pdf["pdf"])) for pdf in pdfs]
     details = {
-        item[0].split(" = ")[0]: item[0].split(" = ")[1]
-        for item in details_table
+        item[0].split(" = ")[0]: item[0].split(" = ")[1] for item in details_table
     }
     for href, text in pdf_texts:
         for name, value in details.items():
             error_message = (
-                f"Could not find {name}: {value} in PDF text downloaded from "
-                f"{href}"
+                f"Could not find {name}: {value} in PDF text downloaded from " f"{href}"
             )
             assert value in text, error_message
             logging.debug(
@@ -490,9 +456,7 @@ def generic_article_counters_should_match(context: Context, actor_alias: str):
     page.article_counter_is_equal_to(context.driver, expected_article_counter)
 
 
-def generic_article_counter_should_match_number_of_articles(
-    context, actor_alias
-):
+def generic_article_counter_should_match_number_of_articles(context, actor_alias):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "article_counter_matches_number_of_articles")
     page.article_counter_matches_number_of_articles(context.driver)
@@ -511,9 +475,7 @@ def office_finder_should_see_correct_office_details(
 
 
 @retry(wait_fixed=5000, stop_max_attempt_number=3, wrap_exception=False)
-def forms_confirmation_email_should_not_be_sent(
-    context: Context, actor_alias: str
-):
+def forms_confirmation_email_should_not_be_sent(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     submissions = find_form_submissions(actor.email)
     assert submissions, f"No form submissions found for {actor_alias}"
