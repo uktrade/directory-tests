@@ -971,3 +971,17 @@ def exred_submit_soo_contact_us_form(
         actor_alias,
         f"{exred.contact_us_soo_long_thank_you.SERVICE} - {exred.contact_us_soo_long_thank_you.NAME}"
     )
+
+
+def soo_find_and_open_random_marketplace(
+        context: Context, actor_alias: str, countries: str, products: str
+):
+    soo_look_for_marketplaces_from_home_page(
+        context, actor_alias, countries, products
+    )
+    generic_click_on_random_marketplace(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        f"{soo.marketplace.SERVICE} - {soo.marketplace.NAME}"
+    )

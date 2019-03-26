@@ -23,6 +23,7 @@ from steps.when_impl import (
     get_barred_actor,
     registration_create_and_verify_account,
     sign_in,
+    soo_find_and_open_random_marketplace,
     soo_look_for_marketplaces_from_home_page,
     sso_actor_received_email_confirmation_code,
     visit_page,
@@ -134,15 +135,7 @@ def given_actor_looks_for_marketplace_using_countries_and_products(
 @given('"{actor_alias}" found a marketplace in {countries} to sell {products}')
 def given_actor_found_marketplace(
         context: Context, actor_alias: str, countries: str, products: str):
-    context.execute_steps(u'''
-        Given "{actor_alias}" searches for marketplaces in "{countries}" to sell {products}'''
-                          .format(actor_alias=actor_alias, countries=countries, products=products))
-    context.execute_steps(u'''
-        When "{actor_alias}" randomly selects a marketplace'''
-                          .format(actor_alias=actor_alias))
-    context.execute_steps(u'''
-        Then "{actor_alias}" should be on the "{page_name}" page'''
-                          .format(actor_alias=actor_alias, page_name="Selling Online Overseas - Marketplace"))
+    soo_find_and_open_random_marketplace(context, actor_alias, countries, products)
 
 
 @given('"{actor_alias}" applied via DIT to contact randomly selected marketplace in "{countries}" to sell "{products}"')
