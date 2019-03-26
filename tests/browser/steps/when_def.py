@@ -44,7 +44,6 @@ from steps.when_impl import (
     language_selector_close,
     language_selector_navigate_through_links_with_keyboard,
     language_selector_open,
-    marketplace_finder,
     office_finder_find_trade_office,
     open_any_element,
     open_link,
@@ -54,6 +53,7 @@ from steps.when_impl import (
     registration_submit_form_and_verify_account,
     sign_in,
     sign_out,
+    soo_look_for_marketplace,
     visit_page,
 )
 
@@ -339,8 +339,8 @@ def when_actor_reports_problem_with_page(context: Context, actor_alias: str):
 
 @when('"{actor_alias}" searches for marketplaces in {countries} to sell {products}')
 def when_actor_looks_for_marketplace_using_countries_and_products(
-        context: Context, actor_alias: str, products: str, countries: str):
-    marketplace_finder(context, actor_alias, products, countries)
+        context: Context, actor_alias: str, countries: str, products: str):
+    soo_look_for_marketplace(context, actor_alias, countries, products)
 
 
 @when('"{actor_alias}" randomly selects a marketplace')

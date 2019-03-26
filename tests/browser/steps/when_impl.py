@@ -922,8 +922,8 @@ def generic_create_great_account(
     should_be_on_page(context, actor_alias, "Profile - Account created")
 
 
-def marketplace_finder(
-    context: Context, actor_alias: str, products: str, countries: str
+def soo_look_for_marketplace(
+    context: Context, actor_alias: str, countries: str, products: str
 ):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "search")
