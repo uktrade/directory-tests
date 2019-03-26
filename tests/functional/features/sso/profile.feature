@@ -15,8 +15,10 @@ Feature: SSO profile
 
 
     @ED-1756
+    @ED-1692
     @sso
     @account
+    @verification
     @real-sso-email-verification
     Scenario: Suppliers should be able to confirm email address for a standalone SSO/great.gov.uk account
       Given "Peter Alder" created a standalone SSO/great.gov.uk account with unverified email address

@@ -1,18 +1,5 @@
 Feature: Trade Profile
 
-  @ED-1692
-  @verification
-  @real-sso-email-verification
-  Scenario: Unauthenticated Suppliers should be able to verify their email address via confirmation link sent in an email
-    Given "Annette Geissinger" is an unauthenticated supplier
-    And "Annette Geissinger" created an unverified SSO/great.gov.uk account
-    And "Annette Geissinger" received the email verification message with the email confirmation link
-
-    When "Annette Geissinger" decides to confirm her email address by using the email confirmation link
-    And "Annette Geissinger" confirms the email address
-
-    Then "Annette Geissinger" should see "Profile - About" page
-
 
   @ED-1757
   @verification
