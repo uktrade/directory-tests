@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""SOO - First page of Long SOO Contact us form"""
+"""Export Readiness - First page of Long SOO Contact us form"""
 import logging
 import random
 from types import ModuleType
@@ -12,21 +12,20 @@ from pages import ElementType
 from pages.common_actions import (
     Actor,
     Selector,
+    check_random_radio,
     check_url,
     fill_out_input_fields,
     find_element,
     go_to_url,
     take_screenshot,
-    tick_captcha_checkbox,
-    tick_checkboxes,
 )
-from pages.soo import contact_us_soo_long_thank_you
+from pages.exred import contact_us_soo_long_your_experience
 from settings import EXRED_UI_URL
 
-NAME = "Long Domestic (Contact details)"
-SERVICE = "Selling Online Overseas"
+NAME = "Long Domestic (Organisation details)"
+SERVICE = "Export Readiness"
 TYPE = "Contact us"
-URL = urljoin(EXRED_UI_URL, "contact/selling-online-overseas/contact-details/")
+URL = urljoin(EXRED_UI_URL, "contact/selling-online-overseas/organisation-details/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 SUBMIT_BUTTON = Selector(
@@ -35,22 +34,45 @@ SUBMIT_BUTTON = Selector(
 SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#content form"),
-        "contact name": Selector(
-            By.ID, "id_contact-details-contact_name", type=ElementType.INPUT
+        "under £100,000": Selector(
+            By.ID, "id_organisation-details-turnover_0", type=ElementType.RADIO,
+            group_id=1,
         ),
-        "email address": Selector(
-            By.ID, "id_contact-details-contact_email", type=ElementType.INPUT
+        "£100,000 to £500,000": Selector(
+            By.ID, "id_organisation-details-turnover_1", type=ElementType.RADIO,
+            group_id=1,
+
         ),
-        "telephone number": Selector(
-            By.ID, "id_contact-details-phone", type=ElementType.INPUT
+        "£500,001 to £2million": Selector(
+            By.ID, "id_organisation-details-turnover_2", type=ElementType.RADIO,
+            group_id=1,
+
         ),
-        "i prefer to be contacted by email": Selector(
-            By.ID, "id_contact-details-email_pref", type=ElementType.CHECKBOX
+        "more than £2million": Selector(
+            By.ID, "id_organisation-details-turnover_3", type=ElementType.RADIO,
+            group_id=1,
+
         ),
-        "t & c": Selector(
-            By.ID, "id_contact-details-terms_agreed", type=ElementType.CHECKBOX
+        "sku": Selector(
+            By.ID, "id_organisation-details-sku_count", type=ElementType.INPUT
+        ),
+        "yes": Selector(
+            By.ID, "id_organisation-details-trademarked_0", type=ElementType.RADIO,
+            group_id=2,
+
+        ),
+        "no": Selector(
+            By.ID, "id_organisation-details-trademarked_1", type=ElementType.RADIO,
+            group_id=2,
+
         ),
     }
+}
+
+OTHER_SELECTORS = {
+    "postcode": Selector(
+        By.ID, "id_organisation-company_postcode", type=ElementType.INPUT
+    ),
 }
 
 
@@ -64,13 +86,8 @@ def should_be_here(driver: WebDriver):
 
 
 def generate_form_details(actor: Actor) -> dict:
-    prefer_email = random.choice([True, False])
     result = {
-        "contact name": "automated tests",
-        "email address": actor.email,
-        "telephone number": "0700 100 2000",
-        "i prefer to be contacted by email": prefer_email,
-        "t & c": True,
+        "sku": random.randint(0, 10000)
     }
     logging.debug(f"Generated form details: {result}")
     return result
@@ -78,9 +95,8 @@ def generate_form_details(actor: Actor) -> dict:
 
 def fill_out(driver: WebDriver, details: dict):
     form_selectors = SELECTORS["form"]
+    check_random_radio(driver, form_selectors)
     fill_out_input_fields(driver, form_selectors, details)
-    tick_checkboxes(driver, form_selectors, details)
-    tick_captcha_checkbox(driver)
     take_screenshot(driver, "After filling out the form")
 
 
@@ -91,4 +107,4 @@ def submit(driver: WebDriver) -> ModuleType:
     )
     button.click()
     take_screenshot(driver, "After submitting the form")
-    return contact_us_soo_long_thank_you
+    return contact_us_soo_long_your_experience

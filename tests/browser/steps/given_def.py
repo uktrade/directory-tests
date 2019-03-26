@@ -23,6 +23,9 @@ from steps.when_impl import (
     get_barred_actor,
     registration_create_and_verify_account,
     sign_in,
+    soo_find_and_open_random_marketplace,
+    soo_find_random_marketplace_and_apply_via_dit,
+    soo_look_for_marketplaces_from_home_page,
     sso_actor_received_email_confirmation_code,
     visit_page,
 )
@@ -119,6 +122,28 @@ def given_actor_received_email_confirmation_code(
 ):
     sso_actor_received_email_confirmation_code(
         context, actor_alias, business_type
+    )
+
+
+@given('"{actor_alias}" searches for marketplaces in {countries} to sell {products}')
+def given_actor_looks_for_marketplace_using_countries_and_products(
+        context: Context, actor_alias: str, countries: str, products: str):
+    soo_look_for_marketplaces_from_home_page(
+        context, actor_alias, countries, products
+    )
+
+
+@given('"{actor_alias}" found a marketplace in {countries} to sell {products}')
+def given_actor_found_marketplace(
+        context: Context, actor_alias: str, countries: str, products: str):
+    soo_find_and_open_random_marketplace(context, actor_alias, countries, products)
+
+
+@given('"{actor_alias}" applied via DIT to contact randomly selected marketplace in "{countries}" to sell "{products}"')
+def actor_applied_via_dit(
+        context: Context, actor_alias: str, countries: str, products: str):
+    soo_find_random_marketplace_and_apply_via_dit(
+        context, actor_alias, countries, products
     )
 
 

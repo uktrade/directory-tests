@@ -1,48 +1,80 @@
-@TT-833
 Feature: New Contact-us form
 
+  Background:
+    Given basic authentication is done for "Selling Online Overseas - Home" page
+    And basic authentication is done for "Export Readiness - Home" page
 
-  @TT-833
+
+  @XOT-631
+  @XOT-689
+  @exopps
+  @dev-only
+  @soo-long-domestic
+  @account-support
+  Scenario Outline: Visitors should be able to search for marketplaces to sell "<products>" in "<countries>"
+    Given "Robert" visits the "Selling Online Overseas - Home" page
+
+    When "Robert" searches for marketplaces in "<countries>" to sell "<products>"
+
+    Then "Robert" should be on the "Selling Online Overseas - Search results" page
+    And "Robert" should see marketplaces which operate globally or in multiple countries "<countries>"
+
+    Examples: products and countries
+      | products      | countries                 |
+      | Shoes,Clothes | United States,China,India |
+
+
+  @XOT-689
   @exopps
   @captcha
   @dev-only
   @soo-long-domestic
   @account-support
-  Scenario: Domestic "Selling Online Overseas" Enquirers should be able to contact us
-    Given "Robert" visits the "Selling Online Overseas - Long Domestic (Your Business)" page
+  Scenario Outline: Domestic "Selling Online Overseas" Enquirers should be able to view marketplace page
+    Given "Robert" searches for marketplaces in "<countries>" to sell "<products>"
 
-    When "Robert" fills out and submits the form
-      | field                         | value     |
-      | I don't have a company number | unchecked |
-    Then "Robert" should be on the "Selling Online Overseas - Long Domestic (Organisation details)" page
-    When "Robert" fills out and submits the form
-    Then "Robert" should be on the "Selling Online Overseas - Long Domestic (Your experience)" page
-    When "Robert" fills out and submits the form
-    Then "Robert" should be on the "Selling Online Overseas - Long Domestic (Contact details)" page
-    When "Robert" fills out and submits the form
+    When "Robert" randomly selects a marketplace
 
-    Then "Robert" should be on the "Selling Online Overseas - Long Domestic (Thank you for your enquiry)" page
-    And "Robert" should receive a "great.gov.uk Selling Online Overseas contact form" confirmation email from Zendesk
+    Then "Robert" should be on the "Selling Online Overseas - Marketplace" page
+
+    Examples: products and countries
+      | products      | countries                 |
+      | Shoes,Clothes | United States,China,India |
 
 
-  @TT-833
+  @XOT-689
   @exopps
   @captcha
   @dev-only
   @soo-long-domestic
   @account-support
-  Scenario: Domestic "Selling Online Overseas" Enquirers should be able to contact us even if they're not registered with Companies House
-    Given "Robert" visits the "Selling Online Overseas - Long Domestic (Your Business)" page
+  Scenario Outline: Domestic "Selling Online Overseas" Enquirers should be able to get the Enquiry page
+    Given "Robert" found a marketplace in "<countries>" to sell "<products>"
 
-    When "Robert" fills out and submits the form
+    When "Robert" decides to "Apply now via DIT"
+
+    Then "Robert" should be on the "Export Readiness - Long Domestic (Your Business)" page
+
+    Examples: product type and country name
+      | products      | countries                 |
+      | Shoes,Clothes | United States,China,India |
+
+
+  @XOT-689
+  @exopps
+  @captcha
+  @dev-only
+  @soo-long-domestic
+  @account-support
+  Scenario Outline: Domestic "Selling Online Overseas" Enquirers should receive a enquiry confirmation email after submitting the contact us form
+    Given "Robert" applied via DIT to contact randomly selected marketplace in "<countries>" to sell "<products>"
+
+    When "Robert" submits the SOO contact-us form
       | field                         | value   |
       | I don't have a company number | checked |
-    Then "Robert" should be on the "Selling Online Overseas - Long Domestic (Organisation details)" page
-    When "Robert" fills out and submits the form
-    Then "Robert" should be on the "Selling Online Overseas - Long Domestic (Your experience)" page
-    When "Robert" fills out and submits the form
-    Then "Robert" should be on the "Selling Online Overseas - Long Domestic (Contact details)" page
-    When "Robert" fills out and submits the form
 
-    Then "Robert" should be on the "Selling Online Overseas - Long Domestic (Thank you for your enquiry)" page
-    And "Robert" should receive a "great.gov.uk Selling Online Overseas contact form" confirmation email from Zendesk
+    Then "Robert" should receive a "great.gov.uk Selling Online Overseas contact form" confirmation email from Zendesk
+
+    Examples: products and countries
+      | products      | countries                 |
+      | Shoes,Clothes | United States,China,India |

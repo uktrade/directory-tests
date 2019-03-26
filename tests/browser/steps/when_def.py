@@ -13,6 +13,7 @@ from steps.when_impl import (
     clear_the_cookies,
     click_on_page_element,
     contact_us_navigate_through_options,
+    exred_submit_soo_contact_us_form,
     fas_fill_out_and_submit_contact_us_form,
     fas_search_for_companies,
     fas_use_breadcrumb,
@@ -20,6 +21,7 @@ from steps.when_impl import (
     fas_view_more_companies,
     fas_view_selected_company_profile,
     generic_click_on_random_industry,
+    generic_click_on_random_marketplace,
     generic_click_on_uk_gov_logo,
     generic_download_all_pdfs,
     generic_fill_out_and_submit_form,
@@ -27,11 +29,12 @@ from steps.when_impl import (
     generic_open_guide_link,
     generic_open_industry_page,
     generic_open_news_article,
-    generic_pick_radio_option_and_submit,
     generic_pick_radio_option,
+    generic_pick_radio_option_and_submit,
     generic_pick_random_radio_option_and_submit,
     generic_report_problem_with_page,
     generic_see_more_industries,
+    generic_select_dropdown_option,
     generic_submit_form,
     generic_unfold_topics,
     generic_visit_current_page_with_lang_parameter,
@@ -51,8 +54,8 @@ from steps.when_impl import (
     registration_submit_form_and_verify_account,
     sign_in,
     sign_out,
+    soo_look_for_marketplace,
     visit_page,
-    generic_select_dropdown_option
 )
 
 
@@ -336,6 +339,25 @@ def when_actor_reports_problem_with_page(context: Context, actor_alias: str):
     generic_report_problem_with_page(context, actor_alias)
 
 
+@when('"{actor_alias}" searches for marketplaces in {countries} to sell {products}')
+def when_actor_looks_for_marketplace_using_countries_and_products(
+        context: Context, actor_alias: str, countries: str, products: str):
+    soo_look_for_marketplace(context, actor_alias, countries, products)
+
+
+@when('"{actor_alias}" randomly selects a marketplace')
+def when_actor_selects_marketplace(context: Context, actor_alias: str):
+    generic_click_on_random_marketplace(context, actor_alias)
+
+
+@when('"{actor_alias}" submits the SOO contact-us form')
+def when_actor_submits_soo_contact_us_form(
+        context: Context, actor_alias: str):
+    exred_submit_soo_contact_us_form(
+        context, actor_alias, custom_details_table=context.table
+    )
+
+
 ###############################################################################
 # Currently unused but useful steps
 ###############################################################################
@@ -345,6 +367,11 @@ def when_actor_reports_problem_with_page(context: Context, actor_alias: str):
 def when_actor_registers_fake_email_verification(context, actor_alias):
     registration_submit_form_and_verify_account(
         context, actor_alias, fake_verification=True)
+
+
+@when('"{actor_alias}" signs out')
+def when_actor_signs_out(context, actor_alias):
+    sign_out(context, actor_alias)
 
 
 @when('"{actor_alias}" completes the registration and real email verification process')
@@ -361,11 +388,6 @@ def when_actor_clears_the_cookies(context, actor_alias):
 @when('"{actor_alias}" signs in')
 def when_actor_signs_in(context, actor_alias):
     sign_in(context, actor_alias)
-
-
-@when('"{actor_alias}" signs out')
-def when_actor_signs_out(context, actor_alias):
-    sign_out(context, actor_alias)
 
 
 @when('"{actor_alias}" searches for local trade office near "{post_code}"')

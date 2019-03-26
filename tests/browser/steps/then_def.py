@@ -28,6 +28,7 @@ from steps.then_impl import (
     language_selector_keyboard_should_be_trapped,
     language_selector_should_not_see_it,
     language_selector_should_see_it,
+    marketplace_finder_should_see_marketplaces,
     office_finder_should_see_correct_office_details,
     pdf_check_expected_details,
     pdf_check_for_dead_links,
@@ -290,3 +291,9 @@ def then_confirmation_email_should_not_be_sent(context: Context, actor_alias: st
 @then('"{actor_alias}" should receive email confirmation code')
 def then_actor_should_get_verifaction_code(context: Context, actor_alias: str):
     generic_get_verification_code(context, actor_alias)
+
+
+@then('"{actor_alias}" should see marketplaces which operate globally or in multiple countries {countries}')
+def then_actor_should_see_expected_marketplaces(
+        context: Context, actor_alias: str, countries: str):
+    marketplace_finder_should_see_marketplaces(context, actor_alias, countries)
