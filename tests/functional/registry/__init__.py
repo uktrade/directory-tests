@@ -190,7 +190,6 @@ SUD_PAGE_REGISTRY = {
         "url": "profile:exops-applications",
         "po": sud_ui_export_opportunities,
     },
-    "sud find a buyer": {"url": "profile:fab", "po": sud_ui_find_a_buyer},
     "sud export opportunities applications": {
         "url": "profile:exops-applications",
         "po": None,
@@ -216,6 +215,7 @@ SUD_PAGE_REGISTRY = {
         "url": "ui-buyer:case-study-add",
         "po": profile_case_study_basic,
     },
+    "profile - find a buyer": {"url": "profile:fab", "po": sud_ui_find_a_buyer},
 }
 
 PAGE_REGISTRY = {}

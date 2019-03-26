@@ -28,7 +28,7 @@ Feature: SUD (Profile) pages
       Examples: SUD pages
         |other SUD                  | expected        |
         |SUD Export Opportunities   | SSO Login       |
-        |SUD Find a Buyer           | Profile - Enrol |
+        |Profile - Find a Buyer           | Profile - Enrol |
         |SUD Selling Online Overseas| SSO Login       |
 
 
@@ -49,7 +49,7 @@ Feature: SUD (Profile) pages
       Examples: SUD pages
         |SUD                        | expected        |
         |SUD Export Opportunities   | SSO Login       |
-        |SUD Find a Buyer           | Profile - Enrol |
+        |profile - Find a Buyer     | Profile - Enrol |
         |SUD Selling Online Overseas| SSO Login       |
 
 
@@ -66,7 +66,7 @@ Feature: SUD (Profile) pages
       When "Peter Alder" goes to specific pages
         |page name                  |
         |SUD Export Opportunities   |
-        |SUD Find a Buyer           |
+        |Profile - Find a Buyer     |
         |SUD Selling Online Overseas|
 
       Then "Peter Alder" should be able to see all selected pages
