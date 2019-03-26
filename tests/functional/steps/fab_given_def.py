@@ -32,6 +32,7 @@ from tests.functional.steps.fab_then_impl import (
 from tests.functional.steps.fab_when_impl import (
     fab_add_collaborator,
     fab_confirm_collaboration_request,
+    fab_decide_to_verify_profile_with_letter,
     fab_open_collaboration_request_link,
     fab_transfer_ownership,
     go_to_page,
@@ -42,7 +43,7 @@ from tests.functional.steps.fab_when_impl import (
     profile_edit_business_details,
     prof_sign_out_from_fab,
     prof_supplier_uploads_logo,
-    reg_create_standalone_unverified_sso_account
+    reg_create_standalone_unverified_sso_account,
 )
 
 
@@ -264,3 +265,9 @@ def given_supplier_edit_business_details(context, actor_alias):
     profile_edit_business_details(
         context, actor_alias, table_of_details=context.table
     )
+
+
+@given('"{supplier_alias}" decided to verify her identity with a verification letter')
+@given('"{supplier_alias}" decided to verify his identity with a verification letter')
+def given_supplier_decided_to_verify_with_letter(context, supplier_alias):
+    fab_decide_to_verify_profile_with_letter(context, supplier_alias)
