@@ -25,6 +25,7 @@ from pages.common_actions import (
     update_actor,
     wait_for_page_load_after_action,
 )
+from pages import soo
 from settings import BASICAUTH_PASS, BASICAUTH_USER
 from steps import has_action
 from utils.cms_api import get_news_articles
@@ -929,3 +930,8 @@ def marketplace_finder(
     products = products.replace('"', "").split(",")
     countries = countries.replace('"', "").split(",")
     page.search(context.driver, products, countries)
+
+
+def soo_look_for_marketplaces_from_home_page(context, actor_alias, countries, products):
+    visit_page(context, actor_alias, f"{soo.home.SERVICE} - {soo.home.NAME}")
+    soo_look_for_marketplace(context, actor_alias, countries, products)

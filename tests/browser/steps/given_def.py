@@ -19,12 +19,13 @@ from steps.when_impl import (
     generic_open_any_news_article,
     generic_open_industry_page,
     generic_open_random_news_article,
+    generic_set_basic_auth_creds,
     get_barred_actor,
     registration_create_and_verify_account,
     sign_in,
+    soo_look_for_marketplaces_from_home_page,
     sso_actor_received_email_confirmation_code,
     visit_page,
-    marketplace_finder,
 )
 
 @given('"{actor_alias}" went to the "{page_name}" page')
@@ -123,11 +124,8 @@ def given_actor_received_email_confirmation_code(
 
 @given('"{actor_alias}" searches for marketplaces in {countries} to sell {products}')
 def given_actor_looks_for_marketplace_using_countries_and_products(
-        context: Context, actor_alias: str, products: str, countries: str):
-    context.execute_steps(u'''
-                Given "{actor_alias}" visits the "{page_name}" page
-            '''.format(actor_alias=actor_alias, page_name="Selling Online Overseas - Home"))
-    marketplace_finder(context, actor_alias, products, countries)
+        context: Context, actor_alias: str, countries: str, products: str):
+    soo_look_for_marketplaces_from_home_page(context, actor_alias, countries, products)
 
 
 @given('"{actor_alias}" found a marketplace in {countries} to sell {products}')
