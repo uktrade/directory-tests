@@ -90,7 +90,9 @@ URLs = {
     "aerospace": urljoin(URL, "aerospace/"),
     "agritech": urljoin(URL, "agritech/"),
     "automotive": urljoin(URL, "automotive/"),
-    "business and government partnerships": urljoin(URL, "business-and-government-partnerships/"),
+    "business and government partnerships": urljoin(
+        URL, "business-and-government-partnerships/"
+    ),
     "consumer & retail": urljoin(URL, "consumer-retail/"),
     "creative services": urljoin(URL, "creative-services/"),
     "cyber security": urljoin(URL, "cyber-security/"),
@@ -104,7 +106,9 @@ URLs = {
     "legal services": urljoin(URL, "legal-services/"),
     "life sciences": urljoin(URL, "life-sciences/"),
     "marine": urljoin(URL, "marine/"),
-    "professional and financial services": urljoin(URL, "professional-and-financial-services/"),
+    "professional and financial services": urljoin(
+        URL, "professional-and-financial-services/"
+    ),
     "space": urljoin(URL, "space/"),
     "sports economy": urljoin(URL, "sports-economy/"),
     "technology": urljoin(URL, "technology/"),
@@ -155,6 +159,7 @@ def should_see_content_for(driver: WebDriver, industry_name: str):
         driver.current_url,
     ):
         from html import escape
+
         assert escape(industry_name) in source
 
 

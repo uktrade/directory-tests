@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """Find a Supplier Landing Page Object."""
 import logging
-
 from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
@@ -13,13 +12,13 @@ from pages.common_actions import (
     Selector,
     check_for_section,
     check_url,
-    find_element,
-    go_to_url,
-    take_screenshot,
-    tick_captcha_checkbox,
     fill_out_input_fields,
     fill_out_textarea_fields,
+    find_element,
+    go_to_url,
     pick_option,
+    take_screenshot,
+    tick_captcha_checkbox,
     tick_checkboxes_by_labels,
 )
 from settings import DIRECTORY_UI_SUPPLIER_URL
@@ -41,7 +40,9 @@ BODY = Selector(By.ID, "id_body", type=ElementType.INPUT)
 SOURCE = Selector(By.ID, "id_source", type=ElementType.SELECT)
 ACCEPT_TC = Selector(By.ID, "id_terms_agreed", type=ElementType.LABEL, is_visible=False)
 IM_NOT_A_ROBOT = Selector(By.CSS_SELECTOR, ".recaptcha-checkbox-checkmark")
-SUBMIT_BUTTON = Selector(By.CSS_SELECTOR, "form input[type=submit]", type=ElementType.BUTTON)
+SUBMIT_BUTTON = Selector(
+    By.CSS_SELECTOR, "form input[type=submit]", type=ElementType.BUTTON
+)
 SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#lede form"),
@@ -90,7 +91,9 @@ def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
     }
     if custom_details:
         if custom_details.get("industry", None):
-            custom_details["industry"] = custom_details["industry"].lower().replace(" ", "-")
+            custom_details["industry"] = (
+                custom_details["industry"].lower().replace(" ", "-")
+            )
         result.update(custom_details)
     return result
 

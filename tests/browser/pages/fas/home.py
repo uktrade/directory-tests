@@ -13,9 +13,9 @@ from pages.common_actions import (
     check_url,
     find_and_click_on_page_element,
     find_element,
+    find_elements,
     go_to_url,
     take_screenshot,
-    find_elements
 )
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
@@ -37,12 +37,9 @@ SELECTORS = {
             By.CSS_SELECTOR, "#header-gov-links  a[href='https://www.gov.uk/']"
         ),
         "great gov link": Selector(
-            By.CSS_SELECTOR,
-            "#header-gov-links  a[href='https://www.great.gov.uk/']",
+            By.CSS_SELECTOR, "#header-gov-links  a[href='https://www.great.gov.uk/']"
         ),
-        "language switcher": Selector(
-            By.CSS_SELECTOR, ".ed-language-switcher"
-        ),
+        "language switcher": Selector(By.CSS_SELECTOR, ".ed-language-switcher"),
         "navigation bar": Selector(By.ID, "ed-menu"),
         "home": Selector(By.CSS_SELECTOR, "#ed-menu > ul > li.active > a"),
         "search": Selector(By.CSS_SELECTOR, "#ed-menu > ul > li:nth-child(2) > a"),
@@ -66,28 +63,22 @@ SELECTORS = {
             By.CSS_SELECTOR, "#footer-main-links > ul > li:nth-child(4) > a"
         ),
         "about": Selector(
-            By.CSS_SELECTOR,
-            "#footer-sub-links > div > ul > li:nth-child(1) > a",
+            By.CSS_SELECTOR, "#footer-sub-links > div > ul > li:nth-child(1) > a"
         ),
         "contact us link": Selector(
-            By.CSS_SELECTOR,
-            "#footer-sub-links > div > ul > li:nth-child(2) > a",
+            By.CSS_SELECTOR, "#footer-sub-links > div > ul > li:nth-child(2) > a"
         ),
         "privacy and cookies": Selector(
-            By.CSS_SELECTOR,
-            "#footer-sub-links > div > ul > li:nth-child(3) > a",
+            By.CSS_SELECTOR, "#footer-sub-links > div > ul > li:nth-child(3) > a"
         ),
         "terms and conditions": Selector(
-            By.CSS_SELECTOR,
-            "#footer-sub-links > div > ul > li:nth-child(4) > a",
+            By.CSS_SELECTOR, "#footer-sub-links > div > ul > li:nth-child(4) > a"
         ),
         "performance": Selector(
-            By.CSS_SELECTOR,
-            "#footer-sub-links > div > ul > li:nth-child(5) > a",
+            By.CSS_SELECTOR, "#footer-sub-links > div > ul > li:nth-child(5) > a"
         ),
         "dit": Selector(
-            By.CSS_SELECTOR,
-            "#footer-sub-links > div > ul > li:nth-child(6) > a",
+            By.CSS_SELECTOR, "#footer-sub-links > div > ul > li:nth-child(6) > a"
         ),
         "copyright links": Selector(By.ID, "ed-footer-copyright"),
     },
@@ -100,9 +91,7 @@ SELECTORS = {
     },
     "contact us": {
         "itself": Selector(By.ID, "introduction-section"),
-        "introduction text": Selector(
-            By.CSS_SELECTOR, "#introduction-section p"
-        ),
+        "introduction text": Selector(By.CSS_SELECTOR, "#introduction-section p"),
         "contact us": CONTACT_US_BUTTON,
     },
     "uk industries": {
@@ -123,20 +112,16 @@ SELECTORS = {
     "uk services": {
         "itself": Selector(By.ID, "services-section"),
         "first service": Selector(
-            By.CSS_SELECTOR,
-            "#services-section div.column-one-quarter:nth-child(3)",
+            By.CSS_SELECTOR, "#services-section div.column-one-quarter:nth-child(3)"
         ),
         "second service": Selector(
-            By.CSS_SELECTOR,
-            "#services-section div.column-one-quarter:nth-child(4)",
+            By.CSS_SELECTOR, "#services-section div.column-one-quarter:nth-child(4)"
         ),
         "third service": Selector(
-            By.CSS_SELECTOR,
-            "#services-section div.column-one-quarter:nth-child(5)",
+            By.CSS_SELECTOR, "#services-section div.column-one-quarter:nth-child(5)"
         ),
         "fourth service": Selector(
-            By.CSS_SELECTOR,
-            "#services-section div.column-one-quarter:nth-child(6)",
+            By.CSS_SELECTOR, "#services-section div.column-one-quarter:nth-child(6)"
         ),
     },
 }
@@ -158,10 +143,7 @@ def should_see_sections(driver: WebDriver, names: List[str]):
 
 def search(driver: WebDriver, *, keyword: str = None, sector: str = None):
     input_field = find_element(
-        driver,
-        SEARCH_INPUT,
-        element_name="Search input field",
-        wait_for_it=False,
+        driver, SEARCH_INPUT, element_name="Search input field", wait_for_it=False
     )
     input_field.clear()
     if keyword:
@@ -173,12 +155,8 @@ def search(driver: WebDriver, *, keyword: str = None, sector: str = None):
             element_name="Sector dropdown menu",
             wait_for_it=False,
         )
-        sector_value = "option[value='{}']".format(
-            sector.upper().replace(" ", "_")
-        )
-        sector_option = sector_dropdown.find_element_by_css_selector(
-            sector_value
-        )
+        sector_value = "option[value='{}']".format(sector.upper().replace(" ", "_"))
+        sector_option = sector_dropdown.find_element_by_css_selector(sector_value)
         sector_option.click()
     take_screenshot(driver, NAME + " after entering the keyword")
     button = find_element(

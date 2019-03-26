@@ -26,9 +26,7 @@ URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "industries/")
 PAGE_TITLE = "Find the best UK suppliers for your industry - trade.great.gov.uk"
 
 BREADCRUMB_LINKS = Selector(By.CSS_SELECTOR, "p.breadcrumbs > a")
-INDUSTRIES_BREADCRUMB = Selector(
-    By.CSS_SELECTOR, "p.breadcrumbs > span.current"
-)
+INDUSTRIES_BREADCRUMB = Selector(By.CSS_SELECTOR, "p.breadcrumbs > span.current")
 INDUSTRIES_LINKS = Selector(By.CSS_SELECTOR, "#industry-pages-container > section a")
 MORE_INDUSTRIES_LINKS = Selector(By.CSS_SELECTOR, "#industry-pages-container > ul a")
 SELECTORS = {
