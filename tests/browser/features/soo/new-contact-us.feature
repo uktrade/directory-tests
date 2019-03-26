@@ -69,7 +69,7 @@ Feature: New Contact-us form
   Scenario Outline: Domestic "Selling Online Overseas" Enquirers should receive a enquiry confirmation email after submitting the contact us form
     Given "Robert" applied via DIT to contact randomly selected marketplace in "<countries>" to sell "<products>"
 
-    When "Robert" submits the SOO contact-us form saying that he doesn't have a company number
+    When "Robert" submits the SOO contact-us form
       | field                         | value   |
       | I don't have a company number | checked |
 

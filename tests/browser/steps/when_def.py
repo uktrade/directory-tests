@@ -347,7 +347,8 @@ def when_actor_looks_for_marketplace_using_countries_and_products(
 def when_actor_selects_marketplace(context: Context, actor_alias: str):
     generic_click_on_random_marketplace(context, actor_alias)
 
-@when('"{actor_alias}" submits the SOO contact-us form saying that he doesn\'t have a company number')
+
+@when('"{actor_alias}" submits the SOO contact-us form')
 def when_actor_submits_soo_contact_us_form(
         context: Context, actor_alias: str):
     generic_fill_out_and_submit_form(context, actor_alias, custom_details_table=context.table)

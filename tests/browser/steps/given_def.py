@@ -28,6 +28,7 @@ from steps.when_impl import (
     visit_page,
 )
 
+
 @given('"{actor_alias}" went to the "{page_name}" page')
 @given('"{actor_alias}" goes to the "{page_name}" page')
 @given('"{actor_alias}" visits the "{page_name}" page')
