@@ -2,7 +2,6 @@ Feature: Case Studies
 
 
   @ED-2142
-  @fab
   @case-study
   @profile
   @fake-sso-email-verification
