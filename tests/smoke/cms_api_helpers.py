@@ -6,20 +6,21 @@ from typing import List, Tuple, Union
 from urllib.parse import urlparse
 
 import requests
+from directory_client_core.helpers import AbstractResponse
 from directory_cms_client import DirectoryCMSClient
 from directory_cms_client.client import cms_api_client
-from directory_client_core.helpers import AbstractResponse
 from directory_constants.constants import cms as SERVICE_NAMES
+from requests import Response
 from rest_framework.status import (
     HTTP_200_OK,
+    HTTP_302_FOUND,
     HTTP_401_UNAUTHORIZED,
     HTTP_403_FORBIDDEN,
     HTTP_404_NOT_FOUND,
 )
-from requests import Response
 from retrying import retry
 
-from tests import get_relative_url, get_absolute_url
+from tests import get_absolute_url, get_relative_url
 from tests.settings import (
     DIRECTORY_CMS_API_CLIENT_API_KEY,
     DIRECTORY_CMS_API_CLIENT_BASE_URL,
@@ -72,7 +73,10 @@ def check_for_special_urls_cases(url: str) -> str:
 
 def check_for_special_page_cases(page: dict) -> str:
     if page["page_type"] in [
-        "ArticlePage", "ArticleListingPage", "SuperregionPage", "CountryGuidePage"
+        "ArticlePage",
+        "ArticleListingPage",
+        "SuperregionPage",
+        "CountryGuidePage",
     ]:
         url = check_for_special_urls_cases(page["full_url"])
     elif page["page_type"] in ["ContactSuccessPage", "ContactUsGuidancePage"]:
@@ -80,13 +84,13 @@ def check_for_special_page_cases(page: dict) -> str:
         # we need to remove last part of the URL path
         url = page["meta"]["url"]
         p = urlparse(page["meta"]["url"])
-        short_path = p.path[:p.path.rfind("/", 0, p.path.rfind("/", 0))+1]
+        short_path = p.path[: p.path.rfind("/", 0, p.path.rfind("/", 0)) + 1]
         url = url.replace(p.path, short_path)
     elif page["page_type"] in [
         "InvestHomePage",
         "LandingPage",
         "HomePage",
-        "InternationalLandingPage"
+        "InternationalLandingPage",
     ]:
         # All draft version of pages that use CMS components are affected by bug CMS-754
         # invest homepage
@@ -114,11 +118,13 @@ def check_for_special_page_cases(page: dict) -> str:
 
 def should_skip_never_published_page(response: AbstractResponse) -> bool:
     if response.status_code == HTTP_404_NOT_FOUND:
-        print(f"GET {response.raw_response.request.url} → 404. Maybe this page was never published")
+        print(
+            f"GET {response.raw_response.request.url} → 404. Maybe this page was never published"
+        )
         return True
     return False
-    
-    
+
+
 def should_skip_url(url: str) -> bool:
     skip = [
         "/markets/",  # ATM there's no landing page for markets
@@ -143,7 +149,8 @@ def should_skip_url(url: str) -> bool:
 
 
 def status_error(
-        expected_status_code: int, response: Union[AbstractResponse, Response]):
+    expected_status_code: int, response: Union[AbstractResponse, Response]
+):
     if isinstance(response, AbstractResponse):
         return (
             f"{response.raw_response.request.method} {response.raw_response.url} "
@@ -163,18 +170,24 @@ def status_error(
 
 
 def get_and_assert(
-    url: str, status_code: int, *, auth: tuple = None, cookies: dict = None,
-    params: dict = None, allow_redirects: bool = False,
+    url: str,
+    status_code: int,
+    *,
+    auth: tuple = None,
+    cookies: dict = None,
+    params: dict = None,
+    allow_redirects: bool = False,
 ) -> Response:
     response = requests.get(
-        url, params=params, auth=auth, cookies=cookies,
-        allow_redirects=allow_redirects,
+        url, params=params, auth=auth, cookies=cookies, allow_redirects=allow_redirects
     )
     was_denied = "Access Denied" in response.content.decode("UTF-8")
     if response.status_code == HTTP_200_OK and was_denied:
         print(f"Request to {url} was denied. Will try to re-authorize")
         response = requests.get(response.url, auth=auth, cookies=cookies)
-    if response.history and (response.status_code in [HTTP_401_UNAUTHORIZED, HTTP_403_FORBIDDEN]):
+    if response.history and (
+        response.status_code in [HTTP_401_UNAUTHORIZED, HTTP_403_FORBIDDEN]
+    ):
         print(
             f"Request to {url} was redirected to {response.url} which asked for"
             f" credentials, will try to authorize with basic auth"
@@ -199,9 +212,7 @@ def get_page_ids_by_type(page_type: str) -> Tuple[List[int], int]:
     endpoint = f"{relative_url}?type={page_type}"
     response = cms_api_client.get(endpoint)
     total_response_time = response.raw_response.elapsed.total_seconds()
-    assert response.status_code == HTTP_200_OK, status_error(
-        HTTP_200_OK, response
-    )
+    assert response.status_code == HTTP_200_OK, status_error(HTTP_200_OK, response)
 
     # get IDs of all pages from the response
     content = response.json()
@@ -209,16 +220,16 @@ def get_page_ids_by_type(page_type: str) -> Tuple[List[int], int]:
 
     total_count = content["meta"]["total_count"]
     if total_count > len(page_ids):
-        print(f"Found more than {len(content['items'])} pages of {page_type} "
-              f"type. Will fetch details of all remaining pages")
+        print(
+            f"Found more than {len(content['items'])} pages of {page_type} "
+            f"type. Will fetch details of all remaining pages"
+        )
     while len(page_ids) < total_count:
         offset = len(page_ids) + len(content["items"])
         endpoint = f"{relative_url}?type={page_type}&offset={offset}"
         response = cms_api_client.get(endpoint)
         total_response_time += response.raw_response.elapsed.total_seconds()
-        assert response.status_code == HTTP_200_OK, status_error(
-            HTTP_200_OK, response
-        )
+        assert response.status_code == HTTP_200_OK, status_error(HTTP_200_OK, response)
         content = response.json()
         page_ids += [page["id"] for page in content["items"]]
 
@@ -233,17 +244,17 @@ def sync_requests(endpoints: List[str]):
     result = []
     for endpoint in endpoints:
         response = cms_api_client.get(endpoint)
-        print(f"Got response from {response.raw_response.url} in: "
-              f"{response.raw_response.elapsed.total_seconds()}s")
+        print(
+            f"Got response from {response.raw_response.url} in: "
+            f"{response.raw_response.elapsed.total_seconds()}s"
+        )
         result.append(response)
     return result
 
 
 def get_pages_types(*, skip: list = None) -> List[str]:
     response = cms_api_client.get(get_relative_url("cms-api:page-types"))
-    assert response.status_code == HTTP_200_OK, status_error(
-        HTTP_200_OK, response
-    )
+    assert response.status_code == HTTP_200_OK, status_error(HTTP_200_OK, response)
     types = response.json()["types"]
     # remove generic (parent) page type common to all pages
     types.remove("wagtailcore.page")
@@ -260,13 +271,17 @@ def get_pages_from_api(page_types: list, *, use_async_client: bool = True) -> di
     for page_type in page_types:
         page_ids_of_type, responses_time = get_page_ids_by_type(page_type)
         count = str(len(page_ids_of_type)).rjust(2, " ")
-        print(f"Found {count} {page_type} pages in {responses_time}s {page_ids_of_type}")
+        print(
+            f"Found {count} {page_type} pages in {responses_time}s {page_ids_of_type}"
+        )
         page_endpoints_by_type[page_type] += [f"{base}{id}/" for id in page_ids_of_type]
 
     for page_type in page_endpoints_by_type:
         if use_async_client:
             loop = asyncio.get_event_loop()
-            responses[page_type] += loop.run_until_complete(fetch(page_endpoints_by_type[page_type]))
+            responses[page_type] += loop.run_until_complete(
+                fetch(page_endpoints_by_type[page_type])
+            )
         else:
             responses[page_type] = sync_requests(page_endpoints_by_type[page_type])
 
