@@ -98,15 +98,10 @@ def collate_products_and_countries(
     return list_of_values
 
 
-def search(
-    driver: WebDriver, product_types: List[str], country_names: List[str]
-):
+def search(driver: WebDriver, product_types: List[str], country_names: List[str]):
     form_selectors = SELECTORS["form"]
     button = find_element(
-        driver,
-        SEARCH_BUTTON,
-        element_name="start your search now",
-        wait_for_it=True,
+        driver, SEARCH_BUTTON, element_name="start your search now", wait_for_it=True
     )
     scroll_to(driver, button)
     values = collate_products_and_countries(product_types, country_names)
@@ -126,9 +121,7 @@ def should_see_marketplaces(driver: WebDriver, countries: str):
     ]
 
     if len(marketplace_countries) > 0:
-        countries = list(
-            set(expected_countries).intersection(marketplace_countries)
-        )
+        countries = list(set(expected_countries).intersection(marketplace_countries))
 
         with assertion_msg(
             "Expected to see '%s' in the marketplace search page but got '%s' instead",

@@ -99,10 +99,7 @@ def collate_products_and_countries(
 def search(driver: WebDriver, products: List[str], countries: List[str]):
     form_selectors = SELECTORS["expected elements"]
     button = find_element(
-        driver,
-        SEARCH_BUTTON,
-        element_name="start your search now",
-        wait_for_it=True,
+        driver, SEARCH_BUTTON, element_name="start your search now", wait_for_it=True
     )
     scroll_to(driver, button)
     values = collate_products_and_countries(products, countries)

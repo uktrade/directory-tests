@@ -13,9 +13,7 @@ def autocomplete_product_type(driver: WebDriver):
     autocomplete = Selector(
         By.CSS_SELECTOR, "ul#search-product-dropdown", is_visible=True
     )
-    find_element(
-        driver, autocomplete, element_name="Autocomplete", wait_for_it=True
-    )
+    find_element(driver, autocomplete, element_name="Autocomplete", wait_for_it=True)
     options = find_elements(
         driver, Selector(By.CSS_SELECTOR, "li > a.form-dropdown-option")
     )
@@ -29,18 +27,15 @@ def autocomplete_product_type(driver: WebDriver):
 def autocomplete_country_name(driver: WebDriver):
     # wait for the response from Geography API
     import time
+
     time.sleep(1)
     autocomplete = Selector(
         By.CSS_SELECTOR, "ul#search-country-dropdown", is_visible=True
     )
-    find_element(
-        driver, autocomplete, element_name="Autocomplete", wait_for_it=True
-    )
+    find_element(driver, autocomplete, element_name="Autocomplete", wait_for_it=True)
     options = find_elements(
         driver,
-        Selector(
-            By.CSS_SELECTOR, "li > a.form-dropdown-option", is_visible=True
-        ),
+        Selector(By.CSS_SELECTOR, "li > a.form-dropdown-option", is_visible=True),
     )
     option = random.choice(options)
     logging.debug(
