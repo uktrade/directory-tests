@@ -1,5 +1,4 @@
 import logging
-
 from collections import namedtuple
 from enum import Enum
 
@@ -14,7 +13,7 @@ from settings import (
     MAILGUN_INVEST_EVENTS_URL,
     MAILGUN_INVEST_SECRET_API_KEY,
 )
-from utils.request import make_request, Method
+from utils.request import Method, make_request
 
 
 class MailGunEvent(Enum):
@@ -72,18 +71,18 @@ class MailGunService(Enum):
 
 @retry(wait_fixed=15000, stop_max_attempt_number=9)
 def find_mailgun_events(
-        context: Context,
-        service: MailGunService,
-        *,
-        sender: str = None,
-        recipient: str = None,
-        to: str = None,
-        subject: str = None,
-        limit: int = None,
-        event: MailGunEvent = None,
-        begin: str = None,
-        end: str = None,
-        ascending: str = None
+    context: Context,
+    service: MailGunService,
+    *,
+    sender: str = None,
+    recipient: str = None,
+    to: str = None,
+    subject: str = None,
+    limit: int = None,
+    event: MailGunEvent = None,
+    begin: str = None,
+    end: str = None,
+    ascending: str = None
 ) -> Response:
     """
 
@@ -122,29 +121,24 @@ def find_mailgun_events(
         params.update({"ascending": ascending})
 
     response = make_request(
-        Method.GET,
-        service.url,
-        auth=(service.user, service.secret),
-        params=params,
+        Method.GET, service.url, auth=(service.user, service.secret), params=params
     )
     context.response = response
     with assertion_msg(
-            "Expected 200 OK from MailGun when searching for an event %s",
-            response.status_code,
+        "Expected 200 OK from MailGun when searching for an event %s",
+        response.status_code,
     ):
         assert response.status_code == 200
     number_of_events = len(response.json()["items"])
     if limit:
         with assertion_msg(
-                "Expected (maximum) %d events but got %d instead.",
-                limit,
-                number_of_events,
+            "Expected (maximum) %d events but got %d instead.", limit, number_of_events
         ):
             assert number_of_events <= limit
     with assertion_msg(
-            "Expected to find at least 1 MailGun event, got 0 instead. User "
-            "parameters: %s",
-            params,
+        "Expected to find at least 1 MailGun event, got 0 instead. User "
+        "parameters: %s",
+        params,
     ):
         assert number_of_events > 0
     logging.debug(
@@ -156,13 +150,13 @@ def find_mailgun_events(
 
 
 def mailgun_invest_find_contact_confirmation_email(
-        context: Context, sender: str, recipient: str, *,
-        subject: str = INVEST_CONTACT_CONFIRMATION_SUBJECT):
-    logging.debug(
-        "Trying to find contact confirmation email sent to: "
-        "%s",
-        recipient,
-    )
+    context: Context,
+    sender: str,
+    recipient: str,
+    *,
+    subject: str = INVEST_CONTACT_CONFIRMATION_SUBJECT
+):
+    logging.debug("Trying to find contact confirmation email sent to: " "%s", recipient)
     response = find_mailgun_events(
         context,
         sender=sender,
@@ -173,7 +167,6 @@ def mailgun_invest_find_contact_confirmation_email(
     )
     context.response = response
     with assertion_msg(
-            "Expected to find a contact confirmation email sent to: %s",
-            recipient
+        "Expected to find a contact confirmation email sent to: %s", recipient
     ):
         assert response.status_code == 200

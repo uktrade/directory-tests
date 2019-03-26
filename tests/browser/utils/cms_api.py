@@ -9,7 +9,7 @@ def get_news_articles(service: str, visitor_type: str) -> List[dict]:
         "export readiness": {
             "domestic": "home",
             "international": "international-eu-exit-news",
-        },
+        }
     }
     slug = news_slugs[service.lower()][visitor_type.lower()]
     response = cms_api_client.lookup_by_slug(slug).json()

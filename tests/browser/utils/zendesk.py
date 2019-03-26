@@ -5,12 +5,12 @@ from typing import List
 from zenpy import Zenpy
 from zenpy.lib.api_objects import Ticket
 
-from settings import ZENDESK_EMAIL, ZENDESK_TOKEN, ZENDESK_SUBDOMAIN
+from settings import ZENDESK_EMAIL, ZENDESK_SUBDOMAIN, ZENDESK_TOKEN
 
 credentials = {
-    'email': ZENDESK_EMAIL,
-    'token': ZENDESK_TOKEN,
-    'subdomain': ZENDESK_SUBDOMAIN,
+    "email": ZENDESK_EMAIL,
+    "token": ZENDESK_TOKEN,
+    "subdomain": ZENDESK_SUBDOMAIN,
 }
 
 ZENPY_CLIENT = Zenpy(**credentials)
@@ -36,9 +36,9 @@ def filter_by_subject(tickets: List[Ticket], subject: str) -> List[Ticket]:
 
 
 def filter_by_content(tickets: List[Ticket], strings: List[str]) -> List[Ticket]:
-    return list(filter(lambda x:
-                       all(string in x.description for string in strings),
-                       tickets))
+    return list(
+        filter(lambda x: all(string in x.description for string in strings), tickets)
+    )
 
 
 def find_tickets(email: str, subject: str) -> List[Ticket]:

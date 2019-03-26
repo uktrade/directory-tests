@@ -23,7 +23,7 @@ from requests.exceptions import (
     Timeout,
     TooManyRedirects,
     UnrewindableBodyError,
-    URLRequired
+    URLRequired,
 )
 from termcolor import cprint
 from urllib3.exceptions import HTTPError as BaseHTTPError
@@ -32,16 +32,32 @@ from pages.common_actions import assertion_msg
 
 # a list of exceptions that can be thrown by `requests` (and urllib3)
 REQUEST_EXCEPTIONS = (
-    BaseHTTPError, RequestException, HTTPError, ConnectionError, ProxyError,
-    SSLError, Timeout, ConnectTimeout, ReadTimeout, URLRequired,
-    TooManyRedirects, MissingSchema, InvalidSchema, InvalidURL, InvalidHeader,
-    ChunkedEncodingError, ContentDecodingError, StreamConsumedError,
-    RetryError, UnrewindableBodyError
+    BaseHTTPError,
+    RequestException,
+    HTTPError,
+    ConnectionError,
+    ProxyError,
+    SSLError,
+    Timeout,
+    ConnectTimeout,
+    ReadTimeout,
+    URLRequired,
+    TooManyRedirects,
+    MissingSchema,
+    InvalidSchema,
+    InvalidURL,
+    InvalidHeader,
+    ChunkedEncodingError,
+    ContentDecodingError,
+    StreamConsumedError,
+    RetryError,
+    UnrewindableBodyError,
 )
 
 
 class Method(Enum):
     """Lists all HTTP methods supported by `requests`."""
+
     DELETE = 0
     GET = 1
     HEAD = 2
@@ -58,15 +74,15 @@ class Method(Enum):
 
 
 def red(x: str):
-    cprint(x, 'red', attrs=['bold'])
+    cprint(x, "red", attrs=["bold"])
 
 
 def green(x: str):
-    cprint(x, 'green', attrs=['bold'])
+    cprint(x, "green", attrs=["bold"])
 
 
 def blue(x: str):
-    cprint(x, 'blue', attrs=['bold'])
+    cprint(x, "blue", attrs=["bold"])
 
 
 def decode_as_utf8(content):
@@ -89,21 +105,21 @@ def log_response(response: Response, *, trim: bool = True):
     trim_offset = 1024  # define the length of logged response content
 
     logging.debug(
-        "RESPONSE TIME | %s | %s %s", str(response.elapsed), request.method,
-        request.url)
+        "RESPONSE TIME | %s | %s %s", str(response.elapsed), request.method, request.url
+    )
     if response.history:
         logging.debug("REQ was redirected")
         for r in response.history:
             logging.debug("Intermediate REQ: %s %s", r.request.method, r.url)
-            if r.request.headers.get('Authorization'):
-                r.request.headers['Authorization'] = 'STRIPPED_OUT'
+            if r.request.headers.get("Authorization"):
+                r.request.headers["Authorization"] = "STRIPPED_OUT"
             logging.debug("Intermediate REQ Headers: %s", r.request.headers)
             if r.request.body:
                 body = decode_as_utf8(r.request.body)
                 if trim:
                     logging.debug(
-                        "Intermediate REQ Body (trimmed): %s",
-                        body[0:trim_offset])
+                        "Intermediate REQ Body (trimmed): %s", body[0:trim_offset]
+                    )
                 else:
                     logging.debug("Intermediate REQ Body: %s", body)
             else:
@@ -114,21 +130,25 @@ def log_response(response: Response, *, trim: bool = True):
                 content = decode_as_utf8(r.content)
                 if trim:
                     logging.debug(
-                        "Intermediate RESP Content: %s",
-                        content[0:trim_offset])
+                        "Intermediate RESP Content: %s", content[0:trim_offset]
+                    )
                 else:
                     logging.debug("Intermediate RSP Content: %s", content)
         logging.debug(
-            "Final destination: %s %s -> %d %s", request.method, request.url,
-            response.status_code, response.url)
+            "Final destination: %s %s -> %d %s",
+            request.method,
+            request.url,
+            response.status_code,
+            response.url,
+        )
     else:
         logging.debug("REQ URL: %s %s", request.method, request.url)
-        if request.headers.get('Authorization'):
-            request.headers['Authorization'] = 'STRIPPED_OUT'
+        if request.headers.get("Authorization"):
+            request.headers["Authorization"] = "STRIPPED_OUT"
         logging.debug("REQ Headers:", request.headers)
 
-        if request.headers.get('Set-Cookie'):
-            logging.debug("REQ Cookies:", request.headers.get('Set-Cookie'))
+        if request.headers.get("Set-Cookie"):
+            logging.debug("REQ Cookies:", request.headers.get("Set-Cookie"))
 
         if request.body:
             body = decode_as_utf8(request.body)
@@ -139,8 +159,7 @@ def log_response(response: Response, *, trim: bool = True):
         else:
             logging.debug("REQ had no body")
 
-        logging.debug(
-            "RSP Status: %s %s", response.status_code, response.reason)
+        logging.debug("RSP Status: %s %s", response.status_code, response.reason)
         logging.debug("RSP URL: %s", response.url)
         logging.debug("RSP Headers: %s", response.headers)
         logging.debug("RSP Cookies: %s", response.cookies)
@@ -154,11 +173,18 @@ def log_response(response: Response, *, trim: bool = True):
 
 
 def make_request(
-        method: Method, url: str, *, session: Session = None,
-        params: dict = None, headers: dict = None,
-        data: dict = None, files: dict = None,
-        allow_redirects: bool = True, auth: tuple = None, trim: bool = True) \
-        -> Response:
+    method: Method,
+    url: str,
+    *,
+    session: Session = None,
+    params: dict = None,
+    headers: dict = None,
+    data: dict = None,
+    files: dict = None,
+    allow_redirects: bool = True,
+    auth: tuple = None,
+    trim: bool = True
+) -> Response:
     """Make a desired HTTP request using optional parameters, headers and data.
 
     NOTE:
@@ -194,9 +220,15 @@ def make_request(
     connect_timeout = 3.05
     read_timeout = 60
     request_kwargs = dict(
-        url=url, params=params, headers=headers, data=data,
-        files=files, allow_redirects=allow_redirects,
-        timeout=(connect_timeout, read_timeout), auth=auth)
+        url=url,
+        params=params,
+        headers=headers,
+        data=data,
+        files=files,
+        allow_redirects=allow_redirects,
+        timeout=(connect_timeout, read_timeout),
+        auth=auth,
+    )
 
     if not allow_redirects:
         msg = "REQ Follow redirects: disabled"
@@ -221,12 +253,11 @@ def make_request(
         else:
             raise KeyError("Unrecognized Method: %s", method.name)
     except REQUEST_EXCEPTIONS as ex:
-        red("Exception UTC datetime: %s" %
-            datetime.isoformat(datetime.utcnow()))
+        red("Exception UTC datetime: %s" % datetime.isoformat(datetime.utcnow()))
         red("{} {}".format(method, url))
         red("Parameters: {}".format(params))
-        if headers.get('Authorization'):
-            headers['Authorization'] = 'STRIPPED_OUT'
+        if headers.get("Authorization"):
+            headers["Authorization"] = "STRIPPED_OUT"
         red("Headers: {}".format(headers))
         red("Data: {}".format(data))
         red("Files: {}".format(files))

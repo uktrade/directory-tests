@@ -7,13 +7,13 @@ from pdfminer.pdfpage import PDFPage
 
 
 def extract_text_from_pdf_bytes(
-        pdf_bytes: bytes,
-        *,
-        codec: str = "utf-8",
-        password: str = "",
-        maxpages: int = 0,
-        caching: bool = True,
-        remove_empty_lines: bool = True,
+    pdf_bytes: bytes,
+    *,
+    codec: str = "utf-8",
+    password: str = "",
+    maxpages: int = 0,
+    caching: bool = True,
+    remove_empty_lines: bool = True,
 ) -> str:
     resource_manager = PDFResourceManager()
     out_file = io.StringIO()
@@ -23,8 +23,13 @@ def extract_text_from_pdf_bytes(
     interpreter = PDFPageInterpreter(resource_manager, device)
     page_numbers = set()
     pdf_pages = PDFPage.get_pages(
-        pdf_file, page_numbers, maxpages=maxpages, password=password,
-        caching=caching, check_extractable=True)
+        pdf_file,
+        page_numbers,
+        maxpages=maxpages,
+        password=password,
+        caching=caching,
+        check_extractable=True,
+    )
     for page in pdf_pages:
         interpreter.process_page(page)
 
