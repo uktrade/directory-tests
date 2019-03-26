@@ -5,11 +5,7 @@ from urllib.parse import urljoin
 
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages.common_actions import (
-    check_url,
-    go_to_url,
-    take_screenshot,
-)
+from pages.common_actions import check_url, go_to_url, take_screenshot
 from settings import EXPORT_OPPORTUNITIES_UI_URL
 
 NAME = "Home"
