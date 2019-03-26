@@ -1728,7 +1728,7 @@ def fas_search_with_term(context: Context, actor_alias: str, search_term: str):
     fas_ui_find_supplier.should_be_here(context.response)
 
 
-def fab_go_to_letter_verification(
+def profile_go_to_letter_verification(
     context: Context, supplier_alias: str, logged_in: bool
 ):
     actor = context.get_actor(supplier_alias)

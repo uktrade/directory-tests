@@ -23,6 +23,7 @@ EXPECTED_STRINGS_NO_DESCRIPTION = [
 ]
 
 EXPECTED_STRINGS_VERIFIED = [
+    "Publish your business profile",
     "You can now publish your business profile",
 ]
 

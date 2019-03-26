@@ -11,7 +11,7 @@ from tests.functional.steps.fab_when_impl import (
     fab_choose_to_verify_with_code,
     fab_collaborator_create_sso_account_and_confirm_email,
     fab_confirm_collaboration_request,
-    fab_go_to_letter_verification,
+    profile_go_to_letter_verification,
     fab_provide_company_details,
     fab_remove_collaborators,
     fab_select_preferred_countries_of_export,
@@ -282,16 +282,14 @@ def step_impl(context, actor_alias, search_term):
     fas_search_with_term(context, actor_alias, search_term)
 
 
-@when('"{supplier_alias}" goes to the verification link from the letter as '
-      'authenticated user')
+@when('"{supplier_alias}" goes to the verification link from the letter as authenticated user')
 def when_supplier_goes_to_verify_page_auth(context, supplier_alias):
-    fab_go_to_letter_verification(context, supplier_alias, True)
+    profile_go_to_letter_verification(context, supplier_alias, True)
 
 
-@when('"{supplier_alias}" goes to the verification link from the letter as '
-      'unauthenticated user')
+@when('"{supplier_alias}" goes to the verification link from the letter as unauthenticated user')
 def when_supplier_goes_to_verify_page_unauth(context, supplier_alias):
-    fab_go_to_letter_verification(context, supplier_alias, False)
+    profile_go_to_letter_verification(context, supplier_alias, False)
 
 
 @when('"{supplier_alias}" decides to verify her identity with the address')
