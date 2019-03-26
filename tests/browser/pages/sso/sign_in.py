@@ -9,14 +9,13 @@ from pages import ElementType
 from pages.common_actions import (
     Selector,
     check_url,
+    find_and_click_on_page_element,
     find_element,
     go_to_url,
     take_screenshot,
     wait_for_page_load_after_action,
 )
 from settings import DIRECTORY_UI_SSO_URL
-
-from pages.common_actions import find_and_click_on_page_element
 
 NAME = "Sign in"
 SERVICE = "Single Sign-On"
@@ -28,8 +27,9 @@ EMAIL_INPUT = Selector(By.ID, "id_login")
 PASSWORD_INPUT = Selector(By.ID, "id_login")
 SIGN_IN_BUTTON = Selector(By.CSS_SELECTOR, "form button")
 REGISTER_BUTTON = Selector(
-    By.CSS_SELECTOR, "#login-form-container > div:nth-child(2) > section > a",
-    type=ElementType.LINK
+    By.CSS_SELECTOR,
+    "#login-form-container > div:nth-child(2) > section > a",
+    type=ElementType.LINK,
 )
 RESET_YOUR_PASSWORD_LINK = Selector(By.CSS_SELECTOR, "form > a")
 SELECTORS = {
@@ -40,9 +40,7 @@ SELECTORS = {
         "sign in": SIGN_IN_BUTTON,
         "forgotten password?": RESET_YOUR_PASSWORD_LINK,
     },
-    "register for an account": {
-        "register": REGISTER_BUTTON,
-    },
+    "register for an account": {"register": REGISTER_BUTTON},
 }
 
 
