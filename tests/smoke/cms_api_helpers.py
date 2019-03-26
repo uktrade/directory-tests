@@ -101,6 +101,7 @@ def check_for_special_page_cases(page: dict) -> str:
         skip_full_paths = [
             "/home-page/",  # Invest home page
             "/landing-page/",  # FAS home page
+            "//landing-page/",  # Broken FAS home page check TT-1278
             "/home/",  # ExRed home page
             "/international/",  # International landing page
         ]
