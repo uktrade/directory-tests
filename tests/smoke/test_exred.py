@@ -8,7 +8,6 @@ from tests.smoke.cms_api_helpers import get_and_assert
 @pytest.mark.parametrize(
     "url",
     [
-        get_absolute_url("ui-exred:landing"),
         get_absolute_url("ui-exred:landing-uk"),
         get_absolute_url("ui-exred:international"),
         get_absolute_url("ui-exred:international-uk"),
@@ -36,6 +35,21 @@ from tests.smoke.cms_api_helpers import get_and_assert
 )
 def test_exred_pages(url, basic_auth):
     get_and_assert(url=url, status_code=HTTP_200_OK, auth=basic_auth)
+
+
+@pytest.mark.parametrize(
+    "url",
+    [
+        get_absolute_url("ui-exred:landing"),
+    ],
+)
+def test_exred_home_page_might_redirect_to_international(url, basic_auth):
+    response = get_and_assert(
+        url=url, status_code=HTTP_200_OK, auth=basic_auth, allow_redirects=True
+    )
+    if response.history:
+        last_redirect = response.history[-1]
+        assert last_redirect.headers["location"] == "/international/?lang=en-gb"
 
 
 @pytest.mark.parametrize(
