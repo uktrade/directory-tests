@@ -27,11 +27,11 @@ NOT_ALLOWED = {
 
 
 def should_be_present(driver: WebDriver, name: str):
-    find_element(
-        driver, ALLOWED[name.lower()], element_name=name, wait_for_it=False)
+    find_element(driver, ALLOWED[name.lower()], element_name=name, wait_for_it=False)
     logging.debug("As expected '{}' is present".format(name))
 
 
 def should_not_be_present(driver: WebDriver, name: str):
     check_if_element_is_not_visible(
-        driver, NOT_ALLOWED[name.lower()], element_name=name)
+        driver, NOT_ALLOWED[name.lower()], element_name=name
+    )

@@ -5,11 +5,7 @@ from urllib.parse import urljoin
 
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages.common_actions import (
-    check_url,
-    take_screenshot,
-    visit_url,
-)
+from pages.common_actions import check_url, take_screenshot, visit_url
 from settings import DIRECTORY_CONTACT_US_UI_URL
 
 NAME = "Feedback"

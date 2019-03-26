@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 """Invest in Great - Contact us - Thank you for your enquiry Page Object."""
 import logging
-from typing import List, Dict
+from typing import Dict, List
 from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    Selector,
     check_for_sections,
     check_if_element_is_not_visible,
     check_url,
-    Selector,
     take_screenshot,
 )
 from settings import INVEST_UI_URL
@@ -29,12 +29,8 @@ URLs = {
     "high productivity food production": urljoin(
         URL, "food-production/contact/success/"
     ),
-    "lightweight structures": urljoin(
-        URL, "lightweight-structures/contact/success/"
-    ),
-    "rail infrastructure": urljoin(
-        URL, "rail-infrastructure/contact/success/"
-    ),
+    "lightweight structures": urljoin(URL, "lightweight-structures/contact/success/"),
+    "rail infrastructure": urljoin(URL, "rail-infrastructure/contact/success/"),
 }
 PAGE_TITLE = "High Potential Opportunities - great.gov.uk"
 
@@ -55,9 +51,7 @@ SELECTORS = {
         "itself": Selector(By.ID, "documents-section"),
         "heading": Selector(By.CSS_SELECTOR, "#documents-section h2"),
         "pdf links": PDF_LINKS,
-        "description": Selector(
-            By.CSS_SELECTOR, "#documents-section h3 ~ span"
-        ),
+        "description": Selector(By.CSS_SELECTOR, "#documents-section h3 ~ span"),
     },
     "report this page": {
         "self": Selector(By.CSS_SELECTOR, "section.error-reporting"),
@@ -88,6 +82,7 @@ def should_not_see_section(driver: WebDriver, name: str):
 
 def download_all_pdfs(driver: WebDriver) -> List[Dict[str, bytes]]:
     import requests
+
     anchors = driver.find_elements(by=PDF_LINKS.by, value=PDF_LINKS.value)
     hrefs = [anchor.get_property("href") for anchor in anchors]
     responses = [requests.get(href) for href in hrefs]

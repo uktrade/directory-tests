@@ -47,19 +47,13 @@ URLs = {
 }
 
 
-TOPIC_EXPANDERS = Selector(
-    By.CSS_SELECTOR, "section.setup-guide a.accordion-expander"
-)
+TOPIC_EXPANDERS = Selector(By.CSS_SELECTOR, "section.setup-guide a.accordion-expander")
 
 SELECTORS = {
     "header": {
         "self": Selector(By.ID, "invest-header"),
-        "logo": Selector(
-            By.CSS_SELECTOR, "#invest-header > div.header-bar  a"
-        ),
-        "contact us": Selector(
-            By.CSS_SELECTOR, "#invest-header a[href='/contact/']"
-        ),
+        "logo": Selector(By.CSS_SELECTOR, "#invest-header > div.header-bar  a"),
+        "contact us": Selector(By.CSS_SELECTOR, "#invest-header a[href='/contact/']"),
     },
     "beta bar": {
         "self": Selector(By.ID, "header-beta-bar"),
@@ -81,12 +75,10 @@ SELECTORS = {
     "footer": {
         "self": Selector(By.ID, "invest-footer"),
         "uk gov logo": Selector(
-            By.CSS_SELECTOR,
-            "#invest-footer div.footer-branding > img:nth-child(1)",
+            By.CSS_SELECTOR, "#invest-footer div.footer-branding > img:nth-child(1)"
         ),
         "invest logo": Selector(
-            By.CSS_SELECTOR,
-            "#invest-footer div.footer-branding > img:nth-child(2)",
+            By.CSS_SELECTOR, "#invest-footer div.footer-branding > img:nth-child(2)"
         ),
     },
 }
@@ -130,9 +122,7 @@ def should_see_content_for(driver: WebDriver, region_name: str):
 
 def unfold_topics(driver: WebDriver):
     expanders = find_elements(driver, TOPIC_EXPANDERS)
-    assert (
-        expanders
-    ), "Expected to see at least 1 topic but found 0 on {}".format(
+    assert expanders, "Expected to see at least 1 topic but found 0 on {}".format(
         driver.current_url
     )
     for expander in expanders:

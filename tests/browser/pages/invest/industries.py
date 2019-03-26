@@ -27,12 +27,8 @@ PAGE_TITLE = "Invest In Great Britain - Invest in UK Industries"
 SELECTORS = {
     "header": {
         "self": Selector(By.ID, "invest-header"),
-        "logo": Selector(
-            By.CSS_SELECTOR, "#invest-header > div.header-bar  a"
-        ),
-        "contact us": Selector(
-            By.CSS_SELECTOR, "#invest-header a[href='/contact/']"
-        ),
+        "logo": Selector(By.CSS_SELECTOR, "#invest-header > div.header-bar  a"),
+        "contact us": Selector(By.CSS_SELECTOR, "#invest-header a[href='/contact/']"),
     },
     "beta bar": {
         "self": Selector(By.ID, "header-beta-bar"),
@@ -53,12 +49,10 @@ SELECTORS = {
     "footer": {
         "self": Selector(By.ID, "invest-footer"),
         "uk gov logo": Selector(
-            By.CSS_SELECTOR,
-            "#invest-footer div.footer-branding > img:nth-child(1)",
+            By.CSS_SELECTOR, "#invest-footer div.footer-branding > img:nth-child(1)"
         ),
         "invest logo": Selector(
-            By.CSS_SELECTOR,
-            "#invest-footer div.footer-branding > img:nth-child(2)",
+            By.CSS_SELECTOR, "#invest-footer div.footer-branding > img:nth-child(2)"
         ),
     },
 }

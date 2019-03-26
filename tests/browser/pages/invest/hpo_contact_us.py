@@ -10,6 +10,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from pages import ElementType
 from pages.common_actions import (
     Actor,
+    Selector,
     check_for_sections,
     check_if_element_is_not_visible,
     check_url,
@@ -18,7 +19,6 @@ from pages.common_actions import (
     find_element,
     find_selector_by_name,
     pick_option_from_autosuggestion,
-    Selector,
     take_screenshot,
     tick_captcha_checkbox,
     tick_checkboxes_by_labels,
@@ -36,9 +36,7 @@ SERVICE = "Invest"
 TYPE = "HPO Contact us"
 URL = urljoin(INVEST_UI_URL, "high-potential-opportunities/")
 URLs = {
-    "high productivity food production": urljoin(
-        URL, "food-production/contact/"
-    ),
+    "high productivity food production": urljoin(URL, "food-production/contact/"),
     "lightweight structures": urljoin(URL, "lightweight-structures/contact/"),
     "rail infrastructure": urljoin(URL, "rail-infrastructure/contact/"),
 }
@@ -56,22 +54,13 @@ SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#content form"),
         "full name": Selector(By.ID, "id_full_name", type=ElementType.INPUT),
-        "job title": Selector(
-            By.ID, "id_role_in_company", type=ElementType.INPUT
-        ),
+        "job title": Selector(By.ID, "id_role_in_company", type=ElementType.INPUT),
         "email": Selector(By.ID, "id_email_address", type=ElementType.INPUT),
         "phone": Selector(By.ID, "id_phone_number", type=ElementType.INPUT),
-        "company name": Selector(
-            By.ID, "id_company_name", type=ElementType.INPUT
-        ),
-        "website url": Selector(
-            By.ID, "id_website_url", type=ElementType.INPUT
-        ),
+        "company name": Selector(By.ID, "id_company_name", type=ElementType.INPUT),
+        "website url": Selector(By.ID, "id_website_url", type=ElementType.INPUT),
         "country": Selector(
-            By.ID,
-            "js-country-select-select",
-            type=ElementType.SELECT,
-            is_visible=False,
+            By.ID, "js-country-select-select", type=ElementType.SELECT, is_visible=False
         ),
         "organisation size": Selector(
             By.ID, "id_company_size", type=ElementType.SELECT
@@ -172,7 +161,7 @@ def generate_form_details(actor: Actor) -> dict:
         "high productivity food production": True,
         "lightweight structures": True,
         "rail infrastructure": True,
-        "terms and conditions": True
+        "terms and conditions": True,
     }
     return details
 

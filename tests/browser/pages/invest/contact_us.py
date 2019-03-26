@@ -10,13 +10,13 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from pages import ElementType
 from pages.common_actions import (
     Actor,
+    Selector,
     check_for_sections,
     check_url,
     fill_out_input_fields,
     fill_out_textarea_fields,
     find_element,
     pick_option,
-    Selector,
     take_screenshot,
     tick_captcha_checkbox,
     visit_url,
@@ -42,12 +42,8 @@ SELECTORS = {
         "job title": Selector(By.ID, "id_job_title", type=ElementType.INPUT),
         "email": Selector(By.ID, "id_email", type=ElementType.INPUT),
         "phone": Selector(By.ID, "id_phone_number", type=ElementType.INPUT),
-        "company name": Selector(
-            By.ID, "id_company_name", type=ElementType.INPUT
-        ),
-        "website url": Selector(
-            By.ID, "id_company_website", type=ElementType.INPUT
-        ),
+        "company name": Selector(By.ID, "id_company_name", type=ElementType.INPUT),
+        "website url": Selector(By.ID, "id_company_website", type=ElementType.INPUT),
         "country": Selector(
             By.CSS_SELECTOR,
             "select[name='country']",
@@ -57,9 +53,7 @@ SELECTORS = {
         "organisation size": Selector(
             By.ID, "id_staff_number", type=ElementType.SELECT, is_visible=False
         ),
-        "your plans": Selector(
-            By.ID, "id_description", type=ElementType.TEXTAREA
-        ),
+        "your plans": Selector(By.ID, "id_description", type=ElementType.TEXTAREA),
         "captcha": Selector(
             By.CSS_SELECTOR, "#form-container iframe", type=ElementType.IFRAME
         ),

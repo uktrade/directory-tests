@@ -15,9 +15,9 @@ from pages.common_actions import (
     check_title,
     find_and_click_on_page_element,
     find_element,
+    find_elements,
     take_screenshot,
     visit_url,
-    find_elements
 )
 from settings import INVEST_UI_URL
 
@@ -30,7 +30,7 @@ PAGE_TITLE = "Invest in Great Britain - Home"
 TOPIC_LINKS = Selector(
     By.CSS_SELECTOR,
     "section.landing-page-accordions > div > ul > li > a",
-    type=ElementType.LINK
+    type=ElementType.LINK,
 )
 TOPIC_CONTENTS = Selector(
     By.CSS_SELECTOR,

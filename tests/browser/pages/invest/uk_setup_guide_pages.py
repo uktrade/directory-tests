@@ -36,9 +36,7 @@ SELECTORS = {
     "header": {
         "self": Selector(By.ID, "invest-header"),
         "logo": Selector(By.CSS_SELECTOR, "#invest-header > div.header-bar a"),
-        "contact us": Selector(
-            By.CSS_SELECTOR, "#invest-header a[href='/contact/']"
-        ),
+        "contact us": Selector(By.CSS_SELECTOR, "#invest-header a[href='/contact/']"),
     },
     "beta bar": {
         "self": Selector(By.ID, "header-beta-bar"),
@@ -59,12 +57,10 @@ SELECTORS = {
     "footer": {
         "self": Selector(By.ID, "invest-footer"),
         "uk gov logo": Selector(
-            By.CSS_SELECTOR,
-            "#invest-footer div.footer-branding > img:nth-child(1)",
+            By.CSS_SELECTOR, "#invest-footer div.footer-branding > img:nth-child(1)"
         ),
         "invest logo": Selector(
-            By.CSS_SELECTOR,
-            "#invest-footer div.footer-branding > img:nth-child(2)",
+            By.CSS_SELECTOR, "#invest-footer div.footer-branding > img:nth-child(2)"
         ),
     },
 }
@@ -77,9 +73,7 @@ URLs = {
     "hire skilled workers for your uk operations": urljoin(
         URL, "hire-skilled-workers-your-uk-operations/"
     ),
-    "open a uk business bank account": urljoin(
-        URL, "open-uk-business-bank-account/"
-    ),
+    "open a uk business bank account": urljoin(URL, "open-uk-business-bank-account/"),
     "register a company in the uk": urljoin(URL, "setup-your-business-uk/"),
     "understand uk tax and incentives": urljoin(
         URL, "understand-uk-tax-and-incentives/"

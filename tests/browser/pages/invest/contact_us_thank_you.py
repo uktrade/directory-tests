@@ -6,12 +6,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages.common_actions import (
-    check_url,
-    Selector,
-    take_screenshot,
-    visit_url,
-)
+from pages.common_actions import Selector, check_url, take_screenshot, visit_url
 from settings import INVEST_UI_URL
 
 NAME = "Thank you for your message"
@@ -20,12 +15,8 @@ TYPE = "contact"
 URL = urljoin(INVEST_UI_URL, "contact/success/")
 PAGE_TITLE = ""
 SELECTORS = {
-    "hero": {
-        "itself": Selector(By.CSS_SELECTOR, "section.hero"),
-    },
-    "success message": {
-        "itself": Selector(By.CSS_SELECTOR, "section.contact-success")
-    }
+    "hero": {"itself": Selector(By.CSS_SELECTOR, "section.hero")},
+    "success message": {"itself": Selector(By.CSS_SELECTOR, "section.contact-success")},
 }
 
 

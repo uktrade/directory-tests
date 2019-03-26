@@ -8,12 +8,12 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
+    Selector,
     assertion_msg,
     check_for_sections,
     check_if_element_is_not_visible,
     check_url,
     find_and_click_on_page_element,
-    Selector,
     take_screenshot,
     visit_url,
 )
@@ -44,9 +44,7 @@ SELECTORS = {
         "self": Selector(By.ID, "invest-header"),
         "logo": Selector(By.CSS_SELECTOR, "#invest-header > div.header-bar a"),
         "home": Selector(By.CSS_SELECTOR, "#invest-header a[href='/'] img"),
-        "contact us": Selector(
-            By.CSS_SELECTOR, "#invest-header a[href='/contact/']"
-        ),
+        "contact us": Selector(By.CSS_SELECTOR, "#invest-header a[href='/contact/']"),
     },
     "beta bar": {
         "self": Selector(By.ID, "header-beta-bar"),
@@ -70,13 +68,9 @@ SELECTORS = {
     "opportunity list": {"self": Selector(By.ID, "opportunity-list")},
     "proposition two": {
         "self": Selector(By.ID, "proposition-two"),
-        "heading": Selector(
-            By.CSS_SELECTOR, "#proposition-two div:nth-child(1) h2"
-        ),
+        "heading": Selector(By.CSS_SELECTOR, "#proposition-two div:nth-child(1) h2"),
         # "image": Selector(By.CSS_SELECTOR, "#proposition-two div:nth-child(1) img"),
-        "list of propositions": Selector(
-            By.CSS_SELECTOR, "#proposition-two ul"
-        ),
+        "list of propositions": Selector(By.CSS_SELECTOR, "#proposition-two ul"),
     },
     "competitive advantages": {
         "self": Selector(By.ID, "competitive-advantages"),
@@ -84,34 +78,28 @@ SELECTORS = {
             By.CSS_SELECTOR, "#competitive-advantages div:nth-child(1) > img"
         ),
         "first - heading": Selector(
-            By.CSS_SELECTOR,
-            "#competitive-advantages div:nth-child(1) > div > h3",
+            By.CSS_SELECTOR, "#competitive-advantages div:nth-child(1) > div > h3"
         ),
         "first - list": Selector(
-            By.CSS_SELECTOR,
-            "#competitive-advantages div:nth-child(1) > div > ul",
+            By.CSS_SELECTOR, "#competitive-advantages div:nth-child(1) > div > ul"
         ),
         "second - icon": Selector(
             By.CSS_SELECTOR, "#competitive-advantages div:nth-child(1) > img"
         ),
         "second - heading": Selector(
-            By.CSS_SELECTOR,
-            "#competitive-advantages div:nth-child(2) > div > h3",
+            By.CSS_SELECTOR, "#competitive-advantages div:nth-child(2) > div > h3"
         ),
         "second - list": Selector(
-            By.CSS_SELECTOR,
-            "#competitive-advantages div:nth-child(2) > div > ul",
+            By.CSS_SELECTOR, "#competitive-advantages div:nth-child(2) > div > ul"
         ),
         "third - icon": Selector(
             By.CSS_SELECTOR, "#competitive-advantages div:nth-child(1) > img"
         ),
         "third - heading": Selector(
-            By.CSS_SELECTOR,
-            "#competitive-advantages div:nth-child(3) > div > h3",
+            By.CSS_SELECTOR, "#competitive-advantages div:nth-child(3) > div > h3"
         ),
         "third - list": Selector(
-            By.CSS_SELECTOR,
-            "#competitive-advantages div:nth-child(3) > div > ul",
+            By.CSS_SELECTOR, "#competitive-advantages div:nth-child(3) > div > ul"
         ),
     },
     "testimonial": {
@@ -128,27 +116,21 @@ SELECTORS = {
     "case studies": {
         "self": Selector(By.ID, "case-studies"),
         "heading": Selector(By.CSS_SELECTOR, "#case-studies h2"),
-        "first": Selector(
-            By.CSS_SELECTOR, "#case-studies ul > li:nth-child(1)"
-        ),
+        "first": Selector(By.CSS_SELECTOR, "#case-studies ul > li:nth-child(1)"),
         "first - heading": Selector(
             By.CSS_SELECTOR, "#case-studies ul > li:nth-child(1) h3"
         ),
         "first - text": Selector(
             By.CSS_SELECTOR, "#case-studies ul > li:nth-child(1) p"
         ),
-        "second": Selector(
-            By.CSS_SELECTOR, "#case-studies ul > li:nth-child(2)"
-        ),
+        "second": Selector(By.CSS_SELECTOR, "#case-studies ul > li:nth-child(2)"),
         "second - heading": Selector(
             By.CSS_SELECTOR, "#case-studies ul > li:nth-child(2) h3"
         ),
         "second - text": Selector(
             By.CSS_SELECTOR, "#case-studies ul > li:nth-child(2) p"
         ),
-        "third": Selector(
-            By.CSS_SELECTOR, "#case-studies ul > li:nth-child(3)"
-        ),
+        "third": Selector(By.CSS_SELECTOR, "#case-studies ul > li:nth-child(3)"),
         "third - heading": Selector(
             By.CSS_SELECTOR, "#case-studies ul > li:nth-child(3) h3"
         ),
@@ -172,12 +154,10 @@ SELECTORS = {
     "footer": {
         "self": Selector(By.ID, "invest-footer"),
         "uk gov logo": Selector(
-            By.CSS_SELECTOR,
-            "#invest-footer div.footer-branding > img:nth-child(1)",
+            By.CSS_SELECTOR, "#invest-footer div.footer-branding > img:nth-child(1)"
         ),
         "invest logo": Selector(
-            By.CSS_SELECTOR,
-            "#invest-footer div.footer-branding > img:nth-child(2)",
+            By.CSS_SELECTOR, "#invest-footer div.footer-branding > img:nth-child(2)"
         ),
     },
 }

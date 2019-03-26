@@ -85,9 +85,7 @@ URLs = {
     "financial services": urljoin(BASE_URL, "financial-services/"),
     "financial technology": urljoin(BASE_URL, "financial-technology/"),
     "food and drink": urljoin(BASE_URL, "food-and-drink/"),
-    "food service and catering": urljoin(
-        BASE_URL, "food-service-and-catering/"
-    ),
+    "food service and catering": urljoin(BASE_URL, "food-service-and-catering/"),
     "free-from foods": urljoin(BASE_URL, "free-foods/"),
     "health and life sciences": urljoin(BASE_URL, "health-and-life-sciences/"),
     "meat, poultry and dairy": urljoin(BASE_URL, "meat-poultry-and-dairy/"),
@@ -97,9 +95,7 @@ URLs = {
     "nuclear energy": urljoin(BASE_URL, "nuclear-energy/"),
     "offshore wind energy": urljoin(BASE_URL, "offshore-wind-energy/"),
     "oil and gas": urljoin(BASE_URL, "oil-and-gas/"),
-    "pharmaceutical manufacturing": urljoin(
-        BASE_URL, "pharmaceutical-manufacturing/"
-    ),
+    "pharmaceutical manufacturing": urljoin(BASE_URL, "pharmaceutical-manufacturing/"),
     "retail": urljoin(BASE_URL, "retail/"),
     "technology": urljoin(BASE_URL, "technology/"),
 }
@@ -112,12 +108,8 @@ TOPIC_EXPANDERS = Selector(
 SELECTORS = {
     "header": {
         "self": Selector(By.ID, "invest-header"),
-        "logo": Selector(
-            By.CSS_SELECTOR, "#invest-header > div.header-bar  a"
-        ),
-        "contact us": Selector(
-            By.CSS_SELECTOR, "#invest-header a[href='/contact/']"
-        ),
+        "logo": Selector(By.CSS_SELECTOR, "#invest-header > div.header-bar  a"),
+        "contact us": Selector(By.CSS_SELECTOR, "#invest-header a[href='/contact/']"),
     },
     "beta bar": {
         "self": Selector(By.ID, "header-beta-bar"),
@@ -125,17 +117,14 @@ SELECTORS = {
         "feedback": Selector(By.CSS_SELECTOR, "#header-beta-bar a"),
     },
     "hero": {"self": Selector(By.CSS_SELECTOR, "#content > section.hero")},
-    "industry pullout": {
-        "self": Selector(By.CSS_SELECTOR, "section.industry-pullout")
-    },
+    "industry pullout": {"self": Selector(By.CSS_SELECTOR, "section.industry-pullout")},
     "big number": {
         "self": Selector(By.CSS_SELECTOR, "section.industry-pullout div.data")
     },
     "topics": {
         "self": Selector(By.CSS_SELECTOR, "section.industry-page-accordions"),
         "accordion expanders": Selector(
-            By.CSS_SELECTOR,
-            "section.industry-page-accordions a.accordion-expander",
+            By.CSS_SELECTOR, "section.industry-page-accordions a.accordion-expander"
         ),
     },
     "topics contents": {
@@ -143,9 +132,7 @@ SELECTORS = {
     },
     "related industries": {
         "self": Selector(By.CSS_SELECTOR, "section.industry-page-related"),
-        "industry cards": Selector(
-            By.CSS_SELECTOR, "section.industry-page-related a"
-        ),
+        "industry cards": Selector(By.CSS_SELECTOR, "section.industry-page-related a"),
     },
     "report this page": {
         "self": Selector(By.CSS_SELECTOR, "section.error-reporting"),
@@ -154,12 +141,10 @@ SELECTORS = {
     "footer": {
         "self": Selector(By.ID, "invest-footer"),
         "uk gov logo": Selector(
-            By.CSS_SELECTOR,
-            "#invest-footer div.footer-branding > img:nth-child(1)",
+            By.CSS_SELECTOR, "#invest-footer div.footer-branding > img:nth-child(1)"
         ),
         "invest logo": Selector(
-            By.CSS_SELECTOR,
-            "#invest-footer div.footer-branding > img:nth-child(2)",
+            By.CSS_SELECTOR, "#invest-footer div.footer-branding > img:nth-child(2)"
         ),
     },
 }
@@ -213,9 +198,7 @@ def should_see_content_for(driver: WebDriver, industry_name: str):
 
 def unfold_topics(driver: WebDriver):
     expanders = find_elements(driver, TOPIC_EXPANDERS)
-    assert (
-        expanders
-    ), "Expected to see at least 1 topic but found 0 on {}".format(
+    assert expanders, "Expected to see at least 1 topic but found 0 on {}".format(
         driver.current_url
     )
     for expander in expanders:
