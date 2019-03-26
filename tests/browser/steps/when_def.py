@@ -13,6 +13,7 @@ from steps.when_impl import (
     clear_the_cookies,
     click_on_page_element,
     contact_us_navigate_through_options,
+    exred_submit_soo_contact_us_form,
     fas_fill_out_and_submit_contact_us_form,
     fas_search_for_companies,
     fas_use_breadcrumb,
@@ -337,6 +338,7 @@ def when_user_opens_any_element(
 def when_actor_reports_problem_with_page(context: Context, actor_alias: str):
     generic_report_problem_with_page(context, actor_alias)
 
+
 @when('"{actor_alias}" searches for marketplaces in {countries} to sell {products}')
 def when_actor_looks_for_marketplace_using_countries_and_products(
         context: Context, actor_alias: str, countries: str, products: str):
@@ -351,35 +353,14 @@ def when_actor_selects_marketplace(context: Context, actor_alias: str):
 @when('"{actor_alias}" submits the SOO contact-us form')
 def when_actor_submits_soo_contact_us_form(
         context: Context, actor_alias: str):
-    generic_fill_out_and_submit_form(context, actor_alias, custom_details_table=context.table)
-    context.execute_steps(u'''
-        Then "{actor_alias}" should be on the "Export Readiness - Long Domestic (Organisation details)" page'''
-                          .format(actor_alias=actor_alias))
-    context.execute_steps(u'''
-        When "{actor_alias}" fills out and submits the form'''
-                          .format(actor_alias=actor_alias))
-    context.execute_steps(u'''
-        Then "{actor_alias}" should be on the "Export Readiness - Long Domestic (Your experience)" page'''
-                          .format(actor_alias=actor_alias))
-    context.execute_steps(u'''
-        When "{actor_alias}" fills out and submits the form'''
-                          .format(actor_alias=actor_alias))
-    context.execute_steps(u'''
-       Then "{actor_alias}" should be on the "Export Readiness - Long Domestic (Contact details)" page'''
-                          .format(actor_alias=actor_alias))
-    context.execute_steps(u'''
-       When "{actor_alias}" fills out and submits the form'''
-                          .format(actor_alias=actor_alias))
-    context.execute_steps(u'''
-       Then "{actor_alias}" should be on the "Export Readiness - Long Domestic (Thank you for your enquiry)" page'''
-                          .format(actor_alias=actor_alias))
+    exred_submit_soo_contact_us_form(
+        context, actor_alias, custom_details_table=context.table
+    )
 
 
 ###############################################################################
 # Currently unused but useful steps
 ###############################################################################
-
-
 
 
 @when('"{actor_alias}" completes the registration and fake email verification process')

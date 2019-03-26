@@ -932,6 +932,42 @@ def soo_look_for_marketplace(
     page.search(context.driver, products, countries)
 
 
-def soo_look_for_marketplaces_from_home_page(context, actor_alias, countries, products):
+def soo_look_for_marketplaces_from_home_page(
+        context: Context, actor_alias: str, countries: str, products: str
+):
     visit_page(context, actor_alias, f"{soo.home.SERVICE} - {soo.home.NAME}")
     soo_look_for_marketplace(context, actor_alias, countries, products)
+
+
+def exred_submit_soo_contact_us_form(
+        context: Context, actor_alias: str, custom_details_table: Table
+):
+    generic_fill_out_and_submit_form(
+        context, actor_alias, custom_details_table=custom_details_table
+    )
+    should_be_on_page(
+        context,
+        actor_alias,
+        f"{exred.contact_us_soo_long_organisation_details.SERVICE} - {exred.contact_us_soo_long_organisation_details.NAME}"
+    )
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        f"{exred.contact_us_soo_long_your_experience.SERVICE} - {exred.contact_us_soo_long_your_experience.NAME}"
+    )
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        f"{exred.contact_us_soo_long_contact_details.SERVICE} - {exred.contact_us_soo_long_contact_details.NAME}"
+    )
+
+    generic_fill_out_and_submit_form(context, actor_alias)
+    should_be_on_page(
+        context,
+        actor_alias,
+        f"{exred.contact_us_soo_long_thank_you.SERVICE} - {exred.contact_us_soo_long_thank_you.NAME}"
+    )
