@@ -985,3 +985,17 @@ def soo_find_and_open_random_marketplace(
         actor_alias,
         f"{soo.marketplace.SERVICE} - {soo.marketplace.NAME}"
     )
+
+
+def soo_find_random_marketplace_and_apply_via_dit(
+        context: Context, actor_alias: str, countries: str, products: str
+):
+    soo_find_and_open_random_marketplace(
+        context, actor_alias, countries, products
+    )
+    click_on_page_element(context, actor_alias, "Apply now via DIT")
+    should_be_on_page(
+        context,
+        actor_alias,
+        f"{exred.contact_us_soo_long_your_business.SERVICE} - {exred.contact_us_soo_long_your_business.NAME}"
+    )

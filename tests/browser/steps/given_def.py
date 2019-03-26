@@ -24,6 +24,7 @@ from steps.when_impl import (
     registration_create_and_verify_account,
     sign_in,
     soo_find_and_open_random_marketplace,
+    soo_find_random_marketplace_and_apply_via_dit,
     soo_look_for_marketplaces_from_home_page,
     sso_actor_received_email_confirmation_code,
     visit_page,
@@ -141,25 +142,11 @@ def given_actor_found_marketplace(
 @given('"{actor_alias}" applied via DIT to contact randomly selected marketplace in "{countries}" to sell "{products}"')
 def actor_applied_via_dit(
         context: Context, actor_alias: str, countries: str, products: str):
-    context.execute_steps(u'''
-        Given "{actor_alias}" visits the "Selling Online Overseas - Home" page'''.format(actor_alias=actor_alias))
-    context.execute_steps(u'''
-        When "{actor_alias}" searches for marketplaces in "{countries}" to sell {products}'''
-                          .format(actor_alias=actor_alias, countries=countries, products=products))
-    context.execute_steps(u'''
-        Then "{actor_alias}" should be on the "Selling Online Overseas - Search results" page'''
-                          .format(actor_alias=actor_alias))
-    context.execute_steps(u'''
-        When "{actor_alias}" randomly selects a marketplace'''
-                          .format(actor_alias=actor_alias))
-    context.execute_steps(u'''
-        Then "{actor_alias}" should be on the "{page_name}" page'''
-                          .format(actor_alias=actor_alias, page_name="Selling Online Overseas - Marketplace"))
-    context.execute_steps(u'''
-        When "{actor_alias}" decides to "Apply now via DIT"'''.format(actor_alias=actor_alias))
-    context.execute_steps(u'''
-        Then "{actor_alias}" should be on the "Export Readiness - Long Domestic (Your Business)" page'''
-                          .format(actor_alias=actor_alias))
+    soo_find_random_marketplace_and_apply_via_dit(
+        context, actor_alias, countries, products
+    )
+
+
 ###############################################################################
 # Currently unused but useful steps
 ###############################################################################
