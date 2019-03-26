@@ -42,6 +42,7 @@ from tests.functional.steps.fab_then_impl import (
     prof_should_be_told_about_invalid_links,
     prof_should_be_told_about_missing_description,
     prof_should_see_logo_picture,
+    profile_business_profile_should_be_ready_for_publishing,
     profile_supplier_should_be_on_landing_page,
     reg_should_get_verification_email,
     reg_sso_account_should_be_created,
@@ -326,6 +327,11 @@ def then_actor_should_see_company_once_in_search_results(
       '"{search_term}" search terms highlighted')
 def then_should_see_highlighted_search_term(context, actor_alias, search_term):
     fas_should_see_highlighted_search_term(context, actor_alias, search_term)
+
+
+@then('"{supplier_alias}" should be told that business profile is ready to be published')
+def then_company_should_be_verified(context, supplier_alias):
+    profile_business_profile_should_be_ready_for_publishing(context, supplier_alias)
 
 
 @then('"{supplier_alias}" should be told that company has been verified')

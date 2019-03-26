@@ -909,6 +909,17 @@ def fab_company_should_be_verified(context: Context, supplier_alias: str):
     )
 
 
+def profile_business_profile_should_be_ready_for_publishing(
+        context: Context, supplier_alias: str
+):
+    response = context.response
+    profile_edit_company_profile.should_see_profile_is_verified(response)
+    logging.debug(
+        f"{supplier_alias} saw that his company's Business Profile is ready to"
+        f" be published on FAS",
+    )
+
+
 def fab_should_see_case_study_error_message(
     context: Context, supplier_alias: str
 ):
