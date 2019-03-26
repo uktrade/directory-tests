@@ -23,8 +23,7 @@ NAME = "Enter your confirmation code"
 SERVICE = "Profile"
 TYPE = "Enrol"
 URL = urljoin(
-    DIRECTORY_UI_PROFILE_URL,
-    "enrol/business-type/companies-house/verification/",
+    DIRECTORY_UI_PROFILE_URL, "enrol/business-type/companies-house/verification/"
 )
 PAGE_TITLE = ""
 
@@ -40,9 +39,7 @@ SELECTORS = {
     },
     "confirmation code form": {
         "itself": Selector(By.CSS_SELECTOR, "section form"),
-        "code": Selector(
-            By.ID, "id_verification-code", type=ElementType.INPUT
-        ),
+        "code": Selector(By.ID, "id_verification-code", type=ElementType.INPUT),
         "submit": Selector(
             By.CSS_SELECTOR, "form button.button", type=ElementType.BUTTON
         ),
@@ -80,7 +77,5 @@ def fill_out(driver: WebDriver, details: dict):
 
 def submit(driver: WebDriver):
     take_screenshot(driver, "Before submitting the form")
-    find_and_click_on_page_element(
-        driver, SELECTORS, "submit", wait_for_it=False
-    )
+    find_and_click_on_page_element(driver, SELECTORS, "submit", wait_for_it=False)
     take_screenshot(driver, "After submitting the form")

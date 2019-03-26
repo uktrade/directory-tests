@@ -22,15 +22,11 @@ URL = urljoin(DIRECTORY_UI_PROFILE_URL, "enrol/")
 PAGE_TITLE = ""
 
 SELECTORS = {
-    "breadcrumbs": {
-        "itself": Selector(By.CSS_SELECTOR, "nav.breadcrumbs"),
-    },
+    "breadcrumbs": {"itself": Selector(By.CSS_SELECTOR, "nav.breadcrumbs")},
     "enrolment progress bar": {
         "itself": Selector(By.ID, "start-page-progress-indicator"),
-        "start now": Selector(
-            By.ID, "start-now-button", type=ElementType.LINK
-        ),
-    }
+        "start now": Selector(By.ID, "start-now-button", type=ElementType.LINK),
+    },
 }
 
 

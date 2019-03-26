@@ -24,14 +24,11 @@ from pages.profile import enrol_enter_your_business_details_step_2
 from pages.profile.autocomplete_callbacks import enrol_autocomplete_company_name
 from settings import DIRECTORY_UI_PROFILE_URL
 
-
 NAME = "Enter your business details"
 NAMES = ["Enter your business details (LTD, PLC or Royal Charter)"]
 SERVICE = "Profile"
 TYPE = "Enrol"
-URL = urljoin(
-    DIRECTORY_UI_PROFILE_URL, "enrol/business-type/companies-house/search/"
-)
+URL = urljoin(DIRECTORY_UI_PROFILE_URL, "enrol/business-type/companies-house/search/")
 URLs = {
     "enter your business details (ltd, plc or royal charter)": urljoin(
         DIRECTORY_UI_PROFILE_URL, "enrol/business-type/companies-house/search/"
@@ -78,8 +75,20 @@ def should_see_sections(driver: WebDriver, names: List[str]):
 
 def generate_form_details(actor: Actor) -> dict:
     words = [
-        "food", "sell", "office", "work", "private", "trade", "fruits",
-        "import", "cars", "animal", "limited", "group", "music", "open",
+        "food",
+        "sell",
+        "office",
+        "work",
+        "private",
+        "trade",
+        "fruits",
+        "import",
+        "cars",
+        "animal",
+        "limited",
+        "group",
+        "music",
+        "open",
     ]
     result = {"company name": random.choice(words)}
     logging.debug(f"Generated form details: {result}")
@@ -94,8 +103,6 @@ def fill_out(driver: WebDriver, details: dict):
 
 def submit(driver: WebDriver) -> ModuleType:
     take_screenshot(driver, "Before submitting the form")
-    find_and_click_on_page_element(
-        driver, SELECTORS, "submit", wait_for_it=False
-    )
+    find_and_click_on_page_element(driver, SELECTORS, "submit", wait_for_it=False)
     take_screenshot(driver, "After submitting the form")
     return enrol_enter_your_business_details_step_2

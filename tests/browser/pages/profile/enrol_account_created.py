@@ -23,10 +23,7 @@ TYPE = "Enrol"
 URL = urljoin(
     DIRECTORY_UI_PROFILE_URL, "enrol/business-type/companies-house/finished/#"
 )
-URLs = {
-    "account created": URL,
-    "account created (ltd, plc or royal charter)": URL,
-}
+URLs = {"account created": URL, "account created (ltd, plc or royal charter)": URL}
 PAGE_TITLE = ""
 
 SELECTORS = {
@@ -36,20 +33,24 @@ SELECTORS = {
     "next steps": {
         "itself": Selector(By.ID, "next-container"),
         "publish your business profile": Selector(
-            By.CSS_SELECTOR, "#next-container li:nth-child(1) > a",
-            type=ElementType.LINK
+            By.CSS_SELECTOR,
+            "#next-container li:nth-child(1) > a",
+            type=ElementType.LINK,
         ),
         "find export opportunities": Selector(
-            By.CSS_SELECTOR, "#next-container li:nth-child(2) > a",
-            type=ElementType.LINK
+            By.CSS_SELECTOR,
+            "#next-container li:nth-child(2) > a",
+            type=ElementType.LINK,
         ),
         "sell online overseas": Selector(
-            By.CSS_SELECTOR, "#next-container li:nth-child(3) > a",
-            type=ElementType.LINK
+            By.CSS_SELECTOR,
+            "#next-container li:nth-child(3) > a",
+            type=ElementType.LINK,
         ),
         "find events and visits": Selector(
-            By.CSS_SELECTOR, "#next-container li:nth-child(4) > a",
-            type=ElementType.LINK
+            By.CSS_SELECTOR,
+            "#next-container li:nth-child(4) > a",
+            type=ElementType.LINK,
         ),
     },
 }

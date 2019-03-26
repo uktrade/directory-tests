@@ -92,12 +92,9 @@ def should_see_form_choices(driver: WebDriver, names: List[str]):
     radio_selectors = get_selectors(SELECTORS["form"], ElementType.RADIO)
     for name in names:
         radio_selector = radio_selectors[name.lower()]
-        find_element(
-            driver, radio_selector, element_name=name, wait_for_it=False
-        )
+        find_element(driver, radio_selector, element_name=name, wait_for_it=False)
     logging.debug(
-        f"All expected form choices: '{names}' are visible on "
-        f"{driver.current_url}"
+        f"All expected form choices: '{names}' are visible on " f"{driver.current_url}"
     )
 
 
@@ -105,8 +102,6 @@ def pick_radio_option_and_submit(driver: WebDriver, name: str) -> ModuleType:
     radio_selectors = get_selectors(SELECTORS["form"], ElementType.RADIO)
     choose_one_form_option(driver, radio_selectors, name)
     take_screenshot(driver, "Before submitting the form")
-    find_and_click_on_page_element(
-        driver, SELECTORS, "submit", wait_for_it=False
-    )
+    find_and_click_on_page_element(driver, SELECTORS, "submit", wait_for_it=False)
     take_screenshot(driver, "After submitting the form")
     return POs[name.lower()]

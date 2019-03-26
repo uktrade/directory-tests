@@ -33,37 +33,27 @@ NAMES = [
 SERVICE = "Profile"
 TYPE = "Enrol"
 URL = urljoin(
-    DIRECTORY_UI_PROFILE_URL,
-    "enrol/business-type/companies-house/user-account/",
+    DIRECTORY_UI_PROFILE_URL, "enrol/business-type/companies-house/user-account/"
 )
 URLs = {
     "enter your business email address and set a password": URL,
     "enter your business email address and set a password (ltd, plc or royal charter)": URL,
     "enter your business email address and set a password (sole trader or other type of business)": urljoin(
-        DIRECTORY_UI_PROFILE_URL,
-        "enrol/business-type/sole-trader/user-account/",
+        DIRECTORY_UI_PROFILE_URL, "enrol/business-type/sole-trader/user-account/"
     ),
 }
 PAGE_TITLE = ""
 
 SELECTORS = {
-    "breadcrumbs": {
-        "itself": Selector(By.CSS_SELECTOR, "nav.breadcrumbs"),
-    },
+    "breadcrumbs": {"itself": Selector(By.CSS_SELECTOR, "nav.breadcrumbs")},
     "enrolment progress bar": {"itself": Selector(By.ID, "progress-column")},
     "registration form": {
         "itself": Selector(By.CSS_SELECTOR, "section form"),
         "email": Selector(
-            By.ID,
-            "id_user-account-email",
-            type=ElementType.INPUT,
-            is_visible=False,
+            By.ID, "id_user-account-email", type=ElementType.INPUT, is_visible=False
         ),
         "password": Selector(
-            By.ID,
-            "id_user-account-password",
-            type=ElementType.INPUT,
-            is_visible=False,
+            By.ID, "id_user-account-password", type=ElementType.INPUT, is_visible=False
         ),
         "confirm password": Selector(
             By.ID,
@@ -121,8 +111,6 @@ def fill_out(driver: WebDriver, details: dict):
 
 def submit(driver: WebDriver) -> ModuleType:
     take_screenshot(driver, "Before submitting the form")
-    find_and_click_on_page_element(
-        driver, SELECTORS, "submit", wait_for_it=False
-    )
+    find_and_click_on_page_element(driver, SELECTORS, "submit", wait_for_it=False)
     take_screenshot(driver, "After submitting the form")
     return enrol_enter_your_confirmation_code

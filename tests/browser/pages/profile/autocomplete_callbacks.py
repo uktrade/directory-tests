@@ -13,12 +13,8 @@ def enrol_autocomplete_company_name(driver: WebDriver):
     autocomplete = Selector(
         By.CSS_SELECTOR, "ul.SelectiveLookupDisplay", is_visible=True
     )
-    find_element(
-        driver, autocomplete, element_name="Autocomplete", wait_for_it=True
-    )
-    options = find_elements(
-        driver, Selector(By.CSS_SELECTOR, "li[role='option']")
-    )
+    find_element(driver, autocomplete, element_name="Autocomplete", wait_for_it=True)
+    options = find_elements(driver, Selector(By.CSS_SELECTOR, "li[role='option']"))
     option = random.choice(options)
     logging.debug(
         f"Selected company: {option.get_attribute('data-value')} {option.text}"

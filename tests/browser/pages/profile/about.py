@@ -25,9 +25,7 @@ SELECTORS = {
         "itself": Selector(By.CSS_SELECTOR, ".sso-profile-tab-container"),
         "export opportunities": Selector(By.LINK_TEXT, "Export opportunities"),
         "Business profile": Selector(By.LINK_TEXT, "Business profile"),
-        "Selling online overseas": Selector(
-            By.LINK_TEXT, "Selling online overseas"
-        ),
+        "Selling online overseas": Selector(By.LINK_TEXT, "Selling online overseas"),
         "about": Selector(By.LINK_TEXT, "About"),
     },
     "welcome": {"welcome message": Selector(By.ID, "welcome-message")},

@@ -28,8 +28,7 @@ NAMES = ["Enter your details (LTD, PLC or Royal Charter)"]
 SERVICE = "Profile"
 TYPE = "Enrol"
 URL = urljoin(
-    DIRECTORY_UI_PROFILE_URL,
-    "enrol/business-type/companies-house/personal-details/",
+    DIRECTORY_UI_PROFILE_URL, "enrol/business-type/companies-house/personal-details/"
 )
 URLs = {"enter your details (ltd, plc or royal charter)": URL}
 PAGE_TITLE = ""
@@ -112,8 +111,6 @@ def fill_out(driver: WebDriver, details: dict):
 
 def submit(driver: WebDriver) -> ModuleType:
     take_screenshot(driver, "Before submitting the form")
-    find_and_click_on_page_element(
-        driver, SELECTORS, "submit", wait_for_it=False
-    )
+    find_and_click_on_page_element(driver, SELECTORS, "submit", wait_for_it=False)
     take_screenshot(driver, "After submitting the form")
     return enrol_account_created
