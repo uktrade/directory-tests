@@ -110,10 +110,8 @@ def when_supplier_selects_random_sector(context, supplier_alias):
     bp_select_random_sector_and_export_to_country(context, supplier_alias)
 
 
-@when('"{supplier_alias}" decides to verify her identity with a verification '
-      'letter')
-@when('"{supplier_alias}" decides to verify his identity with a verification '
-      'letter')
+@when('"{supplier_alias}" decides to verify her identity with a verification letter')
+@when('"{supplier_alias}" decides to verify his identity with a verification letter')
 def when_supplier_provides_full_name(context, supplier_alias):
     fab_decide_to_verify_profile_with_letter(context, supplier_alias)
 
