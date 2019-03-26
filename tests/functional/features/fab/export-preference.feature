@@ -1,7 +1,9 @@
 Feature: Export Preferences
 
 
+  @wip
   @deprecated
+  @needs-rework
   @ED-1952
   @profile
   @export-preferences
@@ -20,7 +22,9 @@ Feature: Export Preferences
       | 5 predefined countries | Canada, Poland, Italy |
 
 
+  @wip
   @deprecated
+  @needs-rework
   @ED-1952
   @profile
   @export-preferences
@@ -39,7 +43,9 @@ Feature: Export Preferences
       | none selected        | empty string    | This field is required.                                      |
 
 
+  @wip
   @deprecated
+  @needs-rework
   @ED-1952
   @profile
   @export-preferences
