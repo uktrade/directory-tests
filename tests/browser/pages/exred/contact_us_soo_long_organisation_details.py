@@ -35,36 +35,43 @@ SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#content form"),
         "under £100,000": Selector(
-            By.ID, "id_organisation-details-turnover_0", type=ElementType.RADIO,
+            By.ID,
+            "id_organisation-details-turnover_0",
+            type=ElementType.RADIO,
             group_id=1,
         ),
         "£100,000 to £500,000": Selector(
-            By.ID, "id_organisation-details-turnover_1", type=ElementType.RADIO,
+            By.ID,
+            "id_organisation-details-turnover_1",
+            type=ElementType.RADIO,
             group_id=1,
-
         ),
         "£500,001 to £2million": Selector(
-            By.ID, "id_organisation-details-turnover_2", type=ElementType.RADIO,
+            By.ID,
+            "id_organisation-details-turnover_2",
+            type=ElementType.RADIO,
             group_id=1,
-
         ),
         "more than £2million": Selector(
-            By.ID, "id_organisation-details-turnover_3", type=ElementType.RADIO,
+            By.ID,
+            "id_organisation-details-turnover_3",
+            type=ElementType.RADIO,
             group_id=1,
-
         ),
         "sku": Selector(
             By.ID, "id_organisation-details-sku_count", type=ElementType.INPUT
         ),
         "yes": Selector(
-            By.ID, "id_organisation-details-trademarked_0", type=ElementType.RADIO,
+            By.ID,
+            "id_organisation-details-trademarked_0",
+            type=ElementType.RADIO,
             group_id=2,
-
         ),
         "no": Selector(
-            By.ID, "id_organisation-details-trademarked_1", type=ElementType.RADIO,
+            By.ID,
+            "id_organisation-details-trademarked_1",
+            type=ElementType.RADIO,
             group_id=2,
-
         ),
     }
 }
@@ -72,7 +79,7 @@ SELECTORS = {
 OTHER_SELECTORS = {
     "postcode": Selector(
         By.ID, "id_organisation-company_postcode", type=ElementType.INPUT
-    ),
+    )
 }
 
 
@@ -86,9 +93,7 @@ def should_be_here(driver: WebDriver):
 
 
 def generate_form_details(actor: Actor) -> dict:
-    result = {
-        "sku": random.randint(0, 10000)
-    }
+    result = {"sku": random.randint(0, 10000)}
     logging.debug(f"Generated form details: {result}")
     return result
 

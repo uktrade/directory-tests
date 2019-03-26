@@ -10,14 +10,14 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from pages.common_actions import (
     Selector,
     check_for_section,
+    check_for_sections,
     check_if_element_is_visible,
     check_url,
+    find_and_click_on_page_element,
     find_element,
     go_to_url,
     take_screenshot,
     wait_for_page_load_after_action,
-    check_for_sections,
-    find_and_click_on_page_element
 )
 from settings import EXRED_UI_URL
 
@@ -54,9 +54,7 @@ SELECTORS = {
         "itself": Selector(By.ID, "invest-fas-section"),
         "cards": Selector(By.CSS_SELECTOR, "#invest-fas-section .card"),
     },
-    "tariffs": {
-        "itself": Selector(By.ID, "tariffs-section"),
-    },
+    "tariffs": {"itself": Selector(By.ID, "tariffs-section")},
     "news": {
         "itself": Selector(By.ID, "news-events-section"),
         "cards": Selector(By.CSS_SELECTOR, "#news-events-section .card"),
@@ -65,7 +63,7 @@ SELECTORS = {
         "itself": Selector(By.ID, "study-visit-cta-section"),
         "study in the uk": Selector(By.LINK_TEXT, "Study in the UK"),
         "visit the uk": Selector(By.LINK_TEXT, "Visit the UK"),
-    }
+    },
 }
 
 

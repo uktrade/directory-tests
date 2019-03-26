@@ -18,10 +18,10 @@ from pages.common_actions import (
     fill_out_textarea_fields,
     find_element,
     go_to_url,
+    pick_option,
     take_screenshot,
     tick_captcha_checkbox,
     tick_checkboxes,
-    pick_option,
 )
 from pages.exred import contact_us_short_domestic_thank_you
 from settings import EXRED_UI_URL
@@ -67,7 +67,7 @@ SELECTORS = {
     }
 }
 OTHER_SELECTORS = {
-    "other": Selector(By.ID, "id_company_type_other", type=ElementType.SELECT),
+    "other": Selector(By.ID, "id_company_type_other", type=ElementType.SELECT)
 }
 
 URLs = {
@@ -80,9 +80,7 @@ URLs = {
     "short contact form (buying from the uk)": urljoin(
         URL, "/contact/find-uk-companies/"
     ),
-    "short contact form (office finder)": urljoin(
-        URL, "/contact/office-finder/"
-    ),
+    "short contact form (office finder)": urljoin(URL, "/contact/office-finder/"),
 }
 
 

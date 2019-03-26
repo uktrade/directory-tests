@@ -9,19 +9,19 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages import ElementType
 from pages.common_actions import (
+    Actor,
     Selector,
+    check_for_sections,
+    check_if_element_is_not_visible,
     check_url,
+    fill_out_input_fields,
+    fill_out_textarea_fields,
     find_element,
     go_to_url,
-    take_screenshot,
-    check_for_sections,
-    Actor,
-    fill_out_textarea_fields,
-    tick_checkboxes,
-    tick_captcha_checkbox,
-    fill_out_input_fields,
     pick_option,
-    check_if_element_is_not_visible
+    take_screenshot,
+    tick_captcha_checkbox,
+    tick_checkboxes,
 )
 from settings import EXRED_UI_URL
 
@@ -34,9 +34,7 @@ PAGE_TITLE = "Welcome to great.gov.uk - buy from or invest in the UK"
 
 SUBMIT_BUTTON = Selector(By.CSS_SELECTOR, "form button")
 SELECTORS = {
-    "header bar": {
-        "itself": Selector(By.ID, "international-header-bar"),
-    },
+    "header bar": {"itself": Selector(By.ID, "international-header-bar")},
     "header menu": {
         "itself": Selector(By.ID, "international-header-menu"),
         "logo": Selector(By.ID, "international-header-logo"),
@@ -44,32 +42,25 @@ SELECTORS = {
     },
     "heading": {
         "itself": Selector(By.CSS_SELECTOR, "#content h1"),
-        "text": Selector(By.CSS_SELECTOR, "#content p.body-text")
+        "text": Selector(By.CSS_SELECTOR, "#content p.body-text"),
     },
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#content form"),
         "given names": Selector(By.ID, "id_first_name", type=ElementType.INPUT),
         "family name": Selector(By.ID, "id_last_name", type=ElementType.INPUT),
         "email": Selector(By.ID, "id_email", type=ElementType.INPUT),
-        "company":
-            Selector(
-                By.ID, "id_organisation_type_0", type=ElementType.CHECKBOX,
-                is_visible=False
-            ),
-        "other type of organisation":
-            Selector(
-                By.ID, "id_organisation_type_0", type=ElementType.CHECKBOX,
-                is_visible=False
-            ),
+        "company": Selector(
+            By.ID, "id_organisation_type_0", type=ElementType.CHECKBOX, is_visible=False
+        ),
+        "other type of organisation": Selector(
+            By.ID, "id_organisation_type_0", type=ElementType.CHECKBOX, is_visible=False
+        ),
         "company name": Selector(By.ID, "id_company_name", type=ElementType.INPUT),
         "country": Selector(By.ID, "js-country-select", type=ElementType.SELECT),
         "city": Selector(By.ID, "id_city", type=ElementType.INPUT),
         "comment": Selector(By.ID, "id_comment", type=ElementType.TEXTAREA),
         "terms and conditions": Selector(
-            By.ID,
-            "id_terms_agreed",
-            type=ElementType.CHECKBOX,
-            is_visible=False,
+            By.ID, "id_terms_agreed", type=ElementType.CHECKBOX, is_visible=False
         ),
         "submit": SUBMIT_BUTTON,
     },
@@ -81,14 +72,14 @@ SELECTORS = {
 
 UNEXPECTED_SELECTORS = {
     "not translated": {
-        "not translated": Selector(By.ID, "header-label-not-translated"),
+        "not translated": Selector(By.ID, "header-label-not-translated")
     },
     "language selector": {
         "language selector": Selector(
             By.CSS_SELECTOR,
             "#international-header-bar .LanguageSelectorDialog-Tracker",
-            is_visible=False
-        ),
+            is_visible=False,
+        )
     },
 }
 

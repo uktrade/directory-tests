@@ -19,10 +19,7 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from pages.exred import (
-    international_contact_us,
-    international_eu_exit_contact_us,
-)
+from pages.exred import international_contact_us, international_eu_exit_contact_us
 from pages.fas import contact_us as fas_contact_us
 from pages.invest import contact_us as invest_contact_us
 from settings import EXRED_UI_URL
@@ -40,20 +37,28 @@ SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#lede form"),
         "investing in the uk": Selector(
-            By.CSS_SELECTOR, "input[value='investing']", type=ElementType.RADIO,
-            is_visible=False
+            By.CSS_SELECTOR,
+            "input[value='investing']",
+            type=ElementType.RADIO,
+            is_visible=False,
         ),
         "buying from the uk": Selector(
-            By.CSS_SELECTOR, "input[value='buying']", type=ElementType.RADIO,
-            is_visible=False
+            By.CSS_SELECTOR,
+            "input[value='buying']",
+            type=ElementType.RADIO,
+            is_visible=False,
         ),
         "eu exit enquiries": Selector(
-            By.CSS_SELECTOR, "input[value='euexit']", type=ElementType.RADIO,
-            is_visible=False
+            By.CSS_SELECTOR,
+            "input[value='euexit']",
+            type=ElementType.RADIO,
+            is_visible=False,
         ),
         "other": Selector(
-            By.CSS_SELECTOR, "input[value='other']", type=ElementType.RADIO,
-            is_visible=False
+            By.CSS_SELECTOR,
+            "input[value='other']",
+            type=ElementType.RADIO,
+            is_visible=False,
         ),
         "submit": SUBMIT_BUTTON,
         "back": Selector(

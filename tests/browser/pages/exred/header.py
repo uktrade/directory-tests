@@ -48,27 +48,33 @@ SELECTORS = {
     },
     "advice": {
         "menu": Selector(By.ID, "header-advice-links"),
-        "create an export plan":
-            Selector(By.ID, "header-advice-create-an-export-plan"),
-        "find an export market":
-            Selector(By.ID, "header-advice-find-an-export-market"),
-        "define route to market":
-            Selector(By.ID, "header-advice-define-route-to-market"),
-        "get export finance and funding":
-            Selector(By.ID, "header-advice-get-export-finance-and-funding"),
-        "manage payment for export orders":
-            Selector(By.ID, "header-advice-manage-payment-for-export-orders"),
-        "prepare to do business in a foreign country":
-            Selector(By.ID, "header-advice-prepare-to-do-business-in-a-foreign-country"),
-        "manage legal and ethical compliance":
-            Selector(By.ID, "header-advice-manage-legal-and-ethical-compliance"),
-        "prepare for export procedures and logistics":
-            Selector(By.ID, "header-advice-prepare-for-export-procedures-and-logistics"),
+        "create an export plan": Selector(By.ID, "header-advice-create-an-export-plan"),
+        "find an export market": Selector(By.ID, "header-advice-find-an-export-market"),
+        "define route to market": Selector(
+            By.ID, "header-advice-define-route-to-market"
+        ),
+        "get export finance and funding": Selector(
+            By.ID, "header-advice-get-export-finance-and-funding"
+        ),
+        "manage payment for export orders": Selector(
+            By.ID, "header-advice-manage-payment-for-export-orders"
+        ),
+        "prepare to do business in a foreign country": Selector(
+            By.ID, "header-advice-prepare-to-do-business-in-a-foreign-country"
+        ),
+        "manage legal and ethical compliance": Selector(
+            By.ID, "header-advice-manage-legal-and-ethical-compliance"
+        ),
+        "prepare for export procedures and logistics": Selector(
+            By.ID, "header-advice-prepare-for-export-procedures-and-logistics"
+        ),
     },
     "services": {
         "menu": Selector(By.ID, "header-services-links"),
         "find a buyer": Selector(By.ID, "header-services-find-a-buyer"),
-        "selling online overseas": Selector(By.ID, "header-services-selling-online-overseas"),
+        "selling online overseas": Selector(
+            By.ID, "header-services-selling-online-overseas"
+        ),
         "export opportunities": Selector(By.ID, "header-services-export-opportunities"),
         "get finance": Selector(By.ID, "header-services-get-finance"),
         "events": Selector(By.ID, "header-services-events"),

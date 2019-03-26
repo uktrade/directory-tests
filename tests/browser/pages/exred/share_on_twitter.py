@@ -20,11 +20,7 @@ URL = urljoin("https://twitter.com/", "intent/tweet?text=")
 PAGE_TITLE = "Post a Tweet on Twitter"
 
 MESSAGE_BOX = Selector(By.ID, "status")
-SELECTORS = {
-    "general": {
-        "message_box": MESSAGE_BOX,
-    }
-}
+SELECTORS = {"general": {"message_box": MESSAGE_BOX}}
 
 
 def should_be_here(driver: WebDriver):

@@ -76,9 +76,7 @@ def should_be_here(driver: WebDriver):
     check_url(driver, URL, exact_match=False)
 
 
-def generate_form_details(
-    actor: Actor, *, custom_details: dict = None
-) -> dict:
+def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
     does_not_have_company_number = custom_details.get(
         "i don't have a company number", random.choice([True, False])
     )

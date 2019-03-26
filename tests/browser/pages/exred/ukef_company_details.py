@@ -54,27 +54,19 @@ SELECTORS = {
             is_visible=False,
         ),
         "building and street first line": Selector(
-            By.ID,
-            "id_company-details-address_line_one",
-            type=ElementType.INPUT,
+            By.ID, "id_company-details-address_line_one", type=ElementType.INPUT
         ),
         "building and street second line": Selector(
-            By.ID,
-            "id_company-details-address_line_two",
-            type=ElementType.INPUT,
+            By.ID, "id_company-details-address_line_two", type=ElementType.INPUT
         ),
         "town or city": Selector(
-            By.ID,
-            "id_company-details-address_town_city",
-            type=ElementType.INPUT,
+            By.ID, "id_company-details-address_town_city", type=ElementType.INPUT
         ),
         "county": Selector(
             By.ID, "id_company-details-address_county", type=ElementType.INPUT
         ),
         "postcode": Selector(
-            By.ID,
-            "id_company-details-address_post_code",
-            type=ElementType.INPUT,
+            By.ID, "id_company-details-address_post_code", type=ElementType.INPUT
         ),
         "industry": Selector(
             By.ID, "id_company-details-industry", type=ElementType.SELECT

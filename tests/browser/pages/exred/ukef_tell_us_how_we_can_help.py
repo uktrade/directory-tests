@@ -41,14 +41,9 @@ SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#content form"),
         "heading": Selector(By.CSS_SELECTOR, "#heading-container h2"),
-        "comment": Selector(
-            By.ID, "id_help-comment", type=ElementType.TEXTAREA
-        ),
+        "comment": Selector(By.ID, "id_help-comment", type=ElementType.TEXTAREA),
         "terms and conditions": Selector(
-            By.ID,
-            "id_help-terms_agreed",
-            type=ElementType.CHECKBOX,
-            is_visible=False,
+            By.ID, "id_help-terms_agreed", type=ElementType.CHECKBOX, is_visible=False
         ),
         "continue": SUBMIT_BUTTON,
     },

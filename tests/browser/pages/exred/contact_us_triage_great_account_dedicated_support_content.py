@@ -40,9 +40,7 @@ URLs = {
     "i have not received my letter containing the verification code": urljoin(
         URL, "no-verification-letter/"
     ),
-    "i have not received a verification code": urljoin(
-        URL, "verification-missing/"
-    ),
+    "i have not received a verification code": urljoin(URL, "verification-missing/"),
 }
 
 SUBMIT_BUTTON = Selector(

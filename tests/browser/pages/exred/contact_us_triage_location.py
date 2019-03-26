@@ -40,10 +40,16 @@ SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#lede form"),
         "the uk": Selector(
-            By.CSS_SELECTOR, "input[value='domestic']", type=ElementType.RADIO, is_visible=False
+            By.CSS_SELECTOR,
+            "input[value='domestic']",
+            type=ElementType.RADIO,
+            is_visible=False,
         ),
         "outside the uk": Selector(
-            By.CSS_SELECTOR, "input[value='international']", type=ElementType.RADIO, is_visible=False
+            By.CSS_SELECTOR,
+            "input[value='international']",
+            type=ElementType.RADIO,
+            is_visible=False,
         ),
         "submit": SUBMIT_BUTTON,
     }

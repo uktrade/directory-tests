@@ -11,6 +11,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages import ElementType
 from pages.common_actions import (
+    Selector,
     assertion_msg,
     check_for_section,
     check_for_sections,
@@ -22,7 +23,6 @@ from pages.common_actions import (
     find_elements,
     get_selectors,
     go_to_url,
-    Selector,
     take_screenshot,
     wait_for_page_load_after_action,
 )
@@ -182,14 +182,10 @@ SELECTORS = {
     "eu exit enquiries banner": {
         "itself": Selector(By.CSS_SELECTOR, ".eu-exit-banner"),
         "guidance on how to prepare for eu exit": Selector(
-            By.CSS_SELECTOR,
-            ".eu-exit-banner a:nth-child(1)",
-            type=ElementType.LINK
+            By.CSS_SELECTOR, ".eu-exit-banner a:nth-child(1)", type=ElementType.LINK
         ),
         "eu exit enquiry form": Selector(
-            By.CSS_SELECTOR,
-            ".eu-exit-banner a:nth-child(2)",
-            type=ElementType.LINK
+            By.CSS_SELECTOR, ".eu-exit-banner a:nth-child(2)", type=ElementType.LINK
         ),
     },
     "news": {

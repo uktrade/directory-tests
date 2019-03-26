@@ -10,16 +10,16 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages import ElementType
 from pages.common_actions import (
+    Selector,
     check_for_sections,
     check_if_element_is_visible,
     check_url,
     find_element,
     find_elements,
+    get_selectors,
     go_to_url,
-    Selector,
     take_screenshot,
     wait_for_page_load_after_action,
-    get_selectors
 )
 from settings import EXRED_UI_URL
 
@@ -44,10 +44,18 @@ URLs = {
     "find an export market": urljoin(URL, "find-an-export-market/"),
     "define route to market": urljoin(URL, "define-route-to-market/"),
     "get export finance and funding": urljoin(URL, "get-export-finance-and-funding/"),
-    "manage payment for export orders": urljoin(URL, "manage-payment-for-export-orders/"),
-    "prepare to do business in a foreign country": urljoin(URL, "prepare-to-do-business-in-a-foreign-country/"),
-    "manage legal and ethical compliance": urljoin(URL, "manage-legal-and-ethical-compliance/"),
-    "prepare for export procedures and logistics": urljoin(URL, "prepare-for-export-procedures-and-logistics/"),
+    "manage payment for export orders": urljoin(
+        URL, "manage-payment-for-export-orders/"
+    ),
+    "prepare to do business in a foreign country": urljoin(
+        URL, "prepare-to-do-business-in-a-foreign-country/"
+    ),
+    "manage legal and ethical compliance": urljoin(
+        URL, "manage-legal-and-ethical-compliance/"
+    ),
+    "prepare for export procedures and logistics": urljoin(
+        URL, "prepare-for-export-procedures-and-logistics/"
+    ),
 }
 
 
@@ -59,7 +67,10 @@ FIRST_ARTICLE = Selector(By.CSS_SELECTOR, "#js-paginate-list > li:nth-child(1) >
 
 ARTICLE_COUNTER = Selector(By.ID, "hero-description")
 ARTICLE_LINKS = Selector(
-    By.CSS_SELECTOR, "#content > section.topic-list-section a.card-link", type=ElementType.LINK)
+    By.CSS_SELECTOR,
+    "#content > section.topic-list-section a.card-link",
+    type=ElementType.LINK,
+)
 SELECTORS = {
     "hero": {
         "itself": Selector(By.ID, "hero"),
@@ -70,9 +81,7 @@ SELECTORS = {
         "itself": Selector(By.CSS_SELECTOR, "nav.breadcrumbs"),
         "links": Selector(By.CSS_SELECTOR, "nav.breadcrumbs a"),
     },
-    "total number of articles": {
-        "itself": ARTICLE_COUNTER,
-    },
+    "total number of articles": {"itself": ARTICLE_COUNTER},
     "list of articles": {
         "itself": Selector(By.ID, "article-list-page"),
         "articles": ARTICLE_LINKS,
@@ -109,8 +118,10 @@ def should_see_sections(driver: WebDriver, names: List[str]):
 
 def get_article_counter(driver: WebDriver) -> int:
     article_counter = find_element(
-        driver, ARTICLE_COUNTER, element_name="total number of articles",
-        wait_for_it=False
+        driver,
+        ARTICLE_COUNTER,
+        element_name="total number of articles",
+        wait_for_it=False,
     )
     counter_index = 0
     return int(article_counter.text.split()[counter_index])
@@ -118,18 +129,22 @@ def get_article_counter(driver: WebDriver) -> int:
 
 def article_counter_is_equal_to(driver: WebDriver, expected_article_counter: int):
     current_counter = get_article_counter(driver)
-    error = (f"Expected Advice article counter to be "
-             f"{expected_article_counter} but found {current_counter} on "
-             f"{driver.current_url}")
+    error = (
+        f"Expected Advice article counter to be "
+        f"{expected_article_counter} but found {current_counter} on "
+        f"{driver.current_url}"
+    )
     assert current_counter == expected_article_counter, error
 
 
 def article_counter_matches_number_of_articles(driver: WebDriver):
     current_counter = get_article_counter(driver)
     article_links = find_elements(driver, ARTICLE_LINKS)
-    error = (f"Expected Advice article counter ({current_counter}) to match "
-             f"number of visible articles {len(article_links)} on"
-             f"{driver.current_url}")
+    error = (
+        f"Expected Advice article counter ({current_counter}) to match "
+        f"number of visible articles {len(article_links)} on"
+        f"{driver.current_url}"
+    )
     assert current_counter == len(article_links), error
 
 
@@ -153,7 +168,8 @@ def extract_text(text: str, section_name: str) -> tuple:
 
 
 def open_any_element_in_section(
-        driver: WebDriver, element_type: str, section_name: str) -> tuple:
+    driver: WebDriver, element_type: str, section_name: str
+) -> tuple:
     section = SELECTORS[section_name.lower()]
     sought_type = ElementType[element_type.upper()]
     selectors = get_selectors(section, sought_type)

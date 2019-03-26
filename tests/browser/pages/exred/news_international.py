@@ -9,12 +9,12 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
     Selector,
-    check_url,
-    take_screenshot,
     check_for_sections,
-    go_to_url,
-    find_elements,
+    check_url,
     find_and_click_on_page_element,
+    find_elements,
+    go_to_url,
+    take_screenshot,
 )
 from settings import EXRED_UI_URL
 
@@ -50,9 +50,9 @@ SELECTORS = {
     "articles": {
         "itself": Selector(By.ID, "article-list-page"),
         "breadcrumbs": Selector(By.CSS_SELECTOR, "#article-list-page .breadcrumbs"),
-        "great.gov.uk":
-            Selector(
-                By.CSS_SELECTOR, ".breadcrumbs a[href='/international/']"),
+        "great.gov.uk": Selector(
+            By.CSS_SELECTOR, ".breadcrumbs a[href='/international/']"
+        ),
         "article list": Selector(By.CSS_SELECTOR, "ul.content-list"),
         "articles": Selector(By.CSS_SELECTOR, "li.article"),
         "article header": Selector(By.CSS_SELECTOR, "li.article h3"),
@@ -72,7 +72,7 @@ SELECTORS = {
         "itself": Selector(By.ID, "international-footer"),
         "logo": Selector(By.ID, "international-footer-logo"),
         "share links": Selector(By.CSS_SELECTOR, "#international-footer ul"),
-    }
+    },
 }
 
 

@@ -45,15 +45,9 @@ SELECTORS = {
         "last name": Selector(
             By.ID, "id_your-details-lastname", type=ElementType.INPUT
         ),
-        "position": Selector(
-            By.ID, "id_your-details-position", type=ElementType.INPUT
-        ),
-        "email": Selector(
-            By.ID, "id_your-details-email", type=ElementType.INPUT
-        ),
-        "phone": Selector(
-            By.ID, "id_your-details-phone", type=ElementType.INPUT
-        ),
+        "position": Selector(By.ID, "id_your-details-position", type=ElementType.INPUT),
+        "email": Selector(By.ID, "id_your-details-email", type=ElementType.INPUT),
+        "phone": Selector(By.ID, "id_your-details-phone", type=ElementType.INPUT),
         "continue": SUBMIT_BUTTON,
     },
     "error reporting": {

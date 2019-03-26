@@ -8,13 +8,13 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from pages import ElementType
 from pages.common_actions import (
     Selector,
+    check_for_expected_sections_elements,
     check_url,
     fill_out_input_fields,
     find_element,
+    find_selector_by_name,
     go_to_url,
     take_screenshot,
-    check_for_expected_sections_elements,
-    find_selector_by_name
 )
 from settings import EXRED_UI_URL
 
@@ -39,7 +39,7 @@ SELECTORS = {
         "office address": Selector(By.CSS_SELECTOR, "#results > p:nth-child(4)"),
         "telephone": Selector(By.CSS_SELECTOR, "#results > p:nth-child(6)"),
         "contact button": Selector(By.CSS_SELECTOR, "#results > a"),
-    }
+    },
 }
 
 
@@ -73,6 +73,8 @@ def should_see_office_details(driver: WebDriver, trade_office: str, city: str):
 
     address_selector = find_selector_by_name(SELECTORS, "office address")
     address = find_element(driver, address_selector)
-    error = (f"Expected to find details for trade office in '{city}' but got "
-             f"{address.text}")
+    error = (
+        f"Expected to find details for trade office in '{city}' but got "
+        f"{address.text}"
+    )
     assert city.lower() in address.text.lower(), error

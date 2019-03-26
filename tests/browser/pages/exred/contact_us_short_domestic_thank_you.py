@@ -51,8 +51,9 @@ SELECTORS = {
 URLs = {
     "thank you for your enquiry": URL,
     "thank you for your enquiry (events)": urljoin(URL, "/contact/events/success/"),
-    "thank you for your enquiry (defence and security organisation (dso))":
-        urljoin(URL, "/contact/defence-and-security-organisation/success/"),
+    "thank you for your enquiry (defence and security organisation (dso))": urljoin(
+        URL, "/contact/defence-and-security-organisation/success/"
+    ),
     "thank you for your enquiry (other)": URL,
     "thank you for your enquiry (i haven't had a response from the opportunity i applied for)": URL,
     "thank you for your enquiry (my daily alerts are not relevant to me)": URL,

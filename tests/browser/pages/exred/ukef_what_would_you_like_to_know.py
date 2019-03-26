@@ -11,12 +11,12 @@ from pages import ElementType
 from pages.common_actions import (
     Actor,
     Selector,
+    check_for_sections,
     check_url,
     find_element,
     go_to_url,
     take_screenshot,
     tick_checkboxes,
-    check_for_sections
 )
 from settings import EXRED_UI_URL
 

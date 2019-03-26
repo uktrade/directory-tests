@@ -66,10 +66,8 @@ SELECTORS = {
 }
 
 POs = {
-    "i haven't had a response from the opportunity i applied for":
-        contact_us_short_domestic,
-    "my daily alerts are not relevant to me":
-        contact_us_triage_export_opportunities_dedicated_support_content,
+    "i haven't had a response from the opportunity i applied for": contact_us_short_domestic,
+    "my daily alerts are not relevant to me": contact_us_triage_export_opportunities_dedicated_support_content,
     "other": contact_us_short_domestic,
 }
 

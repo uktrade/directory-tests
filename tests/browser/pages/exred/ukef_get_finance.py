@@ -54,9 +54,7 @@ SELECTORS = {
     "video": {
         "itself": Selector(By.CSS_SELECTOR, "section.get-finance-video"),
         "heading": Selector(By.CSS_SELECTOR, "section.get-finance-video h2"),
-        "description": Selector(
-            By.CSS_SELECTOR, "section.get-finance-video p"
-        ),
+        "description": Selector(By.CSS_SELECTOR, "section.get-finance-video p"),
         "read more about getting money to grow your business": Selector(
             By.CSS_SELECTOR, "section.get-finance-video a"
         ),
@@ -65,15 +63,9 @@ SELECTORS = {
     "advantages": {
         "itself": Selector(By.ID, "advantages-section"),
         "heading": Selector(By.CSS_SELECTOR, "#advantages-section h2"),
-        "advantage heading": Selector(
-            By.CSS_SELECTOR, "#advantages-section h3"
-        ),
-        "advantage description": Selector(
-            By.CSS_SELECTOR, "#advantages-section p"
-        ),
-        "advantage image": Selector(
-            By.CSS_SELECTOR, "#advantages-section img"
-        ),
+        "advantage heading": Selector(By.CSS_SELECTOR, "#advantages-section h3"),
+        "advantage description": Selector(By.CSS_SELECTOR, "#advantages-section p"),
+        "advantage image": Selector(By.CSS_SELECTOR, "#advantages-section img"),
     },
     "contact us": {
         "itself": Selector(By.ID, "contact-section-bottom"),

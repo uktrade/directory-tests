@@ -9,9 +9,9 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from pages.common_actions import (
     Selector,
     check_url,
-    take_screenshot,
+    find_and_click_on_page_element,
     find_elements,
-    find_and_click_on_page_element
+    take_screenshot,
 )
 from settings import EXRED_UI_URL
 
@@ -50,13 +50,12 @@ SELECTORS = {
     "article": {
         "itself": Selector(By.ID, "article"),
         "breadcrumbs": Selector(By.CSS_SELECTOR, ".breadcrumbs"),
-        "great.gov.uk":
-            Selector(
-                By.CSS_SELECTOR, ".breadcrumbs a[href='/international/']"),
-        "updates for non-uk companies on eu exit":
-            Selector(
-                By.CSS_SELECTOR,
-                ".breadcrumbs a[href='/international/eu-exit-news/']"),
+        "great.gov.uk": Selector(
+            By.CSS_SELECTOR, ".breadcrumbs a[href='/international/']"
+        ),
+        "updates for non-uk companies on eu exit": Selector(
+            By.CSS_SELECTOR, ".breadcrumbs a[href='/international/eu-exit-news/']"
+        ),
         "header": Selector(By.CSS_SELECTOR, "#article h1"),
         "lede": Selector(By.CSS_SELECTOR, "#article p.lede"),
         "updates for companies on eu exit": Selector(
@@ -66,15 +65,11 @@ SELECTORS = {
             By.CSS_SELECTOR, "article footer nav > div:nth-child(2) a"
         ),
     },
-    "tag list": {
-        "itself": Selector(By.CSS_SELECTOR, "ul.tag-list"),
-        "tags": TAGS,
-    },
+    "tag list": {"itself": Selector(By.CSS_SELECTOR, "ul.tag-list"), "tags": TAGS},
     "related content": {
-        "itself":
-            Selector(
-                By.CSS_SELECTOR, "#article > article > div > div > div.column-quarter"
-            ),
+        "itself": Selector(
+            By.CSS_SELECTOR, "#article > article > div > div > div.column-quarter"
+        ),
         "related articles": RELATED_ARTICLES,
     },
     "error reporting": {
@@ -85,7 +80,7 @@ SELECTORS = {
         "itself": Selector(By.ID, "international-footer"),
         "logo": Selector(By.ID, "international-footer-logo"),
         "share links": Selector(By.CSS_SELECTOR, "#international-footer ul"),
-    }
+    },
 }
 
 

@@ -7,12 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages import ElementType
-from pages.common_actions import (
-    Selector,
-    check_url,
-    go_to_url,
-    take_screenshot,
-)
+from pages.common_actions import Selector, check_url, go_to_url, take_screenshot
 from settings import EXRED_UI_URL
 
 NAME = "Thank you"
@@ -36,9 +31,7 @@ SELECTORS = {
     "thank you": {
         "itself": Selector(By.ID, "success-message-container"),
         "heading": Selector(By.CSS_SELECTOR, "#success-message-container h1"),
-        "home": Selector(
-            By.CSS_SELECTOR, ".grid-row a", type=ElementType.LINK
-        ),
+        "home": Selector(By.CSS_SELECTOR, ".grid-row a", type=ElementType.LINK),
     },
     "error reporting": {
         "itself": Selector(By.CSS_SELECTOR, "section.error-reporting"),

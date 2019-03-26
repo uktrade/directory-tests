@@ -42,36 +42,52 @@ SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#lede form"),
         "find your local trade office": Selector(
-            By.CSS_SELECTOR, "input[value='trade-office']", type=ElementType.RADIO,
-            is_visible=False
+            By.CSS_SELECTOR,
+            "input[value='trade-office']",
+            type=ElementType.RADIO,
+            is_visible=False,
         ),
         "advice to export from the uk": Selector(
-            By.CSS_SELECTOR, "input[value='export-advice']", type=ElementType.RADIO,
-            is_visible=False
+            By.CSS_SELECTOR,
+            "input[value='export-advice']",
+            type=ElementType.RADIO,
+            is_visible=False,
         ),
         "great.gov.uk account and services support": Selector(
-            By.CSS_SELECTOR, "input[value='great-services']", type=ElementType.RADIO,
-            is_visible=False
+            By.CSS_SELECTOR,
+            "input[value='great-services']",
+            type=ElementType.RADIO,
+            is_visible=False,
         ),
         "uk export finance (ukef)": Selector(
-            By.CSS_SELECTOR, "input[value='finance']", type=ElementType.RADIO,
-            is_visible=False
+            By.CSS_SELECTOR,
+            "input[value='finance']",
+            type=ElementType.RADIO,
+            is_visible=False,
         ),
         "eu exit enquiries": Selector(
-            By.CSS_SELECTOR, "input[value='euexit']", type=ElementType.RADIO,
-            is_visible=False
+            By.CSS_SELECTOR,
+            "input[value='euexit']",
+            type=ElementType.RADIO,
+            is_visible=False,
         ),
         "events": Selector(
-            By.CSS_SELECTOR, "input[value='events']", type=ElementType.RADIO,
-            is_visible=False
+            By.CSS_SELECTOR,
+            "input[value='events']",
+            type=ElementType.RADIO,
+            is_visible=False,
         ),
         "defence and security organisation (dso)": Selector(
-            By.CSS_SELECTOR, "input[value='dso']", type=ElementType.RADIO,
-            is_visible=False
+            By.CSS_SELECTOR,
+            "input[value='dso']",
+            type=ElementType.RADIO,
+            is_visible=False,
         ),
         "other": Selector(
-            By.CSS_SELECTOR, "input[value='other']", type=ElementType.RADIO,
-            is_visible=False
+            By.CSS_SELECTOR,
+            "input[value='other']",
+            type=ElementType.RADIO,
+            is_visible=False,
         ),
         "submit": SUBMIT_BUTTON,
         "back": Selector(

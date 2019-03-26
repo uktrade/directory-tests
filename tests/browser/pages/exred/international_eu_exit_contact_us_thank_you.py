@@ -5,12 +5,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages.common_actions import (
-    Selector,
-    check_url,
-    go_to_url,
-    take_screenshot,
-)
+from pages.common_actions import Selector, check_url, go_to_url, take_screenshot
 from settings import EXRED_UI_URL
 
 NAME = "International EU Exit"
@@ -27,9 +22,7 @@ LANGUAGE_SELECTOR_CLOSE = Selector(By.ID, "header-language-selector-close")
 BETA_FEEDBACK = Selector(By.CSS_SELECTOR, "#header-beta-bar span > a")
 SUBMIT_BUTTON = Selector(By.CSS_SELECTOR, "form button")
 SELECTORS = {
-    "header bar": {
-        "itself": Selector(By.ID, "international-header-bar"),
-    },
+    "header bar": {"itself": Selector(By.ID, "international-header-bar")},
     "header-menu": {
         "itself": Selector(By.ID, "international-header-menu"),
         "logo": Selector(By.ID, "international-header-logo"),

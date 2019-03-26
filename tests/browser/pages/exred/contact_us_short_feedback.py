@@ -6,12 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages import ElementType
-from pages.common_actions import (
-    Selector,
-    check_url,
-    go_to_url,
-    take_screenshot,
-)
+from pages.common_actions import Selector, check_url, go_to_url, take_screenshot
 from settings import EXRED_UI_URL
 
 NAME = "Feedback"
@@ -36,7 +31,7 @@ SELECTORS = {
     }
 }
 OTHER_SELECTORS = {
-    "other": Selector(By.ID, "id_company_type_other", type=ElementType.SELECT),
+    "other": Selector(By.ID, "id_company_type_other", type=ElementType.SELECT)
 }
 
 

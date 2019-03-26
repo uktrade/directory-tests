@@ -8,10 +8,10 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
     Selector,
+    check_for_sections,
     check_url,
-    take_screenshot,
     find_element,
-    check_for_sections
+    take_screenshot,
 )
 from settings import EXRED_UI_URL
 
@@ -33,9 +33,7 @@ SELECTORS = {
         "breadcrumbs": Selector(By.CSS_SELECTOR, "div.breadcrumbs"),
         "news": Selector(By.CSS_SELECTOR, "#article-list-page ul li"),
         "links": Selector(By.CSS_SELECTOR, "#article-list-page ul li a"),
-        "last updated dates": Selector(
-            By.CSS_SELECTOR, "#article-list-page ul li p"
-        ),
+        "last updated dates": Selector(By.CSS_SELECTOR, "#article-list-page ul li p"),
     },
     "error reporting": {
         "itself": Selector(By.CSS_SELECTOR, "section.error-reporting"),
@@ -52,8 +50,10 @@ def should_be_here(driver: WebDriver):
 def is_filtered_by_tag(driver: WebDriver, tag: str):
     heading = find_element(driver, HERO_HEADING)
     clean_tag = tag.replace(" ", "-").upper()
-    error = (f"Expected to see tag: '{clean_tag}' in page heading but got "
-             f"'{heading.text}' instead")
+    error = (
+        f"Expected to see tag: '{clean_tag}' in page heading but got "
+        f"'{heading.text}' instead"
+    )
     assert clean_tag in heading.text.upper(), error
 
 

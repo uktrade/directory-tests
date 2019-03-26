@@ -49,10 +49,16 @@ SELECTORS = {
         "last name": Selector(By.ID, "id_last_name", type=ElementType.INPUT),
         "email": Selector(By.ID, "id_email", type=ElementType.INPUT),
         "company": Selector(
-            By.CSS_SELECTOR, "input[value='COMPANY']", type=ElementType.CHECKBOX, is_visible=False
+            By.CSS_SELECTOR,
+            "input[value='COMPANY']",
+            type=ElementType.CHECKBOX,
+            is_visible=False,
         ),
         "other type of organisation": Selector(
-            By.CSS_SELECTOR, "input[value='OTHER']", type=ElementType.CHECKBOX, is_visible=False
+            By.CSS_SELECTOR,
+            "input[value='OTHER']",
+            type=ElementType.CHECKBOX,
+            is_visible=False,
         ),
         "company name": Selector(By.ID, "id_company_name", type=ElementType.INPUT),
         "your question": Selector(By.ID, "id_comment", type=ElementType.TEXTAREA),

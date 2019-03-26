@@ -9,12 +9,12 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import (
     Selector,
+    check_for_sections,
     check_url,
-    take_screenshot,
-    go_to_url,
-    find_elements,
     find_and_click_on_page_element,
-    check_for_sections
+    find_elements,
+    go_to_url,
+    take_screenshot,
 )
 from settings import EXRED_UI_URL
 
@@ -42,9 +42,7 @@ SELECTORS = {
         "breadcrumbs": Selector(By.CSS_SELECTOR, "div.breadcrumbs"),
         "news": Selector(By.CSS_SELECTOR, "#news-list-page ul li"),
         "articles": ARTICLES,
-        "last updated dates": Selector(
-            By.CSS_SELECTOR, "#news-list-page ul li p"
-        ),
+        "last updated dates": Selector(By.CSS_SELECTOR, "#news-list-page ul li p"),
     },
     "call to action": {
         "itself": Selector(By.CSS_SELECTOR, "div.cta-box"),
