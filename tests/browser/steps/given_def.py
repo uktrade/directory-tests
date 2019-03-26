@@ -126,12 +126,14 @@ def given_actor_received_email_confirmation_code(
 @given('"{actor_alias}" searches for marketplaces in {countries} to sell {products}')
 def given_actor_looks_for_marketplace_using_countries_and_products(
         context: Context, actor_alias: str, countries: str, products: str):
-    soo_look_for_marketplaces_from_home_page(context, actor_alias, countries, products)
+    soo_look_for_marketplaces_from_home_page(
+        context, actor_alias, countries, products
+    )
 
 
 @given('"{actor_alias}" found a marketplace in {countries} to sell {products}')
 def given_actor_found_marketplace(
-        context: Context, actor_alias: str, products: str, countries: str):
+        context: Context, actor_alias: str, countries: str, products: str):
     context.execute_steps(u'''
         Given "{actor_alias}" searches for marketplaces in "{countries}" to sell {products}'''
                           .format(actor_alias=actor_alias, countries=countries, products=products))
@@ -145,7 +147,7 @@ def given_actor_found_marketplace(
 
 @given('"{actor_alias}" applied via DIT to contact randomly selected marketplace in "{countries}" to sell "{products}"')
 def actor_applied_via_dit(
-        context: Context, actor_alias: str, products: str, countries: str):
+        context: Context, actor_alias: str, countries: str, products: str):
     context.execute_steps(u'''
         Given "{actor_alias}" visits the "Selling Online Overseas - Home" page'''.format(actor_alias=actor_alias))
     context.execute_steps(u'''
