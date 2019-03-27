@@ -28,7 +28,7 @@ Feature: SUD (Profile) pages
     Examples: SUD pages
       |other SUD                  | expected        |
       |SUD Export Opportunities   | SSO Login       |
-      |Profile - Find a Buyer           | Profile - Enrol |
+      |Profile - Find a Buyer     | Profile - Enrol |
       |SUD Selling Online Overseas| SSO Login       |
 
 
