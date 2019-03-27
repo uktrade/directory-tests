@@ -76,7 +76,7 @@ Feature: SUD (Profile) pages
   @profile
   @dev-only
   @fake-sso-email-verification
-  Scenario: Supplier should not be able to use other characters than alphanumerics and commas in profile keywords
+  Scenario: Supplier should not be able to update business details using invalid values
     Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
 
     When "Annette Geissinger" attempts to change business details
@@ -99,7 +99,7 @@ Feature: SUD (Profile) pages
   @profile
   @dev-only
   @fake-sso-email-verification
-  Scenario: Supplier should not be able to use other characters than alphanumerics and commas in profile keywords
+  Scenario: Supplier should not be able to update business details using invalid values (too long name)
     Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
 
     When "Annette Geissinger" attempts to change business details
@@ -113,7 +113,7 @@ Feature: SUD (Profile) pages
   @profile
   @dev-only
   @fake-sso-email-verification
-  Scenario: Supplier should not be able to use other characters than alphanumerics and commas in profile keywords
+  Scenario: Supplier should not be able to use other characters than alphanumerics and commas to define products and services offered by the company
     Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
 
     When "Annette Geissinger" attempts to change products and services offered by the company
