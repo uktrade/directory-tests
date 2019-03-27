@@ -70,3 +70,59 @@ Feature: SUD (Profile) pages
         |SUD Selling Online Overseas|
 
       Then "Peter Alder" should be able to see all selected pages
+
+
+  @ED-2141
+  @profile
+  @dev-only
+  @fake-sso-email-verification
+  Scenario: Supplier should not be able to use other characters than alphanumerics and commas in profile keywords
+    Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
+
+    When "Annette Geissinger" attempts to change business details
+      | trading name   | website         | size       | industry | error                  |
+      | empty string   | empty string    | 1-10       | random   | This field is required |
+      | unchanged      | invalid http    | 11-50      | random   | Enter a valid URL      |
+      | unchanged      | invalid https   | 51-200     | random   | Enter a valid URL      |
+      | unchanged      | 2048 characters | 201-500    | random   | Enter a valid URL      |
+      | unchanged      | empty string    | unset      | random   | This field is required |
+      | unchanged      | empty string    | 501-1000   | unset    | This field is required |
+      | unchanged      | empty string    | 1001-10000 | unset    | This field is required |
+
+    Then "Annette Geissinger" should see expected error messages
+
+
+  @bug
+  @TT-1289
+  @fixme
+  @ED-2141
+  @profile
+  @dev-only
+  @fake-sso-email-verification
+  Scenario: Supplier should not be able to use other characters than alphanumerics and commas in profile keywords
+    Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
+
+    When "Annette Geissinger" attempts to change business details
+      | trading name   | website         | size       | industry | error                  |
+      | 256 characters | empty string    | 10001+     | random   | Ensure this field has no more than 255 characters |
+
+    Then "Annette Geissinger" should see expected error messages
+
+
+  @ED-2141
+  @profile
+  @dev-only
+  @fake-sso-email-verification
+  Scenario: Supplier should not be able to use other characters than alphanumerics and commas in profile keywords
+    Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
+
+    When "Annette Geissinger" attempts to change product and services offered by the company
+      | keywords          | separator  | error                                                       |
+      | empty string      | comma      | This field is required                                      |
+      | book, keys, food  | pipe       | You can only enter letters, numbers and commas              |
+      | sky, sea, blues   | semi-colon | You can only enter letters, numbers and commas              |
+      | sand, dunes, bird | colon      | You can only enter letters, numbers and commas              |
+      | bus, ferry, plane | full stop  | You can only enter letters, numbers and commas              |
+      | 1001 characters   | comma      | Ensure this value has at most 1000 characters (it has 1001) |
+
+    Then "Annette Geissinger" should see expected error messages

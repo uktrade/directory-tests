@@ -3,63 +3,6 @@ Feature: Trade Profile
 
   @wip
   @needs-rework
-  @ED-1716
-  @profile
-  @dev-only
-  @fake-sso-email-verification
-  Scenario: Supplier should be able to build the Directory Profile once the email address is confirmed
-    Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
-
-    When "Annette Geissinger" provides valid details of selected company
-    And "Annette Geissinger" selects sector the company is in and preferred country of export
-    And "Annette Geissinger" decides to verify her identity with a verification letter
-
-    Then "Annette Geissinger" should be on edit Company's Directory Profile page
-    And "Annette Geissinger" should be told that her company has no description
-
-
-  @needs-rework
-  @ED-2141
-  @profile
-  @dev-only
-  @fake-sso-email-verification
-  Scenario: Supplier should not be able to use other characters than alphanumerics and commas in profile keywords
-    Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
-
-    When "Annette Geissinger" provides company details using following values
-      |company name  |website       |keywords         |separator |size    |error                                                       |
-      |empty string  |empty string  |book, keys, food |comma     |1-10    |This field is required.                                     |
-      |unchanged     |empty string  |book, keys, food |pipe      |11-50   |You can only enter letters, numbers and commas.             |
-      |unchanged     |valid http    |sky, sea, blues  |semi-colon|51-200  |You can only enter letters, numbers and commas.             |
-      |unchanged     |valid https   |sand, dunes, bird|colon     |201-500 |You can only enter letters, numbers and commas.             |
-      |unchanged     |empty string  |bus, ferry, plane|full stop |501-1000|You can only enter letters, numbers and commas.             |
-      |unchanged     |valid https   |sand, dunes, bird|comma     |unset   |This field is required.                                     |
-      |unchanged     |valid http    |empty string     |comma     |51-200  |This field is required.                                     |
-      |256 characters|valid https   |sand, dunes, bird|comma     |1-10    |Ensure this value has at most 255 characters (it has 256).  |
-      |unchanged     |empty string  |1001 characters  |comma     |1-10    |Ensure this value has at most 1000 characters (it has 1001).|
-
-    Then "Annette Geissinger" should see expected error messages
-
-
-  @needs-rework
-  @ED-2141
-  @profile
-  @dev-only
-  @fake-sso-email-verification
-  Scenario: Supplier should not be able to use other characters than alphanumerics and commas in profile keywords
-    Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
-
-    When "Annette Geissinger" provides company details using following values
-      |company name  |website       |keywords         |separator |size  |error                                                     |
-      |unchanged     |256 characters|sand, dunes, bird|comma     |1-10  |Ensure this value has at most 255 characters (it has 256).|
-      |unchanged     |invalid http  |sand, dunes, bird|comma     |1-10  |Enter a valid URL.                                        |
-      |unchanged     |invalid https |sand, dunes, bird|comma     |11-50 |Enter a valid URL.                                        |
-
-    Then "Annette Geissinger" should see expected error messages
-
-
-  @wip
-  @needs-rework
   @ED-1722
   @verification
   @letter
