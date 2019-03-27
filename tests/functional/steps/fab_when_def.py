@@ -232,7 +232,7 @@ def when_supplier_provide_company_details(context, supplier_alias):
     profile_provide_business_details(context, supplier_alias, context.table)
 
 
-@when('"{supplier_alias}" attempts to change product and services offered by the company')
+@when('"{supplier_alias}" attempts to change products and services offered by the company')
 def when_supplier_provide_products_and_services(context, supplier_alias):
     profile_provide_products_and_services(context, supplier_alias, context.table)
 
