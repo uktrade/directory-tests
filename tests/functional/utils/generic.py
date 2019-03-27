@@ -326,7 +326,7 @@ def extract_page_contents(
     strip_image_captions: bool = True,
     strip_footer: bool = True,
     strip_select_menus: bool = True,
-    strip_unordered_lists: bool = True
+    strip_unordered_lists: bool = False,
 ) -> str:
     soup = BeautifulSoup(content, "lxml")
 
