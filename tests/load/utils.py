@@ -25,6 +25,20 @@ SECTORS = [
     "WATER"
 ]
 
+PRODUCT_CATEGORIES = [
+    "Home & Garden", "Animals & Pet Supplies", "Food, Beverages & Tobacco"
+    "Bay & Toddler", "Toys & Games", "Sporting Goods", "Hardware", "Clothing & Accessories",
+    "Vehicles & Parts", "Electronics", "Arts & Entertainment", "Business & Industrial",
+    "Office Supplies", "Cameras & Optics"
+]
+
+
+OPERATING_COUNTRIES = [
+    "China", "Japan", "India", "United States",
+    "Australia", "New Zealand", "Finland", "Canada",
+    "France", "Germany", "Austria", "Russia", "Zimbabwe", "Belgium"
+]
+
 
 def rare_word(*, min_length: int = 9, max_length: int = 20) -> str:
     """Get a random rare english word.
@@ -46,3 +60,11 @@ def random_company_number() -> str:
 
 def random_sector() -> str:
     return choice(SECTORS)
+
+
+def random_product_categories() -> str:
+    return choice(PRODUCT_CATEGORIES)
+
+
+def random_operating_countries() -> str:
+    return choice(OPERATING_COUNTRIES)
