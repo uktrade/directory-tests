@@ -14,7 +14,7 @@ from tests.functional.steps.fab_then_impl import (
     fab_should_see_all_case_studies,
     fab_should_see_case_study_error_message,
     fab_should_see_company_details,
-    fab_should_see_expected_error_messages,
+    profile_should_see_expected_error_messages,
     fab_should_see_online_profiles,
     fas_check_profiles,
     fas_find_supplier_using_case_study_details,
@@ -288,7 +288,7 @@ def then_actor_should_see_different_logo_on_fas(context, actor_alias):
 
 @then('"{supplier_alias}" should see expected error messages')
 def then_supplier_should_see_expected_error_messages(context, supplier_alias):
-    fab_should_see_expected_error_messages(context, supplier_alias)
+    profile_should_see_expected_error_messages(context, supplier_alias)
 
 
 @then('"{actor_alias}" should be presented with "{page_name}" FAS page')

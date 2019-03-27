@@ -738,23 +738,19 @@ def fas_supplier_should_receive_message_from_buyer(
     logging.debug("%s received message from %s", supplier_alias, buyer_alias)
 
 
-def fab_should_see_expected_error_messages(
+def profile_should_see_expected_error_messages(
     context: Context, supplier_alias: str
 ):
     results = context.results
-    logging.debug(results)
     for company, response, error in results:
         context.response = response
+        logging.debug(f"Modified company's details: {company}")
+        logging.debug(f"Response: {response}")
+        logging.debug(f"Expected error message: {error}")
         with assertion_msg(
-            "Could not find expected error message: '%s' in the response, "
-            "after submitting the form with following company details: "
-            "title='%s' website='%s' keywords='%s' number of employees="
-            "'%s'",
-            error,
-            company.title,
-            company.website,
-            company.keywords,
-            company.no_employees,
+            f"Could not find expected error message: '{error}' in the response,"
+            f" after submitting the form with following company details: "
+            f"{company}",
         ):
             assert error in response.content.decode("utf-8")
     logging.debug("%s has seen all expected form errors", supplier_alias)
