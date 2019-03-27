@@ -442,10 +442,10 @@ def profile_edit_business_details(
     response, new_details = profile_edit_company_business_details.submit(
         actor,
         company,
-        title=title,
-        website=website,
-        size=size,
-        sector=sector,
+        change_title=title,
+        change_website=website,
+        change_size=size,
+        change_sector=sector,
     )
     context.response = response
 
@@ -845,9 +845,9 @@ def prof_update_company_details(
     response, new_details = profile_edit_company_business_details.submit(
         actor,
         company,
-        title=title,
-        website=website,
-        size=size,
+        change_title=title,
+        change_website=website,
+        change_size=size,
     )
     context.response = response
 
@@ -1424,53 +1424,111 @@ def fas_send_message_to_supplier(
     context.response = response
 
 
-def fab_provide_company_details(
-    context: Context, supplier_alias: str, table: Table
+def profile_provide_business_details(
+        context: Context, supplier_alias: str, table: Table
 ):
-    """Submit company details with specific values in order to verify data
-     validation.
-
-    NOTE:
-    This will store a list of `results` tuples in context. Each tuple will
-    contain:
-    * Company namedtuple (with details used in the request)
-    * response object
-    * expected error message
-    """
     actor = context.get_actor(supplier_alias)
-    original_details = context.get_company(actor.company_alias)
+    company = context.get_company(actor.company_alias)
     results = []
     for row in table:
-        if row["company name"] == "unchanged":
-            title = original_details.title
-        elif row["company name"] == "empty string":
-            title = ""
-        elif row["company name"].endswith(" characters"):
+        if row["trading name"] == "unchanged":
+            new_title = company.title
+            change_title = False
+        elif row["trading name"] == "empty string":
+            new_title = "empty string"
+            change_title = True
+        elif row["trading name"].endswith(" characters"):
             number = [
                 int(word)
-                for word in row["company name"].split()
+                for word in row["trading name"].split()
                 if word.isdigit()
             ][0]
-            title = random_chars(number)
+            new_title = random_chars(number)
+            change_title = True
         else:
-            title = original_details.title
+            new_title = company.title
+            change_title = False
 
-        if row["website"] == "empty string":
-            website = ""
+        if row["website"] == "unchanged":
+            new_website = company.website
+            change_website = False
+        elif row["website"] == "empty string":
+            new_website = "empty string"
+            change_website = True
         elif row["website"] == "valid http":
-            website = "http://{}.{}".format(rare_word(), rare_word())
+            new_website = "http://{}.{}".format(rare_word(), rare_word())
+            change_website = True
         elif row["website"] == "valid https":
-            website = "https://{}.{}".format(rare_word(), rare_word())
+            new_website = "https://{}.{}".format(rare_word(), rare_word())
+            change_website = True
         elif row["website"] == "invalid http":
-            website = "http:{}.{}".format(rare_word(), rare_word())
+            new_website = "http"
+            change_website = True
         elif row["website"] == "invalid https":
-            website = "https:{}.{}".format(rare_word(), rare_word())
+            new_website = "https"
+            change_website = True
         elif row["website"].endswith(" characters"):
             number = [
                 int(word) for word in row["website"].split() if word.isdigit()
             ][0]
-            website = random_chars(number)
+            new_website = random_chars(number)
+            change_website = True
+        else:
+            new_website = company.website
+            change_website = False
 
+        if row["size"] == "unchanged":
+            new_size = None
+            change_size = False
+        elif row["size"] == "unset":
+            new_size = "unset"
+            change_size = True
+        else:
+            new_size = row["size"]
+            change_size = True
+
+        if row["industry"] == "unchanged":
+            new_sector = None
+            change_sector = False
+        elif row["industry"] == "unset":
+            new_sector = "unset"
+            change_sector = True
+        elif row["industry"] == "random":
+            new_sector, _ = random.choice(choices.INDUSTRIES)
+            change_sector = True
+        else:
+            new_sector = company.sector
+            change_sector = False
+
+        modified_details = Company(
+            title=new_title, website=new_website, no_employees=new_size,
+            sector=new_sector
+        )
+
+        logging.debug(f"Details to update: {modified_details}")
+        response, new_details = profile_edit_company_business_details.submit(
+            actor,
+            company,
+            change_title=change_title,
+            specific_title=new_title,
+            change_website=change_website,
+            specific_website=new_website,
+            change_size=change_size,
+            specific_size=new_size,
+            change_sector=change_sector,
+            specific_sector=new_sector,
+        )
+        results.append((new_details, response, row["error"]))
+
+    context.results = results
+
+
+def profile_provide_products_and_services(
+        context: Context, supplier_alias: str, table: Table
+):
+    actor = context.get_actor(supplier_alias)
+    results = []
+    for row in table:
         if row["keywords"] == "empty string":
             keywords = ""
         elif row["keywords"].endswith(" characters"):
@@ -1490,17 +1548,13 @@ def fab_provide_company_details(
             if row["separator"] == "full stop":
                 keywords = ". ".join(separate_keywords)
 
-        if row["size"] == "unset":
-            size = ""
-        else:
-            size = row["size"]
-
-        new_details = Company(
-            title=title, website=website, keywords=keywords, no_employees=size
+        modified_details = Company(keywords=keywords)
+        logging.debug(f"Keywords to update: {keywords}")
+        response = profile_edit_products_and_services_keywords.submit(
+            actor.session,
+            keywords=keywords
         )
-
-        response = fab_ui_build_profile_basic.submit(actor, new_details)
-        results.append((new_details, response, row["error"]))
+        results.append((modified_details, response, row["error"]))
 
     context.results = results
 

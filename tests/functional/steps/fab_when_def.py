@@ -5,14 +5,11 @@ from behave import when
 from tests.functional.steps.fab_when_impl import (
     bp_provide_company_details,
     bp_select_random_sector_and_export_to_country,
-    fab_decide_to_verify_profile_with_letter,
     fab_add_collaborator,
-    profile_attempt_to_add_case_study,
     fab_choose_to_verify_with_code,
     fab_collaborator_create_sso_account_and_confirm_email,
     fab_confirm_collaboration_request,
-    profile_go_to_letter_verification,
-    fab_provide_company_details,
+    fab_decide_to_verify_profile_with_letter,
     fab_remove_collaborators,
     fab_select_preferred_countries_of_export,
     fab_send_transfer_ownership_request,
@@ -36,7 +33,6 @@ from tests.functional.steps.fab_when_impl import (
     fas_view_pages_in_selected_language,
     go_to_page,
     go_to_pages,
-    profile_add_case_study,
     prof_add_invalid_online_profiles,
     prof_add_online_profiles,
     prof_attempt_to_sign_in_to_sso,
@@ -45,8 +41,13 @@ from tests.functional.steps.fab_when_impl import (
     prof_supplier_uploads_logo,
     prof_to_upload_unsupported_logos,
     prof_update_company_details,
-    profile_verify_company_profile,
     prof_view_published_profile,
+    profile_add_case_study,
+    profile_attempt_to_add_case_study,
+    profile_go_to_letter_verification,
+    profile_provide_business_details,
+    profile_provide_products_and_services,
+    profile_verify_company_profile,
     reg_confirm_company_selection,
     reg_create_sso_account,
     reg_create_standalone_unverified_sso_account,
@@ -59,7 +60,7 @@ from tests.functional.steps.fab_when_impl import (
     sso_request_password_reset,
     sso_sign_in,
     sso_supplier_confirms_email_address,
-    stannp_download_verification_letter_and_extract_text
+    stannp_download_verification_letter_and_extract_text,
 )
 
 
@@ -226,9 +227,14 @@ def when_buyer_sends_message_to_supplier(context, buyer_alias, company_alias):
     fas_send_message_to_supplier(context, buyer_alias, company_alias)
 
 
-@when('"{supplier_alias}" provides company details using following values')
+@when('"{supplier_alias}" attempts to change business details')
 def when_supplier_provide_company_details(context, supplier_alias):
-    fab_provide_company_details(context, supplier_alias, context.table)
+    profile_provide_business_details(context, supplier_alias, context.table)
+
+
+@when('"{supplier_alias}" attempts to change product and services offered by the company')
+def when_supplier_provide_products_and_services(context, supplier_alias):
+    profile_provide_products_and_services(context, supplier_alias, context.table)
 
 
 @when('"{actor_alias}" visits "{page_name}" page on FAS')
