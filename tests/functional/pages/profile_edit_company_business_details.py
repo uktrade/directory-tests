@@ -27,10 +27,10 @@ def submit(
     actor: Actor,
     company: Company,
     *,
-    title=True,
-    website=True,
-    size=True,
-    sector=True,
+    change_title=True,
+    change_website=True,
+    change_size=True,
+    change_sector=True,
     specific_title=None,
     specific_website=None,
     specific_size=None,
@@ -42,26 +42,38 @@ def submit(
     """
     session = actor.session
 
-    if title:
-        new_title = specific_title or f"{sentence()} AUTOTESTS"
+    if change_title:
+        if specific_title == "empty string":
+            new_title = ""
+        else:
+            new_title = specific_title or f"{sentence()} AUTOTESTS"
     else:
         new_title = company.title
 
-    if website:
-        new_website = specific_website or (
-            "https://{}.{}/".format(rare_word(), rare_word())
-        )
+    if change_website:
+        if specific_website == "empty string":
+            new_website = ""
+        else:
+            new_website = specific_website or (
+                "https://{}.{}/".format(rare_word(), rare_word())
+            )
     else:
         new_website = company.website
 
-    if size:
-        new_size = specific_size or random.choice(NO_OF_EMPLOYEES)
+    if change_size:
+        if specific_size == "unset":
+            new_size = ""
+        else:
+            new_size = specific_size or random.choice(NO_OF_EMPLOYEES)
     else:
         new_size = company.no_employees
 
-    if sector:
-        random_sector, _ = random.choice(choices.INDUSTRIES)
-        new_sector = specific_sector or random_sector
+    if change_sector:
+        if specific_sector == "unset":
+            new_sector = ""
+        else:
+            random_sector, _ = random.choice(choices.INDUSTRIES)
+            new_sector = specific_sector or random_sector
     else:
         new_sector = company.sector
 
