@@ -432,7 +432,7 @@ def profile_edit_business_details(
     # Step 0 - prepare company's details to update
     table_of_details = table_of_details or []
     details_to_update = [row["detail"] for row in table_of_details]
-    title = DETAILS["TITLE"] in details_to_update
+    title = DETAILS["NAME"] in details_to_update
     website = DETAILS["WEBSITE"] in details_to_update
     size = DETAILS["SIZE"] in details_to_update
     sector = DETAILS["SECTOR"] in details_to_update
@@ -769,20 +769,20 @@ def prof_update_company_details(
 
     # Step 0 - prepare company's details to update
     details_to_update = [row["detail"] for row in table_of_details]
-    title = DETAILS["TITLE"] in details_to_update
     website = DETAILS["WEBSITE"] in details_to_update
     size = DETAILS["SIZE"] in details_to_update
     sector = DETAILS["SECTOR"] in details_to_update
     exported_before = DETAILS["HAS_EXPORTED_BEFORE"] in details_to_update
     countries = DETAILS["COUNTRIES"] in details_to_update
+    change_name = DETAILS["NAME"] in details_to_update
 
     # Step 1 - Update company's details
     response, new_details = profile_edit_company_business_details.submit(
         actor,
         company,
-        change_title=title,
         change_website=website,
         change_size=size,
+        change_name=change_name,
     )
     context.response = response
 

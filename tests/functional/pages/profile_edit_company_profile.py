@@ -54,7 +54,7 @@ def should_see_details(
     visible_details = [row["detail"] for row in table_of_details]
     content = response.content.decode("utf-8")
 
-    title = DETAILS["TITLE"] in visible_details
+    title = DETAILS["NAME"] in visible_details
     keywords = DETAILS["KEYWORDS"] in visible_details
     website = DETAILS["WEBSITE"] in visible_details
     size = DETAILS["SIZE"] in visible_details
