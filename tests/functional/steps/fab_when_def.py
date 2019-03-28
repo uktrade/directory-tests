@@ -39,7 +39,7 @@ from tests.functional.steps.fab_when_impl import (
     prof_remove_links_to_online_profiles,
     prof_supplier_uploads_logo,
     prof_to_upload_unsupported_logos,
-    prof_update_company_details,
+    profile_update_company_details,
     profile_view_published_profile,
     profile_add_case_study,
     profile_attempt_to_add_case_study,
@@ -144,7 +144,7 @@ def when_supplier_decide_to_create_trade_profile(context, supplier_alias):
 
 @when('"{supplier_alias}" updates company\'s details')
 def when_supplier_updates_company_details(context, supplier_alias):
-    prof_update_company_details(context, supplier_alias, context.table)
+    profile_update_company_details(context, supplier_alias, context.table)
 
 
 @when('"{supplier_alias}" adds links to online profiles')

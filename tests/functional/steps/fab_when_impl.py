@@ -442,7 +442,7 @@ def profile_edit_business_details(
     response, new_details = profile_edit_company_business_details.submit(
         actor,
         company,
-        change_title=title,
+        change_name=title,
         change_website=website,
         change_size=size,
         change_sector=sector,
@@ -783,47 +783,29 @@ def profile_update_company_details(
     profile_edit_company_profile.should_be_here(response)
 
     # Step 3 - Go to the Edit Sector page
-    response = fab_ui_edit_sector.go_to(session)
-    context.response = response
-    fab_ui_edit_sector.should_be_here(response)
+    if change_keywords:
+        keywords = ", ".join(sentence().split())
+        new_details = new_details._replace(**{"keywords": keywords})
+        response = profile_edit_products_and_services_keywords.submit(
+            actor.session,
+            keywords=keywords
+        )
+        context.response = response
 
-    # Step 4 - extract CSRF token
-    token = extract_csrf_middleware_token(response)
-    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
+        # Step 3' - Check if Supplier is on FAB Profile page
+        profile_edit_company_profile.should_be_here(response)
 
-    # Step 5 - Update company's sector
-    response, new_sector, new_countries, has_exported_before = fab_ui_edit_sector.update(
-        actor, company, update_sector=sector, update_countries=countries,
-        update_has_exported_before=exported_before
-    )
-    context.response = response
-
-    # Step 7 - Check if Supplier is on FAB Profile page
-    profile_edit_company_profile.should_be_here(response)
-
-    # Step 8 - update company's details stored in context.scenario_data
+    # Step 4 - update company's details stored in context.scenario_data
     context.set_company_details(
         actor.company_alias,
         title=new_details.title,
         website=new_details.website,
         keywords=new_details.keywords,
         no_employees=new_details.no_employees,
-        sector=new_sector,
-        export_to_countries=new_countries,
-        has_exported_before=has_exported_before,
+        sector=new_details.sector,
     )
     logging.debug(
-        "%s successfully updated basic Company's details: title=%s, "
-        "website=%s, keywords=%s, number of employees=%s, sector=%s, "
-        "countries=%s, has_exported_before=%s",
-        supplier_alias,
-        new_details.title,
-        new_details.website,
-        new_details.keywords,
-        new_details.no_employees,
-        new_sector,
-        new_countries,
-        has_exported_before,
+        f"{supplier_alias} successfully updated Company's details: {new_details}"
     )
 
 
