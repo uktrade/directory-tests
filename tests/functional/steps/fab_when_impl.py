@@ -752,37 +752,30 @@ def prof_to_upload_unsupported_logos(
     context.rejections = rejections
 
 
-def prof_update_company_details(
+def profile_update_company_details(
     context: Context, supplier_alias: str, table_of_details: Table
 ):
-    """Update selected Company's details.
-
-    NOTE:
-    `table_of_details` contains names of details to update.
-    Passing `table_of_details` can be avoided as we already have access to
-    `context` object, yet in order to be more explicit, we're making it
-    a mandatory argument.
-    """
+    """Update selected Company's details."""
     actor = context.get_actor(supplier_alias)
     session = actor.session
     company = context.get_company(actor.company_alias)
 
     # Step 0 - prepare company's details to update
     details_to_update = [row["detail"] for row in table_of_details]
-    website = DETAILS["WEBSITE"] in details_to_update
-    size = DETAILS["SIZE"] in details_to_update
-    sector = DETAILS["SECTOR"] in details_to_update
-    exported_before = DETAILS["HAS_EXPORTED_BEFORE"] in details_to_update
-    countries = DETAILS["COUNTRIES"] in details_to_update
     change_name = DETAILS["NAME"] in details_to_update
+    change_website = DETAILS["WEBSITE"] in details_to_update
+    change_size = DETAILS["SIZE"] in details_to_update
+    change_sector = DETAILS["SECTOR"] in details_to_update
+    change_keywords = DETAILS["KEYWORDS"] in details_to_update
 
     # Step 1 - Update company's details
     response, new_details = profile_edit_company_business_details.submit(
         actor,
         company,
-        change_website=website,
-        change_size=size,
         change_name=change_name,
+        change_website=change_website,
+        change_size=change_size,
+        change_sector=change_sector,
     )
     context.response = response
 
@@ -1367,22 +1360,22 @@ def profile_provide_business_details(
     results = []
     for row in table:
         if row["trading name"] == "unchanged":
-            new_title = company.title
-            change_title = False
+            new_name = company.title
+            change_name = False
         elif row["trading name"] == "empty string":
-            new_title = "empty string"
-            change_title = True
+            new_name = "empty string"
+            change_name = True
         elif row["trading name"].endswith(" characters"):
             number = [
                 int(word)
                 for word in row["trading name"].split()
                 if word.isdigit()
             ][0]
-            new_title = random_chars(number)
-            change_title = True
+            new_name = random_chars(number)
+            change_name = True
         else:
-            new_title = company.title
-            change_title = False
+            new_name = company.title
+            change_name = False
 
         if row["website"] == "unchanged":
             new_website = company.website
@@ -1436,7 +1429,7 @@ def profile_provide_business_details(
             change_sector = False
 
         modified_details = Company(
-            title=new_title, website=new_website, no_employees=new_size,
+            title=new_name, website=new_website, no_employees=new_size,
             sector=new_sector
         )
 
@@ -1444,8 +1437,8 @@ def profile_provide_business_details(
         response, new_details = profile_edit_company_business_details.submit(
             actor,
             company,
-            change_title=change_title,
-            specific_title=new_title,
+            change_name=change_name,
+            specific_name=new_name,
             change_website=change_website,
             specific_website=new_website,
             change_size=change_size,

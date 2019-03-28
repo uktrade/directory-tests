@@ -27,11 +27,11 @@ def submit(
     actor: Actor,
     company: Company,
     *,
-    change_title=True,
+    change_name=True,
     change_website=True,
     change_size=True,
     change_sector=True,
-    specific_title=None,
+    specific_name=None,
     specific_website=None,
     specific_size=None,
     specific_sector=None,
@@ -42,13 +42,13 @@ def submit(
     """
     session = actor.session
 
-    if change_title:
-        if specific_title == "empty string":
-            new_title = ""
+    if change_name:
+        if specific_name == "empty string":
+            new_name = ""
         else:
-            new_title = specific_title or f"{sentence()} AUTOTESTS"
+            new_name = specific_name or f"{sentence()} AUTOTESTS"
     else:
-        new_title = company.title
+        new_name = company.title
 
     if change_website:
         if specific_website == "empty string":
@@ -79,14 +79,14 @@ def submit(
 
     headers = {"Referer": URL}
     data = {
-        "name": new_title,
+        "name": new_name,
         "website": new_website,
         "employees": new_size,
         "sectors": new_sector,
     }
 
     new_details = Company(
-        title=new_title,
+        title=new_name,
         website=new_website,
         sector=new_sector,
         no_employees=new_size,
