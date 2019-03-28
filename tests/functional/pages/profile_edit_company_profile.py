@@ -95,7 +95,7 @@ def should_see_details(
             "Couldn't find company's sector '%s' in the response",
             SECTORS_WITH_LABELS[company.sector],
         ):
-            assert SECTORS_WITH_LABELS[company.sector] in content
+            assert SECTORS_WITH_LABELS[company.sector].lower() in content.lower()
 
 
 def should_see_online_profiles(company: Company, response: Response):
