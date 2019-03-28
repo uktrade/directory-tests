@@ -266,14 +266,14 @@ Feature: Multi-user accounts
       | sector of interest          |
       | countries to export to      |
 
-    Then "Annette Geissinger" should see new details on FAB Company's Directory Profile page
+    Then "Annette Geissinger" should see new details on FAB Company's Business Profile page
       | detail                      |
       | business name               |
       | website                     |
       | keywords                    |
       | number of employees         |
       | sector of interest          |
-    And "Annette Geissinger" should see new details on FAS Company's Directory Profile page
+    And "Annette Geissinger" should see new details on FAS Company's Business Profile page
       | detail                      |
       | business name               |
       | website                     |

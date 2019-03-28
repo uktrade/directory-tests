@@ -118,8 +118,7 @@ def then_supplier_should_be_signed_in_to_sso_account(context, supplier_alias):
     sso_should_be_signed_in_to_sso_account(context, supplier_alias)
 
 
-@then('"{supplier_alias}" should see new details on FAB Company\'s Directory '
-      'Profile page')
+@then('"{supplier_alias}" should see new details on FAB Company\'s Business Profile page')
 def then_supplier_should_see_new_details(context, supplier_alias):
     fab_should_see_company_details(context, supplier_alias)
 
@@ -184,8 +183,7 @@ def then_every_invalid_logo_should_be_rejected(context, supplier_alias):
     prof_all_unsupported_files_should_be_rejected(context, supplier_alias)
 
 
-@then('"{supplier_alias}" should see new details on FAS Company\'s Directory '
-      'Profile page')
+@then('"{supplier_alias}" should see new details on FAS Company\'s Business Profile page')
 def then_supplier_should_see_new_details_on_fas(context, supplier_alias):
     fas_should_see_company_details(context, supplier_alias)
 
