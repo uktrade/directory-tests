@@ -1984,11 +1984,12 @@ def sso_request_password_reset(context: Context, supplier_alias: str):
     context.response = response
 
 
-def sso_sign_in(context: Context, supplier_alias: str):
+def sso_sign_in(context: Context, supplier_alias: str, *, from_page: str = None):
     """Sign in to standalone SSO account."""
     actor = context.get_actor(supplier_alias)
-    next_param = get_absolute_url("profile:about")
-    referer = get_absolute_url("profile:about")
+    from_page = get_fabs_page_url(from_page) if from_page else None
+    next_param = from_page or get_absolute_url("profile:about")
+    referer = from_page or get_absolute_url("profile:about")
     response = sso_ui_login.go_to(
         actor.session, next_param=next_param, referer=referer
     )

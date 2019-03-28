@@ -316,9 +316,10 @@ def when_supplier_resets_password(context, supplier_alias):
     sso_request_password_reset(context, supplier_alias)
 
 
+@when('"{supplier_alias}" signs in to SSO/great.gov.uk account from "{page_name}"')
 @when('"{supplier_alias}" signs in to SSO/great.gov.uk account')
-def when_supplier_signs_in_to_sso_account(context, supplier_alias):
-    sso_sign_in(context, supplier_alias)
+def when_supplier_signs_in_to_sso_account(context, supplier_alias, *, page_name: str = None):
+    sso_sign_in(context, supplier_alias, from_page=page_name)
 
 
 @when('"{supplier_alias}" changes the password to a new one using the password'
