@@ -13,7 +13,6 @@ Feature: Trade Profile
     When "Annette Geissinger" signs in to Find a Buyer profile
 
     Then "Annette Geissinger" should be on edit Company's Directory Profile page
-    And "Annette Geissinger" should be told that her company has no description
 
 
   @ED-1758
@@ -28,7 +27,6 @@ Feature: Trade Profile
     When "Peter Alder" signs in to Find a Buyer profile
 
     Then "Peter Alder" should be on edit Company's Directory Profile page
-    And "Peter Alder" should be told that her company is published
 
 
   @wip
