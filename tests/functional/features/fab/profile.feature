@@ -8,7 +8,7 @@ Feature: Trade Profile
   @fake-sso-email-verification
   Scenario: Suppliers with unverified company profile should be able to logout and log back in
     Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
-    And "Annette Geissinger" signed out from Find a Buyer service
+    And "Annette Geissinger" signed out from SSO/great.gov.uk account
 
     When "Annette Geissinger" signs in to Find a Buyer profile
 
@@ -22,7 +22,7 @@ Feature: Trade Profile
   @fake-sso-email-verification
   Scenario: Suppliers with verified company profile should be able to logout and log back in
     Given "Peter Alder" has created verified and published business profile for randomly selected company "Y"
-    And "Peter Alder" signed out from Find a Buyer service
+    And "Peter Alder" signed out from SSO/great.gov.uk account
 
     When "Peter Alder" signs in to Find a Buyer profile
 

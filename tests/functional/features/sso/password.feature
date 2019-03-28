@@ -30,7 +30,7 @@ Feature: SSO password management
   @no-sso-email-verification-required
   Scenario: Suppliers with unverified FAB profile should be able to reset password
     Given "Peter Alder" created an unverified business profile for randomly selected company "Y"
-    And "Peter Alder" signed out from Find a Buyer service
+    And "Peter Alder" signed out from SSO/great.gov.uk account
     And "Peter Alder" received a password reset email
 
     When "Peter Alder" changes the password to a new one using the password reset link
@@ -48,7 +48,7 @@ Feature: SSO password management
   @fake-sso-email-verification
   Scenario: Suppliers with verified FAB profile should be able to reset password
     Given "Peter Alder" has created verified and published business profile for randomly selected company "Y"
-    And "Peter Alder" signed out from Find a Buyer service
+    And "Peter Alder" signed out from SSO/great.gov.uk account
     And "Peter Alder" received a password reset email
 
     When "Peter Alder" changes the password to a new one using the password reset link

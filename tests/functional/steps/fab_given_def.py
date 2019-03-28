@@ -41,7 +41,6 @@ from tests.functional.steps.fab_when_impl import (
     profile_add_business_description,
     profile_add_product_and_services_keywords,
     profile_edit_business_details,
-    prof_sign_out_from_fab,
     prof_supplier_uploads_logo,
     reg_create_standalone_unverified_sso_account,
 )
@@ -83,11 +82,6 @@ def given_supplier_creates_verified_but_unpublished_profile(
     profile_create_verified_yet_unpublished_business_profile(
         context, supplier_alias, company_alias
     )
-
-
-@given('"{supplier_alias}" signed out from Find a Buyer service')
-def given_supplier_signed_out_from_fab(context, supplier_alias):
-    prof_sign_out_from_fab(context, supplier_alias)
 
 
 @given('"{supplier_alias}" created a standalone SSO/great.gov.uk account with '

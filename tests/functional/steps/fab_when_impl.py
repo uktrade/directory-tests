@@ -534,32 +534,6 @@ def prof_attempt_to_sign_in_to_sso(context: Context, supplier_alias: str):
     context.response = response
 
 
-def prof_sign_out_from_fab(context: Context, supplier_alias: str):
-    """Sign out from Find a Buyer."""
-    actor = context.get_actor(supplier_alias)
-    session = actor.session
-
-    # Step 1 - Get to the Sign Out confirmation page
-    response = sso_ui_logout.go_to(session)
-    context.response = response
-
-    # Step 2 - check if Supplier is on Log Out page & extract CSRF token
-    sso_ui_logout.should_be_here(response)
-    token = extract_csrf_middleware_token(response)
-    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
-
-    # Step 3 - log out
-    response = sso_ui_logout.logout(session, token)
-    context.response = response
-
-    # Step 4 - check if Supplier is on FAB Landing page & is logged out
-    fab_ui_landing.should_be_here(response)
-    fab_ui_landing.should_be_logged_out(response)
-
-    # Step 5 - reset requests Session object
-    context.reset_actor_session(supplier_alias)
-
-
 def prof_sign_in_to_fab(context: Context, supplier_alias: str):
     """Sign in to Find a Buyer."""
     actor = context.get_actor(supplier_alias)

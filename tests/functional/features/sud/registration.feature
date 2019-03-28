@@ -30,7 +30,7 @@ Feature: Trade Profile
     Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
     And "Annette Geissinger" set the company description
     And "Annette Geissinger" decided to verify her identity with a verification letter
-    And "Annette Geissinger" signed out from Find a Buyer service
+    And "Annette Geissinger" signed out from SSO/great.gov.uk account
     And "Annette Geissinger" received the letter with verification code
 
     When "Annette Geissinger" goes to the verification link from the letter as unauthenticated user
