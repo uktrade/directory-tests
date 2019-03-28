@@ -1995,6 +1995,13 @@ def sso_sign_in(context: Context, supplier_alias: str, *, from_page: str = None)
     )
     context.response = response
 
+    sso_ui_login.should_be_here(response)
+    with assertion_msg(
+            "It looks like user is still logged in, as the "
+            "sso_display_logged_in cookie is not equal to False"
+    ):
+        assert response.cookies.get("sso_display_logged_in") == "false"
+
     token = extract_csrf_middleware_token(response)
     context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
