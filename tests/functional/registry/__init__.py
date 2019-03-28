@@ -9,14 +9,9 @@ from tests.functional.pages import (
     fab_ui_confim_your_ownership,
     fab_ui_confirm_identity,
     fab_ui_confirm_identity_letter,
-    profile_edit_company_description,
     fab_ui_edit_online_profiles,
     fab_ui_edit_sector,
     fab_ui_landing,
-    profile_case_study_basic,
-    profile_edit_company_profile,
-    profile_enrol,
-    profile_upload_logo,
     fab_ui_verify_company,
     fas_ui_creative_industry,
     fas_ui_creative_industry_summary,
@@ -26,8 +21,15 @@ from tests.functional.pages import (
     fas_ui_health_industry,
     fas_ui_health_industry_summary,
     fas_ui_industries,
+    fas_ui_profile,
     fas_ui_tech_industry,
     fas_ui_tech_industry_summary,
+    profile_about,
+    profile_case_study_basic,
+    profile_edit_company_description,
+    profile_edit_company_profile,
+    profile_enrol,
+    profile_upload_logo,
     sso_ui_confim_your_email,
     sso_ui_login,
     sso_ui_logout,
@@ -35,7 +37,6 @@ from tests.functional.pages import (
     sso_ui_register,
     sud_ui_export_opportunities,
     sud_ui_find_a_buyer,
-    profile_about,
     sud_ui_selling_online_overseas,
 )
 
@@ -79,6 +80,10 @@ FAS_PAGE_REGISTRY = {
     "fas food and drink industry summary": {
         "url": "ui-supplier:industries-food-summary",
         "po": fas_ui_food_and_drink_industry_summary,
+    },
+    "fas - company profile": {
+        "url": "ui-supplier:industries-food-summary",
+        "po": fas_ui_profile,
     },
 }
 
