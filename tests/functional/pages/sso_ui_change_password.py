@@ -9,7 +9,7 @@ from tests.functional.utils.context_utils import Actor
 from tests.functional.utils.generic import assertion_msg
 from tests.functional.utils.request import Method, check_response, make_request
 
-EXPECTED_STRINGS = ["Change Password", "New Password:", "New Password (again)"]
+EXPECTED_STRINGS = ["Change Password", "New password", "Confirm password"]
 
 
 def should_be_here(response: Response):

@@ -13,7 +13,7 @@ URL = get_absolute_url("sso:password_reset")
 EXPECTED_STRINGS = [
     "Password reset",
     "Enter the email address you used to register",
-    "Email:",
+    "Email",
     "Reset my password",
     "Contact us",
     "if the password reset doesn't work.",
