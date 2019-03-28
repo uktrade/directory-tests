@@ -534,45 +534,6 @@ def prof_attempt_to_sign_in_to_sso(context: Context, supplier_alias: str):
     context.response = response
 
 
-def prof_sign_in_to_fab(context: Context, supplier_alias: str):
-    """Sign in to Find a Buyer."""
-    actor = context.get_actor(supplier_alias)
-    session = actor.session
-
-    # Step 1 - Get to the Sign In page
-    response = sso_ui_login.go_to(session)
-    context.response = response
-
-    # Step 2 - check if Supplier is on the SSO Login page
-    sso_ui_login.should_be_here(response)
-    with assertion_msg(
-        "It looks like user is still logged in, as the "
-        "sso_display_logged_in cookie is not equal to False"
-    ):
-        assert response.cookies.get("sso_display_logged_in") == "false"
-
-    # Step 3 - extract CSRF token
-    token = extract_csrf_middleware_token(response)
-    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
-
-    # Step 4 - submit the login form
-    response = sso_ui_login.login(actor)
-    context.response = response
-
-    # Step 5 - check if Supplier is on the FAB profile page
-    profile_edit_company_profile.should_be_here(response)
-    with assertion_msg(
-        "Found sso_display_logged_in cookie in the response. Maybe user is"
-        " still logged in?"
-    ):
-        assert "sso_display_logged_in" not in response.cookies
-    with assertion_msg(
-        "Found directory_sso_dev_session cookie in the response. Maybe "
-        "user is still logged in?"
-    ):
-        assert "directory_sso_dev_session" not in response.cookies
-
-
 def reg_create_standalone_unverified_sso_account(
     context: Context, supplier_alias: str
 ):

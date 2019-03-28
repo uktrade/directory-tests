@@ -10,7 +10,7 @@ Feature: Trade Profile
     Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
     And "Annette Geissinger" signed out from SSO/great.gov.uk account
 
-    When "Annette Geissinger" signs in to Find a Buyer profile
+    When "Annette Geissinger" signs in to SSO/great.gov.uk account from "FAB Landing"
 
     Then "Annette Geissinger" should be on edit Company's Directory Profile page
 
@@ -24,7 +24,7 @@ Feature: Trade Profile
     Given "Peter Alder" has created verified and published business profile for randomly selected company "Y"
     And "Peter Alder" signed out from SSO/great.gov.uk account
 
-    When "Peter Alder" signs in to Find a Buyer profile
+    When "Peter Alder" signs in to SSO/great.gov.uk account from "FAB Landing"
 
     Then "Peter Alder" should be on edit Company's Directory Profile page
 

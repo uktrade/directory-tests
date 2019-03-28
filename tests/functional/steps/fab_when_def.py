@@ -37,7 +37,6 @@ from tests.functional.steps.fab_when_impl import (
     prof_add_online_profiles,
     prof_attempt_to_sign_in_to_sso,
     prof_remove_links_to_online_profiles,
-    prof_sign_in_to_fab,
     prof_supplier_uploads_logo,
     prof_to_upload_unsupported_logos,
     prof_update_company_details,
@@ -131,11 +130,6 @@ def when_supplier_views_published_profile(context, supplier_alias):
 @when('"{supplier_alias}" attempts to sign in to SSO/great.gov.uk account')
 def when_supplier_attempts_to_sign_in_to_fab(context, supplier_alias):
     prof_attempt_to_sign_in_to_sso(context, supplier_alias)
-
-
-@when('"{supplier_alias}" signs in to Find a Buyer profile')
-def when_supplier_signs_in_to_fab(context, supplier_alias):
-    prof_sign_in_to_fab(context, supplier_alias)
 
 
 @when('"{supplier_alias}" creates an unverified SSO/great.gov.uk account')
