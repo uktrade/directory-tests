@@ -14,15 +14,11 @@ from tests.functional.pages import (
     profile_ui_landing,
 )
 from tests.functional.steps.fab_then_impl import (
-    prof_should_be_on_profile_page,
-    prof_should_be_told_about_missing_description,
     sso_should_be_signed_in_to_sso_account,
     sso_should_be_told_about_password_reset,
     sso_should_get_password_reset_email,
 )
 from tests.functional.steps.fab_when_impl import (
-    bp_provide_company_details,
-    bp_select_random_sector_and_export_to_country,
     fab_decide_to_verify_profile_with_letter,
     can_find_supplier_by_term,
     enrol_user,
