@@ -18,25 +18,24 @@ Feature: Trade Profile
       | detail                      |
       | trading name                |
       | website                     |
-      | keywords                    |
       | number of employees         |
       | sector of interest          |
-      | countries to export to      |
+      | keywords                    |
 
     Then "Annette Geissinger" should see new details on FAB Company's Business Profile page
       | detail                      |
       | trading name                |
       | website                     |
-      | keywords                    |
       | number of employees         |
       | sector of interest          |
     And "Annette Geissinger" should see new details on FAS Company's Business Profile page
+      | keywords                    |
       | detail                      |
       | trading name                |
       | website                     |
-      | keywords                    |
       | number of employees         |
       | sector of interest          |
+      | keywords                    |
 
 
   @wip
