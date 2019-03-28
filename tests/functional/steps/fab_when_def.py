@@ -41,7 +41,7 @@ from tests.functional.steps.fab_when_impl import (
     prof_supplier_uploads_logo,
     prof_to_upload_unsupported_logos,
     prof_update_company_details,
-    prof_view_published_profile,
+    profile_view_published_profile,
     profile_add_case_study,
     profile_attempt_to_add_case_study,
     profile_go_to_letter_verification,
@@ -123,9 +123,9 @@ def when_supplier_verifies_company(context, supplier_alias):
     profile_verify_company_profile(context, supplier_alias)
 
 
-@when('"{supplier_alias}" decides to view published Directory Profile')
+@when('"{supplier_alias}" decides to view published Business Profile')
 def when_supplier_views_published_profile(context, supplier_alias):
-    prof_view_published_profile(context, supplier_alias)
+    profile_view_published_profile(context, supplier_alias)
 
 
 @when('"{supplier_alias}" attempts to sign in to SSO/great.gov.uk account')

@@ -495,8 +495,8 @@ def profile_publish_profile_to_fas(context: Context, supplier_alias: str):
     profile_edit_company_profile.should_see_profile_is_published(response)
 
 
-def prof_view_published_profile(context: Context, supplier_alias: str):
-    """Whilst being of FAB company profile page it will `click` on
+def profile_view_published_profile(context: Context, supplier_alias: str):
+    """Whilst being on Profile page it will `click` on
     the `View published profile` link.
     """
     actor = context.get_actor(supplier_alias)

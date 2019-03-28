@@ -101,8 +101,7 @@ def then_supplier_should_be_told_that_profile_is_published(
     fab_profile_is_published(context, supplier_alias)
 
 
-@then('"{supplier_alias}" should be on FAS Directory Profile page of company '
-      '"{company_alias}"')
+@then('"{supplier_alias}" should be on "{company_alias}"\'s FAS Business Profile page')
 def then_supplier_should_be_on_company_fas_page(context, supplier_alias,
                                                 company_alias):
     fas_should_be_on_profile_page(context, supplier_alias, company_alias)
