@@ -75,3 +75,31 @@ Feature: SSO profile
     When "Peter Alder" signs in to SSO/great.gov.uk account
 
     Then "Peter Alder" should be signed in to SSO/great.gov.uk account
+
+
+  @ED-1769
+  @login
+  @fab
+  @dev-only
+  @fake-sso-email-verification
+  Scenario: Suppliers with unverified company profile should be able to logout and log back in
+    Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
+    And "Annette Geissinger" signed out from SSO/great.gov.uk account
+
+    When "Annette Geissinger" signs in to SSO/great.gov.uk account from "FAB Landing"
+
+    Then "Annette Geissinger" should be on "Profile - edit company profile" page
+
+
+  @ED-1758
+  @fab
+  @login
+  @dev-only
+  @fake-sso-email-verification
+  Scenario: Suppliers with verified company profile should be able to logout and log back in
+    Given "Peter Alder" has created verified and published business profile for randomly selected company "Y"
+    And "Peter Alder" signed out from SSO/great.gov.uk account
+
+    When "Peter Alder" signs in to SSO/great.gov.uk account from "FAB Landing"
+
+    Then "Peter Alder" should be on "Profile - edit company profile" page
