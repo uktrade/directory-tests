@@ -360,6 +360,7 @@ def then_should_see_invalid_password_reset_link_error(context, supplier_alias):
 
 
 @then('"{supplier_alias}" should see "{page_name}" page')
+@then('"{supplier_alias}" should be on "{page_name}" page')
 def then_supplier_should_see_specific_page(context, supplier_alias, page_name):
     should_be_at(context, supplier_alias, page_name)
 
