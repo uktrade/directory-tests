@@ -167,3 +167,38 @@ Feature: SUD (Profile) pages
     When "Peter Alder" signs in to SSO/great.gov.uk account from "FAB Landing"
 
     Then "Peter Alder" should be on "Profile - edit company profile" page
+
+
+  @ED-1760
+  @ED-1766
+  @fab
+  @bug
+  @ED-3151
+  @fixed
+  @profile
+  @fake-sso-email-verification
+  Scenario: Supplier should be able to update company's details
+    Given "Annette Geissinger" has created verified and published business profile for randomly selected company "Y"
+
+    When "Annette Geissinger" updates company's details
+      | detail                      |
+      | trading name                |
+      | website                     |
+      | number of employees         |
+      | sector of interest          |
+      | keywords                    |
+
+    Then "Annette Geissinger" should see new details on "Profile - edit company profile" page
+      | detail                      |
+      | trading name                |
+      | website                     |
+      | number of employees         |
+      | sector of interest          |
+      | keywords                    |
+    And "Annette Geissinger" should see new details on "FAS - company profile" page
+      | detail                      |
+      | trading name                |
+      | website                     |
+      | number of employees         |
+      | sector of interest          |
+      | keywords                    |
