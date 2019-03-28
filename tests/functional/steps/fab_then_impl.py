@@ -91,11 +91,6 @@ def bp_should_be_prompted_to_build_your_profile(
     context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
 
-def prof_should_be_on_profile_page(response: Response, supplier_alias: str):
-    profile_edit_company_profile.should_be_here(response)
-    logging.debug("%s is on the company profile page", supplier_alias)
-
-
 def prof_should_be_told_about_missing_description(
     response: Response, supplier_alias: str
 ):

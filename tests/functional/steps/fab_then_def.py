@@ -38,7 +38,6 @@ from tests.functional.steps.fab_then_impl import (
     fas_supplier_cannot_be_found_using_case_study_details,
     fas_supplier_should_receive_message_from_buyer,
     prof_all_unsupported_files_should_be_rejected,
-    prof_should_be_on_profile_page,
     prof_should_be_told_about_invalid_links,
     prof_should_be_told_about_missing_description,
     prof_should_see_logo_picture,
@@ -81,11 +80,6 @@ def then_supplier_should_receive_verification_email(context, alias, subject):
 def then_supplier_should_be_prompted_to_build_your_profile(
         context, supplier_alias):
     bp_should_be_prompted_to_build_your_profile(context, supplier_alias)
-
-
-@then('"{supplier_alias}" should be on edit Company\'s Directory Profile page')
-def then_supplier_should_be_on_profile_page(context, supplier_alias):
-    prof_should_be_on_profile_page(context.response, supplier_alias)
 
 
 @then('"{supplier_alias}" should be told that her company has no description')
