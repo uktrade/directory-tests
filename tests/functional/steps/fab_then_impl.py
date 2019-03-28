@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """FAB Given step definitions."""
 import email
+import inspect
 import logging
 from statistics import median
 
@@ -30,6 +31,7 @@ from tests.functional.pages import (
     profile_about,
 )
 from tests.functional.registry import get_fabs_page_object
+from tests.functional.steps import has_action
 from tests.functional.utils.generic import (
     MailGunEvent,
     MailGunService,
@@ -373,16 +375,21 @@ def fab_profile_is_published(context: Context, supplier_alias: str):
     logging.debug("%s was told that the profile is verified.", supplier_alias)
 
 
-def fab_should_see_company_details(context: Context, supplier_alias: str):
-    """Supplier should see all expected details of FAB profile page."""
+def profile_should_see_company_details(
+        context: Context, supplier_alias: str, page_name: str
+):
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
-    response = context.response
-    profile_edit_company_profile.should_see_details(company, response, context.table)
+    page = get_fabs_page_object(page_name)
+    has_action(page, "go_to")
+    has_action(page, "should_see_details")
+    if "company_number" in inspect.getfullargspec(page.go_to).args:
+        context.response = page.go_to(actor.session, company_number=company.number)
+    else:
+        context.response = page.go_to(actor.session)
+    page.should_see_details(company, context.response, context.table)
     logging.debug(
-        "%s can see all expected details are visible of FAB "
-        "Company's Directory Profile Page",
-        supplier_alias,
+        f"{supplier_alias} can see all expected details on {page_name}"
     )
 
 
@@ -393,26 +400,6 @@ def profile_supplier_should_be_on_landing_page(
     response = context.response
     profile_ui_landing.should_be_here(response)
     logging.debug("%s got to the SSO landing page.", supplier_alias)
-
-
-def fas_should_see_company_details(context: Context, supplier_alias: str):
-    """Supplier should see all expected details of FAS profile page."""
-    actor = context.get_actor(supplier_alias)
-    company = context.get_company(actor.company_alias)
-    session = actor.session
-
-    # Step 1 - Go to the FAS profile page & extract URL of visible logo image
-    response = fas_ui_profile.go_to(session, company.number)
-    context.response = response
-    fas_ui_profile.should_be_here(response)
-
-    # Step 2 - Check if all details are visible on FAS
-    fas_ui_profile.should_see_details(company, response, context.table)
-    logging.debug(
-        "%s can see all expected details are visible of FAS "
-        "Company's Directory Profile Page",
-        supplier_alias,
-    )
 
 
 @retry(wait_fixed=5000, stop_max_attempt_number=3)

@@ -22,14 +22,14 @@ Feature: Trade Profile
       | sector of interest          |
       | keywords                    |
 
-    Then "Annette Geissinger" should see new details on FAB Company's Business Profile page
+    Then "Annette Geissinger" should see new details on "Profile - edit company profile" page
       | detail                      |
       | trading name                |
       | website                     |
       | number of employees         |
       | sector of interest          |
-    And "Annette Geissinger" should see new details on FAS Company's Business Profile page
       | keywords                    |
+    And "Annette Geissinger" should see new details on "FAS - company profile" page
       | detail                      |
       | trading name                |
       | website                     |
