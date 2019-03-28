@@ -16,7 +16,7 @@ Feature: Trade Profile
 
     When "Annette Geissinger" updates company's details
       | detail                      |
-      | business name               |
+      | trading name                |
       | website                     |
       | keywords                    |
       | number of employees         |
@@ -25,14 +25,14 @@ Feature: Trade Profile
 
     Then "Annette Geissinger" should see new details on FAB Company's Business Profile page
       | detail                      |
-      | business name               |
+      | trading name                |
       | website                     |
       | keywords                    |
       | number of employees         |
       | sector of interest          |
     And "Annette Geissinger" should see new details on FAS Company's Business Profile page
       | detail                      |
-      | business name               |
+      | trading name                |
       | website                     |
       | keywords                    |
       | number of employees         |

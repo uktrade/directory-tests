@@ -36,7 +36,7 @@ def submit(
     specific_size=None,
     specific_sector=None,
 ) -> (Response, Company):
-    """Update basic Company's details: business name, website, keywords & size.
+    """Update basic Company's details: trading name, website, keywords & size.
 
     Will use random details or specific values if they are provided.
     """

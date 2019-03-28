@@ -3,7 +3,7 @@
 
 
 DETAILS = {
-    "TITLE": "business name",
+    "NAME": "trading name",
     "KEYWORDS": "keywords",
     "WEBSITE": "website",
     "SIZE": "number of employees",
