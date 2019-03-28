@@ -164,7 +164,7 @@ def sso_should_be_signed_out_from_sso_account(
     session = actor.session
 
     # Step 1 - Get to the Sign Out confirmation page
-    next_param = get_absolute_url("profile:about")
+    next_param = get_absolute_url("profile:landing")
     response = sso_ui_logout.go_to(session, next_param=next_param)
     context.response = response
 
