@@ -1,21 +1,6 @@
 Feature: Trade Profile
 
 
-  @wip
-  @needs-rework
-  @ED-1727
-  @publish
-  @FAS
-  @dev-only
-  @fake-sso-email-verification
-  Scenario: Once verified Company's Directory Profile should be published on FAS
-    Given "Peter Alder" has created verified and published business profile for randomly selected company "Y"
-
-    When "Peter Alder" decides to view published Directory Profile
-
-    Then "Peter Alder" should be on FAS Directory Profile page of company "Y"
-
-
   @ED-1769
   @login
   @fab

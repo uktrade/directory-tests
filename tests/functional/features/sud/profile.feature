@@ -126,3 +126,16 @@ Feature: SUD (Profile) pages
       | 1001 characters   | comma      | Ensure this value has at most 1000 characters (it has 1001) |
 
     Then "Annette Geissinger" should see expected error messages
+
+
+  @ED-1727
+  @publish
+  @FAS
+  @dev-only
+  @fake-sso-email-verification
+  Scenario: Once verified Company's Business Profile should be published on FAS
+    Given "Peter Alder" has created verified and published business profile for randomly selected company "Y"
+
+    When "Peter Alder" decides to view published Business Profile
+
+    Then "Peter Alder" should be on "Y"'s FAS Business Profile page
