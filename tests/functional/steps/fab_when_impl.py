@@ -651,35 +651,6 @@ def sso_go_to_create_trade_profile(context: Context, supplier_alias: str):
     fab_ui_landing.should_be_here(response)
 
 
-def prof_upload_logo(context: Context, supplier_alias: str, picture: str):
-    """Upload Company's logo & extract newly uploaded logo image URL.
-
-    NOTE:
-    picture must represent file stored in ./tests/functional/files
-
-    :param picture: name of the picture file stored in ./tests/functional/files
-    """
-    actor = context.get_actor(supplier_alias)
-    session = actor.session
-    token = actor.csrfmiddlewaretoken
-    file_path = get_absolute_path_of_file(picture)
-
-    # Step 1 - Upload company's logo
-    response = profile_upload_logo.upload(session, token, file_path)
-    context.response = response
-
-    # Step 2 - check if Supplier is on the FAB profile page
-    profile_edit_company_profile.should_be_here(response)
-    logging.debug("Successfully uploaded logo picture: %s", picture)
-
-    # Step 3 - Keep logo details in Company's scenario data
-    logo_url = extract_logo_url(response)
-    md5_hash = get_md5_hash_of_file(file_path)
-    context.set_company_logo_detail(
-        actor.company_alias, picture=picture, hash=md5_hash, url=logo_url
-    )
-
-
 def prof_upload_unsupported_file_as_logo(
     context: Context, supplier_alias: str, file: str
 ):
@@ -722,6 +693,7 @@ def prof_supplier_uploads_logo(
     """
     actor = context.get_actor(supplier_alias)
     session = actor.session
+    file_path = get_absolute_path_of_file(picture)
 
     # Step 1 - go to Upload Logo page
     response = profile_upload_logo.go_to(session)
@@ -732,7 +704,19 @@ def prof_supplier_uploads_logo(
     context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
     # Step 3 - upload the logo
-    prof_upload_logo(context, supplier_alias, picture)
+    response = profile_upload_logo.upload(session, token, file_path)
+    context.response = response
+
+    # Step 4 - check if Supplier is on the FAB profile page
+    profile_edit_company_profile.should_be_here(response)
+    logging.debug("Successfully uploaded logo picture: %s", picture)
+
+    # Step 5 - Keep logo details in Company's scenario data
+    logo_url = extract_logo_url(response)
+    md5_hash = get_md5_hash_of_file(file_path)
+    context.set_company_logo_detail(
+        actor.company_alias, picture=picture, hash=md5_hash, url=logo_url
+    )
 
 
 def prof_to_upload_unsupported_logos(
