@@ -55,7 +55,6 @@ def update_profiles(
     remove existing link.
     """
     session = actor.session
-    token = actor.csrfmiddlewaretoken
     clean_name = re.sub('[|&"-_;# ]', "", company.title.lower())
     random_number = random.randint(9999, 999999999)
     profile_suffix = "{}-{}".format(clean_name, random_number)
@@ -85,11 +84,9 @@ def update_profiles(
 
     headers = {"Referer": URL}
     data = {
-        "csrfmiddlewaretoken": token,
-        "company_social_links_edit_view-current_step": "social",
-        "social-facebook_url": new_fb,
-        "social-linkedin_url": new_li,
-        "social-twitter_url": new_tw,
+        "facebook_url": new_fb,
+        "linkedin_url": new_li,
+        "twitter_url": new_tw,
     }
 
     new_details = Company(facebook=new_fb, linkedin=new_li, twitter=new_tw)
