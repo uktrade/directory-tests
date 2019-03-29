@@ -7,33 +7,6 @@ Feature: Trade Profile
   @ED-1759
   @profile
   @logo
-  @bug
-  @ED-2160
-  @fixed
-  @fake-sso-email-verification
-  Scenario Outline: Supplier should be able to upload an image to set company's logo
-    Given "Peter Alder" has created verified and published business profile for randomly selected company "Y"
-
-    When "Peter Alder" uploads "<valid_image>" as company's logo
-
-    Then "Peter Alder" should see that logo on FAB Company's Directory Profile page
-    And "Peter Alder" should see a PNG logo thumbnail on FAS Company's Directory Profile page
-
-    Examples:
-      | valid_image                                  |
-      | Anfiteatro_El_Jem.jpeg                       |
-      | Kobe_Port_Tower.jpg                          |
-      | archive-org-solid-background.png             |
-      | Wikipedia-logo-v2-en-alpa-channel.png        |
-      | Animated_PNG_example_bouncing_beach_ball.png |
-
-
-  @wip
-  @needs-rework
-  @ED-2093
-  @ED-1759
-  @profile
-  @logo
   @fake-sso-email-verification
   Scenario Outline: Supplier should be able to replace an existing company's logo with a new one
     Given "Peter Alder" has created verified and published business profile for randomly selected company "Y"
