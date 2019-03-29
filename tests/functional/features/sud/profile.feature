@@ -227,3 +227,45 @@ Feature: SUD (Profile) pages
       | archive-org-solid-background.png             |
       | Wikipedia-logo-v2-en-alpa-channel.png        |
       | Animated_PNG_example_bouncing_beach_ball.png |
+
+
+  @ED-2093
+  @ED-1759
+  @profile
+  @logo
+  @fake-sso-email-verification
+  Scenario Outline: Supplier should be able to replace an existing company's logo with a new one
+    Given "Peter Alder" has created verified and published business profile for randomly selected company "Y"
+    And "Peter Alder" has set "<original>" picture as company's logo
+    And "Peter Alder" can see that logo on FAB Company's Directory Profile page
+    And "Peter Alder" can see a PNG logo thumbnail on FAS Company's Directory Profile page
+
+    When "Peter Alder" uploads "<new_picture>" as company's logo
+
+    Then "Peter Alder" should see that logo on FAB Company's Directory Profile page
+    And "Peter Alder" should see different updated thumbnail of the logo on FAS Company's Directory Profile page
+
+    Examples:
+      | original               | new_picture         |
+      | Anfiteatro_El_Jem.jpeg | Kobe_Port_Tower.jpg |
+
+
+  @ED-1759
+  @profile
+  @logo
+  @fake-sso-email-verification
+  Scenario: Supplier should not be able to upload files other than images as company's logo
+    Given "Peter Alder" has created verified and published business profile for randomly selected company "Y"
+
+    When "Peter Alder" attempts to upload a file of unsupported type as company's logo
+      | file                  | type                    |
+      | Anfiteatro_El_Jem.bmp | Bitmap                  |
+      | Anfiteatro_El_Jem.jp2 | JPEG 2000               |
+      | Kobe_Port_Tower.webp  | Web P                   |
+      | example.exe           | Windows executable file |
+      | example.com           | Windows executable file |
+      | example.sh            | Linux shell script      |
+      | example.bat           | Windows shell script    |
+      | example.txt           | text file               |
+
+    Then for every uploaded unsupported file "Peter Alder" should be told that only certain image types can be used as company's logo
