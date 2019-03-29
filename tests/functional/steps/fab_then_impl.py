@@ -348,7 +348,7 @@ def fab_no_links_to_online_profiles_are_visible(
     """Supplier should't see any links to Online Profiles on FAB Profile page.
     """
     response = context.response
-    profile_edit_company_profile.should_not_see_online_profiles(response)
+    profile_edit_company_profile.should_not_see_links_to_online_profiles(response)
     logging.debug(
         "%s cannot see links to Online Profiles on FAB Profile page",
         supplier_alias,
