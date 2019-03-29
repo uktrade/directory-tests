@@ -36,7 +36,7 @@ def should_be_here(response: Response):
     logging.debug("Successfully got to the FAB Upload Logo page")
 
 
-def upload(session: Session, token: str, file_path: str) -> Response:
+def upload(session: Session, file_path: str) -> Response:
     headers = {"Referer": get_absolute_url("profile:upload-logo")}
     data = {
         "company_profile_logo_edit_view-current_step": "logo",

@@ -661,12 +661,11 @@ def prof_upload_unsupported_file_as_logo(
     """
     actor = context.get_actor(supplier_alias)
     session = actor.session
-    token = actor.csrfmiddlewaretoken
     file_path = get_absolute_path_of_file(file)
 
     logging.debug("Attempting to upload %s as company logo", file)
     # Step 1 - Try to upload a file of unsupported type as company's logo
-    response = profile_upload_logo.upload(session, token, file_path)
+    response = profile_upload_logo.upload(session, file_path)
     context.response = response
 
     # Step 2 - check if upload was rejected
@@ -693,23 +692,15 @@ def profile_supplier_uploads_logo(
     session = actor.session
     file_path = get_absolute_path_of_file(picture)
 
-    # Step 1 - go to Upload Logo page
-    response = profile_upload_logo.go_to(session)
+    # Step 1 - upload the logo
+    response = profile_upload_logo.upload(session, file_path)
     context.response = response
 
-    # Step 2 - extract CSRF token
-    token = extract_csrf_middleware_token(response)
-    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
-
-    # Step 3 - upload the logo
-    response = profile_upload_logo.upload(session, token, file_path)
-    context.response = response
-
-    # Step 4 - check if Supplier is on the FAB profile page
+    # Step 2 - check if Supplier is on the FAB profile page
     profile_edit_company_profile.should_be_here(response)
     logging.debug("Successfully uploaded logo picture: %s", picture)
 
-    # Step 5 - Keep logo details in Company's scenario data
+    # Step 3 - Keep logo details in Company's scenario data
     logo_url = extract_logo_url(response)
     md5_hash = get_md5_hash_of_file(file_path)
     context.set_company_logo_detail(
