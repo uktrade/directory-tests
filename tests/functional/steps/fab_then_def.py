@@ -36,7 +36,7 @@ from tests.functional.steps.fab_then_impl import (
     fas_should_see_unfiltered_search_results,
     fas_supplier_cannot_be_found_using_case_study_details,
     fas_supplier_should_receive_message_from_buyer,
-    prof_all_unsupported_files_should_be_rejected,
+    profile_all_unsupported_files_should_be_rejected,
     prof_should_be_told_about_invalid_links,
     prof_should_be_told_about_missing_description,
     profile_business_profile_should_be_ready_for_publishing,
@@ -179,7 +179,7 @@ def then_supplier_should_see_logo_picture_on_fas(context, supplier_alias):
 @then('for every uploaded unsupported file "{supplier_alias}" should be told '
       'that only certain image types can be used as company\'s logo')
 def then_every_invalid_logo_should_be_rejected(context, supplier_alias):
-    prof_all_unsupported_files_should_be_rejected(context, supplier_alias)
+    profile_all_unsupported_files_should_be_rejected(context, supplier_alias)
 
 
 @then('"{buyer_alias}" should be able to find company "{company_alias}" on FAS '

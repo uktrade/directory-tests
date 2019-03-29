@@ -681,6 +681,20 @@ def profile_upload_unsupported_file_as_logo(
     return rejected
 
 
+def profile_to_upload_unsupported_logos(
+        context: Context, supplier_alias: str, table: Table
+):
+    """Upload a picture and set it as Company's logo."""
+    files = [row["file"] for row in table]
+    rejections = []
+    for file in files:
+        rejected = profile_upload_unsupported_file_as_logo(
+            context, supplier_alias, file
+        )
+        rejections.append(rejected)
+    context.rejections = rejections
+
+
 def profile_supplier_uploads_logo(
     context: Context, supplier_alias: str, picture: str
 ):
@@ -706,23 +720,6 @@ def profile_supplier_uploads_logo(
     context.set_company_logo_detail(
         actor.company_alias, picture=picture, hash=md5_hash, url=logo_url
     )
-
-
-def prof_to_upload_unsupported_logos(
-    context: Context, supplier_alias: str, table: Table
-):
-    """Upload a picture and set it as Company's logo."""
-    actor = context.get_actor(supplier_alias)
-    session = actor.session
-    files = [row["file"] for row in table]
-    rejections = []
-    for file in files:
-        profile_upload_logo.go_to(session)
-        rejected = prof_upload_unsupported_file_as_logo(
-            context, supplier_alias, file
-        )
-        rejections.append(rejected)
-    context.rejections = rejections
 
 
 def profile_update_company_details(

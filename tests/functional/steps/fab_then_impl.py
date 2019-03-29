@@ -312,7 +312,7 @@ def fas_should_see_different_png_logo_thumbnail(
         assert visible_logo_url.lower().endswith(".png")
 
 
-def prof_all_unsupported_files_should_be_rejected(
+def profile_all_unsupported_files_should_be_rejected(
     context: Context, supplier_alias: str
 ):
     """Check if all unsupported files were rejected upon upload as company logo
