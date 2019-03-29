@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Given step definitions."""
+"""Then step implementations"""
 import email
 import inspect
 import logging
@@ -10,6 +10,7 @@ from behave.runner import Context
 from requests import Response
 from retrying import retry
 from scrapy import Selector
+
 from tests import get_absolute_url
 from tests.functional.pages import (
     fab_ui_account_remove_collaborator,

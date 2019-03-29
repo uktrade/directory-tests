@@ -2,23 +2,6 @@
 # flake8: noqa
 """Given step definitions."""
 from behave import given
-from tests.functional.steps.given_impl import (
-    create_actor_with_or_without_sso_account,
-    create_actor_with_verified_or_unverified_fab_profile,
-    fab_find_published_company,
-    fas_find_company_by_name,
-    fas_get_company_slug,
-    profile_create_unverified_business_profile,
-    profile_create_verified_and_published_business_profile,
-    profile_create_verified_yet_unpublished_business_profile,
-    reg_should_get_verification_letter,
-    sso_create_standalone_unverified_sso_account,
-    sso_create_standalone_verified_sso_account,
-    sso_get_password_reset_link,
-    stannp_send_verification_letter,
-    unauthenticated_buyer,
-    unauthenticated_supplier,
-)
 from tests.functional.steps.then_impl import (
     profile_should_see_all_case_studies,
     fas_should_see_png_logo_thumbnail,
@@ -30,19 +13,34 @@ from tests.functional.steps.then_impl import (
     sso_should_get_request_for_collaboration_email,
 )
 from tests.functional.steps.when_impl import (
+    create_actor_with_or_without_sso_account,
+    create_actor_with_verified_or_unverified_fab_profile,
     fab_add_collaborator,
     fab_confirm_collaboration_request,
     fab_decide_to_verify_profile_with_letter,
+    fab_find_published_company,
     fab_open_collaboration_request_link,
     fab_transfer_ownership,
+    fas_find_company_by_name,
+    fas_get_company_slug,
     go_to_page,
     profile_add_business_description,
     profile_add_case_study,
     profile_add_online_profiles,
     profile_add_product_and_services_keywords,
+    profile_create_unverified_business_profile,
+    profile_create_verified_and_published_business_profile,
+    profile_create_verified_yet_unpublished_business_profile,
     profile_edit_business_details,
     profile_supplier_uploads_logo,
     reg_create_standalone_unverified_sso_account,
+    reg_should_get_verification_letter,
+    sso_create_standalone_unverified_sso_account,
+    sso_create_standalone_verified_sso_account,
+    sso_get_password_reset_link,
+    stannp_send_verification_letter,
+    unauthenticated_buyer,
+    unauthenticated_supplier,
 )
 
 
