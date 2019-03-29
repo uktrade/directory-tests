@@ -339,3 +339,63 @@ Feature: SUD (Profile) pages
 
     Then "Peter Alder" should not see any links to online profiles on edit Business Profile page
     And "Peter Alder" should not see any links to online profiles on FAS Business Profile page
+
+
+  @ED-1764
+  @fab
+  @case-study
+  @profile
+  @fake-sso-email-verification
+  Scenario: Supplier should be able to add a case study to unverified company
+    Given "Peter Alder" created an unverified business profile for randomly selected company "Y"
+
+    When "Peter Alder" adds a complete case study called "no 1"
+
+    Then "Peter Alder" should see all case studies on the edit Business Profile page
+
+
+  @ED-1764
+  @fab
+  @case-study
+  @profile
+  @fake-sso-email-verification
+  Scenario: Supplier should be able to add a case study to verified company
+    Given "Peter Alder" has created verified and published business profile for randomly selected company "Y"
+
+    When "Peter Alder" adds a complete case study called "no 1"
+
+    Then "Peter Alder" should see all case studies on the edit Business Profile page
+    And "Peter Alder" should see all case studies on the FAS Business Profile page
+
+
+  @ED-1765
+  @fab
+  @case-study
+  @profile
+  @fake-sso-email-verification
+  Scenario: Supplier should be able to add multiple case studies to unverified company
+    Given "Peter Alder" created an unverified business profile for randomly selected company "Y"
+
+    When "Peter Alder" adds a complete case study called "no 1"
+    And "Peter Alder" adds a complete case study called "no 2"
+    And "Peter Alder" adds a complete case study called "no 3"
+    And "Peter Alder" adds a complete case study called "no 4"
+
+    Then "Peter Alder" should see all case studies on the edit Business Profile page
+
+
+  @ED-1765
+  @fab
+  @case-study
+  @profile
+  @fake-sso-email-verification
+  Scenario: Supplier should be able to add multiple case studies to verified company
+    Given "Peter Alder" has created verified and published business profile for randomly selected company "Y"
+
+    When "Peter Alder" adds a complete case study called "no 1"
+    And "Peter Alder" adds a complete case study called "no 2"
+    And "Peter Alder" adds a complete case study called "no 3"
+    And "Peter Alder" adds a complete case study called "no 4"
+
+    Then "Peter Alder" should see all case studies on the edit Business Profile page
+    And "Peter Alder" should see all case studies on the FAS Business Profile page
