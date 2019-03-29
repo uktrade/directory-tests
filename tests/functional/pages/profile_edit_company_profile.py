@@ -103,15 +103,12 @@ def should_see_online_profiles(company: Company, response: Response):
 
     if company.facebook:
         with assertion_msg("Couldn't find link to company's Facebook profile"):
-            assert "Visit Facebook" in content
             assert company.facebook in content
     if company.linkedin:
         with assertion_msg("Couldn't find link to company's LinkedIn profile"):
-            assert "Visit LinkedIn" in content
             assert company.linkedin in content
     if company.twitter:
         with assertion_msg("Couldn't find link to company's Twitter profile"):
-            assert "Visit Twitter" in content
             assert company.twitter in content
     logging.debug(
         "Supplier can see all expected links to Online Profiles on "
@@ -119,14 +116,14 @@ def should_see_online_profiles(company: Company, response: Response):
     )
 
 
-def should_not_see_online_profiles(response: Response):
-    content = response.content.decode("utf-8")
-    with assertion_msg("Found a link to 'Add Facebook' profile"):
-        assert "Add Facebook" in content
-    with assertion_msg("Found a link to 'Add LinkedIn' profile"):
-        assert "Add LinkedIn" in content
-    with assertion_msg("Found a link to 'Add Twitter' profile"):
-        assert "Add Twitter" in content
+def should_not_see_links_to_online_profiles(response: Response):
+    content = response.content.decode("utf-8").lower()
+    with assertion_msg("Found a link to Facebook profile"):
+        assert "add facebook" in content
+    with assertion_msg("Found a link to LinkedIn profile"):
+        assert "add linkedin" in content
+    with assertion_msg("Found a link to Twitter profile"):
+        assert "add twitter" in content
     logging.debug(
         "Supplier cannot see links to any Online Profile on FAB "
         "Company's Directory Profile Page"

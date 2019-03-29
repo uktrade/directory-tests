@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""FAB - Edit Company's Directory Profile page"""
+"""FAS - Company's Business Profile page"""
 import logging
 from urllib.parse import urljoin
 
@@ -66,13 +66,13 @@ def should_see_online_profiles(company: Company, response: Response):
 
 
 def should_not_see_online_profiles(response: Response):
-    content = response.content.decode("utf-8")
-    with assertion_msg("Found a link to 'Add Facebook' profile"):
-        assert "Visit Facebook" not in content
-    with assertion_msg("Found a link to 'Add LinkedIn' profile"):
-        assert "Visit LinkedIn" not in content
-    with assertion_msg("Found a link to 'Add Twitter' profile"):
-        assert "Visit Twitter" not in content
+    content = response.content.decode("utf-8").lower()
+    with assertion_msg("Found a link to 'visit Facebook' profile"):
+        assert "visit facebook" not in content
+    with assertion_msg("Found a link to 'visit LinkedIn' profile"):
+        assert "visit linkedin" not in content
+    with assertion_msg("Found a link to 'visit Twitter' profile"):
+        assert "visit twitter" not in content
 
 
 def should_see_case_studies(case_studies: dict, response: Response):
