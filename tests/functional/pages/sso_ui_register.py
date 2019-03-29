@@ -12,13 +12,11 @@ URL = get_absolute_url("sso:signup")
 EXPECTED_STRINGS = [
     "Register",
     "Create a great.gov.uk account and you can",
-    "create a free business profile to promote your company to overseas buyers",
-    "express your interest and apply for export opportunities",
-    "Email:",
-    "Confirm email:",
-    "Password:",
-    "Confirm password:",
-    "Your password must:",
+    "Email",
+    "Confirm email",
+    "Password",
+    "Confirm password",
+    "Your password must",
     "be at least 10 characters",
     "contain at least one letter",
     "contain at least one number",
@@ -47,11 +45,7 @@ def go_to(
 
 
 def submit(actor: Actor, company: Company) -> Response:
-    """Will submit the SSO Registration form with Supplier & Company details.
-
-    :param actor: a namedtuple with Actor details
-    :param company: a namedtuple with Company details
-    """
+    """Will submit the SSO Registration form with Supplier & Company details."""
     session = actor.session
     next_url = get_absolute_url("ui-buyer:register-submit-account-details")
     next_link_query = "?company_number={}".format(company.number)
