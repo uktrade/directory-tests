@@ -13,12 +13,12 @@ from tests.functional.pages import (
     fas_ui_profile,
     profile_ui_landing,
 )
-from tests.functional.steps.fab_then_impl import (
+from tests.functional.steps.then_impl import (
     sso_should_be_signed_in_to_sso_account,
     sso_should_be_told_about_password_reset,
     sso_should_get_password_reset_email,
 )
-from tests.functional.steps.fab_when_impl import (
+from tests.functional.steps.when_impl import (
     fab_decide_to_verify_profile_with_letter,
     can_find_supplier_by_term,
     enrol_user,

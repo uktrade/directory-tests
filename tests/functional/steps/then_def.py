@@ -3,7 +3,7 @@
 """Then step definitions."""
 from behave import then
 from behave.runner import Context
-from tests.functional.steps.fab_then_impl import (
+from tests.functional.steps.then_impl import (
     bp_should_be_prompted_to_build_your_profile,
     fab_company_should_be_verified,
     fab_profile_is_published,
@@ -58,7 +58,7 @@ from tests.functional.steps.fab_then_impl import (
     sud_should_not_see_options_to_manage_users,
     sud_should_see_options_to_manage_users,
 )
-from tests.functional.steps.fab_when_impl import (
+from tests.functional.steps.when_impl import (
     fas_feedback_request_should_be_submitted,
     fas_should_be_told_about_empty_search_results,
 )

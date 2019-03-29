@@ -60,7 +60,7 @@ from tests.functional.pages import (
     profile_about,
 )
 from tests.functional.registry import get_fabs_page_object, get_fabs_page_url
-from tests.functional.steps.fab_then_impl import (
+from tests.functional.steps.then_impl import (
     fab_should_get_request_for_becoming_owner,
     reg_should_get_verification_email,
 )

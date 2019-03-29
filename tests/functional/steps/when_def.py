@@ -2,7 +2,7 @@
 # flake8: noqa
 """When step definitions."""
 from behave import when
-from tests.functional.steps.fab_when_impl import (
+from tests.functional.steps.when_impl import (
     bp_provide_company_details,
     bp_select_random_sector_and_export_to_country,
     fab_add_collaborator,

@@ -2,7 +2,7 @@
 # flake8: noqa
 """Given step definitions."""
 from behave import given
-from tests.functional.steps.fab_given_impl import (
+from tests.functional.steps.given_impl import (
     create_actor_with_or_without_sso_account,
     create_actor_with_verified_or_unverified_fab_profile,
     fab_find_published_company,
@@ -19,7 +19,7 @@ from tests.functional.steps.fab_given_impl import (
     unauthenticated_buyer,
     unauthenticated_supplier,
 )
-from tests.functional.steps.fab_then_impl import (
+from tests.functional.steps.then_impl import (
     profile_should_see_all_case_studies,
     fas_should_see_png_logo_thumbnail,
     profile_should_see_logo_picture,
@@ -29,7 +29,7 @@ from tests.functional.steps.fab_then_impl import (
     sso_should_be_signed_out_from_sso_account,
     sso_should_get_request_for_collaboration_email,
 )
-from tests.functional.steps.fab_when_impl import (
+from tests.functional.steps.when_impl import (
     fab_add_collaborator,
     fab_confirm_collaboration_request,
     fab_decide_to_verify_profile_with_letter,
