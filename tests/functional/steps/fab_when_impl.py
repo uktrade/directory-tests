@@ -924,14 +924,15 @@ def fab_update_case_study(
 
     # Step 0 - extract links to Case Studies and do a crude mapping to
     # Case Study titles.
-    css_titles = ".company-profile-module-container h4::text"
-    css_links = "div.ed-company-profile-sector-case-study-inner a::attr(href)"
+    css_titles = "#case-studies span::text"
+    css_links = "#case-studies a::attr(href)"
     titles = Selector(text=content).css(css_titles).extract()
     links = Selector(text=content).css(css_links).extract()
     case_link_mappings = {k: v for (k, v) in zip(titles, links)}
     current = company.case_studies[case_alias]
     current_link = case_link_mappings[current.title]
-    index_of_case_id_in_url = -2
+    # link format is "/profile/find-a-buyer/case-study/35309/basic/"
+    index_of_case_id_in_url = 4
     current_number = int(current_link.split("/")[index_of_case_id_in_url])
     logging.debug(
         "Extracted link for case study: %s is: %s", case_alias, current_link
