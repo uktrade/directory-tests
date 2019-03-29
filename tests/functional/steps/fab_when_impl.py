@@ -816,13 +816,12 @@ def profile_add_online_profiles(
     )
 
 
-def prof_add_invalid_online_profiles(
+def profile_add_invalid_online_profiles(
     context: Context, supplier_alias: str, online_profiles: Table
 ):
     """Attempt to update links to Company's Online Profiles using invalid URLs.
     """
     actor = context.get_actor(supplier_alias)
-    session = actor.session
     company = context.get_company(actor.company_alias)
     facebook = False
     linkedin = False
@@ -841,22 +840,13 @@ def prof_add_invalid_online_profiles(
             twitter = True
             twitter_url = row.get("invalid link", twitter_url)
 
-    # Step 1 - Go to the Edit Online Profiles page
-    response = fab_ui_edit_online_profiles.go_to(session)
-    context.response = response
-    fab_ui_edit_online_profiles.should_be_here(response)
-
-    # Step 2 - Extract CSRF token
-    extract_and_set_csrf_middleware_token(context, response, supplier_alias)
-
-    # Step 3 - update links to Online Profiles
     logging.debug(
         "Will use following invalid URLs to Online Profiles: %s %s %s",
         facebook_url if facebook else "",
         linkedin_url if linkedin else "",
         twitter_url if twitter else "",
     )
-    response, _ = fab_ui_edit_online_profiles.update_profiles(
+    response, _ = profile_edit_online_profiles.update_profiles(
         actor,
         company,
         facebook=facebook,
