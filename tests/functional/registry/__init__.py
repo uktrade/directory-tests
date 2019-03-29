@@ -9,7 +9,6 @@ from tests.functional.pages import (
     fab_ui_confim_your_ownership,
     fab_ui_confirm_identity,
     fab_ui_confirm_identity_letter,
-    fab_ui_edit_online_profiles,
     fab_ui_edit_sector,
     fab_ui_landing,
     fab_ui_verify_company,
@@ -28,6 +27,7 @@ from tests.functional.pages import (
     profile_case_study_basic,
     profile_edit_company_description,
     profile_edit_company_profile,
+    profile_edit_online_profiles,
     profile_enrol,
     profile_upload_logo,
     sso_ui_confim_your_email,
@@ -139,10 +139,6 @@ FAB_PAGE_REGISTRY = {
         "url": "ui-buyer:confirm-identity-letter",
         "po": fab_ui_confirm_identity_letter,
     },
-    "fab edit company profile": {
-        "url": "ui-buyer:company-edit",
-        "po": fab_ui_edit_online_profiles,
-    },
     "fab edit company address": {
         "url": "ui-buyer:company-edit-address",
         "po": None,
@@ -154,10 +150,6 @@ FAB_PAGE_REGISTRY = {
     "fab edit company contact": {
         "url": "ui-buyer:company-edit-contact",
         "po": None,
-    },
-    "fab edit social media links": {
-        "url": "ui-buyer:company-edit-social-media",
-        "po": fab_ui_edit_online_profiles,
     },
     "fab add collaborator": {
         "url": "ui-buyer:account-add-collaborator",
@@ -221,6 +213,10 @@ SUD_PAGE_REGISTRY = {
         "po": profile_case_study_basic,
     },
     "profile - find a buyer": {"url": "profile:fab", "po": sud_ui_find_a_buyer},
+    "profile - edit social media profiles": {
+        "url": "profile:company-edit-social-media",
+        "po": profile_edit_online_profiles,
+    },
 }
 
 PAGE_REGISTRY = {}
