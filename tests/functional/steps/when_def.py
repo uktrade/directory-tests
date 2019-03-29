@@ -2,6 +2,7 @@
 # flake8: noqa
 """When step definitions."""
 from behave import when
+
 from tests.functional.steps.when_impl import (
     bp_provide_company_details,
     bp_select_random_sector_and_export_to_country,
@@ -15,7 +16,6 @@ from tests.functional.steps.when_impl import (
     fab_send_transfer_ownership_request,
     fab_submit_verification_code,
     fab_transfer_ownership,
-    profile_update_case_study,
     fas_browse_suppliers_by_company_sectors,
     fas_browse_suppliers_by_invalid_sectors,
     fas_browse_suppliers_by_multiple_sectors,
@@ -44,6 +44,7 @@ from tests.functional.steps.when_impl import (
     profile_remove_links_to_online_profiles,
     profile_supplier_uploads_logo,
     profile_to_upload_unsupported_logos,
+    profile_update_case_study,
     profile_update_company_details,
     profile_verify_company_profile,
     profile_view_published_profile,

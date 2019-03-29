@@ -2,9 +2,10 @@
 # flake8: noqa
 """Given step definitions."""
 from behave import given
+
 from tests.functional.steps.then_impl import (
-    profile_should_see_all_case_studies,
     fas_should_see_png_logo_thumbnail,
+    profile_should_see_all_case_studies,
     profile_should_see_logo_picture,
     reg_should_get_verification_email,
     should_be_at,

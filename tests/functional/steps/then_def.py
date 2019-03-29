@@ -3,6 +3,7 @@
 """Then step definitions."""
 from behave import then
 from behave.runner import Context
+
 from tests.functional.steps.then_impl import (
     bp_should_be_prompted_to_build_your_profile,
     fab_company_should_be_verified,
@@ -10,7 +11,6 @@ from tests.functional.steps.then_impl import (
     fab_should_be_asked_about_verification_form,
     fab_should_get_request_for_becoming_owner,
     fab_should_not_see_collaborator,
-    profile_should_see_all_case_studies,
     fab_should_see_case_study_error_message,
     fas_check_profiles,
     fas_find_supplier_using_case_study_details,
@@ -37,6 +37,7 @@ from tests.functional.steps.then_impl import (
     profile_business_profile_should_be_ready_for_publishing,
     profile_no_links_to_online_profiles_are_visible,
     profile_should_be_told_about_invalid_links,
+    profile_should_see_all_case_studies,
     profile_should_see_company_details,
     profile_should_see_expected_error_messages,
     profile_should_see_logo_picture,
