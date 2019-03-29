@@ -6,7 +6,6 @@ from behave.runner import Context
 from tests.functional.steps.fab_then_impl import (
     bp_should_be_prompted_to_build_your_profile,
     fab_company_should_be_verified,
-    fab_no_links_to_online_profiles_are_visible,
     fab_profile_is_published,
     fab_should_be_asked_about_verification_form,
     fab_should_get_request_for_becoming_owner,
@@ -38,6 +37,7 @@ from tests.functional.steps.fab_then_impl import (
     profile_all_unsupported_files_should_be_rejected,
     prof_should_be_told_about_missing_description,
     profile_business_profile_should_be_ready_for_publishing,
+    profile_no_links_to_online_profiles_are_visible,
     profile_should_be_told_about_invalid_links,
     profile_should_see_logo_picture,
     profile_should_see_online_profiles,
@@ -139,10 +139,9 @@ def then_supplier_should_be_told_to_use_valid_links(context, supplier_alias):
     profile_should_be_told_about_invalid_links(context, supplier_alias)
 
 
-@then('"{supplier_alias}" should not see any links to online profiles on FAB '
-      'Company\'s Directory Profile page')
+@then('"{supplier_alias}" should not see any links to online profiles on edit Business Profile page')
 def then_no_online_profiles_are_visible_on_fab(context, supplier_alias):
-    fab_no_links_to_online_profiles_are_visible(context, supplier_alias)
+    profile_no_links_to_online_profiles_are_visible(context, supplier_alias)
 
 
 @then('"{supplier_alias}" should not see any links to online profiles on FAS '

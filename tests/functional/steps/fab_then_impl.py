@@ -342,7 +342,7 @@ def profile_should_see_online_profiles(context: Context, supplier_alias: str):
     profile_edit_company_profile.should_see_online_profiles(company, response)
 
 
-def fab_no_links_to_online_profiles_are_visible(
+def profile_no_links_to_online_profiles_are_visible(
     context: Context, supplier_alias: str
 ):
     """Supplier should't see any links to Online Profiles on FAB Profile page.
