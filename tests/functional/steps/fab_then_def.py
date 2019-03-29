@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # flake8: noqa
-"""FAB Given step definitions."""
+"""Given step definitions."""
 from behave import then
 from behave.runner import Context
 from tests.functional.steps.fab_then_impl import (

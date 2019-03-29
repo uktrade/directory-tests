@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # flake8: noqa
-"""FAB Given step definitions."""
+"""Given step definitions."""
 from behave import when
 from tests.functional.steps.fab_when_impl import (
     bp_provide_company_details,

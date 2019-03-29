@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""FAB Given step implementations."""
+"""Given step implementations."""
 import logging
 import os
 import random

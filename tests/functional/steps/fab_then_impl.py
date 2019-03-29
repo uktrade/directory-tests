@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""FAB Given step definitions."""
+"""Given step definitions."""
 import email
 import inspect
 import logging

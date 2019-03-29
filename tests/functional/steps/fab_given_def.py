@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # flake8: noqa
-"""FAB Given step definitions."""
+"""Given step definitions."""
 from behave import given
 from tests.functional.steps.fab_given_impl import (
     create_actor_with_or_without_sso_account,
