@@ -16,8 +16,8 @@ Feature: Trade Profile
       | LinkedIn        |
       | Twitter         |
 
-    Then "Peter Alder" should see links to all online profiles on FAB Company's Directory Profile page
-    And "Peter Alder" should see links to all online profiles on FAS Company's Directory Profile page
+    Then "Peter Alder" should see links to all online profiles on Edit Business Profile page
+    And "Peter Alder" should see links to all online profiles on FAS Business Profile page
 
 
   @wip
@@ -75,8 +75,8 @@ Feature: Trade Profile
 
     When "Peter Alder" removes links to all online profiles
 
-    Then "Peter Alder" should not see any links to online profiles on FAB Company's Directory Profile page
-    And "Peter Alder" should not see any links to online profiles on FAS Company's Directory Profile page
+    Then "Peter Alder" should not see any links to online profiles on edit Business Profile page
+    And "Peter Alder" should not see any links to online profiles on FAS Business Profile page
 
 
   @wip

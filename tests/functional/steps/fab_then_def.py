@@ -127,8 +127,7 @@ def then_supplier_should_see_online_profiles_on_fab(context, supplier_alias):
     profile_should_see_online_profiles(context, supplier_alias)
 
 
-@then('"{supplier_alias}" should see links to all online profiles on FAS '
-      'Company\'s Directory Profile page')
+@then('"{supplier_alias}" should see links to all online profiles on FAS Business Profile page')
 def then_supplier_should_see_online_profiles_on_fas(context, supplier_alias):
     fas_check_profiles(context, supplier_alias)
 
@@ -144,8 +143,7 @@ def then_no_online_profiles_are_visible_on_fab(context, supplier_alias):
     profile_no_links_to_online_profiles_are_visible(context, supplier_alias)
 
 
-@then('"{supplier_alias}" should not see any links to online profiles on FAS '
-      'Company\'s Directory Profile page')
+@then('"{supplier_alias}" should not see any links to online profiles on FAS Business Profile page')
 def then_no_online_profiles_are_visible_on_fas(context, supplier_alias):
     fas_no_links_to_online_profiles_are_visible(context, supplier_alias)
 
