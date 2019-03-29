@@ -269,3 +269,73 @@ Feature: SUD (Profile) pages
       | example.txt           | text file               |
 
     Then for every uploaded unsupported file "Peter Alder" should be told that only certain image types can be used as company's logo
+
+
+  @ED-1761
+  @fab
+  @profile
+  @fake-sso-email-verification
+  Scenario: Supplier should be able to add valid links to Online Profiles (social media URLs)
+    Given "Peter Alder" has created verified and published business profile for randomly selected company "Y"
+
+    When "Peter Alder" adds links to online profiles
+      | online profile  |
+      | Facebook        |
+      | LinkedIn        |
+      | Twitter         |
+
+    Then "Peter Alder" should see links to all online profiles on Edit Business Profile page
+    And "Peter Alder" should see links to all online profiles on FAS Business Profile page
+
+
+  @ED-1762
+  @fab
+  @profile
+  @fake-sso-email-verification
+  Scenario: Supplier should NOT be able to use invalid links to Online Profiles - explicit social media URLs
+    Given "Peter Alder" has created verified and published business profile for randomly selected company "Y"
+
+    When "Peter Alder" attempts to use invalid links to online profiles
+      | online profile  | invalid link               |
+      | Facebook        | https://wrong.facebook.url |
+      | LinkedIn        | https://wrong.linkedin.url |
+      | Twitter         | https://wrong.twitter.url  |
+
+    Then "Peter Alder" should be told to provide valid links to all online profiles
+
+
+  @ED-1762
+  @fab
+  @profile
+  @bug
+  @ED-1833
+  @fixed
+  @fake-sso-email-verification
+  Scenario: Supplier should NOT be able to use invalid links to Online Profiles (social media URLs)
+    Given "Peter Alder" has created verified and published business profile for randomly selected company "Y"
+
+    When "Peter Alder" attempts to use invalid links to online profiles
+      | online profile  | invalid link           |
+      | Facebook        | http://notfacebook.com |
+      | LinkedIn        | http://notlinkedin.com |
+      | Twitter         | http://nottwitter.com  |
+
+    Then "Peter Alder" should be told to provide valid links to all online profiles
+
+
+  @ED-1763
+  @fab
+  @profile
+  @fake-sso-email-verification
+  Scenario: Supplier should be able to remove links to all online profiles (social media URLs)
+    Given "Peter Alder" has created verified and published business profile for randomly selected company "Y"
+    And "Peter Alder" has added links to online profiles
+      | online profile  |
+      | Facebook        |
+      | LinkedIn        |
+      | Twitter         |
+
+    When "Peter Alder" removes links to all online profiles
+
+    Then "Peter Alder" should not see any links to online profiles on edit Business Profile page
+    And "Peter Alder" should not see any links to online profiles on FAS Business Profile page
