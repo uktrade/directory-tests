@@ -68,7 +68,6 @@ from tests.functional.utils.context_utils import Company
 from tests.functional.utils.generic import (
     assertion_msg,
     escape_html,
-    extract_and_set_csrf_middleware_token,
     extract_csrf_middleware_token,
     extract_form_action,
     extract_logo_url,
