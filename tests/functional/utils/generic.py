@@ -702,7 +702,7 @@ def extract_logo_url(response, *, fas: bool = False):
     :param fas: Use FAS specific CSS selector if True, else use FAB selector
     :return: a URL to the company's logo image
     """
-    css_selector = ".logo-container img::attr(src)"
+    css_selector = "#logo-container img::attr(src)"
     if fas:
         css_selector = "#company-logo::attr(src)"
     logo_url = extract_by_css(response, css_selector)
