@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # flake8: noqa
-"""Given step definitions."""
+"""Then step definitions."""
 from behave import then
 from behave.runner import Context
 from tests.functional.steps.fab_then_impl import (
@@ -74,8 +74,7 @@ def then_supplier_should_receive_verification_email(context, alias, subject):
     reg_should_get_verification_email(context, alias)
 
 
-@then('"{supplier_alias}" should be prompted to Build and improve your '
-      'Directory Profile')
+@then('"{supplier_alias}" should be prompted to Build and improve your Directory Profile')
 def then_supplier_should_be_prompted_to_build_your_profile(
         context, supplier_alias):
     bp_should_be_prompted_to_build_your_profile(context, supplier_alias)
@@ -100,14 +99,12 @@ def then_supplier_should_be_on_company_fas_page(context, supplier_alias,
     fas_should_be_on_profile_page(context, supplier_alias, company_alias)
 
 
-@then('"{supplier_alias}" should be told that she needs to verify her email '
-      'address first')
+@then('"{supplier_alias}" should be told that she needs to verify her email address first')
 def then_supplier_has_to_verify_email_first(context, supplier_alias):
     reg_supplier_has_to_verify_email_first(context, supplier_alias)
 
 
-@then('"{supplier_alias}" should be on Welcome to your great.gov.uk profile '
-      'page')
+@then('"{supplier_alias}" should be on Welcome to your great.gov.uk profile page')
 def then_supplier_should_be_on_profile_landing_page(context, supplier_alias):
     profile_supplier_should_be_on_landing_page(context, supplier_alias)
 
@@ -132,8 +129,7 @@ def then_supplier_should_see_online_profiles_on_fas(context, supplier_alias):
     fas_check_profiles(context, supplier_alias)
 
 
-@then('"{supplier_alias}" should be told to provide valid links to all online '
-      'profiles')
+@then('"{supplier_alias}" should be told to provide valid links to all online profiles')
 def then_supplier_should_be_told_to_use_valid_links(context, supplier_alias):
     profile_should_be_told_about_invalid_links(context, supplier_alias)
 
@@ -158,26 +154,22 @@ def then_supplier_should_see_all_case_studies_fas(context, supplier_alias):
     fas_should_see_all_case_studies(context, supplier_alias)
 
 
-@then('"{supplier_alias}" should see that logo on FAB Company\'s '
-      'Directory Profile page')
+@then('"{supplier_alias}" should see that logo on FAB Company\'s Directory Profile page')
 def then_supplier_should_see_logo_picture_on_fab(context, supplier_alias):
     profile_should_see_logo_picture(context, supplier_alias)
 
 
-@then('"{supplier_alias}" should see that logo on FAS Company\'s '
-      'Directory Profile page')
+@then('"{supplier_alias}" should see that logo on FAS Company\'s Directory Profile page')
 def then_supplier_should_see_logo_picture_on_fas(context, supplier_alias):
     fas_should_see_png_logo_thumbnail(context, supplier_alias)
 
 
-@then('for every uploaded unsupported file "{supplier_alias}" should be told '
-      'that only certain image types can be used as company\'s logo')
+@then('for every uploaded unsupported file "{supplier_alias}" should be told that only certain image types can be used as company\'s logo')
 def then_every_invalid_logo_should_be_rejected(context, supplier_alias):
     profile_all_unsupported_files_should_be_rejected(context, supplier_alias)
 
 
-@then('"{buyer_alias}" should be able to find company "{company_alias}" on FAS '
-      'using words from case study "{case_alias}"')
+@then('"{buyer_alias}" should be able to find company "{company_alias}" on FAS using words from case study "{case_alias}"')
 def then_buyer_should_find_supplier_using_part_of_case_study(
         context, buyer_alias, company_alias, case_alias):
     fas_find_supplier_using_case_study_details(
@@ -185,15 +177,13 @@ def then_buyer_should_find_supplier_using_part_of_case_study(
         properties=context.table)
 
 
-@then('"{buyer_alias}" should NOT be able to find company "{company_alias}" on '
-      'FAS by using any part of case study "{case_alias}"')
+@then('"{buyer_alias}" should NOT be able to find company "{company_alias}" on FAS by using any part of case study "{case_alias}"')
 def step_impl(context, buyer_alias, company_alias, case_alias):
     fas_supplier_cannot_be_found_using_case_study_details(
         context, buyer_alias, company_alias, case_alias)
 
 
-@then('"{buyer_alias}" should be able to find company "{company_alias}" on FAS '
-      'using any part of case study "{case_alias}"')
+@then('"{buyer_alias}" should be able to find company "{company_alias}" on FAS using any part of case study "{case_alias}"')
 def then_buyer_should_find_supplier_using_any_part_of_case_study(
         context, buyer_alias, company_alias, case_alias):
     fas_find_supplier_using_case_study_details(
@@ -206,29 +196,25 @@ def then_buyer_should_find_supplier_using_company_details(
     fas_should_not_find_with_company_details(context, buyer_alias, company_alias)
 
 
-@then('"{buyer_alias}" should be able to find company "{company_alias}" on FAS '
-      'using selected company\'s details')
+@then('"{buyer_alias}" should be able to find company "{company_alias}" on FAS using selected company\'s details')
 def then_buyer_should_find_supplier_using_company_details(
         context, buyer_alias, company_alias):
     fas_should_find_with_company_details(context, buyer_alias, company_alias)
 
 
-@then('the "{page_part}" part of the viewed FAS page should be presented '
-      'in "{language}" language with probability greater than "{probability}"')
+@then('the "{page_part}" part of the viewed FAS page should be presented in "{language}" language with probability greater than "{probability}"')
 def then_page_should_be_in(context, page_part, language, probability):
     fas_pages_should_be_in_selected_language(
         context, pages_table=context.table, language=language,
         page_part=page_part, probability=float(probability))
 
 
-@then('"{buyer_alias}" should be told that the search did not match any UK '
-      'trade profiles')
+@then('"{buyer_alias}" should be told that the search did not match any UK trade profiles')
 def then_should_be_told_about_empty_search_results(context, buyer_alias):
     fas_should_be_told_about_empty_search_results(context, buyer_alias)
 
 
-@then('"{buyer_alias}" should be told that the feedback request has been '
-      'submitted')
+@then('"{buyer_alias}" should be told that the feedback request has been submitted')
 def then_buyer_should_be_told_about_feedback_request_confirmation(
         context, buyer_alias):
     fas_feedback_request_should_be_submitted(context, buyer_alias)
@@ -239,8 +225,7 @@ def then_buyer_should_find_all_sought_companies(context, buyer_alias):
     fas_should_find_all_sought_companies(context, buyer_alias)
 
 
-@then('"{buyer_alias}" should be told that the message has been sent to company'
-      ' "{company_alias}"')
+@then('"{buyer_alias}" should be told that the message has been sent to company "{company_alias}"')
 def then_buyer_should_be_told_that_message_has_been_sent(
         context, buyer_alias, company_alias):
     fas_should_be_told_that_message_has_been_sent(
@@ -253,14 +238,12 @@ def then_supplier_should_receive_message_from_buyer(
     fas_supplier_should_receive_message_from_buyer(context, supplier_alias, buyer_alias)
 
 
-@then('"{actor_alias}" should see a PNG logo thumbnail on FAS Company\'s '
-      'Directory Profile page')
+@then('"{actor_alias}" should see a PNG logo thumbnail on FAS Company\'s Directory Profile page')
 def then_buyer_should_see_logo_on_fas_profile_page(context, actor_alias):
     fas_should_see_png_logo_thumbnail(context, actor_alias)
 
 
-@then('"{actor_alias}" should see different updated thumbnail of the logo on '
-      'FAS Company\'s Directory Profile page')
+@then('"{actor_alias}" should see different updated thumbnail of the logo on FAS Company\'s Directory Profile page')
 def then_actor_should_see_different_logo_on_fas(context, actor_alias):
     fas_should_see_different_png_logo_thumbnail(context, actor_alias)
 
@@ -280,30 +263,25 @@ def then_actor_should_see_sections_with_industries(context, actor_alias):
     fas_should_see_promoted_industries(context, actor_alias, context.table)
 
 
-@then('"{actor_alias}" should see search results filtered by appropriate '
-      'sector')
-@then('"{actor_alias}" should see search results filtered by appropriate '
-      'sectors')
+@then('"{actor_alias}" should see search results filtered by appropriate sector')
+@then('"{actor_alias}" should see search results filtered by appropriate sectors')
 def then_actor_should_see_filtered_search_results(context, actor_alias):
     fas_should_see_filtered_search_results(context, actor_alias)
 
 
-@then('"{actor_alias}" should see that search results are not filtered by any '
-      'sector')
+@then('"{actor_alias}" should see that search results are not filtered by any sector')
 def then_actor_should_see_unfiltered_search_results(context, actor_alias):
     fas_should_see_unfiltered_search_results(context, actor_alias)
 
 
-@then('"{actor_alias}" should see company "{company_alias}" only once on '
-      'browsed search result pages')
+@then('"{actor_alias}" should see company "{company_alias}" only once on browsed search result pages')
 def then_actor_should_see_company_once_in_search_results(
         context, actor_alias, company_alias):
     fas_should_see_company_once_in_search_results(
         context, actor_alias, company_alias)
 
 
-@then('"{actor_alias}" should see that some of the results have the '
-      '"{search_term}" search terms highlighted')
+@then('"{actor_alias}" should see that some of the results have the "{search_term}" search terms highlighted')
 def then_should_see_highlighted_search_term(context, actor_alias, search_term):
     fas_should_see_highlighted_search_term(context, actor_alias, search_term)
 

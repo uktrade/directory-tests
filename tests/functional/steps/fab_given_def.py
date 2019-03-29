@@ -57,8 +57,7 @@ def when_supplier_creates_standalone_sso_account(context, supplier_alias):
     reg_create_standalone_unverified_sso_account(context, supplier_alias)
 
 
-@given('"{alias}" received the email verification message with the email '
-       'confirmation link')
+@given('"{alias}" received the email verification message with the email confirmation link')
 def given_supplier_received_verification_email(context, alias):
     reg_should_get_verification_email(context, alias)
 
@@ -84,8 +83,7 @@ def given_supplier_creates_verified_but_unpublished_profile(
     )
 
 
-@given('"{supplier_alias}" created a standalone SSO/great.gov.uk account with '
-       'unverified email address')
+@given('"{supplier_alias}" created a standalone SSO/great.gov.uk account with unverified email address')
 def given_supplier_creates_standalone_unverified_sso_account(
         context, supplier_alias):
     sso_create_standalone_unverified_sso_account(context, supplier_alias)
@@ -117,8 +115,7 @@ def given_supplier_sets_logo_picture(context, supplier_alias, picture):
     profile_supplier_uploads_logo(context, supplier_alias, picture)
 
 
-@given('"{supplier_alias}" can see that logo on FAB Company\'s Directory '
-       'Profile page')
+@given('"{supplier_alias}" can see that logo on FAB Company\'s Directory Profile page')
 def given_supplier_can_see_correct_logo_on_fab_profile(
         context, supplier_alias):
     profile_should_see_logo_picture(context, supplier_alias)
@@ -137,14 +134,12 @@ def given_unauthenticated_buyer(context, buyer_alias):
     context.add_actor(buyer)
 
 
-@given('"{buyer_alias}" has found a company "{company_alias}" on Find a '
-       'Supplier site')
+@given('"{buyer_alias}" has found a company "{company_alias}" on Find a Supplier site')
 def given_buyer_finds_company_by_name(context, buyer_alias, company_alias):
     fas_find_company_by_name(context, buyer_alias, company_alias)
 
 
-@given('"{actor_alias}" can see a PNG logo thumbnail on FAS Company\'s '
-       'Directory Profile page')
+@given('"{actor_alias}" can see a PNG logo thumbnail on FAS Company\'s Directory Profile page')
 def given_actor_can_see_logo_on_fas_profile_page(context, actor_alias):
     fas_should_see_png_logo_thumbnail(context, actor_alias)
 
@@ -154,9 +149,7 @@ def given_actor_views_fas_page(context, actor_alias, page_name):
     go_to_page(context, actor_alias, page_name)
 
 
-@given('"{actor_alias}" finds a Supplier "{company_alias}" with a published '
-       'profile associated with at least "{min_number_sectors}" different '
-       'sectors')
+@given('"{actor_alias}" finds a Supplier "{company_alias}" with a published profile associated with at least "{min_number_sectors}" different sectors')
 def given_actor_finds_published_company_with_min_n_sectors(
         context, actor_alias, company_alias, min_number_sectors: int):
     fab_find_published_company(
@@ -179,8 +172,7 @@ def given_supplier_received_password_reset_email(context, supplier_alias):
     sso_get_password_reset_link(context, supplier_alias)
 
 
-@given('"{actor_alias}" has created "{verified_or_not}" profile for randomly '
-       'selected company "{company_alias}"')
+@given('"{actor_alias}" has created "{verified_or_not}" profile for randomly selected company "{company_alias}"')
 def given_actor_with_verified_or_not_profile(
         context, actor_alias, verified_or_not, company_alias):
     create_actor_with_verified_or_unverified_fab_profile(
@@ -240,8 +232,7 @@ def given_actor_sends_a_verification_letter(context, actor_alias):
     stannp_send_verification_letter(context, actor_alias)
 
 
-@given('"{supplier_alias}" created an unverified business profile for randomly selected'
-       ' company "{company_alias}"')
+@given('"{supplier_alias}" created an unverified business profile for randomly selected company "{company_alias}"')
 def given_unverified_profile_new_reg_flow(context, supplier_alias, company_alias):
     profile_create_unverified_business_profile(
         context, supplier_alias, company_alias
