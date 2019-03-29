@@ -27,7 +27,7 @@ from tests.functional.steps.fab_then_impl import (
     should_be_at,
     sso_should_be_signed_in_to_sso_account,
     sso_should_be_signed_out_from_sso_account,
-    sso_should_get_request_for_collaboration_email
+    sso_should_get_request_for_collaboration_email,
 )
 from tests.functional.steps.fab_when_impl import (
     fab_add_collaborator,
@@ -36,9 +36,9 @@ from tests.functional.steps.fab_when_impl import (
     fab_open_collaboration_request_link,
     fab_transfer_ownership,
     go_to_page,
-    profile_add_case_study,
     prof_add_online_profiles,
     profile_add_business_description,
+    profile_add_case_study,
     profile_add_product_and_services_keywords,
     profile_edit_business_details,
     profile_supplier_uploads_logo,

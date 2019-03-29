@@ -28,7 +28,7 @@ from tests.functional.steps.fab_when_impl import (
     reg_create_standalone_unverified_sso_account,
     sso_request_password_reset,
     sso_sign_in,
-    profile_publish_profile_to_fas
+    profile_publish_profile_to_fas,
 )
 from tests.functional.utils.context_utils import Actor, Company
 from tests.functional.utils.generic import (

@@ -60,7 +60,7 @@ from tests.functional.steps.fab_then_impl import (
 )
 from tests.functional.steps.fab_when_impl import (
     fas_feedback_request_should_be_submitted,
-    fas_should_be_told_about_empty_search_results
+    fas_should_be_told_about_empty_search_results,
 )
 
 
