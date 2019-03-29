@@ -34,7 +34,6 @@ from tests.functional.steps.fab_when_impl import (
     go_to_page,
     go_to_pages,
     prof_add_invalid_online_profiles,
-    prof_add_online_profiles,
     prof_attempt_to_sign_in_to_sso,
     prof_remove_links_to_online_profiles,
     profile_supplier_uploads_logo,
@@ -42,6 +41,7 @@ from tests.functional.steps.fab_when_impl import (
     profile_update_company_details,
     profile_view_published_profile,
     profile_add_case_study,
+    profile_add_online_profiles,
     profile_attempt_to_add_case_study,
     profile_go_to_letter_verification,
     profile_provide_business_details,
@@ -149,7 +149,7 @@ def when_supplier_updates_company_details(context, supplier_alias):
 
 @when('"{supplier_alias}" adds links to online profiles')
 def when_supplier_adds_online_profiles(context, supplier_alias):
-    prof_add_online_profiles(context, supplier_alias, context.table)
+    profile_add_online_profiles(context, supplier_alias, context.table)
 
 
 @when('"{supplier_alias}" attempts to use invalid links to online profiles')

@@ -36,9 +36,9 @@ from tests.functional.steps.fab_when_impl import (
     fab_open_collaboration_request_link,
     fab_transfer_ownership,
     go_to_page,
-    prof_add_online_profiles,
     profile_add_business_description,
     profile_add_case_study,
+    profile_add_online_profiles,
     profile_add_product_and_services_keywords,
     profile_edit_business_details,
     profile_supplier_uploads_logo,
@@ -109,7 +109,7 @@ def given_supplier_is_signed_out_from_sso(context, supplier_alias):
 @given('"{supplier_alias}" has added links to online profiles')
 def given_supplier_adds_valid_links_to_online_profiles(
         context, supplier_alias):
-    prof_add_online_profiles(context, supplier_alias, context.table)
+    profile_add_online_profiles(context, supplier_alias, context.table)
 
 
 @given('"{supplier_alias}" has set "{picture}" picture as company\'s logo')

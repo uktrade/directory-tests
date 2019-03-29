@@ -779,36 +779,27 @@ def profile_update_company_details(
     )
 
 
-def prof_add_online_profiles(
+def profile_add_online_profiles(
     context: Context, supplier_alias: str, online_profiles: Table
 ):
     """Update links to Company's Online Profiles."""
     actor = context.get_actor(supplier_alias)
-    session = actor.session
     company = context.get_company(actor.company_alias)
     profiles = [row["online profile"] for row in online_profiles]
     facebook = PROFILES["FACEBOOK"] in profiles
     linkedin = PROFILES["LINKEDIN"] in profiles
     twitter = PROFILES["TWITTER"] in profiles
 
-    # Step 1 - Go to the FAB Edit Online Profiles page
-    response = fab_ui_edit_online_profiles.go_to(session)
-    context.response = response
-    fab_ui_edit_online_profiles.should_be_here(response)
-
-    # Step 2 - Extract CSRF token
-    extract_and_set_csrf_middleware_token(context, response, supplier_alias)
-
-    # Step 3 - Update links to Online Profiles
-    response, new_details = fab_ui_edit_online_profiles.update_profiles(
+    # Step 1 - Update links to Online Profiles
+    response, new_details = profile_edit_online_profiles.update_profiles(
         actor, company, facebook=facebook, linkedin=linkedin, twitter=twitter
     )
     context.response = response
 
-    # Step 4 - Check if Supplier is on FAB Profile page
+    # Step 2 - Check if Supplier is on FAB Profile page
     profile_edit_company_profile.should_be_here(response)
 
-    # Step 5 - Update company's details stored in context.scenario_data
+    # Step 3 - Update company's details stored in context.scenario_data
     context.set_company_details(
         company.alias,
         facebook=new_details.facebook,
