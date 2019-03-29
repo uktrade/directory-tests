@@ -22,7 +22,7 @@ from tests.functional.steps.fab_given_impl import (
 from tests.functional.steps.fab_then_impl import (
     fab_should_see_all_case_studies,
     fas_should_see_png_logo_thumbnail,
-    prof_should_see_logo_picture,
+    profile_should_see_logo_picture,
     reg_should_get_verification_email,
     should_be_at,
     sso_should_be_signed_in_to_sso_account,
@@ -121,7 +121,7 @@ def given_supplier_sets_logo_picture(context, supplier_alias, picture):
        'Profile page')
 def given_supplier_can_see_correct_logo_on_fab_profile(
         context, supplier_alias):
-    prof_should_see_logo_picture(context, supplier_alias)
+    profile_should_see_logo_picture(context, supplier_alias)
 
 
 @given('"{supplier_alias}" added a complete case study called "{case_alias}"')

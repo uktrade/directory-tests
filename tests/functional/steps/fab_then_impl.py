@@ -230,7 +230,7 @@ def fas_should_see_all_case_studies(context: Context, supplier_alias: str):
     )
 
 
-def prof_should_see_logo_picture(context: Context, supplier_alias: str):
+def profile_should_see_logo_picture(context: Context, supplier_alias: str):
     """Will check if Company's Logo visible on FAB profile page is the same as
     the uploaded one.
     """
