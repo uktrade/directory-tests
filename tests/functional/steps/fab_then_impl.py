@@ -334,7 +334,7 @@ def profile_all_unsupported_files_should_be_rejected(
     )
 
 
-def fab_should_see_online_profiles(context: Context, supplier_alias: str):
+def profile_should_see_online_profiles(context: Context, supplier_alias: str):
     """Check if Supplier can see all online Profiles on FAB Profile page."""
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)

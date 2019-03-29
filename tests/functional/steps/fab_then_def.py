@@ -15,7 +15,6 @@ from tests.functional.steps.fab_then_impl import (
     fab_should_see_case_study_error_message,
     profile_should_see_company_details,
     profile_should_see_expected_error_messages,
-    fab_should_see_online_profiles,
     fas_check_profiles,
     fas_find_supplier_using_case_study_details,
     fas_no_links_to_online_profiles_are_visible,
@@ -41,6 +40,7 @@ from tests.functional.steps.fab_then_impl import (
     profile_business_profile_should_be_ready_for_publishing,
     profile_should_be_told_about_invalid_links,
     profile_should_see_logo_picture,
+    profile_should_see_online_profiles,
     profile_supplier_should_be_on_landing_page,
     reg_should_get_verification_email,
     reg_sso_account_should_be_created,
@@ -122,10 +122,9 @@ def then_supplier_should_see_new_details(context, supplier_alias, page_name):
     profile_should_see_company_details(context, supplier_alias, page_name)
 
 
-@then('"{supplier_alias}" should see links to all online profiles on FAB '
-      'Company\'s Directory Profile page')
+@then('"{supplier_alias}" should see links to all online profiles on Edit Business Profile page')
 def then_supplier_should_see_online_profiles_on_fab(context, supplier_alias):
-    fab_should_see_online_profiles(context, supplier_alias)
+    profile_should_see_online_profiles(context, supplier_alias)
 
 
 @then('"{supplier_alias}" should see links to all online profiles on FAS '
