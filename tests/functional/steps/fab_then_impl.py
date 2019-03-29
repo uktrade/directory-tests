@@ -20,15 +20,15 @@ from tests.functional.pages import (
     fas_ui_find_supplier,
     fas_ui_industries,
     fas_ui_profile,
-    profile_ui_landing,
+    profile_about,
     profile_edit_company_profile,
     profile_edit_online_profiles,
+    profile_ui_landing,
     sso_ui_invalid_password_reset_link,
     sso_ui_logout,
     sso_ui_password_reset,
     sso_ui_verify_your_email,
     sud_ui_find_a_buyer,
-    profile_about,
 )
 from tests.functional.registry import get_fabs_page_object
 from tests.functional.steps import has_action
