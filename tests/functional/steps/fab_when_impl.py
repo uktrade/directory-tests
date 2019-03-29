@@ -684,7 +684,7 @@ def prof_upload_unsupported_file_as_logo(
     return rejected
 
 
-def prof_supplier_uploads_logo(
+def profile_supplier_uploads_logo(
     context: Context, supplier_alias: str, picture: str
 ):
     """Upload a picture and set it as Company's logo.

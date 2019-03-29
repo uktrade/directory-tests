@@ -41,7 +41,7 @@ from tests.functional.steps.fab_when_impl import (
     profile_add_business_description,
     profile_add_product_and_services_keywords,
     profile_edit_business_details,
-    prof_supplier_uploads_logo,
+    profile_supplier_uploads_logo,
     reg_create_standalone_unverified_sso_account,
 )
 
@@ -114,7 +114,7 @@ def given_supplier_adds_valid_links_to_online_profiles(
 
 @given('"{supplier_alias}" has set "{picture}" picture as company\'s logo')
 def given_supplier_sets_logo_picture(context, supplier_alias, picture):
-    prof_supplier_uploads_logo(context, supplier_alias, picture)
+    profile_supplier_uploads_logo(context, supplier_alias, picture)
 
 
 @given('"{supplier_alias}" can see that logo on FAB Company\'s Directory '

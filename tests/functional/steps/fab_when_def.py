@@ -37,7 +37,7 @@ from tests.functional.steps.fab_when_impl import (
     prof_add_online_profiles,
     prof_attempt_to_sign_in_to_sso,
     prof_remove_links_to_online_profiles,
-    prof_supplier_uploads_logo,
+    profile_supplier_uploads_logo,
     prof_to_upload_unsupported_logos,
     profile_update_company_details,
     profile_view_published_profile,
@@ -169,7 +169,7 @@ def when_supplier_adds_case_study(context, supplier_alias, case_alias):
 
 @when('"{supplier_alias}" uploads "{picture}" as company\'s logo')
 def when_supplier_uploads_logo(context, supplier_alias, picture):
-    prof_supplier_uploads_logo(context, supplier_alias, picture)
+    profile_supplier_uploads_logo(context, supplier_alias, picture)
 
 
 @when('"{supplier_alias}" attempts to upload a file of unsupported type as '
