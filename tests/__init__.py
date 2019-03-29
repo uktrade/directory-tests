@@ -67,7 +67,6 @@ urls = {
     "ui-buyer:company-edit-key-facts": "company-profile/edit/key-facts/",
     "ui-buyer:company-edit-sectors": "company-profile/edit/sectors/",
     "ui-buyer:company-edit-contact": "company-profile/edit/contact/",
-    "ui-buyer:company-edit-social-media": "company-profile/edit/social-media/",
     "ui-buyer:account-add-collaborator": "account/add-collaborator/",
     "ui-buyer:account-remove-collaborator": "account/remove-collaborator/",
     "ui-buyer:account-transfer-ownership": "account/transfer/",
@@ -222,6 +221,7 @@ urls = {
     "profile:case-study-details": "find-a-buyer/case-study/details/",
     "profile:case-study-images": "find-a-buyer/case-study/images/",
     "profile:upload-logo": "find-a-buyer/logo/",
+    "profile:company-edit-social-media": "find-a-buyer/social-links/",
 
     # ExRed UI
     "ui-exred:healthcheck": "healthcheck/",

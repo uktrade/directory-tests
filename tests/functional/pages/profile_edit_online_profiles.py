@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""FAB - Edit Company's Online Profiles page"""
+"""Profile - Edit Company's Online Profiles page"""
 import logging
 import random
 import re
@@ -10,17 +10,15 @@ from tests.functional.utils.context_utils import Actor, Company
 from tests.functional.utils.generic import assertion_msg
 from tests.functional.utils.request import Method, check_response, make_request
 
-URL = get_absolute_url("ui-buyer:company-edit-social-media")
+URL = get_absolute_url("profile:company-edit-social-media")
 EXPECTED_STRINGS = [
-    "Add your social media pages",
+    "Online profiles",
+    "URL for your Facebook company page (optional):",
     "URL for your LinkedIn company profile (optional):",
-    "Use a full web address (URL) including http:// or https://",
     "URL for your Twitter company profile (optional):",
     "Use a full web address (URL) including http:// or https://",
-    "URL for your Facebook company page (optional):",
-    "Use a full web address (URL) including http:// or https://",
-    "Save",
-    "Cancel",
+    "Save and continue",
+    "Back",
 ]
 
 
