@@ -34,7 +34,6 @@ from tests.functional.steps.fab_when_impl import (
     go_to_page,
     go_to_pages,
     prof_attempt_to_sign_in_to_sso,
-    prof_remove_links_to_online_profiles,
     profile_supplier_uploads_logo,
     profile_to_upload_unsupported_logos,
     profile_update_company_details,
@@ -46,6 +45,7 @@ from tests.functional.steps.fab_when_impl import (
     profile_go_to_letter_verification,
     profile_provide_business_details,
     profile_provide_products_and_services,
+    profile_remove_links_to_online_profiles,
     profile_verify_company_profile,
     reg_confirm_company_selection,
     reg_create_sso_account,
@@ -159,7 +159,7 @@ def when_supplier_attempts_to_add_invalid_links(context, supplier_alias):
 
 @when('"{supplier_alias}" removes links to all online profiles')
 def when_supplier_removes_links_to_all_online_profiles(context, supplier_alias):
-    prof_remove_links_to_online_profiles(context, supplier_alias)
+    profile_remove_links_to_online_profiles(context, supplier_alias)
 
 
 @when('"{supplier_alias}" adds a complete case study called "{case_alias}"')

@@ -859,7 +859,7 @@ def profile_add_invalid_online_profiles(
     context.response = response
 
 
-def prof_remove_links_to_online_profiles(
+def profile_remove_links_to_online_profiles(
     context: Context, supplier_alias: str
 ):
     """Will remove links to existing Online Profiles."""
@@ -870,10 +870,17 @@ def prof_remove_links_to_online_profiles(
     linkedin = True if company.linkedin else False
     twitter = True if company.twitter else False
 
-    response = fab_ui_edit_online_profiles.remove_links(
+    context.response = profile_edit_online_profiles.remove_links(
         actor, company, facebook=facebook, linkedin=linkedin, twitter=twitter
     )
-    context.response = response
+
+    # Update company's details stored in context.scenario_data
+    context.set_company_details(
+        company.alias,
+        facebook=None,
+        linkedin=None,
+        twitter=None,
+    )
 
 
 def profile_add_case_study(
