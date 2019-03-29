@@ -139,12 +139,6 @@ def should_see_case_studies(case_studies: dict, response: Response):
             case_studies[case].title,
         ):
             assert case_studies[case].title in content
-        with assertion_msg(
-            "Couldn't find Case Study '%s' description '%s'",
-            case_studies[case].alias,
-            case_studies[case].description,
-        ):
-            assert case_studies[case].description in content
     logging.debug(
         "Supplier can see all %d Case Studies on FAB Company's "
         "Directory Profile Page",
