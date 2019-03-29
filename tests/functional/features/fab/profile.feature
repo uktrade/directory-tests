@@ -13,7 +13,7 @@ Feature: Trade Profile
 
     When "Peter Alder" adds a complete case study called "no 1"
 
-    Then "Peter Alder" should see all case studies on the FAB Company's Directory Profile page
+    Then "Peter Alder" should see all case studies on the edit Business Profile page
 
 
   @wip
@@ -28,8 +28,8 @@ Feature: Trade Profile
 
     When "Peter Alder" adds a complete case study called "no 1"
 
-    Then "Peter Alder" should see all case studies on the FAB Company's Directory Profile page
-    And "Peter Alder" should see all case studies on the FAS Company's Directory Profile page
+    Then "Peter Alder" should see all case studies on the edit Business Profile page
+    And "Peter Alder" should see all case studies on the FAS Business Profile page
 
 
   @wip
@@ -47,7 +47,7 @@ Feature: Trade Profile
     And "Peter Alder" adds a complete case study called "no 3"
     And "Peter Alder" adds a complete case study called "no 4"
 
-    Then "Peter Alder" should see all case studies on the FAB Company's Directory Profile page
+    Then "Peter Alder" should see all case studies on the edit Business Profile page
 
 
   @wip
@@ -65,8 +65,8 @@ Feature: Trade Profile
     And "Peter Alder" adds a complete case study called "no 3"
     And "Peter Alder" adds a complete case study called "no 4"
 
-    Then "Peter Alder" should see all case studies on the FAB Company's Directory Profile page
-    And "Peter Alder" should see all case studies on the FAS Company's Directory Profile page
+    Then "Peter Alder" should see all case studies on the edit Business Profile page
+    And "Peter Alder" should see all case studies on the FAS Business Profile page
 
 
   @wip
@@ -86,7 +86,7 @@ Feature: Trade Profile
 
     When "Peter Alder" updates all the details of case study called "no 1"
 
-    Then "Peter Alder" should see all case studies on the FAB Company's Directory Profile page
+    Then "Peter Alder" should see all case studies on the edit Business Profile page
 
 
   @wip
@@ -106,8 +106,8 @@ Feature: Trade Profile
 
     When "Peter Alder" updates all the details of case study called "no 1"
 
-    Then "Peter Alder" should see all case studies on the FAB Company's Directory Profile page
-    And "Peter Alder" should see all case studies on the FAS Company's Directory Profile page
+    Then "Peter Alder" should see all case studies on the edit Business Profile page
+    And "Peter Alder" should see all case studies on the FAS Business Profile page
 
 
   @wip
@@ -131,7 +131,7 @@ Feature: Trade Profile
     And "Peter Alder" updates all the details of case study called "no 2"
     And "Peter Alder" updates all the details of case study called "no 3"
 
-    Then "Peter Alder" should see all case studies on the FAB Company's Directory Profile page
+    Then "Peter Alder" should see all case studies on the edit Business Profile page
 
 
   @wip
@@ -155,5 +155,5 @@ Feature: Trade Profile
     And "Peter Alder" updates all the details of case study called "no 2"
     And "Peter Alder" updates all the details of case study called "no 3"
 
-    Then "Peter Alder" should see all case studies on the FAB Company's Directory Profile page
-    And "Peter Alder" should see all case studies on the FAS Company's Directory Profile page
+    Then "Peter Alder" should see all case studies on the edit Business Profile page
+    And "Peter Alder" should see all case studies on the FAS Business Profile page

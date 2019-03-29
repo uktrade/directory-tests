@@ -206,7 +206,7 @@ def profile_should_be_told_about_invalid_links(
     )
 
 
-def fab_should_see_all_case_studies(context: Context, supplier_alias: str):
+def profile_should_see_all_case_studies(context: Context, supplier_alias: str):
     """Check if Supplier can see all case studies on FAB profile page."""
     actor = context.get_actor(supplier_alias)
     case_studies = context.get_company(actor.company_alias).case_studies

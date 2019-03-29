@@ -10,7 +10,7 @@ from tests.functional.steps.fab_then_impl import (
     fab_should_be_asked_about_verification_form,
     fab_should_get_request_for_becoming_owner,
     fab_should_not_see_collaborator,
-    fab_should_see_all_case_studies,
+    profile_should_see_all_case_studies,
     fab_should_see_case_study_error_message,
     fas_check_profiles,
     fas_find_supplier_using_case_study_details,
@@ -148,14 +148,12 @@ def then_no_online_profiles_are_visible_on_fas(context, supplier_alias):
     fas_no_links_to_online_profiles_are_visible(context, supplier_alias)
 
 
-@then('"{supplier_alias}" should see all case studies on the FAB Company\'s '
-      'Directory Profile page')
+@then('"{supplier_alias}" should see all case studies on the edit Business Profile page')
 def then_supplier_should_see_all_case_studies_fab(context, supplier_alias):
-    fab_should_see_all_case_studies(context, supplier_alias)
+    profile_should_see_all_case_studies(context, supplier_alias)
 
 
-@then('"{supplier_alias}" should see all case studies on the FAS Company\'s '
-      'Directory Profile page')
+@then('"{supplier_alias}" should see all case studies on the FAS Business Profile page')
 def then_supplier_should_see_all_case_studies_fas(context, supplier_alias):
     fas_should_see_all_case_studies(context, supplier_alias)
 

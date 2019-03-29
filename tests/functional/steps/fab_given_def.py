@@ -20,7 +20,7 @@ from tests.functional.steps.fab_given_impl import (
     unauthenticated_supplier,
 )
 from tests.functional.steps.fab_then_impl import (
-    fab_should_see_all_case_studies,
+    profile_should_see_all_case_studies,
     fas_should_see_png_logo_thumbnail,
     profile_should_see_logo_picture,
     reg_should_get_verification_email,
@@ -128,7 +128,7 @@ def given_supplier_can_see_correct_logo_on_fab_profile(
 def given_supplier_added_complete_case_study(
         context, supplier_alias, case_alias):
     profile_add_case_study(context, supplier_alias, case_alias)
-    fab_should_see_all_case_studies(context, supplier_alias)
+    profile_should_see_all_case_studies(context, supplier_alias)
 
 
 @given('"{buyer_alias}" is a buyer')

@@ -318,8 +318,8 @@ Feature: Multi-user accounts
 
     When "Annette Geissinger" adds a complete case study called "no 1"
 
-    Then "Annette Geissinger" should see all case studies on the FAB Company's Directory Profile page
-    And "Annette Geissinger" should see all case studies on the FAS Company's Directory Profile page
+    Then "Annette Geissinger" should see all case studies on the edit Business Profile page
+    And "Annette Geissinger" should see all case studies on the FAS Business Profile page
 
 
   @bug
