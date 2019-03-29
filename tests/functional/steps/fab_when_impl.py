@@ -649,7 +649,7 @@ def sso_go_to_create_trade_profile(context: Context, supplier_alias: str):
     fab_ui_landing.should_be_here(response)
 
 
-def prof_upload_unsupported_file_as_logo(
+def profile_upload_unsupported_file_as_logo(
     context: Context, supplier_alias: str, file: str
 ):
     """Try to upload unsupported file type as Company's logo.
