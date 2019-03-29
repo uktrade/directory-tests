@@ -15,7 +15,6 @@ from tests.functional.pages import (
     fab_ui_account_remove_collaborator,
     fab_ui_build_profile_basic,
     fab_ui_confirm_identity,
-    fab_ui_edit_online_profiles,
     fab_ui_verify_company,
     fas_ui_contact,
     fas_ui_find_supplier,
@@ -23,6 +22,7 @@ from tests.functional.pages import (
     fas_ui_profile,
     profile_ui_landing,
     profile_edit_company_profile,
+    profile_edit_online_profiles,
     sso_ui_invalid_password_reset_link,
     sso_ui_logout,
     sso_ui_password_reset,
@@ -193,7 +193,7 @@ def profile_should_be_told_about_invalid_links(
     linkedin = True if company.linkedin else False
     twitter = True if company.twitter else False
 
-    fab_ui_edit_online_profiles.should_see_errors(
+    profile_edit_online_profiles.should_see_errors(
         context.response, facebook=facebook, linkedin=linkedin, twitter=twitter
     )
     logging.debug(
