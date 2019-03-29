@@ -183,7 +183,7 @@ def sso_should_be_signed_out_from_sso_account(
     context.reset_actor_session(supplier_alias)
 
 
-def prof_should_be_told_about_invalid_links(
+def profile_should_be_told_about_invalid_links(
     context: Context, supplier_alias: str
 ):
     actor = context.get_actor(supplier_alias)

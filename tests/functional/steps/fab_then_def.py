@@ -37,9 +37,9 @@ from tests.functional.steps.fab_then_impl import (
     fas_supplier_cannot_be_found_using_case_study_details,
     fas_supplier_should_receive_message_from_buyer,
     profile_all_unsupported_files_should_be_rejected,
-    prof_should_be_told_about_invalid_links,
     prof_should_be_told_about_missing_description,
     profile_business_profile_should_be_ready_for_publishing,
+    profile_should_be_told_about_invalid_links,
     profile_should_see_logo_picture,
     profile_supplier_should_be_on_landing_page,
     reg_should_get_verification_email,
@@ -137,7 +137,7 @@ def then_supplier_should_see_online_profiles_on_fas(context, supplier_alias):
 @then('"{supplier_alias}" should be told to provide valid links to all online '
       'profiles')
 def then_supplier_should_be_told_to_use_valid_links(context, supplier_alias):
-    prof_should_be_told_about_invalid_links(context, supplier_alias)
+    profile_should_be_told_about_invalid_links(context, supplier_alias)
 
 
 @then('"{supplier_alias}" should not see any links to online profiles on FAB '
