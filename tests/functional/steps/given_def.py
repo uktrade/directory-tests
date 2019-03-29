@@ -47,8 +47,7 @@ from tests.functional.steps.when_impl import (
 
 @given('"{supplier_alias}" is an unauthenticated supplier')
 def given_an_unauthenticated_supplier(context, supplier_alias):
-    supplier = unauthenticated_supplier(supplier_alias)
-    context.add_actor(supplier)
+    context.add_actor(unauthenticated_supplier(supplier_alias))
 
 
 @given('"{supplier_alias}" created an unverified SSO/great.gov.uk account')
