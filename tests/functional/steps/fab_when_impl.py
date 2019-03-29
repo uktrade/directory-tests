@@ -913,13 +913,13 @@ def profile_add_case_study(
     context.add_case_study(actor.company_alias, case_alias, case_study)
 
 
-def fab_update_case_study(
+def profile_update_case_study(
     context: Context, supplier_alias: str, case_alias: str
 ):
     actor = context.get_actor(supplier_alias)
     session = actor.session
     company = context.get_company(actor.company_alias)
-    # get content from last response (which contains FAB Profile Page)
+    # get content from last response (which contains Edit Business Profile Page)
     content = context.response.content.decode("utf-8")
 
     # Step 0 - extract links to Case Studies and do a crude mapping to

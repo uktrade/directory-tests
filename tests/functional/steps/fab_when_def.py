@@ -15,7 +15,7 @@ from tests.functional.steps.fab_when_impl import (
     fab_send_transfer_ownership_request,
     fab_submit_verification_code,
     fab_transfer_ownership,
-    fab_update_case_study,
+    profile_update_case_study,
     fas_browse_suppliers_by_company_sectors,
     fas_browse_suppliers_by_invalid_sectors,
     fas_browse_suppliers_by_multiple_sectors,
@@ -178,10 +178,9 @@ def when_supplier_attempts_to_upload_unsupported_file(context, supplier_alias):
     profile_to_upload_unsupported_logos(context, supplier_alias, context.table)
 
 
-@when('"{supplier_alias}" updates all the details of case study called '
-      '"{case_alias}"')
+@when('"{supplier_alias}" updates all the details of case study called "{case_alias}"')
 def when_supplier_updates_case_study(context, supplier_alias, case_alias):
-    fab_update_case_study(context, supplier_alias, case_alias)
+    profile_update_case_study(context, supplier_alias, case_alias)
 
 
 @when('"{buyer_alias}" searches for company "{company_alias}" on FAS using '
