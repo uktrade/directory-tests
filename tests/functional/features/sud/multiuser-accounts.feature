@@ -6,6 +6,7 @@ Feature: Multi-user accounts
 
 
   @ED-3554
+  @captcha
   @dev-only
   @multi-user
   @add-collaborator
@@ -26,6 +27,7 @@ Feature: Multi-user accounts
 
 
   @ED-3555
+  @captcha
   @dev-only
   @multi-user
   @add-collaborator
@@ -42,6 +44,7 @@ Feature: Multi-user accounts
 
 
   @ED-3556
+  @captcha
   @dev-only
   @multi-user
   @add-collaborator
@@ -57,6 +60,7 @@ Feature: Multi-user accounts
 
 
   @ED-3557
+  @captcha
   @dev-only
   @multi-user
   @add-collaborator
@@ -74,6 +78,7 @@ Feature: Multi-user accounts
 
 
   @ED-3558
+  @captcha
   @dev-only
   @multi-user
   @add-collaborator
@@ -87,6 +92,7 @@ Feature: Multi-user accounts
 
 
   @ED-3559
+  @captcha
   @dev-only
   @multi-user
   @add-collaborator
@@ -107,6 +113,7 @@ Feature: Multi-user accounts
 
 
   @ED-3560
+  @captcha
   @multi-user
   @add-collaborator
   @bug
@@ -121,6 +128,7 @@ Feature: Multi-user accounts
   @TT-217
   @fixme
   @ED-3560
+  @captcha
   @dev-only
   @multi-user
   @add-collaborator
@@ -137,6 +145,7 @@ Feature: Multi-user accounts
 
 
   @ED-3561
+  @captcha
   @dev-only
   @multi-user
   @transfer-ownership
@@ -164,6 +173,7 @@ Feature: Multi-user accounts
   @fixme
   @bug
   @ED-2268
+  @captcha
   @dev-only
   Scenario Outline: Company account owner should be able to transfer the ownership of "<a>" profile to a user who "<has or does not have>" an SSO/great.gov.uk account
     Given "Peter Alder" has created "<a>" profile for randomly selected company "Y"
@@ -183,6 +193,7 @@ Feature: Multi-user accounts
 
 
   @ED-3564
+  @captcha
   @dev-only
   @multi-user
   @remove-collaborator
@@ -201,6 +212,7 @@ Feature: Multi-user accounts
 
 
   @ED-3565
+  @captcha
   @dev-only
   @multi-user
   @remove-collaborator
@@ -225,6 +237,7 @@ Feature: Multi-user accounts
 
 
   @ED-3566
+  @captcha
   @dev-only
   @multi-user
   @transfer-ownership
@@ -246,6 +259,7 @@ Feature: Multi-user accounts
 
 
   @ED-3567
+  @captcha
   @dev-only
   @multi-user
   @add-content
@@ -283,6 +297,7 @@ Feature: Multi-user accounts
 
 
   @ED-3568
+  @captcha
   @dev-only
   @multi-user
   @add-content
@@ -305,6 +320,7 @@ Feature: Multi-user accounts
 
 
   @ED-3569
+  @captcha
   @dev-only
   @multi-user
   @add-content
@@ -329,6 +345,7 @@ Feature: Multi-user accounts
   @ED-3882
   @fixme
   @ED-3570
+  @captcha
   @dev-only
   @multi-user
   @edge-case
@@ -350,6 +367,7 @@ Feature: Multi-user accounts
   @ED-3882
   @fixme
   @ED-3571
+  @captcha
   @dev-only
   @multi-user
   @edge-case
@@ -369,6 +387,7 @@ Feature: Multi-user accounts
   @ED-3852
   @fixme
   @ED-3572
+  @captcha
   @dev-only
   @multi-user
   @edge-case
