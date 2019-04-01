@@ -271,14 +271,6 @@ jobs:
       PYTEST_ARGS: "-m 'not dev and not prod'"
     <<: *steps_smoke_tests
 
-  func_fab_test_dev:
-    <<: *machine_python3
-    working_directory: ~/directory-tests
-    environment:
-      TEST_ENV: "dev"
-      FEATURE_DIR: "fab"
-    <<: *steps_functional_tests
-
   func_fas_test_dev:
     <<: *machine_python3
     working_directory: ~/directory-tests
@@ -301,14 +293,6 @@ jobs:
     environment:
       TEST_ENV: "dev"
       FEATURE_DIR: "sud"
-    <<: *steps_functional_tests
-
-  func_fab_test_stage:
-    <<: *machine_python3
-    working_directory: ~/directory-tests
-    environment:
-      TEST_ENV: "stage"
-      FEATURE_DIR: "fab"
     <<: *steps_functional_tests
 
   func_fas_test_stage:
@@ -471,9 +455,6 @@ workflows:
       - smoke_tests_dev:
           requires:
             - setup_env_for_smoke_tests
-      - func_fab_test_dev:
-          requires:
-            - setup_env_for_functional_tests
       - func_fas_test_dev:
           requires:
             - setup_env_for_functional_tests
@@ -498,9 +479,6 @@ workflows:
       - smoke_tests_stage:
           requires:
             - setup_env_for_smoke_tests
-      - func_fab_test_stage:
-          requires:
-            - setup_env_for_functional_tests
       - func_fas_test_stage:
           requires:
             - setup_env_for_functional_tests
@@ -583,9 +561,6 @@ workflows:
       - smoke_tests_dev:
           requires:
             - setup_env_for_smoke_tests
-      - func_fab_test_dev:
-          requires:
-            - setup_env_for_functional_tests
       - func_fas_test_dev:
           requires:
             - setup_env_for_functional_tests
@@ -616,9 +591,6 @@ workflows:
       - smoke_tests_stage:
           requires:
             - setup_env_for_smoke_tests
-      - func_fab_test_stage:
-          requires:
-            - setup_env_for_functional_tests
       - func_fas_test_stage:
           requires:
             - setup_env_for_functional_tests
