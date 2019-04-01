@@ -369,7 +369,7 @@ def fas_no_links_to_online_profiles_are_visible(
     )
 
 
-def fab_profile_is_published(context: Context, supplier_alias: str):
+def profile_profile_is_published(context: Context, supplier_alias: str):
     """Check if Supplier was told that Company's profile is verified."""
     response = context.response
     profile_edit_company_profile.should_see_profile_is_published(response)

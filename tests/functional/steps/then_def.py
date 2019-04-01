@@ -7,7 +7,7 @@ from behave.runner import Context
 from tests.functional.steps.then_impl import (
     bp_should_be_prompted_to_build_your_profile,
     fab_company_should_be_verified,
-    fab_profile_is_published,
+    profile_profile_is_published,
     fab_should_be_asked_about_verification_form,
     fab_should_get_request_for_becoming_owner,
     fab_should_not_see_collaborator,
@@ -91,7 +91,7 @@ def then_supplier_should_be_told_about_missing_description(
 @then('"{supplier_alias}" should be told that her company is published')
 def then_supplier_should_be_told_that_profile_is_published(
         context, supplier_alias):
-    fab_profile_is_published(context, supplier_alias)
+    profile_profile_is_published(context, supplier_alias)
 
 
 @then('"{supplier_alias}" should be on "{company_alias}"\'s FAS Business Profile page')
