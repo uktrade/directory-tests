@@ -93,8 +93,6 @@ def test_get_market_details_dev(market, basic_auth):
 @pytest.mark.parametrize(
     "market",
     [
-        "1688com",
-        "amazon-canada",
         "amazon-china",
         "amazon-france",
         "amazon-germany",
