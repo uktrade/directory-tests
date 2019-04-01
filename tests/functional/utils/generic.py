@@ -286,6 +286,7 @@ def find_mail_gun_events(
         service.url,
         auth=(service.user, service.password),
         params=params,
+        use_basic_auth=False,
     )
     context.response = response
     with assertion_msg(
