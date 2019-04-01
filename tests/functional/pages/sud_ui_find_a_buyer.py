@@ -29,16 +29,12 @@ EXPECTED_STRINGS_AS_LOGGED_IN_USER = [
     "Business profile",
     "Selling online overseas",
     "About",
-    "Edit profile",
-    "Add case study",
-    "Edit logo",
+    "Add a case study",
+    "Add a logo",
 ]
 
 MANAGE_USER_ACCOUNTS_STRINGS = [
-    "Account details",
-    "Add user to account",
-    "Remove user from account",
-    "Transfer account",
+    "Admin tools", "Admin view"
 ]
 
 
