@@ -6,7 +6,7 @@ from behave import when
 from tests.functional.steps.when_impl import (
     bp_provide_company_details,
     bp_select_random_sector_and_export_to_country,
-    fab_add_collaborator,
+    profile_add_collaborator,
     fab_choose_to_verify_with_code,
     fab_collaborator_create_sso_account_and_confirm_email,
     fab_confirm_collaboration_request,
@@ -347,7 +347,7 @@ def when_supplier_tries_to_change_password_to_letters_only(
 @when('"{supplier_alias}" decides to add "{collaborator_aliases}" as a collaborator')
 def when_owner_adds_a_collaborator(
         context, supplier_alias, collaborator_aliases):
-    fab_add_collaborator(context, supplier_alias, collaborator_aliases)
+    profile_add_collaborator(context, supplier_alias, collaborator_aliases)
 
 
 @when('"{collaborator_alias}" confirms that he wants to be added to the company "{company_alias}" Find a Buyer profile')

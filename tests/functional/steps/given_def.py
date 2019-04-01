@@ -16,7 +16,7 @@ from tests.functional.steps.then_impl import (
 from tests.functional.steps.when_impl import (
     create_actor_with_or_without_sso_account,
     create_actor_with_verified_or_unverified_fab_profile,
-    fab_add_collaborator,
+    profile_add_collaborator,
     fab_confirm_collaboration_request,
     fab_decide_to_verify_profile_with_letter,
     fab_find_published_company,
@@ -187,7 +187,7 @@ def given_actor_with_or_without_sso_account(
 @given('"{supplier_alias}" added "{collaborator_aliases}" as a collaborator')
 def given_supplier_added_a_collaborator(
         context, supplier_alias, collaborator_aliases):
-    fab_add_collaborator(context, supplier_alias, collaborator_aliases)
+    profile_add_collaborator(context, supplier_alias, collaborator_aliases)
 
 
 @given('"{supplier_alias}" has received an email with a request to confirm that he\'s been added to company "{company_alias}" Find a Buyer profile')
