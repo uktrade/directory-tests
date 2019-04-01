@@ -324,6 +324,7 @@ def extract_page_contents(
     strip_cookie_notice: bool = True,
     strip_skip_to_main_content: bool = True,
     strip_image_captions: bool = True,
+    strip_companies_list: bool = True,
     strip_footer: bool = True,
     strip_select_menus: bool = True,
     strip_unordered_lists: bool = False,
@@ -347,6 +348,9 @@ def extract_page_contents(
             element.extract()
     if strip_image_captions:
         for element in soup.select(".image-caption"):
+            element.extract()
+    if strip_companies_list:
+        for element in soup.select("#companies-section ul"):
             element.extract()
     if strip_footer:
         for element in soup.findAll(["footer"]):
