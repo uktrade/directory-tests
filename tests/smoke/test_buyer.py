@@ -72,7 +72,6 @@ def test_redirects_to_profile_pages(url, destination, basic_auth):
         get_absolute_url("ui-buyer:company-edit-key-facts"),
         get_absolute_url("ui-buyer:company-edit-sectors"),
         get_absolute_url("ui-buyer:company-edit-contact"),
-        get_absolute_url("ui-buyer:company-edit-social-media"),
     ],
 )
 def test_302_redirects_for_anon_user(url, basic_auth):
@@ -100,7 +99,6 @@ def test_302_redirects_for_anon_user(url, basic_auth):
         get_absolute_url("ui-buyer:company-edit-key-facts"),
         get_absolute_url("ui-buyer:company-edit-sectors"),
         get_absolute_url("ui-buyer:company-edit-contact"),
-        get_absolute_url("ui-buyer:company-edit-social-media"),
     ],
 )
 def test_301_redirects_after_removing_trailing_slash_for_anon_user(

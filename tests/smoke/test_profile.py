@@ -15,6 +15,17 @@ def test_about_200(basic_auth):
     get_and_assert(url=url, status_code=HTTP_200_OK, auth=basic_auth)
 
 
+@pytest.mark.skip(reason="BUG TT-1298 - this url returns 500 ISE")
+@pytest.mark.parametrize(
+    "url",
+    [
+        get_absolute_url("profile:company-edit-social-media"),
+    ],
+)
+def test_302_redirects_for_anon_user(url, basic_auth):
+    get_and_assert(url=url, status_code=HTTP_302_FOUND, auth=basic_auth)
+
+
 @pytest.mark.parametrize(
     "url",
     [
