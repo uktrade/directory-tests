@@ -1581,6 +1581,7 @@ def mailgun_get_directory_message(context: Context, message_url: str) -> dict:
         message_url,
         headers=headers,
         auth=("api", MAILGUN_DIRECTORY_SECRET_API_KEY),
+        use_basic_auth=False,
     )
     context.response = response
 
