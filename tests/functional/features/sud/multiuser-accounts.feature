@@ -255,7 +255,7 @@ Feature: Multi-user accounts
     When "Annette Geissinger" verifies the company with the verification code from the letter sent after Directory Profile was created
 
     Then "Annette Geissinger" should be on "Profile - edit company profile" page
-    And "Annette Geissinger" should be told that her company is published
+    And "Annette Geissinger" should be told that business profile is ready to be published
 
 
   @ED-3567
