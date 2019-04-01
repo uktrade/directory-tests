@@ -43,11 +43,9 @@ from tests.smoke.cms_api_helpers import get_and_assert
         ("single_sign_on/FeedbackForm/",          "/contact/feedback/"),
         ("soo/FeedbackForm/",                     "/contact/feedback/"),
         ("soo/Triage/",                           "/contact/triage/location/"),
-        ("soo/TriageForm/",                       "/contact/selling-online-overseas/organisation/"),
         ("soo/feedback/",                         "/contact/feedback/"),
         ("triage/",                               "/contact/triage/location/"),
         ("triage/directory/",                     "/contact/triage/location/"),
-        ("triage/soo/",                           "/contact/selling-online-overseas/organisation/"),
         ("triage/sso/",                           "/contact/triage/location/"),
     ]
 )
@@ -69,6 +67,26 @@ def test_redirects_for_legacy_contact_us_urls(
         error_message = (f"Expected {url} redirect to: '{expected_redirect}' "
                          f"but got {last_redirect}")
         assert expected_redirect == last_redirect, error_message
+
+
+@pytest.mark.stage
+@pytest.mark.parametrize(
+    "url, expected_redirect",
+    [
+        (DIRECTORY_LEGACY_CONTACT_US_UI_URL + "soo/TriageForm/", get_absolute_url("sso:login")),
+        (DIRECTORY_LEGACY_CONTACT_US_UI_URL + "triage/soo/", get_absolute_url("sso:login")),
+    ]
+)
+def test_legacy_contact_us_soo_urls_should_redirect_to_sso(
+        url, expected_redirect, basic_auth
+):
+    response = requests.get(url, allow_redirects=True, auth=basic_auth)
+    if "Access denied" in response.content.decode("UTF-8"):
+        response = requests.get(response.url, allow_redirects=True, auth=basic_auth)
+
+    error = (f"Expected request to {url} to be redirected to "
+             f"{expected_redirect}, but got {response.url}")
+    assert response.url.startswith(expected_redirect), error
 
 
 @pytest.mark.parametrize("endpoint, expected_redirect", [
