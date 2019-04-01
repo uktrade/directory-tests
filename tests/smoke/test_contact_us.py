@@ -87,6 +87,10 @@ def test_legacy_contact_us_soo_urls_should_redirect_to_sso(
     error = (f"Expected request to {url} to be redirected to "
              f"{expected_redirect}, but got {response.url}")
     assert response.url.startswith(expected_redirect), error
+    error = (f"After logging in user should be redirected to "
+             f"'contact/selling-online-overseas/organisation/' but ended up on"
+             f" {response.url}")
+    assert response.url.endswith("contact/selling-online-overseas/organisation/"), error
 
 
 @pytest.mark.parametrize("endpoint, expected_redirect", [
