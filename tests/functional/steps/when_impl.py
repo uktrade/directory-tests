@@ -2425,6 +2425,46 @@ def reg_create_standalone_unverified_sso_account_from_sso_login_page(
         assert response.cookies.get("sso_display_logged_in") == "false"
 
 
+def sso_create_standalone_unverified_sso_account_from_collaboration_request(
+        context: Context, actor_alias: str
+):
+    """Create a standalone SSO/great.gov.uk account."""
+    actor = context.get_actor(actor_alias)
+    next = actor.invitation_for_collaboration_link
+
+    # Step 1: Go to the SSO/great.gov.uk registration page
+    referer = get_absolute_url("sso:signup") + f"?next={next}"
+    response = sso_ui_register.go_to(
+        actor.session, next=next, referer=referer
+    )
+    context.response = response
+
+    # Step 2 - extract CSRF token
+    token = extract_csrf_middleware_token(response)
+    context.update_actor(actor_alias, csrfmiddlewaretoken=token)
+
+    # Step 3: Check if User is not logged in
+    with assertion_msg(
+            "It looks like user is still logged in, as the "
+            "sso_display_logged_in cookie is not equal to False"
+    ):
+        assert response.cookies.get("sso_display_logged_in") == "false"
+
+    # Step 4: POST SSO accounts/signup/
+    response = sso_ui_register.submit_no_company(
+        actor, next=next, referer=referer
+    )
+    context.response = response
+
+    # Step 8: Check if Supplier is on Verify your email page & is not logged in
+    sso_ui_verify_your_email.should_be_here(response)
+    with assertion_msg(
+            "It looks like user is still logged in, as the "
+            "sso_display_logged_in cookie is not equal to False"
+    ):
+        assert response.cookies.get("sso_display_logged_in") == "false"
+
+
 def fab_collaborator_create_sso_account_and_confirm_email(
     context: Context, collaborator_alias: str, company_alias: str
 ):
@@ -2432,7 +2472,7 @@ def fab_collaborator_create_sso_account_and_confirm_email(
         context, collaborator_alias, company_alias
     )
     sso_ui_login.should_be_here(context.response)
-    reg_create_standalone_unverified_sso_account_from_sso_login_page(
+    sso_create_standalone_unverified_sso_account_from_collaboration_request(
         context, collaborator_alias
     )
     reg_should_get_verification_email(context, collaborator_alias)
