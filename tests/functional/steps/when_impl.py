@@ -2287,7 +2287,7 @@ def finish_registration_after_flagging_as_verified(
     context.response = response
 
 
-def fab_add_collaborator(
+def profile_add_collaborator(
     context: Context, supplier_alias: str, collaborator_aliases: str
 ):
 
