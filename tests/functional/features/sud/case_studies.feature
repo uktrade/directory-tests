@@ -4,6 +4,8 @@ Feature: Case Studies
   @ED-2142
   @case-study
   @profile
+  @captcha
+  @dev-only
   @fake-sso-email-verification
   Scenario: Supplier should not be able to use invalid values when adding a case study
     Given "Peter Alder" created an unverified business profile for randomly selected company "Y"

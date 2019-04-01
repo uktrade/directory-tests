@@ -74,6 +74,7 @@ Feature: SUD (Profile) pages
 
   @ED-2141
   @profile
+  @captcha
   @dev-only
   @fake-sso-email-verification
   Scenario: Supplier should not be able to update business details using invalid values
@@ -97,6 +98,7 @@ Feature: SUD (Profile) pages
   @fixme
   @ED-2141
   @profile
+  @captcha
   @dev-only
   @fake-sso-email-verification
   Scenario: Supplier should not be able to update business details using invalid values (too long name)
@@ -111,6 +113,7 @@ Feature: SUD (Profile) pages
 
   @ED-2141
   @profile
+  @captcha
   @dev-only
   @fake-sso-email-verification
   Scenario: Supplier should not be able to use other characters than alphanumerics and commas to define products and services offered by the company
@@ -131,6 +134,7 @@ Feature: SUD (Profile) pages
   @ED-1727
   @publish
   @FAS
+  @captcha
   @dev-only
   @fake-sso-email-verification
   Scenario: Once verified Company's Business Profile should be published on FAS
@@ -144,6 +148,7 @@ Feature: SUD (Profile) pages
   @ED-1769
   @login
   @fab
+  @captcha
   @dev-only
   @fake-sso-email-verification
   Scenario: Suppliers with unverified company profile should be able to logout and log back in
@@ -158,6 +163,7 @@ Feature: SUD (Profile) pages
   @ED-1758
   @fab
   @login
+  @captcha
   @dev-only
   @fake-sso-email-verification
   Scenario: Suppliers with verified company profile should be able to logout and log back in
@@ -176,6 +182,8 @@ Feature: SUD (Profile) pages
   @ED-3151
   @fixed
   @profile
+  @captcha
+  @dev-only
   @fake-sso-email-verification
   Scenario: Supplier should be able to update company's details
     Given "Annette Geissinger" has created verified and published business profile for randomly selected company "Y"
@@ -211,6 +219,8 @@ Feature: SUD (Profile) pages
   @bug
   @ED-2160
   @fixed
+  @captcha
+  @dev-only
   @fake-sso-email-verification
   Scenario Outline: Supplier should be able to upload an image to set company's logo
     Given "Peter Alder" has created verified and published business profile for randomly selected company "Y"
@@ -233,6 +243,8 @@ Feature: SUD (Profile) pages
   @ED-1759
   @profile
   @logo
+  @captcha
+  @dev-only
   @fake-sso-email-verification
   Scenario Outline: Supplier should be able to replace an existing company's logo with a new one
     Given "Peter Alder" has created verified and published business profile for randomly selected company "Y"
@@ -253,6 +265,8 @@ Feature: SUD (Profile) pages
   @ED-1759
   @profile
   @logo
+  @captcha
+  @dev-only
   @fake-sso-email-verification
   Scenario: Supplier should not be able to upload files other than images as company's logo
     Given "Peter Alder" has created verified and published business profile for randomly selected company "Y"
@@ -274,6 +288,8 @@ Feature: SUD (Profile) pages
   @ED-1761
   @fab
   @profile
+  @captcha
+  @dev-only
   @fake-sso-email-verification
   Scenario: Supplier should be able to add valid links to Online Profiles (social media URLs)
     Given "Peter Alder" has created verified and published business profile for randomly selected company "Y"
@@ -291,6 +307,8 @@ Feature: SUD (Profile) pages
   @ED-1762
   @fab
   @profile
+  @captcha
+  @dev-only
   @fake-sso-email-verification
   Scenario: Supplier should NOT be able to use invalid links to Online Profiles - explicit social media URLs
     Given "Peter Alder" has created verified and published business profile for randomly selected company "Y"
@@ -310,6 +328,8 @@ Feature: SUD (Profile) pages
   @bug
   @ED-1833
   @fixed
+  @captcha
+  @dev-only
   @fake-sso-email-verification
   Scenario: Supplier should NOT be able to use invalid links to Online Profiles (social media URLs)
     Given "Peter Alder" has created verified and published business profile for randomly selected company "Y"
@@ -326,6 +346,8 @@ Feature: SUD (Profile) pages
   @ED-1763
   @fab
   @profile
+  @captcha
+  @dev-only
   @fake-sso-email-verification
   Scenario: Supplier should be able to remove links to all online profiles (social media URLs)
     Given "Peter Alder" has created verified and published business profile for randomly selected company "Y"
@@ -345,6 +367,8 @@ Feature: SUD (Profile) pages
   @fab
   @case-study
   @profile
+  @captcha
+  @dev-only
   @fake-sso-email-verification
   Scenario: Supplier should be able to add a case study to unverified company
     Given "Peter Alder" created an unverified business profile for randomly selected company "Y"
@@ -358,6 +382,8 @@ Feature: SUD (Profile) pages
   @fab
   @case-study
   @profile
+  @captcha
+  @dev-only
   @fake-sso-email-verification
   Scenario: Supplier should be able to add a case study to verified company
     Given "Peter Alder" has created verified and published business profile for randomly selected company "Y"
@@ -372,6 +398,8 @@ Feature: SUD (Profile) pages
   @fab
   @case-study
   @profile
+  @captcha
+  @dev-only
   @fake-sso-email-verification
   Scenario: Supplier should be able to add multiple case studies to unverified company
     Given "Peter Alder" created an unverified business profile for randomly selected company "Y"
@@ -388,6 +416,8 @@ Feature: SUD (Profile) pages
   @fab
   @case-study
   @profile
+  @captcha
+  @dev-only
   @fake-sso-email-verification
   Scenario: Supplier should be able to add multiple case studies to verified company
     Given "Peter Alder" has created verified and published business profile for randomly selected company "Y"
@@ -409,6 +439,8 @@ Feature: SUD (Profile) pages
   @bug
   @ED-3040
   @fixed
+  @captcha
+  @dev-only
   @found-with-automated-tests
   Scenario: Supplier should be able to update a case study for an unverified company
     Given "Peter Alder" created an unverified business profile for randomly selected company "Y"
@@ -427,6 +459,8 @@ Feature: SUD (Profile) pages
   @bug
   @ED-3040
   @fixed
+  @captcha
+  @dev-only
   @found-with-automated-tests
   Scenario: Supplier should be able to update a case study for a verified company
     Given "Peter Alder" has created verified and published business profile for randomly selected company "Y"
@@ -446,6 +480,8 @@ Feature: SUD (Profile) pages
   @bug
   @ED-3040
   @fixed
+  @captcha
+  @dev-only
   @found-with-automated-tests
   Scenario: Supplier should be able to update multiple case studies for an unverified company
     Given "Peter Alder" created an unverified business profile for randomly selected company "Y"
@@ -468,6 +504,8 @@ Feature: SUD (Profile) pages
   @bug
   @ED-3040
   @fixed
+  @captcha
+  @dev-only
   @found-with-automated-tests
   Scenario: Supplier should be able to update multiple case studies for a verified company
     Given "Peter Alder" has created verified and published business profile for randomly selected company "Y"

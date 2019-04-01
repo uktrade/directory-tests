@@ -5,6 +5,8 @@ Feature: Trade Profile
   @profile
   @verification
   @letter
+  @captcha
+  @dev-only
   @fake-sso-email-verification
   Scenario: Logged-in Supplier should be able to verify profile by using code and link from the letter
     Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
@@ -25,6 +27,8 @@ Feature: Trade Profile
   @profile
   @verification
   @letter
+  @captcha
+  @dev-only
   @fake-sso-email-verification
   Scenario: Logged-out Supplier should be able to verify profile by using code and link from the letter
     Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
