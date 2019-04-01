@@ -1,6 +1,6 @@
 @bug
 @TT-1057
-@fixed
+@fixme
 @multi-user
 Feature: Multi-user accounts
 
