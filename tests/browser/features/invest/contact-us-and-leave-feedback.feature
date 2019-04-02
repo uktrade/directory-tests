@@ -82,7 +82,7 @@ Feature: Contact us and Leave feedback
   @footer
   Scenario Outline: Visitors should be able to contact us from "<selected>" page
     Given "Robert" visits the "Invest - <selected>" page
-    And "Robert" decided to use "Contact us" link
+    And "Robert" decided to "Get in touch"
     And "Robert" is on the "Invest - Contact us" page
 
     When "Robert" fills out and submits the form
@@ -110,7 +110,7 @@ Feature: Contact us and Leave feedback
   @footer
   Scenario Outline: An email should be sent after visitor submits the contact-us form
     Given "Robert" visits the "Invest - <selected>" page
-    And "Robert" decided to use "Contact us" link
+    And "Robert" decided to "Get in touch"
     And "Robert" is on the "Invest - Contact us" page
 
     When "Robert" fills out and submits the form

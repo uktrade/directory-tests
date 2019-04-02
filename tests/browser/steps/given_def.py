@@ -71,6 +71,7 @@ def given_actor_decides_to_click_on_page_element(
 
 @given('"{actor_alias}" decided to use "{element_name}" button')
 @given('"{actor_alias}" decided to use "{element_name}" link')
+@given('"{actor_alias}" decided to "{element_name}"')
 def given_actor_decided_to_click_on_page_element(
         context, actor_alias, element_name):
     click_on_page_element(context, actor_alias, element_name)
