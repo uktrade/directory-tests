@@ -5,6 +5,8 @@ Feature: Contact us and Leave feedback
     Given basic authentication is done for "Invest - Home" page
     And basic authentication is done for "Export Readiness - Home" page
 
+  @skip
+  @beta-bar-is-disabled
   @CMS-163
   @beta
   @feedback
