@@ -93,7 +93,7 @@ Feature: New Enrolment flow
     When "Natalia" fills out and submits the form (and go 1 page back on error)
     Then "Natalia" should be on the "Profile - Enter your business details [step 2] (<selected business type>)" page
 
-    When "Natalia" fills out and submits the form
+    When "Natalia" fills out and submits the form (and go 1 page back on error)
     Then "Natalia" should be on the "Profile - Enter your details (<selected business type>)" page
     And "Natalia" should see following sections
       | sections                    |
