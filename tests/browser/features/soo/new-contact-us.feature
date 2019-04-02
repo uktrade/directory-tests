@@ -48,12 +48,12 @@ Feature: New Contact-us form
   @dev-only
   @soo-long-domestic
   @account-support
-  Scenario Outline: Domestic "Selling Online Overseas" Enquirers should be able to get the Enquiry page
+  Scenario Outline: Anonymous Enquirers should be redirected to SSO login page
     Given "Robert" found a marketplace in "<countries>" to sell "<products>"
 
     When "Robert" decides to "Apply now via DIT"
 
-    Then "Robert" should be on the "Export Readiness - Long Domestic (Your Business)" page
+    Then "Robert" should be on the "Single Sign-On - Sign in" page
 
     Examples: product type and country name
       | products      | countries                 |
