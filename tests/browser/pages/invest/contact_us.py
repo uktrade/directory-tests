@@ -46,7 +46,7 @@ SELECTORS = {
         "website url": Selector(By.ID, "id_company_website", type=ElementType.INPUT),
         "country": Selector(
             By.CSS_SELECTOR,
-            "select[name='country']",
+            "form[method=post] #js-country-select",
             type=ElementType.SELECT,
             is_visible=False,
         ),
