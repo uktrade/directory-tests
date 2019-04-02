@@ -153,9 +153,9 @@ Feature: New Enrolment flow
   Scenario: Companies House company enrolment creates a business profile
     Given "Natalia" has created a great.gov.uk account for a "LTD, PLC or Royal Charter"
 
-    When "Natalia" goes to the "Find A Buyer - Edit Company Profile" page
+    When "Natalia" goes to the "Profile - Edit Company Profile" page
 
-    Then "Natalia" should be on the "Find A Buyer - Edit Company Profile" page
+    Then "Natalia" should be on the "Profile - Edit Company Profile" page
 
 
   @wip
@@ -187,7 +187,7 @@ Feature: New Enrolment flow
 
     When "Natalia" goes to the "<specific>" page
 
-    Then "Natalia" should be on the "Find A Buyer - Edit Company Profile" page
+    Then "Natalia" should be on the "Profile - Edit Company Profile" page
 
     Examples:
       | specific                |
