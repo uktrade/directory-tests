@@ -22,7 +22,7 @@ Feature: Find a Supplier - Industry pages
 
     Examples: promoted industries
       | specific          |
-      | Aerospace         |
+      | Creative services |
 
     @full
     Examples: promoted industries
@@ -37,7 +37,6 @@ Feature: Find a Supplier - Industry pages
     Examples: Industries with no companies in them on DEV or STAGE
       | specific          |
       | Cyber security    |
-      | Creative services |
       | Life sciences     |
       | Technology        |
       | Legal services    |
@@ -56,6 +55,11 @@ Feature: Find a Supplier - Industry pages
       | Marine                             |
       | Professional & financial services  |
       | Space                              |
+
+  @wip
+    Examples: Industries which redirect to the new International site
+      | specific          |
+      | Aerospace         |
 
 
   @bug
@@ -197,7 +201,6 @@ Feature: Find a Supplier - Industry pages
 
     Examples: Industries
       | specific          | following  | pre-selected                           |
-      | Aerospace         | satellites | Aerospace                              |
       | Agritech          | plants     | Agriculture horticulture and fisheries |
       | Creative services | digital    | Creative and media                     |
       | Healthcare        | surgery    | Healthcare and medical                 |
@@ -232,6 +235,11 @@ Feature: Find a Supplier - Industry pages
       | Professional & financial services  | insight     |
       | Space                              | satellite   |
 
+    @wip
+    Examples: Industries which redirect to the new International site
+      | specific          | following  | pre-selected                           |
+      | Aerospace         | satellites | Aerospace                              |
+
 
   @ED-4264
   @search
@@ -245,7 +253,6 @@ Feature: Find a Supplier - Industry pages
 
     Examples: Promoted Industries
       | specific          | pre-selected                           |
-      | Aerospace         | Aerospace                              |
       | Agritech          | Agriculture horticulture and fisheries |
       | Healthcare        | Healthcare and medical                 |
 
@@ -274,6 +281,11 @@ Feature: Find a Supplier - Industry pages
       | Marine                             |
       | Professional & financial services  |
       | Space                              |
+
+    @wip
+    Examples: Industries which redirect to the new International site
+      | specific          | pre-selected                           |
+      | Aerospace         | Aerospace                              |
 
 
   @ED-4265
@@ -316,6 +328,11 @@ Feature: Find a Supplier - Industry pages
       | Marine                             | first    |
       | Professional & financial services  | second   |
       | Space                              | third    |
+
+    @wip
+    Examples: Industries which redirect to the new International site
+      | specific          | selected |
+      | Aerospace         | first    |
 
 
   @ED-4266

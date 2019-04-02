@@ -32,7 +32,6 @@ Feature: Find a Supplier - Industries page
 
     Examples: Industries
       | specific          |
-      | Aerospace         |
       | Agritech          |
       | Consumer & retail |
       | Creative services |
@@ -51,6 +50,11 @@ Feature: Find a Supplier - Industries page
       | specific          |
       | Life sciences     |
       | Legal services    |
+
+    @wip
+    Examples: Industries which redirect to the new International site
+      | specific          |
+      | Aerospace         |
 
 
   @ED-4255
