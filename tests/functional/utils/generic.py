@@ -17,7 +17,7 @@ from enum import Enum
 from pprint import pprint
 from random import choice
 from string import ascii_uppercase
-from typing import DefaultDict, List
+from typing import Callable, DefaultDict, List
 
 import lxml
 import requests
@@ -31,7 +31,7 @@ from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
 from pdfminer.pdfinterp import PDFPageInterpreter, PDFResourceManager
 from pdfminer.pdfpage import PDFPage
-from requests import Response
+from requests import Response, Session
 from retrying import retry
 from scrapy.selector import Selector
 from termcolor import cprint
@@ -923,6 +923,19 @@ def random_feedback_data(
     )
 
     return feedback
+
+
+def assert_that_captcha_is_in_dev_mode(go_to: Callable[..., Response], session: Session, *args):
+    if args:
+        logging.debug(f"Calling go_to with args: {args}")
+        response = go_to(session, *args)
+    else:
+        logging.debug("Calling go_to without args")
+        response = go_to(session)
+    content = response.content.decode("UTF-8")
+    dev_site_key = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+    if dev_site_key not in content:
+        raise NotImplementedError("Captcha is not in Dev Mode!!!")
 
 
 def random_message_data(
