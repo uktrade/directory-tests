@@ -2,8 +2,10 @@
 """Profile - Enter your business email address and set a password"""
 
 from requests import Response, Session
+
 from tests import get_absolute_url
 from tests.functional.utils.context_utils import Actor
+from tests.functional.utils.generic import assert_that_captcha_is_in_dev_mode
 from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("profile:enrol-user-account")
@@ -26,6 +28,7 @@ def should_be_here(response: Response):
 
 def submit(actor: Actor) -> Response:
     session = actor.session
+    assert_that_captcha_is_in_dev_mode(go_to, session)
     headers = {"Referer": URL}
     data = {
         "csrfmiddlewaretoken": actor.csrfmiddlewaretoken,

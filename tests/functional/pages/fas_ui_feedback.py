@@ -3,8 +3,10 @@
 import logging
 
 from requests import Response, Session
+
 from tests import get_absolute_url
 from tests.functional.utils.context_utils import Feedback
+from tests.functional.utils.generic import assert_that_captcha_is_in_dev_mode
 from tests.functional.utils.request import Method, check_response, make_request
 
 URL = get_absolute_url("ui-supplier:feedback")
@@ -67,6 +69,7 @@ def submit(
     :param feedback: a namedtuple with Feedback request details
     :param referer: (optional) Originating page. Defaults to "{FAS}/feedback"
     """
+    assert_that_captcha_is_in_dev_mode(go_to, session)
     if referer:
         headers = {"Referer": referer}
     else:

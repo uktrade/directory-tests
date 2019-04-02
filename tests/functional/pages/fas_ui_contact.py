@@ -1,12 +1,16 @@
 # -*- coding: utf-8 -*-
-"""FAB - Edit Company's Directory Profile page"""
+"""FAS - Contact Supplier page"""
 import logging
 from urllib.parse import urljoin
 
 from requests import Response, Session
+
 from tests import get_absolute_url
 from tests.functional.utils.context_utils import Company, Feedback, Message
-from tests.functional.utils.generic import escape_html
+from tests.functional.utils.generic import (
+    assert_that_captcha_is_in_dev_mode,
+    escape_html,
+)
 from tests.functional.utils.request import Method, check_response, make_request
 
 LANDING = get_absolute_url("ui-supplier:landing")
@@ -54,6 +58,7 @@ def should_be_here(response, *, name=None):
 def submit(
     session: Session, message: Message or Feedback, company_number: str
 ):
+    assert_that_captcha_is_in_dev_mode(go_to, session, company_number)
     full_url = URL.format(company_number=company_number)
     headers = {"Referer": URL.format(company_number=company_number)}
     data = {
