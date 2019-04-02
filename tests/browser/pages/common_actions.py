@@ -757,6 +757,19 @@ def visit_url(driver: WebDriver, url: str):
 
 
 def tick_captcha_checkbox(driver: WebDriver):
+    dev_site_key = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+    g_recaptcha = find_element(
+        driver,
+        Selector(By.CSS_SELECTOR, ".g-recaptcha"),
+        element_name="captcha",
+        wait_for_it=False
+    )
+    current_site_key = g_recaptcha.get_attribute("data-sitekey")
+    logging.debug(f"Current site key: {current_site_key}")
+    logging.debug(f"Site key for captcha in dev mode: {dev_site_key}")
+    is_in_dev_mode = (current_site_key == dev_site_key)
+    if not is_in_dev_mode:
+        raise NoSuchElementException("Captcha is not in Dev Mode!!!")
     im_not_a_robot = Selector(By.CSS_SELECTOR, ".recaptcha-checkbox-checkmark")
     iframe = driver.find_element_by_tag_name("iframe")
     scroll_to(driver, iframe)
