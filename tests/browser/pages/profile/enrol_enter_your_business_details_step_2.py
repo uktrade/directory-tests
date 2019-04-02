@@ -42,7 +42,7 @@ SELECTORS = {
         "company name": Selector(By.ID, "id_search-company_name"),
         "industry": Selector(
             By.ID,
-            "id_business-details-industry",
+            "id_business-details-sectors",
             is_visible=False,
             type=ElementType.SELECT,
         ),

@@ -63,7 +63,7 @@ SELECTORS = {
         ),
         "t & c": Selector(
             By.ID,
-            "id_user-account-terms_agreed",
+            "id_user-account-terms_agreed-label",
             type=ElementType.CHECKBOX,
             is_visible=False,
         ),

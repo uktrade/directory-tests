@@ -60,12 +60,9 @@ SELECTORS = {
         ),
         "background checks": Selector(
             By.ID,
-            "id_personal-details-confirmed_is_company_representative",
+            "id_personal-details-confirmed_is_company_representative-label",
             type=ElementType.CHECKBOX,
             is_visible=False,
-        ),
-        "list of background checks": Selector(
-            By.ID, "list-background-checks", type=ElementType.LINK
         ),
         "submit": Selector(
             By.CSS_SELECTOR, "form button.button", type=ElementType.BUTTON
