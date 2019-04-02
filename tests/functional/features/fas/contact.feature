@@ -16,5 +16,4 @@ Feature: Contact a Supplier
     When "Annette Geissinger" sends a message to company "Y"
 
     Then "Annette Geissinger" should be told that the message has been sent to company "Y"
-  # TODO mailgun doesn't work on Dev & Staging
-#    Then "Peter Alder" should receive an email message from "Annette Geissinger"
+    Then "Peter Alder" should receive an email message from "Annette Geissinger"
