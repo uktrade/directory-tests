@@ -1580,9 +1580,7 @@ def fas_send_message_to_supplier(
     fas_ui_profile.should_be_here(response, number=company.number)
 
     # Step 2 - go to the "email company" form
-    response = fas_ui_contact.go_to(
-        session, company_number=company.number, company_name=company.title
-    )
+    response = fas_ui_contact.go_to(session, company_number=company.number)
     context.response = response
     fas_ui_contact.should_be_here(response)
 

@@ -39,9 +39,7 @@ EXPECTED_STRINGS_MESSAGE_SENT = [
 ]
 
 
-def go_to(
-    session: Session, company_number: str, company_name: str
-) -> Response:
+def go_to(session: Session, company_number: str) -> Response:
     full_url = URL.format(company_number=company_number)
     return make_request(Method.GET, full_url, session=session)
 
