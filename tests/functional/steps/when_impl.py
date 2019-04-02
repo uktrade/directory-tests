@@ -1452,7 +1452,7 @@ def fas_feedback_request_should_be_submitted(
 
 def fas_get_company_profile_url(response: Response, name: str) -> str:
     content = response.content.decode("utf-8")
-    links_to_profiles_selector = "#ed-search-list-container a"
+    links_to_profiles_selector = "#ed-search-list-container .span9 a"
     href_selector = "a::attr(href)"
     links_to_profiles = (
         Selector(text=content).css(links_to_profiles_selector).extract()
