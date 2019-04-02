@@ -22,7 +22,7 @@ Feature: Find a Supplier - Industry pages
 
     Examples: promoted industries
       | specific          |
-      | Creative services |
+      | Energy            |
 
     @full
     Examples: promoted industries
@@ -36,6 +36,7 @@ Feature: Find a Supplier - Industry pages
     @wip
     Examples: Industries with no companies in them on DEV or STAGE
       | specific          |
+      | Creative services |
       | Cyber security    |
       | Life sciences     |
       | Technology        |
@@ -47,7 +48,6 @@ Feature: Find a Supplier - Industry pages
       | Automotive                         |
       | Business & Government Partnerships |
       | Education                          |
-      | Energy                             |
       | Engineering                        |
       | Infrastructure                     |
       | Innovation                         |
@@ -299,7 +299,6 @@ Feature: Find a Supplier - Industry pages
 
     Examples:
       | specific          | selected |
-      | Aerospace         | first    |
       | Agritech          | first    |
       | Consumer & retail | first    |
 
