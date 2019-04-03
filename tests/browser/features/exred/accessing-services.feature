@@ -7,16 +7,14 @@ Feature: Accessing Services
   @ED-2659
   @home-page
   @accessing-services
-  Scenario Outline: Any Exporter visiting the home page should be able to see links to selected Services in/on "<link_location>"
-    Given "Robert" visits the "Export Readiness - Home" page
+  Scenario: Any Exporter visiting the home page should be able to see links to selected Services in/on "<link_location>"
+    When "Robert" goes to the "Export Readiness - Services" page
 
-    Then "Robert" should see links to following "Services" "<services>" in "Export Readiness - <link_location>"
-
-    Examples:
-      | services                                                                         | link_location |
-      | Find a buyer, Selling online overseas, Export opportunities, Get Finance, Events | header        |
-      | Find a buyer, Selling online overseas, Export opportunities                      | home          |
-      | Find a buyer, Selling online overseas, Export opportunities, Get Finance, Events | footer        |
+    Then "Robert" should see following sections
+      | sections        |
+      | Breadcrumbs     |
+      | Services        |
+      | Error reporting |
 
 
   @bug
