@@ -26,7 +26,6 @@ Feature: Accessing Services
   @finance
   @accessing-services
   @<service>
-  @interim-pages
   Scenario: Any Exporter should see "Get finance" service page not as a Advice Article
     Given "Robert" visits the "Export Readiness - Services" page
 
@@ -40,47 +39,6 @@ Feature: Accessing Services
       | Time to complete remaining chapters |
       | Tasks completed counter             |
       | Tasks Total number                  |
-
-
-  @ED-2660
-  @home-page
-  @accessing-services
-  @interim-pages
-  @<service>
-  @external-service
-  Scenario Outline: Any Exporter should be presented with interim pages leading to "<service>" Service page when accessed via "<link_location>"
-    Given "Robert" visits the "Export Readiness - Home" page
-
-    When "Robert" goes to "<service>" using "Services" links in "Export Readiness - <link_location>"
-
-    Then "Robert" should be on the "Export Readiness - Interim <service>" page
-
-    Examples:
-      | service              | link_location |
-      | Export Opportunities | header        |
-      | Export Opportunities | home          |
-      | Export Opportunities | footer        |
-
-
-  @ED-2661
-  @home-page
-  @accessing-services
-  @interim-pages
-  @<service>
-  @external-service
-  Scenario Outline: Any Exporter should be able to get to the "<service>" Service page via interim page which was accessed via "<link_location>"
-    Given "Robert" visits the "Export Readiness - Home" page
-
-    When "Robert" goes to "<service>" using "Services" links in "Export Readiness - <link_location>"
-    And "Robert" opens the link to "<service>" from interim page
-
-    Then "Robert" should be on the "<service> - Home" page
-
-    Examples:
-      | service              | link_location |
-      | Export Opportunities | header        |
-      | Export Opportunities | home          |
-      | Export Opportunities | footer        |
 
 
   @bug

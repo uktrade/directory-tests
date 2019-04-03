@@ -19,7 +19,7 @@ Feature: Header-Footer
       | Single Sign-On - Sign in                        |
       | Single Sign-On - Profile about                  |
       | Export Readiness - Get finance                  |
-      | Export Readiness - Interim export opportunities |
+      | Export Opportunities - Home                     |
       | Find a Buyer - Home                             |
 
     # these services use different logo
@@ -67,7 +67,7 @@ Feature: Header-Footer
       | Single Sign-On - Registration                   |
       | Single Sign-On - Sign in                        |
       | Export Readiness - Get finance                  |
-      | Export Readiness - Interim export opportunities |
+      | Export Opportunities - Home                     |
       | Find a Buyer - Home                             |
       | Export Opportunities - Home                     |
     @bug
@@ -95,7 +95,7 @@ Feature: Header-Footer
     Examples: Export Readiness pages
       | specific                                        |
       | Export Readiness - Home                         |
-      | Export Readiness - Interim export opportunities |
+      | Export Opportunities - Home                     |
 
     Examples: FABS pages
       | specific               |
