@@ -37,7 +37,7 @@ PAGE_TITLE = "Welcome to great.gov.uk"
 PROMO_VIDEO = Selector(
     By.CSS_SELECTOR, "body > div.video-container.Modal-Container.open > div > video"
 )
-CLOSE_VIDEO = Selector(By.ID, "hero-campaign-section-videoplayer-close")
+CLOSE_VIDEO = Selector(By.CSS_SELECTOR, "body > div.video-container.Modal-Container.open > button")
 VIDEO_MODAL_WINDOW = Selector(
     By.CSS_SELECTOR, "body > div.video-container.Modal-Container.open"
 )
@@ -178,6 +178,7 @@ SELECTORS = {
         "become an export advocate": Selector(
             By.CSS_SELECTOR, "#hero-campaign-section a", type=ElementType.LINK
         ),
+        "watch video": Selector(By.ID, "hero-campaign-section-watch-video-button"),
     },
     "eu exit enquiries banner": {
         "itself": Selector(By.CSS_SELECTOR, ".eu-exit-banner"),

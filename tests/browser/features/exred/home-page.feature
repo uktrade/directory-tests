@@ -22,7 +22,6 @@ Feature: Home Page
 
 
   @ED-3014
-  @decommissioned
   @video
   Scenario: Any Exporter should be able to play promotional video on the Home page
     Given "Robert" visits the "Export Readiness - Home" page
@@ -33,7 +32,6 @@ Feature: Home Page
 
 
   @ED-3014
-  @decommissioned
   @video
   Scenario: Any Exporter should be able to close the window with promotional video on the Home page
     Given "Robert" visits the "Export Readiness - Home" page
