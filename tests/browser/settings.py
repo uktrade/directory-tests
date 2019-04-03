@@ -42,10 +42,11 @@ HPO_PDF_URLS = [
     "https://directory-cms-public.s3.amazonaws.com/documents/A_HPO_in_Lightweight_Structures.pdf",
     "https://directory-cms-public.s3.amazonaws.com/documents/A_HPO_in_Rail_Infrastructure.pdf",
 ]
-MAILGUN_API_USER = os.getenv("MAILGUN_API_USER", "api")
-MAILGUN_INVEST_DOMAIN = os.getenv("MAILGUN_INVEST_DOMAIN")
-MAILGUN_INVEST_EVENTS_URL = "https://api.mailgun.net/v3/%s/events" % MAILGUN_INVEST_DOMAIN
-MAILGUN_INVEST_SECRET_API_KEY = os.getenv("MAILGUN_INVEST_SECRET_API_KEY")
+# Mailgun details required to get verification emails
+MAILGUN_DOMAIN = os.getenv("MAILGUN_DOMAIN")
+MAILGUN_API_KEY = os.getenv("MAILGUN_API_KEY")
+MAILGUN_EVENTS_URL = f"https://api.mailgun.net/v3/{MAILGUN_DOMAIN}/events"
+
 ZENDESK_EMAIL = os.getenv("ZENDESK_EMAIL")
 ZENDESK_TOKEN = os.getenv("ZENDESK_TOKEN")
 ZENDESK_SUBDOMAIN = os.getenv("ZENDESK_SUBDOMAIN")

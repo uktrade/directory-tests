@@ -59,9 +59,8 @@ from tests.settings import (
     FAB_TRANSFER_OWNERSHIP_SUBJECT,
     JPEGs,
     JPGs,
-    MAILGUN_DIRECTORY_API_USER,
-    MAILGUN_DIRECTORY_EVENTS_URL,
-    MAILGUN_DIRECTORY_SECRET_API_KEY,
+    MAILGUN_EVENTS_URL,
+    MAILGUN_API_KEY,
     PNGs,
     RARE_WORDS,
     SECTORS,
@@ -206,9 +205,9 @@ class MailGunService(Enum):
 
     ServiceDetails = namedtuple("ServiceDetails", ["url", "user", "password"])
     DIRECTORY = ServiceDetails(
-        url=MAILGUN_DIRECTORY_EVENTS_URL,
-        user=MAILGUN_DIRECTORY_API_USER,
-        password=MAILGUN_DIRECTORY_SECRET_API_KEY,
+        url=MAILGUN_EVENTS_URL,
+        user="api",
+        password=MAILGUN_API_KEY,
     )
 
     def __str__(self):
@@ -1593,7 +1592,7 @@ def mailgun_get_directory_message(context: Context, message_url: str) -> dict:
         Method.GET,
         message_url,
         headers=headers,
-        auth=("api", MAILGUN_DIRECTORY_SECRET_API_KEY),
+        auth=("api", MAILGUN_API_KEY),
         use_basic_auth=False,
     )
     context.response = response

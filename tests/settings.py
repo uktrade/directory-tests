@@ -56,10 +56,9 @@ LOCUST_TIMEOUT = int(os.getenv("LOCUST_TIMEOUT", 150))
 SSO_USER_ID = int(os.getenv("SSO_USER_ID", 0))
 
 # Mailgun details required to get verification emails
-MAILGUN_DIRECTORY_DOMAIN = os.environ["MAILGUN_DIRECTORY_DOMAIN"]
-MAILGUN_DIRECTORY_EVENTS_URL = "https://api.mailgun.net/v3/%s/events" % MAILGUN_DIRECTORY_DOMAIN
-MAILGUN_DIRECTORY_API_USER = "api"
-MAILGUN_DIRECTORY_SECRET_API_KEY = os.environ["MAILGUN_DIRECTORY_SECRET_API_KEY"]
+MAILGUN_DOMAIN = os.environ["MAILGUN_DOMAIN"]
+MAILGUN_API_KEY = os.environ["MAILGUN_API_KEY"]
+MAILGUN_EVENTS_URL = "https://api.mailgun.net/v3/%s/events" % MAILGUN_DOMAIN
 
 # STANNP API DETAILS
 STANNP_API_KEY = os.environ["STANNP_API_KEY"]
