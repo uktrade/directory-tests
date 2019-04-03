@@ -148,15 +148,23 @@ def actor_applied_via_dit(
     )
 
 
-###############################################################################
-# Currently unused but useful steps
-###############################################################################
-
-
+@given('"{actor_alias}" has a verified standalone SSO/great.gov.uk account')
 @given('"{actor_alias}" is a registered and verified user')
 def given_actor_is_registered_and_verified(context, actor_alias):
     registration_create_and_verify_account(
         context, actor_alias, fake_verification=True)
+
+
+@given('"{actor_alias}" has created a great.gov.uk account for a "{business_type}"')
+def given_actor_created_great_account(
+        context: Context, actor_alias: str, business_type: str
+):
+    generic_create_great_account(context, actor_alias, business_type)
+
+
+###############################################################################
+# Currently unused but useful steps
+###############################################################################
 
 
 @given('"{actor_alias}" is signed in')
@@ -179,10 +187,3 @@ def given_actor_opens_any_news_article(context, actor_alias):
 def given_actor_opened_random_news_article(
         context: Context, actor_alias: str, article_type: str):
     generic_open_random_news_article(context, actor_alias, article_type)
-
-
-@given('"{actor_alias}" has created a great.gov.uk account for a "{business_type}"')
-def given_actor_created_great_account(
-        context: Context, actor_alias: str, business_type: str
-):
-    generic_create_great_account(context, actor_alias, business_type)
