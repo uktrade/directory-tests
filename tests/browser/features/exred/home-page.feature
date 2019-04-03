@@ -43,6 +43,7 @@ Feature: Home Page
 
 
   @ED-3083
+  @decommissioned
   @language-selector
   Scenario: Visitor should be able to open and close the language selector on "Export Readiness - Home" page
     Given "Robert" visits the "Export Readiness - Home" page
@@ -55,6 +56,7 @@ Feature: Home Page
 
 
   @ED-3083
+  @decommissioned
   @language-selector
   @accessibility
   Scenario: Keyboard users should be able to open and close the language selector using just the keyboard on "Export Readiness - Home" page
@@ -68,6 +70,7 @@ Feature: Home Page
 
 
   @ED-3083
+  @decommissioned
   @language-selector
   @accessibility
   Scenario: Language selector should trap the keyboard in order to help Keyboard users to navigat on "Export Readiness - Home" pagee
@@ -80,6 +83,7 @@ Feature: Home Page
 
 
   @ED-3083
+  @decommissioned
   @language-selector
   Scenario Outline: Visitors should be able to view go to International page after changing language to "<preferred_language>" on the Domestic Home Page
     Given "Robert" visits the "Export Readiness - Home" page
