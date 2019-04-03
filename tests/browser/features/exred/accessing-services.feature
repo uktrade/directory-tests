@@ -7,7 +7,7 @@ Feature: Accessing Services
   @ED-2659
   @home-page
   @accessing-services
-  Scenario: Any Exporter visiting the home page should be able to see links to selected Services in/on "<link_location>"
+  Scenario: Any Exporter visiting the Services page should be able to see links to all relevant Services
     When "Robert" goes to the "Export Readiness - Services" page
 
     Then "Robert" should see following sections
