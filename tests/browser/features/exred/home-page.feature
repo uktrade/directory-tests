@@ -13,7 +13,7 @@ Feature: Home Page
         | Beta bar                 |
         | Hero                     |
         | EU Exit enquiries banner |
-#        | News                     |
+        | Export Community         |
         | Advice                   |
         | Services                 |
         | Case Studies             |

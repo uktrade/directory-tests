@@ -188,11 +188,11 @@ SELECTORS = {
             By.CSS_SELECTOR, ".eu-exit-banner a:nth-child(2)", type=ElementType.LINK
         ),
     },
-    "news": {
-        "itself": Selector(By.ID, "eu-exit-news-section"),
-        "description": Selector(By.CSS_SELECTOR, "#eu-exit-news-section h2 ~ p"),
-        "articles": ARTICLES,
-        "see all news": Selector(By.ID, "see-all-eu-exit-news"),
+    "export community": {
+        "itself": Selector(By.ID, "community"),
+        "heading": Selector(By.ID, "export-community-title"),
+        "description": Selector(By.ID, "export-community-description"),
+        "become an export advocate": Selector(By.ID, "export-community-link"),
     },
     "advice": {
         "itself": Selector(By.ID, "resource-advice"),
