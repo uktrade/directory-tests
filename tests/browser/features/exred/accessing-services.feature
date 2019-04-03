@@ -25,20 +25,18 @@ Feature: Accessing Services
   @accessing-services
   @<service>
   @external-service
-  Scenario Outline: Any Exporter should be able to get to the "<service>" Service page using "<link_location>"
-    Given "Robert" visits the "Export Readiness - Home" page
+  Scenario Outline: Any Exporter should be able to get to the "<specific>" Service page from "Export Readiness - Services" page
+    Given "Robert" visits the "Export Readiness - Services" page
 
-    When "Robert" goes to "<service>" using "Services" links in "Export Readiness - <link_location>"
+    When "Robert" decides to find out more about "<service>"
 
-    Then "Robert" should be on the "<service> - Home" page
+    Then "Robert" should be on the "<specific>" page
 
     Examples:
-      | service                 | link_location |
-      | Find a Buyer            | header        |
-      | Find a Buyer            | home          |
-      | Find a Buyer            | footer        |
-      | Selling online overseas | header        |
-      | Selling online overseas | home          |
-      | Selling online overseas | footer        |
-      | Events                  | header        |
-      | Events                  | footer        |
+      | service                   | specific                       |
+      | Create a business profile | Find a Buyer - Home            |
+      | Find online marketplaces  | Selling online overseas - Home |
+      | Find export opportunities | Export Opportunities - Home    |
+      | UK Export Finance         | Export Readiness - Get Finance |
+      | Find events and visits    | Events - Home                  |
+      | Get an EORI number        | EORI - Home                    |
