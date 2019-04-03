@@ -12,7 +12,6 @@ from pages import ElementType
 from pages.common_actions import (
     Selector,
     check_for_sections,
-    check_if_element_is_not_visible,
     check_url,
     find_and_click_on_page_element,
     find_elements,
@@ -80,29 +79,6 @@ SELECTORS = {
     },
 }
 
-UNEXPECTED_ELEMENTS = {
-    "share widget": {"itself": Selector(By.CSS_SELECTOR, "ul.sharing-links")},
-    "article counters and indicators": {
-        "itself": Selector(By.CSS_SELECTOR, "#top > div.scope-indicator")
-    },
-    "tasks completed counter": {
-        "itself": Selector(By.CSS_SELECTOR, ".TASKS_ARE_NOT_IMPLEMENTED_YES")
-    },
-    "tasks total number": {
-        "itself": Selector(By.CSS_SELECTOR, ".TASKS_ARE_NOT_IMPLEMENTED_YES")
-    },
-    "total number of articles": {
-        "itself": Selector(By.CSS_SELECTOR, "dd.position > span.to")
-    },
-    "articles read counter": {
-        "itself": Selector(By.CSS_SELECTOR, "dd.position > span.from")
-    },
-    "time to complete remaining chapters": {
-        "itself": Selector(By.CSS_SELECTOR, "dd.time span.value")
-    },
-    "share menu": {"itself": Selector(By.CSS_SELECTOR, "ul.sharing-links")},
-}
-
 
 def visit(driver: WebDriver):
     go_to_url(driver, URL, NAME)
@@ -114,23 +90,8 @@ def should_be_here(driver: WebDriver):
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
-def check_elements_are_not_visible(driver: WebDriver, elements: list):
-    take_screenshot(driver, NAME + " should not see some elements")
-    for element_name in elements:
-        selector = UNEXPECTED_ELEMENTS[element_name.lower()]
-        check_if_element_is_not_visible(
-            driver, selector, element_name=element_name, wait_for_it=False
-        )
-
-
 def should_see_sections(driver: WebDriver, names: List[str]):
     check_for_sections(driver, all_sections=SELECTORS, sought_sections=names)
-
-
-def should_not_see_section(driver: WebDriver, name: str):
-    section = UNEXPECTED_ELEMENTS[name.lower()]
-    for key, selector in section.items():
-        check_if_element_is_not_visible(driver, selector, element_name=key)
 
 
 def play_video(driver: WebDriver, *, play_time: int = 5):

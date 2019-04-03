@@ -18,30 +18,6 @@ Feature: Accessing Services
 
 
   @bug
-  @ED-2647
-  @fixed
-  @ED-2662
-  @ED-2667
-  @home-page
-  @finance
-  @accessing-services
-  @<service>
-  Scenario: Any Exporter should see "Get finance" service page not as a Advice Article
-    Given "Robert" visits the "Export Readiness - Services" page
-
-    When "Robert" decides to find out more about "UK Export Finance"
-
-    Then "Robert" should be on the "Export Readiness - Get Finance" page
-    And  "Robert" should not see following sections
-      | sections                            |
-      | Articles Read counter               |
-      | Total number of Articles            |
-      | Time to complete remaining chapters |
-      | Tasks completed counter             |
-      | Tasks Total number                  |
-
-
-  @bug
   @ED-2702
   @fixed
   @ED-2661
