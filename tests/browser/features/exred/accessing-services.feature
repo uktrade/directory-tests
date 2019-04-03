@@ -27,12 +27,12 @@ Feature: Accessing Services
   @accessing-services
   @<service>
   @interim-pages
-  Scenario Outline: Any Exporter should see "Get finance" service page not as a Advice Article
-    Given "Robert" visits the "Export Readiness - Home" page
+  Scenario: Any Exporter should see "Get finance" service page not as a Advice Article
+    Given "Robert" visits the "Export Readiness - Services" page
 
-    When "Robert" goes to "<service>" using "Services" links in "Export Readiness - <link_location>"
+    When "Robert" decides to find out more about "UK Export Finance"
 
-    Then "Robert" should be on the "Export Readiness - <service>" page
+    Then "Robert" should be on the "Export Readiness - Get Finance" page
     And  "Robert" should not see following sections
       | sections                            |
       | Articles Read counter               |
@@ -40,11 +40,6 @@ Feature: Accessing Services
       | Time to complete remaining chapters |
       | Tasks completed counter             |
       | Tasks Total number                  |
-
-    Examples:
-      | service     | link_location |
-      | Get Finance | header        |
-      | Get Finance | footer        |
 
 
   @ED-2660

@@ -150,6 +150,7 @@ def when_actor_decides_to_click_on_page_element(
     click_on_page_element(context, actor_alias, element_name, page_name=page_name)
 
 
+@when('"{actor_alias}" decides to find out more about "{element_name}"')
 @when('"{actor_alias}" decides to use "{element_name}" button')
 @when('"{actor_alias}" decides to use "{element_name}" link')
 @when('"{actor_alias}" decides to open "{element_name}"')
