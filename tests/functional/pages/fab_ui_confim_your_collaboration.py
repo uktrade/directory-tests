@@ -3,9 +3,12 @@
 import logging
 
 from requests import Response, Session
+
+from tests import get_absolute_url
 from tests.functional.utils.generic import assertion_msg
 from tests.functional.utils.request import Method, check_response, make_request
 
+URL = get_absolute_url("ui-buyer:account-accept-invitation")
 EXPECTED_STRINGS = [
     "Collaborate",
     "Do you want to be added as user to the profile for",
@@ -40,7 +43,9 @@ def confirm(
     # the form_action_value
     start = invitation_link.index("=") + 1
     invite_key = invitation_link[start:]
-    headers = {"Referer": invitation_link}
+
+    url = URL.format(invite_key=invite_key)
+    headers = {"Referer": url}
     data = {
         "csrfmiddlewaretoken": csrf_middleware_token,
         "invite_key": invite_key,
@@ -48,7 +53,7 @@ def confirm(
 
     return make_request(
         Method.POST,
-        invitation_link,
+        url,
         session=session,
         headers=headers,
         data=data,

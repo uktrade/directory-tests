@@ -72,6 +72,7 @@ urls = {
     "ui-buyer:account-transfer-ownership": "account/transfer/",
     "ui-buyer:account-confirm-password": "account/transfer/",
     "ui-buyer:account-confirm-ownership-transfer": "account/transfer/accept/?invite_key=",
+    "ui-buyer:account-accept-invitation": "account/collaborate/accept/?invite_key={invite_key}",
 
     # UI-SUPPLIER
     "ui-supplier:landing": "",
