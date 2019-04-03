@@ -10,9 +10,9 @@ from pages import ElementType
 from pages.common_actions import (
     Selector,
     check_for_sections,
-    take_screenshot,
     check_url,
-    go_to_url
+    go_to_url,
+    take_screenshot,
 )
 from settings import EXRED_UI_URL
 
@@ -34,10 +34,18 @@ SELECTORS = {
         "heading": Selector(By.ID, "services-section-title"),
         "description": Selector(By.ID, "services-section-description"),
         "service cards": Selector(By.CSS_SELECTOR, "#services .card"),
-        "create a business profile": Selector(By.ID, "find-a-buyer-link", type=ElementType.LINK),
-        "find online marketplaces": Selector(By.ID, "selling-online-overseas-link", type=ElementType.LINK),
-        "find export opportunities": Selector(By.ID, "export-opportunities-link", type=ElementType.LINK),
-        "uk export finance": Selector(By.ID, "uk-export-finance-link", type=ElementType.LINK),
+        "create a business profile": Selector(
+            By.ID, "find-a-buyer-link", type=ElementType.LINK
+        ),
+        "find online marketplaces": Selector(
+            By.ID, "selling-online-overseas-link", type=ElementType.LINK
+        ),
+        "find export opportunities": Selector(
+            By.ID, "export-opportunities-link", type=ElementType.LINK
+        ),
+        "uk export finance": Selector(
+            By.ID, "uk-export-finance-link", type=ElementType.LINK
+        ),
         "find events and visits": Selector(By.ID, "events-link", type=ElementType.LINK),
         "get an eori number": Selector(By.ID, "govuk-eori-link", type=ElementType.LINK),
     },
