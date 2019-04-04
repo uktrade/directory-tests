@@ -25,7 +25,7 @@ URL = urljoin(EXRED_UI_URL, "contact/office-finder/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 SEARCH_BUTTON = Selector(
-    By.CSS_SELECTOR, "form button[type=submit]", type=ElementType.BUTTON
+    By.CSS_SELECTOR, "button.button", type=ElementType.BUTTON
 )
 SELECTORS = {
     "form": {

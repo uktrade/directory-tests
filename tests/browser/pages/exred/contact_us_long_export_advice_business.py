@@ -32,7 +32,7 @@ URL = urljoin(EXRED_UI_URL, "contact/export-advice/business/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 SUBMIT_BUTTON = Selector(
-    By.CSS_SELECTOR, "form button[type=submit]", type=ElementType.BUTTON
+    By.CSS_SELECTOR, "div.exred-triage-form button", type=ElementType.BUTTON
 )
 SELECTORS = {
     "form": {
@@ -56,11 +56,6 @@ SELECTORS = {
     }
 }
 
-CH_NUMBER_SELECTORS = {
-    "ch number": Selector(
-        By.ID, "id_business-companies_house_number", type=ElementType.INPUT
-    )
-}
 OTHER_SELECTORS = {
     "other": Selector(By.ID, "id_business-company_type_other", type=ElementType.SELECT)
 }
@@ -88,8 +83,6 @@ def generate_form_details(actor: Actor) -> dict:
         "terms and conditions": True,
     }
     if is_company:
-        result.update({"ch number": "DIT"})
-        SELECTORS["form"].update(CH_NUMBER_SELECTORS)
         # In order to avoid situation when previous scenario example modified
         # SELECTORS we have to remove OTHER_SELECTORS that were then added
         SELECTORS["form"] = dict(
@@ -97,9 +90,6 @@ def generate_form_details(actor: Actor) -> dict:
         )
     else:
         SELECTORS["form"].update(OTHER_SELECTORS)
-        SELECTORS["form"] = dict(
-            set(SELECTORS["form"].items()) - set(CH_NUMBER_SELECTORS.items())
-        )
 
     logging.debug(f"Generated form details: {result}")
     return result

@@ -60,7 +60,6 @@ Feature: New Contact-us form
       | Shoes,Clothes | United States,China,India |
 
 
-  @wip
   @XOT-740
   @exopps
   @captcha
@@ -69,6 +68,7 @@ Feature: New Contact-us form
   @account-support
   Scenario Outline: Logged in Domestic "Selling Online Overseas" Enquirers should be able to get the Enquiry page
     Given "Robert" has a verified standalone SSO/great.gov.uk account
+    And "Robert" is signed in
     And "Robert" found a marketplace in "<countries>" to sell "<products>"
 
     When "Robert" decides to "Apply now via DIT"
@@ -107,8 +107,10 @@ Feature: New Contact-us form
   @dev-only
   @soo-long-domestic
   @account-support
-  Scenario Outline: Domestic "Selling Online Overseas" Enquirers should receive a enquiry confirmation email after submitting the contact us form
-    Given "Robert" applied via DIT to contact randomly selected marketplace in "<countries>" to sell "<products>"
+  Scenario Outline: Logged in Domestic "Selling Online Overseas" Enquirers should receive a enquiry confirmation email after submitting the contact us form
+    Given "Robert" has a verified standalone SSO/great.gov.uk account
+    And "Robert" is signed in
+    And "Robert" applied via DIT to contact randomly selected marketplace in "<countries>" to sell "<products>"
 
     When "Robert" submits the SOO contact-us form
       | field                         | value   |

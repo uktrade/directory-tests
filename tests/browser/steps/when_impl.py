@@ -251,8 +251,7 @@ def registration_submit_form_and_verify_account(
 def registration_create_and_verify_account(
     context: Context, actor_alias: str, *, fake_verification: bool = True
 ):
-    visit_page(context, actor_alias, "export readiness - home")
-    registration_go_to(context, actor_alias)
+    visit_page(context, actor_alias, "Single Sign-On - Registration")
     registration_submit_form_and_verify_account(
         context, actor_alias, fake_verification=fake_verification
     )
@@ -270,17 +269,12 @@ def clear_the_cookies(context: Context, actor_alias: str):
         logging.error("Failed to clear cookies for %s", actor_alias)
 
 
-def sign_in_go_to(context: Context, actor_alias: str, location: str):
-    logging.debug("%s decided to go to sign in page via %s link", actor_alias, location)
-    exred.header.go_to_sign_in(context.driver)
-    sso.sign_in.should_be_here(context.driver)
-
-
 def sign_in(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     email = actor.email
     password = actor.password
-    sign_in_go_to(context, actor_alias)
+    sso.sign_in.visit(context.driver)
+    sso.sign_in.should_be_here(context.driver)
     sso.sign_in.fill_out(context.driver, email, password)
     sso.sign_in.submit(context.driver)
 

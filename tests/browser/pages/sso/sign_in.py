@@ -24,7 +24,7 @@ URL = urljoin(DIRECTORY_UI_SSO_URL, "accounts/login/")
 PAGE_TITLE = "Sign in - great.gov.uk"
 
 EMAIL_INPUT = Selector(By.ID, "id_login")
-PASSWORD_INPUT = Selector(By.ID, "id_login")
+PASSWORD_INPUT = Selector(By.ID, "id_password")
 SIGN_IN_BUTTON = Selector(By.CSS_SELECTOR, "form button")
 REGISTER_BUTTON = Selector(
     By.CSS_SELECTOR,
