@@ -8,10 +8,25 @@ Feature: Advice articles
   @home-page
   @articles
   @<specific>
-  Scenario Outline: Any Exporter should be able to get to a list of Advice articles from the home page using link in "<specific>" section
-    Given "Robert" visits the "Export Readiness - Home" page
+  Scenario: Any Exporter should see all expected sections on "Export Readiness - Advice landing" page
+    When "Robert" goes to the "Export Readiness - Advice landing" page
 
-    When "Robert" opens any "link" available in the "<specific>" section
+    Then  "Robert" should see following sections
+      | sections                 |
+      | Hero                     |
+      | Breadcrumbs              |
+      | Advice & Guidance tiles  |
+      | Error reporting          |
+
+
+  @CMS-686
+  @home-page
+  @articles
+  @<specific>
+  Scenario: Any Exporter should be able to get to a list of Advice articles from the home page using link in "<specific>" section
+    Given "Robert" visits the "Export Readiness - Advice landing" page
+
+    When "Robert" opens any article on the list
 
     Then "Robert" should be on the "Export Readiness - Advice - article list" page
     And  "Robert" should see following sections
@@ -22,20 +37,14 @@ Feature: Advice articles
       | List of articles         |
       | Error reporting          |
 
-    Examples: sections
-      | specific            |
-      | Advice              |
-      | Advice header menu  |
-      | Advice footer links |
-
 
   @CMS-686
   @home-page
   @articles
   Scenario: Advice article counter on the Home page should match the one on the Advice page
-    Given "Robert" visits the "Export Readiness - Home" page
+    Given "Robert" visits the "Export Readiness - Advice landing" page
 
-    When "Robert" opens any "link" available in the "Advice" section
+    When "Robert" opens any article on the list
 
     Then "Robert" should be on the "Export Readiness - Advice - Article list" page
     And "Robert" should see that article counter matches expected number
@@ -67,30 +76,11 @@ Feature: Advice articles
       | advice                                      |
       | Create an export plan                       |
       | Define route to market                      |
-      | Get export finance and funding              |
+      | Get export finance                          |
       | Manage payment for export orders            |
       | Prepare to do business in a foreign country |
       | Manage legal and ethical compliance         |
       | Prepare for export procedures and logistics |
-
-
-  @CMS-686
-  @home-page
-  @articles
-  @<specific>
-  Scenario: Any Exporter should be able to get to a list of Advice articles from the "Advice landing" page
-    Given "Robert" visits the "Export Readiness - Advice - landing" page
-
-    When "Robert" opens any "link" available in the "List of Articles" section
-
-    Then "Robert" should be on the "Export Readiness - Advice - Article list" page
-    And  "Robert" should see following sections
-      | sections                 |
-      | Hero                     |
-      | Total number of Articles |
-      | Breadcrumbs              |
-      | List of articles         |
-      | Error reporting          |
 
 
   @CMS-686
@@ -101,30 +91,6 @@ Feature: Advice articles
     When "Robert" decides to report a problem with the page
 
     Then "Robert" should be on the "Export Readiness - Feedback - contact us" page
-
-
-  @CMS-686
-  @header
-  @footer
-  Scenario Outline: Any Exporter visiting the home page should be able to see links to all Advice categories in "Export Readiness - <link_location>"
-    Given "Robert" visits the "Export Readiness - Home" page
-
-    Then "Robert" should see links to following "Advice" categories in "Export Readiness - <link_location>"
-      | categories                                  |
-      | Create an export plan                       |
-      | Find an export market                       |
-      | Define route to market                      |
-      | Get export finance and funding              |
-      | Manage payment for export orders            |
-      | Prepare to do business in a foreign country |
-      | Manage legal and ethical compliance         |
-      | Prepare for export procedures and logistics |
-
-    Examples:
-      | link_location |
-      | header        |
-      | home          |
-      | footer        |
 
 
   @CMS-686
@@ -139,5 +105,36 @@ Feature: Advice articles
     Examples:
       | breadcrumb   | target                |
       | great.gov.uk | Home                  |
-      | Advice       | Advice - Landing      |
+      | Advice       | Advice Landing        |
       | Article list | Advice - article list |
+
+
+  @CMS-686
+  @header
+  @footer
+  Scenario: Any Exporter visiting the home page should be able to see links to all Advice categories in "Export Readiness - <link_location>"
+    Given "Robert" visits the "Export Readiness - Home" page
+
+    Then "Robert" should see links to following "Advice" categories in "Export Readiness - home"
+      | categories                                  |
+      | Create an export plan                       |
+      | Find an export market                       |
+      | Define route to market                      |
+      | Manage payment for export orders            |
+      | Prepare to do business in a foreign country |
+      | Manage legal and ethical compliance         |
+      | Prepare for export procedures and logistics |
+      | Get export finance                          |
+
+
+  @CMS-686
+  @header
+  @footer
+  Scenario: Any Exporter should be able to access featured Advice Articles from the "Export Readiness - Home" page
+    Given "Robert" visits the "Export Readiness - Home" page
+
+    When "Robert" opens any article on the list
+
+    Then "Robert" should be on the "Export Readiness - Advice - article list" page
+    And "Robert" should see that article counter matches expected number
+    And "Robert" should see that article counter matches the number of articles on the page
