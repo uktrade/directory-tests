@@ -16,6 +16,8 @@ from collections.__init__ import namedtuple
 from contextlib import contextmanager
 from datetime import datetime
 from os import path
+from urllib.parse import urlparse
+
 from selenium.webdriver import ActionChains
 from types import ModuleType
 from typing import Dict, List
@@ -520,8 +522,13 @@ def clear_driver_cookies(driver: WebDriver):
 
 def check_hash_of_remote_file(expected_hash: str, file_url: str):
     """Check if the md5 hash of the file is the same as expected."""
+    from settings import BASICAUTH_PASS, BASICAUTH_USER
     logging.debug("Fetching file: %s", file_url)
-    response = requests.get(file_url)
+    parsed = urlparse(file_url)
+    with_creds = f"{parsed.scheme}://{BASICAUTH_USER}:{BASICAUTH_PASS}@{parsed.netloc}{parsed.path}"
+    response = requests.get(with_creds)
+    logging.debug(f"Got {response.status_code} from {file_url}")
+    assert response.status_code == 200
     file_hash = hashlib.md5(response.content).hexdigest()
     with assertion_msg(
         "Expected hash of file downloaded from %s to be %s but got %s",
