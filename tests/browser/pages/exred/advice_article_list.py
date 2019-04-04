@@ -32,7 +32,7 @@ NAMES = [
     "Create an export plan",
     "Find an export market",
     "Define route to market",
-    "Get export finance and funding",
+    "Get export finance",
     "Manage payment for export orders",
     "Prepare to do business in a foreign country",
     "Manage legal and ethical compliance",
@@ -42,7 +42,7 @@ URLs = {
     "create an export plan": urljoin(URL, "create-an-export-plan/"),
     "find an export market": urljoin(URL, "find-an-export-market/"),
     "define route to market": urljoin(URL, "define-route-to-market/"),
-    "get export finance and funding": urljoin(URL, "get-export-finance-and-funding/"),
+    "get export finance": urljoin(URL, "get-export-finance-and-funding/"),
     "manage payment for export orders": urljoin(
         URL, "manage-payment-for-export-orders/"
     ),

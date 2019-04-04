@@ -147,7 +147,7 @@ SELECTORS = {
         "create an export plan": Selector(By.ID, "create-an-export-plan-link"),
         "find an export market": Selector(By.ID, "find-an-export-market-link"),
         "define route to market": Selector(By.ID, "define-route-to-market-link"),
-        "get export finance and funding": Selector(
+        "get export finance": Selector(
             By.ID, "get-export-finance-and-funding-link"
         ),
         "manage payment for export orders": Selector(
