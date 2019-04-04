@@ -34,7 +34,7 @@ OUTSIDE_THE_UK = Selector(
     By.ID, "id_location-choice_1", type=ElementType.RADIO, is_visible=False
 )
 SUBMIT_BUTTON = Selector(
-    By.CSS_SELECTOR, "form button[type=submit]", type=ElementType.BUTTON
+    By.CSS_SELECTOR, "div.exred-triage-form button", type=ElementType.BUTTON
 )
 SELECTORS = {
     "form": {
