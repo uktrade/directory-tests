@@ -42,7 +42,7 @@ EXPECTED_STRINGS_OWNER_TRANSFERRED = [
     "We’ve sent a confirmation email to the new profile owner."
 ]
 EXPECTED_STRINGS_USER_ADDED = [
-    "We’ve sent an invitation to the user you want added to your profile."
+    "We’ve emailed the user you want added to your profile"
 ]
 EXPECTED_STRINGS_USER_REMOVED = ["User successfully removed from your profile"]
 
