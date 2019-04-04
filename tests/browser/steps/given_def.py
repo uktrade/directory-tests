@@ -162,14 +162,14 @@ def given_actor_created_great_account(
     generic_create_great_account(context, actor_alias, business_type)
 
 
-###############################################################################
-# Currently unused but useful steps
-###############################################################################
-
-
 @given('"{actor_alias}" is signed in')
 def given_actor_is_signed_in(context, actor_alias):
     sign_in(context, actor_alias)
+
+
+###############################################################################
+# Currently unused but useful steps
+###############################################################################
 
 
 @given('"{actor_alias}" decided to find out out more about "{industry_name}" industry')
