@@ -7,6 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import ElementType
 from pages.common_actions import (
     Selector,
     assertion_msg,
@@ -16,7 +17,13 @@ from pages.common_actions import (
     take_screenshot,
     wait_for_page_load_after_action,
 )
-from settings import DIT_FAVICON_MD5_CHECKSUM, DIT_LOGO_MD5_CHECKSUM
+from settings import (
+    DIT_FAVICON_MD5_CHECKSUM,
+    EIG_LOGO_MD5_CHECKSUM,
+    EVENTS_BIG_FOOTER_LOGO_MD5_CHECKSUM,
+    EVENTS_BIG_HEADER_LOGO_MD5_CHECKSUM,
+    GREAT_LOGO_MD5_CHECKSUM,
+)
 
 NAME = "Header"
 SERVICE = "Export Readiness"
@@ -26,63 +33,21 @@ URL = None
 
 FAVICON = Selector(By.CSS_SELECTOR, "link[rel='shortcut icon']")
 EXOPPS_FAVICON = Selector(By.CSS_SELECTOR, "link[rel='icon']")
-LOGO = Selector(By.CSS_SELECTOR, "#header-dit-logo > img")
-HOME_LINK = Selector(By.ID, "header-home-link")
-YOUR_EXPORT_JOURNEY = Selector(By.ID, "header-custom-page-link")
+EIG_LOGO = Selector(By.CSS_SELECTOR, "#great-header-logo > img")
 REGISTRATION_LINK = Selector(By.ID, "header-register-link")
 SIGN_IN_LINK = Selector(By.ID, "header-sign-in-link")
 PROFILE_LINK = Selector(By.ID, "header-profile-link")
 SIGN_OUT_LINK = Selector(By.ID, "header-sign-out-link")
-LANGUAGE_SELECTOR = Selector(
-    By.CSS_SELECTOR, "#header-bar .LanguageSelectorDialog-Tracker"
-)
 SELECTORS = {
-    "export readiness": {
-        "menu": Selector(By.ID, "export-readiness-links"),
-        "new": Selector(By.ID, "header-export-readiness-new"),
-        "occasional": Selector(By.ID, "header-export-readiness-occasional"),
-        "regular": Selector(By.ID, "header-export-readiness-regular"),
-        "i'm new to exporting": Selector(By.ID, "header-export-readiness-new"),
-        "i export occasionally": Selector(By.ID, "header-export-readiness-occasional"),
-        "i'm a regular exporter": Selector(By.ID, "header-export-readiness-regular"),
-    },
-    "advice": {
-        "menu": Selector(By.ID, "header-advice-links"),
-        "create an export plan": Selector(By.ID, "header-advice-create-an-export-plan"),
-        "find an export market": Selector(By.ID, "header-advice-find-an-export-market"),
-        "define route to market": Selector(
-            By.ID, "header-advice-define-route-to-market"
-        ),
-        "get export finance and funding": Selector(
-            By.ID, "header-advice-get-export-finance-and-funding"
-        ),
-        "manage payment for export orders": Selector(
-            By.ID, "header-advice-manage-payment-for-export-orders"
-        ),
-        "prepare to do business in a foreign country": Selector(
-            By.ID, "header-advice-prepare-to-do-business-in-a-foreign-country"
-        ),
-        "manage legal and ethical compliance": Selector(
-            By.ID, "header-advice-manage-legal-and-ethical-compliance"
-        ),
-        "prepare for export procedures and logistics": Selector(
-            By.ID, "header-advice-prepare-for-export-procedures-and-logistics"
-        ),
-    },
-    "services": {
-        "menu": Selector(By.ID, "header-services-links"),
-        "find a buyer": Selector(By.ID, "header-services-find-a-buyer"),
-        "selling online overseas": Selector(
-            By.ID, "header-services-selling-online-overseas"
-        ),
-        "export opportunities": Selector(By.ID, "header-services-export-opportunities"),
-        "get finance": Selector(By.ID, "header-services-get-finance"),
-        "events": Selector(By.ID, "header-services-events"),
-    },
     "general": {
-        "logo": LOGO,
-        "home": HOME_LINK,
-        "your export journey": YOUR_EXPORT_JOURNEY,
+        "logo": EIG_LOGO,
+        "advice": Selector(By.ID, "header-advice", type=ElementType.LINK),
+        "markets": Selector(By.ID, "header-markets", type=ElementType.LINK),
+        "services": Selector(By.ID, "header-services", type=ElementType.LINK),
+        "search box": Selector(By.ID, "search-box", type=ElementType.INPUT),
+        "search button": Selector(
+            By.ID, "#search-box ~ button[type=submit]", type=ElementType.BUTTON
+        ),
     },
     "account links": {"register": REGISTRATION_LINK, "sign in": SIGN_IN_LINK},
 }
