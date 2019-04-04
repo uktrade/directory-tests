@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 """Common PageObject actions."""
-import time
-
 import hashlib
 import json
 import logging
@@ -9,6 +7,7 @@ import os
 import random
 import string
 import sys
+import time
 import traceback
 import uuid
 from collections import defaultdict
@@ -16,11 +15,9 @@ from collections.__init__ import namedtuple
 from contextlib import contextmanager
 from datetime import datetime
 from os import path
-from urllib.parse import urlparse
-
-from selenium.webdriver import ActionChains
 from types import ModuleType
 from typing import Dict, List
+from urllib.parse import urlparse
 
 import requests
 from behave.runner import Context
@@ -30,6 +27,7 @@ from selenium.common.exceptions import (
     TimeoutException,
     WebDriverException,
 )
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
@@ -709,7 +707,7 @@ def check_for_sections(
             ):
                 element = driver.find_element(by=selector.by, value=selector.value)
             if "firefox" not in driver.capabilities["browserName"].lower():
-                logging.debug("Moving focus to '%s' element", key)
+                logging.debug(f"Moving focus to '{name}→{key}' element")
                 action_chains = ActionChains(driver)
                 action_chains.move_to_element(element)
                 action_chains.perform()
