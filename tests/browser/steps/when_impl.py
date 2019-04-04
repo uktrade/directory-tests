@@ -745,18 +745,6 @@ def contact_us_navigate_through_options(context: Context, actor_alias: str, via:
         generic_pick_radio_option_and_submit(context, actor_alias, option)
 
 
-def open_any_element(
-    context: Context, actor_alias: str, element_type: str, section_name: str
-):
-    page = get_last_visited_page(context, actor_alias)
-    has_action(page, "open_any_element_in_section")
-    element_details = page.open_any_element_in_section(
-        context.driver, element_type, section_name
-    )
-    update_actor(context, actor_alias, element_details=element_details)
-    logging.info(f"{actor_alias} opened random {element_type} from {section_name}")
-
-
 def exred_open_random_advice_article(context: Context, actor_alias: str):
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
