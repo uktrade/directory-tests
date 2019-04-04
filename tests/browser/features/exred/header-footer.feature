@@ -1,52 +1,68 @@
 Feature: Header-Footer
 
-  Background:
-    Given basic authentication is done for "Export Readiness - Home" page
 
+  @bug
+  @ED-3116
+  @fixed
   @ED-3118
   @logo
   @header
   @footer
-  Scenario Outline: Any Exporter should see correct DIT logo, one with the boat, in the page header and footer on "<selected>" page
-    Given "Robert" visits the "<selected>" page
+  Scenario Outline: Any Exporter should see correct EIG header logo & GREAT footer logo on "<selected>" page
+    Given basic authentication is done for "<selected>" page
+    And "Robert" visits the "<selected>" page
 
-    Then "Robert" should see correct DIT logo in page header
+    Then "Robert" should see correct "EIG" logo
+    And "Robert" should see correct "Great - footer" logo
 
     Examples:
-      | selected                                        |
-      | Export Readiness - Home                         |
-      | Single Sign-On - Registration                   |
-      | Single Sign-On - Sign in                        |
-      | Single Sign-On - Profile about                  |
-      | Export Readiness - Get finance                  |
-      | Export Opportunities - Home                     |
-      | Find a Buyer - Home                             |
+      | selected                       |
+      | Export Readiness - Get finance |
+      | Export Readiness - Home        |
+      | Find a Buyer - Home            |
+      | Selling Online Overseas - Home |
+      | Single Sign-On - Profile about |
+      | Single Sign-On - Registration  |
+      | Single Sign-On - Sign in       |
 
-    # these services use different logo
-    @wip
-    Examples:
-      | selected                                        |
-      | Find a Supplier - Home                          |
-      | Events - Home                                   |
+
+  @stage-only
+  @ED-3118
+  @logo
+  @header
+  @footer
+  Scenario: Any Exporter should see correct EIG header logo & GREAT footer logo on "Export Opportunities - Home" page
+    Given "Robert" visits the "Export Opportunities - Home" page
+
+    Then "Robert" should see correct "EIG" logo
+    And "Robert" should see correct "Great - footer" logo
 
 
   @bug
   @ED-3116
   @fixed
+  @ED-3118
+  @events
   @logo
   @header
   @footer
+  Scenario: Any Exporter should see correct Business Is Great (BIG) header & footer logo on "Events - Home" page
+    Given "Robert" visits the "Events - Home" page
+
+    Then "Robert" should see correct "EVENTS Business Is Great - header" logo
+    And "Robert" should see correct "EVENTS Business Is Great - footer" logo
+
+
   @ED-3118
-  Scenario Outline: Any Exporter should see correct DIT logo, one with the boat, in the page header and footer on "<selected>" page
-    Given "Robert" visits the "<selected>" page
+  @logo
+  @header
+  @footer
+  Scenario: Any Exporter should see correct GREAT header & footer logo on "Find a Supplier - Home" page
+    Given basic authentication is done for "Find a Supplier - Home" page
+    Given "Robert" visits the "Find a Supplier - Home" page
 
-    Then "Robert" should be on the "<selected>" page
-    And "Robert" should see correct DIT logo in page header
-
-    Examples:
-      | selected                            |
-      | Export Opportunities - Home         |
-      | Selling Online Overseas - Home      |
+    Then "Robert" should see correct "Great - header" logo
+    And "Robert" should see correct "Great - footer" logo
 
 
   @ED-3587
@@ -55,7 +71,8 @@ Feature: Header-Footer
   @footer
   @ED-3118
   Scenario Outline: Any Exporter should be able to get to the Export Readiness Home page from "<selected>" page by using DIT logo in the page header and footer
-    Given "Robert" visits the "<selected>" page
+    Given basic authentication is done for "<selected>" page
+    And "Robert" visits the "<selected>" page
 
     When "Robert" decides to click on the DIT logo in the "header"
 
@@ -64,73 +81,44 @@ Feature: Header-Footer
     Examples:
       | selected                                        |
       | Export Readiness - Home                         |
+      | Export Readiness - Get finance                  |
       | Single Sign-On - Registration                   |
       | Single Sign-On - Sign in                        |
-      | Export Readiness - Get finance                  |
-      | Export Opportunities - Home                     |
       | Find a Buyer - Home                             |
-      | Export Opportunities - Home                     |
-    @bug
-    # There's no SOO DEV env
-    @fixme
-    Examples:
-      | selected                                        |
-      | Selling Online Overseas - Home                  | 
+      | Selling Online Overseas - Home                  |
 
     @bug
     @TT-886
     @fixme
     Examples:
       | selected                                        |
-      | Single Sign-On - Profile about                  |
+      | Profile - About                                 |
+
+    @stage-only
+    Examples:
+      | selected                                        |
+      | Export Opportunities - Home                     |
 
 
   @ED-3091
   @favicon
   Scenario Outline: Any user should see the correct favicon on "<specific>" page
+    Given basic authentication is done for "<specific>" page
     Given "Robert" visits the "<specific>" page
 
     Then "Robert" should see the correct favicon
 
     Examples: Export Readiness pages
-      | specific                                        |
-      | Export Readiness - Home                         |
-      | Export Opportunities - Home                     |
-
-    Examples: FABS pages
-      | specific               |
-      | Find a Buyer - Home    |
-      | Find a Supplier - Home |
-
-    Examples: SSO pages
       | specific                       |
+      | Export Readiness - Home        |
+      | Find a Buyer - Home            |
+      | Find a Supplier - Home         |
       | Single Sign-On - Registration  |
       | Single Sign-On - Sign in       |
-      | Single Sign-On - Profile about |
-
-    Examples: SOO pages
-      | specific                       |
+      | Profile - About                |
       | Selling Online Overseas - Home |
 
+    @stage-only
     Examples: Export Opportunities
-      | specific                    |
-      | Export Opportunities - Home |
-
-
-  @bug
-  @ED-3216
-  @fixed
-  @ED-3215
-  @header
-  @home-page
-  @<specific>
-  Scenario Outline: Any Exported should be able to get to the Domestic "<expected>" page via "<specific>" link in the "<selected section>"
-    Given "Robert" visits the "Export Readiness - Home" page
-
-    When "Robert" goes to the "<specific>" page via "General" links in "Export Readiness - <selected section>"
-
-    Then "Robert" should be on the "<expected>" page or on the International page
-
-    Examples:
-      | specific            | expected                                      | selected section |
-      | Home                | Export Readiness - Home                       | header           |
+      | specific                       |
+      | Export Opportunities - Home    |
