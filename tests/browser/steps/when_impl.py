@@ -15,7 +15,14 @@ from selenium.common.exceptions import (
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import common_language_selector, exred, fas, get_page_object, soo, sso
+from pages import (
+    common_language_selector,
+    exred,
+    fas,
+    get_page_object,
+    soo,
+    sso,
+)
 from pages.common_actions import (
     add_actor,
     barred_actor,
