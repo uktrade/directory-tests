@@ -17,8 +17,8 @@ from steps.then_impl import (
     generic_contact_us_should_receive_confirmation_email,
     generic_should_see_expected_page_content,
     generic_should_see_form_choices,
-    header_check_dit_logo,
     header_check_favicon,
+    header_check_logo,
     hpo_agent_should_receive_enquiry_email,
     hpo_should_receive_enquiry_confirmation_email,
     invest_mailbox_admin_should_receive_contact_confirmation_email,
@@ -125,9 +125,9 @@ def then_actor_should_not_see_video_modal_window(context, actor_alias):
     promo_video_should_not_see_modal_window(context, actor_alias)
 
 
-@then('"{actor_alias}" should see correct DIT logo in page header')
-def then_actor_should_see_correct_dit_logo(context, actor_alias):
-    header_check_dit_logo(context, actor_alias)
+@then('"{actor_alias}" should see correct "{logo_name}" logo')
+def then_actor_should_see_correct_logo(context, actor_alias, logo_name):
+    header_check_logo(context, actor_alias, logo_name)
 
 
 @then('"{actor_alias}" should see the language selector')

@@ -146,18 +146,31 @@ def go_to_sign_out(driver: WebDriver):
         sign_out_link.click()
 
 
-def check_dit_logo(driver: WebDriver):
-    old = "#header-bar > div:nth-child(2) > a > img"
-    try:
-        logo = find_element(driver, LOGO)
-    except NoSuchElementException:
-        try:
-            logo = find_element(driver, old)
-        except NoSuchElementException:
-            raise
-    src = logo.get_attribute("src")
-    check_hash_of_remote_file(DIT_LOGO_MD5_CHECKSUM, src)
-    logging.debug("%s has correct MD5sum %s", src, DIT_LOGO_MD5_CHECKSUM)
+def check_logo(driver: WebDriver, logo_name: str):
+    logos = {
+        "eig": {"selector": EIG_LOGO, "md5": EIG_LOGO_MD5_CHECKSUM},
+        "great - header": {
+            "selector": Selector(By.CSS_SELECTOR, "#great-header-logo img"),
+            "md5": GREAT_LOGO_MD5_CHECKSUM,
+        },
+        "great - footer": {
+            "selector": Selector(By.ID, "great-footer-great-logo"),
+            "md5": GREAT_LOGO_MD5_CHECKSUM,
+        },
+        "events business is great - header": {
+            "selector": Selector(By.CSS_SELECTOR, "header img"),
+            "md5": EVENTS_BIG_HEADER_LOGO_MD5_CHECKSUM,
+        },
+        "events business is great - footer": {
+            "selector": Selector(By.CSS_SELECTOR, "#footer_section img"),
+            "md5": EVENTS_BIG_FOOTER_LOGO_MD5_CHECKSUM,
+        },
+    }
+    logo = logos[logo_name.lower()]
+    logo_element = find_element(driver, logo["selector"])
+    src = logo_element.get_attribute("src")
+    check_hash_of_remote_file(logo["md5"], src)
+    logging.debug(f"{src} has correct MD5sum {logo['md5']}")
 
 
 def check_dit_favicon(driver: WebDriver):

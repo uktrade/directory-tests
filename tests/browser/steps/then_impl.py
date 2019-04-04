@@ -208,9 +208,9 @@ def promo_video_should_not_see_modal_window(context: Context, actor_alias: str):
     )
 
 
-def header_check_dit_logo(context: Context, actor_alias: str):
-    exred.header.check_dit_logo(context.driver)
-    logging.debug("As expected %s can see correct DIT logo", actor_alias)
+def header_check_logo(context: Context, actor_alias: str, logo_name: str):
+    exred.header.check_logo(context.driver, logo_name)
+    logging.debug(f"As expected {actor_alias} can see correct {logo_name} logo")
 
 
 def header_check_favicon(context: Context, actor_alias: str):
