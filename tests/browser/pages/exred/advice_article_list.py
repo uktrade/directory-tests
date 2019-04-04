@@ -155,31 +155,3 @@ def open_any_article(driver: WebDriver) -> str:
     with wait_for_page_load_after_action(driver):
         link.click()
     return link_text
-
-
-def extract_text(text: str, section_name: str) -> tuple:
-    if section_name.lower() == "advice":
-        advice_name_index = 1
-        article_counter_index = -2
-        name = text.splitlines()[advice_name_index]
-        counter = int(text.split()[article_counter_index])
-        return name, counter
-
-
-def open_any_element_in_section(
-    driver: WebDriver, element_type: str, section_name: str
-) -> tuple:
-    section = SELECTORS[section_name.lower()]
-    sought_type = ElementType[element_type.upper()]
-    selectors = get_selectors(section, sought_type)
-    error = f"Could't find any {element_type} in {section_name} section"
-    assert len(selectors) > 0, error
-    selector_key = random.choice(list(selectors))
-    selector = SELECTORS[section_name.lower()][selector_key]
-    elements = find_elements(driver, selector)
-    element = random.choice(elements)
-    check_if_element_is_visible(element, element_name=selector_key)
-    element_text = extract_text(element.text, section_name)
-    with wait_for_page_load_after_action(driver):
-        element.click()
-    return element_text
