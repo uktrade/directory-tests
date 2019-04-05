@@ -31,56 +31,31 @@ SEARCH_BUTTON = Selector(By.CSS_SELECTOR, "#search-area > form button")
 CONTACT_US_BUTTON = Selector(By.CSS_SELECTOR, "#introduction-section a")
 SELECTORS = {
     "header": {
-        "itself": Selector(By.ID, "ed-header"),
-        "gov links": Selector(By.ID, "header-gov-links"),
-        "hm gov link": Selector(
-            By.CSS_SELECTOR, "#header-gov-links  a[href='https://www.gov.uk/']"
+        "itself": Selector(By.ID, "great-header"),
+        "find out more about cookies": Selector(By.CSS_SELECTOR, "#header-cookie-notice a"),
+        "dismiss cookie notice": Selector(By.ID, "dismiss-cookie-notice"),
+        "for uk businesses": Selector(By.ID, "great-global-header-domestic-link"),
+        "for international businesses": Selector(
+            By.ID, "great-global-header-international-link"
         ),
-        "great gov link": Selector(
-            By.CSS_SELECTOR, "#header-gov-links  a[href='https://www.great.gov.uk/']"
-        ),
-        "language switcher": Selector(By.CSS_SELECTOR, ".ed-language-switcher"),
-        "navigation bar": Selector(By.ID, "ed-menu"),
-        "home": Selector(By.CSS_SELECTOR, "#ed-menu > ul > li.active > a"),
-        "search": Selector(By.CSS_SELECTOR, "#ed-menu > ul > li:nth-child(2) > a"),
-        "industries": Selector(By.CSS_SELECTOR, "#ed-menu > ul > li:nth-child(3) > a"),
+        "language switcher": Selector(By.ID, "country-selector-activator"),
+        "logo": Selector(By.ID, "great-header-logo"),
+        "invest": Selector(By.ID, "header-invest"),
+        "find a uk supplier": Selector(By.ID, "header-fas-search"),
+        "industries": Selector(By.ID, "header-industries"),
+        "how to do business with the uk": Selector(By.ID, "header-how-to-do-business-with-the-uk"),
     },
     "footer": {
-        "itself": Selector(By.ID, "ed-footer"),
-        "sub-links": Selector(By.ID, "footer-sub-links"),
-        "hm gov link": Selector(By.CSS_SELECTOR, "#footer-logos > a"),
-        "great gov link": Selector(By.CSS_SELECTOR, "#footer-logos > img"),
-        "home": Selector(
-            By.CSS_SELECTOR, "#footer-main-links > ul > li:nth-child(1) > a"
-        ),
-        "search": Selector(
-            By.CSS_SELECTOR, "#footer-main-links > ul > li:nth-child(2) > a"
-        ),
-        "industries": Selector(
-            By.CSS_SELECTOR, "#footer-main-links > ul > li:nth-child(3) > a"
-        ),
-        "contact": Selector(
-            By.CSS_SELECTOR, "#footer-main-links > ul > li:nth-child(4) > a"
-        ),
-        "about": Selector(
-            By.CSS_SELECTOR, "#footer-sub-links > div > ul > li:nth-child(1) > a"
-        ),
-        "contact us link": Selector(
-            By.CSS_SELECTOR, "#footer-sub-links > div > ul > li:nth-child(2) > a"
-        ),
-        "privacy and cookies": Selector(
-            By.CSS_SELECTOR, "#footer-sub-links > div > ul > li:nth-child(3) > a"
-        ),
-        "terms and conditions": Selector(
-            By.CSS_SELECTOR, "#footer-sub-links > div > ul > li:nth-child(4) > a"
-        ),
-        "performance": Selector(
-            By.CSS_SELECTOR, "#footer-sub-links > div > ul > li:nth-child(5) > a"
-        ),
-        "dit": Selector(
-            By.CSS_SELECTOR, "#footer-sub-links > div > ul > li:nth-child(6) > a"
-        ),
-        "copyright links": Selector(By.ID, "ed-footer-copyright"),
+        "itself": Selector(By.ID, "great-footer"),
+        "dit logo": Selector(By.ID, "great-footer-dit-logo"),
+        "great logo": Selector(By.ID, "great-footer-great-logo"),
+        "contact us footer": Selector(By.ID, "footer-contact"),
+        "privacy and cookies": Selector(By.ID, "footer-privacy-and-cookies"),
+        "terms and conditions": Selector(By.ID, "footer-terms-and-conditions"),
+        "dit": Selector(By.ID, "footer-dit"),
+        "go to the page for uk businesses": Selector(By.ID, "footer-domestic"),
+        "great global logo": Selector(By.ID, "great-global-footer-logo"),
+        "copyright": Selector(By.ID, "great-footer-copyright"),
     },
     "hero": {"itself": Selector(By.CSS_SELECTOR, "section#hero")},
     "find uk suppliers": {
