@@ -48,7 +48,7 @@ SELECTORS = {
         ),
         "website": Selector(
             By.ID,
-            "id_business-details-website_address",
+            "id_business-details-website",
             is_visible=False,
             type=ElementType.INPUT,
         ),
