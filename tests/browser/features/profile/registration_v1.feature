@@ -114,13 +114,13 @@ Feature: New Enrolment flow
     Given "Natalia" has received the email confirmation code by opting to register as "<selected business type>"
     And "Natalia" is on the "Profile - Enter your confirmation code" page
 
-    When "Natalia" fills out and submits the form
+    When "Natalia" fills out and submits the form (and go 1 page back on error)
     Then "Natalia" should be on the "Profile - Enter your business details (<selected business type>)" page
 
     When "Natalia" fills out and submits the form (and go 1 page back on error)
     Then "Natalia" should be on the "Profile - Enter your business details [step 2] (<selected business type>)" page
 
-    When "Natalia" fills out and submits the form
+    When "Natalia" fills out and submits the form (and go 1 page back on error)
     Then "Natalia" should be on the "Profile - Enter your details (<selected business type>)" page
 
     When "Natalia" fills out and submits the form
