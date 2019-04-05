@@ -41,7 +41,7 @@ Feature: New Enrolment flow
   @ltd-plc-royal
   @sole-trader-other-business
   @tax-payer
-  Scenario Outline: "<selected business type>" representative should receive an email with confirmation code
+  Scenario Outline: "<business type>" representative should receive an email with confirmation code
     Given "Natalia" visits the "Profile - Enter your business email address and set a password (<business type>)" page
 
     When "Natalia" fills out and submits the form
