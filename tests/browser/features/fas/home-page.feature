@@ -47,13 +47,23 @@ Feature: Find a Supplier - home page
     Then "Robert" should be on the "Find a Supplier - Contact us" page
 
 
+  @ED-4246
+  @contact-us
+  Scenario: Buyers should be able to get to the "Contact us" page using footer link
+    Given "Robert" visits the "Find a Supplier - Home" page
+
+    When "Robert" decides to use "Contact us footer" link
+
+    Then "Robert" should be on the "Export Readiness - Contact us" page
+
+
   @ED-4247
   @captcha
   @dev-only
   @contact-us
   Scenario: Buyers should be able to contact DIT from the "Find a Supplier - home" page
     Given "Robert" visits the "Find a Supplier - Home" page
-    And "Robert" decided to use "contact us" button
+    And "Robert" decided to use "Contact us" link
 
     When "Robert" fills out and submits the contact us form
 
