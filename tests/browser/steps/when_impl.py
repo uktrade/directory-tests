@@ -101,6 +101,8 @@ def visit_page(context: Context, actor_alias: str, page_name: str):
     url = context.driver.current_url
     error = f"Looks like {url} doesn't exist"
     assert "404 Not Found: Requested route" not in source, error
+    error = f"Looks like following page: {url} cannot be found"
+    assert "This page cannot be found" not in source, error
     update_actor(context, actor_alias, visited_page=page)
 
 
