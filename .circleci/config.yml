@@ -561,7 +561,7 @@ workflows:
   run_soo_load_tests_on_stage:
     triggers:
       - schedule:
-          cron: "10 6 * * 1-5"
+          cron: "40 4 * * 1-5"
           filters:
             branches:
               only: master
