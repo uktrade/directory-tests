@@ -30,33 +30,26 @@ TYPE = "contact"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "industries/contact/sent/")
 PAGE_TITLE = "Contact us - trade.great.gov.uk"
 
-FULL_NAME = Selector(By.ID, "id_full_name", type=ElementType.INPUT)
-EMAIL = Selector(By.ID, "id_email_address", type=ElementType.INPUT)
-INDUSTRY = Selector(By.ID, "id_sector", type=ElementType.SELECT)
-ORGANISATION = Selector(By.ID, "id_organisation_name", type=ElementType.INPUT)
-ORGANISATION_SIZE = Selector(By.ID, "id_organisation_size", type=ElementType.SELECT)
-PHONE_NUMBER = Selector(By.ID, "id_phone_number", type=ElementType.INPUT)
-COUNTRY = Selector(By.ID, "id_country", type=ElementType.INPUT)
-BODY = Selector(By.ID, "id_body", type=ElementType.INPUT)
-SOURCE = Selector(By.ID, "id_source", type=ElementType.SELECT)
-ACCEPT_TC = Selector(By.ID, "id_terms_agreed", type=ElementType.LABEL, is_visible=False)
-IM_NOT_A_ROBOT = Selector(By.CSS_SELECTOR, ".recaptcha-checkbox-checkmark")
 SUBMIT_BUTTON = Selector(
     By.CSS_SELECTOR, "form input[type=submit]", type=ElementType.BUTTON
 )
 SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#lede form"),
-        "full name": FULL_NAME,
-        "email": EMAIL,
-        "phone number": PHONE_NUMBER,
-        "industry": INDUSTRY,
-        "organisation": ORGANISATION,
-        "organisation size": ORGANISATION_SIZE,
-        "country": COUNTRY,
-        "body": BODY,
-        "source": SOURCE,
-        "accept t&c": ACCEPT_TC,
+        "full name": Selector(By.ID, "id_full_name", type=ElementType.INPUT),
+        "email": Selector(By.ID, "id_email_address", type=ElementType.INPUT),
+        "phone number": Selector(By.ID, "id_phone_number", type=ElementType.INPUT),
+        "industry": Selector(By.ID, "id_sector", type=ElementType.SELECT),
+        "organisation": Selector(By.ID, "id_organisation_name", type=ElementType.INPUT),
+        "organisation size": Selector(
+            By.ID, "id_organisation_size", type=ElementType.SELECT
+        ),
+        "country": Selector(By.ID, "id_country", type=ElementType.INPUT),
+        "body": Selector(By.ID, "id_body", type=ElementType.INPUT),
+        "source": Selector(By.ID, "id_source", type=ElementType.SELECT),
+        "accept t&c": Selector(
+            By.ID, "id_terms_agreed", type=ElementType.LABEL, is_visible=False
+        ),
         "submit": SUBMIT_BUTTON,
     }
 }
