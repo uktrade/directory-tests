@@ -6,7 +6,12 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages.common_actions import Selector, check_url, take_screenshot
+from pages.common_actions import (
+    Selector,
+    check_url,
+    find_and_click_on_page_element,
+    take_screenshot,
+)
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
 NAME = "Company Profile"
@@ -22,6 +27,9 @@ SELECTORS = {
         "contact": Selector(By.CSS_SELECTOR, "div.company-profile-module-details"),
         "facts & details": Selector(
             By.CSS_SELECTOR, "div.company-profile-module-facts"
+        ),
+        "email company": Selector(
+            By.CSS_SELECTOR, "#company-details a.ga-tracking-contact-supplier"
         ),
     },
     "description": {
@@ -53,3 +61,8 @@ def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
     logging.debug("All expected elements are visible on '%s' page", NAME)
+
+
+def click_on_page_element(driver: WebDriver, element_name: str):
+    find_and_click_on_page_element(driver, SELECTORS, element_name)
+    take_screenshot(driver, NAME + " after clicking on " + element_name)
