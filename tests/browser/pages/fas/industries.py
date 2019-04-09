@@ -17,6 +17,7 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
+from pages.fas.header_footer import HEADER_FOOTER_SELECTORS
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
 NAME = "Industries"
@@ -52,6 +53,7 @@ SELECTORS = {
         "more industries": MORE_INDUSTRIES_LINKS,
     },
 }
+SELECTORS.update(HEADER_FOOTER_SELECTORS)
 
 
 def visit(driver: WebDriver):

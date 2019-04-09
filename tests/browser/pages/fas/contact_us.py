@@ -21,6 +21,7 @@ from pages.common_actions import (
     tick_captcha_checkbox,
     tick_checkboxes_by_labels,
 )
+from pages.fas.header_footer import HEADER_FOOTER_SELECTORS
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
 NAME = "Contact Us"
@@ -59,6 +60,7 @@ SELECTORS = {
         "submit": SUBMIT_BUTTON,
     }
 }
+SELECTORS.update(HEADER_FOOTER_SELECTORS)
 
 
 def visit(driver: WebDriver):

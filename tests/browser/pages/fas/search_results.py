@@ -15,6 +15,7 @@ from pages.common_actions import (
     find_elements,
     take_screenshot,
 )
+from pages.fas.header_footer import HEADER_FOOTER_SELECTORS
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
 NAME = "Search results"
@@ -52,6 +53,7 @@ SELECTORS = {
         "country": Selector(By.ID, "id_country"),
     },
 }
+SELECTORS.update(HEADER_FOOTER_SELECTORS)
 
 
 def should_be_here(driver: WebDriver):

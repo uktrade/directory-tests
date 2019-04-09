@@ -21,11 +21,11 @@ from pages.common_actions import (
     find_and_click_on_page_element,
     find_element,
     find_elements,
-    get_selectors,
     go_to_url,
     take_screenshot,
     wait_for_page_load_after_action,
 )
+from pages.exred import header
 from settings import EXRED_UI_URL
 
 NAME = "Home"
@@ -202,6 +202,7 @@ SELECTORS = {
         "link": Selector(By.ID, "error-reporting-section-contact-us"),
     },
 }
+SELECTORS.update(header.SELECTORS)
 
 
 def visit(driver: WebDriver):

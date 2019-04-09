@@ -7,6 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import Selector, check_for_section, check_url, take_screenshot
+from pages.fas.header_footer import HEADER_FOOTER_SELECTORS
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
 NAME = "Empty Search Results"
@@ -23,6 +24,7 @@ SELECTORS = {
     },
     "no results": {"itself": Selector(By.ID, "fassearch-no-results-content")},
 }
+SELECTORS.update(HEADER_FOOTER_SELECTORS)
 
 
 def should_be_here(driver: WebDriver):

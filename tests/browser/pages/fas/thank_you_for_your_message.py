@@ -7,6 +7,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import Selector, check_url, take_screenshot
+from pages.fas.header_footer import HEADER_FOOTER_SELECTORS
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
 NAME = "Thank you for your message"
@@ -23,6 +24,7 @@ SELECTORS = {
         "go back link": Selector(By.CSS_SELECTOR, "#lede a"),
     },
 }
+SELECTORS.update(HEADER_FOOTER_SELECTORS)
 
 
 def should_be_here(driver: WebDriver):

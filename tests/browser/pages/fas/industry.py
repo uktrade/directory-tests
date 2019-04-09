@@ -18,6 +18,7 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
+from pages.fas.header_footer import HEADER_FOOTER_SELECTORS
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
 NAME = "Industry"
@@ -86,6 +87,7 @@ SELECTORS = {
     },
     "articles": {"itself": Selector(By.ID, "articles-section")},
 }
+SELECTORS.update(HEADER_FOOTER_SELECTORS)
 
 URLs = {
     "aerospace": urljoin(URL, "aerospace/"),
