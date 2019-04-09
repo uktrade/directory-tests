@@ -406,6 +406,14 @@ def fas_search_for_companies(
     )
 
 
+def fas_searched_for_companies(
+        context: Context, actor_alias: str, *, keyword: str = None, sector: str = None
+):
+    visit_page(context, actor_alias, f"{fas.home.SERVICE} - {fas.home.NAME}")
+    fas_search_for_companies(context, actor_alias, keyword=keyword, sector=sector)
+    should_be_on_page(context, actor_alias, f"{fas.search_results.SERVICE} - {fas.search_results.NAME}")
+
+
 @retry(
     wait_fixed=30000,
     stop_max_attempt_number=3,
