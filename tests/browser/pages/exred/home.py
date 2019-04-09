@@ -384,3 +384,7 @@ def open_any_article(driver: WebDriver) -> tuple:
     with wait_for_page_load_after_action(driver):
         link.click()
     return extract_text(link_text)
+
+
+def search(driver: WebDriver, phrase: str):
+    header.search(driver, phrase)
