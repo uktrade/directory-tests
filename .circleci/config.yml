@@ -410,6 +410,17 @@ jobs:
       <<: *load_run_time
     <<: *steps_run_load_tests
 
+  load_soo_tests_stage:
+    <<: *machine_python3
+    working_directory: ~/directory-tests
+    environment:
+      SERVICE: "soo"
+      TEST_ENV: "stage"
+      <<: *load_hatch_rate
+      <<: *load_num_clients
+      <<: *load_run_time
+    <<: *steps_run_load_tests
+
   load_fab_tests_stage:
     <<: *machine_python3
     working_directory: ~/directory-tests
@@ -546,6 +557,19 @@ workflows:
     - load_fab_tests_stage:
         requires:
         - setup_env_for_load_tests
+
+  run_soo_load_tests_on_stage:
+    triggers:
+      - schedule:
+          cron: "40 4 * * 1-5"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - setup_env_for_load_tests
+      - load_soo_tests_stage:
+          requires:
+            - setup_env_for_load_tests
 
   run_all_tests_on_dev:
     triggers:
