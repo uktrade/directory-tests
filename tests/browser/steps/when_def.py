@@ -273,6 +273,7 @@ def when_actor_fills_out_and_submits_the_form(context: Context, actor_alias: str
     generic_fill_out_and_submit_form(context, actor_alias, custom_details_table=context.table, go_back=True)
 
 
+@when('"{actor_alias}" fills out and submits the newsletter form')
 @when('"{actor_alias}" fills out and submits the form')
 def when_actor_fills_out_and_submits_the_form(context: Context, actor_alias: str):
     generic_fill_out_and_submit_form(context, actor_alias, custom_details_table=context.table)
