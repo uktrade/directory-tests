@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Find a Supplier Empty Search Results Page Object."""
 import logging
+from typing import List
 from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
@@ -31,6 +32,10 @@ SELECTORS = {
     "no results": {"itself": Selector(By.ID, "fassearch-no-results-content")},
 }
 SELECTORS.update(HEADER_FOOTER_SELECTORS)
+
+
+def visit(driver: WebDriver):
+    go_to_url(driver, URL, NAME)
 
 
 def should_be_here(driver: WebDriver):
