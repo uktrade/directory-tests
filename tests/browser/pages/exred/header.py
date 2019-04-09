@@ -46,7 +46,7 @@ SELECTORS = {
         "services": Selector(By.ID, "header-services", type=ElementType.LINK),
         "search box": Selector(By.ID, "search-box", type=ElementType.INPUT),
         "search button": Selector(
-            By.ID, "#search-box ~ button[type=submit]", type=ElementType.BUTTON
+            By.CSS_SELECTOR, "#search-box ~ button[type=submit]", type=ElementType.BUTTON
         ),
     },
     "account links": {"register": REGISTRATION_LINK, "sign in": SIGN_IN_LINK},
