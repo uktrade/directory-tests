@@ -80,6 +80,31 @@ Feature: New Contact-us form
       | Shoes,Clothes | United States,China,India |
 
 
+  @XOT-749
+  @exopps
+  @captcha
+  @dev-only
+  @soo-long-domestic
+  @account-support
+  Scenario Outline: Logged in Domestic "Selling Online Overseas" Enquirers should be able to fill the Enquiry page
+    Given "Robert" has a verified standalone SSO/great.gov.uk account
+    And "Robert" is signed in
+    And "Robert" found a marketplace in "<countries>" to sell "<products>"
+
+    When "Robert" decides to "Apply now via DIT"
+
+    Then "Robert" should be on the "Export Readiness - Long Domestic (Your Business)" page
+
+    When "Robert" submits the SOO contact-us form
+      | field                         | value   |
+      | I don't have a company number | checked |
+
+    Then "Robert" should be on the "Export Readiness - Long Domestic (Thank you for your enquiry)" page
+
+    Examples: product type and country name
+      | products      | countries                 |
+      | Shoes,Clothes | United States,China,India |
+
   @wip
   @XOT-741
   @exopps
