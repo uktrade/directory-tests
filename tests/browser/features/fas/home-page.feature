@@ -47,13 +47,23 @@ Feature: Find a Supplier - home page
     Then "Robert" should be on the "Find a Supplier - Contact us" page
 
 
+  @ED-4246
+  @contact-us
+  Scenario: Buyers should be able to get to the "Contact us" page using footer link
+    Given "Robert" visits the "Find a Supplier - Home" page
+
+    When "Robert" decides to use "Contact us footer" link
+
+    Then "Robert" should be on the "Export Readiness - Contact us" page
+
+
   @ED-4247
   @captcha
   @dev-only
   @contact-us
   Scenario: Buyers should be able to contact DIT from the "Find a Supplier - home" page
     Given "Robert" visits the "Find a Supplier - Home" page
-    And "Robert" decided to use "contact us" button
+    And "Robert" decided to use "Contact us" link
 
     When "Robert" fills out and submits the contact us form
 
@@ -78,28 +88,3 @@ Feature: Find a Supplier - home page
     When "Robert" decides to see more UK industries
 
     Then "Robert" should be on the "Find a Supplier - Industries" page
-
-
-  @wip
-  @captcha
-  @dev-only
-  @ED-4250
-  @report-this-page
-  Scenario: Buyers should be able to report a problem with the "Find a Supplier - home" page
-    Given "Robert" visits the "Find a Supplier - Home" page
-
-    When "Robert" decides to report problem with the "Find a Supplier - home" page
-    And "Robert" fills out and submits the "Help us improve great.gov.uk" form
-
-    Then "Robert" should be on the "Find a Supplier - Thank you for your feedback" page
-
-
-  @wip
-  @ED-4251
-  @marketing-content-page
-  Scenario: Buyers should be able to view the Marketing Content from the "Find a Supplier - home" page
-    Given "Robert" visits the "Find a Supplier - Home" page
-
-    When "Robert" decides to go to learn more about marketing on the "Find a Supplier - home" page
-
-    Then "Robert" should be on the "Find a Supplier - Marketing content" page

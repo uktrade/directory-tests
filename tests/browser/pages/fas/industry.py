@@ -27,6 +27,7 @@ NAMES = [
     "Consumer & retail",
     "Creative services",
     "Cyber security",
+    "Energy",
     "Food and drink",
     "Healthcare",
     "Life sciences",
