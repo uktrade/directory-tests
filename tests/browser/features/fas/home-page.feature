@@ -68,6 +68,10 @@ Feature: Find a Supplier - home page
     When "Robert" fills out and submits the contact us form
 
     Then "Robert" should be on the "Find a Supplier - Thank you for your message" page
+    And "Robert" should see following sections
+      | Sections          |
+      | Header            |
+      | Footer            |
 
 
   @ED-4248
