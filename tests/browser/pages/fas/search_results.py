@@ -10,7 +10,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from pages.common_actions import (
     Selector,
     assertion_msg,
-    check_for_section,
+    check_for_sections,
     check_url,
     find_elements,
     take_screenshot,
@@ -62,8 +62,8 @@ def should_be_here(driver: WebDriver):
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
-def should_see_section(driver: WebDriver, name: str):
-    check_for_section(driver, SELECTORS, sought_section=name)
+def should_see_sections(driver: WebDriver, names: List[str]):
+    check_for_sections(driver, all_sections=SELECTORS, sought_sections=names)
 
 
 def should_see_filtered_results(driver: WebDriver, expected_filters: List[str]):

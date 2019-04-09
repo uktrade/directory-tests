@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Find a Supplier Landing Page Object."""
 import logging
+from typing import List
 from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
@@ -10,7 +11,7 @@ from pages import ElementType
 from pages.common_actions import (
     Actor,
     Selector,
-    check_for_section,
+    check_for_sections,
     check_url,
     fill_out_input_fields,
     fill_out_textarea_fields,
@@ -66,8 +67,8 @@ def should_be_here(driver: WebDriver):
     logging.debug("All expected elements are visible on '%s' page", NAME)
 
 
-def should_see_section(driver: WebDriver, name: str):
-    check_for_section(driver, SELECTORS, sought_section=name)
+def should_see_sections(driver: WebDriver, names: List[str]):
+    check_for_sections(driver, all_sections=SELECTORS, sought_sections=names)
 
 
 def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
