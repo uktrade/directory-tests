@@ -1,19 +1,26 @@
 # -*- coding: utf-8 -*-
 """Find a Supplier Search Results Page Object."""
 import logging
+import random
 from typing import List
 from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import ElementType
 from pages.common_actions import (
+    Actor,
     Selector,
     assertion_msg,
     check_for_sections,
     check_url,
+    fill_out_input_fields,
+    find_element,
     find_elements,
+    pick_option,
     take_screenshot,
+    tick_checkboxes,
 )
 from pages.fas.header_footer import HEADER_FOOTER_SELECTORS
 from settings import DIRECTORY_UI_SUPPLIER_URL
@@ -25,6 +32,10 @@ URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "search/")
 PAGE_TITLE = "Search the database of UK suppliers' trade profiles - trade.great.gov.uk"
 
 SECTOR_FILTERS = Selector(By.CSS_SELECTOR, "#id_sectors input")
+NEWSLETTER_SEND = Selector(By.CSS_SELECTOR, "form[action='/trade/subscribe/'] button")
+PROFILE_LINKS = Selector(
+    By.CSS_SELECTOR, "div.public-company-profiles-result-item div.span9 a"
+)
 SELECTORS = {
     "filters": {
         "itself": Selector(By.ID, "ed-search-filters-container"),
@@ -43,6 +54,14 @@ SELECTORS = {
             By.CSS_SELECTOR,
             "div.company-profile-details-body-toolbar-bottom span.current",
         ),
+    },
+    "newsletter form": {
+        "full name": Selector(By.ID, "id_full_name", type=ElementType.INPUT),
+        "email": Selector(By.ID, "id_email_address", type=ElementType.INPUT),
+        "sector": Selector(By.ID, "id_sector", type=ElementType.SELECT),
+        "company name": Selector(By.ID, "id_company_name", type=ElementType.INPUT),
+        "country": Selector(By.ID, "id_country", type=ElementType.INPUT),
+        "t&c": Selector(By.ID, "id_terms", type=ElementType.CHECKBOX),
     },
     "subscribe": {
         "itself": Selector(By.CSS_SELECTOR, "div.ed-landing-page-form-container"),
@@ -91,3 +110,51 @@ def should_see_filtered_results(driver: WebDriver, expected_filters: List[str]):
     diff = list(set(formatted_expected_filters) - set(checked_sector_filters))
     with assertion_msg("Couldn't find '%s' among checked filters", diff):
         assert not diff
+
+
+def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
+    company_name = actor.company_name or "Automated test"
+    result = {
+        "full name": actor.alias,
+        "email": actor.email,
+        "sector": None,
+        "company name": company_name,
+        "country": "AUTOMATED TESTS",
+        "t&c": True,
+    }
+    if custom_details:
+        result.update(custom_details)
+    return result
+
+
+def fill_out(driver: WebDriver, contact_us_details: dict):
+    form_selectors = SELECTORS["newsletter form"]
+    fill_out_input_fields(driver, form_selectors, contact_us_details)
+    pick_option(driver, form_selectors, contact_us_details)
+    tick_checkboxes(driver, form_selectors, contact_us_details)
+    take_screenshot(driver, "After filling out the newsletter form")
+
+
+def submit(driver: WebDriver):
+    take_screenshot(driver, "Before submitting the newsletter form")
+    button = find_element(
+        driver,
+        NEWSLETTER_SEND,
+        element_name="Register with newsletter",
+        wait_for_it=False,
+    )
+    button.click()
+    take_screenshot(driver, "After submitting the newsletter form")
+
+
+def open_profile(driver: WebDriver, number: int):
+    profile_links = find_elements(driver, PROFILE_LINKS)
+    if number == 0:
+        link = random.choice(profile_links)
+    elif number == 1:
+        link = profile_links[0]
+    else:
+        link = profile_links[0]
+    link.click()
+
+    take_screenshot(driver, NAME + " after clicking on company profile link")

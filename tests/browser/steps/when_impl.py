@@ -37,7 +37,7 @@ from steps import has_action
 from utils.cms_api import get_news_articles
 from utils.gov_notify import get_verification_code, get_verification_link
 
-NUMBERS = {"first": 1, "second": 2, "third": 3, "fourth": 4, "fifth": 5, "sixth": 6}
+NUMBERS = {"random": 0, "first": 1, "second": 2, "third": 3, "fourth": 4, "fifth": 5, "sixth": 6}
 
 
 def retry_if_webdriver_error(exception):
