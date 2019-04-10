@@ -29,7 +29,7 @@ class SOOTasks(TaskSet):
             url,
             params=params,
             headers=USER_AGENT,
-            name="/?product_categories=[product_categories]&operating_countries=[operating_countries]",
+            name="/?product_categories=[...]&operating_countries=[...]",
             auth=basic_auth()
        )
 
@@ -62,3 +62,4 @@ class SOO(HttpLocust):
     stop_timeout = settings.LOCUST_TIMEOUT
     min_wait = settings.LOCUST_MIN_WAIT
     max_wait = settings.LOCUST_MAX_WAIT
+
