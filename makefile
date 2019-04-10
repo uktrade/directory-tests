@@ -48,6 +48,10 @@ rudimental_load_test_invest:
 	export LOCUST_FILE=./locustfile_rudimental_invest.py; \
 	$(LOCUST)
 
+rudimental_load_test_soo:
+	export LOCUST_FILE=./locustfile_rudimental_soo.py; \
+	$(LOCUST)
+
 load_test:
 	$(LOCUST)
 
