@@ -19,4 +19,4 @@ def go_to(session: Session) -> Response:
 
 def should_be_here(response: Response):
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
-    logging.debug("Successfully got to the Profile About page")
+    logging.debug("Successfully got to the International - Landing page")

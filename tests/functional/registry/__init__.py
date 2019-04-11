@@ -23,6 +23,8 @@ from tests.functional.pages import (
     fas_ui_profile,
     fas_ui_tech_industry,
     fas_ui_tech_industry_summary,
+    international_industries,
+    international_industry,
     international_landing,
     profile_about,
     profile_case_study_basic,
@@ -221,7 +223,18 @@ SUD_PAGE_REGISTRY = {
 }
 
 INTERNATIONAL_SITE_PAGE_REGISTRY = {
-    "international - landing": {"url": "ui-international:landing", "po": international_landing},
+    "international - landing": {
+        "url": "ui-international:landing",
+        "po": international_landing,
+    },
+    "international - industries": {
+        "url": "ui-international:industries",
+        "po": international_industries,
+    },
+    "international - industry - engineering and manufacturing": {
+        "url": "ui-international:industry",
+        "po": international_industry,
+    },
 }
 
 PAGE_REGISTRY = {}
@@ -236,7 +249,7 @@ def get_fabs_page_url(
         page_name: str,
         *,
         language_code: str = None,
-        language_argument: str = "lang"
+        language_argument: str = "lang",
 ):
     url = get_absolute_url(PAGE_REGISTRY[page_name.lower()]["url"])
     if language_code:
