@@ -232,10 +232,10 @@ PAGE_REGISTRY.update(SUD_PAGE_REGISTRY)
 PAGE_REGISTRY.update(INTERNATIONAL_SITE_PAGE_REGISTRY)
 
 
-def get_fabs_page_url(page_name: str, *, language_code: str = None):
+def get_fabs_page_url(page_name: str, *, language_code: str = None, language_argument: str = "lang"):
     url = get_absolute_url(PAGE_REGISTRY[page_name.lower()]["url"])
     if language_code:
-        url += "?lang={}".format(language_code)
+        url += f"?{language_argument}={language_code}"
     return url
 
 
