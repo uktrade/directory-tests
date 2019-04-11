@@ -595,7 +595,7 @@ def fas_should_find_with_company_details(
             assert context.search_results[result]
 
 
-def fas_pages_should_be_in_selected_language(
+def generic_pages_should_be_in_selected_language(
     context: Context,
     pages_table: Table,
     language: str,
