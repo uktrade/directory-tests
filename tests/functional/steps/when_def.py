@@ -30,7 +30,7 @@ from tests.functional.steps.when_impl import (
     fas_send_feedback_request,
     fas_send_message_to_supplier,
     fas_view_page,
-    fas_view_pages_in_selected_language,
+    generic_view_pages_in_selected_language,
     go_to_page,
     go_to_pages,
     prof_attempt_to_sign_in_to_sso,
@@ -186,8 +186,20 @@ def when_buyer_searches_on_fas_using_company_details(
 
 @when('"{buyer_alias}" chooses to view specific FAS page in "{language}" language')
 def when_buyer_views_page_in_selected_language(context, buyer_alias, language):
-    fas_view_pages_in_selected_language(
-        context, buyer_alias, pages_table=context.table, language=language)
+    # FAS uses ?lang=de
+    generic_view_pages_in_selected_language(
+        context, buyer_alias, pages_table=context.table, language=language,
+        language_argument="lang"
+    )
+
+
+@when('"{actor_alias}" chooses to view following pages in "{language}" language')
+def when_actor_views_pages_in_selected_language(context, actor_alias, language):
+    # Domestic site uses ?language=de
+    generic_view_pages_in_selected_language(
+        context, actor_alias, pages_table=context.table, language=language,
+        language_argument="language"
+    )
 
 
 @when('"{buyer_alias}" searches for companies on FAS with empty search query')

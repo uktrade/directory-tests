@@ -1380,8 +1380,9 @@ def fas_search_using_company_details(
     context.search_responses = search_responses
 
 
-def fas_view_pages_in_selected_language(
-    context: Context, buyer_alias: str, pages_table: Table, language: str
+def generic_view_pages_in_selected_language(
+    context: Context, buyer_alias: str, pages_table: Table, language: str,
+    language_argument: str = "lang",
 ):
     """View specific FAS pages in selected language.
 
@@ -1390,11 +1391,15 @@ def fas_view_pages_in_selected_language(
     """
     pages = [row["page"] for row in pages_table]
     views = {}
+    actor = context.get_actor(buyer_alias)
+    session = actor.session
     for page_name in pages:
-        actor = context.get_actor(buyer_alias)
-        session = actor.session
         language_code = get_language_code(language)
-        page_url = get_fabs_page_url(page_name, language_code=language_code)
+        page_url = get_fabs_page_url(
+            page_name,
+            language_code=language_code,
+            language_argument=language_argument,
+        )
         response = make_request(Method.GET, page_url, session=session)
         views[page_name] = response
     context.views = views
