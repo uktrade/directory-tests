@@ -79,7 +79,6 @@ Feature: International Page
     Then "Robert"'s keyboard should be trapped to the language selector
 
 
-  @wip
   @ED-3149
   @language-selector
   Scenario Outline: Visitors should be able to view International page in "<preferred_language>"
@@ -93,11 +92,18 @@ Feature: International Page
     Examples: available languages
       | preferred_language |
       | English            |
-      | 简体中文            |
       | Deutsch            |
       | 日本語              |
-      | Español            |
+      | 简体中文            |
+      | Français           |
+      | español            |
       | Português          |
+
+    @bug
+    @CMS-1263
+    @fixme
+    Examples: 500 ISE
+      | preferred_language |
       | العربيّة            |
 
 
