@@ -204,6 +204,7 @@ def then_buyer_should_find_supplier_using_company_details(
 
 
 @then('the "{page_part}" part of the viewed FAS page should be presented in "{language}" language with probability greater than "{probability}"')
+@then('the "{page_part}" part of the viewed pages should be presented in "{language}" language with probability greater than "{probability}"')
 def then_page_should_be_in(context, page_part, language, probability):
     fas_pages_should_be_in_selected_language(
         context, pages_table=context.table, language=language,
