@@ -126,6 +126,7 @@ def given_supplier_added_complete_case_study(
     profile_should_see_all_case_studies(context, supplier_alias)
 
 
+@given('"{buyer_alias}" is an anonymous visitor')
 @given('"{buyer_alias}" is a buyer')
 def given_unauthenticated_buyer(context, buyer_alias):
     buyer = unauthenticated_buyer(buyer_alias)
