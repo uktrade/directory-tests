@@ -23,6 +23,7 @@ from tests.functional.pages import (
     fas_ui_profile,
     fas_ui_tech_industry,
     fas_ui_tech_industry_summary,
+    international_landing,
     profile_about,
     profile_case_study_basic,
     profile_edit_company_description,
@@ -219,11 +220,16 @@ SUD_PAGE_REGISTRY = {
     },
 }
 
+INTERNATIONAL_SITE_PAGE_REGISTRY = {
+    "international - landing": {"url": "ui-international:landing", "po": international_landing},
+}
+
 PAGE_REGISTRY = {}
 PAGE_REGISTRY.update(FAB_PAGE_REGISTRY)
 PAGE_REGISTRY.update(FAS_PAGE_REGISTRY)
 PAGE_REGISTRY.update(SSO_PAGE_REGISTRY)
 PAGE_REGISTRY.update(SUD_PAGE_REGISTRY)
+PAGE_REGISTRY.update(INTERNATIONAL_SITE_PAGE_REGISTRY)
 
 
 def get_fabs_page_url(page_name: str, *, language_code: str = None):
