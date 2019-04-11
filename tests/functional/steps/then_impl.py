@@ -3,6 +3,7 @@
 import email
 import inspect
 import logging
+from collections import defaultdict
 from statistics import median
 
 from behave.model import Table
@@ -631,44 +632,47 @@ def generic_pages_should_be_in_selected_language(
     else:
         main = False
 
+    if language.lower() == "chinese":
+        expected_language = "zh-cn"
+    else:
+        expected_language = get_language_code(language)
+
+    results = defaultdict()
     for page_name in pages:
         response = views[page_name]
-        # store currently processed response in context, so that it can be
-        # printed out to the console in case of a failing assertion
-        context.response = response
         content = response.content.decode("utf-8")
-        url = response.url
-        if language.lower() == "chinese":
-            expected_language = "zh-cn"
-        else:
-            expected_language = get_language_code(language)
         logging.debug(
             "detecting the language of fas %s page %s", page_name, response.url
         )
-        results = detect_page_language(content=content, main=main)
+        lang_detect_results = detect_page_language(content=content, main=main)
         median_results = {
             language: median(probabilities)
-            for language, probabilities in results.items()
+            for language, probabilities in lang_detect_results.items()
         }
 
-        with assertion_msg(
-            "Expected to see '{}' among languages detected for page '{} ->"
-            " {}', but instead got '{}'".format(
-                expected_language, page_name, url, median_results
-            )
-        ):
-            assert expected_language in median_results
+        results[page_name] = median_results
 
-        with assertion_msg(
-            "Expected '{}' page to be '{}' with median probability {} "
-            "but it was detected with {}".format(
-                page_name,
-                expected_language,
-                probability,
-                median_results[expected_language],
-            )
-        ):
-            assert median_results[expected_language] > probability
+    undetected_languages = {
+        page: medians
+        for page, medians in results.items()
+        if expected_language not in medians
+    }
+    with assertion_msg(
+        f"Could not detect '{expected_language}' in page content on following"
+        f" pages: {undetected_languages}"
+    ):
+        assert not undetected_languages
+
+    unmet_probabilities = {
+        page: medians
+        for page, medians in results.items()
+        if medians[expected_language] < probability
+    }
+    with assertion_msg(
+            f"Median '{expected_language}' language detection probability of "
+            f"{probability} wasn't met on following pages: {unmet_probabilities}"
+    ):
+        assert not unmet_probabilities
 
 
 def fas_should_find_all_sought_companies(context: Context, buyer_alias: str):
