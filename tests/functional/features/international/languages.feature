@@ -10,12 +10,16 @@ Feature: View International site in various languages
     Given "Annette" is an anonymous visitor
 
     When "Annette" chooses to view following pages in "<selected>" language
-      | page                    |
-      | International - Landing |
+      | page                                                     |
+      | International - Landing                                  |
+      | International - Industries                               |
+      | International - Industry - Engineering and manufacturing |
 
     Then the "main" part of the viewed pages should be presented in "<expected>" language with probability greater than "<lower limit>"
-      | page                    |
-      | International - Landing |
+      | page                                                     |
+      | International - Landing                                  |
+      | International - Industries                               |
+      | International - Industry - Engineering and manufacturing |
 
     Examples:
       | selected   | expected   | lower limit |
@@ -24,5 +28,11 @@ Feature: View International site in various languages
       | German     | German     | 0.98        |
       | Portuguese | Portuguese | 0.98        |
       | Spanish    | Spanish    | 0.98        |
-      | Arabic     | Arabic     | 0.85        |
       | Chinese    | Chinese    | 0.85        |
+
+    @bug
+    @CMS-1263
+    @fixme
+    Examples: 500 ISE
+      | selected   | expected   | lower limit |
+      | Arabic     | Arabic     | 0.85        |
