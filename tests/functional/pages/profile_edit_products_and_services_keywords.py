@@ -1,19 +1,35 @@
 # -*- coding: utf-8 -*-
 """Profile - Edit Company's products and services keywords"""
+from typing import List
+from urllib.parse import urljoin
 
 from requests import Response, Session
+
 from tests import get_absolute_url
-from tests.functional.utils.request import Method, make_request
+from tests.functional.utils.request import Method, check_url, make_request
 
-URL = get_absolute_url("profile:add-products-and-services-keywords")
-EXPECTED_STRINGS = []
+URL = get_absolute_url("profile:add-products-and-services")
+EXPECTED_STRINGS = [
+    "Add publicity services",
+    "Choose the products and services"
+]
 
 
-def submit(session: Session, keywords: str) -> Response:
+def should_be_here(response: Response, *, industry: str = None):
+    if industry:
+        url = urljoin(URL, industry + "/")
+    else:
+        url = URL
+    check_url(response, url)
+
+
+def submit(session: Session, industry: str, keywords: List[str]) -> Response:
     headers = {"Referer": URL}
     data = {
-        "keywords": keywords,
+        "input-autocomplete": "",
+        "expertise_products_services": "|".join(keywords),
     }
+    url = urljoin(URL, industry + "/")
     return make_request(
-        Method.POST, URL, session=session, headers=headers, data=data
+        Method.POST, url, session=session, headers=headers, data=data
     )
