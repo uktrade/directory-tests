@@ -291,9 +291,9 @@ Feature: Multi-user accounts
       | detail                      |
       | trading name                |
       | website                     |
-      | keywords                    |
       | number of employees         |
       | sector of interest          |
+#      | keywords                    |  SEE TT-1329
 
 
   @ED-3568
