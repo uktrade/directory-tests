@@ -6,7 +6,6 @@ from behave import when
 from tests.functional.steps.when_impl import (
     bp_provide_company_details,
     bp_select_random_sector_and_export_to_country,
-    profile_add_collaborator,
     fab_choose_to_verify_with_code,
     fab_collaborator_create_sso_account_and_confirm_email,
     fab_confirm_collaboration_request,
@@ -35,6 +34,7 @@ from tests.functional.steps.when_impl import (
     go_to_pages,
     prof_attempt_to_sign_in_to_sso,
     profile_add_case_study,
+    profile_add_collaborator,
     profile_add_invalid_online_profiles,
     profile_add_online_profiles,
     profile_attempt_to_add_case_study,

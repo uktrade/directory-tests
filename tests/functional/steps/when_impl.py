@@ -31,7 +31,6 @@ from tests.functional.pages import (
     fab_ui_confirm_export_status,
     fab_ui_confirm_identity,
     fab_ui_confirm_identity_letter,
-    fab_ui_landing,
     fab_ui_verify_company,
     fas_ui_contact,
     fas_ui_feedback,
@@ -44,14 +43,15 @@ from tests.functional.pages import (
     profile_edit_company_description,
     profile_edit_company_profile,
     profile_edit_online_profiles,
+    profile_edit_products_and_services_industry,
     profile_edit_products_and_services_keywords,
     profile_enrolment_finished,
-    profile_find_a_buyer,
     profile_enter_email_verification_code,
     profile_enter_your_business_details,
     profile_enter_your_business_details_part_2,
     profile_enter_your_email_and_password,
     profile_enter_your_personal_details,
+    profile_find_a_buyer,
     profile_publish_company_profile,
     profile_ui_landing,
     profile_upload_logo,
@@ -1029,17 +1029,89 @@ def profile_update_company_details(
     profile_edit_company_profile.should_be_here(response)
 
     # Step 3 - Go to the Edit Sector page
+    industries = {
+        "financial": [
+            'Opening bank accounts',
+            'Accounting and Tax (including registration for VAT and PAYE)',
+            'Insurance',
+            'Raising Capital',
+            'Regulatory support',
+            'Mergers and Acquisitions',
+        ],
+        "management-consulting": [
+            'Business development',
+            'Product safety regulation and compliance',
+            'Commercial/pricing strategy',
+            'Workforce development',
+            'Strategy & long-term planning',
+            'Risk consultation',
+        ],
+        "human-resources": [
+            'Staff management & progression',
+            'Onboarding, including new starter support and contracts of employment',
+            'Payroll',
+            'Salary benchmarking and employee benefits ',
+            'Succession planning',
+            'Employment & talent research',
+            'Sourcing and Hiring',
+        ],
+        "legal": [
+            'Company incorporation',
+            'Employment',
+            'Immigration',
+            'Land use planning',
+            'Intellectual property',
+            'Data Protection and Information Assurance',
+        ],
+        "publicity": [
+            'Public Relations',
+            'Branding',
+            'Social Media',
+            'Public Affairs',
+            'Advertising',
+            'Marketing',
+        ],
+        "further-services": [
+            'Business relocation',
+            'Planning consultants',
+            'Facilities (water, wifi, electricity)',
+            'Translation services',
+            'Staff and family relocation including schooling for children',
+        ],
+        "other": sentence().split(),
+    }
     if change_keywords:
-        keywords = ", ".join(sentence().split())
-        new_details = new_details._replace(**{"keywords": keywords})
+        industry = random.choice(list(industries.keys()))
+        response = profile_edit_products_and_services_industry.submit(
+            actor.session,
+            industry=industry,
+        )
+        context.response = response
+        profile_edit_products_and_services_keywords.should_be_here(
+            response, industry=industry
+        )
+
+        number_of_keywords = random.randint(1, len(industries[industry]))
+        keywords = list(
+            set(
+                random.choice(industries[industry]) for _ in range(number_of_keywords)
+            )
+        )
         response = profile_edit_products_and_services_keywords.submit(
             actor.session,
-            keywords=keywords
+            industry=industry,
+            keywords=keywords,
         )
         context.response = response
 
         # Step 3' - Check if Supplier is on FAB Profile page
         profile_edit_company_profile.should_be_here(response)
+        new_details = new_details._replace(
+            **{
+                "industry": industry,
+                "keywords": ", ".join(keywords)
+            }
+        )
 
     # Step 4 - update company's details stored in context.scenario_data
     context.set_company_details(

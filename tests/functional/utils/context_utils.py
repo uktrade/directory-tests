@@ -76,6 +76,7 @@ Company = namedtuple(
         "keywords",
         "no_employees",
         "sector",
+        "industry",
         "letter_recipient",
         "companies_house_details",
         "facebook",
