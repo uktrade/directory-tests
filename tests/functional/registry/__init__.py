@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-"""FABS Page Registry"""
+"""Page Registry"""
+from tests import get_absolute_url
 from tests.functional.pages import (
     fab_ui_account_add_collaborator,
     fab_ui_account_confrim_password,
@@ -42,8 +43,6 @@ from tests.functional.pages import (
     sso_ui_password_reset,
     sso_ui_register,
 )
-
-from tests import get_absolute_url
 
 FAS_PAGE_REGISTRY = {
     "fas landing": {"url": "ui-supplier:landing", "po": None},
