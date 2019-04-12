@@ -32,15 +32,15 @@ from tests.functional.pages import (
     profile_edit_company_profile,
     profile_edit_online_profiles,
     profile_enrol,
+    profile_export_opportunities,
+    profile_find_a_buyer,
+    profile_selling_online_overseas,
     profile_upload_logo,
     sso_ui_confim_your_email,
     sso_ui_login,
     sso_ui_logout,
     sso_ui_password_reset,
     sso_ui_register,
-    sud_ui_export_opportunities,
-    sud_ui_find_a_buyer,
-    sud_ui_selling_online_overseas,
 )
 
 from tests import get_absolute_url
@@ -184,11 +184,11 @@ SUD_PAGE_REGISTRY = {
     "sud landing": {"url": "profile:landing", "po": profile_about},
     "sud selling online overseas": {
         "url": "profile:soo",
-        "po": sud_ui_selling_online_overseas,
+        "po": profile_selling_online_overseas,
     },
     "sud export opportunities": {
         "url": "profile:exops-applications",
-        "po": sud_ui_export_opportunities,
+        "po": profile_export_opportunities,
     },
     "sud export opportunities applications": {
         "url": "profile:exops-applications",
@@ -215,7 +215,7 @@ SUD_PAGE_REGISTRY = {
         "url": "ui-buyer:case-study-add",
         "po": profile_case_study_basic,
     },
-    "profile - find a buyer": {"url": "profile:fab", "po": sud_ui_find_a_buyer},
+    "profile - find a buyer": {"url": "profile:fab", "po": profile_find_a_buyer},
     "profile - edit social media profiles": {
         "url": "profile:company-edit-social-media",
         "po": profile_edit_online_profiles,

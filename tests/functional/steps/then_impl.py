@@ -25,12 +25,12 @@ from tests.functional.pages import (
     profile_about,
     profile_edit_company_profile,
     profile_edit_online_profiles,
+    profile_find_a_buyer,
     profile_ui_landing,
     sso_ui_invalid_password_reset_link,
     sso_ui_logout,
     sso_ui_password_reset,
     sso_ui_verify_your_email,
-    sud_ui_find_a_buyer,
 )
 from tests.functional.registry import get_fabs_page_object
 from tests.functional.steps import has_action
@@ -1008,12 +1008,10 @@ def sud_should_see_options_to_manage_users(context: Context, actor_alias: str):
     actor = context.get_actor(actor_alias)
     session = actor.session
 
-    context.response = sud_ui_find_a_buyer.go_to(session)
-    sud_ui_find_a_buyer.should_be_here(
-        context.response, as_logged_in_user=True
-    )
+    context.response = profile_find_a_buyer.go_to(session)
+    profile_find_a_buyer.should_be_here(context.response)
 
-    sud_ui_find_a_buyer.should_see_options_to_manage_users(context.response)
+    profile_find_a_buyer.should_see_options_to_manage_users(context.response)
     logging.debug("%s can see options to control user accounts", actor_alias)
 
 
@@ -1031,12 +1029,10 @@ def sud_should_not_see_options_to_manage_users(
     context.response = profile_about.go_to(session, set_next_page=False)
     profile_about.should_be_here(context.response)
 
-    context.response = sud_ui_find_a_buyer.go_to(session)
-    sud_ui_find_a_buyer.should_be_here(
-        context.response, as_logged_in_user=True
-    )
+    context.response = profile_find_a_buyer.go_to(session)
+    profile_find_a_buyer.should_be_here(context.response)
 
-    sud_ui_find_a_buyer.should_not_see_options_to_manage_users(
+    profile_find_a_buyer.should_not_see_options_to_manage_users(
         context.response
     )
     logging.debug("%s can't see options to control user accounts", actor_alias)

@@ -46,13 +46,13 @@ from tests.functional.pages import (
     profile_edit_online_profiles,
     profile_edit_products_and_services_keywords,
     profile_enrolment_finished,
+    profile_find_a_buyer,
     profile_enter_email_verification_code,
     profile_enter_your_business_details,
     profile_enter_your_business_details_part_2,
     profile_enter_your_email_and_password,
     profile_enter_your_personal_details,
     profile_publish_company_profile,
-    profile_ui_find_a_buyer,
     profile_ui_landing,
     profile_upload_logo,
     sso_ui_change_password,
@@ -2315,7 +2315,7 @@ def profile_add_collaborator(
         )
         context.response = response
 
-        profile_ui_find_a_buyer.should_be_here(response, user_added=True)
+        profile_find_a_buyer.should_be_here(response, user_added=True)
         collaborators = company.collaborators
         if collaborators:
             collaborators.append(collaborator_alias)
@@ -2530,7 +2530,7 @@ def fab_send_transfer_ownership_request(
     )
     context.response = response
 
-    profile_ui_find_a_buyer.should_be_here(response, owner_transferred=True)
+    profile_find_a_buyer.should_be_here(response, owner_transferred=True)
 
     context.update_actor(supplier_alias, ex_owner=True)
     context.update_actor(new_owner_alias, company_alias=company_alias)
@@ -2659,7 +2659,7 @@ def fab_remove_collaborators(
     )
     context.response = response
 
-    profile_ui_find_a_buyer.should_be_here(response, user_removed=True)
+    profile_find_a_buyer.should_be_here(response, user_removed=True)
     collaborators = company.collaborators
     collaborators = [alias for alias in collaborators if alias not in aliases]
     context.set_company_details(company.alias, collaborators=collaborators)
