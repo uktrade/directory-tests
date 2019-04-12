@@ -219,7 +219,7 @@ urls = {
     "profile:edit-company-description": "find-a-buyer/description/",
     "profile:edit-company-business-details": "find-a-buyer/business-details/",
     "profile:publish-business-profile-to-fas": "find-a-buyer/publish/",
-    "profile:add-products-and-services-keywords": "find-a-buyer/products-and-services/",
+    "profile:add-products-and-services": "find-a-buyer/add-expertise/products-and-services/",
     "profile:case-study-edit": "find-a-buyer/case-study/{case_number}/details/",
     "profile:case-study-details": "find-a-buyer/case-study/details/",
     "profile:case-study-images": "find-a-buyer/case-study/images/",
