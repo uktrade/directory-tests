@@ -4,10 +4,11 @@ import logging
 
 from behave.model import Table
 from requests import Response, Session
+
 from tests import get_absolute_url
 from tests.functional.common import DETAILS
 from tests.functional.utils.context_utils import Company
-from tests.functional.utils.generic import assertion_msg
+from tests.functional.utils.generic import assertion_msg, escape_html
 from tests.functional.utils.request import Method, check_response, make_request
 from tests.settings import SECTORS_WITH_LABELS
 
@@ -70,7 +71,7 @@ def should_see_details(
             with assertion_msg(
                 "Couldn't find keyword '%s' in the response", keyword
             ):
-                assert keyword.strip() in content
+                assert escape_html(keyword.strip()) in content
     if website:
         with assertion_msg(
             "Couldn't find company's website '%s' in the response",
