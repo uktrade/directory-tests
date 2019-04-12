@@ -52,6 +52,10 @@ rudimental_load_test_soo:
 	export LOCUST_FILE=./locustfile_rudimental_soo.py; \
 	$(LOCUST)
 
+rudimental_load_test_search:
+	export LOCUST_FILE=./locustfile_rudimental_search.py; \
+	$(LOCUST)
+
 load_test:
 	$(LOCUST)
 
