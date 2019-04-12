@@ -925,28 +925,6 @@ def sso_supplier_confirms_email_address(context: Context, supplier_alias: str):
     context.update_actor(supplier_alias, has_sso_account=True)
 
 
-def sso_go_to_create_trade_profile(context: Context, supplier_alias: str):
-    """Follow the 'Create a trade profile' button on the "Find a Buyer" tab.
-
-    NOTE:
-    It's assumed that Supplier already has a standalone SSO/great.gov.uk
-    account
-    """
-    actor = context.get_actor(supplier_alias)
-    session = actor.session
-
-    # Step 1 - Go to "Find a Buyer" tab
-    response = profile_ui_find_a_buyer.go_to(session)
-    context.response = response
-    profile_ui_find_a_buyer.should_be_here(response)
-    profile_ui_find_a_buyer.should_see_get_a_trade_profile(response)
-
-    # Step 2 - Click on "Create a trade profile" button
-    response = profile_ui_find_a_buyer.go_to_create_a_trade_profile(session)
-    context.response = response
-    fab_ui_landing.should_be_here(response)
-
-
 def profile_upload_unsupported_file_as_logo(
     context: Context, supplier_alias: str, file: str
 ):

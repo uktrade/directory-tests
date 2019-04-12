@@ -55,7 +55,6 @@ from tests.functional.steps.when_impl import (
     reg_supplier_confirms_email_address,
     select_random_company,
     sso_change_password_with_password_reset_link,
-    sso_go_to_create_trade_profile,
     sso_open_password_reset_link,
     sso_request_password_reset,
     sso_sign_in,
@@ -130,11 +129,6 @@ def when_supplier_attempts_to_sign_in_to_fab(context, supplier_alias):
 @when('"{supplier_alias}" creates an unverified SSO/great.gov.uk account')
 def when_supplier_creates_standalone_sso_account(context, supplier_alias):
     reg_create_standalone_unverified_sso_account(context, supplier_alias)
-
-
-@when('"{supplier_alias}" decides to create a trade profile')
-def when_supplier_decide_to_create_trade_profile(context, supplier_alias):
-    sso_go_to_create_trade_profile(context, supplier_alias)
 
 
 @when('"{supplier_alias}" updates company\'s details')
