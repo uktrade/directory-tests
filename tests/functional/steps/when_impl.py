@@ -18,6 +18,7 @@ from scrapy import Selector
 
 from tests import get_absolute_url
 from tests.functional.common import DETAILS, PROFILES
+from tests.functional.pages import get_page_object
 from tests.functional.pages.fab import (
     fab_ui_account_add_collaborator,
     fab_ui_account_confrim_password,
@@ -67,7 +68,6 @@ from tests.functional.pages.sso import (
     sso_ui_register,
     sso_ui_verify_your_email,
 )
-from tests.functional.registry import get_fabs_page_object, get_fabs_page_url
 from tests.functional.steps.then_impl import (
     fab_should_get_request_for_becoming_owner,
     reg_should_get_verification_email,
@@ -1450,11 +1450,8 @@ def generic_view_pages_in_selected_language(
     session = actor.session
     for page_name in pages:
         language_code = get_language_code(language)
-        page_url = get_fabs_page_url(
-            page_name,
-            language_code=language_code,
-            language_argument=language_argument,
-        )
+        page_url = get_page_object(page_name).URL
+        page_url += f"?{language_argument}={language_code}"
         response = make_request(Method.GET, page_url, session=session)
         views[page_name] = response
     context.views = views
@@ -1482,7 +1479,7 @@ def fas_send_feedback_request(
 ):
     actor = context.get_actor(buyer_alias)
     session = actor.session
-    referer_url = get_fabs_page_url(page_name)
+    referer_url = get_page_object(page_name).URL
 
     # Step 1: generate random form data for our Buyer
     feedback = random_feedback_data(email=actor.email)
@@ -2186,9 +2183,9 @@ def profile_attempt_to_add_case_study(
 def sso_request_password_reset(context: Context, supplier_alias: str):
     actor = context.get_actor(supplier_alias)
     if actor.company_alias is None:
-        next_param = get_fabs_page_url(page_name="profile - about")
+        next_param = get_page_object("profile - about").URL
     else:
-        next_param = get_fabs_page_url(page_name="fab landing")
+        next_param = get_page_object("fab - landing").URL
 
     response = sso_ui_password_reset.go_to(
         actor.session, next_param=next_param
@@ -2207,7 +2204,7 @@ def sso_request_password_reset(context: Context, supplier_alias: str):
 def sso_sign_in(context: Context, supplier_alias: str, *, from_page: str = None):
     """Sign in to standalone SSO account."""
     actor = context.get_actor(supplier_alias)
-    from_page = get_fabs_page_url(from_page) if from_page else None
+    from_page = get_page_object(from_page).URL if from_page else None
     next_param = from_page or get_absolute_url("profile:about")
     referer = from_page or get_absolute_url("profile:about")
     response = sso_ui_login.go_to(
@@ -2293,7 +2290,7 @@ def sso_open_password_reset_link(context: Context, supplier_alias: str):
 
 def go_to_page(context: Context, supplier_alias: str, page_name: str):
     actor = context.get_actor(supplier_alias)
-    url = get_fabs_page_url(page_name)
+    url = get_page_object(page_name).URL
     context.response = make_request(Method.GET, url, session=actor.session)
 
 
@@ -2302,7 +2299,7 @@ def go_to_pages(context: Context, actor_alias: str, table: Table):
     results = {}
     for row in table:
         page_name = row["page name"]
-        url = get_fabs_page_url(page_name)
+        url = get_page_object(page_name).URL
         response = make_request(Method.GET, url, session=actor.session)
         context.response = response
         results[page_name] = response

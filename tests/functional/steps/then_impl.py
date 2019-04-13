@@ -13,7 +13,7 @@ from retrying import retry
 from scrapy import Selector
 
 from tests import get_absolute_url
-from tests.functional.pages import has_action
+from tests.functional.pages import has_action, get_page_object
 from tests.functional.pages.fab import (
     fab_ui_account_remove_collaborator,
     fab_ui_build_profile_basic,
@@ -38,7 +38,6 @@ from tests.functional.pages.sso import (
     sso_ui_password_reset,
     sso_ui_verify_your_email,
 )
-from tests.functional.registry import get_fabs_page_object
 from tests.functional.utils.generic import (
     MailGunEvent,
     MailGunService,
@@ -387,7 +386,7 @@ def profile_should_see_company_details(
 ):
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
-    page = get_fabs_page_object(page_name)
+    page = get_page_object(page_name)
     has_action(page, "go_to")
     has_action(page, "should_see_details")
     if "company_number" in inspect.getfullargspec(page.go_to).args:
@@ -943,7 +942,7 @@ def sso_should_see_invalid_password_reset_link_error(
 
 def should_be_at(context: Context, supplier_alias: str, page_name: str):
     response = context.response
-    page = get_fabs_page_object(page_name.lower())
+    page = get_page_object(page_name.lower())
     page.should_be_here(response)
     logging.debug("%s is on '%s' page", supplier_alias, page_name)
 
@@ -952,7 +951,7 @@ def should_see_selected_pages(context: Context, actor_alias: str):
     results = context.results
     for page_name, response in results.items():
         context.response = response
-        page = get_fabs_page_object(page_name.lower())
+        page = get_page_object(page_name.lower())
         page.should_be_here(response)
         logging.debug(
             "%s successfully got to '%s' page", actor_alias, page_name
@@ -1070,7 +1069,7 @@ def should_not_be_able_to_access_page(
     context: Context, collaborator_alias: str, page_name: str
 ):
     collaborator = context.get_actor(collaborator_alias)
-    page_object = get_fabs_page_object(page_name)
+    page_object = get_page_object(page_name)
     response = page_object.go_to(collaborator.session)
     try:
         page_object.should_be_here(response)
