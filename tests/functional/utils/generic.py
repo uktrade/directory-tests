@@ -1267,25 +1267,6 @@ def get_language_code(language: str):
     return FAS_SUPPORTED_LANGUAGES[language.lower()]
 
 
-def get_fas_page_url(page_name: str, *, language_code: str = None):
-    from tests.functional.registry import PAGE_REGISTRY
-
-    selector = PAGE_REGISTRY[page_name.lower()]
-    url = get_absolute_url(selector)
-    if language_code:
-        url += "?lang={}".format(language_code)
-    return url
-
-
-def get_fabs_page_url(page_name: str, *, language_code: str = None):
-    from tests.functional.registry import PAGE_REGISTRY
-
-    url = get_absolute_url(PAGE_REGISTRY[page_name.lower()])
-    if language_code:
-        url += "?lang={}".format(language_code)
-    return url
-
-
 def extract_main_error(content: str) -> str:
     """Extract error from page `main` block.
 
