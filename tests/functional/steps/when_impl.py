@@ -57,7 +57,6 @@ from tests.functional.pages.profile import (
     profile_enter_your_personal_details,
     profile_find_a_buyer,
     profile_publish_company_profile,
-    profile_ui_landing,
     profile_upload_logo,
 )
 from tests.functional.pages.sso import (
@@ -245,7 +244,7 @@ def sso_create_standalone_verified_sso_account(
     supplier = context.get_actor(supplier_alias)
     flag_sso_account_as_verified(context, supplier.email)
     sso_sign_in(context, supplier_alias)
-    profile_ui_landing.should_be_here(context.response)
+    profile_about.should_be_here(context.response)
     sso_should_be_signed_in_to_sso_account(context, supplier_alias)
     context.update_actor(supplier_alias, has_sso_account=True)
 
@@ -925,7 +924,7 @@ def sso_supplier_confirms_email_address(context: Context, supplier_alias: str):
     context.response = response
 
     # STEP 2 - Check if Supplier if on SSO Profile Landing page
-    profile_ui_landing.should_be_here(response)
+    profile_about.should_be_here(response)
 
     # STEP 3 - Update Actor's data
     context.update_actor(supplier_alias, has_sso_account=True)

@@ -184,8 +184,8 @@ def sso_should_be_signed_out_from_sso_account(
     context.response = response
 
     # Step 4 - check if Supplier is on SSO landing page
-    profile_ui_landing.should_be_here(response)
-    profile_ui_landing.should_be_logged_out(response)
+    profile_about.should_be_here(response)
+    profile_about.should_be_logged_out(response)
 
     # Step 5 - reset requests Session object
     context.reset_actor_session(supplier_alias)
@@ -406,7 +406,7 @@ def profile_supplier_should_be_on_landing_page(
 ):
     """Check if Supplier is on Profile Landing page."""
     response = context.response
-    profile_ui_landing.should_be_here(response)
+    profile_about.should_be_here(response)
     logging.debug("%s got to the SSO landing page.", supplier_alias)
 
 
