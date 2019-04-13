@@ -748,17 +748,6 @@ def profile_should_see_expected_error_messages(
     logging.debug("%s has seen all expected form errors", supplier_alias)
 
 
-def fas_should_be_on_selected_page(
-    context: Context, actor_alias: str, page_name: str
-):
-    response = context.response
-    page_object = get_fabs_page_object(page_name)
-    page_object.should_be_here(response)
-    logging.debug(
-        "%s successfully got to the %s FAS page", actor_alias, page_name
-    )
-
-
 def fas_should_see_promoted_industries(
     context: Context, actor_alias: str, table: Table
 ):
