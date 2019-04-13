@@ -4,11 +4,13 @@ import logging
 from urllib.parse import quote, urljoin
 
 from requests import Response, Session
+
 from tests import get_absolute_url
+from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Actor, Company
 from tests.functional.utils.request import Method, check_response, make_request
 
-SERVICE = "SSO"
+SERVICE = Services.SSO
 NAME = "Register"
 TYPE = "form"
 URL = get_absolute_url("sso:signup")

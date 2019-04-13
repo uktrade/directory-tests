@@ -5,9 +5,10 @@ import logging
 from requests import Response
 
 from tests import get_absolute_url
+from tests.functional.pages import Services
 from tests.functional.utils.request import check_response
 
-SERVICE = "SSO"
+SERVICE = Services.SSO
 NAME = "Invalid password reset link"
 TYPE = "error"
 URL = get_absolute_url("sso:password_reset")

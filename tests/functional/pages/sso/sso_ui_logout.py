@@ -4,10 +4,12 @@ import logging
 from urllib.parse import urljoin
 
 from requests import Response, Session
+
 from tests import get_absolute_url
+from tests.functional.pages import Services
 from tests.functional.utils.request import Method, check_response, make_request
 
-SERVICE = "SSO"
+SERVICE = Services.SSO
 NAME = "Logout"
 TYPE = "form"
 URL = get_absolute_url("sso:logout")

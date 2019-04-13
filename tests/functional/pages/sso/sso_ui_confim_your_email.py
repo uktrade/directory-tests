@@ -4,12 +4,14 @@ import logging
 from urllib.parse import unquote, urljoin
 
 from requests import Response, Session
+
 from tests import get_absolute_url
+from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Actor
 from tests.functional.utils.generic import assertion_msg
 from tests.functional.utils.request import Method, check_response, make_request
 
-SERVICE = "SSO"
+SERVICE = Services.SSO
 NAME = "Confirm your email"
 TYPE = "form"
 URL = get_absolute_url("sso:email_confirm")
