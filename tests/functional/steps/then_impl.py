@@ -13,6 +13,7 @@ from retrying import retry
 from scrapy import Selector
 
 from tests import get_absolute_url
+from tests.functional.pages import has_action
 from tests.functional.pages.fab import (
     fab_ui_account_remove_collaborator,
     fab_ui_build_profile_basic,
@@ -38,7 +39,6 @@ from tests.functional.pages.sso import (
     sso_ui_verify_your_email,
 )
 from tests.functional.registry import get_fabs_page_object
-from tests.functional.steps import has_action
 from tests.functional.utils.generic import (
     MailGunEvent,
     MailGunService,

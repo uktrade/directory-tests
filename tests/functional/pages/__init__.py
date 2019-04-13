@@ -171,3 +171,7 @@ def get_page_object(service_and_page: str) -> ModuleType:
         )
     logging.debug(f"PO search: found 1 PO for: {service_and_page} → {result}")
     return result
+
+
+def has_action(page: ModuleType, name: str):
+    assert hasattr(page, name), f"{page.__name__} has no '{name}' action"
