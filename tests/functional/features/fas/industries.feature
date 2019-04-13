@@ -30,14 +30,14 @@ Feature: Promoted industries
 
     Examples:
       | selected                                |
-      | FAS - Health - Industry                 |
-      | FAS - Technology - Industry             |
       | FAS - Creative - Industry               |
-      | FAS - Food and drink - Industry         |
-      | FAS - Health Industry - Summary         |
-      | FAS - Technology Industry - Summary     |
       | FAS - Creative Industry - Summary       |
+      | FAS - Food and drink - Industry         |
       | FAS - Food and drink Industry - Summary |
+      | FAS - Health - Industry                 |
+      | FAS - Health Industry - Summary         |
+      | FAS - Technology - Industry             |
+      | FAS - Technology Industry - Summary     |
 
 
   @wip
@@ -54,11 +54,11 @@ Feature: Promoted industries
 
     Examples:
       | selected                                |
-      | FAS - Health - Industry                 |
-      | FAS - Technology - Industry             |
       | FAS - Creative - Industry               |
-      | FAS - Food and drink - Industry         |
-      | FAS - Health Industry - Summary         |
-      | FAS - Technology Industry - Summary     |
       | FAS - Creative Industry - Summary       |
+      | FAS - Food and drink - Industry         |
       | FAS - Food and drink Industry - Summary |
+      | FAS - Health - Industry                 |
+      | FAS - Health Industry - Summary         |
+      | FAS - Technology - Industry             |
+      | FAS - Technology Industry - Summary     |
