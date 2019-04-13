@@ -14,7 +14,7 @@ from tests.functional.utils.request import Method, check_response, make_request
 from tests.settings import SECTORS_WITH_LABELS
 
 SERVICE = Services.PROFILE
-NAME = "Edit company's profile"
+NAME = "Edit company profile"
 TYPE = "landing"
 URL = get_absolute_url("profile:edit-company-profile")
 EXPECTED_STRINGS = [
