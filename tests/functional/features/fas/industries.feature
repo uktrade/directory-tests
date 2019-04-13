@@ -7,7 +7,7 @@ Feature: Promoted industries
   Scenario: Buyers should be able to view page with promoted Industries
     Given "Annette Geissinger" is a buyer
 
-    When "Annette Geissinger" goes to "FAS Industries" page
+    When "Annette Geissinger" goes to "FAS - Industries" page
 
     Then "Annette Geissinger" should see sections with selected industries
       | industry       |
