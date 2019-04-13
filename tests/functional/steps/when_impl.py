@@ -19,19 +19,6 @@ from scrapy import Selector
 from tests import get_absolute_url
 from tests.functional.common import DETAILS, PROFILES
 from tests.functional.pages import (
-    fab_ui_account_add_collaborator,
-    fab_ui_account_confrim_password,
-    fab_ui_account_remove_collaborator,
-    fab_ui_account_transfer_ownership,
-    fab_ui_build_profile_basic,
-    fab_ui_build_profile_sector,
-    fab_ui_confim_your_collaboration,
-    fab_ui_confim_your_ownership,
-    fab_ui_confirm_company,
-    fab_ui_confirm_export_status,
-    fab_ui_confirm_identity,
-    fab_ui_confirm_identity_letter,
-    fab_ui_verify_company,
     fas_ui_contact,
     fas_ui_feedback,
     fas_ui_find_supplier,
@@ -61,6 +48,21 @@ from tests.functional.pages import (
     sso_ui_password_reset,
     sso_ui_register,
     sso_ui_verify_your_email,
+)
+from tests.functional.pages.fab import (
+    fab_ui_account_add_collaborator,
+    fab_ui_account_confrim_password,
+    fab_ui_account_remove_collaborator,
+    fab_ui_account_transfer_ownership,
+    fab_ui_build_profile_basic,
+    fab_ui_build_profile_sector,
+    fab_ui_confim_your_collaboration,
+    fab_ui_confim_your_ownership,
+    fab_ui_confirm_company,
+    fab_ui_confirm_export_status,
+    fab_ui_confirm_identity,
+    fab_ui_confirm_identity_letter,
+    fab_ui_verify_company,
 )
 from tests.functional.registry import get_fabs_page_object, get_fabs_page_url
 from tests.functional.steps.then_impl import (

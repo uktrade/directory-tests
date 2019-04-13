@@ -14,10 +14,6 @@ from scrapy import Selector
 
 from tests import get_absolute_url
 from tests.functional.pages import (
-    fab_ui_account_remove_collaborator,
-    fab_ui_build_profile_basic,
-    fab_ui_confirm_identity,
-    fab_ui_verify_company,
     fas_ui_contact,
     fas_ui_find_supplier,
     fas_ui_industries,
@@ -31,6 +27,12 @@ from tests.functional.pages import (
     sso_ui_logout,
     sso_ui_password_reset,
     sso_ui_verify_your_email,
+)
+from tests.functional.pages.fab import (
+    fab_ui_account_remove_collaborator,
+    fab_ui_build_profile_basic,
+    fab_ui_confirm_identity,
+    fab_ui_verify_company,
 )
 from tests.functional.registry import get_fabs_page_object
 from tests.functional.steps import has_action

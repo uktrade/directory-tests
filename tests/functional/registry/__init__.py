@@ -2,17 +2,6 @@
 """Page Registry"""
 from tests import get_absolute_url
 from tests.functional.pages import (
-    fab_ui_account_add_collaborator,
-    fab_ui_account_confrim_password,
-    fab_ui_account_remove_collaborator,
-    fab_ui_account_transfer_ownership,
-    fab_ui_confim_your_collaboration,
-    fab_ui_confim_your_ownership,
-    fab_ui_confirm_identity,
-    fab_ui_confirm_identity_letter,
-    fab_ui_edit_sector,
-    fab_ui_landing,
-    fab_ui_verify_company,
     fas_ui_creative_industry,
     fas_ui_creative_industry_summary,
     fas_ui_find_supplier,
@@ -42,6 +31,19 @@ from tests.functional.pages import (
     sso_ui_logout,
     sso_ui_password_reset,
     sso_ui_register,
+)
+from tests.functional.pages.fab import (
+    fab_ui_account_add_collaborator,
+    fab_ui_account_confrim_password,
+    fab_ui_account_remove_collaborator,
+    fab_ui_account_transfer_ownership,
+    fab_ui_confim_your_collaboration,
+    fab_ui_confim_your_ownership,
+    fab_ui_confirm_identity,
+    fab_ui_confirm_identity_letter,
+    fab_ui_edit_sector,
+    fab_ui_landing,
+    fab_ui_verify_company,
 )
 
 FAS_PAGE_REGISTRY = {
