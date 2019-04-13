@@ -2,9 +2,6 @@
 """Page Registry"""
 from tests import get_absolute_url
 from tests.functional.pages import (
-    international_industries,
-    international_industry,
-    international_landing,
     profile_about,
     profile_case_study_basic,
     profile_edit_company_description,
@@ -21,6 +18,8 @@ from tests.functional.pages import (
     sso_ui_password_reset,
     sso_ui_register,
 )
+from tests.functional.pages.international import international_industry, \
+    international_industries, international_landing
 from tests.functional.pages.fab import (
     fab_ui_account_add_collaborator,
     fab_ui_account_confrim_password,
