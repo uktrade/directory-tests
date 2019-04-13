@@ -75,6 +75,7 @@ def get_enum_key(module: ModuleType) -> str:
         f"{module.SERVICE.value}_{module.TYPE}_{module.NAME}".upper()
         .replace(" ", "_")
         .replace("-", "_")
+        .replace("'", "")
     )
 
 
