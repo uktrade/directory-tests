@@ -3,9 +3,14 @@
 import logging
 
 from requests import Response, Session
+
 from tests import get_absolute_url
+from tests.functional.pages import Services
 from tests.functional.utils.request import Method, check_response, make_request
 
+SERVICE = Services.PROFILE
+NAME = "Export Opportunities"
+TYPE = "landing"
 URL = get_absolute_url("profile:exops-applications")
 EXPECTED_STRINGS = [
     "Account",

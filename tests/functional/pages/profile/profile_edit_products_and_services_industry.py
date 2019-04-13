@@ -2,14 +2,19 @@
 """Profile - Edit Company's products and services industry"""
 
 from requests import Response, Session
+
 from tests import get_absolute_url
+from tests.functional.pages import Services
 from tests.functional.utils.request import (
     Method,
-    make_request,
-    check_url,
     check_response,
+    check_url,
+    make_request,
 )
 
+SERVICE = Services.PROFILE
+NAME = "Edit company's products and services (industry)"
+TYPE = "form"
 URL = get_absolute_url("profile:add-products-and-services")
 EXPECTED_STRINGS = [
     "Choose the products and services industry"

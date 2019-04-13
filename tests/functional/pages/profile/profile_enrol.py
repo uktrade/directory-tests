@@ -2,9 +2,14 @@
 """Profile - Enrol - Create an account"""
 
 from requests import Response, Session
+
 from tests import get_absolute_url
+from tests.functional.pages import Services
 from tests.functional.utils.request import Method, check_response, make_request
 
+SERVICE = Services.PROFILE
+NAME = "Enrol"
+TYPE = "landing"
 URL = get_absolute_url("profile:enrol")
 EXPECTED_STRINGS = [
     "Create an account",

@@ -3,10 +3,15 @@
 import logging
 
 from requests import Response, Session
+
 from tests import get_absolute_url
+from tests.functional.pages import Services
 from tests.functional.utils.context_utils import CaseStudy
 from tests.functional.utils.request import Method, check_response, make_request
 
+SERVICE = Services.PROFILE
+NAME = "Add case study (basic details)"
+TYPE = "form"
 URL = get_absolute_url("profile:case-study-details")
 EDIT_URL = get_absolute_url("profile:case-study-edit")
 EXPECTED_STRINGS = [

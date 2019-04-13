@@ -8,9 +8,13 @@ from requests import Response, Session
 from retrying import retry
 
 from tests import get_absolute_url
+from tests.functional.pages import Services
 from tests.functional.utils.context_utils import CaseStudy
 from tests.functional.utils.request import Method, check_response, make_request
 
+SERVICE = Services.PROFILE
+NAME = "Add case study (images)"
+TYPE = "form"
 URL = get_absolute_url("profile:case-study-images")
 EXPECTED_STRINGS = [
     "Add a caption that tells visitors what the main image represents",

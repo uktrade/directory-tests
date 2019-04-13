@@ -3,10 +3,15 @@
 import logging
 
 from requests import Response, Session
+
 from tests import get_absolute_url
+from tests.functional.pages import Services
 from tests.functional.utils.generic import assertion_msg
 from tests.functional.utils.request import Method, check_response, make_request
 
+SERVICE = Services.PROFILE
+NAME = "Find a Buyer"
+TYPE = "landing"
 URL = get_absolute_url("profile:fab")
 EXPECTED_STRINGS = [
     "Account",

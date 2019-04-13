@@ -1,11 +1,16 @@
 # -*- coding: utf-8 -*-
-"""Profile - Enter your details"""
+"""Profile - Enter your personal details"""
 
 from requests import Response, Session
+
 from tests import get_absolute_url
-from tests.functional.utils.context_utils import Actor, Company
+from tests.functional.pages import Services
+from tests.functional.utils.context_utils import Actor
 from tests.functional.utils.request import Method, check_response, make_request
 
+SERVICE = Services.PROFILE
+NAME = "Enter your personal details"
+TYPE = "form"
 URL = get_absolute_url("profile:enrol-personal-details")
 EXPECTED_STRINGS = [
     "Enter your details",

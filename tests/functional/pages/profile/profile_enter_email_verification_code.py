@@ -2,10 +2,15 @@
 """Profile - Enter your email verification code"""
 
 from requests import Response, Session
+
 from tests import get_absolute_url
+from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Actor
 from tests.functional.utils.request import Method, check_response, make_request
 
+SERVICE = Services.PROFILE
+NAME = "Enter email verification code"
+TYPE = "form"
 URL = get_absolute_url("profile:enrol-email-verification")
 EXPECTED_STRINGS = [
     "Enter your confirmation code",

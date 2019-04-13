@@ -3,9 +3,13 @@
 from requests import Response, Session
 
 from tests import get_absolute_url
+from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Actor, Company
 from tests.functional.utils.request import Method, check_response, make_request
 
+SERVICE = Services.PROFILE
+NAME = "Enter your business details (industry & website)"
+TYPE = "form"
 URL = get_absolute_url("profile:enrol-business-details")
 EXPECTED_STRINGS = [
     "Enter your business details",

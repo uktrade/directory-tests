@@ -5,11 +5,16 @@ import random
 import re
 
 from requests import Response, Session
+
 from tests import get_absolute_url
+from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Actor, Company
 from tests.functional.utils.generic import assertion_msg
 from tests.functional.utils.request import Method, check_response, make_request
 
+SERVICE = Services.PROFILE
+NAME = "Edit online profiles"
+TYPE = "form"
 URL = get_absolute_url("profile:company-edit-social-media")
 EXPECTED_STRINGS = [
     "Online profiles",

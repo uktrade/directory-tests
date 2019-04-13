@@ -2,10 +2,15 @@
 """Profile - Enter your business details"""
 
 from requests import Response, Session
+
 from tests import get_absolute_url
+from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Actor, Company
 from tests.functional.utils.request import Method, check_response, make_request
 
+SERVICE = Services.PROFILE
+NAME = "Enter your business details (CH search)"
+TYPE = "form"
 URL = get_absolute_url("profile:enrol-companies-house-search")
 EXPECTED_STRINGS = [
     "Enter your business details",
