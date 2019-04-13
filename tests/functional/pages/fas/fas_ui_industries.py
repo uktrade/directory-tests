@@ -24,7 +24,7 @@ EXPECTED_STRINGS_HEALTH = [
     ),
     "Find out more about the UK’s healthcare and life sciences",
 ]
-EXPECTED_STRINGS_TECH = [
+EXPECTED_STRINGS_TECHNOLOGY = [
     "The UK's advanced technology",
     (
         "Check out the cutting-edge technological innovations that the UK is "
@@ -63,8 +63,8 @@ def should_be_here(response: Response):
 def should_see_industry_section(response: Response, industry: str):
     if industry == "health":
         expected = EXPECTED_STRINGS_HEALTH
-    elif industry == "tech":
-        expected = EXPECTED_STRINGS_TECH
+    elif industry == "technology":
+        expected = EXPECTED_STRINGS_TECHNOLOGY
     elif industry == "creative":
         expected = EXPECTED_STRINGS_CREATIVE
     elif industry == "food and drink":

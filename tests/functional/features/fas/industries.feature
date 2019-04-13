@@ -12,7 +12,7 @@ Feature: Promoted industries
     Then "Annette Geissinger" should see sections with selected industries
       | industry       |
       | Health         |
-      | Tech           |
+      | Technology     |
       | Creative       |
       | Food and drink |
 
@@ -31,11 +31,11 @@ Feature: Promoted industries
     Examples:
       | selected                                |
       | FAS - Health - Industry                 |
-      | FAS - Tech - Industry                   |
+      | FAS - Technology - Industry             |
       | FAS - Creative - Industry               |
       | FAS - Food and drink - Industry         |
       | FAS - Health Industry - Summary         |
-      | FAS - Tech Industry - Summary           |
+      | FAS - Technology Industry - Summary     |
       | FAS - Creative Industry - Summary       |
       | FAS - Food and drink Industry - Summary |
 
@@ -55,10 +55,10 @@ Feature: Promoted industries
     Examples:
       | selected                                |
       | FAS - Health - Industry                 |
-      | FAS - Tech - Industry                   |
+      | FAS - Technology - Industry             |
       | FAS - Creative - Industry               |
       | FAS - Food and drink - Industry         |
       | FAS - Health Industry - Summary         |
-      | FAS - Tech Industry - Summary           |
+      | FAS - Technology Industry - Summary     |
       | FAS - Creative Industry - Summary       |
       | FAS - Food and drink Industry - Summary |

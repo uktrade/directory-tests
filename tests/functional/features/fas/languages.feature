@@ -15,7 +15,7 @@ Feature: View FAS in various languages
       | FAS - Landing                   |
       | FAS - Industries                |
       | FAS - Health - Industry         |
-      | FAS - Tech - Industry           |
+      | FAS - Technology - Industry     |
       | FAS - Creative - Industry       |
       | FAS - Food and drink - Industry |
 
@@ -24,7 +24,7 @@ Feature: View FAS in various languages
       | FAS - Landing                   |
       | FAS - Industries                |
       | FAS - Health - Industry         |
-      | FAS - Tech - Industry           |
+      | FAS - Technology - Industry     |
       | FAS - Creative - Industry       |
       | FAS - Food and drink - Industry |
 
