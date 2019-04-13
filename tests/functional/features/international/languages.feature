@@ -13,13 +13,13 @@ Feature: View International site in various languages
       | page                                                     |
       | International - Landing                                  |
       | International - Industries                               |
-      | International - Industry - Engineering and manufacturing |
+      | International - Industry (Engineering and manufacturing) |
 
     Then the "main" part of the viewed pages should be presented in "<expected>" language with probability greater than "<lower limit>"
       | page                                                     |
       | International - Landing                                  |
       | International - Industries                               |
-      | International - Industry - Engineering and manufacturing |
+      | International - Industry (Engineering and manufacturing) |
 
     Examples:
       | selected   | expected   | lower limit |

@@ -10,6 +10,9 @@ from tests.functional.utils.request import Method, check_response, make_request
 
 SERVICE = Services.INTERNATIONAL
 NAME = "Industry"
+NAMES = [
+    "Industry (Engineering and manufacturing)",
+]
 TYPE = "article"
 URL = get_absolute_url("ui-international:industry")
 EXPECTED_STRINGS = [
