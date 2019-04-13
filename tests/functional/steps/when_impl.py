@@ -18,14 +18,6 @@ from scrapy import Selector
 
 from tests import get_absolute_url
 from tests.functional.common import DETAILS, PROFILES
-from tests.functional.pages import (
-    sso_ui_change_password,
-    sso_ui_confim_your_email,
-    sso_ui_login,
-    sso_ui_password_reset,
-    sso_ui_register,
-    sso_ui_verify_your_email,
-)
 from tests.functional.pages.fab import (
     fab_ui_account_add_collaborator,
     fab_ui_account_confrim_password,
@@ -67,6 +59,14 @@ from tests.functional.pages.profile import (
     profile_publish_company_profile,
     profile_ui_landing,
     profile_upload_logo,
+)
+from tests.functional.pages.sso import (
+    sso_ui_change_password,
+    sso_ui_confim_your_email,
+    sso_ui_login,
+    sso_ui_password_reset,
+    sso_ui_register,
+    sso_ui_verify_your_email,
 )
 from tests.functional.registry import get_fabs_page_object, get_fabs_page_url
 from tests.functional.steps.then_impl import (

@@ -13,12 +13,6 @@ from retrying import retry
 from scrapy import Selector
 
 from tests import get_absolute_url
-from tests.functional.pages import (
-    sso_ui_invalid_password_reset_link,
-    sso_ui_logout,
-    sso_ui_password_reset,
-    sso_ui_verify_your_email,
-)
 from tests.functional.pages.fab import (
     fab_ui_account_remove_collaborator,
     fab_ui_build_profile_basic,
@@ -37,6 +31,12 @@ from tests.functional.pages.profile import (
     profile_edit_online_profiles,
     profile_find_a_buyer,
     profile_ui_landing,
+)
+from tests.functional.pages.sso import (
+    sso_ui_invalid_password_reset_link,
+    sso_ui_logout,
+    sso_ui_password_reset,
+    sso_ui_verify_your_email,
 )
 from tests.functional.registry import get_fabs_page_object
 from tests.functional.steps import has_action

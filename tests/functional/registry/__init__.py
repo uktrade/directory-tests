@@ -1,13 +1,6 @@
 # -*- coding: utf-8 -*-
 """Page Registry"""
 from tests import get_absolute_url
-from tests.functional.pages import (
-    sso_ui_confim_your_email,
-    sso_ui_login,
-    sso_ui_logout,
-    sso_ui_password_reset,
-    sso_ui_register,
-)
 from tests.functional.pages.fab import (
     fab_ui_account_add_collaborator,
     fab_ui_account_confrim_password,
@@ -50,6 +43,13 @@ from tests.functional.pages.profile import (
     profile_find_a_buyer,
     profile_selling_online_overseas,
     profile_upload_logo,
+)
+from tests.functional.pages.sso import (
+    sso_ui_confim_your_email,
+    sso_ui_login,
+    sso_ui_logout,
+    sso_ui_password_reset,
+    sso_ui_register,
 )
 
 FAS_PAGE_REGISTRY = {
