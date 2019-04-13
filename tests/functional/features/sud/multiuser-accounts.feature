@@ -70,7 +70,7 @@ Feature: Multi-user accounts
     And "Peter Alder" added "Annette Geissinger" as a collaborator
     And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
     And "Annette Geissinger" decides to open the invitation from company "Y"
-    And "Annette Geissinger" should be on "FAB confirm you want to be added to the profile" page
+    And "Annette Geissinger" should be on "FAB - Accept invitation" page
 
     When "Annette Geissinger" confirms that she wants to be added to the company "Y" Find a Buyer profile
 
@@ -287,7 +287,7 @@ Feature: Multi-user accounts
       | keywords                    |
       | number of employees         |
       | sector of interest          |
-    And "Annette Geissinger" should see new details on "FAS - company profile" page
+    And "Annette Geissinger" should see new details on "FAS - Company's business profile" page
       | detail                      |
       | trading name                |
       | website                     |

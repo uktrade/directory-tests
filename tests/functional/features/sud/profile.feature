@@ -8,9 +8,9 @@ Feature: SUD (Profile) pages
   Scenario: Users should be able to view SUD Landing page without authentication
     Given "Peter Alder" is an unauthenticated supplier
 
-    When "Peter Alder" goes to "SUD Landing" page
+    When "Peter Alder" goes to "Profile - About" page
 
-    Then "Peter Alder" should see "SUD Landing" page
+    Then "Peter Alder" should see "Profile - About" page
 
 
   @ED-2266
@@ -20,16 +20,16 @@ Feature: SUD (Profile) pages
   Scenario Outline: Users who visited SUD landing page should not be able to view "<other SUD>" page without authentication
     Given "Peter Alder" is an unauthenticated supplier
 
-    When "Peter Alder" goes to "SUD Landing" page
+    When "Peter Alder" goes to "Profile - About" page
     And "Peter Alder" goes to "<other SUD>" page
 
     Then "Peter Alder" should see "<expected>" page
 
     Examples: SUD pages
-      |other SUD                  | expected        |
-      |SUD Export Opportunities   | SSO Login       |
-      |Profile - Find a Buyer     | Profile - Enrol |
-      |SUD Selling Online Overseas| SSO Login       |
+      | other SUD                         | expected        |
+      | Profile - Export Opportunities    | SSO - Login     |
+      | Profile - Find a Buyer            | Profile - Enrol |
+      | Profile - Selling Online Overseas | SSO - Login     |
 
 
   @ED-2266
@@ -47,10 +47,10 @@ Feature: SUD (Profile) pages
     Then "Peter Alder" should see "<expected>" page
 
     Examples: SUD pages
-      |SUD                        | expected        |
-      |SUD Export Opportunities   | SSO Login       |
-      |profile - Find a Buyer     | Profile - Enrol |
-      |SUD Selling Online Overseas| SSO Login       |
+      | SUD                               | expected        |
+      | Profile - Export Opportunities    | SSO - Login     |
+      | Profile - Find a Buyer            | Profile - Enrol |
+      | Profile - Selling Online Overseas | SSO - Login     |
 
 
   # I've been told that on non-prod envs ExOpps doesn't keep synced state
@@ -64,10 +64,10 @@ Feature: SUD (Profile) pages
     Given "Peter Alder" has a verified standalone SSO/great.gov.uk account
 
     When "Peter Alder" goes to specific pages
-      |page name                  |
-      |SUD Export Opportunities   |
-      |Profile - Find a Buyer     |
-      |SUD Selling Online Overseas|
+      | page name                         |
+      | Profile - Export Opportunities    |
+      | Profile - Find a Buyer            |
+      | Profile - Selling Online Overseas |
 
     Then "Peter Alder" should be able to see all selected pages
 
@@ -155,7 +155,7 @@ Feature: SUD (Profile) pages
     Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
     And "Annette Geissinger" signed out from SSO/great.gov.uk account
 
-    When "Annette Geissinger" signs in to SSO/great.gov.uk account from "FAB Landing"
+    When "Annette Geissinger" signs in to SSO/great.gov.uk account from "FAB - Landing"
 
     Then "Annette Geissinger" should be on "Profile - edit company profile" page
 
@@ -170,7 +170,7 @@ Feature: SUD (Profile) pages
     Given "Peter Alder" has created verified and published business profile for randomly selected company "Y"
     And "Peter Alder" signed out from SSO/great.gov.uk account
 
-    When "Peter Alder" signs in to SSO/great.gov.uk account from "FAB Landing"
+    When "Peter Alder" signs in to SSO/great.gov.uk account from "FAB - Landing"
 
     Then "Peter Alder" should be on "Profile - edit company profile" page
 
@@ -203,7 +203,7 @@ Feature: SUD (Profile) pages
       | number of employees         |
       | sector of interest          |
       | keywords                    |
-    And "Annette Geissinger" should see new details on "FAS - company profile" page
+    And "Annette Geissinger" should see new details on "FAS - Company's business profile" page
       | detail                      |
       | trading name                |
       | website                     |

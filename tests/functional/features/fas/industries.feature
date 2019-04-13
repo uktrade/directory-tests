@@ -29,15 +29,15 @@ Feature: Promoted industries
     Then "Annette Geissinger" should see "<selected>" page
 
     Examples:
-      | selected                            |
-      | FAS Health Industry                 |
-      | FAS Tech Industry                   |
-      | FAS Creative Industry               |
-      | FAS Food and drink Industry         |
-      | FAS Health Industry Summary         |
-      | FAS Tech Industry Summary           |
-      | FAS Creative Industry Summary       |
-      | FAS Food and drink Industry Summary |
+      | selected                                |
+      | FAS - Health - Industry                 |
+      | FAS - Tech - Industry                   |
+      | FAS - Creative - Industry               |
+      | FAS - Food and drink - Industry         |
+      | FAS - Health Industry - Summary         |
+      | FAS - Tech Industry - Summary           |
+      | FAS - Creative Industry - Summary       |
+      | FAS - Food and drink Industry - Summary |
 
 
   @wip
@@ -53,12 +53,12 @@ Feature: Promoted industries
     Then "Annette Geissinger" should see search results filtered by appropriate sectors
 
     Examples:
-      | selected                            |
-      | FAS Health Industry                 |
-      | FAS Tech Industry                   |
-      | FAS Creative Industry               |
-      | FAS Food and drink Industry         |
-      | FAS Health Industry Summary         |
-      | FAS Tech Industry Summary           |
-      | FAS Creative Industry Summary       |
-      | FAS Food and drink Industry Summary |
+      | selected                                |
+      | FAS - Health - Industry                 |
+      | FAS - Tech - Industry                   |
+      | FAS - Creative - Industry               |
+      | FAS - Food and drink - Industry         |
+      | FAS - Health Industry - Summary         |
+      | FAS - Tech Industry - Summary           |
+      | FAS - Creative Industry - Summary       |
+      | FAS - Food and drink Industry - Summary |
