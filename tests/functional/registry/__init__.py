@@ -2,24 +2,12 @@
 """Page Registry"""
 from tests import get_absolute_url
 from tests.functional.pages import (
-    profile_about,
-    profile_case_study_basic,
-    profile_edit_company_description,
-    profile_edit_company_profile,
-    profile_edit_online_profiles,
-    profile_enrol,
-    profile_export_opportunities,
-    profile_find_a_buyer,
-    profile_selling_online_overseas,
-    profile_upload_logo,
     sso_ui_confim_your_email,
     sso_ui_login,
     sso_ui_logout,
     sso_ui_password_reset,
     sso_ui_register,
 )
-from tests.functional.pages.international import international_industry, \
-    international_industries, international_landing
 from tests.functional.pages.fab import (
     fab_ui_account_add_collaborator,
     fab_ui_account_confrim_password,
@@ -45,6 +33,23 @@ from tests.functional.pages.fas import (
     fas_ui_profile,
     fas_ui_tech_industry,
     fas_ui_tech_industry_summary,
+)
+from tests.functional.pages.international import (
+    international_industries,
+    international_industry,
+    international_landing,
+)
+from tests.functional.pages.profile import (
+    profile_about,
+    profile_case_study_basic,
+    profile_edit_company_description,
+    profile_edit_company_profile,
+    profile_edit_online_profiles,
+    profile_enrol,
+    profile_export_opportunities,
+    profile_find_a_buyer,
+    profile_selling_online_overseas,
+    profile_upload_logo,
 )
 
 FAS_PAGE_REGISTRY = {
