@@ -19,10 +19,6 @@ from scrapy import Selector
 from tests import get_absolute_url
 from tests.functional.common import DETAILS, PROFILES
 from tests.functional.pages import (
-    fas_ui_contact,
-    fas_ui_feedback,
-    fas_ui_find_supplier,
-    fas_ui_profile,
     profile_about,
     profile_case_study_basic,
     profile_case_study_images,
@@ -63,6 +59,12 @@ from tests.functional.pages.fab import (
     fab_ui_confirm_identity,
     fab_ui_confirm_identity_letter,
     fab_ui_verify_company,
+)
+from tests.functional.pages.fas import (
+    fas_ui_contact,
+    fas_ui_feedback,
+    fas_ui_find_supplier,
+    fas_ui_profile,
 )
 from tests.functional.registry import get_fabs_page_object, get_fabs_page_url
 from tests.functional.steps.then_impl import (

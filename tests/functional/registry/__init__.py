@@ -2,17 +2,6 @@
 """Page Registry"""
 from tests import get_absolute_url
 from tests.functional.pages import (
-    fas_ui_creative_industry,
-    fas_ui_creative_industry_summary,
-    fas_ui_find_supplier,
-    fas_ui_food_and_drink_industry,
-    fas_ui_food_and_drink_industry_summary,
-    fas_ui_health_industry,
-    fas_ui_health_industry_summary,
-    fas_ui_industries,
-    fas_ui_profile,
-    fas_ui_tech_industry,
-    fas_ui_tech_industry_summary,
     international_industries,
     international_industry,
     international_landing,
@@ -44,6 +33,19 @@ from tests.functional.pages.fab import (
     fab_ui_edit_sector,
     fab_ui_landing,
     fab_ui_verify_company,
+)
+from tests.functional.pages.fas import (
+    fas_ui_creative_industry,
+    fas_ui_creative_industry_summary,
+    fas_ui_find_supplier,
+    fas_ui_food_and_drink_industry,
+    fas_ui_food_and_drink_industry_summary,
+    fas_ui_health_industry,
+    fas_ui_health_industry_summary,
+    fas_ui_industries,
+    fas_ui_profile,
+    fas_ui_tech_industry,
+    fas_ui_tech_industry_summary,
 )
 
 FAS_PAGE_REGISTRY = {
