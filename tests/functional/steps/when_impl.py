@@ -1460,13 +1460,6 @@ def generic_view_pages_in_selected_language(
     context.views = views
 
 
-def fas_view_page(context: Context, actor_alias: str, page_name: str):
-    actor = context.get_actor(actor_alias)
-    session = actor.session
-    page_object = get_fabs_page_object(page_name)
-    context.response = page_object.go_to(session)
-
-
 def fas_search_with_empty_query(context: Context, buyer_alias: str):
     actor = context.get_actor(buyer_alias)
     session = actor.session

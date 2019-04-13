@@ -28,7 +28,6 @@ from tests.functional.steps.when_impl import (
     fas_search_with_term,
     fas_send_feedback_request,
     fas_send_message_to_supplier,
-    fas_view_page,
     generic_view_pages_in_selected_language,
     go_to_page,
     go_to_pages,
@@ -224,11 +223,6 @@ def when_supplier_provide_company_details(context, supplier_alias):
 @when('"{supplier_alias}" attempts to change products and services offered by the company')
 def when_supplier_provide_products_and_services(context, supplier_alias):
     profile_provide_products_and_services(context, supplier_alias, context.table)
-
-
-@when('"{actor_alias}" visits "{page_name}" page on FAS')
-def when_actor_visits_page_on_fas(context, actor_alias, page_name):
-    fas_view_page(context, actor_alias, page_name)
 
 
 @when('"{actor_alias}" follows all the links to industries associated with the case study from the Company Showcase')
