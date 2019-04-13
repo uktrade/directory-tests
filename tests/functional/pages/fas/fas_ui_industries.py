@@ -3,9 +3,14 @@
 import logging
 
 from requests import Response, Session
+
 from tests import get_absolute_url
+from tests.functional.pages import Services
 from tests.functional.utils.request import Method, check_response, make_request
 
+SERVICE = Services.FAS
+NAME = "Industries"
+TYPE = "listing"
 URL = get_absolute_url("ui-supplier:industries")
 EXPECTED_STRINGS = [
     "Discover the UK's capability in these key industries",

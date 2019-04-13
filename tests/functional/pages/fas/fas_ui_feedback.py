@@ -1,14 +1,18 @@
 # -*- coding: utf-8 -*-
-"""FAB - Edit Company's Directory Profile page"""
+"""FAS - Edit Company's Directory Profile page"""
 import logging
 
 from requests import Response, Session
 
 from tests import get_absolute_url
+from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Feedback
 from tests.functional.utils.generic import assert_that_captcha_is_in_dev_mode
 from tests.functional.utils.request import Method, check_response, make_request
 
+SERVICE = Services.FAS
+NAME = "Feedback"
+TYPE = "form"
 URL = get_absolute_url("ui-supplier:feedback")
 EXPECTED_STRINGS_FORM = [
     "Get UK companies to fulfil your business needs",

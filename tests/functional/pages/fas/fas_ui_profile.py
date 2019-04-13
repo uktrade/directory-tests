@@ -6,13 +6,18 @@ from urllib.parse import urljoin
 from behave.model import Table
 from requests import Response, Session
 from scrapy import Selector
+
 from tests import get_absolute_url
 from tests.functional.common import DETAILS
+from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Company
 from tests.functional.utils.generic import Method, assertion_msg, make_request
 from tests.functional.utils.request import check_response
 from tests.settings import SECTORS_WITH_LABELS
 
+SERVICE = Services.FAS
+NAME = "Company's business profile"
+TYPE = "profile"
 URL = get_absolute_url("ui-supplier:suppliers")
 EXPECTED_STRINGS = [
     "Contact",

@@ -6,6 +6,7 @@ from urllib.parse import urljoin
 from requests import Response, Session
 
 from tests import get_absolute_url
+from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Company, Feedback, Message
 from tests.functional.utils.generic import (
     assert_that_captcha_is_in_dev_mode,
@@ -13,6 +14,9 @@ from tests.functional.utils.generic import (
 )
 from tests.functional.utils.request import Method, check_response, make_request
 
+SERVICE = Services.FAS
+NAME = "Contact Supplier"
+TYPE = "form"
 LANDING = get_absolute_url("ui-supplier:landing")
 URL = urljoin(LANDING, "suppliers/{company_number}/contact/")
 EXPECTED_STRINGS = [

@@ -4,10 +4,15 @@ import logging
 
 from requests import Response, Session
 from retrying import retry
+
 from tests import get_absolute_url
+from tests.functional.pages import Services
 from tests.functional.utils.generic import escape_html
 from tests.functional.utils.request import Method, check_response, make_request
 
+SERVICE = Services.FAS
+NAME = "Search"
+TYPE = "search"
 URL = get_absolute_url("ui-supplier:search")
 EXPECTED_STRINGS = [
     "Find UK Suppliers",
