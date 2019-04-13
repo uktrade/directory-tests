@@ -16,6 +16,8 @@ class Services(Enum):
     FIND_A_BUYER = "Find a Buyer"
     FIND_A_SUPPLIER = "Find a Supplier"
     INTERNATIONAL = "International"
+    PROFILE = "Profile"
+    SSO = "SSO"
 
 
 def is_page_object(module: ModuleType):
