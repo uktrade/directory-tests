@@ -8,6 +8,9 @@ from tests import get_absolute_url
 from tests.functional.utils.context_utils import Actor
 from tests.functional.utils.request import Method, check_response, make_request
 
+SERVICE = "SSO"
+NAME = "Login"
+TYPE = "form"
 URL = get_absolute_url("sso:login")
 EXPECTED_STRINGS = [
     "Sign in",

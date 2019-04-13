@@ -3,8 +3,14 @@
 import logging
 
 from requests import Response
+
+from tests import get_absolute_url
 from tests.functional.utils.request import check_response
 
+SERVICE = "SSO"
+NAME = "Verify your email"
+TYPE = "form"
+URL = get_absolute_url("sso:email_confirm")
 EXPECTED_STRINGS = [
     "Verify your email address",
     (

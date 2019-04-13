@@ -9,6 +9,9 @@ from tests.functional.utils.context_utils import Actor
 from tests.functional.utils.generic import assertion_msg
 from tests.functional.utils.request import Method, check_response, make_request
 
+SERVICE = "SSO"
+NAME = "Password reset"
+TYPE = "form"
 URL = get_absolute_url("sso:password_reset")
 EXPECTED_STRINGS = [
     "Password reset",

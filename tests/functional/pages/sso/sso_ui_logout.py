@@ -7,6 +7,9 @@ from requests import Response, Session
 from tests import get_absolute_url
 from tests.functional.utils.request import Method, check_response, make_request
 
+SERVICE = "SSO"
+NAME = "Logout"
+TYPE = "form"
 URL = get_absolute_url("sso:logout")
 EXPECTED_STRINGS = ["Sign out", "Are you sure you want to sign out?"]
 

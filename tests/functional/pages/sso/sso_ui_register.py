@@ -8,6 +8,9 @@ from tests import get_absolute_url
 from tests.functional.utils.context_utils import Actor, Company
 from tests.functional.utils.request import Method, check_response, make_request
 
+SERVICE = "SSO"
+NAME = "Register"
+TYPE = "form"
 URL = get_absolute_url("sso:signup")
 EXPECTED_STRINGS = [
     "Register",
