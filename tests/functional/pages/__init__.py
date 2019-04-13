@@ -118,7 +118,7 @@ def get_page_object(service_and_page: str) -> ModuleType:
         matched_type = False
         matched_name = False
 
-        if sought_service.lower() == page_object.service.lower():
+        if sought_service.lower() == page_object.service.value.lower():
             # logging.debug(f"PO search: matched service '{sought_service}'")
             matched_service = True
         else:
