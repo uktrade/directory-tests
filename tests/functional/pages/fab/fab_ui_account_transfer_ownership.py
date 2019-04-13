@@ -1,10 +1,15 @@
 # -*- coding: utf-8 -*-
 """FAB - Change profile owner page"""
 from requests import Response, Session
+
 from tests import get_absolute_url
+from tests.functional.pages import Services
 from tests.functional.utils.generic import Method, make_request
 from tests.functional.utils.request import check_response
 
+SERVICE = Services.FAB
+NAME = "Transfer ownership"
+TYPE = "form"
 URL = get_absolute_url("ui-buyer:account-transfer-ownership")
 EXPECTED_STRINGS = [
     "Transfer account",

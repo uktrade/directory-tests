@@ -1,10 +1,15 @@
 # -*- coding: utf-8 -*-
 """FAB - Change profile owner - confirm password page"""
 from requests import Response, Session
+
 from tests import get_absolute_url
+from tests.functional.pages import Services
 from tests.functional.utils.generic import Method, make_request
 from tests.functional.utils.request import check_response
 
+SERVICE = Services.FAB
+NAME = "Confirm password"
+TYPE = "form"
 URL = get_absolute_url("ui-buyer:account-confirm-password")
 EXPECTED_STRINGS = [
     "Transfer account",

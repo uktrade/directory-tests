@@ -3,10 +3,15 @@
 import logging
 
 from requests import Response, Session
+
 from tests import get_absolute_url
+from tests.functional.pages import Services
 from tests.functional.utils.generic import assertion_msg
 from tests.functional.utils.request import Method, check_response, make_request
 
+SERVICE = Services.FAB
+NAME = "Confirm company ownership"
+TYPE = "form"
 URL = get_absolute_url("ui-buyer:account-confirm-ownership-transfer")
 EXPECTED_STRINGS = [
     "Transfer account",

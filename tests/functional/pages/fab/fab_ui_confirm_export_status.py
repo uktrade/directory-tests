@@ -3,9 +3,15 @@
 import logging
 
 from requests import Response, Session
+
 from tests import get_absolute_url
+from tests.functional.pages import Services
 from tests.functional.utils.request import Method, check_response, make_request
 
+SERVICE = Services.FAB
+NAME = "Confirm export status"
+TYPE = "form"
+URL = get_absolute_url("ui-buyer:register-confirm-export-status")
 EXPECTED_STRINGS = [
     "Your company's previous exports",
     "Confirm company",
@@ -37,8 +43,7 @@ def should_be_here(response: Response):
 
 def submit(session: Session, token: str, exported: bool) -> Response:
     """Submit the Export Status form."""
-    url = get_absolute_url("ui-buyer:register-confirm-export-status")
-    headers = {"Referer": url}
+    headers = {"Referer": URL}
     data = {
         "csrfmiddlewaretoken": token,
         "enrolment_view-current_step": "exports",
@@ -47,7 +52,7 @@ def submit(session: Session, token: str, exported: bool) -> Response:
     }
 
     response = make_request(
-        Method.POST, url, session=session, headers=headers, data=data
+        Method.POST, URL, session=session, headers=headers, data=data
     )
 
     return response

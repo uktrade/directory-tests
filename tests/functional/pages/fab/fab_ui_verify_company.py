@@ -3,9 +3,14 @@
 import logging
 
 from requests import Response, Session
+
 from tests import get_absolute_url
+from tests.functional.pages import Services
 from tests.functional.utils.request import Method, check_response, make_request
 
+SERVICE = Services.FAB
+NAME = "Verify company"
+TYPE = "form"
 URL = get_absolute_url("ui-buyer:confirm-company-address")
 EXPECTED_STRINGS = [
     "Verify your company",

@@ -4,11 +4,16 @@ import logging
 import random
 
 from requests import Response, Session
+
 from tests import get_absolute_url
+from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Actor, Company
 from tests.functional.utils.request import Method, check_response, make_request
 from tests.settings import COUNTRIES, SECTORS
 
+SERVICE = Services.FAB
+NAME = "Edit company's sector"
+TYPE = "form"
 URL = get_absolute_url("ui-buyer:company-edit-sectors")
 EXPECTED_STRINGS = [
     "Your company sector",

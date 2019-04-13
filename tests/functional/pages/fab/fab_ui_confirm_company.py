@@ -4,7 +4,9 @@ import logging
 from urllib.parse import urljoin
 
 from requests import Response, Session
+
 from tests import get_absolute_url
+from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Company
 from tests.functional.utils.generic import escape_html
 from tests.functional.utils.request import (
@@ -14,6 +16,9 @@ from tests.functional.utils.request import (
     make_request,
 )
 
+SERVICE = Services.FAB
+NAME = "Confirm company"
+TYPE = "form"
 URL = get_absolute_url("ui-buyer:landing")
 POST_URL = get_absolute_url("ui-buyer:register-confirm-company")
 EXPECTED_STRINGS = [

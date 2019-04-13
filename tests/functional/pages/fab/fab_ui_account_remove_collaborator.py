@@ -4,10 +4,15 @@ from typing import List, Tuple
 
 from requests import Response, Session
 from scrapy import Selector
+
 from tests import get_absolute_url
+from tests.functional.pages import Services
 from tests.functional.utils.generic import Method, make_request
 from tests.functional.utils.request import check_response
 
+SERVICE = Services.FAB
+NAME = "Remove collaborator"
+TYPE = "form"
 URL = get_absolute_url("ui-buyer:account-remove-collaborator")
 EXPECTED_STRINGS = [
     "Remove user from account",

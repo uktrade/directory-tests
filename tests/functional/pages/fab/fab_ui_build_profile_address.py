@@ -3,10 +3,15 @@
 import logging
 
 from requests import Response
+
 from tests import get_absolute_url
+from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Actor
 from tests.functional.utils.request import Method, check_response, make_request
 
+SERVICE = Services.FAB
+NAME = "Build and improve your profile (address)"
+TYPE = "form"
 URL = get_absolute_url("ui-buyer:company-edit")
 EXPECTED_STRINGS = [
     "Your company address",
