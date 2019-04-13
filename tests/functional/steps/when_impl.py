@@ -703,27 +703,6 @@ def profile_add_business_description(context: Context, supplier_alias: str):
     logging.debug("Supplier is back to the Profile Page")
 
 
-def profile_add_product_and_services_keywords(context: Context, supplier_alias: str):
-    actor = context.get_actor(supplier_alias)
-    session = actor.session
-
-    # Step 1 - Submit random keywords
-    keywords = ", ".join(sentence().split())
-    response = profile_edit_products_and_services_keywords.submit(
-        session, keywords
-    )
-    context.response = response
-
-    # Step 3 - check if Supplier is on Profile page
-    profile_edit_company_profile.should_be_here(response)
-
-    # Step 4 - update company details in Scenario Data
-    context.set_company_details(
-        actor.company_alias, keywords=keywords
-    )
-    logging.debug("Supplier successfully added keywords to their profile")
-
-
 def profile_edit_business_details(
     context: Context, supplier_alias: str, *, table_of_details: Table
 ):
@@ -1008,7 +987,6 @@ def profile_update_company_details(
 ):
     """Update selected Company's details."""
     actor = context.get_actor(supplier_alias)
-    session = actor.session
     company = context.get_company(actor.company_alias)
 
     # Step 0 - prepare company's details to update
@@ -1020,18 +998,28 @@ def profile_update_company_details(
     change_keywords = DETAILS["KEYWORDS"] in details_to_update
 
     # Step 1 - Update company's details
-    response, new_details = profile_edit_company_business_details.submit(
-        actor,
-        company,
-        change_name=change_name,
-        change_website=change_website,
-        change_size=change_size,
-        change_sector=change_sector,
-    )
-    context.response = response
+    if any([change_name, change_website, change_size, change_sector]):
+        response, new_details = profile_edit_company_business_details.submit(
+            actor,
+            company,
+            change_name=change_name,
+            change_website=change_website,
+            change_size=change_size,
+            change_sector=change_sector,
+        )
+        context.response = response
 
-    # Step 2 - Supplier should be on Edit Profile page
-    profile_edit_company_profile.should_be_here(response)
+        # Step 2 - Supplier should be on Edit Profile page
+        profile_edit_company_profile.should_be_here(response)
+
+        # Step 3 - update company's details stored in context.scenario_data
+        context.set_company_details(
+            actor.company_alias,
+            title=new_details.title,
+            website=new_details.website,
+            no_employees=new_details.no_employees,
+            sector=new_details.sector,
+        )
 
     # Step 3 - Go to the Edit Sector page
     industries = {
@@ -1111,25 +1099,13 @@ def profile_update_company_details(
 
         # Step 3' - Check if Supplier is on FAB Profile page
         profile_edit_company_profile.should_be_here(response)
-        new_details = new_details._replace(
-            **{
-                "industry": industry,
-                "keywords": ", ".join(keywords)
-            }
-        )
 
-    # Step 4 - update company's details stored in context.scenario_data
-    context.set_company_details(
-        actor.company_alias,
-        title=new_details.title,
-        website=new_details.website,
-        keywords=new_details.keywords,
-        no_employees=new_details.no_employees,
-        sector=new_details.sector,
-    )
-    logging.debug(
-        f"{supplier_alias} successfully updated Company's details: {new_details}"
-    )
+        # Step 4 - update company's details stored in context.scenario_data
+        context.set_company_details(
+            actor.company_alias,
+            industry=industry,
+            keywords=", ".join(keywords),
+        )
 
 
 def profile_add_online_profiles(
@@ -1363,7 +1339,7 @@ def fas_search_using_company_details(
     for key in keys:
         if key == "keywords":
             for index, keyword in enumerate(company.keywords.split(", ")):
-                search_terms["keyword #{}".format(index)] = keyword
+                search_terms[f"keyword #{index}"] = keyword
         else:
             search_terms[key] = getattr(company, key)
     logging.debug(
@@ -1769,6 +1745,7 @@ def profile_provide_products_and_services(
         logging.debug(f"Keywords to update: {keywords}")
         response = profile_edit_products_and_services_keywords.submit(
             actor.session,
+            industry=industry,
             keywords=keywords
         )
         results.append((modified_details, response, row["error"]))

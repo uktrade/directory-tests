@@ -2,6 +2,7 @@
 # flake8: noqa
 """Given step definitions."""
 from behave import given
+from behave.runner import Context
 
 from tests.functional.steps.then_impl import (
     fas_should_see_png_logo_thumbnail,
@@ -28,12 +29,12 @@ from tests.functional.steps.when_impl import (
     profile_add_business_description,
     profile_add_case_study,
     profile_add_online_profiles,
-    profile_add_product_and_services_keywords,
     profile_create_unverified_business_profile,
     profile_create_verified_and_published_business_profile,
     profile_create_verified_yet_unpublished_business_profile,
     profile_edit_business_details,
     profile_supplier_uploads_logo,
+    profile_update_company_details,
     reg_create_standalone_unverified_sso_account,
     reg_should_get_verification_letter,
     sso_create_standalone_unverified_sso_account,
@@ -238,11 +239,6 @@ def given_unverified_profile_new_reg_flow(context, supplier_alias, company_alias
     )
 
 
-@given('"{actor_alias}" has added random keywords to describe the products and services his business offers')
-def given_supplier_added_products_and_services_keywords(context, actor_alias):
-    profile_add_product_and_services_keywords(context, actor_alias)
-
-
 @given('"{actor_alias}" has updated business details')
 def given_supplier_edit_business_details(context, actor_alias):
     """This step was added as a workaround for bug TT-1256"""
@@ -255,3 +251,8 @@ def given_supplier_edit_business_details(context, actor_alias):
 @given('"{supplier_alias}" decided to verify his identity with a verification letter')
 def given_supplier_decided_to_verify_with_letter(context, supplier_alias):
     fab_decide_to_verify_profile_with_letter(context, supplier_alias)
+
+
+@given('"{actor_alias}" updates company\'s details')
+def step_impl(context: Context, actor_alias: str):
+    profile_update_company_details(context, actor_alias, context.table)

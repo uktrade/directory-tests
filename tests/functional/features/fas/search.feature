@@ -111,7 +111,9 @@ Feature: Find a Supplier
     Given "Annette Geissinger" is a buyer
     And "Peter Alder" is an unauthenticated supplier
     And "Peter Alder" has created verified and published business profile for randomly selected company "Y"
-    And "Peter Alder" has added random keywords to describe the products and services his business offers
+    And "Peter Alder" updates company's details
+      | detail         |
+      | keywords       |
     And "Peter Alder" has updated business details
     And "Peter Alder" gets the slug for company "Y"
 
@@ -256,7 +258,9 @@ Feature: Find a Supplier
   @found-with-automated-tests
   Scenario: Unpublished business profiles (for any or ISD company) shouldn't appear in FAS search results
     Given "Peter Alder" has created verified yet unpublished business profile for randomly selected company "Y"
-    And "Peter Alder" has added random keywords to describe the products and services his business offers
+    And "Peter Alder" updates company's details
+      | detail         |
+      | keywords       |
 
     When "Peter Alder" searches for company "Y" on FAS using selected company's details
       | company detail |
