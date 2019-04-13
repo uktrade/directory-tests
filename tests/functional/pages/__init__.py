@@ -72,7 +72,7 @@ class PageObjects(Enum):
 
 def get_enum_key(module: ModuleType) -> str:
     return (
-        f"{module.SERVICE}_{module.TYPE}_{module.NAME}".upper()
+        f"{module.SERVICE.value}_{module.TYPE}_{module.NAME}".upper()
         .replace(" ", "_")
         .replace("-", "_")
     )
