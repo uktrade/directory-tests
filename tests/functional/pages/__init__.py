@@ -13,8 +13,8 @@ REQUIRED_PROPERTIES = ["SERVICE", "NAME", "TYPE", "URL", "EXPECTED_STRINGS"]
 
 
 class Services(Enum):
-    FIND_A_BUYER = "Find a Buyer"
-    FIND_A_SUPPLIER = "Find a Supplier"
+    FAB = "Find a Buyer"
+    FAS = "Find a Supplier"
     INTERNATIONAL = "International"
     PROFILE = "Profile"
     SSO = "SSO"
