@@ -19,6 +19,5 @@ __all__ = [
     'profile_find_a_buyer',
     'profile_publish_company_profile',
     'profile_selling_online_overseas',
-    'profile_ui_landing',
     'profile_upload_logo',
 ]

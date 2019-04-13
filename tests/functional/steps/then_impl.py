@@ -30,7 +30,6 @@ from tests.functional.pages.profile import (
     profile_edit_company_profile,
     profile_edit_online_profiles,
     profile_find_a_buyer,
-    profile_ui_landing,
 )
 from tests.functional.pages.sso import (
     sso_ui_invalid_password_reset_link,
