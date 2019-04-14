@@ -119,6 +119,58 @@ from tests.settings import (
     WEBPs,
 )
 
+INDUSTRIES_FOR_PRODUCTS_AND_SERVICES = {
+    "financial": [
+        'Opening bank accounts',
+        'Accounting and Tax (including registration for VAT and PAYE)',
+        'Insurance',
+        'Raising Capital',
+        'Regulatory support',
+        'Mergers and Acquisitions',
+    ],
+    "management-consulting": [
+        'Business development',
+        'Product safety regulation and compliance',
+        'Commercial/pricing strategy',
+        'Workforce development',
+        'Strategy & long-term planning',
+        'Risk consultation',
+    ],
+    "human-resources": [
+        'Staff management & progression',
+        'Onboarding, including new starter support and contracts of employment',
+        'Payroll',
+        'Salary benchmarking and employee benefits ',
+        'Succession planning',
+        'Employment & talent research',
+        'Sourcing and Hiring',
+    ],
+    "legal": [
+        'Company incorporation',
+        'Employment',
+        'Immigration',
+        'Land use planning',
+        'Intellectual property',
+        'Data Protection and Information Assurance',
+    ],
+    "publicity": [
+        'Public Relations',
+        'Branding',
+        'Social Media',
+        'Public Affairs',
+        'Advertising',
+        'Marketing',
+    ],
+    "further-services": [
+        'Business relocation',
+        'Planning consultants',
+        'Facilities (water, wifi, electricity)',
+        'Translation services',
+        'Staff and family relocation including schooling for children',
+    ],
+    "other": sentence().split(),
+}
+
 
 def unauthenticated_supplier(supplier_alias: str) -> Actor:
     """Create an instance of an unauthenticated Supplier Actor.
@@ -1022,57 +1074,7 @@ def profile_update_company_details(
         )
 
     # Step 3 - Go to the Edit Sector page
-    industries = {
-        "financial": [
-            'Opening bank accounts',
-            'Accounting and Tax (including registration for VAT and PAYE)',
-            'Insurance',
-            'Raising Capital',
-            'Regulatory support',
-            'Mergers and Acquisitions',
-        ],
-        "management-consulting": [
-            'Business development',
-            'Product safety regulation and compliance',
-            'Commercial/pricing strategy',
-            'Workforce development',
-            'Strategy & long-term planning',
-            'Risk consultation',
-        ],
-        "human-resources": [
-            'Staff management & progression',
-            'Onboarding, including new starter support and contracts of employment',
-            'Payroll',
-            'Salary benchmarking and employee benefits ',
-            'Succession planning',
-            'Employment & talent research',
-            'Sourcing and Hiring',
-        ],
-        "legal": [
-            'Company incorporation',
-            'Employment',
-            'Immigration',
-            'Land use planning',
-            'Intellectual property',
-            'Data Protection and Information Assurance',
-        ],
-        "publicity": [
-            'Public Relations',
-            'Branding',
-            'Social Media',
-            'Public Affairs',
-            'Advertising',
-            'Marketing',
-        ],
-        "further-services": [
-            'Business relocation',
-            'Planning consultants',
-            'Facilities (water, wifi, electricity)',
-            'Translation services',
-            'Staff and family relocation including schooling for children',
-        ],
-        "other": sentence().split(),
-    }
+    industries = INDUSTRIES_FOR_PRODUCTS_AND_SERVICES
     if change_keywords:
         industry = random.choice(list(industries.keys()))
         response = profile_edit_products_and_services_industry.submit(
