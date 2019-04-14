@@ -27,11 +27,17 @@ def should_be_here(response: Response, *, industry: str = None):
     check_url(response, url)
 
 
-def submit(session: Session, industry: str, keywords: List[str]) -> Response:
+def submit(
+        session: Session,
+        industry: str,
+        keywords: List[str],
+        *,
+        separator: str = "|"
+) -> Response:
     headers = {"Referer": URL}
     data = {
-        "input-autocomplete": "",
-        "expertise_products_services": "|".join(keywords),
+        "input-autocomplete": f"{separator}".join(keywords),
+        "expertise_products_services": f"{separator}".join(keywords),
     }
     url = urljoin(URL, industry + "/")
     return make_request(
