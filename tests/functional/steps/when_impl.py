@@ -2741,10 +2741,48 @@ def enrol_enter_email_verification_code(context: Context, actor_alias: str):
     profile_enter_your_business_details.should_be_here(response)
 
 
-def enrol_enter_company_name(context: Context, actor: Actor, company: Company):
+def retry_if_assertion_error(exception):
+    """Return True if we should retry on AssertionError, False otherwise"""
+    return isinstance(exception, AssertionError)
+
+
+def check_if_found_wrong_company(context: Context, actor_alias: str, company_alias: str):
+    content = context.response.content.decode("UTF-8")
+    actor = context.get_actor(actor_alias)
+    company = context.get_company(company_alias)
+    errors = {
+        "Company not active":
+            f"Found wrong company '{company.number} - {company.title}' is inactive",
+        "74990":
+            f"Found wrong company '{company.number} - {company.title}' has SIC=74990",
+        "88100":
+            f"Found wrong company '{company.number} - {company.title}' has SIC=88100",
+    }
+    for string, error in errors.items():
+        if string in content:
+            with assertion_msg(error):
+                logging.debug(error)
+                token = extract_csrf_middleware_token(context.response)
+                context.update_actor(actor.alias, csrfmiddlewaretoken=token)
+                find_unregistered_company(context, actor.alias, company.alias)
+                assert string not in content
+
+
+@retry(
+    wait_fixed=500,
+    stop_max_attempt_number=3,
+    retry_on_exception=retry_if_assertion_error,
+    wrap_exception=False,
+)
+def enrol_enter_company_name(context: Context, actor_alias: str, company_alias: str):
+    actor = context.get_actor(actor_alias)
+    company = context.get_company(company_alias)
     logging.debug("# 5) submit company details - 1st part")
     response = profile_enter_your_business_details.submit(actor, company)
     context.response = response
+
+    check_if_found_wrong_company(context, actor_alias, company_alias)
+
     token = extract_csrf_middleware_token(response)
     context.update_actor(actor.alias, csrfmiddlewaretoken=token)
     profile_enter_your_business_details_part_2.should_be_here(response)
