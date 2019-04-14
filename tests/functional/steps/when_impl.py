@@ -2707,7 +2707,8 @@ def stannp_download_verification_letter_and_extract_text(
     context.update_actor(actor_alias, verification_letter=pdf_text)
 
 
-def enrol_enter_email_and_password(context: Context, actor: Actor):
+def enrol_enter_email_and_password(context: Context, actor_alias: str):
+    actor = context.get_actor(actor_alias)
     logging.debug("# 1) Go to Enter your email & password")
     response = profile_enter_your_email_and_password.go_to(actor.session)
     context.response = response
@@ -2722,14 +2723,16 @@ def enrol_enter_email_and_password(context: Context, actor: Actor):
     profile_enter_email_verification_code.should_be_here(response)
 
 
-def enrol_get_email_verification_code(context: Context, actor: Actor):
+def enrol_get_email_verification_code(context: Context, actor_alias: str):
+    actor = context.get_actor(actor_alias)
     logging.debug("# 3) get email verification code")
     code = get_email_verification_code(actor.email)
     assert code, f"Could not find email verification code for {actor.email}"
     context.update_actor(actor.alias, email_confirmation_code=code)
 
 
-def enrol_enter_email_verification_code(context: Context, actor: Actor):
+def enrol_enter_email_verification_code(context: Context, actor_alias: str):
+    actor = context.get_actor(actor_alias)
     logging.debug("# 4) submit email verification code")
     response = profile_enter_email_verification_code.submit(actor)
     context.response = response
@@ -2747,7 +2750,9 @@ def enrol_enter_company_name(context: Context, actor: Actor, company: Company):
     profile_enter_your_business_details_part_2.should_be_here(response)
 
 
-def enrol_enter_company_website_and_industry(context: Context, actor: Actor, company: Company):
+def enrol_enter_company_website_and_industry(context: Context, actor_alias: str, company_alias: str):
+    actor = context.get_actor(actor_alias)
+    company = context.get_company(company_alias)
     logging.debug("# 6) submit company details - 2nd part")
     if not company.website:
         words = ".".join(sentence().split())
@@ -2766,7 +2771,8 @@ def enrol_enter_company_website_and_industry(context: Context, actor: Actor, com
     profile_enter_your_personal_details.should_be_here(response)
 
 
-def enrol_enter_personal_details(context: Context, actor: Actor):
+def enrol_enter_personal_details(context: Context, actor_alias: str):
+    actor = context.get_actor(actor_alias)
     logging.debug("# 7) submit personal details")
     response = profile_enter_your_personal_details.submit(actor)
     context.response = response
@@ -2774,16 +2780,15 @@ def enrol_enter_personal_details(context: Context, actor: Actor):
 
 
 def enrol_user(context: Context, actor_alias: str, company_alias: str):
+    enrol_enter_email_and_password(context, actor_alias)
+    enrol_get_email_verification_code(context, actor_alias)
+    enrol_enter_email_verification_code(context, actor_alias)
+    enrol_enter_company_name(context, actor_alias, company_alias)
+    enrol_enter_company_website_and_industry(context, actor_alias, company_alias)
+    enrol_enter_personal_details(context, actor_alias)
+
     actor = context.get_actor(actor_alias)
     company = context.get_company(company_alias)
-
-    enrol_enter_email_and_password(context, actor)
-    enrol_get_email_verification_code(context, actor)
-    enrol_enter_email_verification_code(context, actor)
-    enrol_enter_company_name(context, actor, company)
-    enrol_enter_company_website_and_industry(context, actor, company)
-    enrol_enter_personal_details(context, actor)
-
     logging.debug(
         f"'{actor.alias}' created an unverified Business Profile for "
         f"'{company.title} - {company.number}'"
