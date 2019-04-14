@@ -2707,64 +2707,82 @@ def stannp_download_verification_letter_and_extract_text(
     context.update_actor(actor_alias, verification_letter=pdf_text)
 
 
-def enrol_user(context: Context, actor_alias: str, company_alias: str):
-    actor = context.get_actor(actor_alias)
-    company = context.get_company(company_alias)
-
+def enrol_enter_email_and_password(context: Context, actor: Actor):
     logging.debug("# 1) Go to Enter your email & password")
     response = profile_enter_your_email_and_password.go_to(actor.session)
     context.response = response
     token = extract_csrf_middleware_token(response)
-    context.update_actor(actor_alias, csrfmiddlewaretoken=token)
+    context.update_actor(actor.alias, csrfmiddlewaretoken=token)
 
     logging.debug("# 2) submit the form")
     response = profile_enter_your_email_and_password.submit(actor)
     context.response = response
     token = extract_csrf_middleware_token(response)
-    context.update_actor(actor_alias, csrfmiddlewaretoken=token)
+    context.update_actor(actor.alias, csrfmiddlewaretoken=token)
     profile_enter_email_verification_code.should_be_here(response)
 
+
+def enrol_get_email_verification_code(context: Context, actor: Actor):
     logging.debug("# 3) get email verification code")
     code = get_email_verification_code(actor.email)
     assert code, f"Could not find email verification code for {actor.email}"
-    context.update_actor(actor_alias, email_confirmation_code=code)
+    context.update_actor(actor.alias, email_confirmation_code=code)
 
+
+def enrol_enter_email_verification_code(context: Context, actor: Actor):
     logging.debug("# 4) submit email verification code")
-    actor = context.get_actor(actor_alias)
     response = profile_enter_email_verification_code.submit(actor)
     context.response = response
     token = extract_csrf_middleware_token(response)
-    context.update_actor(actor_alias, csrfmiddlewaretoken=token)
+    context.update_actor(actor.alias, csrfmiddlewaretoken=token)
     profile_enter_your_business_details.should_be_here(response)
 
+
+def enrol_enter_company_name(context: Context, actor: Actor, company: Company):
     logging.debug("# 5) submit company details - 1st part")
     response = profile_enter_your_business_details.submit(actor, company)
     context.response = response
     token = extract_csrf_middleware_token(response)
-    context.update_actor(actor_alias, csrfmiddlewaretoken=token)
+    context.update_actor(actor.alias, csrfmiddlewaretoken=token)
     profile_enter_your_business_details_part_2.should_be_here(response)
 
+
+def enrol_enter_company_website_and_industry(context: Context, actor: Actor, company: Company):
     logging.debug("# 6) submit company details - 2nd part")
     if not company.website:
         words = ".".join(sentence().split())
-        context.set_company_details(company_alias, website=f"https://{words}/")
+        context.set_company_details(company.alias, website=f"https://{words}/")
     if not company.sector:
         industry, _ = random.choice(choices.INDUSTRIES)
-        context.set_company_details(company_alias, sector=industry)
+        context.set_company_details(company.alias, sector=industry)
     if not company.no_employees:
         size = random.choice(NO_OF_EMPLOYEES)
-        context.set_company_details(company_alias, no_employees=size)
-    company = context.get_company(company_alias)
-    profile_enter_your_business_details_part_2.submit(actor, company)
+        context.set_company_details(company.alias, no_employees=size)
+    company = context.get_company(company.alias)
+    response = profile_enter_your_business_details_part_2.submit(actor, company)
     context.response = response
     token = extract_csrf_middleware_token(response)
-    context.update_actor(actor_alias, csrfmiddlewaretoken=token)
+    context.update_actor(actor.alias, csrfmiddlewaretoken=token)
     profile_enter_your_personal_details.should_be_here(response)
 
+
+def enrol_enter_personal_details(context: Context, actor: Actor):
     logging.debug("# 7) submit personal details")
     response = profile_enter_your_personal_details.submit(actor)
     context.response = response
     profile_enrolment_finished.should_be_here(response)
+
+
+def enrol_user(context: Context, actor_alias: str, company_alias: str):
+    actor = context.get_actor(actor_alias)
+    company = context.get_company(company_alias)
+
+    enrol_enter_email_and_password(context, actor)
+    enrol_get_email_verification_code(context, actor)
+    enrol_enter_email_verification_code(context, actor)
+    enrol_enter_company_name(context, actor, company)
+    enrol_enter_company_website_and_industry(context, actor, company)
+    enrol_enter_personal_details(context, actor)
 
     logging.debug(
         f"'{actor.alias}' created an unverified Business Profile for "
