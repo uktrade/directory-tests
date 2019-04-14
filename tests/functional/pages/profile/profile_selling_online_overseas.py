@@ -11,7 +11,7 @@ from tests.functional.utils.request import Method, check_response, make_request
 SERVICE = Services.PROFILE
 NAME = "Selling Online Overseas"
 TYPE = "landing"
-URL = get_absolute_url("profile:exops-applications")
+URL = get_absolute_url("profile:soo")
 EXPECTED_STRINGS = [
     "Account",
     "You are signed in as",
