@@ -1723,32 +1723,45 @@ def profile_provide_products_and_services(
 ):
     actor = context.get_actor(supplier_alias)
     results = []
+    industries = INDUSTRIES_FOR_PRODUCTS_AND_SERVICES
     for row in table:
+        industry = random.choice(list(industries.keys()))
+        response = profile_edit_products_and_services_industry.submit(
+            actor.session,
+            industry=industry,
+        )
+        context.response = response
+        profile_edit_products_and_services_keywords.should_be_here(
+            response, industry=industry
+        )
+
+        separator = "|"
         if row["keywords"] == "empty string":
-            keywords = ""
+            keywords = [""]
         elif row["keywords"].endswith(" characters"):
             number = [
                 int(word) for word in row["keywords"].split() if word.isdigit()
             ][0]
-            keywords = random_chars(number)
+            keywords = [random_chars(number)]
         else:
             keywords = row["keywords"]
-            separate_keywords = keywords.split(", ")
+            keywords = keywords.split(", ")
             if row["separator"] == "pipe":
-                keywords = "| ".join(separate_keywords)
-            if row["separator"] == "semi-colon":
-                keywords = "; ".join(separate_keywords)
-            if row["separator"] == "colon":
-                keywords = ": ".join(separate_keywords)
-            if row["separator"] == "full stop":
-                keywords = ". ".join(separate_keywords)
+                separator = "|"
+            elif row["separator"] == "semi-colon":
+                separator = ";"
+            elif row["separator"] == "colon":
+                separator = ":"
+            elif row["separator"] == "full stop":
+                separator = "."
 
         modified_details = Company(keywords=keywords)
         logging.debug(f"Keywords to update: {keywords}")
         response = profile_edit_products_and_services_keywords.submit(
             actor.session,
             industry=industry,
-            keywords=keywords
+            keywords=keywords,
+            separator=separator,
         )
         results.append((modified_details, response, row["error"]))
 
