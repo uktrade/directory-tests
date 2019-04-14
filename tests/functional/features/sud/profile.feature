@@ -1,11 +1,11 @@
-Feature: SUD (Profile) pages
+Feature: Profile pages
 
 
   @ED-2265
   @sso
   @account
   @no-sso-email-verification-required
-  Scenario: Users should be able to view SUD Landing page without authentication
+  Scenario: Users should be able to view Profile Landing page without authentication
     Given "Peter Alder" is an unauthenticated supplier
 
     When "Peter Alder" goes to "Profile - About" page
@@ -17,16 +17,16 @@ Feature: SUD (Profile) pages
   @sso
   @account
   @no-sso-email-verification-required
-  Scenario Outline: Users who visited SUD landing page should not be able to view "<other SUD>" page without authentication
+  Scenario Outline: Users who visited Profile landing page should not be able to view "<other Profile>" page without authentication
     Given "Peter Alder" is an unauthenticated supplier
 
     When "Peter Alder" goes to "Profile - About" page
-    And "Peter Alder" goes to "<other SUD>" page
+    And "Peter Alder" goes to "<other Profile>" page
 
     Then "Peter Alder" should see "<expected>" page
 
-    Examples: SUD pages
-      | other SUD                         | expected        |
+    Examples: Profile pages
+      | other Profile                     | expected        |
       | Profile - Export Opportunities    | SSO - Login     |
       | Profile - Find a Buyer            | Profile - Enrol |
       | Profile - Selling Online Overseas | SSO - Login     |
@@ -39,35 +39,35 @@ Feature: SUD (Profile) pages
   @ED-2268
   @fixed
   @no-sso-email-verification-required
-  Scenario Outline: Users who visit "<SUD>" page for the first time should be redirected to SSO Login page
+  Scenario Outline: Users who visit "<Profile>" page for the first time should be redirected to SSO Login page
     Given "Peter Alder" is an unauthenticated supplier
 
-    When "Peter Alder" goes to "<SUD>" page
+    When "Peter Alder" goes to "<Profile>" page
 
     Then "Peter Alder" should see "<expected>" page
 
-    Examples: SUD pages
-      | SUD                               | expected        |
+    Examples: Profile pages
+      | Profile                           | expected        |
       | Profile - Export Opportunities    | SSO - Login     |
       | Profile - Find a Buyer            | Profile - Enrol |
       | Profile - Selling Online Overseas | SSO - Login     |
 
 
   # I've been told that on non-prod envs ExOpps doesn't keep synced state
-  # between different services and thus ExOpps page on SUD displays
+  # between different services and thus ExOpps page on Profile displays
   # different content based on user ID
   @ED-2267
   @sso
   @account
   @fake-sso-email-verification
-  Scenario: Authenticated Users should be able to view SUD sub-pages
+  Scenario: Authenticated Users should be able to view Profile sub-pages
     Given "Peter Alder" has a verified standalone SSO/great.gov.uk account
 
     When "Peter Alder" goes to specific pages
-      | page name                         |
-      | Profile - Export Opportunities    |
-      | Profile - Find a Buyer            |
-      | Profile - Selling Online Overseas |
+      | page name                                           |
+      | Profile - Export Opportunities                      |
+      | Profile - Find a Buyer (without a business profile) |
+      | Profile - Selling Online Overseas                   |
 
     Then "Peter Alder" should be able to see all selected pages
 
