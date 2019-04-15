@@ -1725,6 +1725,8 @@ def profile_provide_products_and_services(
     results = []
     industries = INDUSTRIES_FOR_PRODUCTS_AND_SERVICES
     for row in table:
+        send_as_files = True
+        send_as_data = False
         industry = random.choice(list(industries.keys()))
         response = profile_edit_products_and_services_industry.submit(
             actor.session,
@@ -1743,6 +1745,8 @@ def profile_provide_products_and_services(
                 int(word) for word in row["keywords"].split() if word.isdigit()
             ][0]
             keywords = [random_chars(number)]
+            send_as_files = False
+            send_as_data = True
         else:
             keywords = row["keywords"]
             keywords = keywords.split(", ")
@@ -1762,6 +1766,8 @@ def profile_provide_products_and_services(
             industry=industry,
             keywords=keywords,
             separator=separator,
+            send_as_data=send_as_data,
+            send_as_files=send_as_files,
         )
         results.append((modified_details, response, row["error"]))
 

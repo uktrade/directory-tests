@@ -32,14 +32,24 @@ def submit(
         industry: str,
         keywords: List[str],
         *,
-        separator: str = "|"
+        separator: str = "|",
+        send_as_data: bool = True,
+        send_as_files: bool = False,
 ) -> Response:
+    error = f"Can send data only as data or as files"
+    assert (send_as_data and not send_as_files) or\
+           (send_as_files and not send_as_data), error
     headers = {"Referer": URL}
     data = {
         "input-autocomplete": f"{separator}".join(keywords),
         "expertise_products_services": f"{separator}".join(keywords),
     }
     url = urljoin(URL, industry + "/")
-    return make_request(
-        Method.POST, url, session=session, headers=headers, data=data
-    )
+    if send_as_data and not send_as_files:
+        return make_request(
+            Method.POST, url, session=session, headers=headers, data=data
+        )
+    elif send_as_files and not send_as_data:
+        return make_request(
+            Method.POST, url, session=session, headers=headers, files=data
+        )
