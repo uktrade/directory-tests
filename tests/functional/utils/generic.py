@@ -322,6 +322,7 @@ def extract_page_contents(
     strip_css: bool = True,
     strip_header: bool = True,
     strip_cookie_notice: bool = True,
+    strip_country_dialog: bool = True,
     strip_skip_to_main_content: bool = True,
     strip_image_captions: bool = True,
     strip_companies_list: bool = True,
@@ -341,6 +342,9 @@ def extract_page_contents(
         for element in soup.findAll(["header"]):
             element.extract()
         for element in soup.select("#great-header"):
+            element.extract()
+    if strip_country_dialog:
+        for element in soup.select("#country-selector-dialog"):
             element.extract()
     if strip_cookie_notice:
         for element in soup.select("#header-cookie-notice"):
