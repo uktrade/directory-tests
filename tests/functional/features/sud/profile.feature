@@ -122,10 +122,10 @@ Feature: Profile pages
     When "Annette Geissinger" attempts to change products and services offered by the company
       | keywords          | separator  | error                                                       |
       | empty string      | comma      | This field is required                                      |
-      | book, keys, food  | pipe       | You can only enter letters, numbers and commas              |
-      | sky, sea, blues   | semi-colon | You can only enter letters, numbers and commas              |
-      | sand, dunes, bird | colon      | You can only enter letters, numbers and commas              |
-      | bus, ferry, plane | full stop  | You can only enter letters, numbers and commas              |
+      | book, keys, food  | pipe       | This field is required                                      |
+      | sky, sea, blues   | semi-colon | This field is required                                      |
+      | sand, dunes, bird | colon      | This field is required                                      |
+      | bus, ferry, plane | full stop  | This field is required                                      |
       | 1001 characters   | comma      | Ensure this value has at most 1000 characters (it has 1001) |
 
     Then "Annette Geissinger" should see expected error messages
