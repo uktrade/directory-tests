@@ -15,6 +15,19 @@
 * [Docker Compose >= 1.8](https://docs.docker.com/compose/install/)
 * libpq-dev -> `sudo apt install libpq-dev`
 
+
+### Updating requirements files
+
+In order to generate (or update) dependecies file please use [pip-tools](https://pypi.org/project/pip-tools/).
+
+* `pip install pip-tools`
+* Update `requirements_*.in` file
+* Remember not to specify dependency version in the `in` file!
+* Regenerate `requirements_*.txt` with `pip-compile`
+```shell
+pip-compile -U -o requirements_load.txt requirements_load.in
+```
+
 ## Local installation
 
     $ git clone https://github.com/uktrade/directory-tests
