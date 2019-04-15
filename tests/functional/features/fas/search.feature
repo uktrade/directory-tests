@@ -121,7 +121,7 @@ Feature: Find a Supplier
       | company detail |
       | title          |
       | number         |
-      | keywords       |
+#      | keywords       |  see TT-1333
       | website        |
       | summary        |
       | description    |
@@ -131,7 +131,7 @@ Feature: Find a Supplier
       | company detail |
       | title          |
       | number         |
-      | keywords       |
+#      | keywords       |  see TT-1333
       | website        |
       | summary        |
       | description    |

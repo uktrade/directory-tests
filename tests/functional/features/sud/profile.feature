@@ -194,7 +194,7 @@ Feature: Profile pages
       | website                     |
       | number of employees         |
       | sector of interest          |
-      | keywords                    |
+#      | keywords                    |  see TT-1333
 
     Then "Annette Geissinger" should see new details on "Profile - edit company profile" page
       | detail                      |
@@ -202,14 +202,14 @@ Feature: Profile pages
       | website                     |
       | number of employees         |
       | sector of interest          |
-      | keywords                    |
+#      | keywords                    |  see TT-1333
     And "Annette Geissinger" should see new details on "FAS - Company's business profile" page
       | detail                      |
       | trading name                |
       | website                     |
       | number of employees         |
       | sector of interest          |
-      | keywords                    |
+#      | keywords                    |  see TT-1333
 
 
   @ED-2093
