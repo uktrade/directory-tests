@@ -340,6 +340,8 @@ def extract_page_contents(
     if strip_header:
         for element in soup.findAll(["header"]):
             element.extract()
+        for element in soup.select("#great-header"):
+            element.extract()
     if strip_cookie_notice:
         for element in soup.select("#header-cookie-notice"):
             element.extract()
