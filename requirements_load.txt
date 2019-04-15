@@ -9,7 +9,7 @@ chardet==3.0.4            # via requests
 click==7.0                # via flask
 directory-client-core==4.4.0  # via directory-cms-client
 directory-cms-client==8.3.0
-directory-constants==14.0.0
+directory-constants==16.0.0
 django==1.11.20           # via directory-client-core, directory-constants, sigauth
 djangorestframework==3.9.2  # via sigauth
 docopt==0.6.2
@@ -18,17 +18,17 @@ gevent==1.4.0             # via locustio
 greenlet==0.4.15          # via gevent
 idna==2.8                 # via requests
 itsdangerous==1.1.0       # via flask
-jinja2==2.10              # via flask
-locustio==0.9.0
+jinja2==2.10.1            # via flask
+locustio==0.11.0
 markupsafe==1.1.1         # via jinja2
 mohawk==0.3.4             # via sigauth
 monotonic==1.5            # via directory-client-core
 msgpack==0.6.1            # via locustio
-pytz==2018.9              # via django
+pytz==2019.1              # via django
 pyzmq==18.0.1             # via locustio
 requests==2.21.0
 sigauth==4.0.1            # via directory-client-core
 six==1.12.0               # via locustio, mohawk, w3lib
 urllib3==1.24.1           # via requests
 w3lib==1.20.0             # via directory-client-core
-werkzeug==0.14.1          # via flask
+werkzeug==0.15.2          # via flask
