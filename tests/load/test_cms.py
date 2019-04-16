@@ -1,7 +1,7 @@
 from collections import namedtuple
 from random import choice
 
-from directory_constants.constants import cms
+from directory_constants.cms import INVEST, FIND_A_SUPPLIER, EXPORT_READINESS
 from locust import TaskSet, task
 from tests import settings
 from tests.load import USER_AGENT
@@ -17,9 +17,9 @@ class CMSTasks(TaskSet):
     @task
     def lookup_by_slug(self):
         services = [
-            cms.INVEST,
-            cms.FIND_A_SUPPLIER,
-            cms.EXPORT_READINESS,
+            INVEST,
+            FIND_A_SUPPLIER,
+            EXPORT_READINESS,
         ]
         slugs = [
             "advanced-manufacturing",

@@ -34,7 +34,7 @@ django_settings.configure(
 # these module have to be imported after django settings are set
 # otherwise you won't be able to get an instance of CMS Client
 from directory_cms_client.client import DirectoryCMSClient
-from directory_constants.constants import cms
+from directory_constants.cms import INVEST
 
 
 def build_params(
@@ -118,5 +118,5 @@ class CMSAPIAuthClientMixin(HttpLocust):
             api_key=DIRECTORY_CMS_API_CLIENT_API_KEY,
             sender_id=DIRECTORY_CMS_API_CLIENT_SENDER_ID,
             timeout=DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT,
-            default_service_name=cms.INVEST,
+            default_service_name=INVEST,
         )
