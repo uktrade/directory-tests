@@ -16,14 +16,11 @@ HEADER_FOOTER_SELECTORS = {
         "for international businesses": Selector(
             By.ID, "great-global-header-international-link"
         ),
-        "language switcher": Selector(By.ID, "country-selector-activator"),
+        "language switcher": Selector(By.ID, "great-header-language-select"),
         "logo": Selector(By.ID, "great-header-logo"),
         "invest": Selector(By.ID, "header-invest"),
-        "find a uk supplier": Selector(By.ID, "header-fas-search"),
+        "find a uk supplier": Selector(By.ID, "header-fas"),
         "industries": Selector(By.ID, "header-industries"),
-        "how to do business with the uk": Selector(
-            By.ID, "header-how-to-do-business-with-the-uk"
-        ),
     },
     "footer": {
         "itself": Selector(By.ID, "great-footer"),
