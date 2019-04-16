@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import datetime
+import logging
 from typing import List
 
 from zenpy import Zenpy
@@ -43,5 +44,7 @@ def filter_by_content(tickets: List[Ticket], strings: List[str]) -> List[Ticket]
 
 def find_tickets(email: str, subject: str) -> List[Ticket]:
     tickets = get_tickets()
+    logging.debug(f"Found {len(tickets)} Zendesk tickets")
     by_email = filter_by_email(tickets, email)
+    logging.debug(f"Found {len(by_email)} emails for {email}")
     return filter_by_subject(by_email, subject)
