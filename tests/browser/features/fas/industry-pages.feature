@@ -137,7 +137,7 @@ Feature: Find a Supplier - Industry pages
       | industry | <specific> |
 
     Then "Robert" should be on the "Find a Supplier - Thank you for your message" page
-    And "Robert" should receive a "<specific> contact form submitted." confirmation email from Zendesk
+    And "Robert" should receive a "Thank you for your Buying from the UK enquiry" confirmation email
 
     Examples: Promoted industries
       | specific          |
