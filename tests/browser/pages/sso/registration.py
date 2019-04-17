@@ -74,3 +74,8 @@ def submit(driver: WebDriver):
     sign_up_button = find_element(driver, SIGN_UP_BUTTON)
     with wait_for_page_load_after_action(driver):
         sign_up_button.click()
+
+
+def click_on_page_element(driver: WebDriver, element_name: str):
+    find_and_click_on_page_element(driver, SELECTORS, element_name)
+    take_screenshot(driver, NAME + " after clicking on " + element_name)
