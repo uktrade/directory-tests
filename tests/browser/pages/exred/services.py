@@ -6,7 +6,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType
+from pages import ElementType, common_selectors
 from pages.common_actions import (
     Selector,
     check_for_sections,
@@ -23,18 +23,8 @@ TYPE = "services list"
 URL = urljoin(EXRED_UI_URL, "services/")
 
 SELECTORS = {
-    "breadcrumbs": {
-        "itself": Selector(By.CSS_SELECTOR, "div.breadcrumbs"),
-        "current page": Selector(
-            By.CSS_SELECTOR, "div.breadcrumbs li[aria-current='page']"
-        ),
-        "links": Selector(By.CSS_SELECTOR, "div.breadcrumbs a"),
-    },
     "services": {
-        "itself": Selector(By.ID, "services"),
-        "heading": Selector(By.ID, "services-section-title"),
-        "description": Selector(By.ID, "services-section-description"),
-        "service cards": Selector(By.CSS_SELECTOR, "#services .card"),
+        "service cards": Selector(By.CSS_SELECTOR, "div.card"),
         "create a business profile": Selector(
             By.ID, "find-a-buyer-link", type=ElementType.LINK
         ),
@@ -49,12 +39,12 @@ SELECTORS = {
         ),
         "find events and visits": Selector(By.ID, "events-link", type=ElementType.LINK),
         "get an eori number": Selector(By.ID, "govuk-eori-link", type=ElementType.LINK),
-    },
-    "error reporting": {
-        "itself": Selector(By.CSS_SELECTOR, "section.error-reporting"),
-        "link": Selector(By.ID, "error-reporting-section-contact-us"),
-    },
+    }
 }
+SELECTORS.update(common_selectors.HEADER)
+SELECTORS.update(common_selectors.BREADCRUMBS)
+SELECTORS.update(common_selectors.ERROR_REPORTING)
+SELECTORS.update(common_selectors.FOOTER)
 
 
 def visit(driver: WebDriver):
