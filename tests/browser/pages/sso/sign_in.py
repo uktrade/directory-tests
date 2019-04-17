@@ -5,7 +5,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType
+from pages import ElementType, common_selectors
 from pages.common_actions import (
     Selector,
     check_url,
@@ -42,6 +42,8 @@ SELECTORS = {
     },
     "register for an account": {"register": REGISTER_BUTTON},
 }
+SELECTORS.update(common_selectors.HEADER)
+SELECTORS.update(common_selectors.FOOTER)
 
 
 def visit(driver: WebDriver):

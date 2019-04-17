@@ -5,6 +5,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import common_selectors
 from pages.common_actions import (
     Selector,
     check_url,
@@ -30,6 +31,8 @@ SELECTORS = {
     },
     "welcome": {"welcome message": Selector(By.ID, "welcome-message")},
 }
+SELECTORS.update(common_selectors.HEADER)
+SELECTORS.update(common_selectors.FOOTER)
 
 
 def visit(driver: WebDriver):
