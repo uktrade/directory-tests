@@ -9,7 +9,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType
+from pages import ElementType, common_selectors
 from pages.common_actions import (
     Selector,
     assertion_msg,
@@ -25,7 +25,7 @@ from pages.common_actions import (
     take_screenshot,
     wait_for_page_load_after_action,
 )
-from pages.exred import header
+from pages.exred import actions as domestic_actions
 from settings import EXRED_UI_URL
 
 NAME = "Home"
@@ -37,26 +37,11 @@ PAGE_TITLE = "Welcome to great.gov.uk"
 PROMO_VIDEO = Selector(
     By.CSS_SELECTOR, "body > div.video-container.Modal-Container.open > div > video"
 )
-CLOSE_VIDEO = Selector(By.CSS_SELECTOR, "body > div.video-container.Modal-Container.open > button")
+CLOSE_VIDEO = Selector(
+    By.CSS_SELECTOR, "body > div.video-container.Modal-Container.open > button"
+)
 VIDEO_MODAL_WINDOW = Selector(
     By.CSS_SELECTOR, "body > div.video-container.Modal-Container.open"
-)
-GET_STARTED_BUTTON = Selector(By.ID, "triage-section-get-started")
-CONTINUE_EXPORT_JOURNEY = Selector(By.ID, "triage-section-continue-your-journey")
-NEW_TO_EXPORTING_LINK = Selector(By.ID, "personas-section-new")
-OCCASIONAL_EXPORTER_LINK = Selector(By.ID, "personas-section-occasional")
-REGULAR_EXPORTED_LINK = Selector(By.ID, "personas-section-regular")
-FIND_A_BUYER_SERVICE_LINK = Selector(
-    By.CSS_SELECTOR, "#services-section-find-a-buyer a"
-)
-SELLING_ONLINE_OVERSEAS_SERVICE_LINK = Selector(
-    By.CSS_SELECTOR, "#services-section-selling-online-overseas a"
-)
-EXPORT_OPPORTUNITIES_SERVICE_LINK = Selector(
-    By.CSS_SELECTOR, "#services-section-export-opportunities a"
-)
-CAROUSEL_INDICATORS_SECTION = Selector(
-    By.CSS_SELECTOR, "#carousel  div.ed-carousel__indicators"
 )
 CAROUSEL_INDICATORS = Selector(By.CSS_SELECTOR, ".ed-carousel__indicator")
 CAROUSEL_PREV_BUTTON = Selector(
@@ -65,53 +50,12 @@ CAROUSEL_PREV_BUTTON = Selector(
 CAROUSEL_NEXT_BUTTON = Selector(
     By.CSS_SELECTOR, "#carousel label.ed-carousel__control--forward"
 )
-CAROUSEL_FIRST_INDICATOR = Selector(By.CSS_SELECTOR, ".ed-carousel__indicator[for='1']")
-CAROUSEL_SECOND_INDICATOR = Selector(
-    By.CSS_SELECTOR, ".ed-carousel__indicator[for='2']"
-)
-CAROUSEL_THIRD_INDICATOR = Selector(By.CSS_SELECTOR, ".ed-carousel__indicator[for='3']")
-CASE_STUDIES_LINK = Selector(By.CSS_SELECTOR, "#carousel h3 > a")
 CASE_STUDY_LINK = Selector(
     By.CSS_SELECTOR, "#carousel div.ed-carousel__slide:nth-child({}) h3 > a"
 )
-CAROUSEL = {
-    "itself": Selector(By.ID, "carousel"),
-    "title": Selector(By.ID, "case-studies-section-title"),
-    "description": Selector(By.ID, "case-studies-section-description"),
-    "carousel_previous_button": CAROUSEL_PREV_BUTTON,
-    "carousel_next_button": CAROUSEL_NEXT_BUTTON,
-    "carousel - indicator 1": Selector(By.ID, "case-studies-section-indicator-1"),
-    "carousel - indicator 2": Selector(By.ID, "case-studies-section-indicator-2"),
-    "carousel - indicator 3": Selector(By.ID, "case-studies-section-indicator-3"),
-    "carousel - case study 1 - link": Selector(
-        By.ID, "case-studies-section-case-study-1-link"
-    ),
-    "carousel - case study 2 - link": Selector(
-        By.ID, "case-studies-section-case-study-2-link"
-    ),
-    "carousel - case study 3 - link": Selector(
-        By.ID, "case-studies-section-case-study-3-link"
-    ),
-    "carousel - case study 1 - image": Selector(
-        By.ID, "case-studies-section-case-study-1-image"
-    ),
-    "carousel - case study 2 - image": Selector(
-        By.ID, "case-studies-section-case-study-2-image"
-    ),
-    "carousel - case study 3 - image": Selector(
-        By.ID, "case-studies-section-case-study-3-image"
-    ),
-}
-HEADER_ADVICE_LINKS = Selector(By.ID, "header-advice-links")
 ARTICLES = Selector(By.CSS_SELECTOR, "#eu-exit-news-section .article a")
 ADVICE_ARTICLE_LINKS = Selector(By.CSS_SELECTOR, "#resource-advice a")
 SELECTORS = {
-    "beta bar": {
-        "itself": Selector(By.ID, "header-beta-bar"),
-        "badge": Selector(By.CSS_SELECTOR, "#header-beta-bar .phase-tag"),
-        "message": Selector(By.CSS_SELECTOR, "#header-beta-bar span"),
-        "link": Selector(By.CSS_SELECTOR, "#header-beta-bar a"),
-    },
     "hero": {
         "itself": Selector(By.ID, "hero-campaign-section"),
         "title": Selector(By.ID, "hero-campaign-section-title"),
@@ -147,9 +91,7 @@ SELECTORS = {
         "create an export plan": Selector(By.ID, "create-an-export-plan-link"),
         "find an export market": Selector(By.ID, "find-an-export-market-link"),
         "define route to market": Selector(By.ID, "define-route-to-market-link"),
-        "get export finance": Selector(
-            By.ID, "get-export-finance-and-funding-link"
-        ),
+        "get export finance": Selector(By.ID, "get-export-finance-and-funding-link"),
         "manage payment for export orders": Selector(
             By.ID, "manage-payment-for-export-orders-link"
         ),
@@ -170,9 +112,13 @@ SELECTORS = {
         "fab": Selector(By.ID, "services-section-find-a-buyer"),
         "soo": Selector(By.ID, "services-section-selling-online-overseas"),
         "exops": Selector(By.ID, "services-section-export-opportunities"),
-        "find a buyer": FIND_A_BUYER_SERVICE_LINK,
-        "selling online overseas": SELLING_ONLINE_OVERSEAS_SERVICE_LINK,
-        "export opportunities": EXPORT_OPPORTUNITIES_SERVICE_LINK,
+        "find a buyer": (Selector(By.CSS_SELECTOR, "#services-section-find-a-buyer a")),
+        "selling online overseas": (
+            Selector(By.CSS_SELECTOR, "#services-section-selling-online-overseas a")
+        ),
+        "export opportunities": (
+            Selector(By.CSS_SELECTOR, "#services-section-export-opportunities a")
+        ),
     },
     "case studies": {
         "itself": Selector(By.ID, "carousel"),
@@ -197,12 +143,11 @@ SELECTORS = {
         "description": Selector(By.ID, "business-is-great-description"),
         "link": Selector(By.ID, "business-is-great-link"),
     },
-    "error reporting": {
-        "itself": Selector(By.CSS_SELECTOR, "section.error-reporting"),
-        "link": Selector(By.ID, "error-reporting-section-contact-us"),
-    },
 }
-SELECTORS.update(header.SELECTORS)
+SELECTORS.update(common_selectors.HEADER)
+SELECTORS.update(common_selectors.BETA_BAR)
+SELECTORS.update(common_selectors.ERROR_REPORTING)
+SELECTORS.update(common_selectors.FOOTER)
 
 
 def visit(driver: WebDriver):
@@ -387,4 +332,4 @@ def open_any_article(driver: WebDriver) -> tuple:
 
 
 def search(driver: WebDriver, phrase: str):
-    header.search(driver, phrase)
+    domestic_actions.search(driver, phrase)
