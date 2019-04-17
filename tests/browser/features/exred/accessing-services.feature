@@ -12,9 +12,11 @@ Feature: Accessing Services
 
     Then "Robert" should see following sections
       | sections        |
+      | Header          |
       | Breadcrumbs     |
       | Services        |
       | Error reporting |
+      | Footer          |
 
 
   @bug

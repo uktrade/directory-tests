@@ -10,6 +10,7 @@ Feature: Home Page
       Given "Robert" visits the "Export Readiness - Home" page
       Then "Robert" should see following sections
         | Sections                 |
+        | Header                   |
         | Beta bar                 |
         | Hero                     |
         | EU Exit enquiries banner |
@@ -19,6 +20,7 @@ Feature: Home Page
         | Case Studies             |
         | Business is Great        |
         | Error Reporting          |
+        | Footer                   |
 
 
   @ED-3014
