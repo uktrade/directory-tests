@@ -91,13 +91,6 @@ def then_should_see_links_to_services(
         context, actor_alias, section, context.table, location)
 
 
-@then('"{actor_alias}" should see links to following "{section}" "{elements}" in "{location}"')
-def then_should_see_links_to_services(
-        context, actor_alias, section, elements, location):
-    should_see_links_in_specific_location(
-        context, actor_alias, section, elements.split(", "), location)
-
-
 @then('"{actor_alias}" should be taken to a new tab with the "{social_media}" share page opened')
 def then_actor_should_be_on_share_page(context, actor_alias, social_media):
     articles_should_be_on_share_page(context, actor_alias, social_media)
