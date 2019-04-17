@@ -38,7 +38,6 @@ from steps.when_impl import (
     generic_submit_form,
     generic_unfold_topics,
     generic_visit_current_page_with_lang_parameter,
-    header_footer_click_on_dit_logo,
     header_footer_open_link,
     invest_read_more,
     language_selector_change_to,
@@ -158,11 +157,6 @@ def when_actor_decides_to_click_on_page_element(
 def when_actor_decides_to_click_on_page_element(
         context, actor_alias, element_name):
     click_on_page_element(context, actor_alias, element_name)
-
-
-@when('"{actor_alias}" decides to click on the DIT logo in the "{logo_location}"')
-def when_actor_clicks_on_the_dit_logo(context, actor_alias, logo_location):
-    header_footer_click_on_dit_logo(context, actor_alias, logo_location)
 
 
 @when('"{actor_alias}" searches for companies using "{keyword}" keyword in "{sector}" sector')

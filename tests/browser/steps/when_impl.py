@@ -199,12 +199,6 @@ def open_service_link_on_interim_page(context: Context, actor_alias: str, servic
     logging.debug("%s went to %s service page", actor_alias, service)
 
 
-def registration_go_to(context: Context, actor_alias: str):
-    logging.debug("%s decided to go to registration", actor_alias)
-    exred.header.go_to_registration(context.driver)
-    sso.registration.should_be_here(context.driver)
-
-
 def registration_should_get_verification_email(context: Context, actor_alias: str):
     """Will check if the Exporter received an email verification message."""
     logging.debug("Searching for an email verification message...")
@@ -383,11 +377,6 @@ def click_on_page_element(
     logging.debug(
         "%s decided to click on '%s' on '%s' page", actor_alias, element_name, page.NAME
     )
-
-
-def header_footer_click_on_dit_logo(context: Context, actor_alias: str, location: str):
-    open_group_element(context, group="general", element="logo", location=location)
-    logging.debug("%s clicked on DIT logo", actor_alias)
 
 
 def fas_search_for_companies(
