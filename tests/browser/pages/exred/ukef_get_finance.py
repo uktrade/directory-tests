@@ -8,7 +8,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType
+from pages import ElementType, common_selectors
 from pages.common_actions import (
     Selector,
     check_for_sections,
@@ -30,13 +30,6 @@ PAGE_TITLE = "Get finance - great.gov.uk"
 PROMO_VIDEO = Selector(By.CSS_SELECTOR, "section.get-finance-video video")
 BREADCRUMB_LINKS = Selector(By.CSS_SELECTOR, "div.breadcrumbs a")
 SELECTORS = {
-    "breadcrumbs": {
-        "itself": Selector(By.CSS_SELECTOR, "div.breadcrumbs"),
-        "current page": Selector(
-            By.CSS_SELECTOR, "div.breadcrumbs li[aria-current='page']"
-        ),
-        "links": BREADCRUMB_LINKS,
-    },
     "hero": {
         "itself": Selector(By.ID, "get-finance-hero"),
         "header": Selector(By.CSS_SELECTOR, "#get-finance-hero h1"),
@@ -73,11 +66,11 @@ SELECTORS = {
             By.CSS_SELECTOR, "#contact-section-bottom a", type=ElementType.LINK
         ),
     },
-    "error reporting": {
-        "itself": Selector(By.CSS_SELECTOR, "section.error-reporting"),
-        "link": Selector(By.ID, "error-reporting-section-contact-us"),
-    },
 }
+SELECTORS.update(common_selectors.BREADCRUMBS)
+SELECTORS.update(common_selectors.HEADER)
+SELECTORS.update(common_selectors.ERROR_REPORTING)
+SELECTORS.update(common_selectors.FOOTER)
 
 
 def visit(driver: WebDriver):
