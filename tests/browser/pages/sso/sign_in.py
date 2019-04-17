@@ -43,6 +43,7 @@ SELECTORS = {
     "register for an account": {"register": REGISTER_BUTTON},
 }
 SELECTORS.update(common_selectors.HEADER)
+SELECTORS.update(common_selectors.SSO_LOGGED_OUT)
 SELECTORS.update(common_selectors.FOOTER)
 
 

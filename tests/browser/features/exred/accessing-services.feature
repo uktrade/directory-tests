@@ -11,12 +11,13 @@ Feature: Accessing Services
     When "Robert" goes to the "Export Readiness - Services" page
 
     Then "Robert" should see following sections
-      | sections        |
-      | Header          |
-      | Breadcrumbs     |
-      | Services        |
-      | Error reporting |
-      | Footer          |
+      | sections               |
+      | Header                 |
+      | SSO links - logged out |
+      | Breadcrumbs            |
+      | Services               |
+      | Error reporting        |
+      | Footer                 |
 
 
   @bug

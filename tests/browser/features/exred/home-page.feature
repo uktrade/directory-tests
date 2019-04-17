@@ -11,6 +11,7 @@ Feature: Home Page
       Then "Robert" should see following sections
         | Sections                 |
         | Header                   |
+        | SSO links - logged out   |
         | Beta bar                 |
         | Hero                     |
         | EU Exit enquiries banner |

@@ -22,6 +22,7 @@ PAGE_TITLE = "Business profile - great.gov.uk"
 
 SELECTORS = {}
 SELECTORS.update(common_selectors.HEADER)
+SELECTORS.update(common_selectors.SSO_LOGGED_OUT)
 SELECTORS.update(common_selectors.ERROR_REPORTING)
 SELECTORS.update(common_selectors.FOOTER)
 
