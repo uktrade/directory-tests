@@ -152,6 +152,7 @@ def when_actor_decides_to_click_on_page_element(
 @when('"{actor_alias}" decides to use "{element_name}" button')
 @when('"{actor_alias}" decides to use "{element_name}" link')
 @when('"{actor_alias}" decides to open "{element_name}"')
+@when('"{actor_alias}" decides to click on "{element_name}"')
 @when('"{actor_alias}" decides to see "{element_name}"')
 @when('"{actor_alias}" decides to "{element_name}"')
 def when_actor_decides_to_click_on_page_element(
