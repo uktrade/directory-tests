@@ -74,7 +74,7 @@ Feature: Header-Footer
     Given basic authentication is done for "<selected>" page
     And "Robert" visits the "<selected>" page
 
-    When "Robert" decides to click on the DIT logo in the "header"
+    When "Robert" decides to click on "EIG logo"
 
     Then "Robert" should be on the "Export Readiness - Home" page or on the International page
 
@@ -86,13 +86,8 @@ Feature: Header-Footer
       | Single Sign-On - Sign in                        |
       | Find a Buyer - Home                             |
       | Selling Online Overseas - Home                  |
-
-    @bug
-    @TT-886
-    @fixme
-    Examples:
-      | selected                                        |
       | Profile - About                                 |
+
 
     @stage-only
     Examples:
