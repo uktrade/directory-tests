@@ -1,4 +1,5 @@
 __all__ = [
+    "actions",
     "advice_article",
     "advice_article_list",
     "advice_landing",
@@ -28,10 +29,7 @@ __all__ = [
     "contact_us_triage_location",
     "domestic_eu_exit_contact_us",
     "domestic_eu_exit_contact_us_thank_you",
-    "footer",
-    "header",
     "home",
-    "interim_exporting_opportunities",
     "international",
     "international_contact_us",
     "international_eu_exit_contact_us",
