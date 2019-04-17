@@ -15,14 +15,7 @@ from selenium.common.exceptions import (
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import (
-    common_language_selector,
-    exred,
-    fas,
-    get_page_object,
-    soo,
-    sso,
-)
+from pages import common_language_selector, exred, fas, get_page_object, soo, sso
 from pages.common_actions import (
     add_actor,
     barred_actor,
@@ -37,7 +30,15 @@ from steps import has_action
 from utils.cms_api import get_news_articles
 from utils.gov_notify import get_verification_code, get_verification_link
 
-NUMBERS = {"random": 0, "first": 1, "second": 2, "third": 3, "fourth": 4, "fifth": 5, "sixth": 6}
+NUMBERS = {
+    "random": 0,
+    "first": 1,
+    "second": 2,
+    "third": 3,
+    "fourth": 4,
+    "fifth": 5,
+    "sixth": 6,
+}
 
 
 def retry_if_webdriver_error(exception):
@@ -396,11 +397,15 @@ def fas_search_for_companies(
 
 
 def fas_searched_for_companies(
-        context: Context, actor_alias: str, *, keyword: str = None, sector: str = None
+    context: Context, actor_alias: str, *, keyword: str = None, sector: str = None
 ):
     visit_page(context, actor_alias, f"{fas.home.SERVICE} - {fas.home.NAME}")
     fas_search_for_companies(context, actor_alias, keyword=keyword, sector=sector)
-    should_be_on_page(context, actor_alias, f"{fas.search_results.SERVICE} - {fas.search_results.NAME}")
+    should_be_on_page(
+        context,
+        actor_alias,
+        f"{fas.search_results.SERVICE} - {fas.search_results.NAME}",
+    )
 
 
 @retry(
