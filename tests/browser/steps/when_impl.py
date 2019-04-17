@@ -287,7 +287,7 @@ def sign_in(context: Context, actor_alias: str):
 
 
 def sign_out(context: Context, actor_alias: str):
-    exred.header.go_to_sign_out(context.driver)
+    exred.actions.go_to_sign_out(context.driver)
     sso.sign_out.submit(context.driver)
     logging.debug("%s signed out", actor_alias)
 
