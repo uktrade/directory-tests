@@ -38,10 +38,18 @@ HEADER = {
             "#search-box ~ button[type=submit]",
             type=ElementType.BUTTON,
         ),
-        "sign in": Selector(By.ID, "header-sign-in-link", is_visible=False),
+    }
+}
+SSO_LOGGED_IN = {
+    "sso links - logged out": {
         "account": Selector(By.ID, "header-profile-link", is_visible=False),
         "sign out": Selector(By.ID, "header-sign-out-link", is_visible=False),
-    }
+    },
+}
+SSO_LOGGED_OUT = {
+    "sso links - logged out": {
+        "sign in": Selector(By.ID, "header-sign-in-link", is_visible=False),
+    },
 }
 
 BETA_BAR = {
