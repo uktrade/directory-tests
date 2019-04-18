@@ -639,7 +639,7 @@ def generic_visit_current_page_with_lang_parameter(
 def generic_at_least_n_news_articles(
     context: Context, n: int, visitor_type: str, service: str
 ):
-    articles = (service, visitor_type)
+    articles = get_news_articles(service, visitor_type)
     error = (
         f"Expected to find at least {n} news articles on {service} but "
         f"got {len(articles)}"
