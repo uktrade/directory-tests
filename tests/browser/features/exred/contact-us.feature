@@ -356,6 +356,7 @@ Feature:  new contact us forms
 
 
   @TT-758
+  @zendesk
   @CMS-506
   @dev-only
   @captcha
@@ -391,6 +392,7 @@ Feature:  new contact us forms
 
 
   @TT-758
+  @zendesk
   @dev-only
   @captcha
   @short-form

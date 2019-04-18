@@ -127,6 +127,7 @@ Feature: New Contact-us form
 
 
   @XOT-689
+  @zendesk
   @exopps
   @captcha
   @dev-only
