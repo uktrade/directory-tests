@@ -3,10 +3,12 @@
 import logging
 from typing import List
 from urllib import parse as urlparse
+from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import common_selectors
 from pages.common_actions import (
     Selector,
     assertion_msg,
@@ -15,13 +17,16 @@ from pages.common_actions import (
     check_if_element_is_not_visible,
     find_and_click_on_page_element,
     find_element,
+    go_to_url,
     take_screenshot,
 )
+from pages.exred import actions as domestic_actions
+from settings import EXRED_UI_URL
 
 NAME = "Advice"
 SERVICE = "Export Readiness"
 TYPE = "article"
-URL = None
+URL = urljoin(EXRED_UI_URL, "advice/")
 
 ARTICLE_NAME = Selector(By.CSS_SELECTOR, "article h1")
 ARTICLE_TEXT = Selector(By.CSS_SELECTOR, ".article-content")
@@ -59,6 +64,11 @@ SELECTORS = {
         "report page link": IS_THERE_ANYTHING_WRONG_WITH_THIS_PAGE_LINK,
     },
 }
+SELECTORS.update(common_selectors.HEADER)
+
+
+def visit(driver: WebDriver):
+    go_to_url(driver, URL, NAME)
 
 
 def should_be_here(driver: WebDriver):
@@ -77,7 +87,9 @@ def should_not_see_section(driver: WebDriver, name: str):
 
 
 def get_article_name(driver: WebDriver) -> str:
-    current_article = find_element(driver, ARTICLE_NAME, element_name="Article name")
+    current_article = find_element(
+        driver, ARTICLE_NAME, element_name="Article name"
+    )
     return current_article.text
 
 
@@ -144,7 +156,9 @@ def share_via(driver: WebDriver, social_media: str):
     share_button_selector = SHARE_BUTTONS[social_media.lower()]
     share_button = find_element(driver, share_button_selector)
     href = share_button.get_attribute("href")
-    logging.debug("Opening 'Share on %s' link '%s' in the same tab", social_media, href)
+    logging.debug(
+        "Opening 'Share on %s' link '%s' in the same tab", social_media, href
+    )
     driver.get(href)
 
 
@@ -157,3 +171,7 @@ def report_problem(driver: WebDriver):
 def click_on_page_element(driver: WebDriver, element_name: str):
     find_and_click_on_page_element(driver, SELECTORS, element_name)
     take_screenshot(driver, NAME + " after clicking on " + element_name)
+
+
+def search(driver: WebDriver, phrase: str):
+    domestic_actions.search(driver, phrase)

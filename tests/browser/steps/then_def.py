@@ -8,6 +8,7 @@ from behave.runner import Context
 from steps.then_impl import (
     articles_should_be_on_share_page,
     case_studies_should_see_case_study,
+    exred_search_finder_should_see_page_number,
     fas_search_results_filtered_by_industries,
     form_check_state_of_element,
     form_should_see_error_messages,
@@ -15,6 +16,7 @@ from steps.then_impl import (
     generic_article_counter_should_match_number_of_articles,
     generic_article_counters_should_match,
     generic_contact_us_should_receive_confirmation_email,
+    generic_should_be_on_one_of_the_pages,
     generic_should_see_expected_page_content,
     generic_should_see_form_choices,
     header_check_favicon,
@@ -286,7 +288,18 @@ def then_actor_should_get_verifaction_code(context: Context, actor_alias: str):
     generic_get_verification_code(context, actor_alias)
 
 
-@then('"{actor_alias}" should see marketplaces which operate globally or in multiple countries {countries}')
+@then('"{actor_alias}" should see marketplaces which operate globally or in multiple countries "{countries}"')
 def then_actor_should_see_expected_marketplaces(
         context: Context, actor_alias: str, countries: str):
     marketplace_finder_should_see_marketplaces(context, actor_alias, countries)
+
+
+@then('"{actor_alias}" should see search results page number "{page_num:d}" for "{phrase}"')
+def then_actor_should_see_page_number(
+        context: Context, actor_alias: str, page_num: int, phrase: str):
+    exred_search_finder_should_see_page_number(context, actor_alias, page_num)
+
+
+@then('"{actor_alias}" should be on one of the "{expected_pages}" pages')
+def then_actor_should_be_on_one_of_the_pages(context: Context, actor_alias: str, expected_pages: str):
+    generic_should_be_on_one_of_the_pages(context, actor_alias, expected_pages)
