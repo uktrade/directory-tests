@@ -19,7 +19,7 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from pages.exred import international_contact_us, international_eu_exit_contact_us
+from pages.international import international_contact_us, international_eu_exit_contact_us
 from pages.fas import contact_us as fas_contact_us
 from pages.invest import contact_us as invest_contact_us
 from settings import EXRED_UI_URL
