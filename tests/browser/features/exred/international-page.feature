@@ -97,6 +97,9 @@ Feature: International Page
       | English            |
       | Deutsch            |
       | 日本語              |
+
+    @wip
+    Examples: Missing translations
       | 简体中文            |
       | Français           |
       | español            |
