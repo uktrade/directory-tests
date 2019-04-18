@@ -225,12 +225,6 @@ def language_selector_should_see_it(context: Context, actor_alias: str):
     logging.debug("As expected %s can see language selector", actor_alias)
 
 
-def language_selector_should_not_see_it(context: Context, actor_alias: str):
-    page = get_last_visited_page(context, actor_alias)
-    common_language_selector.should_not_see_it_on(context.driver, page=page)
-    logging.debug("As expected %s cannot see language selector", actor_alias)
-
-
 def language_selector_keyboard_should_be_trapped(context: Context, actor_alias: str):
     page = get_last_visited_page(context, actor_alias)
     common_language_selector.keyboard_should_be_trapped(context.driver, page=page)

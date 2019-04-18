@@ -53,7 +53,6 @@ Feature: International Page
     Then "Robert" should see the language selector
 
     When "Robert" closes the language selector
-    Then "Robert" should not see the language selector
 
 
   @wip
@@ -67,7 +66,6 @@ Feature: International Page
     Then "Robert" should see the language selector
 
     When "Robert" closes the language selector using his keyboard
-    Then "Robert" should not see the language selector
 
 
   @wip

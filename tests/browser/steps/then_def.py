@@ -28,7 +28,6 @@ from steps.then_impl import (
     invest_should_see_topic_contents,
     invest_should_see_uk_gov_logo,
     language_selector_keyboard_should_be_trapped,
-    language_selector_should_not_see_it,
     language_selector_should_see_it,
     marketplace_finder_should_see_marketplaces,
     office_finder_should_see_correct_office_details,
@@ -128,11 +127,6 @@ def then_actor_should_see_correct_logo(context, actor_alias, logo_name):
 @then('"{actor_alias}" should see the language selector')
 def then_actor_should_see_language_selector(context, actor_alias):
     language_selector_should_see_it(context, actor_alias)
-
-
-@then('"{actor_alias}" should not see the language selector')
-def then_actor_should_not_see_language_selector(context, actor_alias):
-    language_selector_should_not_see_it(context, actor_alias)
 
 
 @then('"{actor_alias}"\'s keyboard should be trapped to the language selector')
