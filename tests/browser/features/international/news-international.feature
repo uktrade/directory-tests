@@ -38,6 +38,7 @@ Feature: Updates for non-UK companies on EU Exit
 
 
   @CMS-579
+  @eu-exit
   @contact-form
   Scenario: International Visitors should see be able to navigate to the "EU Exit contact form"
     Given "Henry" went to the "International - Updates for non UK companies on EU Exit" page
@@ -67,6 +68,7 @@ Feature: Updates for non-UK companies on EU Exit
 
 
   @CMS-579
+  @eu-exit
   @breadcrumbs
   Scenario: International Visitors should see be able to get to "International" page by using "Great.gov.uk" breadcrumb on "Updates for non-UK companies on EU Exit" page
     Given "Henry" went to the "International - Updates for non UK companies on EU Exit" page
