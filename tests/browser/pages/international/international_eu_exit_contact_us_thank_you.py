@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""great.gov.uk International EU Exit Contact us - Thank you page"""
+"""International - EU Exit Contact us - Thank you page"""
 from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
@@ -8,8 +8,8 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from pages.common_actions import Selector, check_url, go_to_url, take_screenshot
 from settings import EXRED_UI_URL
 
-NAME = "International EU Exit"
-SERVICE = "Export Readiness"
+NAME = "EU Exit"
+SERVICE = "International"
 TYPE = "Thank you for contacting us"
 URL = urljoin(EXRED_UI_URL, "international/eu-exit-news/contact/success/")
 PAGE_TITLE = "Welcome to great.gov.uk - buy from or invest in the UK"

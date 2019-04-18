@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""great.gov.uk International page"""
+"""International - Landing page"""
 import logging
 from typing import List
 from urllib.parse import urljoin
@@ -21,8 +21,8 @@ from pages.common_actions import (
 )
 from settings import EXRED_UI_URL
 
-NAME = "International"
-SERVICE = "Export Readiness"
+NAME = "Landing"
+SERVICE = "International"
 TYPE = "home"
 URL = urljoin(EXRED_UI_URL, "international/")
 PAGE_TITLE = "Welcome to great.gov.uk - buy from or invest in the UK"

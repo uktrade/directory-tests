@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Export Readiness - International Contact us form"""
+"""International - Contact us form"""
 from types import ModuleType
 from urllib.parse import urljoin
 
@@ -17,8 +17,8 @@ from pages.common_actions import (
 from pages.exred import contact_us_triage_domestic
 from settings import EXRED_UI_URL
 
-NAME = "International Contact us"
-SERVICE = "Export Readiness"
+NAME = "Contact us"
+SERVICE = "International"
 TYPE = "Contact us"
 URL = urljoin(EXRED_UI_URL, "contact/international/")
 PAGE_TITLE = "Welcome to great.gov.uk"
