@@ -1,0 +1,59 @@
+# -*- coding: utf-8 -*-
+"""ExRed Markets Page object"""
+
+import logging
+from urllib.parse import urljoin
+
+from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webdriver import WebDriver
+
+from pages import ElementType
+from pages.common_actions import (
+    Selector,
+    check_url,
+    fill_out_input_fields,
+    find_element,
+    go_to_url,
+    take_screenshot,
+)
+from pages.exred import header
+from settings import EXRED_UI_URL
+
+NAME = "Markets"
+SERVICE = "Export Readiness"
+TYPE = "market list"
+URL = urljoin(EXRED_UI_URL, "markets/")
+
+SELECTORS = {
+    "form": {
+        "search box": Selector(By.ID, "search-box", type=ElementType.INPUT),
+        "submit": Selector(
+            By.CSS_SELECTOR,
+            "#search-box ~ button[type=submit]",
+            type=ElementType.BUTTON,
+        ),
+    },
+    "no results": {"itself": Selector(By.ID, "search-results-list")},
+}
+SELECTORS.update(header.SELECTORS)
+
+
+def visit(driver: WebDriver):
+    go_to_url(driver, URL, NAME)
+
+
+def should_be_here(driver: WebDriver):
+    take_screenshot(driver, NAME)
+    check_url(driver, URL, exact_match=False)
+    logging.debug("All expected elements are visible on '%s' page", NAME)
+
+
+def search(driver: WebDriver, phrase: str):
+    form_selectors = SELECTORS["general"]
+    button_selector = form_selectors["search button"]
+
+    search_phrase = {"search box": phrase}
+    button = find_element(driver, button_selector, wait_for_it=True)
+    fill_out_input_fields(driver, form_selectors, search_phrase)
+    button.click()
+    take_screenshot(driver, "After submitting the form")

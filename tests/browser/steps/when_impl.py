@@ -639,7 +639,7 @@ def generic_visit_current_page_with_lang_parameter(
 def generic_at_least_n_news_articles(
     context: Context, n: int, visitor_type: str, service: str
 ):
-    articles = get_news_articles(service, visitor_type)
+    articles = (service, visitor_type)
     error = (
         f"Expected to find at least {n} news articles on {service} but "
         f"got {len(articles)}"
@@ -897,3 +897,64 @@ def soo_find_random_marketplace_and_apply_via_dit(
         actor_alias,
         f"{exred.contact_us_soo_long_your_business.SERVICE} - {exred.contact_us_soo_long_your_business.NAME}",
     )
+
+
+def exred_search_for_phrase(
+        context: Context, actor_alias: str, phrase: str):
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "search")
+    page.search(context.driver, phrase)
+
+
+def exred_search_for_phrase_on_page(
+        context: Context, actor_alias: str, phrase: str, page_name: str):
+    visit_page(context, actor_alias, page_name)
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "search")
+    page.search(context.driver, phrase)
+
+
+def exred_find_more_about_search_result_type(
+        context: Context, actor_alias: str, type_of: str
+):
+    should_be_on_page(
+        context,
+        actor_alias,
+        f"{exred.search_results.SERVICE} - {exred.search_results.NAME}",
+    )
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "click_on_result_of_type")
+    page.click_on_result_of_type(context.driver, type_of)
+
+
+def exred_search_result_has_more_than_one_page(
+        context: Context, actor_alias: str, min_page_num: int
+):
+    should_be_on_page(
+        context,
+        actor_alias,
+        f"{exred.search_results.SERVICE} - {exred.search_results.NAME}",
+    )
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "has_pagination")
+    page.has_pagination(context.driver, min_page_num)
+
+
+def exred_find_existing_page(
+        context: Context, actor_alias: str, existing_page: str
+):
+
+    click_on_page_element(context, actor_alias, existing_page)
+    should_be_on_page(
+        context,
+        actor_alias,
+        f"{exred.search_results.SERVICE} - {exred.search_results.NAME}",
+    )
+    page = get_last_visited_page(context, actor_alias)
+
+    if existing_page == "Next":
+        has_action(page, "paginator")
+        page.paginator(context.driver, existing_page)
+    else:
+        has_action(page, "has_pagination")
+        page.has_pagination(context.driver, 1)
