@@ -43,7 +43,39 @@ Feature: International Page
       | Visit the UK     | Visit Britain - Home   |
 
 
+  @ED-3149
+  @dev-only
+  @language-selector
+  Scenario Outline: Visitors should be able to view International page in "<preferred_language>"
+    Given "Robert" visits the "International - Landing" page
+
+    When "Robert" decides to view the page in "<preferred_language>"
+
+    Then "Robert" should be on the "International - Landing" page
+    And "Robert" should see the page in "<preferred_language>"
+
+    Examples: available languages
+      | preferred_language |
+      | English            |
+      | Deutsch            |
+      | 日本語              |
+
   @wip
+    Examples: Missing translations
+      | preferred_language |
+      | 简体中文            |
+      | Français           |
+      | español            |
+      | Português          |
+
+  @bug
+  @CMS-1263
+  @fixme
+    Examples: 500 ISE
+      | preferred_language |
+      | العربيّة            |
+
+
   @ED-3083
   @language-selector
   Scenario: Visitor should be able to open and close the language selector on "International - Landing" page
@@ -82,37 +114,6 @@ Feature: International Page
 
 
   @ED-3149
-  @language-selector
-  Scenario Outline: Visitors should be able to view International page in "<preferred_language>"
-    Given "Robert" visits the "International - Landing" page
-
-    When "Robert" decides to view the page in "<preferred_language>"
-
-    Then "Robert" should be on the "International - Landing" page
-    And "Robert" should see the page in "<preferred_language>"
-
-    Examples: available languages
-      | preferred_language |
-      | English            |
-      | Deutsch            |
-      | 日本語              |
-
-    @wip
-    Examples: Missing translations
-      | preferred_language |
-      | 简体中文            |
-      | Français           |
-      | español            |
-      | Português          |
-
-    @bug
-    @CMS-1263
-    @fixme
-    Examples: 500 ISE
-      | preferred_language |
-      | العربيّة            |
-
-
   @wip
   @ED-3149
   @language-selector
