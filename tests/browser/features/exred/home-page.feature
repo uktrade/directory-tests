@@ -93,7 +93,7 @@ Feature: Home Page
 
     When "Robert" decides to view the page in "<preferred_language>"
 
-    Then "Robert" should be on the "Export Readiness - International" page
+    Then "Robert" should be on the "International - Landing" page
     # ATM International page doesn't support translations
     # And "Robert" should see the page in "<preferred_language>"
 

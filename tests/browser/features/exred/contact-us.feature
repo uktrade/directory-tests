@@ -437,11 +437,11 @@ Feature:  new contact us forms
     Then "Robert" should be on the "<expected>" page
 
     Examples:
-      | selected            | expected                                                   |
-      | Investing in the UK | Invest - Contact us                                        |
-      | Buying from the UK  | Find a Supplier - Contact us                               |
-      | EU exit enquiries   | Export Readiness - International EU Exit - Contact Us      |
-      | Other               | Export Readiness - International Contact us                |
+      | selected            | expected                             |
+      | Investing in the UK | Invest - Contact us                  |
+      | Buying from the UK  | Find a Supplier - Contact us         |
+      | EU exit enquiries   | International - EU Exit - Contact Us |
+      | Other               | International - Contact us           |
 
 
   @TT-758
