@@ -6,6 +6,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import common_selectors
 from pages.common_actions import (
     Selector,
     check_url,
@@ -27,19 +28,6 @@ RELATED_ARTICLES = Selector(
     By.CSS_SELECTOR, "#article > article > div > div > div.column-quarter ul a"
 )
 SELECTORS = {
-    "header": {
-        "itself": Selector(By.ID, "international-header"),
-        "skip": Selector(By.ID, "skip-link"),
-        "header bar": Selector(By.ID, "international-header-bar"),
-        "header menu": Selector(By.ID, "international-header-menu"),
-        "logo": Selector(By.ID, "international-header-logo"),
-    },
-    "beta bar": {
-        "itself": Selector(By.ID, "header-beta-bar"),
-        "badge": Selector(By.CSS_SELECTOR, "#header-beta-bar .phase-tag"),
-        "message": Selector(By.CSS_SELECTOR, "#header-beta-bar span"),
-        "link": Selector(By.CSS_SELECTOR, "#header-beta-bar a"),
-    },
     "share menu": {
         "itself": Selector(By.CSS_SELECTOR, "ul.sharing-links"),
         "twitter": Selector(By.ID, "share-twitter"),
@@ -72,16 +60,11 @@ SELECTORS = {
         ),
         "related articles": RELATED_ARTICLES,
     },
-    "error reporting": {
-        "itself": Selector(By.CSS_SELECTOR, "section.error-reporting"),
-        "link": Selector(By.ID, "error-reporting-section-contact-us"),
-    },
-    "footer": {
-        "itself": Selector(By.ID, "international-footer"),
-        "logo": Selector(By.ID, "international-footer-logo"),
-        "share links": Selector(By.CSS_SELECTOR, "#international-footer ul"),
-    },
 }
+SELECTORS.update(common_selectors.HEADER_INTERNATIONAL)
+SELECTORS.update(common_selectors.BETA_BAR)
+SELECTORS.update(common_selectors.ERROR_REPORTING)
+SELECTORS.update(common_selectors.FOOTER_INTERNATIONAL)
 
 
 def should_be_here(driver: WebDriver):

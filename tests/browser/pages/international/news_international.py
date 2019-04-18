@@ -7,6 +7,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import common_selectors
 from pages.common_actions import (
     Selector,
     check_for_sections,
@@ -29,19 +30,6 @@ BETA_FEEDBACK = Selector(By.CSS_SELECTOR, "#header-beta-bar span > a")
 SUBMIT_BUTTON = Selector(By.CSS_SELECTOR, "form[method=POST] button")
 ARTICLES = Selector(By.CSS_SELECTOR, "li.article a")
 SELECTORS = {
-    "header": {
-        "itself": Selector(By.ID, "international-header"),
-        "skip": Selector(By.ID, "skip-link"),
-        "header bar": Selector(By.ID, "international-header-bar"),
-        "header menu": Selector(By.ID, "international-header-menu"),
-        "logo": Selector(By.ID, "international-header-logo"),
-    },
-    "beta bar": {
-        "itself": Selector(By.ID, "header-beta-bar"),
-        "badge": Selector(By.CSS_SELECTOR, "#header-beta-bar .phase-tag"),
-        "message": Selector(By.CSS_SELECTOR, "#header-beta-bar span"),
-        "link": Selector(By.CSS_SELECTOR, "#header-beta-bar a"),
-    },
     "hero": {
         "itself": Selector(By.ID, "hero"),
         "header": Selector(By.CSS_SELECTOR, "#hero h1"),
@@ -64,16 +52,11 @@ SELECTORS = {
         "description": Selector(By.CSS_SELECTOR, "#eu-exit-cta-box p"),
         "contact us": Selector(By.CSS_SELECTOR, "#eu-exit-cta-box a"),
     },
-    "error reporting": {
-        "itself": Selector(By.CSS_SELECTOR, "section.error-reporting"),
-        "link": Selector(By.ID, "error-reporting-section-contact-us"),
-    },
-    "footer": {
-        "itself": Selector(By.ID, "international-footer"),
-        "logo": Selector(By.ID, "international-footer-logo"),
-        "share links": Selector(By.CSS_SELECTOR, "#international-footer ul"),
-    },
 }
+SELECTORS.update(common_selectors.HEADER_INTERNATIONAL)
+SELECTORS.update(common_selectors.BETA_BAR)
+SELECTORS.update(common_selectors.ERROR_REPORTING)
+SELECTORS.update(common_selectors.FOOTER_INTERNATIONAL)
 
 
 def visit(driver: WebDriver):

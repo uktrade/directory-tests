@@ -7,6 +7,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import common_selectors
 from pages.common_actions import (
     Selector,
     check_for_section,
@@ -36,23 +37,9 @@ LEARN_MORE = Selector(By.ID, "card-study-uk-link")
 PLAN_YOUR_TRIP = Selector(By.ID, "card-visit-uk-link")
 BETA_FEEDBACK = Selector(By.CSS_SELECTOR, "#header-beta-bar span > a")
 SELECTORS = {
-    "header bar": {
-        "itself": Selector(By.ID, "great-global-header"),
-        "country selector": COUNTRY_SELECTOR,
-    },
-    "beta bar": {
-        "itself": Selector(By.ID, "header-beta-bar"),
-        "badge": Selector(By.CSS_SELECTOR, "#header-beta-bar .phase-tag"),
-        "message": Selector(By.CSS_SELECTOR, "#header-beta-bar span"),
-        "link": Selector(By.CSS_SELECTOR, "#header-beta-bar a"),
-    },
-    "header menu": {
-        "itself": Selector(By.CSS_SELECTOR, ".great-header-menu"),
-        "logo": Selector(By.ID, "great-header-logo"),
-    },
     "service cards": {
-        "itself": Selector(By.ID, "invest-fas-section"),
-        "cards": Selector(By.CSS_SELECTOR, "#invest-fas-section .card"),
+        "itself": Selector(By.CSS_SELECTOR, "div.card-grid"),
+        "cards": Selector(By.CSS_SELECTOR, "#content div.card"),
         "expand to the uk": Selector(By.CSS_SELECTOR, "#content > section > div > div > div:nth-child(1) a"),
         "find a uk supplier": Selector(By.CSS_SELECTOR, "#content > section > div > div > div:nth-child(2) a"),
     },
@@ -67,6 +54,10 @@ SELECTORS = {
         "visit the uk": Selector(By.LINK_TEXT, "Visit the UK"),
     },
 }
+SELECTORS.update(common_selectors.HEADER_INTERNATIONAL)
+SELECTORS.update(common_selectors.BETA_BAR)
+SELECTORS.update(common_selectors.ERROR_REPORTING)
+SELECTORS.update(common_selectors.FOOTER_INTERNATIONAL)
 
 
 def visit(driver: WebDriver):
