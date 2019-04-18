@@ -2,7 +2,6 @@
 """ExRed Empty Search Page object"""
 
 import logging
-import time
 from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
@@ -33,5 +32,4 @@ SELECTORS = {
 def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
-    time.sleep(2)
     logging.debug("All expected elements are visible on '%s' page", NAME)

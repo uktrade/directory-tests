@@ -16,7 +16,6 @@ from steps.when_impl import (
     clear_the_cookies,
     click_on_page_element,
     contact_us_navigate_through_options,
-    exred_find_existing_page,
     exred_find_more_about_search_result_type,
     exred_search_for_phrase,
     exred_submit_soo_contact_us_form,
@@ -364,12 +363,6 @@ def when_actor_search_for_phrase(
 def when_actor_decides_to_find_out_more_about_result_type(
         context: Context, actor_alias: str, type_of: str):
     exred_find_more_about_search_result_type(context, actor_alias, type_of)
-
-
-@when('"{actor_alias}" decides to go to the "{existing_page}" page')
-def when_actor_is_on_existing_page(
-        context: Context, actor_alias: str, existing_page: str):
-    exred_find_existing_page(context, actor_alias, existing_page)
 
 
 @when('"{actor_alias}" should see search results page number "{page_num:d}" for "{phrase}"')

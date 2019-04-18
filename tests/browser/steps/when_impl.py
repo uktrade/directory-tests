@@ -938,23 +938,3 @@ def exred_search_result_has_more_than_one_page(
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "has_pagination")
     page.has_pagination(context.driver, min_page_num)
-
-
-def exred_find_existing_page(
-        context: Context, actor_alias: str, existing_page: str
-):
-
-    click_on_page_element(context, actor_alias, existing_page)
-    should_be_on_page(
-        context,
-        actor_alias,
-        f"{exred.search_results.SERVICE} - {exred.search_results.NAME}",
-    )
-    page = get_last_visited_page(context, actor_alias)
-
-    if existing_page == "Next":
-        has_action(page, "paginator")
-        page.paginator(context.driver, existing_page)
-    else:
-        has_action(page, "has_pagination")
-        page.has_pagination(context.driver, 1)

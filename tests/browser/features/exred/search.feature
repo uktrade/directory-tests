@@ -26,10 +26,9 @@ Feature: Great site search
       | Services | Manufacture       |
 
 
-  @wip
   @bug
   @XOT-840
-  @XOT-760
+  @fixme
   Scenario Outline: Visitors should be able to find out more about the "<type of>" search results
     Given "Robert" searched using "<phrase>" on the "Export Readiness - <specific>" page
 
@@ -51,10 +50,10 @@ Feature: Great site search
     Given "Robert" searched using "<phrase>" on the "Export Readiness - <specific>" page
     And "Robert" sees more than "1" search result page
 
-    When "Robert" decides to go to the "Next" page
+    When "Robert" decides to use "Next" link
     Then "Robert" should see search results page number "2" for "<phrase>"
 
-    When "Robert" decides to go to the "Previous" page
+    When "Robert" decides to use "Previous" link
     Then "Robert" should see search results page number "1" for "<phrase>"
 
     Examples: event, market, service and opportunity
@@ -80,3 +79,4 @@ Feature: Great site search
       | Advice   | Transport         | Passenger transport     |
       | Markets  | Steel             | Market selection clinic |
       | Services | Manufacture       | Motor vehicles          |
+
