@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Then step implementations."""
 import logging
+from collections import defaultdict
 from time import sleep
 from typing import List, Union
 from urllib.parse import urlparse
@@ -499,3 +500,30 @@ def marketplace_finder_should_see_marketplaces(
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "should_see_marketplaces")
     page.should_see_marketplaces(context.driver, countries)
+
+
+def exred_search_finder_should_see_page_number(
+        context: Context, actor_alias: str, page_num: int
+):
+    should_be_on_page(
+        context,
+        actor_alias,
+        f"{exred.search_results.SERVICE} - {exred.search_results.NAME}",
+    )
+    page = get_last_visited_page(context, actor_alias)
+    has_action(page, "should_see_page_number")
+    page.should_see_page_number(context.driver, page_num)
+
+
+def generic_should_be_on_one_of_the_pages(context: Context, actor_alias: str, expected_pages: str):
+    expected_pages = [page.strip() for page in expected_pages.split(",")]
+    results = defaultdict()
+    for page_name in expected_pages:
+        try:
+            should_be_on_page(context, actor_alias, page_name)
+            results[page_name] = True
+        except AssertionError:
+            results[page_name] = False
+
+    with assertion_msg(f"{actor_alias} didn't see any of expected pages, instead it's on {context.driver.current_url}"):
+        assert any(list(results.values()))
