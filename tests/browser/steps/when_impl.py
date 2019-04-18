@@ -325,7 +325,8 @@ def language_selector_open(
     context: Context, actor_alias: str, *, with_keyboard: bool = False
 ):
     logging.debug("%s decided to go open language selector", actor_alias)
-    common_language_selector.open(context.driver, with_keyboard=with_keyboard)
+    page = get_last_visited_page(context, actor_alias)
+    common_language_selector.open(context.driver, page=page, with_keyboard=with_keyboard)
 
 
 def language_selector_navigate_through_links_with_keyboard(
