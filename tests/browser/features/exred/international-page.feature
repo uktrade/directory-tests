@@ -20,23 +20,26 @@ Feature: International Page
 #      | EU Exit updates   |  # EU Exit feature is turned off
 
 
-  @wip
   @ED-3136
   @external-service
   @<expected_service>
   Scenario Outline: Visitors should be able to go to "<expected_service>" page from the International page
     Given "Robert" visits the "Export Readiness - International" page
 
-    When "Robert" goes to "<expected_service>" using "<section>" link on "Export Readiness - International"
+    When "Robert" decides to find out more about "<service>"
 
     Then "Robert" should be on the "<expected_service>" page
 
     Examples:
-      | expected_service       | section          |
-      | Invest - Home          | Invest in the UK |
-      | British Council - Home | Study in the UK  |
-      | Visit Britain - Home   | Visit the UK     |
-      | Find a Supplier - Home | Buy from the UK  |
+      | service            | expected_service       |
+      | Expand to the UK   | Invest - Home          |
+      | Find a UK supplier | Find a Supplier - Home |
+
+    @wip
+    Examples: ATM there are no links to these services
+      | service          | expected_service       |
+      | Study in the UK  | British Council - Home |
+      | Visit the UK     | Visit Britain - Home   |
 
 
   @wip
