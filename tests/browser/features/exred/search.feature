@@ -1,3 +1,4 @@
+@search
 Feature: Great site search
 
   @XOT-760
@@ -29,6 +30,7 @@ Feature: Great site search
   @bug
   @XOT-840
   @fixme
+  @XOT-760
   Scenario Outline: Visitors should be able to find out more about the "<type of>" search results
     Given "Robert" searched using "<phrase>" on the "Export Readiness - <specific>" page
 
