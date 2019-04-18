@@ -229,6 +229,7 @@ urls = {
     # ExRed UI
     "ui-exred:healthcheck": "healthcheck/",
     "ui-exred:healthcheck-ping": "healthcheck/ping/",
+    "ui-exred:search": "search/",
     "ui-exred:landing": "",
     "ui-exred:landing-uk": "?lang=en-gb",
     "ui-exred:international": "international/",
