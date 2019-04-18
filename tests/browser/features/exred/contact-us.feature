@@ -368,7 +368,7 @@ Feature:  new contact us forms
     When "Robert" fills out and submits the form
 
     Then "Robert" should be on the "Export Readiness - Thank you for your enquiry - Domestic EU Exit Contact us" page
-    And "Robert" should receive "Thank you for your EU exit enquiry" confirmation email
+    And "Robert" should receive a "EU exit contact form" confirmation email from Zendesk
 
 
   @TT-758
