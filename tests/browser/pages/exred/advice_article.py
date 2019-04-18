@@ -8,19 +8,19 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import common_selectors
 from pages.common_actions import (
     Selector,
     assertion_msg,
     check_for_expected_sections_elements,
     check_for_sections,
     check_if_element_is_not_visible,
-    fill_out_input_fields,
     find_and_click_on_page_element,
     find_element,
     go_to_url,
     take_screenshot,
 )
-from pages.exred import header
+from pages.exred import actions as domestic_actions
 from settings import EXRED_UI_URL
 
 NAME = "Advice"
@@ -64,7 +64,7 @@ SELECTORS = {
         "report page link": IS_THERE_ANYTHING_WRONG_WITH_THIS_PAGE_LINK,
     },
 }
-SELECTORS.update(header.SELECTORS)
+SELECTORS.update(common_selectors.HEADER)
 
 
 def visit(driver: WebDriver):
@@ -174,11 +174,4 @@ def click_on_page_element(driver: WebDriver, element_name: str):
 
 
 def search(driver: WebDriver, phrase: str):
-    form_selectors = SELECTORS["general"]
-    button_selector = form_selectors["search button"]
-
-    search_phrase = {"search box": phrase}
-    button = find_element(driver, button_selector, wait_for_it=True)
-    fill_out_input_fields(driver, form_selectors, search_phrase)
-    button.click()
-    take_screenshot(driver, "After submitting the form")
+    domestic_actions.search(driver, phrase)
