@@ -5,6 +5,7 @@ Feature: International Page
     Given basic authentication is done for "Export Readiness - Home" page
 
   @ED-3114
+  @dev-only
   Scenario: Visitors should see "Buy from the UK, Invest in the UK, Study in the UK, Visit the UK" sections on the International page
     Given "Robert" visits the "International - Landing" page
 
@@ -22,6 +23,7 @@ Feature: International Page
 
 
   @ED-3136
+  @dev-only
   @external-service
   @<expected_service>
   Scenario Outline: Visitors should be able to go to "<expected_service>" page from the International page
@@ -77,6 +79,7 @@ Feature: International Page
 
 
   @ED-3083
+  @dev-only
   @language-selector
   Scenario: Visitor should be able to open and close the language selector on "International - Landing" page
     Given "Robert" visits the "International - Landing" page
@@ -87,8 +90,8 @@ Feature: International Page
     When "Robert" closes the language selector
 
 
-  @wip
   @ED-3083
+  @dev-only
   @language-selector
   @accessibility
   Scenario: Keyboard users should be able to open and close the language selector using just the keyboard on "International - Landing" page
@@ -100,8 +103,8 @@ Feature: International Page
     When "Robert" closes the language selector using his keyboard
 
 
-  @wip
   @ED-3083
+  @dev-only
   @language-selector
   @accessibility
   Scenario: Language selector should trap the keyboard in order to help Keyboard users to navigate on "International - Landing" pagee
