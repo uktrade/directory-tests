@@ -6,25 +6,26 @@ Feature: International Page
 
   @ED-3114
   Scenario: Visitors should see "Buy from the UK, Invest in the UK, Study in the UK, Visit the UK" sections on the International page
-    Given "Robert" visits the "Export Readiness - International" page
+    Given "Robert" visits the "International - Landing" page
 
     Then "Robert" should see following sections
       | Sections              |
-      | Header bar            |
-      | Header menu           |
+      | Header                |
       | Service Cards         |
-      | Tariffs               |
-      | News                  |
-      | Study or visit the UK |
-#      | Beta bar          |
-#      | EU Exit updates   |  # EU Exit feature is turned off
+      | Error reporting       |
+      | Footer                |
+#      | Beta bar              |
+#      | EU Exit updates       |
+#      | News                  |
+#      | Tariffs               |
+#      | Study or visit the UK |
 
 
   @ED-3136
   @external-service
   @<expected_service>
   Scenario Outline: Visitors should be able to go to "<expected_service>" page from the International page
-    Given "Robert" visits the "Export Readiness - International" page
+    Given "Robert" visits the "International - Landing" page
 
     When "Robert" decides to find out more about "<service>"
 
@@ -45,8 +46,8 @@ Feature: International Page
   @wip
   @ED-3083
   @language-selector
-  Scenario: Visitor should be able to open and close the language selector on "Export Readiness - International" page
-    Given "Robert" visits the "Export Readiness - International" page
+  Scenario: Visitor should be able to open and close the language selector on "International - Landing" page
+    Given "Robert" visits the "International - Landing" page
 
     When "Robert" opens up the language selector
     Then "Robert" should see the language selector
@@ -59,8 +60,8 @@ Feature: International Page
   @ED-3083
   @language-selector
   @accessibility
-  Scenario: Keyboard users should be able to open and close the language selector using just the keyboard on "Export Readiness - International" page
-    Given "Robert" visits the "Export Readiness - International" page
+  Scenario: Keyboard users should be able to open and close the language selector using just the keyboard on "International - Landing" page
+    Given "Robert" visits the "International - Landing" page
 
     When "Robert" opens up the language selector using his keyboard
     Then "Robert" should see the language selector
@@ -73,8 +74,8 @@ Feature: International Page
   @ED-3083
   @language-selector
   @accessibility
-  Scenario: Language selector should trap the keyboard in order to help Keyboard users to navigat on "Export Readiness - International" pagee
-    Given "Robert" visits the "Export Readiness - International" page
+  Scenario: Language selector should trap the keyboard in order to help Keyboard users to navigate on "International - Landing" pagee
+    Given "Robert" visits the "International - Landing" page
 
     When "Robert" opens up the language selector using his keyboard
     And "Robert" uses his keyboard to navigate through all links visible on language selector
@@ -85,11 +86,11 @@ Feature: International Page
   @ED-3149
   @language-selector
   Scenario Outline: Visitors should be able to view International page in "<preferred_language>"
-    Given "Robert" visits the "Export Readiness - International" page
+    Given "Robert" visits the "International - Landing" page
 
     When "Robert" decides to view the page in "<preferred_language>"
 
-    Then "Robert" should be on the "Export Readiness - International" page
+    Then "Robert" should be on the "International - Landing" page
     And "Robert" should see the page in "<preferred_language>"
 
     Examples: available languages
@@ -100,6 +101,7 @@ Feature: International Page
 
     @wip
     Examples: Missing translations
+      | preferred_language |
       | 简体中文            |
       | Français           |
       | español            |
@@ -117,7 +119,7 @@ Feature: International Page
   @ED-3149
   @language-selector
   Scenario: Visitors should be able to "get advice and services to help them export" from International page
-    Given "Robert" visits the "Export Readiness - International" page
+    Given "Robert" visits the "International - Landing" page
 
     When "Robert" decides to view the page in "English (UK)"
 
