@@ -315,11 +315,10 @@ def promo_video_close(context: Context, actor_alias: str):
     logging.debug("%s closed the video", actor_alias)
 
 
-def language_selector_close(
-    context: Context, actor_alias: str, *, with_keyboard: bool = False
-):
+def language_selector_close(context: Context, actor_alias: str):
     logging.debug("%s decided to close language selector", actor_alias)
-    common_language_selector.close(context.driver, with_keyboard=with_keyboard)
+    page = get_last_visited_page(context, actor_alias)
+    common_language_selector.close(context.driver, page=page)
 
 
 def language_selector_open(

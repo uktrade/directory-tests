@@ -110,6 +110,7 @@ def when_actor_opens_up_language_selector(context, actor_alias):
     language_selector_open(context, actor_alias)
 
 
+@when('"{actor_alias}" closes the language selector using his keyboard')
 @when('"{actor_alias}" closes the language selector')
 def when_actor_closes_language_selector(context, actor_alias):
     language_selector_close(context, actor_alias)
@@ -119,11 +120,6 @@ def when_actor_closes_language_selector(context, actor_alias):
 @when('"{actor_alias}" opens up the language selector using his keyboard')
 def when_actor_opens_up_language_selector_with_keyboard(context, actor_alias):
     language_selector_open(context, actor_alias, with_keyboard=True)
-
-
-@when('"{actor_alias}" closes the language selector using his keyboard')
-def when_actor_closes_language_selector_with_keyboard(context, actor_alias):
-    language_selector_close(context, actor_alias, with_keyboard=True)
 
 
 @when('"{actor_alias}" uses her keyboard to navigate through all links visible on language selector')
