@@ -32,7 +32,7 @@ URL = urljoin(EXRED_UI_URL, "international/eu-exit-news/contact/")
 PAGE_TITLE = "Welcome to great.gov.uk - buy from or invest in the UK"
 
 
-SUBMIT_BUTTON = Selector(By.CSS_SELECTOR, "form button")
+SUBMIT_BUTTON = Selector(By.CSS_SELECTOR, "form[method=POST] button")
 SELECTORS = {
     "header bar": {"itself": Selector(By.ID, "international-header-bar")},
     "header menu": {

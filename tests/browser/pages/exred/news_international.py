@@ -26,7 +26,7 @@ PAGE_TITLE = ""
 
 
 BETA_FEEDBACK = Selector(By.CSS_SELECTOR, "#header-beta-bar span > a")
-SUBMIT_BUTTON = Selector(By.CSS_SELECTOR, "form button")
+SUBMIT_BUTTON = Selector(By.CSS_SELECTOR, "form[method=POST] button")
 ARTICLES = Selector(By.CSS_SELECTOR, "li.article a")
 SELECTORS = {
     "header": {

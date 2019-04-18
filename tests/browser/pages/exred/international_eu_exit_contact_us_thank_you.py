@@ -20,7 +20,7 @@ LANGUAGE_SELECTOR = Selector(
 )
 LANGUAGE_SELECTOR_CLOSE = Selector(By.ID, "header-language-selector-close")
 BETA_FEEDBACK = Selector(By.CSS_SELECTOR, "#header-beta-bar span > a")
-SUBMIT_BUTTON = Selector(By.CSS_SELECTOR, "form button")
+SUBMIT_BUTTON = Selector(By.CSS_SELECTOR, "form[method=POST] button")
 SELECTORS = {
     "header bar": {"itself": Selector(By.ID, "international-header-bar")},
     "header-menu": {
