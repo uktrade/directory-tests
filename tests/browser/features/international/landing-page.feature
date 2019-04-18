@@ -117,12 +117,10 @@ Feature: International Page
 
 
   @ED-3149
-  @wip
-  @ED-3149
-  @language-selector
+  @dev-only
   Scenario: Visitors should be able to "get advice and services to help them export" from International page
     Given "Robert" visits the "International - Landing" page
 
-    When "Robert" decides to view the page in "English (UK)"
+    When "Robert" decides to find out more about "For UK Businesses"
 
     Then "Robert" should be on the "Export Readiness - Home" page
