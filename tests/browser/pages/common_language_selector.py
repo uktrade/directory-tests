@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 """Common Language Selector on Great pages"""
 import logging
-import time
 
-from selenium.common.exceptions import NoSuchElementException
 from types import ModuleType
 
 from selenium.webdriver.common.by import By
@@ -13,9 +11,8 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from pages.common_actions import (
     Selector,
     assertion_msg,
-    check_if_element_is_not_visible,
     find_element,
-    selenium_action,
+    find_selector_by_name,
     take_screenshot,
 )
 
@@ -45,7 +42,7 @@ ELEMENTS_ON = {
         "العربيّة": "ar",
         "Français": "fr",
     },
-    "export readiness - international": {
+    "international - landing": {
         "English": "en-gb",
         "简体中文": "zh-hans",
         "Deutsch": "de",
@@ -93,18 +90,15 @@ LANGUAGE_INDICATOR_VALUES = {
 }
 
 
-def close(driver: WebDriver, *, with_keyboard: bool = False):
-    language_selector = find_element(driver, LANGUAGE_SELECTOR_CLOSE)
-    with assertion_msg("Close Language Selector button is not visible"):
-        assert language_selector.is_displayed()
+def close(driver: WebDriver, page: ModuleType):
+    selector = find_selector_by_name(page.SELECTORS, "language selector")
+    language_selector = find_element(driver, selector, element_name="language selector")
     language_selector.send_keys(Keys.ESCAPE)
 
 
-def open(driver: WebDriver, *, with_keyboard: bool = False):
-    language_selector = find_element(driver, LANGUAGE_SELECTOR)
-
-    with assertion_msg("Language Selector button is not visible"):
-        assert language_selector.is_displayed()
+def open(driver: WebDriver, page: ModuleType, *, with_keyboard: bool = False):
+    selector = find_selector_by_name(page.SELECTORS, "language selector")
+    language_selector = find_element(driver, selector, element_name="language selector")
     if with_keyboard:
         language_selector.send_keys(Keys.ENTER)
     else:
@@ -113,42 +107,23 @@ def open(driver: WebDriver, *, with_keyboard: bool = False):
 
 def should_see_it_on(driver: WebDriver, page: ModuleType):
     take_screenshot(driver, NAME + page.NAME)
-    page_name = f"{page.SERVICE} - {page.NAME}".lower()
-    section = ELEMENTS_ON[page_name]
-    for key, selector in section.items():
-        with selenium_action(
-            driver,
-            "Could not find: '%s' element on '%s' using " "'%s' selector",
-            key,
-            page.NAME,
-            selector,
-        ):
-            element = find_element(driver, selector)
-        with assertion_msg("'%s' on '%s' is not displayed", key, page_name):
-            assert element.is_displayed()
-            logging.debug("'%s' on '%s' is displayed", key, page_name)
-
-
-def should_not_see_it_on(driver: WebDriver, page: ModuleType):
-    # wait a second before language selector modal window disappears
-    time.sleep(1)
-    page_name = f"{page.SERVICE} - {page.NAME}".lower()
-    take_screenshot(driver, NAME + page_name)
-    page_elements = ELEMENTS_ON[page_name]
-    for key, selector in page_elements.items():
-        check_if_element_is_not_visible(
-            driver, selector, element_name=key, wait_for_it=False
-        )
+    selector = find_selector_by_name(page.SELECTORS, "language selector")
+    language_selector = find_element(driver, selector, element_name="language selector")
+    with assertion_msg(f"Language selector is not visible on {driver.current_url}"):
+        assert language_selector.is_displayed()
+        logging.debug(f"Language selector is visible on {driver.current_url}")
 
 
 def navigate_through_links_with_keyboard(driver: WebDriver, page: ModuleType):
-    page_name = f"{page.SERVICE} - {page.NAME}".lower()
-    for name, selector in KEYBOARD_NAVIGABLE_ELEMENTS[page_name]:
-        element = find_element(driver, selector, element_name=name)
-        with assertion_msg("Expected '%s' element to be in focus", name):
-            assert element.id == driver.switch_to.active_element.id
-            logging.debug("%s is focused, moving to the next one", name)
-        element.send_keys(Keys.TAB)
+    selector = find_selector_by_name(page.SELECTORS, "language selector")
+    language_selector = find_element(driver, selector, element_name="language selector")
+    options = language_selector.find_elements_by_tag_name("option")
+    for _ in options:
+        language_selector.send_keys(Keys.DOWN)
+    for _ in options:
+        language_selector.send_keys(Keys.UP)
+    with assertion_msg(f"Language selector is not visible on {driver.current_url}"):
+        assert language_selector.is_displayed()
 
 
 def keyboard_should_be_trapped(driver: WebDriver, page: ModuleType):
