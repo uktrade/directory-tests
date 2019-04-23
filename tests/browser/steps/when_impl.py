@@ -596,7 +596,7 @@ def generic_fill_out_and_submit_form(
     actor_alias: str,
     *,
     custom_details_table: Table = None,
-    retry_on_errors: bool = True,
+    retry_on_errors: bool = False,
     go_back: bool = False,
 ):
     actor = get_actor(context, actor_alias)
@@ -831,7 +831,7 @@ def generic_create_great_account(
         context, actor_alias, f"Profile - Enter your business details ({business_type})"
     )
 
-    generic_fill_out_and_submit_form(context, actor_alias)
+    generic_fill_out_and_submit_form(context, actor_alias, retry_on_errors=True, go_back=True)
     should_be_on_page(
         context,
         actor_alias,
