@@ -17,6 +17,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages import common_language_selector, exred, fas, get_page_object, soo, sso
 from pages.common_actions import (
+    Actor,
     add_actor,
     barred_actor,
     get_actor,
@@ -571,6 +572,16 @@ def check_for_errors_or_non_trading_companies(
             with wait_for_page_load_after_action(driver):
                 driver.back()
         raise
+
+
+def update_actor_forms_data(context: Context, actor: Actor, form_data: dict):
+    actor_forms_data = actor.forms_data
+    page = actor.visited_page
+    if not actor_forms_data:
+        actor_forms_data = defaultdict()
+    form_data_key = f"{page.SERVICE} - {page.NAME} - {page.TYPE}"
+    actor_forms_data[form_data_key] = form_data
+    update_actor(context, actor.alias, forms_data=actor_forms_data)
 
 
 @retry(

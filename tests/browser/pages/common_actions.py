@@ -61,6 +61,7 @@ Actor = namedtuple(
         "visited_page",
         "last_tag",
         "element_details",
+        "forms_data",
     ],
 )
 Selector = namedtuple(
