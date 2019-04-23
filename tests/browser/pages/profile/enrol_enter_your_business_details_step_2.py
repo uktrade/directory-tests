@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Profile - Enrol - Enter your business details"""
 import logging
+from collections import defaultdict
 from types import ModuleType
 from typing import List
 from urllib.parse import urljoin
@@ -16,6 +17,7 @@ from pages.common_actions import (
     check_url,
     fill_out_input_fields,
     find_and_click_on_page_element,
+    find_elements_of_type,
     go_to_url,
     pick_option,
     take_screenshot,
@@ -33,6 +35,12 @@ URL = urljoin(
 URLs = {"enter your business details [step 2] (ltd, plc or royal charter)": URL}
 PAGE_TITLE = ""
 
+INDUSTRY = Selector(
+    By.ID, "id_business-details-sectors", is_visible=False, type=ElementType.SELECT
+)
+WEBSITE = Selector(
+    By.ID, "id_business-details-website", is_visible=False, type=ElementType.INPUT
+)
 SELECTORS = {
     "enrolment progress bar": {"itself": Selector(By.ID, "progress-column")},
     "enter your business details": {
@@ -40,22 +48,21 @@ SELECTORS = {
         "heading": Selector(By.CSS_SELECTOR, "h2"),
         "text": Selector(By.ID, "form-step-body-text"),
         "company name": Selector(By.ID, "id_search-company_name"),
-        "industry": Selector(
-            By.ID,
-            "id_business-details-sectors",
-            is_visible=False,
-            type=ElementType.SELECT,
-        ),
-        "website": Selector(
-            By.ID,
-            "id_business-details-website",
-            is_visible=False,
-            type=ElementType.INPUT,
-        ),
+        "industry": INDUSTRY,
+        "website": WEBSITE,
         "submit": Selector(
             By.CSS_SELECTOR, "form button.button", type=ElementType.BUTTON
         ),
     },
+}
+FORM_FIELDS_WITH_USEFUL_DATA = {
+    "industry": INDUSTRY,
+    "website": WEBSITE,
+    "sic": Selector(By.ID, "id_business-details-sic", type=ElementType.INPUT),
+    "date_of_creation": Selector(
+        By.ID, "id_business-details-date_of_creation", type=ElementType.INPUT
+    ),
+    "address": Selector(By.ID, "id_business-details-address", type=ElementType.INPUT),
 }
 
 
@@ -93,3 +100,15 @@ def submit(driver: WebDriver) -> ModuleType:
     find_and_click_on_page_element(driver, SELECTORS, "submit", wait_for_it=False)
     take_screenshot(driver, "After submitting the form")
     return enrol_enter_your_details
+
+
+def get_form_details(driver: WebDriver) -> dict:
+    elements = find_elements_of_type(
+        driver, FORM_FIELDS_WITH_USEFUL_DATA, ElementType.INPUT
+    )
+    result = defaultdict()
+    for key, element in elements.items():
+        value = element.get_attribute("value")
+        result[key] = value
+
+    return dict(result)

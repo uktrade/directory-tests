@@ -2,6 +2,7 @@
 """Profile - Enrol - Enter your business details"""
 import logging
 import random
+from collections import defaultdict
 from types import ModuleType
 from typing import List
 from urllib.parse import urljoin
@@ -17,6 +18,7 @@ from pages.common_actions import (
     check_url,
     fill_out_input_fields,
     find_and_click_on_page_element,
+    find_elements_of_type,
     go_to_url,
     take_screenshot,
 )
@@ -38,22 +40,29 @@ PAGE_TITLE = ""
 
 AUTOCOMPLETION = Selector(By.CSS_SELECTOR, "ul.SelectiveLookupDisplay")
 AUTOCOMPLETION_OPTIONS = Selector(By.CSS_SELECTOR, "li[role='option']")
+COMPANY_NAME = Selector(
+    By.ID,
+    "id_search-company_name",
+    type=ElementType.INPUT,
+    is_visible=False,
+    autocomplete_callback=enrol_autocomplete_company_name,
+)
 SELECTORS = {
     "enrolment progress bar": {"itself": Selector(By.ID, "progress-column")},
     "enter your business details": {
         "itself": Selector(By.CSS_SELECTOR, "section form"),
         "heading": Selector(By.CSS_SELECTOR, "#form-step-body-text h1"),
-        "company name": Selector(
-            By.ID,
-            "id_search-company_name",
-            type=ElementType.INPUT,
-            is_visible=False,
-            autocomplete_callback=enrol_autocomplete_company_name,
-        ),
+        "company name": COMPANY_NAME,
         "submit": Selector(
             By.CSS_SELECTOR, "form button.button", type=ElementType.BUTTON
         ),
     },
+}
+FORM_FIELDS_WITH_USEFUL_DATA = {
+    "company name": COMPANY_NAME,
+    "company number": Selector(
+        By.ID, "id_search-company_number", is_visible=False, type=ElementType.INPUT
+    ),
 }
 
 
@@ -106,3 +115,15 @@ def submit(driver: WebDriver) -> ModuleType:
     find_and_click_on_page_element(driver, SELECTORS, "submit", wait_for_it=False)
     take_screenshot(driver, "After submitting the form")
     return enrol_enter_your_business_details_step_2
+
+
+def get_form_details(driver: WebDriver) -> dict:
+    elements = find_elements_of_type(
+        driver, FORM_FIELDS_WITH_USEFUL_DATA, ElementType.INPUT
+    )
+    result = defaultdict()
+    for key, element in elements.items():
+        value = element.get_attribute("value")
+        result[key] = value
+
+    return dict(result)
