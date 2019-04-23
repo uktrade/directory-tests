@@ -727,6 +727,16 @@ def get_selectors(section: dict, element_type: ElementType) -> Dict[str, Selecto
     }
 
 
+def find_elements_of_type(
+        driver: WebDriver, section: dict, element_type: ElementType) -> defaultdict:
+    selectors = get_selectors(section, element_type)
+    result = defaultdict()
+    for key, selector in selectors.items():
+        element = find_element(driver, selector, element_name=key)
+        result[key] = element
+    return result
+
+
 def selectors_by_group(form_selectors: Dict[str, Selector]) -> Dict[str, Selector]:
     groups = defaultdict(lambda: defaultdict(dict))
     for key, selector in form_selectors.items():
