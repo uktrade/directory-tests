@@ -454,6 +454,17 @@ jobs:
       <<: *load_run_time
     <<: *steps_run_load_tests
 
+  load_search_tests_stage:
+    <<: *machine_python3
+    working_directory: ~/directory-tests
+    environment:
+      SERVICE: "search"
+      TEST_ENV: "stage"
+      <<: *load_hatch_rate
+      <<: *load_num_clients
+      <<: *load_run_time
+    <<: *steps_run_load_tests
+
 
 workflows:
   version: 2
@@ -568,6 +579,19 @@ workflows:
     jobs:
       - setup_env_for_load_tests
       - load_soo_tests_stage:
+          requires:
+            - setup_env_for_load_tests
+
+  run_search_load_tests_on_stage:
+    triggers:
+      - schedule:
+          cron: "10 4 * * 1-5"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - setup_env_for_load_tests
+      - load_search_tests_stage:
           requires:
             - setup_env_for_load_tests
 
