@@ -2,6 +2,7 @@
 """When step implementations."""
 import logging
 import random
+from collections import defaultdict
 from urllib.parse import urljoin, urlparse
 
 from behave.model import Table
@@ -616,7 +617,16 @@ def generic_fill_out_and_submit_form(
     else:
         details = page.generate_form_details(actor)
     logging.debug(f"{actor_alias} will fill out the form with: {details}")
+
+    update_actor_forms_data(context, actor, details)
+
     page.fill_out(context.driver, details)
+
+    if hasattr(page, "get_form_details"):
+        form_data = page.get_form_details(context.driver)
+        if form_data:
+            update_actor_forms_data(context, actor, form_data)
+
     page.submit(context.driver)
     if retry_on_errors:
         check_for_errors_or_non_trading_companies(context.driver, go_back=go_back)
