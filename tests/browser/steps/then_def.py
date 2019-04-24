@@ -16,6 +16,7 @@ from steps.then_impl import (
     generic_article_counter_should_match_number_of_articles,
     generic_article_counters_should_match,
     generic_contact_us_should_receive_confirmation_email,
+    generic_form_should_be_prepopulated,
     generic_should_be_on_one_of_the_pages,
     generic_should_see_expected_page_content,
     generic_should_see_form_choices,
@@ -297,3 +298,8 @@ def then_actor_should_see_page_number(
 @then('"{actor_alias}" should be on one of the "{expected_pages}" pages')
 def then_actor_should_be_on_one_of_the_pages(context: Context, actor_alias: str, expected_pages: str):
     generic_should_be_on_one_of_the_pages(context, actor_alias, expected_pages)
+
+
+@then('"{actor_alias}" should see form fields populated with his company details')
+def then_form_should_be_prepopulated(context: Context, actor_alias: str):
+    generic_form_should_be_prepopulated(context, actor_alias)

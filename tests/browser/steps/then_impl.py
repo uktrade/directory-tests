@@ -11,7 +11,14 @@ from behave.model import Table
 from behave.runner import Context
 from retrying import retry
 
-from pages import common_language_selector, exred, fas, get_page_object, invest
+from pages import (
+    common_language_selector,
+    exred,
+    fas,
+    get_page_object,
+    invest,
+    profile,
+)
 from pages.common_actions import (
     assertion_msg,
     clear_driver_cookies,
@@ -521,3 +528,15 @@ def generic_should_be_on_one_of_the_pages(context: Context, actor_alias: str, ex
 
     with assertion_msg(f"{actor_alias} didn't see any of expected pages, instead it's on {context.driver.current_url}"):
         assert any(list(results.values()))
+
+
+def generic_form_should_be_prepopulated(context: Context, actor_alias: str):
+    actor = get_actor(context, actor_alias)
+    page = get_last_visited_page(context, actor_alias)
+
+    form_po = profile.enrol_enter_your_business_details_step_2
+    form_data_key = f"{form_po.SERVICE} - {form_po.NAME} - {form_po.TYPE}"
+    form_data = actor.forms_data[form_data_key]
+
+    has_action(page, "check_if_populated")
+    page.check_if_populated(context.driver, form_data)
