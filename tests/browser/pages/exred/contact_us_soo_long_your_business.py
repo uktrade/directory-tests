@@ -12,6 +12,7 @@ from pages import ElementType
 from pages.common_actions import (
     Actor,
     Selector,
+    assertion_msg,
     check_url,
     fill_out_input_fields,
     find_element,
@@ -32,18 +33,22 @@ PAGE_TITLE = "Welcome to great.gov.uk"
 SUBMIT_BUTTON = Selector(
     By.CSS_SELECTOR, "div.exred-triage-form button", type=ElementType.BUTTON
 )
+WEBSITE = Selector(By.ID, "id_organisation-website_address", type=ElementType.INPUT)
+COMPANY_NAME = Selector(By.ID, "id_organisation-company_name", type=ElementType.INPUT)
+COMPANY_POSTCODE = Selector(
+    By.ID, "id_organisation-company_postcode", type=ElementType.INPUT
+)
+COMPANY_NUMBER = Selector(
+    By.ID, "id_organisation-company_number", type=ElementType.INPUT
+)
 SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#content form"),
         "i don't have a company number": Selector(
             By.ID, "id_organisation-soletrader", type=ElementType.CHECKBOX
         ),
-        "company website": Selector(
-            By.ID, "id_organisation-website_address", type=ElementType.INPUT
-        ),
-        "company name": Selector(
-            By.ID, "id_organisation-company_name", type=ElementType.INPUT
-        ),
+        "company website": WEBSITE,
+        "company name": COMPANY_NAME,
     }
 }
 
@@ -55,15 +60,15 @@ HAS_COMPANY_NUMBER = {
         is_visible=False,
         autocomplete_callback=autocomplete_company_name,
     ),
-    "companies house number": Selector(
-        By.ID, "id_organisation-company_number", type=ElementType.INPUT
-    ),
+    "company number": COMPANY_NUMBER,
 }
 
-DOESNT_HAVE_COMPANY_NUMBER = {
-    "company postcode": Selector(
-        By.ID, "id_organisation-company_postcode", type=ElementType.INPUT
-    )
+DOESNT_HAVE_COMPANY_NUMBER = {"company postcode": COMPANY_POSTCODE}
+PREPOPULATED_FORM_FIELDS = {
+    "company name": COMPANY_NAME,
+    "company number": COMPANY_NUMBER,
+    "company postcode": COMPANY_POSTCODE,
+    "company website": WEBSITE,
 }
 
 
@@ -99,7 +104,7 @@ def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
         result.update(
             {
                 "company name": "COLDSPACE COLD ROOMS (UK) LLP",
-                "companies house number": "OC399213",
+                "company number": "OC399213",
                 "company postcode": "GL2 2AQ",
             }
         )
