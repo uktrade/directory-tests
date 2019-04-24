@@ -47,7 +47,7 @@ SELECTORS = {
         "itself": Selector(By.CSS_SELECTOR, "section form"),
         "heading": Selector(By.CSS_SELECTOR, "h2"),
         "text": Selector(By.ID, "form-step-body-text"),
-        "company name": Selector(By.ID, "id_search-company_name"),
+        "company name": Selector(By.ID, "id_business-details-company_name"),
         "industry": INDUSTRY,
         "website": WEBSITE,
         "submit": Selector(
@@ -56,8 +56,17 @@ SELECTORS = {
     },
 }
 FORM_FIELDS_WITH_USEFUL_DATA = {
+    "company name": Selector(
+        By.ID, "id_business-details-company_name", type=ElementType.INPUT
+    ),
+    "company number": Selector(
+        By.ID,
+        "id_business-details-company_number",
+        type=ElementType.INPUT,
+        is_visible=False,
+    ),
     "industry": INDUSTRY,
-    "website": WEBSITE,
+    "company website": WEBSITE,
     "sic": Selector(By.ID, "id_business-details-sic", type=ElementType.INPUT),
     "date_of_creation": Selector(
         By.ID, "id_business-details-date_of_creation", type=ElementType.INPUT
