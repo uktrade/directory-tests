@@ -530,7 +530,7 @@ def generic_should_be_on_one_of_the_pages(context: Context, actor_alias: str, ex
         assert any(list(results.values()))
 
 
-def generic_form_should_be_prepopulated(context: Context, actor_alias: str):
+def soo_contact_form_should_be_prepopulated(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     page = get_last_visited_page(context, actor_alias)
 
