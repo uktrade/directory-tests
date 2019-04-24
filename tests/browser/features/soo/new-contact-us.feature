@@ -105,7 +105,7 @@ Feature: New Contact-us form
       | products      | countries                 |
       | Shoes,Clothes | United States,China,India |
 
-  @wip
+
   @XOT-741
   @exopps
   @captcha
