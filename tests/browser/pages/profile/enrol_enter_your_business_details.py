@@ -40,28 +40,27 @@ PAGE_TITLE = ""
 
 AUTOCOMPLETION = Selector(By.CSS_SELECTOR, "ul.SelectiveLookupDisplay")
 AUTOCOMPLETION_OPTIONS = Selector(By.CSS_SELECTOR, "li[role='option']")
-COMPANY_NAME = Selector(
-    By.ID,
-    "id_search-company_name",
-    type=ElementType.INPUT,
-    is_visible=False,
-    autocomplete_callback=enrol_autocomplete_company_name,
-)
 SELECTORS = {
     "enrolment progress bar": {"itself": Selector(By.ID, "progress-column")},
     "enter your business details": {
         "itself": Selector(By.CSS_SELECTOR, "section form"),
         "heading": Selector(By.CSS_SELECTOR, "#form-step-body-text h1"),
-        "company name": COMPANY_NAME,
+        "company name": Selector(
+            By.ID,
+            "id_search-company_name",
+            type=ElementType.INPUT,
+            is_visible=False,
+            autocomplete_callback=enrol_autocomplete_company_name,
+        ),
         "submit": Selector(
             By.CSS_SELECTOR, "form button.button", type=ElementType.BUTTON
         ),
     },
 }
 FORM_FIELDS_WITH_USEFUL_DATA = {
-    "company name": COMPANY_NAME,
+    "company name": Selector(By.ID, "id_search-company_name", type=ElementType.INPUT),
     "company number": Selector(
-        By.ID, "id_search-company_number", is_visible=False, type=ElementType.INPUT
+        By.ID, "id_search-company_number", type=ElementType.INPUT, is_visible=False
     ),
 }
 
