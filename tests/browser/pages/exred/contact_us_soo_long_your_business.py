@@ -132,3 +132,23 @@ def submit(driver: WebDriver) -> ModuleType:
     button.click()
     take_screenshot(driver, "After submitting the form")
     return contact_us_soo_long_organisation_details
+
+
+def check_if_populated(driver: WebDriver, expected_form_details: dict):
+    for key, expected_value in expected_form_details.items():
+        existing_field_selector = PREPOPULATED_FORM_FIELDS.get(key, None)
+        if not existing_field_selector:
+            continue
+        existing_field = find_element(driver, existing_field_selector, element_name=key)
+        existing_field_value = existing_field.get_attribute("value")
+        if expected_value:
+            error = (
+                f"Expected '{key}' value to be '{expected_value}' but got "
+                f"'{existing_field_value}'"
+            )
+            with assertion_msg(error):
+                assert existing_field_value.lower() == expected_value.lower()
+                logging.debug(
+                    f"'{key}' field was prepopulated with expected value: "
+                    f"'{expected_value}'"
+                )
