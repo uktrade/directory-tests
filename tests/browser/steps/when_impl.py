@@ -559,8 +559,11 @@ def check_for_errors_or_non_trading_companies(
 ):
     """Throws an AssertionError if error message is visible."""
     try:
+        content = driver.page_source
+        assert "industry" in content, f"Missing Industry field"
+        assert "website" in content, f"Missing Website field"
         # fail when a non-trading company is selected (SIC=74990)
-        assert "74990" not in driver.page_source, f"Found a non-trading company"
+        assert "74990" not in content, f"Found a non-trading company"
         error = driver.find_element(by=By.CSS_SELECTOR, value=".error-message")
         assert not error.is_displayed(), f"Found error on form page"
     except NoSuchElementException:
@@ -587,7 +590,7 @@ def update_actor_forms_data(context: Context, actor: Actor, form_data: dict):
 
 @retry(
     wait_fixed=2000,
-    stop_max_attempt_number=3,
+    stop_max_attempt_number=5,
     retry_on_exception=retry_if_assertion_error,
     wrap_exception=False,
 )
