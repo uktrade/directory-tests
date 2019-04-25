@@ -1,23 +1,28 @@
-Feature: Promoted industries
+Feature: Industry pages
 
-  @wip
   @ED-2013
   @industries
   @no-sso-email-verification-required
-  Scenario: Buyers should be able to view page with promoted Industries
+  Scenario Outline: Buyers should be able to view page with promoted Industries
     Given "Annette Geissinger" is a buyer
 
-    When "Annette Geissinger" goes to "FAS - Industries" page
+    When "Annette Geissinger" chooses to view specific FAS page in "<selected>" language
+      | page                            |
+      | FAS - Industries                |
 
-    Then "Annette Geissinger" should see sections with selected industries
-      | industry       |
-      | Health         |
-      | Technology     |
-      | Creative       |
-      | Food and drink |
+    Then "Annette Geissinger" should see links to all industry pages available in "<selected>" language
+
+    Examples:
+      | selected   |
+      | English    |
+      | French     |
+      | German     |
+      | Portuguese |
+      | Spanish    |
+      | Arabic     |
+      | Chinese    |
 
 
-  @wip
   @ED-2015
   @industries
   @no-sso-email-verification-required
