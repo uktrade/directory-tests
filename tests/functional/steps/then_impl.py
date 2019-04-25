@@ -747,17 +747,14 @@ def profile_should_see_expected_error_messages(
     logging.debug("%s has seen all expected form errors", supplier_alias)
 
 
-def fas_should_see_promoted_industries(
-    context: Context, actor_alias: str, table: Table
+def fas_should_see_links_to_industry_pages(
+    context: Context, actor_alias: str, language: str
 ):
-    industries = [row["industry"].lower() for row in table]
-    response = context.response
-    for industry in industries:
-        fas_ui_industries.should_see_industry_section(response, industry)
+    page_name = f"{fas_ui_industries.SERVICE.value} - {fas_ui_industries.NAME}"
+    response = context.views[page_name]
+    fas_ui_industries.should_see_links_to_industry_pages(response, language)
     logging.debug(
-        "%s can see all expected industry sections '%s'",
-        actor_alias,
-        industries,
+        f"{actor_alias} saw all links to industry pages available in '{language}'"
     )
 
 

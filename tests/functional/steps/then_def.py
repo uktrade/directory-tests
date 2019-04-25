@@ -26,7 +26,7 @@ from tests.functional.steps.then_impl import (
     fas_should_see_filtered_search_results,
     fas_should_see_highlighted_search_term,
     fas_should_see_png_logo_thumbnail,
-    fas_should_see_promoted_industries,
+    fas_should_see_links_to_industry_pages,
     fas_should_see_unfiltered_search_results,
     fas_supplier_cannot_be_found_using_case_study_details,
     fas_supplier_should_receive_message_from_buyer,
@@ -254,9 +254,9 @@ def then_supplier_should_see_expected_error_messages(context, supplier_alias):
     profile_should_see_expected_error_messages(context, supplier_alias)
 
 
-@then('"{actor_alias}" should see sections with selected industries')
-def then_actor_should_see_sections_with_industries(context, actor_alias):
-    fas_should_see_promoted_industries(context, actor_alias, context.table)
+@then('"{actor_alias}" should see links to all industry pages available in "{language}" language')
+def then_actor_should_see_links_to_industry_pages(context: Context, actor_alias: str, language: str):
+    fas_should_see_links_to_industry_pages(context, actor_alias, language)
 
 
 @then('"{actor_alias}" should see search results filtered by appropriate sector')
