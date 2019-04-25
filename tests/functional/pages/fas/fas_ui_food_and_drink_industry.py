@@ -13,16 +13,10 @@ NAME = "Food and drink"
 TYPE = "industry"
 URL = get_absolute_url("ui-supplier:industries-food")
 EXPECTED_STRINGS = [
-    "UK food and drink",
-    "Key facts",
-    "British heritage shared globally",
-    "See the UK's food and drink companies on the Find a supplier service",
-    "Joe &amp; Seph&#39;s",
-    "Fever-Tree",
-    "Find other great UK companies",
-    "Read more about the company",
-    "Company showcase",
-    "Read case study",
+    "Why choose UK food and drink",
+    "Innovative products",
+    "Quality research",
+    "Healthy eating",
 ]
 
 

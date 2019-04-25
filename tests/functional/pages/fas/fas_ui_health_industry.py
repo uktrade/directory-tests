@@ -13,19 +13,10 @@ NAME = "Health"
 TYPE = "industry"
 URL = get_absolute_url("ui-supplier:industries-health")
 EXPECTED_STRINGS = [
-    "Delivering the exceptional in healthcare and life sciences",
-    "Key facts",
-    "Work with the UK to create first-rate healthcare",
-    (
-        "See the UK's healthcare and life sciences providers on the Find a "
-        "supplier service"
-    ),
-    "RD Biomed",
-    "Touch Bionics",
-    "Find other great UK companies",
-    "Read more about the company",
-    "Company showcase",
-    "Read case study",
+    "Why choose UK healthcare",
+    "World-class infrastructure",
+    "Innovative healthcare",
+    "Pioneering technology",
 ]
 
 

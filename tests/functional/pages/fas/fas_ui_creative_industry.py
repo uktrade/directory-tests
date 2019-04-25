@@ -13,16 +13,11 @@ NAME = "Creative"
 TYPE = "industry"
 URL = get_absolute_url("ui-supplier:industries-creative")
 EXPECTED_STRINGS = [
-    "Delivering exceptional creative services",
-    "Key facts",
-    "Work with the best in film, TV and visual effects",
-    "See the UK's creative services providers on the Find a supplier service",
-    "Immersive",
-    "Blippar",
-    "Find other great UK companies",
-    "Read more about the company",
-    "Company showcase",
-    "Read case study",
+    "Why choose UK creative services",
+    "Global appeal",
+    "Talented artists",
+    "State-of-the-art studios",
+    "Search for UK creative companies",
 ]
 
 
