@@ -11,22 +11,22 @@ Feature: View FAS in various languages
     Given "Annette Geissinger" is a buyer
 
     When "Annette Geissinger" chooses to view specific FAS page in "<selected>" language
-      | page                            |
-      | FAS - Landing                   |
-      | FAS - Industries                |
-      | FAS - Health - Industry         |
-      | FAS - Technology - Industry     |
-      | FAS - Creative - Industry       |
-      | FAS - Food and drink - Industry |
+      | page                               |
+      | FAS - Landing                      |
+      | FAS - Industries                   |
+      | FAS - Health - Industry            |
+      | FAS - Technology - Industry        |
+      | FAS - Creative services - Industry |
+      | FAS - Food and drink - Industry    |
 
     Then the "main" part of the viewed FAS page should be presented in "<expected>" language with probability greater than "<lower limit>"
-      | page                            |
-      | FAS - Landing                   |
-      | FAS - Industries                |
-      | FAS - Health - Industry         |
-      | FAS - Technology - Industry     |
-      | FAS - Creative - Industry       |
-      | FAS - Food and drink - Industry |
+      | page                               |
+      | FAS - Landing                      |
+      | FAS - Industries                   |
+      | FAS - Health - Industry            |
+      | FAS - Technology - Industry        |
+      | FAS - Creative services - Industry |
+      | FAS - Food and drink - Industry    |
 
     Examples:
       | selected   | expected   | lower limit |

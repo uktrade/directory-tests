@@ -29,15 +29,11 @@ Feature: Promoted industries
     Then "Annette Geissinger" should see "<selected>" page
 
     Examples:
-      | selected                                |
-      | FAS - Creative - Industry               |
-      | FAS - Creative Industry - Summary       |
-      | FAS - Food and drink - Industry         |
-      | FAS - Food and drink Industry - Summary |
-      | FAS - Health - Industry                 |
-      | FAS - Health Industry - Summary         |
-      | FAS - Technology - Industry             |
-      | FAS - Technology Industry - Summary     |
+      | selected                                   |
+      | FAS - Creative services - Industry         |
+      | FAS - Food and drink - Industry            |
+      | FAS - Health - Industry                    |
+      | FAS - Technology - Industry                |
 
 
   @wip
@@ -54,11 +50,7 @@ Feature: Promoted industries
 
     Examples:
       | selected                                |
-      | FAS - Creative - Industry               |
-      | FAS - Creative Industry - Summary       |
+      | FAS - Creative services - Industry      |
       | FAS - Food and drink - Industry         |
-      | FAS - Food and drink Industry - Summary |
       | FAS - Health - Industry                 |
-      | FAS - Health Industry - Summary         |
       | FAS - Technology - Industry             |
-      | FAS - Technology Industry - Summary     |

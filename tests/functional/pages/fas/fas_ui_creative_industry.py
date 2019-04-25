@@ -14,7 +14,7 @@ from tests.functional.utils.request import (
 )
 
 SERVICE = Services.FAS
-NAME = "Creative"
+NAME = "Creative services"
 TYPE = "industry"
 URL = get_absolute_url("ui-supplier:industries-creative")
 EXPECTED_STRINGS = [
