@@ -64,6 +64,8 @@ def check_for_special_urls_cases(url: str) -> str:
         url = url.replace("setup-guides", "uk-setup-guide")
     if "setup-guide-landing" in url:
         url = url.replace("setup-guide-landing", "uk-setup-guide")
+    if "setup-guide-landing-page/" in url:
+        url = url.replace("setup-guide-landing-page/", "")
     if "performance-dashboard-" in url:
         url = url.replace("performance-dashboard-", "performance-dashboard/")
     if "high-potential-opportunity-submit-success" in url:
