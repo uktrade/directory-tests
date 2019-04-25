@@ -650,9 +650,9 @@ def bp_provide_company_details(context: Context, supplier_alias: str):
 
     # Step 0 - generate random details & update Company matching details
     # Need to get Company details after updating it in the Scenario Data
-    title = "{} {} AUTOTESTS".format(company.title, sentence())
+    title = f"{company.title} {sentence()} AUTOTESTS"
     size = choice(NO_OF_EMPLOYEES)
-    website = "http://{}.{}".format(rare_word(min_length=15), rare_word())
+    website = f"http://{rare_word(min_length=15)}.{rare_word()}"
     keywords = ", ".join(sentence().split())
     context.set_company_details(
         company_alias,
@@ -1651,10 +1651,10 @@ def profile_provide_business_details(
             new_website = "empty string"
             change_website = True
         elif row["website"] == "valid http":
-            new_website = "http://{}.{}".format(rare_word(), rare_word())
+            new_website = f"http://{rare_word()}.{rare_word()}"
             change_website = True
         elif row["website"] == "valid https":
-            new_website = "https://{}.{}".format(rare_word(), rare_word())
+            new_website = f"https://{rare_word()}.{rare_word()}"
             change_website = True
         elif row["website"] == "invalid http":
             new_website = "http"
@@ -2014,9 +2014,7 @@ def profile_go_to_letter_verification(
 
         sso_login_url = get_absolute_url("sso:login")
         fab_verify_url = quote(get_absolute_url("ui-buyer:confirm-identity"))
-        referer = "{sso_login_url}?next={fab_verify_url}".format(
-            sso_login_url=sso_login_url, fab_verify_url=fab_verify_url
-        )
+        referer = f"{sso_login_url}?next={fab_verify_url}"
         next = get_absolute_url("ui-buyer:confirm-identity")
         logging.debug(
             "After successful login %s should be redirected to: %s",
@@ -2071,10 +2069,10 @@ def get_form_value(key: str) -> str or list or int or None:
 
     mappings = [
         ("empty string", ""),
-        ("valid http", "http://{}.{}".format(rare_word(), rare_word())),
-        ("valid https", "https://{}.{}".format(rare_word(), rare_word())),
-        ("invalid http", "http:{}.{}".format(rare_word(), rare_word())),
-        ("invalid https", "https:{}.{}".format(rare_word(), rare_word())),
+        ("valid http", f"http://{rare_word()}.{rare_word()}"),
+        ("valid https", f"https://{rare_word()}.{rare_word()}"),
+        ("invalid http", f"http:{rare_word()}.{rare_word()}"),
+        ("invalid https", f"https:{rare_word()}.{rare_word()}"),
         ("invalid sector", "this is an invalid sector"),
         ("no image", None),
         ("invalid image", choice(BMPs + JP2s + WEBPs)),
@@ -2328,9 +2326,7 @@ def finish_registration_after_flagging_as_verified(
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
     register_url = get_absolute_url("ui-buyer:register-submit-account-details")
-    url = "{}?company_number={}&has_exported_before=True".format(
-        register_url, company.number
-    )
+    url = f"{register_url}?company_number={company.number}&has_exported_before=True"
     response = make_request(Method.GET, url, session=actor.session)
     context.response = response
 

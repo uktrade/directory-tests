@@ -334,9 +334,7 @@ def profile_all_unsupported_files_should_be_rejected(
     ):
         assert all(context.rejections)
     logging.debug(
-        "All files of unsupported types uploaded by %s were rejected".format(
-            supplier_alias
-        )
+        f"All files of unsupported types uploaded by %s were rejected"
     )
 
 
@@ -438,7 +436,7 @@ def fas_find_supplier_using_case_study_details(
     for key in keys:
         if key == "keywords":
             for index, keyword in enumerate(case_study.keywords.split(", ")):
-                search_terms["keyword #{}".format(index)] = keyword
+                search_terms[f"keyword #{index}"] = keyword
         else:
             search_terms[key] = getattr(case_study, key.replace(" ", "_"))
     logging.debug(
@@ -513,7 +511,7 @@ def fas_supplier_cannot_be_found_using_case_study_details(
     for key in keys:
         if key == "keywords":
             for index, keyword in enumerate(case_study.keywords.split(", ")):
-                search_terms["keyword #{}".format(index)] = keyword
+                search_terms[f"keyword #{index}"] = keyword
         else:
             search_terms[key] = getattr(case_study, key)
     logging.debug(
@@ -646,7 +644,7 @@ def generic_pages_should_be_in_selected_language(
         response = views[page_name]
         content = response.content.decode("utf-8")
         logging.debug(
-            "detecting the language of fas %s page %s", page_name, response.url
+            f"Detecting the language of '{page_name}'' page {response.url}"
         )
         lang_detect_results = detect_page_language(content=content, main=main)
         median_results = {
