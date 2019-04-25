@@ -59,7 +59,7 @@ def login(
         "password": actor.password,
         "remember": "on",
     }
-    query = "?next={}".format(referer or fab_landing)
+    query = f"?next={referer or fab_landing}"
     referer = urljoin(URL, query)
     headers = {"Referer": referer}
 

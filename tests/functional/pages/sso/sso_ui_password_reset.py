@@ -68,7 +68,7 @@ def reset(
         "email": actor.email,
     }
     # Referer is the same as the final URL from the previous request
-    query = "?next={}".format(next_param or fab_landing)
+    query = f"?next={next_param or fab_landing}"
     referer = referer or urljoin(URL, query)
     headers = {"Referer": referer}
 

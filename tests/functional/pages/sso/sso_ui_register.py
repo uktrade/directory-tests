@@ -42,7 +42,7 @@ def go_to(
 ) -> Response:
     referer = referer or get_absolute_url("ui-buyer:landing")
     if next:
-        url = urljoin(URL, "?next={}".format(next))
+        url = urljoin(URL, f"?next={next}")
     else:
         url = URL
     headers = {"Referer": referer}
@@ -53,9 +53,9 @@ def submit(actor: Actor, company: Company) -> Response:
     """Will submit the SSO Registration form with Supplier & Company details."""
     session = actor.session
     next_url = get_absolute_url("ui-buyer:register-submit-account-details")
-    next_link_query = "?company_number={}".format(company.number)
+    next_link_query = f"?company_number={company.number}"
     next_link = quote(urljoin(next_url, next_link_query))
-    referer_query = "?next={}".format(next_link)
+    referer_query = f"?next={next_link}"
     headers = {"Referer": urljoin(URL, referer_query)}
     data = {
         "csrfmiddlewaretoken": actor.csrfmiddlewaretoken,

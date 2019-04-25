@@ -50,7 +50,7 @@ def should_be_here(response: Response, company: Company):
 def confirm_company_selection(
     session: Session, company: Company, token: str
 ) -> Response:
-    query = "?company_number={}".format(company.number)
+    query = f"?company_number={company.number}"
     url = urljoin(get_absolute_url("ui-buyer:register-confirm-company"), query)
     headers = {"Referer": url}
     data = {

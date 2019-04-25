@@ -51,7 +51,7 @@ def extract_email_to_id_mapping(label: str) -> Tuple[str, str]:
 
 def extract_sso_id(html: str, email_to_element_id: Tuple[str, str]):
     email, element_id = email_to_element_id
-    css_selector = "#{}::attr(value)".format(element_id)
+    css_selector = f"#{element_id}::attr(value)"
     value = Selector(text=html).css(css_selector).extract()
     return email, value[0] if value else None
 

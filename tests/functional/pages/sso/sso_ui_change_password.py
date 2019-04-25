@@ -42,7 +42,7 @@ def submit(
         "password2": password_again or password or actor.password,
     }
     # Referer is the same as the final URL from the previous request
-    query = "?next={}".format(referer or profile_about)
+    query = f"?next={referer or profile_about}"
     referer = urljoin(URL, query)
     headers = {"Referer": referer}
 

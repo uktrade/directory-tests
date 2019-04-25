@@ -35,7 +35,7 @@ def logout(
 ) -> Response:
     fab_landing = get_absolute_url("ui-buyer:landing")
     data = {"csrfmiddlewaretoken": token, "next": next_param or fab_landing}
-    query = "?next={}".format(fab_landing)
+    query = f"?next={fab_landing}"
     headers = {"Referer": urljoin(URL, query)}
     return make_request(
         Method.POST, URL, session=session, headers=headers, data=data

@@ -62,11 +62,11 @@ def update_profiles(
     session = actor.session
     clean_name = re.sub('[|&"-_;# ]', "", company.title.lower())
     random_number = random.randint(9999, 999999999)
-    profile_suffix = "{}-{}".format(clean_name, random_number)
+    profile_suffix = f"{clean_name}-{random_number}"
 
-    fake_fb = "http://facebook.com/{}".format(profile_suffix)
-    fake_li = "http://linkedin.com/{}".format(profile_suffix)
-    fake_tw = "http://twitter.com/{}".format(profile_suffix)
+    fake_fb = f"http://facebook.com/{profile_suffix}"
+    fake_li = f"http://linkedin.com/{profile_suffix}"
+    fake_tw = f"http://twitter.com/{profile_suffix}"
 
     if facebook:
         new_fb = (

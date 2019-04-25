@@ -154,8 +154,8 @@ def get_case_studies_details(response: Response):
         summary = Selector(text=article).css("p::text").extract()[0]
         href = Selector(text=article).css("a::attr(href)").extract()[0]
         slug = href.split("/")[-2]
-        assert slug, "Couldn't extract case study slug from {}".format(article)
+        assert slug, f"Couldn't extract case study slug from {article}"
         logging.debug("Got case study slug: %s", slug)
         result.append((title, summary, href, slug))
-    assert result, "No Case Study details extracted from {}".format(articles)
+    assert result, f"No Case Study details extracted from {articles}"
     return result

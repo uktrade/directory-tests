@@ -60,7 +60,7 @@ def submit(
             new_website = ""
         else:
             new_website = specific_website or (
-                "https://{}.{}/".format(rare_word(), rare_word())
+                f"https://{rare_word()}.{rare_word()}/"
             )
     else:
         new_website = company.website
