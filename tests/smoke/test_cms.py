@@ -133,39 +133,39 @@ def test_wagtail_get_pages_per_application_on_prod(application):
 @pytest.mark.invest
 @pytest.mark.fas
 @pytest.mark.exred
-@pytest.mark.parametrize("url", find_published_urls(ALL_PAGES))
-def test_all_published_english_pages_should_return_200(url, basic_auth):
-    get_and_assert(url, HTTP_200_OK, auth=basic_auth, allow_redirects=True)
+@pytest.mark.parametrize("url, page_id", find_published_urls(ALL_PAGES))
+def test_all_published_english_pages_should_return_200(url, page_id, basic_auth):
+    get_and_assert(url, HTTP_200_OK, auth=basic_auth, allow_redirects=True, page_id=page_id)
 
 
 @pytest.mark.fas
 @pytest.mark.exred
 @pytest.mark.parametrize(
-    "url", find_published_translated_urls(NON_INVEST_API_PAGES)
+    "url, page_id", find_published_translated_urls(NON_INVEST_API_PAGES)
 )
-def test_non_invest_published_translated_pages_should_return_200_new(url, basic_auth):
-    get_and_assert(url, HTTP_200_OK, auth=basic_auth, allow_redirects=True)
+def test_non_invest_published_translated_pages_should_return_200_new(url, page_id, basic_auth):
+    get_and_assert(url, HTTP_200_OK, auth=basic_auth, allow_redirects=True, page_id=page_id)
 
 
 @pytest.mark.fas
 @pytest.mark.exred
-@pytest.mark.parametrize("url", find_draft_urls(NON_INVEST_API_PAGES))
-def test_non_invest_draft_translated_pages_should_return_200_new(url, basic_auth):
-    get_and_assert(url, HTTP_200_OK, auth=basic_auth)
+@pytest.mark.parametrize("url, page_id", find_draft_urls(NON_INVEST_API_PAGES))
+def test_non_invest_draft_translated_pages_should_return_200_new(url, page_id, basic_auth):
+    get_and_assert(url, HTTP_200_OK, auth=basic_auth, page_id=page_id)
 
 
 @pytest.mark.invest
 @pytest.mark.parametrize(
-    "url", invest_find_published_translated_urls(INVEST_PAGES)
+    "url, page_id", invest_find_published_translated_urls(INVEST_PAGES)
 )
-def test_published_translated_invest_pages_should_return_200_new(url, basic_auth):
-    get_and_assert(url, HTTP_200_OK, auth=basic_auth, allow_redirects=True)
+def test_published_translated_invest_pages_should_return_200_new(url, page_id, basic_auth):
+    get_and_assert(url, HTTP_200_OK, auth=basic_auth, allow_redirects=True, page_id=page_id)
 
 
 @pytest.mark.invest
-@pytest.mark.parametrize("url", invest_find_draft_urls(INVEST_PAGES))
-def test_draft_translated_invest_pages_should_return_200_new(url, basic_auth):
-    get_and_assert(url, HTTP_200_OK, auth=basic_auth)
+@pytest.mark.parametrize("url, page_id", invest_find_draft_urls(INVEST_PAGES))
+def test_draft_translated_invest_pages_should_return_200_new(url, page_id, basic_auth):
+    get_and_assert(url, HTTP_200_OK, auth=basic_auth, page_id=page_id)
 
 
 @pytest.mark.invest
@@ -289,6 +289,6 @@ def test_wagtail_get_component_pages(cms_client, service_name, slug):
 @pytest.mark.invest
 @pytest.mark.fas
 @pytest.mark.exred
-@pytest.mark.parametrize("url", find_published_urls(ALL_PAGES))
-def test_new_all_published_english_pages_should_return_200(url, basic_auth):
-    get_and_assert(url, HTTP_200_OK, auth=basic_auth, allow_redirects=True)
+@pytest.mark.parametrize("url, page_id", find_published_urls(ALL_PAGES))
+def test_new_all_published_english_pages_should_return_200(url, page_id, basic_auth):
+    get_and_assert(url, HTTP_200_OK, auth=basic_auth, allow_redirects=True, page_id=page_id)

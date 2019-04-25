@@ -179,6 +179,7 @@ def get_and_assert(
     cookies: dict = None,
     params: dict = None,
     allow_redirects: bool = False,
+    page_id: int = None,
 ) -> Response:
     response = requests.get(
         url, params=params, auth=auth, cookies=cookies, allow_redirects=allow_redirects
@@ -201,7 +202,8 @@ def get_and_assert(
         if response.status_code == HTTP_302_FOUND
         else ""
     )
-    msg = f"Expected {status_code} but got {response.status_code} {redirect}from {url}"
+    page_id = f" -> PAGE ID: {page_id}" if page_id else ""
+    msg = f"Expected {status_code} but got {response.status_code} {redirect}from {url}{page_id}"
     assert response.status_code == status_code, msg
     return response
 
@@ -290,7 +292,7 @@ def get_pages_from_api(page_types: list, *, use_async_client: bool = True) -> di
     return dict(responses)
 
 
-def invest_find_draft_urls(responses: dict) -> List[str]:
+def invest_find_draft_urls(responses: dict) -> List[Tuple[str, int]]:
     """
     Invest app includes language code in the endpoint rather than using ?lang=
     query param, thus it requires different processing.
@@ -299,6 +301,7 @@ def invest_find_draft_urls(responses: dict) -> List[str]:
     for page_type in responses.keys():
         for response in responses[page_type]:
             page = response.json()
+            page_id = page["id"]
             draft_token = page["meta"]["draft_token"]
             if draft_token is not None:
                 live_url = check_for_special_page_cases(page)
@@ -318,12 +321,12 @@ def invest_find_draft_urls(responses: dict) -> List[str]:
 
                     draft_url = f"{url}?draft_token={draft_token}"
                     draft_url = check_for_special_urls_cases(draft_url)
-                    result.append(draft_url)
+                    result.append((draft_url, page_id))
 
     return result
 
 
-def invest_find_published_translated_urls(responses: dict) -> List[str]:
+def invest_find_published_translated_urls(responses: dict) -> List[Tuple[str, int]]:
     """
     Invest app includes language code in the endpoint rather than using ?lang=
     query param, thus it requires different processing.
@@ -333,6 +336,7 @@ def invest_find_published_translated_urls(responses: dict) -> List[str]:
         for response in responses[page_type]:
             if should_skip_never_published_page(response):
                 continue
+            page_id = response.json()["id"]
             live_url = response.json()["meta"]["url"]
             parsed = urlparse(live_url)
             lang_codes = [lang[0] for lang in response.json()["meta"]["languages"]]
@@ -347,17 +351,18 @@ def invest_find_published_translated_urls(responses: dict) -> List[str]:
                 if should_skip_url(url):
                     continue
 
-                result.append(url)
+                result.append((url, page_id))
 
     return result
 
 
-def find_draft_urls(responses: dict) -> List[str]:
+def find_draft_urls(responses: dict) -> List[Tuple[str, int]]:
     result = []
     for page_type in responses.keys():
         for response in responses[page_type]:
             if response.status_code == HTTP_200_OK:
                 page = response.json()
+                page_id = page["id"]
                 draft_token = page["meta"]["draft_token"]
                 if draft_token is not None:
 
@@ -370,7 +375,7 @@ def find_draft_urls(responses: dict) -> List[str]:
                     lang_codes = [lang[0] for lang in page["meta"]["languages"]]
                     for code in lang_codes:
                         lang_url = f"{draft_url}&lang={code}"
-                        result.append(lang_url)
+                        result.append((lang_url, page_id))
             else:
                 logging.error(
                     f"Expected 200 but got {response.status_code} from "
@@ -379,29 +384,31 @@ def find_draft_urls(responses: dict) -> List[str]:
     return result
 
 
-def find_published_urls(responses: dict) -> List[str]:
+def find_published_urls(responses: dict) -> List[Tuple[str, int]]:
     result = []
     for page_type in responses.keys():
         for response in responses[page_type]:
             if should_skip_never_published_page(response):
                 continue
             page = response.json()
+            page_id = page["id"]
             url = check_for_special_page_cases(page)
             url = check_for_special_urls_cases(url)
             if should_skip_url(url):
                 continue
 
-            result.append(url)
+            result.append((url, page_id))
     return result
 
 
-def find_published_translated_urls(responses: dict) -> List[str]:
+def find_published_translated_urls(responses: dict) -> List[Tuple[str, int]]:
     result = []
     for page_type in responses.keys():
         for response in responses[page_type]:
             if should_skip_never_published_page(response):
                 continue
             page = response.json()
+            page_id = page["id"]
 
             url = check_for_special_page_cases(page)
             url = check_for_special_urls_cases(url)
@@ -410,5 +417,5 @@ def find_published_translated_urls(responses: dict) -> List[str]:
 
             lang_codes = [lang[0] for lang in page["meta"]["languages"]]
             for code in lang_codes:
-                result.append("{}?lang={}".format(url, code))
+                result.append(("{}?lang={}".format(url, code), page_id))
     return result
