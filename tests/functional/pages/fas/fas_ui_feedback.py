@@ -54,9 +54,7 @@ def should_be_here(response):
 
 
 def should_see_feedback_submission_confirmation(response):
-    check_response(
-        response, 200, body_contains=EXPECTED_STRINGS_SUCCESSFUL_SUBMISSION
-    )
+    check_response(response, 200, body_contains=EXPECTED_STRINGS_SUCCESSFUL_SUBMISSION)
     logging.debug("Feedback submission was confirmed.")
 
 
@@ -65,9 +63,7 @@ def should_see_errors(response):
     logging.debug("Buyer was presented with Feedback submission errors.")
 
 
-def submit(
-    session: Session, feedback: Feedback, *, referer: str = None
-) -> Response:
+def submit(session: Session, feedback: Feedback, *, referer: str = None) -> Response:
     """Submit feedback form.
 
     :param feedback: a namedtuple with Feedback request details
@@ -89,10 +85,5 @@ def submit(
         "g-recaptcha-response": feedback.g_recaptcha_response,
     }
     return make_request(
-        Method.POST,
-        URL,
-        session=session,
-        headers=headers,
-        data=data,
-        trim=False,
+        Method.POST, URL, session=session, headers=headers, data=data, trim=False
     )

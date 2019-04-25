@@ -30,11 +30,7 @@ NO_MATCH = [
 
 @retry(wait_fixed=5000, stop_max_attempt_number=2)
 def go_to(
-    session: Session,
-    *,
-    term: str = None,
-    page: int = None,
-    sectors: list = None
+    session: Session, *, term: str = None, page: int = None, sectors: list = None
 ) -> Response:
     """Go to "FAS Find a Supplier" page.
 

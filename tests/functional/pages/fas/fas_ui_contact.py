@@ -59,9 +59,7 @@ def should_be_here(response, *, name=None):
     logging.debug("Supplier is on FAS Contact Company page")
 
 
-def submit(
-    session: Session, message: Message or Feedback, company_number: str
-):
+def submit(session: Session, message: Message or Feedback, company_number: str):
     assert_that_captcha_is_in_dev_mode(go_to, session, company_number)
     full_url = URL.format(company_number=company_number)
     headers = {"Referer": URL.format(company_number=company_number)}
@@ -81,9 +79,7 @@ def submit(
     )
 
 
-def should_see_that_message_has_been_sent(
-    company: Company, response: Response
-):
+def should_see_that_message_has_been_sent(company: Company, response: Response):
     expected = EXPECTED_STRINGS_MESSAGE_SENT + [escape_html(company.title)]
     check_response(response, 200, body_contains=expected)
     logging.debug("Buyer was told that the message has been sent")

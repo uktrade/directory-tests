@@ -97,9 +97,7 @@ def should_see_case_studies(case_studies: dict, response: Response):
             assert case_studies[case].summary in content
 
 
-def should_see_details(
-    company: Company, response: Response, table_of_details: Table
-):
+def should_see_details(company: Company, response: Response, table_of_details: Table):
     """Supplier should see all expected Company details of FAS profile page.
 
     :param company: a namedtuple with Company details
@@ -116,20 +114,14 @@ def should_see_details(
     sector = DETAILS["SECTOR"] in visible_details
 
     if title:
-        with assertion_msg(
-            "Couldn't find Company's title '%s'", company.title
-        ):
+        with assertion_msg("Couldn't find Company's title '%s'", company.title):
             assert company.title in content
     if keywords:
         for keyword in company.keywords.split(", "):
-            with assertion_msg(
-                "Couldn't find Company's keyword '%s'", keyword
-            ):
+            with assertion_msg("Couldn't find Company's keyword '%s'", keyword):
                 assert keyword.strip() in content
     if website:
-        with assertion_msg(
-            "Couldn't find Company's website '%s'", company.website
-        ):
+        with assertion_msg("Couldn't find Company's website '%s'", company.website):
             assert company.website in content
     if size:
         with assertion_msg(
