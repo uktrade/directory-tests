@@ -36,4 +36,4 @@ Feature: View FAS in various languages
       | Portuguese | Portuguese | 0.98        |
       | Spanish    | Spanish    | 0.98        |
       | Arabic     | Arabic     | 0.98        |
-      | Chinese    | Chinese    | 0.85        |
+      | Chinese    | Chinese    | 0.71        |
