@@ -239,10 +239,10 @@ def check_response(
     if body_contains:
         with assertion_msg("Expected response with content, got an empty one"):
             assert response.content
-        content = response.content.decode("utf-8")
+        content = response.content.decode("utf-8").lower()
         for string in body_contains:
             with assertion_msg(f"Could not find '{string}' in the response from: {response.request.url}"):
-                assert string in content
+                assert string.lower() in content
 
     if unexpected_strings:
         with assertion_msg("Expected response with content, got an empty one"):
