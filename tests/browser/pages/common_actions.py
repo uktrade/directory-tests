@@ -800,7 +800,7 @@ def fill_out_input_fields(
         input_field.send_keys(value_to_type)
         if selector.autocomplete_callback:
             logging.debug(f"Calling autocomplete_callback()")
-            selector.autocomplete_callback(driver)
+            selector.autocomplete_callback(driver, value=value_to_type)
 
 
 def fill_out_textarea_fields(

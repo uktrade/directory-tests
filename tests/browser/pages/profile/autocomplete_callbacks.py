@@ -9,7 +9,8 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from pages.common_actions import Selector, find_element, find_elements
 
 
-def enrol_autocomplete_company_name(driver: WebDriver):
+def enrol_autocomplete_company_name(driver: WebDriver, value: str = None):
+    """Value is ignored as we want to choose random company name"""
     autocomplete = Selector(
         By.CSS_SELECTOR, "ul.SelectiveLookupDisplay", is_visible=True
     )

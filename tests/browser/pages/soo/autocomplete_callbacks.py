@@ -9,7 +9,8 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from pages.common_actions import Selector, find_element, find_elements
 
 
-def autocomplete_product_type(driver: WebDriver):
+def autocomplete_product_type(driver: WebDriver, value: str = None):
+    """Value is ignored as we want to choose random product type"""
     autocomplete = Selector(
         By.CSS_SELECTOR, "ul#search-product-dropdown", is_visible=True
     )
@@ -24,7 +25,7 @@ def autocomplete_product_type(driver: WebDriver):
     option.click()
 
 
-def autocomplete_country_name(driver: WebDriver):
+def autocomplete_country_name(driver: WebDriver, value: str = None):
     # wait for the response from Geography API
     import time
 
@@ -37,7 +38,14 @@ def autocomplete_country_name(driver: WebDriver):
         driver,
         Selector(By.CSS_SELECTOR, "li > a.form-dropdown-option", is_visible=True),
     )
-    option = random.choice(options)
+    matching_options = [
+        option
+        for option in options
+        if option.get_attribute("data-option-id").lower() == value.lower()
+    ]
+    error = f"Expected to find 1 matching option, but got: {len((matching_options))}"
+    assert matching_options, error
+    option = matching_options[0]
     logging.debug(
         f"Autocomplete selected country name: {option.get_attribute('data-option-id')}"
     )

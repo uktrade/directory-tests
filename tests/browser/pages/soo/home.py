@@ -32,7 +32,7 @@ TYPE = "home"
 PAGE_TITLE = "Welcome to Selling online overseas"
 
 SEARCH_BUTTON = Selector(
-    By.CSS_SELECTOR, "#results-count button", type=ElementType.BUTTON
+    By.CSS_SELECTOR, "#hero-banner form input.submit", type=ElementType.BUTTON
 )
 
 SELECTORS = {
