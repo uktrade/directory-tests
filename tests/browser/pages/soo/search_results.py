@@ -34,11 +34,11 @@ URL = urljoin(SELLING_ONLINE_OVERSEAS_UI_URL, "markets/results/")
 PAGE_TITLE = "Search results | Selling online overseas"
 
 SEARCH_BUTTON = Selector(
-    By.CSS_SELECTOR, "div.exred-triage-form button", type=ElementType.BUTTON
+    By.CSS_SELECTOR, "#results-count button", type=ElementType.BUTTON
 )
 SELECTORS = {
     "form": {
-        "itself": Selector(By.CSS_SELECTOR, "form[method=get]"),
+        "itself": Selector(By.ID, "results-form"),
         "product_type": Selector(
             By.ID,
             "search-product",
@@ -95,6 +95,7 @@ def collate_products_and_countries(
                 "country_name": dict(enumerate(country_names)).get(i, None),
             }
         )
+    logging.debug(f"Collated list of products & countries: {list_of_values}")
     return list_of_values
 
 

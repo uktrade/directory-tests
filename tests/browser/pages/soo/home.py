@@ -52,7 +52,7 @@ SELECTORS = {
             is_visible=False,
             autocomplete_callback=autocomplete_country_name,
         ),
-        "start your search now": SEARCH_BUTTON,
+        "find a marketplace": SEARCH_BUTTON,
     }
 }
 SELECTORS.update(common_selectors.HEADER)
