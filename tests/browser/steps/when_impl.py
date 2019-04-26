@@ -863,7 +863,7 @@ def soo_look_for_marketplace(
 def soo_look_for_marketplaces_from_home_page(
     context: Context, actor_alias: str, countries: str, products: str
 ):
-    visit_page(context, actor_alias, f"{soo.home.SERVICE} - {soo.home.NAME}")
+    visit_page(context, actor_alias, f"{soo.search_results.SERVICE} - {soo.search_results.NAME}")
     soo_look_for_marketplace(context, actor_alias, countries, products)
 
 

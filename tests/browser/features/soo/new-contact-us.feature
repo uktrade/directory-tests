@@ -12,7 +12,7 @@ Feature: New Contact-us form
   @soo-long-domestic
   @account-support
   Scenario Outline: Visitors should be able to search for marketplaces to sell "<products>" in "<countries>"
-    Given "Robert" visits the "Selling Online Overseas - Home" page
+    Given "Robert" visits the "Selling Online Overseas - Search results" page
 
     When "Robert" searches for marketplaces in "<countries>" to sell "<products>"
 
