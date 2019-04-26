@@ -59,17 +59,25 @@ async def fetch(endpoints: List[str]):
 
 
 def check_for_special_urls_cases(url: str) -> str:
-    # this was added because of BUG CMS-416
+    # this was added because of BUG CMS-1426
     if "setup-guides" in url:
         url = url.replace("setup-guides", "uk-setup-guide")
     if "setup-guide-landing" in url:
         url = url.replace("setup-guide-landing", "uk-setup-guide")
     if "setup-guide-landing-page/" in url:
         url = url.replace("setup-guide-landing-page/", "")
+    if "uk-setup-guide-page/" in url:
+        url = url.replace("uk-setup-guide-page/", "")
     if "performance-dashboard-" in url:
         url = url.replace("performance-dashboard-", "performance-dashboard/")
     if "high-potential-opportunity-submit-success" in url:
         url = url.replace("high-potential-opportunity-submit-success", "success")
+    if "high-potential-opportunitiesrailcontact" in url:
+        url = url.replace("high-potential-opportunitiesrailcontact", "high-potential-opportunities/rail/contact")
+    if "industriescontact/" in url:
+        url = url.replace("industriescontact/", "industries/contact/")
+    if "industry-contact/" in url:
+        url = url.replace("industry-contact/", "")
     return url
 
 
