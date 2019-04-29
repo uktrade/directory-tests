@@ -185,6 +185,8 @@ HEADER_INVEST = {
         # header menu
         "header menu": Selector(By.ID, "great-header-menu"),
         "eig logo": Selector(By.ID, "great-header-logo"),
+        "country selector": Selector(By.ID, "great-header-country-select"),
+        "language selector": Selector(By.ID, "great-header-language-select"),
         "invest": Selector(By.ID, "header-invest", type=ElementType.LINK),
         "find a uk supplier": Selector(By.ID, "header-fas", type=ElementType.LINK),
         "industries": Selector(By.ID, "header-industries", type=ElementType.LINK),
