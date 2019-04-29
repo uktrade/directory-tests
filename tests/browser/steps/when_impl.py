@@ -550,7 +550,7 @@ def generic_unfold_topics(context: Context, actor_alias: str):
 def generic_click_on_uk_gov_logo(context: Context, actor_alias: str, page_name: str):
     page = get_page_object(page_name)
     has_action(page, "click_on_page_element")
-    page.click_on_page_element(context.driver, "uk gov logo")
+    page.click_on_page_element(context.driver, "eig logo")
     logging.debug("%s click on UK Gov logo %s", actor_alias, page_name)
 
 
