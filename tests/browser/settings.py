@@ -38,9 +38,9 @@ HPO_AGENT_EMAIL_ADDRESS = os.getenv(
 HPO_AGENT_EMAIL_SUBJECT = os.getenv(
     "HPO_AGENT_EMAIL_SUBJECT", "HPO Enquiry (Invest in GREAT Britain)")
 HPO_PDF_URLS = [
-    "https://directory-cms-public.s3.amazonaws.com/documents/A_High_Potential_Opportunity_in_High_Productivity_Food_Production.pdf",
-    "https://directory-cms-public.s3.amazonaws.com/documents/A_HPO_in_Lightweight_Structures.pdf",
-    "https://directory-cms-public.s3.amazonaws.com/documents/A_HPO_in_Rail_Infrastructure.pdf",
+    "https://directory-cms-public.s3.amazonaws.com/documents/documents/A_High_Potential_Opportunity_in_High_Productivity_Food_Production.pdf",
+    "https://directory-cms-public.s3.amazonaws.com/documents/A_High_Potential_Investment_Opportunity_in_Lightweight_Structures.pdf",
+    "https://directory-cms-public.s3.amazonaws.com/documents/A_High_Potential_Investment_Opportunity_in_UK_Rail.pdf",
 ]
 # Mailgun details required to get verification emails
 MAILGUN_DOMAIN = os.getenv("MAILGUN_DOMAIN")
