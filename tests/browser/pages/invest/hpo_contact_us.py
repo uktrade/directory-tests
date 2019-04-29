@@ -28,7 +28,7 @@ from settings import INVEST_UI_URL
 
 NAME = "Contact us"
 NAMES = [
-    "High productivity food production",
+    "Advanced food production",
     "Lightweight structures",
     "Rail infrastructure",
 ]
@@ -36,7 +36,7 @@ SERVICE = "Invest"
 TYPE = "HPO Contact us"
 URL = urljoin(INVEST_UI_URL, "high-potential-opportunities/")
 URLs = {
-    "high productivity food production": urljoin(URL, "food-production/contact/"),
+    "advanced food production": urljoin(URL, "food-production/contact/"),
     "lightweight structures": urljoin(URL, "lightweight-structures/contact/"),
     "rail infrastructure": urljoin(URL, "rail-infrastructure/contact/"),
 }
@@ -60,9 +60,9 @@ SELECTORS = {
         "organisation size": Selector(
             By.ID, "id_company_size", type=ElementType.SELECT
         ),
-        "high productivity food production": Selector(
+        "advanced food production": Selector(
             By.ID,
-            "checkbox-multiple-high-productivity-food-production",
+            "checkbox-multiple-advanced-food-production",
             type=ElementType.LABEL,
             is_visible=False,
         ),
@@ -91,9 +91,9 @@ SELECTORS = {
         "submit": SUBMIT_BUTTON,
     },
     "elements invisible to selenium": {
-        "high productivity food production checkbox": Selector(
+        "advanced food production checkbox": Selector(
             By.ID,
-            "checkbox-multiple-high-productivity-food-production",
+            "checkbox-multiple-advanced-food-production",
             is_visible=False,
         ),
         "rail infrastructure checkbox": Selector(
@@ -153,7 +153,7 @@ def generate_form_details(actor: Actor) -> dict:
         "country": None,
         "organisation size": None,
         "comment": "This form was submitted by Automated test",
-        "high productivity food production": True,
+        "advanced food production": True,
         "lightweight structures": True,
         "rail infrastructure": True,
         "terms and conditions": True,

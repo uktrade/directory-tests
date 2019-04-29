@@ -22,7 +22,7 @@ from settings import INVEST_UI_URL
 
 NAME = "HPO"
 NAMES = [
-    "High productivity food production",
+    "Advanced food production",
     "Lightweight structures",
     "Rail infrastructure",
 ]
@@ -34,7 +34,7 @@ PAGE_TITLE = "high potential"
 
 
 URLs = {
-    "high productivity food production": urljoin(BASE_URL, "food-production/"),
+    "advanced food production": urljoin(BASE_URL, "food-production/"),
     "lightweight structures": urljoin(BASE_URL, "lightweight-structures/"),
     "rail infrastructure": urljoin(BASE_URL, "rail-infrastructure/"),
 }

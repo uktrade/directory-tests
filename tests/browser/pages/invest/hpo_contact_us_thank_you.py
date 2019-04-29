@@ -19,7 +19,7 @@ from settings import INVEST_UI_URL
 
 NAME = "Thank you for your enquiry"
 NAMES = [
-    "High productivity food production",
+    "Advanced food production",
     "Lightweight structures",
     "Rail infrastructure",
 ]
@@ -27,7 +27,7 @@ SERVICE = "Invest"
 TYPE = "HPO Contact us"
 URL = urljoin(INVEST_UI_URL, "high-potential-opportunities/")
 URLs = {
-    "high productivity food production": urljoin(
+    "advanced food production": urljoin(
         URL, "food-production/contact/success/"
     ),
     "lightweight structures": urljoin(URL, "lightweight-structures/contact/success/"),
