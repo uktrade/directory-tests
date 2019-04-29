@@ -164,3 +164,45 @@ FOOTER_INTERNATIONAL = {
         "copyright notice": Selector(By.ID, "great-footer-copyright"),
     }
 }
+
+HEADER_INVEST = {
+    "header": {
+        # cookie notice
+        "itself": Selector(By.ID, "header-cookie-notice", is_visible=False),
+        "find out more about cookies": Selector(
+            By.CSS_SELECTOR, "#header-cookie-notice a", is_visible=False
+        ),
+        "dismiss cookie notice": Selector(
+            By.ID, "dismiss-cookie-notice", is_visible=False
+        ),
+        # global header
+        "global header": Selector(By.ID, "great-global-header"),
+        "great global logo": Selector(By.ID, "great-global-header-logo"),
+        "for uk businesses": Selector(By.ID, "great-global-header-domestic-link"),
+        "for international businesses": Selector(
+            By.ID, "great-global-header-international-link"
+        ),
+        # header menu
+        "header menu": Selector(By.ID, "great-header-menu"),
+        "eig logo": Selector(By.ID, "great-header-logo"),
+        "invest": Selector(By.ID, "header-invest", type=ElementType.LINK),
+        "find a uk supplier": Selector(By.ID, "header-fas", type=ElementType.LINK),
+        "industries": Selector(By.ID, "header-industries", type=ElementType.LINK),
+    }
+}
+
+FOOTER_INVEST = {
+    "footer": {
+        "great footer logo": Selector(By.ID, "great-footer-great-logo"),
+        "contact us": Selector(By.ID, "footer-contact"),
+        "privacy and cookies": Selector(By.ID, "footer-privacy-and-cookies"),
+        "terms and conditions": Selector(By.ID, "footer-terms-and-conditions"),
+        "department for international trade on gov.uk": Selector(By.ID, "footer-dit"),
+        "go to the page for uk businesses": Selector(
+            By.ID, "footer-domestic"
+        ),
+        "dit footer logo": Selector(By.ID, "great-global-footer-logo"),
+        "copyright notice": Selector(By.ID, "great-footer-copyright"),
+    }
+}
+
