@@ -946,10 +946,19 @@ def tick_checkboxes_by_labels(
 ):
     checkbox_selectors = get_selectors(form_selectors, ElementType.LABEL)
     for key, selector in checkbox_selectors.items():
-        logging.debug(f"Ticking {key} checkbox by its label (if necessary)")
         if form_details[key]:
+            logging.debug(f"'{key}' checkbox should be ticked")
             checkbox = find_element(
                 driver, selector, element_name=key, wait_for_it=False
             )
             if not checkbox.get_property("checked"):
+                logging.debug(f"'{key}' checkbox is not ticked, checking it")
+                checkbox.click()
+        else:
+            logging.debug(f"'{key}' checkbox should be left unchanged")
+            checkbox = find_element(
+                driver, selector, element_name=key, wait_for_it=False
+            )
+            if checkbox.get_property("checked"):
+                logging.debug(f"'{key}' checkbox is ticked, unchecking it")
                 checkbox.click()
