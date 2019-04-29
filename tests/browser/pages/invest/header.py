@@ -5,6 +5,7 @@ import logging
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import common_selectors
 from pages.common_actions import (
     Selector,
     check_hash_of_remote_file,
@@ -19,30 +20,11 @@ NAME = "Header"
 URL = None
 SERVICE = "invest"
 TYPE = "header"
-FAVICON = Selector(By.CSS_SELECTOR, "link[rel='shortcut icon']")
 HEADER_LOGO = Selector(By.CSS_SELECTOR, "#great-header-logo > img")
-FOOTER_LOGO = Selector(By.ID, "great-footer-dit-logo")
-HOME_LINK = Selector(By.CSS_SELECTOR, "#invest-header a[href='/']")
-INDUSTRIES_LINK = Selector(By.CSS_SELECTOR, "#invest-header a[href='/industries/']")
-UK_SETUP_GUIDE_LINK = Selector(
-    By.CSS_SELECTOR, "#invest-header a[href='/uk-setup-guide/']"
-)
-CONTACT_US_LINK = Selector(By.CSS_SELECTOR, "#invest-header a[href='/contact/']")
-LANGUAGE_SELECTOR = Selector(By.CSS_SELECTOR, "#language-selector-activator > a")
 SELECTORS = {
-    "general": {
-        "uk gov logo": HEADER_LOGO,
-        "home": HOME_LINK,
-        "industries": INDUSTRIES_LINK,
-        "uk setup guide": UK_SETUP_GUIDE_LINK,
-        "contact us": CONTACT_US_LINK,
-        "language selector": LANGUAGE_SELECTOR,
-    },
-    "beta bar": {
-        "itself": Selector(By.ID, "#header-beta-bar"),
-        "feedback": Selector(By.CSS_SELECTOR, "#header-beta-bar a"),
-    },
 }
+SELECTORS.update(common_selectors.HEADER_INVEST)
+SELECTORS.update(common_selectors.BETA_BAR)
 
 
 def click_on_page_element(driver: WebDriver, element: str):
