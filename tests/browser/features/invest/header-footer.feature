@@ -34,21 +34,16 @@ Feature: Header-Footer
 
     When "Robert" decides to use "<specific>" link from page "Invest - <section>"
 
-    Then "Robert" should be on the "Invest - <specific>" page
+    Then "Robert" should be on the "<expected>" page
 
     Examples:
-      | specific       | section|
-      | Home           | header |
-      | Industries     | header |
-      | UK Setup Guide | header |
-      | Contact Us     | header |
-      | Home           | footer |
-      | Industries     | footer |
-      | UK Setup Guide | footer |
-      | Contact Us     | footer |
+      | specific           | section | expected                   |
+      | Invest             | header  | Invest - Home              |
+      | Find a UK Supplier | header  | Find a Supplier - Home     |
+      | Industries         | header  | International - Industries |
 
 
-  @CMS-158
+  @CMS-158a
   @logo
   @header
   @footer
@@ -57,7 +52,7 @@ Feature: Header-Footer
 
     When "Robert" decides to click on the UK Government logo in the page "Invest - header"
 
-    Then "Robert" should be on the "Invest - Home" page
+    Then "Robert" should be on the "International - Landing" page
 
     Examples:
       | selected                            |
