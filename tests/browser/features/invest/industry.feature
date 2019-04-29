@@ -13,13 +13,13 @@ Feature: Industry pages
     Then "Robert" should see following sections
       | Sections         |
       | Header           |
-      | Beta bar         |
+#      | Beta bar         |
       | Hero             |
       | Industry pullout |
       | Big number       |
       | Topics           |
       | Topics contents  |
-      | Report this page |
+      | Error reporting  |
       | Footer           |
 
     Examples: Industries
@@ -62,14 +62,14 @@ Feature: Industry pages
     Then "Robert" should see following sections
       | Sections           |
       | Header             |
-      | Beta bar           |
+#      | Beta bar           |
       | Hero               |
       | Industry pullout   |
       | Big number         |
       | Topics             |
       | Topics contents    |
       | Related industries |
-      | Report this page   |
+      | Error reporting    |
       | Footer             |
 
     Examples: Industries

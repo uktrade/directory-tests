@@ -12,10 +12,10 @@ Feature: Industries page
     Then "Robert" should see following sections
       | Sections         |
       | Header           |
-      | Beta bar         |
+#      | Beta bar         |
       | Hero             |
       | Sectors          |
-      | Report this page |
+      | Error reporting  |
       | Footer           |
 
 

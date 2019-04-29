@@ -11,11 +11,11 @@ Feature: UK Setup Guide
     Then "Robert" should see following sections
       | Sections         |
       | Header           |
-      | Beta bar         |
+#      | Beta bar         |
       | Hero             |
       | Introduction     |
       | Guides           |
-      | Report this page |
+      | Error reporting  |
       | Footer           |
 
 
@@ -49,10 +49,10 @@ Feature: UK Setup Guide
     Then "Robert" should see following sections
       | Sections         |
       | Header           |
-      | Beta bar         |
+#      | Beta bar         |
       | Hero             |
       | Content          |
-      | Report this page |
+      | Error reporting  |
       | Footer           |
 
     Examples: UK Setup Guides

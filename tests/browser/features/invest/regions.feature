@@ -13,11 +13,11 @@ Feature: Regional pages
     Then "Robert" should see following sections
       | Sections         |
       | Header           |
-      | Beta bar         |
+#      | Beta bar         |
       | Hero             |
       | Topics           |
       | Topics contents  |
-      | Report this page |
+      | Error reporting  |
       | Footer           |
     And "Robert" should see content specific to "Invest - <selected> - region" page
 

@@ -12,7 +12,7 @@ Feature: Invest home page
     Then "Robert" should see following sections
       | Sections                           |
       | Header                             |
-      | Beta bar                           |
+#      | Beta bar                           |
       | Reasons to move business to the UK |
       | Sectors                            |
       | Setup Guides                       |

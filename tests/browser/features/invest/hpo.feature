@@ -11,7 +11,7 @@ Feature: High Potential Opportunities
     Then "Annette Geissinger" should see following sections
       | Sections               |
       | Header                 |
-      | Beta bar               |
+#      | Beta bar               |
       | Hero                   |
       | Contact us             |
       | Proposition one        |
@@ -21,7 +21,7 @@ Feature: High Potential Opportunities
 #      | Testimonial            |  # this is not present on these 2 pages
       | Case studies           |
       | Other opportunities    |
-      | Report this page       |
+      | Error reporting        |
       | Footer                 |
     And "Annette Geissinger" should not see following section
       | section          |
@@ -40,7 +40,7 @@ Feature: High Potential Opportunities
     Then "Annette Geissinger" should see following sections
       | Sections               |
       | Header                 |
-      | Beta bar               |
+#      | Beta bar               |
       | Hero                   |
       | Contact us             |
       | Proposition one        |
@@ -50,7 +50,7 @@ Feature: High Potential Opportunities
       | Testimonial            |
       | Case studies           |
       | Other opportunities    |
-      | Report this page       |
+      | Error reporting        |
       | Footer                 |
     And "Annette Geissinger" should not see following section
       | section          |
@@ -72,9 +72,9 @@ Feature: High Potential Opportunities
     And "Annette Geissinger" should see that "<selected> checkbox" in the form is "selected"
     And "Annette Geissinger" should see following sections
       | sections         |
-      | Beta Bar         |
+#      | Beta Bar         |
       | Form             |
-      | Report this page |
+      | Error reporting  |
 
     Examples: HPO pages
       | selected                          |
@@ -147,10 +147,10 @@ Feature: High Potential Opportunities
     Then "Annette Geissinger" should be on the "Invest - Thank you for your enquiry - HPO Contact us" page
     And "Annette Geissinger" should see following sections
       | Sections         |
-      | Beta bar         |
+#      | Beta bar         |
       | Confirmation     |
       | Documents        |
-      | Report this page |
+      | Error reporting  |
     And "Annette Geissinger" should receive HPO enquiry confirmation email
     And HPO Agent should receive HPO enquiry email from "Annette Geissinger"
 
