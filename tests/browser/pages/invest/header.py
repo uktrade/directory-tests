@@ -20,8 +20,8 @@ URL = None
 SERVICE = "invest"
 TYPE = "header"
 FAVICON = Selector(By.CSS_SELECTOR, "link[rel='shortcut icon']")
-HEADER_LOGO = Selector(By.CSS_SELECTOR, "#invest-header img")
-FOOTER_LOGO = Selector(By.CSS_SELECTOR, "#invest-footer img:nth-child(1)")
+HEADER_LOGO = Selector(By.CSS_SELECTOR, "#great-header-logo > img")
+FOOTER_LOGO = Selector(By.ID, "great-footer-dit-logo")
 HOME_LINK = Selector(By.CSS_SELECTOR, "#invest-header a[href='/']")
 INDUSTRIES_LINK = Selector(By.CSS_SELECTOR, "#invest-header a[href='/industries/']")
 UK_SETUP_GUIDE_LINK = Selector(

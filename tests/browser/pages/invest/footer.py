@@ -20,7 +20,7 @@ URL = None
 SERVICE = "Invest"
 TYPE = "footer"
 
-UK_GOV_LOGO = Selector(By.CSS_SELECTOR, "#invest-footer img:nth-child(1)")
+UK_GOV_LOGO = Selector(By.ID, "great-footer-great-logo")
 SELECTORS = {
     "logos": {
         "uk gov": UK_GOV_LOGO,
