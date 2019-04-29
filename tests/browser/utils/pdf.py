@@ -1,9 +1,22 @@
 import io
+import logging
 
 from pdfminer.converter import TextConverter
 from pdfminer.layout import LAParams
 from pdfminer.pdfinterp import PDFPageInterpreter, PDFResourceManager
 from pdfminer.pdfpage import PDFPage
+
+
+class NoPDFMinerLogEntriesFilter(logging.Filter):
+    def filter(self, record):
+        skip = [
+            "nextline", "nexttoken", "seek", "start_type", "exec", "nextobject",
+            "do_keyword", "add_results", "end_type", "get_unichr", "Stream",
+            "register", "getobj", "xref", "Resource", "Processing ",
+            "trailer", "get_font", "Page", "find_xref", "render_contents",
+            "read_xref_from"
+        ]
+        return all(not record.getMessage().startswith(word) for word in skip)
 
 
 def extract_text_from_pdf_bytes(

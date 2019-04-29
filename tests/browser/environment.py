@@ -26,6 +26,7 @@ from pages.common_actions import (
     initialize_scenario_data,
     show_snackbar_message,
 )
+from utils.pdf import NoPDFMinerLogEntriesFilter
 
 try:
     import http.client as httplib
@@ -238,3 +239,5 @@ def before_all(context: Context):
     context.local_desired_capabilities = local_desired_capabilities
 
     context.config.setup_logging(configfile=".behave_logging")
+    logger = logging.getLogger()
+    logger.addFilter(NoPDFMinerLogEntriesFilter())
