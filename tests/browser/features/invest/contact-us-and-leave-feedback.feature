@@ -76,34 +76,6 @@ Feature: Contact us and Leave feedback
       | Understand UK tax and incentives - guide            |
 
 
-  @CMS-163
-  @dev-only
-  @captcha
-  @contact-us
-  @header
-  @footer
-  Scenario Outline: Visitors should be able to contact us from "<selected>" page
-    Given "Robert" visits the "Invest - <selected>" page
-    And "Robert" decided to "Get in touch"
-    And "Robert" is on the "Invest - Contact us" page
-
-    When "Robert" fills out and submits the form
-
-    Then "Robert" should be on the "Invest - Thank you for your message" page
-
-    Examples: Various pages
-      | selected                          |
-      | Home                              |
-
-    @full
-    Examples: Various pages
-      | selected                          |
-      | Industries                        |
-      | UK Setup Guide                    |
-      | Advanced manufacturing - industry |
-      | Apply for a UK visa - guide       |
-
-
   @CMS-237
   @contact-us
   @dev-only
