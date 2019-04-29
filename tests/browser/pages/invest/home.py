@@ -37,7 +37,11 @@ TOPIC_CONTENTS = Selector(
     "section.landing-page-accordions > div > ul > li > .accordion-content",
 )
 SELECTORS = {
-    "hero": {"self": Selector(By.CSS_SELECTOR, "#content > section.hero")},
+    "hero": {
+        "self": Selector(By.CSS_SELECTOR, "#content > section.hero"),
+        "heading": Selector(By.CSS_SELECTOR, "#content > section.hero h1"),
+        "get in touch": Selector(By.CSS_SELECTOR, "#content > section.hero a"),
+    },
     "reasons to move business to the uk": {
         "self": Selector(By.CSS_SELECTOR, "section.landing-page-accordions"),
         "first": Selector(
