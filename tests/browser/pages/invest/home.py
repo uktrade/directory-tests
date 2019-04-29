@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType
+from pages import ElementType, common_selectors
 from pages.common_actions import (
     Selector,
     assertion_msg,
@@ -37,16 +37,6 @@ TOPIC_CONTENTS = Selector(
     "section.landing-page-accordions > div > ul > li > .accordion-content",
 )
 SELECTORS = {
-    "header": {
-        "self": Selector(By.ID, "invest-header"),
-        "logo": Selector(By.CSS_SELECTOR, "#invest-header > div.header-bar  a"),
-        "get in touch": Selector(By.CSS_SELECTOR, ".hero a[href='/contact/']"),
-    },
-    "beta bar": {
-        "self": Selector(By.ID, "header-beta-bar"),
-        "beta bar": Selector(By.CSS_SELECTOR, "#header-beta-bar strong"),
-        "feedback": Selector(By.CSS_SELECTOR, "#header-beta-bar a"),
-    },
     "hero": {"self": Selector(By.CSS_SELECTOR, "#content > section.hero")},
     "reasons to move business to the uk": {
         "self": Selector(By.CSS_SELECTOR, "section.landing-page-accordions"),
@@ -183,16 +173,11 @@ SELECTORS = {
             "section.landing-page-how-we-help ul > li:nth-child(6) > div > p",
         ),
     },
-    "footer": {
-        "self": Selector(By.ID, "invest-footer"),
-        "uk gov logo": Selector(
-            By.CSS_SELECTOR, "#invest-footer div.footer-branding > img:nth-child(1)"
-        ),
-        "invest logo": Selector(
-            By.CSS_SELECTOR, "#invest-footer div.footer-branding > img:nth-child(2)"
-        ),
-    },
 }
+SELECTORS.update(common_selectors.HEADER_INVEST)
+SELECTORS.update(common_selectors.BETA_BAR)
+SELECTORS.update(common_selectors.ERROR_REPORTING)
+SELECTORS.update(common_selectors.FOOTER_INVEST)
 
 
 def visit(driver: WebDriver):

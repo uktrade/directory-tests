@@ -7,6 +7,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import common_selectors
 from pages.common_actions import (
     Selector,
     check_for_sections,
@@ -36,11 +37,6 @@ PAGE_TITLE = "High Potential Opportunities - great.gov.uk"
 
 PDF_LINKS = Selector(By.CSS_SELECTOR, "#documents-section a.link")
 SELECTORS = {
-    "beta bar": {
-        "self": Selector(By.ID, "header-beta-bar"),
-        "beta bar": Selector(By.CSS_SELECTOR, "#header-beta-bar strong"),
-        "feedback": Selector(By.CSS_SELECTOR, "#header-beta-bar a"),
-    },
     "confirmation": {
         "itself": Selector(By.ID, "confirmation-section"),
         "heading": Selector(
@@ -53,11 +49,11 @@ SELECTORS = {
         "pdf links": PDF_LINKS,
         "description": Selector(By.CSS_SELECTOR, "#documents-section h3 ~ span"),
     },
-    "report this page": {
-        "self": Selector(By.CSS_SELECTOR, "section.error-reporting"),
-        "report link": Selector(By.CSS_SELECTOR, "section.error-reporting a"),
-    },
 }
+SELECTORS.update(common_selectors.HEADER_INVEST)
+SELECTORS.update(common_selectors.BETA_BAR)
+SELECTORS.update(common_selectors.ERROR_REPORTING)
+SELECTORS.update(common_selectors.FOOTER_INVEST)
 
 UNEXPECTED_ELEMENTS = {
     "breadcrumbs": {"itself": Selector(By.CSS_SELECTOR, "div.breadcrumbs")}

@@ -7,6 +7,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import common_selectors
 from pages.common_actions import (
     Selector,
     assertion_msg,
@@ -40,17 +41,6 @@ URLs = {
 
 
 SELECTORS = {
-    "header": {
-        "self": Selector(By.ID, "invest-header"),
-        "logo": Selector(By.CSS_SELECTOR, "#invest-header > div.header-bar a"),
-        "home": Selector(By.CSS_SELECTOR, "#invest-header a[href='/'] img"),
-        "contact us": Selector(By.CSS_SELECTOR, "#invest-header a[href='/contact/']"),
-    },
-    "beta bar": {
-        "self": Selector(By.ID, "header-beta-bar"),
-        "beta bar": Selector(By.CSS_SELECTOR, "#header-beta-bar strong"),
-        "feedback": Selector(By.CSS_SELECTOR, "#header-beta-bar a"),
-    },
     "hero": {
         "self": Selector(By.ID, "hero"),
         "heading": Selector(By.CSS_SELECTOR, "#hero h1"),
@@ -147,20 +137,11 @@ SELECTORS = {
             By.CSS_SELECTOR, "#other-opportunities div:nth-child(2) > div > a"
         ),
     },
-    "report this page": {
-        "self": Selector(By.CSS_SELECTOR, "section.error-reporting"),
-        "report link": Selector(By.CSS_SELECTOR, "section.error-reporting a"),
-    },
-    "footer": {
-        "self": Selector(By.ID, "invest-footer"),
-        "uk gov logo": Selector(
-            By.CSS_SELECTOR, "#invest-footer div.footer-branding > img:nth-child(1)"
-        ),
-        "invest logo": Selector(
-            By.CSS_SELECTOR, "#invest-footer div.footer-branding > img:nth-child(2)"
-        ),
-    },
 }
+SELECTORS.update(common_selectors.HEADER_INVEST)
+SELECTORS.update(common_selectors.BETA_BAR)
+SELECTORS.update(common_selectors.ERROR_REPORTING)
+SELECTORS.update(common_selectors.FOOTER_INVEST)
 
 
 UNEXPECTED_ELEMENTS = {

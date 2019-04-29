@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType
+from pages import ElementType, common_selectors
 from pages.common_actions import (
     Actor,
     Selector,
@@ -46,11 +46,6 @@ IM_NOT_A_ROBOT = Selector(By.CSS_SELECTOR, ".recaptcha-checkbox-checkmark")
 SUBMIT_BUTTON = Selector(By.ID, "submit-button")
 COUNTRY_SELECTOR = Selector(By.CSS_SELECTOR, "select[name='country']")
 SELECTORS = {
-    "beta bar": {
-        "self": Selector(By.ID, "header-beta-bar"),
-        "beta bar": Selector(By.CSS_SELECTOR, "#header-beta-bar strong"),
-        "feedback": Selector(By.CSS_SELECTOR, "#header-beta-bar a"),
-    },
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#content form"),
         "full name": Selector(By.ID, "id_full_name", type=ElementType.INPUT),
@@ -111,11 +106,11 @@ SELECTORS = {
             By.ID, "id_terms_agreed", is_visible=False
         ),
     },
-    "report this page": {
-        "self": Selector(By.CSS_SELECTOR, "section.error-reporting"),
-        "report link": Selector(By.CSS_SELECTOR, "section.error-reporting a"),
-    },
 }
+SELECTORS.update(common_selectors.HEADER_INVEST)
+SELECTORS.update(common_selectors.BETA_BAR)
+SELECTORS.update(common_selectors.ERROR_REPORTING)
+SELECTORS.update(common_selectors.FOOTER_INVEST)
 
 UNEXPECTED_ELEMENTS = {
     "breadcrumbs": {"itself": Selector(By.CSS_SELECTOR, "div.breadcrumbs")}
