@@ -28,9 +28,9 @@ Feature: High Potential Opportunities
       | Breadcrumbs      |
 
     Examples: HPO pages
-      | selected                          |
-      | High productivity food production |
-      | Lightweight structures            |
+      | selected                 |
+      | Advanced food production |
+      | Lightweight structures   |
 
 
   @TT-442
@@ -77,14 +77,14 @@ Feature: High Potential Opportunities
       | Error reporting  |
 
     Examples: HPO pages
-      | selected                          |
-      | High productivity food production |
+      | selected                 |
+      | Advanced food production |
 
     @full
     Examples: HPO pages
-      | selected                          |
-      | Lightweight structures            |
-      | Rail infrastructure               |
+      | selected                 |
+      | Lightweight structures   |
+      | Rail infrastructure      |
 
 
   @bug
@@ -99,14 +99,14 @@ Feature: High Potential Opportunities
       | Breadcrumbs      |
 
     Examples: HPO Contact Us pages
-      | selected                          |
-      | High productivity food production |
+      | selected                 |
+      | Advanced food production |
 
     @full
     Examples: HPO Contact Us pages
-      | selected                          |
-      | Lightweight structures            |
-      | Rail infrastructure               |
+      | selected                 |
+      | Lightweight structures   |
+      | Rail infrastructure      |
 
 
   @TT-442
@@ -119,17 +119,17 @@ Feature: High Potential Opportunities
     Then "Annette Geissinger" should be on the "Invest - <expected opportunity> - HPO" page
 
     Examples: HPO pages
-      | selected                          | specific | expected opportunity              |
-      | High productivity food production | first    | Lightweight structures            |
-      | Lightweight structures            | second   | Rail infrastructure               |
-      | Rail infrastructure               | first    | High productivity food production |
+      | selected                 | specific | expected opportunity     |
+      | Advanced food production | first    | Lightweight structures   |
+      | Lightweight structures   | second   | Rail infrastructure      |
+      | Rail infrastructure      | first    | Advanced food production |
 
     @full
     Examples: HPO pages
-      | selected                          | specific | expected opportunity              |
-      | High productivity food production | second   | Rail infrastructure               |
-      | Lightweight structures            | first    | High productivity food production |
-      | Rail infrastructure               | second   | Lightweight structures            |
+      | selected                 | specific | expected opportunity     |
+      | Advanced food production | second   | Rail infrastructure      |
+      | Lightweight structures   | first    | Advanced food production |
+      | Rail infrastructure      | second   | Lightweight structures   |
 
 
   @bug
@@ -155,14 +155,14 @@ Feature: High Potential Opportunities
     And HPO Agent should receive HPO enquiry email from "Annette Geissinger"
 
     Examples: HPO pages
-      | selected                          |
-      | High productivity food production |
+      | selected                 |
+      | Advanced food production |
 
     @full
     Examples: HPO pages
-      | selected                          |
-      | Lightweight structures            |
-      | Rail infrastructure               |
+      | selected                 |
+      | Lightweight structures   |
+      | Rail infrastructure      |
 
 
   @bug
@@ -186,11 +186,11 @@ Feature: High Potential Opportunities
       | Breadcrumbs      |
 
     Examples: HPO pages
-      | selected                          |
-      | High productivity food production |
+      | selected                 |
+      | Advanced food production |
 
     @full
     Examples: HPO pages
-      | selected                          |
-      | Lightweight structures            |
-      | Rail infrastructure               |
+      | selected                 |
+      | Lightweight structures   |
+      | Rail infrastructure      |
