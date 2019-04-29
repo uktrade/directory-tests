@@ -87,7 +87,7 @@ def given_actor_decided_to_click_on_page_element(
 @given('"{actor_alias}" got in touch with us via "{page_name}" page')
 def given_actor_got_in_touch_with_us(
         context: Context, actor_alias: str, page_name: str):
-    generic_get_in_touch(context, actor_alias, page_name)
+    generic_get_in_touch(context, actor_alias, page_name, custom_details_table=context.table)
 
 
 @given('at least "{no_articles:d}" published "{visitor_type}" news articles on "{service}"')

@@ -142,7 +142,7 @@ def check_state_of_form_element(
         assert element.get_property("checked")
 
 
-def generate_form_details(actor: Actor) -> dict:
+def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
     details = {
         "full name": actor.company_name or "Automated test",
         "job title": "QA @ DIT",
@@ -158,6 +158,9 @@ def generate_form_details(actor: Actor) -> dict:
         "rail infrastructure": True,
         "terms and conditions": True,
     }
+    if custom_details:
+        details.update(custom_details)
+    logging.debug(f"Form details: {details}")
     return details
 
 

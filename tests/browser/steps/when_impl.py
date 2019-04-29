@@ -641,9 +641,9 @@ def generic_submit_form(context: Context, actor_alias: str):
     page.submit(context.driver)
 
 
-def generic_get_in_touch(context: Context, actor_alias: str, page_name: str):
+def generic_get_in_touch(context: Context, actor_alias: str, page_name: str, custom_details_table: Table):
     visit_page(context, actor_alias, page_name)
-    generic_fill_out_and_submit_form(context, actor_alias)
+    generic_fill_out_and_submit_form(context, actor_alias, custom_details_table=custom_details_table)
 
 
 def generic_download_all_pdfs(context: Context, actor_alias: str):
