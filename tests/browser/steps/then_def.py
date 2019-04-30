@@ -25,7 +25,6 @@ from steps.then_impl import (
     hpo_should_receive_enquiry_confirmation_email,
     invest_mailbox_admin_should_receive_contact_confirmation_email,
     invest_should_receive_contact_confirmation_email,
-    invest_should_see_topic_contents,
     invest_should_see_uk_gov_logo,
     language_selector_keyboard_should_be_trapped,
     language_selector_should_see_it,
@@ -158,11 +157,6 @@ def fas_should_see_filtered_search_results(
         context: Context, actor_alias: str, industry_names: str):
     fas_search_results_filtered_by_industries(
         context, actor_alias, industry_names.split(", "))
-
-
-@then('"{actor_alias}" should see brief explanation why the UK is the best place for his business')
-def then_actor_should_see_topic_content(context: Context, actor_alias: str):
-    invest_should_see_topic_contents(context, actor_alias)
 
 
 @then('following web statistics analysis or tracking elements should NOT be present')

@@ -181,13 +181,6 @@ def open_all_topics(driver: WebDriver):
         link.click()
 
 
-def should_see_all_topics(driver: WebDriver):
-    contents = find_elements(driver, TOPIC_CONTENTS)
-    for content in contents:
-        with assertion_msg("Can't see contents for: {}".format(content.text)):
-            assert content.is_displayed()
-
-
 def clean_name(name: str) -> str:
     return name.split(" - ")[1].strip()
 

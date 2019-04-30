@@ -259,17 +259,6 @@ def fas_search_results_filtered_by_industries(
     )
 
 
-def invest_should_see_topic_contents(context: Context, actor_alias: str):
-    page = get_last_visited_page(context, actor_alias)
-    has_action(page, "should_see_all_topics")
-    page.should_see_all_topics(context.driver)
-    logging.debug(
-        "%s can see contents of all topics on %s",
-        actor_alias,
-        context.driver.current_url,
-    )
-
-
 def generic_should_see_expected_page_content(
     context: Context, actor_alias: str, expected_page_name: str
 ):
