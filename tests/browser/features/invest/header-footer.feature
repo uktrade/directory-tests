@@ -43,7 +43,7 @@ Feature: Header-Footer
       | Industries         | header  | International - Industries |
 
 
-  @CMS-158a
+  @CMS-158
   @logo
   @header
   @footer
