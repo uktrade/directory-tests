@@ -89,6 +89,6 @@ Feature: Find a Supplier - home page
   Scenario: Buyers should be able to see more UK industries from the "Find a Supplier - home" page
     Given "Robert" visits the "Find a Supplier - Home" page
 
-    When "Robert" decides to see more UK industries
+    When "Robert" decides to "see more industries"
 
     Then "Robert" should be on the "Find a Supplier - Industries" page

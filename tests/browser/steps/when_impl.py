@@ -452,17 +452,6 @@ def fas_fill_out_and_submit_contact_us_form(
     fas.contact_us.submit(context.driver)
 
 
-def generic_see_more_industries(context: Context, actor_alias: str):
-    page = get_last_visited_page(context, actor_alias)
-    has_action(page, "see_more_industries")
-    page.see_more_industries(context.driver)
-    logging.debug(
-        "%s clicked on 'See more industries' button on %s",
-        actor_alias,
-        context.driver.current_url,
-    )
-
-
 def fas_use_breadcrumb(
     context: Context, actor_alias: str, breadcrumb_name: str, page_name: str
 ):

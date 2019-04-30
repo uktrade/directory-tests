@@ -53,7 +53,7 @@ Feature: Invest home page
   Scenario: Overseas businesses should be able to also learn more about UK Industries other than the promoted ones
     Given "Robert" visits the "Invest - home" page
 
-    When "Robert" decides to see more UK industries
+    When "Robert" decides to "see more industries"
 
     Then "Robert" should be on the "Invest - Industries" page
 

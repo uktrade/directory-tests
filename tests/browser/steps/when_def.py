@@ -38,7 +38,6 @@ from steps.when_impl import (
     generic_pick_radio_option_and_submit,
     generic_pick_random_radio_option_and_submit,
     generic_report_problem_with_page,
-    generic_see_more_industries,
     generic_select_dropdown_option,
     generic_submit_form,
     generic_unfold_topics,
@@ -211,11 +210,6 @@ def when_actor_chooses_form_option(
 def when_actor_selects_form_option(
         context: Context, actor_alias: str, option: str, dropdown: str):
     generic_select_dropdown_option(context, actor_alias, dropdown, option)
-
-
-@when('"{actor_alias}" decides to see more UK industries')
-def fas_landing_page_see_more_industries(context: Context, actor_alias: str):
-    generic_see_more_industries(context, actor_alias)
 
 
 @when('"{actor_alias}" decides to use "{breadcrumb_name}" breadcrumb on the "{page_name}" page')

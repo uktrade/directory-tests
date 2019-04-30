@@ -132,10 +132,6 @@ def open_industry(driver: WebDriver, industry_name: str):
     take_screenshot(driver, NAME + " after opening " + industry_name + " page")
 
 
-def see_more_industries(driver: WebDriver):
-    click_on_page_element(driver, "see more industries")
-
-
 def open_any_article(driver: WebDriver):
     selector = Selector(By.CSS_SELECTOR, "#industries-section a.industry-card")
     links = find_elements(driver, selector)
