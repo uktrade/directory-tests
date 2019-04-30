@@ -10,7 +10,7 @@ Feature: High Potential Opportunities
 
     Then "Annette Geissinger" should see following sections
       | Sections               |
-      | Header                 |
+#      | Header                 |
 #      | Beta bar               |
       | Hero                   |
       | Contact us             |
@@ -39,7 +39,7 @@ Feature: High Potential Opportunities
 
     Then "Annette Geissinger" should see following sections
       | Sections               |
-      | Header                 |
+#      | Header                 |
 #      | Beta bar               |
       | Hero                   |
       | Contact us             |
