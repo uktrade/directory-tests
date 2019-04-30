@@ -15,7 +15,7 @@ from settings import EXRED_UI_URL
 NAME = "Industries"
 SERVICE = "International"
 TYPE = "landing"
-URL = urljoin(EXRED_UI_URL, "international/industries")
+URL = urljoin(EXRED_UI_URL, "international/industries/")
 PAGE_TITLE = "Welcome to great.gov.uk - buy from or invest in the UK"
 
 
