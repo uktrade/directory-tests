@@ -208,3 +208,12 @@ FOOTER_INVEST = {
     }
 }
 
+
+EU_EXIT_NEWS_BANNER = {
+    "eu exit news banner": {
+        "itself": Selector(By.ID, "information-banner"),
+        "badge": Selector(By.CSS_SELECTOR, "#information-banner span"),
+        "text": Selector(By.CSS_SELECTOR, "#information-banner p"),
+        "see our updates on eu exit": Selector(By.CSS_SELECTOR, "#information-banner a"),
+    }
+}
