@@ -10,12 +10,10 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from pages import ElementType, common_selectors
 from pages.common_actions import (
     Selector,
-    assertion_msg,
     check_for_sections,
     check_title,
     find_and_click_on_page_element,
     find_element,
-    find_elements,
     take_screenshot,
     visit_url,
 )
@@ -145,7 +143,7 @@ SELECTORS = {
         "self": Selector(By.CSS_SELECTOR, "#content > section:nth-child(12)"),
         "heading": Selector(By.CSS_SELECTOR, "#content > section:nth-child(12) h2"),
         "text": Selector(By.CSS_SELECTOR, "#content > section:nth-child(12) p"),
-        "get in touch": Selector(By.CSS_SELECTOR, "#content > section:nth-child(12) a", type=ElementType.LINK),
+        "speak to us": Selector(By.CSS_SELECTOR, "#content > section:nth-child(12) a", type=ElementType.LINK),
 
     },
 }
