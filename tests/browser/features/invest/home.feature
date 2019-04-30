@@ -10,24 +10,22 @@ Feature: Invest home page
     Given "Robert" visits the "Invest - home" page
 
     Then "Robert" should see following sections
-      | Sections                           |
-      | Header                             |
-#      | Beta bar                           |
-      | Reasons to move business to the UK |
-      | Sectors                            |
-      | Setup Guides                       |
-      | How we help                        |
-      | Footer                             |
-
-
-  @CMS-157
-  @browser
-  Scenario: Overseas businesses should be able to find out why UK is the best place for their business
-    Given "Robert" visits the "Invest - home" page
-
-    When "Robert" decides to read more on all reasons to move business to the UK
-
-    Then "Robert" should see brief explanation why the UK is the best place for his business
+      | Sections                     |
+      | Header                       |
+      | Breadcrumbs                  |
+#      | Beta bar                     |
+      | EU exit news banner          |
+      | Benefits                     |
+      | The UK and the EU            |
+      | Invest your capital          |
+      | Sectors                      |
+      | High-Potential Opportunities |
+      | How to setup in the uk       |
+      | Investment support directory |
+      | How we help                  |
+      | Contact us                   |
+      | Error reporting              |
+      | Footer                       |
 
 
   @CMS-157
@@ -42,9 +40,6 @@ Feature: Invest home page
     Examples: promoted industries
       | selected                 |
       | Automotive               |
-      | Capital investment       |
-      | Creative industries      |
-      | Financial services       |
       | Health and life sciences |
       | Technology               |
 
@@ -59,43 +54,34 @@ Feature: Invest home page
 
 
   @CMS-157
-  Scenario Outline: Overseas businesses should be able to learn how to grow their businesses in the UK by reading "<selected>" guide
+  Scenario: Overseas businesses should be able to learn how to set up in the UK
     Given "Robert" visits the "Invest - home" page
 
-    When "Robert" decides to read "Invest - <selected> - guide" guide
+    When "Robert" decides to "get started"
 
-    Then "Robert" should be on the "Invest - <selected> - guide" page
-    And "Robert" should see content specific to "Invest - <selected> - guide" page
+    Then "Robert" should be on the "International - How to set up in the UK" page
+
+
+  @ISD
+  Scenario: Overseas businesses should be able to learn how to find a UK specialist
+    Given "Robert" visits the "Invest - home" page
+
+    When "Robert" decides to "find a UK specialist"
+
+    Then "Robert" should be on the "Find a Supplier - UK support directory" page
+
+
+  @HPO
+  Scenario Outline: Overseas businesses should be able to learn about "<selected>" High-Potential Opportunities
+    Given "Robert" visits the "Invest - home" page
+
+    When "Robert" decides to find out more about "<selected>"
+
+    Then "Robert" should be on the "Invest - <selected> - hpo" page
+    And "Robert" should see content specific to "Invest - <selected> - hpo" page
 
     Examples: UK Setup Guides
-      | selected                                    |
-      | Apply for a UK visa                         |
-      | Establish a base for business in the UK     |
-      | Hire skilled workers for your UK operations |
-      | Open a UK business bank account             |
-      | Register a company in the UK                |
-      | Understand UK tax and incentives            |
-
-
-  @CMS-157
-  Scenario: Overseas businesses should be able to learn how UK government can help them to establish in the UK
-    Given "Robert" visits the "Invest - home" page
-
-    Then "Robert" should see following sections
-      | Sections             |
-      | Build connections    |
-      | Apply for visas      |
-      | Find grants          |
-      | Get insights         |
-      | Grow workforce       |
-
-  @bug
-  @CMS-255
-  @fixme
-  @CMS-157
-  Scenario: Overseas businesses should be able to learn how UK government can help them to establish in the UK
-    Given "Robert" visits the "Invest - home" page
-
-    Then "Robert" should see following sections
-      | Sections             |
-      | Contact us for help  |
+      | selected                 |
+      | Advanced food production |
+      | Lightweight structures   |
+      | Rail infrastructure      |
