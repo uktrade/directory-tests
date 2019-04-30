@@ -27,97 +27,79 @@ SERVICE = "Invest"
 TYPE = "home"
 PAGE_TITLE = "Invest in Great Britain - Home"
 
-TOPIC_LINKS = Selector(
-    By.CSS_SELECTOR,
-    "section.landing-page-accordions > div > ul > li > a",
-    type=ElementType.LINK,
-)
-TOPIC_CONTENTS = Selector(
-    By.CSS_SELECTOR,
-    "section.landing-page-accordions > div > ul > li > .accordion-content",
-)
 SELECTORS = {
     "hero": {
         "self": Selector(By.CSS_SELECTOR, "#content > section.hero"),
         "heading": Selector(By.CSS_SELECTOR, "#content > section.hero h1"),
-        "get in touch": Selector(By.CSS_SELECTOR, "#content > section.hero a"),
+        "get in touch": Selector(By.CSS_SELECTOR, "#content > section.hero a", type=ElementType.LINK),
     },
-    "reasons to move business to the uk": {
-        "self": Selector(By.CSS_SELECTOR, "section.landing-page-accordions"),
-        "first": Selector(
-            By.CSS_SELECTOR,
-            "section.landing-page-accordions > div > ul > li:nth-child(1) > a",
-        ),
-        "second": Selector(
-            By.CSS_SELECTOR,
-            "section.landing-page-accordions > div > ul > li:nth-child(2) > a",
-        ),
-        "third": Selector(
-            By.CSS_SELECTOR,
-            "section.landing-page-accordions > div > ul > li:nth-child(3) > a",
-        ),
+    "benefits": {
+        "self": Selector(By.CSS_SELECTOR, "section.landing-page-benefits"),
+        "heading": Selector(By.CSS_SELECTOR, "section.landing-page-benefits h2"),
+        "sub-section headings": Selector(By.CSS_SELECTOR, "section.landing-page-benefits h4"),
+        "text": Selector(By.CSS_SELECTOR, "section.landing-page-benefits p"),
+        "image": Selector(By.CSS_SELECTOR, "section.landing-page-benefits img"),
+
+    },
+    "the uk and the eu": {
+        "self": Selector(By.CSS_SELECTOR, "#content > section:nth-child(5)"),
+        "heading": Selector(By.CSS_SELECTOR, "#content > section:nth-child(5) h2"),
+        "text": Selector(By.CSS_SELECTOR, "#content > section:nth-child(5) p"),
+        "image": Selector(By.CSS_SELECTOR, "#content > section:nth-child(5) img"),
+        "find out what's changing": Selector(By.CSS_SELECTOR, "#content > section:nth-child(5) a", type=ElementType.LINK),
+
+    },
+    "invest your capital": {
+        "self": Selector(By.CSS_SELECTOR, "div.informative-banner"),
+        "heading": Selector(By.CSS_SELECTOR, "div.informative-banner h2"),
+        "text": Selector(By.CSS_SELECTOR, "div.informative-banner p"),
+
     },
     "sectors": {
-        "self": Selector(By.CSS_SELECTOR, "section.landing-page-industries"),
+        "self": Selector(By.CSS_SELECTOR, "#content > section:nth-child(7)"),
+        "heading": Selector(By.CSS_SELECTOR, "#content > section:nth-child(7) h2"),
+        "heading text": Selector(By.CSS_SELECTOR, "#content > section:nth-child(7) h2 ~ div > p"),
         "first": Selector(
             By.CSS_SELECTOR,
-            "section.landing-page-industries > div > div > div:nth-child(1) > a",
+            "#content > section:nth-child(7) > div > div.card-grid > div:nth-child(1) > div > a",
         ),
         "second": Selector(
             By.CSS_SELECTOR,
-            "section.landing-page-industries > div > div > div:nth-child(2) > a",
+            "#content > section:nth-child(7) > div > div.card-grid > div:nth-child(2) > div > a",
         ),
         "third": Selector(
             By.CSS_SELECTOR,
-            "section.landing-page-industries > div > div > div:nth-child(3) > a",
-        ),
-        "fourth": Selector(
-            By.CSS_SELECTOR,
-            "section.landing-page-industries > div > div > div:nth-child(4) > a",
-        ),
-        "fifth": Selector(
-            By.CSS_SELECTOR,
-            "section.landing-page-industries > div > div > div:nth-child(5) > a",
-        ),
-        "sixth": Selector(
-            By.CSS_SELECTOR,
-            "section.landing-page-industries > div > div > div:nth-child(6) > a",
+            "#content > section:nth-child(7) > div > div.card-grid > div:nth-child(3) > div > a",
         ),
         "see more industries": Selector(
-            By.CSS_SELECTOR, "section.landing-page-industries > div > a"
+            By.CSS_SELECTOR, "#content > section:nth-child(7) > div > a"
         ),
     },
-    "setup guides": {
+    "high-potential opportunities": {
+        "self": Selector(By.CSS_SELECTOR, "#content > section:nth-child(8)"),
+        "heading": Selector(By.CSS_SELECTOR, "#content > section:nth-child(8) h2"),
+        "text": Selector(By.CSS_SELECTOR, "#content > section:nth-child(8) h2 ~ div > p"),
+        "advanced food production": Selector(By.CSS_SELECTOR, "#content > section:nth-child(8) > div > div.card-grid > div:nth-child(1) > div > a"),
+        "lightweight structures": Selector(By.CSS_SELECTOR, "#content > section:nth-child(8) > div > div.card-grid > div:nth-child(2) > div > a"),
+        "rail infrastructure": Selector(By.CSS_SELECTOR, "#content > section:nth-child(8) > div > div.card-grid > div:nth-child(3) > div > a"),
+    },
+    "how to setup in the uk": {
         "self": Selector(By.CSS_SELECTOR, "section.landing-page-setup-guide"),
-        "first": Selector(
-            By.CSS_SELECTOR,
-            "section.landing-page-setup-guide div.card-grid > div:nth-child(1) a h3",
-        ),
-        "second": Selector(
-            By.CSS_SELECTOR,
-            "section.landing-page-setup-guide div.card-grid > div:nth-child(2) a h3",
-        ),
-        "third": Selector(
-            By.CSS_SELECTOR,
-            "section.landing-page-setup-guide div.card-grid > div:nth-child(3) a h3",
-        ),
-        "fourth": Selector(
-            By.CSS_SELECTOR,
-            "section.landing-page-setup-guide div.card-grid > div:nth-child(4) a h3",
-        ),
-        "fifth": Selector(
-            By.CSS_SELECTOR,
-            "section.landing-page-setup-guide div.card-grid > div:nth-child(5) a h3",
-        ),
-        "sixth": Selector(
-            By.CSS_SELECTOR,
-            "section.landing-page-setup-guide div.card-grid > div:nth-child(6) a h3",
-        ),
+        "heading": Selector(By.CSS_SELECTOR, "section.landing-page-setup-guide h2"),
+        "text": Selector(By.CSS_SELECTOR, "section.landing-page-setup-guide p"),
+        "image": Selector(By.CSS_SELECTOR, "section.landing-page-setup-guide img"),
+        "get started": Selector(By.CSS_SELECTOR, "section.landing-page-setup-guide a", type=ElementType.LINK),
+    },
+    "investment support directory": {
+        "self": Selector(By.CSS_SELECTOR, "#content > section:nth-child(10)"),
+        "heading": Selector(By.CSS_SELECTOR, "#content > section:nth-child(10) h2"),
+        "text": Selector(By.CSS_SELECTOR, "#content > section:nth-child(10) p"),
+        "image": Selector(By.CSS_SELECTOR, "#content > section:nth-child(10) img"),
+        "find a uk specialist": Selector(By.CSS_SELECTOR, "#content > section:nth-child(10) a"),
+
     },
     "how we help": {
-        "self": Selector(By.CSS_SELECTOR, "section.landing-page-how-we-help")
-    },
-    "build connections": {
+        "self": Selector(By.CSS_SELECTOR, "section.landing-page-how-we-help"),
         "build connections - icon": Selector(
             By.CSS_SELECTOR,
             "section.landing-page-how-we-help ul > li:nth-child(1) > div > img",
@@ -126,8 +108,6 @@ SELECTORS = {
             By.CSS_SELECTOR,
             "section.landing-page-how-we-help ul > li:nth-child(1) > div > p",
         ),
-    },
-    "apply for visas": {
         "apply for visas - icon": Selector(
             By.CSS_SELECTOR,
             "section.landing-page-how-we-help ul > li:nth-child(2) > div > img",
@@ -136,8 +116,6 @@ SELECTORS = {
             By.CSS_SELECTOR,
             "section.landing-page-how-we-help ul > li:nth-child(2) > div > p",
         ),
-    },
-    "find grants": {
         "find grants - icon": Selector(
             By.CSS_SELECTOR,
             "section.landing-page-how-we-help ul > li:nth-child(3) > div > img",
@@ -146,8 +124,6 @@ SELECTORS = {
             By.CSS_SELECTOR,
             "section.landing-page-how-we-help ul > li:nth-child(3) > div > p",
         ),
-    },
-    "get insights": {
         "get insights - icon": Selector(
             By.CSS_SELECTOR,
             "section.landing-page-how-we-help ul > li:nth-child(4) > div > img",
@@ -156,8 +132,6 @@ SELECTORS = {
             By.CSS_SELECTOR,
             "section.landing-page-how-we-help ul > li:nth-child(4) > div > p",
         ),
-    },
-    "grow workforce": {
         "grow workforce - icon": Selector(
             By.CSS_SELECTOR,
             "section.landing-page-how-we-help ul > li:nth-child(5) > div > img",
@@ -167,19 +141,18 @@ SELECTORS = {
             "section.landing-page-how-we-help ul > li:nth-child(5) > div > p",
         ),
     },
-    "contact us for help": {
-        "contact us for help - link": Selector(
-            By.CSS_SELECTOR,
-            "section.landing-page-how-we-help ul > li:nth-child(6) > div > a",
-        ),
-        "contact us for help - text": Selector(
-            By.CSS_SELECTOR,
-            "section.landing-page-how-we-help ul > li:nth-child(6) > div > p",
-        ),
+    "contact us": {
+        "self": Selector(By.CSS_SELECTOR, "#content > section:nth-child(12)"),
+        "heading": Selector(By.CSS_SELECTOR, "#content > section:nth-child(12) h2"),
+        "text": Selector(By.CSS_SELECTOR, "#content > section:nth-child(12) p"),
+        "get in touch": Selector(By.CSS_SELECTOR, "#content > section:nth-child(12) a", type=ElementType.LINK),
+
     },
 }
 SELECTORS.update(common_selectors.HEADER_INVEST)
+SELECTORS.update(common_selectors.BREADCRUMBS)
 SELECTORS.update(common_selectors.BETA_BAR)
+SELECTORS.update(common_selectors.EU_EXIT_NEWS_BANNER)
 SELECTORS.update(common_selectors.ERROR_REPORTING)
 SELECTORS.update(common_selectors.FOOTER_INVEST)
 
