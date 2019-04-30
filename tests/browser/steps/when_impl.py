@@ -505,15 +505,6 @@ def fas_view_article(context: Context, actor_alias: str, article_number: str):
     )
 
 
-def invest_read_more(context: Context, actor_alias: str):
-    page = get_last_visited_page(context, actor_alias)
-    has_action(page, "open_all_topics")
-    page.open_all_topics(context.driver)
-    logging.debug(
-        "%s clicked on all visible topic on %s", actor_alias, context.driver.current_url
-    )
-
-
 @retry(
     wait_fixed=30000,
     stop_max_attempt_number=3,

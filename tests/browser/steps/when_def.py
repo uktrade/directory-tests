@@ -43,7 +43,6 @@ from steps.when_impl import (
     generic_unfold_topics,
     generic_visit_current_page_with_lang_parameter,
     header_footer_open_link,
-    invest_read_more,
     language_selector_change_to,
     language_selector_close,
     language_selector_navigate_through_links_with_keyboard,
@@ -234,11 +233,6 @@ def fas_when_actor_views_selected_company_profile(
 def fas_when_actor_views_article(
         context: Context, actor_alias: str, article_number: str):
     fas_view_article(context, actor_alias, article_number)
-
-
-@when('"{actor_alias}" decides to read more on all reasons to move business to the UK')
-def actor_decides_to_read_more(context: Context, actor_alias: str):
-    invest_read_more(context, actor_alias)
 
 
 @when('"{actor_alias}" decides to read "{guide_name}" guide')

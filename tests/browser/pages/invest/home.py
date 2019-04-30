@@ -175,12 +175,6 @@ def open_link(driver: WebDriver, name: str):
     driver.find_element_by_link_text(name).click()
 
 
-def open_all_topics(driver: WebDriver):
-    topic_links = find_elements(driver, TOPIC_LINKS)
-    for link in topic_links:
-        link.click()
-
-
 def clean_name(name: str) -> str:
     return name.split(" - ")[1].strip()
 
