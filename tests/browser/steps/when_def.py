@@ -318,10 +318,10 @@ def when_actor_reports_problem_with_page(context: Context, actor_alias: str):
     generic_report_problem_with_page(context, actor_alias)
 
 
-@when('"{actor_alias}" searches for marketplaces in {countries} to sell {products}')
+@when('"{actor_alias}" searches for marketplaces in "{country}" to sell "{category}"')
 def when_actor_looks_for_marketplace_using_countries_and_products(
-        context: Context, actor_alias: str, countries: str, products: str):
-    soo_look_for_marketplace(context, actor_alias, countries, products)
+        context: Context, actor_alias: str, country: str, category: str):
+    soo_look_for_marketplace(context, actor_alias, country, category)
 
 
 @when('"{actor_alias}" randomly selects a marketplace')

@@ -831,20 +831,45 @@ def generic_create_great_account(
 
 
 def soo_look_for_marketplace(
-    context: Context, actor_alias: str, countries: str, products: str
+    context: Context, actor_alias: str, country: str, category: str
 ):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "search")
-    products = products.replace('"', "").split(",")
-    countries = countries.replace('"', "").split(",")
-    page.search(context.driver, products, countries)
+    page.search(context.driver, country, category)
 
 
 def soo_look_for_marketplaces_from_home_page(
-    context: Context, actor_alias: str, countries: str, products: str
+    context: Context, actor_alias: str, country: str, category: str
 ):
-    visit_page(context, actor_alias, f"{soo.search_results.SERVICE} - {soo.search_results.NAME}")
-    soo_look_for_marketplace(context, actor_alias, countries, products)
+    visit_page(context, actor_alias, f"{soo.home.SERVICE} - {soo.home.NAME}")
+    soo_look_for_marketplace(context, actor_alias, country, category)
+    should_be_on_page(
+        context,
+        actor_alias,
+        f"{soo.search_results.SERVICE} - {soo.search_results.NAME}",
+    )
+
+
+def soo_find_and_open_random_marketplace(
+        context: Context, actor_alias: str, country: str, category: str
+):
+    soo_look_for_marketplaces_from_home_page(context, actor_alias, country, category)
+    generic_click_on_random_marketplace(context, actor_alias)
+    should_be_on_page(
+        context, actor_alias, f"{soo.marketplace.SERVICE} - {soo.marketplace.NAME}"
+    )
+
+
+def soo_find_random_marketplace_and_apply_via_dit(
+        context: Context, actor_alias: str, country: str, category: str
+):
+    soo_find_and_open_random_marketplace(context, actor_alias, country, category)
+    click_on_page_element(context, actor_alias, "Apply now via DIT")
+    should_be_on_page(
+        context,
+        actor_alias,
+        f"{exred.contact_us_soo_long_your_business.SERVICE} - {exred.contact_us_soo_long_your_business.NAME}",
+    )
 
 
 def exred_submit_soo_contact_us_form(
@@ -878,28 +903,6 @@ def exred_submit_soo_contact_us_form(
         context,
         actor_alias,
         f"{exred.contact_us_soo_long_thank_you.SERVICE} - {exred.contact_us_soo_long_thank_you.NAME}",
-    )
-
-
-def soo_find_and_open_random_marketplace(
-    context: Context, actor_alias: str, countries: str, products: str
-):
-    soo_look_for_marketplaces_from_home_page(context, actor_alias, countries, products)
-    generic_click_on_random_marketplace(context, actor_alias)
-    should_be_on_page(
-        context, actor_alias, f"{soo.marketplace.SERVICE} - {soo.marketplace.NAME}"
-    )
-
-
-def soo_find_random_marketplace_and_apply_via_dit(
-    context: Context, actor_alias: str, countries: str, products: str
-):
-    soo_find_and_open_random_marketplace(context, actor_alias, countries, products)
-    click_on_page_element(context, actor_alias, "Apply now via DIT")
-    should_be_on_page(
-        context,
-        actor_alias,
-        f"{exred.contact_us_soo_long_your_business.SERVICE} - {exred.contact_us_soo_long_your_business.NAME}",
     )
 
 

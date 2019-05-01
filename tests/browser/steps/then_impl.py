@@ -485,11 +485,11 @@ def forms_confirmation_email_should_not_be_sent(context: Context, actor_alias: s
 
 
 def marketplace_finder_should_see_marketplaces(
-    context: Context, actor_alias: str, countries: str
+    context: Context, actor_alias: str, country: str
 ):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "should_see_marketplaces")
-    page.should_see_marketplaces(context.driver, countries)
+    page.should_see_marketplaces(context.driver, country)
 
 
 def exred_search_finder_should_see_page_number(

@@ -133,25 +133,25 @@ def given_actor_received_email_confirmation_code(
     )
 
 
-@given('"{actor_alias}" searches for marketplaces in {countries} to sell {products}')
+@given('"{actor_alias}" searches for marketplaces in "{country}" to sell "{category}"')
 def given_actor_looks_for_marketplace_using_countries_and_products(
-        context: Context, actor_alias: str, countries: str, products: str):
+        context: Context, actor_alias: str, country: str, category: str):
     soo_look_for_marketplaces_from_home_page(
-        context, actor_alias, countries, products
+        context, actor_alias, country, category
     )
 
 
-@given('"{actor_alias}" found a marketplace in {countries} to sell {products}')
+@given('"{actor_alias}" found a marketplace in "{country}" to sell "{category}"')
 def given_actor_found_marketplace(
-        context: Context, actor_alias: str, countries: str, products: str):
-    soo_find_and_open_random_marketplace(context, actor_alias, countries, products)
+        context: Context, actor_alias: str, country: str, category: str):
+    soo_find_and_open_random_marketplace(context, actor_alias, country, category)
 
 
-@given('"{actor_alias}" applied via DIT to contact randomly selected marketplace in "{countries}" to sell "{products}"')
+@given('"{actor_alias}" applied via DIT to contact randomly selected marketplace in "{country}" to sell "{category}"')
 def actor_applied_via_dit(
-        context: Context, actor_alias: str, countries: str, products: str):
+        context: Context, actor_alias: str, country: str, category: str):
     soo_find_random_marketplace_and_apply_via_dit(
-        context, actor_alias, countries, products
+        context, actor_alias, country, category
     )
 
 

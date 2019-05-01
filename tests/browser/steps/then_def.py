@@ -277,10 +277,10 @@ def then_actor_should_get_verifaction_code(context: Context, actor_alias: str):
     generic_get_verification_code(context, actor_alias)
 
 
-@then('"{actor_alias}" should see marketplaces which operate globally or in multiple countries "{countries}"')
+@then('"{actor_alias}" should see marketplaces which operate globally or in "{country}"')
 def then_actor_should_see_expected_marketplaces(
-        context: Context, actor_alias: str, countries: str):
-    marketplace_finder_should_see_marketplaces(context, actor_alias, countries)
+        context: Context, actor_alias: str, country: str):
+    marketplace_finder_should_see_marketplaces(context, actor_alias, country)
 
 
 @then('"{actor_alias}" should see search results page number "{page_num:d}" for "{phrase}"')
