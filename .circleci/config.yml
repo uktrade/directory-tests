@@ -326,7 +326,7 @@ jobs:
       TEST_ENV: "dev"
       BROWSER: "chrome"
       <<: *chrome_version
-      TAGS: "--tags=~@stage-only --tags=~@decommissioned --tags=~@skip"
+      TAGS: "--tags=~@stage-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
     <<: *steps_run_browser_tests
 
   browser_all_firefox_dev:
@@ -336,7 +336,7 @@ jobs:
       TEST_ENV: "dev"
       BROWSER: "firefox"
       <<: *firefox_version
-      TAGS: "--tags=~@stage-only --tags=~@decommissioned --tags=~@skip"
+      TAGS: "--tags=~@stage-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
     <<: *steps_run_browser_tests
 
   browser_selected_chrome_dev:
