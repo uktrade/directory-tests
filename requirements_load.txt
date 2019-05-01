@@ -7,11 +7,11 @@
 certifi==2019.3.9         # via requests
 chardet==3.0.4            # via requests
 click==7.0                # via flask
-directory-client-core==4.4.0  # via directory-cms-client
-directory-cms-client==8.3.0
-directory-constants==16.0.0
+directory-client-core==5.0.0  # via directory-cms-client
+directory-cms-client==10.0.0
+directory-constants==16.2.0
 django==1.11.20           # via directory-client-core, directory-constants, sigauth
-djangorestframework==3.9.2  # via sigauth
+djangorestframework==3.9.3  # via sigauth
 docopt==0.6.2
 flask==1.0.2              # via locustio
 gevent==1.4.0             # via locustio
@@ -29,6 +29,6 @@ pyzmq==18.0.1             # via locustio
 requests==2.21.0
 sigauth==4.0.1            # via directory-client-core
 six==1.12.0               # via locustio, mohawk, w3lib
-urllib3==1.24.1           # via requests
+urllib3==1.24.2           # via requests
 w3lib==1.20.0             # via directory-client-core
 werkzeug==0.15.2          # via flask
