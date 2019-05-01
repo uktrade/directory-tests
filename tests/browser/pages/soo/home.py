@@ -19,6 +19,7 @@ from pages.common_actions import (
     take_screenshot,
     pick_option,
 )
+from pages.soo import search_criteria
 from settings import SELLING_ONLINE_OVERSEAS_UI_URL
 
 NAME = "Home"
@@ -65,34 +66,28 @@ def open_random_marketplace(driver: WebDriver):
     random.choice(links).click()
 
 
-def collate_products_and_countries(
-    products: List[str], countries: List[str]
-) -> List[dict]:
-    if len(products) > len(countries):
-        iterations = len(products)
-    else:
-        iterations = len(countries)
-
-    list_of_values = []
-    for i in range(iterations):
-        list_of_values.append(
-            {
-                "product_type": dict(enumerate(products)).get(i, None),
-                "country_name": dict(enumerate(countries)).get(i, None),
-            }
-        )
-    return list_of_values
+def generate_form_details(country: str = None, category: str = None) -> dict:
+    if category:
+        category = category.replace("&", "&amp;")
+        category = search_criteria.CATEGORIES[category]
+    if country:
+        country = country.replace("&", "&amp;")
+        country = search_criteria.COUNTRIES[country]
+    result = {
+        "category": category,
+        "country": country,
+    }
+    logging.debug(f"Form details: {result}")
+    return result
 
 
-def search(driver: WebDriver, products: List[str], countries: List[str]):
-    form_selectors = SELECTORS["expected elements"]
-    button = find_element(
-        driver, SEARCH_BUTTON, element_name="start your search now", wait_for_it=True
+def search(driver: WebDriver, country: str, category: str):
+    form_selectors = SELECTORS["search form"]
+    find_a_marketplace = find_element(
+        driver, SEARCH_BUTTON, element_name="find a marketplace"
     )
-    scroll_to(driver, button)
-    values = collate_products_and_countries(products, countries)
-
-    for pair in values:
-        fill_out_input_fields(driver, form_selectors, pair)
-    button.click()
+    scroll_to(driver, find_a_marketplace)
+    details = generate_form_details(country, category)
+    pick_option(driver, form_selectors, form_details=details)
+    find_a_marketplace.click()
     take_screenshot(driver, "After submitting the form")
