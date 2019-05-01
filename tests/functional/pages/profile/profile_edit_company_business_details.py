@@ -2,7 +2,7 @@
 """Profile - Edit Company's business details"""
 import random
 
-from directory_constants.constants import choices
+from directory_constants import choices
 from requests import Response
 
 from tests import get_absolute_url

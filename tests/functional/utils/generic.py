@@ -23,7 +23,7 @@ import lxml
 import requests
 from behave.runner import Context
 from bs4 import BeautifulSoup
-from directory_constants.constants import choices
+from directory_constants import choices
 from jsonschema import validate
 from jsonschema.exceptions import ValidationError
 from langdetect import DetectorFactory, detect_langs

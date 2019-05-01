@@ -11,7 +11,7 @@ from urllib.parse import parse_qsl, quote, urljoin, urlsplit
 
 from behave.model import Table
 from behave.runner import Context
-from directory_constants.constants import choices
+from directory_constants import choices
 from requests import Response, Session
 from retrying import retry
 from scrapy import Selector
