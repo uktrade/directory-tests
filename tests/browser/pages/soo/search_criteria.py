@@ -1,4 +1,3 @@
-
 CATEGORIES = {
     "Animals &amp; Pet Supplies": "1",
     "Arts &amp; Entertainment": "8",

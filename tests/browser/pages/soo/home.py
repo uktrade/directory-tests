@@ -15,9 +15,9 @@ from pages.common_actions import (
     find_element,
     find_elements,
     go_to_url,
+    pick_option,
     scroll_to,
     take_screenshot,
-    pick_option,
 )
 from pages.soo import search_criteria
 from settings import SELLING_ONLINE_OVERSEAS_UI_URL
@@ -33,14 +33,16 @@ SEARCH_BUTTON = Selector(
 )
 
 SELECTORS = {
-    "hero": {
-        "itself": Selector(By.CSS_SELECTOR, ".hero-content"),
-    },
+    "hero": {"itself": Selector(By.CSS_SELECTOR, ".hero-content")},
     "search form": {
-        "category": Selector(By.CSS_SELECTOR, "select[name=category_id]", type=ElementType.SELECT),
-        "country": Selector(By.CSS_SELECTOR, "select[name=country_id]", type=ElementType.SELECT),
+        "category": Selector(
+            By.CSS_SELECTOR, "select[name=category_id]", type=ElementType.SELECT
+        ),
+        "country": Selector(
+            By.CSS_SELECTOR, "select[name=country_id]", type=ElementType.SELECT
+        ),
         "find a marketplace": SEARCH_BUTTON,
-    }
+    },
 }
 SELECTORS.update(common_selectors.HEADER)
 SELECTORS.update(common_selectors.FOOTER)
@@ -73,10 +75,7 @@ def generate_form_details(country: str = None, category: str = None) -> dict:
     if country:
         country = country.replace("&", "&amp;")
         country = search_criteria.COUNTRIES[country]
-    result = {
-        "category": category,
-        "country": country,
-    }
+    result = {"category": category, "country": country}
     logging.debug(f"Form details: {result}")
     return result
 

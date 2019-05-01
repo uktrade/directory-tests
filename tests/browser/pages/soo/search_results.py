@@ -17,9 +17,9 @@ from pages.common_actions import (
     find_element,
     find_elements,
     go_to_url,
+    pick_option,
     scroll_to,
     take_screenshot,
-    pick_option
 )
 from pages.soo import search_criteria
 from settings import SELLING_ONLINE_OVERSEAS_UI_URL
@@ -35,8 +35,12 @@ SEARCH_BUTTON = Selector(
 )
 SELECTORS = {
     "search form": {
-        "category": Selector(By.CSS_SELECTOR, "select[name=category_id]", type=ElementType.SELECT),
-        "country": Selector(By.CSS_SELECTOR, "select[name=country_id]", type=ElementType.SELECT),
+        "category": Selector(
+            By.CSS_SELECTOR, "select[name=category_id]", type=ElementType.SELECT
+        ),
+        "country": Selector(
+            By.CSS_SELECTOR, "select[name=country_id]", type=ElementType.SELECT
+        ),
         "find a marketplace": SEARCH_BUTTON,
     }
 }
@@ -90,10 +94,7 @@ def generate_form_details(country: str = None, category: str = None) -> dict:
     if country:
         country = country.replace("&", "&amp;")
         country = search_criteria.COUNTRIES[country]
-    result = {
-        "category": category,
-        "country": country,
-    }
+    result = {"category": category, "country": country}
     logging.debug(f"Form details: {result}")
     return result
 
@@ -114,7 +115,11 @@ def should_see_marketplaces(driver: WebDriver, country: str):
     expected_countries = [country, "Global"]
     markets_selector = Selector(By.CSS_SELECTOR, "div.market-item-inner")
     marketplace_countries = {
-        marketplace.find_element_by_tag_name("a").text: marketplace.find_element_by_css_selector("div.market-item-inner p.market-operating-countries").text
+        marketplace.find_element_by_tag_name("a")
+        .text: marketplace.find_element_by_css_selector(
+            "div.market-item-inner p.market-operating-countries"
+        )
+        .text
         for marketplace in find_elements(driver, markets_selector)
     }
 
@@ -123,8 +128,10 @@ def should_see_marketplaces(driver: WebDriver, country: str):
 
     for marketplace, countries in marketplace_countries.items():
         with assertion_msg(
-                f"{marketplace} does not operate in '{country}' or Globally!"
-                f"but in '{countries}' instead",
+            f"{marketplace} does not operate in '{country}' or Globally!"
+            f"but in '{countries}' instead"
         ):
             assert any(country in countries for country in expected_countries)
-            logging.debug(f"{marketplace} operates in '{country}' or Globally! -> {countries}")
+            logging.debug(
+                f"{marketplace} operates in '{country}' or Globally! -> {countries}"
+            )
