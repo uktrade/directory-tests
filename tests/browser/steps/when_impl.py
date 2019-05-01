@@ -140,12 +140,6 @@ def open_group_element(context: Context, group: str, element: str, location: str
     driver = context.driver
     if location.lower() == "export readiness - home":
         exred.home.open(driver, group, element)
-    elif location.lower() in "export readiness - header":
-        exred.header.open(driver, group, element)
-    elif location.lower() in "export readiness - footer":
-        exred.footer.open(driver, group, element)
-    elif location.lower() == "export readiness - personalised journey":
-        exred.personalised_journey.open(driver, group, element)
     elif location.lower() == "export readiness - international":
         international.international.open(driver, group, element, same_tab=True)
     else:
