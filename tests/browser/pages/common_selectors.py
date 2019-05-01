@@ -34,9 +34,7 @@ HEADER = {
         "services": Selector(By.ID, "header-services", type=ElementType.LINK),
         "search box": Selector(By.ID, "search-box", type=ElementType.INPUT),
         "search button": Selector(
-            By.CSS_SELECTOR,
-            "#search-box ~ button[type=submit]",
-            type=ElementType.BUTTON,
+            By.CSS_SELECTOR, "#search-box ~ button", type=ElementType.BUTTON,
         ),
     }
 }
