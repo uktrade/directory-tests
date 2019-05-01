@@ -1,11 +1,14 @@
 @search
 Feature: Great site search
 
+  Background:
+    Given basic authentication is done for "Export Readiness - Home" page
+
   @XOT-760
   Scenario: Visitor should see empty search results if they don't specify search phrase
     Given "Robert" visits the "Export Readiness - Home" page
 
-    When "Robert" decides to "search button"
+    When "Robert" decides to click on "search button"
 
     Then "Robert" should be on the "Export Readiness - Empty Search results" page
 
