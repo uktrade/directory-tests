@@ -126,12 +126,6 @@ def navigate_through_links_with_keyboard(driver: WebDriver, page: ModuleType):
         assert language_selector.is_displayed()
 
 
-def keyboard_should_be_trapped(driver: WebDriver, page: ModuleType):
-    number_of_navigation_iterations = 2
-    for _ in range(number_of_navigation_iterations):
-        navigate_through_links_with_keyboard(driver, page)
-
-
 def change_to(
     driver: WebDriver, page: ModuleType, language: str, *, with_keyboard: bool = False
 ):

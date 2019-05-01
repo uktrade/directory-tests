@@ -26,7 +26,6 @@ from steps.then_impl import (
     invest_mailbox_admin_should_receive_contact_confirmation_email,
     invest_should_receive_contact_confirmation_email,
     invest_should_see_uk_gov_logo,
-    language_selector_keyboard_should_be_trapped,
     language_selector_should_see_it,
     marketplace_finder_should_see_marketplaces,
     office_finder_should_see_correct_office_details,
