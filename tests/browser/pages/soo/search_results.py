@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Selling Online Overseas Home Page Object."""
+"""Selling Online Overseas - Search results page"""
 import logging
 import random
 from typing import List
@@ -74,7 +74,7 @@ def click_on_page_element(driver: WebDriver, element_name: str):
 
 
 def open_random_marketplace(driver: WebDriver):
-    selector = Selector(By.CSS_SELECTOR, "ul.markets li.markets-item")
+    selector = Selector(By.CSS_SELECTOR, "div.market-item-inner a")
     links = find_elements(driver, selector)
     random.choice(links).click()
 

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Selling Online Overseas Home Page Object."""
+import logging
 import random
-from typing import List
 from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
@@ -11,17 +11,13 @@ from pages import ElementType, common_selectors
 from pages.common_actions import (
     Selector,
     check_url,
-    fill_out_input_fields,
     find_and_click_on_page_element,
     find_element,
     find_elements,
     go_to_url,
     scroll_to,
     take_screenshot,
-)
-from pages.soo.autocomplete_callbacks import (
-    autocomplete_country_name,
-    autocomplete_product_type,
+    pick_option,
 )
 from settings import SELLING_ONLINE_OVERSEAS_UI_URL
 
@@ -36,22 +32,12 @@ SEARCH_BUTTON = Selector(
 )
 
 SELECTORS = {
-    "expected elements": {
-        "hero section": Selector(By.CSS_SELECTOR, ".hero-content"),
-        "product_type": Selector(
-            By.ID,
-            "search-product",
-            type=ElementType.INPUT,
-            is_visible=False,
-            autocomplete_callback=autocomplete_product_type,
-        ),
-        "country_name": Selector(
-            By.ID,
-            "search-country",
-            type=ElementType.INPUT,
-            is_visible=False,
-            autocomplete_callback=autocomplete_country_name,
-        ),
+    "hero": {
+        "itself": Selector(By.CSS_SELECTOR, ".hero-content"),
+    },
+    "search form": {
+        "category": Selector(By.CSS_SELECTOR, "select[name=category_id]", type=ElementType.SELECT),
+        "country": Selector(By.CSS_SELECTOR, "select[name=country_id]", type=ElementType.SELECT),
         "find a marketplace": SEARCH_BUTTON,
     }
 }
