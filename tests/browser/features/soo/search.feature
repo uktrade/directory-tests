@@ -11,7 +11,7 @@ Feature: Search for marketplace
   @soo-long-domestic
   @account-support
   Scenario Outline: Visitors should be able to search for marketplaces to sell "<products>" in "<countries>"
-    Given "Robert" visits the "Selling Online Overseas - Home" page
+    Given "Robert" visits the "Selling Online Overseas - <starting page>" page
 
     When "Robert" searches for marketplaces in "<country>" to sell "<products>"
 
@@ -19,8 +19,9 @@ Feature: Search for marketplace
     And "Robert" should see marketplaces which operate globally or in "<country>"
 
     Examples: products and countries
-      | country   | products               |
-      | Australia | Clothing & Accessories |
+      | starting page  | country   | products               |
+      | Home           | Australia | Clothing & Accessories |
+      | Search results | Poland    | Home & Garden          |
 
 
   @XOT-689
@@ -39,3 +40,4 @@ Feature: Search for marketplace
     Examples: products and countries
       | country   | products               |
       | Australia | Clothing & Accessories |
+      | China     | Sporting Goods         |
