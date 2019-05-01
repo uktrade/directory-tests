@@ -44,15 +44,6 @@ SELECTORS = {
         "trading name": Selector(
             By.ID, "id_company-details-trading_name", type=ElementType.INPUT
         ),
-        "companies house number": Selector(
-            By.ID, "id_company-details-company_number", type=ElementType.INPUT
-        ),
-        "not registered with companies house": Selector(
-            By.ID,
-            "id_company-details-not_companies_house",
-            type=ElementType.CHECKBOX,
-            is_visible=False,
-        ),
         "building and street first line": Selector(
             By.ID, "id_company-details-address_line_one", type=ElementType.INPUT
         ),
@@ -111,8 +102,6 @@ def should_be_here(driver: WebDriver):
 def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
     result = {
         "trading name": "automated tests",
-        "companies house number": None,
-        "not registered with companies house": True,
         "building and street first line": "automated tests",
         "building and street second line": "automated tests",
         "town or city": "automated tests",
