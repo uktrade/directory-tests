@@ -109,26 +109,3 @@ Feature: UK Export Finance page & contact-us form
 
     When "Robert" fills out and submits the form
     Then "Robert" should be on the "Export Readiness - Thank you - UKEF Contact us" page
-
-
-  @TT-585
-  @bug
-  @TT-943
-  @TT-937
-  @fixme
-  @captcha
-  @dev-only
-  Scenario: Any Exporter with company not registered with CH should be able to submit "Check you eligibility" form
-    Given "Robert" visits the "Export Readiness - What would you like to know more about? - UKEF Contact us" page
-
-    When "Robert" fills out and submits the form
-    Then "Robert" should be on the "Export Readiness - Your details - UKEF Contact us" page
-
-    When "Robert" fills out and submits the form
-    Then "Robert" should be on the "Export Readiness - Company details - UKEF Contact us" page
-
-    When "Robert" fills out and submits the form
-      | field                               | value         |
-      | Trading name                        | not in the CH |
-      | Not registered with Companies House | unchecked     |
-    Then "Robert" should be on the "Export Readiness - Tell us how we can help - UKEF Contact us" page
