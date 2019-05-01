@@ -350,6 +350,9 @@ Feature: Find a Supplier - Industry pages
       | Creative services | first    | Find a Supplier - Article    |
       | Cyber security    | first    | Find a Supplier - Article    |
 
+    @bug
+    @TT-1338
+    @fixme
     @full
     Examples: Industries
       | specific          | selected | expected                     |
