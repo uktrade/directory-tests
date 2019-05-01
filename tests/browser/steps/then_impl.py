@@ -17,6 +17,7 @@ from pages import (
     fas,
     get_page_object,
     invest,
+    international,
     profile,
 )
 from pages.common_actions import (
@@ -73,7 +74,7 @@ def should_be_on_page_or_international_page(
     try:
         should_be_on_page(context, actor_alias, page_name)
     except AssertionError:
-        exred.international.should_be_here(context.driver)
+        international.international.should_be_here(context.driver)
         logging.debug("%s was redirected to the International page", actor_alias)
 
 

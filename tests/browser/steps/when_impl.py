@@ -16,7 +16,15 @@ from selenium.common.exceptions import (
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import common_language_selector, exred, fas, get_page_object, soo, sso
+from pages import (
+    common_language_selector,
+    exred,
+    fas,
+    get_page_object,
+    international,
+    soo,
+    sso,
+)
 from pages.common_actions import (
     Actor,
     add_actor,
@@ -139,7 +147,7 @@ def open_group_element(context: Context, group: str, element: str, location: str
     elif location.lower() == "export readiness - personalised journey":
         exred.personalised_journey.open(driver, group, element)
     elif location.lower() == "export readiness - international":
-        exred.international.open(driver, group, element, same_tab=True)
+        international.international.open(driver, group, element, same_tab=True)
     else:
         raise KeyError("Could not recognize location: {}".format(location))
 
