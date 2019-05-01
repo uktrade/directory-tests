@@ -28,10 +28,8 @@ PAGE_TITLE = "Invest In Great Britain - Invest in UK Industries"
 SELECTORS = {
     "hero": {"self": Selector(By.CSS_SELECTOR, "#content > section.hero")},
     "sectors": {
-        "self": Selector(By.CSS_SELECTOR, "section.industries"),
-        "industry cards": Selector(
-            By.CSS_SELECTOR, "section.industries a.labelled-image-card"
-        ),
+        "self": Selector(By.ID, "industries"),
+        "industry cards": Selector(By.CSS_SELECTOR, "#industries-cards a"),
     },
 }
 SELECTORS.update(common_selectors.HEADER_INVEST)
