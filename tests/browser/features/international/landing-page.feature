@@ -103,19 +103,6 @@ Feature: International Page
     When "Robert" closes the language selector using his keyboard
 
 
-  @ED-3083
-  @dev-only
-  @language-selector
-  @accessibility
-  Scenario: Language selector should trap the keyboard in order to help Keyboard users to navigate on "International - Landing" pagee
-    Given "Robert" visits the "International - Landing" page
-
-    When "Robert" opens up the language selector using his keyboard
-    And "Robert" uses his keyboard to navigate through all links visible on language selector
-
-    Then "Robert"'s keyboard should be trapped to the language selector
-
-
   @ED-3149
   @dev-only
   Scenario: Visitors should be able to "get advice and services to help them export" from International page
