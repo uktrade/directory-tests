@@ -113,21 +113,21 @@ def search(driver: WebDriver, product_types: List[str], country_names: List[str]
     take_screenshot(driver, "After submitting the form")
 
 
-def should_see_marketplaces(driver: WebDriver, countries: str):
-    expected_countries = countries.replace('"', "").split(",")
-    expected_countries.append("Global")
-    country_selector = Selector(By.CSS_SELECTOR, "ul.markets-countries dd")
-    marketplace_countries = [
-        country.text for country in find_elements(driver, country_selector)
-    ]
+def should_see_marketplaces(driver: WebDriver, country: str):
+    expected_countries = [country, "Global"]
+    markets_selector = Selector(By.CSS_SELECTOR, "div.market-item-inner")
+    marketplace_countries = {
+        marketplace.find_element_by_tag_name("a").text: marketplace.find_element_by_css_selector("div.market-item-inner p.market-operating-countries").text
+        for marketplace in find_elements(driver, markets_selector)
+    }
 
-    if len(marketplace_countries) > 0:
-        countries = list(set(expected_countries).intersection(marketplace_countries))
+    error = f"Found marketplace without a list of countries it operates in"
+    assert marketplace_countries, error
 
+    for marketplace, countries in marketplace_countries.items():
         with assertion_msg(
-            "Expected to see '%s' in the marketplace search page but got '%s' instead",
-            countries,
-            marketplace_countries,
+                f"{marketplace} does not operate in '{country}' or Globally!"
+                f"but in '{countries}' instead",
         ):
-
-            assert len(countries) != 0
+            assert any(country in countries for country in expected_countries)
+            logging.debug(f"{marketplace} operates in '{country}' or Globally! -> {countries}")
