@@ -13,18 +13,15 @@ from pages.common_actions import (
     Selector,
     assertion_msg,
     check_url,
-    fill_out_input_fields,
     find_and_click_on_page_element,
     find_element,
     find_elements,
     go_to_url,
     scroll_to,
     take_screenshot,
+    pick_option
 )
-from pages.soo.autocomplete_callbacks import (
-    autocomplete_country_name,
-    autocomplete_product_type,
-)
+from pages.soo import search_criteria
 from settings import SELLING_ONLINE_OVERSEAS_UI_URL
 
 SERVICE = "Selling Online Overseas"
@@ -86,17 +83,30 @@ def collate_products_and_countries(
     return list_of_values
 
 
-def search(driver: WebDriver, product_types: List[str], country_names: List[str]):
-    form_selectors = SELECTORS["form"]
-    button = find_element(
-        driver, SEARCH_BUTTON, element_name="start your search now", wait_for_it=True
-    )
-    scroll_to(driver, button)
-    values = collate_products_and_countries(product_types, country_names)
+def generate_form_details(country: str = None, category: str = None) -> dict:
+    if category:
+        category = category.replace("&", "&amp;")
+        category = search_criteria.CATEGORIES[category]
+    if country:
+        country = country.replace("&", "&amp;")
+        country = search_criteria.COUNTRIES[country]
+    result = {
+        "category": category,
+        "country": country,
+    }
+    logging.debug(f"Form details: {result}")
+    return result
 
-    for pair in values:
-        fill_out_input_fields(driver, form_selectors, pair)
-    button.click()
+
+def search(driver: WebDriver, country: str, category: str):
+    form_selectors = SELECTORS["search form"]
+    find_a_marketplace = find_element(
+        driver, SEARCH_BUTTON, element_name="find a marketplace"
+    )
+    scroll_to(driver, find_a_marketplace)
+    details = generate_form_details(country, category)
+    pick_option(driver, form_selectors, form_details=details)
+    find_a_marketplace.click()
     take_screenshot(driver, "After submitting the form")
 
 
