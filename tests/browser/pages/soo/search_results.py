@@ -34,26 +34,13 @@ URL = urljoin(SELLING_ONLINE_OVERSEAS_UI_URL, "markets/results/")
 PAGE_TITLE = "Search results | Selling online overseas"
 
 SEARCH_BUTTON = Selector(
-    By.CSS_SELECTOR, "#results-count button", type=ElementType.BUTTON
+    By.CSS_SELECTOR, "#results-form input", type=ElementType.BUTTON
 )
 SELECTORS = {
-    "form": {
-        "itself": Selector(By.ID, "results-form"),
-        "product_type": Selector(
-            By.ID,
-            "search-product",
-            type=ElementType.INPUT,
-            is_visible=False,
-            autocomplete_callback=autocomplete_product_type,
-        ),
-        "country_name": Selector(
-            By.ID,
-            "search-country",
-            type=ElementType.INPUT,
-            is_visible=False,
-            autocomplete_callback=autocomplete_country_name,
-        ),
-        "start your search now": SEARCH_BUTTON,
+    "search form": {
+        "category": Selector(By.CSS_SELECTOR, "select[name=category_id]", type=ElementType.SELECT),
+        "country": Selector(By.CSS_SELECTOR, "select[name=country_id]", type=ElementType.SELECT),
+        "find a marketplace": SEARCH_BUTTON,
     }
 }
 
