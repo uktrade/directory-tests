@@ -40,7 +40,7 @@ def go_to(
     """
     params = {}
     if term is not None:
-        params.update({"term": term})
+        params.update({"q": term})
     if page is not None:
         params.update({"page": page})
     if sectors is not None:

@@ -63,4 +63,3 @@ Feature: UK Setup Guide
       | Open a UK business bank account             |
       | Register a company in the UK                |
       | Understand UK tax and incentives            |
-
