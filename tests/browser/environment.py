@@ -112,9 +112,9 @@ def restart_webdriver_if_unresponsive(context: Context, scenario: Scenario):
                 f"{scenario.name}. Will try to recover the selenium session"
             )
             print(msg)
+            logging.error(msg)
             session_id = context.driver.session_id
             flag_browserstack_session_as_failed(session_id, msg)
-            logging.error(msg)
             clean_name = scenario.name.lower().replace(" ", "-")
             start_driver_session(
                 context, f"session-recovered-after-scenario-{clean_name}"
@@ -192,7 +192,10 @@ def before_scenario(context: Context, scenario: Scenario):
     """Place here code which has to be executed before every Scenario."""
     logging.debug("Starting scenario: %s", scenario.name)
     message = f"Start: {scenario.name} | {scenario.filename}:{scenario.line}"
-    show_snackbar_message(context.driver, message)
+    try:
+        show_snackbar_message(context.driver, message)
+    except WebDriverException:
+        logging.error(f"Failed to show snackbar with message: {message}")
     context.scenario_data = initialize_scenario_data()
     if RESTART_BROWSER == "scenario":
         start_driver_session(context, scenario.name)
@@ -203,7 +206,10 @@ def after_scenario(context: Context, scenario: Scenario):
     message = f"Finish: {scenario.name} | {scenario.filename}:{scenario.line}"
     if scenario.status == "failed":
         restart_webdriver_if_unresponsive(context, scenario)
-    show_snackbar_message(context.driver, message)
+    try:
+        show_snackbar_message(context.driver, message)
+    except WebDriverException:
+        logging.error(f"Failed to show snackbar with message: {message}")
     # in order to show the snackbar message after scenario, an explicit wait
     # has to executed
     time.sleep(0.2)
