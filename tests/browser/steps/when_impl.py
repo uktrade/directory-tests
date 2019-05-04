@@ -74,9 +74,11 @@ def generic_set_basic_auth_creds(context: Context, page_name: str):
     driver.get(with_creds)
 
 
+# BrowserStack times out after 60s of inactivity
+# https://www.browserstack.com/automate/timeouts
 @retry(
-    wait_fixed=30000,
-    stop_max_attempt_number=3,
+    wait_fixed=10000,
+    stop_max_attempt_number=5,
     retry_on_exception=retry_if_webdriver_error,
     wrap_exception=False,
 )
@@ -131,9 +133,11 @@ def should_be_on_page(context: Context, actor_alias: str, page_name: str):
     )
 
 
+# BrowserStack times out after 60s of inactivity
+# https://www.browserstack.com/automate/timeouts
 @retry(
-    wait_fixed=30000,
-    stop_max_attempt_number=3,
+    wait_fixed=10000,
+    stop_max_attempt_number=4,
     retry_on_exception=retry_if_webdriver_error,
 )
 def open_group_element(context: Context, group: str, element: str, location: str):
@@ -291,7 +295,9 @@ def sign_out(context: Context, actor_alias: str):
     logging.debug("%s signed out", actor_alias)
 
 
-@retry(wait_fixed=30000, stop_max_attempt_number=3)
+# BrowserStack times out after 60s of inactivity
+# https://www.browserstack.com/automate/timeouts
+@retry(wait_fixed=10000, stop_max_attempt_number=4)
 def articles_share_on_social_media(
     context: Context, actor_alias: str, social_media: str
 ):
@@ -413,8 +419,8 @@ def fas_searched_for_companies(
 
 
 @retry(
-    wait_fixed=30000,
-    stop_max_attempt_number=3,
+    wait_fixed=10000,
+    stop_max_attempt_number=4,
     retry_on_exception=retry_if_webdriver_error,
     wrap_exception=False,
 )
@@ -507,9 +513,11 @@ def fas_view_article(context: Context, actor_alias: str, article_number: str):
     )
 
 
+# BrowserStack times out after 60s of inactivity
+# https://www.browserstack.com/automate/timeouts
 @retry(
-    wait_fixed=30000,
-    stop_max_attempt_number=3,
+    wait_fixed=10000,
+    stop_max_attempt_number=4,
     retry_on_exception=retry_if_webdriver_error,
     wrap_exception=False,
 )

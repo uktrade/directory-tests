@@ -398,7 +398,9 @@ def form_should_see_error_messages(
     logging.debug(f"{actor_alias} saw expected error message '{message}'")
 
 
-@retry(wait_fixed=10000, stop_max_attempt_number=6, wrap_exception=False)
+# BrowserStack times out after 60s of inactivity
+# https://www.browserstack.com/automate/timeouts
+@retry(wait_fixed=10000, stop_max_attempt_number=5, wrap_exception=False)
 def zendesk_should_receive_confirmation_email(
     context: Context, actor_alias: str, subject: str
 ):
@@ -422,7 +424,9 @@ def should_see_articles_filtered_by_tag(context: Context, actor_alias: str):
     page.is_filtered_by_tag(context.driver, tag)
 
 
-@retry(wait_fixed=10000, stop_max_attempt_number=6, wrap_exception=False)
+# BrowserStack times out after 60s of inactivity
+# https://www.browserstack.com/automate/timeouts
+@retry(wait_fixed=10000, stop_max_attempt_number=5, wrap_exception=False)
 def generic_contact_us_should_receive_confirmation_email(
     context: Context, actor_alias: str, subject: str
 ):
