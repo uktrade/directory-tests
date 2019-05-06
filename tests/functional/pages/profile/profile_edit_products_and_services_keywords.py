@@ -14,7 +14,6 @@ NAME = "Edit company's products and services (keywords)"
 TYPE = "form"
 URL = get_absolute_url("profile:add-products-and-services")
 EXPECTED_STRINGS = [
-    "Add publicity services",
     "Choose the products and services"
 ]
 
