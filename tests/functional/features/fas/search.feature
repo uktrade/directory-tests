@@ -259,9 +259,9 @@ Feature: Find a Supplier
   @found-with-automated-tests
   Scenario: Unpublished business profiles (for any or ISD company) shouldn't appear in FAS search results
     Given "Peter Alder" has created verified yet unpublished business profile for randomly selected company "Y"
-    And "Peter Alder" updates company's details
-      | detail         |
-      | keywords       |
+#    And "Peter Alder" updates company's details  TODO fix this step BUG TT-1377
+#      | detail         |
+#      | keywords       |
 
     When "Peter Alder" searches for company "Y" on FAS using selected company's details
       | company detail |
