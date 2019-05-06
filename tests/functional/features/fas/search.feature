@@ -112,9 +112,9 @@ Feature: Find a Supplier
     Given "Annette Geissinger" is a buyer
     And "Peter Alder" is an unauthenticated supplier
     And "Peter Alder" has created verified and published business profile for randomly selected company "Y"
-#    And "Peter Alder" updates company's details  TODO fix this step BUG TT-1377
-#      | detail         |
-#      | keywords       |
+    And "Peter Alder" updates company's details
+      | detail         |
+      | keywords       |
     And "Peter Alder" has updated business details
     And "Peter Alder" gets the slug for company "Y"
 
@@ -122,7 +122,7 @@ Feature: Find a Supplier
       | company detail |
       | title          |
       | number         |
-#      | keywords       |  BUG TT-1377
+      | keywords       |
       | website        |
       | summary        |
       | description    |
@@ -132,7 +132,7 @@ Feature: Find a Supplier
       | company detail |
       | title          |
       | number         |
-#      | keywords       |  BUG TT-1377
+      | keywords       |
       | website        |
       | summary        |
       | description    |
@@ -259,9 +259,9 @@ Feature: Find a Supplier
   @found-with-automated-tests
   Scenario: Unpublished business profiles (for any or ISD company) shouldn't appear in FAS search results
     Given "Peter Alder" has created verified yet unpublished business profile for randomly selected company "Y"
-#    And "Peter Alder" updates company's details  TODO fix this step BUG TT-1377
-#      | detail         |
-#      | keywords       |
+    And "Peter Alder" updates company's details
+      | detail         |
+      | keywords       |
 
     When "Peter Alder" searches for company "Y" on FAS using selected company's details
       | company detail |
@@ -271,7 +271,7 @@ Feature: Find a Supplier
       | summary        |
       | description    |
       | slug           |
-#      | keywords       |  BUG TT-1377
+      | keywords       |
 
     Then "Peter Alder" should NOT be able to find company "Y" on FAS using selected company's details
       | company detail |
@@ -281,4 +281,4 @@ Feature: Find a Supplier
       | summary        |
       | description    |
       | slug           |
-#      | keywords       |  BUG TT-1377
+      | keywords       |

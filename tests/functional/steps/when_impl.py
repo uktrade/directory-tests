@@ -1099,8 +1099,8 @@ def profile_update_company_details(
         )
         context.response = response
 
-        # Step 3' - Check if Supplier is on FAB Profile page
-        profile_edit_company_profile.should_be_here(response)
+        # Step 3' - Check if Supplier is back on the "Add products and services" page
+        profile_edit_products_and_services_industry.should_be_here(response)
 
         # Step 4 - update company's details stored in context.scenario_data
         context.set_company_details(
