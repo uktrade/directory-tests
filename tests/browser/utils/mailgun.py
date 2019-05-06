@@ -70,7 +70,7 @@ class MailGunService(Enum):
 
 # BrowserStack times out after 60s of inactivity
 # https://www.browserstack.com/automate/timeouts
-@retry(wait_fixed=10000, stop_max_attempt_number=5)
+@retry(wait_fixed=10000, stop_max_attempt_number=4)
 def find_mailgun_events(
     context: Context,
     service: MailGunService,
