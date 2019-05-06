@@ -16,12 +16,10 @@ Feature: Invest home page
 #      | Beta bar                     |
       | EU exit news banner          |
       | Benefits                     |
-      | The UK and the EU            |
-      | Invest your capital          |
+      | UK setup guides              |
+#      | The UK and the EU            |
       | Sectors                      |
       | High-Potential Opportunities |
-      | How to setup in the uk       |
-      | Investment support directory |
       | How we help                  |
       | Contact us                   |
       | Error reporting              |

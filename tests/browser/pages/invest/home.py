@@ -47,11 +47,11 @@ SELECTORS = {
         "find out what's changing": Selector(By.CSS_SELECTOR, "#eu-exit a", type=ElementType.LINK),
 
     },
-    "invest your capital": {
-        "self": Selector(By.ID, "informative-banner"),
-        "heading": Selector(By.CSS_SELECTOR, "#informative-banner h2"),
-        "text": Selector(By.CSS_SELECTOR, "#informative-banner p"),
-
+    "uk setup guides": {
+        "self": Selector(By.ID, "uk-setup-guides"),
+        "get started in the uk": Selector(By.ID, "how-to-setup-in-the-uk"),
+        "get help to set up or expand in the uk": Selector(By.ID, "investment-support-directory"),
+        "invest your capital in the uk": Selector(By.ID, "capital-investment"),
     },
     "sectors": {
         "self": Selector(By.ID, "industries"),
@@ -78,21 +78,6 @@ SELECTORS = {
         "advanced food production": Selector(By.CSS_SELECTOR, "#high-potential-opportunities > div > div.card-grid > div:nth-child(1) > div > a"),
         "lightweight structures": Selector(By.CSS_SELECTOR, "#high-potential-opportunities > div > div.card-grid > div:nth-child(2) > div > a"),
         "rail infrastructure": Selector(By.CSS_SELECTOR, "#high-potential-opportunities > div > div.card-grid > div:nth-child(3) > div > a"),
-    },
-    "how to setup in the uk": {
-        "self": Selector(By.ID, "uk-setup-guide"),
-        "heading": Selector(By.CSS_SELECTOR, "#uk-setup-guide h2"),
-        "text": Selector(By.CSS_SELECTOR, "#uk-setup-guide p"),
-        "image": Selector(By.CSS_SELECTOR, "#uk-setup-guide img"),
-        "get started": Selector(By.CSS_SELECTOR, "#uk-setup-guide a", type=ElementType.LINK),
-    },
-    "investment support directory": {
-        "self": Selector(By.ID, "investment-support-directory"),
-        "heading": Selector(By.CSS_SELECTOR, "#investment-support-directory h2"),
-        "text": Selector(By.CSS_SELECTOR, "#investment-support-directory p"),
-        "image": Selector(By.CSS_SELECTOR, "#investment-support-directory img"),
-        "find a uk specialist": Selector(By.CSS_SELECTOR, "#investment-support-directory a"),
-
     },
     "how we help": {
         "self": Selector(By.ID, "how-we-help"),
