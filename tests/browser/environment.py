@@ -105,7 +105,8 @@ def start_driver_session(context: Context, session_name: str):
 def restart_webdriver_if_unresponsive(context: Context, scenario: Scenario):
     if hasattr(context, "driver"):
         try:
-            context.driver.execute(Command.STATUS)
+            response = context.driver.execute(Command.STATUS)
+            logging.debug(f"WebDriver Status: {response}")
         except (socket.error, httplib.CannotSendRequest):
             msg = (
                 f"Remote driver became unresponsive after scenario: "
@@ -119,6 +120,8 @@ def restart_webdriver_if_unresponsive(context: Context, scenario: Scenario):
             start_driver_session(
                 context, f"session-recovered-after-scenario-{clean_name}"
             )
+    else:
+        logging.error(f"Context doesn't have 'driver' attribute")
 
 
 def before_step(context: Context, step: Step):
@@ -205,13 +208,17 @@ def after_scenario(context: Context, scenario: Scenario):
     """Place here code which has to be executed after every scenario."""
     message = f"Finish: {scenario.name} | {scenario.filename}:{scenario.line}"
     if scenario.status == "failed":
+        logging.error(
+            f"Failed scenario: '{scenario.name}', will try to restart driver "
+            f"session"
+        )
         restart_webdriver_if_unresponsive(context, scenario)
     try:
         show_snackbar_message(context.driver, message)
     except WebDriverException:
         logging.error(f"Failed to show snackbar with message: {message}")
     # in order to show the snackbar message after scenario, an explicit wait
-    # has to executed
+    # had to be added
     time.sleep(0.2)
     logging.debug(context.scenario_data)
     actors = context.scenario_data.actors
