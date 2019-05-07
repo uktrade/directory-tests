@@ -153,15 +153,16 @@ INDUSTRIES_FOR_PRODUCTS_AND_SERVICES = {
         'Intellectual property',
         'Data Protection and Information Assurance',
     ],
-    "publicity": [
+    "publicity-and-communications": [
         'Public Relations',
         'Branding',
         'Social Media',
         'Public Affairs',
+        'Translation services'
         'Advertising',
         'Marketing',
     ],
-    "further-services": [
+    "business-support": [
         'Business relocation',
         'Planning consultants',
         'Facilities (water, wifi, electricity)',
