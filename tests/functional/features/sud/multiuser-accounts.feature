@@ -126,7 +126,7 @@ Feature: Multi-user accounts
 
   @bug
   @TT-217
-  @fixme
+  @fixed
   @ED-3560
   @captcha
   @dev-only
@@ -170,7 +170,7 @@ Feature: Multi-user accounts
   @transfer-ownership
   @bug
   @TT-217
-  @fixme
+  @fixed
   @bug
   @ED-2268
   @captcha
@@ -340,10 +340,10 @@ Feature: Multi-user accounts
 
   @bug
   @TT-217
-  @fixme
+  @fixed
   @bug
   @ED-3882
-  @fixme
+  @fixed
   @ED-3570
   @captcha
   @dev-only
