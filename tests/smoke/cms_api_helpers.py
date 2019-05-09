@@ -78,6 +78,24 @@ def check_for_special_urls_cases(url: str) -> str:
         url = url.replace("industriescontact/", "industries/contact/")
     if "industry-contact/" in url:
         url = url.replace("industry-contact/", "")
+    # International pages which are not handled by UI are available via "/c/" infix
+    if (
+            "/international/" in url
+            and not url.endswith("/international/")
+            and "/international/content/" not in url
+            and "/how-to-setup-in-the-uk/" not in url
+            and "/campaigns/" not in url
+            and "/international-eu-exit-news/" not in url
+    ):
+        url = url.replace("/international/", "/international/c/")
+    # ATM International pages with "Tree Based Routing" enabled are served
+    # via "/content/" infix, which is not handled by UI properly. Instead UI
+    # temporarily allows to view those pages via "/c/" infix
+    if "/international/content/" in url:
+        url = url.replace("/international/content/", "/international/c/")
+    # International UI serves guide pages via "/guides/" infix
+    if "/how-to-setup-in-the-uk/" in url:
+        url = url.replace("/how-to-setup-in-the-uk/", "/how-to-setup-in-the-uk/guides/")
     return url
 
 
@@ -112,7 +130,6 @@ def check_for_special_page_cases(page: dict) -> str:
             "/home-page/",  # Invest home page
             "/landing-page/",  # FAS home page
             "/home/",  # ExRed home page
-            "/international/",  # International landing page
         ]
         if any(True for path in skip_full_paths if page["full_path"] == path):
             if page["meta"]["draft_token"]:
@@ -140,7 +157,7 @@ def should_skip_url(url: str) -> bool:
         "/markets/",  # ATM there's no landing page for markets
         "/asia-pacific/",  #
         "country-guides",  # Country guides are not ready for testing
-        "/international/",  # International news aren't always enabled
+        "/international-eu-exit-news/",  # International EU Exit news aren't enabled
         "/eu-exit-news/",  # International news aren't always enabled
         "contact/find-uk-companies/success/",  # this page is not in use anymore
         "skip.this.url",  # skip URL which was deemed to skip the page checker
