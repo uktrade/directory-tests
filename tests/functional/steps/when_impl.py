@@ -2471,11 +2471,11 @@ def reg_create_standalone_unverified_sso_account_from_sso_login_page(
 
 
 def sso_create_standalone_unverified_sso_account_from_collaboration_request(
-        context: Context, actor_alias: str
+        context: Context, actor_alias: str, *, next_link: str = None
 ):
     """Create a standalone SSO/great.gov.uk account."""
     actor = context.get_actor(actor_alias)
-    next = actor.invitation_for_collaboration_link
+    next = next_link or actor.invitation_for_collaboration_link
 
     # Step 1: Go to the SSO/great.gov.uk registration page
     referer = get_absolute_url("sso:signup") + f"?next={next}"
@@ -2597,8 +2597,8 @@ def fab_open_transfer_ownership_request_link_and_create_sso_account_if_needed(
     if new_owner.has_sso_account:
         fab_ui_confim_your_ownership.should_be_here(response)
     else:
-        reg_create_standalone_unverified_sso_account_from_sso_login_page(
-            context, new_owner_alias
+        sso_create_standalone_unverified_sso_account_from_collaboration_request(
+            context, new_owner_alias, next_link=link
         )
         reg_should_get_verification_email(context, new_owner_alias)
         reg_open_email_confirmation_link(context, new_owner_alias)
