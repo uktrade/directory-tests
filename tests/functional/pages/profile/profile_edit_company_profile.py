@@ -19,7 +19,8 @@ TYPE = "landing"
 URL = get_absolute_url("profile:fab")
 EXPECTED_STRINGS = [
     "You are signed in as",
-    "About company",
+    "This company",
+    "Business profile",
     "Profile email",
 ]
 
