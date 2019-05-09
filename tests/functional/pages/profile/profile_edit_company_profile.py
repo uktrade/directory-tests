@@ -16,7 +16,7 @@ from tests.settings import SECTORS_WITH_LABELS
 SERVICE = Services.PROFILE
 NAME = "Edit company profile"
 TYPE = "landing"
-URL = get_absolute_url("profile:edit-company-profile")
+URL = get_absolute_url("profile:fab")
 EXPECTED_STRINGS = [
     "You are signed in as",
     "About company",
