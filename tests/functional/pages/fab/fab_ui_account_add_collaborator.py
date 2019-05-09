@@ -12,8 +12,8 @@ NAME = "Add collaborator"
 TYPE = "form"
 URL = get_absolute_url("ui-buyer:account-add-collaborator")
 EXPECTED_STRINGS = [
-    "Add a user to your profile",
-    "Enter the new user’s email address",
+    "Add an editor to the business profile",
+    "Enter the new editor’s email address",
     "Confirm",
     "Cancel",
     "Is there anything wrong with this page?",

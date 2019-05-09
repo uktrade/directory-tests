@@ -16,7 +16,7 @@ URL = get_absolute_url("profile:case-study-details")
 EDIT_URL = get_absolute_url("profile:case-study-edit")
 EXPECTED_STRINGS = [
     "Business showcase",
-    "Showcase title",
+    "Title of your case study or project",
 ]
 
 

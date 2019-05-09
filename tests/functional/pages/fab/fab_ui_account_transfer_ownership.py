@@ -15,7 +15,7 @@ EXPECTED_STRINGS = [
     "Transfer account",
     "Next",
     "Cancel",
-    "Enter the email address you want your profile transferred to.",
+    "Enter the email address of the new administrator",
 ]
 
 

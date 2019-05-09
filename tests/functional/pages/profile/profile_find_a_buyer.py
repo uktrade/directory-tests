@@ -28,7 +28,7 @@ MANAGE_USER_ACCOUNTS_STRINGS = [
 ]
 
 EXPECTED_STRINGS_USER_ADDED = [
-    "We’ve emailed the user you want added to your profile"
+    "We’ve emailed the person you want to add to this account"
 ]
 EXPECTED_STRINGS_OWNER_TRANSFERRED = [
     "We’ve sent a confirmation email to the new profile owner."
