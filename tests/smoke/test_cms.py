@@ -22,6 +22,7 @@ SKIPPED_PAGE_TYPES = []
 ALL_PAGE_TYPES = get_pages_types(skip=SKIPPED_PAGE_TYPES)
 
 EXRED_PAGE_TYPES = [t for t in ALL_PAGE_TYPES if t.startswith("export_readiness.")]
+INTERNATIONAL_PAGE_TYPES = [t for t in ALL_PAGE_TYPES if t.startswith("great_international.")]
 INVEST_PAGE_TYPES = [t for t in ALL_PAGE_TYPES if t.startswith("invest.")]
 FAS_PAGE_TYPES = [t for t in ALL_PAGE_TYPES if t.startswith("find_a_supplier.")]
 COMPONENTS_PAGE_TYPES = [t for t in ALL_PAGE_TYPES if t.startswith("components.")]
@@ -29,15 +30,18 @@ COMPONENTS_PAGE_TYPES = [t for t in ALL_PAGE_TYPES if t.startswith("components."
 INVEST_PAGES = get_pages_from_api(INVEST_PAGE_TYPES, use_async_client=False)
 FAS_PAGES = get_pages_from_api(FAS_PAGE_TYPES, use_async_client=False)
 EXRED_PAGES = get_pages_from_api(EXRED_PAGE_TYPES, use_async_client=False)
+INTERNATIONAL_PAGES = get_pages_from_api(INTERNATIONAL_PAGE_TYPES, use_async_client=False)
 
 ALL_PAGES = {}
 ALL_PAGES.update(INVEST_PAGES)
 ALL_PAGES.update(FAS_PAGES)
 ALL_PAGES.update(EXRED_PAGES)
+ALL_PAGES.update(INTERNATIONAL_PAGES)
 
 NON_INVEST_API_PAGES = {}
 NON_INVEST_API_PAGES.update(FAS_PAGES)
 NON_INVEST_API_PAGES.update(EXRED_PAGES)
+NON_INVEST_API_PAGES.update(INTERNATIONAL_PAGES)
 
 
 @pytest.mark.parametrize(
