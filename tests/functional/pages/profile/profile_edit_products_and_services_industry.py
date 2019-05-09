@@ -17,7 +17,7 @@ NAME = "Edit company's products and services (industry)"
 TYPE = "form"
 URL = get_absolute_url("profile:add-products-and-services")
 EXPECTED_STRINGS = [
-    "Choose the products and services industry"
+    "Choose the industry you’re in"
 ]
 
 
