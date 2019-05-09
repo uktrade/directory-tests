@@ -64,7 +64,7 @@ Feature: Invest home page
   Scenario: Overseas businesses should be able to learn how to find a UK specialist
     Given "Robert" visits the "Invest - home" page
 
-    When "Robert" decides to "find a UK specialist"
+    When "Robert" decides to "Get help to set up or expand in the UK"
 
     Then "Robert" should be on the "Find a Supplier - UK support directory" page
 
