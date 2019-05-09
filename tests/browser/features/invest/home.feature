@@ -55,7 +55,7 @@ Feature: Invest home page
   Scenario: Overseas businesses should be able to learn how to set up in the UK
     Given "Robert" visits the "Invest - home" page
 
-    When "Robert" decides to "get started"
+    When "Robert" decides to "Get started in the UK"
 
     Then "Robert" should be on the "International - How to set up in the UK" page
 
