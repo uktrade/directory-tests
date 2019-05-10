@@ -35,10 +35,10 @@ Feature: Find a Supplier
       | caption 2                 |
       | caption 3                 |
       | testimonial               |
-      | source name               |
-      | source job                |
-      | source company            |
-      | website                   |
+#      | source name               | See TT-1438
+#      | source job                |
+#      | source company            |
+#      | website                   |
       | keywords                  |
       | slug                      |
 
