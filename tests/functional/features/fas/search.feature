@@ -36,8 +36,8 @@ Feature: Find a Supplier
       | caption 3                 |
       | testimonial               |
 #      | source name               | See TT-1438
-#      | source job                |
-#      | source company            |
+#      | source job                | when fixed remember to uncomment fields in
+#      | source company            | SEARCHABLE_CASE_STUDY_DETAILS
 #      | website                   |
       | keywords                  |
       | slug                      |

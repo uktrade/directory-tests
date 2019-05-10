@@ -193,11 +193,20 @@ nine = sorted(set([w.lower() for w in words
 with open(os.path.join(TEST_IMAGES_DIR, "rare.txt"), "r") as f:
     RARE_WORDS = f.read().split()
 
-
 SEARCHABLE_CASE_STUDY_DETAILS = [
-    "title", "summary", "description", "website", "keywords", "caption_1",
-    "caption_2", "caption_3", "testimonial", "source_name", "source_job",
-    "source_company", "slug"
+    "title",
+    "summary",
+    "description",
+    "keywords",
+    "caption_1",
+    "caption_2",
+    "caption_3",
+    "testimonial",
+    "slug"
+    # "source_name",  disabled because of bug TT-1438
+    # "source_job",
+    # "source_company",
+    # "website",
 ]
 
 FAS_LOGO_PLACEHOLDER_IMAGE = "/static/images/placeholder.fc5114289e5b.png"
