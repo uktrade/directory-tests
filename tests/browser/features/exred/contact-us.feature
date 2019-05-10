@@ -446,7 +446,7 @@ Feature:  new contact us forms
 
   @TT-758
   @going-back
-  Scenario Outline: Enquirers should be able to navigate back to previous pages
+  Scenario Outline: Enquirers should be able to navigate back to previous pages from "<path>" back to "<expected>" page
     Given "Robert" navigates via "<path>"
 
     When "Robert" decides to use "back" link
