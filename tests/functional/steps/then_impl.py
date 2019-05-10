@@ -445,6 +445,8 @@ def fas_find_supplier_using_case_study_details(
         company.title,
         search_terms,
     )
+
+    search_results = defaultdict()
     for term_name in search_terms:
         term = search_terms[term_name]
         response = fas_ui_find_supplier.go_to(session, term=term)
@@ -482,21 +484,27 @@ def fas_find_supplier_using_case_study_details(
                     term_name,
                     term,
                 ):
-                    assert False
+                    found = False
+        search_results[term_name] = {"term": term, "found": found}
 
-        with assertion_msg(
-            "Buyer could not find Supplier '%s' on FAS using %s: %s",
-            company.title,
-            term_name,
-            term,
-        ):
-            assert found
-        logging.debug(
-            "Buyer found Supplier '%s' on FAS using %s: %s",
-            company.title,
-            term_name,
-            term,
-        )
+    logging.debug(f"Search results: {search_results}")
+    not_found_by = {
+        term_name: search
+        for term_name, search in
+        search_results.items() if not search["found"]
+    }
+    not_found_by_str = "; ".join(
+        [f"{k} → {v['term']}" for k, v in not_found_by.items()]
+    )
+    with assertion_msg(
+        f"Couldn't find '{company.title}' on FAS using following case study "
+        f"details: {not_found_by_str}"
+    ):
+        assert not not_found_by
+    logging.debug(
+        f"{buyer_alias} was able to find company '{company.title} using all "
+        f"case study details: {search_terms}"
+    )
 
 
 def fas_supplier_cannot_be_found_using_case_study_details(
