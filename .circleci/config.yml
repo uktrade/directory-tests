@@ -271,6 +271,14 @@ jobs:
       PYTEST_ARGS: "-m 'not dev and not prod'"
     <<: *steps_smoke_tests
 
+  smoke_tests_uat:
+    <<: *machine_python3
+    working_directory: ~/directory-tests
+    environment:
+      TEST_ENV: "uat"
+      PYTEST_ARGS: "-m 'not dev and not prod'"
+    <<: *steps_smoke_tests
+
   func_fas_test_dev:
     <<: *machine_python3
     working_directory: ~/directory-tests
@@ -316,6 +324,30 @@ jobs:
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "stage"
+      FEATURE_DIR: "sud"
+    <<: *steps_functional_tests
+
+  func_fas_test_uat:
+    <<: *machine_python3
+    working_directory: ~/directory-tests
+    environment:
+      TEST_ENV: "uat"
+      FEATURE_DIR: "fas"
+    <<: *steps_functional_tests
+
+  func_sso_test_uat:
+    <<: *machine_python3
+    working_directory: ~/directory-tests
+    environment:
+      TEST_ENV: "uat"
+      FEATURE_DIR: "sso"
+    <<: *steps_functional_tests
+
+  func_sud_test_uat:
+    <<: *machine_python3
+    working_directory: ~/directory-tests
+    environment:
+      TEST_ENV: "uat"
       FEATURE_DIR: "sud"
     <<: *steps_functional_tests
 
@@ -394,6 +426,46 @@ jobs:
     <<: *machine_python3
     environment:
       TEST_ENV: "stage"
+      BROWSER: "firefox"
+      <<: *firefox_version
+      TAGS: "--tags=~@full --tags=~@dev-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
+    <<: *steps_run_browser_tests
+
+  browser_all_chrome_uat:
+    <<: *machine_python3
+    working_directory: ~/directory-tests
+    environment:
+      TEST_ENV: "uat"
+      BROWSER: "chrome"
+      <<: *chrome_version
+      TAGS: "--tags=~@dev-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
+    <<: *steps_run_browser_tests
+
+  browser_all_firefox_uat:
+    working_directory: ~/directory-tests
+    <<: *machine_python3
+    environment:
+      TEST_ENV: "uat"
+      BROWSER: "firefox"
+      <<: *firefox_version
+      TAGS: "--tags=~@dev-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
+    <<: *steps_run_browser_tests
+
+  browser_selected_chrome_uat:
+    <<: *machine_python3
+    working_directory: ~/directory-tests
+    environment:
+      TEST_ENV: "uat"
+      BROWSER: "chrome"
+      <<: *chrome_version
+      TAGS: "--tags=~@full --tags=~@dev-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
+    <<: *steps_run_browser_tests
+
+  browser_selected_firefox_uat:
+    working_directory: ~/directory-tests
+    <<: *machine_python3
+    environment:
+      TEST_ENV: "uat"
       BROWSER: "firefox"
       <<: *firefox_version
       TAGS: "--tags=~@full --tags=~@dev-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
@@ -514,6 +586,30 @@ workflows:
           requires:
             - setup_env_for_browser_tests
       - browser_selected_firefox_stage:
+          requires:
+            - setup_env_for_browser_tests
+
+  run_smoke_all_functional_and_selected_browser_tests_on_uat:
+    jobs:
+      - setup_env_for_smoke_tests
+      - setup_env_for_functional_tests
+      - setup_env_for_browser_tests
+      - smoke_tests_uat:
+          requires:
+            - setup_env_for_smoke_tests
+      - func_fas_test_uat:
+          requires:
+            - setup_env_for_functional_tests
+      - func_sso_test_uat:
+          requires:
+            - setup_env_for_functional_tests
+      - func_sud_test_uat:
+          requires:
+            - setup_env_for_functional_tests
+      - browser_selected_chrome_uat:
+          requires:
+            - setup_env_for_browser_tests
+      - browser_selected_firefox_uat:
           requires:
             - setup_env_for_browser_tests
 
@@ -655,3 +751,32 @@ workflows:
           requires:
             - setup_env_for_browser_tests
 
+  run_all_tests_on_uat:
+    triggers:
+      - schedule:
+          cron: "0 18 * * 1-5"
+          filters:
+            branches:
+              only: master
+    jobs:
+      - setup_env_for_smoke_tests
+      - setup_env_for_functional_tests
+      - setup_env_for_browser_tests
+      - smoke_tests_uat:
+          requires:
+            - setup_env_for_smoke_tests
+      - func_fas_test_uat:
+          requires:
+            - setup_env_for_functional_tests
+      - func_sso_test_uat:
+          requires:
+            - setup_env_for_functional_tests
+      - func_sud_test_uat:
+          requires:
+            - setup_env_for_functional_tests
+      - browser_all_chrome_uat:
+          requires:
+            - setup_env_for_browser_tests
+      - browser_all_firefox_uat:
+          requires:
+            - setup_env_for_browser_tests
