@@ -309,6 +309,7 @@ jobs:
     environment:
       TEST_ENV: "stage"
       FEATURE_DIR: "fas"
+      TAGS: "--tags=~@dev-only"
     <<: *steps_functional_tests
 
   func_sso_test_stage:
@@ -317,6 +318,7 @@ jobs:
     environment:
       TEST_ENV: "stage"
       FEATURE_DIR: "sso"
+      TAGS: "--tags=~@dev-only"
     <<: *steps_functional_tests
 
   func_sud_test_stage:
@@ -325,6 +327,7 @@ jobs:
     environment:
       TEST_ENV: "stage"
       FEATURE_DIR: "sud"
+      TAGS: "--tags=~@dev-only"
     <<: *steps_functional_tests
 
   func_fas_test_uat:
