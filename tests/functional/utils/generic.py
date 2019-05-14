@@ -940,7 +940,7 @@ def assert_that_captcha_is_in_dev_mode(go_to: Callable[..., Response], session: 
     content = response.content.decode("UTF-8")
     dev_site_key = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
     if dev_site_key not in content:
-        raise NotImplementedError("Captcha is not in Dev Mode!!!")
+        raise NotImplementedError(f"Captcha is not in Dev Mode on {response.url} !!!")
 
 
 def random_message_data(

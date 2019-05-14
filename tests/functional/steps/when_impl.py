@@ -1761,7 +1761,10 @@ def profile_provide_products_and_services(
                 separator = "."
 
         modified_details = Company(keywords=keywords)
-        logging.debug(f"Keywords to update: {keywords}")
+        logging.debug(
+            f"Add products & services keywords: '{keywords}' to '{industry}' "
+            f"using '{separator}' as separator"
+        )
         response = profile_edit_products_and_services_keywords.submit(
             actor.session,
             industry=industry,
