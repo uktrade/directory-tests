@@ -303,6 +303,14 @@ jobs:
       FEATURE_DIR: "sud"
     <<: *steps_functional_tests
 
+  func_international_test_dev:
+    <<: *machine_python3
+    working_directory: ~/directory-tests
+    environment:
+      TEST_ENV: "dev"
+      FEATURE_DIR: "international"
+    <<: *steps_functional_tests
+
   func_fas_test_stage:
     <<: *machine_python3
     working_directory: ~/directory-tests
@@ -330,6 +338,15 @@ jobs:
       TAGS: "--tags=~@dev-only"
     <<: *steps_functional_tests
 
+  func_international_test_stage:
+    <<: *machine_python3
+    working_directory: ~/directory-tests
+    environment:
+      TEST_ENV: "stage"
+      FEATURE_DIR: "international"
+      TAGS: "--tags=~@dev-only"
+    <<: *steps_functional_tests
+
   func_fas_test_uat:
     <<: *machine_python3
     working_directory: ~/directory-tests
@@ -352,6 +369,14 @@ jobs:
     environment:
       TEST_ENV: "uat"
       FEATURE_DIR: "sud"
+    <<: *steps_functional_tests
+
+  func_international_test_uat:
+    <<: *machine_python3
+    working_directory: ~/directory-tests
+    environment:
+      TEST_ENV: "uat"
+      FEATURE_DIR: "international"
     <<: *steps_functional_tests
 
   browser_all_chrome_dev:
@@ -555,6 +580,9 @@ workflows:
       - func_fas_test_dev:
           requires:
             - setup_env_for_functional_tests
+      - func_international_test_dev:
+          requires:
+            - setup_env_for_functional_tests
       - func_sso_test_dev:
           requires:
             - setup_env_for_functional_tests
@@ -579,6 +607,9 @@ workflows:
       - func_fas_test_stage:
           requires:
             - setup_env_for_functional_tests
+      - func_international_test_stage:
+          requires:
+            - setup_env_for_functional_tests
       - func_sso_test_stage:
           requires:
             - setup_env_for_functional_tests
@@ -601,6 +632,9 @@ workflows:
           requires:
             - setup_env_for_smoke_tests
       - func_fas_test_uat:
+          requires:
+            - setup_env_for_functional_tests
+      - func_international_test_uat:
           requires:
             - setup_env_for_functional_tests
       - func_sso_test_uat:
@@ -711,6 +745,9 @@ workflows:
       - func_fas_test_dev:
           requires:
             - setup_env_for_functional_tests
+      - func_international_test_dev:
+          requires:
+            - setup_env_for_functional_tests
       - func_sso_test_dev:
           requires:
             - setup_env_for_functional_tests
@@ -741,6 +778,9 @@ workflows:
       - func_fas_test_stage:
           requires:
             - setup_env_for_functional_tests
+      - func_international_test_stage:
+          requires:
+            - setup_env_for_functional_tests
       - func_sso_test_stage:
           requires:
             - setup_env_for_functional_tests
@@ -769,6 +809,9 @@ workflows:
           requires:
             - setup_env_for_smoke_tests
       - func_fas_test_uat:
+          requires:
+            - setup_env_for_functional_tests
+      - func_international_test_uat:
           requires:
             - setup_env_for_functional_tests
       - func_sso_test_uat:
