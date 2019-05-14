@@ -105,7 +105,7 @@ Feature: Profile pages
     Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
 
     When "Annette Geissinger" attempts to change business details
-      | trading name   | website         | size       | industry | error                  |
+      | trading name   | website         | size       | industry | error                                             |
       | 256 characters | empty string    | 10001+     | random   | Ensure this field has no more than 255 characters |
 
     Then "Annette Geissinger" should see expected error messages
@@ -140,7 +140,7 @@ Feature: Profile pages
   Scenario: Once verified Company's Business Profile should be published on FAS
     Given "Peter Alder" has created verified and published FAS business profile for randomly selected company "Y"
 
-    When "Peter Alder" decides to view published Business Profile
+    When "Peter Alder" decides to view published FAS Business Profile
 
     Then "Peter Alder" should be on "Y"'s FAS Business Profile page
 

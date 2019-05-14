@@ -115,7 +115,7 @@ def when_supplier_verifies_company(context, supplier_alias):
     profile_verify_company_profile(context, supplier_alias)
 
 
-@when('"{supplier_alias}" decides to view published Business Profile')
+@when('"{supplier_alias}" decides to view published FAS Business Profile')
 def when_supplier_views_published_profile(context, supplier_alias):
     profile_view_published_profile(context, supplier_alias)
 
