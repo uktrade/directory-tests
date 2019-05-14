@@ -246,7 +246,7 @@ def profile_create_unverified_business_profile(
     context.update_actor(supplier_alias, has_sso_account=True)
 
 
-def profile_create_verified_and_published_business_profile(
+def profile_create_verified_and_published_business_fas_profile(
         context: Context, supplier_alias: str, company_alias: str
 ):
     """Create a verified Business profile and publish it to FAS"""
@@ -438,7 +438,7 @@ def create_actor_with_verified_or_unverified_fab_profile(
         company_alias: str,
 ):
     if verified_or_not == "a verified":
-        profile_create_verified_and_published_business_profile(context, actor_alias, company_alias)
+        profile_create_verified_and_published_business_fas_profile(context, actor_alias, company_alias)
     else:
         profile_create_unverified_business_profile(context, actor_alias, company_alias)
 

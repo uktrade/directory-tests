@@ -30,7 +30,7 @@ from tests.functional.steps.when_impl import (
     profile_add_case_study,
     profile_add_online_profiles,
     profile_create_unverified_business_profile,
-    profile_create_verified_and_published_business_profile,
+    profile_create_verified_and_published_business_fas_profile,
     profile_create_verified_yet_unpublished_business_profile,
     profile_edit_business_details,
     profile_supplier_uploads_logo,
@@ -67,9 +67,9 @@ def given_supplier_set_company_description(context, supplier_alias):
 
 
 @given('"{supplier_alias}" has created verified and published FAS business profile for randomly selected company "{company_alias}"')
-def given_supplier_creates_verified_and_published_profile(
+def given_supplier_creates_verified_and_published_fas_profile(
         context, supplier_alias, company_alias):
-    profile_create_verified_and_published_business_profile(
+    profile_create_verified_and_published_business_fas_profile(
         context, supplier_alias, company_alias
     )
 
