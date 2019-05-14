@@ -34,7 +34,7 @@ EXPECTED_STRINGS_VERIFIED = [
 ]
 
 EXPECTED_STRINGS_PUBLISHED = [
-    "View profile",
+    "View Find a Supplier profile",
 ]
 
 EXPECTED_STRINGS_NOT_VERIFIED = [
