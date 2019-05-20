@@ -237,6 +237,25 @@ def unauthenticated_buyer(buyer_alias: str) -> Actor:
 
 
 def profile_create_unverified_business_profile(
+def go_to_page(context: Context, supplier_alias: str, page_name: str):
+    actor = context.get_actor(supplier_alias)
+    page = get_page_object(page_name)
+    has_action(page, "go_to")
+
+    if hasattr(page, "URLs"):
+        page_name = page_name.split(" - ")[1]
+        specific_url = page.URLs[page_name.lower()]
+        logging.debug(
+            f"{supplier_alias} will visit '{page_name}' using page specific URL"
+            f": {specific_url} not the general one: {page.URL}"
+        )
+        response = page.go_to(actor.session, page_name=page_name)
+    else:
+        response = page.go_to(actor.session)
+
+    context.response = response
+
+
         context: Context, supplier_alias: str, company_alias: str
 ):
     if not context.get_actor(supplier_alias):
@@ -2286,12 +2305,6 @@ def sso_open_password_reset_link(context: Context, supplier_alias: str):
     session = actor.session
     link = actor.password_reset_link
     context.response = sso_ui_password_reset.open_link(session, link)
-
-
-def go_to_page(context: Context, supplier_alias: str, page_name: str):
-    actor = context.get_actor(supplier_alias)
-    url = get_page_object(page_name).URL
-    context.response = make_request(Method.GET, url, session=actor.session)
 
 
 def go_to_pages(context: Context, actor_alias: str, table: Table):
