@@ -78,7 +78,8 @@ def check_for_special_urls_cases(url: str) -> str:
         url = url.replace("industriescontact/", "industries/contact/")
     if "industry-contact/" in url:
         url = url.replace("industry-contact/", "")
-    # International pages which are not handled by UI are available via "/c/" infix
+    # International pages which are not handled by UI are available via
+    # "/content/" infix
     if (
             "/international/" in url
             and not url.endswith("/international/")
@@ -87,12 +88,12 @@ def check_for_special_urls_cases(url: str) -> str:
             and "/campaigns/" not in url
             and "/international-eu-exit-news/" not in url
     ):
-        url = url.replace("/international/", "/international/c/")
+        url = url.replace("/international/", "/international/content/")
     # ATM International pages with "Tree Based Routing" enabled are served
     # via "/content/" infix, which is not handled by UI properly. Instead UI
-    # temporarily allows to view those pages via "/c/" infix
+    # temporarily allows to view those pages via "/content/" infix
     if "/international/content/" in url:
-        url = url.replace("/international/content/", "/international/c/")
+        url = url.replace("/international/content/", "/international/content/")
     # International UI serves guide pages via "/guides/" infix
     if "/how-to-setup-in-the-uk/" in url:
         url = url.replace("/how-to-setup-in-the-uk/", "/how-to-setup-in-the-uk/guides/")
