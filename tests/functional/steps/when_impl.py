@@ -18,7 +18,7 @@ from scrapy import Selector
 
 from tests import get_absolute_url
 from tests.functional.common import DETAILS, PROFILES
-from tests.functional.pages import get_page_object
+from tests.functional.pages import get_page_object, has_action
 from tests.functional.pages.fab import (
     fab_ui_account_add_collaborator,
     fab_ui_account_confrim_password,

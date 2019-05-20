@@ -948,6 +948,7 @@ def sso_should_see_invalid_password_reset_link_error(
 def should_be_at(context: Context, supplier_alias: str, page_name: str):
     response = context.response
     page = get_page_object(page_name.lower())
+    has_action(page, "should_be_here")
     page.should_be_here(response)
     logging.debug("%s is on '%s' page", supplier_alias, page_name)
 
