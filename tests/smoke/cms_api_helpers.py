@@ -94,9 +94,6 @@ def check_for_special_urls_cases(url: str) -> str:
     # temporarily allows to view those pages via "/content/" infix
     if "/international/content/" in url:
         url = url.replace("/international/content/", "/international/content/")
-    # International UI serves guide pages via "/guides/" infix
-    if "/how-to-setup-in-the-uk/" in url:
-        url = url.replace("/how-to-setup-in-the-uk/", "/how-to-setup-in-the-uk/guides/")
     return url
 
 
