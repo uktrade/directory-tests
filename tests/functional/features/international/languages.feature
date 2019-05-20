@@ -14,12 +14,14 @@ Feature: View International site in various languages
       | International - Landing                                  |
       | International - Industries                               |
       | International - Industry (Engineering and manufacturing) |
+      | International - Industry (Healthcare and Life Sciences)  |
 
     Then the "main" part of the viewed pages should be presented in "<expected>" language with probability greater than "<lower limit>"
       | page                                                     |
       | International - Landing                                  |
       | International - Industries                               |
       | International - Industry (Engineering and manufacturing) |
+      | International - Industry (Healthcare and Life Sciences)  |
 
     Examples:
       | selected   | expected   | lower limit |

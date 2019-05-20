@@ -93,9 +93,9 @@ urls = {
 
     # UI-INTERNATIONAL
     "ui-international:landing": "",
-    "ui-international:industries": "industries/",
-    "ui-international:industry": "industries/engineering-and-manufacturing/",
-    "ui-international:healthcheck-sentry": "healthcheck/sentry/",
+    "ui-international:industries": "content/industries/",
+    "ui-international:industry": "content/industries/",
+    "ui-international:healthcheck-sentry": "content/healthcheck/",
 
     # UI-INVEST
     "ui-invest:landing": "",
