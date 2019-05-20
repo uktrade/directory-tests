@@ -1448,7 +1448,12 @@ def generic_view_pages_in_selected_language(
     session = actor.session
     for page_name in pages:
         language_code = get_language_code(language)
-        page_url = get_page_object(page_name).URL
+        page = get_page_object(page_name)
+        if hasattr(page, "URLs"):
+            name = page_name.split(" - ")[1]
+            page_url = page.URLs[name.lower()]
+        else:
+            page_url = get_page_object(page_name).URL
         page_url += f"?{language_argument}={language_code}"
         response = make_request(Method.GET, page_url, session=session)
         views[page_name] = response
