@@ -1344,9 +1344,10 @@ def extract_form_errors(content: str) -> str:
 
 
 def detect_page_language(
+    name: str,
+    url: str,
+    content: str,
     *,
-    url: str = None,
-    content: str = None,
     main: bool = False,
     rounds: int = 15
 ) -> DefaultDict[str, List]:
@@ -1366,6 +1367,7 @@ def detect_page_language(
         pt, ro, ru, sk, sl, so, sq, sv, sw, ta, te, th, tl, tr, uk, ur, vi,
         zh-cn, zh-tw
 
+    :param name: human friendly page name
     :param url: URL to the HTML page with some content
     :param content: use explicit content rather than downloading it from URL
     :param main: use only the main part of the content (ignore header & footer)
@@ -1406,9 +1408,8 @@ def detect_page_language(
             flattened_results[detection.lang].append(detection.prob)
 
     logging.debug(
-        "Language detection results after %d rounds: %s",
-        rounds,
-        flattened_results,
+        f"Language detection results for '{name}' -> {url} after {rounds} "
+        f"rounds: {flattened_results}",
     )
     return flattened_results
 
