@@ -177,21 +177,10 @@ def when_buyer_searches_on_fas_using_company_details(
         context, buyer_alias, company_alias, table_of_details=context.table)
 
 
-@when('"{buyer_alias}" chooses to view specific FAS page in "{language}" language')
-def when_buyer_views_page_in_selected_language(context, buyer_alias, language):
-    # FAS uses ?lang=de
-    generic_view_pages_in_selected_language(
-        context, buyer_alias, pages_table=context.table, language=language,
-        language_argument="lang"
-    )
-
-
 @when('"{actor_alias}" chooses to view following pages in "{language}" language')
 def when_actor_views_pages_in_selected_language(context, actor_alias, language):
-    # Domestic site uses ?language=de
     generic_view_pages_in_selected_language(
         context, actor_alias, pages_table=context.table, language=language,
-        language_argument="language"
     )
 
 

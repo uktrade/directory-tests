@@ -10,7 +10,7 @@ Feature: View FAS in various languages
   Scenario Outline: Buyers should be able to view specific FAS pages in "<selected>" language
     Given "Annette Geissinger" is a buyer
 
-    When "Annette Geissinger" chooses to view specific FAS page in "<selected>" language
+    When "Annette Geissinger" chooses to view following pages in "<selected>" language
       | page                               |
       | FAS - Landing                      |
       | FAS - Industries                   |

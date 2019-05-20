@@ -6,9 +6,9 @@ Feature: Industry pages
   Scenario Outline: Buyers should be able to view page with promoted Industries
     Given "Annette Geissinger" is a buyer
 
-    When "Annette Geissinger" chooses to view specific FAS page in "<selected>" language
-      | page                            |
-      | FAS - Industries                |
+    When "Annette Geissinger" chooses to view following pages in "<selected>" language
+      | page             |
+      | FAS - Industries |
 
     Then "Annette Geissinger" should see links to all industry pages available in "<selected>" language
 
