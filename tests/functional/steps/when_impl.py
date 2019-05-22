@@ -114,7 +114,7 @@ from tests.settings import (
     NO_OF_EMPLOYEES,
     SECTORS,
     SEPARATORS,
-    BMPs,def profile_create_unverified_business_profile(
+    BMPs,
     JP2s,
     WEBPs,
 )
@@ -254,7 +254,7 @@ def go_to_page(context: Context, supplier_alias: str, page_name: str):
 
     context.response = response
 
-    
+
 def profile_create_unverified_business_profile(
         context: Context, supplier_alias: str, company_alias: str
 ):
