@@ -236,7 +236,6 @@ def unauthenticated_buyer(buyer_alias: str) -> Actor:
     )
 
 
-def profile_create_unverified_business_profile(
 def go_to_page(context: Context, supplier_alias: str, page_name: str):
     actor = context.get_actor(supplier_alias)
     page = get_page_object(page_name)
@@ -256,6 +255,7 @@ def go_to_page(context: Context, supplier_alias: str, page_name: str):
     context.response = response
 
 
+def profile_create_unverified_business_profile(
         context: Context, supplier_alias: str, company_alias: str
 ):
     if not context.get_actor(supplier_alias):
