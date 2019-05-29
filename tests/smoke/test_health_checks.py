@@ -184,7 +184,10 @@ def test_forms_healthcheck_endpoint(url, basic_auth):
 
 @pytest.mark.international
 @pytest.mark.parametrize(
-    "url", [get_absolute_url("ui-international:healthcheck-sentry")]
+    "url", [
+        get_absolute_url("ui-international:healthcheck-forms-api"),
+        get_absolute_url("ui-international:healthcheck-sentry"),
+    ]
 )
 def test_international_healthcheck_endpoint(url, basic_auth):
     params = {"token": TOKEN}
