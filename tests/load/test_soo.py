@@ -21,31 +21,63 @@ class SOOTasks(TaskSet):
         url = get_relative_url("ui-soo:search-results")
 
         params = {
-            "product_categories": random_product_categories(),
-            "operating_countries": random_operating_countries()
+            "category_id": random_product_categories(),
+            "country_id": random_operating_countries(),
+            "commit": "Find+a+marketplace",
         }
 
         self.client.get(
             url,
             params=params,
             headers=USER_AGENT,
-            name="/?product_categories=[...]&operating_countries=[...]",
+            name="/?category_id=[...]&country_id=[...]",
             auth=basic_auth()
        )
 
     @task
     def marketplace(self):
         urls = [
-            "markets/details/etsy/",
-            "markets/details/ebay/",
-            "markets/details/fruugo/",
-            "markets/details/westwing/",
-            "markets/details/linio/",
-            "markets/details/otto/",
             "markets/details/allegro/",
-            "markets/details/la-redoute/",
+            "markets/details/amazon-china/",
+            "markets/details/amazon-france/",
+            "markets/details/amazon-germany/",
+            "markets/details/amazon-india/",
+            "markets/details/amazon-italy/",
+            "markets/details/amazon-japan/",
+            "markets/details/amazon-mexico/",
+            "markets/details/amazon-spain/",
+            "markets/details/amazon-usa/",
+            "markets/details/cdiscount/",
+            "markets/details/ctrip/",
+            "markets/details/dafiti/",
+            "markets/details/ebay/",
+            "markets/details/etsy/",
+            "markets/details/flipkart/",
+            "markets/details/fruugo/",
+            "markets/details/goxip/",
+            "markets/details/jd-worldwide/",
             "markets/details/kaola/",
-            "markets/details/ctrip/"
+            "markets/details/la-redoute/",
+            "markets/details/lamoda/",
+            "markets/details/linio/",
+            "markets/details/mercado-libre/",
+            "markets/details/newegg-business/",
+            "markets/details/newegg-canada/",
+            "markets/details/newegg-inc/",
+            "markets/details/otto/",
+            "markets/details/privalia/",
+            "markets/details/rakuten/",
+            "markets/details/royal-mail-t-mall/",
+            "markets/details/sfbest/",
+            "markets/details/shangpin/",
+            "markets/details/spartoo/",
+            "markets/details/the-iconic/",
+            "markets/details/tmall-global/",
+            "markets/details/trademe/",
+            "markets/details/tthigo/",
+            "markets/details/westwing/",
+            "markets/details/xiu/",
+            "markets/details/zalora/",
         ]
 
         self.client.get(
