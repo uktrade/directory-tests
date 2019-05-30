@@ -153,7 +153,7 @@ INDUSTRIES_FOR_PRODUCTS_AND_SERVICES = {
         "Intellectual property",
         "Data Protection and Information Assurance",
     ],
-    "publicity": [
+    "publicity-and-communication": [
         "Public Relations",
         "Branding",
         "Social Media",
