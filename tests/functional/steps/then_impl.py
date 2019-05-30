@@ -964,6 +964,19 @@ def should_see_selected_pages(context: Context, actor_alias: str):
         )
 
 
+def should_be_taken_to_selected_page(
+        context: Context, actor_alias: str, page_name: str
+):
+    page = get_page_object(page_name.lower())
+    for _, response, _ in context.results:
+        context.response = response
+        page.should_be_here(response)
+    logging.debug(
+        f"{actor_alias} was successfully taken to '{page_name}' page for all "
+        f"requests"
+    )
+
+
 def fab_should_be_asked_about_verification_form(
     context: Context, supplier_alias: str
 ):

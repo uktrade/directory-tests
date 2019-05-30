@@ -46,6 +46,7 @@ from tests.functional.steps.then_impl import (
     reg_sso_account_should_be_created,
     reg_supplier_has_to_verify_email_first,
     should_be_at,
+    should_be_taken_to_selected_page,
     should_not_be_able_to_access_page,
     should_see_message,
     should_see_selected_pages,
@@ -322,6 +323,11 @@ def then_supplier_should_see_specific_page(context, supplier_alias, page_name):
 @then('"{actor_alias}" should be able to see all selected pages')
 def then_actor_should_see_selected_pages(context, actor_alias):
     should_see_selected_pages(context, actor_alias)
+
+
+@then('"{actor_alias}" should be taken to "{page_name}" for all requests')
+def then_actor_should_see_selected_pages(context, actor_alias, page_name):
+    should_be_taken_to_selected_page(context, actor_alias, page_name)
 
 
 @then('"{supplier_alias}" should be asked to decide how to verify her identity')
