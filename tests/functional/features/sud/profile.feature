@@ -121,14 +121,28 @@ Feature: Profile pages
 
     When "Annette Geissinger" attempts to change products and services offered by the company
       | keywords          | separator  | error                                                       |
-      | empty string      | comma      | This field is required                                      |
-      | book, keys, food  | pipe       | This field is required                                      |
-      | sky, sea, blues   | semi-colon | This field is required                                      |
-      | sand, dunes, bird | colon      | This field is required                                      |
-      | bus, ferry, plane | full stop  | This field is required                                      |
       | 1001 characters   | comma      | Ensure this value has at most 1000 characters (it has 1001) |
 
     Then "Annette Geissinger" should see expected error messages
+
+
+  @ED-2141
+  @profile
+  @captcha
+  @dev-only
+  @fake-sso-email-verification
+  Scenario: Supplier should not be able to use other characters than alphanumerics and commas to define products and services offered by the company
+    Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
+
+    When "Annette Geissinger" attempts to change products and services offered by the company
+      | keywords          | separator  | error    |
+      | empty string      | comma      | No error |
+      | book, keys, food  | pipe       | No error |
+      | sky, sea, blues   | semi-colon | No error |
+      | sand, dunes, bird | colon      | No error |
+      | bus, ferry, plane | full stop  | No error |
+
+    Then "Annette Geissinger" should be taken to "Profile - Edit company's products and services (keywords)" for all requests
 
 
   @ED-1727
