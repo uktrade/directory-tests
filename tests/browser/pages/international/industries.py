@@ -5,22 +5,17 @@ from urllib.parse import urljoin
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages import common_selectors
-from pages.common_actions import (
-    check_url,
-    go_to_url,
-    take_screenshot,
-)
+from pages.common_actions import check_url, go_to_url, take_screenshot
 from settings import EXRED_UI_URL
 
 NAME = "Industries"
 SERVICE = "International"
 TYPE = "landing"
-URL = urljoin(EXRED_UI_URL, "international/industries/")
+URL = urljoin(EXRED_UI_URL, "international/content/industries/")
 PAGE_TITLE = "Welcome to great.gov.uk - buy from or invest in the UK"
 
 
-SELECTORS = {
-}
+SELECTORS = {}
 SELECTORS.update(common_selectors.HEADER_INTERNATIONAL)
 SELECTORS.update(common_selectors.BETA_BAR)
 SELECTORS.update(common_selectors.ERROR_REPORTING)
