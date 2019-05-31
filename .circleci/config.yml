@@ -386,7 +386,7 @@ jobs:
       TEST_ENV: "dev"
       BROWSER: "chrome"
       <<: *chrome_version
-      TAGS: "--tags=~@stage-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
+      TAGS: "--tags=~@stage-only --tags=~@uat-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
     <<: *steps_run_browser_tests
 
   browser_all_firefox_dev:
@@ -396,7 +396,7 @@ jobs:
       TEST_ENV: "dev"
       BROWSER: "firefox"
       <<: *firefox_version
-      TAGS: "--tags=~@stage-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
+      TAGS: "--tags=~@stage-only --tags=~@uat-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
     <<: *steps_run_browser_tests
 
   browser_selected_chrome_dev:
@@ -406,7 +406,7 @@ jobs:
       TEST_ENV: "dev"
       BROWSER: "chrome"
       <<: *chrome_version
-      TAGS: "--tags=~@stage-only --tags=~@full --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
+      TAGS: "--tags=~@stage-only --tags=~@uat-only --tags=~@full --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
     <<: *steps_run_browser_tests
 
   browser_selected_firefox_dev:
@@ -416,7 +416,7 @@ jobs:
       TEST_ENV: "dev"
       BROWSER: "firefox"
       <<: *firefox_version
-      TAGS: "--tags=~@stage-only --tags=~@full --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
+      TAGS: "--tags=~@stage-only --tags=~@uat-only --tags=~@full --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
     <<: *steps_run_browser_tests
 
   browser_all_chrome_stage:
@@ -426,7 +426,7 @@ jobs:
       TEST_ENV: "stage"
       BROWSER: "chrome"
       <<: *chrome_version
-      TAGS: "--tags=~@dev-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
+      TAGS: "--tags=~@dev-only --tags=~@uat-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
     <<: *steps_run_browser_tests
 
   browser_all_firefox_stage:
@@ -436,7 +436,7 @@ jobs:
       TEST_ENV: "stage"
       BROWSER: "firefox"
       <<: *firefox_version
-      TAGS: "--tags=~@dev-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
+      TAGS: "--tags=~@dev-only --tags=~@uat-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
     <<: *steps_run_browser_tests
 
   browser_selected_chrome_stage:
@@ -446,7 +446,7 @@ jobs:
       TEST_ENV: "stage"
       BROWSER: "chrome"
       <<: *chrome_version
-      TAGS: "--tags=~@full --tags=~@dev-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
+      TAGS: "--tags=~@full --tags=~@dev-only --tags=~@uat-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
     <<: *steps_run_browser_tests
 
   browser_selected_firefox_stage:
@@ -456,7 +456,7 @@ jobs:
       TEST_ENV: "stage"
       BROWSER: "firefox"
       <<: *firefox_version
-      TAGS: "--tags=~@full --tags=~@dev-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
+      TAGS: "--tags=~@full --tags=~@dev-only --tags=~@uat-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
     <<: *steps_run_browser_tests
 
   browser_all_chrome_uat:
@@ -466,7 +466,7 @@ jobs:
       TEST_ENV: "uat"
       BROWSER: "chrome"
       <<: *chrome_version
-      TAGS: "--tags=~@dev-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
+      TAGS: "--tags=~@dev-only --tags=~@stage-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
     <<: *steps_run_browser_tests
 
   browser_all_firefox_uat:
@@ -476,7 +476,7 @@ jobs:
       TEST_ENV: "uat"
       BROWSER: "firefox"
       <<: *firefox_version
-      TAGS: "--tags=~@dev-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
+      TAGS: "--tags=~@dev-only --tags=~@stage-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
     <<: *steps_run_browser_tests
 
   browser_selected_chrome_uat:
@@ -486,7 +486,7 @@ jobs:
       TEST_ENV: "uat"
       BROWSER: "chrome"
       <<: *chrome_version
-      TAGS: "--tags=~@full --tags=~@dev-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
+      TAGS: "--tags=~@full --tags=~@dev-only --tags=~@stage-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
     <<: *steps_run_browser_tests
 
   browser_selected_firefox_uat:
@@ -496,7 +496,7 @@ jobs:
       TEST_ENV: "uat"
       BROWSER: "firefox"
       <<: *firefox_version
-      TAGS: "--tags=~@full --tags=~@dev-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
+      TAGS: "--tags=~@full --tags=~@dev-only --tags=~@stage-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
     <<: *steps_run_browser_tests
 
   load_cms_tests_stage:
