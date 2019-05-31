@@ -96,14 +96,18 @@ def visit_page(context: Context, actor_alias: str, page_name: str):
 
     page = get_page_object(page_name)
 
-    logging.debug(
-        "%s will visit '%s' page using: '%s'", actor_alias, page_name, page.URL
-    )
     has_action(page, "visit")
 
     if is_special_case(page_name):
+        special_url = page.URLs[page_name.split(" - ")[1]]
+        logging.debug(
+            f"{actor_alias} will visit '{page_name}' page using: '{special_url}"
+        )
         page.visit(context.driver, page_name=page_name)
     else:
+        logging.debug(
+            f"{actor_alias} will visit '{page_name}' page using: '{page.URL}'"
+        )
         page.visit(context.driver)
 
     source = context.driver.page_source
