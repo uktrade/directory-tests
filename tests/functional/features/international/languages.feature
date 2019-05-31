@@ -31,10 +31,4 @@ Feature: View International site in various languages
       | Portuguese | Portuguese | 0.98        |
       | Spanish    | Spanish    | 0.98        |
       | Chinese    | Chinese    | 0.85        |
-
-    @bug
-    @CMS-1263
-    @fixme
-    Examples: 500 ISE
-      | selected   | expected   | lower limit |
-      | Arabic     | Arabic     | 0.85        |
+#      | Arabic     | Arabic     | 0.85        | This language is not available
