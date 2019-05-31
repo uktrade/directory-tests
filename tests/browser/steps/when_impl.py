@@ -77,8 +77,7 @@ def generic_set_basic_auth_creds(context: Context, page_name: str):
 # BrowserStack times out after 60s of inactivity
 # https://www.browserstack.com/automate/timeouts
 @retry(wait_fixed=5000, stop_max_attempt_number=5,
-    retry_on_exception=retry_if_webdriver_error, wrap_exception=False,
-)
+       retry_on_exception=retry_if_webdriver_error, wrap_exception=False)
 def visit_page(context: Context, actor_alias: str, page_name: str):
     """Will visit specific page.
 
