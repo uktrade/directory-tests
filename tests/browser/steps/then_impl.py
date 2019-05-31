@@ -43,6 +43,7 @@ from utils.gov_notify import (
     get_email_confirmation_notification,
     get_email_confirmations_with_matching_string,
 )
+from utils.gtm import get_gtm_datalayer_properties, replace_string_representations
 from utils.mailgun import mailgun_invest_find_contact_confirmation_email
 from utils.pdf import extract_text_from_pdf_bytes
 from utils.zendesk import find_tickets
@@ -529,3 +530,24 @@ def soo_contact_form_should_be_prepopulated(context: Context, actor_alias: str):
 
     has_action(page, "check_if_populated")
     page.check_if_populated(context.driver, form_data)
+
+
+def generic_check_gtm_datalayer_properties(context: Context, table: Table):
+    row_names = [
+        "businessUnit", "loginStatus", "siteLanguage", "siteSection",
+        "siteSubsection", "userId"
+    ]
+    table.require_columns(row_names)
+    raw_properties = {
+        name: row.get(name)
+        for name in row_names
+        for row in table
+    }
+    expected_properties = replace_string_representations(raw_properties)
+    found_properties = get_gtm_datalayer_properties(context.driver)
+
+    with assertion_msg(
+            f"Expected to see following GTM datalayer proeprties:\n"
+            f"'{expected_properties}'\n but got:\n'{found_properties}'"
+    ):
+        assert expected_properties == found_properties
