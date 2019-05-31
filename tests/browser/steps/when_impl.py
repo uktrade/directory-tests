@@ -358,7 +358,7 @@ def language_selector_change_to(
         f"{actor_alias} decided to change language on {visit_page} to"
         f" {preferred_language}"
     )
-    language_selector_open(context, actor_alias)
+    common_language_selector.open(context.driver, page=page)
     common_language_selector.change_to(context.driver, page, preferred_language)
 
 
