@@ -10,12 +10,12 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from settings import DIRECTORY_UI_SUPPLIER_URL
+from settings import EXRED_UI_URL
 
 NAME = "UK support directory"
 SERVICE = "Find a Supplier"
 TYPE = "landing"
-URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "investment-support-directory/")
+URL = urljoin(EXRED_UI_URL, "investment-support-directory/")
 PAGE_TITLE = ""
 
 
