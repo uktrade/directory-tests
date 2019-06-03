@@ -15,7 +15,7 @@ Feature: Google Tag Manager
 
     Examples: Listing pages
       | selected                | businessUnit  | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
-      | Landing                 | International | False       | en-gb        | HomePage    | DetailPage     | None   |
+      | Landing                 | International | False       | en-gb        | HomePage    | Empty string   | None   |
       | Industries              | International | False       | en-gb        | Topic       | ListingPage    | None   |
       | How to set up in the UK | Invest        | False       | en-gb        | Guide       | ListingPage    | None   |
 
