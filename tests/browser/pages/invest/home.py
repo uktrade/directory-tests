@@ -44,14 +44,22 @@ SELECTORS = {
         "heading": Selector(By.CSS_SELECTOR, "#eu-exit h2"),
         "text": Selector(By.CSS_SELECTOR, "#eu-exit p"),
         "image": Selector(By.CSS_SELECTOR, "#eu-exit img"),
-        "find out what's changing": Selector(By.CSS_SELECTOR, "#eu-exit a", type=ElementType.LINK),
+        "find out what's changing": Selector(
+            By.CSS_SELECTOR, "#eu-exit a", type=ElementType.LINK
+        ),
 
     },
     "uk setup guides": {
         "self": Selector(By.ID, "uk-setup-guides"),
-        "get started in the uk": Selector(By.ID, "how-to-setup-in-the-uk"),
-        "get help to set up or expand in the uk": Selector(By.ID, "investment-support-directory"),
-        "invest your capital in the uk": Selector(By.ID, "capital-investment"),
+        "get started in the uk": Selector(
+            By.CSS_SELECTOR, "#uk-setup-guides > div > div > div:nth-child(1) a"
+        ),
+        "get help to set up or expand in the uk": Selector(
+            By.CSS_SELECTOR, "#uk-setup-guides > div > div > div:nth-child(1) a"
+        ),
+        "invest your capital in the uk": Selector(
+            By.CSS_SELECTOR, "#uk-setup-guides > div > div > div:nth-child(1) a"
+        ),
     },
     "sectors": {
         "self": Selector(By.ID, "industries"),
