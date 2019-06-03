@@ -68,7 +68,18 @@ Feature: Header-Footer
       | selected                            |
       | Capital Investment - industry       |
       | Creative industries - industry      |
-      | Financial services - industry       |
       | Health and life sciences - industry |
       | Technology - industry               |
 #      | Feedback                            | it's a separate service with different header & footer
+
+    @dev-only
+    @full
+    Examples:
+      | selected                            |
+      | Financial services - industry       |
+
+    @uat-only
+    @full
+    Examples:
+      | selected                            |
+      | Financial services - industry       |
