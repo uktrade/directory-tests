@@ -146,8 +146,10 @@ HEADER_INTERNATIONAL = {
         "find a uk supplier": Selector(By.ID, "header-fas", type=ElementType.LINK),
         "industries": Selector(By.ID, "header-industries", type=ElementType.LINK),
     }
-
 }
+HEADER_INTERNATIONAL_WO_LANGUAGE_SELECTOR = dict(HEADER_INTERNATIONAL)
+HEADER_INTERNATIONAL_WO_LANGUAGE_SELECTOR["header"].pop("language selector")
+
 FOOTER_INTERNATIONAL = {
     "footer": {
         "great footer logo": Selector(By.ID, "great-footer-great-logo"),
