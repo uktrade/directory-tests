@@ -25,16 +25,25 @@ NAME = "Industry"
 NAMES = [
     "Aerospace",
     "Agritech",
+    "Automotive",
+    "Business & Government Partnerships",
     "Consumer & retail",
     "Creative services",
     "Cyber security",
+    "Education",
     "Energy",
+    "Engineering",
     "Food and drink",
     "Healthcare",
+    "Infrastructure",
+    "Innovation",
+    "Legal services",
     "Life sciences",
+    "Marine",
+    "Professional & financial services",
+    "Space",
     "Sports economy",
     "Technology",
-    "Legal services",
 ]
 SERVICE = "Find a Supplier"
 TYPE = "industry"
@@ -93,7 +102,7 @@ URLs = {
     "aerospace": urljoin(URL, "aerospace/"),
     "agritech": urljoin(URL, "agritech/"),
     "automotive": urljoin(URL, "automotive/"),
-    "business and government partnerships": urljoin(
+    "business & government partnerships": urljoin(
         URL, "business-and-government-partnerships/"
     ),
     "consumer & retail": urljoin(URL, "consumer-retail/"),
@@ -109,7 +118,7 @@ URLs = {
     "legal services": urljoin(URL, "legal-services/"),
     "life sciences": urljoin(URL, "life-sciences/"),
     "marine": urljoin(URL, "marine/"),
-    "professional and financial services": urljoin(
+    "professional & financial services": urljoin(
         URL, "professional-and-financial-services/"
     ),
     "space": urljoin(URL, "space/"),
