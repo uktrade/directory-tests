@@ -548,6 +548,7 @@ def generic_check_gtm_datalayer_properties(context: Context, table: Table):
 
     with assertion_msg(
             f"Expected to see following GTM datalayer proeprties:\n"
-            f"'{expected_properties}'\n but got:\n'{found_properties}'"
+            f"'{expected_properties}'\n but got:\n'{found_properties}'\non: "
+            f"{context.driver.current_url}"
     ):
         assert expected_properties == found_properties
