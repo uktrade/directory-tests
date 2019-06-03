@@ -769,7 +769,7 @@ def tick_captcha_checkbox(driver: WebDriver):
         raise NoSuchElementException(
             f"Captcha is not in Dev Mode on {driver.current_url}"
         )
-    im_not_a_robot = Selector(By.CSS_SELECTOR, ".recaptcha-checkbox-checkmark")
+    im_not_a_robot = Selector(By.CSS_SELECTOR, "#recaptcha-anchor")
     iframe = driver.find_element_by_tag_name("iframe")
     scroll_to(driver, iframe)
     driver.switch_to.frame(iframe)
