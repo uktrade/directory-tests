@@ -20,7 +20,6 @@ Feature: Google Tag Manager
       | Contact us | FindASupplier | False       | en-gb        | Industries  | LandingPageContact | None   |
 
     @industry
-    @dev-only
     Examples: Industry pages
       | selected                                      | businessUnit  | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
       | Aerospace - Industry                          | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |

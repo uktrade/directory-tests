@@ -19,9 +19,7 @@ Feature: Google Tag Manager
       | Industries | Invest       | False       | en-gb        | Industries  | ListingPage    | None   |
       | Contact us | Invest       | False       | en-gb        | Contact     | DetailPage     | None   |
 
-
     @industry
-    @dev-only
     Examples: Industry pages
       | selected                                       | businessUnit | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
       | Advanced manufacturing - Industry              | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
@@ -40,7 +38,6 @@ Feature: Google Tag Manager
       | Electrical networks - Industry                 | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
       | Energy - Industry                              | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
       | Energy from waste market - Industry            | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
-      | Financial services - Industry                  | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
       | Financial technology - Industry                | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
       | Food and drink - Industry                      | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
       | Food service and catering - Industry           | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
@@ -56,8 +53,13 @@ Feature: Google Tag Manager
       | Retail - Industry                              | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
       | Technology - Industry                          | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
 
-    @hpo
     @dev-only
+    @industry
+    Examples: Industry pages
+      | selected                                       | businessUnit | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
+      | Financial services - Industry                  | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
+
+    @hpo
     Examples: High-potential opportunities
       | selected                       | businessUnit | loginStatus | siteLanguage | siteSection                | siteSubsection | userId |
       | Advanced food production - HPO | Invest       | False       | en-gb        | HighPotentialOpportunities | DetailPage     | None   |
