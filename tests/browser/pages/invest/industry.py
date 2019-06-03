@@ -42,6 +42,7 @@ NAMES = [
     "Financial services",
     "Financial technology",
     "Food and drink",
+    "Food service and catering",
     "Free-from foods",
     "Health and life sciences",
     "Meat, poultry and dairy",
