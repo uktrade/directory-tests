@@ -10,6 +10,8 @@ def replace_string_representations(dictionary: dict) -> dict:
             result[key] = True
         elif value == "False":
             result[key] = False
+        elif value.lower() == "empty string":
+            result[key] = ''
         else:
             result[key] = value
     return result
