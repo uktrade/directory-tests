@@ -99,7 +99,7 @@ def visit_page(context: Context, actor_alias: str, page_name: str):
     has_action(page, "visit")
 
     if is_special_case(page_name):
-        special_url = page.URLs[page_name.split(" - ")[1]]
+        special_url = page.URLs[page_name.split(" - ")[1].lower()]
         logging.debug(
             f"{actor_alias} will visit '{page_name}' page using: '{special_url}"
         )

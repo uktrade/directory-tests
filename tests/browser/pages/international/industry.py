@@ -42,23 +42,23 @@ PAGE_TITLE = "great.gov.uk International - "
 
 
 URLs = {
-    "Aerospace": urljoin(URL, "aerospace/"),
-    "Agricultural technology": urljoin(URL, "agricultural-technology/"),
-    "Automotive": urljoin(URL, "automotive/"),
-    "Creative industries": urljoin(URL, "creative-industries/"),
-    "Cyber security": urljoin(URL, "cyber-security/"),
-    "Education": urljoin(URL, "education"),
-    "Engineering and manufacturing": urljoin(URL, "engineering-and-manufacturing/"),
-    "Financial services": urljoin(URL, "financial-services"),
-    "Food and drink": urljoin(URL, "food-and-drink/"),
-    "Healthcare and Life Sciences": urljoin(URL, "healthcare-and-life-sciences/"),
-    "Legal services": urljoin(URL, "legal-services/"),
-    "Maritime": urljoin(URL, "maritime/"),
-    "Nuclear energy": urljoin(URL, "nuclear-energy/"),
-    "Retail": urljoin(URL, "retail/"),
-    "Space": urljoin(URL, "space/"),
-    "Sports economy": urljoin(URL, "sports-economy/"),
-    "Technology": urljoin(URL, "technology/"),
+    "aerospace": urljoin(URL, "aerospace/"),
+    "agricultural technology": urljoin(URL, "agricultural-technology/"),
+    "automotive": urljoin(URL, "automotive/"),
+    "creative industries": urljoin(URL, "creative-industries/"),
+    "cyber security": urljoin(URL, "cyber-security/"),
+    "education": urljoin(URL, "education"),
+    "engineering and manufacturing": urljoin(URL, "engineering-and-manufacturing/"),
+    "financial services": urljoin(URL, "financial-services"),
+    "food and drink": urljoin(URL, "food-and-drink/"),
+    "healthcare and life sciences": urljoin(URL, "healthcare-and-life-sciences/"),
+    "legal services": urljoin(URL, "legal-services/"),
+    "maritime": urljoin(URL, "maritime/"),
+    "nuclear energy": urljoin(URL, "nuclear-energy/"),
+    "retail": urljoin(URL, "retail/"),
+    "space": urljoin(URL, "space/"),
+    "sports economy": urljoin(URL, "sports-economy/"),
+    "technology": urljoin(URL, "technology/"),
 }
 
 
@@ -71,7 +71,7 @@ SELECTORS.update(common_selectors.FOOTER_INTERNATIONAL)
 
 
 def visit(driver: WebDriver, *, page_name: str = None):
-    url = URLs[page_name.split(" - ")[1]] if page_name else URL
+    url = URLs[page_name.split(" - ")[1].lower()] if page_name else URL
     visit_url(driver, url)
 
 

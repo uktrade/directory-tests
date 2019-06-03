@@ -118,8 +118,7 @@ UNEXPECTED_ELEMENTS = {
 
 
 def visit(driver: WebDriver, *, page_name: str = None):
-    key = page_name.split(" - ")[1].lower()
-    url = URLs[key]
+    url = URLs[page_name.split(" - ")[1].lower()] if page_name else URL
     visit_url(driver, url)
 
 
