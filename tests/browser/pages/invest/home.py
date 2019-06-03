@@ -55,10 +55,10 @@ SELECTORS = {
             By.CSS_SELECTOR, "#uk-setup-guides > div > div > div:nth-child(1) a"
         ),
         "get help to set up or expand in the uk": Selector(
-            By.CSS_SELECTOR, "#uk-setup-guides > div > div > div:nth-child(1) a"
+            By.CSS_SELECTOR, "#uk-setup-guides > div > div > div:nth-child(2) a"
         ),
         "invest your capital in the uk": Selector(
-            By.CSS_SELECTOR, "#uk-setup-guides > div > div > div:nth-child(1) a"
+            By.CSS_SELECTOR, "#uk-setup-guides > div > div > div:nth-child(3) a"
         ),
     },
     "sectors": {
