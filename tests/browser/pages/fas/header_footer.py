@@ -16,7 +16,7 @@ HEADER_FOOTER_SELECTORS = {
         "for international businesses": Selector(
             By.ID, "great-global-header-international-link"
         ),
-        "language switcher": Selector(By.ID, "great-header-language-select"),
+        "language selector": Selector(By.ID, "great-header-language-select"),
         "logo": Selector(By.ID, "great-header-logo"),
         "invest": Selector(By.ID, "header-invest"),
         "find a uk supplier": Selector(By.ID, "header-fas"),
