@@ -34,8 +34,8 @@ Feature: Google Tag Manager
     @uat-only
     Examples: Industry pages
       | selected                                 | businessUnit  | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
-      | Aerospace - Industry                     | International | False       | en-gb        | Sector      | DetailPage     | None   |
       | Automotive - Industry                    | International | False       | en-gb        | Sector      | DetailPage     | None   |
+      | Aerospace - Industry                     | International | False       | en-gb        | Sector      | DetailPage     | None   |
       | Creative industries - Industry           | International | False       | en-gb        | Sector      | DetailPage     | None   |
       | Education - Industry                     | International | False       | en-gb        | Sector      | DetailPage     | None   |
       | Engineering and manufacturing - Industry | International | False       | en-gb        | Sector      | DetailPage     | None   |
