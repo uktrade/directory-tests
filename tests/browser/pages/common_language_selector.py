@@ -52,6 +52,15 @@ ELEMENTS_ON = {
         "العربيّة": "ar",
         "Français": "fr",
     },
+    "invest - home": {
+        "English": "en-gb",
+        "简体中文": "zh-hans",
+        "Deutsch": "de",
+        "日本語": "ja",
+        "español": "es",
+        "Português": "pt",
+        "Français": "fr",
+    },
 }
 KEYBOARD_NAVIGABLE_ELEMENTS = {
     "export readiness - home": [
