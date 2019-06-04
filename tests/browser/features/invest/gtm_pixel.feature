@@ -13,11 +13,17 @@ Feature: Google Tag Manager
       | businessUnit   | loginStatus   | siteLanguage   | siteSection   | siteSubsection   | userId   |
       | <businessUnit> | <loginStatus> | <siteLanguage> | <siteSection> | <siteSubsection> | <userId> |
 
+    @bug
+    @CMS-1634
+    @fixme
     Examples: Listing pages
       | selected   | businessUnit | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
       | Home       | Invest       | False       | en-gb        | LandingPage | Empty string   | None   |
-      | Industries | Invest       | False       | en-gb        | Industries  | ListingPage    | None   |
       | Contact us | Invest       | False       | en-gb        | Contact     | DetailPage     | None   |
+
+    Examples: Listing pages
+      | selected   | businessUnit | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
+      | Industries | Invest       | False       | en-gb        | Industries  | ListingPage    | None   |
 
     @industry
     Examples: Industry pages
@@ -67,6 +73,9 @@ Feature: Google Tag Manager
       | Rail infrastructure - HPO      | Invest       | False       | en-gb        | HighPotentialOpportunities | DetailPage     | None   |
 
 
+  @bug
+  @CMS-1634
+  @fixme
   @TT-1500
   @internationalisation
   Scenario Outline: GTM properties should be properly set on "Invest - <selected>" page viewed in "<preferred_language>"

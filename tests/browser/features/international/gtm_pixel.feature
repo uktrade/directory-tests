@@ -13,9 +13,15 @@ Feature: Google Tag Manager
       | businessUnit   | loginStatus   | siteLanguage   | siteSection   | siteSubsection   | userId   |
       | <businessUnit> | <loginStatus> | <siteLanguage> | <siteSection> | <siteSubsection> | <userId> |
 
-    Examples: Listing pages
+    @bug
+    @CMS-1634
+    @fixme
+    Examples: Landing page
       | selected                | businessUnit  | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
       | Landing                 | International | False       | en-gb        | HomePage    | Empty string   | None   |
+
+    Examples: Listing pages
+      | selected                | businessUnit  | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
       | Industries              | International | False       | en-gb        | Topic       | ListingPage    | None   |
       | How to set up in the UK | Invest        | False       | en-gb        | Guide       | ListingPage    | None   |
 
@@ -76,6 +82,9 @@ Feature: Google Tag Manager
       | UK visas and migration - UK setup guide                           | International | False       | en-gb        | Article     | DetailPage     | None   |
 
 
+  @bug
+  @CMS-1634
+  @fixme
   @TT-1500
   @internationalisation
   Scenario Outline: GTM properties should be properly set on "International - <selected>" page viewed in "<preferred_language>"

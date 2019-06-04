@@ -13,9 +13,15 @@ Feature: Google Tag Manager
       | businessUnit   | loginStatus   | siteLanguage   | siteSection   | siteSubsection   | userId   |
       | <businessUnit> | <loginStatus> | <siteLanguage> | <siteSection> | <siteSubsection> | <userId> |
 
+    @bug
+    @CMS-1634
+    @fixme
     Examples: Listing pages
       | selected   | businessUnit  | loginStatus | siteLanguage | siteSection | siteSubsection     | userId |
       | Home       | FindASupplier | False       | en-gb        | HomePage    | Empty string       | None   |
+
+    Examples: Listing pages
+      | selected   | businessUnit  | loginStatus | siteLanguage | siteSection | siteSubsection     | userId |
       | Industries | FindASupplier | False       | en-gb        | Industries  | LandingPage        | None   |
       | Contact us | FindASupplier | False       | en-gb        | Industries  | LandingPageContact | None   |
 
@@ -45,6 +51,9 @@ Feature: Google Tag Manager
       | Technology - Industry                         | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
 
 
+  @bug
+  @CMS-1634
+  @fixme
   @TT-1500
   @internationalisation
   Scenario Outline: GTM properties should be properly set on "Find a Supplier - <selected>" page viewed in "<preferred_language>"
