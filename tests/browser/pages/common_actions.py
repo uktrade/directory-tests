@@ -23,6 +23,7 @@ import requests
 from behave.runner import Context
 from retrying import retry
 from selenium.common.exceptions import (
+    ElementClickInterceptedException,
     NoSuchElementException,
     TimeoutException,
     WebDriverException,
@@ -520,6 +521,31 @@ def check_hash_of_remote_file(expected_hash: str, file_url: str):
         f"Expected hash of file downloaded from {file_url} to be {expected_hash} but got {file_hash}"
     ):
         assert expected_hash == file_hash
+
+
+@contextmanager
+def try_js_click_on_element_click_intercepted_exception(
+        driver: WebDriver, element: WebElement
+):
+    """Try to use JS to perform click on an element if regular way didn't work
+
+    This is to handle situations when clicking on element triggers:
+        selenium.common.exceptions.ElementClickInterceptedException:
+            Message: element click intercepted:
+            Element <input id="id_terms" name="terms" type="checkbox">
+            is not clickable at point (714, 1235).
+            Other element would receive the click:
+            <label for="id_terms">...</label>
+
+    See: https://stackoverflow.com/a/44916498
+    """
+    try:
+        yield
+    except ElementClickInterceptedException as e:
+        logging.warning(
+            f"Click was intercepted. Will try JS workaround. Exception msg: "
+            f"{e.msg}")
+        driver.execute_script("arguments[0].click();", element)
 
 
 @contextmanager
