@@ -89,8 +89,8 @@ Feature: Google Tag Manager
 
     Examples: Various pages
       | selected | preferred_language | businessUnit  | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
-      | Landing  | Deutsch            | International | False       | de           | HomePage    | DetailPage     | None   |
-      | Landing  | Français           | International | False       | fr           | HomePage    | DetailPage     | None   |
-      | Landing  | español            | International | False       | es           | HomePage    | DetailPage     | None   |
-      | Landing  | Português          | International | False       | pt           | HomePage    | DetailPage     | None   |
-      | Landing  | 简体中文            | International | False       | zh-hans      | HomePage    | DetailPage     | None   |
+      | Landing  | Deutsch            | International | False       | de           | HomePage    | Empty string   | None   |
+      | Landing  | Français           | International | False       | fr           | HomePage    | Empty string   | None   |
+      | Landing  | español            | International | False       | es           | HomePage    | Empty string   | None   |
+      | Landing  | Português          | International | False       | pt           | HomePage    | Empty string   | None   |
+      | Landing  | 简体中文            | International | False       | zh-hans      | HomePage    | Empty string   | None   |

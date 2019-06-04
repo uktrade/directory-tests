@@ -80,8 +80,8 @@ Feature: Google Tag Manager
 
     Examples: Various pages
       | selected | preferred_language | businessUnit | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
-      | Home     | Deutsch            | Invest       | False       | de           | LandingPage | DetailPage     | None   |
-      | Home     | Français           | Invest       | False       | fr           | LandingPage | DetailPage     | None   |
-      | Home     | español            | Invest       | False       | es           | LandingPage | DetailPage     | None   |
-      | Home     | Português          | Invest       | False       | pt           | LandingPage | DetailPage     | None   |
-      | Home     | 简体中文            | Invest       | False       | zh-hans      | LandingPage | DetailPage     | None   |
+      | Home     | Deutsch            | Invest       | False       | de           | LandingPage | Empty string   | None   |
+      | Home     | Français           | Invest       | False       | fr           | LandingPage | Empty string   | None   |
+      | Home     | español            | Invest       | False       | es           | LandingPage | Empty string   | None   |
+      | Home     | Português          | Invest       | False       | pt           | LandingPage | Empty string   | None   |
+      | Home     | 简体中文            | Invest       | False       | zh-hans      | LandingPage | Empty string   | None   |
