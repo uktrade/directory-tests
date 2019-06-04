@@ -9,6 +9,7 @@ from urllib.parse import urlparse
 import requests
 from behave.model import Table
 from behave.runner import Context
+from datadiff import diff
 from retrying import retry
 
 from pages import (
@@ -549,6 +550,7 @@ def generic_check_gtm_datalayer_properties(context: Context, table: Table):
     with assertion_msg(
             f"Expected to see following GTM datalayer proeprties:\n"
             f"'{expected_properties}'\n but got:\n'{found_properties}'\non: "
-            f"{context.driver.current_url}"
+            f"{context.driver.current_url}\ndiff:\n"
+            f"{diff(expected_properties, found_properties)}"
     ):
         assert expected_properties == found_properties
