@@ -152,7 +152,10 @@ Feature: High Potential Opportunities
       | Documents        |
       | Error reporting  |
     And "Annette Geissinger" should receive HPO enquiry confirmation email
-    And HPO Agent should receive HPO enquiry email from "Annette Geissinger"
+#    @bug
+#    @TT-1509
+#    @fixme
+#    And HPO Agent should receive HPO enquiry email from "Annette Geissinger"
 
     Examples: HPO pages
       | selected                 |
