@@ -33,14 +33,14 @@ PAGE_TITLE = " - great.gov.uk International"
 
 
 URLs = {
-    "Access finance in the UK": urljoin(URL, "access-finance-in-the-uk/"),
-    "Establish a UK business base": urljoin(URL, "establish-a-base-for-business-in-the-uk/"),
-    "Hire skilled workers for your UK operations": urljoin(URL, "hire-skilled-workers-for-your-uk-operations/"),
-    "Open a UK business bank account": urljoin(URL, "open-a-uk-business-bank-account/"),
-    "Register a company in the UK": urljoin(URL, "register-a-company-in-the-uk/"),
-    "Research and development (R&D) support in the UK": urljoin(URL, "research-and-development-rd-support-in-the-uk/"),
-    "UK tax and incentives": urljoin(URL, "uk-tax-and-incentives/"),
-    "UK visas and migration": urljoin(URL, "uk-visas-and-migration/"),
+    "access finance in the uk": urljoin(URL, "access-finance-in-the-uk/"),
+    "establish a uk business base": urljoin(URL, "establish-a-base-for-business-in-the-uk/"),
+    "hire skilled workers for your uk operations": urljoin(URL, "hire-skilled-workers-for-your-uk-operations/"),
+    "open a uk business bank account": urljoin(URL, "open-a-uk-business-bank-account/"),
+    "register a company in the uk": urljoin(URL, "register-a-company-in-the-uk/"),
+    "research and development (r&d) support in the uk": urljoin(URL, "research-and-development-rd-support-in-the-uk/"),
+    "uk tax and incentives": urljoin(URL, "uk-tax-and-incentives/"),
+    "uk visas and migration": urljoin(URL, "uk-visas-and-migration/"),
 }
 
 
@@ -53,7 +53,7 @@ SELECTORS.update(common_selectors.FOOTER_INTERNATIONAL)
 
 
 def visit(driver: WebDriver, *, page_name: str = None):
-    url = URLs[page_name.split(" - ")[1]] if page_name else URL
+    url = URLs[page_name.split(" - ")[1].lower()] if page_name else URL
     visit_url(driver, url)
 
 
