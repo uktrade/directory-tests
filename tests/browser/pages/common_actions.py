@@ -982,7 +982,10 @@ def tick_checkboxes_by_labels(
             )
             if not checkbox.get_property("checked"):
                 logging.debug(f"'{key}' checkbox is not ticked, checking it")
-                checkbox.click()
+                with try_js_click_on_element_click_intercepted_exception(
+                        driver, checkbox
+                ):
+                    checkbox.click()
         else:
             logging.debug(f"'{key}' checkbox should be left unchanged")
             checkbox = find_element(
@@ -990,4 +993,7 @@ def tick_checkboxes_by_labels(
             )
             if checkbox.get_property("checked"):
                 logging.debug(f"'{key}' checkbox is ticked, unchecking it")
-                checkbox.click()
+                with try_js_click_on_element_click_intercepted_exception(
+                        driver, checkbox
+                ):
+                    checkbox.click()
