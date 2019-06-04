@@ -19,7 +19,8 @@ from pages.common_actions import (
     pick_option,
     take_screenshot,
     tick_captcha_checkbox,
-    tick_checkboxes_by_labels,
+    tick_checkboxes,
+    try_js_click_on_element_click_intercepted_exception,
 )
 from pages.fas.header_footer import HEADER_FOOTER_SELECTORS
 from settings import DIRECTORY_UI_SUPPLIER_URL
@@ -43,7 +44,7 @@ SELECTORS = {
         "industry": Selector(By.ID, "id_sector", type=ElementType.SELECT),
         "subject": Selector(By.ID, "id_subject", type=ElementType.INPUT),
         "message": Selector(By.ID, "id_body", type=ElementType.TEXTAREA),
-        "t&c": Selector(By.ID, "id_terms", type=ElementType.LABEL, is_visible=False),
+        "t&c": Selector(By.ID, "id_terms", type=ElementType.CHECKBOX, is_visible=False),
         "send": SEND_BUTTON,
     }
 }
@@ -88,7 +89,7 @@ def fill_out(driver: WebDriver, contact_us_details: dict, *, captcha: bool = Tru
     fill_out_input_fields(driver, form_selectors, contact_us_details)
     pick_option(driver, form_selectors, contact_us_details)
     fill_out_textarea_fields(driver, form_selectors, contact_us_details)
-    tick_checkboxes_by_labels(driver, form_selectors, contact_us_details)
+    tick_checkboxes(driver, form_selectors, contact_us_details)
 
     if captcha:
         tick_captcha_checkbox(driver)
@@ -101,5 +102,6 @@ def submit(driver: WebDriver):
     button = find_element(
         driver, SEND_BUTTON, element_name="Send button", wait_for_it=False
     )
-    button.click()
+    with try_js_click_on_element_click_intercepted_exception(driver, button):
+        button.click()
     take_screenshot(driver, "After submitting the contact supplier form")

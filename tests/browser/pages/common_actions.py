@@ -964,7 +964,10 @@ def tick_checkboxes(
                 driver, selector, element_name=key, wait_for_it=False
             )
             if not checkbox.get_property("checked"):
-                checkbox.click()
+                with try_js_click_on_element_click_intercepted_exception(
+                        driver, checkbox
+                ):
+                    checkbox.click()
 
 
 def tick_checkboxes_by_labels(
