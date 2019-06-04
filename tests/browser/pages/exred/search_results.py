@@ -25,7 +25,7 @@ from settings import EXRED_UI_URL
 NAME = "Search results"
 SERVICE = "Export Readiness"
 TYPE = "Search"
-URL = urljoin(EXRED_UI_URL, "/search/?q=")
+URL = urljoin(EXRED_UI_URL, "/search/?")
 
 PAGES = Selector(By.CSS_SELECTOR, "ul.navigation li")
 PAGINATION = Selector(By.CSS_SELECTOR, "div.pagination")
