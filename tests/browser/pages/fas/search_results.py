@@ -20,7 +20,7 @@ from pages.common_actions import (
     find_elements,
     pick_option,
     take_screenshot,
-    tick_checkboxes,
+    tick_checkboxes_by_labels,
 )
 from pages.fas.header_footer import HEADER_FOOTER_SELECTORS
 from settings import DIRECTORY_UI_SUPPLIER_URL
@@ -61,7 +61,10 @@ SELECTORS = {
         "sector": Selector(By.ID, "id_sector", type=ElementType.SELECT),
         "company name": Selector(By.ID, "id_company_name", type=ElementType.INPUT),
         "country": Selector(By.ID, "id_country", type=ElementType.INPUT),
-        "t&c": Selector(By.ID, "id_terms", type=ElementType.CHECKBOX),
+        "t&c": Selector(
+            By.CSS_SELECTOR, "label[for=id_terms]", type=ElementType.LABEL,
+            is_visible=False
+        ),
     },
     "subscribe": {
         "itself": Selector(By.CSS_SELECTOR, "div.ed-landing-page-form-container"),
@@ -131,7 +134,7 @@ def fill_out(driver: WebDriver, contact_us_details: dict):
     form_selectors = SELECTORS["newsletter form"]
     fill_out_input_fields(driver, form_selectors, contact_us_details)
     pick_option(driver, form_selectors, contact_us_details)
-    tick_checkboxes(driver, form_selectors, contact_us_details)
+    tick_checkboxes_by_labels(driver, form_selectors, contact_us_details)
     take_screenshot(driver, "After filling out the newsletter form")
 
 
