@@ -40,6 +40,7 @@ __all__ = [
     "ukef_get_finance",
     "ukef_tell_us_how_we_can_help",
     "ukef_thank_you",
+    "ukef_trade_finance",
     "ukef_what_would_you_like_to_know",
     "ukef_your_details",
 ]
