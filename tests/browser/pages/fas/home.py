@@ -17,7 +17,7 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from pages.fas.header_footer import HEADER_FOOTER_SELECTORS
+from pages.fas.header_footer import HEADER_FOOTER_SELECTORS_W_LANGUAGE_SELECTOR
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
 NAME = "Home"
@@ -74,7 +74,7 @@ SELECTORS = {
         ),
     },
 }
-SELECTORS.update(HEADER_FOOTER_SELECTORS)
+SELECTORS.update(HEADER_FOOTER_SELECTORS_W_LANGUAGE_SELECTOR)
 
 
 def visit(driver: WebDriver):

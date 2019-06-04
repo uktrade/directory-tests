@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Find a Supplier - Common header/footer selectors"""
+import copy
 
 from selenium.webdriver.common.by import By
 
@@ -16,7 +17,6 @@ HEADER_FOOTER_SELECTORS = {
         "for international businesses": Selector(
             By.ID, "great-global-header-international-link"
         ),
-        "language selector": Selector(By.ID, "great-header-language-select"),
         "logo": Selector(By.ID, "great-header-logo"),
         "invest": Selector(By.ID, "header-invest"),
         "find a uk supplier": Selector(By.ID, "header-fas"),
@@ -35,3 +35,9 @@ HEADER_FOOTER_SELECTORS = {
         "copyright": Selector(By.ID, "great-footer-copyright"),
     },
 }
+HEADER_FOOTER_SELECTORS_W_LANGUAGE_SELECTOR = copy.deepcopy(HEADER_FOOTER_SELECTORS)
+HEADER_FOOTER_SELECTORS_W_LANGUAGE_SELECTOR["header"].update(
+    {
+        "language selector": Selector(By.ID, "great-header-language-select"),
+    }
+)
