@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 """Selectors for various common page components"""
+import copy
+
 from pages import ElementType
 from pages.common_actions import By, Selector
 from settings import (
@@ -147,7 +149,7 @@ HEADER_INTERNATIONAL = {
         "industries": Selector(By.ID, "header-industries", type=ElementType.LINK),
     }
 }
-HEADER_INTERNATIONAL_WO_LANGUAGE_SELECTOR = dict(HEADER_INTERNATIONAL)
+HEADER_INTERNATIONAL_WO_LANGUAGE_SELECTOR = copy.deepcopy(HEADER_INTERNATIONAL)
 HEADER_INTERNATIONAL_WO_LANGUAGE_SELECTOR["header"].pop("language selector")
 
 FOOTER_INTERNATIONAL = {
