@@ -23,7 +23,7 @@ from settings import EXRED_UI_URL
 NAME = "What would you like to know more about?"
 SERVICE = "Export Readiness"
 TYPE = "UKEF Contact us"
-URL = urljoin(EXRED_UI_URL, "get-finance/contact/")
+URL = urljoin(EXRED_UI_URL, "get-finance/your-details/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 BREADCRUMB_LINKS = Selector(By.CSS_SELECTOR, "div.breadcrumbs a")
