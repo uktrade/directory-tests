@@ -121,22 +121,22 @@ Feature: Find a Supplier
     When "Annette Geissinger" searches for company "Y" on FAS using selected company's details
       | company detail |
       | title          |
-      | number         |
-      | keywords       |
-      | website        |
+#      | keywords       | see TT-1525
       | summary        |
       | description    |
       | slug           |
+#      | number         | see TT-1514
+#      | website        |
 
     Then "Annette Geissinger" should be able to find company "Y" on FAS using selected company's details
       | company detail |
       | title          |
-      | number         |
-      | keywords       |
-      | website        |
+#      | keywords       | see TT-1525
       | summary        |
       | description    |
       | slug           |
+#      | number         | see TT-1514
+#      | website        |
 
 
   @ED-2000
