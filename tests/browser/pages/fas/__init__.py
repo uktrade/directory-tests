@@ -7,6 +7,7 @@ __all__ = [
     "industries",
     "industry",
     "isd_landing",
+    "isd_search_results",
     "search_results",
     "thank_you_for_your_message",
 ]
