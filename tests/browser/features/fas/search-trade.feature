@@ -1,6 +1,9 @@
 @search
 Feature: Trade - Search
 
+  Background:
+    Given basic authentication is done for "Find a Supplier - Home" page
+
   @bug
   @TT-1512
   @fixed
