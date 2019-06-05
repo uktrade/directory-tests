@@ -119,56 +119,22 @@ from tests.settings import (
     WEBPs,
 )
 
+from directory_constants.expertise import (
+    BUSINESS_SUPPORT,
+    FINANCIAL,
+    HUMAN_RESOURCES,
+    LEGAL,
+    MANAGEMENT_CONSULTING,
+    PUBLICITY,
+)
+
 INDUSTRIES_FOR_PRODUCTS_AND_SERVICES = {
-    "financial": [
-        "Opening bank accounts",
-        "Accounting and Tax (including registration for VAT and PAYE)",
-        "Insurance",
-        "Raising Capital",
-        "Regulatory support",
-        "Mergers and Acquisitions",
-    ],
-    "management-consulting": [
-        "Business development",
-        "Product safety regulation and compliance",
-        "Commercial/pricing strategy",
-        "Workforce development",
-        "Strategy & long-term planning",
-        "Risk consultation",
-    ],
-    "human-resources": [
-        "Staff management & progression",
-        "Onboarding, including new starter support and contracts of employment",
-        "Payroll",
-        "Salary benchmarking and employee benefits ",
-        "Succession planning",
-        "Employment & talent research",
-        "Sourcing and Hiring",
-    ],
-    "legal": [
-        "Company incorporation",
-        "Employment",
-        "Immigration",
-        "Land use planning",
-        "Intellectual property",
-        "Data Protection and Information Assurance",
-    ],
-    "publicity-and-communication": [
-        "Public Relations",
-        "Branding",
-        "Social Media",
-        "Public Affairs",
-        "Translation services"
-        "Advertising",
-        "Marketing",
-    ],
-    "business-support": [
-        "Business relocation",
-        "Planning consultants",
-        "Facilities (water, wifi, electricity)",
-        "Translation services",
-        "Staff and family relocation including schooling for children",
-    ],
+    "financial": FINANCIAL,
+    "management-consulting": MANAGEMENT_CONSULTING,
+    "human-resources": HUMAN_RESOURCES,
+    "legal": LEGAL,
+    "publicity-and-communication": PUBLICITY,
+    "business-support": BUSINESS_SUPPORT,
     "other": sentence().split(),
 }
 
