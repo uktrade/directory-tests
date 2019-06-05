@@ -37,6 +37,12 @@ PROFILE_LINKS = Selector(
     By.CSS_SELECTOR, "div.public-company-profiles-result-item div.span9 a"
 )
 SELECTORS = {
+    "search form": {
+        "itself": Selector(By.ID, "fassearch-intro"),
+        "search box label": Selector(By.CSS_SELECTOR, "label[for=id_q]"),
+        "search box": Selector(By.ID, "id_q"),
+        "search button": Selector(By.CSS_SELECTOR, "#fassearch-intro input.button.button-primary")
+    },
     "filters": {
         "itself": Selector(By.ID, "ed-search-filters-container"),
         "title": Selector(By.ID, "ed-search-filters-title"),
