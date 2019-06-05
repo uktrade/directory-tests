@@ -32,7 +32,8 @@ Feature: Header-Footer
   @header
   @footer
   Scenario: Any Exporter should see correct EIG header logo & GREAT footer logo on "Export Opportunities - Home" page
-    Given "Robert" visits the "Export Opportunities - Home" page
+    Given basic authentication is done for "Export Opportunities - Home" page
+    And "Robert" visits the "Export Opportunities - Home" page
 
     Then "Robert" should see correct "EIG" logo
     And "Robert" should see correct "Great - footer" logo
