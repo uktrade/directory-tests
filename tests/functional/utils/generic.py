@@ -1427,11 +1427,12 @@ def get_number_of_search_result_pages(response: Response) -> int:
     """
     no_page_counter = 0
     css_selector = (
-        ".company-profile-details-body-toolbar-bottom" " span.current::text"
+        ".company-profile-details-body-toolbar-bottom span.current::text"
     )
     pages = extract_by_css(response, css_selector).strip()
     page_numbers = [int(word) for word in pages.split() if word.isdigit()]
     last_page = page_numbers[-1] if len(page_numbers) == 2 else no_page_counter
+    logging.debug(f"Number of search result pages: {last_page}")
     return last_page
 
 
