@@ -1034,6 +1034,9 @@ def profile_update_company_details(
     change_size = DETAILS["SIZE"] in details_to_update
     change_sector = DETAILS["SECTOR"] in details_to_update
     change_keywords = DETAILS["KEYWORDS"] in details_to_update
+    change_other_keywords = DETAILS["OTHER_KEYWORDS"] in details_to_update
+    if change_other_keywords:
+        change_keywords = True
 
     # Step 1 - Update company's details
     if any([change_name, change_website, change_size, change_sector]):
@@ -1062,7 +1065,10 @@ def profile_update_company_details(
     # Step 3 - Go to the Edit Sector page
     industries = INDUSTRIES_FOR_PRODUCTS_AND_SERVICES
     if change_keywords:
-        industry = random.choice(list(industries.keys()))
+        if change_other_keywords:
+            industry = "other"
+        else:
+            industry = random.choice(list(industries.keys()))
         response = profile_edit_products_and_services_industry.submit(
             actor.session,
             industry=industry,
@@ -1082,6 +1088,7 @@ def profile_update_company_details(
             actor.session,
             industry=industry,
             keywords=keywords,
+            separator="," if change_other_keywords else "|",
         )
         context.response = response
 

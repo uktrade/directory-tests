@@ -114,7 +114,7 @@ Feature: Find a Supplier
     And "Peter Alder" has created verified and published FAS business profile for randomly selected company "Y"
     And "Peter Alder" updates company's details
       | detail         |
-      | keywords       |
+      | other keywords |
     And "Peter Alder" has updated business details
     And "Peter Alder" gets the slug for company "Y"
 
