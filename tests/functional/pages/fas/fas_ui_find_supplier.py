@@ -7,7 +7,7 @@ from retrying import retry
 
 from tests import get_absolute_url
 from tests.functional.pages import Services
-from tests.functional.utils.generic import escape_html
+from tests.functional.utils.generic import escape_html, extract_page_contents
 from tests.functional.utils.request import Method, check_response, make_request
 
 SERVICE = Services.FAS
@@ -58,15 +58,15 @@ def should_be_here(response, *, number=None):
 
 
 def should_see_company(response: Response, company_title: str) -> bool:
-    content = response.content.decode("utf-8").lower()
+    content = extract_page_contents(response.content.decode("utf-8")).lower()
     no_match = "did not match any uk trade profiles" in content
     contains_company_title = escape_html(company_title).lower() in content
     return contains_company_title and not no_match
 
 
 def should_not_see_company(response: Response, company_title: str) -> bool:
-    content = response.content.decode("utf-8")
-    return escape_html(company_title, upper=True) not in content
+    content = extract_page_contents(response.content.decode("utf-8")).lower()
+    return escape_html(company_title).lower() not in content
 
 
 def should_see_no_matches(response: Response, *, term: str = None):
