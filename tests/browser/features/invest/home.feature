@@ -99,7 +99,7 @@ Feature: Invest home page
 
     When "Robert" decides to "Get help to set up or expand in the UK"
 
-    Then "Robert" should be on the "Find a Supplier - UK support directory" page
+    Then "Robert" should be on the "Find a Supplier - ISD" page
 
 
   @HPO
@@ -112,7 +112,7 @@ Feature: Invest home page
     And "Robert" should see content specific to "Invest - <selected> - hpo" page
 
     Examples: UK Setup Guides
-      | selected                 |
+      | selected                          |
       | Advanced food production |
-      | Lightweight structures   |
-      | Rail infrastructure      |
+      | Lightweight structures            |
+      | Rail infrastructure               |
