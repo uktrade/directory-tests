@@ -8,6 +8,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages import common_selectors
 from pages.common_actions import (
+    assertion_msg,
     check_for_sections,
     check_url,
     take_screenshot,
@@ -84,3 +85,19 @@ def should_be_here(driver: WebDriver, *, page_name: str):
 
 def should_see_sections(driver: WebDriver, names: List[str]):
     check_for_sections(driver, all_sections=SELECTORS, sought_sections=names)
+
+
+def clean_name(name: str) -> str:
+    return name.split(" - ")[1].strip()
+
+
+def should_see_content_for(driver: WebDriver, industry_name: str):
+    source = driver.page_source
+    industry_name = clean_name(industry_name)
+    logging.debug("Looking for: {}".format(industry_name))
+    with assertion_msg(
+            "Expected to find term '%s' in the source of the page %s",
+            industry_name,
+            driver.current_url,
+    ):
+        assert industry_name.lower() in source.lower()
