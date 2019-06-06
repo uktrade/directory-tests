@@ -29,14 +29,13 @@ NAMES = [
 SERVICE = "invest"
 TYPE = "HPO"
 URL = urljoin(INVEST_UI_URL, "high-potential-opportunities/")
-BASE_URL = urljoin(INVEST_UI_URL, "high-potential-opportunities/")
 PAGE_TITLE = "high potential"
 
 
 URLs = {
-    "advanced food production": urljoin(BASE_URL, "food-production/"),
-    "lightweight structures": urljoin(BASE_URL, "lightweight-structures/"),
-    "rail infrastructure": urljoin(BASE_URL, "rail-infrastructure/"),
+    "advanced food production": urljoin(URL, "food-production/"),
+    "lightweight structures": urljoin(URL, "lightweight-structures/"),
+    "rail infrastructure": urljoin(URL, "rail-infrastructure/"),
 }
 
 
