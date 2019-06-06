@@ -5,6 +5,7 @@ Feature: Invest home page
   Background:
     Given basic authentication is done for "Invest - Home" page
 
+  @dev-only
   @CMS-157
   Scenario: Visitors should be able to view "Invest home" page
     Given "Robert" visits the "Invest - home" page
@@ -13,11 +14,26 @@ Feature: Invest home page
       | Sections                     |
       | Header                       |
       | Breadcrumbs                  |
-#      | Beta bar                     |
       | EU exit news banner          |
       | Benefits                     |
       | UK setup guides              |
-#      | The UK and the EU            |
+      | Sectors                      |
+      | High-Potential Opportunities |
+      | How we help                  |
+      | Contact us                   |
+      | Error reporting              |
+      | Footer                       |
+
+  @stage-only
+  @CMS-157
+  Scenario: Visitors should be able to view "Invest home" page
+    Given "Robert" visits the "Invest - home" page
+
+    Then "Robert" should see following sections
+      | Sections                     |
+      | Header                       |
+      | Breadcrumbs                  |
+      | UK setup guides              |
       | Sectors                      |
       | High-Potential Opportunities |
       | How we help                  |
