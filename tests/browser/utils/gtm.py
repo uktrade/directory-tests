@@ -40,6 +40,7 @@ def get_gtm_datalayer_properties(driver: WebDriver) -> dict:
     Only if a value contains string representation of boolean & None type.
     """
     script_result = driver.execute_script('return window.dataLayer;')
+    assert script_result, f"window.dataLayer on {driver.current_url} is empty!"
 
     datalayer_raw = {
         key: value
