@@ -51,7 +51,7 @@ URLs = {
     "engineering and manufacturing": urljoin(URL, "engineering-and-manufacturing/"),
     "financial services": urljoin(URL, "financial-services"),
     "food and drink": urljoin(URL, "food-and-drink/"),
-    "healthcare and life sciences": urljoin(URL, "healthcare-and-life-sciences/"),
+    "healthcare and life sciences": urljoin(URL, "health-and-life-sciences/"),
     "legal services": urljoin(URL, "legal-services/"),
     "maritime": urljoin(URL, "maritime/"),
     "nuclear energy": urljoin(URL, "nuclear-energy/"),
