@@ -54,7 +54,25 @@ Feature: Google Tag Manager
       | Pharmaceutical manufacturing - Industry        | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
       | Retail - Industry                              | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
 
-    @dev-only
+    @hpo
+    Examples: High-potential opportunities
+      | selected                       | businessUnit | loginStatus | siteLanguage | siteSection                | siteSubsection | userId |
+      | Advanced food production - HPO | Invest       | False       | en-gb        | HighPotentialOpportunities | DetailPage     | None   |
+      | Lightweight structures - HPO   | Invest       | False       | en-gb        | HighPotentialOpportunities | DetailPage     | None   |
+      | Rail infrastructure - HPO      | Invest       | False       | en-gb        | HighPotentialOpportunities | DetailPage     | None   |
+
+
+  @dev-only
+  @TT-1500
+  Scenario Outline: GTM properties should be properly set when redirecting from "Invest - <selected>" page to International site
+    Given basic authentication is done for "International - Landing" page
+
+    When "Robert" goes to the "Invest - <selected>" page
+
+    Then Google Tag Manager properties should be set to proper values
+      | businessUnit   | loginStatus   | siteLanguage   | siteSection   | siteSubsection   | userId   |
+      | <businessUnit> | <loginStatus> | <siteLanguage> | <siteSection> | <siteSubsection> | <userId> |
+
     @industry
     Examples: Industry pages Available via International site
       | selected                            | businessUnit       | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
@@ -64,13 +82,6 @@ Feature: Google Tag Manager
       | Financial services - Industry       | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
       | Health and life sciences - Industry | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
       | Technology - Industry               | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
-
-    @hpo
-    Examples: High-potential opportunities
-      | selected                       | businessUnit | loginStatus | siteLanguage | siteSection                | siteSubsection | userId |
-      | Advanced food production - HPO | Invest       | False       | en-gb        | HighPotentialOpportunities | DetailPage     | None   |
-      | Lightweight structures - HPO   | Invest       | False       | en-gb        | HighPotentialOpportunities | DetailPage     | None   |
-      | Rail infrastructure - HPO      | Invest       | False       | en-gb        | HighPotentialOpportunities | DetailPage     | None   |
 
 
   @bug
