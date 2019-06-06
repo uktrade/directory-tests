@@ -17,69 +17,69 @@ Feature: Google Tag Manager
     @CMS-1634
     @fixme
     Examples: Landing page
-      | selected                | businessUnit  | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
-      | Landing                 | International | False       | en-gb        | HomePage    | Empty string   | None   |
+      | selected | businessUnit       | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
+      | Landing  | GreatInternational | False       | en-gb        | HomePage    | Empty string   | None   |
 
     Examples: Listing pages
-      | selected                | businessUnit  | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
-      | Industries              | International | False       | en-gb        | Topic       | ListingPage    | None   |
-      | How to set up in the UK | Invest        | False       | en-gb        | Guide       | ListingPage    | None   |
+      | selected                | businessUnit       | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
+      | Industries              | GreatInternational | False       | en-gb        | Topic       | ListingPage    | None   |
+      | How to set up in the UK | Invest             | False       | en-gb        | Guide       | ListingPage    | None   |
 
     @dev-only
     Examples: Industry pages
-      | selected                                 | businessUnit  | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
-      | Engineering and manufacturing - Industry | International | False       | en-gb        | Sector      | DetailPage     | None   |
-      | Healthcare and Life Sciences - Industry  | International | False       | en-gb        | Sector      | DetailPage     | None   |
+      | selected                                 | businessUnit       | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
+      | Engineering and manufacturing - Industry | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
+      | Healthcare and Life Sciences - Industry  | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
 
     @stage-only
     Examples: Industry pages
-      | selected                                       | businessUnit  | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
-      | Engineering and manufacturing - Industry       | International | False       | en-gb        | Sector      | DetailPage     | None   |
-      | Creative industries - Industry                 | International | False       | en-gb        | Sector      | DetailPage     | None   |
+      | selected                                 | businessUnit       | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
+      | Engineering and manufacturing - Industry | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
+      | Creative industries - Industry           | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
 
     @uat-only
     Examples: Industry pages
-      | selected                                 | businessUnit  | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
-      | Automotive - Industry                    | International | False       | en-gb        | Sector      | DetailPage     | None   |
-      | Aerospace - Industry                     | International | False       | en-gb        | Sector      | DetailPage     | None   |
-      | Creative industries - Industry           | International | False       | en-gb        | Sector      | DetailPage     | None   |
-      | Education - Industry                     | International | False       | en-gb        | Sector      | DetailPage     | None   |
-      | Engineering and manufacturing - Industry | International | False       | en-gb        | Sector      | DetailPage     | None   |
-      | Financial services - Industry            | International | False       | en-gb        | Sector      | DetailPage     | None   |
-      | Healthcare and Life Sciences - Industry  | International | False       | en-gb        | Sector      | DetailPage     | None   |
-      | Legal services - Industry                | International | False       | en-gb        | Sector      | DetailPage     | None   |
-      | Space - Industry                         | International | False       | en-gb        | Sector      | DetailPage     | None   |
-      | Technology - Industry                    | International | False       | en-gb        | Sector      | DetailPage     | None   |
+      | selected                                 | businessUnit       | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
+      | Automotive - Industry                    | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
+      | Aerospace - Industry                     | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
+      | Creative industries - Industry           | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
+      | Education - Industry                     | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
+      | Engineering and manufacturing - Industry | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
+      | Financial services - Industry            | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
+      | Healthcare and Life Sciences - Industry  | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
+      | Legal services - Industry                | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
+      | Space - Industry                         | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
+      | Technology - Industry                    | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
 
     @dev-only
     Examples: UK setup guides
-      | selected                                                          | businessUnit  | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
-      | Access finance in the UK - UK setup guide                         | International | False       | en-gb        | Article     | DetailPage     | None   |
-      | Establish a UK business base - UK setup guide                     | International | False       | en-gb        | Article     | DetailPage     | None   |
-      | Hire skilled workers for your UK operations - UK setup guide      | International | False       | en-gb        | Article     | DetailPage     | None   |
-      | Open a UK business bank account - UK setup guide                  | International | False       | en-gb        | Article     | DetailPage     | None   |
-      | Register a company in the UK - UK setup guide                     | International | False       | en-gb        | Article     | DetailPage     | None   |
-      | Research and development (R&D) support in the UK - UK setup guide | International | False       | en-gb        | Article     | DetailPage     | None   |
-      | UK tax and incentives - UK setup guide                            | International | False       | en-gb        | Article     | DetailPage     | None   |
-      | UK visas and migration - UK setup guide                           | International | False       | en-gb        | Article     | DetailPage     | None   |
+      | selected                                                          | businessUnit       | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
+      | Access finance in the UK - UK setup guide                         | GreatInternational | False       | en-gb        | Article     | DetailPage     | None   |
+      | Establish a UK business base - UK setup guide                     | GreatInternational | False       | en-gb        | Article     | DetailPage     | None   |
+      | Hire skilled workers for your UK operations - UK setup guide      | GreatInternational | False       | en-gb        | Article     | DetailPage     | None   |
+      | Open a UK business bank account - UK setup guide                  | GreatInternational | False       | en-gb        | Article     | DetailPage     | None   |
+      | Register a company in the UK - UK setup guide                     | GreatInternational | False       | en-gb        | Article     | DetailPage     | None   |
+      | Research and development (R&D) support in the UK - UK setup guide | GreatInternational | False       | en-gb        | Article     | DetailPage     | None   |
+      | UK tax and incentives - UK setup guide                            | GreatInternational | False       | en-gb        | Article     | DetailPage     | None   |
+      | UK visas and migration - UK setup guide                           | GreatInternational | False       | en-gb        | Article     | DetailPage     | None   |
 
     @stage-only
     Examples: UK setup guides
-      | selected                                                          | businessUnit  | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
-      | Access finance in the UK - UK setup guide                         | International | False       | en-gb        | Article     | DetailPage     | None   |
-      | Open a UK business bank account - UK setup guide                  | International | False       | en-gb        | Article     | DetailPage     | None   |
+      | selected                                         | businessUnit       | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
+      | Access finance in the UK - UK setup guide        | GreatInternational | False       | en-gb        | Article     | DetailPage     | None   |
+      | Open a UK business bank account - UK setup guide | GreatInternational | False       | en-gb        | Article     | DetailPage     | None   |
 
     @uat-only
     Examples: UK setup guides
-      | selected                                                          | businessUnit  | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
-      | Access finance in the UK - UK setup guide                         | International | False       | en-gb        | Article     | DetailPage     | None   |
-      | Establish a UK business base - UK setup guide                     | International | False       | en-gb        | Article     | DetailPage     | None   |
-      | Hire skilled workers for your UK operations - UK setup guide      | International | False       | en-gb        | Article     | DetailPage     | None   |
-      | Open a UK business bank account - UK setup guide                  | International | False       | en-gb        | Article     | DetailPage     | None   |
-      | Register a company in the UK - UK setup guide                     | International | False       | en-gb        | Article     | DetailPage     | None   |
-      | Research and development (R&D) support in the UK - UK setup guide | International | False       | en-gb        | Article     | DetailPage     | None   |
-      | UK tax and incentives - UK setup guide                            | International | False       | en-gb        | Article     | DetailPage     | None   |
-      | UK visas and migration - UK setup guide                           | International | False       | en-gb        | Article     | DetailPage     | None   |
+      | selected                                                          | businessUnit       | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
+      | Access finance in the UK - UK setup guide                         | GreatInternational | False       | en-gb        | Article     | DetailPage     | None   |
+      | Establish a UK business base - UK setup guide                     | GreatInternational | False       | en-gb        | Article     | DetailPage     | None   |
+      | Hire skilled workers for your UK operations - UK setup guide      | GreatInternational | False       | en-gb        | Article     | DetailPage     | None   |
+      | Open a UK business bank account - UK setup guide                  | GreatInternational | False       | en-gb        | Article     | DetailPage     | None   |
+      | Register a company in the UK - UK setup guide                     | GreatInternational | False       | en-gb        | Article     | DetailPage     | None   |
+      | Research and development (R&D) support in the UK - UK setup guide | GreatInternational | False       | en-gb        | Article     | DetailPage     | None   |
+      | UK tax and incentives - UK setup guide                            | GreatInternational | False       | en-gb        | Article     | DetailPage     | None   |
+      | UK visas and migration - UK setup guide                           | GreatInternational | False       | en-gb        | Article     | DetailPage     | None   |
 
 
   @bug
@@ -97,9 +97,9 @@ Feature: Google Tag Manager
       | <businessUnit> | <loginStatus> | <siteLanguage> | <siteSection> | <siteSubsection> | <userId> |
 
     Examples: Various pages
-      | selected | preferred_language | businessUnit  | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
-      | Landing  | Deutsch            | International | False       | de           | HomePage    | Empty string   | None   |
-      | Landing  | Français           | International | False       | fr           | HomePage    | Empty string   | None   |
-      | Landing  | español            | International | False       | es           | HomePage    | Empty string   | None   |
-      | Landing  | Português          | International | False       | pt           | HomePage    | Empty string   | None   |
-      | Landing  | 简体中文            | International | False       | zh-hans      | HomePage    | Empty string   | None   |
+      | selected | preferred_language | businessUnit       | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
+      | Landing  | Deutsch            | GreatInternational | False       | de           | HomePage    | Empty string   | None   |
+      | Landing  | Français           | GreatInternational | False       | fr           | HomePage    | Empty string   | None   |
+      | Landing  | español            | GreatInternational | False       | es           | HomePage    | Empty string   | None   |
+      | Landing  | Português          | GreatInternational | False       | pt           | HomePage    | Empty string   | None   |
+      | Landing  | 简体中文            | GreatInternational | False       | zh-hans      | HomePage    | Empty string   | None   |
