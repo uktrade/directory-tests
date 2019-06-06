@@ -52,13 +52,13 @@ SELECTORS = {
     "uk setup guides": {
         "self": Selector(By.ID, "uk-setup-guides"),
         "get started in the uk": Selector(
-            By.CSS_SELECTOR, "#uk-setup-guides > div > div > div:nth-child(1) a"
+            By.PARTIAL_LINK_TEXT, "Get started in the UK"
         ),
         "get help to set up or expand in the uk": Selector(
-            By.CSS_SELECTOR, "#uk-setup-guides > div > div > div:nth-child(2) a"
+            By.PARTIAL_LINK_TEXT, "Get help to set up or expand in the UK"
         ),
         "invest your capital in the uk": Selector(
-            By.CSS_SELECTOR, "#uk-setup-guides > div > div > div:nth-child(3) a"
+            By.PARTIAL_LINK_TEXT, "Invest your capital in the UK"
         ),
     },
     "sectors": {
@@ -83,9 +83,9 @@ SELECTORS = {
         "self": Selector(By.ID, "high-potential-opportunities"),
         "heading": Selector(By.CSS_SELECTOR, "#high-potential-opportunities h2"),
         "text": Selector(By.CSS_SELECTOR, "#high-potential-opportunities h2 ~ div > p"),
-        "advanced food production": Selector(By.CSS_SELECTOR, "#high-potential-opportunities > div > div.card-grid > div:nth-child(1) > div > a"),
-        "lightweight structures": Selector(By.CSS_SELECTOR, "#high-potential-opportunities > div > div.card-grid > div:nth-child(2) > div > a"),
-        "rail infrastructure": Selector(By.CSS_SELECTOR, "#high-potential-opportunities > div > div.card-grid > div:nth-child(3) > div > a"),
+        "advanced food production": Selector(By.PARTIAL_LINK_TEXT, "Advanced food production"),
+        "lightweight structures": Selector(By.PARTIAL_LINK_TEXT, "Lightweight structures"),
+        "rail infrastructure": Selector(By.PARTIAL_LINK_TEXT, "Rail infrastructure"),
     },
     "how we help": {
         "self": Selector(By.ID, "how-we-help"),
