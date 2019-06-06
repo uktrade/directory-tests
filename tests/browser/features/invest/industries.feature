@@ -31,30 +31,25 @@ Feature: Industries page
     Examples: Industries
       | selected                            |
       | Advanced manufacturing              |
-      | Aerospace                           |
       | Agri-tech                           |
 
     @full
     Examples: Industries
       | selected                            |
       | Asset management                    |
-      | Automotive                          |
       | Automotive research and development |
       | Automotive supply chain             |
 #      | Capital investment                  |
       | Chemicals                           |
       | Creative content and production     |
-      | Creative industries                 |
       | Data analytics                      |
       | Digital media                       |
       | Electrical networks                 |
       | Energy                              |
       | Energy from waste market            |
-      | Financial services                  |
       | Financial technology                |
       | Food and drink                      |
       | Free-from foods                     |
-      | Health and life sciences            |
       | Meat, poultry and dairy             |
       | Medical technology                  |
       | Motorsport                          |
@@ -63,4 +58,13 @@ Feature: Industries page
       | Oil and gas                         |
       | Pharmaceutical manufacturing        |
       | Retail                              |
+
+    @skip
+    Examples: Industries available via International site (have different content)
+      | selected                            |
+      | Aerospace                           |
+      | Automotive                          |
+      | Creative industries                 |
+      | Financial services                  |
+      | Health and life sciences            |
       | Technology                          |

@@ -25,7 +25,6 @@ Feature: Industry pages
     Examples: Industries
       | selected                            |
       | Advanced manufacturing              |
-      | Aerospace                           |
       | Agri-tech                           |
       | Asset management                    |
 
@@ -52,6 +51,11 @@ Feature: Industry pages
       | Pharmaceutical manufacturing        |
       | Retail                              |
 
+    @skip
+    Examples: Industries available via International site (have different content)
+      | selected                            |
+      | Aerospace                           |
+
 
   @CMS-160
   Scenario Outline: Visitors should be able to see the "Invest - <selected> industry" page with related Industries
@@ -74,14 +78,14 @@ Feature: Industry pages
 
     Examples: Industries
       | selected                 |
+      | Energy                   |
+      | Food and drink           |
+
+    @skip
+    Examples: Industries available via International site (have different content)
+      | selected                 |
       | Automotive               |
       | Creative industries      |
-      | Energy                   |
-
-    @full
-    Examples: Industries
-      | selected                 |
       | Financial services       |
-      | Food and drink           |
       | Health and life sciences |
       | Technology               |

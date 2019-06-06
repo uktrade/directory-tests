@@ -26,30 +26,25 @@ Feature: Pixels
     Examples: Industry pages
       | selected                                       |
       | Advanced manufacturing - industry              |
-      | Aerospace - industry                           |
       | Agri-tech - industry                           |
 
     @full
     Examples: Industry pages
       | selected                                       |
       | Asset management - industry                    |
-      | Automotive - industry                          |
       | Automotive research and development - industry |
       | Automotive supply chain - industry             |
       | Capital Investment - industry                  |
       | Chemicals - industry                           |
       | Creative content and production - industry     |
-      | Creative industries - industry                 |
       | Data Analytics - industry                      |
       | Digital media - industry                       |
       | Electrical networks - industry                 |
       | Energy - industry                              |
       | Energy from waste market - industry            |
-      | Financial services - industry                  |
       | Financial technology - industry                |
       | Food and drink - industry                      |
       | Free-from foods - industry                     |
-      | Health and life sciences - industry            |
       | Meat, poultry and dairy - industry             |
       | Medical technology - industry                  |
       | Motorsport - industry                          |
@@ -58,7 +53,6 @@ Feature: Pixels
       | Oil and gas - industry                         |
       | Pharmaceutical manufacturing - industry        |
       | Retail - industry                              |
-      | Technology - industry                          |
 
     Examples: UK Setup Guides
       | selected                                            |
@@ -72,3 +66,13 @@ Feature: Pixels
       | Open a UK business bank account - guide  |
       | Register a company in the UK - guide     |
       | Understand UK tax and incentives - guide |
+
+    @skip
+    Examples: Industry pages available via International site
+      | selected                            |
+      | Aerospace - industry                |
+      | Automotive - industry               |
+      | Creative industries - industry      |
+      | Financial services - industry       |
+      | Health and life sciences - industry |
+      | Technology - industry               |
