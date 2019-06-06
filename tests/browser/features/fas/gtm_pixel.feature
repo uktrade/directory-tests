@@ -28,9 +28,7 @@ Feature: Google Tag Manager
     @industry
     Examples: Industry pages
       | selected                                      | businessUnit  | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
-      | Aerospace - Industry                          | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
       | Agritech - Industry                           | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
-      | Automotive - Industry                         | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
       | Business & Government Partnerships - Industry | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
       | Consumer & retail - Industry                  | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
       | Creative services - Industry                  | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
@@ -42,13 +40,30 @@ Feature: Google Tag Manager
       | Healthcare - Industry                         | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
       | Infrastructure - Industry                     | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
       | Innovation - Industry                         | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
-      | Legal services - Industry                     | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
       | Life sciences - Industry                      | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
       | Marine - Industry                             | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
       | Professional & financial services - Industry  | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
-      | Space - Industry                              | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
       | Sports economy - Industry                     | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
-      | Technology - Industry                         | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
+
+    @stage-only
+    @industry
+    Examples: Industry pages
+      | selected                  | businessUnit  | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
+      | Aerospace - Industry      | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
+      | Automotive - Industry     | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
+      | Legal services - Industry | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
+      | Space - Industry          | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
+      | Technology - Industry     | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
+
+    @dev-only
+    @industry
+    Examples: Industry pages available via International Site
+      | selected                  | businessUnit       | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
+      | Aerospace - Industry      | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
+      | Automotive - Industry     | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
+      | Legal services - Industry | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
+      | Space - Industry          | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
+      | Technology - Industry     | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
 
 
   @bug

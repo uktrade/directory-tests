@@ -29,16 +29,13 @@ Feature: Google Tag Manager
     Examples: Industry pages
       | selected                                       | businessUnit | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
       | Advanced manufacturing - Industry              | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
-      | Aerospace - Industry                           | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
       | Agri-tech - Industry                           | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
       | Asset management - Industry                    | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
-      | Automotive - Industry                          | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
       | Automotive research and development - Industry | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
       | Automotive supply chain - Industry             | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
       | Capital investment - Industry                  | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
       | Chemicals - Industry                           | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
       | Creative content and production - Industry     | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
-      | Creative industries - Industry                 | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
       | Data analytics - Industry                      | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
       | Digital media - Industry                       | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
       | Electrical networks - Industry                 | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
@@ -48,7 +45,6 @@ Feature: Google Tag Manager
       | Food and drink - Industry                      | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
       | Food service and catering - Industry           | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
       | Free-from foods - Industry                     | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
-      | Health and life sciences - Industry            | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
       | Meat, poultry and dairy - Industry             | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
       | Medical technology - Industry                  | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
       | Motorsport - Industry                          | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
@@ -57,13 +53,17 @@ Feature: Google Tag Manager
       | Oil and gas - Industry                         | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
       | Pharmaceutical manufacturing - Industry        | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
       | Retail - Industry                              | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
-      | Technology - Industry                          | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
 
     @dev-only
     @industry
-    Examples: Industry pages
-      | selected                                       | businessUnit | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
-      | Financial services - Industry                  | Invest       | False       | en-gb        | Industries  | DetailPage     | None   |
+    Examples: Industry pages Available via International site
+      | selected                            | businessUnit       | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
+      | Aerospace - Industry                | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
+      | Automotive - Industry               | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
+      | Creative industries - Industry      | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
+      | Financial services - Industry       | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
+      | Health and life sciences - Industry | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
+      | Technology - Industry               | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
 
     @hpo
     Examples: High-potential opportunities

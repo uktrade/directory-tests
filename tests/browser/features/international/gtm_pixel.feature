@@ -28,8 +28,16 @@ Feature: Google Tag Manager
     @dev-only
     Examples: Industry pages
       | selected                                 | businessUnit       | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
+      | Aerospace - Industry                     | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
+      | Automotive - Industry                    | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
+      | Creative industries - Industry           | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
+      | Education - Industry                     | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
       | Engineering and manufacturing - Industry | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
+      | Financial services - Industry            | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
       | Healthcare and Life Sciences - Industry  | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
+      | Legal services - Industry                | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
+      | Space - Industry                         | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
+      | Technology - Industry                    | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
 
     @stage-only
     Examples: Industry pages
