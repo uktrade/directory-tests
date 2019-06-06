@@ -42,20 +42,37 @@ Feature: Invest home page
       | Footer                       |
 
 
+  @dev-only
+  @CMS-157
+  Scenario Outline: Overseas businesses should be able to learn more about "<selected>" UK Industry
+    Given basic authentication is done for "International - Landing" page
+    And "Robert" visits the "Invest - home" page
+
+    When "Robert" decides to find out out more about "Invest - <selected> - industry"
+
+    Then "Robert" should be on the "<service> - <selected> - industry" page
+
+    Examples: promoted industries available via International site
+      | selected                 | service       |
+      | Automotive               | International |
+      | Health and life sciences | International |
+      | Technology               | International |
+
+
+  @stage-only
   @CMS-157
   Scenario Outline: Overseas businesses should be able to learn more about "<selected>" UK Industry
     Given "Robert" visits the "Invest - home" page
 
     When "Robert" decides to find out out more about "Invest - <selected> - industry"
 
-    Then "Robert" should be on the "Invest - <selected> - industry" page
-    And "Robert" should see content specific to "Invest - <selected> - industry" page
+    Then "Robert" should be on the "<service> - <selected> - industry" page
 
     Examples: promoted industries
-      | selected                 |
-      | Automotive               |
-      | Health and life sciences |
-      | Technology               |
+      | selected                 | service |
+      | Automotive               | Invest  |
+      | Health and life sciences | Invest  |
+      | Technology               | Invest  |
 
 
   @CMS-157
