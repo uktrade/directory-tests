@@ -41,18 +41,29 @@ def count_errors(doc: OrderedDict) -> dict:
     Non-Assertion errors are stored in "error" nodes.
     Assertions errors are stored in "failure" nodes.
     """
+    def get_error_type_and_msg(test_case: OrderedDict) -> tuple:
+        if "error" in test_case:
+            error_type = test_case["error"]["@type"]
+            error_msg = test_case["error"]["@message"]
+        elif "failure" in test_case:
+            error_type = test_case["failure"]["@type"]
+            error_msg = test_case["failure"]["@message"]
+        return error_type, error_msg
+
     failure_types = defaultdict(list)
-    for ts in doc["testsuites"]["testsuite"]:
-        for tc in ts["testcase"]:
-            if isinstance(tc, OrderedDict):
-                if tc["@status"] == "failed":
-                    if "error" in tc:
-                        error_type = tc["error"]["@type"]
-                        error_msg = tc["error"]["@message"]
-                        failure_types[error_type].append(error_msg)
-                    if "failure" in tc:
-                        error_type = tc["failure"]["@type"]
-                        error_msg = tc["failure"]["@message"]
+    # Handle TestSuite with only 1 TestCase
+    if isinstance(doc["testsuites"]["testsuite"], OrderedDict):
+        tc = doc["testsuites"]["testsuite"]["testcase"]
+        if tc["@status"] == "failed":
+            error_type, error_msg = get_error_type_and_msg(tc)
+            failure_types[error_type].append(error_msg)
+    # Handle TestSuite with multiple TestCases
+    elif isinstance(doc["testsuites"]["testsuite"], list):
+        for ts in doc["testsuites"]["testsuite"]:
+            for tc in ts["testcase"]:
+                if isinstance(tc, OrderedDict):
+                    if tc["@status"] == "failed":
+                        error_type, error_msg = get_error_type_and_msg(tc)
                         failure_types[error_type].append(error_msg)
     return dict(failure_types)
 
