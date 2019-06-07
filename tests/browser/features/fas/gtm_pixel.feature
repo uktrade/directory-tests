@@ -55,7 +55,18 @@ Feature: Google Tag Manager
       | Space - Industry          | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
       | Technology - Industry     | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
 
-    @dev-only
+
+  @dev-only
+  @TT-1500
+  Scenario Outline: GTM properties should be properly set on "Find a Supplier - <selected>" page
+    Given basic authentication is done for "International - Landing" page
+
+    When "Robert" goes to the "Find a Supplier - <selected>" page
+
+    Then Google Tag Manager properties should be set to proper values
+      | businessUnit   | loginStatus   | siteLanguage   | siteSection   | siteSubsection   | userId   |
+      | <businessUnit> | <loginStatus> | <siteLanguage> | <siteSection> | <siteSubsection> | <userId> |
+
     @industry
     Examples: Industry pages available via International Site
       | selected                  | businessUnit       | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
