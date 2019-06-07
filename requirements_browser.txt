@@ -39,4 +39,5 @@ soupsieve==1.9.1          # via beautifulsoup4
 termcolor==1.1.0
 urllib3==1.25.3
 w3lib==1.20.0             # via directory-client-core
+xmltodict==0.12.0
 zenpy==2.0.12
