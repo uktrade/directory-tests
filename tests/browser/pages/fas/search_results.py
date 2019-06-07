@@ -34,7 +34,7 @@ PAGE_TITLE = "Search the database of UK suppliers' trade profiles - trade.great.
 SECTOR_FILTERS = Selector(By.CSS_SELECTOR, "#id_sectors input")
 NEWSLETTER_SEND = Selector(By.CSS_SELECTOR, "form[action='/trade/subscribe/'] button")
 PROFILE_LINKS = Selector(
-    By.CSS_SELECTOR, "div.public-company-profiles-result-item div.span9 a"
+    By.CSS_SELECTOR, "div.public-company-profiles-result-item div.logo a"
 )
 SELECTORS = {
     "search form": {
