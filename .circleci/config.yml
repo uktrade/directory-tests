@@ -151,7 +151,7 @@ step_run_load_tests: &step_run_load_tests
 
 step_merge_junit_xml_reports_from_functional_tests: &step_merge_junit_xml_reports_from_functional_tests
   run:
-    name: Merge JUnit XML reports
+    name: Merge JUnit XML reports & print errors summary
     when: always
     command: |
       python3 -m venv venv
@@ -159,11 +159,12 @@ step_merge_junit_xml_reports_from_functional_tests: &step_merge_junit_xml_report
       cd ./tests/functional/reports
       junit-merge *.xml -o merged.xml
       ls *.xml | grep -v merged.xml | xargs rm
+      ./print_error_summary.py --report ./tests/functional/reports/merged.xml
 
 
 step_merge_junit_xml_reports_from_browser_tests: &step_merge_junit_xml_reports_from_browser_tests
   run:
-    name: Merge JUnit XML reports
+    name: Merge JUnit XML reports & print errors summary
     when: always
     command: |
       python3 -m venv venv
@@ -171,6 +172,7 @@ step_merge_junit_xml_reports_from_browser_tests: &step_merge_junit_xml_reports_f
       cd ./tests/browser/reports
       junit-merge *.xml -o merged.xml
       ls *.xml | grep -v merged.xml | xargs rm
+      ./print_error_summary.py --report ./tests/browser/reports/merged.xml
 
 
 # Lists of steps
