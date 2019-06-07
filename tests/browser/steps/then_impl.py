@@ -58,6 +58,16 @@ def should_be_on_page(context: Context, actor_alias: str, page_name: str):
         context.driver.get(page.URL)
         error = f"Got blocked again on {context.driver.current_url}"
         assert "Access denied" not in context.driver.page_source, error
+
+    source = context.driver.page_source
+    url = context.driver.current_url
+    error = f"'{page_name}' does not exist. Got 404 on {url}"
+    assert "404 Not Found: Requested route" not in source, error
+    error = f"Looks like following page: {url} cannot be found"
+    assert "This page cannot be found" not in source, error
+    error = f"Got 500 ISE on {url}"
+    assert "HTTP 500 Error Code" not in source, error
+
     has_action(page, "should_be_here")
     if hasattr(page, "URLs"):
         special_page_name = page_name.split(" - ")[1]
