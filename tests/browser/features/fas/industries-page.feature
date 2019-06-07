@@ -43,7 +43,6 @@ Feature: Find a Supplier - Industries page
       | Food and drink    |
       | Healthcare        |
       | Sports economy    |
-      | Technology        |
 
     @wip
     Examples: Industries with no companies in them on DEV
@@ -51,10 +50,23 @@ Feature: Find a Supplier - Industries page
       | Life sciences     |
       | Legal services    |
 
-    @wip
-    Examples: Industries which redirect to the new International site
-      | specific          |
-      | Aerospace         |
+
+    @dev-only
+    @ED-4254
+    @industry-pages
+    Scenario Outline: Buyers should be able to find out more about "<specific>" industry from the "Find a Supplier - Industries" page
+      Given basic authentication is done for "International - Landing" page
+      And "Robert" visits the "Find a Supplier - Industries" page
+
+      When "Robert" decides to find out out more about "Find a Supplier - <specific> - industry"
+
+      Then "Robert" should be on the "International - <specific> - industry" page
+      And "Robert" should see content specific to "International - <specific> - industry" page
+
+      Examples: Industries which redirect to the new International site
+        | specific          |
+        | Aerospace         |
+        | Technology        |
 
 
   @ED-4255
