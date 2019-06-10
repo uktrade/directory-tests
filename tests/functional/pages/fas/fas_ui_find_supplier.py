@@ -20,8 +20,9 @@ EXPECTED_STRINGS = [
     "New search",
 ]
 
+NO_UK_BUSINESS_MATCH = "No UK businesses match your search"
 NO_MATCH = [
-    "No UK businesses match your search",
+    NO_UK_BUSINESS_MATCH,
     "Try different filters or a new search term",
 ]
 
@@ -57,7 +58,7 @@ def should_be_here(response, *, number=None):
 
 def should_see_company(response: Response, company_title: str) -> bool:
     content = extract_page_contents(response.content.decode("utf-8")).lower()
-    no_match = "did not match any uk trade profiles" in content
+    no_match = NO_UK_BUSINESS_MATCH.lower() in content
     contains_company_title = escape_html(company_title).lower() in content
     return contains_company_title and not no_match
 
