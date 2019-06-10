@@ -60,6 +60,10 @@ def should_see_company(response: Response, company_title: str) -> bool:
     content = extract_page_contents(response.content.decode("utf-8")).lower()
     no_match = NO_UK_BUSINESS_MATCH.lower() in content
     contains_company_title = escape_html(company_title).lower() in content
+    if not contains_company_title:
+        logging.debug(
+            f"Could not find company: {escape_html(company_title).lower()} in "
+            f"the response:\n{content}")
     return contains_company_title and not no_match
 
 
