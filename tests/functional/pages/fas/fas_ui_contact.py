@@ -21,23 +21,19 @@ LANDING = get_absolute_url("ui-supplier:landing")
 URL = urljoin(LANDING, "suppliers/{company_number}/contact/")
 EXPECTED_STRINGS = [
     "Send a message to",
-    (
-        "Fill in your details and a brief message summarising your needs that "
-        "will be sent to the UK company."
-    ),
-    "Your full name:",
-    "Your company name:",
-    "Country:",
-    "Your email address:",
-    "Industry:",
-    "Enter a subject line for your message:",
-    "Maximum 200 characters.",
-    "Enter your message to the UK company:",
-    "Maximum 1000 characters.",
-    "Captcha:",
+    "Enter your details and a brief message about your needs",
+    "Your full name",
+    "Your company name",
+    "Country",
+    "Your email address",
+    "Industry",
+    "Enter a subject line for your message",
+    "Maximum 200 characters",
+    "Enter your message to the UK company",
+    "Maximum 1000 characters",
+    "Captcha",
     "I agree to the great.gov.uk terms and conditions",
-    "Send",
-    "cancel",
+    "Send message",
 ]
 
 EXPECTED_STRINGS_MESSAGE_SENT = [

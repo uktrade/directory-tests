@@ -20,14 +20,11 @@ NAME = "Company's business profile"
 TYPE = "profile"
 URL = get_absolute_url("ui-supplier:suppliers")
 EXPECTED_STRINGS = [
-    "Contact",
-    "Facts &amp; details",
+    "Business details",
+    "Contact company",
     "Company description",
     "Core industry",
-    "Keywords",
     "Report profile",
-    "Email company",
-    "Contact company",
 ]
 
 

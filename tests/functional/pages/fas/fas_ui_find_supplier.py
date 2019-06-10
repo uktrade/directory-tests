@@ -15,16 +15,14 @@ NAME = "Search"
 TYPE = "search"
 URL = get_absolute_url("ui-supplier:search")
 EXPECTED_STRINGS = [
-    "Find UK Suppliers",
-    "Search by product, service or company keyword",
-    "Search",
+    "Search results",
+    "Filter results",
+    "New search",
 ]
 
 NO_MATCH = [
-    "Your search",
-    '&quot;<span class="term">',
-    "</span>&quot;",
-    "did not match any UK trade profiles.",
+    "No UK businesses match your search",
+    "Try different filters or a new search term",
 ]
 
 

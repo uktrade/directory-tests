@@ -13,8 +13,8 @@ NAME = "Industries"
 TYPE = "listing"
 URL = get_absolute_url("ui-supplier:industries")
 EXPECTED_STRINGS = [
-    "Discover the UK's capability in these key industries",
-    "UK industries",
+    "FIND THE BEST UK SUPPLIERS FOR YOUR INDUSTRY",
+    "More industries",
 ]
 EXPECTED_STRINGS_HEALTH = [
     "Healthcare and life sciences in the UK",
