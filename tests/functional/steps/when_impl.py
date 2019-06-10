@@ -373,8 +373,8 @@ def fas_get_company_slug(
     url = response.request.url
     last_item_idx = -1
     slash_idx = 1
-    slug = urlsplit(url).path.split(company.number)[last_item_idx][slash_idx:]
-    logging.debug("%s got company's slug: %s", actor_alias, slug)
+    slug = urlsplit(url).path.split(company.number)[last_item_idx][slash_idx:last_item_idx]
+    logging.debug(f"{actor_alias} got company's slug: {slug}")
     context.set_company_details(company_alias, slug=slug)
 
 
