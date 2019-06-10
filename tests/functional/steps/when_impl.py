@@ -1515,6 +1515,7 @@ def can_find_supplier_by_term(
     fas_ui_find_supplier.should_be_here(response)
     number_of_pages = get_number_of_search_result_pages(response)
     if number_of_pages == 0:
+        found = fas_ui_find_supplier.should_see_company(response, name)
         return found, response, endpoint
     for page_number in range(1, number_of_pages + 1):
         found = fas_ui_find_supplier.should_see_company(response, name)
