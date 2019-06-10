@@ -1356,13 +1356,18 @@ def fas_search_using_company_details(
             )
             search_results[term_name] = found
             search_responses[term_name] = response
-            logging.debug(
-                "Couldn't find Supplier '%s' on the first and only FAS search "
-                "result page. Search was done using '%s' : '%s'",
-                company.title,
-                term_name,
-                term,
-            )
+            if found:
+                logging.debug(
+                    f"Found Supplier '{company.title}' on the first and"
+                    f" only FAS search result page. Search was done using "
+                    f"'{term_name}' : '{term}'"
+                )
+            else:
+                logging.debug(
+                    f"Couldn't find Supplier '{company.title}' on the first and"
+                    f" only FAS search result page. Search was done using "
+                    f"'{term_name}' : '{term}'"
+                )
             continue
 
         for page_number in range(1, number_of_pages + 1):
