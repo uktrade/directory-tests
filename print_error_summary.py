@@ -51,8 +51,15 @@ def count_errors(doc: OrderedDict) -> dict:
         return error_type, error_msg
 
     failure_types = defaultdict(list)
+    # Handle report with only TestSuite and no TestSuites
+    if "testuites" not in doc and "testsuite" in doc:
+        if isinstance(doc["testsuite"], OrderedDict):
+            for tc in doc["testsuite"]["testcase"]:
+                if tc["@status"] == "failed":
+                    error_type, error_msg = get_error_type_and_msg(tc)
+                    failure_types[error_type].append(error_msg)
     # Handle TestSuite with only 1 TestCase
-    if isinstance(doc["testsuites"]["testsuite"], OrderedDict):
+    elif isinstance(doc["testsuites"]["testsuite"], OrderedDict):
         tc = doc["testsuites"]["testsuite"]["testcase"]
         if tc["@status"] == "failed":
             error_type, error_msg = get_error_type_and_msg(tc)
