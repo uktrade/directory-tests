@@ -143,12 +143,12 @@ def should_see_details(company: Company, response: Response, table_of_details: T
 
 def get_case_studies_details(response: Response):
     content = response.content.decode("utf-8")
-    article_selector = "#company-projects > article"
+    article_selector = "div.card"
     articles = Selector(text=content).css(article_selector).extract()
     result = []
     for article in articles:
         title = Selector(text=article).css("h3::text").extract()[0]
-        summary = Selector(text=article).css("p::text").extract()[0]
+        summary = Selector(text=article).css("p.description::text").extract()[0]
         href = Selector(text=article).css("a::attr(href)").extract()[0]
         slug = href.split("/")[-2]
         assert slug, f"Couldn't extract case study slug from {article}"
