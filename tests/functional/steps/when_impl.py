@@ -1490,9 +1490,10 @@ def fas_get_company_profile_url(response: Response, name: str) -> str:
                 or (escape_html(name).lower() in escape_html(link).lower()):
             profile_url = Selector(text=link).css(href_selector).extract()[0]
     with assertion_msg(
-        "Couldn't find link to '%s' company profile page in the response", name
+        f"Couldn't find link to '{name}' company profile page in the response"
     ):
         assert profile_url
+    logging.debug(f"Found link to '{name}'s profile: {profile_url}")
     return profile_url
 
 

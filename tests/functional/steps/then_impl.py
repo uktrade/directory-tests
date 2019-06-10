@@ -694,6 +694,7 @@ def fas_should_find_all_sought_companies(context: Context, buyer_alias: str):
         "one of previous steps sets it correctly."
     ):
         assert hasattr(context, "search_results")
+    logging.debug(context.search_results)
     for company, results in context.search_results.items():
         for result in results:
             term = result["term"]
@@ -864,8 +865,8 @@ def fas_should_see_highlighted_search_term(
         founds += [(keyword in summary) for keyword in keywords]
 
     with assertion_msg(
-        "Expected to see at least 1 search result with highlighted search "
-        "term: '%s'".format(", ".join(keywords))
+        f"Expected to see at least 1 search result with highlighted search "
+        f"term: '{', '.join(keywords)}'"
     ):
         assert any(founds)
 
