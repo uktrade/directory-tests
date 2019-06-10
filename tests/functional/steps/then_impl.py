@@ -855,7 +855,7 @@ def fas_should_see_highlighted_search_term(
 ):
     response = context.response
     content = response.content.decode("utf-8")
-    search_summaries_selector = ".ed-company-search-summary"
+    search_summaries_selector = "#companies-column div.width-full.details-container"
     summaries = Selector(text=content).css(search_summaries_selector).extract()
     tag = "em"
     keywords = [surround(keyword, tag) for keyword in search_term.split()]

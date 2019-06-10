@@ -1478,7 +1478,7 @@ def fas_feedback_request_should_be_submitted(
 
 def fas_get_company_profile_url(response: Response, name: str) -> str:
     content = response.content.decode("utf-8")
-    links_to_profiles_selector = "#ed-search-list-container .span9 a"
+    links_to_profiles_selector = "#companies-column > ul > li > a"
     href_selector = "a::attr(href)"
     links_to_profiles = (
         Selector(text=content).css(links_to_profiles_selector).extract()
@@ -1820,7 +1820,7 @@ def fas_browse_suppliers_using_every_sector_filter(
     context.response = response
     fas_ui_find_supplier.should_be_here(response)
 
-    sector_filters_selector = "#id_sectors input::attr(value)"
+    sector_filters_selector = "#checkbox-industry-expertise input::attr(value)"
     content = response.content.decode("utf-8")
     sector_filters = (
         Selector(text=content).css(sector_filters_selector).extract()
@@ -1852,7 +1852,7 @@ def fas_browse_suppliers_by_multiple_sectors(
     context.response = response
     fas_ui_find_supplier.should_be_here(response)
 
-    sector_selector = "#id_sectors input::attr(value)"
+    sector_selector = "#checkbox-industry-expertise input::attr(value)"
     content = response.content.decode("utf-8")
     filters = Selector(text=content).css(sector_selector).extract()
 
@@ -1885,7 +1885,7 @@ def fas_browse_suppliers_by_invalid_sectors(
     context.response = response
     fas_ui_find_supplier.should_be_here(response)
 
-    sector_selector = "#id_sectors input::attr(value)"
+    sector_selector = "#checkbox-industry-expertise input::attr(value)"
     content = response.content.decode("utf-8")
     filters = Selector(text=content).css(sector_selector).extract()
 
