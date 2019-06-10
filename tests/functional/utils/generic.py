@@ -329,6 +329,7 @@ def extract_page_contents(
     strip_footer: bool = True,
     strip_select_menus: bool = True,
     strip_unordered_lists: bool = False,
+    strip_fas_search_result_summary: bool = True,
 ) -> str:
     soup = BeautifulSoup(content, "lxml")
 
@@ -366,6 +367,9 @@ def extract_page_contents(
             element.extract()
     if strip_unordered_lists:
         for element in soup.findAll(["ul"]):
+            element.extract()
+    if strip_fas_search_result_summary:
+        for element in soup.select("#hero-container"):
             element.extract()
 
     text = soup.get_text()
