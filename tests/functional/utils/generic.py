@@ -1425,13 +1425,11 @@ def get_number_of_search_result_pages(response: Response) -> int:
     :return: a number of FAS Search Result pages or 0 if couldn't find
              information about number of pages
     """
-    no_page_counter = 0
-    css_selector = (
-        ".company-profile-details-body-toolbar-bottom span.current::text"
+    last_page_css_selector = (
+        "#paginator ol li.active-blue-text ~ li a::text"
     )
-    pages = extract_by_css(response, css_selector).strip()
-    page_numbers = [int(word) for word in pages.split() if word.isdigit()]
-    last_page = page_numbers[-1] if len(page_numbers) == 2 else no_page_counter
+    last_page = extract_by_css(response, last_page_css_selector).strip()
+    last_page = int(last_page) if last_page.isdigit() else 0
     logging.debug(f"Number of search result pages: {last_page}")
     return last_page
 
