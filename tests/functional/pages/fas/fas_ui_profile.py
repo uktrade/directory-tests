@@ -60,26 +60,26 @@ def should_see_online_profiles(company: Company, response: Response):
     content = response.content.decode("utf-8")
     if company.facebook:
         with assertion_msg("Couldn't find link to company's Facebook profile"):
-            assert "Visit Facebook" in content
+            assert "Visit company Facebook" in content
             assert company.facebook in content
     if company.linkedin:
         with assertion_msg("Couldn't find link to company's LinkedIn profile"):
-            assert "Visit LinkedIn" in content
+            assert "Visit company LinkedIn" in content
             assert company.linkedin in content
     if company.twitter:
         with assertion_msg("Couldn't find link to company's Twitter profile"):
-            assert "Visit Twitter" in content
+            assert "Visit company Twitter" in content
             assert company.twitter in content
 
 
 def should_not_see_online_profiles(response: Response):
     content = response.content.decode("utf-8").lower()
     with assertion_msg("Found a link to 'visit Facebook' profile"):
-        assert "visit facebook" not in content
+        assert "visit company facebook" not in content
     with assertion_msg("Found a link to 'visit LinkedIn' profile"):
-        assert "visit linkedin" not in content
+        assert "visit company linkedin" not in content
     with assertion_msg("Found a link to 'visit Twitter' profile"):
-        assert "visit twitter" not in content
+        assert "visit company twitter" not in content
 
 
 def should_see_case_studies(case_studies: dict, response: Response):
