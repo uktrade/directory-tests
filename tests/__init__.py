@@ -1,35 +1,46 @@
+from enum import Enum, unique
 from functools import partial
 import os
 import uuid
+from urllib.parse import urljoin
 
-from tests import settings
+from tests.settings import (
+    DIRECTORY_API_URL,
+    DIRECTORY_BUYER_API_URL,
+    DIRECTORY_UI_INTERNATIONAL_URL,
+    DIRECTORY_SSO_URL,
+    DIRECTORY_SSO_API_CLIENT_BASE_URL,
+    DIRECTORY_PROFILE_URL,
+    DIRECTORY_UI_BUYER_URL,
+    DIRECTORY_UI_SUPPLIER_URL,
+    INVEST_UI_URL,
+    EXRED_UI_URL,
+    EXPORT_OPPORTUNITIES_UI_URL,
+    DIRECTORY_CONTACT_US_UI_URL,
+    DIRECTORY_LEGACY_CONTACT_US_UI_URL,
+    SOO_UI_URL,
+    DIRECTORY_CMS_API_CLIENT_BASE_URL,
+    DIRECTORY_FORMS_API_URL,
+)
 
-
-def urljoin(base_url: str, endpoint: str):
-    if base_url.endswith("/"):
-        return f"{base_url}{endpoint}"
-    else:
-        return f"{base_url}/{endpoint}"
-
-
-join_api = partial(urljoin, settings.DIRECTORY_API_URL)
-join_internal_api = partial(urljoin, settings.DIRECTORY_BUYER_API_URL)
-join_ui_international = partial(urljoin, settings.DIRECTORY_UI_INTERNATIONAL_URL)
-join_sso = partial(urljoin, settings.DIRECTORY_SSO_URL)
-join_sso_api = partial(urljoin, settings.DIRECTORY_SSO_API_CLIENT_BASE_URL)
-join_profile = partial(urljoin, settings.DIRECTORY_PROFILE_URL)
-join_ui_buyer = partial(urljoin, settings.DIRECTORY_UI_BUYER_URL)
-join_ui_supplier = partial(urljoin, settings.DIRECTORY_UI_SUPPLIER_URL)
-join_ui_invest = partial(urljoin, settings.INVEST_UI_URL)
-join_exred = partial(urljoin, settings.EXRED_UI_URL)
-join_exopps = partial(urljoin, settings.EXPORT_OPPORTUNITIES_UI_URL)
-join_contact_us = partial(urljoin, settings.DIRECTORY_CONTACT_US_UI_URL)
-join_legacy_contact_us = partial(urljoin, settings.DIRECTORY_LEGACY_CONTACT_US_UI_URL)
-join_soo = partial(urljoin, settings.SOO_UI_URL)
-join_cms_url = partial(urljoin, settings.DIRECTORY_CMS_API_CLIENT_BASE_URL)
-join_cms_api = partial(urljoin, settings.DIRECTORY_CMS_API_CLIENT_BASE_URL)
-join_cms_ui = partial(urljoin, settings.DIRECTORY_CMS_API_CLIENT_BASE_URL)
-join_forms_api = partial(urljoin, settings.DIRECTORY_FORMS_API_URL)
+join_api = partial(urljoin, DIRECTORY_API_URL)
+join_internal_api = partial(urljoin, DIRECTORY_BUYER_API_URL)
+join_ui_international = partial(urljoin, DIRECTORY_UI_INTERNATIONAL_URL)
+join_sso = partial(urljoin, DIRECTORY_SSO_URL)
+join_sso_api = partial(urljoin, DIRECTORY_SSO_API_CLIENT_BASE_URL)
+join_profile = partial(urljoin, DIRECTORY_PROFILE_URL)
+join_ui_buyer = partial(urljoin, DIRECTORY_UI_BUYER_URL)
+join_ui_supplier = partial(urljoin, DIRECTORY_UI_SUPPLIER_URL)
+join_ui_invest = partial(urljoin, INVEST_UI_URL)
+join_exred = partial(urljoin, EXRED_UI_URL)
+join_exopps = partial(urljoin, EXPORT_OPPORTUNITIES_UI_URL)
+join_contact_us = partial(urljoin, DIRECTORY_CONTACT_US_UI_URL)
+join_legacy_contact_us = partial(urljoin, DIRECTORY_LEGACY_CONTACT_US_UI_URL)
+join_soo = partial(urljoin, SOO_UI_URL)
+join_cms_url = partial(urljoin, DIRECTORY_CMS_API_CLIENT_BASE_URL)
+join_cms_api = partial(urljoin, DIRECTORY_CMS_API_CLIENT_BASE_URL)
+join_cms_ui = partial(urljoin, DIRECTORY_CMS_API_CLIENT_BASE_URL)
+join_forms_api = partial(urljoin, DIRECTORY_FORMS_API_URL)
 
 urls = {
     # SSO
@@ -414,3 +425,408 @@ def retriable_error(exception):
 def is_500(exception):
     """Return True exception message contains 500"""
     return "500" in str(exception)
+
+
+class Url:
+
+    def __init__(
+            self, service_url: str, relative_endpoint: str, *,
+            template: str = None
+    ):
+        join_service_endpoint = partial(urljoin, service_url)
+        self.relative = relative_endpoint
+        self.absolute = join_service_endpoint(relative_endpoint)
+        self.template = join_service_endpoint(template) if template else None
+
+
+class CMSApiUrl(Url):
+    def __init__(self, endpoint: str, *, template: str = None):
+        super().__init__(
+            DIRECTORY_CMS_API_CLIENT_BASE_URL, endpoint, template=template
+        )
+
+
+class ContactUrl(Url):
+    def __init__(self, endpoint: str, *, template: str = None):
+        super().__init__(
+            DIRECTORY_CONTACT_US_UI_URL, endpoint, template=template
+        )
+
+
+class DirectoryApiUrl(Url):
+    def __init__(self, endpoint: str, *, template: str = None):
+        super().__init__(DIRECTORY_API_URL, endpoint, template=template)
+
+
+class DomesticUrl(Url):
+    def __init__(self, endpoint: str, *, template: str = None):
+        super().__init__(EXRED_UI_URL, endpoint, template=template)
+
+
+class ExOppsUrl(Url):
+    def __init__(self, endpoint: str, *, template: str = None):
+        super().__init__(
+            EXPORT_OPPORTUNITIES_UI_URL, endpoint, template=template
+        )
+
+
+class FABUrl(Url):
+    def __init__(self, endpoint: str, *, template: str = None):
+        super().__init__(DIRECTORY_UI_BUYER_URL, endpoint, template=template)
+
+
+class FABApiUrl(Url):
+    def __init__(self, endpoint: str, *, template: str = None):
+        super().__init__(DIRECTORY_BUYER_API_URL, endpoint, template=template)
+
+
+class FASUrl(Url):
+    def __init__(self, endpoint: str, *, template: str = None):
+        super().__init__(DIRECTORY_UI_SUPPLIER_URL, endpoint, template=template)
+
+
+class FormsApiUrl(Url):
+    def __init__(self, endpoint: str, *, template: str = None):
+        super().__init__(DIRECTORY_FORMS_API_URL, endpoint, template=template)
+
+
+class InternationalUrl(Url):
+    def __init__(self, endpoint: str, *, template: str = None):
+        super().__init__(
+            DIRECTORY_UI_INTERNATIONAL_URL, endpoint, template=template
+        )
+
+
+class InvestUrl(Url):
+    def __init__(self, endpoint: str, *, template: str = None):
+        super().__init__(INVEST_UI_URL, endpoint, template=template)
+
+
+class LegacyContactUrl(Url):
+    def __init__(self, endpoint: str, *, template: str = None):
+        super().__init__(
+            DIRECTORY_LEGACY_CONTACT_US_UI_URL, endpoint, template=template
+        )
+
+
+class ProfileUrl(Url):
+    def __init__(self, endpoint: str, *, template: str = None):
+        super().__init__(DIRECTORY_PROFILE_URL, endpoint, template=template)
+
+
+class SOOUrl(Url):
+    def __init__(self, endpoint: str, *, template: str = None):
+        super().__init__(SOO_UI_URL, endpoint, template=template)
+
+
+class SSOUrl(Url):
+    def __init__(self, endpoint: str, *, template: str = None):
+        super().__init__(DIRECTORY_SSO_URL, endpoint, template=template)
+
+
+class SSOApiUrl(Url):
+    def __init__(self, endpoint: str, *, template: str = None):
+        super().__init__(
+            DIRECTORY_SSO_API_CLIENT_BASE_URL, endpoint, template=template
+        )
+
+
+@unique
+class URLs(Enum):
+
+    def __str__(self):
+        return (f"{self._name_} absolute URL: {self.value.absolute} relative "
+                f"URL: {self.value.relative}")
+
+    @property
+    def absolute(self) -> str:
+        return self.value.absolute
+
+    @property
+    def relative(self) -> str:
+        return self.value.relative
+
+    @property
+    def template(self) -> str:
+        return self.value.template
+
+    # Directory API
+    INTERNAL_API_COMPANIES_HOUSE_SEARCH = FABApiUrl("api/internal/companies-house-search/")
+    DIR_API_HEALTHCHECK = DirectoryApiUrl("healthcheck/")
+    DIR_API_HEALTHCHECK_PING = DirectoryApiUrl("healthcheck/ping/")
+    DIR_API_ENROLMENT = DirectoryApiUrl("enrolment/")
+    DIR_API_PRE_VERIFIED_ENROLMENT = DirectoryApiUrl("pre-verified-enrolment")
+    DIR_API_ENROLMENT_TRUSTED_CODE = DirectoryApiUrl("trusted-code/{code}/")
+    DIR_API_NOTIFICATIONS_ANONYMOUS_UNSUBSCRIBE = DirectoryApiUrl("notifications/anonymous-unsubscribe/")
+    DIR_API_BUYER = DirectoryApiUrl("buyer/")
+    DIR_API_BUYER_CSV_DUMP = DirectoryApiUrl("buyer/csv-dump/")
+    DIR_API_SUPPLIER_CSV_DUMP = DirectoryApiUrl("supplier/csv-dump/")
+    DIR_API_VALIDATE_COMPANY_NUMBER = DirectoryApiUrl("validate/company-number/")
+    DIR_API_COMPANIES_HOUSE_PROFILE = DirectoryApiUrl("company/companies-house-profile/")
+    DIR_API_SUPPLIER = DirectoryApiUrl("supplier/")
+    DIR_API_SUPPLIER_UNSUBSCRIBE = DirectoryApiUrl("supplier/unsubscribe/")
+    DIR_API_EXPORT_READINESS_TRIAGE = DirectoryApiUrl("export-readiness/triage/")
+    DIR_API_EXPORT_READINESS_ARTICLE_READ = DirectoryApiUrl("export-readiness/article-read/")
+    DIR_API_EXPORT_READINESS_TASK_COMPLETED = DirectoryApiUrl("export-readiness/task-completed/")
+    DIR_API_EXPORT_OPPORTUNITY_FOOD = DirectoryApiUrl("export-opportunity/food/")
+    DIR_API_EXPORT_OPPORTUNITY_LEGAL = DirectoryApiUrl("export-opportunity/legal/")
+    DIR_API_PUBLIC_COMPANY = DirectoryApiUrl("public/company/")
+    DIR_API_PUBLIC_COMPANY_PROFILE = DirectoryApiUrl("public/company/{companies_house_number}/")
+    DIR_API_PUBLIC_CASE_STUDY = DirectoryApiUrl("public/case-study/{id}/")
+    DIR_API_SUPPLIER_COMPANY = DirectoryApiUrl("supplier/company/")
+    DIR_API_SUPPLIER_COMPANY_CASE_STUDY = DirectoryApiUrl("supplier/company/case-study/")
+    DIR_API_SUPPLIER_COMPANY_CASE_STUDY_BY_ID = DirectoryApiUrl("supplier/company/case-study/{id}/")
+    DIR_API_SUPPLIER_COMPANY_VERIFY = DirectoryApiUrl("supplier/company/verify/")
+    DIR_API_SUPPLIER_COMPANY_VERIFY_COMPANIES_HOUSE = DirectoryApiUrl("supplier/company/verify/companies-house/")
+    DIR_API_CONTACT_SUPPLIER = DirectoryApiUrl("contact/supplier/")
+    DIR_API_COMPANY_SEARCH = DirectoryApiUrl("company/search/")
+    DIR_API_CASE_STUDY_SEARCH = DirectoryApiUrl("case-study/search/")
+    DIR_API_SUPPLIER_COMPANY_COLLABORATORS = DirectoryApiUrl("supplier/company/collaborators/")
+    DIR_API_SUPPLIER_COMPANY_COLLABORATION_INVITE = DirectoryApiUrl("supplier/company/collaboration-invite/")
+    DIR_API_SUPPLIER_COMPANY_COLLABORATION_INVITE_BY_UUID = DirectoryApiUrl("supplier/company/collaboration-invite/{uuid}/")
+    DIR_API_SUPPLIER_COMPANY_REMOVE_COLLABORATORS = DirectoryApiUrl("supplier/company/remove-collaborators/")
+    DIR_API_SUPPLIER_COMPANY_TRANSFER_OWNERSHIP_INVITE = DirectoryApiUrl("supplier/company/transfer-ownership-invite/")
+    DIR_API_SUPPLIER_COMPANY_TRANSFER_OWNERSHIP_INVITE_BY_UUID = DirectoryApiUrl("supplier/company/transfer-ownership-invite/{uuid}/")
+    DIR_API_SUPPLIER_GECKO_TOTAL_REGISTERED = DirectoryApiUrl("supplier/gecko/total-registered/")
+    DIR_API_ACTIVITY_STREAM = DirectoryApiUrl("activity-stream/")
+    DIR_API_EXTERNAL_SUPPLIER_SSO = DirectoryApiUrl("external/supplier-sso/")
+    DIR_API_EXTERNAL_SUPPLIER = DirectoryApiUrl("external/supplier/")
+
+    # SSO UI
+    SSO_LANDING = SSOUrl("")
+    SSO_EMAIL_CONFIRM = SSOUrl("accounts/confirm-email/")
+    SSO_INACTIVE = SSOUrl("accounts/inactive/")
+    SSO_LOGIN = SSOUrl("accounts/login/")
+    SSO_LOGOUT = SSOUrl("accounts/logout/")
+    SSO_PASSWORD_CHANGE = SSOUrl("accounts/password/change/")
+    SSO_PASSWORD_RESET = SSOUrl("accounts/password/reset/")
+    SSO_PASSWORD_SET = SSOUrl("accounts/password/set/")
+    SSO_SIGNUP = SSOUrl("accounts/signup/")
+
+    # SSO API
+    SSO_API_LANDING = SSOApiUrl("")
+    SSO_API_HEALTHCECK = SSOApiUrl("api/v1/healthcheck/")
+    SSO_API_HEALTHCHECK_PING = SSOApiUrl("api/v1/healthcheck/ping/")
+    SSO_API_USER = SSOApiUrl("api/v1/session-user/")
+
+    # Find a Buyer
+    FAB_LANDING = FABUrl("")
+    FAB_ACCOUNT_ACCEPT_INVITATION = FABUrl("account/collaborate/accept/?invite_key={invite_key}", template="account/collaborate/accept/?invite_key={invite_key}")
+    FAB_ACCOUNT_ADD_COLLABORATOR = FABUrl("account/add-collaborator/")
+    FAB_ACCOUNT_CONFIRM_OWNERSHIP_TRANSFER = FABUrl("account/transfer/accept/?invite_key=", template="account/transfer/accept/?invite_key={invite_key}")
+    FAB_ACCOUNT_CONFIRM_PASSWORD = FABUrl("account/transfer/")
+    FAB_ACCOUNT_REMOVE_COLLABORATOR = FABUrl("account/remove-collaborator/")
+    FAB_ACCOUNT_TRANSFER_OWNERSHIP = FABUrl("account/transfer/")
+    FAB_COMPANY_EDIT = FABUrl("company-profile/edit/")
+    FAB_COMPANY_EDIT_ADDRESS = FABUrl("company-profile/edit/address")
+    FAB_COMPANY_EDIT_CONTACT = FABUrl("company-profile/edit/contact/")
+    FAB_COMPANY_EDIT_DESCRIPTION = FABUrl("company-profile/edit/description/")
+    FAB_COMPANY_EDIT_KEY_FACTS = FABUrl("company-profile/edit/key-facts/")
+    FAB_COMPANY_EDIT_SECTORS = FABUrl("company-profile/edit/sectors/")
+    FAB_COMPANY_PROFILE = FABUrl("company-profile/")
+    FAB_CONFIRM_COMPANY_ADDRESS = FABUrl("verify/letter-confirm/")
+    FAB_CONFIRM_IDENTITY = FABUrl("verify/")
+    FAB_CONFIRM_IDENTITY_LETTER = FABUrl("verify/letter-send/")
+    FAB_HEALTHCHECK = FABUrl("healthcheck/")
+    FAB_REGISTER = FABUrl("register")
+    FAB_REGISTER_CONFIRM_COMPANY = FABUrl("register/company/")
+    FAB_REGISTER_CONFIRM_EXPORT_STATUS = FABUrl("register/exports/")
+    FAB_REGISTER_FINISH = FABUrl("register/finished/")
+    FAB_REGISTER_SUBMIT_ACCOUNT_DETAILS = FABUrl("register-submit/")
+
+    # Find a Supplier
+    FAS_LANDING = FASUrl("")
+    FAS_HEALTHCHECK = FASUrl("healthcheck/")
+    FAS_SUPPLIERS = FASUrl("suppliers/")
+    FAS_INDUSTRIES = FASUrl("industries/")
+    FAS_SUBSCRIBE = FASUrl("subscribe/")
+    FAS_INDUSTRIES_HEALTH = FASUrl("industries/healthcare/")
+    FAS_INDUSTRIES_TECH = FASUrl("industries/technology/")
+    FAS_INDUSTRIES_CREATIVE = FASUrl("industries/creative-services/")
+    FAS_INDUSTRIES_FOOD = FASUrl("industries/food-and-drink/")
+    FAS_INDUSTRIES_HEALTH_SUMMARY = FASUrl("industries/health/summary/")
+    FAS_INDUSTRIES_TECH_SUMMARY = FASUrl("industries/tech/summary/")
+    FAS_INDUSTRIES_CREATIVE_SUMMARY = FASUrl("industries/creative/summary/")
+    FAS_INDUSTRIES_FOOD_SUMMARY = FASUrl("industries/food-and-drink/summary/")
+    FAS_FEEDBACK = FASUrl("feedback/")
+    FAS_SEARCH = FASUrl("search/")
+
+    # New International site
+    INTERNATIONAL_LANDING = InternationalUrl("")
+    INTERNATIONAL_INDUSTRIES = InternationalUrl("content/industries/")
+    INTERNATIONAL_INDUSTRY = InternationalUrl("content/industries/", template="content/industries/{industry}")
+    INTERNATIONAL_HEALTHCHECK_FORMS_API = InternationalUrl("healthcheck/forms-api/")
+    INTERNATIONAL_HEALTHCHECK_SENTRY = InternationalUrl("healthcheck/sentry/")
+
+    # Invest site
+    INVEST_LANDING = InvestUrl("")
+    INVEST_HEALTHCHECK = InvestUrl("healthcheck/")
+    INVEST_CONTACT = InvestUrl("contact/")
+    INVEST_INDUSTRIES = InvestUrl("industries/")
+    INVEST_UK_SETUP_GUIDE = InvestUrl("uk-setup-guide/")
+    INVEST_HPO_RAIL = InvestUrl("high-potential-opportunities/rail-infrastructure/")
+    INVEST_HPO_RAIL_CONTACT = InvestUrl("high-potential-opportunities/rail-infrastructure/contact/")
+    INVEST_HPO_FOOD = InvestUrl("high-potential-opportunities/food-production/")
+    INVEST_HPO_FOOD_CONTACT = InvestUrl("high-potential-opportunities/food-production/contact/")
+    INVEST_HPO_LIGHTWEIGHT = InvestUrl("high-potential-opportunities/lightweight-structures/")
+    INVEST_HPO_LIGHTWEIGHT_CONTACT = InvestUrl("high-potential-opportunities/lightweight-structures/contact/")
+    INVEST_INDUSTRIES_ADVANCED_MANUFACTURING = InvestUrl("industries/advanced-manufacturing/")
+    INVEST_INDUSTRIES_AEROSPACE = InvestUrl("industries/aerospace/")
+    INVEST_INDUSTRIES_AGRI_TECH = InvestUrl("industries/agri-tech/")
+    INVEST_INDUSTRIES_ASSET_MANAGEMENT = InvestUrl("industries/asset-management/")
+    INVEST_INDUSTRIES_AUTOMOTIVE = InvestUrl("industries/automotive/")
+    INVEST_INDUSTRIES_AUTOMOTIVE_RESEARCH_AND_DEVELOPMENT = InvestUrl("industries/automotive-research-and-development/")
+    INVEST_INDUSTRIES_AUTOMOTIVE_SUPPLY_CHAIN = InvestUrl("industries/automotive-supply-chain/")
+    INVEST_INDUSTRIES_CAPITAL_INVESTMENT = InvestUrl("industries/capital-investment/")
+    INVEST_INDUSTRIES_CHEMICALS = InvestUrl("industries/chemicals/")
+    INVEST_INDUSTRIES_CREATIVE_CONTENT_AND_PRODUCTION = InvestUrl("industries/creative-content-and-production/")
+    INVEST_INDUSTRIES_CREATIVE_INDUSTRIES = InvestUrl("industries/creative-industries/")
+    INVEST_INDUSTRIES_DATA_ANALYTICS = InvestUrl("industries/data-analytics/")
+    INVEST_INDUSTRIES_DIGITAL_MEDIA = InvestUrl("industries/digital-media/")
+    INVEST_INDUSTRIES_ELECTRICAL_NETWORKS = InvestUrl("industries/electrical-networks/")
+    INVEST_INDUSTRIES_ENERGY = InvestUrl("industries/energy/")
+    INVEST_INDUSTRIES_ENERGY_WASTE = InvestUrl("industries/energy-waste/")
+    INVEST_INDUSTRIES_FINANCIAL_SERVICES = InvestUrl("industries/financial-services/")
+    INVEST_INDUSTRIES_FINANCIAL_TECHNOLOGY = InvestUrl("industries/financial-technology/")
+    INVEST_INDUSTRIES_FOOD_AND_DRINK = InvestUrl("industries/food-and-drink/")
+    INVEST_INDUSTRIES_FOOD_SERVICE_AND_CATERING = InvestUrl("industries/food-service-and-catering/")
+    INVEST_INDUSTRIES_FREE_FOODS = InvestUrl("industries/free-foods/")
+    INVEST_INDUSTRIES_HEALTH_AND_LIFE_SCIENCES = InvestUrl("industries/health-and-life-sciences/")
+    INVEST_INDUSTRIES_MEAT_POULTRY_AND_DAIRY = InvestUrl("industries/meat-poultry-and-dairy/")
+    INVEST_INDUSTRIES_MEDICAL_TECHNOLOGY = InvestUrl("industries/medical-technology/")
+    INVEST_INDUSTRIES_MOTORSPORT = InvestUrl("industries/motorsport/")
+    INVEST_INDUSTRIES_NUCLEAR_ENERGY = InvestUrl("industries/nuclear-energy/")
+    INVEST_INDUSTRIES_OFFSHORE_WIND_ENERGY = InvestUrl("industries/offshore-wind-energy/")
+    INVEST_INDUSTRIES_OIL_AND_GAS = InvestUrl("industries/oil-and-gas/")
+    INVEST_INDUSTRIES_PHARMACEUTICAL_MANUFACTURING = InvestUrl("industries/pharmaceutical-manufacturing/")
+    INVEST_INDUSTRIES_RETAIL = InvestUrl("industries/retail/")
+    INVEST_INDUSTRIES_TECHNOLOGY = InvestUrl("industries/technology/")
+
+    # FAS/ISD Profile 
+    PROFILE_HEALTHCHECK = ProfileUrl("healthcheck/")
+    PROFILE_HEALTHCHECK_PING = ProfileUrl("healthcheck/ping/")
+    PROFILE_SOO = ProfileUrl("selling-online-overseas/")
+    PROFILE_FAB = ProfileUrl("find-a-buyer/")
+    PROFILE_EXOPS_ALERTS = ProfileUrl("export-opportunities/email-alerts/")
+    PROFILE_EXOPS_APPLICATIONS = ProfileUrl("export-opportunities/applications/")
+    PROFILE_LANDING = ProfileUrl("")
+    PROFILE_ABOUT = ProfileUrl("about/")
+    PROFILE_ENROL = ProfileUrl("enrol/")
+    PROFILE_ENROL_USER_ACCOUNT = ProfileUrl("enrol/business-type/companies-house/user-account/")
+    PROFILE_ENROL_EMAIL_VERIFICATION = ProfileUrl("enrol/business-type/companies-house/verification/")
+    PROFILE_ENROL_COMPANIES_HOUSE_SEARCH = ProfileUrl("enrol/business-type/companies-house/search/")
+    PROFILE_ENROL_BUSINESS_DETAILS = ProfileUrl("enrol/business-type/companies-house/business-details/")
+    PROFILE_ENROL_PERSONAL_DETAILS = ProfileUrl("enrol/business-type/companies-house/personal-details/")
+    PROFILE_ENROL_FINISHED = ProfileUrl("enrol/business-type/companies-house/finished/")
+    PROFILE_EDIT_COMPANY_DESCRIPTION = ProfileUrl("find-a-buyer/description/")
+    PROFILE_EDIT_COMPANY_BUSINESS_DETAILS = ProfileUrl("find-a-buyer/business-details/")
+    PROFILE_PUBLISH_BUSINESS_PROFILE_TO_FAS = ProfileUrl("find-a-buyer/publish/")
+    PROFILE_ADD_PRODUCTS_AND_SERVICES = ProfileUrl("find-a-buyer/add-expertise/products-and-services/")
+    PROFILE_CASE_STUDY_EDIT = ProfileUrl("find-a-buyer/case-study/{case_number}/details/")
+    PROFILE_CASE_STUDY_DETAILS = ProfileUrl("find-a-buyer/case-study/details/")
+    PROFILE_CASE_STUDY_IMAGES = ProfileUrl("find-a-buyer/case-study/images/")
+    PROFILE_UPLOAD_LOGO = ProfileUrl("find-a-buyer/logo/")
+    PROFILE_COMPANY_EDIT_SOCIAL_MEDIA = ProfileUrl("find-a-buyer/social-links/")
+
+    # Domestic site
+    DOMESTIC_HEALTHCHECK = DomesticUrl("healthcheck/")
+    DOMESTIC_HEALTHCHECK_PING = DomesticUrl("healthcheck/ping/")
+    DOMESTIC_SEARCH = DomesticUrl("search/")
+    DOMESTIC_LANDING = DomesticUrl("")
+    DOMESTIC_LANDING_UK = DomesticUrl("?lang=en-gb")
+    DOMESTIC_INTERNATIONAL = DomesticUrl("international/")
+    DOMESTIC_INTERNATIONAL_UK = DomesticUrl("international/?lang=en-gb")
+    DOMESTIC_INTERNATIONAL_ZH = DomesticUrl("international/?lang=zh-hans")
+    DOMESTIC_INTERNATIONAL_DE = DomesticUrl("international/?lang=de")
+    DOMESTIC_INTERNATIONAL_JA = DomesticUrl("international/?lang=ja")
+    DOMESTIC_INTERNATIONAL_ES = DomesticUrl("international/?lang=es")
+    DOMESTIC_INTERNATIONAL_PT = DomesticUrl("international/?lang=pt")
+    DOMESTIC_INTERNATIONAL_AR = DomesticUrl("international/?lang=ar")
+    DOMESTIC_TRIAGE_SECTOR = DomesticUrl("triage/sector/")
+    DOMESTIC_TRIAGE_EXPORTED_BEFORE = DomesticUrl("triage/exported-before/")
+    DOMESTIC_TRIAGE_REGULAR_EXPORTER = DomesticUrl("triage/regular-exporter/")
+    DOMESTIC_TRIAGE_ONLINE_MARKETPLACE = DomesticUrl("triage/online-marketplace/")
+    DOMESTIC_TRIAGE_COMPANIES_HOUSE = DomesticUrl("triage/companies-house/")
+    DOMESTIC_TRIAGE_COMPANY = DomesticUrl("triage/company/")
+    DOMESTIC_TRIAGE_SUMMARY = DomesticUrl("triage/summary/")
+    DOMESTIC_CUSTOM = DomesticUrl("custom/")
+    DOMESTIC_NEW = DomesticUrl("new/")
+    DOMESTIC_OCCASIONAL = DomesticUrl("occasional/")
+    DOMESTIC_REGULAR = DomesticUrl("regular/")
+    DOMESTIC_MARKET_RESEARCH = DomesticUrl("market-research/")
+    DOMESTIC_CUSTOMER_INSIGHT = DomesticUrl("customer-insight/")
+    DOMESTIC_FINANCE = DomesticUrl("finance/")
+    DOMESTIC_BUSINESS_PLANNING = DomesticUrl("business-planning/")
+    DOMESTIC_GETTING_PAID = DomesticUrl("getting-paid/")
+    DOMESTIC_OPERATIONS_AND_COMPLIANCE = DomesticUrl("operations-and-compliance/")
+    DOMESTIC_GET_FINANCE = DomesticUrl("get-finance/")
+    DOMESTIC_STORY_FIRST = DomesticUrl("story/online-marketplaces-propel-freestyle-xtreme-sales/")
+    DOMESTIC_STORY_SECOND = DomesticUrl("story/hello-babys-rapid-online-growth/")
+    DOMESTIC_STORY_THIRD = DomesticUrl("story/york-bag-retailer-goes-global-via-e-commerce/")
+    DOMESTIC_TERMS = DomesticUrl("terms-and-conditions/")
+    DOMESTIC_PRIVACY = DomesticUrl("privacy-and-cookies/")
+
+    # New Contact-Us UI - Domestic & International
+    CONTACT_US_LANDING = ContactUrl("contact/triage/location/")
+    CONTACT_US_DOMESTIC = ContactUrl("contact/triage/domestic/")
+    CONTACT_US_INTERNATIONAL = ContactUrl("contact/triage/international/")
+    CONTACT_US_GREAT_SERVICES = ContactUrl("contact/triage/great-services/")
+    CONTACT_US_EXPORT_OPPORTUNITIES = ContactUrl("contact/triage/export-opportunities/")
+    CONTACT_US_EXPORT_OPPORTUNITIES_NO_RESPONSE = ContactUrl("contact/triage/export-opportunities/opportunity-no-response/")
+    CONTACT_US_EXPORT_OPPORTUNITIES_NOT_RELEVANT = ContactUrl("contact/triage/export-opportunities/alerts-not-relevant/")
+    CONTACT_US_GREAT_ACCOUNT = ContactUrl("contact/triage/great-account/")
+    CONTACT_US_GREAT_ACCOUNT_PASSWORD_RESET = ContactUrl("contact/triage/great-account/password-reset/")
+    CONTACT_US_GREAT_ACCOUNT_CH_LOGIN = ContactUrl("contact/triage/great-account/companies-house-login/")
+    CONTACT_US_GREAT_ACCOUNT_VERIFICATION_LETTER_CODE = ContactUrl("contact/triage/great-account/verification-letter-code/")
+    CONTACT_US_GREAT_ACCOUNT_NO_VERIFICATION_EMAIL = ContactUrl("contact/triage/great-account/no-verification-email/")
+    CONTACT_US_GREAT_ACCOUNT_NO_VERIFICATION_LETTER = ContactUrl("contact/triage/great-account/no-verification-letter/")
+
+    # New Contact-Us UI - forms
+    CONTACT_US_FORM_DOMESTIC = ContactUrl("contact/domestic/")
+    CONTACT_US_FORM_INTERNATIONAL = ContactUrl("contact/international/")
+    CONTACT_US_FORM_DSO = ContactUrl("contact/defence-and-security-organisation/")
+    CONTACT_US_FORM_EVENTS = ContactUrl("contact/events/")
+    CONTACT_US_FORM_EXPORT_ADVICE = ContactUrl("contact/export-advice/comment/")
+    
+    # Other Contact-Us pages
+    CONTACT_US_OTHER_DOMESTIC_EU_EXIT = ContactUrl("eu-exit-news/contact/")
+    CONTACT_US_OTHER_INTERNATIONAL_EU_EXIT = ContactUrl("international/eu-exit-news/contact/")
+    CONTACT_US_OTHER_GET_FINANCE = ContactUrl("get-finance/contact/")
+    CONTACT_US_SOO_ORGANISATION = ContactUrl("selling-online-overseas/organisation")
+    CONTACT_US_SOO_ORGANISATION_DETAILS = ContactUrl("selling-online-overseas/organisation-details")
+    CONTACT_US_SOO_ORGANISATION_YOUR_EXPERIENCE = ContactUrl("selling-online-overseas/your-experience")
+    CONTACT_US_SOO_ORGANISATION_CONTACT_DETAILS = ContactUrl("selling-online-overseas/contact-details")
+    CONTACT_US_SOO_ORGANISATION_SUCCESS = ContactUrl("selling-online-overseas/success")
+
+    # Legacy Contact-Us UI
+    LEGACY_CONTACT_US_HELP = LegacyContactUrl("help/")
+    LEGACY_CONTACT_US_FEEDBACK_FORM = LegacyContactUrl("help/FeedbackForm/")
+    LEGACY_CONTACT_US_DIRECTORY = LegacyContactUrl("directory/")
+    LEGACY_CONTACT_US_DIRECTORY_FEEDBACK_FORM = LegacyContactUrl("directory/FeedbackForm/")
+    LEGACY_CONTACT_US_SOO_TRIAGE = LegacyContactUrl("triage/")
+    LEGACY_CONTACT_US_SOO_TRIAGE_FORM = LegacyContactUrl("triage/soo/")
+    LEGACY_CONTACT_US_SOO_TRIAGE_FEEDBACK_FORM = LegacyContactUrl("FeedbackForm/TriageForm/")
+
+    # ExOpps UI - Export Opportunities
+    EXOPPS_LANDING = ExOppsUrl("")
+
+    # SOO UI Selling Online Overseas
+    SOO_LANDING = SOOUrl("")
+    SOO_SEARCH_RESULTS = SOOUrl("markets/results/")
+    SOO_MARKET_DETAILS = SOOUrl("markets/details/")
+
+    # CMS API endpoints
+    CMS_API_HEALTHCHECK = CMSApiUrl("healthcheck/")
+    CMS_API_HEALTHCHECK_PING = CMSApiUrl("healthcheck/ping/")
+    CMS_API_PAGES = CMSApiUrl("api/pages/")
+    CMS_API_PAGE_TYPES = CMSApiUrl("api/pages/types/")
+    CMS_API_IMAGES = CMSApiUrl("api/images/")
+    CMS_API_DOCUMENTS = CMSApiUrl("api/documents/")
+    CMS_API_PAGES_BY_SLUG = CMSApiUrl("api/pages/lookup-by-slug/{}/")
+
+    # Forms API endpoints
+    FORMS_API_HEALTHCHECK = FormsApiUrl("api/healthcheck/")
+    FORMS_API_HEALTHCHECK_PING = FormsApiUrl("api/healthcheck/ping/")
+    FORMS_API_SUBMISSION = FormsApiUrl("api/submission/")
+    FORMS_API_ADMIN = FormsApiUrl("admin/")
+    FORMS_API_TESTAPI = FormsApiUrl("testapi/submissions-by-email/{email}/")
