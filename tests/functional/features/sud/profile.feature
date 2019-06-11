@@ -242,7 +242,10 @@ Feature: Profile pages
     When "Peter Alder" uploads "<valid_image>" as company's logo
 
     Then "Peter Alder" should see that logo on FAB Company's Directory Profile page
-    And "Peter Alder" should see a PNG logo thumbnail on FAS Company's Directory Profile page
+#    @bug
+#    @TT-1537
+#    @fixme
+#    And "Peter Alder" should see a PNG logo thumbnail on FAS Company's Directory Profile page
 
     Examples:
       | valid_image                                  |

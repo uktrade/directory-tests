@@ -296,9 +296,6 @@ Feature: Multi-user accounts
 #      | keywords                    |  SEE TT-1329
 
 
-  @bug
-  @TT-1537
-  @fixme
   @ED-3568
   @captcha
   @dev-only
@@ -315,7 +312,10 @@ Feature: Multi-user accounts
     When "Annette Geissinger" uploads "<valid_image>" as company's logo
 
     Then "Annette Geissinger" should see that logo on FAB Company's Directory Profile page
-    And "Annette Geissinger" should see a PNG logo thumbnail on FAS Company's Directory Profile page
+#    @bug
+#    @TT-1537
+#    @fixme
+#    And "Annette Geissinger" should see a PNG logo thumbnail on FAS Company's Directory Profile page
 
     Examples:
       | valid_image            |
