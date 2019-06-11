@@ -30,7 +30,7 @@ importlib-metadata==0.17  # via pluggy, pytest
 incremental==17.5.0       # via twisted
 jsonschema==3.0.1
 langdetect==1.0.7
-lxml==4.3.3               # via parsel, scrapy
+lxml==4.3.4               # via parsel, scrapy
 mohawk==0.3.4             # via sigauth
 monotonic==1.5            # via directory-client-core, notifications-python-client
 more-itertools==7.0.0     # via pytest

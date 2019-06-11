@@ -11,7 +11,12 @@ from tests import get_absolute_url
 from tests.functional.common import DETAILS
 from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Company
-from tests.functional.utils.generic import Method, assertion_msg, make_request
+from tests.functional.utils.generic import (
+    Method,
+    assertion_msg,
+    extract_page_contents,
+    make_request,
+)
 from tests.functional.utils.request import check_response
 from tests.settings import SECTORS_WITH_LABELS
 
@@ -102,7 +107,7 @@ def should_see_details(company: Company, response: Response, table_of_details: T
     :param table_of_details: a table of expected company details
     """
     visible_details = [row["detail"] for row in table_of_details]
-    content = response.content.decode("utf-8")
+    content = extract_page_contents(response.content.decode("utf-8")).lower()
 
     title = DETAILS["NAME"] in visible_details
     keywords = DETAILS["KEYWORDS"] in visible_details
@@ -112,14 +117,14 @@ def should_see_details(company: Company, response: Response, table_of_details: T
 
     if title:
         with assertion_msg("Couldn't find Company's title '%s'", company.title):
-            assert company.title in content
+            assert company.title.lower() in content
     if keywords:
         for keyword in company.keywords.split(", "):
             with assertion_msg("Couldn't find Company's keyword '%s'", keyword):
-                assert keyword.strip() in content
+                assert keyword.strip().lower() in content
     if website:
         with assertion_msg("Couldn't find Company's website '%s'", company.website):
-            assert company.website in content
+            assert company.website.lower() in content
     if size:
         with assertion_msg(
             "Couldn't find the size of the company '%s' in the response",
@@ -138,7 +143,7 @@ def should_see_details(company: Company, response: Response, table_of_details: T
             "Couldn't find company's sector '%s' in the response",
             SECTORS_WITH_LABELS[company.sector],
         ):
-            assert SECTORS_WITH_LABELS[company.sector] in content
+            assert SECTORS_WITH_LABELS[company.sector].lower() in content
 
 
 def get_case_studies_details(response: Response):
