@@ -269,7 +269,7 @@ def fas_should_see_png_logo_thumbnail(context: Context, supplier_alias: str):
     response = fas_ui_profile.go_to(session, company.number)
     context.response = response
     fas_ui_profile.should_be_here(response)
-    visible_logo_url = extract_logo_url(response, fas=True)
+    visible_logo_url = extract_logo_url(response)
     placeholder = FAS_LOGO_PLACEHOLDER_IMAGE
 
     with assertion_msg(
@@ -300,7 +300,7 @@ def fas_should_see_different_png_logo_thumbnail(
     response = fas_ui_profile.go_to(session, company.number)
     context.response = response
     fas_ui_profile.should_be_here(response)
-    visible_logo_url = extract_logo_url(response, fas=True)
+    visible_logo_url = extract_logo_url(response)
     placeholder = FAS_LOGO_PLACEHOLDER_IMAGE
 
     with assertion_msg(
