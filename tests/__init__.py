@@ -2,6 +2,7 @@ from enum import Enum, unique
 from functools import partial
 import os
 import uuid
+from typing import Union
 from urllib.parse import urljoin
 
 from tests.settings import (
@@ -433,10 +434,12 @@ class Url:
             self, service_url: str, relative_endpoint: str, *,
             template: str = None
     ):
-        join_service_endpoint = partial(urljoin, service_url)
-        self.relative = relative_endpoint
-        self.absolute = join_service_endpoint(relative_endpoint)
-        self.template = join_service_endpoint(template) if template else None
+        join_endpoint = partial(urljoin, service_url)
+        self.relative: str = relative_endpoint
+        self.absolute: str = join_endpoint(relative_endpoint)
+        self.template: Union[str, None] = (
+            join_endpoint(template) if template else None
+        )
 
 
 class CMSApiUrl(Url):
@@ -534,7 +537,7 @@ class SSOApiUrl(Url):
 @unique
 class URLs(Enum):
 
-    def __str__(self):
+    def __str__(self) -> str:
         return (f"{self._name_} absolute URL: {self.value.absolute} relative "
                 f"URL: {self.value.relative}")
 
@@ -547,7 +550,7 @@ class URLs(Enum):
         return self.value.relative
 
     @property
-    def template(self) -> str:
+    def template(self) -> Union[str, None]:
         return self.value.template
 
     # Directory API
