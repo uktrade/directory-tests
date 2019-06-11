@@ -12,16 +12,16 @@ from tests.functional.utils.request import Method, check_response, make_request
 SERVICE = Services.INTERNATIONAL
 NAME = "Industry"
 NAMES = [
-    "Industry",
-    "Industry (Engineering and manufacturing)",
-    "Industry (Healthcare and Life Sciences)",
+    "Engineering and manufacturing",
+    "Healthcare and Life Sciences",
+    "Technology",
 ]
-TYPE = "article"
+TYPE = "industry"
 URL = get_absolute_url("ui-international:industry")
 URLs = {
-    "industry": URL,
-    "industry (engineering and manufacturing)": urljoin(URL, "engineering-and-manufacturing/"),
-    "industry (healthcare and life sciences)": urljoin(URL, "healthcare-and-life-sciences/"),
+    "engineering and manufacturing": urljoin(URL, "engineering-and-manufacturing/"),
+    "healthcare and life sciences": urljoin(URL, "healthcare-and-life-sciences/"),
+    "technology": urljoin(URL, "technology/"),
 }
 EXPECTED_STRINGS = [
     "Industries",

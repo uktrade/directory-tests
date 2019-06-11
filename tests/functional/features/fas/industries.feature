@@ -38,7 +38,22 @@ Feature: Industry pages
       | FAS - Creative services - Industry         |
       | FAS - Food and drink - Industry            |
       | FAS - Health - Industry                    |
-      | FAS - Technology - Industry                |
+
+
+  @dev-only
+  @ED-2015
+  @industries
+  @no-sso-email-verification-required
+  Scenario Outline: Buyers should be able to find out more about every promoted industry - visit "<selected>" page
+    Given "Annette Geissinger" is a buyer
+
+    When "Annette Geissinger" goes to "FAS - <selected>" page
+
+    Then "Annette Geissinger" should see "International - <selected>" page
+
+    Examples:
+      | selected              |
+      | Technology - Industry |
 
 
   @wip
