@@ -256,6 +256,9 @@ Feature: Profile pages
       | Animated_PNG_example_bouncing_beach_ball.png |
 
 
+  @bug
+  @TT-1537
+  @fixme
   @ED-2093
   @ED-1759
   @profile
