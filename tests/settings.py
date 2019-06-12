@@ -1,5 +1,6 @@
 import os
 from glob import glob
+from urllib.parse import urljoin
 
 __auto_retry = os.environ.get("AUTO_RETRY", "true")
 AUTO_RETRY = (True
@@ -47,6 +48,9 @@ DIRECTORY_SSO_API_CLIENT_SENDER_ID = os.getenv("DIRECTORY_SSO_API_CLIENT_SENDER_
 DIRECTORY_SSO_API_CLIENT_DEFAULT_TIMEOUT = int(os.getenv("DIRECTORY_SSO_API_CLIENT_DEFAULT_TIMEOUT", 30))
 
 EXRED_UI_URL = os.environ["EXRED_UI_URL"]
+ISD_UI_URL = os.getenv(
+    "ISD_UI_URL", urljoin(EXRED_UI_URL, "investment-support-directory/")
+)
 GOV_NOTIFY_API_KEY = os.environ["GOV_NOTIFY_API_KEY"]
 LOCUST_MAX_WAIT = int(os.getenv("LOCUST_MAX_WAIT", 6000))
 LOCUST_MIN_WAIT = int(os.getenv("LOCUST_MIN_WAIT", 500))
