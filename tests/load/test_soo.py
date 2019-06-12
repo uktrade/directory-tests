@@ -1,15 +1,18 @@
 import random
 
 from locust import HttpLocust, TaskSet, task
-from tests import get_relative_url, settings
+from tests import settings, URLs
 from tests.load import USER_AGENT, basic_auth
-from tests.load.utils import random_product_categories, random_operating_countries
+from tests.load.utils import (
+    random_operating_countries,
+    random_product_categories,
+)
 
 
 class SOOTasks(TaskSet):
     @task
     def home_page(self):
-        url = get_relative_url("ui-soo:landing")
+        url = URLs.SOO_LANDING.relative
         self.client.get(
             url,
             headers=USER_AGENT,
@@ -18,7 +21,7 @@ class SOOTasks(TaskSet):
 
     @task
     def search(self):
-        url = get_relative_url("ui-soo:search-results")
+        url = URLs.SOO_SEARCH_RESULTS.relative
 
         params = {
             "category_id": random_product_categories(),
@@ -32,52 +35,52 @@ class SOOTasks(TaskSet):
             headers=USER_AGENT,
             name="/?category_id=[...]&country_id=[...]",
             auth=basic_auth()
-       )
+        )
 
     @task
     def marketplace(self):
         urls = [
-            "markets/details/allegro/",
-            "markets/details/amazon-china/",
-            "markets/details/amazon-france/",
-            "markets/details/amazon-germany/",
-            "markets/details/amazon-india/",
-            "markets/details/amazon-italy/",
-            "markets/details/amazon-japan/",
-            "markets/details/amazon-mexico/",
-            "markets/details/amazon-spain/",
-            "markets/details/amazon-usa/",
-            "markets/details/cdiscount/",
-            "markets/details/ctrip/",
-            "markets/details/dafiti/",
-            "markets/details/ebay/",
-            "markets/details/etsy/",
-            "markets/details/flipkart/",
-            "markets/details/fruugo/",
-            "markets/details/goxip/",
-            "markets/details/jd-worldwide/",
-            "markets/details/kaola/",
-            "markets/details/la-redoute/",
-            "markets/details/lamoda/",
-            "markets/details/linio/",
-            "markets/details/mercado-libre/",
-            "markets/details/newegg-business/",
-            "markets/details/newegg-canada/",
-            "markets/details/newegg-inc/",
-            "markets/details/otto/",
-            "markets/details/privalia/",
-            "markets/details/rakuten/",
-            "markets/details/royal-mail-t-mall/",
-            "markets/details/sfbest/",
-            "markets/details/shangpin/",
-            "markets/details/spartoo/",
-            "markets/details/the-iconic/",
-            "markets/details/tmall-global/",
-            "markets/details/trademe/",
-            "markets/details/tthigo/",
-            "markets/details/westwing/",
-            "markets/details/xiu/",
-            "markets/details/zalora/",
+            URLs.SOO_MARKET_DETAILS.template.format(market="allegro"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="amazon-china"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="amazon-france"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="amazon-germany"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="amazon-india"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="amazon-italy"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="amazon-japan"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="amazon-mexico"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="amazon-spain"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="amazon-usa"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="cdiscount"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="ctrip"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="dafiti"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="ebay"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="etsy"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="flipkart"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="fruugo"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="goxip"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="jd-worldwide"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="kaola"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="la-redoute"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="lamoda"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="linio"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="mercado-libre"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="newegg-business"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="newegg-canada"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="newegg-inc"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="otto"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="privalia"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="rakuten"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="royal-mail-t-mall"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="sfbest"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="shangpin"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="spartoo"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="the-iconic"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="tmall-global"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="trademe"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="tthigo"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="westwing"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="xiu"),
+            URLs.SOO_MARKET_DETAILS.template.format(market="zalora"),
         ]
 
         self.client.get(
