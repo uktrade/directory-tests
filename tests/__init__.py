@@ -802,7 +802,7 @@ class URLs(Enum):
     # SOO UI Selling Online Overseas
     SOO_LANDING = SOOUrl("")
     SOO_SEARCH_RESULTS = SOOUrl("markets/results/")
-    SOO_MARKET_DETAILS = SOOUrl("markets/details/")
+    SOO_MARKET_DETAILS = SOOUrl("markets/details/", template="markets/details/{market}/")
 
     # CMS API endpoints
     CMS_API_HEALTHCHECK = CMSApiUrl("healthcheck/")
