@@ -644,10 +644,19 @@ class URLs(Enum):
 
     # New International site
     INTERNATIONAL_LANDING = InternationalUrl("")
-    INTERNATIONAL_INDUSTRIES = InternationalUrl("content/industries/")
-    INTERNATIONAL_INDUSTRY = InternationalUrl("content/industries/", template="content/industries/{industry}")
+    INTERNATIONAL_INDUSTRIES = InternationalUrl("content/industries/", template="content/industries/{industry}/")
+    INTERNATIONAL_INDUSTRY_CREATIVE_INDUSTRIES = InternationalUrl("content/industries/")
+    INTERNATIONAL_INDUSTRY_FINANCIAL_SERVICES = InternationalUrl("content/industries/")
+    INTERNATIONAL_INDUSTRY_ENGINEERING_AND_MANUFACTURING = InternationalUrl("content/industries/")
     INTERNATIONAL_HEALTHCHECK_FORMS_API = InternationalUrl("healthcheck/forms-api/")
     INTERNATIONAL_HEALTHCHECK_SENTRY = InternationalUrl("healthcheck/sentry/")
+    INTERNATIONAL_UK_SETUP_GUIDE = InternationalUrl("content/how-to-setup-in-the-uk/", template="content/how-to-setup-in-the-uk/{guide}/")
+    INTERNATIONAL_UK_SETUP_GUIDE_UK_VISAS = InternationalUrl("content/how-to-setup-in-the-uk/uk-visas-and-migration/")
+    INTERNATIONAL_UK_SETUP_GUIDE_ESTABLISH_A_BASE = InternationalUrl("content/how-to-setup-in-the-uk/establish-a-base-for-business-in-the-uk/")
+    INTERNATIONAL_UK_SETUP_GUIDE_HIRE_SKILLED_WORKERS = InternationalUrl("content/how-to-setup-in-the-uk/hire-skilled-workers-for-your-uk-operations/")
+    INTERNATIONAL_UK_SETUP_GUIDE_OPEN_BANK_ACCOUNT = InternationalUrl("content/how-to-setup-in-the-uk/open-a-uk-business-bank-account/")
+    INTERNATIONAL_UK_SETUP_GUIDE_REGISTER_A_COMPANY = InternationalUrl("content/how-to-setup-in-the-uk/register-a-company-in-the-uk/")
+    INTERNATIONAL_UK_SETUP_GUIDE_UK_TAX = InternationalUrl("content/how-to-setup-in-the-uk/uk-tax-and-incentives/")
 
     # Invest site
     INVEST_LANDING = InvestUrl("")
