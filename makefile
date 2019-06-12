@@ -56,32 +56,6 @@ rudimental_load_test_search:
 	export LOCUST_FILE=./locustfile_rudimental_search.py; \
 	$(LOCUST)
 
-load_test:
-	$(LOCUST)
-
-load_test_cms_api:
-	export LOCUST_FILE=./locustfile_cms_api.py; \
-	$(LOCUST)
-
-load_test_buyer:
-	export LOCUST_FILE=./locustfile_buyer.py; \
-	$(LOCUST)
-
-load_test_supplier:
-	export LOCUST_FILE=./locustfile_supplier.py; \
-	$(LOCUST)
-
-load_test_sso:
-	export LOCUST_FILE=./locustfile_sso.py; \
-	$(LOCUST)
-
-load_test_exred:
-	export LOCUST_FILE=./locustfile_exred.py; \
-	$(LOCUST)
-
-load_test_minimal:
-	$(LOCUST)
-
 TEST_ENV ?= DEV
 
 smoke_tests:
