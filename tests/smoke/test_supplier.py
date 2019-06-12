@@ -1,4 +1,5 @@
-from rest_framework.status import HTTP_200_OK
+import pytest
+from rest_framework.status import HTTP_200_OK, HTTP_302_FOUND
 
 from tests import get_absolute_url, join_ui_supplier
 from tests.smoke.cms_api_helpers import get_and_assert
@@ -26,6 +27,13 @@ def test_health_industry_200(basic_auth):
     get_and_assert(url=url, status_code=HTTP_200_OK, auth=basic_auth)
 
 
+@pytest.mark.dev
+def test_tech_industry_200(basic_auth):
+    url = get_absolute_url("ui-supplier:industries-tech")
+    get_and_assert(url=url, status_code=HTTP_302_FOUND, auth=basic_auth)
+
+
+@pytest.mark.stage
 def test_tech_industry_200(basic_auth):
     url = get_absolute_url("ui-supplier:industries-tech")
     get_and_assert(url=url, status_code=HTTP_200_OK, auth=basic_auth)
