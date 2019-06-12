@@ -12,7 +12,7 @@ from tests.smoke.cms_api_helpers import status_error
 @pytest.mark.session_auth
 def test_sso_authentication_using_api_client(logged_in_session):
     """This test gets the user_session_id from currently logged in session
-    and then uses SSO API "sso-api:user" endpoint ("api/v1/session-user/")
+    and then uses "URLs.SSO_API_USER" endpoint ("api/v1/session-user/")
     to get user details
     """
     user_session_id = logged_in_session.cookies.get("directory_sso_dev_session")
@@ -28,7 +28,7 @@ def test_sso_authentication_using_api_client(logged_in_session):
 @pytest.mark.session_auth
 def test_sso_authentication_using_api_client_and_stage_cookie(logged_in_session):
     """This test gets the user_session_id from currently logged in session
-    and then uses SSO API "sso-api:user" endpoint ("api/v1/session-user/")
+    and then uses "URLs.SSO_API_USER" endpoint ("api/v1/session-user/")
     to get user details
     """
     user_session_id = logged_in_session.cookies.get("sso_stage_session")

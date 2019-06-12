@@ -5,10 +5,9 @@ from locust import HttpLocust, TaskSet, task
 
 from directory_client_core.authentication import SessionSSOAuthenticator
 
-from tests import get_relative_url, settings, get_absolute_url
+from tests import get_relative_url, settings, URLs
 from tests.locust.helpers import (
     AuthedClientMixin,
-    authenticate_with_sso,
     get_two_valid_sso_sessions,
     get_valid_sso_session_id,
 )
@@ -22,7 +21,7 @@ class PublicPagesAPI(TaskSet):
     def api_health_check_ping(self):
         params = {'token': TOKEN}
         self.client.get(
-            get_relative_url('api:healthcheck-ping'), params=params,
+            URLs.DIR_API_HEALTHCHECK_PING, params=params,
             name="/healthcheck/ping/?token=[token]"
         )
 

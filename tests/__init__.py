@@ -56,15 +56,8 @@ urls = {
     "sso:email_confirm": "accounts/confirm-email/",
     "sso:inactive": "accounts/inactive/",
 
-    # SSO API
-    "sso-api:landing": "",
-    "sso-api:healthcheck": "api/v1/healthcheck/",
-    "sso-api:healthcheck-ping": "api/v1/healthcheck/ping/",
-    "sso-api:user": "api/v1/session-user/",
-
     # UI-BUYER
     "ui-buyer:landing": "",
-    "ui-buyer:healthcheck": "healthcheck/",
     "ui-buyer:register": "register",
     "ui-buyer:register-confirm-company": "register/company/",
     "ui-buyer:register-confirm-export-status": "register/exports/",
@@ -89,7 +82,6 @@ urls = {
 
     # UI-SUPPLIER
     "ui-supplier:landing": "",
-    "ui-supplier:healthcheck": "healthcheck/",
     "ui-supplier:suppliers": "suppliers/",
     "ui-supplier:industries": "industries/",
     "ui-supplier:subscribe": "subscribe/",
@@ -108,12 +100,9 @@ urls = {
     "ui-international:landing": "",
     "ui-international:industries": "content/industries/",
     "ui-international:industry": "content/industries/",
-    "ui-international:healthcheck-forms-api": "healthcheck/forms-api/",
-    "ui-international:healthcheck-sentry": "healthcheck/sentry/",
 
     # UI-INVEST
     "ui-invest:landing": "",
-    "ui-invest:healthcheck": "healthcheck/",
     "ui-invest:contact": "contact/",
     "ui-invest:industries": "industries/",
     "ui-invest:uk-setup-guide": "uk-setup-guide/",
@@ -157,9 +146,6 @@ urls = {
 
 
     # API
-    "api:healthcheck": "healthcheck/",
-    "api:healthcheck-ping": "healthcheck/ping/",
-
     "api:enrolment": "enrolment/",
     "api:pre-verified-enrolment": "pre-verified-enrolment",
     "api:enrolment-trusted-code": "trusted-code/{code}/",
@@ -214,8 +200,6 @@ urls = {
     "internal-api:companies-house-search": "api/internal/companies-house-search/",
 
     # SSO-PROFILE
-    "profile:healthcheck": "healthcheck/",
-    "profile:healthcheck-ping": "healthcheck/ping/",
     "profile:soo": "selling-online-overseas/",
     "profile:fab": "find-a-buyer/",
     "profile:exops-alerts": "export-opportunities/email-alerts/",
@@ -240,8 +224,6 @@ urls = {
     "profile:company-edit-social-media": "find-a-buyer/social-links/",
 
     # ExRed UI
-    "ui-exred:healthcheck": "healthcheck/",
-    "ui-exred:healthcheck-ping": "healthcheck/ping/",
     "ui-exred:search": "search/",
     "ui-exred:landing": "",
     "ui-exred:landing-uk": "?lang=en-gb",
@@ -327,8 +309,6 @@ urls = {
     "ui-soo:market-details": "markets/details/",
 
     # CMS API endpoints
-    "cms-api:healthcheck": "healthcheck/",
-    "cms-api:healthcheck-ping": "healthcheck/ping/",
     "cms-api:pages": "api/pages/",
     "cms-api:page-types": "api/pages/types/",
     "cms-api:images": "api/images/",
@@ -336,8 +316,6 @@ urls = {
     "cms-api:pages-by-slug": "api/pages/lookup-by-slug/{}/",
 
     # Forms API endpoints
-    "forms-api:healthcheck": "api/healthcheck/",
-    "forms-api:healthcheck-ping": "api/healthcheck/ping/",
     "forms-api:submission": "api/submission/",
     "forms-api:admin": "admin/",
     "forms-api:testapi": "testapi/submissions-by-email/{email}/",

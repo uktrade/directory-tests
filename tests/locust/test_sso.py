@@ -7,7 +7,6 @@ from tests import (
     get_relative_url,
     settings
 )
-from tests.settings import DIRECTORY_API_HEALTH_CHECK_TOKEN as TOKEN
 
 
 class PublicPagesSSO(TaskSet):
@@ -56,15 +55,6 @@ class PublicPagesSSO(TaskSet):
             url=get_relative_url('sso:signup'),
             data=json.dumps(data),
             headers={'content-type': 'application/x-www-form-urlencoded'},
-        )
-
-    @task
-    def healthcheck_database(self):
-        params = {'token': TOKEN}
-        self.client.get(
-            get_relative_url('sso-api:healthcheck-database'), 
-            params=params,
-            name="/healthcheck/database/?token=[token]"
         )
 
     @task
