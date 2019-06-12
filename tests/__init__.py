@@ -89,10 +89,6 @@ urls = {
     "ui-supplier:industries-tech": "industries/technology/",
     "ui-supplier:industries-creative": "industries/creative-services/",
     "ui-supplier:industries-food": "industries/food-and-drink/",
-    "ui-supplier:industries-health-summary": "industries/health/summary/",
-    "ui-supplier:industries-tech-summary": "industries/tech/summary/",
-    "ui-supplier:industries-creative-summary": "industries/creative/summary/",
-    "ui-supplier:industries-food-summary": "industries/food-and-drink/summary/",
     "ui-supplier:feedback": "feedback/",
     "ui-supplier:search": "search/",
 
@@ -628,16 +624,18 @@ class URLs(Enum):
     FAS_SUPPLIERS = FASUrl("suppliers/")
     FAS_INDUSTRIES = FASUrl("industries/")
     FAS_SUBSCRIBE = FASUrl("subscribe/")
-    FAS_INDUSTRIES_HEALTH = FASUrl("industries/healthcare/")
-    FAS_INDUSTRIES_TECH = FASUrl("industries/technology/")
-    FAS_INDUSTRIES_CREATIVE = FASUrl("industries/creative-services/")
-    FAS_INDUSTRIES_FOOD = FASUrl("industries/food-and-drink/")
-    FAS_INDUSTRIES_HEALTH_SUMMARY = FASUrl("industries/health/summary/")
-    FAS_INDUSTRIES_TECH_SUMMARY = FASUrl("industries/tech/summary/")
-    FAS_INDUSTRIES_CREATIVE_SUMMARY = FASUrl("industries/creative/summary/")
-    FAS_INDUSTRIES_FOOD_SUMMARY = FASUrl("industries/food-and-drink/summary/")
+    FAS_INDUSTRIES_HEALTHCARE = FASUrl("industries/healthcare/")
+    FAS_INDUSTRIES_TECHNOLOGY = FASUrl("industries/technology/")
+    FAS_INDUSTRIES_CREATIVE_SERVICES = FASUrl("industries/creative-services/")
+    FAS_INDUSTRIES_FOOD_AND_DRINK = FASUrl("industries/food-and-drink/")
     FAS_FEEDBACK = FASUrl("feedback/")
     FAS_SEARCH = FASUrl("search/")
+
+    # Legacy FAS industry endpoints before slugs were changed to:
+    # healthcare, technology & creative-services respectively
+    FAS_INDUSTRIES_HEALTH = FASUrl("industries/health/")
+    FAS_INDUSTRIES_TECH = FASUrl("industries/tech/")
+    FAS_INDUSTRIES_CREATIVE = FASUrl("industries/creative/")
 
     # New International site
     INTERNATIONAL_LANDING = InternationalUrl("")
