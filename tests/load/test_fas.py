@@ -20,14 +20,14 @@ class FASTasks(TaskSet):
     def search(self):
         url = URLs.FAS_SEARCH.relative
         params = {
-            "term": rare_word(),
+            "q": rare_word(),
             "sectors": random_sector(),
         }
         self.client.get(
             url,
             params=params,
             headers=USER_AGENT,
-            name="/search/?term=[term]&sectors=[sectors]",
+            name="/search/?q=[term]&sectors=[sectors]",
             auth=basic_auth(),
         )
 
