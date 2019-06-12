@@ -1,7 +1,7 @@
 import random
 
 from locust import HttpLocust, TaskSet, task
-from tests import get_relative_url, settings
+from tests import settings, URLs
 from tests.load import USER_AGENT, basic_auth
 from tests.load.utils import rare_word, random_sector
 
@@ -9,7 +9,7 @@ from tests.load.utils import rare_word, random_sector
 class FASTasks(TaskSet):
     @task
     def home_page(self):
-        url = get_relative_url("ui-supplier:landing")
+        url = URLs.FAS_LANDING.relative
         self.client.get(
             url,
             headers=USER_AGENT,
@@ -18,7 +18,7 @@ class FASTasks(TaskSet):
 
     @task
     def search(self):
-        url = get_relative_url("ui-supplier:search")
+        url = URLs.FAS_SEARCH.relative
         params = {
             "term": rare_word(),
             "sectors": random_sector(),
