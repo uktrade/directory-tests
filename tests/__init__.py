@@ -412,7 +412,8 @@ class Url:
         join_endpoint = partial(urljoin, service_url)
         self.relative: str = relative_endpoint
         self.absolute: str = join_endpoint(relative_endpoint)
-        self.template: Union[str, None] = (
+        self.template: Union[str, None] = template
+        self.absolute_template: Union[str, None] = (
             join_endpoint(template) if template else None
         )
 
@@ -533,6 +534,10 @@ class URLs(Enum):
     @property
     def template(self) -> Union[str, None]:
         return self.value.template
+
+    @property
+    def absolute_template(self) -> Union[str, None]:
+        return self.value.absolute_template
 
     # Directory API
     INTERNAL_API_COMPANIES_HOUSE_SEARCH = FABApiUrl("api/internal/companies-house-search/")
