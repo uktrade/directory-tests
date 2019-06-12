@@ -16,6 +16,7 @@ class Services(Enum):
     FAB = "FAB"
     FAS = "FAS"
     INTERNATIONAL = "International"
+    ISD = "ISD"
     PROFILE = "Profile"
     SSO = "SSO"
 
