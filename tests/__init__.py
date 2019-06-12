@@ -8,20 +8,21 @@ from urllib.parse import urljoin
 from tests.settings import (
     DIRECTORY_API_URL,
     DIRECTORY_BUYER_API_URL,
-    DIRECTORY_UI_INTERNATIONAL_URL,
-    DIRECTORY_SSO_URL,
-    DIRECTORY_SSO_API_CLIENT_BASE_URL,
-    DIRECTORY_PROFILE_URL,
-    DIRECTORY_UI_BUYER_URL,
-    DIRECTORY_UI_SUPPLIER_URL,
-    INVEST_UI_URL,
-    EXRED_UI_URL,
-    EXPORT_OPPORTUNITIES_UI_URL,
-    DIRECTORY_CONTACT_US_UI_URL,
-    DIRECTORY_LEGACY_CONTACT_US_UI_URL,
-    SOO_UI_URL,
     DIRECTORY_CMS_API_CLIENT_BASE_URL,
+    DIRECTORY_CONTACT_US_UI_URL,
     DIRECTORY_FORMS_API_URL,
+    DIRECTORY_LEGACY_CONTACT_US_UI_URL,
+    DIRECTORY_PROFILE_URL,
+    DIRECTORY_SSO_API_CLIENT_BASE_URL,
+    DIRECTORY_SSO_URL,
+    DIRECTORY_UI_BUYER_URL,
+    DIRECTORY_UI_INTERNATIONAL_URL,
+    DIRECTORY_UI_SUPPLIER_URL,
+    EXPORT_OPPORTUNITIES_UI_URL,
+    EXRED_UI_URL,
+    INVEST_UI_URL,
+    ISD_UI_URL,
+    SOO_UI_URL,
 )
 
 join_api = partial(urljoin, DIRECTORY_API_URL)
@@ -505,6 +506,11 @@ class InvestUrl(Url):
         super().__init__(INVEST_UI_URL, endpoint, template=template)
 
 
+class ISDUrl(Url):
+    def __init__(self, endpoint: str, *, template: str = None):
+        super().__init__(ISD_UI_URL, endpoint, template=template)
+
+
 class LegacyContactUrl(Url):
     def __init__(self, endpoint: str, *, template: str = None):
         super().__init__(
@@ -536,6 +542,7 @@ class SSOApiUrl(Url):
 
 @unique
 class URLs(Enum):
+    """This Enum is to help discover, refactor, find usage of URLs"""
 
     def __str__(self) -> str:
         return (f"{self._name_} absolute URL: {self.value.absolute} relative "
@@ -704,6 +711,9 @@ class URLs(Enum):
     INVEST_INDUSTRIES_PHARMACEUTICAL_MANUFACTURING = InvestUrl("industries/pharmaceutical-manufacturing/")
     INVEST_INDUSTRIES_RETAIL = InvestUrl("industries/retail/")
     INVEST_INDUSTRIES_TECHNOLOGY = InvestUrl("industries/technology/")
+
+    ISD_LANDING = ISDUrl("")
+    ISD_SEARCH = ISDUrl("search/")
 
     # FAS/ISD Profile 
     PROFILE_HEALTHCHECK = ProfileUrl("healthcheck/")
