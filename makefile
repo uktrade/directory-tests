@@ -44,6 +44,10 @@ rudimental_load_test_fas:
 	export LOCUST_FILE=./locustfile_rudimental_fas.py; \
 	$(LOCUST)
 
+rudimental_load_test_international:
+	export LOCUST_FILE=./locustfile_rudimental_international.py; \
+	$(LOCUST)
+
 rudimental_load_test_invest:
 	export LOCUST_FILE=./locustfile_rudimental_invest.py; \
 	$(LOCUST)
