@@ -1,17 +1,17 @@
 import pytest
 from rest_framework.status import HTTP_200_OK, HTTP_302_FOUND
 
-from tests import get_absolute_url, join_ui_supplier
+from tests import get_absolute_url, join_ui_supplier, URLs
 from tests.smoke.cms_api_helpers import get_and_assert
 
 
 def test_landing_page_200(basic_auth):
-    url = get_absolute_url("ui-supplier:landing")
+    url = URLs.FAS_LANDING.absolute
     get_and_assert(url=url, status_code=HTTP_200_OK, auth=basic_auth)
 
 
 def test_supplier_list_200(basic_auth):
-    url = get_absolute_url("ui-supplier:suppliers")
+    url = URLs.FAS_SUPPLIERS.absolute
     get_and_assert(
         url=url, status_code=HTTP_200_OK, auth=basic_auth, allow_redirects=True
     )

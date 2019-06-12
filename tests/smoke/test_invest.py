@@ -1,55 +1,53 @@
 import pytest
 from rest_framework.status import *
 
-from tests import get_absolute_url, join_ui_international, join_ui_invest
+from tests import join_ui_international, join_ui_invest, URLs
 from tests.smoke.cms_api_helpers import get_and_assert
 
 
 @pytest.mark.parametrize(
     "url",
     [
-        get_absolute_url("ui-invest:landing"),
-        get_absolute_url("ui-invest:contact"),
-        get_absolute_url("ui-invest:industries"),
-        get_absolute_url("ui-invest:uk-setup-guide"),
-        get_absolute_url("ui-invest:hpo-rail"),
-        get_absolute_url("ui-invest:hpo-rail-contact"),
-        get_absolute_url("ui-invest:hpo-food"),
-        get_absolute_url("ui-invest:hpo-food-contact"),
-        get_absolute_url("ui-invest:hpo-lightweight"),
-        get_absolute_url("ui-invest:hpo-lightweight-contact"),
-        get_absolute_url("ui-invest:industries-advanced-manufacturing"),
-        get_absolute_url("ui-invest:industries-agri-tech"),
-        get_absolute_url("ui-invest:industries-asset-management"),
-        get_absolute_url("ui-invest:industries-automotive"),
-        get_absolute_url(
-            "ui-invest:industries-automotive-research-and-development"
-        ),
-        get_absolute_url("ui-invest:industries-automotive-supply-chain"),
-        get_absolute_url("ui-invest:industries-capital-investment"),
-        get_absolute_url("ui-invest:industries-chemicals"),
-        get_absolute_url(
-            "ui-invest:industries-creative-content-and-production"
-        ),
-        get_absolute_url("ui-invest:industries-creative-industries"),
-        get_absolute_url("ui-invest:industries-data-analytics"),
-        get_absolute_url("ui-invest:industries-digital-media"),
-        get_absolute_url("ui-invest:industries-electrical-networks"),
-        get_absolute_url("ui-invest:industries-energy"),
-        get_absolute_url("ui-invest:industries-energy-waste"),
-        get_absolute_url("ui-invest:industries-financial-technology"),
-        get_absolute_url("ui-invest:industries-food-and-drink"),
-        get_absolute_url("ui-invest:industries-food-service-and-catering"),
-        get_absolute_url("ui-invest:industries-free-foods"),
-        get_absolute_url("ui-invest:industries-meat-poultry-and-dairy"),
-        get_absolute_url("ui-invest:industries-medical-technology"),
-        get_absolute_url("ui-invest:industries-motorsport"),
-        get_absolute_url("ui-invest:industries-nuclear-energy"),
-        get_absolute_url("ui-invest:industries-offshore-wind-energy"),
-        get_absolute_url("ui-invest:industries-oil-and-gas"),
-        get_absolute_url("ui-invest:industries-pharmaceutical-manufacturing"),
-        get_absolute_url("ui-invest:industries-retail"),
-        get_absolute_url("ui-invest:industries-technology"),
+        URLs.INVEST_LANDING.absolute,
+        URLs.INVEST_CONTACT.absolute,
+        URLs.INVEST_INDUSTRIES.absolute,
+        URLs.INVEST_UK_SETUP_GUIDE.absolute,
+        URLs.INVEST_HPO_FOOD.absolute,
+        URLs.INVEST_HPO_FOOD_CONTACT.absolute,
+        URLs.INVEST_HPO_LIGHTWEIGHT.absolute,
+        URLs.INVEST_HPO_LIGHTWEIGHT_CONTACT.absolute,
+        URLs.INVEST_HPO_RAIL.absolute,
+        URLs.INVEST_HPO_RAIL_CONTACT.absolute,
+        URLs.INVEST_INDUSTRIES_AEROSPACE.absolute,
+        URLs.INVEST_INDUSTRIES_ADVANCED_MANUFACTURING.absolute,
+        URLs.INVEST_INDUSTRIES_AGRI_TECH.absolute,
+        URLs.INVEST_INDUSTRIES_ASSET_MANAGEMENT.absolute,
+        URLs.INVEST_INDUSTRIES_AUTOMOTIVE.absolute,
+        URLs.INVEST_INDUSTRIES_AUTOMOTIVE_RESEARCH_AND_DEVELOPMENT.absolute,
+        URLs.INVEST_INDUSTRIES_AUTOMOTIVE_SUPPLY_CHAIN.absolute,
+        URLs.INVEST_INDUSTRIES_CAPITAL_INVESTMENT.absolute,
+        URLs.INVEST_INDUSTRIES_CHEMICALS.absolute,
+        URLs.INVEST_INDUSTRIES_CREATIVE_CONTENT_AND_PRODUCTION.absolute,
+        URLs.INVEST_INDUSTRIES_CREATIVE_INDUSTRIES.absolute,
+        URLs.INVEST_INDUSTRIES_DATA_ANALYTICS.absolute,
+        URLs.INVEST_INDUSTRIES_DIGITAL_MEDIA.absolute,
+        URLs.INVEST_INDUSTRIES_ELECTRICAL_NETWORKS.absolute,
+        URLs.INVEST_INDUSTRIES_ENERGY.absolute,
+        URLs.INVEST_INDUSTRIES_ENERGY_WASTE.absolute,
+        URLs.INVEST_INDUSTRIES_FINANCIAL_TECHNOLOGY.absolute,
+        URLs.INVEST_INDUSTRIES_FOOD_AND_DRINK.absolute,
+        URLs.INVEST_INDUSTRIES_FOOD_SERVICE_AND_CATERING.absolute,
+        URLs.INVEST_INDUSTRIES_FREE_FOODS.absolute,
+        URLs.INVEST_INDUSTRIES_HEALTH_AND_LIFE_SCIENCES.absolute,
+        URLs.INVEST_INDUSTRIES_MEAT_POULTRY_AND_DAIRY.absolute,
+        URLs.INVEST_INDUSTRIES_MEDICAL_TECHNOLOGY.absolute,
+        URLs.INVEST_INDUSTRIES_MOTORSPORT.absolute,
+        URLs.INVEST_INDUSTRIES_NUCLEAR_ENERGY.absolute,
+        URLs.INVEST_INDUSTRIES_OFFSHORE_WIND_ENERGY.absolute,
+        URLs.INVEST_INDUSTRIES_OIL_AND_GAS.absolute,
+        URLs.INVEST_INDUSTRIES_PHARMACEUTICAL_MANUFACTURING.absolute,
+        URLs.INVEST_INDUSTRIES_RETAIL.absolute,
+        URLs.INVEST_INDUSTRIES_TECHNOLOGY.absolute,
     ],
 )
 def test_invest_pages(url, basic_auth):
@@ -60,9 +58,7 @@ def test_invest_pages(url, basic_auth):
 @pytest.mark.parametrize(
     "endpoint",
     [
-        "industries/health-and-life-sciences/",
-        "industries/financial-services/",
-        "industries/aerospace/",
+        URLs.INVEST_INDUSTRIES_FINANCIAL_SERVICES.relative,
     ],
 )
 def test_cms_918_redirect_to_international_if_matching_industry_exists(

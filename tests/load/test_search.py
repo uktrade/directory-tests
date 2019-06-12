@@ -1,5 +1,5 @@
 from locust import HttpLocust, TaskSet, task
-from tests import get_relative_url, settings
+from tests import settings, URLs
 from tests.load import USER_AGENT, basic_auth
 from tests.load.utils import rare_word
 
@@ -7,7 +7,7 @@ from tests.load.utils import rare_word
 class SearchTasks(TaskSet):
     @task
     def search(self):
-        url = get_relative_url("ui-exred:search")
+        url = URLs.DOMESTIC_SEARCH.relative
         params = {"q": rare_word()}
 
         self.client.get(
