@@ -1,3 +1,5 @@
+from urllib.parse import urljoin
+
 import pytest
 import requests
 from rest_framework.status import (
@@ -7,7 +9,7 @@ from rest_framework.status import (
     HTTP_404_NOT_FOUND,
 )
 
-from tests import companies, get_absolute_url
+from tests import companies, URLs
 from tests.smoke.cms_api_helpers import get_and_assert, status_error
 
 
@@ -18,7 +20,7 @@ from tests.smoke.cms_api_helpers import get_and_assert, status_error
 def test_landing_page_post_company_not_active(basic_auth):
     data = {"company_number": companies["not_active"]}
     response = requests.post(
-        get_absolute_url("ui-buyer:landing"),
+        URLs.FAB_LANDING.absolute,
         data=data,
         allow_redirects=False,
         auth=basic_auth,
@@ -27,8 +29,13 @@ def test_landing_page_post_company_not_active(basic_auth):
 
 
 @pytest.mark.session_auth
-def test_not_existing_page_return_404_user(logged_in_session, basic_auth):
-    url = get_absolute_url("ui-buyer:landing") + "/foobar"
+@pytest.mark.parametrize(
+    "url",
+    [
+        urljoin(URLs.FAB_LANDING.absolute, "foobar"),
+    ],
+)
+def test_not_existing_page_return_404_user(logged_in_session, basic_auth, url):
     response = logged_in_session.get(
         url, allow_redirects=False, auth=basic_auth
     )
@@ -37,16 +44,17 @@ def test_not_existing_page_return_404_user(logged_in_session, basic_auth):
     )
 
 
+@pytest.mark.dev
 @pytest.mark.parametrize(
     "url,destination",
     [
-        (
-            get_absolute_url("ui-buyer:register"),
-            get_absolute_url("ui-buyer:landing"),
-        )
+        (URLs.FAB_REGISTER.absolute, URLs.PROFILE_ENROL.absolute)
     ],
 )
-def test_redirects_to_profile_pages(url, destination, basic_auth):
+def test_redirects_to_profile_pages_dev(url, destination, basic_auth):
+    # get rid of trailing slash -> see TT-1543
+    if url[-1] == "/":
+        url = url[:-1]
     response = get_and_assert(
         url=url,
         allow_redirects=False,
@@ -54,24 +62,69 @@ def test_redirects_to_profile_pages(url, destination, basic_auth):
         auth=basic_auth,
     )
     location = response.headers["location"]
-    assert destination.endswith(location)
+    error = (
+        f"Expected '{url}' to return a redirect which would get us to "
+        f"'{destination}' but got redirect to '{location}'"
+    )
+    assert destination.endswith(location), error
+
+
+@pytest.mark.stage
+@pytest.mark.parametrize(
+    "url,destination",
+    [
+        (URLs.FAB_REGISTER.absolute, URLs.FAB_LANDING.absolute)
+    ],
+)
+def test_redirects_to_profile_pages_stage(url, destination, basic_auth):
+    # get rid of trailing slash -> see TT-1543
+    if url[-1] == "/":
+        url = url[:-1]
+    response = get_and_assert(
+        url=url,
+        allow_redirects=False,
+        status_code=HTTP_302_FOUND,
+        auth=basic_auth,
+    )
+    location = response.headers["location"]
+    error = (
+        f"Expected '{url}' to return a redirect which would get us to "
+        f"'{destination}' but got redirect to '{location}'"
+    )
+    assert destination.endswith(location), error
+
+
+@pytest.mark.skip(reason="see TT-1543 missing redirect with trailing /")
+@pytest.mark.parametrize(
+    "url",
+    [
+        URLs.FAB_REGISTER.absolute,
+    ],
+)
+def test_tt_1543_302_redirects_for_anon_user(url, basic_auth):
+    get_and_assert(
+        url=url,
+        allow_redirects=False,
+        status_code=HTTP_302_FOUND,
+        auth=basic_auth,
+    )
 
 
 @pytest.mark.parametrize(
     "url",
     [
-        get_absolute_url("ui-buyer:register"),
-        get_absolute_url("ui-buyer:register-confirm-export-status"),
-        get_absolute_url("ui-buyer:register-submit-account-details"),
-        get_absolute_url("ui-buyer:confirm-company-address"),
-        get_absolute_url("ui-buyer:confirm-identity"),
-        get_absolute_url("ui-buyer:confirm-identity-letter"),
-        get_absolute_url("ui-buyer:company-profile"),
-        get_absolute_url("ui-buyer:company-edit"),
-        get_absolute_url("ui-buyer:company-edit-description"),
-        get_absolute_url("ui-buyer:company-edit-key-facts"),
-        get_absolute_url("ui-buyer:company-edit-sectors"),
-        get_absolute_url("ui-buyer:company-edit-contact"),
+        URLs.FAB_REGISTER_CONFIRM_EXPORT_STATUS.absolute,
+        URLs.FAB_REGISTER_SUBMIT_ACCOUNT_DETAILS.absolute,
+        URLs.FAB_CONFIRM_COMPANY_ADDRESS.absolute,
+        URLs.FAB_CONFIRM_IDENTITY.absolute,
+        URLs.FAB_CONFIRM_IDENTITY_LETTER.absolute,
+        URLs.FAB_COMPANY_PROFILE.absolute,
+        URLs.FAB_COMPANY_EDIT.absolute,
+        URLs.FAB_COMPANY_EDIT_ADDRESS.absolute,
+        URLs.FAB_COMPANY_EDIT_DESCRIPTION.absolute,
+        URLs.FAB_COMPANY_EDIT_KEY_FACTS.absolute,
+        URLs.FAB_COMPANY_EDIT_SECTORS.absolute,
+        URLs.FAB_COMPANY_EDIT_CONTACT.absolute,
     ],
 )
 def test_302_redirects_for_anon_user(url, basic_auth):
@@ -86,19 +139,20 @@ def test_302_redirects_for_anon_user(url, basic_auth):
 @pytest.mark.parametrize(
     "url",
     [
-        get_absolute_url("ui-buyer:register-confirm-company"),
-        get_absolute_url("ui-buyer:register-confirm-export-status"),
-        get_absolute_url("ui-buyer:register-finish"),
-        get_absolute_url("ui-buyer:register-submit-account-details"),
-        get_absolute_url("ui-buyer:confirm-company-address"),
-        get_absolute_url("ui-buyer:confirm-identity"),
-        get_absolute_url("ui-buyer:confirm-identity-letter"),
-        get_absolute_url("ui-buyer:company-profile"),
-        get_absolute_url("ui-buyer:company-edit"),
-        get_absolute_url("ui-buyer:company-edit-description"),
-        get_absolute_url("ui-buyer:company-edit-key-facts"),
-        get_absolute_url("ui-buyer:company-edit-sectors"),
-        get_absolute_url("ui-buyer:company-edit-contact"),
+        URLs.FAB_REGISTER_CONFIRM_COMPANY.absolute,
+        URLs.FAB_REGISTER_CONFIRM_EXPORT_STATUS.absolute,
+        URLs.FAB_REGISTER_FINISH.absolute,
+        URLs.FAB_REGISTER_SUBMIT_ACCOUNT_DETAILS.absolute,
+        URLs.FAB_CONFIRM_COMPANY_ADDRESS.absolute,
+        URLs.FAB_CONFIRM_IDENTITY.absolute,
+        URLs.FAB_CONFIRM_IDENTITY_LETTER.absolute,
+        URLs.FAB_COMPANY_PROFILE.absolute,
+        URLs.FAB_COMPANY_EDIT.absolute,
+        URLs.FAB_COMPANY_EDIT_ADDRESS.absolute,
+        URLs.FAB_COMPANY_EDIT_DESCRIPTION.absolute,
+        URLs.FAB_COMPANY_EDIT_KEY_FACTS.absolute,
+        URLs.FAB_COMPANY_EDIT_SECTORS.absolute,
+        URLs.FAB_COMPANY_EDIT_CONTACT.absolute,
     ],
 )
 def test_301_redirects_after_removing_trailing_slash_for_anon_user(
@@ -119,14 +173,13 @@ def test_301_redirects_after_removing_trailing_slash_for_anon_user(
 @pytest.mark.parametrize(
     "url",
     [
-        get_absolute_url("ui-buyer:landing"),
-        get_absolute_url("ui-buyer:register"),
-        get_absolute_url("ui-buyer:register-confirm-company"),
-        get_absolute_url("ui-buyer:register-confirm-export-status"),
-        get_absolute_url("ui-buyer:register-finish"),
-        get_absolute_url("ui-buyer:confirm-company-address"),
-        get_absolute_url("ui-buyer:confirm-identity"),
-        get_absolute_url("ui-buyer:confirm-identity-letter"),
+        URLs.FAB_LANDING.absolute,
+        URLs.FAB_REGISTER_CONFIRM_COMPANY.absolute,
+        URLs.FAB_REGISTER_CONFIRM_EXPORT_STATUS.absolute,
+        URLs.FAB_REGISTER_FINISH.absolute,
+        URLs.FAB_CONFIRM_COMPANY_ADDRESS.absolute,
+        URLs.FAB_CONFIRM_IDENTITY.absolute,
+        URLs.FAB_CONFIRM_IDENTITY_LETTER.absolute,
     ],
 )
 def test_access_non_health_check_endpoints_as_logged_in_user(
