@@ -1,7 +1,7 @@
 import pytest
 import requests
 
-from directory_constants.constants import cms as SERVICE_NAMES
+from directory_constants import cms as SERVICE_NAMES
 from requests.auth import HTTPBasicAuth
 from retrying import retry
 

@@ -1,6 +1,6 @@
 import pytest
 from directory_cms_client.client import cms_api_client
-from directory_constants.constants import cms as SERVICE_NAMES
+from directory_constants import cms as SERVICE_NAMES
 from rest_framework.status import HTTP_200_OK, HTTP_404_NOT_FOUND
 from retrying import retry
 

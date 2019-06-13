@@ -6,10 +6,9 @@ from typing import List, Tuple, Union
 from urllib.parse import urlparse
 
 import requests
-from directory_client_core.helpers import AbstractResponse
 from directory_cms_client import DirectoryCMSClient
 from directory_cms_client.client import cms_api_client
-from directory_constants.constants import cms as SERVICE_NAMES
+from directory_constants import cms as SERVICE_NAMES
 from requests import Response
 from rest_framework.status import (
     HTTP_200_OK,
@@ -141,10 +140,10 @@ def check_for_special_page_cases(page: dict) -> str:
     return url
 
 
-def should_skip_never_published_page(response: AbstractResponse) -> bool:
+def should_skip_never_published_page(response: Response) -> bool:
     if response.status_code == HTTP_404_NOT_FOUND:
         print(
-            f"GET {response.raw_response.request.url} → 404. Maybe this page was never published"
+            f"GET {response.request.url} → 404. Maybe this page was never published"
         )
         return True
     return False
@@ -173,18 +172,8 @@ def should_skip_url(url: str) -> bool:
     return False
 
 
-def status_error(
-    expected_status_code: int, response: Union[AbstractResponse, Response]
-):
-    if isinstance(response, AbstractResponse):
-        return (
-            f"{response.raw_response.request.method} {response.raw_response.url} "
-            f"returned {response.status_code} instead of expected "
-            f"{expected_status_code}\n"
-            f"REQ headers: {pformat(response.raw_response.request.headers)}\n"
-            f"RSP headers: {pformat(response.raw_response.headers)}"
-        )
-    elif isinstance(response, Response):
+def status_error(expected_status_code: int, response:  Response):
+    if isinstance(response, Response):
         return (
             f"{response.request.method} {response.url} "
             f"returned {response.status_code} instead of expected "
@@ -192,6 +181,8 @@ def status_error(
             f"REQ headers: {pformat(response.request.headers)}\n"
             f"RSP headers: {pformat(response.headers)}"
         )
+    else:
+        raise RuntimeError(f"Got an unknown type of response {type(response)}")
 
 
 def get_and_assert(
@@ -238,7 +229,7 @@ def get_page_ids_by_type(page_type: str) -> Tuple[List[int], int]:
     relative_url = get_relative_url("cms-api:pages")
     endpoint = f"{relative_url}?type={page_type}"
     response = cms_api_client.get(endpoint)
-    total_response_time = response.raw_response.elapsed.total_seconds()
+    total_response_time = response.elapsed.total_seconds()
     assert response.status_code == HTTP_200_OK, status_error(HTTP_200_OK, response)
 
     # get IDs of all pages from the response
@@ -255,7 +246,7 @@ def get_page_ids_by_type(page_type: str) -> Tuple[List[int], int]:
         offset = len(page_ids) + len(content["items"])
         endpoint = f"{relative_url}?type={page_type}&offset={offset}"
         response = cms_api_client.get(endpoint)
-        total_response_time += response.raw_response.elapsed.total_seconds()
+        total_response_time += response.elapsed.total_seconds()
         assert response.status_code == HTTP_200_OK, status_error(HTTP_200_OK, response)
         content = response.json()
         page_ids += [page["id"] for page in content["items"]]
@@ -272,8 +263,8 @@ def sync_requests(endpoints: List[str]):
     for endpoint in endpoints:
         response = cms_api_client.get(endpoint)
         print(
-            f"Got response from {response.raw_response.url} in: "
-            f"{response.raw_response.elapsed.total_seconds()}s"
+            f"Got response from {response.url} in: "
+            f"{response.elapsed.total_seconds()}s"
         )
         result.append(response)
     return result
@@ -402,7 +393,7 @@ def find_draft_urls(responses: dict) -> List[Tuple[str, int]]:
             else:
                 logging.error(
                     f"Expected 200 but got {response.status_code} from "
-                    f"{response.raw_response.url}"
+                    f"{response.url}"
                 )
     return result
 
