@@ -5,30 +5,62 @@ from tests import join_ui_international, join_ui_invest, URLs
 from tests.smoke.cms_api_helpers import get_and_assert
 
 
+@pytest.mark.skip(reason="see CMS-1671 requests are redirected to http then to https")
+@pytest.mark.dev
+@pytest.mark.parametrize(
+    "url",
+    [
+        URLs.INVEST_INDUSTRIES_AEROSPACE.absolute,
+        URLs.INVEST_INDUSTRIES_AUTOMOTIVE.absolute,
+        URLs.INVEST_INDUSTRIES_CREATIVE_INDUSTRIES.absolute,
+        URLs.INVEST_INDUSTRIES_HEALTH_AND_LIFE_SCIENCES.absolute,
+        URLs.INVEST_INDUSTRIES_TECHNOLOGY.absolute,
+    ],
+)
+def test_invest_pages_redirects(url, basic_auth):
+    response = get_and_assert(url=url, status_code=HTTP_302_FOUND, auth=basic_auth, allow_redirects=False)
+    location = response.headers["location"]
+    error = f"Expected redirect to https://... URL but got {location}"
+    assert location.startswith("https://"), error
+
+
+@pytest.mark.dev
+@pytest.mark.parametrize(
+    "url,redirected",
+    [
+        (URLs.INVEST_UK_SETUP_GUIDE.absolute, URLs.INTERNATIONAL_UK_SETUP_GUIDE.absolute),
+        (URLs.INVEST_INDUSTRIES_AEROSPACE.absolute, URLs.INTERNATIONAL_INDUSTRY_AEROSPACE.absolute),
+        (URLs.INVEST_INDUSTRIES_AUTOMOTIVE.absolute, URLs.INTERNATIONAL_INDUSTRY_AUTOMOTIVE.absolute),
+        (URLs.INVEST_INDUSTRIES_CREATIVE_INDUSTRIES.absolute, URLs.INTERNATIONAL_INDUSTRY_CREATIVE_INDUSTRIES.absolute),
+        (URLs.INVEST_INDUSTRIES_HEALTH_AND_LIFE_SCIENCES.absolute, URLs.INTERNATIONAL_INDUSTRY_HEALTH_AND_LIFE_SCIENCES.absolute),
+        (URLs.INVEST_INDUSTRIES_TECHNOLOGY.absolute, URLs.INTERNATIONAL_INDUSTRY_TECHNOLOGY.absolute),
+    ],
+)
+def test_invest_pages_redirect_to_international(url, redirected, basic_auth):
+    response = get_and_assert(url=url, status_code=HTTP_200_OK, auth=basic_auth, allow_redirects=True)
+    assert response.url == redirected
+
+
 @pytest.mark.parametrize(
     "url",
     [
         URLs.INVEST_LANDING.absolute,
         URLs.INVEST_CONTACT.absolute,
         URLs.INVEST_INDUSTRIES.absolute,
-        URLs.INVEST_UK_SETUP_GUIDE.absolute,
         URLs.INVEST_HPO_FOOD.absolute,
         URLs.INVEST_HPO_FOOD_CONTACT.absolute,
         URLs.INVEST_HPO_LIGHTWEIGHT.absolute,
         URLs.INVEST_HPO_LIGHTWEIGHT_CONTACT.absolute,
         URLs.INVEST_HPO_RAIL.absolute,
         URLs.INVEST_HPO_RAIL_CONTACT.absolute,
-        URLs.INVEST_INDUSTRIES_AEROSPACE.absolute,
         URLs.INVEST_INDUSTRIES_ADVANCED_MANUFACTURING.absolute,
         URLs.INVEST_INDUSTRIES_AGRI_TECH.absolute,
         URLs.INVEST_INDUSTRIES_ASSET_MANAGEMENT.absolute,
-        URLs.INVEST_INDUSTRIES_AUTOMOTIVE.absolute,
         URLs.INVEST_INDUSTRIES_AUTOMOTIVE_RESEARCH_AND_DEVELOPMENT.absolute,
         URLs.INVEST_INDUSTRIES_AUTOMOTIVE_SUPPLY_CHAIN.absolute,
         URLs.INVEST_INDUSTRIES_CAPITAL_INVESTMENT.absolute,
         URLs.INVEST_INDUSTRIES_CHEMICALS.absolute,
         URLs.INVEST_INDUSTRIES_CREATIVE_CONTENT_AND_PRODUCTION.absolute,
-        URLs.INVEST_INDUSTRIES_CREATIVE_INDUSTRIES.absolute,
         URLs.INVEST_INDUSTRIES_DATA_ANALYTICS.absolute,
         URLs.INVEST_INDUSTRIES_DIGITAL_MEDIA.absolute,
         URLs.INVEST_INDUSTRIES_ELECTRICAL_NETWORKS.absolute,
@@ -38,7 +70,6 @@ from tests.smoke.cms_api_helpers import get_and_assert
         URLs.INVEST_INDUSTRIES_FOOD_AND_DRINK.absolute,
         URLs.INVEST_INDUSTRIES_FOOD_SERVICE_AND_CATERING.absolute,
         URLs.INVEST_INDUSTRIES_FREE_FOODS.absolute,
-        URLs.INVEST_INDUSTRIES_HEALTH_AND_LIFE_SCIENCES.absolute,
         URLs.INVEST_INDUSTRIES_MEAT_POULTRY_AND_DAIRY.absolute,
         URLs.INVEST_INDUSTRIES_MEDICAL_TECHNOLOGY.absolute,
         URLs.INVEST_INDUSTRIES_MOTORSPORT.absolute,
@@ -47,7 +78,6 @@ from tests.smoke.cms_api_helpers import get_and_assert
         URLs.INVEST_INDUSTRIES_OIL_AND_GAS.absolute,
         URLs.INVEST_INDUSTRIES_PHARMACEUTICAL_MANUFACTURING.absolute,
         URLs.INVEST_INDUSTRIES_RETAIL.absolute,
-        URLs.INVEST_INDUSTRIES_TECHNOLOGY.absolute,
     ],
 )
 def test_invest_pages(url, basic_auth):
