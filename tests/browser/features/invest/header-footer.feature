@@ -12,17 +12,34 @@ Feature: Header-Footer
   Scenario Outline: Visitors should see correct UK Government logo, with Union Jack, in the page header and footer on "<selected>" page
     Given "Robert" visits the "<selected>" page
 
-    Then "Robert" should be on the "<selected>" page
+    Then "Robert" should be on the "<expected>" page
     And "Robert" should see correct UK Government logo in page "header"
     And "Robert" should see correct UK Government logo in page "footer"
     And "Robert" should see the correct favicon
 
+    @dev-only
     Examples:
-      | selected                |
-      | Invest - Home           |
-      | Invest - Industries     |
-      | Invest - UK Setup Guide |
-      | Invest - Contact Us     |
+      | selected                | expected                                |
+      | Invest - Home           | Invest - Home                           |
+      | Invest - Industries     | Invest - Industries                     |
+      | Invest - UK Setup Guide | International - How to set up in the UK |
+      | Invest - Contact Us     | Invest - Contact Us                     |
+
+    @stage-only
+    Examples:
+      | selected                | expected                |
+      | Invest - Home           | Invest - Home           |
+      | Invest - Industries     | Invest - Industries     |
+      | Invest - UK Setup Guide | Invest - UK Setup Guide |
+      | Invest - Contact Us     | Invest - Contact Us     |
+
+    @uat-only
+    Examples:
+      | selected                | expected                                |
+      | Invest - Home           | Invest - Home                           |
+      | Invest - Industries     | Invest - Industries                     |
+      | Invest - UK Setup Guide | International - How to set up in the UK |
+      | Invest - Contact Us     | Invest - Contact Us                     |
 
 
   @CMS-158
@@ -68,12 +85,18 @@ Feature: Header-Footer
     Examples:
       | selected                            |
       | Capital Investment - industry       |
-      | Creative industries - industry      |
       | Health and life sciences - industry |
       | Technology - industry               |
 #      | Feedback                            | it's a separate service with different header & footer
 
     @dev-only
+    @full
+    Examples:
+      | selected                            |
+      | Creative industries - industry      |
+      | Financial services - industry       |
+
+    @stage-only
     @full
     Examples:
       | selected                            |
