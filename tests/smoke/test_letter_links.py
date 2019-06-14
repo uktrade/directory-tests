@@ -6,7 +6,7 @@ from rest_framework.status import (
     HTTP_302_FOUND,
 )
 
-from tests import get_absolute_url
+from tests import get_absolute_url, URLs
 from tests.smoke.cms_api_helpers import get_and_assert, status_error
 
 
@@ -14,8 +14,8 @@ from tests.smoke.cms_api_helpers import get_and_assert, status_error
 @pytest.mark.parametrize(
     "url",
     [
-        get_absolute_url("legacy-ui-contact-us:help"),
-        get_absolute_url("legacy-ui-contact-us:feedback-form"),
+        URLs.LEGACY_CONTACT_US_HELP.absolute,
+        URLs.LEGACY_CONTACT_US_FEEDBACK_FORM.absolute,
     ],
 )
 def test_access_as_anon_user(url, basic_auth):
@@ -33,8 +33,8 @@ def test_access_as_anon_user(url, basic_auth):
 @pytest.mark.parametrize(
     "url",
     [
-        get_absolute_url("legacy-ui-contact-us:help"),
-        get_absolute_url("legacy-ui-contact-us:feedback-form"),
+        URLs.LEGACY_CONTACT_US_HELP.absolute,
+        URLs.LEGACY_CONTACT_US_FEEDBACK_FORM.absolute,
     ],
 )
 def test_access_contact_us_as_anon_user_after_removing_trailing_slash(

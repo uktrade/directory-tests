@@ -35,7 +35,6 @@ join_ui_invest = partial(urljoin, INVEST_UI_URL)
 join_exred = partial(urljoin, EXRED_UI_URL)
 join_exopps = partial(urljoin, EXPORT_OPPORTUNITIES_UI_URL)
 join_contact_us = partial(urljoin, DIRECTORY_CONTACT_US_UI_URL)
-join_legacy_contact_us = partial(urljoin, DIRECTORY_LEGACY_CONTACT_US_UI_URL)
 join_soo = partial(urljoin, SOO_UI_URL)
 join_cms_url = partial(urljoin, DIRECTORY_CMS_API_CLIENT_BASE_URL)
 join_cms_api = partial(urljoin, DIRECTORY_CMS_API_CLIENT_BASE_URL)
@@ -237,15 +236,6 @@ urls = {
     "ui-contact-us:soo:organisation:contact-details": "selling-online-overseas/contact-details",
     "ui-contact-us:soo:organisation:success": "selling-online-overseas/success",
 
-    # Legacy Contact-Us UI
-    "legacy-ui-contact-us:help": "help/",
-    "legacy-ui-contact-us:feedback-form": "help/FeedbackForm/",
-    "legacy-ui-contact-us:directory": "directory/",
-    "legacy-ui-contact-us:directory-feedback-form": "directory/FeedbackForm/",
-    "legacy-ui-contact-us:soo-triage": "triage/",
-    "legacy-ui-contact-us:soo-triage-form": "triage/soo/",
-    "legacy-ui-contact-us:soo-triage-feedback-form": "FeedbackForm/TriageForm/",
-
     # ExOpps UI - Export Opportunities
     "ui-exopps:landing": "",
 
@@ -303,8 +293,6 @@ def get_absolute_url(name):
         return join_exred(relative_url)
     elif name.startswith("ui-contact-us:"):
         return join_contact_us(relative_url)
-    elif name.startswith("legacy-ui-contact-us:"):
-        return join_legacy_contact_us(relative_url)
     elif name.startswith("ui-soo:"):
         return join_soo(relative_url)
     elif name.startswith("cms-api:"):
@@ -761,11 +749,6 @@ class URLs(Enum):
     # Legacy Contact-Us UI
     LEGACY_CONTACT_US_HELP = LegacyContactUrl("help/")
     LEGACY_CONTACT_US_FEEDBACK_FORM = LegacyContactUrl("help/FeedbackForm/")
-    LEGACY_CONTACT_US_DIRECTORY = LegacyContactUrl("directory/")
-    LEGACY_CONTACT_US_DIRECTORY_FEEDBACK_FORM = LegacyContactUrl("directory/FeedbackForm/")
-    LEGACY_CONTACT_US_SOO_TRIAGE = LegacyContactUrl("triage/")
-    LEGACY_CONTACT_US_SOO_TRIAGE_FORM = LegacyContactUrl("triage/soo/")
-    LEGACY_CONTACT_US_SOO_TRIAGE_FEEDBACK_FORM = LegacyContactUrl("FeedbackForm/TriageForm/")
 
     # ExOpps UI - Export Opportunities
     EXOPPS_LANDING = ExOppsUrl("")
