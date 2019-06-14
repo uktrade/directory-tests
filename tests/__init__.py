@@ -24,15 +24,9 @@ from tests.settings import (
     SOO_UI_URL,
 )
 
-join_api = partial(urljoin, DIRECTORY_API_URL)
-join_sso_api = partial(urljoin, DIRECTORY_SSO_API_CLIENT_BASE_URL)
 join_profile = partial(urljoin, DIRECTORY_PROFILE_URL)
 join_ui_buyer = partial(urljoin, DIRECTORY_UI_BUYER_URL)
 join_exred = partial(urljoin, EXRED_UI_URL)
-join_cms_url = partial(urljoin, DIRECTORY_CMS_API_CLIENT_BASE_URL)
-join_cms_api = partial(urljoin, DIRECTORY_CMS_API_CLIENT_BASE_URL)
-join_cms_ui = partial(urljoin, DIRECTORY_CMS_API_CLIENT_BASE_URL)
-join_forms_api = partial(urljoin, DIRECTORY_FORMS_API_URL)
 
 urls = {
     # UI-BUYER
@@ -58,56 +52,6 @@ urls = {
     "ui-buyer:account-confirm-password": "account/transfer/",
     "ui-buyer:account-confirm-ownership-transfer": "account/transfer/accept/?invite_key=",
     "ui-buyer:account-accept-invitation": "account/collaborate/accept/?invite_key={invite_key}",
-
-    # API
-    "api:enrolment": "enrolment/",
-    "api:pre-verified-enrolment": "pre-verified-enrolment",
-    "api:enrolment-trusted-code": "trusted-code/{code}/",
-
-    "api:notifications-anonymous-unsubscribe": "notifications/anonymous-unsubscribe/",
-
-    "api:buyer": "buyer/",
-    "api:buyer-csv-dump": "buyer/csv-dump/",
-    "api:supplier-csv-dump": "supplier/csv-dump/",
-
-    "api:validate-company-number": "validate/company-number/",
-    "api:companies-house-profile": "company/companies-house-profile/",
-
-    "api:supplier": "supplier/",
-    "api:supplier-unsubscribe": "supplier/unsubscribe/",
-
-    "api:export-readiness-triage": "export-readiness/triage/",
-    "api:export-readiness-article-read": "export-readiness/article-read/",
-    "api:export-readiness-task-completed": "export-readiness/task-completed/",
-
-    "api:export-opportunity-food": "export-opportunity/food/",
-    "api:export-opportunity-legal": "export-opportunity/legal/",
-
-    "api:public-company": "public/company/",
-    "api:public-company-profile": "public/company/{companies_house_number}/",
-    "api:public-case-study": "public/case-study/{id}/",
-
-
-    "api:supplier-company": "supplier/company/",
-    "api:supplier-company-case-study": "supplier/company/case-study/",
-    "api:supplier-company-case-study-by-id": "supplier/company/case-study/{id}/",
-    "api:supplier-company-verify": "supplier/company/verify/",
-    "api:supplier-company-verify-companies-house": "supplier/company/verify/companies-house/",
-    "api:contact-supplier": "contact/supplier/",
-    "api:company-search": "company/search/",
-    "api:case-study-search": "case-study/search/",
-
-    "api:supplier-company-collaborators": "supplier/company/collaborators/",
-    "api:supplier-company-collaboration-invite": "supplier/company/collaboration-invite/",
-    "api:supplier-company-collaboration-invite-by-uuid": "supplier/company/collaboration-invite/{uuid}/",
-    "api:supplier-company-remove-collaborators": "supplier/company/remove-collaborators/",
-
-    "api:supplier-company-transfer-ownership-invite": "supplier/company/transfer-ownership-invite/",
-    "api:supplier-company-transfer-ownership-invite-by-uuid": "supplier/company/transfer-ownership-invite/{uuid}/",
-    "api:supplier-gecko-total-registered": "supplier/gecko/total-registered/",
-    "api:activity-stream": "activity-stream/",
-    "api:external-supplier-sso": "external/supplier-sso/",
-    "api:external-supplier": "external/supplier/",
 
     # SSO-PROFILE
     "profile:soo": "selling-online-overseas/",
@@ -200,24 +144,12 @@ companies = {
 
 def get_absolute_url(name):
     relative_url = urls[name]
-    if name.startswith("sso-api:"):
-        return join_sso_api(relative_url)
-    elif name.startswith("ui-buyer:"):
+    if name.startswith("ui-buyer:"):
         return join_ui_buyer(relative_url)
-    elif name.startswith("api:"):
-        return join_api(relative_url)
     elif name.startswith("profile:"):
         return join_profile(relative_url)
     elif name.startswith("ui-exred:"):
         return join_exred(relative_url)
-    elif name.startswith("cms-api:"):
-        return join_cms_api(relative_url)
-    elif name.startswith("cms-healthcheck:"):
-        return join_cms_url(relative_url)
-    elif name.startswith("cms-ui:"):
-        return join_cms_ui(relative_url)
-    elif name.startswith("forms-api:"):
-        return join_forms_api(relative_url)
 
 
 def get_random_email_address():
