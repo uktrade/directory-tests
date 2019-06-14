@@ -33,7 +33,6 @@ join_ui_buyer = partial(urljoin, DIRECTORY_UI_BUYER_URL)
 join_ui_supplier = partial(urljoin, DIRECTORY_UI_SUPPLIER_URL)
 join_ui_invest = partial(urljoin, INVEST_UI_URL)
 join_exred = partial(urljoin, EXRED_UI_URL)
-join_exopps = partial(urljoin, EXPORT_OPPORTUNITIES_UI_URL)
 join_contact_us = partial(urljoin, DIRECTORY_CONTACT_US_UI_URL)
 join_soo = partial(urljoin, SOO_UI_URL)
 join_cms_url = partial(urljoin, DIRECTORY_CMS_API_CLIENT_BASE_URL)
@@ -236,9 +235,6 @@ urls = {
     "ui-contact-us:soo:organisation:contact-details": "selling-online-overseas/contact-details",
     "ui-contact-us:soo:organisation:success": "selling-online-overseas/success",
 
-    # ExOpps UI - Export Opportunities
-    "ui-exopps:landing": "",
-
     # SOO UI Selling Online Overseas
     "ui-soo:landing": "",
     "ui-soo:search-results": "markets/results/",
@@ -305,8 +301,6 @@ def get_absolute_url(name):
         return join_forms_api(relative_url)
     elif name.startswith("ui-international"):
         return join_ui_international(relative_url)
-    elif name.startswith("ui-exopps:"):
-        return join_exopps(relative_url)
 
 
 def get_random_email_address():

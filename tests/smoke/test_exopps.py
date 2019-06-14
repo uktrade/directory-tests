@@ -1,7 +1,7 @@
 import pytest
 from rest_framework.status import HTTP_200_OK
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.smoke.cms_api_helpers import get_and_assert
 
 
@@ -9,7 +9,7 @@ from tests.smoke.cms_api_helpers import get_and_assert
 @pytest.mark.parametrize(
     "url",
     [
-        get_absolute_url("ui-exopps:landing"),
+        URLs.EXOPPS_LANDING.absolute,
     ],
 )
 def test_exops_pages(url, basic_auth):
