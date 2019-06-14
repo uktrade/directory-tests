@@ -5,7 +5,7 @@ from urllib.parse import urljoin
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Actor
 from tests.functional.utils.generic import assertion_msg
@@ -14,7 +14,7 @@ from tests.functional.utils.request import Method, check_response, make_request
 SERVICE = Services.SSO
 NAME = "Password reset"
 TYPE = "form"
-URL = get_absolute_url("sso:password_reset")
+URL = URLs.SSO_PASSWORD_RESET.absolute
 EXPECTED_STRINGS = [
     "Password reset",
     "Enter the email address you used to register",
@@ -36,7 +36,7 @@ EXPECTED_STRINGS_PASSWORD_RESET = [
 
 
 def go_to(session: Session, *, next_param: str = None) -> Response:
-    fab_landing = get_absolute_url("ui-buyer:landing")
+    fab_landing = URLs.FAB_LANDING.absolute
     params = {"next": next_param or fab_landing}
     headers = {"Referer": fab_landing}
     return make_request(
@@ -60,7 +60,7 @@ def reset(
     actor: Actor, token: str, *, referer: str = None, next_param: str = None
 ) -> Response:
     session = actor.session
-    fab_landing = get_absolute_url("ui-buyer:landing")
+    fab_landing = URLs.FAB_LANDING.absolute
 
     data = {
         "next": next_param or fab_landing,

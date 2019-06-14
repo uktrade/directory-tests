@@ -25,7 +25,6 @@ from tests.settings import (
 )
 
 join_api = partial(urljoin, DIRECTORY_API_URL)
-join_sso = partial(urljoin, DIRECTORY_SSO_URL)
 join_sso_api = partial(urljoin, DIRECTORY_SSO_API_CLIENT_BASE_URL)
 join_profile = partial(urljoin, DIRECTORY_PROFILE_URL)
 join_ui_buyer = partial(urljoin, DIRECTORY_UI_BUYER_URL)
@@ -36,17 +35,6 @@ join_cms_ui = partial(urljoin, DIRECTORY_CMS_API_CLIENT_BASE_URL)
 join_forms_api = partial(urljoin, DIRECTORY_FORMS_API_URL)
 
 urls = {
-    # SSO
-    "sso:landing": "",
-    "sso:login": "accounts/login/",
-    "sso:signup": "accounts/signup/",
-    "sso:logout": "accounts/logout/",
-    "sso:password_change": "accounts/password/change/",
-    "sso:password_set": "accounts/password/set/",
-    "sso:password_reset": "accounts/password/reset/",
-    "sso:email_confirm": "accounts/confirm-email/",
-    "sso:inactive": "accounts/inactive/",
-
     # UI-BUYER
     "ui-buyer:landing": "",
     "ui-buyer:register": "register",
@@ -212,9 +200,7 @@ companies = {
 
 def get_absolute_url(name):
     relative_url = urls[name]
-    if name.startswith("sso:"):
-        return join_sso(relative_url)
-    elif name.startswith("sso-api:"):
+    if name.startswith("sso-api:"):
         return join_sso_api(relative_url)
     elif name.startswith("ui-buyer:"):
         return join_ui_buyer(relative_url)

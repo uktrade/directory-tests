@@ -5,7 +5,7 @@ from urllib.parse import quote, urljoin
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Actor, Company
 from tests.functional.utils.request import Method, check_response, make_request
@@ -13,7 +13,7 @@ from tests.functional.utils.request import Method, check_response, make_request
 SERVICE = Services.SSO
 NAME = "Register"
 TYPE = "form"
-URL = get_absolute_url("sso:signup")
+URL = URLs.SSO_SIGNUP.absolute
 EXPECTED_STRINGS = [
     "Register",
     "Create a great.gov.uk account and you can",
@@ -40,7 +40,7 @@ def should_be_here(response: Response):
 def go_to(
     session: Session, *, next: str = None, referer: str = None
 ) -> Response:
-    referer = referer or get_absolute_url("ui-buyer:landing")
+    referer = referer or URLs.FAB_LANDING.absolute
     if next:
         url = urljoin(URL, f"?next={next}")
     else:
@@ -52,7 +52,7 @@ def go_to(
 def submit(actor: Actor, company: Company) -> Response:
     """Will submit the SSO Registration form with Supplier & Company details."""
     session = actor.session
-    next_url = get_absolute_url("ui-buyer:register-submit-account-details")
+    next_url = URLs.FAB_REGISTER_SUBMIT_ACCOUNT_DETAILS.absolute
     next_link_query = f"?company_number={company.number}"
     next_link = quote(urljoin(next_url, next_link_query))
     referer_query = f"?next={next_link}"

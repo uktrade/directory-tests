@@ -5,7 +5,7 @@ from urllib.parse import urljoin
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Actor
 from tests.functional.utils.generic import assertion_msg
@@ -14,7 +14,7 @@ from tests.functional.utils.request import Method, check_response, make_request
 SERVICE = Services.SSO
 NAME = "Change password"
 TYPE = "form"
-URL = get_absolute_url("sso:password_change")
+URL = URLs.SSO_PASSWORD_CHANGE.absolute
 EXPECTED_STRINGS = ["Change Password", "New password", "Confirm password"]
 
 
@@ -32,8 +32,8 @@ def submit(
     referer: str = None
 ) -> Response:
     session = actor.session
-    URL = urljoin(get_absolute_url("sso:landing"), action)
-    profile_about = get_absolute_url("profile:about")
+    url = urljoin(URLs.SSO_LANDING.absolute, action)
+    profile_about = URLs.PROFILE_ABOUT.absolute
 
     data = {
         "action": "change password",
@@ -43,11 +43,11 @@ def submit(
     }
     # Referer is the same as the final URL from the previous request
     query = f"?next={referer or profile_about}"
-    referer = urljoin(URL, query)
+    referer = urljoin(url, query)
     headers = {"Referer": referer}
 
     response = make_request(
-        Method.POST, URL, session=session, data=data, headers=headers
+        Method.POST, url, session=session, data=data, headers=headers
     )
 
     return response

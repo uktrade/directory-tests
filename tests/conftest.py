@@ -5,7 +5,7 @@ from directory_constants import cms as SERVICE_NAMES
 from requests.auth import HTTPBasicAuth
 from retrying import retry
 
-from tests import get_absolute_url, users
+from tests import users, URLs
 from tests.settings import (
     BASICAUTH_USER,
     BASICAUTH_PASS,
@@ -74,7 +74,7 @@ def extract_csrf_middleware_token(content: str) -> str:
 @retry(wait_fixed=5000, stop_max_attempt_number=2)
 def logged_in_session():
     session = requests.Session()
-    login_url = get_absolute_url("sso:login")
+    login_url = URLs.SSO_LOGIN.absolute
     response = session.get(url=login_url, auth=(BASICAUTH_USER, BASICAUTH_PASS))
     assert response.status_code == 200, f"Expected 200 but got {response.status_code} from {response.url}"
     csrfmiddlewaretoken = extract_csrf_middleware_token(response.content.decode("UTF-8"))

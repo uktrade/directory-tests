@@ -5,21 +5,21 @@ from urllib.parse import urljoin
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.request import Method, check_response, make_request
 
 SERVICE = Services.SSO
 NAME = "Logout"
 TYPE = "form"
-URL = get_absolute_url("sso:logout")
+URL = URLs.SSO_LOGOUT.absolute
 EXPECTED_STRINGS = ["Sign out", "Are you sure you want to sign out?"]
 
 
 def go_to(session: Session, *, next_param: str = None) -> Response:
-    fab_landing = get_absolute_url("ui-buyer:landing")
+    fab_landing = URLs.FAB_LANDING.absolute
     params = {"next": next_param or fab_landing}
-    headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
+    headers = {"Referer": URLs.FAB_COMPANY_PROFILE.absolute}
     return make_request(
         Method.GET, URL, session=session, params=params, headers=headers
     )
@@ -33,7 +33,7 @@ def should_be_here(response: Response):
 def logout(
     session: Session, token: str, *, next_param: str = None
 ) -> Response:
-    fab_landing = get_absolute_url("ui-buyer:landing")
+    fab_landing = URLs.FAB_LANDING.absolute
     data = {"csrfmiddlewaretoken": token, "next": next_param or fab_landing}
     query = f"?next={fab_landing}"
     headers = {"Referer": urljoin(URL, query)}

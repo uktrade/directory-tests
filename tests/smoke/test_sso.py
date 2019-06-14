@@ -1,7 +1,7 @@
 import pytest
 from rest_framework.status import HTTP_200_OK, HTTP_301_MOVED_PERMANENTLY
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.smoke.cms_api_helpers import get_and_assert, status_error
 
 
@@ -9,9 +9,9 @@ from tests.smoke.cms_api_helpers import get_and_assert, status_error
 @pytest.mark.parametrize(
     "url",
     [
-        get_absolute_url("sso:landing"),
-        get_absolute_url("sso:login"),
-        get_absolute_url("sso:signup"),
+        URLs.SSO_LANDING.absolute,
+        URLs.SSO_LOGIN.absolute,
+        URLs.SSO_SIGNUP.absolute,
     ],
 )
 def test_access_sso_endpoints_as_logged_in_user_w_redirect_to_sud(
@@ -29,12 +29,12 @@ def test_access_sso_endpoints_as_logged_in_user_w_redirect_to_sud(
 @pytest.mark.parametrize(
     "url",
     [
-        get_absolute_url("sso:logout"),
-        get_absolute_url("sso:password_change"),
-        get_absolute_url("sso:password_set"),
-        get_absolute_url("sso:password_reset"),
-        get_absolute_url("sso:email_confirm"),
-        get_absolute_url("sso:inactive"),
+        URLs.SSO_LOGOUT.absolute,
+        URLs.SSO_PASSWORD_CHANGE.absolute,
+        URLs.SSO_PASSWORD_SET.absolute,
+        URLs.SSO_PASSWORD_RESET.absolute,
+        URLs.SSO_EMAIL_CONFIRM.absolute,
+        URLs.SSO_INACTIVE.absolute,
     ],
 )
 def test_access_sso_endpoints_as_anonymous_user_yields_200(url, basic_auth):
@@ -47,12 +47,12 @@ def test_access_sso_endpoints_as_anonymous_user_yields_200(url, basic_auth):
 @pytest.mark.parametrize(
     "url",
     [
-        get_absolute_url("sso:logout"),
-        get_absolute_url("sso:password_change"),
-        get_absolute_url("sso:password_set"),
-        get_absolute_url("sso:password_reset"),
-        get_absolute_url("sso:email_confirm"),
-        get_absolute_url("sso:inactive"),
+        URLs.SSO_LOGOUT.absolute,
+        URLs.SSO_PASSWORD_CHANGE.absolute,
+        URLs.SSO_PASSWORD_SET.absolute,
+        URLs.SSO_PASSWORD_RESET.absolute,
+        URLs.SSO_EMAIL_CONFIRM.absolute,
+        URLs.SSO_INACTIVE.absolute,
     ],
 )
 def test_access_sso_endpoints_as_logged_in_user_wo_redirect_to_sud(
@@ -70,15 +70,15 @@ def test_access_sso_endpoints_as_logged_in_user_wo_redirect_to_sud(
 @pytest.mark.parametrize(
     "url, expected_status_code",
     [
-        (get_absolute_url("sso:landing"), HTTP_301_MOVED_PERMANENTLY),
-        (get_absolute_url("sso:login"), HTTP_301_MOVED_PERMANENTLY),
-        (get_absolute_url("sso:signup"), HTTP_301_MOVED_PERMANENTLY),
-        (get_absolute_url("sso:logout"), HTTP_301_MOVED_PERMANENTLY),
-        (get_absolute_url("sso:password_change"), HTTP_301_MOVED_PERMANENTLY),
-        (get_absolute_url("sso:password_set"), HTTP_301_MOVED_PERMANENTLY),
-        (get_absolute_url("sso:password_reset"), HTTP_301_MOVED_PERMANENTLY),
-        (get_absolute_url("sso:email_confirm"), HTTP_301_MOVED_PERMANENTLY),
-        (get_absolute_url("sso:inactive"), HTTP_301_MOVED_PERMANENTLY),
+        (URLs.SSO_LANDING.absolute, HTTP_301_MOVED_PERMANENTLY),
+        (URLs.SSO_LOGIN.absolute, HTTP_301_MOVED_PERMANENTLY),
+        (URLs.SSO_SIGNUP.absolute, HTTP_301_MOVED_PERMANENTLY),
+        (URLs.SSO_LOGOUT.absolute, HTTP_301_MOVED_PERMANENTLY),
+        (URLs.SSO_PASSWORD_CHANGE.absolute, HTTP_301_MOVED_PERMANENTLY),
+        (URLs.SSO_PASSWORD_SET.absolute, HTTP_301_MOVED_PERMANENTLY),
+        (URLs.SSO_PASSWORD_RESET.absolute, HTTP_301_MOVED_PERMANENTLY),
+        (URLs.SSO_EMAIL_CONFIRM.absolute, HTTP_301_MOVED_PERMANENTLY),
+        (URLs.SSO_INACTIVE.absolute, HTTP_301_MOVED_PERMANENTLY),
     ],
 )
 def test_redirects_after_removing_trailing_slash_as_logged_in_user(

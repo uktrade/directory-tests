@@ -2020,7 +2020,7 @@ def profile_go_to_letter_verification(
         token = extract_csrf_middleware_token(response)
         context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
-        sso_login_url = get_absolute_url("sso:login")
+        sso_login_url = URLs.SSO_LOGIN.absolute
         fab_verify_url = quote(get_absolute_url("ui-buyer:confirm-identity"))
         referer = f"{sso_login_url}?next={fab_verify_url}"
         next = get_absolute_url("ui-buyer:confirm-identity")
@@ -2479,7 +2479,7 @@ def sso_create_standalone_unverified_sso_account_from_collaboration_request(
     next = next_link or actor.invitation_for_collaboration_link
 
     # Step 1: Go to the SSO/great.gov.uk registration page
-    referer = get_absolute_url("sso:signup") + f"?next={next}"
+    referer = URLs.SSO_SIGNUP.absolute + f"?next={next}"
     response = sso_ui_register.go_to(
         actor.session, next=next, referer=referer
     )

@@ -5,7 +5,7 @@ from urllib.parse import urljoin
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Actor
 from tests.functional.utils.request import Method, check_response, make_request
@@ -13,7 +13,7 @@ from tests.functional.utils.request import Method, check_response, make_request
 SERVICE = Services.SSO
 NAME = "Login"
 TYPE = "form"
-URL = get_absolute_url("sso:login")
+URL = URLs.SSO_LOGIN.absolute
 EXPECTED_STRINGS = [
     "Sign in",
     "Use your great.gov.uk login details to sign in.",
@@ -29,7 +29,7 @@ EXPECTED_STRINGS = [
 def go_to(
     session: Session, *, next_param: str = None, referer: str = None
 ) -> Response:
-    fab_landing = get_absolute_url("ui-buyer:landing")
+    fab_landing = URLs.FAB_LANDING.absolute
     params = {"next": next_param or fab_landing}
     headers = {"Referer": referer or fab_landing}
     return make_request(
@@ -50,7 +50,7 @@ def login(
     next_param: str = None
 ) -> Response:
     session = actor.session
-    fab_landing = get_absolute_url("ui-buyer:landing")
+    fab_landing = URLs.FAB_LANDING.absolute
 
     data = {
         "next": next_param or fab_landing,

@@ -5,7 +5,7 @@ from urllib.parse import unquote, urljoin
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Actor
 from tests.functional.utils.generic import assertion_msg
@@ -14,7 +14,7 @@ from tests.functional.utils.request import Method, check_response, make_request
 SERVICE = Services.SSO
 NAME = "Confirm your email"
 TYPE = "form"
-URL = get_absolute_url("sso:email_confirm")
+URL = URLs.SSO_EMAIL_CONFIRM.absolute
 EXPECTED_STRINGS = [
     "Confirm email address",
     "Confirm that ",
@@ -41,7 +41,7 @@ def confirm(actor: Actor, form_action_value: str) -> Response:
     session = actor.session
     # in order to be redirected to the correct URL we have `unquote`
     # the form_action_value
-    url = urljoin(get_absolute_url("sso:landing"), unquote(form_action_value))
+    url = urljoin(URLs.SSO_LANDING.absolute, unquote(form_action_value))
     headers = {"Referer": url}
     data = {"csrfmiddlewaretoken": actor.csrfmiddlewaretoken}
 
