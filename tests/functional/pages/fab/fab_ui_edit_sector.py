@@ -5,7 +5,7 @@ import random
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Actor, Company
 from tests.functional.utils.request import Method, check_response, make_request
@@ -14,7 +14,7 @@ from tests.settings import COUNTRIES, SECTORS
 SERVICE = Services.FAB
 NAME = "Edit company's sector"
 TYPE = "form"
-URL = get_absolute_url("ui-buyer:company-edit-sectors")
+URL = URLs.FAB_COMPANY_EDIT_SECTORS.absolute
 EXPECTED_STRINGS = [
     "Your company sector",
     "What industry is your company in?",
@@ -35,7 +35,7 @@ def go_to(session: Session) -> Response:
     This requires:
      * Supplier to be logged in
     """
-    headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
+    headers = {"Referer": URLs.FAB_COMPANY_PROFILE.absolute}
     return make_request(Method.GET, URL, session=session, headers=headers)
 
 

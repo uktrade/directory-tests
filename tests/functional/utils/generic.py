@@ -35,7 +35,7 @@ from requests import Response, Session
 from retrying import retry
 from scrapy.selector import Selector
 from termcolor import cprint
-from tests import get_absolute_url, URLs
+from tests import URLs
 from tests.functional.schemas.Companies import COMPANIES
 from tests.functional.utils.context_utils import (
     Actor,
@@ -1108,7 +1108,7 @@ def already_registered(company_number: str) -> bool:
     :param company_number:
     :return: True/False based on the presence of FAB profile
     """
-    url = get_absolute_url("ui-buyer:landing")
+    url = URLs.FAB_LANDING.absolute
     data = {"company_number": company_number}
     headers = {"Referer": url}
 

@@ -4,14 +4,14 @@ import logging
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.request import Method, check_response, make_request
 
 SERVICE = Services.FAB
 NAME = "Confirm export status"
 TYPE = "form"
-URL = get_absolute_url("ui-buyer:register-confirm-export-status")
+URL = URLs.FAB_REGISTER_CONFIRM_EXPORT_STATUS.absolute
 EXPECTED_STRINGS = [
     "Your company's previous exports",
     "Confirm company",

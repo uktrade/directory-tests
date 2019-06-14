@@ -5,7 +5,7 @@ from urllib.parse import urljoin
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Company
 from tests.functional.utils.generic import escape_html
@@ -19,8 +19,8 @@ from tests.functional.utils.request import (
 SERVICE = Services.FAB
 NAME = "Confirm company"
 TYPE = "form"
-URL = get_absolute_url("ui-buyer:landing")
-POST_URL = get_absolute_url("ui-buyer:register-confirm-company")
+URL = URLs.FAB_LANDING.absolute
+POST_URL = URLs.FAB_REGISTER_CONFIRM_COMPANY.absolute
 EXPECTED_STRINGS = [
     "Confirm your company",
     "Registered name",
@@ -51,7 +51,7 @@ def confirm_company_selection(
     session: Session, company: Company, token: str
 ) -> Response:
     query = f"?company_number={company.number}"
-    url = urljoin(get_absolute_url("ui-buyer:register-confirm-company"), query)
+    url = urljoin(URLs.FAB_REGISTER_CONFIRM_COMPANY.absolute, query)
     headers = {"Referer": url}
     data = {
         "csrfmiddlewaretoken": token,

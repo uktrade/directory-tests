@@ -2,7 +2,7 @@
 """FAB - Change profile owner - confirm password page"""
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.generic import Method, make_request
 from tests.functional.utils.request import check_response
@@ -10,7 +10,7 @@ from tests.functional.utils.request import check_response
 SERVICE = Services.FAB
 NAME = "Confirm password"
 TYPE = "form"
-URL = get_absolute_url("ui-buyer:account-confirm-password")
+URL = URLs.FAB_ACCOUNT_CONFIRM_PASSWORD.absolute
 EXPECTED_STRINGS = [
     "Transfer account",
     "Your password",

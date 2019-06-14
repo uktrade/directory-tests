@@ -24,34 +24,9 @@ from tests.settings import (
     SOO_UI_URL,
 )
 
-join_ui_buyer = partial(urljoin, DIRECTORY_UI_BUYER_URL)
 join_exred = partial(urljoin, EXRED_UI_URL)
 
 urls = {
-    # UI-BUYER
-    "ui-buyer:landing": "",
-    "ui-buyer:register": "register",
-    "ui-buyer:register-confirm-company": "register/company/",
-    "ui-buyer:register-confirm-export-status": "register/exports/",
-    "ui-buyer:register-finish": "register/finished/",
-    "ui-buyer:register-submit-account-details": "register-submit/",
-    "ui-buyer:confirm-company-address": "verify/letter-confirm/",
-    "ui-buyer:confirm-identity": "verify/",
-    "ui-buyer:confirm-identity-letter": "verify/letter-send/",
-    "ui-buyer:company-profile": "company-profile/",
-    "ui-buyer:company-edit": "company-profile/edit/",
-    "ui-buyer:company-edit-address": "company-profile/edit/address",
-    "ui-buyer:company-edit-description": "company-profile/edit/description/",
-    "ui-buyer:company-edit-key-facts": "company-profile/edit/key-facts/",
-    "ui-buyer:company-edit-sectors": "company-profile/edit/sectors/",
-    "ui-buyer:company-edit-contact": "company-profile/edit/contact/",
-    "ui-buyer:account-add-collaborator": "account/add-collaborator/",
-    "ui-buyer:account-remove-collaborator": "account/remove-collaborator/",
-    "ui-buyer:account-transfer-ownership": "account/transfer/",
-    "ui-buyer:account-confirm-password": "account/transfer/",
-    "ui-buyer:account-confirm-ownership-transfer": "account/transfer/accept/?invite_key=",
-    "ui-buyer:account-accept-invitation": "account/collaborate/accept/?invite_key={invite_key}",
-
     # ExRed UI
     "ui-exred:search": "search/",
     "ui-exred:landing": "",
@@ -119,9 +94,7 @@ companies = {
 
 def get_absolute_url(name):
     relative_url = urls[name]
-    if name.startswith("ui-buyer:"):
-        return join_ui_buyer(relative_url)
-    elif name.startswith("ui-exred:"):
+    if name.startswith("ui-exred:"):
         return join_exred(relative_url)
 
 

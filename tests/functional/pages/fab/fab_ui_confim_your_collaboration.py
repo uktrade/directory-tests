@@ -4,7 +4,7 @@ import logging
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.generic import assertion_msg
 from tests.functional.utils.request import Method, check_response, make_request
@@ -12,7 +12,7 @@ from tests.functional.utils.request import Method, check_response, make_request
 SERVICE = Services.FAB
 NAME = "Accept invitation"
 TYPE = "form"
-URL = get_absolute_url("ui-buyer:account-accept-invitation")
+URL = URLs.FAB_ACCOUNT_ACCEPT_INVITATION.absolute
 EXPECTED_STRINGS = [
     "Collaborate",
     "Do you want to be added as user to the profile for",

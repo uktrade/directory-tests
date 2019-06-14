@@ -4,14 +4,14 @@ import logging
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.request import Method, check_response, make_request
 
 SERVICE = Services.FAB
 NAME = "Verify company"
 TYPE = "form"
-URL = get_absolute_url("ui-buyer:confirm-company-address")
+URL = URLs.FAB_CONFIRM_COMPANY_ADDRESS.absolute
 EXPECTED_STRINGS = [
     "Verify your company",
     "Enter the 12 digit code from the letter that was sent to",
@@ -29,7 +29,7 @@ EXPECTED_STRINGS_VERIFIED = [
 
 
 def go_to(session: Session, *, referer: str = None) -> Response:
-    referer = referer or get_absolute_url("ui-buyer:company-profile")
+    referer = referer or URLs.FAB_COMPANY_PROFILE.absolute
     headers = {"Referer": referer}
     return make_request(Method.GET, URL, session=session, headers=headers)
 
@@ -48,7 +48,7 @@ def submit(
 ) -> Response:
     """Submit the form with verification code."""
     if referer is None:
-        referer = get_absolute_url("ui-buyer:company-profile")
+        referer = URLs.FAB_COMPANY_PROFILE.absolute
     headers = {"Referer": referer}
     data = {
         "csrfmiddlewaretoken": token,
@@ -69,5 +69,5 @@ def should_see_company_is_verified(response: Response):
 def view_or_amend_profile(session: Session) -> Response:
     """Simulate clicking on the 'View or amend your company profile' link."""
     headers = {"Referer": URL}
-    url = get_absolute_url("ui-buyer:company-profile")
+    url = URLs.FAB_COMPANY_PROFILE.absolute
     return make_request(Method.GET, url, session=session, headers=headers)

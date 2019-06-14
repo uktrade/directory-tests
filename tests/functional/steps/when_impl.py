@@ -16,7 +16,7 @@ from requests import Response, Session
 from retrying import retry
 from scrapy import Selector
 
-from tests import get_absolute_url, URLs
+from tests import URLs
 from tests.functional.common import DETAILS, PROFILES
 from tests.functional.pages import get_page_object, has_action
 from tests.functional.pages.fab import (
@@ -2021,9 +2021,9 @@ def profile_go_to_letter_verification(
         context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
         sso_login_url = URLs.SSO_LOGIN.absolute
-        fab_verify_url = quote(get_absolute_url("ui-buyer:confirm-identity"))
+        fab_verify_url = quote(URLs.FAB_CONFIRM_IDENTITY.absolute)
         referer = f"{sso_login_url}?next={fab_verify_url}"
-        next = get_absolute_url("ui-buyer:confirm-identity")
+        next = URLs.FAB_CONFIRM_IDENTITY.absolute
         logging.debug(
             "After successful login %s should be redirected to: %s",
             supplier_alias,
@@ -2037,7 +2037,7 @@ def profile_go_to_letter_verification(
 
 def fab_choose_to_verify_with_code(context: Context, supplier_alias: str):
     actor = context.get_actor(supplier_alias)
-    referer = get_absolute_url("ui-buyer:confirm-identity")
+    referer = URLs.FAB_CONFIRM_IDENTITY.absolute
     response = fab_ui_verify_company.go_to(actor.session, referer=referer)
     context.response = response
     fab_ui_verify_company.should_be_here(response)
@@ -2047,7 +2047,7 @@ def fab_submit_verification_code(context: Context, supplier_alias: str):
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
     verification_code = company.verification_code
-    referer = get_absolute_url("ui-buyer:confirm-company-address")
+    referer = URLs.FAB_CONFIRM_COMPANY_ADDRESS.absolute
     response = fab_ui_verify_company.submit(
         actor.session,
         actor.csrfmiddlewaretoken,
@@ -2327,7 +2327,7 @@ def finish_registration_after_flagging_as_verified(
     """
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
-    register_url = get_absolute_url("ui-buyer:register-submit-account-details")
+    register_url = URLs.FAB_REGISTER_SUBMIT_ACCOUNT_DETAILS.absolute
     url = f"{register_url}?company_number={company.number}&has_exported_before=True"
     response = make_request(Method.GET, url, session=actor.session)
     context.response = response

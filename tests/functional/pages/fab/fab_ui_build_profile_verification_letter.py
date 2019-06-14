@@ -4,14 +4,14 @@ import logging
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.request import Method, check_response, make_request
 
 SERVICE = Services.FAB
 NAME = "Verification letter sent"
 TYPE = "confirmation"
-URL = get_absolute_url("ui-buyer:company-edit")
+URL = URLs.FAB_COMPANY_EDIT.absolute
 EXPECTED_STRINGS = [
     "We've sent your verification letter",
     (
@@ -30,7 +30,7 @@ def should_be_here(response: Response):
 
 def go_to_profile(session: Session) -> Response:
     """Supplier clicks on the 'View or amend your company profile' link."""
-    url = get_absolute_url("ui-buyer:company-profile")
+    url = URLs.FAB_COMPANY_PROFILE.absolute
     headers = {"Referer": URL}
     response = make_request(Method.GET, url, session=session, headers=headers)
     return response

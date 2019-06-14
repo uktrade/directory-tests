@@ -4,7 +4,7 @@ import logging
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Actor
 from tests.functional.utils.request import Method, check_response, make_request
@@ -12,7 +12,7 @@ from tests.functional.utils.request import Method, check_response, make_request
 SERVICE = Services.FAB
 NAME = "Confirm identity with letter"
 TYPE = "form"
-URL = get_absolute_url("ui-buyer:confirm-identity-letter")
+URL = URLs.FAB_CONFIRM_IDENTITY_LETTER.absolute
 EXPECTED_STRINGS = [
     "Verification letter request",
     "Your verification letter should arrive within 5 working days",

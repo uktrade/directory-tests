@@ -2,7 +2,7 @@
 """FAB - Add Collaborator page"""
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.generic import Method, make_request
 from tests.functional.utils.request import check_response
@@ -10,7 +10,7 @@ from tests.functional.utils.request import check_response
 SERVICE = Services.FAB
 NAME = "Add collaborator"
 TYPE = "form"
-URL = get_absolute_url("ui-buyer:account-add-collaborator")
+URL = URLs.FAB_ACCOUNT_ADD_COLLABORATOR.absolute
 EXPECTED_STRINGS = [
     "Add an editor to the business profile",
     "Enter the new editor’s email address",
@@ -30,7 +30,7 @@ def go_to(session: Session) -> Response:
     This requires:
      * Supplier to be logged in
     """
-    headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
+    headers = {"Referer": URLs.FAB_COMPANY_PROFILE.absolute}
     return make_request(Method.GET, URL, session=session, headers=headers)
 
 

@@ -2,7 +2,7 @@
 """FAB - Change profile owner page"""
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.generic import Method, make_request
 from tests.functional.utils.request import check_response
@@ -10,7 +10,7 @@ from tests.functional.utils.request import check_response
 SERVICE = Services.FAB
 NAME = "Transfer ownership"
 TYPE = "form"
-URL = get_absolute_url("ui-buyer:account-transfer-ownership")
+URL = URLs.FAB_ACCOUNT_TRANSFER_OWNERSHIP.absolute
 EXPECTED_STRINGS = [
     "Transfer account",
     "Next",

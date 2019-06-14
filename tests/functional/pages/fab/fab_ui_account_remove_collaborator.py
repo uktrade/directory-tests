@@ -5,7 +5,7 @@ from typing import List, Tuple
 from requests import Response, Session
 from scrapy import Selector
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.generic import Method, make_request
 from tests.functional.utils.request import check_response
@@ -13,7 +13,7 @@ from tests.functional.utils.request import check_response
 SERVICE = Services.FAB
 NAME = "Remove collaborator"
 TYPE = "form"
-URL = get_absolute_url("ui-buyer:account-remove-collaborator")
+URL = URLs.FAB_ACCOUNT_REMOVE_COLLABORATOR.absolute
 EXPECTED_STRINGS = [
     "Remove user from account",
     "Select the emails you would like to remove",
@@ -39,7 +39,7 @@ def should_be_here(response: Response, *, have_collaborators: bool = True):
 
 
 def go_to(session: Session) -> Response:
-    headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
+    headers = {"Referer": URLs.FAB_COMPANY_PROFILE.absolute}
     return make_request(Method.GET, URL, session=session, headers=headers)
 
 

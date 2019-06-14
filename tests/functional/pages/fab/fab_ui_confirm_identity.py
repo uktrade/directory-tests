@@ -5,7 +5,7 @@ from copy import copy
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Actor
 from tests.functional.utils.request import Method, check_response, make_request
@@ -13,7 +13,7 @@ from tests.functional.utils.request import Method, check_response, make_request
 SERVICE = Services.FAB
 NAME = "Confirm identity"
 TYPE = "option"
-URL = get_absolute_url("ui-buyer:confirm-identity")
+URL = URLs.FAB_CONFIRM_IDENTITY.absolute
 EXPECTED_STRINGS = [
     "Confirm your identity",
     "For security, we need to check you’re who you say you are.",
@@ -77,7 +77,7 @@ def should_be_here(
 def confirm_with_letter(actor: Actor) -> Response:
     """Choose to verify your identity with a physical letter."""
     headers = {"Referer": URL}
-    letter_url = get_absolute_url("ui-buyer:confirm-identity-letter")
+    letter_url = URLs.FAB_CONFIRM_IDENTITY_LETTER.absolute
     response = make_request(
         Method.GET, letter_url, session=actor.session, headers=headers
     )
