@@ -254,13 +254,6 @@ urls = {
     "ui-soo:search-results": "markets/results/",
     "ui-soo:market-details": "markets/details/",
 
-    # CMS API endpoints
-    "cms-api:pages": "api/pages/",
-    "cms-api:page-types": "api/pages/types/",
-    "cms-api:images": "api/images/",
-    "cms-api:documents": "api/documents/",
-    "cms-api:pages-by-slug": "api/pages/lookup-by-slug/{}/",
-
     # Forms API endpoints
     "forms-api:submission": "api/submission/",
     "forms-api:admin": "admin/",
@@ -798,7 +791,6 @@ class URLs(Enum):
     CMS_API_PAGE_TYPES = CMSApiUrl("api/pages/types/")
     CMS_API_IMAGES = CMSApiUrl("api/images/")
     CMS_API_DOCUMENTS = CMSApiUrl("api/documents/")
-    CMS_API_PAGES_BY_SLUG = CMSApiUrl("api/pages/lookup-by-slug/{}/")
 
     # Forms API endpoints
     FORMS_API_HEALTHCHECK = FormsApiUrl("api/healthcheck/")

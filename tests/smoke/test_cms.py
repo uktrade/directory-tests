@@ -4,7 +4,7 @@ from directory_constants import cms as SERVICE_NAMES
 from rest_framework.status import HTTP_200_OK, HTTP_404_NOT_FOUND
 from retrying import retry
 
-from tests import get_relative_url, retriable_error
+from tests import retriable_error, URLs
 from tests.smoke.cms_api_helpers import (
     find_draft_urls,
     find_published_translated_urls,
@@ -47,8 +47,8 @@ NON_INVEST_API_PAGES.update(INTERNATIONAL_PAGES)
 @pytest.mark.parametrize(
     "relative_url",
     [
-        get_relative_url("cms-api:images"),
-        get_relative_url("cms-api:documents"),
+        URLs.CMS_API_IMAGES.relative,
+        URLs.CMS_API_DOCUMENTS.relative,
     ],
 )
 def test_wagtail_get_disabled_content_endpoints(relative_url):
@@ -59,7 +59,7 @@ def test_wagtail_get_disabled_content_endpoints(relative_url):
 
 
 def test_wagtail_get_pages():
-    endpoint = get_relative_url("cms-api:pages")
+    endpoint = URLs.CMS_API_PAGES.relative
     response = cms_api_client.get(endpoint)
     assert response.status_code == HTTP_200_OK, status_error(
         HTTP_200_OK, response
@@ -69,14 +69,14 @@ def test_wagtail_get_pages():
 @pytest.mark.parametrize("limit", [2, 10, 20])
 def test_wagtail_get_number_of_pages(limit):
     query = "?order=id&limit={}".format(limit)
-    endpoint = get_relative_url("cms-api:pages") + query
+    endpoint = URLs.CMS_API_PAGES.relative + query
     response = cms_api_client.get(endpoint)
     assert len(response.json()["items"]) == limit
 
 
 def test_wagtail_can_list_only_20_pages():
     query = "?limit=21"
-    endpoint = get_relative_url("cms-api:pages") + query
+    endpoint = URLs.CMS_API_PAGES.relative + query
     response = cms_api_client.get(endpoint)
     assert response.json()["message"] == "limit cannot be higher than 20"
 
@@ -94,14 +94,14 @@ def test_wagtail_can_list_only_20_pages():
 def test_wagtail_get_pages_per_application_on_dev(application):
     # Get ID of specific application (parent page)
     query = "?title={}".format(application)
-    endpoint = get_relative_url("cms-api:pages") + query
+    endpoint = URLs.CMS_API_PAGES.relative + query
     response = cms_api_client.get(endpoint)
     assert response.json()["meta"]["total_count"] == 1
     application_id = response.json()["items"][0]["id"]
 
     # Get inf about its child pages
     query = "?child_of={}".format(application_id)
-    endpoint = get_relative_url("cms-api:pages") + query
+    endpoint = URLs.CMS_API_PAGES.relative + query
     response = cms_api_client.get(endpoint)
     assert response.json()["meta"]["total_count"] > 0
 

@@ -2,7 +2,7 @@ import asyncio
 import logging
 from collections import defaultdict
 from pprint import pformat
-from typing import List, Tuple, Union
+from typing import List, Tuple
 from urllib.parse import urlparse
 
 import requests
@@ -19,7 +19,7 @@ from rest_framework.status import (
 )
 from retrying import retry
 
-from tests import get_absolute_url, get_relative_url
+from tests import URLs
 from tests.settings import (
     DIRECTORY_CMS_API_CLIENT_API_KEY,
     DIRECTORY_CMS_API_CLIENT_BASE_URL,
@@ -226,7 +226,7 @@ def get_page_ids_by_type(page_type: str) -> Tuple[List[int], int]:
     page_ids = []
 
     # get first page of results
-    relative_url = get_relative_url("cms-api:pages")
+    relative_url = URLs.CMS_API_PAGES.relative
     endpoint = f"{relative_url}?type={page_type}"
     response = cms_api_client.get(endpoint)
     total_response_time = response.elapsed.total_seconds()
@@ -271,7 +271,7 @@ def sync_requests(endpoints: List[str]):
 
 
 def get_pages_types(*, skip: list = None) -> List[str]:
-    response = cms_api_client.get(get_relative_url("cms-api:page-types"))
+    response = cms_api_client.get(URLs.CMS_API_PAGE_TYPES.relative)
     assert response.status_code == HTTP_200_OK, status_error(HTTP_200_OK, response)
     types = response.json()["types"]
     # remove generic (parent) page type common to all pages
@@ -284,7 +284,7 @@ def get_pages_types(*, skip: list = None) -> List[str]:
 def get_pages_from_api(page_types: list, *, use_async_client: bool = True) -> dict:
     page_endpoints_by_type = defaultdict(list)
     responses = defaultdict(list)
-    base = get_absolute_url("cms-api:pages")
+    base = URLs.CMS_API_PAGES.absolute
 
     for page_type in page_types:
         page_ids_of_type, responses_time = get_page_ids_by_type(page_type)
