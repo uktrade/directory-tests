@@ -7,7 +7,6 @@ from urllib.parse import urljoin
 
 from tests.settings import (
     DIRECTORY_API_URL,
-    DIRECTORY_BUYER_API_URL,
     DIRECTORY_CMS_API_CLIENT_BASE_URL,
     DIRECTORY_CONTACT_US_UI_URL,
     DIRECTORY_FORMS_API_URL,
@@ -26,7 +25,6 @@ from tests.settings import (
 )
 
 join_api = partial(urljoin, DIRECTORY_API_URL)
-join_internal_api = partial(urljoin, DIRECTORY_BUYER_API_URL)
 join_ui_international = partial(urljoin, DIRECTORY_UI_INTERNATIONAL_URL)
 join_sso = partial(urljoin, DIRECTORY_SSO_URL)
 join_sso_api = partial(urljoin, DIRECTORY_SSO_API_CLIENT_BASE_URL)
@@ -146,10 +144,6 @@ urls = {
     "api:activity-stream": "activity-stream/",
     "api:external-supplier-sso": "external/supplier-sso/",
     "api:external-supplier": "external/supplier/",
-
-
-    # INTERNAL API
-    "internal-api:companies-house-search": "api/internal/companies-house-search/",
 
     # SSO-PROFILE
     "profile:soo": "selling-online-overseas/",
@@ -319,8 +313,6 @@ def get_absolute_url(name):
         return join_ui_invest(relative_url)
     elif name.startswith("api:"):
         return join_api(relative_url)
-    elif name.startswith("internal-api:"):
-        return join_internal_api(relative_url)
     elif name.startswith("profile:"):
         return join_profile(relative_url)
     elif name.startswith("ui-exred:"):
@@ -412,7 +404,7 @@ class FABUrl(Url):
 
 class FABApiUrl(Url):
     def __init__(self, endpoint: str, *, template: str = None):
-        super().__init__(DIRECTORY_BUYER_API_URL, endpoint, template=template)
+        super().__init__(DIRECTORY_UI_BUYER_URL, endpoint, template=template)
 
 
 class FASUrl(Url):
@@ -496,7 +488,6 @@ class URLs(Enum):
         return self.value.absolute_template
 
     # Directory API
-    INTERNAL_API_COMPANIES_HOUSE_SEARCH = FABApiUrl("api/internal/companies-house-search/")
     DIR_API_HEALTHCHECK = DirectoryApiUrl("healthcheck/")
     DIR_API_HEALTHCHECK_PING = DirectoryApiUrl("healthcheck/ping/")
     DIR_API_ENROLMENT = DirectoryApiUrl("enrolment/")
@@ -555,6 +546,7 @@ class URLs(Enum):
     SSO_API_USER = SSOApiUrl("api/v1/session-user/")
 
     # Find a Buyer
+    FAB_API_COMPANIES_HOUSE_SEARCH = FABApiUrl("api/internal/companies-house-search/", template="api/internal/companies-house-search/?term={term}")
     FAB_LANDING = FABUrl("")
     FAB_ACCOUNT_ACCEPT_INVITATION = FABUrl("account/collaborate/accept/?invite_key={invite_key}", template="account/collaborate/accept/?invite_key={invite_key}")
     FAB_ACCOUNT_ADD_COLLABORATOR = FABUrl("account/add-collaborator/")

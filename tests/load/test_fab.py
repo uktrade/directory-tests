@@ -33,7 +33,7 @@ class FABTasks(TaskSet):
 
     @task
     def companies_house_search_by_term(self):
-        url = get_relative_url("internal-api:companies-house-search")
+        url = URLs.FAB_API_COMPANIES_HOUSE_SEARCH.relative
         params = {
             "term": random.choice([random_company_number(), rare_word()])
         }
@@ -41,7 +41,7 @@ class FABTasks(TaskSet):
             url,
             params=params,
             headers=USER_AGENT,
-            name="api/internal/companies-house-search/?term=[term]",
+            name=URLs.FAB_API_COMPANIES_HOUSE_SEARCH.template,
             auth=basic_auth(),
         )
 

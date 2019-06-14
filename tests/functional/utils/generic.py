@@ -588,7 +588,7 @@ def int_api_ch_search(term: str) -> dict:
     :type term: str
     :return: a JSON response from Companies House Search endpoint
     """
-    url = get_absolute_url("internal-api:companies-house-search")
+    url = URLs.FAB_API_COMPANIES_HOUSE_SEARCH.absolute
     params = {"term": term}
     response = make_request(Method.GET, url, params=params)
     if response.status_code == 404:

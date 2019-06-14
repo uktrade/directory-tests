@@ -86,7 +86,6 @@ DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL := docker-compose rm && docker-compose pull
 
 DOCKER_SET_ENV_VARS_FOR_DEV := \
 	export DEV_DIRECTORY_TESTS_DIRECTORY_API_URL=https://directory-api-dev.herokuapp.com/; \
-	export DEV_DIRECTORY_TESTS_DIRECTORY_BUYER_API_URL=https://dev.buyer.directory.uktrade.io/; \
 	export DEV_DIRECTORY_TESTS_DIRECTORY_CMS_API_CLIENT_BASE_URL=https://dev.cms.directory.uktrade.io/; \
 	export DEV_DIRECTORY_TESTS_DIRECTORY_CONTACT_US_UI_URL=https://contact-us.export.great.gov.uk/; \
 	export DEV_DIRECTORY_TESTS_DIRECTORY_PROFILE_URL=https://dev.profile.uktrade.io/; \
@@ -100,7 +99,6 @@ DOCKER_SET_ENV_VARS_FOR_DEV := \
 
 DOCKER_SET_ENV_VARS_FOR_STAGE := \
 	export STAGE_DIRECTORY_TESTS_DIRECTORY_API_URL=https://directory-api-staging.cloudapps.digital/; \
-	export STAGE_DIRECTORY_TESTS_DIRECTORY_BUYER_API_URL=https://great.uat.uktrade.io/find-a-buyer/; \
 	export STAGE_DIRECTORY_TESTS_DIRECTORY_CMS_API_CLIENT_BASE_URL=https://stage.cms.directory.uktrade.io/; \
 	export STAGE_DIRECTORY_TESTS_DIRECTORY_CONTACT_US_UI_URL=https://contact-us.export.great.gov.uk/; \
 	export STAGE_DIRECTORY_TESTS_DIRECTORY_PROFILE_URL=https://great.uat.uktrade.io/profile/; \
