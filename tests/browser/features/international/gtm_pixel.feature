@@ -34,7 +34,7 @@ Feature: Google Tag Manager
       | Education - Industry                     | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
       | Engineering and manufacturing - Industry | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
       | Financial services - Industry            | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
-      | Healthcare and Life Sciences - Industry  | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
+      | Health and Life Sciences - Industry      | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
       | Legal services - Industry                | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
       | Space - Industry                         | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
       | Technology - Industry                    | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
@@ -54,7 +54,7 @@ Feature: Google Tag Manager
       | Education - Industry                     | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
       | Engineering and manufacturing - Industry | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
       | Financial services - Industry            | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
-      | Healthcare and Life Sciences - Industry  | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
+      | Health and Life Sciences - Industry      | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
       | Legal services - Industry                | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
       | Space - Industry                         | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
       | Technology - Industry                    | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
