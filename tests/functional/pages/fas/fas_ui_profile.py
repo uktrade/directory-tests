@@ -7,7 +7,7 @@ from behave.model import Table
 from requests import Response, Session
 from scrapy import Selector
 
-from tests import get_absolute_url
+from tests import get_absolute_url, URLs
 from tests.functional.common import DETAILS
 from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Company
@@ -23,7 +23,7 @@ from tests.settings import SECTORS_WITH_LABELS
 SERVICE = Services.FAS
 NAME = "Company's business profile"
 TYPE = "profile"
-URL = get_absolute_url("ui-supplier:suppliers")
+URL = URLs.FAS_SUPPLIERS.absolute
 EXPECTED_STRINGS = [
     "Business details",
     "Contact company",
@@ -45,7 +45,7 @@ def go_to_endpoint(session: Session, endpoint: str) -> Response:
 
     :param endpoint: FAS endpoint that leads directly to Company's profile page
     """
-    fas_url = get_absolute_url("ui-supplier:landing")
+    fas_url = URLs.FAS_LANDING.absolute
     profile_url = urljoin(fas_url, endpoint)
     return make_request(Method.GET, profile_url, session=session)
 

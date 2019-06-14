@@ -5,7 +5,7 @@ import logging
 from requests import Response, Session
 from retrying import retry
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.generic import escape_html, extract_page_contents
 from tests.functional.utils.request import Method, check_response, make_request
@@ -13,7 +13,7 @@ from tests.functional.utils.request import Method, check_response, make_request
 SERVICE = Services.FAS
 NAME = "Search"
 TYPE = "search"
-URL = get_absolute_url("ui-supplier:search")
+URL = URLs.FAS_SEARCH.absolute
 EXPECTED_STRINGS = [
     "Search results",
     "Filter results",
@@ -44,7 +44,7 @@ def go_to(
         params.update({"page": page})
     if sectors is not None:
         params.update({"sectors": sectors})
-    headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
+    headers = {"Referer": URLs.FAB_COMPANY_PROFILE.absolute}
     return make_request(
         Method.GET, URL, session=session, params=params, headers=headers
     )

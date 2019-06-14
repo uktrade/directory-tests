@@ -4,7 +4,7 @@ import logging
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.generic import Method, make_request
 from tests.functional.utils.request import check_response
@@ -12,7 +12,7 @@ from tests.functional.utils.request import check_response
 SERVICE = Services.FAS
 NAME = "Landing"
 TYPE = "landing"
-URL = get_absolute_url("ui-supplier:landing")
+URL = URLs.FAS_LANDING.absolute
 EXPECTED_STRINGS = [
     "Connect with UK businesses",
     "British products and services are valued worldwide for their quality",

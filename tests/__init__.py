@@ -29,7 +29,6 @@ join_sso = partial(urljoin, DIRECTORY_SSO_URL)
 join_sso_api = partial(urljoin, DIRECTORY_SSO_API_CLIENT_BASE_URL)
 join_profile = partial(urljoin, DIRECTORY_PROFILE_URL)
 join_ui_buyer = partial(urljoin, DIRECTORY_UI_BUYER_URL)
-join_ui_supplier = partial(urljoin, DIRECTORY_UI_SUPPLIER_URL)
 join_exred = partial(urljoin, EXRED_UI_URL)
 join_cms_url = partial(urljoin, DIRECTORY_CMS_API_CLIENT_BASE_URL)
 join_cms_api = partial(urljoin, DIRECTORY_CMS_API_CLIENT_BASE_URL)
@@ -71,18 +70,6 @@ urls = {
     "ui-buyer:account-confirm-password": "account/transfer/",
     "ui-buyer:account-confirm-ownership-transfer": "account/transfer/accept/?invite_key=",
     "ui-buyer:account-accept-invitation": "account/collaborate/accept/?invite_key={invite_key}",
-
-    # UI-SUPPLIER
-    "ui-supplier:landing": "",
-    "ui-supplier:suppliers": "suppliers/",
-    "ui-supplier:industries": "industries/",
-    "ui-supplier:subscribe": "subscribe/",
-    "ui-supplier:industries-health": "industries/healthcare/",
-    "ui-supplier:industries-tech": "industries/technology/",
-    "ui-supplier:industries-creative": "industries/creative-services/",
-    "ui-supplier:industries-food": "industries/food-and-drink/",
-    "ui-supplier:feedback": "feedback/",
-    "ui-supplier:search": "search/",
 
     # API
     "api:enrolment": "enrolment/",
@@ -231,8 +218,6 @@ def get_absolute_url(name):
         return join_sso_api(relative_url)
     elif name.startswith("ui-buyer:"):
         return join_ui_buyer(relative_url)
-    elif name.startswith("ui-supplier:"):
-        return join_ui_supplier(relative_url)
     elif name.startswith("api:"):
         return join_api(relative_url)
     elif name.startswith("profile:"):
@@ -484,13 +469,19 @@ class URLs(Enum):
     FAB_REGISTER_SUBMIT_ACCOUNT_DETAILS = FABUrl("register-submit/")
 
     # Find a Supplier
-    FAS_LANDING = FASUrl("")
-    FAS_HEALTHCHECK = FASUrl("healthcheck/")
-    FAS_SUPPLIERS = FASUrl("suppliers/")
-    FAS_INDUSTRIES = FASUrl("industries/", template="industries/{industry}/")
-    FAS_SUBSCRIBE = FASUrl("subscribe/")
+    FAS_CASE_STUDY = FASUrl("case-study/", template="case-study/{number}/")
+    FAS_CONTACT_SUPPLIER = FASUrl("suppliers/", template="suppliers/{ch_number}/contact/")
     FAS_FEEDBACK = FASUrl("feedback/")
+    FAS_HEALTHCHECK = FASUrl("healthcheck/")
+    FAS_INDUSTRIES = FASUrl("industries/", template="industries/{industry}/")
+    FAS_INDUSTRY_CREATIVE_SERVICES = FASUrl("industries/creative-services/")
+    FAS_INDUSTRY_FOOD_AND_DRINK = FASUrl("industries/food-and-drink/")
+    FAS_INDUSTRY_HEALTHCARE = FASUrl("industries/healthcare/")
+    FAS_INDUSTRY_TECHNOLOGY = FASUrl("industries/technology/")
+    FAS_LANDING = FASUrl("")
     FAS_SEARCH = FASUrl("search/")
+    FAS_SUBSCRIBE = FASUrl("subscribe/")
+    FAS_SUPPLIERS = FASUrl("suppliers/", template="suppliers/{ch_number}/{slug}/")
 
     # Legacy FAS industry endpoints before slugs were changed to:
     # healthcare, technology & creative-services respectively

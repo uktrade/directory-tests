@@ -35,7 +35,7 @@ from requests import Response, Session
 from retrying import retry
 from scrapy.selector import Selector
 from termcolor import cprint
-from tests import get_absolute_url
+from tests import get_absolute_url, URLs
 from tests.functional.schemas.Companies import COMPANIES
 from tests.functional.utils.context_utils import (
     Actor,
@@ -1096,7 +1096,7 @@ def has_fas_profile(company_number: str) -> bool:
                                                    with zeroes)
     :return: True/False based on the presence of FAS profile
     """
-    endpoint = get_absolute_url("ui-supplier:suppliers")
+    endpoint = URLs.FAS_SUPPLIERS.absolute
     url = "{}/{}".format(endpoint, company_number)
     response = make_request(Method.GET, url, allow_redirects=False)
     return response.status_code == 301

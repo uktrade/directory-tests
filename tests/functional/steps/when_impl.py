@@ -1796,7 +1796,7 @@ def fas_follow_case_study_links_to_related_sectors(
     ):
         assert links_css_selector
     results = {}
-    fas_url = get_absolute_url("ui-supplier:landing")
+    fas_url = URLs.FAS_LANDING.absolute
     for link in links_to_sectors:
         industry = Selector(text=link).css("a::text").extract()[0]
         href = Selector(text=link).css("a::attr(href)").extract()[0]

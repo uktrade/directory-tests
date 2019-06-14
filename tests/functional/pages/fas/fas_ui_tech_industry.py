@@ -4,7 +4,7 @@ import logging
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.request import (
     Method,
@@ -16,7 +16,7 @@ from tests.functional.utils.request import (
 SERVICE = Services.FAS
 NAME = "Technology"
 TYPE = "industry"
-URL = get_absolute_url("ui-supplier:industries-tech")
+URL = URLs.FAS_INDUSTRY_TECHNOLOGY.absolute
 EXPECTED_STRINGS = [
     "Why choose UK technology",
     "Multi-purpose technology",
@@ -26,7 +26,7 @@ EXPECTED_STRINGS = [
 
 
 def go_to(session: Session) -> Response:
-    headers = {"Referer": get_absolute_url("ui-supplier:industries")}
+    headers = {"Referer": URLs.FAS_INDUSTRIES.absolute}
     return make_request(Method.GET, URL, session=session, headers=headers)
 
 

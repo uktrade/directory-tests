@@ -4,7 +4,7 @@ import logging
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Feedback
 from tests.functional.utils.generic import assert_that_captcha_is_in_dev_mode
@@ -13,7 +13,7 @@ from tests.functional.utils.request import Method, check_response, make_request
 SERVICE = Services.FAS
 NAME = "Feedback"
 TYPE = "form"
-URL = get_absolute_url("ui-supplier:feedback")
+URL = URLs.FAS_FEEDBACK.absolute
 EXPECTED_STRINGS_FORM = [
     "Get UK companies to fulfil your business needs",
     (
@@ -44,7 +44,7 @@ EXPECTED_STRINGS_ERRORS = [
 
 
 def go_to(session: Session) -> Response:
-    headers = {"Referer": get_absolute_url("ui-supplier:feedback")}
+    headers = {"Referer": URL}
     return make_request(Method.GET, URL, session=session, headers=headers)
 
 
@@ -73,7 +73,7 @@ def submit(session: Session, feedback: Feedback, *, referer: str = None) -> Resp
     if referer:
         headers = {"Referer": referer}
     else:
-        headers = {"Referer": get_absolute_url("ui-supplier:feedback")}
+        headers = {"Referer": URL}
 
     data = {
         "full_name": feedback.name,

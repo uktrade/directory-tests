@@ -5,7 +5,7 @@ from urllib.parse import urljoin
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Company, Feedback, Message
 from tests.functional.utils.generic import (
@@ -17,7 +17,7 @@ from tests.functional.utils.request import Method, check_response, make_request
 SERVICE = Services.FAS
 NAME = "Contact Supplier"
 TYPE = "form"
-LANDING = get_absolute_url("ui-supplier:landing")
+LANDING = URLs.FAS_LANDING.absolute
 URL = urljoin(LANDING, "suppliers/{company_number}/contact/")
 EXPECTED_STRINGS = [
     "Send a message to",
