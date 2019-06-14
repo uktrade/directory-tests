@@ -7,7 +7,7 @@ from behave.model import Table
 from requests import Response, Session
 from scrapy import Selector
 
-from tests import get_absolute_url, URLs
+from tests import URLs
 from tests.functional.common import DETAILS
 from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Company

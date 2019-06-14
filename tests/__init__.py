@@ -24,46 +24,6 @@ from tests.settings import (
     SOO_UI_URL,
 )
 
-join_exred = partial(urljoin, EXRED_UI_URL)
-
-urls = {
-    # ExRed UI
-    "ui-exred:search": "search/",
-    "ui-exred:landing": "",
-    "ui-exred:landing-uk": "?lang=en-gb",
-    "ui-exred:international": "international/",
-    "ui-exred:international-uk": "international/?lang=en-gb",
-    "ui-exred:international-zh": "international/?lang=zh-hans",
-    "ui-exred:international-de": "international/?lang=de",
-    "ui-exred:international-ja": "international/?lang=ja",
-    "ui-exred:international-es": "international/?lang=es",
-    "ui-exred:international-pt": "international/?lang=pt",
-    "ui-exred:international-ar": "international/?lang=ar",
-    "ui-exred:triage-sector": "triage/sector/",
-    "ui-exred:triage-exported-before": "triage/exported-before/",
-    "ui-exred:triage-regular-exporter": "triage/regular-exporter/",
-    "ui-exred:triage-online-marketplace": "triage/online-marketplace/",
-    "ui-exred:triage-companies-house": "triage/companies-house/",
-    "ui-exred:triage-company": "triage/company/",
-    "ui-exred:triage-summary": "triage/summary/",
-    "ui-exred:custom": "custom/",
-    "ui-exred:new": "new/",
-    "ui-exred:occasional": "occasional/",
-    "ui-exred:regular": "regular/",
-    "ui-exred:market-research": "market-research/",
-    "ui-exred:customer-insight": "customer-insight/",
-    "ui-exred:finance": "finance/",
-    "ui-exred:business-planning": "business-planning/",
-    "ui-exred:getting-paid": "getting-paid/",
-    "ui-exred:operations-and-compliance": "operations-and-compliance/",
-    "ui-exred:get-finance": "get-finance/",
-    "ui-exred:story-first": "story/online-marketplaces-propel-freestyle-xtreme-sales/",
-    "ui-exred:story-second": "story/hello-babys-rapid-online-growth/",
-    "ui-exred:story-third": "story/york-bag-retailer-goes-global-via-e-commerce/",
-    "ui-exred:terms": "terms-and-conditions/",
-    "ui-exred:privacy": "privacy-and-cookies/",
-}
-
 # these user credentials are hard-coded in `directory-sso`. The users
 # are created when `manage.py create_test_users` is ran on sso.
 users = {
@@ -90,12 +50,6 @@ companies = {
         "SSO_COMPANY_ACTIVE_NOT_REGISTERED", "01624297"
     ),
 }
-
-
-def get_absolute_url(name):
-    relative_url = urls[name]
-    if name.startswith("ui-exred:"):
-        return join_exred(relative_url)
 
 
 def get_random_email_address():

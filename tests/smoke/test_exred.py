@@ -1,36 +1,36 @@
 import pytest
 from rest_framework.status import HTTP_200_OK, HTTP_302_FOUND
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.smoke.cms_api_helpers import get_and_assert
 
 
 @pytest.mark.parametrize(
     "url",
     [
-        get_absolute_url("ui-exred:landing-uk"),
-        get_absolute_url("ui-exred:international"),
-        get_absolute_url("ui-exred:international-uk"),
-        get_absolute_url("ui-exred:international-zh"),
-        get_absolute_url("ui-exred:international-de"),
-        get_absolute_url("ui-exred:international-ja"),
-        get_absolute_url("ui-exred:international-es"),
-        get_absolute_url("ui-exred:international-pt"),
-        get_absolute_url("ui-exred:international-ar"),
-        get_absolute_url("ui-exred:triage-sector"),
-        get_absolute_url("ui-exred:triage-exported-before"),
-        get_absolute_url("ui-exred:triage-regular-exporter"),
-        get_absolute_url("ui-exred:triage-online-marketplace"),
-        get_absolute_url("ui-exred:triage-companies-house"),
-        get_absolute_url("ui-exred:triage-company"),
-        get_absolute_url("ui-exred:triage-summary"),
-        get_absolute_url("ui-exred:custom"),
-        get_absolute_url("ui-exred:get-finance"),
-        get_absolute_url("ui-exred:story-first"),
-        get_absolute_url("ui-exred:story-second"),
-        get_absolute_url("ui-exred:story-third"),
-        get_absolute_url("ui-exred:terms"),
-        get_absolute_url("ui-exred:privacy"),
+        URLs.DOMESTIC_LANDING_UK.absolute,
+        URLs.DOMESTIC_INTERNATIONAL.absolute,
+        URLs.DOMESTIC_INTERNATIONAL_UK.absolute,
+        URLs.DOMESTIC_INTERNATIONAL_ZH.absolute,
+        URLs.DOMESTIC_INTERNATIONAL_DE.absolute,
+        URLs.DOMESTIC_INTERNATIONAL_JA.absolute,
+        URLs.DOMESTIC_INTERNATIONAL_ES.absolute,
+        URLs.DOMESTIC_INTERNATIONAL_PT.absolute,
+        URLs.DOMESTIC_INTERNATIONAL_AR.absolute,
+        URLs.DOMESTIC_TRIAGE_SECTOR.absolute,
+        URLs.DOMESTIC_TRIAGE_EXPORTED_BEFORE.absolute,
+        URLs.DOMESTIC_TRIAGE_REGULAR_EXPORTER.absolute,
+        URLs.DOMESTIC_TRIAGE_ONLINE_MARKETPLACE.absolute,
+        URLs.DOMESTIC_TRIAGE_COMPANIES_HOUSE.absolute,
+        URLs.DOMESTIC_TRIAGE_COMPANY.absolute,
+        URLs.DOMESTIC_TRIAGE_SUMMARY.absolute,
+        URLs.DOMESTIC_CUSTOM.absolute,
+        URLs.DOMESTIC_GET_FINANCE.absolute,
+        URLs.DOMESTIC_STORY_FIRST.absolute,
+        URLs.DOMESTIC_STORY_SECOND.absolute,
+        URLs.DOMESTIC_STORY_THIRD.absolute,
+        URLs.DOMESTIC_TERMS.absolute,
+        URLs.DOMESTIC_PRIVACY.absolute,
     ],
 )
 def test_exred_pages(url, basic_auth):
@@ -40,7 +40,7 @@ def test_exred_pages(url, basic_auth):
 @pytest.mark.parametrize(
     "url",
     [
-        get_absolute_url("ui-exred:landing"),
+        URLs.DOMESTIC_LANDING.absolute,
     ],
 )
 def test_exred_home_page_might_redirect_to_international(url, basic_auth):
@@ -55,31 +55,31 @@ def test_exred_home_page_might_redirect_to_international(url, basic_auth):
 @pytest.mark.parametrize(
     "url,redirect",
     [
-        (get_absolute_url("ui-exred:new"), "/advice/"),
-        (get_absolute_url("ui-exred:occasional"), "/advice/"),
-        (get_absolute_url("ui-exred:regular"), "/advice/"),
+        (URLs.DOMESTIC_NEW.absolute, "/advice/"),
+        (URLs.DOMESTIC_OCCASIONAL.absolute, "/advice/"),
+        (URLs.DOMESTIC_REGULAR.absolute, "/advice/"),
         (
-            get_absolute_url("ui-exred:market-research"),
+            URLs.DOMESTIC_MARKET_RESEARCH.absolute,
             "/advice/find-an-export-market/",
         ),
         (
-            get_absolute_url("ui-exred:customer-insight"),
+            URLs.DOMESTIC_CUSTOMER_INSIGHT.absolute,
             "/advice/prepare-to-do-business-in-a-foreign-country/",
         ),
         (
-            get_absolute_url("ui-exred:finance"),
+            URLs.DOMESTIC_FINANCE.absolute,
             "/advice/get-export-finance-and-funding/",
         ),
         (
-            get_absolute_url("ui-exred:business-planning"),
+            URLs.DOMESTIC_BUSINESS_PLANNING.absolute,
             "/advice/define-route-to-market/",
         ),
         (
-            get_absolute_url("ui-exred:getting-paid"),
+            URLs.DOMESTIC_GETTING_PAID.absolute,
             "/advice/manage-payment-for-export-orders/",
         ),
         (
-            get_absolute_url("ui-exred:operations-and-compliance"),
+            URLs.DOMESTIC_OPERATIONS_AND_COMPLIANCE.absolute,
             "/advice/manage-legal-and-ethical-compliance/",
         ),
     ],
