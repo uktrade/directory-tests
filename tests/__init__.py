@@ -30,7 +30,6 @@ join_sso_api = partial(urljoin, DIRECTORY_SSO_API_CLIENT_BASE_URL)
 join_profile = partial(urljoin, DIRECTORY_PROFILE_URL)
 join_ui_buyer = partial(urljoin, DIRECTORY_UI_BUYER_URL)
 join_ui_supplier = partial(urljoin, DIRECTORY_UI_SUPPLIER_URL)
-join_ui_invest = partial(urljoin, INVEST_UI_URL)
 join_exred = partial(urljoin, EXRED_UI_URL)
 join_soo = partial(urljoin, SOO_UI_URL)
 join_cms_url = partial(urljoin, DIRECTORY_CMS_API_CLIENT_BASE_URL)
@@ -240,8 +239,6 @@ def get_absolute_url(name):
         return join_ui_buyer(relative_url)
     elif name.startswith("ui-supplier:"):
         return join_ui_supplier(relative_url)
-    elif name.startswith("ui-invest:"):
-        return join_ui_invest(relative_url)
     elif name.startswith("api:"):
         return join_api(relative_url)
     elif name.startswith("profile:"):
