@@ -16,7 +16,7 @@ from requests import Response, Session
 from retrying import retry
 from scrapy import Selector
 
-from tests import get_absolute_url
+from tests import get_absolute_url, URLs
 from tests.functional.common import DETAILS, PROFILES
 from tests.functional.pages import get_page_object, has_action
 from tests.functional.pages.fab import (
@@ -2209,8 +2209,8 @@ def sso_sign_in(context: Context, supplier_alias: str, *, from_page: str = None)
     """Sign in to standalone SSO account."""
     actor = context.get_actor(supplier_alias)
     from_page = get_page_object(from_page).URL if from_page else None
-    next_param = from_page or get_absolute_url("profile:about")
-    referer = from_page or get_absolute_url("profile:about")
+    next_param = from_page or URLs.PROFILE_ABOUT.absolute
+    referer = from_page or URLs.PROFILE_ABOUT.absolute
     response = sso_ui_login.go_to(
         actor.session, next_param=next_param, referer=referer
     )

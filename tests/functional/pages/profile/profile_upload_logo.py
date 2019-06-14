@@ -6,14 +6,14 @@ import os
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.request import Method, check_response, make_request
 
 SERVICE = Services.PROFILE
 NAME = "Upload logo"
 TYPE = "form"
-URL = get_absolute_url("profile:upload-logo")
+URL = URLs.PROFILE_UPLOAD_LOGO.absolute
 EXPECTED_STRINGS = [
     "Company logo",
     "Logo:",
@@ -42,7 +42,7 @@ def should_be_here(response: Response):
 
 
 def upload(session: Session, file_path: str) -> Response:
-    headers = {"Referer": get_absolute_url("profile:upload-logo")}
+    headers = {"Referer": URLs.PROFILE_UPLOAD_LOGO.absolute}
     data = {
         "company_profile_logo_edit_view-current_step": "logo",
     }

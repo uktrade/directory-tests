@@ -3,7 +3,7 @@
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Actor
 from tests.functional.utils.generic import assert_that_captcha_is_in_dev_mode
@@ -12,7 +12,7 @@ from tests.functional.utils.request import Method, check_response, make_request
 SERVICE = Services.PROFILE
 NAME = "Enter your business email address and set a password"
 TYPE = "form"
-URL = get_absolute_url("profile:enrol-user-account")
+URL = URLs.PROFILE_ENROL_USER_ACCOUNT.absolute
 EXPECTED_STRINGS = [
     "Enter your business email address and set a password",
     "Your email address",

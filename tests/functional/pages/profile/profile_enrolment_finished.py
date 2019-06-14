@@ -3,14 +3,14 @@
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.request import Method, check_response, make_request
 
 SERVICE = Services.PROFILE
 NAME = "Enrolment (finished)"
 TYPE = "confirmation"
-URL = get_absolute_url("profile:enrol-finished")
+URL = URLs.PROFILE_ENROL_FINISHED.absolute
 EXPECTED_STRINGS = [
     "Your account has been created",
 ]

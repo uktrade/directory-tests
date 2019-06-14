@@ -12,7 +12,7 @@ from requests import Response
 from retrying import retry
 from scrapy import Selector
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import has_action, get_page_object
 from tests.functional.pages.fab import (
     fab_ui_account_remove_collaborator,
@@ -167,7 +167,7 @@ def sso_should_be_signed_out_from_sso_account(
     session = actor.session
 
     # Step 1 - Get to the Sign Out confirmation page
-    next_param = get_absolute_url("profile:landing")
+    next_param = URLs.PROFILE_LANDING.absolute
     response = sso_ui_logout.go_to(session, next_param=next_param)
     context.response = response
 
@@ -177,7 +177,7 @@ def sso_should_be_signed_out_from_sso_account(
     context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
     # Step 3 - log out
-    next_param = get_absolute_url("profile:landing")
+    next_param = URLs.PROFILE_LANDING.absolute
     response = sso_ui_logout.logout(session, token, next_param=next_param)
     context.response = response
 

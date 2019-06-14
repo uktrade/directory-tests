@@ -4,14 +4,14 @@ import logging
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.request import Method, check_response, make_request
 
 SERVICE = Services.PROFILE
 NAME = "Find a Buyer (without a business profile)"
 TYPE = "landing"
-URL = get_absolute_url("profile:fab")
+URL = URLs.PROFILE_FAB.absolute
 EXPECTED_STRINGS = [
     'Account',
     'You are signed in as',
@@ -26,7 +26,7 @@ EXPECTED_STRINGS = [
 
 
 def go_to(session: Session) -> Response:
-    headers = {"Referer": get_absolute_url("profile:about")}
+    headers = {"Referer": URLs.PROFILE_ABOUT.absolute}
     return make_request(Method.GET, URL, session=session, headers=headers)
 
 

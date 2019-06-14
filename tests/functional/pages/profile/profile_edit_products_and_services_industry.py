@@ -3,7 +3,7 @@
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.request import (
     Method,
@@ -15,7 +15,7 @@ from tests.functional.utils.request import (
 SERVICE = Services.PROFILE
 NAME = "Edit company's products and services (industry)"
 TYPE = "form"
-URL = get_absolute_url("profile:add-products-and-services")
+URL = URLs.PROFILE_ADD_PRODUCTS_AND_SERVICES.absolute
 EXPECTED_STRINGS = [
     "Choose the industry you’re in"
 ]

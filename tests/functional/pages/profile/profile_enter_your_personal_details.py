@@ -3,7 +3,7 @@
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Actor
 from tests.functional.utils.request import Method, check_response, make_request
@@ -11,7 +11,7 @@ from tests.functional.utils.request import Method, check_response, make_request
 SERVICE = Services.PROFILE
 NAME = "Enter your personal details"
 TYPE = "form"
-URL = get_absolute_url("profile:enrol-personal-details")
+URL = URLs.PROFILE_ENROL_PERSONAL_DETAILS.absolute
 EXPECTED_STRINGS = [
     "Enter your details",
 ]

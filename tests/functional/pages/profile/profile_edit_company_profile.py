@@ -5,7 +5,7 @@ import logging
 from behave.model import Table
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.common import DETAILS
 from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Company
@@ -16,7 +16,7 @@ from tests.settings import SECTORS_WITH_LABELS
 SERVICE = Services.PROFILE
 NAME = "Edit company profile"
 TYPE = "landing"
-URL = get_absolute_url("profile:fab")
+URL = URLs.PROFILE_FAB.absolute
 EXPECTED_STRINGS = [
     "You are signed in as",
     "This company",

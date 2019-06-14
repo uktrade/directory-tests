@@ -6,7 +6,7 @@ import re
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Actor, Company
 from tests.functional.utils.generic import assertion_msg
@@ -15,7 +15,7 @@ from tests.functional.utils.request import Method, check_response, make_request
 SERVICE = Services.PROFILE
 NAME = "Edit online profiles"
 TYPE = "form"
-URL = get_absolute_url("profile:company-edit-social-media")
+URL = URLs.PROFILE_COMPANY_EDIT_SOCIAL_MEDIA.absolute
 EXPECTED_STRINGS = [
     "Online profiles",
     "URL for your Facebook company page (optional):",
@@ -38,7 +38,7 @@ def go_to(session: Session) -> Response:
     This requires:
      * Supplier to be logged in
     """
-    headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
+    headers = {"Referer": URLs.FAB_COMPANY_PROFILE.absolute}
     return make_request(Method.GET, URL, session=session, headers=headers)
 
 

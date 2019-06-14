@@ -5,7 +5,7 @@ import random
 from directory_constants import choices
 from requests import Response
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Actor, Company
 from tests.functional.utils.generic import (
@@ -19,7 +19,7 @@ from tests.settings import NO_OF_EMPLOYEES
 SERVICE = Services.PROFILE
 NAME = "Edit company's business details"
 TYPE = "form"
-URL = get_absolute_url("profile:edit-company-business-details")
+URL = URLs.PROFILE_EDIT_COMPANY_BUSINESS_DETAILS.absolute
 EXPECTED_STRINGS = [
     "Business details",
     "Trading name",

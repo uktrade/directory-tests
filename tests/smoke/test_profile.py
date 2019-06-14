@@ -6,12 +6,12 @@ from rest_framework.status import (
 )
 from retrying import retry
 
-from tests import get_absolute_url, is_500
+from tests import is_500, URLs
 from tests.smoke.cms_api_helpers import get_and_assert, status_error
 
 
 def test_about_200(basic_auth):
-    url = get_absolute_url("profile:about")
+    url = URLs.PROFILE_ABOUT.absolute
     get_and_assert(url=url, status_code=HTTP_200_OK, auth=basic_auth)
 
 
@@ -19,7 +19,7 @@ def test_about_200(basic_auth):
 @pytest.mark.parametrize(
     "url",
     [
-        get_absolute_url("profile:company-edit-social-media"),
+        URLs.PROFILE_COMPANY_EDIT_SOCIAL_MEDIA.absolute,
     ],
 )
 def test_302_redirects_for_anon_user(url, basic_auth):
@@ -29,11 +29,11 @@ def test_302_redirects_for_anon_user(url, basic_auth):
 @pytest.mark.parametrize(
     "url",
     [
-        get_absolute_url("profile:landing"),
-        get_absolute_url("profile:soo"),
-        get_absolute_url("profile:fab"),
-        get_absolute_url("profile:exops-alerts"),
-        get_absolute_url("profile:exops-applications"),
+        URLs.PROFILE_LANDING.absolute,
+        URLs.PROFILE_SOO.absolute,
+        URLs.PROFILE_FAB.absolute,
+        URLs.PROFILE_EXOPS_ALERTS.absolute,
+        URLs.PROFILE_EXOPS_APPLICATIONS.absolute,
     ],
 )
 def test_302_redirects_for_anon_user(url, basic_auth):
@@ -43,10 +43,10 @@ def test_302_redirects_for_anon_user(url, basic_auth):
 @pytest.mark.parametrize(
     "url",
     [
-        get_absolute_url("profile:soo"),
-        get_absolute_url("profile:fab"),
-        get_absolute_url("profile:exops-alerts"),
-        get_absolute_url("profile:exops-applications"),
+        URLs.PROFILE_SOO.absolute,
+        URLs.PROFILE_FAB.absolute,
+        URLs.PROFILE_EXOPS_ALERTS.absolute,
+        URLs.PROFILE_EXOPS_APPLICATIONS.absolute,
     ],
 )
 def test_301_redirects_after_removing_trailing_slash_for_anon_user(
@@ -65,11 +65,11 @@ def test_301_redirects_after_removing_trailing_slash_for_anon_user(
 @pytest.mark.parametrize(
     "url",
     [
-        get_absolute_url("profile:landing"),
-        get_absolute_url("profile:soo"),
-        get_absolute_url("profile:fab"),
-        get_absolute_url("profile:exops-alerts"),
-        get_absolute_url("profile:exops-applications"),
+        URLs.PROFILE_LANDING.absolute,
+        URLs.PROFILE_SOO.absolute,
+        URLs.PROFILE_FAB.absolute,
+        URLs.PROFILE_EXOPS_ALERTS.absolute,
+        URLs.PROFILE_EXOPS_APPLICATIONS.absolute,
     ],
 )
 def test_access_to_non_health_check_endpoints_as_logged_in_user(

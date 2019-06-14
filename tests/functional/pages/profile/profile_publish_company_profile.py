@@ -2,14 +2,14 @@
 """Profile - Publish Company's Business Profile to FAS"""
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.request import Method, make_request
 
 SERVICE = Services.PROFILE
 NAME = "Publish company's business profile"
 TYPE = "form"
-URL = get_absolute_url("profile:publish-business-profile-to-fas")
+URL = URLs.PROFILE_PUBLISH_BUSINESS_PROFILE_TO_FAS.absolute
 EXPECTED_STRINGS = []
 
 

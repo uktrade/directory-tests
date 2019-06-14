@@ -4,7 +4,7 @@ import logging
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.generic import assertion_msg
 from tests.functional.utils.request import Method, check_response, make_request
@@ -12,7 +12,7 @@ from tests.functional.utils.request import Method, check_response, make_request
 SERVICE = Services.PROFILE
 NAME = "About"
 TYPE = "landing"
-URL = get_absolute_url("profile:about")
+URL = URLs.PROFILE_ABOUT.absolute
 EXPECTED_STRINGS = [
     "Account",
     "Welcome to your great.gov.uk account",
@@ -25,7 +25,7 @@ EXPECTED_STRINGS = [
 
 
 def go_to(session: Session, *, set_next_page: bool = True) -> Response:
-    fab_landing = get_absolute_url("ui-buyer:landing")
+    fab_landing = URLs.FAB_LANDING.absolute
     params = {"next": fab_landing}
     headers = {"Referer": fab_landing}
     if not set_next_page:

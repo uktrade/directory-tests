@@ -24,7 +24,6 @@ from tests.settings import (
     SOO_UI_URL,
 )
 
-join_profile = partial(urljoin, DIRECTORY_PROFILE_URL)
 join_ui_buyer = partial(urljoin, DIRECTORY_UI_BUYER_URL)
 join_exred = partial(urljoin, EXRED_UI_URL)
 
@@ -52,30 +51,6 @@ urls = {
     "ui-buyer:account-confirm-password": "account/transfer/",
     "ui-buyer:account-confirm-ownership-transfer": "account/transfer/accept/?invite_key=",
     "ui-buyer:account-accept-invitation": "account/collaborate/accept/?invite_key={invite_key}",
-
-    # SSO-PROFILE
-    "profile:soo": "selling-online-overseas/",
-    "profile:fab": "find-a-buyer/",
-    "profile:exops-alerts": "export-opportunities/email-alerts/",
-    "profile:exops-applications": "export-opportunities/applications/",
-    "profile:landing": "",
-    "profile:about": "about/",
-    "profile:enrol": "enrol/",
-    "profile:enrol-user-account": "enrol/business-type/companies-house/user-account/",
-    "profile:enrol-email-verification": "enrol/business-type/companies-house/verification/",
-    "profile:enrol-companies-house-search": "enrol/business-type/companies-house/search/",
-    "profile:enrol-business-details": "enrol/business-type/companies-house/business-details/",
-    "profile:enrol-personal-details": "enrol/business-type/companies-house/personal-details/",
-    "profile:enrol-finished": "enrol/business-type/companies-house/finished/",
-    "profile:edit-company-description": "find-a-buyer/description/",
-    "profile:edit-company-business-details": "find-a-buyer/business-details/",
-    "profile:publish-business-profile-to-fas": "find-a-buyer/publish/",
-    "profile:add-products-and-services": "find-a-buyer/add-expertise/products-and-services/",
-    "profile:case-study-edit": "find-a-buyer/case-study/{case_number}/details/",
-    "profile:case-study-details": "find-a-buyer/case-study/details/",
-    "profile:case-study-images": "find-a-buyer/case-study/images/",
-    "profile:upload-logo": "find-a-buyer/logo/",
-    "profile:company-edit-social-media": "find-a-buyer/social-links/",
 
     # ExRed UI
     "ui-exred:search": "search/",
@@ -146,8 +121,6 @@ def get_absolute_url(name):
     relative_url = urls[name]
     if name.startswith("ui-buyer:"):
         return join_ui_buyer(relative_url)
-    elif name.startswith("profile:"):
-        return join_profile(relative_url)
     elif name.startswith("ui-exred:"):
         return join_exred(relative_url)
 

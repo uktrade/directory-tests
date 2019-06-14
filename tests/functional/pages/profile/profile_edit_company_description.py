@@ -4,14 +4,14 @@ import logging
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.request import Method, check_response, make_request
 
 SERVICE = Services.PROFILE
 NAME = "Edit company's description"
 TYPE = "form"
-URL = get_absolute_url("profile:edit-company-description")
+URL = URLs.PROFILE_EDIT_COMPANY_DESCRIPTION.absolute
 EXPECTED_STRINGS = [
     "Company description",
     "Describe your business to overseas buyers",
@@ -25,7 +25,7 @@ def should_be_here(response: Response):
 
 
 def go_to(session: Session) -> Response:
-    headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
+    headers = {"Referer": URLs.FAB_COMPANY_PROFILE.absolute}
     return make_request(Method.GET, URL, session=session, headers=headers)
 
 

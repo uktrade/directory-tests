@@ -5,14 +5,14 @@ from urllib.parse import urljoin
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.request import Method, check_url, make_request
 
 SERVICE = Services.PROFILE
 NAME = "Edit company's products and services (keywords)"
 TYPE = "form"
-URL = get_absolute_url("profile:add-products-and-services")
+URL = URLs.PROFILE_ADD_PRODUCTS_AND_SERVICES.absolute
 EXPECTED_STRINGS = [
     "Choose the products and services"
 ]

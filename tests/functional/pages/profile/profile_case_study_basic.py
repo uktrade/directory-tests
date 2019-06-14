@@ -4,7 +4,7 @@ import logging
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.context_utils import CaseStudy
 from tests.functional.utils.request import Method, check_response, make_request
@@ -12,8 +12,8 @@ from tests.functional.utils.request import Method, check_response, make_request
 SERVICE = Services.PROFILE
 NAME = "Add case study (basic details)"
 TYPE = "form"
-URL = get_absolute_url("profile:case-study-details")
-EDIT_URL = get_absolute_url("profile:case-study-edit")
+URL = URLs.PROFILE_CASE_STUDY_DETAILS.absolute
+EDIT_URL = URLs.PROFILE_CASE_STUDY_EDIT.absolute
 EXPECTED_STRINGS = [
     "Business showcase",
     "Title of your case study or project",
@@ -35,7 +35,7 @@ def go_to(session: Session, *, case_number: int = None) -> Response:
         url = EDIT_URL.format(case_number=case_number)
     else:
         url = URL
-    headers = {"Referer": get_absolute_url("ui-buyer:company-profile")}
+    headers = {"Referer": URLs.FAB_COMPANY_PROFILE.absolute}
     response = make_request(Method.GET, url, session=session, headers=headers)
     logging.debug("Supplier is on the Add Case Study - Basic page")
     return response

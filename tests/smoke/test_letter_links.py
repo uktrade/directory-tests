@@ -6,7 +6,7 @@ from rest_framework.status import (
     HTTP_302_FOUND,
 )
 
-from tests import get_absolute_url, URLs
+from tests import URLs
 from tests.smoke.cms_api_helpers import get_and_assert, status_error
 
 
@@ -55,7 +55,7 @@ def test_access_contact_us_as_anon_user_after_removing_trailing_slash(
 
 @pytest.mark.stage
 @pytest.mark.parametrize(
-    "url", [get_absolute_url("ui-buyer:confirm-identity")]
+    "url", [URLs.FAB_CONFIRM_IDENTITY.absolute]
 )
 def test_302_redirects_for_anon_user(url, basic_auth):
     get_and_assert(
@@ -67,7 +67,7 @@ def test_302_redirects_for_anon_user(url, basic_auth):
 
 
 @pytest.mark.parametrize(
-    "url", [get_absolute_url("ui-buyer:confirm-identity")]
+    "url", [URLs.FAB_CONFIRM_IDENTITY.absolute]
 )
 def test_301_redirects_after_removing_trailing_slash_for_anon_user(
     url, basic_auth
@@ -87,7 +87,7 @@ def test_301_redirects_after_removing_trailing_slash_for_anon_user(
 @pytest.mark.session_auth
 @pytest.mark.stage
 @pytest.mark.parametrize(
-    "url", [get_absolute_url("ui-buyer:confirm-identity")]
+    "url", [URLs.FAB_CONFIRM_IDENTITY.absolute]
 )
 def test_access_endpoints_as_logged_in_user(
     logged_in_session, url, basic_auth
@@ -103,7 +103,7 @@ def test_access_endpoints_as_logged_in_user(
 @pytest.mark.session_auth
 @pytest.mark.stage
 @pytest.mark.parametrize(
-    "url", [get_absolute_url("ui-buyer:confirm-identity")]
+    "url", [URLs.FAB_CONFIRM_IDENTITY.absolute]
 )
 def test_check_if_verify_endpoint_redirects_to_correct_page(
     logged_in_session, url, basic_auth
@@ -117,8 +117,8 @@ def test_check_if_verify_endpoint_redirects_to_correct_page(
     # depends on the test account status/configuration user should either get
     # to the letter verification page or to their profile page if they already
     # went through verification
-    got_to_letter_confirmation = response.url == get_absolute_url(
-        "ui-buyer:confirm-company-address"
+    got_to_letter_confirmation = (
+            response.url == URLs.FAB_CONFIRM_COMPANY_ADDRESS.absolute
     )
-    got_to_profile = response.url == get_absolute_url("profile:fab")
+    got_to_profile = response.url == URLs.PROFILE_FAB.absolute
     assert got_to_letter_confirmation or got_to_profile
