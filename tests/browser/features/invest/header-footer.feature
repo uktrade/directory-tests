@@ -2,6 +2,7 @@
 Feature: Header-Footer
 
   Background:
+    Given basic authentication is done for "International - Landing" page
     Given basic authentication is done for "Invest - Home" page
 
   @CMS-158
