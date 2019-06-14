@@ -1,7 +1,9 @@
+from urllib.parse import urljoin
+
 import pytest
 from rest_framework.status import *
 
-from tests import join_ui_international, join_ui_invest, URLs
+from tests import URLs
 from tests.smoke.cms_api_helpers import get_and_assert
 
 
@@ -98,8 +100,8 @@ def test_cms_918_redirect_to_international_if_matching_industry_exists(
     A redirect to the International site will happen only if there’s a sector
     page with the same slug in International.
     """
-    old_url = join_ui_invest(endpoint)
-    new_url = join_ui_international(endpoint)
+    old_url = urljoin(URLs.INVEST_LANDING.absolute, endpoint)
+    new_url = urljoin(URLs.INTERNATIONAL_LANDING.absolute, endpoint)
     response = get_and_assert(
         url=old_url,
         allow_redirects=False,

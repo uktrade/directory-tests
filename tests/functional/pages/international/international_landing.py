@@ -4,14 +4,14 @@ import logging
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.request import Method, check_response, make_request
 
 SERVICE = Services.INTERNATIONAL
 NAME = "Landing"
 TYPE = "landing"
-URL = get_absolute_url("ui-international:landing")
+URL = URLs.INTERNATIONAL_LANDING.absolute
 EXPECTED_STRINGS = [
     "We are Open",
     "The UK welcomes international business",

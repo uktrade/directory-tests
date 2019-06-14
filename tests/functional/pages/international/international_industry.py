@@ -5,7 +5,7 @@ from urllib.parse import urljoin
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.request import Method, check_response, make_request
 
@@ -17,7 +17,7 @@ NAMES = [
     "Technology",
 ]
 TYPE = "industry"
-URL = get_absolute_url("ui-international:industry")
+URL = URLs.INTERNATIONAL_INDUSTRIES.absolute
 URLs = {
     "engineering and manufacturing": urljoin(URL, "engineering-and-manufacturing/"),
     "healthcare and life sciences": urljoin(URL, "healthcare-and-life-sciences/"),

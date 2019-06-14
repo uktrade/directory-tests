@@ -4,14 +4,14 @@ import logging
 
 from requests import Response, Session
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.request import Method, check_response, make_request
 
 SERVICE = Services.INTERNATIONAL
 NAME = "Industries"
 TYPE = "listing"
-URL = get_absolute_url("ui-international:industries")
+URL = URLs.INTERNATIONAL_INDUSTRIES.absolute
 EXPECTED_STRINGS = [
     "Industries",
     "Great.gov.uk International"

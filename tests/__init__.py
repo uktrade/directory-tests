@@ -25,7 +25,6 @@ from tests.settings import (
 )
 
 join_api = partial(urljoin, DIRECTORY_API_URL)
-join_ui_international = partial(urljoin, DIRECTORY_UI_INTERNATIONAL_URL)
 join_sso = partial(urljoin, DIRECTORY_SSO_URL)
 join_sso_api = partial(urljoin, DIRECTORY_SSO_API_CLIENT_BASE_URL)
 join_profile = partial(urljoin, DIRECTORY_PROFILE_URL)
@@ -86,11 +85,6 @@ urls = {
     "ui-supplier:industries-food": "industries/food-and-drink/",
     "ui-supplier:feedback": "feedback/",
     "ui-supplier:search": "search/",
-
-    # UI-INTERNATIONAL
-    "ui-international:landing": "",
-    "ui-international:industries": "content/industries/",
-    "ui-international:industry": "content/industries/",
 
     # API
     "api:enrolment": "enrolment/",
@@ -264,8 +258,6 @@ def get_absolute_url(name):
         return join_cms_ui(relative_url)
     elif name.startswith("forms-api:"):
         return join_forms_api(relative_url)
-    elif name.startswith("ui-international"):
-        return join_ui_international(relative_url)
 
 
 def get_random_email_address():
