@@ -253,11 +253,6 @@ urls = {
     "ui-soo:landing": "",
     "ui-soo:search-results": "markets/results/",
     "ui-soo:market-details": "markets/details/",
-
-    # Forms API endpoints
-    "forms-api:submission": "api/submission/",
-    "forms-api:admin": "admin/",
-    "forms-api:testapi": "testapi/submissions-by-email/{email}/",
 }
 
 # these user credentials are hard-coded in `directory-sso`. The users
