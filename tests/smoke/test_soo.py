@@ -1,22 +1,22 @@
 import pytest
 from rest_framework.status import HTTP_200_OK, HTTP_301_MOVED_PERMANENTLY
 
-from tests import get_absolute_url
+from tests import URLs
 from tests.smoke.cms_api_helpers import get_and_assert
 
 
 @pytest.mark.parametrize(
     "url",
     [
-        get_absolute_url("ui-soo:landing"),
-        get_absolute_url("ui-soo:search-results"),
+        URLs.SOO_LANDING.absolute,
+        URLs.SOO_SEARCH_RESULTS.absolute,
     ],
 )
 def test_access_soo_endpoints(url, basic_auth):
     get_and_assert(url=url, status_code=HTTP_200_OK, auth=basic_auth)
 
 
-@pytest.mark.parametrize("url", [get_absolute_url("ui-soo:search-results")])
+@pytest.mark.parametrize("url", [URLs.SOO_SEARCH_RESULTS.absolute])
 def test_access_soo_endpoints_without_trailing_slash(url, basic_auth):
     # get rid of trailing slash
     if url.endswith("/"):
@@ -35,7 +35,7 @@ def test_access_soo_endpoints_without_trailing_slash(url, basic_auth):
     ],
 )
 def test_search_works(categories, countries, basic_auth):
-    url = get_absolute_url("ui-soo:search-results")
+    url = URLs.SOO_SEARCH_RESULTS.absolute
     params = {
         "product_categories": categories,
         "operating_countries": countries,
@@ -79,7 +79,7 @@ def test_search_works(categories, countries, basic_auth):
     ],
 )
 def test_get_market_details_dev(market, basic_auth):
-    url = get_absolute_url("ui-soo:market-details")
+    url = URLs.SOO_MARKET_DETAILS.absolute
     absolute_url = f"{url}{market}"
     get_and_assert(
         url=absolute_url,
@@ -124,7 +124,7 @@ def test_get_market_details_dev(market, basic_auth):
     ],
 )
 def test_get_market_details_stage(market, basic_auth):
-    url = get_absolute_url("ui-soo:market-details")
+    url = URLs.SOO_MARKET_DETAILS.absolute
     absolute_url = f"{url}{market}"
     get_and_assert(
         url=absolute_url,
@@ -141,7 +141,6 @@ def test_get_market_details_stage(market, basic_auth):
     [
         "1688com",
         "amazon-canada",
-        "amazon-china",
         "amazon-france",
         "amazon-germany",
         "amazon-italy",
@@ -179,7 +178,7 @@ def test_get_market_details_stage(market, basic_auth):
     ],
 )
 def test_get_market_details_prod(market, basic_auth):
-    url = get_absolute_url("ui-soo:market-details")
+    url = URLs.SOO_MARKET_DETAILS.absolute
     absolute_url = f"{url}{market}"
     get_and_assert(
         url=absolute_url,

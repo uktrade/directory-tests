@@ -31,7 +31,6 @@ join_profile = partial(urljoin, DIRECTORY_PROFILE_URL)
 join_ui_buyer = partial(urljoin, DIRECTORY_UI_BUYER_URL)
 join_ui_supplier = partial(urljoin, DIRECTORY_UI_SUPPLIER_URL)
 join_exred = partial(urljoin, EXRED_UI_URL)
-join_soo = partial(urljoin, SOO_UI_URL)
 join_cms_url = partial(urljoin, DIRECTORY_CMS_API_CLIENT_BASE_URL)
 join_cms_api = partial(urljoin, DIRECTORY_CMS_API_CLIENT_BASE_URL)
 join_cms_ui = partial(urljoin, DIRECTORY_CMS_API_CLIENT_BASE_URL)
@@ -194,11 +193,6 @@ urls = {
     "ui-exred:story-third": "story/york-bag-retailer-goes-global-via-e-commerce/",
     "ui-exred:terms": "terms-and-conditions/",
     "ui-exred:privacy": "privacy-and-cookies/",
-
-    # SOO UI Selling Online Overseas
-    "ui-soo:landing": "",
-    "ui-soo:search-results": "markets/results/",
-    "ui-soo:market-details": "markets/details/",
 }
 
 # these user credentials are hard-coded in `directory-sso`. The users
@@ -245,8 +239,6 @@ def get_absolute_url(name):
         return join_profile(relative_url)
     elif name.startswith("ui-exred:"):
         return join_exred(relative_url)
-    elif name.startswith("ui-soo:"):
-        return join_soo(relative_url)
     elif name.startswith("cms-api:"):
         return join_cms_api(relative_url)
     elif name.startswith("cms-healthcheck:"):
