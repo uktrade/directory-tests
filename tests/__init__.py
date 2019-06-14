@@ -673,32 +673,31 @@ class URLs(Enum):
     DOMESTIC_TERMS = DomesticUrl("terms-and-conditions/")
     DOMESTIC_PRIVACY = DomesticUrl("privacy-and-cookies/")
 
+    # UNUSED DEFINITIONS
     # New Contact-Us UI - Domestic & International
-    CONTACT_US_LANDING = ContactUrl("contact/triage/location/")
     CONTACT_US_DOMESTIC = ContactUrl("contact/triage/domestic/")
-    CONTACT_US_INTERNATIONAL = ContactUrl("contact/triage/international/")
-    CONTACT_US_GREAT_SERVICES = ContactUrl("contact/triage/great-services/")
     CONTACT_US_EXPORT_OPPORTUNITIES = ContactUrl("contact/triage/export-opportunities/")
     CONTACT_US_EXPORT_OPPORTUNITIES_NO_RESPONSE = ContactUrl("contact/triage/export-opportunities/opportunity-no-response/")
     CONTACT_US_EXPORT_OPPORTUNITIES_NOT_RELEVANT = ContactUrl("contact/triage/export-opportunities/alerts-not-relevant/")
-    CONTACT_US_GREAT_ACCOUNT = ContactUrl("contact/triage/great-account/")
-    CONTACT_US_GREAT_ACCOUNT_PASSWORD_RESET = ContactUrl("contact/triage/great-account/password-reset/")
-    CONTACT_US_GREAT_ACCOUNT_CH_LOGIN = ContactUrl("contact/triage/great-account/companies-house-login/")
-    CONTACT_US_GREAT_ACCOUNT_VERIFICATION_LETTER_CODE = ContactUrl("contact/triage/great-account/verification-letter-code/")
-    CONTACT_US_GREAT_ACCOUNT_NO_VERIFICATION_EMAIL = ContactUrl("contact/triage/great-account/no-verification-email/")
-    CONTACT_US_GREAT_ACCOUNT_NO_VERIFICATION_LETTER = ContactUrl("contact/triage/great-account/no-verification-letter/")
-
-    # New Contact-Us UI - forms
     CONTACT_US_FORM_DOMESTIC = ContactUrl("contact/domestic/")
-    CONTACT_US_FORM_INTERNATIONAL = ContactUrl("contact/international/")
     CONTACT_US_FORM_DSO = ContactUrl("contact/defence-and-security-organisation/")
     CONTACT_US_FORM_EVENTS = ContactUrl("contact/events/")
     CONTACT_US_FORM_EXPORT_ADVICE = ContactUrl("contact/export-advice/comment/")
-    
-    # Other Contact-Us pages
+    CONTACT_US_FORM_INTERNATIONAL = ContactUrl("contact/international/")
+    CONTACT_US_GREAT_ACCOUNT = ContactUrl("contact/triage/great-account/")
+    CONTACT_US_GREAT_ACCOUNT_CH_LOGIN = ContactUrl("contact/triage/great-account/companies-house-login/")
+    CONTACT_US_GREAT_ACCOUNT_NO_VERIFICATION_EMAIL = ContactUrl("contact/triage/great-account/no-verification-email/")
+    CONTACT_US_GREAT_ACCOUNT_NO_VERIFICATION_LETTER = ContactUrl("contact/triage/great-account/no-verification-letter/")
+    CONTACT_US_GREAT_ACCOUNT_PASSWORD_RESET = ContactUrl("contact/triage/great-account/password-reset/")
+    CONTACT_US_GREAT_ACCOUNT_VERIFICATION_LETTER_CODE = ContactUrl("contact/triage/great-account/verification-letter-code/")
+    CONTACT_US_GREAT_SERVICES = ContactUrl("contact/triage/great-services/")
+    CONTACT_US_INTERNATIONAL = ContactUrl("contact/triage/international/")
+    CONTACT_US_LANDING = ContactUrl("contact/triage/location/")
     CONTACT_US_OTHER_DOMESTIC_EU_EXIT = ContactUrl("eu-exit-news/contact/")
-    CONTACT_US_OTHER_INTERNATIONAL_EU_EXIT = ContactUrl("international/eu-exit-news/contact/")
     CONTACT_US_OTHER_GET_FINANCE = ContactUrl("get-finance/contact/")
+    CONTACT_US_OTHER_INTERNATIONAL_EU_EXIT = ContactUrl("international/eu-exit-news/contact/")
+
+    # SOO Contact-Us pages
     CONTACT_US_SOO_ORGANISATION = ContactUrl("selling-online-overseas/organisation/")
     CONTACT_US_SOO_ORGANISATION_DETAILS = ContactUrl("selling-online-overseas/organisation-details/")
     CONTACT_US_SOO_ORGANISATION_YOUR_EXPERIENCE = ContactUrl("selling-online-overseas/your-experience/")
@@ -706,6 +705,7 @@ class URLs(Enum):
     CONTACT_US_SOO_ORGANISATION_SUCCESS = ContactUrl("selling-online-overseas/success/")
 
     # Legacy Contact-Us UI
+    LEGACY_CONTACT_US_LANDING = LegacyContactUrl("")
     LEGACY_CONTACT_US_HELP = LegacyContactUrl("help/")
     LEGACY_CONTACT_US_FEEDBACK_FORM = LegacyContactUrl("help/FeedbackForm/")
 
