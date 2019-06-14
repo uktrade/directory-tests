@@ -288,12 +288,8 @@ companies = {
 }
 
 
-def get_relative_url(name):
-    return urls[name]
-
-
 def get_absolute_url(name):
-    relative_url = get_relative_url(name)
+    relative_url = urls[name]
     if name.startswith("sso:"):
         return join_sso(relative_url)
     elif name.startswith("sso-api:"):
