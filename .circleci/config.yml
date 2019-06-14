@@ -848,9 +848,9 @@ workflows:
       - func_sud_test_uat:
           requires:
             - setup_env_for_functional_tests
-      - browser_all_chrome_uat:
-          requires:
-            - setup_env_for_browser_tests
-      - browser_all_firefox_uat:
-          requires:
-            - setup_env_for_browser_tests
+      #- browser_all_chrome_uat:
+          #requires:
+            #- setup_env_for_browser_tests
+      #- browser_all_firefox_uat:
+          #requires:
+            #- setup_env_for_browser_tests
