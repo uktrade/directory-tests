@@ -1,9 +1,10 @@
+from urllib.parse import urljoin
+
 import pytest
 import requests
 from rest_framework.status import HTTP_200_OK
 
-from tests import get_absolute_url
-from tests.settings import DIRECTORY_LEGACY_CONTACT_US_UI_URL
+from tests import URLs
 from tests.smoke.cms_api_helpers import get_and_assert
 
 
@@ -52,7 +53,7 @@ from tests.smoke.cms_api_helpers import get_and_assert
 def test_redirects_for_legacy_contact_us_urls(
         endpoint, expected_redirect, basic_auth
 ):
-    url = DIRECTORY_LEGACY_CONTACT_US_UI_URL + endpoint
+    url = urljoin(URLs.LEGACY_CONTACT_US_LANDING.absolute, endpoint)
     legacy_contact_us_response = requests.get(url, allow_redirects=False)
     redirect = legacy_contact_us_response.headers["location"]
     response = get_and_assert(
@@ -73,8 +74,8 @@ def test_redirects_for_legacy_contact_us_urls(
 @pytest.mark.parametrize(
     "url, expected_redirect",
     [
-        (DIRECTORY_LEGACY_CONTACT_US_UI_URL + "soo/TriageForm/", get_absolute_url("sso:login")),
-        (DIRECTORY_LEGACY_CONTACT_US_UI_URL + "triage/soo/", get_absolute_url("sso:login")),
+        (urljoin(URLs.LEGACY_CONTACT_US_LANDING.absolute, "soo/TriageForm/"), URLs.SSO_LOGIN.absolute),
+        (urljoin(URLs.LEGACY_CONTACT_US_LANDING.absolute, "triage/soo/"), URLs.SSO_LOGIN.absolute),
     ]
 )
 def test_legacy_contact_us_soo_urls_should_redirect_to_sso(
@@ -99,7 +100,7 @@ def test_legacy_contact_us_soo_urls_should_redirect_to_sso(
 def test_redirects_for_legacy_contact_us_urls_direct(
         endpoint, expected_redirect, basic_auth
 ):
-    url = DIRECTORY_LEGACY_CONTACT_US_UI_URL + endpoint
+    url = urljoin(URLs.LEGACY_CONTACT_US_LANDING.absolute, endpoint)
     legacy_contact_us_response = requests.get(url, allow_redirects=False)
     redirect = legacy_contact_us_response.headers["location"]
     response = get_and_assert(
@@ -141,10 +142,9 @@ def test_redirects_for_legacy_contact_us_urls_direct(
     ]
 )
 def test_access_contact_us_organisation_endpoints_dev(market, basic_auth):
-    url = get_absolute_url("ui-contact-us:soo:organisation")
     params = {"market": market}
     get_and_assert(
-        url=url,
+        url=URLs.CONTACT_US_SOO_ORGANISATION.absolute,
         params=params,
         allow_redirects=True,
         status_code=HTTP_200_OK,
@@ -189,10 +189,9 @@ def test_access_contact_us_organisation_endpoints_dev(market, basic_auth):
     ]
 )
 def test_access_contact_us_organisation_endpoints_stage(market, basic_auth):
-    url = get_absolute_url("ui-contact-us:soo:organisation")
     params = {"market": market}
     get_and_assert(
-        url=url,
+        url=URLs.CONTACT_US_SOO_ORGANISATION.absolute,
         params=params,
         allow_redirects=True,
         status_code=HTTP_200_OK,
@@ -244,10 +243,9 @@ def test_access_contact_us_organisation_endpoints_stage(market, basic_auth):
     ]
 )
 def test_access_contact_us_organisation_endpoints_prod(market):
-    url = get_absolute_url("ui-contact-us:soo:organisation")
     params = {"market": market}
     get_and_assert(
-        url=url,
+        url=URLs.CONTACT_US_SOO_ORGANISATION.absolute,
         params=params,
         allow_redirects=True,
         status_code=HTTP_200_OK,
@@ -255,10 +253,10 @@ def test_access_contact_us_organisation_endpoints_prod(market):
 
 
 @pytest.mark.parametrize("url", [
-    get_absolute_url("ui-contact-us:soo:organisation:details"),
-    get_absolute_url("ui-contact-us:soo:organisation:your-experience"),
-    get_absolute_url("ui-contact-us:soo:organisation:contact-details"),
-    get_absolute_url("ui-contact-us:soo:organisation:success")
+    URLs.CONTACT_US_SOO_ORGANISATION_DETAILS.absolute,
+    URLs.CONTACT_US_SOO_ORGANISATION_YOUR_EXPERIENCE.absolute,
+    URLs.CONTACT_US_SOO_ORGANISATION_CONTACT_DETAILS.absolute,
+    URLs.CONTACT_US_SOO_ORGANISATION_SUCCESS.absolute,
 ])
 def test_access_contact_us_endpoints(url, basic_auth):
     get_and_assert(
