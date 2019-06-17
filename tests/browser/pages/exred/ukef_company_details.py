@@ -41,7 +41,7 @@ SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#content form"),
         "heading": Selector(By.CSS_SELECTOR, "#heading-container h2"),
-        "trading name": Selector(
+        "registered name": Selector(
             By.ID, "id_company-details-trading_name", type=ElementType.INPUT
         ),
         "building and street first line": Selector(
@@ -62,21 +62,21 @@ SELECTORS = {
         "industry": Selector(
             By.ID, "id_company-details-industry", type=ElementType.SELECT
         ),
+        "i have three years of registered accounts": Selector(
+            By.ID,
+            "checkbox-multiple-i-have-three-years-of-registered-accounts",
+            type=ElementType.CHECKBOX,
+            is_visible=False,
+        ),
         "i have customers outside the uk": Selector(
             By.ID,
-            "checkbox-multiple-i-have-customers-outside-the-uk",
+            "checkbox-multiple-i-have-customers-outside-uk",
             type=ElementType.CHECKBOX,
             is_visible=False,
         ),
         "i supply uk companies that sell overseas": Selector(
             By.ID,
-            "checkbox-multiple-i-supply-uk-companies-that-sell-overseas",
-            type=ElementType.CHECKBOX,
-            is_visible=False,
-        ),
-        "i don't currently export or supply businesses that export": Selector(
-            By.ID,
-            "checkbox-multiple-i-dont-currently-export-or-supply-businesses-that-export",
+            "checkbox-multiple-i-supply-companies-that-sell-overseas",
             type=ElementType.CHECKBOX,
             is_visible=False,
         ),
@@ -101,16 +101,16 @@ def should_be_here(driver: WebDriver):
 
 def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
     result = {
-        "trading name": "automated tests",
+        "registered name": "automated tests",
         "building and street first line": "automated tests",
         "building and street second line": "automated tests",
         "town or city": "automated tests",
         "county": "automated tests",
         "postcode": "automated tests",
         "industry": None,
+        "i have three years of registered accounts": True,
         "i have customers outside the uk": True,
         "i supply uk companies that sell overseas": True,
-        "i don't currently export or supply businesses that export": True,
     }
     if custom_details:
         result.update(custom_details)
