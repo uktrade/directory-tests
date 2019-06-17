@@ -16,17 +16,16 @@ TYPE = "UKEF Contact us"
 URL = urljoin(EXRED_UI_URL, "get-finance/contact/thanks/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
-BREADCRUMB_LINKS = Selector(By.CSS_SELECTOR, "div.breadcrumbs a")
 SUBMIT_BUTTON = Selector(
     By.CSS_SELECTOR, "#content form button", type=ElementType.BUTTON
 )
 SELECTORS = {
     "breadcrumbs": {
-        "itself": Selector(By.CSS_SELECTOR, "div.breadcrumbs"),
+        "itself": Selector(By.CSS_SELECTOR, "nav.breadcrumbs"),
         "current page": Selector(
-            By.CSS_SELECTOR, "div.breadcrumbs li[aria-current='page']"
+            By.CSS_SELECTOR, "nav.breadcrumbs li[aria-current='page']"
         ),
-        "links": BREADCRUMB_LINKS,
+        "links": Selector(By.CSS_SELECTOR, "nav.breadcrumbs a"),
     },
     "thank you": {
         "itself": Selector(By.ID, "success-message-container"),

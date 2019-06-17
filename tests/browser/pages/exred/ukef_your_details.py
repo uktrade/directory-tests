@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """ExRed UKEF Contact Us - Page Object."""
 import logging
+from typing import List
 from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
@@ -11,6 +12,7 @@ from pages.common_actions import (
     Actor,
     Selector,
     check_url,
+    check_for_sections,
     fill_out_input_fields,
     find_element,
     go_to_url,
@@ -24,21 +26,20 @@ TYPE = "UKEF Contact us"
 URL = urljoin(EXRED_UI_URL, "get-finance/your-details/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
-BREADCRUMB_LINKS = Selector(By.CSS_SELECTOR, "div.breadcrumbs a")
 SUBMIT_BUTTON = Selector(
     By.CSS_SELECTOR, "#content form button", type=ElementType.BUTTON
 )
 SELECTORS = {
     "breadcrumbs": {
-        "itself": Selector(By.CSS_SELECTOR, "div.breadcrumbs"),
+        "itself": Selector(By.CSS_SELECTOR, "nav.breadcrumbs"),
         "current page": Selector(
-            By.CSS_SELECTOR, "div.breadcrumbs li[aria-current='page']"
+            By.CSS_SELECTOR, "nav.breadcrumbs li[aria-current='page']"
         ),
-        "links": BREADCRUMB_LINKS,
+        "links": Selector(By.CSS_SELECTOR, "nav.breadcrumbs a"),
     },
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#content form"),
-        "heading": Selector(By.CSS_SELECTOR, "#heading-container h2"),
+        "heading": Selector(By.CSS_SELECTOR, "#heading-container h1"),
         "first name": Selector(
             By.ID, "id_your-details-firstname", type=ElementType.INPUT
         ),
@@ -65,6 +66,10 @@ def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=True)
     logging.debug("All expected elements are visible on '%s' page", NAME)
+
+
+def should_see_sections(driver: WebDriver, names: List[str]):
+    check_for_sections(driver, all_sections=SELECTORS, sought_sections=names)
 
 
 def generate_form_details(actor: Actor) -> dict:
