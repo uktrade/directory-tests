@@ -70,10 +70,7 @@ Feature: UK Export Finance page & contact-us form
   @captcha
   @dev-only
   Scenario: Any Exporter should be able to contact UKEF team by submitting the "Check your eligibility" form
-    Given "Robert" visits the "Export Readiness - What would you like to know more about? - UKEF Contact us" page
-
-    When "Robert" fills out and submits the form
-    Then "Robert" should be on the "Export Readiness - Your details - UKEF Contact us" page
+    Given "Robert" visits the "Export Readiness - Your details - UKEF Contact us" page
 
     When "Robert" fills out and submits the form
     Then "Robert" should be on the "Export Readiness - Company details - UKEF Contact us" page
