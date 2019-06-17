@@ -24,7 +24,7 @@ from pages.exred import (
     contact_us_short_domestic,
     contact_us_triage_great_services,
     domestic_eu_exit_contact_us,
-    ukef_what_would_you_like_to_know,
+    ukef_your_details,
 )
 from pages.external import office_finder
 from settings import EXRED_UI_URL
@@ -101,7 +101,7 @@ POs = {
     "find your local trade office": office_finder,
     "advice to export from the uk": contact_us_long_export_advice_comment,
     "great.gov.uk account and services support": contact_us_triage_great_services,
-    "uk export finance (ukef)": ukef_what_would_you_like_to_know,
+    "uk export finance (ukef)": ukef_your_details,
     "eu exit enquiries": domestic_eu_exit_contact_us,
     "events": contact_us_short_domestic,
     "defence and security organisation (dso)": contact_us_short_domestic,

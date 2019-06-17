@@ -305,7 +305,7 @@ Feature:  new contact us forms
 
     When "Robert" chooses "UK Export Finance (UKEF)" option
 
-    Then "Robert" should be on the "Export Readiness - What would you like to know more about? - UKEF Contact us" page
+    Then "Robert" should be on the "Export Readiness - Your details - UKEF Contact us" page
 
 
   # already partially covered by stories for TT-585
@@ -314,7 +314,7 @@ Feature:  new contact us forms
   @captcha
   @ukef
   Scenario: Exporters should be able to contact UKEF mailbox
-    Given "Robert" got to the "Export Readiness - What would you like to know more about? - UKEF Contact us" page via "The UK -> UK Export Finance (UKEF)"
+    Given "Robert" got to the "Export Readiness - Your details - UKEF Contact us" page via "The UK -> UK Export Finance (UKEF)"
 
     When "Robert" fills out and submits the form
 

@@ -58,7 +58,7 @@ Feature: UK Export Finance page & contact-us form
 
     When "Robert" decides to "Tell us about your business"
 
-    Then "Robert" should be on the "Export Readiness - What would you like to know more about? - UKEF Contact us" page
+    Then "Robert" should be on the "Export Readiness - Your details - UKEF Contact us" page
     And "Robert" should see following sections
       | Sections        |
       | Breadcrumbs     |
@@ -86,13 +86,7 @@ Feature: UK Export Finance page & contact-us form
   @captcha
   @dev-only
   Scenario: Any Exporter should not be able to submit "Check you eligibility" form without filling out all required fields
-    Given "Robert" visits the "Export Readiness - What would you like to know more about? - UKEF Contact us" page
-    When "Robert" submits the form
-    Then "Robert" should be on the "Export Readiness - What would you like to know more about? - UKEF Contact us" page
-    And "Robert" should see error message saying that mandatory fields are required
-
-    When "Robert" fills out and submits the form
-    Then "Robert" should be on the "Export Readiness - Your details - UKEF Contact us" page
+    Given "Robert" visits the "Export Readiness - Your details - UKEF Contact us" page
     When "Robert" submits the form
     Then "Robert" should be on the "Export Readiness - Your details - UKEF Contact us" page
     And "Robert" should see error message saying that mandatory fields are required
