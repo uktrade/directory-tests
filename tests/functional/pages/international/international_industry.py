@@ -18,7 +18,7 @@ NAMES = [
 ]
 TYPE = "industry"
 URL = URLs.INTERNATIONAL_INDUSTRIES.absolute
-URLs = {
+SUB_URLs = {
     "engineering and manufacturing": urljoin(URL, "engineering-and-manufacturing/"),
     "healthcare and life sciences": urljoin(URL, "healthcare-and-life-sciences/"),
     "technology": urljoin(URL, "technology/"),
@@ -30,7 +30,7 @@ EXPECTED_STRINGS = [
 
 
 def go_to(session: Session, *, page_name: str = None) -> Response:
-    url = URLs[page_name.lower()] if page_name else URL
+    url = SUB_URLs[page_name.lower()] if page_name else URL
     return make_request(Method.GET, url, session=session)
 
 

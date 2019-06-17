@@ -207,9 +207,9 @@ def go_to_page(context: Context, supplier_alias: str, page_name: str):
     page = get_page_object(page_name)
     has_action(page, "go_to")
 
-    if hasattr(page, "URLs"):
+    if hasattr(page, "SUB_URLs"):
         page_name = page_name.split(" - ")[1]
-        specific_url = page.URLs[page_name.lower()]
+        specific_url = page.SUB_URLs[page_name.lower()]
         logging.debug(
             f"{supplier_alias} will visit '{page_name}' using page specific URL"
             f": {specific_url} not the general one: {page.URL}"
@@ -1427,9 +1427,9 @@ def generic_view_pages_in_selected_language(
     for page_name in pages:
         language_code = get_language_code(language)
         page = get_page_object(page_name)
-        if hasattr(page, "URLs"):
+        if hasattr(page, "SUB_URLs"):
             name = page_name.split(" - ")[1]
-            page_url = page.URLs[name.lower()]
+            page_url = page.SUB_URLs[name.lower()]
         else:
             page_url = get_page_object(page_name).URL
         page_url += f"?{language_argument}={language_code}"
