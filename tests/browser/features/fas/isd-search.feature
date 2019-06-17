@@ -2,7 +2,7 @@
 Feature: ISD - Search
 
   Background:
-    Given basic authentication is done for "Find a Supplier - Home" page
+    Given basic authentication is done for "Export Readiness - Home" page
 
   @search
   Scenario: User comes through the content page - it means that the directory is pre-filtered for the matching content page (industry)
