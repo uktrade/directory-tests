@@ -16,7 +16,7 @@ Feature: Trade - Search
     And "Robert" should see following sections
       | Sections        |
       | Header          |
-      | Footer          |
       | Search form     |
       | Filters         |
       | Results         |
+      | Footer          |

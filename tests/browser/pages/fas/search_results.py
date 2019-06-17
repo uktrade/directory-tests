@@ -35,9 +35,10 @@ PROFILE_LINKS = Selector(
     By.CSS_SELECTOR, "#companies-column li > a"
 )
 UPDATE_RESULTS = Selector(By.CSS_SELECTOR, "#filter-column button[type=submit]")
+FILTER_TOGGLE = Selector(By.ID, "toggle_id_sectors")
 SELECTORS = {
     "search form": {
-        "itself": Selector(By.ID, "#content form"),
+        "itself": Selector(By.CSS_SELECTOR, "#content form"),
         "search box label": Selector(By.CSS_SELECTOR, "label[for=id_q]"),
         "search box": Selector(By.ID, "id_q"),
         "update results button": UPDATE_RESULTS,
@@ -58,6 +59,7 @@ SELECTORS.update(HEADER_FOOTER_SELECTORS)
 
 
 def should_be_here(driver: WebDriver):
+    show_filters(driver)
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=False)
     logging.debug("All expected elements are visible on '%s' page", NAME)
@@ -67,12 +69,18 @@ def should_see_sections(driver: WebDriver, names: List[str]):
     check_for_sections(driver, all_sections=SELECTORS, sought_sections=names)
 
 
+def show_filters(driver: WebDriver):
+    filter_toggle = find_element(driver, FILTER_TOGGLE, wait_for_it=False)
+    filter_toggle.click()
+
+
 def should_see_filtered_results(driver: WebDriver, expected_filters: List[str]):
     def to_filter_format(name):
         return name.upper().replace(" ", "_").replace("-", "_")
 
     formatted_expected_filters = list(map(to_filter_format, expected_filters))
 
+    show_filters(driver)
     sector_filters = find_elements(driver, SECTOR_FILTERS)
     checked_sector_filters = [
         sector_filter.get_attribute("value")
