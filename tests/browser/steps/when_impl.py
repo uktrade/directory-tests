@@ -31,6 +31,7 @@ from pages.common_actions import (
     barred_actor,
     get_actor,
     get_last_visited_page,
+    selenium_action,
     unauthenticated_actor,
     update_actor,
     wait_for_page_load_after_action,
@@ -72,6 +73,8 @@ def generic_set_basic_auth_creds(context: Context, page_name: str):
         with_creds += "/automated-test-auth"
     logging.debug(f"Visiting {page.URL} in order to pass basic auth")
     driver.get(with_creds)
+    with selenium_action(driver, f"Request to {driver.current_url} was blocked"):
+        assert "Access Denied" not in driver.page_source
 
 
 # BrowserStack times out after 60s of inactivity
