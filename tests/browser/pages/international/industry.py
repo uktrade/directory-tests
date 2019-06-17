@@ -11,6 +11,8 @@ from pages.common_actions import (
     assertion_msg,
     check_for_sections,
     check_url,
+    find_elements,
+    find_selector_by_name,
     take_screenshot,
     visit_url,
 )
@@ -101,3 +103,16 @@ def should_see_content_for(driver: WebDriver, industry_name: str):
             driver.current_url,
     ):
         assert industry_name.lower() in source.lower()
+
+
+def click_breadcrumb(driver: WebDriver, name: str):
+    selector = find_selector_by_name(SELECTORS, "links")
+    breadcrumbs = find_elements(driver, selector)
+    url = driver.current_url
+    link = None
+    for breadcrumb in breadcrumbs:
+        if breadcrumb.text.lower() == name.lower():
+            link = breadcrumb
+    assert link, "Couldn't find '{}' breadcrumb on {}".format(name, url)
+    link.click()
+    take_screenshot(driver, " after clicking on " + name + " breadcrumb")
