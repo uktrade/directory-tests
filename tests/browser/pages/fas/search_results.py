@@ -30,7 +30,9 @@ TYPE = "search"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "search/")
 PAGE_TITLE = "Search the database of UK suppliers' trade profiles - trade.great.gov.uk"
 
-SECTOR_FILTERS = Selector(By.ID, "checkbox-industry-expertise")
+SECTOR_FILTERS = Selector(
+    By.CSS_SELECTOR, "#checkbox-industry-expertise li input[type=checkbox]"
+)
 PROFILE_LINKS = Selector(
     By.CSS_SELECTOR, "#companies-column li > a"
 )
@@ -71,7 +73,9 @@ def should_see_sections(driver: WebDriver, names: List[str]):
 
 def show_filters(driver: WebDriver):
     filter_toggle = find_element(driver, FILTER_TOGGLE, wait_for_it=False)
-    filter_toggle.click()
+    css_classes = filter_toggle.get_attribute("class")
+    if "checked" in css_classes:
+        filter_toggle.click()
 
 
 def should_see_filtered_results(driver: WebDriver, expected_filters: List[str]):
