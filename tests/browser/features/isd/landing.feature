@@ -5,7 +5,7 @@ Feature: ISD - Landing
     Given basic authentication is done for "Export Readiness - Home" page
 
   Scenario: Users should see all expected elements on "Investment Support Directory - Landing" page
-    When "Robert" goes to the "Find a Supplier - ISD" page
+    When "Robert" goes to the "ISD - Landing" page
 
     Then "Robert" should see following sections
       | Sections          |

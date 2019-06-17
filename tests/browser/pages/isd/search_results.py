@@ -16,8 +16,8 @@ from pages.common_actions import (
 )
 from settings import EXRED_UI_URL
 
-NAME = "ISD"
-SERVICE = "Find a Supplier"
+NAME = "Search results"
+SERVICE = "ISD"
 TYPE = "search results"
 URL = urljoin(EXRED_UI_URL, "investment-support-directory/search/?")
 PAGE_TITLE = "Find a UK specialist"
