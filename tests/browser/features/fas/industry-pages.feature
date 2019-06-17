@@ -5,7 +5,7 @@
 Feature: Find a Supplier - Industry pages
 
   Background:
-    Given basic authentication is done for "Find a Supplier - Home" page
+    Given basic authentication is done for "Export Readiness - Home" page
 
   @ED-4260
   Scenario Outline: Buyers should be able to see all expected page elements on "<specific>" page
@@ -56,7 +56,7 @@ Feature: Find a Supplier - Industry pages
       | Professional & financial services  |
       | Space                              |
 
-  @wip
+    @wip
     Examples: Industries which redirect to the new International site
       | specific          |
       | Aerospace         |
@@ -79,49 +79,61 @@ Feature: Find a Supplier - Industry pages
       | Agritech          | Home       |
       | Food and drink    | Home       |
       | Sports economy    | Industries |
-      | Technology        | Industries |
 
     @full
     Examples: Promoted Industries
-      | specific          | selected   |
-      | Creative services | Home       |
-      | Cyber security    | Home       |
-      | Sports economy    | Home       |
-      | Healthcare        | Home       |
-      | Life sciences     | Home       |
-      | Technology        | Home       |
-      | Agritech          | Industries |
-      | Creative services | Industries |
-      | Cyber security    | Industries |
-      | Healthcare        | Industries |
-      | Life sciences     | Industries |
-      | Food and drink    | Industries |
-
-    @wip
-    Examples: Industries not present on Dev
       | specific                           | selected   |
-      | Automotive                         | Home       |
       | Business & Government Partnerships | Home       |
+      | Creative services                  | Home       |
+      | Cyber security                     | Home       |
       | Education                          | Home       |
       | Energy                             | Home       |
       | Engineering                        | Home       |
+      | Healthcare                         | Home       |
       | Infrastructure                     | Home       |
       | Innovation                         | Home       |
-      | Legal services                     | Home       |
+      | Life sciences                      | Home       |
       | Marine                             | Home       |
       | Professional & financial services  | Home       |
-      | Space                              | Home       |
-      | Automotive                         | Industries |
+      | Sports economy                     | Home       |
+      | Agritech                           | Industries |
       | Business & Government Partnerships | Industries |
+      | Creative services                  | Industries |
+      | Cyber security                     | Industries |
       | Education                          | Industries |
       | Energy                             | Industries |
       | Engineering                        | Industries |
+      | Food and drink                     | Industries |
+      | Healthcare                         | Industries |
       | Infrastructure                     | Industries |
       | Innovation                         | Industries |
-      | Legal services                     | Industries |
+      | Life sciences                      | Industries |
       | Marine                             | Industries |
       | Professional & financial services  | Industries |
-      | Space                              | Industries |
+
+
+  @bug
+  @TT-433
+  @fixed
+  @ED-4261
+  @breadcrumbs
+  Scenario Outline: "<specific>" FAS Industry page should be served via International site
+    Given "Robert" visits the "Find a Supplier - <specific> - industry" page
+
+    When "Robert" decides to use "<selected>" breadcrumb on the "International - <specific> - industry" page
+
+    Then "Robert" should be on the "International - <expected>" page
+
+    Examples: Industry pages available via International site
+      | specific       | selected                   | expected   |
+      | Automotive     | Great.gov.uk International | Landing    |
+      | Legal services | Great.gov.uk International | Landing    |
+      | Space          | Great.gov.uk International | Landing    |
+      | Technology     | Great.gov.uk International | Landing    |
+      | Automotive     | Industries                 | Industries |
+      | Legal services | Industries                 | Industries |
+      | Space          | Industries                 | Industries |
+      | Technology     | Industries                 | Industries |
 
 
   @ED-4262
@@ -210,15 +222,9 @@ Feature: Find a Supplier - Industry pages
       | specific          | following  | pre-selected                           |
       | Cyber security    | WiFi       | Security                               |
       | Food and drink    | beer       | Food and drink                         |
+      | Life sciences     | biotech    | Healthcare And Medical, Life sciences  |
       | Sports economy    | arenas     | Global sports infrastructure           |
-      | Technology        | holograms  | Electronics and IT hardware, Software and computer services |
-
-    @wip
-    Examples: Industries with no companies in them on DEV or STAGE
-      | specific          | following  | pre-selected   |
-      | Legal services    | lawyer     | Legal services |
-      | Life sciences     | biotech    | Life sciences  |
-      | Consumer & retail | salon      | Retail and luxury                      |
+      | Consumer & retail | salon      | Clothing Footwear And Fashion, Giftware Jewellery And Tableware, Household Goods Furniture And Furnishings, Retail and luxury, Textiles Interior Textiles And Carpets |
 
     @wip
     Examples: Industries not present on Dev
@@ -237,8 +243,10 @@ Feature: Find a Supplier - Industry pages
 
     @wip
     Examples: Industries which redirect to the new International site
-      | specific          | following  | pre-selected                           |
-      | Aerospace         | satellites | Aerospace                              |
+      | specific       | following  | pre-selected                                                |
+      | Aerospace      | satellites | Aerospace                                                   |
+      | Legal services | lawyer     | Legal services                                              |
+      | Technology     | holograms  | Electronics and IT hardware, Software and computer services |
 
 
   @ED-4264
