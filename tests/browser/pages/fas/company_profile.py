@@ -20,38 +20,28 @@ TYPE = "profile"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "suppliers/")
 
 SELECTORS = {
-    "name": {"itself": Selector(By.CSS_SELECTOR, "#content h1.company-name-title")},
+    "name": {"itself": Selector(By.ID, "company-name")},
     "company details": {
-        "itself": Selector(By.ID, "company-details"),
-        "logo": Selector(By.ID, "company-logo"),
-        "contact": Selector(By.CSS_SELECTOR, "div.company-profile-module-details"),
-        "facts & details": Selector(
-            By.CSS_SELECTOR, "div.company-profile-module-facts"
+        "itself": Selector(By.ID, "main-content"),
+        "logo": Selector(By.ID, "cover-image-container"),
+        "contact company": Selector(
+            By.CSS_SELECTOR, "#contact-company-container a"
         ),
-        "email company": Selector(
-            By.CSS_SELECTOR, "#company-details a.ga-tracking-contact-supplier"
-        ),
+        "about company": Selector(By.ID, "about-company-container"),
+    },
+    "online-profiles": {
+        "itself": Selector(By.ID, "online-profiles"),
     },
     "description": {
-        "itself": Selector(By.CSS_SELECTOR, "div.company-profile-module-description"),
-        "read full profile": Selector(
-            By.CSS_SELECTOR, "div.company-profile-module-description a"
+        "itself": Selector(By.ID, "company-description-container"),
+        "read more": Selector(
+            By.CSS_SELECTOR, "#company-description-container a"
         ),
     },
-    "core industry": {
-        "itself": Selector(By.CSS_SELECTOR, "div.company-profile-industries")
-    },
-    "keywords": {"itself": Selector(By.CSS_SELECTOR, "div.company-profile-keywords")},
     "report profile": {
         "itself": Selector(By.CSS_SELECTOR, "div.ed-report-profile-container"),
         "report profile": Selector(
             By.CSS_SELECTOR, "div.ed-report-profile-container a[href^=mailto]"
-        ),
-    },
-    "contact company": {
-        "itself": Selector(By.CSS_SELECTOR, "div.ed-contact-company-container"),
-        "contact company": Selector(
-            By.CSS_SELECTOR, "div.ed-contact-company-container a"
         ),
     },
 }

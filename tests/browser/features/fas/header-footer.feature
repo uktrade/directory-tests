@@ -34,18 +34,6 @@ Feature: Find a Supplier - Common header & Footer
       | Footer   |
 
 
-  Scenario: Buyers should be able to subscribe to newsletter and see correct header & footer on "Find a Supplier - Thank you for registering" page
-    Given "Robert" searched for companies using "food" keyword in "any" sector
-
-    When "Robert" fills out and submits the newsletter form
-
-    Then "Robert" should be on the "Find a Supplier - Thank you for registering" page
-    And "Robert" should see following sections
-      | Sections |
-      | Header   |
-      | Footer   |
-
-
   @captcha
   @dev-only
   Scenario: Buyers should be able to send a query to supplier and see correct header & footer on "Find a Supplier - Thank you for contacting supplier" page
@@ -54,10 +42,10 @@ Feature: Find a Supplier - Common header & Footer
     When "Robert" decides to view "random" company profile
     Then "Robert" should be on the "Find a Supplier - Company profile" page
 
-    When "Robert" decides to "Email company"
+    When "Robert" decides to "Contact company"
     Then "Robert" should be on the "Find a Supplier - Contact supplier" page
 
-    When "Robert" fills out and submits the newsletter form
+    When "Robert" fills out and submits the form
     Then "Robert" should be on the "Find a Supplier - Thank you for contacting supplier" page
     And "Robert" should see following sections
       | Sections |

@@ -32,7 +32,7 @@ URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "suppliers/{company_number}/contact/")
 PAGE_TITLE = "Find a Buyer - GREAT.gov.uk"
 
 SEND_BUTTON = Selector(
-    By.CSS_SELECTOR, "form input[type=submit]", type=ElementType.BUTTON
+    By.CSS_SELECTOR, "#content form button.button", type=ElementType.BUTTON
 )
 SELECTORS = {
     "form": {

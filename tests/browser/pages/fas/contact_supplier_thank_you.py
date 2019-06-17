@@ -24,11 +24,11 @@ PAGE_TITLE = "Find a Buyer - GREAT.gov.uk"
 
 SELECTORS = {
     "content": {
-        "itself": Selector(By.ID, "content"),
-        "heading": Selector(By.CSS_SELECTOR, "#content h1"),
-        "description": Selector(By.CSS_SELECTOR, "#content p"),
+        "itself": Selector(By.ID, "success-message-container"),
+        "heading": Selector(By.CSS_SELECTOR, "#success-message-container h1"),
+        "description": Selector(By.CSS_SELECTOR, "#success-message-container p"),
         "browse more companies": Selector(
-            By.CSS_SELECTOR, "#content div.ed-international-success-container a"
+            By.CSS_SELECTOR, "#next-container a"
         ),
     }
 }

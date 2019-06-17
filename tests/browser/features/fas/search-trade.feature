@@ -20,5 +20,3 @@ Feature: Trade - Search
       | Search form     |
       | Filters         |
       | Results         |
-      | Newsletter form |
-      | Subscribe       |
