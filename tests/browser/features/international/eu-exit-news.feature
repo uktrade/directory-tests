@@ -102,8 +102,8 @@ Feature: Updates for non-UK companies on EU Exit
     Then "Henry" should be on the "<expected page>" page
 
     Examples: breadcrumbs
-      | breadcrumb                              | expected page                                              |
-      | Great.gov.uk                            | International - Landing                                    |
+      | breadcrumb                              | expected page                                      |
+      | Great.gov.uk                            | International - Landing                            |
       | Updates for non-UK companies on EU exit | Domestic - Updates for non UK companies on EU Exit |
 
 

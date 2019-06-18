@@ -17,8 +17,8 @@ Feature: Header-Footer
 
     Examples:
       | selected                       |
-      | Domestic - Get finance |
-      | Domestic - Home        |
+      | Domestic - Get finance         |
+      | Domestic - Home                |
       | Find a Buyer - Home            |
       | Selling Online Overseas - Home |
       | Single Sign-On - Profile about |
@@ -80,20 +80,20 @@ Feature: Header-Footer
     Then "Robert" should be on the "Domestic - Home" page or on the International page
 
     Examples:
-      | selected                                        |
-      | Domestic - Home                         |
-      | Domestic - Get finance                  |
-      | Single Sign-On - Registration                   |
-      | Single Sign-On - Sign in                        |
-      | Find a Buyer - Home                             |
-      | Selling Online Overseas - Home                  |
-      | Profile - About                                 |
+      | selected                       |
+      | Domestic - Home                |
+      | Domestic - Get finance         |
+      | Single Sign-On - Registration  |
+      | Single Sign-On - Sign in       |
+      | Find a Buyer - Home            |
+      | Selling Online Overseas - Home |
+      | Profile - About                |
 
 
     @stage-only
     Examples:
-      | selected                                        |
-      | Export Opportunities - Home                     |
+      | selected                    |
+      | Export Opportunities - Home |
 
 
   @ED-3091
@@ -106,7 +106,7 @@ Feature: Header-Footer
 
     Examples: Domestic pages
       | specific                       |
-      | Domestic - Home        |
+      | Domestic - Home                |
       | Find a Buyer - Home            |
       | Find a Supplier - Home         |
       | Single Sign-On - Registration  |

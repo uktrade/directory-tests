@@ -29,10 +29,10 @@ Feature: UK Setup Guide
     And "Robert" should see content specific to "Invest - <selected> - guide" page
 
     Examples: UK Setup Guides
-      | selected                                                |
-      | Apply for a UK visa                                     |
-      | Establish a base for business in the UK                 |
-      | Hire skilled workers for your UK operations             |
+      | selected                                    |
+      | Apply for a UK visa                         |
+      | Establish a base for business in the UK     |
+      | Hire skilled workers for your UK operations |
 
     @full
     Examples: UK Setup Guides

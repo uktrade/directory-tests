@@ -40,6 +40,6 @@ Feature: Accessing Services
       | Create a business profile | Find a Buyer - Home            |
       | Find online marketplaces  | Selling online overseas - Home |
       | Find export opportunities | Export Opportunities - Home    |
-      | UK Export Finance         | Domestic - Get Finance |
+      | UK Export Finance         | Domestic - Get Finance         |
       | Find events and visits    | Events - Home                  |
       | Get an EORI number        | EORI - Home                    |
