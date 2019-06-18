@@ -1,5 +1,5 @@
 @contact-us
-Feature:  new contact us forms
+Feature: New contact us forms
 
   Background:
     Given basic authentication is done for "Export Readiness - Home" page
