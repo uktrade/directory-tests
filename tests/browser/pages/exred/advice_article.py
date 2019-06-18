@@ -53,9 +53,11 @@ SELECTORS = {
         "itself": Selector(By.CSS_SELECTOR, "nav.breadcrumbs"),
         "links": Selector(By.CSS_SELECTOR, "nav.breadcrumbs a"),
         "great.gov.uk": Selector(By.CSS_SELECTOR, ".breadcrumbs a[href='/']"),
-        "advice": Selector(By.CSS_SELECTOR, ".breadcrumbs a[href='/advice/']"),
+        "advice": Selector(
+            By.CSS_SELECTOR, "nav.breadcrumbs > ol > li:nth-child(2) > a"
+        ),
         "article list": Selector(
-            By.CSS_SELECTOR, ".breadcrumbs > ol > li:nth-child(3) > a"
+            By.CSS_SELECTOR, "nav.breadcrumbs > ol > li:nth-child(3) > a"
         ),
     },
     "article": {"article name": ARTICLE_NAME, "article text": ARTICLE_TEXT},
