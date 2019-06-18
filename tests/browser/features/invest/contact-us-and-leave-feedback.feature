@@ -3,7 +3,7 @@ Feature: Contact us and Leave feedback
 
   Background:
     Given basic authentication is done for "Invest - Home" page
-    And basic authentication is done for "Export Readiness - Home" page
+    And basic authentication is done for "Domestic - Home" page
 
   @skip
   @beta-bar-is-disabled
@@ -17,7 +17,7 @@ Feature: Contact us and Leave feedback
 
     When "Robert" decides to use "Feedback" link on "Invest - <selected>" page
 
-    Then "Robert" should be on the "Export Readiness - Feedback" page
+    Then "Robert" should be on the "Domestic - Feedback" page
 
     Examples: Various pages
       | selected       |

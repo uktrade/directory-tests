@@ -145,7 +145,7 @@ Feature: New Enrolment flow
 
     When "Natalia" decides to use "I cannot find my business name" link
 
-    Then "Natalia" should be on the "Export Readiness - I cannot find my business name - Dedicated Support Content" page
+    Then "Natalia" should be on the "Domestic - I cannot find my business name - Dedicated Support Content" page
 
 
   @TT-1126

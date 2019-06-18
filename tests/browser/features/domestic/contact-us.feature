@@ -2,14 +2,14 @@
 Feature: New contact us forms
 
   Background:
-    Given basic authentication is done for "Export Readiness - Home" page
+    Given basic authentication is done for "Domestic - Home" page
 
   @TT-758
   @enquirer-location
-  Scenario: Enquirers should see all expected contact location options on the "Export Readiness - Contact us"
-    Given "Robert" visits the "Export Readiness - Contact us" page
+  Scenario: Enquirers should see all expected contact location options on the "Domestic - Contact us"
+    Given "Robert" visits the "Domestic - Contact us" page
 
-    Then "Robert" should be on the "Export Readiness - Contact us" page
+    Then "Robert" should be on the "Domestic - Contact us" page
     And "Robert" should see following form choices
       | radio elements |
       | The UK         |
@@ -20,11 +20,11 @@ Feature: New contact us forms
   @enquirer-location
   @domestic-enquiry-page
   Scenario: Domestic Enquirers should see all expected contact options on the "Domestic - What can we help you with?" page
-    Given "Robert" visits the "Export Readiness - Contact us" page
+    Given "Robert" visits the "Domestic - Contact us" page
 
     When "Robert" says that his business is in "The UK"
 
-    Then "Robert" should be on the "Export Readiness - What can we help you with? - Domestic Contact us" page
+    Then "Robert" should be on the "Domestic - What can we help you with? - Domestic Contact us" page
     And "Robert" should see following form choices
       | radio elements                            |
       | Find your local trade office              |
@@ -40,22 +40,22 @@ Feature: New contact us forms
   @TT-363
   @office-finder
   Scenario: Domestic Enquirers should be able to get to the "New Office finder - Home" page
-    Given "Robert" visits the "Export Readiness - Contact us" page
+    Given "Robert" visits the "Domestic - Contact us" page
 
     When "Robert" says that his business is in "the UK"
     And "Robert" chooses "Find your local trade office" option
 
-    Then "Robert" should be on the "Export Readiness - New Office Finder" page
+    Then "Robert" should be on the "Domestic - New Office Finder" page
 
 
   @TT-363
   @office-finder
   Scenario Outline: Domestic Enquirers should be able to get to find contact details for "<appropriate>" office in "<city>"
-    Given "Robert" visits the "Export Readiness - New Office Finder" page
+    Given "Robert" visits the "Domestic - New Office Finder" page
 
     When "Robert" searches for local trade office near "<post-code>"
 
-    Then "Robert" should be on the "Export Readiness - New Office Finder - search results" page
+    Then "Robert" should be on the "Domestic - New Office Finder - search results" page
     And "Robert" should see contact details for "<appropriate>" office in "<city>"
 
     Examples: postcodes and trade offices
@@ -82,12 +82,12 @@ Feature: New contact us forms
   @TT-363
   @office-finder
   Scenario: Domestic Enquirers should be able to get to the NEW Office finder page
-    Given "Robert" visits the "Export Readiness - New Office Finder" page
+    Given "Robert" visits the "Domestic - New Office Finder" page
 
     When "Robert" found his local trade office by providing his company's postcode
     And "Robert" decides to "Contact the local trade office"
 
-    Then "Robert" should be on the "Export Readiness - Short contact form (Office Finder)" page
+    Then "Robert" should be on the "Domestic - Short contact form (Office Finder)" page
 
 
   @wip
@@ -107,12 +107,12 @@ Feature: New contact us forms
   @TT-758
   @exporting-from-the-UK
   Scenario: Domestic Enquirers should be able to get to the "Long (Export Advice Comment) - Contact us" form
-    Given "Robert" visits the "Export Readiness - Contact us" page
+    Given "Robert" visits the "Domestic - Contact us" page
 
     When "Robert" says that his business is in "the UK"
     And "Robert" chooses "Advice to export from the UK" option
 
-    Then "Robert" should be on the "Export Readiness - Long (Export Advice Comment) - Contact us" page
+    Then "Robert" should be on the "Domestic - Long (Export Advice Comment) - Contact us" page
 
 
   @TT-758
@@ -121,15 +121,15 @@ Feature: New contact us forms
   @dev-only
   @exporting-from-the-UK
   Scenario: Domestic Enquirers should be able to contact relevant ITA based on the postcode provided
-    Given "Robert" got to the "Export Readiness - Long (Export Advice Comment)" page via "The UK -> Advice to export from the UK"
+    Given "Robert" got to the "Domestic - Long (Export Advice Comment)" page via "The UK -> Advice to export from the UK"
 
     When "Robert" fills out and submits the form
-    Then "Robert" should be on the "Export Readiness - Long (Personal details) - Contact us" page
+    Then "Robert" should be on the "Domestic - Long (Personal details) - Contact us" page
     When "Robert" fills out and submits the form
-    Then "Robert" should be on the "Export Readiness - Long (Business details) - Contact us" page
+    Then "Robert" should be on the "Domestic - Long (Business details) - Contact us" page
     When "Robert" fills out and submits the form
 
-    Then "Robert" should be on the "Export Readiness - Thank you for your enquiry" page
+    Then "Robert" should be on the "Domestic - Thank you for your enquiry" page
     And "Robert" should receive "Thank you for your enquiry" confirmation email
     # TODO check if this email is being actually sent
 #    And an email is submitted to relevant "ITA" (based on the postcode provided)
@@ -138,7 +138,7 @@ Feature: New contact us forms
   @TT-758
   @account-support
   Scenario: Domestic enquirers should see all expected help options on the "Great.gov.uk account and services support" page
-    Given "Robert" got to the "Export Readiness - Great.gov.uk account and services support" page via "The UK -> Great.gov.uk account and services support"
+    Given "Robert" got to the "Domestic - Great.gov.uk account and services support" page via "The UK -> Great.gov.uk account and services support"
 
     Then "Robert" should see following form choices
       | radio elements               |
@@ -151,7 +151,7 @@ Feature: New contact us forms
   @exopps
   @account-support
   Scenario: Domestic enquirers should see all expected help options for "Export opportunities service"
-    Given "Robert" got to the "Export Readiness - Export opportunities service" page via "The UK -> Great.gov.uk account and services support -> Export opportunities service"
+    Given "Robert" got to the "Domestic - Export opportunities service" page via "The UK -> Great.gov.uk account and services support -> Export opportunities service"
 
     Then "Robert" should see following form choices
       | radio elements                                              |
@@ -164,7 +164,7 @@ Feature: New contact us forms
   @greatgovuk-account
   @account-support
   Scenario: Domestic enquirers should see all expected help options for "Great.gov.uk account"
-    Given "Robert" got to the "Export Readiness - Great.gov.uk account" page via "The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk"
+    Given "Robert" got to the "Domestic - Great.gov.uk account" page via "The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk"
 
     Then "Robert" should see following form choices
       | radio elements                                                 |
@@ -181,11 +181,11 @@ Feature: New contact us forms
   @short-domestic
   @account-support
   Scenario: Domestic enquirers should be able to get to the "Short Contact Us" form via "The UK -> Great.gov.uk account and services support -> Other"
-    Given "Robert" got to the "Export Readiness - Great.gov.uk account and services support" page via "The UK -> Great.gov.uk account and services support"
+    Given "Robert" got to the "Domestic - Great.gov.uk account and services support" page via "The UK -> Great.gov.uk account and services support"
 
     When "Robert" chooses "Other" option
 
-    Then "Robert" should be on the "Export Readiness - Short contact form (Tell us how we can help)" page
+    Then "Robert" should be on the "Domestic - Short contact form (Tell us how we can help)" page
 
 
   @TT-758
@@ -193,33 +193,33 @@ Feature: New contact us forms
   @greatgovuk-account
   @support
   Scenario: Domestic enquirers should be able to get to the "Short Contact Us" form via "The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk -> Other"
-    Given "Robert" got to the "Export Readiness - Great.gov.uk account" page via "The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk"
+    Given "Robert" got to the "Domestic - Great.gov.uk account" page via "The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk"
 
     When "Robert" chooses "Other" option
 
-    Then "Robert" should be on the "Export Readiness - Short contact form (Tell us how we can help)" page
+    Then "Robert" should be on the "Domestic - Short contact form (Tell us how we can help)" page
 
 
   @TT-758
   @greatgovuk-account
   @support
   Scenario: Domestic enquirers should be able to find answers to sought topic about "Your account on Great.gov.uk"
-    Given "Robert" got to the "Export Readiness - Great.gov.uk account" page via "The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk"
+    Given "Robert" got to the "Domestic - Great.gov.uk account" page via "The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk"
 
     When "Robert" chooses any available option except "Other"
 
-    Then "Robert" should be on the "Export Readiness - Great.gov.uk account - Dedicated Support Content" page
+    Then "Robert" should be on the "Domestic - Great.gov.uk account - Dedicated Support Content" page
 
 
   @TT-758
   @exopps
   @support
   Scenario Outline: Exporters should be able to find answers to Export Opportunities related topic "<selected>"
-    Given "Robert" got to the "Export Readiness - Export opportunities service" page via "The UK -> Great.gov.uk account and services support -> Export opportunities service"
+    Given "Robert" got to the "Domestic - Export opportunities service" page via "The UK -> Great.gov.uk account and services support -> Export opportunities service"
 
     When "Robert" chooses "<selected>" option
 
-    Then "Robert" should be on the "Export Readiness - <selected> - Dedicated Support Content" page
+    Then "Robert" should be on the "Domestic - <selected> - Dedicated Support Content" page
 
     Examples:
       | selected                                                    |
@@ -233,13 +233,13 @@ Feature: New contact us forms
   @captcha
   @account-support
   Scenario Outline: Domestic Enquirers should be able to contact Great Support team via "The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk -> <selected topic>"
-    Given "Robert" got to the "Export Readiness - <selected topic> - Dedicated Support Content" page via "The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk -> <selected topic>"
+    Given "Robert" got to the "Domestic - <selected topic> - Dedicated Support Content" page via "The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk -> <selected topic>"
 
     When "Robert" decides to "Submit an enquiry"
-    And "Robert" is on the "Export Readiness - Short contact form (Tell us how we can help)" page
+    And "Robert" is on the "Domestic - Short contact form (Tell us how we can help)" page
     And "Robert" fills out and submits the form
 
-    Then "Robert" should be on the "Export Readiness - Thank you for your enquiry (<selected topic>)" page
+    Then "Robert" should be on the "Domestic - Thank you for your enquiry (<selected topic>)" page
     And "Robert" should receive a "great.gov.uk contact form" confirmation email from Zendesk
 
     Examples:
@@ -263,13 +263,13 @@ Feature: New contact us forms
   @captcha
   @exopps
   Scenario Outline: Exporters should be to contact Export Opportunities team via Zendesk using "Short contact form" page accessed via "The UK -> Great.gov.uk account and services support -> Export opportunities service -> <selected topic>"
-    Given "Robert" got to the "Export Readiness - <selected topic> - Dedicated Support Content" page via "The UK -> Great.gov.uk account and services support -> Export opportunities service -> <selected topic>"
+    Given "Robert" got to the "Domestic - <selected topic> - Dedicated Support Content" page via "The UK -> Great.gov.uk account and services support -> Export opportunities service -> <selected topic>"
 
     When "Robert" decides to "Submit an enquiry"
-    And "Robert" is on the "Export Readiness - Short contact form (Tell us how we can help)" page
+    And "Robert" is on the "Domestic - Short contact form (Tell us how we can help)" page
     And "Robert" fills out and submits the form
 
-    Then "Robert" should be on the "Export Readiness - Thank you for your enquiry (<selected topic>) - Short Domestic Contact us" page
+    Then "Robert" should be on the "Domestic - Thank you for your enquiry (<selected topic>) - Short Domestic Contact us" page
     And "Robert" should receive a "great.gov.uk contact form" confirmation email from Zendesk
 
     Examples:
@@ -286,11 +286,11 @@ Feature: New contact us forms
   @captcha
   @account-support
   Scenario Outline: Domestic Enquirers should be able to contact Great Support team via "The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk -> <selected topic>"
-    Given "Robert" got to the "Export Readiness - Short contact form (Tell us how we can help)" page via "The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk -> <selected topic>"
+    Given "Robert" got to the "Domestic - Short contact form (Tell us how we can help)" page via "The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk -> <selected topic>"
 
     When "Robert" fills out and submits the form
 
-    Then "Robert" should be on the "Export Readiness - Thank you for your enquiry (<selected topic>) - Short Domestic Contact us" page
+    Then "Robert" should be on the "Domestic - Thank you for your enquiry (<selected topic>) - Short Domestic Contact us" page
     And "Robert" should receive a "great.gov.uk contact form" confirmation email from Zendesk
 
     Examples:
@@ -301,11 +301,11 @@ Feature: New contact us forms
   @TT-758
   @ukef
   Scenario: Exporters should be able to get to the UKEF Check your eligibility contact-us form
-    Given "Robert" got to the "Export Readiness - What can we help you with? - Domestic Contact us" page via "The UK"
+    Given "Robert" got to the "Domestic - What can we help you with? - Domestic Contact us" page via "The UK"
 
     When "Robert" chooses "UK Export Finance (UKEF)" option
 
-    Then "Robert" should be on the "Export Readiness - Your details - UKEF Contact us" page
+    Then "Robert" should be on the "Domestic - Your details - UKEF Contact us" page
 
 
   # already partially covered by stories for TT-585
@@ -314,11 +314,11 @@ Feature: New contact us forms
   @captcha
   @ukef
   Scenario: Exporters should be able to contact UKEF mailbox
-    Given "Robert" got to the "Export Readiness - Your details - UKEF Contact us" page via "The UK -> UK Export Finance (UKEF)"
+    Given "Robert" got to the "Domestic - Your details - UKEF Contact us" page via "The UK -> UK Export Finance (UKEF)"
 
     When "Robert" fills out and submits the form
 
-    Then "Robert" should be on the "Export Readiness - Thank you - UKEF Contact us" page
+    Then "Robert" should be on the "Domestic - Thank you - UKEF Contact us" page
     # No confirmation email is sent to the user
     # TODO check if email is sent to dedicated mailbox
     And an email is submitted to "UKEF mailbox"
@@ -330,11 +330,11 @@ Feature: New contact us forms
   @dso
   @short-form
   Scenario Outline: Domestic enquirers should get to the "Short contact us form" via "The UK -> <selected option>"
-    Given "Robert" got to the "Export Readiness - What can we help you with? - Domestic Contact us" page via "The UK"
+    Given "Robert" got to the "Domestic - What can we help you with? - Domestic Contact us" page via "The UK"
 
     When "Robert" chooses "<selected option>" option
 
-    Then "Robert" should be on the "Export Readiness - Short contact form (<selected option>)" page
+    Then "Robert" should be on the "Domestic - Short contact form (<selected option>)" page
 
     Examples:
       | selected option                         |
@@ -348,11 +348,11 @@ Feature: New contact us forms
   @eu-exit
   @feature-flagged
   Scenario: Exporters should be able to get to the "Domestic EU Exit short contact-us form"
-    Given "Robert" got to the "Export Readiness - What can we help you with? - Domestic Contact us" page via "The UK"
+    Given "Robert" got to the "Domestic - What can we help you with? - Domestic Contact us" page via "The UK"
 
     When "Robert" chooses "EU Exit enquiries" option
 
-    Then "Robert" should be on the "Export Readiness - Domestic EU Exit contact form" page
+    Then "Robert" should be on the "Domestic - Domestic EU Exit contact form" page
 
 
   @TT-758
@@ -363,11 +363,11 @@ Feature: New contact us forms
   @eu-exit
   @feature-flagged
   Scenario: Exporters should be able to contact "EU Exit mailbox"
-    Given "Robert" got to the "Export Readiness - Domestic EU Exit contact form" page via "The UK -> EU Exit enquiries"
+    Given "Robert" got to the "Domestic - Domestic EU Exit contact form" page via "The UK -> EU Exit enquiries"
 
     When "Robert" fills out and submits the form
 
-    Then "Robert" should be on the "Export Readiness - Thank you for your enquiry - Domestic EU Exit Contact us" page
+    Then "Robert" should be on the "Domestic - Thank you for your enquiry - Domestic EU Exit Contact us" page
     And "Robert" should receive a "EU exit contact form" confirmation email from Zendesk
 
 
@@ -376,11 +376,11 @@ Feature: New contact us forms
   @captcha
   @short-form
   Scenario Outline: Exporters should be able to contact "<expected recipient>" using "Short contact form (<selected option>)" page accessed via "The UK -> <selected option>"
-    Given "Robert" got to the "Export Readiness - Short contact form (<selected option>)" page via "The UK -> <selected option>"
+    Given "Robert" got to the "Domestic - Short contact form (<selected option>)" page via "The UK -> <selected option>"
 
     When "Robert" fills out and submits the form
 
-    Then "Robert" should be on the "Export Readiness - Thank you for your enquiry (<selected option>) - Short Domestic Contact us" page
+    Then "Robert" should be on the "Domestic - Thank you for your enquiry (<selected option>) - Short Domestic Contact us" page
     And "Robert" should receive "<appropriate>" confirmation email
     # TODO check if email is sent to dedicated mailbox
 #    And an email is submitted to "<expected recipient>"
@@ -397,11 +397,11 @@ Feature: New contact us forms
   @captcha
   @short-form
   Scenario Outline: Exporters should be able to contact "<expected recipient>" using "Short contact form (<selected option>)" page accessed via "The UK -> <selected option>"
-    Given "Robert" got to the "Export Readiness - Short contact form (<selected option>)" page via "The UK -> <selected option>"
+    Given "Robert" got to the "Domestic - Short contact form (<selected option>)" page via "The UK -> <selected option>"
 
     When "Robert" fills out and submits the form
 
-    Then "Robert" should be on the "Export Readiness - Thank you for your enquiry (<selected option>) - Short Domestic Contact us" page
+    Then "Robert" should be on the "Domestic - Thank you for your enquiry (<selected option>) - Short Domestic Contact us" page
     And "Robert" should receive a "<appropriate>" confirmation email from Zendesk
     # TODO check if email is sent to dedicated mailbox
 #    And an email is submitted to "<expected recipient>"
@@ -414,11 +414,11 @@ Feature: New contact us forms
   @TT-758
   @international
   Scenario: International Enquirers should be able to see all expected contact options on the "International - What would you like to know more about?" page
-    Given "Robert" visits the "Export Readiness - Contact us" page
+    Given "Robert" visits the "Domestic - Contact us" page
 
     When "Robert" says that his business is "Outside the UK"
 
-    Then "Robert" should be on the "Export Readiness - What would you like to know more about? - International Contact us" page
+    Then "Robert" should be on the "Domestic - What would you like to know more about? - International Contact us" page
     And "Robert" should see following form choices
       | radio elements                    |
       | Investing in the UK               |
@@ -430,7 +430,7 @@ Feature: New contact us forms
   @TT-758
   @international
   Scenario Outline: International Enquirers should be able to get to the "<expected>" form for "<selected>"
-    Given "Robert" got to the "Export Readiness - What would you like to know more about? - International Contact us" page via "Outside the UK"
+    Given "Robert" got to the "Domestic - What would you like to know more about? - International Contact us" page via "Outside the UK"
 
     When "Robert" chooses "<selected>" option
 
@@ -455,8 +455,8 @@ Feature: New contact us forms
 
     Examples:
       | path                                                                                | expected                                                            |
-      | The UK                                                                              | Export Readiness - Contact us                                       |
-      | Outside the UK                                                                      | Export Readiness - Contact us                                       |
-      | The UK -> Great.gov.uk account and services support                                 | Export Readiness - What can we help you with? - Domestic Contact us |
-      | The UK -> Great.gov.uk account and services support -> Export opportunities service | Export Readiness - Great.gov.uk account and services support        |
-      | The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk | Export Readiness - Great.gov.uk account and services support        |
+      | The UK                                                                              | Domestic - Contact us                                       |
+      | Outside the UK                                                                      | Domestic - Contact us                                       |
+      | The UK -> Great.gov.uk account and services support                                 | Domestic - What can we help you with? - Domestic Contact us |
+      | The UK -> Great.gov.uk account and services support -> Export opportunities service | Domestic - Great.gov.uk account and services support        |
+      | The UK -> Great.gov.uk account and services support -> Your account on Great.gov.uk | Domestic - Great.gov.uk account and services support        |

@@ -54,7 +54,7 @@ Feature: Find a Supplier - home page
 
     When "Robert" decides to use "Contact us footer" link
 
-    Then "Robert" should be on the "Export Readiness - Contact us" page
+    Then "Robert" should be on the "Domestic - Contact us" page
 
 
   @ED-4247

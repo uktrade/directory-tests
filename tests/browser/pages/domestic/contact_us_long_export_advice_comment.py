@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-"""Export Readiness - First page of Long Contact us form"""
+"""Domestic - First page of Long Contact us form"""
 from types import ModuleType
 from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType
+from pages import ElementType, Services
 from pages.common_actions import (
     Actor,
     Selector,
@@ -20,7 +20,7 @@ from pages.domestic import contact_us_long_export_advice_personal
 from settings import EXRED_UI_URL
 
 NAME = "Long (Export Advice Comment)"
-SERVICE = "Export Readiness"
+SERVICE = Services.DOMESTIC
 TYPE = "Contact us"
 URL = urljoin(EXRED_UI_URL, "contact/export-advice/comment/")
 PAGE_TITLE = "Welcome to great.gov.uk"

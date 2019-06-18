@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType
+from pages import ElementType, Services
 from pages.common_actions import (
     Actor,
     Selector,
@@ -25,7 +25,7 @@ from pages.common_actions import (
 from settings import EXRED_UI_URL
 
 NAME = "Domestic EU Exit contact form"
-SERVICE = "Export Readiness"
+SERVICE = Services.DOMESTIC
 TYPE = "Contact us"
 URL = urljoin(EXRED_UI_URL, "eu-exit-news/contact/")
 PAGE_TITLE = ""

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Export Readiness - Sort Domestic Contact us form"""
+"""Domestic - Sort Domestic Contact us form"""
 import logging
 import random
 from types import ModuleType
@@ -8,7 +8,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType
+from pages import ElementType, Services
 from pages.common_actions import (
     Actor,
     Selector,
@@ -35,7 +35,7 @@ NAMES = [
     "Short contact form (Other)",
     "Short contact form (Office Finder)",
 ]
-SERVICE = "Export Readiness"
+SERVICE = Services.DOMESTIC
 TYPE = "Contact us"
 URL = urljoin(EXRED_UI_URL, "contact/domestic/")
 PAGE_TITLE = "Welcome to great.gov.uk"

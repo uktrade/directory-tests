@@ -2,7 +2,7 @@
 Feature: International Page
 
   Background:
-    Given basic authentication is done for "Export Readiness - Home" page
+    Given basic authentication is done for "Domestic - Home" page
 
   @ED-3114
   @dev-only
@@ -110,4 +110,4 @@ Feature: International Page
 
     When "Robert" decides to find out more about "For UK Businesses"
 
-    Then "Robert" should be on the "Export Readiness - Home" page
+    Then "Robert" should be on the "Domestic - Home" page

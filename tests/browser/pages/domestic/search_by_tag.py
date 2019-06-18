@@ -6,6 +6,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import Services
 from pages.common_actions import (
     Selector,
     check_for_sections,
@@ -16,7 +17,7 @@ from pages.common_actions import (
 from settings import EXRED_UI_URL
 
 NAME = "Search by tag"
-SERVICE = "Export Readiness"
+SERVICE = Services.DOMESTIC
 TYPE = "search"
 URL = urljoin(EXRED_UI_URL, "prototype/tagged/")
 PAGE_TITLE = ""

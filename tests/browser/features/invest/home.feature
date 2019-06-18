@@ -95,7 +95,7 @@ Feature: Invest home page
 
   @ISD
   Scenario: Overseas businesses should be able to learn how to find a UK specialist
-    Given basic authentication is done for "Export Readiness - Home" page
+    Given basic authentication is done for "Domestic - Home" page
     Given "Robert" visits the "Invest - home" page
 
     When "Robert" decides to "Get help to set up or expand in the UK"

@@ -2,11 +2,11 @@
 Feature: UK Export Finance page & contact-us form
 
   Background:
-    Given basic authentication is done for "Export Readiness - Home" page
+    Given basic authentication is done for "Domestic - Home" page
 
   @TT-585
   Scenario: Any Exporter should see the all expected sections on the "UKEF Trade Finance" page
-    Given "Robert" visits the "Export Readiness - Trade Finance" page
+    Given "Robert" visits the "Domestic - Trade Finance" page
 
     Then "Robert" should see following sections
       | Sections                    |
@@ -22,7 +22,7 @@ Feature: UK Export Finance page & contact-us form
   @TT-585
   @video
   Scenario: Any Exporter should be able to watch promotional video on the "UKEF Trade Finance" page
-    Given "Robert" visits the "Export Readiness - Trade Finance" page
+    Given "Robert" visits the "Domestic - Trade Finance" page
 
     When "Robert" decides to watch "6" seconds of the promotional video
 
@@ -31,20 +31,20 @@ Feature: UK Export Finance page & contact-us form
 
   @TT-585
   Scenario: Any Exporter should be able to get to "Finance Advice" page from the "UKEF Trade Finance" page
-    Given "Robert" visits the "Export Readiness - Trade Finance" page
+    Given "Robert" visits the "Domestic - Trade Finance" page
 
     When "Robert" decides to "Read more about getting money to grow your business"
 
-    Then "Robert" should be on the "Export Readiness - Advice - Article list" page
+    Then "Robert" should be on the "Domestic - Advice - Article list" page
 
 
   @TT-585
-  Scenario Outline: Any Exporter should be able to navigate to "Export Readiness - Home" using breadcrumbs on the "UKEF Trade Finance" page
-    Given "Robert" visits the "Export Readiness - Trade Finance" page
+  Scenario Outline: Any Exporter should be able to navigate to "Domestic - Home" using breadcrumbs on the "UKEF Trade Finance" page
+    Given "Robert" visits the "Domestic - Trade Finance" page
 
-    When "Robert" decides to use "<specific>" breadcrumb on the "Export Readiness - Trade Finance" page
+    When "Robert" decides to use "<specific>" breadcrumb on the "Domestic - Trade Finance" page
 
-    Then "Robert" should be on the "Export Readiness - <expected>" page or on the International page
+    Then "Robert" should be on the "Domestic - <expected>" page or on the International page
 
     Examples: Breadcrumbs
       | specific     | expected    |
@@ -53,12 +53,12 @@ Feature: UK Export Finance page & contact-us form
 
 
   @TT-585
-  Scenario: Any Exporter should be able to get to the "Contact UKEF" form from "Export Readiness - Trade Finance"
-    Given "Robert" visits the "Export Readiness - Trade Finance" page
+  Scenario: Any Exporter should be able to get to the "Contact UKEF" form from "Domestic - Trade Finance"
+    Given "Robert" visits the "Domestic - Trade Finance" page
 
     When "Robert" decides to "Tell us about your business"
 
-    Then "Robert" should be on the "Export Readiness - Your details - UKEF Contact us" page
+    Then "Robert" should be on the "Domestic - Your details - UKEF Contact us" page
     And "Robert" should see following sections
       | Sections        |
       | Breadcrumbs     |
@@ -70,38 +70,38 @@ Feature: UK Export Finance page & contact-us form
   @captcha
   @dev-only
   Scenario: Any Exporter should be able to contact UKEF team by submitting the "Check your eligibility" form
-    Given "Robert" visits the "Export Readiness - Your details - UKEF Contact us" page
+    Given "Robert" visits the "Domestic - Your details - UKEF Contact us" page
 
     When "Robert" fills out and submits the form
-    Then "Robert" should be on the "Export Readiness - Company details - UKEF Contact us" page
+    Then "Robert" should be on the "Domestic - Company details - UKEF Contact us" page
 
     When "Robert" fills out and submits the form
-    Then "Robert" should be on the "Export Readiness - Tell us how we can help - UKEF Contact us" page
+    Then "Robert" should be on the "Domestic - Tell us how we can help - UKEF Contact us" page
 
     When "Robert" fills out and submits the form
-    Then "Robert" should be on the "Export Readiness - Thank you - UKEF Contact us" page
+    Then "Robert" should be on the "Domestic - Thank you - UKEF Contact us" page
 
 
   @TT-585
   @captcha
   @dev-only
   Scenario: Any Exporter should not be able to submit "Check you eligibility" form without filling out all required fields
-    Given "Robert" visits the "Export Readiness - Your details - UKEF Contact us" page
+    Given "Robert" visits the "Domestic - Your details - UKEF Contact us" page
     When "Robert" submits the form
-    Then "Robert" should be on the "Export Readiness - Your details - UKEF Contact us" page
+    Then "Robert" should be on the "Domestic - Your details - UKEF Contact us" page
     And "Robert" should see error message saying that mandatory fields are required
 
     When "Robert" fills out and submits the form
-    Then "Robert" should be on the "Export Readiness - Company details - UKEF Contact us" page
+    Then "Robert" should be on the "Domestic - Company details - UKEF Contact us" page
     When "Robert" submits the form
-    Then "Robert" should be on the "Export Readiness - Company details - UKEF Contact us" page
+    Then "Robert" should be on the "Domestic - Company details - UKEF Contact us" page
     And "Robert" should see error message saying that mandatory fields are required
 
     When "Robert" fills out and submits the form
-    Then "Robert" should be on the "Export Readiness - Tell us how we can help - UKEF Contact us" page
+    Then "Robert" should be on the "Domestic - Tell us how we can help - UKEF Contact us" page
     When "Robert" submits the form
-    Then "Robert" should be on the "Export Readiness - Tell us how we can help - UKEF Contact us" page
+    Then "Robert" should be on the "Domestic - Tell us how we can help - UKEF Contact us" page
     And "Robert" should see error message saying that mandatory fields are required
 
     When "Robert" fills out and submits the form
-    Then "Robert" should be on the "Export Readiness - Thank you - UKEF Contact us" page
+    Then "Robert" should be on the "Domestic - Thank you - UKEF Contact us" page

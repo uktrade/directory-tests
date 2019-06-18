@@ -32,7 +32,7 @@ PORTUGUESE = Selector(By.ID, "header-language-selector-pt")
 ARABIC = Selector(By.ID, "header-language-selector-ar")
 FRENCH = Selector(By.ID, "header-language-selector-fr")
 ELEMENTS_ON = {
-    "export readiness - home": {
+    "domestic - home": {
         "English": "en-gb",
         "简体中文": "zh-hans",
         "Deutsch": "de",
@@ -73,7 +73,7 @@ ELEMENTS_ON = {
     },
 }
 KEYBOARD_NAVIGABLE_ELEMENTS = {
-    "export readiness - home": [
+    "domestic - home": [
         ("English", ENGLISH),
         ("简体中文", CHINESE),
         ("Deutsch", GERMAN),
@@ -84,7 +84,7 @@ KEYBOARD_NAVIGABLE_ELEMENTS = {
         ("Français", FRENCH),
         ("close", LANGUAGE_SELECTOR_CLOSE),
     ],
-    "export readiness - international": [
+    "international - landing": [
         ("English", ENGLISH),
         ("简体中文", CHINESE),
         ("Deutsch", GERMAN),

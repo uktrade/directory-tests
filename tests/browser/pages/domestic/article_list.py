@@ -7,6 +7,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import Services
 from pages.common_actions import (
     Selector,
     assertion_msg,
@@ -19,7 +20,7 @@ from pages.common_actions import (
 )
 
 NAME = "Article List"
-SERVICE = "Export Readiness"
+SERVICE = Services.DOMESTIC
 TYPE = "article list"
 URL = None
 

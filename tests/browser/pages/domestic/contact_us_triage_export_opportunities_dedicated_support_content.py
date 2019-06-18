@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-"""Export Readiness - Domestic Contact us - Great.gov.uk account"""
+"""Domestic - Domestic Contact us - Great.gov.uk account"""
 from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType
+from pages import ElementType, Services
 from pages.common_actions import (
     Selector,
     check_url,
@@ -21,7 +21,7 @@ NAMES = [
     "I haven't had a response from the opportunity I applied for",
     "My daily alerts are not relevant to me",
 ]
-SERVICE = "Export Readiness"
+SERVICE = Services.DOMESTIC
 TYPE = "Dedicated Support Content"
 URL = urljoin(EXRED_UI_URL, "contact/triage/export-opportunities/")
 PAGE_TITLE = "Welcome to great.gov.uk"

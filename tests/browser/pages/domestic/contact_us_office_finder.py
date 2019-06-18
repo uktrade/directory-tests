@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-"""Export Readiness - Office finder search results page"""
+"""Domestic - Office finder search results page"""
 from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType
+from pages import ElementType, Services
 from pages.common_actions import (
     Selector,
     check_url,
@@ -17,7 +17,7 @@ from pages.common_actions import (
 from settings import EXRED_UI_URL
 
 NAME = "New Office Finder"
-SERVICE = "Export Readiness"
+SERVICE = Services.DOMESTIC
 TYPE = "office finder"
 URL = urljoin(EXRED_UI_URL, "contact/office-finder/")
 PAGE_TITLE = "Welcome to great.gov.uk"

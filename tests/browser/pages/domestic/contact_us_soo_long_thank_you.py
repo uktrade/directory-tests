@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
-"""Export Readiness - SOO Domestic Long Contact us - Thank you for your enquiry."""
-import logging
+"""Domestic - SOO Domestic Long Contact us - Thank you for your enquiry."""
 from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import Services
 from pages.common_actions import Selector, check_url, take_screenshot
 from settings import EXRED_UI_URL
 
 NAME = "Long Domestic (Thank you for your enquiry)"
-SERVICE = "Export Readiness"
+SERVICE = Services.DOMESTIC
 TYPE = "Contact us"
 URL = urljoin(EXRED_UI_URL, "contact/selling-online-overseas/success/")
 PAGE_TITLE = "Welcome to great.gov.uk"

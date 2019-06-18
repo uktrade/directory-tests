@@ -2,13 +2,13 @@
 Feature: Updates for non-UK companies on EU Exit
 
   Background:
-    Given basic authentication is done for "Export Readiness - Home" page
+    Given basic authentication is done for "Domestic - Home" page
 
   @news
   @eu-exit
   @CMS-579
   Scenario: International Visitors should be able to view news article
-    Given at least "1" published "international" news article on "Export Readiness"
+    Given at least "1" published "international" news article on "Domestic"
 
     When "Henry" goes to the "International - Updates for non UK companies on EU Exit" page
     And "Henry" opens "first" news article
@@ -20,12 +20,12 @@ Feature: Updates for non-UK companies on EU Exit
   @eu-exit
   @CMS-579
   Scenario: International Visitors should be able to ge to the "Updates for non-UK companies on EU Exit" from "International - Landing" page
-    Given at least "1" published "international" news article on "Export Readiness"
+    Given at least "1" published "international" news article on "Domestic"
     And "Henry" went to the "International - Landing" page
 
     When "Henry" decides to "See our updates on EU Exit"
 
-    Then "Henry" should be on the "Export Readiness - Updates for non UK companies on EU Exit" page
+    Then "Henry" should be on the "Domestic - Updates for non UK companies on EU Exit" page
     And "Henry" should see following sections
       | sections        |
       | Header          |
@@ -58,7 +58,7 @@ Feature: Updates for non-UK companies on EU Exit
 
     When "Henry" decides to see related news articles by using one of the tags
 
-    Then "Henry" should be on the "Export Readiness - Search by tag" page
+    Then "Henry" should be on the "Domestic - Search by tag" page
     And "Henry" should see list of news articles filtered by selected tag
     And "Henry" should see following sections
       | sections        |
@@ -104,7 +104,7 @@ Feature: Updates for non-UK companies on EU Exit
     Examples: breadcrumbs
       | breadcrumb                              | expected page                                              |
       | Great.gov.uk                            | International - Landing                                    |
-      | Updates for non-UK companies on EU exit | Export Readiness - Updates for non UK companies on EU Exit |
+      | Updates for non-UK companies on EU exit | Domestic - Updates for non UK companies on EU Exit |
 
 
   @wip
@@ -113,7 +113,7 @@ Feature: Updates for non-UK companies on EU Exit
   @bug
   @fixme
   Scenario: International Visitors should see not see news section on "International - Landing" page if there aren't any published articles
-    Given there are no "international" news articles published on "Export Readiness"
+    Given there are no "international" news articles published on "Domestic"
 
     When "Henry" goes to the "International - Landing" page
 
@@ -130,7 +130,7 @@ Feature: Updates for non-UK companies on EU Exit
   Scenario: Publishers should be able to unpublish International news
     Given "Sarah" is a publisher
     And "Henry" is a visitor
-    And "1" published "international" news articles on "Export Readiness"
+    And "1" published "international" news articles on "Domestic"
 
     When "Sarah" unpublish an article visible on the "International - Landing" page
     And "Henry" goes to the "International - Updates for non UK companies on EU Exit - International" page
@@ -146,9 +146,9 @@ Feature: Updates for non-UK companies on EU Exit
   Scenario: International Visitors should see correct "Last updated" date
     Given "Sarah" is a publisher
     And "Henry" is a visitor
-    And at least "1" published "international" news articles on "Export Readiness"
+    And at least "1" published "international" news articles on "Domestic"
 
-    When "Sarah" updates an article visible on the "Export Readiness - Updates for non UK companies on EU Exit - International" page
+    When "Sarah" updates an article visible on the "Domestic - Updates for non UK companies on EU Exit - International" page
     And "Henry" goes to the "International - Updates for non UK companies on EU Exit - International" page
 
     Then "Henry" should see that updated news article has a correct "Last updated" date

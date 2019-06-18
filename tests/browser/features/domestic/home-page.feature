@@ -2,12 +2,12 @@
 Feature: Home Page
 
   Background:
-    Given basic authentication is done for "Export Readiness - Home" page
+    Given basic authentication is done for "Domestic - Home" page
 
   @ED-2366
   @sections
   Scenario: Any Exporter should see the "Beta bar, Hero, EU Exit enquiries banner, Advice, Services, Case Studies, Business is Great, Error Reporting" sections on the home page
-      Given "Robert" visits the "Export Readiness - Home" page
+      Given "Robert" visits the "Domestic - Home" page
       Then "Robert" should see following sections
         | Sections                 |
         | Header                   |
@@ -27,7 +27,7 @@ Feature: Home Page
   @ED-3014
   @video
   Scenario: Any Exporter should be able to play promotional video on the Home page
-    Given "Robert" visits the "Export Readiness - Home" page
+    Given "Robert" visits the "Domestic - Home" page
 
     When "Robert" decides to watch "6" seconds of the promotional video
 
@@ -37,7 +37,7 @@ Feature: Home Page
   @ED-3014
   @video
   Scenario: Any Exporter should be able to close the window with promotional video on the Home page
-    Given "Robert" visits the "Export Readiness - Home" page
+    Given "Robert" visits the "Domestic - Home" page
 
     When "Robert" decides to watch "6" seconds of the promotional video
     And "Robert" closes the window with promotional video
@@ -48,8 +48,8 @@ Feature: Home Page
   @ED-3083
   @decommissioned
   @language-selector
-  Scenario: Visitor should be able to open and close the language selector on "Export Readiness - Home" page
-    Given "Robert" visits the "Export Readiness - Home" page
+  Scenario: Visitor should be able to open and close the language selector on "Domestic - Home" page
+    Given "Robert" visits the "Domestic - Home" page
 
     When "Robert" opens up the language selector
     Then "Robert" should see the language selector
@@ -62,8 +62,8 @@ Feature: Home Page
   @decommissioned
   @language-selector
   @accessibility
-  Scenario: Keyboard users should be able to open and close the language selector using just the keyboard on "Export Readiness - Home" page
-    Given "Robert" visits the "Export Readiness - Home" page
+  Scenario: Keyboard users should be able to open and close the language selector using just the keyboard on "Domestic - Home" page
+    Given "Robert" visits the "Domestic - Home" page
 
     When "Robert" opens up the language selector using his keyboard
     Then "Robert" should see the language selector
@@ -76,7 +76,7 @@ Feature: Home Page
   @decommissioned
   @language-selector
   Scenario Outline: Visitors should be able to view go to International page after changing language to "<preferred_language>" on the Domestic Home Page
-    Given "Robert" visits the "Export Readiness - Home" page
+    Given "Robert" visits the "Domestic - Home" page
 
     When "Robert" decides to view the page in "<preferred_language>"
 

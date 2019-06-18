@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType
+from pages import ElementType, Services
 from pages.common_actions import (
     Actor,
     Selector,
@@ -21,7 +21,7 @@ from pages.common_actions import (
 from settings import EXRED_UI_URL
 
 NAME = "Your details"
-SERVICE = "Export Readiness"
+SERVICE = Services.DOMESTIC
 TYPE = "UKEF Contact us"
 URL = urljoin(EXRED_UI_URL, "get-finance/your-details/")
 PAGE_TITLE = "Welcome to great.gov.uk"

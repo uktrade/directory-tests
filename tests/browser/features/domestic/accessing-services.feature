@@ -2,13 +2,13 @@
 Feature: Accessing Services
 
   Background:
-    Given basic authentication is done for "Export Readiness - Home" page
+    Given basic authentication is done for "Domestic - Home" page
 
   @ED-2659
   @home-page
   @accessing-services
   Scenario: Any Exporter visiting the Services page should be able to see links to all relevant Services
-    When "Robert" goes to the "Export Readiness - Services" page
+    When "Robert" goes to the "Domestic - Services" page
 
     Then "Robert" should see following sections
       | sections               |
@@ -28,8 +28,8 @@ Feature: Accessing Services
   @accessing-services
   @<service>
   @external-service
-  Scenario Outline: Any Exporter should be able to get to the "<specific>" Service page from "Export Readiness - Services" page
-    Given "Robert" visits the "Export Readiness - Services" page
+  Scenario Outline: Any Exporter should be able to get to the "<specific>" Service page from "Domestic - Services" page
+    Given "Robert" visits the "Domestic - Services" page
 
     When "Robert" decides to find out more about "<service>"
 
@@ -40,6 +40,6 @@ Feature: Accessing Services
       | Create a business profile | Find a Buyer - Home            |
       | Find online marketplaces  | Selling online overseas - Home |
       | Find export opportunities | Export Opportunities - Home    |
-      | UK Export Finance         | Export Readiness - Get Finance |
+      | UK Export Finance         | Domestic - Get Finance |
       | Find events and visits    | Events - Home                  |
       | Get an EORI number        | EORI - Home                    |

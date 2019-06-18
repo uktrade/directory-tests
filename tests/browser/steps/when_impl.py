@@ -143,9 +143,9 @@ def should_be_on_page(context: Context, actor_alias: str, page_name: str):
 )
 def open_group_element(context: Context, group: str, element: str, location: str):
     driver = context.driver
-    if location.lower() == "export readiness - home":
+    if location.lower() == "domestic - home":
         domestic.home.open(driver, group, element)
-    elif location.lower() == "export readiness - international":
+    elif location.lower() == "international - landing":
         international.international.open(driver, group, element, same_tab=True)
     else:
         raise KeyError("Could not recognize location: {}".format(location))
@@ -172,7 +172,7 @@ def case_studies_go_to(context: Context, actor_alias: str, case_number: str):
 
 
 def case_studies_go_to_random(context: Context, actor_alias: str, page_name: str):
-    assert page_name.lower() in ["export readiness - home"]
+    assert page_name.lower() in ["domestic - home"]
     visit_page(context, actor_alias, page_name)
     case_number = random.choice(["first", "second", "third"])
     case_studies_go_to(context, actor_alias, case_number)
@@ -202,7 +202,7 @@ def open_link(
 
 
 def open_service_link_on_interim_page(context: Context, actor_alias: str, service: str):
-    page_name = "export readiness - interim {}".format(service)
+    page_name = "domestic - interim {}".format(service)
     page = get_page_object(page_name)
     has_action(page, "go_to_service")
     page.go_to_service(context.driver)
@@ -679,12 +679,12 @@ def generic_open_random_news_article(
 ):
     flow = {
         "domestic": {
-            "start": "Export Readiness - Updates for UK companies on EU Exit - Domestic",
-            "finish": "Export Readiness - Domestic EU Exit news - article",
+            "start": "Domestic - Updates for UK companies on EU Exit - Domestic",
+            "finish": "Domestic - Domestic EU Exit news - article",
         },
         "international": {
-            "start": "Export Readiness - Updates for non-UK companies on EU Exit - International",
-            "finish": "Export Readiness - International EU Exit news - article",
+            "start": "Domestic - Updates for non-UK companies on EU Exit - International",
+            "finish": "Domestic - International EU Exit news - article",
         },
     }
     start = flow[article_type.lower()]["start"]
@@ -744,7 +744,7 @@ def contact_us_get_to_page_via(
 ):
     intermediate = [name.strip() for name in via.split("->")]
     # 1) start at the Contact us "choose location" page
-    visit_page(context, actor_alias, "Export Readiness - Contact us")
+    visit_page(context, actor_alias, "Domestic - Contact us")
     # 2) click through every listed option
     for option in intermediate:
         generic_pick_radio_option_and_submit(context, actor_alias, option)
@@ -755,7 +755,7 @@ def contact_us_get_to_page_via(
 def contact_us_navigate_through_options(context: Context, actor_alias: str, via: str):
     intermediate = [name.strip() for name in via.split("->")]
     # 1) start at the Contact us "choose location" page
-    visit_page(context, actor_alias, "Export Readiness - Contact us")
+    visit_page(context, actor_alias, "Domestic - Contact us")
     # 2) click through every listed option
     for option in intermediate:
         generic_pick_radio_option_and_submit(context, actor_alias, option)

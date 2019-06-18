@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-"""Export Readiness - Short Domestic Contact us - Thank you for your enquiry."""
+"""Domestic - Short Domestic Contact us - Thank you for your enquiry."""
 from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import Services
 from pages.common_actions import Selector, check_url, take_screenshot
 from settings import EXRED_UI_URL
 
@@ -23,7 +24,7 @@ NAMES = [
     "Thank you for your enquiry (I have not received my letter containing the verification code)",
     "Thank you for your enquiry (I have not received a verification code)",
 ]
-SERVICE = "Export Readiness"
+SERVICE = Services.DOMESTIC
 TYPE = "Short Domestic Contact us"
 URL = urljoin(EXRED_UI_URL, "contact/domestic/success/")
 PAGE_TITLE = "Welcome to great.gov.uk"

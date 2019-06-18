@@ -2,7 +2,7 @@ Feature: Apply via DIT
 
   Background:
     Given basic authentication is done for "Selling Online Overseas - Home" page
-    And basic authentication is done for "Export Readiness - Home" page
+    And basic authentication is done for "Domestic - Home" page
 
 
   @XOT-689
@@ -36,7 +36,7 @@ Feature: Apply via DIT
 
     When "Robert" decides to "Apply now via DIT"
 
-    Then "Robert" should be on the "Export Readiness - Long Domestic (Your Business)" page
+    Then "Robert" should be on the "Domestic - Long Domestic (Your Business)" page
 
     Examples: products and countries
       | country   | products               |
@@ -56,13 +56,13 @@ Feature: Apply via DIT
 
     When "Robert" decides to "Apply now via DIT"
 
-    Then "Robert" should be on the "Export Readiness - Long Domestic (Your Business)" page
+    Then "Robert" should be on the "Domestic - Long Domestic (Your Business)" page
 
     When "Robert" submits the SOO contact-us form
       | field                         | value   |
       | I don't have a company number | checked |
 
-    Then "Robert" should be on the "Export Readiness - Long Domestic (Thank you for your enquiry)" page
+    Then "Robert" should be on the "Domestic - Long Domestic (Thank you for your enquiry)" page
 
     Examples: products and countries
       | country   | products               |
@@ -81,7 +81,7 @@ Feature: Apply via DIT
 
     When "Robert" decides to "Apply now via DIT"
 
-    Then "Robert" should be on the "Export Readiness - Long Domestic (Your Business)" page
+    Then "Robert" should be on the "Domestic - Long Domestic (Your Business)" page
     And "Robert" should see form fields populated with his company details
 
     Examples: products and countries

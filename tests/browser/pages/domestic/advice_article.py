@@ -8,7 +8,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import common_selectors
+from pages import common_selectors, Services
 from pages.common_actions import (
     Selector,
     assertion_msg,
@@ -24,7 +24,7 @@ from pages.domestic import actions as domestic_actions
 from settings import EXRED_UI_URL
 
 NAME = "Advice"
-SERVICE = "Export Readiness"
+SERVICE = Services.DOMESTIC
 TYPE = "article"
 URL = urljoin(EXRED_UI_URL, "advice/")
 

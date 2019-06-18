@@ -8,7 +8,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType
+from pages import ElementType, Services
 from pages.common_actions import (
     Selector,
     assertion_msg,
@@ -23,7 +23,7 @@ from pages.common_actions import (
 from settings import EXRED_UI_URL
 
 NAME = "Search results"
-SERVICE = "Export Readiness"
+SERVICE = Services.DOMESTIC
 TYPE = "Search"
 URL = urljoin(EXRED_UI_URL, "/search/?")
 

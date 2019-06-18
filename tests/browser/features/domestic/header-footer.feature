@@ -17,8 +17,8 @@ Feature: Header-Footer
 
     Examples:
       | selected                       |
-      | Export Readiness - Get finance |
-      | Export Readiness - Home        |
+      | Domestic - Get finance |
+      | Domestic - Home        |
       | Find a Buyer - Home            |
       | Selling Online Overseas - Home |
       | Single Sign-On - Profile about |
@@ -71,18 +71,18 @@ Feature: Header-Footer
   @header
   @footer
   @ED-3118
-  Scenario Outline: Any Exporter should be able to get to the Export Readiness Home page from "<selected>" page by using DIT logo in the page header and footer
+  Scenario Outline: Any Exporter should be able to get to the Domestic Home page from "<selected>" page by using DIT logo in the page header and footer
     Given basic authentication is done for "<selected>" page
     And "Robert" visits the "<selected>" page
 
     When "Robert" decides to click on "EIG logo"
 
-    Then "Robert" should be on the "Export Readiness - Home" page or on the International page
+    Then "Robert" should be on the "Domestic - Home" page or on the International page
 
     Examples:
       | selected                                        |
-      | Export Readiness - Home                         |
-      | Export Readiness - Get finance                  |
+      | Domestic - Home                         |
+      | Domestic - Get finance                  |
       | Single Sign-On - Registration                   |
       | Single Sign-On - Sign in                        |
       | Find a Buyer - Home                             |
@@ -104,9 +104,9 @@ Feature: Header-Footer
 
     Then "Robert" should see the correct favicon
 
-    Examples: Export Readiness pages
+    Examples: Domestic pages
       | specific                       |
-      | Export Readiness - Home        |
+      | Domestic - Home        |
       | Find a Buyer - Home            |
       | Find a Supplier - Home         |
       | Single Sign-On - Registration  |

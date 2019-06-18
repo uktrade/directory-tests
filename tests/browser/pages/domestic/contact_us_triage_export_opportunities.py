@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Export Readiness - Domestic Contact us - Great.gov.uk account"""
+"""Domestic - Domestic Contact us - Great.gov.uk account"""
 import logging
 from types import ModuleType
 from typing import List
@@ -8,7 +8,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType
+from pages import ElementType, Services
 from pages.common_actions import (
     Selector,
     check_url,
@@ -27,7 +27,7 @@ from pages.domestic import (
 from settings import EXRED_UI_URL
 
 NAME = "Export opportunities service"
-SERVICE = "Export Readiness"
+SERVICE = Services.DOMESTIC
 TYPE = "Domestic Contact us"
 URL = urljoin(EXRED_UI_URL, "contact/triage/export-opportunities/")
 PAGE_TITLE = "Welcome to great.gov.uk"
