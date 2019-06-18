@@ -393,9 +393,12 @@ Feature: Find a Supplier - Industry pages
       | Space                              |
 
 
+  @skip
   @ED-4267
   @legal-services
   @marketing-content
+  # New International industry page doesn't link to Legal services page.
+  # Until that changes, this scenario won't be executed.
   # link to Legal Services industry page should take users to an external
   # Legal Services website (not hosted on great.gov.uk)
   Scenario: Buyers should be able to learn more from the Legal Services page
