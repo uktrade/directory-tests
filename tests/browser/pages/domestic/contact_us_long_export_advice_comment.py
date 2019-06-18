@@ -16,7 +16,7 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from pages.exred import contact_us_long_export_advice_personal
+from pages.domestic import contact_us_long_export_advice_personal
 from settings import EXRED_UI_URL
 
 NAME = "Long (Export Advice Comment)"

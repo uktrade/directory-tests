@@ -14,7 +14,7 @@ from retrying import retry
 
 from pages import (
     common_language_selector,
-    exred,
+    domestic,
     fas,
     get_page_object,
     invest,
@@ -28,7 +28,7 @@ from pages.common_actions import (
     get_last_visited_page,
     update_actor,
 )
-from pages.exred import contact_us_office_finder_search_results
+from pages.domestic import contact_us_office_finder_search_results
 from settings import (
     HPO_AGENT_EMAIL_ADDRESS,
     HPO_AGENT_EMAIL_SUBJECT,
@@ -132,14 +132,14 @@ def case_studies_should_see_case_study(
     case_study_numbers = {"first": 1, "second": 2, "third": 3}
     number = case_study_numbers[case_study_number.lower()]
     case_study_title = get_actor(context, actor_alias).case_study_title
-    exred.case_studies_common.should_be_here(
+    domestic.case_studies_common.should_be_here(
         context.driver, number, title=case_study_title
     )
 
 
 def should_see_share_widget(context: Context, actor_alias: str):
     driver = context.driver
-    exred.case_studies_common.should_see_share_widget(driver)
+    domestic.case_studies_common.should_see_share_widget(driver)
     logging.debug("%s can see Share Widget on %s", actor_alias, driver.current_url)
 
 
@@ -190,8 +190,8 @@ def share_page_via_email_should_have_article_details(
 ):
     driver = context.driver
     body = driver.current_url
-    subject = exred.advice_article.get_article_name(driver)
-    exred.advice_article.check_share_via_email_link_details(driver, subject, body)
+    subject = domestic.advice_article.get_article_name(driver)
+    domestic.advice_article.check_share_via_email_link_details(driver, subject, body)
     logging.debug(
         "%s checked that the 'share via email' link contain correct subject: "
         "'%s' and message body: '%s'",
@@ -223,19 +223,19 @@ def promo_video_check_watch_time(
 
 
 def promo_video_should_not_see_modal_window(context: Context, actor_alias: str):
-    exred.home.should_not_see_video_modal_window(context.driver)
+    domestic.home.should_not_see_video_modal_window(context.driver)
     logging.debug(
         "As expected %s can't see promotional video modal window", actor_alias
     )
 
 
 def header_check_logo(context: Context, actor_alias: str, logo_name: str):
-    exred.actions.check_logo(context.driver, logo_name)
+    domestic.actions.check_logo(context.driver, logo_name)
     logging.debug(f"As expected {actor_alias} can see correct {logo_name} logo")
 
 
 def header_check_favicon(context: Context, actor_alias: str):
-    exred.actions.check_dit_favicon(context.driver)
+    domestic.actions.check_dit_favicon(context.driver)
     logging.debug("As expected %s can see correct DIT favicon", actor_alias)
 
 
@@ -510,7 +510,7 @@ def exred_search_finder_should_see_page_number(
     should_be_on_page(
         context,
         actor_alias,
-        f"{exred.search_results.SERVICE} - {exred.search_results.NAME}",
+        f"{domestic.search_results.SERVICE} - {domestic.search_results.NAME}",
     )
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "should_see_page_number")

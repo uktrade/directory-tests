@@ -18,7 +18,7 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from pages.exred import contact_us_soo_long_contact_details
+from pages.domestic import contact_us_soo_long_contact_details
 from settings import EXRED_UI_URL
 
 NAME = "Long Domestic (Your experience)"

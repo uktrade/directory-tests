@@ -14,7 +14,7 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from pages.exred import contact_us_triage_domestic
+from pages.domestic import contact_us_triage_domestic
 from settings import EXRED_UI_URL
 
 NAME = "Contact us"

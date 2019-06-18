@@ -18,7 +18,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages import (
     common_language_selector,
-    exred,
+    domestic,
     fas,
     get_page_object,
     international,
@@ -144,7 +144,7 @@ def should_be_on_page(context: Context, actor_alias: str, page_name: str):
 def open_group_element(context: Context, group: str, element: str, location: str):
     driver = context.driver
     if location.lower() == "export readiness - home":
-        exred.home.open(driver, group, element)
+        domestic.home.open(driver, group, element)
     elif location.lower() == "export readiness - international":
         international.international.open(driver, group, element, same_tab=True)
     else:
@@ -160,8 +160,8 @@ def articles_open_any(context: Context, actor_alias: str):
 
 
 def case_studies_go_to(context: Context, actor_alias: str, case_number: str):
-    case_study_title = exred.home.get_case_study_title(context.driver, case_number)
-    exred.home.open_case_study(context.driver, case_number)
+    case_study_title = domestic.home.get_case_study_title(context.driver, case_number)
+    domestic.home.open_case_study(context.driver, case_number)
     update_actor(context, actor_alias, case_study_title=case_study_title)
     logging.debug(
         "%s opened %s case study, entitled: %s",
@@ -291,7 +291,7 @@ def sign_in(context: Context, actor_alias: str):
 
 
 def sign_out(context: Context, actor_alias: str):
-    exred.actions.go_to_sign_out(context.driver)
+    domestic.actions.go_to_sign_out(context.driver)
     sso.sign_out.submit(context.driver)
     logging.debug("%s signed out", actor_alias)
 
@@ -304,11 +304,11 @@ def articles_share_on_social_media(
 ):
     context.article_url = context.driver.current_url
     if social_media.lower() == "email":
-        exred.advice_article.check_if_link_opens_email_client(context.driver)
+        domestic.advice_article.check_if_link_opens_email_client(context.driver)
     else:
-        exred.advice_article.check_if_link_opens_new_tab(context.driver, social_media)
+        domestic.advice_article.check_if_link_opens_new_tab(context.driver, social_media)
         if not social_media.lower() == "linkedin":
-            exred.advice_article.share_via(context.driver, social_media)
+            domestic.advice_article.share_via(context.driver, social_media)
     logging.debug(
         "%s successfully got to the share article on '%s'", actor_alias, social_media
     )
@@ -322,7 +322,7 @@ def promo_video_watch(context: Context, actor_alias: str, *, play_time: int = No
 
 
 def promo_video_close(context: Context, actor_alias: str):
-    exred.home.close_video(context.driver)
+    domestic.home.close_video(context.driver)
     logging.debug("%s closed the video", actor_alias)
 
 
@@ -765,11 +765,11 @@ def exred_open_random_advice_article(context: Context, actor_alias: str):
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
     driver = context.driver
-    exred.advice_landing.visit(driver)
-    exred.advice_landing.open_any_article(driver)
-    exred.advice_article_list.open_any_article(driver)
-    exred.advice_article.should_be_here(driver)
-    update_actor(context, actor_alias, visited_page=exred.advice_article)
+    domestic.advice_landing.visit(driver)
+    domestic.advice_landing.open_any_article(driver)
+    domestic.advice_article_list.open_any_article(driver)
+    domestic.advice_article.should_be_here(driver)
+    update_actor(context, actor_alias, visited_page=domestic.advice_article)
     update_actor(context, actor_alias, article_url=driver.current_url)
 
 
@@ -870,7 +870,7 @@ def soo_find_random_marketplace_and_apply_via_dit(
     should_be_on_page(
         context,
         actor_alias,
-        f"{exred.contact_us_soo_long_your_business.SERVICE} - {exred.contact_us_soo_long_your_business.NAME}",
+        f"{domestic.contact_us_soo_long_your_business.SERVICE} - {domestic.contact_us_soo_long_your_business.NAME}",
     )
 
 
@@ -883,28 +883,28 @@ def exred_submit_soo_contact_us_form(
     should_be_on_page(
         context,
         actor_alias,
-        f"{exred.contact_us_soo_long_organisation_details.SERVICE} - {exred.contact_us_soo_long_organisation_details.NAME}",
+        f"{domestic.contact_us_soo_long_organisation_details.SERVICE} - {domestic.contact_us_soo_long_organisation_details.NAME}",
     )
 
     generic_fill_out_and_submit_form(context, actor_alias)
     should_be_on_page(
         context,
         actor_alias,
-        f"{exred.contact_us_soo_long_your_experience.SERVICE} - {exred.contact_us_soo_long_your_experience.NAME}",
+        f"{domestic.contact_us_soo_long_your_experience.SERVICE} - {domestic.contact_us_soo_long_your_experience.NAME}",
     )
 
     generic_fill_out_and_submit_form(context, actor_alias)
     should_be_on_page(
         context,
         actor_alias,
-        f"{exred.contact_us_soo_long_contact_details.SERVICE} - {exred.contact_us_soo_long_contact_details.NAME}",
+        f"{domestic.contact_us_soo_long_contact_details.SERVICE} - {domestic.contact_us_soo_long_contact_details.NAME}",
     )
 
     generic_fill_out_and_submit_form(context, actor_alias)
     should_be_on_page(
         context,
         actor_alias,
-        f"{exred.contact_us_soo_long_thank_you.SERVICE} - {exred.contact_us_soo_long_thank_you.NAME}",
+        f"{domestic.contact_us_soo_long_thank_you.SERVICE} - {domestic.contact_us_soo_long_thank_you.NAME}",
     )
 
 
@@ -929,7 +929,7 @@ def exred_find_more_about_search_result_type(
     should_be_on_page(
         context,
         actor_alias,
-        f"{exred.search_results.SERVICE} - {exred.search_results.NAME}",
+        f"{domestic.search_results.SERVICE} - {domestic.search_results.NAME}",
     )
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "click_on_result_of_type")
@@ -942,7 +942,7 @@ def exred_search_result_has_more_than_one_page(
     should_be_on_page(
         context,
         actor_alias,
-        f"{exred.search_results.SERVICE} - {exred.search_results.NAME}",
+        f"{domestic.search_results.SERVICE} - {domestic.search_results.NAME}",
     )
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "has_pagination")

@@ -20,7 +20,7 @@ from pages.common_actions import (
     tick_captcha_checkbox,
     tick_checkboxes,
 )
-from pages.exred import contact_us_soo_long_thank_you
+from pages.domestic import contact_us_soo_long_thank_you
 from settings import EXRED_UI_URL
 
 NAME = "Long Domestic (Contact details)"

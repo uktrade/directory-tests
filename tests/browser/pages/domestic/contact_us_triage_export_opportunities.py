@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Export Readiness - Domestic Contact us - What can we help you with?"""
+"""Export Readiness - Domestic Contact us - Great.gov.uk account"""
 import logging
 from types import ModuleType
 from typing import List
@@ -13,26 +13,23 @@ from pages.common_actions import (
     Selector,
     check_url,
     choose_one_form_option,
+    choose_one_form_option_except,
     find_and_click_on_page_element,
     find_element,
     get_selectors,
     go_to_url,
     take_screenshot,
 )
-from pages.exred import (
-    contact_us_long_export_advice_comment,
+from pages.domestic import (
     contact_us_short_domestic,
-    contact_us_triage_great_services,
-    domestic_eu_exit_contact_us,
-    ukef_your_details,
+    contact_us_triage_export_opportunities_dedicated_support_content,
 )
-from pages.external import office_finder
 from settings import EXRED_UI_URL
 
-NAME = "What can we help you with?"
+NAME = "Export opportunities service"
 SERVICE = "Export Readiness"
 TYPE = "Domestic Contact us"
-URL = urljoin(EXRED_UI_URL, "contact/triage/domestic/")
+URL = urljoin(EXRED_UI_URL, "contact/triage/export-opportunities/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 SUBMIT_BUTTON = Selector(
@@ -41,45 +38,15 @@ SUBMIT_BUTTON = Selector(
 SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#lede form"),
-        "find your local trade office": Selector(
+        "i haven't had a response from the opportunity i applied for": Selector(
             By.CSS_SELECTOR,
-            "input[value='trade-office']",
+            "input[value='no-response']",
             type=ElementType.RADIO,
             is_visible=False,
         ),
-        "advice to export from the uk": Selector(
+        "my daily alerts are not relevant to me": Selector(
             By.CSS_SELECTOR,
-            "input[value='export-advice']",
-            type=ElementType.RADIO,
-            is_visible=False,
-        ),
-        "great.gov.uk account and services support": Selector(
-            By.CSS_SELECTOR,
-            "input[value='great-services']",
-            type=ElementType.RADIO,
-            is_visible=False,
-        ),
-        "uk export finance (ukef)": Selector(
-            By.CSS_SELECTOR,
-            "input[value='finance']",
-            type=ElementType.RADIO,
-            is_visible=False,
-        ),
-        "eu exit enquiries": Selector(
-            By.CSS_SELECTOR,
-            "input[value='euexit']",
-            type=ElementType.RADIO,
-            is_visible=False,
-        ),
-        "events": Selector(
-            By.CSS_SELECTOR,
-            "input[value='events']",
-            type=ElementType.RADIO,
-            is_visible=False,
-        ),
-        "defence and security organisation (dso)": Selector(
-            By.CSS_SELECTOR,
-            "input[value='dso']",
+            "input[value='alerts']",
             type=ElementType.RADIO,
             is_visible=False,
         ),
@@ -97,14 +64,10 @@ SELECTORS = {
         ),
     }
 }
+
 POs = {
-    "find your local trade office": office_finder,
-    "advice to export from the uk": contact_us_long_export_advice_comment,
-    "great.gov.uk account and services support": contact_us_triage_great_services,
-    "uk export finance (ukef)": ukef_your_details,
-    "eu exit enquiries": domestic_eu_exit_contact_us,
-    "events": contact_us_short_domestic,
-    "defence and security organisation (dso)": contact_us_short_domestic,
+    "i haven't had a response from the opportunity i applied for": contact_us_short_domestic,
+    "my daily alerts are not relevant to me": contact_us_triage_export_opportunities_dedicated_support_content,
     "other": contact_us_short_domestic,
 }
 
@@ -138,6 +101,18 @@ def pick_radio_option_and_submit(driver: WebDriver, name: str) -> ModuleType:
     button.click()
     take_screenshot(driver, "After submitting the form")
     return POs[name.lower()]
+
+
+def pick_random_radio_option_and_submit(driver: WebDriver, ignored: List[str]):
+    radio_selectors = get_selectors(SELECTORS["form"], ElementType.RADIO)
+    selected = choose_one_form_option_except(driver, radio_selectors, ignored)
+    take_screenshot(driver, "Before submitting the form")
+    button = find_element(
+        driver, SUBMIT_BUTTON, element_name="Submit button", wait_for_it=False
+    )
+    button.click()
+    take_screenshot(driver, "After submitting the form")
+    return POs[selected.lower()]
 
 
 def click_on_page_element(driver: WebDriver, element_name: str):

@@ -20,8 +20,8 @@ from pages.common_actions import (
     take_screenshot,
     tick_checkboxes,
 )
-from pages.exred import contact_us_soo_long_organisation_details
-from pages.exred.autocomplete_callbacks import autocomplete_company_name
+from pages.domestic import contact_us_soo_long_organisation_details
+from pages.domestic.autocomplete_callbacks import autocomplete_company_name
 from settings import EXRED_UI_URL
 
 NAME = "Long Domestic (Your Business)"

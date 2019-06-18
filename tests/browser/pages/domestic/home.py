@@ -25,7 +25,7 @@ from pages.common_actions import (
     take_screenshot,
     wait_for_page_load_after_action,
 )
-from pages.exred import actions as domestic_actions
+from pages.domestic import actions as domestic_actions
 from settings import EXRED_UI_URL
 
 NAME = "Home"

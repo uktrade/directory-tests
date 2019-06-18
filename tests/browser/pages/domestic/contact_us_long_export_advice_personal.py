@@ -16,7 +16,7 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from pages.exred import contact_us_long_export_advice_business
+from pages.domestic import contact_us_long_export_advice_business
 from settings import EXRED_UI_URL
 
 NAME = "Long (Personal details)"
