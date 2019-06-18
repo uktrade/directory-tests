@@ -9,8 +9,8 @@ from retrying import retry
 from pages.common_actions import assertion_msg
 from settings import (
     INVEST_CONTACT_CONFIRMATION_SUBJECT,
-    MAILGUN_EVENTS_URL,
     MAILGUN_API_KEY,
+    MAILGUN_EVENTS_URL,
 )
 from utils.request import Method, make_request
 

@@ -17,8 +17,8 @@ from pages import (
     domestic,
     fas,
     get_page_object,
-    invest,
     international,
+    invest,
     profile,
 )
 from pages.common_actions import (
@@ -44,7 +44,10 @@ from utils.gov_notify import (
     get_email_confirmation_notification,
     get_email_confirmations_with_matching_string,
 )
-from utils.gtm import get_gtm_datalayer_properties, replace_string_representations
+from utils.gtm import (
+    get_gtm_datalayer_properties,
+    replace_string_representations,
+)
 from utils.mailgun import mailgun_invest_find_contact_confirmation_email
 from utils.pdf import extract_text_from_pdf_bytes
 from utils.zendesk import find_tickets
