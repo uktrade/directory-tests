@@ -7,7 +7,7 @@ Feature: Trade - Search
   @bug
   @TT-1512
   @fixed
-  Scenario: Buyers should be able to find UK suppliers from the "<specific> Industry" page
+  Scenario: Buyers should be able to find UK suppliers using arbitrary search term
     Given "Robert" visits the "Find a Supplier - Home" page
 
     When "Robert" searches for companies using "food" keyword
