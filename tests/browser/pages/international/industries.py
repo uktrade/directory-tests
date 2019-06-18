@@ -4,12 +4,12 @@ from urllib.parse import urljoin
 
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import common_selectors
+from pages import common_selectors, Services
 from pages.common_actions import check_url, go_to_url, take_screenshot
 from settings import EXRED_UI_URL
 
 NAME = "Industries"
-SERVICE = "International"
+SERVICE = Services.INTERNATIONAL
 TYPE = "landing"
 URL = urljoin(EXRED_UI_URL, "international/content/industries/")
 PAGE_TITLE = "Welcome to great.gov.uk - buy from or invest in the UK"

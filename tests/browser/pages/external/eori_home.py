@@ -4,6 +4,7 @@ import logging
 
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import Services
 from pages.common_actions import (
     check_url,
     go_to_url,
@@ -11,7 +12,7 @@ from pages.common_actions import (
 )
 
 NAME = "Home"
-SERVICE = "EORI"
+SERVICE = Services.EORI
 TYPE = "home"
 URL = "https://www.gov.uk/eori"
 SELECTORS = {}

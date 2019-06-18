@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType, common_selectors
+from pages import ElementType, common_selectors, Services
 from pages.common_actions import (
     Actor,
     Selector,
@@ -32,7 +32,7 @@ NAMES = [
     "Lightweight structures",
     "Rail infrastructure",
 ]
-SERVICE = "Invest"
+SERVICE = Services.INVEST
 TYPE = "HPO Contact us"
 URL = urljoin(INVEST_UI_URL, "high-potential-opportunities/")
 URLs = {

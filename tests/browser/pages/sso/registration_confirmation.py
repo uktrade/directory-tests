@@ -5,6 +5,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import Services
 from pages.common_actions import (
     Selector,
     check_url,
@@ -15,7 +16,7 @@ from pages.common_actions import (
 from settings import DIRECTORY_UI_SSO_URL
 
 NAME = "Registration Confirmation"
-SERVICE = "Single Sign-On"
+SERVICE = Services.SSO
 TYPE = "registration"
 URL = urljoin(DIRECTORY_UI_SSO_URL, "accounts/confirm-email/")
 

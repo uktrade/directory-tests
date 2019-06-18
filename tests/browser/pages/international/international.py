@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import common_selectors
+from pages import common_selectors, Services
 from pages.common_actions import (
     Selector,
     check_for_section,
@@ -23,7 +23,7 @@ from pages.common_actions import (
 from settings import EXRED_UI_URL
 
 NAME = "Landing"
-SERVICE = "International"
+SERVICE = Services.INTERNATIONAL
 TYPE = "home"
 URL = urljoin(EXRED_UI_URL, "international/")
 PAGE_TITLE = "Welcome to great.gov.uk - buy from or invest in the UK"

@@ -6,11 +6,12 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import Services
 from pages.common_actions import Selector, check_url, take_screenshot, visit_url
 from settings import INVEST_UI_URL
 
 NAME = "Thank you for your message"
-SERVICE = "invest"
+SERVICE = Services.INVEST
 TYPE = "contact"
 URL = urljoin(INVEST_UI_URL, "contact/success/")
 PAGE_TITLE = ""

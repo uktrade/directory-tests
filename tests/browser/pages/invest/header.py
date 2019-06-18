@@ -5,7 +5,7 @@ import logging
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import common_selectors
+from pages import common_selectors, Services
 from pages.common_actions import (
     Selector,
     check_hash_of_remote_file,
@@ -18,7 +18,7 @@ from settings import UK_GOV_MD5_CHECKSUM
 
 NAME = "Header"
 URL = None
-SERVICE = "invest"
+SERVICE = Services.INVEST
 TYPE = "header"
 HEADER_LOGO = Selector(By.CSS_SELECTOR, "#great-header-logo > img")
 SELECTORS = {

@@ -9,7 +9,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType
+from pages import ElementType, Services
 from pages.common_actions import (
     Actor,
     Selector,
@@ -27,7 +27,7 @@ from settings import DIRECTORY_UI_PROFILE_URL
 
 NAME = "Enter your business details [step 2]"
 NAMES = ["Enter your business details [step 2] (LTD, PLC or Royal Charter)"]
-SERVICE = "Profile"
+SERVICE = Services.PROFILE
 TYPE = "Enrol"
 URL = urljoin(
     DIRECTORY_UI_PROFILE_URL, "enrol/business-type/companies-house/business-details/"

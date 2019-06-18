@@ -7,6 +7,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import Services
 from pages.common_actions import (
     Selector,
     assertion_msg,
@@ -45,7 +46,7 @@ NAMES = [
     "Sports economy",
     "Technology",
 ]
-SERVICE = "Find a Supplier"
+SERVICE = Services.FIND_A_SUPPLIER
 TYPE = "industry"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "industries/")
 PAGE_TITLE = "trade.great.gov.uk"

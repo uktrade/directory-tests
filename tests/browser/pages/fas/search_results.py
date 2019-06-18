@@ -8,6 +8,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import Services
 from pages.common_actions import (
     Actor,
     Selector,
@@ -24,7 +25,7 @@ from pages.fas.header_footer import HEADER_FOOTER_SELECTORS
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
 NAME = "Search results"
-SERVICE = "Find a Supplier"
+SERVICE = Services.FIND_A_SUPPLIER
 TYPE = "search"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "search/")
 PAGE_TITLE = "Search the database of UK suppliers' trade profiles - trade.great.gov.uk"

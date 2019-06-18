@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import common_selectors
+from pages import common_selectors, Services
 from pages.common_actions import (
     Selector,
     check_for_sections,
@@ -20,7 +20,7 @@ from pages.common_actions import (
 from settings import INVEST_UI_URL
 
 NAME = "UK Setup guide"
-SERVICE = "invest"
+SERVICE = Services.INVEST
 TYPE = "landing"
 URL = urljoin(INVEST_UI_URL, "uk-setup-guide/")
 PAGE_TITLE = "Invest In Great Britain - UK Setup Guide"

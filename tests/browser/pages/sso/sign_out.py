@@ -5,6 +5,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import Services
 from pages.common_actions import (
     Selector,
     check_url,
@@ -16,7 +17,7 @@ from pages.common_actions import (
 from settings import DIRECTORY_UI_SSO_URL
 
 NAME = "Sign out"
-SERVICE = "Single Sign-On"
+SERVICE = Services.SSO
 TYPE = "log out"
 URL = urljoin(DIRECTORY_UI_SSO_URL, "accounts/logout/")
 PAGE_TITLE = "Sign out - great.gov.uk"

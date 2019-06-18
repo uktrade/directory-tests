@@ -7,6 +7,7 @@ from typing import List
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import Services
 from pages.common_actions import (
     Selector,
     check_for_sections,
@@ -21,7 +22,7 @@ from pages.fas.header_footer import HEADER_FOOTER_SELECTORS_W_LANGUAGE_SELECTOR
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
 NAME = "Home"
-SERVICE = "Find a Supplier"
+SERVICE = Services.FIND_A_SUPPLIER
 TYPE = "home"
 URL = DIRECTORY_UI_SUPPLIER_URL
 PAGE_TITLE = "Find UK suppliers - trade.great.gov.uk"

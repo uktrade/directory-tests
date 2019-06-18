@@ -4,10 +4,11 @@ import logging
 
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import Services
 from pages.common_actions import check_url, take_screenshot
 
 NAME = "Home"
-SERVICE = "Legal Services"
+SERVICE = Services.LEGAL_SERVICES
 TYPE = "home"
 URL = "https://medium.com/legal-services-are-great"
 SELECTORS = {}

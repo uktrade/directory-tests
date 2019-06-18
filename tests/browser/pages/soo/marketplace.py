@@ -5,6 +5,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import Services
 from pages.common_actions import (
     Selector,
     check_url,
@@ -13,7 +14,7 @@ from pages.common_actions import (
 )
 from settings import SELLING_ONLINE_OVERSEAS_UI_URL
 
-SERVICE = "Selling Online Overseas"
+SERVICE = Services.SOO
 TYPE = "search"
 NAME = "Marketplace"
 URL = urljoin(SELLING_ONLINE_OVERSEAS_UI_URL, "markets/details")

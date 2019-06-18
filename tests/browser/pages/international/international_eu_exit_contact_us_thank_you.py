@@ -5,11 +5,12 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import Services
 from pages.common_actions import Selector, check_url, go_to_url, take_screenshot
 from settings import EXRED_UI_URL
 
 NAME = "EU Exit"
-SERVICE = "International"
+SERVICE = Services.INTERNATIONAL
 TYPE = "Thank you for contacting us"
 URL = urljoin(EXRED_UI_URL, "international/eu-exit-news/contact/success/")
 PAGE_TITLE = "Welcome to great.gov.uk - buy from or invest in the UK"

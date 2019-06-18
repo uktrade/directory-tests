@@ -5,7 +5,7 @@ from urllib.parse import urljoin
 
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import common_selectors
+from pages import common_selectors, Services
 from pages.common_actions import (
     check_url,
     find_and_click_on_page_element,
@@ -15,7 +15,7 @@ from pages.common_actions import (
 from settings import EXPORT_OPPORTUNITIES_UI_URL
 
 NAME = "Home"
-SERVICE = "Export Opportunities"
+SERVICE = Services.EXPORT_OPPORTUNITIES
 TYPE = "home"
 URL = urljoin(EXPORT_OPPORTUNITIES_UI_URL, "")
 PAGE_TITLE = "Export opportunities"

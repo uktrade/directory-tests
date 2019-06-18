@@ -5,7 +5,7 @@ from urllib.parse import urljoin
 
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import common_selectors
+from pages import common_selectors, Services
 from pages.common_actions import (
     check_url,
     find_and_click_on_page_element,
@@ -15,7 +15,7 @@ from pages.common_actions import (
 from settings import DIRECTORY_UI_BUYER_URL
 
 NAME = "Home"
-SERVICE = "Find a Buyer"
+SERVICE = Services.FIND_A_BUYER
 TYPE = "home"
 URL = urljoin(DIRECTORY_UI_BUYER_URL, "")
 PAGE_TITLE = "Business profile - great.gov.uk"

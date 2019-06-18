@@ -4,10 +4,11 @@ import logging
 
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import Services
 from pages.common_actions import check_url, take_screenshot
 
 NAME = "Home"
-SERVICE = "EXISTING Office Finder"
+SERVICE = Services.EXISTING_OFFICE_FINDER
 TYPE = "home"
 URL = "https://www.contactus.trade.gov.uk/office-finder"
 SELECTORS = {}

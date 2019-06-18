@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType, common_selectors
+from pages import ElementType, common_selectors, Services
 from pages.common_actions import (
     Selector,
     check_url,
@@ -24,7 +24,7 @@ from settings import SELLING_ONLINE_OVERSEAS_UI_URL
 
 NAME = "Home"
 URL = urljoin(SELLING_ONLINE_OVERSEAS_UI_URL, "")
-SERVICE = "Selling Online Overseas"
+SERVICE = Services.SOO
 TYPE = "home"
 PAGE_TITLE = "Welcome to Selling online overseas"
 

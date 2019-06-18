@@ -6,7 +6,7 @@ from typing import List
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType, common_selectors
+from pages import ElementType, common_selectors, Services
 from pages.common_actions import (
     Selector,
     check_for_sections,
@@ -17,7 +17,7 @@ from pages.common_actions import (
 from settings import PIR_UI_URL
 
 NAME = "Landing"
-SERVICE = "PIR"
+SERVICE = Services.PIR
 TYPE = "landing"
 URL = PIR_UI_URL
 

@@ -5,6 +5,7 @@ import logging
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import Services
 from pages.common_actions import (
     Selector,
     check_hash_of_remote_file,
@@ -17,7 +18,7 @@ from settings import GREAT_LOGO_MD5_CHECKSUM
 
 NAME = "Footer"
 URL = None
-SERVICE = "Invest"
+SERVICE = Services.INVEST
 TYPE = "footer"
 
 UK_GOV_LOGO = Selector(By.ID, "great-footer-great-logo")

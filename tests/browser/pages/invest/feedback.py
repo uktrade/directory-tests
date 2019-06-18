@@ -5,11 +5,12 @@ from urllib.parse import urljoin
 
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import Services
 from pages.common_actions import check_url, take_screenshot, visit_url
 from settings import DIRECTORY_CONTACT_US_UI_URL
 
 NAME = "Feedback"
-SERVICE = "invest"
+SERVICE = Services.INVEST
 TYPE = "contact"
 URL = urljoin(DIRECTORY_CONTACT_US_UI_URL, "feedback/")
 PAGE_TITLE = "Contact us - great.gov.uk"

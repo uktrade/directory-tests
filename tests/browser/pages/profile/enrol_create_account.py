@@ -5,7 +5,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType
+from pages import ElementType, Services
 from pages.common_actions import (
     Selector,
     check_url,
@@ -16,7 +16,7 @@ from pages.common_actions import (
 from settings import DIRECTORY_UI_PROFILE_URL
 
 NAME = "Create an account"
-SERVICE = "Profile"
+SERVICE = Services.PROFILE
 TYPE = "Enrol"
 URL = urljoin(DIRECTORY_UI_PROFILE_URL, "enrol/")
 PAGE_TITLE = ""

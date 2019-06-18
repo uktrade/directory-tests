@@ -6,6 +6,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
+from pages import Services
 from pages.common_actions import (
     Selector,
     check_url,
@@ -15,7 +16,7 @@ from pages.common_actions import (
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
 NAME = "Company Profile"
-SERVICE = "Find a Supplier"
+SERVICE = Services.FIND_A_SUPPLIER
 TYPE = "profile"
 URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "suppliers/")
 

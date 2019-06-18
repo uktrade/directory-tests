@@ -8,7 +8,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType
+from pages import ElementType, Services
 from pages.common_actions import (
     Selector,
     assertion_msg,
@@ -24,7 +24,7 @@ from pages.common_actions import (
 from pages.soo import search_criteria
 from settings import SELLING_ONLINE_OVERSEAS_UI_URL
 
-SERVICE = "Selling Online Overseas"
+SERVICE = Services.SOO
 TYPE = "search"
 NAME = "Search results"
 URL = urljoin(SELLING_ONLINE_OVERSEAS_UI_URL, "markets/results/")
