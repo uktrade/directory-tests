@@ -19,7 +19,6 @@ from pages.common_actions import (
     find_elements,
     pick_option,
     take_screenshot,
-    tick_checkboxes_by_labels,
 )
 from pages.fas.header_footer import HEADER_FOOTER_SELECTORS
 from settings import DIRECTORY_UI_SUPPLIER_URL
@@ -48,7 +47,9 @@ SELECTORS = {
     "filters": {
         "itself": Selector(By.ID, "filter-column"),
         "title": Selector(By.CSS_SELECTOR, "#filter-column section span"),
-        "filter list": SECTOR_FILTERS,
+        "filter list labels": Selector(
+            By.CSS_SELECTOR, "#checkbox-industry-expertise li label"
+        ),
     },
     "results": {
         "itself": Selector(By.ID, "companies-column"),
