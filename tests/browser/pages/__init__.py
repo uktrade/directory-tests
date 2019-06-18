@@ -44,6 +44,9 @@ class Services(Enum):
     TWITTER = "Twitter"
     VISIT_BRITAIN = "Visit Britain"
 
+    def __str__(self):
+        return self.value
+
 
 def is_page_object(module: ModuleType):
     return all([hasattr(module, prop) for prop in REQUIRED_PROPERTIES])
@@ -68,7 +71,7 @@ class PageObjects(Enum):
 
     def __str__(self):
         return "{}-{} [{} - {}]".format(
-            self.value.SERVICE,
+            self.value.SERVICE.value,
             self.value.NAME,
             self.value.TYPE,
             self.value.URL,
@@ -80,7 +83,7 @@ class PageObjects(Enum):
 
     @property
     def service(self) -> str:
-        return self.value.SERVICE
+        return self.value.SERVICE.value
 
     @property
     def type(self) -> str:
