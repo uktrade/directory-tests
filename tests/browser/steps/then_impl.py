@@ -44,10 +44,7 @@ from utils.gov_notify import (
     get_email_confirmation_notification,
     get_email_confirmations_with_matching_string,
 )
-from utils.gtm import (
-    get_gtm_datalayer_properties,
-    replace_string_representations,
-)
+from utils.gtm import get_gtm_datalayer_properties, replace_string_representations
 from utils.mailgun import mailgun_invest_find_contact_confirmation_email
 from utils.pdf import extract_text_from_pdf_bytes
 from utils.zendesk import find_tickets
@@ -508,7 +505,7 @@ def marketplace_finder_should_see_marketplaces(
 
 
 def domestic_search_finder_should_see_page_number(
-        context: Context, actor_alias: str, page_num: int
+    context: Context, actor_alias: str, page_num: int
 ):
     should_be_on_page(
         context,
@@ -520,7 +517,9 @@ def domestic_search_finder_should_see_page_number(
     page.should_see_page_number(context.driver, page_num)
 
 
-def generic_should_be_on_one_of_the_pages(context: Context, actor_alias: str, expected_pages: str):
+def generic_should_be_on_one_of_the_pages(
+    context: Context, actor_alias: str, expected_pages: str
+):
     expected_pages = [page.strip() for page in expected_pages.split(",")]
     results = defaultdict()
     for page_name in expected_pages:
@@ -530,7 +529,9 @@ def generic_should_be_on_one_of_the_pages(context: Context, actor_alias: str, ex
         except AssertionError:
             results[page_name] = False
 
-    with assertion_msg(f"{actor_alias} didn't see any of expected pages, instead it's on {context.driver.current_url}"):
+    with assertion_msg(
+        f"{actor_alias} didn't see any of expected pages, instead it's on {context.driver.current_url}"
+    ):
         assert any(list(results.values()))
 
 
@@ -548,22 +549,22 @@ def soo_contact_form_should_be_prepopulated(context: Context, actor_alias: str):
 
 def generic_check_gtm_datalayer_properties(context: Context, table: Table):
     row_names = [
-        "businessUnit", "loginStatus", "siteLanguage", "siteSection",
-        "siteSubsection", "userId"
+        "businessUnit",
+        "loginStatus",
+        "siteLanguage",
+        "siteSection",
+        "siteSubsection",
+        "userId",
     ]
     table.require_columns(row_names)
-    raw_properties = {
-        name: row.get(name)
-        for name in row_names
-        for row in table
-    }
+    raw_properties = {name: row.get(name) for name in row_names for row in table}
     expected_properties = replace_string_representations(raw_properties)
     found_properties = get_gtm_datalayer_properties(context.driver)
 
     with assertion_msg(
-            f"Expected to see following GTM datalayer proeprties:\n"
-            f"'{expected_properties}'\n but got:\n'{found_properties}'\non: "
-            f"{context.driver.current_url}\ndiff:\n"
-            f"{diff(expected_properties, found_properties)}"
+        f"Expected to see following GTM datalayer proeprties:\n"
+        f"'{expected_properties}'\n but got:\n'{found_properties}'\non: "
+        f"{context.driver.current_url}\ndiff:\n"
+        f"{diff(expected_properties, found_properties)}"
     ):
         assert expected_properties == found_properties

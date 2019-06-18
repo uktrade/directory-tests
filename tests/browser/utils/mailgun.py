@@ -43,11 +43,7 @@ class MailGunService(Enum):
     """Lists all MailGun's events states"""
 
     ServiceDetails = namedtuple("ServiceDetails", ["url", "user", "secret"])
-    INVEST = ServiceDetails(
-        url=MAILGUN_EVENTS_URL,
-        user="api",
-        secret=MAILGUN_API_KEY,
-    )
+    INVEST = ServiceDetails(url=MAILGUN_EVENTS_URL, user="api", secret=MAILGUN_API_KEY)
 
     def __str__(self):
         return self.value

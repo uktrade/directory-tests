@@ -79,8 +79,12 @@ def generic_set_basic_auth_creds(context: Context, page_name: str):
 
 # BrowserStack times out after 60s of inactivity
 # https://www.browserstack.com/automate/timeouts
-@retry(wait_fixed=5000, stop_max_attempt_number=5,
-       retry_on_exception=retry_if_webdriver_error, wrap_exception=False)
+@retry(
+    wait_fixed=5000,
+    stop_max_attempt_number=5,
+    retry_on_exception=retry_if_webdriver_error,
+    wrap_exception=False,
+)
 def visit_page(context: Context, actor_alias: str, page_name: str):
     """Will visit specific page.
 
@@ -138,7 +142,9 @@ def should_be_on_page(context: Context, actor_alias: str, page_name: str):
 
 # BrowserStack times out after 60s of inactivity
 # https://www.browserstack.com/automate/timeouts
-@retry(wait_fixed=5000, stop_max_attempt_number=4,
+@retry(
+    wait_fixed=5000,
+    stop_max_attempt_number=4,
     retry_on_exception=retry_if_webdriver_error,
 )
 def open_group_element(context: Context, group: str, element: str, location: str):
@@ -306,7 +312,9 @@ def articles_share_on_social_media(
     if social_media.lower() == "email":
         domestic.advice_article.check_if_link_opens_email_client(context.driver)
     else:
-        domestic.advice_article.check_if_link_opens_new_tab(context.driver, social_media)
+        domestic.advice_article.check_if_link_opens_new_tab(
+            context.driver, social_media
+        )
         if not social_media.lower() == "linkedin":
             domestic.advice_article.share_via(context.driver, social_media)
     logging.debug(
@@ -337,7 +345,9 @@ def language_selector_open(
 ):
     logging.debug("%s decided to go open language selector", actor_alias)
     page = get_last_visited_page(context, actor_alias)
-    common_language_selector.open(context.driver, page=page, with_keyboard=with_keyboard)
+    common_language_selector.open(
+        context.driver, page=page, with_keyboard=with_keyboard
+    )
 
 
 def language_selector_navigate_through_links_with_keyboard(
@@ -419,8 +429,11 @@ def fas_searched_for_companies(
     )
 
 
-@retry(wait_fixed=5000, stop_max_attempt_number=4,
-    retry_on_exception=retry_if_webdriver_error, wrap_exception=False,
+@retry(
+    wait_fixed=5000,
+    stop_max_attempt_number=4,
+    retry_on_exception=retry_if_webdriver_error,
+    wrap_exception=False,
 )
 def generic_open_industry_page(context: Context, actor_alias: str, industry_name: str):
     page = get_last_visited_page(context, actor_alias)
@@ -513,8 +526,11 @@ def fas_view_article(context: Context, actor_alias: str, article_number: str):
 
 # BrowserStack times out after 60s of inactivity
 # https://www.browserstack.com/automate/timeouts
-@retry(wait_fixed=5000, stop_max_attempt_number=4,
-    retry_on_exception=retry_if_webdriver_error, wrap_exception=False,
+@retry(
+    wait_fixed=5000,
+    stop_max_attempt_number=4,
+    retry_on_exception=retry_if_webdriver_error,
+    wrap_exception=False,
 )
 def generic_open_guide_link(context: Context, actor_alias: str, guide_name: str):
     page = get_last_visited_page(context, actor_alias)
@@ -573,8 +589,11 @@ def update_actor_forms_data(context: Context, actor: Actor, form_data: dict):
     update_actor(context, actor.alias, forms_data=actor_forms_data)
 
 
-@retry(wait_fixed=2000, stop_max_attempt_number=5,
-    retry_on_exception=retry_if_assertion_error, wrap_exception=False,
+@retry(
+    wait_fixed=2000,
+    stop_max_attempt_number=5,
+    retry_on_exception=retry_if_assertion_error,
+    wrap_exception=False,
 )
 def generic_fill_out_and_submit_form(
     context: Context,
@@ -623,9 +642,13 @@ def generic_submit_form(context: Context, actor_alias: str):
     page.submit(context.driver)
 
 
-def generic_get_in_touch(context: Context, actor_alias: str, page_name: str, custom_details_table: Table):
+def generic_get_in_touch(
+    context: Context, actor_alias: str, page_name: str, custom_details_table: Table
+):
     visit_page(context, actor_alias, page_name)
-    generic_fill_out_and_submit_form(context, actor_alias, custom_details_table=custom_details_table)
+    generic_fill_out_and_submit_form(
+        context, actor_alias, custom_details_table=custom_details_table
+    )
 
 
 def generic_download_all_pdfs(context: Context, actor_alias: str):
@@ -816,7 +839,9 @@ def generic_create_great_account(
         context, actor_alias, f"Profile - Enter your business details ({business_type})"
     )
 
-    generic_fill_out_and_submit_form(context, actor_alias, retry_on_errors=True, go_back=True)
+    generic_fill_out_and_submit_form(
+        context, actor_alias, retry_on_errors=True, go_back=True
+    )
     should_be_on_page(
         context,
         actor_alias,
@@ -853,7 +878,7 @@ def soo_look_for_marketplaces_from_home_page(
 
 
 def soo_find_and_open_random_marketplace(
-        context: Context, actor_alias: str, country: str, category: str
+    context: Context, actor_alias: str, country: str, category: str
 ):
     soo_look_for_marketplaces_from_home_page(context, actor_alias, country, category)
     generic_click_on_random_marketplace(context, actor_alias)
@@ -863,7 +888,7 @@ def soo_find_and_open_random_marketplace(
 
 
 def soo_find_random_marketplace_and_apply_via_dit(
-        context: Context, actor_alias: str, country: str, category: str
+    context: Context, actor_alias: str, country: str, category: str
 ):
     soo_find_and_open_random_marketplace(context, actor_alias, country, category)
     click_on_page_element(context, actor_alias, "Apply now via DIT")
@@ -908,15 +933,15 @@ def domestic_submit_soo_contact_us_form(
     )
 
 
-def domestic_search_for_phrase(
-        context: Context, actor_alias: str, phrase: str):
+def domestic_search_for_phrase(context: Context, actor_alias: str, phrase: str):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "search")
     page.search(context.driver, phrase)
 
 
 def domestic_search_for_phrase_on_page(
-        context: Context, actor_alias: str, phrase: str, page_name: str):
+    context: Context, actor_alias: str, phrase: str, page_name: str
+):
     visit_page(context, actor_alias, page_name)
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "search")
@@ -924,7 +949,7 @@ def domestic_search_for_phrase_on_page(
 
 
 def domestic_find_more_about_search_result_type(
-        context: Context, actor_alias: str, type_of: str
+    context: Context, actor_alias: str, type_of: str
 ):
     should_be_on_page(
         context,
@@ -937,7 +962,7 @@ def domestic_find_more_about_search_result_type(
 
 
 def domestic_search_result_has_more_than_one_page(
-        context: Context, actor_alias: str, min_page_num: int
+    context: Context, actor_alias: str, min_page_num: int
 ):
     should_be_on_page(
         context,

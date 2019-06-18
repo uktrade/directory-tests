@@ -11,7 +11,7 @@ def replace_string_representations(dictionary: dict) -> dict:
         elif value == "False":
             result[key] = False
         elif value.lower() == "empty string":
-            result[key] = ''
+            result[key] = ""
         else:
             result[key] = value
     return result
@@ -39,14 +39,14 @@ def get_gtm_datalayer_properties(driver: WebDriver) -> dict:
     In order to make the result easier to work with, some extra parsing is done.
     Only if a value contains string representation of boolean & None type.
     """
-    script_result = driver.execute_script('return window.dataLayer;')
+    script_result = driver.execute_script("return window.dataLayer;")
     assert script_result, f"window.dataLayer on {driver.current_url} is empty!"
 
     datalayer_raw = {
         key: value
         for item in script_result
         for key, value in item.items()
-        if 'businessUnit' in item
+        if "businessUnit" in item
     }
 
     return replace_string_representations(datalayer_raw)
