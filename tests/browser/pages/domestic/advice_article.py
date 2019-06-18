@@ -89,9 +89,7 @@ def should_not_see_section(driver: WebDriver, name: str):
 
 
 def get_article_name(driver: WebDriver) -> str:
-    current_article = find_element(
-        driver, ARTICLE_NAME, element_name="Article name"
-    )
+    current_article = find_element(driver, ARTICLE_NAME, element_name="Article name")
     return current_article.text
 
 
@@ -158,9 +156,7 @@ def share_via(driver: WebDriver, social_media: str):
     share_button_selector = SHARE_BUTTONS[social_media.lower()]
     share_button = find_element(driver, share_button_selector)
     href = share_button.get_attribute("href")
-    logging.debug(
-        "Opening 'Share on %s' link '%s' in the same tab", social_media, href
-    )
+    logging.debug("Opening 'Share on %s' link '%s' in the same tab", social_media, href)
     driver.get(href)
 
 

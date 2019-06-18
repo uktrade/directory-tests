@@ -65,8 +65,7 @@ URLs = {
 }
 
 
-SELECTORS = {
-}
+SELECTORS = {}
 SELECTORS.update(common_selectors.HEADER_INTERNATIONAL)
 SELECTORS.update(common_selectors.BREADCRUMBS)
 SELECTORS.update(common_selectors.ERROR_REPORTING)
@@ -98,9 +97,9 @@ def should_see_content_for(driver: WebDriver, industry_name: str):
     industry_name = clean_name(industry_name)
     logging.debug("Looking for: {}".format(industry_name))
     with assertion_msg(
-            "Expected to find term '%s' in the source of the page %s",
-            industry_name,
-            driver.current_url,
+        "Expected to find term '%s' in the source of the page %s",
+        industry_name,
+        driver.current_url,
     ):
         assert industry_name.lower() in source.lower()
 

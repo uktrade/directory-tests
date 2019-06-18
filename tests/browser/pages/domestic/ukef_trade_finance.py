@@ -126,6 +126,8 @@ def click_breadcrumb(driver: WebDriver, name: str):
     for breadcrumb in breadcrumbs:
         if breadcrumb.text.lower() == name.lower():
             link = breadcrumb
-    assert link, f"Couldn't find '{name}' breadcrumb on {url}. Found breadcrumbs: {[breadcrumb.text for breadcrumb in breadcrumbs]}"
+    assert (
+        link
+    ), f"Couldn't find '{name}' breadcrumb on {url}. Found breadcrumbs: {[breadcrumb.text for breadcrumb in breadcrumbs]}"
     link.click()
     take_screenshot(driver, " after clicking on " + name + " breadcrumb")

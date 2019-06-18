@@ -18,18 +18,12 @@ from pages.common_actions import (
 from settings import INVEST_UI_URL
 
 NAME = "Thank you for your enquiry"
-NAMES = [
-    "Advanced food production",
-    "Lightweight structures",
-    "Rail infrastructure",
-]
+NAMES = ["Advanced food production", "Lightweight structures", "Rail infrastructure"]
 SERVICE = Services.INVEST
 TYPE = "HPO Contact us"
 URL = urljoin(INVEST_UI_URL, "high-potential-opportunities/")
 URLs = {
-    "advanced food production": urljoin(
-        URL, "food-production/contact/success/"
-    ),
+    "advanced food production": urljoin(URL, "food-production/contact/success/"),
     "lightweight structures": urljoin(URL, "lightweight-structures/contact/success/"),
     "rail infrastructure": urljoin(URL, "rail-infrastructure/contact/success/"),
 }

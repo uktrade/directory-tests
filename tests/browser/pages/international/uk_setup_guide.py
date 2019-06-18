@@ -34,18 +34,23 @@ PAGE_TITLE = " - great.gov.uk International"
 
 URLs = {
     "access finance in the uk": urljoin(URL, "access-finance-in-the-uk/"),
-    "establish a uk business base": urljoin(URL, "establish-a-base-for-business-in-the-uk/"),
-    "hire skilled workers for your uk operations": urljoin(URL, "hire-skilled-workers-for-your-uk-operations/"),
+    "establish a uk business base": urljoin(
+        URL, "establish-a-base-for-business-in-the-uk/"
+    ),
+    "hire skilled workers for your uk operations": urljoin(
+        URL, "hire-skilled-workers-for-your-uk-operations/"
+    ),
     "open a uk business bank account": urljoin(URL, "open-a-uk-business-bank-account/"),
     "register a company in the uk": urljoin(URL, "register-a-company-in-the-uk/"),
-    "research and development (r&d) support in the uk": urljoin(URL, "research-and-development-rd-support-in-the-uk/"),
+    "research and development (r&d) support in the uk": urljoin(
+        URL, "research-and-development-rd-support-in-the-uk/"
+    ),
     "uk tax and incentives": urljoin(URL, "uk-tax-and-incentives/"),
     "uk visas and migration": urljoin(URL, "uk-visas-and-migration/"),
 }
 
 
-SELECTORS = {
-}
+SELECTORS = {}
 SELECTORS.update(common_selectors.HEADER_INTERNATIONAL)
 SELECTORS.update(common_selectors.BREADCRUMBS)
 SELECTORS.update(common_selectors.ERROR_REPORTING)

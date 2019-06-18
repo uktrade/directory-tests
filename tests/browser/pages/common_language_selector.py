@@ -150,7 +150,8 @@ def change_to(
     page_name = f"{page.SERVICE} - {page.NAME}".lower()
 
     select = find_element(
-        driver, LANGUAGE_SELECTOR, element_name="Language selector", wait_for_it=False)
+        driver, LANGUAGE_SELECTOR, element_name="Language selector", wait_for_it=False
+    )
     option = ELEMENTS_ON[page_name][language]
     logging.debug(f"Picking option {option} from dropdown list")
     logging.debug("Will select option: {}".format(option))

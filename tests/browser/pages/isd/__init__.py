@@ -1,4 +1,1 @@
-__all__ = [
-    "landing",
-    "search_results",
-]
+__all__ = ["landing", "search_results"]

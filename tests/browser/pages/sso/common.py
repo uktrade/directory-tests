@@ -4,10 +4,7 @@ import logging
 
 from directory_sso_api_client.testapiclient import DirectorySSOTestAPIClient
 
-from settings import (
-    DIRECTORY_SSO_API_CLIENT_API_KEY,
-    DIRECTORY_SSO_API_CLIENT_BASE_URL,
-)
+from settings import DIRECTORY_SSO_API_CLIENT_API_KEY, DIRECTORY_SSO_API_CLIENT_BASE_URL
 
 
 def verify_account(email: str):

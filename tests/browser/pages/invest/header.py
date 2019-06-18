@@ -21,8 +21,7 @@ URL = None
 SERVICE = Services.INVEST
 TYPE = "header"
 HEADER_LOGO = Selector(By.CSS_SELECTOR, "#great-header-logo > img")
-SELECTORS = {
-}
+SELECTORS = {}
 SELECTORS.update(common_selectors.HEADER_INVEST)
 SELECTORS.update(common_selectors.BETA_BAR)
 

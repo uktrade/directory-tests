@@ -37,7 +37,5 @@ HEADER_FOOTER_SELECTORS = {
 }
 HEADER_FOOTER_SELECTORS_W_LANGUAGE_SELECTOR = copy.deepcopy(HEADER_FOOTER_SELECTORS)
 HEADER_FOOTER_SELECTORS_W_LANGUAGE_SELECTOR["header"].update(
-    {
-        "language selector": Selector(By.ID, "great-header-language-select"),
-    }
+    {"language selector": Selector(By.ID, "great-header-language-select")}
 )

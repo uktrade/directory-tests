@@ -23,7 +23,7 @@ URL = urljoin(EVENTS_UI_URL, "")
 GREAT_LOGO = Selector(By.CSS_SELECTOR, "div.event-logo")
 SELECTORS = {
     "general": {"great.gov.uk logo": GREAT_LOGO},
-    "breadcrumbs": Selector(By.CSS_SELECTOR, ".breadcrumbs div>a")
+    "breadcrumbs": Selector(By.CSS_SELECTOR, ".breadcrumbs div>a"),
 }
 
 

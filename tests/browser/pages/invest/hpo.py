@@ -21,11 +21,7 @@ from pages.common_actions import (
 from settings import INVEST_UI_URL
 
 NAME = "HPO"
-NAMES = [
-    "Advanced food production",
-    "Lightweight structures",
-    "Rail infrastructure",
-]
+NAMES = ["Advanced food production", "Lightweight structures", "Rail infrastructure"]
 SERVICE = Services.INVEST
 TYPE = "HPO"
 URL = urljoin(INVEST_UI_URL, "high-potential-opportunities/")
