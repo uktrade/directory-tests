@@ -8,7 +8,7 @@ from behave.runner import Context
 from steps.then_impl import (
     articles_should_be_on_share_page,
     case_studies_should_see_case_study,
-    exred_search_finder_should_see_page_number,
+    domestic_search_finder_should_see_page_number,
     fas_search_results_filtered_by_industries,
     form_check_state_of_element,
     form_should_see_error_messages,
@@ -286,7 +286,7 @@ def then_actor_should_see_expected_marketplaces(
 @then('"{actor_alias}" should see search results page number "{page_num:d}" for "{phrase}"')
 def then_actor_should_see_page_number(
         context: Context, actor_alias: str, page_num: int, phrase: str):
-    exred_search_finder_should_see_page_number(context, actor_alias, page_num)
+    domestic_search_finder_should_see_page_number(context, actor_alias, page_num)
 
 
 @then('"{actor_alias}" should be on one of the "{expected_pages}" pages')

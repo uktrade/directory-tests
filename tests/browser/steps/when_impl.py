@@ -761,7 +761,7 @@ def contact_us_navigate_through_options(context: Context, actor_alias: str, via:
         generic_pick_radio_option_and_submit(context, actor_alias, option)
 
 
-def exred_open_random_advice_article(context: Context, actor_alias: str):
+def domestic_open_random_advice_article(context: Context, actor_alias: str):
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
     driver = context.driver
@@ -874,7 +874,7 @@ def soo_find_random_marketplace_and_apply_via_dit(
     )
 
 
-def exred_submit_soo_contact_us_form(
+def domestic_submit_soo_contact_us_form(
     context: Context, actor_alias: str, custom_details_table: Table
 ):
     generic_fill_out_and_submit_form(
@@ -908,14 +908,14 @@ def exred_submit_soo_contact_us_form(
     )
 
 
-def exred_search_for_phrase(
+def domestic_search_for_phrase(
         context: Context, actor_alias: str, phrase: str):
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "search")
     page.search(context.driver, phrase)
 
 
-def exred_search_for_phrase_on_page(
+def domestic_search_for_phrase_on_page(
         context: Context, actor_alias: str, phrase: str, page_name: str):
     visit_page(context, actor_alias, page_name)
     page = get_last_visited_page(context, actor_alias)
@@ -923,7 +923,7 @@ def exred_search_for_phrase_on_page(
     page.search(context.driver, phrase)
 
 
-def exred_find_more_about_search_result_type(
+def domestic_find_more_about_search_result_type(
         context: Context, actor_alias: str, type_of: str
 ):
     should_be_on_page(
@@ -936,7 +936,7 @@ def exred_find_more_about_search_result_type(
     page.click_on_result_of_type(context.driver, type_of)
 
 
-def exred_search_result_has_more_than_one_page(
+def domestic_search_result_has_more_than_one_page(
         context: Context, actor_alias: str, min_page_num: int
 ):
     should_be_on_page(

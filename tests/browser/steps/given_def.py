@@ -6,7 +6,7 @@ from behave import given
 from behave.runner import Context
 
 from steps.then_impl import (
-    exred_search_finder_should_see_page_number,
+    domestic_search_finder_should_see_page_number,
     should_be_on_page,
     should_see_sections,
 )
@@ -16,10 +16,10 @@ from steps.when_impl import (
     click_on_page_element,
     contact_us_get_to_page_via,
     contact_us_navigate_through_options,
-    exred_open_random_advice_article,
+    domestic_open_random_advice_article,
     fas_searched_for_companies,
-    exred_search_for_phrase_on_page,
-    exred_search_result_has_more_than_one_page,
+    domestic_search_for_phrase_on_page,
+    domestic_search_result_has_more_than_one_page,
     generic_at_least_n_news_articles,
     generic_create_great_account,
     generic_get_in_touch,
@@ -116,7 +116,7 @@ def given_user_did_basic_auth(context: Context, page_name: str):
 
 @given('"{actor_alias}" is on randomly selected Advice article page')
 def given_actor_in_on_random_advice_article(context: Context, actor_alias: str):
-    exred_open_random_advice_article(context, actor_alias)
+    domestic_open_random_advice_article(context, actor_alias)
 
 
 @given('"{actor_alias}" was barred from contacting us')
@@ -184,19 +184,19 @@ def fas_when_actor_searches_for_companies(
 @given('"{actor_alias}" searched using "{phrase}" on the "{page_name}" page')
 def given_actor_searched_phrase(
         context: Context, actor_alias: str, phrase: str, page_name: str):
-    exred_search_for_phrase_on_page(context, actor_alias, phrase, page_name)
+    domestic_search_for_phrase_on_page(context, actor_alias, phrase, page_name)
 
 
 @given('"{actor_alias}" sees more than "{min_page_num:d}" search result page')
 def given_actor_sees_more_than_one_page(
         context: Context, actor_alias: str, min_page_num: int):
-    exred_search_result_has_more_than_one_page(context, actor_alias, min_page_num)
+    domestic_search_result_has_more_than_one_page(context, actor_alias, min_page_num)
 
 
 @given('"{actor_alias}" sees search results page number "{page_num:d}" for "{first_phrase}"')
 def then_actor_should_see_page_number(
         context: Context, actor_alias: str, page_num: int, first_phrase: str):
-    exred_search_finder_should_see_page_number(context, actor_alias, page_num)
+    domestic_search_finder_should_see_page_number(context, actor_alias, page_num)
 
 
 ###############################################################################

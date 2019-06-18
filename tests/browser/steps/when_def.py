@@ -6,7 +6,7 @@ from behave import when
 from behave.runner import Context
 
 from steps.then_impl import (
-    exred_search_finder_should_see_page_number,
+    domestic_search_finder_should_see_page_number,
     should_be_on_page,
 )
 from steps.when_impl import (
@@ -16,9 +16,9 @@ from steps.when_impl import (
     clear_the_cookies,
     click_on_page_element,
     contact_us_navigate_through_options,
-    exred_find_more_about_search_result_type,
-    exred_search_for_phrase,
-    exred_submit_soo_contact_us_form,
+    domestic_find_more_about_search_result_type,
+    domestic_search_for_phrase,
+    domestic_submit_soo_contact_us_form,
     fas_fill_out_and_submit_contact_us_form,
     fas_search_for_companies,
     fas_use_breadcrumb,
@@ -332,7 +332,7 @@ def when_actor_selects_marketplace(context: Context, actor_alias: str):
 @when('"{actor_alias}" submits the SOO contact-us form')
 def when_actor_submits_soo_contact_us_form(
         context: Context, actor_alias: str):
-    exred_submit_soo_contact_us_form(
+    domestic_submit_soo_contact_us_form(
         context, actor_alias, custom_details_table=context.table
     )
 
@@ -340,19 +340,19 @@ def when_actor_submits_soo_contact_us_form(
 @when('"{actor_alias}" searches using "{phrase}"')
 def when_actor_search_for_phrase(
         context: Context, actor_alias: str, phrase: str):
-    exred_search_for_phrase(context, actor_alias, phrase)
+    domestic_search_for_phrase(context, actor_alias, phrase)
 
 
 @when('"{actor_alias}" decides to find out more about random "{type_of}" result')
 def when_actor_decides_to_find_out_more_about_result_type(
         context: Context, actor_alias: str, type_of: str):
-    exred_find_more_about_search_result_type(context, actor_alias, type_of)
+    domestic_find_more_about_search_result_type(context, actor_alias, type_of)
 
 
 @when('"{actor_alias}" should see search results page number "{page_num:d}" for "{phrase}"')
 def then_actor_should_see_page_number(
         context: Context, actor_alias: str, page_num: int, phrase: str):
-    exred_search_finder_should_see_page_number(context, actor_alias, page_num)
+    domestic_search_finder_should_see_page_number(context, actor_alias, page_num)
 
 
 ###############################################################################

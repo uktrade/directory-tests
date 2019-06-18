@@ -504,7 +504,7 @@ def marketplace_finder_should_see_marketplaces(
     page.should_see_marketplaces(context.driver, country)
 
 
-def exred_search_finder_should_see_page_number(
+def domestic_search_finder_should_see_page_number(
         context: Context, actor_alias: str, page_num: int
 ):
     should_be_on_page(
