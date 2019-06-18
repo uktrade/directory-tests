@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """Common Language Selector on Great pages"""
 import logging
-
 from types import ModuleType
 
 from selenium.webdriver.common.by import By

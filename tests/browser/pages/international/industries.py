@@ -4,7 +4,7 @@ from urllib.parse import urljoin
 
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import common_selectors, Services
+from pages import Services, common_selectors
 from pages.common_actions import check_url, go_to_url, take_screenshot
 from settings import EXRED_UI_URL
 

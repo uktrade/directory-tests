@@ -6,7 +6,7 @@ from typing import List
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType, common_selectors, Services
+from pages import ElementType, Services, common_selectors
 from pages.common_actions import (
     Selector,
     check_for_sections,

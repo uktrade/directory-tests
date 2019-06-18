@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-import os
 import logging
+import os
 from enum import Enum
 from importlib import import_module
 from pkgutil import iter_modules

@@ -7,13 +7,8 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType, common_selectors, Services
-from pages.common_actions import (
-    Selector,
-    check_url,
-    go_to_url,
-    take_screenshot,
-)
+from pages import ElementType, Services, common_selectors
+from pages.common_actions import Selector, check_url, go_to_url, take_screenshot
 from pages.domestic import actions as domestic_actions
 from settings import EXRED_UI_URL
 
