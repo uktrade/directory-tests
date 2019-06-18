@@ -29,15 +29,19 @@ class ElementType(Enum):
 
 class Services(Enum):
     BRITISH_COUNCIL = "British Council"
+    DOMESTIC = "Domestic"
     EVENTS = "Events"
     EXPORT_OPPORTUNITIES = "Export Opportunities"
-    EXPORT_READINESS = "Export Readiness"
+    FACEBOOK = "Facebook"
     FIND_A_BUYER = "Find a Buyer"
     FIND_A_SUPPLIER = "Find a Supplier"
+    INTERNATIONAL = "International"
     INVEST = "Invest"
     LEGAL_SERVICES = "Legal Services"
+    LINKEDIN = "LinkedIn"
     SELLING_ONLINE_OVERSEAS = "Selling Online Overseas"
     SINGLE_SIGN_ON = "Single Sign-On"
+    TWITTER = "Twitter"
     VISIT_BRITAIN = "Visit Britain"
 
 
