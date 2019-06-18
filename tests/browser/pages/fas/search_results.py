@@ -74,8 +74,8 @@ def should_see_sections(driver: WebDriver, names: List[str]):
 
 def show_filters(driver: WebDriver):
     filter_toggle = find_element(driver, FILTER_TOGGLE, wait_for_it=False)
-    css_classes = filter_toggle.get_attribute("class")
-    if "checked" in css_classes:
+    if "checked" in filter_toggle.get_attribute("class"):
+        logging.debug(f"Toggling Industry filters")
         filter_toggle.click()
 
 
