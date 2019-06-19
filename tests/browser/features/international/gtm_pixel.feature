@@ -15,7 +15,7 @@ Feature: Google Tag Manager
 
     @bug
     @CMS-1634
-    @fixme
+    @fixed
     Examples: Landing page
       | selected | businessUnit       | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
       | Landing  | GreatInternational | False       | en-gb        | HomePage    | Empty string   | None   |
@@ -92,7 +92,7 @@ Feature: Google Tag Manager
 
   @bug
   @CMS-1634
-  @fixme
+  @fixed
   @TT-1500
   @internationalisation
   Scenario Outline: GTM properties should be properly set on "International - <selected>" page viewed in "<preferred_language>"
