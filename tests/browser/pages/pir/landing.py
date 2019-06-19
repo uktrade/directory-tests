@@ -2,6 +2,7 @@
 """PIR - Landing Page"""
 import logging
 from typing import List
+from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -14,12 +15,12 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from settings import PIR_UI_URL
+from settings import EXRED_UI_URL
 
 NAME = "Landing"
 SERVICE = Services.PIR
 TYPE = "landing"
-URL = PIR_UI_URL
+URL = urljoin(EXRED_UI_URL, "international/invest/perfectfit/")
 
 SUBMIT_BUTTON = Selector(
     By.CSS_SELECTOR, "form input.button[type=submit]", type=ElementType.BUTTON
