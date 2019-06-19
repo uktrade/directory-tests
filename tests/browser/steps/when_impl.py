@@ -152,7 +152,7 @@ def open_group_element(context: Context, group: str, element: str, location: str
     if location.lower() == "domestic - home":
         domestic.home.open(driver, group, element)
     elif location.lower() == "international - landing":
-        international.international.open(driver, group, element, same_tab=True)
+        international.landing.open(driver, group, element, same_tab=True)
     else:
         raise KeyError("Could not recognize location: {}".format(location))
 
