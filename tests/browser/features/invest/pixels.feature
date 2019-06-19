@@ -7,11 +7,11 @@ Feature: Pixels
   Scenario Outline: Pixels should be present on "<selected>" page
     Given "Robert" visits the "Invest - <selected>" page
 
-    Then following web statistics analysis or tracking elements should be present
+    Then "Robert" should be on the "Invest - <selected>" page
+    And following web statistics analysis or tracking elements should be present
       | Google Tag Manager             |
       | Google Tag Manager - no script |
       | UTM Cookie Domain              |
-
     And following web statistics analysis or tracking elements should NOT be present
       | LinkedIn tracking pixel |
       | Facebook tracking pixel |
@@ -20,7 +20,6 @@ Feature: Pixels
       | selected       |
       | Home           |
       | Industries     |
-      | UK Setup Guide |
       | Contact Us     |
 
     Examples: Industry pages
@@ -53,26 +52,3 @@ Feature: Pixels
       | Oil and gas - industry                         |
       | Pharmaceutical manufacturing - industry        |
       | Retail - industry                              |
-
-    Examples: UK Setup Guides
-      | selected                                            |
-      | Apply for a UK visa - guide                         |
-      | Establish a base for business in the UK - guide     |
-      | Hire skilled workers for your UK operations - guide |
-
-    @full
-    Examples: UK Setup Guides
-      | selected                                 |
-      | Open a UK business bank account - guide  |
-      | Register a company in the UK - guide     |
-      | Understand UK tax and incentives - guide |
-
-    @skip
-    Examples: Industry pages available via International site
-      | selected                            |
-      | Aerospace - industry                |
-      | Automotive - industry               |
-      | Creative industries - industry      |
-      | Financial services - industry       |
-      | Health and life sciences - industry |
-      | Technology - industry               |
