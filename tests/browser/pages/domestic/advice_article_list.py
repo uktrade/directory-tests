@@ -94,12 +94,9 @@ def clean_name(name: str) -> str:
 
 
 def visit(driver: WebDriver, *, page_name: str = None):
-    if page_name:
-        key = clean_name(page_name).lower()
-        url = URLs[key]
-    else:
-        url = URL
-    go_to_url(driver, url, NAME)
+    take_screenshot(driver, page_name or NAME)
+    url = URLs[page_name.lower()] if page_name else URL
+    go_to_url(driver, url, page_name or NAME)
 
 
 def should_be_here(driver: WebDriver, *, page_name: str):

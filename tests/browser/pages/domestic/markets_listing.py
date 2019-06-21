@@ -14,7 +14,7 @@ from settings import EXRED_UI_URL
 
 NAME = "Markets"
 SERVICE = Services.DOMESTIC
-TYPE = "market list"
+TYPE = "listing"
 URL = urljoin(EXRED_UI_URL, "markets/")
 
 SELECTORS = {
