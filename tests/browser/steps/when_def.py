@@ -40,6 +40,7 @@ from steps.when_impl import (
     generic_report_problem_with_page,
     generic_select_dropdown_option,
     generic_submit_form,
+    generic_trigger_all_gtm_events,
     generic_unfold_topics,
     generic_visit_current_page_with_lang_parameter,
     header_footer_open_link,
@@ -353,6 +354,22 @@ def when_actor_decides_to_find_out_more_about_result_type(
 def then_actor_should_see_page_number(
         context: Context, actor_alias: str, page_num: int, phrase: str):
     domestic_search_finder_should_see_page_number(context, actor_alias, page_num)
+
+
+@when('"{actor_alias}" triggers all GTM events defined for "{tagging_package}"')
+def when_actor_triggers_all_gtm_events(
+        context: Context, actor_alias: str, tagging_package: str
+):
+    generic_trigger_all_gtm_events(context, actor_alias, tagging_package)
+
+
+@when('"{actor_alias}" triggers all GTM "{event_group}" events defined for "{tagging_package}"')
+def when_actor_triggers_all_gtm_events(
+        context: Context, actor_alias: str, event_group: str, tagging_package: str
+):
+    generic_trigger_all_gtm_events(
+        context, actor_alias, tagging_package, event_group=event_group
+    )
 
 
 ###############################################################################

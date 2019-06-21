@@ -39,6 +39,7 @@ from pages.common_actions import (
 from settings import BASICAUTH_PASS, BASICAUTH_USER
 from steps import has_action
 from utils.cms_api import get_news_articles
+from utils.gtm import get_gtm_event_definitions, trigger_js_event
 from utils.gov_notify import get_verification_code, get_verification_link
 
 NUMBERS = {
@@ -972,3 +973,16 @@ def domestic_search_result_has_more_than_one_page(
     page = get_last_visited_page(context, actor_alias)
     has_action(page, "has_pagination")
     page.has_pagination(context.driver, min_page_num)
+
+
+def generic_trigger_all_gtm_events(
+    context: Context, actor_alias: str, tagging_package: str, *, event_group: str = None
+):
+    events = get_gtm_event_definitions(
+        context.driver, tagging_package, event_group=event_group
+    )
+    assert events, f"No registered GTM events were found on {context.driver.current_url}"
+    for event_group, events in events.items():
+        for event in events:
+            trigger_js_event(context.driver, event)
+    logging.debug(f"{actor_alias} triggered all events for GTM event handlers")
