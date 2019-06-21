@@ -101,10 +101,7 @@ def find_all_substring_indexes(string: str, substring: str) -> list:
 
 def get_dit_tagging_js_event_source_code(driver: WebDriver, package: str) -> str:
     """Return JS source code for specific DIT Tagging package"""
-    packages = {
-        "Domestic header": "domesticHeader",
-        "Domestic pages": "domestic",
-    }
+    packages = {"Domestic header": "domesticHeader", "Domestic pages": "domestic"}
     error = (
         f"'{package}' is not supported, please use one of the following: "
         f"{list(packages.keys())}"
@@ -131,8 +128,7 @@ def get_event_details(raw_code: str) -> dict:
     return {
         line.strip().split(": ")[key_index]: line.strip().split(": ")[value_index]
         for line in raw_code.replace("'", "").replace(",", "").splitlines()
-        if ":" in line
-        and "value" not in line
+        if ":" in line and "value" not in line
     }
 
 
@@ -162,7 +158,9 @@ def get_selector_and_on_what_action(raw_code: str) -> tuple:
     register_event_call = ").on("
     event_function_start = ", function"
     if ").on(" in raw_code.strip():
-        selector_start = raw_code.index(selector_line_start) + len(selector_line_start) + 1
+        selector_start = (
+            raw_code.index(selector_line_start) + len(selector_line_start) + 1
+        )
         selector_end = raw_code.index(register_event_call) - 1
         selector = raw_code[selector_start:selector_end]
         event_start = raw_code.index(register_event_call) + len(register_event_call) + 1
@@ -233,7 +231,7 @@ def get_gtm_events_from_raw_js(raw_code: str) -> dict:
 
 
 def get_gtm_event_definitions(
-        driver: WebDriver, tagging_package: str, *, event_group: str = None
+    driver: WebDriver, tagging_package: str, *, event_group: str = None
 ) -> dict:
     """Extracts details of all GTM events from a specific JS DIT tagging package.
     ATM. it supports both: dit.tagging.domestic & dit.tagging.domesticHeader packages
@@ -279,9 +277,13 @@ def trigger_js_event(driver: WebDriver, event: dict):
     on_what = event["on_what"]
     if on_what == "keypress":
         key = event["key"]
-        js = f"""$('{selector}').trigger({{type:"keypress", which: {key}}});"""  # fmt: off
+        js = (
+            f"""$('{selector}').trigger({{type:"keypress", which: {key}}});"""
+        )  # fmt: off
     elif on_what == "submit":
-        js = f"""$('{selector}').get(0).dispatchEvent(new Event("submit"));"""  # fmt: off
+        js = (
+            f"""$('{selector}').get(0).dispatchEvent(new Event("submit"));"""
+        )  # fmt: off
     elif on_what == "click":
         js = f"""$('{selector}').click();"""  # fmt: off
     else:
@@ -292,5 +294,7 @@ def trigger_js_event(driver: WebDriver, event: dict):
         f"Triggering '{on_what}' event for '{action}' in '{element}' found using "
         f"'{selector}'"
     )
-    with selenium_action(driver, f"Failed to trigger '{on_what}' event for '{selector}'"):
+    with selenium_action(
+        driver, f"Failed to trigger '{on_what}' event for '{selector}'"
+    ):
         driver.execute_script(js)
