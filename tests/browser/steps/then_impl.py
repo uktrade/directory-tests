@@ -44,7 +44,11 @@ from utils.gov_notify import (
     get_email_confirmation_notification,
     get_email_confirmations_with_matching_string,
 )
-from utils.gtm import get_gtm_datalayer_properties, replace_string_representations
+from utils.gtm import (
+    get_gtm_data_layer_events,
+    get_gtm_data_layer_properties,
+    replace_string_representations,
+)
 from utils.mailgun import mailgun_invest_find_contact_confirmation_email
 from utils.pdf import extract_text_from_pdf_bytes
 from utils.zendesk import find_tickets
@@ -559,12 +563,58 @@ def generic_check_gtm_datalayer_properties(context: Context, table: Table):
     table.require_columns(row_names)
     raw_properties = {name: row.get(name) for name in row_names for row in table}
     expected_properties = replace_string_representations(raw_properties)
-    found_properties = get_gtm_datalayer_properties(context.driver)
+    found_properties = get_gtm_data_layer_properties(context.driver)
 
     with assertion_msg(
-        f"Expected to see following GTM datalayer proeprties:\n"
+        f"Expected to see following GTM data layer properties:\n"
         f"'{expected_properties}'\n but got:\n'{found_properties}'\non: "
         f"{context.driver.current_url}\ndiff:\n"
         f"{diff(expected_properties, found_properties)}"
     ):
         assert expected_properties == found_properties
+
+
+def table_to_list_of_dicts(table: Table) -> List[dict]:
+    """Convert behave's table to a list of dictionaries"""
+    result = []
+    for row in table:
+        result.append({name: row.get(name) for name in table.headings})
+    return result
+
+
+def generic_check_gtm_events(context: Context):
+    required_columns = ["action", "element", "event", "type", "value"]
+    context.table.require_columns(required_columns)
+    expected_gtm_events = table_to_list_of_dicts(context.table)
+
+    for event in expected_gtm_events:
+        if event["type"] == "Empty string":
+            event["type"] = ""
+        if event["value"] == "Empty string":
+            event["value"] = ""
+        if event["type"] == "Not present":
+            event.pop("type")
+        if event["value"] == "Not present":
+            event.pop("value")
+    logging.debug(f"Expected GTM events: {expected_gtm_events}")
+    registered_gtm_events = get_gtm_data_layer_events(context.driver)
+
+    missing_events = [
+        event
+        for event in expected_gtm_events
+        if event not in registered_gtm_events
+    ]
+    with assertion_msg(
+            f"Could not find following GTM events:\n{missing_events}\n"
+            f"among following GTM events:\n{registered_gtm_events}\n"
+            f"registered on: {context.driver.current_url}\n"
+            f"Diff:\n{diff(expected_gtm_events, registered_gtm_events)}"
+    ):
+        assert not missing_events
+
+    with assertion_msg(
+            f"Expected to find {len(expected_gtm_events)} registered GTM event(s) but "
+            f"found {len(registered_gtm_events)} instead: "
+            f"{registered_gtm_events}"
+    ):
+        assert len(expected_gtm_events) == len(registered_gtm_events)

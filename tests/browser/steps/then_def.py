@@ -16,6 +16,7 @@ from steps.then_impl import (
     generic_article_counter_should_match_number_of_articles,
     generic_article_counters_should_match,
     generic_check_gtm_datalayer_properties,
+    generic_check_gtm_events,
     generic_contact_us_should_receive_confirmation_email,
     generic_should_be_on_one_of_the_pages,
     generic_should_see_expected_page_content,
@@ -300,5 +301,10 @@ def then_form_should_be_prepopulated(context: Context, actor_alias: str):
 
 
 @then("Google Tag Manager properties should be set to proper values")
-def step_check_gtm_datalayer_properties(context: Context):
+def step_check_gtm_data_layer_properties(context: Context):
     generic_check_gtm_datalayer_properties(context, context.table)
+
+
+@then("following GTM events should be registered")
+def then_expected_gtm_events_should_be_registered(context: Context):
+    generic_check_gtm_events(context)
