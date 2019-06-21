@@ -107,11 +107,12 @@ def visit_page(context: Context, actor_alias: str, page_name: str):
     has_action(page, "visit")
 
     if is_special_case(page_name) and hasattr(page, "URLs"):
-        special_url = page.URLs[page_name.split(" - ")[1].lower()]
+        subpage_name = page_name.split(" - ")[1].lower()
+        special_url = page.URLs[subpage_name]
         logging.debug(
             f"{actor_alias} will visit '{page_name}' page using: '{special_url}"
         )
-        page.visit(context.driver, page_name=page_name)
+        page.visit(context.driver, page_name=subpage_name)
     else:
         logging.debug(
             f"{actor_alias} will visit '{page_name}' page using: '{page.URL}'"
