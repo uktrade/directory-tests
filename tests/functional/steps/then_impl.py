@@ -39,8 +39,6 @@ from tests.functional.pages.sso import (
     sso_ui_verify_your_email,
 )
 from tests.functional.utils.generic import (
-    MailGunEvent,
-    MailGunService,
     assertion_msg,
     check_hash_of_remote_file,
     detect_page_language,
@@ -49,7 +47,6 @@ from tests.functional.utils.generic import (
     extract_link_with_ownership_transfer_request,
     extract_logo_url,
     extract_plain_text_payload,
-    find_mail_gun_events,
     get_language_code,
     get_number_of_search_result_pages,
     mailgun_find_email_with_ownership_transfer_request,
@@ -57,6 +54,7 @@ from tests.functional.utils.generic import (
     surround,
 )
 from tests.functional.utils.gov_notify import (
+    get_email_notification,
     get_password_reset_link,
     get_verification_link,
 )
@@ -727,15 +725,16 @@ def fas_should_be_told_that_message_has_been_sent(
 def fas_supplier_should_receive_message_from_buyer(
     context: Context, supplier_alias: str, buyer_alias: str
 ):
+    buyer = context.get_actor(buyer_alias)
     supplier = context.get_actor(supplier_alias)
-    context.response = find_mail_gun_events(
-        context,
-        service=MailGunService.DIRECTORY,
-        to=supplier.email,
-        event=MailGunEvent.ACCEPTED,
-        subject=FAS_MESSAGE_FROM_BUYER_SUBJECT,
+    context.response = get_email_notification(
+        from_email=buyer.email,
+        to_email=supplier.email,
+        subject=FAS_MESSAGE_FROM_BUYER_SUBJECT
     )
-    logging.debug("%s received message from %s", supplier_alias, buyer_alias)
+    logging.debug(
+        f"{supplier_alias} received a notification about a message from {buyer_alias}"
+    )
 
 
 def profile_should_see_expected_error_messages(
