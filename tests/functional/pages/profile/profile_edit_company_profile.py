@@ -19,8 +19,8 @@ TYPE = "landing"
 URL = URLs.PROFILE_FAB.absolute
 EXPECTED_STRINGS = [
     "You are signed in as",
-    "This company",
     "Business profile",
+    "Business details",
     "Profile email",
 ]
 
