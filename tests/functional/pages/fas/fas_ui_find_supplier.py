@@ -46,7 +46,7 @@ def go_to(
         params.update({"sectors": sectors})
     headers = {"Referer": URLs.FAB_COMPANY_PROFILE.absolute}
     return make_request(
-        Method.GET, URL, session=session, params=params, headers=headers
+        Method.GET, URL, session=session, params=params, headers=headers, trim=False
     )
 
 
