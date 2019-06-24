@@ -4,16 +4,23 @@
 [![codecov-image]][codecov]
 [![snyk-image]][snyk]
 
-**[Export Directory integration tests](https://www.directory.exportingisgreat.gov.uk/)**
+**[Export Directory smoke, load, functional & functional browser tests](https://www.great.gov.uk)**
 
 ---
 
+Please refer to readme per specific type of tests:
+
+* [Load tests](tests/load/README.md)
+* [Functional Browser tests](tests/browser/README.md)
+
+
 ## Requirements
 
-* Python3
+* Python 3.6+
+
+Optionally:
 * [Docker >= 1.10](https://docs.docker.com/engine/installation/)
 * [Docker Compose >= 1.8](https://docs.docker.com/compose/install/)
-* libpq-dev -> `sudo apt install libpq-dev`
 
 
 ### Updating requirements files
