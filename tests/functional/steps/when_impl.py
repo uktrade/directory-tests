@@ -1603,7 +1603,13 @@ def fas_send_message_to_supplier(
     ):
         assert endpoint
     # Step 0 - generate message data
-    message = random_message_data()
+    message = random_message_data(
+        family_name=buyer.alias,
+        given_name="AUTOMATED TESTS",
+        company_name=buyer.company_alias,
+        email_address=buyer.email,
+        subject="CONTACT SUPPLIER - AUTOMATED TESTS",
+    )
 
     # Step 1 - go to Company's profile page
     response = fas_ui_profile.go_to_endpoint(session, endpoint)
