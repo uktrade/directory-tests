@@ -1512,40 +1512,38 @@ def can_find_supplier_by_term(
     :return: a tuple with search result (True/False), last search Response and
              an endpoint to company's profile
     """
-    found = False
     endpoint = None
     response = fas_ui_find_supplier.go_to(session, term=term)
     fas_ui_find_supplier.should_be_here(response)
-    number_of_pages = get_number_of_search_result_pages(response)
-    if number_of_pages == 0:
-        found = fas_ui_find_supplier.should_see_company(response, name)
+    found = fas_ui_find_supplier.should_see_company(response, name)
+    if found:
+        endpoint = fas_get_company_profile_url(response, name)
         return found, response, endpoint
-    for page_number in range(1, number_of_pages + 1):
-        found = fas_ui_find_supplier.should_see_company(response, name)
-        if found:
-            endpoint = fas_get_company_profile_url(response, name)
-            break
-        else:
-            logging.debug(
-                "Couldn't find Supplier '%s' on the %d page out of %d of "
-                "FAS search results. Search was done using '%s' : '%s'",
-                name,
-                page_number,
-                number_of_pages,
-                term_type,
-                term,
-            )
-            next_page = page_number + 1
-            if next_page <= number_of_pages:
-                response = fas_ui_find_supplier.go_to(
-                    session, term=term, page=next_page
-                )
-                fas_ui_find_supplier.should_be_here(response)
+    else:
+        number_of_pages = get_number_of_search_result_pages(response)
+        for page_number in range(1, number_of_pages + 1):
+            found = fas_ui_find_supplier.should_see_company(response, name)
+            assert found
+            if found:
+                endpoint = fas_get_company_profile_url(response, name)
+                break
             else:
                 logging.debug(
-                    "Couldn't find the Supplier even on the last page of the "
-                    "search results"
+                    f"Couldn't find Supplier '{name}' on the {page_number} page out of "
+                    f"{number_of_pages} of FAS search results. Search was done using "
+                    f"'{term_type}' : '{term}'"
                 )
+                next_page = page_number + 1
+                if next_page <= number_of_pages:
+                    response = fas_ui_find_supplier.go_to(
+                        session, term=term, page=next_page
+                    )
+                    fas_ui_find_supplier.should_be_here(response)
+                else:
+                    logging.debug(
+                        "Couldn't find the Supplier even on the last page of the "
+                        "search results"
+                    )
     return found, response, endpoint
 
 
