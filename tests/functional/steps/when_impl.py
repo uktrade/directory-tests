@@ -185,12 +185,10 @@ def unauthenticated_buyer(buyer_alias: str) -> Actor:
     """
     session = Session()
     email = (
-        "test+buyer_{}{}@directory.uktrade.io".format(
-            buyer_alias, str(uuid.uuid4())
-        )
-            .replace("-", "")
-            .replace(" ", "")
-            .lower()
+        f"test+buyer_{buyer_alias}{str(uuid.uuid4())}@directory.uktrade.io"
+        .replace("-", "")
+        .replace(" ", "")
+        .lower()
     )
     company_name = f"{sentence()} AUTOTESTS"
     return Actor(
