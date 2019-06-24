@@ -54,6 +54,47 @@ def filter_by_recipient(notifications: list, email: str) -> list:
     return list(filter(lambda x: x["email_address"] == email, notifications))
 
 
+def filter_by_content(notifications: list, substring: str) -> list:
+    return list(filter(lambda x: substring in x["body"], notifications))
+
+
+@retry(wait_fixed=5000, stop_max_attempt_number=5)
+def get_email_notification(from_email: str, to_email: str, subject: str) -> dict:
+    all_notifications = GOV_NOTIFY_CLIENT.get_all_notifications(
+        template_type="email"
+    )["notifications"]
+
+    recipient_notifications = filter_by_recipient(all_notifications, to_email)
+    assert len(recipient_notifications) > 0, (
+        f"Expected to find at least 1 notification send to {to_email} but found 0"
+    )
+    logging.debug(
+        f"Found {len(recipient_notifications)} notifications send to: {to_email}"
+    )
+
+    notifications_with_matching_subject = filter_by_subject(recipient_notifications, subject)
+    assert len(notifications_with_matching_subject) == 1, (
+        f"Expected to find 1 notification entitled '{subject}' send to {to_email} but "
+        f"found {len(notifications_with_matching_subject)}"
+    )
+    logging.debug(
+        f"Found {len(notifications_with_matching_subject)} notifications send to: "
+        f"{to_email} with matching subject: '{subject}'"
+    )
+
+    matching_notifications = filter_by_content(notifications_with_matching_subject, from_email)
+    assert len(matching_notifications) == 1, (
+        f"Expected to find 1 notification entitled '{subject}' send from {from_email} "
+        f"to {to_email} but found {len(matching_notifications)}"
+    )
+    logging.debug(
+        f"Found {len(matching_notifications)} notifications send from {from_email} to: "
+        f"{to_email} with matching subject: '{subject}'"
+    )
+
+    return matching_notifications[0]
+
+
 @retry(wait_fixed=5000, stop_max_attempt_number=5)
 def get_email_confirmation_notification(
     email: str, *, subject: str = EMAIL_VERIFICATION_MSG_SUBJECT
