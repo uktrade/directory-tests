@@ -69,8 +69,7 @@ STANNP_LETTER_TEMPLATE_ID = os.getenv("STANNP_LETTER_TEMPLATE_ID", "5395")
 
 # Static data used across the projects
 EMAIL_VERIFICATION_MSG_SUBJECT = "Confirm your email address"
-FAS_MESSAGE_FROM_BUYER_SUBJECT = ("Someone is interested in your Find a Buyer "
-                                  "profile")
+FAS_MESSAGE_FROM_BUYER_SUBJECT = "New message through your great.gov.uk business profile"
 FAB_CONFIRM_COLLABORATION_SUBJECT = ("Confirm you’ve been added to {}’s Find a"
                                      " buyer profile")
 FAB_TRANSFER_OWNERSHIP_SUBJECT = ("Confirm ownership of {}’s Find a buyer "
