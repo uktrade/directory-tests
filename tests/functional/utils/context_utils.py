@@ -95,6 +95,10 @@ Company = namedtuple(
         "owner",
         "owner_email",
         "has_exported_before",
+        "is_uk_isd_company",
+        "expertise_industries",
+        "export_destinations",
+        "export_destinations_other",
     ],
 )
 Feedback = namedtuple(

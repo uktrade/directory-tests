@@ -78,6 +78,7 @@ from tests.functional.steps.then_impl import (
 from tests.functional.utils.context_utils import Actor, Company
 from tests.functional.utils.generic import (
     assertion_msg,
+    create_test_isd_company,
     escape_html,
     extract_csrf_middleware_token,
     extract_form_action,
@@ -2852,3 +2853,59 @@ def enrol_user(context: Context, actor_alias: str, company_alias: str):
         f"'{actor.alias}' created an unverified Business Profile for "
         f"'{company.title} - {company.number}'"
     )
+
+
+def isd_enrol_user(context: Context, actor_alias: str, company_alias: str):
+    pass
+
+
+def isd_publish_profile(context: Context, supplier_alias: str):
+    pass
+
+
+def isd_create_unregistered_company(
+        context: Context, supplier_alias: str, company_alias: str
+):
+    company_dict = create_test_isd_company(context)
+    company = Company(
+        alias=company_alias,
+        title=company_dict["name"],
+        number=company_dict["number"],
+        sector=company_dict["sectors"],
+        description=company_dict["description"],
+        summary=company_dict["summary"],
+        no_employees=company_dict["employees"],
+        keywords=company_dict["keywords"],
+        website=company_dict["website"],
+        facebook=company_dict["facebook_url"],
+        twitter=company_dict["twitter_url"],
+        linkedin=company_dict["linkedin_url"],
+        is_uk_isd_company=company_dict["is_uk_isd_company"],
+        slug=company_dict["slug"],
+        expertise_industries=company_dict["expertise_industries"],
+        export_destinations=company_dict["export_destinations"],
+        export_destinations_other=company_dict["export_destinations_other"]
+    )
+    context.update_actor(supplier_alias, company_alias=company_alias)
+    context.add_company(company)
+    logging.debug(f"A test ISD company was successfully created:\n{company}")
+
+
+def isd_create_unverified_business_profile(
+        context: Context, supplier_alias: str, company_alias: str
+):
+    if not context.get_actor(supplier_alias):
+        context.add_actor(unauthenticated_supplier(supplier_alias))
+    isd_create_unregistered_company(context, supplier_alias, company_alias)
+    isd_enrol_user(context, supplier_alias, company_alias)
+    context.update_actor(supplier_alias, has_sso_account=True)
+
+
+def isd_create_verified_and_published_business_profile(
+        context: Context, supplier_alias: str, company_alias: str
+):
+    """Create a verified ISD Business profile and publish it to ISD"""
+    logging.debug("1 - find unregistered ISD company & enrol user for that company")
+    isd_create_unverified_business_profile(context, supplier_alias, company_alias)
+    logging.debug("2 - Publish ISD business profile")
+    isd_publish_profile(context, supplier_alias)
