@@ -263,6 +263,7 @@ class URLs(Enum):
     # Find a Buyer
     FAB_API_COMPANIES_HOUSE_SEARCH = FABApiUrl("api/internal/companies-house-search/", template="api/internal/companies-house-search/?term={term}")
     FAB_LANDING = FABUrl("")
+    FAB_SITEMAP = FABUrl("sitemap.xml")
     FAB_ACCOUNT_ACCEPT_INVITATION = FABUrl("account/collaborate/accept/?invite_key={invite_key}", template="account/collaborate/accept/?invite_key={invite_key}")
     FAB_ACCOUNT_ADD_COLLABORATOR = FABUrl("account/add-collaborator/")
     FAB_ACCOUNT_CONFIRM_OWNERSHIP_TRANSFER = FABUrl("account/transfer/accept/?invite_key=", template="account/transfer/accept/?invite_key={invite_key}")
@@ -298,6 +299,7 @@ class URLs(Enum):
     FAS_INDUSTRY_TECHNOLOGY = FASUrl("industries/technology/")
     FAS_LANDING = FASUrl("")
     FAS_SEARCH = FASUrl("search/")
+    FAS_SITEMAP = FASUrl("sitemap.xml")
     FAS_SUBSCRIBE = FASUrl("subscribe/")
     FAS_SUPPLIERS = FASUrl("suppliers/", template="suppliers/{ch_number}/{slug}/")
 
@@ -309,6 +311,7 @@ class URLs(Enum):
 
     # New International site
     INTERNATIONAL_LANDING = InternationalUrl("")
+    INTERNATIONAL_SITEMAP = InternationalUrl("sitemap.xml")
     INTERNATIONAL_INDUSTRIES = InternationalUrl("content/industries/", template="content/industries/{industry}/")
     INTERNATIONAL_INDUSTRY_ADVANCED_MANUFACTURING = InternationalUrl("content/industries/advanced-manufacturing/")
     INTERNATIONAL_INDUSTRY_AEROSPACE = InternationalUrl("content/industries/aerospace/")
@@ -356,6 +359,7 @@ class URLs(Enum):
     INVEST_LANDING = InvestUrl("")
     INVEST_HEALTHCHECK = InvestUrl("healthcheck/")
     INVEST_CONTACT = InvestUrl("contact/")
+    INVEST_SITEMAP = InvestUrl("sitemap.xml")
     INVEST_INDUSTRIES = InvestUrl("industries/")
     INVEST_UK_SETUP_GUIDE = InvestUrl("uk-setup-guide/")
     INVEST_HPO_RAIL = InvestUrl("high-potential-opportunities/rail-infrastructure/")
@@ -407,6 +411,7 @@ class URLs(Enum):
     PROFILE_EXOPS_ALERTS = ProfileUrl("export-opportunities/email-alerts/")
     PROFILE_EXOPS_APPLICATIONS = ProfileUrl("export-opportunities/applications/")
     PROFILE_LANDING = ProfileUrl("")
+    PROFILE_SITEMAP = ProfileUrl("sitemap.xml")
     PROFILE_ABOUT = ProfileUrl("about/")
     PROFILE_ENROL = ProfileUrl("enrol/")
     PROFILE_ENROL_USER_ACCOUNT = ProfileUrl("enrol/business-type/companies-house/user-account/")
@@ -429,6 +434,7 @@ class URLs(Enum):
     DOMESTIC_HEALTHCHECK = DomesticUrl("healthcheck/")
     DOMESTIC_HEALTHCHECK_PING = DomesticUrl("healthcheck/ping/")
     DOMESTIC_SEARCH = DomesticUrl("search/")
+    DOMESTIC_SITEMAP = DomesticUrl("sitemap.xml")
     DOMESTIC_LANDING = DomesticUrl("")
     DOMESTIC_LANDING_UK = DomesticUrl("?lang=en-gb")
     DOMESTIC_INTERNATIONAL = DomesticUrl("international/")
@@ -501,9 +507,11 @@ class URLs(Enum):
 
     # ExOpps UI - Export Opportunities
     EXOPPS_LANDING = ExOppsUrl("")
+    EXOPPS_SITEMAP = ExOppsUrl("sitemap.xml")
 
     # SOO UI Selling Online Overseas
     SOO_LANDING = SOOUrl("")
+    SOO_SITEMAP = SOOUrl("sitemap.xml")
     SOO_SEARCH_RESULTS = SOOUrl("markets/results/")
     SOO_MARKET_DETAILS = SOOUrl("markets/details/", template="markets/details/{market}/")
 
