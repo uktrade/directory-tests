@@ -29,7 +29,7 @@ from tests.functional.steps.when_impl import (
     profile_add_business_description,
     profile_add_case_study,
     profile_add_online_profiles,
-    profile_create_unverified_business_profile,
+    profile_create_unverified_fas_business_profile,
     profile_create_verified_and_published_business_fas_profile,
     profile_create_verified_yet_unpublished_business_profile,
     profile_edit_business_details,
@@ -234,7 +234,7 @@ def given_actor_sends_a_verification_letter(context, actor_alias):
 
 @given('"{supplier_alias}" created an unverified business profile for randomly selected company "{company_alias}"')
 def given_unverified_profile_new_reg_flow(context, supplier_alias, company_alias):
-    profile_create_unverified_business_profile(
+    profile_create_unverified_fas_business_profile(
         context, supplier_alias, company_alias
     )
 

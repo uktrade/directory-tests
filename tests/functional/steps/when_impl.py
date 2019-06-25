@@ -219,7 +219,7 @@ def go_to_page(context: Context, supplier_alias: str, page_name: str):
     context.response = response
 
 
-def profile_create_unverified_business_profile(
+def profile_create_unverified_fas_business_profile(
         context: Context, supplier_alias: str, company_alias: str
 ):
     if not context.get_actor(supplier_alias):
@@ -253,7 +253,7 @@ def profile_create_verified_yet_unpublished_business_profile(
 ):
     """Create a verified Business profile and publish it to FAS"""
     logging.debug("1 - find unregistered company & enrol user for that company")
-    profile_create_unverified_business_profile(context, supplier_alias, company_alias)
+    profile_create_unverified_fas_business_profile(context, supplier_alias, company_alias)
     logging.debug("2 - add business description")
     profile_add_business_description(context, supplier_alias)
     logging.debug("3 - decide to confirm identity with letter code")
@@ -423,7 +423,7 @@ def create_actor_with_verified_or_unverified_fab_profile(
     if verified_or_not == "a verified":
         profile_create_verified_and_published_business_fas_profile(context, actor_alias, company_alias)
     else:
-        profile_create_unverified_business_profile(context, actor_alias, company_alias)
+        profile_create_unverified_fas_business_profile(context, actor_alias, company_alias)
 
 
 def stannp_send_verification_letter(context: Context, actor_alias: str):

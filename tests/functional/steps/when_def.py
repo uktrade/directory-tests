@@ -184,8 +184,8 @@ def when_actor_views_pages_in_selected_language(context, actor_alias, language):
     )
 
 
-@when('"{buyer_alias}" searches for companies on FAS with empty search query')
-def when_buyer_searches_with_emtpy_search_query(context, buyer_alias):
+@when('"{buyer_alias}" searches for FAS companies with empty search query')
+def when_fas_buyer_searches_with_emtpy_search_query(context, buyer_alias):
     fas_search_with_empty_query(context, buyer_alias)
 
 
