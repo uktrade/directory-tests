@@ -15,11 +15,11 @@ Feature: Google Tag Manager
 
     @bug
     @CMS-1634
-    @fixme
+    @fixed
     Examples: Listing pages
       | selected   | businessUnit | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
       | Home       | Invest       | False       | en-gb        | LandingPage | Empty string   | None   |
-      | Contact us | Invest       | False       | en-gb        | Contact     | DetailPage     | None   |
+      | Contact us | Invest       | False       | en-gb        | Contact     | Empty string   | None   |
 
     Examples: Listing pages
       | selected   | businessUnit | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
@@ -86,7 +86,7 @@ Feature: Google Tag Manager
 
   @bug
   @CMS-1634
-  @fixme
+  @fixed
   @TT-1500
   @internationalisation
   Scenario Outline: GTM properties should be properly set on "Invest - <selected>" page viewed in "<preferred_language>"

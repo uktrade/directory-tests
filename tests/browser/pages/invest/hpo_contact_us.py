@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType, common_selectors, Services
+from pages import ElementType, Services, common_selectors
 from pages.common_actions import (
     Actor,
     Selector,
@@ -27,11 +27,7 @@ from pages.common_actions import (
 from settings import INVEST_UI_URL
 
 NAME = "Contact us"
-NAMES = [
-    "Advanced food production",
-    "Lightweight structures",
-    "Rail infrastructure",
-]
+NAMES = ["Advanced food production", "Lightweight structures", "Rail infrastructure"]
 SERVICE = Services.INVEST
 TYPE = "HPO Contact us"
 URL = urljoin(INVEST_UI_URL, "high-potential-opportunities/")
@@ -92,9 +88,7 @@ SELECTORS = {
     },
     "elements invisible to selenium": {
         "advanced food production checkbox": Selector(
-            By.ID,
-            "checkbox-multiple-advanced-food-production",
-            is_visible=False,
+            By.ID, "checkbox-multiple-advanced-food-production", is_visible=False
         ),
         "rail infrastructure checkbox": Selector(
             By.ID, "checkbox-multiple-rail-infrastructure", is_visible=False

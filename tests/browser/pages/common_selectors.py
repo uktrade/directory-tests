@@ -36,7 +36,7 @@ HEADER = {
         "services": Selector(By.ID, "header-services", type=ElementType.LINK),
         "search box": Selector(By.ID, "search-box", type=ElementType.INPUT),
         "search button": Selector(
-            By.CSS_SELECTOR, "#search-box ~ button", type=ElementType.BUTTON,
+            By.CSS_SELECTOR, "#search-box ~ button", type=ElementType.BUTTON
         ),
     }
 }
@@ -44,12 +44,12 @@ SSO_LOGGED_IN = {
     "sso links - logged out": {
         "account": Selector(By.ID, "header-profile-link", is_visible=False),
         "sign out": Selector(By.ID, "header-sign-out-link", is_visible=False),
-    },
+    }
 }
 SSO_LOGGED_OUT = {
     "sso links - logged out": {
-        "sign in": Selector(By.ID, "header-sign-in-link", is_visible=False),
-    },
+        "sign in": Selector(By.ID, "header-sign-in-link", is_visible=False)
+    }
 }
 
 BETA_BAR = {
@@ -140,7 +140,9 @@ HEADER_INTERNATIONAL = {
             By.ID, "great-global-header-international-link"
         ),
         # language selector
-        "language selector": Selector(By.ID, "great-header-language-select", type=ElementType.SELECT),
+        "language selector": Selector(
+            By.ID, "great-header-language-select", type=ElementType.SELECT
+        ),
         # header menu
         "header menu": Selector(By.ID, "great-header-menu"),
         "eig logo": Selector(By.ID, "great-header-logo"),
@@ -159,9 +161,7 @@ FOOTER_INTERNATIONAL = {
         "privacy and cookies": Selector(By.ID, "footer-privacy-and-cookies"),
         "terms and conditions": Selector(By.ID, "footer-terms-and-conditions"),
         "department for international trade on gov.uk": Selector(By.ID, "footer-dit"),
-        "go to the page for uk businesses": Selector(
-            By.ID, "footer-domestic"
-        ),
+        "go to the page for uk businesses": Selector(By.ID, "footer-domestic"),
         "dit footer logo": Selector(By.ID, "great-global-footer-logo"),
         "copyright notice": Selector(By.ID, "great-footer-copyright"),
     }
@@ -202,9 +202,7 @@ FOOTER_INVEST = {
         "privacy and cookies": Selector(By.ID, "footer-privacy-and-cookies"),
         "terms and conditions": Selector(By.ID, "footer-terms-and-conditions"),
         "department for international trade on gov.uk": Selector(By.ID, "footer-dit"),
-        "go to the page for uk businesses": Selector(
-            By.ID, "footer-domestic"
-        ),
+        "go to the page for uk businesses": Selector(By.ID, "footer-domestic"),
         "dit footer logo": Selector(By.ID, "great-global-footer-logo"),
         "copyright notice": Selector(By.ID, "great-footer-copyright"),
     }
@@ -216,6 +214,8 @@ EU_EXIT_NEWS_BANNER = {
         "itself": Selector(By.ID, "information-banner"),
         "badge": Selector(By.CSS_SELECTOR, "#information-banner span"),
         "text": Selector(By.CSS_SELECTOR, "#information-banner p"),
-        "see our updates on eu exit": Selector(By.CSS_SELECTOR, "#information-banner a"),
+        "see our updates on eu exit": Selector(
+            By.CSS_SELECTOR, "#information-banner a"
+        ),
     }
 }

@@ -44,8 +44,8 @@ Feature: Great site search
     Examples: event, market, service and opportunity
       | specific | phrase         | type of     | expected                           |
       | Home     | Food           | Event       | Events - Event                     |
-      | Advice   | Transport      | Article     | Domestic - Advice          |
-      | Advice   | export finance | Service     | Domestic - Get Finance     |
+      | Advice   | Transport      | Article     | Domestic - Advice                  |
+      | Advice   | export finance | Service     | Domestic - Get Finance             |
       | Markets  | Food           | Market      | Something                          |
       | Services | Manufacture    | Opportunity | Export Opportunities - Opportunity |
 

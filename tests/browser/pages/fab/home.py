@@ -5,7 +5,7 @@ from urllib.parse import urljoin
 
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import common_selectors, Services
+from pages import Services, common_selectors
 from pages.common_actions import (
     check_url,
     find_and_click_on_page_element,

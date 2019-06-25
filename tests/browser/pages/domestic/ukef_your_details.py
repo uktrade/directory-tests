@@ -11,8 +11,8 @@ from pages import ElementType, Services
 from pages.common_actions import (
     Actor,
     Selector,
-    check_url,
     check_for_sections,
+    check_url,
     fill_out_input_fields,
     find_element,
     go_to_url,

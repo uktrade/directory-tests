@@ -33,9 +33,7 @@ PAGE_TITLE = "Search the database of UK suppliers' trade profiles - trade.great.
 SECTOR_FILTERS = Selector(
     By.CSS_SELECTOR, "#checkbox-industry-expertise li input[type=checkbox]"
 )
-PROFILE_LINKS = Selector(
-    By.CSS_SELECTOR, "#companies-column li > a"
-)
+PROFILE_LINKS = Selector(By.CSS_SELECTOR, "#companies-column li > a")
 UPDATE_RESULTS = Selector(By.CSS_SELECTOR, "#filter-column button[type=submit]")
 FILTER_TOGGLE = Selector(By.ID, "toggle_id_sectors")
 SELECTORS = {
@@ -54,9 +52,7 @@ SELECTORS = {
     },
     "results": {
         "itself": Selector(By.ID, "companies-column"),
-        "number of results": Selector(
-            By.CSS_SELECTOR, "#hero-container h2"
-        ),
+        "number of results": Selector(By.CSS_SELECTOR, "#hero-container h2"),
     },
 }
 SELECTORS.update(HEADER_FOOTER_SELECTORS)
@@ -126,10 +122,7 @@ def fill_out(driver: WebDriver, contact_us_details: dict):
 def submit(driver: WebDriver):
     take_screenshot(driver, "Before submitting the search form")
     button = find_element(
-        driver,
-        UPDATE_RESULTS,
-        element_name="Update results",
-        wait_for_it=False,
+        driver, UPDATE_RESULTS, element_name="Update results", wait_for_it=False
     )
     button.click()
     take_screenshot(driver, "After submitting the search form")

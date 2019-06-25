@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import common_selectors, Services
+from pages import Services, common_selectors
 from pages.common_actions import (
     Selector,
     check_for_section,
@@ -40,8 +40,12 @@ SELECTORS = {
     "service cards": {
         "itself": Selector(By.CSS_SELECTOR, "div.card-grid"),
         "cards": Selector(By.CSS_SELECTOR, "#content div.card"),
-        "expand to the uk": Selector(By.CSS_SELECTOR, "#content > section > div > div > div:nth-child(1) a"),
-        "find a uk supplier": Selector(By.CSS_SELECTOR, "#content > section > div > div > div:nth-child(2) a"),
+        "expand to the uk": Selector(
+            By.CSS_SELECTOR, "#content > section > div > div > div:nth-child(1) a"
+        ),
+        "find a uk supplier": Selector(
+            By.CSS_SELECTOR, "#content > section > div > div > div:nth-child(2) a"
+        ),
     },
     "tariffs": {"itself": Selector(By.ID, "tariffs-section")},
     "news": {

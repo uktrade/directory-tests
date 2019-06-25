@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType, common_selectors, Services
+from pages import ElementType, Services, common_selectors
 from pages.common_actions import (
     Selector,
     check_for_sections,
@@ -29,7 +29,9 @@ SELECTORS = {
     "hero": {
         "self": Selector(By.CSS_SELECTOR, "#content > section.hero"),
         "heading": Selector(By.CSS_SELECTOR, "#content > section.hero h1"),
-        "get in touch": Selector(By.CSS_SELECTOR, "#content > section.hero a", type=ElementType.LINK),
+        "get in touch": Selector(
+            By.CSS_SELECTOR, "#content > section.hero a", type=ElementType.LINK
+        ),
     },
     "benefits": {
         "self": Selector(By.ID, "benefits"),
@@ -37,7 +39,6 @@ SELECTORS = {
         "sub-section headings": Selector(By.CSS_SELECTOR, "#benefits h4"),
         "text": Selector(By.CSS_SELECTOR, "#benefits p"),
         "image": Selector(By.CSS_SELECTOR, "#benefits img"),
-
     },
     "the uk and the eu": {
         "self": Selector(By.ID, "eu-exit"),
@@ -47,7 +48,6 @@ SELECTORS = {
         "find out what's changing": Selector(
             By.CSS_SELECTOR, "#eu-exit a", type=ElementType.LINK
         ),
-
     },
     "uk setup guides": {
         "self": Selector(By.ID, "uk-setup-guides"),
@@ -66,16 +66,13 @@ SELECTORS = {
         "heading": Selector(By.CSS_SELECTOR, "#industries h2"),
         "heading text": Selector(By.CSS_SELECTOR, "#industries h2 ~ div > p"),
         "first": Selector(
-            By.CSS_SELECTOR,
-            "#industries div.card-grid > div:nth-child(1) > div > a",
+            By.CSS_SELECTOR, "#industries div.card-grid > div:nth-child(1) > div > a"
         ),
         "second": Selector(
-            By.CSS_SELECTOR,
-            "#industries div.card-grid > div:nth-child(2) > div > a",
+            By.CSS_SELECTOR, "#industries div.card-grid > div:nth-child(2) > div > a"
         ),
         "third": Selector(
-            By.CSS_SELECTOR,
-            "#industries div.card-grid > div:nth-child(3) > div > a",
+            By.CSS_SELECTOR, "#industries div.card-grid > div:nth-child(3) > div > a"
         ),
         "see more industries": Selector(By.ID, "see-more-industries"),
     },
@@ -83,59 +80,54 @@ SELECTORS = {
         "self": Selector(By.ID, "high-potential-opportunities"),
         "heading": Selector(By.CSS_SELECTOR, "#high-potential-opportunities h2"),
         "text": Selector(By.CSS_SELECTOR, "#high-potential-opportunities h2 ~ div > p"),
-        "advanced food production": Selector(By.PARTIAL_LINK_TEXT, "Advanced food production"),
-        "lightweight structures": Selector(By.PARTIAL_LINK_TEXT, "Lightweight structures"),
+        "advanced food production": Selector(
+            By.PARTIAL_LINK_TEXT, "Advanced food production"
+        ),
+        "lightweight structures": Selector(
+            By.PARTIAL_LINK_TEXT, "Lightweight structures"
+        ),
         "rail infrastructure": Selector(By.PARTIAL_LINK_TEXT, "Rail infrastructure"),
     },
     "how we help": {
         "self": Selector(By.ID, "how-we-help"),
         "build connections - icon": Selector(
-            By.CSS_SELECTOR,
-            "#how-we-help ul > li:nth-child(1) > div > img",
+            By.CSS_SELECTOR, "#how-we-help ul > li:nth-child(1) > div > img"
         ),
         "build connections - text": Selector(
-            By.CSS_SELECTOR,
-            "#how-we-help ul > li:nth-child(1) > div > p",
+            By.CSS_SELECTOR, "#how-we-help ul > li:nth-child(1) > div > p"
         ),
         "apply for visas - icon": Selector(
-            By.CSS_SELECTOR,
-            "#how-we-help ul > li:nth-child(2) > div > img",
+            By.CSS_SELECTOR, "#how-we-help ul > li:nth-child(2) > div > img"
         ),
         "apply for visas - text": Selector(
-            By.CSS_SELECTOR,
-            "#how-we-help ul > li:nth-child(2) > div > p",
+            By.CSS_SELECTOR, "#how-we-help ul > li:nth-child(2) > div > p"
         ),
         "find grants - icon": Selector(
-            By.CSS_SELECTOR,
-            "#how-we-help ul > li:nth-child(3) > div > img",
+            By.CSS_SELECTOR, "#how-we-help ul > li:nth-child(3) > div > img"
         ),
         "find grants - text": Selector(
-            By.CSS_SELECTOR,
-            "#how-we-help ul > li:nth-child(3) > div > p",
+            By.CSS_SELECTOR, "#how-we-help ul > li:nth-child(3) > div > p"
         ),
         "get insights - icon": Selector(
-            By.CSS_SELECTOR,
-            "#how-we-help ul > li:nth-child(4) > div > img",
+            By.CSS_SELECTOR, "#how-we-help ul > li:nth-child(4) > div > img"
         ),
         "get insights - text": Selector(
-            By.CSS_SELECTOR,
-            "#how-we-help ul > li:nth-child(4) > div > p",
+            By.CSS_SELECTOR, "#how-we-help ul > li:nth-child(4) > div > p"
         ),
         "grow workforce - icon": Selector(
-            By.CSS_SELECTOR,
-            "#how-we-help ul > li:nth-child(5) > div > img",
+            By.CSS_SELECTOR, "#how-we-help ul > li:nth-child(5) > div > img"
         ),
         "grow workforce - text": Selector(
-            By.CSS_SELECTOR,
-            "#how-we-help ul > li:nth-child(5) > div > p",
+            By.CSS_SELECTOR, "#how-we-help ul > li:nth-child(5) > div > p"
         ),
     },
     "contact us": {
         "self": Selector(By.ID, "get-in-touch"),
         "heading": Selector(By.CSS_SELECTOR, "#get-in-touch h2"),
         "text": Selector(By.CSS_SELECTOR, "#get-in-touch p"),
-        "speak to us": Selector(By.CSS_SELECTOR, "#get-in-touch a", type=ElementType.LINK),
-
+        "speak to us": Selector(
+            By.CSS_SELECTOR, "#get-in-touch a", type=ElementType.LINK
+        ),
     },
 }
 SELECTORS.update(common_selectors.HEADER_INVEST)

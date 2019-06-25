@@ -525,7 +525,7 @@ def check_hash_of_remote_file(expected_hash: str, file_url: str):
 
 @contextmanager
 def try_js_click_on_element_click_intercepted_exception(
-        driver: WebDriver, element: WebElement
+    driver: WebDriver, element: WebElement
 ):
     """Try to use JS to perform click on an element if regular way didn't work
 
@@ -543,8 +543,8 @@ def try_js_click_on_element_click_intercepted_exception(
         yield
     except ElementClickInterceptedException as e:
         logging.warning(
-            f"Click was intercepted. Will try JS workaround. Exception msg: "
-            f"{e.msg}")
+            f"Click was intercepted. Will try JS workaround. Exception msg: " f"{e.msg}"
+        )
         driver.execute_script("arguments[0].click();", element)
 
 
@@ -755,7 +755,8 @@ def get_selectors(section: dict, element_type: ElementType) -> Dict[str, Selecto
 
 
 def find_elements_of_type(
-        driver: WebDriver, section: dict, element_type: ElementType) -> defaultdict:
+    driver: WebDriver, section: dict, element_type: ElementType
+) -> defaultdict:
     selectors = get_selectors(section, element_type)
     result = defaultdict()
     for key, selector in selectors.items():
@@ -965,7 +966,7 @@ def tick_checkboxes(
             )
             if not checkbox.get_property("checked"):
                 with try_js_click_on_element_click_intercepted_exception(
-                        driver, checkbox
+                    driver, checkbox
                 ):
                     checkbox.click()
 
@@ -983,7 +984,7 @@ def tick_checkboxes_by_labels(
             if not checkbox.get_property("checked"):
                 logging.debug(f"'{key}' checkbox is not ticked, checking it")
                 with try_js_click_on_element_click_intercepted_exception(
-                        driver, checkbox
+                    driver, checkbox
                 ):
                     checkbox.click()
         else:
@@ -994,6 +995,6 @@ def tick_checkboxes_by_labels(
             if checkbox.get_property("checked"):
                 logging.debug(f"'{key}' checkbox is ticked, unchecking it")
                 with try_js_click_on_element_click_intercepted_exception(
-                        driver, checkbox
+                    driver, checkbox
                 ):
                     checkbox.click()

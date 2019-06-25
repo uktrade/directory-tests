@@ -16,10 +16,10 @@ Feature: New Enrolment flow
 
     Then "Natalia" should be on the "SUD - Select your business type" page
     And "Natalia" should see following sections
-      | sections                  |
-      | Breadcrumbs               |
-      | Description               |
-      | Enrolment progress bar    |
+      | sections               |
+      | Breadcrumbs            |
+      | Description            |
+      | Enrolment progress bar |
 
   @wip
   @TT-1116
@@ -274,7 +274,7 @@ Feature: New Enrolment flow
     Then "Natalia" should be on the "FAB - Edit Company Profile" page
 
     Examples:
-      | specific                |
+      | specific                    |
       | Profile - Sign in           |
       | Profile - Create an account |
 

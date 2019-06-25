@@ -25,19 +25,13 @@ SELECTORS = {
     "company details": {
         "itself": Selector(By.ID, "main-content"),
         "logo": Selector(By.ID, "cover-image-container"),
-        "contact company": Selector(
-            By.CSS_SELECTOR, "#contact-company-container a"
-        ),
+        "contact company": Selector(By.CSS_SELECTOR, "#contact-company-container a"),
         "about company": Selector(By.ID, "about-company-container"),
     },
-    "online-profiles": {
-        "itself": Selector(By.ID, "online-profiles"),
-    },
+    "online-profiles": {"itself": Selector(By.ID, "online-profiles")},
     "description": {
         "itself": Selector(By.ID, "company-description-container"),
-        "read more": Selector(
-            By.CSS_SELECTOR, "#company-description-container a"
-        ),
+        "read more": Selector(By.CSS_SELECTOR, "#company-description-container a"),
     },
     "report profile": {
         "itself": Selector(By.CSS_SELECTOR, "div.ed-report-profile-container"),

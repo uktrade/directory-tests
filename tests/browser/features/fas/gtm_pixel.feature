@@ -15,7 +15,7 @@ Feature: Google Tag Manager
 
     @bug
     @CMS-1634
-    @fixme
+    @fixed
     Examples: Listing pages
       | selected   | businessUnit  | loginStatus | siteLanguage | siteSection | siteSubsection     | userId |
       | Home       | FindASupplier | False       | en-gb        | HomePage    | Empty string       | None   |
@@ -79,7 +79,7 @@ Feature: Google Tag Manager
 
   @bug
   @CMS-1634
-  @fixme
+  @fixed
   @TT-1500
   @internationalisation
   Scenario Outline: GTM properties should be properly set on "Find a Supplier - <selected>" page viewed in "<preferred_language>"

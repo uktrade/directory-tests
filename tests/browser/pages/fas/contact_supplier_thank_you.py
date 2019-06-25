@@ -28,9 +28,7 @@ SELECTORS = {
         "itself": Selector(By.ID, "success-message-container"),
         "heading": Selector(By.CSS_SELECTOR, "#success-message-container h1"),
         "description": Selector(By.CSS_SELECTOR, "#success-message-container p"),
-        "browse more companies": Selector(
-            By.CSS_SELECTOR, "#next-container a"
-        ),
+        "browse more companies": Selector(By.CSS_SELECTOR, "#next-container a"),
     }
 }
 SELECTORS.update(HEADER_FOOTER_SELECTORS)
