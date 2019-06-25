@@ -31,6 +31,7 @@ from tests.functional.steps.when_impl import (
     generic_view_pages_in_selected_language,
     go_to_page,
     go_to_pages,
+    isd_search_with_empty_query,
     prof_attempt_to_sign_in_to_sso,
     profile_add_case_study,
     profile_add_collaborator,
@@ -187,6 +188,11 @@ def when_actor_views_pages_in_selected_language(context, actor_alias, language):
 @when('"{buyer_alias}" searches for FAS companies with empty search query')
 def when_fas_buyer_searches_with_emtpy_search_query(context, buyer_alias):
     fas_search_with_empty_query(context, buyer_alias)
+
+
+@when('"{buyer_alias}" searches for ISD companies with empty search query')
+def when_isd_buyer_searches_with_emtpy_search_query(context, buyer_alias):
+    isd_search_with_empty_query(context, buyer_alias)
 
 
 @when('"{buyer_alias}" sends a Trade Profiles feedback request from "{page_name}" FAS page')

@@ -18,7 +18,7 @@ from scrapy import Selector
 
 from tests import URLs
 from tests.functional.common import DETAILS, PROFILES
-from tests.functional.pages import get_page_object, has_action
+from tests.functional.pages import get_page_object, has_action, isd
 from tests.functional.pages.fab import (
     fab_ui_account_add_collaborator,
     fab_ui_account_confrim_password,
@@ -2909,3 +2909,10 @@ def isd_create_verified_and_published_business_profile(
     isd_create_unverified_business_profile(context, supplier_alias, company_alias)
     logging.debug("2 - Publish ISD business profile")
     isd_publish_profile(context, supplier_alias)
+
+
+def isd_search_with_empty_query(context: Context, buyer_alias: str):
+    actor = context.get_actor(buyer_alias)
+    session = actor.session
+    context.response = isd.search.go_to(session, term="")
+    isd.search.should_be_here(context.response)
