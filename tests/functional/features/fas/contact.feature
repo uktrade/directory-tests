@@ -16,4 +16,4 @@ Feature: Contact a Supplier
     When "Annette Geissinger" sends a message to company "Y"
 
     Then "Annette Geissinger" should be told that the message has been sent to company "Y"
-    Then "Peter Alder" should receive an email message from "Annette Geissinger"
+    And "Peter Alder" should receive an email message from "Annette Geissinger"

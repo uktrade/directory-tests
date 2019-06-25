@@ -13,7 +13,7 @@ from retrying import retry
 from scrapy import Selector
 
 from tests import URLs
-from tests.functional.pages import has_action, get_page_object
+from tests.functional.pages import has_action, get_page_object, isd
 from tests.functional.pages.fab import (
     fab_ui_account_remove_collaborator,
     fab_ui_build_profile_basic,
@@ -39,8 +39,6 @@ from tests.functional.pages.sso import (
     sso_ui_verify_your_email,
 )
 from tests.functional.utils.generic import (
-    MailGunEvent,
-    MailGunService,
     assertion_msg,
     check_hash_of_remote_file,
     detect_page_language,
@@ -49,7 +47,7 @@ from tests.functional.utils.generic import (
     extract_link_with_ownership_transfer_request,
     extract_logo_url,
     extract_plain_text_payload,
-    find_mail_gun_events,
+    extract_page_contents,
     get_language_code,
     get_number_of_search_result_pages,
     mailgun_find_email_with_ownership_transfer_request,
@@ -57,6 +55,7 @@ from tests.functional.utils.generic import (
     surround,
 )
 from tests.functional.utils.gov_notify import (
+    get_email_notification,
     get_password_reset_link,
     get_verification_link,
 )
@@ -727,32 +726,43 @@ def fas_should_be_told_that_message_has_been_sent(
 def fas_supplier_should_receive_message_from_buyer(
     context: Context, supplier_alias: str, buyer_alias: str
 ):
+    buyer = context.get_actor(buyer_alias)
     supplier = context.get_actor(supplier_alias)
-    context.response = find_mail_gun_events(
-        context,
-        service=MailGunService.DIRECTORY,
-        to=supplier.email,
-        event=MailGunEvent.ACCEPTED,
-        subject=FAS_MESSAGE_FROM_BUYER_SUBJECT,
+    context.response = get_email_notification(
+        from_email=buyer.email,
+        to_email=supplier.email,
+        subject=FAS_MESSAGE_FROM_BUYER_SUBJECT
     )
-    logging.debug("%s received message from %s", supplier_alias, buyer_alias)
+    logging.debug(
+        f"{supplier_alias} received a notification about a message from {buyer_alias}"
+    )
 
 
 def profile_should_see_expected_error_messages(
     context: Context, supplier_alias: str
 ):
     results = context.results
+    assertion_results = []
     for company, response, error in results:
-        context.response = response
-        logging.debug(f"Modified company's details: {company}")
-        logging.debug(f"Response: {response}")
-        logging.debug(f"Expected error message: {error}")
-        with assertion_msg(
-            f"Could not find expected error message: '{error}' in the response,"
-            f" after submitting the form with following company details: "
-            f"{company}",
-        ):
-            assert error in response.content.decode("utf-8")
+        if error not in response.content.decode("utf-8"):
+            context.response = response
+            logging.debug(f"Modified company's details: {company}")
+            logging.debug(f"Expected error message: {error}")
+            logging.debug(f"Response: {extract_page_contents(response.content.decode('utf-8'))}")
+            assertion_results.append((response, error))
+
+    formatted_message = ";\n\n".join(
+        [
+            f"'{error}' in response from '{response.url}':\n"
+            f"'{extract_page_contents(response.content.decode('utf-8'))}'"
+            for response, error in assertion_results
+        ]
+    )
+    with assertion_msg(
+            f"Expected to see correct error messages, but couldn't find them in"
+            f" following responses: {formatted_message}"
+    ):
+        assert not assertion_results
     logging.debug("%s has seen all expected form errors", supplier_alias)
 
 
@@ -1137,4 +1147,14 @@ def stannp_should_see_expected_details_in_verification_letter(
         all(detail in letter for detail in expected_details.values())
     logging.debug(
         "All expected details are visible in the verification letter"
+    )
+
+
+def isd_should_be_told_about_empty_search_results(
+        context: Context, buyer_alias: str
+):
+    isd.search.should_see_no_matches(context.response)
+    logging.debug(
+        "%s was told that the search did not match any UK trade profiles",
+        buyer_alias,
     )

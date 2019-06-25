@@ -349,6 +349,7 @@ class URLs(Enum):
     INTERNATIONAL_HEALTHCHECK_SENTRY = InternationalUrl("healthcheck/sentry/")
     INTERNATIONAL_UK_SETUP_GUIDE = InternationalUrl("content/how-to-setup-in-the-uk/", template="content/how-to-setup-in-the-uk/{guide}/")
     INTERNATIONAL_UK_SETUP_GUIDE_UK_VISAS = InternationalUrl("content/how-to-setup-in-the-uk/uk-visas-and-migration/")
+    INTERNATIONAL_UK_SETUP_GUIDE_ACCESS_FINANCE = InternationalUrl("content/how-to-setup-in-the-uk/access-finance-in-the-uk/")
     INTERNATIONAL_UK_SETUP_GUIDE_ESTABLISH_A_BASE = InternationalUrl("content/how-to-setup-in-the-uk/establish-a-base-for-business-in-the-uk/")
     INTERNATIONAL_UK_SETUP_GUIDE_HIRE_SKILLED_WORKERS = InternationalUrl("content/how-to-setup-in-the-uk/hire-skilled-workers-for-your-uk-operations/")
     INTERNATIONAL_UK_SETUP_GUIDE_OPEN_BANK_ACCOUNT = InternationalUrl("content/how-to-setup-in-the-uk/open-a-uk-business-bank-account/")

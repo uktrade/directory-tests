@@ -22,8 +22,9 @@ URL = urljoin(LANDING, "suppliers/{company_number}/contact/")
 EXPECTED_STRINGS = [
     "Send a message to",
     "Enter your details and a brief message about your needs",
-    "Your full name",
-    "Your company name",
+    "Given name",
+    "Family name",
+    "Your organisation name",
     "Country",
     "Your email address",
     "Industry",
@@ -32,13 +33,15 @@ EXPECTED_STRINGS = [
     "Enter your message to the UK company",
     "Maximum 1000 characters",
     "Captcha",
-    "I agree to the great.gov.uk terms and conditions",
+    "I agree to the ",
+    "great.gov.uk terms and conditions",
     "Send message",
 ]
 
 EXPECTED_STRINGS_MESSAGE_SENT = [
     "Message sent",
     "Your message has been sent to",
+    "Next steps",
     "Browse more companies",
 ]
 
@@ -64,7 +67,8 @@ def submit(session: Session, message: Message or Feedback, company_number: str):
         "company_name": message.company_name,
         "country": message.country,
         "email_address": message.email_address,
-        "full_name": message.full_name,
+        "family_name": message.family_name,
+        "given_name": message.given_name,
         "g-recaptcha-response": message.g_recaptcha_response,
         "sector": message.sector,
         "subject": message.subject,

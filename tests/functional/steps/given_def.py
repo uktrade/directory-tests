@@ -26,10 +26,11 @@ from tests.functional.steps.when_impl import (
     fas_find_company_by_name,
     fas_get_company_slug,
     go_to_page,
+    isd_create_verified_and_published_business_profile,
     profile_add_business_description,
     profile_add_case_study,
     profile_add_online_profiles,
-    profile_create_unverified_business_profile,
+    profile_create_unverified_fas_business_profile,
     profile_create_verified_and_published_business_fas_profile,
     profile_create_verified_yet_unpublished_business_profile,
     profile_edit_business_details,
@@ -70,6 +71,14 @@ def given_supplier_set_company_description(context, supplier_alias):
 def given_supplier_creates_verified_and_published_fas_profile(
         context, supplier_alias, company_alias):
     profile_create_verified_and_published_business_fas_profile(
+        context, supplier_alias, company_alias
+    )
+
+
+@given('"{supplier_alias}" has created verified and published ISD business profile for company "{company_alias}"')
+def given_supplier_creates_verified_and_published_isd_profile(
+        context, supplier_alias, company_alias):
+    isd_create_verified_and_published_business_profile(
         context, supplier_alias, company_alias
     )
 
@@ -234,7 +243,7 @@ def given_actor_sends_a_verification_letter(context, actor_alias):
 
 @given('"{supplier_alias}" created an unverified business profile for randomly selected company "{company_alias}"')
 def given_unverified_profile_new_reg_flow(context, supplier_alias, company_alias):
-    profile_create_unverified_business_profile(
+    profile_create_unverified_fas_business_profile(
         context, supplier_alias, company_alias
     )
 

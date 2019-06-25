@@ -95,6 +95,10 @@ Company = namedtuple(
         "owner",
         "owner_email",
         "has_exported_before",
+        "is_uk_isd_company",
+        "expertise_industries",
+        "export_destinations",
+        "export_destinations_other",
     ],
 )
 Feedback = namedtuple(
@@ -117,7 +121,8 @@ Message = namedtuple(
         "company_name",
         "country",
         "email_address",
-        "full_name",
+        "family_name",
+        "given_name",
         "g_recaptcha_response",
         "sector",
         "subject",

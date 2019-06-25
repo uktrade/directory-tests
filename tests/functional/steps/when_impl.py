@@ -18,7 +18,7 @@ from scrapy import Selector
 
 from tests import URLs
 from tests.functional.common import DETAILS, PROFILES
-from tests.functional.pages import get_page_object, has_action
+from tests.functional.pages import get_page_object, has_action, isd
 from tests.functional.pages.fab import (
     fab_ui_account_add_collaborator,
     fab_ui_account_confrim_password,
@@ -78,6 +78,7 @@ from tests.functional.steps.then_impl import (
 from tests.functional.utils.context_utils import Actor, Company
 from tests.functional.utils.generic import (
     assertion_msg,
+    create_test_isd_company,
     escape_html,
     extract_csrf_middleware_token,
     extract_form_action,
@@ -185,12 +186,10 @@ def unauthenticated_buyer(buyer_alias: str) -> Actor:
     """
     session = Session()
     email = (
-        "test+buyer_{}{}@directory.uktrade.io".format(
-            buyer_alias, str(uuid.uuid4())
-        )
-            .replace("-", "")
-            .replace(" ", "")
-            .lower()
+        f"test+buyer_{buyer_alias}{str(uuid.uuid4())}@directory.uktrade.io"
+        .replace("-", "")
+        .replace(" ", "")
+        .lower()
     )
     company_name = f"{sentence()} AUTOTESTS"
     return Actor(
@@ -221,7 +220,7 @@ def go_to_page(context: Context, supplier_alias: str, page_name: str):
     context.response = response
 
 
-def profile_create_unverified_business_profile(
+def profile_create_unverified_fas_business_profile(
         context: Context, supplier_alias: str, company_alias: str
 ):
     if not context.get_actor(supplier_alias):
@@ -234,9 +233,9 @@ def profile_create_unverified_business_profile(
 def profile_create_verified_and_published_business_fas_profile(
         context: Context, supplier_alias: str, company_alias: str
 ):
-    """Create a verified Business profile and publish it to FAS"""
+    """Create a verified FAS Business profile and publish it to FAS"""
     logging.debug("1 - find unregistered company & enrol user for that company")
-    profile_create_unverified_business_profile(context, supplier_alias, company_alias)
+    profile_create_unverified_fas_business_profile(context, supplier_alias, company_alias)
     logging.debug("2 - add business description")
     profile_add_business_description(context, supplier_alias)
     logging.debug("3 - decide to confirm identity with letter code")
@@ -255,7 +254,7 @@ def profile_create_verified_yet_unpublished_business_profile(
 ):
     """Create a verified Business profile and publish it to FAS"""
     logging.debug("1 - find unregistered company & enrol user for that company")
-    profile_create_unverified_business_profile(context, supplier_alias, company_alias)
+    profile_create_unverified_fas_business_profile(context, supplier_alias, company_alias)
     logging.debug("2 - add business description")
     profile_add_business_description(context, supplier_alias)
     logging.debug("3 - decide to confirm identity with letter code")
@@ -425,7 +424,7 @@ def create_actor_with_verified_or_unverified_fab_profile(
     if verified_or_not == "a verified":
         profile_create_verified_and_published_business_fas_profile(context, actor_alias, company_alias)
     else:
-        profile_create_unverified_business_profile(context, actor_alias, company_alias)
+        profile_create_unverified_fas_business_profile(context, actor_alias, company_alias)
 
 
 def stannp_send_verification_letter(context: Context, actor_alias: str):
@@ -1514,40 +1513,38 @@ def can_find_supplier_by_term(
     :return: a tuple with search result (True/False), last search Response and
              an endpoint to company's profile
     """
-    found = False
     endpoint = None
     response = fas_ui_find_supplier.go_to(session, term=term)
     fas_ui_find_supplier.should_be_here(response)
-    number_of_pages = get_number_of_search_result_pages(response)
-    if number_of_pages == 0:
-        found = fas_ui_find_supplier.should_see_company(response, name)
+    found = fas_ui_find_supplier.should_see_company(response, name)
+    if found:
+        endpoint = fas_get_company_profile_url(response, name)
         return found, response, endpoint
-    for page_number in range(1, number_of_pages + 1):
-        found = fas_ui_find_supplier.should_see_company(response, name)
-        if found:
-            endpoint = fas_get_company_profile_url(response, name)
-            break
-        else:
-            logging.debug(
-                "Couldn't find Supplier '%s' on the %d page out of %d of "
-                "FAS search results. Search was done using '%s' : '%s'",
-                name,
-                page_number,
-                number_of_pages,
-                term_type,
-                term,
-            )
-            next_page = page_number + 1
-            if next_page <= number_of_pages:
-                response = fas_ui_find_supplier.go_to(
-                    session, term=term, page=next_page
-                )
-                fas_ui_find_supplier.should_be_here(response)
+    else:
+        number_of_pages = get_number_of_search_result_pages(response)
+        for page_number in range(1, number_of_pages + 1):
+            found = fas_ui_find_supplier.should_see_company(response, name)
+            assert found
+            if found:
+                endpoint = fas_get_company_profile_url(response, name)
+                break
             else:
                 logging.debug(
-                    "Couldn't find the Supplier even on the last page of the "
-                    "search results"
+                    f"Couldn't find Supplier '{name}' on the {page_number} page out of "
+                    f"{number_of_pages} of FAS search results. Search was done using "
+                    f"'{term_type}' : '{term}'"
                 )
+                next_page = page_number + 1
+                if next_page <= number_of_pages:
+                    response = fas_ui_find_supplier.go_to(
+                        session, term=term, page=next_page
+                    )
+                    fas_ui_find_supplier.should_be_here(response)
+                else:
+                    logging.debug(
+                        "Couldn't find the Supplier even on the last page of the "
+                        "search results"
+                    )
     return found, response, endpoint
 
 
@@ -1607,7 +1604,13 @@ def fas_send_message_to_supplier(
     ):
         assert endpoint
     # Step 0 - generate message data
-    message = random_message_data()
+    message = random_message_data(
+        family_name=buyer.alias,
+        given_name="AUTOMATED TESTS",
+        company_name=buyer.company_alias,
+        email_address=buyer.email,
+        subject="CONTACT SUPPLIER - AUTOMATED TESTS",
+    )
 
     # Step 1 - go to Company's profile page
     response = fas_ui_profile.go_to_endpoint(session, endpoint)
@@ -2850,3 +2853,66 @@ def enrol_user(context: Context, actor_alias: str, company_alias: str):
         f"'{actor.alias}' created an unverified Business Profile for "
         f"'{company.title} - {company.number}'"
     )
+
+
+def isd_enrol_user(context: Context, actor_alias: str, company_alias: str):
+    pass
+
+
+def isd_publish_profile(context: Context, supplier_alias: str):
+    pass
+
+
+def isd_create_unregistered_company(
+        context: Context, supplier_alias: str, company_alias: str
+):
+    company_dict = create_test_isd_company(context)
+    company = Company(
+        alias=company_alias,
+        title=company_dict["name"],
+        number=company_dict["number"],
+        sector=company_dict["sectors"],
+        description=company_dict["description"],
+        summary=company_dict["summary"],
+        no_employees=company_dict["employees"],
+        keywords=company_dict["keywords"],
+        website=company_dict["website"],
+        facebook=company_dict["facebook_url"],
+        twitter=company_dict["twitter_url"],
+        linkedin=company_dict["linkedin_url"],
+        is_uk_isd_company=company_dict["is_uk_isd_company"],
+        slug=company_dict["slug"],
+        expertise_industries=company_dict["expertise_industries"],
+        export_destinations=company_dict["export_destinations"],
+        export_destinations_other=company_dict["export_destinations_other"]
+    )
+    context.update_actor(supplier_alias, company_alias=company_alias)
+    context.add_company(company)
+    logging.debug(f"A test ISD company was successfully created:\n{company}")
+
+
+def isd_create_unverified_business_profile(
+        context: Context, supplier_alias: str, company_alias: str
+):
+    if not context.get_actor(supplier_alias):
+        context.add_actor(unauthenticated_supplier(supplier_alias))
+    isd_create_unregistered_company(context, supplier_alias, company_alias)
+    isd_enrol_user(context, supplier_alias, company_alias)
+    context.update_actor(supplier_alias, has_sso_account=True)
+
+
+def isd_create_verified_and_published_business_profile(
+        context: Context, supplier_alias: str, company_alias: str
+):
+    """Create a verified ISD Business profile and publish it to ISD"""
+    logging.debug("1 - find unregistered ISD company & enrol user for that company")
+    isd_create_unverified_business_profile(context, supplier_alias, company_alias)
+    logging.debug("2 - Publish ISD business profile")
+    isd_publish_profile(context, supplier_alias)
+
+
+def isd_search_with_empty_query(context: Context, buyer_alias: str):
+    actor = context.get_actor(buyer_alias)
+    session = actor.session
+    context.response = isd.search.go_to(session, term="")
+    isd.search.should_be_here(context.response)

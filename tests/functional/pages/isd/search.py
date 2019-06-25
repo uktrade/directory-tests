@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""FAS - Find a Supplier page"""
+"""ISD - Find a UK Supplier page"""
 import logging
 
 from requests import Response, Session
@@ -7,16 +7,18 @@ from retrying import retry
 
 from tests import URLs
 from tests.functional.pages import Services
-from tests.functional.utils.generic import escape_html, extract_page_contents
+from tests.functional.utils.generic import escape_html, extract_page_contents, \
+    assertion_msg
 from tests.functional.utils.request import Method, check_response, make_request
 
-SERVICE = Services.FAS
+SERVICE = Services.ISD
 NAME = "Search"
-TYPE = "search"
-URL = URLs.FAS_SEARCH.absolute
+TYPE = "search results"
+URL = URLs.ISD_SEARCH.absolute
 EXPECTED_STRINGS = [
     "Search results",
     "Filter results",
+    "Filter by expertise",
     "New search",
 ]
 
@@ -29,31 +31,47 @@ NO_MATCH = [
 
 @retry(wait_fixed=5000, stop_max_attempt_number=2)
 def go_to(
-    session: Session, *, term: str = None, page: int = None, sectors: list = None
+    session: Session, *, term: str = None, page: int = None, **kwargs
 ) -> Response:
     """Go to "FAS Find a Supplier" page.
 
+    :param session: Actor's request Session
     :param term: (optional) search term
     :param page: (optional) number of search result page
-    :param sectors: (optional) a list of Industry sector filters
+    :param kwargs: (optional) search filters
+
     """
+    allowed_search_filters = [
+        "expertise_regions",
+        "expertise_industries",
+        "expertise_languages",
+        "expertise_countries",
+        "expertise_products_services_financial",
+        "expertise_products_services_management",
+        "expertise_products_services_human_resources",
+        "expertise_products_services_legal",
+        "expertise_products_services_publicity",
+        "expertise_products_services_business_support",
+    ]
     params = {}
     if term is not None:
         params.update({"q": term})
     if page is not None:
         params.update({"page": page})
-    if sectors is not None:
-        params.update({"sectors": sectors})
+
+    filter_diff = (set(kwargs.keys()) - set(allowed_search_filters))
+    with assertion_msg(f"Got unexpected search filters: {filter_diff}"):
+        assert not filter_diff
     headers = {"Referer": URLs.FAB_COMPANY_PROFILE.absolute}
     return make_request(
-        Method.GET, URL, session=session, params=params, headers=headers, trim=False
+        Method.GET, URL, session=session, params=params, headers=headers
     )
 
 
 def should_be_here(response, *, number=None):
     expected = EXPECTED_STRINGS + [number] if number else EXPECTED_STRINGS
     check_response(response, 200, body_contains=expected)
-    logging.debug("Buyer is on the FAS Find a Supplier page")
+    logging.debug("Buyer is on the ISD Find a UK Supplier page")
 
 
 def should_see_company(response: Response, company_title: str) -> bool:

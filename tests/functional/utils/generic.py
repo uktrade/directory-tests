@@ -952,7 +952,8 @@ def random_message_data(
     company_name: str = None,
     country: str = None,
     email_address: str = None,
-    full_name: str = None,
+    family_name: str = None,
+    given_name: str = None,
     g_recaptcha_response: str = None,
     sector: str = None,
     subject: str = None,
@@ -965,7 +966,8 @@ def random_message_data(
     email_address = email_address or (
         "test+buyer_{}@directory.uktrade.io".format(rare_word(min_length=15))
     )
-    full_name = full_name or sentence(min_words=2, max_words=2)
+    family_name = family_name or sentence(min_words=2, max_words=2)
+    given_name = given_name or sentence(min_words=2, max_words=2)
     sector = sector or random.choice(SECTORS)
     subject = subject or sentence(max_length=200)
     g_recaptcha_response = g_recaptcha_response or "test mode"
@@ -977,7 +979,8 @@ def random_message_data(
         company_name=company_name,
         country=country,
         email_address=email_address,
-        full_name=full_name,
+        family_name=family_name,
+        given_name=given_name,
         g_recaptcha_response=g_recaptcha_response,
         sector=sector,
         subject=subject,
@@ -1777,3 +1780,11 @@ def extract_text_from_pdf(
     device.close()
     retstr.close()
     return text
+
+
+def create_test_isd_company(context: Context) -> dict:
+    """Creates an unpublished test ISD company"""
+    response = DIRECTORY_CLIENT.post("testapi/isd_company/")
+    context.response = response
+    check_response(response, 201)
+    return response.json()

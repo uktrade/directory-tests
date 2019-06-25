@@ -20,12 +20,12 @@ class InternationalTasks(TaskSet):
     def uk_setup_guides_pages(self):
         endpoints = [
             URLs.INTERNATIONAL_UK_SETUP_GUIDE.relative,
-            URLs.INTERNATIONAL_UK_SETUP_GUIDE_UK_VISAS.relative,
-            URLs.INTERNATIONAL_UK_SETUP_GUIDE_ESTABLISH_A_BASE.relative,
-            URLs.INTERNATIONAL_UK_SETUP_GUIDE_HIRE_SKILLED_WORKERS.relative,
             URLs.INTERNATIONAL_UK_SETUP_GUIDE_OPEN_BANK_ACCOUNT.relative,
-            URLs.INTERNATIONAL_UK_SETUP_GUIDE_REGISTER_A_COMPANY.relative,
+            URLs.INTERNATIONAL_UK_SETUP_GUIDE_ACCESS_FINANCE.relative,
             URLs.INTERNATIONAL_UK_SETUP_GUIDE_UK_TAX.relative,
+            # URLs.INTERNATIONAL_UK_SETUP_GUIDE_ESTABLISH_A_BASE.relative,
+            # URLs.INTERNATIONAL_UK_SETUP_GUIDE_HIRE_SKILLED_WORKERS.relative,
+            # URLs.INTERNATIONAL_UK_SETUP_GUIDE_REGISTER_A_COMPANY.relative,
         ]
         self.client.get(
             choice(endpoints),
