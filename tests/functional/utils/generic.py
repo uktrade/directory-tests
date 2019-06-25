@@ -1780,3 +1780,11 @@ def extract_text_from_pdf(
     device.close()
     retstr.close()
     return text
+
+
+def create_test_isd_company(context: Context) -> dict:
+    """Creates an unpublished test ISD company"""
+    response = DIRECTORY_CLIENT.post("testapi/isd_company/")
+    context.response = response
+    check_response(response, 201)
+    return response.json()
