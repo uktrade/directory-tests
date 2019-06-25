@@ -75,7 +75,7 @@ SELECTORS.update(common_selectors.FOOTER_INTERNATIONAL)
 
 
 def visit(driver: WebDriver, *, page_name: str = None):
-    url = URLs[page_name.split(" - ")[1].lower()] if page_name else URL
+    url = URLs[page_name] if page_name else URL
     visit_url(driver, url)
 
 
