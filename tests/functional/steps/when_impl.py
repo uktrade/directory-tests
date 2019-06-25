@@ -232,9 +232,9 @@ def profile_create_unverified_fas_business_profile(
 def profile_create_verified_and_published_business_fas_profile(
         context: Context, supplier_alias: str, company_alias: str
 ):
-    """Create a verified Business profile and publish it to FAS"""
+    """Create a verified FAS Business profile and publish it to FAS"""
     logging.debug("1 - find unregistered company & enrol user for that company")
-    profile_create_unverified_business_profile(context, supplier_alias, company_alias)
+    profile_create_unverified_fas_business_profile(context, supplier_alias, company_alias)
     logging.debug("2 - add business description")
     profile_add_business_description(context, supplier_alias)
     logging.debug("3 - decide to confirm identity with letter code")
