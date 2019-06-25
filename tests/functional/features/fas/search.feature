@@ -147,7 +147,7 @@ Feature: Find a Supplier
 
     When "Annette Geissinger" searches for FAS companies with empty search query
 
-    Then "Annette Geissinger" should be told that the search did not match any UK trade profiles
+    Then "Annette Geissinger" should be told to enter a search term or use the filters
 
     
   @ED-2020
@@ -215,7 +215,7 @@ Feature: Find a Supplier
     When "Annette Geissinger" browse Suppliers by multiple sector filters
     And "Annette Geissinger" clears the search filters
 
-    Then "Annette Geissinger" should be told that the search did not match any UK trade profiles
+    Then "Annette Geissinger" should be told to enter a search term or use the filters
     And "Annette Geissinger" should see that search results are not filtered by any sector
 
 

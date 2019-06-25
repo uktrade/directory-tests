@@ -25,6 +25,7 @@ NO_MATCH = [
     NO_UK_BUSINESS_MATCH,
     "Try different filters or a new search term",
 ]
+ENTER_SEARCH_TERM_OR_USE_FILTERS = ["Enter a search term or use the filters"]
 
 
 @retry(wait_fixed=5000, stop_max_attempt_number=2)
@@ -76,6 +77,13 @@ def should_not_see_company(response: Response, company_title: str) -> bool:
 
 def should_see_no_matches(response: Response, *, term: str = None):
     expected = NO_MATCH
+    if term:
+        expected += term
+    check_response(response, 200, body_contains=expected)
+
+
+def should_see_no_results(response: Response, *, term: str = None):
+    expected = ENTER_SEARCH_TERM_OR_USE_FILTERS
     if term:
         expected += term
     check_response(response, 200, body_contains=expected)

@@ -1454,6 +1454,16 @@ def fas_should_be_told_about_empty_search_results(
     )
 
 
+def fas_should_be_told_to_enter_search_term_or_use_filters(
+    context: Context, buyer_alias: str
+):
+    fas_ui_find_supplier.should_see_no_results(context.response)
+    logging.debug(
+        "%s was told to use a search term or use the filters",
+        buyer_alias,
+    )
+
+
 def fas_send_feedback_request(
     context: Context, buyer_alias: str, page_name: str
 ):

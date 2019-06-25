@@ -63,6 +63,7 @@ from tests.functional.steps.then_impl import (
 from tests.functional.steps.when_impl import (
     fas_feedback_request_should_be_submitted,
     fas_should_be_told_about_empty_search_results,
+    fas_should_be_told_to_enter_search_term_or_use_filters,
 )
 
 
@@ -215,6 +216,11 @@ def then_page_should_be_in(context, page_part, language, probability):
 @then('"{buyer_alias}" should be told that the search did not match any UK trade profiles')
 def then_should_be_told_about_empty_search_results(context, buyer_alias):
     fas_should_be_told_about_empty_search_results(context, buyer_alias)
+
+
+@then('"{buyer_alias}" should be told to enter a search term or use the filters')
+def then_should_be_told_about_empty_search_results(context, buyer_alias):
+    fas_should_be_told_to_enter_search_term_or_use_filters(context, buyer_alias)
 
 
 @then('"{buyer_alias}" should be told that the search did not match any ISD companies')
