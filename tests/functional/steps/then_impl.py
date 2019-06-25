@@ -13,7 +13,7 @@ from retrying import retry
 from scrapy import Selector
 
 from tests import URLs
-from tests.functional.pages import has_action, get_page_object
+from tests.functional.pages import has_action, get_page_object, isd
 from tests.functional.pages.fab import (
     fab_ui_account_remove_collaborator,
     fab_ui_build_profile_basic,
@@ -1136,4 +1136,14 @@ def stannp_should_see_expected_details_in_verification_letter(
         all(detail in letter for detail in expected_details.values())
     logging.debug(
         "All expected details are visible in the verification letter"
+    )
+
+
+def isd_should_be_told_about_empty_search_results(
+        context: Context, buyer_alias: str
+):
+    isd.search.should_see_no_matches(context.response)
+    logging.debug(
+        "%s was told that the search did not match any UK trade profiles",
+        buyer_alias,
     )

@@ -31,6 +31,7 @@ from tests.functional.steps.then_impl import (
     fas_supplier_cannot_be_found_using_case_study_details,
     fas_supplier_should_receive_message_from_buyer,
     generic_pages_should_be_in_selected_language,
+    isd_should_be_told_about_empty_search_results,
     prof_should_be_told_about_missing_description,
     profile_all_unsupported_files_should_be_rejected,
     profile_business_profile_should_be_ready_for_publishing,
@@ -214,6 +215,11 @@ def then_page_should_be_in(context, page_part, language, probability):
 @then('"{buyer_alias}" should be told that the search did not match any UK trade profiles')
 def then_should_be_told_about_empty_search_results(context, buyer_alias):
     fas_should_be_told_about_empty_search_results(context, buyer_alias)
+
+
+@then('"{buyer_alias}" should be told that the search did not match any ISD companies')
+def then_should_be_told_about_empty_search_results(context, buyer_alias):
+    isd_should_be_told_about_empty_search_results(context, buyer_alias)
 
 
 @then('"{buyer_alias}" should be told that the feedback request has been submitted')
