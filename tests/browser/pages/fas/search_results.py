@@ -35,7 +35,7 @@ SECTOR_FILTERS = Selector(
 )
 PROFILE_LINKS = Selector(By.CSS_SELECTOR, "#companies-column li > a")
 UPDATE_RESULTS = Selector(By.CSS_SELECTOR, "#filter-column button[type=submit]")
-FILTER_TOGGLE = Selector(By.ID, "toggle_id_sectors")
+FILTER_TOGGLE = Selector(By.ID, "toggle_id_industries")
 SELECTORS = {
     "search form": {
         "itself": Selector(By.CSS_SELECTOR, "#content form"),
