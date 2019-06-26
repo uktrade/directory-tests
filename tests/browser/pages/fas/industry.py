@@ -133,8 +133,7 @@ def clean_name(name: str) -> str:
 
 
 def visit(driver: WebDriver, *, page_name: str = None):
-    key = clean_name(page_name).lower()
-    url = URLs[key]
+    url = URLs[page_name] if page_name else URL
     go_to_url(driver, url, NAME)
 
 
