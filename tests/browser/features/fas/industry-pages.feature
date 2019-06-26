@@ -124,6 +124,7 @@ Feature: Find a Supplier - Industry pages
 
     Then "Robert" should be on the "International - <expected>" page
 
+    @dev-only
     Examples: Industry pages available via International site
       | specific       | selected                   | expected   |
       | Automotive     | Great.gov.uk International | Landing    |
@@ -134,6 +135,14 @@ Feature: Find a Supplier - Industry pages
       | Legal services | Industries                 | Industries |
       | Space          | Industries                 | Industries |
       | Technology     | Industries                 | Industries |
+
+    @skip
+    @stage-only
+    Examples: Industry pages available via DEMO International site
+      | specific                            | selected                   | expected |
+      | Creative industries                 | Great.gov.uk International | Landing  |
+      | Engineering and manufacturing       | Great.gov.uk International | Landing  |
+      | Financial and professional services | Great.gov.uk International | Landing  |
 
 
   @ED-4262
