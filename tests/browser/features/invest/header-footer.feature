@@ -22,24 +22,24 @@ Feature: Header-Footer
       | selected                | expected                                |
       | Invest - Home           | Invest - Home                           |
       | Invest - Industries     | Invest - Industries                     |
-      | Invest - UK Setup Guide | International - How to set up in the UK |
       | Invest - Contact Us     | Invest - Contact Us                     |
+      | Invest - UK Setup Guide | International - How to set up in the UK |
 
     @stage-only
     Examples:
-      | selected                | expected                |
-      | Invest - Home           | Invest - Home           |
-      | Invest - Industries     | Invest - Industries     |
-      | Invest - UK Setup Guide | Invest - UK Setup Guide |
-      | Invest - Contact Us     | Invest - Contact Us     |
+      | selected                | expected                                |
+      | Invest - Home           | Invest - Home                           |
+      | Invest - Industries     | Invest - Industries                     |
+      | Invest - Contact Us     | Invest - Contact Us                     |
+      | Invest - UK Setup Guide | International - How to set up in the UK |
 
     @uat-only
     Examples:
       | selected                | expected                                |
       | Invest - Home           | Invest - Home                           |
       | Invest - Industries     | Invest - Industries                     |
-      | Invest - UK Setup Guide | International - How to set up in the UK |
       | Invest - Contact Us     | Invest - Contact Us                     |
+      | Invest - UK Setup Guide | International - How to set up in the UK |
 
 
   @CMS-158
@@ -79,7 +79,6 @@ Feature: Header-Footer
       | UK Setup Guide                      |
       | Contact Us                          |
       | Automotive - industry               |
-      | Apply for a UK visa - guide         |
 
     @full
     Examples:
@@ -100,7 +99,7 @@ Feature: Header-Footer
     @full
     Examples:
       | selected                            |
-      | Financial services - industry       |
+      | Health and life sciences - industry |
 
     @uat-only
     @full
