@@ -60,15 +60,15 @@ Feature: International Page
       | preferred_language |
       | English            |
       | Deutsch            |
-      | 日本語              |
-
-  @wip
-    Examples: Missing translations
-      | preferred_language |
-      | 简体中文            |
       | Français           |
       | español            |
       | Português          |
+      | 简体中文            |
+
+    @wip
+    Examples: Missing translations
+      | preferred_language |
+      | 日本語              |
 
   @bug
   @CMS-1263
