@@ -14,7 +14,7 @@ Feature: Advice articles
     Then  "Robert" should see following sections
       | sections                 |
       | Hero                     |
-      | Breadcrumbs              |
+#      | Breadcrumbs              |  Breadcrums are not present on this page. See bug CMS-1698
       | Advice & Guidance tiles  |
       | Error reporting          |
 
@@ -33,7 +33,7 @@ Feature: Advice articles
       | sections                 |
       | Hero                     |
       | Total number of Articles |
-      | Breadcrumbs              |
+#      | Breadcrumbs              |  Breadcrums are not present on this page. See bug CMS-1698
       | List of articles         |
       | Error reporting          |
 
@@ -93,6 +93,9 @@ Feature: Advice articles
     Then "Robert" should be on the "Domestic - Feedback - contact us" page
 
 
+  @bug
+  @CMS-1698
+  @fixme
   @CMS-686
   @breadcrumbs
   Scenario Outline: Any Exporter should see be to use "<breadcrumb>" breadcrumb on "Advice article" page to get to "<target>" page
