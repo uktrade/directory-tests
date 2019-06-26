@@ -38,7 +38,7 @@ PLAN_YOUR_TRIP = Selector(By.ID, "card-visit-uk-link")
 BETA_FEEDBACK = Selector(By.CSS_SELECTOR, "#header-beta-bar span > a")
 SELECTORS = {
     "service cards": {
-        "itself": Selector(By.CSS_SELECTOR, "div.card-grid"),
+        "itself": Selector(By.ID, "featured-cards-section"),
         "cards": Selector(By.CSS_SELECTOR, "#content div.card"),
         "expand to the uk": Selector(
             By.CSS_SELECTOR, "#content > section > div > div > div:nth-child(1) a"
