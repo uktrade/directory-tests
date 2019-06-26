@@ -4,7 +4,7 @@
 Feature: Google Tag Manager
 
   Background:
-    Given basic authentication is done for "PIR - Landing" page
+    Given basic authentication is done for "Domestic - Home" page
 
   @TT-1500
   Scenario Outline: GTM properties should be properly set on "Find a Supplier - <selected>" page

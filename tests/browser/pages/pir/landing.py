@@ -27,8 +27,8 @@ SUBMIT_BUTTON = Selector(
 )
 SELECTORS = {
     "hero": {
-        "self": Selector(By.ID, "heading_hero"),
-        "heading": Selector(By.CSS_SELECTOR, "#heading_hero h1"),
+        "self": Selector(By.ID, "hero"),
+        "heading": Selector(By.CSS_SELECTOR, "#hero h1"),
     },
     "contact form": {
         "itself": Selector(By.CSS_SELECTOR, "#content form"),
