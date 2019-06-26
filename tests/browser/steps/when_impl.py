@@ -592,8 +592,8 @@ def update_actor_forms_data(context: Context, actor: Actor, form_data: dict):
 
 
 @retry(
-    wait_fixed=2000,
-    stop_max_attempt_number=5,
+    wait_fixed=1000,
+    stop_max_attempt_number=8,
     retry_on_exception=retry_if_assertion_error,
     wrap_exception=False,
 )
