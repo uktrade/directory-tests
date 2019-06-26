@@ -68,7 +68,7 @@ def clean_name(name: str) -> str:
 
 
 def visit(driver: WebDriver, *, page_name: str = None):
-    url = URLs[clean_name(page_name).lower()]
+    url = URLs[page_name] if page_name else URL
     visit_url(driver, url)
 
 
