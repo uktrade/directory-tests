@@ -20,6 +20,7 @@ from settings import EXRED_UI_URL
 
 NAME = "Industry"
 NAMES = [
+    "Industry",
     "Aerospace",
     "Agricultural technology",
     "Automotive",
@@ -46,6 +47,7 @@ PAGE_TITLE = "great.gov.uk International - "
 
 
 URLs = {
+    "industry": URL,
     "aerospace": urljoin(URL, "aerospace/"),
     "agricultural technology": urljoin(URL, "agricultural-technology/"),
     "automotive": urljoin(URL, "automotive/"),
@@ -82,7 +84,7 @@ def visit(driver: WebDriver, *, page_name: str = None):
 def should_be_here(driver: WebDriver, *, page_name: str):
     take_screenshot(driver, PAGE_TITLE)
     url = URLs[page_name.lower()] if page_name else URL
-    check_url(driver, url, exact_match=True)
+    check_url(driver, url, exact_match=False)
     logging.debug("All expected elements are visible on '%s' page", PAGE_TITLE)
 
 

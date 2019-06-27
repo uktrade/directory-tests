@@ -38,6 +38,7 @@ from steps.then_impl import (
     share_page_should_be_prepopulated,
     share_page_via_email_should_have_article_details,
     should_be_on_page,
+    should_be_on_page_or_be_redirected_to_page,
     should_be_on_page_or_international_page,
     should_not_see_sections,
     should_see_articles_filtered_by_tag,
@@ -51,6 +52,14 @@ from steps.then_impl import (
     zendesk_should_receive_confirmation_email,
 )
 from steps.when_impl import generic_get_verification_code
+
+
+@then('"{actor_alias}" should be on the "{page_name}" page or be redirected to "{redirect_page}" page')
+def then_actor_should_be_on_page_on_international_page(
+        context, actor_alias, page_name, redirect_page):
+    should_be_on_page_or_be_redirected_to_page(
+        context, actor_alias, page_name, redirect_page
+    )
 
 
 @then('"{actor_alias}" should be on the "{page_name}" page')

@@ -94,6 +94,16 @@ def should_be_on_page_or_international_page(
         logging.debug("%s was redirected to the International page", actor_alias)
 
 
+def should_be_on_page_or_be_redirected_to_page(
+        context: Context, actor_alias: str, page_name: str, redirect_page: str
+):
+    try:
+        should_be_on_page(context, actor_alias, page_name)
+    except AssertionError:
+        should_be_on_page(context, actor_alias, redirect_page)
+        logging.debug(f"{actor_alias} was redirected to '{redirect_page}' page")
+
+
 def should_see_sections(
     context: Context,
     actor_alias: str,

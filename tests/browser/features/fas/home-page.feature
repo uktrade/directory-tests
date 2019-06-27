@@ -81,7 +81,7 @@ Feature: Find a Supplier - home page
 
     When "Robert" decides to read about one of listed industries
 
-    Then "Robert" should be on the "Find a Supplier - Industry" page
+    Then "Robert" should be on the "Find a Supplier - Industry" page or be redirected to "International - Industry" page
 
 
   @ED-4249
