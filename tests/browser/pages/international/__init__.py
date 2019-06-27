@@ -1,7 +1,7 @@
 __all__ = [
     "industries",
     "industry",
-    "landing.py",
+    "landing",
     "international_contact_us",
     "international_eu_exit_contact_us",
     "international_eu_exit_contact_us_thank_you",
