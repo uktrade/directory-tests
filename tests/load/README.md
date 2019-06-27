@@ -17,84 +17,37 @@ Services covered with load tests:
 * `Selling Online Overseas`
 
 
-# CircleCI
-
-All load tests are executed against staging environment every night on CircleCI.  
-Load test workflows are defined in [config.yml](../../.circleci/config.yml).
-
-Below are the workflow names per specific service:
-* run_cms_load_tests_on_stage
-* run_fab_load_tests_on_stage
-* run_fas_load_tests_on_stage
-* run_international_load_tests_on_stage
-* run_invest_load_tests_on_stage
-* run_isd_load_tests_on_stage
-* run_search_load_tests_on_stage
-* run_soo_load_tests_on_stage
-
-Tests are controlled by `3` variables defined at the top of [config.yml](../../.circleci/config.yml).
-
-```yaml
-load_hatch_rate: &load_hatch_rate
-    HATCH_RATE: 5
-
-load_num_clients: &load_num_clients
-    NUM_CLIENTS: 20
-
-load_run_time: &load_run_time
-    RUN_TIME: 300
-```
-
-
-## Artifacts & Geckoboards
-
-After each load test job is done, CircleCI will keep locust's test result files: 
-`results_distribution.csv` & `results_requests.csv` as a job artifact.  
-
-These `CSV` files are then consumed by [Geckoboard Updater](https://github.com/uktrade/directory-periodic-tests/tree/master/geckoboard_updater) script. 
-Once fetched, parsed & converted into a JSON Dataset, Geckoboard Updater will push 
-the load tests results to Geckoboard, where they're nicely visualised.
-
-
-# env vars
-
-In order to execute load tests following environment variables must be set:
-
-* `DIRECTORY_CMS_API_CLIENT_API_KEY`
-* `DIRECTORY_CMS_API_CLIENT_BASE_URL`
-* `DIRECTORY_UI_BUYER_URL`
-* `DIRECTORY_UI_INTERNATIONAL_URL`
-* `DIRECTORY_UI_SUPPLIER_URL`
-* `EXRED_UI_URL`
-* `INVEST_UI_URL`
-* `ISD_UI_URL`
-* `SOO_UI_URL`
-
-
-There are also optional environment variables which will use default values if unset:
-
-* `DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT=30`
-* `DIRECTORY_CMS_API_CLIENT_SENDER_ID=directory`
-* `LOCUST_MAX_WAIT=6000`
-* `LOCUST_MIN_WAIT=500`
-* `LOCUST_TIMEOUT=150`
-
-
 # Requirements
 
-All requirements are specified in [requirements_load.txt](../../requirements_load.txt)
-
-`requirements_load.txt` are generated from [requirements_load.in](../../requirements_load.in) using [pip-compile](https://pypi.org/project/pip-tools/).
-
-[virtualenvwrapper](https://pypi.org/project/virtualenvwrapper/) is highly recommended for creating & managing [virtual envs](https://pypi.org/project/virtualenv/).
+* python 3.6
+* pip
+* dependencies listed in [requirements_load.txt](../../requirements_load.txt)
+* required environment variables (see [env.json](../../docker/env.json)
 
 
 # Installation and execution
 
-1. Create a virtual env -> `mkvirtualenv -p python3.6 load`
-2. Install requirements -> `pip install -r requirements_load.txt`
-3. Set required environment variables -> find them in `rattic`
+1. Create dedicated virtualenv -> `mkvirtualenv -p python3.6 load`
+2. Install dependencies from [requirements_load.txt](../../requirements_load.txt) → `pip install -r requirements_load.txt`
+3. Set required env vars (see [Env Vars](#env-vars))
 4. Run tests with or without Web GUI -> see steps below
+
+
+# Env Vars
+
+Before running tests you'll need to set all required environment variables.  
+You can find those variables in Rattic.  
+
+The next steps is to define handy command aliases to make that process as simple as possible:
+
+```bash
+alias dev='source ~/dev.sh';
+alias stage='source ~/stage.sh';
+alias uat='source ~/uat.sh';
+```
+
+Once that's done, remember to run `dev`, `stage` or `uat` command prior running tests 
+against desired environment.
 
 
 ## Run without Web GUI
@@ -171,3 +124,66 @@ Clicking on `Start swarming` will start the test and allow you to see:
 * failures
 * exceptions
 * and download statistics in form of CSV files
+
+
+# CircleCI
+
+All load tests are executed against staging environment every night on CircleCI.  
+Load test workflows are defined in [config.yml](../../.circleci/config.yml).
+
+Below are the workflow names per specific service:
+* run_cms_load_tests_on_stage
+* run_fab_load_tests_on_stage
+* run_fas_load_tests_on_stage
+* run_international_load_tests_on_stage
+* run_invest_load_tests_on_stage
+* run_isd_load_tests_on_stage
+* run_search_load_tests_on_stage
+* run_soo_load_tests_on_stage
+
+Tests are controlled by `3` variables defined at the top of [config.yml](../../.circleci/config.yml).
+
+```yaml
+load_hatch_rate: &load_hatch_rate
+    HATCH_RATE: 5
+
+load_num_clients: &load_num_clients
+    NUM_CLIENTS: 20
+
+load_run_time: &load_run_time
+    RUN_TIME: 300
+```
+
+
+## Artifacts & Geckoboards
+
+After each load test job is done, CircleCI will keep locust's test result files: 
+`results_distribution.csv` & `results_requests.csv` as a job artifact.  
+
+These `CSV` files are then consumed by [Geckoboard Updater](https://github.com/uktrade/directory-periodic-tests/tree/master/geckoboard_updater) script. 
+Once fetched, parsed & converted into a JSON Dataset, Geckoboard Updater will push 
+the load tests results to Geckoboard, where they're nicely visualised.
+
+
+# env vars
+
+In order to execute load tests following environment variables must be set:
+
+* `DIRECTORY_CMS_API_CLIENT_API_KEY`
+* `DIRECTORY_CMS_API_CLIENT_BASE_URL`
+* `DIRECTORY_UI_BUYER_URL`
+* `DIRECTORY_UI_INTERNATIONAL_URL`
+* `DIRECTORY_UI_SUPPLIER_URL`
+* `EXRED_UI_URL`
+* `INVEST_UI_URL`
+* `ISD_UI_URL`
+* `SOO_UI_URL`
+
+
+There are also optional environment variables which will use default values if unset:
+
+* `DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT=30`
+* `DIRECTORY_CMS_API_CLIENT_SENDER_ID=directory`
+* `LOCUST_MAX_WAIT=6000`
+* `LOCUST_MIN_WAIT=500`
+* `LOCUST_TIMEOUT=150`
