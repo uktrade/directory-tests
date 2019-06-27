@@ -3,6 +3,7 @@ import logging
 from collections import defaultdict
 from typing import List
 
+from selenium.common.exceptions import JavascriptException
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import selenium_action
@@ -120,9 +121,16 @@ def get_dit_tagging_js_event_source_code(driver: WebDriver, package: str) -> str
         f"{list(packages.keys())}"
     )
     assert package in packages, error
-    return driver.execute_script(
-        f"return dit.tagging.{packages[package]}.constructor.toString();"
-    )
+    try:
+        result = driver.execute_script(
+            f"return dit.tagging.{packages[package]}.constructor.toString();"
+        )
+    except JavascriptException:
+        raise JavascriptException(
+            f"Failed to find JS tagging package 'dit.tagging.{packages[package]}' on "
+            f"'{driver.current_url}'"
+        )
+    return result
 
 
 def get_event_details(raw_code: str) -> dict:
