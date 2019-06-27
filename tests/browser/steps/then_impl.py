@@ -426,7 +426,7 @@ def form_should_see_error_messages(
 
 # BrowserStack times out after 60s of inactivity
 # https://www.browserstack.com/automate/timeouts
-@retry(wait_fixed=10000, stop_max_attempt_number=5, wrap_exception=False)
+@retry(wait_fixed=10000, stop_max_attempt_number=7, wrap_exception=False)
 def zendesk_should_receive_confirmation_email(
     context: Context, actor_alias: str, subject: str
 ):
