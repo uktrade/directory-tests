@@ -265,6 +265,23 @@ def update_actor(context: Context, alias: str, **kwargs):
     logging.debug("Successfully updated %s's details: %s", alias, actors[alias])
 
 
+def avoid_browser_stack_idle_timeout_exception(driver: WebDriver):
+    """BrowserStack will stop browser session after 90s of inactivity.
+
+    In order to avoid it, this helper will generate random events, like scrolling
+    """
+    actions = {
+        "scroll up": "window.scrollBy(0,-1000);",
+        "scroll down": "window.scrollBy(0,1000);",
+        "click on body": "document.querySelector('body').click();",
+        "scroll to random link": "window.scrollTo(0, document.querySelectorAll('a')[Math.floor(Math.random()*document.querySelectorAll('a').length)].offsetTop);"
+    }
+    action = random.choice(list(actions.keys()))
+    message = f"Trigger '{action}' event to avoid 'Idle Timeout exception'"
+    logging.debug(message)
+    driver.execute_script(actions[action])
+
+
 @retry(stop_max_attempt_number=3)
 def take_screenshot(driver: WebDriver, page_name: str):
     """Will take a screenshot of current page."""

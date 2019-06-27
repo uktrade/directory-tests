@@ -23,6 +23,7 @@ from pages import (
 )
 from pages.common_actions import (
     assertion_msg,
+    avoid_browser_stack_idle_timeout_exception,
     clear_driver_cookies,
     get_actor,
     get_last_visited_page,
@@ -430,9 +431,11 @@ def form_should_see_error_messages(
 def zendesk_should_receive_confirmation_email(
     context: Context, actor_alias: str, subject: str
 ):
+    avoid_browser_stack_idle_timeout_exception(context.driver)
     actor = get_actor(context, actor_alias)
     email = actor.email
     tickets = find_tickets(email, subject)
+    avoid_browser_stack_idle_timeout_exception(context.driver)
     assert tickets, f"Expected to find at least 1 ticket for {email} but got 0"
     error_msg = (
         f"Expected to find only 1 '{subject}' ticket for {email} but "
@@ -456,6 +459,7 @@ def should_see_articles_filtered_by_tag(context: Context, actor_alias: str):
 def generic_contact_us_should_receive_confirmation_email(
     context: Context, actor_alias: str, subject: str
 ):
+    avoid_browser_stack_idle_timeout_exception(context.driver)
     actor = get_actor(context, actor_alias)
     confirmation = get_email_confirmation_notification(
         email=actor.email, subject=subject
@@ -500,6 +504,7 @@ def office_finder_should_see_correct_office_details(
 
 @retry(wait_fixed=5000, stop_max_attempt_number=3, wrap_exception=False)
 def forms_confirmation_email_should_not_be_sent(context: Context, actor_alias: str):
+    avoid_browser_stack_idle_timeout_exception(context.driver)
     actor = get_actor(context, actor_alias)
     submissions = find_form_submissions(actor.email)
     assert submissions, f"No form submissions found for {actor_alias}"

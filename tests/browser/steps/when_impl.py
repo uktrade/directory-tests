@@ -28,6 +28,7 @@ from pages import (
 from pages.common_actions import (
     Actor,
     add_actor,
+    avoid_browser_stack_idle_timeout_exception,
     barred_actor,
     get_actor,
     get_last_visited_page,
@@ -310,6 +311,7 @@ def sign_out(context: Context, actor_alias: str):
 def articles_share_on_social_media(
     context: Context, actor_alias: str, social_media: str
 ):
+    avoid_browser_stack_idle_timeout_exception(context.driver)
     context.article_url = context.driver.current_url
     if social_media.lower() == "email":
         domestic.advice_article.check_if_link_opens_email_client(context.driver)
