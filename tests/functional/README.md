@@ -63,7 +63,9 @@ dev
 behave -k --format pretty --no-skipped features/fas/search.feature --tags=~@wip --tags=~@skip --tags=~@fixme --stop
 ```
 
-PS. Test execution will also stop on first error because `--stop` parameter was used.
+PS. 
+* Test execution will also stop on first error because `--stop` parameter was used.
+* You can use `--tags=` & `-t` interchangeably.
 
 
 *IMPORTANT NOTE:*

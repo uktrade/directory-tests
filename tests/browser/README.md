@@ -55,6 +55,9 @@ This command will run all scenarios from specified feature file which are not an
 with `@wip`, `@skip` or `@fixme` tags. Test execution will also stop on first error 
 because `--stop` parameter was used.
 
+PS. you can use `--tags=` & `-t` interchangeably.
+
+
 *IMPORTANT NOTE:*
 
 You can increase the control over test execution by using one or all of the following env vars:
@@ -86,14 +89,14 @@ paver run --config=browserstack
 To run all scenarios on [BrowserStack](https://www.browserstack.com/automate) with `behave` command (always defaults to `Chrome`):   
 ```bash
 cd tests/browser
-CONFIG=browserstack behave -k --format progress3 --no-logcapture --stop --tags=-wip --tags=-skip --tags=~fixme
+CONFIG=browserstack behave -k --format progress3 --no-logcapture --stop --tags=~@wip --tags=~@skip --tags=~@fixme
 ```
 
 
 To run specific scenario on [BrowserStack](https://www.browserstack.com/automate) with `behave` command):   
 ```bash
 cd tests/browser
-BROWSERS=Edge VERSIONS=18.0 CONFIG=browserstack-single behave -k --format progress3 --no-logcapture --stop --tags=-wip --tags=-skip --tags=~fixme --tags={YOUR_TAG}
+BROWSERS=Edge VERSIONS=18.0 CONFIG=browserstack-single behave -k --format progress3 --no-logcapture --stop --tags=~@wip --tags=~@skip --tags=~@fixme --tags={YOUR_TAG}
 ```
 
 
@@ -110,7 +113,7 @@ make docker_browserstack_second_set
 
 In order to use custom browser capabilities, please provide them as a dict string in `CAPABILITIES` env var:
 ```shell
-CAPABILITIES='{"pageLoadStrategy":"eager","marionette":true}' AUTO_RETRY=false BROWSERS=firefox behave -k --no-logcapture -t ~wip -t ~fixme features/ --stop -t <your_tag>
+CAPABILITIES='{"pageLoadStrategy":"eager","marionette":true}' AUTO_RETRY=false BROWSERS=firefox behave -k --no-logcapture --tags=~@wip --tags=~@fixme features/ --stop --tags=<your_tag>
 ```
 
 PS. When using custom browser capabilities in Firefox, then the [geckodriver](https://github.com/mozilla/geckodriver/) will always expect `marionette` set to `true`.
@@ -118,7 +121,7 @@ PS. When using custom browser capabilities in Firefox, then the [geckodriver](ht
 In order to change `pageLoadStrategy` to `eager` in Chrome you'll have to set its value to `none`.
 See [this answer](https://stackoverflow.com/a/43737358) for more details.
 ```shell
-CAPABILITIES='{"pageLoadStrategy":"none"}' AUTO_RETRY=false BROWSERS=chrome behave -k --no-logcapture -t ~wip -t ~fixme features/ --stop -t <your_tag>
+CAPABILITIES='{"pageLoadStrategy":"none"}' AUTO_RETRY=false BROWSERS=chrome behave -k --no-logcapture --tags=~@wip --tags=~@fixme features/ --stop --tags=<your_tag>
 ```
 
 

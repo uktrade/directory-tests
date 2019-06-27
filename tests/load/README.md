@@ -1,4 +1,4 @@
-Load tests for DIT Services
+DIT - Load tests
 ---------------------------------------
 
 This package contains a set of rudimentary load tests for various DIT services.  

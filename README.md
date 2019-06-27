@@ -4,7 +4,7 @@
 [![codecov-image]][codecov]
 [![snyk-image]][snyk]
 
-**[Export Directory smoke, load, functional & functional browser tests](https://www.great.gov.uk)**
+Smoke, load, functional/integration & functional browser tests for [https://www.great.gov.uk](https://www.great.gov.uk).
 
 ---
 

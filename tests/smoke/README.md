@@ -14,7 +14,7 @@ Some of tests also use: `directory_client_core`, `directory_cms_client` or `dire
 
 * python 3.6
 * pip
-* required environment variables (see [env.json](../../docker/env.json)
+* required environment variables (see [env.json](../../docker/env.json))
 * dependencies listed in [requirements_smoke.txt](../../requirements_smoke.txt)
 
 
