@@ -59,7 +59,10 @@ def get_gtm_data_layer_properties(driver: WebDriver) -> dict:
     return replace_string_representations(data_layer_raw)
 
 
-def get_gtm_data_layer_events(driver: WebDriver, *, dedupe: bool = True) -> List[dict]:
+def get_gtm_data_layer_events(
+        driver: WebDriver, *, dedupe: bool = True,
+        ignore_other_gtm_fields: bool = True
+) -> List[dict]:
     """Get all GTM events registered in window.dataLayer object.
 
     An example array of GTM events looks like this:
@@ -79,6 +82,16 @@ def get_gtm_data_layer_events(driver: WebDriver, *, dedupe: bool = True) -> List
         for item in script_result
         if "event" in item and "action" in item and "element" in item
     ]
+    if ignore_other_gtm_fields:
+        logging.debug(f"Before removing ignored GTM fields:\n{raw_events}")
+        ignored_gtm_fields = ["gtm.uniqueEventId"]
+        for ignored_field in ignored_gtm_fields:
+            [
+                item.pop(ignored_field)
+                for item in raw_events
+                if ignored_field in item
+            ]
+        logging.debug(f"After removing ignored GTM fields:\n{raw_events}")
     result = [replace_string_representations(raw_event) for raw_event in raw_events]
     assert result, f"No GTM events were found on {driver.current_url}"
     logging.debug(f"All GTM events found on {driver.current_url}: {result}")
