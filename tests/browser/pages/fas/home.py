@@ -28,7 +28,7 @@ URL = DIRECTORY_UI_SUPPLIER_URL
 PAGE_TITLE = "Find UK suppliers - trade.great.gov.uk"
 
 SEARCH_INPUT = Selector(By.ID, "id_term")
-SEARCH_SECTOR = Selector(By.ID, "id_sectors")
+SEARCH_SECTOR = Selector(By.ID, "id_industries")
 SEARCH_BUTTON = Selector(By.CSS_SELECTOR, "#search-area > form button")
 CONTACT_US_BUTTON = Selector(By.CSS_SELECTOR, "#introduction-section a")
 SELECTORS = {
