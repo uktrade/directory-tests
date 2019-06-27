@@ -21,7 +21,12 @@ def get_tickets(*, start_time: datetime.datetime = None) -> List[Ticket]:
     if not start_time:
         now = datetime.datetime.now(tz=datetime.timezone.utc)
         start_time = now - datetime.timedelta(days=1)
-    return [t for t in ZENPY_CLIENT.tickets.incremental(start_time=start_time)]
+    return [
+        t
+        for t in ZENPY_CLIENT.tickets.incremental(
+            include=["users"], start_time=start_time
+        )
+    ]
 
 
 def filter_by_brand(tickets: List[Ticket], brand: str) -> List[Ticket]:
