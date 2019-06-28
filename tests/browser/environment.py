@@ -254,3 +254,6 @@ def before_all(context: Context):
     context.config.setup_logging(configfile=".behave_logging")
     logger = logging.getLogger()
     logger.addFilter(NoPDFMinerLogEntriesFilter())
+
+    logging.debug(f"remote_desired_capabilities:\n{remote_desired_capabilities}")
+    logging.debug(f"local_desired_capabilities:\n{local_desired_capabilities}")
