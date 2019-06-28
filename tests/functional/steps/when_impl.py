@@ -1468,14 +1468,18 @@ def fas_send_feedback_request(
     context: Context, buyer_alias: str, page_name: str
 ):
     actor = context.get_actor(buyer_alias)
-    session = actor.session
-    referer_url = get_page_object(page_name).URL
+    # Step 0: get csrf token
+    response = fas_ui_feedback.go_to(actor.session)
+    token = extract_csrf_middleware_token(response)
+    context.update_actor(buyer_alias, csrfmiddlewaretoken=token)
 
+    actor = context.get_actor(buyer_alias)
+    referer_url = get_page_object(page_name).URL
     # Step 1: generate random form data for our Buyer
     feedback = random_feedback_data(email=actor.email)
 
     # Step 2: submit the form
-    response = fas_ui_feedback.submit(session, feedback, referer=referer_url)
+    response = fas_ui_feedback.submit(actor, feedback, referer=referer_url)
     context.response = response
     logging.debug("%s submitted the feedback request", buyer_alias)
 

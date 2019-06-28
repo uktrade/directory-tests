@@ -6,14 +6,14 @@ from requests import Response, Session
 
 from tests import URLs
 from tests.functional.pages import Services
-from tests.functional.utils.context_utils import Feedback
+from tests.functional.utils.context_utils import Feedback, Actor
 from tests.functional.utils.generic import assert_that_captcha_is_in_dev_mode
 from tests.functional.utils.request import Method, check_response, make_request
 
 SERVICE = Services.FAS
 NAME = "Feedback"
 TYPE = "form"
-URL = URLs.FAS_FEEDBACK.absolute
+URL = URLs.DOMESTIC_FEEDBACK.absolute
 EXPECTED_STRINGS_FORM = [
     "Get UK companies to fulfil your business needs",
     (
@@ -30,12 +30,9 @@ EXPECTED_STRINGS_FORM = [
     "Send",
 ]
 EXPECTED_STRINGS_SUCCESSFUL_SUBMISSION = [
-    "Your request has been submitted",
-    "Thank you for letting us know about your organisation’s needs.",
-    (
-        "UK government staff based in your region will be in touch to let you "
-        "know how UK businesses can help you."
-    ),
+    "We have received your enquiry",
+    "also sent an email with the information",
+    "What happens next",
 ]
 EXPECTED_STRINGS_ERRORS = [
     "This field is required.",
@@ -63,12 +60,13 @@ def should_see_errors(response):
     logging.debug("Buyer was presented with Feedback submission errors.")
 
 
-def submit(session: Session, feedback: Feedback, *, referer: str = None) -> Response:
+def submit(actor: Actor, feedback: Feedback, *, referer: str = None) -> Response:
     """Submit feedback form.
 
     :param feedback: a namedtuple with Feedback request details
     :param referer: (optional) Originating page. Defaults to "{FAS}/feedback"
     """
+    session = actor.session
     assert_that_captcha_is_in_dev_mode(go_to, session)
     if referer:
         headers = {"Referer": referer}
@@ -76,12 +74,11 @@ def submit(session: Session, feedback: Feedback, *, referer: str = None) -> Resp
         headers = {"Referer": URL}
 
     data = {
-        "full_name": feedback.name,
-        "email_address": feedback.email,
-        "company_name": feedback.company_name,
-        "country": feedback.country,
+        "csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
+        "name": feedback.name,
+        "email": feedback.email,
         "comment": feedback.comment,
-        "terms": feedback.terms,
+        "terms_agreed": feedback.terms,
         "g-recaptcha-response": feedback.g_recaptcha_response,
     }
     return make_request(
