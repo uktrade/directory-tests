@@ -206,6 +206,13 @@ def before_scenario(context: Context, scenario: Scenario):
 
 def after_scenario(context: Context, scenario: Scenario):
     """Place here code which has to be executed after every scenario."""
+    try:
+        response = context.driver.execute(Command.STATUS)
+        logging.debug(f"WebDriver Status: {response}")
+    except (socket.error, httplib.CannotSendRequest):
+        logging.error(
+            f"Remote browser driver became unresponsive after scenario: {scenario.name}"
+        )
     message = f"Finish: {scenario.name} | {scenario.filename}:{scenario.line}"
     if scenario.status == "failed":
         logging.error(
