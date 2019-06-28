@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""ExRed Markets Page object"""
+"""Domestic Markets Page object"""
 
 import logging
 from urllib.parse import urljoin

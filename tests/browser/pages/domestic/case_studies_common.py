@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""ExRed Common Case Study Page Object."""
+"""Domestic Common Case Study Page Object."""
 import logging
 
 from selenium.webdriver.common.by import By
@@ -13,7 +13,7 @@ from pages.common_actions import (
     take_screenshot,
 )
 
-NAME = "ExRed Common Case Study"
+NAME = "Domestic Common Case Study"
 URL = None
 
 

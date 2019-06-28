@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""ExRed Article List Page Object."""
+"""Domestic Article List Page Object."""
 import logging
 from typing import List
 

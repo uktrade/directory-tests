@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""ExRed UKEF Contact Us - Page Object."""
+"""Domestic UKEF Contact Us - Page Object."""
 import logging
 from typing import List
 from urllib.parse import urljoin

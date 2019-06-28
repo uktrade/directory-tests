@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""ExRed Common Advice Page Object."""
+"""Domestic Common Advice Page Object."""
 import logging
 import random
 from typing import List

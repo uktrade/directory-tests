@@ -120,13 +120,12 @@ def check_for_special_page_cases(page: dict) -> str:
         # All draft version of pages that use CMS components are affected by bug CMS-754
         # invest homepage
         # fas homepage
-        # exred international page
-        # exred international
+        # International page
         # domestic eu-exit-news list
         skip_full_paths = [
             "/home-page/",  # Invest home page
             "/landing-page/",  # FAS home page
-            "/home/",  # ExRed home page
+            "/home/",  # Domestic home page
         ]
         if any(True for path in skip_full_paths if page["full_path"] == path):
             if page["meta"]["draft_token"]:

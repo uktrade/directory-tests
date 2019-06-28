@@ -7,7 +7,7 @@
     "browserstack.geckodriver": "0.23.0",
     "browserstack.chrome.driver": "74.0.3729.6",
     "build": {BUILD_ID},
-    "project": "ExRed",
+    "project": "DIT",
     "resolution": "1600x1200"
   }},
   "environments": [

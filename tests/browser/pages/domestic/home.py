@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""ExRed Home Page Object."""
+"""Domestic Home Page Object."""
 import logging
 import random
 import time

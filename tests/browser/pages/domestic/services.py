@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""ExRed - Services page"""
+"""Domestic - Services page"""
 from typing import List
 from urllib.parse import urljoin
 

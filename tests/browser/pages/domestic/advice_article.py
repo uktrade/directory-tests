@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""ExRed Common Articles Page Object."""
+"""Domestic Common Articles Page Object."""
 import logging
 from typing import List
 from urllib import parse as urlparse

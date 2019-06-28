@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""ExRed Search Result Page object"""
+"""Domestic Search Result Page object"""
 
 import logging
 import random

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""ExRed Empty Search Page object"""
+"""Domestic Empty Search Page object"""
 
 import logging
 from urllib.parse import urljoin
