@@ -107,6 +107,18 @@ def restart_webdriver_if_unresponsive(context: Context, scenario: Scenario):
         try:
             response = context.driver.execute(Command.STATUS)
             logging.debug(f"WebDriver Status: {response}")
+            session_id = context.driver.session_id
+            if "sessionId" in response and response["sessionId"] is None:
+                msg = (
+                    f"Looks like current session_id: {session_id} became unresponsive, "
+                    f"will try to spawn a new one"
+                )
+                logging.error(msg)
+                flag_browserstack_session_as_failed(session_id, msg)
+                clean_name = scenario.name.lower().replace(" ", "-")
+                start_driver_session(
+                    context, f"session-recovered-after-scenario-{clean_name}"
+                )
         except (socket.error, httplib.CannotSendRequest):
             msg = (
                 f"Remote driver became unresponsive after scenario: "
