@@ -14,7 +14,7 @@ Feature: Advice articles
     Then  "Robert" should see following sections
       | sections                 |
       | Hero                     |
-#      | Breadcrumbs              |  Breadcrums are not present on this page. See bug CMS-1698
+#      | Breadcrumbs              |  Breadcrumbs are not present on this page. See bug CMS-1698
       | Advice & Guidance tiles  |
       | Error reporting          |
 
@@ -33,7 +33,7 @@ Feature: Advice articles
       | sections                 |
       | Hero                     |
       | Total number of Articles |
-#      | Breadcrumbs              |  Breadcrums are not present on this page. See bug CMS-1698
+#      | Breadcrumbs              |  Breadcrumbs are not present on this page. See bug CMS-1698
       | List of articles         |
       | Error reporting          |
 
