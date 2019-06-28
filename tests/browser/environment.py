@@ -115,7 +115,7 @@ def restart_webdriver_if_unresponsive(context: Context, scenario: Scenario):
                 )
                 logging.error(msg)
                 flag_browserstack_session_as_failed(session_id, msg)
-                clean_name = scenario.name.lower().replace(" ", "-")
+                clean_name = scenario.name.lower().replace(" ", "-")[0:254]
                 start_driver_session(
                     context, f"session-recovered-after-scenario-{clean_name}"
                 )
@@ -128,7 +128,7 @@ def restart_webdriver_if_unresponsive(context: Context, scenario: Scenario):
             logging.error(msg)
             session_id = context.driver.session_id
             flag_browserstack_session_as_failed(session_id, msg)
-            clean_name = scenario.name.lower().replace(" ", "-")
+            clean_name = scenario.name.lower().replace(" ", "-")[0:254]
             start_driver_session(
                 context, f"session-recovered-after-scenario-{clean_name}"
             )
