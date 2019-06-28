@@ -28,7 +28,7 @@ PAGE_TITLE = "Welcome to great.gov.uk"
 
 ARTICLE_LINKS = Selector(
     By.CSS_SELECTOR,
-    "#content section.topic-list-section div.card a",
+    "#advice-list-section div.card a",
     type=ElementType.LINK,
 )
 SELECTORS = {
@@ -41,9 +41,12 @@ SELECTORS = {
         "links": Selector(By.CSS_SELECTOR, "nav.breadcrumbs a"),
     },
     "advice & guidance tiles": {
-        "itself": Selector(By.CSS_SELECTOR, "div.card-grid"),
-        "cards": Selector(By.CSS_SELECTOR, "section.topic-list-section div.card"),
+        "itself": Selector(By.ID, "advice-list-section"),
+        "cards": Selector(By.CSS_SELECTOR, "#advice-list-section div.card"),
         "articles": ARTICLE_LINKS,
+        "article images": Selector(
+            By.CSS_SELECTOR, "#advice-list-section div.card div[role=image]"
+        ),
     },
     "error reporting": {
         "itself": Selector(By.CSS_SELECTOR, "section.error-reporting"),
