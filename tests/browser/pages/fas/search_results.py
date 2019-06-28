@@ -33,7 +33,7 @@ PAGE_TITLE = "Search the database of UK suppliers' trade profiles - trade.great.
 SECTOR_FILTERS = Selector(
     By.CSS_SELECTOR, "#checkbox-industry-expertise li input[type=checkbox]"
 )
-PROFILE_LINKS = Selector(By.CSS_SELECTOR, "#companies-column li > a")
+PROFILE_LINKS = Selector(By.CSS_SELECTOR, "#companies-column li > a[data-ga-class=company-detail-link]")
 UPDATE_RESULTS = Selector(By.CSS_SELECTOR, "#filter-column button[type=submit]")
 FILTER_TOGGLE = Selector(By.ID, "toggle_id_industries")
 SELECTORS = {
@@ -136,6 +136,7 @@ def open_profile(driver: WebDriver, number: int):
         link = profile_links[0]
     else:
         link = profile_links[0]
+    logging.debug(f"Will click on profile link: {link.text}")
     link.click()
 
     take_screenshot(driver, NAME + " after clicking on company profile link")
