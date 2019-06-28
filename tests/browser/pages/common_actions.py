@@ -819,9 +819,9 @@ def tick_captcha_checkbox(driver: WebDriver):
     driver.switch_to.frame(iframe)
     captcha = find_element(driver, im_not_a_robot)
     captcha.click()
-    # wait 2 s after user clicks on the CAPTCHA checkbox
+    # wait 3 s after user clicks on the CAPTCHA checkbox
     # otherwise the test might fail
-    time.sleep(2)
+    time.sleep(3)
     driver.switch_to.parent_frame()
 
 
