@@ -37,7 +37,8 @@ SEND_BUTTON = Selector(
 SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#content form"),
-        "full name": Selector(By.ID, "id_full_name", type=ElementType.INPUT),
+        "given name": Selector(By.ID, "id_given_name", type=ElementType.INPUT),
+        "family name": Selector(By.ID, "id_family_name", type=ElementType.INPUT),
         "company name": Selector(By.ID, "id_company_name", type=ElementType.INPUT),
         "country": Selector(By.ID, "id_country", type=ElementType.INPUT),
         "email": Selector(By.ID, "id_email_address", type=ElementType.INPUT),
@@ -69,7 +70,8 @@ def should_see_sections(driver: WebDriver, names: List[str]):
 def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
     company_name = actor.company_name or "Automated test"
     result = {
-        "full name": actor.alias,
+        "given name": actor.alias,
+        "family name": "AUTOMATES TESTS",
         "company name": company_name,
         "country": "AUTOMATED TESTS",
         "email": actor.email,
