@@ -437,6 +437,7 @@ class URLs(Enum):
     DOMESTIC_SEARCH = DomesticUrl("search/")
     DOMESTIC_SITEMAP = DomesticUrl("sitemap.xml")
     DOMESTIC_LANDING = DomesticUrl("")
+    DOMESTIC_FEEDBACK = DomesticUrl("contact/feedback/")
     DOMESTIC_LANDING_UK = DomesticUrl("?lang=en-gb")
     DOMESTIC_INTERNATIONAL = DomesticUrl("international/")
     DOMESTIC_INTERNATIONAL_UK = DomesticUrl("international/?lang=en-gb")
