@@ -5,6 +5,7 @@ Feature: Google Analytics 360 Events
     Given basic authentication is done for "Domestic - Home" page
 
 
+  @skip
   @CMS-1672
   @header-events
   Scenario Outline: All GA360 events should registered for event handlers attached to "Domestic Header" elements on "Domestic - <specific>" page
