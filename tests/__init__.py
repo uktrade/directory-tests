@@ -261,7 +261,6 @@ class URLs(Enum):
     SSO_API_USER = SSOApiUrl("api/v1/session-user/")
 
     # Find a Buyer
-    FAB_API_COMPANIES_HOUSE_SEARCH = FABApiUrl("api/internal/companies-house-search/", template="api/internal/companies-house-search/?term={term}")
     FAB_LANDING = FABUrl("")
     FAB_SITEMAP = FABUrl("sitemap.xml")
     FAB_ACCOUNT_ACCEPT_INVITATION = FABUrl("account/collaborate/accept/?invite_key={invite_key}", template="account/collaborate/accept/?invite_key={invite_key}")
@@ -405,6 +404,7 @@ class URLs(Enum):
     ISD_SEARCH = ISDUrl("search/")
 
     # FAS/ISD Profile 
+    PROFILE_API_COMPANIES_HOUSE_SEARCH = FABApiUrl("api/v1/companies-house-search/", template="api/v1/companies-house-search/?term={term}")
     PROFILE_HEALTHCHECK = ProfileUrl("healthcheck/")
     PROFILE_HEALTHCHECK_PING = ProfileUrl("healthcheck/ping/")
     PROFILE_SOO = ProfileUrl("selling-online-overseas/")

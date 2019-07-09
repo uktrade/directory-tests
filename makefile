@@ -36,6 +36,10 @@ rudimental_load_test_cms:
 	export LOCUST_FILE=./locustfile_rudimental_cms.py; \
 	$(LOCUST)
 
+rudimental_load_test_profile:
+	export LOCUST_FILE=./locustfile_rudimental_profile.py; \
+	$(LOCUST)
+
 rudimental_load_test_fab:
 	export LOCUST_FILE=./locustfile_rudimental_fab.py; \
 	$(LOCUST)
