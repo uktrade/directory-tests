@@ -35,7 +35,7 @@ def go_to(session: Session, *, case_number: int = None) -> Response:
         url = EDIT_URL.format(case_number=case_number)
     else:
         url = URL
-    headers = {"Referer": URLs.FAB_COMPANY_PROFILE.absolute}
+    headers = {"Referer": URLs.PROFILE_FAB.absolute}
     response = make_request(Method.GET, url, session=session, headers=headers)
     logging.debug("Supplier is on the Add Case Study - Basic page")
     return response

@@ -82,7 +82,7 @@ functional_tests_feature_dir:
 functional_update_companies:
 	python -c "from tests.functional.utils.generic import update_companies; update_companies()"
 
-test: pep8 smoke_tests functional_tests load_test_minimal
+test: smoke_tests functional_tests load_test_minimal
 
 DOCKER_COMPOSE_REMOVE_AND_PULL := docker-compose rm -f && docker-compose pull
 DOCKER_COMPOSE_CREATE_ENVS := \
@@ -209,4 +209,4 @@ compile_load_requirements:
 
 compile_all_requirements: compile_requirements compile_browser_requirements compile_functional_requirements compile_smoke_requirements compile_load_requirements
 
-.PHONY: build clean requirements test docker_remove_all docker_integration_tests smoke_tests load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal functional_tests pep8
+.PHONY: build clean requirements test docker_remove_all docker_integration_tests smoke_tests load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal functional_tests

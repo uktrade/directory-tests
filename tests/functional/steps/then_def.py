@@ -5,7 +5,6 @@ from behave import then
 from behave.runner import Context
 
 from tests.functional.steps.then_impl import (
-    bp_should_be_prompted_to_build_your_profile,
     fab_company_should_be_verified,
     profile_profile_is_published,
     fab_should_be_asked_about_verification_form,
@@ -75,12 +74,6 @@ def then_sso_account_was_created(context, alias):
 @then('"{alias}" should receive an email verification msg entitled "{subject}"')
 def then_supplier_should_receive_verification_email(context, alias, subject):
     reg_should_get_verification_email(context, alias)
-
-
-@then('"{supplier_alias}" should be prompted to Build and improve your Directory Profile')
-def then_supplier_should_be_prompted_to_build_your_profile(
-        context, supplier_alias):
-    bp_should_be_prompted_to_build_your_profile(context, supplier_alias)
 
 
 @then('"{supplier_alias}" should be told that her company has no description')

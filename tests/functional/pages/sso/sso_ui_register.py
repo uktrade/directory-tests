@@ -49,29 +49,6 @@ def go_to(
     return make_request(Method.GET, url, session=session, headers=headers)
 
 
-def submit(actor: Actor, company: Company) -> Response:
-    """Will submit the SSO Registration form with Supplier & Company details."""
-    session = actor.session
-    next_url = URLs.FAB_REGISTER_SUBMIT_ACCOUNT_DETAILS.absolute
-    next_link_query = f"?company_number={company.number}"
-    next_link = quote(urljoin(next_url, next_link_query))
-    referer_query = f"?next={next_link}"
-    headers = {"Referer": urljoin(URL, referer_query)}
-    data = {
-        "csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
-        "email": actor.email,
-        "email2": actor.email,
-        "password1": actor.password,
-        "password2": actor.password,
-        "terms_agreed": "on",
-        "next": next_link,
-    }
-
-    return make_request(
-        Method.POST, URL, session=session, headers=headers, data=data
-    )
-
-
 def submit_no_company(
     actor: Actor, *, next: str = None, referer: str = URL
 ) -> Response:

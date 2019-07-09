@@ -29,7 +29,7 @@ EXPECTED_STRINGS_VERIFIED = [
 
 
 def go_to(session: Session, *, referer: str = None) -> Response:
-    referer = referer or URLs.FAB_COMPANY_PROFILE.absolute
+    referer = referer or URLs.PROFILE_FAB.absolute
     headers = {"Referer": referer}
     return make_request(Method.GET, URL, session=session, headers=headers)
 
@@ -48,7 +48,7 @@ def submit(
 ) -> Response:
     """Submit the form with verification code."""
     if referer is None:
-        referer = URLs.FAB_COMPANY_PROFILE.absolute
+        referer = URLs.PROFILE_FAB.absolute
     headers = {"Referer": referer}
     data = {
         "csrfmiddlewaretoken": token,
@@ -64,10 +64,3 @@ def should_see_company_is_verified(response: Response):
     """Check is Supplier was told that the company has been verified"""
     check_response(response, 200, body_contains=EXPECTED_STRINGS_VERIFIED)
     logging.debug("Supplier is on the Verify Company page")
-
-
-def view_or_amend_profile(session: Session) -> Response:
-    """Simulate clicking on the 'View or amend your company profile' link."""
-    headers = {"Referer": URL}
-    url = URLs.FAB_COMPANY_PROFILE.absolute
-    return make_request(Method.GET, url, session=session, headers=headers)

@@ -19,7 +19,7 @@ EXPECTED_STRINGS = ["Sign out", "Are you sure you want to sign out?"]
 def go_to(session: Session, *, next_param: str = None) -> Response:
     fab_landing = URLs.FAB_LANDING.absolute
     params = {"next": next_param or fab_landing}
-    headers = {"Referer": URLs.FAB_COMPANY_PROFILE.absolute}
+    headers = {"Referer": URLs.PROFILE_FAB.absolute}
     return make_request(
         Method.GET, URL, session=session, params=params, headers=headers
     )

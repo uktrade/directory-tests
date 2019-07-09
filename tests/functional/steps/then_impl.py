@@ -16,7 +16,6 @@ from tests import URLs
 from tests.functional.pages import has_action, get_page_object, isd
 from tests.functional.pages.fab import (
     fab_ui_account_remove_collaborator,
-    fab_ui_build_profile_basic,
     fab_ui_confirm_identity,
     fab_ui_verify_company,
 )
@@ -85,17 +84,6 @@ def reg_should_get_verification_email(context: Context, alias: str):
     actor = context.get_actor(alias)
     link = get_verification_link(actor.email)
     context.update_actor(alias, email_confirmation_link=link)
-
-
-def bp_should_be_prompted_to_build_your_profile(
-    context: Context, supplier_alias: str
-):
-    fab_ui_build_profile_basic.should_be_here(context.response)
-    logging.debug(
-        "%s is on the 'Build and improve your profile' page", supplier_alias
-    )
-    token = extract_csrf_middleware_token(context.response)
-    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
 
 def prof_should_be_told_about_missing_description(
