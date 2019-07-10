@@ -13,7 +13,7 @@ directory-client-core==5.1.0  # via directory-cms-client, directory-sso-api-clie
 directory-cms-client==10.1.0
 directory-constants==17.1.1
 directory-sso-api-client==5.0.0
-django==1.11.21           # via directory-client-core, directory-constants, sigauth
+django==1.11.22           # via directory-client-core, directory-constants, sigauth
 djangorestframework==3.9.4  # via sigauth
 docopt==0.6.2
 idna==2.8                 # via requests

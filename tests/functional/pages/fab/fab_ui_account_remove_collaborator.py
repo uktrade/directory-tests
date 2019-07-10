@@ -39,7 +39,7 @@ def should_be_here(response: Response, *, have_collaborators: bool = True):
 
 
 def go_to(session: Session) -> Response:
-    headers = {"Referer": URLs.FAB_COMPANY_PROFILE.absolute}
+    headers = {"Referer": URLs.PROFILE_FAB.absolute}
     return make_request(Method.GET, URL, session=session, headers=headers)
 
 

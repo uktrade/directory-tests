@@ -62,7 +62,7 @@ def go_to(
     filter_diff = (set(kwargs.keys()) - set(allowed_search_filters))
     with assertion_msg(f"Got unexpected search filters: {filter_diff}"):
         assert not filter_diff
-    headers = {"Referer": URLs.FAB_COMPANY_PROFILE.absolute}
+    headers = {"Referer": URLs.PROFILE_FAB.absolute}
     return make_request(
         Method.GET, URL, session=session, params=params, headers=headers
     )

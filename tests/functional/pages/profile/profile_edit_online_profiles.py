@@ -38,7 +38,7 @@ def go_to(session: Session) -> Response:
     This requires:
      * Supplier to be logged in
     """
-    headers = {"Referer": URLs.FAB_COMPANY_PROFILE.absolute}
+    headers = {"Referer": URLs.PROFILE_FAB.absolute}
     return make_request(Method.GET, URL, session=session, headers=headers)
 
 

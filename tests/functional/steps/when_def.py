@@ -4,14 +4,11 @@
 from behave import when
 
 from tests.functional.steps.when_impl import (
-    bp_provide_company_details,
-    bp_select_random_sector_and_export_to_country,
     fab_choose_to_verify_with_code,
     fab_collaborator_create_sso_account_and_confirm_email,
     fab_confirm_collaboration_request,
     fab_decide_to_verify_profile_with_letter,
     fab_remove_collaborators,
-    fab_select_preferred_countries_of_export,
     fab_send_transfer_ownership_request,
     fab_submit_verification_code,
     fab_transfer_ownership,
@@ -48,12 +45,10 @@ from tests.functional.steps.when_impl import (
     profile_update_company_details,
     profile_verify_company_profile,
     profile_view_published_profile,
-    reg_confirm_company_selection,
     reg_create_sso_account,
     reg_create_standalone_unverified_sso_account,
     reg_open_email_confirmation_link,
     reg_supplier_confirms_email_address,
-    select_random_company,
     sso_change_password_with_password_reset_link,
     sso_open_password_reset_link,
     sso_request_password_reset,
@@ -61,16 +56,6 @@ from tests.functional.steps.when_impl import (
     sso_supplier_confirms_email_address,
     stannp_download_verification_letter_and_extract_text,
 )
-
-
-@when('"{supplier_alias}" randomly selects an active company without a Directory Profile identified by an alias "{alias}"')
-def when_supplier_selects_random_company(context, supplier_alias, alias):
-    select_random_company(context, supplier_alias, alias)
-
-
-@when('"{supplier_alias}" confirms that "{alias}" is the correct one')
-def when_company_selection_is_confirmed(context, supplier_alias, alias):
-    reg_confirm_company_selection(context, supplier_alias, alias)
 
 
 @when('"{supplier_alias}" creates a SSO/great.gov.uk account for "{alias}" using valid credentials')
@@ -93,16 +78,6 @@ def when_supplier_confirms_email_address(context, supplier_alias):
 @when('"{supplier_alias}" confirms the email address for SSO/great.gov.uk account')
 def when_supplier_confirms_email_address_for_sso(context, supplier_alias):
     sso_supplier_confirms_email_address(context, supplier_alias)
-
-
-@when('"{supplier_alias}" provides valid details of selected company')
-def when_supplier_provides_company_details(context, supplier_alias):
-    bp_provide_company_details(context, supplier_alias)
-
-
-@when('"{supplier_alias}" selects sector the company is in and preferred country of export')
-def when_supplier_selects_random_sector(context, supplier_alias):
-    bp_select_random_sector_and_export_to_country(context, supplier_alias)
 
 
 @when('"{supplier_alias}" decides to verify her identity with a verification letter')
@@ -323,13 +298,6 @@ def when_supplier_goes_sud_page(context, supplier_alias, page_name):
 @when('"{actor_alias}" goes to specific pages')
 def when_actor_goes_to_specific_pages(context, actor_alias):
     go_to_pages(context, actor_alias, context.table)
-
-
-@when('"{supplier_alias}" selects sector the company is in and "{preferred}" & "{other}" as other countries of export')
-def when_supplier_select_preferred_countries_of_export(
-        context, supplier_alias, preferred, other):
-    fab_select_preferred_countries_of_export(
-        context, supplier_alias, preferred, other)
 
 
 @when('"{supplier_alias}" attempts to change the password to one with only letters and using the password reset link')

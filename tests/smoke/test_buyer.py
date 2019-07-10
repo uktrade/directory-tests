@@ -43,40 +43,13 @@ def test_not_existing_page_return_404_user(logged_in_session, basic_auth, url):
         HTTP_404_NOT_FOUND, response
     )
 
-
-@pytest.mark.dev
 @pytest.mark.parametrize(
     "url,destination",
     [
         (URLs.FAB_REGISTER.absolute, URLs.PROFILE_ENROL.absolute)
     ],
 )
-def test_redirects_to_profile_pages_dev(url, destination, basic_auth):
-    # get rid of trailing slash -> see TT-1543
-    if url[-1] == "/":
-        url = url[:-1]
-    response = get_and_assert(
-        url=url,
-        allow_redirects=False,
-        status_code=HTTP_302_FOUND,
-        auth=basic_auth,
-    )
-    location = response.headers["location"]
-    error = (
-        f"Expected '{url}' to return a redirect which would get us to "
-        f"'{destination}' but got redirect to '{location}'"
-    )
-    assert destination.endswith(location), error
-
-
-@pytest.mark.stage
-@pytest.mark.parametrize(
-    "url,destination",
-    [
-        (URLs.FAB_REGISTER.absolute, URLs.FAB_LANDING.absolute)
-    ],
-)
-def test_redirects_to_profile_pages_stage(url, destination, basic_auth):
+def test_redirects_to_profile_pages(url, destination, basic_auth):
     # get rid of trailing slash -> see TT-1543
     if url[-1] == "/":
         url = url[:-1]
@@ -113,18 +86,9 @@ def test_tt_1543_302_redirects_for_anon_user(url, basic_auth):
 @pytest.mark.parametrize(
     "url",
     [
-        URLs.FAB_REGISTER_CONFIRM_EXPORT_STATUS.absolute,
-        URLs.FAB_REGISTER_SUBMIT_ACCOUNT_DETAILS.absolute,
         URLs.FAB_CONFIRM_COMPANY_ADDRESS.absolute,
         URLs.FAB_CONFIRM_IDENTITY.absolute,
         URLs.FAB_CONFIRM_IDENTITY_LETTER.absolute,
-        URLs.FAB_COMPANY_PROFILE.absolute,
-        URLs.FAB_COMPANY_EDIT.absolute,
-        URLs.FAB_COMPANY_EDIT_ADDRESS.absolute,
-        URLs.FAB_COMPANY_EDIT_DESCRIPTION.absolute,
-        URLs.FAB_COMPANY_EDIT_KEY_FACTS.absolute,
-        URLs.FAB_COMPANY_EDIT_SECTORS.absolute,
-        URLs.FAB_COMPANY_EDIT_CONTACT.absolute,
     ],
 )
 def test_302_redirects_for_anon_user(url, basic_auth):
@@ -139,20 +103,9 @@ def test_302_redirects_for_anon_user(url, basic_auth):
 @pytest.mark.parametrize(
     "url",
     [
-        URLs.FAB_REGISTER_CONFIRM_COMPANY.absolute,
-        URLs.FAB_REGISTER_CONFIRM_EXPORT_STATUS.absolute,
-        URLs.FAB_REGISTER_FINISH.absolute,
-        URLs.FAB_REGISTER_SUBMIT_ACCOUNT_DETAILS.absolute,
         URLs.FAB_CONFIRM_COMPANY_ADDRESS.absolute,
         URLs.FAB_CONFIRM_IDENTITY.absolute,
         URLs.FAB_CONFIRM_IDENTITY_LETTER.absolute,
-        URLs.FAB_COMPANY_PROFILE.absolute,
-        URLs.FAB_COMPANY_EDIT.absolute,
-        URLs.FAB_COMPANY_EDIT_ADDRESS.absolute,
-        URLs.FAB_COMPANY_EDIT_DESCRIPTION.absolute,
-        URLs.FAB_COMPANY_EDIT_KEY_FACTS.absolute,
-        URLs.FAB_COMPANY_EDIT_SECTORS.absolute,
-        URLs.FAB_COMPANY_EDIT_CONTACT.absolute,
     ],
 )
 def test_301_redirects_after_removing_trailing_slash_for_anon_user(
@@ -174,9 +127,6 @@ def test_301_redirects_after_removing_trailing_slash_for_anon_user(
     "url",
     [
         URLs.FAB_LANDING.absolute,
-        URLs.FAB_REGISTER_CONFIRM_COMPANY.absolute,
-        URLs.FAB_REGISTER_CONFIRM_EXPORT_STATUS.absolute,
-        URLs.FAB_REGISTER_FINISH.absolute,
         URLs.FAB_CONFIRM_COMPANY_ADDRESS.absolute,
         URLs.FAB_CONFIRM_IDENTITY.absolute,
         URLs.FAB_CONFIRM_IDENTITY_LETTER.absolute,

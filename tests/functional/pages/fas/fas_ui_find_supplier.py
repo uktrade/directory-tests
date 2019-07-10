@@ -45,7 +45,7 @@ def go_to(
         params.update({"page": page})
     if sectors is not None:
         params.update({"sectors": sectors})
-    headers = {"Referer": URLs.FAB_COMPANY_PROFILE.absolute}
+    headers = {"Referer": URLs.PROFILE_FAB.absolute}
     return make_request(
         Method.GET, URL, session=session, params=params, headers=headers, trim=False
     )

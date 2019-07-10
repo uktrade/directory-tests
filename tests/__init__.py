@@ -261,7 +261,6 @@ class URLs(Enum):
     SSO_API_USER = SSOApiUrl("api/v1/session-user/")
 
     # Find a Buyer
-    FAB_API_COMPANIES_HOUSE_SEARCH = FABApiUrl("api/internal/companies-house-search/", template="api/internal/companies-house-search/?term={term}")
     FAB_LANDING = FABUrl("")
     FAB_SITEMAP = FABUrl("sitemap.xml")
     FAB_ACCOUNT_ACCEPT_INVITATION = FABUrl("account/collaborate/accept/?invite_key={invite_key}", template="account/collaborate/accept/?invite_key={invite_key}")
@@ -270,22 +269,11 @@ class URLs(Enum):
     FAB_ACCOUNT_CONFIRM_PASSWORD = FABUrl("account/transfer/")
     FAB_ACCOUNT_REMOVE_COLLABORATOR = FABUrl("account/remove-collaborator/")
     FAB_ACCOUNT_TRANSFER_OWNERSHIP = FABUrl("account/transfer/")
-    FAB_COMPANY_EDIT = FABUrl("company-profile/edit/")
-    FAB_COMPANY_EDIT_ADDRESS = FABUrl("company-profile/edit/address/")
-    FAB_COMPANY_EDIT_CONTACT = FABUrl("company-profile/edit/contact/")
-    FAB_COMPANY_EDIT_DESCRIPTION = FABUrl("company-profile/edit/description/")
-    FAB_COMPANY_EDIT_KEY_FACTS = FABUrl("company-profile/edit/key-facts/")
-    FAB_COMPANY_EDIT_SECTORS = FABUrl("company-profile/edit/sectors/")
-    FAB_COMPANY_PROFILE = FABUrl("company-profile/")
     FAB_CONFIRM_COMPANY_ADDRESS = FABUrl("verify/letter-confirm/")
     FAB_CONFIRM_IDENTITY = FABUrl("verify/")
     FAB_CONFIRM_IDENTITY_LETTER = FABUrl("verify/letter-send/")
     FAB_HEALTHCHECK = FABUrl("healthcheck/")
     FAB_REGISTER = FABUrl("register/")
-    FAB_REGISTER_CONFIRM_COMPANY = FABUrl("register/company/")
-    FAB_REGISTER_CONFIRM_EXPORT_STATUS = FABUrl("register/exports/")
-    FAB_REGISTER_FINISH = FABUrl("register/finished/")
-    FAB_REGISTER_SUBMIT_ACCOUNT_DETAILS = FABUrl("register-submit/")
 
     # Find a Supplier
     FAS_CASE_STUDY = FASUrl("case-study/", template="case-study/{number}/")
@@ -405,6 +393,7 @@ class URLs(Enum):
     ISD_SEARCH = ISDUrl("search/")
 
     # FAS/ISD Profile 
+    PROFILE_API_COMPANIES_HOUSE_SEARCH = FABApiUrl("api/v1/companies-house-search/", template="api/v1/companies-house-search/?term={term}")
     PROFILE_HEALTHCHECK = ProfileUrl("healthcheck/")
     PROFILE_HEALTHCHECK_PING = ProfileUrl("healthcheck/ping/")
     PROFILE_SOO = ProfileUrl("selling-online-overseas/")

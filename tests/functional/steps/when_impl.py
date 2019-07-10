@@ -24,12 +24,8 @@ from tests.functional.pages.fab import (
     fab_ui_account_confrim_password,
     fab_ui_account_remove_collaborator,
     fab_ui_account_transfer_ownership,
-    fab_ui_build_profile_basic,
-    fab_ui_build_profile_sector,
     fab_ui_confim_your_collaboration,
     fab_ui_confim_your_ownership,
-    fab_ui_confirm_company,
-    fab_ui_confirm_export_status,
     fab_ui_confirm_identity,
     fab_ui_confirm_identity_letter,
     fab_ui_verify_company,
@@ -444,65 +440,6 @@ def stannp_send_verification_letter(context: Context, actor_alias: str):
     logging.debug("Successfully sent letter in test mode via StanNP")
 
 
-def select_random_company(
-    context: Context, supplier_alias: str, company_alias: str
-):
-    """Will try to find an active company that doesn't have a FAS profile.
-
-    Steps (repeat until successful):
-        1 - generate a random Companies House Number
-        2 - check if there's a FAS profile for it
-        3 - check if such company is registered at Companies House & is active
-
-    Once a matching company is found, then it's data will be stored in:
-        context.scenario_data.companies[]
-    """
-    actor = context.get_actor(supplier_alias)
-    session = actor.session
-    max_attempts = 15
-    counter = 0
-
-    while True:
-        # Step 1 - find an active company without a FAS profile
-        company = get_active_company_without_fas_profile(company_alias)
-
-        # Step 2 - Go to the Confirm Company page
-        response = fab_ui_confirm_company.go_to(session, company)
-        registered = is_already_registered(response)
-        inactive = is_inactive(response)
-        counter += 1
-        if counter >= max_attempts:
-            with assertion_msg(
-                "Failed to find an active company which is not registered "
-                "with FAB after %d attempts",
-                max_attempts,
-            ):
-                assert False
-        if registered or inactive:
-            logging.warning(
-                "Company '%s' is already registered or inactive, will use "
-                "a different one",
-                company.title,
-            )
-            continue
-        else:
-            logging.warning(
-                "Company '%s' is active and not registered with FAB",
-                company.title,
-            )
-            context.response = response
-            break
-
-    # Step 3 - check if we're on the Confirm Company page
-    fab_ui_confirm_company.should_be_here(response, company)
-
-    # Step 4 - store Company, CSRF token & associate Actor with Company
-    context.add_company(company)
-    token = extract_csrf_middleware_token(response)
-    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
-    context.update_actor(supplier_alias, company_alias=company_alias)
-
-
 def find_unregistered_company(
         context: Context, supplier_alias: str, company_alias: str
 ) -> Company:
@@ -528,50 +465,6 @@ def find_unregistered_company(
     context.add_company(company)
     context.update_actor(supplier_alias, company_alias=company_alias)
     return company
-
-
-def reg_confirm_company_selection(
-    context: Context, supplier_alias: str, company_alias: str
-):
-    """Will confirm that the selected company is the right one."""
-    actor = context.get_actor(supplier_alias)
-    token = actor.csrfmiddlewaretoken
-    has_sso_account = actor.has_sso_account
-    session = actor.session
-    company = context.get_company(company_alias)
-
-    # Step 1 - confirm the selection of the company
-    response = fab_ui_confirm_company.confirm_company_selection(
-        session, company, token
-    )
-    context.response = response
-
-    logging.debug("Confirmed selection of Company: %s", company.number)
-
-    if has_sso_account:
-        logging.debug("Supplier already has a SSO account")
-        fab_ui_build_profile_basic.should_be_here(response)
-    else:
-        logging.debug("Supplier doesn't have a SSO account")
-        sso_ui_register.should_be_here(response)
-        token = extract_csrf_middleware_token(response)
-        context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
-
-
-def reg_supplier_is_not_ready_to_export(context: Context, supplier_alias: str):
-    """Supplier decides that her/his company is not ready to export."""
-    actor = context.get_actor(supplier_alias)
-    session = actor.session
-    token = actor.csrfmiddlewaretoken
-
-    # Step 1 - Submit the form with No Intention to Export
-    response = fab_ui_confirm_export_status.submit(
-        session, token, exported=False
-    )
-
-    # Step 2 - store response & check it
-    context.response = response
-    check_response(response, 200)
 
 
 def reg_create_sso_account(
@@ -623,69 +516,6 @@ def reg_supplier_confirms_email_address(context: Context, supplier_alias: str):
 
     response = sso_ui_confim_your_email.confirm(actor, form_action_value)
     context.response = response
-
-
-def bp_provide_company_details(context: Context, supplier_alias: str):
-    """Build Profile - Provide company details: website (optional), keywords
-    and number of employees.
-    """
-    actor = context.get_actor(supplier_alias)
-    company = context.get_company(actor.company_alias)
-    company_alias = company.alias
-
-    # Step 0 - generate random details & update Company matching details
-    # Need to get Company details after updating it in the Scenario Data
-    title = f"{company.title} {sentence()} AUTOTESTS"
-    size = choice(NO_OF_EMPLOYEES)
-    website = f"http://{rare_word(min_length=15)}.{rare_word()}"
-    keywords = ", ".join(sentence().split())
-    context.set_company_details(
-        company_alias,
-        title=title,
-        no_employees=size,
-        website=website,
-        keywords=keywords,
-    )
-    company = context.get_company(actor.company_alias)
-
-    # Step 1 - submit the Basic details form
-    response = fab_ui_build_profile_basic.submit(actor, company)
-    context.response = response
-
-    # Step 2 - check if Supplier is on Select Your Sector page
-    fab_ui_build_profile_sector.should_be_here(response)
-
-    # Step 3 - extract CSRF token
-    logging.debug("Supplier is on the Select Sector page")
-    token = extract_csrf_middleware_token(response)
-    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
-
-
-def bp_select_random_sector_and_export_to_country(
-    context: Context, supplier_alias: str
-):
-    """Build Profile - Randomly select one of available sectors our company is
-    interested in working in.
-
-    NOTE:
-    This will set `context.details` which will contain company details
-    extracted from the page displayed after Supplier selects the sector.
-    """
-    actor = context.get_actor(supplier_alias)
-    sector = choice(SECTORS)
-    countries = [COUNTRIES[choice(list(COUNTRIES))]]
-    other = ""
-    has_exported_before = get_form_value("true or false")
-
-    # Step 1 - Submit the Choose Your Sector form
-    response = fab_ui_build_profile_sector.submit(
-        actor, sector, countries, other, has_exported_before
-    )
-    context.response = response
-
-    # Step 2 - check if Supplier is on Confirm Address page
-    fab_ui_confirm_identity.should_be_here(response, profile_building=True)
-    logging.debug("Supplier is on the Confirm your Identity page")
 
 
 def fab_decide_to_verify_profile_with_letter(context: Context, supplier_alias: str):
@@ -2320,34 +2150,6 @@ def go_to_pages(context: Context, actor_alias: str, table: Table):
         results[page_name] = response
 
     context.results = results
-
-
-def fab_select_preferred_countries_of_export(
-    context: Context, supplier_alias: str, country_names, other_countries
-):
-    actor = context.get_actor(supplier_alias)
-    country_codes = get_form_value(country_names)
-    other = get_form_value(other_countries)
-    sector = get_form_value("sector")
-    has_exported_before = get_form_value("true or false")
-    response = fab_ui_build_profile_sector.submit(
-        actor, sector, country_codes, other, has_exported_before
-    )
-    context.response = response
-
-
-def finish_registration_after_flagging_as_verified(
-    context: Context, supplier_alias: str
-):
-    """Go to the `/register-submit` endpoint which, when Actor has a verified
-     SSO account, should redirect to `company-profile/edit` (Create Profile)
-    """
-    actor = context.get_actor(supplier_alias)
-    company = context.get_company(actor.company_alias)
-    register_url = URLs.FAB_REGISTER_SUBMIT_ACCOUNT_DETAILS.absolute
-    url = f"{register_url}?company_number={company.number}&has_exported_before=True"
-    response = make_request(Method.GET, url, session=actor.session)
-    context.response = response
 
 
 def profile_add_collaborator(
