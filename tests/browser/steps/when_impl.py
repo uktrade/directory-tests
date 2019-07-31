@@ -18,6 +18,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages import (
     common_language_selector,
+    common_selectors,
     domestic,
     fas,
     get_page_object,
@@ -127,6 +128,11 @@ def visit_page(context: Context, actor_alias: str, page_name: str):
     error = f"Looks like following page: {url} cannot be found"
     assert "This page cannot be found" not in source, error
     update_actor(context, actor_alias, visited_page=page)
+
+
+def set_small_screen(context: Context):
+    context.driver.set_window_position(0, 0)
+    context.driver.set_window_size(768, 1024)
 
 
 def should_be_on_page(context: Context, actor_alias: str, page_name: str):
@@ -989,3 +995,13 @@ def generic_trigger_all_gtm_events(
         for event in events:
             trigger_js_event(context.driver, event)
     logging.debug(f"{actor_alias} triggered all events for GTM event handlers")
+
+
+def click_on_header_menu_button(context: Context):
+    try:
+        button = context.driver.find_element(by=By.ID, value='js-mobile-button')
+    except NoSuchElementException:
+        button = context.driver.find_element(by=By.ID, value='mobile-menu-button')
+    button.click()
+
+

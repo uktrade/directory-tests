@@ -11,6 +11,7 @@ from settings import (
     GREAT_LOGO_MD5_CHECKSUM,
 )
 
+
 HEADER = {
     "header": {
         # cookie notice

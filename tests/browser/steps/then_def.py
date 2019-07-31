@@ -30,6 +30,7 @@ from steps.then_impl import (
     invest_should_see_uk_gov_logo,
     language_selector_should_see_it,
     marketplace_finder_should_see_marketplaces,
+    menu_items_should_be_visible,
     office_finder_should_see_correct_office_details,
     pdf_check_expected_details,
     pdf_check_for_dead_links,
@@ -317,3 +318,8 @@ def step_check_gtm_data_layer_properties(context: Context):
 @then("following GTM events should be registered")
 def then_expected_gtm_events_should_be_registered(context: Context):
     generic_check_gtm_events(context)
+
+
+@then('"{actor_alias}" should see the menu items')
+def then_actor_should_see_menu_items(context: Context, actor_alias: str):
+    menu_items_should_be_visible(context)

@@ -14,6 +14,7 @@ from steps.when_impl import (
     articles_share_on_social_media,
     case_studies_go_to,
     clear_the_cookies,
+    click_on_header_menu_button,
     click_on_page_element,
     contact_us_navigate_through_options,
     domestic_find_more_about_search_result_type,
@@ -407,3 +408,8 @@ def when_actor_signs_in(context, actor_alias):
 @when('"{actor_alias}" searches for local trade office near "{post_code}"')
 def when_actor_looks_for_trade_office(context: Context, actor_alias: str, post_code: str):
     office_finder_find_trade_office(context, actor_alias, post_code)
+
+
+@when('"{actor_alias}" clicks the Menu button')
+def when_actor_clicks_header_menu_button(context: Context, actor_alias: str):
+    click_on_header_menu_button(context)

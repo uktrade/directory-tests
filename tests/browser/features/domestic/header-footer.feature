@@ -118,3 +118,22 @@ Feature: Header-Footer
     Examples: Export Opportunities
       | specific                       |
       | Export Opportunities - Home    |
+
+  @header
+  @footer
+  Scenario Outline: Any mobile user should see mobile-friendly header
+    Given "Robert" has a small screen
+    And basic authentication is done for "<selected>" page
+    And "Robert" visits the "<selected>" page
+    When "Robert" clicks the Menu button
+    Then "Robert" should see the menu items
+
+    Examples: Domestic pages
+      | selected                       |
+      | Domestic - Home                |
+      | Find a Buyer - Home            |
+      | Find a Supplier - Home         |
+      | Single Sign-On - Registration  |
+      | Single Sign-On - Sign in       |
+      | Profile - About                |
+      | Selling Online Overseas - Home |
