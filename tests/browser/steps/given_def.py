@@ -35,7 +35,13 @@ from steps.when_impl import (
     soo_look_for_marketplaces_from_home_page,
     sso_actor_received_email_confirmation_code,
     visit_page,
+    set_small_screen,
 )
+
+
+@given('"{actor_alias}" has a small screen')
+def given_actor_has_small_screen(context, actor_alias):
+    set_small_screen(context)
 
 
 @given('"{actor_alias}" went to the "{page_name}" page')

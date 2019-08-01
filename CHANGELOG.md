@@ -1,5 +1,12 @@
 # Changelog
 
+## 2019-07-31
+[Full Changelog](https://github.com/uktrade/directory-tests/pull/169/files)
+
+### Implemented enhancements
+
+- TT-1646 - Any mobile user should see mobile-friendly header
+
 ## 2019-07-09
 [Full Changelog](https://github.com/uktrade/directory-tests/pull/168/files)
 

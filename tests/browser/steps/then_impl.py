@@ -11,6 +11,8 @@ from behave.model import Table
 from behave.runner import Context
 from datadiff import diff
 from retrying import retry
+from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.common.by import By
 
 from pages import (
     common_language_selector,
@@ -29,6 +31,7 @@ from pages.common_actions import (
     get_last_visited_page,
     update_actor,
 )
+from pages import common_selectors
 from pages.domestic import contact_us_office_finder_search_results
 from settings import (
     HPO_AGENT_EMAIL_ADDRESS,
@@ -40,6 +43,7 @@ from settings import (
 )
 from steps import has_action
 from steps.when_impl import generic_set_basic_auth_creds
+
 from utils.forms_api import find_form_submissions
 from utils.gov_notify import (
     get_email_confirmation_notification,
@@ -633,3 +637,21 @@ def generic_check_gtm_events(context: Context):
             f"{registered_gtm_events}"
     ):
         assert len(expected_gtm_events) == len(registered_gtm_events)
+
+
+def menu_items_should_be_visible(context: Context):
+    ids = [
+        'great-header-nav-mobile',
+        'great-header-mobile-nav',
+        'great-header-nav',
+    ]
+    for value in ids:
+        try:
+            element = context.driver.find_element(by=By.ID, value=value)
+            break
+        except NoSuchElementException as error:
+            continue
+    else:
+        raise error
+
+    assert element.is_displayed()
