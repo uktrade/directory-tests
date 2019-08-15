@@ -421,7 +421,7 @@ class URLs(Enum):
     PROFILE_COMPANY_EDIT_SOCIAL_MEDIA = ProfileUrl("find-a-buyer/social-links/")
 
     # Domestic site
-    DOMESTIC_API_COMPANY_HOUSE_SEARCH = DomesticUrl("api/internal/companies-house-search")
+    DOMESTIC_API_COMPANY_HOUSE_SEARCH = DomesticUrl("api/internal/companies-house-search/")
     DOMESTIC_HEALTHCHECK = DomesticUrl("healthcheck/")
     DOMESTIC_HEALTHCHECK_PING = DomesticUrl("healthcheck/ping/")
     DOMESTIC_SEARCH = DomesticUrl("search/")
