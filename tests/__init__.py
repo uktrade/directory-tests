@@ -456,7 +456,6 @@ class URLs(Enum):
     DOMESTIC_GET_FINANCE = DomesticUrl("get-finance/")
     DOMESTIC_STORY_FIRST = DomesticUrl("story/online-marketplaces-propel-freestyle-xtreme-sales/")
     DOMESTIC_STORY_SECOND = DomesticUrl("story/hello-babys-rapid-online-growth/")
-    DOMESTIC_STORY_THIRD = DomesticUrl("story/york-bag-retailer-goes-global-via-e-commerce/")
     DOMESTIC_TERMS = DomesticUrl("terms-and-conditions/")
     DOMESTIC_PRIVACY = DomesticUrl("privacy-and-cookies/")
 
