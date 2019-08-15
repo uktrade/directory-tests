@@ -79,9 +79,14 @@ def test_sitemap_should_not_contain_reference_to_itself(url):
     # get_urls_from_sitemap(URLs.EXOPPS_SITEMAP.absolute) +
     # get_urls_from_sitemap(URLs.PROFILE_SITEMAP.absolute) +
     # get_urls_from_sitemap(URLs.SOO_SITEMAP.absolute) +
-    get_urls_from_sitemap(URLs.DOMESTIC_SITEMAP.absolute) +
-    get_urls_from_sitemap(URLs.FAB_SITEMAP.absolute) +
-    get_urls_from_sitemap(URLs.FAS_SITEMAP.absolute)
+    set(
+        get_urls_from_sitemap(URLs.DOMESTIC_SITEMAP.absolute) +
+        get_urls_from_sitemap(URLs.FAB_SITEMAP.absolute) +
+        get_urls_from_sitemap(URLs.FAS_SITEMAP.absolute)
+    ) - {
+        URLs.DOMESTIC_API_COMPANY_HOUSE_SEARCH.absolute,  # see CMS-1699
+        URLs.TRADE_BARRIERS_REPORT_FORM_SUCCESS.absolute,  # see CMS-1811
+    }
 )
 def test_check_all_urls_from_sitemap(url, basic_auth):
     get_and_assert(
