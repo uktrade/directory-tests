@@ -20,6 +20,7 @@ from tests.smoke.cms_api_helpers import (
 SKIPPED_PAGE_TYPES = [
     "great_international.internationalcapitalinvestlandingpage",
     "great_international.baseinternationalsectorpage",
+    "great_international.capitalinvestopportunitypage",
 ]
 
 ALL_PAGE_TYPES = get_pages_types(skip=SKIPPED_PAGE_TYPES)
