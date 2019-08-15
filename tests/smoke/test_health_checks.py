@@ -89,15 +89,6 @@ def test_fas_health_check_endpoints(url, basic_auth):
     )
 
 
-@pytest.mark.invest
-@pytest.mark.parametrize("url", [URLs.INVEST_HEALTHCHECK.absolute])
-def test_invest_health_check_endpoints(url, basic_auth):
-    params = {"token": TOKEN}
-    get_and_assert(
-        url=url, params=params, status_code=HTTP_200_OK, auth=basic_auth
-    )
-
-
 @pytest.mark.dir_api
 @pytest.mark.parametrize(
     "url",
