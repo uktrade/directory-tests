@@ -519,3 +519,11 @@ class URLs(Enum):
     FORMS_API_SUBMISSION = FormsApiUrl("api/submission/")
     FORMS_API_ADMIN = FormsApiUrl("admin/")
     FORMS_API_TESTAPI = FormsApiUrl("testapi/submissions-by-email/{email}/")
+
+    # Trade Barriers
+    TRADE_BARRIERS_LANDING = DomesticUrl("report-trade-barrier/")
+    TRADE_BARRIERS_REPORT_FORM_ABOUT = DomesticUrl("report-trade-barrier/report/about/")
+    TRADE_BARRIERS_REPORT_FORM_PROBLEM_DETAILS = DomesticUrl("report-trade-barrier/report/problem-details/")
+    TRADE_BARRIERS_REPORT_FORM_SUMMARY = DomesticUrl("report-trade-barrier/report/summary/")
+    TRADE_BARRIERS_REPORT_FORM_FINISHED = DomesticUrl("report-trade-barrier/report/finished/")
+    TRADE_BARRIERS_REPORT_FORM_SUCCESS = DomesticUrl("report-trade-barrier/report/success/")
