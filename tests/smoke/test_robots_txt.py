@@ -15,7 +15,6 @@ from tests.smoke.cms_api_helpers import get_and_assert
         urljoin(URLs.FAB_LANDING.absolute, "robots.txt"),
         urljoin(URLs.FAS_LANDING.absolute, "robots.txt"),
         urljoin(URLs.INTERNATIONAL_LANDING.absolute, "robots.txt"),
-        urljoin(URLs.INVEST_LANDING.absolute, "robots.txt"),
         # urljoin(URLs.PROFILE_LANDING.absolute, "robots.txt"), see TT-1499
         urljoin(URLs.SOO_LANDING.absolute, "robots.txt"),
         urljoin(URLs.SSO_LANDING.absolute, "robots.txt"),
