@@ -36,6 +36,7 @@ def submit(actor: Actor):
         "personal-details-job_title": "AUTOMATED TESTS",
         "personal-details-phone_number:": "0987654321",
         "personal-details-confirmed_is_company_representative": "on",
+        "personal-details-terms_agreed": "on",
     }
 
     return make_request(
