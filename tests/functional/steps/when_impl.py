@@ -16,7 +16,7 @@ from requests import Response, Session
 from retrying import retry
 from scrapy import Selector
 
-from tests import URLs
+from tests import URLs, BusinessType
 from tests.functional.common import DETAILS, PROFILES
 from tests.functional.pages import get_page_object, has_action, isd
 from tests.functional.pages.fab import (
@@ -55,6 +55,7 @@ from tests.functional.pages.profile import (
     profile_find_a_buyer,
     profile_publish_company_profile,
     profile_upload_logo,
+    profile_select_business_type
 )
 from tests.functional.pages.sso import (
     sso_ui_change_password,
@@ -2545,6 +2546,29 @@ def stannp_download_verification_letter_and_extract_text(
     context.update_actor(actor_alias, verification_letter=pdf_text)
 
 
+def enrol_select_business_type(context: Context, actor_alias: str, company_alias: str):
+    actor = context.get_actor(actor_alias)
+    company = context.get_company(company_alias)
+
+    logging.debug("# 1) Go to 'Select your business type' page")
+    response = profile_select_business_type.go_to(actor.session)
+    context.response = response
+    token = extract_csrf_middleware_token(response)
+    context.update_actor(actor.alias, csrfmiddlewaretoken=token)
+
+    if not company.business_type:
+        business_type = BusinessType.COMPANIES_HOUSE.value
+        context.set_company_details(company.alias, business_type=business_type)
+        company = context.get_company(company_alias)
+
+    logging.debug("# 2) submit 'select business type' form")
+    response = profile_select_business_type.submit(actor, company)
+    context.response = response
+    token = extract_csrf_middleware_token(response)
+    context.update_actor(actor.alias, csrfmiddlewaretoken=token)
+    profile_enter_your_email_and_password.should_be_here(response)
+
+
 def enrol_enter_email_and_password(context: Context, actor_alias: str):
     actor = context.get_actor(actor_alias)
     logging.debug("# 1) Go to Enter your email & password")
@@ -2656,6 +2680,7 @@ def enrol_enter_personal_details(context: Context, actor_alias: str):
 
 
 def enrol_user(context: Context, actor_alias: str, company_alias: str):
+    enrol_select_business_type(context, actor_alias, company_alias)
     enrol_enter_email_and_password(context, actor_alias)
     enrol_get_email_verification_code(context, actor_alias)
     enrol_enter_email_verification_code(context, actor_alias)

@@ -99,6 +99,7 @@ Company = namedtuple(
         "expertise_industries",
         "export_destinations",
         "export_destinations_other",
+        "business_type",
     ],
 )
 Feedback = namedtuple(
