@@ -1,7 +1,8 @@
-from enum import Enum, unique
-from functools import partial
 import os
 import uuid
+from enum import Enum, unique
+from functools import partial
+from random import choice
 from typing import Union
 from urllib.parse import urljoin
 
@@ -50,6 +51,17 @@ companies = {
         "SSO_COMPANY_ACTIVE_NOT_REGISTERED", "01624297"
     ),
 }
+
+
+class BusinessType(Enum):
+    COMPANIES_HOUSE = "companies-house-company"
+    SOLE_TRADED = "non-companies-house-company"
+    TAX_PAYER = "not-company"
+    OVERSEAS_COMPANY = "overseas-company"
+
+    @classmethod
+    def random(cls):
+        return choice(list(cls.__members__.values()))
 
 
 def get_random_email_address():
