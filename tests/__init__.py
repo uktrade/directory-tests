@@ -404,6 +404,7 @@ class URLs(Enum):
     PROFILE_SITEMAP = ProfileUrl("sitemap.xml")
     PROFILE_ABOUT = ProfileUrl("about/")
     PROFILE_ENROL = ProfileUrl("enrol/")
+    PROFILE_ENROL_SELECT_BUSINESS_TYPE = ProfileUrl("enrol/business-type/")
     PROFILE_ENROL_USER_ACCOUNT = ProfileUrl("enrol/business-type/companies-house/user-account/")
     PROFILE_ENROL_EMAIL_VERIFICATION = ProfileUrl("enrol/business-type/companies-house/verification/")
     PROFILE_ENROL_COMPANIES_HOUSE_SEARCH = ProfileUrl("enrol/business-type/companies-house/search/")
