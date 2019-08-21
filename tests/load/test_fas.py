@@ -21,36 +21,30 @@ class FASTasks(TaskSet):
         url = URLs.FAS_SEARCH.relative
         params = {
             "q": rare_word(),
-            "sectors": random_sector(),
+            "industries": random_sector(),
         }
         self.client.get(
             url,
             params=params,
             headers=USER_AGENT,
-            name="/search/?q=[term]&sectors=[sectors]",
+            name="/search/?q=[term]&industries=[sectors]",
             auth=basic_auth(),
         )
 
     @task
-    def industry_pages(self):
-        urls = [
-            "industries/",
-            "industries/aerospace/",
-            "industries/agritech/",
-            "industries/consumer-retail/",
-            "industries/creative-services/",
-            "industries/cyber-security/",
-            "industries/food-and-drink/",
-            "industries/healthcare/",
-            "industries/legal-services/",
-            "industries/life-sciences/",
-            "industries/sports-economy/",
-            "industries/technology/",
+    def profile(self):
+        ch_ids = [
+            "00832429", "02152566", "04092016", "04716401", "06362216", "06712674",
+            "07006709", "07282974", "07543721", "07710219", "07719599", "07906462",
+            "07944809", "08037389", "08240787", "08291104", "08597472", "08634730",
+            "08646741", "08795085", "08818272", "08956237", "09009697", "09642236",
+            "10668509", "11102696", "11136874", "NI608411", "SC443301", "SC465051",
         ]
+        url = URLs.FAS_SUPPLIER.template.format(ch_number=random.choice(ch_ids))
         self.client.get(
-            random.choice(urls),
+            url,
             headers=USER_AGENT,
-            name="/industries/[industry]/",
+            name="/suppliers/[id]/[slug]/",
             auth=basic_auth(),
         )
 

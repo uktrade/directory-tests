@@ -301,6 +301,7 @@ class URLs(Enum):
     FAS_SEARCH = FASUrl("search/")
     FAS_SITEMAP = FASUrl("sitemap.xml")
     FAS_SUBSCRIBE = FASUrl("subscribe/")
+    FAS_SUPPLIER = FASUrl("suppliers/", template="suppliers/{ch_number}/")
     FAS_SUPPLIERS = FASUrl("suppliers/", template="suppliers/{ch_number}/{slug}/")
 
     # Legacy FAS industry endpoints before slugs were changed to:
