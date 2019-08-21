@@ -18,7 +18,9 @@ from tests.smoke.cms_api_helpers import (
 )
 
 SKIPPED_PAGE_TYPES = [
+    "find_a_supplier.industrycontactpage",
     "great_international.internationalcapitalinvestlandingpage",
+    "great_international.internationalcuratedtopiclandingpage",
     "great_international.baseinternationalsectorpage",
     "great_international.capitalinvestopportunitypage",
 ]
