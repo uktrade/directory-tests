@@ -82,7 +82,8 @@ def logged_in_session():
     data = {
         "login": user["username"],
         "password": user["password"],
-        "csrfmiddlewaretoken": csrfmiddlewaretoken
+        "csrfmiddlewaretoken": csrfmiddlewaretoken,
+        "next": URLs.PROFILE_ABOUT.absolute,
     }
     response = session.post(
         url=login_url,

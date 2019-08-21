@@ -23,7 +23,6 @@ def get_urls_from_sitemap(sitemap_url: str) -> list:
         URLs.FAB_SITEMAP.absolute,
         URLs.FAS_SITEMAP.absolute,
         URLs.INTERNATIONAL_SITEMAP.absolute,
-        URLs.INVEST_SITEMAP.absolute,
         # URLs.EXOPPS_SITEMAP.absolute,  # missing sitemap.xml. See TT-1581
         # URLs.PROFILE_SITEMAP.absolute,  # missing sitemap.xml. See TT-1581
         # URLs.SOO_SITEMAP.absolute,  # missing sitemap.xml. See TT-1581
@@ -40,7 +39,6 @@ def test_if_sitemap_exist(url, basic_auth):
         URLs.FAB_SITEMAP.absolute,
         URLs.FAS_SITEMAP.absolute,
         # URLs.INTERNATIONAL_SITEMAP.absolute,  # empty sitemap.xml. See CI-293
-        # URLs.INVEST_SITEMAP.absolute,  # empty sitemap.xml. See CI-293
     ],
 )
 def test_check_sitemap_schema_and_if_it_contains_urls(url, basic_auth):
@@ -81,9 +79,14 @@ def test_sitemap_should_not_contain_reference_to_itself(url):
     # get_urls_from_sitemap(URLs.EXOPPS_SITEMAP.absolute) +
     # get_urls_from_sitemap(URLs.PROFILE_SITEMAP.absolute) +
     # get_urls_from_sitemap(URLs.SOO_SITEMAP.absolute) +
-    get_urls_from_sitemap(URLs.DOMESTIC_SITEMAP.absolute) +
-    get_urls_from_sitemap(URLs.FAB_SITEMAP.absolute) +
-    get_urls_from_sitemap(URLs.FAS_SITEMAP.absolute)
+    set(
+        get_urls_from_sitemap(URLs.DOMESTIC_SITEMAP.absolute) +
+        get_urls_from_sitemap(URLs.FAB_SITEMAP.absolute) +
+        get_urls_from_sitemap(URLs.FAS_SITEMAP.absolute)
+    ) - {
+        URLs.DOMESTIC_API_COMPANY_HOUSE_SEARCH.absolute,  # see CMS-1699
+        URLs.TRADE_BARRIERS_REPORT_FORM_SUCCESS.absolute,  # see CMS-1811
+    }
 )
 def test_check_all_urls_from_sitemap(url, basic_auth):
     get_and_assert(

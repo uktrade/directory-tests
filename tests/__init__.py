@@ -421,6 +421,7 @@ class URLs(Enum):
     PROFILE_COMPANY_EDIT_SOCIAL_MEDIA = ProfileUrl("find-a-buyer/social-links/")
 
     # Domestic site
+    DOMESTIC_API_COMPANY_HOUSE_SEARCH = DomesticUrl("api/internal/companies-house-search/")
     DOMESTIC_HEALTHCHECK = DomesticUrl("healthcheck/")
     DOMESTIC_HEALTHCHECK_PING = DomesticUrl("healthcheck/ping/")
     DOMESTIC_SEARCH = DomesticUrl("search/")
@@ -456,7 +457,6 @@ class URLs(Enum):
     DOMESTIC_GET_FINANCE = DomesticUrl("get-finance/")
     DOMESTIC_STORY_FIRST = DomesticUrl("story/online-marketplaces-propel-freestyle-xtreme-sales/")
     DOMESTIC_STORY_SECOND = DomesticUrl("story/hello-babys-rapid-online-growth/")
-    DOMESTIC_STORY_THIRD = DomesticUrl("story/york-bag-retailer-goes-global-via-e-commerce/")
     DOMESTIC_TERMS = DomesticUrl("terms-and-conditions/")
     DOMESTIC_PRIVACY = DomesticUrl("privacy-and-cookies/")
 
@@ -520,3 +520,11 @@ class URLs(Enum):
     FORMS_API_SUBMISSION = FormsApiUrl("api/submission/")
     FORMS_API_ADMIN = FormsApiUrl("admin/")
     FORMS_API_TESTAPI = FormsApiUrl("testapi/submissions-by-email/{email}/")
+
+    # Trade Barriers
+    TRADE_BARRIERS_LANDING = DomesticUrl("report-trade-barrier/")
+    TRADE_BARRIERS_REPORT_FORM_ABOUT = DomesticUrl("report-trade-barrier/report/about/")
+    TRADE_BARRIERS_REPORT_FORM_PROBLEM_DETAILS = DomesticUrl("report-trade-barrier/report/problem-details/")
+    TRADE_BARRIERS_REPORT_FORM_SUMMARY = DomesticUrl("report-trade-barrier/report/summary/")
+    TRADE_BARRIERS_REPORT_FORM_FINISHED = DomesticUrl("report-trade-barrier/report/finished/")
+    TRADE_BARRIERS_REPORT_FORM_SUCCESS = DomesticUrl("report-trade-barrier/report/success/")

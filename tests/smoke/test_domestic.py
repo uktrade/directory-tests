@@ -28,7 +28,6 @@ from tests.smoke.cms_api_helpers import get_and_assert
         URLs.DOMESTIC_GET_FINANCE.absolute,
         URLs.DOMESTIC_STORY_FIRST.absolute,
         URLs.DOMESTIC_STORY_SECOND.absolute,
-        URLs.DOMESTIC_STORY_THIRD.absolute,
         URLs.DOMESTIC_TERMS.absolute,
         URLs.DOMESTIC_PRIVACY.absolute,
     ],
