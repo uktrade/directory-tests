@@ -1,5 +1,15 @@
 # Changelog
 
+
+
+## 2019-08-14
+[Full Changelog](https://github.com/uktrade/directory-tests/pull/176/files)
+
+### Fixed bugs
+
+- no ticket - Update django to 1.11.23 to fix vulnerability
+
+
 ## 2019-07-31
 [Full Changelog](https://github.com/uktrade/directory-tests/pull/169/files)
 
