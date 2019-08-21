@@ -13,6 +13,7 @@ class FASTasks(TaskSet):
         self.client.get(
             url,
             headers=USER_AGENT,
+            name="/",
             auth=basic_auth(),
         )
 
@@ -40,9 +41,8 @@ class FASTasks(TaskSet):
             "08646741", "08795085", "08818272", "08956237", "09009697", "09642236",
             "10668509", "11102696", "11136874", "NI608411", "SC443301", "SC465051",
         ]
-        url = URLs.FAS_SUPPLIER.template.format(ch_number=random.choice(ch_ids))
         self.client.get(
-            url,
+            URLs.FAS_SUPPLIER.template.format(ch_number=random.choice(ch_ids)),
             headers=USER_AGENT,
             name="/suppliers/[id]/[slug]/",
             auth=basic_auth(),
