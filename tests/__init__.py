@@ -139,6 +139,11 @@ class FASUrl(Url):
         super().__init__(DIRECTORY_UI_SUPPLIER_URL, endpoint, template=template)
 
 
+class LegacyFASUrl(Url):
+    def __init__(self, endpoint: str, *, template: str = None):
+        super().__init__(EXRED_UI_URL + "trade/", endpoint, template=template)
+
+
 class FormsApiUrl(Url):
     def __init__(self, endpoint: str, *, template: str = None):
         super().__init__(DIRECTORY_FORMS_API_URL, endpoint, template=template)
@@ -306,9 +311,9 @@ class URLs(Enum):
 
     # Legacy FAS industry endpoints before slugs were changed to:
     # healthcare, technology & creative-services respectively
-    FAS_INDUSTRIES_HEALTH = FASUrl("industries/health/")
-    FAS_INDUSTRIES_TECH = FASUrl("industries/tech/")
-    FAS_INDUSTRIES_CREATIVE = FASUrl("industries/creative/")
+    FAS_INDUSTRIES_HEALTH = LegacyFASUrl("industries/health/")
+    FAS_INDUSTRIES_TECH = LegacyFASUrl("industries/tech/")
+    FAS_INDUSTRIES_CREATIVE = LegacyFASUrl("industries/creative/")
 
     # New International site
     INTERNATIONAL_LANDING = InternationalUrl("")
