@@ -303,7 +303,7 @@ class URLs(Enum):
     FAS_INDUSTRY_HEALTHCARE = FASUrl("industries/healthcare/")
     FAS_INDUSTRY_TECHNOLOGY = FASUrl("industries/technology/")
     FAS_LANDING = FASUrl("")
-    FAS_SEARCH = FASUrl("search/")
+    FAS_SEARCH = FASUrl("search/", template="search/?q={query}&industries={industries}")
     FAS_SITEMAP = FASUrl("sitemap.xml")
     FAS_SUBSCRIBE = FASUrl("subscribe/")
     FAS_SUPPLIER = FASUrl("suppliers/", template="suppliers/{ch_number}/")
