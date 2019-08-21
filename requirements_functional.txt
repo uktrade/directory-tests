@@ -20,7 +20,7 @@ directory-api-client==14.0.0
 directory-client-core==5.1.0  # via directory-api-client, directory-sso-api-client
 directory-constants==17.0.0
 directory-sso-api-client==5.0.0
-django==1.11.22           # via directory-api-client, directory-client-core, directory-constants, sigauth
+django==1.11.23           # via directory-api-client, directory-client-core, directory-constants, sigauth
 djangorestframework==3.9.4  # via sigauth
 docopt==0.6.2
 future==0.17.1            # via notifications-python-client

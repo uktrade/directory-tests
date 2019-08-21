@@ -10,7 +10,7 @@ click==7.0                # via flask
 directory-client-core==5.1.0  # via directory-cms-client
 directory-cms-client==10.0.1
 directory-constants==17.1.1
-django==1.11.22           # via directory-client-core, directory-constants, sigauth
+django==1.11.23           # via directory-client-core, directory-constants, sigauth
 djangorestframework==3.9.4  # via sigauth
 docopt==0.6.2
 flask==1.0.3              # via locustio
