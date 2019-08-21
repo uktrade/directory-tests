@@ -61,7 +61,7 @@ SSO_USER_ID = int(os.getenv("SSO_USER_ID", 0))
 # Mailgun details required to get verification emails
 MAILGUN_DOMAIN = os.environ["MAILGUN_DOMAIN"]
 MAILGUN_API_KEY = os.environ["MAILGUN_API_KEY"]
-MAILGUN_EVENTS_URL = "https://api.mailgun.net/v3/%s/events" % MAILGUN_DOMAIN
+MAILGUN_EVENTS_URL = "https://api.eu.mailgun.net/v3/%s/events" % MAILGUN_DOMAIN
 
 # STANNP API DETAILS
 STANNP_API_KEY = os.environ["STANNP_API_KEY"]
