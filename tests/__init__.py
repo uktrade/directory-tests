@@ -308,6 +308,7 @@ class URLs(Enum):
     FAS_SUBSCRIBE = FASUrl("subscribe/")
     FAS_SUPPLIER = FASUrl("suppliers/", template="suppliers/{ch_number}/")
     FAS_SUPPLIERS = FASUrl("suppliers/", template="suppliers/{ch_number}/{slug}/")
+    FAS_INCOMING_REDIRECT = FASUrl("incoming/", template="incoming/{endpoint}")
 
     # Legacy FAS industry endpoints before slugs were changed to:
     # healthcare, technology & creative-services respectively
