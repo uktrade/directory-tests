@@ -13,6 +13,7 @@ class InternationalTasks(TaskSet):
         self.client.get(
             url,
             headers=USER_AGENT,
+            name="/",
             auth=basic_auth(),
         )
 
@@ -39,8 +40,9 @@ class InternationalTasks(TaskSet):
         urls = [
             URLs.INTERNATIONAL_INDUSTRIES.relative,
             URLs.INTERNATIONAL_INDUSTRY_CREATIVE_INDUSTRIES.relative,
-            URLs.INTERNATIONAL_INDUSTRY_FINANCIAL_SERVICES.relative,
             URLs.INTERNATIONAL_INDUSTRY_ENGINEERING_AND_MANUFACTURING.relative,
+            URLs.INTERNATIONAL_INDUSTRY_FINANCIAL_SERVICES.relative,
+            URLs.INTERNATIONAL_INDUSTRY_TECHNOLOGY.relative,
         ]
         self.client.get(
             choice(urls),
