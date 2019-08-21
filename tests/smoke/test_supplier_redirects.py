@@ -10,15 +10,15 @@ from tests.smoke.cms_api_helpers import get_and_assert
     [
         (
             URLs.FAS_INDUSTRIES_HEALTH.absolute,
-            "/trade/industries/healthcare/",
+            URLs.FAS_INCOMING_REDIRECT.absolute_template.format(endpoint="industries/health")
         ),
         (
             URLs.FAS_INDUSTRIES_TECH.absolute,
-            "/trade/industries/technology/",
+            URLs.FAS_INCOMING_REDIRECT.absolute_template.format(endpoint="industries/tech")
         ),
         (
             URLs.FAS_INDUSTRIES_CREATIVE.absolute,
-            "/trade/industries/creative-services/",
+            URLs.FAS_INCOMING_REDIRECT.absolute_template.format(endpoint="industries/creative")
         ),
     ],
 )
