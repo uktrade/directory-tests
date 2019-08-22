@@ -48,8 +48,8 @@ def test_access_sso_endpoints_as_anonymous_user_yields_200(url, basic_auth):
     "url",
     [
         URLs.SSO_LOGOUT.absolute,
-        URLs.SSO_PASSWORD_CHANGE.absolute,
-        URLs.SSO_PASSWORD_SET.absolute,
+        # URLs.SSO_PASSWORD_CHANGE.absolute,  # see TT-1758
+        # URLs.SSO_PASSWORD_SET.absolute,  # see TT-1758
         URLs.SSO_PASSWORD_RESET.absolute,
         URLs.SSO_EMAIL_CONFIRM.absolute,
         URLs.SSO_INACTIVE.absolute,
