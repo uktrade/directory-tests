@@ -114,11 +114,16 @@ def test_check_if_verify_endpoint_redirects_to_correct_page(
     assert response.status_code == HTTP_200_OK, status_error(
         HTTP_200_OK, response
     )
-    # depends on the test account status/configuration user should either get
-    # to the letter verification page or to their profile page if they already
-    # went through verification
+    # final redirect depends on the account's verification status
+    # for a verified profile request should be redirected to /profile/find-a-buyer/
+    # and for an unverified profile it should go to /find-a-buyer/verify/letter-confirm/
     got_to_letter_confirmation = (
             response.url == URLs.FAB_CONFIRM_COMPANY_ADDRESS.absolute
     )
     got_to_profile = response.url == URLs.PROFILE_FAB.absolute
-    assert got_to_letter_confirmation or got_to_profile
+    error = (
+        f"Expected request to {url} to be redirected to "
+        f"{URLs.FAB_CONFIRM_COMPANY_ADDRESS.absolute} or {URLs.PROFILE_FAB.absolute} "
+        f"but got to {response.url}"
+    )
+    assert got_to_letter_confirmation or got_to_profile, error
