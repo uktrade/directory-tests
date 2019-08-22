@@ -127,3 +127,21 @@ def test_check_if_verify_endpoint_redirects_to_correct_page(
         f"but got to {response.url}"
     )
     assert got_to_letter_confirmation or got_to_profile, error
+
+
+@pytest.mark.parametrize(
+    "url", [URLs.FAB_CONFIRM_IDENTITY.absolute]
+)
+def test_anonymous_request_to_verify_endpoint_redirects_to_login_page(url, basic_auth):
+    response = requests.get(
+        url, allow_redirects=True, auth=basic_auth
+    )
+    assert response.status_code == HTTP_200_OK, status_error(
+        HTTP_200_OK, response
+    )
+    expected_url = URLs.SSO_LOGIN.absolute_template.format(next="/find-a-buyer/verify/")
+    error = (
+        f"Expected request to {url} to be redirected to "
+        f"{expected_url} but was redirected to {response.url}"
+    )
+    assert response.url == expected_url, error
