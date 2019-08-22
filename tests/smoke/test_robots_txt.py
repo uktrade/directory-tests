@@ -13,7 +13,6 @@ from tests.smoke.cms_api_helpers import get_and_assert
         urljoin(URLs.DOMESTIC_LANDING.absolute, "robots.txt"),
         urljoin(URLs.EXOPPS_LANDING.absolute, "robots.txt"),
         urljoin(URLs.FAB_LANDING.absolute, "robots.txt"),
-        urljoin(URLs.FAS_LANDING.absolute, "robots.txt"),
         urljoin(URLs.INTERNATIONAL_LANDING.absolute, "robots.txt"),
         # urljoin(URLs.PROFILE_LANDING.absolute, "robots.txt"), see TT-1499
         urljoin(URLs.SOO_LANDING.absolute, "robots.txt"),
