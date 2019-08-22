@@ -8,12 +8,21 @@ from tests.settings import BASICAUTH_USER, BASICAUTH_PASS
 from tests.smoke.cms_api_helpers import get_and_assert
 
 
-def get_urls_from_sitemap(sitemap_url: str) -> list:
-    response = get_and_assert(
-        url=sitemap_url, status_code=HTTP_200_OK, auth=(BASICAUTH_USER, BASICAUTH_PASS)
-    )
-    xml_soup = BeautifulSoup(response.content, "xml")
-    return [loc.text for loc in xml_soup.find_all("loc")]
+def get_urls_from_sitemap(sitemap_url: str, *, ignore_404: bool = False) -> list:
+    result = []
+    try:
+        response = get_and_assert(
+            url=sitemap_url, status_code=HTTP_200_OK, auth=(BASICAUTH_USER, BASICAUTH_PASS)
+        )
+        xml_soup = BeautifulSoup(response.content, "xml")
+        if xml_soup.find_all("loc"):
+            result = [loc.text for loc in xml_soup.find_all("loc")]
+    except AssertionError:
+        if not ignore_404:
+            pass
+        else:
+            raise
+    return result
 
 
 @pytest.mark.parametrize(
