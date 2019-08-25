@@ -7,7 +7,6 @@ from tests import URLs
 from tests.smoke.cms_api_helpers import get_and_assert
 
 
-@pytest.mark.skip(reason="see CMS-1671 requests are redirected to http then to https")
 @pytest.mark.dev
 @pytest.mark.parametrize(
     "url",
@@ -30,6 +29,7 @@ def test_invest_pages_redirects(url, basic_auth):
 @pytest.mark.parametrize(
     "url,redirected",
     [
+        (URLs.INVEST_INDUSTRIES.absolute, URLs.INTERNATIONAL_INDUSTRIES.absolute),
         (URLs.INVEST_UK_SETUP_GUIDE.absolute, URLs.INTERNATIONAL_UK_SETUP_GUIDE.absolute),
         (URLs.INVEST_INDUSTRIES_AEROSPACE.absolute, URLs.INTERNATIONAL_INDUSTRY_AEROSPACE.absolute),
         (URLs.INVEST_INDUSTRIES_AUTOMOTIVE.absolute, URLs.INTERNATIONAL_INDUSTRY_AUTOMOTIVE.absolute),
@@ -38,9 +38,69 @@ def test_invest_pages_redirects(url, basic_auth):
         (URLs.INVEST_INDUSTRIES_TECHNOLOGY.absolute, URLs.INTERNATIONAL_INDUSTRY_TECHNOLOGY.absolute),
     ],
 )
-def test_invest_pages_redirect_to_international(url, redirected, basic_auth):
+def test_invest_pages_redirect_to_international_dev(url, redirected, basic_auth):
     response = get_and_assert(url=url, status_code=HTTP_200_OK, auth=basic_auth, allow_redirects=True)
-    assert response.url == redirected
+    error = f"Expected {url} to redirect to {redirected} instead got to {response.url}"
+    assert response.url == redirected, error
+
+
+@pytest.mark.stage
+@pytest.mark.parametrize(
+    "url,redirected",
+    [
+        (URLs.INVEST_INDUSTRIES.absolute, URLs.INTERNATIONAL_INDUSTRIES.absolute),
+        (URLs.INVEST_UK_SETUP_GUIDE.absolute, URLs.INTERNATIONAL_UK_SETUP_GUIDE.absolute),
+        (URLs.INVEST_INDUSTRIES_CREATIVE_INDUSTRIES.absolute, URLs.INTERNATIONAL_INDUSTRY_CREATIVE_INDUSTRIES.absolute),
+        (URLs.INVEST_INDUSTRIES_FINANCIAL_SERVICES.absolute, URLs.INTERNATIONAL_INDUSTRY_FINANCIAL_SERVICES.absolute),
+        (URLs.INVEST_INDUSTRIES_TECHNOLOGY.absolute, URLs.INTERNATIONAL_INDUSTRY_TECHNOLOGY.absolute),
+    ],
+)
+def test_invest_pages_redirect_to_international_stage(url, redirected, basic_auth):
+    response = get_and_assert(url=url, status_code=HTTP_200_OK, auth=basic_auth, allow_redirects=True)
+    error = f"Expected {url} to redirect to {redirected} instead got to {response.url}"
+    assert response.url == redirected, error
+
+
+@pytest.mark.prod
+@pytest.mark.parametrize(
+    "url,redirected",
+    [
+        (URLs.INVEST_UK_SETUP_GUIDE.absolute, URLs.INTERNATIONAL_UK_SETUP_GUIDE.absolute),
+        (URLs.INVEST_UK_SETUP_GUIDE_ESTABLISH_A_BASE.absolute, URLs.INTERNATIONAL_UK_SETUP_GUIDE_ESTABLISH_A_BASE.absolute),
+        (URLs.INVEST_UK_SETUP_GUIDE_HIRE_SKILLED_WORKERS.absolute, URLs.INTERNATIONAL_UK_SETUP_GUIDE_ESTABLISH_A_BASE.absolute),
+        (URLs.INVEST_UK_SETUP_GUIDE_OPEN_BANK_ACCOUNT.absolute, URLs.INTERNATIONAL_UK_SETUP_GUIDE_OPEN_BANK_ACCOUNT.absolute),
+        (URLs.INVEST_UK_SETUP_GUIDE_REGISTER_A_COMPANY.absolute, URLs.INTERNATIONAL_UK_SETUP_GUIDE_REGISTER_A_COMPANY.absolute),
+        (URLs.INVEST_UK_SETUP_GUIDE_UK_TAX.absolute, URLs.INTERNATIONAL_UK_SETUP_GUIDE_UK_TAX.absolute),
+        (URLs.INVEST_UK_SETUP_GUIDE_UK_VISAS.absolute, URLs.INTERNATIONAL_UK_SETUP_GUIDE_UK_VISAS.absolute),
+
+        (URLs.INVEST_REGIONS_LONDON.absolute, URLs.INTERNATIONAL_REGIONS_LONDON.absolute),
+        (URLs.INVEST_REGIONS_MIDLANDS.absolute, URLs.INTERNATIONAL_REGIONS_MIDLANDS.absolute),
+        (URLs.INVEST_REGIONS_NORTH_ENGLAND.absolute, URLs.INTERNATIONAL_REGIONS_NORTH_ENGLAND.absolute),
+        (URLs.INVEST_REGIONS_NORTHERN_IRELAND.absolute, URLs.INTERNATIONAL_REGIONS_NORTHERN_IRELAND.absolute),
+        (URLs.INVEST_REGIONS_SCOTLAND.absolute, URLs.INTERNATIONAL_REGIONS_SCOTLAND.absolute),
+        (URLs.INVEST_REGIONS_SOUTH_ENGLAND.absolute, URLs.INTERNATIONAL_REGIONS_SOUTH_ENGLAND.absolute),
+        (URLs.INVEST_REGIONS_WALES.absolute, URLs.INTERNATIONAL_REGIONS_WALES.absolute),
+
+        (URLs.INVEST_INDUSTRIES.absolute, URLs.INTERNATIONAL_INDUSTRIES.absolute),
+        (URLs.INVEST_INDUSTRIES_ADVANCED_MANUFACTURING.absolute, URLs.INTERNATIONAL_INDUSTRY_ADVANCED_MANUFACTURING.absolute),
+        (URLs.INVEST_INDUSTRIES_AEROSPACE.absolute, URLs.INTERNATIONAL_INDUSTRY_AEROSPACE.absolute),
+        (URLs.INVEST_INDUSTRIES_AGRI_TECH.absolute, URLs.INTERNATIONAL_INDUSTRY_AGRICULTURAL_TECHNOLOGY.absolute),
+        (URLs.INVEST_INDUSTRIES_AUTOMOTIVE.absolute, URLs.INTERNATIONAL_INDUSTRY_AUTOMOTIVE.absolute),
+        (URLs.INVEST_INDUSTRIES_CAPITAL_INVESTMENT.absolute, URLs.INTERNATIONAL_CAPITAL_INVEST.absolute),
+        (URLs.INVEST_INDUSTRIES_CHEMICALS.absolute, URLs.INTERNATIONAL_INDUSTRY_CHEMICALS.absolute),
+        (URLs.INVEST_INDUSTRIES_CREATIVE_INDUSTRIES.absolute, URLs.INTERNATIONAL_INDUSTRY_CREATIVE_INDUSTRIES.absolute),
+        (URLs.INVEST_INDUSTRIES_ENERGY.absolute, URLs.INTERNATIONAL_INDUSTRY_ENERGY.absolute),
+        (URLs.INVEST_INDUSTRIES_FINANCIAL_SERVICES.absolute, URLs.INTERNATIONAL_INDUSTRY_FINANCIAL_SERVICES.absolute),
+        (URLs.INVEST_INDUSTRIES_FOOD_AND_DRINK.absolute, URLs.INTERNATIONAL_INDUSTRY_FOOD_AND_DRINK.absolute),
+        (URLs.INVEST_INDUSTRIES_HEALTH_AND_LIFE_SCIENCES.absolute, URLs.INTERNATIONAL_INDUSTRY_HEALTH_AND_LIFE_SCIENCES.absolute),
+        (URLs.INVEST_INDUSTRIES_RETAIL.absolute, URLs.INTERNATIONAL_INDUSTRY_RETAIL.absolute),
+        (URLs.INVEST_INDUSTRIES_TECHNOLOGY.absolute, URLs.INTERNATIONAL_INDUSTRY_TECHNOLOGY.absolute),
+    ],
+)
+def test_invest_pages_redirect_to_international_prod(url, redirected, basic_auth):
+    response = get_and_assert(url=url, status_code=HTTP_200_OK, auth=basic_auth, allow_redirects=True)
+    error = f"Expected {url} to redirect to {redirected} instead got to {response.url}"
+    assert response.url == redirected, error
 
 
 @pytest.mark.parametrize(
