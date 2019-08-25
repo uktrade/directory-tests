@@ -31,6 +31,7 @@ DIRECTORY_FORMS_API_SENDER_ID = os.environ["DIRECTORY_FORMS_API_SENDER_ID"]
 OLD_DIRECTORY_UI_SUPPLIER_URL = os.getenv("OLD_DIRECTORY_UI_SUPPLIER_URL", "https://stage.supplier.directory.uktrade.io/")
 OLD_EXRED_UI_URL = os.getenv("OLD_EXRED_UI_URL", "https://stage.exportreadiness.directory.uktrade.io/")
 INVEST_UI_URL = os.environ["INVEST_UI_URL"]
+INVEST_LEGACY_UI_URL = os.environ["INVEST_LEGACY_UI_URL"]
 SOO_UI_URL = os.environ["SOO_UI_URL"]
 EXPORT_OPPORTUNITIES_UI_URL = os.environ["EXPORT_OPPORTUNITIES_UI_URL"]
 
