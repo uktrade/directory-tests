@@ -93,6 +93,8 @@ def check_for_special_urls_cases(url: str) -> str:
     # temporarily allows to view those pages via "/content/" infix
     if "/international/content/" in url:
         url = url.replace("/international/content/", "/international/content/")
+    if url.startswith("http://"):
+        url = url.replace("http://", "https://")
     return url
 
 
