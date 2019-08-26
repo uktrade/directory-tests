@@ -83,7 +83,7 @@ def check_for_special_urls_cases(url: str) -> str:
             "/international/" in url
             and not url.endswith("/international/")
             and "/international/content/" not in url
-            and "/how-to-setup-in-the-uk/" not in url
+            and "/content/how-to-setup-in-the-uk/" not in url
             and "/campaigns/" not in url
             and "/international-eu-exit-news/" not in url
     ):
