@@ -29,11 +29,6 @@ def get_urls_from_sitemap(sitemap_url: str, *, ignore_404: bool = False) -> list
     "url",
     [
         URLs.DOMESTIC_SITEMAP.absolute,
-        URLs.FAB_SITEMAP.absolute,
-        URLs.INTERNATIONAL_SITEMAP.absolute,
-        URLs.EXOPPS_SITEMAP.absolute,  # missing sitemap.xml. See TT-1581
-        URLs.PROFILE_SITEMAP.absolute,  # missing sitemap.xml. See TT-1581
-        URLs.SOO_SITEMAP.absolute,  # missing sitemap.xml. See TT-1581
     ],
 )
 def test_if_sitemap_exist(url, basic_auth):
@@ -44,8 +39,6 @@ def test_if_sitemap_exist(url, basic_auth):
     "url",
     [
         URLs.DOMESTIC_SITEMAP.absolute,
-        URLs.FAB_SITEMAP.absolute,
-        URLs.INTERNATIONAL_SITEMAP.absolute,  # empty sitemap.xml. See CI-293
     ],
 )
 def test_check_sitemap_schema_and_if_it_contains_urls(url, basic_auth):
@@ -63,11 +56,11 @@ def test_check_sitemap_schema_and_if_it_contains_urls(url, basic_auth):
     assert sitemap_urls, error
 
 
+@pytest.mark.skip(reason="see CMS-1699")
 @pytest.mark.parametrize(
     "url",
     [
         URLs.DOMESTIC_SITEMAP.absolute,  # contains a self-reference. See bug CMS-1699
-        URLs.FAB_SITEMAP.absolute,
     ],
 )
 def test_sitemap_should_not_contain_reference_to_itself(url):
@@ -76,11 +69,11 @@ def test_sitemap_should_not_contain_reference_to_itself(url):
     assert url not in sitemap_urls, error
 
 
+@pytest.mark.skip(reason="see CMS-1699")
 @pytest.mark.parametrize(
     "url",
     [
         URLs.DOMESTIC_SITEMAP.absolute,  # contains a dupe. See bug CMS-1699
-        URLs.FAB_SITEMAP.absolute,
     ],
 )
 def test_sitemap_should_not_contain_duplicated_links(url):
@@ -90,19 +83,10 @@ def test_sitemap_should_not_contain_duplicated_links(url):
     assert not dupes, error
 
 
+@pytest.mark.skip(reason="see CMS-1699 & CMS-1811")
 @pytest.mark.parametrize(
     "url",
-    set(
-        # empty sitemap.xml. See CI-293
-        get_urls_from_sitemap(URLs.INTERNATIONAL_SITEMAP.absolute) +
-        # missing sitemap.xml. See TT-1581
-        get_urls_from_sitemap(URLs.EXOPPS_SITEMAP.absolute) +
-        get_urls_from_sitemap(URLs.PROFILE_SITEMAP.absolute) +
-        get_urls_from_sitemap(URLs.SOO_SITEMAP.absolute) +
-
-        get_urls_from_sitemap(URLs.DOMESTIC_SITEMAP.absolute, ignore_404=True) +
-        get_urls_from_sitemap(URLs.FAB_SITEMAP.absolute)
-    ) - {
+    set(get_urls_from_sitemap(URLs.DOMESTIC_SITEMAP.absolute, ignore_404=True)) - {
         URLs.DOMESTIC_API_COMPANY_HOUSE_SEARCH.absolute,  # see CMS-1699
         URLs.TRADE_BARRIERS_REPORT_FORM_SUCCESS.absolute,  # see CMS-1811
     }
