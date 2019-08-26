@@ -45,9 +45,12 @@ def test_forms_admin_is_available():
 
 @pytest.mark.dev
 @pytest.mark.forms
-def test_forms_testapi_endpoint_is_present_on_dev():
+@pytest.mark.parametrize(
+    "email", ["asdf@sdf.pl"],
+)
+def test_forms_testapi_endpoint_is_present_on_dev(email: str):
     response = client.get(
-        URLs.FORMS_API_TESTAPI.absolute.format(email="test@example.com")
+        URLs.FORMS_API_TESTAPI.absolute.format(email=email)
     )
     assert response.status_code == HTTP_200_OK, status_error(
         HTTP_200_OK, response
@@ -56,8 +59,11 @@ def test_forms_testapi_endpoint_is_present_on_dev():
 
 @pytest.mark.stage
 @pytest.mark.forms
-def test_forms_testapi_endpoint_is_present_on_stage():
-    test_forms_testapi_endpoint_is_present_on_dev()
+@pytest.mark.parametrize(
+    "email", ["test@gmail.com"],
+)
+def test_forms_testapi_endpoint_is_present_on_stage(email):
+    test_forms_testapi_endpoint_is_present_on_dev(email)
 
 
 @pytest.mark.prod
