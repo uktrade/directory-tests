@@ -12,8 +12,6 @@ from tests.smoke.cms_api_helpers import (
     get_and_assert,
     get_pages_from_api,
     get_pages_types,
-    invest_find_draft_urls,
-    invest_find_published_translated_urls,
     status_error,
 )
 
@@ -23,31 +21,21 @@ SKIPPED_PAGE_TYPES = [
     "great_international.internationalcuratedtopiclandingpage",
     "great_international.baseinternationalsectorpage",
     "great_international.capitalinvestopportunitypage",
+    "great_international.internationalsubsectorpage",
 ]
 
 ALL_PAGE_TYPES = get_pages_types(skip=SKIPPED_PAGE_TYPES)
 
 EXRED_PAGE_TYPES = [t for t in ALL_PAGE_TYPES if t.startswith("export_readiness.")]
 INTERNATIONAL_PAGE_TYPES = [t for t in ALL_PAGE_TYPES if t.startswith("great_international.")]
-INVEST_PAGE_TYPES = [t for t in ALL_PAGE_TYPES if t.startswith("invest.")]
-FAS_PAGE_TYPES = [t for t in ALL_PAGE_TYPES if t.startswith("find_a_supplier.")]
 COMPONENTS_PAGE_TYPES = [t for t in ALL_PAGE_TYPES if t.startswith("components.")]
 
-INVEST_PAGES = get_pages_from_api(INVEST_PAGE_TYPES, use_async_client=False)
-FAS_PAGES = get_pages_from_api(FAS_PAGE_TYPES, use_async_client=False)
 EXRED_PAGES = get_pages_from_api(EXRED_PAGE_TYPES, use_async_client=False)
 INTERNATIONAL_PAGES = get_pages_from_api(INTERNATIONAL_PAGE_TYPES, use_async_client=False)
 
 ALL_PAGES = {}
-ALL_PAGES.update(INVEST_PAGES)
-ALL_PAGES.update(FAS_PAGES)
 ALL_PAGES.update(EXRED_PAGES)
 ALL_PAGES.update(INTERNATIONAL_PAGES)
-
-NON_INVEST_API_PAGES = {}
-NON_INVEST_API_PAGES.update(FAS_PAGES)
-NON_INVEST_API_PAGES.update(EXRED_PAGES)
-NON_INVEST_API_PAGES.update(INTERNATIONAL_PAGES)
 
 
 @pytest.mark.parametrize(
@@ -118,7 +106,7 @@ def test_wagtail_get_pages_per_application_on_dev(application):
         "Components",
         "Find a Supplier Pages",
         "Great Domestic pages",
-        "Great International pages",
+        "great.gov.uk international",
         "Invest pages",
     ]
 )
@@ -131,8 +119,8 @@ def test_wagtail_get_pages_per_application_on_stage(application):
     "application", [
         "Components",
         "Find a Supplier app",
-        "Great Domestic",
-        "Great International pages",
+        "great.gov.uk",
+        "great.gov.uk international",
         "Invest pages",
     ]
 )
@@ -140,47 +128,23 @@ def test_wagtail_get_pages_per_application_on_prod(application):
     test_wagtail_get_pages_per_application_on_dev(application)
 
 
-@pytest.mark.invest
-@pytest.mark.fas
-@pytest.mark.exred
 @pytest.mark.parametrize("url, page_id", find_published_urls(ALL_PAGES))
 def test_all_published_english_pages_should_return_200(url, page_id, basic_auth):
     get_and_assert(url, HTTP_200_OK, auth=basic_auth, allow_redirects=True, page_id=page_id)
 
 
-@pytest.mark.fas
-@pytest.mark.exred
 @pytest.mark.parametrize(
-    "url, page_id", find_published_translated_urls(NON_INVEST_API_PAGES)
+    "url, page_id", find_published_translated_urls(ALL_PAGES)
 )
-def test_non_invest_published_translated_pages_should_return_200_new(url, page_id, basic_auth):
+def test_published_translated_pages_should_return_200_new(url, page_id, basic_auth):
     get_and_assert(url, HTTP_200_OK, auth=basic_auth, allow_redirects=True, page_id=page_id)
 
 
-@pytest.mark.fas
-@pytest.mark.exred
-@pytest.mark.parametrize("url, page_id", find_draft_urls(NON_INVEST_API_PAGES))
-def test_non_invest_draft_translated_pages_should_return_200_new(url, page_id, basic_auth):
+@pytest.mark.parametrize("url, page_id", find_draft_urls(ALL_PAGES))
+def test_drafts_of_translated_pages_should_return_200_new(url, page_id, basic_auth):
     get_and_assert(url, HTTP_200_OK, auth=basic_auth, page_id=page_id)
 
 
-@pytest.mark.invest
-@pytest.mark.parametrize(
-    "url, page_id", invest_find_published_translated_urls(INVEST_PAGES)
-)
-def test_published_translated_invest_pages_should_return_200_new(url, page_id, basic_auth):
-    get_and_assert(url, HTTP_200_OK, auth=basic_auth, allow_redirects=True, page_id=page_id)
-
-
-@pytest.mark.invest
-@pytest.mark.parametrize("url, page_id", invest_find_draft_urls(INVEST_PAGES))
-def test_draft_translated_invest_pages_should_return_200_new(url, page_id, basic_auth):
-    get_and_assert(url, HTTP_200_OK, auth=basic_auth, page_id=page_id)
-
-
-@pytest.mark.invest
-@pytest.mark.fas
-@pytest.mark.exred
 @retry(
     wait_fixed=30000,
     stop_max_attempt_number=2,
@@ -294,11 +258,3 @@ def test_wagtail_get_component_pages(cms_client, service_name, slug):
         HTTP_200_OK, response
     )
     assert response.json()["meta"]["slug"] == slug
-
-
-@pytest.mark.invest
-@pytest.mark.fas
-@pytest.mark.exred
-@pytest.mark.parametrize("url, page_id", find_published_urls(ALL_PAGES))
-def test_new_all_published_english_pages_should_return_200(url, page_id, basic_auth):
-    get_and_assert(url, HTTP_200_OK, auth=basic_auth, allow_redirects=True, page_id=page_id)
