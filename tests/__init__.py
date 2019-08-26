@@ -501,8 +501,8 @@ class URLs(Enum):
     DOMESTIC_GETTING_PAID = DomesticUrl("getting-paid/")
     DOMESTIC_OPERATIONS_AND_COMPLIANCE = DomesticUrl("operations-and-compliance/")
     DOMESTIC_GET_FINANCE = DomesticUrl("get-finance/")
-    DOMESTIC_STORY_FIRST = DomesticUrl("story/online-marketplaces-propel-freestyle-xtreme-sales/")
-    DOMESTIC_STORY_SECOND = DomesticUrl("story/hello-babys-rapid-online-growth/")
+    DOMESTIC_STORY_FIRST = DomesticUrl("story/hello-babys-rapid-online-growth/")
+    DOMESTIC_STORY_SECOND = DomesticUrl("story/york-bag-retailer-goes-global-via-e-commerce/")
     DOMESTIC_TERMS = DomesticUrl("terms-and-conditions/")
     DOMESTIC_PRIVACY = DomesticUrl("privacy-and-cookies/")
 
