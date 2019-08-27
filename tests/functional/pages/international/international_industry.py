@@ -12,6 +12,7 @@ from tests.functional.utils.request import Method, check_response, make_request
 SERVICE = Services.INTERNATIONAL
 NAME = "Industry"
 NAMES = [
+    "Creative industries",
     "Engineering and manufacturing",
     "Healthcare and Life Sciences",
     "Technology",
@@ -19,6 +20,7 @@ NAMES = [
 TYPE = "industry"
 URL = URLs.INTERNATIONAL_INDUSTRIES.absolute
 SUB_URLs = {
+    "creative industries": urljoin(URL, "creative-industries/"),
     "engineering and manufacturing": urljoin(URL, "engineering-and-manufacturing/"),
     "healthcare and life sciences": urljoin(URL, "healthcare-and-life-sciences/"),
     "technology": urljoin(URL, "technology/"),
