@@ -1,26 +1,38 @@
 Feature: Industry pages
 
-  @ED-2013a
-  @industries
+  @ED-2013
+  @internationalization
+  @i18n
+  @<selected>
   @no-sso-email-verification-required
-  Scenario Outline: Buyers should be able to view page with promoted Industries
-    Given "Annette Geissinger" is a buyer
+  Scenario Outline: Visitors should be able to view specific pages on International site in "<selected>" language
+    Given "Annette" is an anonymous visitor
 
-    When "Annette Geissinger" chooses to view following pages in "<selected>" language
-      | page                       |
-      | International - Industries |
+    When "Annette" chooses to view following pages in "<selected>" language
+      | page                                                     |
+      | International - Industries                               |
+      | International - Creative industries - Industry  |
+      | International - Engineering and manufacturing - Industry |
 
-    Then "Annette Geissinger" should see links to all industry pages available in "<selected>" language
+    Then the "whole" part of the viewed pages should be presented in "<expected>" language with probability greater than "<lower limit>"
+      | page                                                     |
+      | International - Industries                               |
+      | International - Creative industries - Industry           |
+      | International - Engineering and manufacturing - Industry |
 
     Examples:
-      | selected   |
-      | English    |
-      | French     |
-      | German     |
-      | Portuguese |
-      | Spanish    |
-      | Arabic     |
-      | Chinese    |
+      | selected   | expected   | lower limit |
+      | English    | English    | 0.98        |
+      | French     | French     | 0.85        |
+      | German     | German     | 0.98        |
+      | Portuguese | Portuguese | 0.98        |
+      | Spanish    | Spanish    | 0.98        |
+      | Chinese    | Chinese    | 0.85        |
+
+    @wip
+    Examples: Missing translations
+      | selected   | expected   | lower limit |
+      | Arabic     | Arabic     | 0.85        |
 
 
   @ED-2015
@@ -34,43 +46,7 @@ Feature: Industry pages
     Then "Annette Geissinger" should see "<selected>" page
 
     Examples:
-      | selected                                   |
-      | FAS - Creative services - Industry         |
-      | FAS - Engineering and manufacturing - Industry            |
-      | FAS - Health - Industry                    |
-
-
-  @dev-only
-  @ED-2015
-  @industries
-  @no-sso-email-verification-required
-  Scenario Outline: Buyers should be able to find out more about every promoted industry - visit "<selected>" page
-    Given "Annette Geissinger" is a buyer
-
-    When "Annette Geissinger" goes to "FAS - <selected>" page
-
-    Then "Annette Geissinger" should see "International - <selected>" page
-
-    Examples:
-      | selected                         |
-      | Technology - Creative industries |
-
-
-  @wip
-  @ED-2016
-  @industries
-  @no-sso-email-verification-required
-  Scenario Outline: Buyers should be able to find UK Suppliers by industries associated with promoted Case Study on "<selected>" page
-    Given "Annette Geissinger" is a buyer
-    And "Annette Geissinger" is on the "<selected>" page
-
-    When "Annette Geissinger" follows all the links to industries associated with the case study from the Company Showcase
-
-    Then "Annette Geissinger" should see search results filtered by appropriate sectors
-
-    Examples:
-      | selected                                |
-      | FAS - Creative services - Industry      |
-      | FAS - Food and drink - Industry         |
-      | FAS - Health - Industry                 |
-      | FAS - Technology - Industry             |
+      | selected                                                 |
+      | International - Creative industries - Industry           |
+      | International - Engineering and manufacturing - Industry |
+      | International - Technology - Industry                    |
