@@ -16,7 +16,8 @@ TYPE = "form"
 URL = URLs.SSO_SIGNUP.absolute
 EXPECTED_STRINGS = [
     "Register",
-    "Create a great.gov.uk account and you can",
+    "Create an account",
+    "To create an account you'll need a business email address",
     "Email",
     "Confirm email",
     "Password",

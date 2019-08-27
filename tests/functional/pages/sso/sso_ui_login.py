@@ -20,9 +20,9 @@ EXPECTED_STRINGS = [
     "Email",
     "Password",
     "Forgotten password?",
-    "Start now",
+    "Sign in",
     "Create a great.gov.uk account",
-    "It takes less than three minutes to register.",
+    "It takes less than three minutes to create an account",
 ]
 
 
