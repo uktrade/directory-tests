@@ -169,6 +169,9 @@ Feature: Multi-user accounts
   @multi-user
   @transfer-ownership
   @bug
+  @TT-1764
+  @fixme
+  @bug
   @TT-217
   @fixed
   @bug
@@ -341,6 +344,9 @@ Feature: Multi-user accounts
     And "Annette Geissinger" should see all case studies on the FAS Business Profile page
 
 
+  @bug
+  @TT-1764
+  @fixme
   @bug
   @TT-217
   @fixed
