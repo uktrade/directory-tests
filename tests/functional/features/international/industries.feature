@@ -1,6 +1,6 @@
 Feature: Industry pages
 
-  @ED-2013
+  @ED-2013a
   @industries
   @no-sso-email-verification-required
   Scenario Outline: Buyers should be able to view page with promoted Industries
@@ -36,7 +36,7 @@ Feature: Industry pages
     Examples:
       | selected                                   |
       | FAS - Creative services - Industry         |
-      | FAS - Food and drink - Industry            |
+      | FAS - Engineering and manufacturing - Industry            |
       | FAS - Health - Industry                    |
 
 
@@ -52,8 +52,8 @@ Feature: Industry pages
     Then "Annette Geissinger" should see "International - <selected>" page
 
     Examples:
-      | selected              |
-      | Technology - Industry |
+      | selected                         |
+      | Technology - Creative industries |
 
 
   @wip

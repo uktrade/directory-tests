@@ -22,8 +22,10 @@ from tests.functional.pages.fab import (
 from tests.functional.pages.fas import (
     fas_ui_contact,
     fas_ui_find_supplier,
-    fas_ui_industries,
     fas_ui_profile,
+)
+from tests.functional.pages.international import (
+    international_industries,
 )
 from tests.functional.pages.profile import (
     profile_about,
@@ -774,12 +776,12 @@ def profile_should_see_expected_error_messages(
     logging.debug("%s has seen all expected form errors", supplier_alias)
 
 
-def fas_should_see_links_to_industry_pages(
+def intl_should_see_links_to_industry_pages(
     context: Context, actor_alias: str, language: str
 ):
-    page_name = f"{fas_ui_industries.SERVICE.value} - {fas_ui_industries.NAME}"
+    page_name = f"{international_industries.SERVICE.value} - {international_industries.NAME}"
     response = context.views[page_name]
-    fas_ui_industries.should_see_links_to_industry_pages(response, language)
+    international_industries.should_see_links_to_industry_pages(response, language)
     logging.debug(
         f"{actor_alias} saw all links to industry pages available in '{language}'"
     )
