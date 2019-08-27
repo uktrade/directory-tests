@@ -7,8 +7,8 @@ Feature: Industry pages
     Given "Annette Geissinger" is a buyer
 
     When "Annette Geissinger" chooses to view following pages in "<selected>" language
-      | page             |
-      | FAS - Industries |
+      | page                       |
+      | International - Industries |
 
     Then "Annette Geissinger" should see links to all industry pages available in "<selected>" language
 
