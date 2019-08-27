@@ -134,15 +134,35 @@ def sso_should_be_signed_in_to_sso_account(
 ):
     response = context.response
     with assertion_msg(
-        "Expected profile_sessionid cookie to be set. It looks like "
-        "user is not logged in"
-    ):
-        assert response.cookies.get("profile_sessionid") is not None
-    with assertion_msg(
         "Response doesn't contain 'Sign out' button. It looks "
         "like user is not logged in"
     ):
         assert "Sign out" in response.content.decode("utf-8")
+    error = f"Missing response history in SSO login request!"
+    assert response.history, error
+    
+    intermediate_headers = []
+    for r in response.history:
+        dev_session = r.cookies.get("directory_sso_dev_session", None)
+        stage_session = r.cookies.get("sso_stage_session", None)
+        sso_display_logged_in = r.cookies.get("sso_display_logged_in", None)
+        cookies = {
+            "url": r.url,
+            "location": r.headers.get("location", None),
+            "sso_session": dev_session or stage_session,
+            "sso_display_logged_in": sso_display_logged_in,
+        }
+        intermediate_headers.append(cookies)
+    logging.debug(f"SSO session cookie history: {intermediate_headers}")
+    with assertion_msg(
+            "Expected to see following SSO Session cookies to be set in intermediate "
+            "responses: sso_display_logged_in=true and directory_sso_dev_session or "
+            "sso_stage_session. It looks like user did not log in successfully!"
+    ):
+        assert all(
+            cookies["sso_display_logged_in"] == "true"
+            for cookies in intermediate_headers
+        )
     logging.debug("%s is logged in to the SSO account", supplier_alias)
 
 
