@@ -12,7 +12,8 @@ NAME = "Enrol"
 TYPE = "landing"
 URL = URLs.PROFILE_ENROL.absolute
 EXPECTED_STRINGS = [
-    "Create an account",
+    "Create an ",
+    "Start now",
 ]
 
 
