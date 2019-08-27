@@ -57,7 +57,6 @@ def login(
         "csrfmiddlewaretoken": token or actor.csrfmiddlewaretoken,
         "login": actor.email,
         "password": actor.password,
-        "remember": "on",
     }
     query = f"?next={referer or fab_landing}"
     referer = urljoin(URL, query)
