@@ -1391,7 +1391,13 @@ def detect_page_language(
     if url:
         content = make_request(Method.GET, url).content.decode("utf-8")
 
-    if not main:
+    if main:
+        logging.debug(
+            "Will analyse only the main content of the page and ignore the "
+            "page header & footer"
+        )
+        text = extract_page_contents(content)
+    else:
         logging.debug(
             "Will analyse the contents of the whole page, including page "
             "header & footer"
@@ -1402,12 +1408,6 @@ def detect_page_language(
             strip_footer=False,
             strip_unordered_lists=False,
         )
-    else:
-        logging.debug(
-            "Will analyse only the main content of the page and ignore the "
-            "page header & footer"
-        )
-        text = extract_page_contents(content)
 
     raw_results = {}
     logging.debug("Text used to detect the page language(s):")
