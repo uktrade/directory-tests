@@ -330,6 +330,8 @@ def extract_page_contents(
     strip_select_menus: bool = True,
     strip_unordered_lists: bool = False,
     strip_fas_search_result_summary: bool = True,
+    strip_industry_last_updated: bool = True,
+    strip_report_this_page: bool = True,
 ) -> str:
     soup = BeautifulSoup(content, "lxml")
 
@@ -370,6 +372,12 @@ def extract_page_contents(
             element.extract()
     if strip_fas_search_result_summary:
         for element in soup.select("#hero-container"):
+            element.extract()
+    if strip_industry_last_updated:
+        for element in soup.select("p.description.subheading"):
+            element.extract()
+    if strip_report_this_page:
+        for element in soup.select("#error-reporting-section-contact-us"):
             element.extract()
 
     text = soup.get_text()
