@@ -1389,7 +1389,7 @@ def detect_page_language(
     """
     assert rounds > 0, "Rounds can't be lower than 1"
     if url:
-        content = requests.get(url).content.decode("utf-8")
+        content = make_request(Method.GET, url).content.decode("utf-8")
 
     if not main:
         logging.debug(
