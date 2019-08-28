@@ -664,7 +664,7 @@ def generic_pages_should_be_in_selected_language(
             f"Detecting the language of '{page_name}'' page {response.url}"
         )
         lang_detect_results = detect_page_language(
-            page_name, response.url, content, main=main
+            page_name, "", content, main=main
         )
         median_results = {
             language: median(probabilities)
