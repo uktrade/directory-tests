@@ -11,7 +11,7 @@ Feature: Industry pages
     When "Annette" chooses to view following pages in "<selected>" language
       | page                                                     |
       | International - Industries                               |
-      | International - Creative industries - Industry  |
+      | International - Creative industries - Industry           |
       | International - Engineering and manufacturing - Industry |
 
     Then the "whole" part of the viewed pages should be presented in "<expected>" language with probability greater than "<lower limit>"
@@ -27,13 +27,17 @@ Feature: Industry pages
       | German     | German     | 0.98        |
       | Portuguese | Portuguese | 0.98        |
       | Spanish    | Spanish    | 0.98        |
-      | Chinese    | Chinese    | 0.85        |
 
     @wip
     Examples: Missing translations
       | selected   | expected   | lower limit |
       | Arabic     | Arabic     | 0.85        |
 
+    # langdetect struggles to detect Chinese
+    @wip
+    Examples: Missing translations
+      | selected   | expected   | lower limit |
+      | Chinese    | Chinese    | 0.85        |
 
   @ED-2015
   @industries
