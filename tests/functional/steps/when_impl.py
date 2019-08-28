@@ -1347,7 +1347,7 @@ def fas_get_company_profile_url(response: Response, name: str) -> str:
 
 
 def can_find_supplier_by_term(
-    session: Session, name: str, term: str, term_type: str
+    session: Session, name: str, term: str, term_type: str, max_pages: int = 10,
 ) -> (bool, Response, str):
     """
 
@@ -1355,6 +1355,7 @@ def can_find_supplier_by_term(
     :param name: sought Supplier name
     :param term: a text used to find the Supplier
     :param term_type: type of the term, e.g.: product, service, keyword etc.
+    :param max_pages: maximum number of search results pages to go through
     :return: a tuple with search result (True/False), last search Response and
              an endpoint to company's profile
     """
@@ -1367,6 +1368,7 @@ def can_find_supplier_by_term(
         return found, response, endpoint
     else:
         number_of_pages = get_number_of_search_result_pages(response)
+        page_counter = 1
         for page_number in range(1, number_of_pages + 1):
             found = fas_ui_find_supplier.should_see_company(response, name)
             if found:
@@ -1389,6 +1391,9 @@ def can_find_supplier_by_term(
                         "Couldn't find the Supplier even on the last page of the "
                         "search results"
                     )
+            if page_counter >= max_pages:
+                logging.debug(f"Got to the {max_pages}th/st search results page")
+                break
     return found, response, endpoint
 
 
