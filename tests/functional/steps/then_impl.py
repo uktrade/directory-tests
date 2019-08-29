@@ -422,7 +422,8 @@ def fas_find_supplier_using_case_study_details(
     company_alias: str,
     case_alias: str,
     *,
-    properties: Table = None
+    properties: Table = None,
+    max_pages: int = 10,
 ):
     """Find Supplier on FAS using parts of the Case Study added by Supplier.
 
@@ -464,6 +465,7 @@ def fas_find_supplier_using_case_study_details(
         found = fas_ui_find_supplier.should_see_company(
             response, company.title
         )
+        count = 1
         if found:
             logging.debug(
                 "Found Supplier '%s' using '%s' : '%s' on 1st result page",
@@ -494,6 +496,10 @@ def fas_find_supplier_using_case_study_details(
                     term,
                 ):
                     found = False
+            count += 1
+        if count >= max_pages:
+            logging.warn(f"Couldn not find '{company.title}' on first {max_pages} pages")
+            break
         search_results[term_name] = {"term": term, "found": found}
 
     logging.debug(f"Search results: {search_results}")
