@@ -1,3 +1,4 @@
+@international
 Feature: Industry pages
 
   @ED-2013
