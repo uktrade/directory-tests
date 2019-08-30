@@ -13,8 +13,6 @@ from steps.then_impl import (
     form_check_state_of_element,
     form_should_see_error_messages,
     forms_confirmation_email_should_not_be_sent,
-    generic_article_counter_should_match_number_of_articles,
-    generic_article_counters_should_match,
     generic_check_gtm_datalayer_properties,
     generic_check_gtm_events,
     generic_contact_us_should_receive_confirmation_email,
@@ -259,16 +257,6 @@ def then_should_see_form_choices(context: Context, actor_alias: str):
 @then('"{actor_alias}" should receive a "{subject}" email from Zendesk')
 def step_impl(context: Context, actor_alias: str, subject: str):
     zendesk_should_receive_confirmation_email(context, actor_alias, subject)
-
-
-@then('"{actor_alias}" should see that article counter matches expected number')
-def then_article_counter_should_match(context: Context, actor_alias: str):
-    generic_article_counters_should_match(context, actor_alias)
-
-
-@then('"{actor_alias}" should see that article counter matches the number of articles on the page')
-def then_article_counter_should_match_number_of_articles(context: Context, actor_alias: str):
-    generic_article_counter_should_match_number_of_articles(context, actor_alias)
 
 
 @then('"{actor_alias}" should see contact details for "{trade_office}" office in "{city}"')

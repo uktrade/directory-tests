@@ -7,7 +7,6 @@ Feature: Advice articles
   @CMS-686
   @home-page
   @articles
-  @<specific>
   Scenario: Any Exporter should see all expected sections on "Domestic - Advice landing" page
     When "Robert" goes to the "Domestic - Advice landing" page
 
@@ -22,7 +21,6 @@ Feature: Advice articles
   @CMS-686
   @home-page
   @articles
-  @<specific>
   Scenario: Any Exporter should be able to get to a list of Advice articles from the home page using link in "<specific>" section
     Given "Robert" visits the "Domestic - Advice landing" page
 
@@ -36,19 +34,6 @@ Feature: Advice articles
 #      | Breadcrumbs              |  Breadcrumbs are not present on this page. See bug CMS-1698
       | List of articles         |
       | Error reporting          |
-
-
-  @CMS-686
-  @home-page
-  @articles
-  Scenario: Advice article counter on the Home page should match the one on the Advice page
-    Given "Robert" visits the "Domestic - Advice landing" page
-
-    When "Robert" opens any article on the list
-
-    Then "Robert" should be on the "Domestic - Advice - Article list" page
-    And "Robert" should see that article counter matches expected number
-    And "Robert" should see that article counter matches the number of articles on the page
 
 
   @CMS-686
@@ -128,16 +113,3 @@ Feature: Advice articles
       | Manage legal and ethical compliance         |
       | Prepare for export procedures and logistics |
       | Get export finance                          |
-
-
-  @CMS-686
-  @header
-  @footer
-  Scenario: Any Exporter should be able to access featured Advice Articles from the "Domestic - Home" page
-    Given "Robert" visits the "Domestic - Home" page
-
-    When "Robert" opens any article on the list
-
-    Then "Robert" should be on the "Domestic - Advice - article list" page
-    And "Robert" should see that article counter matches expected number
-    And "Robert" should see that article counter matches the number of articles on the page

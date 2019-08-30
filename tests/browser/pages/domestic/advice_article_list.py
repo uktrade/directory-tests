@@ -14,7 +14,6 @@ from pages.common_actions import (
     check_for_sections,
     check_if_element_is_visible,
     check_url,
-    find_element,
     find_elements,
     go_to_url,
     take_screenshot,
@@ -57,13 +56,9 @@ URLs = {
 }
 
 
-TOTAL_NUMBER_OF_ARTICLES = Selector(By.CSS_SELECTOR, "dd.position > span.to")
-ARTICLES_TO_READ_COUNTER = Selector(By.CSS_SELECTOR, "dd.position > span.from")
-TIME_TO_COMPLETE = Selector(By.CSS_SELECTOR, "dd.time > span.value")
 ARTICLES_LIST = Selector(By.CSS_SELECTOR, "#js-paginate-list > li")
 FIRST_ARTICLE = Selector(By.CSS_SELECTOR, "#js-paginate-list > li:nth-child(1) > a")
 
-ARTICLE_COUNTER = Selector(By.ID, "hero-description")
 ARTICLE_LINKS = Selector(
     By.CSS_SELECTOR, "#article-list-page li.article a", type=ElementType.LINK
 )
@@ -71,13 +66,11 @@ SELECTORS = {
     "hero": {
         "itself": Selector(By.ID, "hero"),
         "heading": Selector(By.ID, "hero-heading"),
-        "description": Selector(By.ID, "hero-description"),
     },
     "breadcrumbs": {
         "itself": Selector(By.CSS_SELECTOR, "nav.breadcrumbs"),
         "links": Selector(By.CSS_SELECTOR, "nav.breadcrumbs a"),
     },
-    "total number of articles": {"itself": ARTICLE_COUNTER},
     "list of articles": {
         "itself": Selector(By.ID, "article-list-page"),
         "articles": ARTICLE_LINKS,
@@ -107,38 +100,6 @@ def should_be_here(driver: WebDriver, *, page_name: str):
 
 def should_see_sections(driver: WebDriver, names: List[str]):
     check_for_sections(driver, all_sections=SELECTORS, sought_sections=names)
-
-
-def get_article_counter(driver: WebDriver) -> int:
-    article_counter = find_element(
-        driver,
-        ARTICLE_COUNTER,
-        element_name="total number of articles",
-        wait_for_it=False,
-    )
-    counter_index = 0
-    return int(article_counter.text.split()[counter_index])
-
-
-def article_counter_is_equal_to(driver: WebDriver, expected_article_counter: int):
-    current_counter = get_article_counter(driver)
-    error = (
-        f"Expected Advice article counter to be "
-        f"{expected_article_counter} but found {current_counter} on "
-        f"{driver.current_url}"
-    )
-    assert current_counter == expected_article_counter, error
-
-
-def article_counter_matches_number_of_articles(driver: WebDriver):
-    current_counter = get_article_counter(driver)
-    article_links = find_elements(driver, ARTICLE_LINKS)
-    error = (
-        f"Expected Advice article counter ({current_counter}) to match "
-        f"number of visible articles {len(article_links)} on"
-        f"{driver.current_url}"
-    )
-    assert current_counter == len(article_links), error
 
 
 def open_any_article(driver: WebDriver) -> str:

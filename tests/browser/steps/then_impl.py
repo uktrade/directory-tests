@@ -480,20 +480,6 @@ def generic_should_see_form_choices(
     page.should_see_form_choices(context.driver, option_names)
 
 
-def generic_article_counters_should_match(context: Context, actor_alias: str):
-    actor = get_actor(context, actor_alias)
-    _, expected_article_counter = actor.element_details
-    page = get_last_visited_page(context, actor_alias)
-    has_action(page, "article_counter_is_equal_to")
-    page.article_counter_is_equal_to(context.driver, expected_article_counter)
-
-
-def generic_article_counter_should_match_number_of_articles(context, actor_alias):
-    page = get_last_visited_page(context, actor_alias)
-    has_action(page, "article_counter_matches_number_of_articles")
-    page.article_counter_matches_number_of_articles(context.driver)
-
-
 def office_finder_should_see_correct_office_details(
     context: Context, actor_alias: str, trade_office: str, city: str
 ):
