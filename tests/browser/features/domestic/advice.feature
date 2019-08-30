@@ -30,8 +30,7 @@ Feature: Advice articles
     And  "Robert" should see following sections
       | sections                 |
       | Hero                     |
-      | Total number of Articles |
-#      | Breadcrumbs              |  Breadcrumbs are not present on this page. See bug CMS-1698
+      | Breadcrumbs              |
       | List of articles         |
       | Error reporting          |
 
@@ -80,7 +79,7 @@ Feature: Advice articles
 
   @bug
   @CMS-1698
-  @fixme
+  @fixed
   @CMS-686
   @breadcrumbs
   Scenario Outline: Any Exporter should see be to use "<breadcrumb>" breadcrumb on "Advice article" page to get to "<target>" page
