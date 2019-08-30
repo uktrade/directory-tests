@@ -97,8 +97,6 @@ Feature: Advice articles
 
 
   @CMS-686
-  @header
-  @footer
   Scenario: Any Exporter visiting the home page should be able to see links to all Advice categories in "Domestic - <link_location>"
     Given "Robert" visits the "Domestic - Home" page
 
@@ -107,8 +105,8 @@ Feature: Advice articles
       | Create an export plan                       |
       | Find an export market                       |
       | Define route to market                      |
+      | Get export finance and funding              |
       | Manage payment for export orders            |
       | Prepare to do business in a foreign country |
       | Manage legal and ethical compliance         |
       | Prepare for export procedures and logistics |
-      | Get export finance                          |

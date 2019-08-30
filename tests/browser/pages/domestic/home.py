@@ -88,21 +88,21 @@ SELECTORS = {
         "cards": Selector(
             By.CSS_SELECTOR, "#resource-advice .card-link", type=ElementType.LINK
         ),
-        "create an export plan": Selector(By.ID, "create-an-export-plan-link"),
-        "find an export market": Selector(By.ID, "find-an-export-market-link"),
-        "define route to market": Selector(By.ID, "define-route-to-market-link"),
-        "get export finance": Selector(By.ID, "get-export-finance-and-funding-link"),
+        "create an export plan": Selector(By.LINK_TEXT, "Create an export plan"),
+        "find an export market": Selector(By.LINK_TEXT, "Find an export market"),
+        "define route to market": Selector(By.LINK_TEXT, "Define route to market"),
+        "get export finance and funding": Selector(By.LINK_TEXT, "Get export finance and funding"),
         "manage payment for export orders": Selector(
-            By.ID, "manage-payment-for-export-orders-link"
+            By.LINK_TEXT, "Manage payment for export orders"
         ),
         "prepare to do business in a foreign country": Selector(
-            By.ID, "prepare-to-do-business-in-a-foreign-country-link"
+            By.LINK_TEXT, "Prepare to do business in a foreign country"
         ),
         "manage legal and ethical compliance": Selector(
-            By.ID, "manage-legal-and-ethical-compliance-link"
+            By.LINK_TEXT, "Manage legal and ethical compliance"
         ),
         "prepare for export procedures and logistics": Selector(
-            By.ID, "prepare-for-export-procedures-and-logistics-link"
+            By.LINK_TEXT, "Prepare for export procedures and logistics"
         ),
     },
     "services": {
