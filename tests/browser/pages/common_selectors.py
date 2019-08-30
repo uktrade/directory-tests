@@ -30,14 +30,14 @@ HEADER = {
             By.ID, "great-global-header-international-link"
         ),
         # header menu
-        "header menu": Selector(By.ID, "great-header-menu"),
+        "header menu": Selector(By.CSS_SELECTOR, ".menu"),
         "eig logo": Selector(By.ID, "great-header-logo"),
         "advice": Selector(By.ID, "header-advice", type=ElementType.LINK),
         "markets": Selector(By.ID, "header-markets", type=ElementType.LINK),
         "services": Selector(By.ID, "header-services", type=ElementType.LINK),
-        "search box": Selector(By.ID, "search-box", type=ElementType.INPUT),
+        "search box": Selector(By.ID, "great-header-search-box", type=ElementType.INPUT),
         "search button": Selector(
-            By.CSS_SELECTOR, "#search-box ~ button", type=ElementType.BUTTON
+            By.CSS_SELECTOR, "#great-header-search-box ~ button", type=ElementType.BUTTON
         ),
     }
 }
