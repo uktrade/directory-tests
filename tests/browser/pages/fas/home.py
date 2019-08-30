@@ -133,7 +133,12 @@ def open_industry(driver: WebDriver, industry_name: str):
     take_screenshot(driver, NAME + " after opening " + industry_name + " page")
 
 
-def open_any_article(driver: WebDriver):
+def open_any_article(driver: WebDriver) -> str:
     selector = Selector(By.CSS_SELECTOR, "#industries-section a.industry-card")
     links = find_elements(driver, selector)
-    random.choice(links).click()
+    link = random.choice(links)
+    link_text = link.text
+    check_if_element_is_visible(link, element_name=link_text)
+    with wait_for_page_load_after_action(driver):
+        link.click()
+    return link_text

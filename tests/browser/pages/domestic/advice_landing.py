@@ -76,11 +76,11 @@ def extract_text(text: str) -> tuple:
     return name, counter
 
 
-def open_any_article(driver: WebDriver) -> tuple:
+def open_any_article(driver: WebDriver) -> str:
     article_links = find_elements(driver, ARTICLE_LINKS)
     link = random.choice(article_links)
     link_text = link.text
     check_if_element_is_visible(link, element_name=link_text)
     with wait_for_page_load_after_action(driver):
         link.click()
-    return extract_text(link_text)
+    return link_text

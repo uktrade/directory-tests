@@ -314,22 +314,14 @@ def click_on_page_element(driver: WebDriver, element_name: str):
     take_screenshot(driver, NAME + " after clicking on " + element_name)
 
 
-def extract_text(text: str) -> tuple:
-    advice_name_index = 1
-    article_counter_index = -2
-    name = text.splitlines()[advice_name_index]
-    counter = int(text.split()[article_counter_index])
-    return name, counter
-
-
-def open_any_article(driver: WebDriver) -> tuple:
+def open_any_article(driver: WebDriver) -> str:
     article_links = find_elements(driver, ADVICE_ARTICLE_LINKS)
     link = random.choice(article_links)
     link_text = link.text
     check_if_element_is_visible(link, element_name=link_text)
     with wait_for_page_load_after_action(driver):
         link.click()
-    return extract_text(link_text)
+    return link_text
 
 
 def search(driver: WebDriver, phrase: str):
