@@ -67,7 +67,7 @@ def given_actor_opens_any_article(context, actor_alias):
     articles_open_any(context, actor_alias)
 
 
-@when('"{actor_alias}" goes to the "{case_number}" Case Study via carousel')
+@when('"{actor_alias}" goes to the "{case_number}" Case Study')
 def when_actor_goes_to_case_study(context, actor_alias, case_number):
     case_studies_go_to(context, actor_alias, case_number)
 

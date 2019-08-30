@@ -43,15 +43,8 @@ CLOSE_VIDEO = Selector(
 VIDEO_MODAL_WINDOW = Selector(
     By.CSS_SELECTOR, "body > div.video-container.Modal-Container.open"
 )
-CAROUSEL_INDICATORS = Selector(By.CSS_SELECTOR, ".ed-carousel__indicator")
-CAROUSEL_PREV_BUTTON = Selector(
-    By.CSS_SELECTOR, "#carousel label.ed-carousel__control--backward"
-)
-CAROUSEL_NEXT_BUTTON = Selector(
-    By.CSS_SELECTOR, "#carousel label.ed-carousel__control--forward"
-)
 CASE_STUDY_LINK = Selector(
-    By.CSS_SELECTOR, "#carousel div.ed-carousel__slide:nth-child({}) h3 > a"
+    By.CSS_SELECTOR, "section.casestudy-section > div > div > div:nth-child({}) a"
 )
 ARTICLES = Selector(By.CSS_SELECTOR, "#eu-exit-news-section .article a")
 ADVICE_ARTICLE_LINKS = Selector(By.CSS_SELECTOR, "#resource-advice a")
@@ -121,20 +114,9 @@ SELECTORS = {
         ),
     },
     "case studies": {
-        "itself": Selector(By.ID, "carousel"),
+        "itself": Selector(By.CSS_SELECTOR, "section.casestudy-section"),
         "title": Selector(By.ID, "case-studies-section-title"),
         "description": Selector(By.ID, "case-studies-section-description"),
-        "carousel_previous_button": CAROUSEL_PREV_BUTTON,
-        "carousel_next_button": CAROUSEL_NEXT_BUTTON,
-        "carousel - indicator 1": Selector(By.ID, "case-studies-section-indicator-1"),
-        "carousel - indicator 2": Selector(By.ID, "case-studies-section-indicator-2"),
-        "carousel - indicator 3": Selector(By.ID, "case-studies-section-indicator-3"),
-        "carousel - case study 1 - link": Selector(
-            By.ID, "case-studies-section-case-study-1-link"
-        ),
-        "carousel - case study 1 - image": Selector(
-            By.ID, "case-studies-section-case-study-1-image"
-        ),
     },
     "business is great": {
         "itself": Selector(By.ID, "beis"),
@@ -177,71 +159,9 @@ def should_see_link_to(driver: WebDriver, section: str, item_name: str):
         assert menu_item.is_displayed()
 
 
-def get_number_of_current_carousel_article(driver: WebDriver) -> int:
-    indicators = find_elements(driver, CAROUSEL_INDICATORS)
-    opacities = [
-        (k, float(v.value_of_css_property("opacity"))) for k, v in enumerate(indicators)
-    ]
-    active_indicator = [opacity[0] for opacity in opacities if opacity[1] == 1]
-    return active_indicator[0] + 1
-
-
-def find_case_study_by_going_left(driver: WebDriver, to_open: int):
-    current = get_number_of_current_carousel_article(driver)
-    prev_buttons = find_elements(driver, CAROUSEL_PREV_BUTTON)
-    prev_button = [nb for nb in prev_buttons if nb.is_displayed()][0]
-    max_actions = 5
-    while (current != to_open) and (max_actions > 0):
-        prev_button.click()
-        prev_buttons = find_elements(driver, CAROUSEL_PREV_BUTTON)
-        prev_button = [nb for nb in prev_buttons if nb.is_displayed()][0]
-        current = get_number_of_current_carousel_article(driver)
-        take_screenshot(
-            driver, "After moving left to find Case Study {}".format(to_open)
-        )
-        max_actions -= 1
-
-
-def find_case_study_by_going_right(driver: WebDriver, to_open: int):
-    current = get_number_of_current_carousel_article(driver)
-    next_buttons = find_elements(driver, CAROUSEL_NEXT_BUTTON)
-    next_button = [nb for nb in next_buttons if nb.is_displayed()][0]
-    max_actions = 5
-    while (current != to_open) and (max_actions > 0):
-        next_button.click()
-        next_buttons = find_elements(driver, CAROUSEL_NEXT_BUTTON)
-        next_button = [nb for nb in next_buttons if nb.is_displayed()][0]
-        current = get_number_of_current_carousel_article(driver)
-        take_screenshot(
-            driver, "After moving right to find Case Study {}".format(to_open)
-        )
-        max_actions -= 1
-
-
-def move_to_case_study_navigation_buttons(driver: WebDriver):
-    prev_button = find_element(
-        driver,
-        CAROUSEL_PREV_BUTTON,
-        element_name="Carousel Previous button",
-        wait_for_it=False,
-    )
-    vertical_position = prev_button.location["y"]
-    logging.debug("Moving focus to Carousel navigation buttons")
-    driver.execute_script("window.scrollTo(0, {});".format(vertical_position))
-
-
 def open_case_study(driver: WebDriver, case_number: str):
     case_study_numbers = {"first": 1, "second": 2, "third": 3}
     case_study_number = case_study_numbers[case_number.lower()]
-
-    move_to_case_study_navigation_buttons(driver)
-
-    current_case_study_number = get_number_of_current_carousel_article(driver)
-    if current_case_study_number != case_study_number:
-        if random.choice([True, False]):
-            find_case_study_by_going_left(driver, case_study_number)
-        else:
-            find_case_study_by_going_right(driver, case_study_number)
 
     selector = Selector(
         CASE_STUDY_LINK.by, CASE_STUDY_LINK.value.format(case_study_number)
