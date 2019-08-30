@@ -28,7 +28,7 @@ PAGE_TITLE = "Welcome to great.gov.uk"
 
 ARTICLE_LINKS = Selector(
     By.CSS_SELECTOR,
-    "#advice-list-section div.card a",
+    "#advice-list-section a",
     type=ElementType.LINK,
 )
 SELECTORS = {
@@ -45,7 +45,7 @@ SELECTORS = {
         "cards": Selector(By.CSS_SELECTOR, "#advice-list-section div.card"),
         "articles": ARTICLE_LINKS,
         "article images": Selector(
-            By.CSS_SELECTOR, "#advice-list-section div.card div[role=image]"
+            By.CSS_SELECTOR, "#advice-list-section .card-image"
         ),
     },
     "error reporting": {
