@@ -1,4 +1,3 @@
-@wip
 @gtm
 @pixels
 Feature: Google Tag Manager
@@ -15,5 +14,5 @@ Feature: Google Tag Manager
       | <businessUnit> | <loginStatus> | <siteLanguage> | <siteSection> | <siteSubsection> | <userId> |
 
     Examples: Listing pages
-      | selected   | businessUnit  | loginStatus | siteLanguage | siteSection | siteSubsection     | userId |
-      | Landing    | Invest        | False       | en-gb        | HomePage    | Empty string       | None   |
+      | selected | businessUnit | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
+      | Landing  | Invest       | False       | en-gb        | PerfectFit  | FormPage       | None   |
