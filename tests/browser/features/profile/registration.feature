@@ -8,20 +8,6 @@ Feature: New Enrolment flow
     Given basic authentication is done for "Profile - About" page
 
   @wip
-  @TT-1115
-  Scenario: Users should be presented with the Enrolment Steps prior to starting the registration process
-    Given "Natalia" visits the "Profile - Sign in" page
-
-    When "Natalia" decides to "Start now"
-
-    Then "Natalia" should be on the "SUD - Select your business type" page
-    And "Natalia" should see following sections
-      | sections               |
-      | Breadcrumbs            |
-      | Description            |
-      | Enrolment progress bar |
-
-  @wip
   @TT-1116
   Scenario: Users should be asked for their business type once they start the registration process
     Given "Natalia" visits the "Profile - Create an account" page
