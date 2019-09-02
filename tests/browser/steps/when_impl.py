@@ -127,6 +127,8 @@ def visit_page(context: Context, actor_alias: str, page_name: str):
     assert "404 Not Found: Requested route" not in source, error
     error = f"Looks like following page: {url} cannot be found"
     assert "This page cannot be found" not in source, error
+    error = f"500 ISE on: {url}"
+    assert "Internal Server Error" not in source, error
     update_actor(context, actor_alias, visited_page=page)
 
 
