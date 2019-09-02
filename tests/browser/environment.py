@@ -78,7 +78,6 @@ def start_driver_session(context: Context, session_name: str):
                     options.add_argument("--headless")
                     options.add_argument("--window-size=1600x2200")
                 options.add_argument("--start-maximized")
-                options.add_argument("--whitelisted-ips=")
                 options.add_argument("--disable-extensions")
                 options.add_argument("--no-sandbox")
             elif browser_name.lower() == "firefox":
