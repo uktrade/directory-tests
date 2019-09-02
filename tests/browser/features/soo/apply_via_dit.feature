@@ -14,7 +14,7 @@ Feature: Apply via DIT
   Scenario Outline: Anonymous Enquirers should be redirected to SSO login page
     Given "Robert" found a marketplace in "<country>" to sell "<products>"
 
-    When "Robert" decides to "Apply now via DIT"
+    When "Robert" decides to "Apply now"
 
     Then "Robert" should be on the "Single Sign-On - Sign in" page
 
@@ -34,7 +34,7 @@ Feature: Apply via DIT
     And "Robert" is signed in
     And "Robert" found a marketplace in "<country>" to sell "<products>"
 
-    When "Robert" decides to "Apply now via DIT"
+    When "Robert" decides to "Apply now"
 
     Then "Robert" should be on the "Domestic - Long Domestic (Your Business)" page
 
@@ -54,7 +54,7 @@ Feature: Apply via DIT
     And "Robert" is signed in
     And "Robert" found a marketplace in "<country>" to sell "<products>"
 
-    When "Robert" decides to "Apply now via DIT"
+    When "Robert" decides to "Apply now"
 
     Then "Robert" should be on the "Domestic - Long Domestic (Your Business)" page
 
@@ -79,7 +79,7 @@ Feature: Apply via DIT
     Given "Robert" has created a great.gov.uk account for a "LTD, PLC or Royal Charter"
     And "Robert" found a marketplace in "<country>" to sell "<products>"
 
-    When "Robert" decides to "Apply now via DIT"
+    When "Robert" decides to "Apply now"
 
     Then "Robert" should be on the "Domestic - Long Domestic (Your Business)" page
     And "Robert" should see form fields populated with his company details

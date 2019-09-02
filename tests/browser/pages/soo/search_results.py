@@ -63,8 +63,9 @@ def click_on_page_element(driver: WebDriver, element_name: str):
 
 def open_random_marketplace(driver: WebDriver):
     selector = Selector(By.CSS_SELECTOR, "div.market-item-inner a")
-    links = find_elements(driver, selector)
-    random.choice(links).click()
+    link = random.choice(find_elements(driver, selector))
+    logging.debug(f"Clicked on {link.text}")
+    link.click()
 
 
 def collate_products_and_countries(

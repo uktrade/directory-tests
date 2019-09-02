@@ -23,8 +23,8 @@ PAGE_TITLE = "Marketplace details | Selling Online Overseas"
 
 SELECTORS = {
     "expected elements": {
-        "marketplace": Selector(By.CSS_SELECTOR, ".markets-info h1"),
-        "apply now via dit": Selector(By.ID, "apply-to-join"),
+        "marketplace": Selector(By.CSS_SELECTOR, "div.market-item h1"),
+        "apply now": Selector(By.CSS_SELECTOR, "#content div.market-item a.button "),
     }
 }
 

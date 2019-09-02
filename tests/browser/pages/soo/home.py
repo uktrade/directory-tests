@@ -29,7 +29,7 @@ TYPE = "home"
 PAGE_TITLE = "Welcome to Selling online overseas"
 
 SEARCH_BUTTON = Selector(
-    By.CSS_SELECTOR, "#hero-banner form input.submit", type=ElementType.BUTTON
+    By.CSS_SELECTOR, "#results-form button[type='submit']", type=ElementType.BUTTON
 )
 
 SELECTORS = {
@@ -41,7 +41,7 @@ SELECTORS = {
         "country": Selector(
             By.CSS_SELECTOR, "select[name=country_id]", type=ElementType.SELECT
         ),
-        "find a marketplace": SEARCH_BUTTON,
+        "find your marketplace": SEARCH_BUTTON,
     },
 }
 SELECTORS.update(common_selectors.HEADER)
@@ -83,7 +83,7 @@ def generate_form_details(country: str = None, category: str = None) -> dict:
 def search(driver: WebDriver, country: str, category: str):
     form_selectors = SELECTORS["search form"]
     find_a_marketplace = find_element(
-        driver, SEARCH_BUTTON, element_name="find a marketplace"
+        driver, SEARCH_BUTTON, element_name="find your marketplace"
     )
     scroll_to(driver, find_a_marketplace)
     details = generate_form_details(country, category)
