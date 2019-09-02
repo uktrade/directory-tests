@@ -105,7 +105,7 @@ Feature: Apply via DIT
       | field                         | value   |
       | I don't have a company number | checked |
 
-    Then "Robert" should receive a "great.gov.uk Selling Online Overseas contact form" confirmation email from Zendesk
+    Then a "zendesk" notification entitled "great.gov.uk Selling Online Overseas contact form" should be sent to "Robert"
 
     Examples: products and countries
       | country   | products               |

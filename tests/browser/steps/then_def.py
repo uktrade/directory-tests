@@ -50,7 +50,6 @@ from steps.then_impl import (
     soo_contact_form_should_be_prepopulated,
     stats_and_tracking_elements_should_be_present,
     stats_and_tracking_elements_should_not_be_present,
-    zendesk_should_receive_confirmation_email,
 )
 from steps.when_impl import generic_get_verification_code
 
@@ -253,12 +252,6 @@ def then_should_see_articles_filtered_by_tag(context: Context, actor_alias: str)
 @then('"{actor_alias}" should see following form choices')
 def then_should_see_form_choices(context: Context, actor_alias: str):
     generic_should_see_form_choices(context, actor_alias, context.table)
-
-
-@then('"{actor_alias}" should receive a "{subject}" confirmation email from Zendesk')
-@then('"{actor_alias}" should receive a "{subject}" email from Zendesk')
-def step_impl(context: Context, actor_alias: str, subject: str):
-    zendesk_should_receive_confirmation_email(context, actor_alias, subject)
 
 
 @then('"{actor_alias}" should see contact details for "{trade_office}" office in "{city}"')

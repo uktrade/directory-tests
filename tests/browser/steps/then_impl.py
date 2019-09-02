@@ -60,7 +60,6 @@ from utils.gtm import (
 )
 from utils.mailgun import mailgun_invest_find_contact_confirmation_email
 from utils.pdf import extract_text_from_pdf_bytes
-from utils.zendesk import find_tickets
 
 
 def should_be_on_page(context: Context, actor_alias: str, page_name: str):
@@ -431,26 +430,6 @@ def form_should_see_error_messages(
     assertion_error = f"Expected error message '{message}' is not present"
     assert message in page_source, assertion_error
     logging.debug(f"{actor_alias} saw expected error message '{message}'")
-
-
-# BrowserStack times out after 60s of inactivity
-# https://www.browserstack.com/automate/timeouts
-@retry(wait_fixed=10000, stop_max_attempt_number=7, wrap_exception=False)
-def zendesk_should_receive_confirmation_email(
-    context: Context, actor_alias: str, subject: str
-):
-    avoid_browser_stack_idle_timeout_exception(context.driver)
-    actor = get_actor(context, actor_alias)
-    email = actor.email
-    tickets = find_tickets(email, subject)
-    avoid_browser_stack_idle_timeout_exception(context.driver)
-    assert tickets, f"Expected to find at least 1 ticket for {email} but got 0"
-    error_msg = (
-        f"Expected to find only 1 '{subject}' ticket for {email} but "
-        f"found {len(tickets)} instead"
-    )
-    assert len(tickets) == 1, error_msg
-    logging.debug(f"{actor_alias} received '{subject}' email from Zendesk")
 
 
 def should_see_articles_filtered_by_tag(context: Context, actor_alias: str):

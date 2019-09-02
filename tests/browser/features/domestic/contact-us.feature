@@ -240,7 +240,7 @@ Feature: New contact us forms
     And "Robert" fills out and submits the form
 
     Then "Robert" should be on the "Domestic - Thank you for your enquiry (<selected topic>)" page
-    And "Robert" should receive a "great.gov.uk contact form" confirmation email from Zendesk
+    And a "zendesk" notification entitled "great.gov.uk contact form" should be sent to "Robert"
 
     Examples:
       | selected topic                                                 |
@@ -270,7 +270,7 @@ Feature: New contact us forms
     And "Robert" fills out and submits the form
 
     Then "Robert" should be on the "Domestic - Thank you for your enquiry (<selected topic>) - Short Domestic Contact us" page
-    And "Robert" should receive a "great.gov.uk contact form" confirmation email from Zendesk
+    And a "zendesk" notification entitled "great.gov.uk contact form" should be sent to "Robert"
 
     Examples:
       | selected topic                                              |
@@ -291,7 +291,7 @@ Feature: New contact us forms
     When "Robert" fills out and submits the form
 
     Then "Robert" should be on the "Domestic - Thank you for your enquiry (<selected topic>) - Short Domestic Contact us" page
-    And "Robert" should receive a "great.gov.uk contact form" confirmation email from Zendesk
+    And a "zendesk" notification entitled "great.gov.uk contact form" should be sent to "Robert"
 
     Examples:
       | selected topic |
@@ -368,7 +368,7 @@ Feature: New contact us forms
     When "Robert" fills out and submits the form
 
     Then "Robert" should be on the "Domestic - Thank you for your enquiry - Domestic EU Exit Contact us" page
-    And "Robert" should receive a "EU exit contact form" confirmation email from Zendesk
+    And a "zendesk" notification entitled "Brexit contact form" should be sent to "Robert"
 
 
   @TT-758
@@ -382,33 +382,13 @@ Feature: New contact us forms
 
     Then "Robert" should be on the "Domestic - Thank you for your enquiry (<selected option>) - Short Domestic Contact us" page
     And "Robert" should receive "<appropriate>" confirmation email
-    # TODO check if email is sent to dedicated mailbox
-#    And an email is submitted to "<expected recipient>"
+    And an email notification about "Robert"'s enquiry should be send to "<expected recipient>"
 
     Examples:
       | selected option                         | appropriate                                                  | expected recipient |
       | Events                                  | Thank you for your Events enquiry                            | Events mailbox     |
       | Defence and Security Organisation (DSO) | Thank you for your Defence and Security Organisation enquiry | DSO mailbox        |
-
-
-  @TT-758
-  @zendesk
-  @dev-only
-  @captcha
-  @short-form
-  Scenario Outline: Exporters should be able to contact "<expected recipient>" using "Short contact form (<selected option>)" page accessed via "The UK -> <selected option>"
-    Given "Robert" got to the "Domestic - Short contact form (<selected option>)" page via "The UK -> <selected option>"
-
-    When "Robert" fills out and submits the form
-
-    Then "Robert" should be on the "Domestic - Thank you for your enquiry (<selected option>) - Short Domestic Contact us" page
-    And "Robert" should receive a "<appropriate>" confirmation email from Zendesk
-    # TODO check if email is sent to dedicated mailbox
-#    And an email is submitted to "<expected recipient>"
-
-    Examples:
-      | selected option | appropriate               | expected recipient |
-      | Other           | great.gov.uk contact form | DIT Enquiry unit   |
+      | Other                                   | Thank you for your enquiry                                   | DIT Enquiry unit   |
 
 
   @TT-758
