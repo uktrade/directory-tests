@@ -903,7 +903,7 @@ def soo_find_random_marketplace_and_apply_via_dit(
     context: Context, actor_alias: str, country: str, category: str
 ):
     soo_find_and_open_random_marketplace(context, actor_alias, country, category)
-    click_on_page_element(context, actor_alias, "Apply now via DIT")
+    click_on_page_element(context, actor_alias, "Apply now")
     should_be_on_page(
         context,
         actor_alias,
