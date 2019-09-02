@@ -42,6 +42,11 @@ HPO_PDF_URLS = [
     "https://directory-cms-public.s3.amazonaws.com/documents/A_High_Potential_Investment_Opportunity_in_Lightweight_Structures.pdf",
     "https://directory-cms-public.s3.amazonaws.com/documents/A_High_Potential_Investment_Opportunity_in_UK_Rail.pdf",
 ]
+FORMS_API_MAILBOXES = {
+    "DIT Enquiry unit": os.getenv("FORMS_API_EMAIL_DIT_ENQUIRIES"),
+    "Events mailbox": os.getenv("FORMS_API_EMAIL_EVENTS"),
+    "DSO mailbox": os.getenv("FORMS_API_EMAIL_DSO"),
+}
 # Mailgun details required to get verification emails
 MAILGUN_DOMAIN = os.getenv("MAILGUN_DOMAIN")
 MAILGUN_API_KEY = os.getenv("MAILGUN_API_KEY")

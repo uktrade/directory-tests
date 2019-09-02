@@ -13,6 +13,8 @@ from steps.then_impl import (
     form_check_state_of_element,
     form_should_see_error_messages,
     forms_confirmation_email_should_not_be_sent,
+    generic_a_notification_should_be_sent,
+    generic_a_notification_should_be_sent_to_specific_dit_office,
     generic_check_gtm_datalayer_properties,
     generic_check_gtm_events,
     generic_contact_us_should_receive_confirmation_email,
@@ -311,3 +313,21 @@ def then_expected_gtm_events_should_be_registered(context: Context):
 @then('"{actor_alias}" should see the menu items')
 def then_actor_should_see_menu_items(context: Context, actor_alias: str):
     menu_items_should_be_visible(context)
+
+
+@then('a "{action}" notification entitled "{subject}" should be sent to "{actor_alias}"')
+def then_notification_should_be_sent(
+        context: Context, action: str, subject: str, actor_alias: str
+):
+    generic_a_notification_should_be_sent(
+        context, actor_alias, action, subject
+    )
+
+
+@then('an email notification about "{actor_alias}"\'s enquiry should be send to "{mailbox_name}"')
+def then_notification_should_be_sent_to_specific_dit_office(
+        context: Context, actor_alias: str, mailbox_name: str
+):
+    generic_a_notification_should_be_sent_to_specific_dit_office(
+        context, actor_alias, mailbox_name
+    )

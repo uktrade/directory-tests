@@ -31,9 +31,9 @@ from pages.common_actions import (
     get_last_visited_page,
     update_actor,
 )
-from pages import common_selectors
 from pages.domestic import contact_us_office_finder_search_results
 from settings import (
+    FORMS_API_MAILBOXES,
     HPO_AGENT_EMAIL_ADDRESS,
     HPO_AGENT_EMAIL_SUBJECT,
     HPO_ENQUIRY_CONFIRMATION_SUBJECT,
@@ -44,7 +44,11 @@ from settings import (
 from steps import has_action
 from steps.when_impl import generic_set_basic_auth_creds
 
-from utils.forms_api import find_form_submissions
+from utils.forms_api import (
+    find_form_submissions,
+    find_form_submissions_by_subject_and_action,
+    find_form_submissions_for_dit_office
+)
 from utils.gov_notify import (
     get_email_confirmation_notification,
     get_email_confirmations_with_matching_string,
@@ -469,6 +473,52 @@ def generic_contact_us_should_receive_confirmation_email(
         email=actor.email, subject=subject
     )
     assert confirmation
+
+
+@retry(wait_fixed=5000, stop_max_attempt_number=5)
+def generic_a_notification_should_be_sent(
+        context: Context, actor_alias: str, action: str, subject: str
+):
+    actor = get_actor(context, actor_alias)
+    submissions = find_form_submissions_by_subject_and_action(
+        email=actor.email, subject=subject, action=action
+    )
+    error = (
+        f"Expected to find 1 '{action}' notification entitled '{subject}' sent to "
+        f"'{actor.email}', but found {len(submissions)}"
+    )
+    assert len(submissions) == 1, error
+
+    error = (
+        f"A '{action}' notification entitled '{subject}' was NOT sent to "
+        f"'{actor.email}'!"
+    )
+    assert submissions[0]["is_sent"], error
+
+
+def generic_a_notification_should_be_sent_to_specific_dit_office(
+        context: Context, actor_alias: str, mailbox_name: str
+):
+    actor = get_actor(context, actor_alias)
+    mailbox_email = FORMS_API_MAILBOXES[mailbox_name]
+    submissions = find_form_submissions_for_dit_office(
+        mailbox=mailbox_email,
+        sender=actor.email,
+    )
+    error = (
+        f"Expected to find 1 notification sent to '{mailbox_email}' about contact "
+        f"enquiry from {actor.email}, but found {len(submissions)}"
+    )
+    assert len(submissions) == 1, error
+
+    error = (
+        f"A 'Notification about enquiry from '{actor.email}' was NOT sent to "
+        f"{mailbox_name} mailbox: '{mailbox_email}'!"
+    )
+    assert submissions[0]["is_sent"], error
+    logging.debug(
+        f"A notification about enquiry from {actor.email} was successfully sent to "
+        f"{mailbox_name} mailbox: {mailbox_email}")
 
 
 def generic_should_see_form_choices(
