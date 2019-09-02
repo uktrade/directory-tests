@@ -19,12 +19,12 @@ from pages.common_actions import (
     take_screenshot,
 )
 from pages.fas.header_footer import HEADER_FOOTER_SELECTORS
-from settings import DIRECTORY_UI_SUPPLIER_URL
+from settings import INTERNATIONAL_UI_URL
 
 NAME = "Industries"
 SERVICE = Services.FIND_A_SUPPLIER
 TYPE = "industries"
-URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "industries/")
+URL = urljoin(INTERNATIONAL_UI_URL, "content/industries/")
 PAGE_TITLE = "Find the best UK suppliers for your industry - trade.great.gov.uk"
 
 BREADCRUMB_LINKS = Selector(By.CSS_SELECTOR, "p.breadcrumbs > a")

@@ -23,12 +23,12 @@ from pages.common_actions import (
     tick_checkboxes_by_labels,
 )
 from pages.fas.header_footer import HEADER_FOOTER_SELECTORS
-from settings import DIRECTORY_UI_SUPPLIER_URL
+from settings import INTERNATIONAL_UI_URL
 
 NAME = "Contact Us"
 SERVICE = Services.FIND_A_SUPPLIER
 TYPE = "contact"
-URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "industries/contact/sent/")
+URL = urljoin(INTERNATIONAL_UI_URL, "content/trade/contact/")
 PAGE_TITLE = "Contact us - trade.great.gov.uk"
 
 SUBMIT_BUTTON = Selector(

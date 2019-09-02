@@ -11,12 +11,14 @@ from pages import Services
 from pages.common_actions import (
     Selector,
     check_for_sections,
+    check_if_element_is_visible,
     check_url,
     find_and_click_on_page_element,
     find_element,
     find_elements,
     go_to_url,
     take_screenshot,
+    wait_for_page_load_after_action,
 )
 from pages.fas.header_footer import HEADER_FOOTER_SELECTORS_W_LANGUAGE_SELECTOR
 from settings import DIRECTORY_UI_SUPPLIER_URL

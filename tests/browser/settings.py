@@ -2,6 +2,7 @@
 """Project Settings."""
 import os
 from datetime import datetime
+from urllib.parse import urljoin
 
 import config
 from django.conf import settings
@@ -19,6 +20,7 @@ HUB_URL = os.environ.get("HUB_URL", None)
 CAPABILITIES = os.environ.get("CAPABILITIES", None)
 BUILD_ID = os.environ.get("CIRCLE_SHA1", str(datetime.date(datetime.now())))
 EXRED_UI_URL = os.environ["EXRED_UI_URL"]
+INTERNATIONAL_UI_URL = urljoin(EXRED_UI_URL, "international/")
 INVEST_UI_URL = os.environ["INVEST_UI_URL"]
 INVEST_MAILBOX_ADMIN_EMAIL = os.environ["INVEST_MAILBOX_ADMIN_EMAIL"]
 INVEST_CONTACT_CONFIRMATION_SUBJECT = os.getenv(
