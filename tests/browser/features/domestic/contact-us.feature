@@ -363,7 +363,7 @@ Feature: New contact us forms
   @eu-exit
   @feature-flagged
   Scenario: Exporters should be able to contact "EU Exit mailbox"
-    Given "Robert" got to the "Domestic - Domestic EU Exit contact form" page via "The UK -> EU Exit enquiries"
+    Given "Robert" got to the "Domestic - Domestic EU Exit contact form" page via "The UK -> Brexit enquiries"
 
     When "Robert" fills out and submits the form
 
