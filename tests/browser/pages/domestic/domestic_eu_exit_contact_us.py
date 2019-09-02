@@ -27,7 +27,7 @@ from settings import EXRED_UI_URL
 NAME = "Domestic EU Exit contact form"
 SERVICE = Services.DOMESTIC
 TYPE = "Contact us"
-URL = urljoin(EXRED_UI_URL, "eu-exit-news/contact/")
+URL = urljoin(EXRED_UI_URL, "brexit/contact/")
 PAGE_TITLE = ""
 
 

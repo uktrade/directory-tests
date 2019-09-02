@@ -31,7 +31,7 @@ Feature: New contact us forms
       | Advice to export from the UK              |
       | Great.gov.uk account and services support |
       | UK Export Finance (UKEF)                  |
-      | EU exit enquiries                         |
+      | Brexit enquiries                          |
       | Events                                    |
       | Defence and Security Organisation (DSO)   |
       | Other                                     |

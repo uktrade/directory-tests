@@ -65,7 +65,7 @@ SELECTORS = {
             type=ElementType.RADIO,
             is_visible=False,
         ),
-        "eu exit enquiries": Selector(
+        "brexit enquiries": Selector(
             By.CSS_SELECTOR,
             "input[value='euexit']",
             type=ElementType.RADIO,
@@ -102,7 +102,7 @@ POs = {
     "advice to export from the uk": contact_us_long_export_advice_comment,
     "great.gov.uk account and services support": contact_us_triage_great_services,
     "uk export finance (ukef)": ukef_your_details,
-    "eu exit enquiries": domestic_eu_exit_contact_us,
+    "brexit enquiries": domestic_eu_exit_contact_us,
     "events": contact_us_short_domestic,
     "defence and security organisation (dso)": contact_us_short_domestic,
     "other": contact_us_short_domestic,
