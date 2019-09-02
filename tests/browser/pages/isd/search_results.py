@@ -14,19 +14,17 @@ from pages.common_actions import (
     check_url,
     take_screenshot,
 )
-from settings import EXRED_UI_URL
+from settings import INTERNATIONAL_UI_URL
 
 NAME = "Search results"
 SERVICE = Services.ISD
 TYPE = "search results"
-URL = urljoin(EXRED_UI_URL, "investment-support-directory/search/?")
+URL = urljoin(INTERNATIONAL_UI_URL, "investment-support-directory/search/?")
 PAGE_TITLE = "Find a UK specialist"
 
 SELECTORS = {
     "results summary": {
-        "number of results": Selector(
-            By.CSS_SELECTOR, "#hero-container > div > div > div.column-two-thirds > h2"
-        )
+        "number of results": Selector(By.CSS_SELECTOR, "#hero-container h2")
     },
     "search form": {
         "itself": Selector(By.ID, "-container"),
