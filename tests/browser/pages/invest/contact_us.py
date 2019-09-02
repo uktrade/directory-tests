@@ -16,7 +16,7 @@ from pages.common_actions import (
     fill_out_input_fields,
     fill_out_textarea_fields,
     find_element,
-    pick_option,
+    pick_option_from_autosuggestion,
     take_screenshot,
     tick_captcha_checkbox,
     visit_url,
@@ -46,7 +46,7 @@ SELECTORS = {
         "website url": Selector(By.ID, "id_company_website", type=ElementType.INPUT),
         "country": Selector(
             By.CSS_SELECTOR,
-            "form[method=post] #js-country-select",
+            "form[method=post] #js-country-select-select",
             type=ElementType.SELECT,
             is_visible=False,
         ),
@@ -98,7 +98,7 @@ def fill_out(driver: WebDriver, details: dict):
 
     fill_out_input_fields(driver, form_selectors, details)
     fill_out_textarea_fields(driver, form_selectors, details)
-    pick_option(driver, form_selectors, details)
+    pick_option_from_autosuggestion(driver, form_selectors, details)
     tick_captcha_checkbox(driver)
 
     take_screenshot(driver, "After filling out the contact us form")
