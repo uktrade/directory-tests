@@ -31,7 +31,7 @@ URL = urljoin(SELLING_ONLINE_OVERSEAS_UI_URL, "markets/results/")
 PAGE_TITLE = "Search results | Selling online overseas"
 
 SEARCH_BUTTON = Selector(
-    By.CSS_SELECTOR, "#results-form input", type=ElementType.BUTTON
+    By.CSS_SELECTOR, "form button.soo-search-button", type=ElementType.BUTTON
 )
 SELECTORS = {
     "search form": {
