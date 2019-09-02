@@ -18,13 +18,13 @@ from pages.common_actions import (
     take_screenshot,
     visit_url,
 )
-from settings import INVEST_UI_URL
+from settings import INTERNATIONAL_UI_URL
 
 NAME = "HPO"
 NAMES = ["Advanced food production", "Lightweight structures", "Rail infrastructure"]
 SERVICE = Services.INVEST
 TYPE = "HPO"
-URL = urljoin(INVEST_UI_URL, "high-potential-opportunities/")
+URL = urljoin(INTERNATIONAL_UI_URL, "content/invest/high-potential-opportunities/")
 PAGE_TITLE = "high potential"
 
 

@@ -15,13 +15,13 @@ from pages.common_actions import (
     check_url,
     take_screenshot,
 )
-from settings import INVEST_UI_URL
+from settings import INTERNATIONAL_UI_URL
 
 NAME = "Thank you for your enquiry"
 NAMES = ["Advanced food production", "Lightweight structures", "Rail infrastructure"]
 SERVICE = Services.INVEST
 TYPE = "HPO Contact us"
-URL = urljoin(INVEST_UI_URL, "high-potential-opportunities/")
+URL = urljoin(INTERNATIONAL_UI_URL, "content/invest/high-potential-opportunities/")
 URLs = {
     "advanced food production": urljoin(URL, "food-production/contact/success/"),
     "lightweight structures": urljoin(URL, "lightweight-structures/contact/success/"),
