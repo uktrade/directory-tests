@@ -36,7 +36,7 @@ def visit(driver: WebDriver):
 
 def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
-    check_url(driver, URL)
+    check_url(driver, URL, exact_match=False)
 
 
 def click_on_page_element(driver: WebDriver, element_name: str):

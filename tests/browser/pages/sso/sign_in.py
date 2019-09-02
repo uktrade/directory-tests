@@ -40,7 +40,7 @@ SELECTORS = {
         "sign in": SIGN_IN_BUTTON,
         "forgotten password?": RESET_YOUR_PASSWORD_LINK,
     },
-    "register for an account": {"register": REGISTER_BUTTON},
+    "register for an account": {"create account": REGISTER_BUTTON},
 }
 SELECTORS.update(common_selectors.HEADER)
 SELECTORS.update(common_selectors.SSO_LOGGED_OUT)
