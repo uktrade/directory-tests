@@ -7,7 +7,6 @@ Feature: Search for marketplace
   @XOT-631
   @XOT-689
   @exopps
-  @dev-only
   @soo-long-domestic
   @account-support
   Scenario Outline: Visitors should be able to search for marketplaces to sell "<products>" in "<countries>"
@@ -26,8 +25,6 @@ Feature: Search for marketplace
 
   @XOT-689
   @exopps
-  @captcha
-  @dev-only
   @soo-long-domestic
   @account-support
   Scenario Outline: Domestic "Selling Online Overseas" Enquirers should be able to view marketplace page
