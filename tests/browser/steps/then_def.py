@@ -25,8 +25,6 @@ from steps.then_impl import (
     header_check_logo,
     hpo_agent_should_receive_enquiry_email,
     hpo_should_receive_enquiry_confirmation_email,
-    invest_mailbox_admin_should_receive_contact_confirmation_email,
-    invest_should_receive_contact_confirmation_email,
     invest_should_see_uk_gov_logo,
     language_selector_should_see_it,
     marketplace_finder_should_see_marketplaces,
@@ -185,13 +183,6 @@ def then_user_should_see_uk_gov_logo(
     invest_should_see_uk_gov_logo(context, actor_alias, section)
 
 
-@then('"{actor_alias}" should receive a contact confirmation email from "{sender_email}"')
-def then_should_receive_contact_confirmation_email(
-        context: Context, actor_alias: str, sender_email: str):
-    invest_should_receive_contact_confirmation_email(
-        context, actor_alias, sender_email)
-
-
 @then('"{actor_alias}" should receive an "{subject}" confirmation email')
 @then('"{actor_alias}" should receive a "{subject}" confirmation email')
 @then('"{actor_alias}" should receive "{subject}" confirmation email')
@@ -201,13 +192,6 @@ def then_should_receive_confirmation_email_from_govnotify(
     generic_contact_us_should_receive_confirmation_email(
         context, actor_alias, subject
     )
-
-
-@then('Invest mailbox admin should also receive a contact confirmation email from "{sender_email}"')
-def then_invest_mailbox_admin_should_also_receive_contact_confirmation_email(
-        context: Context, sender_email: str):
-    invest_mailbox_admin_should_receive_contact_confirmation_email(
-        context, sender_email)
 
 
 @then('"{actor_alias}" should receive HPO enquiry confirmation email')
@@ -308,6 +292,7 @@ def then_actor_should_see_menu_items(context: Context, actor_alias: str):
     menu_items_should_be_visible(context)
 
 
+@then('an "{action}" notification entitled "{subject}" should be sent to "{actor_alias}"')
 @then('a "{action}" notification entitled "{subject}" should be sent to "{actor_alias}"')
 def then_notification_should_be_sent(
         context: Context, action: str, subject: str, actor_alias: str

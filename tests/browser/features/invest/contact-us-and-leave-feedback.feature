@@ -18,8 +18,8 @@ Feature: Contact us and Leave feedback
     When "Robert" fills out and submits the form
 
     Then "Robert" should be on the "Invest - Thank you for your message" page
-    And "Robert" should receive a contact confirmation email from "no-reply@mailgun.directory.uktrade.io"
-    And Invest mailbox admin should also receive a contact confirmation email from "no-reply@mailgun.directory.uktrade.io"
+    And an "email" notification entitled "Contact form user email subject" should be sent to "Robert"
+    And an email notification about "Robert"'s enquiry should be send to "Invest mailbox"
 
     Examples: Various pages
       | selected                          |

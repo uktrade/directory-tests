@@ -38,8 +38,6 @@ from settings import (
     HPO_AGENT_EMAIL_SUBJECT,
     HPO_ENQUIRY_CONFIRMATION_SUBJECT,
     HPO_PDF_URLS,
-    INVEST_AGENT_CONTACT_CONFIRMATION_SUBJECT,
-    INVEST_MAILBOX_ADMIN_EMAIL,
 )
 from steps import has_action
 from steps.when_impl import generic_set_basic_auth_creds
@@ -58,7 +56,6 @@ from utils.gtm import (
     get_gtm_data_layer_properties,
     replace_string_representations,
 )
-from utils.mailgun import mailgun_invest_find_contact_confirmation_email
 from utils.pdf import extract_text_from_pdf_bytes
 
 
@@ -327,25 +324,6 @@ def invest_should_see_uk_gov_logo(context: Context, actor_alias: str, section: s
         actor_alias,
         section,
         context.driver.current_url,
-    )
-
-
-def invest_should_receive_contact_confirmation_email(
-    context: Context, actor_alias: str, sender_email: str
-):
-    actor = get_actor(context, actor_alias)
-    sleep(5)
-    mailgun_invest_find_contact_confirmation_email(context, sender_email, actor.email)
-
-
-def invest_mailbox_admin_should_receive_contact_confirmation_email(
-    context: Context, sender_email: str
-):
-    mailgun_invest_find_contact_confirmation_email(
-        context,
-        sender_email,
-        INVEST_MAILBOX_ADMIN_EMAIL,
-        subject=INVEST_AGENT_CONTACT_CONFIRMATION_SUBJECT,
     )
 
 

@@ -22,13 +22,8 @@ BUILD_ID = os.environ.get("CIRCLE_SHA1", str(datetime.date(datetime.now())))
 EXRED_UI_URL = os.environ["EXRED_UI_URL"]
 INTERNATIONAL_UI_URL = urljoin(EXRED_UI_URL, "international/")
 INVEST_UI_URL = os.environ["INVEST_UI_URL"]
-INVEST_MAILBOX_ADMIN_EMAIL = os.environ["INVEST_MAILBOX_ADMIN_EMAIL"]
 INVEST_CONTACT_CONFIRMATION_SUBJECT = os.getenv(
     "INVEST_CONTACT_CONFIRMATION_SUBJECT", "Contact form user email subject")
-INVEST_AGENT_CONTACT_CONFIRMATION_SUBJECT = os.getenv(
-    "INVEST_AGENT_CONTACT_CONFIRMATION_SUBJECT",
-    "Contact form agent email subject"
-)
 BASICAUTH_USER = os.getenv("BASICAUTH_USER", None)
 BASICAUTH_PASS = os.getenv("BASICAUTH_PASS", None)
 HPO_ENQUIRY_CONFIRMATION_SUBJECT = os.getenv(
@@ -48,11 +43,8 @@ FORMS_API_MAILBOXES = {
     "DIT Enquiry unit": os.getenv("FORMS_API_EMAIL_DIT_ENQUIRIES"),
     "Events mailbox": os.getenv("FORMS_API_EMAIL_EVENTS"),
     "DSO mailbox": os.getenv("FORMS_API_EMAIL_DSO"),
+    "Invest mailbox": os.getenv("FORMS_API_EMAIL_INVEST"),
 }
-# Mailgun details required to get verification emails
-MAILGUN_DOMAIN = os.getenv("MAILGUN_DOMAIN")
-MAILGUN_API_KEY = os.getenv("MAILGUN_API_KEY")
-MAILGUN_EVENTS_URL = f"https://api.mailgun.net/v3/{MAILGUN_DOMAIN}/events"
 
 DIRECTORY_SSO_API_CLIENT_API_KEY = os.environ["DIRECTORY_SSO_API_CLIENT_API_KEY"]
 DIRECTORY_SSO_API_CLIENT_BASE_URL = os.environ["DIRECTORY_SSO_API_CLIENT_BASE_URL"]
