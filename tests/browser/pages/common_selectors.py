@@ -145,11 +145,12 @@ HEADER_INTERNATIONAL = {
             By.ID, "great-header-language-select", type=ElementType.SELECT
         ),
         # header menu
-        "header menu": Selector(By.ID, "great-header-menu"),
+        "header menu": Selector(By.CSS_SELECTOR, "div.menu"),
         "eig logo": Selector(By.ID, "great-header-logo"),
-        "invest": Selector(By.ID, "header-invest", type=ElementType.LINK),
-        "find a uk supplier": Selector(By.ID, "header-fas", type=ElementType.LINK),
-        "industries": Selector(By.ID, "header-industries", type=ElementType.LINK),
+        "invest": Selector(By.LINK_TEXT, "Invest", type=ElementType.LINK),
+        "UK setup guide": Selector(By.LINK_TEXT, "UK setup guide", type=ElementType.LINK),
+        "find a uk supplier": Selector(By.LINK_TEXT, "Find a UK supplier", type=ElementType.LINK),
+        "industries": Selector(By.LINK_TEXT, "Industries", type=ElementType.LINK),
     }
 }
 HEADER_INTERNATIONAL_WO_LANGUAGE_SELECTOR = copy.deepcopy(HEADER_INTERNATIONAL)
