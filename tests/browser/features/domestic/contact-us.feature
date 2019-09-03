@@ -350,7 +350,7 @@ Feature: New contact us forms
   Scenario: Exporters should be able to get to the "Domestic EU Exit short contact-us form"
     Given "Robert" got to the "Domestic - What can we help you with? - Domestic Contact us" page via "The UK"
 
-    When "Robert" chooses "EU Exit enquiries" option
+    When "Robert" chooses "Brexit enquiries" option
 
     Then "Robert" should be on the "Domestic - Domestic EU Exit contact form" page
 
@@ -403,7 +403,7 @@ Feature: New contact us forms
       | radio elements                    |
       | Investing in the UK               |
       | Buying from the UK                |
-      | EU exit enquiries                 |
+      | Brexit enquiries                  |
       | Other                             |
 
 
@@ -420,7 +420,7 @@ Feature: New contact us forms
       | selected            | expected                             |
       | Investing in the UK | Invest - Contact us                  |
       | Buying from the UK  | Find a Supplier - Contact us         |
-      | EU exit enquiries   | International - EU Exit - Contact Us |
+      | Brexit enquiries    | International - EU Exit - Contact Us |
       | Other               | International - Contact us           |
 
 
