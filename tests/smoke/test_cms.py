@@ -254,6 +254,24 @@ def test_wagtail_get_page_by_slug(cms_client, service_name, slug):
     assert response.json()["meta"]["slug"] == slug
 
 
+@pytest.mark.skip(reason="See CMS-1841")
+@pytest.mark.parametrize(
+    "service_name, slug",
+    [
+        (SERVICE_NAMES.GREAT_INTERNATIONAL, "high-potential-opportunities"),
+        (SERVICE_NAMES.EXPORT_READINESS, "export-readiness-site-policy-pages"),
+        (SERVICE_NAMES.EXPORT_READINESS, "all-export-readiness-contact-pages"),
+        (SERVICE_NAMES.EXPORT_READINESS, "campaigns"),
+    ],
+)
+def test_wagtail_get_page_by_slug_dont_return_500_ise(cms_client, service_name, slug):
+    response = cms_client.lookup_by_slug(slug, service_name=service_name)
+    assert response.status_code == HTTP_200_OK, status_error(
+        HTTP_200_OK, response
+    )
+    assert response.json()["meta"]["slug"] == slug
+
+
 @pytest.mark.parametrize(
     "service_name, slug",
     [
