@@ -44,7 +44,7 @@ def test_if_sitemap_exist(url, basic_auth):
 def test_check_sitemap_schema_and_if_it_contains_urls(url, basic_auth):
     schema = "http://www.sitemaps.org/schemas/sitemap/0.9"
     response = get_and_assert(url=url, status_code=HTTP_200_OK, auth=basic_auth)
-    xml_soup = BeautifulSoup(response.content, "xml")
+    xml_soup = BeautifulSoup(markup=response.content, features="lxml")
 
     assert xml_soup.urlset["xmlns"] == schema
 
