@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType, Services
+from pages import ElementType, Services, common_selectors
 from pages.common_actions import (
     Actor,
     Selector,
@@ -15,6 +15,7 @@ from pages.common_actions import (
     check_url,
     fill_out_input_fields,
     fill_out_textarea_fields,
+    find_and_click_on_page_element,
     find_element,
     pick_option_from_autosuggestion,
     take_screenshot,
@@ -62,6 +63,9 @@ SELECTORS = {
         "submit": SUBMIT_BUTTON,
     },
 }
+SELECTORS.update(common_selectors.HEADER_INVEST)
+SELECTORS.update(common_selectors.ERROR_REPORTING)
+SELECTORS.update(common_selectors.FOOTER_INVEST)
 
 
 def visit(driver: WebDriver):
@@ -111,3 +115,8 @@ def submit(driver: WebDriver):
     )
     button.click()
     take_screenshot(driver, "After submitting the contact us form")
+
+
+def click_on_page_element(driver: WebDriver, element_name: str):
+    find_and_click_on_page_element(driver, SELECTORS, element_name)
+    take_screenshot(driver, PAGE_TITLE + " after clicking on " + element_name)
