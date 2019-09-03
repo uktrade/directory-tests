@@ -21,7 +21,11 @@ from pages.common_actions import (
 from settings import INTERNATIONAL_UI_URL
 
 NAME = "HPO"
-NAMES = ["Advanced food production", "Lightweight structures", "Rail infrastructure"]
+NAMES = [
+    "High productivity food production",
+    "Lightweight structures",
+    "Rail infrastructure",
+]
 SERVICE = Services.INVEST
 TYPE = "HPO"
 URL = urljoin(INTERNATIONAL_UI_URL, "content/invest/high-potential-opportunities/")
@@ -29,7 +33,7 @@ PAGE_TITLE = "high potential"
 
 
 URLs = {
-    "advanced food production": urljoin(URL, "food-production/"),
+    "high productivity food production": urljoin(URL, "food-production/"),
     "lightweight structures": urljoin(URL, "lightweight-structures/"),
     "rail infrastructure": urljoin(URL, "rail-infrastructure/"),
 }
