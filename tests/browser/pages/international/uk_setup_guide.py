@@ -33,6 +33,7 @@ PAGE_TITLE = " - great.gov.uk International"
 
 
 URLs = {
+    "uk setup guide": URL,
     "access finance in the uk": urljoin(URL, "access-finance-in-the-uk/"),
     "establish a uk business base": urljoin(
         URL, "establish-a-base-for-business-in-the-uk/"
