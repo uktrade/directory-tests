@@ -347,12 +347,12 @@ Feature: New contact us forms
   @CMS-506
   @eu-exit
   @feature-flagged
-  Scenario: Exporters should be able to get to the "Domestic EU Exit short contact-us form"
-    Given "Robert" got to the "Domestic - What can we help you with? - Domestic Contact us" page via "The UK"
+  Scenario: Exporters should be able to get to the "Domestic Brexit help short contact-us form"
+    Given "Robert" got to the "Domestic - What can we help you with? - Contact us" page via "The UK"
 
     When "Robert" chooses "Brexit enquiries" option
 
-    Then "Robert" should be on the "Domestic - Domestic EU Exit contact form" page
+    Then "Robert" should be on the "Domestic - Brexit help" page
 
 
   @TT-758
@@ -362,12 +362,12 @@ Feature: New contact us forms
   @captcha
   @eu-exit
   @feature-flagged
-  Scenario: Exporters should be able to contact "EU Exit mailbox"
-    Given "Robert" got to the "Domestic - Domestic EU Exit contact form" page via "The UK -> Brexit enquiries"
+  Scenario: Exporters should be able to contact "Brexit help mailbox"
+    Given "Robert" got to the "Domestic - Brexit help" page via "The UK -> Brexit enquiries"
 
     When "Robert" fills out and submits the form
 
-    Then "Robert" should be on the "Domestic - Thank you for your enquiry - Domestic EU Exit Contact us" page
+    Then "Robert" should be on the "Domestic - Brexit help - Thank you for your enquiry" page
     And a "zendesk" notification entitled "Brexit contact form" should be sent to "Robert"
 
 

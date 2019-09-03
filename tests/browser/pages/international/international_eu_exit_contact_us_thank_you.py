@@ -9,7 +9,7 @@ from pages import Services
 from pages.common_actions import Selector, check_url, go_to_url, take_screenshot
 from settings import EXRED_UI_URL
 
-NAME = "EU Exit"
+NAME = "Brexit help"
 SERVICE = Services.INTERNATIONAL
 TYPE = "Thank you for contacting us"
 URL = urljoin(EXRED_UI_URL, "international/eu-exit-news/contact/success/")

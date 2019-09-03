@@ -10,9 +10,9 @@ from pages import Services
 from pages.common_actions import Selector, check_url, take_screenshot
 from settings import EXRED_UI_URL
 
-NAME = "Thank you for your enquiry"
+NAME = "Brexit help"
 SERVICE = Services.DOMESTIC
-TYPE = "Domestic EU Exit Contact us"
+TYPE = "Thank you for your enquiry"
 URL = urljoin(EXRED_UI_URL, "brexit/contact/success/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
