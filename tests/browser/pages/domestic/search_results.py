@@ -34,12 +34,12 @@ ACTIVE_PAGE = Selector(By.CSS_SELECTOR, ".pagination ul li span.active")
 NEXT = Selector(By.CSS_SELECTOR, ".pagination a.next")
 PREVIOUS = Selector(By.CSS_SELECTOR, ".pagination a.previous")
 SUBMIT_BUTTON = Selector(
-    By.CSS_SELECTOR, "#search-box ~ button[type=submit]", type=ElementType.BUTTON
+    By.CSS_SELECTOR, "#search-again-input ~ input[type=submit]", type=ElementType.BUTTON
 )
 SEARCH_RESULTS = Selector(By.CSS_SELECTOR, "ul.results li")
 SELECTORS = {
     "form": {
-        "search box": Selector(By.ID, "search-box", type=ElementType.INPUT),
+        "search box": Selector(By.ID, "search-again-input", type=ElementType.INPUT),
         "search button": SUBMIT_BUTTON,
     },
     "results": {
