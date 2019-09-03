@@ -75,7 +75,7 @@ Feature: Header-Footer
     Given basic authentication is done for "<selected>" page
     And "Robert" visits the "<selected>" page
 
-    When "Robert" decides to click on "EIG logo"
+    When "Robert" decides to click on "The Invest in Great logo"
 
     Then "Robert" should be on the "Domestic - Home" page or on the International page
 

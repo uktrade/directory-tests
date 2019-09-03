@@ -31,7 +31,7 @@ HEADER = {
         ),
         # header menu
         "header menu": Selector(By.CSS_SELECTOR, ".menu"),
-        "eig logo": Selector(By.ID, "great-header-logo"),
+        "invest in great logo": Selector(By.ID, "great-header-logo"),
         "advice": Selector(By.ID, "header-advice", type=ElementType.LINK),
         "markets": Selector(By.ID, "header-markets", type=ElementType.LINK),
         "services": Selector(By.ID, "header-services", type=ElementType.LINK),
@@ -146,7 +146,7 @@ HEADER_INTERNATIONAL = {
         ),
         # header menu
         "header menu": Selector(By.CSS_SELECTOR, "div.menu"),
-        "eig logo": Selector(By.ID, "great-header-logo"),
+        "invest in great logo": Selector(By.ID, "great-header-logo"),
         "invest": Selector(By.LINK_TEXT, "Invest", type=ElementType.LINK),
         "UK setup guide": Selector(By.LINK_TEXT, "UK setup guide", type=ElementType.LINK),
         "find a uk supplier": Selector(By.LINK_TEXT, "Find a UK supplier", type=ElementType.LINK),
@@ -188,8 +188,6 @@ HEADER_INVEST = {
         ),
         # header menu
         "header menu": Selector(By.ID, "great-header-menu"),
-        "eig logo": Selector(By.ID, "great-header-logo"),
-        # "country selector": Selector(By.ID, "great-header-country-select"),
         "language selector": Selector(By.ID, "great-header-language-select"),
         "invest": Selector(By.ID, "header-invest", type=ElementType.LINK),
         "find a uk supplier": Selector(By.ID, "header-fas", type=ElementType.LINK),

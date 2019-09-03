@@ -61,42 +61,14 @@ Feature: Header-Footer
   @logo
   @header
   @footer
-  Scenario Outline: Visitors should be able to get to the Invest home page from "<selected>" page by using UK Government logo in the page header
+  Scenario Outline: Visitors should be able to get to the International home page from "Invest - <selected>" page by using UK Government logo in the page header
     Given "Robert" visits the "Invest - <selected>" page
 
-    When "Robert" decides to click on the UK Government logo in the page "Invest - header"
+    When "Robert" decides to click on "Invest in Great logo"
 
     Then "Robert" should be on the "International - Landing" page
 
     Examples:
-      | selected                            |
-      | Home                                |
-      | UK Setup Guide                      |
-      | Contact Us                          |
-
-    @full
-    Examples:
-      | selected                            |
-      | Capital Investment - industry       |
-      | Health and life sciences - industry |
-      | Technology - industry               |
-#      | Feedback                            | it's a separate service with different header & footer
-
-    @dev-only
-    @full
-    Examples:
-      | selected                            |
-      | Creative industries - industry      |
-      | Financial services - industry       |
-
-    @stage-only
-    @full
-    Examples:
-      | selected                            |
-      | Health and life sciences - industry |
-
-    @uat-only
-    @full
-    Examples:
-      | selected                            |
-      | Financial services - industry       |
+      | selected   |
+      | Home       |
+      | Contact Us |
