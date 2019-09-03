@@ -28,7 +28,6 @@ from steps.when_impl import (
     fas_view_selected_company_profile,
     generic_click_on_random_industry,
     generic_click_on_random_marketplace,
-    generic_click_on_uk_gov_logo,
     generic_download_all_pdfs,
     generic_fill_out_and_submit_form,
     generic_open_any_tag,
@@ -246,12 +245,6 @@ def when_actor_goes_to_guide(
 @when('"{actor_alias}" unfolds all topic sections')
 def when_actor_unfolds_all_topic_sections(context: Context, actor_alias: str):
     generic_unfold_topics(context, actor_alias)
-
-
-@when('"{actor_alias}" decides to click on the UK Government logo in the page "{page_name}"')
-def when_actor_clicks_on_uk_gov_logo(
-        context: Context, actor_alias: str, page_name: str):
-    generic_click_on_uk_gov_logo(context, actor_alias, page_name)
 
 
 @when('"{actor_alias}" fills out and submits the form (and go 1 page back on error)')

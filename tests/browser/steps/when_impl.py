@@ -560,13 +560,6 @@ def generic_unfold_topics(context: Context, actor_alias: str):
     logging.debug("%s unfolded all topics on %s", actor_alias, page.NAME)
 
 
-def generic_click_on_uk_gov_logo(context: Context, actor_alias: str, page_name: str):
-    page = get_page_object(page_name)
-    has_action(page, "click_on_page_element")
-    page.click_on_page_element(context.driver, "invest in great logo")
-    logging.debug("%s click on UK Gov logo %s", actor_alias, page_name)
-
-
 def check_for_errors_or_non_trading_companies(
     driver: WebDriver, *, go_back: bool = False
 ):
