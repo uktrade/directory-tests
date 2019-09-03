@@ -81,7 +81,6 @@ def test_wagtail_can_list_only_20_pages():
         "Components",
         "Great Domestic pages",
         "Great International pages",
-        "Invest pages",
     ]
 )
 def test_wagtail_get_pages_per_application_on_dev(application):
@@ -105,7 +104,6 @@ def test_wagtail_get_pages_per_application_on_dev(application):
         "Components",
         "Great Domestic pages",
         "great.gov.uk international",
-        "Invest pages",
     ]
 )
 def test_wagtail_get_pages_per_application_on_stage(application):
@@ -118,7 +116,6 @@ def test_wagtail_get_pages_per_application_on_stage(application):
         "Components",
         "great.gov.uk",
         "great.gov.uk international",
-        "Invest pages",
     ]
 )
 def test_wagtail_get_pages_per_application_on_prod(application):
@@ -143,13 +140,14 @@ def test_drafts_of_translated_pages_should_return_200_new(url, page_id, basic_au
 
 
 @retry(
-    wait_fixed=30000,
+    wait_fixed=5000,
     stop_max_attempt_number=2,
     retry_on_exception=retriable_error,
 )
 @pytest.mark.parametrize(
     "service_name, slug",
     [
+        # Domestic pages
         (SERVICE_NAMES.EXPORT_READINESS, "get-finance"),
         (SERVICE_NAMES.EXPORT_READINESS, "terms-and-conditions"),
         (SERVICE_NAMES.EXPORT_READINESS, "privacy-and-cookies"),
@@ -185,7 +183,6 @@ def test_drafts_of_translated_pages_should_return_200_new(url, page_id, basic_au
         (SERVICE_NAMES.GREAT_INTERNATIONAL, "eu-exit-international"),
         (SERVICE_NAMES.GREAT_INTERNATIONAL, "how-to-setup-in-the-uk"),
         (SERVICE_NAMES.GREAT_INTERNATIONAL, "industries"),
-        (SERVICE_NAMES.GREAT_INTERNATIONAL, "international"),
         (SERVICE_NAMES.GREAT_INTERNATIONAL, "midlands-engine"),
         (SERVICE_NAMES.GREAT_INTERNATIONAL, "news"),
         (SERVICE_NAMES.GREAT_INTERNATIONAL, "opportunities"),
@@ -196,53 +193,22 @@ def test_drafts_of_translated_pages_should_return_200_new(url, page_id, basic_au
         (SERVICE_NAMES.GREAT_INTERNATIONAL, "trade"),
         (SERVICE_NAMES.GREAT_INTERNATIONAL, "contact"),
 
-        (SERVICE_NAMES.INVEST, "home-page"),
-        (SERVICE_NAMES.INVEST, "sector-landing-page"),
-        (SERVICE_NAMES.INVEST, "advanced-manufacturing"),
-        (SERVICE_NAMES.INVEST, "aerospace"),
-        (SERVICE_NAMES.INVEST, "agri-tech"),
-        (SERVICE_NAMES.INVEST, "asset-management"),
-        (SERVICE_NAMES.INVEST, "automotive"),
-        (SERVICE_NAMES.INVEST, "automotive-research-and-development"),
-        (SERVICE_NAMES.INVEST, "automotive-supply-chain"),
-        (SERVICE_NAMES.INVEST, "capital-investment"),
-        (SERVICE_NAMES.INVEST, "chemicals"),
-        (SERVICE_NAMES.INVEST, "creative-content-and-production"),
-        (SERVICE_NAMES.INVEST, "creative-industries"),
-        (SERVICE_NAMES.INVEST, "data-analytics"),
-        (SERVICE_NAMES.INVEST, "digital-media"),
-        (SERVICE_NAMES.INVEST, "electrical-networks"),
-        (SERVICE_NAMES.INVEST, "energy"),
-        (SERVICE_NAMES.INVEST, "energy-waste"),
-        (SERVICE_NAMES.INVEST, "financial-services"),
-        (SERVICE_NAMES.INVEST, "financial-technology"),
-        (SERVICE_NAMES.INVEST, "food-and-drink"),
-        (SERVICE_NAMES.INVEST, "food-service-and-catering"),
-        (SERVICE_NAMES.INVEST, "free-foods"),
-        (SERVICE_NAMES.INVEST, "health-and-life-sciences"),
-        (SERVICE_NAMES.INVEST, "meat-poultry-and-dairy"),
-        (SERVICE_NAMES.INVEST, "medical-technology"),
-        (SERVICE_NAMES.INVEST, "motorsport"),
-        (SERVICE_NAMES.INVEST, "nuclear-energy"),
-        (SERVICE_NAMES.INVEST, "offshore-wind-energy"),
-        (SERVICE_NAMES.INVEST, "oil-and-gas"),
-        (SERVICE_NAMES.INVEST, "pharmaceutical-manufacturing"),
-        (SERVICE_NAMES.INVEST, "retail"),
-        (SERVICE_NAMES.INVEST, "technology"),
-        (SERVICE_NAMES.INVEST, "uk-region-landing-page"),
-        (SERVICE_NAMES.INVEST, "london"),
-        (SERVICE_NAMES.INVEST, "north-england"),
-        (SERVICE_NAMES.INVEST, "northern-ireland"),
-        (SERVICE_NAMES.INVEST, "scotland"),
-        (SERVICE_NAMES.INVEST, "south-england"),
-        (SERVICE_NAMES.INVEST, "wales"),
-        (SERVICE_NAMES.INVEST, "setup-guide-landing-page"),
-        (SERVICE_NAMES.INVEST, "apply-uk-visa"),
-        (SERVICE_NAMES.INVEST, "establish-base-business-uk"),
-        (SERVICE_NAMES.INVEST, "hire-skilled-workers-your-uk-operations"),
-        (SERVICE_NAMES.INVEST, "open-uk-business-bank-account"),
-        (SERVICE_NAMES.INVEST, "setup-your-business-uk"),
-        (SERVICE_NAMES.INVEST, "understand-uk-tax-and-incentives"),
+        # Industry pages
+        (SERVICE_NAMES.GREAT_INTERNATIONAL, "advanced-manufacturing"),
+        (SERVICE_NAMES.GREAT_INTERNATIONAL, "aerospace"),
+        (SERVICE_NAMES.GREAT_INTERNATIONAL, "automotive"),
+        (SERVICE_NAMES.GREAT_INTERNATIONAL, "creative-industries"),
+        (SERVICE_NAMES.GREAT_INTERNATIONAL, "energy"),
+        (SERVICE_NAMES.GREAT_INTERNATIONAL, "financial-services"),
+        (SERVICE_NAMES.GREAT_INTERNATIONAL, "health-and-life-sciences"),
+        (SERVICE_NAMES.GREAT_INTERNATIONAL, "technology"),
+
+        # Regional pages
+        (SERVICE_NAMES.GREAT_INTERNATIONAL, "north-england"),
+        (SERVICE_NAMES.GREAT_INTERNATIONAL, "northern-ireland"),
+        (SERVICE_NAMES.GREAT_INTERNATIONAL, "scotland"),
+        (SERVICE_NAMES.GREAT_INTERNATIONAL, "south-england"),
+        (SERVICE_NAMES.GREAT_INTERNATIONAL, "wales"),
     ],
 )
 def test_wagtail_get_page_by_slug(cms_client, service_name, slug):
