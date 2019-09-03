@@ -188,10 +188,28 @@ HEADER_INVEST = {
         ),
         # header menu
         "header menu": Selector(By.ID, "great-header-menu"),
+        "invest in great logo": Selector(By.ID, "great-header-logo"),
         "language selector": Selector(By.ID, "great-header-language-select"),
-        "invest": Selector(By.ID, "header-invest", type=ElementType.LINK),
-        "find a uk supplier": Selector(By.ID, "header-fas", type=ElementType.LINK),
-        "industries": Selector(By.ID, "header-industries", type=ElementType.LINK),
+        "invest": Selector(
+            By.CSS_SELECTOR,
+            "nav.main-nav.desktop ul li:nth-child(1) a",
+            type=ElementType.LINK
+        ),
+        "uk setup guide": Selector(
+            By.CSS_SELECTOR,
+            "nav.main-nav.desktop ul li:nth-child(2) a",
+            type=ElementType.LINK
+        ),
+        "find a uk supplier": Selector(
+            By.CSS_SELECTOR,
+            "nav.main-nav.desktop ul li:nth-child(3) a",
+            type=ElementType.LINK
+        ),
+        "industries": Selector(
+            By.CSS_SELECTOR,
+            "nav.main-nav.desktop ul li:nth-child(4) a",
+            type=ElementType.LINK
+        ),
     }
 }
 
@@ -207,7 +225,6 @@ FOOTER_INVEST = {
         "copyright notice": Selector(By.ID, "great-footer-copyright"),
     }
 }
-
 
 EU_EXIT_NEWS_BANNER = {
     "eu exit news banner": {
