@@ -137,11 +137,6 @@ def then_actor_should_see_language_selector(context, actor_alias):
     language_selector_should_see_it(context, actor_alias)
 
 
-@then('"{actor_alias}"\'s keyboard should be trapped to the language selector')
-def then_keyboard_should_be_trapped_to_language_selector(context, actor_alias):
-    language_selector_keyboard_should_be_trapped(context, actor_alias)
-
-
 @then('"{actor_alias}" should see the page in "{preferred_language}"')
 def then_page_language_should_be(context, actor_alias, preferred_language):
     should_see_page_in_preferred_language(
