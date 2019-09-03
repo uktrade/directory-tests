@@ -19,9 +19,11 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from pages.fas import contact_us as fas_contact_us
+from pages.fas import contact_us
 from pages.international import (
     international_contact_us,
+    international_contact_us_capital_invest,
+    international_contact_us_exporting_to_the_uk,
     international_eu_exit_contact_us,
 )
 from pages.invest import contact_us as invest_contact_us
@@ -45,13 +47,25 @@ SELECTORS = {
             type=ElementType.RADIO,
             is_visible=False,
         ),
-        "buying from the uk": Selector(
+        "capital investment in the uk": Selector(
+            By.CSS_SELECTOR,
+            "input[value='capital-invest']",
+            type=ElementType.RADIO,
+            is_visible=False,
+        ),
+        "exporting to the uk": Selector(
+            By.CSS_SELECTOR,
+            "input[value='exporting-to-uk']",
+            type=ElementType.RADIO,
+            is_visible=False,
+        ),
+        "find a uk business partner": Selector(
             By.CSS_SELECTOR,
             "input[value='buying']",
             type=ElementType.RADIO,
             is_visible=False,
         ),
-        "eu exit enquiries": Selector(
+        "brexit enquiries": Selector(
             By.CSS_SELECTOR,
             "input[value='euexit']",
             type=ElementType.RADIO,
@@ -73,8 +87,10 @@ SELECTORS = {
 }
 POs = {
     "investing in the uk": invest_contact_us,
-    "buying from the uk": fas_contact_us,
-    "eu exit enquiries": international_eu_exit_contact_us,
+    "capital investment in the uk": international_contact_us_capital_invest,
+    "exporting to the uk": international_contact_us_exporting_to_the_uk,
+    "find a uk business partner": contact_us,
+    "brexit enquiries": international_eu_exit_contact_us,
     "other": international_contact_us,
 }
 
