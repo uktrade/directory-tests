@@ -11,7 +11,7 @@ from pages import ElementType, Services, common_selectors
 from pages.common_actions import (
     Selector,
     check_for_sections,
-    check_title,
+    check_url,
     find_and_click_on_page_element,
     find_element,
     take_screenshot,
@@ -144,7 +144,7 @@ def visit(driver: WebDriver):
 
 def should_be_here(driver: WebDriver):
     take_screenshot(driver, PAGE_TITLE)
-    check_title(driver, PAGE_TITLE, exact_match=True)
+    check_url(driver, URL)
     logging.debug("All expected elements are visible on '%s' page", PAGE_TITLE)
 
 
