@@ -79,7 +79,6 @@ def test_wagtail_can_list_only_20_pages():
 @pytest.mark.parametrize(
     "application", [
         "Components",
-        "Find a Supplier Pages",
         "Great Domestic pages",
         "Great International pages",
         "Invest pages",
@@ -104,7 +103,6 @@ def test_wagtail_get_pages_per_application_on_dev(application):
 @pytest.mark.parametrize(
     "application", [
         "Components",
-        "Find a Supplier Pages",
         "Great Domestic pages",
         "great.gov.uk international",
         "Invest pages",
@@ -118,7 +116,6 @@ def test_wagtail_get_pages_per_application_on_stage(application):
 @pytest.mark.parametrize(
     "application", [
         "Components",
-        "Find a Supplier app",
         "great.gov.uk",
         "great.gov.uk international",
         "Invest pages",
