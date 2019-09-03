@@ -432,7 +432,7 @@ def generic_contact_us_should_receive_confirmation_email(
     assert confirmation
 
 
-@retry(wait_fixed=5000, stop_max_attempt_number=10)
+@retry(wait_fixed=5000, stop_max_attempt_number=15)
 def generic_a_notification_should_be_sent(
         context: Context, actor_alias: str, action: str, subject: str
 ):
