@@ -1,5 +1,8 @@
 Feature: Header-Footer
 
+  Background:
+    Given basic authentication is done for "Domestic - Home" page
+
 
   @bug
   @ED-3116
