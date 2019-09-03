@@ -21,7 +21,6 @@ Feature: Header-Footer
     Examples:
       | selected                | expected                                |
       | Invest - Home           | Invest - Home                           |
-      | Invest - Industries     | Invest - Industries                     |
       | Invest - Contact Us     | Invest - Contact Us                     |
       | Invest - UK Setup Guide | International - How to set up in the UK |
 
@@ -29,7 +28,6 @@ Feature: Header-Footer
     Examples:
       | selected                | expected                                |
       | Invest - Home           | Invest - Home                           |
-      | Invest - Industries     | Invest - Industries                     |
       | Invest - Contact Us     | Invest - Contact Us                     |
       | Invest - UK Setup Guide | International - How to set up in the UK |
 
@@ -37,7 +35,6 @@ Feature: Header-Footer
     Examples:
       | selected                | expected                                |
       | Invest - Home           | Invest - Home                           |
-      | Invest - Industries     | Invest - Industries                     |
       | Invest - Contact Us     | Invest - Contact Us                     |
       | Invest - UK Setup Guide | International - How to set up in the UK |
 
@@ -58,7 +55,6 @@ Feature: Header-Footer
       | specific           | section | expected                   |
       | Invest             | header  | Invest - Home              |
       | Find a UK Supplier | header  | Find a Supplier - Home     |
-      | Industries         | header  | International - Industries |
 
 
   @CMS-158
@@ -75,10 +71,8 @@ Feature: Header-Footer
     Examples:
       | selected                            |
       | Home                                |
-      | Industries                          |
       | UK Setup Guide                      |
       | Contact Us                          |
-      | Automotive - industry               |
 
     @full
     Examples:
