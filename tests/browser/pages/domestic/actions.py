@@ -31,8 +31,11 @@ def go_to_sign_out(driver: WebDriver):
 
 def check_logo(driver: WebDriver, logo_name: str):
     logo = LOGOS[logo_name.lower()]
-    logo_element = find_element(driver, logo["selector"])
+    logo_element = find_element(driver, logo["selector"], wait_for_it=False)
     src = logo_element.get_attribute("src")
+    if not src:
+        logging.debug(f"IMG SRC is empty will try to use 'data-src' for {logo}")
+        src = logo_element.get_attribute("data-src")
     check_hash_of_remote_file(logo["md5"], src)
     logging.debug(f"{src} has correct MD5sum {logo['md5']}")
 
