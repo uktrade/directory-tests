@@ -391,6 +391,7 @@ Feature: New contact us forms
       | Other                                   | Thank you for your enquiry                                   | DIT Enquiry unit   |
 
 
+  @dev-only
   @TT-758
   @international
   Scenario: International Enquirers should be able to see all expected contact options on the "International - What would you like to know more about?" page
@@ -400,11 +401,31 @@ Feature: New contact us forms
 
     Then "Robert" should be on the "Domestic - What would you like to know more about? - International Contact us" page
     And "Robert" should see following form choices
-      | radio elements                    |
-      | Investing in the UK               |
-      | Buying from the UK                |
-      | Brexit enquiries                  |
-      | Other                             |
+      | radio elements               |
+      | Investing in the UK          |
+      | Capital investment in the UK |
+      | Exporting to the UK          |
+      | Find a UK business partner   |
+      | Brexit enquiries             |
+      | Other                        |
+
+
+  @stage-only
+  @prod-only
+  @TT-758
+  @international
+  Scenario: International Enquirers should be able to see all expected contact options on the "International - What would you like to know more about?" page
+    Given "Robert" visits the "Domestic - Contact us" page
+
+    When "Robert" says that his business is "Outside the UK"
+
+    Then "Robert" should be on the "Domestic - What would you like to know more about? - International Contact us" page
+    And "Robert" should see following form choices
+      | radio elements               |
+      | Investing in the UK          |
+      | Find a UK business partner   |
+      | Brexit enquiries             |
+      | Other                        |
 
 
   @TT-758
@@ -416,12 +437,24 @@ Feature: New contact us forms
 
     Then "Robert" should be on the "<expected>" page
 
+    @dev-only
     Examples:
-      | selected            | expected                             |
-      | Investing in the UK | Invest - Contact us                  |
-      | Buying from the UK  | Find a Supplier - Contact us         |
-      | Brexit enquiries    | International - EU Exit - Contact Us |
-      | Other               | International - Contact us           |
+      | selected                     | expected                                            |
+      | Investing in the UK          | Invest - Contact us                                 |
+      | Capital investment in the UK | International - Contact the Capital Investment team |
+      | Exporting to the UK          | International - Exporting to the UK                 |
+      | Find a UK business partner   | Find a Supplier - Contact us                        |
+      | Brexit enquiries             | International - Brexit help                         |
+      | Other                        | International - Contact us                          |
+
+    @stage-only
+    @prod-only
+    Examples:
+      | selected                     | expected                                            |
+      | Investing in the UK          | Invest - Contact us                                 |
+      | Find a UK business partner   | Find a Supplier - Contact us                        |
+      | Brexit enquiries             | International - Brexit help                         |
+      | Other                        | International - Contact us                          |
 
 
   @TT-758
