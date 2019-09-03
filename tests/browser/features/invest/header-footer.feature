@@ -3,7 +3,6 @@ Feature: Header-Footer
 
   Background:
     Given basic authentication is done for "International - Landing" page
-    Given basic authentication is done for "Invest - Home" page
 
   @CMS-158
   @logo
@@ -17,26 +16,30 @@ Feature: Header-Footer
     And "Robert" should see correct UK Government logo in page "footer"
     And "Robert" should see the correct favicon
 
-    @dev-only
     Examples:
       | selected                | expected                                |
       | Invest - Home           | Invest - Home                           |
       | Invest - Contact Us     | Invest - Contact Us                     |
-      | Invest - UK Setup Guide | International - How to set up in the UK |
 
-    @stage-only
-    Examples:
-      | selected                | expected                                |
-      | Invest - Home           | Invest - Home                           |
-      | Invest - Contact Us     | Invest - Contact Us                     |
-      | Invest - UK Setup Guide | International - How to set up in the UK |
 
-    @uat-only
+  @stage-only
+  @CMS-158
+  @logo
+  @header
+  @footer
+  Scenario Outline: Visitors should see correct UK Government logo, with Union Jack, in the page header and footer on "<selected>" page
+    Given "Robert" visits the "<selected>" page
+
+    Then "Robert" should be on the "<expected>" page
+    And "Robert" should see correct "Great - header" logo
+    And "Robert" should see correct "Great - footer" logo
+    And "Robert" should see the correct favicon
+
     Examples:
-      | selected                | expected                                |
-      | Invest - Home           | Invest - Home                           |
-      | Invest - Contact Us     | Invest - Contact Us                     |
-      | Invest - UK Setup Guide | International - How to set up in the UK |
+      | selected                                         | expected                                         |
+      | Invest - High productivity food production - HPO | Invest - High productivity food production - HPO |
+      | Invest - Lightweight structures - HPO            | Invest - Lightweight structures - HPO            |
+      | Invest - Rail infrastructure - HPO               | Invest - Rail infrastructure - HPO               |
 
 
   @CMS-158
@@ -52,9 +55,11 @@ Feature: Header-Footer
     Then "Robert" should be on the "<expected>" page
 
     Examples:
-      | specific           | section | expected                   |
-      | Invest             | header  | Invest - Home              |
-      | Find a UK Supplier | header  | Find a Supplier - Home     |
+      | specific           | section | expected                       |
+      | Invest             | header  | Invest - Home                  |
+      | Industries         | header  | International - Industries     |
+      | UK setup guide     | header  | International - UK setup guide |
+      | Find a UK Supplier | header  | Find a Supplier - Home         |
 
 
   @CMS-158
