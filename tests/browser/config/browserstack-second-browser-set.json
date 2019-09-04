@@ -2,7 +2,7 @@
   "hub_url": {HUB_URL},
   "capabilities": {{
     "browserstack.debug": true,
-    "browserstack.selenium_version": "3.14.0",
+    "browserstack.selenium_version": "3.141.59",
     "build": {BUILD_ID},
     "project": "DIT",
     "resolution": "1600x1200"
