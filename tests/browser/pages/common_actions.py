@@ -511,14 +511,16 @@ def find_elements(driver: WebDriver, selector: Selector) -> List[WebElement]:
     return elements
 
 
-def clear_driver_cookies(driver: WebDriver):
+def clear_driver_cookies(driver: WebDriver, *, log_cleanup: bool = False):
     try:
-        cookies = driver.get_cookies()
-        logging.debug(f"COOKIES: {cookies}")
+        if log_cleanup:
+            cookies = driver.get_cookies()
+            logging.debug(f"COOKIES: {cookies}")
         driver.delete_all_cookies()
         logging.debug("Successfully cleared cookies")
-        cookies = driver.get_cookies()
-        logging.debug(f"Driver cookies after clearing them: {cookies}")
+        if log_cleanup:
+            cookies = driver.get_cookies()
+            logging.debug(f"Driver cookies after clearing them: {cookies}")
     except WebDriverException as ex:
         logging.error(f"Failed to clear cookies: '{ex.msg}'")
 
