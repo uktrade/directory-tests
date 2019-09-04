@@ -205,8 +205,8 @@ def after_feature(context: Context, feature: Feature):
 def before_scenario(context: Context, scenario: Scenario):
     """Place here code which has to be executed before every Scenario."""
     logging.debug("Starting scenario: %s", scenario.name)
-    message = f"Start: {scenario.name} | {scenario.filename}:{scenario.line}"
-    show_snackbar_message(context.driver, message)
+    # message = f"Start: {scenario.name} | {scenario.filename}:{scenario.line}"
+    # show_snackbar_message(context.driver, message)
     context.scenario_data = initialize_scenario_data()
     if RESTART_BROWSER == "scenario":
         start_driver_session(context, scenario.name)
