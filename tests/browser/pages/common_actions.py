@@ -701,7 +701,10 @@ def show_snackbar_message(driver: WebDriver, message: str):
     showMessage(`{message}`);
     """
     message = message.replace("`", "")
-    driver.execute_script(script.format(message=message))
+    try:
+        driver.execute_script(script.format(message=message))
+    except WebDriverException:
+        logging.error(f"Failed to show snackbar with message: {message}")
 
 
 def check_for_sections(
