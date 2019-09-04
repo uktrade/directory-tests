@@ -3,7 +3,7 @@
 Feature: International Page - EU Exit - Contact us
 
   Background:
-    Given basic authentication is done for "Domestic - Home" page
+    Given basic authentication is done for "International - Landing" page
 
   @TT-617
   @eu-exit

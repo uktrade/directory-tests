@@ -2,7 +2,7 @@
 Feature: Regional pages
 
   Background:
-    Given basic authentication is done for "Invest - Home" page
+    Given basic authentication is done for "International - Landing" page
 
   @CMS-215
   Scenario Outline: Visitors should be able to see regional page for "<selected>"

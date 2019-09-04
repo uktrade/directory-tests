@@ -3,7 +3,7 @@
 Feature: Find a Supplier - Common header & Footer
 
   Background:
-    Given basic authentication is done for "Find a Supplier - Home" page
+    Given basic authentication is done for "International - Landing" page
 
   Scenario Outline: Buyers should be able to see correct header & footer on "Find a Supplier - <specific>" page
     Given "Robert" visits the "Find a Supplier - <specific>" page

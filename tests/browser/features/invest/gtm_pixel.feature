@@ -3,7 +3,7 @@
 Feature: Google Tag Manager
 
   Background:
-    Given basic authentication is done for "Invest - Home" page
+    Given basic authentication is done for "International - Landing" page
 
   @TT-1500
   Scenario Outline: GTM properties should be properly set on "Invest - <selected>" page

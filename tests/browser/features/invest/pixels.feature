@@ -2,7 +2,7 @@
 Feature: Pixels
 
   Background:
-    Given basic authentication is done for "Invest - Home" page
+    Given basic authentication is done for "International - Landing" page
 
   Scenario Outline: Pixels should be present on "<selected>" page
     Given "Robert" visits the "Invest - <selected>" page

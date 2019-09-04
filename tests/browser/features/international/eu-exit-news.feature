@@ -2,7 +2,7 @@
 Feature: Updates for non-UK companies on EU Exit
 
   Background:
-    Given basic authentication is done for "Domestic - Home" page
+    Given basic authentication is done for "International - Landing" page
 
   @news
   @eu-exit

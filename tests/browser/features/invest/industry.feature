@@ -2,7 +2,7 @@
 Feature: Industry pages
 
   Background:
-    Given basic authentication is done for "Invest - Home" page
+    Given basic authentication is done for "International - Landing" page
     
   @CMS-160
   Scenario Outline: Visitors should be able to see the "Invest - <selected> industry" page

@@ -2,7 +2,7 @@
 Feature: Contact us and Leave feedback
 
   Background:
-    Given basic authentication is done for "Invest - Home" page
+    Given basic authentication is done for "International - Landing" page
 
   @CMS-237
   @contact-us

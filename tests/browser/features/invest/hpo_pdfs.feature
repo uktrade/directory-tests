@@ -4,7 +4,7 @@
 Feature: HPO PDFs sent after
 
   Background:
-    Given basic authentication is done for "Invest - Home" page
+    Given basic authentication is done for "International - Landing" page
 
   @TT-444
   @dev-only

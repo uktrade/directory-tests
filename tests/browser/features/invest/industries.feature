@@ -3,7 +3,7 @@
 Feature: Industries page
 
   Background:
-    Given basic authentication is done for "Invest - Home" page
+    Given basic authentication is done for "International - Landing" page
 
   @CMS-159
   Scenario: Visitors should be able to view "Invest Industries" page

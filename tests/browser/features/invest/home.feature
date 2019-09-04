@@ -3,7 +3,7 @@
 Feature: Invest home page
 
   Background:
-    Given basic authentication is done for "Invest - Home" page
+    Given basic authentication is done for "International - Landing" page
 
   @dev-only
   @CMS-157

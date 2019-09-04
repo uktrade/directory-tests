@@ -2,7 +2,7 @@
 Feature: International Page
 
   Background:
-    Given basic authentication is done for "Domestic - Home" page
+    Given basic authentication is done for "International - Landing" page
 
   @ED-3114
   @dev-only
