@@ -101,6 +101,7 @@ BROWSERSTACK_EXECUTOR_URL = "http://{}:{}@{}/wd/hub".format(
 BROWSERSTACK_SESSIONS_URL = (
     "https://www.browserstack.com/automate/sessions/{}.json"
 )
+MAX_SESSION_RECOVERY_RETRIES = 2
 
 
 if CONFIG_NAME.startswith("browserstack") and (

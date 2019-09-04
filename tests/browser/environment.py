@@ -2,7 +2,6 @@
 """Behave configuration file."""
 import logging
 import socket
-import time
 
 from behave.contrib.scenario_autoretry import patch_scenario_with_autoretry
 from behave.model import Feature, Scenario, Step
@@ -19,6 +18,7 @@ from settings import (
     CONFIG_NAME,
     RESTART_BROWSER,
     TASK_ID,
+    MAX_SESSION_RECOVERY_RETRIES,
 )
 from pages.common_actions import (
     clear_driver_cookies,
@@ -43,6 +43,7 @@ def start_driver_session(context: Context, session_name: str):
             desired_capabilities=remote_desired_capabilities,
             command_executor=CONFIG["hub_url"],
         )
+        logging.warning(f"Started new remote session: {context.driver.session_id}")
     else:
         browser_name = CONFIG["environments"][0]["browser"]
         drivers = {
@@ -215,6 +216,7 @@ def before_scenario(context: Context, scenario: Scenario):
     # message = f"Start: {scenario.name} | {scenario.filename}:{scenario.line}"
     # show_snackbar_message(context.driver, message)
     context.scenario_data = initialize_scenario_data()
+    context.session_recovery_counter = 0
     if RESTART_BROWSER == "scenario":
         start_driver_session(context, scenario.name)
 
@@ -230,11 +232,18 @@ def after_scenario(context: Context, scenario: Scenario):
         )
     # message = f"Finish: {scenario.name} | {scenario.filename}:{scenario.line}"
     if scenario.status == "failed":
-        logging.error(
-            f"Failed scenario: '{scenario.name}', will try to restart driver "
-            f"session if it's unresponsive"
-        )
-        restart_webdriver_if_unresponsive(context, scenario)
+        if context.session_recovery_counter <= MAX_SESSION_RECOVERY_RETRIES:
+            logging.error(
+                f"Failed scenario: '{scenario.name}', will try to restart driver "
+                f"session if it's unresponsive"
+            )
+            restart_webdriver_if_unresponsive(context, scenario)
+            context.session_recovery_counter += 1
+        else:
+            logging.error(
+                f"Failed to recover WebDriver session after "
+                f"{MAX_SESSION_RECOVERY_RETRIES} attempts"
+            )
     # try:
     #     show_snackbar_message(context.driver, message)
     # except WebDriverException:
