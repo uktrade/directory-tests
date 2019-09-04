@@ -104,7 +104,7 @@ def start_driver_session(context: Context, session_name: str):
 def restart_webdriver_if_unresponsive(context: Context, scenario: Scenario):
     if hasattr(context, "driver"):
         session_id = context.driver.session_id
-        clean_name = scenario.name.lower().replace(" ", "-")[0:254]
+        clean_name = scenario.name.lower().replace(" ", "-")[0:220]
         try:
             response = context.driver.execute(Command.STATUS)
             logging.debug(f"WebDriver Status: {response}")
