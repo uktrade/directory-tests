@@ -228,20 +228,20 @@ def after_scenario(context: Context, scenario: Scenario):
         logging.error(
             f"Remote browser driver became unresponsive after scenario: {scenario.name}"
         )
-    message = f"Finish: {scenario.name} | {scenario.filename}:{scenario.line}"
+    # message = f"Finish: {scenario.name} | {scenario.filename}:{scenario.line}"
     if scenario.status == "failed":
         logging.error(
             f"Failed scenario: '{scenario.name}', will try to restart driver "
-            f"session"
+            f"session if it's unresponsive"
         )
         restart_webdriver_if_unresponsive(context, scenario)
-    try:
-        show_snackbar_message(context.driver, message)
-    except WebDriverException:
-        logging.error(f"Failed to show snackbar with message: {message}")
+    # try:
+    #     show_snackbar_message(context.driver, message)
+    # except WebDriverException:
+    #     logging.error(f"Failed to show snackbar with message: {message}")
     # in order to show the snackbar message after scenario, an explicit wait
     # had to be added
-    time.sleep(0.2)
+    # time.sleep(0.2)
     logging.debug(context.scenario_data)
     actors = context.scenario_data.actors
     for actor in actors.values():
