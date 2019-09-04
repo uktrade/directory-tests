@@ -13,14 +13,14 @@
   "environments": [
     {{
       "browser": "Chrome",
-      "browser_version": "75.0",
+      "browser_version": "76.0",
       "pageLoadStrategy": "none",
       "os": "Windows",
       "os_version": "10"
     }},
     {{
       "browser": "Firefox",
-      "browser_version": "67.0",
+      "browser_version": "68.0",
       "pageLoadStrategy": "eager",
       "os": "Windows",
       "os_version": "10"
