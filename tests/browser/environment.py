@@ -120,10 +120,12 @@ def restart_webdriver_if_unresponsive(context: Context, scenario: Scenario):
                 start_driver_session(
                     context, f"session-recovered-for-scenario-{clean_name}"
                 )
-                logging.warning(
+                msg = (
                     f"An unresponsive session '{session_id}' was recovered and new "
                     f"session ID is: '{context.driver.session_id}'"
                 )
+                print(msg)
+                logging.warning(msg)
         except (socket.error, httplib.CannotSendRequest):
             msg = (
                 f"Remote driver became unresponsive after scenario: "
@@ -135,10 +137,12 @@ def restart_webdriver_if_unresponsive(context: Context, scenario: Scenario):
             start_driver_session(
                 context, f"driver-recovered-for-scenario-{clean_name}"
             )
-            logging.warning(
+            msg = (
                 f"An unresponsive driver with ID: '{session_id}' was recovered and new "
                 f"driver session ID is: '{context.driver.session_id}'"
             )
+            print(msg)
+            logging.error(msg)
     else:
         logging.error(f"Context doesn't have 'driver' attribute")
 
