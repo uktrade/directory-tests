@@ -40,11 +40,11 @@ HPO_PDF_URLS = [
     "https://directory-cms-public.s3.amazonaws.com/documents/A_High_Potential_Investment_Opportunity_in_UK_Rail.pdf",
 ]
 FORMS_API_MAILBOXES = {
-    "DIT Enquiry unit": os.getenv("FORMS_API_EMAIL_DIT_ENQUIRIES"),
-    "Events mailbox": os.getenv("FORMS_API_EMAIL_EVENTS"),
-    "DSO mailbox": os.getenv("FORMS_API_EMAIL_DSO"),
-    "Invest mailbox": os.getenv("FORMS_API_EMAIL_INVEST"),
-    "Trade mailbox": os.getenv("FORMS_API_EMAIL_TRADE"),
+    "DIT Enquiry unit": os.getenv("FORMS_API_SENDER_EMAIL_DIT_ENQUIRIES"),
+    "Events mailbox": os.getenv("FORMS_API_SENDER_EMAIL_EVENTS"),
+    "DSO mailbox": os.getenv("FORMS_API_SENDER_EMAIL_DSO"),
+    "Invest mailbox": os.getenv("FORMS_API_SENDER_EMAIL_INVEST"),
+    "Trade mailbox": os.getenv("FORMS_API_SENDER_EMAIL_TRADE"),
 }
 
 DIRECTORY_SSO_API_CLIENT_API_KEY = os.environ["DIRECTORY_SSO_API_CLIENT_API_KEY"]
