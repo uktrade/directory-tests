@@ -18,7 +18,7 @@ from pages.common_actions import (
     take_screenshot,
     visit_url,
 )
-from settings import INVEST_UI_URL
+from settings import INTERNATIONAL_UI_URL
 
 NAME = "Region"
 NAMES = [
@@ -26,25 +26,24 @@ NAMES = [
     "North England",
     "Northern Ireland",
     "Scotland",
-    "South of England",
-    "The Midlands",
+    "South England",
+    "Midlands",
     "Wales",
 ]
 SERVICE = Services.INVEST
 TYPE = "region"
-URL = urljoin(INVEST_UI_URL, "uk-regions/")
-BASE_URL = urljoin(INVEST_UI_URL, "uk-regions/")
+URL = urljoin(INTERNATIONAL_UI_URL, "content/about-uk/regions/")
 PAGE_TITLE = "Invest in Great Britain - "
 
 
 URLs = {
-    "london": urljoin(BASE_URL, "london/"),
-    "north england": urljoin(BASE_URL, "north-england/"),
-    "northern ireland": urljoin(BASE_URL, "northern-ireland/"),
-    "scotland": urljoin(BASE_URL, "scotland/"),
-    "south of england": urljoin(BASE_URL, "south-england/"),
-    "the midlands": urljoin(BASE_URL, "midlands/"),
-    "wales": urljoin(BASE_URL, "wales/"),
+    "london": urljoin(URL, "london/"),
+    "north england": urljoin(URL, "north-england/"),
+    "northern ireland": urljoin(URL, "northern-ireland/"),
+    "scotland": urljoin(URL, "scotland/"),
+    "south england": urljoin(URL, "south-england/"),
+    "midlands": urljoin(URL, "midlands/"),
+    "wales": urljoin(URL, "wales/"),
 }
 
 
@@ -60,10 +59,9 @@ SELECTORS = {
         "paragraphs": Selector(By.CSS_SELECTOR, "div.accordion-content p")
     },
 }
-SELECTORS.update(common_selectors.HEADER_INVEST)
-SELECTORS.update(common_selectors.BETA_BAR)
+SELECTORS.update(common_selectors.INTERNATIONAL_HEADER_WO_LANGUAGE_SELECTOR)
 SELECTORS.update(common_selectors.ERROR_REPORTING)
-SELECTORS.update(common_selectors.FOOTER_INVEST)
+SELECTORS.update(common_selectors.INTERNATIONAL_FOOTER)
 
 
 def visit(driver: WebDriver, *, page_name: str = None):
