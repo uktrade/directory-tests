@@ -5,13 +5,33 @@
 Feature: New Enrolment flow
 
   Background:
-    Given basic authentication is done for "Profile - About" page
+    Given basic authentication is done for "Domestic - Home" page
 
-  @TT-1115
+  @TT-1115a
   Scenario: Users should be presented with the Enrolment Steps prior to starting the registration process
     Given "Natalia" visits the "Profile - Create an account" page
 
     When "Natalia" decides to "Start now"
+
+    Then "Natalia" should be on the "Profile - Select your business type" page
+    And "Natalia" should see following sections
+      | sections               |
+      | Breadcrumbs            |
+      | Form                   |
+      | Enrolment progress bar |
+    And "Natalia" should see following form choices
+      | radio elements                        |
+      | LTD, PLC or Royal Charter             |
+      | Sole trader or other type of business |
+      | UK taxpayer                           |
+      | Overseas Company                      |
+
+
+  @TT-1115
+  Scenario: Users should be presented with the Enrolment Steps prior to starting the registration process
+    Given "Natalia" visits the "Profile - Select your business type" page
+
+    When "Natalia" chooses "LTD, PLC or Royal Charter" option
 
     Then "Natalia" should be on the "Profile - Enter your business email address and set a password" page
     And "Natalia" should see following sections
@@ -110,7 +130,6 @@ Feature: New Enrolment flow
   @sole-trader-other-business
   @uk-taxpayer
   Scenario Outline: A representative of a "selected business type" company should receive a confirmation email when a great.gov.uk account is created
-#    Given "Natalia" got to the "Profile - Enter your details (for <selected business type>)" by opting to register as "<selected business type>"
     Given "Natalia" has received the email confirmation code by opting to register as "<selected business type>"
     And "Natalia" is on the "Profile - Enter your confirmation code" page
 
@@ -129,11 +148,21 @@ Feature: New Enrolment flow
     And "Natalia" should see following sections
       | sections                   |
       | Confirmation email message |
-      | Next steps                 |
+#      | Next steps                 |
 
     Examples:
       | selected business type     |
       | LTD, PLC or Royal Charter  |
+
+
+  @TT-1126
+  @TT-1031
+  Scenario: Companies House company enrolment creates a business profile
+    Given "Natalia" has created a great.gov.uk account for a "LTD, PLC or Royal Charter"
+
+    When "Natalia" goes to the "Profile - Edit Company Profile" page
+
+    Then "Natalia" should be on the "Profile - Edit Company Profile" page
 
 
   @wip
@@ -146,16 +175,6 @@ Feature: New Enrolment flow
     When "Natalia" decides to use "I cannot find my business name" link
 
     Then "Natalia" should be on the "Domestic - I cannot find my business name - Dedicated Support Content" page
-
-
-  @TT-1126
-  @TT-1031
-  Scenario: Companies House company enrolment creates a business profile
-    Given "Natalia" has created a great.gov.uk account for a "LTD, PLC or Royal Charter"
-
-    When "Natalia" goes to the "Profile - Edit Company Profile" page
-
-    Then "Natalia" should be on the "Profile - Edit Company Profile" page
 
 
   @wip

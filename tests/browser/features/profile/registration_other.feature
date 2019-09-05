@@ -5,69 +5,21 @@
 Feature: New Enrolment flow
 
   Background:
-    Given basic authentication is done for "Profile - About" page
-
-  @wip
-  @TT-1116
-  Scenario: Users should be asked for their business type once they start the registration process
-    Given "Natalia" visits the "Profile - Create an account" page
-
-    When "Natalia" decides to "Start now"
-
-    Then "Natalia" should be on the "Profile - Select your business type" page
-    And "Natalia" should see following form choices
-      | radio elements                        |
-      | LTD, PLC or Royal Charter             |
-      | Sole trader or other type of business |
-      | UK taxpayer                           |
-      | Overseas Company                      |
+    Given basic authentication is done for "Domestic - Home" page
 
 
-  @wip
-  @TT-1117
-  @ltd-plc-royal
-  @tax-payer
-  Scenario Outline: "<business type>" representative should be asked to enter their email and set a password after selecting their business type
-    Given "Natalia" visits the "Profile - Select your business type" page
-
-    When "Natalia" chooses "<business type>" option
-
-    Then "Natalia" should be on the "Profile - Enter your email and set a password (<business type>)" page
-    And "Natalia" should see following sections
-      | sections               |
-      | Registration form      |
-      | Enrolment progress bar |
-
-    Examples:
-      | business type             |
-      | LTD, PLC or Royal Charter |
-      | UK taxpayer               |
-
-
-  @wip
   @TT-1118
   @sole-trader-other-business
-  Scenario Outline: "<business type>" representative should be asked to specify the type of their business before being asked to enter their email and set a password
+  Scenario: "Sole trader" representative should be asked to specify the type of their business before being asked to enter their email and set a password
     Given "Natalia" visits the "Profile - Select your business type" page
 
-    When "Natalia" picks "Sole trader or other type of business" option
-    Then "Natalia" should see following sections
-      | sections                |
-      | Select type of business |
+    When "Natalia" chooses "Sole trader or other type of business" option
 
-    When "Natalia" selects "<business type>" from "Select type" dropdown
-    And "Natalia" submits the form
-    Then "Natalia" should be on the "Profile - Enter your email and set a password" page
+    Then "Natalia" should be on the "Profile - Enter your business email address and set a password (Sole trader or other type of business)" page
     And "Natalia" should see following sections
       | sections               |
       | Registration form      |
       | Enrolment progress bar |
-
-    Examples:
-      | business type       |
-      | Sole trader         |
-      | Overseas Company    |
-      | other options ????? |
 
 
   @wip
