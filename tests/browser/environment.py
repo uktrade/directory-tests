@@ -186,8 +186,14 @@ def before_feature(context: Context, feature: Feature):
 def after_feature(context: Context, feature: Feature):
     if RESTART_BROWSER == "feature":
         if hasattr(context, "driver"):
-            logging.debug("QUIT DRIVER AFTER FEATURE: %s", feature.name)
-            context.driver.quit()
+            logging.debug(f"Quit driver after feature: '{feature.name}'")
+            try:
+                context.driver.quit()
+            except WebDriverException as ex:
+                logging.error(
+                    f"Failed to quit the driver after feature '{feature.name}': "
+                    f"{ex.msg}"
+                )
         if feature.status == "failed":
             if hasattr(context, "scenario_data"):
                 logging.debug(context.scenario_data)
