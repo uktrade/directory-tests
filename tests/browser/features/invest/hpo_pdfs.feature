@@ -1,6 +1,7 @@
 @invest
 @hpo
 @pdf
+@stage-only
 Feature: HPO PDFs sent after
 
   Background:
@@ -11,10 +12,10 @@ Feature: HPO PDFs sent after
   @captcha
   Scenario Outline: Check PDFs listed on "Thank you for your enquiry" page for "<selected>" HPO
     Given "Peter Alder" got in touch with us via "Invest - <selected> - HPO Contact Us" page
-      | field                    | value     |
-      | Advanced food production | checked   |
-      | Lightweight structures   | unchecked |
-      | Rail infrastructure      | unchecked |
+      | field                             | value     |
+      | High productivity food production | checked   |
+      | Lightweight structures            | unchecked |
+      | Rail infrastructure               | unchecked |
     And "Peter Alder" is on the "Invest - Thank you for your enquiry - HPO Contact us" page
 
     When "Peter Alder" downloads all visible PDFs
@@ -25,8 +26,8 @@ Feature: HPO PDFs sent after
     And there should not be any dead links in every downloaded PDF
 
     Examples:
-      | selected                 |
-      | Advanced food production |
+      | selected                          |
+      | High productivity food production |
 
 
   @TT-444
@@ -34,10 +35,10 @@ Feature: HPO PDFs sent after
   @captcha
   Scenario Outline: Check PDFs listed on "Thank you for your enquiry" page for "<selected>" HPO
     Given "Peter Alder" got in touch with us via "Invest - <selected> - HPO Contact Us" page
-      | field                    | value     |
-      | Advanced food production | unchecked |
-      | Lightweight structures   | checked   |
-      | Rail infrastructure      | unchecked |
+      | field                             | value     |
+      | High productivity food production | unchecked |
+      | Lightweight structures            | checked   |
+      | Rail infrastructure               | unchecked |
     And "Peter Alder" is on the "Invest - Thank you for your enquiry - HPO Contact us" page
 
     When "Peter Alder" downloads all visible PDFs
@@ -57,10 +58,10 @@ Feature: HPO PDFs sent after
   @captcha
   Scenario Outline: Check PDFs listed on "Thank you for your enquiry" page for "<selected>" HPO
     Given "Peter Alder" got in touch with us via "Invest - <selected> - HPO Contact Us" page
-      | field                    | value     |
-      | Advanced food production | unchecked |
-      | Lightweight structures   | unchecked |
-      | Rail infrastructure      | checked   |
+      | field                             | value     |
+      | High productivity food production | unchecked |
+      | Lightweight structures            | unchecked |
+      | Rail infrastructure               | checked   |
     And "Peter Alder" is on the "Invest - Thank you for your enquiry - HPO Contact us" page
 
     When "Peter Alder" downloads all visible PDFs
