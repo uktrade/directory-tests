@@ -4,6 +4,7 @@ import logging
 from types import ModuleType
 from typing import List
 from urllib.parse import urljoin
+from uuid import uuid4
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -90,7 +91,7 @@ def should_see_sections(driver: WebDriver, names: List[str]):
 def generate_form_details(actor: Actor) -> dict:
     result = {
         "first name": actor.alias,
-        "last name": "automated tests",
+        "last name": str(uuid4()),
         "job title": "automated tests",
         "phone number": "07123456789",
         "background checks": True,

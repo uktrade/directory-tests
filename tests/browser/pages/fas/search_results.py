@@ -8,7 +8,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import Services
+from pages import Services, common_selectors
 from pages.common_actions import (
     Actor,
     Selector,
@@ -21,7 +21,6 @@ from pages.common_actions import (
     pick_option,
     take_screenshot,
 )
-from pages.fas.header_footer import HEADER_FOOTER_SELECTORS
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
 NAME = "Search results"
@@ -33,7 +32,9 @@ PAGE_TITLE = "Search the database of UK suppliers' trade profiles - trade.great.
 SECTOR_FILTERS = Selector(
     By.CSS_SELECTOR, "#checkbox-industry-expertise li input[type=checkbox]"
 )
-PROFILE_LINKS = Selector(By.CSS_SELECTOR, "#companies-column li > a[data-ga-class=company-detail-link]")
+PROFILE_LINKS = Selector(
+    By.CSS_SELECTOR, "#companies-column li > a:not(.button-ghost-blue):not(.button)"
+)
 UPDATE_RESULTS = Selector(By.CSS_SELECTOR, "#filter-column button[type=submit]")
 FILTER_TOGGLE = Selector(By.ID, "toggle_id_industries")
 SELECTORS = {
@@ -55,7 +56,8 @@ SELECTORS = {
         "number of results": Selector(By.CSS_SELECTOR, "#hero-container h2"),
     },
 }
-SELECTORS.update(HEADER_FOOTER_SELECTORS)
+SELECTORS.update(common_selectors.INTERNATIONAL_HEADER_WO_LANGUAGE_SELECTOR)
+SELECTORS.update(common_selectors.INTERNATIONAL_FOOTER)
 
 
 def should_be_here(driver: WebDriver):

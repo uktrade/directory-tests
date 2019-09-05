@@ -4,6 +4,7 @@ import logging
 import random
 from types import ModuleType
 from urllib.parse import urljoin
+from uuid import uuid4
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -99,7 +100,7 @@ def generate_form_details(actor: Actor) -> dict:
     result = {
         "comment": f"Submitted by automated tests {actor.alias}",
         "first name": f"send by {actor.alias} - automated tests",
-        "last name": actor.alias,
+        "last name": str(uuid4()),
         "email": actor.email,
         "uk private or public limited company": is_company,
         "other type of uk organisation": not is_company,

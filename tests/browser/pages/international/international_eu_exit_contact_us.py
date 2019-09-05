@@ -3,6 +3,7 @@
 import random
 from typing import List
 from urllib.parse import urljoin
+from uuid import uuid4
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -111,7 +112,7 @@ def generate_form_details(actor: Actor) -> dict:
     is_company = random.choice([True, False])
     result = {
         "given names": f"send by {actor.alias} - automated tests",
-        "family name": actor.alias,
+        "family name": str(uuid4()),
         "email": actor.email,
         "company": is_company,
         "other type of organisation": not is_company,

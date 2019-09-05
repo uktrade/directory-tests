@@ -15,15 +15,13 @@ Feature: Find a Supplier - Common header & Footer
 
     Examples:
       | specific             |
-      | Home                 |
+      | Landing              |
       | Empty search results |
-      | Industries           |
-      | Energy - industry    |
       | Contact us           |
 
 
   Scenario: Buyers should be able to see correct header & footer on "Find a Supplier - Search results" page
-    Given "Robert" visits the "Find a Supplier - Home" page
+    Given "Robert" visits the "Find a Supplier - Landing" page
 
     When "Robert" searches for companies using "Drilling" keyword in "Mining" sector
 
@@ -34,19 +32,13 @@ Feature: Find a Supplier - Common header & Footer
       | Footer   |
 
 
-  @captcha
   @dev-only
-  Scenario: Buyers should be able to send a query to supplier and see correct header & footer on "Find a Supplier - Thank you for contacting supplier" page
+  Scenario: Buyers should see correct header & footer on "Company Profile" page
     Given "Robert" searched for companies using "food" keyword in "any" sector
 
     When "Robert" decides to view "random" company profile
+
     Then "Robert" should be on the "Find a Supplier - Company profile" page
-
-    When "Robert" decides to "Contact company"
-    Then "Robert" should be on the "Find a Supplier - Contact supplier" page
-
-    When "Robert" fills out and submits the form
-    Then "Robert" should be on the "Find a Supplier - Thank you for contacting supplier" page
     And "Robert" should see following sections
       | Sections |
       | Header   |

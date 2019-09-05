@@ -16,10 +16,10 @@ PAGE_TITLE = "Great.gov.uk International - How to set up in the UK"
 
 
 SELECTORS = {}
-SELECTORS.update(common_selectors.HEADER_INTERNATIONAL)
+SELECTORS.update(common_selectors.INTERNATIONAL_HEADER)
 SELECTORS.update(common_selectors.BETA_BAR)
 SELECTORS.update(common_selectors.ERROR_REPORTING)
-SELECTORS.update(common_selectors.FOOTER_INTERNATIONAL)
+SELECTORS.update(common_selectors.INTERNATIONAL_FOOTER)
 
 
 def visit(driver: WebDriver):

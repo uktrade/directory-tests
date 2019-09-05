@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Find a Supplier Thank you for contacting supplier"""
+"""Find a Supplier - Thank you for your message."""
 import logging
 from typing import List
 from urllib.parse import urljoin
@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import Services
+from pages import Services, common_selectors
 from pages.common_actions import (
     Selector,
     check_for_sections,
@@ -15,26 +15,23 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from pages.fas.header_footer import HEADER_FOOTER_SELECTORS
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
-NAME = "Thank you for contacting us"
-SERVICE = Services.FIND_A_SUPPLIER
-TYPE = "contact"
-URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "suppliers/{company_number}/contact/success/")
+NAME = "Find a UK business partner"
+SERVICE = Services.INTERNATIONAL
+TYPE = "Thank you for your message"
+URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "contact/success/")
 PAGE_TITLE = "Find a Buyer - GREAT.gov.uk"
 
 SELECTORS = {
     "content": {
         "itself": Selector(By.ID, "content"),
-        "heading": Selector(By.CSS_SELECTOR, "#content h1"),
+        "heading": Selector(By.CSS_SELECTOR, "#content h2"),
         "description": Selector(By.CSS_SELECTOR, "#content p"),
-        "browse more companies": Selector(
-            By.CSS_SELECTOR, "#content div.ed-international-success-container a"
-        ),
     }
 }
-SELECTORS.update(HEADER_FOOTER_SELECTORS)
+SELECTORS.update(common_selectors.INTERNATIONAL_HEADER_WO_LANGUAGE_SELECTOR)
+SELECTORS.update(common_selectors.INTERNATIONAL_FOOTER)
 
 
 def visit(driver: WebDriver):

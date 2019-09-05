@@ -36,6 +36,12 @@ SELECTORS = {
         "description": Selector(By.CSS_SELECTOR, "#get-finance-hero p"),
         "logo": Selector(By.CSS_SELECTOR, "#get-finance-hero img"),
     },
+    "ukef breadcrumbs": {
+        "great.gov.uk": Selector(
+            By.CSS_SELECTOR, "nav.breadcrumbs li:nth-child(1) > a"
+        ),
+        "ukef": Selector(By.CSS_SELECTOR, "nav.breadcrumbs li:nth-child(2) > a"),
+    },
     "tell us about your business": {
         "itself": Selector(By.ID, "contact-section"),
         "description": Selector(By.CSS_SELECTOR, "#contact-section p"),
@@ -117,17 +123,3 @@ def get_video_watch_time(driver: WebDriver) -> int:
 def click_on_page_element(driver: WebDriver, element_name: str):
     find_and_click_on_page_element(driver, SELECTORS, element_name)
     take_screenshot(driver, NAME + " after clicking on " + element_name)
-
-
-def click_breadcrumb(driver: WebDriver, name: str):
-    breadcrumbs = find_elements(driver, BREADCRUMB_LINKS)
-    url = driver.current_url
-    link = None
-    for breadcrumb in breadcrumbs:
-        if breadcrumb.text.lower() == name.lower():
-            link = breadcrumb
-    assert (
-        link
-    ), f"Couldn't find '{name}' breadcrumb on {url}. Found breadcrumbs: {[breadcrumb.text for breadcrumb in breadcrumbs]}"
-    link.click()
-    take_screenshot(driver, " after clicking on " + name + " breadcrumb")

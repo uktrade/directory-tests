@@ -2,6 +2,7 @@
 """International - Contact the Capital Investment team page"""
 from typing import List
 from urllib.parse import urljoin
+from uuid import uuid4
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -45,13 +46,13 @@ SELECTORS = {
             By.ID, "id_terms_agreed", type=ElementType.CHECKBOX, is_visible=False
         ),
         "submit": SUBMIT_BUTTON,
-    },
+    }
 }
 
-SELECTORS.update(common_selectors.HEADER_INTERNATIONAL)
+SELECTORS.update(common_selectors.INTERNATIONAL_HEADER)
 SELECTORS.update(common_selectors.BREADCRUMBS)
 SELECTORS.update(common_selectors.ERROR_REPORTING)
-SELECTORS.update(common_selectors.FOOTER_INTERNATIONAL)
+SELECTORS.update(common_selectors.INTERNATIONAL_FOOTER)
 
 
 def visit(driver: WebDriver, *, page_name: str = None):
@@ -70,7 +71,7 @@ def should_see_sections(driver: WebDriver, names: List[str]):
 def generate_form_details(actor: Actor) -> dict:
     result = {
         "given name": f"send by {actor.alias} - automated tests",
-        "family name": actor.alias,
+        "family name": str(uuid4()),
         "email": actor.email,
         "phone number": "01234567890",
         "country": None,

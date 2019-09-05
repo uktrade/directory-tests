@@ -3,6 +3,7 @@
 import logging
 from typing import List
 from urllib.parse import urljoin
+from uuid import uuid4
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -137,7 +138,7 @@ def check_state_of_form_element(
 
 def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
     details = {
-        "full name": actor.company_name or "Automated test",
+        "full name": str(uuid4()),
         "job title": "QA @ DIT",
         "email": actor.email,
         "phone": "0123456789",

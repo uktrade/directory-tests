@@ -41,7 +41,7 @@ ELEMENTS_ON = {
         "العربيّة": "ar",
         "Français": "fr",
     },
-    "find a supplier - home": {
+    "find a supplier - landing": {
         "English": "en-gb",
         "简体中文": "zh-hans",
         "Deutsch": "de",

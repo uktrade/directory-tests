@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import Services
+from pages import Services, common_selectors
 from pages.common_actions import (
     Selector,
     assertion_msg,
@@ -15,11 +15,9 @@ from pages.common_actions import (
     check_url,
     find_and_click_on_page_element,
     find_element,
-    find_elements,
     go_to_url,
     take_screenshot,
 )
-from pages.fas.header_footer import HEADER_FOOTER_SELECTORS
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
 NAME = "Industry"
@@ -100,7 +98,8 @@ SELECTORS = {
     },
     "articles": {"itself": Selector(By.ID, "articles-section")},
 }
-SELECTORS.update(HEADER_FOOTER_SELECTORS)
+SELECTORS.update(common_selectors.INTERNATIONAL_HEADER_WO_LANGUAGE_SELECTOR)
+SELECTORS.update(common_selectors.INTERNATIONAL_FOOTER)
 
 URLs = {
     "aerospace": urljoin(URL, "aerospace/"),
@@ -184,18 +183,6 @@ def should_see_content_for(driver: WebDriver, industry_name: str):
 def click_on_page_element(driver: WebDriver, element_name: str):
     find_and_click_on_page_element(driver, SELECTORS, element_name)
     take_screenshot(driver, NAME + " after clicking on " + element_name)
-
-
-def click_breadcrumb(driver: WebDriver, name: str):
-    breadcrumbs = find_elements(driver, BREADCRUMB_LINKS)
-    url = driver.current_url
-    link = None
-    for breadcrumb in breadcrumbs:
-        if breadcrumb.text.lower() == name.lower():
-            link = breadcrumb
-    assert link, "Couldn't find '{}' breadcrumb on {}".format(name, url)
-    link.click()
-    take_screenshot(driver, " after clicking on " + name + " breadcrumb")
 
 
 def search(driver: WebDriver, *, keyword: str = None, sector: str = None):

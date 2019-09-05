@@ -27,9 +27,7 @@ URL = urljoin(EXRED_UI_URL, "advice/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 ARTICLE_LINKS = Selector(
-    By.CSS_SELECTOR,
-    "#advice-list-section a",
-    type=ElementType.LINK,
+    By.CSS_SELECTOR, "#advice-list-section a", type=ElementType.LINK
 )
 SELECTORS = {
     "hero": {
@@ -44,9 +42,7 @@ SELECTORS = {
         "itself": Selector(By.ID, "advice-list-section"),
         "cards": Selector(By.CSS_SELECTOR, "#advice-list-section div.card"),
         "articles": ARTICLE_LINKS,
-        "article images": Selector(
-            By.CSS_SELECTOR, "#advice-list-section .card-image"
-        ),
+        "article images": Selector(By.CSS_SELECTOR, "#advice-list-section .card-image"),
     },
     "error reporting": {
         "itself": Selector(By.CSS_SELECTOR, "section.error-reporting"),

@@ -53,10 +53,10 @@ SELECTORS = {
         "contact us": Selector(By.CSS_SELECTOR, "#eu-exit-cta-box a"),
     },
 }
-SELECTORS.update(common_selectors.HEADER_INTERNATIONAL)
+SELECTORS.update(common_selectors.INTERNATIONAL_HEADER)
 SELECTORS.update(common_selectors.BETA_BAR)
 SELECTORS.update(common_selectors.ERROR_REPORTING)
-SELECTORS.update(common_selectors.FOOTER_INTERNATIONAL)
+SELECTORS.update(common_selectors.INTERNATIONAL_FOOTER)
 
 
 def visit(driver: WebDriver):

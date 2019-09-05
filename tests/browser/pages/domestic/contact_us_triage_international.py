@@ -19,12 +19,12 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from pages.fas import contact_us
 from pages.international import (
     international_contact_us,
     international_contact_us_capital_invest,
     international_contact_us_exporting_to_the_uk,
     international_eu_exit_contact_us,
+    trade_contact_us,
 )
 from pages.invest import contact_us as invest_contact_us
 from settings import EXRED_UI_URL
@@ -89,7 +89,7 @@ POs = {
     "investing in the uk": invest_contact_us,
     "capital investment in the uk": international_contact_us_capital_invest,
     "exporting to the uk": international_contact_us_exporting_to_the_uk,
-    "find a uk business partner": contact_us,
+    "find a uk business partner": trade_contact_us,
     "brexit enquiries": international_eu_exit_contact_us,
     "other": international_contact_us,
 }

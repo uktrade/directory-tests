@@ -7,35 +7,28 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import Services
-from pages.common_actions import (
-    Selector,
-    check_for_sections,
-    go_to_url,
-    take_screenshot,
-)
-from pages.fas.header_footer import HEADER_FOOTER_SELECTORS
+from pages import Services, common_selectors
+from pages.common_actions import Selector, check_for_sections, take_screenshot
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
 NAME = "Thank you for contacting supplier"
 SERVICE = Services.FIND_A_SUPPLIER
 TYPE = "contact"
-URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "suppliers/{company_number}/contact/success/")
+URL = urljoin(
+    DIRECTORY_UI_SUPPLIER_URL, "suppliers/{company_number}/contact/success/{query}"
+)
 PAGE_TITLE = "Find a Buyer - GREAT.gov.uk"
 
 SELECTORS = {
     "content": {
-        "itself": Selector(By.ID, "success-message-container"),
-        "heading": Selector(By.CSS_SELECTOR, "#success-message-container h1"),
-        "description": Selector(By.CSS_SELECTOR, "#success-message-container p"),
+        "itself": Selector(By.CSS_SELECTOR, "div.message-box-with-icon"),
+        "heading": Selector(By.CSS_SELECTOR, "div.message-box-with-icon h3"),
+        "description": Selector(By.CSS_SELECTOR, "div.message-box-with-icon p"),
         "browse more companies": Selector(By.CSS_SELECTOR, "#next-container a"),
     }
 }
-SELECTORS.update(HEADER_FOOTER_SELECTORS)
-
-
-def visit(driver: WebDriver):
-    go_to_url(driver, URL, NAME)
+SELECTORS.update(common_selectors.INTERNATIONAL_HEADER_WO_LANGUAGE_SELECTOR)
+SELECTORS.update(common_selectors.INTERNATIONAL_FOOTER)
 
 
 def should_be_here(driver: WebDriver):

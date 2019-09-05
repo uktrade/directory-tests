@@ -2,6 +2,7 @@
 """Domestic - First page of Long Contact us form"""
 from types import ModuleType
 from urllib.parse import urljoin
+from uuid import uuid4
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -53,7 +54,7 @@ def should_be_here(driver: WebDriver):
 def generate_form_details(actor: Actor) -> dict:
     result = {
         "first name": f"send by {actor.alias} - automated tests",
-        "last name": actor.alias,
+        "last name": str(uuid4()),
         "position": "automated tests",
         "email": actor.email,
         "phone": "automated tests",

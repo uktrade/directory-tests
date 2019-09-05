@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
-"""Find a Supplier Landing Page Object."""
+"""Find a Supplier - Contact us."""
 import logging
 from typing import List
 from urllib.parse import urljoin
+from uuid import uuid4
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType, Services
+from pages import ElementType, Services, common_selectors
 from pages.common_actions import (
     Actor,
     Selector,
@@ -22,13 +23,12 @@ from pages.common_actions import (
     tick_captcha_checkbox,
     tick_checkboxes_by_labels,
 )
-from pages.fas.header_footer import HEADER_FOOTER_SELECTORS
-from settings import INTERNATIONAL_UI_URL
+from settings import DIRECTORY_UI_SUPPLIER_URL
 
-NAME = "Contact Us"
-SERVICE = Services.FIND_A_SUPPLIER
-TYPE = "contact"
-URL = urljoin(INTERNATIONAL_UI_URL, "content/trade/contact/")
+NAME = "Find a UK business partner"
+SERVICE = Services.INTERNATIONAL
+TYPE = "contact us"
+URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "contact/")
 PAGE_TITLE = "Contact us - trade.great.gov.uk"
 
 SUBMIT_BUTTON = Selector(
@@ -54,7 +54,8 @@ SELECTORS = {
         "submit": SUBMIT_BUTTON,
     }
 }
-SELECTORS.update(HEADER_FOOTER_SELECTORS)
+SELECTORS.update(common_selectors.INTERNATIONAL_HEADER_WO_LANGUAGE_SELECTOR)
+SELECTORS.update(common_selectors.INTERNATIONAL_FOOTER)
 
 
 def visit(driver: WebDriver):
@@ -74,7 +75,7 @@ def should_see_sections(driver: WebDriver, names: List[str]):
 def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
     company_name = actor.company_name or "Automated test"
     result = {
-        "full name": actor.alias,
+        "full name": str(uuid4()),
         "email": actor.email,
         "phone number": "this is a test",
         "industry": None,

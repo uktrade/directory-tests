@@ -69,14 +69,14 @@ BREADCRUMBS = {
             By.CSS_SELECTOR, ".breadcrumbs li[aria-current='page']"
         ),
         "links": Selector(By.CSS_SELECTOR, ".breadcrumbs a"),
-    }
+    },
 }
 
 ERROR_REPORTING = {
     "error reporting": {
         "itself": Selector(By.CSS_SELECTOR, "section.error-reporting"),
-        "link": Selector(By.ID, "error-reporting-section-contact-us"),
-    }
+        "report a problem with the page": Selector(By.ID, "error-reporting-section-contact-us"),
+    },
 }
 
 FOOTER = {
@@ -123,7 +123,7 @@ LOGOS = {
     },
 }
 
-HEADER_INTERNATIONAL = {
+INTERNATIONAL_HEADER = {
     "header": {
         # cookie notice
         "itself": Selector(By.ID, "header-cookie-notice", is_visible=False),
@@ -153,13 +153,13 @@ HEADER_INTERNATIONAL = {
         "industries": Selector(By.LINK_TEXT, "Industries", type=ElementType.LINK),
     }
 }
-HEADER_INTERNATIONAL_WO_LANGUAGE_SELECTOR = copy.deepcopy(HEADER_INTERNATIONAL)
-HEADER_INTERNATIONAL_WO_LANGUAGE_SELECTOR["header"].pop("language selector")
+INTERNATIONAL_HEADER_WO_LANGUAGE_SELECTOR = copy.deepcopy(INTERNATIONAL_HEADER)
+INTERNATIONAL_HEADER_WO_LANGUAGE_SELECTOR["header"].pop("language selector")
 
-FOOTER_INTERNATIONAL = {
+INTERNATIONAL_FOOTER = {
     "footer": {
         "great footer logo": Selector(By.ID, "great-footer-great-logo"),
-        "contact us": Selector(By.ID, "footer-contact"),
+        "contact us footer": Selector(By.ID, "footer-contact"),
         "privacy and cookies": Selector(By.ID, "footer-privacy-and-cookies"),
         "terms and conditions": Selector(By.ID, "footer-terms-and-conditions"),
         "department for international trade on gov.uk": Selector(By.ID, "footer-dit"),
@@ -167,6 +167,12 @@ FOOTER_INTERNATIONAL = {
         "dit footer logo": Selector(By.ID, "great-global-footer-logo"),
         "copyright notice": Selector(By.ID, "great-footer-copyright"),
     }
+}
+INTERNATIONAL_HERO = {
+    "hero": {
+        "itself": Selector(By.ID, "hero"),
+        "heading": Selector(By.CSS_SELECTOR, "#hero h1"),
+    },
 }
 
 HEADER_INVEST = {

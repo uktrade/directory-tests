@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import Services
+from pages import Services, common_selectors
 from pages.common_actions import (
     Selector,
     check_for_sections,
@@ -15,7 +15,6 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from pages.fas.header_footer import HEADER_FOOTER_SELECTORS
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
 NAME = "Empty Search Results"
@@ -32,7 +31,8 @@ SELECTORS = {
     },
     "no results": {"itself": Selector(By.ID, "fassearch-no-results-content")},
 }
-SELECTORS.update(HEADER_FOOTER_SELECTORS)
+SELECTORS.update(common_selectors.INTERNATIONAL_HEADER_WO_LANGUAGE_SELECTOR)
+SELECTORS.update(common_selectors.INTERNATIONAL_FOOTER)
 
 
 def visit(driver: WebDriver):

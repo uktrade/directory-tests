@@ -36,7 +36,7 @@ Feature: International Page
     Examples:
       | service            | expected_service       |
       | Expand to the UK   | Invest - Home          |
-      | Find a UK supplier | Find a Supplier - Home |
+      | Find a UK supplier | Find a Supplier - Landing |
 
     @wip
     Examples: ATM there are no links to these services

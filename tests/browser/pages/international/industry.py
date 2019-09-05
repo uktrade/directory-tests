@@ -4,13 +4,16 @@ import logging
 from typing import List
 from urllib.parse import urljoin
 
+from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages import Services, common_selectors
 from pages.common_actions import (
+    Selector,
     assertion_msg,
     check_for_sections,
     check_url,
+    find_and_click_on_page_element,
     find_elements,
     find_selector_by_name,
     take_screenshot,
@@ -20,21 +23,23 @@ from settings import EXRED_UI_URL
 
 NAME = "Industry"
 NAMES = [
-    "Industry",
     "Aerospace",
     "Agricultural technology",
     "Automotive",
     "Creative industries",
     "Cyber security",
     "Education",
+    "Energy",
     "Engineering and manufacturing",
-    "Financial services",
     "Financial and professional services",
+    "Financial services",
     "Food and drink",
-    "Health and Life Sciences",
+    "Healthcare and Life Sciences",
+    "Industry",
     "Legal services",
     "Maritime",
     "Nuclear energy",
+    "Real Estate",
     "Retail",
     "Space",
     "Sports economy",
@@ -52,28 +57,54 @@ URLs = {
     "agricultural technology": urljoin(URL, "agricultural-technology/"),
     "automotive": urljoin(URL, "automotive/"),
     "creative industries": urljoin(URL, "creative-industries/"),
+    "creative services": urljoin(URL, "creative-services/"),
     "cyber security": urljoin(URL, "cyber-security/"),
     "education": urljoin(URL, "education/"),
+    "energy": urljoin(URL, "energy/"),
     "engineering and manufacturing": urljoin(URL, "engineering-and-manufacturing/"),
     "financial and professional services": urljoin(URL, "financial-services/"),
     "financial services": urljoin(URL, "financial-services/"),
     "food and drink": urljoin(URL, "food-and-drink/"),
-    "health and life sciences": urljoin(URL, "health-and-life-sciences/"),
+    "healthcare and life sciences": urljoin(URL, "health-and-life-sciences/"),
     "legal services": urljoin(URL, "legal-services/"),
     "maritime": urljoin(URL, "maritime/"),
     "nuclear energy": urljoin(URL, "nuclear-energy/"),
+    "real estate": urljoin(URL, "real-estate/"),
     "retail": urljoin(URL, "retail/"),
     "space": urljoin(URL, "space/"),
     "sports economy": urljoin(URL, "sports-economy/"),
     "technology": urljoin(URL, "technology/"),
 }
 
-
-SELECTORS = {}
-SELECTORS.update(common_selectors.HEADER_INTERNATIONAL)
+SELECTORS = {
+    "industry breadcrumbs": {
+        "great.gov.uk international": Selector(
+            By.CSS_SELECTOR, "#breadcrumb-section ol > li:nth-child(1) > a"
+        ),
+        "industries": Selector(
+            By.CSS_SELECTOR, "#breadcrumb-section ol > li:nth-child(2) > a"
+        ),
+    },
+    "content": {
+        "section 1": Selector(By.ID, "sector-section-one"),
+        "section 2": Selector(By.ID, "sector-section-two"),
+        "section statistics": Selector(By.ID, "sector-statistics-section"),
+    },
+    "next steps": {
+        "next steps": Selector(By.ID, "sector-next-steps-section"),
+        "invest in the uk": Selector(
+            By.CSS_SELECTOR, "#sector-next-steps-section div:nth-child(1) > a"
+        ),
+        "buy from the uk": Selector(
+            By.CSS_SELECTOR, "#sector-next-steps-section div:nth-child(2) > a"
+        ),
+    },
+}
+SELECTORS.update(common_selectors.INTERNATIONAL_HEADER)
+SELECTORS.update(common_selectors.INTERNATIONAL_HERO)
 SELECTORS.update(common_selectors.BREADCRUMBS)
 SELECTORS.update(common_selectors.ERROR_REPORTING)
-SELECTORS.update(common_selectors.FOOTER_INTERNATIONAL)
+SELECTORS.update(common_selectors.INTERNATIONAL_FOOTER)
 
 
 def visit(driver: WebDriver, *, page_name: str = None):
@@ -108,14 +139,6 @@ def should_see_content_for(driver: WebDriver, industry_name: str):
         assert industry_name.lower() in source.lower()
 
 
-def click_breadcrumb(driver: WebDriver, name: str):
-    selector = find_selector_by_name(SELECTORS, "links")
-    breadcrumbs = find_elements(driver, selector)
-    url = driver.current_url
-    link = None
-    for breadcrumb in breadcrumbs:
-        if breadcrumb.text.lower() == name.lower():
-            link = breadcrumb
-    assert link, "Couldn't find '{}' breadcrumb on {}".format(name, url)
-    link.click()
-    take_screenshot(driver, " after clicking on " + name + " breadcrumb")
+def click_on_page_element(driver: WebDriver, element_name: str):
+    find_and_click_on_page_element(driver, SELECTORS, element_name)
+    take_screenshot(driver, NAME + " after clicking on " + element_name)

@@ -65,10 +65,10 @@ SELECTORS = {
         "result links": Selector(By.CSS_SELECTOR, "#companies-column ul li a"),
     },
 }
-SELECTORS.update(common_selectors.HEADER_INTERNATIONAL_WO_LANGUAGE_SELECTOR)
+SELECTORS.update(common_selectors.INTERNATIONAL_HEADER_WO_LANGUAGE_SELECTOR)
 SELECTORS.update(common_selectors.BREADCRUMBS)
 SELECTORS.update(common_selectors.ERROR_REPORTING)
-SELECTORS.update(common_selectors.FOOTER_INTERNATIONAL)
+SELECTORS.update(common_selectors.INTERNATIONAL_FOOTER)
 
 
 def should_be_here(driver: WebDriver):

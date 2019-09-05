@@ -7,7 +7,7 @@ from typing import List
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import Services
+from pages import Services, common_selectors
 from pages.common_actions import (
     Selector,
     check_for_sections,
@@ -20,19 +20,19 @@ from pages.common_actions import (
     take_screenshot,
     wait_for_page_load_after_action,
 )
-from pages.fas.header_footer import HEADER_FOOTER_SELECTORS_W_LANGUAGE_SELECTOR
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
-NAME = "Home"
+NAME = "Landing"
 SERVICE = Services.FIND_A_SUPPLIER
-TYPE = "home"
+TYPE = "Landing"
 URL = DIRECTORY_UI_SUPPLIER_URL
 PAGE_TITLE = "Find UK suppliers - trade.great.gov.uk"
 
-SEARCH_INPUT = Selector(By.ID, "id_term")
+SEARCH_INPUT = Selector(By.CSS_SELECTOR, "#search-area form input[name=q]")
 SEARCH_SECTOR = Selector(By.ID, "id_industries")
 SEARCH_BUTTON = Selector(By.CSS_SELECTOR, "#search-area > form button")
 CONTACT_US_BUTTON = Selector(By.CSS_SELECTOR, "#introduction-section a")
+INDUSTRY_CARDS = Selector(By.CSS_SELECTOR, "#industries-section a.labelled-image-card")
 SELECTORS = {
     "hero": {"itself": Selector(By.CSS_SELECTOR, "section#hero")},
     "find uk suppliers": {
@@ -48,36 +48,29 @@ SELECTORS = {
     },
     "uk industries": {
         "itself": Selector(By.ID, "industries-section"),
+        "industry cards": INDUSTRY_CARDS,
         "first industry": Selector(
-            By.CSS_SELECTOR, "#industries-section a:nth-child(1)"
+            By.CSS_SELECTOR, "#industries-section div.grid-row div:nth-child(1) > a"
         ),
         "second industry": Selector(
-            By.CSS_SELECTOR, "#industries-section a:nth-child(2)"
+            By.CSS_SELECTOR, "#industries-section div.grid-row div:nth-child(2) > a"
         ),
         "third industry": Selector(
-            By.CSS_SELECTOR, "#industries-section a:nth-child(3)"
+            By.CSS_SELECTOR, "#industries-section div.grid-row div:nth-child(3) > a"
         ),
         "see more industries": Selector(
-            By.CSS_SELECTOR, "#industries-section > div > a.button"
+            By.CSS_SELECTOR, "#industries-section a.button"
         ),
     },
-    "uk services": {
+    "how we can help": {
         "itself": Selector(By.ID, "services-section"),
-        "first service": Selector(
-            By.CSS_SELECTOR, "#services-section div.column-one-quarter:nth-child(3)"
-        ),
-        "second service": Selector(
-            By.CSS_SELECTOR, "#services-section div.column-one-quarter:nth-child(4)"
-        ),
-        "third service": Selector(
-            By.CSS_SELECTOR, "#services-section div.column-one-quarter:nth-child(5)"
-        ),
-        "fourth service": Selector(
-            By.CSS_SELECTOR, "#services-section div.column-one-quarter:nth-child(6)"
+        "help options": Selector(
+            By.CSS_SELECTOR, "#services-section div.column-quarter-xl"
         ),
     },
 }
-SELECTORS.update(HEADER_FOOTER_SELECTORS_W_LANGUAGE_SELECTOR)
+SELECTORS.update(common_selectors.INTERNATIONAL_HEADER_WO_LANGUAGE_SELECTOR)
+SELECTORS.update(common_selectors.INTERNATIONAL_FOOTER)
 
 
 def visit(driver: WebDriver):
@@ -136,8 +129,7 @@ def open_industry(driver: WebDriver, industry_name: str):
 
 
 def open_any_article(driver: WebDriver) -> str:
-    selector = Selector(By.CSS_SELECTOR, "#industries-section a.industry-card")
-    links = find_elements(driver, selector)
+    links = find_elements(driver, INDUSTRY_CARDS)
     link = random.choice(links)
     link_text = link.text
     check_if_element_is_visible(link, element_name=link_text)

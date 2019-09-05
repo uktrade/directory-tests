@@ -84,7 +84,9 @@ SELECTORS = {
         "create an export plan": Selector(By.LINK_TEXT, "Create an export plan"),
         "find an export market": Selector(By.LINK_TEXT, "Find an export market"),
         "define route to market": Selector(By.LINK_TEXT, "Define route to market"),
-        "get export finance and funding": Selector(By.LINK_TEXT, "Get export finance and funding"),
+        "get export finance and funding": Selector(
+            By.LINK_TEXT, "Get export finance and funding"
+        ),
         "manage payment for export orders": Selector(
             By.LINK_TEXT, "Manage payment for export orders"
         ),

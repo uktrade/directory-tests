@@ -1,14 +1,14 @@
 @ED-3580
 @fas-home-page
 @no-sso-email-verification-required
-Feature: Find a Supplier - home page
+Feature: Find a Supplier - Landing page
 
   Background:
     Given basic authentication is done for "International - Landing" page
 
   @ED-4242
   Scenario: Buyers should be able to view "Find a Supplier home" page
-    Given "Robert" visits the "Find a Supplier - Home" page
+    Given "Robert" visits the "Find a Supplier - Landing" page
 
     Then "Robert" should see following sections
       | Sections          |
@@ -17,14 +17,14 @@ Feature: Find a Supplier - home page
       | Find UK Suppliers |
       | Contact us        |
       | UK Industries     |
-      | UK Services       |
+      | How we can help   |
       | Footer            |
 
 
   @ED-4245
   @search
   Scenario Outline: Buyers should be able to "Find UK suppliers" in "<specific>" industry from the "Find a Supplier home" page using "<following>" keyword
-    Given "Robert" visits the "Find a Supplier - Home" page
+    Given "Robert" visits the "Find a Supplier - Landing" page
 
     When "Robert" searches for companies using "<following>" keyword in "<specific>" sector
 
@@ -39,18 +39,18 @@ Feature: Find a Supplier - home page
 
   @ED-4246
   @contact-us
-  Scenario: Buyers should be able to get to the "Contact us" page from the "Find a Supplier - home" page
-    Given "Robert" visits the "Find a Supplier - Home" page
+  Scenario: Buyers should be able to get to the "Contact us" page from the "Find a Supplier - Landing" page
+    Given "Robert" visits the "Find a Supplier - Landing" page
 
     When "Robert" decides to use "Contact us" button
 
-    Then "Robert" should be on the "Find a Supplier - Contact us" page
+    Then "Robert" should be on the "International - Find a UK business partner - Contact us" page
 
 
   @ED-4246
   @contact-us
   Scenario: Buyers should be able to get to the "Contact us" page using footer link
-    Given "Robert" visits the "Find a Supplier - Home" page
+    Given "Robert" visits the "Find a Supplier - Landing" page
 
     When "Robert" decides to use "Contact us footer" link
 
@@ -61,34 +61,36 @@ Feature: Find a Supplier - home page
   @captcha
   @dev-only
   @contact-us
-  Scenario: Buyers should be able to contact DIT from the "Find a Supplier - home" page
-    Given "Robert" visits the "Find a Supplier - Home" page
+  Scenario: Buyers should be able to contact DIT from the "Find a Supplier - Landing" page
+    Given "Robert" visits the "Find a Supplier - Landing" page
     And "Robert" decided to use "Contact us" link
+    And "Robert" is on the "International - Find a UK business partner - Contact us" page
 
-    When "Robert" fills out and submits the contact us form
+    When "Robert" fills out and submits the form
 
-    Then "Robert" should be on the "Find a Supplier - Thank you for your message" page
+    Then "Robert" should be on the "International - Find a UK business partner - Thank you for your message" page
     And "Robert" should see following sections
       | Sections          |
       | Header            |
+      | Content           |
       | Footer            |
 
 
   @ED-4248
   @industry-page
-  Scenario: Buyers should be able to find out more about featured industries from the "Find a Supplier - home" page
-    Given "Robert" visits the "Find a Supplier - Home" page
+  Scenario: Buyers should be able to find out more about featured industries from the "Find a Supplier - Landing" page
+    Given "Robert" visits the "Find a Supplier - Landing" page
 
     When "Robert" decides to read about one of listed industries
 
-    Then "Robert" should be on the "Find a Supplier - Industry" page or be redirected to "International - Industry" page
+    Then "Robert" should be on the "International - Industry" page
 
 
   @ED-4249
   @industries-page
-  Scenario: Buyers should be able to see more UK industries from the "Find a Supplier - home" page
-    Given "Robert" visits the "Find a Supplier - Home" page
+  Scenario: Buyers should be able to see more UK industries from the "Find a Supplier - Landing" page
+    Given "Robert" visits the "Find a Supplier - Landing" page
 
     When "Robert" decides to "see more industries"
 
-    Then "Robert" should be on the "Find a Supplier - Industries" page
+    Then "Robert" should be on the "International - Industries" page

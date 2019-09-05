@@ -3,11 +3,12 @@
 import logging
 from typing import List
 from urllib.parse import urljoin
+from uuid import uuid4
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType, Services
+from pages import ElementType, Services, common_selectors
 from pages.common_actions import (
     Actor,
     Selector,
@@ -22,7 +23,6 @@ from pages.common_actions import (
     tick_checkboxes,
     try_js_click_on_element_click_intercepted_exception,
 )
-from pages.fas.header_footer import HEADER_FOOTER_SELECTORS
 from settings import DIRECTORY_UI_SUPPLIER_URL
 
 NAME = "Contact Supplier"
@@ -49,7 +49,8 @@ SELECTORS = {
         "send": SEND_BUTTON,
     }
 }
-SELECTORS.update(HEADER_FOOTER_SELECTORS)
+SELECTORS.update(common_selectors.INTERNATIONAL_HEADER_WO_LANGUAGE_SELECTOR)
+SELECTORS.update(common_selectors.INTERNATIONAL_FOOTER)
 
 
 def visit(driver: WebDriver, company_number: str):
@@ -71,7 +72,7 @@ def generate_form_details(actor: Actor, *, custom_details: dict = None) -> dict:
     company_name = actor.company_name or "Automated test"
     result = {
         "given name": actor.alias,
-        "family name": "AUTOMATES TESTS",
+        "family name": str(uuid4()),
         "company name": company_name,
         "country": "AUTOMATED TESTS",
         "email": actor.email,

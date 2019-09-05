@@ -6,7 +6,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import Services
+from pages import Services, common_selectors
 from pages.common_actions import Selector, check_url, take_screenshot
 from settings import EXRED_UI_URL
 
@@ -37,6 +37,8 @@ SELECTORS = {
         "email": Selector(By.ID, "share-email"),
     },
 }
+SELECTORS.update(common_selectors.INTERNATIONAL_HEADER_WO_LANGUAGE_SELECTOR)
+SELECTORS.update(common_selectors.INTERNATIONAL_FOOTER)
 
 
 def should_be_here(driver: WebDriver):

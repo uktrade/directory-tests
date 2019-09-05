@@ -44,8 +44,8 @@ SELECTORS = {
         "submit": SUBMIT_BUTTON,
     },
 }
-SELECTORS.update(common_selectors.HEADER_INTERNATIONAL_WO_LANGUAGE_SELECTOR)
-SELECTORS.update(common_selectors.FOOTER_INTERNATIONAL)
+SELECTORS.update(common_selectors.INTERNATIONAL_HEADER_WO_LANGUAGE_SELECTOR)
+SELECTORS.update(common_selectors.INTERNATIONAL_FOOTER)
 
 
 def visit(driver: WebDriver):

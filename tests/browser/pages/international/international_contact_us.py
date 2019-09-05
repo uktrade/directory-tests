@@ -1,18 +1,28 @@
 # -*- coding: utf-8 -*-
 """International - Contact us form"""
+import logging
+import random
 from types import ModuleType
 from urllib.parse import urljoin
+from uuid import uuid4
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages import ElementType, Services
 from pages.common_actions import (
+    Actor,
     Selector,
+    check_radio,
     check_url,
+    fill_out_input_fields,
+    fill_out_textarea_fields,
     find_element,
     go_to_url,
+    pick_option,
     take_screenshot,
+    tick_captcha_checkbox,
+    tick_checkboxes,
 )
 from pages.domestic import contact_us_triage_domestic
 from settings import EXRED_UI_URL
@@ -42,9 +52,7 @@ SELECTORS = {
         "country": Selector(By.ID, "id_country_name", type=ElementType.SELECT),
         "city": Selector(By.ID, "id_city", type=ElementType.INPUT),
         "comment": Selector(By.ID, "id_comment", type=ElementType.TEXTAREA),
-        "terms and conditions": Selector(
-            By.ID, "id_terms_agreed", type=ElementType.CHECKBOX
-        ),
+        "accept t&c": Selector(By.ID, "id_terms_agreed", type=ElementType.CHECKBOX),
         "submit": SUBMIT_BUTTON,
     }
 }
@@ -57,6 +65,35 @@ def visit(driver: WebDriver):
 def should_be_here(driver: WebDriver):
     take_screenshot(driver, NAME)
     check_url(driver, URL, exact_match=True)
+
+
+def generate_form_details(actor: Actor) -> dict:
+    is_company = random.choice([True, False])
+    result = {
+        "first name": actor.alias,
+        "last name": str(uuid4()),
+        "email": actor.email,
+        "company": is_company,
+        "other type of organisation": not is_company,
+        "your organisation name": "automated tests",
+        "country": None,
+        "city": "Automated tests",
+        "comment": "This is a test message sent via automated tests",
+        "accept t&c": True,
+    }
+    logging.debug(f"Generated form details: {result}")
+    return result
+
+
+def fill_out(driver: WebDriver, details: dict):
+    form_selectors = SELECTORS["enter your details form"]
+    fill_out_input_fields(driver, form_selectors, details)
+    fill_out_textarea_fields(driver, form_selectors, details)
+    check_radio(driver, form_selectors, details)
+    pick_option(driver, form_selectors, details)
+    tick_checkboxes(driver, form_selectors, details)
+    tick_captcha_checkbox(driver)
+    take_screenshot(driver, "After filling out the form")
 
 
 def submit(driver: WebDriver) -> ModuleType:

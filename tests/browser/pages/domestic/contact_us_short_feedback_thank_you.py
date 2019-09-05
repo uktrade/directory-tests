@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-"""Domestic - Feedback Contact us form"""
+"""Domestic - Feedback Contact us form thank you page"""
 import logging
 import random
 from types import ModuleType
 from urllib.parse import urljoin
+from uuid import uuid4
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -23,10 +24,10 @@ from pages.common_actions import (
 )
 from settings import EXRED_UI_URL
 
-NAME = "Feedback"
+NAME = "Thank you for your feedback"
 SERVICE = Services.DOMESTIC
 TYPE = "Contact us"
-URL = urljoin(EXRED_UI_URL, "contact/feedback/")
+URL = urljoin(EXRED_UI_URL, "contact/feedback/success/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 SUBMIT_BUTTON = Selector(
@@ -35,7 +36,7 @@ SUBMIT_BUTTON = Selector(
 SELECTORS = {
     "form": {
         "itself": Selector(By.CSS_SELECTOR, "#lede form"),
-        "name": Selector(By.ID, "id_name", type=ElementType.INPUT),
+        "full name": Selector(By.ID, "id_name", type=ElementType.INPUT),
         "email": Selector(By.ID, "id_email", type=ElementType.INPUT),
         "feedback": Selector(By.ID, "id_comment", type=ElementType.TEXTAREA),
         "terms and conditions": Selector(
@@ -60,7 +61,7 @@ def should_be_here(driver: WebDriver, *, page_name: str = None):
 
 def generate_form_details(actor: Actor) -> dict:
     result = {
-        "name": f"Send by {actor.alias} - automated tests",
+        "full name": str(uuid4()),
         "email": actor.email,
         "feedback": f"Feedback submitted by automated tests {actor.alias}",
         "terms and conditions": True,
