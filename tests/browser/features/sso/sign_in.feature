@@ -1,6 +1,8 @@
 @sso
 Feature: Sign in
 
+  @bug
+  @TT-1778
   Scenario: Visitors should see all expected page elements on "Single Sign-On - Sign in"
     When "Robert" goes to the "Single Sign-On - Sign in" page
 
@@ -11,10 +13,12 @@ Feature: Sign in
       | Breadcrumbs                   |
       | Login form                    |
       | Create a great.gov.uk account |
-    # See TT-1778 there's a problem with lazy loading and Firefox
+#      See TT-1778 there's a problem with lazy loading and Firefox
 #      | Footer                        |
 
 
+  @bug
+  @TT-1778
   Scenario: Visitors should see all expected page elements on "Single Sign-On - Registration" page
     When "Robert" goes to the "Single Sign-On - Registration" page
 
@@ -24,9 +28,12 @@ Feature: Sign in
       | SSO links - logged out |
       | Breadcrumbs            |
       | Form                   |
-      | Footer                 |
+#      See TT-1778 there's a problem with lazy loading and Firefox
+#      | Footer                        |
 
 
+  @bug
+  @TT-1778
   Scenario: Visitors should see all expected page elements on "Profile - Sign in"
     Given "Robert" visits the "Single Sign-On - Sign in" page
 
@@ -38,4 +45,5 @@ Feature: Sign in
       | Header                 |
       | Breadcrumbs            |
       | Enrolment progress bar |
-      | Footer                 |
+#      See TT-1778 there's a problem with lazy loading and Firefox
+#      | Footer                        |
