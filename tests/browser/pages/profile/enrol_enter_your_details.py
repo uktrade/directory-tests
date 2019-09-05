@@ -65,6 +65,12 @@ SELECTORS = {
             type=ElementType.CHECKBOX,
             is_visible=False,
         ),
+        "t & c": Selector(
+            By.ID,
+            "id_personal-details-terms_agreed-label",
+            type=ElementType.CHECKBOX,
+            is_visible=False,
+        ),
         "submit": Selector(
             By.CSS_SELECTOR, "form button.button", type=ElementType.BUTTON
         ),
@@ -95,6 +101,7 @@ def generate_form_details(actor: Actor) -> dict:
         "job title": "automated tests",
         "phone number": "07123456789",
         "background checks": True,
+        "t & c": True,
     }
     logging.debug(f"Generated form details: {result}")
     return result
