@@ -440,6 +440,9 @@ def generic_a_notification_should_be_sent(
     submissions = find_form_submissions_by_subject_and_action(
         email=actor.email, subject=subject, action=action
     )
+    logging.debug(
+        f"Email submissions from '{actor.email}': {submissions}"
+    )
     error = (
         f"Expected to find 1 '{action}' notification entitled '{subject}' sent to "
         f"'{actor.email}', but found {len(submissions)}"
@@ -462,6 +465,9 @@ def generic_a_notification_should_be_sent_to_specific_dit_office(
         mailbox=mailbox_email,
         sender=actor.email,
     )
+    logging.debug(
+        f"Email submissions from '{actor.email}' to '{mailbox_email}': {submissions}"
+    )
     error = (
         f"Expected to find 1 notification sent to '{mailbox_email}' about contact "
         f"enquiry from {actor.email}, but found {len(submissions)}"
@@ -469,7 +475,7 @@ def generic_a_notification_should_be_sent_to_specific_dit_office(
     assert len(submissions) == 1, error
 
     error = (
-        f"A 'Notification about enquiry from '{actor.email}' was NOT sent to "
+        f"A notification about enquiry from '{actor.email}' was NOT sent to "
         f"{mailbox_name} mailbox: '{mailbox_email}'!"
     )
     assert submissions[0]["is_sent"], error
