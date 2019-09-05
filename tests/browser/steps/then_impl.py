@@ -554,7 +554,6 @@ def office_finder_should_see_correct_office_details(
 
 @retry(wait_fixed=5000, stop_max_attempt_number=3, wrap_exception=False)
 def forms_confirmation_email_should_not_be_sent(context: Context, actor_alias: str):
-    avoid_browser_stack_idle_timeout_exception(context.driver)
     actor = get_actor(context, actor_alias)
     submissions = find_form_submissions(actor.email)
     assert submissions, f"No form submissions found for {actor_alias}"

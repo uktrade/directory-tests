@@ -22,7 +22,6 @@ from steps.when_impl import (
     domestic_submit_soo_contact_us_form,
     fas_fill_out_and_submit_contact_us_form,
     fas_search_for_companies,
-    fas_use_breadcrumb,
     fas_view_article,
     fas_view_more_companies,
     fas_view_selected_company_profile,
@@ -186,12 +185,6 @@ def fas_when_actor_fills_out_and_submits_contact_us_form_wo_captcha(
     fas_fill_out_and_submit_contact_us_form(context, actor_alias, captcha=False)
 
 
-@when('"{actor_alias}" fills out and submits the contact us form')
-def fas_when_actor_fills_out_and_submits_contact_us_form(
-        context: Context, actor_alias: str):
-    fas_fill_out_and_submit_contact_us_form(context, actor_alias)
-
-
 @when('"{actor_alias}" says that his business is in "{option}"')
 @when('"{actor_alias}" says that his business is "{option}"')
 @when('"{actor_alias}" chooses "{option}" option')
@@ -210,13 +203,6 @@ def when_actor_chooses_form_option(
 def when_actor_selects_form_option(
         context: Context, actor_alias: str, option: str, dropdown: str):
     generic_select_dropdown_option(context, actor_alias, dropdown, option)
-
-
-@when('"{actor_alias}" decides to use "{breadcrumb_name}" breadcrumb on the "{page_name}" page')
-def fas_industries_use_breadcrumb(
-        context: Context, actor_alias: str, breadcrumb_name: str,
-        page_name: str):
-    fas_use_breadcrumb(context, actor_alias, breadcrumb_name, page_name)
 
 
 @when('"{actor_alias}" decides to view more companies in the current industry')

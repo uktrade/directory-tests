@@ -432,7 +432,7 @@ def fas_search_for_companies(
 def fas_searched_for_companies(
     context: Context, actor_alias: str, *, keyword: str = None, sector: str = None
 ):
-    visit_page(context, actor_alias, f"{fas.home.SERVICE} - {fas.home.NAME}")
+    visit_page(context, actor_alias, f"{fas.landing.SERVICE} - {fas.landing.NAME}")
     fas_search_for_companies(context, actor_alias, keyword=keyword, sector=sector)
     should_be_on_page(
         context,
@@ -479,22 +479,8 @@ def fas_fill_out_and_submit_contact_us_form(
         "source": sources,
         "accept t&c": accept_tc,
     }
-    fas.contact_us.fill_out(context.driver, contact_us_details, captcha=captcha)
-    fas.contact_us.submit(context.driver)
-
-
-def fas_use_breadcrumb(
-    context: Context, actor_alias: str, breadcrumb_name: str, page_name: str
-):
-    page = get_page_object(page_name)
-    has_action(page, "click_breadcrumb")
-    page.click_breadcrumb(context.driver, breadcrumb_name)
-    logging.debug(
-        "%s clicked on '%s' breadcrumb on %s",
-        actor_alias,
-        breadcrumb_name,
-        context.driver.current_url,
-    )
+    international.trade_contact_us.fill_out(context.driver, contact_us_details, captcha=captcha)
+    international.trade_contact_us.submit(context.driver)
 
 
 def fas_view_more_companies(context: Context, actor_alias: str):
