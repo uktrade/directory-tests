@@ -15,6 +15,7 @@ from steps.then_impl import (
     forms_confirmation_email_should_not_be_sent,
     generic_a_notification_should_be_sent,
     generic_a_notification_should_be_sent_to_specific_dit_office,
+    generic_a_notification_should_not_be_sent_to_specific_dit_office,
     generic_check_gtm_datalayer_properties,
     generic_check_gtm_events,
     generic_contact_us_should_receive_confirmation_email,
@@ -302,5 +303,14 @@ def then_notification_should_be_sent_to_specific_dit_office(
         context: Context, actor_alias: str, mailbox_name: str
 ):
     generic_a_notification_should_be_sent_to_specific_dit_office(
+        context, actor_alias, mailbox_name
+    )
+
+
+@then('an email notification about "{actor_alias}"\'s enquiry should NOT be send to "{mailbox_name}"')
+def then_notification_should_be_sent_to_specific_dit_office(
+        context: Context, actor_alias: str, mailbox_name: str
+):
+    generic_a_notification_should_not_be_sent_to_specific_dit_office(
         context, actor_alias, mailbox_name
     )

@@ -478,6 +478,52 @@ def generic_a_notification_should_be_sent_to_specific_dit_office(
         f"{mailbox_name} mailbox: {mailbox_email}")
 
 
+def generic_a_notification_should_not_be_sent_to_specific_dit_office(
+        context: Context, actor_alias: str, mailbox_name: str
+):
+    actor = get_actor(context, actor_alias)
+    forms_data = actor.forms_data
+    uuid = None
+    for data in forms_data.values():
+        if "full name" in data:
+            uuid = data["full name"]
+            break
+        if "family name" in data:
+            uuid = data["family name"]
+            break
+        if "last name" in data:
+            uuid = data["last name"]
+            break
+        if "lastname" in data:
+            uuid = data["lastname"]
+            break
+    assert uuid, f"Could not find last name UUID in user's form data: {forms_data}"
+    mailbox_email = FORMS_API_MAILBOXES[mailbox_name]
+    submissions = find_form_submissions_for_dit_office(
+        mailbox=mailbox_email,
+        sender=actor.email,
+        uuid=uuid,
+    )
+    logging.debug(
+        f"Email submissions from '{actor.email}' to '{mailbox_email}': {submissions}"
+    )
+    error = (
+        f"Expected to find at least 1 notification sent to '{mailbox_email}' about "
+        f"contact enquiry from blocked email address: {actor.email}, but found "
+        f"{len(submissions)}"
+    )
+    assert len(submissions) >= 1, error
+
+    error = (
+        f"An unnecessary notification about enquiry from '{actor.email}' was sent to "
+        f"'{mailbox_name}': '{mailbox_email}'!"
+    )
+    assert not submissions[0]["is_sent"], error
+    logging.debug(
+        f"Unfortunately a notification about enquiry from {actor.email} was sent to "
+        f"{mailbox_name} mailbox: {mailbox_email}")
+
+
 def generic_should_see_form_choices(
     context: Context, actor_alias: str, option_names: Table
 ):
