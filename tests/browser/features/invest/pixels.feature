@@ -19,36 +19,11 @@ Feature: Pixels
     Examples: Various pages
       | selected       |
       | Home           |
-      | Industries     |
       | Contact Us     |
 
-    Examples: Industry pages
-      | selected                                       |
-      | Advanced manufacturing - industry              |
-      | Agri-tech - industry                           |
-
-    @full
-    Examples: Industry pages
-      | selected                                       |
-      | Asset management - industry                    |
-      | Automotive research and development - industry |
-      | Automotive supply chain - industry             |
-      | Capital Investment - industry                  |
-      | Chemicals - industry                           |
-      | Creative content and production - industry     |
-      | Data Analytics - industry                      |
-      | Digital media - industry                       |
-      | Electrical networks - industry                 |
-      | Energy - industry                              |
-      | Energy from waste market - industry            |
-      | Financial technology - industry                |
-      | Food and drink - industry                      |
-      | Free-from foods - industry                     |
-      | Meat, poultry and dairy - industry             |
-      | Medical technology - industry                  |
-      | Motorsport - industry                          |
-      | Nuclear energy - industry                      |
-      | Offshore wind energy - industry                |
-      | Oil and gas - industry                         |
-      | Pharmaceutical manufacturing - industry        |
-      | Retail - industry                              |
+    @stage-only
+    Examples: HPO pages
+      | selected                               |
+      | High productivity food production - HPO|
+      | Lightweight structures - HPO           |
+      | Rail infrastructure - HPO              |
