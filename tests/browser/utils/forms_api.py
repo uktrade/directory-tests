@@ -3,6 +3,7 @@ import logging
 from typing import List
 
 from directory_client_core.base import AbstractAPIClient
+from retrying import retry
 
 import settings
 
@@ -75,6 +76,12 @@ def find_form_submissions_by_subject_and_action(
     return filter_by_action(by_subject, action)
 
 
-def find_form_submissions_for_dit_office(mailbox: str, sender: str) -> List[dict]:
+@retry(wait_fixed=5000, stop_max_attempt_number=2)
+def find_form_submissions_for_dit_office(
+        mailbox: str, sender: str, *, uuid: str = None
+) -> List[dict]:
     submissions = find_form_submissions(mailbox)
-    return filter_by_sender_email(submissions, sender)
+    by_sender = filter_by_sender_email(submissions, sender)
+    if uuid:
+        return filter_by_uuid_last_name(by_sender, uuid)
+    return by_sender
