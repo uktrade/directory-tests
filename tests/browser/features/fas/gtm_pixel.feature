@@ -5,6 +5,9 @@ Feature: Google Tag Manager
   Background:
     Given basic authentication is done for "International - Landing" page
 
+  @bug
+  @CMS-1634
+  @fixed
   @TT-1500
   Scenario Outline: GTM properties should be properly set on "Find a Supplier - <selected>" page
     When "Robert" goes to the "Find a Supplier - <selected>" page
@@ -12,71 +15,31 @@ Feature: Google Tag Manager
     Then Google Tag Manager properties should be set to proper values
       | businessUnit   | loginStatus   | siteLanguage   | siteSection   | siteSubsection   | userId   |
       | <businessUnit> | <loginStatus> | <siteLanguage> | <siteSection> | <siteSubsection> | <userId> |
-
-    @bug
-    @CMS-1634
-    @fixed
     Examples: Listing pages
-      | selected   | businessUnit  | loginStatus | siteLanguage | siteSection | siteSubsection     | userId |
-      | Home       | FindASupplier | False       | en-gb        | HomePage    | Empty string       | None   |
+      | selected             | businessUnit  | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
+      | Landing              | FindASupplier | False       | en-gb        | HomePage    | Empty string   | None   |
+      | Empty search results | FindASupplier | False       | en-gb        | Companies   | Search         | None   |
 
-    Examples: Listing pages
-      | selected   | businessUnit  | loginStatus | siteLanguage | siteSection | siteSubsection     | userId |
-      | Industries | FindASupplier | False       | en-gb        | Industries  | LandingPage        | None   |
-      | Contact us | FindASupplier | False       | en-gb        | Industries  | LandingPageContact | None   |
-
-    @industry
-    Examples: Industry pages
-      | selected                                      | businessUnit  | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
-      | Agritech - Industry                           | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
-      | Business & Government Partnerships - Industry | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
-      | Consumer & retail - Industry                  | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
-      | Creative services - Industry                  | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
-      | Cyber security - Industry                     | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
-      | Education - Industry                          | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
-      | Energy - Industry                             | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
-      | Engineering - Industry                        | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
-      | Food and drink - Industry                     | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
-      | Healthcare - Industry                         | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
-      | Infrastructure - Industry                     | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
-      | Innovation - Industry                         | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
-      | Life sciences - Industry                      | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
-      | Marine - Industry                             | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
-      | Professional & financial services - Industry  | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
-      | Sports economy - Industry                     | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
-
-    @stage-only
-    @industry
-    Examples: Industry pages
-      | selected                  | businessUnit  | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
-      | Aerospace - Industry      | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
-      | Automotive - Industry     | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
-      | Legal services - Industry | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
-      | Space - Industry          | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
-      | Technology - Industry     | FindASupplier | False       | en-gb        | Industries  | Detail         | None   |
-
-
-  @dev-only
+  @bug
+  @CMS-1634
+  @fixed
   @TT-1500
-  Scenario Outline: GTM properties should be properly set on "Find a Supplier - <selected>" page
-    Given basic authentication is done for "International - Landing" page
+  Scenario Outline: GTM properties should be properly set on "Find a Supplier - Company profile" page
+    Given "Robert" searched for companies using "food" keyword in "any" sector
 
-    When "Robert" goes to the "Find a Supplier - <selected>" page
+    When "Robert" decides to view "random" company profile
 
-    Then Google Tag Manager properties should be set to proper values
+    Then "Robert" should be on the "Find a Supplier - Company profile" page
+    And Google Tag Manager properties should be set to proper values
       | businessUnit   | loginStatus   | siteLanguage   | siteSection   | siteSubsection   | userId   |
       | <businessUnit> | <loginStatus> | <siteLanguage> | <siteSection> | <siteSubsection> | <userId> |
 
-    @industry
-    Examples: Industry pages available via International Site
-      | selected                  | businessUnit       | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
-      | Aerospace - Industry      | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
-      | Automotive - Industry     | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
-      | Legal services - Industry | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
-      | Space - Industry          | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
-      | Technology - Industry     | GreatInternational | False       | en-gb        | Sector      | DetailPage     | None   |
+    Examples: Listing pages
+      | businessUnit  | loginStatus | siteLanguage | siteSection | siteSubsection         | userId |
+      | FindASupplier | False       | en-gb        | Companies   | PublishedProfileDetail | None   |
 
 
+  @stage-only
   @bug
   @CMS-1634
   @fixed
@@ -93,8 +56,8 @@ Feature: Google Tag Manager
 
     Examples: Various pages
       | selected | preferred_language | businessUnit  | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
-      | Home     | Deutsch            | FindASupplier | False       | de           | HomePage    | Empty string   | None   |
-      | Home     | Français           | FindASupplier | False       | fr           | HomePage    | Empty string   | None   |
-      | Home     | español            | FindASupplier | False       | es           | HomePage    | Empty string   | None   |
-      | Home     | Português          | FindASupplier | False       | pt           | HomePage    | Empty string   | None   |
-      | Home     | 简体中文            | FindASupplier | False       | zh-hans      | HomePage    | Empty string   | None   |
+      | Landing  | Deutsch            | FindASupplier | False       | de           | HomePage    | Empty string   | None   |
+      | Landing  | Français           | FindASupplier | False       | fr           | HomePage    | Empty string   | None   |
+      | Landing  | español            | FindASupplier | False       | es           | HomePage    | Empty string   | None   |
+      | Landing  | Português          | FindASupplier | False       | pt           | HomePage    | Empty string   | None   |
+      | Landing  | 简体中文            | FindASupplier | False       | zh-hans      | HomePage    | Empty string   | None   |
