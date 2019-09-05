@@ -63,9 +63,7 @@ def filter_by_uuid_last_name(submissions: List[dict], uuid: str) -> list:
 
 
 def find_form_submissions(email: str) -> List[dict]:
-    json = client.get(f"testapi/submissions-by-email/{email}/").json()
-    logging.debug(f"Submissions for {email}: {json}")
-    return json
+    return client.get(f"testapi/submissions-by-email/{email}/").json()
 
 
 def find_form_submissions_by_subject_and_action(
