@@ -61,9 +61,9 @@ Feature: Header-Footer
   @logo
   @header
   @footer
-  Scenario: Any Exporter should see correct GREAT header & footer logo on "Find a Supplier - Home" page
-    Given basic authentication is done for "Find a Supplier - Home" page
-    Given "Robert" visits the "Find a Supplier - Home" page
+  Scenario: Any Exporter should see correct GREAT header & footer logo on "Find a Supplier - Landing" page
+    Given basic authentication is done for "Find a Supplier - Landing" page
+    Given "Robert" visits the "Find a Supplier - Landing" page
 
     Then "Robert" should see correct "Great - header" logo
     And "Robert" should see correct "Great - footer" logo
@@ -111,7 +111,7 @@ Feature: Header-Footer
       | specific                       |
       | Domestic - Home                |
       | Find a Buyer - Home            |
-      | Find a Supplier - Home         |
+      | Find a Supplier - Landing      |
       | Single Sign-On - Registration  |
       | Single Sign-On - Sign in       |
       | Profile - About                |
@@ -135,7 +135,7 @@ Feature: Header-Footer
       | selected                       |
       | Domestic - Home                |
       | Find a Buyer - Home            |
-      | Find a Supplier - Home         |
+      | Find a Supplier - Landing      |
       | Single Sign-On - Registration  |
       | Single Sign-On - Sign in       |
       | Profile - About                |

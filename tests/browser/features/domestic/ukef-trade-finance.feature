@@ -39,16 +39,16 @@ Feature: UK Export Finance page & contact-us form
 
 
   @TT-585
-  Scenario Outline: Any Exporter should be able to navigate to "Domestic - Home" using breadcrumbs on the "UKEF Trade Finance" page
+  Scenario Outline: Any Exporter should be able to navigate to "Domestic - <expected>" page using "<breadcrumb>" on the "UKEF Trade Finance" page
     Given "Robert" visits the "Domestic - Trade Finance" page
 
-    When "Robert" decides to use "<specific>" breadcrumb on the "Domestic - Trade Finance" page
+    When "Robert" decides to click on "<breadcrumb>"
 
     Then "Robert" should be on the "Domestic - <expected>" page or on the International page
 
     Examples: Breadcrumbs
-      | specific     | expected    |
-      | Great.gov.uk | Home        |
+      | breadcrumb   | expected    |
+      | great.gov.uk | Home        |
       | UKEF         | Get Finance |
 
 

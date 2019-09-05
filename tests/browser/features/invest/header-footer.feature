@@ -59,7 +59,7 @@ Feature: Header-Footer
       | Invest             | header  | Invest - Home                  |
       | Industries         | header  | International - Industries     |
       | UK setup guide     | header  | International - UK setup guide |
-      | Find a UK Supplier | header  | Find a Supplier - Home         |
+      | Find a UK Supplier | header  | Find a Supplier - Landing      |
 
 
   @CMS-158

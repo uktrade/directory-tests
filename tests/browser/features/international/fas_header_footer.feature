@@ -17,7 +17,6 @@ Feature: Find a Supplier - Common header & Footer
       | specific             |
       | Landing              |
       | Empty search results |
-      | Contact us           |
 
 
   Scenario: Buyers should be able to see correct header & footer on "Find a Supplier - Search results" page
@@ -32,7 +31,6 @@ Feature: Find a Supplier - Common header & Footer
       | Footer   |
 
 
-  @dev-only
   Scenario: Buyers should see correct header & footer on "Company Profile" page
     Given "Robert" searched for companies using "food" keyword in "any" sector
 

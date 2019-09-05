@@ -37,45 +37,6 @@ Feature: Find a Supplier - Landing page
       | no        | Mining         | Find a Supplier - Search results       |
 
 
-  @ED-4246
-  @contact-us
-  Scenario: Buyers should be able to get to the "Contact us" page from the "Find a Supplier - Landing" page
-    Given "Robert" visits the "Find a Supplier - Landing" page
-
-    When "Robert" decides to use "Contact us" button
-
-    Then "Robert" should be on the "International - Find a UK business partner - Contact us" page
-
-
-  @ED-4246
-  @contact-us
-  Scenario: Buyers should be able to get to the "Contact us" page using footer link
-    Given "Robert" visits the "Find a Supplier - Landing" page
-
-    When "Robert" decides to use "Contact us footer" link
-
-    Then "Robert" should be on the "Domestic - Contact us" page
-
-
-  @ED-4247
-  @captcha
-  @dev-only
-  @contact-us
-  Scenario: Buyers should be able to contact DIT from the "Find a Supplier - Landing" page
-    Given "Robert" visits the "Find a Supplier - Landing" page
-    And "Robert" decided to use "Contact us" link
-    And "Robert" is on the "International - Find a UK business partner - Contact us" page
-
-    When "Robert" fills out and submits the form
-
-    Then "Robert" should be on the "International - Find a UK business partner - Thank you for your message" page
-    And "Robert" should see following sections
-      | Sections          |
-      | Header            |
-      | Content           |
-      | Footer            |
-
-
   @ED-4248
   @industry-page
   Scenario: Buyers should be able to find out more about featured industries from the "Find a Supplier - Landing" page
