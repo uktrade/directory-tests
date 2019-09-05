@@ -148,7 +148,7 @@ INTERNATIONAL_HEADER = {
         "header menu": Selector(By.CSS_SELECTOR, "div.menu"),
         "invest in great logo": Selector(By.ID, "great-header-logo"),
         "invest": Selector(By.LINK_TEXT, "Invest", type=ElementType.LINK),
-        "UK setup guide": Selector(By.LINK_TEXT, "UK setup guide", type=ElementType.LINK),
+        "uk setup guide": Selector(By.LINK_TEXT, "UK setup guide", type=ElementType.LINK),
         "find a uk supplier": Selector(By.LINK_TEXT, "Find a UK supplier", type=ElementType.LINK),
         "industries": Selector(By.LINK_TEXT, "Industries", type=ElementType.LINK),
     }
