@@ -18,7 +18,6 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages import (
     common_language_selector,
-    common_selectors,
     domestic,
     fas,
     get_page_object,
@@ -63,6 +62,14 @@ def retry_if_webdriver_error(exception):
 def retry_if_assertion_error(exception):
     """Return True if we should retry on AssertionError, False otherwise"""
     return isinstance(exception, AssertionError)
+
+
+def check_for_errors(driver: WebDriver):
+    source = driver.page_source
+    url = driver.current_url
+    assert "404 Not Found" not in source, f"404 Not Found → {url}"
+    assert "This page cannot be found" not in source, f"404 Not Found → {url}"
+    assert "Internal Server Error" not in source, f"500 ISE → {url}"
 
 
 def generic_set_basic_auth_creds(context: Context, page_name: str):
@@ -121,14 +128,7 @@ def visit_page(context: Context, actor_alias: str, page_name: str):
         )
         page.visit(context.driver)
 
-    source = context.driver.page_source
-    url = context.driver.current_url
-    error = f"Looks like {url} doesn't exist"
-    assert "404 Not Found: Requested route" not in source, error
-    error = f"Looks like following page: {url} cannot be found"
-    assert "This page cannot be found" not in source, error
-    error = f"500 ISE on: {url}"
-    assert "Internal Server Error" not in source, error
+    check_for_errors(context.driver)
     update_actor(context, actor_alias, visited_page=page)
 
 
@@ -305,6 +305,7 @@ def sign_in(context: Context, actor_alias: str):
     sso.sign_in.should_be_here(context.driver)
     sso.sign_in.fill_out(context.driver, email, password)
     sso.sign_in.submit(context.driver)
+    check_for_errors(context.driver)
 
 
 def sign_out(context: Context, actor_alias: str):
