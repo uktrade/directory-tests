@@ -615,7 +615,7 @@ class wait_for_page_load_after_action(object):
 def scroll_to(driver: WebDriver, element: WebElement):
     viewport_height = int(driver.execute_script("return window.innerHeight;"))
     vertical_position = int(element.location["y"])
-    if vertical_position < viewport_height:
+    if vertical_position > viewport_height:
         logging.debug(f"Scrolling to y={vertical_position}")
         driver.execute_script(f"window.scrollTo(0, {vertical_position});")
     else:
