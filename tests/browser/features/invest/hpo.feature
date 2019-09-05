@@ -1,4 +1,5 @@
 @hpo
+@stage-only
 Feature: High Potential Opportunities
 
   Background:
@@ -10,8 +11,7 @@ Feature: High Potential Opportunities
 
     Then "Annette Geissinger" should see following sections
       | Sections               |
-#      | Header                 |
-#      | Beta bar               |
+      | Header                 |
       | Hero                   |
       | Contact us             |
       | Proposition one        |
@@ -28,9 +28,9 @@ Feature: High Potential Opportunities
       | Breadcrumbs      |
 
     Examples: HPO pages
-      | selected                 |
-      | Advanced food production |
-      | Lightweight structures   |
+      | selected                          |
+      | High productivity food production |
+      | Lightweight structures            |
 
 
   @TT-442
@@ -39,8 +39,7 @@ Feature: High Potential Opportunities
 
     Then "Annette Geissinger" should see following sections
       | Sections               |
-#      | Header                 |
-#      | Beta bar               |
+      | Header                 |
       | Hero                   |
       | Contact us             |
       | Proposition one        |
@@ -77,8 +76,8 @@ Feature: High Potential Opportunities
       | Error reporting  |
 
     Examples: HPO pages
-      | selected                 |
-      | Advanced food production |
+      | selected                          |
+      | High productivity food production |
 
     @full
     Examples: HPO pages
@@ -99,8 +98,8 @@ Feature: High Potential Opportunities
       | Breadcrumbs      |
 
     Examples: HPO Contact Us pages
-      | selected                 |
-      | Advanced food production |
+      | selected                          |
+      | High productivity food production |
 
     @full
     Examples: HPO Contact Us pages
@@ -119,17 +118,17 @@ Feature: High Potential Opportunities
     Then "Annette Geissinger" should be on the "Invest - <expected opportunity> - HPO" page
 
     Examples: HPO pages
-      | selected                 | specific | expected opportunity     |
-      | Advanced food production | first    | Lightweight structures   |
-      | Lightweight structures   | second   | Rail infrastructure      |
-      | Rail infrastructure      | first    | Advanced food production |
+      | selected                          | specific | expected opportunity              |
+      | High productivity food production | first    | Lightweight structures            |
+      | Lightweight structures            | second   | Rail infrastructure               |
+      | Rail infrastructure               | first    | High productivity food production |
 
     @full
     Examples: HPO pages
-      | selected                 | specific | expected opportunity     |
-      | Advanced food production | second   | Rail infrastructure      |
-      | Lightweight structures   | first    | Advanced food production |
-      | Rail infrastructure      | second   | Lightweight structures   |
+      | selected                          | specific | expected opportunity              |
+      | High productivity food production | second   | Rail infrastructure               |
+      | Lightweight structures            | first    | High productivity food production |
+      | Rail infrastructure               | second   | Lightweight structures            |
 
 
   @bug
@@ -158,8 +157,8 @@ Feature: High Potential Opportunities
 #    And HPO Agent should receive HPO enquiry email from "Annette Geissinger"
 
     Examples: HPO pages
-      | selected                 |
-      | Advanced food production |
+      | selected                          |
+      | High productivity food production |
 
     @full
     Examples: HPO pages
@@ -190,7 +189,7 @@ Feature: High Potential Opportunities
 
     Examples: HPO pages
       | selected                 |
-      | Advanced food production |
+      | High productivity food production |
 
     @full
     Examples: HPO pages
