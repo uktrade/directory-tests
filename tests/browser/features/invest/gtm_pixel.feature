@@ -24,12 +24,13 @@ Feature: Google Tag Manager
     @hpo
     @stage-only
     Examples: High-potential opportunities
-      | selected                       | businessUnit | loginStatus | siteLanguage | siteSection                | siteSubsection | userId |
-      | Advanced food production - HPO | Invest       | False       | en-gb        | HighPotentialOpportunities | DetailPage     | None   |
-      | Lightweight structures - HPO   | Invest       | False       | en-gb        | HighPotentialOpportunities | DetailPage     | None   |
-      | Rail infrastructure - HPO      | Invest       | False       | en-gb        | HighPotentialOpportunities | DetailPage     | None   |
+      | selected                                | businessUnit | loginStatus | siteLanguage | siteSection                | siteSubsection | userId |
+      | High productivity food production - HPO | Invest       | False       | en-gb        | HighPotentialOpportunities | DetailPage     | None   |
+      | Lightweight structures - HPO            | Invest       | False       | en-gb        | HighPotentialOpportunities | DetailPage     | None   |
+      | Rail infrastructure - HPO               | Invest       | False       | en-gb        | HighPotentialOpportunities | DetailPage     | None   |
 
 
+  @wip
   @bug
   @CMS-1634
   @fixed
