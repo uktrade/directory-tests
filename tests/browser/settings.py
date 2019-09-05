@@ -44,6 +44,7 @@ FORMS_API_MAILBOXES = {
     "Events mailbox": os.getenv("FORMS_API_EMAIL_EVENTS"),
     "DSO mailbox": os.getenv("FORMS_API_EMAIL_DSO"),
     "Invest mailbox": os.getenv("FORMS_API_EMAIL_INVEST"),
+    "Trade mailbox": os.getenv("FORMS_API_EMAIL_TRADE"),
 }
 
 DIRECTORY_SSO_API_CLIENT_API_KEY = os.environ["DIRECTORY_SSO_API_CLIENT_API_KEY"]
