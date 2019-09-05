@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """SSO Registration Page Object."""
+from typing import List
 from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
@@ -14,6 +15,7 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
     wait_for_page_load_after_action,
+    check_for_sections
 )
 from settings import DIRECTORY_UI_SSO_URL
 
@@ -30,7 +32,7 @@ PASSWORD_CONFIRMATION_INPUT = Selector(By.ID, "id_password2")
 T_AND_C_BUTTON = Selector(By.ID, "id_terms_agreed-label")
 SIGN_UP_BUTTON = Selector(By.CSS_SELECTOR, "#signup_form > button")
 SELECTORS = {
-    "general": {
+    "form": {
         "title": Selector(By.CSS_SELECTOR, "#profile-register-intro > h1"),
         "email input": EMAIL_INPUT,
         "email confirmation input": EMAIL_CONFIRMATION_INPUT,
@@ -40,6 +42,7 @@ SELECTORS = {
     }
 }
 SELECTORS.update(common_selectors.HEADER)
+SELECTORS.update(common_selectors.BREADCRUMBS)
 SELECTORS.update(common_selectors.SSO_LOGGED_OUT)
 SELECTORS.update(common_selectors.FOOTER)
 
@@ -80,3 +83,7 @@ def submit(driver: WebDriver):
 def click_on_page_element(driver: WebDriver, element_name: str):
     find_and_click_on_page_element(driver, SELECTORS, element_name)
     take_screenshot(driver, NAME + " after clicking on " + element_name)
+
+
+def should_see_sections(driver: WebDriver, names: List[str]):
+    check_for_sections(driver, all_sections=SELECTORS, sought_sections=names)

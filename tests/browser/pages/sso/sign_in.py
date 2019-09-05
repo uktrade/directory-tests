@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """SSO Sign In Page Object."""
+from typing import List
 from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
@@ -14,6 +15,7 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
     wait_for_page_load_after_action,
+    check_for_sections
 )
 from settings import DIRECTORY_UI_SSO_URL
 
@@ -33,16 +35,17 @@ REGISTER_BUTTON = Selector(
 )
 RESET_YOUR_PASSWORD_LINK = Selector(By.CSS_SELECTOR, "form > a")
 SELECTORS = {
-    "returning user": {
+    "login form": {
         "title": Selector(By.CSS_SELECTOR, "#content h1.heading-xlarge"),
         "email input": EMAIL_INPUT,
         "password input": PASSWORD_INPUT,
         "sign in": SIGN_IN_BUTTON,
         "forgotten password?": RESET_YOUR_PASSWORD_LINK,
     },
-    "register for an account": {"create account": REGISTER_BUTTON},
+    "create a great.gov.uk account": {"create account": REGISTER_BUTTON},
 }
 SELECTORS.update(common_selectors.HEADER)
+SELECTORS.update(common_selectors.BREADCRUMBS)
 SELECTORS.update(common_selectors.SSO_LOGGED_OUT)
 SELECTORS.update(common_selectors.FOOTER)
 
@@ -76,3 +79,7 @@ def submit(driver: WebDriver):
     with wait_for_page_load_after_action(driver):
         sign_up_button.click()
     take_screenshot(driver, NAME + "after signing in")
+
+
+def should_see_sections(driver: WebDriver, names: List[str]):
+    check_for_sections(driver, all_sections=SELECTORS, sought_sections=names)
