@@ -456,7 +456,6 @@ def generic_a_notification_should_be_sent(
     assert submissions[0]["is_sent"], error
 
 
-@retry(wait_fixed=5000, stop_max_attempt_number=3)
 def generic_a_notification_should_be_sent_to_specific_dit_office(
         context: Context, actor_alias: str, mailbox_name: str
 ):

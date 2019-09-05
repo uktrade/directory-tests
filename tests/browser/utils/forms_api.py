@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import logging
 from typing import List
 
 from directory_client_core.base import AbstractAPIClient
