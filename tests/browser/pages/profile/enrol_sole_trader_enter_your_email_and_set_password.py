@@ -29,7 +29,7 @@ SERVICE = Services.PROFILE
 TYPE = "Enrol"
 URL = urljoin(
     DIRECTORY_UI_PROFILE_URL,
-    "enrol/business-type/non-companies-house-company/user-account/"
+    "enrol/business-type/non-companies-house-company/user-account/",
 )
 PAGE_TITLE = ""
 

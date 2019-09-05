@@ -20,10 +20,12 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from pages.profile import enrol_you_cannot_create_account, \
-    enrol_sole_trader_enter_your_email_and_set_password, \
-    enrol_enter_your_business_email_and_set_password, \
-    enrol_uk_taxpayer_enter_your_email_and_set_password
+from pages.profile import (
+    enrol_enter_your_business_email_and_set_password,
+    enrol_sole_trader_enter_your_email_and_set_password,
+    enrol_uk_taxpayer_enter_your_email_and_set_password,
+    enrol_you_cannot_create_account,
+)
 from settings import DIRECTORY_UI_PROFILE_URL
 
 NAME = "Select your business type"

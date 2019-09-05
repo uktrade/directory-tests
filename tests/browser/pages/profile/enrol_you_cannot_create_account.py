@@ -37,7 +37,7 @@ SELECTORS = {
         "view our site for international businesses": Selector(
             By.PARTIAL_LINK_TEXT, "View our site for international businesses"
         ),
-    },
+    }
 }
 SELECTORS.update(common_selectors.HEADER)
 SELECTORS.update(common_selectors.BREADCRUMBS)

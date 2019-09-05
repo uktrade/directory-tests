@@ -27,7 +27,7 @@ SELECTORS = {
     "enrolment progress bar": {
         "itself": Selector(By.ID, "start-page-progress-indicator"),
         "start now": Selector(By.ID, "start-now-button", type=ElementType.LINK),
-    },
+    }
 }
 SELECTORS.update(common_selectors.HEADER)
 SELECTORS.update(common_selectors.BREADCRUMBS)
