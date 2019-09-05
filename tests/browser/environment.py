@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Behave configuration file."""
 import logging
+import http.client as httplib
 import socket
 
 from behave.contrib.scenario_autoretry import patch_scenario_with_autoretry
@@ -28,11 +29,6 @@ from pages.common_actions import (
 )
 from utils.pdf import NoPDFMinerLogEntriesFilter
 
-try:
-    import http.client as httplib
-except ImportError:  # above is available in py3+, below is py2.7
-    import httplib as httplib
-
 
 def start_driver_session(context: Context, session_name: str):
     remote_desired_capabilities = context.remote_desired_capabilities
@@ -54,12 +50,10 @@ def start_driver_session(context: Context, session_name: str):
             "phantomjs": webdriver.PhantomJS,
             "safari": webdriver.Safari,
         }
-        print("Starting local instance of {}".format(browser_name))
+        print(f"Starting local instance of {browser_name}")
         if local_desired_capabilities:
             print(
-                "Will use following browser capabilities: {}".format(
-                    local_desired_capabilities
-                )
+                f"Will use following browser capabilities: {local_desired_capabilities}"
             )
             if browser_name.lower() in ["firefox", "edge", "ie"]:
                 context.driver = drivers[browser_name.lower()](
@@ -99,7 +93,7 @@ def start_driver_session(context: Context, session_name: str):
             logging.warning("Set window size to 1600x1200")
         except WebDriverException:
             logging.warning("Failed to set window size, will continue as is")
-    logging.debug("Browser Capabilities: %s", context.driver.capabilities)
+    logging.debug(f"Browser Capabilities: {context.driver.capabilities}")
 
 
 def restart_webdriver_if_unresponsive(context: Context, scenario: Scenario):
@@ -144,24 +138,22 @@ def restart_webdriver_if_unresponsive(context: Context, scenario: Scenario):
             print(msg)
             logging.error(msg)
     else:
-        logging.error(f"Context doesn't have 'driver' attribute")
+        logging.error("Context doesn't have 'driver' attribute")
 
 
 def before_step(context: Context, step: Step):
     """Place here code which that has to be executed before every step."""
-    logging.debug("Started Step: %s %s", step.step_type, str(repr(step.name)))
+    logging.debug(f"Started Step: {step.step_type} {str(repr(step.name))}")
 
 
 def after_step(context: Context, step: Step):
     """Place here code which that has to be executed after every step."""
-    logging.debug("Finished Step: %s %s", step.step_type, str(repr(step.name)))
-    logging.debug("Step Duration: %s %s", str(repr(step.name)), step.duration)
+    logging.debug(f"Finished Step: {step.step_type} {str(repr(step.name))}")
+    logging.debug(f"Step Duration: {str(repr(step.name))} {step.duration}")
     if RESTART_BROWSER == "scenario":
         if step.status == "failed":
-            message = "Step '%s %s' failed. Reason: '%s'" % (
-                step.step_type,
-                step.name,
-                step.exception,
+            message = (
+                f"Step '{step.step_type} {step.name}' failed: '{step.exception}'"
             )
             logging.error(message)
             logging.debug(context.scenario_data)
@@ -205,17 +197,12 @@ def after_feature(context: Context, feature: Feature):
                         if scenario.status == "failed"
                     ]
                 )
-                message = (
-                    "Feature '%s' failed because of issues with %d "
-                    "%s"
-                    % (
-                        feature.name,
-                        failed,
-                        "scenarios" if failed > 1 else "scenario",
-                    )
-                )
                 if hasattr(context, "driver"):
                     session_id = context.driver.session_id
+                    message = (
+                        f"Feature '{feature.name}' failed because of issues with "
+                        f"{failed} scenarios"
+                    )
                     flag_browserstack_session_as_failed(session_id, message)
 
 
@@ -269,7 +256,7 @@ def after_scenario(context: Context, scenario: Scenario):
     if hasattr(context, "driver"):
         if RESTART_BROWSER == "scenario":
             logging.debug(
-                "Closing Selenium Driver after scenario: %s", scenario.name)
+                f"Closing Selenium Driver after scenario: {scenario.name}")
             context.driver.quit()
         if RESTART_BROWSER == "feature":
             clear_driver_cookies(context.driver)
