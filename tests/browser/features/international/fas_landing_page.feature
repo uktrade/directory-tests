@@ -55,3 +55,22 @@ Feature: Find a Supplier - Landing page
     When "Robert" decides to "see more industries"
 
     Then "Robert" should be on the "International - Industries" page
+
+
+  @bug
+  @TT-1512
+  @fixed
+  @search
+  Scenario: Buyers should be able to find UK suppliers using arbitrary search term
+    Given "Robert" visits the "Find a Supplier - Landing" page
+
+    When "Robert" searches for companies using "food" keyword
+
+    Then "Robert" should be on the "Find a Supplier - Search results" page
+    And "Robert" should see following sections
+      | Sections        |
+      | Header          |
+      | Search form     |
+      | Filters         |
+      | Results         |
+      | Footer          |
