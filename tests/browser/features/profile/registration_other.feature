@@ -15,30 +15,38 @@ Feature: New Enrolment flow
 
     When "Natalia" chooses "Sole trader or other type of business" option
 
-    Then "Natalia" should be on the "Profile - Enter your business email address and set a password (Sole trader or other type of business)" page
+    Then "Natalia" should be on the "Profile - Enter your email address and set a password (Sole trader)" page
     And "Natalia" should see following sections
       | sections               |
       | Registration form      |
       | Enrolment progress bar |
 
 
-  @wip
+  @TT-1119
+  @uk-taxpayer
+  Scenario: UK taxpayers can create an SSO account
+    Given "Mirko" visits the "Profile - Select your business type" page
+
+    When "Mirko" chooses "UK taxpayer" option
+
+    Then "Mirko" should be on the "Profile - Enter your email address and set a password (UK taxpayer)" page
+    And "Mirko" should see following sections
+      | sections               |
+      | Registration form      |
+      | Enrolment progress bar |
+
+
   @TT-1119
   @foreign-business
   Scenario: Only UK business can create a great.gov.uk account
-    Given "Mirko" is on the "Profile - Select your business type" page
+    Given "Mirko" visits the "Profile - Select your business type" page
 
-    When "Mirko" picks "Company not registered in the UK" option
-    Then "Mirko" should not see following sections
-      | sections               |
-      | Enrolment progress bar |
+    When "Mirko" chooses "Overseas company" option
 
-    When "Mirko" submits the form
     Then "Mirko" should be on the "Profile - You cannot create an account" page
     And "Mirko" should see following sections
       | sections               |
       | Explanation            |
-      | Links to other sites   |
 
 
   @wip

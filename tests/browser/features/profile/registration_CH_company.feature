@@ -7,7 +7,7 @@ Feature: New Enrolment flow
   Background:
     Given basic authentication is done for "Domestic - Home" page
 
-  @TT-1115a
+  @TT-1115
   Scenario: Users should be presented with the Enrolment Steps prior to starting the registration process
     Given "Natalia" visits the "Profile - Create an account" page
 
