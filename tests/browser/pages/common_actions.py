@@ -613,9 +613,22 @@ class wait_for_page_load_after_action(object):
 
 
 def scroll_to(driver: WebDriver, element: WebElement):
-    vertical_position = element.location["y"]
-    logging.debug("Moving focus to %s", element.id)
-    driver.execute_script(f"window.scrollTo(0, {vertical_position});")
+    viewport_height = int(driver.execute_script("return window.innerHeight;"))
+    vertical_position = int(element.location["y"])
+    if vertical_position < viewport_height:
+        logging.debug(f"Scrolling to y={vertical_position}")
+        driver.execute_script(f"window.scrollTo(0, {vertical_position});")
+    else:
+        logging.debug(
+            f"Element is already positioned ({vertical_position}) within viewport "
+            f"({viewport_height})"
+        )
+
+
+def move_to(driver: WebDriver, element: WebElement):
+    action_chains = ActionChains(driver)
+    action_chains.move_to_element(element)
+    action_chains.perform()
 
 
 def show_snackbar_message(driver: WebDriver, message: str):
@@ -736,11 +749,12 @@ def check_for_sections(
                 f" selector on {driver.current_url}",
             ):
                 element = driver.find_element(by=selector.by, value=selector.value)
-            if "firefox" not in driver.capabilities["browserName"].lower():
+            if "firefox" in driver.capabilities["browserName"].lower():
+                logging.debug(f"Scrolling to '{name}→{key}' element")
+                scroll_to(driver, element)
+            else:
                 logging.debug(f"Moving focus to '{name}→{key}' element")
-                action_chains = ActionChains(driver)
-                action_chains.move_to_element(element)
-                action_chains.perform()
+                move_to(driver, element)
             if selector.is_visible:
                 with assertion_msg(
                     f"It looks like '{key}' element identified by '{selector}' "
