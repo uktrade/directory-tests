@@ -36,43 +36,22 @@ SELECTORS = {
     "benefits": {
         "self": Selector(By.ID, "benefits"),
         "heading": Selector(By.CSS_SELECTOR, "#benefits h2"),
-        "sub-section headings": Selector(By.CSS_SELECTOR, "#benefits h4"),
+        "sub-section headings": Selector(By.CSS_SELECTOR, "#benefits h3"),
         "text": Selector(By.CSS_SELECTOR, "#benefits p"),
         "image": Selector(By.CSS_SELECTOR, "#benefits img"),
-    },
-    "the uk and the eu": {
-        "self": Selector(By.ID, "eu-exit"),
-        "heading": Selector(By.CSS_SELECTOR, "#eu-exit h2"),
-        "text": Selector(By.CSS_SELECTOR, "#eu-exit p"),
-        "image": Selector(By.CSS_SELECTOR, "#eu-exit img"),
-        "find out what's changing": Selector(
-            By.CSS_SELECTOR, "#eu-exit a", type=ElementType.LINK
-        ),
-    },
-    "uk setup guides": {
-        "self": Selector(By.ID, "uk-setup-guides"),
-        "get started in the uk": Selector(
-            By.PARTIAL_LINK_TEXT, "Get started in the UK"
-        ),
-        "get help to set up or expand in the uk": Selector(
-            By.PARTIAL_LINK_TEXT, "Get help to set up or expand in the UK"
-        ),
-        "invest your capital in the uk": Selector(
-            By.PARTIAL_LINK_TEXT, "Invest your capital in the UK"
-        ),
     },
     "sectors": {
         "self": Selector(By.ID, "industries"),
         "heading": Selector(By.CSS_SELECTOR, "#industries h2"),
         "heading text": Selector(By.CSS_SELECTOR, "#industries h2 ~ div > p"),
         "first": Selector(
-            By.CSS_SELECTOR, "#industries div.card-grid > div:nth-child(1) > div > a"
+            By.CSS_SELECTOR, "#industries div:nth-child(1) > div > a"
         ),
         "second": Selector(
-            By.CSS_SELECTOR, "#industries div.card-grid > div:nth-child(2) > div > a"
+            By.CSS_SELECTOR, "#industries div:nth-child(2) > div > a"
         ),
         "third": Selector(
-            By.CSS_SELECTOR, "#industries div.card-grid > div:nth-child(3) > div > a"
+            By.CSS_SELECTOR, "#industries div:nth-child(3) > div > a"
         ),
         "see more industries": Selector(By.ID, "see-more-industries"),
     },
@@ -80,13 +59,15 @@ SELECTORS = {
         "self": Selector(By.ID, "high-potential-opportunities"),
         "heading": Selector(By.CSS_SELECTOR, "#high-potential-opportunities h2"),
         "text": Selector(By.CSS_SELECTOR, "#high-potential-opportunities h2 ~ div > p"),
-        "advanced food production": Selector(
-            By.PARTIAL_LINK_TEXT, "Advanced food production"
+        "high productivity food production": Selector(
+            By.CSS_SELECTOR, "#high-potential-opportunities div:nth-child(1) > div > a"
         ),
         "lightweight structures": Selector(
-            By.PARTIAL_LINK_TEXT, "Lightweight structures"
+            By.CSS_SELECTOR, "#high-potential-opportunities div:nth-child(2) > div > a"
         ),
-        "rail infrastructure": Selector(By.PARTIAL_LINK_TEXT, "Rail infrastructure"),
+        "rail infrastructure": Selector(
+            By.CSS_SELECTOR, "#high-potential-opportunities div:nth-child(2) > div > a"
+        ),
     },
     "how we help": {
         "self": Selector(By.ID, "how-we-help"),
@@ -130,12 +111,10 @@ SELECTORS = {
         ),
     },
 }
-SELECTORS.update(common_selectors.HEADER_INVEST)
+SELECTORS.update(common_selectors.INTERNATIONAL_HEADER_WO_LANGUAGE_SELECTOR)
 SELECTORS.update(common_selectors.BREADCRUMBS)
-SELECTORS.update(common_selectors.BETA_BAR)
-SELECTORS.update(common_selectors.EU_EXIT_NEWS_BANNER)
 SELECTORS.update(common_selectors.ERROR_REPORTING)
-SELECTORS.update(common_selectors.FOOTER_INVEST)
+SELECTORS.update(common_selectors.INTERNATIONAL_FOOTER)
 
 
 def visit(driver: WebDriver):
