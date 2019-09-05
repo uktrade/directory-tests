@@ -10,8 +10,8 @@ Feature: Contact us and Leave feedback
   @captcha
   @header
   @footer
-  Scenario Outline: An email should be sent after visitor submits the contact-us form
-    Given "Robert" visits the "Invest - <selected>" page
+  Scenario: An email should be sent after visitor submits the contact-us form
+    Given "Robert" visits the "Invest - Home" page
     And "Robert" decided to "Get in touch"
     And "Robert" is on the "Invest - Contact us" page
 
@@ -20,7 +20,3 @@ Feature: Contact us and Leave feedback
     Then "Robert" should be on the "Invest - Thank you for your message" page
     And an "email" notification entitled "Contact form user email subject" should be sent to "Robert"
     And an email notification about "Robert"'s enquiry should be send to "Invest mailbox"
-
-    Examples: Various pages
-      | selected                          |
-      | Home                              |
