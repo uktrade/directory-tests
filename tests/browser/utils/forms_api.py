@@ -40,6 +40,27 @@ def filter_by_subject(submissions: List[dict], action: str) -> list:
     return list(filter(lambda x: x["meta"]["subject"] == action, submissions))
 
 
+def filter_by_uuid_last_name(submissions: List[dict], uuid: str) -> list:
+    result = []
+    for x in submissions:
+        if "full_name" in x["data"]:
+            if x["data"]["full_name"] == uuid:
+                result.append(x)
+        if "family_name" in x["data"]:
+            if x["data"]["family_name"] == uuid:
+                result.append(x)
+        if "last_name" in x["data"]:
+            if x["data"]["last_name"] == uuid:
+                result.append(x)
+        if "lastname" in x["data"]:
+            if x["data"]["lastname"] == uuid:
+                result.append(x)
+        if "html_body" in x["data"]:
+            if uuid in x["data"]["html_body"]:
+                result.append(x)
+    return result
+
+
 def find_form_submissions(email: str) -> List[dict]:
     json = client.get(f"testapi/submissions-by-email/{email}/").json()
     logging.debug(f"Submissions for {email}: {json}")
