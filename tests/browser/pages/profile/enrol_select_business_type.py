@@ -8,7 +8,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType, Services
+from pages import ElementType, Services, common_selectors
 from pages.common_actions import (
     Selector,
     check_for_sections,
@@ -20,6 +20,10 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
+from pages.profile import enrol_you_cannot_create_account, \
+    enrol_sole_trader_enter_your_email_and_set_password, \
+    enrol_enter_your_business_email_and_set_password, \
+    enrol_uk_taxpayer_enter_your_email_and_set_password
 from settings import DIRECTORY_UI_PROFILE_URL
 
 NAME = "Select your business type"
@@ -34,25 +38,25 @@ SELECTORS = {
         "itself": Selector(By.CSS_SELECTOR, "section form"),
         "ltd, plc or royal charter": Selector(
             By.CSS_SELECTOR,
-            "input[value='companies-house-company']",
+            "input[value='companies-house-company'] ~ label",
             type=ElementType.RADIO,
             is_visible=False,
         ),
         "sole trader or other type of business": Selector(
             By.CSS_SELECTOR,
-            "input[value='sole-trader']",
+            "input[value='non-companies-house-company'] ~ label",
             type=ElementType.RADIO,
             is_visible=False,
         ),
         "uk taxpayer": Selector(
             By.CSS_SELECTOR,
-            "input[value='not-company']",
+            "input[value='not-company'] ~ label",
             type=ElementType.RADIO,
             is_visible=False,
         ),
         "overseas company": Selector(
             By.CSS_SELECTOR,
-            "input[value='overseas-company']",
+            "input[value='overseas-company'] ~ label",
             type=ElementType.RADIO,
             is_visible=False,
         ),
@@ -61,12 +65,15 @@ SELECTORS = {
         ),
     },
 }
+SELECTORS.update(common_selectors.HEADER)
+SELECTORS.update(common_selectors.BREADCRUMBS)
+SELECTORS.update(common_selectors.FOOTER)
 
 POs = {
-    "ltd, plc or royal charter": None,
-    "sole trader or other type of business": None,
-    "uk taxpayer": None,
-    "overseas company": None,
+    "ltd, plc or royal charter": enrol_enter_your_business_email_and_set_password,
+    "sole trader or other type of business": enrol_sole_trader_enter_your_email_and_set_password,
+    "uk taxpayer": enrol_uk_taxpayer_enter_your_email_and_set_password,
+    "overseas company": enrol_you_cannot_create_account,
 }
 
 

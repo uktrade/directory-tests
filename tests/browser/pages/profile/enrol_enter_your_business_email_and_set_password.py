@@ -28,7 +28,6 @@ NAME = "Enter your business email address and set a password"
 NAMES = [
     "Enter your business email address and set a password",
     "Enter your business email address and set a password (LTD, PLC or Royal Charter)",
-    "Enter your business email address and set a password (Sole trader or other type of business)",
 ]
 SERVICE = Services.PROFILE
 TYPE = "Enrol"
@@ -38,9 +37,6 @@ URL = urljoin(
 URLs = {
     "enter your business email address and set a password": URL,
     "enter your business email address and set a password (ltd, plc or royal charter)": URL,
-    "enter your business email address and set a password (sole trader or other type of business)": urljoin(
-        DIRECTORY_UI_PROFILE_URL, "enrol/business-type/sole-trader/user-account/"
-    ),
 }
 PAGE_TITLE = ""
 
