@@ -64,36 +64,35 @@ SELECTORS = {
     "competitive advantages": {
         "self": Selector(By.ID, "competitive-advantages"),
         "first - icon": Selector(
-            By.CSS_SELECTOR, "#competitive-advantages div:nth-child(1) > img"
+            By.CSS_SELECTOR, "#competitive-advantages li:nth-child(1) img"
         ),
         "first - heading": Selector(
-            By.CSS_SELECTOR, "#competitive-advantages div:nth-child(1) > div > h3"
+            By.CSS_SELECTOR, "#competitive-advantages li:nth-child(1) div ~ div > h3"
         ),
         "first - list": Selector(
-            By.CSS_SELECTOR, "#competitive-advantages div:nth-child(1) > div > ul"
+            By.CSS_SELECTOR, "#competitive-advantages li:nth-child(1) div ~ div > ul"
         ),
         "second - icon": Selector(
-            By.CSS_SELECTOR, "#competitive-advantages div:nth-child(1) > img"
+            By.CSS_SELECTOR, "#competitive-advantages li:nth-child(2) img"
         ),
         "second - heading": Selector(
-            By.CSS_SELECTOR, "#competitive-advantages div:nth-child(2) > div > h3"
+            By.CSS_SELECTOR, "#competitive-advantages li:nth-child(2) div ~ div > h3"
         ),
         "second - list": Selector(
-            By.CSS_SELECTOR, "#competitive-advantages div:nth-child(2) > div > ul"
+            By.CSS_SELECTOR, "#competitive-advantages li:nth-child(2) div ~ div > ul"
         ),
         "third - icon": Selector(
-            By.CSS_SELECTOR, "#competitive-advantages div:nth-child(1) > img"
+            By.CSS_SELECTOR, "#competitive-advantages li:nth-child(3) img"
         ),
         "third - heading": Selector(
-            By.CSS_SELECTOR, "#competitive-advantages div:nth-child(3) > div > h3"
+            By.CSS_SELECTOR, "#competitive-advantages li:nth-child(3) div ~ div > h3"
         ),
         "third - list": Selector(
-            By.CSS_SELECTOR, "#competitive-advantages div:nth-child(3) > div > ul"
+            By.CSS_SELECTOR, "#competitive-advantages li:nth-child(3) div ~ div > ul"
         ),
     },
     "testimonial": {
         "self": Selector(By.ID, "testimonial"),
-        # "heading": Selector(By.CSS_SELECTOR, "#testimonial h2"),
         "quote": Selector(By.CSS_SELECTOR, "#testimonial p"),
     },
     "company list": {
@@ -137,10 +136,10 @@ SELECTORS = {
         ),
     },
 }
-SELECTORS.update(common_selectors.HEADER_INVEST)
+SELECTORS.update(common_selectors.INTERNATIONAL_HEADER_WO_LANGUAGE_SELECTOR)
 SELECTORS.update(common_selectors.BETA_BAR)
 SELECTORS.update(common_selectors.ERROR_REPORTING)
-SELECTORS.update(common_selectors.FOOTER_INVEST)
+SELECTORS.update(common_selectors.INTERNATIONAL_FOOTER)
 
 
 UNEXPECTED_ELEMENTS = {
