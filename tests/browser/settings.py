@@ -11,29 +11,29 @@ from utils.browser import get_driver_capabilities
 #####################################################################
 # Behave specific settings
 #####################################################################
-TAKE_SCREENSHOTS = env.bool("TAKE_SCREENSHOTS", default=False)
 AUTO_RETRY = env.bool("AUTO_RETRY", default=True)
+TAKE_SCREENSHOTS = env.bool("TAKE_SCREENSHOTS", default=False)
 
 
 #####################################################################
 # Browser & BrowserStack related settings
 #####################################################################
 BROWSER = env.str("BROWSER", default="chrome")
-BROWSER_ENVIRONMENT = env.str("BROWSER_ENVIRONMENT", default="local")
-BROWSER_TYPE = env.str("BROWSER_TYPE", default="desktop")
-BROWSER_RESTART_POLICY = env.str("RESTART_POLICY", default="feature")
 BROWSER_CUSTOM_CAPABILITIES = env.dict("CAPABILITIES", default=None)
+BROWSER_ENVIRONMENT = env.str("BROWSER_ENVIRONMENT", default="local")
 BROWSER_HEADLESS = env.bool("HEADLESS", default=False)
+BROWSER_RESTART_POLICY = env.str("RESTART_POLICY", default="feature")
+BROWSER_TYPE = env.str("BROWSER_TYPE", default="desktop")
 BROWSER_VERSION = env.str("VERSION", default=None)
-HUB_URL = env.str("HUB_URL", default=None)
-BUILD_ID = env.str("CIRCLE_SHA1", default=datetime.isoformat(datetime.now()))
-BROWSERSTACK_SERVER = env.str("BROWSERSTACK_SERVER", default="hub.browserstack.com")
-BROWSERSTACK_USER = env.str("BROWSERSTACK_USER", default="")
 BROWSERSTACK_PASS = env.str("BROWSERSTACK_PASS", default="")
+BROWSERSTACK_SERVER = env.str("BROWSERSTACK_SERVER", default="hub.browserstack.com")
+BROWSERSTACK_SESSIONS_URL = "https://www.browserstack.com/automate/sessions/{}.json"
+BROWSERSTACK_USER = env.str("BROWSERSTACK_USER", default="")
 BROWSERSTACK_EXECUTOR_URL = (
     f"http://{BROWSERSTACK_USER}:{BROWSERSTACK_PASS}@{BROWSERSTACK_SERVER}/wd/hub"
 )
-BROWSERSTACK_SESSIONS_URL = "https://www.browserstack.com/automate/sessions/{}.json"
+BUILD_ID = env.str("CIRCLE_SHA1", default=datetime.isoformat(datetime.now()))
+HUB_URL = env.str("HUB_URL", default=None)
 
 if BROWSER_ENVIRONMENT.lower() == "remote" and (
     BROWSERSTACK_USER and BROWSERSTACK_PASS
