@@ -5,6 +5,14 @@ import logging
 from behave.contrib.scenario_autoretry import patch_scenario_with_autoretry
 from behave.model import Feature, Scenario, Step
 from behave.runner import Context
+from utils.browser import (
+    clear_driver_cookies,
+    flag_browserstack_session_as_failed,
+    is_driver_responsive,
+    start_driver_session,
+    terminate_driver,
+)
+from utils.pdf import NoPDFMinerLogEntriesFilter
 
 from pages import sso
 from pages.common_actions import initialize_scenario_data
@@ -14,19 +22,12 @@ from settings import (
     BROWSER_RESTART_POLICY,
     DRIVER_CAPABILITIES,
 )
-from utils.browser import (
-    flag_browserstack_session_as_failed,
-    start_driver_session,
-    terminate_driver,
-    clear_driver_cookies,
-    is_driver_responsive,
-)
-from utils.pdf import NoPDFMinerLogEntriesFilter
 
 
 def before_all(context: Context):
     context.driver_capabilities = DRIVER_CAPABILITIES
-    logging.debug(f"driver_capabilities:\n{DRIVER_CAPABILITIES}")
+    print(f"CAPABILITIES: {DRIVER_CAPABILITIES}")
+    logging.debug(f"CAPABILITIES: {DRIVER_CAPABILITIES}")
 
     context.config.setup_logging(configfile=".behave_logging")
     logger = logging.getLogger()
@@ -47,7 +48,6 @@ def before_feature(context: Context, feature: Feature):
 
 def before_scenario(context: Context, scenario: Scenario):
     logging.debug(f"Starting scenario: {scenario.name}")
-    logging.debug(f"driver_capabilities:\n{DRIVER_CAPABILITIES}")
     context.scenario_data = initialize_scenario_data()
     if BROWSER_RESTART_POLICY == "scenario":
         context.driver = start_driver_session(scenario.name)

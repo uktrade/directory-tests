@@ -2,32 +2,22 @@
 """Behave configuration file."""
 import json
 import logging
-import http.client as httplib
 import socket
 import time
+from http.client import CannotSendRequest
 
 import requests
-from behave.model import Scenario
-from behave.runner import Context
 from selenium import webdriver
 from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.remote.command import Command
 from selenium.webdriver.remote.webdriver import WebDriver
 
-
 CAPABILITIES_TEMPLATES = {
     "local": {
-        "common_capabilities": {
-            "desktop": {},
-            "mobile": {},
-        },
+        "common_capabilities": {"desktop": {}, "mobile": {}},
         "browser_capabilities": {
-            "chrome": {
-                "browser": "Chrome",
-            },
-            "firefox": {
-                "browser": "Firefox",
-            },
+            "chrome": {"browser": "Chrome"},
+            "firefox": {"browser": "Firefox"},
         },
     },
     "remote": {
@@ -59,7 +49,7 @@ CAPABILITIES_TEMPLATES = {
                 "pageLoadStrategy": "none",
                 "os": "Windows",
                 "os_version": "10",
-                "browserstack.chrome.driver": "75.0.3770.8"
+                "browserstack.chrome.driver": "75.0.3770.8",
             },
             "edge": {
                 "browser": "Edge",
@@ -73,7 +63,7 @@ CAPABILITIES_TEMPLATES = {
                 "pageLoadStrategy": "eager",
                 "os": "Windows",
                 "os_version": "10",
-                "browserstack.geckodriver": "0.24.0"
+                "browserstack.geckodriver": "0.24.0",
             },
             "ie": {
                 "browser": "IE",
@@ -87,8 +77,11 @@ CAPABILITIES_TEMPLATES = {
 
 
 def get_driver_capabilities(
-        environment: str, browser_type: str, browser: str, build: str = None,
-        custom_capabilities: dict = None
+    environment: str,
+    browser_type: str,
+    browser: str,
+    build: str = None,
+    custom_capabilities: dict = None,
 ) -> dict:
     common = CAPABILITIES_TEMPLATES[environment]["common_capabilities"][browser_type]
     browser = CAPABILITIES_TEMPLATES[environment]["browser_capabilities"][browser]
@@ -126,12 +119,10 @@ def start_driver_session(session_name: str) -> WebDriver:
 
     capabilities = DRIVER_CAPABILITIES
     capabilities["name"] = session_name
-    print(f"CAPABILITIES: {capabilities}")
 
     if HUB_URL:
         driver = webdriver.Remote(
-            desired_capabilities=capabilities,
-            command_executor=HUB_URL,
+            desired_capabilities=capabilities, command_executor=HUB_URL
         )
         logging.warning(f"Started new remote session: {driver.session_id}")
     else:
@@ -142,11 +133,11 @@ def start_driver_session(session_name: str) -> WebDriver:
             "firefox": webdriver.Firefox,
             "ie": webdriver.Ie,
         }
-        print(f"Starting local instance of {browser_name}")
 
         options = None
         if browser_name == "chrome":
             from selenium.webdriver.chrome.options import Options
+
             options = Options()
             if BROWSER_HEADLESS:
                 options.add_argument("--headless")
@@ -156,11 +147,13 @@ def start_driver_session(session_name: str) -> WebDriver:
             options.add_argument("--no-sandbox")
         elif browser_name == "firefox":
             from selenium.webdriver.firefox.options import Options
+
             options = Options()
             if BROWSER_HEADLESS:
                 options.add_argument("--headless")
                 options.add_argument("--window-size=1600x2200")
 
+        print(f"Starting local instance of {browser_name} with options: {options}")
         driver = drivers[browser_name](options=options)
 
     driver.set_page_load_timeout(time_to_wait=27.0)
@@ -179,45 +172,41 @@ def start_driver_session(session_name: str) -> WebDriver:
     return driver
 
 
-def restart_webdriver_if_unresponsive(context: Context, scenario: Scenario):
-    if hasattr(context, "driver"):
-        session_id = context.driver.session_id
-        clean_name = scenario.name.lower().replace(" ", "-")[0:220]
-        try:
-            response = context.driver.execute(Command.STATUS)
-            logging.debug(f"WebDriver Status: {response}")
-            if "sessionId" in response and response["sessionId"] is None:
-                msg = (
-                    f"Looks like current session_id: {session_id} became unresponsive, "
-                    f"will try to spawn a new one"
-                )
-                print(msg)
-                logging.error(msg)
-                flag_browserstack_session_as_failed(session_id, msg)
-                start_driver_session(f"session-recovered-for-scenario-{clean_name}")
-                msg = (
-                    f"An unresponsive session '{session_id}' was recovered and new "
-                    f"session ID is: '{context.driver.session_id}'"
-                )
-                print(msg)
-                logging.warning(msg)
-        except (socket.error, httplib.CannotSendRequest):
-            msg = (
-                f"Remote driver became unresponsive after scenario: "
-                f"{scenario.name}. Will try to recover the selenium session"
-            )
-            print(msg)
-            logging.error(msg)
-            flag_browserstack_session_as_failed(session_id, msg)
-            start_driver_session(f"driver-recovered-for-scenario-{clean_name}")
-            msg = (
-                f"An unresponsive driver with ID: '{session_id}' was recovered and new "
-                f"driver session ID is: '{context.driver.session_id}'"
-            )
-            print(msg)
-            logging.error(msg)
-    else:
-        logging.error("Context doesn't have 'driver' attribute")
+def terminate_driver(driver: WebDriver):
+    if not driver:
+        logging.warning(f"Can't terminate an empty driver!")
+        return
+    try:
+        logging.debug("Quit driver")
+        driver.quit()
+    except WebDriverException as ex:
+        logging.error(f"Failed to quit the driver {ex.msg}")
+
+
+def is_driver_responsive(driver: WebDriver) -> bool:
+    responsive = False
+    try:
+        response = driver.execute(Command.STATUS)
+        logging.debug(f"WebDriver Status: {response}")
+        responsive = True
+    except (socket.error, CannotSendRequest):
+        logging.error(f"Remote browser driver became unresponsive!")
+    return responsive
+
+
+def clear_driver_cookies(driver: WebDriver, *, log_cleanup: bool = False):
+    if not driver:
+        logging.warning(f"Can't clear cookies from an empty driver!")
+        return
+    try:
+        if log_cleanup:
+            logging.debug(f"COOKIES: {driver.get_cookies()}")
+        driver.delete_all_cookies()
+        logging.debug("Successfully cleared cookies")
+        if log_cleanup:
+            logging.debug(f"Driver cookies after clearing them: {driver.get_cookies()}")
+    except WebDriverException as ex:
+        logging.error(f"Failed to clear cookies: '{ex.msg}'")
 
 
 def show_snackbar_message(driver: WebDriver, message: str):
@@ -313,41 +302,3 @@ def show_snackbar_message(driver: WebDriver, message: str):
     # in order to keep the snackbar visible after the scenario is finished,
     # wait for 200ms
     time.sleep(0.2)
-
-
-def terminate_driver(driver: WebDriver):
-    if not driver:
-        logging.warning(f"Can't terminate an empty driver!")
-        return
-    try:
-        logging.debug("Quit driver")
-        # driver.close()
-        driver.quit()
-    except WebDriverException as ex:
-        logging.error(f"Failed to quit the driver {ex.msg}")
-
-
-def is_driver_responsive(driver: WebDriver) -> bool:
-    responsive = False
-    try:
-        response = driver.execute(Command.STATUS)
-        logging.debug(f"WebDriver Status: {response}")
-        responsive = True
-    except (socket.error, httplib.CannotSendRequest):
-        logging.error(f"Remote browser driver became unresponsive!")
-    return responsive
-
-
-def clear_driver_cookies(driver: WebDriver, *, log_cleanup: bool = False):
-    if not driver:
-        logging.warning(f"Can't clear cookies from an empty driver!")
-        return
-    try:
-        if log_cleanup:
-            logging.debug(f"COOKIES: {driver.get_cookies()}")
-        driver.delete_all_cookies()
-        logging.debug("Successfully cleared cookies")
-        if log_cleanup:
-            logging.debug(f"Driver cookies after clearing them: {driver.get_cookies()}")
-    except WebDriverException as ex:
-        logging.error(f"Failed to clear cookies: '{ex.msg}'")
