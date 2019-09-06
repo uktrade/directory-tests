@@ -1,12 +1,6 @@
 version: 2
 
 # Variables
-chrome_version: &chrome_version
-  BROWSER_VERSION: "75.0"
-
-firefox_version: &firefox_version
-  BROWSER_VERSION: "67.0"
-
 load_hatch_rate: &load_hatch_rate
     HATCH_RATE: 5
 
@@ -138,7 +132,7 @@ step_run_browser_tests: &step_run_browser_tests
       python ./docker/env_writer.py --env=${TEST_ENV} --config=./docker/env_browser.json
       source ./docker/.env_with_export;
       export PATH=$PATH:$HOME/bin
-      BROWSER=${BROWSER} VERSION=${BROWSER_VERSION} TAGS="${TAGS}" make browserstack
+      BROWSER=${BROWSER} TAGS="${TAGS}" make browserstack
 
 step_run_load_tests: &step_run_load_tests
   run:
@@ -389,7 +383,6 @@ jobs:
     environment:
       TEST_ENV: "dev"
       BROWSER: "chrome"
-      <<: *chrome_version
       TAGS: "--tags=~@stage-only --tags=~@uat-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
     <<: *steps_run_browser_tests
 
@@ -399,7 +392,6 @@ jobs:
     environment:
       TEST_ENV: "dev"
       BROWSER: "firefox"
-      <<: *firefox_version
       TAGS: "--tags=~@stage-only --tags=~@uat-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
     <<: *steps_run_browser_tests
 
@@ -409,7 +401,6 @@ jobs:
     environment:
       TEST_ENV: "dev"
       BROWSER: "chrome"
-      <<: *chrome_version
       TAGS: "--tags=~@stage-only --tags=~@uat-only --tags=~@full --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
     <<: *steps_run_browser_tests
 
@@ -419,7 +410,6 @@ jobs:
     environment:
       TEST_ENV: "dev"
       BROWSER: "firefox"
-      <<: *firefox_version
       TAGS: "--tags=~@stage-only --tags=~@uat-only --tags=~@full --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
     <<: *steps_run_browser_tests
 
@@ -429,7 +419,6 @@ jobs:
     environment:
       TEST_ENV: "stage"
       BROWSER: "chrome"
-      <<: *chrome_version
       TAGS: "--tags=~@dev-only --tags=~@uat-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
     <<: *steps_run_browser_tests
 
@@ -439,7 +428,6 @@ jobs:
     environment:
       TEST_ENV: "stage"
       BROWSER: "firefox"
-      <<: *firefox_version
       TAGS: "--tags=~@dev-only --tags=~@uat-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
     <<: *steps_run_browser_tests
 
@@ -449,7 +437,6 @@ jobs:
     environment:
       TEST_ENV: "stage"
       BROWSER: "chrome"
-      <<: *chrome_version
       TAGS: "--tags=~@full --tags=~@dev-only --tags=~@uat-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
     <<: *steps_run_browser_tests
 
@@ -459,7 +446,6 @@ jobs:
     environment:
       TEST_ENV: "stage"
       BROWSER: "firefox"
-      <<: *firefox_version
       TAGS: "--tags=~@full --tags=~@dev-only --tags=~@uat-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
     <<: *steps_run_browser_tests
 
@@ -469,7 +455,6 @@ jobs:
     environment:
       TEST_ENV: "uat"
       BROWSER: "chrome"
-      <<: *chrome_version
       TAGS: "--tags=~@dev-only --tags=~@stage-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
     <<: *steps_run_browser_tests
 
@@ -479,7 +464,6 @@ jobs:
     environment:
       TEST_ENV: "uat"
       BROWSER: "firefox"
-      <<: *firefox_version
       TAGS: "--tags=~@dev-only --tags=~@stage-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
     <<: *steps_run_browser_tests
 
@@ -489,7 +473,6 @@ jobs:
     environment:
       TEST_ENV: "uat"
       BROWSER: "chrome"
-      <<: *chrome_version
       TAGS: "--tags=~@full --tags=~@dev-only --tags=~@stage-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
     <<: *steps_run_browser_tests
 
@@ -499,7 +482,6 @@ jobs:
     environment:
       TEST_ENV: "uat"
       BROWSER: "firefox"
-      <<: *firefox_version
       TAGS: "--tags=~@full --tags=~@dev-only --tags=~@stage-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
     <<: *steps_run_browser_tests
 
