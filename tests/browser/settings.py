@@ -22,10 +22,11 @@ BROWSER = env.str("BROWSER", default="chrome")
 BROWSER_ENVIRONMENT = env.str("BROWSER_ENVIRONMENT", default="local")
 BROWSER_TYPE = env.str("BROWSER_TYPE", default="desktop")
 BROWSER_RESTART_POLICY = env.str("RESTART_POLICY", default="feature")
-BROWSER_CUSTOM_CAPABILITIES = env.dict("CAPABILITIES", default={})
+BROWSER_CUSTOM_CAPABILITIES = env.dict("CAPABILITIES", default=None)
 BROWSER_HEADLESS = env.bool("HEADLESS", default=False)
+BROWSER_VERSION = env.str("VERSION", default=None)
 HUB_URL = env.str("HUB_URL", default=None)
-BUILD_ID = env.str("CIRCLE_SHA1", default=str(datetime.date(datetime.now())))
+BUILD_ID = env.str("CIRCLE_SHA1", default=datetime.isoformat(datetime.now()))
 BROWSERSTACK_SERVER = env.str("BROWSERSTACK_SERVER", default="hub.browserstack.com")
 BROWSERSTACK_USER = env.str("BROWSERSTACK_USER", default="")
 BROWSERSTACK_PASS = env.str("BROWSERSTACK_PASS", default="")
@@ -40,7 +41,9 @@ if BROWSER_ENVIRONMENT.lower() == "remote" and (
     HUB_URL = BROWSERSTACK_EXECUTOR_URL
 
 DRIVER_CAPABILITIES = get_driver_capabilities(
-    BROWSER_ENVIRONMENT, BROWSER_TYPE, BROWSER, BUILD_ID, BROWSER_CUSTOM_CAPABILITIES
+    environment=BROWSER_ENVIRONMENT, browser_type=BROWSER_TYPE, browser=BROWSER,
+    version=BROWSER_VERSION, custom_capabilities=BROWSER_CUSTOM_CAPABILITIES,
+    build=BUILD_ID
 )
 
 

@@ -156,15 +156,16 @@ BROWSER ?= chrome
 HEADLESS ?= false
 AUTO_RETRY ?= true
 BROWSER_TYPE ?= desktop
+VERSION ?= ""
 
 browser_tests_locally:
 	cd tests/browser && \
-	BROWSER_ENVIRONMENT=local BROWSER_TYPE=$(BROWSER_TYPE) BROWSER=$(BROWSER) HEADLESS=$(HEADLESS) AUTO_RETRY=$(AUTO_RETRY) behave -f pretty --no-skipped --tags=~@wip --tags=~@fixme --tags=~@skip --tags=~@decommissioned "${TAGS}"
+	BROWSER_ENVIRONMENT=local BROWSER_TYPE=$(BROWSER_TYPE) BROWSER=$(BROWSER) VERSION=$(VERSION) HEADLESS=$(HEADLESS) AUTO_RETRY=$(AUTO_RETRY) behave -f pretty --no-skipped --tags=~@wip --tags=~@fixme --tags=~@skip --tags=~@decommissioned ${TAGS}
 
 browserstack:
 	$(BROWSER_SET_DOCKER_ENV_VARS) && \
 	cd tests/browser && \
-	BROWSER_ENVIRONMENT=remote BROWSER_TYPE=$(BROWSER_TYPE) BROWSER=$(BROWSER) HEADLESS=$(HEADLESS) AUTO_RETRY=$(AUTO_RETRY) behave -f pretty --no-skipped --tags=~@wip --tags=~@fixme --tags=~@skip --tags=~@decommissioned "${TAGS}"
+	BROWSER_ENVIRONMENT=remote BROWSER_TYPE=$(BROWSER_TYPE) BROWSER=$(BROWSER) VERSION=$(VERSION) HEADLESS=$(HEADLESS) AUTO_RETRY=$(AUTO_RETRY) behave -f pretty --no-skipped --tags=~@wip --tags=~@fixme --tags=~@skip --tags=~@decommissioned ${TAGS}
 
 docker_browserstack: BROWSER_DOCKER_REMOVE_ALL
 	$(BROWSER_SET_DOCKER_ENV_VARS) && \

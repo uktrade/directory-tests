@@ -80,16 +80,20 @@ def get_driver_capabilities(
     environment: str,
     browser_type: str,
     browser: str,
-    build: str = None,
+    version: str = None,
     custom_capabilities: dict = None,
+    build: str = None,
 ) -> dict:
+    print(environment, browser_type, browser, version, custom_capabilities, build)
     common = CAPABILITIES_TEMPLATES[environment]["common_capabilities"][browser_type]
     browser = CAPABILITIES_TEMPLATES[environment]["browser_capabilities"][browser]
-    if build:
-        common["build"] = build
     capabilities = {}
     capabilities.update(common)
     capabilities.update(browser)
+    if build:
+        capabilities["build"] = build
+    if version:
+        capabilities["browser_version"] = version
     if custom_capabilities:
         capabilities.update(custom_capabilities)
     return capabilities
