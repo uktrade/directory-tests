@@ -5,10 +5,10 @@ import copy
 from pages import ElementType
 from pages.common_actions import By, Selector
 from settings import (
-    EIG_LOGO_MD5_CHECKSUM,
-    EVENTS_BIG_FOOTER_LOGO_MD5_CHECKSUM,
-    EVENTS_BIG_HEADER_LOGO_MD5_CHECKSUM,
-    GREAT_LOGO_MD5_CHECKSUM,
+    MD5_CHECKSUM_EIG_LOGO,
+    MD5_CHECKSUM_EVENTS_BIG_FOOTER_LOGO,
+    MD5_CHECKSUM_EVENTS_BIG_HEADER_LOGO,
+    MD5_CHECKSUM_GREAT_LOGO,
 )
 
 
@@ -104,22 +104,22 @@ PROFILE_LINK = Selector(By.ID, "header-profile-link")
 SIGN_OUT_LINK = Selector(By.ID, "header-sign-out-link")
 
 LOGOS = {
-    "eig": {"selector": EIG_LOGO, "md5": EIG_LOGO_MD5_CHECKSUM},
+    "eig": {"selector": EIG_LOGO, "md5": MD5_CHECKSUM_EIG_LOGO},
     "great - header": {
         "selector": Selector(By.CSS_SELECTOR, "#great-header-logo img"),
-        "md5": GREAT_LOGO_MD5_CHECKSUM,
+        "md5": MD5_CHECKSUM_GREAT_LOGO,
     },
     "great - footer": {
         "selector": Selector(By.ID, "great-footer-great-logo"),
-        "md5": GREAT_LOGO_MD5_CHECKSUM,
+        "md5": MD5_CHECKSUM_GREAT_LOGO,
     },
     "events business is great - header": {
         "selector": Selector(By.CSS_SELECTOR, "header img"),
-        "md5": EVENTS_BIG_HEADER_LOGO_MD5_CHECKSUM,
+        "md5": MD5_CHECKSUM_EVENTS_BIG_HEADER_LOGO,
     },
     "events business is great - footer": {
         "selector": Selector(By.CSS_SELECTOR, "#footer_section img"),
-        "md5": EVENTS_BIG_FOOTER_LOGO_MD5_CHECKSUM,
+        "md5": MD5_CHECKSUM_EVENTS_BIG_FOOTER_LOGO,
     },
 }
 

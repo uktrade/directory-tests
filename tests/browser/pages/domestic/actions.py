@@ -12,7 +12,7 @@ from pages.common_actions import (
     wait_for_page_load_after_action,
 )
 from pages.common_selectors import EXOPPS_FAVICON, FAVICON, HEADER, LOGOS
-from settings import DIT_FAVICON_MD5_CHECKSUM
+from settings import MD5_CHECKSUM_DIT_FAVICON
 
 
 def search(driver: WebDriver, phrase: str):
@@ -53,5 +53,5 @@ def check_dit_favicon(driver: WebDriver):
         except NoSuchElementException:
             raise
     src = favicon.get_attribute("href")
-    check_hash_of_remote_file(DIT_FAVICON_MD5_CHECKSUM, src)
-    logging.debug("Favicon %s has correct MD5sum %s", src, DIT_FAVICON_MD5_CHECKSUM)
+    check_hash_of_remote_file(MD5_CHECKSUM_DIT_FAVICON, src)
+    logging.debug("Favicon %s has correct MD5sum %s", src, MD5_CHECKSUM_DIT_FAVICON)
