@@ -1,23 +1,12 @@
 version: '2'
 services:
 
-  tests_first_browser_set:
+  browser_tests:
     build:
       context: .
       dockerfile: Dockerfile-browser
     working_dir: /usr/src/app
-    command: ./docker/cmd-first-browser-set.sh
-    env_file: ./docker/.env_without_export
-    volumes:
-      - ./tests/browser/reports:/usr/src/app/tests/browser/reports
-      - ./tests/browser/screenshots:/usr/src/app/tests/browser/screenshots
-
-  tests_second_browser_set:
-    build:
-      context: .
-      dockerfile: Dockerfile-browser
-    working_dir: /usr/src/app
-    command: ./docker/cmd-second-browser-set.sh
+    command: ./docker/cmd-run-browser-tests.sh
     env_file: ./docker/.env_without_export
     volumes:
       - ./tests/browser/reports:/usr/src/app/tests/browser/reports

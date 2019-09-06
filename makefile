@@ -160,16 +160,6 @@ browserstack:
 	cd tests/browser && \
 	paver run --config=browserstack-single --browsers=${BROWSERS} --versions=${VERSIONS} --tags="${TAGS}"
 
-browserstack_first_set:
-	$(BROWSER_SET_DOCKER_ENV_VARS) && \
-	cd tests/browser && \
-	paver run --config=browserstack-first-browser-set --tags="${TAGS}"
-
-browserstack_second_set:
-	$(BROWSER_SET_DOCKER_ENV_VARS) && \
-	cd tests/browser && \
-	paver run --config=browserstack-second-browser-set --tags="${TAGS}"
-
 browserstack_mobile:
 	$(BROWSER_SET_DOCKER_ENV_VARS) && \
 	cd tests/browser && paver run --config=browserstack-mobile --browsers=${BROWSERS} --versions=${VERSIONS} --tags="${TAGS}"
@@ -178,19 +168,12 @@ browserstack_single:
 	$(BROWSER_SET_DOCKER_ENV_VARS) && \
 	cd tests/browser && paver run --config=browserstack-single --browsers=${BROWSERS} --versions=${VERSIONS} --tags="${TAGS}"
 
-docker_browserstack_first_set: BROWSER_DOCKER_REMOVE_ALL
+docker_browserstack: BROWSER_DOCKER_REMOVE_ALL
 	$(BROWSER_SET_DOCKER_ENV_VARS) && \
 	$(BROWSER_DOCKER_COMPOSE_CREATE_ENVS) && \
 	$(BROWSER_DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
 	docker-compose -f docker-compose-browser.yml -p browser build && \
-	docker-compose -f docker-compose-browser.yml -p browser run tests_first_browser_set
-
-docker_browserstack_second_set:
-	$(BROWSER_SET_DOCKER_ENV_VARS) && \
-	$(BROWSER_DOCKER_COMPOSE_CREATE_ENVS) && \
-	$(BROWSER_DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL) && \
-	docker-compose -f docker-compose-browser.yml -p browser build && \
-	docker-compose -f docker-compose-browser.yml -p browser run tests_second_browser_set
+	docker-compose -f docker-compose-browser.yml -p browser run browser_tests
 
 compile_requirements:
 	python3 -m piptools compile requirements.in

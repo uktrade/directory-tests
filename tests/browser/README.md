@@ -100,15 +100,6 @@ BROWSERS=Edge VERSIONS=18.0 CONFIG=browserstack-single behave -k --format progre
 ```
 
 
-# Run scenarios in Docker container on BrowserStack
-
-To run all tests in a container using one of two browser sets on [BrowserStack](https://www.browserstack.com/automate):  
-```bash
-make docker_browserstack_first_set
-make docker_browserstack_second_set
-```
-
-
 ## BrowserStack - Custom browser capabilities
 
 In order to use custom browser capabilities, please provide them as a dict string in `CAPABILITIES` env var:
