@@ -152,23 +152,19 @@ BROWSER_DOCKER_REMOVE_ALL:
 	awk '{print $$1 }' | \
 	xargs -I {} docker rm -f {}
 
-browser_local:
+BROWSER ?= chrome
+HEADLESS ?= false
+AUTO_RETRY ?= true
+BROWSER_TYPE ?= desktop
+
+browser_tests_locally:
 	cd tests/browser && \
-	HEADLESS=false BROWSER=${BROWSER} AUTO_RETRY=true BROWSER_ENVIRONMENT=local behave -f pretty --no-skipped --tags=~@wip --tags=~@fixme --tags=~@skip --tags=~@decommissioned --tags="${TAGS}"
+	BROWSER_ENVIRONMENT=local BROWSER_TYPE=$(BROWSER_TYPE) BROWSER=$(BROWSER) HEADLESS=$(HEADLESS) AUTO_RETRY=$(AUTO_RETRY) behave -f pretty --no-skipped --tags=~@wip --tags=~@fixme --tags=~@skip --tags=~@decommissioned "${TAGS}"
 
 browserstack:
 	$(BROWSER_SET_DOCKER_ENV_VARS) && \
 	cd tests/browser && \
-	HEADLESS=false AUTO_RETRY=true BROWSER_ENVIRONMENT=remote behave -f pretty --no-skipped --tags=~@wip --tags=~@fixme --tags=~@skip --tags=~@decommissioned "${TAGS}"
-
-browserstack_mobile:
-	$(BROWSER_SET_DOCKER_ENV_VARS) && \
-	cd tests/browser && \
-	HEADLESS=false AUTO_RETRY=true BROWSER_ENVIRONMENT=mobile behave -f pretty --no-skipped --tags=~@wip --tags=~@fixme --tags=~@skip --tags=~@decommissioned "${TAGS}"
-
-browserstack_single:
-	$(BROWSER_SET_DOCKER_ENV_VARS) && \
-	cd tests/browser && paver run --config=browserstack-single --browsers=${BROWSERS} --versions=${VERSIONS} --tags="${TAGS}"
+	BROWSER_ENVIRONMENT=remote BROWSER_TYPE=$(BROWSER_TYPE) BROWSER=$(BROWSER) HEADLESS=$(HEADLESS) AUTO_RETRY=$(AUTO_RETRY) behave -f pretty --no-skipped --tags=~@wip --tags=~@fixme --tags=~@skip --tags=~@decommissioned "${TAGS}"
 
 docker_browserstack: BROWSER_DOCKER_REMOVE_ALL
 	$(BROWSER_SET_DOCKER_ENV_VARS) && \
