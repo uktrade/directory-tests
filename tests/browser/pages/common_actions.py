@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """Common PageObject actions."""
 import hashlib
-import json
 import logging
 import os
 import random
@@ -39,9 +38,6 @@ from selenium.webdriver.support.wait import WebDriverWait
 from pages import ElementType
 from settings import (
     BARRED_USERS,
-    BROWSERSTACK_PASS,
-    BROWSERSTACK_SESSIONS_URL,
-    BROWSERSTACK_USER,
     TAKE_SCREENSHOTS,
 )
 
@@ -398,24 +394,6 @@ def init_loggers(context: Context, *, task_id: str = None):
     context.config.setup_logging(handlers=[log_file_handler])
 
 
-def flag_browserstack_session_as_failed(session_id: str, reason: str):
-    url = BROWSERSTACK_SESSIONS_URL.format(session_id)
-    headers = {"Content-Type": "application/json"}
-    data = {"status": "failed", "reason": reason}
-    auth = (BROWSERSTACK_USER, BROWSERSTACK_PASS)
-    response = requests.put(url=url, headers=headers, data=json.dumps(data), auth=auth)
-    if not response.ok:
-        logging.error(
-            "Failed to flagged BrowserStack session: %s as failed. "
-            "BrowserStack responded with %d: %s",
-            session_id,
-            response.status_code,
-            response.content,
-        )
-    else:
-        logging.error("Flagged BrowserStack session: %s as failed", session_id)
-
-
 def wait_for_visibility(
     driver: WebDriver, selector: Selector, *, time_to_wait: int = 5
 ):
@@ -509,20 +487,6 @@ def find_elements(driver: WebDriver, selector: Selector) -> List[WebElement]:
     with selenium_action(driver, f"Couldn't find elements using '{selector.value}'"):
         elements = driver.find_elements(by=selector.by, value=selector.value)
     return elements
-
-
-def clear_driver_cookies(driver: WebDriver, *, log_cleanup: bool = False):
-    try:
-        if log_cleanup:
-            cookies = driver.get_cookies()
-            logging.debug(f"COOKIES: {cookies}")
-        driver.delete_all_cookies()
-        logging.debug("Successfully cleared cookies")
-        if log_cleanup:
-            cookies = driver.get_cookies()
-            logging.debug(f"Driver cookies after clearing them: {cookies}")
-    except WebDriverException as ex:
-        logging.error(f"Failed to clear cookies: '{ex.msg}'")
 
 
 def check_hash_of_remote_file(expected_hash: str, file_url: str):
@@ -629,97 +593,6 @@ def move_to(driver: WebDriver, element: WebElement):
     action_chains = ActionChains(driver)
     action_chains.move_to_element(element)
     action_chains.perform()
-
-
-def show_snackbar_message(driver: WebDriver, message: str):
-    script = """
-    function removeElement(id) {{
-        var existing = document.getElementById(id);
-        if(existing) {{
-            existing.parentNode.removeChild(existing);
-        }};
-    }};
-
-    function addElement(tag, innerHTML, id) {{
-        removeElement(id);
-        var node = document.createElement(tag);
-        node.innerHTML = innerHTML;
-        node.id = id;
-        document.body.appendChild(node);
-    }};
-
-    function showSnackBar() {{
-        var x = document.getElementById("snackbar");
-        x.className = "show";
-        setTimeout(function(){{ x.className = x.className.replace("show", ""); }}, 3000);
-    }};
-
-    function createSnackBarElements(message) {{
-        var snackbar_css = `
-        #snackbar {{
-            visibility: hidden;
-            min-width: 250px;
-            margin-left: -125px;
-            background-color: #333;
-            color: #00FF00;
-            text-align: center;
-            border-radius: 2px;
-            padding: 16px;
-            position: fixed;
-            z-index: 1;
-            left: 10%;
-            top: 30px;
-        }}
-
-        #snackbar.show {{
-            visibility: visible;
-            -webkit-animation: fadein 0.1s, fadeout 0.1s 1s;
-            animation: fadein 0.1s, fadeout 0.1s 1s;
-        }}
-
-        @-webkit-keyframes fadein {{
-            from {{top: 0; opacity: 0;}}
-            to {{top: 30px; opacity: 1;}}
-        }}
-
-        @keyframes fadein {{
-            from {{top: 0; opacity: 0;}}
-            to {{top: 30px; opacity: 1;}}
-        }}
-
-        @-webkit-keyframes fadeout {{
-            from {{top: 30px; opacity: 1;}}
-            to {{top: 0; opacity: 0;}}
-        }}
-
-        @keyframes fadeout {{
-            from {{top: 30px; opacity: 1;}}
-            to {{top: 0; opacity: 0;}}
-        }}`;
-
-        addElement('style', snackbar_css, 'snackbar_css');
-        addElement('div', message, 'snackbar');
-    }};
-
-    function deleteSnackBarElements() {{
-        removeElement('snackbar');
-        removeElement('snackbar_css');
-    }};
-
-    function showMessage(message) {{
-        deleteSnackBarElements();
-        createSnackBarElements(message);
-        showSnackBar();
-        setTimeout(deleteSnackBarElements, 1000);
-    }};
-
-    showMessage(`{message}`);
-    """
-    message = message.replace("`", "")
-    try:
-        driver.execute_script(script.format(message=message))
-    except WebDriverException:
-        logging.error(f"Failed to show snackbar with message: {message}")
 
 
 def check_for_sections(

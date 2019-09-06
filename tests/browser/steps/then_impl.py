@@ -25,11 +25,11 @@ from pages import (
 from pages.common_actions import (
     assertion_msg,
     avoid_browser_stack_idle_timeout_exception,
-    clear_driver_cookies,
     get_actor,
     get_last_visited_page,
     update_actor,
 )
+from utils.browser import clear_driver_cookies
 from pages.domestic import contact_us_office_finder_search_results
 from settings import (
     FORMS_API_MAILBOXES,
