@@ -84,7 +84,6 @@ def get_driver_capabilities(
     custom_capabilities: dict = None,
     build: str = None,
 ) -> dict:
-    print(environment, browser_type, browser, version, custom_capabilities, build)
     common = CAPABILITIES_TEMPLATES[environment]["common_capabilities"][browser_type]
     browser = CAPABILITIES_TEMPLATES[environment]["browser_capabilities"][browser]
     capabilities = {}
