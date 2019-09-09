@@ -97,18 +97,18 @@ def after_scenario(context: Context, scenario: Scenario):
 
 def after_feature(context: Context, feature: Feature):
     if hasattr(context, "driver"):
-        if BROWSER_RESTART_POLICY == "feature" and feature.status == "failed":
-            driver = context.driver
-            if driver and BROWSER_ENVIRONMENT == "remote":
-                scenarios = feature.scenarios
-                failed = sum(1 for scenario in scenarios if scenario.status == "failed")
-                session_id = driver.session_id
-                reason = (
-                    f"{failed} out of {len(feature.scenarios)} scenarios in "
-                    f"'{feature.name}' failed"
-                )
-                flag_browserstack_session_as_failed(session_id, reason)
-
+        driver = context.driver
+        if BROWSER_RESTART_POLICY == "feature":
+            if feature.status == "failed":
+                if driver and BROWSER_ENVIRONMENT == "remote":
+                    scenarios = feature.scenarios
+                    failed = sum(1 for scenario in scenarios if scenario.status == "failed")
+                    session_id = driver.session_id
+                    reason = (
+                        f"{failed} out of {len(feature.scenarios)} scenarios in "
+                        f"'{feature.name}' failed"
+                    )
+                    flag_browserstack_session_as_failed(session_id, reason)
             terminate_driver(driver)
 
 
