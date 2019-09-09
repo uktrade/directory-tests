@@ -8,7 +8,7 @@ from uuid import uuid4
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType, Services
+from pages import ElementType, Services, common_selectors
 from pages.common_actions import (
     Actor,
     Selector,
@@ -29,18 +29,12 @@ from settings import EXRED_UI_URL
 NAME = "Brexit help"
 SERVICE = Services.INTERNATIONAL
 TYPE = "Contact us"
-URL = urljoin(EXRED_UI_URL, "international/eu-exit-news/contact/")
+URL = urljoin(EXRED_UI_URL, "international/brexit/contact/")
 PAGE_TITLE = "Welcome to great.gov.uk - buy from or invest in the UK"
 
 
 SUBMIT_BUTTON = Selector(By.CSS_SELECTOR, "form[method=POST] button")
 SELECTORS = {
-    "header bar": {"itself": Selector(By.ID, "international-header-bar")},
-    "header menu": {
-        "itself": Selector(By.ID, "international-header-menu"),
-        "logo": Selector(By.ID, "international-header-logo"),
-        "breadcrumbs": Selector(By.CSS_SELECTOR, ".breadcrumbs"),
-    },
     "heading": {
         "itself": Selector(By.CSS_SELECTOR, "#content h1"),
         "text": Selector(By.CSS_SELECTOR, "#content p.body-text"),
@@ -70,6 +64,9 @@ SELECTORS = {
         "link": Selector(By.ID, "error-reporting-section-contact-us"),
     },
 }
+SELECTORS.update(common_selectors.INTERNATIONAL_HEADER_WO_LANGUAGE_SELECTOR)
+SELECTORS.update(common_selectors.BREADCRUMBS)
+SELECTORS.update(common_selectors.INTERNATIONAL_FOOTER)
 
 UNEXPECTED_SELECTORS = {
     "not translated": {

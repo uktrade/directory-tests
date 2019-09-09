@@ -1,20 +1,19 @@
 @international-page
 @contact-us
-Feature: International Page - EU Exit - Contact us
+Feature: International Page - Brexit help - Contact us
 
   Background:
     Given basic authentication is done for "International - Landing" page
 
   @TT-617
   @eu-exit
-  @stage-only
-  Scenario: International Visitors should see all expected page sections on "International EU Exit - Contact Us form" page
-    Given "Robert" visits the "International - EU Exit - Contact Us" page
+  @dev-only
+  Scenario: International Visitors should see all expected page sections on "International Brexit help - Contact Us form" page
+    Given "Robert" visits the "International - Brexit help - Contact Us" page
 
     Then "Robert" should see following sections
       | sections        |
-      | header bar      |
-      | header menu     |
+      | header          |
       | heading         |
       | form            |
       | error reporting |
@@ -24,11 +23,13 @@ Feature: International Page - EU Exit - Contact us
       | not translated    |
 
 
+  # Missing translations
+  @wip
   @TT-617
   @eu-exit
-  @stage-only
-  Scenario Outline: International Visitors should not be able view "International EU Exit - Contact Us form" in "<preferred_language>"
-    Given "Robert" visits the "International - EU Exit - Contact Us" page
+  @dev-only
+  Scenario Outline: International Visitors should not be able view "International Brexit help - Contact Us form" in "<preferred_language>"
+    Given "Robert" visits the "International - Brexit help - Contact Us" page
 
     When "Robert" manually change the page language to "<preferred_language>"
 
@@ -50,11 +51,11 @@ Feature: International Page - EU Exit - Contact us
   @dev-only
   @captcha
   @eu-exit
-  @stage-only
+  @dev-only
   Scenario: International Visitors should be able to submit their questions regarding EU Exit
-    Given "Robert" visits the "International - EU Exit - Contact Us" page
+    Given "Robert" visits the "International - Brexit help - Contact Us" page
 
     When "Robert" fills out and submits the form
 
-    Then "Robert" should be on the "International - EU Exit - Thank you for contacting us" page
+    Then "Robert" should be on the "International - Brexit help - Thank you for contacting us" page
     And "Robert" should receive an "Thank you for your EU exit enquiry" confirmation email
