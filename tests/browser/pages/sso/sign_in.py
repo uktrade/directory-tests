@@ -9,13 +9,13 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from pages import ElementType, Services, common_selectors
 from pages.common_actions import (
     Selector,
+    check_for_sections,
     check_url,
     find_and_click_on_page_element,
     find_element,
     go_to_url,
     take_screenshot,
     wait_for_page_load_after_action,
-    check_for_sections
 )
 from settings import DIRECTORY_UI_SSO_URL
 
@@ -76,8 +76,8 @@ def fill_out(driver: WebDriver, email: str, password: str):
 
 def submit(driver: WebDriver):
     sign_up_button = find_element(driver, SIGN_IN_BUTTON)
-    with wait_for_page_load_after_action(driver):
-        sign_up_button.click()
+    # with wait_for_page_load_after_action(driver):
+    sign_up_button.click()
     take_screenshot(driver, NAME + "after signing in")
 
 
