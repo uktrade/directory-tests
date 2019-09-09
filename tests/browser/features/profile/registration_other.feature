@@ -50,6 +50,7 @@ Feature: New Enrolment flow
 
 
   @wip
+  @dev-only
   @TT-1120
   @ltd-plc-royal
   @sole-trader-other-business
@@ -77,6 +78,7 @@ Feature: New Enrolment flow
 
 
   @wip
+  @dev-only
   @TT-1121
   @ltd-plc-royal
   @sole-trader-other-business
@@ -100,6 +102,7 @@ Feature: New Enrolment flow
 
 
   @wip
+  @dev-only
   @TT-1122
   @uk-taxpayer
   Scenario: A UK taxpayers wanting to register should be asked to enter their details after providing email confirmation code
@@ -118,6 +121,7 @@ Feature: New Enrolment flow
 
 
   @wip
+  @dev-only
   @TT-1123
   @ltd-plc-royal
   @sole-trader-other-business
@@ -142,6 +146,7 @@ Feature: New Enrolment flow
 
 
   @wip
+    @dev-only
   @TT-1124
   @ltd-plc-royal
   @sole-trader-other-business
@@ -166,6 +171,7 @@ Feature: New Enrolment flow
 
 
   @wip
+  @dev-only
   @TT-1125
   @TT-1017
   Scenario: When CH record doesn't include business' address the business representative should be referred to a contact page
@@ -178,6 +184,7 @@ Feature: New Enrolment flow
 
 
   @wip
+  @dev-only
   @TT-1126
   @TT-1031
   Scenario: Companies House company enrolment creates a business profile
@@ -189,6 +196,7 @@ Feature: New Enrolment flow
 
 
   @wip
+  @dev-only
   @TT-1127
   @TT-1035
   Scenario Outline: Handle case of if the email already present in Profile-Profile
@@ -210,6 +218,7 @@ Feature: New Enrolment flow
 
 
   @wip
+  @dev-only
   @TT-1128
   @TT-1036
   Scenario Outline: Handle invalid user state - has company already - redirect to their profile
@@ -226,6 +235,7 @@ Feature: New Enrolment flow
 
 
   @wip
+  @dev-only
   @TT-1129
   @TT-1036
   Scenario Outline: Handle invalid user state - already logged in - skip ahead to page where they enter business details
@@ -244,6 +254,7 @@ Feature: New Enrolment flow
 
 
   @wip
+  @dev-only
   @TT-1130
   @TT-1037
   Scenario Outline: Log user in on verification submit, not on account creation

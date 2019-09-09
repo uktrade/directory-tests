@@ -20,7 +20,7 @@ Feature: Apply via DIT
     Then "Robert" should be on the "Single Sign-On - Sign in" page
 
     Examples: products and countries
-      | country   | products               |
+      | country   | products                 |
       | Australia | Clothing and accessories |
 
 
