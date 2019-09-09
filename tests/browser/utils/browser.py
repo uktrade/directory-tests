@@ -156,7 +156,9 @@ def start_driver_session(session_name: str) -> WebDriver:
                 options.add_argument("--headless")
                 options.add_argument("--window-size=1600x2200")
 
-        print(f"Starting local instance of {browser_name} with options: {options}")
+        print(
+            f"Starting local instance of {browser_name} with options: {options.arguments}"
+        )
         driver = drivers[browser_name](options=options)
 
     driver.set_page_load_timeout(time_to_wait=27.0)
