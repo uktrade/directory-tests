@@ -161,7 +161,7 @@ def start_driver_session(session_name: str) -> WebDriver:
         )
         driver = drivers[browser_name](options=options)
 
-    driver.set_page_load_timeout(time_to_wait=27.0)
+    driver.set_page_load_timeout(time_to_wait=30)
     try:
         driver.maximize_window()
         logging.debug("Maximized the window.")
