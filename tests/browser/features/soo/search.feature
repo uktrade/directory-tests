@@ -9,6 +9,7 @@ Feature: Search for marketplace
   @exopps
   @soo-long-domestic
   @account-support
+  @read-only
   Scenario Outline: Visitors should be able to search for marketplaces to sell "<products>" in "<countries>"
     Given "Robert" visits the "Selling Online Overseas - <starting page>" page
 

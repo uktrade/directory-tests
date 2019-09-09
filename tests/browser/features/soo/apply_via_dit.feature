@@ -11,6 +11,7 @@ Feature: Apply via DIT
   @dev-only
   @soo-long-domestic
   @account-support
+  @read-only
   Scenario Outline: Anonymous Enquirers should be redirected to SSO login page
     Given "Robert" found a marketplace in "<country>" to sell "<products>"
 
