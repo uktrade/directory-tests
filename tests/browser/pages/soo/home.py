@@ -63,17 +63,15 @@ def click_on_page_element(driver: WebDriver, element_name: str):
 
 
 def open_random_marketplace(driver: WebDriver):
-    selector = Selector(By.CSS_SELECTOR, "ul.markets li.markets-item")
+    selector = Selector(By.CSS_SELECTOR, "#random-markets a.card-link")
     links = find_elements(driver, selector)
     random.choice(links).click()
 
 
 def generate_form_details(country: str = None, category: str = None) -> dict:
     if category:
-        category = category.replace("&", "&amp;")
         category = search_criteria.CATEGORIES[category]
     if country:
-        country = country.replace("&", "&amp;")
         country = search_criteria.COUNTRIES[country]
     result = {"category": category, "country": country}
     logging.debug(f"Form details: {result}")
