@@ -260,15 +260,12 @@ def registration_open_email_confirmation_link(context: Context, actor_alias: str
 def registration_submit_form_and_verify_account(
     context: Context, actor_alias: str, *, fake_verification: bool = True
 ):
-    driver = context.driver
     actor = get_actor(context, actor_alias)
-    email = actor.email
-    password = actor.password
-    sso.registration.fill_out(driver, email, password)
-    sso.registration.submit(driver)
-    sso.registration_confirmation.should_be_here(driver)
+
+    generic_fill_out_and_submit_form(context, actor_alias, custom_details_table=context.table)
+
     if fake_verification:
-        sso.common.verify_account(email)
+        sso.common.verify_account(actor.email)
     else:
         registration_should_get_verification_email(context, actor_alias)
         registration_open_email_confirmation_link(context, actor_alias)
