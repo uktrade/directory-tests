@@ -20,7 +20,7 @@ Feature: Apply via DIT
 
     Examples: products and countries
       | country   | products               |
-      | Australia | Clothing & Accessories |
+      | Australia | Clothing and accessories |
 
 
   @XOT-740
@@ -39,8 +39,8 @@ Feature: Apply via DIT
     Then "Robert" should be on the "Domestic - Long Domestic (Your Business)" page
 
     Examples: products and countries
-      | country   | products               |
-      | Australia | Clothing & Accessories |
+      | country   | products                 |
+      | Australia | Clothing and accessories |
 
 
   @XOT-749
@@ -65,8 +65,8 @@ Feature: Apply via DIT
     Then "Robert" should be on the "Domestic - Long Domestic (Thank you for your enquiry)" page
 
     Examples: products and countries
-      | country   | products               |
-      | Australia | Clothing & Accessories |
+      | country   | products                 |
+      | Australia | Clothing and accessories |
 
 
   @XOT-741
@@ -85,8 +85,8 @@ Feature: Apply via DIT
     And "Robert" should see form fields populated with his company details
 
     Examples: products and countries
-      | country   | products               |
-      | Australia | Clothing & Accessories |
+      | country   | products                 |
+      | Australia | Clothing and accessories |
 
 
   @XOT-689
@@ -108,5 +108,5 @@ Feature: Apply via DIT
     Then a "zendesk" notification entitled "great.gov.uk Selling Online Overseas contact form" should be sent to "Robert"
 
     Examples: products and countries
-      | country   | products               |
-      | Australia | Clothing & Accessories |
+      | country   | products                 |
+      | Australia | Clothing and accessories |

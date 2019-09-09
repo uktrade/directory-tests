@@ -18,15 +18,16 @@ Feature: Search for marketplace
     And "Robert" should see marketplaces which operate globally or in "<country>"
 
     Examples: products and countries
-      | starting page  | country   | products               |
-      | Home           | Australia | Clothing & Accessories |
-      | Search results | Poland    | Home & Garden          |
+      | starting page  | country   | products                 |
+      | Home           | Australia | Clothing and accessories |
+      | Search results | Poland    | Home and lifestyle       |
 
 
   @XOT-689
   @exopps
   @soo-long-domestic
   @account-support
+  @read-only
   Scenario Outline: Domestic "Selling Online Overseas" Enquirers should be able to view marketplace page
     Given "Robert" searches for marketplaces in "<country>" to sell "<products>"
 
@@ -46,6 +47,6 @@ Feature: Search for marketplace
 #      | Footer              |
 
     Examples: products and countries
-      | country   | products               |
-      | Australia | Clothing & Accessories |
-      | China     | Sporting Goods         |
+      | country   | products                 |
+      | Australia | Clothing and accessories |
+      | China     | Sports and leisure       |
