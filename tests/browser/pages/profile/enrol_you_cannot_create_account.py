@@ -83,3 +83,8 @@ def submit(driver: WebDriver) -> ModuleType:
     find_and_click_on_page_element(driver, SELECTORS, "submit", wait_for_it=False)
     take_screenshot(driver, "After submitting the form")
     return enrol_enter_your_confirmation_code
+
+
+def click_on_page_element(driver: WebDriver, element_name: str):
+    find_and_click_on_page_element(driver, SELECTORS, element_name)
+    take_screenshot(driver, NAME + " after clicking on " + element_name)
