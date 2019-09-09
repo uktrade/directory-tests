@@ -33,6 +33,17 @@ Feature: Search for marketplace
     When "Robert" randomly selects a marketplace
 
     Then "Robert" should be on the "Selling Online Overseas - Marketplace" page
+    Then "Robert" should see following sections
+      | Sections            |
+      | Header              |
+      | Breadcrumbs         |
+      | Logo                |
+      | Apply now - sidebar |
+      | Market details      |
+      | Back                |
+      | Error reporting     |
+#      See TT-1778 there's a problem with lazy loading and Firefox
+#      | Footer              |
 
     Examples: products and countries
       | country   | products               |
