@@ -165,7 +165,7 @@ browser_tests_locally:
 browserstack:
 	$(BROWSER_SET_DOCKER_ENV_VARS) && \
 	cd tests/browser && \
-	BROWSER_ENVIRONMENT=remote BROWSER_TYPE=$(BROWSER_TYPE) BROWSER=$(BROWSER) VERSION=$(VERSION) HEADLESS=$(HEADLESS) AUTO_RETRY=$(AUTO_RETRY) behave -f pretty --no-skipped --tags=~@wip --tags=~@fixme --tags=~@skip --tags=~@decommissioned ${TAGS}
+	BROWSER_ENVIRONMENT=remote BROWSER_TYPE=$(BROWSER_TYPE) BROWSER=$(BROWSER) VERSION=$(VERSION) HEADLESS=$(HEADLESS) AUTO_RETRY=$(AUTO_RETRY) behave --format progress3 --no-skipped --tags=~@wip --tags=~@fixme --tags=~@skip --tags=~@decommissioned ${TAGS}
 
 docker_browserstack: BROWSER_DOCKER_REMOVE_ALL
 	$(BROWSER_SET_DOCKER_ENV_VARS) && \
