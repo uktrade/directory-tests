@@ -163,20 +163,13 @@ step_merge_junit_xml_reports_from_browser_tests: &step_merge_junit_xml_reports_f
     name: Merge JUnit XML reports & print errors summary
     when: always
     command: |
-      pwd
-      ls
-      REPORTS=`find ./tests/browser/reports/ -iname "*.xml"`
-      if [ ! -z "${DSRC}" ]; then
-        python3 -m venv venv
-        . venv/bin/activate
-        cd ./tests/browser/reports
-        junit-merge *.xml -o merged.xml
-        ls *.xml | grep -v merged.xml | xargs rm
-        cd ../../../
-        ./print_error_summary.py --report ./tests/browser/reports/merged.xml
-      else
-        echo "Nothing to do as there are no *.xml files in ./tests/browser/reports/ directory";
-      fi
+      python3 -m venv venv
+      . venv/bin/activate
+      cd ./tests/browser/reports
+      junit-merge *.xml -o merged.xml
+      ls *.xml | grep -v merged.xml | xargs rm
+      cd ../../../
+      ./print_error_summary.py --report ./tests/browser/reports/merged.xml
 
 
 step_generate_allure_report_for_browser_tests: &step_generate_allure_report_for_browser_tests
@@ -184,18 +177,14 @@ step_generate_allure_report_for_browser_tests: &step_generate_allure_report_for_
     name: Generate a standaole Allure report from a JUnit XML Browser tests reports
     when: always
     command: |
-      if [ -f "./tests/browser/reports/merged.xml" ]; then
-        python3 -m venv venv
-        . venv/bin/activate
-        cd ./tests/browser
-        allure generate ./reports && {
-          mv allure-report/* reports/ && {
-            rm -fr allure-report/
-          }
+      python3 -m venv venv
+      . venv/bin/activate
+      cd ./tests/browser
+      allure generate ./reports && {
+        mv allure-report/* reports/ && {
+          rm -fr allure-report/
         }
-      else
-        echo "Nothing to do as ./tests/browser/reports/merged.xml doesn't exist";
-      fi
+      }
 
 
 # Lists of steps
