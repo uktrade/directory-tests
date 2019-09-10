@@ -41,6 +41,7 @@ def submit(actor: Actor) -> Response:
         "user-account-password": actor.password,
         "user-account-password_confirmed": actor.password,
         "user-account-terms_agreed": "on",
+        "user-account-remote_password_error": None,
         "g-recaptcha-response": "test mode",
     }
 

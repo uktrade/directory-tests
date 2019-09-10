@@ -452,7 +452,7 @@ class URLs(Enum):
     PROFILE_ENROL_SELECT_BUSINESS_TYPE = ProfileUrl("enrol/business-type/")
     PROFILE_ENROL_USER_ACCOUNT = ProfileUrl("enrol/business-type/companies-house/user-account/")
     PROFILE_ENROL_EMAIL_VERIFICATION = ProfileUrl("enrol/business-type/companies-house/verification/")
-    PROFILE_ENROL_COMPANIES_HOUSE_SEARCH = ProfileUrl("enrol/business-type/companies-house/search/")
+    PROFILE_ENROL_COMPANIES_HOUSE_SEARCH = ProfileUrl("enrol/business-type/companies-house/company-search/")
     PROFILE_ENROL_BUSINESS_DETAILS = ProfileUrl("enrol/business-type/companies-house/business-details/")
     PROFILE_ENROL_PERSONAL_DETAILS = ProfileUrl("enrol/business-type/companies-house/personal-details/")
     PROFILE_ENROL_FINISHED = ProfileUrl("enrol/business-type/companies-house/finished/")

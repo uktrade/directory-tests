@@ -31,9 +31,8 @@ def submit(actor: Actor, company: Company) -> Response:
         "csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
         "companies_house_enrolment_view-current_step": "business-details",
         "business-details-company_name": company.title,
-        "business-details-postal_code": company.companies_house_details["address"]["postal_code"],
         "business-details-sectors": company.sector,
-        "business-details-website_address": company.website,
+        "business-details-website": company.website,
     }
 
     return make_request(

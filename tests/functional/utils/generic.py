@@ -644,8 +644,10 @@ def extract_csrf_middleware_token(response: Response) -> str:
     """
     with assertion_msg("Can't extract CSRF token as response has no content"):
         assert response.content
-    css_selector = '#content input[type="hidden"]::attr(value)'
+    css_selector = "input[type=hidden][name=csrfmiddlewaretoken]::attr(value)"
     token = extract_by_css(response, css_selector)
+    with assertion_msg(f"Couldn't find csrfmiddlewaretoken on {response.url}"):
+        assert token
     logging.debug("Found CSRF token: %s", token)
     return token
 

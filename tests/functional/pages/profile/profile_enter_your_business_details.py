@@ -30,9 +30,9 @@ def submit(actor: Actor, company: Company) -> Response:
     headers = {"Referer": URL}
     data = {
         "csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
-        "companies_house_enrolment_view-current_step": "search",
-        "search-company_name": company.title,
-        "search-company_number": company.number,
+        "companies_house_enrolment_view-current_step": "company-search",
+        "company-search-company_name": company.title,
+        "company-search-company_number": company.number,
     }
 
     return make_request(
