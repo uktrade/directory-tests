@@ -30,10 +30,10 @@ NAME = "Enter your business details"
 NAMES = ["Enter your business details (LTD, PLC or Royal Charter)"]
 SERVICE = Services.PROFILE
 TYPE = "Enrol"
-URL = urljoin(DIRECTORY_UI_PROFILE_URL, "enrol/business-type/companies-house/search/")
+URL = urljoin(DIRECTORY_UI_PROFILE_URL, "enrol/business-type/companies-house/company-search/")
 URLs = {
     "enter your business details (ltd, plc or royal charter)": urljoin(
-        DIRECTORY_UI_PROFILE_URL, "enrol/business-type/companies-house/search/"
+        DIRECTORY_UI_PROFILE_URL, "enrol/business-type/companies-house/company-search/"
     )
 }
 PAGE_TITLE = ""
@@ -47,7 +47,7 @@ SELECTORS = {
         "heading": Selector(By.CSS_SELECTOR, "#form-step-body-text h1"),
         "company name": Selector(
             By.ID,
-            "id_search-company_name",
+            "id_company-search-company_name",
             type=ElementType.INPUT,
             is_visible=False,
             autocomplete_callback=enrol_autocomplete_company_name,
@@ -58,9 +58,9 @@ SELECTORS = {
     },
 }
 FORM_FIELDS_WITH_USEFUL_DATA = {
-    "company name": Selector(By.ID, "id_search-company_name", type=ElementType.INPUT),
+    "company name": Selector(By.ID, "id_company-search-company_name", type=ElementType.INPUT),
     "company number": Selector(
-        By.ID, "id_search-company_number", type=ElementType.INPUT, is_visible=False
+        By.ID, "id_company-search-company_number", type=ElementType.INPUT, is_visible=False
     ),
 }
 
