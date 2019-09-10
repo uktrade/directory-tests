@@ -49,7 +49,7 @@ step_install_requirements_for_browser_tests: &step_install_requirements_for_brow
       pip install --upgrade pip
       pip install -r requirements_browser.txt
       nodeenv -p
-      npm install -g junit-merge@1.2.3
+      npm install -g junit-merge@2.0.0
 
 step_install_requirements_for_load_tests: &step_install_requirements_for_load_tests
   run:
@@ -162,13 +162,17 @@ step_merge_junit_xml_reports_from_browser_tests: &step_merge_junit_xml_reports_f
     name: Merge JUnit XML reports & print errors summary
     when: always
     command: |
-      python3 -m venv venv
-      . venv/bin/activate
-      cd ./tests/browser/reports
-      junit-merge *.xml -o merged.xml
-      ls *.xml | grep -v merged.xml | xargs rm
-      cd ../../../
-      ./print_error_summary.py --report ./tests/browser/reports/merged.xml
+      if [ -f ./tests/browser/reports/*.xml ]; then
+        python3 -m venv venv
+        . venv/bin/activate
+        cd ./tests/browser/reports
+        junit-merge *.xml -o merged.xml
+        ls *.xml | grep -v merged.xml | xargs rm
+        cd ../../../
+        ./print_error_summary.py --report ./tests/browser/reports/merged.xml
+      else
+        echo "Nothing to do as there are no *.xml files in ./reports/ directory";
+      fi
 
 
 # Lists of steps
