@@ -75,8 +75,7 @@ Feature: Domestic - Header-Footer
   @footer
   @ED-3118
   Scenario Outline: Any Exporter should be able to get to the Domestic Home page from "<selected>" page by using DIT logo in the page header and footer
-    Given basic authentication is done for "<selected>" page
-    And "Robert" visits the "<selected>" page
+    Given "Robert" visits the "<selected>" page
 
     When "Robert" decides to click on "Invest in Great logo"
 
