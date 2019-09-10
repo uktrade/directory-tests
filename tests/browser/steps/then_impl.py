@@ -85,6 +85,10 @@ def should_be_on_page_or_international_page(
     try:
         should_be_on_page(context, actor_alias, page_name)
     except AssertionError:
+        logging.warning(
+            f"'{actor_alias}' is not on expected '{page_name}' page. Will check if it "
+            f"was redirected to the international site"
+        )
         international.landing.should_be_here(context.driver)
         logging.debug("%s was redirected to the International page", actor_alias)
 
