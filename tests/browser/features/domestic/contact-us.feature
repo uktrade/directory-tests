@@ -439,22 +439,22 @@ Feature: New contact us forms
 
     @dev-only
     Examples:
-      | selected                     | expected                                            |
-      | Investing in the UK          | Invest - Contact us                                 |
-      | Capital investment in the UK | International - Contact the Capital Investment team |
-      | Exporting to the UK          | International - Exporting to the UK                 |
-      | Find a UK business partner   | Find a Supplier - Contact us                        |
-      | Brexit enquiries             | International - Brexit help                         |
-      | Other                        | International - Contact us                          |
+      | selected                     | expected                                                |
+      | Investing in the UK          | Invest - Contact us                                     |
+      | Capital investment in the UK | International - Contact the Capital Investment team     |
+      | Exporting to the UK          | International - Exporting to the UK                     |
+      | Find a UK business partner   | International - Find a UK business partner - Contact us |
+      | Brexit enquiries             | International - Brexit help                             |
+      | Other                        | International - Contact us                              |
 
     @stage-only
     @prod-only
     Examples:
-      | selected                     | expected                                            |
-      | Investing in the UK          | Invest - Contact us                                 |
-      | Find a UK business partner   | Find a Supplier - Contact us                        |
-      | Brexit enquiries             | International - Brexit help                         |
-      | Other                        | International - Contact us                          |
+      | selected                   | expected                                                |
+      | Investing in the UK        | Invest - Contact us                                     |
+      | Find a UK business partner | International - Find a UK business partner - Contact us |
+      | Brexit enquiries           | International - Brexit help                             |
+      | Other                      | International - Contact us                              |
 
 
   @TT-758
@@ -467,7 +467,7 @@ Feature: New contact us forms
     Then "Robert" should be on the "<expected>" page
 
     Examples:
-      | path                                                                                | expected                                                            |
+      | path                                                                                | expected                                                    |
       | The UK                                                                              | Domestic - Contact us                                       |
       | Outside the UK                                                                      | Domestic - Contact us                                       |
       | The UK -> Great.gov.uk account and services support                                 | Domestic - What can we help you with? - Domestic Contact us |
