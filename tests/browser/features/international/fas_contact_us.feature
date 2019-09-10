@@ -61,39 +61,39 @@ Feature: Find a Supplier - Contact us
 
     When "Robert" decides to "<buy or invest>"
 
-    Then "Robert" should be on the "International - <expected>" page
+    Then "Robert" should be on the "<expected>" page
 
     Examples: common industries
-      | specific                      | buy or invest    | expected                    |
-      | Creative industries           | invest in the UK | Contact the investment team |
-      | Engineering and manufacturing | buy from the UK  | Find a UK business partner  |
+      | specific                      | buy or invest    | expected                                                |
+      | Creative industries           | invest in the UK | Invest - Contact us                                     |
+      | Engineering and manufacturing | buy from the UK  | International - Find a UK business partner - Contact us |
 
     @full
     @dev-only
     Examples: promoted industries
-      | specific                            | buy or invest    | expected                    |
-      | Automotive                          | invest in the UK | Contact the investment team |
-      | Aerospace                           | invest in the UK | Contact the investment team |
-      | Education                           | invest in the UK | Contact the investment team |
-      | Healthcare and Life Sciences        | invest in the UK | Contact the investment team |
-      | Legal services                      | buy from the UK  | Find a UK business partner  |
-      | Real Estate                         | buy from the UK  | Find a UK business partner  |
-      | Space                               | buy from the UK  | Find a UK business partner  |
-      | Technology                          | buy from the UK  | Find a UK business partner  |
+      | specific                     | buy or invest    | expected                                                |
+      | Automotive                   | invest in the UK | Invest - Contact us                                     |
+      | Aerospace                    | invest in the UK | Invest - Contact us                                     |
+      | Education                    | invest in the UK | Invest - Contact us                                     |
+      | Healthcare and Life Sciences | invest in the UK | Invest - Contact us                                     |
+      | Legal services               | buy from the UK  | International - Find a UK business partner - Contact us |
+      | Real Estate                  | buy from the UK  | International - Find a UK business partner - Contact us |
+      | Space                        | buy from the UK  | International - Find a UK business partner - Contact us |
+      | Technology                   | buy from the UK  | International - Find a UK business partner - Contact us |
 
     @full
     @stage-only
     Examples: promoted industries
-      | specific                            | buy or invest    | expected                    |
-      | Financial and professional services | invest in the UK | Contact the investment team |
-      | Legal services                      | buy from the UK  | Find a UK business partner  |
-      | Technology                          | buy from the UK  | Find a UK business partner  |
+      | specific                            | buy or invest    | expected                                                |
+      | Financial and professional services | invest in the UK | Invest - Contact us                                     |
+      | Legal services                      | buy from the UK  | International - Find a UK business partner - Contact us |
+      | Technology                          | buy from the UK  | International - Find a UK business partner - Contact us |
 
     @wip
     @dev-only
     Examples: missing content
-      | specific                            | buy or invest    | expected                    |
-      | Energy                              | invest in the UK | Contact the investment team |
+      | specific                            | buy or invest    | expected            |
+      | Energy                              | invest in the UK | Invest - Contact us |
 
 
   @report-this-page
