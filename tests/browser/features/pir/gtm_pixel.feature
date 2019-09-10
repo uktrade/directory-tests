@@ -1,6 +1,6 @@
 @gtm
 @pixels
-Feature: Google Tag Manager
+Feature: PIR - Google Tag Manager
 
   Background:
     Given basic authentication is done for "Domestic - Home" page

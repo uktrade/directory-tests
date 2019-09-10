@@ -1,5 +1,5 @@
 @contact-us
-Feature: Contact us and Leave feedback
+Feature: Invest - Contact us and Leave feedback
 
   Background:
     Given basic authentication is done for "International - Landing" page

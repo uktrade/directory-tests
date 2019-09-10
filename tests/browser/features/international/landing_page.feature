@@ -1,5 +1,5 @@
 @international-page
-Feature: International Page
+Feature: INTL - Landing page
 
   Background:
     Given basic authentication is done for "International - Landing" page

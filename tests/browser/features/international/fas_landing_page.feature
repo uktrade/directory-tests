@@ -1,7 +1,7 @@
 @ED-3580
 @fas-home-page
 @no-sso-email-verification-required
-Feature: Find a Supplier - Landing page
+Feature: FAS - Landing page
 
   Background:
     Given basic authentication is done for "International - Landing" page

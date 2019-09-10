@@ -1,6 +1,6 @@
 @wip
 @ga360
-Feature: Google Analytics 360 Events
+Feature: Domestic - Google Analytics 360 Events
 
   Background:
     Given basic authentication is done for "Domestic - Home" page

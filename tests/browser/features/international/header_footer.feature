@@ -1,5 +1,5 @@
 @header-footer
-Feature: Header-Footer
+Feature: INTL - Header-Footer
 
   Background:
     Given basic authentication is done for "International - Landing" page

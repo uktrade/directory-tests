@@ -1,6 +1,6 @@
 @contact-us
 @no-sso-email-verification-required
-Feature: Find a Supplier - Contact us
+Feature: FAS - Contact us
 
   Background:
     Given basic authentication is done for "International - Landing" page

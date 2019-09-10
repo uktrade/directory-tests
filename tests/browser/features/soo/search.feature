@@ -1,4 +1,4 @@
-Feature: Search for marketplace
+Feature: SOO - Search for marketplace
 
   Background:
     Given basic authentication is done for "Selling Online Overseas - Home" page

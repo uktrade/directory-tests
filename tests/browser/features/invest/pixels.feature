@@ -1,5 +1,5 @@
 @pixels
-Feature: Pixels
+Feature: Invest - Pixels
 
   Background:
     Given basic authentication is done for "International - Landing" page

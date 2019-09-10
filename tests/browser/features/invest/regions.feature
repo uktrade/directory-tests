@@ -1,6 +1,6 @@
 @dev-only
 @regional-pages
-Feature: Regional pages
+Feature: Invest - Regional pages
 
   Background:
     Given basic authentication is done for "International - Landing" page

@@ -1,5 +1,5 @@
 @home-page
-Feature: Home Page
+Feature: Domestic - Home Page
 
   Background:
     Given basic authentication is done for "Domestic - Home" page

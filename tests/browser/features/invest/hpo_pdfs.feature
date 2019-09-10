@@ -2,7 +2,7 @@
 @hpo
 @pdf
 @stage-only
-Feature: HPO PDFs sent after
+Feature: Invest - HPO PDFs sent after
 
   Background:
     Given basic authentication is done for "International - Landing" page

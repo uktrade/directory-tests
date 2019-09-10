@@ -1,6 +1,6 @@
 @home-page
 @no-sso-email-verification-required
-Feature: Invest home page
+Feature: Invest - landing page
 
   Background:
     Given basic authentication is done for "International - Landing" page

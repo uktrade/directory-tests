@@ -1,4 +1,4 @@
-Feature: Apply via DIT
+Feature: SOO - Apply via DIT
 
   Background:
     Given basic authentication is done for "Selling Online Overseas - Home" page

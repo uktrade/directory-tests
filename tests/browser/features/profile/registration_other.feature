@@ -2,7 +2,7 @@
 @TT-1094
 @enrol
 @new-registration
-Feature: New Enrolment flow
+Feature: Profile - Non-CH enrolment flows
 
   Background:
     Given basic authentication is done for "Domestic - Home" page

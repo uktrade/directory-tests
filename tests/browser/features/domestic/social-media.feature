@@ -1,6 +1,6 @@
 @sharing
 @social-media
-Feature: Sharing on Social Media and via emails
+Feature: Domestic - Sharing on Social Media and via emails
 
   Background:
     Given basic authentication is done for "Domestic - Home" page

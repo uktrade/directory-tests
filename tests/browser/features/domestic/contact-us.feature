@@ -1,5 +1,5 @@
 @contact-us
-Feature: New contact us forms
+Feature: Domestic - Contact us
 
   Background:
     Given basic authentication is done for "Domestic - Home" page

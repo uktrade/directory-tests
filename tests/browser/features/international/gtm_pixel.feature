@@ -1,7 +1,7 @@
 @wip
 @gtm
 @pixels
-Feature: Google Tag Manager
+Feature: INTL - Google Tag Manager
 
   Background:
     Given basic authentication is done for "International - Landing" page

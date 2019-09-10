@@ -1,4 +1,4 @@
-Feature: Header-Footer
+Feature: Domestic - Header-Footer
 
   Background:
     Given basic authentication is done for "Domestic - Home" page

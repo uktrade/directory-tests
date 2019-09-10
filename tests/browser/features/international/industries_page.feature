@@ -1,7 +1,7 @@
 @ED-3190
 @industries-page
 @no-sso-email-verification-required
-Feature: International - Industries page
+Feature: INTL - Industries page
 
   Background:
     Given basic authentication is done for "International - Landing" page

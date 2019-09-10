@@ -1,6 +1,6 @@
 @hpo
 @stage-only
-Feature: High Potential Opportunities
+Feature: Invest - High Potential Opportunities
 
   Background:
     Given basic authentication is done for "International - Landing" page

@@ -1,5 +1,5 @@
 @case-studies
-Feature: Case Studies
+Feature: Domestic - Case Studies
 
   Background:
     Given basic authentication is done for "Domestic - Home" page

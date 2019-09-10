@@ -1,5 +1,5 @@
 @search
-Feature: Great site search
+Feature: Domestic - Great site search
 
   Background:
     Given basic authentication is done for "Domestic - Home" page

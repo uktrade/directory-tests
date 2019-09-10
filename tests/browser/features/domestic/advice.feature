@@ -1,5 +1,5 @@
 @advice
-Feature: Advice articles
+Feature: Domestic - Advice articles
 
   Background:
     Given basic authentication is done for "Domestic - Home" page

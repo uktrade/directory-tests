@@ -1,5 +1,5 @@
 @international
-Feature: Updates for non-UK companies on EU Exit
+Feature: INTL - Updates for non-UK companies on EU Exit
 
   Background:
     Given basic authentication is done for "International - Landing" page

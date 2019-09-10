@@ -1,6 +1,6 @@
 @international-page
 @contact-us
-Feature: International Page - Brexit help - Contact us
+Feature: INTL - Brexit help - Contact us
 
   Background:
     Given basic authentication is done for "International - Landing" page

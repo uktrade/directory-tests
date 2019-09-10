@@ -1,5 +1,5 @@
 @sso
-Feature: Sign in
+Feature: SSO - Sign in
 
   @bug
   @TT-1778

@@ -1,6 +1,6 @@
 @fas
 @header-footer
-Feature: Find a Supplier - Common header & Footer
+Feature: FAS - Common header & Footer
 
   Background:
     Given basic authentication is done for "International - Landing" page

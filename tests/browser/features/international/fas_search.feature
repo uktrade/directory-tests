@@ -2,7 +2,7 @@
 @ED-4259
 @industry-pages
 @no-sso-email-verification-required
-Feature: Industry pages
+Feature: FAS - Search
 
   Background:
     Given basic authentication is done for "International - Landing" page

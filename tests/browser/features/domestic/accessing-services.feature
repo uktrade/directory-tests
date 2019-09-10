@@ -1,5 +1,5 @@
 @services
-Feature: Accessing Services
+Feature: Domestic - Accessing Services
 
   Background:
     Given basic authentication is done for "Domestic - Home" page
