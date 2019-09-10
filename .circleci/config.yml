@@ -163,6 +163,8 @@ step_merge_junit_xml_reports_from_browser_tests: &step_merge_junit_xml_reports_f
     name: Merge JUnit XML reports & print errors summary
     when: always
     command: |
+      pwd
+      ls
       REPORTS=`find ./tests/browser/reports/ -iname "*.xml"`
       if [ ! -z "${DSRC}" ]; then
         python3 -m venv venv
