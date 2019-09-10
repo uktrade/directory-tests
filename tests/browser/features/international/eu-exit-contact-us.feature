@@ -6,7 +6,7 @@ Feature: INTL - Brexit help - Contact us
     Given basic authentication is done for "International - Landing" page
 
   @TT-617
-  @eu-exit
+  @brexit
   @dev-only
   Scenario: International Visitors should see all expected page sections on "International Brexit help - Contact Us form" page
     Given "Robert" visits the "International - Brexit help - Contact Us" page
@@ -26,7 +26,7 @@ Feature: INTL - Brexit help - Contact us
   # Missing translations
   @wip
   @TT-617
-  @eu-exit
+  @brexit
   @dev-only
   Scenario Outline: International Visitors should not be able view "International Brexit help - Contact Us form" in "<preferred_language>"
     Given "Robert" visits the "International - Brexit help - Contact Us" page
@@ -50,7 +50,7 @@ Feature: INTL - Brexit help - Contact us
   @TT-617
   @dev-only
   @captcha
-  @eu-exit
+  @brexit
   @dev-only
   Scenario: International Visitors should be able to submit their questions regarding EU Exit
     Given "Robert" visits the "International - Brexit help - Contact Us" page
