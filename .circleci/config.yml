@@ -50,6 +50,7 @@ step_install_requirements_for_browser_tests: &step_install_requirements_for_brow
       pip install -r requirements_browser.txt
       nodeenv -p
       npm install -g junit-merge@2.0.0
+      npm install -g allure-commandline@2.13.0
 
 step_install_requirements_for_load_tests: &step_install_requirements_for_load_tests
   run:
@@ -175,6 +176,25 @@ step_merge_junit_xml_reports_from_browser_tests: &step_merge_junit_xml_reports_f
       fi
 
 
+step_generate_allure_report_for_browser_tests: &step_generate_allure_report_for_browser_tests
+  run:
+    name: Generate a standaole Allure report from a JUnit XML Browser tests reports
+    when: always
+    command: |
+      if [ -f ./tests/browser/reports/merged.xml ]; then
+        python3 -m venv venv
+        . venv/bin/activate
+        cd ./tests/browser
+        allure generate ./reports && {
+          mv allure-report/* reports/ && {
+            rm -fr allure-report/
+          }
+        }
+      else
+        echo "Nothing to do as ./reports/merged.xml doesn't exist";
+      fi
+
+
 # Lists of steps
 steps_setup_env_for_smoke_tests: &steps_setup_env_for_smoke_tests
   steps:
@@ -224,6 +244,7 @@ steps_run_browser_tests: &steps_run_browser_tests
     - *step_restore_cached_browser_tests_requirements
     - *step_run_browser_tests
     - *step_merge_junit_xml_reports_from_browser_tests
+    - *step_generate_allure_report_for_browser_tests
     - store_test_results:
         path: ./tests/browser/reports
     - store_artifacts:
