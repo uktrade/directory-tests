@@ -172,6 +172,7 @@ step_merge_junit_xml_reports_from_browser_tests: &step_merge_junit_xml_reports_f
       ./print_error_summary.py --report ./tests/browser/reports/merged.xml
 
 
+# this step requires Java 8+ to work.
 step_generate_allure_report_for_browser_tests: &step_generate_allure_report_for_browser_tests
   run:
     name: Generate a standaole Allure report from a JUnit XML Browser tests reports
@@ -236,7 +237,6 @@ steps_run_browser_tests: &steps_run_browser_tests
     - *step_restore_cached_browser_tests_requirements
     - *step_run_browser_tests
     - *step_merge_junit_xml_reports_from_browser_tests
-    - *step_generate_allure_report_for_browser_tests
     - store_test_results:
         path: ./tests/browser/reports
     - store_artifacts:
