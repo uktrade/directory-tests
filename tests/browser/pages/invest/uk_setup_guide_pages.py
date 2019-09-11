@@ -17,20 +17,29 @@ from pages.common_actions import (
     take_screenshot,
     visit_url,
 )
-from settings import INVEST_UI_URL
+from settings import INTERNATIONAL_UI_URL
 
 NAME = "Guide"
 NAMES = [
-    "Apply for a UK visa",
-    "Establish a base for business in the UK",
-    "Hire skilled workers for your UK operations",
+    "Access finance in the UK",
+    "Access finance in the UK (Staging)",
+    "DIT's guide to UK Capital Gains Tax",
+    "DIT's guide to UK Corporation Tax",
+    "DIT's Guide to UK Venture Capital Schemes",
+    "Establish a UK business base",
     "Open a UK business bank account",
+    "Open a UK business bank account (Staging)",
     "Register a company in the UK",
-    "Understand UK tax and incentives",
+    "UK Income Tax",
+    "UK infrastructure",
+    "UK talent and labour",
+    "UK tax and incentives",
+    "UK tax and incentives (Staging)",
 ]
 SERVICE = Services.INVEST
 TYPE = "guide"
-URL = urljoin(INVEST_UI_URL, "uk-setup-guide/")
+URL = urljoin(INTERNATIONAL_UI_URL, "content/invest/how-to-setup-in-the-uk/")
+URL_STAGING = urljoin(INTERNATIONAL_UI_URL, "content/how-to-setup-in-the-uk/")
 PAGE_TITLE = "Invest in Great Britain -"
 
 SELECTORS = {
@@ -48,18 +57,22 @@ SELECTORS.update(common_selectors.ERROR_REPORTING)
 SELECTORS.update(common_selectors.FOOTER_INVEST)
 
 URLs = {
-    "apply for a uk visa": urljoin(URL, "apply-uk-visa/"),
-    "establish a base for business in the uk": urljoin(
-        URL, "establish-base-business-uk/"
-    ),
-    "hire skilled workers for your uk operations": urljoin(
-        URL, "hire-skilled-workers-your-uk-operations/"
-    ),
-    "open a uk business bank account": urljoin(URL, "open-uk-business-bank-account/"),
-    "register a company in the uk": urljoin(URL, "setup-your-business-uk/"),
-    "understand uk tax and incentives": urljoin(
-        URL, "understand-uk-tax-and-incentives/"
-    ),
+    # Dev & UAT
+    "access finance in the uk": urljoin(URL, "access-finance-in-the-uk/"),
+    "dit's guide to uk capital gains tax": urljoin(URL, "uk-capital-gains-tax/"),
+    "dit's guide to uk corporation tax": urljoin(URL, "uk-corporation-tax/"),
+    "dit's guide to uk venture capital schemes": urljoin(URL, "uk-venture-capital-schemes/"),
+    "establish a uk business base": urljoin(URL, "establish-a-base-for-business-in-the-uk/"),
+    "register a company in the uk": urljoin(URL, "register-a-company-in-the-uk/"),
+    "uk income tax": urljoin(URL, "uk-income-tax/"),
+    "uk infrastructure": urljoin(URL, "uk-infrastructure/"),
+    "uk talent and labour": urljoin(URL, "hire-skilled-workers-for-your-uk-operations/"),
+    "uk tax and incentives": urljoin(URL, "uk-tax-and-incentives/"),
+
+    # Staging
+    "access finance in the uk (staging)": urljoin(URL_STAGING, "access-finance-in-the-uk/"),
+    "open a uk business bank account (staging)": urljoin(URL_STAGING, "open-a-uk-business-bank-account/"),
+    "uk tax and incentives (staging)": urljoin(URL_STAGING, "uk-tax-and-incentives/"),
 }
 
 
