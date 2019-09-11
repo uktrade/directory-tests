@@ -170,6 +170,26 @@ Feature: Profile - CH enrolment flows
     Then "Natalia" should be on the "Profile - Edit Company Profile" page
 
 
+  @dev-only
+  @verification-code
+  Scenario: Users should be able to resend email verification code
+    Given "Natalia" has received the email confirmation code by opting to register as "LTD, PLC or Royal Charter"
+    And "Natalia" is on the "Profile - Enter your confirmation code" page
+
+    When "Natalia" decides to use "Resend my code" link
+    Then "Natalia" should be on the "Domestic - I have not received a verification code - Dedicated Support Content" page
+
+    When "Natalia" decides to use "Resend your code" link
+    Then "Natalia" should be on the "Profile - Resend your verification code" page
+
+    When "Natalia" fills out and submits the form
+    Then "Natalia" should be on the "Profile - Re-enter your confirmation code" page
+    And "Natalia" should receive email with a new confirmation code
+
+    When "Natalia" fills out and submits the form
+    Then "Natalia" should be on the "Profile - Enter your business details (LTD, PLC or Royal Charter)" page
+
+
   @wip
   @dev-only
   @TT-1125
