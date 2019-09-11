@@ -107,7 +107,7 @@ def visit_page(context: Context, actor_alias: str, page_name: str):
 
     def is_special_case(page_name: str) -> bool:
         parts = page_name.split(" - ")
-        return len(parts) > 2
+        return len(parts) == 3
 
     if not get_actor(context, actor_alias):
         add_actor(context, unauthenticated_actor(actor_alias))
@@ -120,7 +120,7 @@ def visit_page(context: Context, actor_alias: str, page_name: str):
         subpage_name = page_name.split(" - ")[1].lower()
         special_url = page.URLs[subpage_name]
         logging.debug(
-            f"{actor_alias} will visit '{page_name}' page using: '{special_url}"
+            f"{actor_alias} will visit '{page_name}' subpage using: '{special_url}"
         )
         page.visit(context.driver, page_name=subpage_name)
     else:
