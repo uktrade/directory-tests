@@ -58,6 +58,10 @@ SELECTORS = {
         "submit an enquiry": Selector(
             By.CSS_SELECTOR, "#further-help-link > a", type=ElementType.LINK
         ),
+        "resend your code": Selector(
+            By.PARTIAL_LINK_TEXT, "resend your code", type=ElementType.LINK,
+            is_visible=False
+        ),
     },
     "error reporting": {
         "itself": Selector(By.CSS_SELECTOR, "section.error-reporting"),
