@@ -235,11 +235,13 @@ def registration_should_get_verification_email(context: Context, actor_alias: st
     update_actor(context, actor_alias, email_confirmation_link=link)
 
 
-def generic_get_verification_code(context: Context, actor_alias: str):
+def generic_get_verification_code(
+        context: Context, actor_alias: str, *, resent_code: bool = False
+):
     """Will check if the Exporter received an email verification message."""
     logging.debug("Searching for an email verification message...")
     actor = get_actor(context, actor_alias)
-    code = get_verification_code(actor.email)
+    code = get_verification_code(actor.email, resent_code=resent_code)
     update_actor(context, actor_alias, email_confirmation_code=code)
 
 

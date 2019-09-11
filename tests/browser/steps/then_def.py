@@ -246,8 +246,13 @@ def then_confirmation_email_should_not_be_sent(context: Context, actor_alias: st
     forms_confirmation_email_should_not_be_sent(context, actor_alias)
 
 
+@then('"{actor_alias}" should receive email with a new confirmation code')
+def then_actor_should_get_verification_code(context: Context, actor_alias: str):
+    generic_get_verification_code(context, actor_alias, resent_code=True)
+
+
 @then('"{actor_alias}" should receive email confirmation code')
-def then_actor_should_get_verifaction_code(context: Context, actor_alias: str):
+def then_actor_should_get_verification_code(context: Context, actor_alias: str):
     generic_get_verification_code(context, actor_alias)
 
 

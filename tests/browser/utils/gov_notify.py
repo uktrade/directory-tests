@@ -46,8 +46,12 @@ def filter_by_body_string(notifications: list, strings: List[str]) -> list:
 
 @retry(wait_fixed=5000, stop_max_attempt_number=5)
 def get_email_confirmation_notification(
-    email: str, *, subject: str = "Confirm your email address"
+    email: str, *, subject: str = "Confirm your email address", resent_code: bool = False
 ) -> dict:
+    """Find email confirmation notification sent via Gov-Notify.
+    if resent_code=True - it will return the most recent notification
+    if resent_code=False - it will return the oldest notification
+    """
     notifications = GOV_NOTIFY_CLIENT.get_all_notifications(template_type="email")[
         "notifications"
     ]
@@ -104,10 +108,10 @@ def get_verification_link(email: str) -> str:
     return extract_email_confirmation_link(body)
 
 
-def get_verification_code(email: str) -> str:
+def get_verification_code(email: str, *, resent_code: bool = False) -> str:
     """Find email confirmation code inside the plain text email payload."""
     subject = "Your confirmation code for great.gov.uk"
-    notification = get_email_confirmation_notification(email, subject=subject)
+    notification = get_email_confirmation_notification(email, subject=subject, resent_code=resent_code)
     body = notification["body"]
     activation_code = extract_email_confirmation_code(body)
     logging.debug("Found email confirmation code: %s", activation_code)
