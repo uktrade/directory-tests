@@ -57,12 +57,21 @@ def get_email_confirmation_notification(
 
     if email_confirmations:
         logging.debug(pformat(email_confirmations))
-    assert len(email_confirmations) == 1, (
-        "Expected to find 1 email confirmation notification for {} but found "
-        "{}".format(email, len(email_confirmations))
-    )
+    if resent_code:
+        assert len(email_confirmations) > 1, (
+            "Expected to find more than 1 email confirmation notification for {} but "
+            "found {}".format(email, len(email_confirmations))
+        )
 
-    return email_confirmations[0]
+        result = max(email_confirmations, key=lambda x: x["created_at"])
+    else:
+        assert len(email_confirmations) == 1, (
+            "Expected to find only 1 email confirmation notification for {} but found "
+            "{}".format(email, len(email_confirmations))
+        )
+        result = min(email_confirmations, key=lambda x: x["created_at"])
+
+    return result
 
 
 @retry(wait_fixed=5000, stop_max_attempt_number=5)
