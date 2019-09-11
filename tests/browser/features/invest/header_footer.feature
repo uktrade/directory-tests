@@ -62,11 +62,11 @@ Feature: Invest - Header-Footer
       | Find a UK Supplier | header  | Find a Supplier - Landing      |
 
 
-  @CMS-158
+  @CMS-158a
   @logo
   @header
   @footer
-  Scenario Outline: Visitors should be able to get to the International home page from "Invest - <selected>" page by using UK Government logo in the page header
+  Scenario Outline: Visitors should be able to get to the Invest home page from "<selected>" page by using UK Government logo in the page header
     Given "Robert" visits the "Invest - <selected>" page
 
     When "Robert" decides to click on "Invest in Great logo"
@@ -74,6 +74,42 @@ Feature: Invest - Header-Footer
     Then "Robert" should be on the "International - Landing" page
 
     Examples:
-      | selected   |
-      | Home       |
-      | Contact Us |
+      | selected                            |
+      | Home                                |
+      | UK Setup Guide                      |
+      | Contact Us                          |
+
+    @dev-only
+    Examples: UK setup guides
+      | selected                                          |
+      | Access finance in the UK - guide                  |
+      | DIT's guide to UK Capital Gains Tax - guide       |
+      | DIT's guide to UK Corporation Tax - guide         |
+      | DIT's Guide to UK Venture Capital Schemes - guide |
+      | Establish a UK business base - guide              |
+      | Register a company in the UK - guide              |
+      | UK Income Tax - guide                             |
+      | UK infrastructure - guide                         |
+      | UK talent and labour - guide                      |
+      | UK tax and incentives - guide                     |
+
+    @stage-only
+    Examples: Legacy UK setup guides
+      | selected                                         |
+      | Access finance in the UK (Staging) - guide       |
+      | Open a UK business bank account (Staging) - guide|
+      | UK tax and incentives (Staging) - guide          |
+
+    @uat-only
+    Examples: UK setup guides
+      | selected                                          |
+      | Access finance in the UK - guide                  |
+      | DIT's guide to UK Capital Gains Tax - guide       |
+      | DIT's guide to UK Corporation Tax - guide         |
+      | DIT's Guide to UK Venture Capital Schemes - guide |
+      | Establish a UK business base - guide              |
+      | Register a company in the UK - guide              |
+      | UK Income Tax - guide                             |
+      | UK infrastructure - guide                         |
+      | UK talent and labour - guide                      |
+      | UK tax and incentives - guide                     |
