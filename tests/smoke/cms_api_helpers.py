@@ -282,6 +282,7 @@ def get_pages_types(*, skip: list = None) -> List[str]:
     return types
 
 
+@retry(wait_fixed=10000, stop_max_attempt_number=3)
 def get_pages_from_api(page_types: list, *, use_async_client: bool = True) -> dict:
     page_endpoints_by_type = defaultdict(list)
     responses = defaultdict(list)
