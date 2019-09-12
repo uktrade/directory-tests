@@ -12,11 +12,19 @@ from urllib.parse import parse_qsl, quote, urljoin, urlsplit
 from behave.model import Table
 from behave.runner import Context
 from directory_constants import choices
+from directory_constants.expertise import (
+    BUSINESS_SUPPORT,
+    FINANCIAL,
+    HUMAN_RESOURCES,
+    LEGAL,
+    MANAGEMENT_CONSULTING,
+    PUBLICITY,
+)
 from requests import Response, Session
 from retrying import retry
 from scrapy import Selector
 
-from tests import URLs, BusinessType
+from tests import BusinessType, URLs
 from tests.functional.common import DETAILS, PROFILES
 from tests.functional.pages import get_page_object, has_action, isd
 from tests.functional.pages.fab import (
@@ -46,6 +54,7 @@ from tests.functional.pages.profile import (
     profile_edit_online_profiles,
     profile_edit_products_and_services_industry,
     profile_edit_products_and_services_keywords,
+    profile_enrol,
     profile_enrolment_finished,
     profile_enter_email_verification_code,
     profile_enter_your_business_details,
@@ -53,9 +62,12 @@ from tests.functional.pages.profile import (
     profile_enter_your_email_and_password,
     profile_enter_your_personal_details,
     profile_find_a_buyer,
+    profile_individual_enrolment_finished,
+    profile_individual_enter_your_personal_details,
+    profile_individual_update_your_details,
     profile_publish_company_profile,
+    profile_select_business_type,
     profile_upload_logo,
-    profile_select_business_type
 )
 from tests.functional.pages.sso import (
     sso_ui_change_password,
@@ -77,6 +89,7 @@ from tests.functional.utils.generic import (
     assertion_msg,
     create_test_isd_company,
     escape_html,
+    extract_and_set_csrf_middleware_token,
     extract_csrf_middleware_token,
     extract_form_action,
     extract_logo_url,
@@ -115,15 +128,6 @@ from tests.settings import (
     BMPs,
     JP2s,
     WEBPs,
-)
-
-from directory_constants.expertise import (
-    BUSINESS_SUPPORT,
-    FINANCIAL,
-    HUMAN_RESOURCES,
-    LEGAL,
-    MANAGEMENT_CONSULTING,
-    PUBLICITY,
 )
 
 INDUSTRIES_FOR_PRODUCTS_AND_SERVICES = {
@@ -271,6 +275,30 @@ def sso_create_standalone_unverified_sso_account(
     reg_create_standalone_unverified_sso_account(context, supplier_alias)
 
 
+def profile_provide_missing_details_as_an_individual(
+        context: Context, supplier_alias: str
+):
+    actor = context.get_actor(supplier_alias)
+    individual = Company(business_type=BusinessType.TAX_PAYER.value)
+
+    # Ensure we start on the "Update your details (as an Individual)" page
+    profile_individual_update_your_details.should_be_here(context.response)
+
+    context.response = profile_select_business_type.go_to(actor.session)
+    extract_and_set_csrf_middleware_token(context, context.response, supplier_alias)
+
+    context.response = profile_select_business_type.submit(actor, company=individual)
+
+    profile_individual_enter_your_personal_details.should_be_here(context.response)
+    extract_and_set_csrf_middleware_token(context, context.response, supplier_alias)
+
+    actor = context.get_actor(supplier_alias)
+    context.response = profile_individual_enter_your_personal_details.submit(actor)
+
+    profile_individual_enrolment_finished.should_be_here(context.response)
+    context.update_actor(supplier_alias, has_sso_account=True)
+
+
 def sso_create_standalone_verified_sso_account(
         context: Context, supplier_alias: str
 ):
@@ -278,9 +306,8 @@ def sso_create_standalone_verified_sso_account(
     supplier = context.get_actor(supplier_alias)
     flag_sso_account_as_verified(context, supplier.email)
     sso_sign_in(context, supplier_alias)
-    profile_about.should_be_here(context.response)
     sso_should_be_signed_in_to_sso_account(context, supplier_alias)
-    context.update_actor(supplier_alias, has_sso_account=True)
+    profile_provide_missing_details_as_an_individual(context, supplier_alias)
 
 
 @retry(wait_fixed=2000, stop_max_attempt_number=5)
