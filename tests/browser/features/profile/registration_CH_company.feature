@@ -203,26 +203,23 @@ Feature: Profile - CH enrolment flows
     Then "Natalia" should be on the "Domestic - I cannot find my business name - Dedicated Support Content" page
 
 
-  @wip
   @dev-only
   @TT-1127
   @TT-1035
   Scenario Outline: Handle case of if the email already present in Profile-Profile
-    Given "Natalia" opted to register for a great.gov.uk account as "<selected business type>"
-    And "Natalia" is on the "Profile - Enter your business email address and set a password" page
+    Given "Natalia" has a verified standalone SSO/great.gov.uk account
+    And "Natalia" decided to create a great.gov.uk account as "<selected business type>"
 
     When "Natalia" fills out and submits the form
-      | field              | value                             |
-      | Your email address | already-registered-email@test.com |
 
-    Then "Natalia" should be on the "Profile - Enter your confirmation code" page
-    And "Natalia" should receive "Someone is trying to create an account with us. You already have an account." email
+    Then "Natalia" should be on the "<email verification>" page
+    And "Natalia" should receive "Sign in to great.gov.uk services" email containing "There is an account already registered to this email address" message
 
     Examples:
-      | selected business type                |
-      | LTD, PLC or Royal Charter             |
-      | Sole trader or other type of business |
-      | UK taxpayer                           |
+      | selected business type                | email verification                                                   |
+      | LTD, PLC or Royal Charter             | Profile - Enter your confirmation code                               |
+      | Sole trader or other type of business | Profile - Enter your confirmation code (non Companies House company) |
+      | UK taxpayer                           | Profile - Enter your confirmation code (Individual)                  |
 
 
   @wip
@@ -247,7 +244,7 @@ Feature: Profile - CH enrolment flows
   @TT-1129
   @TT-1036
   Scenario Outline: Handle invalid user state - already logged in - skip ahead to page where they enter business details
-    Given "Natalia" has a verified standalone Profile/great.gov.uk account
+    Given "Natalia" has a verified standalone SSO/great.gov.uk account
 
     When "Natalia" goes to the "Create an account" page
     Then "Natalia" should be on the "Profile - Select your business type" page
