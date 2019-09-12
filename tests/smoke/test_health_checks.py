@@ -123,7 +123,8 @@ def test_profile_health_check_endpoints_with_token(url, basic_auth):
 @pytest.mark.parametrize(
     "url",
     [
-        URLs.DOMESTIC_HEALTHCHECK.absolute,
+        # See bug TT-1805
+        # URLs.DOMESTIC_HEALTHCHECK.absolute,
         URLs.DOMESTIC_HEALTHCHECK_PING.absolute,
     ],
 )
