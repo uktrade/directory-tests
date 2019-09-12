@@ -22,6 +22,7 @@ from pages import (
     fas,
     get_page_object,
     international,
+    profile,
     soo,
     sso,
 )
@@ -847,6 +848,18 @@ def generic_create_great_account(
 
     generic_fill_out_and_submit_form(context, actor_alias)
     should_be_on_page(context, actor_alias, "Profile - Account created")
+
+
+def profile_start_registration_as(
+        context: Context, actor_alias: str, business_type: str
+):
+    if not get_actor(context, actor_alias):
+        add_actor(context, unauthenticated_actor(actor_alias))
+    profile.enrol_select_business_type.visit(context.driver)
+    second_page = profile.enrol_select_business_type.pick_radio_option_and_submit(
+        context.driver, name=business_type
+    )
+    should_be_on_page(context, actor_alias, f"{second_page.SERVICE} - {second_page.NAME}")
 
 
 def soo_look_for_marketplace(

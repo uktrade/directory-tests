@@ -28,6 +28,7 @@ from steps.when_impl import (
     generic_open_random_news_article,
     generic_set_basic_auth_creds,
     get_barred_actor,
+    profile_start_registration_as,
     registration_create_and_verify_account,
     sign_in,
     soo_find_and_open_random_marketplace,
@@ -137,6 +138,11 @@ def given_actor_received_email_confirmation_code(
     sso_actor_received_email_confirmation_code(
         context, actor_alias, business_type
     )
+
+
+@given('"{actor_name}" decided to create a great.gov.uk account as "{business_type}"')
+def given_actor_wants_to_register_as(context: Context, actor_name: str, business_type: str):
+    profile_start_registration_as(context, actor_name, business_type)
 
 
 @given('"{actor_alias}" searches for marketplaces in "{country}" to sell "{category}"')
