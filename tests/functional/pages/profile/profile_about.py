@@ -7,7 +7,12 @@ from requests import Response, Session
 from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.generic import assertion_msg
-from tests.functional.utils.request import Method, check_response, make_request
+from tests.functional.utils.request import (
+    Method,
+    check_response,
+    check_url,
+    make_request,
+)
 
 SERVICE = Services.PROFILE
 NAME = "About"
@@ -36,6 +41,7 @@ def go_to(session: Session, *, set_next_page: bool = True) -> Response:
 
 
 def should_be_here(response: Response):
+    check_url(response, URL, startswith=True)
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Successfully got to the Profile About page")
 
