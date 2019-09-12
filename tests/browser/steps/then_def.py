@@ -19,6 +19,7 @@ from steps.then_impl import (
     generic_check_gtm_datalayer_properties,
     generic_check_gtm_events,
     generic_contact_us_should_receive_confirmation_email,
+    generic_contact_us_should_receive_confirmation_email_containing_message,
     generic_should_be_on_one_of_the_pages,
     generic_should_see_expected_page_content,
     generic_should_see_form_choices,
@@ -177,6 +178,14 @@ def then_stats_and_tracking_elements_should_be_present(context: Context):
 def then_user_should_see_uk_gov_logo(
         context: Context, actor_alias: str, section: str):
     invest_should_see_uk_gov_logo(context, actor_alias, section)
+
+
+@then('"{actor_alias}" should receive "{subject}" email containing "{message}" message')
+def then_should_receive_confirmation_email_from_govnotify(
+        context: Context, actor_alias: str, subject: str, message: str):
+    generic_contact_us_should_receive_confirmation_email_containing_message(
+        context, actor_alias, subject, message=message
+    )
 
 
 @then('"{actor_alias}" should receive an "{subject}" confirmation email')

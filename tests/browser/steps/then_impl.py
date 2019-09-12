@@ -426,6 +426,20 @@ def generic_contact_us_should_receive_confirmation_email(
     assert confirmation
 
 
+def generic_contact_us_should_receive_confirmation_email_containing_message(
+        context: Context, actor_alias: str, subject: str, message: str
+):
+    actor = get_actor(context, actor_alias)
+    confirmation = get_email_confirmations_with_matching_string(
+        recipient_email=actor.email, subject=subject, strings=[message]
+    )
+    assert confirmation
+    logging.debug(
+        f"Found an email notification containing expected message: '{message}' send to "
+        f"{actor.email}"
+    )
+
+
 @retry(wait_fixed=5000, stop_max_attempt_number=15)
 def generic_a_notification_should_be_sent(
         context: Context, actor_alias: str, action: str, subject: str
