@@ -5,6 +5,7 @@ from tests import URLs
 from tests.smoke.cms_api_helpers import get_and_assert
 
 
+@pytest.mark.skip(reason="See CMS-1834")
 @pytest.mark.parametrize(
     "old_url,to_new_endpoint",
     [
