@@ -1,6 +1,9 @@
 Feature: SSO profile
 
 
+  @bug
+  @TT-1823
+  @fixme
   @ED-1757
   @sso
   @login
