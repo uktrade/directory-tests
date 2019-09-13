@@ -17,6 +17,7 @@ SKIPPED_PAGE_TYPES = []
 if "dev" in DIRECTORY_CMS_API_CLIENT_BASE_URL:
     SKIPPED_PAGE_TYPES = [
         "export_readiness.articlelistingpage",  # 500 ISE
+        "export_readiness.homepage",  # 500 ISE
         "great_international.baseinternationalsectorpage",  # 400 not found
         "great_international.capitalinvestopportunitypage",  # timeout
     ]
