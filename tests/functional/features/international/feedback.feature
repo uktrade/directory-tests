@@ -2,6 +2,9 @@
 Feature: Send feedback
 
 
+  @bug
+  @CMS-1850
+  @fixme
   @ED-2012
   @captcha
   @dev-only
