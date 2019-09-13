@@ -6,14 +6,14 @@ import logging
 from collections import defaultdict
 from statistics import median
 
-from behave.model import Table
-from behave.runner import Context
 from requests import Response
 from retrying import retry
-from scrapy import Selector
 
+from behave.model import Table
+from behave.runner import Context
+from scrapy import Selector
 from tests import URLs
-from tests.functional.pages import has_action, get_page_object, isd
+from tests.functional.pages import get_page_object, has_action, isd
 from tests.functional.pages.fab import (
     fab_ui_account_remove_collaborator,
     fab_ui_confirm_identity,
@@ -24,9 +24,7 @@ from tests.functional.pages.fas import (
     fas_ui_find_supplier,
     fas_ui_profile,
 )
-from tests.functional.pages.international import (
-    international_industries,
-)
+from tests.functional.pages.international import international_industries
 from tests.functional.pages.profile import (
     profile_about,
     profile_edit_company_profile,
@@ -47,8 +45,8 @@ from tests.functional.utils.generic import (
     extract_link_with_invitation_for_collaboration,
     extract_link_with_ownership_transfer_request,
     extract_logo_url,
-    extract_plain_text_payload,
     extract_page_contents,
+    extract_plain_text_payload,
     get_language_code,
     get_number_of_search_result_pages,
     mailgun_find_email_with_ownership_transfer_request,

@@ -9,8 +9,6 @@ from random import choice, randrange
 from string import ascii_letters, digits
 from urllib.parse import parse_qsl, quote, urljoin, urlsplit
 
-from behave.model import Table
-from behave.runner import Context
 from directory_constants import choices
 from directory_constants.expertise import (
     BUSINESS_SUPPORT,
@@ -22,8 +20,10 @@ from directory_constants.expertise import (
 )
 from requests import Response, Session
 from retrying import retry
-from scrapy import Selector
 
+from behave.model import Table
+from behave.runner import Context
+from scrapy import Selector
 from tests import BusinessType, URLs
 from tests.functional.common import DETAILS, PROFILES
 from tests.functional.pages import get_page_object, has_action, isd
