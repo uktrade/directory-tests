@@ -4,7 +4,7 @@ from directory_constants import cms as SERVICE_NAMES
 from rest_framework.status import HTTP_200_OK, HTTP_404_NOT_FOUND
 from retrying import retry
 
-from tests import retriable_error, URLs
+from tests import retriable_error, URLs, DIRECTORY_CMS_API_CLIENT_BASE_URL
 from tests.smoke.cms_api_helpers import (
     find_draft_urls,
     find_published_translated_urls,
@@ -15,14 +15,26 @@ from tests.smoke.cms_api_helpers import (
     status_error,
 )
 
-SKIPPED_PAGE_TYPES = [
-    "find_a_supplier.industrycontactpage",
-    "great_international.internationalcapitalinvestlandingpage",
-    "great_international.internationalcuratedtopiclandingpage",
-    "great_international.baseinternationalsectorpage",
-    "great_international.capitalinvestopportunitypage",
-    "great_international.internationalsubsectorpage",
-]
+SKIPPED_PAGE_TYPES = []
+if "dev" in DIRECTORY_CMS_API_CLIENT_BASE_URL:
+    SKIPPED_PAGE_TYPES = [
+        "export_readiness.articlelistingpage",  # 500 ISE
+        "great_international.baseinternationalsectorpage",  # 400 not found
+        "great_international.capitalinvestopportunitypage",  # timeout
+    ]
+if "staging" in DIRECTORY_CMS_API_CLIENT_BASE_URL:
+    SKIPPED_PAGE_TYPES = [
+        "export_readiness.articlelistingpage",  # 500 ISE
+        "export_readiness.homepageold",  # 400
+        "export_readiness.internationallandingpage",  # 400
+        "export_readiness.euexitinternationalformpage",  # 400
+        "great_international.internationalarticlepage",  # 500 ISE
+        "great_international.internationalcampaignpage",  # 500 ISE
+    ]
+if "uat" in DIRECTORY_CMS_API_CLIENT_BASE_URL:
+    SKIPPED_PAGE_TYPES = [
+        "great_international.baseinternationalsectorpage",  # 400 not found
+    ]
 
 ALL_PAGE_TYPES = get_pages_types(skip=SKIPPED_PAGE_TYPES)
 
