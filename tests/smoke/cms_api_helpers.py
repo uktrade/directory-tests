@@ -275,8 +275,6 @@ def get_pages_types(*, skip: list = None) -> List[str]:
     response = cms_api_client.get(URLs.CMS_API_PAGE_TYPES.relative)
     assert response.status_code == HTTP_200_OK, status_error(HTTP_200_OK, response)
     types = response.json()["types"]
-    # remove generic (parent) page type common to all pages
-    types.remove("wagtailcore.page")
     if skip:
         types = sorted(list(set(types) - set(skip)))
     return types

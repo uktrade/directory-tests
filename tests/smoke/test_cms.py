@@ -13,25 +13,22 @@ from tests.smoke.cms_api_helpers import (
     status_error,
 )
 
-SKIPPED_PAGE_TYPES = []
+SKIPPED_PAGE_TYPES = [
+    "wagtailcore.page",  # remove generic (parent) page type common to all pages
+]
 if "dev" in DIRECTORY_CMS_API_CLIENT_BASE_URL:
-    SKIPPED_PAGE_TYPES = [
-        "export_readiness.articlelistingpage",  # 500 ISE
+    SKIPPED_PAGE_TYPES += [
         "export_readiness.homepage",  # 500 ISE
-        "great_international.baseinternationalsectorpage",  # 400 not found
-        "great_international.capitalinvestopportunitypage",  # timeout
+        "great_international.capitalinvestopportunitypage",  # 502 timeout
     ]
 if "staging" in DIRECTORY_CMS_API_CLIENT_BASE_URL:
-    SKIPPED_PAGE_TYPES = [
+    SKIPPED_PAGE_TYPES += [
         "export_readiness.articlelistingpage",  # 500 ISE
-        "export_readiness.homepageold",  # 400
-        "export_readiness.internationallandingpage",  # 400
-        "export_readiness.euexitinternationalformpage",  # 400
         "great_international.internationalarticlepage",  # 500 ISE
         "great_international.internationalcampaignpage",  # 500 ISE
     ]
 if "uat" in DIRECTORY_CMS_API_CLIENT_BASE_URL:
-    SKIPPED_PAGE_TYPES = [
+    SKIPPED_PAGE_TYPES += [
         "great_international.baseinternationalsectorpage",  # 400 not found
     ]
 
