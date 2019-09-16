@@ -20,6 +20,10 @@ if "dev" in DIRECTORY_CMS_API_CLIENT_BASE_URL:
     SKIPPED_PAGE_TYPES += [
         "export_readiness.homepage",  # 500 ISE
         "great_international.capitalinvestopportunitypage",  # 502 timeout
+        # ignore sub-sector pages as they're behind a feature flag
+        # and are used to categorise capital invest opportunities
+        # so come up as a filter on the opportunity listing page
+        "great_international.internationalsubsectorpage",
     ]
 if "staging" in DIRECTORY_CMS_API_CLIENT_BASE_URL:
     SKIPPED_PAGE_TYPES += [
