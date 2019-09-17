@@ -174,7 +174,7 @@ def then_buyer_should_find_supplier_using_part_of_case_study(
 
 
 @then('"{buyer_alias}" should NOT be able to find company "{company_alias}" on FAS by using any part of case study "{case_alias}"')
-def step_impl(context, buyer_alias, company_alias, case_alias):
+def then_buyer_should_not_be_able_to_find_company(context, buyer_alias, company_alias, case_alias):
     fas_supplier_cannot_be_found_using_case_study_details(
         context, buyer_alias, company_alias, case_alias)
 
