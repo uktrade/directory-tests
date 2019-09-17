@@ -1,5 +1,6 @@
 __all__ = [
     "about",
+    "admin_remove_profile_from_account",
     "case_study_basic",
     "case_study_images",
     "edit_company_business_details",

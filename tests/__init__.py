@@ -459,6 +459,8 @@ class URLs(Enum):
     PROFILE_ENROL_BUSINESS_DETAILS = ProfileUrl("enrol/business-type/companies-house/business-details/")
     PROFILE_ENROL_PERSONAL_DETAILS = ProfileUrl("enrol/business-type/companies-house/personal-details/")
     PROFILE_ENROL_FINISHED = ProfileUrl("enrol/business-type/companies-house/finished/")
+    PROFILE_ADMIN = ProfileUrl("business-profile/admin/")
+    PROFILE_ADMIN_REMOVE_PROFILE_FROM_ACCOUNT = ProfileUrl("business-profile/admin/disconnect/")
     PROFILE_EDIT_COMPANY_DESCRIPTION = ProfileUrl("business-profile/description/")
     PROFILE_EDIT_COMPANY_BUSINESS_DETAILS = ProfileUrl("business-profile/business-details/")
     PROFILE_PUBLISH_BUSINESS_PROFILE_TO_FAS = ProfileUrl("business-profile/publish/")
