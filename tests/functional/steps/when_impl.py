@@ -506,17 +506,17 @@ def fab_decide_to_verify_profile_with_letter(context: Context, supplier_alias: s
     actor = context.get_actor(supplier_alias)
 
     # Step 1 - go to page where you choose to verify with a letter
-    response = fab.fab_ui_confirm_identity_letter.go_to(actor.session)
+    response = fab.confirm_identity_letter.go_to(actor.session)
     context.response = response
     token = extract_csrf_middleware_token(response)
     context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
     # Step 2 - Choose to verify with a letter
-    response = fab.fab_ui_confirm_identity_letter.submit(actor)
+    response = fab.confirm_identity_letter.submit(actor)
     context.response = response
 
     # Step 2 - check if Supplier is on the We've sent you a verification letter
-    fab.fab_ui_confirm_identity_letter.should_be_here(response)
+    fab.confirm_identity_letter.should_be_here(response)
     logging.debug(
         "Supplier is on the 'Your company address' letter verification page"
     )
@@ -595,7 +595,7 @@ def profile_verify_company_profile(context: Context, supplier_alias: str):
     verification_code = get_verification_code(context, company.number)
 
     # STEP 1 - go to the "Verify your company" page
-    response = fab.fab_ui_verify_company.go_to(session)
+    response = fab.verify_company.go_to(session)
     context.response = response
 
     # STEP 2 - extract CSRF token
@@ -603,11 +603,11 @@ def profile_verify_company_profile(context: Context, supplier_alias: str):
     context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
     # STEP 3 - Submit the verification code
-    response = fab.fab_ui_verify_company.submit(session, token, verification_code)
+    response = fab.verify_company.submit(session, token, verification_code)
     context.response = response
 
     # STEP 4 - check if code was accepted
-    fab.fab_ui_verify_company.should_see_company_is_verified(response)
+    fab.verify_company.should_see_company_is_verified(response)
 
     # STEP 5 - click on the "View or amend your company profile" link
     response = profile.edit_company_profile.go_to(session)
@@ -720,7 +720,7 @@ def sso_collaborator_confirm_email_address(
     context.response = response
 
     # STEP 2 - Check if Supplier if on SSO Profile Landing page
-    fab.fab_ui_confim_your_collaboration.should_be_here(response)
+    fab.confirm_your_collaboration.should_be_here(response)
 
     # STEP 3 - Update Actor's data
     context.update_actor(supplier_alias, has_sso_account=True)
@@ -735,7 +735,7 @@ def sso_new_owner_confirm_email_address(context: Context, supplier_alias: str):
     context.response = response
 
     # STEP 2 - Check if new account owner is on the correct page
-    fab.fab_ui_confim_your_ownership.should_be_here(response)
+    fab.confirm_your_ownership.should_be_here(response)
 
     # STEP 3 - Update Actor's data
     context.update_actor(supplier_alias, has_sso_account=True)
@@ -1843,11 +1843,11 @@ def profile_go_to_letter_verification(
     context: Context, supplier_alias: str, logged_in: bool
 ):
     actor = context.get_actor(supplier_alias)
-    response = fab.fab_ui_confirm_identity.go_to(actor.session)
+    response = fab.confirm_identity.go_to(actor.session)
     context.response = response
 
     if logged_in:
-        fab.fab_ui_verify_company.should_be_here(response)
+        fab.verify_company.should_be_here(response)
     else:
         sso.login.should_be_here(response)
 
@@ -1866,15 +1866,15 @@ def profile_go_to_letter_verification(
         response = sso.login.login(actor, referer=referer, next_param=next)
         context.response = response
 
-        fab.fab_ui_verify_company.should_be_here(response)
+        fab.verify_company.should_be_here(response)
 
 
 def fab_choose_to_verify_with_code(context: Context, supplier_alias: str):
     actor = context.get_actor(supplier_alias)
     referer = URLs.FAB_CONFIRM_IDENTITY.absolute
-    response = fab.fab_ui_verify_company.go_to(actor.session, referer=referer)
+    response = fab.verify_company.go_to(actor.session, referer=referer)
     context.response = response
-    fab.fab_ui_verify_company.should_be_here(response)
+    fab.verify_company.should_be_here(response)
 
 
 def fab_submit_verification_code(context: Context, supplier_alias: str):
@@ -1882,7 +1882,7 @@ def fab_submit_verification_code(context: Context, supplier_alias: str):
     company = context.get_company(actor.company_alias)
     verification_code = company.verification_code
     referer = URLs.FAB_CONFIRM_COMPANY_ADDRESS.absolute
-    response = fab.fab_ui_verify_company.submit(
+    response = fab.verify_company.submit(
         actor.session,
         actor.csrfmiddlewaretoken,
         verification_code,
@@ -2156,15 +2156,15 @@ def profile_add_collaborator(
         supplier = context.get_actor(supplier_alias)
         company = context.get_company(supplier.company_alias)
         collaborator = context.get_actor(collaborator_alias)
-        response = fab.fab_ui_account_add_collaborator.go_to(supplier.session)
+        response = fab.account_add_collaborator.go_to(supplier.session)
         context.response = response
 
-        fab.fab_ui_account_add_collaborator.should_be_here(response)
+        fab.account_add_collaborator.should_be_here(response)
 
         token = extract_csrf_middleware_token(response)
         context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
-        response = fab.fab_ui_account_add_collaborator.add_collaborator(
+        response = fab.account_add_collaborator.add_collaborator(
             supplier.session, token, collaborator.email
         )
         context.response = response
@@ -2190,11 +2190,11 @@ def fab_confirm_collaboration_request(
 
     # Step 1 - open confirmation link
     if open_invitation_link:
-        response = fab.fab_ui_confim_your_collaboration.open(session, link)
+        response = fab.confirm_your_collaboration.open(session, link)
         context.response = response
 
     # Step 3 - confirm that Supplier is on SSO Confirm Your Email page
-    fab.fab_ui_confim_your_collaboration.should_be_here(context.response)
+    fab.confirm_your_collaboration.should_be_here(context.response)
     logging.debug(
         "Collaborator %s is on the FAB Confirm your collaboration page",
         collaborator_alias,
@@ -2208,7 +2208,7 @@ def fab_confirm_collaboration_request(
     context.form_action_value = form_action_value
 
     # Step 5 - submit the form
-    response = fab.fab_ui_confim_your_collaboration.confirm(session, token, link)
+    response = fab.confirm_your_collaboration.confirm(session, token, link)
     context.response = response
     context.update_actor(collaborator_alias, company_alias=company_alias)
     logging.debug(
@@ -2225,7 +2225,7 @@ def fab_open_collaboration_request_link(
     session = collaborator.session
     link = collaborator.invitation_for_collaboration_link
 
-    response = fab.fab_ui_confim_your_collaboration.open(session, link)
+    response = fab.confirm_your_collaboration.open(session, link)
     context.response = response
     logging.debug(
         "%s opened the collaboration request link from company %s",
@@ -2363,23 +2363,23 @@ def fab_send_transfer_ownership_request(
     )
     profile.about.should_be_here(context.response)
 
-    response = fab.fab_ui_account_transfer_ownership.go_to(supplier.session)
+    response = fab.account_transfer_ownership.go_to(supplier.session)
     context.response = response
 
     token = extract_csrf_middleware_token(response)
     context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
-    response = fab.fab_ui_account_transfer_ownership.submit(
+    response = fab.account_transfer_ownership.submit(
         supplier.session, token, new_owner.email
     )
     context.response = response
 
-    fab.fab_ui_account_confrim_password.should_be_here(response)
+    fab.account_confirm_password.should_be_here(response)
 
     token = extract_csrf_middleware_token(response)
     context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
-    response = fab.fab_ui_account_confrim_password.submit(
+    response = fab.account_confirm_password.submit(
         supplier.session, token, supplier.password
     )
     context.response = response
@@ -2406,10 +2406,10 @@ def fab_open_transfer_ownership_request_link_and_create_sso_account_if_needed(
     session = new_owner.session
     link = new_owner.ownership_request_link
 
-    response = fab.fab_ui_confim_your_ownership.open(session, link)
+    response = fab.confirm_your_ownership.open(session, link)
     context.response = response
     if new_owner.has_sso_account:
-        fab.fab_ui_confim_your_ownership.should_be_here(response)
+        fab.confirm_your_ownership.should_be_here(response)
     else:
         sso_create_standalone_unverified_sso_account_from_collaboration_request(
             context, new_owner_alias, next_link=link
@@ -2432,7 +2432,7 @@ def fab_confirm_account_ownership_request(
     link = new_owner.ownership_request_link
 
     # Step 1 - confirm that Supplier is on SSO Confirm Your Email page
-    fab.fab_ui_confim_your_ownership.should_be_here(context.response)
+    fab.confirm_your_ownership.should_be_here(context.response)
     logging.debug(
         "New Owner %s is on the FAB Confirm your request for ownership page",
         new_owner_alias,
@@ -2446,7 +2446,7 @@ def fab_confirm_account_ownership_request(
     context.form_action_value = form_action_value
 
     # Step 3 - submit the form
-    response = fab.fab_ui_confim_your_ownership.confirm(session, token, link)
+    response = fab.confirm_your_ownership.confirm(session, token, link)
     context.response = response
 
     profile.edit_company_profile.should_be_here(response)
@@ -2491,14 +2491,14 @@ def fab_remove_collaborators(
     company = context.get_company(company_alias)
 
     # Step 1: go to the remove collaborators page
-    response = fab.fab_ui_account_remove_collaborator.go_to(supplier.session)
+    response = fab.account_remove_collaborator.go_to(supplier.session)
     context.response = response
 
     token = extract_csrf_middleware_token(response)
     context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
     # Step 2: extract SSO IDs for users to remove
-    emails_to_sso_id = fab.fab_ui_account_remove_collaborator.extract_sso_ids(
+    emails_to_sso_id = fab.account_remove_collaborator.extract_sso_ids(
         response
     )
     logging.debug("SSO IDs for specific actor: %s", emails_to_sso_id)
@@ -2508,7 +2508,7 @@ def fab_remove_collaborators(
     logging.debug("List of SSO IDs to remove: %s", sso_ids)
 
     # Step 3: send the request with SSO IDs of users to remove
-    response = fab.fab_ui_account_remove_collaborator.remove(
+    response = fab.account_remove_collaborator.remove(
         supplier.session, token, sso_ids
     )
     context.response = response

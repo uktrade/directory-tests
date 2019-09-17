@@ -895,7 +895,7 @@ def fas_should_see_highlighted_search_term(
 
 def fab_company_should_be_verified(context: Context, supplier_alias: str):
     response = context.response
-    fab.fab_ui_verify_company.should_see_company_is_verified(response)
+    fab.verify_company.should_see_company_is_verified(response)
     logging.debug(
         "%s saw that his company's FAB profile is verified", supplier_alias
     )
@@ -991,7 +991,7 @@ def should_be_taken_to_selected_page(
 def fab_should_be_asked_about_verification_form(
     context: Context, supplier_alias: str
 ):
-    fab.fab_ui_confirm_identity.should_be_here(context.response)
+    fab.confirm_identity.should_be_here(context.response)
     logging.debug(
         "%s was asked about the form of identity verification", supplier_alias
     )
@@ -1085,12 +1085,12 @@ def fab_should_not_see_collaborator(
 ):
     aliases = [alias.strip() for alias in collaborators_aliases.split(",")]
     supplier = context.get_actor(supplier_alias)
-    response = fab.fab_ui_account_remove_collaborator.go_to(supplier.session)
+    response = fab.account_remove_collaborator.go_to(supplier.session)
     context.response = response
 
     for collaborator_alias in aliases:
         collaborator = context.get_actor(collaborator_alias)
-        fab.fab_ui_account_remove_collaborator.should_not_see_collaborator(
+        fab.account_remove_collaborator.should_not_see_collaborator(
             response, collaborator.email
         )
 
