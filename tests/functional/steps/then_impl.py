@@ -1158,3 +1158,25 @@ def isd_should_be_told_about_empty_search_results(
         "%s was told that the search did not match any UK trade profiles",
         buyer_alias,
     )
+
+
+def isd_should_see_unfiltered_search_results(
+        context: Context, actor_alias: str
+):
+    response = context.response
+    content = response.content.decode("utf-8")
+    sector_filters_selector = "#filter-column input[type=checkbox]"
+    filters = Selector(text=content).css(sector_filters_selector).extract()
+    with assertion_msg(f"Couldn't find filter checkboxes on {response.url}"):
+        assert filters
+    for fil in filters:
+        sector = Selector(text=fil).css("input::attr(value)").extract()[0]
+        selector = "input::attr(checked)"
+        checked = True if Selector(text=fil).css(selector).extract() else False
+        with assertion_msg(
+                "Expected search results to be unfiltered but this "
+                "filter was checked: '%s'",
+                sector,
+        ):
+            assert not checked
+    logging.debug("%s was shown with unfiltered search results", actor_alias)

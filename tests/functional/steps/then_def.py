@@ -31,6 +31,7 @@ from tests.functional.steps.then_impl import (
     fas_supplier_should_receive_message_from_buyer,
     generic_pages_should_be_in_selected_language,
     isd_should_be_told_about_empty_search_results,
+    isd_should_see_unfiltered_search_results,
     prof_should_be_told_about_missing_description,
     profile_all_unsupported_files_should_be_rejected,
     profile_business_profile_should_be_ready_for_publishing,
@@ -274,6 +275,11 @@ def then_actor_should_see_filtered_search_results(context, actor_alias):
 @then('"{actor_alias}" should see that FAS search results are not filtered by any sector')
 def then_actor_should_see_unfiltered_search_results(context, actor_alias):
     fas_should_see_unfiltered_search_results(context, actor_alias)
+
+
+@then('"{actor_alias}" should see that ISD search results are not filtered by any sector')
+def then_actor_should_see_unfiltered_search_results(context, actor_alias):
+    isd_should_see_unfiltered_search_results(context, actor_alias)
 
 
 @then('"{actor_alias}" should see company "{company_alias}" only once on browsed search result pages')
