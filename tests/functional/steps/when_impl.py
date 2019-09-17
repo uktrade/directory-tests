@@ -2050,8 +2050,8 @@ def sso_sign_in(context: Context, supplier_alias: str, *, from_page: str = None)
     """Sign in to standalone SSO account."""
     actor = context.get_actor(supplier_alias)
     from_page = get_page_object(from_page).URL if from_page else None
-    next_param = from_page or URLs.ABOUT.absolute
-    referer = from_page or URLs.ABOUT.absolute
+    next_param = from_page or URLs.PROFILE_ABOUT.absolute
+    referer = from_page or URLs.PROFILE_ABOUT.absolute
     response = sso.login.go_to(
         actor.session, next_param=next_param, referer=referer
     )
