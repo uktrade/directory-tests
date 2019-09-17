@@ -12,7 +12,7 @@ from tests.functional.utils.request import Method, check_response, make_request
 SERVICE = Services.FAB
 NAME = "Accept invitation"
 TYPE = "form"
-URL = URLs.FAB_ACCOUNT_ACCEPT_INVITATION.absolute
+URL = URLs.PROFILE_ACCOUNT_ACCEPT_INVITATION.absolute
 EXPECTED_STRINGS = [
     "Collaborate",
     "Do you want to be added as user to the profile for",

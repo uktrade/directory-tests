@@ -10,7 +10,7 @@ from tests.functional.utils.request import check_response
 SERVICE = Services.FAB
 NAME = "Add collaborator"
 TYPE = "form"
-URL = URLs.FAB_ACCOUNT_ADD_COLLABORATOR.absolute
+URL = URLs.PROFILE_ACCOUNT_ADD_COLLABORATOR.absolute
 EXPECTED_STRINGS = [
     "Add an editor to the business profile",
     "Enter the new editor’s email address",

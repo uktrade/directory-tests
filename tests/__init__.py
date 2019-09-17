@@ -286,8 +286,6 @@ class URLs(Enum):
     # Find a Buyer
     FAB_LANDING = FABUrl("")
     FAB_SITEMAP = FABUrl("sitemap.xml")
-    FAB_ACCOUNT_ACCEPT_INVITATION = FABUrl("account/collaborate/accept/?invite_key={invite_key}", template="account/collaborate/accept/?invite_key={invite_key}")
-    FAB_ACCOUNT_ADD_COLLABORATOR = FABUrl("account/add-collaborator/")
     FAB_ACCOUNT_CONFIRM_OWNERSHIP_TRANSFER = FABUrl("account/transfer/accept/?invite_key=", template="account/transfer/accept/?invite_key={invite_key}")
     FAB_ACCOUNT_CONFIRM_PASSWORD = FABUrl("account/transfer/")
     FAB_ACCOUNT_REMOVE_COLLABORATOR = FABUrl("account/remove-collaborator/")
@@ -448,6 +446,8 @@ class URLs(Enum):
     PROFILE_LANDING = ProfileUrl("")
     PROFILE_SITEMAP = ProfileUrl("sitemap.xml")
     PROFILE_ABOUT = ProfileUrl("about/")
+    PROFILE_ACCOUNT_ACCEPT_INVITATION = ProfileUrl("account/collaborate/accept/?invite_key={invite_key}", template="account/collaborate/accept/?invite_key={invite_key}")
+    PROFILE_ACCOUNT_ADD_COLLABORATOR = ProfileUrl("business-profile/admin/invite/")
     PROFILE_ENROL = ProfileUrl("enrol/")
     PROFILE_ENROL_INDIVIDUAL_UPDATE_YOUR_DETAILS = ProfileUrl("enrol/?backfill-details-intent=true")
     PROFILE_ENROL_INDIVIDUAL_ENTER_YOUR_PERSONAL_DETAILS = ProfileUrl("enrol/business-type/individual/personal-details/")
