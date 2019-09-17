@@ -2,6 +2,9 @@
 Feature: Find a Supplier
 
 
+  @bug
+  @TT-1438
+  @fixed
   @ED-1746
   @case-study
   @profile
@@ -35,10 +38,10 @@ Feature: Find a Supplier
       | caption 2                 |
       | caption 3                 |
       | testimonial               |
-#      | source name               | See TT-1438
-#      | source job                | when fixed remember to uncomment fields in
-#      | source company            | SEARCHABLE_CASE_STUDY_DETAILS
-#      | website                   |
+      | source name               |
+      | source job                |
+      | source company            |
+      | website                   |
       | keywords                  |
       | slug                      |
 

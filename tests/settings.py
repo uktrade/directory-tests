@@ -206,10 +206,10 @@ SEARCHABLE_CASE_STUDY_DETAILS = [
     "caption_3",
     "testimonial",
     "slug"
-    # "source_name",  disabled because of bug TT-1438
-    # "source_job",
-    # "source_company",
-    # "website",
+    "source_name",
+    "source_job",
+    "source_company",
+    "website",
 ]
 
 FAS_LOGO_PLACEHOLDER_IMAGE = "/static/images/placeholder.fc5114289e5b.png"
