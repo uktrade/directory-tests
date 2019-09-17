@@ -769,9 +769,9 @@ def profile_should_see_expected_error_messages(
 def intl_should_see_links_to_industry_pages(
     context: Context, actor_alias: str, language: str
 ):
-    page_name = f"{international.international_industries.SERVICE.value} - {international.international_industries.NAME}"
+    page_name = f"{international.industries.SERVICE.value} - {international.industries.NAME}"
     response = context.views[page_name]
-    international.international_industries.should_see_links_to_industry_pages(response, language)
+    international.industries.should_see_links_to_industry_pages(response, language)
     logging.debug(
         f"{actor_alias} saw all links to industry pages available in '{language}'"
     )
