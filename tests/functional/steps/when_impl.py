@@ -463,7 +463,7 @@ def reg_create_sso_account(
     company = context.get_company(company_alias)
 
     logging.debug("Submit SSO Registration form with Supplier's & Company's required details")
-    context.response = sso.sso_ui_register.submit(actor, company)
+    context.response = sso.register.submit(actor, company)
 
 
 def reg_open_email_confirmation_link(context: Context, supplier_alias: str):
@@ -475,11 +475,11 @@ def reg_open_email_confirmation_link(context: Context, supplier_alias: str):
     link = actor.email_confirmation_link
 
     # Step 1 - open confirmation link
-    response = sso.sso_ui_confim_your_email.open_confirmation_link(session, link)
+    response = sso.confirm_your_email.open_confirmation_link(session, link)
     context.response = response
 
     # Step 3 - confirm that Supplier is on SSO Confirm Your Email page
-    sso.sso_ui_confim_your_email.should_be_here(response)
+    sso.confirm_your_email.should_be_here(response)
     logging.debug("Supplier is on the SSO Confirm your email address page")
 
     # Step 4 - extract & store CSRF token & form action value
@@ -497,7 +497,7 @@ def reg_supplier_confirms_email_address(context: Context, supplier_alias: str):
     actor = context.get_actor(supplier_alias)
     form_action_value = context.form_action_value
 
-    response = sso.sso_ui_confim_your_email.confirm(actor, form_action_value)
+    response = sso.confirm_your_email.confirm(actor, form_action_value)
     context.response = response
 
 
@@ -646,11 +646,11 @@ def prof_attempt_to_sign_in_to_sso(context: Context, supplier_alias: str):
     session = actor.session
 
     # Step 1 - Get to the Sign In page
-    response = sso.sso_ui_login.go_to(session)
+    response = sso.login.go_to(session)
     context.response = response
 
     # Step 2 - check if Supplier is on SSO Login page & extract CSRF token
-    sso.sso_ui_login.should_be_here(response)
+    sso.login.should_be_here(response)
     with assertion_msg(
         "It looks like user is still logged in, as the "
         "sso_display_logged_in cookie is not equal to False"
@@ -660,7 +660,7 @@ def prof_attempt_to_sign_in_to_sso(context: Context, supplier_alias: str):
     context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
     # Step 3 - submit the login form
-    response = sso.sso_ui_login.login(actor)
+    response = sso.login.login(actor)
     context.response = response
 
 
@@ -676,9 +676,9 @@ def reg_create_standalone_unverified_sso_account(
     session = actor.session
 
     # Step 1: Go to the SSO/great.gov.uk registration page
-    response = sso.sso_ui_register.go_to(session)
+    response = sso.register.go_to(session)
     context.response = response
-    sso.sso_ui_register.should_be_here(response)
+    sso.register.should_be_here(response)
 
     # Step 2 - extract CSRF token
     token = extract_csrf_middleware_token(response)
@@ -693,11 +693,11 @@ def reg_create_standalone_unverified_sso_account(
         assert response.cookies.get("sso_display_logged_in") == "false"
 
     # Step 4: POST SSO accounts/signup/
-    response = sso.sso_ui_register.submit_no_company(actor)
+    response = sso.register.submit_no_company(actor)
     context.response = response
 
     # Step 5: Check if Supplier is on Verify your email page & is not logged in
-    sso.sso_ui_verify_your_email.should_be_here(response)
+    sso.verify_your_email.should_be_here(response)
     with assertion_msg(
         "It looks like user is still logged in, as the "
         "sso_display_logged_in cookie is not equal to False"
@@ -716,7 +716,7 @@ def sso_collaborator_confirm_email_address(
     form_action_value = context.form_action_value
 
     # STEP 1 - Submit "Confirm your email address" form
-    response = sso.sso_ui_confim_your_email.confirm(actor, form_action_value)
+    response = sso.confirm_your_email.confirm(actor, form_action_value)
     context.response = response
 
     # STEP 2 - Check if Supplier if on SSO Profile Landing page
@@ -726,12 +726,12 @@ def sso_collaborator_confirm_email_address(
     context.update_actor(supplier_alias, has_sso_account=True)
 
 
-def sso_new_onwer_confirm_email_address(context: Context, supplier_alias: str):
+def sso_new_owner_confirm_email_address(context: Context, supplier_alias: str):
     actor = context.get_actor(supplier_alias)
     form_action_value = context.form_action_value
 
     # STEP 1 - Submit "Confirm your email address" form
-    response = sso.sso_ui_confim_your_email.confirm(actor, form_action_value)
+    response = sso.confirm_your_email.confirm(actor, form_action_value)
     context.response = response
 
     # STEP 2 - Check if new account owner is on the correct page
@@ -749,7 +749,7 @@ def sso_supplier_confirms_email_address(context: Context, supplier_alias: str):
     form_action_value = context.form_action_value
 
     # STEP 1 - Submit "Confirm your email address" form
-    response = sso.sso_ui_confim_your_email.confirm(actor, form_action_value)
+    response = sso.confirm_your_email.confirm(actor, form_action_value)
     context.response = response
 
     # STEP 2 - Check if Supplier if on SSO Profile Landing page
@@ -1849,7 +1849,7 @@ def profile_go_to_letter_verification(
     if logged_in:
         fab.fab_ui_verify_company.should_be_here(response)
     else:
-        sso.sso_ui_login.should_be_here(response)
+        sso.login.should_be_here(response)
 
         token = extract_csrf_middleware_token(response)
         context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
@@ -1863,7 +1863,7 @@ def profile_go_to_letter_verification(
             supplier_alias,
             referer,
         )
-        response = sso.sso_ui_login.login(actor, referer=referer, next_param=next)
+        response = sso.login.login(actor, referer=referer, next_param=next)
         context.response = response
 
         fab.fab_ui_verify_company.should_be_here(response)
@@ -2032,17 +2032,17 @@ def sso_request_password_reset(context: Context, supplier_alias: str):
     else:
         next_param = get_page_object("fab - landing").URL
 
-    response = sso.sso_ui_password_reset.go_to(
+    response = sso.password_reset.go_to(
         actor.session, next_param=next_param
     )
     context.response = response
 
-    sso.sso_ui_password_reset.should_be_here(response)
+    sso.password_reset.should_be_here(response)
 
     token = extract_csrf_middleware_token(response)
     context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
-    response = sso.sso_ui_password_reset.reset(actor, token, next_param=next_param)
+    response = sso.password_reset.reset(actor, token, next_param=next_param)
     context.response = response
 
 
@@ -2052,12 +2052,12 @@ def sso_sign_in(context: Context, supplier_alias: str, *, from_page: str = None)
     from_page = get_page_object(from_page).URL if from_page else None
     next_param = from_page or URLs.ABOUT.absolute
     referer = from_page or URLs.ABOUT.absolute
-    response = sso.sso_ui_login.go_to(
+    response = sso.login.go_to(
         actor.session, next_param=next_param, referer=referer
     )
     context.response = response
 
-    sso.sso_ui_login.should_be_here(response)
+    sso.login.should_be_here(response)
     with assertion_msg(
             "It looks like user is still logged in, as the "
             "sso_display_logged_in cookie is not equal to False"
@@ -2067,7 +2067,7 @@ def sso_sign_in(context: Context, supplier_alias: str, *, from_page: str = None)
     token = extract_csrf_middleware_token(response)
     context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
-    context.response = sso.sso_ui_login.login(
+    context.response = sso.login.login(
         actor, next_param=next_param, referer=referer
     )
     error = f"User is not logged in. Could not find 'Sign out' in the response from {context.response.url}"
@@ -2088,10 +2088,10 @@ def sso_change_password_with_password_reset_link(
     session = actor.session
     link = actor.password_reset_link
 
-    response = sso.sso_ui_password_reset.open_link(session, link)
+    response = sso.password_reset.open_link(session, link)
     context.response = response
 
-    sso.sso_ui_change_password.should_be_here(response)
+    sso.change_password.should_be_here(response)
 
     token = extract_csrf_middleware_token(response)
     context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
@@ -2120,7 +2120,7 @@ def sso_change_password_with_password_reset_link(
 
     actor = context.get_actor(supplier_alias)
 
-    response = sso.sso_ui_change_password.submit(
+    response = sso.change_password.submit(
         actor, action, password=password, password_again=password_again
     )
     context.response = response
@@ -2130,7 +2130,7 @@ def sso_open_password_reset_link(context: Context, supplier_alias: str):
     actor = context.get_actor(supplier_alias)
     session = actor.session
     link = actor.password_reset_link
-    context.response = sso.sso_ui_password_reset.open_link(session, link)
+    context.response = sso.password_reset.open_link(session, link)
 
 
 def go_to_pages(context: Context, actor_alias: str, table: Table):
@@ -2242,7 +2242,7 @@ def reg_create_standalone_unverified_sso_account_from_sso_login_page(
     response = context.response
 
     # Step 1: Check if we are on the SSO/great.gov.uk login page
-    sso.sso_ui_login.should_be_here(response)
+    sso.login.should_be_here(response)
 
     # Step 2 - extract CSRF token
     token = extract_csrf_middleware_token(response)
@@ -2253,7 +2253,7 @@ def reg_create_standalone_unverified_sso_account_from_sso_login_page(
     registration_page_link = extract_registration_page_link(response)
 
     # Step 4: Go to the SSO/great.gov.uk registration page
-    response = sso.sso_ui_register.go_to(
+    response = sso.register.go_to(
         actor.session, next=registration_page_link, referer=referer
     )
     context.response = response
@@ -2270,13 +2270,13 @@ def reg_create_standalone_unverified_sso_account_from_sso_login_page(
         assert response.cookies.get("sso_display_logged_in") == "false"
 
     # Step 7: POST SSO accounts/signup/
-    response = sso.sso_ui_register.submit_no_company(
+    response = sso.register.submit_no_company(
         actor, next=registration_page_link, referer=response.url
     )
     context.response = response
 
     # Step 8: Check if Supplier is on Verify your email page & is not logged in
-    sso.sso_ui_verify_your_email.should_be_here(response)
+    sso.verify_your_email.should_be_here(response)
     with assertion_msg(
         "It looks like user is still logged in, as the "
         "sso_display_logged_in cookie is not equal to False"
@@ -2293,7 +2293,7 @@ def sso_create_standalone_unverified_sso_account_from_collaboration_request(
 
     # Step 1: Go to the SSO/great.gov.uk registration page
     referer = URLs.SSO_SIGNUP.absolute + f"?next={next}"
-    response = sso.sso_ui_register.go_to(
+    response = sso.register.go_to(
         actor.session, next=next, referer=referer
     )
     context.response = response
@@ -2310,13 +2310,13 @@ def sso_create_standalone_unverified_sso_account_from_collaboration_request(
         assert response.cookies.get("sso_display_logged_in") == "false"
 
     # Step 4: POST SSO accounts/signup/
-    response = sso.sso_ui_register.submit_no_company(
+    response = sso.register.submit_no_company(
         actor, next=next, referer=referer
     )
     context.response = response
 
     # Step 8: Check if Supplier is on Verify your email page & is not logged in
-    sso.sso_ui_verify_your_email.should_be_here(response)
+    sso.verify_your_email.should_be_here(response)
     with assertion_msg(
             "It looks like user is still logged in, as the "
             "sso_display_logged_in cookie is not equal to False"
@@ -2330,7 +2330,7 @@ def fab_collaborator_create_sso_account_and_confirm_email(
     fab_open_collaboration_request_link(
         context, collaborator_alias, company_alias
     )
-    sso.sso_ui_login.should_be_here(context.response)
+    sso.login.should_be_here(context.response)
     sso_create_standalone_unverified_sso_account_from_collaboration_request(
         context, collaborator_alias
     )
@@ -2416,7 +2416,7 @@ def fab_open_transfer_ownership_request_link_and_create_sso_account_if_needed(
         )
         reg_should_get_verification_email(context, new_owner_alias)
         reg_open_email_confirmation_link(context, new_owner_alias)
-        sso_new_onwer_confirm_email_address(context, new_owner_alias)
+        sso_new_owner_confirm_email_address(context, new_owner_alias)
     logging.debug(
         "%s opened the transfer ownership request link from company %s",
         new_owner_alias,

@@ -58,7 +58,7 @@ def reg_sso_account_should_be_created(response: Response, supplier_alias: str):
     It's a very crude check, as it will only check if the response body
     contains selected phrases.
     """
-    sso.sso_ui_verify_your_email.should_be_here(response)
+    sso.verify_your_email.should_be_here(response)
     logging.debug(
         "Successfully created new SSO account for %s", supplier_alias
     )
@@ -107,7 +107,7 @@ def fas_check_profiles(context: Context, supplier_alias: str):
 def reg_supplier_has_to_verify_email_first(
     context: Context, supplier_alias: str
 ):
-    sso.sso_ui_verify_your_email.should_be_here(context.response)
+    sso.verify_your_email.should_be_here(context.response)
     logging.debug(
         "%s was told that her/his email address has to be verified "
         "first before being able to Sign In",
@@ -161,17 +161,17 @@ def sso_should_be_signed_out_from_sso_account(
 
     # Step 1 - Get to the Sign Out confirmation page
     next_param = URLs.LANDING.absolute
-    response = sso.sso_ui_logout.go_to(session, next_param=next_param)
+    response = sso.logout.go_to(session, next_param=next_param)
     context.response = response
 
     # Step 2 - check if Supplier is on Log Out page & extract CSRF token
-    sso.sso_ui_logout.should_be_here(response)
+    sso.logout.should_be_here(response)
     token = extract_csrf_middleware_token(response)
     context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
     # Step 3 - log out
     next_param = URLs.LANDING.absolute
-    response = sso.sso_ui_logout.logout(session, token, next_param=next_param)
+    response = sso.logout.logout(session, token, next_param=next_param)
     context.response = response
 
     # Step 4 - check if Supplier is on SSO landing page
@@ -935,7 +935,7 @@ def fab_should_see_case_study_error_message(
 def sso_should_be_told_about_password_reset(
     context: Context, supplier_alias: str
 ):
-    sso.sso_ui_password_reset.should_see_that_password_was_reset(context.response)
+    sso.password_reset.should_see_that_password_was_reset(context.response)
     logging.debug("%s was told that the password was reset", supplier_alias)
 
 
@@ -950,7 +950,7 @@ def sso_should_get_password_reset_email(context: Context, supplier_alias: str):
 def sso_should_see_invalid_password_reset_link_error(
     context: Context, supplier_alias: str
 ):
-    sso.sso_ui_invalid_password_reset_link.should_be_here(context.response)
+    sso.invalid_password_reset_link.should_be_here(context.response)
     logging.debug(
         "%s was told about invalid password reset link", supplier_alias
     )
