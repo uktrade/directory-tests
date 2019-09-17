@@ -2745,8 +2745,8 @@ def isd_create_verified_and_published_business_profile(
     isd_publish_profile(context, supplier_alias)
 
 
-def isd_search_with_empty_query(context: Context, buyer_alias: str):
+def isd_search(context: Context, buyer_alias: str, term: str):
     actor = context.get_actor(buyer_alias)
     session = actor.session
-    context.response = isd.search.go_to(session, term="")
+    context.response = isd.search.go_to(session, term=term)
     isd.search.should_be_here(context.response)
