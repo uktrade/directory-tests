@@ -72,13 +72,3 @@ def should_be_here(
         expected += EXPECTED_STRINGS_WHILE_LETTER_VERIFICATION
     check_response(response, 200, body_contains=expected)
     logging.debug("Successfully got to the FAB Confirm your Identity page")
-
-
-def confirm_with_letter(actor: Actor) -> Response:
-    """Choose to verify your identity with a physical letter."""
-    headers = {"Referer": URL}
-    letter_url = URLs.FAB_CONFIRM_IDENTITY_LETTER.absolute
-    response = make_request(
-        Method.GET, letter_url, session=actor.session, headers=headers
-    )
-    return response

@@ -3,12 +3,11 @@
 import logging
 from urllib.parse import urljoin
 
-from requests import Response, Session
+from requests import Response
 
 from tests import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Actor
-from tests.functional.utils.generic import assertion_msg
 from tests.functional.utils.request import Method, check_response, make_request
 
 SERVICE = Services.SSO
@@ -51,9 +50,3 @@ def submit(
     )
 
     return response
-
-
-def open_password_reset_link(session: Session, link: str) -> Response:
-    with assertion_msg("Expected a non-empty password reset email link"):
-        assert link
-    return make_request(Method.GET, link, session=session)

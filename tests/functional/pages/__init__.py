@@ -66,10 +66,6 @@ class PageObjects(Enum):
     def url(self) -> str:
         return self.value.URL
 
-    @property
-    def selectors(self) -> Dict:
-        return self.value.SELECTORS
-
 
 def get_enum_key(module: ModuleType) -> str:
     return (
