@@ -13,29 +13,15 @@ from behave.model import Table
 from behave.runner import Context
 from scrapy import Selector
 from tests import URLs
-from tests.functional.pages import get_page_object, has_action, isd
-from tests.functional.pages.fab import (
-    fab_ui_account_remove_collaborator,
-    fab_ui_confirm_identity,
-    fab_ui_verify_company,
-)
-from tests.functional.pages.fas import (
-    fas_ui_contact,
-    fas_ui_find_supplier,
-    fas_ui_profile,
-)
-from tests.functional.pages.international import international_industries
-from tests.functional.pages.profile import (
-    profile_about,
-    profile_edit_company_profile,
-    profile_edit_online_profiles,
-    profile_find_a_buyer,
-)
-from tests.functional.pages.sso import (
-    sso_ui_invalid_password_reset_link,
-    sso_ui_logout,
-    sso_ui_password_reset,
-    sso_ui_verify_your_email,
+from tests.functional.pages import (
+    fab,
+    fas,
+    get_page_object,
+    has_action,
+    international,
+    isd,
+    profile,
+    sso,
 )
 from tests.functional.utils.generic import (
     assertion_msg,
@@ -72,7 +58,7 @@ def reg_sso_account_should_be_created(response: Response, supplier_alias: str):
     It's a very crude check, as it will only check if the response body
     contains selected phrases.
     """
-    sso_ui_verify_your_email.should_be_here(response)
+    sso.sso_ui_verify_your_email.should_be_here(response)
     logging.debug(
         "Successfully created new SSO account for %s", supplier_alias
     )
@@ -89,14 +75,14 @@ def reg_should_get_verification_email(context: Context, alias: str):
 def prof_should_be_told_about_missing_description(
     response: Response, supplier_alias: str
 ):
-    profile_edit_company_profile.should_see_missing_description(response)
+    profile.profile_edit_company_profile.should_see_missing_description(response)
     logging.debug("%s was told about missing description", supplier_alias)
 
 
 def fas_should_be_on_profile_page(context, supplier_alias, company_alias):
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
-    fas_ui_profile.should_be_here(context.response, number=company.number)
+    fas.fas_ui_profile.should_be_here(context.response, number=company.number)
     logging.debug(
         "%s is on the %s company's FAS page", supplier_alias, company_alias
     )
@@ -106,11 +92,11 @@ def fas_check_profiles(context: Context, supplier_alias: str):
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
     # Step 1 - go to company's profile page on FAS
-    response = fas_ui_profile.go_to(actor.session, company.number)
+    response = fas.fas_ui_profile.go_to(actor.session, company.number)
     context.response = response
-    fas_ui_profile.should_be_here(response)
+    fas.fas_ui_profile.should_be_here(response)
     # Step 2 - check if links to online profile are visible
-    fas_ui_profile.should_see_online_profiles(company, response)
+    fas.fas_ui_profile.should_see_online_profiles(company, response)
     logging.debug(
         "%s can see all expected links to Online Profiles on "
         "FAS Company's Directory Profile Page",
@@ -121,7 +107,7 @@ def fas_check_profiles(context: Context, supplier_alias: str):
 def reg_supplier_has_to_verify_email_first(
     context: Context, supplier_alias: str
 ):
-    sso_ui_verify_your_email.should_be_here(context.response)
+    sso.sso_ui_verify_your_email.should_be_here(context.response)
     logging.debug(
         "%s was told that her/his email address has to be verified "
         "first before being able to Sign In",
@@ -175,22 +161,22 @@ def sso_should_be_signed_out_from_sso_account(
 
     # Step 1 - Get to the Sign Out confirmation page
     next_param = URLs.PROFILE_LANDING.absolute
-    response = sso_ui_logout.go_to(session, next_param=next_param)
+    response = sso.sso_ui_logout.go_to(session, next_param=next_param)
     context.response = response
 
     # Step 2 - check if Supplier is on Log Out page & extract CSRF token
-    sso_ui_logout.should_be_here(response)
+    sso.sso_ui_logout.should_be_here(response)
     token = extract_csrf_middleware_token(response)
     context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
     # Step 3 - log out
     next_param = URLs.PROFILE_LANDING.absolute
-    response = sso_ui_logout.logout(session, token, next_param=next_param)
+    response = sso.sso_ui_logout.logout(session, token, next_param=next_param)
     context.response = response
 
     # Step 4 - check if Supplier is on SSO landing page
-    profile_about.should_be_here(response)
-    profile_about.should_be_logged_out(response)
+    profile.profile_about.should_be_here(response)
+    profile.profile_about.should_be_logged_out(response)
 
     # Step 5 - reset requests Session object
     context.reset_actor_session(supplier_alias)
@@ -206,7 +192,7 @@ def profile_should_be_told_about_invalid_links(
     linkedin = True if company.linkedin else False
     twitter = True if company.twitter else False
 
-    profile_edit_online_profiles.should_see_errors(
+    profile.profile_edit_online_profiles.should_see_errors(
         context.response, facebook=facebook, linkedin=linkedin, twitter=twitter
     )
     logging.debug(
@@ -223,18 +209,18 @@ def profile_should_see_all_case_studies(context: Context, supplier_alias: str):
     """Check if Supplier can see all case studies on FAB profile page."""
     actor = context.get_actor(supplier_alias)
     case_studies = context.get_company(actor.company_alias).case_studies
-    profile_edit_company_profile.should_see_case_studies(case_studies, context.response)
+    profile.profile_edit_company_profile.should_see_case_studies(case_studies, context.response)
 
 
 def fas_should_see_all_case_studies(context: Context, supplier_alias: str):
     """Check if Supplier can see all case studies on FAS profile page."""
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
-    response = fas_ui_profile.go_to(actor.session, company.number)
+    response = fas.fas_ui_profile.go_to(actor.session, company.number)
     context.response = response
-    fas_ui_profile.should_be_here(response)
+    fas.fas_ui_profile.should_be_here(response)
     case_studies = context.get_company(actor.company_alias).case_studies
-    fas_ui_profile.should_see_case_studies(case_studies, response)
+    fas.fas_ui_profile.should_see_case_studies(case_studies, response)
     logging.debug(
         "%s can see all %d Case Studies on FAS Company's "
         "Directory Profile Page",
@@ -273,9 +259,9 @@ def fas_should_see_png_logo_thumbnail(context: Context, supplier_alias: str):
     company = context.get_company(actor.company_alias)
 
     # Step 1 - Go to the FAS profile page & extract URL of visible logo image
-    response = fas_ui_profile.go_to(session, company.number)
+    response = fas.fas_ui_profile.go_to(session, company.number)
     context.response = response
-    fas_ui_profile.should_be_here(response)
+    fas.fas_ui_profile.should_be_here(response)
     visible_logo_url = extract_logo_url(response)
     placeholder = FAS_LOGO_PLACEHOLDER_IMAGE
 
@@ -304,9 +290,9 @@ def fas_should_see_different_png_logo_thumbnail(
     fas_logo_url = company.logo_url
 
     # Step 1 - Go to the FAS profile page & extract URL of visible logo image
-    response = fas_ui_profile.go_to(session, company.number)
+    response = fas.fas_ui_profile.go_to(session, company.number)
     context.response = response
-    fas_ui_profile.should_be_here(response)
+    fas.fas_ui_profile.should_be_here(response)
     visible_logo_url = extract_logo_url(response)
     placeholder = FAS_LOGO_PLACEHOLDER_IMAGE
 
@@ -350,7 +336,7 @@ def profile_should_see_online_profiles(context: Context, supplier_alias: str):
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
     response = context.response
-    profile_edit_company_profile.should_see_online_profiles(company, response)
+    profile.profile_edit_company_profile.should_see_online_profiles(company, response)
 
 
 def profile_no_links_to_online_profiles_are_visible(
@@ -359,7 +345,7 @@ def profile_no_links_to_online_profiles_are_visible(
     """Supplier should't see any links to Online Profiles on FAB Profile page.
     """
     response = context.response
-    profile_edit_company_profile.should_not_see_links_to_online_profiles(response)
+    profile.profile_edit_company_profile.should_not_see_links_to_online_profiles(response)
     logging.debug(
         "%s cannot see links to Online Profiles on FAB Profile page",
         supplier_alias,
@@ -372,7 +358,7 @@ def fas_no_links_to_online_profiles_are_visible(
     """Supplier should't see any links to Online Profiles on FAS Profile page.
     """
     response = context.response
-    fas_ui_profile.should_not_see_online_profiles(response)
+    fas.fas_ui_profile.should_not_see_online_profiles(response)
     logging.debug(
         "%s cannot see links to Online Profiles on FAS Profile page",
         supplier_alias,
@@ -382,7 +368,7 @@ def fas_no_links_to_online_profiles_are_visible(
 def profile_profile_is_published(context: Context, supplier_alias: str):
     """Check if Supplier was told that Company's profile is verified."""
     response = context.response
-    profile_edit_company_profile.should_see_profile_is_published(response)
+    profile.profile_edit_company_profile.should_see_profile_is_published(response)
     logging.debug("%s was told that the profile is verified.", supplier_alias)
 
 
@@ -409,7 +395,7 @@ def profile_supplier_should_be_on_landing_page(
 ):
     """Check if Supplier is on Profile Landing page."""
     response = context.response
-    profile_about.should_be_here(response)
+    profile.profile_about.should_be_here(response)
     logging.debug("%s got to the SSO landing page.", supplier_alias)
 
 
@@ -457,10 +443,10 @@ def fas_find_supplier_using_case_study_details(
     search_results = defaultdict()
     for term_name in search_terms:
         term = search_terms[term_name]
-        response = fas_ui_find_supplier.go_to(session, term=term)
+        response = fas.fas_ui_find_supplier.go_to(session, term=term)
         context.response = response
-        fas_ui_find_supplier.should_be_here(response)
-        found = fas_ui_find_supplier.should_see_company(
+        fas.fas_ui_find_supplier.should_be_here(response)
+        found = fas.fas_ui_find_supplier.should_see_company(
             response, company.title
         )
         count = 1
@@ -475,12 +461,12 @@ def fas_find_supplier_using_case_study_details(
             number_of_pages = get_number_of_search_result_pages(response)
             if number_of_pages > 1:
                 for page_number in range(2, number_of_pages + 1):
-                    response = fas_ui_find_supplier.go_to(
+                    response = fas.fas_ui_find_supplier.go_to(
                         session, term=term, page=page_number
                     )
                     context.response = response
-                    fas_ui_find_supplier.should_be_here(response)
-                    found = fas_ui_find_supplier.should_see_company(
+                    fas.fas_ui_find_supplier.should_be_here(response)
+                    found = fas.fas_ui_find_supplier.should_see_company(
                         response, company.title
                     )
                     if found:
@@ -549,10 +535,10 @@ def fas_supplier_cannot_be_found_using_case_study_details(
             term_name,
             search_terms,
         )
-        response = fas_ui_find_supplier.go_to(session, term=term)
+        response = fas.fas_ui_find_supplier.go_to(session, term=term)
         context.response = response
-        fas_ui_find_supplier.should_be_here(response)
-        found = fas_ui_find_supplier.should_not_see_company(
+        fas.fas_ui_find_supplier.should_be_here(response)
+        found = fas.fas_ui_find_supplier.should_not_see_company(
             response, company.title
         )
         with assertion_msg(
@@ -728,7 +714,7 @@ def fas_should_be_told_that_message_has_been_sent(
 ):
     response = context.response
     company = context.get_company(company_alias)
-    fas_ui_contact.should_see_that_message_has_been_sent(company, response)
+    fas.fas_ui_contact.should_see_that_message_has_been_sent(company, response)
     logging.debug(
         "%s was told that the message to '%s' (%s) has been sent",
         buyer_alias,
@@ -783,9 +769,9 @@ def profile_should_see_expected_error_messages(
 def intl_should_see_links_to_industry_pages(
     context: Context, actor_alias: str, language: str
 ):
-    page_name = f"{international_industries.SERVICE.value} - {international_industries.NAME}"
+    page_name = f"{international.international_industries.SERVICE.value} - {international.international_industries.NAME}"
     response = context.views[page_name]
-    international_industries.should_see_links_to_industry_pages(response, language)
+    international.international_industries.should_see_links_to_industry_pages(response, language)
     logging.debug(
         f"{actor_alias} saw all links to industry pages available in '{language}'"
     )
@@ -909,7 +895,7 @@ def fas_should_see_highlighted_search_term(
 
 def fab_company_should_be_verified(context: Context, supplier_alias: str):
     response = context.response
-    fab_ui_verify_company.should_see_company_is_verified(response)
+    fab.fab_ui_verify_company.should_see_company_is_verified(response)
     logging.debug(
         "%s saw that his company's FAB profile is verified", supplier_alias
     )
@@ -919,7 +905,7 @@ def profile_business_profile_should_be_ready_for_publishing(
         context: Context, supplier_alias: str
 ):
     response = context.response
-    profile_edit_company_profile.should_see_profile_is_verified(response)
+    profile.profile_edit_company_profile.should_see_profile_is_verified(response)
     logging.debug(
         f"{supplier_alias} saw that his company's Business Profile is ready to"
         f" be published on FAS",
@@ -949,7 +935,7 @@ def fab_should_see_case_study_error_message(
 def sso_should_be_told_about_password_reset(
     context: Context, supplier_alias: str
 ):
-    sso_ui_password_reset.should_see_that_password_was_reset(context.response)
+    sso.sso_ui_password_reset.should_see_that_password_was_reset(context.response)
     logging.debug("%s was told that the password was reset", supplier_alias)
 
 
@@ -964,7 +950,7 @@ def sso_should_get_password_reset_email(context: Context, supplier_alias: str):
 def sso_should_see_invalid_password_reset_link_error(
     context: Context, supplier_alias: str
 ):
-    sso_ui_invalid_password_reset_link.should_be_here(context.response)
+    sso.sso_ui_invalid_password_reset_link.should_be_here(context.response)
     logging.debug(
         "%s was told about invalid password reset link", supplier_alias
     )
@@ -1005,7 +991,7 @@ def should_be_taken_to_selected_page(
 def fab_should_be_asked_about_verification_form(
     context: Context, supplier_alias: str
 ):
-    fab_ui_confirm_identity.should_be_here(context.response)
+    fab.fab_ui_confirm_identity.should_be_here(context.response)
     logging.debug(
         "%s was asked about the form of identity verification", supplier_alias
     )
@@ -1045,10 +1031,10 @@ def sud_should_see_options_to_manage_users(context: Context, actor_alias: str):
     actor = context.get_actor(actor_alias)
     session = actor.session
 
-    context.response = profile_find_a_buyer.go_to(session)
-    profile_find_a_buyer.should_be_here(context.response)
+    context.response = profile.profile_find_a_buyer.go_to(session)
+    profile.profile_find_a_buyer.should_be_here(context.response)
 
-    profile_find_a_buyer.should_see_options_to_manage_users(context.response)
+    profile.profile_find_a_buyer.should_see_options_to_manage_users(context.response)
     logging.debug("%s can see options to control user accounts", actor_alias)
 
 
@@ -1063,13 +1049,13 @@ def sud_should_not_see_options_to_manage_users(
     """
     actor = context.get_actor(actor_alias)
     session = actor.session
-    context.response = profile_about.go_to(session, set_next_page=False)
-    profile_about.should_be_here(context.response)
+    context.response = profile.profile_about.go_to(session, set_next_page=False)
+    profile.profile_about.should_be_here(context.response)
 
-    context.response = profile_find_a_buyer.go_to(session)
-    profile_find_a_buyer.should_be_here(context.response)
+    context.response = profile.profile_find_a_buyer.go_to(session)
+    profile.profile_find_a_buyer.should_be_here(context.response)
 
-    profile_find_a_buyer.should_not_see_options_to_manage_users(
+    profile.profile_find_a_buyer.should_not_see_options_to_manage_users(
         context.response
     )
     logging.debug("%s can't see options to control user accounts", actor_alias)
@@ -1099,12 +1085,12 @@ def fab_should_not_see_collaborator(
 ):
     aliases = [alias.strip() for alias in collaborators_aliases.split(",")]
     supplier = context.get_actor(supplier_alias)
-    response = fab_ui_account_remove_collaborator.go_to(supplier.session)
+    response = fab.fab_ui_account_remove_collaborator.go_to(supplier.session)
     context.response = response
 
     for collaborator_alias in aliases:
         collaborator = context.get_actor(collaborator_alias)
-        fab_ui_account_remove_collaborator.should_not_see_collaborator(
+        fab.fab_ui_account_remove_collaborator.should_not_see_collaborator(
             response, collaborator.email
         )
 
