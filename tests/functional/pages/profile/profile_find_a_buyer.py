@@ -24,7 +24,7 @@ EXPECTED_STRINGS = [
 ]
 
 MANAGE_USER_ACCOUNTS_STRINGS = [
-    "Admin tools", "Admin view"
+    "Admin tools",
 ]
 
 EXPECTED_STRINGS_USER_ADDED = [
