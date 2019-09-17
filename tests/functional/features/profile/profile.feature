@@ -171,7 +171,7 @@ Feature: Profile pages
 
     When "Annette Geissinger" signs in to SSO/great.gov.uk account from "FAB - Landing"
 
-    Then "Annette Geissinger" should be on "Profile - edit company profile" page
+    Then "Annette Geissinger" should be on "Profile - About" page
 
 
   @ED-1758
