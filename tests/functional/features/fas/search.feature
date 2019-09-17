@@ -216,7 +216,7 @@ Feature: Find a Supplier
     And "Annette Geissinger" clears the search filters
 
     Then "Annette Geissinger" should be told to enter a search term or use the filters
-    And "Annette Geissinger" should see that search results are not filtered by any sector
+    And "Annette Geissinger" should see that FAS search results are not filtered by any sector
 
 
   @ED-1824

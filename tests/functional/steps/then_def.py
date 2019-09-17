@@ -271,7 +271,7 @@ def then_actor_should_see_filtered_search_results(context, actor_alias):
     fas_should_see_filtered_search_results(context, actor_alias)
 
 
-@then('"{actor_alias}" should see that search results are not filtered by any sector')
+@then('"{actor_alias}" should see that FAS search results are not filtered by any sector')
 def then_actor_should_see_unfiltered_search_results(context, actor_alias):
     fas_should_see_unfiltered_search_results(context, actor_alias)
 
