@@ -75,7 +75,7 @@ def reg_should_get_verification_email(context: Context, alias: str):
 def prof_should_be_told_about_missing_description(
     response: Response, supplier_alias: str
 ):
-    profile.profile_edit_company_profile.should_see_missing_description(response)
+    profile.edit_company_profile.should_see_missing_description(response)
     logging.debug("%s was told about missing description", supplier_alias)
 
 
@@ -160,7 +160,7 @@ def sso_should_be_signed_out_from_sso_account(
     session = actor.session
 
     # Step 1 - Get to the Sign Out confirmation page
-    next_param = URLs.PROFILE_LANDING.absolute
+    next_param = URLs.LANDING.absolute
     response = sso.sso_ui_logout.go_to(session, next_param=next_param)
     context.response = response
 
@@ -170,13 +170,13 @@ def sso_should_be_signed_out_from_sso_account(
     context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
     # Step 3 - log out
-    next_param = URLs.PROFILE_LANDING.absolute
+    next_param = URLs.LANDING.absolute
     response = sso.sso_ui_logout.logout(session, token, next_param=next_param)
     context.response = response
 
     # Step 4 - check if Supplier is on SSO landing page
-    profile.profile_about.should_be_here(response)
-    profile.profile_about.should_be_logged_out(response)
+    profile.about.should_be_here(response)
+    profile.about.should_be_logged_out(response)
 
     # Step 5 - reset requests Session object
     context.reset_actor_session(supplier_alias)
@@ -192,7 +192,7 @@ def profile_should_be_told_about_invalid_links(
     linkedin = True if company.linkedin else False
     twitter = True if company.twitter else False
 
-    profile.profile_edit_online_profiles.should_see_errors(
+    profile.edit_online_profiles.should_see_errors(
         context.response, facebook=facebook, linkedin=linkedin, twitter=twitter
     )
     logging.debug(
@@ -209,7 +209,7 @@ def profile_should_see_all_case_studies(context: Context, supplier_alias: str):
     """Check if Supplier can see all case studies on FAB profile page."""
     actor = context.get_actor(supplier_alias)
     case_studies = context.get_company(actor.company_alias).case_studies
-    profile.profile_edit_company_profile.should_see_case_studies(case_studies, context.response)
+    profile.edit_company_profile.should_see_case_studies(case_studies, context.response)
 
 
 def fas_should_see_all_case_studies(context: Context, supplier_alias: str):
@@ -336,7 +336,7 @@ def profile_should_see_online_profiles(context: Context, supplier_alias: str):
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
     response = context.response
-    profile.profile_edit_company_profile.should_see_online_profiles(company, response)
+    profile.edit_company_profile.should_see_online_profiles(company, response)
 
 
 def profile_no_links_to_online_profiles_are_visible(
@@ -345,7 +345,7 @@ def profile_no_links_to_online_profiles_are_visible(
     """Supplier should't see any links to Online Profiles on FAB Profile page.
     """
     response = context.response
-    profile.profile_edit_company_profile.should_not_see_links_to_online_profiles(response)
+    profile.edit_company_profile.should_not_see_links_to_online_profiles(response)
     logging.debug(
         "%s cannot see links to Online Profiles on FAB Profile page",
         supplier_alias,
@@ -368,7 +368,7 @@ def fas_no_links_to_online_profiles_are_visible(
 def profile_profile_is_published(context: Context, supplier_alias: str):
     """Check if Supplier was told that Company's profile is verified."""
     response = context.response
-    profile.profile_edit_company_profile.should_see_profile_is_published(response)
+    profile.edit_company_profile.should_see_profile_is_published(response)
     logging.debug("%s was told that the profile is verified.", supplier_alias)
 
 
@@ -395,7 +395,7 @@ def profile_supplier_should_be_on_landing_page(
 ):
     """Check if Supplier is on Profile Landing page."""
     response = context.response
-    profile.profile_about.should_be_here(response)
+    profile.about.should_be_here(response)
     logging.debug("%s got to the SSO landing page.", supplier_alias)
 
 
@@ -905,7 +905,7 @@ def profile_business_profile_should_be_ready_for_publishing(
         context: Context, supplier_alias: str
 ):
     response = context.response
-    profile.profile_edit_company_profile.should_see_profile_is_verified(response)
+    profile.edit_company_profile.should_see_profile_is_verified(response)
     logging.debug(
         f"{supplier_alias} saw that his company's Business Profile is ready to"
         f" be published on FAS",
@@ -1031,10 +1031,10 @@ def sud_should_see_options_to_manage_users(context: Context, actor_alias: str):
     actor = context.get_actor(actor_alias)
     session = actor.session
 
-    context.response = profile.profile_find_a_buyer.go_to(session)
-    profile.profile_find_a_buyer.should_be_here(context.response)
+    context.response = profile.find_a_buyer.go_to(session)
+    profile.find_a_buyer.should_be_here(context.response)
 
-    profile.profile_find_a_buyer.should_see_options_to_manage_users(context.response)
+    profile.find_a_buyer.should_see_options_to_manage_users(context.response)
     logging.debug("%s can see options to control user accounts", actor_alias)
 
 
@@ -1049,13 +1049,13 @@ def sud_should_not_see_options_to_manage_users(
     """
     actor = context.get_actor(actor_alias)
     session = actor.session
-    context.response = profile.profile_about.go_to(session, set_next_page=False)
-    profile.profile_about.should_be_here(context.response)
+    context.response = profile.about.go_to(session, set_next_page=False)
+    profile.about.should_be_here(context.response)
 
-    context.response = profile.profile_find_a_buyer.go_to(session)
-    profile.profile_find_a_buyer.should_be_here(context.response)
+    context.response = profile.find_a_buyer.go_to(session)
+    profile.find_a_buyer.should_be_here(context.response)
 
-    profile.profile_find_a_buyer.should_not_see_options_to_manage_users(
+    profile.find_a_buyer.should_not_see_options_to_manage_users(
         context.response
     )
     logging.debug("%s can't see options to control user accounts", actor_alias)
