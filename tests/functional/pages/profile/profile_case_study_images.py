@@ -76,6 +76,9 @@ def submit(session: Session, token: str, case_study: CaseStudy) -> Response:
     data, files = prepare_form_data(token, case_study)
     headers = {"Referer": URL}
 
+    logging.debug(f"DATA: {data}")
+    file_names = {k: v[0] for k, v in files.items()}
+    logging.debug(f"FILES: {file_names}")
     response = make_request(
         Method.POST,
         URL,
