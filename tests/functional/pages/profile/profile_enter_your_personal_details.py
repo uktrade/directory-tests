@@ -13,7 +13,7 @@ NAME = "Enter your personal details"
 TYPE = "form"
 URL = URLs.PROFILE_ENROL_PERSONAL_DETAILS.absolute
 EXPECTED_STRINGS = [
-    "Enter your details",
+    "Enter your personal details",
 ]
 
 
