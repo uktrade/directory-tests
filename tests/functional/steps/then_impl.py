@@ -82,7 +82,7 @@ def prof_should_be_told_about_missing_description(
 def fas_should_be_on_profile_page(context, supplier_alias, company_alias):
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
-    fas.fas_ui_profile.should_be_here(context.response, number=company.number)
+    fas.profile.should_be_here(context.response, number=company.number)
     logging.debug(
         "%s is on the %s company's FAS page", supplier_alias, company_alias
     )
@@ -92,11 +92,11 @@ def fas_check_profiles(context: Context, supplier_alias: str):
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
     # Step 1 - go to company's profile page on FAS
-    response = fas.fas_ui_profile.go_to(actor.session, company.number)
+    response = fas.profile.go_to(actor.session, company.number)
     context.response = response
-    fas.fas_ui_profile.should_be_here(response)
+    fas.profile.should_be_here(response)
     # Step 2 - check if links to online profile are visible
-    fas.fas_ui_profile.should_see_online_profiles(company, response)
+    fas.profile.should_see_online_profiles(company, response)
     logging.debug(
         "%s can see all expected links to Online Profiles on "
         "FAS Company's Directory Profile Page",
@@ -216,11 +216,11 @@ def fas_should_see_all_case_studies(context: Context, supplier_alias: str):
     """Check if Supplier can see all case studies on FAS profile page."""
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
-    response = fas.fas_ui_profile.go_to(actor.session, company.number)
+    response = fas.profile.go_to(actor.session, company.number)
     context.response = response
-    fas.fas_ui_profile.should_be_here(response)
+    fas.profile.should_be_here(response)
     case_studies = context.get_company(actor.company_alias).case_studies
-    fas.fas_ui_profile.should_see_case_studies(case_studies, response)
+    fas.profile.should_see_case_studies(case_studies, response)
     logging.debug(
         "%s can see all %d Case Studies on FAS Company's "
         "Directory Profile Page",
@@ -259,9 +259,9 @@ def fas_should_see_png_logo_thumbnail(context: Context, supplier_alias: str):
     company = context.get_company(actor.company_alias)
 
     # Step 1 - Go to the FAS profile page & extract URL of visible logo image
-    response = fas.fas_ui_profile.go_to(session, company.number)
+    response = fas.profile.go_to(session, company.number)
     context.response = response
-    fas.fas_ui_profile.should_be_here(response)
+    fas.profile.should_be_here(response)
     visible_logo_url = extract_logo_url(response)
     placeholder = FAS_LOGO_PLACEHOLDER_IMAGE
 
@@ -290,9 +290,9 @@ def fas_should_see_different_png_logo_thumbnail(
     fas_logo_url = company.logo_url
 
     # Step 1 - Go to the FAS profile page & extract URL of visible logo image
-    response = fas.fas_ui_profile.go_to(session, company.number)
+    response = fas.profile.go_to(session, company.number)
     context.response = response
-    fas.fas_ui_profile.should_be_here(response)
+    fas.profile.should_be_here(response)
     visible_logo_url = extract_logo_url(response)
     placeholder = FAS_LOGO_PLACEHOLDER_IMAGE
 
@@ -358,7 +358,7 @@ def fas_no_links_to_online_profiles_are_visible(
     """Supplier should't see any links to Online Profiles on FAS Profile page.
     """
     response = context.response
-    fas.fas_ui_profile.should_not_see_online_profiles(response)
+    fas.profile.should_not_see_online_profiles(response)
     logging.debug(
         "%s cannot see links to Online Profiles on FAS Profile page",
         supplier_alias,
@@ -443,10 +443,10 @@ def fas_find_supplier_using_case_study_details(
     search_results = defaultdict()
     for term_name in search_terms:
         term = search_terms[term_name]
-        response = fas.fas_ui_find_supplier.go_to(session, term=term)
+        response = fas.search.go_to(session, term=term)
         context.response = response
-        fas.fas_ui_find_supplier.should_be_here(response)
-        found = fas.fas_ui_find_supplier.should_see_company(
+        fas.search.should_be_here(response)
+        found = fas.search.should_see_company(
             response, company.title
         )
         count = 1
@@ -461,12 +461,12 @@ def fas_find_supplier_using_case_study_details(
             number_of_pages = get_number_of_search_result_pages(response)
             if number_of_pages > 1:
                 for page_number in range(2, number_of_pages + 1):
-                    response = fas.fas_ui_find_supplier.go_to(
+                    response = fas.search.go_to(
                         session, term=term, page=page_number
                     )
                     context.response = response
-                    fas.fas_ui_find_supplier.should_be_here(response)
-                    found = fas.fas_ui_find_supplier.should_see_company(
+                    fas.search.should_be_here(response)
+                    found = fas.search.should_see_company(
                         response, company.title
                     )
                     if found:
@@ -535,10 +535,10 @@ def fas_supplier_cannot_be_found_using_case_study_details(
             term_name,
             search_terms,
         )
-        response = fas.fas_ui_find_supplier.go_to(session, term=term)
+        response = fas.search.go_to(session, term=term)
         context.response = response
-        fas.fas_ui_find_supplier.should_be_here(response)
-        found = fas.fas_ui_find_supplier.should_not_see_company(
+        fas.search.should_be_here(response)
+        found = fas.search.should_not_see_company(
             response, company.title
         )
         with assertion_msg(
@@ -714,7 +714,7 @@ def fas_should_be_told_that_message_has_been_sent(
 ):
     response = context.response
     company = context.get_company(company_alias)
-    fas.fas_ui_contact.should_see_that_message_has_been_sent(company, response)
+    fas.contact.should_see_that_message_has_been_sent(company, response)
     logging.debug(
         "%s was told that the message to '%s' (%s) has been sent",
         buyer_alias,

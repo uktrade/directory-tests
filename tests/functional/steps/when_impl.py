@@ -345,9 +345,9 @@ def fas_get_company_slug(
     actor = context.get_actor(actor_alias)
     session = actor.session
     company = context.get_company(company_alias)
-    response = fas.fas_ui_profile.go_to(session, company_number=company.number)
+    response = fas.profile.go_to(session, company_number=company.number)
     context.response = response
-    fas.fas_ui_profile.should_be_here(response)
+    fas.profile.should_be_here(response)
     url = response.request.url
     last_item_idx = -1
     slash_idx = 1
@@ -634,9 +634,9 @@ def profile_view_published_profile(context: Context, supplier_alias: str):
     company = context.get_company(actor.company_alias)
 
     # STEP 1 - go to the "View published profile" page
-    response = fas.fas_ui_profile.go_to(session, company.number)
+    response = fas.profile.go_to(session, company.number)
     context.response = response
-    fas.fas_ui_profile.should_be_here(response)
+    fas.profile.should_be_here(response)
     logging.debug("Supplier is on the company's FAS page")
 
 
@@ -1157,13 +1157,13 @@ def fas_search_using_company_details(
     )
     for term_name in search_terms:
         term = search_terms[term_name]
-        response = fas.fas_ui_find_supplier.go_to(session, term=term)
+        response = fas.search.go_to(session, term=term)
         context.response = response
-        fas.fas_ui_find_supplier.should_be_here(response)
+        fas.search.should_be_here(response)
         number_of_pages = get_number_of_search_result_pages(response)
 
         if number_of_pages == 0:
-            found = fas.fas_ui_find_supplier.should_see_company(
+            found = fas.search.should_see_company(
                 response, company.title
             )
             search_results[term_name] = found
@@ -1184,7 +1184,7 @@ def fas_search_using_company_details(
 
         for page_number in range(1, number_of_pages + 1):
             search_responses[term_name] = response
-            found = fas.fas_ui_find_supplier.should_see_company(
+            found = fas.search.should_see_company(
                 response, company.title
             )
             search_results[term_name] = found
@@ -1211,7 +1211,7 @@ def fas_search_using_company_details(
                 )
                 next_page = page_number + 1
                 if next_page <= number_of_pages:
-                    response = fas.fas_ui_find_supplier.go_to(
+                    response = fas.search.go_to(
                         session, term=term, page=next_page
                     )
                 else:
@@ -1253,14 +1253,14 @@ def generic_view_pages_in_selected_language(
 def fas_search_with_empty_query(context: Context, buyer_alias: str):
     actor = context.get_actor(buyer_alias)
     session = actor.session
-    context.response = fas.fas_ui_find_supplier.go_to(session, term="")
-    fas.fas_ui_find_supplier.should_be_here(context.response)
+    context.response = fas.search.go_to(session, term="")
+    fas.search.should_be_here(context.response)
 
 
 def fas_should_be_told_about_empty_search_results(
     context: Context, buyer_alias: str
 ):
-    fas.fas_ui_find_supplier.should_see_no_matches(context.response)
+    fas.search.should_see_no_matches(context.response)
     logging.debug(
         "%s was told that the search did not match any UK trade profiles",
         buyer_alias,
@@ -1270,7 +1270,7 @@ def fas_should_be_told_about_empty_search_results(
 def fas_should_be_told_to_enter_search_term_or_use_filters(
     context: Context, buyer_alias: str
 ):
-    fas.fas_ui_find_supplier.should_see_no_results(context.response)
+    fas.search.should_see_no_results(context.response)
     logging.debug(
         "%s was told to use a search term or use the filters",
         buyer_alias,
@@ -1282,7 +1282,7 @@ def fas_send_feedback_request(
 ):
     actor = context.get_actor(buyer_alias)
     # Step 0: get csrf token
-    response = fas.fas_ui_feedback.go_to(actor.session)
+    response = fas.feedback.go_to(actor.session)
     token = extract_csrf_middleware_token(response)
     context.update_actor(buyer_alias, csrfmiddlewaretoken=token)
 
@@ -1292,7 +1292,7 @@ def fas_send_feedback_request(
     feedback = random_feedback_data(email=actor.email)
 
     # Step 2: submit the form
-    response = fas.fas_ui_feedback.submit(actor, feedback, referer=referer_url)
+    response = fas.feedback.submit(actor, feedback, referer=referer_url)
     context.response = response
     logging.debug("%s submitted the feedback request", buyer_alias)
 
@@ -1301,7 +1301,7 @@ def fas_feedback_request_should_be_submitted(
     context: Context, buyer_alias: str
 ):
     response = context.response
-    fas.fas_ui_feedback.should_see_feedback_submission_confirmation(response)
+    fas.feedback.should_see_feedback_submission_confirmation(response)
     logging.debug(
         "%s was told that the feedback request has been submitted", buyer_alias
     )
@@ -1342,9 +1342,9 @@ def can_find_supplier_by_term(
              an endpoint to company's profile
     """
     endpoint = None
-    response = fas.fas_ui_find_supplier.go_to(session, term=term)
-    fas.fas_ui_find_supplier.should_be_here(response)
-    found = fas.fas_ui_find_supplier.should_see_company(response, name)
+    response = fas.search.go_to(session, term=term)
+    fas.search.should_be_here(response)
+    found = fas.search.should_see_company(response, name)
     if found:
         endpoint = fas_get_company_profile_url(response, name)
         return found, response, endpoint
@@ -1352,7 +1352,7 @@ def can_find_supplier_by_term(
         number_of_pages = get_number_of_search_result_pages(response)
         page_counter = 1
         for page_number in range(1, number_of_pages + 1):
-            found = fas.fas_ui_find_supplier.should_see_company(response, name)
+            found = fas.search.should_see_company(response, name)
             if found:
                 endpoint = fas_get_company_profile_url(response, name)
                 break
@@ -1364,10 +1364,10 @@ def can_find_supplier_by_term(
                 )
                 next_page = page_number + 1
                 if next_page <= number_of_pages:
-                    response = fas.fas_ui_find_supplier.go_to(
+                    response = fas.search.go_to(
                         session, term=term, page=next_page
                     )
-                    fas.fas_ui_find_supplier.should_be_here(response)
+                    fas.search.should_be_here(response)
                 else:
                     logging.debug(
                         "Couldn't find the Supplier even on the last page of the "
@@ -1444,17 +1444,17 @@ def fas_send_message_to_supplier(
     )
 
     # Step 1 - go to Company's profile page
-    response = fas.fas_ui_profile.go_to_endpoint(session, endpoint)
+    response = fas.profile.go_to_endpoint(session, endpoint)
     context.response = response
-    fas.fas_ui_profile.should_be_here(response, number=company.number)
+    fas.profile.should_be_here(response, number=company.number)
 
     # Step 2 - go to the "email company" form
-    response = fas.fas_ui_contact.go_to(session, company_number=company.number)
+    response = fas.contact.go_to(session, company_number=company.number)
     context.response = response
-    fas.fas_ui_contact.should_be_here(response)
+    fas.contact.should_be_here(response)
 
     # Step 3 - submit the form with the message data
-    response = fas.fas_ui_contact.submit(session, message, company.number)
+    response = fas.contact.submit(session, message, company.number)
     context.response = response
 
 
@@ -1657,9 +1657,9 @@ def fas_browse_suppliers_using_every_sector_filter(
     actor = context.get_actor(actor_alias)
     session = actor.session
 
-    response = fas.fas_ui_find_supplier.go_to(session, term="")
+    response = fas.search.go_to(session, term="")
     context.response = response
-    fas.fas_ui_find_supplier.should_be_here(response)
+    fas.search.should_be_here(response)
 
     sector_filters_selector = "#checkbox-industry-expertise input::attr(value)"
     content = response.content.decode("utf-8")
@@ -1673,8 +1673,8 @@ def fas_browse_suppliers_using_every_sector_filter(
             actor_alias,
             sector,
         )
-        response = fas.fas_ui_find_supplier.go_to(session, sectors=[sector])
-        fas.fas_ui_find_supplier.should_be_here(response)
+        response = fas.search.go_to(session, sectors=[sector])
+        fas.search.should_be_here(response)
         results[sector] = {
             "url": response.request.url,
             "sectors": [sector],
@@ -1689,9 +1689,9 @@ def fas_browse_suppliers_by_multiple_sectors(
     actor = context.get_actor(actor_alias)
     session = actor.session
 
-    response = fas.fas_ui_find_supplier.go_to(session, term="")
+    response = fas.search.go_to(session, term="")
     context.response = response
-    fas.fas_ui_find_supplier.should_be_here(response)
+    fas.search.should_be_here(response)
 
     sector_selector = "#checkbox-industry-expertise input::attr(value)"
     content = response.content.decode("utf-8")
@@ -1706,8 +1706,8 @@ def fas_browse_suppliers_by_multiple_sectors(
         actor_alias,
         ", ".join(sectors),
     )
-    response = fas.fas_ui_find_supplier.go_to(session, sectors=sectors)
-    fas.fas_ui_find_supplier.should_be_here(response)
+    response = fas.search.go_to(session, sectors=sectors)
+    fas.search.should_be_here(response)
     results["multiple choice"] = {
         "url": response.request.url,
         "sectors": sectors,
@@ -1722,9 +1722,9 @@ def fas_browse_suppliers_by_invalid_sectors(
     actor = context.get_actor(actor_alias)
     session = actor.session
 
-    response = fas.fas_ui_find_supplier.go_to(session, term="")
+    response = fas.search.go_to(session, term="")
     context.response = response
-    fas.fas_ui_find_supplier.should_be_here(response)
+    fas.search.should_be_here(response)
 
     sector_selector = "#checkbox-industry-expertise input::attr(value)"
     content = response.content.decode("utf-8")
@@ -1741,7 +1741,7 @@ def fas_browse_suppliers_by_invalid_sectors(
         actor_alias,
         ", ".join(sectors),
     )
-    context.response = fas.fas_ui_find_supplier.go_to(session, sectors=sectors)
+    context.response = fas.search.go_to(session, sectors=sectors)
 
 
 def fas_clear_search_filters(context: Context, actor_alias: str):
@@ -1749,9 +1749,9 @@ def fas_clear_search_filters(context: Context, actor_alias: str):
     session = actor.session
 
     logging.debug("%s will clear the search filter", actor_alias)
-    response = fas.fas_ui_find_supplier.go_to(session, term="")
+    response = fas.search.go_to(session, term="")
     context.response = response
-    fas.fas_ui_find_supplier.should_be_here(response)
+    fas.search.should_be_here(response)
 
 
 def fas_browse_suppliers_by_company_sectors(
@@ -1763,11 +1763,11 @@ def fas_browse_suppliers_by_company_sectors(
     sectors = company.sector
     results = {}
 
-    response = fas.fas_ui_find_supplier.go_to(session, sectors=sectors)
+    response = fas.search.go_to(session, sectors=sectors)
     context.response = response
-    fas.fas_ui_find_supplier.should_be_here(response)
+    fas.search.should_be_here(response)
 
-    found = fas.fas_ui_find_supplier.should_see_company(response, company.title)
+    found = fas.search.should_see_company(response, company.title)
 
     results[1] = {
         "url": response.request.url,
@@ -1783,10 +1783,10 @@ def fas_browse_suppliers_by_company_sectors(
         logging.debug("Will scan only first %d pages", last_page)
         for page_number in range(2, last_page):
             logging.debug("Going to search result page no.: %d", page_number)
-            response = fas.fas_ui_find_supplier.go_to(
+            response = fas.search.go_to(
                 session, page=page_number, sectors=sectors
             )
-            found = fas.fas_ui_find_supplier.should_see_company(
+            found = fas.search.should_see_company(
                 response, company.title
             )
             results[page_number] = {
@@ -1814,11 +1814,11 @@ def fas_get_case_study_slug(
     company = context.get_company(actor.company_alias)
     case = context.get_company(actor.company_alias).case_studies[case_alias]
 
-    response = fas.fas_ui_profile.go_to(actor.session, company.number)
+    response = fas.profile.go_to(actor.session, company.number)
     context.response = response
-    fas.fas_ui_profile.should_be_here(response)
+    fas.profile.should_be_here(response)
 
-    case_studies_details = fas.fas_ui_profile.get_case_studies_details(response)
+    case_studies_details = fas.profile.get_case_studies_details(response)
     for title, summary, href, slug in case_studies_details:
         if title == case.title:
             result = slug
@@ -1835,8 +1835,8 @@ def fas_get_case_study_slug(
 def fas_search_with_term(context: Context, actor_alias: str, search_term: str):
     actor = context.get_actor(actor_alias)
     session = actor.session
-    context.response = fas.fas_ui_find_supplier.go_to(session, term=search_term)
-    fas.fas_ui_find_supplier.should_be_here(context.response)
+    context.response = fas.search.go_to(session, term=search_term)
+    fas.search.should_be_here(context.response)
 
 
 def profile_go_to_letter_verification(
