@@ -2023,6 +2023,10 @@ def profile_attempt_to_add_case_study(
         value_type = row["value type"]
         separator = row["separator"]
         error = row["error"]
+        logging.debug(
+            f"Trying to add a case study with: field='{field}'; "
+            f"value type='{value_type}'; separator='{separator}'; error='{error}'"
+        )
 
         value = get_form_value(value_type)
 
@@ -2038,11 +2042,13 @@ def profile_attempt_to_add_case_study(
 
         token = extract_csrf_middleware_token(response)
 
+        logging.debug(f"Case study details: {case_study}")
         if field in page_1_fields:
             response = profile_case_study_basic.submit(
                 session, token, case_study
             )
             context.response = response
+            check_response(response, 200)
         elif field in page_2_fields:
             response = profile_case_study_basic.submit(
                 session, token, case_study
@@ -2053,6 +2059,7 @@ def profile_attempt_to_add_case_study(
                 session, token, case_study
             )
             context.response = response
+            check_response(response, 200)
         else:
             raise KeyError(
                 "Could not recognize field '{}' as valid case study field"
