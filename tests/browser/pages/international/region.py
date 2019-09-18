@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Invest in Great Regional Page Object."""
+"""Regional page."""
 import logging
 from typing import List
 from urllib.parse import urljoin
@@ -29,9 +29,10 @@ NAMES = [
     "Midlands",
     "Wales",
 ]
-SERVICE = Services.INVEST
+SERVICE = Services.INTERNATIONAL
 TYPE = "region"
 URL = urljoin(INTERNATIONAL_UI_URL, "content/about-uk/regions/")
+URL_LEGACY = urljoin(INTERNATIONAL_UI_URL, "content/invest/uk-regions/")
 PAGE_TITLE = "Invest in Great Britain - "
 
 
@@ -39,7 +40,7 @@ URLs = {
     "london": urljoin(URL, "london/"),
     "north england": urljoin(URL, "north-england/"),
     "northern ireland": urljoin(URL, "northern-ireland/"),
-    "scotland": urljoin(URL, "scotland/"),
+    "scotland": urljoin(URL_LEGACY, "scotland//"),
     "south england": urljoin(URL, "south-england/"),
     "midlands": urljoin(URL, "midlands/"),
     "wales": urljoin(URL, "wales/"),
