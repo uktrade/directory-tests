@@ -48,7 +48,7 @@ NAMES = [
 ]
 SERVICE = Services.INTERNATIONAL
 TYPE = "industry"
-URL = urljoin(EXRED_UI_URL, "international/content/industries/")
+URL = urljoin(EXRED_UI_URL, "international/content/about-uk/industries/")
 PAGE_TITLE = "great.gov.uk International - "
 
 

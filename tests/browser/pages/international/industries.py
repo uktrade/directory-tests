@@ -22,7 +22,7 @@ from settings import EXRED_UI_URL
 NAME = "Industries"
 SERVICE = Services.INTERNATIONAL
 TYPE = "landing"
-URL = urljoin(EXRED_UI_URL, "international/content/industries/")
+URL = urljoin(EXRED_UI_URL, "international/content/about-uk/industries/")
 PAGE_TITLE = "Welcome to great.gov.uk - buy from or invest in the UK"
 
 BREADCRUMB_LINKS = Selector(By.CSS_SELECTOR, ".breadcrumbs a")
