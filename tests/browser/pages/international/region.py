@@ -48,7 +48,14 @@ URLs = {
 
 
 SELECTORS = {
-    "hero": {"self": Selector(By.CSS_SELECTOR, "#content > section.hero")},
+    "regional breadcrumbs": {
+        "great.gov.uk international": Selector(
+            By.CSS_SELECTOR, "nav.breadcrumbs ol > li:nth-child(1) > a"),
+        "about the uk": Selector(
+            By.CSS_SELECTOR, "nav.breadcrumbs ol > li:nth-child(2) > a"),
+        "regions": Selector(
+            By.CSS_SELECTOR, "nav.breadcrumbs ol > li:nth-child(3) > a"),
+    },
 }
 SELECTORS.update(common_selectors.INTERNATIONAL_HEADER_WO_LANGUAGE_SELECTOR)
 SELECTORS.update(common_selectors.INTERNATIONAL_HERO)
@@ -63,7 +70,8 @@ def visit(driver: WebDriver, *, page_name: str = None):
 
 def should_be_here(driver: WebDriver, *, page_name: str):
     take_screenshot(driver, PAGE_TITLE)
-    check_url(driver, URL, exact_match=False)
+    url = URLs[page_name.lower()] if page_name else URL
+    check_url(driver, url)
     logging.debug("All expected elements are visible on '%s' page", PAGE_TITLE)
 
 
