@@ -35,7 +35,7 @@ Feature: INTL - Landing page
 
     Examples:
       | service            | expected_service       |
-      | Expand to the UK   | Invest - Home          |
+      | Expand to the UK   | Invest - landing          |
       | Find a UK supplier | Find a Supplier - Landing |
 
     @wip

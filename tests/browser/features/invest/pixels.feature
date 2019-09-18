@@ -17,9 +17,10 @@ Feature: Invest - Pixels
       | Facebook tracking pixel |
 
     Examples: Various pages
-      | selected       |
-      | Home           |
-      | Contact Us     |
+      | selected                |
+      | Landing                 |
+      | Contact Us              |
+      | How to set up in the UK |
 
     @stage-only
     Examples: HPO pages

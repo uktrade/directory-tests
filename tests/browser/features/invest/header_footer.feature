@@ -45,28 +45,28 @@ Feature: Invest - Header-Footer
   @CMS-158
   @header
   @footer
-  @home-page
+  @landing-page
   @<specific>
-  Scenario Outline: Visitors should be able to get to the "<specific>" page via "<section>" link
-    Given "Robert" visits the "Invest - Home" page
+  Scenario Outline: Visitors should be able to find out more about "<specific topic>" and get to "<expected>" page
+    Given "Robert" visits the "Invest - landing" page
 
-    When "Robert" decides to use "<specific>" link from page "Invest - <section>"
+    When "Robert" decides to find out more about "<specific topic>"
 
     Then "Robert" should be on the "<expected>" page
 
     Examples:
-      | specific           | section | expected                       |
-      | Invest             | header  | Invest - Home                  |
-      | Industries         | header  | International - Industries     |
-      | UK setup guide     | header  | International - UK setup guide |
-      | Find a UK Supplier | header  | Find a Supplier - Landing      |
+      | specific topic     | expected                         |
+      | Invest             | Invest - landing                 |
+      | Industries         | International - Industries       |
+      | UK setup guide     | Invest - How to set up in the UK |
+      | Find a UK Supplier | Find a Supplier - Landing        |
 
 
-  @CMS-158a
+  @CMS-158
   @logo
   @header
   @footer
-  Scenario Outline: Visitors should be able to get to the Invest home page from "<selected>" page by using UK Government logo in the page header
+  Scenario Outline: Visitors should be able to get to the Invest landing page from "<selected>" page by using UK Government logo in the page header
     Given "Robert" visits the "Invest - <selected>" page
 
     When "Robert" decides to click on "Invest in Great logo"
@@ -74,10 +74,10 @@ Feature: Invest - Header-Footer
     Then "Robert" should be on the "International - Landing" page
 
     Examples:
-      | selected                            |
-      | Home                                |
-      | UK Setup Guide                      |
-      | Contact Us                          |
+      | selected                |
+      | Landing                 |
+      | How to set up in the UK |
+      | Contact Us              |
 
     @dev-only
     Examples: UK setup guides

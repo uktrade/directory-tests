@@ -61,7 +61,7 @@ ELEMENTS_ON = {
         "العربيّة": "ar",
         "Français": "fr",
     },
-    "invest - home": {
+    "invest - landing": {
         "English": "en-gb",
         "简体中文": "zh-hans",
         "Deutsch": "de",

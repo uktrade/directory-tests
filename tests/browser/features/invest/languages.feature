@@ -30,7 +30,7 @@ Feature: Invest - Internationalisation
 
     Examples: Various pages
       | selected                |
-      | Invest - Home           |
+      | Invest - landing           |
       | Invest - UK Setup Guide |
       | Invest - Contact Us     |
       | Invest - Feedback       |

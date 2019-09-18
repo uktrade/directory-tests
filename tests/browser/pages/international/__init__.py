@@ -10,6 +10,7 @@ __all__ = [
     "how_to_setup_in_the_uk",
     "news_international",
     "news_international_article",
+    "regions_landing",
     "trade_contact_us",
     "trade_contact_us_thank_you",
     "uk_setup_guide",

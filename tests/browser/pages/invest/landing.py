@@ -2,7 +2,6 @@
 """Invest in Great Home Page Object."""
 import logging
 from typing import List
-from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -26,13 +25,6 @@ TYPE = "landing"
 PAGE_TITLE = "Invest in Great Britain - Home"
 
 SELECTORS = {
-    "hero": {
-        "self": Selector(By.CSS_SELECTOR, "#content > section.hero"),
-        "heading": Selector(By.CSS_SELECTOR, "#content > section.hero h1"),
-        "get in touch": Selector(
-            By.CSS_SELECTOR, "#content > section.hero a", type=ElementType.LINK
-        ),
-    },
     "benefits": {
         "self": Selector(By.ID, "benefits"),
         "heading": Selector(By.CSS_SELECTOR, "#benefits h2"),
@@ -111,7 +103,8 @@ SELECTORS = {
         ),
     },
 }
-SELECTORS.update(common_selectors.INTERNATIONAL_HEADER_WO_LANGUAGE_SELECTOR)
+SELECTORS.update(common_selectors.INTERNATIONAL_HEADER)
+SELECTORS.update(common_selectors.INVEST_HERO)
 SELECTORS.update(common_selectors.BREADCRUMBS)
 SELECTORS.update(common_selectors.ERROR_REPORTING)
 SELECTORS.update(common_selectors.INTERNATIONAL_FOOTER)

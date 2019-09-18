@@ -11,7 +11,7 @@ Feature: Invest - Contact us and Leave feedback
   @header
   @footer
   Scenario: An email should be sent after visitor submits the contact-us form
-    Given "Robert" visits the "Invest - Home" page
+    Given "Robert" visits the "Invest - landing" page
     And "Robert" decided to "Get in touch"
     And "Robert" is on the "Invest - Contact us" page
 

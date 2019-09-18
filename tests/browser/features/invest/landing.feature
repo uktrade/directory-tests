@@ -1,4 +1,4 @@
-@home-page
+@landing-page
 @no-sso-email-verification-required
 Feature: Invest - landing page
 
@@ -7,8 +7,8 @@ Feature: Invest - landing page
 
   @dev-only
   @CMS-157
-  Scenario: Visitors should be able to view "Invest home" page
-    Given "Robert" visits the "Invest - home" page
+  Scenario: Visitors should be able to view "Invest - Landing" page
+    Given "Robert" visits the "Invest - landing" page
 
     Then "Robert" should see following sections
       | Sections                     |
@@ -24,8 +24,8 @@ Feature: Invest - landing page
 
   @stage-only
   @CMS-157
-  Scenario: Visitors should be able to view "Invest home" page
-    Given "Robert" visits the "Invest - home" page
+  Scenario: Visitors should be able to view "Invest - Landing" page
+    Given "Robert" visits the "Invest - landing" page
 
     Then "Robert" should see following sections
       | Sections                     |
@@ -43,7 +43,7 @@ Feature: Invest - landing page
 
   @CMS-157
   Scenario Outline: Overseas businesses should be able to learn more about "<selected>" UK Industry
-    Given "Robert" visits the "Invest - home" page
+    Given "Robert" visits the "Invest - landing" page
 
     When "Robert" decides to find out out more about "Invest - <selected> - industry"
 
@@ -66,7 +66,7 @@ Feature: Invest - landing page
 
   @CMS-157
   Scenario: Overseas businesses should be able to also learn more about UK Industries other than the promoted ones
-    Given "Robert" visits the "Invest - home" page
+    Given "Robert" visits the "Invest - landing" page
 
     When "Robert" decides to "see more industries"
 
@@ -75,24 +75,24 @@ Feature: Invest - landing page
 
   @CMS-157
   Scenario: Overseas businesses should be able to learn how to set up in the UK
-    Given "Robert" visits the "Invest - home" page
+    Given "Robert" visits the "Invest - landing" page
 
     When "Robert" decides to find out more about "UK setup guide"
 
-    Then "Robert" should be on the "International - How to set up in the UK" page
+    Then "Robert" should be on the "Invest - How to set up in the UK" page
 
 
   @HPO
   @stage-only
   Scenario Outline: Overseas businesses should be able to learn about "<selected>" High-Potential Opportunities
-    Given "Robert" visits the "Invest - home" page
+    Given "Robert" visits the "Invest - landing" page
 
     When "Robert" decides to find out more about "<selected>"
 
     Then "Robert" should be on the "Invest - <selected> - hpo" page
     And "Robert" should see content specific to "Invest - <selected> - hpo" page
 
-    Examples: UK Setup Guides
+    Examples: HPO pages
       | selected                          |
       | High productivity food production |
       | Lightweight structures            |

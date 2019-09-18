@@ -4,7 +4,7 @@ __all__ = [
     "feedback",
     "footer",
     "header",
-    "home",
+    "landing",
     "hpo",
     "hpo_contact_us",
     "hpo_contact_us_thank_you",
