@@ -308,19 +308,6 @@ def stats_and_tracking_elements_should_not_be_present(context: Context, names: T
         invest.pixels.should_not_be_present(context.driver, name)
 
 
-def invest_should_see_uk_gov_logo(context: Context, actor_alias: str, section: str):
-    if section.lower() == "header":
-        invest.header.check_logo(context.driver)
-    else:
-        invest.footer.check_logo(context.driver)
-    logging.debug(
-        "%s can see correct UK GOV logo in page %s on %s",
-        actor_alias,
-        section,
-        context.driver.current_url,
-    )
-
-
 def hpo_should_receive_enquiry_confirmation_email(context: Context, actor_alias: str):
     actor = get_actor(context, actor_alias)
     get_email_confirmations_with_matching_string(

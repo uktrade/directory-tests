@@ -40,7 +40,6 @@ from steps.when_impl import (
     generic_select_dropdown_option,
     generic_submit_form,
     generic_trigger_all_gtm_events,
-    generic_unfold_topics,
     generic_visit_current_page_with_lang_parameter,
     header_footer_open_link,
     language_selector_change_to,
@@ -226,11 +225,6 @@ def fas_when_actor_views_article(
 def when_actor_goes_to_guide(
         context: Context, actor_alias: str, guide_name: str):
     generic_open_guide_link(context, actor_alias, guide_name)
-
-
-@when('"{actor_alias}" unfolds all topic sections')
-def when_actor_unfolds_all_topic_sections(context: Context, actor_alias: str):
-    generic_unfold_topics(context, actor_alias)
 
 
 @when('"{actor_alias}" fills out and submits the form (and go 1 page back on error)')

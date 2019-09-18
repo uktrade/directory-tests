@@ -27,7 +27,6 @@ from steps.then_impl import (
     header_check_logo,
     hpo_agent_should_receive_enquiry_email,
     hpo_should_receive_enquiry_confirmation_email,
-    invest_should_see_uk_gov_logo,
     language_selector_should_see_it,
     marketplace_finder_should_see_marketplaces,
     menu_items_should_be_visible,
@@ -172,12 +171,6 @@ def then_stats_and_tracking_elements_should_be_present(context: Context):
 @then('following web statistics analysis or tracking elements should be present')
 def then_stats_and_tracking_elements_should_be_present(context: Context):
     stats_and_tracking_elements_should_be_present(context, context.table)
-
-
-@then('"{actor_alias}" should see correct UK Government logo in page "{section}"')
-def then_user_should_see_uk_gov_logo(
-        context: Context, actor_alias: str, section: str):
-    invest_should_see_uk_gov_logo(context, actor_alias, section)
 
 
 @then('"{actor_alias}" should receive "{subject}" email containing "{message}" message')
