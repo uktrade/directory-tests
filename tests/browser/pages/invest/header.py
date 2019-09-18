@@ -14,7 +14,7 @@ from pages.common_actions import (
     scroll_to,
     take_screenshot,
 )
-from settings import MD5_CHECKSUM_UK_GOV
+from settings import MD5_CHECKSUM_INVEST_IN_GREAT
 
 NAME = "Header"
 URL = None
@@ -36,5 +36,5 @@ def check_logo(driver: WebDriver):
     logo = find_element(driver, HEADER_LOGO)
     scroll_to(driver, logo)
     src = logo.get_attribute("src")
-    check_hash_of_remote_file(MD5_CHECKSUM_UK_GOV, src)
-    logging.debug("%s has correct MD5sum %s", src, MD5_CHECKSUM_UK_GOV)
+    check_hash_of_remote_file(MD5_CHECKSUM_INVEST_IN_GREAT, src)
+    logging.debug("%s has correct MD5sum %s", src, MD5_CHECKSUM_INVEST_IN_GREAT)

@@ -9,6 +9,7 @@ from settings import (
     MD5_CHECKSUM_EVENTS_BIG_FOOTER_LOGO,
     MD5_CHECKSUM_EVENTS_BIG_HEADER_LOGO,
     MD5_CHECKSUM_GREAT_LOGO,
+    MD5_CHECKSUM_INVEST_IN_GREAT,
 )
 
 
@@ -112,6 +113,10 @@ LOGOS = {
     "great - footer": {
         "selector": Selector(By.ID, "great-footer-great-logo"),
         "md5": MD5_CHECKSUM_GREAT_LOGO,
+    },
+    "invest in great - header": {
+        "selector": Selector(By.CSS_SELECTOR, "#great-header-logo img"),
+        "md5": MD5_CHECKSUM_INVEST_IN_GREAT,
     },
     "events business is great - header": {
         "selector": Selector(By.CSS_SELECTOR, "header img"),
