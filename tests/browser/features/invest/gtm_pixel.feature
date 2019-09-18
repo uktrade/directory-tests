@@ -17,9 +17,10 @@ Feature: Invest - Google Tag Manager
     @CMS-1634
     @fixed
     Examples: Listing pages
-      | selected   | businessUnit | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
-      | Home       | Invest       | False       | en-gb        | HomePage    | Empty string   | None   |
-      | Contact us | Invest       | False       | en-gb        | Contact     | Empty string   | None   |
+      | selected                | businessUnit | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
+      | Landing                 | Invest       | False       | en-gb        | HomePage    | Empty string   | None   |
+      | Contact us              | Invest       | False       | en-gb        | Contact     | Empty string   | None   |
+      | How to set up in the UK | Invest       | False       | en-gb        | Guide       | ListingPage    | None   |
 
     @hpo
     @stage-only

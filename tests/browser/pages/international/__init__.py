@@ -9,6 +9,7 @@ __all__ = [
     "international_eu_exit_contact_us_thank_you",
     "news_international",
     "news_international_article",
+    "region",
     "regions_landing",
     "trade_contact_us",
     "trade_contact_us_thank_you",

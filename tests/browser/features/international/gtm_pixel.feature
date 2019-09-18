@@ -24,7 +24,6 @@ Feature: INTL - Google Tag Manager
     Examples: Listing pages
       | selected                | businessUnit       | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
       | Industries              | GreatInternational | False       | en-gb        | Topic       | ListingPage    | None   |
-      | How to set up in the UK | Invest             | False       | en-gb        | Guide       | ListingPage    | None   |
 
     @dev-only
     Examples: Industry pages

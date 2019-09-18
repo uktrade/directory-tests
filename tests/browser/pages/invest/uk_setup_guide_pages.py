@@ -19,7 +19,7 @@ from pages.common_actions import (
 )
 from settings import INTERNATIONAL_UI_URL
 
-NAME = "Guide"
+NAME = "How to set up in the UK"
 NAMES = [
     "Access finance in the UK",
     "Access finance in the UK (Staging)",

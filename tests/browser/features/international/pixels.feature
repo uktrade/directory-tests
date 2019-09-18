@@ -21,7 +21,6 @@ Feature: INTL - Pixels
       | selected                     |
       | Landing                      |
       | Industries                   |
-      | How to set up in the UK      |
       | Contact Us                   |
 
     @dev-only
