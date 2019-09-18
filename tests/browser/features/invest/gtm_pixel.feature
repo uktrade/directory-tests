@@ -31,7 +31,6 @@ Feature: Invest - Google Tag Manager
       | Rail infrastructure - HPO               | Invest       | False       | en-gb        | HighPotentialOpportunities | DetailPage     | None   |
 
 
-  @wip
   @bug
   @CMS-1634
   @fixed
@@ -48,8 +47,8 @@ Feature: Invest - Google Tag Manager
 
     Examples: Various pages
       | selected | preferred_language | businessUnit | loginStatus | siteLanguage | siteSection | siteSubsection | userId |
-      | Home     | Deutsch            | Invest       | False       | de           | HomePage    | Empty string   | None   |
-      | Home     | Français           | Invest       | False       | fr           | HomePage    | Empty string   | None   |
-      | Home     | español            | Invest       | False       | es           | HomePage    | Empty string   | None   |
-      | Home     | Português          | Invest       | False       | pt           | HomePage    | Empty string   | None   |
-      | Home     | 简体中文            | Invest       | False       | zh-hans      | HomePage    | Empty string   | None   |
+      | Landing  | Deutsch            | Invest       | False       | de           | HomePage    | Empty string   | None   |
+      | Landing  | Français           | Invest       | False       | fr           | HomePage    | Empty string   | None   |
+      | Landing  | español            | Invest       | False       | es           | HomePage    | Empty string   | None   |
+      | Landing  | Português          | Invest       | False       | pt           | HomePage    | Empty string   | None   |
+      | Landing  | 简体中文            | Invest       | False       | zh-hans      | HomePage    | Empty string   | None   |
