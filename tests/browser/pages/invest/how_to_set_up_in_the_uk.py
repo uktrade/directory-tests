@@ -19,7 +19,7 @@ from pages.common_actions import (
 )
 from settings import INTERNATIONAL_UI_URL
 
-NAME = "UK Setup guide"
+NAME = "How to set up in the UK"
 SERVICE = Services.INVEST
 TYPE = "landing"
 URL = urljoin(INTERNATIONAL_UI_URL, "content/invest/how-to-setup-in-the-uk/")

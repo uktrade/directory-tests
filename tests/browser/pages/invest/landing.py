@@ -19,10 +19,10 @@ from pages.common_actions import (
 )
 from settings import INVEST_UI_URL
 
-NAME = "Home"
-URL = urljoin(INVEST_UI_URL, "")
+NAME = "landing"
+URL = INVEST_UI_URL
 SERVICE = Services.INVEST
-TYPE = "home"
+TYPE = "landing"
 PAGE_TITLE = "Invest in Great Britain - Home"
 
 SELECTORS = {

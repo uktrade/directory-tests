@@ -14,7 +14,6 @@ from pages.common_actions import (
     check_for_sections,
     check_url,
     find_and_click_on_page_element,
-    find_elements,
     take_screenshot,
     visit_url,
 )
@@ -47,19 +46,11 @@ URLs = {
 }
 
 
-TOPIC_EXPANDERS = Selector(By.CSS_SELECTOR, "section.setup-guide a.accordion-expander")
-
 SELECTORS = {
     "hero": {"self": Selector(By.CSS_SELECTOR, "#content > section.hero")},
-    "topics": {
-        "self": Selector(By.CSS_SELECTOR, "#content > section.setup-guide > div > ul"),
-        "accordion expanders": TOPIC_EXPANDERS,
-    },
-    "topics contents": {
-        "paragraphs": Selector(By.CSS_SELECTOR, "div.accordion-content p")
-    },
 }
 SELECTORS.update(common_selectors.INTERNATIONAL_HEADER_WO_LANGUAGE_SELECTOR)
+SELECTORS.update(common_selectors.INTERNATIONAL_HERO)
 SELECTORS.update(common_selectors.ERROR_REPORTING)
 SELECTORS.update(common_selectors.INTERNATIONAL_FOOTER)
 
@@ -97,15 +88,6 @@ def should_see_content_for(driver: WebDriver, region_name: str):
         driver.current_url,
     ):
         assert region_name.lower() in source.lower()
-
-
-def unfold_topics(driver: WebDriver):
-    expanders = find_elements(driver, TOPIC_EXPANDERS)
-    assert expanders, "Expected to see at least 1 topic but found 0 on {}".format(
-        driver.current_url
-    )
-    for expander in expanders:
-        expander.click()
 
 
 def click_on_page_element(driver: WebDriver, element_name: str):
