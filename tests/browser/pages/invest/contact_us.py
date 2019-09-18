@@ -63,9 +63,9 @@ SELECTORS = {
         "submit": SUBMIT_BUTTON,
     },
 }
-SELECTORS.update(common_selectors.HEADER_INVEST)
+SELECTORS.update(common_selectors.INTERNATIONAL_HEADER)
 SELECTORS.update(common_selectors.ERROR_REPORTING)
-SELECTORS.update(common_selectors.FOOTER_INVEST)
+SELECTORS.update(common_selectors.INVEST_FOOTER)
 
 
 def visit(driver: WebDriver):

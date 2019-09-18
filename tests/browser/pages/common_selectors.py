@@ -180,7 +180,7 @@ INTERNATIONAL_HERO = {
     },
 }
 
-HEADER_INVEST = {
+INVEST_HEADER = {
     "header": {
         # cookie notice
         "itself": Selector(By.ID, "header-cookie-notice", is_visible=False),
@@ -224,7 +224,18 @@ HEADER_INVEST = {
     }
 }
 
-FOOTER_INVEST = {
+INVEST_HERO = {
+    "hero": {
+        "self": Selector(By.CSS_SELECTOR, "section[data-ga-section='hero']"),
+        "heading": Selector(By.CSS_SELECTOR, "section[data-ga-section='hero'] h1"),
+        "get in touch": Selector(
+            By.CSS_SELECTOR, "section[data-ga-section='hero'] a.button",
+            type=ElementType.LINK
+        ),
+    },
+}
+
+INVEST_FOOTER = {
     "footer": {
         "great footer logo": Selector(By.ID, "great-footer-great-logo"),
         "contact us": Selector(By.ID, "footer-contact"),
