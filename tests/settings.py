@@ -205,7 +205,7 @@ SEARCHABLE_CASE_STUDY_DETAILS = [
     "caption_2",
     "caption_3",
     "testimonial",
-    "slug"
+    "slug",
     "source_name",
     "source_job",
     "source_company",
