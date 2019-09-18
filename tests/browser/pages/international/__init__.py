@@ -7,11 +7,9 @@ __all__ = [
     "international_contact_us_exporting_to_the_uk",
     "international_eu_exit_contact_us",
     "international_eu_exit_contact_us_thank_you",
-    "how_to_setup_in_the_uk",
     "news_international",
     "news_international_article",
     "regions_landing",
     "trade_contact_us",
     "trade_contact_us_thank_you",
-    "uk_setup_guide",
 ]

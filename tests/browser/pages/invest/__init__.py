@@ -5,12 +5,12 @@ __all__ = [
     "footer",
     "header",
     "landing",
+    "how_to_set_up_in_the_uk",
     "hpo",
     "hpo_contact_us",
     "hpo_contact_us_thank_you",
     "industries",
     "industry",
     "pixels",
-    "uk_setup_guide",
     "uk_setup_guide_pages",
 ]
