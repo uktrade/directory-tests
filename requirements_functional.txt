@@ -4,6 +4,7 @@
 #
 #    pip-compile --output-file=requirements_functional.txt requirements_functional.in
 #
+-e ./directory_tests_shared/
 asn1crypto==0.24.0        # via cryptography
 atomicwrites==1.3.0       # via pytest
 attrs==19.1.0             # via automat, jsonschema, pytest, service-identity, twisted
@@ -20,7 +21,6 @@ directory-api-client==20.0.0
 directory-client-core==6.1.0  # via directory-api-client, directory-sso-api-client
 directory-constants==20.3.0
 directory-sso-api-client==6.1.0
-file:///home/jk/git/dit/directory-tests/directory_tests_shared
 django==2.2.5             # via directory-api-client, directory-client-core, directory-constants, sigauth
 djangorestframework==3.10.3  # via sigauth
 docopt==0.6.2

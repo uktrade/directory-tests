@@ -1,4 +1,4 @@
-directory_tests_shared/
+-e ./directory_tests_shared/
 beautifulsoup4
 directory-cms-client
 directory-sso-api-client

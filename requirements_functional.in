@@ -1,4 +1,4 @@
-directory_tests_shared/
+-e ./directory_tests_shared/
 Scrapy
 beautifulsoup4
 behave
