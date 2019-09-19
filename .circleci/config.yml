@@ -315,7 +315,7 @@ jobs:
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "dev"
-      FEATURE_DIR: "sud"
+      FEATURE_DIR: "profile"
     <<: *steps_functional_tests
 
   func_international_test_dev:
@@ -349,7 +349,7 @@ jobs:
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "stage"
-      FEATURE_DIR: "sud"
+      FEATURE_DIR: "profile"
       TAGS: "--tags=~@dev-only"
     <<: *steps_functional_tests
 
@@ -383,7 +383,7 @@ jobs:
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "uat"
-      FEATURE_DIR: "sud"
+      FEATURE_DIR: "profile"
     <<: *steps_functional_tests
 
   func_international_test_uat:
