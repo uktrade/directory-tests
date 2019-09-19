@@ -29,7 +29,7 @@ from urllib3.exceptions import HTTPError as BaseHTTPError
 
 
 # a list of exceptions that can be thrown by `requests` (and urllib3)
-from tests.settings import BASICAUTH_USER, BASICAUTH_PASS, USE_BASIC_AUTH
+from directory_tests_shared.settings import BASICAUTH_USER, BASICAUTH_PASS, USE_BASIC_AUTH
 
 REQUEST_EXCEPTIONS = (
     BaseHTTPError,

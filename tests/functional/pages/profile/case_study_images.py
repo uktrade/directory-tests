@@ -7,7 +7,7 @@ from os.path import basename
 from requests import Response, Session
 from retrying import retry
 
-from tests import URLs
+from directory_tests_shared import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.context_utils import CaseStudy
 from tests.functional.utils.request import Method, check_response, make_request

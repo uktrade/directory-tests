@@ -6,7 +6,7 @@ import re
 
 from requests import Response, Session
 
-from tests import URLs
+from directory_tests_shared import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Actor, Company
 from tests.functional.utils.generic import assertion_msg

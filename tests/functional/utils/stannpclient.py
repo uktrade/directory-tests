@@ -1,6 +1,6 @@
 import requests
 from requests import Response
-from tests.settings import STANNP_API_KEY
+from directory_tests_shared.settings import STANNP_API_KEY
 
 
 class StannpClient:

@@ -35,7 +35,7 @@ from requests import Response, Session
 from retrying import retry
 from scrapy.selector import Selector
 from termcolor import cprint
-from tests import URLs
+from directory_tests_shared import URLs
 from tests.functional.schemas.Companies import COMPANIES
 from tests.functional.utils.context_utils import (
     Actor,
@@ -46,7 +46,7 @@ from tests.functional.utils.context_utils import (
 )
 from tests.functional.utils.request import Method, check_response, make_request
 from tests.functional.utils.stannpclient import STANNP_CLIENT
-from tests.settings import (
+from directory_tests_shared.settings import (
     DIRECTORY_API_CLIENT_KEY,
     DIRECTORY_API_CLIENT_SENDER_ID,
     DIRECTORY_API_URL,

@@ -4,7 +4,7 @@ import logging
 
 from requests import Response, Session
 
-from tests import URLs
+from directory_tests_shared import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.generic import assertion_msg
 from tests.functional.utils.request import (

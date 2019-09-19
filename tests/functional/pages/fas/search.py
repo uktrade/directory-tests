@@ -5,7 +5,7 @@ import logging
 from requests import Response, Session
 from retrying import retry
 
-from tests import URLs
+from directory_tests_shared import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.generic import escape_html, extract_page_contents
 from tests.functional.utils.request import Method, check_response, make_request

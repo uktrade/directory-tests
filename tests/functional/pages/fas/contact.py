@@ -5,7 +5,7 @@ from urllib.parse import urljoin
 
 from requests import Response, Session
 
-from tests import URLs
+from directory_tests_shared import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.context_utils import Company, Feedback, Message
 from tests.functional.utils.generic import (

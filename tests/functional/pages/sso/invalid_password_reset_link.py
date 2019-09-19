@@ -4,7 +4,7 @@ import logging
 
 from requests import Response
 
-from tests import URLs
+from directory_tests_shared import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.request import check_response
 

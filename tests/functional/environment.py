@@ -20,7 +20,7 @@ from tests.functional.utils.generic import (
     red,
 )
 from tests.functional.utils.request import REQUEST_EXCEPTIONS
-from tests.settings import AUTO_RETRY, AUTO_RETRY_MAX_ATTEMPTS
+from directory_tests_shared.settings import AUTO_RETRY, AUTO_RETRY_MAX_ATTEMPTS
 
 
 def before_feature(context, feature):

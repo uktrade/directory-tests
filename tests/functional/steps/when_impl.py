@@ -24,7 +24,8 @@ from retrying import retry
 from behave.model import Table
 from behave.runner import Context
 from scrapy import Selector
-from tests import BusinessType, URLs
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import BusinessType
 from tests.functional.common import DETAILS, PROFILES
 from tests.functional.pages import (
     get_page_object,
@@ -76,7 +77,7 @@ from tests.functional.utils.generic import (
 )
 from tests.functional.utils.gov_notify import get_email_verification_code
 from tests.functional.utils.request import Method, check_response, make_request
-from tests.settings import (
+from directory_tests_shared.settings import (
     NO_OF_EMPLOYEES,
     SECTORS,
     SEPARATORS,

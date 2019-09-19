@@ -12,7 +12,7 @@ from retrying import retry
 from behave.model import Table
 from behave.runner import Context
 from scrapy import Selector
-from tests import URLs
+from directory_tests_shared import URLs
 from tests.functional.pages import (
     fab,
     fas,
@@ -44,7 +44,7 @@ from tests.functional.utils.gov_notify import (
     get_password_reset_link,
     get_verification_link,
 )
-from tests.settings import (
+from directory_tests_shared.settings import (
     FAS_LOGO_PLACEHOLDER_IMAGE,
     FAS_MESSAGE_FROM_BUYER_SUBJECT,
     SEARCHABLE_CASE_STUDY_DETAILS,

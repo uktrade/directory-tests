@@ -5,7 +5,7 @@ from typing import List, Tuple
 from requests import Response, Session
 from scrapy import Selector
 
-from tests import URLs
+from directory_tests_shared import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.generic import Method, make_request
 from tests.functional.utils.request import check_response

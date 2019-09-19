@@ -2,7 +2,7 @@
 """Profile - Remove profile from account"""
 from requests import Response, Session
 
-from tests import URLs
+from directory_tests_shared import URLs
 from tests.functional.pages import Services
 from tests.functional.utils.generic import Method, make_request
 from tests.functional.utils.request import check_response, check_url
