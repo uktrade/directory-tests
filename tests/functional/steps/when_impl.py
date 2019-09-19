@@ -2162,15 +2162,12 @@ def profile_add_collaborator(
 
         fab.account_add_collaborator.should_be_here(response)
 
-        token = extract_csrf_middleware_token(response)
-        context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
-
         response = fab.account_add_collaborator.add_collaborator(
-            supplier.session, token, collaborator.email
+            supplier.session, collaborator.email
         )
         context.response = response
 
-        profile.find_a_buyer.should_be_here(response, user_added=True)
+        fab.account_add_collaborator.should_be_here(response, invitation_sent=True)
         collaborators = company.collaborators
         if collaborators:
             collaborators.append(collaborator_alias)
