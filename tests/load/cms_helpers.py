@@ -8,7 +8,7 @@ from requests.exceptions import (
     RequestException
 )
 
-from tests.settings import (
+from directory_tests_shared.settings import (
     DIRECTORY_CMS_API_CLIENT_API_KEY,
     DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT,
     DIRECTORY_CMS_API_CLIENT_SENDER_ID

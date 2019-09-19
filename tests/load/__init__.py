@@ -1,4 +1,4 @@
-from tests.settings import BASICAUTH_USER, BASICAUTH_PASS
+from directory_tests_shared.settings import BASICAUTH_USER, BASICAUTH_PASS
 
 USER_AGENT = {"User-Agent": "locust - load tests"}
 

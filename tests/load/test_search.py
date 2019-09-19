@@ -1,5 +1,5 @@
 from locust import HttpLocust, TaskSet, task
-from tests import settings, URLs
+from directory_tests_shared import settings, URLs
 from tests.load import USER_AGENT, basic_auth
 from tests.load.utils import rare_word
 

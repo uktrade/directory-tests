@@ -3,7 +3,7 @@ from random import choice
 
 from directory_constants.cms import INVEST, FIND_A_SUPPLIER, EXPORT_READINESS
 from locust import TaskSet, task
-from tests import settings
+from directory_tests_shared import settings
 from tests.load import USER_AGENT
 from tests.load.cms_helpers import CMSAPIAuthClientMixin
 
