@@ -286,68 +286,68 @@ class URLs(Enum):
     # New International site
     INTERNATIONAL_LANDING = InternationalUrl("")
     INTERNATIONAL_SITEMAP = InternationalUrl("sitemap.xml")
-    INTERNATIONAL_INDUSTRIES = InternationalUrl("content/industries/",
-                                                template="content/industries/{industry}/")
+    INTERNATIONAL_INDUSTRIES = InternationalUrl("content/about-uk/industries/",
+                                                template="content/about-uk/industries/{industry}/")
     INTERNATIONAL_CAPITAL_INVEST = InternationalUrl("content/capital-invest/")
     INTERNATIONAL_INDUSTRY_ADVANCED_MANUFACTURING = InternationalUrl(
-        "content/industries/advanced-manufacturing/")
-    INTERNATIONAL_INDUSTRY_AEROSPACE = InternationalUrl("content/industries/aerospace/")
-    INTERNATIONAL_INDUSTRY_AGRI_TECH = InternationalUrl("content/industries/agri-tech/")
+        "content/about-uk/industries/advanced-manufacturing/")
+    INTERNATIONAL_INDUSTRY_AEROSPACE = InternationalUrl("content/about-uk/industries/aerospace/")
+    INTERNATIONAL_INDUSTRY_AGRI_TECH = InternationalUrl("content/about-uk/industries/agri-tech/")
     INTERNATIONAL_INDUSTRY_AGRICULTURAL_TECHNOLOGY = InternationalUrl(
-        "content/industries/agricultural-technology/")
+        "content/about-uk/industries/agricultural-technology/")
     INTERNATIONAL_INDUSTRY_ASSET_MANAGEMENT = InternationalUrl(
-        "content/industries/asset-management/")
+        "content/about-uk/industries/asset-management/")
     INTERNATIONAL_INDUSTRY_AUTOMOTIVE = InternationalUrl(
-        "content/industries/automotive/")
+        "content/about-uk/industries/automotive/")
     INTERNATIONAL_INDUSTRY_AUTOMOTIVE_RESEARCH_AND_DEVELOPMENT = InternationalUrl(
-        "content/industries/automotive-research-and-development/")
+        "content/about-uk/industries/automotive-research-and-development/")
     INTERNATIONAL_INDUSTRY_AUTOMOTIVE_SUPPLY_CHAIN = InternationalUrl(
-        "content/industries/automotive-supply-chain/")
-    INTERNATIONAL_INDUSTRY_CHEMICALS = InternationalUrl("content/industries/chemicals/")
+        "content/about-uk/industries/automotive-supply-chain/")
+    INTERNATIONAL_INDUSTRY_CHEMICALS = InternationalUrl("content/about-uk/industries/chemicals/")
     INTERNATIONAL_INDUSTRY_CREATIVE_CONTENT_AND_PRODUCTION = InternationalUrl(
-        "content/industries/creative-content-and-production/")
+        "content/about-uk/industries/creative-content-and-production/")
     INTERNATIONAL_INDUSTRY_CREATIVE_INDUSTRIES = InternationalUrl(
-        "content/industries/creative-industries/")
+        "content/about-uk/industries/creative-industries/")
     INTERNATIONAL_INDUSTRY_DATA_ANALYTICS = InternationalUrl(
-        "content/industries/data-analytics/")
+        "content/about-uk/industries/data-analytics/")
     INTERNATIONAL_INDUSTRY_DIGITAL_MEDIA = InternationalUrl(
-        "content/industries/digital-media/")
+        "content/about-uk/industries/digital-media/")
     INTERNATIONAL_INDUSTRY_ELECTRICAL_NETWORKS = InternationalUrl(
-        "content/industries/electrical-networks/")
-    INTERNATIONAL_INDUSTRY_ENERGY = InternationalUrl("content/industries/energy/")
+        "content/about-uk/industries/electrical-networks/")
+    INTERNATIONAL_INDUSTRY_ENERGY = InternationalUrl("content/about-uk/industries/energy/")
     INTERNATIONAL_INDUSTRY_ENERGY_WASTE = InternationalUrl(
-        "content/industries/energy-waste/")
+        "content/about-uk/industries/energy-waste/")
     INTERNATIONAL_INDUSTRY_ENGINEERING_AND_MANUFACTURING = InternationalUrl(
-        "content/industries/engineering-and-manufacturing/")
+        "content/about-uk/industries/engineering-and-manufacturing/")
     INTERNATIONAL_INDUSTRY_FINANCIAL_SERVICES = InternationalUrl(
-        "content/industries/financial-services/")
+        "content/about-uk/industries/financial-services/")
     INTERNATIONAL_INDUSTRY_FINANCIAL_TECHNOLOGY = InternationalUrl(
-        "content/industries/financial-technology/")
+        "content/about-uk/industries/financial-technology/")
     INTERNATIONAL_INDUSTRY_FOOD_AND_DRINK = InternationalUrl(
-        "content/industries/food-and-drink/")
+        "content/about-uk/industries/food-and-drink/")
     INTERNATIONAL_INDUSTRY_FOOD_SERVICE_AND_CATERING = InternationalUrl(
-        "content/industries/food-service-and-catering/")
+        "content/about-uk/industries/food-service-and-catering/")
     INTERNATIONAL_INDUSTRY_FREE_FOODS = InternationalUrl(
-        "content/industries/free-foods/")
+        "content/about-uk/industries/free-foods/")
     INTERNATIONAL_INDUSTRY_HEALTH_AND_LIFE_SCIENCES = InternationalUrl(
-        "content/industries/health-and-life-sciences/")
+        "content/about-uk/industries/health-and-life-sciences/")
     INTERNATIONAL_INDUSTRY_MEAT_POULTRY_AND_DAIRY = InternationalUrl(
-        "content/industries/meat-poultry-and-dairy/")
+        "content/about-uk/industries/meat-poultry-and-dairy/")
     INTERNATIONAL_INDUSTRY_MEDICAL_TECHNOLOGY = InternationalUrl(
-        "content/industries/medical-technology/")
+        "content/about-uk/industries/medical-technology/")
     INTERNATIONAL_INDUSTRY_MOTORSPORT = InternationalUrl(
-        "content/industries/motorsport/")
+        "content/about-uk/industries/motorsport/")
     INTERNATIONAL_INDUSTRY_NUCLEAR_ENERGY = InternationalUrl(
-        "content/industries/nuclear-energy/")
+        "content/about-uk/industries/nuclear-energy/")
     INTERNATIONAL_INDUSTRY_OFFSHORE_WIND_ENERGY = InternationalUrl(
-        "content/industries/offshore-wind-energy/")
+        "content/about-uk/industries/offshore-wind-energy/")
     INTERNATIONAL_INDUSTRY_OIL_AND_GAS = InternationalUrl(
-        "content/industries/oil-and-gas/")
+        "content/about-uk/industries/oil-and-gas/")
     INTERNATIONAL_INDUSTRY_PHARMACEUTICAL_MANUFACTURING = InternationalUrl(
-        "content/industries/pharmaceutical-manufacturing/")
-    INTERNATIONAL_INDUSTRY_RETAIL = InternationalUrl("content/industries/retail/")
+        "content/about-uk/industries/pharmaceutical-manufacturing/")
+    INTERNATIONAL_INDUSTRY_RETAIL = InternationalUrl("content/about-uk/industries/retail/")
     INTERNATIONAL_INDUSTRY_TECHNOLOGY = InternationalUrl(
-        "content/industries/technology/")
+        "content/about-uk/industries/technology/")
     INTERNATIONAL_HEALTHCHECK_FORMS_API = InternationalUrl("healthcheck/forms-api/")
     INTERNATIONAL_HEALTHCHECK_SENTRY = InternationalUrl("healthcheck/sentry/")
     INTERNATIONAL_REGIONS_MIDLANDS = InternationalUrl(
