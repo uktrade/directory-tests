@@ -1,5 +1,3 @@
-from urllib.parse import urljoin
-
 import pytest
 from rest_framework.status import *
 
@@ -61,7 +59,7 @@ def test_invest_pages_redirect_to_international_dev(url, redirected, basic_auth)
         (URLs.INVEST_INDUSTRIES_FOOD_SERVICE_AND_CATERING.absolute, URLs.INVEST_LANDING.absolute),
         (URLs.INVEST_INDUSTRIES_FREE_FOODS.absolute, URLs.INVEST_LANDING.absolute),
         (URLs.INVEST_INDUSTRIES_MEAT_POULTRY_AND_DAIRY.absolute, URLs.INVEST_LANDING.absolute),
-        (URLs.INVEST_UK_SETUP_GUIDE.absolute, URLs.INVEST_LANDING.absolute),
+        (URLs.INVEST_LEGACY_UK_SETUP_GUIDE.absolute, URLs.INVEST_LANDING.absolute),
     ],
 )
 def test_some_legacy_invest_industry_pages_redirect_to_various_pages(url, redirected, basic_auth):
@@ -113,21 +111,20 @@ def test_non_existing_invest_pages_redirect_to_international_stage(url, redirect
     "url,redirected",
     [
         # These pages are present on Production but redirects are set to Invest Landing page
-        # (URLs.INVEST_UK_SETUP_GUIDE.absolute, URLs.INTERNATIONAL_UK_SETUP_GUIDE.absolute),
-        # (URLs.INVEST_UK_SETUP_GUIDE_ESTABLISH_A_BASE.absolute, URLs.INTERNATIONAL_UK_SETUP_GUIDE_ESTABLISH_A_BASE.absolute),
-        # (URLs.INVEST_UK_SETUP_GUIDE_HIRE_SKILLED_WORKERS.absolute, URLs.INTERNATIONAL_UK_SETUP_GUIDE_ESTABLISH_A_BASE.absolute),
-        # (URLs.INVEST_UK_SETUP_GUIDE_OPEN_BANK_ACCOUNT.absolute, URLs.INTERNATIONAL_UK_SETUP_GUIDE_OPEN_BANK_ACCOUNT.absolute),
-        # (URLs.INVEST_UK_SETUP_GUIDE_REGISTER_A_COMPANY.absolute, URLs.INTERNATIONAL_UK_SETUP_GUIDE_REGISTER_A_COMPANY.absolute),
-        # (URLs.INVEST_UK_SETUP_GUIDE_UK_TAX.absolute, URLs.INTERNATIONAL_UK_SETUP_GUIDE_UK_TAX.absolute),
-        # (URLs.INVEST_UK_SETUP_GUIDE_UK_VISAS.absolute, URLs.INTERNATIONAL_UK_SETUP_GUIDE_UK_VISAS.absolute),
+        # (URLs.INVEST_LEGACY_UK_SETUP_GUIDE.absolute, URLs.INTERNATIONAL_UK_SETUP_GUIDE.absolute),
+        # (URLs.INVEST_LEGACY_UK_SETUP_GUIDE_ESTABLISH_A_BASE.absolute, URLs.INTERNATIONAL_UK_SETUP_GUIDE_ESTABLISH_A_BASE.absolute),
+        # (URLs.INVEST_LEGACY_UK_SETUP_GUIDE_HIRE_SKILLED_WORKERS.absolute, URLs.INTERNATIONAL_UK_SETUP_GUIDE_ESTABLISH_A_BASE.absolute),
+        # (URLs.INVEST_LEGACY_UK_SETUP_GUIDE_OPEN_BANK_ACCOUNT.absolute, URLs.INTERNATIONAL_UK_SETUP_GUIDE_OPEN_BANK_ACCOUNT.absolute),
+        # (URLs.INVEST_LEGACY_UK_SETUP_GUIDE_REGISTER_A_COMPANY.absolute, URLs.INTERNATIONAL_UK_SETUP_GUIDE_REGISTER_A_COMPANY.absolute),
+        # (URLs.INVEST_LEGACY_UK_SETUP_GUIDE_UK_TAX.absolute, URLs.INTERNATIONAL_UK_SETUP_GUIDE_UK_TAX.absolute),
+        # (URLs.INVEST_LEGACY_UK_SETUP_GUIDE_UK_VISAS.absolute, URLs.INTERNATIONAL_UK_SETUP_GUIDE_UK_VISAS.absolute),
 
-        (URLs.INVEST_REGIONS_LONDON.absolute, URLs.INTERNATIONAL_REGIONS_LONDON.absolute),
-        (URLs.INVEST_REGIONS_MIDLANDS.absolute, URLs.INTERNATIONAL_REGIONS_MIDLANDS.absolute),
-        (URLs.INVEST_REGIONS_NORTH_ENGLAND.absolute, URLs.INTERNATIONAL_REGIONS_NORTH_ENGLAND.absolute),
-        (URLs.INVEST_REGIONS_NORTHERN_IRELAND.absolute, URLs.INTERNATIONAL_REGIONS_NORTHERN_IRELAND.absolute),
-        (URLs.INVEST_REGIONS_SCOTLAND.absolute, URLs.INTERNATIONAL_REGIONS_SCOTLAND.absolute),
-        (URLs.INVEST_REGIONS_SOUTH_ENGLAND.absolute, URLs.INTERNATIONAL_REGIONS_SOUTH_ENGLAND.absolute),
-        (URLs.INVEST_REGIONS_WALES.absolute, URLs.INTERNATIONAL_REGIONS_WALES.absolute),
+        (URLs.INVEST_LEGACY_REGIONS_MIDLANDS.absolute, URLs.INTERNATIONAL_REGIONS_MIDLANDS.absolute),
+        (URLs.INVEST_LEGACY_REGIONS_NORTH_ENGLAND.absolute, URLs.INTERNATIONAL_REGIONS_NORTH_ENGLAND.absolute),
+        (URLs.INVEST_LEGACY_REGIONS_NORTHERN_IRELAND.absolute, URLs.INTERNATIONAL_REGIONS_NORTHERN_IRELAND.absolute),
+        (URLs.INVEST_LEGACY_REGIONS_SCOTLAND.absolute, URLs.INVEST_REGIONS_SCOTLAND.absolute),
+        (URLs.INVEST_LEGACY_REGIONS_SOUTH_ENGLAND.absolute, URLs.INTERNATIONAL_REGIONS_SOUTH_ENGLAND.absolute),
+        (URLs.INVEST_LEGACY_REGIONS_WALES.absolute, URLs.INTERNATIONAL_REGIONS_WALES.absolute),
 
         (URLs.INVEST_INDUSTRIES.absolute, URLs.INTERNATIONAL_INDUSTRIES.absolute),
         # (URLs.INVEST_INDUSTRIES_ADVANCED_MANUFACTURING.absolute, URLs.INTERNATIONAL_INDUSTRY_ADVANCED_MANUFACTURING.absolute),
@@ -164,3 +161,21 @@ def test_invest_pages_redirect_to_international_prod(url, redirected, basic_auth
 )
 def test_invest_pages(url, basic_auth):
     get_and_assert(url=url, status_code=HTTP_200_OK, auth=basic_auth)
+
+
+@pytest.mark.dev
+@pytest.mark.parametrize(
+    "url",
+    [
+        URLs.INVEST_REGIONS_SCOTLAND.absolute,
+        URLs.INVEST_UK_SETUP_GUIDE.absolute,
+        URLs.INVEST_UK_SETUP_GUIDE_ESTABLISH_A_BASE.absolute,
+        URLs.INVEST_UK_SETUP_GUIDE_ESTABLISH_A_BASE.absolute,
+        URLs.INVEST_UK_SETUP_GUIDE_OPEN_BANK_ACCOUNT.absolute,
+        URLs.INVEST_UK_SETUP_GUIDE_REGISTER_A_COMPANY.absolute,
+        URLs.INVEST_UK_SETUP_GUIDE_UK_TAX.absolute,
+        URLs.INVEST_UK_SETUP_GUIDE_UK_VISAS.absolute,
+    ],
+)
+def test_in_region_pages_and_uk_setup_guide_pages(url, basic_auth):
+    get_and_assert(url=url, status_code=HTTP_200_OK, auth=basic_auth, allow_redirects=True)
