@@ -12,11 +12,10 @@ NAME = "Add collaborator"
 TYPE = "form"
 URL = URLs.PROFILE_ACCOUNT_ADD_COLLABORATOR.absolute
 EXPECTED_STRINGS = [
-    "Add an editor to the business profile",
-    "Enter the new editor’s email address",
-    "Confirm",
-    "Cancel",
-    "Is there anything wrong with this page?",
+    "Invite collaborators and select the role",
+    "Email address of collaborator",
+    "Send invite",
+    "Select role",
 ]
 
 
