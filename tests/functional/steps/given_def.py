@@ -195,10 +195,11 @@ def given_actor_with_or_without_sso_account(
         context, actor_aliases, has_or_does_not_have)
 
 
-@given('"{supplier_alias}" added "{collaborator_aliases}" as a collaborator')
+@given('"{supplier_alias}" added "{collaborator_aliases}" as an "{role}" collaborator')
+@given('"{supplier_alias}" added "{collaborator_aliases}" as a "{role}" collaborator')
 def given_supplier_added_a_collaborator(
-        context, supplier_alias, collaborator_aliases):
-    profile_add_collaborator(context, supplier_alias, collaborator_aliases)
+        context, supplier_alias, collaborator_aliases, role):
+    profile_add_collaborator(context, supplier_alias, collaborator_aliases, role)
 
 
 @given('"{supplier_alias}" has received an email with a request to confirm that he\'s been added to company "{company_alias}" Find a Buyer profile')

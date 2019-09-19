@@ -2148,7 +2148,7 @@ def go_to_pages(context: Context, actor_alias: str, table: Table):
 
 
 def profile_add_collaborator(
-    context: Context, supplier_alias: str, collaborator_aliases: str
+    context: Context, supplier_alias: str, collaborator_aliases: str, role: str
 ):
 
     aliases = [alias.strip() for alias in collaborator_aliases.split(",")]
@@ -2163,7 +2163,7 @@ def profile_add_collaborator(
         fab.account_add_collaborator.should_be_here(response)
 
         response = fab.account_add_collaborator.add_collaborator(
-            supplier.session, collaborator.email
+            supplier.session, collaborator.email, role
         )
         context.response = response
 

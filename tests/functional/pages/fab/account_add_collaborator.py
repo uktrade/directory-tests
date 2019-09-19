@@ -45,8 +45,11 @@ def go_to(session: Session) -> Response:
     return make_request(Method.GET, URL, session=session, headers=headers)
 
 
-def add_collaborator(session: Session, email: str) -> Response:
-    data = {"email_address": email}
+def add_collaborator(session: Session, email: str, role: str) -> Response:
+    data = {
+        "collaborator_email": email,
+        "role": role.upper(),
+    }
     headers = {"Referer": URL}
     return make_request(
         Method.POST, URL, session=session, data=data, headers=headers

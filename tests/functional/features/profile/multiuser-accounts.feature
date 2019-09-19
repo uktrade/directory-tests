@@ -14,7 +14,7 @@ Feature: Multi-user accounts
     Given "Peter Alder" has created "<a>" profile for randomly selected company "Y"
     And "Annette Geissinger" "<has or does not have>" an SSO/great.gov.uk account
 
-    When "Peter Alder" decides to add "Annette Geissinger" as a collaborator
+    When "Peter Alder" decides to add "Annette Geissinger" as an "editor" collaborator
 
     Then "Annette Geissinger" should receive an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
 
@@ -35,7 +35,7 @@ Feature: Multi-user accounts
     Given "Peter Alder" has created verified and published FAS business profile for randomly selected company "Y"
     And "Annette Geissinger" has a verified standalone SSO/great.gov.uk account
     And "Annette Geissinger" is signed in to SSO/great.gov.uk account
-    And "Peter Alder" added "Annette Geissinger" as a collaborator
+    And "Peter Alder" added "Annette Geissinger" as an "editor" collaborator
     And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
 
     When "Annette Geissinger" confirms that she wants to be added to the company "Y" Find a Buyer profile
@@ -51,7 +51,7 @@ Feature: Multi-user accounts
   Scenario: Add "1" collaborator without an SSO/great.gov.uk account to a verified company
     Given "Peter Alder" has created verified and published FAS business profile for randomly selected company "Y"
     And "Annette Geissinger" "does not have" an SSO/great.gov.uk account
-    And "Peter Alder" added "Annette Geissinger" as a collaborator
+    And "Peter Alder" added "Annette Geissinger" as an "editor" collaborator
     And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
 
     When "Annette Geissinger" opens the invitation from company "Y", creates a SSO/great.gov.uk account and confirms that he wants to be added to the FAB profile
@@ -67,7 +67,7 @@ Feature: Multi-user accounts
   Scenario: Add "1" collaborator with an SSO/great.gov.uk account to a verified company
     Given "Peter Alder" has created verified and published FAS business profile for randomly selected company "Y"
     And "Annette Geissinger" "has" an SSO/great.gov.uk account
-    And "Peter Alder" added "Annette Geissinger" as a collaborator
+    And "Peter Alder" added "Annette Geissinger" as an "editor" collaborator
     And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
     And "Annette Geissinger" decides to open the invitation from company "Y"
     And "Annette Geissinger" should be on "FAB - Accept invitation" page
@@ -86,7 +86,7 @@ Feature: Multi-user accounts
     Given "Peter Alder" has created "an unverified" profile for randomly selected company "Y"
     And "Annette Geissinger, Betty Jones, James Weir" "don't have" an SSO/great.gov.uk account
 
-    When "Peter Alder" decides to add "Annette Geissinger, Betty Jones, James Weir" as a collaborator
+    When "Peter Alder" decides to add "Annette Geissinger, Betty Jones, James Weir" as an "editor" collaborator
 
     Then "Annette Geissinger, Betty Jones, James Weir" should receive an email with a request to confirm that they've been added to company "Y" Find a Buyer profile
 
@@ -99,7 +99,7 @@ Feature: Multi-user accounts
   Scenario: Add "3" collaborators with an SSO/great.gov.uk account to a verified company
     Given "Peter Alder" has created "an unverified" profile for randomly selected company "Y"
     And "Annette Geissinger, Betty Jones, James Weir" "have" an SSO/great.gov.uk account
-    And "Peter Alder" added "Annette Geissinger, Betty Jones, James Weir" as a collaborator
+    And "Peter Alder" added "Annette Geissinger, Betty Jones, James Weir" as an "editor" collaborator
     And "Annette Geissinger, Betty Jones, James Weir" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
 
     When "Annette Geissinger" confirms that she wants to be added to the company "Y" Find a Buyer profile
@@ -137,7 +137,7 @@ Feature: Multi-user accounts
   Scenario: Collaborators should not be able to add/remove other collaborators or transfer account ownership
     Given "Peter Alder" has created "an unverified" profile for randomly selected company "Y"
     And "Annette Geissinger" "has" an SSO/great.gov.uk account
-    And "Peter Alder" added "Annette Geissinger" as a collaborator
+    And "Peter Alder" added "Annette Geissinger" as an "editor" collaborator
     And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
     And "Annette Geissinger" confirmed that she wants to be added to the company "Y" Find a Buyer profile
 
@@ -204,7 +204,7 @@ Feature: Multi-user accounts
   Scenario: Account owner should be able to remove one account collaborator
     Given "Peter Alder" has created "an unverified" profile for randomly selected company "Y"
     And "Annette Geissinger" "has" an SSO/great.gov.uk account
-    And "Peter Alder" added "Annette Geissinger" as a collaborator
+    And "Peter Alder" added "Annette Geissinger" as an "editor" collaborator
     And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
     And "Annette Geissinger" confirmed that she wants to be added to the company "Y" Find a Buyer profile
 
@@ -223,7 +223,7 @@ Feature: Multi-user accounts
   Scenario: Account owner should be able to remove multiple account collaborators
     Given "Peter Alder" has created "an unverified" profile for randomly selected company "Y"
     And "Annette Geissinger, Betty Jones, James Weir" "have" an SSO/great.gov.uk account
-    And "Peter Alder" added "Annette Geissinger, Betty Jones, James Weir" as a collaborator
+    And "Peter Alder" added "Annette Geissinger, Betty Jones, James Weir" as an "editor" collaborator
     And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
     And "Betty Jones" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
     And "James Weir" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
@@ -250,7 +250,7 @@ Feature: Multi-user accounts
   Scenario: Collaborators should be able to set the company description and verify company profile with verification code
     Given "Peter Alder" has created "an unverified" profile for randomly selected company "Y"
     And "Annette Geissinger" "has" an SSO/great.gov.uk account
-    And "Peter Alder" added "Annette Geissinger" as a collaborator
+    And "Peter Alder" added "Annette Geissinger" as an "editor" collaborator
     And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
     And "Annette Geissinger" confirmed that she wants to be added to the company "Y" Find a Buyer profile
     And "Annette Geissinger" set the company description
@@ -270,7 +270,7 @@ Feature: Multi-user accounts
   Scenario: Account collaborators should be able to update company's details
     Given "Peter Alder" has created "a verified" profile for randomly selected company "Y"
     And "Annette Geissinger" "has" an SSO/great.gov.uk account
-    And "Peter Alder" added "Annette Geissinger" as a collaborator
+    And "Peter Alder" added "Annette Geissinger" as an "editor" collaborator
     And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
     And "Annette Geissinger" confirmed that she wants to be added to the company "Y" Find a Buyer profile
 
@@ -308,7 +308,7 @@ Feature: Multi-user accounts
   Scenario Outline: Account collaborators should be able to upload company's logo
     Given "Peter Alder" has created "a verified" profile for randomly selected company "Y"
     And "Annette Geissinger" "has" an SSO/great.gov.uk account
-    And "Peter Alder" added "Annette Geissinger" as a collaborator
+    And "Peter Alder" added "Annette Geissinger" as an "editor" collaborator
     And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
     And "Annette Geissinger" confirmed that she wants to be added to the company "Y" Find a Buyer profile
 
@@ -334,7 +334,7 @@ Feature: Multi-user accounts
   Scenario: Account collaborators should be able to add a case study
     Given "Peter Alder" has created "a verified" profile for randomly selected company "Y"
     And "Annette Geissinger" "has" an SSO/great.gov.uk account
-    And "Peter Alder" added "Annette Geissinger" as a collaborator
+    And "Peter Alder" added "Annette Geissinger" as an "editor" collaborator
     And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
     And "Annette Geissinger" confirmed that she wants to be added to the company "Y" Find a Buyer profile
 
@@ -381,12 +381,12 @@ Feature: Multi-user accounts
   @multi-user
   @edge-case
   @fake-sso-email-verification
-  Scenario: New account owner should be able to add the original owner as a collaborator to the company profile
+  Scenario: New account owner should be able to add the original owner as an "editor" collaborator to the company profile
     Given "Peter Alder" has created "an unverified" profile for randomly selected company "Y"
     And "Annette Geissinger" "has" an SSO/great.gov.uk account
     And "Peter Alder" transferred the ownership of company's "Y" Find a Buyer profile to "Annette Geissinger"
 
-    When "Annette Geissinger" decides to add "Peter Alder" as a collaborator
+    When "Annette Geissinger" decides to add "Peter Alder" as an "editor" collaborator
     When "Peter Alder" confirms that he wants to be added to the company "Y" Find a Buyer profile
 
     Then "Peter Alder" should see "Profile - edit company profile" page
@@ -405,7 +405,7 @@ Feature: Multi-user accounts
     Given "Peter Alder" has created "an unverified" profile for randomly selected company "Alpha"
     And "Annette Geissinger" has created "an unverified" profile for randomly selected company "Omega"
 
-    When "Peter Alder" decides to add "Annette Geissinger" as a collaborator
+    When "Peter Alder" decides to add "Annette Geissinger" as an "editor" collaborator
 
     Then "Peter Alder" should see "<error>" message
 
