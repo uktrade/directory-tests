@@ -18,9 +18,21 @@ EXPECTED_STRINGS = [
     "Select role",
 ]
 
+EXPECTED_STRINGS_INVITATION_SENT = [
+    "We have sent a confirmation to",
+    "with an invitation to become a collaborator",
+]
 
-def should_be_here(response: Response):
+
+def should_be_here(response: Response, *, invitation_sent: bool = False):
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
+
+    expected_strings = None
+    if invitation_sent:
+        expected_strings = EXPECTED_STRINGS_INVITATION_SENT
+
+    if expected_strings:
+        check_response(response, 200, body_contains=expected_strings)
 
 
 def go_to(session: Session) -> Response:
@@ -33,8 +45,8 @@ def go_to(session: Session) -> Response:
     return make_request(Method.GET, URL, session=session, headers=headers)
 
 
-def add_collaborator(session: Session, token: str, email: str) -> Response:
-    data = {"csrfmiddlewaretoken": token, "email_address": email}
+def add_collaborator(session: Session, email: str) -> Response:
+    data = {"email_address": email}
     headers = {"Referer": URL}
     return make_request(
         Method.POST, URL, session=session, data=data, headers=headers
