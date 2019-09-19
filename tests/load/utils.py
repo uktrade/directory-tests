@@ -1,6 +1,9 @@
 import os
 from random import choice, randint
 
+
+USER_AGENT = {"User-Agent": "locust - load tests"}
+
 FILES_DIR = os.path.abspath(os.path.join("tests", "functional", "files"))
 
 with open(os.path.join(FILES_DIR, "rare.txt"), "r") as words_file:

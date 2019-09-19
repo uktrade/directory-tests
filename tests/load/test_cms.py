@@ -1,12 +1,12 @@
 from collections import namedtuple
 from random import choice
 
-from directory_constants.cms import INVEST, FIND_A_SUPPLIER, EXPORT_READINESS
-from locust import TaskSet, task
-from directory_tests_shared import settings
-from tests.load import USER_AGENT
-from tests.load.cms_helpers import CMSAPIAuthClientMixin
+from directory_constants.cms import EXPORT_READINESS, FIND_A_SUPPLIER, INVEST
 
+from directory_tests_shared import settings
+from locust import TaskSet, task
+from tests.load.cms_helpers import CMSAPIAuthClientMixin
+from tests.load.utils import USER_AGENT
 
 UA = namedtuple("UA", "headers")
 user_agent = UA(headers=USER_AGENT)

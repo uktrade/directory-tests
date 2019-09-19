@@ -1,7 +1,7 @@
+from directory_tests_shared import URLs, settings
+from directory_tests_shared.utils import basic_auth
 from locust import HttpLocust, TaskSet, task
-from directory_tests_shared import settings, URLs
-from tests.load import USER_AGENT, basic_auth
-from tests.load.utils import rare_word
+from tests.load.utils import USER_AGENT, rare_word
 
 
 class SearchTasks(TaskSet):

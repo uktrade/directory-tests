@@ -1,9 +1,9 @@
 import random
 
+from directory_tests_shared import URLs, settings
+from directory_tests_shared.utils import basic_auth
 from locust import HttpLocust, TaskSet, task
-from directory_tests_shared import settings, URLs
-from tests.load import USER_AGENT, basic_auth
-from tests.load.utils import random_company_number, rare_word
+from tests.load.utils import USER_AGENT, random_company_number, rare_word
 
 
 class ProfileTasks(TaskSet):
@@ -28,4 +28,3 @@ class Profile(HttpLocust):
     stop_timeout = settings.LOCUST_TIMEOUT
     min_wait = settings.LOCUST_MIN_WAIT
     max_wait = settings.LOCUST_MAX_WAIT
-

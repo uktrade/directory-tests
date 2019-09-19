@@ -1,19 +1,18 @@
 import random
 
-from locust import HttpLocust, TaskSet, task
-
 from directory_constants.expertise import (
+    BUSINESS_SUPPORT,
     FINANCIAL,
-    MANAGEMENT_CONSULTING,
     HUMAN_RESOURCES,
     LEGAL,
+    MANAGEMENT_CONSULTING,
     PUBLICITY,
-    BUSINESS_SUPPORT,
 )
 
-from directory_tests_shared import settings, URLs
-from tests.load import USER_AGENT, basic_auth
-from tests.load.utils import rare_word
+from directory_tests_shared import URLs, settings
+from directory_tests_shared.utils import basic_auth
+from locust import HttpLocust, TaskSet, task
+from tests.load.utils import USER_AGENT, rare_word
 
 
 class ISDTasks(TaskSet):
