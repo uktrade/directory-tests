@@ -42,6 +42,7 @@ Feature: INTL - Industries page
       | Aerospace                           |
       | Education                           |
       | Engineering and manufacturing       |
+      | Financial services                  |
       | Healthcare and Life Sciences        |
       | Legal services                      |
       | Real Estate                         |
