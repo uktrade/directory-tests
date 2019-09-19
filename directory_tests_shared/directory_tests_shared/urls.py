@@ -351,33 +351,14 @@ class URLs(Enum):
     INTERNATIONAL_HEALTHCHECK_FORMS_API = InternationalUrl("healthcheck/forms-api/")
     INTERNATIONAL_HEALTHCHECK_SENTRY = InternationalUrl("healthcheck/sentry/")
     INTERNATIONAL_REGIONS_MIDLANDS = InternationalUrl(
-        "content/invest/uk-regions/midlands/")
+        "content/about-uk/regions/midlands/")
     INTERNATIONAL_REGIONS_NORTHERN_IRELAND = InternationalUrl(
-        "content/invest/uk-regions/northern-ireland/")
+        "content/about-uk/regions/northern-ireland/")
     INTERNATIONAL_REGIONS_SOUTH_ENGLAND = InternationalUrl(
-        "content/invest/uk-regions/south-england/")
+        "content/about-uk/regions/south-england/")
     INTERNATIONAL_REGIONS_NORTH_ENGLAND = InternationalUrl(
-        "content/invest/uk-regions/north-england/")
-    INTERNATIONAL_REGIONS_LONDON = InternationalUrl("content/invest/uk-regions/london/")
-    INTERNATIONAL_REGIONS_WALES = InternationalUrl("content/invest/uk-regions/wales/")
-    INTERNATIONAL_REGIONS_SCOTLAND = InternationalUrl(
-        "content/invest/uk-regions/scotland/")
-    INTERNATIONAL_UK_SETUP_GUIDE = InternationalUrl("content/how-to-setup-in-the-uk/",
-                                                    template="content/how-to-setup-in-the-uk/{guide}/")
-    INTERNATIONAL_UK_SETUP_GUIDE_UK_VISAS = InternationalUrl(
-        "content/how-to-setup-in-the-uk/uk-visas-and-migration/")
-    INTERNATIONAL_UK_SETUP_GUIDE_ACCESS_FINANCE = InternationalUrl(
-        "content/how-to-setup-in-the-uk/access-finance-in-the-uk/")
-    INTERNATIONAL_UK_SETUP_GUIDE_ESTABLISH_A_BASE = InternationalUrl(
-        "content/how-to-setup-in-the-uk/establish-a-base-for-business-in-the-uk/")
-    INTERNATIONAL_UK_SETUP_GUIDE_HIRE_SKILLED_WORKERS = InternationalUrl(
-        "content/how-to-setup-in-the-uk/hire-skilled-workers-for-your-uk-operations/")
-    INTERNATIONAL_UK_SETUP_GUIDE_OPEN_BANK_ACCOUNT = InternationalUrl(
-        "content/how-to-setup-in-the-uk/open-a-uk-business-bank-account/")
-    INTERNATIONAL_UK_SETUP_GUIDE_REGISTER_A_COMPANY = InternationalUrl(
-        "content/how-to-setup-in-the-uk/register-a-company-in-the-uk/")
-    INTERNATIONAL_UK_SETUP_GUIDE_UK_TAX = InternationalUrl(
-        "content/how-to-setup-in-the-uk/uk-tax-and-incentives/")
+        "content/about-uk/regions/north-england/")
+    INTERNATIONAL_REGIONS_WALES = InternationalUrl("content/about-uk/regions/wales/")
 
     # Invest site
     INVEST_LANDING = InvestUrl("")
@@ -394,25 +375,47 @@ class URLs(Enum):
         "content/invest/high-potential-opportunities/lightweight-structures/")
 
     INVEST_INDUSTRIES = LegacyInvestUrl("industries/")
-    INVEST_UK_SETUP_GUIDE = LegacyInvestUrl("uk-setup-guide/")
-    INVEST_UK_SETUP_GUIDE_UK_VISAS = LegacyInvestUrl("uk-setup-guide/apply-uk-visa/")
-    INVEST_UK_SETUP_GUIDE_ESTABLISH_A_BASE = LegacyInvestUrl(
+    INVEST_REGIONS_SCOTLAND = InternationalUrl(
+        "content/invest/uk-regions/scotland/")
+    INVEST_LEGACY_UK_SETUP_GUIDE = LegacyInvestUrl("uk-setup-guide/")
+    INVEST_LEGACY_UK_SETUP_GUIDE_UK_VISAS = LegacyInvestUrl("uk-setup-guide/apply-uk-visa/")
+    INVEST_LEGACY_UK_SETUP_GUIDE_ESTABLISH_A_BASE = LegacyInvestUrl(
         "uk-setup-guide/establish-base-business-uk/")
-    INVEST_UK_SETUP_GUIDE_HIRE_SKILLED_WORKERS = LegacyInvestUrl(
+    INVEST_LEGACY_UK_SETUP_GUIDE_HIRE_SKILLED_WORKERS = LegacyInvestUrl(
         "uk-setup-guide/hire-skilled-workers-your-uk-operations/")
-    INVEST_UK_SETUP_GUIDE_OPEN_BANK_ACCOUNT = LegacyInvestUrl(
+    INVEST_LEGACY_UK_SETUP_GUIDE_OPEN_BANK_ACCOUNT = LegacyInvestUrl(
         "uk-setup-guide/open-uk-business-bank-account/")
-    INVEST_UK_SETUP_GUIDE_REGISTER_A_COMPANY = LegacyInvestUrl(
+    INVEST_LEGACY_UK_SETUP_GUIDE_REGISTER_A_COMPANY = LegacyInvestUrl(
         "uk-setup-guide/setup-your-business-uk/")
-    INVEST_UK_SETUP_GUIDE_UK_TAX = LegacyInvestUrl(
+    INVEST_LEGACY_UK_SETUP_GUIDE_UK_TAX = LegacyInvestUrl(
         "uk-setup-guide/understand-uk-tax-and-incentives/")
-    INVEST_REGIONS_MIDLANDS = LegacyInvestUrl("uk-regions/midlands/")
-    INVEST_REGIONS_NORTHERN_IRELAND = LegacyInvestUrl("uk-regions/northern-ireland/")
-    INVEST_REGIONS_SOUTH_ENGLAND = LegacyInvestUrl("uk-regions/south-england/")
-    INVEST_REGIONS_NORTH_ENGLAND = LegacyInvestUrl("uk-regions/north-england/")
-    INVEST_REGIONS_LONDON = LegacyInvestUrl("uk-regions/london/")
-    INVEST_REGIONS_WALES = LegacyInvestUrl("uk-regions/wales/")
-    INVEST_REGIONS_SCOTLAND = LegacyInvestUrl("uk-regions/scotland/")
+
+    INVEST_UK_SETUP_GUIDE = InternationalUrl(
+        "content/invest/how-to-setup-in-the-uk/",
+        template="content/invest/how-to-setup-in-the-uk/{guide}/")
+    INVEST_UK_SETUP_GUIDE_UK_VISAS = InternationalUrl(
+        "content/invest/how-to-setup-in-the-uk/uk-visas-and-migration/")
+    INVEST_UK_SETUP_GUIDE_ACCESS_FINANCE = InternationalUrl(
+        "content/invest/how-to-setup-in-the-uk/access-finance-in-the-uk/")
+    INVEST_UK_SETUP_GUIDE_ESTABLISH_A_BASE = InternationalUrl(
+        "content/invest/how-to-setup-in-the-uk/establish-a-base-for-business-in-the-uk/")
+    INVEST_UK_SETUP_GUIDE_HIRE_SKILLED_WORKERS = InternationalUrl(
+        "content/invest/how-to-setup-in-the-uk/hire-skilled-workers-for-your-uk-operations/")
+    INVEST_UK_SETUP_GUIDE_OPEN_BANK_ACCOUNT = InternationalUrl(
+        "content/invest/how-to-setup-in-the-uk/open-a-uk-business-bank-account/")
+    INVEST_UK_SETUP_GUIDE_REGISTER_A_COMPANY = InternationalUrl(
+        "content/invest/how-to-setup-in-the-uk/register-a-company-in-the-uk/")
+    INVEST_UK_SETUP_GUIDE_UK_TAX = InternationalUrl(
+        "content/invest/how-to-setup-in-the-uk/uk-tax-and-incentives/")
+
+    INVEST_LEGACY_REGIONS_MIDLANDS = LegacyInvestUrl("uk-regions/midlands/")
+    INVEST_LEGACY_REGIONS_NORTHERN_IRELAND = LegacyInvestUrl("uk-regions/northern-ireland/")
+    INVEST_LEGACY_REGIONS_SOUTH_ENGLAND = LegacyInvestUrl("uk-regions/south-england/")
+    INVEST_LEGACY_REGIONS_NORTH_ENGLAND = LegacyInvestUrl("uk-regions/north-england/")
+    INVEST_LEGACY_REGIONS_LONDON = LegacyInvestUrl("uk-regions/london/")
+    INVEST_LEGACY_REGIONS_WALES = LegacyInvestUrl("uk-regions/wales/")
+    INVEST_LEGACY_REGIONS_SCOTLAND = LegacyInvestUrl("uk-regions/scotland/")
+
     INVEST_INDUSTRIES_ADVANCED_MANUFACTURING = LegacyInvestUrl(
         "industries/advanced-manufacturing/")
     INVEST_INDUSTRIES_AEROSPACE = LegacyInvestUrl("industries/aerospace/")
