@@ -19,8 +19,8 @@ EXPECTED_STRINGS = [
 ]
 
 EXPECTED_STRINGS_INVITATION_SENT = [
-    "We have sent a confirmation to",
-    "with an invitation to become a collaborator",
+    "Collaborators invited",
+    "User accounts linked to the business profile",
 ]
 
 
