@@ -1,7 +1,7 @@
 from random import choice
-from rest_framework.status import HTTP_200_OK, HTTP_302_FOUND
+from rest_framework.status import HTTP_200_OK
 
-from tests import URLs, settings
+from directory_tests_shared import URLs, settings
 from tests.smoke.cms_api_helpers import get_and_assert
 from tests.load.utils import rare_word
 

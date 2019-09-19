@@ -4,7 +4,7 @@ from rest_framework.status import *
 
 from directory_sso_api_client.client import sso_api_client
 
-from tests import users
+from directory_tests_shared.settings import USERS
 from tests.smoke.cms_api_helpers import status_error
 
 
@@ -42,7 +42,7 @@ def test_sso_authentication_using_api_client_and_stage_cookie(logged_in_session)
 
 @pytest.mark.skip(reason="see TT-856")
 def test_get_oauth2_user_profile():
-    token = users["verified"]["token"]
+    token = USERS["verified"]["token"]
     response = sso_api_client.user.get_oauth2_user_profile(bearer_token=token)
     assert response.status_code == HTTP_200_OK, status_error(
         HTTP_200_OK, response
@@ -67,7 +67,7 @@ def test_get_oauth2_user_profile_w_invalid_token(token):
 def test_check_password_using_dev_cookie(logged_in_session):
     user_session_id = logged_in_session.cookies.get("directory_sso_dev_session")
     assert user_session_id
-    password = users["verified"]["password"]
+    password = USERS["verified"]["password"]
     response = sso_api_client.user.check_password(user_session_id, password)
     assert response.status_code == HTTP_200_OK, status_error(
         HTTP_200_OK, response
@@ -79,7 +79,7 @@ def test_check_password_using_dev_cookie(logged_in_session):
 def test_check_password_using_stage_cookie(logged_in_session):
     user_session_id = logged_in_session.cookies.get("sso_stage_session")
     assert user_session_id
-    password = users["verified"]["password"]
+    password = USERS["verified"]["password"]
     response = sso_api_client.user.check_password(user_session_id, password)
     assert response.status_code == HTTP_200_OK, status_error(
         HTTP_200_OK, response

@@ -2,7 +2,8 @@ import pytest
 from directory_cms_client.client import cms_api_client
 from rest_framework.status import HTTP_200_OK, HTTP_404_NOT_FOUND
 
-from tests import URLs, DIRECTORY_CMS_API_CLIENT_BASE_URL
+from directory_tests_shared import URLs
+from directory_tests_shared.settings import DIRECTORY_CMS_API_CLIENT_BASE_URL
 from tests.smoke.cms_api_helpers import (
     find_draft_urls,
     find_published_translated_urls,

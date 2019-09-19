@@ -5,8 +5,8 @@ from directory_constants import cms as SERVICE_NAMES
 from requests.auth import HTTPBasicAuth
 from retrying import retry
 
-from tests import users, URLs
-from tests.settings import (
+from directory_tests_shared import URLs
+from directory_tests_shared.settings import (
     BASICAUTH_USER,
     BASICAUTH_PASS,
     DIRECTORY_CMS_API_CLIENT_API_KEY,
@@ -16,6 +16,7 @@ from tests.settings import (
     DIRECTORY_SSO_API_CLIENT_BASE_URL,
     DIRECTORY_SSO_API_CLIENT_SENDER_ID,
     DIRECTORY_CMS_API_CLIENT_CACHE_EXPIRE_SECONDS,
+    USERS,
 )
 
 
@@ -76,7 +77,7 @@ def logged_in_session():
     response = session.get(url=login_url, auth=(BASICAUTH_USER, BASICAUTH_PASS))
     assert response.status_code == 200, f"Expected 200 but got {response.status_code} from {response.url}"
     csrfmiddlewaretoken = extract_csrf_middleware_token(response.content.decode("UTF-8"))
-    user = users["verified"]
+    user = USERS["verified"]
     data = {
         "login": user["username"],
         "password": user["password"],

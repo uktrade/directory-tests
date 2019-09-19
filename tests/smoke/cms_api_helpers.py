@@ -19,8 +19,8 @@ from rest_framework.status import (
 )
 from retrying import retry
 
-from tests import URLs
-from tests.settings import (
+from directory_tests_shared import URLs
+from directory_tests_shared.settings import (
     DIRECTORY_CMS_API_CLIENT_API_KEY,
     DIRECTORY_CMS_API_CLIENT_BASE_URL,
     DIRECTORY_CMS_API_CLIENT_SENDER_ID,

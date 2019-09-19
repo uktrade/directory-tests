@@ -6,7 +6,8 @@ from rest_framework.status import (
 )
 from retrying import retry
 
-from tests import is_500, URLs
+from directory_tests_shared import URLs
+from directory_tests_shared.utils import is_500
 from tests.smoke.cms_api_helpers import get_and_assert, status_error
 
 

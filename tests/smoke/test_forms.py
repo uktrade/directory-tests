@@ -3,7 +3,7 @@ from rest_framework.status import *
 
 from directory_client_core.base import AbstractAPIClient
 
-from tests import settings, URLs
+from directory_tests_shared import settings, URLs
 from tests.smoke.cms_api_helpers import status_error
 
 

@@ -3,8 +3,8 @@ from rest_framework.status import HTTP_200_OK
 
 from bs4 import BeautifulSoup
 
-from tests import URLs
-from tests.settings import BASICAUTH_USER, BASICAUTH_PASS
+from directory_tests_shared import URLs
+from directory_tests_shared.settings import BASICAUTH_USER, BASICAUTH_PASS
 from tests.smoke.cms_api_helpers import get_and_assert
 
 

@@ -9,7 +9,8 @@ from rest_framework.status import (
     HTTP_404_NOT_FOUND,
 )
 
-from tests import companies, URLs
+from directory_tests_shared import URLs
+from directory_tests_shared.settings import COMPANIES
 from tests.smoke.cms_api_helpers import get_and_assert, status_error
 
 
@@ -18,7 +19,7 @@ from tests.smoke.cms_api_helpers import get_and_assert, status_error
     "tickets: ED-3188, ED-3782"
 )
 def test_landing_page_post_company_not_active(basic_auth):
-    data = {"company_number": companies["not_active"]}
+    data = {"company_number": COMPANIES["not_active"]}
     response = requests.post(
         URLs.FAB_LANDING.absolute,
         data=data,
