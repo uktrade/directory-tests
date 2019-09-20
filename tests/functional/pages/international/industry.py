@@ -5,11 +5,11 @@ from urllib.parse import urljoin
 
 from requests import Response, Session
 
-from directory_tests_shared import URLs
-from tests.functional.pages import Services
+from directory_tests_shared import PageType, Service, URLs
+
 from tests.functional.utils.request import Method, check_response, make_request
 
-SERVICE = Services.INTERNATIONAL
+SERVICE = Service.INTERNATIONAL
 NAME = "Industry"
 NAMES = [
     "Creative industries",
@@ -17,7 +17,7 @@ NAMES = [
     "Healthcare and Life Sciences",
     "Technology",
 ]
-TYPE = "industry"
+TYPE = PageType.INDUSTRY
 URL = URLs.INTERNATIONAL_INDUSTRIES.absolute
 SUB_URLs = {
     "creative industries": urljoin(URL, "creative-industries/"),
