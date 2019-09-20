@@ -24,7 +24,7 @@ def test_about_200(basic_auth):
         URLs.PROFILE_COMPANY_EDIT_SOCIAL_MEDIA.absolute,
     ],
 )
-def test_302_redirects_for_anon_user(url, basic_auth):
+def test_302_redirects_for_anon_user_bug_tt_1298(url, basic_auth):
     get_and_assert(url=url, status_code=HTTP_302_FOUND, auth=basic_auth)
 
 
