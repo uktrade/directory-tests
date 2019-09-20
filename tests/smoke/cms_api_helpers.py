@@ -234,7 +234,7 @@ def get_page_ids_by_type(page_type: str) -> Tuple[List[int], int]:
     total_response_time = response.elapsed.total_seconds()
     assert response.status_code == HTTP_200_OK, status_error(HTTP_200_OK, response)
 
-    # get IDs of all pages from the response
+    # get all page ids from the response
     content = response.json()
     page_ids += [page["id"] for page in content["items"]]
 

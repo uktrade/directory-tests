@@ -17,7 +17,7 @@ def get_urls_from_sitemap(sitemap_url: str, *, ignore_404: bool = False) -> list
         )
         xml_soup = BeautifulSoup(response.content, "xml")
         if xml_soup.find_all("loc"):
-            result = [loc.text for loc in xml_soup.find_all("loc")]
+            result = [location.text for location in xml_soup.find_all("loc")]
     except AssertionError:
         if not ignore_404:
             pass
@@ -49,7 +49,7 @@ def test_check_sitemap_schema_and_if_it_contains_urls(url, basic_auth):
 
     assert xml_soup.urlset["xmlns"] == schema
 
-    sitemap_urls = [loc.text for loc in xml_soup.find_all("loc")]
+    sitemap_urls = [location.text for location in xml_soup.find_all("loc")]
     error = (
         f"Expected to find at least 1 URL location in {url} but found an empty "
         f"sitemap.xml"

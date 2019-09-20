@@ -56,7 +56,7 @@ def test_access_sso_endpoints_as_anonymous_user_yields_200(url, basic_auth):
         URLs.SSO_INACTIVE.absolute,
     ],
 )
-def test_access_sso_endpoints_as_logged_in_user_wo_redirect_to_sud(
+def test_access_sso_endpoints_as_logged_in_user_without_redirect_to_sud(
     logged_in_session, url, basic_auth
 ):
     response = logged_in_session.get(

@@ -49,7 +49,7 @@ def test_search_works(categories, countries, basic_auth):
         auth=basic_auth,
     )
 
-
+# flake8: noqa
 @pytest.mark.dev
 @pytest.mark.parametrize(
     "url",
