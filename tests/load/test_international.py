@@ -22,18 +22,15 @@ class InternationalTasks(TaskSet):
     @task
     def uk_setup_guides_pages(self):
         endpoints = [
-            URLs.INTERNATIONAL_UK_SETUP_GUIDE.relative,
-            URLs.INTERNATIONAL_UK_SETUP_GUIDE_OPEN_BANK_ACCOUNT.relative,
-            URLs.INTERNATIONAL_UK_SETUP_GUIDE_ACCESS_FINANCE.relative,
-            URLs.INTERNATIONAL_UK_SETUP_GUIDE_UK_TAX.relative,
-            # URLs.INTERNATIONAL_UK_SETUP_GUIDE_ESTABLISH_A_BASE.relative,
-            # URLs.INTERNATIONAL_UK_SETUP_GUIDE_HIRE_SKILLED_WORKERS.relative,
-            # URLs.INTERNATIONAL_UK_SETUP_GUIDE_REGISTER_A_COMPANY.relative,
+            URLs.INVEST_UK_SETUP_GUIDE.relative,
+            URLs.INVEST_UK_SETUP_GUIDE_OPEN_BANK_ACCOUNT.relative,
+            URLs.INVEST_UK_SETUP_GUIDE_ACCESS_FINANCE.relative,
+            URLs.INVEST_UK_SETUP_GUIDE_UK_TAX.relative,
         ]
         self.client.get(
             choice(endpoints),
             headers=USER_AGENT,
-            name=URLs.INTERNATIONAL_UK_SETUP_GUIDE.template,
+            name=URLs.INVEST_UK_SETUP_GUIDE.template,
             auth=basic_auth(),
         )
 
@@ -55,7 +52,7 @@ class InternationalTasks(TaskSet):
 
 
 class International(HttpLocust):
-    host = settings.DIRECTORY_UI_INTERNATIONAL_URL
+    host = settings.INTERNATIONAL_URL
     task_set = InternationalTasks
     stop_timeout = settings.LOCUST_TIMEOUT
     min_wait = settings.LOCUST_MIN_WAIT

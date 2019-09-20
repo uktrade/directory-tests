@@ -94,7 +94,7 @@ class SOOTasks(TaskSet):
 
 
 class SOO(HttpLocust):
-    host = settings.SOO_UI_URL
+    host = settings.SOO_URL
     task_set = SOOTasks
     stop_timeout = settings.LOCUST_TIMEOUT
     min_wait = settings.LOCUST_MIN_WAIT

@@ -45,7 +45,7 @@ class InvestTasks(TaskSet):
 
 
 class Invest(HttpLocust):
-    host = settings.INVEST_UI_URL
+    host = settings.INVEST_URL
     task_set = InvestTasks
     stop_timeout = settings.LOCUST_TIMEOUT
     min_wait = settings.LOCUST_MIN_WAIT

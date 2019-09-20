@@ -51,7 +51,7 @@ class FASTasks(TaskSet):
 
 
 class FAS(HttpLocust):
-    host = settings.DIRECTORY_UI_SUPPLIER_URL
+    host = settings.FIND_A_SUPPLIER_URL
     task_set = FASTasks
     stop_timeout = settings.LOCUST_TIMEOUT
     min_wait = settings.LOCUST_MIN_WAIT

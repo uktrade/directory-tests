@@ -17,7 +17,7 @@ class FABTasks(TaskSet):
 
 
 class FAB(HttpLocust):
-    host = settings.DIRECTORY_UI_BUYER_URL
+    host = settings.FIND_A_BUYER_URL
     task_set = FABTasks
     stop_timeout = settings.LOCUST_TIMEOUT
     min_wait = settings.LOCUST_MIN_WAIT

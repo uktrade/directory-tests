@@ -10,30 +10,10 @@ from requests.exceptions import (
 )
 
 from directory_tests_shared.settings import (
-    DIRECTORY_CMS_API_CLIENT_API_KEY,
-    DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT,
-    DIRECTORY_CMS_API_CLIENT_SENDER_ID
+    CMS_API_KEY,
+    CMS_API_DEFAULT_TIMEOUT,
+    CMS_API_SENDER_ID
 )
-# Initialise CMS Client with dummy ENV Vars as we're going to use a patched
-# CMS Client
-from django.conf import settings as django_settings
-django_settings.configure(
-    DIRECTORY_CMS_API_CLIENT_BASE_URL=None,
-    DIRECTORY_CMS_API_CLIENT_API_KEY=None,
-    DIRECTORY_CMS_API_CLIENT_SENDER_ID=None,
-    DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT=None,
-    DIRECTORY_CMS_API_CLIENT_SERVICE_NAME=None,
-    DIRECTORY_CMS_API_CLIENT_CACHE_EXPIRE_SECONDS=None,
-    DIRECTORY_CLIENT_CORE_CACHE_EXPIRE_SECONDS=None,
-    CACHES={
-        "cms_fallback": {
-            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
-            "LOCATION": "unique-snowflake",
-        }
-    },
-)
-# these module have to be imported after django settings are set
-# otherwise you won't be able to get an instance of CMS Client
 from directory_cms_client.client import DirectoryCMSClient  # noqa
 from directory_constants.cms import INVEST  # noqa
 
@@ -116,8 +96,8 @@ class CMSAPIAuthClientMixin(HttpLocust):
         super(CMSAPIAuthClientMixin, self).__init__()
         self.client = LocustCMSAPIAuthenticatedClient(
             base_url=self.host,
-            api_key=DIRECTORY_CMS_API_CLIENT_API_KEY,
-            sender_id=DIRECTORY_CMS_API_CLIENT_SENDER_ID,
-            timeout=DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT,
+            api_key=CMS_API_KEY,
+            sender_id=CMS_API_SENDER_ID,
+            timeout=CMS_API_DEFAULT_TIMEOUT,
             default_service_name=INVEST,
         )

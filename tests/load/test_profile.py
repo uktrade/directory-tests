@@ -24,7 +24,7 @@ class ProfileTasks(TaskSet):
 
 
 class Profile(HttpLocust):
-    host = settings.DIRECTORY_PROFILE_URL
+    host = settings.PROFILE_URL
     task_set = ProfileTasks
     stop_timeout = settings.LOCUST_TIMEOUT
     min_wait = settings.LOCUST_MIN_WAIT

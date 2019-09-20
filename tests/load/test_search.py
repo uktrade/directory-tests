@@ -21,7 +21,7 @@ class SearchTasks(TaskSet):
 
 
 class Search(HttpLocust):
-    host = settings.EXRED_UI_URL
+    host = settings.DOMESTIC_URL
     task_set = SearchTasks
     stop_timeout = settings.LOCUST_TIMEOUT
     min_wait = settings.LOCUST_MIN_WAIT

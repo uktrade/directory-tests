@@ -65,7 +65,7 @@ class CMSTasks(TaskSet):
 
 
 class CMS(CMSAPIAuthClientMixin):
-    host = settings.DIRECTORY_CMS_API_CLIENT_BASE_URL
+    host = settings.CMS_API_URL
     task_set = CMSTasks
     stop_timeout = settings.LOCUST_TIMEOUT
     min_wait = settings.LOCUST_MIN_WAIT
