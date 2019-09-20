@@ -5,14 +5,13 @@ from typing import List, Tuple
 from requests import Response, Session
 from scrapy import Selector
 
-from directory_tests_shared import URLs
-from tests.functional.pages import Services
+from directory_tests_shared import PageType, Service, URLs
 from tests.functional.utils.generic import Method, make_request
 from tests.functional.utils.request import check_response
 
-SERVICE = Services.FAB
+SERVICE = Service.FAB
 NAME = "Remove collaborator"
-TYPE = "form"
+TYPE = PageType.FORM
 URL = URLs.FAB_ACCOUNT_REMOVE_COLLABORATOR.absolute
 EXPECTED_STRINGS = [
     "Remove user from account",

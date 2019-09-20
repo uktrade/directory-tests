@@ -2,14 +2,13 @@
 """FAB - Change profile owner - confirm password page"""
 from requests import Response, Session
 
-from directory_tests_shared import URLs
-from tests.functional.pages import Services
+from directory_tests_shared import PageType, Service, URLs
 from tests.functional.utils.generic import Method, make_request
 from tests.functional.utils.request import check_response
 
-SERVICE = Services.FAB
+SERVICE = Service.FAB
 NAME = "Confirm password"
-TYPE = "form"
+TYPE = PageType.FORM
 URL = URLs.FAB_ACCOUNT_CONFIRM_PASSWORD.absolute
 EXPECTED_STRINGS = [
     "Transfer account",

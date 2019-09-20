@@ -4,14 +4,13 @@ import logging
 
 from requests import Response, Session
 
-from directory_tests_shared import URLs
-from tests.functional.pages import Services
+from directory_tests_shared import PageType, Service, URLs
 from tests.functional.utils.context_utils import Actor
 from tests.functional.utils.request import Method, check_response, make_request
 
-SERVICE = Services.FAB
+SERVICE = Service.FAB
 NAME = "Confirm identity with letter"
-TYPE = "form"
+TYPE = PageType.FORM
 URL = URLs.FAB_CONFIRM_IDENTITY_LETTER.absolute
 EXPECTED_STRINGS = [
     "Verification letter request",

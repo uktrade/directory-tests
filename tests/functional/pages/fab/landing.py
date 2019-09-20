@@ -4,14 +4,13 @@ import logging
 
 from requests import Response, Session
 
-from directory_tests_shared import URLs
-from tests.functional.pages import Services
+from directory_tests_shared import PageType, Service, URLs
 from tests.functional.utils.generic import assertion_msg
 from tests.functional.utils.request import Method, check_response, make_request
 
-SERVICE = Services.FAB
+SERVICE = Service.FAB
 NAME = "Landing"
-TYPE = "landing"
+TYPE = PageType.LANDING
 URL = URLs.FAB_LANDING.absolute
 EXPECTED_STRINGS = [
     "Connect directly with international buyers",

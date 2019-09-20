@@ -2,14 +2,13 @@
 """FAB - Change profile owner page"""
 from requests import Response, Session
 
-from directory_tests_shared import URLs
-from tests.functional.pages import Services
+from directory_tests_shared import PageType, Service, URLs
 from tests.functional.utils.generic import Method, make_request
 from tests.functional.utils.request import check_response
 
-SERVICE = Services.FAB
+SERVICE = Service.FAB
 NAME = "Transfer ownership"
-TYPE = "form"
+TYPE = PageType.FORM
 URL = URLs.FAB_ACCOUNT_TRANSFER_OWNERSHIP.absolute
 EXPECTED_STRINGS = [
     "Transfer account",

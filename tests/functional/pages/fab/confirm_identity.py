@@ -5,14 +5,12 @@ from copy import copy
 
 from requests import Response, Session
 
-from directory_tests_shared import URLs
-from tests.functional.pages import Services
-from tests.functional.utils.context_utils import Actor
+from directory_tests_shared import PageType, Service, URLs
 from tests.functional.utils.request import Method, check_response, make_request
 
-SERVICE = Services.FAB
+SERVICE = Service.FAB
 NAME = "Confirm identity"
-TYPE = "option"
+TYPE = PageType.OPTION
 URL = URLs.FAB_CONFIRM_IDENTITY.absolute
 EXPECTED_STRINGS = [
     "Confirm your identity",
