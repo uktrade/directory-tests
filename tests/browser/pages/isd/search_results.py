@@ -14,12 +14,12 @@ from pages.common_actions import (
     check_url,
     take_screenshot,
 )
-from settings import INTERNATIONAL_UI_URL
+from directory_tests_shared.settings import ISD_URL
 
 NAME = "Search results"
 SERVICE = Services.ISD
 TYPE = "search results"
-URL = urljoin(INTERNATIONAL_UI_URL, "investment-support-directory/search/?")
+URL = ISD_URL
 PAGE_TITLE = "Find a UK specialist"
 
 SELECTORS = {

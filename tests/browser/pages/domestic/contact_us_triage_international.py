@@ -27,12 +27,12 @@ from pages.international import (
     trade_contact_us,
 )
 from pages.invest import contact_us as invest_contact_us
-from settings import EXRED_UI_URL
+from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "What would you like to know more about?"
 SERVICE = Services.DOMESTIC
 TYPE = "International Contact us"
-URL = urljoin(EXRED_UI_URL, "contact/triage/international/")
+URL = urljoin(DOMESTIC_URL, "contact/triage/international/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 SUBMIT_BUTTON = Selector(

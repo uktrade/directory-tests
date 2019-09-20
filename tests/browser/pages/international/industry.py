@@ -14,12 +14,10 @@ from pages.common_actions import (
     check_for_sections,
     check_url,
     find_and_click_on_page_element,
-    find_elements,
-    find_selector_by_name,
     take_screenshot,
     visit_url,
 )
-from settings import EXRED_UI_URL
+from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Industry"
 NAMES = [
@@ -48,7 +46,7 @@ NAMES = [
 ]
 SERVICE = Services.INTERNATIONAL
 TYPE = "industry"
-URL = urljoin(EXRED_UI_URL, "international/content/about-uk/industries/")
+URL = urljoin(DOMESTIC_URL, "international/content/about-uk/industries/")
 PAGE_TITLE = "great.gov.uk International - "
 
 

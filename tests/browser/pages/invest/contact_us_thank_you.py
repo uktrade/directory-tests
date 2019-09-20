@@ -8,12 +8,12 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages import Services
 from pages.common_actions import Selector, check_url, take_screenshot, visit_url
-from settings import INVEST_UI_URL
+from directory_tests_shared.settings import INVEST_URL
 
 NAME = "Thank you for your message"
 SERVICE = Services.INVEST
 TYPE = "contact"
-URL = urljoin(INVEST_UI_URL, "contact/success/")
+URL = urljoin(INVEST_URL, "contact/success/")
 PAGE_TITLE = ""
 SELECTORS = {
     "hero": {"itself": Selector(By.CSS_SELECTOR, "section.hero")},

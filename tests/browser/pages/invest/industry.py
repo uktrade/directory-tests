@@ -19,7 +19,7 @@ from pages.common_actions import (
     take_screenshot,
     visit_url,
 )
-from settings import INVEST_UI_URL
+from directory_tests_shared.settings import INVEST_URL
 
 NAME = "Industry"
 NAMES = [
@@ -57,8 +57,8 @@ NAMES = [
 ]
 SERVICE = Services.INVEST
 TYPE = "industry"
-URL = urljoin(INVEST_UI_URL, "industries/")
-BASE_URL = urljoin(INVEST_UI_URL, "industries/")
+URL = urljoin(INVEST_URL, "industries/")
+BASE_URL = urljoin(INVEST_URL, "industries/")
 PAGE_TITLE = "Invest in Great Britain - "
 
 

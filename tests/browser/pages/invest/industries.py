@@ -17,12 +17,12 @@ from pages.common_actions import (
     take_screenshot,
     visit_url,
 )
-from settings import INVEST_UI_URL
+from directory_tests_shared.settings import INVEST_URL
 
 NAME = "Industries"
 SERVICE = Services.INVEST
 TYPE = "industries"
-URL = urljoin(INVEST_UI_URL, "industries/")
+URL = urljoin(INVEST_URL, "industries/")
 PAGE_TITLE = "Invest In Great Britain - Invest in UK Industries"
 
 SELECTORS = {

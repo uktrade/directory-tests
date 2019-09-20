@@ -17,7 +17,7 @@ from pages.common_actions import (
     take_screenshot,
     visit_url,
 )
-from settings import INTERNATIONAL_UI_URL
+from directory_tests_shared.settings import INTERNATIONAL_URL
 
 NAME = "How to set up in the UK"
 NAMES = [
@@ -38,8 +38,8 @@ NAMES = [
 ]
 SERVICE = Services.INVEST
 TYPE = "guide"
-URL = urljoin(INTERNATIONAL_UI_URL, "content/invest/how-to-setup-in-the-uk/")
-URL_STAGING = urljoin(INTERNATIONAL_UI_URL, "content/how-to-setup-in-the-uk/")
+URL = urljoin(INTERNATIONAL_URL, "content/invest/how-to-setup-in-the-uk/")
+URL_STAGING = urljoin(INTERNATIONAL_URL, "content/how-to-setup-in-the-uk/")
 PAGE_TITLE = "Invest in Great Britain -"
 
 SELECTORS = {

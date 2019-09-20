@@ -16,12 +16,12 @@ from pages.common_actions import (
     take_screenshot,
     visit_url,
 )
-from settings import INTERNATIONAL_UI_URL
+from directory_tests_shared.settings import INTERNATIONAL_URL
 
 NAME = "Regions"
 SERVICE = Services.INTERNATIONAL
 TYPE = "landing"
-URL = urljoin(INTERNATIONAL_UI_URL, "content/about-uk/regions/")
+URL = urljoin(INTERNATIONAL_URL, "content/about-uk/regions/")
 PAGE_TITLE = "Invest in Great Britain - "
 
 SELECTORS = {

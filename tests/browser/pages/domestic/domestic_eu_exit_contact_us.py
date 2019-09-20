@@ -23,12 +23,12 @@ from pages.common_actions import (
     tick_captcha_checkbox,
     tick_checkboxes,
 )
-from settings import EXRED_UI_URL
+from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Brexit help"
 SERVICE = Services.DOMESTIC
 TYPE = "Contact us"
-URL = urljoin(EXRED_UI_URL, "brexit/contact/")
+URL = urljoin(DOMESTIC_URL, "brexit/contact/")
 PAGE_TITLE = ""
 
 

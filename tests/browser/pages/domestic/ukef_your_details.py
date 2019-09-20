@@ -19,12 +19,12 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from settings import EXRED_UI_URL
+from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Your details"
 SERVICE = Services.DOMESTIC
 TYPE = "UKEF Contact us"
-URL = urljoin(EXRED_UI_URL, "get-finance/your-details/")
+URL = urljoin(DOMESTIC_URL, "get-finance/your-details/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 SUBMIT_BUTTON = Selector(

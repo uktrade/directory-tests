@@ -21,12 +21,12 @@ from pages.common_actions import (
     scroll_to,
     take_screenshot,
 )
-from settings import EXRED_UI_URL
+from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Search results"
 SERVICE = Services.DOMESTIC
 TYPE = "Search"
-URL = urljoin(EXRED_UI_URL, "/search/?")
+URL = urljoin(DOMESTIC_URL, "/search/?")
 
 PAGES = Selector(By.CSS_SELECTOR, "ul.navigation li")
 PAGINATION = Selector(By.CSS_SELECTOR, "div.pagination")

@@ -14,12 +14,12 @@ from pages.common_actions import (
     take_screenshot,
     wait_for_page_load_after_action,
 )
-from settings import DIRECTORY_UI_SSO_URL
+from directory_tests_shared.settings import SSO_URL
 
 NAME = "Sign out"
 SERVICE = Services.SSO
 TYPE = "log out"
-URL = urljoin(DIRECTORY_UI_SSO_URL, "accounts/logout/")
+URL = urljoin(SSO_URL, "accounts/logout/")
 PAGE_TITLE = "Sign out - great.gov.uk"
 
 SIGN_OUT_BUTTON = Selector(By.CSS_SELECTOR, "form button")

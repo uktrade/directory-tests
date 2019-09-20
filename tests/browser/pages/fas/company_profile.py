@@ -15,12 +15,12 @@ from pages.common_actions import (
     find_and_click_on_page_element,
     take_screenshot,
 )
-from settings import DIRECTORY_UI_SUPPLIER_URL
+from directory_tests_shared.settings import FIND_A_SUPPLIER_URL
 
 NAME = "Company Profile"
 SERVICE = Services.FIND_A_SUPPLIER
 TYPE = "profile"
-URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "suppliers/")
+URL = urljoin(FIND_A_SUPPLIER_URL, "suppliers/")
 
 SELECTORS = {
     "name": {"itself": Selector(By.ID, "company-name")},

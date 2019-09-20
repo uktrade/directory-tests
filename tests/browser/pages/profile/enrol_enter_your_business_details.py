@@ -24,16 +24,16 @@ from pages.common_actions import (
 )
 from pages.profile import enrol_enter_your_business_details_step_2
 from pages.profile.autocomplete_callbacks import enrol_autocomplete_company_name
-from settings import DIRECTORY_UI_PROFILE_URL
+from directory_tests_shared.settings import PROFILE_URL
 
 NAME = "Enter your business details"
 NAMES = ["Enter your business details (LTD, PLC or Royal Charter)"]
 SERVICE = Services.PROFILE
 TYPE = "Enrol"
-URL = urljoin(DIRECTORY_UI_PROFILE_URL, "enrol/business-type/companies-house/company-search/")
+URL = urljoin(PROFILE_URL, "enrol/business-type/companies-house/company-search/")
 URLs = {
     "enter your business details (ltd, plc or royal charter)": urljoin(
-        DIRECTORY_UI_PROFILE_URL, "enrol/business-type/companies-house/company-search/"
+        PROFILE_URL, "enrol/business-type/companies-house/company-search/"
     )
 }
 PAGE_TITLE = ""

@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """Find a Buyer Home Page Object."""
 import logging
-from urllib.parse import urljoin
 
 from selenium.webdriver.remote.webdriver import WebDriver
 
@@ -12,12 +11,12 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from settings import DIRECTORY_UI_BUYER_URL
+from directory_tests_shared import URLs
 
 NAME = "Home"
 SERVICE = Services.FIND_A_BUYER
 TYPE = "home"
-URL = urljoin(DIRECTORY_UI_BUYER_URL, "")
+URL = URLs.FAB_LANDING.absolute
 PAGE_TITLE = "Business profile - great.gov.uk"
 
 SELECTORS = {}

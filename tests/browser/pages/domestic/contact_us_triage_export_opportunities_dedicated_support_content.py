@@ -13,7 +13,7 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from settings import EXRED_UI_URL
+from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Export opportunities service"
 NAMES = [
@@ -23,7 +23,7 @@ NAMES = [
 ]
 SERVICE = Services.DOMESTIC
 TYPE = "Dedicated Support Content"
-URL = urljoin(EXRED_UI_URL, "contact/triage/export-opportunities/")
+URL = urljoin(DOMESTIC_URL, "contact/triage/export-opportunities/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 URLs = {

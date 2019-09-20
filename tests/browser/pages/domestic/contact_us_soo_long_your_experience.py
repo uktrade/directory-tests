@@ -19,12 +19,12 @@ from pages.common_actions import (
     take_screenshot,
 )
 from pages.domestic import contact_us_soo_long_contact_details
-from settings import EXRED_UI_URL
+from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Long Domestic (Your experience)"
 SERVICE = Services.DOMESTIC
 TYPE = "Contact us"
-URL = urljoin(EXRED_UI_URL, "contact/selling-online-overseas/your-experience/")
+URL = urljoin(DOMESTIC_URL, "contact/selling-online-overseas/your-experience/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 SUBMIT_BUTTON = Selector(

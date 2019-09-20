@@ -17,13 +17,13 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from settings import DIRECTORY_UI_PROFILE_URL
+from directory_tests_shared.settings import PROFILE_URL
 
 NAME = "Enter your confirmation code (non Companies House company)"
 SERVICE = Services.PROFILE
 TYPE = "Enrol"
 URL = urljoin(
-    DIRECTORY_UI_PROFILE_URL, "enrol/business-type/non-companies-house-company/verification/"
+    PROFILE_URL, "enrol/business-type/non-companies-house-company/verification/"
 )
 PAGE_TITLE = ""
 

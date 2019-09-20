@@ -21,12 +21,12 @@ from pages.common_actions import (
     pick_option,
     take_screenshot,
 )
-from settings import DIRECTORY_UI_SUPPLIER_URL
+from directory_tests_shared.settings import FIND_A_SUPPLIER_URL
 
 NAME = "Search results"
 SERVICE = Services.FIND_A_SUPPLIER
 TYPE = "search"
-URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "search/")
+URL = urljoin(FIND_A_SUPPLIER_URL, "search/")
 PAGE_TITLE = "Search the database of UK suppliers' trade profiles - trade.great.gov.uk"
 
 SECTOR_FILTERS = Selector(

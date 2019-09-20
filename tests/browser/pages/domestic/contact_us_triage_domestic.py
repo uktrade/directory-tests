@@ -27,12 +27,12 @@ from pages.domestic import (
     ukef_your_details,
 )
 from pages.external import office_finder
-from settings import EXRED_UI_URL
+from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "What can we help you with?"
 SERVICE = Services.DOMESTIC
 TYPE = "Domestic Contact us"
-URL = urljoin(EXRED_UI_URL, "contact/triage/domestic/")
+URL = urljoin(DOMESTIC_URL, "contact/triage/domestic/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 SUBMIT_BUTTON = Selector(

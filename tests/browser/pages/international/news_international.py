@@ -17,12 +17,12 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from settings import EXRED_UI_URL
+from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Updates for non UK companies on EU Exit"
 SERVICE = Services.INTERNATIONAL
 TYPE = "international"
-URL = urljoin(EXRED_UI_URL, "international/eu-exit-news/?lang=en")
+URL = urljoin(DOMESTIC_URL, "international/eu-exit-news/?lang=en")
 PAGE_TITLE = ""
 
 

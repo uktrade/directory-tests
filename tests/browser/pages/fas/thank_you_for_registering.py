@@ -15,12 +15,12 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from settings import DIRECTORY_UI_SUPPLIER_URL
+from directory_tests_shared.settings import FIND_A_SUPPLIER_URL
 
 NAME = "Thank you for registering"
 SERVICE = Services.FIND_A_SUPPLIER
 TYPE = "contact"
-URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "subscribe/")
+URL = urljoin(FIND_A_SUPPLIER_URL, "subscribe/")
 PAGE_TITLE = "Find a Buyer - GREAT.gov.uk"
 
 SELECTORS = {

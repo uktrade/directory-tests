@@ -45,17 +45,17 @@ def before_feature(context: Context, feature: Feature):
         for scenario in feature.scenarios:
             patch_scenario_with_autoretry(scenario, max_attempts=2)
     if BROWSER_RESTART_POLICY == "feature":
-        context.driver = start_driver_session(feature.name)
+        context.driver = start_driver_session(feature.name, DRIVER_CAPABILITIES)
 
 
 def before_scenario(context: Context, scenario: Scenario):
     logging.debug(f"Starting scenario: {scenario.name}")
     context.scenario_data = initialize_scenario_data()
     if BROWSER_RESTART_POLICY == "scenario":
-        context.driver = start_driver_session(scenario.name)
+        context.driver = start_driver_session(scenario.name, DRIVER_CAPABILITIES)
     if BROWSER_RESTART_POLICY == "feature":
         if (not context.driver) or not is_driver_responsive(context.driver):
-            context.driver = start_driver_session(scenario.name)
+            context.driver = start_driver_session(scenario.name, DRIVER_CAPABILITIES)
 
 
 def before_step(context: Context, step: Step):

@@ -18,12 +18,12 @@ from pages.common_actions import (
     tick_captcha_checkbox,
     tick_checkboxes,
 )
-from settings import EXRED_UI_URL
+from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Tell us how we can help"
 SERVICE = Services.DOMESTIC
 TYPE = "UKEF Contact us"
-URL = urljoin(EXRED_UI_URL, "get-finance/help/")
+URL = urljoin(DOMESTIC_URL, "get-finance/help/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 BREADCRUMB_LINKS = Selector(By.CSS_SELECTOR, "div.breadcrumbs a")

@@ -22,14 +22,14 @@ from pages.common_actions import (
     tick_checkboxes,
 )
 from pages.profile import enrol_account_created
-from settings import DIRECTORY_UI_PROFILE_URL
+from directory_tests_shared.settings import PROFILE_URL
 
 NAME = "Enter your details"
 NAMES = ["Enter your details (LTD, PLC or Royal Charter)"]
 SERVICE = Services.PROFILE
 TYPE = "Enrol"
 URL = urljoin(
-    DIRECTORY_UI_PROFILE_URL, "enrol/business-type/companies-house/personal-details/"
+    PROFILE_URL, "enrol/business-type/companies-house/personal-details/"
 )
 URLs = {"enter your details (ltd, plc or royal charter)": URL}
 PAGE_TITLE = ""

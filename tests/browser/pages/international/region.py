@@ -17,7 +17,7 @@ from pages.common_actions import (
     take_screenshot,
     visit_url,
 )
-from settings import INTERNATIONAL_UI_URL
+from directory_tests_shared.settings import INTERNATIONAL_URL
 
 NAME = "Region"
 NAMES = [
@@ -31,8 +31,8 @@ NAMES = [
 ]
 SERVICE = Services.INTERNATIONAL
 TYPE = "region"
-URL = urljoin(INTERNATIONAL_UI_URL, "content/about-uk/regions/")
-URL_LEGACY = urljoin(INTERNATIONAL_UI_URL, "content/invest/uk-regions/")
+URL = urljoin(INTERNATIONAL_URL, "content/about-uk/regions/")
+URL_LEGACY = urljoin(INTERNATIONAL_URL, "content/invest/uk-regions/")
 PAGE_TITLE = "Invest in Great Britain - "
 
 

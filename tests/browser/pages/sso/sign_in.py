@@ -17,12 +17,12 @@ from pages.common_actions import (
     take_screenshot,
     wait_for_page_load_after_action,
 )
-from settings import DIRECTORY_UI_SSO_URL
+from directory_tests_shared.settings import SSO_URL
 
 NAME = "Sign in"
 SERVICE = Services.SSO
 TYPE = "log in"
-URL = urljoin(DIRECTORY_UI_SSO_URL, "accounts/login/")
+URL = urljoin(SSO_URL, "accounts/login/")
 PAGE_TITLE = "Sign in - great.gov.uk"
 
 EMAIL_INPUT = Selector(By.ID, "id_login")

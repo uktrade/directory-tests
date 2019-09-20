@@ -23,12 +23,12 @@ from pages.domestic import (
     contact_us_triage_export_opportunities,
     contact_us_triage_great_account,
 )
-from settings import EXRED_UI_URL
+from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Great.gov.uk account and services support"
 SERVICE = Services.DOMESTIC
 TYPE = "Domestic Contact us"
-URL = urljoin(EXRED_UI_URL, "contact/triage/great-services/")
+URL = urljoin(DOMESTIC_URL, "contact/triage/great-services/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 SUBMIT_BUTTON = Selector(

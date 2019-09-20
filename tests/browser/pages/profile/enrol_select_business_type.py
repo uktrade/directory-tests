@@ -26,12 +26,12 @@ from pages.profile import (
     enrol_uk_taxpayer_enter_your_email_and_set_password,
     enrol_you_cannot_create_account,
 )
-from settings import DIRECTORY_UI_PROFILE_URL
+from directory_tests_shared.settings import PROFILE_URL
 
 NAME = "Select your business type"
 SERVICE = Services.PROFILE
 TYPE = "Enrol"
-URL = urljoin(DIRECTORY_UI_PROFILE_URL, "enrol/business-type/")
+URL = urljoin(PROFILE_URL, "enrol/business-type/")
 PAGE_TITLE = ""
 
 SELECTORS = {

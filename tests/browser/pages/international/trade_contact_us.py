@@ -23,12 +23,12 @@ from pages.common_actions import (
     tick_captcha_checkbox,
     tick_checkboxes_by_labels,
 )
-from settings import DIRECTORY_UI_SUPPLIER_URL
+from directory_tests_shared.settings import FIND_A_SUPPLIER_URL
 
 NAME = "Find a UK business partner"
 SERVICE = Services.INTERNATIONAL
 TYPE = "contact us"
-URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "contact/")
+URL = urljoin(FIND_A_SUPPLIER_URL, "contact/")
 PAGE_TITLE = "Contact us - trade.great.gov.uk"
 
 SUBMIT_BUTTON = Selector(

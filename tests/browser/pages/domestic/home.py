@@ -26,12 +26,12 @@ from pages.common_actions import (
     wait_for_page_load_after_action,
 )
 from pages.domestic import actions as domestic_actions
-from settings import EXRED_UI_URL
+from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Home"
 SERVICE = Services.DOMESTIC
 TYPE = "home"
-URL = urljoin(EXRED_UI_URL, "?lang=en-gb")
+URL = urljoin(DOMESTIC_URL, "?lang=en-gb")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 PROMO_VIDEO = Selector(

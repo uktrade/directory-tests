@@ -16,12 +16,12 @@ from pages.common_actions import (
     take_screenshot,
 )
 from pages.domestic import actions as domestic_actions
-from settings import EXRED_UI_URL
+from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Services"
 SERVICE = Services.DOMESTIC
 TYPE = "services list"
-URL = urljoin(EXRED_UI_URL, "services/")
+URL = urljoin(DOMESTIC_URL, "services/")
 
 SELECTORS = {
     "services": {

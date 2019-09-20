@@ -14,14 +14,14 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from settings import DIRECTORY_UI_PROFILE_URL
+from directory_tests_shared.settings import PROFILE_URL
 
 NAME = "Account created"
 NAMES = ["Account created (LTD, PLC or Royal Charter)"]
 SERVICE = Services.PROFILE
 TYPE = "Enrol"
 URL = urljoin(
-    DIRECTORY_UI_PROFILE_URL, "enrol/business-type/companies-house/finished/#"
+    PROFILE_URL, "enrol/business-type/companies-house/finished/#"
 )
 URLs = {"account created": URL, "account created (ltd, plc or royal charter)": URL}
 PAGE_TITLE = ""

@@ -14,12 +14,12 @@ from pages.common_actions import (
     check_url,
     take_screenshot,
 )
-from settings import DIRECTORY_UI_SUPPLIER_URL
+from directory_tests_shared.settings import FIND_A_SUPPLIER_URL
 
 NAME = "Thank you for your message"
 SERVICE = Services.FIND_A_SUPPLIER
 TYPE = "contact"
-URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "industries/contact/")
+URL = urljoin(FIND_A_SUPPLIER_URL, "industries/contact/")
 PAGE_TITLE = "Contact us - trade.great.gov.uk"
 
 SELECTORS = {

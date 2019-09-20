@@ -36,7 +36,7 @@ from selenium.webdriver.support.expected_conditions import staleness_of
 from selenium.webdriver.support.wait import WebDriverWait
 
 from pages import ElementType
-from settings import (
+from directory_tests_shared.settings import (
     BARRED_USERS,
     TAKE_SCREENSHOTS,
 )
@@ -491,7 +491,7 @@ def find_elements(driver: WebDriver, selector: Selector) -> List[WebElement]:
 
 def check_hash_of_remote_file(expected_hash: str, file_url: str):
     """Check if the md5 hash of the file is the same as expected."""
-    from settings import BASICAUTH_PASS, BASICAUTH_USER
+    from directory_tests_shared.settings import BASICAUTH_PASS, BASICAUTH_USER
 
     logging.debug("Fetching file: %s", file_url)
     parsed = urlparse(file_url)

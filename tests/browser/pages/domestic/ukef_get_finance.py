@@ -18,12 +18,12 @@ from pages.common_actions import (
     scroll_to,
     take_screenshot,
 )
-from settings import EXRED_UI_URL
+from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Get Finance"
 SERVICE = Services.DOMESTIC
 TYPE = "interim"
-URL = urljoin(EXRED_UI_URL, "get-finance/?lang=en-gb")
+URL = urljoin(DOMESTIC_URL, "get-finance/?lang=en-gb")
 PAGE_TITLE = "Get finance - great.gov.uk"
 
 PROMO_VIDEO = Selector(By.CSS_SELECTOR, "section.get-finance-video video")

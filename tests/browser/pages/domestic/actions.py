@@ -12,7 +12,7 @@ from pages.common_actions import (
     wait_for_page_load_after_action,
 )
 from pages.common_selectors import EXOPPS_FAVICON, FAVICON, HEADER, LOGOS
-from settings import MD5_CHECKSUM_DIT_FAVICON
+from directory_tests_shared.constants import MD5_CHECKSUM_DIT_FAVICON
 
 
 def search(driver: WebDriver, phrase: str):

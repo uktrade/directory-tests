@@ -4,7 +4,7 @@ import copy
 
 from pages import ElementType
 from pages.common_actions import By, Selector
-from settings import (
+from directory_tests_shared.constants import (
     MD5_CHECKSUM_EIG_LOGO,
     MD5_CHECKSUM_EVENTS_BIG_FOOTER_LOGO,
     MD5_CHECKSUM_EVENTS_BIG_HEADER_LOGO,

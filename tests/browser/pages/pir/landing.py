@@ -15,12 +15,12 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from settings import EXRED_UI_URL
+from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Landing"
 SERVICE = Services.PIR
 TYPE = "landing"
-URL = urljoin(EXRED_UI_URL, "international/invest/perfectfit/")
+URL = urljoin(DOMESTIC_URL, "international/invest/perfectfit/")
 
 SUBMIT_BUTTON = Selector(
     By.CSS_SELECTOR, "form input.button[type=submit]", type=ElementType.BUTTON

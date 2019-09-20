@@ -13,12 +13,12 @@ from pages.common_actions import (
     take_screenshot,
     wait_for_page_load_after_action,
 )
-from settings import DIRECTORY_UI_SSO_URL
+from directory_tests_shared.settings import SSO_URL
 
 NAME = "Confirm your email address"
 SERVICE = Services.SSO
 TYPE = "confirmation"
-URL = urljoin(DIRECTORY_UI_SSO_URL, "accounts/confirm-email/")
+URL = urljoin(SSO_URL, "accounts/confirm-email/")
 PAGE_TITLE = "Confirm email Address"
 
 CONFIRM_LINK = Selector(By.CSS_SELECTOR, "#content form > button[type=submit]")

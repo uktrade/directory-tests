@@ -38,7 +38,7 @@ from pages.common_actions import (
     update_actor,
     wait_for_page_load_after_action,
 )
-from settings import BASICAUTH_PASS, BASICAUTH_USER
+from directory_tests_shared.settings import BASICAUTH_PASS, BASICAUTH_USER
 from steps import has_action
 from utils.cms_api import get_news_articles
 from utils.gtm import get_gtm_event_definitions, trigger_js_event

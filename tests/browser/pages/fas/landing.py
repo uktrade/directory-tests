@@ -20,12 +20,12 @@ from pages.common_actions import (
     take_screenshot,
     wait_for_page_load_after_action,
 )
-from settings import DIRECTORY_UI_SUPPLIER_URL
+from directory_tests_shared.settings import FIND_A_SUPPLIER_URL
 
 NAME = "Landing"
 SERVICE = Services.FIND_A_SUPPLIER
 TYPE = "Landing"
-URL = DIRECTORY_UI_SUPPLIER_URL
+URL = FIND_A_SUPPLIER_URL
 PAGE_TITLE = "Find UK suppliers - trade.great.gov.uk"
 
 SEARCH_INPUT = Selector(By.CSS_SELECTOR, "#search-area form input[name=q]")

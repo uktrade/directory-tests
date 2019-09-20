@@ -22,12 +22,12 @@ from pages.common_actions import (
     tick_captcha_checkbox,
     tick_checkboxes,
 )
-from settings import INTERNATIONAL_UI_URL
+from directory_tests_shared.settings import INTERNATIONAL_URL
 
 NAME = "Contact the Capital Investment team"
 SERVICE = Services.INTERNATIONAL
 TYPE = "Contact us"
-URL = urljoin(INTERNATIONAL_UI_URL, "content/capital-invest/contact/")
+URL = urljoin(INTERNATIONAL_URL, "content/capital-invest/contact/")
 PAGE_TITLE = "Capital Invest Contact Form - great.gov.uk international"
 
 SUBMIT_BUTTON = Selector(By.CSS_SELECTOR, "form[method=POST] button")

@@ -17,12 +17,12 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from settings import INTERNATIONAL_UI_URL
+from directory_tests_shared.settings import ISD_URL
 
 NAME = "Landing"
 SERVICE = Services.ISD
 TYPE = "landing"
-URL = urljoin(INTERNATIONAL_UI_URL, "investment-support-directory/")
+URL = ISD_URL
 PAGE_TITLE = ""
 
 

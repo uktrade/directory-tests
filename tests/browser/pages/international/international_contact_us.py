@@ -25,12 +25,12 @@ from pages.common_actions import (
     tick_checkboxes,
 )
 from pages.domestic import contact_us_triage_domestic
-from settings import EXRED_UI_URL
+from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Contact us"
 SERVICE = Services.INTERNATIONAL
 TYPE = "Contact us"
-URL = urljoin(EXRED_UI_URL, "contact/international/")
+URL = urljoin(DOMESTIC_URL, "contact/international/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 SUBMIT_BUTTON = Selector(

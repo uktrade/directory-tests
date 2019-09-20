@@ -14,7 +14,7 @@ from pages.common_actions import (
     scroll_to,
     take_screenshot,
 )
-from settings import MD5_CHECKSUM_INVEST_IN_GREAT
+from directory_tests_shared.constants import MD5_CHECKSUM_INVEST_IN_GREAT
 
 NAME = "Header"
 URL = None

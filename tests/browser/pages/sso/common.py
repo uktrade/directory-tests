@@ -4,13 +4,13 @@ import logging
 
 from directory_sso_api_client.testapiclient import DirectorySSOTestAPIClient
 
-from settings import DIRECTORY_SSO_API_CLIENT_API_KEY, DIRECTORY_SSO_API_CLIENT_BASE_URL
+from directory_tests_shared.settings import SSO_API_KEY, SSO_API_URL
 
 
 def verify_account(email: str):
     client = DirectorySSOTestAPIClient(
-        base_url=DIRECTORY_SSO_API_CLIENT_BASE_URL,
-        api_key=DIRECTORY_SSO_API_CLIENT_API_KEY,
+        base_url=SSO_API_URL,
+        api_key=SSO_API_KEY,
         sender_id="directory",
         timeout=5,
     )
@@ -25,8 +25,8 @@ def verify_account(email: str):
 
 def delete_supplier_data_from_sso(email: str):
     client = DirectorySSOTestAPIClient(
-        base_url=DIRECTORY_SSO_API_CLIENT_BASE_URL,
-        api_key=DIRECTORY_SSO_API_CLIENT_API_KEY,
+        base_url=SSO_API_URL,
+        api_key=SSO_API_KEY,
         sender_id="directory",
         timeout=5,
     )

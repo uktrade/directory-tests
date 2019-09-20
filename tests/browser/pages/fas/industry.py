@@ -18,7 +18,7 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from settings import DIRECTORY_UI_SUPPLIER_URL
+from directory_tests_shared.settings import FIND_A_SUPPLIER_URL
 
 NAME = "Industry"
 NAMES = [
@@ -49,7 +49,7 @@ NAMES = [
 ]
 SERVICE = Services.FIND_A_SUPPLIER
 TYPE = "industry"
-URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "industries/")
+URL = urljoin(FIND_A_SUPPLIER_URL, "industries/")
 PAGE_TITLE = "trade.great.gov.uk"
 
 COMPANY_PROFILE_LINK = "#companies-section li:nth-child({number}) a.link"

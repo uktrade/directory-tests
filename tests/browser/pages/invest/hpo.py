@@ -18,7 +18,7 @@ from pages.common_actions import (
     take_screenshot,
     visit_url,
 )
-from settings import INTERNATIONAL_UI_URL
+from directory_tests_shared.settings import INTERNATIONAL_URL
 
 NAME = "HPO"
 NAMES = [
@@ -28,7 +28,7 @@ NAMES = [
 ]
 SERVICE = Services.INVEST
 TYPE = "HPO"
-URL = urljoin(INTERNATIONAL_UI_URL, "content/invest/high-potential-opportunities/")
+URL = urljoin(INTERNATIONAL_URL, "content/invest/high-potential-opportunities/")
 PAGE_TITLE = "high potential"
 
 

@@ -22,12 +22,12 @@ from pages.common_actions import (
     tick_checkboxes,
 )
 from pages.profile import enrol_enter_your_confirmation_code
-from settings import DIRECTORY_UI_PROFILE_URL
+from directory_tests_shared.settings import PROFILE_URL
 
 NAME = "Enter your email address and set a password (UK taxpayer)"
 SERVICE = Services.PROFILE
 TYPE = "Enrol"
-URL = urljoin(DIRECTORY_UI_PROFILE_URL, "enrol/business-type/individual/user-account/")
+URL = urljoin(PROFILE_URL, "enrol/business-type/individual/user-account/")
 PAGE_TITLE = ""
 
 SELECTORS = {

@@ -18,12 +18,12 @@ from pages.common_actions import (
     take_screenshot,
     wait_for_page_load_after_action,
 )
-from settings import EXRED_UI_URL
+from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Advice landing"
 TYPE = "landing"
 SERVICE = Services.DOMESTIC
-URL = urljoin(EXRED_UI_URL, "advice/")
+URL = urljoin(DOMESTIC_URL, "advice/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 ARTICLE_LINKS = Selector(

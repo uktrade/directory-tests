@@ -14,12 +14,12 @@ from pages.common_actions import (
     find_element,
     take_screenshot,
 )
-from settings import EXRED_UI_URL
+from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Search by tag"
 SERVICE = Services.DOMESTIC
 TYPE = "search"
-URL = urljoin(EXRED_UI_URL, "prototype/tagged/")
+URL = urljoin(DOMESTIC_URL, "prototype/tagged/")
 PAGE_TITLE = ""
 
 HERO_HEADING = Selector(By.ID, "hero-heading")

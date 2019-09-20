@@ -7,12 +7,12 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages import Services
 from pages.common_actions import check_url, take_screenshot, visit_url
-from settings import DIRECTORY_CONTACT_US_UI_URL
+from directory_tests_shared.settings import CONTACT_US_URL
 
 NAME = "Feedback"
 SERVICE = Services.INVEST
 TYPE = "contact"
-URL = urljoin(DIRECTORY_CONTACT_US_UI_URL, "feedback/")
+URL = urljoin(CONTACT_US_URL, "feedback/")
 PAGE_TITLE = "Contact us - great.gov.uk"
 SELECTORS = {}
 

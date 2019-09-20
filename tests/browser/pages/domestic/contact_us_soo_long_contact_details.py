@@ -21,12 +21,12 @@ from pages.common_actions import (
     tick_checkboxes,
 )
 from pages.domestic import contact_us_soo_long_thank_you
-from settings import EXRED_UI_URL
+from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Long Domestic (Contact details)"
 SERVICE = Services.DOMESTIC
 TYPE = "Contact us"
-URL = urljoin(EXRED_UI_URL, "contact/selling-online-overseas/contact-details/")
+URL = urljoin(DOMESTIC_URL, "contact/selling-online-overseas/contact-details/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 SUBMIT_BUTTON = Selector(

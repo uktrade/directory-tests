@@ -7,7 +7,7 @@ from typing import List
 from notifications_python_client import NotificationsAPIClient
 from retrying import retry
 
-from settings import GOV_NOTIFY_API_KEY
+from directory_tests_shared.settings import GOV_NOTIFY_API_KEY
 
 GOV_NOTIFY_CLIENT = NotificationsAPIClient(GOV_NOTIFY_API_KEY)
 

@@ -10,12 +10,12 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from pages import Services, common_selectors
 from pages.common_actions import Selector, check_url, go_to_url, take_screenshot
 from pages.domestic import actions as domestic_actions
-from settings import EXRED_UI_URL
+from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Markets"
 SERVICE = Services.DOMESTIC
 TYPE = "country guide"
-URL = urljoin(EXRED_UI_URL, "markets/")
+URL = urljoin(DOMESTIC_URL, "markets/")
 
 NAMES = [
     "Brazil",

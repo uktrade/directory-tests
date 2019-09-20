@@ -22,12 +22,12 @@ from pages.common_actions import (
 )
 from pages.domestic import contact_us_soo_long_organisation_details
 from pages.domestic.autocomplete_callbacks import autocomplete_company_name
-from settings import EXRED_UI_URL
+from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Long Domestic (Your Business)"
 SERVICE = Services.DOMESTIC
 TYPE = "Contact us"
-URL = urljoin(EXRED_UI_URL, "contact/selling-online-overseas/organisation/")
+URL = urljoin(DOMESTIC_URL, "contact/selling-online-overseas/organisation/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 SUBMIT_BUTTON = Selector(

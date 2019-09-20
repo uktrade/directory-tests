@@ -22,12 +22,12 @@ from pages.common_actions import (
     tick_captcha_checkbox,
     visit_url,
 )
-from settings import INVEST_UI_URL
+from directory_tests_shared.settings import INVEST_URL
 
 NAME = "Contact us"
 SERVICE = Services.INVEST
 TYPE = "contact"
-URL = urljoin(INVEST_UI_URL, "contact/")
+URL = urljoin(INVEST_URL, "contact/")
 PAGE_TITLE = ""
 
 IM_NOT_A_ROBOT = Selector(By.CSS_SELECTOR, ".recaptcha-checkbox-checkmark")

@@ -31,7 +31,7 @@ from pages.common_actions import (
 )
 from utils.browser import clear_driver_cookies
 from pages.domestic import contact_us_office_finder_search_results
-from settings import (
+from directory_tests_shared.constants import (
     FORMS_API_MAILBOXES,
     HPO_AGENT_EMAIL_ADDRESS,
     HPO_AGENT_EMAIL_SUBJECT,

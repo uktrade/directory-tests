@@ -23,14 +23,14 @@ from pages.common_actions import (
     take_screenshot,
 )
 from pages.profile import enrol_enter_your_details
-from settings import DIRECTORY_UI_PROFILE_URL
+from directory_tests_shared.settings import PROFILE_URL
 
 NAME = "Enter your business details [step 2]"
 NAMES = ["Enter your business details [step 2] (LTD, PLC or Royal Charter)"]
 SERVICE = Services.PROFILE
 TYPE = "Enrol"
 URL = urljoin(
-    DIRECTORY_UI_PROFILE_URL, "enrol/business-type/companies-house/business-details/"
+    PROFILE_URL, "enrol/business-type/companies-house/business-details/"
 )
 URLs = {"enter your business details [step 2] (ltd, plc or royal charter)": URL}
 PAGE_TITLE = ""

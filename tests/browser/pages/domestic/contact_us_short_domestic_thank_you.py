@@ -7,7 +7,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages import Services
 from pages.common_actions import Selector, check_url, take_screenshot
-from settings import EXRED_UI_URL
+from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Thank you for your enquiry"
 NAMES = [
@@ -26,7 +26,7 @@ NAMES = [
 ]
 SERVICE = Services.DOMESTIC
 TYPE = "Short Domestic Contact us"
-URL = urljoin(EXRED_UI_URL, "contact/domestic/success/")
+URL = urljoin(DOMESTIC_URL, "contact/domestic/success/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 PDF_LINKS = Selector(By.CSS_SELECTOR, "#documents-section a.link")

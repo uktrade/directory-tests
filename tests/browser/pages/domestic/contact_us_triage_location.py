@@ -19,12 +19,12 @@ from pages.common_actions import (
     take_screenshot,
 )
 from pages.domestic import contact_us_triage_domestic, contact_us_triage_international
-from settings import EXRED_UI_URL
+from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Contact Us"
 SERVICE = Services.DOMESTIC
 TYPE = "Contact us"
-URL = urljoin(EXRED_UI_URL, "contact/triage/location/")
+URL = urljoin(DOMESTIC_URL, "contact/triage/location/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 THE_UK = Selector(

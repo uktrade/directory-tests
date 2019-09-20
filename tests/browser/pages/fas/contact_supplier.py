@@ -23,12 +23,12 @@ from pages.common_actions import (
     tick_checkboxes,
     try_js_click_on_element_click_intercepted_exception,
 )
-from settings import DIRECTORY_UI_SUPPLIER_URL
+from directory_tests_shared.settings import FIND_A_SUPPLIER_URL
 
 NAME = "Contact Supplier"
 SERVICE = Services.FIND_A_SUPPLIER
 TYPE = "contact"
-URL = urljoin(DIRECTORY_UI_SUPPLIER_URL, "suppliers/{company_number}/contact/")
+URL = urljoin(FIND_A_SUPPLIER_URL, "suppliers/{company_number}/contact/")
 PAGE_TITLE = "Find a Buyer - GREAT.gov.uk"
 
 SEND_BUTTON = Selector(

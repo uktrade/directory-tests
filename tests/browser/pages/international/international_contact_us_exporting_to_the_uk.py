@@ -13,12 +13,12 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from settings import EXRED_UI_URL
+from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Exporting to the UK"
 SERVICE = Services.INTERNATIONAL
 TYPE = "Dedicated Support Content"
-URL = urljoin(EXRED_UI_URL, "contact/triage/international/exporting-to-the-uk/")
+URL = urljoin(DOMESTIC_URL, "contact/triage/international/exporting-to-the-uk/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
 SUBMIT_BUTTON = Selector(

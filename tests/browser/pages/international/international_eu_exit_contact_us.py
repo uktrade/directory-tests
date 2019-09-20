@@ -24,12 +24,12 @@ from pages.common_actions import (
     tick_captcha_checkbox,
     tick_checkboxes,
 )
-from settings import EXRED_UI_URL
+from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Brexit help"
 SERVICE = Services.INTERNATIONAL
 TYPE = "Contact us"
-URL = urljoin(EXRED_UI_URL, "international/brexit/contact/")
+URL = urljoin(DOMESTIC_URL, "international/brexit/contact/")
 PAGE_TITLE = "Welcome to great.gov.uk - buy from or invest in the UK"
 
 

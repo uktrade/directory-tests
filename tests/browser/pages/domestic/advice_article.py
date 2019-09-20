@@ -21,12 +21,12 @@ from pages.common_actions import (
     take_screenshot,
 )
 from pages.domestic import actions as domestic_actions
-from settings import EXRED_UI_URL
+from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Advice"
 SERVICE = Services.DOMESTIC
 TYPE = "article"
-URL = urljoin(EXRED_UI_URL, "advice/")
+URL = urljoin(DOMESTIC_URL, "advice/")
 
 ARTICLE_NAME = Selector(By.CSS_SELECTOR, "article h1")
 ARTICLE_TEXT = Selector(By.CSS_SELECTOR, ".article-content")

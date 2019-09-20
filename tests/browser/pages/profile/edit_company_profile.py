@@ -7,12 +7,12 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages import Services
 from pages.common_actions import check_url, go_to_url, take_screenshot
-from settings import DIRECTORY_UI_PROFILE_URL
+from directory_tests_shared.settings import PROFILE_URL
 
 NAME = "Edit Company Profile"
 SERVICE = Services.PROFILE
 TYPE = "profile"
-URL = urljoin(DIRECTORY_UI_PROFILE_URL, "find-a-buyer/")
+URL = urljoin(PROFILE_URL, "find-a-buyer/")
 PAGE_TITLE = "Business profile - great.gov.uk"
 
 SELECTORS = {}

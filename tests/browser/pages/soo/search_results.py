@@ -22,12 +22,12 @@ from pages.common_actions import (
     take_screenshot,
 )
 from pages.soo import search_criteria
-from settings import SELLING_ONLINE_OVERSEAS_UI_URL
+from directory_tests_shared.settings import SOO_URL
 
 SERVICE = Services.SOO
 TYPE = "search"
 NAME = "Search results"
-URL = urljoin(SELLING_ONLINE_OVERSEAS_UI_URL, "markets/results/")
+URL = urljoin(SOO_URL, "markets/results/")
 PAGE_TITLE = "Search results | Selling online overseas"
 
 SEARCH_BUTTON = Selector(

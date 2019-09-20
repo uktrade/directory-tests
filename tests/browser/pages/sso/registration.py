@@ -19,14 +19,13 @@ from pages.common_actions import (
     take_screenshot,
     tick_checkboxes,
     try_js_click_on_element_click_intercepted_exception,
-    wait_for_page_load_after_action,
 )
-from settings import DIRECTORY_UI_SSO_URL
+from directory_tests_shared.settings import SSO_URL
 
 NAME = "Registration"
 SERVICE = Services.SSO
 TYPE = "registration"
-URL = urljoin(DIRECTORY_UI_SSO_URL, "accounts/signup/")
+URL = urljoin(SSO_URL, "accounts/signup/")
 PAGE_TITLE = "Register - great.gov.uk"
 
 SEND_BUTTON = Selector(

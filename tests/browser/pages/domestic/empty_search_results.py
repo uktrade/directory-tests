@@ -9,12 +9,12 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages import ElementType, Services
 from pages.common_actions import Selector, check_url, take_screenshot
-from settings import EXRED_UI_URL
+from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Empty Search results"
 SERVICE = Services.DOMESTIC
 TYPE = "Search"
-URL = urljoin(EXRED_UI_URL, "/search/?q=")
+URL = urljoin(DOMESTIC_URL, "/search/?q=")
 
 SELECTORS = {
     "form": {

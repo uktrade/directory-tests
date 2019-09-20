@@ -17,12 +17,12 @@ from pages.common_actions import (
     take_screenshot,
     visit_url,
 )
-from settings import INTERNATIONAL_UI_URL
+from directory_tests_shared.settings import INTERNATIONAL_URL
 
 NAME = "How to set up in the UK"
 SERVICE = Services.INVEST
 TYPE = "landing"
-URL = urljoin(INTERNATIONAL_UI_URL, "content/invest/how-to-setup-in-the-uk/")
+URL = urljoin(INTERNATIONAL_URL, "content/invest/how-to-setup-in-the-uk/")
 PAGE_TITLE = "Invest In Great Britain - UK Setup Guide"
 
 

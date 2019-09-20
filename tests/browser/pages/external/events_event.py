@@ -14,12 +14,12 @@ from pages.common_actions import (
     take_screenshot,
     wait_for_visibility,
 )
-from settings import EVENTS_UI_URL
+from directory_tests_shared.settings import EVENTS_URL
 
 NAME = "Event"
 SERVICE = Services.EVENTS
 TYPE = "event"
-URL = urljoin(EVENTS_UI_URL, "")
+URL = urljoin(EVENTS_URL, "")
 GREAT_LOGO = Selector(By.CSS_SELECTOR, "div.event-logo")
 SELECTORS = {
     "general": {"great.gov.uk logo": GREAT_LOGO},

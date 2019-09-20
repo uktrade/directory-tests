@@ -15,12 +15,12 @@ from pages.common_actions import (
     take_screenshot,
 )
 from pages.domestic import actions as domestic_actions
-from settings import EXRED_UI_URL
+from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Join our export community"
 SERVICE = Services.DOMESTIC
 TYPE = "landing"
-URL = urljoin(EXRED_UI_URL, "community/")
+URL = urljoin(DOMESTIC_URL, "community/")
 
 SELECTORS = {
     "share on social media": {"itself": Selector(By.CSS_SELECTOR, "ul.sharing-links")},

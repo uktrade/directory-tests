@@ -2,7 +2,6 @@
 """Selling Online Overseas Home Page Object."""
 import logging
 import random
-from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
@@ -20,10 +19,10 @@ from pages.common_actions import (
     take_screenshot,
 )
 from pages.soo import search_criteria
-from settings import SELLING_ONLINE_OVERSEAS_UI_URL
+from directory_tests_shared.settings import SOO_URL
 
 NAME = "Home"
-URL = urljoin(SELLING_ONLINE_OVERSEAS_UI_URL, "")
+URL = SOO_URL
 SERVICE = Services.SOO
 TYPE = "home"
 PAGE_TITLE = "Welcome to Selling online overseas"

@@ -25,13 +25,13 @@ from pages.common_actions import (
     tick_checkboxes_by_labels,
     visit_url,
 )
-from settings import INTERNATIONAL_UI_URL
+from directory_tests_shared.settings import INTERNATIONAL_URL
 
 NAME = "Contact us"
 NAMES = ["Advanced food production", "Lightweight structures", "Rail infrastructure"]
 SERVICE = Services.INVEST
 TYPE = "HPO Contact us"
-URL = urljoin(INTERNATIONAL_UI_URL, "content/invest/high-potential-opportunities/")
+URL = urljoin(INTERNATIONAL_URL, "content/invest/high-potential-opportunities/")
 URLs = {
     "advanced food production": urljoin(URL, "food-production/contact/"),
     "lightweight structures": urljoin(URL, "lightweight-structures/contact/"),

@@ -15,12 +15,12 @@ from pages.common_actions import (
     take_screenshot,
 )
 from pages.domestic import actions as domestic_actions
-from settings import EXRED_UI_URL
+from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Report a trade barrier"
 SERVICE = Services.DOMESTIC
 TYPE = "article"
-URL = urljoin(EXRED_UI_URL, "report-trade-barrier/")
+URL = urljoin(DOMESTIC_URL, "report-trade-barrier/")
 
 SELECTORS = {
     "description": {

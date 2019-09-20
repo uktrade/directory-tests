@@ -15,12 +15,12 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from settings import DIRECTORY_UI_PROFILE_URL
+from directory_tests_shared.settings import PROFILE_URL
 
 NAME = "Create an account"
 SERVICE = Services.PROFILE
 TYPE = "Enrol"
-URL = urljoin(DIRECTORY_UI_PROFILE_URL, "enrol/")
+URL = urljoin(PROFILE_URL, "enrol/")
 PAGE_TITLE = ""
 
 SELECTORS = {

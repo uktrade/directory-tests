@@ -16,10 +16,10 @@ from pages.common_actions import (
     take_screenshot,
     visit_url,
 )
-from settings import INVEST_UI_URL
+from directory_tests_shared.settings import INVEST_URL
 
 NAME = "landing"
-URL = INVEST_UI_URL
+URL = INVEST_URL
 SERVICE = Services.INVEST
 TYPE = "landing"
 PAGE_TITLE = "Invest in Great Britain - Home"

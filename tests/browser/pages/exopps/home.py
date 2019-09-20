@@ -12,12 +12,12 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from settings import EXPORT_OPPORTUNITIES_UI_URL
+from directory_tests_shared.settings import EXPORT_OPPORTUNITIES_URL
 
 NAME = "Home"
 SERVICE = Services.EXPORT_OPPORTUNITIES
 TYPE = "home"
-URL = urljoin(EXPORT_OPPORTUNITIES_UI_URL, "")
+URL = urljoin(EXPORT_OPPORTUNITIES_URL, "")
 PAGE_TITLE = "Export opportunities"
 SELECTORS = {}
 SELECTORS.update(common_selectors.HEADER)

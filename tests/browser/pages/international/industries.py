@@ -17,12 +17,12 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from settings import EXRED_UI_URL
+from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Industries"
 SERVICE = Services.INTERNATIONAL
 TYPE = "landing"
-URL = urljoin(EXRED_UI_URL, "international/content/about-uk/industries/")
+URL = urljoin(DOMESTIC_URL, "international/content/about-uk/industries/")
 PAGE_TITLE = "Welcome to great.gov.uk - buy from or invest in the UK"
 
 BREADCRUMB_LINKS = Selector(By.CSS_SELECTOR, ".breadcrumbs a")

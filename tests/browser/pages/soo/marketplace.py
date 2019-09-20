@@ -14,12 +14,12 @@ from pages.common_actions import (
     find_and_click_on_page_element,
     take_screenshot,
 )
-from settings import SELLING_ONLINE_OVERSEAS_UI_URL
+from directory_tests_shared.settings import SOO_URL
 
 SERVICE = Services.SOO
 TYPE = "search"
 NAME = "Marketplace"
-URL = urljoin(SELLING_ONLINE_OVERSEAS_UI_URL, "markets/details")
+URL = urljoin(SOO_URL, "markets/details")
 PAGE_TITLE = "Marketplace details | Selling Online Overseas"
 
 
