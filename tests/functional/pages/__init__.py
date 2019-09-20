@@ -60,7 +60,7 @@ class PageObjects(Enum):
 
 def get_enum_key(module: ModuleType) -> str:
     return (
-        f"{module.SERVICE.value}_{module.TYPE}_{module.NAME}".upper()
+        f"{module.SERVICE.value}_{module.TYPE.value}_{module.NAME}".upper()
         .replace(" ", "_")
         .replace("-", "_")
         .replace("'", "")
@@ -130,7 +130,7 @@ def get_page_object(service_and_page: str) -> ModuleType:
                 continue
 
         if sought_type:
-            if sought_type.lower() == page_object.type.lower():
+            if sought_type.lower() == page_object.type.value.lower():
                 logging.debug(f"PO search: matched type '{sought_type}'")
                 matched_type = True
             else:
