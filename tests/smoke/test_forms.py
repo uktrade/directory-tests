@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
 import pytest
-from rest_framework.status import *
+from rest_framework.status import (
+    HTTP_200_OK,
+    HTTP_404_NOT_FOUND,
+    HTTP_405_METHOD_NOT_ALLOWED,
+)
 
 from directory_client_core.base import AbstractAPIClient
 
