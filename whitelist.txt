@@ -2,6 +2,7 @@ Enum
 Formatter
 IDs
 Mixin
+Opps
 Paver
 Runtime
 Unrewindable
@@ -36,6 +37,7 @@ dirname
 dit
 dropdown
 enum
+enums
 environ
 eq
 errno

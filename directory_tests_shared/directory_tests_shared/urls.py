@@ -26,10 +26,8 @@ from .settings import (
 
 
 class Url:
-
     def __init__(
-            self, service_url: str, relative_endpoint: str, *,
-            template: str = None
+        self, service_url: str, relative_endpoint: str, *, template: str = None
     ):
         join_endpoint = partial(urljoin, service_url)
         self.relative: str = relative_endpoint
@@ -42,16 +40,12 @@ class Url:
 
 class CMSApiUrl(Url):
     def __init__(self, endpoint: str, *, template: str = None):
-        super().__init__(
-            DIRECTORY_CMS_API_CLIENT_BASE_URL, endpoint, template=template
-        )
+        super().__init__(DIRECTORY_CMS_API_CLIENT_BASE_URL, endpoint, template=template)
 
 
 class ContactUrl(Url):
     def __init__(self, endpoint: str, *, template: str = None):
-        super().__init__(
-            DIRECTORY_CONTACT_US_UI_URL, endpoint, template=template
-        )
+        super().__init__(DIRECTORY_CONTACT_US_UI_URL, endpoint, template=template)
 
 
 class DirectoryApiUrl(Url):
@@ -66,9 +60,7 @@ class DomesticUrl(Url):
 
 class ExOppsUrl(Url):
     def __init__(self, endpoint: str, *, template: str = None):
-        super().__init__(
-            EXPORT_OPPORTUNITIES_UI_URL, endpoint, template=template
-        )
+        super().__init__(EXPORT_OPPORTUNITIES_UI_URL, endpoint, template=template)
 
 
 class FABUrl(Url):
@@ -98,9 +90,7 @@ class FormsApiUrl(Url):
 
 class InternationalUrl(Url):
     def __init__(self, endpoint: str, *, template: str = None):
-        super().__init__(
-            DIRECTORY_UI_INTERNATIONAL_URL, endpoint, template=template
-        )
+        super().__init__(DIRECTORY_UI_INTERNATIONAL_URL, endpoint, template=template)
 
 
 class InvestUrl(Url):
@@ -142,9 +132,7 @@ class SSOUrl(Url):
 
 class SSOApiUrl(Url):
     def __init__(self, endpoint: str, *, template: str = None):
-        super().__init__(
-            DIRECTORY_SSO_API_CLIENT_BASE_URL, endpoint, template=template
-        )
+        super().__init__(DIRECTORY_SSO_API_CLIENT_BASE_URL, endpoint, template=template)
 
 
 @unique
@@ -152,8 +140,10 @@ class URLs(Enum):
     """This Enum is to help discover, refactor, find usage of URLs"""
 
     def __str__(self) -> str:
-        return (f"{self._name_} absolute URL: {self.value.absolute} relative "
-                f"URL: {self.value.relative}")
+        return (
+            f"{self._name_} absolute URL: {self.value.absolute} relative "
+            f"URL: {self.value.relative}"
+        )
 
     @property
     def absolute(self) -> str:
@@ -178,51 +168,66 @@ class URLs(Enum):
     DIR_API_PRE_VERIFIED_ENROLMENT = DirectoryApiUrl("pre-verified-enrolment/")
     DIR_API_ENROLMENT_TRUSTED_CODE = DirectoryApiUrl("trusted-code/{code}/")
     DIR_API_NOTIFICATIONS_ANONYMOUS_UNSUBSCRIBE = DirectoryApiUrl(
-        "notifications/anonymous-unsubscribe/")
+        "notifications/anonymous-unsubscribe/"
+    )
     DIR_API_BUYER = DirectoryApiUrl("buyer/")
     DIR_API_BUYER_CSV_DUMP = DirectoryApiUrl("buyer/csv-dump/")
     DIR_API_SUPPLIER_CSV_DUMP = DirectoryApiUrl("supplier/csv-dump/")
     DIR_API_VALIDATE_COMPANY_NUMBER = DirectoryApiUrl("validate/company-number/")
     DIR_API_COMPANIES_HOUSE_PROFILE = DirectoryApiUrl(
-        "company/companies-house-profile/")
+        "company/companies-house-profile/"
+    )
     DIR_API_SUPPLIER = DirectoryApiUrl("supplier/")
     DIR_API_SUPPLIER_UNSUBSCRIBE = DirectoryApiUrl("supplier/unsubscribe/")
     DIR_API_EXPORT_READINESS_TRIAGE = DirectoryApiUrl("export-readiness/triage/")
     DIR_API_EXPORT_READINESS_ARTICLE_READ = DirectoryApiUrl(
-        "export-readiness/article-read/")
+        "export-readiness/article-read/"
+    )
     DIR_API_EXPORT_READINESS_TASK_COMPLETED = DirectoryApiUrl(
-        "export-readiness/task-completed/")
+        "export-readiness/task-completed/"
+    )
     DIR_API_EXPORT_OPPORTUNITY_FOOD = DirectoryApiUrl("export-opportunity/food/")
     DIR_API_EXPORT_OPPORTUNITY_LEGAL = DirectoryApiUrl("export-opportunity/legal/")
     DIR_API_PUBLIC_COMPANY = DirectoryApiUrl("public/company/")
     DIR_API_PUBLIC_COMPANY_PROFILE = DirectoryApiUrl(
-        "public/company/{companies_house_number}/")
+        "public/company/{companies_house_number}/"
+    )
     DIR_API_PUBLIC_CASE_STUDY = DirectoryApiUrl("public/case-study/{id}/")
     DIR_API_SUPPLIER_COMPANY = DirectoryApiUrl("supplier/company/")
     DIR_API_SUPPLIER_COMPANY_CASE_STUDY = DirectoryApiUrl(
-        "supplier/company/case-study/")
+        "supplier/company/case-study/"
+    )
     DIR_API_SUPPLIER_COMPANY_CASE_STUDY_BY_ID = DirectoryApiUrl(
-        "supplier/company/case-study/{id}/")
+        "supplier/company/case-study/{id}/"
+    )
     DIR_API_SUPPLIER_COMPANY_VERIFY = DirectoryApiUrl("supplier/company/verify/")
     DIR_API_SUPPLIER_COMPANY_VERIFY_COMPANIES_HOUSE = DirectoryApiUrl(
-        "supplier/company/verify/companies-house/")
+        "supplier/company/verify/companies-house/"
+    )
     DIR_API_CONTACT_SUPPLIER = DirectoryApiUrl("contact/supplier/")
     DIR_API_COMPANY_SEARCH = DirectoryApiUrl("company/search/")
     DIR_API_CASE_STUDY_SEARCH = DirectoryApiUrl("case-study/search/")
     DIR_API_SUPPLIER_COMPANY_COLLABORATORS = DirectoryApiUrl(
-        "supplier/company/collaborators/")
+        "supplier/company/collaborators/"
+    )
     DIR_API_SUPPLIER_COMPANY_COLLABORATION_INVITE = DirectoryApiUrl(
-        "supplier/company/collaboration-invite/")
+        "supplier/company/collaboration-invite/"
+    )
     DIR_API_SUPPLIER_COMPANY_COLLABORATION_INVITE_BY_UUID = DirectoryApiUrl(
-        "supplier/company/collaboration-invite/{uuid}/")
+        "supplier/company/collaboration-invite/{uuid}/"
+    )
     DIR_API_SUPPLIER_COMPANY_REMOVE_COLLABORATORS = DirectoryApiUrl(
-        "supplier/company/remove-collaborators/")
+        "supplier/company/remove-collaborators/"
+    )
     DIR_API_SUPPLIER_COMPANY_TRANSFER_OWNERSHIP_INVITE = DirectoryApiUrl(
-        "supplier/company/transfer-ownership-invite/")
+        "supplier/company/transfer-ownership-invite/"
+    )
     DIR_API_SUPPLIER_COMPANY_TRANSFER_OWNERSHIP_INVITE_BY_UUID = DirectoryApiUrl(
-        "supplier/company/transfer-ownership-invite/{uuid}/")
+        "supplier/company/transfer-ownership-invite/{uuid}/"
+    )
     DIR_API_SUPPLIER_GECKO_TOTAL_REGISTERED = DirectoryApiUrl(
-        "supplier/gecko/total-registered/")
+        "supplier/gecko/total-registered/"
+    )
     DIR_API_ACTIVITY_STREAM = DirectoryApiUrl("activity-stream/")
     DIR_API_EXTERNAL_SUPPLIER_SSO = DirectoryApiUrl("external/supplier-sso/")
     DIR_API_EXTERNAL_SUPPLIER = DirectoryApiUrl("external/supplier/")
@@ -249,7 +254,8 @@ class URLs(Enum):
     FAB_SITEMAP = FABUrl("sitemap.xml")
     FAB_ACCOUNT_CONFIRM_OWNERSHIP_TRANSFER = FABUrl(
         "account/transfer/accept/?invite_key=",
-        template="account/transfer/accept/?invite_key={invite_key}")
+        template="account/transfer/accept/?invite_key={invite_key}",
+    )
     FAB_ACCOUNT_CONFIRM_PASSWORD = FABUrl("account/transfer/")
     FAB_ACCOUNT_REMOVE_COLLABORATOR = FABUrl("account/remove-collaborator/")
     FAB_ACCOUNT_TRANSFER_OWNERSHIP = FABUrl("account/transfer/")
@@ -261,8 +267,9 @@ class URLs(Enum):
 
     # Find a Supplier
     FAS_CASE_STUDY = FASUrl("case-study/", template="case-study/{number}/")
-    FAS_CONTACT_SUPPLIER = FASUrl("suppliers/",
-                                  template="suppliers/{ch_number}/contact/")
+    FAS_CONTACT_SUPPLIER = FASUrl(
+        "suppliers/", template="suppliers/{ch_number}/contact/"
+    )
     FAS_FEEDBACK = FASUrl("feedback/")
     FAS_HEALTHCHECK = FASUrl("healthcheck/")
     FAS_INDUSTRIES = FASUrl("industries/", template="industries/{industry}/")
@@ -287,78 +294,121 @@ class URLs(Enum):
     # New International site
     INTERNATIONAL_LANDING = InternationalUrl("")
     INTERNATIONAL_SITEMAP = InternationalUrl("sitemap.xml")
-    INTERNATIONAL_INDUSTRIES = InternationalUrl("content/about-uk/industries/",
-                                                template="content/about-uk/industries/{industry}/")
+    INTERNATIONAL_INDUSTRIES = InternationalUrl(
+        "content/about-uk/industries/",
+        template="content/about-uk/industries/{industry}/",
+    )
     INTERNATIONAL_CAPITAL_INVEST = InternationalUrl("content/capital-invest/")
     INTERNATIONAL_INDUSTRY_ADVANCED_MANUFACTURING = InternationalUrl(
-        "content/about-uk/industries/advanced-manufacturing/")
-    INTERNATIONAL_INDUSTRY_AEROSPACE = InternationalUrl("content/about-uk/industries/aerospace/")
-    INTERNATIONAL_INDUSTRY_AGRI_TECH = InternationalUrl("content/about-uk/industries/agri-tech/")
+        "content/about-uk/industries/advanced-manufacturing/"
+    )
+    INTERNATIONAL_INDUSTRY_AEROSPACE = InternationalUrl(
+        "content/about-uk/industries/aerospace/"
+    )
+    INTERNATIONAL_INDUSTRY_AGRI_TECH = InternationalUrl(
+        "content/about-uk/industries/agri-tech/"
+    )
     INTERNATIONAL_INDUSTRY_AGRICULTURAL_TECHNOLOGY = InternationalUrl(
-        "content/about-uk/industries/agricultural-technology/")
+        "content/about-uk/industries/agricultural-technology/"
+    )
     INTERNATIONAL_INDUSTRY_ASSET_MANAGEMENT = InternationalUrl(
-        "content/about-uk/industries/asset-management/")
+        "content/about-uk/industries/asset-management/"
+    )
     INTERNATIONAL_INDUSTRY_AUTOMOTIVE = InternationalUrl(
-        "content/about-uk/industries/automotive/")
+        "content/about-uk/industries/automotive/"
+    )
     INTERNATIONAL_INDUSTRY_AUTOMOTIVE_RESEARCH_AND_DEVELOPMENT = InternationalUrl(
-        "content/about-uk/industries/automotive-research-and-development/")
+        "content/about-uk/industries/automotive-research-and-development/"
+    )
     INTERNATIONAL_INDUSTRY_AUTOMOTIVE_SUPPLY_CHAIN = InternationalUrl(
-        "content/about-uk/industries/automotive-supply-chain/")
-    INTERNATIONAL_INDUSTRY_CHEMICALS = InternationalUrl("content/about-uk/industries/chemicals/")
+        "content/about-uk/industries/automotive-supply-chain/"
+    )
+    INTERNATIONAL_INDUSTRY_CHEMICALS = InternationalUrl(
+        "content/about-uk/industries/chemicals/"
+    )
     INTERNATIONAL_INDUSTRY_CREATIVE_CONTENT_AND_PRODUCTION = InternationalUrl(
-        "content/about-uk/industries/creative-content-and-production/")
+        "content/about-uk/industries/creative-content-and-production/"
+    )
     INTERNATIONAL_INDUSTRY_CREATIVE_INDUSTRIES = InternationalUrl(
-        "content/about-uk/industries/creative-industries/")
+        "content/about-uk/industries/creative-industries/"
+    )
     INTERNATIONAL_INDUSTRY_DATA_ANALYTICS = InternationalUrl(
-        "content/about-uk/industries/data-analytics/")
+        "content/about-uk/industries/data-analytics/"
+    )
     INTERNATIONAL_INDUSTRY_DIGITAL_MEDIA = InternationalUrl(
-        "content/about-uk/industries/digital-media/")
+        "content/about-uk/industries/digital-media/"
+    )
     INTERNATIONAL_INDUSTRY_ELECTRICAL_NETWORKS = InternationalUrl(
-        "content/about-uk/industries/electrical-networks/")
-    INTERNATIONAL_INDUSTRY_ENERGY = InternationalUrl("content/about-uk/industries/energy/")
+        "content/about-uk/industries/electrical-networks/"
+    )
+    INTERNATIONAL_INDUSTRY_ENERGY = InternationalUrl(
+        "content/about-uk/industries/energy/"
+    )
     INTERNATIONAL_INDUSTRY_ENERGY_WASTE = InternationalUrl(
-        "content/about-uk/industries/energy-waste/")
+        "content/about-uk/industries/energy-waste/"
+    )
     INTERNATIONAL_INDUSTRY_ENGINEERING_AND_MANUFACTURING = InternationalUrl(
-        "content/about-uk/industries/engineering-and-manufacturing/")
+        "content/about-uk/industries/engineering-and-manufacturing/"
+    )
     INTERNATIONAL_INDUSTRY_FINANCIAL_SERVICES = InternationalUrl(
-        "content/about-uk/industries/financial-services/")
+        "content/about-uk/industries/financial-services/"
+    )
     INTERNATIONAL_INDUSTRY_FINANCIAL_TECHNOLOGY = InternationalUrl(
-        "content/about-uk/industries/financial-technology/")
+        "content/about-uk/industries/financial-technology/"
+    )
     INTERNATIONAL_INDUSTRY_FOOD_AND_DRINK = InternationalUrl(
-        "content/about-uk/industries/food-and-drink/")
+        "content/about-uk/industries/food-and-drink/"
+    )
     INTERNATIONAL_INDUSTRY_FOOD_SERVICE_AND_CATERING = InternationalUrl(
-        "content/about-uk/industries/food-service-and-catering/")
+        "content/about-uk/industries/food-service-and-catering/"
+    )
     INTERNATIONAL_INDUSTRY_FREE_FOODS = InternationalUrl(
-        "content/about-uk/industries/free-foods/")
+        "content/about-uk/industries/free-foods/"
+    )
     INTERNATIONAL_INDUSTRY_HEALTH_AND_LIFE_SCIENCES = InternationalUrl(
-        "content/about-uk/industries/health-and-life-sciences/")
+        "content/about-uk/industries/health-and-life-sciences/"
+    )
     INTERNATIONAL_INDUSTRY_MEAT_POULTRY_AND_DAIRY = InternationalUrl(
-        "content/about-uk/industries/meat-poultry-and-dairy/")
+        "content/about-uk/industries/meat-poultry-and-dairy/"
+    )
     INTERNATIONAL_INDUSTRY_MEDICAL_TECHNOLOGY = InternationalUrl(
-        "content/about-uk/industries/medical-technology/")
+        "content/about-uk/industries/medical-technology/"
+    )
     INTERNATIONAL_INDUSTRY_MOTORSPORT = InternationalUrl(
-        "content/about-uk/industries/motorsport/")
+        "content/about-uk/industries/motorsport/"
+    )
     INTERNATIONAL_INDUSTRY_NUCLEAR_ENERGY = InternationalUrl(
-        "content/about-uk/industries/nuclear-energy/")
+        "content/about-uk/industries/nuclear-energy/"
+    )
     INTERNATIONAL_INDUSTRY_OFFSHORE_WIND_ENERGY = InternationalUrl(
-        "content/about-uk/industries/offshore-wind-energy/")
+        "content/about-uk/industries/offshore-wind-energy/"
+    )
     INTERNATIONAL_INDUSTRY_OIL_AND_GAS = InternationalUrl(
-        "content/about-uk/industries/oil-and-gas/")
+        "content/about-uk/industries/oil-and-gas/"
+    )
     INTERNATIONAL_INDUSTRY_PHARMACEUTICAL_MANUFACTURING = InternationalUrl(
-        "content/about-uk/industries/pharmaceutical-manufacturing/")
-    INTERNATIONAL_INDUSTRY_RETAIL = InternationalUrl("content/about-uk/industries/retail/")
+        "content/about-uk/industries/pharmaceutical-manufacturing/"
+    )
+    INTERNATIONAL_INDUSTRY_RETAIL = InternationalUrl(
+        "content/about-uk/industries/retail/"
+    )
     INTERNATIONAL_INDUSTRY_TECHNOLOGY = InternationalUrl(
-        "content/about-uk/industries/technology/")
+        "content/about-uk/industries/technology/"
+    )
     INTERNATIONAL_HEALTHCHECK_FORMS_API = InternationalUrl("healthcheck/forms-api/")
     INTERNATIONAL_HEALTHCHECK_SENTRY = InternationalUrl("healthcheck/sentry/")
     INTERNATIONAL_REGIONS_MIDLANDS = InternationalUrl(
-        "content/about-uk/regions/midlands/")
+        "content/about-uk/regions/midlands/"
+    )
     INTERNATIONAL_REGIONS_NORTHERN_IRELAND = InternationalUrl(
-        "content/about-uk/regions/northern-ireland/")
+        "content/about-uk/regions/northern-ireland/"
+    )
     INTERNATIONAL_REGIONS_SOUTH_ENGLAND = InternationalUrl(
-        "content/about-uk/regions/south-england/")
+        "content/about-uk/regions/south-england/"
+    )
     INTERNATIONAL_REGIONS_NORTH_ENGLAND = InternationalUrl(
-        "content/about-uk/regions/north-england/")
+        "content/about-uk/regions/north-england/"
+    )
     INTERNATIONAL_REGIONS_WALES = InternationalUrl("content/about-uk/regions/wales/")
 
     # Invest site
@@ -367,50 +417,70 @@ class URLs(Enum):
     INVEST_CONTACT = InvestUrl("contact/")
     INVEST_SITEMAP = InvestUrl("sitemap.xml")
     INVEST_HPO_CONTACT = InternationalUrl(
-        "content/invest/high-potential-opportunities/contact/")
+        "content/invest/high-potential-opportunities/contact/"
+    )
     INVEST_HPO_RAIL = InternationalUrl(
-        "content/invest/high-potential-opportunities/rail-infrastructure/")
+        "content/invest/high-potential-opportunities/rail-infrastructure/"
+    )
     INVEST_HPO_FOOD = InternationalUrl(
-        "content/invest/high-potential-opportunities/food-production/")
+        "content/invest/high-potential-opportunities/food-production/"
+    )
     INVEST_HPO_LIGHTWEIGHT = InternationalUrl(
-        "content/invest/high-potential-opportunities/lightweight-structures/")
+        "content/invest/high-potential-opportunities/lightweight-structures/"
+    )
 
     INVEST_INDUSTRIES = LegacyInvestUrl("industries/")
-    INVEST_REGIONS_SCOTLAND = InternationalUrl(
-        "content/invest/uk-regions/scotland/")
+    INVEST_REGIONS_SCOTLAND = InternationalUrl("content/invest/uk-regions/scotland/")
     INVEST_LEGACY_UK_SETUP_GUIDE = LegacyInvestUrl("uk-setup-guide/")
-    INVEST_LEGACY_UK_SETUP_GUIDE_UK_VISAS = LegacyInvestUrl("uk-setup-guide/apply-uk-visa/")
+    INVEST_LEGACY_UK_SETUP_GUIDE_UK_VISAS = LegacyInvestUrl(
+        "uk-setup-guide/apply-uk-visa/"
+    )
     INVEST_LEGACY_UK_SETUP_GUIDE_ESTABLISH_A_BASE = LegacyInvestUrl(
-        "uk-setup-guide/establish-base-business-uk/")
+        "uk-setup-guide/establish-base-business-uk/"
+    )
     INVEST_LEGACY_UK_SETUP_GUIDE_HIRE_SKILLED_WORKERS = LegacyInvestUrl(
-        "uk-setup-guide/hire-skilled-workers-your-uk-operations/")
+        "uk-setup-guide/hire-skilled-workers-your-uk-operations/"
+    )
     INVEST_LEGACY_UK_SETUP_GUIDE_OPEN_BANK_ACCOUNT = LegacyInvestUrl(
-        "uk-setup-guide/open-uk-business-bank-account/")
+        "uk-setup-guide/open-uk-business-bank-account/"
+    )
     INVEST_LEGACY_UK_SETUP_GUIDE_REGISTER_A_COMPANY = LegacyInvestUrl(
-        "uk-setup-guide/setup-your-business-uk/")
+        "uk-setup-guide/setup-your-business-uk/"
+    )
     INVEST_LEGACY_UK_SETUP_GUIDE_UK_TAX = LegacyInvestUrl(
-        "uk-setup-guide/understand-uk-tax-and-incentives/")
+        "uk-setup-guide/understand-uk-tax-and-incentives/"
+    )
 
     INVEST_UK_SETUP_GUIDE = InternationalUrl(
         "content/invest/how-to-setup-in-the-uk/",
-        template="content/invest/how-to-setup-in-the-uk/{guide}/")
+        template="content/invest/how-to-setup-in-the-uk/{guide}/",
+    )
     INVEST_UK_SETUP_GUIDE_UK_VISAS = InternationalUrl(
-        "content/invest/how-to-setup-in-the-uk/uk-visas-and-migration/")
+        "content/invest/how-to-setup-in-the-uk/uk-visas-and-migration/"
+    )
     INVEST_UK_SETUP_GUIDE_ACCESS_FINANCE = InternationalUrl(
-        "content/invest/how-to-setup-in-the-uk/access-finance-in-the-uk/")
+        "content/invest/how-to-setup-in-the-uk/access-finance-in-the-uk/"
+    )
     INVEST_UK_SETUP_GUIDE_ESTABLISH_A_BASE = InternationalUrl(
-        "content/invest/how-to-setup-in-the-uk/establish-a-base-for-business-in-the-uk/")
+        "content/invest/how-to-setup-in-the-uk/establish-a-base-for-business-in-the-uk/"
+    )
     INVEST_UK_SETUP_GUIDE_HIRE_SKILLED_WORKERS = InternationalUrl(
-        "content/invest/how-to-setup-in-the-uk/hire-skilled-workers-for-your-uk-operations/")
+        "content/invest/how-to-setup-in-the-uk/hire-skilled-workers-for-your-uk-operations/"  # noqa
+    )
     INVEST_UK_SETUP_GUIDE_OPEN_BANK_ACCOUNT = InternationalUrl(
-        "content/invest/how-to-setup-in-the-uk/open-a-uk-business-bank-account/")
+        "content/invest/how-to-setup-in-the-uk/open-a-uk-business-bank-account/"
+    )
     INVEST_UK_SETUP_GUIDE_REGISTER_A_COMPANY = InternationalUrl(
-        "content/invest/how-to-setup-in-the-uk/register-a-company-in-the-uk/")
+        "content/invest/how-to-setup-in-the-uk/register-a-company-in-the-uk/"
+    )
     INVEST_UK_SETUP_GUIDE_UK_TAX = InternationalUrl(
-        "content/invest/how-to-setup-in-the-uk/uk-tax-and-incentives/")
+        "content/invest/how-to-setup-in-the-uk/uk-tax-and-incentives/"
+    )
 
     INVEST_LEGACY_REGIONS_MIDLANDS = LegacyInvestUrl("uk-regions/midlands/")
-    INVEST_LEGACY_REGIONS_NORTHERN_IRELAND = LegacyInvestUrl("uk-regions/northern-ireland/")
+    INVEST_LEGACY_REGIONS_NORTHERN_IRELAND = LegacyInvestUrl(
+        "uk-regions/northern-ireland/"
+    )
     INVEST_LEGACY_REGIONS_SOUTH_ENGLAND = LegacyInvestUrl("uk-regions/south-england/")
     INVEST_LEGACY_REGIONS_NORTH_ENGLAND = LegacyInvestUrl("uk-regions/north-england/")
     INVEST_LEGACY_REGIONS_LONDON = LegacyInvestUrl("uk-regions/london/")
@@ -418,49 +488,64 @@ class URLs(Enum):
     INVEST_LEGACY_REGIONS_SCOTLAND = LegacyInvestUrl("uk-regions/scotland/")
 
     INVEST_INDUSTRIES_ADVANCED_MANUFACTURING = LegacyInvestUrl(
-        "industries/advanced-manufacturing/")
+        "industries/advanced-manufacturing/"
+    )
     INVEST_INDUSTRIES_AEROSPACE = LegacyInvestUrl("industries/aerospace/")
     INVEST_INDUSTRIES_AGRI_TECH = LegacyInvestUrl("industries/agri-tech/")
     INVEST_INDUSTRIES_ASSET_MANAGEMENT = LegacyInvestUrl("industries/asset-management/")
     INVEST_INDUSTRIES_AUTOMOTIVE = LegacyInvestUrl("industries/automotive/")
     INVEST_INDUSTRIES_AUTOMOTIVE_RESEARCH_AND_DEVELOPMENT = LegacyInvestUrl(
-        "industries/automotive-research-and-development/")
+        "industries/automotive-research-and-development/"
+    )
     INVEST_INDUSTRIES_AUTOMOTIVE_SUPPLY_CHAIN = LegacyInvestUrl(
-        "industries/automotive-supply-chain/")
+        "industries/automotive-supply-chain/"
+    )
     INVEST_INDUSTRIES_CAPITAL_INVESTMENT = LegacyInvestUrl(
-        "industries/capital-investment/")
+        "industries/capital-investment/"
+    )
     INVEST_INDUSTRIES_CHEMICALS = LegacyInvestUrl("industries/chemicals/")
     INVEST_INDUSTRIES_CREATIVE_CONTENT_AND_PRODUCTION = LegacyInvestUrl(
-        "industries/creative-content-and-production/")
+        "industries/creative-content-and-production/"
+    )
     INVEST_INDUSTRIES_CREATIVE_INDUSTRIES = LegacyInvestUrl(
-        "industries/creative-industries/")
+        "industries/creative-industries/"
+    )
     INVEST_INDUSTRIES_DATA_ANALYTICS = LegacyInvestUrl("industries/data-analytics/")
     INVEST_INDUSTRIES_DIGITAL_MEDIA = LegacyInvestUrl("industries/digital-media/")
     INVEST_INDUSTRIES_ELECTRICAL_NETWORKS = LegacyInvestUrl(
-        "industries/electrical-networks/")
+        "industries/electrical-networks/"
+    )
     INVEST_INDUSTRIES_ENERGY = LegacyInvestUrl("industries/energy/")
     INVEST_INDUSTRIES_ENERGY_WASTE = LegacyInvestUrl("industries/energy-waste/")
     INVEST_INDUSTRIES_FINANCIAL_SERVICES = LegacyInvestUrl(
-        "industries/financial-services/")
+        "industries/financial-services/"
+    )
     INVEST_INDUSTRIES_FINANCIAL_TECHNOLOGY = LegacyInvestUrl(
-        "industries/financial-technology/")
+        "industries/financial-technology/"
+    )
     INVEST_INDUSTRIES_FOOD_AND_DRINK = LegacyInvestUrl("industries/food-and-drink/")
     INVEST_INDUSTRIES_FOOD_SERVICE_AND_CATERING = LegacyInvestUrl(
-        "industries/food-service-and-catering/")
+        "industries/food-service-and-catering/"
+    )
     INVEST_INDUSTRIES_FREE_FOODS = LegacyInvestUrl("industries/free-foods/")
     INVEST_INDUSTRIES_HEALTH_AND_LIFE_SCIENCES = LegacyInvestUrl(
-        "industries/health-and-life-sciences/")
+        "industries/health-and-life-sciences/"
+    )
     INVEST_INDUSTRIES_MEAT_POULTRY_AND_DAIRY = LegacyInvestUrl(
-        "industries/meat-poultry-and-dairy/")
+        "industries/meat-poultry-and-dairy/"
+    )
     INVEST_INDUSTRIES_MEDICAL_TECHNOLOGY = LegacyInvestUrl(
-        "industries/medical-technology/")
+        "industries/medical-technology/"
+    )
     INVEST_INDUSTRIES_MOTORSPORT = LegacyInvestUrl("industries/motorsport/")
     INVEST_INDUSTRIES_NUCLEAR_ENERGY = LegacyInvestUrl("industries/nuclear-energy/")
     INVEST_INDUSTRIES_OFFSHORE_WIND_ENERGY = LegacyInvestUrl(
-        "industries/offshore-wind-energy/")
+        "industries/offshore-wind-energy/"
+    )
     INVEST_INDUSTRIES_OIL_AND_GAS = LegacyInvestUrl("industries/oil-and-gas/")
     INVEST_INDUSTRIES_PHARMACEUTICAL_MANUFACTURING = LegacyInvestUrl(
-        "industries/pharmaceutical-manufacturing/")
+        "industries/pharmaceutical-manufacturing/"
+    )
     INVEST_INDUSTRIES_RETAIL = LegacyInvestUrl("industries/retail/")
     INVEST_INDUSTRIES_TECHNOLOGY = LegacyInvestUrl("industries/technology/")
 
@@ -468,8 +553,10 @@ class URLs(Enum):
     ISD_SEARCH = ISDUrl("search/")
 
     # FAS/ISD Profile
-    PROFILE_API_COMPANIES_HOUSE_SEARCH = FABApiUrl("api/v1/companies-house-search/",
-                                                   template="api/v1/companies-house-search/?term={term}")
+    PROFILE_API_COMPANIES_HOUSE_SEARCH = FABApiUrl(
+        "api/v1/companies-house-search/",
+        template="api/v1/companies-house-search/?term={term}",
+    )
     PROFILE_HEALTHCHECK = ProfileUrl("healthcheck/")
     PROFILE_HEALTHCHECK_PING = ProfileUrl("healthcheck/ping/")
     PROFILE_SOO = ProfileUrl("selling-online-overseas/")
@@ -481,38 +568,51 @@ class URLs(Enum):
     PROFILE_ABOUT = ProfileUrl("about/")
     PROFILE_ACCOUNT_ACCEPT_INVITATION = ProfileUrl(
         "account/collaborate/accept/?invite_key={invite_key}",
-        template="account/collaborate/accept/?invite_key={invite_key}")
+        template="account/collaborate/accept/?invite_key={invite_key}",
+    )
     PROFILE_ACCOUNT_ADD_COLLABORATOR = ProfileUrl("business-profile/admin/invite/")
     PROFILE_ENROL = ProfileUrl("enrol/")
     PROFILE_ENROL_INDIVIDUAL_UPDATE_YOUR_DETAILS = ProfileUrl(
-        "enrol/?backfill-details-intent=true")
+        "enrol/?backfill-details-intent=true"
+    )
     PROFILE_ENROL_INDIVIDUAL_ENTER_YOUR_PERSONAL_DETAILS = ProfileUrl(
-        "enrol/business-type/individual/personal-details/")
+        "enrol/business-type/individual/personal-details/"
+    )
     PROFILE_ENROL_INDIVIDUAL_FINISHED = ProfileUrl(
-        "enrol/business-type/individual/finished/")
+        "enrol/business-type/individual/finished/"
+    )
     PROFILE_ENROL_SELECT_BUSINESS_TYPE = ProfileUrl("enrol/business-type/")
     PROFILE_ENROL_USER_ACCOUNT = ProfileUrl(
-        "enrol/business-type/companies-house/user-account/")
+        "enrol/business-type/companies-house/user-account/"
+    )
     PROFILE_ENROL_EMAIL_VERIFICATION = ProfileUrl(
-        "enrol/business-type/companies-house/verification/")
+        "enrol/business-type/companies-house/verification/"
+    )
     PROFILE_ENROL_COMPANIES_HOUSE_SEARCH = ProfileUrl(
-        "enrol/business-type/companies-house/company-search/")
+        "enrol/business-type/companies-house/company-search/"
+    )
     PROFILE_ENROL_BUSINESS_DETAILS = ProfileUrl(
-        "enrol/business-type/companies-house/business-details/")
+        "enrol/business-type/companies-house/business-details/"
+    )
     PROFILE_ENROL_PERSONAL_DETAILS = ProfileUrl(
-        "enrol/business-type/companies-house/personal-details/")
+        "enrol/business-type/companies-house/personal-details/"
+    )
     PROFILE_ENROL_FINISHED = ProfileUrl("enrol/business-type/companies-house/finished/")
     PROFILE_ADMIN = ProfileUrl("business-profile/admin/")
     PROFILE_ADMIN_REMOVE_PROFILE_FROM_ACCOUNT = ProfileUrl(
-        "business-profile/admin/disconnect/")
+        "business-profile/admin/disconnect/"
+    )
     PROFILE_EDIT_COMPANY_DESCRIPTION = ProfileUrl("business-profile/description/")
     PROFILE_EDIT_COMPANY_BUSINESS_DETAILS = ProfileUrl(
-        "business-profile/business-details/")
+        "business-profile/business-details/"
+    )
     PROFILE_PUBLISH_BUSINESS_PROFILE_TO_FAS = ProfileUrl("business-profile/publish/")
     PROFILE_ADD_PRODUCTS_AND_SERVICES = ProfileUrl(
-        "business-profile/add-expertise/products-and-services/")
+        "business-profile/add-expertise/products-and-services/"
+    )
     PROFILE_CASE_STUDY_EDIT = ProfileUrl(
-        "business-profile/case-study/{case_number}/details/")
+        "business-profile/case-study/{case_number}/details/"
+    )
     PROFILE_CASE_STUDY_DETAILS = ProfileUrl("business-profile/case-study/details/")
     PROFILE_CASE_STUDY_IMAGES = ProfileUrl("business-profile/case-study/images/")
     PROFILE_UPLOAD_LOGO = ProfileUrl("business-profile/logo/")
@@ -520,7 +620,8 @@ class URLs(Enum):
 
     # Domestic site
     DOMESTIC_API_COMPANY_HOUSE_SEARCH = DomesticUrl(
-        "api/internal/companies-house-search/")
+        "api/internal/companies-house-search/"
+    )
     DOMESTIC_HEALTHCHECK = DomesticUrl("healthcheck/")
     DOMESTIC_HEALTHCHECK_PING = DomesticUrl("healthcheck/ping/")
     DOMESTIC_SEARCH = DomesticUrl("search/")
@@ -556,7 +657,8 @@ class URLs(Enum):
     DOMESTIC_GET_FINANCE = DomesticUrl("get-finance/")
     DOMESTIC_STORY_FIRST = DomesticUrl("story/hello-babys-rapid-online-growth/")
     DOMESTIC_STORY_SECOND = DomesticUrl(
-        "story/york-bag-retailer-goes-global-via-e-commerce/")
+        "story/york-bag-retailer-goes-global-via-e-commerce/"
+    )
     DOMESTIC_TERMS = DomesticUrl("terms-and-conditions/")
     DOMESTIC_PRIVACY = DomesticUrl("privacy-and-cookies/")
 
@@ -565,9 +667,11 @@ class URLs(Enum):
     CONTACT_US_DOMESTIC = ContactUrl("contact/triage/domestic/")
     CONTACT_US_EXPORT_OPPORTUNITIES = ContactUrl("contact/triage/export-opportunities/")
     CONTACT_US_EXPORT_OPPORTUNITIES_NO_RESPONSE = ContactUrl(
-        "contact/triage/export-opportunities/opportunity-no-response/")
+        "contact/triage/export-opportunities/opportunity-no-response/"
+    )
     CONTACT_US_EXPORT_OPPORTUNITIES_NOT_RELEVANT = ContactUrl(
-        "contact/triage/export-opportunities/alerts-not-relevant/")
+        "contact/triage/export-opportunities/alerts-not-relevant/"
+    )
     CONTACT_US_FORM_DOMESTIC = ContactUrl("contact/domestic/")
     CONTACT_US_FORM_DSO = ContactUrl("contact/defence-and-security-organisation/")
     CONTACT_US_FORM_EVENTS = ContactUrl("contact/events/")
@@ -575,31 +679,40 @@ class URLs(Enum):
     CONTACT_US_FORM_INTERNATIONAL = ContactUrl("contact/international/")
     CONTACT_US_GREAT_ACCOUNT = ContactUrl("contact/triage/great-account/")
     CONTACT_US_GREAT_ACCOUNT_CH_LOGIN = ContactUrl(
-        "contact/triage/great-account/companies-house-login/")
+        "contact/triage/great-account/companies-house-login/"
+    )
     CONTACT_US_GREAT_ACCOUNT_NO_VERIFICATION_EMAIL = ContactUrl(
-        "contact/triage/great-account/no-verification-email/")
+        "contact/triage/great-account/no-verification-email/"
+    )
     CONTACT_US_GREAT_ACCOUNT_NO_VERIFICATION_LETTER = ContactUrl(
-        "contact/triage/great-account/no-verification-letter/")
+        "contact/triage/great-account/no-verification-letter/"
+    )
     CONTACT_US_GREAT_ACCOUNT_PASSWORD_RESET = ContactUrl(
-        "contact/triage/great-account/password-reset/")
+        "contact/triage/great-account/password-reset/"
+    )
     CONTACT_US_GREAT_ACCOUNT_VERIFICATION_LETTER_CODE = ContactUrl(
-        "contact/triage/great-account/verification-letter-code/")
+        "contact/triage/great-account/verification-letter-code/"
+    )
     CONTACT_US_GREAT_SERVICES = ContactUrl("contact/triage/great-services/")
     CONTACT_US_INTERNATIONAL = ContactUrl("contact/triage/international/")
     CONTACT_US_LANDING = ContactUrl("contact/triage/location/")
     CONTACT_US_OTHER_DOMESTIC_EU_EXIT = ContactUrl("eu-exit-news/contact/")
     CONTACT_US_OTHER_GET_FINANCE = ContactUrl("get-finance/contact/")
     CONTACT_US_OTHER_INTERNATIONAL_EU_EXIT = ContactUrl(
-        "international/eu-exit-news/contact/")
+        "international/eu-exit-news/contact/"
+    )
 
     # SOO Contact-Us pages
     CONTACT_US_SOO_ORGANISATION = ContactUrl("selling-online-overseas/organisation/")
     CONTACT_US_SOO_ORGANISATION_DETAILS = ContactUrl(
-        "selling-online-overseas/organisation-details/")
+        "selling-online-overseas/organisation-details/"
+    )
     CONTACT_US_SOO_ORGANISATION_YOUR_EXPERIENCE = ContactUrl(
-        "selling-online-overseas/your-experience/")
+        "selling-online-overseas/your-experience/"
+    )
     CONTACT_US_SOO_ORGANISATION_CONTACT_DETAILS = ContactUrl(
-        "selling-online-overseas/contact-details/")
+        "selling-online-overseas/contact-details/"
+    )
     CONTACT_US_SOO_ORGANISATION_SUCCESS = ContactUrl("selling-online-overseas/success/")
 
     # Legacy Contact-Us UI
@@ -615,8 +728,9 @@ class URLs(Enum):
     SOO_LANDING = SOOUrl("")
     SOO_SITEMAP = SOOUrl("sitemap.xml")
     SOO_SEARCH_RESULTS = SOOUrl("markets/results/")
-    SOO_MARKET_DETAILS = SOOUrl("markets/details/",
-                                template="markets/details/{market}/")
+    SOO_MARKET_DETAILS = SOOUrl(
+        "markets/details/", template="markets/details/{market}/"
+    )
 
     # CMS API endpoints
     CMS_API_HEALTHCHECK = CMSApiUrl("healthcheck/")
@@ -637,10 +751,14 @@ class URLs(Enum):
     TRADE_BARRIERS_LANDING = DomesticUrl("report-trade-barrier/")
     TRADE_BARRIERS_REPORT_FORM_ABOUT = DomesticUrl("report-trade-barrier/report/about/")
     TRADE_BARRIERS_REPORT_FORM_PROBLEM_DETAILS = DomesticUrl(
-        "report-trade-barrier/report/problem-details/")
+        "report-trade-barrier/report/problem-details/"
+    )
     TRADE_BARRIERS_REPORT_FORM_SUMMARY = DomesticUrl(
-        "report-trade-barrier/report/summary/")
+        "report-trade-barrier/report/summary/"
+    )
     TRADE_BARRIERS_REPORT_FORM_FINISHED = DomesticUrl(
-        "report-trade-barrier/report/finished/")
+        "report-trade-barrier/report/finished/"
+    )
     TRADE_BARRIERS_REPORT_FORM_SUCCESS = DomesticUrl(
-        "report-trade-barrier/report/success/")
+        "report-trade-barrier/report/success/"
+    )

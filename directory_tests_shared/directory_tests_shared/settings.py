@@ -4,10 +4,9 @@ from glob import glob
 from urllib.parse import urljoin
 
 __auto_retry = os.environ.get("AUTO_RETRY", "true")
-AUTO_RETRY = (True
-              if __auto_retry
-              and __auto_retry.lower() in ["true", "1", "yes"]
-              else False)
+AUTO_RETRY = (
+    True if __auto_retry and __auto_retry.lower() in ["true", "1", "yes"] else False
+)
 AUTO_RETRY_MAX_ATTEMPTS = int(os.environ.get("AUTO_RETRY_MAX_ATTEMPTS", "2"))
 
 DIRECTORY_API_URL = os.environ["DIRECTORY_API_URL"]
@@ -17,9 +16,13 @@ BASICAUTH_USER = os.environ["BASICAUTH_USER"]
 BASICAUTH_PASS = os.environ["BASICAUTH_PASS"]
 USE_BASIC_AUTH = os.getenv("USE_BASIC_AUTH", True)
 DIRECTORY_API_CSV_DUMP_AUTH_TOKEN = os.environ["DIRECTORY_API_CSV_DUMP_AUTH_TOKEN"]
-DIRECTORY_API_CLIENT_SENDER_ID = os.getenv("DIRECTORY_API_CLIENT_SENDER_ID", "directory")
-DIRECTORY_API_CLIENT_DEFAULT_TIMEOUT = int(os.getenv("DIRECTORY_API_CLIENT_DEFAULT_TIMEOUT", 30))
-DIRECTORY_SSO_URL = os.environ['DIRECTORY_SSO_URL']
+DIRECTORY_API_CLIENT_SENDER_ID = os.getenv(
+    "DIRECTORY_API_CLIENT_SENDER_ID", "directory"
+)
+DIRECTORY_API_CLIENT_DEFAULT_TIMEOUT = int(
+    os.getenv("DIRECTORY_API_CLIENT_DEFAULT_TIMEOUT", 30)
+)
+DIRECTORY_SSO_URL = os.environ["DIRECTORY_SSO_URL"]
 DIRECTORY_UI_BUYER_URL = os.environ["DIRECTORY_UI_BUYER_URL"]
 DIRECTORY_UI_SUPPLIER_URL = os.environ["DIRECTORY_UI_SUPPLIER_URL"]
 DIRECTORY_UI_INTERNATIONAL_URL = os.environ["DIRECTORY_UI_INTERNATIONAL_URL"]
@@ -29,8 +32,12 @@ DIRECTORY_LEGACY_CONTACT_US_UI_URL = os.environ["DIRECTORY_LEGACY_CONTACT_US_UI_
 DIRECTORY_FORMS_API_URL = os.environ["DIRECTORY_FORMS_API_URL"]
 DIRECTORY_FORMS_API_KEY = os.environ["DIRECTORY_FORMS_API_KEY"]
 DIRECTORY_FORMS_API_SENDER_ID = os.environ["DIRECTORY_FORMS_API_SENDER_ID"]
-OLD_DIRECTORY_UI_SUPPLIER_URL = os.getenv("OLD_DIRECTORY_UI_SUPPLIER_URL", "https://stage.supplier.directory.uktrade.io/")
-OLD_EXRED_UI_URL = os.getenv("OLD_EXRED_UI_URL", "https://stage.exportreadiness.directory.uktrade.io/")
+OLD_DIRECTORY_UI_SUPPLIER_URL = os.getenv(
+    "OLD_DIRECTORY_UI_SUPPLIER_URL", "https://stage.supplier.directory.uktrade.io/"
+)
+OLD_EXRED_UI_URL = os.getenv(
+    "OLD_EXRED_UI_URL", "https://stage.exportreadiness.directory.uktrade.io/"
+)
 INVEST_UI_URL = os.environ["INVEST_UI_URL"]
 INVEST_LEGACY_UI_URL = os.environ["INVEST_LEGACY_UI_URL"]
 SOO_UI_URL = os.environ["SOO_UI_URL"]
@@ -38,25 +45,36 @@ EXPORT_OPPORTUNITIES_UI_URL = os.environ["EXPORT_OPPORTUNITIES_UI_URL"]
 
 DIRECTORY_CMS_API_CLIENT_BASE_URL = os.environ["DIRECTORY_CMS_API_CLIENT_BASE_URL"]
 DIRECTORY_CMS_API_CLIENT_API_KEY = os.environ["DIRECTORY_CMS_API_CLIENT_API_KEY"]
-DIRECTORY_CMS_API_CLIENT_SENDER_ID = os.getenv("DIRECTORY_CMS_API_CLIENT_SENDER_ID", "directory")
-DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT = int(os.getenv("DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT", 30))
+DIRECTORY_CMS_API_CLIENT_SENDER_ID = os.getenv(
+    "DIRECTORY_CMS_API_CLIENT_SENDER_ID", "directory"
+)
+DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT = int(
+    os.getenv("DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT", 30)
+)
 
-DIRECTORY_CMS_API_CLIENT_CACHE_EXPIRE_SECONDS = int(os.getenv("DIRECTORY_CMS_API_CLIENT_CACHE_EXPIRE_SECONDS", 60 * 60 * 24 * 30))  # 30 days
+DIRECTORY_CMS_API_CLIENT_CACHE_EXPIRE_SECONDS = int(
+    os.getenv("DIRECTORY_CMS_API_CLIENT_CACHE_EXPIRE_SECONDS", 60 * 60 * 24 * 30)
+)  # 30 days
 
 DIRECTORY_SSO_API_CLIENT_BASE_URL = os.environ["DIRECTORY_SSO_API_CLIENT_BASE_URL"]
 DIRECTORY_SSO_API_CLIENT_API_KEY = os.environ["DIRECTORY_SSO_API_CLIENT_API_KEY"]
-DIRECTORY_SSO_API_CLIENT_SENDER_ID = os.getenv("DIRECTORY_SSO_API_CLIENT_SENDER_ID", "directory")
-DIRECTORY_SSO_API_CLIENT_DEFAULT_TIMEOUT = int(os.getenv("DIRECTORY_SSO_API_CLIENT_DEFAULT_TIMEOUT", 30))
+DIRECTORY_SSO_API_CLIENT_SENDER_ID = os.getenv(
+    "DIRECTORY_SSO_API_CLIENT_SENDER_ID", "directory"
+)
+DIRECTORY_SSO_API_CLIENT_DEFAULT_TIMEOUT = int(
+    os.getenv("DIRECTORY_SSO_API_CLIENT_DEFAULT_TIMEOUT", 30)
+)
 
 EXRED_UI_URL = os.environ["EXRED_UI_URL"]
 ISD_UI_URL = os.getenv(
-    "ISD_UI_URL", urljoin(DIRECTORY_UI_INTERNATIONAL_URL, "investment-support-directory/")
+    "ISD_UI_URL",
+    urljoin(DIRECTORY_UI_INTERNATIONAL_URL, "investment-support-directory/"),
 )
 GOV_NOTIFY_API_KEY = os.environ["GOV_NOTIFY_API_KEY"]
 LOCUST_MAX_WAIT = int(os.getenv("LOCUST_MAX_WAIT", 6000))
 LOCUST_MIN_WAIT = int(os.getenv("LOCUST_MIN_WAIT", 500))
 
-# run tests for 2.5min by default
+# run tests for 2.5 minutes by default
 LOCUST_TIMEOUT = int(os.getenv("LOCUST_TIMEOUT", 150))
 SSO_USER_ID = int(os.getenv("SSO_USER_ID", 0))
 
@@ -71,31 +89,63 @@ STANNP_LETTER_TEMPLATE_ID = os.getenv("STANNP_LETTER_TEMPLATE_ID", "5395")
 
 # Static data used across the projects
 EMAIL_VERIFICATION_MSG_SUBJECT = "Confirm your email address"
-FAS_MESSAGE_FROM_BUYER_SUBJECT = "New message through your great.gov.uk business profile"
-FAB_CONFIRM_COLLABORATION_SUBJECT = ("Confirm you’ve been added to {}’s Find a"
-                                     " buyer profile")
-FAB_TRANSFER_OWNERSHIP_SUBJECT = ("Confirm ownership of {}’s Find a buyer "
-                                  "profile")
+FAS_MESSAGE_FROM_BUYER_SUBJECT = (
+    "New message through your great.gov.uk business profile"
+)
+FAB_CONFIRM_COLLABORATION_SUBJECT = (
+    "Confirm you’ve been added to {}’s Find a" " buyer profile"
+)
+FAB_TRANSFER_OWNERSHIP_SUBJECT = "Confirm ownership of {}’s Find a buyer " "profile"
 SSO_PASSWORD_RESET_MSG_SUBJECT = "Reset your great.gov.uk password"
-NO_OF_EMPLOYEES = ["1-10", "11-50", "51-200", "201-500", "501-1000",
-                   "1001-10000", "10001+"]
+NO_OF_EMPLOYEES = [
+    "1-10",
+    "11-50",
+    "51-200",
+    "201-500",
+    "501-1000",
+    "1001-10000",
+    "10001+",
+]
 SECTORS = [
-    "AEROSPACE", "ADVANCED_MANUFACTURING", "AIRPORTS",
-    "AGRICULTURE_HORTICULTURE_AND_FISHERIES", "AUTOMOTIVE",
-    "BIOTECHNOLOGY_AND_PHARMACEUTICALS", "BUSINESS_AND_CONSUMER_SERVICES",
-    "CHEMICALS", "CLOTHING_FOOTWEAR_AND_FASHION", "COMMUNICATIONS",
-    "CONSTRUCTION", "CREATIVE_AND_MEDIA", "EDUCATION_AND_TRAINING",
-    "ELECTRONICS_AND_IT_HARDWARE", "ENVIRONMENT",
-    "FINANCIAL_AND_PROFESSIONAL_SERVICES", "FOOD_AND_DRINK",
-    "GIFTWARE_JEWELLERY_AND_TABLEWARE", "GLOBAL_SPORTS_INFRASTRUCTURE",
-    "HEALTHCARE_AND_MEDICAL", "HOUSEHOLD_GOODS_FURNITURE_AND_FURNISHINGS",
-    "LIFE_SCIENCES", "LEISURE_AND_TOURISM", "LEGAL_SERVICES", "MARINE",
+    "AEROSPACE",
+    "ADVANCED_MANUFACTURING",
+    "AIRPORTS",
+    "AGRICULTURE_HORTICULTURE_AND_FISHERIES",
+    "AUTOMOTIVE",
+    "BIOTECHNOLOGY_AND_PHARMACEUTICALS",
+    "BUSINESS_AND_CONSUMER_SERVICES",
+    "CHEMICALS",
+    "CLOTHING_FOOTWEAR_AND_FASHION",
+    "COMMUNICATIONS",
+    "CONSTRUCTION",
+    "CREATIVE_AND_MEDIA",
+    "EDUCATION_AND_TRAINING",
+    "ELECTRONICS_AND_IT_HARDWARE",
+    "ENVIRONMENT",
+    "FINANCIAL_AND_PROFESSIONAL_SERVICES",
+    "FOOD_AND_DRINK",
+    "GIFTWARE_JEWELLERY_AND_TABLEWARE",
+    "GLOBAL_SPORTS_INFRASTRUCTURE",
+    "HEALTHCARE_AND_MEDICAL",
+    "HOUSEHOLD_GOODS_FURNITURE_AND_FURNISHINGS",
+    "LIFE_SCIENCES",
+    "LEISURE_AND_TOURISM",
+    "LEGAL_SERVICES",
+    "MARINE",
     "MECHANICAL_ELECTRICAL_AND_PROCESS_ENGINEERING",
-    "METALLURGICAL_PROCESS_PLANT", "METALS_MINERALS_AND_MATERIALS",
-    "MINING", "OIL_AND_GAS", "PORTS_AND_LOGISTICS", "POWER", "RAILWAYS",
-    "RENEWABLE_ENERGY", "RETAIL_AND_LUXURY", "SECURITY",
-    "SOFTWARE_AND_COMPUTER_SERVICES", "TEXTILES_INTERIOR_TEXTILES_AND_CARPETS",
-    "WATER"
+    "METALLURGICAL_PROCESS_PLANT",
+    "METALS_MINERALS_AND_MATERIALS",
+    "MINING",
+    "OIL_AND_GAS",
+    "PORTS_AND_LOGISTICS",
+    "POWER",
+    "RAILWAYS",
+    "RENEWABLE_ENERGY",
+    "RETAIL_AND_LUXURY",
+    "SECURITY",
+    "SOFTWARE_AND_COMPUTER_SERVICES",
+    "TEXTILES_INTERIOR_TEXTILES_AND_CARPETS",
+    "WATER",
 ]
 
 SECTORS_WITH_LABELS = {
@@ -137,7 +187,7 @@ SECTORS_WITH_LABELS = {
     "SECURITY": "Security",
     "SOFTWARE_AND_COMPUTER_SERVICES": "Software and computer services",
     "TEXTILES_INTERIOR_TEXTILES_AND_CARPETS": "Textiles, interior textiles and carpets",
-    "WATER": "Water"
+    "WATER": "Water",
 }
 
 COUNTRIES = {
@@ -145,7 +195,7 @@ COUNTRIES = {
     "Germany": "DE",
     "India": "IN",
     "Japan": "JP",
-    "United States": "US"
+    "United States": "US",
 }
 
 # Absolute path to a directory with test images
@@ -156,7 +206,7 @@ PNGs = glob(os.path.join(TEST_IMAGES_DIR, "*.png"))
 JPGs = glob(os.path.join(TEST_IMAGES_DIR, "*.jpg"))
 JPEGs = glob(os.path.join(TEST_IMAGES_DIR, "*.jpeg"))
 BMPs = glob(os.path.join(TEST_IMAGES_DIR, "*.bmp"))
-JP2s = glob(os.path.join(TEST_IMAGES_DIR, "*.jp2"))
+JP2s = glob(os.path.join(TEST_IMAGES_DIR, "*.jp2"))  # noqa
 WEBPs = glob(os.path.join(TEST_IMAGES_DIR, "*.webp"))
 
 """
@@ -220,7 +270,7 @@ SEPARATORS = {
     "semi-colon": ";",
     "colon": ":",
     "full stop": ".",
-    "comma": ","
+    "comma": ",",
 }
 
 # these user credentials are hard-coded in `directory-sso`. The users
@@ -230,21 +280,13 @@ USERS = {
         "username": os.environ["SSO_USER_USERNAME"],
         "password": os.environ["SSO_USER_PASSWORD"],
         "token": os.environ["SSO_USER_TOKEN"],
-        "sso_id": int(os.environ["SSO_USER_SSO_ID"])
+        "sso_id": int(os.environ["SSO_USER_SSO_ID"]),
     },
-    "unverified": {
-        "token": os.environ["SSO_UNVERIFIED_USER_TOKEN"]
-    }
+    "unverified": {"token": os.environ["SSO_UNVERIFIED_USER_TOKEN"]},
 }
 
 COMPANIES = {
-    "not_active": os.getenv(
-        "SSO_COMPANY_NOT_ACTIVE", "06542942"
-    ),
-    "already_registered": os.getenv(
-        "SSO_COMPANY_ALREADY_REGISTERED", "10416664"
-    ),
-    "active_not_registered": os.getenv(
-        "SSO_COMPANY_ACTIVE_NOT_REGISTERED", "01624297"
-    ),
+    "not_active": os.getenv("SSO_COMPANY_NOT_ACTIVE", "06542942"),
+    "already_registered": os.getenv("SSO_COMPANY_ALREADY_REGISTERED", "10416664"),
+    "active_not_registered": os.getenv("SSO_COMPANY_ACTIVE_NOT_REGISTERED", "01624297"),
 }
