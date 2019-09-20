@@ -1,0 +1,8 @@
+black
+flake8
+flake8-spellcheck
+ipdb
+isort
+pip-tools
+pre-commit
+vulture
