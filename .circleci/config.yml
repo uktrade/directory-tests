@@ -251,344 +251,438 @@ steps_run_load_tests: &steps_run_load_tests
 
 jobs:
   setup_env_for_smoke_tests:
-    <<: *machine_python3
     working_directory: ~/directory-tests
-    <<: *steps_setup_env_for_smoke_tests
+    <<: [
+    *machine_python3,
+    *steps_setup_env_for_smoke_tests,
+    ]
 
   setup_env_for_functional_tests:
-    <<: *machine_python3
     working_directory: ~/directory-tests
-    <<: *steps_setup_env_for_functional_tests
+    <<: [
+    *machine_python3,
+    *steps_setup_env_for_functional_tests,
+    ]
 
   setup_env_for_browser_tests:
-    <<: *machine_python3
     working_directory: ~/directory-tests
-    <<: *steps_setup_env_for_browser_tests
+    <<: [
+    *machine_python3,
+    *steps_setup_env_for_browser_tests,
+    ]
 
   setup_env_for_load_tests:
-    <<: *machine_python3
     working_directory: ~/directory-tests
-    <<: *steps_setup_env_for_load_tests
+    <<: [
+    *machine_python3,
+    *steps_setup_env_for_load_tests,
+    ]
 
   smoke_tests_dev:
-    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "dev"
       PYTEST_ARGS: '-m "not stage and not prod"'
-    <<: *steps_smoke_tests
+    <<: [
+    *machine_python3,
+    *steps_smoke_tests,
+    ]
 
   smoke_tests_stage:
-    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "stage"
       PYTEST_ARGS: "-m 'not dev and not prod'"
-    <<: *steps_smoke_tests
+    <<: [
+    *machine_python3,
+    *steps_smoke_tests,
+    ]
 
   smoke_tests_uat:
-    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "uat"
       PYTEST_ARGS: "-m 'not dev and not prod'"
-    <<: *steps_smoke_tests
+    <<: [
+    *machine_python3,
+    *steps_smoke_tests,
+    ]
 
   func_fas_test_dev:
-    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "dev"
       FEATURE_DIR: "fas"
-    <<: *steps_functional_tests
+    <<: [
+    *machine_python3,
+    *steps_functional_tests,
+    ]
 
   func_sso_test_dev:
-    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "dev"
       FEATURE_DIR: "sso"
-    <<: *steps_functional_tests
+    <<: [
+    *machine_python3,
+    *steps_functional_tests,
+    ]
 
   func_sud_test_dev:
-    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "dev"
       FEATURE_DIR: "profile"
-    <<: *steps_functional_tests
+    <<: [
+    *machine_python3,
+    *steps_functional_tests,
+    ]
 
   func_international_test_dev:
-    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "dev"
       FEATURE_DIR: "international"
-    <<: *steps_functional_tests
+    <<: [
+    *machine_python3,
+    *steps_functional_tests,
+    ]
 
   func_fas_test_stage:
-    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "stage"
       FEATURE_DIR: "fas"
       TAGS: "--tags=~@dev-only"
-    <<: *steps_functional_tests
+    <<: [
+    *machine_python3,
+    *steps_functional_tests,
+    ]
 
   func_sso_test_stage:
-    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "stage"
       FEATURE_DIR: "sso"
       TAGS: "--tags=~@dev-only"
-    <<: *steps_functional_tests
+    <<: [
+    *machine_python3,
+    *steps_functional_tests,
+    ]
 
   func_sud_test_stage:
-    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "stage"
       FEATURE_DIR: "profile"
       TAGS: "--tags=~@dev-only"
-    <<: *steps_functional_tests
+    <<: [
+    *machine_python3,
+    *steps_functional_tests,
+    ]
 
   func_international_test_stage:
-    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "stage"
       FEATURE_DIR: "international"
       TAGS: "--tags=~@dev-only"
-    <<: *steps_functional_tests
+    <<: [
+    *machine_python3,
+    *steps_functional_tests,
+    ]
 
   func_fas_test_uat:
-    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "uat"
       FEATURE_DIR: "fas"
-    <<: *steps_functional_tests
+    <<: [
+    *machine_python3,
+    *steps_functional_tests,
+    ]
 
   func_sso_test_uat:
-    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "uat"
       FEATURE_DIR: "sso"
-    <<: *steps_functional_tests
+    <<: [
+    *machine_python3,
+    *steps_functional_tests,
+    ]
 
   func_sud_test_uat:
-    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "uat"
       FEATURE_DIR: "profile"
-    <<: *steps_functional_tests
+    <<: [
+    *machine_python3,
+    *steps_functional_tests,
+    ]
 
   func_international_test_uat:
-    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "uat"
       FEATURE_DIR: "international"
-    <<: *steps_functional_tests
+    <<: [
+    *machine_python3,
+    *steps_functional_tests,
+    ]
 
   browser_all_chrome_dev:
-    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "dev"
       BROWSER: "chrome"
       TAGS: "--tags=~@stage-only --tags=~@uat-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
-    <<: *steps_run_browser_tests
+    <<: [
+    *machine_python3,
+    *steps_run_browser_tests,
+    ]
 
   browser_all_firefox_dev:
     working_directory: ~/directory-tests
-    <<: *machine_python3
     environment:
       TEST_ENV: "dev"
       BROWSER: "firefox"
       TAGS: "--tags=~@stage-only --tags=~@uat-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
-    <<: *steps_run_browser_tests
+    <<: [
+    *machine_python3,
+    *steps_run_browser_tests,
+    ]
 
   browser_selected_chrome_dev:
-    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "dev"
       BROWSER: "chrome"
       TAGS: "--tags=~@stage-only --tags=~@uat-only --tags=~@full --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
-    <<: *steps_run_browser_tests
+    <<: [
+    *machine_python3,
+    *steps_run_browser_tests,
+    ]
 
   browser_selected_firefox_dev:
     working_directory: ~/directory-tests
-    <<: *machine_python3
     environment:
       TEST_ENV: "dev"
       BROWSER: "firefox"
       TAGS: "--tags=~@stage-only --tags=~@uat-only --tags=~@full --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
-    <<: *steps_run_browser_tests
+    <<: [
+    *machine_python3,
+    *steps_run_browser_tests,
+    ]
 
   browser_all_chrome_stage:
-    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "stage"
       BROWSER: "chrome"
       TAGS: "--tags=~@dev-only --tags=~@uat-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
-    <<: *steps_run_browser_tests
+    <<: [
+    *machine_python3,
+    *steps_run_browser_tests,
+    ]
 
   browser_all_firefox_stage:
     working_directory: ~/directory-tests
-    <<: *machine_python3
     environment:
       TEST_ENV: "stage"
       BROWSER: "firefox"
       TAGS: "--tags=~@dev-only --tags=~@uat-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
-    <<: *steps_run_browser_tests
+    <<: [
+    *machine_python3,
+    *steps_run_browser_tests,
+    ]
 
   browser_selected_chrome_stage:
-    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "stage"
       BROWSER: "chrome"
       TAGS: "--tags=~@full --tags=~@dev-only --tags=~@uat-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
-    <<: *steps_run_browser_tests
+    <<: [
+    *machine_python3,
+    *steps_run_browser_tests,
+    ]
 
   browser_selected_firefox_stage:
     working_directory: ~/directory-tests
-    <<: *machine_python3
     environment:
       TEST_ENV: "stage"
       BROWSER: "firefox"
       TAGS: "--tags=~@full --tags=~@dev-only --tags=~@uat-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
-    <<: *steps_run_browser_tests
+    <<: [
+    *machine_python3,
+    *steps_run_browser_tests,
+    ]
 
   browser_all_chrome_uat:
-    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "uat"
       BROWSER: "chrome"
       TAGS: "--tags=~@dev-only --tags=~@stage-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
-    <<: *steps_run_browser_tests
+    <<: [
+    *machine_python3,
+    *steps_run_browser_tests,
+    ]
 
   browser_all_firefox_uat:
     working_directory: ~/directory-tests
-    <<: *machine_python3
     environment:
       TEST_ENV: "uat"
       BROWSER: "firefox"
       TAGS: "--tags=~@dev-only --tags=~@stage-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
-    <<: *steps_run_browser_tests
+    <<: [
+    *machine_python3,
+    *steps_run_browser_tests,
+    ]
 
   browser_selected_chrome_uat:
-    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       TEST_ENV: "uat"
       BROWSER: "chrome"
       TAGS: "--tags=~@full --tags=~@dev-only --tags=~@stage-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
-    <<: *steps_run_browser_tests
+    <<: [
+    *machine_python3,
+    *steps_run_browser_tests,
+    ]
 
   browser_selected_firefox_uat:
     working_directory: ~/directory-tests
-    <<: *machine_python3
     environment:
       TEST_ENV: "uat"
       BROWSER: "firefox"
       TAGS: "--tags=~@full --tags=~@dev-only --tags=~@stage-only --tags=~@eu-exit --tags=~@decommissioned --tags=~@skip"
-    <<: *steps_run_browser_tests
+    <<: [
+    *machine_python3,
+    *steps_run_browser_tests,
+    ]
 
   load_cms_tests_stage:
-    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       SERVICE: "cms"
       TEST_ENV: "stage"
-      <<: *load_hatch_rate
-      <<: *load_num_clients
-      <<: *load_run_time
-    <<: *steps_run_load_tests
+      <<: [
+      *load_hatch_rate,
+      *load_num_clients,
+      *load_run_time,
+      ]
+    <<: [
+    *machine_python3,
+    *steps_run_load_tests,
+    ]
 
   load_soo_tests_stage:
-    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       SERVICE: "soo"
       TEST_ENV: "stage"
-      <<: *load_hatch_rate
-      <<: *load_num_clients
-      <<: *load_run_time
-    <<: *steps_run_load_tests
+      <<: [
+      *load_hatch_rate,
+      *load_num_clients,
+      *load_run_time,
+      ]
+    <<: [
+    *machine_python3,
+    *steps_run_load_tests,
+    ]
 
   load_fab_tests_stage:
-    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       SERVICE: "fab"
       TEST_ENV: "stage"
-      <<: *load_hatch_rate
-      <<: *load_num_clients
-      <<: *load_run_time
-    <<: *steps_run_load_tests
+      <<: [
+      *load_hatch_rate,
+      *load_num_clients,
+      *load_run_time,
+      ]
+    <<: [
+    *machine_python3,
+    *steps_run_load_tests,
+    ]
 
   load_fas_tests_stage:
-    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       SERVICE: "fas"
       TEST_ENV: "stage"
-      <<: *load_hatch_rate
-      <<: *load_num_clients
-      <<: *load_run_time
-    <<: *steps_run_load_tests
+      <<: [
+      *load_hatch_rate,
+      *load_num_clients,
+      *load_run_time,
+      ]
+    <<: [
+    *machine_python3,
+    *steps_run_load_tests,
+    ]
 
   load_isd_tests_stage:
-    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       SERVICE: "isd"
       TEST_ENV: "stage"
-      <<: *load_hatch_rate
-      <<: *load_num_clients
-      <<: *load_run_time
-    <<: *steps_run_load_tests
+      <<: [
+      *load_hatch_rate,
+      *load_num_clients,
+      *load_run_time,
+      ]
+    <<: [
+    *machine_python3,
+    *steps_run_load_tests,
+    ]
 
   load_international_tests_stage:
-    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       SERVICE: "international"
       TEST_ENV: "stage"
-      <<: *load_hatch_rate
-      <<: *load_num_clients
-      <<: *load_run_time
-    <<: *steps_run_load_tests
+      <<: [
+      *load_hatch_rate,
+      *load_num_clients,
+      *load_run_time,
+      ]
+    <<: [
+    *machine_python3,
+    *steps_run_load_tests,
+    ]
 
   load_invest_tests_stage:
-    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       SERVICE: "invest"
       TEST_ENV: "stage"
-      <<: *load_hatch_rate
-      <<: *load_num_clients
-      <<: *load_run_time
-    <<: *steps_run_load_tests
+      <<: [
+      *load_hatch_rate,
+      *load_num_clients,
+      *load_run_time,
+      ]
+    <<: [
+    *machine_python3,
+    *steps_run_load_tests,
+    ]
 
   load_search_tests_stage:
-    <<: *machine_python3
     working_directory: ~/directory-tests
     environment:
       SERVICE: "search"
       TEST_ENV: "stage"
-      <<: *load_hatch_rate
-      <<: *load_num_clients
-      <<: *load_run_time
-    <<: *steps_run_load_tests
+      <<: [
+      *load_hatch_rate,
+      *load_num_clients,
+      *load_run_time,
+      ]
+    <<: [
+    *machine_python3,
+    *steps_run_load_tests,
+    ]
 
 
 workflows:
