@@ -152,7 +152,7 @@ Feature: Find a Supplier
 
     Then "Annette Geissinger" should be told to enter a search term or use the filters
 
-    
+
   @ED-2020
   @search
   @no-sso-email-verification-required

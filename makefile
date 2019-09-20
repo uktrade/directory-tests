@@ -1,4 +1,4 @@
-build: docker_integration_tests 
+build: docker_integration_tests
 
 clean:
 	-find . -type f -name "*.pyc" -delete

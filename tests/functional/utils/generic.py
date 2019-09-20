@@ -70,7 +70,7 @@ from directory_tests_shared.settings import (
 
 INDUSTRY_CHOICES = dict(choices.INDUSTRIES)
 
-# This is ugly way of dealing with imports but Django settings have to be 
+# This is ugly way of dealing with imports but Django settings have to be
 # configured before we can import DirectoryTestAPIClient
 from django.conf import settings
 settings.configure(
@@ -78,10 +78,10 @@ settings.configure(
     DIRECTORY_API_CLIENT_API_KEY=DIRECTORY_API_CLIENT_KEY,
     DIRECTORY_API_CLIENT_SENDER_ID=DIRECTORY_API_CLIENT_SENDER_ID,
     DIRECTORY_API_CLIENT_DEFAULT_TIMEOUT=DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT,
-    
+
     DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT=DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT,
     DIRECTORY_CLIENT_CORE_CACHE_EXPIRE_SECONDS=30,
-    
+
     DIRECTORY_SSO_API_CLIENT_BASE_URL=DIRECTORY_SSO_API_CLIENT_BASE_URL,
     DIRECTORY_SSO_API_CLIENT_API_KEY=DIRECTORY_SSO_API_CLIENT_API_KEY,
     DIRECTORY_SSO_API_CLIENT_SENDER_ID=DIRECTORY_SSO_API_CLIENT_SENDER_ID,

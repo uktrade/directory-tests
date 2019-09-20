@@ -126,7 +126,7 @@ def sso_should_be_signed_in_to_sso_account(
         assert "Sign out" in response.content.decode("utf-8")
     error = f"Missing response history in SSO login request!"
     assert response.history, error
-    
+
     intermediate_headers = []
     for r in response.history:
         dev_session = r.cookies.get("directory_sso_dev_session", None)
