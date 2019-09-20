@@ -12,15 +12,21 @@ from tests.smoke.cms_api_helpers import get_and_assert
     [
         (
             URLs.FAS_INDUSTRIES_HEALTH.absolute,
-            URLs.FAS_INCOMING_REDIRECT.absolute_template.format(endpoint="industries/health")
+            URLs.FAS_INCOMING_REDIRECT.absolute_template.format(
+                endpoint="industries/health"
+            ),
         ),
         (
             URLs.FAS_INDUSTRIES_TECH.absolute,
-            URLs.FAS_INCOMING_REDIRECT.absolute_template.format(endpoint="industries/tech")
+            URLs.FAS_INCOMING_REDIRECT.absolute_template.format(
+                endpoint="industries/tech"
+            ),
         ),
         (
             URLs.FAS_INDUSTRIES_CREATIVE.absolute,
-            URLs.FAS_INCOMING_REDIRECT.absolute_template.format(endpoint="industries/creative")
+            URLs.FAS_INCOMING_REDIRECT.absolute_template.format(
+                endpoint="industries/creative"
+            ),
         ),
     ],
 )
@@ -28,10 +34,7 @@ def test_ed_4152_redirect_on_stage_from_old_industry_page(
     old_url, to_new_endpoint, basic_auth
 ):
     response = get_and_assert(
-        url=old_url,
-        status_code=HTTP_302_FOUND,
-        auth=basic_auth,
-        allow_redirects=False,
+        url=old_url, status_code=HTTP_302_FOUND, auth=basic_auth, allow_redirects=False
     )
 
     error_msg = (

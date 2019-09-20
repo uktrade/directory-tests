@@ -15,9 +15,7 @@ from tests.smoke.cms_api_helpers import status_error
 class FormsClient(AbstractAPIClient):
     version = "1"
 
-    def __init__(
-            self, base_url, api_key, sender_id, timeout, default_service_name,
-    ):
+    def __init__(self, base_url, api_key, sender_id, timeout, default_service_name):
         super().__init__(base_url, api_key, sender_id, timeout)
         self.default_service_name = default_service_name
 
@@ -27,7 +25,7 @@ client = FormsClient(
     api_key=settings.DIRECTORY_FORMS_API_KEY,
     sender_id=settings.DIRECTORY_FORMS_API_SENDER_ID,
     timeout=30,
-    default_service_name="testapi"
+    default_service_name="testapi",
 )
 
 
@@ -43,30 +41,20 @@ def test_forms_submissions_endpoint_accepts_only_post():
 @pytest.mark.forms
 def test_forms_admin_is_available():
     response = client.get(URLs.FORMS_API_ADMIN.absolute)
-    assert response.status_code == HTTP_200_OK, status_error(
-        HTTP_200_OK, response
-    )
+    assert response.status_code == HTTP_200_OK, status_error(HTTP_200_OK, response)
 
 
 @pytest.mark.dev
 @pytest.mark.forms
-@pytest.mark.parametrize(
-    "email", ["asdf@sdf.pl"],
-)
+@pytest.mark.parametrize("email", ["asdf@sdf.pl"])
 def test_forms_testapi_endpoint_is_present_on_dev(email: str):
-    response = client.get(
-        URLs.FORMS_API_TESTAPI.absolute.format(email=email)
-    )
-    assert response.status_code == HTTP_200_OK, status_error(
-        HTTP_200_OK, response
-    )
+    response = client.get(URLs.FORMS_API_TESTAPI.absolute.format(email=email))
+    assert response.status_code == HTTP_200_OK, status_error(HTTP_200_OK, response)
 
 
 @pytest.mark.stage
 @pytest.mark.forms
-@pytest.mark.parametrize(
-    "email", ["test@gmail.com"],
-)
+@pytest.mark.parametrize("email", ["test@gmail.com"])
 def test_forms_testapi_endpoint_is_present_on_stage(email):
     test_forms_testapi_endpoint_is_present_on_dev(email)
 

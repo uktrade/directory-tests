@@ -16,7 +16,7 @@ from tests.smoke.cms_api_helpers import (
 )
 
 SKIPPED_PAGE_TYPES = [
-    "wagtailcore.page",  # remove generic (parent) page type common to all pages
+    "wagtailcore.page"  # remove generic (parent) page type common to all pages
 ]
 if "dev" in DIRECTORY_CMS_API_CLIENT_BASE_URL:
     SKIPPED_PAGE_TYPES += [
@@ -35,17 +35,21 @@ if "staging" in DIRECTORY_CMS_API_CLIENT_BASE_URL:
     ]
 if "uat" in DIRECTORY_CMS_API_CLIENT_BASE_URL:
     SKIPPED_PAGE_TYPES += [
-        "great_international.baseinternationalsectorpage",  # 400 not found
+        "great_international.baseinternationalsectorpage"  # 400 not found
     ]
 
 ALL_PAGE_TYPES = get_pages_types(skip=SKIPPED_PAGE_TYPES)
 
 EXRED_PAGE_TYPES = [t for t in ALL_PAGE_TYPES if t.startswith("export_readiness.")]
-INTERNATIONAL_PAGE_TYPES = [t for t in ALL_PAGE_TYPES if t.startswith("great_international.")]
+INTERNATIONAL_PAGE_TYPES = [
+    t for t in ALL_PAGE_TYPES if t.startswith("great_international.")
+]
 COMPONENTS_PAGE_TYPES = [t for t in ALL_PAGE_TYPES if t.startswith("components.")]
 
 EXRED_PAGES = get_pages_from_api(EXRED_PAGE_TYPES, use_async_client=False)
-INTERNATIONAL_PAGES = get_pages_from_api(INTERNATIONAL_PAGE_TYPES, use_async_client=False)
+INTERNATIONAL_PAGES = get_pages_from_api(
+    INTERNATIONAL_PAGE_TYPES, use_async_client=False
+)
 
 ALL_PAGES = {}
 ALL_PAGES.update(EXRED_PAGES)
@@ -53,11 +57,7 @@ ALL_PAGES.update(INTERNATIONAL_PAGES)
 
 
 @pytest.mark.parametrize(
-    "relative_url",
-    [
-        URLs.CMS_API_IMAGES.relative,
-        URLs.CMS_API_DOCUMENTS.relative,
-    ],
+    "relative_url", [URLs.CMS_API_IMAGES.relative, URLs.CMS_API_DOCUMENTS.relative]
 )
 def test_wagtail_get_disabled_content_endpoints(relative_url):
     response = cms_api_client.get(relative_url)
@@ -69,9 +69,7 @@ def test_wagtail_get_disabled_content_endpoints(relative_url):
 def test_wagtail_get_pages():
     endpoint = URLs.CMS_API_PAGES.relative
     response = cms_api_client.get(endpoint)
-    assert response.status_code == HTTP_200_OK, status_error(
-        HTTP_200_OK, response
-    )
+    assert response.status_code == HTTP_200_OK, status_error(HTTP_200_OK, response)
 
 
 @pytest.mark.parametrize("limit", [2, 10, 20])
@@ -91,11 +89,7 @@ def test_wagtail_can_list_only_20_pages():
 
 @pytest.mark.dev
 @pytest.mark.parametrize(
-    "application", [
-        "Components",
-        "Great Domestic pages",
-        "Great International pages",
-    ]
+    "application", ["Components", "Great Domestic pages", "Great International pages"]
 )
 def test_wagtail_get_pages_per_application_on_dev(application):
     # Get ID of specific application (parent page)
@@ -114,11 +108,7 @@ def test_wagtail_get_pages_per_application_on_dev(application):
 
 @pytest.mark.stage
 @pytest.mark.parametrize(
-    "application", [
-        "Components",
-        "Great Domestic pages",
-        "great.gov.uk international",
-    ]
+    "application", ["Components", "Great Domestic pages", "great.gov.uk international"]
 )
 def test_wagtail_get_pages_per_application_on_stage(application):
     test_wagtail_get_pages_per_application_on_dev(application)
@@ -126,11 +116,7 @@ def test_wagtail_get_pages_per_application_on_stage(application):
 
 @pytest.mark.prod
 @pytest.mark.parametrize(
-    "application", [
-        "Components",
-        "great.gov.uk",
-        "great.gov.uk international",
-    ]
+    "application", ["Components", "great.gov.uk", "great.gov.uk international"]
 )
 def test_wagtail_get_pages_per_application_on_prod(application):
     test_wagtail_get_pages_per_application_on_dev(application)
@@ -138,14 +124,16 @@ def test_wagtail_get_pages_per_application_on_prod(application):
 
 @pytest.mark.parametrize("url, page_id", find_published_urls(ALL_PAGES))
 def test_all_published_english_pages_should_return_200(url, page_id, basic_auth):
-    get_and_assert(url, HTTP_200_OK, auth=basic_auth, allow_redirects=True, page_id=page_id)
+    get_and_assert(
+        url, HTTP_200_OK, auth=basic_auth, allow_redirects=True, page_id=page_id
+    )
 
 
-@pytest.mark.parametrize(
-    "url, page_id", find_published_translated_urls(ALL_PAGES)
-)
+@pytest.mark.parametrize("url, page_id", find_published_translated_urls(ALL_PAGES))
 def test_published_translated_pages_should_return_200_new(url, page_id, basic_auth):
-    get_and_assert(url, HTTP_200_OK, auth=basic_auth, allow_redirects=True, page_id=page_id)
+    get_and_assert(
+        url, HTTP_200_OK, auth=basic_auth, allow_redirects=True, page_id=page_id
+    )
 
 
 @pytest.mark.parametrize("url, page_id", find_draft_urls(ALL_PAGES))

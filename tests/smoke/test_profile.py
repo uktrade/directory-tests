@@ -18,12 +18,7 @@ def test_about_200(basic_auth):
 
 
 @pytest.mark.skip(reason="BUG TT-1298 - this url returns 500 ISE")
-@pytest.mark.parametrize(
-    "url",
-    [
-        URLs.PROFILE_COMPANY_EDIT_SOCIAL_MEDIA.absolute,
-    ],
-)
+@pytest.mark.parametrize("url", [URLs.PROFILE_COMPANY_EDIT_SOCIAL_MEDIA.absolute])
 def test_302_redirects_for_anon_user_bug_tt_1298(url, basic_auth):
     get_and_assert(url=url, status_code=HTTP_302_FOUND, auth=basic_auth)
 
@@ -51,15 +46,11 @@ def test_302_redirects_for_anon_user(url, basic_auth):
         URLs.PROFILE_EXOPS_APPLICATIONS.absolute,
     ],
 )
-def test_301_redirects_after_removing_trailing_slash_for_anon_user(
-    url, basic_auth
-):
+def test_301_redirects_after_removing_trailing_slash_for_anon_user(url, basic_auth):
     # get rid of trailing slash
     if url[-1] == "/":
         url = url[:-1]
-    get_and_assert(
-        url=url, status_code=HTTP_301_MOVED_PERMANENTLY, auth=basic_auth
-    )
+    get_and_assert(url=url, status_code=HTTP_301_MOVED_PERMANENTLY, auth=basic_auth)
 
 
 @pytest.mark.session_auth
@@ -77,9 +68,5 @@ def test_301_redirects_after_removing_trailing_slash_for_anon_user(
 def test_access_to_non_health_check_endpoints_as_logged_in_user(
     logged_in_session, url, basic_auth
 ):
-    response = logged_in_session.get(
-        url, allow_redirects=True, auth=basic_auth
-    )
-    assert response.status_code == HTTP_200_OK, status_error(
-        HTTP_200_OK, response
-    )
+    response = logged_in_session.get(url, allow_redirects=True, auth=basic_auth)
+    assert response.status_code == HTTP_200_OK, status_error(HTTP_200_OK, response)

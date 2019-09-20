@@ -33,17 +33,12 @@ from tests.smoke.cms_api_helpers import get_and_assert
         URLs.DOMESTIC_PRIVACY.absolute,
     ],
 )
-def test_exred_pages(url, basic_auth):
+def test_domestic_pages(url, basic_auth):
     get_and_assert(url=url, status_code=HTTP_200_OK, auth=basic_auth)
 
 
-@pytest.mark.parametrize(
-    "url",
-    [
-        URLs.DOMESTIC_LANDING.absolute,
-    ],
-)
-def test_exred_home_page_might_redirect_to_international(url, basic_auth):
+@pytest.mark.parametrize("url", [URLs.DOMESTIC_LANDING.absolute])
+def test_domestic_home_page_might_redirect_to_international(url, basic_auth):
     response = get_and_assert(
         url=url, status_code=HTTP_200_OK, auth=basic_auth, allow_redirects=True
     )
@@ -58,22 +53,13 @@ def test_exred_home_page_might_redirect_to_international(url, basic_auth):
         (URLs.DOMESTIC_NEW.absolute, "/advice/"),
         (URLs.DOMESTIC_OCCASIONAL.absolute, "/advice/"),
         (URLs.DOMESTIC_REGULAR.absolute, "/advice/"),
-        (
-            URLs.DOMESTIC_MARKET_RESEARCH.absolute,
-            "/advice/find-an-export-market/",
-        ),
+        (URLs.DOMESTIC_MARKET_RESEARCH.absolute, "/advice/find-an-export-market/"),
         (
             URLs.DOMESTIC_CUSTOMER_INSIGHT.absolute,
             "/advice/prepare-to-do-business-in-a-foreign-country/",
         ),
-        (
-            URLs.DOMESTIC_FINANCE.absolute,
-            "/advice/get-export-finance-and-funding/",
-        ),
-        (
-            URLs.DOMESTIC_BUSINESS_PLANNING.absolute,
-            "/advice/define-route-to-market/",
-        ),
+        (URLs.DOMESTIC_FINANCE.absolute, "/advice/get-export-finance-and-funding/"),
+        (URLs.DOMESTIC_BUSINESS_PLANNING.absolute, "/advice/define-route-to-market/"),
         (
             URLs.DOMESTIC_GETTING_PAID.absolute,
             "/advice/manage-payment-for-export-orders/",
@@ -84,7 +70,7 @@ def test_exred_home_page_might_redirect_to_international(url, basic_auth):
         ),
     ],
 )
-def test_exred_redirects(url, redirect, basic_auth):
+def test_domestic_redirects(url, redirect, basic_auth):
     resp = get_and_assert(url=url, status_code=HTTP_302_FOUND, auth=basic_auth)
     location = resp.headers["location"]
     error = f"Expected redirect to '{redirect}' but got '{location}'"

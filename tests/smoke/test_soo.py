@@ -7,11 +7,7 @@ from tests.smoke.cms_api_helpers import get_and_assert
 
 
 @pytest.mark.parametrize(
-    "url",
-    [
-        URLs.SOO_LANDING.absolute,
-        URLs.SOO_SEARCH_RESULTS.absolute,
-    ],
+    "url", [URLs.SOO_LANDING.absolute, URLs.SOO_SEARCH_RESULTS.absolute]
 )
 def test_access_soo_endpoints(url, basic_auth):
     get_and_assert(url=url, status_code=HTTP_200_OK, auth=basic_auth)
@@ -22,9 +18,7 @@ def test_access_soo_endpoints_without_trailing_slash(url, basic_auth):
     # get rid of trailing slash
     if url.endswith("/"):
         url = url[:-1]
-    get_and_assert(
-        url=url, status_code=HTTP_301_MOVED_PERMANENTLY, auth=basic_auth
-    )
+    get_and_assert(url=url, status_code=HTTP_301_MOVED_PERMANENTLY, auth=basic_auth)
 
 
 @pytest.mark.parametrize(
@@ -37,10 +31,7 @@ def test_access_soo_endpoints_without_trailing_slash(url, basic_auth):
 )
 def test_search_works(categories, countries, basic_auth):
     url = URLs.SOO_SEARCH_RESULTS.absolute
-    params = {
-        "product_categories": categories,
-        "operating_countries": countries,
-    }
+    params = {"product_categories": categories, "operating_countries": countries}
     get_and_assert(
         url=url,
         params=params,
@@ -48,6 +39,7 @@ def test_search_works(categories, countries, basic_auth):
         status_code=HTTP_200_OK,
         auth=basic_auth,
     )
+
 
 # flake8: noqa
 @pytest.mark.dev
@@ -92,16 +84,13 @@ def test_search_works(categories, countries, basic_auth):
                 # "westwing",
                 # "xiu",
                 # "zalora",
-            ]
+            ],
         )
     ),
 )
 def test_get_market_details_dev(url, basic_auth):
     get_and_assert(
-        url=url,
-        allow_redirects=True,
-        status_code=HTTP_200_OK,
-        auth=basic_auth,
+        url=url, allow_redirects=True, status_code=HTTP_200_OK, auth=basic_auth
     )
 
 
@@ -152,16 +141,13 @@ def test_get_market_details_dev(url, basic_auth):
                 "westwing",
                 "xiu",
                 "zalora",
-            ]
+            ],
         )
     ),
 )
 def test_get_market_details_stage(url, basic_auth):
     get_and_assert(
-        url=url,
-        allow_redirects=True,
-        status_code=HTTP_200_OK,
-        auth=basic_auth,
+        url=url, allow_redirects=True, status_code=HTTP_200_OK, auth=basic_auth
     )
 
 
@@ -211,14 +197,11 @@ def test_get_market_details_stage(url, basic_auth):
                 "trademe",
                 "themarket",
                 "tthigo",
-            ]
+            ],
         )
     ),
 )
 def test_get_market_details_prod(url, basic_auth):
     get_and_assert(
-        url=url,
-        allow_redirects=True,
-        status_code=HTTP_200_OK,
-        auth=basic_auth,
+        url=url, allow_redirects=True, status_code=HTTP_200_OK, auth=basic_auth
     )

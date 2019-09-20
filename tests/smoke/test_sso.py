@@ -9,21 +9,13 @@ from tests.smoke.cms_api_helpers import get_and_assert, status_error
 @pytest.mark.session_auth
 @pytest.mark.parametrize(
     "url",
-    [
-        URLs.SSO_LANDING.absolute,
-        URLs.SSO_LOGIN.absolute,
-        URLs.SSO_SIGNUP.absolute,
-    ],
+    [URLs.SSO_LANDING.absolute, URLs.SSO_LOGIN.absolute, URLs.SSO_SIGNUP.absolute],
 )
 def test_access_sso_endpoints_as_logged_in_user_w_redirect_to_sud(
     logged_in_session, url, basic_auth
 ):
-    response = logged_in_session.get(
-        url, allow_redirects=True, auth=basic_auth
-    )
-    assert response.status_code == HTTP_200_OK, status_error(
-        HTTP_200_OK, response
-    )
+    response = logged_in_session.get(url, allow_redirects=True, auth=basic_auth)
+    assert response.status_code == HTTP_200_OK, status_error(HTTP_200_OK, response)
 
 
 @pytest.mark.prod
@@ -59,12 +51,8 @@ def test_access_sso_endpoints_as_anonymous_user_yields_200(url, basic_auth):
 def test_access_sso_endpoints_as_logged_in_user_without_redirect_to_sud(
     logged_in_session, url, basic_auth
 ):
-    response = logged_in_session.get(
-        url, allow_redirects=True, auth=basic_auth
-    )
-    assert response.status_code == HTTP_200_OK, status_error(
-        HTTP_200_OK, response
-    )
+    response = logged_in_session.get(url, allow_redirects=True, auth=basic_auth)
+    assert response.status_code == HTTP_200_OK, status_error(HTTP_200_OK, response)
 
 
 @pytest.mark.session_auth
@@ -88,9 +76,7 @@ def test_redirects_after_removing_trailing_slash_as_logged_in_user(
     # get rid of trailing slash
     if url[-1] == "/":
         url = url[:-1]
-    response = logged_in_session.get(
-        url, allow_redirects=False, auth=basic_auth
-    )
+    response = logged_in_session.get(url, allow_redirects=False, auth=basic_auth)
     assert response.status_code == expected_status_code, status_error(
         expected_status_code, response
     )
