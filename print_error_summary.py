@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """JUnit XML Report Error Summary
 Prints out a summary of errors found in a XML report file.
 
