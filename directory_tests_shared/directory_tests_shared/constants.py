@@ -160,7 +160,14 @@ COUNTRIES = {
 }
 
 # Absolute path to a directory with test images
-TEST_IMAGES_DIR = os.path.abspath(os.path.join("..", "files"))
+test_files_path_browser_tests = os.path.abspath(os.path.join("..", "files"))
+test_files_path_other_tests = os.path.abspath(os.path.join("tests", "files"))
+if os.path.isdir(test_files_path_browser_tests):
+    TEST_IMAGES_DIR = test_files_path_browser_tests
+elif os.path.isdir(test_files_path_other_tests):
+    TEST_IMAGES_DIR = test_files_path_other_tests
+else:
+    raise FileNotFoundError
 
 # lists of absolute paths to test images of specific type
 PNGs = glob(os.path.join(TEST_IMAGES_DIR, "*.png"))
