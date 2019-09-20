@@ -5,7 +5,6 @@ import logging
 from requests import Response
 
 from directory_tests_shared import PageType, Service, URLs
-
 from tests.functional.utils.request import check_response
 
 SERVICE = Service.SSO

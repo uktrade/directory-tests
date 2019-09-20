@@ -4,7 +4,6 @@
 from requests import Response
 
 from directory_tests_shared import PageType, Service, URLs
-
 from tests.functional.utils.context_utils import Actor
 from tests.functional.utils.request import (
     Method,

@@ -4,7 +4,6 @@
 from requests import Response, Session
 
 from directory_tests_shared import PageType, Service, URLs
-
 from tests.functional.utils.request import (
     Method,
     check_response,

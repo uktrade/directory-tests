@@ -8,7 +8,6 @@ from requests import Response, Session
 from retrying import retry
 
 from directory_tests_shared import PageType, Service, URLs
-
 from tests.functional.utils.context_utils import CaseStudy
 from tests.functional.utils.request import Method, check_response, make_request
 

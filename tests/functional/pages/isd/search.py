@@ -6,9 +6,11 @@ from requests import Response, Session
 from retrying import retry
 
 from directory_tests_shared import PageType, Service, URLs
-
-from tests.functional.utils.generic import escape_html, extract_page_contents, \
-    assertion_msg
+from tests.functional.utils.generic import (
+    assertion_msg,
+    escape_html,
+    extract_page_contents,
+)
 from tests.functional.utils.request import Method, check_response, make_request
 
 SERVICE = Service.ISD

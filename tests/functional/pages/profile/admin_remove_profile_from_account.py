@@ -3,7 +3,6 @@
 from requests import Response, Session
 
 from directory_tests_shared import PageType, Service, URLs
-
 from tests.functional.utils.generic import Method, make_request
 from tests.functional.utils.request import check_response, check_url
 

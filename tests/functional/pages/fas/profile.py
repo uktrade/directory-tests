@@ -8,8 +8,8 @@ from requests import Response, Session
 from scrapy import Selector
 
 from directory_tests_shared import PageType, Service, URLs
+from directory_tests_shared.settings import SECTORS_WITH_LABELS
 from tests.functional.common import DETAILS
-
 from tests.functional.utils.context_utils import Company
 from tests.functional.utils.generic import (
     Method,
@@ -18,7 +18,6 @@ from tests.functional.utils.generic import (
     make_request,
 )
 from tests.functional.utils.request import check_response
-from directory_tests_shared.settings import SECTORS_WITH_LABELS
 
 SERVICE = Service.FAS
 NAME = "Company's business profile"

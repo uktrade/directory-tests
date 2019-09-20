@@ -6,7 +6,6 @@ from urllib.parse import urljoin
 from requests import Response, Session
 
 from directory_tests_shared import PageType, Service, URLs
-
 from tests.functional.utils.context_utils import Company, Feedback, Message
 from tests.functional.utils.generic import (
     assert_that_captcha_is_in_dev_mode,
