@@ -44,7 +44,6 @@ EXRED_PAGE_TYPES = [t for t in ALL_PAGE_TYPES if t.startswith("export_readiness.
 INTERNATIONAL_PAGE_TYPES = [
     t for t in ALL_PAGE_TYPES if t.startswith("great_international.")
 ]
-COMPONENTS_PAGE_TYPES = [t for t in ALL_PAGE_TYPES if t.startswith("components.")]
 
 EXRED_PAGES = get_pages_from_api(EXRED_PAGE_TYPES, use_async_client=False)
 INTERNATIONAL_PAGES = get_pages_from_api(
