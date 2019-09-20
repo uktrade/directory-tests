@@ -3,8 +3,8 @@
 
 from requests import Response, Session
 
-from directory_tests_shared import URLs
-from tests.functional.pages import Services
+from directory_tests_shared import PageType, Service, URLs
+
 from tests.functional.utils.request import (
     Method,
     check_response,
@@ -12,9 +12,9 @@ from tests.functional.utils.request import (
     make_request,
 )
 
-SERVICE = Services.PROFILE
+SERVICE = Service.PROFILE
 NAME = "Edit company's products and services (industry)"
-TYPE = "form"
+TYPE = PageType.FORM
 URL = URLs.PROFILE_ADD_PRODUCTS_AND_SERVICES.absolute
 EXPECTED_STRINGS = [
     "Choose the industry you’re in"

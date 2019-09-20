@@ -3,13 +3,13 @@
 
 from requests import Response, Session
 
-from directory_tests_shared import URLs
-from tests.functional.pages import Services
+from directory_tests_shared import PageType, Service, URLs
+
 from tests.functional.utils.request import Method, check_response, make_request
 
-SERVICE = Services.PROFILE
+SERVICE = Service.PROFILE
 NAME = "Enrolment (finished)"
-TYPE = "confirmation"
+TYPE = PageType.CONFIRMATION
 URL = URLs.PROFILE_ENROL_FINISHED.absolute
 EXPECTED_STRINGS = [
     "Your account has been created",

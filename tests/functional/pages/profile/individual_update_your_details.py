@@ -3,13 +3,13 @@
 
 from requests import Response
 
-from directory_tests_shared import URLs
-from tests.functional.pages import Services
+from directory_tests_shared import PageType, Service, URLs
+
 from tests.functional.utils.request import check_response, check_url
 
-SERVICE = Services.PROFILE
+SERVICE = Service.PROFILE
 NAME = "Update your details"
-TYPE = "landing"
+TYPE = PageType.LANDING
 URL = URLs.PROFILE_ENROL_INDIVIDUAL_UPDATE_YOUR_DETAILS.absolute
 EXPECTED_STRINGS = [
     "Update your details",

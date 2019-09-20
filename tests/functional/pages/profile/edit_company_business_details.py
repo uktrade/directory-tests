@@ -5,8 +5,8 @@ import random
 from directory_constants import choices
 from requests import Response
 
-from directory_tests_shared import URLs
-from tests.functional.pages import Services
+from directory_tests_shared import PageType, Service, URLs
+
 from tests.functional.utils.context_utils import Actor, Company
 from tests.functional.utils.generic import (
     Method,
@@ -16,9 +16,9 @@ from tests.functional.utils.generic import (
 )
 from directory_tests_shared.settings import NO_OF_EMPLOYEES
 
-SERVICE = Services.PROFILE
+SERVICE = Service.PROFILE
 NAME = "Edit company's business details"
-TYPE = "form"
+TYPE = PageType.FORM
 URL = URLs.PROFILE_EDIT_COMPANY_BUSINESS_DETAILS.absolute
 EXPECTED_STRINGS = [
     "Business details",

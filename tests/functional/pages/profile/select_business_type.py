@@ -2,14 +2,14 @@
 """Profile - Select Business Type"""
 from requests import Response, Session
 
-from directory_tests_shared import URLs
-from tests.functional.pages import Services
+from directory_tests_shared import PageType, Service, URLs
+
 from tests.functional.utils.context_utils import Actor, Company
 from tests.functional.utils.request import Method, check_response, make_request
 
-SERVICE = Services.PROFILE
+SERVICE = Service.PROFILE
 NAME = "Select business type"
-TYPE = "form"
+TYPE = PageType.FORM
 URL = URLs.PROFILE_ENROL_SELECT_BUSINESS_TYPE.absolute
 EXPECTED_STRINGS = [
     "Select your business type",

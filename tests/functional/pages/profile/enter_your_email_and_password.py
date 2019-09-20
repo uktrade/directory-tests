@@ -3,15 +3,15 @@
 
 from requests import Response, Session
 
-from directory_tests_shared import URLs
-from tests.functional.pages import Services
+from directory_tests_shared import PageType, Service, URLs
+
 from tests.functional.utils.context_utils import Actor
 from tests.functional.utils.generic import assert_that_captcha_is_in_dev_mode
 from tests.functional.utils.request import Method, check_response, make_request
 
-SERVICE = Services.PROFILE
+SERVICE = Service.PROFILE
 NAME = "Enter your business email address and set a password"
-TYPE = "form"
+TYPE = PageType.FORM
 URL = URLs.PROFILE_ENROL_USER_ACCOUNT.absolute
 EXPECTED_STRINGS = [
     "Enter your business email address and set a password",

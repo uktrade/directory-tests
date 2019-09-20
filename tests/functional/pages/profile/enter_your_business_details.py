@@ -3,14 +3,14 @@
 
 from requests import Response, Session
 
-from directory_tests_shared import URLs
-from tests.functional.pages import Services
+from directory_tests_shared import PageType, Service, URLs
+
 from tests.functional.utils.context_utils import Actor, Company
 from tests.functional.utils.request import Method, check_response, make_request
 
-SERVICE = Services.PROFILE
+SERVICE = Service.PROFILE
 NAME = "Enter your business details (CH search)"
-TYPE = "form"
+TYPE = PageType.FORM
 URL = URLs.PROFILE_ENROL_COMPANIES_HOUSE_SEARCH.absolute
 EXPECTED_STRINGS = [
     "Enter your business details",

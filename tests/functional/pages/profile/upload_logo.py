@@ -6,13 +6,13 @@ import os
 
 from requests import Response, Session
 
-from directory_tests_shared import URLs
-from tests.functional.pages import Services
+from directory_tests_shared import PageType, Service, URLs
+
 from tests.functional.utils.request import Method, check_response, make_request
 
-SERVICE = Services.PROFILE
+SERVICE = Service.PROFILE
 NAME = "Upload logo"
-TYPE = "form"
+TYPE = PageType.FORM
 URL = URLs.PROFILE_UPLOAD_LOGO.absolute
 EXPECTED_STRINGS = [
     "Company logo",

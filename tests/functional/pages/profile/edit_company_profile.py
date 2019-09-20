@@ -5,17 +5,17 @@ import logging
 from behave.model import Table
 from requests import Response, Session
 
-from directory_tests_shared import URLs
+from directory_tests_shared import PageType, Service, URLs
 from tests.functional.common import DETAILS
-from tests.functional.pages import Services
+
 from tests.functional.utils.context_utils import Company
 from tests.functional.utils.generic import assertion_msg, escape_html
 from tests.functional.utils.request import Method, check_response, make_request
 from directory_tests_shared.settings import SECTORS_WITH_LABELS
 
-SERVICE = Services.PROFILE
+SERVICE = Service.PROFILE
 NAME = "Edit company profile"
-TYPE = "landing"
+TYPE = PageType.LANDING
 URL = URLs.PROFILE_FAB.absolute
 EXPECTED_STRINGS = [
     "You are signed in as",

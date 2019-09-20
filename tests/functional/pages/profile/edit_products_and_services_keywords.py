@@ -5,13 +5,13 @@ from urllib.parse import urljoin
 
 from requests import Response, Session
 
-from directory_tests_shared import URLs
-from tests.functional.pages import Services
+from directory_tests_shared import PageType, Service, URLs
+
 from tests.functional.utils.request import Method, check_url, make_request
 
-SERVICE = Services.PROFILE
+SERVICE = Service.PROFILE
 NAME = "Edit company's products and services (keywords)"
-TYPE = "form"
+TYPE = PageType.FORM
 URL = URLs.PROFILE_ADD_PRODUCTS_AND_SERVICES.absolute
 EXPECTED_STRINGS = [
     "Choose the products and services"

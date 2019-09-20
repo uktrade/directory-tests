@@ -3,8 +3,8 @@
 
 from requests import Response
 
-from directory_tests_shared import URLs
-from tests.functional.pages import Services
+from directory_tests_shared import PageType, Service, URLs
+
 from tests.functional.utils.context_utils import Actor
 from tests.functional.utils.request import (
     Method,
@@ -13,9 +13,9 @@ from tests.functional.utils.request import (
     make_request,
 )
 
-SERVICE = Services.PROFILE
+SERVICE = Service.PROFILE
 NAME = "Enter your individual details"
-TYPE = "form"
+TYPE = PageType.FORM
 URL = URLs.PROFILE_ENROL_INDIVIDUAL_ENTER_YOUR_PERSONAL_DETAILS.absolute
 EXPECTED_STRINGS = [
     "Enter your personal details",

@@ -4,13 +4,13 @@ import logging
 
 from requests import Response, Session
 
-from directory_tests_shared import URLs
-from tests.functional.pages import Services
+from directory_tests_shared import PageType, Service, URLs
+
 from tests.functional.utils.request import Method, check_response, make_request
 
-SERVICE = Services.PROFILE
+SERVICE = Service.PROFILE
 NAME = "Selling Online Overseas"
-TYPE = "landing"
+TYPE = PageType.LANDING
 URL = URLs.PROFILE_SOO.absolute
 EXPECTED_STRINGS = [
     "Account",

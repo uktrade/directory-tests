@@ -4,14 +4,14 @@ import logging
 
 from requests import Response, Session
 
-from directory_tests_shared import URLs
-from tests.functional.pages import Services
+from directory_tests_shared import PageType, Service, URLs
+
 from tests.functional.utils.context_utils import CaseStudy
 from tests.functional.utils.request import Method, check_response, make_request
 
-SERVICE = Services.PROFILE
+SERVICE = Service.PROFILE
 NAME = "Add case study (basic details)"
-TYPE = "form"
+TYPE = PageType.FORM
 URL = URLs.PROFILE_CASE_STUDY_DETAILS.absolute
 EDIT_URL = URLs.PROFILE_CASE_STUDY_EDIT.absolute
 EXPECTED_STRINGS = [

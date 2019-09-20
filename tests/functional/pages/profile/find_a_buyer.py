@@ -4,14 +4,14 @@ import logging
 
 from requests import Response, Session
 
-from directory_tests_shared import URLs
-from tests.functional.pages import Services
+from directory_tests_shared import PageType, Service, URLs
+
 from tests.functional.utils.generic import assertion_msg
 from tests.functional.utils.request import Method, check_response, make_request
 
-SERVICE = Services.PROFILE
+SERVICE = Service.PROFILE
 NAME = "Find a Buyer"
-TYPE = "landing"
+TYPE = PageType.LANDING
 URL = URLs.PROFILE_FAB.absolute
 EXPECTED_STRINGS = [
     "Account",

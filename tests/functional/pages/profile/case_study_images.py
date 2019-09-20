@@ -7,14 +7,14 @@ from os.path import basename
 from requests import Response, Session
 from retrying import retry
 
-from directory_tests_shared import URLs
-from tests.functional.pages import Services
+from directory_tests_shared import PageType, Service, URLs
+
 from tests.functional.utils.context_utils import CaseStudy
 from tests.functional.utils.request import Method, check_response, make_request
 
-SERVICE = Services.PROFILE
+SERVICE = Service.PROFILE
 NAME = "Add case study (images)"
-TYPE = "form"
+TYPE = PageType.FORM
 URL = URLs.PROFILE_CASE_STUDY_IMAGES.absolute
 EXPECTED_STRINGS = [
     "Add a caption that tells visitors what the main image represents",

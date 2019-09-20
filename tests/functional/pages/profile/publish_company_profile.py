@@ -2,13 +2,13 @@
 """Profile - Publish Company's Business Profile to FAS"""
 from requests import Response, Session
 
-from directory_tests_shared import URLs
-from tests.functional.pages import Services
+from directory_tests_shared import PageType, Service, URLs
+
 from tests.functional.utils.request import Method, make_request
 
-SERVICE = Services.PROFILE
+SERVICE = Service.PROFILE
 NAME = "Publish company's business profile"
-TYPE = "form"
+TYPE = PageType.FORM
 URL = URLs.PROFILE_PUBLISH_BUSINESS_PROFILE_TO_FAS.absolute
 EXPECTED_STRINGS = []
 
