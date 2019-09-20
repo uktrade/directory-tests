@@ -130,7 +130,7 @@ step_run_browser_tests: &step_run_browser_tests
     name: Run all functional scenarios
     command: |
       . venv/bin/activate
-      python ./docker/env_writer.py --env=${TEST_ENV} --config=./docker/env_browser.json
+      python ./docker/env_writer.py --env=${TEST_ENV} --config=./docker/env.json
       source ./docker/.env_with_export;
       export PATH=$PATH:$HOME/bin
       BROWSER=${BROWSER} TAGS="${TAGS}" make browserstack

@@ -140,7 +140,7 @@ BROWSER_SET_DOCKER_ENV_VARS := \
 	export BROWSER_TESTS_CIRCLE_SHA1=$(CIRCLE_SHA1)
 
 BROWSER_DOCKER_COMPOSE_CREATE_ENVS := \
-	python3 ./docker/env_writer.py --env=$(TEST_ENV) --config=./docker/env_browser.json
+	python3 ./docker/env_writer.py --env=$(TEST_ENV) --config=./docker/env.json
 
 BROWSER_DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL := \
 	docker-compose -f docker-compose-browser.yml -p browser rm -f && \

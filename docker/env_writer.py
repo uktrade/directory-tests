@@ -6,7 +6,6 @@ Creates .env_* files in two forms:
 
 Example config:
     {
-      "host_env_var_prefix": "DIRECTORY",
       "file_path": ".env-postgres",
       "env_vars": {
         "required": [
@@ -39,8 +38,7 @@ from docopt import docopt
 class DockerComposeEnvWriter:
     @staticmethod
     def save_env_vars(
-            config: dict, all_env_vars: dict, env_prefix: str,
-            export_mode: bool
+            config: dict, all_env_vars: dict, env_prefix: str, export_mode: bool
     ):
         if export_mode:
             filename = "{}_with_export".format(config["file_path"])
@@ -50,7 +48,7 @@ class DockerComposeEnvWriter:
             for var in all_env_vars:
                 # Get value of the prefixed host env var
                 value = os.getenv(
-                    f"{env_prefix}_{config['host_env_var_prefix']}_{var}"
+                    f"{env_prefix}_{var}"
                 )
                 if value:
                     special_chars = "!$"
@@ -78,7 +76,7 @@ class DockerComposeEnvWriter:
             var
             for var in config["env_vars"]["required"]
             if not os.getenv(
-                f"{env_prefix}_{config['host_env_var_prefix']}_{var}"
+                f"{env_prefix}_{var}"
             )
         ]
 
