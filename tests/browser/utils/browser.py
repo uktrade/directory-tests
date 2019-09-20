@@ -12,6 +12,7 @@ from selenium.common.exceptions import WebDriverException
 from selenium.webdriver.remote.command import Command
 from selenium.webdriver.remote.webdriver import WebDriver
 
+
 CAPABILITIES_TEMPLATES = {
     "local": {
         "common_capabilities": {"desktop": {}, "mobile": {}},
@@ -76,30 +77,35 @@ CAPABILITIES_TEMPLATES = {
 }
 
 
-def get_driver_capabilities(
-    environment: str,
-    browser_type: str,
-    browser: str,
-    version: str = None,
-    custom_capabilities: dict = None,
-    build: str = None,
-) -> dict:
-    common = CAPABILITIES_TEMPLATES[environment]["common_capabilities"][browser_type]
-    browser = CAPABILITIES_TEMPLATES[environment]["browser_capabilities"][browser]
+def get_driver_capabilities() -> dict:
+    from directory_tests_shared.settings import (
+        BROWSER,
+        BROWSER_CUSTOM_CAPABILITIES,
+        BROWSER_ENVIRONMENT,
+        BROWSER_TYPE,
+        BROWSER_VERSION,
+        BUILD_ID,
+    )
+    common = CAPABILITIES_TEMPLATES[BROWSER_ENVIRONMENT]["common_capabilities"][BROWSER_TYPE]
+    browser = CAPABILITIES_TEMPLATES[BROWSER_ENVIRONMENT]["browser_capabilities"][BROWSER]
     capabilities = {}
     capabilities.update(common)
     capabilities.update(browser)
-    if build:
-        capabilities["build"] = build
-    if version:
-        capabilities["browser_version"] = version
-    if custom_capabilities:
-        capabilities.update(custom_capabilities)
+    if BUILD_ID:
+        capabilities["build"] = BUILD_ID
+    if BROWSER_VERSION:
+        capabilities["browser_version"] = BROWSER_VERSION
+    if BROWSER_CUSTOM_CAPABILITIES:
+        capabilities.update(BROWSER_CUSTOM_CAPABILITIES)
     return capabilities
 
 
 def flag_browserstack_session_as_failed(session_id: str, reason: str):
-    from settings import BROWSERSTACK_SESSIONS_URL, BROWSERSTACK_USER, BROWSERSTACK_PASS
+    from directory_tests_shared.settings import (
+        BROWSERSTACK_PASS,
+        BROWSERSTACK_SESSIONS_URL,
+        BROWSERSTACK_USER,
+    )
 
     url = BROWSERSTACK_SESSIONS_URL.format(session_id)
     headers = {"Content-Type": "application/json"}
@@ -117,10 +123,12 @@ def flag_browserstack_session_as_failed(session_id: str, reason: str):
         )
 
 
-def start_driver_session(session_name: str) -> WebDriver:
-    from settings import BROWSER_HEADLESS, DRIVER_CAPABILITIES, HUB_URL
+def start_driver_session(session_name: str, capabilities: dict) -> WebDriver:
+    from directory_tests_shared.settings import (
+        BROWSER_HEADLESS,
+        HUB_URL,
+    )
 
-    capabilities = DRIVER_CAPABILITIES
     capabilities["name"] = session_name
 
     if HUB_URL:

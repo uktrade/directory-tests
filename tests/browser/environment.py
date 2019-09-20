@@ -8,6 +8,7 @@ from behave.runner import Context
 from utils.browser import (
     clear_driver_cookies,
     flag_browserstack_session_as_failed,
+    get_driver_capabilities,
     is_driver_responsive,
     start_driver_session,
     terminate_driver,
@@ -16,12 +17,13 @@ from utils.pdf import NoPDFMinerLogEntriesFilter
 
 from pages import sso
 from pages.common_actions import initialize_scenario_data
-from settings import (
+from directory_tests_shared.settings import (
     AUTO_RETRY,
     BROWSER_ENVIRONMENT,
     BROWSER_RESTART_POLICY,
-    DRIVER_CAPABILITIES,
 )
+
+DRIVER_CAPABILITIES = get_driver_capabilities()
 
 
 def before_all(context: Context):
