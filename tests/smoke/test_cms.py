@@ -4,7 +4,7 @@ from directory_cms_client.client import cms_api_client
 from rest_framework.status import HTTP_200_OK, HTTP_404_NOT_FOUND
 
 from directory_tests_shared import URLs
-from directory_tests_shared.settings import DIRECTORY_CMS_API_CLIENT_BASE_URL
+from directory_tests_shared.settings import CMS_API_URL
 from tests.smoke.cms_api_helpers import (
     find_draft_urls,
     find_published_translated_urls,
@@ -18,7 +18,7 @@ from tests.smoke.cms_api_helpers import (
 SKIPPED_PAGE_TYPES = [
     "wagtailcore.page"  # remove generic (parent) page type common to all pages
 ]
-if "dev" in DIRECTORY_CMS_API_CLIENT_BASE_URL:
+if "dev" in CMS_API_URL:
     SKIPPED_PAGE_TYPES += [
         "export_readiness.homepage",  # 500 ISE
         "great_international.capitalinvestopportunitypage",  # 502 timeout
@@ -27,13 +27,13 @@ if "dev" in DIRECTORY_CMS_API_CLIENT_BASE_URL:
         # so come up as a filter on the opportunity listing page
         "great_international.internationalsubsectorpage",
     ]
-if "staging" in DIRECTORY_CMS_API_CLIENT_BASE_URL:
+if "staging" in CMS_API_URL:
     SKIPPED_PAGE_TYPES += [
         "export_readiness.articlelistingpage",  # 500 ISE
         "great_international.internationalarticlepage",  # 500 ISE
         "great_international.internationalcampaignpage",  # 500 ISE
     ]
-if "uat" in DIRECTORY_CMS_API_CLIENT_BASE_URL:
+if "uat" in CMS_API_URL:
     SKIPPED_PAGE_TYPES += [
         "great_international.baseinternationalsectorpage"  # 400 not found
     ]

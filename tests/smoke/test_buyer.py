@@ -11,7 +11,7 @@ from rest_framework.status import (
 )
 
 from directory_tests_shared import URLs
-from directory_tests_shared.settings import COMPANIES
+from directory_tests_shared.constants import COMPANIES
 from tests.smoke.cms_api_helpers import get_and_assert, status_error
 
 

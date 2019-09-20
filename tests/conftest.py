@@ -2,57 +2,27 @@
 import pytest
 import requests
 
-from directory_constants import cms as SERVICE_NAMES
 from requests.auth import HTTPBasicAuth
 from retrying import retry
 
 from directory_tests_shared import URLs
+from directory_tests_shared.constants import USERS
 from directory_tests_shared.settings import (
     BASICAUTH_USER,
     BASICAUTH_PASS,
-    DIRECTORY_CMS_API_CLIENT_API_KEY,
-    DIRECTORY_CMS_API_CLIENT_BASE_URL,
-    DIRECTORY_CMS_API_CLIENT_SENDER_ID,
-    DIRECTORY_SSO_API_CLIENT_API_KEY,
-    DIRECTORY_SSO_API_CLIENT_BASE_URL,
-    DIRECTORY_SSO_API_CLIENT_SENDER_ID,
-    DIRECTORY_CMS_API_CLIENT_CACHE_EXPIRE_SECONDS,
-    USERS,
+    CMS_API_KEY,
+    CMS_API_URL,
+    CMS_API_SENDER_ID,
 )
-
-
-def pytest_configure():
-    from django.conf import settings
-    settings.configure(
-        DIRECTORY_CLIENT_CORE_CACHE_EXPIRE_SECONDS=30,
-
-        DIRECTORY_SSO_API_CLIENT_BASE_URL=DIRECTORY_SSO_API_CLIENT_BASE_URL,
-        DIRECTORY_SSO_API_CLIENT_API_KEY=DIRECTORY_SSO_API_CLIENT_API_KEY,
-        DIRECTORY_SSO_API_CLIENT_SENDER_ID=DIRECTORY_SSO_API_CLIENT_SENDER_ID,
-        DIRECTORY_SSO_API_CLIENT_DEFAULT_TIMEOUT=60,
-
-        DIRECTORY_CMS_API_CLIENT_API_KEY=DIRECTORY_CMS_API_CLIENT_API_KEY,
-        DIRECTORY_CMS_API_CLIENT_BASE_URL=DIRECTORY_CMS_API_CLIENT_BASE_URL,
-        DIRECTORY_CMS_API_CLIENT_CACHE_EXPIRE_SECONDS=DIRECTORY_CMS_API_CLIENT_CACHE_EXPIRE_SECONDS,
-        DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT=60,
-        DIRECTORY_CMS_API_CLIENT_SENDER_ID=DIRECTORY_CMS_API_CLIENT_SENDER_ID,
-        DIRECTORY_CMS_API_CLIENT_SERVICE_NAME=SERVICE_NAMES.EXPORT_READINESS,
-        CACHES={
-            "cms_fallback": {
-                "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
-                "LOCATION": "unique-snowflake",
-            }
-        }
-    )
 
 
 @pytest.fixture
 def cms_client():
     from directory_cms_client.client import DirectoryCMSClient
     return DirectoryCMSClient(
-        base_url=DIRECTORY_CMS_API_CLIENT_BASE_URL,
-        api_key=DIRECTORY_CMS_API_CLIENT_API_KEY,
-        sender_id=DIRECTORY_CMS_API_CLIENT_SENDER_ID,
+        base_url=CMS_API_URL,
+        api_key=CMS_API_KEY,
+        sender_id=CMS_API_SENDER_ID,
         timeout=60,
         default_service_name="change-me",
     )

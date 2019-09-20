@@ -22,9 +22,9 @@ from retrying import retry
 
 from directory_tests_shared import URLs
 from directory_tests_shared.settings import (
-    DIRECTORY_CMS_API_CLIENT_API_KEY,
-    DIRECTORY_CMS_API_CLIENT_BASE_URL,
-    DIRECTORY_CMS_API_CLIENT_SENDER_ID,
+    CMS_API_KEY,
+    CMS_API_URL,
+    CMS_API_SENDER_ID,
 )
 
 
@@ -40,9 +40,9 @@ class AsyncDirectoryCMSClient(DirectoryCMSClient):
 
 def async_cms_client():
     return AsyncDirectoryCMSClient(
-        base_url=DIRECTORY_CMS_API_CLIENT_BASE_URL,
-        api_key=DIRECTORY_CMS_API_CLIENT_API_KEY,
-        sender_id=DIRECTORY_CMS_API_CLIENT_SENDER_ID,
+        base_url=CMS_API_URL,
+        api_key=CMS_API_KEY,
+        sender_id=CMS_API_SENDER_ID,
         timeout=55,
         default_service_name=SERVICE_NAMES.INVEST,
     )

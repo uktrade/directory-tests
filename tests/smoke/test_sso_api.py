@@ -9,7 +9,7 @@ from rest_framework.status import (
 
 from directory_sso_api_client.client import sso_api_client
 
-from directory_tests_shared.settings import USERS
+from directory_tests_shared.constants import USERS
 from tests.smoke.cms_api_helpers import status_error
 
 
