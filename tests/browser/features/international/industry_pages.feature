@@ -91,4 +91,3 @@ Feature: INTL - Industry pages
       | Financial and professional services | great.gov.uk international | Landing    |
       | Legal services                      | Industries                 | Industries |
       | Technology                          | Industries                 | Industries |
-

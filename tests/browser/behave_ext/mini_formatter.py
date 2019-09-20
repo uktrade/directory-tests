@@ -32,4 +32,3 @@ class MiniFormatter(Formatter):
         )
         if not has_scenario_skip_tags and not has_feature_skip_tags:
             self.stream.write(f"{scenario.name}\n")
-

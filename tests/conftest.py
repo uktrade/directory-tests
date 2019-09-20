@@ -94,4 +94,3 @@ def logged_in_session():
     assert response.status_code == 200, f"Expected 200 but got {response.status_code} from {response.url}"
     assert "Sign out" in response.content.decode("UTF-8"),  f"Couldn't find 'Sign out' in the response from: {response.url}"
     return session
-
