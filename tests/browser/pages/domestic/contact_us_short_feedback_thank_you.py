@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """Domestic - Feedback Contact us form thank you page"""
 import logging
-import random
 from types import ModuleType
 from urllib.parse import urljoin
 from uuid import uuid4

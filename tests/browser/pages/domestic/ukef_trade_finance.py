@@ -14,7 +14,6 @@ from pages.common_actions import (
     check_for_sections,
     check_url,
     find_and_click_on_page_element,
-    find_elements,
     go_to_url,
     scroll_to,
     take_screenshot,

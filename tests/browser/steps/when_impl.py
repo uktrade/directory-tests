@@ -89,7 +89,7 @@ def generic_set_basic_auth_creds(context: Context, page_name: str):
         assert "Access Denied" not in driver.page_source
 
 
-# BrowserStack times out after 60s of inactivity
+# BrowserStack times out after 60 seconds of inactivity
 # https://www.browserstack.com/automate/timeouts
 @retry(
     wait_fixed=5000,
@@ -153,7 +153,7 @@ def should_be_on_page(context: Context, actor_alias: str, page_name: str):
     )
 
 
-# BrowserStack times out after 60s of inactivity
+# BrowserStack times out after 60 seconds of inactivity
 # https://www.browserstack.com/automate/timeouts
 @retry(
     wait_fixed=5000,
@@ -315,7 +315,7 @@ def sign_out(context: Context, actor_alias: str):
     logging.debug("%s signed out", actor_alias)
 
 
-# BrowserStack times out after 60s of inactivity
+# BrowserStack times out after 60 seconds of inactivity
 # https://www.browserstack.com/automate/timeouts
 @retry(wait_fixed=10000, stop_max_attempt_number=3)
 def articles_share_on_social_media(
@@ -524,7 +524,7 @@ def fas_view_article(context: Context, actor_alias: str, article_number: str):
     )
 
 
-# BrowserStack times out after 60s of inactivity
+# BrowserStack times out after 60 seconds of inactivity
 # https://www.browserstack.com/automate/timeouts
 @retry(
     wait_fixed=5000,
@@ -892,7 +892,8 @@ def soo_find_random_marketplace_and_apply_via_dit(
     should_be_on_page(
         context,
         actor_alias,
-        f"{domestic.contact_us_soo_long_your_business.SERVICE} - {domestic.contact_us_soo_long_your_business.NAME}",
+        f"{domestic.contact_us_soo_long_your_business.SERVICE} - "
+        f"{domestic.contact_us_soo_long_your_business.NAME}",
     )
 
 
@@ -905,28 +906,32 @@ def domestic_submit_soo_contact_us_form(
     should_be_on_page(
         context,
         actor_alias,
-        f"{domestic.contact_us_soo_long_organisation_details.SERVICE} - {domestic.contact_us_soo_long_organisation_details.NAME}",
+        f"{domestic.contact_us_soo_long_organisation_details.SERVICE} - "
+        f"{domestic.contact_us_soo_long_organisation_details.NAME}",
     )
 
     generic_fill_out_and_submit_form(context, actor_alias)
     should_be_on_page(
         context,
         actor_alias,
-        f"{domestic.contact_us_soo_long_your_experience.SERVICE} - {domestic.contact_us_soo_long_your_experience.NAME}",
+        f"{domestic.contact_us_soo_long_your_experience.SERVICE} - "
+        f"{domestic.contact_us_soo_long_your_experience.NAME}",
     )
 
     generic_fill_out_and_submit_form(context, actor_alias)
     should_be_on_page(
         context,
         actor_alias,
-        f"{domestic.contact_us_soo_long_contact_details.SERVICE} - {domestic.contact_us_soo_long_contact_details.NAME}",
+        f"{domestic.contact_us_soo_long_contact_details.SERVICE} - "
+        f"{domestic.contact_us_soo_long_contact_details.NAME}",
     )
 
     generic_fill_out_and_submit_form(context, actor_alias)
     should_be_on_page(
         context,
         actor_alias,
-        f"{domestic.contact_us_soo_long_thank_you.SERVICE} - {domestic.contact_us_soo_long_thank_you.NAME}",
+        f"{domestic.contact_us_soo_long_thank_you.SERVICE} - "
+        f"{domestic.contact_us_soo_long_thank_you.NAME}",
     )
 
 
@@ -977,7 +982,7 @@ def generic_trigger_all_gtm_events(
     events = get_gtm_event_definitions(
         context.driver, tagging_package, event_group=event_group
     )
-    assert events, f"No registered GTM events were found on {context.driver.current_url}"
+    assert events, f"No GTM events were found on {context.driver.current_url}"
     for event_group, events in events.items():
         for event in events:
             trigger_js_event(context.driver, event)

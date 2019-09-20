@@ -399,7 +399,7 @@ def should_see_articles_filtered_by_tag(context: Context, actor_alias: str):
     page.is_filtered_by_tag(context.driver, tag)
 
 
-# BrowserStack times out after 60s of inactivity
+# BrowserStack times out after 60 seconds of inactivity
 # https://www.browserstack.com/automate/timeouts
 @retry(wait_fixed=10000, stop_max_attempt_number=5, wrap_exception=False)
 def generic_contact_us_should_receive_confirmation_email(
@@ -688,9 +688,9 @@ def menu_items_should_be_visible(context: Context):
         try:
             element = context.driver.find_element(by=By.ID, value=value)
             break
-        except NoSuchElementException as error:
+        except NoSuchElementException:
             continue
     else:
-        raise error
+        raise
 
     assert element.is_displayed()

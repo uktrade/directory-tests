@@ -9,8 +9,7 @@ import sys
 import time
 import traceback
 import uuid
-from collections import defaultdict
-from collections.__init__ import namedtuple
+from collections import defaultdict, namedtuple
 from contextlib import contextmanager
 from datetime import datetime
 from os import path
@@ -270,7 +269,7 @@ def avoid_browser_stack_idle_timeout_exception(driver: WebDriver):
         "scroll up": "window.scrollBy(0,-1000);",
         "scroll down": "window.scrollBy(0,1000);",
         "click on body": "document.querySelector('body').click();",
-        "scroll to random link": "window.scrollTo(0, document.querySelectorAll('a')[Math.floor(Math.random()*document.querySelectorAll('a').length)].offsetTop);"
+        "scroll to random link": "window.scrollTo(0, document.querySelectorAll('a')[Math.floor(Math.random()*document.querySelectorAll('a').length)].offsetTop);"  # noqa
     }
     action = random.choice(list(actions.keys()))
     message = f"Trigger '{action}' event to avoid 'Idle Timeout exception'"
@@ -578,15 +577,15 @@ class wait_for_page_load_after_action(object):
 
 def scroll_to(driver: WebDriver, element: WebElement):
     if "firefox" in driver.capabilities["browserName"].lower():
-        viewport_height = int(driver.execute_script("return window.innerHeight;"))
+        view_port_height = int(driver.execute_script("return window.innerHeight;"))
         vertical_position = int(element.location["y"])
-        if vertical_position > viewport_height:
+        if vertical_position > view_port_height:
             logging.debug(f"Scrolling to y={vertical_position}")
             driver.execute_script(f"window.scrollTo(0, {vertical_position});")
         else:
             logging.debug(
-                f"Element is already positioned ({vertical_position}) within viewport "
-                f"({viewport_height})"
+                f"Element is already positioned ({vertical_position}) within view_port "
+                f"({view_port_height})"
             )
     else:
         action_chains = ActionChains(driver)

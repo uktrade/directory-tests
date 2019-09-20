@@ -2,7 +2,6 @@
 """Find a Supplier - ISD Search Results Page Object."""
 import logging
 from typing import List
-from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver

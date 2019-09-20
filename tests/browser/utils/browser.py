@@ -313,5 +313,5 @@ def show_snackbar_message(driver: WebDriver, message: str):
         logging.error(f"Failed to show snackbar with message: {message}")
 
     # in order to keep the snackbar visible after the scenario is finished,
-    # wait for 200ms
+    # wait for 200 ms
     time.sleep(0.2)

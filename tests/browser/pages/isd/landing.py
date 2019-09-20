@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """Find a Supplier - ISD Landing page"""
 from typing import List
-from urllib.parse import urljoin
 
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver

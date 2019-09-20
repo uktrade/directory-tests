@@ -15,7 +15,6 @@ from pages.common_actions import (
     find_element,
     go_to_url,
     take_screenshot,
-    wait_for_page_load_after_action,
 )
 from directory_tests_shared.settings import SSO_URL
 
