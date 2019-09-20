@@ -4,13 +4,13 @@ import logging
 
 from requests import Response
 
-from directory_tests_shared import URLs
-from tests.functional.pages import Services
+from directory_tests_shared import PageType, Service, URLs
+
 from tests.functional.utils.request import check_response
 
-SERVICE = Services.SSO
+SERVICE = Service.SSO
 NAME = "Verify your email"
-TYPE = "form"
+TYPE = PageType.FORM
 URL = URLs.SSO_EMAIL_CONFIRM.absolute
 EXPECTED_STRINGS = [
     "Verify your email address",

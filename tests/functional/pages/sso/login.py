@@ -5,14 +5,14 @@ from urllib.parse import urljoin
 
 from requests import Response, Session
 
-from directory_tests_shared import URLs
-from tests.functional.pages import Services
+from directory_tests_shared import PageType, Service, URLs
+
 from tests.functional.utils.context_utils import Actor
 from tests.functional.utils.request import Method, check_response, make_request
 
-SERVICE = Services.SSO
+SERVICE = Service.SSO
 NAME = "Login"
-TYPE = "form"
+TYPE = PageType.FORM
 URL = URLs.SSO_LOGIN.absolute
 EXPECTED_STRINGS = [
     "Sign in",

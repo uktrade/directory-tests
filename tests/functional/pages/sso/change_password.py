@@ -5,14 +5,14 @@ from urllib.parse import urljoin
 
 from requests import Response
 
-from directory_tests_shared import URLs
-from tests.functional.pages import Services
+from directory_tests_shared import PageType, Service, URLs
+
 from tests.functional.utils.context_utils import Actor
 from tests.functional.utils.request import Method, check_response, make_request
 
-SERVICE = Services.SSO
+SERVICE = Service.SSO
 NAME = "Change password"
-TYPE = "form"
+TYPE = PageType.FORM
 URL = URLs.SSO_PASSWORD_CHANGE.absolute
 EXPECTED_STRINGS = ["Change Password", "New password", "Confirm password"]
 

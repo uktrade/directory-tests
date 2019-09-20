@@ -5,15 +5,15 @@ from urllib.parse import unquote, urljoin
 
 from requests import Response, Session
 
-from directory_tests_shared import URLs
-from tests.functional.pages import Services
+from directory_tests_shared import PageType, Service, URLs
+
 from tests.functional.utils.context_utils import Actor
 from tests.functional.utils.generic import assertion_msg
 from tests.functional.utils.request import Method, check_response, make_request
 
-SERVICE = Services.SSO
+SERVICE = Service.SSO
 NAME = "Confirm your email"
-TYPE = "form"
+TYPE = PageType.FORM
 URL = URLs.SSO_EMAIL_CONFIRM.absolute
 EXPECTED_STRINGS = [
     "Confirm email address",

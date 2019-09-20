@@ -4,13 +4,13 @@ import logging
 
 from requests import Response
 
-from directory_tests_shared import URLs
-from tests.functional.pages import Services
+from directory_tests_shared import PageType, Service, URLs
+
 from tests.functional.utils.request import check_response
 
-SERVICE = Services.SSO
+SERVICE = Service.SSO
 NAME = "Invalid password reset link"
-TYPE = "error"
+TYPE = PageType.ERROR
 URL = URLs.SSO_PASSWORD_RESET.absolute
 EXPECTED_STRINGS = [
     "Bad Token",

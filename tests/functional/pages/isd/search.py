@@ -5,15 +5,15 @@ import logging
 from requests import Response, Session
 from retrying import retry
 
-from directory_tests_shared import URLs
-from tests.functional.pages import Services
+from directory_tests_shared import PageType, Service, URLs
+
 from tests.functional.utils.generic import escape_html, extract_page_contents, \
     assertion_msg
 from tests.functional.utils.request import Method, check_response, make_request
 
-SERVICE = Services.ISD
+SERVICE = Service.ISD
 NAME = "Search"
-TYPE = "search results"
+TYPE = PageType.SEARCH_RESULTS
 URL = URLs.ISD_SEARCH.absolute
 EXPECTED_STRINGS = [
     "Search results",
