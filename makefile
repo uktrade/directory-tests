@@ -93,30 +93,30 @@ DOCKER_COMPOSE_CREATE_ENVS := \
 DOCKER_COMPOSE_REMOVE_AND_PULL_LOCAL := docker-compose rm && docker-compose pull
 
 DOCKER_SET_ENV_VARS_FOR_DEV := \
-	export DEV_DIRECTORY_TESTS_DIRECTORY_API_URL=https://directory-api-dev.herokuapp.com/; \
-	export DEV_DIRECTORY_TESTS_DIRECTORY_CMS_API_CLIENT_BASE_URL=https://dev.cms.directory.uktrade.io/; \
-	export DEV_DIRECTORY_TESTS_DIRECTORY_CONTACT_US_UI_URL=https://contact-us.export.great.gov.uk/; \
-	export DEV_DIRECTORY_TESTS_DIRECTORY_PROFILE_URL=https://dev.profile.uktrade.io/; \
-	export DEV_DIRECTORY_TESTS_DIRECTORY_SSO_API_CLIENT_BASE_URL=https://directory-sso-dev.herokuapp.com/; \
-	export DEV_DIRECTORY_TESTS_DIRECTORY_SSO_URL=https://www.dev.sso.uktrade.io/; \
-	export DEV_DIRECTORY_TESTS_DIRECTORY_UI_BUYER_URL=https://dev.buyer.directory.uktrade.io/; \
-	export DEV_DIRECTORY_TESTS_DIRECTORY_UI_SUPPLIER_URL=https://dev.supplier.directory.uktrade.io/; \
-	export DEV_DIRECTORY_TESTS_EXRED_UI_URL=https://dev.exportreadiness.directory.uktrade.io/; \
-	export DEV_DIRECTORY_TESTS_INVEST_UI_URL=https://dev.invest.directory.uktrade.io/; \
-	export DEV_DIRECTORY_TESTS_SOO_UI_URL=https://selling-online-overseas.export.staging.uktrade.io/
+	export DEV_DIRECTORY_API_URL=https://directory-api-dev.herokuapp.com/; \
+	export DEV_CMS_API_URL=https://dev.cms.directory.uktrade.io/; \
+	export DEV_CONTACT_US_URL=https://contact-us.export.great.gov.uk/; \
+	export DEV_PROFILE_URL=https://dev.profile.uktrade.io/; \
+	export DEV_SSO_API_URL=https://directory-sso-dev.herokuapp.com/; \
+	export DEV_SSO_URL=https://www.dev.sso.uktrade.io/; \
+	export DEV_FIND_A_BUYER_URL=https://dev.buyer.directory.uktrade.io/; \
+	export DEV_FIND_A_SUPPLIER_URL=https://dev.supplier.directory.uktrade.io/; \
+	export DEV_DOMESTIC_URL=https://dev.exportreadiness.directory.uktrade.io/; \
+	export DEV_INVEST_URL=https://dev.invest.directory.uktrade.io/; \
+	export DEV_SOO_URL=https://selling-online-overseas.export.staging.uktrade.io/
 
 DOCKER_SET_ENV_VARS_FOR_STAGE := \
-	export STAGE_DIRECTORY_TESTS_DIRECTORY_API_URL=https://directory-api-staging.cloudapps.digital/; \
-	export STAGE_DIRECTORY_TESTS_DIRECTORY_CMS_API_CLIENT_BASE_URL=https://stage.cms.directory.uktrade.io/; \
-	export STAGE_DIRECTORY_TESTS_DIRECTORY_CONTACT_US_UI_URL=https://contact-us.export.great.gov.uk/; \
-	export STAGE_DIRECTORY_TESTS_DIRECTORY_PROFILE_URL=https://great.uat.uktrade.io/profile/; \
-	export STAGE_DIRECTORY_TESTS_DIRECTORY_SSO_API_CLIENT_BASE_URL=https://directory-sso-staging.cloudapps.digital/; \
-	export STAGE_DIRECTORY_TESTS_DIRECTORY_SSO_URL=https://great.uat.uktrade.io/sso/; \
-	export STAGE_DIRECTORY_TESTS_DIRECTORY_UI_BUYER_URL=https://great.uat.uktrade.io/find-a-buyer/; \
-	export STAGE_DIRECTORY_TESTS_DIRECTORY_UI_SUPPLIER_URL=https://great.uat.uktrade.io/trade/; \
-	export STAGE_DIRECTORY_TESTS_EXRED_UI_URL=https://great.uat.uktrade.io/; \
-	export STAGE_DIRECTORY_TESTS_INVEST_UI_URL=https://invest-ui-staging.cloudapps.digital/; \
-	export STAGE_DIRECTORY_TESTS_SOO_UI_URL=https://selling-online-overseas.export.staging.uktrade.io/
+	export STAGE_DIRECTORY_API_URL=https://directory-api-dev.herokuapp.com/; \
+	export STAGE_CMS_API_URL=https://dev.cms.directory.uktrade.io/; \
+	export STAGE_CONTACT_US_URL=https://contact-us.export.great.gov.uk/; \
+	export STAGE_PROFILE_URL=https://dev.profile.uktrade.io/; \
+	export STAGE_SSO_API_URL=https://directory-sso-dev.herokuapp.com/; \
+	export STAGE_SSO_URL=https://www.dev.sso.uktrade.io/; \
+	export STAGE_FIND_A_BUYER_URL=https://dev.buyer.directory.uktrade.io/; \
+	export STAGE_FIND_A_SUPPLIER_URL=https://dev.supplier.directory.uktrade.io/; \
+	export STAGE_DOMESTIC_URL=https://dev.exportreadiness.directory.uktrade.io/; \
+	export STAGE_INVEST_URL=https://dev.invest.directory.uktrade.io/; \
+	export STAGE_SOO_URL=https://selling-online-overseas.export.staging.uktrade.io/
 
 DOCKER_REMOVE_ALL := \
 	docker ps -a | \
@@ -137,7 +137,7 @@ docker_integration_tests: docker_remove_all
 
 
 BROWSER_SET_DOCKER_ENV_VARS := \
-	export BROWSER_TESTS_CIRCLE_SHA1=$(CIRCLE_SHA1)
+	export CIRCLE_SHA1=$(CIRCLE_SHA1)
 
 BROWSER_DOCKER_COMPOSE_CREATE_ENVS := \
 	python3 ./docker/env_writer.py --env=$(TEST_ENV) --config=./docker/env.json
