@@ -2,7 +2,11 @@
 import pytest
 from directory_cms_client.client import cms_api_client
 from directory_sso_api_client.client import sso_api_client
-from rest_framework.status import HTTP_200_OK, HTTP_301_MOVED_PERMANENTLY, HTTP_404_NOT_FOUND
+from rest_framework.status import (
+    HTTP_200_OK,
+    HTTP_301_MOVED_PERMANENTLY,
+    HTTP_404_NOT_FOUND,
+)
 from retrying import retry
 
 from directory_tests_shared import URLs
