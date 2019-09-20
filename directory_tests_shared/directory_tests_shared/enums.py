@@ -11,3 +11,42 @@ class BusinessType(Enum):
     @classmethod
     def random(cls):
         return choice(list(cls.__members__.values()))
+
+
+class Service(Enum):
+    FAB = "FAB"
+    FAS = "FAS"
+    INTERNATIONAL = "International"
+    ISD = "ISD"
+    PROFILE = "Profile"
+    SSO = "SSO"
+
+    def __str__(self):
+        return self.value
+
+
+class PageType(Enum):
+    ARTICLE = "article"
+    ARTICLE_LIST = "article list"
+    CONFIRMATION = "confirmation"
+    CONTACT_US = "contact us"
+    CONTENT = "content"
+    ERROR = "error"
+    EVENT = "event"
+    FORM = "form"
+    GUIDE = "guide"
+    HOME = "home"
+    HPO = "HPO"
+    INDUSTRY = "industry"
+    LANDING = "landing"
+    LISTING = "listing"
+    OPTION = "option"
+    PROFILE = "profile"
+    REGION = "region"
+    SEARCH = "search"
+    SEARCH_RESULTS = "search results"
+    SHARE = "share"
+    THANK_YOU = "thank you"
+
+    def __str__(self):
+        return self.value

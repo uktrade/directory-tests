@@ -12,15 +12,6 @@ from tests.functional import pages
 REQUIRED_PROPERTIES = ["SERVICE", "NAME", "TYPE", "URL", "EXPECTED_STRINGS"]
 
 
-class Services(Enum):
-    FAB = "FAB"
-    FAS = "FAS"
-    INTERNATIONAL = "International"
-    ISD = "ISD"
-    PROFILE = "Profile"
-    SSO = "SSO"
-
-
 def is_page_object(module: ModuleType):
     return all([hasattr(module, prop) for prop in REQUIRED_PROPERTIES])
 
