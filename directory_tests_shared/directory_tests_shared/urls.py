@@ -5,23 +5,23 @@ from typing import Union
 from urllib.parse import urljoin
 
 from .settings import (
+    CMS_API_URL,
+    CONTACT_US_URL,
     DIRECTORY_API_URL,
-    DIRECTORY_CMS_API_CLIENT_BASE_URL,
-    DIRECTORY_CONTACT_US_UI_URL,
-    DIRECTORY_FORMS_API_URL,
-    DIRECTORY_LEGACY_CONTACT_US_UI_URL,
-    DIRECTORY_PROFILE_URL,
-    DIRECTORY_SSO_API_CLIENT_BASE_URL,
-    DIRECTORY_SSO_URL,
-    DIRECTORY_UI_BUYER_URL,
-    DIRECTORY_UI_INTERNATIONAL_URL,
-    DIRECTORY_UI_SUPPLIER_URL,
-    EXPORT_OPPORTUNITIES_UI_URL,
-    EXRED_UI_URL,
-    INVEST_UI_URL,
-    INVEST_LEGACY_UI_URL,
-    ISD_UI_URL,
-    SOO_UI_URL,
+    DOMESTIC_URL,
+    EXPORT_OPPORTUNITIES_URL,
+    FIND_A_BUYER_URL,
+    FIND_A_SUPPLIER_URL,
+    FORMS_API_URL,
+    INTERNATIONAL_URL,
+    INVEST_URL,
+    ISD_URL,
+    LEGACY_CONTACT_US_URL,
+    LEGACY_INVEST_URL,
+    PROFILE_URL,
+    SOO_URL,
+    SSO_API_URL,
+    SSO_URL,
 )
 
 
@@ -40,12 +40,12 @@ class Url:
 
 class CMSApiUrl(Url):
     def __init__(self, endpoint: str, *, template: str = None):
-        super().__init__(DIRECTORY_CMS_API_CLIENT_BASE_URL, endpoint, template=template)
+        super().__init__(CMS_API_URL, endpoint, template=template)
 
 
 class ContactUrl(Url):
     def __init__(self, endpoint: str, *, template: str = None):
-        super().__init__(DIRECTORY_CONTACT_US_UI_URL, endpoint, template=template)
+        super().__init__(CONTACT_US_URL, endpoint, template=template)
 
 
 class DirectoryApiUrl(Url):
@@ -55,84 +55,82 @@ class DirectoryApiUrl(Url):
 
 class DomesticUrl(Url):
     def __init__(self, endpoint: str, *, template: str = None):
-        super().__init__(EXRED_UI_URL, endpoint, template=template)
+        super().__init__(DOMESTIC_URL, endpoint, template=template)
 
 
 class ExOppsUrl(Url):
     def __init__(self, endpoint: str, *, template: str = None):
-        super().__init__(EXPORT_OPPORTUNITIES_UI_URL, endpoint, template=template)
+        super().__init__(EXPORT_OPPORTUNITIES_URL, endpoint, template=template)
 
 
 class FABUrl(Url):
     def __init__(self, endpoint: str, *, template: str = None):
-        super().__init__(DIRECTORY_UI_BUYER_URL, endpoint, template=template)
+        super().__init__(FIND_A_BUYER_URL, endpoint, template=template)
 
 
 class FABApiUrl(Url):
     def __init__(self, endpoint: str, *, template: str = None):
-        super().__init__(DIRECTORY_UI_BUYER_URL, endpoint, template=template)
+        super().__init__(FIND_A_BUYER_URL, endpoint, template=template)
 
 
 class FASUrl(Url):
     def __init__(self, endpoint: str, *, template: str = None):
-        super().__init__(DIRECTORY_UI_SUPPLIER_URL, endpoint, template=template)
+        super().__init__(FIND_A_SUPPLIER_URL, endpoint, template=template)
 
 
 class LegacyFASUrl(Url):
     def __init__(self, endpoint: str, *, template: str = None):
-        super().__init__(EXRED_UI_URL + "trade/", endpoint, template=template)
+        super().__init__(DOMESTIC_URL + "trade/", endpoint, template=template)
 
 
 class FormsApiUrl(Url):
     def __init__(self, endpoint: str, *, template: str = None):
-        super().__init__(DIRECTORY_FORMS_API_URL, endpoint, template=template)
+        super().__init__(FORMS_API_URL, endpoint, template=template)
 
 
 class InternationalUrl(Url):
     def __init__(self, endpoint: str, *, template: str = None):
-        super().__init__(DIRECTORY_UI_INTERNATIONAL_URL, endpoint, template=template)
+        super().__init__(INTERNATIONAL_URL, endpoint, template=template)
 
 
 class InvestUrl(Url):
     def __init__(self, endpoint: str, *, template: str = None):
-        super().__init__(INVEST_UI_URL, endpoint, template=template)
+        super().__init__(INVEST_URL, endpoint, template=template)
 
 
 class LegacyInvestUrl(Url):
     def __init__(self, endpoint: str, *, template: str = None):
-        super().__init__(INVEST_LEGACY_UI_URL, endpoint, template=template)
+        super().__init__(LEGACY_INVEST_URL, endpoint, template=template)
 
 
 class ISDUrl(Url):
     def __init__(self, endpoint: str, *, template: str = None):
-        super().__init__(ISD_UI_URL, endpoint, template=template)
+        super().__init__(ISD_URL, endpoint, template=template)
 
 
 class LegacyContactUrl(Url):
     def __init__(self, endpoint: str, *, template: str = None):
-        super().__init__(
-            DIRECTORY_LEGACY_CONTACT_US_UI_URL, endpoint, template=template
-        )
+        super().__init__(LEGACY_CONTACT_US_URL, endpoint, template=template)
 
 
 class ProfileUrl(Url):
     def __init__(self, endpoint: str, *, template: str = None):
-        super().__init__(DIRECTORY_PROFILE_URL, endpoint, template=template)
+        super().__init__(PROFILE_URL, endpoint, template=template)
 
 
 class SOOUrl(Url):
     def __init__(self, endpoint: str, *, template: str = None):
-        super().__init__(SOO_UI_URL, endpoint, template=template)
+        super().__init__(SOO_URL, endpoint, template=template)
 
 
 class SSOUrl(Url):
     def __init__(self, endpoint: str, *, template: str = None):
-        super().__init__(DIRECTORY_SSO_URL, endpoint, template=template)
+        super().__init__(SSO_URL, endpoint, template=template)
 
 
 class SSOApiUrl(Url):
     def __init__(self, endpoint: str, *, template: str = None):
-        super().__init__(DIRECTORY_SSO_API_CLIENT_BASE_URL, endpoint, template=template)
+        super().__init__(SSO_API_URL, endpoint, template=template)
 
 
 @unique
