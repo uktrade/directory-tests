@@ -41,6 +41,4 @@ def submit(session: Session, token: str, password: str) -> Response:
         "transfer_account_wizard_view-current_step": "password",
     }
     headers = {"Referer": URL}
-    return make_request(
-        Method.POST, URL, session=session, data=data, headers=headers
-    )
+    return make_request(Method.POST, URL, session=session, data=data, headers=headers)

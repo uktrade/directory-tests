@@ -23,9 +23,7 @@ EXPECTED_STRINGS = [
 
 def should_be_here(response: Response):
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
-    logging.debug(
-        "Successfully got to the FAB Confirm your collaboration page"
-    )
+    logging.debug("Successfully got to the FAB Confirm your collaboration page")
 
 
 def open(session: Session, link: str) -> Response:
@@ -49,15 +47,6 @@ def confirm(
 
     url = URL.format(invite_key=invite_key)
     headers = {"Referer": url}
-    data = {
-        "csrfmiddlewaretoken": csrf_middleware_token,
-        "invite_key": invite_key,
-    }
+    data = {"csrfmiddlewaretoken": csrf_middleware_token, "invite_key": invite_key}
 
-    return make_request(
-        Method.POST,
-        url,
-        session=session,
-        headers=headers,
-        data=data,
-    )
+    return make_request(Method.POST, url, session=session, headers=headers, data=data)

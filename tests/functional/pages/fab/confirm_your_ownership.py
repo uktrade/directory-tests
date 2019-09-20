@@ -31,19 +31,12 @@ def open(session: Session, link: str) -> Response:
     return make_request(Method.GET, link, session=session)
 
 
-def confirm(
-    session: Session, csrf_middleware_token: str, link: str
-) -> Response:
+def confirm(session: Session, csrf_middleware_token: str, link: str) -> Response:
     # in order to be redirected to the correct URL we have `unquote`
     # the form_action_value
     start = link.index("=") + 1
     invite_key = link[start:]
     headers = {"Referer": link}
-    data = {
-        "csrfmiddlewaretoken": csrf_middleware_token,
-        "invite_key": invite_key,
-    }
+    data = {"csrfmiddlewaretoken": csrf_middleware_token, "invite_key": invite_key}
 
-    return make_request(
-        Method.POST, link, session=session, headers=headers, data=data
-    )
+    return make_request(Method.POST, link, session=session, headers=headers, data=data)

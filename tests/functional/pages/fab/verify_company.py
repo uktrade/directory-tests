@@ -22,9 +22,7 @@ EXPECTED_STRINGS = [
     ),
 ]
 
-EXPECTED_STRINGS_VERIFIED = [
-    "Your company has been verified",
-]
+EXPECTED_STRINGS_VERIFIED = ["Your company has been verified"]
 
 
 def go_to(session: Session, *, referer: str = None) -> Response:
@@ -39,11 +37,7 @@ def should_be_here(response: Response):
 
 
 def submit(
-    session: Session,
-    token: str,
-    verification_code: str,
-    *,
-    referer: str = None
+    session: Session, token: str, verification_code: str, *, referer: str = None
 ) -> Response:
     """Submit the form with verification code."""
     if referer is None:
@@ -54,9 +48,7 @@ def submit(
         "company_address_verification_view-current_step": "address",
         "address-code": verification_code,
     }
-    return make_request(
-        Method.POST, URL, session=session, headers=headers, data=data
-    )
+    return make_request(Method.POST, URL, session=session, headers=headers, data=data)
 
 
 def should_see_company_is_verified(response: Response):

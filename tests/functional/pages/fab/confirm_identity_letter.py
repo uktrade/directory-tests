@@ -15,7 +15,7 @@ URL = URLs.FAB_CONFIRM_IDENTITY_LETTER.absolute
 EXPECTED_STRINGS = [
     "Verification letter request",
     "Your verification letter should arrive within 5 working days",
-    "The letter contains a 12 digit verification code"
+    "The letter contains a 12 digit verification code",
 ]
 
 

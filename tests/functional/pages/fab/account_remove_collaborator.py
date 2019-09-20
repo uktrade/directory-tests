@@ -32,9 +32,7 @@ def should_be_here(response: Response, *, have_collaborators: bool = True):
     if have_collaborators:
         check_response(response, 200, body_contains=EXPECTED_STRINGS)
     else:
-        check_response(
-            response, 200, body_contains=EXPECTED_STRINGS_NO_COLLABORATORS
-        )
+        check_response(response, 200, body_contains=EXPECTED_STRINGS_NO_COLLABORATORS)
 
 
 def go_to(session: Session) -> Response:
@@ -58,9 +56,7 @@ def extract_sso_id(html: str, email_to_element_id: Tuple[str, str]):
 def extract_email_to_sso_id(html: str, mapping: dict) -> dict:
     return dict(
         map(
-            lambda email_to_element_id: extract_sso_id(
-                html, email_to_element_id
-            ),
+            lambda email_to_element_id: extract_sso_id(html, email_to_element_id),
             mapping.items(),
         )
     )
@@ -77,9 +73,7 @@ def extract_sso_ids(response: Response) -> dict:
 def remove(session: Session, token: str, sso_ids: List[str]) -> Response:
     data = {"csrfmiddlewaretoken": token, "sso_ids": sso_ids}
     headers = {"Referer": URL}
-    return make_request(
-        Method.POST, URL, session=session, data=data, headers=headers
-    )
+    return make_request(Method.POST, URL, session=session, data=data, headers=headers)
 
 
 def should_not_see_collaborator(response: Response, collaborator_email: str):
