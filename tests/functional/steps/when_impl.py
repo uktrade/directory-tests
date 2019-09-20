@@ -1555,6 +1555,16 @@ def profile_provide_business_details(
         )
         results.append((new_details, response, row["error"]))
 
+        if row["error"] == "no error":
+            # update company's details if no error was expected
+            context.set_company_details(
+                actor.company_alias,
+                title=new_details.title,
+                website=new_details.website,
+                no_employees=new_details.no_employees,
+                sector=new_details.sector,
+            )
+
     context.results = results
 
 
