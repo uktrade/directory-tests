@@ -16,7 +16,9 @@ setup(
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     include_package_data=True,
-    install_requires=[],
+    install_requires=[
+        "envparse>=0.2.0",
+    ],
     extras_require={},
     classifiers=[
         "Development Status :: 5 - Production/Stable",
