@@ -46,7 +46,7 @@ alias stage='source ~/stage.sh';
 alias uat='source ~/uat.sh';
 ```
 
-Once that's done, remember to run `dev`, `stage` or `uat` command prior running tests 
+Once that's done, remember to run `dev`, `stage` or `uat` command prior running tests
 against desired environment.
 
 
@@ -111,7 +111,7 @@ In order to start the Web GUI, choose service name and from repo's root director
 locust -f locustfile_rudimental_{service_name}.py
 ```
 
-Once web monitor is up, go to [http://localhost:8089/](http://localhost:8089/).   
+Once web monitor is up, go to [http://localhost:8089/](http://localhost:8089/).  
 You'll be prompted to enter:
 
 * Number of users to simulate
@@ -157,11 +157,11 @@ load_run_time: &load_run_time
 
 ## Artifacts & Geckoboards
 
-After each load test job is done, CircleCI will keep locust's test result files: 
+After each load test job is done, CircleCI will keep locust's test result files:
 `results_distribution.csv` & `results_requests.csv` as a job artifact.  
 
-These `CSV` files are then consumed by [Geckoboard Updater](https://github.com/uktrade/directory-periodic-tests/tree/master/geckoboard_updater) script. 
-Once fetched, parsed & converted into a JSON Dataset, Geckoboard Updater will push 
+These `CSV` files are then consumed by [Geckoboard Updater](https://github.com/uktrade/directory-periodic-tests/tree/master/geckoboard_updater) script.
+Once fetched, parsed & converted into a JSON Dataset, Geckoboard Updater will push
 the load tests results to Geckoboard, where they're nicely visualised.
 
 

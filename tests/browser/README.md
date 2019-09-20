@@ -4,7 +4,7 @@ DIT - Functional Browser Tests
 This repository contains UI tests automated using:
 * [Behave](https://pythonhosted.org/behave/)
 * [Selenium with Python](https://selenium-python.readthedocs.io/)
-* [BrowserStack](https://www.browserstack.com/automate) 
+* [BrowserStack](https://www.browserstack.com/automate)
 
 
 # Requirements
@@ -37,13 +37,13 @@ alias stage='source ~/stage.sh';
 alias uat='source ~/uat.sh';
 ```
 
-Once that's done, remember to run `dev`, `stage` or `uat` command prior running tests 
+Once that's done, remember to run `dev`, `stage` or `uat` command prior running tests
 against desired environment.
 
 
 # Run scenarios locally with "behave" command
 
-You can also run the scenarios with `behave` command (defaults to Chrome): 
+You can also run the scenarios with `behave` command (defaults to Chrome):
 ```bash
 cd tests/browser
 workon browser
@@ -51,8 +51,8 @@ dev
 behave -k --format pretty --no-skipped features/domestic/home-page.feature --tags=~@wip --tags=~@skip --tags=~@fixme --stop
 ```
 
-This command will run all scenarios from specified feature file which are not annotated 
-with `@wip`, `@skip` or `@fixme` tags. Test execution will also stop on first error 
+This command will run all scenarios from specified feature file which are not annotated
+with `@wip`, `@skip` or `@fixme` tags. Test execution will also stop on first error
 because `--stop` parameter was used.
 
 PS. you can use `--tags=` & `-t` interchangeably.
@@ -79,14 +79,14 @@ TAG=ED-2366 BROWSER=Edge VERSIONS=18.0 make browserstack
 ```
 
 
-To run all scenarios on [BrowserStack](https://www.browserstack.com/automate) with `behave` command (always defaults to `Chrome`):   
+To run all scenarios on [BrowserStack](https://www.browserstack.com/automate) with `behave` command (always defaults to `Chrome`):  
 ```bash
 cd tests/browser
-BROWSER_ENVIRONMENT=remote BROWSER=chrome AUTO_RETRY=true behave -k --format progress3 --no-logcapture --stop --tags=~@wip --tags=~@skip --tags=~@fixme --tags=~@decommissioned 
+BROWSER_ENVIRONMENT=remote BROWSER=chrome AUTO_RETRY=true behave -k --format progress3 --no-logcapture --stop --tags=~@wip --tags=~@skip --tags=~@fixme --tags=~@decommissioned
 ```
 
 
-To run specific scenario on [BrowserStack](https://www.browserstack.com/automate) with `behave` command):   
+To run specific scenario on [BrowserStack](https://www.browserstack.com/automate) with `behave` command):  
 ```bash
 cd tests/browser
 BROWSER_ENVIRONMENT=remote BROWSER=Edge AUTO_RETRY=true behave -k --format progress3 --no-logcapture --stop --tags=~@wip --tags=~@skip --tags=~@fixme --tags=~@decommissioned  --tags={YOUR_TAG}
@@ -111,7 +111,7 @@ CAPABILITIES='{"pageLoadStrategy":"none"}' BROWSER_ENVIRONMENT=remote AUTO_RETRY
 
 # Run all scenarios using locally installed browser
 
-This command is not recommended as it will also execute scenarios which are not meant 
+This command is not recommended as it will also execute scenarios which are not meant
 to work on the environment you want to run the tests against.
 
 Run all scenarios locally using default browser (defaults to Chrome):  

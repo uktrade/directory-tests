@@ -38,7 +38,7 @@ alias stage='source ~/stage.sh';
 alias uat='source ~/uat.sh';
 ```
 
-Once that's done, remember to run `dev`, `stage` or `uat` command prior running tests 
+Once that's done, remember to run `dev`, `stage` or `uat` command prior running tests
 against desired environment.
 
 
@@ -54,14 +54,14 @@ PYTEST_ARGS='-m "not stage and not prod"' make smoke_tests
 * `PYTEST_ARGS` - are used to filter out tests which you don't want to run
 
 
-You can also use `pytest` command to run scenarios from a specific test file: 
+You can also use `pytest` command to run scenarios from a specific test file:
 ```bash
 workon smoke
 dev
 pytest tests/smoke/test_sitemaps.py
 ```
 
-This will run all tests from selected module (even those that should be skipped) and 
+This will run all tests from selected module (even those that should be skipped) and
 hide some logging on error.
 Thus it's better to run it with `--capture=no --verbose`:
 
@@ -71,7 +71,7 @@ dev
 pytest --capture=no --verbose tests/smoke/test_sitemaps.py
 ```
 
-If you'd like to skip tests not meant to be run against currently selected environment, 
+If you'd like to skip tests not meant to be run against currently selected environment,
 then use `-m` to filter them out, i.e.:
 ```bash
 pytest --capture=no --verbose tests/smoke/test_cms.py -m "not stage and not prod"

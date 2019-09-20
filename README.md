@@ -26,7 +26,7 @@ You can find then in:
 * [requirements_browser.txt](requirements_browser.txt)
 
 Please use a dedicated `virtualenv` for each type of tests.  
-[virtualenvwrapper](https://pypi.org/project/virtualenvwrapper/) is highly recommended 
+[virtualenvwrapper](https://pypi.org/project/virtualenvwrapper/) is highly recommended
 for creating & managing [virtual envs](https://pypi.org/project/virtualenv/).
 
 
@@ -43,7 +43,7 @@ In order to generate (or update) dependencies for i.e. `smoke` tests:
 
 # CircleCI
 
-All tests are executed nightly on CircleCI against `Dev` & `Staging` environments and in 
+All tests are executed nightly on CircleCI against `Dev` & `Staging` environments and in
 the evening against `UAT` environment.  
 Test workflows are defined in [config.yml](.circleci/config.yml#L595).
 
