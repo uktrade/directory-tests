@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import pytest
 from directory_cms_client.client import cms_api_client
 from directory_sso_api_client.client import sso_api_client

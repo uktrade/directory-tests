@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import logging
 
 from selenium.webdriver.common.by import By

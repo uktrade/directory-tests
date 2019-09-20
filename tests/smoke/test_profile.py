@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import pytest
 from rest_framework.status import (
     HTTP_200_OK,

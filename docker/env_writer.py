@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Env var writer
 Creates .env_* files in two forms:
 1) with `export ` prefix (.env_with_export), for `source ` or `. ` shell commands

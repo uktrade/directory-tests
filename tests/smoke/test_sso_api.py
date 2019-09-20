@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import datetime
 import pytest
 from rest_framework.status import *

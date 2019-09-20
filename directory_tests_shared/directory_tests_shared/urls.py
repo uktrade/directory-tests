@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from enum import Enum, unique
 from functools import partial
 from typing import Union

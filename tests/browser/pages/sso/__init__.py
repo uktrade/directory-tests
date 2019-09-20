@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 __all__ = [
     "common",
     "confirm_your_email",

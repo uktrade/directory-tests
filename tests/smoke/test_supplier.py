@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from random import choice
 from rest_framework.status import HTTP_200_OK
 

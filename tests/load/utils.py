@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 from random import choice, randint
 

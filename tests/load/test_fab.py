@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from directory_tests_shared import URLs, settings
 from directory_tests_shared.utils import basic_auth
 from locust import HttpLocust, TaskSet, task

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 __all__ = [
     "change_password",
     "confirm_your_email",

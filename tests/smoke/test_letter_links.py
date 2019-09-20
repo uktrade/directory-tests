@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import pytest
 import requests
 from rest_framework.status import (

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 __all__ = [
     "account_add_collaborator",
     "account_confirm_password",

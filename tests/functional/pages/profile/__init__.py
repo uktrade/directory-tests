@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 __all__ = [
     "about",
     "admin_remove_profile_from_account",

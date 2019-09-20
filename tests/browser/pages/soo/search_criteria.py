@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 CATEGORIES = {
     "Arts, crafts and hobbies": "8",
     "Baby and toddler": "537",

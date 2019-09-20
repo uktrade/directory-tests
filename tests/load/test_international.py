@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from random import choice
 
 from directory_tests_shared import URLs, settings
