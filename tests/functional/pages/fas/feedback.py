@@ -4,15 +4,15 @@ import logging
 
 from requests import Response, Session
 
-from directory_tests_shared import URLs
-from tests.functional.pages import Services
+from directory_tests_shared import PageType, Service, URLs
+
 from tests.functional.utils.context_utils import Feedback, Actor
 from tests.functional.utils.generic import assert_that_captcha_is_in_dev_mode
 from tests.functional.utils.request import Method, check_response, make_request
 
-SERVICE = Services.FAS
+SERVICE = Service.FAS
 NAME = "Feedback"
-TYPE = "form"
+TYPE = PageType.FORM
 URL = URLs.DOMESTIC_FEEDBACK.absolute
 EXPECTED_STRINGS_FORM = [
     "Get UK companies to fulfil your business needs",

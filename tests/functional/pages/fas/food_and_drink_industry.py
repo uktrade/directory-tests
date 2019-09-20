@@ -4,8 +4,8 @@ import logging
 
 from requests import Response, Session
 
-from directory_tests_shared import URLs
-from tests.functional.pages import Services
+from directory_tests_shared import PageType, Service, URLs
+
 from tests.functional.utils.request import (
     Method,
     check_response,
@@ -13,9 +13,9 @@ from tests.functional.utils.request import (
     make_request,
 )
 
-SERVICE = Services.FAS
+SERVICE = Service.FAS
 NAME = "Food and drink"
-TYPE = "industry"
+TYPE = PageType.INDUSTRY
 URL = URLs.FAS_INDUSTRY_FOOD_AND_DRINK.absolute
 EXPECTED_STRINGS = [
     "Why choose UK food and drink",

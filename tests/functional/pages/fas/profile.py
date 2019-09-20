@@ -7,9 +7,9 @@ from behave.model import Table
 from requests import Response, Session
 from scrapy import Selector
 
-from directory_tests_shared import URLs
+from directory_tests_shared import PageType, Service, URLs
 from tests.functional.common import DETAILS
-from tests.functional.pages import Services
+
 from tests.functional.utils.context_utils import Company
 from tests.functional.utils.generic import (
     Method,
@@ -20,9 +20,9 @@ from tests.functional.utils.generic import (
 from tests.functional.utils.request import check_response
 from directory_tests_shared.settings import SECTORS_WITH_LABELS
 
-SERVICE = Services.FAS
+SERVICE = Service.FAS
 NAME = "Company's business profile"
-TYPE = "profile"
+TYPE = PageType.PROFILE
 URL = URLs.FAS_SUPPLIERS.absolute
 EXPECTED_STRINGS = [
     "Business details",
