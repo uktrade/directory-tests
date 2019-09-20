@@ -95,20 +95,25 @@ Feature: Profile pages
 
   @bug
   @TT-1289
-  @fixme
+  @fixed
   @ED-2141
   @profile
   @captcha
   @dev-only
   @fake-sso-email-verification
-  Scenario: Supplier should not be able to update business details using invalid values (too long name)
-    Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
+  Scenario: Supplier should able to change business trading name to a long one
+    Given "Annette Geissinger" has created verified and published FAS business profile for randomly selected company "Y"
 
     When "Annette Geissinger" attempts to change business details
-      | trading name   | website         | size       | industry | error                                             |
-      | 256 characters | empty string    | 10001+     | random   | Ensure this field has no more than 255 characters |
+      | trading name   | website         | size       | industry | error    |
+      | 256 characters | empty string    | 10001+     | random   | no error |
 
-    Then "Annette Geissinger" should see expected error messages
+    Then "Annette Geissinger" should see new details on "Profile - edit company profile" page
+      | detail       |
+      | trading name |
+    And "Annette Geissinger" should see new details on "FAS - Company's business profile" page
+      | detail       |
+      | trading name |
 
 
   @ED-2141
