@@ -13,10 +13,7 @@ NAME = "Add case study (basic details)"
 TYPE = PageType.FORM
 URL = URLs.PROFILE_CASE_STUDY_DETAILS.absolute
 EDIT_URL = URLs.PROFILE_CASE_STUDY_EDIT.absolute
-EXPECTED_STRINGS = [
-    "Business showcase",
-    "Title of your case study or project",
-]
+EXPECTED_STRINGS = ["Business showcase", "Title of your case study or project"]
 
 
 def should_be_here(response: Response):
@@ -62,7 +59,5 @@ def submit(session: Session, token: str, case_study: CaseStudy) -> Response:
     response = make_request(
         Method.POST, URL, session=session, headers=headers, data=data
     )
-    logging.debug(
-        "Supplier successfully submitted basic case study data: %s", data
-    )
+    logging.debug("Supplier successfully submitted basic case study data: %s", data)
     return response

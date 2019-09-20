@@ -50,7 +50,7 @@ def update_profiles(
     twitter=True,
     specific_facebook=None,
     specific_linkedin=None,
-    specific_twitter=None
+    specific_twitter=None,
 ) -> (Response, Company):
     """Change Company's Sector of Interest.
 
@@ -68,16 +68,12 @@ def update_profiles(
     fake_tw = f"http://twitter.com/{profile_suffix}"
 
     if facebook:
-        new_fb = (
-            specific_facebook if specific_facebook is not None else fake_fb
-        )
+        new_fb = specific_facebook if specific_facebook is not None else fake_fb
     else:
         new_fb = company.facebook
 
     if linkedin:
-        new_li = (
-            specific_linkedin if specific_linkedin is not None else fake_li
-        )
+        new_li = specific_linkedin if specific_linkedin is not None else fake_li
     else:
         new_li = company.linkedin
 
@@ -87,11 +83,7 @@ def update_profiles(
         new_tw = company.twitter
 
     headers = {"Referer": URL}
-    data = {
-        "facebook_url": new_fb,
-        "linkedin_url": new_li,
-        "twitter_url": new_tw,
-    }
+    data = {"facebook_url": new_fb, "linkedin_url": new_li, "twitter_url": new_tw}
 
     new_details = Company(facebook=new_fb, linkedin=new_li, twitter=new_tw)
 
@@ -118,12 +110,7 @@ def should_see_errors(
 
 
 def remove_links(
-    actor: Actor,
-    company: Company,
-    *,
-    facebook=False,
-    linkedin=False,
-    twitter=False
+    actor: Actor, company: Company, *, facebook=False, linkedin=False, twitter=False
 ) -> Response:
     """Remove links to all existing Online Profiles."""
     response, _ = update_profiles(

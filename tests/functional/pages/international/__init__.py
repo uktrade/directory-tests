@@ -1,5 +1,1 @@
-__all__ = [
-    "industries",
-    "industry",
-    "landing",
-]
+__all__ = ["industries", "industry", "landing"]

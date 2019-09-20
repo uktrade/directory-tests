@@ -11,9 +11,7 @@ SERVICE = Service.PROFILE
 NAME = "Enter email verification code"
 TYPE = PageType.FORM
 URL = URLs.PROFILE_ENROL_EMAIL_VERIFICATION.absolute
-EXPECTED_STRINGS = [
-    "Enter your confirmation code",
-]
+EXPECTED_STRINGS = ["Enter your confirmation code"]
 
 
 def go_to(session: Session) -> Response:
@@ -34,6 +32,4 @@ def submit(actor: Actor) -> Response:
         "verification-code": actor.email_confirmation_code,
     }
 
-    return make_request(
-        Method.POST, URL, session=session, headers=headers, data=data
-    )
+    return make_request(Method.POST, URL, session=session, headers=headers, data=data)

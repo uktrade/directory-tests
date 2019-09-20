@@ -11,10 +11,7 @@ SERVICE = Service.INTERNATIONAL
 NAME = "Industries"
 TYPE = PageType.LISTING
 URL = URLs.INTERNATIONAL_INDUSTRIES.absolute
-EXPECTED_STRINGS = [
-    "Industries",
-    "Great.gov.uk International"
-]
+EXPECTED_STRINGS = ["Industries", "Great.gov.uk International"]
 
 INDUSTRY_NAMES = {
     "english": [

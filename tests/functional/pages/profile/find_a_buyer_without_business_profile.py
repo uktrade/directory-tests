@@ -12,15 +12,15 @@ NAME = "Find a Buyer (without a business profile)"
 TYPE = PageType.LANDING
 URL = URLs.PROFILE_FAB.absolute
 EXPECTED_STRINGS = [
-    'Account',
-    'You are signed in as',
-    'Get a business profile',
-    'Get a business profile for your company and you can',
-    'generate new sales leads',
-    'promote your business to thousands of overseas buyers',
-    'add case studies of your best work to make your company stand out',
-    'have buyers contact your sales team directly to get deals moving',
-    'Create a business profile',
+    "Account",
+    "You are signed in as",
+    "Get a business profile",
+    "Get a business profile for your company and you can",
+    "generate new sales leads",
+    "promote your business to thousands of overseas buyers",
+    "add case studies of your best work to make your company stand out",
+    "have buyers contact your sales team directly to get deals moving",
+    "Create a business profile",
 ]
 
 

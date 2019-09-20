@@ -44,6 +44,4 @@ def confirm(actor: Actor, form_action_value: str) -> Response:
     headers = {"Referer": url}
     data = {"csrfmiddlewaretoken": actor.csrfmiddlewaretoken}
 
-    return make_request(
-        Method.POST, url, session=session, headers=headers, data=data
-    )
+    return make_request(Method.POST, url, session=session, headers=headers, data=data)

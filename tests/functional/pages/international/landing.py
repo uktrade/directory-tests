@@ -11,10 +11,7 @@ SERVICE = Service.INTERNATIONAL
 NAME = "Landing"
 TYPE = PageType.LANDING
 URL = URLs.INTERNATIONAL_LANDING.absolute
-EXPECTED_STRINGS = [
-    "We are Open",
-    "The UK welcomes international business",
-]
+EXPECTED_STRINGS = ["We are Open", "The UK welcomes international business"]
 
 
 def go_to(session: Session) -> Response:

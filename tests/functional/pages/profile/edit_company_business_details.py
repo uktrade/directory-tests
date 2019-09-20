@@ -8,12 +8,7 @@ from requests import Response
 from directory_tests_shared import PageType, Service, URLs
 from directory_tests_shared.settings import NO_OF_EMPLOYEES
 from tests.functional.utils.context_utils import Actor, Company
-from tests.functional.utils.generic import (
-    Method,
-    make_request,
-    rare_word,
-    sentence,
-)
+from tests.functional.utils.generic import Method, make_request, rare_word, sentence
 
 SERVICE = Service.PROFILE
 NAME = "Edit company's business details"
@@ -58,9 +53,7 @@ def submit(
         if specific_website == "empty string":
             new_website = ""
         else:
-            new_website = specific_website or (
-                f"https://{rare_word()}.{rare_word()}/"
-            )
+            new_website = specific_website or (f"https://{rare_word()}.{rare_word()}/")
     else:
         new_website = company.website
 
@@ -90,10 +83,7 @@ def submit(
     }
 
     new_details = Company(
-        title=new_name,
-        website=new_website,
-        sector=new_sector,
-        no_employees=new_size,
+        title=new_name, website=new_website, sector=new_sector, no_employees=new_size
     )
 
     response = make_request(

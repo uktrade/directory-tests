@@ -23,22 +23,18 @@ EXPECTED_STRINGS = [
     "Profile email",
 ]
 
-EXPECTED_STRINGS_NO_DESCRIPTION = [
-    "Add a business description",
-]
+EXPECTED_STRINGS_NO_DESCRIPTION = ["Add a business description"]
 
 EXPECTED_STRINGS_VERIFIED = [
     "Publish your business profile",
     "You can now publish your business profile",
 ]
 
-EXPECTED_STRINGS_PUBLISHED = [
-    "View Find a Supplier profile",
-]
+EXPECTED_STRINGS_PUBLISHED = ["View Find a Supplier profile"]
 
 EXPECTED_STRINGS_NOT_VERIFIED = [
     "Confirm your identity",
-    "For security reasons, we need to check you're who you say you are"
+    "For security reasons, we need to check you're who you say you are",
 ]
 
 
@@ -52,9 +48,7 @@ def should_be_here(response: Response):
     logging.debug("Supplier is on Profile - Edit Company's Profile page")
 
 
-def should_see_details(
-    company: Company, response: Response, table_of_details: Table
-):
+def should_see_details(company: Company, response: Response, table_of_details: Table):
     """Supplier should see all expected Company details of Profile page."""
     visible_details = [row["detail"] for row in table_of_details]
     content = response.content.decode("utf-8")
@@ -72,14 +66,11 @@ def should_see_details(
             assert company.title in content
     if keywords:
         for keyword in company.keywords.split(", "):
-            with assertion_msg(
-                "Couldn't find keyword '%s' in the response", keyword
-            ):
+            with assertion_msg("Couldn't find keyword '%s' in the response", keyword):
                 assert escape_html(keyword.strip()) in content
     if website:
         with assertion_msg(
-            "Couldn't find company's website '%s' in the response",
-            company.website,
+            "Couldn't find company's website '%s' in the response", company.website
         ):
             assert company.website in content
     if size:

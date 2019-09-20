@@ -24,10 +24,7 @@ SUB_URLs = {
     "healthcare and life sciences": urljoin(URL, "healthcare-and-life-sciences/"),
     "technology": urljoin(URL, "technology/"),
 }
-EXPECTED_STRINGS = [
-    "Industries",
-    "Great.gov.uk International"
-]
+EXPECTED_STRINGS = ["Industries", "Great.gov.uk International"]
 
 
 def go_to(session: Session, *, page_name: str = None) -> Response:

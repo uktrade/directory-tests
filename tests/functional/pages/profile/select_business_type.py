@@ -36,6 +36,4 @@ def submit(actor: Actor, company: Company) -> Response:
         "choice": company.business_type,
     }
 
-    return make_request(
-        Method.POST, URL, session=session, headers=headers, data=data
-    )
+    return make_request(Method.POST, URL, session=session, headers=headers, data=data)

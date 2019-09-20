@@ -11,9 +11,7 @@ SERVICE = Service.PROFILE
 NAME = "Enter your personal details"
 TYPE = PageType.FORM
 URL = URLs.PROFILE_ENROL_PERSONAL_DETAILS.absolute
-EXPECTED_STRINGS = [
-    "Enter your personal details",
-]
+EXPECTED_STRINGS = ["Enter your personal details"]
 
 
 def go_to(session: Session) -> Response:
@@ -38,6 +36,4 @@ def submit(actor: Actor):
         "personal-details-terms_agreed": "on",
     }
 
-    return make_request(
-        Method.POST, URL, session=session, headers=headers, data=data
-    )
+    return make_request(Method.POST, URL, session=session, headers=headers, data=data)

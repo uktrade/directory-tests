@@ -48,12 +48,12 @@ def should_be_here(response: Response):
 def should_be_logged_out(response: Response):
     """Check if Supplier is logged out by checking the cookies."""
     with assertion_msg(
-            "Found sso_display_logged_in cookie in the response. Maybe user is"
-            " still logged in?"
+        "Found sso_display_logged_in cookie in the response. Maybe user is"
+        " still logged in?"
     ):
         assert "sso_display_logged_in" not in response.cookies
     with assertion_msg(
-            "Found directory_sso_dev_session cookie in the response. Maybe "
-            "user is still logged in?"
+        "Found directory_sso_dev_session cookie in the response. Maybe "
+        "user is still logged in?"
     ):
         assert "directory_sso_dev_session" not in response.cookies

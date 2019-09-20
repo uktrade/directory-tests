@@ -35,9 +35,7 @@ def should_be_here(response: Response):
     logging.debug("Successfully got to the SSO Registration page")
 
 
-def go_to(
-    session: Session, *, next: str = None, referer: str = None
-) -> Response:
+def go_to(session: Session, *, next: str = None, referer: str = None) -> Response:
     referer = referer or URLs.FAB_LANDING.absolute
     if next:
         url = urljoin(URL, f"?next={next}")
@@ -67,6 +65,4 @@ def submit_no_company(
     if next:
         data["next"] = next
 
-    return make_request(
-        Method.POST, URL, session=session, headers=headers, data=data
-    )
+    return make_request(Method.POST, URL, session=session, headers=headers, data=data)

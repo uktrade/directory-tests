@@ -10,9 +10,7 @@ SERVICE = Service.PROFILE
 NAME = "Enrolment (finished)"
 TYPE = PageType.CONFIRMATION
 URL = URLs.PROFILE_ENROL_FINISHED.absolute
-EXPECTED_STRINGS = [
-    "Your account has been created",
-]
+EXPECTED_STRINGS = ["Your account has been created"]
 
 
 def go_to(session: Session) -> Response:

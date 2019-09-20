@@ -10,9 +10,7 @@ SERVICE = Service.PROFILE
 NAME = "Enter your business details (industry & website)"
 TYPE = PageType.FORM
 URL = URLs.PROFILE_ENROL_BUSINESS_DETAILS.absolute
-EXPECTED_STRINGS = [
-    "Enter your business details",
-]
+EXPECTED_STRINGS = ["Enter your business details"]
 
 
 def go_to(session: Session) -> Response:
@@ -34,6 +32,4 @@ def submit(actor: Actor, company: Company) -> Response:
         "business-details-website": company.website,
     }
 
-    return make_request(
-        Method.POST, URL, session=session, headers=headers, data=data
-    )
+    return make_request(Method.POST, URL, session=session, headers=headers, data=data)

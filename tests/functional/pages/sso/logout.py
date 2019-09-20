@@ -29,13 +29,9 @@ def should_be_here(response: Response):
     logging.debug("Successfully got to the SSO logout page")
 
 
-def logout(
-    session: Session, token: str, *, next_param: str = None
-) -> Response:
+def logout(session: Session, token: str, *, next_param: str = None) -> Response:
     fab_landing = URLs.FAB_LANDING.absolute
     data = {"csrfmiddlewaretoken": token, "next": next_param or fab_landing}
     query = f"?next={fab_landing}"
     headers = {"Referer": urljoin(URL, query)}
-    return make_request(
-        Method.POST, URL, session=session, headers=headers, data=data
-    )
+    return make_request(Method.POST, URL, session=session, headers=headers, data=data)

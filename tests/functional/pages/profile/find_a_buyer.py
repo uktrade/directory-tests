@@ -22,9 +22,7 @@ EXPECTED_STRINGS = [
     "Add a logo",
 ]
 
-MANAGE_USER_ACCOUNTS_STRINGS = [
-    "Admin tools",
-]
+MANAGE_USER_ACCOUNTS_STRINGS = ["Admin tools"]
 
 EXPECTED_STRINGS_USER_ADDED = [
     "We’ve emailed the person you want to add to this account"
@@ -41,11 +39,11 @@ def go_to(session: Session) -> Response:
 
 
 def should_be_here(
-        response: Response,
-        *,
-        user_added: bool = False,
-        owner_transferred: bool = False,
-        user_removed: bool = False
+    response: Response,
+    *,
+    user_added: bool = False,
+    owner_transferred: bool = False,
+    user_removed: bool = False,
 ):
     """Check if Supplier is on Profile 'Find a Buyer' page.
 
@@ -67,8 +65,10 @@ def should_be_here(
         expected_strings = EXPECTED_STRINGS_USER_REMOVED
 
     if expected_strings:
-        error = (f"Expected to see '{expected_query}' in the URL but got: "
-                 f"'{response.url}' instead")
+        error = (
+            f"Expected to see '{expected_query}' in the URL but got: "
+            f"'{response.url}' instead"
+        )
         with assertion_msg(error):
             assert expected_query in response.url
         check_response(response, 200, body_contains=expected_strings)
@@ -82,7 +82,5 @@ def should_see_options_to_manage_users(response: Response):
 
 
 def should_not_see_options_to_manage_users(response: Response):
-    check_response(
-        response, 200, unexpected_strings=MANAGE_USER_ACCOUNTS_STRINGS
-    )
+    check_response(response, 200, unexpected_strings=MANAGE_USER_ACCOUNTS_STRINGS)
     logging.debug("User can't see options to manage FAB profile user accounts")

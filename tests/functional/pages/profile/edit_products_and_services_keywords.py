@@ -12,9 +12,7 @@ SERVICE = Service.PROFILE
 NAME = "Edit company's products and services (keywords)"
 TYPE = PageType.FORM
 URL = URLs.PROFILE_ADD_PRODUCTS_AND_SERVICES.absolute
-EXPECTED_STRINGS = [
-    "Choose the products and services"
-]
+EXPECTED_STRINGS = ["Choose the products and services"]
 
 
 def should_be_here(response: Response, *, industry: str = None):
@@ -26,17 +24,18 @@ def should_be_here(response: Response, *, industry: str = None):
 
 
 def submit(
-        session: Session,
-        industry: str,
-        keywords: List[str],
-        *,
-        separator: str = "|",
-        send_as_data: bool = True,
-        send_as_files: bool = False,
+    session: Session,
+    industry: str,
+    keywords: List[str],
+    *,
+    separator: str = "|",
+    send_as_data: bool = True,
+    send_as_files: bool = False,
 ) -> Response:
     error = f"Can send data only as data or as files"
-    assert (send_as_data and not send_as_files) or\
-           (send_as_files and not send_as_data), error
+    assert (send_as_data and not send_as_files) or (
+        send_as_files and not send_as_data
+    ), error
     headers = {"Referer": URL}
     data = {
         "input-autocomplete": f"{separator}".join(keywords),

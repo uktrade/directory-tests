@@ -42,9 +42,7 @@ def should_be_here(response: Response):
 
 def upload(session: Session, file_path: str) -> Response:
     headers = {"Referer": URLs.PROFILE_UPLOAD_LOGO.absolute}
-    data = {
-        "company_profile_logo_edit_view-current_step": "logo",
-    }
+    data = {"company_profile_logo_edit_view-current_step": "logo"}
     with open(file_path, "rb") as f:
         picture = f.read()
     mime = mimetypes.MimeTypes().guess_type(file_path)[0]

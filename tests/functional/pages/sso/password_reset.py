@@ -25,10 +25,7 @@ EXPECTED_STRINGS = [
 
 EXPECTED_STRINGS_PASSWORD_RESET = [
     "Password reset email",
-    (
-        "We've sent a password reset email. Click on the link to reset your "
-        "password"
-    ),
+    ("We've sent a password reset email. Click on the link to reset your " "password"),
     "Contact us",
     "if you haven't received the email within 10 minutes",
 ]
@@ -49,9 +46,7 @@ def should_be_here(response: Response):
 
 
 def should_see_that_password_was_reset(response: Response):
-    check_response(
-        response, 200, body_contains=EXPECTED_STRINGS_PASSWORD_RESET
-    )
+    check_response(response, 200, body_contains=EXPECTED_STRINGS_PASSWORD_RESET)
     logging.debug("Successfully Reset Password")
 
 
@@ -71,9 +66,7 @@ def reset(
     referer = referer or urljoin(URL, query)
     headers = {"Referer": referer}
 
-    return make_request(
-        Method.POST, URL, session=session, data=data, headers=headers
-    )
+    return make_request(Method.POST, URL, session=session, data=data, headers=headers)
 
 
 def open_link(session: Session, link: str) -> Response:

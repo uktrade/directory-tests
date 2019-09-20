@@ -42,6 +42,4 @@ def submit(actor: Actor):
         "personal-details-phone_number": "0987654321",
     }
 
-    return make_request(
-        Method.POST, URL, session=session, headers=headers, data=data
-    )
+    return make_request(Method.POST, URL, session=session, headers=headers, data=data)

@@ -25,9 +25,7 @@ EXPECTED_STRINGS = [
 ]
 
 
-def go_to(
-    session: Session, *, next_param: str = None, referer: str = None
-) -> Response:
+def go_to(session: Session, *, next_param: str = None, referer: str = None) -> Response:
     fab_landing = URLs.FAB_LANDING.absolute
     params = {"next": next_param or fab_landing}
     headers = {"Referer": referer or fab_landing}
@@ -42,11 +40,7 @@ def should_be_here(response: Response):
 
 
 def login(
-    actor: Actor,
-    *,
-    token: str = None,
-    referer: str = None,
-    next_param: str = None
+    actor: Actor, *, token: str = None, referer: str = None, next_param: str = None
 ) -> Response:
     session = actor.session
     fab_landing = URLs.FAB_LANDING.absolute
@@ -61,6 +55,4 @@ def login(
     referer = urljoin(URL, query)
     headers = {"Referer": referer}
 
-    return make_request(
-        Method.POST, URL, session=session, data=data, headers=headers
-    )
+    return make_request(Method.POST, URL, session=session, data=data, headers=headers)

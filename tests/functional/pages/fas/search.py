@@ -13,17 +13,10 @@ SERVICE = Service.FAS
 NAME = "Search"
 TYPE = PageType.SEARCH
 URL = URLs.FAS_SEARCH.absolute
-EXPECTED_STRINGS = [
-    "Search results",
-    "Filter results",
-    "New search",
-]
+EXPECTED_STRINGS = ["Search results", "Filter results", "New search"]
 
 NO_UK_BUSINESS_MATCH = "No UK businesses match your search"
-NO_MATCH = [
-    NO_UK_BUSINESS_MATCH,
-    "Try different filters or a new search term",
-]
+NO_MATCH = [NO_UK_BUSINESS_MATCH, "Try different filters or a new search term"]
 ENTER_SEARCH_TERM_OR_USE_FILTERS = ["Enter a search term or use the filters"]
 
 
@@ -63,9 +56,7 @@ def should_see_company(response: Response, company_title: str) -> bool:
     if not contains_company_title:
         contains_company_title = escape_html(company_title).lower() in content
     if not contains_company_title:
-        logging.debug(
-            f"Could not find company: '{escape_html(company_title).lower()}'"
-        )
+        logging.debug(f"Could not find company: '{escape_html(company_title).lower()}'")
     return contains_company_title and not no_match
 
 

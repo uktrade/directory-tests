@@ -15,10 +15,7 @@ SERVICE = Service.PROFILE
 NAME = "Enrol"
 TYPE = PageType.LANDING
 URL = URLs.PROFILE_ENROL.absolute
-EXPECTED_STRINGS = [
-    "Create an ",
-    "Start now",
-]
+EXPECTED_STRINGS = ["Create an ", "Start now"]
 
 
 def go_to(session: Session) -> Response:

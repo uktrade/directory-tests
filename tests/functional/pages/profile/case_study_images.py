@@ -23,9 +23,7 @@ EXPECTED_STRINGS = [
 
 def should_be_here(response: Response):
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
-    logging.debug(
-        "Supplier is on 'Create case study or project' - images page"
-    )
+    logging.debug("Supplier is on 'Create case study or project' - images page")
 
 
 def prepare_form_data(token: str, case_study: CaseStudy) -> (dict, dict):
@@ -87,8 +85,6 @@ def submit(session: Session, token: str, case_study: CaseStudy) -> Response:
         files=files,
         trim=True,
     )
-    logging.debug(
-        "Supplier successfully submitted case study images: %s", data
-    )
+    logging.debug("Supplier successfully submitted case study images: %s", data)
 
     return response

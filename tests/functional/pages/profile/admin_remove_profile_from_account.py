@@ -10,9 +10,7 @@ SERVICE = Service.PROFILE
 NAME = "Remove profile from account"
 TYPE = PageType.FORM
 URL = URLs.PROFILE_ADMIN_REMOVE_PROFILE_FROM_ACCOUNT.absolute
-EXPECTED_STRINGS = [
-    "Remove profile from account",
-]
+EXPECTED_STRINGS = ["Remove profile from account"]
 
 
 def should_be_here(response: Response):

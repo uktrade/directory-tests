@@ -25,10 +25,7 @@ EXPECTED_STRINGS = [
 ]
 
 NO_UK_BUSINESS_MATCH = "No UK businesses match your search"
-NO_MATCH = [
-    NO_UK_BUSINESS_MATCH,
-    "Try different filters or a new search term",
-]
+NO_MATCH = [NO_UK_BUSINESS_MATCH, "Try different filters or a new search term"]
 
 
 @retry(wait_fixed=5000, stop_max_attempt_number=2)
@@ -61,7 +58,7 @@ def go_to(
     if page is not None:
         params.update({"page": page})
 
-    filter_diff = (set(kwargs.keys()) - set(allowed_search_filters))
+    filter_diff = set(kwargs.keys()) - set(allowed_search_filters)
     with assertion_msg(f"Got unexpected search filters: {filter_diff}"):
         assert not filter_diff
     headers = {"Referer": URLs.PROFILE_FAB.absolute}
@@ -83,9 +80,7 @@ def should_see_company(response: Response, company_title: str) -> bool:
     if not contains_company_title:
         contains_company_title = escape_html(company_title).lower() in content
     if not contains_company_title:
-        logging.debug(
-            f"Could not find company: '{escape_html(company_title).lower()}'"
-        )
+        logging.debug(f"Could not find company: '{escape_html(company_title).lower()}'")
     return contains_company_title and not no_match
 
 

@@ -27,7 +27,7 @@ def submit(
     *,
     password: str = None,
     password_again: str = None,
-    referer: str = None
+    referer: str = None,
 ) -> Response:
     session = actor.session
     url = urljoin(URLs.SSO_LANDING.absolute, action)

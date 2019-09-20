@@ -15,9 +15,5 @@ EXPECTED_STRINGS = []
 def submit(session: Session) -> Response:
     """Submit the form with verification code."""
     headers = {"Referer": URL}
-    data = {
-        "is_published_find_a_supplier": "on"
-    }
-    return make_request(
-        Method.POST, URL, session=session, headers=headers, data=data
-    )
+    data = {"is_published_find_a_supplier": "on"}
+    return make_request(Method.POST, URL, session=session, headers=headers, data=data)
