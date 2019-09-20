@@ -39,6 +39,7 @@ dropdown
 enum
 enums
 environ
+envparse
 eq
 errno
 exc
