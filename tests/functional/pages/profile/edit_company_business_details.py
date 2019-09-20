@@ -6,7 +6,7 @@ from directory_constants import choices
 from requests import Response
 
 from directory_tests_shared import PageType, Service, URLs
-from directory_tests_shared.settings import NO_OF_EMPLOYEES
+from directory_tests_shared.constants import NO_OF_EMPLOYEES
 from tests.functional.utils.context_utils import Actor, Company
 from tests.functional.utils.generic import Method, make_request, rare_word, sentence
 

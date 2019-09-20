@@ -46,67 +46,44 @@ from tests.functional.utils.context_utils import (
 )
 from tests.functional.utils.request import Method, check_response, make_request
 from tests.functional.utils.stannpclient import STANNP_CLIENT
-from directory_tests_shared.settings import (
-    DIRECTORY_API_CLIENT_KEY,
-    DIRECTORY_API_CLIENT_SENDER_ID,
-    DIRECTORY_API_URL,
-    DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT,
-    DIRECTORY_SSO_API_CLIENT_API_KEY,
-    DIRECTORY_SSO_API_CLIENT_BASE_URL,
-    DIRECTORY_SSO_API_CLIENT_DEFAULT_TIMEOUT,
-    DIRECTORY_SSO_API_CLIENT_SENDER_ID,
+from directory_tests_shared.constants import (
     FAB_CONFIRM_COLLABORATION_SUBJECT,
     FAB_TRANSFER_OWNERSHIP_SUBJECT,
     JPEGs,
     JPGs,
-    MAILGUN_EVENTS_URL,
-    MAILGUN_API_KEY,
     PNGs,
     RARE_WORDS,
     SECTORS,
-    STANNP_LETTER_TEMPLATE_ID,
     TEST_IMAGES_DIR,
+)
+from directory_tests_shared.settings import (
+    DIRECTORY_API_KEY,
+    DIRECTORY_API_SENDER_ID,
+    DIRECTORY_API_URL,
+    CMS_API_DEFAULT_TIMEOUT,
+    SSO_API_KEY,
+    SSO_API_URL,
+    SSO_API_DEFAULT_TIMEOUT,
+    SSO_API_SENDER_ID,
+    MAILGUN_EVENTS_URL,
+    MAILGUN_API_KEY,
+    STANNP_LETTER_TEMPLATE_ID,
 )
 
 INDUSTRY_CHOICES = dict(choices.INDUSTRIES)
-
-# This is ugly way of dealing with imports but Django settings have to be
-# configured before we can import DirectoryTestAPIClient
-from django.conf import settings
-settings.configure(
-    DIRECTORY_API_CLIENT_BASE_URL=DIRECTORY_API_URL,
-    DIRECTORY_API_CLIENT_API_KEY=DIRECTORY_API_CLIENT_KEY,
-    DIRECTORY_API_CLIENT_SENDER_ID=DIRECTORY_API_CLIENT_SENDER_ID,
-    DIRECTORY_API_CLIENT_DEFAULT_TIMEOUT=DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT,
-
-    DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT=DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT,
-    DIRECTORY_CLIENT_CORE_CACHE_EXPIRE_SECONDS=30,
-
-    DIRECTORY_SSO_API_CLIENT_BASE_URL=DIRECTORY_SSO_API_CLIENT_BASE_URL,
-    DIRECTORY_SSO_API_CLIENT_API_KEY=DIRECTORY_SSO_API_CLIENT_API_KEY,
-    DIRECTORY_SSO_API_CLIENT_SENDER_ID=DIRECTORY_SSO_API_CLIENT_SENDER_ID,
-    DIRECTORY_SSO_API_CLIENT_DEFAULT_TIMEOUT=DIRECTORY_SSO_API_CLIENT_DEFAULT_TIMEOUT,
-
-    CACHES={
-        "api_fallback": {
-            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
-            "LOCATION": "unique-snowflake",
-        },
-    }
-)
 from directory_api_client.testapiclient import DirectoryTestAPIClient
 from directory_sso_api_client.testapiclient import DirectorySSOTestAPIClient
 
 DIRECTORY_CLIENT = DirectoryTestAPIClient(
     DIRECTORY_API_URL,
-    DIRECTORY_API_CLIENT_KEY,
-    DIRECTORY_API_CLIENT_SENDER_ID,
-    DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT,
+    DIRECTORY_API_KEY,
+    DIRECTORY_API_SENDER_ID,
+    CMS_API_DEFAULT_TIMEOUT,
 )
 SSO_CLIENT = DirectorySSOTestAPIClient(
-    DIRECTORY_SSO_API_CLIENT_BASE_URL, DIRECTORY_SSO_API_CLIENT_API_KEY,
-    DIRECTORY_SSO_API_CLIENT_SENDER_ID,
-    DIRECTORY_SSO_API_CLIENT_DEFAULT_TIMEOUT
+    SSO_API_URL, SSO_API_KEY,
+    SSO_API_SENDER_ID,
+    SSO_API_DEFAULT_TIMEOUT
 )
 
 # a type hint for a List of Company named tuples

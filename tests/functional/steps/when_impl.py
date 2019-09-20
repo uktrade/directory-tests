@@ -77,7 +77,7 @@ from tests.functional.utils.generic import (
 )
 from tests.functional.utils.gov_notify import get_email_verification_code
 from tests.functional.utils.request import Method, check_response, make_request
-from directory_tests_shared.settings import (
+from directory_tests_shared.constants import (
     NO_OF_EMPLOYEES,
     SECTORS,
     SEPARATORS,

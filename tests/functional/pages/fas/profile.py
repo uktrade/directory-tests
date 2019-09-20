@@ -8,7 +8,7 @@ from requests import Response, Session
 from scrapy import Selector
 
 from directory_tests_shared import PageType, Service, URLs
-from directory_tests_shared.settings import SECTORS_WITH_LABELS
+from directory_tests_shared.constants import SECTORS_WITH_LABELS
 from tests.functional.common import DETAILS
 from tests.functional.utils.context_utils import Company
 from tests.functional.utils.generic import (
