@@ -1,293 +1,135 @@
 # -*- coding: utf-8 -*-
-import os
-from glob import glob
+from datetime import datetime
 from urllib.parse import urljoin
 from envparse import env
 
-AUTO_RETRY = env.bool("AUTO_RETRY", default=True)
-AUTO_RETRY_MAX_ATTEMPTS = env.int("AUTO_RETRY_MAX_ATTEMPTS", default=2)
 
-DIRECTORY_API_URL = env.str("DIRECTORY_API_URL")
-DIRECTORY_API_CLIENT_KEY = env.str("DIRECTORY_API_CLIENT_KEY")
+#####################################################################
+# Directory Service URLs & Credentials
+#####################################################################
+CMS_API_KEY = env.str("CMS_API_KEY")
+CMS_API_URL = env.str("CMS_API_URL")
+CMS_API_CACHE_EXPIRE_SECONDS = env.int("CMS_API_CACHE_EXPIRE_SECONDS", default=60 * 60 * 24 * 30)  # 30 days
+CMS_API_DEFAULT_TIMEOUT = env.int("CMS_API_DEFAULT_TIMEOUT", default=30)
+CMS_API_SENDER_ID = env.str("CMS_API_SENDER_ID", default="directory")
+CONTACT_US_URL = env.str("CONTACT_US_URL")
+DIRECTORY_API_DEFAULT_TIMEOUT = env.int("DIRECTORY_API_DEFAULT_TIMEOUT", default=30)
+DIRECTORY_API_KEY = env.str("DIRECTORY_API_KEY")
+DIRECTORY_API_SENDER_ID = env.str("DIRECTORY_API_SENDER_ID", default="directory")
 DIRECTORY_API_HEALTH_CHECK_TOKEN = env.str("DIRECTORY_API_HEALTH_CHECK_TOKEN")
-BASICAUTH_USER = env.str("BASICAUTH_USER")
-BASICAUTH_PASS = env.str("BASICAUTH_PASS")
-USE_BASIC_AUTH = env.bool("USE_BASIC_AUTH", default=True)
-DIRECTORY_API_CSV_DUMP_AUTH_TOKEN = env.str("DIRECTORY_API_CSV_DUMP_AUTH_TOKEN")
-DIRECTORY_API_CLIENT_SENDER_ID = env.str(
-    "DIRECTORY_API_CLIENT_SENDER_ID", default="directory"
-)
-DIRECTORY_API_CLIENT_DEFAULT_TIMEOUT = env.int(
-    "DIRECTORY_API_CLIENT_DEFAULT_TIMEOUT", default=30
-)
-DIRECTORY_SSO_URL = env.str("DIRECTORY_SSO_URL")
-DIRECTORY_UI_BUYER_URL = env.str("DIRECTORY_UI_BUYER_URL")
-DIRECTORY_UI_SUPPLIER_URL = env.str("DIRECTORY_UI_SUPPLIER_URL")
-DIRECTORY_UI_INTERNATIONAL_URL = env.str("DIRECTORY_UI_INTERNATIONAL_URL")
-DIRECTORY_PROFILE_URL = env.str("DIRECTORY_PROFILE_URL")
-DIRECTORY_CONTACT_US_UI_URL = env.str("DIRECTORY_CONTACT_US_UI_URL")
-DIRECTORY_LEGACY_CONTACT_US_UI_URL = env.str("DIRECTORY_LEGACY_CONTACT_US_UI_URL")
-DIRECTORY_FORMS_API_URL = env.str("DIRECTORY_FORMS_API_URL")
-DIRECTORY_FORMS_API_KEY = env.str("DIRECTORY_FORMS_API_KEY")
-DIRECTORY_FORMS_API_SENDER_ID = env.str("DIRECTORY_FORMS_API_SENDER_ID")
-OLD_DIRECTORY_UI_SUPPLIER_URL = env.str(
-    "OLD_DIRECTORY_UI_SUPPLIER_URL",
-    default="https://stage.supplier.directory.uktrade.io/",
-)
-OLD_EXRED_UI_URL = env.str(
-    "OLD_EXRED_UI_URL", default="https://stage.exportreadiness.directory.uktrade.io/"
-)
-INVEST_UI_URL = env.str("INVEST_UI_URL")
-INVEST_LEGACY_UI_URL = env.str("INVEST_LEGACY_UI_URL")
-SOO_UI_URL = env.str("SOO_UI_URL")
-EXPORT_OPPORTUNITIES_UI_URL = env.str("EXPORT_OPPORTUNITIES_UI_URL")
-
-DIRECTORY_CMS_API_CLIENT_BASE_URL = env.str("DIRECTORY_CMS_API_CLIENT_BASE_URL")
-DIRECTORY_CMS_API_CLIENT_API_KEY = env.str("DIRECTORY_CMS_API_CLIENT_API_KEY")
-DIRECTORY_CMS_API_CLIENT_SENDER_ID = env.str(
-    "DIRECTORY_CMS_API_CLIENT_SENDER_ID", default="directory"
-)
-DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT = env.int(
-    "DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT", default=30
-)
-
-DIRECTORY_CMS_API_CLIENT_CACHE_EXPIRE_SECONDS = env.int(
-    "DIRECTORY_CMS_API_CLIENT_CACHE_EXPIRE_SECONDS", default=60 * 60 * 24 * 30
-)  # 30 days
-
-DIRECTORY_SSO_API_CLIENT_BASE_URL = env.str("DIRECTORY_SSO_API_CLIENT_BASE_URL")
-DIRECTORY_SSO_API_CLIENT_API_KEY = env.str("DIRECTORY_SSO_API_CLIENT_API_KEY")
-DIRECTORY_SSO_API_CLIENT_SENDER_ID = env.str(
-    "DIRECTORY_SSO_API_CLIENT_SENDER_ID", default="directory"
-)
-DIRECTORY_SSO_API_CLIENT_DEFAULT_TIMEOUT = env.int(
-    "DIRECTORY_SSO_API_CLIENT_DEFAULT_TIMEOUT", default=30
-)
-
-EXRED_UI_URL = env.str("EXRED_UI_URL")
-ISD_UI_URL = env.str(
-    "ISD_UI_URL",
-    default=urljoin(DIRECTORY_UI_INTERNATIONAL_URL, "investment-support-directory/"),
-)
+DIRECTORY_API_URL = env.str("DIRECTORY_API_URL")
+DOMESTIC_URL = env.str("DOMESTIC_URL")
+EVENTS_URL = env.str("EVENTS_URL")
+EXPORT_OPPORTUNITIES_URL = env.str("EXPORT_OPPORTUNITIES_URL")
+FIND_A_BUYER_URL = env.str("FIND_A_BUYER_URL")
+FIND_A_SUPPLIER_URL = env.str("FIND_A_SUPPLIER_URL")
+FORMS_API_KEY = env.str("FORMS_API_KEY")
+FORMS_API_SENDER_ID = env.str("FORMS_API_SENDER_ID")
+FORMS_API_URL = env.str("FORMS_API_URL")
 GOV_NOTIFY_API_KEY = env.str("GOV_NOTIFY_API_KEY")
-LOCUST_MAX_WAIT = env.int("LOCUST_MAX_WAIT", default=6000)
-LOCUST_MIN_WAIT = env.int("LOCUST_MIN_WAIT", default=500)
+INTERNATIONAL_URL = env.str("INTERNATIONAL_URL")
+INVEST_URL = env.str("INVEST_URL")
+ISD_URL = env.str("ISD_URL", default=urljoin(INTERNATIONAL_URL, "investment-support-directory/"))
+LEGACY_CONTACT_US_URL = env.str("LEGACY_CONTACT_US_URL")
+LEGACY_INVEST_URL = env.str("LEGACY_INVEST_URL")
+PROFILE_URL = env.str("PROFILE_URL")
+SOO_URL = env.str("SOO_URL")
+SSO_API_KEY = env.str("SSO_API_KEY")
+SSO_API_URL = env.str("SSO_API_URL")
+SSO_API_DEFAULT_TIMEOUT = env.int("SSO_API_DEFAULT_TIMEOUT", default=30)
+SSO_API_SENDER_ID = env.str("SSO_API_SENDER_ID", default="directory")
+SSO_URL = env.str("SSO_URL")
 
-# run tests for 2.5 minutes by default
-LOCUST_TIMEOUT = env.int("LOCUST_TIMEOUT", default=150)
-SSO_USER_ID = env.int("SSO_USER_ID", default=0)
 
-# Mailgun details required to get verification emails
+#####################################################################
+# External Services
+#####################################################################
+BASICAUTH_PASS = env.str("BASICAUTH_PASS")
+BASICAUTH_USER = env.str("BASICAUTH_USER")
+
+# MailGun
 MAILGUN_DOMAIN = env.str("MAILGUN_DOMAIN")
 MAILGUN_API_KEY = env.str("MAILGUN_API_KEY")
 MAILGUN_EVENTS_URL = "https://api.eu.mailgun.net/v3/%s/events" % MAILGUN_DOMAIN
 
-# STANNP API DETAILS
+# StanNP API
 STANNP_API_KEY = env.str("STANNP_API_KEY")
 STANNP_LETTER_TEMPLATE_ID = env.str("STANNP_LETTER_TEMPLATE_ID", default="5395")
 
-# Static data used across the projects
-EMAIL_VERIFICATION_MSG_SUBJECT = "Confirm your email address"
-FAS_MESSAGE_FROM_BUYER_SUBJECT = (
-    "New message through your great.gov.uk business profile"
+# BrowserStack
+BROWSERSTACK_USER = env.str("BROWSERSTACK_USER", default="")
+BROWSERSTACK_PASS = env.str("BROWSERSTACK_PASS", default="")
+BROWSERSTACK_SERVER = env.str("BROWSERSTACK_SERVER", default="hub.browserstack.com")
+BROWSERSTACK_SESSIONS_URL = "https://www.browserstack.com/automate/sessions/{}.json"
+BROWSERSTACK_EXECUTOR_URL = (
+    f"http://{BROWSERSTACK_USER}:{BROWSERSTACK_PASS}@{BROWSERSTACK_SERVER}/wd/hub"
 )
-FAB_CONFIRM_COLLABORATION_SUBJECT = (
-    "Confirm you’ve been added to {}’s Find a" " buyer profile"
-)
-FAB_TRANSFER_OWNERSHIP_SUBJECT = "Confirm ownership of {}’s Find a buyer " "profile"
-SSO_PASSWORD_RESET_MSG_SUBJECT = "Reset your great.gov.uk password"
-NO_OF_EMPLOYEES = [
-    "1-10",
-    "11-50",
-    "51-200",
-    "201-500",
-    "501-1000",
-    "1001-10000",
-    "10001+",
-]
-SECTORS = [
-    "AEROSPACE",
-    "ADVANCED_MANUFACTURING",
-    "AIRPORTS",
-    "AGRICULTURE_HORTICULTURE_AND_FISHERIES",
-    "AUTOMOTIVE",
-    "BIOTECHNOLOGY_AND_PHARMACEUTICALS",
-    "BUSINESS_AND_CONSUMER_SERVICES",
-    "CHEMICALS",
-    "CLOTHING_FOOTWEAR_AND_FASHION",
-    "COMMUNICATIONS",
-    "CONSTRUCTION",
-    "CREATIVE_AND_MEDIA",
-    "EDUCATION_AND_TRAINING",
-    "ELECTRONICS_AND_IT_HARDWARE",
-    "ENVIRONMENT",
-    "FINANCIAL_AND_PROFESSIONAL_SERVICES",
-    "FOOD_AND_DRINK",
-    "GIFTWARE_JEWELLERY_AND_TABLEWARE",
-    "GLOBAL_SPORTS_INFRASTRUCTURE",
-    "HEALTHCARE_AND_MEDICAL",
-    "HOUSEHOLD_GOODS_FURNITURE_AND_FURNISHINGS",
-    "LIFE_SCIENCES",
-    "LEISURE_AND_TOURISM",
-    "LEGAL_SERVICES",
-    "MARINE",
-    "MECHANICAL_ELECTRICAL_AND_PROCESS_ENGINEERING",
-    "METALLURGICAL_PROCESS_PLANT",
-    "METALS_MINERALS_AND_MATERIALS",
-    "MINING",
-    "OIL_AND_GAS",
-    "PORTS_AND_LOGISTICS",
-    "POWER",
-    "RAILWAYS",
-    "RENEWABLE_ENERGY",
-    "RETAIL_AND_LUXURY",
-    "SECURITY",
-    "SOFTWARE_AND_COMPUTER_SERVICES",
-    "TEXTILES_INTERIOR_TEXTILES_AND_CARPETS",
-    "WATER",
-]
 
-SECTORS_WITH_LABELS = {
-    "AEROSPACE": "Aerospace",
-    "ADVANCED_MANUFACTURING": "Advanced manufacturing",
-    "AIRPORTS": "Airports",
-    "AGRICULTURE_HORTICULTURE_AND_FISHERIES": "Agriculture, horticulture and fisheries",
-    "AUTOMOTIVE": "Automotive",
-    "BIOTECHNOLOGY_AND_PHARMACEUTICALS": "Biotechnology and pharmaceuticals",
-    "BUSINESS_AND_CONSUMER_SERVICES": "Business and consumer services",
-    "CHEMICALS": "Chemicals",
-    "CLOTHING_FOOTWEAR_AND_FASHION": "Clothing, footwear and fashion",
-    "COMMUNICATIONS": "Communications",
-    "CONSTRUCTION": "Construction",
-    "CREATIVE_AND_MEDIA": "Creative and media",
-    "EDUCATION_AND_TRAINING": "Education and training",
-    "ELECTRONICS_AND_IT_HARDWARE": "Electronics and IT hardware",
-    "ENVIRONMENT": "Environment",
-    "FINANCIAL_AND_PROFESSIONAL_SERVICES": "Financial and professional services",
-    "FOOD_AND_DRINK": "Food and drink",
-    "GIFTWARE_JEWELLERY_AND_TABLEWARE": "Giftware, jewellery and tableware",
-    "GLOBAL_SPORTS_INFRASTRUCTURE": "Global sports infrastructure",
-    "HEALTHCARE_AND_MEDICAL": "Healthcare and medical",
-    "HOUSEHOLD_GOODS_FURNITURE_AND_FURNISHINGS": "Household goods, furniture and furnishings",
-    "LIFE_SCIENCES": "Life sciences",
-    "LEISURE_AND_TOURISM": "Leisure and tourism",
-    "LEGAL_SERVICES": "Legal services",
-    "MARINE": "Marine",
-    "MECHANICAL_ELECTRICAL_AND_PROCESS_ENGINEERING": "Mechanical electrical and process engineering",
-    "METALLURGICAL_PROCESS_PLANT": "Metallurgical process plant",
-    "METALS_MINERALS_AND_MATERIALS": "Metals, minerals and materials",
-    "MINING": "Mining",
-    "OIL_AND_GAS": "Oil and gas",
-    "PORTS_AND_LOGISTICS": "Ports and logistics",
-    "POWER": "Power",
-    "RAILWAYS": "Railways",
-    "RENEWABLE_ENERGY": "Renewable energy",
-    "RETAIL_AND_LUXURY": "Retail and luxury",
-    "SECURITY": "Security",
-    "SOFTWARE_AND_COMPUTER_SERVICES": "Software and computer services",
-    "TEXTILES_INTERIOR_TEXTILES_AND_CARPETS": "Textiles, interior textiles and carpets",
-    "WATER": "Water",
-}
 
-COUNTRIES = {
-    "China": "CN",
-    "Germany": "DE",
-    "India": "IN",
-    "Japan": "JP",
-    "United States": "US",
-}
+#####################################################################
+# Load test (locust.io) settings
+#####################################################################
+LOCUST_TIMEOUT = env.int("LOCUST_TIMEOUT", default=150)
+LOCUST_MAX_WAIT = env.int("LOCUST_MAX_WAIT", default=6000)
+LOCUST_MIN_WAIT = env.int("LOCUST_MIN_WAIT", default=500)
 
-# Absolute path to a directory with test images
-TEST_IMAGES_DIR = os.path.abspath(os.path.join("tests", "functional", "files"))
 
-# lists of absolute paths to test images of specific type
-PNGs = glob(os.path.join(TEST_IMAGES_DIR, "*.png"))
-JPGs = glob(os.path.join(TEST_IMAGES_DIR, "*.jpg"))
-JPEGs = glob(os.path.join(TEST_IMAGES_DIR, "*.jpeg"))
-BMPs = glob(os.path.join(TEST_IMAGES_DIR, "*.bmp"))
-JP2s = glob(os.path.join(TEST_IMAGES_DIR, "*.jp2"))  # noqa
-WEBPs = glob(os.path.join(TEST_IMAGES_DIR, "*.webp"))
+#####################################################################
+# Behave specific settings
+#####################################################################
+AUTO_RETRY = env.bool("AUTO_RETRY", default=True)
+AUTO_RETRY_MAX_ATTEMPTS = env.int("AUTO_RETRY_MAX_ATTEMPTS", default=2)
 
-"""
-Load a list of rare english words.
-This list was compiled using:
-a) Wictionary top 100,000 most frequently-used English words
-  -> https://gist.github.com/h3xx/1976236
-b) 20000 most common English words in order of frequency, as determined by
-  n-gram frequency analysis of the Google's Trillion Word Corpus
-  -> https://github.com/first20hours/google-10000-english
 
-The selection process was as follows:
-1) delete first 30000 lines from a)
-2) select words with a least 9 characters: if len(w) > 8
-3) skip all words that contain non-ASCII characters: len(w) == len(w.encode())
-4) skip all words that contain non-latin alphabet characters, like: ',."@$ etc
-   skip = ["'", "\"", "`", ",", ".", ";", ":", "!", "#", "@", "$", "%", "^",
-           "&", "*", "(", ")", "-", "=", "+", "_", "{", "[", "]", "}", "?",
-           ">", "<"]
-   all(e not in w for e in skip)
-5) make all words lower case: w.lower()
-6) remove all duplicates: set(words)
-7) sort
-8) remove from selected words all words present in b)
-   grep -v -x -f 100k.txt 20k.txt > rare.txt
+#####################################################################
+# Functional tests - specific settings
+#####################################################################
+USE_BASIC_AUTH = env.bool("USE_BASIC_AUTH", default=True)
 
-Steps 2-7:
-with open("./100k.txt") as f:
-   words = f.read().split()
 
-skip = ["'", "\"", "`", ",", ".", ";", ":", "!", "#", "@", "$", "%", "^", "&",
-        "*", "(", ")", "-", "=", "+", "_", "{", "[", "]", "}", "?", ">", "<"]
-nine = sorted(set([w.lower() for w in words
-                   if len(w) > 8
-                   and len(w) == len(w.encode())
-                   and all(e not in w for e in skip)]))
-"""
-with open(os.path.join(TEST_IMAGES_DIR, "rare.txt"), "r") as f:
-    RARE_WORDS = f.read().split()
+#####################################################################
+# Browser & BrowserStack related settings
+#####################################################################
+BARRED_USERS = list(filter(None, env.str("BARRED_USERS", default="").split(",")))
+BROWSER = env.str("BROWSER", default="chrome")
+BROWSER_CUSTOM_CAPABILITIES = env.dict("CAPABILITIES", default=None)
+BROWSER_ENVIRONMENT = env.str("BROWSER_ENVIRONMENT", default="local")
+BROWSER_HEADLESS = env.bool("HEADLESS", default=False)
+BROWSER_RESTART_POLICY = env.str("RESTART_POLICY", default="feature")
+BROWSER_TYPE = env.str("BROWSER_TYPE", default="desktop")
+BROWSER_VERSION = env.str("VERSION", default=None)
+BUILD_ID = env.str("CIRCLE_SHA1", default=datetime.isoformat(datetime.now()))
+HUB_URL = env.str("HUB_URL", default=None)
+TAKE_SCREENSHOTS = env.bool("TAKE_SCREENSHOTS", default=False)
 
-SEARCHABLE_CASE_STUDY_DETAILS = [
-    "title",
-    "summary",
-    "description",
-    "keywords",
-    "caption_1",
-    "caption_2",
-    "caption_3",
-    "testimonial",
-    "slug",
-    "source_name",
-    "source_job",
-    "source_company",
-    "website",
-]
+if BROWSER_ENVIRONMENT.lower() == "remote" and (
+        BROWSERSTACK_USER and BROWSERSTACK_PASS
+):
+    HUB_URL = BROWSERSTACK_EXECUTOR_URL
 
-FAS_LOGO_PLACEHOLDER_IMAGE = "/static/images/placeholder.fc5114289e5b.png"
 
-SEPARATORS = {
-    "pipe": "|",
-    "semi-colon": ";",
-    "colon": ":",
-    "full stop": ".",
-    "comma": ",",
-}
-
-# these user credentials are hard-coded in `directory-sso`. The users
-# are created when `manage.py create_test_users` is ran on sso.
-USERS = {
-    "verified": {
-        "username": env.str("SSO_USER_USERNAME"),
-        "password": env.str("SSO_USER_PASSWORD"),
-        "token": env.str("SSO_USER_TOKEN"),
-        "sso_id": env.int("SSO_USER_SSO_ID"),
+#####################################################################
+# API clients settings
+#####################################################################
+# This is an ugly way of dealing with imports but Django settings have to be
+# configured before we can import various API Clients
+from django.conf import settings
+settings.configure(
+    DIRECTORY_CMS_API_CLIENT_BASE_URL=CMS_API_URL,
+    DIRECTORY_CMS_API_CLIENT_API_KEY=CMS_API_KEY,
+    DIRECTORY_CMS_API_CLIENT_SENDER_ID=CMS_API_SENDER_ID,
+    DIRECTORY_CMS_API_CLIENT_CACHE_EXPIRE_SECONDS=CMS_API_CACHE_EXPIRE_SECONDS,
+    DIRECTORY_CMS_API_CLIENT_DEFAULT_TIMEOUT=CMS_API_DEFAULT_TIMEOUT,
+    DIRECTORY_CMS_API_CLIENT_SERVICE_NAME="EXPORT_READINESS",
+    DIRECTORY_CLIENT_CORE_CACHE_EXPIRE_SECONDS=CMS_API_CACHE_EXPIRE_SECONDS,
+    DIRECTORY_SSO_API_CLIENT_BASE_URL=SSO_API_URL,
+    DIRECTORY_SSO_API_CLIENT_API_KEY=SSO_API_KEY,
+    DIRECTORY_SSO_API_CLIENT_SENDER_ID=CMS_API_SENDER_ID,
+    DIRECTORY_SSO_API_CLIENT_DEFAULT_TIMEOUT=CMS_API_DEFAULT_TIMEOUT,
+    CACHES={
+        "cms_fallback": {
+            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+            "LOCATION": "unique-snowflake",
+        }
     },
-    "unverified": {"token": env.str("SSO_UNVERIFIED_USER_TOKEN")},
-}
-
-COMPANIES = {
-    "not_active": env.str("SSO_COMPANY_NOT_ACTIVE", default="06542942"),
-    "already_registered": env.str("SSO_COMPANY_ALREADY_REGISTERED", default="10416664"),
-    "active_not_registered": env.str(
-        "SSO_COMPANY_ACTIVE_NOT_REGISTERED", default="01624297"
-    ),
-}
+)
