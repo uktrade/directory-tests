@@ -34,8 +34,8 @@ django_settings.configure(
 )
 # these module have to be imported after django settings are set
 # otherwise you won't be able to get an instance of CMS Client
-from directory_cms_client.client import DirectoryCMSClient
-from directory_constants.cms import INVEST
+from directory_cms_client.client import DirectoryCMSClient  # noqa
+from directory_constants.cms import INVEST  # noqa
 
 
 def build_params(
