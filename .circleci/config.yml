@@ -26,8 +26,8 @@ step_install_requirements_for_smoke_tests: &step_install_requirements_for_smoke_
     command: |
       python3 -m venv venv
       . venv/bin/activate
-      pip install --upgrade pip
-      pip install -r requirements_smoke.txt
+      pip install --quiet --upgrade pip
+      pip install --quiet -r requirements_smoke.txt
 
 step_install_requirements_for_functional_tests: &step_install_requirements_for_functional_tests
   run:
@@ -35,8 +35,8 @@ step_install_requirements_for_functional_tests: &step_install_requirements_for_f
     command: |
       python3 -m venv venv
       . venv/bin/activate
-      pip install --upgrade pip
-      pip install -r requirements_functional.txt
+      pip install --quiet --upgrade pip
+      pip install --quiet -r requirements_functional.txt
       nodeenv -p
       npm install -g junit-merge@1.2.3
 
@@ -46,8 +46,8 @@ step_install_requirements_for_browser_tests: &step_install_requirements_for_brow
     command: |
       python3 -m venv venv
       . venv/bin/activate
-      pip install --upgrade pip
-      pip install -r requirements_browser.txt
+      pip install --quiet --upgrade pip
+      pip install --quiet -r requirements_browser.txt
       nodeenv -p
       npm install -g junit-merge@2.0.0
       npm install -g allure-commandline@2.13.0
@@ -58,8 +58,8 @@ step_install_requirements_for_load_tests: &step_install_requirements_for_load_te
     command: |
       python3 -m venv venv
       . venv/bin/activate
-      pip install --upgrade pip
-      pip install -r requirements_load.txt
+      pip install --quiet --upgrade pip
+      pip install --quiet -r requirements_load.txt
 
 step_cache_smoke_tests_requirements: &step_cache_smoke_tests_requirements
   save_cache:
