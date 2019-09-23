@@ -2,9 +2,10 @@
 from random import choice
 from rest_framework.status import HTTP_200_OK
 
-from directory_tests_shared import URLs, settings
+from directory_tests_shared import URLs
+from directory_tests_shared.constants import SECTORS
+from directory_tests_shared.utils import rare_word
 from tests.smoke.cms_api_helpers import get_and_assert
-from tests.load.utils import rare_word
 
 
 def test_landing_page_200(basic_auth):
@@ -20,7 +21,7 @@ def test_supplier_list_200(basic_auth):
 
 
 def test_search_supplier_200(basic_auth):
-    sector = choice(settings.SECTORS)
+    sector = choice(SECTORS)
     url = URLs.FAS_SEARCH.absolute_template.format(query=rare_word(), industries=sector)
     get_and_assert(
         url=url, status_code=HTTP_200_OK, auth=basic_auth, allow_redirects=True
