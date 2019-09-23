@@ -50,9 +50,7 @@ from directory_tests_shared.constants import (
     FAB_CONFIRM_COLLABORATION_SUBJECT,
     FAB_TRANSFER_OWNERSHIP_SUBJECT,
     JPEGs,
-    JPGs,
     PNGs,
-    RARE_WORDS,
     SECTORS,
     TEST_IMAGES_DIR,
 )
@@ -69,6 +67,7 @@ from directory_tests_shared.settings import (
     MAILGUN_API_KEY,
     STANNP_LETTER_TEMPLATE_ID,
 )
+from directory_tests_shared.utils import rare_word, sentence
 
 INDUSTRY_CHOICES = dict(choices.INDUSTRIES)
 from directory_api_client.testapiclient import DirectoryTestAPIClient
@@ -792,49 +791,6 @@ def random_chars(size, *, chars=ascii_uppercase):
     while len(res) < size:
         res += random.choice(chars)
     return res
-
-
-def sentence(
-    *,
-    max_length: int = 60,
-    min_word_length: int = 9,
-    max_words: int = 10,
-    min_words: int = 3
-) -> str:
-    """Generate a random string consisting of rare english words.
-
-    NOTE:
-    min_word_length is set to 9, because all words in RARE_WORDS are at least 9
-    characters long
-
-    :return: a sentence consisting of rare english words
-    """
-    words = []
-    assert min_words <= max_words
-    number_of_words = random.randint(min_words, max_words)
-    while len(words) < number_of_words:
-        word = random.choice(RARE_WORDS)
-        if len(word) > min_word_length:
-            words.append(word)
-    while 0 < max_length < len(" ".join(words)):
-        words.pop()
-    return " ".join(words)
-
-
-def rare_word(*, min_length: int = 9, max_length: int = 20):
-    """Get a random rare english word.
-
-    NOTE:
-    min_length is set to 9, because all words in RARE_WORDS are at least 9
-    characters long
-
-    :return: a rare english word
-    """
-    assert min_length < max_length
-    word = ""
-    while min_length >= len(word) <= max_length:
-        word = random.choice(RARE_WORDS)
-    return word
 
 
 def extract_and_set_csrf_middleware_token(
