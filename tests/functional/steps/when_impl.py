@@ -26,6 +26,7 @@ from behave.runner import Context
 from scrapy import Selector
 from directory_tests_shared import URLs
 from directory_tests_shared.enums import BusinessType
+from directory_tests_shared.utils import rare_word, sentence
 from tests.functional.common import DETAILS, PROFILES
 from tests.functional.pages import (
     get_page_object,
@@ -71,9 +72,7 @@ from tests.functional.utils.generic import (
     random_chars,
     random_feedback_data,
     random_message_data,
-    rare_word,
     send_verification_letter,
-    sentence,
 )
 from tests.functional.utils.gov_notify import get_email_verification_code
 from tests.functional.utils.request import Method, check_response, make_request

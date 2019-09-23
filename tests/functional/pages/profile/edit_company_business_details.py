@@ -7,8 +7,9 @@ from requests import Response
 
 from directory_tests_shared import PageType, Service, URLs
 from directory_tests_shared.constants import NO_OF_EMPLOYEES
+from directory_tests_shared.utils import rare_word, sentence
 from tests.functional.utils.context_utils import Actor, Company
-from tests.functional.utils.generic import Method, make_request, rare_word, sentence
+from tests.functional.utils.generic import Method, make_request
 
 SERVICE = Service.PROFILE
 NAME = "Edit company's business details"
