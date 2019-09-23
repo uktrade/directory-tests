@@ -36,7 +36,7 @@ NAMES = [
     "Manage legal and ethical compliance",
     "Prepare for export procedures and logistics",
 ]
-URLs = {
+SubURLs = {
     "create an export plan": urljoin(URL, "create-an-export-plan/"),
     "find an export market": urljoin(URL, "find-an-export-market/"),
     "define route to market": urljoin(URL, "define-route-to-market/"),
@@ -88,7 +88,7 @@ def clean_name(name: str) -> str:
 
 def visit(driver: WebDriver, *, page_name: str = None):
     take_screenshot(driver, page_name or NAME)
-    url = URLs[page_name.lower()] if page_name else URL
+    url = SubURLs[page_name.lower()] if page_name else URL
     go_to_url(driver, url, page_name or NAME)
 
 

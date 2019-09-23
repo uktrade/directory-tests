@@ -49,7 +49,7 @@ SELECTORS = {
     },
 }
 
-URLs = {
+SubURLs = {
     "thank you for your enquiry": URL,
     "thank you for your enquiry (events)": urljoin(URL, "/contact/events/success/"),
     "thank you for your enquiry (defence and security organisation (dso))": urljoin(
@@ -69,5 +69,5 @@ URLs = {
 
 def should_be_here(driver: WebDriver, *, page_name: str = None):
     take_screenshot(driver, NAME)
-    url = URLs[page_name.lower()] if page_name else URL
+    url = SubURLs[page_name.lower()] if page_name else URL
     check_url(driver, url, exact_match=True)

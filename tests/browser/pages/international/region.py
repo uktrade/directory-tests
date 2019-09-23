@@ -36,7 +36,7 @@ URL_LEGACY = urljoin(INTERNATIONAL_URL, "content/invest/uk-regions/")
 PAGE_TITLE = "Invest in Great Britain - "
 
 
-URLs = {
+SubURLs = {
     "london": urljoin(URL, "london/"),
     "north england": urljoin(URL, "north-england/"),
     "northern ireland": urljoin(URL, "northern-ireland/"),
@@ -64,13 +64,13 @@ SELECTORS.update(common_selectors.INTERNATIONAL_FOOTER)
 
 
 def visit(driver: WebDriver, *, page_name: str = None):
-    url = URLs[page_name] if page_name else URL
+    url = SubURLs[page_name] if page_name else URL
     visit_url(driver, url)
 
 
 def should_be_here(driver: WebDriver, *, page_name: str):
     take_screenshot(driver, PAGE_TITLE)
-    url = URLs[page_name.lower()] if page_name else URL
+    url = SubURLs[page_name.lower()] if page_name else URL
     check_url(driver, url)
     logging.debug("All expected elements are visible on '%s' page", PAGE_TITLE)
 

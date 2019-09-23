@@ -30,7 +30,7 @@ NAMES = [
     "The Netherlands",
     "Turkey",
 ]
-URLs = {
+SubURLs = {
     "brazil": urljoin(URL, "brazil/"),
     "china": urljoin(URL, "china/"),
     "denmark": urljoin(URL, "denmark/"),
@@ -63,7 +63,7 @@ SELECTORS.update(common_selectors.FOOTER)
 
 def visit(driver: WebDriver, *, page_name: str = None):
     take_screenshot(driver, page_name or NAME)
-    url = URLs[page_name.lower()] if page_name else URL
+    url = SubURLs[page_name.lower()] if page_name else URL
     go_to_url(driver, url, page_name or NAME)
 
 

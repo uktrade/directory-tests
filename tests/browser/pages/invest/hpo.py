@@ -32,7 +32,7 @@ URL = urljoin(INTERNATIONAL_URL, "content/invest/high-potential-opportunities/")
 PAGE_TITLE = "high potential"
 
 
-URLs = {
+SubURLs = {
     "high productivity food production": urljoin(URL, "food-production/"),
     "lightweight structures": urljoin(URL, "lightweight-structures/"),
     "rail infrastructure": urljoin(URL, "rail-infrastructure/"),
@@ -148,7 +148,7 @@ UNEXPECTED_ELEMENTS = {
 
 
 def visit(driver: WebDriver, *, page_name: str = None):
-    url = URLs[page_name] if page_name else URL
+    url = SubURLs[page_name] if page_name else URL
     visit_url(driver, url)
 
 

@@ -62,7 +62,7 @@ BASE_URL = urljoin(INVEST_URL, "industries/")
 PAGE_TITLE = "Invest in Great Britain - "
 
 
-URLs = {
+SubURLs = {
     "advanced manufacturing": urljoin(BASE_URL, "advanced-manufacturing/"),
     "aerospace": urljoin(BASE_URL, "aerospace/"),
     "agri-tech": urljoin(BASE_URL, "agri-tech/"),
@@ -134,7 +134,7 @@ SELECTORS.update(common_selectors.INVEST_FOOTER)
 
 
 def visit(driver: WebDriver, *, page_name: str = None):
-    url = URLs[page_name] if page_name else URL
+    url = SubURLs[page_name] if page_name else URL
     visit_url(driver, url)
 
 

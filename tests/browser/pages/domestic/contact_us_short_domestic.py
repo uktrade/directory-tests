@@ -71,7 +71,7 @@ OTHER_SELECTORS = {
     "other": Selector(By.ID, "id_company_type_other", type=ElementType.SELECT)
 }
 
-URLs = {
+SubURLs = {
     "short contact form (tell us how we can help)": URL,
     "short contact form (events)": urljoin(URL, "/contact/events/"),
     "short contact form (defence and security organisation (dso))": urljoin(
@@ -91,7 +91,7 @@ def visit(driver: WebDriver):
 
 def should_be_here(driver: WebDriver, *, page_name: str = None):
     take_screenshot(driver, NAME)
-    url = URLs[page_name.lower()] if page_name else URL
+    url = SubURLs[page_name.lower()] if page_name else URL
     check_url(driver, url, exact_match=True)
 
 

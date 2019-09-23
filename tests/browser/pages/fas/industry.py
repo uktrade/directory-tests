@@ -101,7 +101,7 @@ SELECTORS = {
 SELECTORS.update(common_selectors.INTERNATIONAL_HEADER_WO_LANGUAGE_SELECTOR)
 SELECTORS.update(common_selectors.INTERNATIONAL_FOOTER)
 
-URLs = {
+SubURLs = {
     "aerospace": urljoin(URL, "aerospace/"),
     "agritech": urljoin(URL, "agritech/"),
     "automotive": urljoin(URL, "automotive/"),
@@ -138,7 +138,7 @@ def clean_name(name: str) -> str:
 
 
 def visit(driver: WebDriver, *, page_name: str = None):
-    url = URLs[page_name] if page_name else URL
+    url = SubURLs[page_name] if page_name else URL
     go_to_url(driver, url, NAME)
 
 

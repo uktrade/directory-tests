@@ -56,7 +56,7 @@ SELECTORS.update(common_selectors.BETA_BAR)
 SELECTORS.update(common_selectors.ERROR_REPORTING)
 SELECTORS.update(common_selectors.INVEST_FOOTER)
 
-URLs = {
+SubURLs = {
     # Dev & UAT
     "access finance in the uk": urljoin(URL, "access-finance-in-the-uk/"),
     "dit's guide to uk capital gains tax": urljoin(URL, "uk-capital-gains-tax/"),
@@ -81,7 +81,7 @@ def clean_name(name: str) -> str:
 
 
 def visit(driver: WebDriver, *, page_name: str = None):
-    url = URLs[page_name] if page_name else URL
+    url = SubURLs[page_name] if page_name else URL
     visit_url(driver, url)
 
 

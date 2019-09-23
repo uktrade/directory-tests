@@ -29,7 +29,7 @@ TYPE = "Dedicated Support Content"
 URL = urljoin(DOMESTIC_URL, "contact/triage/great-account/")
 PAGE_TITLE = "Welcome to great.gov.uk"
 
-URLs = {
+SubURLs = {
     "great.gov.uk account": URL,
     "i have not received an email confirmation": urljoin(URL, "no-verification-email/"),
     "i need to reset my password": urljoin(URL, "password-reset/"),
@@ -76,7 +76,7 @@ def visit(driver: WebDriver):
 
 def should_be_here(driver: WebDriver, *, page_name: str = None):
     take_screenshot(driver, NAME)
-    url = URLs[page_name.lower()] if page_name else URL
+    url = SubURLs[page_name.lower()] if page_name else URL
     check_url(driver, url, exact_match=False)
     msg = f"Got 404 on {driver.current_url}"
     assert "This page cannot be found" not in driver.page_source, msg

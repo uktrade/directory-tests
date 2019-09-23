@@ -22,7 +22,7 @@ NAMES = ["Advanced food production", "Lightweight structures", "Rail infrastruct
 SERVICE = Services.INVEST
 TYPE = "HPO Contact us"
 URL = urljoin(INTERNATIONAL_URL, "content/invest/high-potential-opportunities/")
-URLs = {
+SubURLs = {
     "advanced food production": urljoin(URL, "food-production/contact/success/"),
     "lightweight structures": urljoin(URL, "lightweight-structures/contact/success/"),
     "rail infrastructure": urljoin(URL, "rail-infrastructure/contact/success/"),

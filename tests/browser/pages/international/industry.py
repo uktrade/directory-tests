@@ -50,7 +50,7 @@ URL = urljoin(DOMESTIC_URL, "international/content/about-uk/industries/")
 PAGE_TITLE = "great.gov.uk International - "
 
 
-URLs = {
+SubURLs = {
     "industry": URL,
     "aerospace": urljoin(URL, "aerospace/"),
     "agricultural technology": urljoin(URL, "agricultural-technology/"),
@@ -108,13 +108,13 @@ SELECTORS.update(common_selectors.INTERNATIONAL_FOOTER)
 
 
 def visit(driver: WebDriver, *, page_name: str = None):
-    url = URLs[page_name] if page_name else URL
+    url = SubURLs[page_name] if page_name else URL
     visit_url(driver, url)
 
 
 def should_be_here(driver: WebDriver, *, page_name: str):
     take_screenshot(driver, PAGE_TITLE)
-    url = URLs[page_name.lower()] if page_name else URL
+    url = SubURLs[page_name.lower()] if page_name else URL
     check_url(driver, url, exact_match=False)
     logging.debug("All expected elements are visible on '%s' page", PAGE_TITLE)
 
