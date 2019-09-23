@@ -3,14 +3,14 @@ from collections import namedtuple
 from random import choice
 
 from directory_constants.cms import EXPORT_READINESS, FIND_A_SUPPLIER, INVEST
+from locust import TaskSet, task
 
 from directory_tests_shared import settings
-from locust import TaskSet, task
+from directory_tests_shared.constants import LOAD_TESTS_USER_AGENT
 from tests.load.cms_helpers import CMSAPIAuthClientMixin
-from tests.load.utils import USER_AGENT
 
 UA = namedtuple("UA", "headers")
-user_agent = UA(headers=USER_AGENT)
+LOAD_TESTS_USER_AGENT = UA(headers=LOAD_TESTS_USER_AGENT)
 
 
 class CMSTasks(TaskSet):
@@ -57,7 +57,7 @@ class CMSTasks(TaskSet):
         self.client.lookup_by_slug(
             slug,
             fields=None,
-            authenticator=user_agent,
+            authenticator=LOAD_TESTS_USER_AGENT,
             name="/api/pages/lookup-by-slug/[slug]/",
             service_name=choice(services),
             expected_codes=[200, 404],

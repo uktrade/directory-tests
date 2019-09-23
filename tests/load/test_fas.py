@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 import random
 
-from directory_tests_shared import URLs, settings
-from directory_tests_shared.utils import basic_auth
 from locust import HttpLocust, TaskSet, task
-from tests.load.utils import USER_AGENT, random_sector, rare_word
+
+from directory_tests_shared import URLs, settings
+from directory_tests_shared.constants import LOAD_TESTS_USER_AGENT
+from directory_tests_shared.utils import basic_auth, random_sector, rare_word
 
 
 class FASTasks(TaskSet):
@@ -13,7 +14,7 @@ class FASTasks(TaskSet):
         url = URLs.FAS_LANDING.relative
         self.client.get(
             url,
-            headers=USER_AGENT,
+            headers=LOAD_TESTS_USER_AGENT,
             name="/",
             auth=basic_auth(),
         )
@@ -28,7 +29,7 @@ class FASTasks(TaskSet):
         self.client.get(
             url,
             params=params,
-            headers=USER_AGENT,
+            headers=LOAD_TESTS_USER_AGENT,
             name="/search/?q=[term]&industries=[sectors]",
             auth=basic_auth(),
         )
@@ -44,7 +45,7 @@ class FASTasks(TaskSet):
         ]
         self.client.get(
             URLs.FAS_SUPPLIER.template.format(ch_number=random.choice(ch_ids)),
-            headers=USER_AGENT,
+            headers=LOAD_TESTS_USER_AGENT,
             name="/suppliers/[id]/[slug]/",
             auth=basic_auth(),
         )

@@ -1,21 +1,21 @@
 # -*- coding: utf-8 -*-
 import time
 
+from directory_cms_client.client import DirectoryCMSClient  # noqa
+from directory_constants.cms import INVEST  # noqa
 from locust import HttpLocust, events
 from requests.exceptions import (
     InvalidSchema,
     InvalidURL,
     MissingSchema,
-    RequestException
+    RequestException,
 )
 
 from directory_tests_shared.settings import (
-    CMS_API_KEY,
     CMS_API_DEFAULT_TIMEOUT,
-    CMS_API_SENDER_ID
+    CMS_API_KEY,
+    CMS_API_SENDER_ID,
 )
-from directory_cms_client.client import DirectoryCMSClient  # noqa
-from directory_constants.cms import INVEST  # noqa
 
 
 def build_params(

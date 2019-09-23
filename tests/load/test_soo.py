@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 import random
 
-from directory_tests_shared import URLs, settings
-from directory_tests_shared.utils import basic_auth
 from locust import HttpLocust, TaskSet, task
-from tests.load.utils import (
-    USER_AGENT,
+
+from directory_tests_shared import URLs, settings
+from directory_tests_shared.constants import LOAD_TESTS_USER_AGENT
+from directory_tests_shared.utils import (
+    basic_auth,
     random_operating_countries,
     random_product_categories,
 )
@@ -17,7 +18,7 @@ class SOOTasks(TaskSet):
         url = URLs.SOO_LANDING.relative
         self.client.get(
             url,
-            headers=USER_AGENT,
+            headers=LOAD_TESTS_USER_AGENT,
             auth=basic_auth()
         )
 
@@ -34,7 +35,7 @@ class SOOTasks(TaskSet):
         self.client.get(
             url,
             params=params,
-            headers=USER_AGENT,
+            headers=LOAD_TESTS_USER_AGENT,
             name="/?category_id=[...]&country_id=[...]",
             auth=basic_auth()
         )
@@ -87,7 +88,7 @@ class SOOTasks(TaskSet):
 
         self.client.get(
             random.choice(urls),
-            headers=USER_AGENT,
+            headers=LOAD_TESTS_USER_AGENT,
             name="/markets/details/[marketplace]",
             auth=basic_auth()
         )

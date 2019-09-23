@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-from directory_tests_shared import URLs, settings
-from directory_tests_shared.utils import basic_auth
 from locust import HttpLocust, TaskSet, task
-from tests.load.utils import USER_AGENT, rare_word
+
+from directory_tests_shared import URLs, settings
+from directory_tests_shared.constants import LOAD_TESTS_USER_AGENT
+from directory_tests_shared.utils import basic_auth, rare_word
 
 
 class SearchTasks(TaskSet):
@@ -14,7 +15,7 @@ class SearchTasks(TaskSet):
         self.client.get(
             url,
             params=params,
-            headers=USER_AGENT,
+            headers=LOAD_TESTS_USER_AGENT,
             name="search/?q=[...]",
             auth=basic_auth(),
         )

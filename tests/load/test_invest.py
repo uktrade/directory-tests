@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 from random import choice
 
-from directory_tests_shared import URLs, settings
-from directory_tests_shared.utils import basic_auth
 from locust import HttpLocust, TaskSet, task
-from tests.load.utils import USER_AGENT
+
+from directory_tests_shared import URLs, settings
+from directory_tests_shared.constants import LOAD_TESTS_USER_AGENT
+from directory_tests_shared.utils import basic_auth
 
 
 class InvestTasks(TaskSet):
@@ -14,7 +15,7 @@ class InvestTasks(TaskSet):
         url = URLs.INVEST_LANDING.relative
         self.client.get(
             url,
-            headers=USER_AGENT,
+            headers=LOAD_TESTS_USER_AGENT,
             name="/",
             auth=basic_auth(),
         )
@@ -23,7 +24,7 @@ class InvestTasks(TaskSet):
     def contact(self):
         self.client.get(
             URLs.INVEST_CONTACT.absolute,
-            headers=USER_AGENT,
+            headers=LOAD_TESTS_USER_AGENT,
             name="/contact/",
             auth=basic_auth(),
         )
@@ -38,7 +39,7 @@ class InvestTasks(TaskSet):
         ]
         self.client.get(
             choice(hpo_urls),
-            headers=USER_AGENT,
+            headers=LOAD_TESTS_USER_AGENT,
             name="/high-potential-opportunities/[hpo]/",
             auth=basic_auth(),
         )

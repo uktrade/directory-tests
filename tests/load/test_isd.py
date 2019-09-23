@@ -9,11 +9,11 @@ from directory_constants.expertise import (
     MANAGEMENT_CONSULTING,
     PUBLICITY,
 )
+from locust import HttpLocust, TaskSet, task
 
 from directory_tests_shared import URLs, settings
+from directory_tests_shared.constants import LOAD_TESTS_USER_AGENT, rare_word
 from directory_tests_shared.utils import basic_auth
-from locust import HttpLocust, TaskSet, task
-from tests.load.utils import USER_AGENT, rare_word
 
 
 class ISDTasks(TaskSet):
@@ -22,7 +22,7 @@ class ISDTasks(TaskSet):
         url = URLs.ISD_LANDING.relative
         self.client.get(
             url,
-            headers=USER_AGENT,
+            headers=LOAD_TESTS_USER_AGENT,
             auth=basic_auth(),
         )
 
@@ -35,7 +35,7 @@ class ISDTasks(TaskSet):
         self.client.get(
             url,
             params=params,
-            headers=USER_AGENT,
+            headers=LOAD_TESTS_USER_AGENT,
             name="/search/?q={term}",
             auth=basic_auth(),
         )
@@ -74,7 +74,7 @@ class ISDTasks(TaskSet):
         url = f"{URLs.ISD_SEARCH.absolute}?{query}"
         self.client.get(
             url=url,
-            headers=USER_AGENT,
+            headers=LOAD_TESTS_USER_AGENT,
             name="/search/{filters}/",
             auth=basic_auth(),
         )

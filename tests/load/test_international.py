@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 from random import choice
 
-from directory_tests_shared import URLs, settings
-from directory_tests_shared.utils import basic_auth
 from locust import HttpLocust, TaskSet, task
-from tests.load.utils import USER_AGENT
+
+from directory_tests_shared import URLs, settings
+from directory_tests_shared.constants import LOAD_TESTS_USER_AGENT
+from directory_tests_shared.utils import basic_auth
 
 
 class InternationalTasks(TaskSet):
@@ -14,7 +15,7 @@ class InternationalTasks(TaskSet):
         url = URLs.INTERNATIONAL_LANDING.relative
         self.client.get(
             url,
-            headers=USER_AGENT,
+            headers=LOAD_TESTS_USER_AGENT,
             name="/",
             auth=basic_auth(),
         )
@@ -29,7 +30,7 @@ class InternationalTasks(TaskSet):
         ]
         self.client.get(
             choice(endpoints),
-            headers=USER_AGENT,
+            headers=LOAD_TESTS_USER_AGENT,
             name=URLs.INVEST_UK_SETUP_GUIDE.template,
             auth=basic_auth(),
         )
@@ -45,7 +46,7 @@ class InternationalTasks(TaskSet):
         ]
         self.client.get(
             choice(urls),
-            headers=USER_AGENT,
+            headers=LOAD_TESTS_USER_AGENT,
             name=URLs.INTERNATIONAL_INDUSTRIES.template,
             auth=basic_auth(),
         )

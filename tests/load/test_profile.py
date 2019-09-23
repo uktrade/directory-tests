@@ -1,10 +1,15 @@
 # -*- coding: utf-8 -*-
 import random
 
-from directory_tests_shared import URLs, settings
-from directory_tests_shared.utils import basic_auth
 from locust import HttpLocust, TaskSet, task
-from tests.load.utils import USER_AGENT, random_company_number, rare_word
+
+from directory_tests_shared import URLs, settings
+from directory_tests_shared.constants import LOAD_TESTS_USER_AGENT
+from directory_tests_shared.utils import (
+    basic_auth,
+    random_company_number,
+    rare_word,
+)
 
 
 class ProfileTasks(TaskSet):
@@ -17,7 +22,7 @@ class ProfileTasks(TaskSet):
         self.client.get(
             url,
             params=params,
-            headers=USER_AGENT,
+            headers=LOAD_TESTS_USER_AGENT,
             name=URLs.PROFILE_API_COMPANIES_HOUSE_SEARCH.template,
             auth=basic_auth(),
         )

@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
-from directory_tests_shared import URLs, settings
-from directory_tests_shared.utils import basic_auth
 from locust import HttpLocust, TaskSet, task
-from tests.load.utils import USER_AGENT
+
+from directory_tests_shared import URLs, settings
+from directory_tests_shared.constants import LOAD_TESTS_USER_AGENT
+from directory_tests_shared.utils import basic_auth
 
 
 class FABTasks(TaskSet):
@@ -11,7 +12,7 @@ class FABTasks(TaskSet):
         url = URLs.FAB_LANDING.relative
         self.client.get(
             url,
-            headers=USER_AGENT,
+            headers=LOAD_TESTS_USER_AGENT,
             auth=basic_auth(),
         )
 
