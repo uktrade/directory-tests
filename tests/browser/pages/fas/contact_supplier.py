@@ -8,7 +8,7 @@ from uuid import uuid4
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType, Services, common_selectors
+from pages import ElementType, common_selectors
 from pages.common_actions import (
     Actor,
     Selector,
@@ -23,10 +23,11 @@ from pages.common_actions import (
     tick_checkboxes,
     try_js_click_on_element_click_intercepted_exception,
 )
+from directory_tests_shared.enums import Service
 from directory_tests_shared.settings import FIND_A_SUPPLIER_URL
 
 NAME = "Contact Supplier"
-SERVICE = Services.FIND_A_SUPPLIER
+SERVICE = Service.FAS
 TYPE = "contact"
 URL = urljoin(FIND_A_SUPPLIER_URL, "suppliers/{company_number}/contact/")
 PAGE_TITLE = "Find a Buyer - GREAT.gov.uk"

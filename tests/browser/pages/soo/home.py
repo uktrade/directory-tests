@@ -6,7 +6,7 @@ import random
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType, Services, common_selectors
+from pages import ElementType, common_selectors
 from pages.common_actions import (
     Selector,
     check_url,
@@ -19,11 +19,12 @@ from pages.common_actions import (
     take_screenshot,
 )
 from pages.soo import search_criteria
+from directory_tests_shared.enums import Service
 from directory_tests_shared.settings import SOO_URL
 
 NAME = "Home"
 URL = SOO_URL
-SERVICE = Services.SOO
+SERVICE = Service.SOO
 TYPE = "home"
 PAGE_TITLE = "Welcome to Selling online overseas"
 

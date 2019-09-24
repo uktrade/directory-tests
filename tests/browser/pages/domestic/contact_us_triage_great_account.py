@@ -8,7 +8,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType, Services
+from pages import ElementType
 from pages.common_actions import (
     Selector,
     check_url,
@@ -24,10 +24,11 @@ from pages.domestic import (
     contact_us_short_domestic,
     contact_us_triage_great_account_dedicated_support_content,
 )
+from directory_tests_shared.enums import Service
 from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Great.gov.uk account"
-SERVICE = Services.DOMESTIC
+SERVICE = Service.DOMESTIC
 TYPE = "Domestic Contact us"
 URL = urljoin(DOMESTIC_URL, "contact/triage/great-account/")
 PAGE_TITLE = "Welcome to great.gov.uk"

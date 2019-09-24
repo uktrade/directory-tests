@@ -6,12 +6,13 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import Services
+from directory_tests_shared.enums import Service
 from pages.common_actions import Selector, check_url, take_screenshot
+from directory_tests_shared.enums import Service
 from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Brexit help"
-SERVICE = Services.DOMESTIC
+SERVICE = Service.DOMESTIC
 TYPE = "Thank you for your enquiry"
 URL = urljoin(DOMESTIC_URL, "brexit/contact/success/")
 PAGE_TITLE = "Welcome to great.gov.uk"

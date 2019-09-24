@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType, Services
+from pages import ElementType
 from pages.common_actions import (
     Actor,
     Selector,
@@ -20,10 +20,11 @@ from pages.common_actions import (
     tick_captcha_checkbox,
     tick_checkboxes,
 )
+from directory_tests_shared.enums import Service
 from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Feedback"
-SERVICE = Services.DOMESTIC
+SERVICE = Service.DOMESTIC
 TYPE = "Contact us"
 URL = urljoin(DOMESTIC_URL, "contact/feedback/")
 PAGE_TITLE = "Welcome to great.gov.uk"

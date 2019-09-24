@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""FAS - Creative Industry page"""
+"""Find a Supplier - Creative Industry page"""
 import logging
 
 from requests import Response, Session

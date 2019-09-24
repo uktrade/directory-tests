@@ -5,12 +5,12 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import Services
 from pages.common_actions import Selector, check_url, take_screenshot
+from directory_tests_shared.enums import Service
 from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Long Domestic (Thank you for your enquiry)"
-SERVICE = Services.DOMESTIC
+SERVICE = Service.DOMESTIC
 TYPE = "Contact us"
 URL = urljoin(DOMESTIC_URL, "contact/selling-online-overseas/success/")
 PAGE_TITLE = "Welcome to great.gov.uk"

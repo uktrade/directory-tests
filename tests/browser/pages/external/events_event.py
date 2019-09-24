@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import Services
+from directory_tests_shared.enums import Service
 from pages.common_actions import (
     Selector,
     check_url,
@@ -17,7 +17,7 @@ from pages.common_actions import (
 from directory_tests_shared.settings import EVENTS_URL
 
 NAME = "Event"
-SERVICE = Services.EVENTS
+SERVICE = Service.EVENTS
 TYPE = "event"
 URL = urljoin(EVENTS_URL, "")
 GREAT_LOGO = Selector(By.CSS_SELECTOR, "div.event-logo")

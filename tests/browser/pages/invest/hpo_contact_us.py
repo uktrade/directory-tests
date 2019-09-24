@@ -8,7 +8,7 @@ from uuid import uuid4
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType, Services, common_selectors
+from pages import ElementType, common_selectors
 from pages.common_actions import (
     Actor,
     Selector,
@@ -25,11 +25,12 @@ from pages.common_actions import (
     tick_checkboxes_by_labels,
     visit_url,
 )
+from directory_tests_shared.enums import Service
 from directory_tests_shared.settings import INTERNATIONAL_URL
 
 NAME = "Contact us"
 NAMES = ["Advanced food production", "Lightweight structures", "Rail infrastructure"]
-SERVICE = Services.INVEST
+SERVICE = Service.INVEST
 TYPE = "HPO Contact us"
 URL = urljoin(INTERNATIONAL_URL, "content/invest/high-potential-opportunities/")
 SubURLs = {

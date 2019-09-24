@@ -4,11 +4,11 @@ import logging
 
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import Services
+from directory_tests_shared.enums import Service
 from pages.common_actions import check_url, go_to_url, take_screenshot
 
 NAME = "Home"
-SERVICE = Services.EORI
+SERVICE = Service.EORI
 TYPE = "home"
 URL = "https://www.gov.uk/eori"
 SELECTORS = {}

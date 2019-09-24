@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""FAB - Verify Company page"""
+"""Find a Buyer - Verify Company page"""
 import logging
 
 from requests import Response, Session

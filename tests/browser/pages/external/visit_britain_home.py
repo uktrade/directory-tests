@@ -4,11 +4,11 @@ import logging
 
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import Services
+from directory_tests_shared.enums import Service
 from pages.common_actions import check_url, take_screenshot
 
 NAME = "Home"
-SERVICE = Services.VISIT_BRITAIN
+SERVICE = Service.VISIT_BRITAIN
 TYPE = "home"
 URL = "https://www.visitbritain.com/"
 SELECTORS = {}

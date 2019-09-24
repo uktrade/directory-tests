@@ -5,7 +5,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType, Services
+from pages import ElementType
 from pages.common_actions import (
     Selector,
     check_url,
@@ -13,6 +13,7 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
+from directory_tests_shared.enums import Service
 from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Export opportunities service"
@@ -21,7 +22,7 @@ NAMES = [
     "I haven't had a response from the opportunity I applied for",
     "My daily alerts are not relevant to me",
 ]
-SERVICE = Services.DOMESTIC
+SERVICE = Service.DOMESTIC
 TYPE = "Dedicated Support Content"
 URL = urljoin(DOMESTIC_URL, "contact/triage/export-opportunities/")
 PAGE_TITLE = "Welcome to great.gov.uk"

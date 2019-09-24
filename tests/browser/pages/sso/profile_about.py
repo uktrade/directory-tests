@@ -6,12 +6,12 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import Services
+from directory_tests_shared.enums import Service
 from pages.common_actions import Selector, check_url, go_to_url, take_screenshot
 from directory_tests_shared.settings import PROFILE_URL
 
 NAME = "Profile about"
-SERVICE = Services.SSO
+SERVICE = Service.SSO
 TYPE = "profile"
 URL = urljoin(PROFILE_URL, "about/")
 PAGE_TITLE = "Exporting is Great Account - GREAT.gov.uk"

@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import Services
+from directory_tests_shared.enums import Service
 from pages.common_actions import (
     Selector,
     check_for_sections,
@@ -17,10 +17,11 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
+from directory_tests_shared.enums import Service
 from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Updates for UK companies on EU Exit"
-SERVICE = Services.DOMESTIC
+SERVICE = Service.DOMESTIC
 TYPE = "Domestic"
 URL = urljoin(DOMESTIC_URL, "eu-exit-news/")
 PAGE_TITLE = "Welcome to great.gov.uk"

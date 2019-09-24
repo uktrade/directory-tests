@@ -6,7 +6,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import Services
+from directory_tests_shared.enums import Service
 from pages.common_actions import (
     Selector,
     assertion_msg,
@@ -15,7 +15,7 @@ from pages.common_actions import (
 )
 
 NAME = "Share on Facebook"
-SERVICE = Services.FACEBOOK
+SERVICE = Service.FACEBOOK
 TYPE = "share"
 URL = urljoin("https://www.facebook.com/", "share.php?u=")
 PAGE_TITLE = "Facebook"

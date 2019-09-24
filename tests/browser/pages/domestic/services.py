@@ -6,7 +6,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType, Services, common_selectors
+from pages import ElementType, common_selectors
 from pages.common_actions import (
     Selector,
     check_for_sections,
@@ -16,10 +16,11 @@ from pages.common_actions import (
     take_screenshot,
 )
 from pages.domestic import actions as domestic_actions
+from directory_tests_shared.enums import Service
 from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Services"
-SERVICE = Services.DOMESTIC
+SERVICE = Service.DOMESTIC
 TYPE = "services list"
 URL = urljoin(DOMESTIC_URL, "services/")
 

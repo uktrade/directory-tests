@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import Services, common_selectors
+from pages import common_selectors
 from pages.common_actions import (
     Selector,
     check_for_sections,
@@ -15,10 +15,11 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
+from directory_tests_shared.enums import Service
 from directory_tests_shared.settings import FIND_A_SUPPLIER_URL
 
 NAME = "Empty Search Results"
-SERVICE = Services.FIND_A_SUPPLIER
+SERVICE = Service.FAS
 TYPE = "search"
 URL = urljoin(FIND_A_SUPPLIER_URL, "search/")
 PAGE_TITLE = "Search the database of UK suppliers' trade profiles - trade.great.gov.uk"

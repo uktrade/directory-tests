@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""FAB - Remove Collaborator page"""
+"""Find a Buyer - Remove Collaborator page"""
 from typing import List, Tuple
 
 from requests import Response, Session

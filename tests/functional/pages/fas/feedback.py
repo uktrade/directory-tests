@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""FAS - Edit Company's Directory Profile page"""
+"""Find a Supplier - Edit Company's Directory Profile page"""
 import logging
 
 from requests import Response, Session

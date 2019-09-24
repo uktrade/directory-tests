@@ -9,7 +9,7 @@ from uuid import uuid4
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType, Services
+from pages import ElementType
 from pages.common_actions import (
     Actor,
     Selector,
@@ -25,6 +25,7 @@ from pages.common_actions import (
     tick_checkboxes,
 )
 from pages.domestic import contact_us_short_domestic_thank_you
+from directory_tests_shared.enums import Service
 from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Short contact form (Tell us how we can help)"
@@ -36,7 +37,7 @@ NAMES = [
     "Short contact form (Other)",
     "Short contact form (Office Finder)",
 ]
-SERVICE = Services.DOMESTIC
+SERVICE = Service.DOMESTIC
 TYPE = "Contact us"
 URL = urljoin(DOMESTIC_URL, "contact/domestic/")
 PAGE_TITLE = "Welcome to great.gov.uk"

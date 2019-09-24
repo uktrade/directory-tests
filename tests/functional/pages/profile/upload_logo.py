@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""FAB - Upload Logo page"""
+"""Find a Buyer - Upload Logo page"""
 import logging
 import mimetypes
 import os

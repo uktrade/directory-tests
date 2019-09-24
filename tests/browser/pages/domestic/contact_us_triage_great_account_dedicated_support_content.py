@@ -5,7 +5,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType, Services
+from pages import ElementType
 from pages.common_actions import (
     Selector,
     check_url,
@@ -13,6 +13,7 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
+from directory_tests_shared.enums import Service
 from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Great.gov.uk account"
@@ -24,7 +25,7 @@ NAMES = [
     "I have not received my letter containing the verification code",
     "I have not received a verification code",
 ]
-SERVICE = Services.DOMESTIC
+SERVICE = Service.DOMESTIC
 TYPE = "Dedicated Support Content"
 URL = urljoin(DOMESTIC_URL, "contact/triage/great-account/")
 PAGE_TITLE = "Welcome to great.gov.uk"

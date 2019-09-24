@@ -9,7 +9,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType, Services, common_selectors
+from pages import ElementType, common_selectors
 from pages.common_actions import (
     Selector,
     assertion_msg,
@@ -26,10 +26,11 @@ from pages.common_actions import (
     wait_for_page_load_after_action,
 )
 from pages.domestic import actions as domestic_actions
+from directory_tests_shared.enums import Service
 from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Home"
-SERVICE = Services.DOMESTIC
+SERVICE = Service.DOMESTIC
 TYPE = "home"
 URL = urljoin(DOMESTIC_URL, "?lang=en-gb")
 PAGE_TITLE = "Welcome to great.gov.uk"

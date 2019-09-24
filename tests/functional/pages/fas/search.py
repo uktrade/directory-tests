@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""FAS - Find a Supplier page"""
+"""Find a Supplier - Find a Supplier page"""
 import logging
 
 from requests import Response, Session

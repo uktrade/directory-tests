@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""FAS - Company's Business Profile page"""
+"""Find a Supplier - Company's Business Profile page"""
 import logging
 from urllib.parse import urljoin
 

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""FAB - Add Collaborator page"""
+"""Find a Buyer - Add Collaborator page"""
 from requests import Response, Session
 
 from directory_tests_shared import PageType, Service, URLs

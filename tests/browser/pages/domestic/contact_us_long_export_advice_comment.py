@@ -6,7 +6,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType, Services
+from pages import ElementType
 from pages.common_actions import (
     Actor,
     Selector,
@@ -17,10 +17,11 @@ from pages.common_actions import (
     take_screenshot,
 )
 from pages.domestic import contact_us_long_export_advice_personal
+from directory_tests_shared.enums import Service
 from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Long (Export Advice Comment)"
-SERVICE = Services.DOMESTIC
+SERVICE = Service.DOMESTIC
 TYPE = "Contact us"
 URL = urljoin(DOMESTIC_URL, "contact/export-advice/comment/")
 PAGE_TITLE = "Welcome to great.gov.uk"

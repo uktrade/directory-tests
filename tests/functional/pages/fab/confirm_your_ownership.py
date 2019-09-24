@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""FAB - Confirm your want to become the new owner of company's profile page"""
+"""Find a Buyer - Confirm your want to become the new owner of company's profile page"""
 import logging
 
 from requests import Response, Session

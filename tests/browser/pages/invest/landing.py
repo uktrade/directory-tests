@@ -6,7 +6,7 @@ from typing import List
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType, Services, common_selectors
+from pages import ElementType, common_selectors
 from pages.common_actions import (
     Selector,
     check_for_sections,
@@ -16,11 +16,12 @@ from pages.common_actions import (
     take_screenshot,
     visit_url,
 )
+from directory_tests_shared.enums import Service
 from directory_tests_shared.settings import INVEST_URL
 
 NAME = "landing"
 URL = INVEST_URL
-SERVICE = Services.INVEST
+SERVICE = Service.INVEST
 TYPE = "landing"
 PAGE_TITLE = "Invest in Great Britain - Home"
 

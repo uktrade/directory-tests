@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""FAB - Confirm Identity - with letter page"""
+"""Find a Buyer - Confirm Identity - with letter page"""
 import logging
 
 from requests import Response, Session

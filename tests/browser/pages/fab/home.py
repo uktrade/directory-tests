@@ -4,7 +4,7 @@ import logging
 
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import Services, common_selectors
+from pages import common_selectors
 from pages.common_actions import (
     check_url,
     find_and_click_on_page_element,
@@ -12,9 +12,10 @@ from pages.common_actions import (
     take_screenshot,
 )
 from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 
 NAME = "Home"
-SERVICE = Services.FIND_A_BUYER
+SERVICE = Service.FAB
 TYPE = "home"
 URL = URLs.FAB_LANDING.absolute
 PAGE_TITLE = "Business profile - great.gov.uk"

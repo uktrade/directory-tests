@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""FAB - Confirm your will to collaborate to company's profile page"""
+"""Find a Buyer - Confirm your will to collaborate to company's profile page"""
 import logging
 
 from requests import Response, Session

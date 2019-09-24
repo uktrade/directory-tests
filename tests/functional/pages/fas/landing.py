@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""FAS - Landing page"""
+"""Find a Supplier - Landing page"""
 import logging
 
 from requests import Response, Session

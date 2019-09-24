@@ -8,7 +8,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType, Services
+from pages import ElementType
 from pages.common_actions import (
     Selector,
     assertion_msg,
@@ -22,9 +22,10 @@ from pages.common_actions import (
     take_screenshot,
 )
 from pages.soo import search_criteria
+from directory_tests_shared.enums import Service
 from directory_tests_shared.settings import SOO_URL
 
-SERVICE = Services.SOO
+SERVICE = Service.SOO
 TYPE = "search"
 NAME = "Search results"
 URL = urljoin(SOO_URL, "markets/results/")

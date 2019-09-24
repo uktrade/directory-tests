@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""FAB - Change profile owner - confirm password page"""
+"""Find a Buyer - Change profile owner - confirm password page"""
 from requests import Response, Session
 
 from directory_tests_shared import PageType, Service, URLs

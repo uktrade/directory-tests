@@ -8,7 +8,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import ElementType, Services
+from pages import ElementType
 from pages.common_actions import (
     Selector,
     check_url,
@@ -21,16 +21,17 @@ from pages.common_actions import (
 )
 from pages.domestic import (
     contact_us_long_export_advice_comment,
+    contact_us_office_finder,
     contact_us_short_domestic,
     contact_us_triage_great_services,
     domestic_eu_exit_contact_us,
     ukef_your_details,
 )
-from pages.external import office_finder
+from directory_tests_shared.enums import Service
 from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "What can we help you with?"
-SERVICE = Services.DOMESTIC
+SERVICE = Service.DOMESTIC
 TYPE = "Domestic Contact us"
 URL = urljoin(DOMESTIC_URL, "contact/triage/domestic/")
 PAGE_TITLE = "Welcome to great.gov.uk"
@@ -98,7 +99,7 @@ SELECTORS = {
     }
 }
 POs = {
-    "find your local trade office": office_finder,
+    "find your local trade office": contact_us_office_finder,
     "advice to export from the uk": contact_us_long_export_advice_comment,
     "great.gov.uk account and services support": contact_us_triage_great_services,
     "uk export finance (ukef)": ukef_your_details,

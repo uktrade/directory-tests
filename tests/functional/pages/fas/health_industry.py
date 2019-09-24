@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""FAS - Health Industry page"""
+"""Find a Supplier - Health Industry page"""
 import logging
 
 from requests import Response, Session

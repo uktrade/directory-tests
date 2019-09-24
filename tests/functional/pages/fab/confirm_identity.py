@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""FAB - Confirm Identity page"""
+"""Find a Buyer - Confirm Identity page"""
 import logging
 from copy import copy
 

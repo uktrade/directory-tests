@@ -111,7 +111,7 @@ Feature: Profile pages
     Then "Annette Geissinger" should see new details on "Profile - edit company profile" page
       | detail       |
       | trading name |
-    And "Annette Geissinger" should see new details on "FAS - Company's business profile" page
+    And "Annette Geissinger" should see new details on "Find a Supplier - Company's business profile" page
       | detail       |
       | trading name |
 
@@ -174,7 +174,7 @@ Feature: Profile pages
     Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
     And "Annette Geissinger" signed out from SSO/great.gov.uk account
 
-    When "Annette Geissinger" signs in to SSO/great.gov.uk account from "FAB - Landing"
+    When "Annette Geissinger" signs in to SSO/great.gov.uk account from "Find a Buyer - Landing"
 
     Then "Annette Geissinger" should be on "Profile - About" page
 
@@ -189,7 +189,7 @@ Feature: Profile pages
     Given "Peter Alder" has created verified and published FAS business profile for randomly selected company "Y"
     And "Peter Alder" signed out from SSO/great.gov.uk account
 
-    When "Peter Alder" signs in to SSO/great.gov.uk account from "FAB - Landing"
+    When "Peter Alder" signs in to SSO/great.gov.uk account from "Find a Buyer - Landing"
 
     Then "Peter Alder" should be on "Profile - edit company profile" page
 
@@ -222,7 +222,7 @@ Feature: Profile pages
       | number of employees         |
       | sector of interest          |
 #      | keywords                    |  see TT-1333
-    And "Annette Geissinger" should see new details on "FAS - Company's business profile" page
+    And "Annette Geissinger" should see new details on "Find a Supplier - Company's business profile" page
       | detail                      |
       | trading name                |
       | website                     |

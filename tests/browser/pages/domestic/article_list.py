@@ -5,7 +5,7 @@ from typing import List
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import Services
+from directory_tests_shared.enums import Service
 from pages.common_actions import (
     Selector,
     check_for_expected_sections_elements,
@@ -16,7 +16,7 @@ from pages.common_actions import (
 )
 
 NAME = "Article List"
-SERVICE = Services.DOMESTIC
+SERVICE = Service.DOMESTIC
 TYPE = "article list"
 URL = None
 

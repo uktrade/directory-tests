@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""FAS - Food and Drink Industry page"""
+"""Find a Supplier - Food and Drink Industry page"""
 import logging
 
 from requests import Response, Session

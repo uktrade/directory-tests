@@ -11,12 +11,12 @@ Feature: View FAS in various languages
     Given "Annette Geissinger" is a buyer
 
     When "Annette Geissinger" chooses to view following pages in "<selected>" language
-      | page                               |
-      | FAS - Landing                      |
+      | page                      |
+      | Find a Supplier - Landing |
 
     Then the "main" part of the viewed FAS page should be presented in "<expected>" language with probability greater than "<lower limit>"
-      | page                               |
-      | FAS - Landing                      |
+      | page                      |
+      | Find a Supplier - Landing |
 
     Examples:
       | selected   | expected   | lower limit |

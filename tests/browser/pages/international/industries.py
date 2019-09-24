@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import Services, common_selectors
+from pages import common_selectors
 from pages.common_actions import (
     Selector,
     check_for_sections,
@@ -17,10 +17,11 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
+from directory_tests_shared.enums import Service
 from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Industries"
-SERVICE = Services.INTERNATIONAL
+SERVICE = Service.INTERNATIONAL
 TYPE = "landing"
 URL = urljoin(DOMESTIC_URL, "international/content/about-uk/industries/")
 PAGE_TITLE = "Welcome to great.gov.uk - buy from or invest in the UK"

@@ -7,7 +7,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import Services
+from directory_tests_shared.enums import Service
 from pages.common_actions import (
     Selector,
     assertion_msg,
@@ -17,7 +17,7 @@ from pages.common_actions import (
 )
 
 NAME = "Share on LinkedIn"
-SERVICE = Services.LINKEDIN
+SERVICE = Service.LINKEDIN
 TYPE = "share"
 URL = urljoin("https://www.linkedin.com/", "shareArticle")
 PAGE_TITLE = "LinkedIn"

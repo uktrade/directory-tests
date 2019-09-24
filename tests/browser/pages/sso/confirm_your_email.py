@@ -5,7 +5,7 @@ from urllib.parse import urljoin
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages import Services
+from directory_tests_shared.enums import Service
 from pages.common_actions import (
     Selector,
     check_url,
@@ -16,7 +16,7 @@ from pages.common_actions import (
 from directory_tests_shared.settings import SSO_URL
 
 NAME = "Confirm your email address"
-SERVICE = Services.SSO
+SERVICE = Service.SSO
 TYPE = "confirmation"
 URL = urljoin(SSO_URL, "accounts/confirm-email/")
 PAGE_TITLE = "Confirm email Address"
