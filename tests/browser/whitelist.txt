@@ -1,1 +1,1 @@
-./whitelist.txt
+../../whitelist.txt
