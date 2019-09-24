@@ -3,6 +3,7 @@ from datetime import datetime
 from urllib.parse import urljoin
 from envparse import env
 
+from django.conf import settings
 
 #####################################################################
 # Directory Service URLs & Credentials
@@ -111,9 +112,6 @@ if BROWSER_ENVIRONMENT.lower() == "remote" and (
 #####################################################################
 # API clients settings
 #####################################################################
-# This is an ugly way of dealing with imports but Django settings have to be
-# configured before we can import various API Clients
-from django.conf import settings  # noqa
 settings.configure(
     DIRECTORY_API_CLIENT_API_KEY=DIRECTORY_API_KEY,
     DIRECTORY_API_CLIENT_BASE_URL=DIRECTORY_API_URL,
@@ -135,9 +133,9 @@ settings.configure(
             "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
             "LOCATION": "unique-snowflake",
         },
-        'api_fallback': {
-            'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            'LOCATION': 'unique-snowflake',
+        "api_fallback": {
+            "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+            "LOCATION": "unique-snowflake",
         }
     },
 )
