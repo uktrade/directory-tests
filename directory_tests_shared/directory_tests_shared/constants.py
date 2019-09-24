@@ -26,9 +26,9 @@ HPO_AGENT_EMAIL_SUBJECT = env.str(
     "HPO_AGENT_EMAIL_SUBJECT", default="HPO Enquiry (Invest in GREAT Britain)"
 )
 HPO_PDF_URLS = [
-    "https://directory-cms-public.s3.amazonaws.com/documents/documents/A_High_Potential_Opportunity_in_High_Productivity_Food_Production.pdf",
-    "https://directory-cms-public.s3.amazonaws.com/documents/A_High_Potential_Investment_Opportunity_in_Lightweight_Structures.pdf",
-    "https://directory-cms-public.s3.amazonaws.com/documents/A_High_Potential_Investment_Opportunity_in_UK_Rail.pdf",
+    "https://directory-cms-public.s3.amazonaws.com/documents/documents/A_High_Potential_Opportunity_in_High_Productivity_Food_Production.pdf",  # noqa
+    "https://directory-cms-public.s3.amazonaws.com/documents/A_High_Potential_Investment_Opportunity_in_Lightweight_Structures.pdf",  # noqa
+    "https://directory-cms-public.s3.amazonaws.com/documents/A_High_Potential_Investment_Opportunity_in_UK_Rail.pdf",  # noqa
 ]
 MD5_CHECKSUM_EIG_LOGO = env.str(
     "EIG_LOGO_MD5_CHECKSUM", default="8bc6134cffb3cdb134ad910e6a698fb8"

@@ -38,13 +38,13 @@ from docopt import docopt
 class DockerComposeEnvWriter:
     @staticmethod
     def save_env_vars(
-            config: dict, all_env_vars: dict, env_prefix: str, export_mode: bool
+            configuration: dict, all_env_vars: dict, env_prefix: str, export_mode: bool
     ):
         if export_mode:
-            filename = "{}_with_export".format(config["file_path"])
+            filename = "{}_with_export".format(configuration["file_path"])
         else:
-            filename = "{}_without_export".format(config["file_path"])
-        with open(filename, "w") as dest:
+            filename = "{}_without_export".format(configuration["file_path"])
+        with open(filename, "w") as destination:
             for var in all_env_vars:
                 # Get value of the prefixed host env var
                 value = os.getenv(
@@ -54,21 +54,21 @@ class DockerComposeEnvWriter:
                     special_chars = "!$"
                     if export_mode:
                         if any(special in value for special in special_chars):
-                            dest.write("export {}='{}'\n".format(var, value))
+                            destination.write("export {}='{}'\n".format(var, value))
                         else:
-                            dest.write("export {}={}\n".format(var, value))
+                            destination.write("export {}={}\n".format(var, value))
                     else:
-                        dest.write("{}={}\n".format(var, value))
+                        destination.write("{}={}\n".format(var, value))
 
     @classmethod
-    def create(cls, config: dict, env_prefix: str):
-        cls.validate(config, env_prefix)
+    def create(cls, configuration: dict, env_prefix: str):
+        cls.validate(configuration, env_prefix)
 
         all_env_vars = (
-            config["env_vars"]["required"] + config["env_vars"]["optional"]
+                configuration["env_vars"]["required"] + configuration["env_vars"]["optional"]
         )
-        cls.save_env_vars(config, all_env_vars, env_prefix, export_mode=True)
-        cls.save_env_vars(config, all_env_vars, env_prefix, export_mode=False)
+        cls.save_env_vars(configuration, all_env_vars, env_prefix, export_mode=True)
+        cls.save_env_vars(configuration, all_env_vars, env_prefix, export_mode=False)
 
     @staticmethod
     def validate(config: dict, env_prefix: str):

@@ -113,7 +113,7 @@ if BROWSER_ENVIRONMENT.lower() == "remote" and (
 #####################################################################
 # This is an ugly way of dealing with imports but Django settings have to be
 # configured before we can import various API Clients
-from django.conf import settings
+from django.conf import settings  # noqa
 settings.configure(
     DIRECTORY_API_CLIENT_API_KEY=DIRECTORY_API_KEY,
     DIRECTORY_API_CLIENT_BASE_URL=DIRECTORY_API_URL,
