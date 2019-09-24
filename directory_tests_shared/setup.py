@@ -18,6 +18,10 @@ setup(
     include_package_data=True,
     install_requires=[
         "envparse>=0.2.0",
+        "directory-api-client>=20.0.0",
+        "directory-cms-client>=11.0.0",
+        "directory-sso-api-client>=6.1.0",
+        "notifications-python-client>=5.3.0",
     ],
     extras_require={},
     classifiers=[
