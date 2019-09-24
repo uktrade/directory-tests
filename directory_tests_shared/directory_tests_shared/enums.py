@@ -15,12 +15,24 @@ class BusinessType(Enum):
 
 
 class Service(Enum):
-    FAB = "FAB"
-    FAS = "FAS"
+    BRITISH_COUNCIL = "British Council"
+    DOMESTIC = "Domestic"
+    EORI = "EORI"
+    EVENTS = "Events"
+    EXPORT_OPPORTUNITIES = "Export Opportunities"
+    FAB = "Find a Buyer"
+    FACEBOOK = "Facebook"
+    FAS = "Find a Supplier"
     INTERNATIONAL = "International"
+    INVEST = "Invest"
     ISD = "ISD"
+    LINKEDIN = "LinkedIn"
+    PIR = "PIR"
     PROFILE = "Profile"
+    SOO = "Selling Online Overseas"
     SSO = "SSO"
+    TWITTER = "Twitter"
+    VISIT_BRITAIN = "Visit Britain"
 
     def __str__(self):
         return self.value

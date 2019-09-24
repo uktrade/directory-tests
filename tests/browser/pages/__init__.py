@@ -27,30 +27,6 @@ class ElementType(Enum):
         return self.value
 
 
-class Services(Enum):
-    BRITISH_COUNCIL = "British Council"
-    DOMESTIC = "Domestic"
-    EORI = "EORI"
-    EVENTS = "Events"
-    EXPORT_OPPORTUNITIES = "Export Opportunities"
-    FACEBOOK = "Facebook"
-    FIND_A_BUYER = "Find a Buyer"
-    FIND_A_SUPPLIER = "Find a Supplier"
-    INTERNATIONAL = "International"
-    INVEST = "Invest"
-    ISD = "ISD"
-    LINKEDIN = "LinkedIn"
-    PIR = "PIR"
-    PROFILE = "Profile"
-    SOO = "Selling Online Overseas"
-    SSO = "Single Sign-On"
-    TWITTER = "Twitter"
-    VISIT_BRITAIN = "Visit Britain"
-
-    def __str__(self):
-        return self.value
-
-
 def is_page_object(module: ModuleType):
     return all([hasattr(module, prop) for prop in REQUIRED_PROPERTIES])
 
