@@ -6,26 +6,14 @@ from requests.auth import HTTPBasicAuth
 from retrying import retry
 
 from directory_tests_shared import URLs
+from directory_tests_shared.clients import CMS_API_CLIENT
 from directory_tests_shared.constants import USERS
-from directory_tests_shared.settings import (
-    BASICAUTH_USER,
-    BASICAUTH_PASS,
-    CMS_API_KEY,
-    CMS_API_URL,
-    CMS_API_SENDER_ID,
-)
+from directory_tests_shared.settings import BASICAUTH_USER, BASICAUTH_PASS
 
 
 @pytest.fixture
 def cms_client():
-    from directory_cms_client.client import DirectoryCMSClient
-    return DirectoryCMSClient(
-        base_url=CMS_API_URL,
-        api_key=CMS_API_KEY,
-        sender_id=CMS_API_SENDER_ID,
-        timeout=60,
-        default_service_name="change-me",
-    )
+    return CMS_API_CLIENT
 
 
 @pytest.fixture

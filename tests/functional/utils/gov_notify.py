@@ -2,18 +2,10 @@
 """Common operations for Gov Notify service"""
 import logging
 
-from notifications_python_client import NotificationsAPIClient
 from retrying import retry
 from tests.functional.utils.generic import assertion_msg
-from directory_tests_shared.constants import (
-    EMAIL_VERIFICATION_MSG_SUBJECT,
-    SSO_PASSWORD_RESET_MSG_SUBJECT,
-)
-from directory_tests_shared.settings import (
-    GOV_NOTIFY_API_KEY,
-)
-
-GOV_NOTIFY_CLIENT = NotificationsAPIClient(GOV_NOTIFY_API_KEY)
+from directory_tests_shared.clients import GOV_NOTIFY_CLIENT
+from directory_tests_shared.constants import EMAIL_VERIFICATION_MSG_SUBJECT, SSO_PASSWORD_RESET_MSG_SUBJECT
 
 
 def extract_email_confirmation_link(payload: str) -> str:

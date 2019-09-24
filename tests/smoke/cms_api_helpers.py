@@ -8,7 +8,6 @@ from urllib.parse import urlparse
 
 import requests
 from directory_cms_client import DirectoryCMSClient
-from directory_cms_client.client import cms_api_client
 from directory_constants import cms as SERVICE_NAMES
 from requests import Response
 from rest_framework.status import (
@@ -21,6 +20,7 @@ from rest_framework.status import (
 from retrying import retry
 
 from directory_tests_shared import URLs
+from directory_tests_shared.clients import CMS_API_CLIENT
 from directory_tests_shared.settings import (
     CMS_API_KEY,
     CMS_API_URL,
@@ -230,7 +230,7 @@ def get_page_ids_by_type(page_type: str) -> Tuple[List[int], int]:
     # get first page of results
     relative_url = URLs.CMS_API_PAGES.relative
     endpoint = f"{relative_url}?type={page_type}"
-    response = cms_api_client.get(endpoint)
+    response = CMS_API_CLIENT.get(endpoint)
     total_response_time = response.elapsed.total_seconds()
     assert response.status_code == HTTP_200_OK, status_error(HTTP_200_OK, response)
 
@@ -247,7 +247,7 @@ def get_page_ids_by_type(page_type: str) -> Tuple[List[int], int]:
     while len(page_ids) < total_count:
         offset = len(page_ids) + len(content["items"])
         endpoint = f"{relative_url}?type={page_type}&offset={offset}"
-        response = cms_api_client.get(endpoint)
+        response = CMS_API_CLIENT.get(endpoint)
         total_response_time += response.elapsed.total_seconds()
         assert response.status_code == HTTP_200_OK, status_error(HTTP_200_OK, response)
         content = response.json()
@@ -263,7 +263,7 @@ def get_page_ids_by_type(page_type: str) -> Tuple[List[int], int]:
 def sync_requests(endpoints: List[str]):
     result = []
     for endpoint in endpoints:
-        response = cms_api_client.get(endpoint)
+        response = CMS_API_CLIENT.get(endpoint)
         print(
             f"Got response from {response.url} in: "
             f"{response.elapsed.total_seconds()}s"
@@ -273,7 +273,7 @@ def sync_requests(endpoints: List[str]):
 
 
 def get_pages_types(*, skip: list = None) -> List[str]:
-    response = cms_api_client.get(URLs.CMS_API_PAGE_TYPES.relative)
+    response = CMS_API_CLIENT.get(URLs.CMS_API_PAGE_TYPES.relative)
     assert response.status_code == HTTP_200_OK, status_error(HTTP_200_OK, response)
     types = response.json()["types"]
     if skip:

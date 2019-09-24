@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import pytest
-from directory_cms_client.client import cms_api_client
-from directory_sso_api_client.client import sso_api_client
+from directory_tests_shared.clients import CMS_API_CLIENT, SSO_API_CLIENT
 from rest_framework.status import (
     HTTP_200_OK,
     HTTP_301_MOVED_PERMANENTLY,
@@ -28,7 +27,7 @@ def test_sso_api_health_check(url, basic_auth):
 @pytest.mark.sso_api
 def test_sso_api_health_check_ping_with_sso_api_client():
     """Use SSO-API client"""
-    response = sso_api_client.ping()
+    response = SSO_API_CLIENT.ping()
     assert response.status_code == HTTP_200_OK, status_error(HTTP_200_OK, response)
 
 
@@ -114,7 +113,7 @@ def test_exred_health_check_endpoints(url, basic_auth):
 @pytest.mark.cms
 @pytest.mark.parametrize("endpoint", [URLs.CMS_API_HEALTHCHECK_PING.relative])
 def test_cms_health_check_ping_endpoint_with_cms_api_client(endpoint):
-    response = cms_api_client.get(endpoint)
+    response = CMS_API_CLIENT.get(endpoint)
     assert response.status_code == HTTP_200_OK, status_error(HTTP_200_OK, response)
 
 

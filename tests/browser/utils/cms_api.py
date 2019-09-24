@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from typing import List
 
-from directory_cms_client.client import cms_api_client
+from directory_tests_shared.clients import CMS_API_CLIENT
 
 
 def get_news_articles(service: str, visitor_type: str) -> List[dict]:
@@ -12,6 +12,6 @@ def get_news_articles(service: str, visitor_type: str) -> List[dict]:
         }
     }
     slug = news_slugs[service.lower()][visitor_type.lower()]
-    response = cms_api_client.lookup_by_slug(slug).json()
+    response = CMS_API_CLIENT.lookup_by_slug(slug).json()
     articles = response["articles"]
     return [article for article in articles if "news/" in article["full_path"]]

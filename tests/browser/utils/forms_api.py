@@ -1,31 +1,9 @@
 # -*- coding: utf-8 -*-
 from typing import List
 
-from directory_client_core.base import AbstractAPIClient
 from retrying import retry
 
-from directory_tests_shared.settings import (
-    FORMS_API_KEY,
-    FORMS_API_SENDER_ID,
-    FORMS_API_URL,
-)
-
-
-class FormsClient(AbstractAPIClient):
-    version = "1"
-
-    def __init__(self, base_url, api_key, sender_id, timeout, default_service_name):
-        super().__init__(base_url, api_key, sender_id, timeout)
-        self.default_service_name = default_service_name
-
-
-client = FormsClient(
-    base_url=FORMS_API_URL,
-    api_key=FORMS_API_KEY,
-    sender_id=FORMS_API_SENDER_ID,
-    timeout=30,
-    default_service_name="testapi",
-)
+from directory_tests_shared.clients import FORMS_API_CLIENT
 
 
 def filter_by_action(submissions: List[dict], action: str) -> list:
@@ -66,7 +44,7 @@ def filter_by_uuid_last_name(submissions: List[dict], uuid: str) -> list:
 
 
 def find_form_submissions(email: str) -> List[dict]:
-    return client.get(f"testapi/submissions-by-email/{email}/").json()
+    return FORMS_API_CLIENT.get(f"testapi/submissions-by-email/{email}/").json()
 
 
 def find_form_submissions_by_subject_and_action(

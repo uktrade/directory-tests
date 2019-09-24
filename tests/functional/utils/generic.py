@@ -23,8 +23,6 @@ import lxml
 import requests
 from behave.runner import Context
 from bs4 import BeautifulSoup
-from directory_api_client.testapiclient import DirectoryTestAPIClient
-from directory_sso_api_client.testapiclient import DirectorySSOTestAPIClient
 from directory_constants import choices
 from jsonschema import validate
 from jsonschema.exceptions import ValidationError
@@ -56,34 +54,18 @@ from directory_tests_shared.constants import (
     SECTORS,
     TEST_IMAGES_DIR,
 )
+from directory_tests_shared.clients import (
+    DIRECTORY_TEST_API_CLIENT,
+    SSO_TEST_API_CLIENT,
+)
 from directory_tests_shared.settings import (
-    DIRECTORY_API_KEY,
-    DIRECTORY_API_SENDER_ID,
-    DIRECTORY_API_URL,
-    CMS_API_DEFAULT_TIMEOUT,
-    SSO_API_KEY,
-    SSO_API_URL,
-    SSO_API_DEFAULT_TIMEOUT,
-    SSO_API_SENDER_ID,
-    MAILGUN_EVENTS_URL,
     MAILGUN_API_KEY,
+    MAILGUN_EVENTS_URL,
     STANNP_LETTER_TEMPLATE_ID,
 )
 from directory_tests_shared.utils import rare_word, sentence
 
 INDUSTRY_CHOICES = dict(choices.INDUSTRIES)
-
-DIRECTORY_CLIENT = DirectoryTestAPIClient(
-    DIRECTORY_API_URL,
-    DIRECTORY_API_KEY,
-    DIRECTORY_API_SENDER_ID,
-    CMS_API_DEFAULT_TIMEOUT,
-)
-SSO_CLIENT = DirectorySSOTestAPIClient(
-    SSO_API_URL, SSO_API_KEY,
-    SSO_API_SENDER_ID,
-    SSO_API_DEFAULT_TIMEOUT
-)
 
 # a type hint for a List of Company named tuples
 CompaniesList = List[Company]
@@ -1395,13 +1377,13 @@ def get_number_of_search_result_pages(response: Response) -> int:
 
 def get_company_by_id(number: str) -> dict:
     """Get email address associated with company."""
-    response = DIRECTORY_CLIENT.get_company_by_ch_id(number)
+    response = DIRECTORY_TEST_API_CLIENT.get_company_by_ch_id(number)
     return response.json() if response.status_code == 200 else None
 
 
 def get_company_email(number: str) -> str:
     """Get email address associated with company."""
-    response = DIRECTORY_CLIENT.get_company_by_ch_id(number)
+    response = DIRECTORY_TEST_API_CLIENT.get_company_by_ch_id(number)
     check_response(response, 200)
     email = response.json()["company_email"]
     logging.debug("Email for company %s is %s", number, email)
@@ -1413,7 +1395,7 @@ def get_published_companies(context: Context) -> list:
 
     :return: a list of dictionaries with published companies
     """
-    response = DIRECTORY_CLIENT.get_published_companies()
+    response = DIRECTORY_TEST_API_CLIENT.get_published_companies()
     context.response = response
     check_response(response, 200)
     return response.json()
@@ -1426,7 +1408,7 @@ def get_published_companies_with_n_sectors(
 
     :return: a list of dictionaries with matching published companies
     """
-    response = DIRECTORY_CLIENT.get_published_companies(
+    response = DIRECTORY_TEST_API_CLIENT.get_published_companies(
         minimal_number_of_sectors=number_of_sectors
     )
     context.response = response
@@ -1439,7 +1421,7 @@ def get_verification_code(context: Context, company_number: str):
 
     :return: verification code sent by post
     """
-    response = DIRECTORY_CLIENT.get_company_by_ch_id(company_number)
+    response = DIRECTORY_TEST_API_CLIENT.get_company_by_ch_id(company_number)
     context.response = response
     check_response(response, 200)
     verification_code = response.json()["letter_verification_code"]
@@ -1451,7 +1433,7 @@ def is_verification_letter_sent(context: Context, company_number: str) -> bool:
 
     :return: True if letter was sent and False if it wasn't
     """
-    response = DIRECTORY_CLIENT.get_company_by_ch_id(company_number)
+    response = DIRECTORY_TEST_API_CLIENT.get_company_by_ch_id(company_number)
     context.response = response
     check_response(response, 200)
     result = response.json()["is_verification_letter_sent"]
@@ -1461,7 +1443,7 @@ def is_verification_letter_sent(context: Context, company_number: str) -> bool:
 def delete_supplier_data_from_sso(
     email_address: str, *, context: Context = None
 ):
-    response = SSO_CLIENT.delete_user_by_email(email_address)
+    response = SSO_TEST_API_CLIENT.delete_user_by_email(email_address)
     if context:
         context.response = response
     if response.status_code == 204:
@@ -1483,7 +1465,7 @@ def delete_supplier_data_from_sso(
 
 
 def delete_supplier_data_from_dir(ch_id: str, *, context: Context = None):
-    response = DIRECTORY_CLIENT.delete_company_by_ch_id(ch_id)
+    response = DIRECTORY_TEST_API_CLIENT.delete_company_by_ch_id(ch_id)
     if context:
         context.response = response
     if response.status_code == 204:
@@ -1513,7 +1495,7 @@ def delete_supplier_data_from_dir(ch_id: str, *, context: Context = None):
 
 
 def flag_sso_account_as_verified(context: Context, email_address: str):
-    response = SSO_CLIENT.flag_user_email_as_verified_or_not(
+    response = SSO_TEST_API_CLIENT.flag_user_email_as_verified_or_not(
         email_address, verified=True
     )
     context.response = response
@@ -1738,7 +1720,7 @@ def extract_text_from_pdf(
 
 def create_test_isd_company(context: Context) -> dict:
     """Creates an unpublished test ISD company"""
-    response = DIRECTORY_CLIENT.post("testapi/isd_company/")
+    response = DIRECTORY_TEST_API_CLIENT.post("testapi/isd_company/")
     context.response = response
     check_response(response, 201)
     return response.json()

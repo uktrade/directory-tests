@@ -4,12 +4,9 @@ import logging
 from pprint import pformat
 from typing import List
 
-from notifications_python_client import NotificationsAPIClient
 from retrying import retry
 
-from directory_tests_shared.settings import GOV_NOTIFY_API_KEY
-
-GOV_NOTIFY_CLIENT = NotificationsAPIClient(GOV_NOTIFY_API_KEY)
+from directory_tests_shared.clients import GOV_NOTIFY_CLIENT
 
 
 def extract_email_confirmation_link(payload: str) -> str:
