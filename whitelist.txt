@@ -44,6 +44,7 @@ dedupe
 dicts
 dirname
 dit
+docopt
 dropdown
 enum
 enums
@@ -85,6 +86,7 @@ impl
 importlib
 isd
 isdigit
+isdir
 iter
 js
 jsonschema
@@ -116,6 +118,7 @@ pprint
 prepopulated
 py2
 py3
+python3
 qs
 randint
 randrange
@@ -165,6 +168,7 @@ uuid
 uuid4
 webdriver
 webelement
+xmltodict
 zendesk
 zenpy
 zfill
