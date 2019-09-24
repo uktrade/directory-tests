@@ -3,7 +3,6 @@
 import logging
 
 from directory_sso_api_client.testapiclient import DirectorySSOTestAPIClient
-
 from directory_tests_shared.settings import SSO_API_KEY, SSO_API_URL
 
 

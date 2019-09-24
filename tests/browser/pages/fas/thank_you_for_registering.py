@@ -4,6 +4,8 @@ import logging
 from typing import List
 from urllib.parse import urljoin
 
+from directory_tests_shared.enums import Service
+from directory_tests_shared.settings import FIND_A_SUPPLIER_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
@@ -15,8 +17,6 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import FIND_A_SUPPLIER_URL
 
 NAME = "Thank you for registering"
 SERVICE = Service.FAS

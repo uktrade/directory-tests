@@ -2,6 +2,8 @@
 """Find a Buyer Home Page Object."""
 import logging
 
+from directory_tests_shared import URLs
+from directory_tests_shared.enums import Service
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages import common_selectors
@@ -11,8 +13,6 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from directory_tests_shared import URLs
-from directory_tests_shared.enums import Service
 
 NAME = "Home"
 SERVICE = Service.FAB

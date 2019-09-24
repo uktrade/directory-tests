@@ -2,9 +2,9 @@
 """EORI Home Page Object."""
 import logging
 
+from directory_tests_shared.enums import Service
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from directory_tests_shared.enums import Service
 from pages.common_actions import check_url, go_to_url, take_screenshot
 
 NAME = "Home"

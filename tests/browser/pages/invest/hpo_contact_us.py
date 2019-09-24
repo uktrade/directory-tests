@@ -5,6 +5,8 @@ from typing import List
 from urllib.parse import urljoin
 from uuid import uuid4
 
+from directory_tests_shared.enums import Service
+from directory_tests_shared.settings import INTERNATIONAL_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
@@ -25,8 +27,6 @@ from pages.common_actions import (
     tick_checkboxes_by_labels,
     visit_url,
 )
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import INTERNATIONAL_URL
 
 NAME = "Contact us"
 NAMES = ["Advanced food production", "Lightweight structures", "Rail infrastructure"]

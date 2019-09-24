@@ -4,6 +4,8 @@ import logging
 from typing import List
 from urllib.parse import urljoin
 
+from directory_tests_shared.enums import Service
+from directory_tests_shared.settings import INVEST_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
@@ -17,8 +19,6 @@ from pages.common_actions import (
     take_screenshot,
     visit_url,
 )
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import INVEST_URL
 
 NAME = "Industries"
 SERVICE = Service.INVEST

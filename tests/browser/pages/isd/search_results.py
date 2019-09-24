@@ -3,6 +3,8 @@
 import logging
 from typing import List
 
+from directory_tests_shared.enums import Service
+from directory_tests_shared.settings import ISD_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
@@ -13,8 +15,6 @@ from pages.common_actions import (
     check_url,
     take_screenshot,
 )
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import ISD_URL
 
 NAME = "Search results"
 SERVICE = Service.ISD

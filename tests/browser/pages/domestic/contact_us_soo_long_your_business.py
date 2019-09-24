@@ -5,6 +5,8 @@ import random
 from types import ModuleType
 from urllib.parse import urljoin
 
+from directory_tests_shared.enums import Service
+from directory_tests_shared.settings import DOMESTIC_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
@@ -22,8 +24,6 @@ from pages.common_actions import (
 )
 from pages.domestic import contact_us_soo_long_organisation_details
 from pages.domestic.autocomplete_callbacks import autocomplete_company_name
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Long Domestic (Your Business)"
 SERVICE = Service.DOMESTIC

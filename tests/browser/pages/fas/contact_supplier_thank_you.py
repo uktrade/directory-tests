@@ -4,13 +4,13 @@ import logging
 from typing import List
 from urllib.parse import urljoin
 
+from directory_tests_shared.enums import Service
+from directory_tests_shared.settings import FIND_A_SUPPLIER_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages import common_selectors
 from pages.common_actions import Selector, check_for_sections, take_screenshot
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import FIND_A_SUPPLIER_URL
 
 NAME = "Thank you for contacting supplier"
 SERVICE = Service.FAS

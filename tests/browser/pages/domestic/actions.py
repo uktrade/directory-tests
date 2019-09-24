@@ -2,6 +2,7 @@
 """Common Actions for Domestic Page Objects"""
 import logging
 
+from directory_tests_shared.constants import MD5_CHECKSUM_DIT_FAVICON
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.remote.webdriver import WebDriver
 
@@ -12,7 +13,6 @@ from pages.common_actions import (
     wait_for_page_load_after_action,
 )
 from pages.common_selectors import EXOPPS_FAVICON, FAVICON, HEADER, LOGOS
-from directory_tests_shared.constants import MD5_CHECKSUM_DIT_FAVICON
 
 
 def search(driver: WebDriver, phrase: str):

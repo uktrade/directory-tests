@@ -5,6 +5,8 @@ from types import ModuleType
 from typing import List
 from urllib.parse import urljoin
 
+from directory_tests_shared.enums import Service
+from directory_tests_shared.settings import DOMESTIC_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
@@ -27,8 +29,6 @@ from pages.domestic import (
     domestic_eu_exit_contact_us,
     ukef_your_details,
 )
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "What can we help you with?"
 SERVICE = Service.DOMESTIC

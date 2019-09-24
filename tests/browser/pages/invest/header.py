@@ -2,6 +2,8 @@
 """Invest - Page Header."""
 import logging
 
+from directory_tests_shared.constants import MD5_CHECKSUM_INVEST_IN_GREAT
+from directory_tests_shared.enums import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
@@ -14,8 +16,6 @@ from pages.common_actions import (
     scroll_to,
     take_screenshot,
 )
-from directory_tests_shared.enums import Service
-from directory_tests_shared.constants import MD5_CHECKSUM_INVEST_IN_GREAT
 
 NAME = "Header"
 URL = None

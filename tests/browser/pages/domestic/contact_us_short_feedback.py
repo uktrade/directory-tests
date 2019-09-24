@@ -4,6 +4,8 @@ import logging
 from types import ModuleType
 from urllib.parse import urljoin
 
+from directory_tests_shared.enums import Service
+from directory_tests_shared.settings import DOMESTIC_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
@@ -20,8 +22,6 @@ from pages.common_actions import (
     tick_captcha_checkbox,
     tick_checkboxes,
 )
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Feedback"
 SERVICE = Service.DOMESTIC

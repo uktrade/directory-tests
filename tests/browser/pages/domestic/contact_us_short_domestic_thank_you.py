@@ -2,12 +2,12 @@
 """Domestic - Short Domestic Contact us - Thank you for your enquiry."""
 from urllib.parse import urljoin
 
+from directory_tests_shared.enums import Service
+from directory_tests_shared.settings import DOMESTIC_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages.common_actions import Selector, check_url, take_screenshot
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Thank you for your enquiry"
 NAMES = [

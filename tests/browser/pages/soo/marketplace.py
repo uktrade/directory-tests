@@ -3,6 +3,8 @@
 from typing import List
 from urllib.parse import urljoin
 
+from directory_tests_shared.enums import Service
+from directory_tests_shared.settings import SOO_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
@@ -14,8 +16,6 @@ from pages.common_actions import (
     find_and_click_on_page_element,
     take_screenshot,
 )
-from directory_tests_shared.settings import SOO_URL
-from directory_tests_shared.enums import Service
 
 SERVICE = Service.SOO
 TYPE = "search"

@@ -3,6 +3,8 @@
 import logging
 from urllib.parse import urljoin
 
+from directory_tests_shared.enums import Service
+from directory_tests_shared.settings import EXPORT_OPPORTUNITIES_URL
 from selenium.webdriver.remote.webdriver import WebDriver
 
 from pages import common_selectors
@@ -12,8 +14,6 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import EXPORT_OPPORTUNITIES_URL
 
 NAME = "Home"
 SERVICE = Service.EXPORT_OPPORTUNITIES

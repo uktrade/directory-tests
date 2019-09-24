@@ -2,8 +2,6 @@
 """Selectors for various common page components"""
 import copy
 
-from pages import ElementType
-from pages.common_actions import By, Selector
 from directory_tests_shared.constants import (
     MD5_CHECKSUM_EIG_LOGO,
     MD5_CHECKSUM_EVENTS_BIG_FOOTER_LOGO,
@@ -12,6 +10,8 @@ from directory_tests_shared.constants import (
     MD5_CHECKSUM_INVEST_IN_GREAT,
 )
 
+from pages import ElementType
+from pages.common_actions import By, Selector
 
 HEADER = {
     "header": {

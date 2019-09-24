@@ -19,6 +19,7 @@ from urllib.parse import urlparse
 
 import requests
 from behave.runner import Context
+from directory_tests_shared.settings import BARRED_USERS, TAKE_SCREENSHOTS
 from retrying import retry
 from selenium.common.exceptions import (
     ElementClickInterceptedException,
@@ -35,10 +36,6 @@ from selenium.webdriver.support.expected_conditions import staleness_of
 from selenium.webdriver.support.wait import WebDriverWait
 
 from pages import ElementType
-from directory_tests_shared.settings import (
-    BARRED_USERS,
-    TAKE_SCREENSHOTS,
-)
 
 ScenarioData = namedtuple("ScenarioData", ["actors"])
 Actor = namedtuple(

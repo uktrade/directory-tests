@@ -5,6 +5,8 @@ from types import ModuleType
 from typing import List
 from urllib.parse import urljoin
 
+from directory_tests_shared.enums import Service
+from directory_tests_shared.settings import PROFILE_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
@@ -26,8 +28,6 @@ from pages.profile import (
     enrol_uk_taxpayer_enter_your_email_and_set_password,
     enrol_you_cannot_create_account,
 )
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import PROFILE_URL
 
 NAME = "Select your business type"
 SERVICE = Service.PROFILE

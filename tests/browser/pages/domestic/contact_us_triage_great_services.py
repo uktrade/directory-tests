@@ -5,6 +5,8 @@ from types import ModuleType
 from typing import List
 from urllib.parse import urljoin
 
+from directory_tests_shared.enums import Service
+from directory_tests_shared.settings import DOMESTIC_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
@@ -23,8 +25,6 @@ from pages.domestic import (
     contact_us_triage_export_opportunities,
     contact_us_triage_great_account,
 )
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import DOMESTIC_URL
 
 NAME = "Great.gov.uk account and services support"
 SERVICE = Service.DOMESTIC

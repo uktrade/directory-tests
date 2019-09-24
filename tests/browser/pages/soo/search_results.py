@@ -5,6 +5,8 @@ import random
 from typing import List
 from urllib.parse import urljoin
 
+from directory_tests_shared.enums import Service
+from directory_tests_shared.settings import SOO_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
@@ -22,8 +24,6 @@ from pages.common_actions import (
     take_screenshot,
 )
 from pages.soo import search_criteria
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import SOO_URL
 
 SERVICE = Service.SOO
 TYPE = "search"

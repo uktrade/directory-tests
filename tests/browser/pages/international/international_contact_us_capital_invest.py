@@ -4,6 +4,8 @@ from typing import List
 from urllib.parse import urljoin
 from uuid import uuid4
 
+from directory_tests_shared.enums import Service
+from directory_tests_shared.settings import INTERNATIONAL_URL
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 
@@ -22,8 +24,6 @@ from pages.common_actions import (
     tick_captcha_checkbox,
     tick_checkboxes,
 )
-from directory_tests_shared.enums import Service
-from directory_tests_shared.settings import INTERNATIONAL_URL
 
 NAME = "Contact the Capital Investment team"
 SERVICE = Service.INTERNATIONAL
