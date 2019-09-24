@@ -109,10 +109,7 @@ def unauthenticated_supplier(supplier_alias: str) -> Actor:
     email = (
         "test+{}{}@directory.uktrade.io".format(
             supplier_alias, str(uuid.uuid4())
-        )
-            .replace("-", "")
-            .replace(" ", "")
-            .lower()
+        ).replace("-", "").replace(" ", "").lower()
     )
     password_length = 15
     password = "".join(

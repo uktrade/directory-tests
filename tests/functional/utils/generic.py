@@ -23,6 +23,8 @@ import lxml
 import requests
 from behave.runner import Context
 from bs4 import BeautifulSoup
+from directory_api_client.testapiclient import DirectoryTestAPIClient
+from directory_sso_api_client.testapiclient import DirectorySSOTestAPIClient
 from directory_constants import choices
 from jsonschema import validate
 from jsonschema.exceptions import ValidationError
@@ -70,8 +72,6 @@ from directory_tests_shared.settings import (
 from directory_tests_shared.utils import rare_word, sentence
 
 INDUSTRY_CHOICES = dict(choices.INDUSTRIES)
-from directory_api_client.testapiclient import DirectoryTestAPIClient
-from directory_sso_api_client.testapiclient import DirectorySSOTestAPIClient
 
 DIRECTORY_CLIENT = DirectoryTestAPIClient(
     DIRECTORY_API_URL,
