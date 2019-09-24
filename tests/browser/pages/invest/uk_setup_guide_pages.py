@@ -62,17 +62,26 @@ SubURLs = {
     "access finance in the uk": urljoin(URL, "access-finance-in-the-uk/"),
     "dit's guide to uk capital gains tax": urljoin(URL, "uk-capital-gains-tax/"),
     "dit's guide to uk corporation tax": urljoin(URL, "uk-corporation-tax/"),
-    "dit's guide to uk venture capital schemes": urljoin(URL, "uk-venture-capital-schemes/"),
-    "establish a uk business base": urljoin(URL, "establish-a-base-for-business-in-the-uk/"),
+    "dit's guide to uk venture capital schemes": urljoin(
+        URL, "uk-venture-capital-schemes/"
+    ),
+    "establish a uk business base": urljoin(
+        URL, "establish-a-base-for-business-in-the-uk/"
+    ),
     "register a company in the uk": urljoin(URL, "register-a-company-in-the-uk/"),
     "uk income tax": urljoin(URL, "uk-income-tax/"),
     "uk infrastructure": urljoin(URL, "uk-infrastructure/"),
-    "uk talent and labour": urljoin(URL, "hire-skilled-workers-for-your-uk-operations/"),
+    "uk talent and labour": urljoin(
+        URL, "hire-skilled-workers-for-your-uk-operations/"
+    ),
     "uk tax and incentives": urljoin(URL, "uk-tax-and-incentives/"),
-
     # Staging
-    "access finance in the uk (staging)": urljoin(URL_STAGING, "access-finance-in-the-uk/"),
-    "open a uk business bank account (staging)": urljoin(URL_STAGING, "open-a-uk-business-bank-account/"),
+    "access finance in the uk (staging)": urljoin(
+        URL_STAGING, "access-finance-in-the-uk/"
+    ),
+    "open a uk business bank account (staging)": urljoin(
+        URL_STAGING, "open-a-uk-business-bank-account/"
+    ),
     "uk tax and incentives (staging)": urljoin(URL_STAGING, "uk-tax-and-incentives/"),
 }
 

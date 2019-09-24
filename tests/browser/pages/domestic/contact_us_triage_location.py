@@ -20,10 +20,7 @@ from pages.common_actions import (
     go_to_url,
     take_screenshot,
 )
-from pages.domestic import (
-    contact_us_triage_domestic,
-    contact_us_triage_international,
-)
+from pages.domestic import contact_us_triage_domestic, contact_us_triage_international
 
 NAME = "Contact Us"
 SERVICE = Service.DOMESTIC

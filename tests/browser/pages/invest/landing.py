@@ -37,15 +37,9 @@ SELECTORS = {
         "self": Selector(By.ID, "industries"),
         "heading": Selector(By.CSS_SELECTOR, "#industries h2"),
         "heading text": Selector(By.CSS_SELECTOR, "#industries h2 ~ div > p"),
-        "first": Selector(
-            By.CSS_SELECTOR, "#industries div:nth-child(1) > div > a"
-        ),
-        "second": Selector(
-            By.CSS_SELECTOR, "#industries div:nth-child(2) > div > a"
-        ),
-        "third": Selector(
-            By.CSS_SELECTOR, "#industries div:nth-child(3) > div > a"
-        ),
+        "first": Selector(By.CSS_SELECTOR, "#industries div:nth-child(1) > div > a"),
+        "second": Selector(By.CSS_SELECTOR, "#industries div:nth-child(2) > div > a"),
+        "third": Selector(By.CSS_SELECTOR, "#industries div:nth-child(3) > div > a"),
         "see more industries": Selector(By.ID, "see-more-industries"),
     },
     "high-potential opportunities": {

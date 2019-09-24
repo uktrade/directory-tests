@@ -29,8 +29,7 @@ NAME = "Enter your email address and set a password (Sole trader)"
 SERVICE = Service.PROFILE
 TYPE = "Enrol"
 URL = urljoin(
-    PROFILE_URL,
-    "enrol/business-type/non-companies-house-company/user-account/",
+    PROFILE_URL, "enrol/business-type/non-companies-house-company/user-account/"
 )
 PAGE_TITLE = ""
 

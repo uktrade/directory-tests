@@ -59,9 +59,14 @@ SELECTORS = {
     },
 }
 FORM_FIELDS_WITH_USEFUL_DATA = {
-    "company name": Selector(By.ID, "id_company-search-company_name", type=ElementType.INPUT),
+    "company name": Selector(
+        By.ID, "id_company-search-company_name", type=ElementType.INPUT
+    ),
     "company number": Selector(
-        By.ID, "id_company-search-company_number", type=ElementType.INPUT, is_visible=False
+        By.ID,
+        "id_company-search-company_number",
+        type=ElementType.INPUT,
+        is_visible=False,
     ),
 }
 

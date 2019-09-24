@@ -23,18 +23,20 @@ from pages.common_actions import (
 NAME = "Resend your verification code"
 SERVICE = Service.PROFILE
 TYPE = "Enrol"
-URL = urljoin(
-    PROFILE_URL, "enrol/resend-verification/resend/"
-)
+URL = urljoin(PROFILE_URL, "enrol/resend-verification/resend/")
 PAGE_TITLE = ""
 
 SELECTORS = {
     "form": {
         "form": Selector(By.CSS_SELECTOR, "form[method=POST]"),
         "email": Selector(By.ID, "id_resend-email", type=ElementType.INPUT),
-        "if the resent code doesn't work": Selector(By.CSS_SELECTOR, "form > div > p > a.link"),
-        "submit": Selector(By.CSS_SELECTOR, "form button.button", type=ElementType.BUTTON),
-    },
+        "if the resent code doesn't work": Selector(
+            By.CSS_SELECTOR, "form > div > p > a.link"
+        ),
+        "submit": Selector(
+            By.CSS_SELECTOR, "form button.button", type=ElementType.BUTTON
+        ),
+    }
 }
 
 

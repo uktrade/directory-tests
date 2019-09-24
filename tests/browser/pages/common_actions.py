@@ -266,7 +266,7 @@ def avoid_browser_stack_idle_timeout_exception(driver: WebDriver):
         "scroll up": "window.scrollBy(0,-1000);",
         "scroll down": "window.scrollBy(0,1000);",
         "click on body": "document.querySelector('body').click();",
-        "scroll to random link": "window.scrollTo(0, document.querySelectorAll('a')[Math.floor(Math.random()*document.querySelectorAll('a').length)].offsetTop);"  # noqa
+        "scroll to random link": "window.scrollTo(0, document.querySelectorAll('a')[Math.floor(Math.random()*document.querySelectorAll('a').length)].offsetTop);",  # noqa
     }
     action = random.choice(list(actions.keys()))
     message = f"Trigger '{action}' event to avoid 'Idle Timeout exception'"

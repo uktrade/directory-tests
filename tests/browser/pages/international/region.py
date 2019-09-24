@@ -51,12 +51,15 @@ SubURLs = {
 SELECTORS = {
     "regional breadcrumbs": {
         "great.gov.uk international": Selector(
-            By.CSS_SELECTOR, "nav.breadcrumbs ol > li:nth-child(1) > a"),
+            By.CSS_SELECTOR, "nav.breadcrumbs ol > li:nth-child(1) > a"
+        ),
         "about the uk": Selector(
-            By.CSS_SELECTOR, "nav.breadcrumbs ol > li:nth-child(2) > a"),
+            By.CSS_SELECTOR, "nav.breadcrumbs ol > li:nth-child(2) > a"
+        ),
         "regions": Selector(
-            By.CSS_SELECTOR, "nav.breadcrumbs ol > li:nth-child(3) > a"),
-    },
+            By.CSS_SELECTOR, "nav.breadcrumbs ol > li:nth-child(3) > a"
+        ),
+    }
 }
 SELECTORS.update(common_selectors.INTERNATIONAL_HEADER_WO_LANGUAGE_SELECTOR)
 SELECTORS.update(common_selectors.INTERNATIONAL_HERO)

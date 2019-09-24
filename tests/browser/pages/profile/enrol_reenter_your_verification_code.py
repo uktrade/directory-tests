@@ -23,9 +23,7 @@ from pages.common_actions import (
 NAME = "Re-enter your confirmation code"
 SERVICE = Service.PROFILE
 TYPE = "Enrol"
-URL = urljoin(
-    PROFILE_URL, "enrol/resend-verification/verification/"
-)
+URL = urljoin(PROFILE_URL, "enrol/resend-verification/verification/")
 PAGE_TITLE = ""
 
 SELECTORS = {

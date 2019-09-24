@@ -32,9 +32,7 @@ NAMES = [
 ]
 SERVICE = Service.PROFILE
 TYPE = "Enrol"
-URL = urljoin(
-    PROFILE_URL, "enrol/business-type/companies-house/user-account/"
-)
+URL = urljoin(PROFILE_URL, "enrol/business-type/companies-house/user-account/")
 SubURLs = {
     "enter your business email address and set a password": URL,
     "enter your business email address and set a password (ltd, plc or royal charter)": URL,

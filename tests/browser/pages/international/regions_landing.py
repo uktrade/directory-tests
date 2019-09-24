@@ -36,9 +36,7 @@ SELECTORS = {
         "south england": Selector(By.ID, "south-england"),
         "region links": Selector(By.CSS_SELECTOR, "a.region-link"),
     },
-    "contact us": {
-        "get in touch": Selector(By.PARTIAL_LINK_TEXT, "Get in touch")
-    },
+    "contact us": {"get in touch": Selector(By.PARTIAL_LINK_TEXT, "Get in touch")},
 }
 SELECTORS.update(common_selectors.INTERNATIONAL_HEADER_WO_LANGUAGE_SELECTOR)
 SELECTORS.update(common_selectors.INTERNATIONAL_HERO)

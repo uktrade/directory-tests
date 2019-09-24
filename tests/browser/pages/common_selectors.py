@@ -36,9 +36,13 @@ HEADER = {
         "advice": Selector(By.ID, "header-advice", type=ElementType.LINK),
         "markets": Selector(By.ID, "header-markets", type=ElementType.LINK),
         "services": Selector(By.ID, "header-services", type=ElementType.LINK),
-        "search box": Selector(By.ID, "great-header-search-box", type=ElementType.INPUT),
+        "search box": Selector(
+            By.ID, "great-header-search-box", type=ElementType.INPUT
+        ),
         "search button": Selector(
-            By.CSS_SELECTOR, "#great-header-search-box ~ button", type=ElementType.BUTTON
+            By.CSS_SELECTOR,
+            "#great-header-search-box ~ button",
+            type=ElementType.BUTTON,
         ),
     }
 }
@@ -70,14 +74,16 @@ BREADCRUMBS = {
             By.CSS_SELECTOR, ".breadcrumbs li[aria-current='page']"
         ),
         "links": Selector(By.CSS_SELECTOR, ".breadcrumbs a"),
-    },
+    }
 }
 
 ERROR_REPORTING = {
     "error reporting": {
         "itself": Selector(By.CSS_SELECTOR, "section.error-reporting"),
-        "report a problem with the page": Selector(By.ID, "error-reporting-section-contact-us"),
-    },
+        "report a problem with the page": Selector(
+            By.ID, "error-reporting-section-contact-us"
+        ),
+    }
 }
 
 FOOTER = {
@@ -153,8 +159,12 @@ INTERNATIONAL_HEADER = {
         "header menu": Selector(By.CSS_SELECTOR, "div.menu"),
         "invest in great logo": Selector(By.ID, "great-header-logo"),
         "invest": Selector(By.LINK_TEXT, "Invest", type=ElementType.LINK),
-        "uk setup guide": Selector(By.LINK_TEXT, "UK setup guide", type=ElementType.LINK),
-        "find a uk supplier": Selector(By.LINK_TEXT, "Find a UK supplier", type=ElementType.LINK),
+        "uk setup guide": Selector(
+            By.LINK_TEXT, "UK setup guide", type=ElementType.LINK
+        ),
+        "find a uk supplier": Selector(
+            By.LINK_TEXT, "Find a UK supplier", type=ElementType.LINK
+        ),
         "industries": Selector(By.LINK_TEXT, "Industries", type=ElementType.LINK),
     }
 }
@@ -177,7 +187,7 @@ INTERNATIONAL_HERO = {
     "hero": {
         "itself": Selector(By.ID, "hero"),
         "heading": Selector(By.CSS_SELECTOR, "#hero h1"),
-    },
+    }
 }
 
 INVEST_HEADER = {
@@ -204,22 +214,22 @@ INVEST_HEADER = {
         "invest": Selector(
             By.CSS_SELECTOR,
             "nav.main-nav.desktop ul li:nth-child(1) a",
-            type=ElementType.LINK
+            type=ElementType.LINK,
         ),
         "uk setup guide": Selector(
             By.CSS_SELECTOR,
             "nav.main-nav.desktop ul li:nth-child(2) a",
-            type=ElementType.LINK
+            type=ElementType.LINK,
         ),
         "find a uk supplier": Selector(
             By.CSS_SELECTOR,
             "nav.main-nav.desktop ul li:nth-child(3) a",
-            type=ElementType.LINK
+            type=ElementType.LINK,
         ),
         "industries": Selector(
             By.CSS_SELECTOR,
             "nav.main-nav.desktop ul li:nth-child(4) a",
-            type=ElementType.LINK
+            type=ElementType.LINK,
         ),
     }
 }
@@ -229,10 +239,11 @@ INVEST_HERO = {
         "self": Selector(By.CSS_SELECTOR, "section[data-ga-section='hero']"),
         "heading": Selector(By.CSS_SELECTOR, "section[data-ga-section='hero'] h1"),
         "get in touch": Selector(
-            By.CSS_SELECTOR, "section[data-ga-section='hero'] a.button",
-            type=ElementType.LINK
+            By.CSS_SELECTOR,
+            "section[data-ga-section='hero'] a.button",
+            type=ElementType.LINK,
         ),
-    },
+    }
 }
 
 INVEST_FOOTER = {

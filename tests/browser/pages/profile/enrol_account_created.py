@@ -21,9 +21,7 @@ NAME = "Account created"
 NAMES = ["Account created (LTD, PLC or Royal Charter)"]
 SERVICE = Service.PROFILE
 TYPE = "Enrol"
-URL = urljoin(
-    PROFILE_URL, "enrol/business-type/companies-house/finished/#"
-)
+URL = urljoin(PROFILE_URL, "enrol/business-type/companies-house/finished/#")
 SubURLs = {"account created": URL, "account created (ltd, plc or royal charter)": URL}
 PAGE_TITLE = ""
 

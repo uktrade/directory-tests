@@ -60,8 +60,10 @@ SELECTORS = {
             By.CSS_SELECTOR, "#further-help-link > a", type=ElementType.LINK
         ),
         "resend your code": Selector(
-            By.PARTIAL_LINK_TEXT, "resend your code", type=ElementType.LINK,
-            is_visible=False
+            By.PARTIAL_LINK_TEXT,
+            "resend your code",
+            type=ElementType.LINK,
+            is_visible=False,
         ),
     },
     "error reporting": {

@@ -29,9 +29,7 @@ NAME = "Enter your details"
 NAMES = ["Enter your details (LTD, PLC or Royal Charter)"]
 SERVICE = Service.PROFILE
 TYPE = "Enrol"
-URL = urljoin(
-    PROFILE_URL, "enrol/business-type/companies-house/personal-details/"
-)
+URL = urljoin(PROFILE_URL, "enrol/business-type/companies-house/personal-details/")
 SubURLs = {"enter your details (ltd, plc or royal charter)": URL}
 PAGE_TITLE = ""
 
