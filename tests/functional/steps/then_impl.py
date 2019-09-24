@@ -766,7 +766,7 @@ def profile_should_see_expected_error_messages(
     logging.debug("%s has seen all expected form errors", supplier_alias)
 
 
-def intl_should_see_links_to_industry_pages(
+def international_should_see_links_to_industry_pages(
     context: Context, actor_alias: str, language: str
 ):
     page_name = f"{international.industries.SERVICE.value} - {international.industries.NAME}"
@@ -784,9 +784,9 @@ def fas_should_see_filtered_search_results(context: Context, actor_alias: str):
         context.response = result["response"]
         content = result["response"].content.decode("utf-8")
         filters = Selector(text=content).css(sector_filters_selector).extract()
-        for fil in filters:
-            sector = Selector(text=fil).css("input::attr(value)").extract()[0]
-            input = Selector(text=fil).css("input::attr(checked)").extract()
+        for filter in filters:
+            sector = Selector(text=filter).css("input::attr(value)").extract()[0]
+            input = Selector(text=filter).css("input::attr(checked)").extract()
             checked = True if input else False
             if sector in result["sectors"]:
                 with assertion_msg(
@@ -819,10 +819,10 @@ def fas_should_see_unfiltered_search_results(
     content = response.content.decode("utf-8")
     sector_filters_selector = "#id_sectors input"
     filters = Selector(text=content).css(sector_filters_selector).extract()
-    for fil in filters:
-        sector = Selector(text=fil).css("input::attr(value)").extract()[0]
+    for filter in filters:
+        sector = Selector(text=filter).css("input::attr(value)").extract()[0]
         selector = "input::attr(checked)"
-        checked = True if Selector(text=fil).css(selector).extract() else False
+        checked = True if Selector(text=filter).css(selector).extract() else False
         with assertion_msg(
             "Expected search results to be unfiltered but this "
             "filter was checked: '%s'",
@@ -1169,10 +1169,10 @@ def isd_should_see_unfiltered_search_results(
     filters = Selector(text=content).css(sector_filters_selector).extract()
     with assertion_msg(f"Couldn't find filter checkboxes on {response.url}"):
         assert filters
-    for fil in filters:
-        sector = Selector(text=fil).css("input::attr(value)").extract()[0]
+    for filter in filters:
+        sector = Selector(text=filter).css("input::attr(value)").extract()[0]
         selector = "input::attr(checked)"
-        checked = True if Selector(text=fil).css(selector).extract() else False
+        checked = True if Selector(text=filter).css(selector).extract() else False
         with assertion_msg(
                 "Expected search results to be unfiltered but this "
                 "filter was checked: '%s'",

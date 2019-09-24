@@ -63,29 +63,39 @@ def update_profiles(
     random_number = random.randint(9999, 999999999)
     profile_suffix = f"{clean_name}-{random_number}"
 
-    fake_fb = f"http://facebook.com/{profile_suffix}"
-    fake_li = f"http://linkedin.com/{profile_suffix}"
-    fake_tw = f"http://twitter.com/{profile_suffix}"
+    fake_facebook = f"http://facebook.com/{profile_suffix}"
+    fake_linkedin = f"http://linkedin.com/{profile_suffix}"
+    fake_twitter = f"http://twitter.com/{profile_suffix}"
 
     if facebook:
-        new_fb = specific_facebook if specific_facebook is not None else fake_fb
+        new_facebook = (
+            specific_facebook if specific_facebook is not None else fake_facebook
+        )
     else:
-        new_fb = company.facebook
+        new_facebook = company.facebook
 
     if linkedin:
-        new_li = specific_linkedin if specific_linkedin is not None else fake_li
+        new_linkedin = (
+            specific_linkedin if specific_linkedin is not None else fake_linkedin
+        )
     else:
-        new_li = company.linkedin
+        new_linkedin = company.linkedin
 
     if twitter:
-        new_tw = specific_twitter if specific_twitter is not None else fake_tw
+        new_twitter = specific_twitter if specific_twitter is not None else fake_twitter
     else:
-        new_tw = company.twitter
+        new_twitter = company.twitter
 
     headers = {"Referer": URL}
-    data = {"facebook_url": new_fb, "linkedin_url": new_li, "twitter_url": new_tw}
+    data = {
+        "facebook_url": new_facebook,
+        "linkedin_url": new_linkedin,
+        "twitter_url": new_twitter,
+    }
 
-    new_details = Company(facebook=new_fb, linkedin=new_li, twitter=new_tw)
+    new_details = Company(
+        facebook=new_facebook, linkedin=new_linkedin, twitter=new_twitter
+    )
 
     response = make_request(
         Method.POST, URL, session=session, headers=headers, data=data

@@ -144,7 +144,7 @@ def init_loggers(context: Context):
     )
     log_formatter = logging.Formatter(fmt)
     log_file_handler = get_file_log_handler(log_formatter)
-    # Add log file handler to Behave's logging
+    # Add log file handler to Behave logging
     context.config.setup_logging(handlers=[log_file_handler])
 
 
@@ -1609,7 +1609,7 @@ def mailgun_find_email_with_ownership_transfer_request(
 
 
 def extract_plain_text_payload(msg: MIMEText) -> str:
-    """Extract plain text payload (7bit) from email message."""
+    """Extract plain text payload (7 bit) from email message."""
     res = None
     if msg.is_multipart():
         for part in msg.get_payload():
@@ -1620,8 +1620,8 @@ def extract_plain_text_payload(msg: MIMEText) -> str:
         payload = msg.get_payload()
         with assertion_msg("Could not find plain text msg in email payload"):
             assert seven_bit in payload
-        start_7bit = payload.find(seven_bit)
-        start = start_7bit + len(seven_bit)
+        start_7_bit = payload.find(seven_bit)
+        start = start_7_bit + len(seven_bit)
         end = payload.find("--===============", start)
         res = payload[start:end]
     return res
@@ -1714,13 +1714,13 @@ def extract_text_from_pdf(
     retstr = io.StringIO()
     laparams = LAParams()
     device = TextConverter(rsrcmgr, retstr, codec=codec, laparams=laparams)
-    fp = open(path, "rb")
+    file_stream = open(path, "rb")
     interpreter = PDFPageInterpreter(rsrcmgr, device)
-    pagenos = set()
+    page_numbers = set()
 
     for page in PDFPage.get_pages(
-        fp,
-        pagenos,
+        file_stream,
+        page_numbers,
         maxpages=maxpages,
         password=password,
         caching=caching,
@@ -1730,7 +1730,7 @@ def extract_text_from_pdf(
 
     text = retstr.getvalue()
 
-    fp.close()
+    file_stream.close()
     device.close()
     retstr.close()
     return text
