@@ -19,7 +19,7 @@ URL = URLs.PROFILE_FAB.absolute
 EXPECTED_STRINGS = [
     "You are signed in as",
     "Business profile",
-    "Business details",
+    "Personal details",
     "Profile email",
 ]
 

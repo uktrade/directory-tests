@@ -272,7 +272,7 @@ def registration_submit_form_and_verify_account(
 def registration_create_and_verify_account(
     context: Context, actor_alias: str, *, fake_verification: bool = True
 ):
-    visit_page(context, actor_alias, "Single Sign-On - Registration")
+    visit_page(context, actor_alias, "SSO - Registration")
     registration_submit_form_and_verify_account(
         context, actor_alias, fake_verification=fake_verification
     )
