@@ -29,7 +29,7 @@ from tests.functional.steps.then_impl import (
     fas_should_see_unfiltered_search_results,
     fas_supplier_cannot_be_found_using_case_study_details,
     fas_supplier_should_receive_message_from_buyer,
-    generic_pages_should_be_in_selected_language,
+    generic_content_of_viewed_pages_should_in_selected_language,
     isd_should_be_told_about_empty_search_results,
     isd_should_see_unfiltered_search_results,
     prof_should_be_told_about_missing_description,
@@ -202,9 +202,9 @@ def then_buyer_should_find_supplier_using_company_details(
 @then('the "{page_part}" part of the viewed FAS page should be presented in "{language}" language with probability greater than "{probability}"')
 @then('the "{page_part}" part of the viewed pages should be presented in "{language}" language with probability greater than "{probability}"')
 def then_page_should_be_in(context, page_part, language, probability):
-    generic_pages_should_be_in_selected_language(
-        context, pages_table=context.table, language=language,
-        page_part=page_part, probability=float(probability))
+    generic_content_of_viewed_pages_should_in_selected_language(
+        context, language=language, page_part=page_part, probability=float(probability)
+    )
 
 
 @then('"{buyer_alias}" should be told that the search did not match any UK trade profiles')

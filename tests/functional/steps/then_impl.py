@@ -13,6 +13,7 @@ from behave.model import Table
 from behave.runner import Context
 from scrapy import Selector
 from directory_tests_shared import URLs
+from directory_tests_shared.utils import check_for_errors
 from tests.functional.pages import (
     fab,
     fas,
@@ -605,9 +606,8 @@ def fas_should_find_with_company_details(
             assert context.search_results[result]
 
 
-def generic_pages_should_be_in_selected_language(
+def generic_content_of_viewed_pages_should_in_selected_language(
     context: Context,
-    pages_table: Table,
     language: str,
     *,
     page_part: str = None,
@@ -619,15 +619,14 @@ def generic_pages_should_be_in_selected_language(
     This requires all responses with page views to be stored in context.views
 
     :param context: behave `context` object
-    :param pages_table: a table with viewed FAS pages
     :param language: expected language of the view FAS page content
     :param page_part: detect language of the whole page or just the main part
     :param probability: expected probability of expected language
     """
     with assertion_msg("Required dictionary with page views is missing"):
         assert hasattr(context, "views")
-    pages = [row["page"] for row in pages_table]
     views = context.views
+    page_names = [row["page"] for row in context.table] if context.table else views.keys()
 
     if page_part:
         if page_part == "main":
@@ -649,9 +648,10 @@ def generic_pages_should_be_in_selected_language(
         expected_language_code = Language[language.upper()].value
 
     results = defaultdict()
-    for page_name in pages:
+    for page_name in page_names:
         response = views[page_name]
         content = response.content.decode("utf-8")
+        check_for_errors(content, response.url)
         logging.debug(
             f"Detecting the language of '{page_name}'' page {response.url}"
         )
