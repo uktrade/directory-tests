@@ -14,7 +14,7 @@ Feature: Domestic - Great site search
 
 
   @XOT-760
-  Scenario Outline: Visitor should see search results
+  Scenario Outline: Visitor should see search results for "<phrase>"
     Given "Robert" visits the "Domestic - <specific>" page
 
     When "Robert" searches using "<phrase>"
@@ -51,7 +51,7 @@ Feature: Domestic - Great site search
 
 
   @XOT-760
-  Scenario Outline: Visitors should be able to navigate through search results pages
+  Scenario Outline: Visitors should be able to navigate through search results pages for "<phrase>"
     Given "Robert" searched using "<phrase>" on the "Domestic - <specific>" page
     And "Robert" sees more than "1" search result page
 
@@ -70,7 +70,7 @@ Feature: Domestic - Great site search
 
 
   @XOT-760
-  Scenario Outline: Visitor should be able to clear the last search and start new search
+  Scenario Outline: Visitor should be able to clear the last search for "<first phrase>" and start new search for "<second phrase>"
     Given "Robert" searched using "<first phrase>" on the "Domestic - <specific>" page
     And "Robert" sees search results page number "1" for "<first phrase>"
 

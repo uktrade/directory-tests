@@ -243,7 +243,7 @@ Feature: Profile - CH enrolment flows
   @dev-only
   @TT-1129
   @TT-1036
-  Scenario Outline: Handle invalid user state - already logged in - skip ahead to page where they enter business details
+  Scenario Outline: Handle invalid user state - already logged in - skip ahead to page where they enter business details for "<selected business type>"
     Given "Natalia" has a verified standalone SSO/great.gov.uk account
 
     When "Natalia" goes to the "Create an account" page
@@ -262,7 +262,7 @@ Feature: Profile - CH enrolment flows
   @dev-only
   @TT-1130
   @TT-1037
-  Scenario Outline: Log user in on verification submit, not on account creation
+  Scenario Outline: Log user in on verification submit, not on account creation for "<selected business type>"
     Given "Natalia" has received the email confirmation code by opting to register as "<selected business type>"
     And "Natalia" is on the "Profile - Enter your confirmation code" page
 
