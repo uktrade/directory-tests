@@ -1181,3 +1181,30 @@ def isd_should_see_unfiltered_search_results(
         ):
             assert not checked
     logging.debug("%s was shown with unfiltered search results", actor_alias)
+
+
+def generic_page_language_should_be_set_to(context: Context, language: str):
+    language_code = Language[language.upper()].value
+    with assertion_msg("Required dictionary with page views is missing"):
+        assert hasattr(context, "views")
+    views = context.views
+    page_names = [row["page"] for row in context.table] if context.table else views.keys()
+
+    results = defaultdict()
+    for page_name in page_names:
+        response = views[page_name]
+        content = response.content.decode("utf-8")
+        check_for_errors(content, response.url)
+        html_tag_language = Selector(text=content).css("html::attr(lang)").extract()[0]
+        results[page_name] = html_tag_language
+
+    logging.debug(f"HTML tag language attributes for: {dict(results)}")
+    undetected_languages = {
+        page: html_tag_lang
+        for page, html_tag_lang in results.items()
+        if language_code not in html_tag_lang
+    }
+    with assertion_msg(
+            f"HTML document language was not set to '{language_code}' in following pages: {undetected_languages}"
+    ):
+        assert not undetected_languages

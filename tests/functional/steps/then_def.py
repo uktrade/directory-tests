@@ -28,6 +28,7 @@ from tests.functional.steps.then_impl import (
     fas_supplier_cannot_be_found_using_case_study_details,
     fas_supplier_should_receive_message_from_buyer,
     generic_content_of_viewed_pages_should_in_selected_language,
+    generic_page_language_should_be_set_to,
     international_should_see_links_to_industry_pages,
     isd_should_be_told_about_empty_search_results,
     isd_should_see_unfiltered_search_results,
@@ -397,3 +398,8 @@ def then_actor_should_see_expected_details_in_verification_letter(
         context, actor_alias):
     stannp_should_see_expected_details_in_verification_letter(
         context, actor_alias, correct_details=context.table)
+
+
+@then('the HTML document language for viewed pages should be set to "{language}" language')
+def then_page_language_should_be_set_to(context: Context, language: str):
+    generic_page_language_should_be_set_to(context, language)
