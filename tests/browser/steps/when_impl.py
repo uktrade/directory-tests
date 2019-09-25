@@ -39,6 +39,7 @@ from pages.common_actions import (
     wait_for_page_load_after_action,
 )
 from directory_tests_shared.settings import BASICAUTH_PASS, BASICAUTH_USER
+from directory_tests_shared.utils import check_for_errors
 from steps import has_action
 from utils.cms_api import get_news_articles
 from utils.gtm import get_gtm_event_definitions, trigger_js_event
@@ -63,15 +64,6 @@ def retry_if_webdriver_error(exception):
 def retry_if_assertion_error(exception):
     """Return True if we should retry on AssertionError, False otherwise"""
     return isinstance(exception, AssertionError)
-
-
-def check_for_errors(driver: WebDriver):
-    source = driver.page_source
-    url = driver.current_url
-    assert "404 Not Found" not in source, f"404 Not Found → {url}"
-    assert "This page cannot be found" not in source, f"404 Not Found → {url}"
-    assert "Internal Server Error" not in source, f"500 ISE → {url}"
-    assert "trollface.dk" not in url, f"Faced the troll face!"
 
 
 def generic_set_basic_auth_creds(context: Context, page_name: str):
@@ -130,7 +122,7 @@ def visit_page(context: Context, actor_alias: str, page_name: str):
         )
         page.visit(context.driver)
 
-    check_for_errors(context.driver)
+    check_for_errors(context.driver.page_source, context.driver.current_url)
     update_actor(context, actor_alias, visited_page=page)
 
 
@@ -306,7 +298,7 @@ def sign_in(context: Context, actor_alias: str):
     sso.sign_in.should_be_here(context.driver)
     sso.sign_in.fill_out(context.driver, email, password)
     sso.sign_in.submit(context.driver)
-    check_for_errors(context.driver)
+    check_for_errors(context.driver.page_source, context.driver.current_url)
 
 
 def sign_out(context: Context, actor_alias: str):

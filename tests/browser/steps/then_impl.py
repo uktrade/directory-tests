@@ -38,8 +38,9 @@ from directory_tests_shared.constants import (
     HPO_ENQUIRY_CONFIRMATION_SUBJECT,
     HPO_PDF_URLS,
 )
+from directory_tests_shared.utils import check_for_errors
 from steps import has_action
-from steps.when_impl import check_for_errors, generic_set_basic_auth_creds
+from steps.when_impl import generic_set_basic_auth_creds
 
 from utils.forms_api import (
     find_form_submissions,
@@ -66,7 +67,7 @@ def should_be_on_page(context: Context, actor_alias: str, page_name: str):
         context.driver.get(page.URL)
         error = f"Got blocked again on {context.driver.current_url}"
         assert "Access denied" not in context.driver.page_source, error
-    check_for_errors(context.driver)
+    check_for_errors(context.driver.page_source, context.driver.current_url)
     has_action(page, "should_be_here")
     if hasattr(page, "SubURLs"):
         special_page_name = page_name.split(" - ")[1]
