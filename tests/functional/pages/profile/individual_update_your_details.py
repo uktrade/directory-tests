@@ -15,7 +15,7 @@ EXPECTED_STRINGS = [
     "Select your business type",
     "Enter your business details",
     "Enter your personal details",
-    "Start now",
+    "Start",
 ]
 
 
