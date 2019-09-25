@@ -348,6 +348,7 @@ def then_supplier_should_be_asked_about_verification(context, supplier_alias):
     fab_should_be_asked_about_verification_form(context, supplier_alias)
 
 
+@then('"{actor_alias}" should see "{message}" on the page')
 @then('"{actor_alias}" should see "{message}" message')
 def then_actor_should_see_a_message(context, actor_alias, message):
     should_see_message(context, actor_alias, message)

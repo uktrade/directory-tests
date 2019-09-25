@@ -191,7 +191,8 @@ Feature: Profile pages
 
     When "Peter Alder" signs in to SSO/great.gov.uk account from "Find a Buyer - Landing"
 
-    Then "Peter Alder" should be on "Profile - edit company profile" page
+    Then "Peter Alder" should be on "Profile - About" page
+    And "Peter Alder" should see "Sign out" on the page
 
 
   @ED-1760
