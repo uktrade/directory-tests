@@ -63,3 +63,17 @@ class PageType(Enum):
 
     def __str__(self):
         return self.value
+
+
+class Language(Enum):
+    ARABIC = "ar"
+    CHINESE = "zh-hans"
+    ENGLISH = "en-gb"
+    FRENCH = "fr"
+    GERMAN = "de"
+    JAPANESE = "jp"
+    PORTUGUESE = "pt"
+    SPANISH = "es"
+
+    def __str__(self):
+        return self.value

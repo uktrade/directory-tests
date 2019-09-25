@@ -83,17 +83,6 @@ ERROR_INDICATORS = [
     "required",
     "missing",
 ]
-FAS_SUPPORTED_LANGUAGES = {
-    "arabic": "ar",
-    "english": "en",
-    "french": "fr",
-    "chinese": "zh-hans",
-    "german": "de",
-    "japanese": "ja",
-    "portuguese": "pt",
-    "portuguese-brazilian": "pt-br",
-    "spanish": "es",
-}
 
 
 def get_file_log_handler(
@@ -1208,10 +1197,6 @@ def get_active_company_without_fas_profile(alias: str) -> Company:
     company = random.choice(load_companies())._replace(alias=alias)
     logging.debug("Selected company: %s", company)
     return company
-
-
-def get_language_code(language: str):
-    return FAS_SUPPORTED_LANGUAGES[language.lower()]
 
 
 def extract_main_error(content: str) -> str:

@@ -25,7 +25,7 @@ from behave.model import Table
 from behave.runner import Context
 from scrapy import Selector
 from directory_tests_shared import URLs
-from directory_tests_shared.enums import BusinessType
+from directory_tests_shared.enums import BusinessType, Language
 from directory_tests_shared.utils import rare_word, sentence
 from tests.functional.common import DETAILS, PROFILES
 from tests.functional.pages import (
@@ -60,7 +60,6 @@ from tests.functional.utils.generic import (
     get_absolute_path_of_file,
     get_active_company_without_fas_profile,
     get_company_by_id,
-    get_language_code,
     get_md5_hash_of_file,
     get_number_of_search_result_pages,
     get_pdf_from_stannp,
@@ -1229,12 +1228,12 @@ def generic_view_pages_in_selected_language(
     NOTE:
     This will store a dict with all page views responses in context.views
     """
+    language_code = Language[language.upper()].value
     pages = [row["page"] for row in pages_table]
     views = {}
     actor = context.get_actor(buyer_alias)
     session = actor.session
     for page_name in pages:
-        language_code = get_language_code(language)
         page = get_page_object(page_name)
         if hasattr(page, "SUB_URLs"):
             name = page_name.split(" - ")[1]

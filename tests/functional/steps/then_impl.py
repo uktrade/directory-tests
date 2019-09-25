@@ -33,7 +33,6 @@ from tests.functional.utils.generic import (
     extract_logo_url,
     extract_page_contents,
     extract_plain_text_payload,
-    get_language_code,
     get_number_of_search_result_pages,
     mailgun_find_email_with_ownership_transfer_request,
     mailgun_find_email_with_request_for_collaboration,
@@ -49,6 +48,7 @@ from directory_tests_shared.constants import (
     FAS_MESSAGE_FROM_BUYER_SUBJECT,
     SEARCHABLE_CASE_STUDY_DETAILS,
 )
+from directory_tests_shared.enums import Language
 
 
 def reg_sso_account_should_be_created(response: Response, supplier_alias: str):
@@ -642,9 +642,11 @@ def generic_pages_should_be_in_selected_language(
         main = False
 
     if language.lower() == "chinese":
-        expected_language = "zh-cn"
+        expected_language_code = "zh-cn"
+    elif language.lower() == "english":
+        expected_language_code = "en"
     else:
-        expected_language = get_language_code(language)
+        expected_language_code = Language[language.upper()].value
 
     results = defaultdict()
     for page_name in pages:
@@ -666,22 +668,21 @@ def generic_pages_should_be_in_selected_language(
     undetected_languages = {
         page: medians
         for page, medians in results.items()
-        if expected_language not in medians
+        if expected_language_code not in medians
     }
     with assertion_msg(
-        f"Could not detect '{expected_language}' in page content on following"
-        f" pages: {undetected_languages}"
+        f"Could not detect '{expected_language_code}' in page content on following pages: {undetected_languages}"
     ):
         assert not undetected_languages
 
     unmet_probabilities = {
         page: medians
         for page, medians in results.items()
-        if medians[expected_language] < probability
+        if medians[expected_language_code] < probability
     }
     with assertion_msg(
-            f"Median '{expected_language}' language detection probability of "
-            f"{probability} wasn't met on following pages: {unmet_probabilities}"
+            f"Median '{expected_language_code}' language detection probability of "
+            f"{probability} was not met on following pages: {unmet_probabilities}"
     ):
         assert not unmet_probabilities
 
