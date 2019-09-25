@@ -240,7 +240,7 @@ Feature: Find a Supplier
   @search
   @contextual
   @no-sso-email-verification-required
-  Scenario Outline: Buyers should see highlighted search terms in the search results - contextual results
+  Scenario Outline: Buyers should see highlighted search term "<specific>" in the FAS search results - contextual results
     Given "Annette Geissinger" is a buyer
 
     When "Annette Geissinger" searches for Suppliers using "<specific>" term

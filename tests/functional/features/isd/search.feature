@@ -102,7 +102,7 @@ Feature: Investment Support Directory
   @search
   @contextual
   @no-sso-email-verification-required
-  Scenario Outline: Buyers should see highlighted search terms in the search results - contextual results
+  Scenario Outline: Buyers should see highlighted search term "<specific>" in the ISD search results - contextual results
     Given "Annette Geissinger" is a buyer
 
     When "Annette Geissinger" searches for UK suppliers using "<specific>" term

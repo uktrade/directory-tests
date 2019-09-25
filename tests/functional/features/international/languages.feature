@@ -7,7 +7,7 @@ Feature: International - View pages in various languages
   @i18n
   @<selected>
   @no-sso-email-verification-required
-  Scenario Outline: Visitors should be able to view specific pages on International site in "<selected>" language
+  Scenario Outline: Visitors should be able to view International landing page in "<selected>" language
     Given "Annette" is an anonymous visitor
 
     When "Annette" chooses to view following pages in "<selected>" language
@@ -38,7 +38,7 @@ Feature: International - View pages in various languages
   @i18n
   @<selected>
   @no-sso-email-verification-required
-  Scenario Outline: Visitors should be able to view specific pages on International site in "<selected>" language
+  Scenario Outline: Visitors should be able to view Industry pages in "<selected>" language
     Given "Annette" is an anonymous visitor
 
     When "Annette" chooses to view following pages in "<selected>" language
@@ -71,7 +71,7 @@ Feature: International - View pages in various languages
   @i18n
   @<selected>
   @no-sso-email-verification-required
-  Scenario Outline: Visitors should be able to view specific pages on International site in "<selected>" language
+  Scenario Outline: Visitors should be able to view Industry page in "<selected>"
     Given "Annette" is an anonymous visitor
 
     When "Annette" chooses to view following pages in "<selected>" language

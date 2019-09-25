@@ -11,7 +11,7 @@ Feature: Multi-user accounts
   @dev-only
   @multi-user
   @add-collaborator
-  Scenario Outline: Invited collaborator should receive an email with an invitation to collaborate to "<a>" company profile
+  Scenario Outline: Invited collaborator which "<has or does not have>" a company profile should receive an email with an invitation to collaborate to "<a>" company profile
     Given "Peter Alder" has created "<a>" profile for randomly selected company "Y"
     And "Annette Geissinger" "<has or does not have>" an SSO/great.gov.uk account
 
@@ -306,7 +306,7 @@ Feature: Multi-user accounts
   @multi-user
   @add-content
   @fake-sso-email-verification
-  Scenario Outline: Account collaborators should be able to upload company's logo
+  Scenario Outline: Account collaborators should be able to upload "<valid_image>" as company's logo
     Given "Peter Alder" has created "a verified" profile for randomly selected company "Y"
     And "Annette Geissinger" "has" an SSO/great.gov.uk account
     And "Peter Alder" added "Annette Geissinger" as an "editor" collaborator
@@ -402,14 +402,10 @@ Feature: Multi-user accounts
   @multi-user
   @edge-case
   @fake-sso-email-verification
-  Scenario Outline: Suppliers should not be able to add collaborators which already have a Finda Buyer profile
+  Scenario: Suppliers should not be able to add collaborators which already have a Find a Buyer profile
     Given "Peter Alder" has created "an unverified" profile for randomly selected company "Alpha"
     And "Annette Geissinger" has created "an unverified" profile for randomly selected company "Omega"
 
     When "Peter Alder" decides to add "Annette Geissinger" as an "editor" collaborator
 
-    Then "Peter Alder" should see "<error>" message
-
-    Examples:
-      | error               |
-      | Can't add this user |
+    Then "Peter Alder" should see "Can't add this user" message

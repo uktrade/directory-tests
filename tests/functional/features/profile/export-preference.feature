@@ -8,7 +8,7 @@ Feature: Export Preferences
   @profile
   @export-preferences
   @fake-sso-email-verification
-  Scenario Outline: Suppliers can select preferred countries of export from the given list and provide a list of other countries
+  Scenario Outline: Suppliers can select "<preferred>" of export from the given list and provide a list of other countries "<other>"
     Given "Annette Geissinger" created an unverified business profile for randomly selected company "Y"
 
     When "Annette Geissinger" provides valid details of selected company
@@ -29,7 +29,7 @@ Feature: Export Preferences
   @profile
   @export-preferences
   @fake-sso-email-verification
-  Scenario Outline: Suppliers have to provide preferred country of export when building up the profile
+  Scenario Outline: Suppliers have to provide preferred country of export when building up the profile otherwise they'll see an "<error>" message
     Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
 
     When "Annette Geissinger" provides valid details of selected company
@@ -53,7 +53,7 @@ Feature: Export Preferences
   @ED-2313
   @fixme
   @fake-sso-email-verification
-  Scenario Outline: Suppliers have to use commas to separate other preferred countries of export when building up the profile
+  Scenario Outline: Suppliers have to use commas to separate other preferred countries (not <other>) of export when building up the profile otherwise they'll see an "<error>" message
     Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
 
     When "Annette Geissinger" provides valid details of selected company

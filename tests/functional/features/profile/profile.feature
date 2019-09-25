@@ -241,7 +241,7 @@ Feature: Profile pages
   @captcha
   @dev-only
   @fake-sso-email-verification
-  Scenario Outline: Supplier should be able to upload an image to set company's logo
+  Scenario Outline: Supplier should be able to upload "<valid_image>" image to set company's logo
     Given "Peter Alder" has created verified and published FAS business profile for randomly selected company "Y"
 
     When "Peter Alder" uploads "<valid_image>" as company's logo
@@ -271,7 +271,7 @@ Feature: Profile pages
   @captcha
   @dev-only
   @fake-sso-email-verification
-  Scenario Outline: Supplier should be able to replace an existing company's logo with a new one
+  Scenario Outline: Supplier should be able to replace an existing company's logo "<original>" with a new one "<new_picture>"
     Given "Peter Alder" has created verified and published FAS business profile for randomly selected company "Y"
     And "Peter Alder" has set "<original>" picture as company's logo
     And "Peter Alder" can see that logo on FAB Company's Directory Profile page
