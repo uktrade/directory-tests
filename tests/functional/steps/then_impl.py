@@ -1208,3 +1208,35 @@ def generic_page_language_should_be_set_to(context: Context, language: str):
             f"HTML document language was not set to '{language_code}' in following pages: {undetected_languages}"
     ):
         assert not undetected_languages
+
+
+def generic_language_switcher_should_be_set_to(context: Context, language: str):
+    language_code = Language[language.upper()].value
+    with assertion_msg("Required dictionary with page views is missing"):
+        assert hasattr(context, "views")
+    views = context.views
+    page_names = [row["page"] for row in context.table] if context.table else views.keys()
+
+    results = defaultdict()
+    for page_name in page_names:
+        response = views[page_name]
+        content = response.content.decode("utf-8")
+        check_for_errors(content, response.url)
+        selector = f"#great-header-language-select option[selected]::attr(value)"
+        selected_language_switcher_option = Selector(text=content).css(selector).extract()
+        error = f"Couldn't find language switcher on {response.url}"
+        with assertion_msg(error):
+            assert selected_language_switcher_option
+        selected_language_switcher_option = selected_language_switcher_option[0]
+        results[page_name] = selected_language_switcher_option
+
+    logging.debug(f"Selected language in Language Switcher on: {dict(results)}")
+    undetected_languages = {
+        page: selected_language_switcher_option
+        for page, selected_language_switcher_option in results.items()
+        if language_code not in selected_language_switcher_option
+    }
+    with assertion_msg(
+            f"'{language}' was not selected in Language Switcher for following pages: {undetected_languages}"
+    ):
+        assert not undetected_languages
