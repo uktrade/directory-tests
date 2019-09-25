@@ -579,6 +579,9 @@ class URLs(Enum):
     PROFILE_ENROL_INDIVIDUAL_FINISHED = ProfileUrl(
         "enrol/business-type/individual/finished/"
     )
+    PROFILE_ENROL_SOLE_TRADER_ENTER_BUSINESS_DETAILS = ProfileUrl(
+        "enrol/business-type/non-companies-house-company/address-search/"
+    )
     PROFILE_ENROL_SELECT_BUSINESS_TYPE = ProfileUrl("enrol/business-type/")
     PROFILE_ENROL_USER_ACCOUNT = ProfileUrl(
         "enrol/business-type/companies-house/user-account/"
