@@ -806,7 +806,7 @@ def profile_supplier_uploads_logo(
 ):
     """Upload a picture and set it as Company's logo.
 
-    :param picture: name of the picture file stored in ./tests/functional/files
+    :param picture: name of the picture file stored in ./tests/files
     """
     actor = context.get_actor(supplier_alias)
     session = actor.session

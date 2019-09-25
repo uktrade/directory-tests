@@ -635,13 +635,9 @@ def get_absolute_path_of_file(filename):
     :param filename: name of the file stored in ./tests/functional/files
     :return: an absolute path to the file
     """
-    relative_path = os.path.join("tests", "functional", "files", filename)
+    relative_path = os.path.join(TEST_IMAGES_DIR, filename)
     absolute_path = os.path.abspath(relative_path)
-    with assertion_msg(
-        "Could not find '%s' in ./tests/functional/files. Please check the"
-        " filename!",
-        filename,
-    ):
+    with assertion_msg(f"Could not find '{filename}' in ./tests/files. Please check the filename!"):
         assert os.path.exists(absolute_path)
 
     return absolute_path
