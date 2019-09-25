@@ -222,31 +222,29 @@ Feature: Profile - CH enrolment flows
       | UK taxpayer                           | Profile - Enter your confirmation code (Individual)                  |
 
 
-  @wip
+  @captcha
   @dev-only
   @TT-1128
   @TT-1036
-  Scenario Outline: Handle invalid user state - has company already - redirect to their profile
-    Given "Natalia" created a verified Profile/great.gov.uk account associated with randomly selected company "X"
+  Scenario: Handle invalid user state - has company already - redirect to their profile
+    Given "Natalia" has created a great.gov.uk account for a "LTD, PLC or Royal Charter"
 
-    When "Natalia" goes to the "<specific>" page
+    When "Natalia" goes to the "SSO - Sign in" page
+    Then "Natalia" should be on the "Profile - About" page
 
+    When "Natalia" goes to the "Profile - Create an account" page
     Then "Natalia" should be on the "Profile - Edit Company Profile" page
 
-    Examples:
-      | specific                |
-      | Profile - Sign in           |
-      | Profile - Create an account |
 
-
-  @wip
   @dev-only
   @TT-1129
   @TT-1036
   Scenario Outline: Handle invalid user state - already logged in - skip ahead to page where they enter business details for "<selected business type>"
     Given "Natalia" has a verified standalone SSO/great.gov.uk account
+    And "Natalia" is signed in
 
-    When "Natalia" goes to the "Create an account" page
+    When "Natalia" goes to the "Profile - Create an account" page
+    And "Natalia" decides to "Start now"
     Then "Natalia" should be on the "Profile - Select your business type" page
 
     When "Natalia" chooses "<selected business type>" option
