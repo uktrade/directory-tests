@@ -2036,7 +2036,7 @@ def sso_request_password_reset(context: Context, supplier_alias: str):
     if actor.company_alias is None:
         next_param = get_page_object("profile - about").URL
     else:
-        next_param = get_page_object("fab - landing").URL
+        next_param = get_page_object("find a buyer - landing").URL
 
     response = sso.password_reset.go_to(
         actor.session, next_param=next_param
