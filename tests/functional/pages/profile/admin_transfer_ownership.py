@@ -9,12 +9,11 @@ from tests.functional.utils.request import check_response
 SERVICE = Service.FAB
 NAME = "Transfer ownership"
 TYPE = PageType.FORM
-URL = URLs.FAB_ACCOUNT_TRANSFER_OWNERSHIP.absolute
+URL = URLs.PROFILE_ADMIN_INVITE_ADMIN.absolute
 EXPECTED_STRINGS = [
-    "Transfer account",
-    "Next",
-    "Cancel",
-    "Enter the email address of the new administrator",
+    "Choose a new administrator",
+    "Enter the email address of the new profile administrator",
+    "Send invitation",
 ]
 
 
@@ -23,23 +22,16 @@ def should_be_here(response: Response):
 
 
 def go_to(session: Session) -> Response:
-    """Go to "Edit Company's Details" page.
-
-    This requires:
-     * Supplier to be logged in
-    """
-    headers = {"Referer": URLs.PROFILE_FAB.absolute}
+    headers = {"Referer": URL}
     response = make_request(Method.GET, URL, session=session, headers=headers)
 
     should_be_here(response)
     return response
 
 
-def submit(session: Session, token: str, email: str) -> Response:
+def submit(session: Session, email: str) -> Response:
     data = {
-        "csrfmiddlewaretoken": token,
-        "email-email_address": email,
-        "transfer_account_wizard_view-current_step": "email",
+        "collaborator_email": email,
     }
     headers = {"Referer": URL}
     return make_request(Method.POST, URL, session=session, data=data, headers=headers)
