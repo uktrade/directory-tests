@@ -15,7 +15,7 @@ from tests.functional.utils.request import Method, check_response, make_request
 SERVICE = Service.PROFILE
 NAME = "Edit company profile"
 TYPE = PageType.LANDING
-URL = URLs.PROFILE_FAB.absolute
+URL = URLs.PROFILE_BUSINESS_PROFILE.absolute
 EXPECTED_STRINGS = [
     "You are signed in as",
     "Business profile",

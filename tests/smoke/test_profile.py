@@ -28,7 +28,7 @@ def test_302_redirects_for_anon_user_bug_tt_1298(url, basic_auth):
     [
         URLs.PROFILE_LANDING.absolute,
         URLs.PROFILE_SOO.absolute,
-        URLs.PROFILE_FAB.absolute,
+        URLs.PROFILE_BUSINESS_PROFILE.absolute,
         URLs.PROFILE_EXOPS_ALERTS.absolute,
         URLs.PROFILE_EXOPS_APPLICATIONS.absolute,
     ],
@@ -41,7 +41,7 @@ def test_302_redirects_for_anon_user(url, basic_auth):
     "url",
     [
         URLs.PROFILE_SOO.absolute,
-        URLs.PROFILE_FAB.absolute,
+        URLs.PROFILE_BUSINESS_PROFILE.absolute,
         URLs.PROFILE_EXOPS_ALERTS.absolute,
         URLs.PROFILE_EXOPS_APPLICATIONS.absolute,
     ],
@@ -60,7 +60,7 @@ def test_301_redirects_after_removing_trailing_slash_for_anon_user(url, basic_au
     [
         URLs.PROFILE_LANDING.absolute,
         URLs.PROFILE_SOO.absolute,
-        URLs.PROFILE_FAB.absolute,
+        URLs.PROFILE_BUSINESS_PROFILE.absolute,
         URLs.PROFILE_EXOPS_ALERTS.absolute,
         URLs.PROFILE_EXOPS_APPLICATIONS.absolute,
     ],

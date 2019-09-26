@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""SSO - SUD (Profile) Find A Buyer page"""
+"""Profile - Business profile"""
 import logging
 
 from requests import Response, Session
@@ -11,7 +11,7 @@ from tests.functional.utils.request import Method, check_response, make_request
 SERVICE = Service.PROFILE
 NAME = "Find a Buyer"
 TYPE = PageType.LANDING
-URL = URLs.PROFILE_FAB.absolute
+URL = URLs.PROFILE_BUSINESS_PROFILE.absolute
 EXPECTED_STRINGS = [
     "Account",
     "You are signed in as",

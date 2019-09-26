@@ -35,7 +35,7 @@ EXPECTED_STRINGS = [
 def go_to(session: Session, company_number: str) -> Response:
     """Go to Company's FAS profile page using company's number."""
     full_url = urljoin(URL, company_number)
-    headers = {"Referer": URLs.PROFILE_FAB.absolute}
+    headers = {"Referer": URLs.PROFILE_BUSINESS_PROFILE.absolute}
     return make_request(Method.GET, full_url, session=session, headers=headers)
 
 

@@ -11,7 +11,7 @@ from pages.common_actions import check_url, go_to_url, take_screenshot
 NAME = "Edit Company Profile"
 SERVICE = Service.PROFILE
 TYPE = "profile"
-URL = URLs.PROFILE_FAB.absolute
+URL = URLs.PROFILE_BUSINESS_PROFILE.absolute
 PAGE_TITLE = "Business profile - great.gov.uk"
 
 SELECTORS = {}

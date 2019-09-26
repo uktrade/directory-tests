@@ -26,7 +26,7 @@ EXPECTED_STRINGS_VERIFIED = ["Your company has been verified"]
 
 
 def go_to(session: Session, *, referer: str = None) -> Response:
-    referer = referer or URLs.PROFILE_FAB.absolute
+    referer = referer or URLs.PROFILE_BUSINESS_PROFILE.absolute
     headers = {"Referer": referer}
     return make_request(Method.GET, URL, session=session, headers=headers)
 
@@ -41,7 +41,7 @@ def submit(
 ) -> Response:
     """Submit the form with verification code."""
     if referer is None:
-        referer = URLs.PROFILE_FAB.absolute
+        referer = URLs.PROFILE_BUSINESS_PROFILE.absolute
     headers = {"Referer": referer}
     data = {
         "csrfmiddlewaretoken": token,

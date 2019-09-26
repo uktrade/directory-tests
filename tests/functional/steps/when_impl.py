@@ -2493,7 +2493,7 @@ def fab_remove_collaborators(
     )
     context.response = response
 
-    profile.find_a_buyer.should_be_here(response, user_removed=True)
+    profile.business_profile.should_be_here(response, user_removed=True)
     collaborators = company.collaborators
     collaborators = [alias for alias in collaborators if alias not in aliases]
     context.set_company_details(company.alias, collaborators=collaborators)

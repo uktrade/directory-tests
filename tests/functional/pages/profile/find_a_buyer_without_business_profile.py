@@ -10,7 +10,7 @@ from tests.functional.utils.request import Method, check_response, make_request
 SERVICE = Service.PROFILE
 NAME = "Find a Buyer (without a business profile)"
 TYPE = PageType.LANDING
-URL = URLs.PROFILE_FAB.absolute
+URL = URLs.PROFILE_BUSINESS_PROFILE.absolute
 EXPECTED_STRINGS = [
     "Account",
     "You are signed in as",

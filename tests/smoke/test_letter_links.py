@@ -90,10 +90,10 @@ def test_check_if_verify_endpoint_redirects_to_correct_page(
     got_to_letter_confirmation = (
         response.url == URLs.FAB_CONFIRM_COMPANY_ADDRESS.absolute
     )
-    got_to_profile = response.url == URLs.PROFILE_FAB.absolute
+    got_to_profile = response.url == URLs.PROFILE_BUSINESS_PROFILE.absolute
     error = (
         f"Expected request to {url} to be redirected to "
-        f"{URLs.FAB_CONFIRM_COMPANY_ADDRESS.absolute} or {URLs.PROFILE_FAB.absolute} "
+        f"{URLs.FAB_CONFIRM_COMPANY_ADDRESS.absolute} or {URLs.PROFILE_BUSINESS_PROFILE.absolute} "
         f"but got to {response.url}"
     )
     assert got_to_letter_confirmation or got_to_profile, error

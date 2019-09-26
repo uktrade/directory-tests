@@ -1022,10 +1022,10 @@ def sud_should_see_options_to_manage_users(context: Context, actor_alias: str):
     actor = context.get_actor(actor_alias)
     session = actor.session
 
-    context.response = profile.find_a_buyer.go_to(session)
-    profile.find_a_buyer.should_be_here(context.response)
+    context.response = profile.business_profile.go_to(session)
+    profile.business_profile.should_be_here(context.response)
 
-    profile.find_a_buyer.should_see_options_to_manage_users(context.response)
+    profile.business_profile.should_see_options_to_manage_users(context.response)
     logging.debug("%s can see options to control user accounts", actor_alias)
 
 
@@ -1043,10 +1043,10 @@ def sud_should_not_see_options_to_manage_users(
     context.response = profile.about.go_to(session, set_next_page=False)
     profile.about.should_be_here(context.response)
 
-    context.response = profile.find_a_buyer.go_to(session)
-    profile.find_a_buyer.should_be_here(context.response)
+    context.response = profile.business_profile.go_to(session)
+    profile.business_profile.should_be_here(context.response)
 
-    profile.find_a_buyer.should_not_see_options_to_manage_users(
+    profile.business_profile.should_not_see_options_to_manage_users(
         context.response
     )
     logging.debug("%s can't see options to control user accounts", actor_alias)
