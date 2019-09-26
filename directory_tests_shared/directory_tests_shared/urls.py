@@ -256,7 +256,6 @@ class URLs(Enum):
     )
     FAB_ACCOUNT_CONFIRM_PASSWORD = FABUrl("account/transfer/")
     FAB_ACCOUNT_REMOVE_COLLABORATOR = FABUrl("account/remove-collaborator/")
-    FAB_ACCOUNT_TRANSFER_OWNERSHIP = FABUrl("account/transfer/")
     FAB_CONFIRM_COMPANY_ADDRESS = FABUrl("verify/letter-confirm/")
     FAB_CONFIRM_IDENTITY = FABUrl("verify/")
     FAB_CONFIRM_IDENTITY_LETTER = FABUrl("verify/letter-send/")
@@ -564,6 +563,7 @@ class URLs(Enum):
     PROFILE_LANDING = ProfileUrl("")
     PROFILE_SITEMAP = ProfileUrl("sitemap.xml")
     PROFILE_ABOUT = ProfileUrl("about/")
+    PROFILE_ADMIN_TRANSFER_OWNERSHIP = ProfileUrl("business-profile/admin/transfer/")
     PROFILE_ACCOUNT_ACCEPT_INVITATION = ProfileUrl(
         "account/collaborate/accept/?invite_key={invite_key}",
         template="account/collaborate/accept/?invite_key={invite_key}",
