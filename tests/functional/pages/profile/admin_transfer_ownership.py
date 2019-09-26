@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Find a Buyer - Change profile owner page"""
+"""Profile - Transfer ownership"""
 from requests import Response, Session
 
 from directory_tests_shared import PageType, Service, URLs
@@ -9,7 +9,7 @@ from tests.functional.utils.request import check_response
 SERVICE = Service.FAB
 NAME = "Transfer ownership"
 TYPE = PageType.FORM
-URL = URLs.PROFILE_ADMIN_INVITE_ADMIN.absolute
+URL = URLs.PROFILE_ADMIN_TRANSFER_OWNERSHIP.absolute
 EXPECTED_STRINGS = [
     "Choose a new administrator",
     "Enter the email address of the new profile administrator",
