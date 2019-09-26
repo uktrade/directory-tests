@@ -10,10 +10,8 @@ import random
 import re
 import sys
 import traceback
-from collections import defaultdict, namedtuple
+from collections import defaultdict
 from contextlib import contextmanager
-from email.mime.text import MIMEText
-from enum import Enum
 from pprint import pprint
 from random import choice
 from string import ascii_uppercase
@@ -32,13 +30,11 @@ from pdfminer.layout import LAParams
 from pdfminer.pdfinterp import PDFPageInterpreter, PDFResourceManager
 from pdfminer.pdfpage import PDFPage
 from requests import Response, Session
-from retrying import retry
 from scrapy.selector import Selector
 from termcolor import cprint
 from directory_tests_shared import URLs
 from tests.functional.schemas.Companies import COMPANIES
 from tests.functional.utils.context_utils import (
-    Actor,
     CaseStudy,
     Company,
     Feedback,
@@ -47,8 +43,6 @@ from tests.functional.utils.context_utils import (
 from tests.functional.utils.request import Method, check_response, make_request
 from tests.functional.utils.stannpclient import STANNP_CLIENT
 from directory_tests_shared.constants import (
-    FAB_CONFIRM_COLLABORATION_SUBJECT,
-    FAB_TRANSFER_OWNERSHIP_SUBJECT,
     JPEGs,
     PNGs,
     SECTORS,
@@ -59,8 +53,6 @@ from directory_tests_shared.clients import (
     SSO_TEST_API_CLIENT,
 )
 from directory_tests_shared.settings import (
-    MAILGUN_API_KEY,
-    MAILGUN_EVENTS_URL,
     STANNP_LETTER_TEMPLATE_ID,
 )
 from directory_tests_shared.utils import rare_word, sentence
@@ -132,144 +124,6 @@ def decode_as_utf8(content):
             logging.debug("Could not decode content as utf-8")
             pass
     return content
-
-
-class MailGunEvent(Enum):
-    """Lists all of MailGun's event types.
-
-    More info here:
-    https://documentation.mailgun.com/en/latest/api-events.html#event-types
-    """
-
-    ACCEPTED = "accepted"
-    DELIVERED = "delivered"
-    REJECTED = "rejected"
-    FAILED = "failed"
-    OPENED = "opened"
-    CLICKED = "clicked"
-    UNSUBSCRIBED = "unsubscribed"
-    COMPLAINED = "complained"
-    STORED = "stored"
-
-    def __str__(self):
-        return self.value
-
-    def __eq__(self, y):
-        return self.value == y.value
-
-
-class MailGunService(Enum):
-    """Lists all MailGun's events states"""
-
-    ServiceDetails = namedtuple("ServiceDetails", ["url", "user", "password"])
-    DIRECTORY = ServiceDetails(
-        url=MAILGUN_EVENTS_URL,
-        user="api",
-        password=MAILGUN_API_KEY,
-    )
-
-    def __str__(self):
-        return self.value
-
-    def __eq__(self, y):
-        return self.value == y.value
-
-    @property
-    def url(self):
-        return self.value.url
-
-    @property
-    def user(self):
-        return self.value.user
-
-    @property
-    def password(self):
-        return self.value.password
-
-
-@retry(wait_fixed=15000, stop_max_attempt_number=9)
-def find_mail_gun_events(
-    context: Context,
-    service: MailGunService,
-    *,
-    sender: str = None,
-    recipient: str = None,
-    to: str = None,
-    subject: str = None,
-    limit: int = None,
-    event: MailGunEvent = None,
-    begin: str = None,
-    end: str = None,
-    ascending: str = None
-) -> Response:
-    """
-
-    :param context: behave `context` object
-    :param service: an object with MailGun service details
-    :param sender: (optional) email address of the sender
-    :param recipient: (optional) email address of the recipient
-    :param to: (optional) email address of the recipient (from the MIME header)
-    :param subject: (optional) subject of the message
-    :param limit: (optional) Number of entries to return. (300 max)
-    :param event: (optional) An event type
-    :param begin: (optional)
-    :param end: (optional)
-    :param ascending: (optional) yes/no
-    :return: a response object
-    """
-    params = {}
-
-    if sender:
-        params.update({"from": sender})
-    if recipient:
-        params.update({"recipient": recipient})
-    if to:
-        params.update({"to": to})
-    if subject:
-        params.update({"subject": subject})
-    if limit:
-        params.update({"limit": limit})
-    if event:
-        params.update({"event": str(event)})
-    if begin:
-        params.update({"begin": begin})
-    if end:
-        params.update({"end": end})
-    if ascending:
-        params.update({"ascending": ascending})
-
-    response = make_request(
-        Method.GET,
-        service.url,
-        auth=(service.user, service.password),
-        params=params,
-        use_basic_auth=False,
-    )
-    context.response = response
-    with assertion_msg(
-        "Expected 200 OK from MailGun when searching for an event %s",
-        response.status_code,
-    ):
-        assert response.status_code == 200
-    number_of_events = len(response.json()["items"])
-    if limit:
-        with assertion_msg(
-            "Expected (maximum) %d events but got %d instead.",
-            limit,
-            number_of_events,
-        ):
-            assert number_of_events <= limit
-    with assertion_msg(
-        "Expected to find at least 1 MailGun event, got 0 instead. User "
-        "parameters: %s",
-        params,
-    ):
-        assert number_of_events > 0
-    logging.debug(
-        "Found %d event(s) that matched following criteria: %s",
-        number_of_events, params
-    )
-    return response
 
 
 def extract_page_contents(
@@ -1490,127 +1344,6 @@ def filter_out_legacy_industries(company: dict) -> list:
     result = [sector for sector in sectors if sector in INDUSTRY_CHOICES]
     logging.error("Sectors after: %s", result)
     return result
-
-
-@retry(wait_fixed=10000, stop_max_attempt_number=9)
-def mailgun_get_directory_message(context: Context, message_url: str) -> dict:
-    """Get message details from MailGun by its URL."""
-    # this will help us to get the raw MIME
-    headers = {"Accept": "message/rfc2822"}
-    response = make_request(
-        Method.GET,
-        message_url,
-        headers=headers,
-        auth=("api", MAILGUN_API_KEY),
-        use_basic_auth=False,
-    )
-    context.response = response
-
-    with assertion_msg(
-        "Expected to get 200 OK from MailGun when getting message details"
-        " but got %s %s instead",
-        response.status_code,
-        response.reason,
-    ):
-        assert response.status_code == 200
-
-    return response.json()
-
-
-def mailgun_find_email_with_request_for_collaboration(
-    context: Context, actor: Actor, company: Company
-) -> dict:
-    logging.debug(
-        "Trying to find email with a request for collaboration with company: "
-        "%s",
-        company.title,
-    )
-    subject = FAB_CONFIRM_COLLABORATION_SUBJECT.format(company.title)
-    response = find_mail_gun_events(
-        context,
-        service=MailGunService.DIRECTORY,
-        to=actor.email,
-        event=MailGunEvent.ACCEPTED,
-        subject=subject,
-    )
-    context.response = response
-    with assertion_msg(
-        "Expected to find an email with a request for collaboration with "
-        "company: '%s'",
-        company.alias,
-    ):
-        assert response.status_code == 200
-    message_url = response.json()["items"][0]["storage"]["url"]
-    return mailgun_get_directory_message(context, message_url)
-
-
-def mailgun_find_email_with_ownership_transfer_request(
-    context: Context, actor: Actor, company: Company
-) -> dict:
-    logging.debug(
-        "Trying to find email with an account ownership transfer request for "
-        "company: %s",
-        company.title,
-    )
-    subject = FAB_TRANSFER_OWNERSHIP_SUBJECT.format(company.title)
-    response = find_mail_gun_events(
-        context,
-        service=MailGunService.DIRECTORY,
-        to=actor.email,
-        event=MailGunEvent.ACCEPTED,
-        subject=subject,
-    )
-    context.response = response
-    with assertion_msg(
-        "Expected to find an email with an account ownership transfer "
-        "request for company: '%s'",
-        company.alias,
-    ):
-        assert response.status_code == 200
-    message_url = response.json()["items"][0]["storage"]["url"]
-    return mailgun_get_directory_message(context, message_url)
-
-
-def extract_plain_text_payload(msg: MIMEText) -> str:
-    """Extract plain text payload (7 bit) from email message."""
-    res = None
-    if msg.is_multipart():
-        for part in msg.get_payload():
-            if part.get_content_type() == "text/plain":
-                res = part.get_payload()
-    else:
-        seven_bit = "Content-Transfer-Encoding: 7bit"
-        payload = msg.get_payload()
-        with assertion_msg("Could not find plain text msg in email payload"):
-            assert seven_bit in payload
-        start_7_bit = payload.find(seven_bit)
-        start = start_7_bit + len(seven_bit)
-        end = payload.find("--===============", start)
-        res = payload[start:end]
-    return res
-
-
-def extract_link_with_invitation_for_collaboration(payload: str) -> str:
-    start = payload.find("http")
-    end = payload.find("\n", start) - 1  # `- 1` to skip the newline char
-    invitation_link = payload[start:end]
-    assert invitation_link
-    logging.debug(
-        "Found the link with invitation for collaboration %s", invitation_link
-    )
-    return invitation_link
-
-
-def extract_link_with_ownership_transfer_request(payload: str) -> str:
-    start = payload.find("http")
-    end = payload.find("\n", start) - 1  # `- 1` to skip the newline char
-    ownership_request_link = payload[start:end]
-    assert ownership_request_link
-    logging.debug(
-        "Found the link with FAB profile ownership request %s",
-        ownership_request_link,
-    )
-    return ownership_request_link
 
 
 def send_verification_letter(
