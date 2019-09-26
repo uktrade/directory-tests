@@ -9,7 +9,7 @@ from tests.functional.steps.when_impl import (
     fab_confirm_collaboration_request,
     fab_decide_to_verify_profile_with_letter,
     fab_remove_collaborators,
-    fab_send_transfer_ownership_request,
+    profile_send_transfer_ownership_request,
     fab_submit_verification_code,
     fab_transfer_ownership,
     fas_browse_suppliers_by_company_sectors,
@@ -333,7 +333,7 @@ def when_collaborator_creates_sso_account_and_confirms_email(
 @when('"{supplier_alias}" decides to transfer the ownership of company\'s "{company_alias}" Find a Buyer profile to "{new_owner_alias}"')
 def when_supplier_decides_to_transfer_profile_ownership(
         context, supplier_alias, company_alias, new_owner_alias):
-    fab_send_transfer_ownership_request(
+    profile_send_transfer_ownership_request(
         context, supplier_alias, company_alias, new_owner_alias)
 
 

@@ -2345,7 +2345,7 @@ def fab_collaborator_create_sso_account_and_confirm_email(
     )
 
 
-def fab_send_transfer_ownership_request(
+def profile_send_transfer_ownership_request(
     context: Context,
     supplier_alias: str,
     company_alias: str,
@@ -2445,7 +2445,7 @@ def fab_transfer_ownership(
     company_alias: str,
     new_owner_alias: str,
 ):
-    fab_send_transfer_ownership_request(
+    profile_send_transfer_ownership_request(
         context, supplier_alias, company_alias, new_owner_alias
     )
     profile_should_get_request_for_becoming_owner(
