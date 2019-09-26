@@ -617,7 +617,7 @@ class URLs(Enum):
     PROFILE_CASE_STUDY_DETAILS = ProfileUrl("business-profile/case-study/details/")
     PROFILE_CASE_STUDY_IMAGES = ProfileUrl("business-profile/case-study/images/")
     PROFILE_UPLOAD_LOGO = ProfileUrl("business-profile/logo/")
-    PROFILE_COMPANY_EDIT_SOCIAL_MEDIA = ProfileUrl("business-profiler/social-links/")
+    PROFILE_COMPANY_EDIT_SOCIAL_MEDIA = ProfileUrl("business-profile/social-links/")
 
     # Domestic site
     DOMESTIC_API_COMPANY_HOUSE_SEARCH = DomesticUrl(
