@@ -1,65 +1,69 @@
 # -*- coding: utf-8 -*-
 from collections import namedtuple
-from random import choice
+from random import choice, randint
 
 from directory_constants.cms import EXPORT_READINESS, FIND_A_SUPPLIER, INVEST
 from locust import TaskSet, task
 
-from directory_tests_shared import settings
+from directory_tests_shared import settings, URLs
 from directory_tests_shared.constants import LOAD_TESTS_USER_AGENT
 from tests.load.cms_helpers import CMSAPIAuthClientMixin
 
 UA = namedtuple("UA", "headers")
 LOAD_TESTS_USER_AGENT = UA(headers=LOAD_TESTS_USER_AGENT)
 
+SERVICES = [
+    INVEST,
+    FIND_A_SUPPLIER,
+    EXPORT_READINESS,
+]
+
+INTERNATIONAL_PAGE_PATHS = [
+    "",
+    "eu-exit-form-success",
+    "midlands-engine",
+    "news",
+    "topic/articles",
+    "trade",
+    "invest/uk-regions",
+    "invest/how-we-help-you-expand",
+    "invest/how-to-setup-in-the-uk",
+    "invest/how-to-setup-in-the-uk/uk-income-tax",
+    "invest/how-to-setup-in-the-uk/open-a-uk-business-bank-account",
+    "invest/how-to-setup-in-the-uk/uk-visas-and-migration",
+    "invest/how-to-setup-in-the-uk/uk-tax-and-incentives",
+    "invest/how-to-setup-in-the-uk/establish-a-base-for-business-in-the-uk",
+    "invest/how-to-setup-in-the-uk/hire-skilled-workers-for-your-uk-operations",
+    "invest/how-to-setup-in-the-uk/register-a-company-in-the-uk",
+    "invest/how-to-setup-in-the-uk/access-finance-in-the-uk",
+    "invest/how-to-setup-in-the-uk/uk-infrastructure",
+    "invest/how-to-setup-in-the-uk/uk-corporation-tax",
+    "invest/how-to-setup-in-the-uk/uk-capital-gains-tax",
+    "invest/how-to-setup-in-the-uk/uk-income-tax",
+    "invest/how-to-setup-in-the-uk/uk-venture-capital-schemes",
+    "invest/how-to-setup-in-the-uk/uk-labour-market",
+    "invest/how-to-setup-in-the-uk/flexible-uk-labour-terms",
+    "invest/how-to-setup-in-the-uk/uk-labour-costs",
+]
+
 
 class CMSTasks(TaskSet):
 
     @task
-    def lookup_by_slug(self):
-        services = [
-            INVEST,
-            FIND_A_SUPPLIER,
-            EXPORT_READINESS,
-        ]
-        slugs = [
-            "advanced-manufacturing",
-            "aerospace",
-            "agri-tech",
-            "apply-for-a-uk-visa",
-            "asset-management",
-            "automotive",
-            "automotive-research-and-development",
-            "automotive-supply-chain",
-            "capital-investment",
-            "chemicals",
-            "creative-content-and-production",
-            "creative-industries",
-            "data-analytics",
-            "digital-media",
-            "electrical-networks",
-            "energy",
-            "energy-waste",
-            "establish-a-base-for-business-in-the-uk",
-            "financial-services",
-            "financial-technology",
-            "food-and-drink",
-            "food-service-and-catering",
-            "hire-skilled-workers-for-your-uk-operations",
-            "home-page",
-            "invest-sector-landing-page",
-            "open-a-uk-business-bank-account",
-            "sector-landing-page",
-            "sector-landing-page",
-            "setup-guide-landing-page",
-        ]
-        slug = choice(slugs)
-        self.client.lookup_by_slug(
-            slug,
-            fields=None,
+    def get_by_id(self):
+        self.client.get(
+            URLs.CMS_API_PAGE_BY_ID.template.format(page_id=randint(1, 500)),
             authenticator=LOAD_TESTS_USER_AGENT,
-            name="/api/pages/lookup-by-slug/[slug]/",
-            service_name=choice(services),
+            name="/api/pages/[id]/",
+            expected_codes=[200, 404],
+        )
+
+    @task
+    def get_international_page_by_path(self):
+        self.client.get(
+            URLs.CMS_API_PAGE_BY_PATH.template.format(site_id=2, path=choice(INTERNATIONAL_PAGE_PATHS)),
+            authenticator=LOAD_TESTS_USER_AGENT,
+            name="/api/pages/lookup-by-path/[site_id]/[path]",
             expected_codes=[200, 404],
         )
 
