@@ -129,9 +129,9 @@ def get_password_reset_notification(
     return password_reset_notifications[0]
 
 
-def get_verification_link(email: str) -> str:
+def get_verification_link(email: str, *, subject: str = None) -> str:
     logging.debug("Searching for verification email of: %s", email)
-    notification = get_email_confirmation_notification(email)
+    notification = get_email_confirmation_notification(email, subject=subject)
     body = notification["body"]
     return extract_email_confirmation_link(body)
 

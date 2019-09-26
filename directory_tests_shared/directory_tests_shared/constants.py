@@ -58,6 +58,7 @@ FAB_CONFIRM_COLLABORATION_SUBJECT = (
 )
 FAB_TRANSFER_OWNERSHIP_SUBJECT = "Confirm ownership of {}’s Find a buyer " "profile"
 SSO_PASSWORD_RESET_MSG_SUBJECT = "Reset your great.gov.uk password"
+PROFILE_INVITATION_MSG_SUBJECT = "You’ve been invited to join {company_title} on great.gov.uk"
 NO_OF_EMPLOYEES = [
     "1-10",
     "11-50",

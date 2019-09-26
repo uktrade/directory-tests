@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 """Then step implementations"""
-import email
 import inspect
 import logging
 from collections import defaultdict
@@ -29,14 +28,9 @@ from tests.functional.utils.generic import (
     check_hash_of_remote_file,
     detect_page_language,
     extract_csrf_middleware_token,
-    extract_link_with_invitation_for_collaboration,
-    extract_link_with_ownership_transfer_request,
     extract_logo_url,
     extract_page_contents,
-    extract_plain_text_payload,
     get_number_of_search_result_pages,
-    mailgun_find_email_with_ownership_transfer_request,
-    mailgun_find_email_with_request_for_collaboration,
     surround,
 )
 from tests.functional.utils.gov_notify import (
@@ -48,6 +42,7 @@ from directory_tests_shared.constants import (
     FAS_LOGO_PLACEHOLDER_IMAGE,
     FAS_MESSAGE_FROM_BUYER_SUBJECT,
     SEARCHABLE_CASE_STUDY_DETAILS,
+    PROFILE_INVITATION_MSG_SUBJECT
 )
 from directory_tests_shared.enums import Language
 
@@ -1014,13 +1009,8 @@ def sso_should_get_request_for_collaboration_email(
     for actor_alias in actor_aliases:
         actor = context.get_actor(actor_alias)
         company = context.get_company(company_alias)
-        mailgun_response = mailgun_find_email_with_request_for_collaboration(
-            context, actor, company
-        )
-        raw_message_payload = mailgun_response["body-mime"]
-        email_message = email.message_from_string(raw_message_payload)
-        payload = extract_plain_text_payload(email_message)
-        link = extract_link_with_invitation_for_collaboration(payload)
+        subject = PROFILE_INVITATION_MSG_SUBJECT.format(company_title=company.title.upper())
+        link = get_verification_link(actor.email, subject=subject)
         context.update_actor(
             actor_alias,
             invitation_for_collaboration_link=link,
@@ -1067,13 +1057,8 @@ def fab_should_get_request_for_becoming_owner(
 ):
     actor = context.get_actor(new_owner_alias)
     company = context.get_company(company_alias)
-    mailgun_response = mailgun_find_email_with_ownership_transfer_request(
-        context, actor, company
-    )
-    raw_message_payload = mailgun_response["body-mime"]
-    email_message = email.message_from_string(raw_message_payload)
-    payload = extract_plain_text_payload(email_message)
-    link = extract_link_with_ownership_transfer_request(payload)
+    subject = PROFILE_INVITATION_MSG_SUBJECT.format(company_title=company.title.upper())
+    link = get_verification_link(actor.email, subject=subject)
     context.update_actor(
         new_owner_alias,
         ownership_request_link=link,
