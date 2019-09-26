@@ -117,13 +117,16 @@ def should_see_details(company: Company, response: Response, table_of_details: T
     if title:
         with assertion_msg("Couldn't find Company's title '%s'", company.title):
             assert company.title.lower() in content
+        logging.debug(f"Found title: '{company.title}' on: {response.url}")
     if keywords:
         for keyword in company.keywords.split(", "):
             with assertion_msg("Couldn't find Company's keyword '%s'", keyword):
                 assert keyword.strip().lower() in content
+        logging.debug(f"Found keywords: '{company.keywords}' on: {response.url}")
     if website:
         with assertion_msg("Couldn't find Company's website '%s'", company.website):
             assert company.website.lower() in content
+        logging.debug(f"Found website: '{company.website}' on: {response.url}")
     if size:
         with assertion_msg(
             "Couldn't find the size of the company '%s' in the response",
@@ -137,12 +140,15 @@ def should_see_details(company: Company, response: Response, table_of_details: T
                 assert "501-1,000" in content
             else:
                 assert company.no_employees in content
+        logging.debug(f"Found size: '{company.no_employees}' on: {response.url}")
     if sector:
         with assertion_msg(
             "Couldn't find company's sector '%s' in the response",
             SECTORS_WITH_LABELS[company.sector],
         ):
             assert SECTORS_WITH_LABELS[company.sector].lower() in content
+        logging.debug(f"Found sector: '{company.sector}' on: {response.url}")
+    logging.debug(f"Found all expected details on: {response.url}")
 
 
 def get_case_studies_details(response: Response):

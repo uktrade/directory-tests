@@ -214,7 +214,7 @@ Feature: Profile pages
       | website                     |
       | number of employees         |
       | sector of interest          |
-#      | keywords                    |  see TT-1333
+      | keywords                    |
 
     Then "Annette Geissinger" should see new details on "Profile - edit company profile" page
       | detail                      |
@@ -222,14 +222,14 @@ Feature: Profile pages
       | website                     |
       | number of employees         |
       | sector of interest          |
-#      | keywords                    |  see TT-1333
+      | keywords                    |
     And "Annette Geissinger" should see new details on "Find a Supplier - Company's business profile" page
       | detail                      |
       | trading name                |
       | website                     |
       | number of employees         |
       | sector of interest          |
-#      | keywords                    |  see TT-1333
+      | keywords                    |
 
 
   @bug
