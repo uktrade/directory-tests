@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""SSO - SUD (Profile) Find A Buyer page"""
+"""Profile - Business profile (without a profile)"""
 import logging
 
 from requests import Response, Session
@@ -8,7 +8,7 @@ from directory_tests_shared import PageType, Service, URLs
 from tests.functional.utils.request import Method, check_response, make_request
 
 SERVICE = Service.PROFILE
-NAME = "Find a Buyer (without a business profile)"
+NAME = "Business Profile (without a business profile)"
 TYPE = PageType.LANDING
 URL = URLs.PROFILE_BUSINESS_PROFILE.absolute
 EXPECTED_STRINGS = [
@@ -16,10 +16,6 @@ EXPECTED_STRINGS = [
     "You are signed in as",
     "Get a business profile",
     "Get a business profile for your company and you can",
-    "generate new sales leads",
-    "promote your business to thousands of overseas buyers",
-    "add case studies of your best work to make your company stand out",
-    "have buyers contact your sales team directly to get deals moving",
     "Create a business profile",
 ]
 
