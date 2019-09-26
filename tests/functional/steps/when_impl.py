@@ -716,7 +716,7 @@ def sso_collaborator_confirm_email_address(
     context.response = response
 
     # STEP 2 - Check if Supplier if on SSO Profile Landing page
-    fab.confirm_your_collaboration.should_be_here(response)
+    profile.confirm_your_collaboration.should_be_here(response)
 
     # STEP 3 - Update Actor's data
     context.update_actor(supplier_alias, has_sso_account=True)
@@ -2181,7 +2181,7 @@ def profile_add_collaborator(
         context.set_company_details(company.alias, collaborators=collaborators)
 
 
-def fab_confirm_collaboration_request(
+def profile_confirm_collaboration_request(
     context: Context,
     collaborator_alias: str,
     company_alias: str,
@@ -2193,11 +2193,11 @@ def fab_confirm_collaboration_request(
 
     # Step 1 - open confirmation link
     if open_invitation_link:
-        response = fab.confirm_your_collaboration.open(session, link)
+        response = profile.confirm_your_collaboration.open(session, link)
         context.response = response
 
     # Step 3 - confirm that Supplier is on SSO Confirm Your Email page
-    fab.confirm_your_collaboration.should_be_here(context.response)
+    profile.confirm_your_collaboration.should_be_here(context.response)
     logging.debug(
         "Collaborator %s is on the FAB Confirm your collaboration page",
         collaborator_alias,
@@ -2211,7 +2211,7 @@ def fab_confirm_collaboration_request(
     context.form_action_value = form_action_value
 
     # Step 5 - submit the form
-    response = fab.confirm_your_collaboration.confirm(session, token, link)
+    response = profile.confirm_your_collaboration.confirm(session, token, link)
     context.response = response
     context.update_actor(collaborator_alias, company_alias=company_alias)
     logging.debug(
@@ -2228,7 +2228,7 @@ def fab_open_collaboration_request_link(
     session = collaborator.session
     link = collaborator.invitation_for_collaboration_link
 
-    response = fab.confirm_your_collaboration.open(session, link)
+    response = profile.confirm_your_collaboration.open(session, link)
     context.response = response
     logging.debug(
         "%s opened the collaboration request link from company %s",
@@ -2340,7 +2340,7 @@ def fab_collaborator_create_sso_account_and_confirm_email(
     reg_should_get_verification_email(context, collaborator_alias)
     reg_open_email_confirmation_link(context, collaborator_alias)
     sso_collaborator_confirm_email_address(context, collaborator_alias)
-    fab_confirm_collaboration_request(
+    profile_confirm_collaboration_request(
         context, collaborator_alias, company_alias, open_invitation_link=False
     )
 

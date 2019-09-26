@@ -8,6 +8,7 @@ __all__ = [
     "business_profile_without_business_profile",
     "case_study_basic",
     "case_study_images",
+    "confirm_your_collaboration",
     "edit_company_business_details",
     "edit_company_description",
     "edit_company_profile",

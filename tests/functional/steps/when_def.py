@@ -6,7 +6,7 @@ from behave import when
 from tests.functional.steps.when_impl import (
     fab_choose_to_verify_with_code,
     fab_collaborator_create_sso_account_and_confirm_email,
-    fab_confirm_collaboration_request,
+    profile_confirm_collaboration_request,
     fab_decide_to_verify_profile_with_letter,
     fab_remove_collaborators,
     profile_send_transfer_ownership_request,
@@ -318,7 +318,7 @@ def when_owner_adds_a_collaborator(
 @when('"{collaborator_alias}" confirms that she wants to be added to the company "{company_alias}" Find a Buyer profile')
 def when_collaborator_confirms_the_collaboration_request(
         context, collaborator_alias, company_alias):
-    fab_confirm_collaboration_request(
+    profile_confirm_collaboration_request(
         context, collaborator_alias, company_alias)
 
 

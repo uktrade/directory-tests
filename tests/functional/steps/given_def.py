@@ -18,7 +18,7 @@ from tests.functional.steps.when_impl import (
     create_actor_with_or_without_sso_account,
     create_actor_with_verified_or_unverified_fab_profile,
     profile_add_collaborator,
-    fab_confirm_collaboration_request,
+    profile_confirm_collaboration_request,
     fab_decide_to_verify_profile_with_letter,
     fab_find_published_company,
     fab_open_collaboration_request_link,
@@ -226,7 +226,7 @@ def given_collaborator_decides_to_open_invitation(
 @given('"{collaborator_alias}" confirmed that she wants to be added to the company "{company_alias}" Find a Buyer profile')
 def given_collaborator_confirms_the_collaboration_request(
         context, collaborator_alias, company_alias):
-    fab_confirm_collaboration_request(
+    profile_confirm_collaboration_request(
         context, collaborator_alias, company_alias)
 
 

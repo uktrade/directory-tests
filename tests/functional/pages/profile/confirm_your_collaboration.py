@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-"""Find a Buyer - Confirm your will to collaborate to company's profile page"""
+"""Profile - Confirm your will to collaborate to company's profile page"""
 import logging
 
 from requests import Response, Session
 
 from directory_tests_shared import PageType, Service, URLs
 from tests.functional.utils.generic import assertion_msg
-from tests.functional.utils.request import Method, check_response, make_request
+from tests.functional.utils.request import Method, check_response, make_request, check_url
 
 SERVICE = Service.FAB
 NAME = "Accept invitation"
@@ -22,6 +22,7 @@ EXPECTED_STRINGS = [
 
 
 def should_be_here(response: Response):
+    check_url(response, URL, startswith=False)
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
     logging.debug("Successfully got to the FAB Confirm your collaboration page")
 
