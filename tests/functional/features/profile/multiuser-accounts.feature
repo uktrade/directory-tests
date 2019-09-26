@@ -35,7 +35,6 @@ Feature: Multi-user accounts
   Scenario: Add "1" collaborator with an SSO/great.gov.uk account to a verified company
     Given "Peter Alder" has created verified and published FAS business profile for randomly selected company "Y"
     And "Annette Geissinger" has a verified standalone SSO/great.gov.uk account
-    And "Annette Geissinger" is signed in to SSO/great.gov.uk account
     And "Peter Alder" added "Annette Geissinger" as an "editor" collaborator
     And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
 
