@@ -11,7 +11,13 @@ from directory_tests_shared.constants import EMAIL_VERIFICATION_MSG_SUBJECT, SSO
 def extract_email_confirmation_link(payload: str) -> str:
     """Find email confirmation link inside the plain text email payload."""
     start = payload.find("https")
-    activation_link = payload[start:]
+    end = payload.find(" ", start) - 1
+    new_line_end = payload.find("\n", start) - 1
+    if end != new_line_end:
+        end = new_line_end
+    activation_link = payload[start:end]
+    with assertion_msg(f"activation link shouldn't contain new line character"):
+        assert "\n" not in activation_link
     logging.debug("Found email confirmation link: %s", activation_link)
     return activation_link
 
@@ -93,6 +99,7 @@ def get_email_notification(from_email: str, to_email: str, subject: str) -> dict
 def get_email_confirmation_notification(
     email: str, *, subject: str = EMAIL_VERIFICATION_MSG_SUBJECT
 ) -> dict:
+    logging.debug(f"Looking for email sent to '{email}' with subject: '{subject}'")
     notifications = GOV_NOTIFY_CLIENT.get_all_notifications(
         template_type="email"
     )["notifications"]
