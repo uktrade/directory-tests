@@ -2361,33 +2361,10 @@ def fab_send_transfer_ownership_request(
     company = context.get_company(company_alias)
     new_owner = context.get_actor(new_owner_alias)
 
-    context.response = profile.about.go_to(
-        supplier.session, set_next_page=False
+    context.response = profile.admin_transfer_ownership.submit(
+        supplier.session, new_owner.email
     )
-    profile.about.should_be_here(context.response)
-
-    response = fab.account_transfer_ownership.go_to(supplier.session)
-    context.response = response
-
-    token = extract_csrf_middleware_token(response)
-    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
-
-    response = fab.account_transfer_ownership.submit(
-        supplier.session, token, new_owner.email
-    )
-    context.response = response
-
-    fab.account_confirm_password.should_be_here(response)
-
-    token = extract_csrf_middleware_token(response)
-    context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
-
-    response = fab.account_confirm_password.submit(
-        supplier.session, token, supplier.password
-    )
-    context.response = response
-
-    profile.find_a_buyer.should_be_here(response, owner_transferred=True)
+    profile.admin.should_be_here(context.response)
 
     context.update_actor(supplier_alias, ex_owner=True)
     context.update_actor(new_owner_alias, company_alias=company_alias)
