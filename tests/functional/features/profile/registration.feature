@@ -19,7 +19,7 @@ Feature: Trade Profile
 
     Then "Annette Geissinger" should be told that company has been verified
 
-    When "Annette Geissinger" goes to "Profile - Find a Buyer" page
+    When "Annette Geissinger" goes to "Profile - Business Profile" page
     Then "Annette Geissinger" should be told that business profile is ready to be published
 
 
@@ -42,5 +42,5 @@ Feature: Trade Profile
 
     Then "Annette Geissinger" should be told that company has been verified
 
-    When "Annette Geissinger" goes to "Profile - Find a Buyer" page
+    When "Annette Geissinger" goes to "Profile - Business Profile" page
     Then "Annette Geissinger" should be told that business profile is ready to be published

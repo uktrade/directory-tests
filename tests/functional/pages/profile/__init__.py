@@ -5,6 +5,7 @@ __all__ = [
     "admin_remove_profile_from_account",
     "admin_transfer_ownership",
     "business_profile",
+    "business_profile_without_business_profile",
     "case_study_basic",
     "case_study_images",
     "edit_company_business_details",

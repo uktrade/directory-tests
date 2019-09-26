@@ -28,7 +28,7 @@ Feature: Profile pages
     Examples: Profile pages
       | other Profile                     | expected        |
       | Profile - Export Opportunities    | SSO - Login     |
-      | Profile - Find a Buyer            | Profile - Enrol |
+      | Profile - Business Profile        | Profile - Enrol |
       | Profile - Selling Online Overseas | SSO - Login     |
 
 
@@ -49,7 +49,7 @@ Feature: Profile pages
     Examples: Profile pages
       | Profile                           | expected        |
       | Profile - Export Opportunities    | SSO - Login     |
-      | Profile - Find a Buyer            | Profile - Enrol |
+      | Profile - Business Profile            | Profile - Enrol |
       | Profile - Selling Online Overseas | SSO - Login     |
 
 
@@ -64,10 +64,10 @@ Feature: Profile pages
     Given "Peter Alder" has a verified standalone SSO/great.gov.uk account
 
     When "Peter Alder" goes to specific pages
-      | page name                                           |
-      | Profile - Export Opportunities                      |
-      | Profile - Find a Buyer (without a business profile) |
-      | Profile - Selling Online Overseas                   |
+      | page name                                               |
+      | Profile - Export Opportunities                          |
+      | Profile - Business Profile (without a business profile) |
+      | Profile - Selling Online Overseas                       |
 
     Then "Peter Alder" should be able to see all selected pages
 

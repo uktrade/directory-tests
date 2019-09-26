@@ -9,7 +9,7 @@ from tests.functional.utils.generic import assertion_msg
 from tests.functional.utils.request import Method, check_response, make_request
 
 SERVICE = Service.PROFILE
-NAME = "Find a Buyer"
+NAME = "Business Profile"
 TYPE = PageType.LANDING
 URL = URLs.PROFILE_BUSINESS_PROFILE.absolute
 EXPECTED_STRINGS = [
