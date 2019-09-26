@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 __all__ = [
     "about",
+    "admin",
     "admin_remove_profile_from_account",
+    "admin_transfer_ownership",
     "case_study_basic",
     "case_study_images",
     "edit_company_business_details",
