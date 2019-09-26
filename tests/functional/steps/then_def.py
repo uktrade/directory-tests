@@ -7,7 +7,7 @@ from behave.runner import Context
 from tests.functional.steps.then_impl import (
     fab_company_should_be_verified,
     fab_should_be_asked_about_verification_form,
-    fab_should_get_request_for_becoming_owner,
+    profile_should_get_request_for_becoming_owner,
     fab_should_not_see_collaborator,
     fab_should_see_case_study_error_message,
     fas_check_profiles,
@@ -378,7 +378,7 @@ def then_actor_should_not_see_options_to_manage_account_users(
 @then('"{new_owner_alias}" should receive an email with a request for becoming the owner of the company "{company_alias}" profile')
 def then_actor_should_receive_email_with_transfer_account_ownership_request(
         context, new_owner_alias, company_alias):
-    fab_should_get_request_for_becoming_owner(
+    profile_should_get_request_for_becoming_owner(
         context, new_owner_alias, company_alias)
 
 

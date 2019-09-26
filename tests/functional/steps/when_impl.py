@@ -38,7 +38,7 @@ from tests.functional.pages import (
     sso,
 )
 from tests.functional.steps.then_impl import (
-    fab_should_get_request_for_becoming_owner,
+    profile_should_get_request_for_becoming_owner,
     reg_should_get_verification_email,
     sso_should_be_signed_in_to_sso_account,
     sso_should_be_told_about_password_reset,
@@ -2471,7 +2471,7 @@ def fab_transfer_ownership(
     fab_send_transfer_ownership_request(
         context, supplier_alias, company_alias, new_owner_alias
     )
-    fab_should_get_request_for_becoming_owner(
+    profile_should_get_request_for_becoming_owner(
         context, new_owner_alias, company_alias
     )
     fab_open_transfer_ownership_request_link_and_create_sso_account_if_needed(

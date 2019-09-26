@@ -1052,7 +1052,7 @@ def sud_should_not_see_options_to_manage_users(
     logging.debug("%s can't see options to control user accounts", actor_alias)
 
 
-def fab_should_get_request_for_becoming_owner(
+def profile_should_get_request_for_becoming_owner(
     context: Context, new_owner_alias: str, company_alias: str
 ):
     actor = context.get_actor(new_owner_alias)
