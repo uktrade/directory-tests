@@ -737,6 +737,10 @@ class URLs(Enum):
     CMS_API_HEALTHCHECK = CMSApiUrl("healthcheck/")
     CMS_API_HEALTHCHECK_PING = CMSApiUrl("healthcheck/ping/")
     CMS_API_PAGES = CMSApiUrl("api/pages/")
+    CMS_API_PAGE_BY_ID = CMSApiUrl("api/pages/{page_id}/", template="api/pages/{page_id}/")
+    CMS_API_PAGE_BY_PATH = CMSApiUrl(
+        "api/pages/lookup-by-path/{site_id}/{path}", template="api/pages/lookup-by-path/{site_id}/{path}"
+    )
     CMS_API_PAGE_TYPES = CMSApiUrl("api/pages/types/")
     CMS_API_IMAGES = CMSApiUrl("api/images/")
     CMS_API_DOCUMENTS = CMSApiUrl("api/documents/")
