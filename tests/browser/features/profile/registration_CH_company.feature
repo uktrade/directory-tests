@@ -273,3 +273,22 @@ Feature: Profile - CH enrolment flows
       | selected business type                |
       | LTD, PLC or Royal Charter             |
       | Sole trader or other type of business |
+
+
+  @bug
+  @TT-1281
+  @fixed
+  @captcha
+  @dev-only
+  Scenario Outline: Newly registered users should see their business type on "Profile - Business profile" page
+    Given "Natalia" has created a great.gov.uk account for a "<selected business type>"
+
+    When "Natalia" goes to the "Profile - Business profile" page
+
+    Then "Natalia" should see "<expected business type>" on the page
+
+    Examples: business types
+      | selected business type                | expected business type                        |
+      | LTD, PLC or Royal Charter             | UK business registered in Companies House     |
+      | Sole trader or other type of business | UK business not registered in Companies House |
+      | UK taxpayer                           | Individual                                    |
