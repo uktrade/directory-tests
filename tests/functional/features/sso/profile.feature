@@ -3,7 +3,7 @@ Feature: SSO profile
 
   @bug
   @TT-1823
-  @fixme
+  @fixed
   @ED-1757
   @sso
   @login
