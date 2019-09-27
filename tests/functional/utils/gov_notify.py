@@ -11,11 +11,15 @@ from directory_tests_shared.constants import EMAIL_VERIFICATION_MSG_SUBJECT, SSO
 def extract_email_confirmation_link(payload: str) -> str:
     """Find email confirmation link inside the plain text email payload."""
     start = payload.find("https")
-    end = payload.find(" ", start) - 1
-    new_line_end = payload.find("\n", start) - 1
-    if end != new_line_end:
-        end = new_line_end
-    activation_link = payload[start:end]
+    next_word = payload.find(" ", start)
+    if next_word != -1:
+        activation_link = payload[start:next_word]
+    else:
+        new_line = payload.find("\n", start)
+        if new_line != -1:
+            activation_link = payload[start:new_line]
+        else:
+            activation_link = payload[start:]
     with assertion_msg(f"activation link shouldn't contain new line character"):
         assert "\n" not in activation_link
     logging.debug("Found email confirmation link: %s", activation_link)
