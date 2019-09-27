@@ -11,7 +11,7 @@ from steps.then_impl import (
     domestic_search_finder_should_see_page_number,
     fas_search_results_filtered_by_industries,
     form_check_state_of_element,
-    form_should_see_error_messages,
+    generic_should_see_message,
     forms_confirmation_email_should_not_be_sent,
     generic_a_notification_should_be_sent,
     generic_a_notification_should_be_sent_to_specific_dit_office,
@@ -222,8 +222,9 @@ def then_should_not_see_dead_links_in_pdf(context: Context):
 
 
 @then('"{actor_alias}" should see error message saying that mandatory fields are required')
-def then_should_see_an_error_message(context: Context, actor_alias: str):
-    form_should_see_error_messages(context, actor_alias)
+@then('"{actor_alias}" should see "{message}" on the page')
+def then_should_see_message(context: Context, actor_alias: str, *, message: str = None):
+    generic_should_see_message(context, actor_alias, message=message)
 
 
 @then('"{actor_alias}" should see list of news articles filtered by selected tag')

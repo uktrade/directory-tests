@@ -383,9 +383,8 @@ def pdf_check_for_dead_links(context: Context):
     logging.debug("All links in PDFs returned 200 OK")
 
 
-def form_should_see_error_messages(
-    context: Context, actor_alias: str, message: str = "This field is required"
-):
+def generic_should_see_message(context: Context, actor_alias: str, message: str = None):
+    message = message or "This field is required"
     page_source = context.driver.page_source
     assertion_error = f"Expected error message '{message}' is not present"
     assert message in page_source, assertion_error
