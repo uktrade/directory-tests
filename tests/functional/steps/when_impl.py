@@ -172,22 +172,22 @@ def go_to_page(context: Context, supplier_alias: str, page_name: str):
     context.response = response
 
 
-def profile_create_unverified_fas_business_profile(
-        context: Context, supplier_alias: str, company_alias: str
+def profile_create_unverified_profile(
+        context: Context, supplier_alias: str, business_type: str, company_alias: str
 ):
     if not context.get_actor(supplier_alias):
         context.add_actor(unauthenticated_supplier(supplier_alias))
     find_unregistered_company(context, supplier_alias, company_alias)
-    enrol_user(context, supplier_alias, company_alias)
+    enrol_user(context, supplier_alias, business_type, company_alias)
     context.update_actor(supplier_alias, has_sso_account=True)
 
 
-def profile_create_verified_and_published_business_fas_profile(
-        context: Context, supplier_alias: str, company_alias: str
+def profile_create_verified_and_published_business_profile(
+        context: Context, supplier_alias: str, business_type: str, company_alias: str
 ):
     """Create a verified FAS Business profile and publish it to FAS"""
     logging.debug("1 - find unregistered company & enrol user for that company")
-    profile_create_unverified_fas_business_profile(context, supplier_alias, company_alias)
+    profile_create_unverified_profile(context, supplier_alias, business_type, company_alias)
     logging.debug("2 - add business description")
     profile_add_business_description(context, supplier_alias)
     logging.debug("3 - decide to confirm identity with letter code")
@@ -202,11 +202,11 @@ def profile_create_verified_and_published_business_fas_profile(
 
 
 def profile_create_verified_yet_unpublished_business_profile(
-        context: Context, supplier_alias: str, company_alias: str
+        context: Context, supplier_alias: str, business_type: str, company_alias: str
 ):
     """Create a verified Business profile and publish it to FAS"""
     logging.debug("1 - find unregistered company & enrol user for that company")
-    profile_create_unverified_fas_business_profile(context, supplier_alias, company_alias)
+    profile_create_unverified_profile(context, supplier_alias, business_type, company_alias)
     logging.debug("2 - add business description")
     profile_add_business_description(context, supplier_alias)
     logging.debug("3 - decide to confirm identity with letter code")
@@ -394,12 +394,13 @@ def create_actor_with_verified_or_unverified_fab_profile(
         context: Context,
         actor_alias: str,
         verified_or_not: str,
+        business_type: str,
         company_alias: str,
 ):
     if verified_or_not == "a verified":
-        profile_create_verified_and_published_business_fas_profile(context, actor_alias, company_alias)
+        profile_create_verified_and_published_business_profile(context, actor_alias, business_type, company_alias)
     else:
-        profile_create_unverified_fas_business_profile(context, actor_alias, company_alias)
+        profile_create_unverified_profile(context, actor_alias, business_type, company_alias)
 
 
 def stannp_send_verification_letter(context: Context, actor_alias: str):
@@ -2652,7 +2653,7 @@ def enrol_enter_personal_details(context: Context, actor_alias: str):
     profile.enrolment_finished.should_be_here(response)
 
 
-def enrol_user(context: Context, actor_alias: str, company_alias: str):
+def enrol_user(context: Context, actor_alias: str, business_type: str, company_alias: str):
     enrol_select_business_type(context, actor_alias, company_alias)
     enrol_enter_email_and_password(context, actor_alias)
     enrol_get_email_verification_code(context, actor_alias)
