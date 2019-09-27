@@ -76,7 +76,7 @@ def then_sso_account_was_created(context, alias):
 
 @then('"{alias}" should receive an email verification msg entitled "{subject}"')
 def then_supplier_should_receive_verification_email(context, alias, subject):
-    reg_should_get_verification_email(context, alias)
+    reg_should_get_verification_email(context, alias, subject=subject)
 
 
 @then('"{supplier_alias}" should be told that her company has no description')

@@ -96,9 +96,8 @@ def get_email_notification(from_email: str, to_email: str, subject: str) -> dict
 
 
 @retry(wait_fixed=5000, stop_max_attempt_number=5)
-def get_email_confirmation_notification(
-    email: str, *, subject: str = EMAIL_VERIFICATION_MSG_SUBJECT
-) -> dict:
+def get_email_confirmation_notification(email: str, *, subject: str = None) -> dict:
+    subject = subject or EMAIL_VERIFICATION_MSG_SUBJECT
     logging.debug(f"Looking for email sent to '{email}' with subject: '{subject}'")
     notifications = GOV_NOTIFY_CLIENT.get_all_notifications(
         template_type="email"
@@ -111,6 +110,7 @@ def get_email_confirmation_notification(
         "Expected to find 1 email confirmation notification for {} but found "
         "{}".format(email, len(email_confirmations))
     )
+    logging.debug(f"Matching notifications: {email_confirmations}")
 
     return email_confirmations[0]
 
@@ -137,7 +137,6 @@ def get_password_reset_notification(
 
 
 def get_verification_link(email: str, *, subject: str = None) -> str:
-    logging.debug("Searching for verification email of: %s", email)
     notification = get_email_confirmation_notification(email, subject=subject)
     body = notification["body"]
     return extract_email_confirmation_link(body)

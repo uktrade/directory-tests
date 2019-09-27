@@ -60,11 +60,11 @@ def reg_sso_account_should_be_created(response: Response, supplier_alias: str):
     )
 
 
-def reg_should_get_verification_email(context: Context, alias: str):
+def reg_should_get_verification_email(context: Context, alias: str, *, subject: str = None):
     """Will check if the Supplier received an email verification message."""
-    logging.debug("Searching for an email verification message...")
+    logging.debug("Looking for an email verification message...")
     actor = context.get_actor(alias)
-    link = get_verification_link(actor.email)
+    link = get_verification_link(actor.email, subject=subject)
     context.update_actor(alias, email_confirmation_link=link)
 
 
