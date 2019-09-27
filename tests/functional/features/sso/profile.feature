@@ -28,7 +28,7 @@ Feature: SSO profile
     When "Peter Alder" creates an unverified SSO/great.gov.uk account
 
     Then "Peter Alder" should be told about the verification email
-    And "Peter Alder" should receive an email verification msg entitled "Your great.gov.uk account: Please Confirm Your E-mail Address"
+    And "Peter Alder" should receive an email verification msg entitled "Confirm your email address"
 
 
   @ED-1756
