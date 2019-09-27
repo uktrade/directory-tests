@@ -9,7 +9,7 @@ Feature: Trade Profile
   @dev-only
   @fake-sso-email-verification
   Scenario: Logged-in Supplier should be able to verify profile by using code and link from the letter
-    Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
+    Given "Annette Geissinger" created an unverified "LTD, PLC or Royal Charter" profile for randomly selected company "Company X"
     And "Annette Geissinger" set the company description
     And "Annette Geissinger" decided to verify her identity with a verification letter
     And "Annette Geissinger" received the letter with verification code
@@ -31,7 +31,7 @@ Feature: Trade Profile
   @dev-only
   @fake-sso-email-verification
   Scenario: Logged-out Supplier should be able to verify profile by using code and link from the letter
-    Given "Annette Geissinger" created an unverified business profile for randomly selected company "Company X"
+    Given "Annette Geissinger" created an unverified "LTD, PLC or Royal Charter" profile for randomly selected company "Company X"
     And "Annette Geissinger" set the company description
     And "Annette Geissinger" decided to verify her identity with a verification letter
     And "Annette Geissinger" signed out from SSO/great.gov.uk account
