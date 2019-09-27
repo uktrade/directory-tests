@@ -53,6 +53,7 @@ SELECTORS = {
             is_visible=False,
             autocomplete_callback=enrol_autocomplete_company_name,
         ),
+        "i cannot find my business name": Selector(By.CSS_SELECTOR, "details summary", type=ElementType.LINK),
         "submit": Selector(
             By.CSS_SELECTOR, "form button.button", type=ElementType.BUTTON
         ),
