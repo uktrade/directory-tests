@@ -44,3 +44,10 @@ Feature: Trade Profile
 
     When "Annette Geissinger" goes to "Profile - Business Profile" page
     Then "Annette Geissinger" should be told that business profile is ready to be published
+
+
+  @overseas-company
+  @profile
+  Scenario: Users can't create profile for an "Overseas company"
+    Given "Annette" decided to create an "Overseas company" profile for a random company "X"
+    Then "Annette" should be on "Profile - Overseas business cannot create an account" page
