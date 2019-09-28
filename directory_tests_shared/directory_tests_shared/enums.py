@@ -4,14 +4,81 @@ from random import choice
 
 
 class BusinessType(Enum):
-    COMPANIES_HOUSE = "companies-house-company"
-    SOLE_TRADED = "non-companies-house-company"
-    TAX_PAYER = "not-company"
-    OVERSEAS_COMPANY = "overseas-company"
+    COMPANIES_HOUSE = "LTD, PLC or Royal Charter"
+    INDIVIDUAL = "Individual"
+    OVERSEAS_COMPANY = "Overseas company"
+
+    SOLE_TRADER = "Sole trader"
+    CHARITY = "Charity"
+    PARTNERSHIP = "Partnership"
+    OTHER = "Other UK business not registered in Companies House"
+
+    ISD_ONLY = "ISD only"
+    ISD_AND_TRADE = "ISD & Trade"
+    UNPUBLISHED_ISD_AND_PUBLISHED_TRADE = "unpublished ISD & published Trade"
 
     @classmethod
     def random(cls):
         return choice(list(cls.__members__.values()))
+
+
+class Account:
+    published = False
+    published_isd = False
+    verified = False
+    business_type = None
+
+    def __init__(self, account_description: str):
+        if account_description.startswith("published"):
+            self.published = True
+            self.verified = True
+        elif account_description.startswith("unpublished verified"):
+            self.published = False
+            self.verified = True
+        elif account_description.startswith("unpublished unverified"):
+            self.published = False
+            self.verified = False
+        elif account_description == "verified individual":
+            self.published = False
+            self.verified = True
+        elif account_description == "unverified individual":
+            self.published = False
+            self.verified = False
+        elif account_description == f"published {BusinessType.ISD_ONLY.value}":
+            self.published = False
+            self.published_isd = True
+            self.verified = True
+        elif account_description == f"published {BusinessType.ISD_AND_TRADE.value}":
+            self.published = True
+            self.published_isd = True
+            self.verified = True
+        elif account_description == BusinessType.UNPUBLISHED_ISD_AND_PUBLISHED_TRADE.value:
+            self.published = True
+            self.published_isd = False
+            self.verified = True
+        else:
+            LookupError(f"Could not identify state of account in account description: '{account_description}'")
+
+        if BusinessType.COMPANIES_HOUSE.value in account_description:
+            self.business_type = BusinessType.COMPANIES_HOUSE
+        elif BusinessType.SOLE_TRADER.value in account_description:
+            self.business_type = BusinessType.SOLE_TRADER
+        elif BusinessType.CHARITY.value in account_description:
+            self.business_type = BusinessType.CHARITY
+        elif BusinessType.PARTNERSHIP.value in account_description:
+            self.business_type = BusinessType.PARTNERSHIP
+        elif BusinessType.OTHER.value in account_description:
+            self.business_type = BusinessType.OTHER
+        elif BusinessType.INDIVIDUAL.value in account_description:
+            self.business_type = BusinessType.INDIVIDUAL
+        elif BusinessType.ISD_ONLY.value in account_description:
+            self.business_type = BusinessType.ISD_ONLY
+        elif BusinessType.ISD_AND_TRADE.value in account_description:
+            self.business_type = BusinessType.ISD_AND_TRADE
+        elif BusinessType.UNPUBLISHED_ISD_AND_PUBLISHED_TRADE.value in account_description:
+            self.business_type = BusinessType.UNPUBLISHED_ISD_AND_PUBLISHED_TRADE
+        else:
+            raise LookupError(f"Could not identify business type in account description: '{account_description}'")
 
 
 class Service(Enum):
