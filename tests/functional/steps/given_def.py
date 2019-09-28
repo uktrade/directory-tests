@@ -34,6 +34,7 @@ from tests.functional.steps.when_impl import (
     profile_create_verified_and_published_business_profile,
     profile_create_verified_yet_unpublished_business_profile,
     profile_edit_business_details,
+    profile_enrol_user,
     profile_supplier_uploads_logo,
     profile_update_company_details,
     reg_create_standalone_unverified_sso_account,
@@ -243,7 +244,7 @@ def given_actor_sends_a_verification_letter(context, actor_alias):
 
 
 @given('"{supplier_alias}" created an unverified "{business_type}" profile for randomly selected company "{company_alias}"')
-def given_unverified_profile_new_reg_flow(context: Context, business_type: str, supplier_alias: str, company_alias: str):
+def given_unverified_profile_new_reg_flow(context: Context, supplier_alias: str, business_type: str, company_alias: str):
     profile_create_unverified_profile(
         context, supplier_alias, business_type, company_alias
     )
@@ -266,3 +267,10 @@ def given_supplier_decided_to_verify_with_letter(context, supplier_alias):
 @given('"{actor_alias}" updates company\'s details')
 def step_impl(context: Context, actor_alias: str):
     profile_update_company_details(context, actor_alias, context.table)
+
+
+@given('"{actor_alias}" decided to create an "{account_type}" profile for a random company "{company_alias}"')
+@given('"{actor_alias}" created an "{account_type}" profile for a random company "{company_alias}"')
+@given('"{actor_alias}" created a "{account_type}" profile for a random company "{company_alias}"')
+def given_user_created_a_profile(context: Context, actor_alias: str, account_type: str, company_alias: str):
+    profile_enrol_user(context, actor_alias, account_type, company_alias)

@@ -25,7 +25,7 @@ from behave.model import Table
 from behave.runner import Context
 from scrapy import Selector
 from directory_tests_shared import URLs
-from directory_tests_shared.enums import BusinessType, Language
+from directory_tests_shared.enums import Account, BusinessType, Language
 from directory_tests_shared.utils import rare_word, sentence
 from tests.functional.common import DETAILS, PROFILES
 from tests.functional.pages import (
@@ -230,7 +230,7 @@ def profile_provide_missing_details_as_an_individual(
         context: Context, supplier_alias: str
 ):
     actor = context.get_actor(supplier_alias)
-    individual = Company(business_type=BusinessType.TAX_PAYER.value)
+    individual = Company(business_type=BusinessType.INDIVIDUAL.value)
 
     # Ensure we start on the "Update your details (as an Individual)" page
     profile.individual_update_your_details.should_be_here(context.response)
@@ -2668,6 +2668,66 @@ def enrol_user(context: Context, actor_alias: str, business_type: str, company_a
         f"'{actor.alias}' created an unverified Business Profile for "
         f"'{company.title} - {company.number}'"
     )
+
+
+def profile_enrol_companies_house_registered_company(
+        context: Context, actor: Actor, company: Company, account: Account
+):
+    pass
+
+
+def profile_enrol_sole_trader(context: Context, actor: Actor, company: Company, account: Account):
+    pass
+
+
+def profile_enrol_individual(context: Context, actor: Actor, company: Company):
+    pass
+
+
+def profile_enrol_overseas_company(context: Context, actor: Actor, company: Company):
+    context.response = profile.select_business_type.submit(actor, company)
+
+
+def profile_create_isd_profile(context: Context, actor: Actor, company: Company, account: Account):
+    pass
+
+
+def profile_enrol_user(
+        context: Context,
+        actor_alias: str,
+        account_description: str,
+        company_alias: str,
+):
+    account = Account(account_description)
+
+    if not context.get_actor(actor_alias):
+        context.add_actor(unauthenticated_supplier(actor_alias))
+    actor = context.get_actor(actor_alias)
+
+    if account.business_type is BusinessType.OVERSEAS_COMPANY:
+        company = Company(business_type=BusinessType.OVERSEAS_COMPANY)
+    else:
+        find_unregistered_company(context, actor_alias, company_alias)
+        context.set_company_details(alias=company_alias, business_type=account.business_type)
+        company = context.get_company(company_alias)
+    logging.debug(f"Found matching account type: {account}")
+
+    if account.business_type is BusinessType.COMPANIES_HOUSE:
+        profile_enrol_companies_house_registered_company(context, actor, company, account)
+    elif account.business_type in [
+        BusinessType.SOLE_TRADER, BusinessType.CHARITY, BusinessType.PARTNERSHIP, BusinessType.OTHER
+    ]:
+        profile_enrol_sole_trader(context, actor, company, account)
+    elif account.business_type is BusinessType.INDIVIDUAL:
+        profile_enrol_individual(context, actor, account)
+    elif account.business_type is BusinessType.OVERSEAS_COMPANY:
+        profile_enrol_overseas_company(context, actor, company)
+    elif account.business_type in [
+        BusinessType.ISD_ONLY, BusinessType.ISD_AND_TRADE, BusinessType.UNPUBLISHED_ISD_AND_PUBLISHED_TRADE
+    ]:
+        profile_create_isd_profile(context, actor, company, account)
+    else:
+        raise KeyError(f"Unknown business type: '{account_description}'")
 
 
 def isd_enrol_user(context: Context, actor_alias: str, company_alias: str):
