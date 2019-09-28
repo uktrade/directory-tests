@@ -56,6 +56,8 @@ class Account:
             self.published = True
             self.published_isd = False
             self.verified = True
+        elif account_description == BusinessType.OVERSEAS_COMPANY.value:
+            self.business_type = BusinessType.OVERSEAS_COMPANY
         else:
             LookupError(f"Could not identify state of account in account description: '{account_description}'")
 
@@ -71,6 +73,8 @@ class Account:
             self.business_type = BusinessType.OTHER
         elif BusinessType.INDIVIDUAL.value in account_description:
             self.business_type = BusinessType.INDIVIDUAL
+        elif BusinessType.OVERSEAS_COMPANY.value in account_description:
+            self.business_type = BusinessType.OVERSEAS_COMPANY
         elif BusinessType.ISD_ONLY.value in account_description:
             self.business_type = BusinessType.ISD_ONLY
         elif BusinessType.ISD_AND_TRADE.value in account_description:
