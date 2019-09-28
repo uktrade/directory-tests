@@ -2,7 +2,7 @@
 """Profile - Select Business Type"""
 from requests import Response, Session
 
-from directory_tests_shared import PageType, Service, URLs
+from directory_tests_shared import PageType, Service, URLs, BusinessType
 from tests.functional.utils.context_utils import Actor, Company
 from tests.functional.utils.request import Method, check_response, make_request
 
@@ -17,6 +17,16 @@ EXPECTED_STRINGS = [
     "I'm a UK taxpayer but do not represent a business",
     "My business or organisation is not registered in the UK",
 ]
+
+BUSINESS_TYPES = {
+    BusinessType.COMPANIES_HOUSE: "companies-house-company",
+    BusinessType.SOLE_TRADER: "non-companies-house-company",
+    BusinessType.CHARITY: "non-companies-house-company",
+    BusinessType.PARTNERSHIP: "non-companies-house-company",
+    BusinessType.OTHER: "non-companies-house-company",
+    BusinessType.INDIVIDUAL: "not-company",
+    BusinessType.OVERSEAS_COMPANY: "overseas-company",
+}
 
 
 def go_to(session: Session) -> Response:
@@ -33,7 +43,7 @@ def submit(actor: Actor, company: Company) -> Response:
     assert company.business_type
     data = {
         "csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
-        "choice": company.business_type,
+        "choice": BUSINESS_TYPES[company.business_type],
     }
 
     return make_request(Method.POST, URL, session=session, headers=headers, data=data)
