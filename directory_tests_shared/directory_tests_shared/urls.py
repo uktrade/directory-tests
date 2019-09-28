@@ -599,6 +599,7 @@ class URLs(Enum):
         "enrol/business-type/companies-house/personal-details/"
     )
     PROFILE_ENROL_FINISHED = ProfileUrl("enrol/business-type/companies-house/finished/")
+    PROFILE_ENROL_OVERSEAS_BUSINESS = ProfileUrl("enrol/business-type/overseas-business/")
     PROFILE_ADMIN = ProfileUrl("business-profile/admin/")
     PROFILE_ADMIN_REMOVE_PROFILE_FROM_ACCOUNT = ProfileUrl(
         "business-profile/admin/disconnect/"
