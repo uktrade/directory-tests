@@ -1,8 +1,8 @@
+@profile
 Feature: Trade Profile
 
 
   @ED-2094
-  @profile
   @verification
   @letter
   @captcha
@@ -24,7 +24,6 @@ Feature: Trade Profile
 
 
   @ED-2094
-  @profile
   @verification
   @letter
   @captcha
@@ -47,14 +46,11 @@ Feature: Trade Profile
 
 
   @overseas-company
-  @profile
   Scenario: Users can't create profile for an "Overseas company"
     Given "Annette" decided to create an "Overseas company" profile for a random company "X"
     Then "Annette" should be on "Profile - Overseas business cannot create an account" page
 
 
-  @wip
-  @profile
   @individual
   @captcha
   @dev-only
@@ -72,10 +68,6 @@ Feature: Trade Profile
       | unverified Individual |
 
 
-  @wip
-  @profile
-  @verification
-  @letter
   @captcha
   @dev-only
   @fake-sso-email-verification
