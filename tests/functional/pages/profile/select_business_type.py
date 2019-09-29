@@ -3,7 +3,7 @@
 from requests import Response, Session
 
 from directory_tests_shared import PageType, Service, URLs, BusinessType
-from tests.functional.utils.context_utils import Actor, Company
+from tests.functional.utils.context_utils import Actor
 from tests.functional.utils.request import Method, check_response, make_request
 
 SERVICE = Service.PROFILE
@@ -37,13 +37,12 @@ def should_be_here(response: Response):
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
 
 
-def submit(actor: Actor, company: Company) -> Response:
+def submit(actor: Actor, business_type: BusinessType) -> Response:
     session = actor.session
     headers = {"Referer": URL}
-    assert company.business_type
     data = {
         "csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
-        "choice": BUSINESS_TYPES[company.business_type],
+        "choice": BUSINESS_TYPES[business_type],
     }
 
     return make_request(Method.POST, URL, session=session, headers=headers, data=data)

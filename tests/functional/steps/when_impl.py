@@ -230,7 +230,7 @@ def profile_provide_missing_details_as_an_individual(
         context: Context, supplier_alias: str
 ):
     actor = context.get_actor(supplier_alias)
-    individual = Company(business_type=BusinessType.INDIVIDUAL.value)
+    individual = Company(business_type=BusinessType.INDIVIDUAL)
 
     # Ensure we start on the "Update your details (as an Individual)" page
     profile.individual_update_your_details.should_be_here(context.response)
@@ -238,7 +238,7 @@ def profile_provide_missing_details_as_an_individual(
     context.response = profile.select_business_type.go_to(actor.session)
     extract_and_set_csrf_middleware_token(context, context.response, supplier_alias)
 
-    context.response = profile.select_business_type.submit(actor, company=individual)
+    context.response = profile.select_business_type.submit(actor, individual.business_type)
 
     profile.individual_enter_your_personal_details.should_be_here(context.response)
     extract_and_set_csrf_middleware_token(context, context.response, supplier_alias)
@@ -2536,7 +2536,7 @@ def enrol_select_business_type(context: Context, actor_alias: str, company_alias
         company = context.get_company(company_alias)
 
     logging.debug("# 2) submit 'select business type' form")
-    response = profile.select_business_type.submit(actor, company)
+    response = profile.select_business_type.submit(actor, company.business_type)
     context.response = response
     token = extract_csrf_middleware_token(response)
     context.update_actor(actor.alias, csrfmiddlewaretoken=token)
