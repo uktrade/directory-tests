@@ -68,15 +68,16 @@ def submit(actor: Actor, company: Company) -> Response:
 
     headers = {"Referer": URL}
     files = {
-        "csrfmiddlewaretoken": (None, actor.csrfmiddlewaretoken),
-        "non_companies_house_enrolment_view-current_step": (None, "address-search"),
-        "address-search-company_type": (None, BUSINESS_CATEGORY[company.business_type]),
-        "address-search-company_name": (None, company.title),
-        "address-search-postal_code": (None, postcode),
-        "address-search-address": (None, address.replace(",", "\n")),
-        "address-search-sectors": (None, random.choice(SECTORS)),
-        "address-search-website": (None, "https://dit.automated.tests"),
+        "csrfmiddlewaretoken": actor.csrfmiddlewaretoken,
+        "non_companies_house_enrolment_view-current_step": "address-search",
+        "address-search-company_type": BUSINESS_CATEGORY[company.business_type],
+        "address-search-company_name": company.title,
+        "address-search-postal_code": postcode,
+        "address-search-address": address.replace(",", "\n"),
+        "address-search-sectors": random.choice(SECTORS),
+        "address-search-website": "https://dit.automated.tests",
     }
 
-    # passing data as files will send it as "multipart/form-data" instead of default "application/x-www-form-urlencoded"
-    return make_request(Method.POST, URL, session=session, headers=headers, files=files)
+    return make_request(
+        Method.POST, URL, session=session, headers=headers, files=files, no_filename_in_multipart_form_data=True
+    )

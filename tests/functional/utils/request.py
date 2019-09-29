@@ -94,6 +94,7 @@ def make_request(
     connect_timeout: float = 3.05,
     read_timeout: int = 60,
     use_basic_auth: bool = USE_BASIC_AUTH,
+    no_filename_in_multipart_form_data: bool = False,
 ) -> Response:
     """Make a desired HTTP request using optional parameters, headers and data.
 
@@ -108,8 +109,6 @@ def make_request(
     :param params: (optional) query parameters
     :param headers: (optional) extra request headers. Will not be persisted
                     across requests, even if using a session.
-    :param cookies: (optional) extra request cookies. Will not be persisted
-                    across requests, even if using a session.
     :param data: (optional) data to send
     :param files: (optional) a dict with a file.
                   For more details please refer to:
@@ -117,7 +116,14 @@ def make_request(
     :param allow_redirects: Follow or do not follow redirects
     :param auth: (optional) authentication tuple, e.g. ("username", "password")
     :param trim: (optional) trim long request body/response content if True
-    :return: a response object
+    :param cookies: (optional) extra request cookies. Will not be persisted
+                    across requests, even if using a session.
+    :param connect_timeout: (optional) the number of seconds Requests will wait for your client to establish
+                            a connection to a remote machine
+    :param read_timeout: (optional) the number of seconds the client will wait for the server to send a response
+    :param use_basic_auth: (optional) use default basic auth credentials
+    :param no_filename_in_multipart_form_data: (optional) remove filename parameter from multipart form data
+    :return: Response
     """
     from tests.functional.utils.generic import (
         assertion_msg,
@@ -131,6 +137,13 @@ def make_request(
     if not session:
         logging.debug("Session object not provided. Will default to Requests")
     req = session or requests
+
+    if no_filename_in_multipart_form_data:
+        # in order to remove the "filename" parameter from "multipart/form-data;" request, every item from the
+        # dictionary has to have a tuple value, where the first item represents filename. If it's set to None, then
+        # no filename is sent.
+        # see: https://stackoverflow.com/a/23131823
+        files = {key: (None, value) for key, value in files.items()}
 
     if use_basic_auth:
         auth = basic_auth()
