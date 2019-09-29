@@ -113,7 +113,7 @@ def make_request(
     :param data: (optional) data to send
     :param files: (optional) a dict with a file.
                   For more details please refer to:
-                  http://docs.python-requests.org/en/master/user/quickstart/#post-a-multipart-encoded-file
+                  https://requests.kennethreitz.org//en/master/user/quickstart/#post-a-multipart-encoded-file
     :param allow_redirects: Follow or do not follow redirects
     :param auth: (optional) authentication tuple, e.g. ("username", "password")
     :param trim: (optional) trim long request body/response content if True
