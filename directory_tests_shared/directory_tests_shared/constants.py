@@ -160,6 +160,20 @@ COUNTRIES = {
     "United States": "US",
 }
 
+POSTCODES = [
+    "LE4 9HA",
+    "WC1N 3AX",
+    "E13 0LD",
+    "HP10 9AS",
+    "IV30 5YE",
+    "ML11 8AG",
+    "RG26 5NW",
+    "CB5 8SW",
+    "W1W 7LJ",
+    "LL69 9YN",
+    "TN20 6HN",
+]
+
 # Absolute path to a directory with test images
 test_files_path_browser_tests = os.path.abspath(os.path.join("..", "files"))
 test_files_path_other_tests = os.path.abspath(os.path.join("tests", "files"))
