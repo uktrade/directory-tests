@@ -554,6 +554,10 @@ class URLs(Enum):
         "api/v1/companies-house-search/",
         template="api/v1/companies-house-search/?term={term}",
     )
+    PROFILE_API_POSTCODE_SEARCH = ProfileUrl(
+        "api/v1/postcode-search/?postcode={postcode}",
+        template="api/v1/postcode-search/?postcode={postcode}",
+    )
     PROFILE_HEALTHCHECK = ProfileUrl("healthcheck/")
     PROFILE_HEALTHCHECK_PING = ProfileUrl("healthcheck/ping/")
     PROFILE_SOO = ProfileUrl("selling-online-overseas/")
@@ -570,22 +574,9 @@ class URLs(Enum):
     )
     PROFILE_ACCOUNT_ADD_COLLABORATOR = ProfileUrl("business-profile/admin/invite/")
     PROFILE_ENROL = ProfileUrl("enrol/")
-    PROFILE_ENROL_INDIVIDUAL_UPDATE_YOUR_DETAILS = ProfileUrl(
-        "enrol/?backfill-details-intent=true"
-    )
-    PROFILE_ENROL_INDIVIDUAL_ENTER_YOUR_PERSONAL_DETAILS = ProfileUrl(
-        "enrol/business-type/individual/personal-details/"
-    )
-    PROFILE_ENROL_INDIVIDUAL_FINISHED = ProfileUrl(
-        "enrol/business-type/individual/finished/"
-    )
-    PROFILE_ENROL_SOLE_TRADER_ENTER_BUSINESS_DETAILS = ProfileUrl(
-        "enrol/business-type/non-companies-house-company/address-search/"
-    )
     PROFILE_ENROL_SELECT_BUSINESS_TYPE = ProfileUrl("enrol/business-type/")
-    PROFILE_ENROL_USER_ACCOUNT = ProfileUrl(
-        "enrol/business-type/companies-house/user-account/"
-    )
+
+    PROFILE_ENROL_USER_ACCOUNT = ProfileUrl("enrol/business-type/companies-house/user-account/")
     PROFILE_ENROL_EMAIL_VERIFICATION = ProfileUrl(
         "enrol/business-type/companies-house/verification/"
     )
@@ -599,7 +590,37 @@ class URLs(Enum):
         "enrol/business-type/companies-house/personal-details/"
     )
     PROFILE_ENROL_FINISHED = ProfileUrl("enrol/business-type/companies-house/finished/")
+
+    PROFILE_ENROL_NON_CH_COMPANY_ENTER_USER_NAME_AND_PASSWORD = ProfileUrl(
+        "enrol/business-type/non-companies-house-company/user-account/"
+    )
+    PROFILE_ENROL_NON_CH_COMPANY_EMAIL_VERIFICATION = ProfileUrl(
+        "enrol/business-type/non-companies-house-company/verification/"
+    )
+    PROFILE_ENROL_NON_CH_COMPANY_ENTER_BUSINESS_DETAILS = ProfileUrl(
+        "enrol/business-type/non-companies-house-company/address-search/"
+    )
+    PROFILE_ENROL_NON_CH_COMPANY_ENTER_PERSONAL_DETAILS = ProfileUrl(
+        "enrol/business-type/non-companies-house-company/personal-details/"
+    )
+    PROFILE_ENROL_NON_CH_COMPANY_FINISHED = ProfileUrl("enrol/business-type/non-companies-house/finished/")
+
+    PROFILE_ENROL_INDIVIDUAL_ENTER_YOUR_EMAIL_AND_PASSWORD = ProfileUrl(
+        "enrol/business-type/individual/user-account/"
+    )
+    PROFILE_ENROL_INDIVIDUAL_EMAIL_VERIFICATION = ProfileUrl("enrol/business-type/individual/verification/")
+    PROFILE_ENROL_INDIVIDUAL_UPDATE_YOUR_DETAILS = ProfileUrl(
+        "enrol/?backfill-details-intent=true"
+    )
+    PROFILE_ENROL_INDIVIDUAL_ENTER_YOUR_PERSONAL_DETAILS = ProfileUrl(
+        "enrol/business-type/individual/personal-details/"
+    )
+    PROFILE_ENROL_INDIVIDUAL_FINISHED = ProfileUrl(
+        "enrol/business-type/individual/finished/"
+    )
+
     PROFILE_ENROL_OVERSEAS_BUSINESS = ProfileUrl("enrol/business-type/overseas-business/")
+
     PROFILE_ADMIN = ProfileUrl("business-profile/admin/")
     PROFILE_ADMIN_REMOVE_PROFILE_FROM_ACCOUNT = ProfileUrl(
         "business-profile/admin/disconnect/"

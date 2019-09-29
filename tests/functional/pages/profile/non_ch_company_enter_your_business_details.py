@@ -18,7 +18,7 @@ from tests.functional.utils.request import (
 SERVICE = Service.PROFILE
 NAME = "Non Companies House company enter your business details"
 TYPE = PageType.FORM
-URL = URLs.PROFILE_ENROL_SOLE_TRADER_ENTER_BUSINESS_DETAILS.absolute
+URL = URLs.PROFILE_ENROL_NON_CH_COMPANY_ENTER_BUSINESS_DETAILS.absolute
 EXPECTED_STRINGS = [
     "I'm a sole trader or represent another type of UK business not registered with Companies House",
     "Enter your business details",

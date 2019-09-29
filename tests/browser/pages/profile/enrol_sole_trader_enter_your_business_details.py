@@ -30,7 +30,7 @@ from pages.profile.autocomplete_callbacks import enrol_autocomplete_company_name
 NAME = "Enter your business details (Sole trader or other type of business)"
 SERVICE = Service.PROFILE
 TYPE = "Enrol"
-URL = URLs.PROFILE_ENROL_SOLE_TRADER_ENTER_BUSINESS_DETAILS.absolute
+URL = URLs.PROFILE_ENROL_NON_CH_COMPANY_ENTER_BUSINESS_DETAILS.absolute
 PAGE_TITLE = ""
 
 AUTOCOMPLETION = Selector(By.CSS_SELECTOR, "ul.SelectiveLookupDisplay")
