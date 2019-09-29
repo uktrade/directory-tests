@@ -2671,24 +2671,58 @@ def enrol_user(context: Context, actor_alias: str, business_type: str, company_a
 
 
 def profile_enrol_companies_house_registered_company(
-        context: Context, actor: Actor, company: Company, account: Account
+        context: Context, actor: Actor, account: Account, company: Company
 ):
     pass
 
 
-def profile_enrol_sole_trader(context: Context, actor: Actor, company: Company, account: Account):
-    pass
+def profile_enrol_sole_trader(context: Context, actor: Actor, account: Account, company: Company):
+    context.response = profile.select_business_type.submit(actor, account.business_type)
+    profile.non_ch_company_enter_your_email_and_password.should_be_here(context.response)
+
+    extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
+    context.response = profile.non_ch_company_enter_your_email_and_password.submit(actor)
+    profile.enter_email_verification_code.should_be_here(context.response)
+
+    extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
+    enrol_get_email_verification_code(context, actor.alias)
+    actor = context.get_actor(actor.alias)
+    context.response = profile.non_ch_company_enter_email_verification_code.submit(actor)
+
+    profile.non_ch_company_enter_your_business_details.should_be_here(context.response)
+    extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
+    context.response = profile.non_ch_company_enter_your_business_details.submit(actor, company)
+    profile.non_ch_company_enter_your_personal_details.should_be_here(context.response)
+
+    extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
+    context.response = profile.non_ch_company_enter_your_personal_details.submit(actor)
+    profile.non_ch_company_enrolment_finished.should_be_here(context.response)
 
 
-def profile_enrol_individual(context: Context, actor: Actor, company: Company):
-    pass
+def profile_enrol_individual(context: Context, actor: Actor, account: Account):
+    context.response = profile.select_business_type.submit(actor, account.business_type)
+    profile.individual_enter_your_email_and_password.should_be_here(context.response)
+
+    extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
+    context.response = profile.individual_enter_your_email_and_password.submit(actor)
+    profile.individual_enter_email_verification_code.should_be_here(context.response)
+
+    extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
+    enrol_get_email_verification_code(context, actor.alias)
+    actor = context.get_actor(actor.alias)
+    context.response = profile.individual_enter_email_verification_code.submit(actor)
+    profile.individual_enter_your_personal_details.should_be_here(context.response)
+
+    extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
+    context.response = profile.individual_enter_your_personal_details.submit(actor)
+    profile.individual_enrolment_finished.should_be_here(context.response)
 
 
-def profile_enrol_overseas_company(context: Context, actor: Actor, company: Company):
-    context.response = profile.select_business_type.submit(actor, company)
+def profile_enrol_overseas_company(context: Context, actor: Actor, account: Account):
+    context.response = profile.select_business_type.submit(actor, account.business_type)
 
 
-def profile_create_isd_profile(context: Context, actor: Actor, company: Company, account: Account):
+def profile_create_isd_profile(context: Context, actor: Actor, account: Account, company: Company):
     pass
 
 
@@ -2704,30 +2738,26 @@ def profile_enrol_user(
         context.add_actor(unauthenticated_supplier(actor_alias))
     actor = context.get_actor(actor_alias)
 
-    if account.business_type is BusinessType.OVERSEAS_COMPANY:
-        company = Company(business_type=BusinessType.OVERSEAS_COMPANY)
-    else:
+    if account.business_type not in [BusinessType.INDIVIDUAL, BusinessType.OVERSEAS_COMPANY]:
         find_unregistered_company(context, actor_alias, company_alias)
         context.set_company_details(alias=company_alias, business_type=account.business_type)
         company = context.get_company(company_alias)
     logging.debug(f"Found matching account type: {account}")
 
     if account.business_type is BusinessType.COMPANIES_HOUSE:
-        profile_enrol_companies_house_registered_company(context, actor, company, account)
-    elif account.business_type in [
+        profile_enrol_companies_house_registered_company(context, actor, account, company)
+    if account.business_type in [
         BusinessType.SOLE_TRADER, BusinessType.CHARITY, BusinessType.PARTNERSHIP, BusinessType.OTHER
     ]:
-        profile_enrol_sole_trader(context, actor, company, account)
-    elif account.business_type is BusinessType.INDIVIDUAL:
+        profile_enrol_sole_trader(context, actor, account, company)
+    if account.business_type is BusinessType.INDIVIDUAL:
         profile_enrol_individual(context, actor, account)
-    elif account.business_type is BusinessType.OVERSEAS_COMPANY:
-        profile_enrol_overseas_company(context, actor, company)
-    elif account.business_type in [
+    if account.business_type is BusinessType.OVERSEAS_COMPANY:
+        profile_enrol_overseas_company(context, actor, account)
+    if account.business_type in [
         BusinessType.ISD_ONLY, BusinessType.ISD_AND_TRADE, BusinessType.UNPUBLISHED_ISD_AND_PUBLISHED_TRADE
     ]:
-        profile_create_isd_profile(context, actor, company, account)
-    else:
-        raise KeyError(f"Unknown business type: '{account_description}'")
+        profile_create_isd_profile(context, actor, account, company)
 
 
 def isd_enrol_user(context: Context, actor_alias: str, company_alias: str):
