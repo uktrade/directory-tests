@@ -11,9 +11,11 @@ NAME = "Enrolment (finished)"
 TYPE = PageType.CONFIRMATION
 URL = URLs.PROFILE_ENROL_NON_CH_COMPANY_FINISHED.absolute
 EXPECTED_STRINGS = [
-    "Complete",
+    "Account created",
     "Your account has been created",
+    "Next steps",
     "You can now",
+    "publish your business profile",
     "find export opportunities",
     "sell online overseas",
     "find events and visits",
