@@ -52,19 +52,37 @@ Feature: Trade Profile
 
 
   @individual
+  @verified
   @captcha
   @dev-only
   @fake-sso-email-verification
-  Scenario Outline: Individuals should not see any business details on their Profile page
+  Scenario Outline: "<trade>" should not see any business details on their Profile page and options to manage profile
     Given "Annette" created an "<trade>" profile for a random company "X"
 
     When "Annette" goes to "Profile - Business Profile" page
 
-    Then "Annette" should see "Create business profile" on the page
+    Then "Annette" should be on "Profile - Business Profile (get a profile)" page
+    And "Annette" should not see options to manage profile
 
     Examples: business types
       | trade                 |
       | verified Individual   |
+
+
+  @individual
+  @unverified
+  @captcha
+  @dev-only
+  @fake-sso-email-verification
+  Scenario Outline: "<trade>" should not be able to sign in and get to their profile
+    Given "Annette" created an "<trade>" profile for a random company "X"
+
+    When "Annette" attempts to sign in to SSO/great.gov.uk account
+
+    Then "Annette" should be on "SSO - Verify your email" page
+
+    Examples: business types
+      | trade                 |
       | unverified Individual |
 
 
