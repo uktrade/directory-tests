@@ -26,6 +26,7 @@ class Account:
     publish = False
     publish_isd = False
     verify = False
+    verify_email = False
     business_type = None
     description = None
 
@@ -43,9 +44,19 @@ class Account:
         elif self.description == "verified individual":
             self.publish = False
             self.verify = True
+            self.verify_email = True
         elif self.description == "unverified individual":
             self.publish = False
             self.verify = False
+            self.verify_email = False
+        elif self.description.startswith("verified sso/great.gov.uk account for"):
+            self.publish = False
+            self.verify = False
+            self.verify_email = True
+        elif self.description.startswith("unverified sso/great.gov.uk account for"):
+            self.publish = False
+            self.verify = False
+            self.verify_email = False
         elif self.description == f"published {BusinessType.ISD_ONLY.value}":
             self.publish = False
             self.publish_isd = True
