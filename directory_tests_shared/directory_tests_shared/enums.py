@@ -23,41 +23,41 @@ class BusinessType(Enum):
 
 
 class Account:
-    published = False
-    published_isd = False
-    verified = False
+    publish = False
+    publish_isd = False
+    verify = False
     business_type = None
     description = None
 
     def __init__(self, account_description: str):
         self.description = account_description.lower()
         if self.description.startswith("published"):
-            self.published = True
-            self.verified = True
+            self.publish = True
+            self.verify = True
         elif self.description.startswith("unpublished verified"):
-            self.published = False
-            self.verified = True
+            self.publish = False
+            self.verify = True
         elif self.description.startswith("unpublished unverified"):
-            self.published = False
-            self.verified = False
+            self.publish = False
+            self.verify = False
         elif self.description == "verified individual":
-            self.published = False
-            self.verified = True
+            self.publish = False
+            self.verify = True
         elif self.description == "unverified individual":
-            self.published = False
-            self.verified = False
+            self.publish = False
+            self.verify = False
         elif self.description == f"published {BusinessType.ISD_ONLY.value}":
-            self.published = False
-            self.published_isd = True
-            self.verified = True
+            self.publish = False
+            self.publish_isd = True
+            self.verify = True
         elif self.description == f"published {BusinessType.ISD_AND_TRADE.value}":
-            self.published = True
-            self.published_isd = True
-            self.verified = True
+            self.publish = True
+            self.publish_isd = True
+            self.verify = True
         elif self.description == BusinessType.UNPUBLISHED_ISD_AND_PUBLISHED_TRADE.value:
-            self.published = True
-            self.published_isd = False
-            self.verified = True
+            self.publish = True
+            self.publish_isd = False
+            self.verify = True
         elif self.description == BusinessType.OVERSEAS_COMPANY.value:
             self.business_type = BusinessType.OVERSEAS_COMPANY
         else:
@@ -88,8 +88,8 @@ class Account:
 
     def __str__(self) -> str:
         return (
-            f"Requested '{self.description}': business type: {self.business_type}, verified: {self.verified}, "
-            f"published: {self.published}, published ISD: {self.published_isd}"
+            f"Requested '{self.description}': business type: {self.business_type}, verified: {self.verify}, "
+            f"published: {self.publish}, published ISD: {self.publish_isd}"
         )
 
 

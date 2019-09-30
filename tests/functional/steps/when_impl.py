@@ -2683,7 +2683,7 @@ def profile_enrol_sole_trader(context: Context, actor: Actor, account: Account, 
     context.response = profile.non_ch_company_enter_your_email_and_password.submit(actor)
     profile.enter_email_verification_code.should_be_here(context.response)
 
-    if not account.verified:
+    if not account.verify:
         logging.debug(f"Won't verify account for '{actor.alias}' as '{account.description}' account was requested")
         return
     extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
@@ -2709,7 +2709,7 @@ def profile_enrol_individual(context: Context, actor: Actor, account: Account):
     context.response = profile.individual_enter_your_email_and_password.submit(actor)
     profile.individual_enter_email_verification_code.should_be_here(context.response)
 
-    if not account.verified:
+    if not account.verify:
         logging.debug(f"Won't verify account for '{actor.alias}' as '{account.description}' account was requested")
         return
     extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
