@@ -98,6 +98,8 @@ def after_scenario(context, scenario):
                 company = context.get_company(actor.company_alias)
                 if company.deleted:
                     continue
+                if not company.number:
+                    continue
                 delete_supplier_data_from_dir(company.number, context=context)
                 context.set_company_details(alias=company.alias, deleted=True)
             if scenario.status == "failed":
