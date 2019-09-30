@@ -46,9 +46,9 @@ def postcode_search(actor: Actor, postcode: str) -> dict:
     session = actor.session
     headers = {"Accept": "application/json"}
     url = URLs.PROFILE_API_POSTCODE_SEARCH.absolute_template.format(postcode=postcode)
-    logging.debug(url)
     response = make_request(Method.GET, url, session=session, headers=headers)
-    assert response.status_code == 200
+    error = f"Expected 200 OK but got {response.status_code} from {response.url}"
+    assert response.status_code == 200, error
     logging.debug(f"Found addresses for postcode: '{postcode}': {response.json()}")
     return random.choice(response.json())
 
