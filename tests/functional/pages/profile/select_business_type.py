@@ -45,4 +45,6 @@ def submit(actor: Actor, business_type: BusinessType) -> Response:
         "choice": BUSINESS_TYPES[business_type],
     }
 
-    return make_request(Method.POST, URL, session=session, headers=headers, data=data)
+    return make_request(
+        Method.POST, URL, session=session, headers=headers, files=data, no_filename_in_multipart_form_data=True
+    )

@@ -32,4 +32,6 @@ def submit(actor: Actor, company: Company) -> Response:
         "company-search-company_number": company.number,
     }
 
-    return make_request(Method.POST, URL, session=session, headers=headers, data=data)
+    return make_request(
+        Method.POST, URL, session=session, headers=headers, files=data, no_filename_in_multipart_form_data=True
+    )

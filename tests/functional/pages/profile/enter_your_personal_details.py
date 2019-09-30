@@ -5,7 +5,7 @@ from requests import Response, Session
 
 from directory_tests_shared import PageType, Service, URLs
 from tests.functional.utils.context_utils import Actor
-from tests.functional.utils.request import Method, check_response, make_request
+from tests.functional.utils.request import Method, check_response, make_request, check_url
 
 SERVICE = Service.PROFILE
 NAME = "Enter your personal details"
@@ -19,6 +19,7 @@ def go_to(session: Session) -> Response:
 
 
 def should_be_here(response: Response):
+    check_url(response, URL)
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
 
 
@@ -33,7 +34,8 @@ def submit(actor: Actor):
         "personal-details-job_title": "AUTOMATED TESTS",
         "personal-details-phone_number:": "0987654321",
         "personal-details-confirmed_is_company_representative": "on",
-        "personal-details-terms_agreed": "on",
     }
 
-    return make_request(Method.POST, URL, session=session, headers=headers, data=data)
+    return make_request(
+        Method.POST, URL, session=session, headers=headers, files=data, no_filename_in_multipart_form_data=True
+    )
