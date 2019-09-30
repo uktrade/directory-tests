@@ -35,12 +35,15 @@ class Account:
         if self.description.startswith("published"):
             self.publish = True
             self.verify = True
+            self.verify_email = True
         elif self.description.startswith("unpublished verified"):
             self.publish = False
             self.verify = True
+            self.verify_email = True
         elif self.description.startswith("unpublished unverified"):
             self.publish = False
             self.verify = False
+            self.verify_email = True
         elif self.description == "verified individual":
             self.publish = False
             self.verify = True
@@ -61,6 +64,7 @@ class Account:
             self.publish = False
             self.publish_isd = True
             self.verify = True
+            self.verify_email = True
         elif self.description == f"published {BusinessType.ISD_AND_TRADE.value}":
             self.publish = True
             self.publish_isd = True
@@ -69,6 +73,7 @@ class Account:
             self.publish = True
             self.publish_isd = False
             self.verify = True
+            self.verify_email = True
         elif self.description == BusinessType.OVERSEAS_COMPANY.value:
             self.business_type = BusinessType.OVERSEAS_COMPANY
         else:
