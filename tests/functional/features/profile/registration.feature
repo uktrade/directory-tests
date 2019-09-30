@@ -57,7 +57,7 @@ Feature: Trade Profile
   @dev-only
   @fake-sso-email-verification
   Scenario Outline: "<trade>" should not see any business details on their Profile page and options to manage profile
-    Given "Annette" created an "<trade>" profile for a random company "X"
+    Given "Annette" decided to create an "<trade>" profile
 
     When "Annette" goes to "Profile - Business Profile" page
 
@@ -75,7 +75,7 @@ Feature: Trade Profile
   @dev-only
   @fake-sso-email-verification
   Scenario Outline: "<trade>" should not be able to sign in and get to their profile
-    Given "Annette" created an "<trade>" profile for a random company "X"
+    Given "Annette" decided to create an "<trade>" profile
 
     When "Annette" attempts to sign in to SSO/great.gov.uk account
 

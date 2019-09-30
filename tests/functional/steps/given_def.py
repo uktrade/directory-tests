@@ -270,7 +270,8 @@ def step_impl(context: Context, actor_alias: str):
 
 
 @given('"{actor_alias}" decided to create an "{account_type}" profile for a random company "{company_alias}"')
+@given('"{actor_alias}" decided to create an "{account_type}" profile')
 @given('"{actor_alias}" created an "{account_type}" profile for a random company "{company_alias}"')
 @given('"{actor_alias}" created a "{account_type}" profile for a random company "{company_alias}"')
-def given_user_created_a_profile(context: Context, actor_alias: str, account_type: str, company_alias: str):
-    profile_enrol_user(context, actor_alias, account_type, company_alias)
+def given_user_created_a_profile(context: Context, actor_alias: str, account_type: str, *, company_alias: str = None):
+    profile_enrol_user(context, actor_alias, account_type, company_alias=company_alias)

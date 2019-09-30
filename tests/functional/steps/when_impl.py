@@ -2735,13 +2735,16 @@ def profile_enrol_user(
         context: Context,
         actor_alias: str,
         account_description: str,
-        company_alias: str,
+        *,
+        company_alias: str = None,
 ):
     account = Account(account_description)
     logging.debug(f"Account was identified as: {account}")
 
     if not context.get_actor(actor_alias):
         context.add_actor(unauthenticated_supplier(actor_alias))
+    if company_alias:
+        context.update_actor(actor_alias, company_alias=company_alias)
     actor = context.get_actor(actor_alias)
 
     if account.business_type not in [BusinessType.INDIVIDUAL, BusinessType.OVERSEAS_COMPANY]:
