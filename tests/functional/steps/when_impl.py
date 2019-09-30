@@ -2719,7 +2719,44 @@ def find_ch_company(alias: str, *, term: str = None, active: bool = True):
 def profile_enrol_companies_house_registered_company(
         context: Context, actor: Actor, account: Account
 ):
-    pass
+    context.response = profile.select_business_type.submit(actor, account.business_type)
+    profile.enter_your_email_and_password.should_be_here(context.response)
+
+    extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
+    context.response = profile.enter_your_email_and_password.submit(actor)
+    profile.enter_email_verification_code.should_be_here(context.response)
+
+    if not account.verify_email:
+        logging.debug(f"Won't verify email address for '{actor.alias}' as '{account.description}' was requested")
+        return
+    extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
+    enrol_get_email_verification_code(context, actor.alias)
+    actor = context.get_actor(actor.alias)
+    context.response = profile.enter_email_verification_code.submit(actor)
+    profile.enter_your_business_details.should_be_here(context.response)
+
+    company = find_ch_company(actor.company_alias)
+    context.add_company(company)
+    context.set_company_details(alias=actor.company_alias, business_type=account.business_type)
+    extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
+    context.response = profile.enter_your_business_details.submit(actor, company)
+    profile.enter_your_business_details_part_2.should_be_here(context.response)
+
+    extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
+    context.response = profile.enter_your_business_details_part_2.submit(actor, company)
+    profile.enter_your_personal_details.should_be_here(context.response)
+
+    extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
+    context.response = profile.enter_your_personal_details.submit(actor)
+    profile.enrolment_finished.should_be_here(context.response)
+
+    if not account.verify:
+        logging.debug(f"Won't verify account for '{actor.alias}' as '{account.description}' account was requested")
+        return
+
+    if not account.publish:
+        logging.debug(f"Won't publish account for '{actor.alias}' as '{account.description}' account was requested")
+        return
 
 
 def profile_enrol_sole_trader(context: Context, actor: Actor, account: Account):
@@ -2751,6 +2788,14 @@ def profile_enrol_sole_trader(context: Context, actor: Actor, account: Account):
     extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
     context.response = profile.non_ch_company_enter_your_personal_details.submit(actor)
     profile.non_ch_company_enrolment_finished.should_be_here(context.response)
+
+    if not account.verify:
+        logging.debug(f"Won't verify account for '{actor.alias}' as '{account.description}' account was requested")
+        return
+
+    if not account.publish:
+        logging.debug(f"Won't publish account for '{actor.alias}' as '{account.description}' account was requested")
+        return
 
 
 def profile_enrol_individual(context: Context, actor: Actor, account: Account):
