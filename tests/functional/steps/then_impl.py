@@ -1225,3 +1225,12 @@ def generic_language_switcher_should_be_set_to(context: Context, language: str):
             f"'{language}' was not selected in Language Switcher for following pages: {undetected_languages}"
     ):
         assert not undetected_languages
+
+
+def profile_should_not_see_options_to_manage_users(
+        context: Context, actor_alias: str
+):
+    profile.business_profile.should_not_see_options_to_manage_users(
+        context.response
+    )
+    logging.debug("%s can't see options to control user accounts", actor_alias)

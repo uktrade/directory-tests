@@ -7,7 +7,6 @@ from behave.runner import Context
 from tests.functional.steps.then_impl import (
     fab_company_should_be_verified,
     fab_should_be_asked_about_verification_form,
-    profile_should_get_request_for_becoming_owner,
     fab_should_not_see_collaborator,
     fab_should_see_case_study_error_message,
     fas_check_profiles,
@@ -39,6 +38,8 @@ from tests.functional.steps.then_impl import (
     profile_no_links_to_online_profiles_are_visible,
     profile_profile_is_published,
     profile_should_be_told_about_invalid_links,
+    profile_should_get_request_for_becoming_owner,
+    profile_should_not_see_options_to_manage_users,
     profile_should_see_all_case_studies,
     profile_should_see_company_details,
     profile_should_see_expected_error_messages,
@@ -410,3 +411,9 @@ def then_page_language_should_be_set_to(context: Context, language: str):
 @then('the language switcher on viewed pages should show "{language}" as selected language')
 def then_language_switcher_should_be_set_to(context: Context, language: str):
     generic_language_switcher_should_be_set_to(context, language)
+
+
+@then('"{actor_alias}" should not see options to manage profile')
+def then_actor_should_not_see_options_to_manage_account_users(
+        context: Context, actor_alias: str):
+    profile_should_not_see_options_to_manage_users(context, actor_alias)
