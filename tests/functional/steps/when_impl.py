@@ -657,8 +657,7 @@ def prof_attempt_to_sign_in_to_sso(context: Context, supplier_alias: str):
     context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
     # Step 3 - submit the login form
-    response = sso.login.login(actor)
-    context.response = response
+    context.response = sso.login.login(actor)
 
 
 def reg_create_standalone_unverified_sso_account(
@@ -2684,6 +2683,9 @@ def profile_enrol_sole_trader(context: Context, actor: Actor, account: Account, 
     context.response = profile.non_ch_company_enter_your_email_and_password.submit(actor)
     profile.enter_email_verification_code.should_be_here(context.response)
 
+    if not account.verified:
+        logging.debug(f"Won't verify account for '{actor.alias}' as '{account.description}' account was requested")
+        return
     extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
     enrol_get_email_verification_code(context, actor.alias)
     actor = context.get_actor(actor.alias)
@@ -2707,6 +2709,9 @@ def profile_enrol_individual(context: Context, actor: Actor, account: Account):
     context.response = profile.individual_enter_your_email_and_password.submit(actor)
     profile.individual_enter_email_verification_code.should_be_here(context.response)
 
+    if not account.verified:
+        logging.debug(f"Won't verify account for '{actor.alias}' as '{account.description}' account was requested")
+        return
     extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
     enrol_get_email_verification_code(context, actor.alias)
     actor = context.get_actor(actor.alias)
@@ -2733,6 +2738,7 @@ def profile_enrol_user(
         company_alias: str,
 ):
     account = Account(account_description)
+    logging.debug(f"Account was identified as: {account}")
 
     if not context.get_actor(actor_alias):
         context.add_actor(unauthenticated_supplier(actor_alias))
