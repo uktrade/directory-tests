@@ -98,7 +98,7 @@ Feature: Trade Profile
     Then "Annette" should be on "Profile - Enrol" page
 
     Examples: business types
-      | trade                                                                      |
+      | trade                                                                                       |
       | unverified SSO/great.gov.uk account for LTD, PLC or Royal Charter                           |
       | unverified SSO/great.gov.uk account for Sole trader                                         |
       | unverified SSO/great.gov.uk account for Charity                                             |
@@ -107,7 +107,7 @@ Feature: Trade Profile
 
     @wip
     Examples: ISD business accounts
-      | trade                                                                      |
+      | trade                                                                                       |
       | unverified SSO/great.gov.uk account for ISD only                                            |
       | unverified SSO/great.gov.uk account for ISD & Trade                                         |
 
