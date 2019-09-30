@@ -86,6 +86,34 @@ Feature: Trade Profile
       | unverified Individual |
 
 
+  @unverified
+  @captcha
+  @dev-only
+  @fake-sso-email-verification
+  Scenario Outline: Users with "<trade>" profile should not be able to view their business details but should be redirected to enrolment page
+    Given "Annette" decided to create an "<trade>" profile
+
+    When "Annette" goes to "Profile - Business Profile" page
+
+    Then "Annette" should be on "Profile - Enrol" page
+
+    Examples: business types
+      | trade                                                                      |
+      | unverified SSO/great.gov.uk account for LTD, PLC or Royal Charter                           |
+      | unverified SSO/great.gov.uk account for Sole trader                                         |
+      | unverified SSO/great.gov.uk account for Charity                                             |
+      | unverified SSO/great.gov.uk account for Partnership                                         |
+      | unverified SSO/great.gov.uk account for Other UK business not registered in Companies House |
+
+    @wip
+    Examples: ISD business accounts
+      | trade                                                                      |
+      | unverified SSO/great.gov.uk account for ISD only                                            |
+      | unverified SSO/great.gov.uk account for ISD & Trade                                         |
+
+
+  @wip
+  @verified
   @captcha
   @dev-only
   @fake-sso-email-verification
@@ -103,20 +131,24 @@ Feature: Trade Profile
       | unpublished unverified Charity                                             | UK business not registered in Companies House |
       | unpublished unverified Partnership                                         | UK business not registered in Companies House |
       | unpublished unverified Other UK business not registered in Companies House | UK business not registered in Companies House |
-      | unpublished unverified ISD only                                            | ISD Company                                   |
-      | unpublished unverified ISD & Trade                                         | ISD Company                                   |
       | unpublished verified LTD, PLC or Royal Charter                             | UK business registered in Companies House     |
       | unpublished verified Sole trader                                           | UK business not registered in Companies House |
       | unpublished verified Charity                                               | UK business not registered in Companies House |
       | unpublished verified Partnership                                           | UK business not registered in Companies House |
       | unpublished verified Other UK business not registered in Companies House   | UK business not registered in Companies House |
-      | unpublished verified ISD only                                              | ISD Company                                   |
-      | unpublished verified ISD & Trade                                           | ISD Company                                   |
       | published LTD, PLC or Royal Charter                                        | UK business registered in Companies House     |
       | published Sole trader                                                      | UK business not registered in Companies House |
       | published Charity                                                          | UK business not registered in Companies House |
       | published Partnership                                                      | UK business not registered in Companies House |
       | published Other UK business not registered in Companies House              | UK business not registered in Companies House |
+
+    @wip
+    Examples: ISD business accounts
+      | trade                                                                      | expected business classification              |
       | published ISD only                                                         | ISD Company                                   |
       | published ISD & Trade                                                      | ISD Company                                   |
+      | unpublished verified ISD only                                              | ISD Company                                   |
+      | unpublished verified ISD & Trade                                           | ISD Company                                   |
       | unpublished ISD & published Trade                                          | ISD Company                                   |
+      | unpublished unverified ISD only                                            | ISD Company                                   |
+      | unpublished unverified ISD & Trade                                         | ISD Company                                   |
