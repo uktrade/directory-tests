@@ -27,62 +27,70 @@ class Account:
     published_isd = False
     verified = False
     business_type = None
+    description = None
 
     def __init__(self, account_description: str):
-        if account_description.startswith("published"):
+        self.description = account_description.lower()
+        if self.description.startswith("published"):
             self.published = True
             self.verified = True
-        elif account_description.startswith("unpublished verified"):
+        elif self.description.startswith("unpublished verified"):
             self.published = False
             self.verified = True
-        elif account_description.startswith("unpublished unverified"):
+        elif self.description.startswith("unpublished unverified"):
             self.published = False
             self.verified = False
-        elif account_description == "verified individual":
+        elif self.description == "verified individual":
             self.published = False
             self.verified = True
-        elif account_description == "unverified individual":
+        elif self.description == "unverified individual":
             self.published = False
             self.verified = False
-        elif account_description == f"published {BusinessType.ISD_ONLY.value}":
+        elif self.description == f"published {BusinessType.ISD_ONLY.value}":
             self.published = False
             self.published_isd = True
             self.verified = True
-        elif account_description == f"published {BusinessType.ISD_AND_TRADE.value}":
+        elif self.description == f"published {BusinessType.ISD_AND_TRADE.value}":
             self.published = True
             self.published_isd = True
             self.verified = True
-        elif account_description == BusinessType.UNPUBLISHED_ISD_AND_PUBLISHED_TRADE.value:
+        elif self.description == BusinessType.UNPUBLISHED_ISD_AND_PUBLISHED_TRADE.value:
             self.published = True
             self.published_isd = False
             self.verified = True
-        elif account_description == BusinessType.OVERSEAS_COMPANY.value:
+        elif self.description == BusinessType.OVERSEAS_COMPANY.value:
             self.business_type = BusinessType.OVERSEAS_COMPANY
         else:
-            LookupError(f"Could not identify state of account in account description: '{account_description}'")
+            LookupError(f"Could not identify state of account in account description: '{self.description}'")
 
-        if BusinessType.COMPANIES_HOUSE.value in account_description:
+        if BusinessType.COMPANIES_HOUSE.value.lower() in self.description:
             self.business_type = BusinessType.COMPANIES_HOUSE
-        elif BusinessType.SOLE_TRADER.value in account_description:
+        elif BusinessType.SOLE_TRADER.value.lower() in self.description:
             self.business_type = BusinessType.SOLE_TRADER
-        elif BusinessType.CHARITY.value in account_description:
+        elif BusinessType.CHARITY.value.lower() in self.description:
             self.business_type = BusinessType.CHARITY
-        elif BusinessType.PARTNERSHIP.value in account_description:
+        elif BusinessType.PARTNERSHIP.value.lower() in self.description:
             self.business_type = BusinessType.PARTNERSHIP
-        elif BusinessType.OTHER.value in account_description:
+        elif BusinessType.OTHER.value.lower() in self.description:
             self.business_type = BusinessType.OTHER
-        elif BusinessType.INDIVIDUAL.value in account_description:
+        elif BusinessType.INDIVIDUAL.value.lower() in self.description:
             self.business_type = BusinessType.INDIVIDUAL
-        elif BusinessType.OVERSEAS_COMPANY.value in account_description:
+        elif BusinessType.OVERSEAS_COMPANY.value.lower() in self.description:
             self.business_type = BusinessType.OVERSEAS_COMPANY
-        elif BusinessType.ISD_ONLY.value in account_description:
+        elif BusinessType.ISD_ONLY.value.lower() in self.description:
             self.business_type = BusinessType.ISD_ONLY
-        elif BusinessType.ISD_AND_TRADE.value in account_description:
+        elif BusinessType.ISD_AND_TRADE.value.lower() in self.description:
             self.business_type = BusinessType.ISD_AND_TRADE
-        elif BusinessType.UNPUBLISHED_ISD_AND_PUBLISHED_TRADE.value in account_description:
+        elif BusinessType.UNPUBLISHED_ISD_AND_PUBLISHED_TRADE.value.lower() in self.description:
             self.business_type = BusinessType.UNPUBLISHED_ISD_AND_PUBLISHED_TRADE
         else:
-            raise LookupError(f"Could not identify business type in account description: '{account_description}'")
+            raise LookupError(f"Could not identify business type in account description: '{self.description}'")
+
+    def __str__(self) -> str:
+        return (
+            f"Requested '{self.description}': business type: {self.business_type}, verified: {self.verified}, "
+            f"published: {self.published}, published ISD: {self.published_isd}"
+        )
 
 
 class Service(Enum):
