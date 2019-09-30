@@ -2669,6 +2669,53 @@ def enrol_user(context: Context, actor_alias: str, business_type: str, company_a
     )
 
 
+def find_ch_company(alias: str, *, term: str = None, active: bool = True):
+    search_terms = [
+        "food", "sell", "office", "ltd"
+    ]
+    term = term or random.choice(search_terms)
+
+    headers = {"Accept": "application/json"}
+    url = URLs.PROFILE_API_COMPANIES_HOUSE_SEARCH.absolute_template.format(term=term)
+    response = make_request(Method.GET, url, headers=headers)
+    assert response.status_code == 200
+    logging.debug(f"Found {len(response.json())} companies for term: '{term}'")
+
+    unfiltered = response.json()
+
+    ch_companies = [company for company in unfiltered if company["company_number"]]
+
+    active_statuses = ["active", "voluntary-arrangement"]
+    if active:
+        by_status = [company for company in ch_companies if company["company_status"] in active_statuses]
+    else:
+        by_status = [company for company in ch_companies if company["company_status"] not in active_statuses]
+
+    accepted_types = [
+        "ltd",
+        "charitable-incorporated-organisation",
+        "uk-establishment",
+        "limited-partnership",
+        "private-limited-guarant-nsc-limited-exemption",
+        "private-limited-guarant-nsc",
+        "registered-society-non-jurisdictional",
+        "industrial-and-provident-society",
+    ]
+    by_type = [company for company in by_status if company["company_type"] in accepted_types]
+    logging.debug(f"Found {len(by_type)} CH companies filtered by status & type")
+
+    ch_company_details = random.choice(by_type)
+    logging.debug(f"Selected CH company: {ch_company_details}")
+
+    details_mapping = {
+        "alias": alias,
+        "title": ch_company_details["title"],
+        "number": ch_company_details["company_number"],
+        "companies_house_details": ch_company_details,
+    }
+    return Company(**details_mapping)
+
+
 def profile_enrol_companies_house_registered_company(
         context: Context, actor: Actor, account: Account, company: Company
 ):
