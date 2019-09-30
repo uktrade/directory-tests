@@ -550,7 +550,7 @@ class URLs(Enum):
     ISD_SEARCH = ISDUrl("search/")
 
     # FAS/ISD Profile
-    PROFILE_API_COMPANIES_HOUSE_SEARCH = FABApiUrl(
+    PROFILE_API_COMPANIES_HOUSE_SEARCH = ProfileUrl(
         "api/v1/companies-house-search/",
         template="api/v1/companies-house-search/?term={term}",
     )
@@ -603,7 +603,7 @@ class URLs(Enum):
     PROFILE_ENROL_NON_CH_COMPANY_ENTER_PERSONAL_DETAILS = ProfileUrl(
         "enrol/business-type/non-companies-house-company/personal-details/"
     )
-    PROFILE_ENROL_NON_CH_COMPANY_FINISHED = ProfileUrl("enrol/business-type/non-companies-house/finished/")
+    PROFILE_ENROL_NON_CH_COMPANY_FINISHED = ProfileUrl("enrol/business-type/non-companies-house-company/finished/")
 
     PROFILE_ENROL_INDIVIDUAL_ENTER_YOUR_EMAIL_AND_PASSWORD = ProfileUrl(
         "enrol/business-type/individual/user-account/"
