@@ -2753,10 +2753,14 @@ def profile_enrol_companies_house_registered_company(
     if not account.verify:
         logging.debug(f"Won't verify account for '{actor.alias}' as '{account.description}' account was requested")
         return
+    profile_add_business_description(context, actor.alias)
+    fab_decide_to_verify_profile_with_letter(context, actor.alias)
+    profile_verify_company_profile(context, actor.alias)
 
     if not account.publish:
         logging.debug(f"Won't publish account for '{actor.alias}' as '{account.description}' account was requested")
         return
+    profile_publish_profile_to_fas(context, actor.alias)
 
 
 def profile_enrol_sole_trader(context: Context, actor: Actor, account: Account):
