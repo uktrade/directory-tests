@@ -22,7 +22,11 @@ EXPECTED_STRINGS = [
     ),
 ]
 
-EXPECTED_STRINGS_VERIFIED = ["Your company has been verified"]
+EXPECTED_STRINGS_VERIFIED = [
+    "Your company has been verified",
+    "View or amend your company profile",
+    URLs.FAB_COMPANY_PROFILE.relative,
+]
 
 
 def go_to(session: Session, *, referer: str = None) -> Response:
