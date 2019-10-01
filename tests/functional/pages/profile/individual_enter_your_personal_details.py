@@ -40,6 +40,7 @@ def submit(actor: Actor):
         "personal-details-family_name": "AUTOMATED TESTS",
         "personal-details-job_title": "DIT AUTOMATED TESTS",
         "personal-details-phone_number": "0987654321",
+        "personal-details-terms_agreed": "on",
     }
 
     return make_request(Method.POST, URL, session=session, headers=headers, data=data)
