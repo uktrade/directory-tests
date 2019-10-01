@@ -78,7 +78,7 @@ Feature: Profile pages
   @dev-only
   @fake-sso-email-verification
   Scenario: Supplier should not be able to update business details using invalid values
-    Given "Annette Geissinger" created an unverified "LTD, PLC or Royal Charter" profile for randomly selected company "Company X"
+    Given "Annette Geissinger" created an "unpublished unverified LTD, PLC or Royal Charter" profile for a random company "X"
 
     When "Annette Geissinger" attempts to change business details
       | trading name   | website         | size       | industry | error                  |
@@ -122,7 +122,7 @@ Feature: Profile pages
   @dev-only
   @fake-sso-email-verification
   Scenario: Supplier should not be able to use other characters than alphanumerics and commas to define products and services offered by the company
-    Given "Annette Geissinger" created an unverified "LTD, PLC or Royal Charter" profile for randomly selected company "Company X"
+    Given "Annette Geissinger" created an "unpublished unverified LTD, PLC or Royal Charter" profile for a random company "X"
 
     When "Annette Geissinger" attempts to change products and services offered by the company
       | keywords          | separator  | error                                                       |
@@ -137,7 +137,7 @@ Feature: Profile pages
   @dev-only
   @fake-sso-email-verification
   Scenario: Supplier should not be able to use other characters than alphanumerics and commas to define products and services offered by the company
-    Given "Annette Geissinger" created an unverified "LTD, PLC or Royal Charter" profile for randomly selected company "Company X"
+    Given "Annette Geissinger" created an "unpublished unverified LTD, PLC or Royal Charter" profile for a random company "X"
 
     When "Annette Geissinger" attempts to change products and services offered by the company
       | keywords          | separator  | error    |
@@ -171,7 +171,7 @@ Feature: Profile pages
   @dev-only
   @fake-sso-email-verification
   Scenario: Suppliers with unverified company profile should be able to logout and log back in
-    Given "Annette Geissinger" created an unverified "LTD, PLC or Royal Charter" profile for randomly selected company "Company X"
+    Given "Annette Geissinger" created an "unpublished unverified LTD, PLC or Royal Charter" profile for a random company "X"
     And "Annette Geissinger" signed out from SSO/great.gov.uk account
 
     When "Annette Geissinger" signs in to SSO/great.gov.uk account from "Find a Buyer - Landing"
@@ -397,7 +397,7 @@ Feature: Profile pages
   @dev-only
   @fake-sso-email-verification
   Scenario: Supplier should be able to add a case study to unverified company
-    Given "Peter Alder" created an unverified "LTD, PLC or Royal Charter" profile for randomly selected company "Y"
+    Given "Peter Alder" created an "unpublished unverified LTD, PLC or Royal Charter" profile for a random company "X"
 
     When "Peter Alder" adds a complete case study called "no 1"
 
@@ -428,7 +428,7 @@ Feature: Profile pages
   @dev-only
   @fake-sso-email-verification
   Scenario: Supplier should be able to add multiple case studies to unverified company
-    Given "Peter Alder" created an unverified "LTD, PLC or Royal Charter" profile for randomly selected company "Y"
+    Given "Peter Alder" created an "unpublished unverified LTD, PLC or Royal Charter" profile for a random company "X"
 
     When "Peter Alder" adds a complete case study called "no 1"
     And "Peter Alder" adds a complete case study called "no 2"
@@ -469,7 +469,7 @@ Feature: Profile pages
   @dev-only
   @found-with-automated-tests
   Scenario: Supplier should be able to update a case study for an unverified company
-    Given "Peter Alder" created an unverified "LTD, PLC or Royal Charter" profile for randomly selected company "Y"
+    Given "Peter Alder" created an "unpublished unverified LTD, PLC or Royal Charter" profile for a random company "X"
     And "Peter Alder" added a complete case study called "no 1"
 
     When "Peter Alder" updates all the details of case study called "no 1"
@@ -510,7 +510,7 @@ Feature: Profile pages
   @dev-only
   @found-with-automated-tests
   Scenario: Supplier should be able to update multiple case studies for an unverified company
-    Given "Peter Alder" created an unverified "LTD, PLC or Royal Charter" profile for randomly selected company "Y"
+    Given "Peter Alder" created an "unpublished unverified LTD, PLC or Royal Charter" profile for a random company "X"
     And "Peter Alder" added a complete case study called "no 1"
     And "Peter Alder" added a complete case study called "no 2"
     And "Peter Alder" added a complete case study called "no 3"
