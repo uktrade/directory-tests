@@ -2712,6 +2712,7 @@ def find_ch_company(alias: str, *, term: str = None, active: bool = True):
         "title": ch_company_details["title"],
         "number": ch_company_details["company_number"],
         "companies_house_details": ch_company_details,
+        "case_studies": {},
     }
     return Company(**details_mapping)
 
