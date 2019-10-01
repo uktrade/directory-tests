@@ -234,6 +234,7 @@ def profile_provide_missing_details_as_an_individual(
 
     # Ensure we start on the "Update your details (as an Individual)" page
     profile.individual_update_your_details.should_be_here(context.response)
+    logging.debug(f"As expected {supplier_alias} is on: '{profile.individual_update_your_details.NAME}' page")
 
     context.response = profile.select_business_type.go_to(actor.session)
     extract_and_set_csrf_middleware_token(context, context.response, supplier_alias)
@@ -616,10 +617,8 @@ def profile_verify_company_profile(context: Context, supplier_alias: str):
 
 def profile_publish_profile_to_fas(context: Context, supplier_alias: str):
     actor = context.get_actor(supplier_alias)
-    response = profile.publish_company_profile.submit(actor.session)
-    context.response = response
-
-    profile.edit_company_profile.should_see_profile_is_published(response)
+    context.response = profile.publish_company_profile.submit(actor.session)
+    profile.edit_company_profile.should_see_profile_is_published(context.response)
 
 
 def profile_view_published_profile(context: Context, supplier_alias: str):
