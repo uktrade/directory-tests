@@ -259,6 +259,7 @@ class URLs(Enum):
     FAB_CONFIRM_COMPANY_ADDRESS = FABUrl("verify/letter-confirm/")
     FAB_CONFIRM_IDENTITY = FABUrl("verify/")
     FAB_CONFIRM_IDENTITY_LETTER = FABUrl("verify/letter-send/")
+    FAB_COMPANY_PROFILE = FABUrl("company-profile/")
     FAB_HEALTHCHECK = FABUrl("healthcheck/")
     FAB_REGISTER = FABUrl("register/")
 
@@ -742,6 +743,7 @@ class URLs(Enum):
     LEGACY_CONTACT_US_LANDING = LegacyContactUrl("")
     LEGACY_CONTACT_US_HELP = LegacyContactUrl("help/")
     LEGACY_CONTACT_US_FEEDBACK_FORM = LegacyContactUrl("help/FeedbackForm/")
+    LEGACY_CONTACT_US_DIRECTORY_FEEDBACK_FORM = LegacyContactUrl("directory/FeedbackForm")
 
     # ExOpps UI - Export Opportunities
     EXOPPS_LANDING = ExOppsUrl("")
