@@ -2795,8 +2795,8 @@ def profile_enrol_sole_trader(context: Context, actor: Actor, account: Account):
     profile.non_ch_company_enter_your_business_details.should_be_here(context.response)
     extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
     company = Company(
-        alias=actor.company_alias, title="DIT AUTOMATED TESTS", business_type=account.business_type,
-        companies_house_details={}
+        alias=actor.company_alias, title=f"DIT AUTOMATED TESTS {uuid.uuid4()}",
+        business_type=account.business_type, companies_house_details={}
     )
     context.add_company(company)
     context.response = profile.non_ch_company_enter_your_business_details.submit(actor, company)
