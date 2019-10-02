@@ -96,6 +96,12 @@ def after_scenario(context, scenario):
             delete_supplier_data_from_sso(actor.email, context=context)
             if actor.company_alias:
                 company = context.get_company(actor.company_alias)
+                if not company:
+                    logging.warning(
+                        f"Could not find company '{actor.company_alias}' details in context.scenario_data.companies. "
+                        f"Possibly details were not stored in it after its alias was added to actor's details"
+                    )
+                    continue
                 if company.deleted:
                     continue
                 if not company.number:
