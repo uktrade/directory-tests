@@ -521,7 +521,7 @@ def fab_decide_to_verify_profile_with_letter(context: Context, supplier_alias: s
     )
 
 
-def profile_add_business_description(context: Context, supplier_alias: str):
+def profile_add_business_description(context: Context, supplier_alias: str, *, ch_company: bool = True):
     """Edit Profile - Will set company description.
 
     This is quasi-mandatory (*) step before Supplier can verify the company
@@ -543,7 +543,7 @@ def profile_add_business_description(context: Context, supplier_alias: str):
     context.response = response
 
     # Step 3 - check if Supplier is on Profile page
-    profile.edit_company_profile.should_see_profile_is_not_verified(response)
+    profile.edit_company_profile.should_see_profile_is_not_verified(response, ch_company=ch_company)
 
     # Step 4 - update company details in Scenario Data
     context.set_company_details(
@@ -2809,7 +2809,7 @@ def profile_enrol_sole_trader(context: Context, actor: Actor, account: Account):
     if not account.verify:
         logging.debug(f"Won't verify account for '{actor.alias}' as '{account.description}' account was requested")
         return
-    profile_add_business_description(context, actor.alias)
+    profile_add_business_description(context, actor.alias, ch_company=False)
     profile.non_ch_company_request_to_verify.submit(actor)
     verify_non_ch_company(context, company)
 

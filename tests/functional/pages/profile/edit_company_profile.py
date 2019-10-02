@@ -36,6 +36,11 @@ EXPECTED_STRINGS_NOT_VERIFIED = [
     "Confirm your identity",
     "For security reasons, we need to check you're who you say you are",
 ]
+EXPECTED_STRINGS_REQUEST_VERIFICATION = [
+    "Your business profile is ready to be verified",
+    "Profile ready to be verified",
+    "Request to verify",
+]
 
 
 def go_to(session: Session) -> Response:
@@ -142,8 +147,11 @@ def should_see_case_studies(case_studies: dict, response: Response):
     )
 
 
-def should_see_profile_is_not_verified(response: Response):
-    expected = EXPECTED_STRINGS + EXPECTED_STRINGS_NOT_VERIFIED
+def should_see_profile_is_not_verified(response: Response, *, ch_company: bool = True):
+    if ch_company:
+        expected = EXPECTED_STRINGS + EXPECTED_STRINGS_NOT_VERIFIED
+    else:
+        expected = EXPECTED_STRINGS + EXPECTED_STRINGS_REQUEST_VERIFICATION
     check_response(response, 200, body_contains=expected)
     logging.debug("Supplier is on Unverified Company's Profile page")
 
