@@ -104,9 +104,10 @@ def after_scenario(context, scenario):
                     continue
                 if company.deleted:
                     continue
-                if not company.number:
-                    continue
-                delete_supplier_data_from_dir(company.number, context=context)
+                if company.number:
+                    delete_supplier_data_from_dir(company.number, context=context)
+                else:
+                    delete_supplier_data_from_dir(company.title, context=context)
                 context.set_company_details(alias=company.alias, deleted=True)
             if scenario.status == "failed":
                 red("Deleted %s supplier data from DIR & SSO DB" % actor.email)
