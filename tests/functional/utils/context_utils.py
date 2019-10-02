@@ -3,6 +3,7 @@
 import logging
 from collections import namedtuple
 from types import MethodType
+from typing import Union
 
 from behave.runner import Context
 from requests import Session
@@ -241,17 +242,14 @@ def add_company(self, company):
     )
 
 
-def get_company(self, alias):
+def get_company(self: Context, alias: str) -> Union[Company, None]:
     """Get the details of an Unregistered Company from context Scenario Data.
 
     :param self: behave `context` object
-    :type self: behave.runner.Context
     :param alias: alias of sought Unregistered Company
-    :type alias: str
-    :return: an Company named tuple
-    :rtype tests.functional.features.ScenarioData.Company
+    :return: an Company named tuple or None if not found
     """
-    return self.scenario_data.companies[alias]
+    return self.scenario_data.companies.get(alias)
 
 
 def set_company_details(self, alias: str, **kwargs):
