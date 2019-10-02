@@ -16,7 +16,6 @@ from tests.functional.steps.then_impl import (
 )
 from tests.functional.steps.when_impl import (
     create_actor_with_or_without_sso_account,
-    create_actor_with_verified_or_unverified_fab_profile,
     fab_decide_to_verify_profile_with_letter,
     fab_find_published_company,
     fab_open_collaboration_request_link,
@@ -30,9 +29,6 @@ from tests.functional.steps.when_impl import (
     profile_add_collaborator,
     profile_add_online_profiles,
     profile_confirm_collaboration_request,
-    profile_create_unverified_profile,
-    profile_create_verified_and_published_business_profile,
-    profile_create_verified_yet_unpublished_business_profile,
     profile_edit_business_details,
     profile_enrol_user,
     profile_supplier_uploads_logo,
@@ -68,27 +64,11 @@ def given_supplier_set_company_description(context, supplier_alias):
     profile_add_business_description(context, supplier_alias)
 
 
-@given('"{supplier_alias}" has created verified and published "{business_type}" profile for randomly selected company "{company_alias}"')
-def given_supplier_creates_verified_and_published_fas_profile(
-        context, supplier_alias, business_type, company_alias):
-    profile_create_verified_and_published_business_profile(
-        context, supplier_alias, business_type, company_alias
-    )
-
-
 @given('"{supplier_alias}" has created verified and published ISD business profile for company "{company_alias}"')
 def given_supplier_creates_verified_and_published_isd_profile(
         context, supplier_alias, company_alias):
     isd_create_verified_and_published_business_profile(
         context, supplier_alias, company_alias
-    )
-
-
-@given('"{supplier_alias}" has created verified yet unpublished "{business_type}" profile for randomly selected company "{company_alias}"')
-def given_supplier_creates_verified_but_unpublished_profile(
-        context, supplier_alias, business_type, company_alias):
-    profile_create_verified_yet_unpublished_business_profile(
-        context, supplier_alias, business_type, company_alias
     )
 
 
@@ -182,13 +162,6 @@ def given_supplier_received_password_reset_email(context, supplier_alias):
     sso_get_password_reset_link(context, supplier_alias)
 
 
-@given('"{actor_alias}" has created "{verified_or_not}" "{business_type}" profile for randomly selected company "{company_alias}"')
-def given_actor_with_verified_or_not_profile(
-        context, actor_alias, verified_or_not, business_type, company_alias):
-    create_actor_with_verified_or_unverified_fab_profile(
-        context, actor_alias, verified_or_not, business_type, company_alias)
-
-
 @given('"{actor_aliases}" "{has_or_does_not_have}" an SSO/great.gov.uk account')
 def given_actor_with_or_without_sso_account(
         context, actor_aliases, has_or_does_not_have):
@@ -241,13 +214,6 @@ def given_supplier_transfers_the_account_ownership(
 @given('"{actor_alias}" sends a test verification letter via StanNP for randomly selected company')
 def given_actor_sends_a_verification_letter(context, actor_alias):
     stannp_send_verification_letter(context, actor_alias)
-
-
-@given('"{supplier_alias}" created an unverified "{business_type}" profile for randomly selected company "{company_alias}"')
-def given_unverified_profile_new_reg_flow(context: Context, supplier_alias: str, business_type: str, company_alias: str):
-    profile_create_unverified_profile(
-        context, supplier_alias, business_type, company_alias
-    )
 
 
 @given('"{actor_alias}" has updated business details')
