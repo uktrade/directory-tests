@@ -52,6 +52,7 @@ from tests.functional.steps.then_impl import (
     should_be_at,
     should_be_taken_to_selected_page,
     should_not_be_able_to_access_page,
+    should_not_see_message,
     should_see_message,
     should_see_selected_pages,
     sso_should_be_signed_in_to_sso_account,
@@ -353,6 +354,12 @@ def then_supplier_should_be_asked_about_verification(context, supplier_alias):
 @then('"{actor_alias}" should see "{message}" message')
 def then_actor_should_see_a_message(context, actor_alias, message):
     should_see_message(context, actor_alias, message)
+
+
+@then('"{actor_alias}" should not see "{message}" on the page')
+@then('"{actor_alias}" should not see "{message}" message')
+def then_actor_should_not_see_a_message(context, actor_alias, message):
+    should_not_see_message(context, actor_alias, message)
 
 
 @then('"{actor_aliases}" should receive an email with a request to confirm that he\'s been added to company "{company_alias}" Find a Buyer profile')

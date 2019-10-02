@@ -1002,6 +1002,13 @@ def should_see_message(context: Context, actor_alias: str, message: str):
     logging.debug("%s saw expected message: '%s'", actor_alias, message)
 
 
+def should_not_see_message(context: Context, actor_alias: str, message: str):
+    content = context.response.content.decode("utf-8")
+    with assertion_msg(f"Response content contains unexpected message: '{message}'"):
+        assert message not in content
+    logging.debug(f"As expected {actor_alias} haven't seen unexpected message: '{message}'")
+
+
 def sso_should_get_request_for_collaboration_email(
     context: Context, actor_aliases: str, company_alias: str
 ):
