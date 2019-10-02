@@ -229,6 +229,9 @@ class URLs(Enum):
     DIR_API_ACTIVITY_STREAM = DirectoryApiUrl("activity-stream/")
     DIR_API_EXTERNAL_SUPPLIER_SSO = DirectoryApiUrl("external/supplier-sso/")
     DIR_API_EXTERNAL_SUPPLIER = DirectoryApiUrl("external/supplier/")
+    DIR_API_TEST_API_COMPANY = DirectoryApiUrl(
+        "/testapi/company/{ch_id_or_name}/", template="/testapi/company/{ch_id_or_name}/"
+    )
 
     # SSO UI
     SSO_LANDING = SSOUrl("")
@@ -605,6 +608,7 @@ class URLs(Enum):
         "enrol/business-type/non-companies-house-company/personal-details/"
     )
     PROFILE_ENROL_NON_CH_COMPANY_FINISHED = ProfileUrl("enrol/business-type/non-companies-house-company/finished/")
+    PROFILE_ENROL_NON_CH_REQUEST_TO_VERIFY = ProfileUrl("business-profile/verify/request/")
 
     PROFILE_ENROL_INDIVIDUAL_ENTER_YOUR_EMAIL_AND_PASSWORD = ProfileUrl(
         "enrol/business-type/individual/user-account/"
