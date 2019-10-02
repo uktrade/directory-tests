@@ -1307,14 +1307,14 @@ def delete_supplier_data_from_sso(
         )
 
 
-def delete_supplier_data_from_dir(ch_id: str, *, context: Context = None):
-    response = DIRECTORY_TEST_API_CLIENT.delete_company_by_ch_id(ch_id)
+def delete_supplier_data_from_dir(ch_id_or_name: str, *, context: Context = None):
+    response = DIRECTORY_TEST_API_CLIENT.delete_company_by_ch_id(ch_id_or_name)
     if context:
         context.response = response
     if response.status_code == 204:
         logging.debug(
             "Successfully deleted supplier data for company %s from DIR DB",
-            ch_id,
+            ch_id_or_name,
         )
         logging.debug(
             "RESPONSE TIME | %s | %s %s",
@@ -1331,7 +1331,7 @@ def delete_supplier_data_from_dir(ch_id: str, *, context: Context = None):
             " then you're seeing this message because company data was "
             "already deleted when the data for the first supplier actor was"
             " deleted.\nJust in case, here's the response from the server: "
-            "\n{}".format(ch_id, response.content)
+            "\n{}".format(ch_id_or_name, response.content)
         )
         blue(msg)
         logging.error(msg)
