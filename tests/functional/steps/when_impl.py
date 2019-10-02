@@ -2670,7 +2670,10 @@ def enrol_user(context: Context, actor_alias: str, business_type: str, company_a
 
 def find_ch_company(alias: str, *, term: str = None, active: bool = True):
     search_terms = [
-        "food", "sell", "office", "ltd"
+        "food", "sell", "office", "ltd", "fruits", "music", "group", "digital", "open", "world", "finance",
+        "accounting", "consulting", "health", "access", "supply", "suppliers", "safety", "discount", "energy", "media",
+        "impact", "solutions", "market", "limited", "green", "price", "social", "soft", "software", "fashion",
+        "british", "farm", "innovations", "furniture", "light", "power", "care", "metal", "building", "society"
     ]
     term = term or random.choice(search_terms)
 
@@ -2735,11 +2738,20 @@ def profile_enrol_companies_house_registered_company(
     context.response = profile.enter_email_verification_code.submit(actor)
     profile.enter_your_business_details.should_be_here(context.response)
 
-    company = find_ch_company(actor.company_alias)
+    max_attempt = 10
+    attempt_counter = 1
+    profile_already_exists = True
+    while profile_already_exists and attempt_counter < max_attempt:
+        company = find_ch_company(actor.company_alias)
+        extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
+        context.response = profile.enter_your_business_details.submit(actor, company)
+        profile_already_exists = profile.enter_your_business_details_part_2.profile_already_exists(context.response)
+        logging.debug(f"Has '{company.title}' have already a business profile: {profile_already_exists}")
+        attempt_counter += 1
+    error = f"Could not find unregistered CH company after {attempt_counter} attempts"
+    assert not profile_already_exists, error
     context.add_company(company)
     context.set_company_details(alias=actor.company_alias, business_type=account.business_type)
-    extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
-    context.response = profile.enter_your_business_details.submit(actor, company)
     profile.enter_your_business_details_part_2.should_be_here(context.response)
 
     extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
