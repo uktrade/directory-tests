@@ -29,7 +29,7 @@ Feature: SSO password management
   @captcha
   @no-sso-email-verification-required
   Scenario: Suppliers with unverified Business Profile should be able to reset password
-    Given "Peter Alder" created an unverified "LTD, PLC or Royal Charter" profile for randomly selected company "Y"
+    Given "Peter Alder" created an "unpublished unverified LTD, PLC or Royal Charter" profile for a random company "Y"
     And "Peter Alder" signed out from SSO/great.gov.uk account
     And "Peter Alder" received a password reset email
 
@@ -47,7 +47,7 @@ Feature: SSO password management
   @captcha
   @fake-sso-email-verification
   Scenario: Suppliers with verified Business Profile should be able to reset password
-    Given "Peter Alder" has created verified and published "LTD, PLC or Royal Charter" profile for randomly selected company "Y"
+    Given "Peter Alder" created an "published LTD, PLC or Royal Charter" profile for a random company "Y"
     And "Peter Alder" signed out from SSO/great.gov.uk account
     And "Peter Alder" received a password reset email
 

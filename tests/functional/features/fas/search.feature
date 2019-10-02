@@ -24,7 +24,7 @@ Feature: Find a Supplier
   Scenario: Buyers should be able to find Supplier by uniquely identifying words present on Supplier's case study
     Given "Annette Geissinger" is a buyer
     And "Peter Alder" is an unauthenticated supplier
-    And "Peter Alder" has created verified and published "LTD, PLC or Royal Charter" profile for randomly selected company "Y"
+    And "Peter Alder" created an "published LTD, PLC or Royal Charter" profile for a random company "Y"
 
     When "Peter Alder" adds a complete case study called "no 1"
     And "Peter Alder" gets the slug for case study "no 1"
@@ -61,7 +61,7 @@ Feature: Find a Supplier
   Scenario: Buyers should be able to find Supplier by uniquely identifying words present on any of Supplier's case studies
     Given "Annette Geissinger" is a buyer
     And "Peter Alder" is an unauthenticated supplier
-    And "Peter Alder" has created verified and published "LTD, PLC or Royal Charter" profile for randomly selected company "Y"
+    And "Peter Alder" created an "published LTD, PLC or Royal Charter" profile for a random company "Y"
 
     When "Peter Alder" adds a complete case study called "no 1"
     And "Peter Alder" adds a complete case study called "no 2"
@@ -93,7 +93,7 @@ Feature: Find a Supplier
   Scenario: Buyers should NOT be able to find unverified Supplier by uniquely identifying words present on Supplier's case study
     Given "Annette Geissinger" is a buyer
     And "Peter Alder" is an unauthenticated supplier
-    And "Peter Alder" created an unverified "LTD, PLC or Royal Charter" profile for randomly selected company "Y"
+    And "Peter Alder" created an "unpublished unverified LTD, PLC or Royal Charter" profile for a random company "Y"
 
     When "Peter Alder" adds a complete case study called "no 1"
 
@@ -114,7 +114,7 @@ Feature: Find a Supplier
   Scenario: Buyers should be able to find Supplier by uniquely identifying words present on Supplier's profile
     Given "Annette Geissinger" is a buyer
     And "Peter Alder" is an unauthenticated supplier
-    And "Peter Alder" has created verified and published "LTD, PLC or Royal Charter" profile for randomly selected company "Y"
+    And "Peter Alder" created an "published LTD, PLC or Royal Charter" profile for a random company "Y"
     And "Peter Alder" updates company's details
       | detail         |
       | other keywords |
@@ -261,7 +261,7 @@ Feature: Find a Supplier
   @dev-only
   @found-with-automated-tests
   Scenario: Unpublished business profiles (for any or ISD company) shouldn't appear in FAS search results
-    Given "Peter Alder" has created verified yet unpublished "LTD, PLC or Royal Charter" profile for randomly selected company "Y"
+    Given "Peter Alder" created an "unpublished verified LTD, PLC or Royal Charter" profile for a random company "Y"
     And "Peter Alder" updates company's details
       | detail         |
       | keywords       |

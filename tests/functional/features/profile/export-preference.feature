@@ -9,7 +9,7 @@ Feature: Export Preferences
   @export-preferences
   @fake-sso-email-verification
   Scenario Outline: Suppliers can select "<preferred>" of export from the given list and provide a list of other countries "<other>"
-    Given "Annette Geissinger" created an unverified "LTD, PLC or Royal Charter" profile for randomly selected company "Y"
+    Given "Annette Geissinger" created an "unpublished unverified LTD, PLC or Royal Charter" profile for a random company "Company X"
 
     When "Annette Geissinger" provides valid details of selected company
     And "Annette Geissinger" selects sector the company is in and "<preferred>" & "<other>" as other countries of export
@@ -30,7 +30,7 @@ Feature: Export Preferences
   @export-preferences
   @fake-sso-email-verification
   Scenario Outline: Suppliers have to provide preferred country of export when building up the profile otherwise they'll see an "<error>" message
-    Given "Annette Geissinger" created an unverified "LTD, PLC or Royal Charter" profile for randomly selected company "Company X"
+    Given "Annette Geissinger" created an "unpublished unverified LTD, PLC or Royal Charter" profile for a random company "Company X"
 
     When "Annette Geissinger" provides valid details of selected company
     And "Annette Geissinger" selects sector the company is in and "<preferred>" & "<other>" as other countries of export
@@ -54,7 +54,7 @@ Feature: Export Preferences
   @fixme
   @fake-sso-email-verification
   Scenario Outline: Suppliers have to use commas to separate other preferred countries (not <other>) of export when building up the profile otherwise they'll see an "<error>" message
-    Given "Annette Geissinger" created an unverified "LTD, PLC or Royal Charter" profile for randomly selected company "Company X"
+    Given "Annette Geissinger" created an "unpublished unverified LTD, PLC or Royal Charter" profile for a random company "Company X"
 
     When "Annette Geissinger" provides valid details of selected company
     And "Annette Geissinger" selects sector the company is in and "<preferred>" & "<other>" as other countries of export

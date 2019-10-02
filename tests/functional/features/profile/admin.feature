@@ -7,7 +7,7 @@ Feature: Profile - Admin
   @dev-only
   @fake-sso-email-verification
   Scenario: Supplier should not be able to update business details using invalid values
-    Given "Annette Geissinger" created an unverified "LTD, PLC or Royal Charter" profile for randomly selected company "Company X"
+    Given "Annette Geissinger" created an "unpublished unverified LTD, PLC or Royal Charter" profile for a random company "Company X"
 
     When "Annette Geissinger" goes to "Profile - Remove profile from account" page
 
