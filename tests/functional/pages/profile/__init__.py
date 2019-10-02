@@ -34,6 +34,7 @@ __all__ = [
     "non_ch_company_enter_your_business_details",
     "non_ch_company_enter_your_email_and_password",
     "non_ch_company_enter_your_personal_details",
+    "non_ch_company_request_to_verify",
     "overseas_business",
     "publish_company_profile",
     "select_business_type",
