@@ -1268,7 +1268,7 @@ def verify_non_ch_company(context: Context, company: Company):
     url = URLs.DIR_API_TEST_API_COMPANY.absolute_template.format(ch_id_or_name=company.title)
     data = {"verified_with_identity_check": True}
     context.response = DIRECTORY_TEST_API_CLIENT.patch(url, data)
-    check_response(context.response, 200)
+    check_response(context.response, 204)
 
 
 def is_verification_letter_sent(context: Context, company_number: str) -> bool:
