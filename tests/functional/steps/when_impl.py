@@ -72,6 +72,7 @@ from tests.functional.utils.generic import (
     random_feedback_data,
     random_message_data,
     send_verification_letter,
+    verify_non_ch_company,
 )
 from tests.functional.utils.gov_notify import get_email_verification_code
 from tests.functional.utils.request import Method, check_response, make_request
@@ -2808,10 +2809,14 @@ def profile_enrol_sole_trader(context: Context, actor: Actor, account: Account):
     if not account.verify:
         logging.debug(f"Won't verify account for '{actor.alias}' as '{account.description}' account was requested")
         return
+    profile_add_business_description(context, actor.alias)
+    profile.non_ch_company_request_to_verify.submit(actor)
+    verify_non_ch_company(context, company)
 
     if not account.publish:
         logging.debug(f"Won't publish account for '{actor.alias}' as '{account.description}' account was requested")
         return
+    profile_publish_profile_to_fas(context, actor.alias)
 
 
 def profile_enrol_individual(context: Context, actor: Actor, account: Account):
