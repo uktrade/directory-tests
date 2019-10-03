@@ -47,7 +47,7 @@ Feature: SSO password management
   @captcha
   @fake-sso-email-verification
   Scenario: Suppliers with verified Business Profile should be able to reset password
-    Given "Peter Alder" created an "published LTD, PLC or Royal Charter" profile for a random company "Y"
+    Given "Peter Alder" created a "published LTD, PLC or Royal Charter" profile for a random company "Y"
     And "Peter Alder" signed out from SSO/great.gov.uk account
     And "Peter Alder" received a password reset email
 
