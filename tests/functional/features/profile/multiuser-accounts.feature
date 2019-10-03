@@ -59,24 +59,6 @@ Feature: Multi-user accounts
     Then "Annette Geissinger" should see "Profile - edit company profile" page
 
 
-  @ED-3557
-  @captcha
-  @dev-only
-  @multi-user
-  @add-collaborator
-  Scenario: Add "1" collaborator with an SSO/great.gov.uk account to a verified company
-    Given "Peter Alder" created a "published LTD, PLC or Royal Charter" profile for a random company "Y"
-    And "Annette Geissinger" "has" an SSO/great.gov.uk account
-    And "Peter Alder" added "Annette Geissinger" as an "editor" collaborator
-    And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
-    And "Annette Geissinger" decides to open the invitation from company "Y"
-    And "Annette Geissinger" should be on "Find a Buyer - Accept invitation" page
-
-    When "Annette Geissinger" confirms that she wants to be added to the company "Y" Find a Buyer profile
-
-    Then "Annette Geissinger" should see "Profile - edit company profile" page
-
-
   @ED-3558
   @captcha
   @dev-only

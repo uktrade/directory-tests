@@ -18,7 +18,6 @@ from tests.functional.steps.when_impl import (
     create_actor_with_or_without_sso_account,
     fab_decide_to_verify_profile_with_letter,
     fab_find_published_company,
-    fab_open_collaboration_request_link,
     fab_transfer_ownership,
     fas_find_company_by_name,
     fas_get_company_slug,
@@ -181,13 +180,6 @@ def given_actor_should_receive_email_with_request_for_collaboration(
 @given('"{actor_alias}" should be on "{page_name}" page')
 def given_actor_is_on_specific_page(context, actor_alias, page_name):
     should_be_at(context, actor_alias, page_name)
-
-
-@given('"{collaborator_alias}" decides to open the invitation from company "{company_alias}"')
-def given_collaborator_decides_to_open_invitation(
-        context, collaborator_alias, company_alias):
-    fab_open_collaboration_request_link(
-        context, collaborator_alias, company_alias)
 
 
 @given('"{collaborator_alias}" confirmed that he wants to be added to the company "{company_alias}" Find a Buyer profile')

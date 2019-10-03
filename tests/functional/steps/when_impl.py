@@ -2126,16 +2126,13 @@ def profile_confirm_collaboration_request(
     context: Context,
     collaborator_alias: str,
     company_alias: str,
-    open_invitation_link: bool = True,
 ):
     collaborator = context.get_actor(collaborator_alias)
     session = collaborator.session
     link = collaborator.invitation_for_collaboration_link
 
     # Step 1 - open confirmation link
-    if open_invitation_link:
-        response = profile.confirm_your_collaboration.open(session, link)
-        context.response = response
+    context.response = profile.confirm_your_collaboration.open(session, link)
 
     # Step 3 - confirm that Supplier is on SSO Confirm Your Email page
     profile.confirm_your_collaboration.should_be_here(context.response)
@@ -2281,9 +2278,7 @@ def fab_collaborator_create_sso_account_and_confirm_email(
     reg_should_get_verification_email(context, collaborator_alias)
     reg_open_email_confirmation_link(context, collaborator_alias)
     sso_collaborator_confirm_email_address(context, collaborator_alias)
-    profile_confirm_collaboration_request(
-        context, collaborator_alias, company_alias, open_invitation_link=False
-    )
+    profile_confirm_collaboration_request(context, collaborator_alias, company_alias)
 
 
 def profile_send_transfer_ownership_request(
