@@ -1,3 +1,5 @@
+ARGUMENTS=$(filter-out $@,$(MAKECMDGOALS)) $(filter-out --,$(MAKEFLAGS))
+
 build: docker_integration_tests
 
 clean:
@@ -190,5 +192,10 @@ compile_load_requirements:
 	python3 -m piptools compile requirements_load.in
 
 compile_all_requirements: compile_requirements compile_browser_requirements compile_functional_requirements compile_smoke_requirements compile_load_requirements
+
+find_duplicated_scenario_names: SHELL:=/usr/bin/env bash  # set shell for this target to bash
+find_duplicated_scenario_names:
+	@diff -u <(behave $(ARGUMENTS) --dry --no-source --no-summary --no-snippets | grep 'Scenario' | sort) \
+		<(behave $(ARGUMENTS) --dry --no-source --no-summary --no-snippets | grep 'Scenario' | sort -u)
 
 .PHONY: build clean requirements test docker_remove_all docker_integration_tests smoke_tests load_test load_test_buyer load_test_supplier load_test_sso load_test_minimal functional_tests
