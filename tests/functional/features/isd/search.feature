@@ -74,7 +74,7 @@ Feature: Investment Support Directory
   @sector
   @search
   @no-sso-email-verification-required
-  Scenario: Buyers should be able to clear search results filters
+  Scenario: Buyers should be able to clear ISD search results filters
     Given "Annette Geissinger" is a buyer
 
     When "Annette Geissinger" browse UK suppliers by multiple sector filters
@@ -89,7 +89,7 @@ Feature: Investment Support Directory
   @sector
   @search
   @no-sso-email-verification-required
-  Scenario: Buyers should not see the same company multiple times in the search results even if all associated sector filters are used
+  Scenario: Buyers should not see the same company multiple times in the ISD search results even if all associated sector filters are used
     Given "Annette Geissinger" is a buyer
     And "Annette Geissinger" finds a UK specialist "Y" with a published profile associated with at least "4" different sectors
 

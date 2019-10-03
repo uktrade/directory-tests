@@ -121,7 +121,7 @@ Feature: Profile pages
   @captcha
   @dev-only
   @fake-sso-email-verification
-  Scenario: Supplier should not be able to use other characters than alphanumerics and commas to define products and services offered by the company
+  Scenario: Supplier should not be able to use very long keywords to define products and services offered by the company
     Given "Annette Geissinger" created an "unpublished unverified LTD, PLC or Royal Charter" profile for a random company "X"
 
     When "Annette Geissinger" attempts to change products and services offered by the company
