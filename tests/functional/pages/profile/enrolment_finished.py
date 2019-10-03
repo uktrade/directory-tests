@@ -4,7 +4,7 @@
 from requests import Response, Session
 
 from directory_tests_shared import PageType, Service, URLs
-from tests.functional.utils.request import Method, check_response, make_request
+from tests.functional.utils.request import Method, check_response, make_request, check_url
 
 SERVICE = Service.PROFILE
 NAME = "Enrolment (finished)"
@@ -18,4 +18,5 @@ def go_to(session: Session) -> Response:
 
 
 def should_be_here(response: Response):
+    check_url(response, URL)
     check_response(response, 200, body_contains=EXPECTED_STRINGS)
