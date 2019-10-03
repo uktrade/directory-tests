@@ -403,7 +403,7 @@ def fas_find_supplier_using_case_study_details(
     case_alias: str,
     *,
     properties: Table = None,
-    max_pages: int = 10,
+    max_pages: int = 5,
 ):
     """Find Supplier on FAS using parts of the Case Study added by Supplier.
 
