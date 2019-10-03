@@ -15,7 +15,7 @@ from contextlib import contextmanager
 from pprint import pprint
 from random import choice
 from string import ascii_uppercase
-from typing import Callable, DefaultDict, List
+from typing import Callable, DefaultDict, List, Union
 
 import lxml
 import requests
@@ -510,12 +510,13 @@ def get_md5_hash_of_file(absolute_path):
     return hashlib.md5(open(absolute_path, "rb").read()).hexdigest()
 
 
-def extract_by_css(response, selector, *, first: bool = True):
+def extract_by_css(response, selector, *, first: bool = True) -> Union[str, list]:
     """Extract values from HTML response content using CSS selector.
 
     :param response: response containing HTML content
     :param selector: CSS selector
-    :return: value of the 1st found element identified by the CSS selector
+    :param first: (optional) return first found element or all of them
+    :return: value of the 1st found element or emtpy string if not found; or a list of all found elements
     """
     content = response.content.decode("utf-8")
     extracted = Selector(text=content).css(selector).extract()
