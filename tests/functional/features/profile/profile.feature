@@ -61,7 +61,7 @@ Feature: Profile pages
   @account
   @fake-sso-email-verification
   Scenario: Authenticated Users should be able to view Profile sub-pages
-    Given "Peter Alder" has a verified standalone SSO/great.gov.uk account
+    Given "Peter Alder" "has" an SSO/great.gov.uk account
 
     When "Peter Alder" goes to specific pages
       | page name                                               |

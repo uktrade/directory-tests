@@ -34,7 +34,7 @@ Feature: Multi-user accounts
   @add-collaborator
   Scenario: Add "1" collaborator with an SSO/great.gov.uk account to a verified company
     Given "Peter Alder" created a "published LTD, PLC or Royal Charter" profile for a random company "Y"
-    And "Annette Geissinger" has a verified standalone SSO/great.gov.uk account
+    And "Annette Geissinger" "has" an SSO/great.gov.uk account
     And "Peter Alder" added "Annette Geissinger" as an "editor" collaborator
     And "Annette Geissinger" has received an email with a request to confirm that she's been added to company "Y" Find a Buyer profile
 
