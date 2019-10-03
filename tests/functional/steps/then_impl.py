@@ -414,6 +414,8 @@ def fas_find_supplier_using_case_study_details(
     :param properties: (optional) table containing the names of Case Study
                        parts that will be used search. If not provided, then
                        all parts will be used except 'alias'.
+    :param max_pages: (optional) maximum number of search result pages to go
+                      through
     """
     actor = context.get_actor(buyer_alias)
     session = actor.session
@@ -446,40 +448,14 @@ def fas_find_supplier_using_case_study_details(
             response, company.title
         )
         count = 1
-        if found:
-            logging.debug(
-                "Found Supplier '%s' using '%s' : '%s' on 1st result page",
-                company.title,
-                term_name,
-                term,
-            )
-        else:
-            number_of_pages = get_number_of_search_result_pages(response)
-            if number_of_pages > 1:
-                for page_number in range(2, number_of_pages + 1):
-                    response = fas.search.go_to(
-                        session, term=term, page=page_number
-                    )
-                    context.response = response
-                    fas.search.should_be_here(response)
-                    found = fas.search.should_see_company(
-                        response, company.title
-                    )
-                    if found:
-                        break
-            else:
-                with assertion_msg(
-                    "Couldn't find '%s' using '%s': '%s' on the only "
-                    "available search result page",
-                    company.title,
-                    term_name,
-                    term,
-                ):
-                    found = False
-            count += 1
-        if count >= max_pages:
-            logging.warn(f"Couldn not find '{company.title}' on first {max_pages} pages")
-            break
+        number_of_pages = get_number_of_search_result_pages(response)
+        while not found and number_of_pages > 1 and count < max_pages:
+            for page_number in range(2, number_of_pages + 1):
+                logging.debug(f"Checking search result page number: {page_number}")
+                context.response = fas.search.go_to(session, term=term, page=page_number)
+                fas.search.should_be_here(context.response)
+                found = fas.search.should_see_company(context.response, company.title)
+                count += 1
         search_results[term_name] = {"term": term, "found": found}
 
     logging.debug(f"Search results: {search_results}")
