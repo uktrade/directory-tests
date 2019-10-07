@@ -9,6 +9,8 @@ from random import choice, randrange
 from string import ascii_letters, digits
 from urllib.parse import parse_qsl, quote, urljoin, urlsplit
 
+from behave.model import Table
+from behave.runner import Context
 from directory_constants import choices
 from directory_constants.expertise import (
     BUSINESS_SUPPORT,
@@ -18,22 +20,27 @@ from directory_constants.expertise import (
     MANAGEMENT_CONSULTING,
     PUBLICITY,
 )
-from requests import Response, Session
-from retrying import retry
-
-from behave.model import Table
-from behave.runner import Context
-from scrapy import Selector
 from directory_tests_shared import URLs
+from directory_tests_shared.constants import (
+    NO_OF_EMPLOYEES,
+    SECTORS,
+    SEPARATORS,
+    BMPs,
+    JP2s,
+    WEBPs,
+)
 from directory_tests_shared.enums import Account, BusinessType, Language
 from directory_tests_shared.utils import rare_word, sentence
+from requests import Response, Session
+from retrying import retry
+from scrapy import Selector
 from tests.functional.common import DETAILS, PROFILES
 from tests.functional.pages import (
+    fab,
+    fas,
     get_page_object,
     has_action,
     isd,
-    fab,
-    fas,
     profile,
     sso,
 )
@@ -76,14 +83,6 @@ from tests.functional.utils.generic import (
 )
 from tests.functional.utils.gov_notify import get_email_verification_code
 from tests.functional.utils.request import Method, check_response, make_request
-from directory_tests_shared.constants import (
-    NO_OF_EMPLOYEES,
-    SECTORS,
-    SEPARATORS,
-    BMPs,
-    JP2s,
-    WEBPs,
-)
 
 INDUSTRIES_FOR_PRODUCTS_AND_SERVICES = {
     "financial": FINANCIAL,
@@ -107,9 +106,10 @@ def unauthenticated_supplier(supplier_alias: str) -> Actor:
     """
     session = Session()
     email = (
-        "test+{}{}@directory.uktrade.io".format(
-            supplier_alias, str(uuid.uuid4())
-        ).replace("-", "").replace(" ", "").lower()
+        "test+{}{}@directory.uktrade.io".format(supplier_alias, str(uuid.uuid4()))
+        .replace("-", "")
+        .replace(" ", "")
+        .lower()
     )
     password_length = 15
     password = "".join(
@@ -139,8 +139,9 @@ def unauthenticated_buyer(buyer_alias: str) -> Actor:
     """
     session = Session()
     email = (
-        f"test+buyer_{buyer_alias}{str(uuid.uuid4())}@directory.uktrade.io"
-        .replace("-", "")
+        f"test+buyer_{buyer_alias}{str(uuid.uuid4())}@directory.uktrade.io".replace(
+            "-", ""
+        )
         .replace(" ", "")
         .lower()
     )
@@ -173,28 +174,30 @@ def go_to_page(context: Context, supplier_alias: str, page_name: str):
     context.response = response
 
 
-def sso_create_standalone_unverified_sso_account(
-        context: Context, supplier_alias: str
-):
+def sso_create_standalone_unverified_sso_account(context: Context, supplier_alias: str):
     supplier = unauthenticated_supplier(supplier_alias)
     context.add_actor(supplier)
     reg_create_standalone_unverified_sso_account(context, supplier_alias)
 
 
 def profile_provide_missing_details_as_an_individual(
-        context: Context, supplier_alias: str
+    context: Context, supplier_alias: str
 ):
     actor = context.get_actor(supplier_alias)
     individual = Company(business_type=BusinessType.INDIVIDUAL)
 
     # Ensure we start on the "Update your details (as an Individual)" page
     profile.individual_update_your_details.should_be_here(context.response)
-    logging.debug(f"As expected {supplier_alias} is on: '{profile.individual_update_your_details.NAME}' page")
+    logging.debug(
+        f"As expected {supplier_alias} is on: '{profile.individual_update_your_details.NAME}' page"
+    )
 
     context.response = profile.select_business_type.go_to(actor.session)
     extract_and_set_csrf_middleware_token(context, context.response, supplier_alias)
 
-    context.response = profile.select_business_type.submit(actor, individual.business_type)
+    context.response = profile.select_business_type.submit(
+        actor, individual.business_type
+    )
 
     profile.individual_enter_your_personal_details.should_be_here(context.response)
     extract_and_set_csrf_middleware_token(context, context.response, supplier_alias)
@@ -206,9 +209,7 @@ def profile_provide_missing_details_as_an_individual(
     context.update_actor(supplier_alias, has_sso_account=True)
 
 
-def sso_create_standalone_verified_sso_account(
-        context: Context, supplier_alias: str
-):
+def sso_create_standalone_verified_sso_account(context: Context, supplier_alias: str):
     sso_create_standalone_unverified_sso_account(context, supplier_alias)
     supplier = context.get_actor(supplier_alias)
     flag_sso_account_as_verified(context, supplier.email)
@@ -218,9 +219,7 @@ def sso_create_standalone_verified_sso_account(
 
 
 @retry(wait_fixed=2000, stop_max_attempt_number=5)
-def fas_find_company_by_name(
-        context: Context, buyer_alias: str, company_alias: str
-):
+def fas_find_company_by_name(context: Context, buyer_alias: str, company_alias: str):
     buyer = context.get_actor(buyer_alias)
     session = buyer.session
     company = context.get_company(company_alias)
@@ -232,43 +231,33 @@ def fas_find_company_by_name(
     )
     context.response = response
     with assertion_msg(
-            "%s could not find company '%s' of FAS using company's title",
-            buyer_alias,
-            company.title,
+        "%s could not find company '%s' of FAS using company's title",
+        buyer_alias,
+        company.title,
     ):
         assert found
-    with assertion_msg(
-            "Could not extract URL to '%s' profile page", company.title
-    ):
+    with assertion_msg("Could not extract URL to '%s' profile page", company.title):
         assert profile_endpoint
-    context.set_company_details(
-        company_alias, fas_profile_endpoint=profile_endpoint
-    )
+    context.set_company_details(company_alias, fas_profile_endpoint=profile_endpoint)
 
 
 @retry(wait_fixed=3000, stop_max_attempt_number=5)
 def fab_find_published_company(
-        context: Context,
-        actor_alias: str,
-        company_alias: str,
-        *,
-        min_number_sectors: int = None
+    context: Context,
+    actor_alias: str,
+    company_alias: str,
+    *,
+    min_number_sectors: int = None,
 ):
     if min_number_sectors:
-        companies = get_published_companies_with_n_sectors(
-            context, min_number_sectors
-        )
+        companies = get_published_companies_with_n_sectors(context, min_number_sectors)
     else:
         companies = get_published_companies(context)
 
-    with assertion_msg(
-            "Expected to find at least 1 published company but got none!"
-    ):
+    with assertion_msg("Expected to find at least 1 published company but got none!"):
         assert len(companies) > 0
     filtered_companies = [
-        c
-        for c in companies
-        if "@directory.uktrade.io" not in c["company_email"]
+        c for c in companies if "@directory.uktrade.io" not in c["company_email"]
     ]
     company_dict = random.choice(filtered_companies)
     sectors = filter_out_legacy_industries(company_dict)
@@ -291,9 +280,7 @@ def fab_find_published_company(
     logging.debug("%s found a published company: %s", actor_alias, company)
 
 
-def fas_get_company_slug(
-        context: Context, actor_alias: str, company_alias: str
-):
+def fas_get_company_slug(context: Context, actor_alias: str, company_alias: str):
     actor = context.get_actor(actor_alias)
     session = actor.session
     company = context.get_company(company_alias)
@@ -303,7 +290,9 @@ def fas_get_company_slug(
     url = response.request.url
     last_item_idx = -1
     slash_idx = 1
-    slug = urlsplit(url).path.split(company.number)[last_item_idx][slash_idx:last_item_idx]
+    slug = urlsplit(url).path.split(company.number)[last_item_idx][
+        slash_idx:last_item_idx
+    ]
     logging.debug(f"{actor_alias} got company's slug: {slug}")
     context.set_company_details(company_alias, slug=slug)
 
@@ -317,9 +306,7 @@ def reg_should_get_verification_letter(context: Context, supplier_alias: str):
         assert sent
 
     verification_code = get_verification_code(context, company.number)
-    context.set_company_details(
-        company.alias, verification_code=verification_code
-    )
+    context.set_company_details(company.alias, verification_code=verification_code)
 
     logging.debug(
         "%s received the verification letter with code: %s",
@@ -335,7 +322,7 @@ def sso_get_password_reset_link(context: Context, supplier_alias: str):
 
 
 def create_actor_with_or_without_sso_account(
-        context: Context, actor_aliases: str, has_or_does_not_have: str
+    context: Context, actor_aliases: str, has_or_does_not_have: str
 ):
     actor_aliases = [alias.strip() for alias in actor_aliases.split(",")]
     for actor_alias in actor_aliases:
@@ -364,7 +351,7 @@ def stannp_send_verification_letter(context: Context, actor_alias: str):
 
 
 def find_unregistered_company(
-        context: Context, supplier_alias: str, company_alias: str
+    context: Context, supplier_alias: str, company_alias: str
 ) -> Company:
     max_attempts = 15
     counter = 0
@@ -376,9 +363,9 @@ def find_unregistered_company(
         counter += 1
         if counter >= max_attempts:
             with assertion_msg(
-                    "Failed to find an active company which is not registered "
-                    "with FAB after %d attempts",
-                    max_attempts,
+                "Failed to find an active company which is not registered "
+                "with FAB after %d attempts",
+                max_attempts,
             ):
                 assert False
         if not company_details:
@@ -390,9 +377,7 @@ def find_unregistered_company(
     return company
 
 
-def reg_create_sso_account(
-    context: Context, supplier_alias: str, company_alias: str
-):
+def reg_create_sso_account(context: Context, supplier_alias: str, company_alias: str):
     """Will create a SSO account for selected company.
 
     NOTE:
@@ -402,7 +387,9 @@ def reg_create_sso_account(
     actor = context.get_actor(supplier_alias)
     company = context.get_company(company_alias)
 
-    logging.debug("Submit SSO Registration form with Supplier's & Company's required details")
+    logging.debug(
+        "Submit SSO Registration form with Supplier's & Company's required details"
+    )
     context.response = sso.register.submit(actor, company)
 
 
@@ -457,12 +444,12 @@ def fab_decide_to_verify_profile_with_letter(context: Context, supplier_alias: s
 
     # Step 2 - check if Supplier is on the We've sent you a verification letter
     fab.confirm_identity_letter.should_be_here(response)
-    logging.debug(
-        "Supplier is on the 'Your company address' letter verification page"
-    )
+    logging.debug("Supplier is on the 'Your company address' letter verification page")
 
 
-def profile_add_business_description(context: Context, supplier_alias: str, *, ch_company: bool = True):
+def profile_add_business_description(
+    context: Context, supplier_alias: str, *, ch_company: bool = True
+):
     """Edit Profile - Will set company description.
 
     This is quasi-mandatory (*) step before Supplier can verify the company
@@ -478,13 +465,13 @@ def profile_add_business_description(context: Context, supplier_alias: str, *, c
     # Step 1 - Submit company description
     summary = sentence()
     description = sentence()
-    response = profile.edit_company_description.submit(
-        session, summary, description
-    )
+    response = profile.edit_company_description.submit(session, summary, description)
     context.response = response
 
     # Step 3 - check if Supplier is on Profile page
-    profile.edit_company_profile.should_see_profile_is_not_verified(response, ch_company=ch_company)
+    profile.edit_company_profile.should_see_profile_is_not_verified(
+        response, ch_company=ch_company
+    )
 
     # Step 4 - update company details in Scenario Data
     context.set_company_details(
@@ -601,9 +588,7 @@ def prof_attempt_to_sign_in_to_sso(context: Context, supplier_alias: str):
     context.response = sso.login.login(actor)
 
 
-def reg_create_standalone_unverified_sso_account(
-    context: Context, supplier_alias: str
-):
+def reg_create_standalone_unverified_sso_account(context: Context, supplier_alias: str):
     """Will create a standalone SSO/great.gov.uk account.
 
     NOTE:
@@ -642,9 +627,7 @@ def reg_create_standalone_unverified_sso_account(
         assert response.cookies.get("sso_display_logged_in") == "false"
 
 
-def sso_collaborator_confirm_email_address(
-    context: Context, supplier_alias: str
-):
+def sso_collaborator_confirm_email_address(context: Context, supplier_alias: str):
     """Given that invited collaborator has clicked on the email confirmation
      link, he/she has to confirm that the provided email address is the
       correct one.
@@ -698,7 +681,7 @@ def sso_supplier_confirms_email_address(context: Context, supplier_alias: str):
 
 def profile_upload_unsupported_file_as_logo(
     context: Context, supplier_alias: str, file: str
-):
+) -> bool:
     """Try to upload unsupported file type as Company's logo.
 
     NOTE:
@@ -718,9 +701,6 @@ def profile_upload_unsupported_file_as_logo(
     # Step 2 - check if upload was rejected
     rejected = profile.upload_logo.was_upload_rejected(response)
 
-    # There are 2 different error message that you can get, depending of the
-    # type of uploaded file.
-    # Here, we're checking if `any` of these 2 message is visible.
     if rejected:
         logging.debug("%s was rejected", file)
     else:
@@ -729,7 +709,7 @@ def profile_upload_unsupported_file_as_logo(
 
 
 def profile_to_upload_unsupported_logos(
-        context: Context, supplier_alias: str, table: Table
+    context: Context, supplier_alias: str, table: Table
 ):
     """Upload a picture and set it as Company's logo."""
     files = [row["file"] for row in table]
@@ -742,9 +722,7 @@ def profile_to_upload_unsupported_logos(
     context.rejections = rejections
 
 
-def profile_supplier_uploads_logo(
-    context: Context, supplier_alias: str, picture: str
-):
+def profile_supplier_uploads_logo(context: Context, supplier_alias: str, picture: str):
     """Upload a picture and set it as Company's logo.
 
     :param picture: name of the picture file stored in ./tests/files
@@ -819,8 +797,7 @@ def profile_update_company_details(
         else:
             industry = random.choice(list(industries.keys()))
         response = profile.edit_products_and_services_industry.submit(
-            actor.session,
-            industry=industry,
+            actor.session, industry=industry
         )
         context.response = response
         profile.edit_products_and_services_keywords.should_be_here(
@@ -829,9 +806,7 @@ def profile_update_company_details(
 
         number_of_keywords = random.randint(1, len(industries[industry]))
         keywords = list(
-            set(
-                random.choice(industries[industry]) for _ in range(number_of_keywords)
-            )
+            set(random.choice(industries[industry]) for _ in range(number_of_keywords))
         )
         response = profile.edit_products_and_services_keywords.submit(
             actor.session,
@@ -846,9 +821,7 @@ def profile_update_company_details(
 
         # Step 4 - update company's details stored in context.scenario_data
         context.set_company_details(
-            actor.company_alias,
-            industry=industry,
-            keywords=", ".join(keywords),
+            actor.company_alias, industry=industry, keywords=", ".join(keywords)
         )
 
 
@@ -932,9 +905,7 @@ def profile_add_invalid_online_profiles(
     context.response = response
 
 
-def profile_remove_links_to_online_profiles(
-    context: Context, supplier_alias: str
-):
+def profile_remove_links_to_online_profiles(context: Context, supplier_alias: str):
     """Will remove links to existing Online Profiles."""
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
@@ -949,16 +920,11 @@ def profile_remove_links_to_online_profiles(
 
     # Update company's details stored in context.scenario_data
     context.set_company_details(
-        company.alias,
-        facebook=None,
-        linkedin=None,
-        twitter=None,
+        company.alias, facebook=None, linkedin=None, twitter=None
     )
 
 
-def profile_add_case_study(
-    context: Context, supplier_alias: str, case_alias: str
-):
+def profile_add_case_study(context: Context, supplier_alias: str, case_alias: str):
     """Will add a complete case study (all fields will be filled out)."""
     actor = context.get_actor(supplier_alias)
     session = actor.session
@@ -987,9 +953,7 @@ def profile_add_case_study(
     context.add_case_study(actor.company_alias, case_alias, case_study)
 
 
-def profile_update_case_study(
-    context: Context, supplier_alias: str, case_alias: str
-):
+def profile_update_case_study(context: Context, supplier_alias: str, case_alias: str):
     actor = context.get_actor(supplier_alias)
     session = actor.session
     company = context.get_company(actor.company_alias)
@@ -1008,18 +972,14 @@ def profile_update_case_study(
     # link format is "/profile/find-a-buyer/case-study/35309/basic/"
     index_of_case_id_in_url = 4
     current_number = int(current_link.split("/")[index_of_case_id_in_url])
-    logging.debug(
-        "Extracted link for case study: %s is: %s", case_alias, current_link
-    )
+    logging.debug("Extracted link for case study: %s is: %s", case_alias, current_link)
 
     # Step 1 - generate new case study data
     new_case = random_case_study_data(case_alias)
     logging.debug("Now will replace case study data with: %s", new_case)
 
     # Step 2 - go to specific "Case study" page form & extract CSRF token
-    response = profile.case_study_basic.go_to(
-        session, case_number=current_number
-    )
+    response = profile.case_study_basic.go_to(session, case_number=current_number)
     context.response = response
     profile.case_study_basic.should_be_here(response)
     token = extract_csrf_middleware_token(response)
@@ -1041,8 +1001,7 @@ def profile_update_case_study(
     # `add_case_study` apart from adding will replace existing case study.
     context.add_case_study(actor.company_alias, case_alias, new_case)
     logging.debug(
-        "Successfully updated details of case study: '%s', title:'%s', link:"
-        "'%s'",
+        "Successfully updated details of case study: '%s', title:'%s', link:" "'%s'",
         case_alias,
         current.title,
         current_link,
@@ -1054,7 +1013,7 @@ def fas_search_using_company_details(
     buyer_alias: str,
     company_alias: str,
     *,
-    table_of_details: Table = None
+    table_of_details: Table = None,
 ):
     """Search for Company on FAS using it's all or selected details."""
     actor = context.get_actor(buyer_alias)
@@ -1100,9 +1059,7 @@ def fas_search_using_company_details(
         number_of_pages = get_number_of_search_result_pages(response)
 
         if number_of_pages == 0:
-            found = fas.search.should_see_company(
-                response, company.title
-            )
+            found = fas.search.should_see_company(response, company.title)
             search_results[term_name] = found
             search_responses[term_name] = response
             if found:
@@ -1121,9 +1078,7 @@ def fas_search_using_company_details(
 
         for page_number in range(1, number_of_pages + 1):
             search_responses[term_name] = response
-            found = fas.search.should_see_company(
-                response, company.title
-            )
+            found = fas.search.should_see_company(response, company.title)
             search_results[term_name] = found
             if found:
                 logging.debug(
@@ -1148,9 +1103,7 @@ def fas_search_using_company_details(
                 )
                 next_page = page_number + 1
                 if next_page <= number_of_pages:
-                    response = fas.search.go_to(
-                        session, term=term, page=next_page
-                    )
+                    response = fas.search.go_to(session, term=term, page=next_page)
                 else:
                     logging.debug(
                         "Couldn't find the Supplier even on the last"
@@ -1161,7 +1114,10 @@ def fas_search_using_company_details(
 
 
 def generic_view_pages_in_selected_language(
-    context: Context, buyer_alias: str, pages_table: Table, language: str,
+    context: Context,
+    buyer_alias: str,
+    pages_table: Table,
+    language: str,
     language_argument: str = "lang",
 ):
     """View specific FAS pages in selected language.
@@ -1194,13 +1150,10 @@ def fas_search_with_empty_query(context: Context, buyer_alias: str):
     fas.search.should_be_here(context.response)
 
 
-def fas_should_be_told_about_empty_search_results(
-    context: Context, buyer_alias: str
-):
+def fas_should_be_told_about_empty_search_results(context: Context, buyer_alias: str):
     fas.search.should_see_no_matches(context.response)
     logging.debug(
-        "%s was told that the search did not match any UK trade profiles",
-        buyer_alias,
+        "%s was told that the search did not match any UK trade profiles", buyer_alias
     )
 
 
@@ -1208,15 +1161,10 @@ def fas_should_be_told_to_enter_search_term_or_use_filters(
     context: Context, buyer_alias: str
 ):
     fas.search.should_see_no_results(context.response)
-    logging.debug(
-        "%s was told to use a search term or use the filters",
-        buyer_alias,
-    )
+    logging.debug("%s was told to use a search term or use the filters", buyer_alias)
 
 
-def fas_send_feedback_request(
-    context: Context, buyer_alias: str, page_name: str
-):
+def fas_send_feedback_request(context: Context, buyer_alias: str, page_name: str):
     actor = context.get_actor(buyer_alias)
     # Step 0: get csrf token
     response = fas.feedback.go_to(actor.session)
@@ -1234,9 +1182,7 @@ def fas_send_feedback_request(
     logging.debug("%s submitted the feedback request", buyer_alias)
 
 
-def fas_feedback_request_should_be_submitted(
-    context: Context, buyer_alias: str
-):
+def fas_feedback_request_should_be_submitted(context: Context, buyer_alias: str):
     response = context.response
     fas.feedback.should_see_feedback_submission_confirmation(response)
     logging.debug(
@@ -1248,14 +1194,13 @@ def fas_get_company_profile_url(response: Response, name: str) -> str:
     content = response.content.decode("utf-8")
     links_to_profiles_selector = "#companies-column > ul > li > a"
     href_selector = "a::attr(href)"
-    links_to_profiles = (
-        Selector(text=content).css(links_to_profiles_selector).extract()
-    )
+    links_to_profiles = Selector(text=content).css(links_to_profiles_selector).extract()
     profile_url = None
     for link in links_to_profiles:
         # try to find Profile URL by escaping html chars or not in found link
-        if (escape_html(name).lower() in link.lower()) \
-                or (escape_html(name).lower() in escape_html(link).lower()):
+        if (escape_html(name).lower() in link.lower()) or (
+            escape_html(name).lower() in escape_html(link).lower()
+        ):
             profile_url = Selector(text=link).css(href_selector).extract()[0]
     with assertion_msg(
         f"Couldn't find link to '{name}' company profile page in the response"
@@ -1266,7 +1211,7 @@ def fas_get_company_profile_url(response: Response, name: str) -> str:
 
 
 def can_find_supplier_by_term(
-    session: Session, name: str, term: str, term_type: str, max_pages: int = 10,
+    session: Session, name: str, term: str, term_type: str, max_pages: int = 10
 ) -> (bool, Response, str):
     """
 
@@ -1301,9 +1246,7 @@ def can_find_supplier_by_term(
                 )
                 next_page = page_number + 1
                 if next_page <= number_of_pages:
-                    response = fas.search.go_to(
-                        session, term=term, page=next_page
-                    )
+                    response = fas.search.go_to(session, term=term, page=next_page)
                     fas.search.should_be_here(response)
                 else:
                     logging.debug(
@@ -1367,9 +1310,7 @@ def fas_send_message_to_supplier(
     session = buyer.session
     company = context.get_company(company_alias)
     endpoint = company.fas_profile_endpoint
-    with assertion_msg(
-        "Company '%s' doesn't have FAS profile URL set", company.title
-    ):
+    with assertion_msg("Company '%s' doesn't have FAS profile URL set", company.title):
         assert endpoint
     # Step 0 - generate message data
     message = random_message_data(
@@ -1396,7 +1337,7 @@ def fas_send_message_to_supplier(
 
 
 def profile_provide_business_details(
-        context: Context, supplier_alias: str, table: Table
+    context: Context, supplier_alias: str, table: Table
 ):
     actor = context.get_actor(supplier_alias)
     company = context.get_company(actor.company_alias)
@@ -1410,9 +1351,7 @@ def profile_provide_business_details(
             change_name = True
         elif row["trading name"].endswith(" characters"):
             number = [
-                int(word)
-                for word in row["trading name"].split()
-                if word.isdigit()
+                int(word) for word in row["trading name"].split() if word.isdigit()
             ][0]
             new_name = random_chars(number)
             change_name = True
@@ -1439,9 +1378,7 @@ def profile_provide_business_details(
             new_website = "https"
             change_website = True
         elif row["website"].endswith(" characters"):
-            number = [
-                int(word) for word in row["website"].split() if word.isdigit()
-            ][0]
+            number = [int(word) for word in row["website"].split() if word.isdigit()][0]
             new_website = random_chars(number)
             change_website = True
         else:
@@ -1472,8 +1409,10 @@ def profile_provide_business_details(
             change_sector = False
 
         modified_details = Company(
-            title=new_name, website=new_website, no_employees=new_size,
-            sector=new_sector
+            title=new_name,
+            website=new_website,
+            no_employees=new_size,
+            sector=new_sector,
         )
 
         logging.debug(f"Details to update: {modified_details}")
@@ -1505,7 +1444,7 @@ def profile_provide_business_details(
 
 
 def profile_provide_products_and_services(
-        context: Context, supplier_alias: str, table: Table
+    context: Context, supplier_alias: str, table: Table
 ):
     actor = context.get_actor(supplier_alias)
     results = []
@@ -1515,8 +1454,7 @@ def profile_provide_products_and_services(
         send_as_data = False
         industry = random.choice(list(industries.keys()))
         response = profile.edit_products_and_services_industry.submit(
-            actor.session,
-            industry=industry,
+            actor.session, industry=industry
         )
         context.response = response
         profile.edit_products_and_services_keywords.should_be_here(
@@ -1527,9 +1465,9 @@ def profile_provide_products_and_services(
         if row["keywords"] == "empty string":
             keywords = [""]
         elif row["keywords"].endswith(" characters"):
-            number = [
-                int(word) for word in row["keywords"].split() if word.isdigit()
-            ][0]
+            number = [int(word) for word in row["keywords"].split() if word.isdigit()][
+                0
+            ]
             keywords = [random_chars(number)]
             send_as_files = False
             send_as_data = True
@@ -1563,9 +1501,7 @@ def profile_provide_products_and_services(
     context.results = results
 
 
-def fas_follow_case_study_links_to_related_sectors(
-    context: Context, actor_alias: str
-):
+def fas_follow_case_study_links_to_related_sectors(context: Context, actor_alias: str):
     actor = context.get_actor(actor_alias)
     session = actor.session
     content = context.response.content.decode("utf-8")
@@ -1590,17 +1526,11 @@ def fas_follow_case_study_links_to_related_sectors(
             ", ".join(sectors),
         )
         response = make_request(Method.GET, url=url, session=session)
-        results[industry] = {
-            "url": url,
-            "sectors": sectors,
-            "response": response,
-        }
+        results[industry] = {"url": url, "sectors": sectors, "response": response}
     context.results = results
 
 
-def fas_browse_suppliers_using_every_sector_filter(
-    context: Context, actor_alias: str
-):
+def fas_browse_suppliers_using_every_sector_filter(context: Context, actor_alias: str):
     actor = context.get_actor(actor_alias)
     session = actor.session
 
@@ -1610,9 +1540,7 @@ def fas_browse_suppliers_using_every_sector_filter(
 
     sector_filters_selector = "#checkbox-industry-expertise input::attr(value)"
     content = response.content.decode("utf-8")
-    sector_filters = (
-        Selector(text=content).css(sector_filters_selector).extract()
-    )
+    sector_filters = Selector(text=content).css(sector_filters_selector).extract()
     results = {}
     for sector in sector_filters:
         logging.debug(
@@ -1630,9 +1558,7 @@ def fas_browse_suppliers_using_every_sector_filter(
     context.results = results
 
 
-def fas_browse_suppliers_by_multiple_sectors(
-    context: Context, actor_alias: str
-):
+def fas_browse_suppliers_by_multiple_sectors(context: Context, actor_alias: str):
     actor = context.get_actor(actor_alias)
     session = actor.session
 
@@ -1644,9 +1570,7 @@ def fas_browse_suppliers_by_multiple_sectors(
     content = response.content.decode("utf-8")
     filters = Selector(text=content).css(sector_selector).extract()
 
-    sectors = list(
-        set(choice(filters) for _ in range(randrange(1, len(filters))))
-    )
+    sectors = list(set(choice(filters) for _ in range(randrange(1, len(filters)))))
     results = {}
     logging.debug(
         "%s will browse Suppliers by multiple Industry sector filters '%s'",
@@ -1663,9 +1587,7 @@ def fas_browse_suppliers_by_multiple_sectors(
     context.results = results
 
 
-def fas_browse_suppliers_by_invalid_sectors(
-    context: Context, actor_alias: str
-):
+def fas_browse_suppliers_by_invalid_sectors(context: Context, actor_alias: str):
     actor = context.get_actor(actor_alias)
     session = actor.session
 
@@ -1677,9 +1599,7 @@ def fas_browse_suppliers_by_invalid_sectors(
     content = response.content.decode("utf-8")
     filters = Selector(text=content).css(sector_selector).extract()
 
-    sectors = list(
-        set(choice(filters) for _ in range(randrange(1, len(filters))))
-    )
+    sectors = list(set(choice(filters) for _ in range(randrange(1, len(filters)))))
 
     sectors.append("this_is_an_invalid_sector_filter")
     logging.debug(
@@ -1730,12 +1650,8 @@ def fas_browse_suppliers_by_company_sectors(
         logging.debug("Will scan only first %d pages", last_page)
         for page_number in range(2, last_page):
             logging.debug("Going to search result page no.: %d", page_number)
-            response = fas.search.go_to(
-                session, page=page_number, sectors=sectors
-            )
-            found = fas.search.should_see_company(
-                response, company.title
-            )
+            response = fas.search.go_to(session, page=page_number, sectors=sectors)
+            found = fas.search.should_see_company(response, company.title)
             results[page_number] = {
                 "url": response.request.url,
                 "sectors": sectors,
@@ -1753,9 +1669,7 @@ def fas_browse_suppliers_by_company_sectors(
     context.results = results
 
 
-def fas_get_case_study_slug(
-    context: Context, actor_alias: str, case_alias: str
-):
+def fas_get_case_study_slug(context: Context, actor_alias: str, case_alias: str):
     result = None
     actor = context.get_actor(actor_alias)
     company = context.get_company(actor.company_alias)
@@ -1774,9 +1688,7 @@ def fas_get_case_study_slug(
         assert result is not None
 
     context.update_case_study(company.alias, case_alias, slug=result)
-    logging.debug(
-        "%s got case study '%s' slug: '%s'", actor_alias, case_alias, result
-    )
+    logging.debug("%s got case study '%s' slug: '%s'", actor_alias, case_alias, result)
 
 
 def fas_search_with_term(context: Context, actor_alias: str, search_term: str):
@@ -1830,10 +1742,7 @@ def fab_submit_verification_code(context: Context, supplier_alias: str):
     verification_code = company.verification_code
     referer = URLs.FAB_CONFIRM_COMPANY_ADDRESS.absolute
     response = fab.verify_company.submit(
-        actor.session,
-        actor.csrfmiddlewaretoken,
-        verification_code,
-        referer=referer,
+        actor.session, actor.csrfmiddlewaretoken, verification_code, referer=referer
     )
     context.response = response
 
@@ -1867,10 +1776,7 @@ def get_form_value(key: str) -> str or list or int or None:
         ("invalid image", choice(BMPs + JP2s + WEBPs)),
         (" characters$", get_n_chars(get_number_from_key(key))),
         (" words$", get_n_words(get_number_from_key(key))),
-        (
-            " predefined countries$",
-            get_n_country_codes(get_number_from_key(key)),
-        ),
+        (" predefined countries$", get_n_country_codes(get_number_from_key(key))),
         ("1 predefined country$", get_n_country_codes(1)),
         ("none selected", None),
         ("sector", choice(SECTORS)),
@@ -1897,14 +1803,7 @@ def profile_attempt_to_add_case_study(
     actor = context.get_actor(supplier_alias)
     session = actor.session
 
-    page_1_fields = [
-        "title",
-        "summary",
-        "description",
-        "sector",
-        "website",
-        "keywords",
-    ]
+    page_1_fields = ["title", "summary", "description", "sector", "website", "keywords"]
     page_2_fields = [
         "image_1",
         "caption_1",
@@ -1946,26 +1845,18 @@ def profile_attempt_to_add_case_study(
 
         logging.debug(f"Case study details: {case_study}")
         if field in page_1_fields:
-            response = profile.case_study_basic.submit(
-                session, token, case_study
-            )
+            response = profile.case_study_basic.submit(session, token, case_study)
             context.response = response
             check_response(response, 200)
         elif field in page_2_fields:
-            response = profile.case_study_basic.submit(
-                session, token, case_study
-            )
+            response = profile.case_study_basic.submit(session, token, case_study)
             context.response = response
             token = extract_csrf_middleware_token(response)
-            response = profile.case_study_images.submit(
-                session, token, case_study
-            )
+            response = profile.case_study_images.submit(session, token, case_study)
             context.response = response
             check_response(response, 200)
         else:
-            raise KeyError(
-                "Could not recognize field '{}' as valid case study field"
-            )
+            raise KeyError("Could not recognize field '{}' as valid case study field")
 
         results.append((field, value_type, case_study, response, error))
 
@@ -1979,9 +1870,7 @@ def sso_request_password_reset(context: Context, supplier_alias: str):
     else:
         next_param = get_page_object("find a buyer - landing").URL
 
-    response = sso.password_reset.go_to(
-        actor.session, next_param=next_param
-    )
+    response = sso.password_reset.go_to(actor.session, next_param=next_param)
     context.response = response
 
     sso.password_reset.should_be_here(response)
@@ -1999,24 +1888,20 @@ def sso_sign_in(context: Context, supplier_alias: str, *, from_page: str = None)
     from_page = get_page_object(from_page).URL if from_page else None
     next_param = from_page or URLs.PROFILE_ABOUT.absolute
     referer = from_page or URLs.PROFILE_ABOUT.absolute
-    response = sso.login.go_to(
-        actor.session, next_param=next_param, referer=referer
-    )
+    response = sso.login.go_to(actor.session, next_param=next_param, referer=referer)
     context.response = response
 
     sso.login.should_be_here(response)
     with assertion_msg(
-            "It looks like user is still logged in, as the "
-            "sso_display_logged_in cookie is not equal to False"
+        "It looks like user is still logged in, as the "
+        "sso_display_logged_in cookie is not equal to False"
     ):
         assert response.cookies.get("sso_display_logged_in") == "false"
 
     token = extract_csrf_middleware_token(response)
     context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
-    context.response = sso.login.login(
-        actor, next_param=next_param, referer=referer
-    )
+    context.response = sso.login.login(actor, next_param=next_param, referer=referer)
     error = f"User is not logged in. Could not find 'Sign out' in the response from {context.response.url}"
     assert "Sign out" in context.response.content.decode("UTF-8"), error
     logging.debug(f"{actor.email} is logged in")
@@ -2029,7 +1914,7 @@ def sso_change_password_with_password_reset_link(
     new: bool = False,
     same: bool = False,
     mismatch: bool = False,
-    letters_only: bool = False
+    letters_only: bool = False,
 ):
     actor = context.get_actor(supplier_alias)
     session = actor.session
@@ -2050,13 +1935,10 @@ def sso_change_password_with_password_reset_link(
     if new:
         password_length = 15
         if letters_only:
-            password = "".join(
-                choice(ascii_letters) for _ in range(password_length)
-            )
+            password = "".join(choice(ascii_letters) for _ in range(password_length))
         else:
             password = "".join(
-                choice(ascii_letters) + choice(digits)
-                for _ in range(password_length)
+                choice(ascii_letters) + choice(digits) for _ in range(password_length)
             )
         context.update_actor(supplier_alias, password=password)
     if same:
@@ -2123,9 +2005,7 @@ def profile_add_collaborator(
 
 
 def profile_confirm_collaboration_request(
-    context: Context,
-    collaborator_alias: str,
-    company_alias: str,
+    context: Context, collaborator_alias: str, company_alias: str
 ):
     collaborator = context.get_actor(collaborator_alias)
     session = collaborator.session
@@ -2226,7 +2106,7 @@ def reg_create_standalone_unverified_sso_account_from_sso_login_page(
 
 
 def sso_create_standalone_unverified_sso_account_from_collaboration_request(
-        context: Context, actor_alias: str, *, next_link: str = None
+    context: Context, actor_alias: str, *, next_link: str = None
 ):
     """Create a standalone SSO/great.gov.uk account."""
     actor = context.get_actor(actor_alias)
@@ -2234,9 +2114,7 @@ def sso_create_standalone_unverified_sso_account_from_collaboration_request(
 
     # Step 1: Go to the SSO/great.gov.uk registration page
     referer = URLs.SSO_SIGNUP.absolute + f"?next={next}"
-    response = sso.register.go_to(
-        actor.session, next=next, referer=referer
-    )
+    response = sso.register.go_to(actor.session, next=next, referer=referer)
     context.response = response
 
     # Step 2 - extract CSRF token
@@ -2245,22 +2123,20 @@ def sso_create_standalone_unverified_sso_account_from_collaboration_request(
 
     # Step 3: Check if User is not logged in
     with assertion_msg(
-            "It looks like user is still logged in, as the "
-            "sso_display_logged_in cookie is not equal to False"
+        "It looks like user is still logged in, as the "
+        "sso_display_logged_in cookie is not equal to False"
     ):
         assert response.cookies.get("sso_display_logged_in") == "false"
 
     # Step 4: POST SSO accounts/signup/
-    response = sso.register.submit_no_company(
-        actor, next=next, referer=referer
-    )
+    response = sso.register.submit_no_company(actor, next=next, referer=referer)
     context.response = response
 
     # Step 8: Check if Supplier is on Verify your email page & is not logged in
     sso.verify_your_email.should_be_here(response)
     with assertion_msg(
-            "It looks like user is still logged in, as the "
-            "sso_display_logged_in cookie is not equal to False"
+        "It looks like user is still logged in, as the "
+        "sso_display_logged_in cookie is not equal to False"
     ):
         assert response.cookies.get("sso_display_logged_in") == "false"
 
@@ -2268,9 +2144,7 @@ def sso_create_standalone_unverified_sso_account_from_collaboration_request(
 def fab_collaborator_create_sso_account_and_confirm_email(
     context: Context, collaborator_alias: str, company_alias: str
 ):
-    fab_open_collaboration_request_link(
-        context, collaborator_alias, company_alias
-    )
+    fab_open_collaboration_request_link(context, collaborator_alias, company_alias)
     sso.login.should_be_here(context.response)
     sso_create_standalone_unverified_sso_account_from_collaboration_request(
         context, collaborator_alias
@@ -2282,10 +2156,7 @@ def fab_collaborator_create_sso_account_and_confirm_email(
 
 
 def profile_send_transfer_ownership_request(
-    context: Context,
-    supplier_alias: str,
-    company_alias: str,
-    new_owner_alias: str,
+    context: Context, supplier_alias: str, company_alias: str, new_owner_alias: str
 ):
     """
     Due to bug ED-2268 the first time you visit SUD pages by going directly
@@ -2376,10 +2247,7 @@ def fab_confirm_account_ownership_request(
 
 
 def fab_transfer_ownership(
-    context: Context,
-    supplier_alias: str,
-    company_alias: str,
-    new_owner_alias: str,
+    context: Context, supplier_alias: str, company_alias: str, new_owner_alias: str
 ):
     profile_send_transfer_ownership_request(
         context, supplier_alias, company_alias, new_owner_alias
@@ -2390,9 +2258,7 @@ def fab_transfer_ownership(
     fab_open_transfer_ownership_request_link_and_create_sso_account_if_needed(
         context, new_owner_alias, company_alias
     )
-    fab_confirm_account_ownership_request(
-        context, new_owner_alias, company_alias
-    )
+    fab_confirm_account_ownership_request(context, new_owner_alias, company_alias)
 
 
 def fab_remove_collaborators(
@@ -2414,19 +2280,13 @@ def fab_remove_collaborators(
     context.update_actor(supplier_alias, csrfmiddlewaretoken=token)
 
     # Step 2: extract SSO IDs for users to remove
-    emails_to_sso_id = fab.account_remove_collaborator.extract_sso_ids(
-        response
-    )
+    emails_to_sso_id = fab.account_remove_collaborator.extract_sso_ids(response)
     logging.debug("SSO IDs for specific actor: %s", emails_to_sso_id)
-    sso_ids = [
-        sso_id for email, sso_id in emails_to_sso_id.items() if email in emails
-    ]
+    sso_ids = [sso_id for email, sso_id in emails_to_sso_id.items() if email in emails]
     logging.debug("List of SSO IDs to remove: %s", sso_ids)
 
     # Step 3: send the request with SSO IDs of users to remove
-    response = fab.account_remove_collaborator.remove(
-        supplier.session, token, sso_ids
-    )
+    response = fab.account_remove_collaborator.remove(supplier.session, token, sso_ids)
     context.response = response
 
     profile.business_profile.should_be_here(response, user_removed=True)
@@ -2438,9 +2298,7 @@ def fab_remove_collaborators(
 def stannp_download_verification_letter_and_extract_text(
     context: Context, actor_alias: str
 ):
-    with assertion_msg(
-        "context.response does not contain response from StanNP!"
-    ):
+    with assertion_msg("context.response does not contain response from StanNP!"):
         assert "data" in context.response
 
     pdf_link = context.response["data"]["pdf"]
@@ -2450,8 +2308,7 @@ def stannp_download_verification_letter_and_extract_text(
     try:
         os.remove(pdf_path)
     except OSError:
-        logging.error(
-            "Something went wrong when trying to delete: %s", pdf_path)
+        logging.error("Something went wrong when trying to delete: %s", pdf_path)
     context.update_actor(actor_alias, verification_letter=pdf_text)
 
 
@@ -2517,17 +2374,16 @@ def retry_if_assertion_error(exception):
     return isinstance(exception, AssertionError)
 
 
-def check_if_found_wrong_company(context: Context, actor_alias: str, company_alias: str):
+def check_if_found_wrong_company(
+    context: Context, actor_alias: str, company_alias: str
+):
     content = context.response.content.decode("UTF-8")
     actor = context.get_actor(actor_alias)
     company = context.get_company(company_alias)
     errors = {
-        "Company not active":
-            f"Found wrong company '{company.number} - {company.title}' is inactive",
-        "74990":
-            f"Found wrong company '{company.number} - {company.title}' has SIC=74990",
-        "88100":
-            f"Found wrong company '{company.number} - {company.title}' has SIC=88100",
+        "Company not active": f"Found wrong company '{company.number} - {company.title}' is inactive",
+        "74990": f"Found wrong company '{company.number} - {company.title}' has SIC=74990",
+        "88100": f"Found wrong company '{company.number} - {company.title}' has SIC=88100",
     }
     for string, error in errors.items():
         if string in content:
@@ -2559,7 +2415,9 @@ def enrol_enter_company_name(context: Context, actor_alias: str, company_alias: 
     profile.enter_your_business_details_part_2.should_be_here(response)
 
 
-def enrol_enter_company_website_and_industry(context: Context, actor_alias: str, company_alias: str):
+def enrol_enter_company_website_and_industry(
+    context: Context, actor_alias: str, company_alias: str
+):
     actor = context.get_actor(actor_alias)
     company = context.get_company(company_alias)
     logging.debug("# 6) submit company details - 2nd part")
@@ -2588,7 +2446,9 @@ def enrol_enter_personal_details(context: Context, actor_alias: str):
     profile.enrolment_finished.should_be_here(response)
 
 
-def enrol_user(context: Context, actor_alias: str, business_type: str, company_alias: str):
+def enrol_user(
+    context: Context, actor_alias: str, business_type: str, company_alias: str
+):
     enrol_select_business_type(context, actor_alias, company_alias)
     enrol_enter_email_and_password(context, actor_alias)
     enrol_get_email_verification_code(context, actor_alias)
@@ -2607,10 +2467,47 @@ def enrol_user(context: Context, actor_alias: str, business_type: str, company_a
 
 def find_ch_company(alias: str, *, term: str = None, active: bool = True):
     search_terms = [
-        "food", "sell", "office", "ltd", "fruits", "music", "group", "digital", "open", "world", "finance",
-        "accounting", "consulting", "health", "access", "supply", "suppliers", "safety", "discount", "energy", "media",
-        "impact", "solutions", "market", "limited", "green", "price", "social", "soft", "software", "fashion",
-        "british", "farm", "innovations", "furniture", "light", "power", "care", "metal", "building", "society"
+        "food",
+        "sell",
+        "office",
+        "ltd",
+        "fruits",
+        "music",
+        "group",
+        "digital",
+        "open",
+        "world",
+        "finance",
+        "accounting",
+        "consulting",
+        "health",
+        "access",
+        "supply",
+        "suppliers",
+        "safety",
+        "discount",
+        "energy",
+        "media",
+        "impact",
+        "solutions",
+        "market",
+        "limited",
+        "green",
+        "price",
+        "social",
+        "soft",
+        "software",
+        "fashion",
+        "british",
+        "farm",
+        "innovations",
+        "furniture",
+        "light",
+        "power",
+        "care",
+        "metal",
+        "building",
+        "society",
     ]
     term = term or random.choice(search_terms)
 
@@ -2626,9 +2523,17 @@ def find_ch_company(alias: str, *, term: str = None, active: bool = True):
 
     active_statuses = ["active", "voluntary-arrangement"]
     if active:
-        by_status = [company for company in ch_companies if company["company_status"] in active_statuses]
+        by_status = [
+            company
+            for company in ch_companies
+            if company["company_status"] in active_statuses
+        ]
     else:
-        by_status = [company for company in ch_companies if company["company_status"] not in active_statuses]
+        by_status = [
+            company
+            for company in ch_companies
+            if company["company_status"] not in active_statuses
+        ]
 
     accepted_types = [
         "ltd",
@@ -2640,7 +2545,9 @@ def find_ch_company(alias: str, *, term: str = None, active: bool = True):
         "registered-society-non-jurisdictional",
         "industrial-and-provident-society",
     ]
-    by_type = [company for company in by_status if company["company_type"] in accepted_types]
+    by_type = [
+        company for company in by_status if company["company_type"] in accepted_types
+    ]
     logging.debug(f"Found {len(by_type)} CH companies filtered by status & type")
 
     ch_company_details = random.choice(by_type)
@@ -2657,7 +2564,7 @@ def find_ch_company(alias: str, *, term: str = None, active: bool = True):
 
 
 def profile_enrol_companies_house_registered_company(
-        context: Context, actor: Actor, account: Account
+    context: Context, actor: Actor, account: Account
 ):
     context.response = profile.select_business_type.submit(actor, account.business_type)
     profile.enter_your_email_and_password.should_be_here(context.response)
@@ -2667,7 +2574,9 @@ def profile_enrol_companies_house_registered_company(
     profile.enter_email_verification_code.should_be_here(context.response)
 
     if not account.verify_email:
-        logging.debug(f"Won't verify email address for '{actor.alias}' as '{account.description}' was requested")
+        logging.debug(
+            f"Won't verify email address for '{actor.alias}' as '{account.description}' was requested"
+        )
         return
     extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
     enrol_get_email_verification_code(context, actor.alias)
@@ -2682,13 +2591,19 @@ def profile_enrol_companies_house_registered_company(
         company = find_ch_company(actor.company_alias)
         extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
         context.response = profile.enter_your_business_details.submit(actor, company)
-        profile_already_exists = profile.enter_your_business_details_part_2.profile_already_exists(context.response)
-        logging.debug(f"Has '{company.title}' have already a business profile: {profile_already_exists}")
+        profile_already_exists = profile.enter_your_business_details_part_2.profile_already_exists(
+            context.response
+        )
+        logging.debug(
+            f"Has '{company.title}' have already a business profile: {profile_already_exists}"
+        )
         attempt_counter += 1
     error = f"Could not find unregistered CH company after {attempt_counter} attempts"
     assert not profile_already_exists, error
     context.add_company(company)
-    context.set_company_details(alias=actor.company_alias, business_type=account.business_type)
+    context.set_company_details(
+        alias=actor.company_alias, business_type=account.business_type
+    )
     profile.enter_your_business_details_part_2.should_be_here(context.response)
 
     extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
@@ -2700,42 +2615,58 @@ def profile_enrol_companies_house_registered_company(
     profile.enrolment_finished.should_be_here(context.response)
 
     if not account.verify:
-        logging.debug(f"Won't verify account for '{actor.alias}' as '{account.description}' account was requested")
+        logging.debug(
+            f"Won't verify account for '{actor.alias}' as '{account.description}' account was requested"
+        )
         return
     profile_add_business_description(context, actor.alias)
     fab_decide_to_verify_profile_with_letter(context, actor.alias)
     profile_verify_company_profile(context, actor.alias)
 
     if not account.publish:
-        logging.debug(f"Won't publish account for '{actor.alias}' as '{account.description}' account was requested")
+        logging.debug(
+            f"Won't publish account for '{actor.alias}' as '{account.description}' account was requested"
+        )
         return
     profile_publish_profile_to_fas(context, actor.alias)
 
 
 def profile_enrol_sole_trader(context: Context, actor: Actor, account: Account):
     context.response = profile.select_business_type.submit(actor, account.business_type)
-    profile.non_ch_company_enter_your_email_and_password.should_be_here(context.response)
+    profile.non_ch_company_enter_your_email_and_password.should_be_here(
+        context.response
+    )
 
     extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
-    context.response = profile.non_ch_company_enter_your_email_and_password.submit(actor)
+    context.response = profile.non_ch_company_enter_your_email_and_password.submit(
+        actor
+    )
     profile.enter_email_verification_code.should_be_here(context.response)
 
     if not account.verify_email:
-        logging.debug(f"Won't verify email address for '{actor.alias}' as '{account.description}' was requested")
+        logging.debug(
+            f"Won't verify email address for '{actor.alias}' as '{account.description}' was requested"
+        )
         return
     extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
     enrol_get_email_verification_code(context, actor.alias)
     actor = context.get_actor(actor.alias)
-    context.response = profile.non_ch_company_enter_email_verification_code.submit(actor)
+    context.response = profile.non_ch_company_enter_email_verification_code.submit(
+        actor
+    )
 
     profile.non_ch_company_enter_your_business_details.should_be_here(context.response)
     extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
     company = Company(
-        alias=actor.company_alias, title=f"DIT AUTOMATED TESTS {uuid.uuid4()}",
-        business_type=account.business_type, companies_house_details={}
+        alias=actor.company_alias,
+        title=f"DIT AUTOMATED TESTS {uuid.uuid4()}",
+        business_type=account.business_type,
+        companies_house_details={},
     )
     context.add_company(company)
-    context.response = profile.non_ch_company_enter_your_business_details.submit(actor, company)
+    context.response = profile.non_ch_company_enter_your_business_details.submit(
+        actor, company
+    )
     profile.non_ch_company_enter_your_personal_details.should_be_here(context.response)
 
     extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
@@ -2743,14 +2674,18 @@ def profile_enrol_sole_trader(context: Context, actor: Actor, account: Account):
     profile.non_ch_company_enrolment_finished.should_be_here(context.response)
 
     if not account.verify:
-        logging.debug(f"Won't verify account for '{actor.alias}' as '{account.description}' account was requested")
+        logging.debug(
+            f"Won't verify account for '{actor.alias}' as '{account.description}' account was requested"
+        )
         return
     profile_add_business_description(context, actor.alias, ch_company=False)
     profile.non_ch_company_request_to_verify.submit(actor)
     verify_non_ch_company(context, company)
 
     if not account.publish:
-        logging.debug(f"Won't publish account for '{actor.alias}' as '{account.description}' account was requested")
+        logging.debug(
+            f"Won't publish account for '{actor.alias}' as '{account.description}' account was requested"
+        )
         return
     profile_publish_profile_to_fas(context, actor.alias)
 
@@ -2764,7 +2699,9 @@ def profile_enrol_individual(context: Context, actor: Actor, account: Account):
     profile.individual_enter_email_verification_code.should_be_here(context.response)
 
     if not account.verify_email:
-        logging.debug(f"Won't verify email address for '{actor.alias}' as '{account.description}' was requested")
+        logging.debug(
+            f"Won't verify email address for '{actor.alias}' as '{account.description}' was requested"
+        )
         return
     extract_and_set_csrf_middleware_token(context, context.response, actor.alias)
     enrol_get_email_verification_code(context, actor.alias)
@@ -2786,11 +2723,11 @@ def profile_create_isd_profile(context: Context, actor: Actor, account: Account)
 
 
 def profile_enrol_user(
-        context: Context,
-        actor_alias: str,
-        account_description: str,
-        *,
-        company_alias: str = None,
+    context: Context,
+    actor_alias: str,
+    account_description: str,
+    *,
+    company_alias: str = None,
 ):
     account = Account(account_description)
     logging.debug(f"Account was identified as: {account}")
@@ -2805,7 +2742,10 @@ def profile_enrol_user(
     if account.business_type is BusinessType.COMPANIES_HOUSE:
         profile_enrol_companies_house_registered_company(context, actor, account)
     if account.business_type in [
-        BusinessType.SOLE_TRADER, BusinessType.CHARITY, BusinessType.PARTNERSHIP, BusinessType.OTHER
+        BusinessType.SOLE_TRADER,
+        BusinessType.CHARITY,
+        BusinessType.PARTNERSHIP,
+        BusinessType.OTHER,
     ]:
         profile_enrol_sole_trader(context, actor, account)
     if account.business_type is BusinessType.INDIVIDUAL:
@@ -2813,7 +2753,9 @@ def profile_enrol_user(
     if account.business_type is BusinessType.OVERSEAS_COMPANY:
         profile_enrol_overseas_company(context, actor, account)
     if account.business_type in [
-        BusinessType.ISD_ONLY, BusinessType.ISD_AND_TRADE, BusinessType.UNPUBLISHED_ISD_AND_PUBLISHED_TRADE
+        BusinessType.ISD_ONLY,
+        BusinessType.ISD_AND_TRADE,
+        BusinessType.UNPUBLISHED_ISD_AND_PUBLISHED_TRADE,
     ]:
         profile_create_isd_profile(context, actor, account)
 
@@ -2827,7 +2769,7 @@ def isd_publish_profile(context: Context, supplier_alias: str):
 
 
 def isd_create_unregistered_company(
-        context: Context, supplier_alias: str, company_alias: str
+    context: Context, supplier_alias: str, company_alias: str
 ):
     company_dict = create_test_isd_company(context)
     company = Company(
@@ -2847,7 +2789,7 @@ def isd_create_unregistered_company(
         slug=company_dict["slug"],
         expertise_industries=company_dict["expertise_industries"],
         export_destinations=company_dict["export_destinations"],
-        export_destinations_other=company_dict["export_destinations_other"]
+        export_destinations_other=company_dict["export_destinations_other"],
     )
     context.update_actor(supplier_alias, company_alias=company_alias)
     context.add_company(company)
@@ -2855,7 +2797,7 @@ def isd_create_unregistered_company(
 
 
 def isd_create_unverified_business_profile(
-        context: Context, supplier_alias: str, company_alias: str
+    context: Context, supplier_alias: str, company_alias: str
 ):
     if not context.get_actor(supplier_alias):
         context.add_actor(unauthenticated_supplier(supplier_alias))
@@ -2865,7 +2807,7 @@ def isd_create_unverified_business_profile(
 
 
 def isd_create_verified_and_published_business_profile(
-        context: Context, supplier_alias: str, company_alias: str
+    context: Context, supplier_alias: str, company_alias: str
 ):
     """Create a verified ISD Business profile and publish it to ISD"""
     logging.debug("1 - find unregistered ISD company & enrol user for that company")
