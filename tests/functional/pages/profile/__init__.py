@@ -28,6 +28,7 @@ __all__ = [
     "individual_enter_email_verification_code",
     "individual_enter_your_email_and_password",
     "individual_enter_your_personal_details",
+    "individual_start_enrolment",
     "individual_update_your_details",
     "non_ch_company_enrolment_finished",
     "non_ch_company_enter_email_verification_code",

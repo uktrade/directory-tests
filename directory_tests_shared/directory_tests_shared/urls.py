@@ -230,7 +230,8 @@ class URLs(Enum):
     DIR_API_EXTERNAL_SUPPLIER_SSO = DirectoryApiUrl("external/supplier-sso/")
     DIR_API_EXTERNAL_SUPPLIER = DirectoryApiUrl("external/supplier/")
     DIR_API_TEST_API_COMPANY = DirectoryApiUrl(
-        "/testapi/company/{ch_id_or_name}/", template="/testapi/company/{ch_id_or_name}/"
+        "/testapi/company/{ch_id_or_name}/",
+        template="/testapi/company/{ch_id_or_name}/",
     )
 
     # SSO UI
@@ -580,7 +581,9 @@ class URLs(Enum):
     PROFILE_ENROL = ProfileUrl("enrol/")
     PROFILE_ENROL_SELECT_BUSINESS_TYPE = ProfileUrl("enrol/business-type/")
 
-    PROFILE_ENROL_USER_ACCOUNT = ProfileUrl("enrol/business-type/companies-house/user-account/")
+    PROFILE_ENROL_USER_ACCOUNT = ProfileUrl(
+        "enrol/business-type/companies-house/user-account/"
+    )
     PROFILE_ENROL_EMAIL_VERIFICATION = ProfileUrl(
         "enrol/business-type/companies-house/verification/"
     )
@@ -607,13 +610,20 @@ class URLs(Enum):
     PROFILE_ENROL_NON_CH_COMPANY_ENTER_PERSONAL_DETAILS = ProfileUrl(
         "enrol/business-type/non-companies-house-company/personal-details/"
     )
-    PROFILE_ENROL_NON_CH_COMPANY_FINISHED = ProfileUrl("enrol/business-type/non-companies-house-company/finished/")
-    PROFILE_ENROL_NON_CH_REQUEST_TO_VERIFY = ProfileUrl("business-profile/verify/request/")
+    PROFILE_ENROL_NON_CH_COMPANY_FINISHED = ProfileUrl(
+        "enrol/business-type/non-companies-house-company/finished/"
+    )
+    PROFILE_ENROL_NON_CH_REQUEST_TO_VERIFY = ProfileUrl(
+        "business-profile/verify/request/"
+    )
 
+    PROFILE_ENROL_INDIVIDUAL_START = ProfileUrl("enrol/business-type/individual/start/")
     PROFILE_ENROL_INDIVIDUAL_ENTER_YOUR_EMAIL_AND_PASSWORD = ProfileUrl(
         "enrol/business-type/individual/user-account/"
     )
-    PROFILE_ENROL_INDIVIDUAL_EMAIL_VERIFICATION = ProfileUrl("enrol/business-type/individual/verification/")
+    PROFILE_ENROL_INDIVIDUAL_EMAIL_VERIFICATION = ProfileUrl(
+        "enrol/business-type/individual/verification/"
+    )
     PROFILE_ENROL_INDIVIDUAL_UPDATE_YOUR_DETAILS = ProfileUrl(
         "enrol/?backfill-details-intent=true"
     )
@@ -624,7 +634,9 @@ class URLs(Enum):
         "enrol/business-type/individual/finished/"
     )
 
-    PROFILE_ENROL_OVERSEAS_BUSINESS = ProfileUrl("enrol/business-type/overseas-business/")
+    PROFILE_ENROL_OVERSEAS_BUSINESS = ProfileUrl(
+        "enrol/business-type/overseas-business/"
+    )
 
     PROFILE_ADMIN = ProfileUrl("business-profile/admin/")
     PROFILE_ADMIN_REMOVE_PROFILE_FROM_ACCOUNT = ProfileUrl(
@@ -747,7 +759,9 @@ class URLs(Enum):
     LEGACY_CONTACT_US_LANDING = LegacyContactUrl("")
     LEGACY_CONTACT_US_HELP = LegacyContactUrl("help/")
     LEGACY_CONTACT_US_FEEDBACK_FORM = LegacyContactUrl("help/FeedbackForm/")
-    LEGACY_CONTACT_US_DIRECTORY_FEEDBACK_FORM = LegacyContactUrl("directory/FeedbackForm")
+    LEGACY_CONTACT_US_DIRECTORY_FEEDBACK_FORM = LegacyContactUrl(
+        "directory/FeedbackForm"
+    )
 
     # ExOpps UI - Export Opportunities
     EXOPPS_LANDING = ExOppsUrl("")
@@ -765,9 +779,12 @@ class URLs(Enum):
     CMS_API_HEALTHCHECK = CMSApiUrl("healthcheck/")
     CMS_API_HEALTHCHECK_PING = CMSApiUrl("healthcheck/ping/")
     CMS_API_PAGES = CMSApiUrl("api/pages/")
-    CMS_API_PAGE_BY_ID = CMSApiUrl("api/pages/{page_id}/", template="api/pages/{page_id}/")
+    CMS_API_PAGE_BY_ID = CMSApiUrl(
+        "api/pages/{page_id}/", template="api/pages/{page_id}/"
+    )
     CMS_API_PAGE_BY_PATH = CMSApiUrl(
-        "api/pages/lookup-by-path/{site_id}/{path}", template="api/pages/lookup-by-path/{site_id}/{path}"
+        "api/pages/lookup-by-path/{site_id}/{path}",
+        template="api/pages/lookup-by-path/{site_id}/{path}",
     )
     CMS_API_PAGE_TYPES = CMSApiUrl("api/pages/types/")
     CMS_API_IMAGES = CMSApiUrl("api/images/")
