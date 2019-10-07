@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 """Profile - Enter your personal details"""
 
-from requests import Response
-
 from directory_tests_shared import PageType, Service, URLs
+from requests import Response, Session
 from tests.functional.utils.context_utils import Actor
 from tests.functional.utils.request import (
     Method,
@@ -23,6 +22,10 @@ EXPECTED_STRINGS = [
     "Job title",
     "Phone number (optional)",
 ]
+
+
+def go_to(session: Session) -> Response:
+    return make_request(Method.GET, URL, session=session)
 
 
 def should_be_here(response: Response):
