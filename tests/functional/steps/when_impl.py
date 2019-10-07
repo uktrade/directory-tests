@@ -198,7 +198,11 @@ def profile_provide_missing_details_as_an_individual(
     context.response = profile.select_business_type.submit(
         actor, individual.business_type
     )
+    profile.individual_start_enrolment.should_be_here(context.response)
 
+    context.response = profile.individual_enter_your_personal_details.go_to(
+        actor.session
+    )
     profile.individual_enter_your_personal_details.should_be_here(context.response)
     extract_and_set_csrf_middleware_token(context, context.response, supplier_alias)
 
