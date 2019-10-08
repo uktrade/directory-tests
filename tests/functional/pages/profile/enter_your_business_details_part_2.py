@@ -38,7 +38,12 @@ def submit(actor: Actor, company: Company) -> Response:
     }
 
     return make_request(
-        Method.POST, URL, session=session, headers=headers, files=data, no_filename_in_multipart_form_data=True
+        Method.POST,
+        URL,
+        session=session,
+        headers=headers,
+        files=data,
+        no_filename_in_multipart_form_data=True,
     )
 
 

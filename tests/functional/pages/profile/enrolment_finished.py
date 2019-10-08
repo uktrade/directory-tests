@@ -4,7 +4,12 @@
 from requests import Response, Session
 
 from directory_tests_shared import PageType, Service, URLs
-from tests.functional.utils.request import Method, check_response, make_request, check_url
+from tests.functional.utils.request import (
+    Method,
+    check_response,
+    check_url,
+    make_request,
+)
 
 SERVICE = Service.PROFILE
 NAME = "Enrolment (finished)"

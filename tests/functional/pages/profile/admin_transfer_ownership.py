@@ -30,8 +30,6 @@ def go_to(session: Session) -> Response:
 
 
 def submit(session: Session, email: str) -> Response:
-    data = {
-        "collaborator_email": email,
-    }
+    data = {"collaborator_email": email}
     headers = {"Referer": URL}
     return make_request(Method.POST, URL, session=session, data=data, headers=headers)

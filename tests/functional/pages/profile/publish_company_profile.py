@@ -17,5 +17,10 @@ def submit(session: Session) -> Response:
     headers = {"Referer": URL}
     data = {"is_published_find_a_supplier": "on"}
     return make_request(
-        Method.POST, URL, session=session, headers=headers, files=data, no_filename_in_multipart_form_data=True
+        Method.POST,
+        URL,
+        session=session,
+        headers=headers,
+        files=data,
+        no_filename_in_multipart_form_data=True,
     )

@@ -5,7 +5,12 @@ from requests import Response
 
 from directory_tests_shared import PageType, Service, URLs
 from tests.functional.utils.context_utils import Actor
-from tests.functional.utils.request import check_response, check_url, make_request, Method
+from tests.functional.utils.request import (
+    Method,
+    check_response,
+    check_url,
+    make_request,
+)
 
 SERVICE = Service.PROFILE
 NAME = "Request to verify"
@@ -29,5 +34,9 @@ def submit(actor: Actor) -> Response:
     session = actor.session
     data = {}
     return make_request(
-        Method.POST, URL, session=session, files=data, no_filename_in_multipart_form_data=True
+        Method.POST,
+        URL,
+        session=session,
+        files=data,
+        no_filename_in_multipart_form_data=True,
     )

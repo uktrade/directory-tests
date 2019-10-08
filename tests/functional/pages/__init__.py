@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-import os
 import logging
+import os
 from enum import Enum
 from importlib import import_module
 from pkgutil import iter_modules
@@ -25,9 +25,7 @@ class PageObjects(Enum):
     def __new__(cls, value):
         if not is_page_object(value):
             raise TypeError(
-                "Expected to get a Page Object module but got: {}".format(
-                    value
-                )
+                f"Expected to get a Page Object module but got: {value}"
             )
         member = object.__new__(cls)
         member._value_ = value
@@ -35,10 +33,7 @@ class PageObjects(Enum):
 
     def __str__(self):
         return "{}-{} [{} - {}]".format(
-            self.value.SERVICE,
-            self.value.NAME,
-            self.value.TYPE,
-            self.value.URL,
+            self.value.SERVICE, self.value.NAME, self.value.TYPE, self.value.URL
         )
 
     @property
@@ -93,9 +88,7 @@ PAGES = PageObjects("PageObjects", names=get_page_objects(pages))
 
 
 def get_page_object(service_and_page: str) -> ModuleType:
-    assert (
-        " - " in service_and_page
-    ), f"Invalid Service & Page name: {service_and_page}"
+    assert " - " in service_and_page, f"Invalid Service & Page name: {service_and_page}"
     parts = service_and_page.split(" - ")
     sought_service = parts[0]
     sought_page = parts[1]
@@ -121,8 +114,7 @@ def get_page_object(service_and_page: str) -> ModuleType:
             if hasattr(page_object.value, "NAMES"):
                 names = page_object.value.NAMES
                 if sought_page.lower() in [name.lower() for name in names]:
-                    logging.debug(
-                        f"PO search: matched one of names '{sought_page}'")
+                    logging.debug(f"PO search: matched one of names '{sought_page}'")
                     matched_name = True
                 else:
                     continue
@@ -147,11 +139,7 @@ def get_page_object(service_and_page: str) -> ModuleType:
 
     if not result:
         service_key = sought_service.replace(" ", "_").upper()
-        keys = [
-            key
-            for key in PAGES.__members__.keys()
-            if key.startswith(service_key)
-        ]
+        keys = [key for key in PAGES.__members__.keys() if key.startswith(service_key)]
         raise KeyError(
             f"Could not find Page Object for '{sought_page}' in "
             f"'{sought_service}' package. Here's a list of available Page "

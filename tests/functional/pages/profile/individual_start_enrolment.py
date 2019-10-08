@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """Profile - Start Individual enrolment"""
 
-from directory_tests_shared import PageType, Service, URLs
 from requests import Response
+
+from directory_tests_shared import PageType, Service, URLs
 from tests.functional.utils.request import check_response, check_url
 
 SERVICE = Service.PROFILE
