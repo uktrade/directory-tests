@@ -66,8 +66,8 @@ from tests.functional.utils.context_utils import (
     update_company,
 )
 from tests.functional.utils.generic import (
-    assertion_msg,
     assert_that_captcha_is_in_dev_mode,
+    assertion_msg,
     create_test_isd_company,
     escape_html,
     extract_and_set_csrf_middleware_token,
@@ -754,8 +754,10 @@ def profile_update_company_details(
 
         # Step 4 - update company's details stored in context.scenario_data
         update_company(
-            context, actor.company_alias, industry=industry,
-            keywords=", ".join(keywords)
+            context,
+            actor.company_alias,
+            industry=industry,
+            keywords=", ".join(keywords),
         )
 
 
@@ -854,9 +856,7 @@ def profile_remove_links_to_online_profiles(context: Context, supplier_alias: st
     )
 
     # Update company's details stored in context.scenario_data
-    update_company(
-        context, company.alias, facebook=None, linkedin=None, twitter=None
-    )
+    update_company(context, company.alias, facebook=None, linkedin=None, twitter=None)
 
 
 def profile_add_case_study(context: Context, supplier_alias: str, case_alias: str):
@@ -2109,9 +2109,9 @@ def profile_send_transfer_ownership_request(
 
     update_actor(context, supplier_alias, ex_owner=True)
     update_actor(context, new_owner_alias, company_alias=company_alias)
-    update_company(context,
-                   company.alias, owner=new_owner_alias, owner_email=new_owner.email
-                   )
+    update_company(
+        context, company.alias, owner=new_owner_alias, owner_email=new_owner.email
+    )
     logging.debug(
         "%s successfully sent a account ownership transfer request to %s %s",
         supplier_alias,
@@ -2534,9 +2534,9 @@ def profile_enrol_companies_house_registered_company(
     error = f"Could not find unregistered CH company after {attempt_counter} attempts"
     assert not profile_already_exists, error
     add_company(context, company)
-    update_company(context,
-                   alias=actor.company_alias, business_type=account.business_type
-                   )
+    update_company(
+        context, alias=actor.company_alias, business_type=account.business_type
+    )
     profile.enter_your_business_details_part_2.should_be_here(context.response)
 
     extract_and_set_csrf_middleware_token(context, context.response, actor.alias)

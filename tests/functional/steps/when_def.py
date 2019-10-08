@@ -411,10 +411,6 @@ def when_actor_downloads_pdf_with_verification_letter(context, actor_alias):
 
 @when('"{actor_alias}" creates an "{account_type}" profile')
 def when_user_creates_a_profile(
-        context: Context,
-        actor_alias: str,
-        account_type: str,
-        *,
-        company_alias: str = None,
+    context: Context, actor_alias: str, account_type: str, *, company_alias: str = None
 ):
     profile_enrol_user(context, actor_alias, account_type, company_alias=company_alias)

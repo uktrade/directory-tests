@@ -948,7 +948,8 @@ def sso_should_get_request_for_collaboration_email(
             company_title=company.title.upper()
         )
         link = get_verification_link(actor.email, subject=subject)
-        update_actor(context,
+        update_actor(
+            context,
             actor_alias,
             invitation_for_collaboration_link=link,
             company_alias=company_alias,
@@ -992,8 +993,11 @@ def profile_should_get_request_for_becoming_owner(
     company = get_company(context, company_alias)
     subject = PROFILE_INVITATION_MSG_SUBJECT.format(company_title=company.title.upper())
     link = get_verification_link(actor.email, subject=subject)
-    update_actor(context,
-        new_owner_alias, ownership_request_link=link, company_alias=company_alias
+    update_actor(
+        context,
+        new_owner_alias,
+        ownership_request_link=link,
+        company_alias=company_alias,
     )
 
 
