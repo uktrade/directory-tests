@@ -38,6 +38,7 @@ from tests.functional.steps.when_impl import (
     unauthenticated_buyer,
     unauthenticated_supplier,
 )
+from tests.functional.utils.context_utils import add_actor
 
 
 @given('"{supplier_alias}" is an unauthenticated supplier')
